@@ -10,13 +10,7 @@ $Frontend->displayHeader();
 
 
 <div id="r">
-<?php
-$panels = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
-foreach($panels as $i => $panel) {
-	$panel = new Panel($panel['id']);
-	$panel->display();
-}
-?>
+<?php $Frontend->displayPanels(); ?>
 </div>
 
 <div id="l">

@@ -130,7 +130,7 @@ if ($this->year != -1) {
 	</tr>
 	<tr class="space"><td colspan="13" /></tr>
 <?php
-$error->add('TODO', 'Puls-Analyse: Find in MySql via CEIL( ( 100 * `puls` /205 ) /5 ) AS `puls_group`', __FILE__, __LINE__);
+$error->add('TODO', 'Puls-Analyse: Find in MySql via CEIL( ( 100 * `puls` /HF_MAX ) /5 ) AS `puls_group`', __FILE__, __LINE__);
 
 $pulsbereiche = array(65, 70, 75, 80, 85, 90, 100);
 foreach($pulsbereiche as $i => $puls):

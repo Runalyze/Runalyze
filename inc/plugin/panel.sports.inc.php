@@ -26,7 +26,6 @@ function sportarten_installer() {
  * @return string (HTML)
  */
 function sportarten_rightSymbol() {
-	// TODO Set Links: Dieser Monat | Dieses Jahr | Gesamt
 	$html = '';
 	foreach(sports_getTimeset() as $i => $timeset) {
 		if ($i != 0)
