@@ -35,26 +35,10 @@ class Frontend {
 
 		header('Content-type: text/html; charset=ISO-8859-1');
 
-		define('FRONTEND_PATH', dirname(__FILE__).'\\');
-		define('LTB_VERSION', '0.5');
-		define('LTB_DEBUG', true);
-		define('INFINITY', PHP_INT_MAX);
-		define('DAY_IN_S', 86400);
-		define('YEAR', date("Y"));
-		define('CUT_LENGTH', 29);
-		define('NL', "\n");
-		require_once(FRONTEND_PATH.'class.Error.php');
-			$error = new Error();
-		require_once(FRONTEND_PATH.'class.Mysql.php');
-			// Connect to MySql
-			require_once(FRONTEND_PATH.'config.inc.php');
-			$mysql = new Mysql($host, $username, $password, $database);
-			unset($host, $username, $password, $database);
-		// Define config-consts
-		$config = $mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
-		foreach ($config as $key => $value)
-			define('CONFIG_'.strtoupper($key), $value);
-		unset($config);
+		$this->initConsts();
+		$this->initErrorHandling();
+		$this->initMySql();
+		$this->initConfigConsts();
 
 		require_once(FRONTEND_PATH.'class.Ajax.php');
 		require_once(FRONTEND_PATH.'class.Panel.php'); // Will be included by class::Plugin later?
@@ -95,6 +79,54 @@ class Frontend {
 	}
 
 	/**
+	 * Init constants
+	 */
+	function initConsts() {
+		define('FRONTEND_PATH', dirname(__FILE__).'\\');
+		define('LTB_VERSION', '0.5');
+		define('LTB_DEBUG', true);
+		define('INFINITY', PHP_INT_MAX);
+		define('DAY_IN_S', 86400);
+		define('YEAR', date("Y"));
+		define('CUT_LENGTH', 29);
+		define('NL', "\n");
+	}
+
+	/**
+	 * Include class::Error and and init $error
+	 */
+	function initErrorHandling() {
+		global $error;
+
+		require_once(FRONTEND_PATH.'class.Error.php');
+		$error = new Error();
+	}
+
+	/**
+	 * Include class::Mysql and connect to database
+	 */
+	function initMySql() {
+		global $mysql, $error;
+
+		require_once(FRONTEND_PATH.'class.Mysql.php');
+		require_once(FRONTEND_PATH.'config.inc.php');
+		$mysql = new Mysql($host, $username, $password, $database);
+		unset($host, $username, $password, $database);
+	}
+
+	/**
+	 * Define all CONFIG_CONSTS
+	 */
+	function initConfigConsts() {
+		global $mysql, $error;
+
+		$config = $mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
+		foreach ($config as $key => $value)
+			define('CONFIG_'.strtoupper($key), $value);
+		unset($config);
+	}
+
+	/**
 	 * Function to display the HTML-Header
 	 */
 	function displayHeader() {
@@ -105,23 +137,28 @@ class Frontend {
 	}
 
 	/**
-	 * Function to display the HTML-Header
+	 * Function to display the HTML-Footer
 	 */
 	function displayFooter() {
 		global $mysql, $error;
 
-		// Debug
-		if (LTB_DEBUG) {
-			echo('
-	<div class="panel clear">
-		<h1>Debug</h1>');
-			$error->display();
-			echo('
-	</div>');
-		}
+		if (LTB_DEBUG)
+			include('tpl/tpl.Frontend.debug.php');
 
-		if (!$this->ajax_request) {
+		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.footer.php');
+	}
+
+	/**
+	 * Display the panels for the right side
+	 */
+	function displayPanels() {
+		global $mysql, $error;
+
+		$panels = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
+		foreach($panels as $i => $panel) {
+			$panel = new Panel($panel['id']);
+			$panel->display();
 		}
 	}
 }
