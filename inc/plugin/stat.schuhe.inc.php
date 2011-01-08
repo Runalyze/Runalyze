@@ -9,7 +9,7 @@
  * @uses class::Mysql ($mysql)
  * @uses lib/draw/schuhbalken.php
  *
- * Last modified 2010/08/09 07:53 by Hannes Christiansen
+ * Last modified 2011/01/08 18:42 by Michael Pohl
  */
 /**
  * Plugin-installer, will be called by class::Plugin for installing this plugin.
@@ -40,24 +40,28 @@ function stat_schuhe_installer() {
 <?php
 $error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
 $schuhe = $mysql->fetch('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
-foreach($schuhe as $i => $schuh) {
-	$i++;
-	$training_dist = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC LIMIT 1');
-	$training_pace = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC LIMIT 1');
-	$trainings = $mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
-	$in_use = $schuh['inuse']==1 ? '' : ' small';
-	echo('
-	<tr class="a'.($i%2 + 1).' r" style="background:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).') no-repeat bottom left;">
-		<td class="small">'.$trainings.'x</td>
-		<td class="b'.$in_use.' l"><span class="link" onclick="submit_suche(\'dat[0]=schuhid&opt[0]=is&val[0]='.$schuh['id'].'\')">'.$schuh['name'].'</span></td>
-		<td class="small">'.$schuh['kaufdatum'].'</td>
-		<td>'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
-		<td>'.(($trainings != 0) ? Helper::Tempo($schuh['km'], $schuh['dauer']) : '-').'</td>
-		<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_dist['id'].'\')">'.Helper::Km($training_dist['distanz']).'</span></td>
-		<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_pace['id'].'\')">'.$training_pace['pace'].'/km</span></td>
-		<td>'.Helper::Time($schuh['dauer']).'</td>
-		<td>'.Helper::Km($schuh['km']).'</td>
-	</tr>');
+if($schuhe && mysql_num_rows($schuhe)) {
+	foreach($schuhe as $i => $schuh) {
+		$i++;
+		$training_dist = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC LIMIT 1');
+		$training_pace = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC LIMIT 1');
+		$trainings = $mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
+		$in_use = $schuh['inuse']==1 ? '' : ' small';
+		echo('
+		<tr class="a'.($i%2 + 1).' r" style="background:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).') no-repeat bottom left;">
+			<td class="small">'.$trainings.'x</td>
+			<td class="b'.$in_use.' l"><span class="link" onclick="submit_suche(\'dat[0]=schuhid&opt[0]=is&val[0]='.$schuh['id'].'\')">'.$schuh['name'].'</span></td>
+			<td class="small">'.$schuh['kaufdatum'].'</td>
+			<td>'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
+			<td>'.(($trainings != 0) ? Helper::Tempo($schuh['km'], $schuh['dauer']) : '-').'</td>
+			<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_dist['id'].'\')">'.Helper::Km($training_dist['distanz']).'</span></td>
+			<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_pace['id'].'\')">'.$training_pace['pace'].'/km</span></td>
+			<td>'.Helper::Time($schuh['dauer']).'</td>
+			<td>'.Helper::Km($schuh['km']).'</td>
+		</tr>');
+	}
+} else {
+	$error->add('WARNING', 'Bisher keine Schuhe eingetragen', __FILE__, 42);
 }
 echo('
 	<tr class="space"><td colspan="9" /></tr>'); 

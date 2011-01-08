@@ -9,7 +9,7 @@
  * @uses class::Helper
  * @uses START_YEAR
  *
- * Last modified 2010/08/30 20:42 by Hannes Christiansen
+ * Last modified 2011/01/08 18:42 by Michael Pohl
  */
 /**
  * Plugin-installer, will be called by class::Plugin for installing this plugin.
@@ -117,6 +117,7 @@ if ($temps !== false) {
 
 <?php // Wetterarten
 $wetter_all = $mysql->fetch('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
+if($wetter_all && mysql_num_rows($wetter_all))  ##
 foreach($wetter_all as $w => $wetter) {
 	echo('
 	<tr class="a'.($w%2+1).' r">
@@ -175,10 +176,14 @@ FROM `ltb_training` WHERE
 GROUP BY MONTH(FROM_UNIXTIME(`time`))
 ORDER BY `m` ASC
 LIMIT 12', false, true);
+if($nums && mysql_num_rows($nums)) {
 foreach($nums as $dat)
 	$num[$dat['m']] = $dat['num'];
-
+} else {
+$error->add('WARNING', 'Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
+}
 $kleidungen = $mysql->fetch('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
+if($kleidungen && mysql_num_rows($kleidungen)) {
 foreach($kleidungen as $k => $kleidung) {
 	echo('
 	<tr class="a'.($k%2+1).' r">
@@ -223,6 +228,9 @@ foreach($kleidungen as $k => $kleidung) {
 	echo('
 	</tr>');
 }
+} else {
+$error->add('WARNING', 'Keine Kleidung eingetragen', __FILE__, 184); 
+}
 ?>
 	<tr class="space">
 		<td colspan="13" />
@@ -250,6 +258,7 @@ foreach($kleidungen as $k => $kleidung) {
 	<tr class="a1 r">
 <?php // Temperaturbereiche
 $kleidungen = $mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
+if($kleidungen && mysql_num_rows($kleidungen)) {
 foreach($kleidungen as $i => $kleidung) {
 	if ($i%3 == 0):
 ?>
@@ -276,6 +285,10 @@ foreach($kleidungen as $i => $kleidung) {
 		<td colspan="2" class="c"><em>-</em></td>
 <?php endif;
 }
+} else {
+	$error->add('WARNING', 'Keine Kleidung eingetragen', __FILE__, 256);
+}
+
 for (; $i%3 != 1; $i++):
 ?>
 		<td colspan="3">&nbsp;</td>

@@ -8,7 +8,7 @@
  * @uses class::Mysql ($mysql)
  * @uses class::Helper
  *
- * Last modified 2010/09/03 20:41 by Hannes Christiansen
+ * Last modified 2011/01/08 18:42 by Michael Pohl
  */
 /**
  * Plugin-installer, will be called by class::Plugin for installing this plugin.
@@ -57,6 +57,7 @@ foreach ($rekorde as $rekord):
 			<img src="img/sports/'.$sport['bild'].'" /> '.$sport['name'].'
 		</td>');
 		eval('$data = $mysql->fetch(\''.$rekord['datquery'].'\');');
+		if($data && mysql_num_rows($data)) {
 		foreach($data as $j => $dat) {
 			if ($rekord['eval'] == 0)
 				$code = Helper::Tempo($dat['distanz'],$dat['dauer'],$sport['id'],false);
@@ -69,6 +70,9 @@ foreach ($rekorde as $rekord):
 				'.$code.'
 			</span>
 		</td>');
+		}
+		} else {
+			$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 60);
 		}
 		for (; $j < 10; $j++) { echo('
 		<td>
@@ -104,14 +108,18 @@ endforeach;
 <?php
 // Jahre
 $years = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `year` ORDER BY `km` DESC LIMIT 10');
-foreach($years as $i => $year) {
-	$link = 'daten(\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(23,59,50,12,31,$year['year']).'\');';
-	echo('
-		<td>
-			<span class="link" title="'.$year['year'].'" onclick="'.$link.'">
-				'.Helper::Km($year['km']).'
-			</span>
-		</td>');
+if($years && mysql_num_rows($years)) {
+	foreach($years as $i => $year) {
+		$link = 'daten(\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(23,59,50,12,31,$year['year']).'\');';
+		echo('
+			<td>
+				<span class="link" title="'.$year['year'].'" onclick="'.$link.'">
+					'.Helper::Km($year['km']).'
+				</span>
+			</td>');
+	}
+} else {
+	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 112);
 }
 for ($i; $i < 10; $i++) { echo('
 		<td>&nbsp;</td>'); }
@@ -125,14 +133,18 @@ for ($i; $i < 10; $i++) { echo('
 <?php
 // Monate
 $months = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year`, MONTH(FROM_UNIXTIME(`time`)) as `month`, (MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `monthyear` ORDER BY `km` DESC LIMIT 10');
-foreach($months as $i => $month) {
-	$link = 'daten(\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(23,59,50,$month['month']+1,0,$month['year']).'\');';
-	echo('
-		<td>
-			<span class="link" title="'.Helper::Monat($month['month']).' '.$month['year'].'" onclick="'.$link.'">
-				'.Helper::Km($month['km']).'
-			</span>
-		</td>');
+if($months && mysql_num_rows($months)) {
+	foreach($months as $i => $month) {
+		$link = 'daten(\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(23,59,50,$month['month']+1,0,$month['year']).'\');';
+		echo('
+			<td>
+				<span class="link" title="'.Helper::Monat($month['month']).' '.$month['year'].'" onclick="'.$link.'">
+					'.Helper::Km($month['km']).'
+				</span>
+			</td>');
+	}
+} else {
+	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 135);
 }
 for ($i; $i < 10; $i++) { echo('
 		<td>
@@ -147,6 +159,7 @@ for ($i; $i < 10; $i++) { echo('
 <?php
 // Wochen
 $weeks = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10');
+if($weeks && mysql_num_rows($weeks)) {
 foreach($weeks as $i => $week) {
 	$link = 'daten(\''.$week['time'].'\',\''.Helper::Wochenstart($woche['time']).'\',\''.Helper::Wochenende($week['time']).'\');';
 	echo('
@@ -155,6 +168,9 @@ foreach($weeks as $i => $week) {
 				'.Helper::Km($week['km']).'
 			</span>
 		</td>');
+}
+} else {
+	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 161);
 }
 for ($i; $i < 10; $i++) { echo('
 		<td>

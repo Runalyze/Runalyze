@@ -11,7 +11,7 @@
  * @uses CONFIG_USE_...
  * @uses WK_TYPID
  *
- * Last modified 2010/08/30 20:42 by Hannes Christiansen
+ * Last modified 2011/01/08 18:42 by Michael Pohl
  */
 /**
  * Plugin-installer, will be called by class::Plugin for installing this plugin.
@@ -98,9 +98,12 @@ show_table_start();
 $error->add('TODO','Last WKs: Set LAST_WK_NUM as config-var',__FILE__,__LINE__);
 define('LAST_WK_NUM',10);
 $wks = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM);
-foreach($wks as $i => $wk)
-	show_wk_tr($wk, $i);
-
+if($wks && mysql_num_rows($wks)) {
+	foreach($wks as $i => $wk)
+		show_wk_tr($wk, $i);
+} else {
+	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 100);
+}
 show_table_end();
 ?>
 </div>
