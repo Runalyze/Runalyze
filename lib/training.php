@@ -27,7 +27,7 @@ $lon = explode('|',$dat['arr_lon']);
 <a class="ajax" href="lib/training_data.php?id=<?php echo($_GET['id']); ?>" target="trainingData">
 	<img src="img/graph_data.png" alt="Allgemeine Statistiken" />
 </a>
-<?php if ($dat['arr_pace'] != ''): ?>
+<?php if ($dat['arr_heart'] != ''): ?>
 <a class="ajax" href="lib/training_puls.php?id=<?php echo($_GET['id']); ?>" target="trainingData">
 	<img src="img/graph_puls.png" alt="Herzfrequenz" />
 </a>

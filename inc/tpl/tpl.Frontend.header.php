@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
-	<title>LaufTageBuch v<?php echo LTB_VERSION; ?></title>
+	<title>Runalyze v<?php echo LTB_VERSION; ?></title>
 
 	<script type="text/javascript" src="lib/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="lib/jquery.scrollTo-min.js"></script>

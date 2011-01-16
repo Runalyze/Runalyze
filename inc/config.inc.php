@@ -18,6 +18,7 @@ $password = 'fc683f6a';
  * Please set these global constants.
  * 
  * @var   MAINSPORT   The ID of the main sport, normally '1' for 'Laufen'
+ * @var   RUNNINGSPORT   The ID of the running sport
  * @var   WK_TYPID    The ID of the competition-type for 'Laufen'
  * @var   LL_TYPID    The ID of the longjog-type for 'Laufen'
  * @var   ATL_DAYS    Number of days considered for 'Actual Training Load', default 7
@@ -25,6 +26,7 @@ $password = 'fc683f6a';
  */
 // TODO Get these information from config-db?
 define('MAINSPORT',1);
+define('RUNNINGSPORT',1);
 define('WK_TYPID',5);
 define('LL_TYPID',7);
 define('ATL_DAYS',7);

@@ -9,7 +9,7 @@
  * @version 1.0
  * @uses class::Error ($error)
  *
- * Last modified 2010/08/08 21:33 by Hannes Christiansen
+ * Last modified 2011/01/08 19:45 by Hannes Christiansen
  */
 class Mysql {
 	private static $host,
@@ -19,10 +19,10 @@ class Mysql {
 
 	/**
 	 * Creates connection to mysql-database if possible
-	 * @param $host
-	 * @param $user
-	 * @param $password
-	 * @param $database
+	 * @param $host string
+	 * @param $user string
+	 * @param $password string
+	 * @param $database string
 	 */
 	function __construct($host, $user, $password, $database) {
 		global $error;
@@ -41,23 +41,23 @@ class Mysql {
 	/**
 	 * Calls mysql_query and returns the result if there is any
 	 * Be careful, unsafe query! Use $mysql->escape($values)!
-	 * @param $query           full mysql-query
+	 * @param $query string full mysql-query
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
 	function query($query) {
 		global $error;
 
 		$result = false;
-		$result = mysql_query($query) or $error->add('ERROR',mysql_error().' <Query: '.$query.'>',__FILE__,__LINE__);
+		$result = mysql_query($query) or $error->add('ERROR',mysql_error().' &lt;Query: '.$query.'&gt;',__FILE__,__LINE__);
 		return $result;
 	}
 
 	/**
 	 * Updates a table for a given ID.
-	 * @param $table
-	 * @param $id
-	 * @param $column   might be an array
-	 * @param $value    might be an array
+	 * @param $table  string
+	 * @param $id     int
+	 * @param $column mixed  might be an array
+	 * @param $value  mixed  might be an array
 	 */
 	function update($table, $id, $column, $value) {
 		global $error;
@@ -75,9 +75,9 @@ class Mysql {
 
 	/**
 	 * Escapes and inserts the given $values to the $columns in $table
-	 * @param $table
-	 * @param $columns
-	 * @param $values
+	 * @param $table   string
+	 * @param $columns array
+	 * @param $values  array
 	 * @return int       ID of inserted row
 	 */
 	function insert($table, $columns, $values) {
@@ -92,10 +92,10 @@ class Mysql {
 
 	/**
 	 * Fetches the row of an given $id or all rows of a $query
-	 * @param $table|$query      Must be set: name of table or whole query
-	 * @param $id|false|'LAST'   Must not be set if first argument is a query, otherwise the ID.
-	 * @param $as_array          Method returns always $return[$i]['column'] if true. 
-	 * @return array             For sizeof($return)=1: $return['column'], otherwise: $return[$i]['column']. For sizeof($return)=0: false.
+	 * @param string $table    name of table or whole query
+	 * @param int|bool $id     Must not be set if first argument is a query (default: false), otherwise the ID. Can be 'LAST' to get the highest ID
+	 * @param bool $as_array   Method returns always $return[$i]['column'] if true, default: false 
+	 * @return array           For sizeof($return)=1: $return['column'], otherwise: $return[$i]['column']. For sizeof($return)=0: false.
 	 */
 	function fetch($table, $id = false, $as_array = false) {
 		global $error;
@@ -125,7 +125,7 @@ class Mysql {
 
 	/**
 	 * Counts the rows of $query
-	 * @param $query
+	 * @param $query   string
 	 * @return int     number of rows
 	 */
 	function num($query) {
@@ -137,8 +137,8 @@ class Mysql {
 
 	/**
 	 * Deletes the row of ID=$id from $table
-	 * @param $table
-	 * @param $id
+	 * @param $table string
+	 * @param $id    int
 	 */
 	function delete($table, $id) {
 		global $error;
@@ -155,9 +155,9 @@ class Mysql {
 	 *    - Sets null-objects to 'NULL'
 	 *    - Sets true/false to 1/0
 	 *    - Sets strings to "$value"
-	 * @param $values   might be an array
-	 * @param $quotes   true for adding quotes for strings
-	 * @return mixed    safe value(s)
+	 * @param $values mixed might be an array
+	 * @param $quotes bool  true for adding quotes for strings
+	 * @return mixed        safe value(s)
 	 */
 	static function escape($values, $quotes = true) {
 		global $error;

@@ -26,6 +26,7 @@ function sportarten_installer() {
  * @return string (HTML)
  */
 function sportarten_rightSymbol() {
+	// TODO Use class::AJAX for these links
 	$html = '';
 	foreach(sports_getTimeset() as $i => $timeset) {
 		if ($i != 0)

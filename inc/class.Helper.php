@@ -34,9 +34,9 @@ class Helper {
 
 	/**
 	 * Get the name or all information of a sport
-	 * @param $sport_id       ID of the sport
-	 * @param $as_array       Return as array [bool]
-	 * @return string|array   Name of sport or all information as array
+	 * @param int $sport_id ID of the sport
+	 * @param bool $as_array Return as array, default: false
+	 * @return string|array Name of sport or all information as array
 	 */
 	static function Sport($sport_id, $as_array = false) {
 		global $mysql;
@@ -47,19 +47,19 @@ class Helper {
 
 	/**
 	 * Get the name or all information of a type
-	 * @param $type_id          ID of the type
-	 * @param $as_short        Return the shortname [bool]
-	 * @param $as_has_splits   Return if the type allows splits [bool]
-	 * @param $as_array        Return as array [bool]
-	 * @return various         Depends on arguments
+	 * @param int  $type_id         ID of the type
+	 * @param bool $as_short        Return the shortname, default: false
+	 * @param bool $as_has_splits   Return if the type allows splits, default: false
+	 * @param bool $as_array        Return as array, default: false
+	 * @return mixed depends on arguments
 	 */
-	static function Typ($type_id, $as_short = false, $as_has_splits = false, $as_array = false) {
+	static function Typ($type_id, $as_short = false, $as_bool_has_splits = false, $as_array = false) {
 		global $mysql;
 
 		$typ = $mysql->fetch('ltb_typ', $type_id);
 		if ($as_short)
 			return $typ['abk'];
-		if ($as_has_splits)
+		if ($as_bool_has_splits)
 			return $typ['splits'];
 		if ($as_array)
 			return $typ;
@@ -68,8 +68,8 @@ class Helper {
 
 	/**
 	 * Get the name or all information of a shoe
-	 * @param $schuh_id       ID of the schuh
-	 * @param $as_array       Return as array [bool]
+	 * @param int  $schuh_id       ID of the schuh
+	 * @param bool $as_array       Return as array, default: false
 	 * @return string|array   Name of shoe or all information as array
 	 */
 	static function Schuh($schuh_id, $as_array = false) {
@@ -81,15 +81,29 @@ class Helper {
 
 	/**
 	 * Returns the img-Tag for a weather-symbol
-	 * @param int       $wetter_id
-	 * @return string   img-tag
+	 * @param int $wetter_id
+	 * @return string img-tag
 	 */
-	static function WetterImg($wetter_id) {
+	static function WetterImg($wetterid) {
 		global $mysql;
 
-		$wetter = $mysql->fetch('ltb_wetter', $wetter_id);
+		$wetter = $mysql->fetch('ltb_wetter', $wetterid);
 		return ($wetter !== false)
 			? '<img src="img/wetter/'.$wetter['bild'].'" title="'.$wetter['name'].'" style="vertical-align:bottom;" />'
+			: '';
+	}
+
+	/**
+	 * Returns the name for a given weather-id
+	 * @param int $wetterid
+	 * @return string name for this weather
+	 */
+	static function WetterName($wetterid) {
+		global $mysql;
+
+		$wetter = $mysql->fetch('ltb_wetter', $wetterid);
+		return ($wetter !== false)
+			? $wetter['name']
 			: '';
 	}
 
@@ -98,9 +112,9 @@ class Helper {
 	 * @uses self::Pace
 	 * @uses self::Kmh
 	 * @uses self::Sport
-	 * @param $km         Distance [km]
-	 * @param $time       Time [s]
-	 * @param $sport_id   ID of sport for choosing pace/kmh
+	 * @param float $km       Distance [km]
+	 * @param int $time       Time [s]
+	 * @param int $sport_id   ID of sport for choosing pace/kmh
 	 * @return string
 	 */
 	static function Tempo($km, $time, $sport_id = 0) {
@@ -126,8 +140,8 @@ class Helper {
 	/**
 	 * Get the speed in min/km without unit
 	 * @uses self::Time
-	 * @param $km     Distance [km]
-	 * @param $time   Time [s]
+	 * @param float $km   Distance [km]
+	 * @param int $time   Time [s]
 	 * @return string
 	 */
 	static function Pace($km, $time) {
@@ -136,8 +150,8 @@ class Helper {
 
 	/**
 	 * Get the speed in km/h without unit
-	 * @param $km     Distance [km]
-	 * @param $time   Time [s]
+	 * @param float $km   Distance [km]
+	 * @param int $time   Time [s]
 	 * @return string
 	 */
 	static function Kmh($km, $time) {
@@ -146,9 +160,9 @@ class Helper {
 
 	/**
 	 * Display a distance as km or m
-	 * @param $km         Distance [km]
-	 * @param $decimals   Decimals after the point
-	 * @param $track      Run on a tartan track? [bool]
+	 * @param float $km       Distance [km]
+	 * @param int $decimals   Decimals after the point, default: 1
+	 * @param bool $track     Run on a tartan track?, default: false
 	 */
 	static function Km($km, $decimals = 1, $track = false) {
 		if ($km == 0)
@@ -161,9 +175,9 @@ class Helper {
 	/**
 	 * Display the time as a formatted string
 	 * @uses self::TwoNumbers
-	 * @param $time_in_s
-	 * @param $show_days    Show days (default) or count hours > 24 [bool]
-	 * @param $show_zeros   Show e.g. '0:00:00' for 0 [bool]
+	 * @param int $time_in_s
+	 * @param bool $show_days	Show days (default) or count hours > 24, default: true
+	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false
 	 */
 	static function Time($time_in_s, $show_days = true, $show_zeros = false) {
 		$string = '';
@@ -183,9 +197,9 @@ class Helper {
 	/**
 	 * Find the personal best for a given distance
 	 * @uses self::Time
-	 * @param $dist          Distance [km]
-	 * @param $return_time   Return as integer [bool]
-	 * @return various[string|int]
+	 * @param float $dist       Distance [km]
+	 * @param bool $return_time Return as integer, default: false
+	 * @return mixed
 	 */
 	static function Bestzeit($dist, $return_time = false) {
 		global $mysql;
@@ -200,8 +214,8 @@ class Helper {
 
 	/**
 	 * Get the TRIMP for a training or get the minutes needed for a given TRIMP
-	 * @param $training_id   Training-ID
-	 * @param $trimp         [optional] If set, calculate backwards     
+	 * @param int $training_id   Training-ID
+	 * @param bool $trimp        [optional] If set, calculate backwards, default: false     
 	 * @return int
 	 */
 	static function TRIMP($training_id, $trimp = false) {
@@ -217,7 +231,7 @@ class Helper {
 		$typ = ($dat['typid'] != 0) ? self::Typ($dat['typid'], false, false, true) : 0;
 		$HFavg = ($dat['puls'] != 0) ? $dat['puls'] : $sport['HFavg'];
 		$RPE = ($typ != 0) ? $typ['RPE'] : $sport['RPE'];
-		$HFperRest = ($HFavg - $global['HFrest']) / ($global['HFmax'] - $global['HFrest']);
+		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
 		$TRIMP = $dat['dauer']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
 	
 		if ($trimp === false)
@@ -230,7 +244,7 @@ class Helper {
 	 * Calculating ActualTrainingLoad (at a given timestamp)
 	 * @uses ATL_DAYS
 	 * @uses DAY_IN_S
-	 * @param $time   [optional] Timestamp
+	 * @param int $time [optional] timestamp
 	 */
 	static function ATL($time = 0) {
 		global $mysql;
@@ -245,7 +259,7 @@ class Helper {
 	 * Calculating ChronicTrainingLoad (at a given timestamp)
 	 * @uses CTL_DAYS
 	 * @uses DAY_IN_S
-	 * @param $time   [optional] Timestamp
+	 * @param int $time [optional] timestamp
 	 */
 	static function CTL($time = 0) {
 		global $mysql;
@@ -260,7 +274,7 @@ class Helper {
 	 * Calculating TrainingStressBalance (at a given timestamp)
 	 * @uses self::CTL
 	 * @uses self::ATL
-	 * @param $time
+	 * @param int $time [optional] timestamp
 	 */
 	static function TSB($time = 0) {
 		global $mysql;
@@ -270,7 +284,7 @@ class Helper {
 
 	/**
 	 * Creating a RGB-color for a given stress-value [0-100]
-	 * @param $stress   Stress-value [0-100]
+	 * @param int $stress   Stress-value [0-100]
 	 */
 	static function Stresscolor($stress) {
 		if ($stress > 100)
@@ -284,8 +298,8 @@ class Helper {
 	/**
 	 * Calculating 'Grundlagenausdauer'
 	 * @uses DAY_IN_S
-	 * @param $as_int
-	 * @param $timestamp
+	 * @param bool $as_int as normal integer, default: false
+	 * @param int $timestamp [optional] timestamp
 	 */
 	static function Grundlagenausdauer($as_int = false, $timestamp = 0) {
 		global $global, $mysql;
@@ -323,9 +337,9 @@ class Helper {
 	 * @uses self::Time
 	 * @uses self::Km
 	 * @uses JD::WKPrognosis
-	 * @param $dist   Distance [km]
-	 * @param $bahn   A track run? [bool]
-	 * @param $VDOT   Make prognosis for a given VDOT value? (used in plugin/panel.prognose)
+	 * @param float $dist Distance [km]
+	 * @param bool $bahn  A track run?, default: false
+	 * @param int $VDOT   Make prognosis for a given VDOT value? (used in plugin/panel.prognose)
 	 */
 	static function Prognose($dist, $bahn = false, $VDOT = 0) {
 		global $global;
@@ -359,28 +373,28 @@ class Helper {
 
 	/**
 	 * Get a leading 0 if $int is lower than 10
-	 * @param $int
+	 * @param int $int
 	 */
 	static function TwoNumbers($int) {
 		return ($int < 10) ? '0'.$int : $int;
 	}
 
 	/**
-	 * Get a special char if $var is not set
-	 * @param $var
-	 * @param $char   special char [optional]
+	 * Get a special $string if $var is not set
+	 * @param mixed $var
+	 * @param string $string string to be displayed insted, default: ?
 	 */
-	static function Unbekannt($var, $char = '?') {
+	static function Unbekannt($var, $string = '?') {
 		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )
 			return $var;
-		return $char;
+		return $string;
 	}
 
 	/**
 	 * Cut a string if it is longer than $cut (default CUT_LENGTH)
 	 * @uses CUT_LENGTH
-	 * @param $text
-	 * @param $cut
+	 * @param string $text
+	 * @param int $cut [optional]
 	 */
 	static function Cut($text, $cut = 0) {
 		if ($cut == 0)
@@ -392,7 +406,7 @@ class Helper {
 
 	/**
 	 * Get the timestamp of the start of the week
-	 * @param $time
+	 * @param int $time
 	 */
 	static function Wochenstart($time) {
 		$w = date("w", $time);
@@ -404,7 +418,7 @@ class Helper {
 
 	/**
 	 * Get the timestamp of the end of the week
-	 * @param $time
+	 * @param int $time
 	 */
 	static function Wochenende($time) {
 		$start = Wochenstart($time);
@@ -413,8 +427,8 @@ class Helper {
 
 	/**
 	 * Get the name of a day
-	 * @param $w       date('w');
-	 * @param $short   bool[optional]
+	 * @param string $w     date('w');
+	 * @param bool $short   short version, default: false
 	 */
 	static function Wochentag($w, $short = false) {
 		switch($w%7) {
@@ -430,8 +444,8 @@ class Helper {
 
 	/**
 	 * Get the name of the month
-	 * @param $m       date('m');
-	 * @param $short   bool[optional]
+	 * @param string $m     date('m');
+	 * @param bool $short   short version, default: false
 	 */
 	static function Monat($m, $short = false) {
 		switch($m) {
@@ -452,7 +466,7 @@ class Helper {
 
 	/**
 	 * Replace every comma with a point
-	 * @param $string
+	 * @param string $string
 	 */
 	static function CommaToPoint($string) {
 		return ereg_replace(",", ".", $string);
@@ -460,15 +474,39 @@ class Helper {
 
 	/**
 	 * Replace ampersands for a textarea
-	 * @param $text
+	 * @param string $text
+	 * @return string
 	 */
 	static function Textarea($text) {
 		return stripslashes(ereg_replace("&","&amp;",$text));
 	}
 
 	/**
+	 * Get ' checked="checked"' if boolean value is true
+	 * @param bool $value
+	 * @return string
+	 */
+	static function Checked($value) {
+		return $value
+			? ' checked="checked"'
+			: '';
+	}
+
+	/**
+	 * Get ' selected="selected"' if boolean value is true
+	 * @param bool $value
+	 * @return string
+	 */
+	static function Selected($value) {
+		return $value
+			? ' selected="selected"'
+			: '';
+	}
+
+	/**
 	 * Replace umlauts from AJAX
-	 * @param $text
+	 * @param string $text
+	 * @return string
 	 */
 	static function Umlaute($text) {
 		$text = ereg_replace("ÃŸ", "ß", $text);
@@ -480,7 +518,7 @@ class Helper {
 
 	/**
 	 * Check the modus of a row from dataset
-	 * @param $row   Name of dataset-row
+	 * @param string $row   Name of dataset-row
 	 * @return int   Modus
 	 */
 	static function getModus($row) {

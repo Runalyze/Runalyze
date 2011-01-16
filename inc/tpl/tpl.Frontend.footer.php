@@ -12,7 +12,7 @@
 		<a class="left window" href="inc/tpl/tpl.help.html">
 			<img src="img/confHelp.png" title="Hilfe" />
 		</a>
-		&nbsp; LaufTageBuch v<?php echo LTB_VERSION; ?>
+		&nbsp; Runalyze v<?php echo LTB_VERSION; ?>
 	</span>
 
 	<center><img id="wait" src="img/ajax-loader-download.gif" alt="Bitte warten ... es wird geladen." /></center>

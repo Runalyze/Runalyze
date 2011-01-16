@@ -29,7 +29,7 @@ class Stat {
 
 	function __construct($id) {
 		global $error, $mysql, $global;
-		if (!is_numeric($id)) {
+		if (!is_numeric($id) || $id == NULL) {
 			$error->add('ERROR','An object of class::Stat must have an ID: <$id='.$id.'>');
 			return false;
 		}
