@@ -70,7 +70,7 @@ if ($dat['arr_alt'] != '') {
 	if ($src != '')
 		echo('|');
 	else
-		$src = 'training_alt';
+		$src = 'training_hm';
 	echo('
 	<a class="jImg" rel="trainingGraph" href="lib/draw/training_hm.php?id='.$_GET['id'].'">
 		H&ouml;henprofil
@@ -187,14 +187,15 @@ if (sizeof($arr['dist']) > 1 && sizeof($arr['time']) > 1):
 			}
 			if (sizeof($arr['alt']) > 1)
 				echo('
-		<td class="small">+'.$hm_p.'/-'.$hm_m.'</td>');
+		<td class="small">'.($hm_p != 0 ? '+'.$hm_p : '0').'/'.($hm_m != 0 ? '-'.$hm_m : '0').'</td>');
 			echo('
 	</tr>');
 			$hm_p = 0; $hm_m = 0;
 		} elseif ($i != 0 && sizeof($arr['alt']) > 1 && $arr['alt'][$i] != 0 && $arr['alt'][$i-1] != 0) {
 			$hm_diff = $arr['alt'][$i] - $arr['alt'][$i-1];
-			$hm_p += ($hm_diff > 0) ? $hm_diff : 0;
-			$hm_m -= ($hm_diff < 0) ? $hm_diff : 0;
+			// TODO Die '1' nicht hartkodiert zum Glätten benutzen
+			$hm_p += ($hm_diff > 4) ? $hm_diff : 0;
+			$hm_m -= ($hm_diff < -4) ? $hm_diff : 0;
 		}
 	}
 ?>

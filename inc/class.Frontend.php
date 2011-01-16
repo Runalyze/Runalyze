@@ -49,7 +49,7 @@ class Frontend {
 		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
 		$error->add('TODO','Following classes have to be implementated: Plugin, Training, Parser, Draw');
 		// require_once(FRONTEND_PATH.'class.Plugin.php');
-		// require_once(FRONTEND_PATH.'class.Training.php');
+		require_once(FRONTEND_PATH.'class.Training.php');
 		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
 		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
 

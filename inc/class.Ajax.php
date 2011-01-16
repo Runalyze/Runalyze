@@ -9,22 +9,24 @@
  * @version 1.0
  * @uses class:Error ($error)
  *
- * Last modified 2011/01/04 22:52 by Hannes Christiansen
+ * Last modified 2011/01/15 18:21 by Hannes Christiansen
  */
 class Ajax {
 	/**
-	 * Gives a HTML-link for using jTraining which is calling lib/stats/training.php
+	 * Gives a HTML-link for using jTraining which is calling inc/tpl/tpl.training.php
 	 * @param int $training_id
 	 * @param string $name
+	 * @return string
 	 */
 	static function trainingLink($training_id, $name) {
-		return '<a class="training" href="inc/tpl/tpl.training.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
+		return '<a class="training" href="inc/class.Training.display.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
+		//return '<a class="training" href="inc/tpl/tpl.training.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
 	}
 
 	/**
 	 * Gives a HTML-link for using jToggle()
-	 * @param $link        The normal HTML-link
-	 * @param $toggle_id   The ID of the css-container to toggle
+	 * @param string $link        The normal HTML-link
+	 * @param string $toggle_id   The ID of the css-container to toggle
 	 * @return string
 	 */
 	static function toggle($link, $toggle_id) {

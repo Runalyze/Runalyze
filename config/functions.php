@@ -183,6 +183,9 @@ function prognose($dist, $bahn = false, $VDOT = 0) {
 function jd_VDOT($km, $dauer) { # Berechnung des VDOT aus Distanz und Dauer (^= Wettkampf)
 	$min = $dauer/60;
 	$m = 1000*$km;
+
+	if ($min == 0)
+		return 0;
 	return (-4.6+0.182258*$m/$min+0.000104*pow($m/$min,2))/(0.8+0.1894393*exp(-0.012778*$min)+0.2989558*exp(-0.1932605*$min));
 }
 
@@ -366,13 +369,14 @@ function config() {
 	$distanzen = array(1.5, 3, 5, 10, 16.1, 21.1, 42.2);
 	foreach ($distanzen as $distanz) {
 		if (bestzeit($distanz,true) != 0) {
-			if (jd_VDOT($distanz,bestzeit($distanz,true)) > $VDOT_top) {
+			if (jd_VDOT($distanz, bestzeit($distanz,true)) > $VDOT_top
+				&& mysql_num_rows(mysql_query('SELECT 1 FROM `ltb_training` WHERE `typid`='.$global['wettkampf_typid'].' AND `puls`!=0 AND `distanz`="'.$distanz.'"')) > 0 ) {
 				$VDOT_top = jd_VDOT($distanz,bestzeit($distanz,true));
 				$VDOT_top_distanz = $distanz;
 			}
 		}
 	}
-	$VDOT_top_db = mysql_query('SELECT `dauer`, `distanz`, `puls` FROM `ltb_training` WHERE `typid`='.$global['wettkampf_typid'].' AND `distanz`="'.$VDOT_top_distanz.'" ORDER BY `dauer` ASC LIMIT 1');
+	$VDOT_top_db = mysql_query('SELECT `dauer`, `distanz`, `puls` FROM `ltb_training` WHERE `typid`='.$global['wettkampf_typid'].' AND `puls`!=0 AND `distanz`="'.$VDOT_top_distanz.'" ORDER BY `dauer` ASC LIMIT 1');
 	$VDOT_top_dat = mysql_fetch_assoc($VDOT_top_db);
 	$VDOT_max = round(jd_VDOT($VDOT_top_dat['distanz'],$VDOT_top_dat['dauer'])/(jd_pVDOT($VDOT_top_dat['puls']/206)),2);
 

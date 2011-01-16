@@ -12,7 +12,7 @@ $latitude = explode('|', $dat['arr_lat']);
 $longitude = explode('|', $dat['arr_lon']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" style="height: 100%">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Google Maps</title>
@@ -34,7 +34,7 @@ $googlemaps->setGoogleBar("disabled");
 echo($googlemaps->getHeaderScript());
 ?>
 </head>
-<body style="margin: 0; height: 100%; overflow: hidden;" onunload="GUnload();">
+<body style="margin: 0; overflow: hidden; height: 300px;" onunload="GUnload();">
 <?php
 //Tracks
 $pl = $googlemaps->addPolyline("#FF5500",2,100);

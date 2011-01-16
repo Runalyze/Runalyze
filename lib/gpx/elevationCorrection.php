@@ -8,8 +8,9 @@ $dat = mysql_fetch_assoc($dat_db);
 $arr_lat = explode('|', $dat['arr_lat']);
 $arr_lon = explode('|', $dat['arr_lon']);
 $arr_alt = array();
+$num = count($arr_lat);
 
-for ($i = 0; $i < sizeof($arr_lat); $i++) {
+for ($i = 0; $i < $num; $i++) {
 	if ($i%3 == 0) {
 		$lat = $arr_lat[$i];
 		if ($lat != 0) {

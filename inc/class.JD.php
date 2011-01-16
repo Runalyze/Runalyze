@@ -19,7 +19,7 @@ define('VDOT_FORM', JD::calculateVDOTform());
  * @uses HF_MAX
  * @uses WK_TYPID
  *
- * Last modified 2010/08/28 14:03 by Hannes Christiansen
+ * Last modified 2011/01/09 19:03 by Hannes Christiansen
  */
 class JD {
 	/**
@@ -156,14 +156,15 @@ class JD {
 			$dist_PB = Helper::Bestzeit($dist, true);
 			if ($dist_PB != 0) {
 				$dist_VDOT = self::WK2VDOT($dist, $dist_PB);
-				if ($dist_VDOT > $VDOT_top) {
+				if ($dist_VDOT > $VDOT_top
+					&& $mysql->num('SELECT 1 FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `puls`!=0 AND `distanz`="'.$dist.'" LIMIT 1') > 0) {
 					$VDOT_top = $dist_VDOT;
 					$VDOT_top_dist = $dist;
 				}
 			}
 		}
 		// Find best VDOT-value in training
-		$VDOT_top_dat = $mysql->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
+		$VDOT_top_dat = $mysql->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
 		$VDOT_max = self::WK2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
 			/ self::pHF2pVDOT($VDOT_top_dat['puls'] / HF_MAX);
 	
