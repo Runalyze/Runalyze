@@ -6,6 +6,7 @@ if ($_GET['action'] == 'do')
 	include('config/mysql_query.php');
 
 $Frontend->displayHeader();
+$Error = Error::getInstance();
 ?>
 
 
@@ -15,7 +16,7 @@ $Frontend->displayHeader();
 
 <div id="l">
 	<div id="daten">
-<?php $error->add('TODO','class::DataBrowser has to be included',__FILE__,__LINE__); ?>
+<?php $Error->add('TODO','class::DataBrowser has to be included',__FILE__,__LINE__); ?>
 		<div id="daten_results" class="panel"></div>
 	</div>
 
@@ -25,21 +26,21 @@ $Frontend->displayHeader();
 /**
  * STATISTIC PLUGINS
  */
-$error->add('TODO','Plugins have to be deacitvated automatically if modus is unused',__FILE__,__LINE__);
-$stats = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
+$Error->add('TODO','Plugins have to be deacitvated automatically if modus is unused',__FILE__,__LINE__);
+$stats = Mysql::getInstance()->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
 foreach($stats as $i => $stat) {
-	$stat = new Stat($stat['id']);
+	$Stat = new Stat($stat['id']);
 	if ($i == 0)
-		$stat_active = $stat;
+		$Stat_active = $Stat;
 	echo('
-		<li'.(($i == 0) ? ' class="active"' : '').'>'.$stat->getLink().'</li>');
+		<li'.(($i == 0) ? ' class="active"' : '').'>'.$Stat->getLink().'</li>');
 }
 
-$other = $mysql->fetch('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC LIMIT 1');
+$other = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC LIMIT 1');
 if ($other !== false) {
-	$stat = new Stat($other['id']);
+	$Stat = new Stat($other['id']);
 	echo('
-		<li>'.$stat->getLink().'</li>');
+		<li>'.$Stat->getLink().'</li>');
 }
 ?>
 	</ul>
@@ -48,7 +49,7 @@ if ($other !== false) {
 			<em>Es wurde zuvor nichts geladen.</em>
 		</div>
 		<div id="tab_content">
-<?php $stat_active->display(); ?>
+<?php $Stat_active->display(); ?>
 		</div>
 	</div>
 

@@ -7,29 +7,28 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Error ($error)
+ * @uses class::Error
  *
- * Last modified 2011/01/08 19:45 by Hannes Christiansen
+ * Last modified 2011/01/20 20:22 by Hannes Christiansen
  */
-class Mysql {
-	private static $host,
-		$user,
-		$password,
-		$database;
+final class Mysql {
+	private static $instance = NULL;
 
 	/**
-	 * Creates connection to mysql-database if possible
-	 * @param $host string
-	 * @param $user string
-	 * @param $password string
-	 * @param $database string
+	 * Static getter for the singleton instnace
+	 * @return class::Mysql static instance
 	 */
-	function __construct($host, $user, $password, $database) {
-		global $error;
+	public static function getInstance() {
+		if (self::$instance == NULL)
+			self::$instance = new self;
 
-		mysql_connect($host, $user, $password) or $error->add('ERROR',mysql_error(),__FILE__,__LINE__);
-		mysql_select_db($database) or $error->add('ERROR',mysql_error(),__FILE__,__LINE__);
+		return self::$instance;
 	}
+
+	/**
+	 * Prohibit creating an object from outside
+	 */
+	private function __construct() {}
 
 	/**
 	 * Automatically closes connection after execution
@@ -39,16 +38,31 @@ class Mysql {
 	}
 
 	/**
+	 * Prohibit cloning
+	 */
+	private function __clone() {}
+
+	/**
+	 * Creates connection to mysql-database if possible
+	 * @param $host string
+	 * @param $user string
+	 * @param $password string
+	 * @param $database string
+	 */
+	static function connect($host, $user, $password, $database) {
+		mysql_connect($host, $user, $password) or Error::getInstance()->add('ERROR',mysql_error(),__FILE__,__LINE__);
+		mysql_select_db($database) or Error::getInstance()->add('ERROR',mysql_error(),__FILE__,__LINE__);
+	}
+
+	/**
 	 * Calls mysql_query and returns the result if there is any
 	 * Be careful, unsafe query! Use $mysql->escape($values)!
 	 * @param $query string full mysql-query
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
 	function query($query) {
-		global $error;
-
 		$result = false;
-		$result = mysql_query($query) or $error->add('ERROR',mysql_error().' &lt;Query: '.$query.'&gt;',__FILE__,__LINE__);
+		$result = mysql_query($query) or Error::getInstance()->add('ERROR',mysql_error().' &lt;Query: '.$query.'&gt;',__FILE__,__LINE__);
 		return $result;
 	}
 
@@ -60,9 +74,7 @@ class Mysql {
 	 * @param $value  mixed  might be an array
 	 */
 	function update($table, $id, $column, $value) {
-		global $error;
-
-		if (is_array($column) && sizeof($column) == sizeof($value)) {
+		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
 			foreach ($column as $i => $col) {
 				$set .= '`'.$col.'`="'.$value[$i].'", ';
@@ -81,8 +93,6 @@ class Mysql {
 	 * @return int       ID of inserted row
 	 */
 	function insert($table, $columns, $values) {
-		global $error;
-
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
@@ -95,11 +105,9 @@ class Mysql {
 	 * @param string $table    name of table or whole query
 	 * @param int|bool $id     Must not be set if first argument is a query (default: false), otherwise the ID. Can be 'LAST' to get the highest ID
 	 * @param bool $as_array   Method returns always $return[$i]['column'] if true, default: false 
-	 * @return array           For sizeof($return)=1: $return['column'], otherwise: $return[$i]['column']. For sizeof($return)=0: false.
+	 * @return array           For count($return)=1: $return['column'], otherwise: $return[$i]['column']. For count($return)=0 && !$as_array: false.
 	 */
 	function fetch($table, $id = false, $as_array = false) {
-		global $error;
-
 		$return = array();
 		if ($id === false)
 			$result = $this->query($table);
@@ -109,14 +117,14 @@ class Mysql {
 			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
 
 		if ($result === false) {
-			$error->add('WARNING',mysql_error());
+			Error::getInstance()->add('WARNING',mysql_error());
 			return false;
 		}
 
 		while($data = mysql_fetch_assoc($result))
 			$return[] = $data;
 
-		if (sizeof($return) == 0)
+		if (sizeof($return) == 0 && !$as_array)
 			return false;
 		if (sizeof($return) == 1 && !$as_array)
 			return $return[0];
@@ -129,10 +137,7 @@ class Mysql {
 	 * @return int     number of rows
 	 */
 	function num($query) {
-		global $error;
-
-		$db = $this->query($query);
-		return mysql_num_rows($db);
+		return mysql_num_rows($this->query($query));
 	}
 
 	/**
@@ -141,10 +146,8 @@ class Mysql {
 	 * @param $id    int
 	 */
 	function delete($table, $id) {
-		global $error;
-
 		if (!is_int($id)) {
-			$error->add('ERROR','Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>',__FILE__,__LINE__);
+			Error::getInstance()->add('ERROR','Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>',__FILE__,__LINE__);
 			return;
 		}
 		$this->query('DELETE FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
@@ -160,8 +163,6 @@ class Mysql {
 	 * @return mixed        safe value(s)
 	 */
 	static function escape($values, $quotes = true) {
-		global $error;
-
 		if (is_array($values)) {
 			foreach ($values as $key => $value)
 				$values[$key] = self::escape($value, $quotes);

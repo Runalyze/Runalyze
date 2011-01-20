@@ -5,9 +5,10 @@
  */
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
+$Mysql = Mysql::getInstance();
 
 if (isset($_POST) && $_POST['type'] == "newtraining") {
-	$sport = $mysql->fetch('ltb_sports', $_POST['sportid']);
+	$sport = $Mysql->fetch('ltb_sports', $_POST['sportid']);
 	$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($send['distanz']) : 0;
 
 	$columns = array('sportid');
@@ -67,26 +68,26 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 			$columns[] = $var;
 			$values[] = Helper::CommaToPoint($_POST[$var]);
 		}
-	$id = $mysql->insert('ltb_training', $columns, $values);
+	$id = $Mysql->insert('ltb_training', $columns, $values);
 
 	$ATL = Helper::ATL($time);
 	$CTL = Helper::CTL($time);
 	$TRIMP = Helper::TRIMP($id);
 	// Set TRIMP and VDOT
-	$mysql->query('UPDATE `ltb_training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
-	$mysql->query('UPDATE `ltb_training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
+	$Mysql->query('UPDATE `ltb_training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
+	$Mysql->query('UPDATE `ltb_training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
 	// Update Maxima in config
 	if ($ATL > CONFIG_MAX_ATL)
-		$mysql->query('UPDATE `ltb_config` SET `max_atl`="'.$ATL.'"');
+		$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.$ATL.'"');
 	if ($CTL > CONFIG_MAX_CTL)
-		$mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.$CTL.'"');
+		$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.$CTL.'"');
 	if ($TRIMP > CONFIG_MAX_TRIMP)
-		$mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.$TRIMP.'"');
+		$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.$TRIMP.'"');
 	// Update 'Schuhe'
 	if ($sport['typen'] == 1)
-		$mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+		$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 	// Update 'Sports'
-	$mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+	$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 
 	header('Location: ?done');
 }
@@ -102,7 +103,7 @@ $Frontend->displayHeader();
 
 	<center>
 <?php
-$sports = $mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC', false, true);
+$sports = $Mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC', false, true);
 foreach($sports as $sport) {
 	$onclick = 'kps('.$sport['kalorien'].');';
 	$onclick .= ($sport['distanztyp'] == 1) ? 'show(\'distanz\');' : 'unshow(\'distanz\');';
@@ -138,7 +139,7 @@ foreach($sports as $sport) {
 			<input type="hidden" name="count" id="count" value="1" />
 			<select name="typid">
 <?php
-$typen = $mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC', false, true);
+$typen = $Mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC', false, true);
 foreach($typen as $typ) {
 	$onClick = '';
 	if ($typ['count'] == 0)
@@ -155,7 +156,7 @@ foreach($typen as $typ) {
 
 			<select name="schuhid">
 <?php
-$schuhe = $mysql->fetch('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC', false, true);
+$schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC', false, true);
 foreach($schuhe as $schuh)
 	echo('
 				<option value="'.$schuh['id'].'">'.$schuh['name'].'</option>');
@@ -195,7 +196,7 @@ foreach($schuhe as $schuh)
 			<small style="margin-right: 100px;">Strecke</small>
 		<select name="wetterid">
 <?php
-$wetter = $mysql->fetch('SELECT * FROM `ltb_wetter` ORDER BY `order` ASC');
+$wetter = $Mysql->fetch('SELECT * FROM `ltb_wetter` ORDER BY `order` ASC');
 foreach($wetter as $dat)
 	echo('<option value="'.$dat['id'].'">'.$dat['name'].'</option>');
 ?>
@@ -207,7 +208,7 @@ foreach($wetter as $dat)
 			<br />
 		<input type="hidden" name="kleidung" id="kleidung" />
 <?php
-$kleidungen = $mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `name_kurz` ASC');
+$kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `name_kurz` ASC');
 foreach($kleidungen as $kleidung)
 	echo('
 		<input type="checkbox" name="'.$kleidung['name_kurz'].'" onClick="document.getElementById(\'kleidung\').value +=\''.$kleidung['id'].',\';" /> <small style="margin-right: 10px;">'.$kleidung['name_kurz'].'</small>');

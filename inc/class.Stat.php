@@ -7,14 +7,14 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
- * @uses class:Error ($error)
+ * @uses class::Mysql
+ * @uses class:Error
  * @uses $global
  *
  * Last modified 2010/09/03 20:23 by Hannes Christiansen
  */
 
-$error->add('TODO', 'class::Stat: Set config like in class::Panel?');
+Error::getInstance()->add('TODO', 'class::Stat: Set config like in class::Panel?');
 
 class Stat {
 	private $id,
@@ -28,14 +28,14 @@ class Stat {
 		$dat;
 
 	function __construct($id) {
-		global $error, $mysql, $global;
+		global $global;
 		if (!is_numeric($id) || $id == NULL) {
-			$error->add('ERROR','An object of class::Stat must have an ID: <$id='.$id.'>');
+			Error::getInstance()->add('ERROR','An object of class::Stat must have an ID: <$id='.$id.'>');
 			return false;
 		}
-		$dat = $mysql->fetch('ltb_plugin',$id);
+		$dat = Mysql::getInstance()->fetch('ltb_plugin',$id);
 		if ($dat['type'] != 'stat') {
-			$error->add('ERROR','This plugin (ID='.$id.') is not a statistic-plugin.');
+			Error::getInstance()->add('ERROR','This plugin (ID='.$id.') is not a statistic-plugin.');
 			return false;
 		}
 		$this->id = $id;
@@ -55,17 +55,17 @@ class Stat {
 		if (isset($_GET['dat']))
 			$this->dat = $_GET['dat'];
 
-		$error->add('TODO','Move config-setting to class::Plugin');
+		Error::getInstance()->add('TODO','Move config-setting to class::Plugin');
 		// Get config-information from MySql
 		$this->config = array();
 		$config_dat = explode("\n", $dat['config']);
 		foreach ($config_dat as $line) {
 			// Config-lines should have following format: var_name|type=something|description
 			$parts = explode('|', $line);
-			if (sizeof($parts) != 3)
+			if (count($parts) != 3)
 				break;
 			$var_str = explode('=', $parts[1]);
-			if (sizeof($var_str) == 2) {
+			if (count($var_str) == 2) {
 				$var = $var_str[1];
 				switch ($var_str[0]) {
 					case 'bool':
@@ -99,7 +99,7 @@ class Stat {
 			case 'sportid': return $this->sportid;
 			case 'year': return $this->year;
 			case 'dat': return $this->dat;
-			default: $error->add('NOTICE','Asked for non-existant property "'.$property.'" in class::Stat::get()');
+			default: Error::getInstance()->add('NOTICE','Asked for non-existant property "'.$property.'" in class::Stat::get()');
 				return false;
 		}
 	}
@@ -117,7 +117,7 @@ class Stat {
 			case 'sportid': $this->sportid = $value;
 			case 'year': $this->year = $value;
 			case 'dat': $this->dat = $value;
-			default: $error->add('NOTICE','Tried to set non-existant or locked property "'.$property.'" in class::Stat::set()');
+			default: Error::getInstance()->add('NOTICE','Tried to set non-existant or locked property "'.$property.'" in class::Stat::set()');
 				return false;
 		}
 	}
@@ -126,17 +126,17 @@ class Stat {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	function display() {
-		global $mysql, $error, $config, $global;
+		global $config, $global;
 
 		if ($this->active == 2) {
 			// Display links to other plugins having active=2
 			echo(NL.'<small class="right">'.NL);
-			$others = $mysql->fetch('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC', false, true);
+			$others = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC', false, true);
 			foreach($others as $i => $other) {
 				if ($i != 0)
 					echo(' | ');
-				$stat = new Stat($other['id']);
-				echo $stat->getInnerLink($stat->get('name'));
+				$Stat = new Stat($other['id']);
+				echo $Stat->getInnerLink($Stat->get('name'));
 			}
 			echo(NL.'</small>'.NL);
 		}
@@ -151,7 +151,7 @@ class Stat {
 		// TODO Plugin deaktivieren
 		// TODO wenn vorhanden: Config-Vars bearbeiten
 		// TODO Config-Vars müssen Einfluss auf Plugin haben!
-		$count_config = sizeof($this->config);
+		$count_config = count($this->config);
 
 		echo('
 	<h1>Konfiguration: '.$this->name.'</h1>
@@ -213,8 +213,7 @@ class Stat {
 	 * @param $active bool
 	 */
 	function setActive($active = true) {
-		global $mysql;
-		$mysql->update('ltb_plugin',$this->id,'active',$active);
+		Mysql::getInstance()->update('ltb_plugin',$this->id,'active',$active);
 	}
 }
 ?>

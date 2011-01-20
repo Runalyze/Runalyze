@@ -7,14 +7,14 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
- * @uses class:Error ($error)
+ * @uses class::Mysql
+ * @uses class:Error
  * @uses $global
  *
  * Last modified 2010/09/07 22:35 by Hannes Christiansen
  */
 
-$error->add('TODO', 'class::Panel set/edit/use Config-vars', __FILE__, 190);
+Error::getInstance()->add('TODO', 'class::Panel set/edit/use Config-vars', __FILE__, 190);
 
 class Panel {
 	private $id,
@@ -27,15 +27,15 @@ class Panel {
 		$right_symbol;
 
 	function __construct($id) {
-		global $error, $mysql, $global;
+		global $global;
 
 		if (!is_numeric($id) || $id == NULL) {
-			$error->add('ERROR','An object of class::Panel must have an ID: <$id='.$id.'>');
+			Error::getInstance()->add('ERROR','An object of class::Panel must have an ID: <$id='.$id.'>');
 			return false;
 		}
-		$dat = $mysql->fetch('ltb_plugin',$id);
+		$dat = Mysql::getInstance()->fetch('ltb_plugin',$id);
 		if ($dat['type'] != 'panel') {
-			$error->add('ERROR','This plugin (ID='.$id.') is not a panel-plugin.');
+			Error::getInstance()->add('ERROR','This plugin (ID='.$id.') is not a panel-plugin.');
 			return false;
 		}
 		$this->id = $id;
@@ -51,10 +51,10 @@ class Panel {
 		foreach ($config_dat as $line) {
 			// Config-lines should have following format: var_name|type=something|description
 			$parts = explode('|', $line);
-			if (sizeof($parts) != 3)
+			if (count($parts) != 3)
 				break;
 			$var_str = explode('=', $parts[1]);
-			if (sizeof($var_str) == 2) {
+			if (count($var_str) == 2) {
 				$var = $var_str[1];
 				switch ($var_str[0]) {
 					case 'bool':
@@ -80,14 +80,12 @@ class Panel {
 	 * @return mixed      objects property or false if property doesn't exist
 	 */
 	function get($property) {
-		global $error;
-
 		switch($property) {
 			case 'id': return $this->id;
 			case 'filename': return $this->filename;
 			case 'name': return $this->name;
 			case 'description': return $this->description;
-			default: $error->add('NOTICE','Asked for non-existant property "'.$property.'" in class::Panel::get()');
+			default: Error::getInstance()->add('NOTICE','Asked for non-existant property "'.$property.'" in class::Panel::get()');
 				return false;
 		}
 	}
@@ -99,12 +97,10 @@ class Panel {
 	 * @return bool       false if property doesn't exist
 	 */
 	function set($property, $value) {
-		global $error;
-		
 		switch($property) {
 			case 'name': $this->name = $value;
 			case 'description': $this->description = $value;
-			default: $error->add('NOTICE','Tried to set non-existant or locked property "'.$property.'" in class::Panel::set()');
+			default: Error::getInstance()->add('NOTICE','Tried to set non-existant or locked property "'.$property.'" in class::Panel::set()');
 				return false;
 		}
 	}
@@ -113,17 +109,17 @@ class Panel {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	function display() {
-		global $mysql, $error, $config, $global;
+		global $config, $global;
 
 		$file = 'inc/plugin/'.$this->filename;
 		if (!file_exists($file))
-			$error->add('WARNING','The plugin-file ('.$file.') does not exist.');
+			Error::getInstance()->add('WARNING','The plugin-file ('.$file.') does not exist.');
 		else {
 			require_once('plugin/'.$this->filename);
 			if (function_exists(strtolower($this->name).'_rightSymbol'))
 				$this->setRightSymbol( call_user_func(strtolower($this->name).'_rightSymbol') );
 			else
-				$error->add('WARNING','class::Panel::display(): The function '.strtolower($this->name).'_rightSymbol() does not exist.');
+				Error::getInstance()->add('WARNING','class::Panel::display(): The function '.strtolower($this->name).'_rightSymbol() does not exist.');
 
 			// Outputs
 			echo(NL.'<div class="panel">'.NL);
@@ -146,8 +142,6 @@ class Panel {
 	 * @return string
 	 */
 	private function displayHeader() {
-		global $error;
-
 		$this->displayConfigDiv();
 
 		echo('
@@ -163,13 +157,11 @@ class Panel {
 	 * Displays the content of the panel using the plugin-own display function
 	 */
 	function displayContent() {
-		global $error;
-
 		echo(NL.'<div class="content"'.(($this->active == 2) ? ' style="display:none;"' : '' ).'>'.NL);
 		if (function_exists(strtolower($this->name).'_display'))
 			call_user_func(strtolower($this->name).'_display');
 		else
-			$error->add('WARNING','class::Panel::display(): The function '.strtolower($this->name).'_display() does not exist.');
+			Error::getInstance()->add('WARNING','class::Panel::display(): The function '.strtolower($this->name).'_display() does not exist.');
 		echo(NL.'</div>'.NL);
 	}
 
@@ -246,22 +238,18 @@ class Panel {
 	 * @param $active bool
 	 */
 	function setActive($active = true) {
-		global $mysql, $error;
-
-		$mysql->update('ltb_plugin',$this->id,'active',$active);
+		Mysql::getInstance()->update('ltb_plugin',$this->id,'active',$active);
 	}
 
 	/**
 	 * Function to (un)clap the plugin
 	 */
 	function clap() {
-		global $mysql, $error;
-
 		if ($this->active == 0) {
-			$error->add('ERROR','Can\'t clap the panel (ID='.$this->id.') because it\'s not active.');
+			Error::getInstance()->add('ERROR','Can\'t clap the panel (ID='.$this->id.') because it\'s not active.');
 			return;
 		}
-		$mysql->update('ltb_plugin',$this->id,'active',(($this->active == 1) ? 2 : 1));
+		Mysql::getInstance()->update('ltb_plugin',$this->id,'active',(($this->active == 1) ? 2 : 1));
 	}
 
 	/**
@@ -269,14 +257,12 @@ class Panel {
 	 * @param $mode   'up' | 'down'
 	 */
 	function move($mode) {
-		global $mysql, $error;
-
 		if ($mode == 'up') {
-			$mysql->query('UPDATE `ltb_plugin` SET `order`='.$this->order.' WHERE `type`="panel" AND `order`='.($this->order-1).' LIMIT 1');
-			$mysql->update('ltb_plugin',$this->id,'order',($this->order-1));
+			Mysql::getInstance()->query('UPDATE `ltb_plugin` SET `order`='.$this->order.' WHERE `type`="panel" AND `order`='.($this->order-1).' LIMIT 1');
+			Mysql::getInstance()->update('ltb_plugin', $this->id, 'order', ($this->order-1));
 		} elseif ($mode == 'down') {
-			$mysql->query('UPDATE `ltb_plugin` SET `order`='.($this->order).' WHERE `type`="panel" AND `order`='.($this->order+1).' LIMIT 1');
-			$mysql->update('ltb_plugin',$this->id,'order',($this->order+1));
+			Mysql::getInstance()->query('UPDATE `ltb_plugin` SET `order`='.($this->order).' WHERE `type`="panel" AND `order`='.($this->order+1).' LIMIT 1');
+			Mysql::getInstance()->update('ltb_plugin', $this->id, 'order', ($this->order+1));
 		}
 	}
 }

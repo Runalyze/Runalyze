@@ -19,7 +19,7 @@
  * @uses '../config/functions.php' // TODO functions.php Must be a helper-class later
  * @uses '../config/globals.php' // Has to be done on another way
  * // @uses class::Plugin
- * // @uses class::Training
+ * @uses class::Training
  * // @uses class::Parser // Will be included by class::Training later
  * // @uses class::Draw // Including by other classes?
  *
@@ -31,7 +31,7 @@ class Frontend {
 		$file;
 
 	function __construct($ajax_request = false, $file = __FILE__) {
-		global $mysql, $error, $global;
+		global $global;
 
 		header('Content-type: text/html; charset=ISO-8859-1');
 
@@ -47,14 +47,14 @@ class Frontend {
 		require_once(FRONTEND_PATH.'..\\config\\dataset.php'); // Will be a class later
 		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
 		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
-		$error->add('TODO','Following classes have to be implementated: Plugin, Training, Parser, Draw');
+		Error::getInstance()->add('TODO','Following classes have to be implementated: Plugin, Training, Parser, Draw');
 		// require_once(FRONTEND_PATH.'class.Plugin.php');
 		require_once(FRONTEND_PATH.'class.Training.php');
 		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
 		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
 
 		if (!is_bool($ajax_request)) {
-			$error->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
+			Error::getInstance()->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
 			$this->ajax_request = true;
 		} else {
 			$this->ajax_request = $ajax_request;
@@ -65,11 +65,9 @@ class Frontend {
 	}
 
 	/**
-	 * Destructer, closes mysql-connection and prints error-log if set
+	 * Destructer, closes mysql-connection and prints error-log if set (hopefully without another call?)
 	 */
-	function __destruct() {
-		unset($this->mysql, $this->error);
-	}
+	function __destruct() {}
 
 	/**
 	 * Calls the destructer
@@ -93,24 +91,20 @@ class Frontend {
 	}
 
 	/**
-	 * Include class::Error and and init $error
+	 * Include class::Error and and initialise it
 	 */
 	function initErrorHandling() {
-		global $error;
-
 		require_once(FRONTEND_PATH.'class.Error.php');
-		$error = new Error();
+		Error::init();
 	}
 
 	/**
 	 * Include class::Mysql and connect to database
 	 */
 	function initMySql() {
-		global $mysql, $error;
-
 		require_once(FRONTEND_PATH.'class.Mysql.php');
 		require_once(FRONTEND_PATH.'config.inc.php');
-		$mysql = new Mysql($host, $username, $password, $database);
+		Mysql::connect($host, $username, $password, $database);
 		unset($host, $username, $password, $database);
 	}
 
@@ -118,9 +112,7 @@ class Frontend {
 	 * Define all CONFIG_CONSTS
 	 */
 	function initConfigConsts() {
-		global $mysql, $error;
-
-		$config = $mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
+		$config = Mysql::getInstance()->fetch('SELECT * FROM `ltb_config` LIMIT 1');
 		foreach ($config as $key => $value)
 			define('CONFIG_'.strtoupper($key), $value);
 		unset($config);
@@ -130,8 +122,6 @@ class Frontend {
 	 * Function to display the HTML-Header
 	 */
 	function displayHeader() {
-		global $mysql, $error;
-
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.header.php');
 	}
@@ -140,8 +130,6 @@ class Frontend {
 	 * Function to display the HTML-Footer
 	 */
 	function displayFooter() {
-		global $mysql, $error;
-
 		if (LTB_DEBUG)
 			include('tpl/tpl.Frontend.debug.php');
 
@@ -153,9 +141,7 @@ class Frontend {
 	 * Display the panels for the right side
 	 */
 	function displayPanels() {
-		global $mysql, $error;
-
-		$panels = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
+		$panels = Mysql::getInstance()->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
 		foreach($panels as $i => $panel) {
 			$panel = new Panel($panel['id']);
 			$panel->display();

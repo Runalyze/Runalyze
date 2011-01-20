@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  *
  * Last modified 2011/01/08 18:42 by Michael Pohl
@@ -20,6 +20,9 @@ function stat_rekorde_installer() {
 	$description = 'Am schnellsten, am längsten, am weitesten: Die Rekorde aus dem Training.';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 ?>
 <h1>Rekorde</h1>
 
@@ -48,31 +51,31 @@ foreach ($rekorde as $rekord):
 		</td>
 	</tr>
 <?php
-	$error->add('TODO', 'Set correct onclick-Code', __FILE__, __LINE__);
-	eval('$sports = $mysql->fetch(\''.$rekord['sportquery'].'\');');
-	foreach($sports as $i => $sport) {
+	$Error->add('TODO', 'Set correct onclick-Code', __FILE__, __LINE__);
+	eval('$sports = $Mysql->fetch(\''.$rekord['sportquery'].'\', false, true);');
+	foreach ($sports as $i => $sport) {
 		echo('
 	<tr class="a'.($i%2 + 1).' r">
 		<td class="b l">
 			<img src="img/sports/'.$sport['bild'].'" /> '.$sport['name'].'
 		</td>');
-		eval('$data = $mysql->fetch(\''.$rekord['datquery'].'\');');
-		if($data && mysql_num_rows($data)) {
-		foreach($data as $j => $dat) {
-			if ($rekord['eval'] == 0)
-				$code = Helper::Tempo($dat['distanz'],$dat['dauer'],$sport['id'],false);
-			elseif ($rekord['eval'] == 1)
-				$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
-			// TODO Set correct onclick-Code
-			echo('
+		eval('$data = $Mysql->fetch(\''.$rekord['datquery'].'\', false, true);');
+		if (count($data) > 0) {
+			foreach ($data as $j => $dat) {
+				if ($rekord['eval'] == 0)
+					$code = Helper::Tempo($dat['distanz'],$dat['dauer'],$sport['id'],false);
+				elseif ($rekord['eval'] == 1)
+					$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
+				// TODO Set correct onclick-Code
+				echo('
 		<td>
-			<span class="link" title="'.date("d.m.Y",$dat['time']).'" onClick="seite(\'training\',\''.$dat['id'].'\')">
-				'.$code.'
+			<span title="'.date("d.m.Y",$dat['time']).'">
+				'.Ajax::trainingLink($dat['id'], $code).'
 			</span>
 		</td>');
-		}
+			}
 		} else {
-			$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 60);
+			$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 		}
 		for (; $j < 10; $j++) { echo('
 		<td>
@@ -107,9 +110,9 @@ endforeach;
 		</td>
 <?php
 // Jahre
-$years = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `year` ORDER BY `km` DESC LIMIT 10');
-if($years && mysql_num_rows($years)) {
-	foreach($years as $i => $year) {
+$years = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `year` ORDER BY `km` DESC LIMIT 10', false, true);
+if (count($years) > 0) {
+	foreach ($years as $i => $year) {
 		$link = 'daten(\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(23,59,50,12,31,$year['year']).'\');';
 		echo('
 			<td>
@@ -119,9 +122,9 @@ if($years && mysql_num_rows($years)) {
 			</td>');
 	}
 } else {
-	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 112);
+	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
-for ($i; $i < 10; $i++) { echo('
+for (; $i < 10; $i++) { echo('
 		<td>&nbsp;</td>'); }
 ?>
 	</tr>
@@ -132,9 +135,9 @@ for ($i; $i < 10; $i++) { echo('
 		</td>
 <?php
 // Monate
-$months = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year`, MONTH(FROM_UNIXTIME(`time`)) as `month`, (MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `monthyear` ORDER BY `km` DESC LIMIT 10');
-if($months && mysql_num_rows($months)) {
-	foreach($months as $i => $month) {
+$months = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year`, MONTH(FROM_UNIXTIME(`time`)) as `month`, (MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `monthyear` ORDER BY `km` DESC LIMIT 10', false, true);
+if (count($months) > 0) {
+	foreach ($months as $i => $month) {
 		$link = 'daten(\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(23,59,50,$month['month']+1,0,$month['year']).'\');';
 		echo('
 			<td>
@@ -144,7 +147,7 @@ if($months && mysql_num_rows($months)) {
 			</td>');
 	}
 } else {
-	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 135);
+	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
 for ($i; $i < 10; $i++) { echo('
 		<td>
@@ -158,21 +161,21 @@ for ($i; $i < 10; $i++) { echo('
 		</td>
 <?php
 // Wochen
-$weeks = $mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10');
-if($weeks && mysql_num_rows($weeks)) {
-foreach($weeks as $i => $week) {
-	$link = 'daten(\''.$week['time'].'\',\''.Helper::Wochenstart($woche['time']).'\',\''.Helper::Wochenende($week['time']).'\');';
-	echo('
-		<td>
-			<span class="link" title="KW '.$week['week'].' '.$week['year'].'" onclick="'.$link.'">
-				'.Helper::Km($week['km']).'
-			</span>
-		</td>');
-}
+$weeks = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10', false, true);
+if (count($weeks) > 0) {
+	foreach ($weeks as $i => $week) {
+		$link = 'daten(\''.$week['time'].'\',\''.Helper::Wochenstart($woche['time']).'\',\''.Helper::Wochenende($week['time']).'\');';
+		echo('
+			<td>
+				<span class="link" title="KW '.$week['week'].' '.$week['year'].'" onclick="'.$link.'">
+					'.Helper::Km($week['km']).'
+				</span>
+			</td>');
+	}
 } else {
-	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 161);
+	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
-for ($i; $i < 10; $i++) { echo('
+for (; $i < 10; $i++) { echo('
 		<td>
 		</td>'); }
 ?>

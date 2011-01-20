@@ -6,14 +6,16 @@
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 
-$error->add('TODO','Make this file to class::Training',__FILE__,__LINE__);
+$Error->add('TODO','Make this file to class::Training',__FILE__,__LINE__);
 
-$dat = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `id`='.$_GET['id'].' LIMIT 1');
+$dat = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `id`='.$_GET['id'].' LIMIT 1');
 
 $kleidung = '';
 if ($dat['kleidung'] != '') {
-	$kleidungen = $mysql->fetch('SELECT * FROM `ltb_kleidung` WHERE `id` IN ('.$dat['kleidung'].') ORDER BY `order` ASC');
+	$kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` WHERE `id` IN ('.$dat['kleidung'].') ORDER BY `order` ASC');
 	foreach ($kleidungen as $kl) {
 		if ($kleidung != '')
 			$kleidung .= ', ';
@@ -30,7 +32,7 @@ $lon = explode('|', $dat['arr_lon']);
 <h1>
 	<img class="link" onClick="seite('form_training','<?php echo($dat['id']); ?>')" src="img/edit.png" alt="Training editieren" />
 <?php
-$error->add('TODO','Set correct onclick-link for edit-link',__FILE__,__LINE__);
+$Error->add('TODO','Set correct onclick-link for edit-link',__FILE__,__LINE__);
 
 echo ($dat['sportid'] == 1) ? typ($dat['typid']) : sport($dat['sportid']);
 if ($dat['laufabc'] == 1)
@@ -45,7 +47,7 @@ if ($dat['bemerkung'] != '')
 
 <small class="right">
 <?php
-$error->add('TODO','Use new class::Draw',__FILE__,__LINE__);
+$Error->add('TODO','Use new class::Draw',__FILE__,__LINE__);
 
 $src = '';
 if ($dat['arr_pace'] != '') {
@@ -155,7 +157,7 @@ if ($src != '')
 </table>
 
 <?php
-	$error->add('TODO','Make Rundenzeiten look nice',__FILE__,__LINE__);
+	$Error->add('TODO','Make Rundenzeiten look nice',__FILE__,__LINE__);
 $arr['time'] = explode('|', $dat['arr_time']);
 $arr['heart'] = explode('|', $dat['arr_heart']);
 $arr['dist'] = explode('|', $dat['arr_dist']);

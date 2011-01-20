@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  * @uses START_YEAR
  * @uses HF_MAX
@@ -23,7 +23,10 @@ function stat_analyse_installer() {
 	// TODO Include the plugin-installer
 }
 
-$error->add('TODO', 'Add plot for trainingtypes', __FILE__, __LINE__);
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
+
+$Error->add('TODO', 'Add plot for trainingtypes', __FILE__, __LINE__);
 ?>
 <h1>Training <?php echo ($this->year != -1) ? $this->year : 'Jahresvergleich'; ?></h1>
 
@@ -55,8 +58,8 @@ if ($this->year != -1) {
 	</tr>
 	<tr class="space"><td colspan="13" /></tr>
 <?php
-$typen = $mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `RPE` ASC');
-foreach($typen as $i => $typ):
+$typen = $Mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `RPE` ASC', false, true);
+foreach ($typen as $i => $typ):
 ?>
 	<tr class="a<?php echo(($i%2+1));?>">
 		<td class="b" title="<?php echo($typ['name']); ?>"><?php echo($typ['abk']); ?></td>
@@ -64,9 +67,9 @@ foreach($typen as $i => $typ):
 	if ($this->year != -1):
 		$month_km = array();
 		for ($m = 1; $m <= 12; $m++) {
-			$month_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$month_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
 			$month_km[$m] = $month_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$month_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
@@ -74,16 +77,16 @@ foreach($typen as $i => $typ):
 	else:
 		$year_km = array();
 		for ($y = START_YEAR; $y <= date("Y"); $y++) {
-			$year_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$year_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
 			$year_km[$y] = $year_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$year_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
 		}
 	
-		$all_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1');
-		$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1');
+		$all_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1');
+		$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `typid`='.$typ['id'].' && `sportid`=1');
 		echo ($dat['num'] != 0)
 			? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$all_dat['distanz'],1),1).' &#37;</td>'
 			: '<td>&nbsp;</td>';
@@ -130,10 +133,10 @@ if ($this->year != -1) {
 	</tr>
 	<tr class="space"><td colspan="13" /></tr>
 <?php
-$error->add('TODO', 'Puls-Analyse: Find in MySql via CEIL( ( 100 * `puls` /HF_MAX ) /5 ) AS `puls_group`', __FILE__, __LINE__);
+$Error->add('TODO', 'Puls-Analyse: Find in MySql via CEIL( ( 100 * `puls` /HF_MAX ) /5 ) AS `puls_group`', __FILE__, __LINE__);
 
 $pulsbereiche = array(65, 70, 75, 80, 85, 90, 100);
-foreach($pulsbereiche as $i => $puls):
+foreach ($pulsbereiche as $i => $puls):
 	// Add 0.01 to fix problems with >= / > and <= / <
 	$puls_min = ($i == 0) ? 0 : HF_MAX*$pulsbereiche[$i-1]/100 + 0.01;
 	$puls_max = HF_MAX*$puls/100 + 0.01;
@@ -144,9 +147,9 @@ foreach($pulsbereiche as $i => $puls):
 	if ($this->year != -1):
 		$month_km = array();
 		for ($m = 1; $m <= 12; $m++) {
-			$month_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$month_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m.' LIMIT 1');
 			$month_km[$m] = $month_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m.' LIMIT 1');
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$month_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
@@ -154,16 +157,16 @@ foreach($pulsbereiche as $i => $puls):
 	else:
 		$year_km = array();
 		for ($y = START_YEAR; $y <= date("Y"); $y++) {
-			$year_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$year_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$y.' LIMIT 1');
 			$year_km[$y] = $year_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y.' LIMIT 1');
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$year_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
 		}
 	
-		$all_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `sportid`=1');
-		$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1');
+		$all_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `sportid`=1');
+		$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `puls`!=0 && `puls` BETWEEN '.$puls_min.' AND '.$puls_max.' && `sportid`=1');
 		echo ($dat['num'] != 0)
 			? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$all_dat['distanz'],1),1).' &#37;</td>'
 			: '<td>&nbsp;</td>';
@@ -198,7 +201,7 @@ if ($this->year != -1) {
 	</tr>
 	<tr class="space"><td colspan="13" /></tr>
 <?php
-$error->add('TODO', 'Pace-Analyse: Find in MySql via CEIL( `pace_in_seconds` ) /15 ) AS `pace_group`', __FILE__, __LINE__);
+$Error->add('TODO', 'Pace-Analyse: Find in MySql via CEIL( `pace_in_seconds` ) /15 ) AS `pace_group`', __FILE__, __LINE__);
 
 $pace_start = 60*6 + 00;
 $pace_end = 60*3 + 30;
@@ -213,9 +216,9 @@ for ($pace = $pace_start; $pace >= $pace_end; $pace -= 15):
 	if ($this->year != -1):
 		$month_km = array();
 		for ($m = 1; $m <= 12; $m++) {
-			$month_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$month_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
 			$month_km[$m] = $month_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$m);
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$month_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
@@ -223,16 +226,16 @@ for ($pace = $pace_start; $pace >= $pace_end; $pace -= 15):
 	else:
 		$year_km = array();
 		for ($y = START_YEAR; $y <= date("Y"); $y++) {
-			$year_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$year_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
 			$year_km[$y] = $year_dat['distanz'];
-			$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
+			$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1 && YEAR(FROM_UNIXTIME(`time`))='.$y);
 			echo ($dat['num'] != 0)
 				? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$year_dat['distanz'],1),1).' &#37;</td>'
 				: '<td>&nbsp;</td>';
 		}
 	
-		$all_dat = $mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1');
-		$dat = $mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1');
+		$all_dat = $Mysql->fetch('SELECT SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE `sportid`=1');
+		$dat = $Mysql->fetch('SELECT COUNT(*) as `num`, SUM(`distanz`) as `distanz` FROM `ltb_training` WHERE (`dauer`/`distanz`) BETWEEN '.$pace_max.' AND '.$pace_min.' && `sportid`=1');
 		echo ($dat['num'] != 0)
 			? '<td title="'.$dat['num'].'x - '.Helper::Km($dat['distanz']).'">'.number_format(round(100*$dat['distanz']/$all_dat['distanz'],1),1).' &#37;</td>'
 			: '<td>&nbsp;</td>';

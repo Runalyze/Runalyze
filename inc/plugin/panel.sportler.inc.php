@@ -4,7 +4,7 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses $config
  * @uses lib/draw/gewicht.php
  * @uses lib/draw/fett.php
@@ -34,12 +34,12 @@ function sportler_rightSymbol() {
  * Display-function for this plugin, will be called by class::Panel::display()
  */
 function sportler_display() {
-	global $global, $mysql;
+	global $global;
 ?>
 	<div id="sportler">
 		<div id="sportler-gewicht" class="change">
 <?php
-	$dat = $mysql->fetch('ltb_user','LAST');
+	$dat = Mysql::getInstance()->fetch('ltb_user','LAST');
 	if (CONFIG_USE_GEWICHT == 1)
 		$left = '<strong title="'.date("d.m.Y",$dat['time']).'">'.$dat['gewicht'].' kg</strong>';
 	

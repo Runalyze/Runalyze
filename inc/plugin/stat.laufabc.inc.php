@@ -5,8 +5,8 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
- * @uses class::Error ($error)
+ * @uses class::Mysql
+ * @uses class::Error
  *
  * Last modified 2010/09/04 23:27 by Hannes Christiansen
  */
@@ -20,6 +20,8 @@ function stat_laufabc_installer() {
 	$description = 'Wie oft hast du Lauf-ABC absolviert?';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
 ?>
 <h1>Lauf-ABC</h1>
 
@@ -45,7 +47,7 @@ function stat_laufabc_installer() {
 	</tr>
 <?php
 for ($y = START_YEAR; $y <= date("Y"); $y++):
-	if ($mysql->num('SELECT 1 FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND `laufabc`!=0 LIMIT 1') > 0):
+	if ($Mysql->num('SELECT 1 FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND `laufabc`!=0 LIMIT 1') > 0):
 ?>
 	<tr class="a<?php echo($y%2+1); ?> r">
 		<td class="b l">
@@ -53,7 +55,7 @@ for ($y = START_YEAR; $y <= date("Y"); $y++):
 		</td>
 <?php
 		for ($m = 1; $m <= 12; $m++) {
-			$month = $mysql->fetch('SELECT SUM(`laufabc`) as `abc`, SUM(1) as `num`, 1 as `group` FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND MONTH(FROM_UNIXTIME(`time`))="'.$m.'" GROUP BY `group` LIMIT 1');
+			$month = $Mysql->fetch('SELECT SUM(`laufabc`) as `abc`, SUM(1) as `num`, 1 as `group` FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND MONTH(FROM_UNIXTIME(`time`))="'.$m.'" GROUP BY `group` LIMIT 1');
 			if ($month === false)
 				echo('
 				<td>&nbsp;</td>');

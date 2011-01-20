@@ -6,10 +6,10 @@ if (is_numeric($_GET['id'])) {
 	$stat = new Stat($_GET['id']);
 	$stat->displayConfigWindow();
 } else {
-	$error->add('ERROR','ID must be set as GET-variable',__FILE__,__LINE__);
+	Error::getInstance()->add('ERROR','ID must be set as GET-variable',__FILE__,__LINE__);
 	echo('<em>Hier ist etwas schiefgelaufen ...</em>');
 }
 
 echo('<br /><br />');
-$error->display();
+Error::getInstance()->display();
 ?>

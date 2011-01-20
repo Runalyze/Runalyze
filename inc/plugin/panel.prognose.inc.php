@@ -31,9 +31,9 @@ function prognose_rightSymbol() {
  * Display-function for this plugin, will be called by class::Panel::display()
  */
 function prognose_display() {
-	global $global, $config, $mysql, $error;
+	global $global, $config;
 
-	$error->add('TODO','Add Zwischenzeiten/Marschtabelle',__FILE__,__LINE__);
+	Error::getInstance()->add('TODO','Add Zwischenzeiten/Marschtabelle',__FILE__,__LINE__);
 
 	echo Helper::Prognose(1, true);
 	echo Helper::Prognose(3, true);

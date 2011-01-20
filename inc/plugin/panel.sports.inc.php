@@ -4,7 +4,7 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  * @uses START_TIME
  *
@@ -41,16 +41,16 @@ function sportarten_rightSymbol() {
  * Display-function for this plugin, will be called by class::Panel::display()
  */
 function sportarten_display() {
-	global $mysql;
+	$Mysql = Mysql::getInstance();
 
 	echo('<div id="sports">');
 
 	foreach(sports_getTimeset() as $i => $timeset) {
 		echo('<div id="sports_'.$i.'" class="change"'.($i==0?'':'style="display:none;"').'>');
 
-		$sports = $mysql->fetch('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
+		$sports = $Mysql->fetch('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
 		foreach($sports as $sport) {
-			$data = $mysql->fetch('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `ltb_training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
+			$data = $Mysql->fetch('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `ltb_training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
 			$leistung = ($sport['distanztyp'] == 1)
 				? Helper::Unbekannt(km($data['distanz_sum']),'0,0 km')
 				: Helper::Time($data['dauer_sum']); 		

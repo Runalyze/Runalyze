@@ -5,7 +5,8 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
+ * @uses class::Error
  * @uses class::Ajax
  * @uses class::Helper
  * @uses CONFIG_USE_...
@@ -24,7 +25,10 @@ function stat_wettkampf_installer() {
 	// TODO Include the plugin-installer
 }
 
-$error->add('TODO','Add statistics about the weather',__FILE__,__LINE__);
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
+
+$Error->add('TODO','Add statistics about the weather',__FILE__,__LINE__);
 ?>
 <h1>Wettk&auml;mpfe</h1>
 
@@ -54,7 +58,7 @@ function show_table_start() {
 	</tr>');
 }
 
-$error->add('TODO', 'Set correct onclick-link for date-link', __FILE__, __LINE__);
+$Error->add('TODO', 'Set correct onclick-link for date-link', __FILE__, __LINE__);
 function show_wk_tr($wk, $i) {
 	echo('
 	<tr class="a'.($i%2 + 1).' r">
@@ -66,6 +70,13 @@ function show_wk_tr($wk, $i) {
 		<td class="small">'.Helper::Unbekannt($wk['puls']).' / '.Helper::Unbekannt($wk['puls_max']).' bpm</td>' : '').''.(CONFIG_USE_WETTER ? '
 		<td class="small">'.($wk['temperatur'] != 0 && $wk['wetterid'] != 0 ? $wk['temperatur'].' &deg;C '.Helper::WetterImg($wk['wetterid']) : '').'</td>' : '').'
 	</tr>');	
+}
+
+function show_empty_tr($i, $text = '') {
+	echo('
+	<tr class="a'.($i%2 + 1).'">
+		<td colspan="7">'.$text.'</td>
+	</tr>');
 }
 
 function show_table_end() {
@@ -82,7 +93,7 @@ function show_table_end() {
 <?php
 show_table_start();
 
-$wks = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC');
+$wks = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC');
 foreach($wks as $i => $wk)
 	show_wk_tr($wk, $i);
 
@@ -95,14 +106,16 @@ show_table_end();
 <?php
 show_table_start();
 
-$error->add('TODO','Last WKs: Set LAST_WK_NUM as config-var',__FILE__,__LINE__);
+$Error->add('TODO','Last WKs: Set LAST_WK_NUM as config-var',__FILE__,__LINE__);
 define('LAST_WK_NUM',10);
-$wks = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM);
-if($wks && mysql_num_rows($wks)) {
+
+$wks = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM, false, true);
+if (count($wks) > 0) {
 	foreach($wks as $i => $wk)
 		show_wk_tr($wk, $i);
 } else {
-	$error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 100);
+	show_empty_tr(1, 'Keine Wettk&auml;mpfe gefunden.');
+	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 100);
 }
 show_table_end();
 ?>
@@ -114,12 +127,12 @@ show_table_end();
 show_table_start();
 
 $distances = array();
-$dists = $mysql->fetch('SELECT `distanz`, SUM(1) as `wks` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' GROUP BY `distanz`');
+$dists = $Mysql->fetch('SELECT `distanz`, SUM(1) as `wks` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' GROUP BY `distanz`');
 foreach($dists as $i => $dist) {
 	if ($dist['wks'] > 1) {
 		$distances[] = $dist['distanz'];
 
-		$wk = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC LIMIT 1');
+		$wk = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC LIMIT 1');
 		show_wk_tr($wk, $i);
 	}
 }
@@ -129,7 +142,7 @@ show_table_end();
 
 	<small style="text-align:center;display:block;">
 <?php
-$error->add('TODO', 'Set link with Class::Ajax', __FILE__, __LINE__);
+$Error->add('TODO', 'Set link with Class::Ajax', __FILE__, __LINE__);
 // TODO Set link with AJAX-Class
 $first = true;
 foreach($distances as $km) {
@@ -155,7 +168,7 @@ $kms = array(3, 5, 10, 21.1, 42.2);
 foreach($kms as $km)
 	$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 
-$wks = $mysql->fetch('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
+$wks = $Mysql->fetch('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
 foreach($wks as $wk) {
 	if (!isset($year[$wk['y']])) {
 		$year[$wk['y']] = $dists;

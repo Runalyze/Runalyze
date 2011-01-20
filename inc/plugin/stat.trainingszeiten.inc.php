@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  *
  * Last modified 2010/09/03 21:01 by Hannes Christiansen
@@ -20,6 +20,9 @@ function stat_trainingszeiten_installer() {
 	$description = 'Auflistung nächtlicher Trainings und Diagramme über die Trainingszeiten.';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 ?>
 <h1>Trainingszeiten</h1>
 
@@ -29,11 +32,11 @@ function stat_trainingszeiten_installer() {
 	</tr>
 <?php
 $sports_not_short = '';
-$sports = $mysql->fetch('SELECT `id` FROM `ltb_sports` WHERE `short` = 0', false, true);
+$sports = $Mysql->fetch('SELECT `id` FROM `ltb_sports` WHERE `short` = 0', false, true);
 foreach($sports as $sport)
 	$sports_not_short .= $sport['id'].',';
 
-$nights = $mysql->fetch('SELECT * FROM (
+$nights = $Mysql->fetch('SELECT * FROM (
 	SELECT *,
 		HOUR(FROM_UNIXTIME(`time`)) as `H`,
 		MINUTE(FROM_UNIXTIME(`time`)) as `MIN`
@@ -48,7 +51,8 @@ $nights = $mysql->fetch('SELECT * FROM (
 ORDER BY
 	(`H`+12)%24 ASC,
 	`MIN` ASC');
-$error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+
+$Error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
 foreach($nights as $i => $night):
 	$sport = Helper::Sport($night['sportid'],true);
 ?>
@@ -56,7 +60,7 @@ foreach($nights as $i => $night):
 	<tr class="a<?php echo(round($i/2)%2+1); ?>">
 <?php endif; ?>
 		<td class="b"><?php echo date("H:i",$night['time']); ?> Uhr</td>
-		<td><img class="link" onclick="seite('training','<?php echo $night['id']; ?>')" title="<?php echo $sport['name']; ?>" src="img/sports/<?php echo $sport['bild']; ?>" /></td>
+		<td><?php echo Ajax::trainingLink($night['id'], '<img class="link" title="'.$sport['name'].'" src="img/sports/'.$sport['bild'].'" />'); ?></td>
 		<td><?php echo ($night['distanz'] != 0 ? Helper::Km($night['distanz']) : Helper::Time($night['dauer'])).' '.$sport['name']; ?></td>
 		<td><a href="#" onclick="daten('<?php echo $night['time']; ?>','<?php echo Helper::Wochenstart($night['time']); ?>','<?php echo Helper::Wochenende($night['time']); ?>')"><?php echo date("d.m.Y",$night['time']); ?></a></td>
 <?php if ($i%2 == 1): ?>
@@ -67,7 +71,7 @@ endforeach;
 ?>
 </table>
 
-<?php $error->add('TODO', 'Use Class::Draw as soon as possible', __FILE__, __LINE__); ?>
+<?php $Error->add('TODO', 'Use Class::Draw as soon as possible', __FILE__, __LINE__); ?>
 <img class="right" src="lib/draw/trainingstage.php" />
 <img class="left" src="lib/draw/trainingszeiten.php" />
 
