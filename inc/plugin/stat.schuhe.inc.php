@@ -6,7 +6,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses lib/draw/schuhbalken.php
  *
  * Last modified 2011/01/08 18:42 by Michael Pohl
@@ -21,6 +21,9 @@ function stat_schuhe_installer() {
 	$description = 'Ausf&uuml;hrliche Statistiken zu den Schuhen: Durchschnittliche, maximale und absolute Leistung (Kilometer / Tempo).';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 ?>
 <h1>Schuhe</h1>
  
@@ -38,14 +41,14 @@ function stat_schuhe_installer() {
 		<td colspan="9" />
 	</tr>
 <?php
-$error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
-$schuhe = $mysql->fetch('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
-if($schuhe && mysql_num_rows($schuhe)) {
+$Error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+$schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC', false, true);
+if (count($schuhe) > 0) {
 	foreach($schuhe as $i => $schuh) {
 		$i++;
-		$training_dist = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC LIMIT 1');
-		$training_pace = $mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC LIMIT 1');
-		$trainings = $mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
+		$training_dist = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC LIMIT 1');
+		$training_pace = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC LIMIT 1');
+		$trainings = $Mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
 		$in_use = $schuh['inuse']==1 ? '' : ' small';
 		echo('
 		<tr class="a'.($i%2 + 1).' r" style="background:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).') no-repeat bottom left;">
@@ -61,7 +64,8 @@ if($schuhe && mysql_num_rows($schuhe)) {
 		</tr>');
 	}
 } else {
-	$error->add('WARNING', 'Bisher keine Schuhe eingetragen', __FILE__, 42);
+	echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
+	$Error->add('WARNING', 'Bisher keine Schuhe eingetragen', __FILE__, 42);
 }
 echo('
 	<tr class="space"><td colspan="9" /></tr>'); 

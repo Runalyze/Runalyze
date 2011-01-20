@@ -7,5 +7,5 @@ if (is_numeric($_GET['id'])) {
 	$panel->move($_GET['mode']);
 }
 
-$error->display();
+Error::getInstance()->display();
 ?>

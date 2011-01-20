@@ -15,24 +15,28 @@
  * Last modified 2010/08/08 21:34 by Hannes Christiansen
  */
 class Error {
+	private static $instance = NULL;
+
 	private $errors = array(),
 		$file = '',
 		$log = false,
 		$log_file = '';
 
 	/**
-	 * Constructor for this class.
-	 * @param string $file       filename
-	 * @param bool   $log        Logging errors?
-	 * @param string $log_path   Path for logging errors
+	 * Static getter for the singleton instnace
+	 * @return class::Error static instance
 	 */
-	function __construct($file = __FILE__, $log = false, $log_file = '') {
-		if ($log_file == '')
-			$log_file = 'log/'.$file.'.log.'.date("Ymd.Hi").'.html';
+	public static function getInstance() {
+		if (self::$instance == NULL)
+			self::$instance = new self;
 
-		$this->log = $log;
-		$this->log_file = $log_file;
+		return self::$instance;
 	}
+
+	/**
+	 * Prohibit creating an object from outside
+	 */
+	private function __construct() {}
 
 	/**
 	 * Destructor for this class
@@ -42,6 +46,32 @@ class Error {
 		if ($this->log) {
 			$this->display();
 		}
+	}
+
+	/**
+	 * Prohibit cloning
+	 */
+	private function __clone() {}
+
+	/**
+	 * To initialise for this class.
+	 * @param string $file       filename
+	 * @param bool   $log        Logging errors?
+	 * @param string $log_path   Path for logging errors
+	 */
+	static function init($file = __FILE__, $log = false, $log_file = '') {
+		if ($log_file == '')
+			$log_file = 'log/'.$file.'.log.'.date("Ymd.Hi").'.html';
+
+		self::getInstance()->setLogVars($log, $log_file);
+	}
+
+	/**
+	 * Set private variables from self::init()
+	 */
+	function setLogVars($log, $log_file) {
+		$this->log = $log;
+		$this->log_file = $log_file;
 	}
 
 	/**
@@ -85,8 +115,6 @@ class Error {
  * @return bool      returning true to not execute PHP internal error handler
  */
 function error_handler($type, $message, $file, $line) {
-	global $error;
-
 	switch($type) {
 		case E_ERROR:
 			$type = 'ERROR';
@@ -102,7 +130,7 @@ function error_handler($type, $message, $file, $line) {
 			break;
 	}
 
-	$error->add($type, $message, $file, $line);
+	Error::getInstance()->add($type, $message, $file, $line);
 
     // Don't execute PHP internal error handler
     return true;

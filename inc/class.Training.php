@@ -7,8 +7,8 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
- * @uses class:Error ($error)
+ * @uses class::Mysql
+ * @uses class:Error
  * @uses $global
  *
  * Last modified 2011/01/15 18:21 by Hannes Christiansen
@@ -24,14 +24,14 @@ class Training {
 		$data;
 
 	function __construct($id) {
-		global $error, $mysql, $global;
+		global $global;
 		if (!is_numeric($id) || $id == NULL) {
-			$error->add('ERROR', 'An object of class::Training must have an ID: <$id='.$id.'>');
+			Error::getInstance()->add('ERROR', 'An object of class::Training must have an ID: <$id='.$id.'>');
 			return false;
 		}
-		$dat = $mysql->fetch('ltb_training', $id);
+		$dat = Mysql::getInstance()->fetch('ltb_training', $id);
 		if ($dat === false) {
-			$error->add('ERROR', 'This training (ID='.$id.') does not exist.');
+			Error::getInstance()->add('ERROR', 'This training (ID='.$id.') does not exist.');
 			return false;
 		}
 		$this->id = $id;
@@ -44,12 +44,10 @@ class Training {
 	 * @return mixed
 	 */
 	function get($var) {
-		global $error, $mysql;
-
 		if (isset($this->data[$var]))
 			return $this->data[$var];
 
-		$error->add('WARNING','Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
+		Error::getInstance()->add('WARNING','Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
 	}
 
 	/**
@@ -57,11 +55,9 @@ class Training {
 	 * @return string all clothes comma seperated
 	 */
 	function getStringForClothes() {
-		global $error, $mysql;
-
 		if ($this->get('kleidung') != '') {
 			$kleidungen = array();
-			$kleidungen_data = $mysql->fetch('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC', false, true);
+			$kleidungen_data = Mysql::getInstance()->fetch('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC', false, true);
 			foreach ($kleidungen_data as $data)
 				$kleidungen[] = $data['name'];
 			return implode(', ', $kleidungen);
@@ -108,7 +104,7 @@ class Training {
 		$plots = $this->getPlotTypesAsArray();
 
 		echo('<div class="right">'.NL);
-		if (sizeof($plots) > 0) {
+		if (count($plots) > 0) {
 			echo('<small class="right">'.NL);
 			$this->displayPlotLinks('trainingGraph');
 			echo('</small>'.NL);
@@ -195,14 +191,12 @@ class Training {
 	 * @param string $type name of the plot, should be in getPlotTypesAsArray
 	 */
 	function displayPlot($type = 'undefined') {
-		global $error, $mysql;
-
 		// TODO Use class::Draw as soon as possible
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type]))
 			echo '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />'.NL;
 		else
-			$error->add('WARNING','Training::displayPlot - Unknown plottype "'.$type.'"',__FILE__,__LINE__);
+			Error::getInstance()->add('WARNING','Training::displayPlot - Unknown plottype "'.$type.'"',__FILE__,__LINE__);
 	}
 
 	/**
@@ -222,8 +216,8 @@ class Training {
 			echo('<tr>'.NL);
 
 			$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-			$error->add('TODO','Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?',__FILE__,__LINE__);
-			$error->add('TODO','Training::splits Gesamtschnitt/Vorgabe/etc.',__FILE__,__LINE__);
+			Error::getInstance()->add('TODO','Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?',__FILE__,__LINE__);
+			Error::getInstance()->add('TODO','Training::splits Gesamtschnitt/Vorgabe/etc.',__FILE__,__LINE__);
 			
 			for ($i = 0, $num = count($splits); $i < $num; $i++) {
 				$split = explode('|', $splits[$i]);
@@ -365,8 +359,6 @@ class Training {
 	 * Correct the elevation data
 	 */
 	function elevationCorrection() {
-		global $mysql;
-
 		if (!$this->hasPositionData())
 			return;
 
@@ -381,9 +373,13 @@ class Training {
 				$longs[] = $longitude[$i];
 			}
 			if (($i+1)%(20*self::$everyNthElevationPoint) == 0 || $i == $num-1) {
-				$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
-				if (substr($html,0,1) == '<')
-					die('Something went wrong connecting to geonames.org - i: '.$i);
+				$html = false;
+				while ($html === false) {
+					$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+					if (substr($html,0,1) == '<')
+						$html = false;
+						//die('Something went wrong connecting to geonames.org - i: '.$i);
+				}
 				$data = explode("\r\n", $html);
 
 				foreach ($data as $k => $v)
@@ -399,7 +395,7 @@ class Training {
 			}
 		}
 
-		$mysql->update('ltb_training', $this->id, 'arr_alt', implode('|', $altitude));
+		Mysql::getInstance()->update('ltb_training', $this->id, 'arr_alt', implode('|', $altitude));
 		echo('Success.');
 	}
 

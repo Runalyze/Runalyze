@@ -19,8 +19,8 @@ require_once(FRONTEND_PATH.'class.JD.php');
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Error ($error)
- * @uses class::Mysql ($mysql)
+ * @uses class::Error
+ * @uses class::Mysql
  * @uses class::JD
  *
  * Last modified 2010/08/28 18:08 by Hannes Christiansen
@@ -39,9 +39,7 @@ class Helper {
 	 * @return string|array Name of sport or all information as array
 	 */
 	static function Sport($sport_id, $as_array = false) {
-		global $mysql;
-
-		$sport = $mysql->fetch('ltb_sports', $sport_id);
+		$sport = Mysql::getInstance()->fetch('ltb_sports', $sport_id);
 		return ($as_array) ? $sport : $sport['name'];
 	}
 
@@ -54,9 +52,7 @@ class Helper {
 	 * @return mixed depends on arguments
 	 */
 	static function Typ($type_id, $as_short = false, $as_bool_has_splits = false, $as_array = false) {
-		global $mysql;
-
-		$typ = $mysql->fetch('ltb_typ', $type_id);
+		$typ = Mysql::getInstance()->fetch('ltb_typ', $type_id);
 		if ($as_short)
 			return $typ['abk'];
 		if ($as_bool_has_splits)
@@ -73,9 +69,7 @@ class Helper {
 	 * @return string|array   Name of shoe or all information as array
 	 */
 	static function Schuh($schuh_id, $as_array = false) {
-		global $mysql;
-
-		$schuh = $mysql->fetch('ltb_schuhe', $schuh_id);
+		$schuh = Mysql::getInstance()->fetch('ltb_schuhe', $schuh_id);
 		return ($as_array) ? $schuh : $schuh['name'];
 	}
 
@@ -85,9 +79,7 @@ class Helper {
 	 * @return string img-tag
 	 */
 	static function WetterImg($wetterid) {
-		global $mysql;
-
-		$wetter = $mysql->fetch('ltb_wetter', $wetterid);
+		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
 		return ($wetter !== false)
 			? '<img src="img/wetter/'.$wetter['bild'].'" title="'.$wetter['name'].'" style="vertical-align:bottom;" />'
 			: '';
@@ -99,9 +91,7 @@ class Helper {
 	 * @return string name for this weather
 	 */
 	static function WetterName($wetterid) {
-		global $mysql;
-
-		$wetter = $mysql->fetch('ltb_wetter', $wetterid);
+		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
 		return ($wetter !== false)
 			? $wetter['name']
 			: '';
@@ -118,8 +108,6 @@ class Helper {
 	 * @return string
 	 */
 	static function Tempo($km, $time, $sport_id = 0) {
-		global $mysql;
-
 		if ($km == 0 || $time == 0)
 			return '';
 
@@ -202,9 +190,7 @@ class Helper {
 	 * @return mixed
 	 */
 	static function Bestzeit($dist, $return_time = false) {
-		global $mysql;
-	
-		$pb = $mysql->fetch('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC LIMIT 1');
+		$pb = Mysql::getInstance()->fetch('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC LIMIT 1');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
 		if ($bestzeit != '')
@@ -219,9 +205,9 @@ class Helper {
 	 * @return int
 	 */
 	static function TRIMP($training_id, $trimp = false) {
-		global $mysql, $config, $global;
+		global $config, $global;
 	
-		$dat = $mysql->fetch('ltb_training', $training_id);
+		$dat = Mysql::getInstance()->fetch('ltb_training', $training_id);
 		if ($dat === false)
 			$dat = array();
 		$factor_a = ($config['geschlecht'] == 'm') ? 0.64 : 0.86;
@@ -247,11 +233,10 @@ class Helper {
 	 * @param int $time [optional] timestamp
 	 */
 	static function ATL($time = 0) {
-		global $mysql;
-
 		if ($time == 0)
 			$time = time();
-		$dat = $mysql->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
 		return round($dat['sum']/ATL_DAYS);
 	}
 
@@ -262,11 +247,10 @@ class Helper {
 	 * @param int $time [optional] timestamp
 	 */
 	static function CTL($time = 0) {
-		global $mysql;
-
 		if ($time == 0)
 			$time = time();
-		$dat = $mysql->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
 		return round($dat['sum']/CTL_DAYS);
 	}
 
@@ -277,8 +261,6 @@ class Helper {
 	 * @param int $time [optional] timestamp
 	 */
 	static function TSB($time = 0) {
-		global $mysql;
-
 		return self::CTL($time) - self::ATL($time);
 	}
 
@@ -302,21 +284,21 @@ class Helper {
 	 * @param int $timestamp [optional] timestamp
 	 */
 	static function Grundlagenausdauer($as_int = false, $timestamp = 0) {
-		global $global, $mysql;
+		global $global;
 
 		if ($timestamp == 0)
 			$timestamp = time();
 		$points = 0;
 		// Wochenkilometer
 		$wk_sum = 0;
-		$data = $mysql->fetch('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetch('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
 			$tage = round ( ($timestamp - $dat['time']) / DAY_IN_S , 1 );
 			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
 		}
 		$points += $wk_sum / 20;
 		// Lange Läufe ...
-		$data = $mysql->fetch('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetch('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat)
 			$points += ($dat['distanz']-15) / 2;
 	
@@ -522,10 +504,7 @@ class Helper {
 	 * @return int   Modus
 	 */
 	static function getModus($row) {
-		global $mysql;
-
-		$db = mysql_query('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'" LIMIT 1');
-		$dat = mysql_fetch_assoc($db);
+		$dat = Mysql::getInstance()->query('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'" LIMIT 1');
 		return $dat['modus'];
 	}
 
@@ -542,13 +521,11 @@ class Helper {
 	 * @return int   HFmax
 	 */
 	static function getHFmax() {
-		global $mysql, $error;
-
 		if (defined('HF_MAX'))
 			return HF_MAX;
-		$userdata = $mysql->fetch('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+		$userdata = Mysql::getInstance()->fetch('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
 		if ($userdata === false) {
-			$error->add('WARNING', 'HFmax is not set in database, 200 as default.');
+			Error::getInstance()->add('WARNING', 'HFmax is not set in database, 200 as default.');
 			return 200;
 		}
 		return $userdata['puls_max'];
@@ -559,13 +536,11 @@ class Helper {
 	 * @return int   HFrest
 	 */
 	static function getHFrest() {
-		global $mysql, $error;
-
 		if (defined('HF_REST'))
 			return HF_MAX;
-		$userdata = $mysql->fetch('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+		$userdata = Mysql::getInstance()->fetch('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
 		if ($userdata === false) {
-			$error->add('WARNING', 'HFrest is not set in database, 60 as default.');
+			Error::getInstance()->add('WARNING', 'HFrest is not set in database, 60 as default.');
 			return 60;
 		}
 		return $userdata['puls_ruhe'];
@@ -576,9 +551,7 @@ class Helper {
 	 * @return int   Timestamp
 	 */
 	static function getStartTime() {
-		global $mysql;
-
-		$data = $mysql->fetch('SELECT MIN(`time`) as `time` FROM `ltb_training`');
+		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `ltb_training`');
 		if ($data === false)
 			return time();
 		return $data['time'];

@@ -4,7 +4,7 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses lib/draw/schuhbalken.php
  *
  * Last modified 2010/08/11 22:46 by Hannes Christiansen
@@ -32,12 +32,12 @@ function schuhe_rightSymbol() {
  * Display-function for this plugin, will be called by class::Panel::display()
  */
 function schuhe_display() {
-	global $global, $config, $mysql;
+	global $global, $config;
 ?>
 	<div id="schuhe">
 <?php
 	$inuse = true;
-	$schuhe = $mysql->fetch('SELECT `name`, `km`, `inuse` FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
+	$schuhe = Mysql::getInstance()->fetch('SELECT `name`, `km`, `inuse` FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
 	foreach($schuhe as $i => $schuh) {
 		if ($inuse && $schuh['inuse'] == 0) {
 			echo('	<div id="hiddenschuhe" style="display:none;">'.NL);

@@ -16,6 +16,7 @@
 
 <?php // Find date for first page in DataBrowser
 // TODO May be done by class::DataBrowser later
+$mysql = Mysql::getInstance();
 $today = time();
 $last_training = $mysql->fetch('ltb_training','LAST');
 if ($last_training !== false)
@@ -23,7 +24,7 @@ if ($last_training !== false)
 $start = Helper::Wochenstart($today);
 $ende = Helper::Wochenende($today);
 ?>
-<?php $error->add('TODO','class::DataBrowser has to chose first page on its own',__FILE__,__LINE__); ?>
+<?php Error::getInstance()->add('TODO','class::DataBrowser has to chose first page on its own',__FILE__,__LINE__); ?>
 <body onload="daten(<?php echo("'$today','$start','$ende'"); ?>)">
 
 <div id="overlay"></div>

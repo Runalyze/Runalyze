@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  * @uses class:JD
  * @uses CONFIG_SHOW_RECHENSPIELE
@@ -24,7 +24,9 @@ function stat_statistiken_installer() {
 	// TODO Include the plugin-installer
 }
 
-$sport = $mysql->fetch('ltb_sports', $this->sportid);
+$Mysql = Mysql::getInstance();
+
+$sport = $Mysql->fetch('ltb_sports', $this->sportid);
 ?>
 <h1>
 	<?php echo sport($this->sportid); ?>
@@ -33,8 +35,8 @@ $sport = $mysql->fetch('ltb_sports', $this->sportid);
 
 <small class="left">
 <?php
-$sports = $mysql->fetch('SELECT `name`, `id` FROM `ltb_sports` ORDER BY `id` ASC');
-foreach($sports as $i => $sportlink) {
+$sports = $Mysql->fetch('SELECT `name`, `id` FROM `ltb_sports` ORDER BY `id` ASC', false, true);
+foreach ($sports as $i => $sportlink) {
 	if ($i != 0)
 		echo(' |'.NL);
 	echo $this->getInnerLink($sportlink['name'], $sportlink['id'], $this->year);
@@ -44,9 +46,9 @@ foreach($sports as $i => $sportlink) {
 
 <small class="right">
 <?php
-for ($x = START_YEAR; $x <= date("Y"); $x++) {
+for ($x = START_YEAR; $x <= date("Y"); $x++)
 	echo $this->getInnerLink($x, $this->sportid, $x).' | ';
-}
+
 echo $this->getInnerLink('Jahresvergleich', $this->sportid, -1);
 ?>
 </small>
@@ -91,9 +93,9 @@ $line = 0;
 <?php
 $num_i_i = 0;
 $data = ($this->year != -1)
-	? $mysql->fetch('SELECT SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
-	: $mysql->fetch('SELECT SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
-if ($data !== false) {
+	? $Mysql->fetch('SELECT SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
+	: $Mysql->fetch('SELECT SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
+if (count($data) > 0) {
 	foreach($data as $i => $dat) {
 		// Fill empty columns
 		for (; ($num_start+$num_i_i) < $dat['i']; $num_i_i++)
@@ -121,9 +123,9 @@ if ($data !== false) {
 	<?php
 	$num_i_i = 0;
 	$data = ($this->year != -1)
-		? $mysql->fetch('SELECT SUM(`distanz`) as `distanz`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
-		: $mysql->fetch('SELECT SUM(`distanz`) as `distanz`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
-	if ($data !== false) {
+		? $Mysql->fetch('SELECT SUM(`distanz`) as `distanz`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
+		: $Mysql->fetch('SELECT SUM(`distanz`) as `distanz`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
+	if (count($data) > 0) {
 		foreach($data as $i => $dat) {
 			// Fill empty columns
 			for (; ($num_start+$num_i_i) < $dat['i']; $num_i_i++)
@@ -151,9 +153,9 @@ if ($data !== false) {
 	<?php
 	$num_i_i = 0;
 	$data = ($this->year != -1)
-		? $mysql->fetch('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
-		: $mysql->fetch('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
-	if ($data !== false) {
+		? $Mysql->fetch('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
+		: $Mysql->fetch('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
+	if (count($data) > 0) {
 		foreach($data as $i => $dat) {
 			// Fill empty columns
 			for (; ($num_start+$num_i_i) < $dat['i']; $num_i_i++)
@@ -193,9 +195,9 @@ if ($data !== false) {
 		$VDOT = 0;
 		$num = 0;
 		$data = ($date == 'MONTH')
-			? $mysql->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i, false, true)
-			: $mysql->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i, false, true);
-		if ($data !== false)
+			? $Mysql->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i, false, true)
+			: $Mysql->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i, false, true);
+		if (count($data) > 0)
 			foreach($data as $dat) {
 				$VDOT += JD::Training2VDOT($dat['id']);
 				$num++;
@@ -215,9 +217,9 @@ if ($data !== false) {
 	<?php
 	$num_i_i = 0;
 	$data = ($this->year != -1)
-		? $mysql->fetch('SELECT SUM(`trimp`) as `trimp`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
-		: $mysql->fetch('SELECT SUM(`trimp`) as `trimp`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
-	if ($data !== false) {
+		? $Mysql->fetch('SELECT SUM(`trimp`) as `trimp`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12', false, true)
+		: $Mysql->fetch('SELECT SUM(`trimp`) as `trimp`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`', false, true);
+	if (count($data) > 0) {
 		foreach($data as $i => $dat) {
 			// Fill empty columns
 			for (; ($num_start+$num_i_i) < $dat['i']; $num_i_i++)

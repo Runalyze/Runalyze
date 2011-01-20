@@ -5,8 +5,8 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
- * @uses class::Error ($error)
+ * @uses class::Mysql
+ * @uses class::Error
  *
  * Last modified 2010/09/04 21:07 by Hannes Christiansen
  */
@@ -20,6 +20,8 @@ function stat_trainingspartner_installer() {
 	$description = 'Wie oft hast du mit wem gemeinsam trainiert?';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
 ?>
 <h1>Trainingspartner</h1>
 
@@ -31,11 +33,11 @@ function stat_trainingspartner_installer() {
 		<td colspan="2" />
 	</tr>
 <?php
-$error->add('TODO', 'Set correct search-link.', __FILE__, __LINE__);
+Error::getInstance()->add('TODO', 'Set correct search-link.', __FILE__, __LINE__);
 
 $partner = array();
-$trainings = $mysql->fetch('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""', false, true);
-if ($trainings === false)
+$trainings = $Mysql->fetch('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""', false, true);
+if (count($trainings) == 0)
 	echo('
 	<tr class="a1">
 		<td class="b">0x</td>

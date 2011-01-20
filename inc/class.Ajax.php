@@ -7,7 +7,7 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class:Error ($error)
+ * @uses class:Error
  *
  * Last modified 2011/01/15 18:21 by Hannes Christiansen
  */
@@ -73,13 +73,11 @@ class Ajax {
 	 * @return string
 	 */
 	private static function insertClass($link, $class) {
-		global $error;
-
 		$text = preg_replace('#class="(.+?)"#i', 'class="'.$class.' \\1"', $link);
 		if ($text == $link)
 			$text = preg_replace('#<a#i', '<a class="'.$class.'"', $text);
 		if ($text == $link)
-			$error->add('WARNING','Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
+			Error::getInstance()->add('WARNING','Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
 
 		return $text;
 	}
@@ -91,13 +89,11 @@ class Ajax {
 	 * @return string
 	 */
 	private static function insertRel($link, $rel) {
-		global $error;
-
 		$text = preg_replace('#rel="(.+?)"#i', 'rel="'.$rel.'"', $link);
 		if ($text == $link)
 			$text = preg_replace('#<a#i', '<a rel="'.$rel.'"', $text);
 		if ($text == $link)
-			$error->add('WARNING','Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
+			Error::getInstance()->add('WARNING','Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
 
 		return $text;
 	}

@@ -5,6 +5,7 @@
  */
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
+$Mysql = Mysql::getInstance();
 
 if (isset($_POST) && $_POST['type'] == 'schuh' && $_POST['name'] != '') {
 	$columns = array('inuse');
@@ -15,12 +16,12 @@ if (isset($_POST) && $_POST['type'] == 'schuh' && $_POST['name'] != '') {
 			$columns[] = $var;
 			$values[] = $_POST[$var];
 		}
-	$mysql->insert('ltb_schuhe', $columns, $values);
+	$Mysql->insert('ltb_schuhe', $columns, $values);
 
 	$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
 }
 elseif (isset($_POST) && $_POST['type'] == 'schuh_unuse') {
-	$mysql->update('ltb_schuhe', $_POST['schuhid'], 'inuse', 0);
+	$Mysql->update('ltb_schuhe', $_POST['schuhid'], 'inuse', 0);
 
 	$submit = '<em>Der Schuh kann nun nicht mehr benutzt werden!</em><br /><br />';
 }
@@ -54,7 +55,7 @@ if (isset($submit))
 	<input type="hidden" name="type" value="schuh_unuse" />
 	<select name="schuhid">
 <?php
-$schuhe = $mysql->fetch('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
+$schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
 foreach($schuhe as $schuh)
 	echo('
 		<option value="'.$schuh['id'].'">'.$schuh['name'].'</option>');

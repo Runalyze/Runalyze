@@ -5,8 +5,10 @@
  */
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 
-$error->add('TODO', 'Formular abschicken funktioniert noch nicht vollständig', __FILE__, __LINE__);
+$Error->add('TODO', 'Formular abschicken funktioniert noch nicht vollständig', __FILE__, __LINE__);
 if (isset($_POST) && $_POST['type'] == "config") {
 	// die('FUNKTIONIERT NOCH NICHT!');
 
@@ -24,13 +26,13 @@ if (isset($_POST) && $_POST['type'] == "config") {
 		$columns[] = $box;
 		$values[] = (isset($_POST[$box]) && $_POST[$box] == 'on') ? 1 : 0;
 	}
-	$mysql->update('ltb_config', 1, $columns, $values);
+	$Mysql->update('ltb_config', 1, $columns, $values);
 
 	// Plugin config vars: 'ltb_plugin'
-	$plugins = $mysql->fetch('SELECT `id` FROM `ltb_plugin`');
+	$plugins = $Mysql->fetch('SELECT `id` FROM `ltb_plugin`');
 	foreach($plugins as $plugin) {
 		$id = $plugin['id'];
-		$mysql->update('ltb_plugin', $id,
+		$Mysql->update('ltb_plugin', $id,
 			array('active', 'order'),
 			array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
 	}
@@ -49,7 +51,7 @@ function formChecked($var, $value = true) {
 }
 
 // Because constants can't be redefinied, $config has to be used instead of CONFIG_...
-$config = $mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
+$config = $Mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
 
 $Frontend->displayHeader();
 
@@ -75,8 +77,8 @@ if (isset($submit))
 
 <div id="config_allgemein" class="change">
 	<h1>Allgemeine Einstellungen</h1>
-<?php $error->add('TODO', 'Weitere Config-Variablen', __FILE__, __LINE__); ?>
-<?php $error->add('TODO', 'Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
+<?php $Error->add('TODO', 'Weitere Config-Variablen', __FILE__, __LINE__); ?>
+<?php $Error->add('TODO', 'Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
 	<strong>Geschlecht:</strong><br />
 		<input type="radio" name="geschlecht" value="m"<?php echo formChecked($config['geschlecht'], 'm'); ?> />
 			m&auml;nnlich<br />
@@ -131,7 +133,7 @@ if (isset($submit))
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" ORDER BY `order` ASC');
+$plugins = $Mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
@@ -173,7 +175,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" ORDER BY `order` ASC');
+$plugins = $Mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
@@ -206,7 +208,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="4"></td>
 		</tr>
 <?php
-$datasets = $mysql->fetch('SELECT * FROM `ltb_dataset` ORDER BY ABS(2.5-`modus`) ASC, `position` ASC');
+$datasets = $Mysql->fetch('SELECT * FROM `ltb_dataset` ORDER BY ABS(2.5-`modus`) ASC, `position` ASC');
 foreach($datasets as $i => $dataset) {
 	// Modus=1 has been deleted
 	$disabled = ($dataset['modus'] == 3) ? ' disabled="disabled"' : '';
@@ -255,10 +257,10 @@ foreach($datasets as $i => $dataset) {
 			<td colspan="12"></td>
 		</tr>
 <?php
-$error->add('TODO', 'Edit Sports', __FILE__, __LINE__);
+$Error->add('TODO', 'Edit Sports', __FILE__, __LINE__);
 // TODO ID=1 für Laufen sperren!
 
-$sports = $mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
+$sports = $Mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
 foreach($sports as $i => $sport) {
 	echo('
 		<tr class="a'.($i%2+1).'">
@@ -294,10 +296,10 @@ foreach($sports as $i => $sport) {
 			<td colspan="4"></td>
 		</tr>
 <?php
-$error->add('TODO', 'Edit Trainingstypen', __FILE__, __LINE__);
-$error->add('TODO', 'Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
+$Error->add('TODO', 'Edit Trainingstypen', __FILE__, __LINE__);
+$Error->add('TODO', 'Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
 
-$typen = $mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
+$typen = $Mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
 foreach($typen as $i => $typ) {
 	echo('
 		<tr class="a'.($i%2+1).'">
@@ -329,9 +331,9 @@ foreach($typen as $i => $typ) {
 			<td colspan="3"></td>
 		</tr>
 <?php
-$error->add('TODO', 'Edit Kleidungen', __FILE__, __LINE__);
+$Error->add('TODO', 'Edit Kleidungen', __FILE__, __LINE__);
 
-$kleidungen = $mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
+$kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
 foreach($kleidungen as $i => $kleidung) {
 	echo('
 		<tr class="a'.($i%2+1).'">

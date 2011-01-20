@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Stat ($this)
- * @uses class::Mysql ($mysql)
+ * @uses class::Mysql
  * @uses class::Helper
  *
  * Last modified 2010/09/03 21:01 by Hannes Christiansen
@@ -20,6 +20,8 @@ function stat_strecken_installer() {
 	$description = 'Auflistung der häufigsten und seltensten Strecken/Orte.';
 	// TODO Include the plugin-installer
 }
+
+$Mysql = Mysql::getInstance();
 ?>
 <h1>Strecken</h1>
 
@@ -31,10 +33,10 @@ function stat_strecken_installer() {
 		<td colspan="3" />
 	</tr>
 <?php
-$error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+Error::getInstance()->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
 // Häufigsten Strecken
-$strecken = $mysql->fetch('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10');
-foreach($strecken as $i => $strecke):
+$strecken = $Mysql->fetch('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10', false, true);
+foreach ($strecken as $i => $strecke):
 ?>
 	<tr class="a<?php echo($i%2+1); ?> r">
 		<td><?php echo($strecke['num']); ?>x</td>
@@ -58,8 +60,8 @@ foreach($strecken as $i => $strecke):
 <?php
 // Häufigsten Orte
 $orte = array();
-$strecken = $mysql->fetch('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""');
-foreach($strecken as $strecke) {
+$strecken = $Mysql->fetch('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""', false, true);
+foreach ($strecken as $strecke) {
 	$streckenorte = explode(" - ", $strecke['strecke']);
 	foreach ($streckenorte as $streckenort) {
 		if (!isset($orte[$streckenort]))
@@ -72,7 +74,7 @@ foreach($strecken as $strecke) {
 array_multisort($orte, SORT_DESC);
 
 $i = 1;
-foreach($orte as $ort => $num): $i++; ?>
+foreach ($orte as $ort => $num): $i++; ?>
 	<tr class="a<?php echo($i%2+1); ?>">
 		<td><?php echo($num); ?>x</td>
 		<td><span class="link" onclick="submit_suche('opt[strecke]=like&val[strecke]=<?php echo($ort); ?>')"><?php echo($ort); ?></span></td>
@@ -123,7 +125,7 @@ else {
 ?>
 	<tr class="a<?php echo(($num_x+1)%2+1); ?>">
 		<td colspan="2" class="c">
-			Insgesamt wurden <strong><?php echo sizeof($orte); ?> verschiedene Orte</strong> sportlich besucht.
+			Insgesamt wurden <strong><?php echo count($orte); ?> verschiedene Orte</strong> sportlich besucht.
 		</td>
 	</tr>
 </table>

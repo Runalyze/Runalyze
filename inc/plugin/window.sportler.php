@@ -5,9 +5,11 @@
  */
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
+$Mysql = Mysql::getInstance();
+$Error = Error::getInstance();
 
-$error->add('TODO', 'Config: use_koerperfett, use_ruhepuls, use_blutdruck');
-$error->add('TODO', 'Config: wunschgewicht');
+$Error->add('TODO', 'Config: use_koerperfett, use_ruhepuls, use_blutdruck');
+$Error->add('TODO', 'Config: wunschgewicht');
 
 if (isset($_POST) && $_POST['type'] == "user") {
 	$columns = array('time');
@@ -31,14 +33,14 @@ if (isset($_POST) && $_POST['type'] == "user") {
 			$columns[] = $var;
 			$values[] = Helper::CommaToPoint($_POST[$var]);
 		}
-	$id = $mysql->insert('ltb_user', $columns, $values);
+	$id = $Mysql->insert('ltb_user', $columns, $values);
 
 	$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
 }
 
 $Frontend->displayHeader();
 
-$dat = $mysql->fetch('ltb_user','LAST');
+$dat = $Mysql->fetch('ltb_user','LAST');
 ?>
 <h1>K&ouml;rper-Daten eingeben</h1>
 
