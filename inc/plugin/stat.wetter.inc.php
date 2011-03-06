@@ -125,7 +125,7 @@ if (count($wetter_all) > 0)
 	foreach($wetter_all as $w => $wetter) {
 		echo('
 		<tr class="a'.($w%2+1).' r">
-			<td class="c">'.Helper::WetterImg($wetter['id']).'</td>');
+			<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
 	
 		$i = 1;
 		$data = $Mysql->fetch('SELECT
@@ -234,7 +234,7 @@ if (count($kleidungen) > 0) {
 		</tr>');
 	}
 } else {
-	$Error->add('WARNING', 'Keine Kleidung eingetragen', __FILE__, __LINE__); 
+	$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
 }
 ?>
 	<tr class="space">
@@ -291,7 +291,7 @@ if (count($kleidungen) > 0) {
 <?php endif;
 	}
 } else
-	$Error->add('WARNING', 'Keine Kleidung eingetragen', __FILE__, __LINE__);
+	$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
 
 for (; $i%3 != 1; $i++):
 ?>

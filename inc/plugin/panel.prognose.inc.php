@@ -33,13 +33,13 @@ function prognose_rightSymbol() {
 function prognose_display() {
 	global $global, $config;
 
-	Error::getInstance()->add('TODO','Add Zwischenzeiten/Marschtabelle',__FILE__,__LINE__);
+	Error::getInstance()->addTodo('Add Zwischenzeiten/Marschtabelle', __FILE__, __LINE__);
 
-	echo Helper::Prognose(1, true);
-	echo Helper::Prognose(3, true);
-	echo Helper::Prognose(5);
-	echo Helper::Prognose(10);
-	echo Helper::Prognose(21.1);
-	echo Helper::Prognose(42.2);
+	echo Helper::Prognosis(1, true);
+	echo Helper::Prognosis(3, true);
+	echo Helper::Prognosis(5);
+	echo Helper::Prognosis(10);
+	echo Helper::Prognosis(21.1);
+	echo Helper::Prognosis(42.2);
 }
 ?>

@@ -8,7 +8,7 @@ $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->add('TODO', 'Formular abschicken funktioniert noch nicht vollständig', __FILE__, __LINE__);
+$Error->addTodo('Formular abschicken funktioniert noch nicht vollständig', __FILE__, __LINE__);
 if (isset($_POST) && $_POST['type'] == "config") {
 	// die('FUNKTIONIERT NOCH NICHT!');
 
@@ -40,16 +40,6 @@ if (isset($_POST) && $_POST['type'] == "config") {
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
 
-/**
- * Get checked="checked" if $var==$value
- * @param $var     Argument to be checked
- * @param $value   [optional] Value, default: true
- * @return string
- */
-function formChecked($var, $value = true) {
-	return ($var == $value) ? ' checked="checked"' : '';
-}
-
 // Because constants can't be redefinied, $config has to be used instead of CONFIG_...
 $config = $Mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
 
@@ -77,34 +67,34 @@ if (isset($submit))
 
 <div id="config_allgemein" class="change">
 	<h1>Allgemeine Einstellungen</h1>
-<?php $Error->add('TODO', 'Weitere Config-Variablen', __FILE__, __LINE__); ?>
-<?php $Error->add('TODO', 'Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
+<?php $Error->addTodo('Weitere Config-Variablen', __FILE__, __LINE__); ?>
+<?php $Error->addTodo('Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
 	<strong>Geschlecht:</strong><br />
-		<input type="radio" name="geschlecht" value="m"<?php echo formChecked($config['geschlecht'], 'm'); ?> />
+		<input type="radio" name="geschlecht" value="m"<?php echo Helper::Checked($config['geschlecht'], 'm'); ?> />
 			m&auml;nnlich<br />
-		<input type="radio" name="geschlecht" value="w"<?php echo formChecked($config['geschlecht'], 'w'); ?> />
+		<input type="radio" name="geschlecht" value="w"<?php echo Helper::Checked($config['geschlecht'], 'w'); ?> />
 			weiblich<br />
 		<br />
 	<strong>Herzfrequenz-Darstellung:</strong><br />
-		<input type="radio" name="puls_mode" value="bpm"<?php echo formChecked($config['puls_mode'], 'bpm'); ?> />
+		<input type="radio" name="puls_mode" value="bpm"<?php echo Helper::Checked($config['puls_mode'], 'bpm'); ?> />
 			absoluter Wert<br />
-		<input type="radio" name="puls_mode" value="hfmax"<?php echo formChecked($config['puls_mode'], 'hfmax'); ?> />
+		<input type="radio" name="puls_mode" value="hfmax"<?php echo Helper::Checked($config['puls_mode'], 'hfmax'); ?> />
 			&#37; <abbr title="maximale Herzfrequenz">HFmax</abbr><br />
 		<br />
 	<strong>W&auml;hle aus, welche der folgenden Daten du f&uuml;r jedes Training protokollieren m&ouml;chtest:</strong><br />
-	<input type="checkbox" name="use_schuhe"<?php echo formChecked($config['use_schuhe'], 1); ?> />
+	<input type="checkbox" name="use_schuhe"<?php echo Helper::Checked($config['use_schuhe'], 1); ?> />
 		Laufschuh<br />
-	<input type="checkbox" name="use_splits"<?php echo formChecked($config['use_splits'], 1); ?> />
+	<input type="checkbox" name="use_splits"<?php echo Helper::Checked($config['use_splits'], 1); ?> />
 		Zwischenzeiten<br />
-	<input type="checkbox" name="use_puls"<?php echo formChecked($config['use_puls'], 1); ?> />
+	<input type="checkbox" name="use_puls"<?php echo Helper::Checked($config['use_puls'], 1); ?> />
 		Puls<br />
-	<input type="checkbox" name="use_kleidung"<?php echo formChecked($config['use_kleidung'], 1); ?> />
+	<input type="checkbox" name="use_kleidung"<?php echo Helper::Checked($config['use_kleidung'], 1); ?> />
 		Kleidung<br />
-	<input type="checkbox" name="use_temperatur"<?php echo formChecked($config['use_temperatur'], 1); ?> />
+	<input type="checkbox" name="use_temperatur"<?php echo Helper::Checked($config['use_temperatur'], 1); ?> />
 		Temperatur<br />
-	<input type="checkbox" name="use_wetter"<?php echo formChecked($config['use_wetter'], 1); ?> />
+	<input type="checkbox" name="use_wetter"<?php echo Helper::Checked($config['use_wetter'], 1); ?> />
 		Wetter<br />
-	<input type="checkbox" name="use_strecke"<?php echo formChecked($config['use_strecke'], 1); ?> />
+	<input type="checkbox" name="use_strecke"<?php echo Helper::Checked($config['use_strecke'], 1); ?> />
 		Strecke<br />
 </div>
 
@@ -140,9 +130,9 @@ foreach($plugins as $i => $plugin)
 			<td>'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.formChecked($plugin['active'], 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.formChecked($plugin['active'], 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.formChecked($plugin['active'], 0).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'], 1).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'], 2).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'], 0).' /></td>
 			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
 		</tr>');
 ?>
@@ -182,9 +172,9 @@ foreach($plugins as $i => $plugin)
 			<td>'.Ajax::window('<a href="inc/class.Stat.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.formChecked($plugin['active'], 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.formChecked($plugin['active'], 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.formChecked($plugin['active'], 0).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'], 1).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'], 2).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'], 0).' /></td>
 			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
 		</tr>');
 ?>
@@ -257,7 +247,7 @@ foreach($datasets as $i => $dataset) {
 			<td colspan="12"></td>
 		</tr>
 <?php
-$Error->add('TODO', 'Edit Sports', __FILE__, __LINE__);
+$Error->addTodo('Edit Sports', __FILE__, __LINE__);
 // TODO ID=1 für Laufen sperren!
 
 $sports = $Mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
@@ -296,8 +286,8 @@ foreach($sports as $i => $sport) {
 			<td colspan="4"></td>
 		</tr>
 <?php
-$Error->add('TODO', 'Edit Trainingstypen', __FILE__, __LINE__);
-$Error->add('TODO', 'Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
+$Error->addTodo('Edit Trainingstypen', __FILE__, __LINE__);
+$Error->addTodo('Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
 
 $typen = $Mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
 foreach($typen as $i => $typ) {
@@ -331,7 +321,7 @@ foreach($typen as $i => $typ) {
 			<td colspan="3"></td>
 		</tr>
 <?php
-$Error->add('TODO', 'Edit Kleidungen', __FILE__, __LINE__);
+$Error->addTodo('Edit Kleidungen', __FILE__, __LINE__);
 
 $kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
 foreach($kleidungen as $i => $kleidung) {

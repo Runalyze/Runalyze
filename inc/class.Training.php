@@ -11,29 +11,54 @@
  * @uses class:Error
  * @uses $global
  *
- * Last modified 2011/01/15 18:21 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 
 // TODO: Dataset über diese Klasse oder eine eigene? DataBrowser?
 
 class Training {
-	static $minElevationDiff = 3; // minimal difference per step to be recognized
-	static $everyNthElevationPoint = 5; // only every n-th point will be taken for the elevation
+	/**
+	 * Minimal difference per step to be recognized for elevation data
+	 * @var int
+	 */
+	public static $minElevationDiff = 3;
 
-	private $id,
-		$data;
+	/**
+	 * Only every n-th point will be taken for the elevation
+	 * @var int
+	 */
+	public static $everyNthElevationPoint = 5;
 
-	function __construct($id) {
+	/**
+	 * Internal ID in database
+	 * @var int
+	 */
+	private $id;
+
+	/**
+	 * Data array from database
+	 * @var array
+	 */
+	private $data;
+
+	/**
+	 * Constructor (needs ID)
+	 * @param int $id
+	 */
+	public function __construct($id) {
 		global $global;
+
 		if (!is_numeric($id) || $id == NULL) {
-			Error::getInstance()->add('ERROR', 'An object of class::Training must have an ID: <$id='.$id.'>');
+			Error::getInstance()->addError('An object of class::Training must have an ID: <$id='.$id.'>');
 			return false;
 		}
+
 		$dat = Mysql::getInstance()->fetch('ltb_training', $id);
 		if ($dat === false) {
-			Error::getInstance()->add('ERROR', 'This training (ID='.$id.') does not exist.');
+			Error::getInstance()->addError('This training (ID='.$id.') does not exist.');
 			return false;
 		}
+
 		$this->id = $id;
 		$this->data = $dat;
 	}
@@ -43,18 +68,18 @@ class Training {
 	 * @param string $var wanted column from database
 	 * @return mixed
 	 */
-	function get($var) {
+	public function get($var) {
 		if (isset($this->data[$var]))
 			return $this->data[$var];
 
-		Error::getInstance()->add('WARNING','Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
+		Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
 	}
 
 	/**
 	 * Get string for clothes
 	 * @return string all clothes comma seperated
 	 */
-	function getStringForClothes() {
+	public function getStringForClothes() {
 		if ($this->get('kleidung') != '') {
 			$kleidungen = array();
 			$kleidungen_data = Mysql::getInstance()->fetch('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC', false, true);
@@ -71,14 +96,14 @@ class Training {
 	 * @param string $name displayed link name
 	 * @return string HTML-link to this training
 	 */
-	function trainingLink($name) {
+	public function trainingLink($name) {
 		return Ajax::trainingLink($this->id, $name);
 	}
 
 	/**
 	 * Display the whole training
 	 */
-	function display() {
+	public function display() {
 		$this->displayHeader();
 		$this->displayPlotsAndMap();
 		$this->displayTrainingData();
@@ -87,20 +112,20 @@ class Training {
 	/**
 	 * Display header
 	 */
-	function displayHeader() {
+	public function displayHeader() {
 		echo('<h1>'.NL);
 		$this->displayEditLink();
 		$this->displayTitle();
 		echo('<small class="right">');
 		$this->displayDate();
-		echo('</small>');
+		echo('</small><br class="clear" />');
 		echo('</h1>'.NL.NL.NL);
 	}
 
 	/**
 	 * Display plot links, first plot and map
 	 */
-	function displayPlotsAndMap() {
+	public function displayPlotsAndMap() {
 		$plots = $this->getPlotTypesAsArray();
 
 		echo('<div class="right">'.NL);
@@ -123,7 +148,7 @@ class Training {
 	/**
 	 * Display training data
 	 */
-	function displayTrainingData() {
+	public function displayTrainingData() {
 		$this->displayTable();
 		$this->displayRounds();
 		$this->displaySplits();
@@ -133,9 +158,9 @@ class Training {
 	 * Display the title for this training
 	 * @param bool $short short version without description, default: false
 	 */
-	function displayTitle($short = false) {
+	public function displayTitle($short = false) {
 		echo ($this->get('sportid') == RUNNINGSPORT)
-			? Helper::Typ($this->get('typid'))
+			? Helper::Type($this->get('typid'))
 			: Helper::Sport($this->get('sportid'));
 		if (!$short) {
 			if ($this->get('laufabc') == 1)
@@ -148,12 +173,12 @@ class Training {
 	/**
 	 * Display the formatted date
 	 */
-	function displayDate() {
+	public function displayDate() {
 		$time = $this->get('time');
 		$date = date('H:i', $time) != '00:00'
 			? date('d.m.Y, H:i', $time).' Uhr'
 			: date('d.m.Y', $time);
-		echo (Helper::Wochentag( date('w', $time) ).', '.$date);
+		echo (Helper::Weekday( date('w', $time) ).', '.$date);
 	}
 
 	/**
@@ -178,7 +203,7 @@ class Training {
 	 * Display links for all plots
 	 * @param string $rel related string (id of img)
 	 */
-	function displayPlotLinks($rel = 'trainingGraph') {
+	public function displayPlotLinks($rel = 'trainingGraph') {
 		$links = array();
 		$plots = $this->getPlotTypesAsArray();
 		foreach ($plots as $key => $array)
@@ -190,34 +215,34 @@ class Training {
 	 * Display a plot
 	 * @param string $type name of the plot, should be in getPlotTypesAsArray
 	 */
-	function displayPlot($type = 'undefined') {
+	public function displayPlot($type = 'undefined') {
 		// TODO Use class::Draw as soon as possible
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type]))
 			echo '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />'.NL;
 		else
-			Error::getInstance()->add('WARNING','Training::displayPlot - Unknown plottype "'.$type.'"',__FILE__,__LINE__);
+			Error::getInstance()->addWarning('Training::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}
 
 	/**
 	 * Display table with all training data
 	 */
-	function displayTable() {
+	public function displayTable() {
 		include('tpl/tpl.Training.table.php');
 	}
 
 	/**
 	 * Display defined splits
 	 */
-	function displaySplits() {
+	public function displaySplits() {
 		if ($this->hasSplitsData()) {
 			echo('<strong>Zwischenzeiten:</strong><br />'.NL);
 			echo('<table cellspacing="0" style="width:480px;">'.NL);
 			echo('<tr>'.NL);
 
 			$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-			Error::getInstance()->add('TODO','Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?',__FILE__,__LINE__);
-			Error::getInstance()->add('TODO','Training::splits Gesamtschnitt/Vorgabe/etc.',__FILE__,__LINE__);
+			Error::getInstance()->addTodo('Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?', __FILE__, __LINE__);
+			Error::getInstance()->addTodo('Training::splits Gesamtschnitt/Vorgabe/etc.', __FILE__, __LINE__);
 			
 			for ($i = 0, $num = count($splits); $i < $num; $i++) {
 				$split = explode('|', $splits[$i]);
@@ -249,7 +274,7 @@ class Training {
 	/**
 	 * Display (computed) rounds
 	 */
-	function displayRounds() {
+	public function displayRounds() {
 		if ($this->hasPaceData()) {
 			echo('<strong>Berechnete Rundenzeiten:</strong><br />'.NL);
 			echo('<table cellspacing="0">'.NL);
@@ -295,7 +320,7 @@ class Training {
 	/**
 	 * Display route on GoogleMaps
 	 */
-	function displayRoute() {
+	public function displayRoute() {
 		echo '<iframe src="lib/gpx/karte.php?id='.$this->id.'" style="border:0;" width="482" height="300" frameborder="0"></iframe>';
 	}
 
@@ -330,35 +355,37 @@ class Training {
 	/**
 	 * Has the training information about position?
 	 */
-	function hasPositionData() {
+	public function hasPositionData() {
 		return $this->get('arr_lat') != '' && $this->get('arr_lon') != '';
 	}
 
 	/**
 	 * Display create window
 	 */
-	function displayCreateWindow() {
+	public function displayCreateWindow() {
 		// TODO Set up class.Training.createWindow.php ?
+		Error::getInstance()->addTodo('Set up class::Training::createWindow()');
 	}
 
 	/**
 	 * Display link for edit window
 	 */
-	function displayEditLink() {
+	public function displayEditLink() {
 		echo Ajax::window('<a href="inc/class.Training.edit.php?id='.$this->id.'" title="Training editieren"><img src="img/edit.png" alt="Training editieren" /></a> ','small');
 	}
 
 	/**
 	 * Parse a tcx-file
 	 */
-	function parseTcx() {
+	public function parseTcx() {
 		// TODO
+		Error::getInstance()->addTodo('Set up class::Training::parseTcx()');
 	}
 
 	/**
 	 * Correct the elevation data
 	 */
-	function elevationCorrection() {
+	public function elevationCorrection() {
 		if (!$this->hasPositionData())
 			return;
 
@@ -402,8 +429,9 @@ class Training {
 	/**
 	 * Compress data for lower database-traffic
 	 */
-	function compressData() {
+	private function compressData() {
 		// TODO
+		Error::getInstance()->addTodo('Set up class::Training::compressData()');
 	}
 }
 ?>

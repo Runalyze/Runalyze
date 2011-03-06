@@ -23,14 +23,28 @@
  * // @uses class::Parser // Will be included by class::Training later
  * // @uses class::Draw // Including by other classes?
  *
- * Last modified 2010/08/13 22:00 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class Frontend {
+	/**
+	 * Global array (should be deleted later on)
+	 * @var array
+	 */
 	public $global;
-	private $ajax_request,
-		$file;
 
-	function __construct($ajax_request = false, $file = __FILE__) {
+	/**
+	 * Boolean flag if it was an Ajax-request
+	 * @var bool
+	 */
+	private $ajax_request;
+
+	/**
+	 * Called filename
+	 * @var string
+	 */
+	private $file;
+
+	public function __construct($ajax_request = false, $file = __FILE__) {
 		global $global;
 
 		header('Content-type: text/html; charset=ISO-8859-1');
@@ -39,19 +53,7 @@ class Frontend {
 		$this->initErrorHandling();
 		$this->initMySql();
 		$this->initConfigConsts();
-
-		require_once(FRONTEND_PATH.'class.Ajax.php');
-		require_once(FRONTEND_PATH.'class.Panel.php'); // Will be included by class::Plugin later?
-		require_once(FRONTEND_PATH.'class.Stat.php'); // Will be included by class::Plugin later?
-		require_once(FRONTEND_PATH.'class.Helper.php'); // Will be included by class::Plugin later?
-		require_once(FRONTEND_PATH.'..\\config\\dataset.php'); // Will be a class later
-		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
-		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
-		Error::getInstance()->add('TODO','Following classes have to be implementated: Plugin, Training, Parser, Draw');
-		// require_once(FRONTEND_PATH.'class.Plugin.php');
-		require_once(FRONTEND_PATH.'class.Training.php');
-		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
-		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
+		$this->initRequiredFiles();
 
 		if (!is_bool($ajax_request)) {
 			Error::getInstance()->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
@@ -67,19 +69,19 @@ class Frontend {
 	/**
 	 * Destructer, closes mysql-connection and prints error-log if set (hopefully without another call?)
 	 */
-	function __destruct() {}
+	public function __destruct() {}
 
 	/**
 	 * Calls the destructer
 	 */
-	function close() {
+	public function close() {
 		$this->__destruct();
 	}
 
 	/**
 	 * Init constants
 	 */
-	function initConsts() {
+	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'\\');
 		define('LTB_VERSION', '0.5');
 		define('LTB_DEBUG', true);
@@ -93,7 +95,7 @@ class Frontend {
 	/**
 	 * Include class::Error and and initialise it
 	 */
-	function initErrorHandling() {
+	private function initErrorHandling() {
 		require_once(FRONTEND_PATH.'class.Error.php');
 		Error::init();
 	}
@@ -101,7 +103,7 @@ class Frontend {
 	/**
 	 * Include class::Mysql and connect to database
 	 */
-	function initMySql() {
+	private function initMySql() {
 		require_once(FRONTEND_PATH.'class.Mysql.php');
 		require_once(FRONTEND_PATH.'config.inc.php');
 		Mysql::connect($host, $username, $password, $database);
@@ -111,7 +113,7 @@ class Frontend {
 	/**
 	 * Define all CONFIG_CONSTS
 	 */
-	function initConfigConsts() {
+	private function initConfigConsts() {
 		$config = Mysql::getInstance()->fetch('SELECT * FROM `ltb_config` LIMIT 1');
 		foreach ($config as $key => $value)
 			define('CONFIG_'.strtoupper($key), $value);
@@ -119,9 +121,32 @@ class Frontend {
 	}
 
 	/**
+	 * Include alle required files
+	 */
+	private function initRequiredFiles() {
+		global $global;
+
+		require_once(FRONTEND_PATH.'class.Ajax.php');
+		require_once(FRONTEND_PATH.'class.Panel.php'); // Will be included by class::Plugin later?
+		require_once(FRONTEND_PATH.'class.Stat.php'); // Will be included by class::Plugin later?
+		require_once(FRONTEND_PATH.'class.Helper.php'); // Will be included by class::Plugin later?
+		require_once(FRONTEND_PATH.'..\\config\\dataset.php'); // Will be a class later
+		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
+		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
+		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser, Draw');
+		// require_once(FRONTEND_PATH.'class.Plugin.php');
+		require_once(FRONTEND_PATH.'class.Training.php');
+		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
+		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
+	}
+
+	/**
 	 * Function to display the HTML-Header
 	 */
-	function displayHeader() {
+	public function displayHeader() {
+		if ($_GET['action'] == 'do')
+			include('../config/mysql_query.php');
+
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.header.php');
 	}
@@ -129,7 +154,7 @@ class Frontend {
 	/**
 	 * Function to display the HTML-Footer
 	 */
-	function displayFooter() {
+	public function displayFooter() {
 		if (LTB_DEBUG)
 			include('tpl/tpl.Frontend.debug.php');
 
@@ -140,7 +165,7 @@ class Frontend {
 	/**
 	 * Display the panels for the right side
 	 */
-	function displayPanels() {
+	public function displayPanels() {
 		$panels = Mysql::getInstance()->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
 		foreach($panels as $i => $panel) {
 			$panel = new Panel($panel['id']);

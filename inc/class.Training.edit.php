@@ -71,7 +71,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$vars[] = 'schuhid';
 		$columns[] = 'laufabc';
 		$values[] = $_POST['laufabc'] == 'on' ? 1 : 0;
-		if (Helper::Typ($_POST['typid'], false, true) == 1)
+		if (Helper::Type($_POST['typid'], false, true) == 1)
 			$vars[] = 'splits';
 	}
 
@@ -124,7 +124,7 @@ if (isset($submit))
 <input type="hidden" name="type" value="training" />
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
 
-<?php Error::getInstance()->add('TODO','Use class:Ajax for these links',__FILE__,__LINE__); ?>
+<?php Error::getInstance()->add('TODO','Use class:Ajax for these links', __FILE__, __LINE__); ?>
 
 <?php if ($Training->hasPositionData()): ?>
 <a class="right change" href="#edit-gps" target="edit-div">GPS-Daten</a>

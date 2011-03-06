@@ -19,14 +19,14 @@ define('VDOT_FORM', JD::calculateVDOTform());
  * @uses HF_MAX
  * @uses WK_TYPID
  *
- * Last modified 2011/01/09 19:03 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class JD {
 	/**
 	 * This class contains only static methods
 	 */
-	function __construct() {}
-	function __destruct() {}
+	private function __construct() {}
+	private function __destruct() {}
 
 	/**
 	 * Calculates VDOT from an official run
@@ -34,9 +34,10 @@ class JD {
 	 * @param $time_in_s   Time [s]
 	 * @return float       VDOT 
 	 */
-	static function WK2VDOT($km, $time_in_s) {
+	public static function Competition2VDOT($km, $time_in_s) {
 		if ($km == 0 || $time_in_s == 0)
 			return false;
+
 		$time_in_min = $time_in_s/60;
 		$m = $km*1000;
 		return ( -4.6+0.182258*$m / $time_in_min + 0.000104*pow($m/$time_in_min,2) )
@@ -48,7 +49,7 @@ class JD {
 	 * @param $VDOT    VDOT
 	 * @return float   Speed [m/min]
 	 */
-	static function VDOT2v($VDOT) {
+	public static function VDOT2v($VDOT) {
 		return 173.154 + 4.116*($VDOT-29);
 	}
 
@@ -57,7 +58,7 @@ class JD {
 	 * @param $pVDOT   VDOT [%]
 	 * @return float   HFmax [%]
 	 */
-	static function pVDOT2pHF($pVDOT) {
+	public static function pVDOT2pHF($pVDOT) {
 		return ($pVDOT+0.2812)/1.2812;
 	}
 
@@ -66,7 +67,7 @@ class JD {
 	 * @param $pHF     HFmax [%]
 	 * @return float   VDOT [%]
 	 */
-	static function pHF2pVDOT($pHF) {
+	public static function pHF2pVDOT($pHF) {
 		return 1.2812*$pHF-0.2812;
 	}
 
@@ -76,7 +77,7 @@ class JD {
 	 * @param $v        Speed [m/min]
 	 * @return string   1:23 (Pace [min/km])
 	 */
-	static function v2Pace($v) {
+	public static function v2Pace($v) {
 		return Helper::Time(60*1000/$v);
 	}
 
@@ -85,7 +86,7 @@ class JD {
 	 * @param $pace_in_s   Pace [s/km]
 	 * @return float       Speed [m/min
 	 */
-	static function Pace2v($pace_in_s) {
+	public static function Pace2v($pace_in_s) {
 		return $pace_in_s/1000/60;
 	}
 
@@ -94,13 +95,11 @@ class JD {
 	 * @uses HF_MAX
 	 * @param $training_id
 	 */
-	static function Training2VDOT($training_id) {
-		global $global;
-
+	public static function Training2VDOT($training_id) {
 		$training = Mysql::getInstance()->fetch('SELECT `sportid`, `distanz`, `dauer`, `puls` FROM `ltb_training` WHERE `id`='.$training_id.' LIMIT 1');
 
 		return ($training['puls'] != 0 && $training['sportid'] == 1)
-			? round( VDOT_CORRECTOR * self::WK2VDOT($training['distanz'], $training['dauer']) / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2)
+			? round( VDOT_CORRECTOR * self::Competition2VDOT($training['distanz'], $training['dauer']) / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2)
 			: 0;
 	}
 
@@ -110,13 +109,13 @@ class JD {
 	 * @param $distance     Distance [km]
 	 * @return int          Time [s]
 	 */
-	static function WKPrognosis($VDOTactual, $distance = 5) {
+	public static function CompetitionPrognosis($VDOTactual, $distance = 5) {
 		$dauer = 60*$distance;
 		$VDOT_low = 150;
 		while (true) {
 			$dauer++;
 			$VDOT_high = $VDOT_low;
-			$VDOT_low = self::WK2VDOT($distance, $dauer);
+			$VDOT_low = self::Competition2VDOT($distance, $dauer);
 			if ($VDOT_high > $VDOTactual && $VDOTactual > $VDOT_low)
 				break;
 		}
@@ -127,7 +126,7 @@ class JD {
 	 * Calculates an actual VDOT value based on the trainings in the last 30 days
 	 * @return float   VDOT
 	 */
-	static function calculateVDOTform() {
+	public static function calculateVDOTform() {
 		$VDOT_form = 0;
 		$trainings = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time()-30*24*60*60));
 		foreach ($trainings as $training)
@@ -143,17 +142,15 @@ class JD {
 	 * @uses WK_TYPID
 	 * @return float   VDOTcorrectionfactor
 	 */
-	static function calculateVDOTcorrector() {
-		global $global;
-
+	public static function calculateVDOTcorrector() {
 		// Find best VDOT-value in competition
 		$VDOT_top = 0;
 		$VDOT_top_dist = 0;
 		$distances = array(3, 5, 10, 21.1, 42.2);
 		foreach ($distances as $dist) {
-			$dist_PB = Helper::Bestzeit($dist, true);
+			$dist_PB = Helper::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
-				$dist_VDOT = self::WK2VDOT($dist, $dist_PB);
+				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
 				if ($dist_VDOT > $VDOT_top
 					&& Mysql::getInstance()->num('SELECT 1 FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `puls`!=0 AND `distanz`="'.$dist.'" LIMIT 1') > 0) {
 					$VDOT_top = $dist_VDOT;
@@ -163,7 +160,7 @@ class JD {
 		}
 		// Find best VDOT-value in training
 		$VDOT_top_dat = Mysql::getInstance()->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
-		$VDOT_max = self::WK2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
+		$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
 			/ self::pHF2pVDOT($VDOT_top_dat['puls'] / HF_MAX);
 	
 		return $VDOT_top / $VDOT_max;

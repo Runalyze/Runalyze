@@ -52,13 +52,13 @@ function sportarten_display() {
 		foreach($sports as $sport) {
 			$data = $Mysql->fetch('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `ltb_training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
 			$leistung = ($sport['distanztyp'] == 1)
-				? Helper::Unbekannt(km($data['distanz_sum']),'0,0 km')
+				? Helper::Unknown(km($data['distanz_sum']),'0,0 km')
 				: Helper::Time($data['dauer_sum']); 		
 		
 			echo('
 	<p>
 		<span>
-			<small><small>('.Helper::Unbekannt($data['anzahl'],'0').'-mal)</small></small>
+			<small><small>('.Helper::Unknown($data['anzahl'],'0').'-mal)</small></small>
 			'.$leistung.'
 		</span>
 		<img src="img/sports/'.$sport['bild'].'" alt="'.$sport['name'].'" />

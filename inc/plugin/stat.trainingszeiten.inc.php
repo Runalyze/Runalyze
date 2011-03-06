@@ -52,7 +52,7 @@ ORDER BY
 	(`H`+12)%24 ASC,
 	`MIN` ASC');
 
-$Error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+$Error->addTodo('Set correct onclick-link', __FILE__, __LINE__);
 foreach($nights as $i => $night):
 	$sport = Helper::Sport($night['sportid'],true);
 ?>
@@ -62,7 +62,7 @@ foreach($nights as $i => $night):
 		<td class="b"><?php echo date("H:i",$night['time']); ?> Uhr</td>
 		<td><?php echo Ajax::trainingLink($night['id'], '<img class="link" title="'.$sport['name'].'" src="img/sports/'.$sport['bild'].'" />'); ?></td>
 		<td><?php echo ($night['distanz'] != 0 ? Helper::Km($night['distanz']) : Helper::Time($night['dauer'])).' '.$sport['name']; ?></td>
-		<td><a href="#" onclick="daten('<?php echo $night['time']; ?>','<?php echo Helper::Wochenstart($night['time']); ?>','<?php echo Helper::Wochenende($night['time']); ?>')"><?php echo date("d.m.Y",$night['time']); ?></a></td>
+		<td><a href="#" onclick="daten('<?php echo $night['time']; ?>','<?php echo Helper::Weekstart($night['time']); ?>','<?php echo Helper::Weekend($night['time']); ?>')"><?php echo date("d.m.Y",$night['time']); ?></a></td>
 <?php if ($i%2 == 1): ?>
 	</tr>
 <?php endif; ?>
@@ -71,7 +71,7 @@ endforeach;
 ?>
 </table>
 
-<?php $Error->add('TODO', 'Use Class::Draw as soon as possible', __FILE__, __LINE__); ?>
+<?php $Error->addTodo('Use Class::Draw as soon as possible', __FILE__, __LINE__); ?>
 <img class="right" src="lib/draw/trainingstage.php" />
 <img class="left" src="lib/draw/trainingszeiten.php" />
 

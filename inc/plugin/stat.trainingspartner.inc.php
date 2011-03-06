@@ -33,7 +33,7 @@ $Mysql = Mysql::getInstance();
 		<td colspan="2" />
 	</tr>
 <?php
-Error::getInstance()->add('TODO', 'Set correct search-link.', __FILE__, __LINE__);
+Error::getInstance()->addTodo('Set correct search-link.', __FILE__, __LINE__);
 
 $partner = array();
 $trainings = $Mysql->fetch('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""', false, true);
