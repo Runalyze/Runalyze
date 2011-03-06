@@ -1,1 +1,0 @@
-<iframe src="http://localhost/ltb/lib/gpx/karte.php?id=<?php echo $_GET['id']; ?>" style="border:0; width:480px; height:480px;" frameborder="0"></iframe>

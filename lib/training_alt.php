@@ -1,1 +1,0 @@
-<img src="http://localhost/ltb/lib/draw/training_hm.php?id=<?php echo $_GET['id']; ?>" />
