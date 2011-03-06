@@ -28,7 +28,7 @@ function stat_wettkampf_installer() {
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->add('TODO','Add statistics about the weather',__FILE__,__LINE__);
+$Error->addTodo('Add statistics about the weather', __FILE__, __LINE__);
 ?>
 <h1>Wettk&auml;mpfe</h1>
 
@@ -58,17 +58,17 @@ function show_table_start() {
 	</tr>');
 }
 
-$Error->add('TODO', 'Set correct onclick-link for date-link', __FILE__, __LINE__);
+$Error->addTodo('Set correct onclick-link for date-link', __FILE__, __LINE__);
 function show_wk_tr($wk, $i) {
 	echo('
 	<tr class="a'.($i%2 + 1).' r">
-		<td class="c small"><a href="#" onclick="daten(\''.$wk['time'].'\',\''.Helper::Wochenstart($wk['time']).'\',\''.Helper::Wochenende($wk['time']).'\')">'.date("d.m.Y", $wk['time']).'</a></td>
+		<td class="c small"><a href="#" onclick="daten(\''.$wk['time'].'\',\''.Helper::Weekstart($wk['time']).'\',\''.Helper::Weekend($wk['time']).'\')">'.date("d.m.Y", $wk['time']).'</a></td>
 		<td class="l"><strong>'.Ajax::trainingLink($wk['id'],$wk['bemerkung']).'</strong></td>
 		<td>'.Helper::Km($wk['distanz'], (round($wk['distanz']) != $wk['distanz'] ? 1 : 0), $wk['bahn']).'</td>
 		<td>'.Helper::Time($wk['dauer']).'</td>
 		<td class="small">'.$wk['pace'].'/km</td>'.(CONFIG_USE_PULS ? '
-		<td class="small">'.Helper::Unbekannt($wk['puls']).' / '.Helper::Unbekannt($wk['puls_max']).' bpm</td>' : '').''.(CONFIG_USE_WETTER ? '
-		<td class="small">'.($wk['temperatur'] != 0 && $wk['wetterid'] != 0 ? $wk['temperatur'].' &deg;C '.Helper::WetterImg($wk['wetterid']) : '').'</td>' : '').'
+		<td class="small">'.Helper::Unknown($wk['puls']).' / '.Helper::Unknown($wk['puls_max']).' bpm</td>' : '').''.(CONFIG_USE_WETTER ? '
+		<td class="small">'.($wk['temperatur'] != 0 && $wk['wetterid'] != 0 ? $wk['temperatur'].' &deg;C '.Helper::WeatherImage($wk['wetterid']) : '').'</td>' : '').'
 	</tr>');	
 }
 
@@ -106,7 +106,7 @@ show_table_end();
 <?php
 show_table_start();
 
-$Error->add('TODO','Last WKs: Set LAST_WK_NUM as config-var',__FILE__,__LINE__);
+$Error->addTodo('Last WKs: Set LAST_WK_NUM as config-var', __FILE__, __LINE__);
 define('LAST_WK_NUM',10);
 
 $wks = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM, false, true);
@@ -115,7 +115,7 @@ if (count($wks) > 0) {
 		show_wk_tr($wk, $i);
 } else {
 	show_empty_tr(1, 'Keine Wettk&auml;mpfe gefunden.');
-	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, 100);
+	$Error->addWarning('Keine Trainingsdaten vorhanden', __FILE__, 100);
 }
 show_table_end();
 ?>
@@ -142,7 +142,7 @@ show_table_end();
 
 	<small style="text-align:center;display:block;">
 <?php
-$Error->add('TODO', 'Set link with Class::Ajax', __FILE__, __LINE__);
+$Error->addTodo('Set link with Class::Ajax', __FILE__, __LINE__);
 // TODO Set link with AJAX-Class
 $first = true;
 foreach($distances as $km) {

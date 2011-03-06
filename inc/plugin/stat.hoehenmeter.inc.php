@@ -48,8 +48,22 @@ $Mysql = Mysql::getInstance();
 		</td>
 	</tr>
 <?php
-for ($y = START_YEAR; $y <= date("Y"); $y++):
-	if ($Mysql->num('SELECT 1 FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND `hm`!=0 LIMIT 1') > 0):
+$ElevationData = array();
+$result = $Mysql->fetch('
+	SELECT
+		SUM(`hm`) as `hm`,
+		SUM(`distanz`) as `km`,
+		YEAR(FROM_UNIXTIME(`time`)) as `year`,
+		MONTH(FROM_UNIXTIME(`time`)) as `month`
+	FROM `ltb_training`
+	WHERE `hm` > 0
+	GROUP BY `year`, `month`', false, true);
+
+foreach ($result as $dat) {
+	$ElevationData[$dat['year']][$dat['month']] = array('hm' => $dat['hm'], 'km' => $dat['km']);
+}
+
+foreach ($ElevationData as $y => $Data):
 ?>
 	<tr class="a<?php echo($y%2+1); ?> r">
 		<td class="b l">
@@ -57,22 +71,16 @@ for ($y = START_YEAR; $y <= date("Y"); $y++):
 		</td>
 		<?php
 		for ($m = 1; $m <= 12; $m++) {
-			$month = $Mysql->fetch('SELECT SUM(`hm`) as `hmsum`, SUM(`distanz`) as `km`, 1 as `group` FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND MONTH(FROM_UNIXTIME(`time`))="'.$m.'" GROUP BY `group` LIMIT 1');
-			if ($month !== false) {
-				$link = '<span class="link" onclick="submit_suche(\'sort=DESC&order=hm&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y.'\')" title="&oslash; '.round($month['hmsum']/$month['km']/10,2).' &#37;">'.$month['hmsum'].' hm</span>';
-				echo('
-				<td>
-					'.($month['hmsum'] != 0 ? $link	: '&nbsp;').'
-				</td>');
+			if ($Data[$m]['hm'] > 0) {
+				$link = '<span class="link" onclick="submit_suche(\'sort=DESC&order=hm&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y.'\')" title="&oslash; '.round($Data[$m]['hm']/$Data[$m]['km']/10,2).' &#37;">'.$Data[$m]['hm'].' hm</span>';
+				echo('<td>'.$link.'</td>'.NL);
 			}
 			else
-				echo('
-				<td>&nbsp;</td>');
+				echo Helper::emptyTD();
 		}
 		?>
 <?php
-	endif;
-endfor;
+endforeach;
 ?>
 	</tr>
 	<tr class="space">
@@ -120,6 +128,8 @@ else
 		<td colspan="4" />
 	</tr>
 <?php
+Error::getInstance()->addTodo('Set up correct trainingLink', __FILE__, __LINE__);
+
 $strecken = $Mysql->fetch('SELECT `time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`, (`hm`/`distanz`) as `steigung`, `distanz` FROM `ltb_training` ORDER BY `steigung` DESC LIMIT 10', false, true);
 if ($strecken === false)
 	echo('

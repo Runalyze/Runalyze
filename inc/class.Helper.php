@@ -23,14 +23,14 @@ require_once(FRONTEND_PATH.'class.JD.php');
  * @uses class::Mysql
  * @uses class::JD
  *
- * Last modified 2010/08/28 18:08 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class Helper {
 	/**
 	 * This class contains only static methods
 	 */
-	function __construct() {}
-	function __destruct() {}
+	private function __construct() {}
+	private function __destruct() {}
 
 	/**
 	 * Get the name or all information of a sport
@@ -38,7 +38,7 @@ class Helper {
 	 * @param bool $as_array Return as array, default: false
 	 * @return string|array Name of sport or all information as array
 	 */
-	static function Sport($sport_id, $as_array = false) {
+	public static function Sport($sport_id, $as_array = false) {
 		$sport = Mysql::getInstance()->fetch('ltb_sports', $sport_id);
 		return ($as_array) ? $sport : $sport['name'];
 	}
@@ -51,7 +51,7 @@ class Helper {
 	 * @param bool $as_array        Return as array, default: false
 	 * @return mixed depends on arguments
 	 */
-	static function Typ($type_id, $as_short = false, $as_bool_has_splits = false, $as_array = false) {
+	public static function Type($type_id, $as_short = false, $as_bool_has_splits = false, $as_array = false) {
 		$typ = Mysql::getInstance()->fetch('ltb_typ', $type_id);
 		if ($as_short)
 			return $typ['abk'];
@@ -64,13 +64,13 @@ class Helper {
 
 	/**
 	 * Get the name or all information of a shoe
-	 * @param int  $schuh_id       ID of the schuh
-	 * @param bool $as_array       Return as array, default: false
+	 * @param int  $shoe_id   ID of the shoe
+	 * @param bool $as_array  Return as array, default: false
 	 * @return string|array   Name of shoe or all information as array
 	 */
-	static function Schuh($schuh_id, $as_array = false) {
-		$schuh = Mysql::getInstance()->fetch('ltb_schuhe', $schuh_id);
-		return ($as_array) ? $schuh : $schuh['name'];
+	public static function Shoe($shoe_id, $as_array = false) {
+		$shoe = Mysql::getInstance()->fetch('ltb_schuhe', $shoe_id);
+		return ($as_array) ? $shoe : $shoe['name'];
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Helper {
 	 * @param int $wetter_id
 	 * @return string img-tag
 	 */
-	static function WetterImg($wetterid) {
+	public static function WeatherImage($wetterid) {
 		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
 		return ($wetter !== false)
 			? '<img src="img/wetter/'.$wetter['bild'].'" title="'.$wetter['name'].'" style="vertical-align:bottom;" />'
@@ -90,7 +90,7 @@ class Helper {
 	 * @param int $wetterid
 	 * @return string name for this weather
 	 */
-	static function WetterName($wetterid) {
+	public static function WeatherName($wetterid) {
 		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
 		return ($wetter !== false)
 			? $wetter['name']
@@ -107,7 +107,7 @@ class Helper {
 	 * @param int $sport_id   ID of sport for choosing pace/kmh
 	 * @return string
 	 */
-	static function Tempo($km, $time, $sport_id = 0) {
+	public static function Speed($km, $time, $sport_id = 0) {
 		if ($km == 0 || $time == 0)
 			return '';
 
@@ -132,7 +132,7 @@ class Helper {
 	 * @param int $time   Time [s]
 	 * @return string
 	 */
-	static function Pace($km, $time) {
+	public static function Pace($km, $time) {
 		return self::Time(round($time/$km));
 	}
 
@@ -142,7 +142,7 @@ class Helper {
 	 * @param int $time   Time [s]
 	 * @return string
 	 */
-	static function Kmh($km, $time) {
+	public static function Kmh($km, $time) {
 		return number_format($km*3600/$time, 1, ',', '.');
 	}
 
@@ -152,7 +152,7 @@ class Helper {
 	 * @param int $decimals   Decimals after the point, default: 1
 	 * @param bool $track     Run on a tartan track?, default: false
 	 */
-	static function Km($km, $decimals = 1, $track = false) {
+	public static function Km($km, $decimals = 1, $track = false) {
 		if ($km == 0)
 			return '';
 		if ($track)
@@ -167,7 +167,7 @@ class Helper {
 	 * @param bool $show_days	Show days (default) or count hours > 24, default: true
 	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false
 	 */
-	static function Time($time_in_s, $show_days = true, $show_zeros = false) {
+	public static function Time($time_in_s, $show_days = true, $show_zeros = false) {
 		$string = '';
 		if ($show_zeros)
 			return floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
@@ -189,7 +189,7 @@ class Helper {
 	 * @param bool $return_time Return as integer, default: false
 	 * @return mixed
 	 */
-	static function Bestzeit($dist, $return_time = false) {
+	public static function PersonalBest($dist, $return_time = false) {
 		$pb = Mysql::getInstance()->fetch('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC LIMIT 1');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
@@ -204,7 +204,7 @@ class Helper {
 	 * @param bool $trimp        [optional] If set, calculate backwards, default: false     
 	 * @return int
 	 */
-	static function TRIMP($training_id, $trimp = false) {
+	public static function TRIMP($training_id, $trimp = false) {
 		global $config, $global;
 	
 		$dat = Mysql::getInstance()->fetch('ltb_training', $training_id);
@@ -232,7 +232,7 @@ class Helper {
 	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
-	static function ATL($time = 0) {
+	public static function ATL($time = 0) {
 		if ($time == 0)
 			$time = time();
 
@@ -246,7 +246,7 @@ class Helper {
 	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
-	static function CTL($time = 0) {
+	public static function CTL($time = 0) {
 		if ($time == 0)
 			$time = time();
 
@@ -260,7 +260,7 @@ class Helper {
 	 * @uses self::ATL
 	 * @param int $time [optional] timestamp
 	 */
-	static function TSB($time = 0) {
+	public static function TSB($time = 0) {
 		return self::CTL($time) - self::ATL($time);
 	}
 
@@ -268,7 +268,7 @@ class Helper {
 	 * Creating a RGB-color for a given stress-value [0-100]
 	 * @param int $stress   Stress-value [0-100]
 	 */
-	static function Stresscolor($stress) {
+	public static function Stresscolor($stress) {
 		if ($stress > 100)
 			$stress = 100;
 		$gb = dechex(200 - 2*$stress);
@@ -278,18 +278,18 @@ class Helper {
 	}
 
 	/**
-	 * Calculating 'Grundlagenausdauer'
+	 * Calculating basic endurance
 	 * @uses DAY_IN_S
 	 * @param bool $as_int as normal integer, default: false
 	 * @param int $timestamp [optional] timestamp
 	 */
-	static function Grundlagenausdauer($as_int = false, $timestamp = 0) {
+	public static function BasicEndurance($as_int = false, $timestamp = 0) {
 		global $global;
 
 		if ($timestamp == 0)
 			$timestamp = time();
 		$points = 0;
-		// Wochenkilometer
+		// Weekkilometers
 		$wk_sum = 0;
 		$data = Mysql::getInstance()->fetch('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
@@ -297,7 +297,7 @@ class Helper {
 			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
 		}
 		$points += $wk_sum / 20;
-		// Lange Läufe ...
+		// LongJogs ...
 		$data = Mysql::getInstance()->fetch('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat)
 			$points += ($dat['distanz']-15) / 2;
@@ -314,24 +314,24 @@ class Helper {
 	/**
 	 * Calculate a prognosis for a given distance
 	 * @uses VDOT_FORM
-	 * @uses self::Grundlagenausdauer
-	 * @uses self::Bestzeit
+	 * @uses self::BasicEndurance
+	 * @uses self::PersonalBest
 	 * @uses self::Time
 	 * @uses self::Km
-	 * @uses JD::WKPrognosis
+	 * @uses JD::CompetitionPrognosis
 	 * @param float $dist Distance [km]
 	 * @param bool $bahn  A track run?, default: false
 	 * @param int $VDOT   Make prognosis for a given VDOT value? (used in plugin/panel.prognose)
 	 */
-	static function Prognose($dist, $bahn = false, $VDOT = 0) {
+	public static function Prognosis($dist, $bahn = false, $VDOT = 0) {
 		global $global;
 	
 		$VDOT_new = ($VDOT == 0) ? VDOT_FORM : $VDOT;
-		$pb = self::Bestzeit($dist, true);
+		$pb = self::PersonalBest($dist, true);
 		// Grundlagenausdauer
 		if ($dist > 5)
-			$VDOT_new *= 1 - (1 - self::Grundlagenausdauer(true)/100) * (exp(0.005*($dist-5)) - 1);
-		$prognose_dauer = JD::WKPrognosis($VDOT_new, $dist);
+			$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
+		$prognose_dauer = JD::CompetitionPrognosis($VDOT_new, $dist);
 		if ($VDOT != 0)
 			return zeit($prognose_dauer);
 		$bisher_tag = ($prognose_dauer < $pb) ? 'del' : 'strong';
@@ -340,7 +340,7 @@ class Helper {
 	<p>
 		<span>
 			<small>von</small>
-				<'.$bisher_tag.' title="VDOT '.JD::WK2VDOT($dist, $pb).'">
+				<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">
 					'.self::Time($pb).'
 				</'.$bisher_tag.'>
 			<small>auf</small>
@@ -357,7 +357,7 @@ class Helper {
 	 * Get a leading 0 if $int is lower than 10
 	 * @param int $int
 	 */
-	static function TwoNumbers($int) {
+	public static function TwoNumbers($int) {
 		return ($int < 10) ? '0'.$int : $int;
 	}
 
@@ -366,9 +366,10 @@ class Helper {
 	 * @param mixed $var
 	 * @param string $string string to be displayed insted, default: ?
 	 */
-	static function Unbekannt($var, $string = '?') {
+	public static function Unknown($var, $string = '?') {
 		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )
 			return $var;
+
 		return $string;
 	}
 
@@ -378,11 +379,13 @@ class Helper {
 	 * @param string $text
 	 * @param int $cut [optional]
 	 */
-	static function Cut($text, $cut = 0) {
+	public static function Cut($text, $cut = 0) {
 		if ($cut == 0)
 			$cut = CUT_LENGTH;
+
 		if (strlen($text) >= $cut)
 			return substr ($text, 0, $cut-3).'...';
+
 		return $text;
 	}
 
@@ -390,7 +393,7 @@ class Helper {
 	 * Get the timestamp of the start of the week
 	 * @param int $time
 	 */
-	static function Wochenstart($time) {
+	public static function Weekstart($time) {
 		$w = date("w", $time);
 		if ($w == 0)
 			$w = 7;
@@ -402,8 +405,8 @@ class Helper {
 	 * Get the timestamp of the end of the week
 	 * @param int $time
 	 */
-	static function Wochenende($time) {
-		$start = Wochenstart($time);
+	public static function Weekend($time) {
+		$start = self::Weekstart($time);
 		return mktime(23, 59, 50, date("m",$start), date("d",$start)+6, date("Y",$start));
 	}
 
@@ -412,7 +415,7 @@ class Helper {
 	 * @param string $w     date('w');
 	 * @param bool $short   short version, default: false
 	 */
-	static function Wochentag($w, $short = false) {
+	public static function Weekday($w, $short = false) {
 		switch($w%7) {
 			case 0: return ($short) ? "So" : "Sonntag";
 			case 1: return ($short) ? "Mo" : "Montag";
@@ -429,7 +432,7 @@ class Helper {
 	 * @param string $m     date('m');
 	 * @param bool $short   short version, default: false
 	 */
-	static function Monat($m, $short = false) {
+	public static function Month($m, $short = false) {
 		switch($m) {
 			case 1: return ($short) ? "Jan" :  "Januar";
 			case 2: return ($short) ? "Feb" :  "Februar";
@@ -450,8 +453,8 @@ class Helper {
 	 * Replace every comma with a point
 	 * @param string $string
 	 */
-	static function CommaToPoint($string) {
-		return ereg_replace(",", ".", $string);
+	public static function CommaToPoint($string) {
+		return str_replace(",", ".", $string);
 	}
 
 	/**
@@ -459,8 +462,8 @@ class Helper {
 	 * @param string $text
 	 * @return string
 	 */
-	static function Textarea($text) {
-		return stripslashes(ereg_replace("&","&amp;",$text));
+	public static function Textarea($text) {
+		return stripslashes(str_replace("&","&amp;",$text));
 	}
 
 	/**
@@ -468,7 +471,7 @@ class Helper {
 	 * @param bool $value
 	 * @return string
 	 */
-	static function Checked($value) {
+	public static function Checked($value) {
 		return $value
 			? ' checked="checked"'
 			: '';
@@ -479,7 +482,7 @@ class Helper {
 	 * @param bool $value
 	 * @return string
 	 */
-	static function Selected($value) {
+	public static function Selected($value) {
 		return $value
 			? ' selected="selected"'
 			: '';
@@ -490,12 +493,11 @@ class Helper {
 	 * @param string $text
 	 * @return string
 	 */
-	static function Umlaute($text) {
-		$text = ereg_replace("ÃŸ", "ß", $text);
-		$text = ereg_replace("Ã„", "Ä", $text); $text = ereg_replace("Ã–", "Ö", $text);
-		$text = ereg_replace("Ãœ", "Ü", $text); $text = ereg_replace("Ã¤", "ä", $text);
-		$text = ereg_replace("Ã¶", "ö", $text); $text = ereg_replace("Ã¼", "ü", $text);
-		return $text;
+	public static function Umlaute($text) {
+		$encrypted = array("ÃŸ", "Ã„", "Ã–", "Ãœ", "Ã¤", "Ã¶", "Ã¼");
+		$correct   = array("ß",  "Ä",  "Ö",  "Ü",  "ä",  "ö",  "ü");
+
+		return str_replace($encrypted, $correct, $text);
 	}
 
 	/**
@@ -503,7 +505,7 @@ class Helper {
 	 * @param string $row   Name of dataset-row
 	 * @return int   Modus
 	 */
-	static function getModus($row) {
+	public static function getModus($row) {
 		$dat = Mysql::getInstance()->query('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'" LIMIT 1');
 		return $dat['modus'];
 	}
@@ -512,7 +514,7 @@ class Helper {
 	 * Return an empty td-Tag
 	 * @return string
 	 */
-	static function emptyTD() {
+	public static function emptyTD() {
 		return '<td>&nbsp;</td>'.NL;
 	}
 
@@ -520,14 +522,17 @@ class Helper {
 	 * Get the HFmax from ltb_user
 	 * @return int   HFmax
 	 */
-	static function getHFmax() {
+	public static function getHFmax() {
 		if (defined('HF_MAX'))
 			return HF_MAX;
+
 		$userdata = Mysql::getInstance()->fetch('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+
 		if ($userdata === false) {
-			Error::getInstance()->add('WARNING', 'HFmax is not set in database, 200 as default.');
+			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
 			return 200;
 		}
+
 		return $userdata['puls_max'];
 	}
 
@@ -535,14 +540,17 @@ class Helper {
 	 * Get the HFrest from ltb_user
 	 * @return int   HFrest
 	 */
-	static function getHFrest() {
+	public static function getHFrest() {
 		if (defined('HF_REST'))
 			return HF_MAX;
+
 		$userdata = Mysql::getInstance()->fetch('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+
 		if ($userdata === false) {
-			Error::getInstance()->add('WARNING', 'HFrest is not set in database, 60 as default.');
+			Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
 			return 60;
 		}
+
 		return $userdata['puls_ruhe'];
 	}
 
@@ -550,10 +558,12 @@ class Helper {
 	 * Get timestamp of first training
 	 * @return int   Timestamp
 	 */
-	static function getStartTime() {
+	public static function getStartTime() {
 		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `ltb_training`');
+
 		if ($data === false)
 			return time();
+
 		return $data['time'];
 	}
 }

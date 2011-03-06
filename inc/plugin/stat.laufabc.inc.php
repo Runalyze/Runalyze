@@ -46,29 +46,41 @@ $Mysql = Mysql::getInstance();
 		</td>
 	</tr>
 <?php
-for ($y = START_YEAR; $y <= date("Y"); $y++):
-	if ($Mysql->num('SELECT 1 FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND `laufabc`!=0 LIMIT 1') > 0):
+Error::getInstance()->addTodo('Set up correct search-link', __FILE__, __LINE__);
+
+$ABCData = array();
+$result = $Mysql->fetch('
+	SELECT
+		SUM(`laufabc`) as `abc`,
+		SUM(1) as `num`,
+		YEAR(FROM_UNIXTIME(`time`)) as `year`,
+		MONTH(FROM_UNIXTIME(`time`)) as `month`
+	FROM `ltb_training`
+	GROUP BY `year`, `month`', false, true);
+
+foreach ($result as $dat) {
+	if ($dat['abc'] > 0)
+		$ABCData[$dat['year']][$dat['month']] = array('abc' => $dat['abc'], 'num' => $dat['num']);
+}
+
+foreach ($ABCData as $y => $Data):
 ?>
 	<tr class="a<?php echo($y%2+1); ?> r">
 		<td class="b l">
 			<?php echo $y; ?>
 		</td>
-<?php
+		<?php
 		for ($m = 1; $m <= 12; $m++) {
-			$month = $Mysql->fetch('SELECT SUM(`laufabc`) as `abc`, SUM(1) as `num`, 1 as `group` FROM `ltb_training` WHERE YEAR(FROM_UNIXTIME(`time`))="'.$y.'" AND MONTH(FROM_UNIXTIME(`time`))="'.$m.'" GROUP BY `group` LIMIT 1');
-			if ($month === false)
-				echo('
-				<td>&nbsp;</td>');
-			else {
-				$link = '<span class="link" onclick="submit_suche(\'opt[laufabc]=is&val[laufabc]=1&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y.'\')" title="'.$month['abc'].'x">'.round(100*$month['abc']/$month['num']).' &#37;</span>';
-				echo('
-				<td>
-					'.($month['abc'] != 0 ? $link : '&nbsp;').'
-				</td>');
+			if ($Data[$m]['abc'] > 0) {
+				$link = '<span class="link" onclick="submit_suche(\'sort=DESC&order=hm&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y.'\')" title="'.$Data[$m]['abc'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</span>';
+				echo('<td>'.$link.'</td>'.NL);
 			}
+			else
+				echo Helper::emptyTD();
 		}
-	endif;
-endfor;
+		?>
+<?php
+endforeach;
 ?>
 	</tr>
 	<tr class="space">

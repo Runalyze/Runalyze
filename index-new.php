@@ -1,11 +1,9 @@
 <?php
 require('inc/class.Frontend.php');
+
 $Frontend = new Frontend(false, __FILE__);
-
-if ($_GET['action'] == 'do')
-	include('config/mysql_query.php');
-
 $Frontend->displayHeader();
+
 $Error = Error::getInstance();
 ?>
 
@@ -16,7 +14,7 @@ $Error = Error::getInstance();
 
 <div id="l">
 	<div id="daten">
-<?php $Error->add('TODO','class::DataBrowser has to be included',__FILE__,__LINE__); ?>
+<?php $Error->addTodo('class::DataBrowser has to be included', __FILE__, __LINE__); ?>
 		<div id="daten_results" class="panel"></div>
 	</div>
 

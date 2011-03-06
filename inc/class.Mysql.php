@@ -9,9 +9,13 @@
  * @version 1.0
  * @uses class::Error
  *
- * Last modified 2011/01/20 20:22 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 final class Mysql {
+	/**
+	 * Internal instance
+	 * @var Mysql
+	 */
 	private static $instance = NULL;
 
 	/**
@@ -33,7 +37,7 @@ final class Mysql {
 	/**
 	 * Automatically closes connection after execution
 	 */
-	function __destruct() {
+	public function __destruct() {
 		mysql_close();
 	}
 
@@ -49,9 +53,11 @@ final class Mysql {
 	 * @param $password string
 	 * @param $database string
 	 */
-	static function connect($host, $user, $password, $database) {
-		mysql_connect($host, $user, $password) or Error::getInstance()->add('ERROR',mysql_error(),__FILE__,__LINE__);
-		mysql_select_db($database) or Error::getInstance()->add('ERROR',mysql_error(),__FILE__,__LINE__);
+	public static function connect($host, $user, $password, $database) {
+		mysql_connect($host, $user, $password)
+			or Error::getInstance()->addError(mysql_error(), __FILE__, __LINE__);
+		mysql_select_db($database)
+			or Error::getInstance()->addError(mysql_error(), __FILE__, __LINE__);
 	}
 
 	/**
@@ -60,9 +66,10 @@ final class Mysql {
 	 * @param $query string full mysql-query
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
-	function query($query) {
+	public function query($query) {
 		$result = false;
-		$result = mysql_query($query) or Error::getInstance()->add('ERROR',mysql_error().' &lt;Query: '.$query.'&gt;',__FILE__,__LINE__);
+		$result = mysql_query($query)
+			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
 		return $result;
 	}
 
@@ -73,15 +80,15 @@ final class Mysql {
 	 * @param $column mixed  might be an array
 	 * @param $value  mixed  might be an array
 	 */
-	function update($table, $id, $column, $value) {
+	public function update($table, $id, $column, $value) {
 		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
-			foreach ($column as $i => $col) {
+			foreach ($column as $i => $col)
 				$set .= '`'.$col.'`="'.$value[$i].'", ';
-			}
 		} else {
 			$set = '`'.$column.'`="'.$value.'", ';
 		}
+
 		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" LIMIT 1');
 	}
 
@@ -92,7 +99,7 @@ final class Mysql {
 	 * @param $values  array
 	 * @return int       ID of inserted row
 	 */
-	function insert($table, $columns, $values) {
+	public function insert($table, $columns, $values) {
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
@@ -107,7 +114,7 @@ final class Mysql {
 	 * @param bool $as_array   Method returns always $return[$i]['column'] if true, default: false 
 	 * @return array           For count($return)=1: $return['column'], otherwise: $return[$i]['column']. For count($return)=0 && !$as_array: false.
 	 */
-	function fetch($table, $id = false, $as_array = false) {
+	public function fetch($table, $id = false, $as_array = false) {
 		$return = array();
 		if ($id === false)
 			$result = $this->query($table);
@@ -117,7 +124,7 @@ final class Mysql {
 			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
 
 		if ($result === false) {
-			Error::getInstance()->add('WARNING',mysql_error());
+			Error::getInstance()->addWarning(mysql_error());
 			return false;
 		}
 
@@ -136,7 +143,7 @@ final class Mysql {
 	 * @param $query   string
 	 * @return int     number of rows
 	 */
-	function num($query) {
+	public function num($query) {
 		return mysql_num_rows($this->query($query));
 	}
 
@@ -145,9 +152,9 @@ final class Mysql {
 	 * @param $table string
 	 * @param $id    int
 	 */
-	function delete($table, $id) {
+	public function delete($table, $id) {
 		if (!is_int($id)) {
-			Error::getInstance()->add('ERROR','Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>',__FILE__,__LINE__);
+			Error::getInstance()->addError('Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>', __FILE__, __LINE__);
 			return;
 		}
 		$this->query('DELETE FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
@@ -162,7 +169,7 @@ final class Mysql {
 	 * @param $quotes bool  true for adding quotes for strings
 	 * @return mixed        safe value(s)
 	 */
-	static function escape($values, $quotes = true) {
+	public static function escape($values, $quotes = true) {
 		if (is_array($values)) {
 			foreach ($values as $key => $value)
 				$values[$key] = self::escape($value, $quotes);
@@ -175,6 +182,7 @@ final class Mysql {
         	if ($quotes)
             	$values = '"'.$values.'"';
 		}
+
 		return $values;
 	}
 }

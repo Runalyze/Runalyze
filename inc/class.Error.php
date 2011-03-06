@@ -12,15 +12,38 @@
  * @version 1.0
  * @uses error_handler()
  *
- * Last modified 2010/08/08 21:34 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class Error {
+	/**
+	 * Internatl instance pointer
+	 * @var Error
+	 */
 	private static $instance = NULL;
 
-	private $errors = array(),
-		$file = '',
-		$log = false,
-		$log_file = '';
+	/**
+	 * Array of strings with all errors
+	 * @var array
+	 */
+	private $errors = array();
+
+	/**
+	 * Filename creating these errors
+	 * @var string
+	 */
+	private $file = '';
+
+	/**
+	 * Boolean flag: tracking errors
+	 * @var bool
+	 */
+	private $log = false;
+
+	/**
+	 * Name for the log-file
+	 * @var string
+	 */
+	private $log_file = '';
 
 	/**
 	 * Static getter for the singleton instnace
@@ -59,7 +82,7 @@ class Error {
 	 * @param bool   $log        Logging errors?
 	 * @param string $log_path   Path for logging errors
 	 */
-	static function init($file = __FILE__, $log = false, $log_file = '') {
+	public static function init($file = __FILE__, $log = false, $log_file = '') {
 		if ($log_file == '')
 			$log_file = 'log/'.$file.'.log.'.date("Ymd.Hi").'.html';
 
@@ -69,22 +92,35 @@ class Error {
 	/**
 	 * Set private variables from self::init()
 	 */
-	function setLogVars($log, $log_file) {
+	public function setLogVars($log, $log_file) {
 		$this->log = $log;
 		$this->log_file = $log_file;
 	}
 
 	/**
+	 * Prints all errors to screen or into the log-file
+	 */
+	public function display() {
+		if (!$this->log)
+			print implode('<br />', $this->errors);
+		else {
+			$handle = fopen($this->log_file, 'w+');
+			fwrite($handle, implode('<br />', $this->errors));
+			fclose($handle);
+		}
+	}
+
+	/**
 	 * Adds a new message to the array of errors
 	 * @param const  $type      type of error (ERROR | WARNING | NOTICE | Unknown error type)
-	 * @param string $message   error message including file and line number
+	 * @param string $message   error message
 	 * @param string $file      file containing the error
 	 * @param int    $line      line number containing the error
 	 */
-	function add($type, $message, $file = '', $line = '') {
+	public function add($type, $message, $file = '', $line = -1) {
 		if ($file != '') {
 			$message .= ' (in '.$file;
-			if ($line != '')
+			if ($line != -1)
 				$message .= '::'.$line;
 			$message .= ')';
 		}
@@ -93,16 +129,33 @@ class Error {
 	}
 
 	/**
-	 * Prints all errors to screen or into the log-file
+	 * Add an error to error list
+	 * @param string $message
+	 * @param string $file
+	 * @param int $line
 	 */
-	function display() {
-		if (!$this->log)
-			print implode('<br />', $this->errors);
-		else {
-			$handle = fopen($this->log_file, 'w+');
-			fwrite($handle, implode('<br />', $this->errors));
-			fclose($handle);
-		}
+	public function addError($message, $file = '', $line = -1) {
+		$this->add('ERROR', $message, $file, $line);
+	}
+
+	/**
+	 * Add a warning to error list
+	 * @param string $message
+	 * @param string $file
+	 * @param int $line
+	 */
+	public function addWarning($message, $file = '', $line = -1) {
+		$this->add('WARNING', $message, $file, $line);
+	}
+
+	/**
+	 * Add a todo to error list
+	 * @param string $message
+	 * @param string $file
+	 * @param int $line
+	 */
+	public function addTodo($message, $file = '', $line = -1) {
+		$this->add('TODO', $message, $file, $line);
 	}
 }
 

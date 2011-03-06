@@ -18,13 +18,13 @@
 <?php endif; ?>
 	<tr>
 		<td class="b">Kalorien:</td>
-		<td><?php echo Helper::Unbekannt($this->get('kalorien')); ?> kcal</td>
+		<td><?php echo Helper::Unknown($this->get('kalorien')); ?> kcal</td>
 	</tr>
 <?php if ($this->get('puls') != 0): ?>
 	<tr>
 		<td class="b">Puls:</td>
-		<td>&Oslash; <?php echo Helper::Unbekannt($this->get('puls')); ?>bpm<br />
-			max. <?php echo Helper::Unbekannt($this->get('puls_max')); ?>bpm</td>
+		<td>&Oslash; <?php echo Helper::Unknown($this->get('puls')); ?>bpm<br />
+			max. <?php echo Helper::Unknown($this->get('puls_max')); ?>bpm</td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->get('wetterid') != 0 OR $this->get('temperatur') != NULL OR $this->get('strecke') != '' OR $this->getStringForClothes() != ''): ?>
@@ -33,7 +33,7 @@
 <?php if ($this->get('wetterid') != 0 OR $this->get('temperatur') != NULL): ?>
 	<tr>
 		<td class="b">Wetter:</td>
-		<td><?php echo(Helper::WetterImg($this->get('wetterid')).' '.Helper::WetterName($this->get('wetterid')).' bei '.Helper::Unbekannt($this->get('temperatur')).' &#176;C'); ?></td>
+		<td><?php echo(Helper::WeatherImage($this->get('wetterid')).' '.Helper::WeatherName($this->get('wetterid')).' bei '.Helper::Unknown($this->get('temperatur')).' &#176;C'); ?></td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->get('strecke') != ''): ?>
@@ -46,7 +46,7 @@
 <?php if ($this->get('schuhid') != 0): ?>
 	<tr>
 		<td class="b">Schuh:</td>
-		<td><?php echo Helper::Schuh($this->get('schuhid')); ?></td>
+		<td><?php echo Helper::Shoe($this->get('schuhid')); ?></td>
 	</tr>
 <?php endif; ?>
 <?php if ($this->getStringForClothes() != ''): ?>

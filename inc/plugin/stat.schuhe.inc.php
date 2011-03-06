@@ -41,7 +41,8 @@ $Error = Error::getInstance();
 		<td colspan="9" />
 	</tr>
 <?php
-$Error->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+$Error->addTodo('Set correct search-link', __FILE__, __LINE__);
+
 $schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC', false, true);
 if (count($schuhe) > 0) {
 	foreach($schuhe as $i => $schuh) {
@@ -56,16 +57,16 @@ if (count($schuhe) > 0) {
 			<td class="b'.$in_use.' l"><span class="link" onclick="submit_suche(\'dat[0]=schuhid&opt[0]=is&val[0]='.$schuh['id'].'\')">'.$schuh['name'].'</span></td>
 			<td class="small">'.$schuh['kaufdatum'].'</td>
 			<td>'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
-			<td>'.(($trainings != 0) ? Helper::Tempo($schuh['km'], $schuh['dauer']) : '-').'</td>
-			<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_dist['id'].'\')">'.Helper::Km($training_dist['distanz']).'</span></td>
-			<td class="small"><span class="link" onClick="seite(\'training\',\''.$training_pace['id'].'\')">'.$training_pace['pace'].'/km</span></td>
+			<td>'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['dauer']) : '-').'</td>
+			<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distanz'])).'</td>
+			<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
 			<td>'.Helper::Time($schuh['dauer']).'</td>
 			<td>'.Helper::Km($schuh['km']).'</td>
 		</tr>');
 	}
 } else {
 	echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
-	$Error->add('WARNING', 'Bisher keine Schuhe eingetragen', __FILE__, 42);
+	$Error->addWarning('Bisher keine Schuhe eingetragen', __FILE__, __LINE__);
 }
 echo('
 	<tr class="space"><td colspan="9" /></tr>'); 

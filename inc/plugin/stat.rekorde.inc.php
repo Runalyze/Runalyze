@@ -51,7 +51,6 @@ foreach ($rekorde as $rekord):
 		</td>
 	</tr>
 <?php
-	$Error->add('TODO', 'Set correct onclick-Code', __FILE__, __LINE__);
 	eval('$sports = $Mysql->fetch(\''.$rekord['sportquery'].'\', false, true);');
 	foreach ($sports as $i => $sport) {
 		echo('
@@ -63,10 +62,9 @@ foreach ($rekorde as $rekord):
 		if (count($data) > 0) {
 			foreach ($data as $j => $dat) {
 				if ($rekord['eval'] == 0)
-					$code = Helper::Tempo($dat['distanz'],$dat['dauer'],$sport['id'],false);
+					$code = Helper::Speed($dat['distanz'],$dat['dauer'],$sport['id'],false);
 				elseif ($rekord['eval'] == 1)
 					$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
-				// TODO Set correct onclick-Code
 				echo('
 		<td>
 			<span title="'.date("d.m.Y",$dat['time']).'">
@@ -75,7 +73,7 @@ foreach ($rekorde as $rekord):
 		</td>');
 			}
 		} else {
-			$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
+			$Error->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 		}
 		for (; $j < 10; $j++) { echo('
 		<td>
@@ -122,7 +120,7 @@ if (count($years) > 0) {
 			</td>');
 	}
 } else {
-	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
+	$Error->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
 for (; $i < 10; $i++) { echo('
 		<td>&nbsp;</td>'); }
@@ -141,13 +139,13 @@ if (count($months) > 0) {
 		$link = 'daten(\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(23,59,50,$month['month']+1,0,$month['year']).'\');';
 		echo('
 			<td>
-				<span class="link" title="'.Helper::Monat($month['month']).' '.$month['year'].'" onclick="'.$link.'">
+				<span class="link" title="'.Helper::Month($month['month']).' '.$month['year'].'" onclick="'.$link.'">
 					'.Helper::Km($month['km']).'
 				</span>
 			</td>');
 	}
 } else {
-	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
+	$Error->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
 for ($i; $i < 10; $i++) { echo('
 		<td>
@@ -161,10 +159,11 @@ for ($i; $i < 10; $i++) { echo('
 		</td>
 <?php
 // Wochen
+Error::getInstance()->addTodo('Set correct DataBrowser-link', __FILE__, __LINE__);
 $weeks = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10', false, true);
 if (count($weeks) > 0) {
 	foreach ($weeks as $i => $week) {
-		$link = 'daten(\''.$week['time'].'\',\''.Helper::Wochenstart($woche['time']).'\',\''.Helper::Wochenende($week['time']).'\');';
+		$link = 'daten(\''.$week['time'].'\',\''.Helper::Weekstart($woche['time']).'\',\''.Helper::Weekend($week['time']).'\');';
 		echo('
 			<td>
 				<span class="link" title="KW '.$week['week'].' '.$week['year'].'" onclick="'.$link.'">
@@ -173,7 +172,7 @@ if (count($weeks) > 0) {
 			</td>');
 	}
 } else {
-	$Error->add('WARNING', 'Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
+	$Error->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 }
 for (; $i < 10; $i++) { echo('
 		<td>

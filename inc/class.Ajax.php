@@ -7,9 +7,9 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class:Error
+ * @uses class::Error
  *
- * Last modified 2011/01/15 18:21 by Hannes Christiansen
+ * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class Ajax {
 	/**
@@ -20,7 +20,6 @@ class Ajax {
 	 */
 	static function trainingLink($training_id, $name) {
 		return '<a class="training" href="inc/class.Training.display.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
-		//return '<a class="training" href="inc/tpl/tpl.training.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
 	}
 
 	/**
@@ -75,9 +74,9 @@ class Ajax {
 	private static function insertClass($link, $class) {
 		$text = preg_replace('#class="(.+?)"#i', 'class="'.$class.' \\1"', $link);
 		if ($text == $link)
-			$text = preg_replace('#<a#i', '<a class="'.$class.'"', $text);
+			$text = str_replace('<a', '<a class="'.$class.'"', $text);
 		if ($text == $link)
-			Error::getInstance()->add('WARNING','Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
+			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
 
 		return $text;
 	}
@@ -91,9 +90,9 @@ class Ajax {
 	private static function insertRel($link, $rel) {
 		$text = preg_replace('#rel="(.+?)"#i', 'rel="'.$rel.'"', $link);
 		if ($text == $link)
-			$text = preg_replace('#<a#i', '<a rel="'.$rel.'"', $text);
+			$text = str_replace('<a', '<a rel="'.$rel.'"', $text);
 		if ($text == $link)
-			Error::getInstance()->add('WARNING','Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
+			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
 
 		return $text;
 	}

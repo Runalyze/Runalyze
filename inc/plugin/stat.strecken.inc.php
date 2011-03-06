@@ -33,7 +33,7 @@ $Mysql = Mysql::getInstance();
 		<td colspan="3" />
 	</tr>
 <?php
-Error::getInstance()->add('TODO', 'Set correct onclick-link', __FILE__, __LINE__);
+Error::getInstance()->addTodo('Set correct onclick-link', __FILE__, __LINE__);
 // Häufigsten Strecken
 $strecken = $Mysql->fetch('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10', false, true);
 foreach ($strecken as $i => $strecke):

@@ -29,7 +29,7 @@ $Mysql = Mysql::getInstance();
 $sport = $Mysql->fetch('ltb_sports', $this->sportid);
 ?>
 <h1>
-	<?php echo sport($this->sportid); ?>
+	<?php echo $sport['name']; ?>
 	<?php echo ($this->year != -1) ? $this->year : 'Jahresvergleich'; ?>
 </h1>
 
@@ -164,7 +164,7 @@ if (count($data) > 0) {
 	
 			// Print data
 			echo ($dat['dauer'] != 0)
-				? ('		<td>'.Helper::Tempo($dat['distanz'], $dat['dauer'], $this->sportid).'</td>'.NL)
+				? ('		<td>'.Helper::Speed($dat['distanz'], $dat['dauer'], $this->sportid).'</td>'.NL)
 				: Helper::emptyTD();
 		}
 		// Fill empty columns

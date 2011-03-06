@@ -21,10 +21,10 @@ $today = time();
 $last_training = $mysql->fetch('ltb_training','LAST');
 if ($last_training !== false)
 	$today = $last_training['time'];
-$start = Helper::Wochenstart($today);
-$ende = Helper::Wochenende($today);
+$start = Helper::Weekstart($today);
+$ende = Helper::Weekend($today);
 ?>
-<?php Error::getInstance()->add('TODO','class::DataBrowser has to chose first page on its own',__FILE__,__LINE__); ?>
+<?php Error::getInstance()->addTodo('class::DataBrowser has to chose first page on its own', __FILE__, __LINE__); ?>
 <body onload="daten(<?php echo("'$today','$start','$ende'"); ?>)">
 
 <div id="overlay"></div>

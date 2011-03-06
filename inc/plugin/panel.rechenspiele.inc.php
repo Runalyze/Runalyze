@@ -28,7 +28,11 @@ function rechenspiele_installer() {
  * @return string (HTML)
  */
 function rechenspiele_rightSymbol() {
-	return Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen"><img src="img/mued.png" alt="Form anzeigen" /></a>');
+	$symbols = Ajax::window('<a href="inc/plugin/window.monatskilometer.php" title="Monatskilometer anzeigen"><img src="img/mk.png" alt="Monatskilometer anzeigen" /></a>').NL;
+	$symbols .= Ajax::window('<a href="inc/plugin/window.wochenkilometer.php" title="Wochenkilometer anzeigen"><img src="img/wk.png" alt="Wochenkilometer anzeigen" /></a>').NL;
+	$symbols .= Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen"><img src="img/mued.png" alt="Form anzeigen" /></a>').NL;
+
+	return $symbols;
 }
 
 /**
@@ -64,7 +68,7 @@ echo('
 		<p><span>'.round(100*Helper::CTL()/CONFIG_MAX_CTL).' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
 		<p><span>'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
 		<p><span>'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
-		<p><span>'.Helper::Grundlagenausdauer().'</span> <strong>Grundlagenausdauer</strong></p>');
+		<p><span>'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>');
 ?>
 
 	</span>

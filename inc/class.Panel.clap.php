@@ -7,5 +7,5 @@ if (is_numeric($_GET['id'])) {
 	$panel->clap();
 }
 
-$error->display();
+Error::getInstance()->display();
 ?>
