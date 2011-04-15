@@ -71,7 +71,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$vars[] = 'schuhid';
 		$columns[] = 'laufabc';
 		$values[] = $_POST['laufabc'] == 'on' ? 1 : 0;
-		if (Helper::Type($_POST['typid'], false, true) == 1)
+		if (Helper::TypeHasSplits($_POST['typid']) == 1)
 			$vars[] = 'splits';
 	}
 
@@ -215,7 +215,7 @@ foreach ($schuhe as $schuh)
 				<small>max. Puls</small><br />
 		</span>
 
-		<span style="display:<?php echo Helper::Typ($Training->get('typid'), false, true) == 1 ? 'block' : 'none'; ?>;">
+		<span style="display:<?php echo Helper::TypeHasSplits($Training->get('typid')) ? 'block' : 'none'; ?>;">
 			<textarea name="splits" cols="70" rows="3"><?php echo $Training->get('splits'); ?></textarea>
 				<small>Splits</small><br />
 		</span>

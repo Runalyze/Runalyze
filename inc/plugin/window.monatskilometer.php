@@ -12,7 +12,7 @@ $Frontend->displayHeader();
 ?>
 <h1>Monatskilometer</h1>
 
-<div class="bigImg" style="width:800px;height:450px;">
+<div class="bigImg" style="width:802px;height:502px;">
 	<img id="monatskilometer" src="lib/draw/monatskilometer.php?jahr=<?php echo date("Y"); ?>" />
 </div>
 

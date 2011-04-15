@@ -13,9 +13,13 @@ $Error = Error::getInstance();
 </div>
 
 <div id="l">
-	<div id="daten">
-<?php $Error->addTodo('class::DataBrowser has to be included', __FILE__, __LINE__); ?>
-		<div id="daten_results" class="panel"></div>
+	<div id="dataPanel" class="panel">
+		<div id="daten">
+<?php
+$DataBrowser = new DataBrowser();
+$DataBrowser->display();
+?>
+		</div>
 	</div>
 
 	<ul class="tabs">

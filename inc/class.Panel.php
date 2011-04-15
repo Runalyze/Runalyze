@@ -165,14 +165,15 @@ class Panel {
 	}
 
 	/**
-	 * Includes the plugin-file for displaying the statistics
+	 * Includes the plugin-file for displaying the panels
+	 * @param bool $displayDiv
 	 */
-	public function display() {
+	public function display($displayDiv = true) {
 		global $config, $global;
 
-		$file = 'inc/plugin/'.$this->filename;
+		$file = FRONTEND_PATH.'plugin/'.$this->filename;
 		if (!file_exists($file))
-			Error::getInstance()->add('WARNING','The plugin-file ('.$file.') does not exist.');
+			Error::getInstance()->addError('The plugin-file ('.$file.') does not exist.');
 		else {
 			require_once('plugin/'.$this->filename);
 			if (function_exists(strtolower($this->name).'_rightSymbol'))
@@ -181,10 +182,10 @@ class Panel {
 				Error::getInstance()->addWarning('class::Panel::display(): The function '.strtolower($this->name).'_rightSymbol() does not exist.');
 
 			// Outputs
-			echo(NL.'<div class="panel">'.NL);
+			if ($displayDiv) echo(NL.'<div class="panel" id="panel-'.$this->id.'">'.NL);
 				$this->displayHeader();
 				$this->displayContent();
-			echo(NL.'</div>'.NL);
+			if ($displayDiv) echo(NL.'</div>'.NL);
 		}
 	}
 

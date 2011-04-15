@@ -11,10 +11,8 @@
  * @uses class:Error
  * @uses $global
  *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
+ * Last modified 2011/03/15 10:30 by Hannes Christiansen
  */
-
-// TODO: Dataset über diese Klasse oder eine eigene? DataBrowser?
 
 class Training {
 	/**
@@ -42,11 +40,17 @@ class Training {
 	private $data;
 
 	/**
-	 * Constructor (needs ID)
+	 * Constructor (needs ID, can be -1 for set($var) on it's own
 	 * @param int $id
 	 */
 	public function __construct($id) {
 		global $global;
+
+		if ($id == -1) {
+			$this->id = -1;
+			$this->data = array();
+			return;
+		}
 
 		if (!is_numeric($id) || $id == NULL) {
 			Error::getInstance()->addError('An object of class::Training must have an ID: <$id='.$id.'>');
@@ -61,6 +65,20 @@ class Training {
 
 		$this->id = $id;
 		$this->data = $dat;
+	}
+
+	/**
+	 * Set a column
+	 * @param string $var
+	 * @param string $value
+	 */
+	public function set($var, $value) {
+		if ($this->id != -1) {
+			Error::getInstance()->addWarning('Training::set - can\'t set value, Training already loaded');
+			return;
+		}
+
+		$this->data[$var] = $value;
 	}
 
 	/**
@@ -150,8 +168,9 @@ class Training {
 	 */
 	public function displayTrainingData() {
 		$this->displayTable();
-		$this->displayRounds();
-		$this->displaySplits();
+
+		if ($this->get('distanz') > 0)
+			$this->displayRoundsContainer();
 	}
 
 	/**
@@ -160,7 +179,7 @@ class Training {
 	 */
 	public function displayTitle($short = false) {
 		echo ($this->get('sportid') == RUNNINGSPORT)
-			? Helper::Type($this->get('typid'))
+			? Helper::TypeName($this->get('typid'))
 			: Helper::Sport($this->get('sportid'));
 		if (!$short) {
 			if ($this->get('laufabc') == 1)
@@ -219,7 +238,7 @@ class Training {
 		// TODO Use class::Draw as soon as possible
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type]))
-			echo '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />'.NL;
+			echo '<div class="bigImg" style="height:192px; width:482px;"><img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" /></div>'.NL;
 		else
 			Error::getInstance()->addWarning('Training::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}
@@ -232,89 +251,158 @@ class Training {
 	}
 
 	/**
+	 * Display surrounding container for rounds-data
+	 */
+	public function displayRoundsContainer() {
+		$RoundTypes = array();
+		if ($this->hasPaceData())
+			$RoundTypes[] = array('name' => 'berechnete', 'id' => 'computedRounds', 'eval' => '$this->displayRounds();');
+		if ($this->hasSplitsData())
+			$RoundTypes[] = array('name' => 'gestoppte', 'id' => 'stoppedRounds', 'eval' => '$this->displaySplits();');
+
+		echo('<div id="trainingRounds">');
+			echo('<strong>Rundenzeiten:</strong>');
+			echo('<small class="right">');
+			foreach ($RoundTypes as $i => $RoundType) {
+				echo Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
+				if ($i < count($RoundTypes)-1)
+					echo(' | ');
+			}
+			echo('&nbsp;</small>');
+
+			if (empty($RoundTypes))
+				echo('<small><em>Keine Daten vorhanden.</em></small>');
+			foreach ($RoundTypes as $i => $RoundType) {
+				echo('<div id="'.$RoundType['id'].'" class="change"'.($i==0?'':' style="display:none;"').'>');
+				eval($RoundType['eval']);
+				echo('</div>');
+			}
+		echo('</div>');
+	}
+
+	/**
 	 * Display defined splits
 	 */
 	public function displaySplits() {
-		if ($this->hasSplitsData()) {
-			echo('<strong>Zwischenzeiten:</strong><br />'.NL);
-			echo('<table cellspacing="0" style="width:480px;">'.NL);
-			echo('<tr>'.NL);
+		echo('<table class="small" cellspacing="0">'.NL);
+		echo('
+			<tr class="c b">
+				<td>Distanz</td>
+				<td>Zeit</td>
+				<td>Pace</td>
+				<td>Diff.</td>
+			</tr>
+			<tr class="space"><td colspan="4" /></tr>');
 
-			$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-			Error::getInstance()->addTodo('Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?', __FILE__, __LINE__);
-			Error::getInstance()->addTodo('Training::splits Gesamtschnitt/Vorgabe/etc.', __FILE__, __LINE__);
-			
-			for ($i = 0, $num = count($splits); $i < $num; $i++) {
-				$split = explode('|', $splits[$i]);
-				$timedata = explode(':', $split[1]);
-				$distance[] = $split[0];
-				$time[] = round(($timedata[0]*60 + $timedata[1])/$split[0]);
-			
-				$border = ($i+1)%3 != 0 ? ' style="border-right:1px solid #CCC;"' : '';
-			
-				echo('
-					<td class="a'.($i%2+1).' b">'.Helper::Km($split[0]).'</td>
-					<td class="a'.($i%2+1).'">'.Helper::Time($timedata[0]*60 + $timedata[1]).'</td>
-					<td class="a'.($i%2+1).'"'.$border.'><small>'.Helper::Time($time[$i]).'/km</small></td>');
-																// Or use Helper::Pace here?
-				if (($i+1)%3 == 0)
-					echo('
-				</tr>
-				<tr>');
-				if ($i == $num-1)
-					echo('
-					<td class="a'.($i%2+1).'" colspan="'.(9 - 3*($i+1)%3).'" />');
+		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
+		Error::getInstance()->addTodo('Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?', __FILE__, __LINE__);
+		Error::getInstance()->addTodo('Training::splits Gesamtschnitt/Vorgabe/etc.', __FILE__, __LINE__);
+
+		$SpeedString = explode('in ', $this->get('bemerkung'));
+		$SpeedString = explode(',', $SpeedString[1]);
+		$SpeedHasTo = Helper::TimeToSeconds($SpeedString[0]);
+		$TimeSum = 0;
+		$DistSum = 0;
+
+		for ($i = 0, $num = count($splits); $i < $num; $i++) {
+			$split = explode('|', $splits[$i]);
+			$timedata = explode(':', $split[1]);
+			$dist = $split[0];
+			$time_in_s = $timedata[0]*60 + $timedata[1];
+			$pace = Helper::Pace($dist, $time_in_s);
+
+			$TimeSum += $time_in_s;
+			$DistSum += $dist;
+			$PaceDiff = $SpeedHasTo - Helper::TimeToSeconds($pace);
+			if ($PaceDiff >= 0) {
+				$PaceClass = 'plus';
+				$PaceDiffString = '+'.Helper::Time($PaceDiff, false, 2);
+			} else {
+				$PaceClass = 'minus';
+				$PaceDiffString = '-'.Helper::Time(-$PaceDiff, false, 2);
 			}
 
-			echo('</tr>'.NL);
-			echo('</table>'.NL);
+			echo('
+			<tr class="a'.($i%2+1).' r">
+				<td>'.Helper::Km($dist, 2).'</td>
+				<td>'.Helper::Time($time_in_s).'</td>
+				<td>'.Helper::Pace($dist, $time_in_s).'/km</td>
+				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
+			</tr>');
 		}
+
+		$AvgDiff = $SpeedHasTo - Helper::TimeToSeconds( round($TimeSum/$DistSum) );
+		if ($AvgDiff >= 0) {
+			$AvgClass = 'plus';
+			$AvgDiffString = '+'.Helper::Time($AvgDiff, false, 2);
+		} else {
+			$AvgClass = 'minus';
+			$AvgDiffString = '-'.Helper::Time(-$AvgDiff, false, 2);
+		}
+
+		echo('
+			<tr class="space"><td colspan="4" /></tr>
+			<tr class="r">
+				<td colspan="2">Vorgabe: </td>
+				<td >'.Helper::Time($SpeedHasTo).'/km</td>
+				<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
+			</tr>');
+
+		echo('</table>'.NL);
 	}
 
 	/**
 	 * Display (computed) rounds
 	 */
 	public function displayRounds() {
-		if ($this->hasPaceData()) {
-			echo('<strong>Berechnete Rundenzeiten:</strong><br />'.NL);
-			echo('<table cellspacing="0">'.NL);
-			$km 				= 1;
-			$kmIndex	 		= array(0);
-			$positiveElevation 	= 0;
-			$negativeElevation 	= 0;
-			$distancePoints 	= explode('|', $this->get('arr_dist'));
-			$timePoints 		= explode('|', $this->get('arr_time'));
-			$heartPoints 		= explode('|', $this->get('arr_heart'));
-			$elevationPoints 	= explode('|', $this->get('arr_alt'));
-			$numberOfPoints 	= sizeof($distancePoints);
+		$km 				= 1;
+		$kmIndex	 		= array(0);
+		$positiveElevation 	= 0;
+		$negativeElevation 	= 0;
+		$distancePoints 	= explode('|', $this->get('arr_dist'));
+		$timePoints 		= explode('|', $this->get('arr_time'));
+		$heartPoints 		= explode('|', $this->get('arr_heart'));
+		$elevationPoints 	= explode('|', $this->get('arr_alt'));
+		$numberOfPoints 	= sizeof($distancePoints);
 
-			foreach ($distancePoints as $i => $distance) {
-				if (floor($distance) == $km || $i == $numberOfPoints-1) {
-					$km++;
-					$kmIndex[] = $i;
-					$previousIndex = $kmIndex[count($kmIndex)-2];
-					$pace = Helper::Pace(($distancePoints[$i] - $distancePoints[$previousIndex]), ($timePoints[$i] - $timePoints[$previousIndex]));
-					echo('<tr class="a'.($i%2+1).' r">
-							<td>'.Helper::Time($timePoints[$i]).'</td>
-							<td>'.Helper::Km($distance, 2).'</td>
-							<td class="small">'.$pace.'</td>');
-					if (count($heartPoints) > 1) {
-						$heartRateOfThisKm = array_slice($heartPoints, $previousIndex, ($i - $previousIndex));
-						echo('<td class="small">'.round(array_sum($heartRateOfThisKm)/count($heartRateOfThisKm)).'</td>');
-					}
-					if (count($elevationPoints) > 1)
-						echo('<td class="small">'.($positiveElevation != 0 ? '+'.$positiveElevation : '0').'/'.($negativeElevation != 0 ? '-'.$negativeElevation : '0').'</td>
-							</tr>');
-					$positiveElevation = 0;
-					$negativeElevation = 0;
-				} elseif ($i != 0 && count($elevationPoints) > 1 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-					$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
-					$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
-					$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
+		echo('<table class="small" cellspacing="0">'.NL);
+		echo('<tr class="c b">
+				<td>Zeitpunkt</td>
+				<td>Distanz</td>
+				<td>Pace</td>');
+		if (count($heartPoints) > 1)
+			echo(NL.'<td>bpm</td>');
+		if (count($elevationPoints) > 1)
+			echo(NL.'<td>hm</td>');
+		echo(NL.'</tr>'.NL);
+		echo('<tr class="space"><td colspan="5" /></tr>'.NL);
+
+		foreach ($distancePoints as $i => $distance) {
+			if (floor($distance) == $km || $i == $numberOfPoints-1) {
+				$km++;
+				$kmIndex[] = $i;
+				$previousIndex = $kmIndex[count($kmIndex)-2];
+				$pace = Helper::Pace(($distancePoints[$i] - $distancePoints[$previousIndex]), ($timePoints[$i] - $timePoints[$previousIndex]));
+				echo('<tr class="a'.($i%2+1).' r">
+						<td>'.Helper::Time($timePoints[$i]).'</td>
+						<td>'.Helper::Km($distance, 2).'</td>
+						<td>'.$pace.'</td>');
+				if (count($heartPoints) > 1) {
+					$heartRateOfThisKm = array_slice($heartPoints, $previousIndex, ($i - $previousIndex));
+					echo('<td>'.round(array_sum($heartRateOfThisKm)/count($heartRateOfThisKm)).'</td>');
 				}
+				if (count($elevationPoints) > 1)
+					echo('<td>'.($positiveElevation != 0 ? '+'.$positiveElevation : '0').'/'.($negativeElevation != 0 ? '-'.$negativeElevation : '0').'</td>
+						</tr>');
+				$positiveElevation = 0;
+				$negativeElevation = 0;
+			} elseif ($i != 0 && count($elevationPoints) > 1 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
+				$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
+				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
+				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
 			}
-			echo('</table>'.NL.NL);
 		}
+		echo('</table>'.NL.NL);
 	}
 
 	/**
@@ -405,7 +493,6 @@ class Training {
 					$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
 					if (substr($html,0,1) == '<')
 						$html = false;
-						//die('Something went wrong connecting to geonames.org - i: '.$i);
 				}
 				$data = explode("\r\n", $html);
 

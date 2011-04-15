@@ -42,6 +42,9 @@ div.panel {
 	margin-bottom: 5px;
 	border-bottom: 1px solid #EEE;
 }
+.panel h1 a:link {
+	color: #800 !important;
+}
 .panel h1 span.right img, .panel h1 span.right a {
 	margin-left: 15px;
 }
@@ -148,7 +151,7 @@ div#toplinks span:hover {
 }
 
 /*** Waiter for jQuery ***/
-div#wait {
+img#wait {
 	display: none;
 }
 
@@ -216,7 +219,7 @@ img#close {
 	cursor: pointer;
 }
 
-div#daten {
+div#datenPanel {
 	margin-bottom: 15px;
 }
 
@@ -277,7 +280,7 @@ table {
 }
 
 table, tr, td {
-	padding: 2px;
+	padding: 2px 4px;
 	vertical-align: top;
 }
 
@@ -302,7 +305,8 @@ tr.a3 { display: none; }
 .wk td { background: #FFE5CC; }
 .link { padding-bottom: 1px; cursor: pointer; }
 .inline { display: inline; }
-
+.minus { color: #CA3030; }
+.plus { color: #30AA30; }
 
 /***  L I N K S  ***/
 a:link, a:visited {

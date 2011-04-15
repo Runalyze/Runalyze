@@ -98,7 +98,7 @@ class JD {
 	public static function Training2VDOT($training_id) {
 		$training = Mysql::getInstance()->fetch('SELECT `sportid`, `distanz`, `dauer`, `puls` FROM `ltb_training` WHERE `id`='.$training_id.' LIMIT 1');
 
-		return ($training['puls'] != 0 && $training['sportid'] == 1)
+		return ($training['puls'] != 0 && $training['sportid'] == RUNNINGSPORT)
 			? round( VDOT_CORRECTOR * self::Competition2VDOT($training['distanz'], $training['dauer']) / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2)
 			: 0;
 	}
@@ -127,8 +127,10 @@ class JD {
 	 * @return float   VDOT
 	 */
 	public static function calculateVDOTform() {
+		// TODO Speed up this procedure:
+		// + Don't call each training for its own in Training2VDOT
 		$VDOT_form = 0;
-		$trainings = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time()-30*24*60*60));
+		$trainings = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time()-30*DAY_IN_S));
 		foreach ($trainings as $training)
 			$VDOT_form += self::Training2VDOT($training['id']);
 

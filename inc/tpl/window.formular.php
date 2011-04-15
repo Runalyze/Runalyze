@@ -9,7 +9,7 @@ $Mysql = Mysql::getInstance();
 
 if (isset($_POST) && $_POST['type'] == "newtraining") {
 	$sport = $Mysql->fetch('ltb_sports', $_POST['sportid']);
-	$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($send['distanz']) : 0;
+	$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($_POST['distanz']) : 0;
 
 	$columns = array('sportid');
 	$values = array($sport['id']);
@@ -29,6 +29,7 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 	$values[] = $time_in_s;
 	// Prepare values for distances
 	if ($sport['distanztyp'] == 1) {
+		$vars[] = 'distanz';
 		$columns[] = 'bahn';
 		$values[] = $_POST['bahn']==true ? 1 : 0;
 		$columns[] = 'pace';
@@ -59,7 +60,7 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 		$vars[] = 'schuhid';
 		$columns[] = 'laufabc';
 		$values[] = $_POST['laufabc'] == true ? 1 : 0;
-		if (Helper::Typ($_POST['typid'], false, true) == 1)
+		if (Helper::TypeHasSplits($_POST['typid']))
 			$vars[] = 'splits';
 	}
 
@@ -68,6 +69,7 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 			$columns[] = $var;
 			$values[] = Helper::CommaToPoint($_POST[$var]);
 		}
+
 	$id = $Mysql->insert('ltb_training', $columns, $values);
 
 	$ATL = Helper::ATL($time);
@@ -89,14 +91,21 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 	// Update 'Sports'
 	$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 
-	header('Location: ?done');
+	$Frontend->displayHeader();
+
+	echo('<em>Das Training wurde erfolgreich eingetragen.</em>');
+
+	$Frontend->displayFooter();
+	$Frontend->close();
+
+	exit();
 }
 
 $Frontend->displayHeader();
 ?>
 <h1>Neues Training</h1>
 
-<form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
+<form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
 
 	<input type="hidden" name="type" value="newtraining" />
 	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />

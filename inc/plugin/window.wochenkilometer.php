@@ -12,7 +12,7 @@ $Frontend->displayHeader();
 ?>
 <h1>Wochenkilometer</h1>
 
-<div class="bigImg" style="width:800px;height:450px;">
+<div class="bigImg" style="width:802px;height:502px;">
 	<img id="wochenkilometer" src="lib/draw/wochenkilometer.php?jahr=<?php echo date("Y"); ?>" />
 </div>
 

@@ -116,8 +116,6 @@ class Stat {
 	 * @param string $config_dat as $dat['config'] from database
 	 */
 	private function initConfigVars($config_dat) {
-		Error::getInstance()->addTodo('Move config-setting to class::Plugin');
-
 		$this->config = array();
 		$config_dat = explode("\n", $config_dat);
 		foreach ($config_dat as $line) {

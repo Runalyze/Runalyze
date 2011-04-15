@@ -28,11 +28,7 @@ function rechenspiele_installer() {
  * @return string (HTML)
  */
 function rechenspiele_rightSymbol() {
-	$symbols = Ajax::window('<a href="inc/plugin/window.monatskilometer.php" title="Monatskilometer anzeigen"><img src="img/mk.png" alt="Monatskilometer anzeigen" /></a>').NL;
-	$symbols .= Ajax::window('<a href="inc/plugin/window.wochenkilometer.php" title="Wochenkilometer anzeigen"><img src="img/wk.png" alt="Wochenkilometer anzeigen" /></a>').NL;
-	$symbols .= Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen"><img src="img/mued.png" alt="Form anzeigen" /></a>').NL;
-
-	return $symbols;
+	return Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen"><img src="img/mued.png" alt="Form anzeigen" /></a>').NL;
 }
 
 /**
