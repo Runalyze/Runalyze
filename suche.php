@@ -100,7 +100,7 @@ $bedingungen[] = array('name' => 'puls', 'text' => 'Puls <small>(bpm)</small>', 
 $bedingungen[] = array('name' => 'trainingspartner', 'text' => 'Trainingspartner', 'typ' => 'text');
 $bedingungen[] = array('name' => 'kalorien', 'text' => 'Kalorien', 'typ' => 'int');
 ?>
-<table>
+<table class="left">
 <?php
 foreach ($bedingungen as $i => $bedingung):
 	$value = '';
@@ -132,7 +132,7 @@ foreach ($bedingungen as $i => $bedingung):
 			</select>
 		</td>
 
-		<td><input type="text" name="val[<?php echo $bedingung['name']; ?>]" value="<?php echo $value; ?>"<?php if ($bedingung['typ'] != "text") echo ' size="5"'; ?> /></td>
+		<td><input type="text" name="val[<?php echo $bedingung['name']; ?>]" value="<?php echo $value; ?>" size="<?php echo ($bedingung['typ'] != "text") ? 1 : 10; ?>" /></td>
 <?php
 	if (($i+1)%3 == 0 || ($i-1) == sizeof($bedingungen)):
 ?>
@@ -144,7 +144,7 @@ endforeach;
 ?>
 </table>
 
-	<center>
+	<center style="clear:both;">
 		<input type="submit" value="Suchen!" />
 	</center>
 </form>

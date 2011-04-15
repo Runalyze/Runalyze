@@ -18,12 +18,12 @@ require_once(FRONTEND_PATH.'class.JD.php');
  * @defines   START_YEAR   int   Year of first training
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
+ * @version 1.1
  * @uses class::Error
  * @uses class::Mysql
  * @uses class::JD
  *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
+ * Last modified 2011/04/14 17:30 by Hannes Christiansen
  */
 class Helper {
 	/**
@@ -44,22 +44,56 @@ class Helper {
 	}
 
 	/**
-	 * Get the name or all information of a type
-	 * @param int  $type_id         ID of the type
-	 * @param bool $as_short        Return the shortname, default: false
-	 * @param bool $as_has_splits   Return if the type allows splits, default: false
-	 * @param bool $as_array        Return as array, default: false
-	 * @return mixed depends on arguments
+	 * Get all information of a type as an array
+	 * @param int $type_id
+	 * @return array
 	 */
-	public static function Type($type_id, $as_short = false, $as_bool_has_splits = false, $as_array = false) {
-		$typ = Mysql::getInstance()->fetch('ltb_typ', $type_id);
-		if ($as_short)
-			return $typ['abk'];
-		if ($as_bool_has_splits)
-			return $typ['splits'];
-		if ($as_array)
-			return $typ;
-		return $typ['name'];
+	public static function TypeAsArray($type_id) {
+		return Mysql::getInstance()->fetch('ltb_typ', $type_id);
+	}
+
+	/**
+	 * Get the name of a type
+	 * @param int  $type_id
+	 * @return string
+	 */
+	public static function TypeName($type_id) {
+		$array = self::TypeAsArray($type_id);
+
+		return $array['name'];
+	}
+
+	/**
+	 * Get all information of a type as an array
+	 * @param int $type_id
+	 * @return array
+	 */
+	public static function TypeShort($type_id) {
+		$array = self::TypeAsArray($type_id);
+
+		return $array['abk'];
+	}
+
+	/**
+	 * Get boolean flag wheather type alouds splits
+	 * @param int $type_id
+	 * @return bool
+	 */
+	public static function TypeHasSplits($type_id) {
+		$array = self::TypeAsArray($type_id);
+
+		return ($array['splits'] == 1);
+	}
+
+	/**
+	 * Get boolean flag: Is the RPE of this type higher than 4?
+	 * @param int $type_id
+	 * @return bool
+	 */
+	public static function TypeHasHighRPE($type_id) {
+		$array = self::TypeAsArray($type_id);
+
+		return ($array['RPE'] > 4);
 	}
 
 	/**
@@ -95,6 +129,30 @@ class Helper {
 		return ($wetter !== false)
 			? $wetter['name']
 			: '';
+	}
+
+	/**
+	 * Get a string for displaying any pulse
+	 * @param int $pulse
+	 * @param int $time
+	 */
+	public static function PulseString($pulse, $time = 0) {
+		if ($pulse == 0)
+			return '';
+		if ($time == 0)
+			$time = time();
+
+		$bpm = $pulse.'bpm';
+		$hf  = '? &#37;';
+
+		$HFmax = Mysql::getInstance()->fetch('SELECT * FROM `ltb_user` ORDER BY ABS(`time`-'.$time.') ASC LIMIT 1');
+		if ($HFmax !== false)
+			$hf = round(100*$pulse / $HFmax['puls_max']).' &#37';
+
+		if (CONFIG_PULS_MODE != 'bpm')
+			return '<span title="'.$bpm.'">'.$hf.'</span>';
+
+		return '<span title="'.$hf.'">'.$bpm.'</span>';
 	}
 
 	/**
@@ -165,10 +223,13 @@ class Helper {
 	 * @uses self::TwoNumbers
 	 * @param int $time_in_s
 	 * @param bool $show_days	Show days (default) or count hours > 24, default: true
-	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false
+	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false, can be '2' for 0:00
+	 * @return string
 	 */
 	public static function Time($time_in_s, $show_days = true, $show_zeros = false) {
 		$string = '';
+		if ($show_zeros == 2)
+			return (floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		if ($show_zeros)
 			return floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		if ($time_in_s >= 86400 && $show_days)
@@ -180,6 +241,29 @@ class Helper {
 		else
 			$string .= floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		return $string;
+	}
+
+	/**
+	 * Calculate time in seconds from a given string (min:s)
+	 * @param string $string
+	 * @return int
+	 */
+	public static function TimeToSeconds($string) {
+		$TimeArray = explode(':', $string);
+		if (count($TimeArray) == 2)
+			return $TimeArray[0]*60 + $TimeArray[1];
+
+		return $string;
+	}
+
+	/**
+	 * Boolean flag: Is this training a competition?
+	 * @param int $id
+	 */
+	public static function TrainingIsCompetition($id) {
+		if (!is_numeric($id))
+			return false;
+		return (Mysql::getInstance()->num('SELECT 1 FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `id`='.$id) > 0);
 	}
 
 	/**
@@ -210,11 +294,11 @@ class Helper {
 		$dat = Mysql::getInstance()->fetch('ltb_training', $training_id);
 		if ($dat === false)
 			$dat = array();
-		$factor_a = ($config['geschlecht'] == 'm') ? 0.64 : 0.86;
-		$factor_b = ($config['geschlecht'] == 'm') ? 1.92 : 1.67;
+		$factor_a = (CONFIG_GESCHLECHT == 'm') ? 0.64 : 0.86;
+		$factor_b = (CONFIG_GESCHLECHT == 'm') ? 1.92 : 1.67;
 		$sportid = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
 		$sport = sport($sportid,true);
-		$typ = ($dat['typid'] != 0) ? self::Typ($dat['typid'], false, false, true) : 0;
+		$typ = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;
 		$HFavg = ($dat['puls'] != 0) ? $dat['puls'] : $sport['HFavg'];
 		$RPE = ($typ != 0) ? $typ['RPE'] : $sport['RPE'];
 		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);

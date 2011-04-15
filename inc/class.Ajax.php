@@ -37,8 +37,8 @@ class Ajax {
 
 	/**
 	 * Gives a HTML-link for using jImgChange()
-	 * @param $link      The normal HTML-link
-	 * @param $imgID     <img id="$imgID" ...
+	 * @param string $link      The normal HTML-link
+	 * @param string $imgID     <img id="$imgID" ...
 	 * @return string
 	 */
 	static function imgChange($link, $imgID) {
@@ -50,8 +50,8 @@ class Ajax {
 
 	/**
 	 * Gives a HTML-link for using jWindow()
-	 * @param $link     The normal HTML-link
-	 * @param $size     Enum: big|normal|small
+	 * @param string $link     The normal HTML-link
+	 * @param string $size     Enum: big|normal|small
 	 * @return string
 	 */
 	static function window($link, $size = 'normal') {
@@ -62,13 +62,35 @@ class Ajax {
 		return $link;
 	}
 
-	// TODO change()
+	/**
+	 * Gives a HTML-link for using jChange()
+	 * @param string $name   Displayed name for this link
+	 * @param string $target ID of surrounding div-container
+	 * @param string $href   ID of div-container to be displayed
+	 * @return string
+	 */
+	static function change($name, $target, $href) {
+		return '<a class="change" target="'.$target.'" href="'.$href.'">'.$name.'</a>';
+	}
+
+	/**
+	 * Gives a HTML-link for using jLinks()
+	 * @param string $name   Displayed name for this link
+	 * @param string $target ID of target div-container
+	 * @param string $href   URL to be loaded
+	 * @param string $data   data to be passed
+	 * @return string
+	 */
+	static function link($name, $target, $href, $data = '') {
+		return '<a class="ajax" href="'.$href.'"target="'.$target.'" rel="'.$data.'" >'.$name.'</a>';
+	}
+
 	// TODO jImg()
 
 	/**
 	 * Adds a new class-value or creates a class-attribute
-	 * @param $link    The full HTML-link
-	 * @param $class   The new css-class
+	 * @param string $link    The full HTML-link
+	 * @param string $class   The new css-class
 	 * @return string
 	 */
 	private static function insertClass($link, $class) {
@@ -83,8 +105,8 @@ class Ajax {
 
 	/**
 	 * Overwrites an existing rel-attribute or creates a new one
-	 * @param $link   The full HTML-link
-	 * @param $rel    The new rel-value
+	 * @param string $link   The full HTML-link
+	 * @param string $rel    The new rel-value
 	 * @return string
 	 */
 	private static function insertRel($link, $rel) {

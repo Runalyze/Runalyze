@@ -4,6 +4,7 @@
 	<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet"  type="text/css"href="lib/datepicker.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title>Runalyze v<?php echo LTB_VERSION; ?></title>
@@ -12,20 +13,10 @@
 	<script type="text/javascript" src="lib/jquery.scrollTo-min.js"></script>
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
+	<script type="text/javascript" src="lib/datepicker.js"></script>
 </head>
 
-<?php // Find date for first page in DataBrowser
-// TODO May be done by class::DataBrowser later
-$mysql = Mysql::getInstance();
-$today = time();
-$last_training = $mysql->fetch('ltb_training','LAST');
-if ($last_training !== false)
-	$today = $last_training['time'];
-$start = Helper::Weekstart($today);
-$ende = Helper::Weekend($today);
-?>
-<?php Error::getInstance()->addTodo('class::DataBrowser has to chose first page on its own', __FILE__, __LINE__); ?>
-<body onload="daten(<?php echo("'$today','$start','$ende'"); ?>)">
+<body>
 
 <div id="overlay"></div>
 <div id="ajax" class="panel"></div>

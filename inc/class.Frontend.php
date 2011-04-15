@@ -12,6 +12,7 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class::Error
+ * @uses class::Icon
  * @uses class::Ajax
  * @uses class::Panel // Will be included by class::Plugin later?
  * @uses class::Stat // Will be included by class::Plugin later?
@@ -20,10 +21,12 @@
  * @uses '../config/globals.php' // Has to be done on another way
  * // @uses class::Plugin
  * @uses class::Training
+ * @uses class::DataBrowser
+ * @uses class::Dataset
  * // @uses class::Parser // Will be included by class::Training later
  * // @uses class::Draw // Including by other classes?
  *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
+ * Last modified 2011/03/14 16:00 by Hannes Christiansen
  */
 class Frontend {
 	/**
@@ -44,10 +47,13 @@ class Frontend {
 	 */
 	private $file;
 
+	/**
+	 * Constructor for frontend
+	 * @param bool $ajax_request
+	 * @param string $file
+	 */
 	public function __construct($ajax_request = false, $file = __FILE__) {
 		global $global;
-
-		header('Content-type: text/html; charset=ISO-8859-1');
 
 		$this->initConsts();
 		$this->initErrorHandling();
@@ -129,13 +135,16 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.Ajax.php');
 		require_once(FRONTEND_PATH.'class.Panel.php'); // Will be included by class::Plugin later?
 		require_once(FRONTEND_PATH.'class.Stat.php'); // Will be included by class::Plugin later?
-		require_once(FRONTEND_PATH.'class.Helper.php'); // Will be included by class::Plugin later?
+		require_once(FRONTEND_PATH.'class.Helper.php');
+		require_once(FRONTEND_PATH.'class.Icon.php');
+		require_once(FRONTEND_PATH.'class.Training.php');
+		require_once(FRONTEND_PATH.'class.DataBrowser.php');
+		require_once(FRONTEND_PATH.'class.Dataset.php');
 		require_once(FRONTEND_PATH.'..\\config\\dataset.php'); // Will be a class later
 		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
 		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
 		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser, Draw');
 		// require_once(FRONTEND_PATH.'class.Plugin.php');
-		require_once(FRONTEND_PATH.'class.Training.php');
 		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
 		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
 	}
@@ -144,6 +153,8 @@ class Frontend {
 	 * Function to display the HTML-Header
 	 */
 	public function displayHeader() {
+		header('Content-type: text/html; charset=ISO-8859-1');
+
 		if ($_GET['action'] == 'do')
 			include('../config/mysql_query.php');
 
