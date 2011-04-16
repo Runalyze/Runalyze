@@ -29,7 +29,7 @@ $DataBrowser->display();
  * STATISTIC PLUGINS
  */
 $Error->add('TODO','Plugins have to be deacitvated automatically if modus is unused',__FILE__,__LINE__);
-$stats = Mysql::getInstance()->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
+$stats = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
 foreach($stats as $i => $stat) {
 	$Stat = new Stat($stat['id']);
 	if ($i == 0)
@@ -51,7 +51,12 @@ if ($other !== false) {
 			<em>Es wurde zuvor nichts geladen.</em>
 		</div>
 		<div id="tab_content">
-<?php $Stat_active->display(); ?>
+<?php
+if ($Stat_active instanceof Stat)
+	$Stat_active->display();
+else
+	echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');
+?>
 		</div>
 	</div>
 

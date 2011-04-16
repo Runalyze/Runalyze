@@ -53,6 +53,14 @@ class Dataset {
 	}
 
 	/**
+	 * Load complete dataset where position != 0
+	 */
+	public function loadCompleteDataset() {
+		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `ltb_dataset` WHERE `position`!=0 ORDER BY `position` ASC');
+		$this->column_count = count($this->data);
+	}
+
+	/**
 	 * Set training
 	 * @param int $id
 	 */
@@ -238,7 +246,7 @@ class Dataset {
 	 */
 	private function datasetElevation() {
 		return ($this->Training->get('hm') != 0)
-			? '<span title="&oslash; '.round($this->Training->get('hm')/$this->Training->get('distanz')/10, 2).' &#37;">'.$this->Training->get('hm').' hm</span>'
+			? '<span title="&oslash; '.round($this->Training->get('hm')/$this->Training->get('distanz')/10, 2).' &#37;">'.$this->Training->get('hm').'&nbsp;hm</span>'
 			: '';
 	}
 
@@ -246,7 +254,7 @@ class Dataset {
 	 * Dataset for: `kalorien`
 	 */
 	private function datasetCalories() {
-		return Helper::Unknown($this->Training->get('kalorien')).' kcal';
+		return Helper::Unknown($this->Training->get('kalorien')).'&nbsp;kcal';
 	}
 
 	/**
@@ -274,7 +282,7 @@ class Dataset {
 	 * Dataset for: `temperatur`
 	 */
 	private function datasetTemperature() {
-		return ($this->Training->get('temperatur') != 0) ? $this->Training->get('temperatur').' &#176;C' : '';
+		return !is_null($this->Training->get('temperatur')) ? $this->Training->get('temperatur').'&nbsp;&#176;C' : '';
 	}
 
 	/**
@@ -288,14 +296,14 @@ class Dataset {
 	 * Dataset for: `strecke`
 	 */
 	private function datasetPath() {
-		return ($this->Training->get('strecke') != '') ? 'Strecke: '.$this->Training->get('strecke') : '';
+		return ($this->Training->get('strecke') != '') ? Helper::Cut($this->Training->get('strecke'), 20) : '';
 	}
 
 	/**
 	 * Dataset for: `kleidung`
 	 */
 	private function datasetClothes() {
-		return $this->Training->getStringForClothes();
+		return Helper::Cut($this->Training->getStringForClothes(), 20);
 	}
 
 	/**
@@ -319,7 +327,7 @@ class Dataset {
 	 * Dataset for: `trainingspartner`
 	 */
 	private function datasetPartner() {
-		return ($this->Training->get('trainingspartner') != '') ? 'mit '.$this->Training->get('trainingspartner') : '';
+		return ($this->Training->get('trainingspartner') != '') ? 'mit '.Helper::Cut($this->Training->get('trainingspartner'), 15) : '';
 	}
 
 	/**
