@@ -177,7 +177,7 @@ class Frontend {
 	 * Display the panels for the right side
 	 */
 	public function displayPanels() {
-		$panels = Mysql::getInstance()->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
+		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
 		foreach($panels as $i => $panel) {
 			$panel = new Panel($panel['id']);
 			$panel->display();

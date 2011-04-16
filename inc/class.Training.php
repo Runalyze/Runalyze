@@ -90,7 +90,9 @@ class Training {
 		if (isset($this->data[$var]))
 			return $this->data[$var];
 
-		Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
+		// 'temperatur' is set as NULL on default and will fail on above test
+		if ($var != 'temperatur')
+			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
 	}
 
 	/**

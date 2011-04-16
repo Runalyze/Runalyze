@@ -22,7 +22,7 @@ if (isset($_POST) && $_POST['type'] == "config") {
 			$values[] = Helper::CommaToPoint($_POST[$var]);
 		}
 	$checkboxes = array('use_schuhe', 'use_splits', 'use_puls', 'use_kleidung', 'use_temperatur', 'use_wetter', 'use_strecke');
-	foreach($checkboxes as $box) {
+	foreach ($checkboxes as $box) {
 		$columns[] = $box;
 		$values[] = (isset($_POST[$box]) && $_POST[$box] == 'on') ? 1 : 0;
 	}
@@ -30,11 +30,29 @@ if (isset($_POST) && $_POST['type'] == "config") {
 
 	// Plugin config vars: 'ltb_plugin'
 	$plugins = $Mysql->fetch('SELECT `id` FROM `ltb_plugin`');
-	foreach($plugins as $plugin) {
+	foreach ($plugins as $plugin) {
 		$id = $plugin['id'];
 		$Mysql->update('ltb_plugin', $id,
 			array('active', 'order'),
 			array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
+	}
+
+	// Dataset config vars: 'ltb_dataset'
+	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_dataset`');
+	foreach ($dataset as $set) {
+		$id = $set['id'];
+		$modus = $_POST[$id.'_modus'] == 'on' ? 2 : 1;
+		if ($_POST[$id.'_modus_3'] == 3)
+			$modus = 3;
+		$columns = array(
+			'modus',
+			'zusammenfassung',
+			'position');
+		$values  = array(
+			$modus,
+			($_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
+			$_POST[$id.'_position']);
+		$Mysql->update('ltb_dataset', $id, $columns, $values);
 	}
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
@@ -70,31 +88,31 @@ if (isset($submit))
 <?php $Error->addTodo('Weitere Config-Variablen', __FILE__, __LINE__); ?>
 <?php $Error->addTodo('Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
 	<strong>Geschlecht:</strong><br />
-		<input type="radio" name="geschlecht" value="m"<?php echo Helper::Checked($config['geschlecht'], 'm'); ?> />
+		<input type="radio" name="geschlecht" value="m"<?php echo Helper::Checked($config['geschlecht'] == 'm'); ?> />
 			m&auml;nnlich<br />
-		<input type="radio" name="geschlecht" value="w"<?php echo Helper::Checked($config['geschlecht'], 'w'); ?> />
+		<input type="radio" name="geschlecht" value="w"<?php echo Helper::Checked($config['geschlecht'] == 'w'); ?> />
 			weiblich<br />
 		<br />
 	<strong>Herzfrequenz-Darstellung:</strong><br />
-		<input type="radio" name="puls_mode" value="bpm"<?php echo Helper::Checked($config['puls_mode'], 'bpm'); ?> />
+		<input type="radio" name="puls_mode" value="bpm"<?php echo Helper::Checked($config['puls_mode'] == 'bpm'); ?> />
 			absoluter Wert<br />
-		<input type="radio" name="puls_mode" value="hfmax"<?php echo Helper::Checked($config['puls_mode'], 'hfmax'); ?> />
+		<input type="radio" name="puls_mode" value="hfmax"<?php echo Helper::Checked($config['puls_mode'] == 'hfmax'); ?> />
 			&#37; <abbr title="maximale Herzfrequenz">HFmax</abbr><br />
 		<br />
 	<strong>W&auml;hle aus, welche der folgenden Daten du f&uuml;r jedes Training protokollieren m&ouml;chtest:</strong><br />
-	<input type="checkbox" name="use_schuhe"<?php echo Helper::Checked($config['use_schuhe'], 1); ?> />
+	<input type="checkbox" name="use_schuhe"<?php echo Helper::Checked($config['use_schuhe'] == 1); ?> />
 		Laufschuh<br />
-	<input type="checkbox" name="use_splits"<?php echo Helper::Checked($config['use_splits'], 1); ?> />
+	<input type="checkbox" name="use_splits"<?php echo Helper::Checked($config['use_splits'] == 1); ?> />
 		Zwischenzeiten<br />
-	<input type="checkbox" name="use_puls"<?php echo Helper::Checked($config['use_puls'], 1); ?> />
+	<input type="checkbox" name="use_puls"<?php echo Helper::Checked($config['use_puls'] == 1); ?> />
 		Puls<br />
-	<input type="checkbox" name="use_kleidung"<?php echo Helper::Checked($config['use_kleidung'], 1); ?> />
+	<input type="checkbox" name="use_kleidung"<?php echo Helper::Checked($config['use_kleidung'] == 1); ?> />
 		Kleidung<br />
-	<input type="checkbox" name="use_temperatur"<?php echo Helper::Checked($config['use_temperatur'], 1); ?> />
+	<input type="checkbox" name="use_temperatur"<?php echo Helper::Checked($config['use_temperatur'] == 1); ?> />
 		Temperatur<br />
-	<input type="checkbox" name="use_wetter"<?php echo Helper::Checked($config['use_wetter'], 1); ?> />
+	<input type="checkbox" name="use_wetter"<?php echo Helper::Checked($config['use_wetter'] == 1); ?> />
 		Wetter<br />
-	<input type="checkbox" name="use_strecke"<?php echo Helper::Checked($config['use_strecke'], 1); ?> />
+	<input type="checkbox" name="use_strecke"<?php echo Helper::Checked($config['use_strecke'] == 1); ?> />
 		Strecke<br />
 </div>
 
@@ -130,9 +148,9 @@ foreach($plugins as $i => $plugin)
 			<td>'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'], 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'], 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'], 0).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'] == 2).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'] == 0).' /></td>
 			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
 		</tr>');
 ?>
@@ -172,9 +190,9 @@ foreach($plugins as $i => $plugin)
 			<td>'.Ajax::window('<a href="inc/class.Stat.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'], 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'], 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'], 0).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'] == 2).' /></td>
+			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'] == 0).' /></td>
 			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
 		</tr>');
 ?>
@@ -198,7 +216,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="4"></td>
 		</tr>
 <?php
-$datasets = $Mysql->fetch('SELECT * FROM `ltb_dataset` ORDER BY ABS(2.5-`modus`) ASC, `position` ASC');
+$datasets = $Mysql->fetch('SELECT *, (`position` = 0) as `hidden` FROM `ltb_dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
 foreach($datasets as $i => $dataset) {
 	// Modus=1 has been deleted
 	$disabled = ($dataset['modus'] == 3) ? ' disabled="disabled"' : '';

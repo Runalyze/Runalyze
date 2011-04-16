@@ -108,6 +108,15 @@ final class Mysql {
 	}
 
 	/**
+	 * Fetch data from database as array
+	 * @param string $query
+	 * @return array $return[$i]['column']
+	 */
+	public function fetchAsArray($query) {
+		return $this->fetch($query, false, true);
+	}
+
+	/**
 	 * Fetches the row of an given $id or all rows of a $query
 	 * @param string $table    name of table or whole query
 	 * @param int|bool $id     Must not be set if first argument is a query (default: false), otherwise the ID. Can be 'LAST' to get the highest ID

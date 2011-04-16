@@ -235,7 +235,7 @@ class DataBrowser {
 		$href = 'inc/class.DataBrowser.search.php';
 		$icon = Icon::get(Icon::$SEARCH, 'Suche');
 		#return Ajax::link($icon, DATA_BROWSER_ID, $href);
-		return Ajax::window('<a href="suche.php" title="Suche">'.$icon.'</a>', 'big');
+		return Ajax::window('<a href="inc/tpl/window.search.php" title="Suche">'.$icon.'</a>', 'big');
 	}
 
 	/**

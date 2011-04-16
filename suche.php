@@ -12,8 +12,6 @@ if (sizeof($_POST) > 0) {
 	}
 }
 ?>
-
-	<span class="r"><img id="close" src="img/cross.png" onClick="closeSuche()" /></span>
 <h1>Suche</h1>
 
 <form action="javascript:submit_form_suche();" name="suche" id="form_suche" method="post">

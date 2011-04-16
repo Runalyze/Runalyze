@@ -143,11 +143,11 @@ class Helper {
 			$time = time();
 
 		$bpm = $pulse.'bpm';
-		$hf  = '? &#37;';
+		$hf  = '?&nbsp;&#37;';
 
 		$HFmax = Mysql::getInstance()->fetch('SELECT * FROM `ltb_user` ORDER BY ABS(`time`-'.$time.') ASC LIMIT 1');
 		if ($HFmax !== false)
-			$hf = round(100*$pulse / $HFmax['puls_max']).' &#37';
+			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
 
 		if (CONFIG_PULS_MODE != 'bpm')
 			return '<span title="'.$bpm.'">'.$hf.'</span>';
@@ -172,7 +172,7 @@ class Helper {
 		$kmh_mode = 0;
 		$title = '';
 		$as_pace = self::Pace($km, $time).'/km';
-		$as_kmh = self::Kmh($km, $time).' km/h';
+		$as_kmh = self::Kmh($km, $time).'&nbsp;km/h';
 
 		if ($sport_id != 0) {
 			$sport = self::Sport($sport_id, true);
@@ -214,8 +214,8 @@ class Helper {
 		if ($km == 0)
 			return '';
 		if ($track)
-			return number_format($km*1000, 0, ',', '.').' m';
-		return number_format($km, $decimals, ',', '.').' km';
+			return number_format($km*1000, 0, ',', '.').'m';
+		return number_format($km, $decimals, ',', '.').'&nbsp;km';
 	}
 
 	/**
@@ -468,7 +468,7 @@ class Helper {
 			$cut = CUT_LENGTH;
 
 		if (strlen($text) >= $cut)
-			return substr ($text, 0, $cut-3).'...';
+			return '<span title="'.$text.'">'.substr ($text, 0, $cut-3).'...</span>';
 
 		return $text;
 	}
@@ -553,9 +553,12 @@ class Helper {
 	/**
 	 * Get ' checked="checked"' if boolean value is true
 	 * @param bool $value
+	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
 	 */
-	public static function Checked($value) {
+	public static function Checked($value, $value_to_be_checked = NULL) {
+		if ($value_to_be_checked != NULL)
+			$value = ($value == $value_to_be_checked);
 		return $value
 			? ' checked="checked"'
 			: '';
@@ -564,9 +567,12 @@ class Helper {
 	/**
 	 * Get ' selected="selected"' if boolean value is true
 	 * @param bool $value
+	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
 	 */
-	public static function Selected($value) {
+	public static function Selected($value, $value_to_be_checked = NULL) {
+		if ($value_to_be_checked != NULL)
+			$value = ($value == $value_to_be_checked);
 		return $value
 			? ' selected="selected"'
 			: '';
