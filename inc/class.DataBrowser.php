@@ -172,7 +172,7 @@ class DataBrowser {
 		echo $this->getCalenderLink();
 		echo $this->getMonthKmLink();
 		echo $this->getWeekKmLink();
-		echo $this->getSearchLink();
+		echo $this->getNaviSearchLink();
 		echo $this->getAddLink();
 	}
 
@@ -231,11 +231,20 @@ class DataBrowser {
 	/**
 	 * Get ajax-link for searching
 	 */
-	private function getSearchLink() {
+	private function getNaviSearchLink() {
 		$href = 'inc/class.DataBrowser.search.php';
 		$icon = Icon::get(Icon::$SEARCH, 'Suche');
 		#return Ajax::link($icon, DATA_BROWSER_ID, $href);
 		return Ajax::window('<a href="inc/tpl/window.search.php" title="Suche">'.$icon.'</a>', 'big');
+	}
+
+	/**
+	 * Get complete HTML-link for the search
+	 * @param string $name
+	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
+	 */
+	static function getSearchLink($name, $var) {
+		return Ajax::window('<a href="inc/tpl/window.search.php?get=true&'.$var.'">'.$name.'</a>', 'big');
 	}
 
 	/**

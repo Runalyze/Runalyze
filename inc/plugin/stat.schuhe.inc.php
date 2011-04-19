@@ -41,9 +41,7 @@ $Error = Error::getInstance();
 		<td colspan="9" />
 	</tr>
 <?php
-$Error->addTodo('Set correct search-link', __FILE__, __LINE__);
-
-$schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC', false, true);
+$schuhe = $Mysql->fetchAsArray('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
 if (count($schuhe) > 0) {
 	foreach($schuhe as $i => $schuh) {
 		$i++;
@@ -54,7 +52,7 @@ if (count($schuhe) > 0) {
 		echo('
 		<tr class="a'.($i%2 + 1).' r" style="background:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).') no-repeat bottom left;">
 			<td class="small">'.$trainings.'x</td>
-			<td class="b'.$in_use.' l"><span class="link" onclick="submit_suche(\'dat[0]=schuhid&opt[0]=is&val[0]='.$schuh['id'].'\')">'.$schuh['name'].'</span></td>
+			<td class="b'.$in_use.' l">'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</td>
 			<td class="small">'.$schuh['kaufdatum'].'</td>
 			<td>'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
 			<td>'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['dauer']) : '-').'</td>

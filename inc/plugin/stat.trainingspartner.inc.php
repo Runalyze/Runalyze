@@ -33,10 +33,8 @@ $Mysql = Mysql::getInstance();
 		<td colspan="2" />
 	</tr>
 <?php
-Error::getInstance()->addTodo('Set correct search-link.', __FILE__, __LINE__);
-
 $partner = array();
-$trainings = $Mysql->fetch('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""', false, true);
+$trainings = $Mysql->fetchAsArray('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""');
 if (count($trainings) == 0)
 	echo('
 	<tr class="a1">
@@ -75,7 +73,7 @@ else {
 			<td>');
 		}
 
-		echo('<span class="link" onclick="submit_suche(\'opt[trainingspartner]=like&val[trainingspartner]='.$name.'\')">'.$name.'</span>');
+		echo DataBrowser::getSearchLink($name, 'opt[trainingspartner]=like&val[trainingspartner]='.$name);
 	}
 	echo('
 			</td>

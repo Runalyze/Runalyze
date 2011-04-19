@@ -13,7 +13,7 @@
  */
 class Ajax {
 	/**
-	 * Gives a HTML-link for using jTraining which is calling inc/tpl/tpl.training.php
+	 * Gives a HTML-link for using jTraining
 	 * @param int $training_id
 	 * @param string $name
 	 * @return string
