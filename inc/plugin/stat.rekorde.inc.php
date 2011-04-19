@@ -51,18 +51,18 @@ foreach ($rekorde as $rekord):
 		</td>
 	</tr>
 <?php
-	eval('$sports = $Mysql->fetch(\''.$rekord['sportquery'].'\', false, true);');
+	eval('$sports = $Mysql->fetchAsArray(\''.$rekord['sportquery'].'\');');
 	foreach ($sports as $i => $sport) {
 		echo('
 	<tr class="a'.($i%2 + 1).' r">
 		<td class="b l">
 			<img src="img/sports/'.$sport['bild'].'" /> '.$sport['name'].'
 		</td>');
-		eval('$data = $Mysql->fetch(\''.$rekord['datquery'].'\', false, true);');
+		eval('$data = $Mysql->fetchAsArray(\''.$rekord['datquery'].'\');');
 		if (count($data) > 0) {
 			foreach ($data as $j => $dat) {
 				if ($rekord['eval'] == 0)
-					$code = Helper::Speed($dat['distanz'],$dat['dauer'],$sport['id'],false);
+					$code = Helper::Speed($dat['distanz'], $dat['dauer'], $sport['id']);
 				elseif ($rekord['eval'] == 1)
 					$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
 				echo('
@@ -108,14 +108,14 @@ endforeach;
 		</td>
 <?php
 // Jahre
-$years = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `year` ORDER BY `km` DESC LIMIT 10', false, true);
+$years = $Mysql->fetchAsArray('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `year` ORDER BY `km` DESC LIMIT 10');
 if (count($years) > 0) {
 	foreach ($years as $i => $year) {
-		$link = 'daten(\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(0,0,0,1,1,$year['year']).'\',\''.mktime(23,59,50,12,31,$year['year']).'\');';
+		$link = DataBrowser::getLink(Helper::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
 		echo('
 			<td>
-				<span class="link" title="'.$year['year'].'" onclick="'.$link.'">
-					'.Helper::Km($year['km']).'
+				<span title="'.$year['year'].'">
+					'.$link.'
 				</span>
 			</td>');
 	}
@@ -133,14 +133,14 @@ for (; $i < 10; $i++) { echo('
 		</td>
 <?php
 // Monate
-$months = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year`, MONTH(FROM_UNIXTIME(`time`)) as `month`, (MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `monthyear` ORDER BY `km` DESC LIMIT 10', false, true);
+$months = $Mysql->fetchAsArray('SELECT `sportid`, SUM(`distanz`) as `km`, YEAR(FROM_UNIXTIME(`time`)) as `year`, MONTH(FROM_UNIXTIME(`time`)) as `month`, (MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `monthyear` ORDER BY `km` DESC LIMIT 10');
 if (count($months) > 0) {
 	foreach ($months as $i => $month) {
-		$link = 'daten(\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(0,0,0,$month['month'],1,$month['year']).'\',\''.mktime(23,59,50,$month['month']+1,0,$month['year']).'\');';
+		$link = DataBrowser::getLink(Helper::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
 		echo('
 			<td>
-				<span class="link" title="'.Helper::Month($month['month']).' '.$month['year'].'" onclick="'.$link.'">
-					'.Helper::Km($month['km']).'
+				<span title="'.Helper::Month($month['month']).' '.$month['year'].'">
+					'.$link.'
 				</span>
 			</td>');
 	}
@@ -159,15 +159,14 @@ for ($i; $i < 10; $i++) { echo('
 		</td>
 <?php
 // Wochen
-Error::getInstance()->addTodo('Set correct DataBrowser-link', __FILE__, __LINE__);
-$weeks = $Mysql->fetch('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10', false, true);
+$weeks = $Mysql->fetchAsArray('SELECT `sportid`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `week`, YEAR(FROM_UNIXTIME(`time`)) as `year`, YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`, `time` FROM `ltb_training` WHERE `sportid`=1 GROUP BY `weekyear` ORDER BY `km` DESC LIMIT 10');
 if (count($weeks) > 0) {
 	foreach ($weeks as $i => $week) {
-		$link = 'daten(\''.$week['time'].'\',\''.Helper::Weekstart($woche['time']).'\',\''.Helper::Weekend($week['time']).'\');';
+		$link = DataBrowser::getLink(Helper::Km($week['km']), Helper::Weekstart($week['time']), Helper::Weekend($week['time']));
 		echo('
 			<td>
-				<span class="link" title="KW '.$week['week'].' '.$week['year'].'" onclick="'.$link.'">
-					'.Helper::Km($week['km']).'
+				<span title="KW '.$week['week'].' '.$week['year'].'">
+					'.$link.'
 				</span>
 			</td>');
 	}

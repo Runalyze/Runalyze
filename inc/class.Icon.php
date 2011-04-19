@@ -77,8 +77,11 @@ class Icon {
 	 * @param int $id
 	 * @param string $title
 	 */
-	public static function getSportIcon($id, $title) {
+	public static function getSportIcon($id, $title = '') {
 		$data = Mysql::getInstance()->fetch('ltb_sports', $id);
+		if ($title == '')
+			$title = $data['name'];
+
 		return '<img src="img/sports/'.$data['bild'].'" alt="'.$title.'" />';
 	}
 }

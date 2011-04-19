@@ -35,15 +35,13 @@ $Mysql = Mysql::getInstance();
 <?php
 Error::getInstance()->addTodo('Set correct onclick-link', __FILE__, __LINE__);
 // Häufigsten Strecken
-$strecken = $Mysql->fetch('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10', false, true);
+$strecken = $Mysql->fetchAsArray('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10');
 foreach ($strecken as $i => $strecke):
 ?>
 	<tr class="a<?php echo($i%2+1); ?> r">
 		<td><?php echo($strecke['num']); ?>x</td>
 		<td class="l">
-			<span class="link" onclick="submit_suche('opt[strecke]=like&val[strecke]=<?php echo($strecke['strecke']); ?>')" title="<?php echo($strecke['strecke']); ?>">
-				<?php echo Helper::Cut($strecke['strecke'],100); ?>
-			</span>
+			<?php echo DataBrowser::getSearchLink(Helper::Cut($strecke['strecke'],100), 'opt[strecke]=is&val[strecke]='.$strecke['strecke']); ?>
 		</td>
 		<td><?php echo Helper::Km($strecke['km']); ?></td>
 	</tr>
@@ -60,7 +58,7 @@ foreach ($strecken as $i => $strecke):
 <?php
 // Häufigsten Orte
 $orte = array();
-$strecken = $Mysql->fetch('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""', false, true);
+$strecken = $Mysql->fetchAsArray('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""');
 foreach ($strecken as $strecke) {
 	$streckenorte = explode(" - ", $strecke['strecke']);
 	foreach ($streckenorte as $streckenort) {
@@ -77,7 +75,7 @@ $i = 1;
 foreach ($orte as $ort => $num): $i++; ?>
 	<tr class="a<?php echo($i%2+1); ?>">
 		<td><?php echo($num); ?>x</td>
-		<td><span class="link" onclick="submit_suche('opt[strecke]=like&val[strecke]=<?php echo($ort); ?>')"><?php echo($ort); ?></span></td>
+		<td><?php echo DataBrowser::getSearchLink($ort, 'opt[strecke]=like&val[strecke]='.$ort); ?></td>
 	</tr>
 <?php
 	if ($i == 11) break;
@@ -103,7 +101,8 @@ array_multisort($orte);
 foreach ($orte as $ort => $num) {
 if ($num_x <= 4) {
 	if ($num_x != $num) {
-		if ($num != 1) echo('
+		if ($num != 1)
+			echo('
 		</td>
 	</tr>');
 		$num_x = $num;
@@ -112,8 +111,9 @@ if ($num_x <= 4) {
 		<td class="b">'.$num.'x</td>
 		<td>');
 	}
-	else echo(', ');
-	echo('<span class="link" onclick="submit_suche(\'opt[strecke]=like&val[strecke]='.$ort.'\')">'.$ort.'</span>');
+	else
+		echo(', ');
+	echo DataBrowser::getSearchLink($ort, 'opt[strecke]=like&val[strecke]='.$ort);
 }
 else {
 	echo('

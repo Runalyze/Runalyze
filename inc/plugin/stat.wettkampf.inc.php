@@ -62,8 +62,8 @@ $Error->addTodo('Set correct onclick-link for date-link', __FILE__, __LINE__);
 function show_wk_tr($wk, $i) {
 	echo('
 	<tr class="a'.($i%2 + 1).' r">
-		<td class="c small"><a href="#" onclick="daten(\''.$wk['time'].'\',\''.Helper::Weekstart($wk['time']).'\',\''.Helper::Weekend($wk['time']).'\')">'.date("d.m.Y", $wk['time']).'</a></td>
-		<td class="l"><strong>'.Ajax::trainingLink($wk['id'],$wk['bemerkung']).'</strong></td>
+		<td class="c small">'.DataBrowser::getLink(date("d.m.Y", $wk['time']), Helper::Weekstart($wk['time']), Helper::Weekend($wk['time'])).'</a></td>
+		<td class="l"><strong>'.Ajax::trainingLink($wk['id'], $wk['bemerkung']).'</strong></td>
 		<td>'.Helper::Km($wk['distanz'], (round($wk['distanz']) != $wk['distanz'] ? 1 : 0), $wk['bahn']).'</td>
 		<td>'.Helper::Time($wk['dauer']).'</td>
 		<td class="small">'.$wk['pace'].'/km</td>'.(CONFIG_USE_PULS ? '

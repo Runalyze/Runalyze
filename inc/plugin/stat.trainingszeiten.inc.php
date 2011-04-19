@@ -52,22 +52,18 @@ ORDER BY
 	(`H`+12)%24 ASC,
 	`MIN` ASC');
 
-$Error->addTodo('Set correct onclick-link', __FILE__, __LINE__);
-foreach($nights as $i => $night):
+foreach($nights as $i => $night) {
 	$sport = Helper::Sport($night['sportid'],true);
-?>
-<?php if ($i%2 == 0): ?>
-	<tr class="a<?php echo(round($i/2)%2+1); ?>">
-<?php endif; ?>
-		<td class="b"><?php echo date("H:i",$night['time']); ?> Uhr</td>
-		<td><?php echo Ajax::trainingLink($night['id'], '<img class="link" title="'.$sport['name'].'" src="img/sports/'.$sport['bild'].'" />'); ?></td>
-		<td><?php echo ($night['distanz'] != 0 ? Helper::Km($night['distanz']) : Helper::Time($night['dauer'])).' '.$sport['name']; ?></td>
-		<td><a href="#" onclick="daten('<?php echo $night['time']; ?>','<?php echo Helper::Weekstart($night['time']); ?>','<?php echo Helper::Weekend($night['time']); ?>')"><?php echo date("d.m.Y",$night['time']); ?></a></td>
-<?php if ($i%2 == 1): ?>
-	</tr>
-<?php endif; ?>
-<?php
-endforeach;
+	if ($i%2 == 0)
+		echo('<tr class="a'.(round($i/2)%2+1).'">');
+	echo('
+		<td class="b">'.date("H:i", $night['time']).' Uhr</td>
+		<td>'.Ajax::trainingLink($night['id'], Icon::getSportIcon($night['sportid'])).'</td>
+		<td>'.($night['distanz'] != 0 ? Helper::Km($night['distanz']) : Helper::Time($night['dauer']).' '.$sport['name']).'</td>
+		<td>'.DataBrowser::getLink(date("d.m.Y",$night['time']), Helper::Weekstart($night['time']), Helper::Weekend($night['time'])).'</td>');
+	if ($i%2 == 1)
+		echo('</tr>');
+}
 ?>
 </table>
 
