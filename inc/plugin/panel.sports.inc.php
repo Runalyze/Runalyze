@@ -17,7 +17,7 @@ function sportarten_installer() {
 	$type = 'panel';
 	$filename = 'panel.sports.inc.php';
 	$name = 'Sports';
-	$description = 'Übersicht der Leistungen aller Sportarten für den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
+	$description = 'ï¿½bersicht der Leistungen aller Sportarten fï¿½r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
 	// TODO Include the plugin-installer
 }
 
@@ -48,7 +48,7 @@ function sportarten_display() {
 	foreach(sports_getTimeset() as $i => $timeset) {
 		echo('<div id="sports_'.$i.'" class="change"'.($i==0?'':'style="display:none;"').'>');
 
-		$sports = $Mysql->fetch('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
+		$sports = $Mysql->fetchAsArray('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
 		foreach($sports as $sport) {
 			$data = $Mysql->fetch('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `ltb_training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
 			$leistung = ($sport['distanztyp'] == 1)

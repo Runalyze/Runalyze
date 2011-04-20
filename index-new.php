@@ -28,7 +28,7 @@ $DataBrowser->display();
 /**
  * STATISTIC PLUGINS
  */
-$Error->add('TODO','Plugins have to be deacitvated automatically if modus is unused',__FILE__,__LINE__);
+$Error->addTodo('Plugins have to be deacitvated automatically if modus is unused',__FILE__,__LINE__);
 $stats = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
 foreach($stats as $i => $stat) {
 	$Stat = new Stat($stat['id']);

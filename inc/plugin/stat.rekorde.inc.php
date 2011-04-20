@@ -17,7 +17,7 @@ function stat_rekorde_installer() {
 	$type = 'stat';
 	$filename = 'stat.rekorde.inc.php';
 	$name = 'Rekorde';
-	$description = 'Am schnellsten, am längsten, am weitesten: Die Rekorde aus dem Training.';
+	$description = 'Am schnellsten, am lï¿½ngsten, am weitesten: Die Rekorde aus dem Training.';
 	// TODO Include the plugin-installer
 }
 
@@ -56,7 +56,7 @@ foreach ($rekorde as $rekord):
 		echo('
 	<tr class="a'.($i%2 + 1).' r">
 		<td class="b l">
-			<img src="img/sports/'.$sport['bild'].'" /> '.$sport['name'].'
+			'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'
 		</td>');
 		eval('$data = $Mysql->fetchAsArray(\''.$rekord['datquery'].'\');');
 		if (count($data) > 0) {

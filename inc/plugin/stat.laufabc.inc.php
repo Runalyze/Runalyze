@@ -49,14 +49,14 @@ $Mysql = Mysql::getInstance();
 Error::getInstance()->addTodo('Set up correct search-link', __FILE__, __LINE__);
 
 $ABCData = array();
-$result = $Mysql->fetch('
+$result = $Mysql->fetchAsArray('
 	SELECT
 		SUM(`laufabc`) as `abc`,
 		SUM(1) as `num`,
 		YEAR(FROM_UNIXTIME(`time`)) as `year`,
 		MONTH(FROM_UNIXTIME(`time`)) as `month`
 	FROM `ltb_training`
-	GROUP BY `year`, `month`', false, true);
+	GROUP BY `year`, `month`');
 
 foreach ($result as $dat) {
 	if ($dat['abc'] > 0)

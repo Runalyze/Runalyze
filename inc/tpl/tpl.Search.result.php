@@ -69,27 +69,35 @@ if ($num_all > 15) {
 	$submit_search = '';
 
 	foreach ($_POST as $var => $val) {
-		if (is_array($_POST[$var]))
-			foreach ($_POST[$var] as $inner_var => $inner_val)
-				$submit_search .= $var.'['.$inner_var.']='.$inner_val.'&';
-		else
+		if (is_array($val))
+			foreach ($_POST[$var] as $inner_var => $inner_val) {
+				if (is_array($inner_val))
+					foreach ($inner_val as $i_var => $i_val)
+						$submit_search .= $var.'['.$inner_var.']['.$i_var.']='.$i_val.'&';
+				else
+					$submit_search .= $var.'['.$inner_var.']='.$inner_val.'&';
+			}
+		elseif ($var != 'seite')
 			$submit_search .= $var.'='.$val.'&';
 	}
 
 	if ($num_all > $_POST['seite']*15) {
-		$name   = Icon::get(Icon::$ARR_BACK, 'Seite zurück');
-		$data   = $submit_search.'&seite='.($_POST['seite']+1);
-		echo Ajax::link($name, '', 'inc/tpl/window.search.php', $data);
+		$name   = Icon::get(Icon::$ARR_NEXT, 'Seite vor');
+		$data   = $submit_search.'seite='.($_POST['seite']+1);
+		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&'.$data);
 	}
 
 	if ($_POST['seite'] > 1) {
-		$name   = Icon::get(Icon::$ARR_NEXT, 'Seite vor');
-		$data   = $submit_search.'&seite='.($_POST['seite']-1);
-		echo Ajax::link($name, '', 'inc/tpl/window.search.php', $data);
+		$name   = Icon::get(Icon::$ARR_BACK, 'Seite zur&uuml;ck');
+		$data   = $submit_search.'seite='.($_POST['seite']-1);
+		$back = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&'.$data);
 	}
+} else {
+	$next = '';
+	$back = '';
 }
 
-	echo('Insgesamt wurden '.$num_all.' Trainings gefunden.');
+	echo($back.' Insgesamt wurden '.$num_all.' Trainings gefunden. '.$next);
 
 ?>
 		</td>

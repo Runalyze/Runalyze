@@ -16,7 +16,6 @@
  * @uses class::Ajax
  * @uses class::Panel // Will be included by class::Plugin later?
  * @uses class::Stat // Will be included by class::Plugin later?
- * @uses '../config/dataset.php' // Will be a class later
  * @uses '../config/functions.php' // TODO functions.php Must be a helper-class later
  * @uses '../config/globals.php' // Has to be done on another way
  * // @uses class::Plugin
@@ -140,7 +139,6 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.DataBrowser.php');
 		require_once(FRONTEND_PATH.'class.Dataset.php');
-		require_once(FRONTEND_PATH.'..\\config\\dataset.php'); // Will be a class later
 		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
 		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
 		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser, Draw');

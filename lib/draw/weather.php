@@ -70,11 +70,11 @@ else {
 }
 $DataSet->AddPoint($time,"Zeit");
 $DataSet->SetAbsciseLabelSerie("Zeit");
-$DataSet->SetYAxisUnit("°C");
+$DataSet->SetYAxisUnit("Â°C");
 
 // Cache definition
 $Cache = new pCache();
-$Cache->GetFromCache("Wetter-".$y."-".$_GET['m'],$DataSet->GetData());
+#$Cache->GetFromCache("Wetter-".$y."-".$_GET['m'],$DataSet->GetData());
 
 // Initialise the graph
 $Bild = new pChart(780,240);
@@ -91,13 +91,13 @@ $Bild->drawGrid(4,FALSE,184,201,217,200,TRUE,FALSE);
 $Bild->drawTreshold(0,136,0,0,FALSE,FALSE,0);
 $Bild->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());
 if ($_GET['m'] == 'm')
-$Bild->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),2);
+	$Bild->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),2);
 
 // Finish the graph
 if ($_GET['all'] == 'all')
-$Bild->drawLegend(65,15,$DataSet->GetDataDescription(),255,255,255);
+	$Bild->drawLegend(65,15,$DataSet->GetDataDescription(),255,255,255);
 $Bild->drawTextBox(0,220,780,240,$info,0,255,255,255,ALIGN_CENTER,TRUE,0,0,0,30);
 $Bild->AddBorder(1);
-$Cache->WriteToCache("Wetter-".$y."-".$_GET['m'],$DataSet->GetData(),$Bild);
+$Cache->WriteToCache("Wetter-".$y."-".$_GET['m'], $DataSet->GetData(), $Bild);
 $Bild->Stroke();
 ?>

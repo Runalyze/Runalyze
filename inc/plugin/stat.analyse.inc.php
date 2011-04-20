@@ -44,7 +44,7 @@ if ($this->year != -1) {
 }
 
 // TRAININGSTYPEN
-	$result = $Mysql->fetch('
+	$result = $Mysql->fetchAsArray('
 		SELECT '.$timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 			COUNT(*) AS `num`,
 			SUM(`distanz`) AS `distanz`,
@@ -54,7 +54,7 @@ if ($this->year != -1) {
 		LEFT JOIN `ltb_typ` ON (ltb_training.typid=ltb_typ.id)
 		WHERE `sportid`='.RUNNINGSPORT.' '.$where_time.'
 		GROUP BY `typid`, '.$group_time.'
-		ORDER BY `RPE`, `timer` ASC', false, true);
+		ORDER BY `RPE`, `timer` ASC');
 	
 	$type_data = array(
 		'all_sum' => 0,
@@ -72,7 +72,7 @@ if ($this->year != -1) {
 
 	$type_foreach = array();
 
-	$types = $Mysql->fetch('SELECT `id`, `name`, `abk` FROM `ltb_typ` ORDER BY `RPE` ASC', false, true);
+	$types = $Mysql->fetchAsArray('SELECT `id`, `name`, `abk` FROM `ltb_typ` ORDER BY `RPE` ASC');
 	foreach ($types as $i => $type) {
 		$type_foreach[] = array(
 			'name' => '<span title="'.$type['name'].'">'.$type['abk'].'</span>',
@@ -82,7 +82,7 @@ if ($this->year != -1) {
 // PULSBEREICHE
 	$pulse_min = $this->config['lowest_pulsegroup']['var'];
 	$pulse_step = $this->config['pulsegroup_step']['var'];
-	$result = $Mysql->fetch('
+	$result = $Mysql->fetchAsArray('
 		SELECT '.$timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 			COUNT(*) AS `num`,
 			SUM(`distanz`) AS `distanz`,
@@ -90,7 +90,7 @@ if ($this->year != -1) {
 		FROM `ltb_training`
 		WHERE `sportid`='.RUNNINGSPORT.' '.$where_time.' && `puls`!=0
 		GROUP BY `pulsegroup`, '.$group_time.'
-		ORDER BY `pulsegroup`, `timer` ASC', false, true);
+		ORDER BY `pulsegroup`, `timer` ASC');
 	
 	$pulse_data = array(
 		'all_sum' => 0,
@@ -120,7 +120,7 @@ if ($this->year != -1) {
 	$speed_min = $this->config['lowest_pacegroup']['var'];
 	$speed_max = $this->config['highest_pacegroup']['var'];
 	$speed_step = $this->config['pacegroup_step']['var'];
-	$result = $Mysql->fetch('
+	$result = $Mysql->fetchAsArray('
 		SELECT '.$timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 			COUNT(*) AS `num`,
 			SUM(`distanz`) AS `distanz`,
@@ -128,7 +128,7 @@ if ($this->year != -1) {
 		FROM `ltb_training`
 		WHERE `sportid`='.RUNNINGSPORT.' '.$where_time.'
 		GROUP BY `pacegroup`, '.$group_time.'
-		ORDER BY `pacegroup` DESC, `timer` ASC', false, true);
+		ORDER BY `pacegroup` DESC, `timer` ASC');
 	
 	$speed_data = array(
 		'all_sum' => 0,

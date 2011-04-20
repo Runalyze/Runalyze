@@ -5,6 +5,8 @@
  */
 
 define('DATA_BROWSER_ID', 'daten');
+define('DATA_BROWSER_SEARCH_ID', 'search');
+define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
 
 /**
  * Class: Frontend
@@ -180,7 +182,7 @@ class DataBrowser {
 	 * Get link to navigation back
 	 */
 	private function getPrevLink() {
-		$icon = Icon::get(Icon::$ARR_BACK, 'zurück');
+		$icon = Icon::get(Icon::$ARR_BACK, 'zurï¿½ck');
 		$timestamp_array = self::getPrevTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
@@ -190,7 +192,7 @@ class DataBrowser {
 	 * Get link to navigation forward
 	 */
 	private function getNextLink() {
-		$icon = Icon::get(Icon::$ARR_NEXT, 'vorwärts');
+		$icon = Icon::get(Icon::$ARR_NEXT, 'vorwï¿½rts');
 		$timestamp_array = self::getNextTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
@@ -251,8 +253,8 @@ class DataBrowser {
 	 * Get ajax-link for adding a training
 	 */
 	private function getAddLink() {
-		$icon = Icon::get(Icon::$ADD, 'Training hinzufügen');
-		return Ajax::window('<a href="inc/tpl/window.formular.php" title="Training hinzufügen">'.$icon.'</a>', 'normal');
+		$icon = Icon::get(Icon::$ADD, 'Training hinzufï¿½gen');
+		return Ajax::window('<a href="inc/tpl/window.formular.php" title="Training hinzufï¿½gen">'.$icon.'</a>', 'normal');
 	}
 
 	/**
