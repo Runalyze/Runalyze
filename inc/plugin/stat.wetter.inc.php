@@ -19,14 +19,14 @@ function stat_wettkampf_installer() {
 	$type = 'stat';
 	$filename = 'stat.wetter.inc.php';
 	$name = 'Wetter';
-	$description = 'Wetterverhältnisse, Temperaturen und die getragenen Kleidungsstücke.';
+	$description = 'Wetterverhï¿½ltnisse, Temperaturen und die getragenen Kleidungsstï¿½cke.';
 	// TODO Include the plugin-installer
 }
 
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->add('TODO', 'Change via config-set between Wetter/Kleidung/Both', __FILE__, __LINE__);
+$Error->addTodo('Change via config-set between Wetter/Kleidung/Both', __FILE__, __LINE__);
 ?>
 <h1>
 <?php echo Ajax::window('<a class="right" href="inc/plugin/window.wetter.php" title="Wetter-Diagramme anzeigen"><img src="img/mued.png" alt="Wetter-Diagramme anzeigen" /></a>'); ?>
@@ -86,7 +86,7 @@ if ($this->year == -1) {
 		<td class="c">&#176;C</td>
 <?php // Temperatur
 $i = 1;
-$temps = $Mysql->fetch('SELECT
+$temps = $Mysql->fetchAsArray('SELECT
 		AVG(`temperatur`) as `temp`,
 		MONTH(FROM_UNIXTIME(`time`)) as `m`
 	FROM `ltb_training` WHERE
@@ -95,8 +95,8 @@ $temps = $Mysql->fetch('SELECT
 		'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 	GROUP BY MONTH(FROM_UNIXTIME(`time`))
 	ORDER BY `m` ASC
-	LIMIT 12', false, true);
-if ($temps !== false) {
+	LIMIT 12');
+if (count($temps) == 0) {
 	foreach($temps as $temp) {
 		// Fill empty columns
 		for (; $i < $temp['m']; $i++)
@@ -120,7 +120,7 @@ if ($temps !== false) {
 
 
 <?php // Wetterarten
-$wetter_all = $Mysql->fetch('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC', false, true);
+$wetter_all = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
 if (count($wetter_all) > 0)
 	foreach($wetter_all as $w => $wetter) {
 		echo('
@@ -128,7 +128,7 @@ if (count($wetter_all) > 0)
 			<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
 	
 		$i = 1;
-		$data = $Mysql->fetch('SELECT
+		$data = $Mysql->fetchAsArray('SELECT
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `ltb_training` WHERE
@@ -137,8 +137,8 @@ if (count($wetter_all) > 0)
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
-			LIMIT 12', false, true);
-		if ($data !== false) {
+			LIMIT 12');
+		if (count($data) == 0) {
 			foreach($data as $dat) {
 				// Fill empty columns
 				for (; $i < $dat['m']; $i++)
@@ -170,7 +170,7 @@ if (count($wetter_all) > 0)
 
 
 <?php // Kleidungsarten
-$nums = $Mysql->fetch('SELECT
+$nums = $Mysql->fetchAsArray('SELECT
 		SUM(1) as `num`,
 		MONTH(FROM_UNIXTIME(`time`)) as `m`
 	FROM `ltb_training` WHERE
@@ -179,15 +179,15 @@ $nums = $Mysql->fetch('SELECT
 		'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 	GROUP BY MONTH(FROM_UNIXTIME(`time`))
 	ORDER BY `m` ASC
-	LIMIT 12', false, true);
+	LIMIT 12');
 
 if (count($nums) > 0) {
 	foreach($nums as $dat)
 		$num[$dat['m']] = $dat['num'];
 } else {
-	$Error->add('WARNING', 'Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
+	$Error->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
 }
-$kleidungen = $Mysql->fetch('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC', false, true);
+$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
 if (count($kleidungen) > 0) {
 	foreach($kleidungen as $k => $kleidung) {
 		echo('
@@ -195,7 +195,7 @@ if (count($kleidungen) > 0) {
 			<td class="r">'.$kleidung['name'].'</td>');
 	
 		$i = 1;
-		$data = $Mysql->fetch('SELECT
+		$data = $Mysql->fetchAsArray('SELECT
 				SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `ltb_training` WHERE
@@ -204,8 +204,8 @@ if (count($kleidungen) > 0) {
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			HAVING `num`!=0
 			ORDER BY `m` ASC
-			LIMIT 12', false, true);
-		if ($data !== false) {
+			LIMIT 12');
+		if (count($data) == 0) {
 			foreach($data as $dat) {
 				// Fill empty columns
 				for (; $i < $dat['m']; $i++)
@@ -262,7 +262,7 @@ if (count($kleidungen) > 0) {
 	</tr>
 	<tr class="a1 r">
 <?php // Temperaturbereiche
-$kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
+$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
 if (count($kleidungen) > 0) {
 	foreach($kleidungen as $i => $kleidung) {
 		if ($i%3 == 0):

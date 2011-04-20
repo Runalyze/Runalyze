@@ -55,7 +55,7 @@ if (isset($submit))
 	<input type="hidden" name="type" value="schuh_unuse" />
 	<select name="schuhid">
 <?php
-$schuhe = $Mysql->fetch('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
+$schuhe = $Mysql->fetchAsArray('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
 foreach($schuhe as $schuh)
 	echo('
 		<option value="'.$schuh['id'].'">'.$schuh['name'].'</option>');

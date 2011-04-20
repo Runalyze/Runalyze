@@ -17,7 +17,7 @@ function stat_trainingszeiten_installer() {
 	$type = 'stat';
 	$filename = 'stat.trainingszeiten.inc.php';
 	$name = 'Trainingszeiten';
-	$description = 'Auflistung nächtlicher Trainings und Diagramme über die Trainingszeiten.';
+	$description = 'Auflistung nï¿½chtlicher Trainings und Diagramme ï¿½ber die Trainingszeiten.';
 	// TODO Include the plugin-installer
 }
 
@@ -32,11 +32,11 @@ $Error = Error::getInstance();
 	</tr>
 <?php
 $sports_not_short = '';
-$sports = $Mysql->fetch('SELECT `id` FROM `ltb_sports` WHERE `short` = 0', false, true);
+$sports = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_sports` WHERE `short` = 0');
 foreach($sports as $sport)
 	$sports_not_short .= $sport['id'].',';
 
-$nights = $Mysql->fetch('SELECT * FROM (
+$nights = $Mysql->fetchAsArray('SELECT * FROM (
 	SELECT *,
 		HOUR(FROM_UNIXTIME(`time`)) as `H`,
 		MINUTE(FROM_UNIXTIME(`time`)) as `MIN`

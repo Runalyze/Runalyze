@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the plugin "Wettkämpfe".
+ * This file contains the plugin "Wettkï¿½mpfe".
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -20,8 +20,8 @@
 function stat_wettkampf_installer() {
 	$type = 'stat';
 	$filename = 'stat.wettkampf.inc.php';
-	$name = 'Wettkämpfe';
-	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettkämpfen.';
+	$name = 'Wettkï¿½mpfe';
+	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettkï¿½mpfen.';
 	// TODO Include the plugin-installer
 }
 
@@ -58,7 +58,6 @@ function show_table_start() {
 	</tr>');
 }
 
-$Error->addTodo('Set correct onclick-link for date-link', __FILE__, __LINE__);
 function show_wk_tr($wk, $i) {
 	echo('
 	<tr class="a'.($i%2 + 1).' r">
@@ -93,7 +92,7 @@ function show_table_end() {
 <?php
 show_table_start();
 
-$wks = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC');
+$wks = $Mysql->fetchAsArray('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC');
 foreach($wks as $i => $wk)
 	show_wk_tr($wk, $i);
 
@@ -109,7 +108,7 @@ show_table_start();
 $Error->addTodo('Last WKs: Set LAST_WK_NUM as config-var', __FILE__, __LINE__);
 define('LAST_WK_NUM',10);
 
-$wks = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM, false, true);
+$wks = $Mysql->fetchAsArray('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM);
 if (count($wks) > 0) {
 	foreach($wks as $i => $wk)
 		show_wk_tr($wk, $i);
@@ -127,7 +126,7 @@ show_table_end();
 show_table_start();
 
 $distances = array();
-$dists = $Mysql->fetch('SELECT `distanz`, SUM(1) as `wks` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' GROUP BY `distanz`');
+$dists = $Mysql->fetchAsArray('SELECT `distanz`, SUM(1) as `wks` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' GROUP BY `distanz`');
 foreach($dists as $i => $dist) {
 	if ($dist['wks'] > 1) {
 		$distances[] = $dist['distanz'];
@@ -168,7 +167,7 @@ $kms = array(3, 5, 10, 21.1, 42.2);
 foreach($kms as $km)
 	$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 
-$wks = $Mysql->fetch('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
+$wks = $Mysql->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
 foreach($wks as $wk) {
 	if (!isset($year[$wk['y']])) {
 		$year[$wk['y']] = $dists;

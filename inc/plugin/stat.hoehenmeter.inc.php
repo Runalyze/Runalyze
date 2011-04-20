@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the plugin "Höhenhmeter".
+ * This file contains the plugin "Hï¿½henhmeter".
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -18,8 +18,8 @@
 function stat_hoehenmeter_installer() {
 	$type = 'stat';
 	$filename = 'stat.hoehenmeter.inc.php';
-	$name = 'Höhenhmeter';
-	$description = 'Die steilsten und bergigsten Läufe sowie der Überblick über die absolvierten Höhenmeter aller Monate.';
+	$name = 'HÃ¶henhmeter';
+	$description = 'Die steilsten und bergigsten Lï¿½ufe sowie der ï¿½berblick ï¿½ber die absolvierten Hï¿½henmeter aller Monate.';
 	// TODO Include the plugin-installer
 }
 
@@ -49,7 +49,7 @@ $Mysql = Mysql::getInstance();
 	</tr>
 <?php
 $ElevationData = array();
-$result = $Mysql->fetch('
+$result = $Mysql->fetchAsArray('
 	SELECT
 		SUM(`hm`) as `hm`,
 		SUM(`distanz`) as `km`,
@@ -57,7 +57,7 @@ $result = $Mysql->fetch('
 		MONTH(FROM_UNIXTIME(`time`)) as `month`
 	FROM `ltb_training`
 	WHERE `hm` > 0
-	GROUP BY `year`, `month`', false, true);
+	GROUP BY `year`, `month`');
 
 foreach ($result as $dat) {
 	$ElevationData[$dat['year']][$dat['month']] = array('hm' => $dat['hm'], 'km' => $dat['km']);
@@ -97,19 +97,19 @@ endforeach;
 		<td colspan="4" />
 	</tr>
 <?php
-$strecken = $Mysql->fetch('SELECT `time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung` FROM `ltb_training` ORDER BY `hm` DESC LIMIT 10', false, true);
-if ($strecken === false)
+$strecken = $Mysql->fetchAsArray('SELECT `time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung` FROM `ltb_training` ORDER BY `hm` DESC LIMIT 10');
+if (count($strecken) == 0)
 	echo('
 	<tr>
 		<td colspan="4"><em>Keine Strecken gefunden.</em></td>
 	</tr>');
 else
 	foreach($strecken as $i => $strecke):
-		$sport = Helper::Sport($strecke['sportid'],true);
+		$icon = Icon::getSportIcon($strecke['sportid']);
 ?>
 	<tr class="a<?php echo($i%2+1); ?>">
 		<td class="small"><?php echo date("d.m.Y", $strecke['time']); ?></td>
-		<td><img class="link" onclick="seite('training','<?php echo $strecke['id']; ?>')" title="<?php echo $sport['name']; ?>" src="img/sports/<?php echo $sport['bild']; ?>" /></td>
+		<td><?php echo Ajax::trainingLink($strecke['id'], $icon); ?></td>
 		<td title="<?php echo ($strecke['bemerkung'] != "" ? $strecke['bemerkung'].': ' : '').$strecke['strecke']; ?>"><?php echo $strecke['strecke']; ?></td>
 		<td class="r"><?php echo $strecke['hm']; ?>&nbsp;hm</td>
 	</tr>	
@@ -130,18 +130,19 @@ else
 <?php
 Error::getInstance()->addTodo('Set up correct trainingLink', __FILE__, __LINE__);
 
-$strecken = $Mysql->fetch('SELECT `time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`, (`hm`/`distanz`) as `steigung`, `distanz` FROM `ltb_training` ORDER BY `steigung` DESC LIMIT 10', false, true);
-if ($strecken === false)
+$strecken = $Mysql->fetchAsArray('SELECT `time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`, (`hm`/`distanz`) as `steigung`, `distanz` FROM `ltb_training` ORDER BY `steigung` DESC LIMIT 10');
+if (count($strecken) == 0)
 	echo('
 	<tr>
 		<td colspan="4"><em>Keine Strecken gefunden.</em></td>
 	</tr>');
 else
 	foreach($strecken as $i => $strecke):
+		$icon = Icon::getSportIcon($strecke['sportid']);
 ?>
 	<tr class="a<?php echo($i%2+1); ?>">
 		<td class="small"><?php echo date("d.m.Y", $strecke['time']); ?></td>
-		<td><img class="link" onclick="seite('training','<?php echo $strecke['id']; ?>')" title="<?php echo $sport['name']; ?>" src="img/sports/<?php echo $sport['bild']; ?>" /></td>
+		<td><?php echo Ajax::trainingLink($strecke['id'], $icon); ?></td>
 		<td title="<?php echo ($strecke['bemerkung'] != "" ? $strecke['bemerkung'].': ' : '').$strecke['strecke']; ?>"><?php echo $strecke['strecke']; ?></td>
 		<td class="r"><?php echo round($strecke['steigung']/10,2); ?>&nbsp;&#37;<br /><small>(<?php echo($strecke['hm'].'&nbsp;hm/'.$strecke['distanz'].'&nbsp;km'); ?>)</small></td>
 	</tr>	
