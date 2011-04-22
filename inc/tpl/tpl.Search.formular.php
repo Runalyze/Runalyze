@@ -122,7 +122,7 @@ foreach ($inputs as $i => $input) {
 	echo('
 			</select>
 		</td>
-		<td><input type="text" name="val['.$input['name'].']" value="'.$value.'" size="'.($input['typ'] != 'text' ? 1 : 10).'" /></td>');
+		<td><input type="text" name="val['.$input['name'].']" value="'.Helper::Umlaute($value).'" size="'.($input['typ'] != 'text' ? 1 : 10).'" /></td>');
 
 	if (($i+1)%3 == 0 || ($i-1) == sizeof($inputs))
 		echo('</tr>');

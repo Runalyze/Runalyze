@@ -40,6 +40,10 @@ class JD {
 
 		$time_in_min = $time_in_s/60;
 		$m = $km*1000;
+
+		if ($m / $time_in_min < 50 || $m / $time_in_min > 1000)
+			return false;
+	
 		return ( -4.6+0.182258*$m / $time_in_min + 0.000104*pow($m/$time_in_min,2) )
 			/ ( 0.8 + 0.1894393*exp(-0.012778*$time_in_min) + 0.2989558*exp(-0.1932605*$time_in_min) );
 	}
@@ -98,9 +102,13 @@ class JD {
 	public static function Training2VDOT($training_id) {
 		$training = Mysql::getInstance()->fetch('SELECT `sportid`, `distanz`, `dauer`, `puls` FROM `ltb_training` WHERE `id`='.$training_id.' LIMIT 1');
 
-		return ($training['puls'] != 0 && $training['sportid'] == RUNNINGSPORT)
-			? round( VDOT_CORRECTOR * self::Competition2VDOT($training['distanz'], $training['dauer']) / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2)
-			: 0;
+		if ($training['puls'] != 0 && $training['sportid'] == RUNNINGSPORT) {
+			$VDOT = self::Competition2VDOT($training['distanz'], $training['dauer']);
+			if ($VDOT !== false)
+				return round( VDOT_CORRECTOR * $VDOT / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2);
+		}
+
+		return 0;
 	}
 
 	/**
@@ -110,6 +118,9 @@ class JD {
 	 * @return int          Time [s]
 	 */
 	public static function CompetitionPrognosis($VDOTactual, $distance = 5) {
+		if ($VDOTactual == 0)
+			return 0;
+
 		$dauer = 60*$distance;
 		$VDOT_low = 150;
 		while (true) {
@@ -117,6 +128,9 @@ class JD {
 			$VDOT_high = $VDOT_low;
 			$VDOT_low = self::Competition2VDOT($distance, $dauer);
 			if ($VDOT_high > $VDOTactual && $VDOTactual > $VDOT_low)
+				break;
+
+			if ($dauer >= 60 * 60 * $distance / 4)
 				break;
 		}
 		return $dauer;

@@ -47,7 +47,8 @@ foreach($arr_dist as $i => $dist)
 	$arr_dist[$i] = round($dist*2)/2;
 
 $info_left = ($dat['sportid'] == 1 ? typ($dat['typid']) : sport($dat['sportid'])).', '.date("d.m.Y", $dat['time']);
-$info_right = 'Höhenprofil';
+#$info_right = utf8_encode("Höhenprofil");
+$info_right = "Hoehenprofil";
 
 close();
 
