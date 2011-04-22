@@ -228,10 +228,10 @@ class Helper {
 	 */
 	public static function Time($time_in_s, $show_days = true, $show_zeros = false) {
 		$string = '';
+		if ($show_zeros === true)
+			return floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		if ($show_zeros == 2)
 			return (floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
-		if ($show_zeros)
-			return floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		if ($time_in_s >= 86400 && $show_days)
 			$string = floor($time_in_s/86400).'d ';
 		if ($time_in_s < 3600)
@@ -584,8 +584,9 @@ class Helper {
 	 * @return string
 	 */
 	public static function Umlaute($text) {
-		$encrypted = array("ß", "Ä", "Ö", "Ü", "ä", "ö", "ü");
-		$correct   = array("�",  "�",  "�",  "�",  "�",  "�",  "�");
+		$encrypted = array("ÃŸ", "Ã„", "Ã–", "Ãœ", "Ã¤", "Ã¶", "Ã¼");
+		$correct   = array("ß",  "Ä",  "Ö",  "Ü",  "ä",  "ö",  "ü");
+		$text = utf8_decode($text);
 
 		return str_replace($encrypted, $correct, $text);
 	}

@@ -20,9 +20,11 @@ if (is_array($_POST['val'])) {
 		if (is_numeric($name))
 			$name = $conditions[$name]['name'];
 
-		if ($value != '' && $value != 'egal' && $value[0] != 'egal') {
+		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && $value[0] != 'egal') {
 			if ($name == 'dauer')
 				$value *= 60;
+			elseif (!is_array($value))
+				$value = Helper::Umlaute($value);
 			switch ($_POST['opt'][$name]) {
 				case 'is':    $opt = '=';  break;
 				case 'gt':    $opt = '>';  break;

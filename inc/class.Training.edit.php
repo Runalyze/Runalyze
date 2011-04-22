@@ -141,7 +141,7 @@ if (isset($submit))
 <div id="edit-div">
 <?php if ($Training->hasPositionData()): ?>
 	<div id="edit-gps" class="change" style="display:none;">
-		<a class="ajax" target="gps-results" href="inc/class.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="Höhendaten korrigieren">ElevationCorrection</a><br />
+		<a class="ajax" target="gps-results" href="inc/class.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="H&ouml;hendaten korrigieren">ElevationCorrection</a><br />
 		<br />
 		<small>
 			Mit der ElevationCorrection k&ouml;nnen die H&ouml;hendaten korrigiert werden.<br />
