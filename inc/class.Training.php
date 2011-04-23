@@ -180,9 +180,7 @@ class Training {
 	 * @param bool $short short version without description, default: false
 	 */
 	public function displayTitle($short = false) {
-		echo ($this->get('sportid') == RUNNINGSPORT)
-			? Helper::TypeName($this->get('typid'))
-			: Helper::Sport($this->get('sportid'));
+		echo $this->getTitle();
 		if (!$short) {
 			if ($this->get('laufabc') == 1)
 				echo(' <img src="img/abc.png" alt="Lauf-ABC" />');
@@ -192,14 +190,30 @@ class Training {
 	}
 
 	/**
+	 * Get the title for this training
+	 * @return string
+	 */
+	public function getTitle() {
+		return ($this->get('sportid') == RUNNINGSPORT)
+			? Helper::TypeName($this->get('typid'))
+			: Helper::Sport($this->get('sportid'));
+	}
+
+	/**
 	 * Display the formatted date
 	 */
 	public function displayDate() {
+		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDate());
+	}
+
+	/**
+	 * Get the date for this training
+	 */
+	public function getDate() {
 		$time = $this->get('time');
-		$date = date('H:i', $time) != '00:00'
+		return date('H:i', $time) != '00:00'
 			? date('d.m.Y, H:i', $time).' Uhr'
 			: date('d.m.Y', $time);
-		echo (Helper::Weekday( date('w', $time) ).', '.$date);
 	}
 
 	/**
@@ -209,13 +223,13 @@ class Training {
 	private function getPlotTypesAsArray() {
 		$plots = array();
 		if ($this->hasPaceData())
-			$plots['pace'] = array('name' => 'Pace', 'src' => 'lib/draw/training_pace.php?id='.$this->id);
+			$plots['pace'] = array('name' => 'Pace', 'src' => 'inc/draw/training.pace.php?id='.$this->id);
 		if ($this->hasSplitsData())
-			$plots['splits'] = array('name' => 'Splits', 'src' => 'lib/draw/splits.php?id='.$this->id);
+			$plots['splits'] = array('name' => 'Splits', 'src' => 'inc/draw/training.splits.php?id='.$this->id);
 		if ($this->hasPulseData())
-			$plots['pulse'] = array('name' => 'Puls', 'src' => 'lib/draw/training_puls.php?id='.$this->id);
+			$plots['pulse'] = array('name' => 'Puls', 'src' => 'inc/draw/training.heartrate.php?id='.$this->id);
 		if ($this->hasElevationData())
-			$plots['elevation'] = array('name' => 'Höhenprofil', 'col' => 'arr_alt', 'src' => 'lib/draw/training_hm.php?id='.$this->id);
+			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->id);
 
 		return $plots;
 	}
@@ -237,10 +251,9 @@ class Training {
 	 * @param string $type name of the plot, should be in getPlotTypesAsArray
 	 */
 	public function displayPlot($type = 'undefined') {
-		// TODO Use class::Draw as soon as possible
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type]))
-			echo '<div class="bigImg" style="height:192px; width:482px;"><img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" /></div>'.NL;
+			echo '<div class="bigImg" style="height:190px; width:480px;"><img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" /></div>'.NL;
 		else
 			Error::getInstance()->addWarning('Training::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}
@@ -283,6 +296,54 @@ class Training {
 	}
 
 	/**
+	 * Get an array with all times (in seconds) of the splits
+	 * @return array
+	 */
+	public function getSplitsTimeArray() {
+		$array = array();
+		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
+
+		for ($i = 0, $num = count($splits); $i < $num; $i++) {
+			$split = explode('|', $splits[$i]);
+			$timedata = explode(':', $split[1]);
+			$array[] = $timedata[0]*60 + $timedata[1];
+		}
+
+		return $array;
+	}
+
+	/**
+	 * Get an array with all paces (in min/km) of the splits
+	 * @return array
+	 */
+	public function getSplitsPacesArray() {
+		$paces = array();
+		$times = $this->getSplitsTimeArray();
+		$distances = $this->getSplitsDistancesArray();
+
+		for ($i = 0, $n = count($times); $i < $n; $i++)
+			$paces[] = round($times[$i]/$distances[$i]);
+
+		return $paces;
+	}
+
+	/**
+	 * Get an array with all distances (in kilometer) of the splits
+	 * @return array
+	 */
+	public function getSplitsDistancesArray() {
+		$array = array();
+		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
+
+		for ($i = 0, $num = count($splits); $i < $num; $i++) {
+			$split = explode('|', $splits[$i]);
+			$array[] = $split[0];
+		}
+
+		return $array;
+	}
+
+	/**
 	 * Display defined splits
 	 */
 	public function displaySplits() {
@@ -300,55 +361,48 @@ class Training {
 		Error::getInstance()->addTodo('Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?', __FILE__, __LINE__);
 		Error::getInstance()->addTodo('Training::splits Gesamtschnitt/Vorgabe/etc.', __FILE__, __LINE__);
 
-		$SpeedString = explode('in ', $this->get('bemerkung'));
-		$SpeedString = explode(',', $SpeedString[1]);
-		$SpeedHasTo = Helper::TimeToSeconds($SpeedString[0]);
-		$TimeSum = 0;
-		$DistSum = 0;
+		$Distances = $this->getSplitsDistancesArray();
+		$Times = $this->getSplitsTimeArray();
+		$Paces = $this->getSplitsPacesArray();
+		$demandedPace = Helper::DescriptionToDemandedPace($this->get('bemerkung'));
+		$achievedPace = array_sum($Paces) / count($Paces);
+		$TimeSum = array_sum($Times);
+		$DistSum = array_sum($Distances);
 
-		for ($i = 0, $num = count($splits); $i < $num; $i++) {
-			$split = explode('|', $splits[$i]);
-			$timedata = explode(':', $split[1]);
-			$dist = $split[0];
-			$time_in_s = $timedata[0]*60 + $timedata[1];
-			$pace = Helper::Pace($dist, $time_in_s);
-
-			$TimeSum += $time_in_s;
-			$DistSum += $dist;
-			$PaceDiff = $SpeedHasTo - Helper::TimeToSeconds($pace);
-			if ($PaceDiff >= 0) {
-				$PaceClass = 'plus';
-				$PaceDiffString = '+'.Helper::Time($PaceDiff, false, 2);
-			} else {
-				$PaceClass = 'minus';
-				$PaceDiffString = '-'.Helper::Time(-$PaceDiff, false, 2);
-			}
+		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
+			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);
+			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
+			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
 
 			echo('
 			<tr class="a'.($i%2+1).' r">
-				<td>'.Helper::Km($dist, 2).'</td>
-				<td>'.Helper::Time($time_in_s).'</td>
-				<td>'.Helper::Pace($dist, $time_in_s).'/km</td>
+				<td>'.Helper::Km($Distances[$i], 2).'</td>
+				<td>'.Helper::Time($Times[$i]).'</td>
+				<td>'.Helper::Pace($Distances[$i], $Times[$i]).'/km</td>
 				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 			</tr>');
 		}
 
-		$AvgDiff = $SpeedHasTo - Helper::TimeToSeconds( round($TimeSum/$DistSum) );
-		if ($AvgDiff >= 0) {
-			$AvgClass = 'plus';
-			$AvgDiffString = '+'.Helper::Time($AvgDiff, false, 2);
+		if ($demandedPace > 0) {
+			$AvgDiff = $demandedPace - $achievedPace;
+			$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
+			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Helper::Time($AvgDiff, false, 2) : '-'.Helper::Time(-$AvgDiff, false, 2);
+	
+			echo('
+				<tr class="space"><td colspan="4" /></tr>
+				<tr class="r">
+					<td colspan="2">Vorgabe: </td>
+					<td >'.Helper::Time($demandedPace).'/km</td>
+					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
+				</tr>');
 		} else {
-			$AvgClass = 'minus';
-			$AvgDiffString = '-'.Helper::Time(-$AvgDiff, false, 2);
+			echo('
+				<tr class="r">
+					<td colspan="2">Schnitt: </td>
+					<td>'.Helper::Time($achievedPace).'/km</td>
+					<td></td>
+				</tr>');
 		}
-
-		echo('
-			<tr class="space"><td colspan="4" /></tr>
-			<tr class="r">
-				<td colspan="2">Vorgabe: </td>
-				<td >'.Helper::Time($SpeedHasTo).'/km</td>
-				<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
-			</tr>');
 
 		echo('</table>'.NL);
 	}
@@ -411,34 +465,34 @@ class Training {
 	 * Display route on GoogleMaps
 	 */
 	public function displayRoute() {
-		echo '<iframe src="lib/gpx/karte.php?id='.$this->id.'" style="border:0;" width="482" height="300" frameborder="0"></iframe>';
+		echo '<iframe src="lib/gpx/karte.php?id='.$this->id.'" style="border:0;" width="480" height="300" frameborder="0"></iframe>';
 	}
 
 	/**
 	 * Has the training information about splits?
 	 */
-	private function hasSplitsData() {
+	public function hasSplitsData() {
 		return $this->get('splits') != '';
 	}
 
 	/**
 	 * Has the training information about pace?
 	 */
-	private function hasPaceData() {
+	public function hasPaceData() {
 		return $this->get('arr_pace') != '';
 	}
 
 	/**
 	 * Has the training information about elevation?
 	 */
-	private function hasElevationData() {
+	public function hasElevationData() {
 		return $this->get('arr_alt') != '';
 	}
 
 	/**
 	 * Has the training information about pulse?
 	 */
-	private function hasPulseData() {
+	public function hasPulseData() {
 		return $this->get('arr_heart') != '';
 	}
 

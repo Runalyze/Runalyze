@@ -23,7 +23,7 @@
  * @uses class::DataBrowser
  * @uses class::Dataset
  * // @uses class::Parser // Will be included by class::Training later
- * // @uses class::Draw // Including by other classes?
+ * @uses class::Draw
  *
  * Last modified 2011/03/14 16:00 by Hannes Christiansen
  */
@@ -141,10 +141,10 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.Dataset.php');
 		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
 		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
-		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser, Draw');
+		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser');
 		// require_once(FRONTEND_PATH.'class.Plugin.php');
 		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
-		// require_once(FRONTEND_PATH.'class.Draw.php'); // Including by other classes?
+		require_once(FRONTEND_PATH.'class.Draw.php');
 	}
 
 	/**

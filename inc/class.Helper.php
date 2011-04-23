@@ -195,6 +195,19 @@ class Helper {
 	}
 
 	/**
+	 * Get the demanded pace if set in description (e.g. "... in 3:05 ...")
+	 * @param string $description
+	 * @return int
+	 */
+	public static function DescriptionToDemandedPace($description) {
+		$array = explode("in ", $description);
+		$array = explode(",", $array[1]);
+		$array = explode(":", $array[0]);
+
+		return sizeof($array) == 2 ? 60*$array[0]+$array[1] : 0;
+	}
+
+	/**
 	 * Get the speed in km/h without unit
 	 * @param float $km   Distance [km]
 	 * @param int $time   Time [s]
