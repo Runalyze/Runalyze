@@ -146,14 +146,14 @@ $Error->addTodo('Set link with Class::Ajax', __FILE__, __LINE__);
 $first = true;
 foreach($distances as $km) {
 	echo('
-		'.(!$first ? '|' : '').' <a href="#bestzeit-dia" onclick="document.getElementById(\'bestzeit-diagramm\').src=\'lib/draw/bestzeit.php?km='.$km.'\';">'.km($km, (round($km) != $km ? 1 : 0)).'</a>');
+		'.(!$first ? '|' : '').' <a href="#bestzeit-dia" onclick="document.getElementById(\'bestzeit-diagramm\').src=\'inc/draw/plugin.wettkampf.php?km='.$km.'\';">'.km($km, (round($km) != $km ? 1 : 0)).'</a>');
 	$first = false;
 }
 ?>
 	</small>
 
 	<center>
-		<img id="bestzeit-diagramm" src="lib/draw/bestzeit.php?km=10" width="482" height="192" />
+		<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
 	</center>
 
 

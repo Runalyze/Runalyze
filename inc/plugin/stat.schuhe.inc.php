@@ -50,7 +50,7 @@ if (count($schuhe) > 0) {
 		$trainings = $Mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
 		$in_use = $schuh['inuse']==1 ? '' : ' small';
 		echo('
-		<tr class="a'.($i%2 + 1).' r" style="background:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).') no-repeat bottom left;">
+		<tr class="a'.($i%2 + 1).' r" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
 			<td class="small">'.$trainings.'x</td>
 			<td class="b'.$in_use.' l">'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</td>
 			<td class="small">'.$schuh['kaufdatum'].'</td>
