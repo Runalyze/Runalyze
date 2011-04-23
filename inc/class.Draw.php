@@ -157,7 +157,7 @@ class Draw {
 	 * Draw (default) scale
 	 * @param array $Format
 	 */
-	public function drawScale($Format) {
+	public function drawScale($Format = array()) {
 		$this->pImage->drawScale($Format);
 	}
 
