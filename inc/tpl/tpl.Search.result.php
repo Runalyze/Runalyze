@@ -86,7 +86,7 @@ if ($num_all > 15) {
 	if ($num_all > $_POST['seite']*15) {
 		$name   = Icon::get(Icon::$ARR_NEXT, 'Seite vor');
 		$data   = $submit_search.'seite='.($_POST['seite']+1);
-		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&'.$data);
+		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&get=true&'.$data);
 	}
 
 	if ($_POST['seite'] > 1) {

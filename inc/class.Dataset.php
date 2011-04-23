@@ -313,7 +313,7 @@ class Dataset {
 		if ($this->Training->get('splits') == '')
 			return;
 
-		return Icon::get( Icon::$CLOCK, 'Zwischenzeiten gespeichert');
+		return Icon::get( Icon::$CLOCK, $this->Training->getSplitsAsString() );
 	}
 
 	/**
