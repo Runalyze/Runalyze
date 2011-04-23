@@ -344,6 +344,19 @@ class Training {
 	}
 
 	/**
+	 * Get all splits as a string: '1 km in 3:20, ...'
+	 * @return string
+	 */
+	public function getSplitsAsString() {
+		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
+		foreach ($splits as $i => $split) {
+			$splits[$i] = str_replace('|', ' km in ', $split);
+		}
+
+		return implode(', ', $splits);
+	}
+
+	/**
 	 * Display defined splits
 	 */
 	public function displaySplits() {
