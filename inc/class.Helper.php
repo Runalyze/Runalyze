@@ -290,7 +290,7 @@ class Helper {
 		$pb = Mysql::getInstance()->fetch('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC LIMIT 1');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
-		if ($bestzeit != '')
+		if ($pb != '')
 			return self::Time($pb['dauer']);
 		return '<em>keine</em>';
 	}

@@ -203,12 +203,18 @@ class JD {
 				}
 			}
 		}
+
 		// Find best VDOT-value in training
 		$VDOT_top_dat = Mysql::getInstance()->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
-		$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
-			/ self::pHF2pVDOT($VDOT_top_dat['puls'] / HF_MAX);
+		if (!$VDOT_top_dat !== false) {
+			$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
+				/ self::pHF2pVDOT($VDOT_top_dat['puls'] / HF_MAX);
 	
-		return $VDOT_top / $VDOT_max;
+			if ($VDOT_top != 0 && $VDOT_max != 0)
+				return $VDOT_top / $VDOT_max;
+		}
+
+		return 1;
 	}
 }
 ?>
