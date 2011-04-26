@@ -351,7 +351,7 @@ class Dataset {
 	 * Dataset for: `vdot`
 	 */
 	private function datasetVDOT() {
-		$VDOT = $this->Training->get('vdot');
+		$VDOT = round($this->Training->get('vdot'), 2);
 		if ($VDOT == 0)
 			return '';
 		if ( $VDOT > (VDOT_FORM+3) )

@@ -61,6 +61,7 @@ if (is_numeric($_GET['id'])) {
 	$titleError = 'Es wurde kein Training ausgew&#228;hlt.';
 }
 
+$averageHR      = round(array_sum($HR) / count($HR));
 $ScaleFormat    = array(
 	"Factors" => array(10),
 	"Mode" => SCALE_MODE_MANUAL,
@@ -69,8 +70,12 @@ $ScaleFormat    = array(
 		"Max" => 100)),
 	"LabelSkip" => (1/$skip - 1),
 	"XMargin" => 0);
-$SplineFormat   = array("R" => 136, "G" => 0, "B" => 0);
-$averageHR = round(array_sum($HR) / count($HR));
+$TresholdFormat = array(
+	"WriteCaption" => TRUE, "Caption" => "&#216; ".$averageHR." &#37;",
+	"CaptionAlign" => CAPTION_RIGHT_BOTTOM,
+	"R" => 180, "G" => 0, "B" => 0, "Alpha" => 50);
+$SplineFormat   = array(
+	"R" => 136, "G" => 0, "B" => 0);
 
 $Draw->pData->addPoints($Distances, 'Distanz');
 $Draw->pData->addPoints($HR, 'Herzfrequenz');
@@ -85,7 +90,7 @@ $Draw->drawSplineChart();
 $Draw->drawLeftTitle($titleLeft);
 $Draw->drawRightTitle($titleRight);
 
-$Draw->pImage->drawThreshold($averageHR, array("WriteCaption" => TRUE, "Caption" => "&#216; ".$averageHR." &#37;", "R" => 180, "G" => 0, "B" => 0, "Alpha" => 50, "CaptionAlign" => CAPTION_RIGHT_BOTTOM));
+$Draw->pImage->drawThreshold($averageHR, $TresholdFormat);
 
 if ($titleError != '')
 	$Draw->drawCenteredTitle($titleError);

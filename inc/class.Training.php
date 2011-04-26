@@ -65,6 +65,9 @@ class Training {
 
 		$this->id = $id;
 		$this->data = $dat;
+
+		if ($this->data['vdot'] != 0)
+			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
 	}
 
 	/**

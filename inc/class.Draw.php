@@ -55,6 +55,12 @@ class Draw {
 	private $useCache = true;
 
 	/**
+	 * Internal cache-hash
+	 * @var string
+	 */
+	private $cacheHash = '';
+
+	/**
 	 * Boolean flag: Was the image already loaded from cache?
 	 * @var bool
 	 */
@@ -102,10 +108,10 @@ class Draw {
 	 * @return bool False if no image in cache, true for success (but exit() will be called)
 	 */
 	private function loadFromCache() {
-		$hash = $this->pCache->getHash($this->pData);
+		$this->cacheHash = $this->pCache->getHash($this->pData);
 
-		if ($this->pCache->isInCache($hash)) {
-			$this->pCache->strokeFromCache($hash);
+		if ($this->pCache->isInCache($this->cacheHash)) {
+			$this->pCache->strokeFromCache($this->cacheHash);
 			exit();
 
 			return true;
@@ -120,7 +126,7 @@ class Draw {
 	 */
 	public function startImage($transparentBackground = false) {
 		if ($this->useCache)
-			$this->loadFromCache;
+			$this->loadFromCache();
 
 		$this->pImage = new pImage($this->width, $this->height, $this->pData, $transparentBackground);
 
@@ -135,6 +141,16 @@ class Draw {
 		$this->setDefaultPadding();
 
 		$this->drawGraphArea();
+	}
+
+	/**
+	 * Render the image to the browser
+	 */
+	public function finish() {
+		if ($this->useCache && !$this->loadedFromCache)
+			$this->pCache->writeToCache($this->cacheHash, $this->pImage);
+
+		$this->pImage->stroke();
 	}
 
 	/**
@@ -162,6 +178,14 @@ class Draw {
 	}
 
 	/**
+	 * Draw (default) LineChart
+	 */
+	public function drawLineChart() {
+		$this->pImage->drawLineChart(array(
+			"BreakVoid" => TRUE));
+	}
+
+	/**
 	 * Draw (default) SplineChart
 	 */
 	public function drawSplineChart() {
@@ -178,10 +202,28 @@ class Draw {
 	}
 
 	/**
+	 * Draw (default) AreaChart
+	 */
+	public function drawAreaChart() {
+		$this->pImage->drawAreaChart(array(
+			"BreakVoid" => TRUE));
+	}
+
+	/**
 	 * Draw (default) BarChart
 	 */
 	public function drawBarChart() {
 		$this->pImage->drawBarChart(array(
+			"Gradient" => TRUE,
+			"DisplayShadow" => TRUE,
+			"Surrounding" => 10));
+	}
+
+	/**
+	 * Draw (default) StackedBarChart
+	 */
+	public function drawStackedBarChart() {
+		$this->pImage->drawStackedBarChart(array(
 			"Gradient" => TRUE,
 			"DisplayShadow" => TRUE,
 			"Surrounding" => 10));
@@ -282,16 +324,6 @@ class Draw {
 	 */
 	public function drawRightTitle($title) {
 		$this->drawTitle($title, 'RIGHT');
-	}
-
-	/**
-	 * Render the image to the browser
-	 */
-	public function finish() {
-		if ($this->useCache && !$this->loadedFromCache)
-			$this->pCache->writeToCache($this->pCache->getHash($this->pData), $this->pImage);
-
-		$this->pImage->stroke();
 	}
 
 	/**
