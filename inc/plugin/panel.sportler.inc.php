@@ -27,7 +27,7 @@ function sportler_installer() {
  * @return string (HTML)
  */
 function sportler_rightSymbol() {
-	return Ajax::window('<a href="inc/plugin/window.sportler.php" title="Daten hinzufügen"><img src="img/add.png" alt="Daten hinzufügen" /></a>');
+	return Ajax::window('<a href="inc/plugin/window.sportler.php" title="Daten hinzufï¿½gen"><img src="img/add.png" alt="Daten hinzufï¿½gen" /></a>');
 }
 
 /**
@@ -46,24 +46,24 @@ function sportler_display() {
 	if (CONFIG_USE_RUHEPULS == 1)
 		$right = $dat['puls_ruhe'].' bpm / '.$dat['puls_max'].' bpm';
 	
-	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-analyse" target="sportler"><del>Analyse</del> / Allgemein:</a> '.$left.'</p>'.NL);
+	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-analyse" target="sportler"><del>Analyse</del>/Allgemein:</a> '.$left.'</p>'.NL);
 ?>
 			<center>
-				<img src="lib/draw/gewicht.php" alt="Diagramm" style="width:322px; height:150px;" />
+				<img src="inc/draw/plugin.sportler.gewicht.php" alt="Diagramm" style="width:320px; height:148px;" />
 			</center> 
 		</div>
 		<div id="sportler-analyse" class="change" style="display:none;">
 <?php $left = ''; $right = '';
 	if (CONFIG_USE_KOERPERFETT == 1)
-		$left = '<small>'.$dat['fett'].' &#37;Fett, '.$dat['wasser'].' &#37;Wasser, '.$dat['muskeln'].' &#37;Muskeln</small>';
+		$left = '<small>'.$dat['fett'].'&#37;Fett, '.$dat['wasser'].'&#37;Wasser, '.$dat['muskeln'].'&#37;Muskeln</small>';
 	
 	if (CONFIG_USE_BLUTDRUCK == 1) 
 		$right = '<small>Blutdruck: '.$dat['blutdruck_min'].' zu '.$dat['blutdruck_max'];
 	
-	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-gewicht" target="sportler">Analyse / <del>Allgemein</del>:</a> '.$left.'</p>'.NL);
+	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-gewicht" target="sportler">Analyse/<del>Allgemein</del>:</a> '.$left.'</p>'.NL);
 ?>
 			<center>
-				<img src="lib/draw/fett.php" alt="Diagramm" style="width:322px; height:150px;" />
+				<img src="inc/draw/plugin.sportler.fett.php" alt="Diagramm" style="width:320px; height:148px;" />
 			</center> 
 		</div>
 	</div>

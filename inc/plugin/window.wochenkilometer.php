@@ -6,14 +6,11 @@
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
-
-// TODO Get new draw-file with draw-class
-// TODO Is called from Panel::Rechenspiele, should be DataBrowser
 ?>
 <h1>Wochenkilometer</h1>
 
 <div class="bigImg" style="width:802px;height:502px;">
-	<img id="wochenkilometer" src="lib/draw/wochenkilometer.php?jahr=<?php echo date("Y"); ?>" />
+	<img id="wochenkilometer" src="inc/draw/kilometer.week.php?y=<?php echo date("Y"); ?>" />
 </div>
 
 	<br />
@@ -22,7 +19,7 @@ $Frontend->displayHeader();
 <center>
 <?php
 for ($j = START_YEAR; $j <= date("Y"); $j++)
-	echo NL.Ajax::imgChange('<a href="lib/draw/wochenkilometer.php?jahr='.$j.'" style="margin-right:20px;">'.$j.'</a>','wochenkilometer');
+	echo NL.Ajax::imgChange('<a href="inc/draw/kilometer.week.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>','wochenkilometer');
 ?>
 </center>
 <?php

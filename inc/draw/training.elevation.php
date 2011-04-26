@@ -59,11 +59,18 @@ if (is_numeric($_GET['id'])) {
 	$titleError = 'Es wurde kein Training ausgew&#228;hlt.';
 }
 
+
 $ScaleFormat    = array(
 	"Factors" => array(10),
 	"LabelSkip" => (1/$skip - 1),
 	"XMargin" => 0);
 $SplineFormat   = array("R" => 227, "G" => 217, "B" => 187, "Alpha" => 165);
+$BoundsSettings = array(
+	"MaxDisplayR" => 255, "MaxDisplayG" => 255, "MaxDisplayB" => 255,
+	"MinDisplayR" => 255, "MinDisplayG" => 255, "MinDisplayB" => 255,
+	"MaxLabelPos" => BOUND_LABEL_POS_TOP,
+	"MinLabelPos" => BOUND_LABEL_POS_BOTTOM);
+
 
 $Draw->pData->addPoints($Distances, 'Distanz');
 $Draw->pData->addPoints($Elevations, 'Hoehe');
@@ -77,12 +84,6 @@ $Draw->drawScale($ScaleFormat);
 $Draw->drawFilledSplineChart();
 $Draw->drawLeftTitle($titleLeft);
 $Draw->drawRightTitle($titleRight);
-
-$BoundsSettings = array(
-	"MaxDisplayR" => 255, "MaxDisplayG" => 255, "MaxDisplayB" => 255,
-	"MinDisplayR" => 255, "MinDisplayG" => 255, "MinDisplayB" => 255,
-	"MaxLabelPos" => BOUND_LABEL_POS_TOP,
-	"MinLabelPos" => BOUND_LABEL_POS_BOTTOM);
 $Draw->pImage->writeBounds(BOUND_BOTH, $BoundsSettings);
 
 if ($titleError != '')

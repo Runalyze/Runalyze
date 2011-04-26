@@ -195,15 +195,14 @@ if (count($data) > 0) {
 		$VDOT = 0;
 		$num = 0;
 		$data = ($date == 'MONTH')
-			? $Mysql->fetchAsArray('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i)
-			: $Mysql->fetchAsArray('SELECT `id` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i);
-		if (count($data) > 0)
-			foreach($data as $dat) {
-				$VDOT += JD::Training2VDOT($dat['id']);
-				$num++;
-			}
-		echo ($num != 0)
-			? ('		<td>'.number_format(round($VDOT/$num, 1), 1).'</td>'.NL)
+			? $Mysql->fetch('SELECT AVG(`vdot`) as `vdot` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
+			: $Mysql->fetch('SELECT AVG(`vdot`) as `vdot` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
+		if ($data !== false)
+			$VDOT = JD::correctVDOT($data['vdot']);
+		else
+			$VDOT = 0;
+		echo ($VDOT != 0)
+			? ('		<td>'.number_format($VDOT, 1).'</td>'.NL)
 			: Helper::emptyTD();
 	}
 	?>

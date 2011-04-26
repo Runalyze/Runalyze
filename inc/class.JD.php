@@ -3,7 +3,26 @@
  * This file contains the class::JD
  */
 
+Error::getInstance()->addTodo('class::JD: Set CONFIG_USE_VDOT_CORRECTOR as config-var', __FILE__, __LINE__);
+/**
+ * Config-Flag: Should the VDOT-corrector be used?
+ * @var bool
+ */
+define('CONFIG_USE_VDOT_CORRECTOR', true);
+/**
+ * Number of days to be used for calculating VDOT-form
+ * @var int
+ */
+define('VDOT_DAYS', 30);
+/**
+ * VDOT-corrector is used to correct the raw VDOT-value to user-specific values
+ * @var double
+ */
 define('VDOT_CORRECTOR', JD::calculateVDOTcorrector());
+/**
+ * The actual (corrected) VDOT-value based on last trainings
+ * @var double
+ */
 define('VDOT_FORM', JD::calculateVDOTform());
 
 /**
@@ -95,7 +114,19 @@ class JD {
 	}
 
 	/**
-	 * Calculates VDOT for a training using self::VDOTcorrector
+	 * Corrects VDOT if VDOT-corrector is enabled
+	 * @param double $VDOT
+	 * @return double
+	 */
+	public static function correctVDOT($VDOT) {
+		if (CONFIG_USE_VDOT_CORRECTOR)
+			return VDOT_CORRECTOR*$VDOT;
+
+		return $VDOT;
+	}
+
+	/**
+	 * Calculates VDOT for a training (without correction!)
 	 * @uses HF_MAX
 	 * @param $training_id
 	 */
@@ -105,7 +136,7 @@ class JD {
 		if ($training['puls'] != 0 && $training['sportid'] == RUNNINGSPORT) {
 			$VDOT = self::Competition2VDOT($training['distanz'], $training['dauer']);
 			if ($VDOT !== false)
-				return round( VDOT_CORRECTOR * $VDOT / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2);
+				return round( $VDOT / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2);
 		}
 
 		return 0;
@@ -137,18 +168,16 @@ class JD {
 	}
 
 	/**
-	 * Calculates an actual VDOT value based on the trainings in the last 30 days
+	 * Calculates an (corrected) actual VDOT value based on the trainings in the last VDOT_DAYS days
 	 * @return float   VDOT
 	 */
 	public static function calculateVDOTform() {
-		// TODO Speed up this procedure:
-		// + Don't call each training for its own in Training2VDOT
-		$VDOT_form = 0;
-		$trainings = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time()-30*DAY_IN_S));
-		foreach ($trainings as $training)
-			$VDOT_form += self::Training2VDOT($training['id']);
+		$Data = Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `value` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time() - VDOT_DAYS*DAY_IN_S).' GROUP BY `sportid` LIMIT 1');
 
-		return round($VDOT_form/count($trainings), 5);
+		if ($Data !== false)
+			return round(self::correctVDOT($Data['value']), 5);
+
+		return 0;
 	}
 
 	/**

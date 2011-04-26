@@ -96,7 +96,7 @@ $temps = $Mysql->fetchAsArray('SELECT
 	GROUP BY MONTH(FROM_UNIXTIME(`time`))
 	ORDER BY `m` ASC
 	LIMIT 12');
-if (count($temps) == 0) {
+if (!empty($temps)) {
 	foreach($temps as $temp) {
 		// Fill empty columns
 		for (; $i < $temp['m']; $i++)
@@ -121,45 +121,44 @@ if (count($temps) == 0) {
 
 <?php // Wetterarten
 $wetter_all = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
-if (count($wetter_all) > 0)
-	foreach($wetter_all as $w => $wetter) {
-		echo('
-		<tr class="a'.($w%2+1).' r">
-			<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
-	
-		$i = 1;
-		$data = $Mysql->fetchAsArray('SELECT
-				SUM(1) as `num`,
-				MONTH(FROM_UNIXTIME(`time`)) as `m`
-			FROM `ltb_training` WHERE
-				`sportid`="'.MAINSPORT.'" AND
-				`wetterid`='.$wetter['id'].'
-				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
-			GROUP BY MONTH(FROM_UNIXTIME(`time`))
-			ORDER BY `m` ASC
-			LIMIT 12');
-		if (count($data) == 0) {
-			foreach($data as $dat) {
-				// Fill empty columns
-				for (; $i < $dat['m']; $i++)
-					echo Helper::emptyTD();
-				$i++;
-		
-				// Print data
-				echo ($dat['num'] != 0)
-					? ('		<td>'.$dat['num'].'x</td>'.NL)
-					: Helper::emptyTD();
-			}
-		
+foreach($wetter_all as $w => $wetter) {
+	echo('
+	<tr class="a'.($w%2+1).' r">
+		<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
+
+	$i = 1;
+	$data = $Mysql->fetchAsArray('SELECT
+			SUM(1) as `num`,
+			MONTH(FROM_UNIXTIME(`time`)) as `m`
+		FROM `ltb_training` WHERE
+			`sportid`="'.MAINSPORT.'" AND
+			`wetterid`='.$wetter['id'].'
+			'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+		GROUP BY MONTH(FROM_UNIXTIME(`time`))
+		ORDER BY `m` ASC
+		LIMIT 12');
+	if (!empty($data)) {
+		foreach($data as $dat) {
 			// Fill empty columns
-			for (; $i < 12; $i++)
+			for (; $i < $dat['m']; $i++)
 				echo Helper::emptyTD();
-		} else
-			echo('		<td colspan="12" />'.NL);
+			$i++;
 	
-		echo('
-		</tr>');
-	}
+			// Print data
+			echo ($dat['num'] != 0)
+				? ('		<td>'.$dat['num'].'x</td>'.NL)
+				: Helper::emptyTD();
+		}
+	
+		// Fill empty columns
+		for (; $i < 12; $i++)
+			echo Helper::emptyTD();
+	} else
+		echo('		<td colspan="12" />'.NL);
+
+	echo('
+	</tr>');
+}
 ?>
 	<tr class="space">
 		<td colspan="13" />
@@ -181,14 +180,14 @@ $nums = $Mysql->fetchAsArray('SELECT
 	ORDER BY `m` ASC
 	LIMIT 12');
 
-if (count($nums) > 0) {
+if (!empty($nums)) {
 	foreach($nums as $dat)
 		$num[$dat['m']] = $dat['num'];
 } else {
 	$Error->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
 }
 $kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
-if (count($kleidungen) > 0) {
+if (!empty($kleidungen)) {
 	foreach($kleidungen as $k => $kleidung) {
 		echo('
 		<tr class="a'.($k%2+1).' r">
@@ -205,7 +204,7 @@ if (count($kleidungen) > 0) {
 			HAVING `num`!=0
 			ORDER BY `m` ASC
 			LIMIT 12');
-		if (count($data) == 0) {
+		if (!empty($data)) {
 			foreach($data as $dat) {
 				// Fill empty columns
 				for (; $i < $dat['m']; $i++)
@@ -263,7 +262,7 @@ if (count($kleidungen) > 0) {
 	<tr class="a1 r">
 <?php // Temperaturbereiche
 $kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
-if (count($kleidungen) > 0) {
+if (!empty($kleidungen)) {
 	foreach($kleidungen as $i => $kleidung) {
 		if ($i%3 == 0):
 ?>

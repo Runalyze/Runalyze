@@ -12,7 +12,7 @@ $Frontend->displayHeader();
 <h1>Formkurve</h1>
 
 <div class="bigImg" style="width:800px;height:450px;">
-	<img id="formkurve" src="lib/draw/mued.php?jahr=<?php echo date("Y"); ?>" />
+	<img id="formkurve" src="inc/draw/plugin.rechenspiele.php?y=<?php echo date("Y"); ?>" />
 </div>
 
 	<br />
@@ -21,7 +21,7 @@ $Frontend->displayHeader();
 <center>
 <?php
 for ($j = START_YEAR; $j <= date("Y"); $j++)
-	echo NL.Ajax::imgChange('<a href="lib/draw/mued.php?jahr='.$j.'" style="margin-right:20px;">'.$j.'</a>','formkurve');
+	echo NL.Ajax::imgChange('<a href="inc/draw/plugin.rechenspiele.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>','formkurve');
 ?>
 </center>
 <?php

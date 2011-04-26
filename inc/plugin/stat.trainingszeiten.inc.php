@@ -17,7 +17,7 @@ function stat_trainingszeiten_installer() {
 	$type = 'stat';
 	$filename = 'stat.trainingszeiten.inc.php';
 	$name = 'Trainingszeiten';
-	$description = 'Auflistung n�chtlicher Trainings und Diagramme �ber die Trainingszeiten.';
+	$description = 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.';
 	// TODO Include the plugin-installer
 }
 
@@ -45,7 +45,7 @@ $nights = $Mysql->fetchAsArray('SELECT * FROM (
 		`sportid` IN('.substr($sports_not_short,0,-1).') AND
 		(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
 	ORDER BY
-		ABS(6-(`H`+3)%24-`MIN`/60) ASC,
+		ABS(6-(`H`+4)%24-`MIN`/60) ASC,
 		`MIN` DESC LIMIT 20
 	) t
 ORDER BY
@@ -67,9 +67,8 @@ foreach($nights as $i => $night) {
 ?>
 </table>
 
-<?php $Error->addTodo('Use Class::Draw as soon as possible', __FILE__, __LINE__); ?>
-<img class="right" src="lib/draw/trainingstage.php" />
-<img class="left" src="lib/draw/trainingszeiten.php" />
+<img class="right" src="inc/draw/plugin.trainingszeiten.wochentag.php" />
+<img class="left" src="inc/draw/plugin.trainingszeiten.uhrzeit.php" />
 
 <br class="clear" />
 &nbsp;
