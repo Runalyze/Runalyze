@@ -106,6 +106,11 @@ if ($Year >= START_YEAR && $Year <= date('Y')) {
 	$titleError = 'Das Jahr liegt au&#223;erhalb meiner M&#246;glichkeiten.';
 }
 
+if (empty($ATLs) && empty($CTLs) && empty($VDOTs)) {
+	$isDrawable = false;
+	$titleError = 'F&#252;r dieses Jahr liegen keine Daten vor.';
+}
+
 if ($isDrawable) {
 	if ($Year == (int)date('Y'))
 		$minVDOT = min( array_slice($VDOTs, 0, date('z')) );
@@ -126,20 +131,26 @@ if ($isDrawable) {
 		"LabelingMethod" => LABELING_DIFFERENT);
 	$LegendFormat   = array("Style" => LEGEND_NOBORDER, "Mode" => LEGEND_VERTICAL);
 
-	$CTLsFormat = array("R" => 0, "G" => 136, "B" => 0);
-	$Draw->pData->addPoints($CTLs, 'Form (CTL)');
-	$Draw->pData->setSerieOnAxis('Form (CTL)', 0);
-	$Draw->pData->setPalette('Form (CTL)', $CTLsFormat);
-	
-	$ATLsFormat = array("R" => 136, "G" => 0, "B" => 0);
-	$Draw->pData->addPoints($ATLs, 'M&#252;digkeit (ATL)');
-	$Draw->pData->setSerieOnAxis('M&#252;digkeit (ATL)', 0);
-	$Draw->pData->setPalette('M&#252;digkeit (ATL)', $ATLsFormat);
-	
-	$VDOTsFormat = array("R" => 0, "G" => 0, "B" => 0);
-	$Draw->pData->addPoints($VDOTs, 'VDOT');
-	$Draw->pData->setSerieOnAxis('VDOT', 1);
-	$Draw->pData->setPalette('VDOT', $VDOTsFormat);
+	if (max($CTLs) > VOID) {
+		$CTLsFormat = array("R" => 0, "G" => 136, "B" => 0);
+		$Draw->pData->addPoints($CTLs, 'Form (CTL)');
+		$Draw->pData->setSerieOnAxis('Form (CTL)', 0);
+		$Draw->pData->setPalette('Form (CTL)', $CTLsFormat);
+	}
+
+	if (max($ATLs) > VOID) {
+		$ATLsFormat = array("R" => 136, "G" => 0, "B" => 0);
+		$Draw->pData->addPoints($ATLs, 'M&#252;digkeit (ATL)');
+		$Draw->pData->setSerieOnAxis('M&#252;digkeit (ATL)', 0);
+		$Draw->pData->setPalette('M&#252;digkeit (ATL)', $ATLsFormat);
+	}
+
+	if (max($VDOTs) > VOID) {
+		$VDOTsFormat = array("R" => 0, "G" => 0, "B" => 0);
+		$Draw->pData->addPoints($VDOTs, 'VDOT');
+		$Draw->pData->setSerieOnAxis('VDOT', 1);
+		$Draw->pData->setPalette('VDOT', $VDOTsFormat);
+	}
 	
 	$Draw->pData->setAxisPosition(1, AXIS_POSITION_RIGHT);
 	$Draw->pData->setAxisUnit(0, ' %');
@@ -149,6 +160,7 @@ if ($isDrawable) {
 	$Draw->pData->setAxisName(1, 'VDOT');
 }
 
+$Draw->setCaching(false);
 $Draw->startImage();
 $Draw->drawCenterTitle($titleCenter);
 
