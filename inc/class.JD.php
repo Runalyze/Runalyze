@@ -169,10 +169,14 @@ class JD {
 
 	/**
 	 * Calculates an (corrected) actual VDOT value based on the trainings in the last VDOT_DAYS days
+	 * @param int $time optional
 	 * @return float   VDOT
 	 */
-	public static function calculateVDOTform() {
-		$Data = Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `value` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`>'.(time() - VDOT_DAYS*DAY_IN_S).' GROUP BY `sportid` LIMIT 1');
+	public static function calculateVDOTform($time = 0) {
+		if ($time == 0)
+			$time = time();
+
+		$Data = Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `value` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`<'.$time.' && `time`>'.($time - VDOT_DAYS*DAY_IN_S).' GROUP BY `sportid` LIMIT 1');
 
 		if ($Data !== false)
 			return round(self::correctVDOT($Data['value']), 5);

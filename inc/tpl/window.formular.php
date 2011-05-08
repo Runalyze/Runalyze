@@ -67,7 +67,7 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
 			$columns[] = $var;
-			$values[] = Helper::CommaToPoint($_POST[$var]);
+			$values[] = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
 		}
 
 	$id = $Mysql->insert('ltb_training', $columns, $values);
