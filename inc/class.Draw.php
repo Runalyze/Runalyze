@@ -289,6 +289,7 @@ class Draw {
 				break;
 		}
 
+		$title = self::correctSpecialChars($title);
 		$this->pImage->drawText($x, ($this->height-10), $title, array("Align" => $Align));
 	}
 
@@ -408,6 +409,18 @@ class Draw {
 	 */
 	private function setDefaultPalette() {
 		$this->pData->loadPalette(FRONTEND_PATH."/draw/default.color");
+	}
+
+	/**
+	 * Correct special characters like umlaute to unicode-HTML
+	 * @param string $string
+	 */
+	public static function correctSpecialChars($string) {
+		$string    = utf8_encode($string);
+		$encrypted = array("ß",      "Ä",      "Ö",      "Ü",      "ä",      "ö",      "ü");
+		$correct   = array("&#223;", "&#196;", "&#214;", "&#220;", "&#228;", "&#246;", "&#252;");
+
+		return str_replace($encrypted, $correct, $string);
 	}
 }
 ?>

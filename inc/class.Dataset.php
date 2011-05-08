@@ -354,6 +354,10 @@ class Dataset {
 		$VDOT = round($this->Training->get('vdot'), 2);
 		if ($VDOT == 0)
 			return '';
+
+		if ($this->trainingId == -1)
+			$VDOT = round(JD::correctVDOT($VDOT), 2);
+
 		if ( $VDOT > (VDOT_FORM+3) )
 			$icon = Icon::$FORM_UP;
 		elseif ( $VDOT > (VDOT_FORM+1) )
