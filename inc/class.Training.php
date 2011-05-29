@@ -461,7 +461,10 @@ class Training {
 						<td>'.$pace.'</td>');
 				if (count($heartPoints) > 1) {
 					$heartRateOfThisKm = array_slice($heartPoints, $previousIndex, ($i - $previousIndex));
-					echo('<td>'.round(array_sum($heartRateOfThisKm)/count($heartRateOfThisKm)).'</td>');
+					if (array_sum($heartRateOfThisKm) > 0)
+						echo('<td>'.round(array_sum($heartRateOfThisKm)/count($heartRateOfThisKm)).'</td>');
+					else
+						echo('<td>?</td>');
 				}
 				if (count($elevationPoints) > 1)
 					echo('<td>'.($positiveElevation != 0 ? '+'.$positiveElevation : '0').'/'.($negativeElevation != 0 ? '-'.$negativeElevation : '0').'</td>
