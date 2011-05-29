@@ -26,8 +26,9 @@ if (isset($_POST) && $_POST['type'] == "training") {
 	$columns[] = 'time';
 	$values[] = $timestamp;
 	// Time in seconds
-	$dauer = explode(":", $_POST['dauer']);
-	$time_in_s = 3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2];
+	$ms    = explode(".", Helper::CommaToPoint($_POST['dauer']));
+	$dauer = explode(":", $ms[0]);
+	$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 	$columns[] = 'dauer';
 	$values[] = $time_in_s;
 	// save difference for typ/schuh
@@ -43,7 +44,8 @@ if (isset($_POST) && $_POST['type'] == "training") {
 	}
 
 	if ($sport['outside'] == 1) {
-		$vars[] = 'temperatur';
+		if (strlen($_POST['temperatur']) > 0)
+			$vars[] = 'temperatur';
 		$vars[] = 'wetterid';
 		$vars[] = 'strecke';
 		// Kleidung

@@ -2,7 +2,7 @@
 <?php if ($this->get('distanz') != 0): ?>
 	<tr>
 		<td class="b">Distanz:</td>
-		<td><?php echo Helper::Km($this->get('distanz')); ?></td>
+		<td><?php echo Helper::Km($this->get('distanz'), 2, $this->get('bahn')); ?></td>
 	</tr>
 <?php endif; ?>
 	<tr>
