@@ -13,6 +13,7 @@ $titleRight   = '';
 $titleError   = '';
 $demandedPace = 0;
 $achievedPace = 0;
+$ScaleFormat  = array();
 
 if (is_numeric($_GET['id'])) {
 	$Training = new Training($_GET['id']);
@@ -23,6 +24,9 @@ if (is_numeric($_GET['id'])) {
 	if ($Training->hasSplitsData()) {
 		$demandedPace = Helper::DescriptionToDemandedPace($Training->get('bemerkung'));
 		$achievedPace = array_sum($Training->getSplitsPacesArray()) / count($Training->getSplitsPacesArray());
+
+		if (count($Training->getSplitsPacesArray()) > 10)
+			$ScaleFormat["LabelSkip"] = 1;
 	} else {
 		$titleError = 'Keine Zwischenzeiten vorhanden.';
 	}
@@ -38,7 +42,7 @@ $Draw->pData->setAxisDisplay(0, AXIS_FORMAT_TIME, 'i:s');
 $Draw->pData->setAbscissa('Distanz');
 
 $Draw->startImage();
-$Draw->drawScale();
+$Draw->drawScale($ScaleFormat);
 $Draw->drawBarChart();
 $Draw->drawLeftTitle($titleLeft);
 $Draw->drawRightTitle($titleRight);

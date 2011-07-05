@@ -24,9 +24,9 @@ if (is_numeric($_GET['id'])) {
 		$Paces     = array();
 		$Paces_num = array();
 		$Distances = array();
-		$Distance      = $Training->get('distanz');
 		$HR_raw        = explode('|', $Training->get('arr_heart'));
 		$Distances_raw = explode('|', $Training->get('arr_dist'));
+		$Distance      = max($Distances_raw);
 
 		for ($i = 0; $i < $Distance; $i += $skip) {
 			$Distances[] = $i; //floor($i);
@@ -61,7 +61,20 @@ if (is_numeric($_GET['id'])) {
 	$titleError = 'Es wurde kein Training ausgew&#228;hlt.';
 }
 
-$averageHR      = round(array_sum($HR) / count($HR));
+
+if ($Distance >= 15)
+	$skip /= ceil(($Distance-5)/10);
+
+if (!empty($HR)) {
+	$averageHR      = round(array_sum($HR) / count($HR));
+	$TresholdFormat = array(
+		"WriteCaption" => TRUE, "Caption" => "&#216; ".$averageHR." &#37;",
+		"CaptionAlign" => CAPTION_RIGHT_BOTTOM,
+		"R" => 180, "G" => 0, "B" => 0, "Alpha" => 50);
+} else {
+	$TresholdFormat = array();
+}
+
 $ScaleFormat    = array(
 	"Factors" => array(10),
 	"Mode" => SCALE_MODE_MANUAL,
@@ -70,10 +83,6 @@ $ScaleFormat    = array(
 		"Max" => 100)),
 	"LabelSkip" => (1/$skip - 1),
 	"XMargin" => 0);
-$TresholdFormat = array(
-	"WriteCaption" => TRUE, "Caption" => "&#216; ".$averageHR." &#37;",
-	"CaptionAlign" => CAPTION_RIGHT_BOTTOM,
-	"R" => 180, "G" => 0, "B" => 0, "Alpha" => 50);
 $SplineFormat   = array(
 	"R" => 136, "G" => 0, "B" => 0);
 

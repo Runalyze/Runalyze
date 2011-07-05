@@ -24,9 +24,9 @@ if (is_numeric($_GET['id'])) {
 		$Elevations     = array();
 		$Elevations_num = array();
 		$Distances      = array();
-		$Distance       = $Training->get('distanz');
 		$Elevation_raw  = explode('|', $Training->get('arr_alt'));
 		$Distances_raw  = explode('|', $Training->get('arr_dist'));
+		$Distance      = max($Distances_raw);
 
 		for ($i = 0; $i < $Distance; $i += $skip) {
 			$Distances[] = $i; //floor($i);
@@ -59,6 +59,9 @@ if (is_numeric($_GET['id'])) {
 	$titleError = 'Es wurde kein Training ausgew&#228;hlt.';
 }
 
+
+if ($Distance >= 15)
+	$skip /= ceil(($Distance-5)/10);
 
 $ScaleFormat    = array(
 	"Factors" => array(10),

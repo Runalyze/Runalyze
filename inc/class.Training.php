@@ -512,7 +512,7 @@ class Training {
 	 * Has the training information about pulse?
 	 */
 	public function hasPulseData() {
-		return $this->get('arr_heart') != '';
+		return $this->get('arr_heart') != '' && max(explode('|',$this->get('arr_heart'))) > 60;
 	}
 
 	/**

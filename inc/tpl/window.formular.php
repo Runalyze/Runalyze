@@ -23,8 +23,10 @@ if (isset($_POST) && $_POST['type'] == "newtraining") {
 	$columns[] = 'time';
 	$values[] = $time;
 	// Prepare "Dauer"
-	$post_dauer = explode(":", $_POST['dauer']);
-	$time_in_s = 3600 * $post_dauer[0] + 60 * $post_dauer[1] + $post_dauer[2];
+	// Time in seconds
+	$ms    = explode(".", Helper::CommaToPoint($_POST['dauer']));
+	$dauer = explode(":", $ms[0]);
+	$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 	$columns[] = 'dauer';
 	$values[] = $time_in_s;
 	// Prepare values for distances
