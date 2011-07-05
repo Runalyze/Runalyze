@@ -101,7 +101,7 @@ class JD {
 	 * @return string   1:23 (Pace [min/km])
 	 */
 	public static function v2Pace($v) {
-		return Helper::Time(60*1000/$v);
+		return Helper::Time(round(60*1000/$v));
 	}
 
 	/**

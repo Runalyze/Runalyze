@@ -24,9 +24,9 @@ if (is_numeric($_GET['id'])) {
 		$Paces     = array();
 		$Paces_num = array();
 		$Distances = array();
-		$Distance      = $Training->get('distanz');
 		$Paces_raw     = explode('|', $Training->get('arr_pace'));
 		$Distances_raw = explode('|', $Training->get('arr_dist'));
+		$Distance      = max($Distances_raw);
 
 		for ($i = 0; $i < $Distance; $i += $skip) {
 			$Distances[] = $i; //floor($i);
@@ -61,14 +61,21 @@ if (is_numeric($_GET['id'])) {
 	$titleError = 'Es wurde kein Training ausgew&#228;hlt.';
 }
 
-$ScaleFormat    = array(
-	"Factors" => array(60),
-	"Mode" => SCALE_MODE_MANUAL,
-	"ManualScale" => array(0 => array(
-		"Min" => 60*floor(min($Paces)/60),
-		"Max" => 60*ceil(max($Paces)/60))),
-	"LabelSkip" => (1/$skip - 1),
-	"XMargin" => 0);
+if ($Distance >= 15)
+	$skip /= ceil(($Distance-5)/10);
+
+if ($titleError == '') {
+	$ScaleFormat    = array(
+		"Factors" => array(60),
+		"Mode" => SCALE_MODE_MANUAL,
+		"ManualScale" => array(0 => array(
+			"Min" => 60*floor(min($Paces)/60),
+			"Max" => 60*ceil(max($Paces)/60))),
+		"LabelSkip" => (1/$skip - 1),
+		"XMargin" => 0);
+} else {
+	$ScaleFormat = array();
+}
 $SplineFormat   = array("R" => 0, "G" => 0, "B" => 136); 
 
 $Draw->pData->addPoints($Distances, 'Distanz');
