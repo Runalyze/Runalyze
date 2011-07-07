@@ -64,13 +64,20 @@ if (is_numeric($_GET['id'])) {
 if ($Distance >= 15)
 	$skip /= ceil(($Distance-5)/10);
 
+$Draw->setCaching(false);
+
 if ($titleError == '') {
+	$avg = array_sum($Paces)/count($Paces);
+	$sig = sqrt(Helper::getVariance($Paces));
+	$min = 60*floor(($avg-1.5*$sig)/60);
+	$max = 60*ceil(($avg+1.5*$sig)/60);
+
 	$ScaleFormat    = array(
-		"Factors" => array(60),
+		"Factors" => array(30, 60),
 		"Mode" => SCALE_MODE_MANUAL,
 		"ManualScale" => array(0 => array(
-			"Min" => 60*floor(min($Paces)/60),
-			"Max" => 60*ceil(max($Paces)/60))),
+			"Min" => $min,
+			"Max" => $max)),
 		"LabelSkip" => (1/$skip - 1),
 		"XMargin" => 0);
 } else {
