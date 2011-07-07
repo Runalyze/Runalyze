@@ -615,6 +615,22 @@ class Helper {
 	}
 
 	/**
+	 * Calculate the variance of a given (numeric) array
+	 * @param array $array
+	 * @return double
+	 */
+	public static function getVariance($array) {
+		$avg = array_sum($array) / count($array);
+		$d   = 0;
+
+		foreach ($array as $dat)
+			if (is_numeric($dat))
+				$d += pow($dat - $avg, 2);
+
+		return ($d / count($array));
+	}
+
+	/**
 	 * Check the modus of a row from dataset
 	 * @param string $row   Name of dataset-row
 	 * @return int   Modus
