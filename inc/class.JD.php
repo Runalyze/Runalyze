@@ -195,7 +195,7 @@ class JD {
 		// Find best VDOT-value in competition
 		$VDOT_top = 0;
 		$VDOT_top_dist = 0;
-		$distances = array(3, 5, 10, 21.1, 42.2);
+		$distances = array(5, 10, 21.1, 42.2);
 		foreach ($distances as $dist) {
 			$dist_PB = Helper::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
@@ -208,7 +208,7 @@ class JD {
 			}
 		}
 
-		// Find best VDOT-value in training
+		// Find best VDOT-value in training <-- ??? NOT?
 		$VDOT_top_dat = Mysql::getInstance()->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
 		if ($VDOT_top_dat !== false) {
 			$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
