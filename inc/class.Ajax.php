@@ -9,7 +9,7 @@
  * @version 1.0
  * @uses class::Error
  *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
+ * Last modified 2011/07/07 19:00 by Hannes Christiansen
  */
 class Ajax {
 	/**
@@ -69,8 +69,11 @@ class Ajax {
 	 * @param string $href   ID of div-container to be displayed
 	 * @return string
 	 */
-	static function change($name, $target, $href) {
-		return '<a class="change" target="'.$target.'" href="'.$href.'">'.$name.'</a>';
+	static function change($name, $target, $href, $additional_class = '') {
+		if ($additional_class != '')
+			$additional_class .= ' ';
+
+		return '<a class="'.$additional_class.'change" target="'.$target.'" href="'.$href.'">'.$name.'</a>';
 	}
 
 	/**

@@ -9,16 +9,19 @@ Error::getInstance()->addTodo('class::JD: Set CONFIG_USE_VDOT_CORRECTOR as confi
  * @var bool
  */
 define('CONFIG_USE_VDOT_CORRECTOR', true);
+
 /**
  * Number of days to be used for calculating VDOT-form
  * @var int
  */
 define('VDOT_DAYS', 30);
+
 /**
  * VDOT-corrector is used to correct the raw VDOT-value to user-specific values
  * @var double
  */
 define('VDOT_CORRECTOR', JD::calculateVDOTcorrector());
+
 /**
  * The actual (corrected) VDOT-value based on last trainings
  * @var double
@@ -131,10 +134,10 @@ class JD {
 	 * @param $training_id
 	 */
 	public static function Training2VDOT($training_id) {
-		$training = Mysql::getInstance()->fetch('SELECT `sportid`, `distanz`, `dauer`, `puls` FROM `ltb_training` WHERE `id`='.$training_id.' LIMIT 1');
+		$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distanz`, `dauer`, `puls` FROM `ltb_training` WHERE `id`='.$training_id);
 
 		if ($training['puls'] != 0 && $training['sportid'] == RUNNINGSPORT) {
-			$VDOT = self::Competition2VDOT($training['distanz'], $training['dauer']);
+			$VDOT = self::Competition2VDOT($training['distanz'],  $training['dauer']);
 			if ($VDOT !== false)
 				return round( $VDOT / (self::pHF2pVDOT($training['puls']/HF_MAX) ), 2);
 		}
@@ -176,7 +179,7 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
-		$Data = Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `value` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`<'.$time.' && `time`>'.($time - VDOT_DAYS*DAY_IN_S).' GROUP BY `sportid` LIMIT 1');
+		$Data = Mysql::getInstance()->fetchSingle('SELECT AVG(`vdot`) as `value` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' && `puls`!=0 && `time`<'.$time.' && `time`>'.($time - VDOT_DAYS*DAY_IN_S).' GROUP BY `sportid`');
 
 		if ($Data !== false)
 			return round(self::correctVDOT($Data['value']), 5);
@@ -209,7 +212,7 @@ class JD {
 		}
 
 		// Find best VDOT-value in training <-- ??? NOT?
-		$VDOT_top_dat = Mysql::getInstance()->fetch('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC LIMIT 1');
+		$VDOT_top_dat = Mysql::getInstance()->fetchSingle('SELECT `puls`, `dauer` FROM `ltb_training` WHERE `distanz`='.$VDOT_top_dist.' AND `puls`!=0 AND `typid`='.WK_TYPID.' ORDER BY `dauer` ASC');
 		if ($VDOT_top_dat !== false) {
 			$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['dauer'])
 				/ self::pHF2pVDOT($VDOT_top_dat['puls'] / HF_MAX);

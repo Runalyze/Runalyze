@@ -105,7 +105,7 @@ class Training {
 	public function getStringForClothes() {
 		if ($this->get('kleidung') != '') {
 			$kleidungen = array();
-			$kleidungen_data = Mysql::getInstance()->fetch('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC', false, true);
+			$kleidungen_data = Mysql::getInstance()->fetchAsArray('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC');
 			foreach ($kleidungen_data as $data)
 				$kleidungen[] = $data['name'];
 			return implode(', ', $kleidungen);
@@ -186,7 +186,7 @@ class Training {
 		echo $this->getTitle();
 		if (!$short) {
 			if ($this->get('laufabc') == 1)
-				echo(' <img src="img/abc.png" alt="Lauf-ABC" />');
+				echo(' '.Icon::get(Icon::$ABC, 'Lauf-ABC'));
 			if ($this->get('bemerkung') != '')
 				echo (': '.$this->get('bemerkung'));
 		}
@@ -245,7 +245,7 @@ class Training {
 		$links = array();
 		$plots = $this->getPlotTypesAsArray();
 		foreach ($plots as $key => $array)
-			$links[] = '<a class="jImg" rel="trainingGraph" href="'.$array['src'].'">'.$array['name'].'</a>'.NL;
+			$links[] = Ajax::imgChange('<a href="'.$array['src'].'">'.$array['name'].'</a>', 'trainingGraph').NL;
 		echo implode(' | ', $links);
 	}
 
@@ -534,7 +534,7 @@ class Training {
 	 * Display link for edit window
 	 */
 	public function displayEditLink() {
-		echo Ajax::window('<a href="inc/class.Training.edit.php?id='.$this->id.'" title="Training editieren"><img src="img/edit.png" alt="Training editieren" /></a> ','small');
+		echo Ajax::window('<a href="inc/class.Training.edit.php?id='.$this->id.'" title="Training editieren">'.Icon::get(Icon::$EDIT, 'Training editieren').'</a> ','small');
 	}
 
 	/**

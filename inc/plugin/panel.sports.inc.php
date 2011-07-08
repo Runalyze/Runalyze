@@ -31,7 +31,7 @@ function sportarten_rightSymbol() {
 	foreach(sports_getTimeset() as $i => $timeset) {
 		if ($i != 0)
 			$html .= ' | ';
-		$html .= '<a class="change" href="#sports_'.$i.'" target="sports">'.$timeset['name'].'</a>';
+		$html .= Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
 	}
 
 	return '<small>'.$html.'</small>';
@@ -52,7 +52,7 @@ function sportarten_display() {
 		foreach($sports as $sport) {
 			$data = $Mysql->fetch('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `ltb_training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
 			$leistung = ($sport['distanztyp'] == 1)
-				? Helper::Unknown(km($data['distanz_sum']),'0,0 km')
+				? Helper::Unknown(Helper::Km($data['distanz_sum']), '0,0 km')
 				: Helper::Time($data['dauer_sum']); 		
 		
 			echo('

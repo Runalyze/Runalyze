@@ -117,6 +117,18 @@ final class Mysql {
 	}
 
 	/**
+	 * Fetch one single data from database as array
+	 * @param string $query
+	 * @return array $return['column']
+	 */
+	public function fetchSingle($query) {
+		if (substr($query, -7, 7) != 'LIMIT 1')
+			$query .= ' LIMIT 1';
+
+		return $this->fetch($query);
+	}
+
+	/**
 	 * Fetches the row of an given $id or all rows of a $query
 	 * @param string $table    name of table or whole query
 	 * @param int|bool $id     Must not be set if first argument is a query (default: false), otherwise the ID. Can be 'LAST' to get the highest ID
@@ -134,16 +146,16 @@ final class Mysql {
 
 		if ($result === false) {
 			Error::getInstance()->addWarning(mysql_error());
-			return false;
+		} else {
+			while($data = mysql_fetch_assoc($result))
+				$return[] = $data;
 		}
-
-		while($data = mysql_fetch_assoc($result))
-			$return[] = $data;
 
 		if (sizeof($return) == 0 && !$as_array)
 			return false;
 		if (sizeof($return) == 1 && !$as_array)
 			return $return[0];
+
 		return $return;
 	}
 

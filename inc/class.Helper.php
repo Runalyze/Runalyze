@@ -3,9 +3,28 @@
  * This file contains the class::Helper
  */
 
+/**
+ * Maximal heart-frequence of the user
+ * @const HF_MAX
+ */
 define('HF_MAX', Helper::getHFmax());
+
+/**
+ * Heart-frequence in rest of the user
+ * @const HF_REST
+ */
 define('HF_REST', Helper::getHFrest());
+
+/**
+ * Timestamp of the first training
+ * @const START_TIME
+ */
 define('START_TIME', Helper::getStartTime());
+
+/**
+ * Year of the first training
+ * @const START_YEAR
+ */
 define('START_YEAR', date("Y", START_TIME));
 
 require_once(FRONTEND_PATH.'class.JD.php');
@@ -40,6 +59,7 @@ class Helper {
 	 */
 	public static function Sport($sport_id, $as_array = false) {
 		$sport = Mysql::getInstance()->fetch('ltb_sports', $sport_id);
+
 		return ($as_array) ? $sport : $sport['name'];
 	}
 
@@ -104,6 +124,7 @@ class Helper {
 	 */
 	public static function Shoe($shoe_id, $as_array = false) {
 		$shoe = Mysql::getInstance()->fetch('ltb_schuhe', $shoe_id);
+
 		return ($as_array) ? $shoe : $shoe['name'];
 	}
 
@@ -113,10 +134,7 @@ class Helper {
 	 * @return string img-tag
 	 */
 	public static function WeatherImage($wetterid) {
-		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
-		return ($wetter !== false)
-			? '<img src="img/wetter/'.$wetter['bild'].'" title="'.$wetter['name'].'" style="vertical-align:bottom;" />'
-			: '';
+		return Icon::getWeatherIcon($wetterid);
 	}
 
 	/**
@@ -145,7 +163,7 @@ class Helper {
 		$bpm = $pulse.'bpm';
 		$hf  = '?&nbsp;&#37;';
 
-		$HFmax = Mysql::getInstance()->fetch('SELECT * FROM `ltb_user` ORDER BY ABS(`time`-'.$time.') ASC LIMIT 1');
+		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `ltb_user` ORDER BY ABS(`time`-'.$time.') ASC');
 		if ($HFmax !== false)
 			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
 
@@ -297,7 +315,7 @@ class Helper {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = Mysql::getInstance()->fetch('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC LIMIT 1');
+		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
 		if ($pb != '')
@@ -317,18 +335,20 @@ class Helper {
 		$dat = Mysql::getInstance()->fetch('ltb_training', $training_id);
 		if ($dat === false)
 			$dat = array();
-		$factor_a = (CONFIG_GESCHLECHT == 'm') ? 0.64 : 0.86;
-		$factor_b = (CONFIG_GESCHLECHT == 'm') ? 1.92 : 1.67;
-		$sportid = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
-		$sport = sport($sportid,true);
-		$typ = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;
-		$HFavg = ($dat['puls'] != 0) ? $dat['puls'] : $sport['HFavg'];
-		$RPE = ($typ != 0) ? $typ['RPE'] : $sport['RPE'];
+
+		$factor_a  = (CONFIG_GESCHLECHT == 'm') ? 0.64 : 0.86;
+		$factor_b  = (CONFIG_GESCHLECHT == 'm') ? 1.92 : 1.67;
+		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
+		$sport     = Helper::Sport($sportid, true);
+		$typ       = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;
+		$HFavg     = ($dat['puls'] != 0) ? $dat['puls'] : $sport['HFavg'];
+		$RPE       = ($typ != 0) ? $typ['RPE'] : $sport['RPE'];
 		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
-		$TRIMP = $dat['dauer']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
+		$TRIMP     = $dat['dauer']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
 	
 		if ($trimp === false)
 			return round($TRIMP);
+
 		// Anzahl der noetigen Minuten fuer $back als TRIMP-Wert
 		return $trimp / ( $HFperRest * $factor_a * exp($factor_b * $HFperRest) * 5.35 / 10 );
 	}
@@ -393,9 +413,10 @@ class Helper {
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
 		global $global;
 
+		$points = 0;
 		if ($timestamp == 0)
 			$timestamp = time();
-		$points = 0;
+
 		// Weekkilometers
 		$wk_sum = 0;
 		$data = Mysql::getInstance()->fetch('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
@@ -404,17 +425,21 @@ class Helper {
 			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
 		}
 		$points += $wk_sum / 20;
+
 		// LongJogs ...
 		$data = Mysql::getInstance()->fetch('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat)
 			$points += ($dat['distanz']-15) / 2;
 	
 		$points = round($points - 50);
-		if ($points < 0) $points = 0;
-		if ($points > 100) $points = 100;
+		if ($points < 0)
+			$points = 0;
+		if ($points > 100)
+			$points = 100;
 	
 		if ($as_int)
 			return $points;
+
 		return ($as_int) ? $points : $points.' &#37;';
 	}
 
@@ -440,7 +465,7 @@ class Helper {
 			$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
 		$prognose_dauer = JD::CompetitionPrognosis($VDOT_new, $dist);
 		if ($VDOT != 0)
-			return zeit($prognose_dauer);
+			return self::Time($prognose_dauer);
 		$bisher_tag = ($prognose_dauer < $pb) ? 'del' : 'strong';
 		$neu_tag = ($prognose_dauer > $pb) ? 'del' : 'strong';
 		return '
@@ -454,7 +479,7 @@ class Helper {
 				<'.$neu_tag.' title="VDOT '.$VDOT_new.'">
 					'.self::Time($prognose_dauer).'
 				</'.$neu_tag.'>
-			<small>('.self::Time($prognose_dauer/$dist).'/km)</small>
+			<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
 		</span>
 		<strong>'.self::Km($dist, 0, $bahn).'</strong>
 	</p>'.NL;
@@ -524,13 +549,13 @@ class Helper {
 	 */
 	public static function Weekday($w, $short = false) {
 		switch($w%7) {
-			case 0: return ($short) ? "So" : "Sonntag";
-			case 1: return ($short) ? "Mo" : "Montag";
-			case 2: return ($short) ? "Di" : "Dienstag";
-			case 3: return ($short) ? "Mi" : "Mittwoch";
-			case 4: return ($short) ? "Do" : "Donnerstag";
-			case 5: return ($short) ? "Fr" : "Freitag";
-			case 6: return ($short) ? "Sa" : "Samstag";
+			case 0: return ($short) ? 'So' : 'Sonntag';
+			case 1: return ($short) ? 'Mo' : 'Montag';
+			case 2: return ($short) ? 'Di' : 'Dienstag';
+			case 3: return ($short) ? 'Mi' : 'Mittwoch';
+			case 4: return ($short) ? 'Do' : 'Donnerstag';
+			case 5: return ($short) ? 'Fr' : 'Freitag';
+			case 6: return ($short) ? 'Sa' : 'Samstag';
 		}
 	}
 
@@ -541,18 +566,18 @@ class Helper {
 	 */
 	public static function Month($m, $short = false) {
 		switch($m) {
-			case 1: return ($short) ? "Jan" :  "Januar";
-			case 2: return ($short) ? "Feb" :  "Februar";
-			case 3: return ($short) ? "Mrz" :  "M&auml;rz";
-			case 4: return ($short) ? "Apr" :  "April";
-			case 5: return ($short) ? "Mai" :  "Mai";
-			case 6: return ($short) ? "Jun" :  "Juni";
-			case 7: return ($short) ? "Jul" :  "Juli";
-			case 8: return ($short) ? "Aug" :  "August";
-			case 9: return ($short) ? "Sep" :  "September";
-			case 10: return ($short) ? "Okt" :  "Oktober";
-			case 11: return ($short) ? "Nov" :  "November";
-			case 12: return ($short) ? "Dez" :  "Dezember";
+			case 1: return ($short) ? 'Jan' : 'Januar';
+			case 2: return ($short) ? 'Feb' : 'Februar';
+			case 3: return ($short) ? 'Mrz' : 'M&auml;rz';
+			case 4: return ($short) ? 'Apr' : 'April';
+			case 5: return ($short) ? 'Mai' : 'Mai';
+			case 6: return ($short) ? 'Jun' : 'Juni';
+			case 7: return ($short) ? 'Jul' : 'Juli';
+			case 8: return ($short) ? 'Aug' : 'August';
+			case 9: return ($short) ? 'Sep' : 'September';
+			case 10: return ($short) ? 'Okt' : 'Oktober';
+			case 11: return ($short) ? 'Nov' : 'November';
+			case 12: return ($short) ? 'Dez' : 'Dezember';
 		}
 	}
 
@@ -570,7 +595,7 @@ class Helper {
 	 * @return string
 	 */
 	public static function Textarea($text) {
-		return stripslashes(str_replace("&","&amp;",$text));
+		return stripslashes(str_replace("&", "&amp;", $text));
 	}
 
 	/**
@@ -582,6 +607,7 @@ class Helper {
 	public static function Checked($value, $value_to_be_checked = NULL) {
 		if ($value_to_be_checked != NULL)
 			$value = ($value == $value_to_be_checked);
+
 		return $value
 			? ' checked="checked"'
 			: '';
@@ -596,6 +622,7 @@ class Helper {
 	public static function Selected($value, $value_to_be_checked = NULL) {
 		if ($value_to_be_checked != NULL)
 			$value = ($value == $value_to_be_checked);
+
 		return $value
 			? ' selected="selected"'
 			: '';
@@ -636,7 +663,7 @@ class Helper {
 	 * @return int   Modus
 	 */
 	public static function getModus($row) {
-		$dat = Mysql::getInstance()->query('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'" LIMIT 1');
+		$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'"');
 		return $dat['modus'];
 	}
 
@@ -656,7 +683,7 @@ class Helper {
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetch('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
@@ -674,7 +701,7 @@ class Helper {
 		if (defined('HF_REST'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetch('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC LIMIT 1');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');

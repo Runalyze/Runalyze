@@ -38,7 +38,7 @@
 
 	<strong>Sportart:</strong>
 <?php
-$sports = Mysql::getInstance()->fetch('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `id` ASC', false, true);
+$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `id` ASC');
 foreach ($sports as $sport) {
 	$checked = Helper::Checked((!$submit && $sport['id'] == MAINSPORT) || $_POST['sport'][$sport['id']] != false);
 	echo('
@@ -64,7 +64,7 @@ foreach ($conditions as $condition) {
 			<select name="val['.$condition['name'].'][]"'.$multiple.' size="5">
 				<option value="egal"'.$selected_egal.'>--- egal</option>');
 
-	$options = Mysql::getInstance()->fetch('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC', false, true);
+	$options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC');
 	foreach ($options as $option) {
 		$selected        = Helper::Selected(in_array($option['id'], $_POST['val'][$condition['name']]));
 		echo('

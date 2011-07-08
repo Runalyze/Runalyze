@@ -8,10 +8,8 @@ $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->addTodo('Formular abschicken funktioniert noch nicht vollständig', __FILE__, __LINE__);
+$Error->addTodo('Formular abschicken funktioniert noch nicht vollstaendig', __FILE__, __LINE__);
 if (isset($_POST) && $_POST['type'] == "config") {
-	// die('FUNKTIONIERT NOCH NICHT!');
-
 	// General config vars: 'ltb_config'
 	$columns = array();
 	$values = array();
@@ -29,7 +27,7 @@ if (isset($_POST) && $_POST['type'] == "config") {
 	$Mysql->update('ltb_config', 1, $columns, $values);
 
 	// Plugin config vars: 'ltb_plugin'
-	$plugins = $Mysql->fetch('SELECT `id` FROM `ltb_plugin`');
+	$plugins = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_plugin`');
 	foreach ($plugins as $plugin) {
 		$id = $plugin['id'];
 		$Mysql->update('ltb_plugin', $id,
@@ -59,7 +57,7 @@ if (isset($_POST) && $_POST['type'] == "config") {
 }
 
 // Because constants can't be redefinied, $config has to be used instead of CONFIG_...
-$config = $Mysql->fetch('SELECT * FROM `ltb_config` LIMIT 1');
+$config = $Mysql->fetchSingle('SELECT * FROM `ltb_config`');
 
 $Frontend->displayHeader();
 
@@ -141,11 +139,11 @@ if (isset($submit))
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $Mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="panel" ORDER BY `order` ASC');
+$plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
+			<td>'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
 			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
@@ -183,11 +181,11 @@ foreach($plugins as $i => $plugin)
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $Mysql->fetch('SELECT * FROM `ltb_plugin` WHERE `type`="stat" ORDER BY `order` ASC');
+$plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Stat.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'</td>
+			<td>'.Ajax::window('<a href="inc/class.Stat.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
 			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
@@ -208,7 +206,7 @@ foreach($plugins as $i => $plugin)
 	<table cellspacing="0" class="c">
 		<tr>
 			<td title="Die Information wird in der Tabelle direkt angezeigt">Anzeige</td>
-			<td title="Die Daten werden für die Zusammenfassung der Sportart angezeigt">Zusammenfassung</td>
+			<td title="Die Daten werden fï¿½r die Zusammenfassung der Sportart angezeigt">Zusammenfassung</td>
 			<td style="width: 170px;" />
 			<td title="Gibt die Reihenfolge der Anzeige vor">Position</td>
 		</tr>
@@ -216,7 +214,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="4"></td>
 		</tr>
 <?php
-$datasets = $Mysql->fetch('SELECT *, (`position` = 0) as `hidden` FROM `ltb_dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
+$datasets = $Mysql->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `ltb_dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
 foreach($datasets as $i => $dataset) {
 	// Modus=1 has been deleted
 	$disabled = ($dataset['modus'] == 3) ? ' disabled="disabled"' : '';
@@ -253,9 +251,9 @@ foreach($datasets as $i => $dataset) {
 			<td class="small" title="Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt">Kurz</td>
 			<td colspan="2">Sportart</td>
 			<td title="Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde">kcal/h</td>
-			<td title="Die durchschnittliche Herzfrequenz (wird z.B. für TRIMP verwendet)">&Oslash; HF</td>
+			<td title="Die durchschnittliche Herzfrequenz (wird z.B. fï¿½r TRIMP verwendet)">&Oslash; HF</td>
 			<td title="Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)">RPE</td>
-			<td title="Es wird eine Distanz zurückgelegt">km</td>
+			<td title="Es wird eine Distanz zurï¿½ckgelegt">km</td>
 			<td title="Tempoanzeige in km/h statt min/km">kmh</td>
 			<td title="Es werden Trainingstypen wie Intervalltraining verwendet">Typen</td>
 			<td title="Der Puls wird dabei aufgezeichnet">Puls</td>
@@ -266,15 +264,15 @@ foreach($datasets as $i => $dataset) {
 		</tr>
 <?php
 $Error->addTodo('Edit Sports', __FILE__, __LINE__);
-// TODO ID=1 für Laufen sperren!
+// TODO ID=1 fuer Laufen sperren!
 
-$sports = $Mysql->fetch('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
+$sports = $Mysql->fetchAsArray('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
 foreach($sports as $i => $sport) {
 	echo('
 		<tr class="a'.($i%2+1).'">
 			<td><input type="checkbox" name="" disabled="disabled" '.($sport['online'] == 1 ? 'checked="checked" ' : '').'/></td>
 			<td><input type="checkbox" name="" disabled="disabled" '.($sport['short'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><img src="img/sports/'.$sport['bild'].'" /></td>
+			<td>'.Icon::getSportIcon($sport['id']).'</td>
 			<td>'.$sport['name'].'</td>
 			<td><input type="text" size="3" name="" disabled="disabled" value="'.$sport['kalorien'].'" /></td>
 			<td><input type="text" size="3" name="" disabled="disabled" value="'.$sport['HFavg'].'" /></td>
@@ -307,7 +305,7 @@ foreach($sports as $i => $sport) {
 $Error->addTodo('Edit Trainingstypen', __FILE__, __LINE__);
 $Error->addTodo('Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
 
-$typen = $Mysql->fetch('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
+$typen = $Mysql->fetchAsArray('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
 foreach($typen as $i => $typ) {
 	echo('
 		<tr class="a'.($i%2+1).'">
@@ -341,7 +339,7 @@ foreach($typen as $i => $typ) {
 <?php
 $Error->addTodo('Edit Kleidungen', __FILE__, __LINE__);
 
-$kleidungen = $Mysql->fetch('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
+$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
 foreach($kleidungen as $i => $kleidung) {
 	echo('
 		<tr class="a'.($i%2+1).'">

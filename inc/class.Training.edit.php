@@ -50,7 +50,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$vars[] = 'strecke';
 		// Kleidung
 		$kleidung = array();
-		$kleidungen = $Mysql->fetch('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
+		$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
 		foreach ($kleidungen as $kl) {
 			if ($_POST[$kl['name_kurz']] == 'on')
 				$kleidung[] = $kl['id'];
@@ -126,18 +126,20 @@ if (isset($submit))
 <input type="hidden" name="type" value="training" />
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
 
-<?php Error::getInstance()->add('TODO','Use class:Ajax for these links', __FILE__, __LINE__); ?>
+<?php
+Error::getInstance()->add('TODO','Use class:Ajax for these links', __FILE__, __LINE__);
 
-<?php if ($Training->hasPositionData()): ?>
-<a class="right change" href="#edit-gps" target="edit-div">GPS-Daten</a>
-<?php endif; ?>
+if ($Training->hasPositionData())
+	echo Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;
 
-<a class="change" href="#edit-allg" target="edit-div">Allgemeines</a>
-<?php if ($sport['distanztyp'] == 1): ?> |
-<a class="change" href="#edit-train" target="edit-div">Training</a>
-<?php endif; if ($sport['outside'] == 1) : ?> |
-<a class="change" href="#edit-out" target="edit-div">Outside</a>
-<?php endif; ?> <br />
+echo Ajax::change('Allgemeines', 'edit-div', '#edit-allg').NL;
+
+if ($sport['distanztyp'] == 1)
+	echo Ajax::change('Training', 'edit-div', '#edit-train').NL;
+
+if ($sport['outside'] == 1)
+	echo Ajax::change('Outside', 'edit-div', '#edit-out').NL;
+?><br />
 <br />
 
 <div id="edit-div">
@@ -191,7 +193,7 @@ if (isset($submit))
 		<span <?php echo $sport['typen'] == 1 ? '' : ' style="display:none;"'; ?>>
 			<select name="typid">
 <?php
-$typen = $Mysql->fetch('SELECT `id`, `name` FROM `ltb_typ`', false, true);
+$typen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_typ`');
 foreach ($typen as $typ)
 	echo('<option value="'.$typ['id'].'"'.Helper::Selected($typ['id'] == $Training->get('typid')).'>'.$typ['name'].'</option>');
 ?>
@@ -200,7 +202,7 @@ foreach ($typen as $typ)
 			<input type="hidden" name="schuhid_old" value="<?php echo $Training->get('schuhid'); ?>" />
 			<select name="schuhid">
 <?php
-$schuhe = $Mysql->fetch('SELECT `id`, `name` FROM `ltb_schuhe`', false, true);
+$schuhe = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_schuhe`');
 foreach ($schuhe as $schuh)
 	echo('<option value="'.$schuh['id'].'"'.Helper::Selected($schuh['id'] == $Training->get('schuhid')).'>'.$schuh['name'].'</option>');
 ?>
@@ -232,7 +234,7 @@ foreach ($schuhe as $schuh)
 			<small>HM</small><br />
 		<select name="wetterid">
 <?php
-$wetter = $Mysql->fetch('SELECT `id`, `name` FROM `ltb_wetter`');
+$wetter = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_wetter`');
 foreach ($wetter as $wetter_dat)
 	echo('<option value="'.$wetter_dat['id'].'"'.Helper::Selected($wetter_dat['id'] == $Training->get('wetterid')).'>'.$wetter_dat['name'].'</option>');
 ?>
@@ -243,7 +245,7 @@ foreach ($wetter as $wetter_dat)
 		<br />
 		<small>Kleidung</small><br />
 <?php
-$kleidungen = $Mysql->fetch('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
+$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
 foreach ($kleidungen as $kleidung) {
 	$checked = Helper::Checked(in_array($kleidung['id'], explode(',', $Training->get('kleidung'))));
 	echo('<input type="checkbox" name="'.$kleidung['name_kurz'].'"'.$checked.' />&nbsp;<small style="margin-right:12px;">'.$kleidung['name_kurz'].'</small>'.NL);

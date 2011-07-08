@@ -45,8 +45,8 @@ $schuhe = $Mysql->fetchAsArray('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC
 if (count($schuhe) > 0) {
 	foreach($schuhe as $i => $schuh) {
 		$i++;
-		$training_dist = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC LIMIT 1');
-		$training_pace = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC LIMIT 1');
+		$training_dist = $Mysql->fetchSingle('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC');
+		$training_pace = $Mysql->fetchSingle('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC');
 		$trainings = $Mysql->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
 		$in_use = $schuh['inuse']==1 ? '' : ' small';
 		echo('

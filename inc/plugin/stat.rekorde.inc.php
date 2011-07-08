@@ -17,7 +17,7 @@ function stat_rekorde_installer() {
 	$type = 'stat';
 	$filename = 'stat.rekorde.inc.php';
 	$name = 'Rekorde';
-	$description = 'Am schnellsten, am l�ngsten, am weitesten: Die Rekorde aus dem Training.';
+	$description = 'Am schnellsten, am l&auml;ngsten, am weitesten: Die Rekorde aus dem Training.';
 	// TODO Include the plugin-installer
 }
 

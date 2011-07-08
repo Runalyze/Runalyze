@@ -25,7 +25,7 @@ if ($Year >= START_YEAR && $Year <= date('Y')) {
 		$KilometersCompetition[] = 0;
 	}
 
-	$Data = Mysql::getInstance()->fetchAsArray('SELECT (`typid` = '.WK_TYPID.') as `wk`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `w` FROM `ltb_training` WHERE `sportid`=1 AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY (`typid` = '.WK_TYPID.'), WEEK(FROM_UNIXTIME(`time`),1)');
+	$Data = Mysql::getInstance()->fetchAsArray('SELECT (`typid` = '.WK_TYPID.') as `wk`, SUM(`distanz`) as `km`, WEEK(FROM_UNIXTIME(`time`),1) as `w` FROM `ltb_training` WHERE `sportid`='.RUNNINGSPORT.' AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY (`typid` = '.WK_TYPID.'), WEEK(FROM_UNIXTIME(`time`),1)');
 	foreach ($Data as $dat) {
 		if ($dat['wk'] == 1)
 			$KilometersCompetition[$dat['w']] = $dat['km'];
@@ -35,7 +35,7 @@ if ($Year >= START_YEAR && $Year <= date('Y')) {
 
 	if (CONFIG_SHOW_RECHENSPIELE) {
 		$TrimpPerMonth = Helper::TRIMP(0, 7 * Helper::CTL());
-		$AvgMonthPace  = Mysql::getInstance()->fetch('SELECT AVG(`dauer`/60/`distanz`) AS `avg` FROM `ltb_training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`=1 LIMIT 1');
+		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`dauer`/60/`distanz`) AS `avg` FROM `ltb_training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.RUNNINGSPORT);
 		$possibleKM    = 5 * round($TrimpPerMonth / $AvgMonthPace['avg'] / 5);
 	}
 
