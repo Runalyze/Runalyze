@@ -18,8 +18,8 @@ class Ajax {
 	 * @param string $name
 	 * @return string
 	 */
-	static function trainingLink($training_id, $name) {
-		return '<a class="training" href="inc/class.Training.display.php?id='.$training_id.'" rel="'.$training_id.'">'.$name.'</a>';
+	static function trainingLink($training_id, $name, $closeOverlay = false) {
+		return '<a class="training" href="inc/class.Training.display.php?id='.$training_id.'" rel="'.$training_id.'" '.($closeOverlay ? ' onclick="closeOverlay()"' : '').'>'.$name.'</a>';
 	}
 
 	/**

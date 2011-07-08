@@ -66,7 +66,6 @@ $num_all   = Mysql::getInstance()->num('SELECT * FROM `ltb_training` '.$where.' 
 	<tr class="c">
 		<td colspan="<?php echo($max_colspan); ?>">
 <?php
-// TODO Use jQuery-Paginator
 if ($num_all > 15) {
 	$submit_search = '';
 
@@ -110,9 +109,11 @@ if ($num_all > 15) {
 	</tr>
 <?php
 foreach ($trainings as $i => $training) {
+	$date = date("d.m.Y", $training['time']);
+	$link = Ajax::trainingLink($training['id'], $date, true);
 	echo('
 	<tr class="a'.($i%2+1).' r">
-		<td class="l"><small>'.date("d.m.Y", $training['time']).'</small></td>');
+		<td class="l"><small>'.$link.'</small></td>');
 
 	$Dataset->setTrainingId($training['id']);
 	$Dataset->displayTableColumns();
