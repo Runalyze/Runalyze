@@ -85,8 +85,6 @@ class Ajax {
 		return '<a class="ajax" href="'.$href.'"target="'.$target.'" rel="'.$data.'" >'.$name.'</a>';
 	}
 
-	// TODO jImg()
-
 	/**
 	 * Adds a new class-value or creates a class-attribute
 	 * @param string $link    The full HTML-link

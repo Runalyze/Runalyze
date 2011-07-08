@@ -20,8 +20,8 @@
 function stat_wettkampf_installer() {
 	$type = 'stat';
 	$filename = 'stat.wettkampf.inc.php';
-	$name = 'Wettk�mpfe';
-	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk�mpfen.';
+	$name = 'Wettkämpfe';
+	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettkämpfen.';
 	// TODO Include the plugin-installer
 }
 
@@ -141,19 +141,19 @@ show_table_end();
 
 	<small style="text-align:center;display:block;">
 <?php
-$Error->addTodo('Set link with Class::Ajax', __FILE__, __LINE__);
-// TODO Set link with AJAX-Class
 $first = true;
 foreach($distances as $km) {
 	echo('
-		'.(!$first ? '|' : '').' <a href="#bestzeit-dia" onclick="document.getElementById(\'bestzeit-diagramm\').src=\'inc/draw/plugin.wettkampf.php?km='.$km.'\';">'.km($km, (round($km) != $km ? 1 : 0)).'</a>');
+		'.(!$first ? '| ' : '').Ajax::imgChange('<a href="inc/draw/plugin.wettkampf.php?km='.$km.'">'.Helper::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3)).'</a>','bestzeit-diagramm'));
 	$first = false;
 }
 ?>
 	</small>
 
 	<center>
-		<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
+		<div class="bigImg" style="height:190px;width:480px;">
+			<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
+		</div>
 	</center>
 
 
