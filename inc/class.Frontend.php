@@ -16,8 +16,6 @@
  * @uses class::Ajax
  * @uses class::Panel // Will be included by class::Plugin later?
  * @uses class::Stat // Will be included by class::Plugin later?
- * @uses '../config/functions.php' // TODO functions.php Must be a helper-class later
- * @uses '../config/globals.php' // Has to be done on another way
  * // @uses class::Plugin
  * @uses class::Training
  * @uses class::DataBrowser
@@ -54,21 +52,16 @@ class Frontend {
 	public function __construct($ajax_request = false, $file = __FILE__) {
 		global $global;
 
+		$this->file = $file;
+		$this->global = $global;
+		$this->ajax_request = $ajax_request;
+
 		$this->initConsts();
+		$this->initVars();
 		$this->initErrorHandling();
 		$this->initMySql();
 		$this->initConfigConsts();
 		$this->initRequiredFiles();
-
-		if (!is_bool($ajax_request)) {
-			Error::getInstance()->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
-			$this->ajax_request = true;
-		} else {
-			$this->ajax_request = $ajax_request;
-		}
-
-		$this->file = $file;
-		$this->global = $global;
 	}
 
 	/**
@@ -95,6 +88,16 @@ class Frontend {
 		define('YEAR', date("Y"));
 		define('CUT_LENGTH', 29);
 		define('NL', "\n");
+	}
+
+	/**
+	 * Init class-variables
+	 */
+	private function initVars() {
+		if (!is_bool($this->ajax_request)) {
+			Error::getInstance()->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
+			$this->ajax_request = true;
+		}
 	}
 
 	/**
@@ -139,8 +142,6 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.DataBrowser.php');
 		require_once(FRONTEND_PATH.'class.Dataset.php');
-		require_once(FRONTEND_PATH.'..\\config\\globals.php'); // Has to be done on another way
-		require_once(FRONTEND_PATH.'..\\config\\functions.php'); // TODO functions.php Must be a helper-class later
 		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser');
 		// require_once(FRONTEND_PATH.'class.Plugin.php');
 		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later

@@ -80,7 +80,7 @@ class Error {
 	 * To initialise for this class.
 	 * @param string $file       filename
 	 * @param bool   $log        Logging errors?
-	 * @param string $log_path   Path for logging errors
+	 * @param string $log_file   File for logging errors
 	 */
 	public static function init($file = __FILE__, $log = false, $log_file = '') {
 		if ($log_file == '')
@@ -91,6 +91,8 @@ class Error {
 
 	/**
 	 * Set private variables from self::init()
+	 * @param bool   $log        Logging errors?
+	 * @param string $log_file   File for logging errors
 	 */
 	public function setLogVars($log, $log_file) {
 		$this->log = $log;

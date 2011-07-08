@@ -27,7 +27,7 @@ function sportler_installer() {
  * @return string (HTML)
  */
 function sportler_rightSymbol() {
-	return Ajax::window('<a href="inc/plugin/window.sportler.php" title="Daten hinzuf�gen"><img src="img/add.png" alt="Daten hinzuf�gen" /></a>');
+	return Ajax::window('<a href="inc/plugin/window.sportler.php" title="Daten hinzuf&uuml;gen">'.Icon::get(Icon::$ADD, 'Daten hinzuf&uuml;gen').'</a>');
 }
 
 /**
@@ -39,7 +39,7 @@ function sportler_display() {
 	<div id="sportler">
 		<div id="sportler-gewicht" class="change">
 <?php
-	$dat = Mysql::getInstance()->fetch('ltb_user','LAST');
+	$dat = Mysql::getInstance()->fetch('ltb_user', 'LAST');
 	if (CONFIG_USE_GEWICHT == 1)
 		$left = '<strong title="'.date("d.m.Y",$dat['time']).'">'.$dat['gewicht'].' kg</strong>';
 	

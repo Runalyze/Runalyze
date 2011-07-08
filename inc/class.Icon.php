@@ -79,10 +79,29 @@ class Icon {
 	 */
 	public static function getSportIcon($id, $title = '') {
 		$data = Mysql::getInstance()->fetch('ltb_sports', $id);
+		if ($data === false)
+			return '';
+
 		if ($title == '')
 			$title = $data['name'];
 
 		return '<img src="img/sports/'.$data['bild'].'" alt="'.$title.'" />';
+	}
+
+	/**
+	 * Get the weather-specific icon
+	 * @param int $id
+	 * @param string $title
+	 */
+	public static function getWeatherIcon($id, $title = '') {
+		$data = Mysql::getInstance()->fetch('ltb_wetter', $id);
+		if ($data === false)
+			return '';
+
+		if ($title == '')
+			$title = $data['name'];
+
+		return '<img src="img/wetter/'.$data['bild'].'" alt="'.$title.'" style="vertical-align:bottom;" />';
 	}
 }
 ?>

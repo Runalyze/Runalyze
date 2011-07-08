@@ -3,9 +3,22 @@
  * This file contains the class::DataBrowser
  * The class::DataBrowser is is used to handle and display a list of trainings.
  */
-
+/**
+ * Tag-ID for the whole databrowser
+ * @const DATA_BROWSER_ID
+ */
 define('DATA_BROWSER_ID', 'daten');
+
+/**
+ * Tag-ID for the search
+ * @const DATA_BROWSER_SEARCH_ID
+ */
 define('DATA_BROWSER_SEARCH_ID', 'search');
+
+/**
+ * Tag-ID for the resultbrowser of the search
+ * @const DATA_BROWSER_SEARCHRESULT_ID
+ */
 define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
 
 /**
@@ -120,7 +133,7 @@ class DataBrowser {
 		$time_start = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w,   date("Y",$time));
 		$time_end   = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w+1, date("Y",$time));
 
-		$data = $this->Mysql->fetch('SELECT `id`, `sportid` FROM `ltb_training` WHERE `time` BETWEEN '.($time_start-10).' AND '.($time_end-10).' ORDER BY `time` ASC', false, true);
+		$data = $this->Mysql->fetchAsArray('SELECT `id`, `sportid` FROM `ltb_training` WHERE `time` BETWEEN '.($time_start-10).' AND '.($time_end-10).' ORDER BY `time` ASC');
 		if (!empty($data)) {
 			foreach ($data as $short)
 				if (in_array($short['sportid'], $this->sports_short))
@@ -137,7 +150,7 @@ class DataBrowser {
 	 */
 	private function initShortSports() {
 		$this->sports_short = array();
-		$sports = $this->Mysql->fetch('SELECT `id` FROM `ltb_sports` WHERE `short`=1', false, true);
+		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `ltb_sports` WHERE `short`=1');
 		foreach ($sports as $sport)
 			$this->sports_short[] = $sport['id'];
 	}
@@ -182,7 +195,7 @@ class DataBrowser {
 	 * Get link to navigation back
 	 */
 	private function getPrevLink() {
-		$icon = Icon::get(Icon::$ARR_BACK, 'zur�ck');
+		$icon = Icon::get(Icon::$ARR_BACK, 'zur&uuml;ck');
 		$timestamp_array = self::getPrevTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
@@ -192,7 +205,7 @@ class DataBrowser {
 	 * Get link to navigation forward
 	 */
 	private function getNextLink() {
-		$icon = Icon::get(Icon::$ARR_NEXT, 'vorw�rts');
+		$icon = Icon::get(Icon::$ARR_NEXT, 'vorw&auml;rts');
 		$timestamp_array = self::getNextTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
@@ -236,7 +249,8 @@ class DataBrowser {
 	private function getNaviSearchLink() {
 		$href = 'inc/class.DataBrowser.search.php';
 		$icon = Icon::get(Icon::$SEARCH, 'Suche');
-		#return Ajax::link($icon, DATA_BROWSER_ID, $href);
+		// TODO For displaying search inside the databrowser ...
+		// return Ajax::link($icon, DATA_BROWSER_ID, $href);
 		return Ajax::window('<a href="inc/tpl/window.search.php" title="Suche">'.$icon.'</a>', 'big');
 	}
 
@@ -253,8 +267,8 @@ class DataBrowser {
 	 * Get ajax-link for adding a training
 	 */
 	private function getAddLink() {
-		$icon = Icon::get(Icon::$ADD, 'Training hinzuf�gen');
-		return Ajax::window('<a href="inc/tpl/window.formular.php" title="Training hinzuf�gen">'.$icon.'</a>', 'normal');
+		$icon = Icon::get(Icon::$ADD, 'Training hinzuf&uuml;gen');
+		return Ajax::window('<a href="inc/tpl/window.formular.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
 	}
 
 	/**

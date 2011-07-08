@@ -17,7 +17,7 @@ function stat_strecken_installer() {
 	$type = 'stat';
 	$filename = 'stat.strecken.inc.php';
 	$name = 'Strecken';
-	$description = 'Auflistung der häufigsten und seltensten Strecken/Orte.';
+	$description = 'Auflistung der h&auml;ufigsten und seltensten Strecken/Orte.';
 	// TODO Include the plugin-installer
 }
 
@@ -34,7 +34,7 @@ $Mysql = Mysql::getInstance();
 	</tr>
 <?php
 Error::getInstance()->addTodo('Set correct onclick-link', __FILE__, __LINE__);
-// Häufigsten Strecken
+// Haeufigsten Strecken
 $strecken = $Mysql->fetchAsArray('SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num` FROM `ltb_training` WHERE `strecke`!="" GROUP BY `strecke` ORDER BY `num` DESC LIMIT 10');
 foreach ($strecken as $i => $strecke):
 ?>
@@ -56,7 +56,7 @@ foreach ($strecken as $i => $strecke):
 		<td colspan="2" />
 	</tr>
 <?php
-// Häufigsten Orte
+// Hï¿½ufigsten Orte
 $orte = array();
 $strecken = $Mysql->fetchAsArray('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""');
 foreach ($strecken as $strecke) {

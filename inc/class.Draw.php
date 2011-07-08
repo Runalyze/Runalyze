@@ -80,6 +80,8 @@ class Draw {
 
 	/**
 	 * Constructor
+	 * @param int $width
+	 * @param int $height
 	 */
 	function __construct($width = 480, $height = 190) {
 		$this->includePChart();

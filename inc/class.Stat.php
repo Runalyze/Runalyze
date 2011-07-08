@@ -83,7 +83,7 @@ class Stat {
 			return false;
 		}
 
-		$dat = Mysql::getInstance()->fetch('ltb_plugin',$id);
+		$dat = Mysql::getInstance()->fetch('ltb_plugin', $id);
 		if ($dat['type'] != 'stat') {
 			Error::getInstance()->addError('This plugin (ID='.$id.') is not a statistic-plugin.');
 			return false;
@@ -94,7 +94,7 @@ class Stat {
 		$this->filename = $dat['filename'];
 		$this->name = $dat['name'];
 		$this->description = $dat['description'];
-		$this->sportid = $global['hauptsport'];
+		$this->sportid = MAINSPORT;
 		$this->year = date('Y');
 		$this->dat = '';
 
@@ -202,7 +202,7 @@ class Stat {
 	 */
 	public function displayVariousStatistics() {
 		echo(NL.'<small class="right">'.NL);
-		$others = Mysql::getInstance()->fetch('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC', false, true);
+		$others = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 		foreach($others as $i => $other) {
 			if ($i != 0)
 				echo(' | ');
@@ -219,7 +219,7 @@ class Stat {
 		// TODO Outsource
 		// TODO Plugin deaktivieren
 		// TODO wenn vorhanden: Config-Vars bearbeiten
-		// TODO Config-Vars müssen Einfluss auf Plugin haben!
+		// TODO Config-Vars muessen Einfluss auf Plugin haben!
 		$count_config = count($this->config);
 
 		echo('
@@ -282,7 +282,7 @@ class Stat {
 	 * @param $active bool
 	 */
 	public function setActive($active = true) {
-		Mysql::getInstance()->update('ltb_plugin',$this->id,'active',$active);
+		Mysql::getInstance()->update('ltb_plugin', $this->id, 'active', $active);
 	}
 }
 ?>

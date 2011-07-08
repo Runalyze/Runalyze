@@ -25,7 +25,7 @@ function schuhe_installer() {
  * @return string (HTML)
  */
 function schuhe_rightSymbol() {
-	return Ajax::window('<a href="inc/plugin/window.schuhe.php" title="Schuh hinzuf�gen"><img src="img/laufschuhe.png" alt="Schuh hinzuf�gen" /></a>');
+	return Ajax::window('<a href="inc/plugin/window.schuhe.php" title="Schuh hinzuf&uuml;gen">'.Icon::get(Icon::$RUNNINGSHOE, 'Schuh hinzuf&uuml;gen').'</a>');
 }
 
 /**

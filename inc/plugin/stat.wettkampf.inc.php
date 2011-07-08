@@ -131,7 +131,7 @@ foreach($dists as $i => $dist) {
 	if ($dist['wks'] > 1) {
 		$distances[] = $dist['distanz'];
 
-		$wk = $Mysql->fetch('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC LIMIT 1');
+		$wk = $Mysql->fetchSingle('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC');
 		show_wk_tr($wk, $i);
 	}
 }

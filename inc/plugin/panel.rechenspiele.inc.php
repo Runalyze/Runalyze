@@ -28,7 +28,7 @@ function rechenspiele_installer() {
  * @return string (HTML)
  */
 function rechenspiele_rightSymbol() {
-	return Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen"><img src="img/mued.png" alt="Form anzeigen" /></a>').NL;
+	return Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
 }
 
 /**

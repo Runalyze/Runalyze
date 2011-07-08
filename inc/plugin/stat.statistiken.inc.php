@@ -20,7 +20,7 @@ function stat_statistiken_installer() {
 	$type = 'stat';
 	$filename = 'stat.statistiken.inc.php';
 	$name = 'Statistiken';
-	$description = 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres�bersicht f�r alle Sportarten.';
+	$description = 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht f&uuml;r alle Sportarten.';
 	// TODO Include the plugin-installer
 }
 

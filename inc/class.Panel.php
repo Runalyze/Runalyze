@@ -77,7 +77,7 @@ class Panel {
 			return false;
 		}
 
-		$dat = Mysql::getInstance()->fetch('ltb_plugin',$id);
+		$dat = Mysql::getInstance()->fetch('ltb_plugin', $id);
 		if ($dat['type'] != 'panel') {
 			Error::getInstance()->addError('This plugin (ID='.$id.') is not a panel-plugin.');
 			return false;
@@ -232,9 +232,9 @@ class Panel {
 	public function displayConfigDiv() {
 		echo('
 	<div class="config">
-		'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$this->id.'" title="Plugin bearbeiten"><img src="img/confSettings.png" alt="Plugin bearbeiten" /></a>','small').'
-		<img class="link up" rel="'.$this->id.'" src="img/arrUp.png" alt="Nach oben verschieben" />
-		<img class="link down" rel="'.$this->id.'" src="img/arrDown.png" alt="Nach unten verschieben" />
+		'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$this->id.'" title="Plugin bearbeiten"><img src="'.Icon::getSrc(Icon::$CONF_SETTINGS).'" alt="Plugin bearbeiten" /></a>','small').'
+		<img class="link up" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_UP_BIG).'" alt="Nach oben verschieben" />
+		<img class="link down" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_DOWN_BIG).'" alt="Nach unten verschieben" />
 	</div>'.NL);
 	}
 
@@ -245,7 +245,7 @@ class Panel {
 	public function displayConfigWindow() {
 		// TODO Plugin deaktivieren
 		// TODO wenn vorhanden: Config-Vars bearbeiten
-		// TODO Config-Vars müssen Einfluss auf Plugin haben!
+		// TODO Config-Vars muessen Einfluss auf Plugin haben!
 		$count_config = sizeof($this->config);
 
 		echo('
@@ -312,7 +312,7 @@ class Panel {
 			return;
 		}
 
-		Mysql::getInstance()->update('ltb_plugin',$this->id,'active',(($this->active == 1) ? 2 : 1));
+		Mysql::getInstance()->update('ltb_plugin', $this->id, 'active', (($this->active == 1) ? 2 : 1));
 	}
 
 	/**

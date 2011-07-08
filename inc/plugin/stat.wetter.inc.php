@@ -19,7 +19,7 @@ function stat_wettkampf_installer() {
 	$type = 'stat';
 	$filename = 'stat.wetter.inc.php';
 	$name = 'Wetter';
-	$description = 'Wetterverh�ltnisse, Temperaturen und die getragenen Kleidungsst�cke.';
+	$description = 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.';
 	// TODO Include the plugin-installer
 }
 
