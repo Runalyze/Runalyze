@@ -15,7 +15,7 @@
 		&nbsp; Runalyze v<?php echo LTB_VERSION; ?>
 	</span>
 
-	<center><img id="wait" src="img/ajax-loader-download.gif" alt="Bitte warten ... es wird geladen." /></center>
+	<div class="c"><img id="wait" src="img/ajax-loader-download.gif" alt="Bitte warten ... es wird geladen." /></div>
 </div>
 
 </body>

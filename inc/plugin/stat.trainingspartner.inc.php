@@ -25,7 +25,7 @@ $Mysql = Mysql::getInstance();
 ?>
 <h1>Trainingspartner</h1>
 
-<table cellspacing="0" width="95%" style="margin:0 5px;" class="small">
+<table style="width:95%;" style="margin:0 5px;" class="small">
 	<tr class="b c">
 		<td colspan="2">Alle Trainingspartner</td>
 	</tr>

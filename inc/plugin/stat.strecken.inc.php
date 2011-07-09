@@ -25,7 +25,7 @@ $Mysql = Mysql::getInstance();
 ?>
 <h1>Strecken</h1>
 
-<table cellspacing="0" width="70%" style="margin:0 5px;" class="left small">
+<table style="width:70%;" style="margin:0 5px;" class="left small">
 	<tr class="b c">
 		<td colspan="3">H&auml;ufigsten Strecken</td>
 	</tr>
@@ -48,7 +48,7 @@ foreach ($strecken as $i => $strecke):
 <?php endforeach; ?>
 </table>
 
-<table cellspacing="0" width="25%" style="margin:0 5px;" class="left small">
+<table style="width:25%;" style="margin:0 5px;" class="left small">
 	<tr class="b c">
 		<td colspan="2">H&auml;ufigsten Orte</td>
 	</tr>
@@ -86,7 +86,7 @@ endforeach;
 <br class="clear" />
 <br />
 
-<table cellspacing="0" width="95%" style="margin:0 5px;" class="small">
+<table style="width:95%;" style="margin:0 5px;" class="small">
 	<tr class="b c">
 		<td colspan="2">Seltensten Orte</td>
 	</tr>

@@ -67,10 +67,17 @@ if ($Distance >= 15)
 $Draw->setCaching(false);
 
 if ($titleError == '') {
+	$min = min($Paces);
+	$max = max($Paces);
 	$avg = array_sum($Paces)/count($Paces);
 	$sig = sqrt(Helper::getVariance($Paces));
-	$min = 60*floor(($avg-1.5*$sig)/60);
-	$max = 60*ceil(($avg+1.5*$sig)/60);
+
+	if ($min < 120)
+		$min = 60*floor(($avg-1.5*$sig)/60);
+	if ($max > 480)
+		$max = 60*ceil(($avg+1.5*$sig)/60);
+	$min = 60*floor($min)/60;
+	$max = 60*floor($max)/60;
 
 	$ScaleFormat    = array(
 		"Factors" => array(30, 60),

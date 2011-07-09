@@ -150,14 +150,12 @@ foreach($distances as $km) {
 ?>
 	</small>
 
-	<center>
-		<div class="bigImg" style="height:190px;width:480px;">
-			<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
-		</div>
-	</center>
+	<div class="bigImg" style="height:190px;width:480px; margin:0 auto;">
+		<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
+	</div>
 
 
-	<table cellspacing="0" width="100%">
+	<table style="width:100%;">
 		<tr class="b c">
 			<td></td>
 <?php

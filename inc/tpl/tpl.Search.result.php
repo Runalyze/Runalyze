@@ -62,7 +62,7 @@ $trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_training` '.
 $num_all   = Mysql::getInstance()->num('SELECT * FROM `ltb_training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
 ?>
 
-<table cellspacing="0" width="100%">
+<table style="width=100%;">
 	<tr class="c">
 		<td colspan="<?php echo($max_colspan); ?>">
 <?php

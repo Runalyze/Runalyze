@@ -48,9 +48,9 @@ function sportler_display() {
 	
 	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-analyse" target="sportler"><del>Analyse</del>/Allgemein:</a> '.$left.'</p>'.NL);
 ?>
-			<center>
+			<div class="c">
 				<img src="inc/draw/plugin.sportler.gewicht.php" alt="Diagramm" style="width:320px; height:148px;" />
-			</center> 
+			</div> 
 		</div>
 		<div id="sportler-analyse" class="change" style="display:none;">
 <?php $left = ''; $right = '';
@@ -62,9 +62,9 @@ function sportler_display() {
 	
 	echo('    <p><span>'.$right.'</span> <a class="change" href="sportler-gewicht" target="sportler">Analyse/<del>Allgemein</del>:</a> '.$left.'</p>'.NL);
 ?>
-			<center>
+			<div class="c">
 				<img src="inc/draw/plugin.sportler.fett.php" alt="Diagramm" style="width:320px; height:148px;" />
-			</center> 
+			</div> 
 		</div>
 	</div>
 <?php

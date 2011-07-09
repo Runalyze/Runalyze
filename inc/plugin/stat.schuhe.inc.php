@@ -27,7 +27,7 @@ $Error = Error::getInstance();
 ?>
 <h1>Schuhe</h1>
  
-<table cellspacing="0" width="100%">
+<table style="width:100%;">
 	<tr class="b c">
 		<td colspan="2" />
 		<td class="small">Kaufdatum</td>

@@ -127,7 +127,7 @@ if (isset($submit))
 
 	<br />
 
-	<table cellspacing="0">
+	<table>
 		<tr class="top b">
 			<td colspan="3">Panels</td>
 			<td class="small">Ja</td>
@@ -169,7 +169,7 @@ foreach($plugins as $i => $plugin)
 
 	<br />
 
-	<table cellspacing="0">
+	<table>
 		<tr class="top b">
 			<td colspan="3">Statistiken</td>
 			<td class="small">Ja</td>
@@ -203,7 +203,7 @@ foreach($plugins as $i => $plugin)
 	Das Dataset bestimmt, welche Daten der Trainings in der &Uuml;bersicht angezeigt werden.<br />
 		<br />
 
-	<table cellspacing="0" class="c">
+	<table class="c">
 		<tr>
 			<td title="Die Information wird in der Tabelle direkt angezeigt">Anzeige</td>
 			<td title="Die Daten werden f�r die Zusammenfassung der Sportart angezeigt">Zusammenfassung</td>
@@ -245,15 +245,15 @@ foreach($datasets as $i => $dataset) {
 
 		<br />
 
-	<table cellspacing="0" class="c" width="100%">
+	<table class="c" style="width:100%;">
 		<tr class="b">
 			<td title="Diese Sportart wird verwendet" class="small">Aktiv</td>
 			<td class="small" title="Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt">Kurz</td>
 			<td colspan="2">Sportart</td>
 			<td title="Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde">kcal/h</td>
-			<td title="Die durchschnittliche Herzfrequenz (wird z.B. f�r TRIMP verwendet)">&Oslash; HF</td>
+			<td title="Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)">&Oslash; HF</td>
 			<td title="Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)">RPE</td>
-			<td title="Es wird eine Distanz zur�ckgelegt">km</td>
+			<td title="Es wird eine Distanz zur&uuml;ckgelegt">km</td>
 			<td title="Tempoanzeige in km/h statt min/km">kmh</td>
 			<td title="Es werden Trainingstypen wie Intervalltraining verwendet">Typen</td>
 			<td title="Der Puls wird dabei aufgezeichnet">Puls</td>
@@ -291,7 +291,7 @@ foreach($sports as $i => $sport) {
 <div id="config_typen" class="change" style="display:none;">
 	<h1>Trainingstypen:</h1>
 
-	<table cellspacing="0" class="c" width="100%">
+	<table class="c" style="width:100%;">
 		<tr class="b">
 			<td>Trainingstyp</td>
 			<td>Abk&uuml;rzung</td>
@@ -327,7 +327,7 @@ foreach($typen as $i => $typ) {
 
 		<br />
 
-	<table cellspacing="0" class="c" width="80%">
+	<table class="c" style="width:100%;">
 		<tr class="b">
 			<td>Name</td>
 			<td>Abk&uuml;rzung</td>
@@ -354,9 +354,9 @@ foreach($kleidungen as $i => $kleidung) {
 
 
 
-		<center>
+		<div class="c">
 			<input type="submit" value="Einstellungen speichern" />
-		</center>
+		</div>
 	</div>
 </form>
 

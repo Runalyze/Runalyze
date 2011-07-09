@@ -12,7 +12,7 @@ $Mysql = Mysql::getInstance();
 	<input type="hidden" name="type" value="newtraining" />
 	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />
 
-	<center>
+	<div class="c">
 <?php
 $sports = $Mysql->fetchAsArray('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
 foreach($sports as $sport) {
@@ -29,7 +29,7 @@ foreach($sports as $sport) {
 if (isset($_POST['sportid']))
 	echo('<script type="text/javascript">$("input[value=\''.$_POST['sportid'].'\']").click();</script>');
 ?>
-	</center>
+	</div>
 		<br />
 
 	<div style="float: left;">
@@ -142,7 +142,7 @@ foreach($kleidungen as $kleidung)
 			<small>Splits</small><br />
 	</span>
 
-	<center>
+	<div class="c">
 		<input style="margin-top: 10px;" type="submit" value="Eintragen!" />
-	</center>
+	</div>
 </form>

@@ -63,7 +63,7 @@ if ($this->year == -1) {
 
 	<br class="clear" />
 
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b c">
 		<td><?php echo ($this->year == -1) ? 'Gesamt' : $this->year; ?></td>
 		<td width="8%">Jan</td>
@@ -244,7 +244,7 @@ if (!empty($kleidungen)) {
 	</tr>
 </table>
  
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b c">
 		<td />
 		<td>Temperaturen</td>

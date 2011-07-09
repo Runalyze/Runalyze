@@ -25,7 +25,7 @@ $Mysql = Mysql::getInstance();
 ?>
 <h1>Lauf-ABC</h1>
 
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b">
 		<td />
 		<td width="8%">Jan</td>

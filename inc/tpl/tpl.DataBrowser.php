@@ -6,7 +6,7 @@
 <?php $this->displayNavigationLinks(); ?>
 </h1>
 
-<table cellspacing="0" width="100%">
+<table style="width:100%;">
 	<tr class="space">
 		<td colspan="<?php echo ($this->Dataset->column_count + 2); ?>" />
 	</tr>

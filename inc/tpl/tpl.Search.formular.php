@@ -131,7 +131,7 @@ foreach ($inputs as $i => $input) {
 </table>
 
 
-	<center style="clear:both;">
+	<div class="c" style="clear:both;">
 		<input style="margin-top: 10px;" type="submit" value="Suchen!" />
-	</center>
+	</div>
 </form>
