@@ -113,6 +113,10 @@ class Panel {
 			if (count($var_str) == 2) {
 				$var = $var_str[1];
 				switch ($var_str[0]) {
+					case 'array':
+						$type = 'array';
+						$var  = explode(',', $var);
+						break;
 					case 'bool':
 					case 'int':
 					case 'floor':
@@ -263,6 +267,9 @@ class Panel {
 			echo('<form>');
 			foreach ($this->config as $name => $config_var) {
 				switch ($config_var['type']) {
+					case 'array':
+						echo('<input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'<br />');
+						break;
 					case 'bool':
 						echo('<input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'<br />');
 						break;

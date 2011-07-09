@@ -20,8 +20,8 @@
 function stat_wettkampf_installer() {
 	$type = 'stat';
 	$filename = 'stat.wettkampf.inc.php';
-	$name = 'Wettkämpfe';
-	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettkämpfen.';
+	$name = 'Wettk&auml;mpfe';
+	$description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk&auml;mpfen.';
 	// TODO Include the plugin-installer
 }
 
@@ -105,10 +105,7 @@ show_table_end();
 <?php
 show_table_start();
 
-$Error->addTodo('Last WKs: Set LAST_WK_NUM as config-var', __FILE__, __LINE__);
-define('LAST_WK_NUM',10);
-
-$wks = $Mysql->fetchAsArray('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.LAST_WK_NUM);
+$wks = $Mysql->fetchAsArray('SELECT * FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.$this->config['last_wk_num']['var']);
 if (count($wks) > 0) {
 	foreach($wks as $i => $wk)
 		show_wk_tr($wk, $i);
@@ -142,17 +139,23 @@ show_table_end();
 	<small style="text-align:center;display:block;">
 <?php
 $first = true;
-foreach($distances as $km) {
+foreach ($distances as $km) {
 	echo('
 		'.(!$first ? '| ' : '').Ajax::imgChange('<a href="inc/draw/plugin.wettkampf.php?km='.$km.'">'.Helper::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3)).'</a>','bestzeit-diagramm'));
 	$first = false;
 }
+
+$display_km = $distances[0];
+if (in_array($this->config['main_distance']['var'], $distances))
+	$display_km = $this->config['main_distance']['var'];
 ?>
 	</small>
 
+<?php if (count($distances) > 0): ?>
 	<div class="bigImg" style="height:190px;width:480px; margin:0 auto;">
-		<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=10" width="480" height="190" />
+		<img id="bestzeit-diagramm" src="inc/draw/plugin.wettkampf.php?km=<?php echo $display_km; ?>" width="480" height="190" />
 	</div>
+<?php endif; ?>
 
 
 	<table style="width:100%;">
@@ -161,12 +164,12 @@ foreach($distances as $km) {
 <?php
 $year = array();
 $dists = array();
-$kms = array(3, 5, 10, 21.1, 42.2);
-foreach($kms as $km)
+$kms = (is_array($this->config['pb_distances']['var'])) ? $this->config['pb_distances']['var'] : array(3, 5, 10, 21.1, 42.2);
+foreach ($kms as $km)
 	$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 
 $wks = $Mysql->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
-foreach($wks as $wk) {
+foreach ($wks as $wk) {
 	if (!isset($year[$wk['y']])) {
 		$year[$wk['y']] = $dists;
 		$year['sum'] = 0;
@@ -180,7 +183,7 @@ foreach($wks as $wk) {
 		}
 }
 		
-foreach($year as $y => $y_dat)
+foreach ($year as $y => $y_dat)
 	if ($y != 'sum')
 		echo('
 			<td>'.$y.'</td>');
@@ -190,12 +193,12 @@ foreach($year as $y => $y_dat)
 			<td colspan="<?php echo sizeof($year); ?>" />
 		</tr>
 <?php
-foreach($kms as $i => $km) {
+foreach ($kms as $i => $km) {
 	echo('
 		<tr class="a'.($i%2+1).' r">
-			<td class="b">'.Helper::Km($km).'</td>');
+			<td class="b">'.Helper::Km($km, 1, $km <= 3).'</td>');
 
-	foreach($year as $key => $y)
+	foreach ($year as $key => $y)
 		if ($key != 'sum')
 			echo('
 			<td>'.($y[$km]['sum'] != 0 ? '<small>'.Helper::Time($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '&nbsp;').'</td>');
