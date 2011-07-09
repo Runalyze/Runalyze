@@ -496,9 +496,12 @@ class Helper {
 	/**
 	 * Get a special $string if $var is not set
 	 * @param mixed $var
-	 * @param string $string string to be displayed insted, default: ?
+	 * @param string $string string to be displayed instead, default: ?
 	 */
 	public static function Unknown($var, $string = '?') {
+		if ($var == NULL || !isset($var))
+			return $string;
+
 		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )
 			return $var;
 
@@ -607,6 +610,8 @@ class Helper {
 	public static function Checked($value, $value_to_be_checked = NULL) {
 		if ($value_to_be_checked != NULL)
 			$value = ($value == $value_to_be_checked);
+		if ($value == NULL || !isset($value))
+			$value = false;
 
 		return $value
 			? ' checked="checked"'

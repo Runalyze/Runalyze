@@ -267,8 +267,7 @@ class DataBrowser {
 	 * Get ajax-link for adding a training
 	 */
 	private function getAddLink() {
-		$icon = Icon::get(Icon::$ADD, 'Training hinzuf&uuml;gen');
-		return Ajax::window('<a href="inc/tpl/window.formular.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
+		return Training::getCreateWindowLink();
 	}
 
 	/**

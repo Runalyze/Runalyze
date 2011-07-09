@@ -523,18 +523,145 @@ class Training {
 	}
 
 	/**
-	 * Display create window
-	 */
-	public function displayCreateWindow() {
-		// TODO Set up class.Training.createWindow.php ?
-		Error::getInstance()->addTodo('Set up class::Training::createWindow()');
-	}
-
-	/**
 	 * Display link for edit window
 	 */
 	public function displayEditLink() {
 		echo Ajax::window('<a href="inc/class.Training.edit.php?id='.$this->id.'" title="Training editieren">'.Icon::get(Icon::$EDIT, 'Training editieren').'</a> ','small');
+	}
+
+	/**
+	 * Get link for create window
+	 */
+	static public function getCreateWindowLink() {
+		$icon = Icon::get(Icon::$ADD, 'Training hinzuf&uuml;gen');
+		return Ajax::window('<a href="inc/class.Training.create.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
+	}
+
+	/**
+	 * Display the window/formular for creation
+	 */
+	static public function displayCreateWindow() {
+		if (isset($_POST) && $_POST['type'] == "newtraining") {
+			$returnCode = self::parsePostdataForCreation();
+
+			if ($returnCode === true) {
+				echo('<em>Das Training wurde erfolgreich eingetragen.</em>');
+				echo('<script type="text/javascript">closeOverlay();</script>');
+				return;
+			} else {
+				echo('<em>Es ist ein Fehler aufgetreten.</em><br />');
+				if (is_string($returnCode))
+					echo($returnCode.'<br />');
+				echo('<br />');
+			}
+		}
+
+		include('tpl/window.create.php');
+	}
+
+	/**
+	 * Parse posted data to create a new training
+	 */
+	static private function parsePostdataForCreation() {
+		$Mysql   = Mysql::getInstance();
+		$vars    = array(); // Values beeing parsed with Helper::Umlaute/CommaToPoint() for each $_POST[$vars[]]
+		$columns = array(); // Columns inserted directly
+		$values  = array(); // Values inserted directly
+		$values[] = 'kalorien';
+		$values[] = 'bemerkung';
+		$values[] = 'trainingspartner';
+		
+
+		$sport = $Mysql->fetch('ltb_sports', $_POST['sportid']);
+		if ($sport === false)
+			return 'Es wurde keine Sportart ausgew&auml;hlt.';
+
+		$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($_POST['distanz']) : 0;
+		$columns[] = array('sportid');
+		$values[]  = array($sport['id']);
+	
+		// Prepare "Time"
+		$post_day  = explode(".", $_POST['datum']);
+		$post_time = explode(":", $_POST['zeit']);
+		if (count($post_day) != 3 || count($post_time) != 2)
+			return 'Das Datum konnte nicht gelesen werden.';
+
+		$columns[] = 'time';
+		$values[]  = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
+		// Prepare "Dauer"
+		$ms        = explode(".", Helper::CommaToPoint($_POST['dauer']));
+		$dauer     = explode(":", $ms[0]);
+		$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
+		if ($time_in_s == 0)
+			return 'Es muss eine Trainingszeit angegeben sein.';
+
+		$columns[] = 'dauer';
+		$values[]  = $time_in_s;
+		// Prepare values for distances
+		if ($sport['distanztyp'] == 1) {
+			$vars[]    = 'distanz';
+			$columns[] = 'bahn';
+			$values[]  = $_POST['bahn'] ? 1 : 0;
+			$columns[] = 'pace';
+			$values[]  = Helper::Pace($distance, $time_in_s);
+		}
+		// Prepare values for outside-sport
+		if ($sport['outside'] == 1) {
+			$vars[]    = 'hm';
+			$vars[]    = 'wetterid';
+			$vars[]    = 'strecke';
+			$columns[] = 'kleidung';
+			$values[]  = substr($_POST['kleidung'], 0, -1);
+			$columns[] = 'temperatur';
+			$values[]  = is_numeric($_POST['temperatur']) ? $_POST['temperatur'] : NULL;
+		} else {
+			// Set NULL to temperatur otherwise
+			$columns[] = 'temperatur';
+			$values[]  = NULL;
+		}
+		// Prepare values if using heartfrequence
+		if ($sport['pulstyp'] == 1) {
+			$vars[]    = 'puls';
+			$vars[]    = 'puls_max';
+		}
+		// Prepare values for running (checked via "type")
+		if ($sport['typen'] == 1) {
+			$vars[]    = 'typid';
+			$vars[]    = 'schuhid';
+			$columns[] = 'laufabc';
+			$values[]  = $_POST['laufabc'] ? 1 : 0;
+			if (Helper::TypeHasSplits($_POST['typid']))
+				$vars[] = 'splits';
+		}
+	
+		foreach($vars as $var)
+			if (isset($_POST[$var])) {
+				$columns[] = $var;
+				$values[]  = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
+			}
+/*
+		$id = $Mysql->insert('ltb_training', $columns, $values);
+	
+		$ATL = Helper::ATL($time);
+		$CTL = Helper::CTL($time);
+		$TRIMP = Helper::TRIMP($id);
+
+		$Mysql->query('UPDATE `ltb_training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
+		$Mysql->query('UPDATE `ltb_training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
+
+		if ($ATL > CONFIG_MAX_ATL)
+			$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.$ATL.'"');
+		if ($CTL > CONFIG_MAX_CTL)
+			$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.$CTL.'"');
+		if ($TRIMP > CONFIG_MAX_TRIMP)
+			$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.$TRIMP.'"');
+
+		if ($sport['typen'] == 1)
+			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+
+		$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+*/
+		return true;
 	}
 
 	/**
