@@ -40,7 +40,7 @@ $rekorde[] = array('name' => 'L&auml;ngsten Trainings',
 
 foreach ($rekorde as $rekord):
 ?>
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b">
 		<td colspan="11">
 			<?php echo $rekord['name']; ?>
@@ -92,7 +92,7 @@ foreach ($rekorde as $rekord):
 endforeach;
 ?>
 
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b">
 		<td colspan="11">
 			Trainingsreichsten Laufphasen

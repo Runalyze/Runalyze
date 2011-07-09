@@ -27,7 +27,7 @@ $Mysql = Mysql::getInstance();
 ?>
 <h1>H&ouml;henmeter</h1>
 
-<table cellspacing="0" width="100%" class="small">
+<table style="width:100%;" class="small">
 	<tr class="b">
 		<td />
 		<td width="8%">Jan</td>
@@ -89,7 +89,7 @@ endforeach;
 	</tr>
 </table>
 
-<table cellspacing="0" width="48%" style="margin:0 5px;" class="left small">
+<table style="width:48%;" style="margin:0 5px;" class="left small">
 	<tr class="b c">
 		<td colspan="3">Meisten H&ouml;henmeter</td>
 	</tr>
@@ -120,7 +120,7 @@ else
 	</tr>
 </table>
 
-<table cellspacing="0" width="48%" style="margin:0 5px;" class="right small">
+<table style="width:48%;" style="margin:0 5px;" class="right small">
 	<tr class="b c">
 		<td colspan="3">Steilsten Strecken</td>
 	</tr>

@@ -419,7 +419,7 @@ class Helper {
 
 		// Weekkilometers
 		$wk_sum = 0;
-		$data = Mysql::getInstance()->fetch('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
 			$tage = round ( ($timestamp - $dat['time']) / DAY_IN_S , 1 );
 			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
@@ -427,10 +427,10 @@ class Helper {
 		$points += $wk_sum / 20;
 
 		// LongJogs ...
-		$data = Mysql::getInstance()->fetch('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat)
 			$points += ($dat['distanz']-15) / 2;
-	
+
 		$points = round($points - 50);
 		if ($points < 0)
 			$points = 0;

@@ -190,7 +190,7 @@ if ($sport['outside'] == 1)
 
 
 	<div id="edit-train" class="change" style="display:none;">
-		<span <?php echo $sport['typen'] == 1 ? '' : ' style="display:none;"'; ?>>
+		<span<?php echo $sport['typen'] == 1 ? '' : ' style="display:none;"'; ?>>
 			<select name="typid">
 <?php
 $typen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_typ`');

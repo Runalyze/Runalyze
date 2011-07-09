@@ -77,14 +77,4 @@ mysql_query('UPDATE `ltb_training` SET
 `arr_pace`="'.implode('|',$pace).'"
 WHERE `id`='.$_GET['id'].' LIMIT 1');
 echo mysql_error();
-
-echo('<br /><br /><a href="elevationCorrection.php?id='.$_GET['id'].'" target="_blank">ElevationCorrection!</a>');
-
-// Pace
-#echo('<img src="http://localhost/ltb/lib/draw/training_pace.php?id=1125" /><br /><br />');
-// Puls
-#echo('<img src="http://localhost/ltb/lib/draw/training_puls.php?id=1125" /><br /><br />');
-// Elevation
-#echo('<img src="http://localhost/ltb/lib/draw/training_hm.php?id=1125" /><br />');
-#<iframe class="xmlgm" id="xmlgm" src="http://localhost/ltb/lib/gpx/karte.php?id=1338" style="border: 0px; width:664px; height:400px;" name="Google_Gpx_Maps" frameborder="0"></iframe>
 ?>

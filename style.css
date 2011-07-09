@@ -280,6 +280,7 @@ table {
 }
 
 table, tr, td {
+	border-spacing: 0;
 	padding: 2px 3px;
 	vertical-align: top;
 }

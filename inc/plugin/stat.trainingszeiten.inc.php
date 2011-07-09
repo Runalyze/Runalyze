@@ -26,7 +26,7 @@ $Error = Error::getInstance();
 ?>
 <h1>Trainingszeiten</h1>
 
-<table cellspacing="0" width="98%" style="margin:0 5px 25px 5px;" class="left small">
+<table style="width:98%;" style="margin:0 5px 25px 5px;" class="left small">
 	<tr class="b c">
 		<td colspan="8">N&auml;chtliches Training</td>
 	</tr>

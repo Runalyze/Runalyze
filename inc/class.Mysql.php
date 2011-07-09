@@ -103,7 +103,9 @@ final class Mysql {
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
-		$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.')');
+		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.')'))
+			return false;
+
 		return mysql_insert_id();
 	}
 

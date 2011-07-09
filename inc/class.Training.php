@@ -28,6 +28,18 @@ class Training {
 	public static $everyNthElevationPoint = 5;
 
 	/**
+	 * Path to file for displaying the map (used for iframe)
+	 * @var string
+	 */
+	public static $mapURL = 'inc/tcx/window.map.php';
+
+	/**
+	 * Array seperator for gps-data in database
+	 * @var char
+	 */
+	public static $ARR_SEP = '|';
+
+	/**
 	 * Internal ID in database
 	 * @var int
 	 */
@@ -484,7 +496,7 @@ class Training {
 	 * Display route on GoogleMaps
 	 */
 	public function displayRoute() {
-		echo '<iframe src="lib/gpx/karte.php?id='.$this->id.'" style="border:0;" width="480" height="300" frameborder="0"></iframe>';
+		echo '<iframe src="'.self::$mapURL.'?id='.$this->id.'" style="border:0;" width="480" height="300" frameborder="0"></iframe>';
 	}
 
 	/**
@@ -567,9 +579,9 @@ class Training {
 		$vars    = array(); // Values beeing parsed with Helper::Umlaute/CommaToPoint() for each $_POST[$vars[]]
 		$columns = array(); // Columns inserted directly
 		$values  = array(); // Values inserted directly
-		$values[] = 'kalorien';
-		$values[] = 'bemerkung';
-		$values[] = 'trainingspartner';
+		$vars[]  = 'kalorien';
+		$vars[]  = 'bemerkung';
+		$vars[]  = 'trainingspartner';
 		
 
 		$sport = $Mysql->fetch('ltb_sports', $_POST['sportid']);
@@ -577,8 +589,8 @@ class Training {
 			return 'Es wurde keine Sportart ausgew&auml;hlt.';
 
 		$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($_POST['distanz']) : 0;
-		$columns[] = array('sportid');
-		$values[]  = array($sport['id']);
+		$columns[] = 'sportid';
+		$values[]  = $sport['id'];
 	
 		// Prepare "Time"
 		$post_day  = explode(".", $_POST['datum']);
@@ -639,8 +651,10 @@ class Training {
 				$columns[] = $var;
 				$values[]  = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
 			}
-/*
+
 		$id = $Mysql->insert('ltb_training', $columns, $values);
+		if ($id === false)
+			return 'Unbekannter Fehler mit der Datenbank.';
 	
 		$ATL = Helper::ATL($time);
 		$CTL = Helper::CTL($time);
@@ -660,7 +674,7 @@ class Training {
 			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 
 		$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
-*/
+
 		return true;
 	}
 
@@ -670,6 +684,71 @@ class Training {
 	public function parseTcx() {
 		// TODO
 		Error::getInstance()->addTodo('Set up class::Training::parseTcx()');
+
+		return;
+
+		require_once('tcx/class.ParserTcx.php');
+		$Parser = new ParserTcx($file_path);
+		$xml = $Parser->getContentAsArray();
+		$i = 0;
+		$starttime = 0;
+		$time      = array();
+		$latitude  = array();
+		$longitude = array();
+		$altitude  = array();
+		$distance  = array();
+		$heartrate = array();
+		$pace      = array();
+
+		//echo('Aktivit&auml;t ('.$xml['trainingcenterdatabase']['activities']['activity']['attr']['Sport'].', '.$xml['trainingcenterdatabase']['activities']['activity']['id']['value'].')<br />');
+		foreach($xml['trainingcenterdatabase']['activities']['activity']['lap'] as $lap) {
+			$i++;
+			//echo($i.'. Runde: '.round($lap['distancemeters']['value']/1000,3).' km in '.floor($lap['totaltimeseconds']['value']/60).':'.($lap['totaltimeseconds']['value']%60).'; '.$lap['calories']['value'].' kcal; &Oslash; '.$lap['averageheartratebpm']['value']['value'].' bpm, max. '.$lap['maximumheartratebpm']['value']['value'].' bpm<br />');
+			
+			foreach($lap['track'] as $track) {
+				if (isset($track['trackpoint']))
+					$trackpointArray = $track['trackpoint'];
+				else
+					$trackpointArray = $track;
+				foreach($trackpointArray as $trackpoint) {
+					if (isset($trackpoint['distancemeters'])) {
+						if ($starttime == 0)
+							$starttime = strtotime($trackpoint['time']['value']);
+						$time[]     = strtotime($trackpoint['time']['value']) - $starttime;
+						$distance[] = round($trackpoint['distancemeters']['value'])/1000;
+						$pace[]     = ((end($distance) - prev($distance)) != 0)
+							? round((end($time) - prev($time)) / (end($distance) - prev($distance)))
+							: 0;
+						if (isset($trackpoint['position'])) {
+							$latitude[]  = $trackpoint['position']['latitudedegrees']['value'];
+							$longitude[] = $trackpoint['position']['longitudedegrees']['value'];
+						} else {
+							$latitude[]  = 0;
+							$longitude[] = 0;
+						}
+						$altitude[] = (isset($trackpoint['altitudemeters']))
+							? round($trackpoint['altitudemeters']['value'])
+							: 0;
+						$heartrate[] = (isset($trackpoint['heartratebpm']))
+							? $trackpoint['heartratebpm']['value']['value']
+							: 0;
+					} else { // Delete pause from timeline
+						$starttime += (strtotime($trackpoint['time']['value'])-$starttime) - end($time);
+					}
+				}
+			}
+		}
+
+		// ... insert ?
+		/*mysql_query('UPDATE `ltb_training` SET
+		`arr_time`="'.implode('|',$time).'",
+		`arr_lat`="'.implode('|',$latitude).'",
+		`arr_lon`="'.implode('|',$longitude).'",
+		`arr_alt`="'.implode('|',$altitude).'",
+		`arr_dist`="'.implode('|',$distance).'",
+		`arr_heart`="'.implode('|',$heartrate).'",
+		`arr_pace`="'.implode('|',$pace).'"
+		WHERE `id`='.$this->id.' LIMIT 1');*/
 	}
 
 	/**

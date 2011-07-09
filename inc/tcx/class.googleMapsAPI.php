@@ -1,13 +1,12 @@
 <?php
-function getJavascriptDecimalNumber($value,$rounding=3) {
-	return number_format($value,$rounding,".","");
+function getJavascriptDecimalNumber($value, $rounding=3) {
+	return number_format($value, $rounding, ".", "");
 }
 
 /*
- * Diese Klasse enthält sämtliche Google Maps API Funktionen
+ * Diese Klasse enthaelt saemtliche Google Maps API Funktionen
  */
-class xmlgooglemaps_googleMapAPI {
-
+class googleMapsAPI {
 	var $api_key = "";
 	var $map_id = "";
 	var $width = "500px";
@@ -38,7 +37,7 @@ class xmlgooglemaps_googleMapAPI {
 	var $fullscreen = 0;
 
 
-	function xmlgooglemaps_googleMapAPI($api_key, $map_type="map") {
+	function __construct($api_key = '', $map_type="map") {
 		//Default Values
 		$this->map_id = "map".md5(uniqid(rand()));
 		$this->setMapTypeControlButton("G_NORMAL_MAP", "show");
@@ -286,7 +285,7 @@ class xmlgooglemaps_googleMapAPI {
 		$this->zoom = 0;
 	}
 
-	function addMarker($lat, $lon, $html = '', $url='', $urlaction='dblclick', $iconImage = '', $iconShadowImage = '', $iconImageSizeX=12, $iconImageSizeY=20, $iconShadowSizeX=22, $iconShadowSizeY=20, $iconAnchorX=6, $iconAnchorY=18) {
+	function addMarker($lat, $lon, $html = '', $url='', $urlaction='dblclick', $iconImage = '', $iconShadowImage = '', $iconImageSizeX=6, $iconImageSizeY=10, $iconShadowSizeX=11, $iconShadowSizeY=10, $iconAnchorX=3, $iconAnchorY=9) {
 		$html = str_replace('"',"'", $html);
 		$html = str_replace("\n","", $html);
 		$html = str_replace("\r","", $html);

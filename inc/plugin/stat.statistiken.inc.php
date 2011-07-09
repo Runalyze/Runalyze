@@ -55,7 +55,7 @@ echo $this->getInnerLink('Jahresvergleich', $this->sportid, -1);
 
 <br class="clear" />
 
-<table cellspacing="0" width="100%" class="small r">
+<table style="width:100%;" class="small r">
 	<tr class="b c">
 		<td />
 <?php
