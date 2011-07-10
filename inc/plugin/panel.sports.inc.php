@@ -17,7 +17,7 @@ function sportarten_installer() {
 	$type = 'panel';
 	$filename = 'panel.sports.inc.php';
 	$name = 'Sports';
-	$description = '�bersicht der Leistungen aller Sportarten f�r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
+	$description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
 	// TODO Include the plugin-installer
 }
 

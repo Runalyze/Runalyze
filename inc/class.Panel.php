@@ -118,6 +118,7 @@ class Panel {
 						$var  = explode(',', $var);
 						break;
 					case 'bool':
+						$var = ($var == 'true');
 					case 'int':
 					case 'floor':
 						$type = $var_str[0];

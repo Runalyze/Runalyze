@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the plugin "Wettk�mpfe".
+ * This file contains the plugin "Wettkaempfe".
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0

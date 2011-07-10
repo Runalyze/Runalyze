@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the plugin "H�henhmeter".
+ * This file contains the plugin "Hoehenhmeter".
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -18,8 +18,8 @@
 function stat_hoehenmeter_installer() {
 	$type = 'stat';
 	$filename = 'stat.hoehenmeter.inc.php';
-	$name = 'Höhenhmeter';
-	$description = 'Die steilsten und bergigsten L�ufe sowie der �berblick �ber die absolvierten H�henmeter aller Monate.';
+	$name = 'H&ouml;henhmeter';
+	$description = 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.';
 	// TODO Include the plugin-installer
 }
 
