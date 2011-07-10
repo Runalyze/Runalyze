@@ -143,7 +143,7 @@ $plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel"
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Panel.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
+			<td>'.Ajax::window('<a href="inc/class.Plugin.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
 			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
@@ -185,7 +185,7 @@ $plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" 
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Stat.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
+			<td>'.Ajax::window('<a href="inc/class.Plugin.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
 			<td class="b">'.$plugin['name'].'</td>
 			<td class="small">'.$plugin['description'].'</td>
 			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>

@@ -209,6 +209,11 @@ class Helper {
 	 * @return string
 	 */
 	public static function Pace($km, $time) {
+		if ($km == 0) {
+			Error::getInstance()->addWarning("Helper::Pace($km, $time): Division by zero.");
+			return '-:--';
+		}
+
 		return self::Time(round($time/$km));
 	}
 
@@ -674,10 +679,75 @@ class Helper {
 
 	/**
 	 * Return an empty td-Tag
+	 * @param int $colspan
 	 * @return string
 	 */
-	public static function emptyTD() {
-		return '<td>&nbsp;</td>'.NL;
+	public static function emptyTD($colspan = 0) {
+		$colspan = ($colspan > 0) ? ' colspan="'.$colspan.'"' : '';
+
+		return '<td'.$colspan.'>&nbsp;</td>'.NL;
+	}
+
+	/**
+	 * Get a tr-tag for a bold header-line containing all month-names
+	 * @param int $fixedWidth Fixed width for every month-td in percent [set '0' for no fixed width]
+	 * @param int $emptyTDs Number of empty td before the month-td
+	 * @return string
+	 */
+	public static function monthTR($fixedWidth = 0, $emptyTDs = 1) {
+		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
+		$html = '<tr class="b">'.NL;
+
+		for ($i = 1; $i <= $emptyTDs; $i++)
+			$html .= '<td />'.NL;
+
+		for ($m = 1; $m <= 12; $m++)
+			$html .= '<td'.$width.'>'.Helper::Month($m, true).'</td>'.NL;
+
+		$html .= '</tr>'.NL;
+
+		return $html;
+	}
+
+	/**
+	 * Get a tr-tag for a bold header-line containing all years
+	 * @param int $fixedWidth Fixed width for every year-td in percent [set '0' for no fixed width]
+	 * @param int $emptyTDs Number of empty td before the year-td
+	 * @return string
+	 */
+	public static function yearTR($fixedWidth = 0, $emptyTDs = 1) {
+		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
+		$html = '<tr class="b">'.NL;
+
+		for ($i = 1; $i <= $emptyTDs; $i++)
+			$html .= '<td />'.NL;
+
+		for ($y = START_YEAR; $y <= date("Y"); $y++)
+			$html .= '<td'.$width.'>'.$y.'</td>'.NL;
+
+		$html .= '</tr>'.NL;
+
+		return $html;
+	}
+
+	/**
+	 * Get a tr-tag for a space-line
+	 * @param int $colspan
+	 */
+	public static function spaceTR($colspan) {
+		return '
+			<tr class="space">
+				<td colspan="'.$colspan.'">
+				</td>
+			</tr>'.NL;
+	}
+
+	/**
+	 * Return a break with class="clear"
+	 * @return string
+	 */
+	public static function clearBreak() {
+		return '<br class="clear" />';
 	}
 
 	/**
