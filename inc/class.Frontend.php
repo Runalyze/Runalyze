@@ -135,16 +135,15 @@ class Frontend {
 		global $global;
 
 		require_once(FRONTEND_PATH.'class.Ajax.php');
-		require_once(FRONTEND_PATH.'class.Panel.php'); // Will be included by class::Plugin later?
-		require_once(FRONTEND_PATH.'class.Stat.php'); // Will be included by class::Plugin later?
 		require_once(FRONTEND_PATH.'class.Helper.php');
 		require_once(FRONTEND_PATH.'class.Icon.php');
 		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.DataBrowser.php');
 		require_once(FRONTEND_PATH.'class.Dataset.php');
-		Error::getInstance()->addTodo('Following classes have to be implementated: Plugin, Parser');
-		// require_once(FRONTEND_PATH.'class.Plugin.php');
-		// require_once(FRONTEND_PATH.'class.Parser.php'); // Will be included by class::Training later
+		require_once(FRONTEND_PATH.'class.Plugin.php');
+		require_once(FRONTEND_PATH.'class.PluginPanel.php');
+		require_once(FRONTEND_PATH.'class.PluginStat.php');
+		//require_once(FRONTEND_PATH.'class.PluginDraw.php');
 		require_once(FRONTEND_PATH.'class.Draw.php');
 	}
 
@@ -154,8 +153,8 @@ class Frontend {
 	public function displayHeader() {
 		header('Content-type: text/html; charset=ISO-8859-1');
 
-		if ($_GET['action'] == 'do')
-			include('../config/mysql_query.php');
+		//if ($_GET['action'] == 'do')
+		//	include('../config/mysql_query.php');
 
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.header.php');
@@ -177,9 +176,11 @@ class Frontend {
 	 */
 	public function displayPanels() {
 		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
-		foreach($panels as $i => $panel) {
-			$panel = new Panel($panel['id']);
-			$panel->display();
+		foreach ($panels as $i => $panel) {
+			$Panel = Plugin::getInstanceFor($panel['key']);
+			$Panel->display();
+			//$panel = new Panel($panel['id']);
+			//$panel->display();
 		}
 	}
 }

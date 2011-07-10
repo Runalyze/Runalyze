@@ -34,16 +34,18 @@ $DataBrowser->display();
 Error::getInstance()->addTodo('Plugins have to be deacitvated automatically if modus is unused', __FILE__, __LINE__);
 $stats = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
 foreach($stats as $i => $stat) {
-	$Stat = new Stat($stat['id']);
+	//$Stat = new Stat($stat['id']);
+	$Stat = Plugin::getInstanceFor($stat['key']);
 	if ($i == 0)
 		$Stat_active = $Stat;
 	echo('
 		<li'.(($i == 0) ? ' class="active"' : '').'>'.$Stat->getLink().'</li>');
 }
 
-$other = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
+$other = Mysql::getInstance()->fetchSingle('SELECT `key` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 if ($other !== false) {
-	$Stat = new Stat($other['id']);
+	//$Stat = new Stat($other['id']);
+	$Stat = Plugin::getInstanceFor($other['key']);
 	echo('
 		<li>'.$Stat->getLink().'</li>');
 }
@@ -55,7 +57,7 @@ if ($other !== false) {
 		</div>
 		<div id="tab_content">
 <?php
-if ($Stat_active instanceof Stat)
+if ($Stat_active instanceof Plugin) //Stat)
 	$Stat_active->display();
 else
 	echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');
