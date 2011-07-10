@@ -37,16 +37,16 @@ function schuhe_display() {
 	<div id="schuhe">
 <?php
 	$inuse = true;
-	$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `name`, `km`, `inuse` FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
+	$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
 	foreach($schuhe as $i => $schuh) {
 		if ($inuse && $schuh['inuse'] == 0) {
 			echo('	<div id="hiddenschuhe" style="display:none;">'.NL);
 			$inuse = false;
 		}
 		echo('
-		<p style="background-image:url(lib/draw/schuhbalken.php?km='.round($schuh['km']).');">
+		<p style="background-image:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).');">
 			<span>'.Helper::Km($schuh['km']).'</span>
-			<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid]='.$schuh['id']).'</strong>
+			<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</strong>
 		</p>'.NL);	
 	}
 	echo('	</div>');

@@ -25,11 +25,9 @@ function stat_wettkampf_installer() {
 
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
-
-$Error->addTodo('Change via config-set between Wetter/Kleidung/Both', __FILE__, __LINE__);
 ?>
 <h1>
-<?php echo Ajax::window('<a class="right" href="inc/plugin/window.wetter.php" title="Wetter-Diagramme anzeigen"><img src="img/mued.png" alt="Wetter-Diagramme anzeigen" /></a>'); ?>
+<?php if ($this->config['for_weather']['var']) echo Ajax::window('<a class="right" href="inc/plugin/window.wetter.php" title="Wetter-Diagramme anzeigen"><img src="img/mued.png" alt="Wetter-Diagramme anzeigen" /></a>'); ?>
 	Wetter
 </h1>
 
@@ -82,149 +80,74 @@ if ($this->year == -1) {
 	<tr class="space">
 		<td colspan="13" />
 	</tr>
+<?php if ($this->config['for_weather']['var']): ?>
 	<tr class="a2 r">
 		<td class="c">&#176;C</td>
 <?php // Temperatur
-$i = 1;
-$temps = $Mysql->fetchAsArray('SELECT
-		AVG(`temperatur`) as `temp`,
-		MONTH(FROM_UNIXTIME(`time`)) as `m`
-	FROM `ltb_training` WHERE
-		`sportid`="'.MAINSPORT.'" AND
-		`temperatur` IS NOT NULL
-		'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
-	GROUP BY MONTH(FROM_UNIXTIME(`time`))
-	ORDER BY `m` ASC
-	LIMIT 12');
-if (!empty($temps)) {
-	foreach($temps as $temp) {
-		// Fill empty columns
-		for (; $i < $temp['m']; $i++)
-			echo Helper::emptyTD();
-		$i++;
-
-		// Print data
-		echo ('		<td>'.round($temp['temp']).' &deg;C</td>'.NL);
-	}
-
-	// Fill empty columns
-	for (; $i < 12; $i++)
-		echo Helper::emptyTD();
-} else
-	echo('		<td colspan="12" />'.NL);
-?>
-	</tr>
-
-
-
-
-
-<?php // Wetterarten
-$wetter_all = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
-foreach($wetter_all as $w => $wetter) {
-	echo('
-	<tr class="a'.($w%2+1).' r">
-		<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
-
 	$i = 1;
-	$data = $Mysql->fetchAsArray('SELECT
-			SUM(1) as `num`,
+	$temps = $Mysql->fetchAsArray('SELECT
+			AVG(`temperatur`) as `temp`,
 			MONTH(FROM_UNIXTIME(`time`)) as `m`
 		FROM `ltb_training` WHERE
 			`sportid`="'.MAINSPORT.'" AND
-			`wetterid`='.$wetter['id'].'
+			`temperatur` IS NOT NULL
 			'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 		GROUP BY MONTH(FROM_UNIXTIME(`time`))
 		ORDER BY `m` ASC
 		LIMIT 12');
-	if (!empty($data)) {
-		foreach($data as $dat) {
+	if (!empty($temps)) {
+		foreach($temps as $temp) {
 			// Fill empty columns
-			for (; $i < $dat['m']; $i++)
+			for (; $i < $temp['m']; $i++)
 				echo Helper::emptyTD();
 			$i++;
 	
 			// Print data
-			echo ($dat['num'] != 0)
-				? ('		<td>'.$dat['num'].'x</td>'.NL)
-				: Helper::emptyTD();
+			echo ('		<td>'.round($temp['temp']).' &deg;C</td>'.NL);
 		}
 	
 		// Fill empty columns
-		for (; $i < 12; $i++)
+		for (; $i <= 12; $i++)
 			echo Helper::emptyTD();
 	} else
 		echo('		<td colspan="12" />'.NL);
-
-	echo('
-	</tr>');
-}
 ?>
-	<tr class="space">
-		<td colspan="13" />
 	</tr>
 
 
-
-
-
-<?php // Kleidungsarten
-$nums = $Mysql->fetchAsArray('SELECT
-		SUM(1) as `num`,
-		MONTH(FROM_UNIXTIME(`time`)) as `m`
-	FROM `ltb_training` WHERE
-		`sportid`="'.MAINSPORT.'" AND
-		`kleidung`!=""
-		'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
-	GROUP BY MONTH(FROM_UNIXTIME(`time`))
-	ORDER BY `m` ASC
-	LIMIT 12');
-
-if (!empty($nums)) {
-	foreach($nums as $dat)
-		$num[$dat['m']] = $dat['num'];
-} else {
-	$Error->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
-}
-$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
-if (!empty($kleidungen)) {
-	foreach($kleidungen as $k => $kleidung) {
+<?php // Wetterarten
+	$wetter_all = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
+	foreach ($wetter_all as $w => $wetter) {
 		echo('
-		<tr class="a'.($k%2+1).' r">
-			<td class="r">'.$kleidung['name'].'</td>');
+		<tr class="a'.($w%2+1).' r">
+			<td class="c">'.Helper::WeatherImage($wetter['id']).'</td>');
 	
 		$i = 1;
 		$data = $Mysql->fetchAsArray('SELECT
-				SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
+				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `ltb_training` WHERE
-				`sportid`="'.MAINSPORT.'"
+				`sportid`="'.MAINSPORT.'" AND
+				`wetterid`='.$wetter['id'].'
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
-			HAVING `num`!=0
 			ORDER BY `m` ASC
 			LIMIT 12');
 		if (!empty($data)) {
-			foreach($data as $dat) {
+			foreach ($data as $dat) {
 				// Fill empty columns
 				for (; $i < $dat['m']; $i++)
 					echo Helper::emptyTD();
 				$i++;
 		
 				// Print data
-				if ($dat['num'] != 0)
-					echo('
-			<td class="r">
-				<span title="'.$dat['num'].'x">
-					'.round($dat['num']*100/$num[$dat['m']]).' &#37;
-				</span>
-			</td>'.NL);
-				else
-					echo Helper::emptyTD();
+				echo ($dat['num'] != 0)
+					? ('		<td>'.$dat['num'].'x</td>'.NL)
+					: Helper::emptyTD();
 			}
 		
 			// Fill empty columns
-			for (; $i < 12; $i++)
+			for (; $i <= 12; $i++)
 				echo Helper::emptyTD();
 		} else
 			echo('		<td colspan="12" />'.NL);
@@ -232,9 +155,81 @@ if (!empty($kleidungen)) {
 		echo('
 		</tr>');
 	}
-} else {
-	$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
-}
+?>
+	<tr class="space">
+		<td colspan="13" />
+	</tr>
+<?php endif; ?>
+
+<?php if ($this->config['for_clothes']['var']): ?>
+<?php // Kleidungsarten
+	$nums = $Mysql->fetchAsArray('SELECT
+			SUM(1) as `num`,
+			MONTH(FROM_UNIXTIME(`time`)) as `m`
+		FROM `ltb_training` WHERE
+			`sportid`="'.MAINSPORT.'" AND
+			`kleidung`!=""
+			'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+		GROUP BY MONTH(FROM_UNIXTIME(`time`))
+		ORDER BY `m` ASC
+		LIMIT 12');
+	
+	if (!empty($nums)) {
+		foreach ($nums as $dat)
+			$num[$dat['m']] = $dat['num'];
+	} else {
+		$Error->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
+	}
+
+	$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
+	if (!empty($kleidungen)) {
+		foreach ($kleidungen as $k => $kleidung) {
+			echo('
+			<tr class="a'.($k%2+1).' r">
+				<td class="r">'.$kleidung['name'].'</td>');
+		
+			$i = 1;
+			$data = $Mysql->fetchAsArray('SELECT
+					SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
+					MONTH(FROM_UNIXTIME(`time`)) as `m`
+				FROM `ltb_training` WHERE
+					`sportid`="'.MAINSPORT.'"
+					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+				GROUP BY MONTH(FROM_UNIXTIME(`time`))
+				HAVING `num`!=0
+				ORDER BY `m` ASC
+				LIMIT 12');
+			if (!empty($data)) {
+				foreach ($data as $dat) {
+					// Fill empty columns
+					for (; $i < $dat['m']; $i++)
+						echo Helper::emptyTD();
+					$i++;
+			
+					// Print data
+					if ($dat['num'] != 0)
+						echo('
+				<td class="r">
+					<span title="'.$dat['num'].'x">
+						'.round($dat['num']*100/$num[$dat['m']]).' &#37;
+					</span>
+				</td>'.NL);
+					else
+						echo Helper::emptyTD();
+				}
+			
+				// Fill empty columns
+				for (; $i <= 12; $i++)
+					echo Helper::emptyTD();
+			} else
+				echo('		<td colspan="12" />'.NL);
+		
+			echo('
+			</tr>');
+		}
+	} else {
+		$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
+	}
 ?>
 	<tr class="space">
 		<td colspan="13" />
@@ -261,25 +256,25 @@ if (!empty($kleidungen)) {
 	</tr>
 	<tr class="a1 r">
 <?php // Temperaturbereiche
-$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
-if (!empty($kleidungen)) {
-	foreach($kleidungen as $i => $kleidung) {
-		if ($i%3 == 0):
+	$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
+	if (!empty($kleidungen)) {
+		foreach ($kleidungen as $i => $kleidung) {
+			if ($i%3 == 0):
 ?>
 	</tr>
 	<tr class="a<?php echo ($i%2+1);?> r">
 <?php else: ?>
 		<td>&nbsp;&nbsp;</td>
 <?php
-		endif;
-		$dat = $Mysql->fetch('SELECT
-				AVG(`temperatur`) as `avg`,
-				MAX(`temperatur`) as `max`,
-				MIN(`temperatur`) as `min`
-			FROM `ltb_training` WHERE `sportid`="'.MAINSPORT.'" AND
-			`temperatur` IS NOT NULL AND
-			FIND_IN_SET('.$kleidung['id'].',`kleidung`) != 0
-			'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));
+			endif;
+			$dat = $Mysql->fetch('SELECT
+					AVG(`temperatur`) as `avg`,
+					MAX(`temperatur`) as `max`,
+					MIN(`temperatur`) as `min`
+				FROM `ltb_training` WHERE `sportid`="'.MAINSPORT.'" AND
+				`temperatur` IS NOT NULL AND
+				FIND_IN_SET('.$kleidung['id'].',`kleidung`) != 0
+				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));
 ?>
 		<td class="l"><?php echo($kleidung['name']); ?></td>
 <?php if ($dat['min'] != ''): ?>
@@ -288,11 +283,11 @@ if (!empty($kleidungen)) {
 <?php else: ?>
 		<td colspan="2" class="c"><em>-</em></td>
 <?php endif;
-	}
-} else
-	$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
-
-for (; $i%3 != 1; $i++):
+		}
+	} else
+		$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
+	
+	for (; $i%3 != 1; $i++):
 ?>
 		<td colspan="3">&nbsp;</td>
 <?php endfor; ?>
@@ -300,4 +295,10 @@ for (; $i%3 != 1; $i++):
 	<tr class="space">
 		<td colspan="11" />
 	</tr>
+<?php endif; ?>
 </table>
+
+<?php
+if (!$this->config['for_weather']['var'] && !$this->config['for_clothes']['var'])
+	echo ('<em>In der Konfiguration sind sowohl die Wetter- als auch die Kleidungs-Statistiken ausgeschaltet. So macht das keinen Sinn ;)</em>');
+?>

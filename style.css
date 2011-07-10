@@ -295,6 +295,7 @@ tr.a3 { display: none; }
 .nopadding tr, .nopadding td { padding: 0; }
 .nopadding input { margin: 0; }
 
+.hide { display: none; }
 .left { float: left; }
 .right { float: right; }
 .clear { clear: both; }

@@ -5,12 +5,20 @@
  */
 $Mysql = Mysql::getInstance();
 ?>
-<h1>Neues Training</h1>
-
 <form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
 
 	<input type="hidden" name="type" value="newtraining" />
 	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />
+
+	<span class="right"><?php echo Ajax::toggle('<a href="#upload" title="Training hochladen">Training hochladen</a>', 'upload'); ?></span>
+
+	<div class="hide" id="upload">
+		<h1>Training vom Garmin Forerunner hochladen</h1>
+
+		...
+	</div>
+
+	<h1>Neues Training</h1>
 
 	<div class="c">
 <?php
