@@ -10,12 +10,32 @@ $Mysql = Mysql::getInstance();
 	<input type="hidden" name="type" value="newtraining" />
 	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />
 
-	<span class="right"><?php echo Ajax::toggle('<a href="#upload" title="Training hochladen">Training hochladen</a>', 'upload'); ?></span>
+	<span class="right"><?php echo Ajax::toggle('<a href="#upload" title="Training hochladen">Uploader aus/einblenden</a>', 'upload'); ?></span>
 
-	<div class="hide" id="upload">
+	<div class="" id="upload">
 		<h1>Training vom Garmin Forerunner hochladen</h1>
 
-		...
+		<div style="width:100%;text-align:center;">
+			<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="180px"></iframe>
+		</div>
+
+<?php
+// jQuery("#GCapi").contents().find("#result").val()
+?>
+<script type="text/javascript">
+jQuery("iframe#GCapi").load(function(){
+	function check() {
+		if (jQuery("#GCapi").contents().find("#result").val().length > 10) {
+			window.alert(this.val());
+			jQuery("#upload").hide();
+		} else {
+			window.alert('nope');
+		}
+	}
+
+	setInterval('check()', 100);
+}
+</script>
 	</div>
 
 	<h1>Neues Training</h1>
