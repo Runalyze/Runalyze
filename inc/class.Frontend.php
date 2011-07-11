@@ -14,13 +14,13 @@
  * @uses class::Error
  * @uses class::Icon
  * @uses class::Ajax
- * @uses class::Panel // Will be included by class::Plugin later?
- * @uses class::Stat // Will be included by class::Plugin later?
- * // @uses class::Plugin
+ * @uses class::Plugin
+ * @uses class::PluginPanel
+ * @uses class::PluginStat
+ * //@uses class::PluginDraw
  * @uses class::Training
  * @uses class::DataBrowser
  * @uses class::Dataset
- * // @uses class::Parser // Will be included by class::Training later
  * @uses class::Draw
  *
  * Last modified 2011/03/14 16:00 by Hannes Christiansen
@@ -179,8 +179,6 @@ class Frontend {
 		foreach ($panels as $i => $panel) {
 			$Panel = Plugin::getInstanceFor($panel['key']);
 			$Panel->display();
-			//$panel = new Panel($panel['id']);
-			//$panel->display();
 		}
 	}
 }

@@ -309,6 +309,7 @@ tr.a3 { display: none; }
 .inline { display: inline; }
 .minus { color: #CA3030; }
 .plus { color: #30AA30; }
+.error { color: #F00; font-weight: bold; }
 
 /***  L I N K S  ***/
 a:link, a:visited {
