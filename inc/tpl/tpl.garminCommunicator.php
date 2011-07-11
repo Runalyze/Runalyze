@@ -33,7 +33,7 @@
 				dataFound: "#{tracks} Trainings gefunden",
 				showReadDataElementOnDeviceFound: true,
 				postActivityHandler: function(activityXml, display) {
-					document.getElementById('result').value = activityXml;
+					window.parent.getXmlFromIFrame(activityXml);
 				}
 			});
 		}
@@ -43,10 +43,6 @@
 <body onload="load()">
 
 	<div id="garminDisplay"></div>
-
-	<form action="" method="post">
-		<textarea id="result" cols="40" rows="5"></textarea>
-	</form>
 
 </body>
 </html>
