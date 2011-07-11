@@ -1,0 +1,220 @@
+body { padding: 0; margin: 0; }
+
+textarea#result { display: none; }
+
+#garminDisplay {
+	color: #444;
+	font-family: Verdana, Arial, sans serif;
+	font-size: 11px;
+	text-align: center;
+	height: 170px;
+	width: 530px;
+	margin: 0 auto;
+	padding: 3px;
+	border: 1px solid #B4CFEC;
+}
+
+#progressBar {
+	position: relative;
+    height: 17px;
+    border: 1px solid black;
+    background-color: #CCCAC1;
+}
+
+#progressBarDisplay {
+    position:absolute;
+    top:0px;
+    height:17px;
+    z-index: 5;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color:#005E9D;
+}
+
+#progressBarText {
+	z-index: 10;
+	color: #FFF;
+	text-align: center;
+	height: 13px;
+	padding: 2px 0;
+	width: 100%;
+	position: absolute;
+}
+
+#aboutElement, #deviceBrowserBox, #cancelUploadButton {
+	display: none;
+}
+
+/*#garminDisplay input {
+	font-size:10px;
+	font-weight: bold;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    color:#ffffff;
+    height:18px;
+    background-color: #005E9D;
+    border:1px outset #3D3A21;
+    padding: 3px;
+}*/
+
+/*#garminDisplay input.actionButton {
+	font-size:16px;
+	font-weight: bold;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+    color:#ffffff;
+    background-color: #0077AA;
+    border:1px outset #3D3A21;
+    padding: 3px;
+    width: 150px;
+    height: 35px;
+}*/
+
+#garminDisplay input:disabled {
+    background-color: #D0D0D0;
+}
+
+#garminDisplay select { 
+	font-weight: bold;
+    /*background-color: #666699;*/ 
+    background-color: #FFFFFF;
+    color: #005E9D;
+    text-align: center;
+    
+}
+
+#deviceSelectBox {
+   	background: url(choose_bg.png) no-repeat;
+	width: 259px;
+	height: 101px;
+	/*position: absolute;*/
+	/*bottom: 140px;
+	left: 70px;*/
+	text-align: center;
+}
+
+#readBox {
+    text-align: center;
+}
+
+#statusBox {
+    /*font-size: 14px;*/
+    /*margin-top: 60px;*/
+}
+	
+#statusText {
+   	/*position: absolute;
+	top: 65px;
+	left: 18px;*/
+	text-align: center;
+	width: 90%;
+	margin: 0 auto;
+	font-weight: bold;
+}
+#buttonDescription {
+    font-weight: normal;
+}
+
+#activityDirectory {
+}
+
+#activityDirectoryData {
+    width: 410px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 100px;
+    overflow: auto;
+    position: relative;
+    /*left: 10px;*/
+    /*border: 2px outset black;*/
+}
+#activityDirectoryData tr {
+	width: 390px;
+    margin-bottom: 30px;
+}
+
+#activityTableHeader {
+    color: #FFFFFF;
+    background-color: #0077AA;
+    width: 410px;
+    margin: 0 auto;
+}
+#activityTableHeader td {
+	text-align: center !important;
+}
+
+#activityTable {
+    color: #000000;
+    background-color: #D0D0D0;
+    font-weight: normal;
+    font-size: 10px;
+    width: 390px;
+}
+
+.pluginElement {
+	margin: 5px;
+}
+
+#deviceSelect {
+	margin-top: 17px;
+    width: 220px;
+    padding: 5px;
+    line-height: 30px;
+}
+
+#deviceSelectLabel {
+	margin-top: 15px;
+	font-weight: bold;
+}
+
+#aboutElement {
+    /*position: absolute;
+    right: 8px;
+    bottom: 5px;*/
+    color: #5e5e5e;
+}
+
+.readResultsElement {
+    padding-top: 6px;
+}
+
+.readResultsSelect {
+}
+
+/* Style for the Preview button */
+#readDataButton{
+	border: 0;
+	cursor: pointer;
+	text-align: center;
+	width: 127px;
+	height: 25px;
+	margin: 0;
+	padding: 0;
+	background: url(button_bg.jpg) no-repeat 0 top;
+	color: #fff;
+}
+
+/* Style for the Upload button */
+#readSelectedButton {
+	border: 0;
+	cursor: pointer;
+	text-align: center;
+	width: 127px;
+	height: 25px;
+	background: url(button_bg.jpg) no-repeat 0 top;
+	color: #fff;
+}
+
+#readDataButton:hover, #readSelectedButton:hover {
+	background: url(button_bg.jpg) no-repeat 0 bottom;
+}
+
+#readDataButton:active, #readSelectedButton:active {
+	background: url(button_bg.jpg) no-repeat 0 top;
+}
+
+
+#readBox {
+	/*position: absolute;
+	bottom: 60px;
+	left: 70px;*/
+}
