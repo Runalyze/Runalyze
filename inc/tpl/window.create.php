@@ -36,6 +36,7 @@ jQuery("iframe#GCapi").load(function(){
 	setInterval('check()', 100);
 }
 </script>
+		<div id="result" class="hide"></div>
 	</div>
 
 	<h1>Neues Training</h1>
