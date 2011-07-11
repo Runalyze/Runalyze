@@ -10,6 +10,8 @@ $Mysql = Mysql::getInstance();
 $id = $_GET['id'];
 
 if (isset($_POST) && $_POST['type'] == "training") {
+	$error = '';
+
 	$sport = Helper::Sport($_POST['sportid'], true);
 
 	$columns = array('sportid');
@@ -22,32 +24,44 @@ if (isset($_POST) && $_POST['type'] == "training") {
 	// Timestamp
 	$tag = explode('.', $_POST['datum']);
 	$zeit = explode(':', $_POST['zeit']);
-	$timestamp = mktime($zeit[0], $zeit[1], 0, $tag[1], $tag[0], $tag[2]);
-	$columns[] = 'time';
-	$values[] = $timestamp;
+
+	if (count($tag) != 3 || count($zeit) != 2)
+		$error = 'Das Datum konnte nicht gelesen werden.';
+	else {
+		$timestamp = mktime($zeit[0], $zeit[1], 0, $tag[1], $tag[0], $tag[2]);
+		$columns[] = 'time';
+		$values[]  = $timestamp;
+	}
+
 	// Time in seconds
-	$ms    = explode(".", Helper::CommaToPoint($_POST['dauer']));
-	$dauer = explode(":", $ms[0]);
+	$ms        = explode(".", Helper::CommaToPoint($_POST['dauer']));
+	$dauer     = explode(":", $ms[0]);
 	$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 	$columns[] = 'dauer';
-	$values[] = $time_in_s;
+	$values[]  = $time_in_s;
+
+	if ($time_in_s == 0)
+		$error = 'Es muss eine Trainingszeit angegeben sein.';
+
 	// save difference for typ/schuh
 	$distanz = Helper::CommaToPoint($_POST['distanz']);
 	$dauer_dif = $time_in_s - $_POST['dauer_old'];
 	$dist_dif = $distanz - $_POST['dist_old'];
 
 	if ($sport['distanztyp'] == 1) {
-		$vars[] = 'distanz';
-		$vars[] = 'pace';
+		$vars[]    = 'distanz';
+		$vars[]    = 'pace';
 		$columns[] = 'bahn';
-		$values[] = $_POST['bahn'] == 'on' ? 1 : 0;
+		$values[]  = $_POST['bahn'] == 'on' ? 1 : 0;
 	}
 
 	if ($sport['outside'] == 1) {
 		if (strlen($_POST['temperatur']) > 0)
 			$vars[] = 'temperatur';
+
 		$vars[] = 'wetterid';
 		$vars[] = 'strecke';
+
 		// Kleidung
 		$kleidung = array();
 		$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
@@ -55,8 +69,9 @@ if (isset($_POST) && $_POST['type'] == "training") {
 			if ($_POST[$kl['name_kurz']] == 'on')
 				$kleidung[] = $kl['id'];
 		}
+
 		$columns[] = 'kleidung';
-		$values[] = count($kleidung) > 0 ? implode(',', $kleidung) : '';
+		$values[]  = count($kleidung) > 0 ? implode(',', $kleidung) : '';
 	}
 
 	if ($sport['distanztyp'] == 1 && $sport['outside'] == 1)
@@ -69,10 +84,11 @@ if (isset($_POST) && $_POST['type'] == "training") {
 
 	if ($sport['typen'] == 1) {
 		// Typid und Schuhid
-		$vars[] = 'typid';
-		$vars[] = 'schuhid';
+		$vars[]    = 'typid';
+		$vars[]    = 'schuhid';
 		$columns[] = 'laufabc';
-		$values[] = $_POST['laufabc'] == 'on' ? 1 : 0;
+		$values[]  = $_POST['laufabc'] == 'on' ? 1 : 0;
+
 		if (Helper::TypeHasSplits($_POST['typid']) == 1)
 			$vars[] = 'splits';
 	}
@@ -82,30 +98,34 @@ if (isset($_POST) && $_POST['type'] == "training") {
 			$columns[] = $var;
 			$values[] = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
 		}
-	$Mysql->update('ltb_training', $id, $columns, $values);
 
+	if ($error == '') {
+		$Mysql->update('ltb_training', $id, $columns, $values);
 
-	if ($_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
-		$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
-		$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+"'.$distanz.'", `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+		if ($_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
+			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
+			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+"'.$distanz.'", `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+		}
+		if ($sport['typen'] == 1)
+			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+		if ($sport['distanztyp'] == 1)
+			$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+	
+		$Mysql->update('ltb_training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
+		$Mysql->update('ltb_training', $_POST['id'], 'vdot', JD::Training2VDOT($_POST['id']));
+	
+		// TODO What is if a previously wrong training caused a higher config-value and this has to be corrected now?
+		if (Helper::ATL($timestamp) > CONFIG_MAX_ATL)
+			$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.Helper::ATL($timestamp).'"');
+		if (Helper::CTL($timestamp) > CONFIG_MAX_CTL)
+			$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.Helper::CTL($timestamp).'"');
+		if (Helper::TRIMP($_POST['id']) > CONFIG_MAX_TRIMP)
+			$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.Helper::TRIMP($_POST['id']).'"');
+	
+		$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
+	} else {
+		$submit = '<em class="error">'.$error.'</em><br /><br />';
 	}
-	if ($sport['typen'] == 1)
-		$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
-	if ($sport['distanztyp'] == 1)
-		$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
-
-	$Mysql->update('ltb_training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
-	$Mysql->update('ltb_training', $_POST['id'], 'vdot', JD::Training2VDOT($_POST['id']));
-
-	// TODO What is if a previously wrong training caused a higher config-value and this has to be corrected now?
-	if (Helper::ATL($timestamp) > CONFIG_MAX_ATL)
-		$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.Helper::ATL($timestamp).'"');
-	if (Helper::CTL($timestamp) > CONFIG_MAX_CTL)
-		$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.Helper::CTL($timestamp).'"');
-	if (Helper::TRIMP($_POST['id']) > CONFIG_MAX_TRIMP)
-		$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.Helper::TRIMP($_POST['id']).'"');
-
-	$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
 }
 
 $Frontend->displayHeader();
@@ -135,10 +155,10 @@ if ($Training->hasPositionData())
 echo Ajax::change('Allgemeines', 'edit-div', '#edit-allg').NL;
 
 if ($sport['distanztyp'] == 1)
-	echo Ajax::change('Training', 'edit-div', '#edit-train').NL;
+	echo ' | '.Ajax::change('Training', 'edit-div', '#edit-train').NL;
 
 if ($sport['outside'] == 1)
-	echo Ajax::change('Outside', 'edit-div', '#edit-out').NL;
+	echo ' | '.Ajax::change('Outside', 'edit-div', '#edit-out').NL;
 ?><br />
 <br />
 
