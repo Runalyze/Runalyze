@@ -28,13 +28,12 @@ class ParserTcx {
 	private $content = NULL;
 
 	/**
-	 * Constructor (needs file-path)
-	 * @param string $file_path
+	 * Constructor
+	 * @param string $xml [optional] Otherwise use ->loadFile($file_path)
 	 */
-	public function __construct($file_path) {
-		$this->file_path = $file_path;
-
-		$this->loadFile();
+	public function __construct($xml = '') {
+		if ($xml != '')
+			$this->content = $xml;
 	}
 
 	/**
@@ -47,8 +46,11 @@ class ParserTcx {
 
 	/**
 	 * Load file and get contents
+	 * @param string $file_path
 	 */
-	private function loadFile() {
+	public function loadFile($file_path) {
+		$this->file_path = $file_path;
+
 		if ($this->file_path == NULL || !($file = fopen($this->file_path, 'r'))) {
 			Error::getInstance()->addError('Parser is unable to find the given file ('.$this->file_path.').');
 			return;

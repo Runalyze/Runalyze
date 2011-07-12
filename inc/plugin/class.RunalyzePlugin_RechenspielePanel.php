@@ -72,15 +72,19 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 		}
 
 		echo('</small>
-			<span class="left" style="width:60%;">
+			<div class="left" style="width:60%;">
 				<p><span>'.round(100*Helper::ATL()/CONFIG_MAX_ATL).' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
 				<p><span>'.round(100*Helper::CTL()/CONFIG_MAX_CTL).' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
 				<p><span>'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
 				<p><span>'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
 				<p><span>'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
-			</span>');
+			</div>');
 
 		echo Helper::clearBreak();
+
+		// Fix for clear break in IE
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)
+			echo '&nbsp;';
 	}
 }
 ?>

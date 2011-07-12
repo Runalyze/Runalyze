@@ -626,6 +626,14 @@ class Training {
 			$values[]  = substr($_POST['kleidung'], 0, -1);
 			$columns[] = 'temperatur';
 			$values[]  = is_numeric($_POST['temperatur']) ? $_POST['temperatur'] : NULL;
+
+			$vars[]    = 'arr_time';
+			$vars[]    = 'arr_lat';
+			$vars[]    = 'arr_lon';
+			$vars[]    = 'arr_alt';
+			$vars[]    = 'arr_dist';
+			$vars[]    = 'arr_heart';
+			$vars[]    = 'arr_pace';
 		} else {
 			// Set NULL to temperatur otherwise
 			$columns[] = 'temperatur';
@@ -675,23 +683,25 @@ class Training {
 
 		$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 
+		// TODO ElevationCorrection
+
 		return true;
 	}
 
 	/**
 	 * Parse a tcx-file
+	 * @param string $xml XML-Data
+	 * @return array Used as $_POST
 	 */
-	public function parseTcx() {
-		// TODO
-		Error::getInstance()->addTodo('Set up class::Training::parseTcx()');
-
-		return;
-
+	static public function parseTcx($xml) {
 		require_once('tcx/class.ParserTcx.php');
-		$Parser = new ParserTcx($file_path);
+
+		$Parser = new ParserTcx($xml);
 		$xml = $Parser->getContentAsArray();
+
 		$i = 0;
 		$starttime = 0;
+		$calories  = 0;
 		$time      = array();
 		$latitude  = array();
 		$longitude = array();
@@ -699,12 +709,19 @@ class Training {
 		$distance  = array();
 		$heartrate = array();
 		$pace      = array();
+		$splits    = array();
 
-		//echo('Aktivit&auml;t ('.$xml['trainingcenterdatabase']['activities']['activity']['attr']['Sport'].', '.$xml['trainingcenterdatabase']['activities']['activity']['id']['value'].')<br />');
+		$starttime = strtotime($xml['trainingcenterdatabase']['activities']['activity']['id']['value']);
+		$start_tmp = $starttime;
+
 		foreach($xml['trainingcenterdatabase']['activities']['activity']['lap'] as $lap) {
 			$i++;
-			//echo($i.'. Runde: '.round($lap['distancemeters']['value']/1000,3).' km in '.floor($lap['totaltimeseconds']['value']/60).':'.($lap['totaltimeseconds']['value']%60).'; '.$lap['calories']['value'].' kcal; &Oslash; '.$lap['averageheartratebpm']['value']['value'].' bpm, max. '.$lap['maximumheartratebpm']['value']['value'].' bpm<br />');
-			
+
+			$calories += $lap['calories']['value'];
+			if (strtolower($lap['intensity']['value']) == 'active') {
+				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']));
+			}
+
 			foreach($lap['track'] as $track) {
 				if (isset($track['trackpoint']))
 					$trackpointArray = $track['trackpoint'];
@@ -712,9 +729,7 @@ class Training {
 					$trackpointArray = $track;
 				foreach($trackpointArray as $trackpoint) {
 					if (isset($trackpoint['distancemeters'])) {
-						if ($starttime == 0)
-							$starttime = strtotime($trackpoint['time']['value']);
-						$time[]     = strtotime($trackpoint['time']['value']) - $starttime;
+						$time[]     = strtotime($trackpoint['time']['value']) - $start_tmp;
 						$distance[] = round($trackpoint['distancemeters']['value'])/1000;
 						$pace[]     = ((end($distance) - prev($distance)) != 0)
 							? round((end($time) - prev($time)) / (end($distance) - prev($distance)))
@@ -733,22 +748,45 @@ class Training {
 							? $trackpoint['heartratebpm']['value']['value']
 							: 0;
 					} else { // Delete pause from timeline
-						$starttime += (strtotime($trackpoint['time']['value'])-$starttime) - end($time);
+						$start_tmp += (strtotime($trackpoint['time']['value'])-$start_tmp) - end($time);
 					}
 				}
 			}
 		}
 
-		// ... insert ?
-		/*mysql_query('UPDATE `ltb_training` SET
-		`arr_time`="'.implode('|',$time).'",
-		`arr_lat`="'.implode('|',$latitude).'",
-		`arr_lon`="'.implode('|',$longitude).'",
-		`arr_alt`="'.implode('|',$altitude).'",
-		`arr_dist`="'.implode('|',$distance).'",
-		`arr_heart`="'.implode('|',$heartrate).'",
-		`arr_pace`="'.implode('|',$pace).'"
-		WHERE `id`='.$this->id.' LIMIT 1');*/
+		$array = array();
+		$array['sportid']   = RUNNINGSPORT;
+		$array['datum']     = date("d.m.Y", $starttime);
+		$array['zeit']      = date("H:i", $starttime);
+		$array['dauer']     = Helper::Time(end($time), false, true);
+		$array['distanz']   = round(end($distance), 2);
+		$array['pace']      = Helper::Pace($array['distanz'], end($time));
+		$array['kmh']       = Helper::Kmh($array['distanz'], end($time));
+		$array['puls']      = round(array_sum($heartrate)/count($heartrate));
+		$array['puls_max']  = max($heartrate);
+		$array['kalorien']  = $calories;
+		$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
+		$array['splits']    = implode('-', $splits);
+		//$array['hm']
+		
+		//$array['strecke']
+		//$array['wetterid']
+		//$array['temperatur']
+		//$array['trainingspartner']
+		//$array['typid']
+		//$array['schuhid']
+		//$array['laufabc']
+		//$array['bahn']
+
+		$array['arr_time']  = implode(self::$ARR_SEP, $time);
+		$array['arr_lat']   = implode(self::$ARR_SEP, $latitude);
+		$array['arr_lon']   = implode(self::$ARR_SEP, $longitude);
+		$array['arr_alt']   = implode(self::$ARR_SEP, $altitude);
+		$array['arr_dist']  = implode(self::$ARR_SEP, $distance);
+		$array['arr_heart'] = implode(self::$ARR_SEP, $heartrate);
+		$array['arr_pace']  = implode(self::$ARR_SEP, $pace);
+
+		return $array;
 	}
 
 	/**
@@ -791,7 +829,7 @@ class Training {
 		}
 
 		Mysql::getInstance()->update('ltb_training', $this->id, 'arr_alt', implode('|', $altitude));
-		echo('Success.');
+		//echo('Success.');
 	}
 
 	/**

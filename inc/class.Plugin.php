@@ -379,7 +379,7 @@ abstract class Plugin {
 
 		if (isset($_POST['edit']) && $_POST['edit'] == 'true') {
 			foreach($this->config as $name => $dat) {
-				switch ($config_var['type']) {
+				switch ($dat['type']) {
 					case 'array':
 						$array = explode(',', $_POST[$name]);
 						foreach ($array as $i => $var)
@@ -407,10 +407,14 @@ abstract class Plugin {
 	public function displayConfigWindow() {
 		$this->handleGetPostRequest();
 
+		$activationLink = ($this->active == 0)
+			? $this->getConfigLink('Plugin aktivieren', '&active='.Plugin::$ACTIVE)
+			: $this->getConfigLink('Plugin deaktivieren', '&active='.Plugin::$ACTIVE_NOT);
+
 		echo('
 			<h1>Konfiguration: '.$this->name.'</h1>
 			<small class="right">
-				'.$this->getConfigLink('Plugin deaktivieren', '&active=0').'
+				'.$activationLink.'
 			</small><br />
 
 			<strong>Beschreibung:</strong><br />
@@ -423,7 +427,7 @@ abstract class Plugin {
 		if (count($this->config) == 0)
 			echo('Es sind <em>keine</em> <strong>Konfigurations-Variablen</strong> vorhanden<br />');
 		else {
-			echo('<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" method="post">');
+			echo('<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" class="ajax" id="pluginconfig" method="post">');
 			foreach ($this->config as $name => $config_var) {
 				switch ($config_var['type']) {
 					case 'array':
@@ -474,8 +478,9 @@ abstract class Plugin {
 	 * Function to (in)activate the plugin
 	 * @param int $active
 	 */
-	public function setActive($active = true) {
+	public function setActive($active = 1) {
 		Mysql::getInstance()->update('ltb_plugin', $this->id, 'active', $active);
+		$this->active = $active;
 	}
 
 	/**
