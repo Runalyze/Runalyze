@@ -4,6 +4,10 @@
  * Call:   inc/tpl/window.create.php
  */
 $Mysql = Mysql::getInstance();
+
+if (isset($_POST['data']))
+	$_POST = Training::parseTcx($_POST['data']);
+	
 ?>
 <form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
 
@@ -12,31 +16,13 @@ $Mysql = Mysql::getInstance();
 
 	<span class="right"><?php echo Ajax::toggle('<a href="#upload" title="Training hochladen">Uploader aus/einblenden</a>', 'upload'); ?></span>
 
-	<div class="" id="upload">
+	<div class="<?php if (!empty($_POST)) echo 'hide'; ?>" id="upload">
 		<h1>Training vom Garmin Forerunner hochladen</h1>
 
 		<div style="width:100%;text-align:center;">
 			<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="180px"></iframe>
 		</div>
 
-<?php
-// jQuery("#GCapi").contents().find("#result").val()
-?>
-<script type="text/javascript">
-jQuery("iframe#GCapi").load(function(){
-	function check() {
-		if (jQuery("#GCapi").contents().find("#result").val().length > 10) {
-			window.alert(this.val());
-			jQuery("#upload").hide();
-		} else {
-			window.alert('nope');
-		}
-	}
-
-	setInterval('check()', 100);
-}
-</script>
-		<div id="result" class="hide"></div>
 	</div>
 
 	<h1>Neues Training</h1>
@@ -138,6 +124,15 @@ foreach($schuhe as $schuh) {
 		<br class="clear" />
 
 	<span id="outside" style="display: none;">
+
+		<input type="hidden" name="arr_time" value="<?php echo $_POST['arr_time']; ?>" />
+		<input type="hidden" name="arr_lat" value="<?php echo $_POST['arr_lat']; ?>" />
+		<input type="hidden" name="arr_lon" value="<?php echo $_POST['arr_lon']; ?>" />
+		<input type="hidden" name="arr_alt" value="<?php echo $_POST['arr_alt']; ?>" />
+		<input type="hidden" name="arr_dist" value="<?php echo $_POST['arr_dist']; ?>" />
+		<input type="hidden" name="arr_heart" value="<?php echo $_POST['arr_heart']; ?>" />
+		<input type="hidden" name="arr_pace" value="<?php echo $_POST['arr_pace']; ?>" />
+
 		<br />
 		<input type="text" size="50" name="strecke" value="<?php echo Helper::Unknown($_POST['strecke'], ''); ?>" />
 			<small style="margin-right: 100px;">Strecke</small>
