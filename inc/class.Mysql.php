@@ -144,7 +144,7 @@ final class Mysql {
 		elseif ($id == 'LAST')
 			$result = $this->query('SELECT * FROM `'.$table.'` ORDER BY `id` DESC LIMIT 1');
 		else
-			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
+			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`="'.$id.'" LIMIT 1');
 
 		if ($result === false) {
 			Error::getInstance()->addWarning(mysql_error());
@@ -180,7 +180,7 @@ final class Mysql {
 			Error::getInstance()->addError('Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>', __FILE__, __LINE__);
 			return;
 		}
-		$this->query('DELETE FROM `'.$table.'` WHERE `id`='.$id.' LIMIT 1');
+		$this->query('DELETE FROM `'.$table.'` WHERE `id`="'.$id.'" LIMIT 1');
 	}
 
 	/**
