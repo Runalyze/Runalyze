@@ -55,7 +55,7 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 			<div id="sportler">
 				<div id="sportler-gewicht" class="change">');
 
-		$dat = Mysql::getInstance()->fetch('ltb_user', 'LAST');
+		$dat = Mysql::getInstance()->fetch(PREFIX.'user', 'LAST');
 		if (CONFIG_USE_GEWICHT == 1)
 			$left = '<strong title="'.date("d.m.Y",$dat['time']).'">'.$dat['gewicht'].' kg</strong>';
 		

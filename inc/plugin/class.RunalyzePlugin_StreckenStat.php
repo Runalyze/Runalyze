@@ -66,7 +66,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 
 		$strecken = Mysql::getInstance()->fetchAsArray('
 			SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `strecke`!=""
 			GROUP BY `strecke`
 			ORDER BY `num` DESC

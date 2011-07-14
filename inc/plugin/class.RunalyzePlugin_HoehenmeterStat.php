@@ -155,7 +155,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 				SUM(`distanz`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `hm` > 0
 			GROUP BY `year`, `month`');
 
@@ -174,7 +174,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 		$this->SumData = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			ORDER BY `hm` DESC
 			LIMIT 10');
 	}
@@ -187,7 +187,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 			SELECT
 				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`,
 				(`hm`/`distanz`) as `steigung`, `distanz`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			ORDER BY `steigung` DESC
 			LIMIT 10');
 	}

@@ -69,7 +69,7 @@ class Training {
 			return false;
 		}
 
-		$dat = Mysql::getInstance()->fetch('ltb_training', $id);
+		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $id);
 		if ($dat === false) {
 			Error::getInstance()->addError('This training (ID='.$id.') does not exist.');
 			return false;
@@ -77,6 +77,8 @@ class Training {
 
 		$this->id = $id;
 		$this->data = $dat;
+		// TODO
+		// $this->fillUpDataWithDefaultValues();
 
 		if ($this->data['vdot'] != 0)
 			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
@@ -117,7 +119,7 @@ class Training {
 	public function getStringForClothes() {
 		if ($this->get('kleidung') != '') {
 			$kleidungen = array();
-			$kleidungen_data = Mysql::getInstance()->fetchAsArray('SELECT `name` FROM `ltb_kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC');
+			$kleidungen_data = Mysql::getInstance()->fetchAsArray('SELECT `name` FROM `'.PREFIX.'kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC');
 			foreach ($kleidungen_data as $data)
 				$kleidungen[] = $data['name'];
 			return implode(', ', $kleidungen);
@@ -443,10 +445,10 @@ class Training {
 		$kmIndex	 		= array(0);
 		$positiveElevation 	= 0;
 		$negativeElevation 	= 0;
-		$distancePoints 	= explode('|', $this->get('arr_dist'));
-		$timePoints 		= explode('|', $this->get('arr_time'));
-		$heartPoints 		= explode('|', $this->get('arr_heart'));
-		$elevationPoints 	= explode('|', $this->get('arr_alt'));
+		$distancePoints 	= explode(self::$ARR_SEP, $this->get('arr_dist'));
+		$timePoints 		= explode(self::$ARR_SEP, $this->get('arr_time'));
+		$heartPoints 		= explode(self::$ARR_SEP, $this->get('arr_heart'));
+		$elevationPoints 	= explode(self::$ARR_SEP, $this->get('arr_alt'));
 		$numberOfPoints 	= sizeof($distancePoints);
 
 		echo('<table class="small" cellspacing="0">'.NL);
@@ -584,7 +586,7 @@ class Training {
 		$vars[]  = 'trainingspartner';
 		
 
-		$sport = $Mysql->fetch('ltb_sports', $_POST['sportid']);
+		$sport = $Mysql->fetch(PREFIX.'sports', $_POST['sportid']);
 		if ($sport === false)
 			return 'Es wurde keine Sportart ausgew&auml;hlt.';
 
@@ -660,7 +662,7 @@ class Training {
 				$values[]  = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
 			}
 
-		$id = $Mysql->insert('ltb_training', $columns, $values);
+		$id = $Mysql->insert(PREFIX.'training', $columns, $values);
 		if ($id === false)
 			return 'Unbekannter Fehler mit der Datenbank.';
 	
@@ -668,20 +670,20 @@ class Training {
 		$CTL = Helper::CTL($time);
 		$TRIMP = Helper::TRIMP($id);
 
-		$Mysql->query('UPDATE `ltb_training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
-		$Mysql->query('UPDATE `ltb_training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
+		$Mysql->query('UPDATE `'.PREFIX.'training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
+		$Mysql->query('UPDATE `'.PREFIX.'training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
 
 		if ($ATL > CONFIG_MAX_ATL)
-			$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.$ATL.'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_atl`="'.$ATL.'"');
 		if ($CTL > CONFIG_MAX_CTL)
-			$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.$CTL.'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_ctl`="'.$CTL.'"');
 		if ($TRIMP > CONFIG_MAX_TRIMP)
-			$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.$TRIMP.'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$TRIMP.'"');
 
 		if ($sport['typen'] == 1)
-			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 
-		$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+		$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 
 		// TODO ElevationCorrection
 
@@ -796,9 +798,9 @@ class Training {
 		if (!$this->hasPositionData())
 			return;
 
-		$latitude = explode('|', $this->get('arr_lat'));
-		$longitude = explode('|', $this->get('arr_lon'));
-		$altitude = array();
+		$latitude  = explode(self::$ARR_SEP, $this->get('arr_lat'));
+		$longitude = explode(self::$ARR_SEP, $this->get('arr_lon'));
+		$altitude  = array();
 
 		$num = count($latitude);
 		for ($i = 0; $i < $num; $i++) {
@@ -828,8 +830,7 @@ class Training {
 			}
 		}
 
-		Mysql::getInstance()->update('ltb_training', $this->id, 'arr_alt', implode('|', $altitude));
-		//echo('Success.');
+		Mysql::getInstance()->update(PREFIX.'training', $this->id, 'arr_alt', implode(self::$ARR_SEP, $altitude));
 	}
 
 	/**

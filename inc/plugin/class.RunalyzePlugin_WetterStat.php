@@ -101,7 +101,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		$temps = Mysql::getInstance()->fetchAsArray('SELECT
 				AVG(`temperatur`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
-			FROM `ltb_training` WHERE
+			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.MAINSPORT.'" AND
 				`temperatur` IS NOT NULL
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
@@ -131,7 +131,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 	* Display month-table for weather
 	*/
 	private function displayMonthTableWeather() {
-		$wetter_all = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `ltb_wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
+		$wetter_all = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
 		foreach ($wetter_all as $w => $wetter) {
 			echo '<tr class="a'.($w%2+1).' r"><td class="c">'.Helper::WeatherImage($wetter['id']).'</td>';
 		
@@ -139,7 +139,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			$data = Mysql::getInstance()->fetchAsArray('SELECT
 					SUM(1) as `num`,
 					MONTH(FROM_UNIXTIME(`time`)) as `m`
-				FROM `ltb_training` WHERE
+				FROM `'.PREFIX.'training` WHERE
 					`sportid`="'.MAINSPORT.'" AND
 					`wetterid`='.$wetter['id'].'
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
@@ -175,7 +175,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		$nums = Mysql::getInstance()->fetchAsArray('SELECT
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
-			FROM `ltb_training` WHERE
+			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.MAINSPORT.'" AND
 				`kleidung`!=""
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
@@ -190,7 +190,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			Error::getInstance()->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
 		}
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `ltb_kleidung` ORDER BY `order` ASC');
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'kleidung` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
 				echo '<tr class="a'.($k%2+1).' r"><td class="r">'.$kleidung['name'].'</td>';
@@ -199,7 +199,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				$data = Mysql::getInstance()->fetchAsArray('SELECT
 						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
-					FROM `ltb_training` WHERE
+					FROM `'.PREFIX.'training` WHERE
 						`sportid`="'.MAINSPORT.'"
 						'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 					GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -254,7 +254,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		echo Helper::spaceTR(11);
 		echo '<tr class="a1 r">';
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order` ASC');
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $i => $kleidung) {
 				if ($i%3 == 0)
@@ -266,7 +266,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 						AVG(`temperatur`) as `avg`,
 						MAX(`temperatur`) as `max`,
 						MIN(`temperatur`) as `min`
-					FROM `ltb_training` WHERE `sportid`="'.MAINSPORT.'" AND
+					FROM `'.PREFIX.'training` WHERE `sportid`="'.MAINSPORT.'" AND
 					`temperatur` IS NOT NULL AND
 					FIND_IN_SET('.$kleidung['id'].',`kleidung`) != 0
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));

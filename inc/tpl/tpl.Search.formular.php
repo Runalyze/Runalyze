@@ -38,7 +38,7 @@
 
 	<strong>Sportart:</strong>
 <?php
-$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_sports` WHERE `online`=1 ORDER BY `id` ASC');
+$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` WHERE `online`=1 ORDER BY `id` ASC');
 foreach ($sports as $sport) {
 	$checked = Helper::Checked((!$submit && $sport['id'] == MAINSPORT) || $_POST['sport'][$sport['id']] != false);
 	echo('
@@ -48,10 +48,10 @@ foreach ($sports as $sport) {
 echo('<br />');
 
 $conditions = array();
-$conditions[] = array('name' => 'schuhid', 'text' => 'Schuh', 'table' => 'ltb_schuhe', 'multiple' => false);
-$conditions[] = array('name' => 'wetterid', 'text' => 'Wetter', 'table' => 'ltb_wetter');
-$conditions[] = array('name' => 'kleidung', 'text' => 'Kleidung', 'table' => 'ltb_kleidung');
-$conditions[] = array('name' => 'typid', 'text' => 'Trainingstyp', 'table' => 'ltb_typ');
+$conditions[] = array('name' => 'schuhid', 'text' => 'Schuh', 'table' => ''.PREFIX.'schuhe', 'multiple' => false);
+$conditions[] = array('name' => 'wetterid', 'text' => 'Wetter', 'table' => ''.PREFIX.'wetter');
+$conditions[] = array('name' => 'kleidung', 'text' => 'Kleidung', 'table' => ''.PREFIX.'kleidung');
+$conditions[] = array('name' => 'typid', 'text' => 'Trainingstyp', 'table' => ''.PREFIX.'typ');
 
 foreach ($conditions as $condition) {
 	$multiple      = ($condition['multiple'] !== false) ? ' multiple="multiple"' : '';

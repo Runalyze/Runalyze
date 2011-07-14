@@ -11,7 +11,8 @@ textarea#result { display: none; }
 	width: 530px;
 	margin: 0 auto;
 	padding: 3px;
-	border: 1px solid #B4CFEC;
+	border: 1px solid #D2D2D3;
+	background: url(bg.png) no-repeat scroll 0 0 transparent;
 }
 
 #progressBar {
@@ -19,6 +20,12 @@ textarea#result { display: none; }
     height: 17px;
     border: 1px solid black;
     background-color: #CCCAC1;
+	-webkit-border-radius: 3px;
+	-khtml-border-radius: 3px;
+	-moz-border-radius: 3px;
+	box-shadow: 3px 2px 5px #999;
+	-webkit-box-shadow: 3px 2px 5px #999;
+	-moz-box-shadow: 3px 2px 5px #999;
 }
 
 #progressBarDisplay {
@@ -29,7 +36,8 @@ textarea#result { display: none; }
     margin: 0;
     padding: 0;
     text-align: left;
-    background-color:#005E9D;
+	background: url(button_bg.jpg) repeat-x -5px -5px;
+    /*background-color:#005E9D;*/
 }
 
 #progressBarText {
@@ -134,7 +142,8 @@ textarea#result { display: none; }
 
 #activityTableHeader {
     color: #FFFFFF;
-    background-color: #0077AA;
+	background: url(button_bg.jpg) repeat-x -5px -5px;
+    /*background-color: #0077AA;*/
     width: 410px;
     margin: 0 auto;
 }

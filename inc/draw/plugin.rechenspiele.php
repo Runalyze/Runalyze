@@ -45,7 +45,7 @@ if ($Year >= START_YEAR && $Year <= date('Y')) {
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
 			AVG(`trimp`) as `trimp`
-		FROM `ltb_training`
+		FROM `'.PREFIX.'training`
 		WHERE
 			YEAR(FROM_UNIXTIME(`time`))='.$Year.' OR (
 				YEAR(FROM_UNIXTIME(`time`))='.($Year-1).' AND
@@ -67,7 +67,7 @@ if ($Year >= START_YEAR && $Year <= date('Y')) {
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
 			`id`,
 			`vdot`
-		FROM `ltb_training`
+		FROM `'.PREFIX.'training`
 		WHERE
 			`vdot`>0 AND (
 				YEAR(FROM_UNIXTIME(`time`))='.$Year.' OR (

@@ -173,8 +173,8 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				SUM(`distanz`) AS `distanz`,
 				`typid`,
 				`RPE`
-			FROM `ltb_training`
-			LEFT JOIN `ltb_typ` ON (ltb_training.typid=ltb_typ.id)
+			FROM `'.PREFIX.'training`
+			LEFT JOIN `'.PREFIX.'typ` ON ('.PREFIX.'training.typid='.PREFIX.'typ.id)
 			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `typid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
@@ -195,7 +195,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 	
 		$type_foreach = array();
 	
-		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abk` FROM `ltb_typ` ORDER BY `RPE` ASC');
+		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abk` FROM `'.PREFIX.'typ` ORDER BY `RPE` ASC');
 		foreach ($types as $i => $type) {
 			$type_foreach[] = array(
 				'name' => '<span title="'.$type['name'].'">'.$type['abk'].'</span>',
@@ -217,7 +217,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				COUNT(*) AS `num`,
 				SUM(`distanz`) AS `distanz`,
 				FLOOR( (`dauer`/`distanz`)/'.$speed_step.')*'.$speed_step.' AS `pacegroup`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `pacegroup`, '.$this->group_time.'
 			ORDER BY `pacegroup` DESC, `timer` ASC');
@@ -263,7 +263,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				COUNT(*) AS `num`,
 				SUM(`distanz`) AS `distanz`,
 				CEIL( (100 * `puls` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `pulsegroup`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.' && `puls`!=0
 			GROUP BY `pulsegroup`, '.$this->group_time.'
 			ORDER BY `pulsegroup`, `timer` ASC');

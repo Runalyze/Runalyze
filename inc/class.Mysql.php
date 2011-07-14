@@ -81,6 +81,9 @@ final class Mysql {
 	 * @param $value  mixed  might be an array
 	 */
 	public function update($table, $id, $column, $value) {
+		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
+			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+
 		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
 			foreach ($column as $i => $col)
@@ -100,6 +103,9 @@ final class Mysql {
 	 * @return int       ID of inserted row
 	 */
 	public function insert($table, $columns, $values) {
+		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
+			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
@@ -139,6 +145,9 @@ final class Mysql {
 	 */
 	public function fetch($table, $id = false, $as_array = false) {
 		$return = array();
+		if ($id !== false && strncmp($table, PREFIX, strlen(PREFIX)) != 0)
+			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+
 		if ($id === false)
 			$result = $this->query($table);
 		elseif ($id == 'LAST')
@@ -176,6 +185,9 @@ final class Mysql {
 	 * @param $id    int
 	 */
 	public function delete($table, $id) {
+		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
+		Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+		
 		if (!is_int($id)) {
 			Error::getInstance()->addError('Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>', __FILE__, __LINE__);
 			return;

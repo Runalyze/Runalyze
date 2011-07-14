@@ -133,7 +133,7 @@ class DataBrowser {
 		$time_start = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w,   date("Y",$time));
 		$time_end   = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w+1, date("Y",$time));
 
-		$data = $this->Mysql->fetchAsArray('SELECT `id`, `sportid` FROM `ltb_training` WHERE `time` BETWEEN '.($time_start-10).' AND '.($time_end-10).' ORDER BY `time` ASC');
+		$data = $this->Mysql->fetchAsArray('SELECT `id`, `sportid` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time_start-10).' AND '.($time_end-10).' ORDER BY `time` ASC');
 		if (!empty($data)) {
 			foreach ($data as $short)
 				if (in_array($short['sportid'], $this->sports_short))
@@ -150,7 +150,7 @@ class DataBrowser {
 	 */
 	private function initShortSports() {
 		$this->sports_short = array();
-		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `ltb_sports` WHERE `short`=1');
+		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports` WHERE `short`=1');
 		foreach ($sports as $sport)
 			$this->sports_short[] = $sport['id'];
 	}

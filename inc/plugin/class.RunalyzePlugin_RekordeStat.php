@@ -141,12 +141,12 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 	private function initData() {
 		$this->rekorde = array();
 		$this->rekorde[] = array('name' => 'Schnellsten Trainings',
-			'sportquery' => 'SELECT * FROM `ltb_sports` WHERE `distanztyp`=1 ORDER BY `id` ASC',
-			'datquery' => 'SELECT `id`, `time`, `dauer`, `distanz`, `sportid` FROM `ltb_training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `pace` ASC, `dauer` DESC LIMIT 10',
+			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` WHERE `distanztyp`=1 ORDER BY `id` ASC',
+			'datquery' => 'SELECT `id`, `time`, `dauer`, `distanz`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `pace` ASC, `dauer` DESC LIMIT 10',
 			'eval' => '0');
 		$this->rekorde[] = array('name' => 'L&auml;ngsten Trainings',
-			'sportquery' => 'SELECT * FROM `ltb_sports` ORDER BY `id` ASC',
-			'datquery' => 'SELECT * FROM `ltb_training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distanz` DESC, `dauer` DESC LIMIT 10',
+			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC',
+			'datquery' => 'SELECT * FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distanz` DESC, `dauer` DESC LIMIT 10',
 			'eval' => '1');
 
 		$this->years = Mysql::getInstance()->fetchAsArray('
@@ -154,7 +154,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				`sportid`,
 				SUM(`distanz`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.RUNNINGSPORT.'
 			GROUP BY `year`
 			ORDER BY `km` DESC
@@ -167,7 +167,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.RUNNINGSPORT.'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
@@ -181,7 +181,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
 				`time`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.RUNNINGSPORT.'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC

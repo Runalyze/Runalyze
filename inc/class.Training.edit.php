@@ -64,7 +64,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 
 		// Kleidung
 		$kleidung = array();
-		$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
+		$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `'.PREFIX.'kleidung`');
 		foreach ($kleidungen as $kl) {
 			if ($_POST[$kl['name_kurz']] == 'on')
 				$kleidung[] = $kl['id'];
@@ -103,24 +103,24 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$Mysql->update('ltb_training', $id, $columns, $values);
 
 		if ($_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
-			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
-			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+"'.$distanz.'", `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+"'.$distanz.'", `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 		}
 		if ($sport['typen'] == 1)
-			$Mysql->query('UPDATE `ltb_schuhe` SET `km`=`km`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 		if ($sport['distanztyp'] == 1)
-			$Mysql->query('UPDATE `ltb_sports` SET `distanz`=`distanz`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 	
-		$Mysql->update('ltb_training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
-		$Mysql->update('ltb_training', $_POST['id'], 'vdot', JD::Training2VDOT($_POST['id']));
+		$Mysql->update(PREFIX.'training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
+		$Mysql->update(PREFIX.'training', $_POST['id'], 'vdot', JD::Training2VDOT($_POST['id']));
 	
 		// TODO What is if a previously wrong training caused a higher config-value and this has to be corrected now?
 		if (Helper::ATL($timestamp) > CONFIG_MAX_ATL)
-			$Mysql->query('UPDATE `ltb_config` SET `max_atl`="'.Helper::ATL($timestamp).'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_atl`="'.Helper::ATL($timestamp).'"');
 		if (Helper::CTL($timestamp) > CONFIG_MAX_CTL)
-			$Mysql->query('UPDATE `ltb_config` SET `max_ctl`="'.Helper::CTL($timestamp).'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_ctl`="'.Helper::CTL($timestamp).'"');
 		if (Helper::TRIMP($_POST['id']) > CONFIG_MAX_TRIMP)
-			$Mysql->query('UPDATE `ltb_config` SET `max_trimp`="'.Helper::TRIMP($_POST['id']).'"');
+			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.Helper::TRIMP($_POST['id']).'"');
 	
 		$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
 	} else {
@@ -147,8 +147,6 @@ if (isset($submit))
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
 
 <?php
-Error::getInstance()->add('TODO','Use class:Ajax for these links', __FILE__, __LINE__);
-
 if ($Training->hasPositionData())
 	echo Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;
 
@@ -213,7 +211,7 @@ if ($sport['outside'] == 1)
 		<span<?php echo $sport['typen'] == 1 ? '' : ' style="display:none;"'; ?>>
 			<select name="typid">
 <?php
-$typen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_typ`');
+$typen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'typ`');
 foreach ($typen as $typ)
 	echo('<option value="'.$typ['id'].'"'.Helper::Selected($typ['id'] == $Training->get('typid')).'>'.$typ['name'].'</option>');
 ?>
@@ -222,7 +220,7 @@ foreach ($typen as $typ)
 			<input type="hidden" name="schuhid_old" value="<?php echo $Training->get('schuhid'); ?>" />
 			<select name="schuhid">
 <?php
-$schuhe = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_schuhe`');
+$schuhe = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'schuhe`');
 foreach ($schuhe as $schuh)
 	echo('<option value="'.$schuh['id'].'"'.Helper::Selected($schuh['id'] == $Training->get('schuhid')).'>'.$schuh['name'].'</option>');
 ?>
@@ -254,7 +252,7 @@ foreach ($schuhe as $schuh)
 			<small>HM</small><br />
 		<select name="wetterid">
 <?php
-$wetter = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `ltb_wetter`');
+$wetter = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'wetter`');
 foreach ($wetter as $wetter_dat)
 	echo('<option value="'.$wetter_dat['id'].'"'.Helper::Selected($wetter_dat['id'] == $Training->get('wetterid')).'>'.$wetter_dat['name'].'</option>');
 ?>
@@ -265,7 +263,7 @@ foreach ($wetter as $wetter_dat)
 		<br />
 		<small>Kleidung</small><br />
 <?php
-$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `ltb_kleidung`');
+$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `'.PREFIX.'kleidung`');
 foreach ($kleidungen as $kleidung) {
 	$checked = Helper::Checked(in_array($kleidung['id'], explode(',', $Training->get('kleidung'))));
 	echo('<input type="checkbox" name="'.$kleidung['name_kurz'].'"'.$checked.' />&nbsp;<small style="margin-right:12px;">'.$kleidung['name_kurz'].'</small>'.NL);

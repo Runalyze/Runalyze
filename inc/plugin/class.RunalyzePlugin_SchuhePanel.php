@@ -52,7 +52,7 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 		echo('<div id="schuhe">');
 
 		$inuse = true;
-		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
+		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `'.PREFIX.'schuhe` ORDER BY `inuse` DESC, `km` DESC');
 		foreach ($schuhe as $i => $schuh) {
 			if ($inuse && $schuh['inuse'] == 0) {
 				echo('<div id="hiddenschuhe" style="display:none;">'.NL);

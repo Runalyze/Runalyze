@@ -10,7 +10,7 @@ $Error = Error::getInstance();
 
 $Error->addTodo('Formular abschicken funktioniert noch nicht vollstaendig', __FILE__, __LINE__);
 if (isset($_POST) && $_POST['type'] == "config") {
-	// General config vars: 'ltb_config'
+	// General config vars: '_config'
 	$columns = array();
 	$values = array();
 	$vars = array('geschlecht', 'puls_mode');
@@ -24,19 +24,19 @@ if (isset($_POST) && $_POST['type'] == "config") {
 		$columns[] = $box;
 		$values[] = (isset($_POST[$box]) && $_POST[$box] == 'on') ? 1 : 0;
 	}
-	$Mysql->update('ltb_config', 1, $columns, $values);
+	$Mysql->update(PREFIX.'config', 1, $columns, $values);
 
-	// Plugin config vars: 'ltb_plugin'
-	$plugins = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_plugin`');
+	// Plugin config vars: '_plugin'
+	$plugins = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'plugin`');
 	foreach ($plugins as $plugin) {
 		$id = $plugin['id'];
-		$Mysql->update('ltb_plugin', $id,
+		$Mysql->update(PREFIX.'plugin', $id,
 			array('active', 'order'),
 			array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
 	}
 
-	// Dataset config vars: 'ltb_dataset'
-	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `ltb_dataset`');
+	// Dataset config vars: '_dataset'
+	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'dataset`');
 	foreach ($dataset as $set) {
 		$id = $set['id'];
 		$modus = $_POST[$id.'_modus'] == 'on' ? 2 : 1;
@@ -50,14 +50,14 @@ if (isset($_POST) && $_POST['type'] == "config") {
 			$modus,
 			($_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
 			$_POST[$id.'_position']);
-		$Mysql->update('ltb_dataset', $id, $columns, $values);
+		$Mysql->update(PREFIX.'dataset', $id, $columns, $values);
 	}
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
 
 // Because constants can't be redefinied, $config has to be used instead of CONFIG_...
-$config = $Mysql->fetchSingle('SELECT * FROM `ltb_config`');
+$config = $Mysql->fetchSingle('SELECT * FROM `'.PREFIX.'config`');
 
 $Frontend->displayHeader();
 
@@ -139,7 +139,7 @@ if (isset($submit))
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel" ORDER BY `order` ASC');
+$plugins = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
@@ -181,7 +181,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="7"></td>
 		</tr>
 <?php
-$plugins = $Mysql->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" ORDER BY `order` ASC');
+$plugins = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="stat" ORDER BY `order` ASC');
 foreach($plugins as $i => $plugin)
 	echo('
 		<tr class="top a'.($i%2+1).'">
@@ -206,7 +206,7 @@ foreach($plugins as $i => $plugin)
 	<table class="c">
 		<tr>
 			<td title="Die Information wird in der Tabelle direkt angezeigt">Anzeige</td>
-			<td title="Die Daten werden f�r die Zusammenfassung der Sportart angezeigt">Zusammenfassung</td>
+			<td title="Die Daten werden f&uuml;r die Zusammenfassung der Sportart angezeigt">Zusammenfassung</td>
 			<td style="width: 170px;" />
 			<td title="Gibt die Reihenfolge der Anzeige vor">Position</td>
 		</tr>
@@ -214,7 +214,7 @@ foreach($plugins as $i => $plugin)
 			<td colspan="4"></td>
 		</tr>
 <?php
-$datasets = $Mysql->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `ltb_dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
+$datasets = $Mysql->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
 foreach($datasets as $i => $dataset) {
 	// Modus=1 has been deleted
 	$disabled = ($dataset['modus'] == 3) ? ' disabled="disabled"' : '';
@@ -266,7 +266,7 @@ foreach($datasets as $i => $dataset) {
 $Error->addTodo('Edit Sports', __FILE__, __LINE__);
 // TODO ID=1 fuer Laufen sperren!
 
-$sports = $Mysql->fetchAsArray('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
+$sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
 foreach($sports as $i => $sport) {
 	echo('
 		<tr class="a'.($i%2+1).'">
@@ -305,7 +305,7 @@ foreach($sports as $i => $sport) {
 $Error->addTodo('Edit Trainingstypen', __FILE__, __LINE__);
 $Error->addTodo('Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
 
-$typen = $Mysql->fetchAsArray('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
+$typen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'typ` ORDER BY `id` ASC');
 foreach($typen as $i => $typ) {
 	echo('
 		<tr class="a'.($i%2+1).'">
@@ -339,7 +339,7 @@ foreach($typen as $i => $typ) {
 <?php
 $Error->addTodo('Edit Kleidungen', __FILE__, __LINE__);
 
-$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `order`, `id` ASC');
+$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `order`, `id` ASC');
 foreach($kleidungen as $i => $kleidung) {
 	echo('
 		<tr class="a'.($i%2+1).'">

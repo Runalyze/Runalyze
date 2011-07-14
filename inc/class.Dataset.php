@@ -42,7 +42,7 @@ class Dataset {
 	 * Constructor
 	 */
 	public function __construct() {
-		$dat = Mysql::getInstance()->fetch('SELECT * FROM `ltb_dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC');
+		$dat = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC');
 		if ($dat === false) {
 			Error::getInstance()->addError('No dataset in database is active.');
 			return false;
@@ -56,7 +56,7 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `ltb_dataset` WHERE `position`!=0 ORDER BY `position` ASC');
+		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC');
 		$this->column_count = count($this->data);
 	}
 
@@ -84,13 +84,13 @@ class Dataset {
 				if ($set['zf_mode'] != 'AVG')
 					$query_set .= ', '.$set['zf_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
 
-		$summary = Mysql::getInstance()->fetch('SELECT *, SUM(1) as `num`'.$query_set.' FROM `ltb_training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' GROUP BY `sportid`');
+		$summary = Mysql::getInstance()->fetch('SELECT *, SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' GROUP BY `sportid`');
 		foreach ($summary as $var => $value)
 			$this->Training->set($var, $value);
 
 		foreach ($this->data as $set)
 			if ($set['zusammenfassung'] == 1 && $set['zf_mode'] == 'AVG') {
-				$avg_data = Mysql::getInstance()->fetch('SELECT AVG(`'.$set['name'].'`) as `'.$set['name'].'` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' AND `'.$set['name'].'`!=0 AND `'.$set['name'].'`!="" AND `sportid`="'.$sportid.'" GROUP BY `sportid`');
+				$avg_data = Mysql::getInstance()->fetch('SELECT AVG(`'.$set['name'].'`) as `'.$set['name'].'` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' AND `'.$set['name'].'`!=0 AND `'.$set['name'].'`!="" AND `sportid`="'.$sportid.'" GROUP BY `sportid`');
 				if ($avg_data === false)
 					$avg_data[$set['name']] = '';
 				$this->Training->set($set['name'], $avg_data[$set['name']]);

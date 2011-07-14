@@ -28,7 +28,7 @@ if ($_GET['all'] == 'all') {
 			$Temperatures[$y] = array(VOID,VOID,VOID,VOID,VOID,VOID,VOID,VOID,VOID,VOID,VOID,VOID);
 	}
 
-	$Data = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, MONTH(FROM_UNIXTIME(`time`)) as `m`, AVG(`temperatur`) as `temp` FROM `ltb_training` WHERE !ISNULL(`temperatur`) GROUP BY `y`, `m` ORDER BY `y` ASC, `m` ASC');
+	$Data = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, MONTH(FROM_UNIXTIME(`time`)) as `m`, AVG(`temperatur`) as `temp` FROM `'.PREFIX.'training` WHERE !ISNULL(`temperatur`) GROUP BY `y`, `m` ORDER BY `y` ASC, `m` ASC');
 	foreach ($Data as $dat)
 		$Temperatures[$dat['y']][$dat['m'] - 1] = $dat['temp'];
 
@@ -47,7 +47,7 @@ elseif ($Year >= START_YEAR && $Year <= date('Y')) {
 			$Temperatures[] = VOID;
 		}
 
-		$Data = Mysql::getInstance()->fetchAsArray('SELECT MONTH(FROM_UNIXTIME(`time`)) as `m`, AVG(`temperatur`) as `temp` FROM `ltb_training` WHERE !ISNULL(`temperatur`) AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY `m` ORDER BY `m` ASC');
+		$Data = Mysql::getInstance()->fetchAsArray('SELECT MONTH(FROM_UNIXTIME(`time`)) as `m`, AVG(`temperatur`) as `temp` FROM `'.PREFIX.'training` WHERE !ISNULL(`temperatur`) AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY `m` ORDER BY `m` ASC');
 		foreach ($Data as $dat)
 			$Temperatures[$dat['m'] - 1] = $dat['temp'];
 	}
@@ -61,7 +61,7 @@ elseif ($Year >= START_YEAR && $Year <= date('Y')) {
 			$Temperatures[] = VOID;
 		}
 
-		$Data = Mysql::getInstance()->fetchAsArray('SELECT DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`, AVG(`temperatur`) as `temp` FROM `ltb_training` WHERE !ISNULL(`temperatur`) AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY `d` ORDER BY `d` ASC');
+		$Data = Mysql::getInstance()->fetchAsArray('SELECT DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`, AVG(`temperatur`) as `temp` FROM `'.PREFIX.'training` WHERE !ISNULL(`temperatur`) AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY `d` ORDER BY `d` ASC');
 		foreach ($Data as $dat)
 			$Temperatures[$dat['d'] - 1] = $dat['temp'];
 	}

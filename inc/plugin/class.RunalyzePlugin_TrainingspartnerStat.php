@@ -48,7 +48,7 @@ class RunalyzePlugin_TrainingspartnerStat extends PluginStat {
 		echo Helper::spaceTR(2);
 
 		$partner = array();
-		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `trainingspartner` FROM `ltb_training` WHERE `trainingspartner` != ""');
+		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `trainingspartner` FROM `'.PREFIX.'training` WHERE `trainingspartner` != ""');
 		if (empty($trainings))
 			echo('
 				<tr class="a1">

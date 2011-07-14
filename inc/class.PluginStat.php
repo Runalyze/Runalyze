@@ -56,7 +56,7 @@ abstract class PluginStat extends Plugin {
 	 */
 	protected function displayLinksForVariousStatistics() {
 		echo(NL.'<small class="right">'.NL);
-		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
+		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 		foreach ($others as $i => $other) {
 			if ($i != 0)
 				echo(' | ');
@@ -100,7 +100,7 @@ abstract class PluginStat extends Plugin {
 	protected function displaySportsNavigation() {
 		echo '<small class="left">';
 		
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `ltb_sports` ORDER BY `id` ASC');
+		$sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
 		foreach ($sports as $i => $sportlink) {
 			if ($i != 0)
 				echo(' |'.NL);
@@ -152,7 +152,7 @@ abstract class PluginStat extends Plugin {
 	 */
 	static public function getInnerLinkFor($id, $name = '') {
 		if ($name == '') {
-			$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `key` FROM `ltb_plugin` WHERE `id`='.$id);
+			$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `key` FROM `'.PREFIX.'plugin` WHERE `id`='.$id);
 			$name = $dat['name'];
 			$key  = $dat['key'];
 		}
