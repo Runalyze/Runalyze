@@ -8,7 +8,7 @@ $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->add('TODO', 'Config: use_koerperfett, use_ruhepuls, use_blutdruck');
+$Error->add('TODO', 'Config: use_koerperfett, use_ruhepuls');
 $Error->add('TODO', 'Config: wunschgewicht');
 
 if (isset($_POST) && $_POST['type'] == "user") {
@@ -24,16 +24,12 @@ if (isset($_POST) && $_POST['type'] == "user") {
 		$vars[] = 'puls_ruhe';
 		$vars[] = 'puls_max';
 	}
-	if (CONFIG_USE_BLUTDRUCK == 1) {
-		$vars[] = 'blutdruck_min';
-		$vars[] = 'blutdruck_max';
-	}
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
 			$columns[] = $var;
 			$values[] = Helper::CommaToPoint($_POST[$var]);
 		}
-	$id = $Mysql->insert('ltb_user', $columns, $values);
+	$id = $Mysql->insert(PREFIX.'user', $columns, $values);
 
 	$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
 }
@@ -70,13 +66,6 @@ if (isset($submit))
 	<small>Ruhepuls</small><br />
 <input type="text" name="puls_max" value="<?php echo $dat['puls_max']; ?>" size="5" />
 	<small>Maximalpuls</small><br />
-<?php endif; ?>
-
-<?php if (CONFIG_USE_BLUTDRUCK == 1): ?><br />
-<input type="text" name="blutdruck_min" value="<?php echo $dat['blutdruck_min']; ?>" size="5" />
-	<small>zu</small>
-<input type="text" name="blutdruck_max" value="<?php echo $dat['blutdruck_max']; ?>" size="5" />
-	<small>Blutdruck</small><br />
 <?php endif; ?>
 
 <input type="submit" value="Eintragen" />

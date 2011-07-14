@@ -62,9 +62,9 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 
 		if (!empty($this->schuhe)) {
 			foreach ($this->schuhe as $i => $schuh) {
-				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC');
-				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `ltb_training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC');
-				$trainings     = Mysql::getInstance()->num('SELECT * FROM `ltb_training` WHERE `schuhid`="'.$schuh['id'].'"');
+				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC');
+				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC');
+				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`="'.$schuh['id'].'"');
 				$in_use = $schuh['inuse']==1 ? '' : ' small';
 
 				echo('
@@ -93,7 +93,7 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_schuhe` ORDER BY `inuse` DESC, `km` DESC');
+		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` ORDER BY `inuse` DESC, `km` DESC');
 	}
 }
 ?>

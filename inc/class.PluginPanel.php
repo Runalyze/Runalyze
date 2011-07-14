@@ -111,7 +111,7 @@ abstract class PluginPanel extends Plugin {
 			return;
 		}
 
-		Mysql::getInstance()->update('ltb_plugin', $this->id, 'active', (($this->active == parent::$ACTIVE) ? parent::$ACTIVE_VARIOUS : parent::$ACTIVE));
+		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'active', (($this->active == parent::$ACTIVE) ? parent::$ACTIVE_VARIOUS : parent::$ACTIVE));
 	}
 
 	/**
@@ -120,11 +120,11 @@ abstract class PluginPanel extends Plugin {
 	 */
 	public function move($mode) {
 		if ($mode == 'up') {
-			Mysql::getInstance()->query('UPDATE `ltb_plugin` SET `order`='.$this->order.' WHERE `type`="panel" AND `order`='.($this->order-1).' LIMIT 1');
-			Mysql::getInstance()->update('ltb_plugin', $this->id, 'order', ($this->order-1));
+			Mysql::getInstance()->query('UPDATE `'.PREFIX.'plugin` SET `order`='.$this->order.' WHERE `type`="panel" AND `order`='.($this->order-1).' LIMIT 1');
+			Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'order', ($this->order-1));
 		} elseif ($mode == 'down') {
-			Mysql::getInstance()->query('UPDATE `ltb_plugin` SET `order`='.($this->order).' WHERE `type`="panel" AND `order`='.($this->order+1).' LIMIT 1');
-			Mysql::getInstance()->update('ltb_plugin', $this->id, 'order', ($this->order+1));
+			Mysql::getInstance()->query('UPDATE `'.PREFIX.'plugin` SET `order`='.($this->order).' WHERE `type`="panel" AND `order`='.($this->order+1).' LIMIT 1');
+			Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'order', ($this->order+1));
 		}
 	}
 

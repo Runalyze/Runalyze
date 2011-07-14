@@ -48,7 +48,7 @@ class RunalyzePlugin_TrainingszeitenStat extends PluginStat {
 		echo Helper::spaceTR(8);
 
 		$sports_not_short = '';
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `ltb_sports` WHERE `short`=0');
+		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports` WHERE `short`=0');
 		foreach ($sports as $sport)
 			$sports_not_short .= $sport['id'].',';
 	
@@ -56,7 +56,7 @@ class RunalyzePlugin_TrainingszeitenStat extends PluginStat {
 			SELECT *,
 				HOUR(FROM_UNIXTIME(`time`)) as `H`,
 				MINUTE(FROM_UNIXTIME(`time`)) as `MIN`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid` IN('.substr($sports_not_short,0,-1).') AND
 				(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)

@@ -87,7 +87,7 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 				SUM(1) as `num`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
-			FROM `ltb_training`
+			FROM `'.PREFIX.'training`
 			GROUP BY `year`, `month`');
 		
 		foreach ($result as $dat) {

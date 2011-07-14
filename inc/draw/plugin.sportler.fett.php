@@ -18,7 +18,7 @@ $Adiposes   = array();
 $Water      = array();
 $Muscles    = array();
 
-$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_user` ORDER BY `time` DESC LIMIT '.$data_num);
+$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT '.$data_num);
 
 if (!empty($data)) {
 	foreach ($data as $dat) {

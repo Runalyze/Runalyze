@@ -17,7 +17,7 @@ $timeFormat  = 'i:s';
 
 $titleCenter = str_replace('&nbsp;', ' ', $titleCenter);
 
-$competitions = Mysql::getInstance()->fetchAsArray('SELECT `time`, `dauer` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$distance.'" ORDER BY `time` ASC');
+$competitions = Mysql::getInstance()->fetchAsArray('SELECT `time`, `dauer` FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$distance.'" ORDER BY `time` ASC');
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		$Dates[]   = $competition['time'];

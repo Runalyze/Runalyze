@@ -122,7 +122,7 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->sport = Mysql::getInstance()->fetch('ltb_sports', $this->sportid);
+		$this->sport = Mysql::getInstance()->fetch(''.PREFIX.'sports', $this->sportid);
 
 		if ($this->year != -1) {
 			$this->num = 12;
@@ -153,8 +153,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initStundenData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
 			$text = ($dat['dauer'] == 0) ? '&nbsp;' : Helper::Time($dat['dauer'], false);
 			$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
@@ -166,8 +166,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initKMData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
 			$text = ($dat['distanz'] == 0) ? '&nbsp;' : Helper::Km($dat['distanz'], 0);
 			$this->KMData[] = array('i' => $dat['i'], 'text' => $text);
@@ -179,8 +179,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initTempoData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
 			$text = ($dat['dauer'] == 0) ? '&nbsp;' : Helper::Speed($dat['distanz'], $dat['dauer'], $this->sportid);
 			$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
@@ -193,8 +193,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	private function initVDOTData() {
 		for ($i = $this->num_start; $i <= $this->num_end; $i++) {
 			$result = ($this->year != -1)
-				? Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
-				: Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
+				? Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
+				: Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
 			if ($result !== false)
 				$VDOT = JD::correctVDOT($result['vdot']);
 			else
@@ -210,8 +210,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initTRIMPData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `ltb_training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
 			$avg_num = ($this->year != -1) ? 15 : 180;
 			$text = ($dat['trimp'] == 0)

@@ -78,7 +78,7 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getSportIcon($id, $title = '') {
-		$data = Mysql::getInstance()->fetch('ltb_sports', $id);
+		$data = Mysql::getInstance()->fetch(PREFIX.'sports', $id);
 		if ($data === false)
 			return '';
 
@@ -94,7 +94,7 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getWeatherIcon($id, $title = '') {
-		$data = Mysql::getInstance()->fetch('ltb_wetter', $id);
+		$data = Mysql::getInstance()->fetch(PREFIX.'wetter', $id);
 		if ($data === false)
 			return '';
 

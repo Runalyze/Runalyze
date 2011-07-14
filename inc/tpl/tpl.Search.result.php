@@ -58,8 +58,8 @@ if (!isset($_POST['seite']))
 	$_POST['seite'] = 1;
 $limit = $_POST['seite']*15 - 15;
 
-$trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', 15');
-$num_all   = Mysql::getInstance()->num('SELECT * FROM `ltb_training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
+$trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', 15');
+$num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
 ?>
 
 <table style="width=100%;">

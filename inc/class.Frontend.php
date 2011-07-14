@@ -12,6 +12,7 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class::Error
+ * //@uses class::Config
  * @uses class::Icon
  * @uses class::Ajax
  * @uses class::Plugin
@@ -81,8 +82,8 @@ class Frontend {
 	 */
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'\\');
-		define('LTB_VERSION', '0.5');
-		define('LTB_DEBUG', true);
+		define('RUNALYZE_VERSION', '0.5');
+		define('RUNALYZE_DEBUG', true);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -95,7 +96,7 @@ class Frontend {
 	 */
 	private function initVars() {
 		if (!is_bool($this->ajax_request)) {
-			Error::getInstance()->add('WARNING','First argument for class::Frontend__construct() is expected to be boolean.');
+			Error::getInstance()->add('WARNING',' First argument for class::Frontend__construct() is expected to be boolean.');
 			$this->ajax_request = true;
 		}
 	}
@@ -122,7 +123,10 @@ class Frontend {
 	 * Define all CONFIG_CONSTS
 	 */
 	private function initConfigConsts() {
-		$config = Mysql::getInstance()->fetch('SELECT * FROM `ltb_config` LIMIT 1');
+		Error::getInstance()->addTodo('Set up new class::Config');
+		//require_once(FRONTEND_PATH.'class.Config.php');
+
+		$config = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'config` LIMIT 1');
 		foreach ($config as $key => $value)
 			define('CONFIG_'.strtoupper($key), $value);
 		unset($config);
@@ -144,6 +148,7 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.PluginPanel.php');
 		require_once(FRONTEND_PATH.'class.PluginStat.php');
 		//require_once(FRONTEND_PATH.'class.PluginDraw.php');
+		//require_once(FRONTEND_PATH.'class.PluginTool.php');
 		require_once(FRONTEND_PATH.'class.Draw.php');
 	}
 
@@ -153,9 +158,6 @@ class Frontend {
 	public function displayHeader() {
 		header('Content-type: text/html; charset=ISO-8859-1');
 
-		//if ($_GET['action'] == 'do')
-		//	include('../config/mysql_query.php');
-
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.header.php');
 	}
@@ -164,7 +166,7 @@ class Frontend {
 	 * Function to display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (LTB_DEBUG)
+		if (RUNALYZE_DEBUG)
 			include('tpl/tpl.Frontend.debug.php');
 
 		if (!$this->ajax_request)
@@ -175,7 +177,7 @@ class Frontend {
 	 * Display the panels for the right side
 	 */
 	public function displayPanels() {
-		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
+		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
 		foreach ($panels as $i => $panel) {
 			$Panel = Plugin::getInstanceFor($panel['key']);
 			$Panel->display();

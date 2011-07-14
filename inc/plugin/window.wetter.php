@@ -6,8 +6,6 @@
 require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
-
-// TODO Get new draw-file with draw-class
 ?>
 <h1>Wetter</h1>
 

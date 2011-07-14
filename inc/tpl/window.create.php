@@ -67,8 +67,9 @@ if (isset($_POST['sportid']))
 		<span id="typen" style="display: none;">
 			<input type="hidden" name="count" id="count" value="1" />
 			<select name="typid">
+				<option value="0">?</option>
 <?php
-$typen = $Mysql->fetchAsArray('SELECT * FROM `ltb_typ` ORDER BY `id` ASC');
+$typen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'typ` ORDER BY `id` ASC');
 foreach($typen as $typ) {
 	$onClick = '';
 	if ($typ['count'] == 0)
@@ -86,8 +87,9 @@ foreach($typen as $typ) {
 			</select>
 
 			<select name="schuhid">
+				<option value="0">?</option>
 <?php
-$schuhe = $Mysql->fetchAsArray('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
+$schuhe = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
 foreach($schuhe as $schuh) {
 	$selected = isset($_POST) ? Helper::Selected($_POST['schuhid'], $schuh['id']) : '';
 	echo('
@@ -138,7 +140,7 @@ foreach($schuhe as $schuh) {
 			<small style="margin-right: 100px;">Strecke</small>
 		<select name="wetterid">
 <?php
-$wetter = $Mysql->fetchAsArray('SELECT * FROM `ltb_wetter` ORDER BY `order` ASC');
+$wetter = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'wetter` ORDER BY `order` ASC');
 foreach($wetter as $dat) {
 	$selected = isset($_POST) ? Helper::Selected($_POST['wetterid'], $dat['id']) : '';
 	echo('<option value="'.$dat['id'].'"'.$selected.'>'.$dat['name'].'</option>');
@@ -152,7 +154,7 @@ foreach($wetter as $dat) {
 			<br />
 		<input type="hidden" name="kleidung" id="kleidung" />
 <?php
-$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `ltb_kleidung` ORDER BY `name_kurz` ASC');
+$kleidungen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `name_kurz` ASC');
 foreach($kleidungen as $kleidung)
 	echo('
 		<input type="checkbox" name="'.$kleidung['name_kurz'].'"'.Helper::Checked($_POST[$kleidung['name_kurz']]).' onClick="document.getElementById(\'kleidung\').value +=\''.$kleidung['id'].',\';" /> <small style="margin-right: 10px;">'.$kleidung['name_kurz'].'</small>');

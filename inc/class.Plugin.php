@@ -176,7 +176,7 @@ abstract class Plugin {
 			Error::getInstance()->addError('Can\'t find \'plugin/class.'.$PLUGINKEY.'.php\'.');
 			return false;
 		} else {
-			$dat = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `ltb_plugin` WHERE `key`="'.$PLUGINKEY.'"');
+			$dat = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="'.$PLUGINKEY.'"');
 			if ($dat === false)
 				$id = self::$INSTALLER_ID;
 			else
@@ -239,7 +239,7 @@ abstract class Plugin {
 			'99',
 			);
 
-		$this->id = Mysql::getInstance()->insert('ltb_plugin', $columns, $values);
+		$this->id = Mysql::getInstance()->insert(PREFIX.'plugin', $columns, $values);
 		$this->config = $this->getDefaultConfigVars();
 
 		$this->setActive(1);
@@ -253,7 +253,7 @@ abstract class Plugin {
 		if ($this->id == self::$INSTALLER_ID)
 			return;
 
-		$dat = Mysql::getInstance()->fetch('ltb_plugin', $this->id);
+		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $this->id);
 
 		$this->active = $dat['active'];
 		$this->filename = $dat['filename'];
@@ -471,7 +471,7 @@ abstract class Plugin {
 		}
 		return;
 
-		Mysql::getInstance()->update('ltb_plugin', $this->id, 'config', $string);
+		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'config', $string);
 	}
 
 	/**
@@ -479,7 +479,7 @@ abstract class Plugin {
 	 * @param int $active
 	 */
 	public function setActive($active = 1) {
-		Mysql::getInstance()->update('ltb_plugin', $this->id, 'active', $active);
+		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'active', $active);
 		$this->active = $active;
 	}
 
@@ -504,7 +504,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	static public function getKeyForId($id) {
-		$dat = Mysql::getInstance()->fetch('ltb_plugin', $id);
+		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $id);
 
 		if ($dat === false) {
 			Error::getInstance()->addError('Plugin::getKeyForId(): No Plugin with id \''.$id.'\' found.');

@@ -58,7 +58,7 @@ class Helper {
 	 * @return string|array Name of sport or all information as array
 	 */
 	public static function Sport($sport_id, $as_array = false) {
-		$sport = Mysql::getInstance()->fetch('ltb_sports', $sport_id);
+		$sport = Mysql::getInstance()->fetch(PREFIX.'sports', $sport_id);
 
 		return ($as_array) ? $sport : $sport['name'];
 	}
@@ -69,7 +69,7 @@ class Helper {
 	 * @return array
 	 */
 	public static function TypeAsArray($type_id) {
-		return Mysql::getInstance()->fetch('ltb_typ', $type_id);
+		return Mysql::getInstance()->fetch(PREFIX.'typ', $type_id);
 	}
 
 	/**
@@ -123,7 +123,7 @@ class Helper {
 	 * @return string|array   Name of shoe or all information as array
 	 */
 	public static function Shoe($shoe_id, $as_array = false) {
-		$shoe = Mysql::getInstance()->fetch('ltb_schuhe', $shoe_id);
+		$shoe = Mysql::getInstance()->fetch(PREFIX.'schuhe', $shoe_id);
 
 		return ($as_array) ? $shoe : $shoe['name'];
 	}
@@ -143,7 +143,7 @@ class Helper {
 	 * @return string name for this weather
 	 */
 	public static function WeatherName($wetterid) {
-		$wetter = Mysql::getInstance()->fetch('ltb_wetter', $wetterid);
+		$wetter = Mysql::getInstance()->fetch(PREFIX.'wetter', $wetterid);
 		return ($wetter !== false)
 			? $wetter['name']
 			: '';
@@ -163,7 +163,7 @@ class Helper {
 		$bpm = $pulse.'bpm';
 		$hf  = '?&nbsp;&#37;';
 
-		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `ltb_user` ORDER BY ABS(`time`-'.$time.') ASC');
+		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
 		if ($HFmax !== false)
 			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
 
@@ -309,7 +309,7 @@ class Helper {
 	public static function TrainingIsCompetition($id) {
 		if (!is_numeric($id))
 			return false;
-		return (Mysql::getInstance()->num('SELECT 1 FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `id`='.$id) > 0);
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `id`='.$id) > 0);
 	}
 
 	/**
@@ -320,7 +320,7 @@ class Helper {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `ltb_training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
+		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
 		if ($pb != '')
@@ -337,7 +337,7 @@ class Helper {
 	public static function TRIMP($training_id, $trimp = false) {
 		global $config, $global;
 	
-		$dat = Mysql::getInstance()->fetch('ltb_training', $training_id);
+		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $training_id);
 		if ($dat === false)
 			$dat = array();
 
@@ -368,7 +368,7 @@ class Helper {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
 		return round($dat['sum']/ATL_DAYS);
 	}
 
@@ -382,7 +382,7 @@ class Helper {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `ltb_training` WHERE `time` BETWEEN '.($time-CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
 		return round($dat['sum']/CTL_DAYS);
 	}
 
@@ -424,7 +424,7 @@ class Helper {
 
 		// Weekkilometers
 		$wk_sum = 0;
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distanz` FROM `ltb_training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distanz` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
 			$tage = round ( ($timestamp - $dat['time']) / DAY_IN_S , 1 );
 			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
@@ -432,7 +432,7 @@ class Helper {
 		$points += $wk_sum / 20;
 
 		// LongJogs ...
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `ltb_training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat)
 			$points += ($dat['distanz']-15) / 2;
 
@@ -673,7 +673,7 @@ class Helper {
 	 * @return int   Modus
 	 */
 	public static function getModus($row) {
-		$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `modus` FROM `ltb_dataset` WHERE `name`="'.$row.'"');
+		$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `modus` FROM `'.PREFIX.'dataset` WHERE `name`="'.$row.'"');
 		return $dat['modus'];
 	}
 
@@ -751,14 +751,14 @@ class Helper {
 	}
 
 	/**
-	 * Get the HFmax from ltb_user
+	 * Get the HFmax from user-table
 	 * @return int   HFmax
 	 */
 	public static function getHFmax() {
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_max` FROM `ltb_user` ORDER BY `time` DESC');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
@@ -769,14 +769,14 @@ class Helper {
 	}
 
 	/**
-	 * Get the HFrest from ltb_user
+	 * Get the HFrest from user-table
 	 * @return int   HFrest
 	 */
 	public static function getHFrest() {
 		if (defined('HF_REST'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_ruhe` FROM `ltb_user` ORDER BY `time` DESC');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_ruhe` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
@@ -791,7 +791,7 @@ class Helper {
 	 * @return int   Timestamp
 	 */
 	public static function getStartTime() {
-		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `ltb_training`');
+		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`');
 
 		if ($data === false)
 			return time();

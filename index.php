@@ -30,9 +30,10 @@ $DataBrowser->display();
 <?php
 /**
  * STATISTIC PLUGINS
+ * @TODO Move to class::Frontend
  */
 Error::getInstance()->addTodo('Plugins have to be deacitvated automatically if modus is unused', __FILE__, __LINE__);
-$stats = Mysql::getInstance()->fetchAsArray('SELECT * FROM `ltb_plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
+$stats = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=1 ORDER BY `order` ASC');
 foreach($stats as $i => $stat) {
 	//$Stat = new Stat($stat['id']);
 	$Stat = Plugin::getInstanceFor($stat['key']);
@@ -42,7 +43,7 @@ foreach($stats as $i => $stat) {
 		<li'.(($i == 0) ? ' class="active"' : '').'>'.$Stat->getLink().'</li>');
 }
 
-$other = Mysql::getInstance()->fetchSingle('SELECT `key` FROM `ltb_plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
+$other = Mysql::getInstance()->fetchSingle('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 if ($other !== false) {
 	//$Stat = new Stat($other['id']);
 	$Stat = Plugin::getInstanceFor($other['key']);

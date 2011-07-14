@@ -16,12 +16,12 @@ if (isset($_POST) && $_POST['type'] == 'schuh' && $_POST['name'] != '') {
 			$columns[] = $var;
 			$values[] = $_POST[$var];
 		}
-	$Mysql->insert('ltb_schuhe', $columns, $values);
+	$Mysql->insert(PREFIX.'schuhe', $columns, $values);
 
 	$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
 }
 elseif (isset($_POST) && $_POST['type'] == 'schuh_unuse') {
-	$Mysql->update('ltb_schuhe', $_POST['schuhid'], 'inuse', 0);
+	$Mysql->update(PREFIX.'schuhe', $_POST['schuhid'], 'inuse', 0);
 
 	$submit = '<em>Der Schuh kann nun nicht mehr benutzt werden!</em><br /><br />';
 }
@@ -55,7 +55,7 @@ if (isset($submit))
 	<input type="hidden" name="type" value="schuh_unuse" />
 	<select name="schuhid">
 <?php
-$schuhe = $Mysql->fetchAsArray('SELECT * FROM `ltb_schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
+$schuhe = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
 foreach($schuhe as $schuh)
 	echo('
 		<option value="'.$schuh['id'].'">'.$schuh['name'].'</option>');
