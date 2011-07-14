@@ -10,21 +10,23 @@
  * @var   $passwort   The password for the given user. Please note: Never leave a mysql-user without password.
  */
 $host = 'localhost';
-$database = 'ltb';
-$username = 'd0033d80';
-$password = 'fc683f6a';
+$database = 'runalyze';
+$username = 'runalyze';
+$password = 'runalyze';
 
 /**
  * Please set these global constants.
  * 
- * @var   MAINSPORT   The ID of the main sport, normally '1' for 'Laufen'
- * @var   RUNNINGSPORT   The ID of the running sport
- * @var   WK_TYPID    The ID of the competition-type for 'Laufen'
- * @var   LL_TYPID    The ID of the longjog-type for 'Laufen'
- * @var   ATL_DAYS    Number of days considered for 'Actual Training Load', default 7
- * @var   CTL_DAYS    Number of days considered for 'Chroni Training Load', default 42
+ * @var   PREFIX		Database prefix, normally 'runalyze_'
+ * @var   MAINSPORT		The ID of the main sport, normally '1' for 'Laufen'
+ * @var   RUNNINGSPORT	The ID of the running sport
+ * @var   WK_TYPID		The ID of the competition-type for 'Laufen'
+ * @var   LL_TYPID		The ID of the longjog-type for 'Laufen'
+ * @var   ATL_DAYS		Number of days considered for 'Actual Training Load', default 7
+ * @var   CTL_DAYS		Number of days considered for 'Chroni Training Load', default 42
  */
 // TODO Get these information from config-db?
+define('PREFIX','runalyze_');
 define('MAINSPORT',1);
 define('RUNNINGSPORT',1);
 define('WK_TYPID',5);
