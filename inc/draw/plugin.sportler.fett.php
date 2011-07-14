@@ -39,7 +39,7 @@ $ScaleFormat    = array("XMargin" => 0, "DrawYLines" => array(1), "TickAlpha" =>
 $LegendFormat   = array("Style" => LEGEND_NOBORDER, "Mode" => LEGEND_HORIZONTAL);
 
 
-if (CONFIG_USE_KOERPERFETT) {
+if (CONFIG_USE_KOERPERFETT && !empty($Water) && !empty($Adiposes) && !empty($Muscles)) {
 	$WaterFormat = array("R" => 50, "G" => 50, "B" => 255);
 	$Draw->pData->addPoints($Water, 'Wasser');
 	$Draw->pData->setSerieOnAxis('Wasser', 1);
@@ -58,7 +58,7 @@ if (CONFIG_USE_KOERPERFETT) {
 	$Draw->pData->setAxisPosition(1, AXIS_POSITION_RIGHT);
 	$Draw->pData->setAxisUnit(1, ' %');
 	$Draw->pData->setAxisUnit(0, ' %');
-} else {
+} elseif (!CONFIG_USE_KOERPERFETT) {
 	$titleError = 'Es werden keine K&#246;rperfettdaten protokolliert.';
 }
 
@@ -69,7 +69,8 @@ $Draw->pData->addPoints($xAxis, 'Labels');
 $Draw->pData->setAbscissa('Labels');
 
 $Draw->startImage();
-$Draw->drawScale($ScaleFormat);
+if ($titleError == '')
+	$Draw->drawScale($ScaleFormat);
 $Draw->drawAreaChart();
 
 $Draw->pImage->drawLegend(130, 15, $LegendFormat);

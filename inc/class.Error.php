@@ -103,13 +103,27 @@ class Error {
 	 * Prints all errors to screen or into the log-file
 	 */
 	public function display() {
-		if (!$this->log)
-			print implode('<br />', $this->errors);
-		else {
+		if (!$this->log) {
+			echo $this->getErrorTable();
+		} else {
 			$handle = fopen($this->log_file, 'w+');
-			fwrite($handle, implode('<br />', $this->errors));
+			fwrite($handle, $this->getErrorTable());
 			fclose($handle);
 		}
+	}
+
+	/**
+	 * Get table for displaying all errors
+	 * @return string
+	 */
+	private function getErrorTable() {
+		$table = '<table style="width:90%;margin:0;">';
+		foreach ($this->errors as $error)
+			$table .= '<tr><td class="b">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>';
+
+		$table .= '</table>';
+
+		return $table;
 	}
 
 	/**
@@ -127,7 +141,7 @@ class Error {
 			$message .= ')';
 		}
 		
-		$this->errors[] = '<strong>'.$type.'</strong> '.$message;
+		$this->errors[] = array('type' => $type, 'message' => $message);
 	}
 
 	/**
@@ -137,7 +151,7 @@ class Error {
 	 * @param int $line
 	 */
 	public function addError($message, $file = '', $line = -1) {
-		$this->add('ERROR', $message, $file, $line);
+		$this->add('ERROR', self::formErrorMessage($message, debug_backtrace()), $file, $line);
 	}
 
 	/**
@@ -147,7 +161,7 @@ class Error {
 	 * @param int $line
 	 */
 	public function addWarning($message, $file = '', $line = -1) {
-		$this->add('WARNING', $message, $file, $line);
+		$this->add('WARNING', self::formErrorMessage($message, debug_backtrace()), $file, $line);
 	}
 
 	/**
@@ -158,6 +172,29 @@ class Error {
 	 */
 	public function addTodo($message, $file = '', $line = -1) {
 		$this->add('TODO', $message, $file, $line);
+	}
+
+	/**
+	 * Form an error-message with backtrace-info
+	 * @param string $message
+	 * @param array $backtrace
+	 * @return string
+	 */
+	private function formErrorMessage($message, $backtrace) {
+		$id = md5($message);
+		$trace = '';
+		foreach ($backtrace as $i => $part) {
+			if ($i != 0) {
+				$trace .= $part['file'].'<small>::'.$part['line'].'</small><br />';
+				$trace .= '<strong>'.($part['class'] != '' ? $part['class'].'::' : '').$part['function'].'</strong>';
+				$trace .= '<small>('.implode(', ', $part['args']).')</small><br /><br />';
+			}
+		}
+
+		$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
+		$message .= '<div id="'.$id.'" class="hide"><br />'.$trace.'</div>';
+
+		return $message;
 	}
 }
 

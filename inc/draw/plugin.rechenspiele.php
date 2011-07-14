@@ -20,7 +20,7 @@ $Trimps_raw  = array();
 $VDOTs_raw   = array();
 
 $Year = (int)$_GET['y'];
-if ($Year >= START_YEAR && $Year <= date('Y')) {
+if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	for ($d = 1; $d <= 366; $d++) {
 		$Months[] = Helper::Month(ceil(12*$d/366), true);
 		$ATLs[]   = VOID;

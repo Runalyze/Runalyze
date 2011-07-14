@@ -806,7 +806,7 @@ class Helper {
 	public static function getStartTime() {
 		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`');
 
-		if ($data === false)
+		if ($data === false || $data['time'] == 0)
 			return time();
 
 		return $data['time'];

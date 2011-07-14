@@ -66,7 +66,9 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 			</p>'.NL);	
 		}
 
-		echo('</div></div>');
+		if (!$inuse)
+			echo '</div>';
+		echo '</div>';
 
 		echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
 		echo Helper::clearBreak();

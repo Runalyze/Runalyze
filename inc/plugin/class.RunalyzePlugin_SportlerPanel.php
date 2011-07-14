@@ -56,11 +56,11 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 				<div id="sportler-gewicht" class="change">');
 
 		$dat = Mysql::getInstance()->fetch(PREFIX.'user', 'LAST');
-		if (CONFIG_USE_GEWICHT == 1)
-			$left = '<strong title="'.date("d.m.Y",$dat['time']).'">'.$dat['gewicht'].' kg</strong>';
+		if (CONFIG_USE_GEWICHT)
+			$left = '<strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['gewicht']).' kg</strong>';
 		
-		if (CONFIG_USE_RUHEPULS == 1)
-			$right = $dat['puls_ruhe'].' bpm / '.$dat['puls_max'].' bpm';
+		if (CONFIG_USE_RUHEPULS)
+			$right = Helper::Unknown($dat['puls_ruhe']).' bpm / '.Helper::Unknown($dat['puls_max']).' bpm';
 		
 		echo('		<p>
 						<span>'.$right.'</span>
@@ -75,16 +75,13 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 			<div id="sportler-analyse" class="change" style="display:none;">');
 
 		$left = ''; $right = '';
-		if (CONFIG_USE_KOERPERFETT == 1)
-			$left = '<small>'.$dat['fett'].'&#37;Fett, '.$dat['wasser'].'&#37;Wasser, '.$dat['muskeln'].'&#37;Muskeln</small>';
-	
-		if (CONFIG_USE_BLUTDRUCK == 1) 
-			$right = '<small>Blutdruck: '.$dat['blutdruck_min'].' zu '.$dat['blutdruck_max'];
+		if (CONFIG_USE_KOERPERFETT)
+			$left = '<small>'.Helper::Unknown($dat['fett']).'&#37;Fett, '.Helper::Unknown($dat['wasser']).'&#37;Wasser, '.Helper::Unknown($dat['muskeln']).'&#37;Muskeln</small>';
 	
 		echo('		<p>
 						<span>'.$right.'</span>
 						<a class="change" href="sportler-gewicht" target="sportler">Analyse/<del>Allgemein</del>:</a>
-						'.$lefl.'
+						'.$left.'
 					</p>
 	
 					<div class="c">

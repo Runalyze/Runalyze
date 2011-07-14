@@ -17,7 +17,7 @@ $possibleKM            = 0;
 $isDrawable            = true;
 
 $Year = (int)$_GET['y'];
-if ($Year >= START_YEAR && $Year <= date('Y')) {
+if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	
 	for ($m = 1; $m <= 12; $m++) {
 		$Months[]                = Helper::Month($m, true);

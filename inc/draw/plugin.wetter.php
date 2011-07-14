@@ -38,7 +38,7 @@ if ($_GET['all'] == 'all') {
 	}
 }
 
-elseif ($Year >= START_YEAR && $Year <= date('Y')) {
+elseif ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	if ($_GET['m'] == 'm') {
 		$titleCenter = 'Durchschnittstemperaturen '.$Year;
 

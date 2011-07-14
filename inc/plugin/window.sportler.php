@@ -36,7 +36,7 @@ if (isset($_POST) && $_POST['type'] == "user") {
 
 $Frontend->displayHeader();
 
-$dat = $Mysql->fetch('ltb_user','LAST');
+$dat = $Mysql->fetch(PREFIX.'user','LAST');
 ?>
 <h1>K&ouml;rper-Daten eingeben</h1>
 
