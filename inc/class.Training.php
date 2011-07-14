@@ -77,8 +77,7 @@ class Training {
 
 		$this->id = $id;
 		$this->data = $dat;
-		// TODO
-		// $this->fillUpDataWithDefaultValues();
+		$this->fillUpDataWithDefaultValues();
 
 		if ($this->data['vdot'] != 0)
 			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
@@ -110,6 +109,34 @@ class Training {
 		// 'temperatur' is set as NULL on default and will fail on above test
 		if ($var != 'temperatur')
 			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
+	}
+
+	/**
+	 * Fill internal data with default values for NULL-columns
+	 */
+	private function fillUpWithDefaultValues() {
+		if (is_null($this->data['strecke']))
+			$this->data['strecke'] = '';
+		if (is_null($this->data['splits']))
+			$this->data['splits'] = '';
+		if (is_null($this->data['bemerkung']))
+			$this->data['bemerkung'] = '';
+		if (is_null($this->data['trainingspartner']))
+			$this->data['trainingspartner'] = '';
+		if (is_null($this->data['arr_time']))
+			$this->data['arr_time'] = '';
+		if (is_null($this->data['arr_lat']))
+			$this->data['arr_lat'] = '';
+		if (is_null($this->data['arr_lon']))
+			$this->data['arr_lon'] = '';
+		if (is_null($this->data['arr_alt']))
+			$this->data['arr_alt'] = '';
+		if (is_null($this->data['arr_dist']))
+			$this->data['arr_dist'] = '';
+		if (is_null($this->data['arr_heart']))
+			$this->data['arr_heart'] = '';
+		if (is_null($this->data['arr_pace']))
+			$this->data['arr_pace'] = '';
 	}
 
 	/**

@@ -60,6 +60,11 @@ class Helper {
 	public static function Sport($sport_id, $as_array = false) {
 		$sport = Mysql::getInstance()->fetch(PREFIX.'sports', $sport_id);
 
+		if ($sport === false)
+			$sport = array('name' => '?', 'bild' => '', 'online' => 0, 'short' => 0, 'kalorien' => 0,
+				'HFavg' => 0, 'RPE' => 0, 'distanztyp' => 0, 'kmh' => 0, 'typen' => 0, 'pulstyp' => 0,
+				'outside' => 0, 'distanz' => 0, 'dauer' => 0);
+
 		return ($as_array) ? $sport : $sport['name'];
 	}
 
@@ -69,7 +74,12 @@ class Helper {
 	 * @return array
 	 */
 	public static function TypeAsArray($type_id) {
-		return Mysql::getInstance()->fetch(PREFIX.'typ', $type_id);
+		$type = Mysql::getInstance()->fetch(PREFIX.'typ', $type_id);
+
+		if ($type === false)
+			return array('name' => '?', 'abk' => '?', 'splits' => 0, 'RPE' => 0);
+
+		return $type;
 	}
 
 	/**
@@ -124,6 +134,9 @@ class Helper {
 	 */
 	public static function Shoe($shoe_id, $as_array = false) {
 		$shoe = Mysql::getInstance()->fetch(PREFIX.'schuhe', $shoe_id);
+
+		if ($shoe === false)
+			$shoe = array('name' => '?');
 
 		return ($as_array) ? $shoe : $shoe['name'];
 	}
