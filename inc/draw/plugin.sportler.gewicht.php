@@ -38,8 +38,7 @@ $TresholdFormat = array("AxisID" => 1,
 	"WriteCaption" => TRUE, "Caption" => "Wunschgewicht", "CaptionAlign" => CAPTION_LEFT_BOTTOM,
 	"R" => 0, "G" => 136, "B" => 0, "Alpha" => 50);
 
-
-if (CONFIG_USE_GEWICHT) {
+if (CONFIG_USE_GEWICHT && !empty($Weights)) {
 	$WeightFormat = array("R" => 0, "G" => 0, "B" => 136);
 	$Draw->pData->addPoints($Weights, 'Gewicht');
 	$Draw->pData->setSerieOnAxis('Gewicht', 1);
@@ -48,7 +47,7 @@ if (CONFIG_USE_GEWICHT) {
 	$Draw->pData->setPalette('Gewicht', $WeightFormat);
 }
 
-if (CONFIG_USE_RUHEPULS) {
+if (CONFIG_USE_RUHEPULS && !empty($HRrests)) {
 	$HRFormat = array("R" => 136, "G" => 0, "B" => 0);
 	$Draw->pData->addPoints($HRrests, 'Ruhepuls');
 	$Draw->pData->setSerieOnAxis('Ruhepuls', 0);
@@ -62,7 +61,8 @@ $Draw->pData->addPoints($xAxis, 'Labels');
 $Draw->pData->setAbscissa('Labels');
 
 $Draw->startImage();
-$Draw->drawScale($ScaleFormat);
+if ($titleError == '')
+	$Draw->drawScale($ScaleFormat);
 $Draw->drawLineChart();
 
 $Draw->pImage->drawLegend(130, 15, $LegendFormat);

@@ -71,10 +71,13 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 				'.$train['kurz'].': <em>'.JD::v2Pace($vVDOT*$train_tempo[1]/100).'</em> - <em>'.JD::v2Pace($vVDOT*$train_tempo[0]/100).'</em>/km<br />');
 		}
 
+		$atl = (CONFIG_MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/CONFIG_MAX_ATL);
+		$ctl = (CONFIG_MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/CONFIG_MAX_ATL);
+
 		echo('</small>
 			<div class="left" style="width:60%;">
-				<p><span>'.round(100*Helper::ATL()/CONFIG_MAX_ATL).' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
-				<p><span>'.round(100*Helper::CTL()/CONFIG_MAX_CTL).' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
+				<p><span>'.$atl.' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
+				<p><span>'.$ctl.' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
 				<p><span>'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
 				<p><span>'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
 				<p><span>'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
