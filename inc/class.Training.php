@@ -114,7 +114,7 @@ class Training {
 	/**
 	 * Fill internal data with default values for NULL-columns
 	 */
-	private function fillUpWithDefaultValues() {
+	private function fillUpDataWithDefaultValues() {
 		if (is_null($this->data['strecke']))
 			$this->data['strecke'] = '';
 		if (is_null($this->data['splits']))
