@@ -29,7 +29,7 @@ if (isset($_POST['data']))
 
 	<div class="c">
 <?php
-$sports = $Mysql->fetchAsArray('SELECT * FROM `ltb_sports` ORDER BY `id` ASC');
+$sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
 foreach($sports as $sport) {
 	$onclick = 'kps('.$sport['kalorien'].');';
 	$onclick .= ($sport['distanztyp'] == 1) ? 'show(\'distanz\');' : 'unshow(\'distanz\');';
