@@ -100,7 +100,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		}
 
 	if ($error == '') {
-		$Mysql->update('ltb_training', $id, $columns, $values);
+		$Mysql->update('.PREFIX.'training', $id, $columns, $values);
 
 		if ($_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
 			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
