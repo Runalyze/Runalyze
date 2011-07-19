@@ -9,7 +9,7 @@ $Mysql = Mysql::getInstance();
 
 $id = $_GET['id'];
 
-if (isset($_POST) && $_POST['type'] == "training") {
+if (isset($_POST['type']) && $_POST['type'] == "training") {
 	$error = '';
 
 	$sport = Helper::Sport($_POST['sportid'], true);
@@ -36,6 +36,8 @@ if (isset($_POST) && $_POST['type'] == "training") {
 	// Time in seconds
 	$ms        = explode(".", Helper::CommaToPoint($_POST['dauer']));
 	$dauer     = explode(":", $ms[0]);
+	if (!isset($ms[1]))
+		$ms[1] = 0;
 	$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 	$columns[] = 'dauer';
 	$values[]  = $time_in_s;
@@ -52,7 +54,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$vars[]    = 'distanz';
 		$vars[]    = 'pace';
 		$columns[] = 'bahn';
-		$values[]  = $_POST['bahn'] == 'on' ? 1 : 0;
+		$values[]  = isset($_POST['bahn']) && $_POST['bahn'] == 'on' ? 1 : 0;
 	}
 
 	if ($sport['outside'] == 1) {
@@ -66,7 +68,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$kleidung = array();
 		$kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `'.PREFIX.'kleidung`');
 		foreach ($kleidungen as $kl) {
-			if ($_POST[$kl['name_kurz']] == 'on')
+			if (isset($_POST[$kl['name_kurz']]) && $_POST[$kl['name_kurz']] == 'on')
 				$kleidung[] = $kl['id'];
 		}
 
@@ -87,7 +89,7 @@ if (isset($_POST) && $_POST['type'] == "training") {
 		$vars[]    = 'typid';
 		$vars[]    = 'schuhid';
 		$columns[] = 'laufabc';
-		$values[]  = $_POST['laufabc'] == 'on' ? 1 : 0;
+		$values[]  = isset($_POST['laufabc']) && $_POST['laufabc'] == 'on' ? 1 : 0;
 
 		if (Helper::TypeHasSplits($_POST['typid']) == 1)
 			$vars[] = 'splits';
@@ -102,13 +104,13 @@ if (isset($_POST) && $_POST['type'] == "training") {
 	if ($error == '') {
 		$Mysql->update(PREFIX.'training', $id, $columns, $values);
 
-		if ($_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
+		if (isset($_POST['schuhid_old']) && isset($_POST['dauer_old']) && isset($_POST['dist_old']) && isset($_POST['schuhid']) && $_POST['schuhid_old'] != $_POST['schuhid'] && $_POST['schuhid'] != 0) {
 			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`-"'.$_POST['dist_old'].'", `dauer`=`dauer`-'.$_POST['dauer_old'].' WHERE `id`='.$_POST['schuhid_old'].' LIMIT 1');
 			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+"'.$distanz.'", `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 		}
-		if ($sport['typen'] == 1)
+		if ($sport['typen'] == 1 && isset($_POST['schuhid']))
 			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
-		if ($sport['distanztyp'] == 1)
+		if ($sport['distanztyp'] == 1 && isset($_POST['sportid']))
 			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$dist_dif.', `dauer`=`dauer`+'.$dauer_dif.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
 	
 		$Mysql->update(PREFIX.'training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
