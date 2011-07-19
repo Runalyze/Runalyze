@@ -387,7 +387,7 @@ abstract class Plugin {
 						$this->config[$name]['var'] = $array;
 						break;
 					case 'bool':
-						$this->config[$name]['var'] = ($_POST[$name] == 'on');
+						$this->config[$name]['var'] = isset($_POST[$name]) && ($_POST[$name] == 'on');
 						break;
 					case 'int':
 						$this->config[$name]['var'] = Helper::CommaToPoint(trim($_POST[$name]));

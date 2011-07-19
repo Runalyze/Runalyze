@@ -359,14 +359,14 @@ class googleMapsAPI {
 	}
 
 	function getHeaderScript() {
-		$ret .= $this->addLine('<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=%s" type="text/javascript"></script>');
+		$ret = $this->addLine('<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=%s" type="text/javascript"></script>');
 		return sprintf($ret, $this->api_key);
 	}
 
 	function getKMLContentElementOnly($url) {
 		$kmlname = $this->map_id."geoXml";
 		//Div
-		$ret .= $this->getCommon_FirstLines();
+		$ret = $this->getCommon_FirstLines();
 		//Initializing
 		$ret .= $this->addLine(sprintf('var %s = null;',$this->map_id),2);
 		$ret .= $this->addLine(sprintf('var %s = null;',$kmlname),2);
@@ -431,7 +431,7 @@ class googleMapsAPI {
 	}
 
 	function getContentElement() {
-		$ret .= $this->getCommon_FirstLines();
+		$ret = $this->getCommon_FirstLines();
 		$ret .= $this->addLine(sprintf('var %s = null;',$this->map_id),2);
 
 		$ret .= $this->getCommon_SetMapType();
@@ -464,7 +464,7 @@ class googleMapsAPI {
 
 	function getCommon_Controls_AddRemMapType_Behaviours($level=3) {
 		$firstmaptype = $this->map_type;
-		$ret .= $this->addLine(sprintf('%s.addMapType(%s);',$this->map_id,$firstmaptype),$level);
+		$ret = $this->addLine(sprintf('%s.addMapType(%s);',$this->map_id,$firstmaptype),$level);
 		foreach ($this->maptypecontrolprops as $maptypeprop) {
 			if (strtolower($firstmaptype) != strtolower($maptypeprop["name"])) {
 				if ($maptypeprop["visible"] == 1) {
@@ -503,7 +503,7 @@ class googleMapsAPI {
 
 	function getCommon_Init() {
 		//Running
-		$ret .= $this->addLine('if (GBrowserIsCompatible()) {',2);
+		$ret = $this->addLine('if (GBrowserIsCompatible()) {',2);
 		$ret .= $this->addLine(sprintf('setTimeout(load_%s,100);', $this->map_id),3);
 		$ret .= $this->addLine('} else {',2);
 		$ret .= $this->addLine('document.write("Javascript must be enabled in order to use Google Maps.");',3);
@@ -513,28 +513,28 @@ class googleMapsAPI {
 
 	function getCommon_SetMapType() {
 		//Workaraound for Showing other MapTypes than MAP
-		$ret .= $this->addLine(sprintf('var smt_%s = function() {', $this->map_id),2);
+		$ret = $this->addLine(sprintf('var smt_%s = function() {', $this->map_id),2);
 		$ret .= $this->addLine(sprintf('%s.setMapType(%s);',$this->map_id,$this->map_type),3);
 		$ret .= $this->addLine('}',2);
 		return $ret;
 	}
 
 	function getCommon_FirstLines() {
-		$ret .= $this->addLine(sprintf('<div id="%s" style="width: %s; height: %s;"></div>',$this->map_id, $this->width, $this->height));
+		$ret = $this->addLine(sprintf('<div id="%s" style="width: %s; height: %s;"></div>',$this->map_id, $this->width, $this->height));
 		$ret .= $this->addLine('<script type="text/javascript">');
 		$ret .= $this->addLine('<!--',1);
 		return $ret;
 	}
 
 	function getCommon_LastLines() {
-		$ret .= $this->addLine('// -->',1);
+		$ret = $this->addLine('// -->',1);
 		$ret .= $this->addLine('</script>');
 		return $ret;
 	}
 
 	function getCommon_MarkersIcons($level=3) {
 		foreach ($this->icons as $icon) {
-			$ret .= $this->addLine(sprintf('var %s_icon%s = new GIcon(G_DEFAULT_ICON);',$this->map_id, $icon['id']),$level);
+			$ret = $this->addLine(sprintf('var %s_icon%s = new GIcon(G_DEFAULT_ICON);',$this->map_id, $icon['id']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.image = "%s";',$this->map_id, $icon['id'], $icon['image']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.iconSize = new GSize(%s, %s);',$this->map_id, $icon['id'], $icon['imagesizex'], $icon['imagesizey']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.iconAnchor = new GPoint(%s, %s);',$this->map_id, $icon['id'], $icon['anchorx'], $icon['anchory']),$level);
@@ -545,7 +545,8 @@ class googleMapsAPI {
 		}
 
 		$markerct = 0;
-		foreach($this->markers as $marker) {			
+		foreach($this->markers as $marker) {
+			$ret = '';	
 			if (strlen($marker['iconid'])>0) {
 				$ret .= $this->addLine(sprintf('var %s_marker%s = new GMarker(new GLatLng(%s,%s), {icon:%s_icon%s} );',$this->map_id, $markerct, $marker["lat"], $marker["lon"], $this->map_id, $marker['iconid']),$level);
 			} else {

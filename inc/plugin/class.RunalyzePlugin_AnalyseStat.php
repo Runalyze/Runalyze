@@ -189,8 +189,8 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				'num' => $dat['num'],
 				'distanz' => $dat['distanz']);
 			$type_data['all_sum'] += $dat['distanz'];
-			$type_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			$type_data['id_sum'][$dat['typid']] += $dat['distanz'];
+			@$type_data['timer_sum'][$dat['timer']] += $dat['distanz'];
+			@$type_data['id_sum'][$dat['typid']] += $dat['distanz'];
 		}
 	
 		$type_foreach = array();
@@ -233,11 +233,11 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 			else if ($dat['pacegroup'] < $speed_max)
 				$dat['pacegroup'] = $speed_max;
 	
-			$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
-			$speed_data[$dat['pacegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
-			$speed_data['all_sum'] += $dat['distanz'];
-			$speed_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			$speed_data['id_sum'][$dat['pacegroup']] += $dat['distanz'];
+			@$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
+			@$speed_data[$dat['pacegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
+			@$speed_data['all_sum'] += $dat['distanz'];
+			@$speed_data['timer_sum'][$dat['timer']] += $dat['distanz'];
+			@$speed_data['id_sum'][$dat['pacegroup']] += $dat['distanz'];
 		}
 	
 		$speed_foreach = array();
@@ -277,11 +277,11 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 			if ($dat['pulsegroup'] < $pulse_min)
 				$dat['pulsegroup'] = $pulse_min;
 	
-			$pulse_data[$dat['pulsegroup']][$dat['timer']]['num'] += $dat['num'];
-			$pulse_data[$dat['pulsegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
+			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['num'] += $dat['num'];
+			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
 			$pulse_data['all_sum'] += $dat['distanz'];
-			$pulse_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			$pulse_data['id_sum'][$dat['pulsegroup']] += $dat['distanz'];
+			@$pulse_data['timer_sum'][$dat['timer']] += $dat['distanz'];
+			@$pulse_data['id_sum'][$dat['pulsegroup']] += $dat['distanz'];
 		}
 	
 		$pulse_foreach = array();

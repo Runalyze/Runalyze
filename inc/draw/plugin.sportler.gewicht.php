@@ -35,7 +35,7 @@ if (!empty($data)) {
 $ScaleFormat    = array("DrawYLines" => array(1), "TickAlpha" => 50);
 $LegendFormat   = array("Style" => LEGEND_NOBORDER, "Mode" => LEGEND_HORIZONTAL);
 $TresholdFormat = array("AxisID" => 1,
-	"WriteCaption" => TRUE, "Caption" => "Wunschgewicht", "CaptionAlign" => CAPTION_LEFT_BOTTOM,
+	"WriteCaption" => TRUE, "Caption" => "Wunschgewicht", "CaptionAlign" => CAPTION_LEFT_TOP,
 	"R" => 0, "G" => 136, "B" => 0, "Alpha" => 50);
 
 if (CONFIG_USE_GEWICHT && !empty($Weights)) {
