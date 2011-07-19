@@ -34,6 +34,10 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['use_weight']    = array('type' => 'bool', 'var' => true, 'description' => 'Gewicht protokollieren');
+		$config['use_body_fat']  = array('type' => 'bool', 'var' => true, 'description' => 'Fettanteil protokollieren');
+		$config['use_pulse']     = array('type' => 'bool', 'var' => true, 'description' => 'Ruhepuls protokollieren');
+		$config['wunschgewicht'] = array('type' => 'int', 'var' => 0, 'description' => 'Wunschgewicht');
 
 		return $config;
 	}

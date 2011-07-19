@@ -184,9 +184,10 @@ class Error {
 		$id = md5($message);
 		$trace = '';
 		foreach ($backtrace as $i => $part) {
+			$class = isset($part['class']) ? $part['class'].'::' : '';
 			if ($i != 0) {
 				$trace .= $part['file'].'<small>::'.$part['line'].'</small><br />';
-				$trace .= '<strong>'.($part['class'] != '' ? $part['class'].'::' : '').$part['function'].'</strong>';
+				$trace .= '<strong>'.$class.$part['function'].'</strong>';
 				$trace .= '<small>('.implode(', ', $part['args']).')</small><br /><br />';
 			}
 		}

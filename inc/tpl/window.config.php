@@ -9,7 +9,7 @@ $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
 $Error->addTodo('Formular abschicken funktioniert noch nicht vollstaendig', __FILE__, __LINE__);
-if (isset($_POST) && $_POST['type'] == "config") {
+if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 	// General config vars: '_config'
 	$columns = array();
 	$values = array();
@@ -39,8 +39,8 @@ if (isset($_POST) && $_POST['type'] == "config") {
 	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'dataset`');
 	foreach ($dataset as $set) {
 		$id = $set['id'];
-		$modus = $_POST[$id.'_modus'] == 'on' ? 2 : 1;
-		if ($_POST[$id.'_modus_3'] == 3)
+		$modus = isset($_POST[$id.'_modus']) && $_POST[$id.'_modus'] == 'on' ? 2 : 1;
+		if (isset($_POST[$id.'_modus_3']) && $_POST[$id.'_modus_3'] == 3)
 			$modus = 3;
 		$columns = array(
 			'modus',
@@ -48,8 +48,8 @@ if (isset($_POST) && $_POST['type'] == "config") {
 			'position');
 		$values  = array(
 			$modus,
-			($_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
-			$_POST[$id.'_position']);
+			(isset($_POST[$id.'_zusammenfassung']) && $_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
+			isset($_POST[$id.'_position']) ? $_POST[$id.'_position'] : 0);
 		$Mysql->update(PREFIX.'dataset', $id, $columns, $values);
 	}
 

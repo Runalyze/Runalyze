@@ -303,8 +303,8 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		} else {
 			$this->i      = $this->year;
 			$this->jahr   = $this->year;
-			$this->jstart = mktime(0,0,0,1,1,$i);
-			$this->jende  = mktime(23,59,59,1,0,$i+1);
+			$this->jstart = mktime(0,0,0,1,1,$this->i);
+			$this->jende  = mktime(23,59,59,1,0,$this->i+1);
 		}
 	}
 
