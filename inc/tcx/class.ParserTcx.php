@@ -91,8 +91,7 @@ class ParserTcx {
 	
 			if (isset($attributes))
 				foreach ($attributes as $attr => $val)
-					if ($get_attributes == 1)
-						$result['attr'][$attr] = $val;
+					$result['attr'][$attr] = $val;
 	
 			if ($type == "open") { //The starting of the tag '<tag>'
 				$parent[$level-1] = &$current;

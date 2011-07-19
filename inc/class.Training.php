@@ -582,7 +582,7 @@ class Training {
 	 * Display the window/formular for creation
 	 */
 	static public function displayCreateWindow() {
-		if (isset($_POST) && $_POST['type'] == "newtraining") {
+		if (isset($_POST['type']) && $_POST['type'] == "newtraining") {
 			$returnCode = self::parsePostdataForCreation();
 
 			if ($returnCode === true) {

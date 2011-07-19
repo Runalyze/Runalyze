@@ -154,7 +154,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 	 */
 	private function initCities() {
 		$this->orte = array();
-		$strecken = Mysql::getInstance()->fetchAsArray('SELECT `strecke`, `distanz` FROM `ltb_training` WHERE `strecke`!=""');
+		$strecken = Mysql::getInstance()->fetchAsArray('SELECT `strecke`, `distanz` FROM `'.PREFIX.'training` WHERE `strecke`!=""');
 		foreach ($strecken as $strecke) {
 			$streckenorte = explode(" - ", $strecke['strecke']);
 			foreach ($streckenorte as $streckenort) {

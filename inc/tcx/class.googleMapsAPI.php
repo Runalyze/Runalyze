@@ -533,8 +533,9 @@ class googleMapsAPI {
 	}
 
 	function getCommon_MarkersIcons($level=3) {
+		$ret = '';	
 		foreach ($this->icons as $icon) {
-			$ret = $this->addLine(sprintf('var %s_icon%s = new GIcon(G_DEFAULT_ICON);',$this->map_id, $icon['id']),$level);
+			$ret .= $this->addLine(sprintf('var %s_icon%s = new GIcon(G_DEFAULT_ICON);',$this->map_id, $icon['id']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.image = "%s";',$this->map_id, $icon['id'], $icon['image']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.iconSize = new GSize(%s, %s);',$this->map_id, $icon['id'], $icon['imagesizex'], $icon['imagesizey']),$level);
 			$ret .= $this->addLine(sprintf('%s_icon%s.iconAnchor = new GPoint(%s, %s);',$this->map_id, $icon['id'], $icon['anchorx'], $icon['anchory']),$level);
@@ -546,7 +547,6 @@ class googleMapsAPI {
 
 		$markerct = 0;
 		foreach($this->markers as $marker) {
-			$ret = '';	
 			if (strlen($marker['iconid'])>0) {
 				$ret .= $this->addLine(sprintf('var %s_marker%s = new GMarker(new GLatLng(%s,%s), {icon:%s_icon%s} );',$this->map_id, $markerct, $marker["lat"], $marker["lon"], $this->map_id, $marker['iconid']),$level);
 			} else {
@@ -565,6 +565,7 @@ class googleMapsAPI {
 	}
 
 	function getCommon_Polylines() {
+		$ret = '';
 		foreach($this->polylines as $polyline) {
 			$pointcol = null;
 			$pointcol = array();
@@ -633,6 +634,7 @@ class xmlgooglemaps_googleMapAPIPolylineEnc {
 
 	function dpEncode($points)
 	{
+		$absMaxDist = 0;
 		if(count($points) > 2)
 		{
 			$stack[] = array(0, count($points)-1);
@@ -706,6 +708,9 @@ class xmlgooglemaps_googleMapAPIPolylineEnc {
 
 	function createEncodings($points, $dists)
 	{
+		$encoded_points = '';
+		$plat = 0;
+		$plng = 0;
 		for($i=0; $i<count($points); $i++)
 		{
 			if(isset($dists[$i]) || $i == 0 || $i == count($points)-1)
@@ -727,6 +732,7 @@ class xmlgooglemaps_googleMapAPIPolylineEnc {
 
 	function encodeLevels($points, $dists, $absMaxDist)
 	{
+		$encoded_levels = '';
 		if($this->forceEndpoints)
 		{
 			$encoded_levels .= $this->encodeNumber($this->numLevels-1);
@@ -755,6 +761,7 @@ class xmlgooglemaps_googleMapAPIPolylineEnc {
 
 	function encodeNumber($num)
 	{
+		$encodeString = '';
 		while($num >= 0x20)
 		{
 			$nextValue = (0x20 | ($num & 0x1f)) + 63;
