@@ -84,7 +84,7 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		define('RUNALYZE_DEBUG', false);
+		define('RUNALYZE_DEBUG', false); // TODO: Move debug-mode to config
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -161,6 +161,8 @@ class Frontend {
 
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.header.php');
+
+		Error::getInstance()->header_sent = true;
 	}
 
 	/**
@@ -172,6 +174,8 @@ class Frontend {
 
 		if (!$this->ajax_request)
 			include('tpl/tpl.Frontend.footer.php');
+
+		Error::getInstance()->footer_sent = true;
 	}
 
 	/**

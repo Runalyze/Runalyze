@@ -66,6 +66,9 @@ $num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$wh
 	<tr class="c">
 		<td colspan="<?php echo($max_colspan); ?>">
 <?php
+$next = '';
+$back = '';
+
 if ($num_all > 15) {
 	$submit_search = '';
 
@@ -93,9 +96,6 @@ if ($num_all > 15) {
 		$data   = $submit_search.'seite='.($_POST['seite']-1);
 		$back = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&'.$data);
 	}
-} else {
-	$next = '';
-	$back = '';
 }
 
 	echo($back.' Insgesamt wurden '.$num_all.' Trainings gefunden. '.$next);

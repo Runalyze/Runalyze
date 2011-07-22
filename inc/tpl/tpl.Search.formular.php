@@ -66,7 +66,7 @@ foreach ($conditions as $condition) {
 
 	$options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC');
 	foreach ($options as $option) {
-		$selected        = Helper::Selected(in_array($option['id'], $_POST['val'][$condition['name']]));
+		$selected        = Helper::Selected(isset($_POST['val']) && isset($_POST['val'][$condition['name']]) && in_array($option['id'], $_POST['val'][$condition['name']]));
 		echo('
 		<option value="'.$option['id'].'"'.$selected.'>'.$option['name'].'</option>');
 	}

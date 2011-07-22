@@ -185,12 +185,17 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 			'id_sum' => array());
 		
 		foreach ($result as $dat) {
+			if (!isset($type_data['timer_sum'][$dat['timer']]))
+				$type_data['timer_sum'][$dat['timer']] = 0;
+			if (!isset($type_data['id_sum'][$dat['typid']]))
+				$type_data['id_sum'][$dat['typid']] = 0;
+
 			$type_data[$dat['typid']][$dat['timer']] = array(
 				'num' => $dat['num'],
 				'distanz' => $dat['distanz']);
 			$type_data['all_sum'] += $dat['distanz'];
-			@$type_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			@$type_data['id_sum'][$dat['typid']] += $dat['distanz'];
+			$type_data['timer_sum'][$dat['timer']] += $dat['distanz'];
+			$type_data['id_sum'][$dat['typid']] += $dat['distanz'];
 		}
 	
 		$type_foreach = array();
@@ -232,12 +237,21 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				$dat['pacegroup'] = $speed_min;
 			else if ($dat['pacegroup'] < $speed_max)
 				$dat['pacegroup'] = $speed_max;
+
+			if (!isset($speed_data[$dat['pacegroup']]))
+				$speed_data[$dat['pacegroup']] = array();
+			if (!isset($speed_data[$dat['pacegroup']][$dat['timer']]))
+				$speed_data[$dat['pacegroup']][$dat['timer']] = array('num' => 0, 'distanz' => 0);
+			if (!isset($speed_data['timer_sum'][$dat['timer']]))
+				$speed_data['timer_sum'][$dat['timer']] = 0;
+			if (!isset($speed_data['id_sum'][$dat['pacegroup']]))
+				$speed_data['id_sum'][$dat['pacegroup']] = 0;
 	
-			@$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
-			@$speed_data[$dat['pacegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
-			@$speed_data['all_sum'] += $dat['distanz'];
-			@$speed_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			@$speed_data['id_sum'][$dat['pacegroup']] += $dat['distanz'];
+			$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
+			$speed_data[$dat['pacegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
+			$speed_data['all_sum'] += $dat['distanz'];
+			$speed_data['timer_sum'][$dat['timer']] += $dat['distanz'];
+			$speed_data['id_sum'][$dat['pacegroup']] += $dat['distanz'];
 		}
 	
 		$speed_foreach = array();
@@ -276,6 +290,15 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		foreach ($result as $dat) {
 			if ($dat['pulsegroup'] < $pulse_min)
 				$dat['pulsegroup'] = $pulse_min;
+
+			if (!isset($pulse_data[$dat['pulsegroup']]))
+				$pulse_data[$dat['pulsegroup']] = array();
+			if (!isset($pulse_data[$dat['pulsegroup']][$dat['timer']]))
+				$pulse_data[$dat['pulsegroup']][$dat['timer']] = array('num' => 0, 'distanz' => 0);
+			if (!isset($pulse_data['timer_sum'][$dat['timer']]))
+				$pulse_data['timer_sum'][$dat['timer']] = 0;
+			if (!isset($pulse_data['id_sum'][$dat['pulsegroup']]))
+				$pulse_data['id_sum'][$dat['pulsegroup']] = 0;
 	
 			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['num'] += $dat['num'];
 			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
