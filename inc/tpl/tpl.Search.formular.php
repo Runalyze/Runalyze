@@ -14,9 +14,9 @@
 
 	<strong>Zeitraum:</strong>
 		<span class="spacer">von</span>
-		<input type="text" size="10" name="time-gt" value="<?php echo ($_POST['time-gt'] != '') ? $_POST['time-gt'] : date("d.m.Y", START_TIME) ?>" />
+		<input type="text" size="10" name="time-gt" value="<?php echo (isset($_POST['time-gt']) && $_POST['time-gt'] != '') ? $_POST['time-gt'] : date("d.m.Y", START_TIME) ?>" />
 		bis
-		<input type="text" size="10" name="time-lt" value="<?php echo ($_POST['time-lt'] != '') ? $_POST['time-lt'] : date("d.m.Y") ?>" />
+		<input type="text" size="10" name="time-lt" value="<?php echo (isset($_POST['time-lt']) && $_POST['time-lt'] != '') ? $_POST['time-lt'] : date("d.m.Y") ?>" />
 
 	<strong style="padding-left:200px;">Sortierung:</strong>
 		<span class="spacer">nach</span>
@@ -40,7 +40,7 @@
 <?php
 $sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` WHERE `online`=1 ORDER BY `id` ASC');
 foreach ($sports as $sport) {
-	$checked = Helper::Checked((!$submit && $sport['id'] == MAINSPORT) || $_POST['sport'][$sport['id']] != false);
+	$checked = Helper::Checked((!$submit && $sport['id'] == MAINSPORT) || (isset($_POST['sport'][$sport['id']]) && $_POST['sport'][$sport['id']] != false));
 	echo('
 		<input class="spacer" type="checkbox" name="sport['.$sport['id'].']"'.$checked.' /> '.$sport['name']);
 }
@@ -49,13 +49,13 @@ echo('<br />');
 
 $conditions = array();
 $conditions[] = array('name' => 'schuhid', 'text' => 'Schuh', 'table' => ''.PREFIX.'schuhe', 'multiple' => false);
-$conditions[] = array('name' => 'wetterid', 'text' => 'Wetter', 'table' => ''.PREFIX.'wetter');
-$conditions[] = array('name' => 'kleidung', 'text' => 'Kleidung', 'table' => ''.PREFIX.'kleidung');
-$conditions[] = array('name' => 'typid', 'text' => 'Trainingstyp', 'table' => ''.PREFIX.'typ');
+$conditions[] = array('name' => 'wetterid', 'text' => 'Wetter', 'table' => ''.PREFIX.'wetter', 'multiple' => true);
+$conditions[] = array('name' => 'kleidung', 'text' => 'Kleidung', 'table' => ''.PREFIX.'kleidung', 'multiple' => true);
+$conditions[] = array('name' => 'typid', 'text' => 'Trainingstyp', 'table' => ''.PREFIX.'typ', 'multiple' => true);
 
 foreach ($conditions as $condition) {
 	$multiple      = ($condition['multiple'] !== false) ? ' multiple="multiple"' : '';
-	$selected_egal = Helper::Selected($_POST['val'][$condition['name']][0] == 'egal' || $_POST['val'][$condition['name']] == '');
+	$selected_egal = Helper::Selected(!isset($_POST['val']) || !isset($_POST['val'][$condition['name']]) || $_POST['val'][$condition['name']][0] == 'egal' || $_POST['val'][$condition['name']] == '');
 
 	echo('
 		<div class="right">
@@ -91,9 +91,14 @@ $inputs[] = array('name' => 'trainingspartner', 'text' => 'Trainingspartner', 't
 $inputs[] = array('name' => 'kalorien', 'text' => 'Kalorien', 'typ' => 'int');
 
 foreach ($inputs as $i => $input) {
-	$value = '';
-	if ($_POST['val'][$input['name']] != '')
+	if (!isset($_POST['val']) || !isset($_POST['val'][$input['name']]))
+		$value = '';
+	else
 		$value = $_POST['val'][$input['name']];
+	if (!isset($_POST['opt']) || !isset($_POST['opt'][$input['name']]))
+		$opt = 'is';
+	else
+		$opt = $_POST['opt'][$input['name']];
 
 	if ($i%3 == 0)
 		echo('<tr>');
@@ -102,22 +107,22 @@ foreach ($inputs as $i => $input) {
 		<td>'.$input['text'].'</td>
 		<td>
 			<select name="opt['.$input['name'].']">
-				<option value="is"'.Helper::Selected($_POST['opt'][$input['name']] == 'is').'>=</option>');
+				<option value="is"'.Helper::Selected($opt == 'is').'>=</option>');
 
 	if ($input['typ'] == 'int' || $input['typ'] == 'time')
 		echo('
-				<option value="gt"'.Helper::Selected($_POST['opt'][$input['name']] == 'gt').'>&gt;</option>
-				<option value="gtis"'.Helper::Selected($_POST['opt'][$input['name']] == 'gtis').'>&gt;=</option>');
+				<option value="gt"'.Helper::Selected($opt == 'gt').'>&gt;</option>
+				<option value="gtis"'.Helper::Selected($opt == 'gtis').'>&gt;=</option>');
 
 	if ($input['typ'] == 'int' || $input['typ'] == 'time')
 		echo('
-				<option value="ltis"'.Helper::Selected($_POST['opt'][$input['name']] == 'ltis').'>&lt;=</option>
-				<option value="lt"'.Helper::Selected($_POST['opt'][$input['name']] == 'lt').'>&lt;</option>');
+				<option value="ltis"'.Helper::Selected($opt == 'ltis').'>&lt;=</option>
+				<option value="lt"'.Helper::Selected($opt == 'lt').'>&lt;</option>');
 
 	if ($input['typ'] == 'text')
 		echo('
-				<option value="isnot"'.Helper::Selected($_POST['opt'][$input['name']] == 'isnot').'>!=</option>
-				<option value="like"'.Helper::Selected($_POST['opt'][$input['name']] == 'like').'>~</option>');
+				<option value="isnot"'.Helper::Selected($opt == 'isnot').'>!=</option>
+				<option value="like"'.Helper::Selected($opt == 'like').'>~</option>');
 
 	echo('
 			</select>

@@ -6,7 +6,7 @@ $max_colspan = 1 + $Dataset->column_count;
 
 // MYSQL-QUERY
 $where = 'WHERE ';
-if (sizeof($_POST['sport']) > 0) {
+if (isset($_POST['sport']) && sizeof($_POST['sport']) > 0) {
 	$where .= '`sportid` IN(';
 	foreach ($_POST['sport'] as $sportid => $value)
 		if ($value == 'on')
@@ -15,12 +15,12 @@ if (sizeof($_POST['sport']) > 0) {
 }
 
 
-if (is_array($_POST['val'])) {
+if (isset($_POST['val']) && is_array($_POST['val'])) {
 	foreach ($_POST['val'] as $name => $value) {
 		if (is_numeric($name))
 			$name = $conditions[$name]['name'];
 
-		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && $value[0] != 'egal') {
+		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && (isset($value[0]) && $value[0] != 'egal')) {
 			if ($name == 'dauer')
 				$value *= 60;
 			elseif (!is_array($value))

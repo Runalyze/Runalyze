@@ -73,7 +73,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
-				if ($Data[$m]['hm'] > 0)
+				if (isset($Data[$m]) && $Data[$m]['hm'] > 0)
 					echo '<td>'.DataBrowser::getSearchLink($Data[$m]['hm'].' hm', 'sort=DESC&order=hm&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y).'</td>'.NL;
 				else
 					echo Helper::emptyTD();
@@ -175,6 +175,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 			SELECT
 				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`
 			FROM `'.PREFIX.'training`
+			WHERE `hm` > 0
 			ORDER BY `hm` DESC
 			LIMIT 10');
 	}
@@ -188,6 +189,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`,
 				(`hm`/`distanz`) as `steigung`, `distanz`
 			FROM `'.PREFIX.'training`
+			WHERE `hm` > 0
 			ORDER BY `steigung` DESC
 			LIMIT 10');
 	}

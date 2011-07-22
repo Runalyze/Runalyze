@@ -72,6 +72,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				if (empty($data))
 					Error::getInstance()->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 
+				$j = 0;
 				foreach ($data as $j => $dat) {
 					if ($rekord['eval'] == 0)
 						$code = Helper::Speed($dat['distanz'], $dat['dauer'], $sport['id']);
@@ -103,6 +104,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		echo Helper::spaceTR(11);
 
 		// Years
+		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Jahre</td>';
 		foreach ($this->years as $i => $year) {
 			$link = DataBrowser::getLink(Helper::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
@@ -113,6 +115,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		echo '</tr>';
 
 		// Months
+		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Monate</td>';
 		foreach ($this->months as $i => $month) {
 			$link = DataBrowser::getLink(Helper::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
@@ -123,6 +126,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		echo '</tr>';
 
 		// Weeks
+		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Wochen</td>';
 		foreach ($this->weeks as $i => $week) {
 			$link = DataBrowser::getLink(Helper::Km($week['km']), Helper::Weekstart($week['time']), Helper::Weekend($week['time']));

@@ -184,15 +184,20 @@ class Error {
 		$id = md5($message);
 		$trace = '';
 		foreach ($backtrace as $i => $part) {
+			if (!isset($part['args']))
+				$part['args'] = '';
+			if (is_array($part['args']))
+				$part['args'] = implode(', ', $part['args']);
 			$class = isset($part['class']) ? $part['class'].'::' : '';
 			if ($i != 0) {
 				$trace .= $part['file'].'<small>::'.$part['line'].'</small><br />';
 				$trace .= '<strong>'.$class.$part['function'].'</strong>';
-				$trace .= '<small>('.implode(', ', $part['args']).')</small><br /><br />';
+				$trace .= '<small>('.$part['args'].')</small><br /><br />';
 			}
 		}
 
-		$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
+		if (class_exists('Ajax'))
+			$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
 		$message .= '<div id="'.$id.'" class="hide"><br />'.$trace.'</div>';
 
 		return $message;

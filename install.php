@@ -18,7 +18,7 @@
 <div id="ajax" class="panel" style="display:block;">
 	<h1>Installation von Runalyze</h1>
 
-	Herzlich Willkommen bei Runaylze, deinem neuen Lauftagebuch.<br />
+	Herzlich Willkommen bei Runalyze, deinem neuen Lauftagebuch.<br />
 	<br />
 	Eine vollautomatisierte Installation ist derzeit noch nicht m&ouml;lich,
 	sodass du die folgenden Schritte manuell durchf&uuml;hren musst:<br />
