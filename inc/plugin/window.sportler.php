@@ -11,7 +11,7 @@ $Error = Error::getInstance();
 $Error->add('TODO', 'Config: use_koerperfett, use_ruhepuls');
 $Error->add('TODO', 'Config: wunschgewicht');
 
-if (isset($_POST) && $_POST['type'] == "user") {
+if (isset($_POST['type']) && $_POST['type'] == "user") {
 	$columns = array('time');
 	$values = array(time());
 	$vars = array('gewicht');
@@ -37,6 +37,8 @@ if (isset($_POST) && $_POST['type'] == "user") {
 $Frontend->displayHeader();
 
 $dat = $Mysql->fetch(PREFIX.'user','LAST');
+if (empty($dat))
+	$dat = array('gewicht' => '', 'fett' => '', 'wasser' => '', 'muskeln' => '', 'puls_ruhe' => '', 'puls_max' => '');
 ?>
 <h1>K&ouml;rper-Daten eingeben</h1>
 

@@ -54,9 +54,9 @@ final class Mysql {
 	 * @param $database string
 	 */
 	public static function connect($host, $user, $password, $database) {
-		mysql_connect($host, $user, $password)
+		@mysql_connect($host, $user, $password)
 			or Error::getInstance()->addError(mysql_error(), __FILE__, __LINE__);
-		mysql_select_db($database)
+		@mysql_select_db($database)
 			or Error::getInstance()->addError(mysql_error(), __FILE__, __LINE__);
 	}
 

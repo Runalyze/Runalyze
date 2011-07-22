@@ -611,22 +611,28 @@ class Training {
 		$vars[]  = 'kalorien';
 		$vars[]  = 'bemerkung';
 		$vars[]  = 'trainingspartner';
-		
 
+		if (!isset($_POST['sportid']))
+			return 'Es muss eine Sportart ausgew&auml;hlt werden.';
 		$sport = $Mysql->fetch(PREFIX.'sports', $_POST['sportid']);
 		if ($sport === false)
 			return 'Es wurde keine Sportart ausgew&auml;hlt.';
 
-		$distance = ($sport['distanztyp'] == 1) ? Helper::CommaToPoint($_POST['distanz']) : 0;
+		$distance = ($sport['distanztyp'] == 1 && isset($_POST['distanz'])) ? Helper::CommaToPoint($_POST['distanz']) : 0;
 		$columns[] = 'sportid';
 		$values[]  = $sport['id'];
 	
 		// Prepare "Time"
-		$post_day  = explode(".", $_POST['datum']);
-		$post_time = explode(":", $_POST['zeit']);
+		if (!isset($_POST['datum']) || !isset($_POST['zeit'])) {
+			$post_day  = explode(".", $_POST['datum']);
+			$post_time = explode(":", $_POST['zeit']);
+		} else
+			return 'Es muss ein Datum eingetragen werden.';
 		if (count($post_day) != 3 || count($post_time) != 2)
 			return 'Das Datum konnte nicht gelesen werden.';
 
+		if (!isset($_POST['dauer']))
+			return 'Es muss eine Trainingszeit angegeben sein.';
 		$columns[] = 'time';
 		$values[]  = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
 		// Prepare "Dauer"
@@ -642,7 +648,7 @@ class Training {
 		if ($sport['distanztyp'] == 1) {
 			$vars[]    = 'distanz';
 			$columns[] = 'bahn';
-			$values[]  = $_POST['bahn'] ? 1 : 0;
+			$values[]  = isset($_POST['bahn']) ? 1 : 0;
 			$columns[] = 'pace';
 			$values[]  = Helper::Pace($distance, $time_in_s);
 		}
@@ -652,9 +658,9 @@ class Training {
 			$vars[]    = 'wetterid';
 			$vars[]    = 'strecke';
 			$columns[] = 'kleidung';
-			$values[]  = substr($_POST['kleidung'], 0, -1);
+			$values[]  = isset($_POST['kleidung']) ? substr($_POST['kleidung'], 0, -1) : '';
 			$columns[] = 'temperatur';
-			$values[]  = is_numeric($_POST['temperatur']) ? $_POST['temperatur'] : NULL;
+			$values[]  = isset($_POST['temperatur']) && is_numeric($_POST['temperatur']) ? $_POST['temperatur'] : NULL;
 
 			$vars[]    = 'arr_time';
 			$vars[]    = 'arr_lat';
@@ -683,11 +689,10 @@ class Training {
 				$vars[] = 'splits';
 		}
 	
-		foreach($vars as $var)
-			if (isset($_POST[$var])) {
-				$columns[] = $var;
-				$values[]  = Helper::Umlaute(Helper::CommaToPoint($_POST[$var]));
-			}
+		foreach($vars as $var) {
+			$columns[] = $var;
+			$values[]  = isset($_POST[$var]) ? Helper::Umlaute(Helper::CommaToPoint($_POST[$var])) : NULL;
+		}
 
 		$id = $Mysql->insert(PREFIX.'training', $columns, $values);
 		if ($id === false)
@@ -707,10 +712,12 @@ class Training {
 		if ($TRIMP > CONFIG_MAX_TRIMP)
 			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$TRIMP.'"');
 
-		if ($sport['typen'] == 1)
-			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
-
-		$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');
+		if (isset($_POST['schuhid'])) {
+			if ($sport['typen'] == 1)
+				$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+	
+			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
+		}
 
 		// TODO ElevationCorrection
 
@@ -794,7 +801,8 @@ class Training {
 		$array['puls']      = round(array_sum($heartrate)/count($heartrate));
 		$array['puls_max']  = max($heartrate);
 		$array['kalorien']  = $calories;
-		$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
+		if (isset($xml['trainingcenterdatabase']['activities']['activity']['training']))
+			$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
 		$array['splits']    = implode('-', $splits);
 		//$array['hm']
 		

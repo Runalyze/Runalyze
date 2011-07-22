@@ -173,6 +173,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 		foreach ($wks as $wk) {
 			if (!isset($year[$wk['y']])) {
 				$year[$wk['y']] = $dists;
+				$year[$wk['y']]['sum'] = 0;
 				$year['sum'] = 0;
 			}
 			$year[$wk['y']]['sum']++;

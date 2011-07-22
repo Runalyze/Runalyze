@@ -214,6 +214,7 @@ if ($sport['outside'] == 1)
 			<select name="typid">
 <?php
 $typen = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'typ`');
+echo('<option value="0">'.(empty($typen) ? 'keine Typen vorhanden' : '?').'</option>');
 foreach ($typen as $typ)
 	echo('<option value="'.$typ['id'].'"'.Helper::Selected($typ['id'] == $Training->get('typid')).'>'.$typ['name'].'</option>');
 ?>
@@ -223,6 +224,7 @@ foreach ($typen as $typ)
 			<select name="schuhid">
 <?php
 $schuhe = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'schuhe`');
+echo('<option value="0">'.(empty($schuhe) ? 'keine Schuhe vorhanden' : '?').'</option>');
 foreach ($schuhe as $schuh)
 	echo('<option value="'.$schuh['id'].'"'.Helper::Selected($schuh['id'] == $Training->get('schuhid')).'>'.$schuh['name'].'</option>');
 ?>

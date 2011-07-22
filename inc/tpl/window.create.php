@@ -99,9 +99,14 @@ if (isset($_POST['sportid']))
 		<span id="typen" style="display: none;">
 			<input type="hidden" name="count" id="count" value="1" />
 			<select name="typid">
-				<option value="0">?</option>
 <?php
 $typen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'typ` ORDER BY `id` ASC');
+if (empty($typen))
+	echo('
+				<option value="0">keine Typen vorhanden</option>');
+else
+	echo('
+				<option value="0">?</option>');
 foreach($typen as $typ) {
 	$onClick = '';
 	if ($typ['count'] == 0)
@@ -119,9 +124,14 @@ foreach($typen as $typ) {
 			</select>
 
 			<select name="schuhid">
-				<option value="0">?</option>
 <?php
 $schuhe = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
+if (empty($schuhe))
+	echo('
+				<option value="0">keine Schuhe vorhanden</option>');
+else
+	echo('
+				<option value="0">?</option>');
 foreach($schuhe as $schuh) {
 	$selected = isset($_POST['schuhid']) ? Helper::Selected($_POST['schuhid'], $schuh['id']) : '';
 	echo('
