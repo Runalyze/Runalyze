@@ -46,6 +46,18 @@ class Error {
 	private $log_file = '';
 
 	/**
+	 * Boolean flag: Has the header been sent?
+	 * @var bool
+	 */
+	public $header_sent = false;
+
+	/**
+	 * Boolean flag: Has the footer been sent?
+	 * @var bool
+	 */
+	public $footer_sent = false;
+
+	/**
 	 * Static getter for the singleton instnace
 	 * @return class::Error static instance
 	 */
@@ -202,8 +214,28 @@ class Error {
 
 		return $message;
 	}
+
+	/**
+	 * Display an error message causing a fatal error
+	 * @param string $message
+	 */
+	public function displayFatalErrorMessage($message) {
+		if (!$this->header_sent)
+			include('tpl/tpl.Frontend.header.php');
+
+		echo '<div class="panel">';
+		echo '<h1>Fataler Fehler</h1>';
+		echo $message;
+		echo '</div>';
+		
+		if (!$this->footer_sent)
+			include('tpl/tpl.Frontend.footer.php');
+
+		exit();
+	}
 }
 
+set_error_handler("error_handler");
 /**
  * Own function to handle the errors using class::Error.
  * @param $type      type of error (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)

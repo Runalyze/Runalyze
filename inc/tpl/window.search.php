@@ -25,18 +25,19 @@ if (!isset($_GET['pager']))
 
 if (!($_GET['pager'] == 'true')) {
 	// TODO: Laden von vorgefertigten Suchen => Zweimal <h1>
-	echo('<h1>Suche</h1>');
-	echo('<div id="'.DATA_BROWSER_SEARCH_ID.'">');
+	echo '<div id="'.DATA_BROWSER_SEARCH_ID.'">';
+	echo '<h1>Suche</h1>';
 
 	include('tpl.Search.formular.php');
 }
-if ($submit) {
-	echo('<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">');
+
+echo('<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">');
+
+if ($submit)
 	include('tpl.Search.result.php');
-	$Frontend->displayFooter();
-	echo('</div>');
-} else
-	$Frontend->displayFooter();
+	
+$Frontend->displayFooter();
+echo('</div>');
 
 if (!($_GET['pager'] == 'true'))
 	echo('</div>');
