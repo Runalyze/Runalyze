@@ -66,7 +66,9 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 		echo '<table style="width:100%;" class="small">';
 		echo Helper::monthTr(8, 1);
 		echo Helper::spaceTR(13);
-		
+
+		if (empty($this->ElevationData))
+			echo '<tr><td colspan="12"><em>Keine Strecken gefunden.</em></td></tr>';
 		foreach ($this->ElevationData as $y => $Data) {
 			echo('
 				<tr class="a'.($y%2+1).' r">

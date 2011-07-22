@@ -43,10 +43,14 @@ class RunalyzePlugin_TrainingszeitenStat extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader('Trainingszeiten');
-		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="left small">';
-		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';
-		echo Helper::spaceTR(8);
+		$this->displayTable();
+		$this->displayImages();
+	}
 
+	/**
+	 * Display the images
+	 */
+	private function displayTable() {
 		$sports_not_short = '';
 		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports` WHERE `short`=0');
 		foreach ($sports as $sport)
@@ -68,6 +72,13 @@ class RunalyzePlugin_TrainingszeitenStat extends PluginStat {
 			(`H`+12)%24 ASC,
 			`MIN` ASC');
 
+		if (empty($nights))
+			return;
+		
+		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="left small">';
+		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';
+		echo Helper::spaceTR(8);
+
 		foreach ($nights as $i => $night) {
 			$sport = Helper::Sport($night['sportid'],true);
 			if ($i%2 == 0)
@@ -82,6 +93,12 @@ class RunalyzePlugin_TrainingszeitenStat extends PluginStat {
 		}
 
 		echo '</table>';
+	}
+
+	/**
+	 * Display the images
+	 */
+	private function displayImages() {
 		echo '<img class="right" src="inc/draw/plugin.trainingszeiten.wochentag.php" />';
 		echo '<img class="left" src="inc/draw/plugin.trainingszeiten.uhrzeit.php" />';
 		echo Helper::clearBreak();

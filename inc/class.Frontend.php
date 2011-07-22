@@ -26,6 +26,7 @@
  *
  * Last modified 2011/03/14 16:00 by Hannes Christiansen
  */
+//error_reporting(E_ALL);
 class Frontend {
 	/**
 	 * Global array (should be deleted later on)
@@ -81,7 +82,7 @@ class Frontend {
 	 * Init constants
 	 */
 	private function initConsts() {
-		define('FRONTEND_PATH', dirname(__FILE__).'\\');
+		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
 		define('RUNALYZE_DEBUG', true);
 		define('INFINITY', PHP_INT_MAX);
