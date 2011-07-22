@@ -84,7 +84,7 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		define('RUNALYZE_DEBUG', true);
+		define('RUNALYZE_DEBUG', false);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
