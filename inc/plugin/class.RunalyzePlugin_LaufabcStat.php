@@ -58,6 +58,8 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 		echo Helper::monthTr(8, 1);
 		echo Helper::spaceTR(13);
 		
+		if (empty($this->ABCData))
+			echo '<tr><td colspan="12"><em>Keine Daten gefunden.</em></td></tr>';
 		foreach ($this->ABCData as $y => $Data) {
 			echo('
 				<tr class="a'.($y%2+1).' r">
