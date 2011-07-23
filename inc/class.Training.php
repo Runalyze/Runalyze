@@ -171,6 +171,7 @@ class Training {
 		$this->displayHeader();
 		$this->displayPlotsAndMap();
 		$this->displayTrainingData();
+		echo Helper::clearBreak();
 	}
 
 	/**
@@ -623,7 +624,9 @@ class Training {
 		$values[]  = $sport['id'];
 	
 		// Prepare "Time"
-		if (!isset($_POST['datum']) || !isset($_POST['zeit'])) {
+		if (!isset($_POST['zeit']))
+			$_POST['zeit'] = '00:00';
+		if (isset($_POST['datum'])) {
 			$post_day  = explode(".", $_POST['datum']);
 			$post_time = explode(":", $_POST['zeit']);
 		} else
@@ -732,8 +735,11 @@ class Training {
 	static public function parseTcx($xml) {
 		require_once('tcx/class.ParserTcx.php');
 
-		$Parser = new ParserTcx($xml);
-		$xml = $Parser->getContentAsArray();
+		if (!is_array($xml)) {
+			$Parser = new ParserTcx($xml);
+			$xml = $Parser->getContentAsArray();
+		} else
+			Error::getInstance()->addNotice('Training::parseTcx() got an array instead of a xml-string - nothing parsed.');
 
 		$i = 0;
 		$starttime = 0;
@@ -747,24 +753,38 @@ class Training {
 		$pace      = array();
 		$splits    = array();
 
+		if (!is_array($xml['trainingcenterdatabase']['activities']['activity']))
+			return array('error' => 'Es scheint keine Garmin-Trainingsdatei zu sein.');
+
 		$starttime = strtotime($xml['trainingcenterdatabase']['activities']['activity']['id']['value']);
 		$start_tmp = $starttime;
+
+		if (!is_array($xml['trainingcenterdatabase']['activities']['activity']['lap']))
+			return array('error' => 'Es konnten keine gestoppten Runden gefunden werden.');
 
 		foreach($xml['trainingcenterdatabase']['activities']['activity']['lap'] as $lap) {
 			$i++;
 
-			$calories += $lap['calories']['value'];
-			if (strtolower($lap['intensity']['value']) == 'active') {
+			if (isset($lap['calories']))
+				$calories += $lap['calories']['value'];
+			if (isset($lap['intensity']) && strtolower($lap['intensity']['value']) == 'active') {
 				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']));
 			}
 
-			foreach($lap['track'] as $track) {
+			if (!isset($lap['track']) || !is_array($lap['track']) || empty($lap['track']))
+				Error::getInstance()->addWarning('Training::parseTcx(): Keine Track-Daten vorhanden.');
+
+			foreach ($lap['track'] as $track) {
+				$last_point = 0;
+
 				if (isset($track['trackpoint']))
 					$trackpointArray = $track['trackpoint'];
 				else
 					$trackpointArray = $track;
+
 				foreach($trackpointArray as $trackpoint) {
-					if (isset($trackpoint['distancemeters'])) {
+					if (isset($trackpoint['distancemeters']) && $trackpoint['distancemeters']['value'] > $last_point) {
+						$last_point = $trackpoint['distancemeters']['value'];
 						$time[]     = strtotime($trackpoint['time']['value']) - $start_tmp;
 						$distance[] = round($trackpoint['distancemeters']['value'])/1000;
 						$pace[]     = ((end($distance) - prev($distance)) != 0)
@@ -784,6 +804,7 @@ class Training {
 							? $trackpoint['heartratebpm']['value']['value']
 							: 0;
 					} else { // Delete pause from timeline
+						//Error::getInstance()->addDebug('Training::parseTcx(): '.Helper::Time(strtotime($trackpoint['time']['value'])-$start_tmp-end($time)).' pause after '.Helper::Km(end($distance),2).'.');
 						$start_tmp += (strtotime($trackpoint['time']['value'])-$start_tmp) - end($time);
 					}
 				}
@@ -794,12 +815,16 @@ class Training {
 		$array['sportid']   = RUNNINGSPORT;
 		$array['datum']     = date("d.m.Y", $starttime);
 		$array['zeit']      = date("H:i", $starttime);
-		$array['dauer']     = Helper::Time(end($time), false, true);
 		$array['distanz']   = round(end($distance), 2);
-		$array['pace']      = Helper::Pace($array['distanz'], end($time));
-		$array['kmh']       = Helper::Kmh($array['distanz'], end($time));
-		$array['puls']      = round(array_sum($heartrate)/count($heartrate));
-		$array['puls_max']  = max($heartrate);
+		if (!empty($time)) {
+			$array['dauer']     = Helper::Time(end($time), false, true);
+			$array['pace']      = Helper::Pace($array['distanz'], end($time));
+			$array['kmh']       = Helper::Kmh($array['distanz'], end($time));
+		}
+		if (!empty($heartrate)) {
+			$array['puls']      = round(array_sum($heartrate)/count($heartrate));
+			$array['puls_max']  = max($heartrate);
+		}
 		$array['kalorien']  = $calories;
 		if (isset($xml['trainingcenterdatabase']['activities']['activity']['training']))
 			$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
