@@ -271,6 +271,13 @@ input:focus, select:focus, textarea:focus {
 	margin-left: 20px;
 }
 
+hr {
+	background:url(img/line.png) center center no-repeat;
+	height: 2px;
+	margin: 10px 0;
+	width: 100%;
+}
+
 table {
 	margin: 5px auto 10px;
 }
