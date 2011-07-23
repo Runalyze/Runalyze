@@ -26,6 +26,7 @@ if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 	}
 	$Mysql->update(PREFIX.'config', 1, $columns, $values);
 
+
 	// Plugin config vars: '_plugin'
 	$plugins = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'plugin`');
 	foreach ($plugins as $plugin) {
@@ -34,6 +35,7 @@ if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 			array('active', 'order'),
 			array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
 	}
+
 
 	// Dataset config vars: '_dataset'
 	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'dataset`');
@@ -53,8 +55,47 @@ if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 		$Mysql->update(PREFIX.'dataset', $id, $columns, $values);
 	}
 
+	// Sportarten
+	$sports = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports`');
+	$sports[] = array('id' => -1);
+	foreach ($sports as $i => $sport) {
+		$columns = array(
+			'name',
+			'short',
+			'online',
+			'kalorien',
+			'HFavg',
+			'RPE',
+			'distanztyp',
+			'kmh',
+			'typen',
+			'pulstyp',
+			'outside',
+			);
+		$values  = array(
+			$_POST['sport']['name'][$i],
+			isset($_POST['sport']['short'][$i]),
+			isset($_POST['sport']['online'][$i]),
+			$_POST['sport']['kalorien'][$i],
+			$_POST['sport']['HFavg'][$i],
+			$_POST['sport']['RPE'][$i],
+			isset($_POST['sport']['distanztyp'][$i]),
+			isset($_POST['sport']['kmh'][$i]),
+			isset($_POST['sport']['typen'][$i]),
+			isset($_POST['sport']['pulstyp'][$i]),
+			isset($_POST['sport']['outside'][$i]),
+			);
+
+		if ($sport['id'] != -1)
+			$Mysql->update(PREFIX.'sports', $sport['id'], $columns, $values);
+		elseif (strlen($_POST['sport']['name'][$i]) > 2)
+			$Mysql->insert(PREFIX.'sports', $columns, $values);
+	}
+
+
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
+
 
 // Because constants can't be redefinied, $config has to be used instead of CONFIG_...
 $config = $Mysql->fetchSingle('SELECT * FROM `'.PREFIX.'config`');
@@ -267,21 +308,29 @@ $Error->addTodo('Edit Sports', __FILE__, __LINE__);
 // TODO ID=1 fuer Laufen sperren!
 
 $sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
+$sports[] = array('new' => true, 'online' => 1, 'short' => 0, 'kalorien' => '', 'HFavg' => '', 'RPE' => '', 'distanztyp' => 0, 'kmh' => 0, 'typen' => 0, 'pulstyp' => 0, 'outside' => '');
 foreach($sports as $i => $sport) {
+	if (isset($sport['new'])) {
+		$icon = '?';
+		$name = '<input type="text" name="sport[name]['.$i.']" value="" />';
+	} else {
+		$icon = Icon::getSportIcon($sport['id']);
+		$name = '<input type="hidden" name="sport[name]['.$i.']" value="'.$sport['name'].'" />'.$sport['name'];
+	}
 	echo('
 		<tr class="a'.($i%2+1).'">
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['online'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['short'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td>'.Icon::getSportIcon($sport['id']).'</td>
-			<td>'.$sport['name'].'</td>
-			<td><input type="text" size="3" name="" disabled="disabled" value="'.$sport['kalorien'].'" /></td>
-			<td><input type="text" size="3" name="" disabled="disabled" value="'.$sport['HFavg'].'" /></td>
-			<td><input type="text" size="1" name="" disabled="disabled" value="'.$sport['RPE'].'" /></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['distanztyp'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['kmh'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['typen'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['pulstyp'] == 1 ? 'checked="checked" ' : '').'/></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($sport['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[online]['.$i.']" '.($sport['online'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[short]['.$i.']" '.($sport['short'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td>'.$icon.'</td>
+			<td>'.$name.'</td>
+			<td><input type="text" size="3" name="sport[kalorien]['.$i.']" value="'.$sport['kalorien'].'" /></td>
+			<td><input type="text" size="3" name="sport[HFavg]['.$i.']" value="'.$sport['HFavg'].'" /></td>
+			<td><input type="text" size="1" name="sport[RPE]['.$i.']" value="'.$sport['RPE'].'" /></td>
+			<td><input type="checkbox" name="sport[distanztyp]['.$i.']" '.($sport['distanztyp'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[kmh]['.$i.']" '.($sport['kmh'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[typen]['.$i.']" '.($sport['typen'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[pulstyp]['.$i.']" '.($sport['pulstyp'] == 1 ? 'checked="checked" ' : '').'/></td>
+			<td><input type="checkbox" name="sport[outside]['.$i.']" '.($sport['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
 		</tr>');
 }
 ?>
