@@ -7,7 +7,7 @@ require('../class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 
-if (isset($_POST) && $_POST['type'] == 'schuh' && $_POST['name'] != '') {
+if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 	$columns = array('inuse');
 	$values = array(1);
 	$vars = array('name', 'marke', 'kaufdatum');
@@ -16,11 +16,14 @@ if (isset($_POST) && $_POST['type'] == 'schuh' && $_POST['name'] != '') {
 			$columns[] = $var;
 			$values[] = $_POST[$var];
 		}
-	$Mysql->insert(PREFIX.'schuhe', $columns, $values);
 
-	$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
-}
-elseif (isset($_POST) && $_POST['type'] == 'schuh_unuse') {
+	if (strlen($_POST['name']) > 1) {
+		$Mysql->insert(PREFIX.'schuhe', $columns, $values);
+		$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
+	} else {
+		$submit = '<em class="error">Der Schuh muss einen Namen haben!</em><br /><br />';
+	}
+} elseif (isset($_POST['type']) && $_POST['type'] == 'schuh_unuse') {
 	$Mysql->update(PREFIX.'schuhe', $_POST['schuhid'], 'inuse', 0);
 
 	$submit = '<em>Der Schuh kann nun nicht mehr benutzt werden!</em><br /><br />';

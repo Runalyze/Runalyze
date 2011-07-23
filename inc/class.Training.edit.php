@@ -7,6 +7,13 @@ require('class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 
+if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
+	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
+	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';
+	echo '<script type="text/javascript">jReloadContent();</script>';
+	exit();
+}
+
 $id = $_GET['id'];
 
 if (isset($_POST['type']) && $_POST['type'] == "training") {
@@ -20,7 +27,6 @@ if (isset($_POST['type']) && $_POST['type'] == "training") {
 	// Helper::Umlaute() and Helper::CommaToPoint will be called automatically
 	$vars = array('kalorien', 'bemerkung', 'trainingspartner');
 
-	// TODO error-handling if day and time are not in the right format
 	// Timestamp
 	$tag = explode('.', $_POST['datum']);
 	$zeit = explode(':', $_POST['zeit']);
@@ -115,8 +121,7 @@ if (isset($_POST['type']) && $_POST['type'] == "training") {
 	
 		$Mysql->update(PREFIX.'training', $_POST['id'], 'trimp', Helper::TRIMP($_POST['id']));
 		$Mysql->update(PREFIX.'training', $_POST['id'], 'vdot', JD::Training2VDOT($_POST['id']));
-	
-		// TODO What is if a previously wrong training caused a higher config-value and this has to be corrected now?
+
 		if (Helper::ATL($timestamp) > CONFIG_MAX_ATL)
 			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_atl`="'.Helper::ATL($timestamp).'"');
 		if (Helper::CTL($timestamp) > CONFIG_MAX_CTL)
@@ -149,8 +154,10 @@ if (isset($submit))
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
 
 <?php
+echo Ajax::change(Icon::get(Icon::$CROSS, 'Training l&ouml;schen'), 'edit-div', '#delete', 'right').NL;
+
 if ($Training->hasPositionData())
-	echo Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;
+	echo '<span class="right">&nbsp;|&nbsp;</span> '.Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;
 
 echo Ajax::change('Allgemeines', 'edit-div', '#edit-allg').NL;
 
@@ -159,13 +166,23 @@ if ($sport['distanztyp'] == 1)
 
 if ($sport['outside'] == 1)
 	echo ' | '.Ajax::change('Outside', 'edit-div', '#edit-out').NL;
-?><br />
-<br />
+?>
+
+<hr />
 
 <div id="edit-div">
-<?php if ($Training->hasPositionData()): ?>
+	<div id="delete" class="change" style="display:none;">
+		Bist du dir sicher, dass du dieses Training l&ouml;schen m&ouml;chtest?<br />
+		<br />
+<?php echo Ajax::link('<strong>Training wirklich l&ouml;schen</strong>', 'ajax', $_SERVER['SCRIPT_NAME'].'?delete='.$id); ?><br />
+		<br />
+		<small>Falls im Anschluss Probleme mit der Datenbank auftauchen, solltest du das Plugin-Tool zur Datenbankreinigung verwenden.</small>
+	</div>
+
+<?php // TODO: Check if elevationCorrection is already done ?>
 	<div id="edit-gps" class="change" style="display:none;">
-		<a class="ajax" target="gps-results" href="inc/class.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="H&ouml;hendaten korrigieren">ElevationCorrection</a><br />
+<?php if ($Training->hasPositionData()): ?>
+		<a class="ajax" target="gps-results" href="inc/class.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="H&ouml;hendaten korrigieren"><strong>ElevationCorrection</strong></a><br />
 		<br />
 		<small>
 			Mit der ElevationCorrection k&ouml;nnen die H&ouml;hendaten korrigiert werden.<br />
@@ -173,10 +190,11 @@ if ($sport['outside'] == 1)
 		</small><br />
 		<br />
 
-		<?php // TODO: Check if elevationCorrection is already done ?>
 		<small id="gps-results"></small>
-	</div>
+<?php else: ?>
+		... hier soll ein Formular hin, um nachtr&auml;glich eine TCX-Datei hochzuladen und die GPS-Daten zu speichern.
 <?php endif; ?>
+	</div>
 
 
 	<div id="edit-allg" class="change">
