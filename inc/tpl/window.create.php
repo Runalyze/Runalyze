@@ -5,10 +5,21 @@
  */
 $Mysql = Mysql::getInstance();
 
-$showUploader = empty($_POST);
-
-if (isset($_POST['data']))
+if (isset($_GET['json'])) {
+	Error::getInstance()->footer_sent = true;
+	move_uploaded_file($_FILES['userfile']['tmp_name'], 'tmp.tcx');
+	echo 'success';
+	return;
+} elseif (isset($_GET['tmp'])) {
+	$_POST = Training::parseTcx(file_get_contents('tmp.tcx'));
+	unlink('tmp.tcx');
+} elseif (isset($_POST['data']))
 	$_POST = Training::parseTcx($_POST['data']);
+
+if (isset($_POST['error']))
+	Error::getInstance()->addError('Training::parseTcx() meldet: '.$_POST['error']);
+
+$showUploader = empty($_POST);
 
 if (!isset($_POST['datum']))
 	$_POST['datum'] = date("d.m.Y");
@@ -41,21 +52,45 @@ if (!isset($_POST['temperatur']))
 if (!isset($_POST['splits']))
 	$_POST['splits'] = '';
 ?>
+
+<span class="right" id="ajaxLinks">
+	<?php echo Ajax::change('TCX-Upload', 'ajax', 'uploadTcx'); ?> |
+	<?php echo Ajax::change('Garmin-Upload', 'ajax', 'upload'); ?> |
+	<?php echo Ajax::change('Formular', 'ajax', 'formular'); ?>
+</span>
+
+<?php // TODO: Set Uploader-Visibility as Config-Var ?>
+<div class="change" id="uploadTcx" style="display:none;" onmouseover="javascript:createUploader()">
+	<h1>Eine tcx-Datei hochladen</h1>
+
+	<div class="c button" id="file-upload-tcx">Datei hochladen</div>
+<script>
+function createUploader() {
+	$("#file-upload-tcx").removeClass("hide");
+	new AjaxUpload('#file-upload-tcx', {
+		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
+		onComplete : function(file, response){
+			jLoadLink('ajax', '<?php echo $_SERVER['SCRIPT_NAME']; ?>?tmp=true');
+		}		
+	});
+}
+</script>
+</div>
+
+<div class="change" id="upload"<?php if (!$showUploader) echo ' style="display:none;"'; ?>>
+	<h1>Training vom Garmin Forerunner hochladen</h1>
+
+	<div style="width:100%;text-align:center;position:relative;">
+		<small style="position:absolute;right:0;">Bei Problemen: <?php echo '<img class="link" style="vertical-align:middle;" src="'.Icon::getSrc(ICON::$REFRESH).'" onclick="$(\'#GCapi\').attr(\'src\', \'inc/tpl/tpl.garminCommunicator.php\')" />'; ?></small>
+		<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="180px"></iframe>
+	</div>
+</div>
+
+<div class="change" id="formular"<?php if ($showUploader) echo ' style="display:none;"'; ?>>
 <form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
 
 	<input type="hidden" name="type" value="newtraining" />
 	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />
-
-	<span class="right"><?php echo Ajax::toggle('<a href="#upload" title="Training hochladen">Uploader aus/einblenden</a>', 'upload'); ?></span>
-
-	<div class="<?php if (!$showUploader) echo 'hide'; ?>" id="upload">
-		<h1>Training vom Garmin Forerunner hochladen</h1>
-
-		<div style="width:100%;text-align:center;">
-			<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="180px"></iframe>
-		</div>
-
-	</div>
 
 	<h1>Neues Training</h1>
 
@@ -214,3 +249,4 @@ foreach($kleidungen as $kleidung)
 		<input style="margin-top: 10px;" type="submit" value="Eintragen!" />
 	</div>
 </form>
+</div>

@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
+	<script type="text/javascript" src="lib/fileuploader.js"></script>
 </head>
 
 <body>

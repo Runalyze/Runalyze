@@ -177,6 +177,16 @@ class Error {
 	}
 
 	/**
+	 * Add a warning to error list
+	 * @param string $message
+	 * @param string $file
+	 * @param int $line
+	 */
+	public function addNotice($message, $file = '', $line = -1) {
+		$this->add('NOTICE', $message, $file, $line);
+	}
+
+	/**
 	 * Add a todo to error list
 	 * @param string $message
 	 * @param string $file
@@ -184,6 +194,16 @@ class Error {
 	 */
 	public function addTodo($message, $file = '', $line = -1) {
 		$this->add('TODO', $message, $file, $line);
+	}
+
+	/**
+	 * Add a debug-info to error list
+	 * @param string $message
+	 * @param string $file
+	 * @param int $line
+	 */
+	public function addDebug($message, $file = '', $line = -1) {
+		$this->add('debug', $message, $file, $line);
 	}
 
 	/**

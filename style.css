@@ -327,3 +327,20 @@ a:hover, a:active, .link:hover {
 a#copy:hover, a#copy:active {
 	color: #DDD;
 }
+
+/*** O T H E R  T H I N G S ***/
+div.button {
+	border: 0;
+	cursor: pointer;
+	text-align: center;
+	width: 127px;
+	height: 19px;
+	padding-top: 6px;
+	margin: 0 auto;
+	background: url(inc/tcx/garmin/button_bg.jpg) no-repeat 0 top;
+	color: #fff;
+}
+
+div.button.hover {
+	background: url(inc/tcx/garmin/button_bg.jpg) no-repeat 0 bottom;
+}
