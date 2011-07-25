@@ -7,6 +7,54 @@ require('class.Frontend.php');
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 
+// Upload tcx-file
+if (isset($_GET['json'])) {
+	Error::getInstance()->footer_sent = true;
+	move_uploaded_file($_FILES['userfile']['tmp_name'], 'tmp.tcx');
+	echo 'success';
+	exit();
+} elseif (isset($_GET['tmp'])) {
+	$vars = array();
+	$GPS  = Training::parseTcx(file_get_contents('tmp.tcx'));
+	$Data = $Mysql->fetch(PREFIX.'training', $_GET['id']);
+
+	if (!($Data['hm'] > 0))
+		$vars[] = 'hm';
+
+	$vars[] = 'arr_time';
+	$vars[] = 'arr_lat';
+	$vars[] = 'arr_lon';
+	$vars[] = 'arr_alt';
+	$vars[] = 'arr_dist';
+	$vars[] = 'arr_heart';
+	$vars[] = 'arr_pace';
+
+	if ($Data['puls'] == 0 || $Data['puls_max'] == 0) {
+		$vars[] = 'puls';
+		$vars[] = 'puls_max';
+	}
+
+	if (Helper::TypeHasSplits($Data['typid']) && strlen($Data['splits']) == 0)
+		$vars[] = 'splits';
+
+	foreach ($vars as $var)
+		if (isset($GPS[$var])) {
+			$columns[] = $var;
+			$values[] = Helper::Umlaute(Helper::CommaToPoint($GPS[$var]));
+		}
+
+	if (!isset($GPS['error']) || $GPS['error'] == '') {
+		$Mysql->update(PREFIX.'training', $_GET['id'], $columns, $values);
+	
+		$submit = '<em>Die Daten wurden hinzugef&uuml;gt.</em><br /><br />';
+		$submit .= '<script type="text/javascript">jReloadContent();</script>';
+	} else {
+		$submit = '<em class="error">'.$GPS['error'].'</em><br /><br />';
+	}
+
+	unlink('tmp.tcx');
+}
+
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
 	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';
@@ -156,7 +204,7 @@ if (isset($submit))
 <?php
 echo Ajax::change(Icon::get(Icon::$CROSS, 'Training l&ouml;schen'), 'edit-div', '#delete', 'right').NL;
 
-if ($Training->hasPositionData())
+if ($sport['outside'] == 1)
 	echo '<span class="right">&nbsp;|&nbsp;</span> '.Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;
 
 echo Ajax::change('Allgemeines', 'edit-div', '#edit-allg').NL;
@@ -192,7 +240,22 @@ if ($sport['outside'] == 1)
 
 		<small id="gps-results"></small>
 <?php else: ?>
-		... hier soll ein Formular hin, um nachtr&auml;glich eine TCX-Datei hochzuladen und die GPS-Daten zu speichern.
+		<div onmouseover="javascript:createUploader()">
+			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br />
+				<br />
+			<div class="c button" id="file-upload-tcx">Datei hochladen</div>
+			<script>
+				function createUploader() {
+					$("#file-upload-tcx").removeClass("hide");
+					new AjaxUpload('#file-upload-tcx', {
+						action: '<?php echo $_SERVER['SCRIPT_NAME'].'?id='.$id.'&json=true'; ?>',
+						onComplete : function(file, response){
+							jLoadLink('ajax', '<?php echo $_SERVER['SCRIPT_NAME'].'?id='.$id.'&tmp=true'; ?>');
+						}		
+					});
+				}
+			</script>
+		</div>
 <?php endif; ?>
 	</div>
 
@@ -206,7 +269,7 @@ if ($sport['outside'] == 1)
 			<small>Datum</small><br />
 		<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="<?php echo $sport['kalorien']; ?>" />
 		<input type="hidden" name="dauer_old" value="<?php echo $Training->get('dauer'); ?>" />
-		<input type="text" size="8" name="dauer" id="dauer" value="<?php echo Helper::Time($Training->get('dauer'), false, true); ?>" onChange="paceberechnung(); kalorienberechnung();" />
+		<input type="text" size="9" name="dauer" id="dauer" value="<?php echo Helper::Time($Training->get('dauer'), false, true); ?>" onChange="paceberechnung(); kalorienberechnung();" />
 			<small>Dauer</small><br />
 <?php if ($sport['distanztyp'] == 1): ?>
 		<input type="checkbox" size="4" name="bahn" <?php echo Helper::Checked($Training->get('bahn') == 1); ?> />

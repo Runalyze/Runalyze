@@ -31,6 +31,12 @@ abstract class Plugin {
 	* @var int
 	*/
 	public static $DRAW = 2;
+	
+	/**
+	* Enum for plugin-type: Tool
+	* @var int
+	*/
+	public static $TOOL = 3;
 
 	/**
 	* Enum for active-flag: hidden
@@ -85,6 +91,12 @@ abstract class Plugin {
 	 * @var int
 	 */
 	protected $active;
+
+	/**
+	 * Integer position of plugins
+	 * @var int
+	 */
+	protected $order;
 
 	/**
 	 * Array with all config vars
@@ -167,7 +179,7 @@ abstract class Plugin {
 	/**
 	 * Get an instance for a given pluginkey (starting with 'RunalyzePlugin');
 	 * @param string $PLUGINKEY
-	 * @return object
+	 * @return Plugin
 	 */
 	static public function getInstanceFor($PLUGINKEY) {
 		include_once('plugin/class.'.$PLUGINKEY.'.php');
@@ -255,13 +267,14 @@ abstract class Plugin {
 
 		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $this->id);
 
-		$this->active = $dat['active'];
-		$this->filename = $dat['filename'];
-		$this->name = $dat['name'];
+		$this->active      = $dat['active'];
+		$this->order       = $dat['order'];
+		$this->filename    = $dat['filename'];
+		$this->name        = $dat['name'];
 		$this->description = $dat['description'];
-		$this->sportid = MAINSPORT;
-		$this->year = date('Y');
-		$this->dat = '';
+		$this->sportid     = MAINSPORT;
+		$this->year        = date('Y');
+		$this->dat         = '';
 
 		if (isset($_GET['sport']))
 			if (is_numeric($_GET['sport']))
@@ -327,6 +340,8 @@ abstract class Plugin {
 		switch($property) {
 			case 'id': return $this->id;
 			case 'type': return $this->type;
+			case 'active': return $this->active;
+			case 'order': return $this->order;
 			case 'config': return $this->config;
 			case 'filename': return $this->filename;
 			case 'name': return $this->name;
@@ -495,6 +510,8 @@ abstract class Plugin {
 				return 'panel';
 			case self::$Draw:
 				return 'draw';
+			case self::$Tool:
+				return 'tool';
 		}
 	}
 

@@ -318,6 +318,9 @@ tr.a3 { display: none; }
 .plus { color: #30AA30; }
 .error { color: #F00; font-weight: bold; }
 
+.unimportant { opacity: 0.5; }
+.unimportant:hover { opacity: 1; }
+
 /***  L I N K S  ***/
 a:link, a:visited {
 	text-decoration: none;
