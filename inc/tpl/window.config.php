@@ -10,88 +10,10 @@ $Error = Error::getInstance();
 
 $Error->addTodo('Formular abschicken funktioniert noch nicht vollstaendig', __FILE__, __LINE__);
 if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
-	// General config vars: '_config'
-	$columns = array();
-	$values = array();
-	$vars = array('geschlecht', 'puls_mode');
-	foreach($vars as $var)
-		if (isset($_POST[$var])) {
-			$columns[] = $var;
-			$values[] = Helper::CommaToPoint($_POST[$var]);
-		}
-	$checkboxes = array('use_schuhe', 'use_splits', 'use_puls', 'use_kleidung', 'use_temperatur', 'use_wetter', 'use_strecke');
-	foreach ($checkboxes as $box) {
-		$columns[] = $box;
-		$values[] = (isset($_POST[$box]) && $_POST[$box] == 'on') ? 1 : 0;
-	}
-	$Mysql->update(PREFIX.'config', 1, $columns, $values);
-
-
-	// Plugin config vars: '_plugin'
-	$plugins = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'plugin`');
-	foreach ($plugins as $plugin) {
-		$id = $plugin['id'];
-		$Mysql->update(PREFIX.'plugin', $id,
-			array('active', 'order'),
-			array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
-	}
-
-
-	// Dataset config vars: '_dataset'
-	$dataset = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'dataset`');
-	foreach ($dataset as $set) {
-		$id = $set['id'];
-		$modus = isset($_POST[$id.'_modus']) && $_POST[$id.'_modus'] == 'on' ? 2 : 1;
-		if (isset($_POST[$id.'_modus_3']) && $_POST[$id.'_modus_3'] == 3)
-			$modus = 3;
-		$columns = array(
-			'modus',
-			'zusammenfassung',
-			'position');
-		$values  = array(
-			$modus,
-			(isset($_POST[$id.'_zusammenfassung']) && $_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
-			isset($_POST[$id.'_position']) ? $_POST[$id.'_position'] : 0);
-		$Mysql->update(PREFIX.'dataset', $id, $columns, $values);
-	}
-
-	// Sportarten
-	$sports = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports`');
-	$sports[] = array('id' => -1);
-	foreach ($sports as $i => $sport) {
-		$columns = array(
-			'name',
-			'short',
-			'online',
-			'kalorien',
-			'HFavg',
-			'RPE',
-			'distanztyp',
-			'kmh',
-			'typen',
-			'pulstyp',
-			'outside',
-			);
-		$values  = array(
-			$_POST['sport']['name'][$i],
-			isset($_POST['sport']['short'][$i]),
-			isset($_POST['sport']['online'][$i]),
-			$_POST['sport']['kalorien'][$i],
-			$_POST['sport']['HFavg'][$i],
-			$_POST['sport']['RPE'][$i],
-			isset($_POST['sport']['distanztyp'][$i]),
-			isset($_POST['sport']['kmh'][$i]),
-			isset($_POST['sport']['typen'][$i]),
-			isset($_POST['sport']['pulstyp'][$i]),
-			isset($_POST['sport']['outside'][$i]),
-			);
-
-		if ($sport['id'] != -1)
-			$Mysql->update(PREFIX.'sports', $sport['id'], $columns, $values);
-		elseif (strlen($_POST['sport']['name'][$i]) > 2)
-			$Mysql->insert(PREFIX.'sports', $columns, $values);
-	}
-
+	Config::parsePostDataForConf();
+	Config::parsePostDataForPlugins();
+	Config::parsePostDataForDataset();
+	Config::parsePostDataForSports();
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
@@ -124,33 +46,38 @@ if (isset($submit))
 <div id="config_allgemein" class="change">
 	<h1>Allgemeine Einstellungen</h1>
 
-	<strong>Geschlecht:</strong><br />
-		<input type="radio" name="geschlecht" value="m"<?php echo Helper::Checked($config['geschlecht'] == 'm'); ?> />
-			m&auml;nnlich<br />
-		<input type="radio" name="geschlecht" value="w"<?php echo Helper::Checked($config['geschlecht'] == 'w'); ?> />
-			weiblich<br />
-		<br />
-	<strong>Herzfrequenz-Darstellung:</strong><br />
-		<input type="radio" name="puls_mode" value="bpm"<?php echo Helper::Checked($config['puls_mode'] == 'bpm'); ?> />
-			absoluter Wert<br />
-		<input type="radio" name="puls_mode" value="hfmax"<?php echo Helper::Checked($config['puls_mode'] == 'hfmax'); ?> />
-			&#37; <abbr title="maximale Herzfrequenz">HFmax</abbr><br />
-		<br />
-	<strong>W&auml;hle aus, welche der folgenden Daten du f&uuml;r jedes Training protokollieren m&ouml;chtest:</strong><br />
-	<input type="checkbox" name="use_schuhe"<?php echo Helper::Checked($config['use_schuhe'] == 1); ?> />
-		Laufschuh<br />
-	<input type="checkbox" name="use_splits"<?php echo Helper::Checked($config['use_splits'] == 1); ?> />
-		Zwischenzeiten<br />
-	<input type="checkbox" name="use_puls"<?php echo Helper::Checked($config['use_puls'] == 1); ?> />
-		Puls<br />
-	<input type="checkbox" name="use_kleidung"<?php echo Helper::Checked($config['use_kleidung'] == 1); ?> />
-		Kleidung<br />
-	<input type="checkbox" name="use_temperatur"<?php echo Helper::Checked($config['use_temperatur'] == 1); ?> />
-		Temperatur<br />
-	<input type="checkbox" name="use_wetter"<?php echo Helper::Checked($config['use_wetter'] == 1); ?> />
-		Wetter<br />
-	<input type="checkbox" name="use_strecke"<?php echo Helper::Checked($config['use_strecke'] == 1); ?> />
-		Strecke<br />
+	<div class="c">
+<?php
+$categories = $Mysql->fetch('SELECT `category` FROM `'.PREFIX.'conf` GROUP BY `category`');
+foreach ($categories as $i => $cat)
+	echo Ajax::change('<strong>'.$cat['category'].'</strong>', 'conf_div', strtolower($cat['category'])).($i < count($categories)-1 ? ' &nbsp; - &nbsp; ' : '').NL;
+?>
+	</div>
+
+	<hr />
+
+	<div id="conf_div">
+<?php
+foreach ($categories as $i => $cat) {
+	echo '<div id="'.strtolower($cat['category']).'" class="change"'.($i == 0 ? '' : ' style="display:none;"').'>';
+
+	$confs = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`="'.$cat['category'].'"');
+
+	if (empty($confs))
+		echo '<em>Keine Konfigurationsvariablen vorhanden vorhanden.</em>';
+
+	foreach ($confs as $i => $conf) {
+		echo Config::getInputField($conf).NL;
+		echo '<strong>'.$conf['description'].'</strong>';
+		if ($conf['type'] == 'array')
+			echo ' <small>(kommagetrennt)</small>';
+		echo '<br />';
+	}
+
+	echo '</div>';
+}
+?>
+	</div>
 </div>
 
 <?php
@@ -176,6 +103,8 @@ foreach ($plugin_types as $i => $type)
 ?>
 	</div>
 
+	<hr />
+
 	<div id="plugin_div">
 <?php
 foreach ($plugin_types as $i => $type) {
@@ -184,7 +113,7 @@ foreach ($plugin_types as $i => $type) {
 	echo '<tr class="top b"><td colspan="3">'.$type['name'].'</td><td>Modus</td><td>Pos.</td></tr>';
 	echo Helper::spaceTR(5);
 
-	$plugins = $Mysql->fetchAsArray('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.$type['type'].'" ORDER BY `order` ASC');
+	$plugins = $Mysql->fetchAsArray('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.$type['type'].'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC');
 
 	if (empty($plugins))
 		echo '<tr><td colspan="5"><em>Keine Plugins vorhanden.</em></td></tr>';

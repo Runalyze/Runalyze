@@ -3,12 +3,7 @@
  * This file contains the class::JD
  */
 
-Error::getInstance()->addTodo('class::JD: Set CONFIG_USE_VDOT_CORRECTOR as config-var', __FILE__, __LINE__);
-/**
- * Config-Flag: Should the VDOT-corrector be used?
- * @var bool
- */
-define('CONFIG_USE_VDOT_CORRECTOR', true);
+Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, 'Individuelle VDOT-Korrektur verwenden');
 
 /**
  * Number of days to be used for calculating VDOT-form
@@ -122,7 +117,7 @@ class JD {
 	 * @return double
 	 */
 	public static function correctVDOT($VDOT) {
-		if (CONFIG_USE_VDOT_CORRECTOR)
+		if (CONF_JD_USE_VDOT_CORRECTOR)
 			return VDOT_CORRECTOR*$VDOT;
 
 		return $VDOT;

@@ -22,7 +22,7 @@ $Map->setPanZoomControl("hide");
 $Map->setOverviewMap("hide");
 $Map->setScaleControl("hide");
 $Map->setMapTypeControl("hide");
-$Map->setMapType("G_HYBRID_MAP");
+$Map->setMapType(CONF_TRAINING_MAPTYPE);
 $Map->setContinuousZoom("enabled");
 $Map->setDragging("enabled");
 $Map->setScrollWheelZoom("enabled");
@@ -52,7 +52,10 @@ foreach ($Latitude as $i => $lat) {
 		$html = $km.'. Kilometer in '.Helper::Time($Time[$i]-$s).'/km<br />';
 		$html .= 'H&ouml;he: '.$Elevation[$i].'m<br /><br />';
 		$html .= 'Gesamtzeit: '.Helper::Time($Time[$i]);
-		$Map->addMarker($lat, $Longitude[$i], $html, '', '', $iconImage = '../../img/marker.gif', 'none', 10, 10, 0, 0, 5, 5);
+
+		if (CONF_TRAINING_MAP_MARKER)
+			$Map->addMarker($lat, $Longitude[$i], $html, '', '', $iconImage = '../../img/marker.gif', 'none', 10, 10, 0, 0, 5, 5);
+
 		$s = $Time[$i];
 	}
 

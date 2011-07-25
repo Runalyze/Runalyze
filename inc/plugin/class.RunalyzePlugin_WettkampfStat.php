@@ -232,8 +232,8 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 					<td>Lauf</td>
 					<td>Distanz</td>
 					<td>Zeit</td>
-					<td>Pace</td>'.(CONFIG_USE_PULS ? '
-					<td>Puls</td>' : '').''.(CONFIG_USE_WETTER ? '
+					<td>Pace</td>'.(CONF_USE_PULS ? '
+					<td>Puls</td>' : '').''.(CONF_USE_WETTER ? '
 					<td>Wetter</td>' : '').'
 				</tr>');
 		echo Helper::spaceTR(7);
@@ -251,8 +251,8 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 				<td class="l"><strong>'.Ajax::trainingLink($wk['id'], $wk['bemerkung']).'</strong></td>
 				<td>'.Helper::Km($wk['distanz'], (round($wk['distanz']) != $wk['distanz'] ? 1 : 0), $wk['bahn']).'</td>
 				<td>'.Helper::Time($wk['dauer']).'</td>
-				<td class="small">'.$wk['pace'].'/km</td>'.(CONFIG_USE_PULS ? '
-				<td class="small">'.Helper::Unknown($wk['puls']).' / '.Helper::Unknown($wk['puls_max']).' bpm</td>' : '').''.(CONFIG_USE_WETTER ? '
+				<td class="small">'.$wk['pace'].'/km</td>'.(CONF_USE_PULS ? '
+				<td class="small">'.Helper::Unknown($wk['puls']).' / '.Helper::Unknown($wk['puls_max']).' bpm</td>' : '').''.(CONF_USE_WETTER ? '
 				<td class="small">'.($wk['temperatur'] != 0 && $wk['wetterid'] != 0 ? $wk['temperatur'].' &deg;C '.Helper::WeatherImage($wk['wetterid']) : '').'</td>' : '').'
 			</tr>');	
 	}

@@ -313,7 +313,7 @@ abstract class Plugin {
 					case 'bool':
 						$var = ($var == 'true');
 					case 'int':
-					case 'floor':
+					case 'float':
 						$type = $var_str[0];
 						break;
 					default:

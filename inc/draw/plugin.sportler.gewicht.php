@@ -38,7 +38,7 @@ $TresholdFormat = array("AxisID" => 1,
 	"WriteCaption" => TRUE, "Caption" => "Wunschgewicht", "CaptionAlign" => CAPTION_LEFT_TOP,
 	"R" => 0, "G" => 136, "B" => 0, "Alpha" => 50);
 
-if (CONFIG_USE_GEWICHT && !empty($Weights)) {
+if (!empty($Weights)) {
 	$WeightFormat = array("R" => 0, "G" => 0, "B" => 136);
 	$Draw->pData->addPoints($Weights, 'Gewicht');
 	$Draw->pData->setSerieOnAxis('Gewicht', 1);
@@ -47,7 +47,7 @@ if (CONFIG_USE_GEWICHT && !empty($Weights)) {
 	$Draw->pData->setPalette('Gewicht', $WeightFormat);
 }
 
-if (CONFIG_USE_RUHEPULS && !empty($HRrests)) {
+if (!empty($HRrests)) {
 	$HRFormat = array("R" => 136, "G" => 0, "B" => 0);
 	$Draw->pData->addPoints($HRrests, 'Ruhepuls');
 	$Draw->pData->setSerieOnAxis('Ruhepuls', 0);
@@ -67,8 +67,10 @@ $Draw->drawLineChart();
 
 $Draw->pImage->drawLegend(130, 15, $LegendFormat);
 
-if (CONFIG_WUNSCHGEWICHT > 1 && CONFIG_WUNSCHGEWICHT > $Draw->pData->getMin('Gewicht'))
-	$Draw->pImage->drawThreshold(CONFIG_WUNSCHGEWICHT, $TresholdFormat);
+$Plugin = Plugin::getInstanceFor('RunalyzePlugin_SportlerPanel');
+$Plugin_conf = $Plugin->get('config');
+if ($Plugin_conf['wunschgewicht'] > 1 && $Plugin_conf['wunschgewicht'] > $Draw->pData->getMin('Gewicht'))
+	$Draw->pImage->drawThreshold($Plugin_conf['wunschgewicht'], $TresholdFormat);
 
 if ($titleError != '')
 	$Draw->drawCenteredTitle($titleError);

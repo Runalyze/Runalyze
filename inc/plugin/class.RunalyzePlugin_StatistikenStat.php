@@ -14,7 +14,7 @@ $PLUGINKEY = 'RunalyzePlugin_StatistikenStat';
  * @uses class::Error
  * @uses class::Helper
  * @uses class:JD
- * @uses CONFIG_SHOW_RECHENSPIELE
+ * @uses CONF_RECHENSPIELE
  * @uses START_YEAR
  *
  * Last modified 2011/07/10 13:00 by Hannes Christiansen
@@ -78,10 +78,10 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 			$this->displayLine('&Oslash;Tempo', $this->TempoData);
 		}
 
-		if ($this->sportid == RUNNINGSPORT && CONFIG_SHOW_RECHENSPIELE != 0)
+		if ($this->sportid == RUNNINGSPORT && CONF_RECHENSPIELE)
 			$this->displayLine('VDOT', $this->VDOTData);
 
-		if (CONFIG_SHOW_RECHENSPIELE != 0)
+		if (CONF_RECHENSPIELE)
 			$this->displayLine('TRIMP', $this->TRIMPData);
 
 		echo '</table>';

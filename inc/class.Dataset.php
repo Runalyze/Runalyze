@@ -205,6 +205,8 @@ class Dataset {
 	 */
 	private function datasetType() {
 		$type_id = $this->Training->get('typid');
+		if ($type_id == 0)
+			return '';
 
 		$text = Helper::TypeShort($type_id);
 		if (Helper::TypeHasHighRPE($type_id))

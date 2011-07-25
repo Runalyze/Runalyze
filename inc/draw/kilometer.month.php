@@ -33,7 +33,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$Kilometers[$dat['m']-1] = $dat['km'];
 	}
 
-	if (CONFIG_SHOW_RECHENSPIELE) {
+	if (CONF_RECHENSPIELE) {
 		$TrimpPerMonth = Helper::TRIMP(0, 365 * Helper::CTL() / 12);
 		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`dauer`/60/`distanz`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.RUNNINGSPORT);
 		$possibleKM    = 10 * round($TrimpPerMonth / $AvgMonthPace['avg'] / 10);

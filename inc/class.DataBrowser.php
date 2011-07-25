@@ -21,6 +21,8 @@ define('DATA_BROWSER_SEARCH_ID', 'search');
  */
 define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
 
+Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Seite');
+
 /**
  * Class: Frontend
  * 

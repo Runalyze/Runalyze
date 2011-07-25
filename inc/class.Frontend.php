@@ -12,7 +12,7 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class::Error
- * //@uses class::Config
+ * @uses class::Config
  * @uses class::Icon
  * @uses class::Ajax
  * @uses class::Plugin
@@ -84,7 +84,8 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		define('RUNALYZE_DEBUG', false); // TODO: Move debug-mode to config
+		//define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
+		define('RUNALYZE_DEBUG', false);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -121,13 +122,19 @@ class Frontend {
 	}
 
 	/**
-	 * Define all CONFIG_CONSTS
+	 * Define all CONF_CONSTS
 	 */
 	private function initConfigConsts() {
-		Error::getInstance()->addTodo('Set up new class::Config');
-		//require_once(FRONTEND_PATH.'class.Config.php');
+		require_once(FRONTEND_PATH.'class.Config.php');
 
-		$config = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'config` LIMIT 1');
+		Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
+		Config::register('Allgemein', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
+		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
+		Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
+		Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
+
+		// Following lines are only used for MAX_ATL/CTL/TRIMP anymore
+		$config = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'config`');
 		foreach ($config as $key => $value)
 			define('CONFIG_'.strtoupper($key), $value);
 		unset($config);

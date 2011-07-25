@@ -20,7 +20,7 @@ final class Mysql {
 
 	/**
 	 * Static getter for the singleton instnace
-	 * @return class::Mysql static instance
+	 * @return Mysql
 	 */
 	public static function getInstance() {
 		if (self::$instance == NULL)
@@ -67,6 +67,8 @@ final class Mysql {
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
 	public function query($query) {
+		//Error::getInstance()->addDebug($query);
+
 		$result = false;
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
@@ -106,6 +108,8 @@ final class Mysql {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
+		foreach ($columns as $k => $v)
+			$columns[$k] = '`'.$v.'`';
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 

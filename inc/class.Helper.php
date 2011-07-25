@@ -173,14 +173,14 @@ class Helper {
 		if ($time == 0)
 			$time = time();
 
-		$bpm = $pulse.'bpm';
+		$bpm = round($pulse).'bpm';
 		$hf  = '?&nbsp;&#37;';
 
 		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
 		if ($HFmax !== false)
 			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
 
-		if (CONFIG_PULS_MODE != 'bpm')
+		if (CONF_PULS_MODE != 'bpm')
 			return '<span title="'.$bpm.'">'.$hf.'</span>';
 
 		return '<span title="'.$hf.'">'.$bpm.'</span>';
@@ -354,8 +354,8 @@ class Helper {
 		if ($dat === false)
 			$dat = array();
 
-		$factor_a  = (CONFIG_GESCHLECHT == 'm') ? 0.64 : 0.86;
-		$factor_b  = (CONFIG_GESCHLECHT == 'm') ? 1.92 : 1.67;
+		$factor_a  = (CONF_GESCHLECHT == 'm') ? 0.64 : 0.86;
+		$factor_b  = (CONF_GESCHLECHT == 'm') ? 1.92 : 1.67;
 		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
 		$sport     = Helper::Sport($sportid, true);
 		$typ       = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;

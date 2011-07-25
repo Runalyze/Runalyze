@@ -2,6 +2,16 @@
 /**
  * This file contains the class to handle every training.
  */
+
+// TODO: Config::register('Training', 'TRAINING_MAP_COLOR', 'select', array(), ...
+Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
+Config::register('Training', 'TRAINING_MAPTYPE', 'select',
+	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
+	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
+Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
+	array('tcx' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
+	array('tcx-Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
+
 /**
  * Class: Stat
  * 
@@ -13,7 +23,6 @@
  *
  * Last modified 2011/03/15 10:30 by Hannes Christiansen
  */
-
 class Training {
 	/**
 	 * Minimal difference per step to be recognized for elevation data
