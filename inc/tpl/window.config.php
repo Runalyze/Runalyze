@@ -8,12 +8,12 @@ $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->addTodo('Formular abschicken funktioniert noch nicht vollstaendig', __FILE__, __LINE__);
 if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 	Config::parsePostDataForConf();
 	Config::parsePostDataForPlugins();
 	Config::parsePostDataForDataset();
 	Config::parsePostDataForSports();
+	Config::parsePostDataForClothes();
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
@@ -279,25 +279,31 @@ foreach($typen as $i => $typ) {
 
 		<br />
 
-	<table class="c" style="width:100%;">
+	<table class="c">
 		<tr class="b">
 			<td>Name</td>
 			<td>Abk&uuml;rzung</td>
 			<td>Kategorie</td>
+			<td>l&ouml;schen?</td>
 		</tr>
 		<tr class="space">
-			<td colspan="3"></td>
+			<td colspan="4"></td>
 		</tr>
 <?php
-$Error->addTodo('Edit Kleidungen', __FILE__, __LINE__);
-
 $kleidungen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `order`, `id` ASC');
+$kleidungen[] = array('new' => true, 'name' => '', 'name_kurz' => '', 'order' => '');
 foreach($kleidungen as $i => $kleidung) {
+	if (isset($kleidung['new'])) {
+		$delete = '';
+	} else {
+		$delete = '<input type="checkbox" name="kleidung[delete]['.$i.']" />';
+	}
 	echo('
-		<tr class="a'.($i%2+1).'">
-			<td>'.$kleidung['name'].'</td>
-			<td>'.$kleidung['name_kurz'].'</td>
-			<td>'.$kleidung['order'].'</td>
+		<tr class="a'.($i%2+1).($delete == '' ? ' unimportant' : '').'">
+			<td><input type="text" size="30" name="kleidung[name]['.$i.']" value="'.$kleidung['name'].'" /></td>
+			<td><input type="text" size="15" name="kleidung[name_kurz]['.$i.']" value="'.$kleidung['name_kurz'].'" /></td>
+			<td><input type="text" size="4" name="kleidung[order]['.$i.']" value="'.$kleidung['order'].'" /></td>
+			<td>'.$delete.'</td>
 		</tr>');
 }
 ?>

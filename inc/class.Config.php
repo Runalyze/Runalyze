@@ -276,5 +276,33 @@ class Config {
 				Mysql::getInstance()->insert(PREFIX.'sports', $columns, $values);
 		}
 	}
+
+	/**
+	 * Parse post-data for editing clothes
+	 */
+	static public function parsePostDataForClothes() {
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'kleidung`');
+		$kleidungen[] = array('id' => -1);
+
+		foreach ($kleidungen as $i => $kleidung) {
+			$columns = array(
+				'name',
+				'name_kurz',
+				'order',
+				);
+			$values  = array(
+				$_POST['kleidung']['name'][$i],
+				$_POST['kleidung']['name_kurz'][$i],
+				$_POST['kleidung']['order'][$i],
+				);
+
+			if (isset($_POST['kleidung']['delete'][$i]))
+				Mysql::getInstance()->delete(PREFIX.'kleidung', (int)$kleidung['id']);
+			elseif ($kleidung['id'] != -1)
+				Mysql::getInstance()->update(PREFIX.'kleidung', $kleidung['id'], $columns, $values);
+			elseif (strlen($_POST['kleidung']['name'][$i]) > 2)
+				Mysql::getInstance()->insert(PREFIX.'kleidung', $columns, $values);
+		}
+	}
 }
 ?>
