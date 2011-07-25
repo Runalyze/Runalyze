@@ -112,20 +112,18 @@ if (isset($submit))
 
 		<span class="right">
 			<a class="change" href="#config_allgemein" target="config_all">Allgemeines</a> |
-			<a class="change" href="#config_plugins_panel" target="config_all">Panel-Plugins</a> |
-			<a class="change" href="#config_plugins_stat" target="config_all">Stat-Plugins</a> |
+			<a class="change" href="#config_plugins" target="config_all">Plugins</a> |
 			<a class="change" href="#config_dataset" target="config_all">Dataset</a> |
 			<a class="change" href="#config_sport" target="config_all">Sportarten</a> |
-			<a class="change" href="#config_typen" target="config_all">Trainingstypen</a> |
+			<a class="change" href="#config_typen" target="config_all">Trainingstypen</a>
+<?php if ($config['use_kleidung'] == 1): ?> |
 			<a class="change" href="#config_kleidung" target="config_all">Kleidung</a>
+<?php endif; ?>
 		</span>
-
-		<br class="clear" />
 
 <div id="config_allgemein" class="change">
 	<h1>Allgemeine Einstellungen</h1>
-<?php $Error->addTodo('Weitere Config-Variablen', __FILE__, __LINE__); ?>
-<?php $Error->addTodo('Weitere Config-Variablen -&gt; nur entsprechende DIVs anzeigen', __FILE__, __LINE__); ?>
+
 	<strong>Geschlecht:</strong><br />
 		<input type="radio" name="geschlecht" value="m"<?php echo Helper::Checked($config['geschlecht'] == 'm'); ?> />
 			m&auml;nnlich<br />
@@ -155,87 +153,66 @@ if (isset($submit))
 		Strecke<br />
 </div>
 
-<div id="config_plugins_panel" class="change" style="display:none;">
-	<h1>Panel-Plugins</h1>
-
-	Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Belieben.
-	Panel-Plugins werden durchgehend auf der rechten Seite angezeigt.
-	W&auml;hle hier aus, welche Plugins du verwenden m&ouml;chtest.<br />
-		<br />
-	Beachte dabei bitte, dass einige Plugins die Nutzung gewisser Felder voraussetzen (z.B. den Puls).
-	Die Einstellungen eines Plugins k&ouml;nnen nach einem Klick auf das Symbol ge&auml;ndert werden.
-	Dabei werden aber alle &Auml;nderungen hier verworfen.<br />
-
-	<br />
-
-	<table>
-		<tr class="top b">
-			<td colspan="3">Panels</td>
-			<td class="small">Ja</td>
-			<td class="small">eingeklappt</td>
-			<td class="small">Nein</td>
-			<td class="small">Pos.</td>
-		</tr>
-		<tr class="space">
-			<td colspan="7"></td>
-		</tr>
 <?php
-$plugins = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" ORDER BY `order` ASC');
-foreach($plugins as $i => $plugin)
-	echo('
-		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Plugin.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
-			<td class="b">'.$plugin['name'].'</td>
-			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'] == 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'] == 0).' /></td>
-			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
-		</tr>');
+$Error->addTodo('Plugin-Verwaltung: Installieren und co', __FILE__, __LINE__);
+// TODO: Download-Link
 ?>
-	</table>
-</div>
-
-<div id="config_plugins_stat" class="change" style="display:none;">
-	<h1>Stat-Plugins</h1>
+<div id="config_plugins" class="change" style="display:none;">
+	<h1>Plugins</h1>
 
 	Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Belieben.<br />
-	Statistik-Plugins werden unterhalb der Trainingseinheiten angezeigt.
-	Unwichtigere und kleinere Statistik-Plugins k&ouml;nnen unter dem Reiter &quot;Sonstiges&quot; zusammengefasst werden.
-	W&auml;hle hier aus, welche Plugins du verwenden m&ouml;chtest.<br />
-		<br />
-	Beachte dabei bitte, dass einige Plugins die Nutzung gewisser Felder voraussetzen (z.B. den Puls).
-	Die Einstellungen eines Plugins k&ouml;nnen nach einem Klick auf das Symbol ge&auml;ndert werden.
-	Dabei werden aber alle &Auml;nderungen hier verworfen.<br />
-
 	<br />
 
-	<table>
-		<tr class="top b">
-			<td colspan="3">Statistiken</td>
-			<td class="small">Ja</td>
-			<td class="small" title="Das Plugin wird unter dem Reiter Sonstiges gruppiert">Sonst.</td>
-			<td class="small">Nein</td>
-			<td class="small">Pos.</td>
-		</tr>
-		<tr class="space">
-			<td colspan="7"></td>
-		</tr>
+	<div class="c">
 <?php
-$plugins = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="stat" ORDER BY `order` ASC');
-foreach($plugins as $i => $plugin)
-	echo('
-		<tr class="top a'.($i%2+1).'">
-			<td>'.Ajax::window('<a href="inc/class.Plugin.config.php?id='.$plugin['id'].'" title="Plugin bearbeiten">'.Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten').'</a>','small').'</td>
-			<td class="b">'.$plugin['name'].'</td>
-			<td class="small">'.$plugin['description'].'</td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="1"'.Helper::Checked($plugin['active'] == 1).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="2"'.Helper::Checked($plugin['active'] == 2).' /></td>
-			<td><input type="radio" name="plugin_modus_'.$plugin['id'].'" value="0"'.Helper::Checked($plugin['active'] == 0).' /></td>
-			<td><input type="text" name="plugin_order_'.$plugin['id'].'" size="3" value="'.$plugin['order'].'" /></td>
-		</tr>');
+$plugin_types = array();
+$plugin_types[] = array('type' => 'stat', 'name' => 'Statistiken', 'text' => 'Gro&szlig;e Statistiken unterhalb des Kalenders.');
+$plugin_types[] = array('type' => 'panel', 'name' => 'Panels', 'text' => 'Erweiterte Ansichten und Zusammenfassungen in der rechten Spalte');
+$plugin_types[] = array('type' => 'draw', 'name' => 'Diagramme', 'text' => 'Zus&auml;tzliche Diagramme, meist eingebunden durch ein Statistik-Plugin.');
+$plugin_types[] = array('type' => 'tool', 'name' => 'Tool', 'text' => 'Extra ansteuerbare Tools, meist zur Auswertung oder Aufbereitung der kompletten Datenbank.');
+
+foreach ($plugin_types as $i => $type)
+	echo Ajax::change('<strong>'.$type['name'].'</strong>', 'plugin_div', $type['type']).($i < count($plugin_types)-1 ? ' &nbsp;&nbsp; - &nbsp;&nbsp; ' : '').NL;
 ?>
-	</table>
+	</div>
+
+	<div id="plugin_div">
+<?php
+foreach ($plugin_types as $i => $type) {
+	echo '<div id="'.$type['type'].'" class="change"'.($i == 0 ? '' : ' style="display:none;"').'>';
+	echo '<table style="width:100%;">';
+	echo '<tr class="top b"><td colspan="3">'.$type['name'].'</td><td>Modus</td><td>Pos.</td></tr>';
+	echo Helper::spaceTR(5);
+
+	$plugins = $Mysql->fetchAsArray('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.$type['type'].'" ORDER BY `order` ASC');
+
+	if (empty($plugins))
+		echo '<tr><td colspan="5"><em>Keine Plugins vorhanden.</em></td></tr>';
+
+	foreach ($plugins as $i => $plug) {
+		$Plugin = Plugin::getInstanceFor($plug['key']);
+		
+		echo('
+			<tr class="a'.($i%2+1).'">
+				<td>'.$Plugin->getConfigLink().'</td>
+				<td class="b">'.$Plugin->get('name').'</td>
+				<td class="small">'.$Plugin->get('description').'</td>
+				<td><select name="plugin_modus_'.$Plugin->get('id').'">
+						<option value="'.Plugin::$ACTIVE.'"'.Helper::Selected($Plugin->get('active') == Plugin::$ACTIVE).'>aktiviert</option>
+						<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.Helper::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>versteckt*</option>
+						<option value="'.Plugin::$ACTIVE_NOT.'"'.Helper::Selected($Plugin->get('active') == Plugin::$ACTIVE_NOT).'>nicht aktiviert</option>
+					</select></td>
+				<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'" /></td>
+			</tr>');
+	}
+	
+	echo Helper::spaceTR(5);
+	echo '</table>';
+	echo '</div>';
+}
+?>
+		<small>* Versteckte Plugins sind als Panel eingeklappt, als Statistik unter &quot;Sonstiges&quot; gruppiert.</small>
+	</div>
 </div>
 
 <div id="config_dataset" class="change" style="display:none;">
@@ -304,9 +281,6 @@ foreach($datasets as $i => $dataset) {
 			<td colspan="12"></td>
 		</tr>
 <?php
-$Error->addTodo('Edit Sports', __FILE__, __LINE__);
-// TODO ID=1 fuer Laufen sperren!
-
 $sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
 $sports[] = array('new' => true, 'online' => 1, 'short' => 0, 'kalorien' => '', 'HFavg' => '', 'RPE' => '', 'distanztyp' => 0, 'kmh' => 0, 'typen' => 0, 'pulstyp' => 0, 'outside' => '');
 foreach($sports as $i => $sport) {
@@ -318,7 +292,7 @@ foreach($sports as $i => $sport) {
 		$name = '<input type="hidden" name="sport[name]['.$i.']" value="'.$sport['name'].'" />'.$sport['name'];
 	}
 	echo('
-		<tr class="a'.($i%2+1).'">
+		<tr class="a'.($i%2+1).($icon == '?' ? ' unimportant' : '').'">
 			<td><input type="checkbox" name="sport[online]['.$i.']" '.($sport['online'] == 1 ? 'checked="checked" ' : '').'/></td>
 			<td><input type="checkbox" name="sport[short]['.$i.']" '.($sport['short'] == 1 ? 'checked="checked" ' : '').'/></td>
 			<td>'.$icon.'</td>
