@@ -59,8 +59,7 @@ if (!isset($_POST['splits']))
 	<?php echo Ajax::change('Formular', 'ajax', 'formular'); ?>
 </span>
 
-<?php // TODO: Set Uploader-Visibility as Config-Var ?>
-<div class="change" id="uploadTcx" style="display:none;" onmouseover="javascript:createUploader()">
+<div class="change" id="uploadTcx"<?php if (CONF_TRAINING_CREATE_MODE != 'tcx' || !$showUploader) echo ' style="display:none;"'; ?> onmouseover="javascript:createUploader()">
 	<h1>Eine tcx-Datei hochladen</h1>
 
 	<div class="c button" id="file-upload-tcx">Datei hochladen</div>
@@ -77,7 +76,7 @@ function createUploader() {
 </script>
 </div>
 
-<div class="change" id="upload"<?php if (!$showUploader) echo ' style="display:none;"'; ?>>
+<div class="change" id="upload"<?php if (CONF_TRAINING_CREATE_MODE != 'garmin' || !$showUploader) echo ' style="display:none;"'; ?>>
 	<h1>Training vom Garmin Forerunner hochladen</h1>
 
 	<div style="width:100%;text-align:center;position:relative;">
@@ -86,7 +85,7 @@ function createUploader() {
 	</div>
 </div>
 
-<div class="change" id="formular"<?php if ($showUploader) echo ' style="display:none;"'; ?>>
+<div class="change" id="formular"<?php if (CONF_TRAINING_CREATE_MODE != 'form' && $showUploader) echo ' style="display:none;"'; ?>>
 <form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
 
 	<input type="hidden" name="type" value="newtraining" />

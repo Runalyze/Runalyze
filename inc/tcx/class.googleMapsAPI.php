@@ -40,9 +40,9 @@ class googleMapsAPI {
 	function __construct($api_key = '', $map_type="map") {
 		//Default Values
 		$this->map_id = "map".md5(uniqid(rand()));
-		$this->setMapTypeControlButton("G_NORMAL_MAP", "show");
-		$this->setMapTypeControlButton("G_HYBRID_MAP", "show");
-		$this->setMapTypeControlButton("G_SATELLITE_MAP", "show");
+		$this->setMapTypeControlButton("G_NORMAL_MAP", "hide");
+		$this->setMapTypeControlButton("G_HYBRID_MAP", "hide");
+		$this->setMapTypeControlButton("G_SATELLITE_MAP", "hide");
 		$this->setMapTypeControlButton("G_PHYSICAL_MAP", "hide");
 
 		$this->api_key = $api_key;

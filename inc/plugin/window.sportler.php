@@ -8,19 +8,19 @@ $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Error->add('TODO', 'Config: use_koerperfett, use_ruhepuls');
-$Error->add('TODO', 'Config: wunschgewicht');
+$Plugin = Plugin::getInstanceFor('RunalyzePlugin_SportlerPanel');
+$Plugin_conf = $Plugin->get('config');
 
 if (isset($_POST['type']) && $_POST['type'] == "user") {
 	$columns = array('time');
 	$values = array(time());
 	$vars = array('gewicht');
-	if (CONFIG_USE_KOERPERFETT == 1) {
+	if ($Plugin_conf['use_body_fat']) {
 		$vars[] = 'fett';
 		$vars[] = 'wasser';
 		$vars[] = 'muskeln';
 	}
-	if (CONFIG_USE_RUHEPULS == 1) {
+	if ($Plugin_conf['use_puls']) {
 		$vars[] = 'puls_ruhe';
 		$vars[] = 'puls_max';
 	}
@@ -54,7 +54,7 @@ if (isset($submit))
 <input type="text" name="gewicht" value="<?php echo $dat['gewicht']; ?>" size="5" />
 	<small>Gewicht</small><br />
 
-<?php if (CONFIG_USE_KOERPERFETT == 1): ?>
+<?php if ($Plugin_conf['use_body_fat']): ?>
 <input type="text" name="fett" value="<?php echo $dat['fett']; ?>" size="5" />
 	<small>&#37; Fett</small><br />
 <input type="text" name="wasser" value="<?php echo $dat['wasser']; ?>"	size="5" />
@@ -63,7 +63,7 @@ if (isset($submit))
 	<small>&#37; Muskeln</small><br />
 <?php endif; ?>
 
-<?php if (CONFIG_USE_RUHEPULS == 1): ?><br />
+<?php if ($Plugin_conf['use_weight']): ?><br />
 <input type="text" name="puls_ruhe" value="<?php echo $dat['puls_ruhe']; ?>" size="5" />
 	<small>Ruhepuls</small><br />
 <input type="text" name="puls_max" value="<?php echo $dat['puls_max']; ?>" size="5" />

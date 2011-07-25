@@ -22,6 +22,25 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `runalyze_conf`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_conf` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `category` tinytext NOT NULL,
+  `key` varchar(100) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `value` text NOT NULL,
+  `description` tinytext NOT NULL,
+  `select_description` tinytext NOT NULL,
+  UNIQUE (
+    `key`
+  )
+) ENGINE = MYISAM ;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `runalyze_config`
 --
 

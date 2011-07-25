@@ -59,7 +59,7 @@ class Error {
 
 	/**
 	 * Static getter for the singleton instnace
-	 * @return class::Error static instance
+	 * @return Error
 	 */
 	public static function getInstance() {
 		if (self::$instance == NULL)
@@ -217,14 +217,15 @@ class Error {
 		$trace = '';
 		foreach ($backtrace as $i => $part) {
 			if (!isset($part['args']))
-				$part['args'] = '';
+				$args = '';
 			if (is_array($part['args']))
-				$part['args'] = implode(', ', $part['args']);
+				$args = self::r_implode(', ', $part['args']);
+
 			$class = isset($part['class']) ? $part['class'].'::' : '';
 			if ($i != 0) {
 				$trace .= $part['file'].'<small>::'.$part['line'].'</small><br />';
 				$trace .= '<strong>'.$class.$part['function'].'</strong>';
-				$trace .= '<small>('.$part['args'].')</small><br /><br />';
+				$trace .= '<small>('.$args.')</small><br /><br />';
 			}
 		}
 
@@ -252,6 +253,21 @@ class Error {
 			include('tpl/tpl.Frontend.footer.php');
 
 		exit();
+	}
+
+	/**
+	 * Implode for a multidimensional array
+	 * @param string $glue
+	 * @param array $pieces
+	 * @return string
+	 */
+	public static function r_implode($glue, $pieces) {
+		$retVal = array();
+
+		foreach ($pieces as $r_pieces)
+			$retVal[] = is_array($r_pieces) ? self::r_implode($glue, $r_pieces) : $r_pieces;
+
+	  	return implode($glue, $retVal);
 	}
 }
 

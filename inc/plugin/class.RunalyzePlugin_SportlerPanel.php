@@ -60,10 +60,10 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 				<div id="sportler-gewicht" class="change">');
 
 		$dat = Mysql::getInstance()->fetch(PREFIX.'user', 'LAST');
-		if (CONFIG_USE_GEWICHT)
+		if ($this->config['use_weight'])
 			$left = '<strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['gewicht']).' kg</strong>';
 		
-		if (CONFIG_USE_RUHEPULS)
+		if ($this->config['use_pulse'])
 			$right = Helper::Unknown($dat['puls_ruhe']).' bpm / '.Helper::Unknown($dat['puls_max']).' bpm';
 		
 		echo('		<p>
@@ -79,7 +79,7 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 			<div id="sportler-analyse" class="change" style="display:none;">');
 
 		$left = ''; $right = '';
-		if (CONFIG_USE_KOERPERFETT)
+		if ($this->config['use_body_fat'])
 			$left = '<small>'.Helper::Unknown($dat['fett']).'&#37;Fett, '.Helper::Unknown($dat['wasser']).'&#37;Wasser, '.Helper::Unknown($dat['muskeln']).'&#37;Muskeln</small>';
 	
 		echo('		<p>

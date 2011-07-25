@@ -56,9 +56,9 @@ if (isset($_POST['time-gt']) && isset($_POST['time-lt'])) {
 	$where = substr($where, 0, -5);
 if (!isset($_POST['seite']))
 	$_POST['seite'] = 1;
-$limit = $_POST['seite']*15 - 15;
+$limit = $_POST['seite']*CONF_RESULTS_AT_PAGE - CONF_RESULTS_AT_PAGE;
 
-$trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', 15');
+$trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', '.CONF_RESULTS_AT_PAGE);
 $num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
 ?>
 
@@ -69,7 +69,7 @@ $num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$wh
 $next = '';
 $back = '';
 
-if ($num_all > 15) {
+if ($num_all > CONF_RESULTS_AT_PAGE) {
 	$submit_search = '';
 
 	foreach ($_POST as $var => $val) {
@@ -85,7 +85,7 @@ if ($num_all > 15) {
 			$submit_search .= $var.'='.$val.'&';
 	}
 
-	if ($num_all > $_POST['seite']*15) {
+	if ($num_all > $_POST['seite']*CONF_RESULTS_AT_PAGE) {
 		$name   = Icon::get(Icon::$ARR_NEXT, 'Seite vor');
 		$data   = $submit_search.'seite='.($_POST['seite']+1);
 		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&get=true&'.$data);
