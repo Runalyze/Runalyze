@@ -63,33 +63,38 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			echo '<tr class="b"><td colspan="11">'.$rekord['name'].'</td></tr>';
 			echo Helper::spaceTR(11);
 
+			$output = false;
 			eval('$sports = Mysql::getInstance()->fetchAsArray(\''.$rekord['sportquery'].'\');');
 			foreach ($sports as $i => $sport) {
-				echo '<tr class="a'.($i%2 + 1).' r">';
-				echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
-
 				eval('$data = Mysql::getInstance()->fetchAsArray(\''.$rekord['datquery'].'\');');
-				if (empty($data))
-					Error::getInstance()->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 
-				$j = 0;
-				foreach ($data as $j => $dat) {
-					if ($rekord['eval'] == 0)
-						$code = Helper::Speed($dat['distanz'], $dat['dauer'], $sport['id']);
-					elseif ($rekord['eval'] == 1)
-						$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
-
-					echo('<td><span title="'.date("d.m.Y",$dat['time']).'">
-							'.Ajax::trainingLink($dat['id'], $code).'
-						</span></td>');
-				}
-
-				for (; $j < 10; $j++)
-					echo Helper::emptyTD();
-
-				echo '</tr>';
-			}
+				if (!empty($data)) {
+					$output = true;
+					echo '<tr class="a'.($i%2 + 1).' r">';
+					echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
 	
+					$j = 0;
+					foreach ($data as $j => $dat) {
+						if ($rekord['eval'] == 0)
+							$code = Helper::Speed($dat['distanz'], $dat['dauer'], $sport['id']);
+						elseif ($rekord['eval'] == 1)
+							$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
+	
+						echo('<td><span title="'.date("d.m.Y",$dat['time']).'">
+								'.Ajax::trainingLink($dat['id'], $code).'
+							</span></td>');
+					}
+	
+					for (; $j < 10; $j++)
+						echo Helper::emptyTD();
+	
+					echo '</tr>';
+				}
+			}
+
+			if (!$output)
+				echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
+
 			echo Helper::spaceTR(11);
 			echo '</table>';
 		}
@@ -102,6 +107,13 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		echo '<table style="width:100%;" class="small">';
 		echo '<tr class="b"><td colspan="11">Trainingsreichsten Laufphasen</td></tr>';
 		echo Helper::spaceTR(11);
+
+		if (empty($this->years)) {
+			echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
+			echo Helper::spaceTR(11);
+			echo '</table>';
+			return;
+		}
 
 		// Years
 		$i = 0;
@@ -136,6 +148,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			echo Helper::emptyTD();
 		echo '</tr>';
 
+		echo Helper::spaceTR(11);
 		echo '</table>';
 	}
 
