@@ -244,7 +244,7 @@ abstract class Plugin {
 			);
 		$values  = array(
 			$this->key,
-			$this->getTypeString(),
+			self::getTypeString($this->type),
 			'class.'.$this->key.'.php',
 			$this->name,
 			$this->description,
@@ -272,7 +272,7 @@ abstract class Plugin {
 		$this->filename    = $dat['filename'];
 		$this->name        = $dat['name'];
 		$this->description = $dat['description'];
-		$this->sportid     = MAINSPORT;
+		$this->sportid     = CONF_MAINSPORT;
 		$this->year        = date('Y');
 		$this->dat         = '';
 
@@ -500,19 +500,39 @@ abstract class Plugin {
 
 	/**
 	 * Get string for internal type-enum
+	 * @param enum $type
 	 * @return string
 	 */
-	private function getTypeString() {
-		switch ($this->type) {
+	static protected function getTypeString($type) {
+		switch ($type) {
 			case self::$STAT:
 				return 'stat';
 			case self::$PANEL:
 				return 'panel';
-			case self::$Draw:
+			case self::$DRAW:
 				return 'draw';
-			case self::$Tool:
+			case self::$TOOL:
 				return 'tool';
 		}
+	}
+
+	/**
+	 * Get all keys for a given plugintype as array
+	 * @param enum $type
+	 * @param enum $active
+	 * @return array
+	 */
+	static public function getKeysAsArray($type, $active = -1) {
+		if ($active == -1)
+			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC');
+		else
+			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC');
+
+		$return = array();
+		foreach ($array as $k => $v)
+			$return[] = $v['key'];
+
+		return $return;
 	}
 
 	/**

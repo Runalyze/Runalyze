@@ -78,7 +78,7 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 			$this->displayLine('&Oslash;Tempo', $this->TempoData);
 		}
 
-		if ($this->sportid == RUNNINGSPORT && CONF_RECHENSPIELE)
+		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
 			$this->displayLine('VDOT', $this->VDOTData);
 
 		if (CONF_RECHENSPIELE)

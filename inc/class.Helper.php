@@ -322,7 +322,7 @@ class Helper {
 	public static function TrainingIsCompetition($id) {
 		if (!is_numeric($id))
 			return false;
-		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `id`='.$id) > 0);
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `id`='.$id) > 0);
 	}
 
 	/**
@@ -333,7 +333,7 @@ class Helper {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
+		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
 		if ($return_time)
 			return ($pb != '') ? $pb['dauer'] : 0;
 		if ($pb != '')
@@ -354,8 +354,8 @@ class Helper {
 		if ($dat === false)
 			$dat = array();
 
-		$factor_a  = (CONF_GESCHLECHT == 'm') ? 0.64 : 0.86;
-		$factor_b  = (CONF_GESCHLECHT == 'm') ? 1.92 : 1.67;
+		$factor_a  = (CONF_GENDER == 'm') ? 0.64 : 0.86;
+		$factor_b  = (CONF_GENDER == 'm') ? 1.92 : 1.67;
 		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
 		$sport     = Helper::Sport($sportid, true);
 		$typ       = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;
@@ -429,6 +429,7 @@ class Helper {
 	 * @param int $timestamp [optional] timestamp
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
+		// TODO: New algorithm
 		global $global;
 
 		$points = 0;
@@ -445,9 +446,12 @@ class Helper {
 		$points += $wk_sum / 20;
 
 		// LongJogs ...
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
-		foreach($data as $dat)
-			$points += ($dat['distanz']-15) / 2;
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		foreach($data as $dat) {
+			$p = ($dat['distanz']-15) / 2;
+			if ($p > 0)
+				$points += ($dat['distanz']-15) / 2;
+		}
 
 		$points = round($points - 50);
 		if ($points < 0)

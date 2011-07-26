@@ -159,7 +159,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		$this->rekorde = array();
 		$this->rekorde[] = array('name' => 'Schnellsten Trainings',
 			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` WHERE `distanztyp`=1 ORDER BY `id` ASC',
-			'datquery' => 'SELECT `id`, `time`, `dauer`, `distanz`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `pace` ASC, `dauer` DESC LIMIT 10',
+			'datquery' => 'SELECT `id`, `time`, `dauer`, `distanz`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY (`distanz`/`dauer`) DESC, `dauer` DESC LIMIT 10',
 			'eval' => '0');
 		$this->rekorde[] = array('name' => 'L&auml;ngsten Trainings',
 			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC',
@@ -172,7 +172,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				SUM(`distanz`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.RUNNINGSPORT.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.'
 			GROUP BY `year`
 			ORDER BY `km` DESC
 			LIMIT 10');
@@ -185,7 +185,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.RUNNINGSPORT.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
 			LIMIT 10');
@@ -199,7 +199,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.RUNNINGSPORT.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC
 			LIMIT 10');

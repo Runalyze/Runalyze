@@ -13,6 +13,7 @@ if (isset($_POST) && isset($_POST['type']) && $_POST['type'] == "config") {
 	Config::parsePostDataForPlugins();
 	Config::parsePostDataForDataset();
 	Config::parsePostDataForSports();
+	Config::parsePostDataForTypes();
 	Config::parsePostDataForClothes();
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
@@ -122,7 +123,7 @@ foreach ($plugin_types as $i => $type) {
 		$Plugin = Plugin::getInstanceFor($plug['key']);
 		
 		echo('
-			<tr class="a'.($i%2+1).'">
+			<tr class="a'.($i%2+1).($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
 				<td>'.$Plugin->getConfigLink().'</td>
 				<td class="b">'.$Plugin->get('name').'</td>
 				<td class="small">'.$Plugin->get('description').'</td>
@@ -243,28 +244,44 @@ foreach($sports as $i => $sport) {
 <div id="config_typen" class="change" style="display:none;">
 	<h1>Trainingstypen:</h1>
 
-	<table class="c" style="width:100%;">
+	Mit Trainingstypen k&ouml;nnen die Trainings bequem in Kategorien sortiert werden,
+	das dient vor allem der Trainingsanalyse.
+	Bestehende Trainingstypen k&ouml;nnen aber nur gel&ouml;scht werden, wenn keine Referenzen bestehen.
+	Daher sind die Trainingstypen mit ihren Trainings verlinkt.
+
+	<hr />
+
+	<table class="c">
 		<tr class="b">
 			<td>Trainingstyp</td>
 			<td>Abk&uuml;rzung</td>
 			<td title="Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)">RPE</td>
 			<td title="Es werden einzelne Kilometerabschnitte aufgezeichnet">Splits</td>
+			<td title="Ein Trainingstyp kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen">l&ouml;schen?</td>
 		</tr>
 		<tr class="space">
-			<td colspan="4"></td>
+			<td colspan="5"></td>
 		</tr>
 <?php
-$Error->addTodo('Edit Trainingstypen', __FILE__, __LINE__);
-$Error->addTodo('Edit Trainingstypen: WK_TYPID', __FILE__, __LINE__);
-
 $typen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'typ` ORDER BY `id` ASC');
+$typen[] = array('id' => -1, 'name' => '', 'abk' => '', 'RPE' => 5, 'splits' => 0);
+
 foreach($typen as $i => $typ) {
+	$num = $Mysql->num('SELECT `id` FROM `'.PREFIX.'training` WHERE `typid`="'.$typ['id'].'"');
+	if ($typ['id'] == -1)
+		$delete = '';
+	elseif ($num == 0)
+		$delete = '<input type="checkbox" name="typ[delete]['.$i.']" />';
+	else
+		$delete = DataBrowser::getSearchLink('<small>('.$num.')</small>', 'opt[typid]=is&val[typid][0]='.$typ['id']);
+
 	echo('
-		<tr class="a'.($i%2+1).'">
-			<td>'.$typ['name'].'</td>
-			<td><input type="text" size="3" name="" disabled="disabled" value="'.$typ['abk'].'" /></td>
-			<td><input type="text" size="1" name="" disabled="disabled" value="'.$typ['RPE'].'" /></td>
-			<td><input type="checkbox" name="" disabled="disabled" '.($typ['splits'] == 1 ? 'checked="checked" ' : '').'/></td>
+		<tr class="a'.($i%2+1).($typ['id'] == -1 ? ' unimportant' : '').'">
+			<td><input type="text" size="20" name="typ[name]['.$i.']" value="'.$typ['name'].'" /></td>
+			<td><input type="text" size="3" name="typ[abk]['.$i.']" value="'.$typ['abk'].'" /></td>
+			<td><input type="text" size="1" name="typ[RPE]['.$i.']" value="'.$typ['RPE'].'" /></td>
+			<td><input type="checkbox" name="typ[splits]['.$i.']" '.Helper::Checked($typ['splits'] == 1).'/></td>
+			<td>'.$delete.'</td>
 		</tr>');
 }
 ?>
@@ -292,6 +309,7 @@ foreach($typen as $i => $typ) {
 <?php
 $kleidungen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `order`, `id` ASC');
 $kleidungen[] = array('new' => true, 'name' => '', 'name_kurz' => '', 'order' => '');
+
 foreach($kleidungen as $i => $kleidung) {
 	if (isset($kleidung['new'])) {
 		$delete = '';

@@ -167,5 +167,25 @@ abstract class PluginStat extends Plugin {
 	public function isVariousStat() {
 		return ($this->active == self::$ACTIVE_VARIOUS);
 	}
+
+	/**
+	 * Are various statistics installed?
+	 * @return bool
+	 */
+	public static function hasVariousStats() {
+		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
+
+		return (!empty($array));
+	}
+
+	/**
+	 * Get the link for first various statistic
+	 * @return string
+	 */
+	public static function getLinkForVariousStats() {
+		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
+
+		return Plugin::getInstanceFor($array[0])->getLink();
+	}
 }
 ?>
