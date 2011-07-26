@@ -63,9 +63,6 @@ class Config {
 		define('CONF_'.$KEY, $value);
 	}
 
-	// TODO: Add type "select-sportid"
-	// TODO: Add type "select-typid"
-
 	/**
 	 * Transform given value to string for saving in database
 	 * @param mixed $value
@@ -83,6 +80,7 @@ class Config {
 				return implode(', ', $value);
 			case 'bool':
 				return ($value ? 'true' : 'false');
+			case 'selectdb':
 			case 'int':
 				return (string)$value;
 			case 'float':
@@ -118,6 +116,7 @@ class Config {
 				return $array;
 			case 'bool':
 				return ($value == 'true');
+			case 'selectdb':
 			case 'int':
 				return (int)$value;
 			case 'float':
@@ -137,6 +136,17 @@ class Config {
 		$value = self::stringToValue($conf['value'], $conf['type']);
 
 		switch ($conf['type']) {
+			case 'selectdb':
+				$settings = self::stringToValue($conf['select_description'], 'array');
+				$db       = $settings[0];
+				$col      = $settings[1];
+
+				$select = '<select name="'.$name.'">';
+				$values = Mysql::getInstance()->fetchAsArray('SELECT `id`, `'.$col.'` FROM `'.PREFIX.$db.'` ORDER BY `'.$col.'` ASC');
+				foreach ($values as $v)
+					$select .= '<option value="'.$v['id'].'"'.Helper::Selected($v['id'] == $conf['value']).'>'.$v[$col].'&nbsp;</option>';
+				$select .= '</select>';
+				return $select;
 			case 'select':
 				$descr  = self::stringToValue($conf['select_description'], 'array');
 				$select = '<select name="'.$name.'">';
@@ -171,6 +181,9 @@ class Config {
 			$post      = isset($_POST['CONF_'.$conf['key']]) ? $_POST['CONF_'.$conf['key']] : false;
 
 			switch ($conf['type']) {
+				case 'selectdb':
+					$str_value = $post;
+					break;
 				case 'select':
 					$array = array();
 					foreach ($value as $key => $val)
@@ -196,6 +209,9 @@ class Config {
 			Mysql::getInstance()->update(PREFIX.'conf', $conf['id'], 'value', $str_value);
 		}
 	}
+
+
+
 
 	/**
 	 * Parse post-data for editing plugins
@@ -274,6 +290,42 @@ class Config {
 				Mysql::getInstance()->update(PREFIX.'sports', $sport['id'], $columns, $values);
 			elseif (strlen($_POST['sport']['name'][$i]) > 2)
 				Mysql::getInstance()->insert(PREFIX.'sports', $columns, $values);
+		}
+	}
+
+	/**
+	 * Parse post-data for editing trainingtypes
+	 */
+	static public function parsePostDataForTypes() {
+		$typen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'typ`');
+		$typen[] = array('id' => -1);
+
+		foreach ($typen as $i => $typ) {
+			$rpe = (int)$_POST['typ']['RPE'][$i];
+			if ($rpe < 1)
+				$rpe = 1;
+			elseif ($rpe > 10)
+				$rpe = 10;
+
+			$columns = array(
+				'name',
+				'abk',
+				'RPE',
+				'splits',
+				);
+			$values  = array(
+				$_POST['typ']['name'][$i],
+				$_POST['typ']['abk'][$i],
+				$rpe,
+				isset($_POST['typ']['splits'][$i]),
+				);
+
+			if (isset($_POST['typ']['delete'][$i]))
+				Mysql::getInstance()->delete(PREFIX.'typ', (int)$typ['id']);
+			elseif ($typ['id'] != -1)
+				Mysql::getInstance()->update(PREFIX.'typ', $typ['id'], $columns, $values);
+			elseif (strlen($_POST['typ']['name'][$i]) > 2)
+				Mysql::getInstance()->insert(PREFIX.'typ', $columns, $values);
 		}
 	}
 

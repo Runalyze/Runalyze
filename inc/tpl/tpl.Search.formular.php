@@ -40,7 +40,7 @@
 <?php
 $sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` WHERE `online`=1 ORDER BY `id` ASC');
 foreach ($sports as $sport) {
-	$checked = Helper::Checked((!$submit && $sport['id'] == MAINSPORT) || (isset($_POST['sport'][$sport['id']]) && $_POST['sport'][$sport['id']] != false));
+	$checked = Helper::Checked((!$submit && $sport['id'] == CONF_MAINSPORT) || (isset($_POST['sport'][$sport['id']]) && $_POST['sport'][$sport['id']] != false));
 	echo('
 		<input class="spacer" type="checkbox" name="sport['.$sport['id'].']"'.$checked.' /> '.$sport['name']);
 }

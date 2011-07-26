@@ -61,7 +61,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 
 		$this->displayHeader($this->getHeader());
 		$this->displayYearNavigation();
-		echo '<small class="left">'.Helper::Sport(MAINSPORT).'</small>';
+		echo '<small class="left">'.Helper::Sport(CONF_MAINSPORT).'</small>';
 		echo Helper::clearBreak();
 
 		$this->displayMonthTable();
@@ -102,7 +102,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				AVG(`temperatur`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.MAINSPORT.'" AND
+				`sportid`="'.CONF_MAINSPORT.'" AND
 				`temperatur` IS NOT NULL
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -140,7 +140,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 					SUM(1) as `num`,
 					MONTH(FROM_UNIXTIME(`time`)) as `m`
 				FROM `'.PREFIX.'training` WHERE
-					`sportid`="'.MAINSPORT.'" AND
+					`sportid`="'.CONF_MAINSPORT.'" AND
 					`wetterid`='.$wetter['id'].'
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 				GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -176,7 +176,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.MAINSPORT.'" AND
+				`sportid`="'.CONF_MAINSPORT.'" AND
 				`kleidung`!=""
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -200,7 +200,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
 					FROM `'.PREFIX.'training` WHERE
-						`sportid`="'.MAINSPORT.'"
+						`sportid`="'.CONF_MAINSPORT.'"
 						'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 					GROUP BY MONTH(FROM_UNIXTIME(`time`))
 					HAVING `num`!=0
@@ -266,7 +266,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 						AVG(`temperatur`) as `avg`,
 						MAX(`temperatur`) as `max`,
 						MIN(`temperatur`) as `min`
-					FROM `'.PREFIX.'training` WHERE `sportid`="'.MAINSPORT.'" AND
+					FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_MAINSPORT.'" AND
 					`temperatur` IS NOT NULL AND
 					FIND_IN_SET('.$kleidung['id'].',`kleidung`) != 0
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));

@@ -66,7 +66,7 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
-				if ($Data[$m]['num'] > 0)
+				if (isset($Data[$m]) && $Data[$m]['num'] > 0)
 					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>'.NL;
 				else
 					echo Helper::emptyTD();

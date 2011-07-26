@@ -42,7 +42,7 @@ $Map->setGoogleBar("disabled");
 	<body style="margin: 0; overflow: hidden; height: 300px;" onunload="GUnload();">
 
 <?php
-$Polyline = $Map->addPolyline("#FF5500", 2, 100);
+$Polyline = $Map->addPolyline(CONF_TRAINING_MAP_COLOR, 2, 100);
 
 $km = 0;
 $s  = 0;

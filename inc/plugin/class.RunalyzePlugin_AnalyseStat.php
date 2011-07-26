@@ -175,7 +175,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				`RPE`
 			FROM `'.PREFIX.'training`
 			LEFT JOIN `'.PREFIX.'typ` ON ('.PREFIX.'training.typid='.PREFIX.'typ.id)
-			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `typid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
 		
@@ -223,7 +223,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				SUM(`distanz`) AS `distanz`,
 				FLOOR( (`dauer`/`distanz`)/'.$speed_step.')*'.$speed_step.' AS `pacegroup`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `pacegroup`, '.$this->group_time.'
 			ORDER BY `pacegroup` DESC, `timer` ASC');
 		
@@ -259,7 +259,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
 			$name = ($speed == $speed_max)
 				? 'schneller'
-				: '<small>bis</small> '.Helper::Speed(1, $speed, RUNNINGSPORT);
+				: '<small>bis</small> '.Helper::Speed(1, $speed, CONF_RUNNINGSPORT);
 			$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
 		}
 
@@ -278,7 +278,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				SUM(`distanz`) AS `distanz`,
 				CEIL( (100 * `puls` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `pulsegroup`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.RUNNINGSPORT.' '.$this->where_time.' && `puls`!=0
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.' && `puls`!=0
 			GROUP BY `pulsegroup`, '.$this->group_time.'
 			ORDER BY `pulsegroup`, `timer` ASC');
 		

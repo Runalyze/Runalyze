@@ -3,11 +3,17 @@
  * This file contains the class to handle every training.
  */
 
-// TODO: Config::register('Training', 'TRAINING_MAP_COLOR', 'select', array(), ...
+Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sports', 'name'));
+Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sports', 'name'));
+Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('typ', 'name'));
+Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('typ', 'name'));
+
+Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienfarbe auf GoogleMaps-Karte (#RGB)');
 Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
 Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
 	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
+
 Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('tcx' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('tcx-Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
@@ -248,7 +254,7 @@ class Training {
 	 * @return string
 	 */
 	public function getTitle() {
-		return ($this->get('sportid') == RUNNINGSPORT)
+		return ($this->get('sportid') == CONF_RUNNINGSPORT)
 			? Helper::TypeName($this->get('typid'))
 			: Helper::Sport($this->get('sportid'));
 	}
@@ -821,7 +827,7 @@ class Training {
 		}
 
 		$array = array();
-		$array['sportid']   = RUNNINGSPORT;
+		$array['sportid']   = CONF_RUNNINGSPORT;
 		$array['datum']     = date("d.m.Y", $starttime);
 		$array['zeit']      = date("H:i", $starttime);
 		$array['distanz']   = round(end($distance), 2);

@@ -79,7 +79,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	private function displayAllCompetitions() {
 		$this->displayTableStart();
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC');
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `time` DESC');
 		foreach ($wks as $i => $wk)
 			$this->displayWKTr($wk, $i);
 		
@@ -92,7 +92,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	private function displayLastCompetitions() {
 		$this->displayTableStart();
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' ORDER BY `time` DESC LIMIT '.$this->config['last_wk_num']['var']);
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `time` DESC LIMIT '.$this->config['last_wk_num']['var']);
 		if (count($wks) > 0) {
 			foreach($wks as $i => $wk)
 				$this->displayWkTr($wk, $i);
@@ -123,12 +123,12 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	 */
 	private function displayPersonalBestsTRs() {
 		$this->distances = array();
-		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distanz`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' GROUP BY `distanz`');
+		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distanz`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' GROUP BY `distanz`');
 		foreach ($dists as $i => $dist) {
 			if ($dist['wks'] > 1) {
 				$this->distances[] = $dist['distanz'];
 		
-				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC');
+				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC');
 				$this->displayWKTr($wk, $i);
 			}
 		}
@@ -169,7 +169,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `'.PREFIX.'training` WHERE `typid`='.WK_TYPID.' ORDER BY `y` ASC');
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `y` ASC');
 		foreach ($wks as $wk) {
 			if (!isset($year[$wk['y']])) {
 				$year[$wk['y']] = $dists;

@@ -146,10 +146,10 @@ class Frontend {
 	private function initRequiredFiles() {
 		global $global;
 
+		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.Ajax.php');
 		require_once(FRONTEND_PATH.'class.Helper.php');
 		require_once(FRONTEND_PATH.'class.Icon.php');
-		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.DataBrowser.php');
 		require_once(FRONTEND_PATH.'class.Dataset.php');
 		require_once(FRONTEND_PATH.'class.Plugin.php');
