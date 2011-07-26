@@ -10,7 +10,7 @@ $Frontend->displayHeader();
 <h1>Wetter</h1>
 
 <center>
-<img id="average" height="240" width="780" src="inc/draw/plugin.wetter.php?all=all&m=m" />
+<div class="bigImg" style="height:240px; width:780px;"><img id="average" height="240" width="780" src="inc/draw/plugin.wetter.php?all=all&m=m" /></div>
 <br />
 
 <?php
@@ -20,7 +20,7 @@ echo NL.Ajax::imgChange('<a href="inc/draw/plugin.wetter.php?all=all&m=m" style=
 ?>
 <br />
 <br />
-<img id="all" height="240" width="780" src="inc/draw/plugin.wetter.php?y=<?php echo date("Y"); ?>" />
+<div class="bigImg" style="height:240px; width:780px;"><img id="all" height="240" width="780" src="inc/draw/plugin.wetter.php?y=<?php echo date("Y"); ?>" /></div>
 <br />
 
 <?php

@@ -68,16 +68,19 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 				$in_use = $schuh['inuse']==1 ? '' : ' small';
 
 				echo('
-				<tr class="a'.($i%2 + 1).' r" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
+				<tr class="a'.($i%2 + 1).' r">
 					<td class="small">'.$trainings.'x</td>
 					<td class="b'.$in_use.' l">'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</td>
 					<td class="small">'.$schuh['kaufdatum'].'</td>
-					<td>'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
-					<td>'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['dauer']) : '-').'</td>
+					<td >'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
+					<td >'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['dauer']) : '-').'</td>
 					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distanz'])).'</td>
 					<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
 					<td>'.Helper::Time($schuh['dauer']).'</td>
 					<td>'.Helper::Km($schuh['km']).'</td>
+				</tr>
+				<tr style="height:2px; background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
+					<td colspan="9"></td>
 				</tr>');
 			}
 		} else {

@@ -15,6 +15,11 @@
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
 	<script type="text/javascript" src="lib/fileuploader.js"></script>
+	<!--[if IE]>
+	<style type="text/css">
+	table { border-collapse: collapse; }
+	</style>
+	<![endif]-->
 </head>
 
 <body>
