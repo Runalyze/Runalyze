@@ -279,6 +279,7 @@ hr {
 }
 
 table {
+	border-spacing: 0;
 	margin: 5px auto 10px;
 }
 

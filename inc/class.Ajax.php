@@ -70,6 +70,9 @@ class Ajax {
 	 * @return string
 	 */
 	static function change($name, $target, $href, $additional_class = '') {
+		if (substr($href, 0, 1) != '#')
+			$href = '#'.$href;
+
 		if ($additional_class != '')
 			$additional_class .= ' ';
 
