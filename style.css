@@ -190,6 +190,13 @@ div#ajax {
 	-moz-box-shadow: 3px 2px 5px #333;
 }
 
+div#ajax.tooBig {
+	width: 90%;
+	height: 90%;
+	position: absolute;
+	overflow: scroll;
+}
+
 div.ajax {
 	display: none;
 	position: fixed;

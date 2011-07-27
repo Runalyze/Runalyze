@@ -67,17 +67,26 @@ if ($Distance >= 15)
 $Draw->setCaching(false);
 
 if ($titleError == '') {
-	$min = min($Paces);
-	$max = max($Paces);
-	$avg = array_sum($Paces)/count($Paces);
-	$sig = sqrt(Helper::getVariance($Paces));
+	$sport = Helper::Sport($Training->get('sportid'), true);
+	if ($sport['kmh'] == 1) {
+		foreach ($Paces as $k => $v)
+			$Paces[$k] = 3600/$v;
 
-	if ($min < 120)
-		$min = 60*floor(($avg-1.5*$sig)/60);
-	if ($max > 480)
-		$max = 60*ceil(($avg+1.5*$sig)/60);
-	$min = 60*floor($min)/60;
-	$max = 60*floor($max)/60;
+		$min = min($Paces);
+		$max = max($Paces);
+	} else {
+		$min = min($Paces);
+		$max = max($Paces);
+		$avg = array_sum($Paces)/count($Paces);
+		$sig = sqrt(Helper::getVariance($Paces));
+	
+		if ($min < 120)
+			$min = 60*floor(($avg-1.5*$sig)/60);
+		if ($max > 480)
+			$max = 60*ceil(($avg+1.5*$sig)/60);
+		$min = 60*floor($min)/60;
+		$max = 60*floor($max)/60;
+	}
 
 	$ScaleFormat    = array(
 		"Factors" => array(30, 60),
@@ -95,7 +104,10 @@ $SplineFormat   = array("R" => 0, "G" => 0, "B" => 136);
 $Draw->pData->addPoints($Distances, 'Distanz');
 $Draw->pData->addPoints($Paces, 'Pace');
 $Draw->pData->setXAxisUnit(' km');
-$Draw->pData->setAxisDisplay(0, AXIS_FORMAT_TIME, 'i:s');
+if ($sport['kmh'] == 1)
+	$Draw->pData->setAxisUnit(0, ' km/h');
+else
+	$Draw->pData->setAxisDisplay(0, AXIS_FORMAT_TIME, 'i:s');
 $Draw->pData->setAbscissa('Distanz');
 $Draw->pData->setPalette('Pace', $SplineFormat);
 

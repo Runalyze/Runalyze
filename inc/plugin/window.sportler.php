@@ -20,7 +20,7 @@ if (isset($_POST['type']) && $_POST['type'] == "user") {
 		$vars[] = 'wasser';
 		$vars[] = 'muskeln';
 	}
-	if ($Plugin_conf['use_puls']) {
+	if ($Plugin_conf['use_pulse']) {
 		$vars[] = 'puls_ruhe';
 		$vars[] = 'puls_max';
 	}
