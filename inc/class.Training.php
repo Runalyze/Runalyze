@@ -498,7 +498,7 @@ class Training {
 		echo('<tr class="c b">
 				<td>Zeitpunkt</td>
 				<td>Distanz</td>
-				<td>Pace</td>');
+				<td>Tempo</td>');
 		if (count($heartPoints) > 1)
 			echo(NL.'<td>bpm</td>');
 		if (count($elevationPoints) > 1)
@@ -511,7 +511,7 @@ class Training {
 				$km++;
 				$kmIndex[] = $i;
 				$previousIndex = $kmIndex[count($kmIndex)-2];
-				$pace = Helper::Pace(($distancePoints[$i] - $distancePoints[$previousIndex]), ($timePoints[$i] - $timePoints[$previousIndex]));
+				$pace = Helper::Speed(($distancePoints[$i] - $distancePoints[$previousIndex]), ($timePoints[$i] - $timePoints[$previousIndex]), $this->get('sportid'));
 				echo('<tr class="a'.($i%2+1).' r">
 						<td>'.Helper::Time($timePoints[$i]).'</td>
 						<td>'.Helper::Km($distance, 2).'</td>

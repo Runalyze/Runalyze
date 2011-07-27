@@ -26,7 +26,6 @@
  *
  * Last modified 2011/03/14 16:00 by Hannes Christiansen
  */
-//error_reporting(E_ALL);
 class Frontend {
 	/**
 	 * Global array (should be deleted later on)
@@ -84,8 +83,9 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		//define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
-		define('RUNALYZE_DEBUG', false);
+		//define('RUNALYZE_DEBUG', false);
+			define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
+			error_reporting(E_ALL);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -128,10 +128,10 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.Config.php');
 
 		Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
-		Config::register('Allgemein', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
-		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
-		Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
 		Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
+		Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
+		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
+		Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
 
 		// Following lines are only used for MAX_ATL/CTL/TRIMP anymore
 		$config = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'config`');

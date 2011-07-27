@@ -177,10 +177,10 @@ class Helper {
 		$hf  = '?&nbsp;&#37;';
 
 		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
-		if ($HFmax !== false)
+		if ($HFmax !== false && $HFmax['puls_max'] != 0)
 			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
 
-		if (CONF_PULS_MODE != 'bpm')
+		if (CONF_PULS_MODE != 'bpm' && $HFmax['puls_max'] != 0)
 			return '<span title="'.$bpm.'">'.$hf.'</span>';
 
 		return '<span title="'.$hf.'">'.$bpm.'</span>';
@@ -779,6 +779,9 @@ class Helper {
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
+			return 200;
+		} elseif ($userdata['puls_max'] == 0) {
+			Error::getInstance()->addWarning('HFmax is 0, taking 200 as default.');
 			return 200;
 		}
 
