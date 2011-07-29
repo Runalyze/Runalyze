@@ -125,6 +125,14 @@ class Error {
 	}
 
 	/**
+	 * Are errors reported?
+	 * @return bool
+	 */
+	public function hasErrors() {
+		return !empty($this->errors);
+	}
+
+	/**
 	 * Get table for displaying all errors
 	 * @return string
 	 */

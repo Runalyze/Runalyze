@@ -36,6 +36,7 @@ class Icon {
 	static public $CONF_EDIT		= 'img/confEdit.png';
 	static public $CONF_HELP		= 'img/confHelp.png';
 	static public $CONF_SETTINGS	= 'img/confSettings.png';
+	static public $CONF_TOOL		= 'img/confTool.png';
 	// Running-specific
 	static public $ABC				= 'img/abc.png';
 	static public $RUNNINGSHOE		= 'img/laufschuhe.png';

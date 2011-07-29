@@ -783,7 +783,7 @@ class Training {
 			if (isset($lap['calories']))
 				$calories += $lap['calories']['value'];
 			if (isset($lap['intensity']) && strtolower($lap['intensity']['value']) == 'active') {
-				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']));
+				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']), false, 2);
 			}
 
 			if (!isset($lap['track']) || !is_array($lap['track']) || empty($lap['track']))

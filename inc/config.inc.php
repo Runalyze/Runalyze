@@ -25,12 +25,11 @@ $password = 'runalyze';
  * @var   ATL_DAYS		Number of days considered for 'Actual Training Load', default 7
  * @var   CTL_DAYS		Number of days considered for 'Chroni Training Load', default 42
  */
-// TODO Get these information from config-db?
 define('PREFIX','runalyze_');
-define('MAINSPORT',1);
-define('RUNNINGSPORT',1);
-define('WK_TYPID',5);
-define('LL_TYPID',7);
-define('ATL_DAYS',7);
-define('CTL_DAYS',42);
+define('MAINSPORT',1); // can be deleted
+define('RUNNINGSPORT',1); // can be deleted
+define('WK_TYPID',5); // can be deleted
+define('LL_TYPID',7); // can be deleted
+define('ATL_DAYS',7); // TODO
+define('CTL_DAYS',42); // TODO
 ?>

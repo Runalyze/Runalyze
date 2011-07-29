@@ -18,6 +18,7 @@
  * @uses class::Plugin
  * @uses class::PluginPanel
  * @uses class::PluginStat
+ * @uses class::PluginTool
  * //@uses class::PluginDraw
  * @uses class::Training
  * @uses class::DataBrowser
@@ -83,9 +84,9 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		//define('RUNALYZE_DEBUG', false);
-			define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
-			error_reporting(E_ALL);
+		define('RUNALYZE_DEBUG', false);
+		//	define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
+		//	error_reporting(E_ALL);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -156,7 +157,7 @@ class Frontend {
 		require_once(FRONTEND_PATH.'class.PluginPanel.php');
 		require_once(FRONTEND_PATH.'class.PluginStat.php');
 		//require_once(FRONTEND_PATH.'class.PluginDraw.php');
-		//require_once(FRONTEND_PATH.'class.PluginTool.php');
+		require_once(FRONTEND_PATH.'class.PluginTool.php');
 		require_once(FRONTEND_PATH.'class.Draw.php');
 	}
 
@@ -176,7 +177,7 @@ class Frontend {
 	 * Function to display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (RUNALYZE_DEBUG)
+		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
 			include('tpl/tpl.Frontend.debug.php');
 
 		if (!$this->ajax_request)
@@ -194,6 +195,14 @@ class Frontend {
 			$Panel = Plugin::getInstanceFor($panel['key']);
 			$Panel->display();
 		}
+	}
+
+	/**
+	 * Get link to the help window
+	 * @return string
+	 */
+	static public function getHelpOverlayLink() {
+		return Ajax::window('<a class="left" href="inc/tpl/tpl.help.html" title="Hilfe">'.Icon::get(Icon::$CONF_HELP, 'Hilfe').'</a>');
 	}
 }
 ?>
