@@ -731,9 +731,10 @@ class Training {
 			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$TRIMP.'"');
 
 		if (isset($_POST['schuhid'])) {
-			if ($sport['typen'] == 1)
+			if ($sport['typen'] == 1) // Why the hell this if?
 				$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
-	
+
+			// TODO Is this distance used anymore?
 			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
 		}
 

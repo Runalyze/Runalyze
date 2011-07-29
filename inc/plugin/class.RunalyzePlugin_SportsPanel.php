@@ -66,7 +66,7 @@ class RunalyzePlugin_SportsPanel extends PluginPanel {
 	
 			$sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
 			foreach ($sports as $sport) {
-				$data = $Mysql->fetchSingle('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `sportid`='.$sport['id'].' AND `time` > '.$timeset['start'].' GROUP BY `sportid`');
+				$data = $Mysql->fetchSingle('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `sportid`='.$sport['id'].' AND `time` >= '.$timeset['start'].' GROUP BY `sportid`');
 				$leistung = ($sport['distanztyp'] == 1)
 					? Helper::Unknown(Helper::Km($data['distanz_sum']), '0,0 km')
 					: Helper::Time($data['dauer_sum']); 		
