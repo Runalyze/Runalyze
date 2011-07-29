@@ -6,6 +6,7 @@
 
 /***  L A Y O U T  ***/
 body {
+	min-width: 1000px;
 	padding-bottom: 33px;
 	background: url(img/bg.jpg);
 	color: #444;
@@ -15,6 +16,7 @@ body {
 
 div#l {
 	width: 66%;
+	min-width: 680px;
 	float: left;
 	text-align: left;
 	margin-bottom: 33px;
@@ -22,6 +24,7 @@ div#l {
 
 div#r {
 	width: 32%;
+	min-width: 320px;
 	float: right;
 	text-align: left;
 	margin-bottom: 33px;
@@ -190,11 +193,20 @@ div#ajax {
 	-moz-box-shadow: 3px 2px 5px #333;
 }
 
-div#ajax.tooBig {
+div#ajax.small {
+	width: 400px;
+	margin-left: -200px;
+}
+div#ajax.big {
 	width: 90%;
-	height: 90%;
+	margin-left: -45%;
+}
+
+div#ajax.tooBig {
 	position: absolute;
-	overflow: scroll;
+	top: 10px;
+	left: 10px;
+	margin-left: 0 !important;
 }
 
 div.ajax {

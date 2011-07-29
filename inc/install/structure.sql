@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_kleidung` (
 CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) COLLATE latin1_general_ci NOT NULL,
-  `type` enum('panel','stat','draw') COLLATE latin1_general_ci NOT NULL,
+  `type` enum('panel','stat','draw','tool') COLLATE latin1_general_ci NOT NULL,
   `filename` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `name` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `description` text COLLATE latin1_general_ci NOT NULL,

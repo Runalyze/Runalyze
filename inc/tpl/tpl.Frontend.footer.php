@@ -6,12 +6,9 @@
 		<a id="copy" href="http://www.laufhannes.de/" title="Laufhannes" target="_blank">laufhannes.de</a>
 	</span>
 	<span class="left b">
-		<a class="left window" href="inc/tpl/window.config.php">
-			<img src="img/confEdit.png" title="Einstellungen" />
-		</a>
-		<a class="left window" href="inc/tpl/tpl.help.html">
-			<img src="img/confHelp.png" title="Hilfe" />
-		</a>
+		<?php echo Config::getOverlayLink(); ?>
+		<?php echo PluginTool::getOverlayLink(); ?>
+		<?php echo Frontend::getHelpOverlayLink(); ?>
 		&nbsp; Runalyze v<?php echo RUNALYZE_VERSION; ?>
 	</span>
 

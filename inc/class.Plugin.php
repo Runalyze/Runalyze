@@ -12,7 +12,6 @@
  *
  * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-Error::getInstance()->addTodo('class::Plugin: Test Plugin-Installer.');
 abstract class Plugin {
 	/**
 	 * Enum for plugin-type: Statistic
@@ -202,12 +201,40 @@ abstract class Plugin {
 	}
 
 	/**
+	 * Get array with all avaiable plugins for installation
+	 * @return array
+	 */
+	static public function getPluginsToInstallAsArray() {
+		$plugins   = array();
+		$dir = opendir(FRONTEND_PATH.'plugin/');
+		while ($file = readdir($dir))
+			if (substr($file, 0, 6) == 'class.' && !self::isInstalled(substr($file, 6, -4)))
+				$plugins[] = array('key' => substr($file, 6, -4));
+
+		closedir($dir);
+
+		return $plugins;
+	}
+
+	/**
+	 * Get link to the window for installing this plugin
+	 * @param string $name
+	 * @return string
+	 */
+	public function getInstallLink($name = '') {
+		if ($name == '')
+			$name = Icon::get(Icon::$ADD, 'Plugin installieren');
+
+		return Ajax::window('<a href="inc/class.Plugin.install.php?key='.$this->key.'" title="Plugin installieren">'.$name.'</a>');
+	}
+
+	/**
 	 * Install a new plugin
 	 * @param string $file Filepath relative to inc/plugin/
 	 */
 	static public function installPlugin($file) {
 		if (!file_exists($file)) {
-			Error::getInstance()->addError('Pluginfile\''.$file.'\' can\'t be found. Installing impossible.');
+			Error::getInstance()->addError('Pluginfile \''.$file.'\' can\'t be found. Installing impossible.');
 			return false;
 		}
 
@@ -222,14 +249,15 @@ abstract class Plugin {
 		}
 
 		$Plugin = self::getInstanceFor($PLUGINKEY);
-		$Plugin->install();
+		return $Plugin->install();
 	}
 
 	/**
 	 * Install this plugin
+	 * @return bool
 	 */
 	public function install() {
-		if ($id != self::$INSTALLER_ID) {
+		if ($this->id != self::$INSTALLER_ID) {
 			Error::getInstance()->addError('Plugin can not be installed, id is set wrong.');
 			return false;
 		}
@@ -256,6 +284,8 @@ abstract class Plugin {
 
 		$this->setActive(1);
 		$this->updateConfigVarToDatabase();
+
+		return true;
 	}
 
 	/**
@@ -517,13 +547,33 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Get all keys for a given plugintype as array
+	 * Get readable string for internal type-enum
 	 * @param enum $type
-	 * @param enum $active
+	 * @return string
+	 */
+	static public function getReadableTypeString($type) {
+		switch ($type) {
+			case self::$STAT:
+				return 'Statistik';
+			case self::$PANEL:
+				return 'Panel';
+			case self::$DRAW:
+				return 'Diagramm';
+			case self::$TOOL:
+				return 'Tool';
+		}
+	}
+
+	/**
+	 * Get all keys for a given plugintype as array
+	 * @param enum $type [optional]
+	 * @param enum $active [optional]
 	 * @return array
 	 */
-	static public function getKeysAsArray($type, $active = -1) {
-		if ($active == -1)
+	static public function getKeysAsArray($type = -1, $active = -1) {
+		if ($type == -1)
+			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin`');
+		elseif ($active == -1)
 			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC');
 		else
 			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC');
@@ -533,6 +583,15 @@ abstract class Plugin {
 			$return[] = $v['key'];
 
 		return $return;
+	}
+
+	/**
+	 * Is the plugin already installed?
+	 * @param string $key
+	 * @return bool
+	 */
+	static public function isInstalled($key) {
+		return in_array($key, self::getKeysAsArray(-1));
 	}
 
 	/**

@@ -28,6 +28,14 @@ class Config {
 	public function __destruct() {}
 
 	/**
+	 * Get link to the configuration overlay
+	 * @return string
+	 */
+	static public function getOverlayLink() {
+		return Ajax::window('<a class="left" href="inc/tpl/window.config.php" title="Einstellungen">'.Icon::get(Icon::$CONF_EDIT, 'Einstellungen').'</a>');
+	}
+
+	/**
 	 * Register a variable
 	 * @param string $category Descriptive category for config-window
 	 * @param string $KEY Internal key, must be unique, should start with an equivalent for the category
