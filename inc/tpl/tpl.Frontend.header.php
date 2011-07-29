@@ -22,7 +22,7 @@
 	<![endif]-->
 </head>
 
-<body>
+<body id="main">
 
 <div id="overlay"></div>
 <div id="ajax" class="panel"></div>

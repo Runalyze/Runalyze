@@ -6,13 +6,13 @@
 
 /***  L A Y O U T  ***/
 body {
-	min-width: 1000px;
 	padding-bottom: 33px;
 	background: url(img/bg.jpg);
 	color: #444;
 	font-family: Verdana, Arial, sans serif;
 	font-size: 11px;
 }
+body#main { min-width: 1000px; }
 
 div#l {
 	width: 66%;
@@ -193,11 +193,11 @@ div#ajax {
 	-moz-box-shadow: 3px 2px 5px #333;
 }
 
-div#ajax.small {
+div#ajax.smallWin {
 	width: 400px;
 	margin-left: -200px;
 }
-div#ajax.big {
+div#ajax.bigWin {
 	width: 90%;
 	margin-left: -45%;
 }
