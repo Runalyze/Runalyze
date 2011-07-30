@@ -93,6 +93,7 @@ div.tabs {
 
 ul.tabs {
 	margin: 0 5px;
+	padding: 0;
 	list-style: none;
 	height: 26px;
 	border-bottom: 1px solid #000;
@@ -268,6 +269,11 @@ div#trainingRounds {
 }
 
 /***  S O N S T I G E S  ***/
+ul {
+	margin: 5px 10px 15px 10px;
+	padding-left: 20px;
+}
+
 input, select, textarea {
 	font-size: 0.9em;
 	margin: 4px 2px;

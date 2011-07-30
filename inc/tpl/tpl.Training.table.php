@@ -43,7 +43,6 @@
 			<?php if ($this->get('hm') > 0): ?><br />
 			<small>
 				&nbsp;<?php echo $this->get('hm'); ?> H&ouml;henmeter<br />
-				&nbsp;<?php echo Training::calculateElevation($this->get('arr_alt')); ?> berechnet<br />
 				&nbsp;&oslash; <?php echo number_format($this->get('hm')/10/$this->get('distanz'), 2, ',', '.'); ?>&#37; Steigung
 			</small>
 			<?php endif; ?>

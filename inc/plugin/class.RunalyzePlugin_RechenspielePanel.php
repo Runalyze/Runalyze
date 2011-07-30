@@ -72,7 +72,7 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 		}
 
 		$atl = (CONFIG_MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/CONFIG_MAX_ATL);
-		$ctl = (CONFIG_MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/CONFIG_MAX_ATL);
+		$ctl = (CONFIG_MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/CONFIG_MAX_CTL);
 
 		echo('</small>
 			<div class="left" style="width:60%;">
