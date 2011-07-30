@@ -20,7 +20,12 @@ if (isset($_POST['error']))
 	Error::getInstance()->addError('Training::parseTcx() meldet: '.$_POST['error']);
 
 $showUploader = empty($_POST);
+$weather = Helper::getWeatherData();
 
+if (!isset($_POST['wetterid']))
+	$_POST['wetterid'] = $weather[1];
+if (!isset($_POST['temperatur']))
+	$_POST['temperatur'] = $weather[0];
 if (!isset($_POST['datum']))
 	$_POST['datum'] = date("d.m.Y");
 if (!isset($_POST['zeit']))
@@ -104,7 +109,7 @@ foreach($sports as $sport) {
 	$onclick .= ($sport['outside'] == 1) ? 'show(\'outside\');' : 'unshow(\'outside\');';
 
 	echo('
-		<input type="radio" name="sportid" value="'.$sport['id'].'" onClick="show(\'normal\');'.$onclick.'" /> '.$sport['name'].' &nbsp; '.NL);
+		<label><input type="radio" name="sportid" value="'.$sport['id'].'" onClick="show(\'normal\');'.$onclick.'" /> '.$sport['name'].'</label> &nbsp; '.NL);
 }
 
 if (isset($_POST['sportid']))
@@ -115,17 +120,27 @@ if (isset($_POST['sportid']))
 
 	<div style="float: left;">
 		<span id="normal" style="display: none;">
-			<input type="text" size="10" name="datum" value="<?php echo $_POST['datum']; ?>" />
-			<input type="text" size="4" name="zeit" value="<?php echo $_POST['zeit']; ?>" />
-				<small>Datum</small><br />
-			<input type="text" size="8" name="dauer" id="dauer" value="<?php echo $_POST['dauer']; ?>" onChange="paceberechnung(); kalorienberechnung(); kmhberechnung();" />
+			<label>
+				<input type="text" size="10" name="datum" value="<?php echo $_POST['datum']; ?>" />
+				<input type="text" size="4" name="zeit" value="<?php echo $_POST['zeit']; ?>" />
+				<small>Datum</small>
+			</label><br />
+			<label>
+				<input type="text" size="8" name="dauer" id="dauer" value="<?php echo $_POST['dauer']; ?>" onChange="paceberechnung(); kalorienberechnung(); kmhberechnung();" />
 				<small style="margin-right: 75px;">Dauer</small>
-			<input type="text" size="4" name="kalorien" id="kalorien" value="<?php echo $_POST['kalorien']; ?>" />
-				<small>kcal</small><br />
-			<input type="text" size="50" name="bemerkung" value="<?php echo $_POST['bemerkung']; ?>" />
-				<small>Bemerkung</small><br />
-			<input type="text" size="50" name="trainingspartner" value="<?php echo $_POST['trainingspartner']; ?>" />
+			</label>
+			<label>
+				<input type="text" size="4" name="kalorien" id="kalorien" value="<?php echo $_POST['kalorien']; ?>" />
+				<small>kcal</small>
+			</label><br />
+			<label>
+				<input type="text" size="50" name="bemerkung" value="<?php echo $_POST['bemerkung']; ?>" />
+				<small>Bemerkung</small>
+			</label><br />
+			<label>
+				<input type="text" size="50" name="trainingspartner" value="<?php echo $_POST['trainingspartner']; ?>" />
 				<small>Trainingspartner</small>
+			</label>
 		</span>
 	</div>
 
@@ -174,28 +189,44 @@ foreach($schuhe as $schuh) {
 ?>
 			</select>
 
-			<input type="checkbox" name="laufabc"<?php echo Helper::Checked(isset($_POST['laufabc']) ? $_POST['laufabc'] : false); ?> />
+			<label>
+				<input type="checkbox" name="laufabc"<?php echo Helper::Checked(isset($_POST['laufabc']) ? $_POST['laufabc'] : false); ?> />
 				<small>Lauf-ABC</small>
+			</label>
 		</span>
 
 		<span id="distanz" style="display: none;">
-			<input type="text" size="4" name="distanz" id="dist" value="<?php echo Helper::Unknown($_POST['distanz'], '0.00'); ?>" onChange="paceberechnung(); kmhberechnung();" />
+			<label>
+				<input type="text" size="4" name="distanz" id="dist" value="<?php echo Helper::Unknown($_POST['distanz'], '0.00'); ?>" onChange="paceberechnung(); kmhberechnung();" />
 				<small>km</small>
-			<input type="checkbox" name="bahn"<?php echo Helper::Checked(isset($_POST['bahn']) ? $_POST['bahn'] : false); ?> />
+			</label>
+			<label>
+				<input type="checkbox" name="bahn"<?php echo Helper::Checked(isset($_POST['bahn']) ? $_POST['bahn'] : false); ?> />
 				<small style="margin-right: 25px;">Bahn</small>
-			<input type="text" size="4" name="pace" id="pace" value="<?php echo Helper::Unknown($_POST['pace'], '0:00'); ?>" disabled="disabled" />
+			</label>
+			<label>
+				<input type="text" size="4" name="pace" id="pace" value="<?php echo Helper::Unknown($_POST['pace'], '0:00'); ?>" disabled="disabled" />
 				<small>/km</small>
-			<input type="text" size="4" name="kmh" id="kmh" value="<?php echo Helper::Unknown($_POST['kmh'], '0,00'); ?>" disabled="disabled" />
+			</label>
+			<label>
+				<input type="text" size="4" name="kmh" id="kmh" value="<?php echo Helper::Unknown($_POST['kmh'], '0,00'); ?>" disabled="disabled" />
 				<small>km/h</small>
-			<input type="text" size="3" name="hm" value="<?php echo Helper::Unknown($_POST['hm'], '0'); if (isset($_POST['arr_alt'])) echo '" disabled="disabled'; ?>" />
+			</label>
+			<label>
+				<input type="text" size="3" name="hm" value="<?php echo Helper::Unknown($_POST['hm'], '0'); if (isset($_POST['arr_alt'])) echo '" disabled="disabled'; ?>" />
 				<small>HM</small>
+			</label>
 		</span>
 
 		<span id="puls" style="display: none;">
-			<input type="text" size="3" name="puls" value="<?php echo Helper::Unknown($_POST['puls'], '0'); ?>" />
+			<label>
+				<input type="text" size="3" name="puls" value="<?php echo Helper::Unknown($_POST['puls'], '0'); ?>" />
 				<small style="margin-right: 73px;">Puls</small>
-			<input type="text" size="3" name="puls_max" value="<?php echo Helper::Unknown($_POST['puls_max'], '0'); ?>" />
+			</label>
+			<label>
+				<input type="text" size="3" name="puls_max" value="<?php echo Helper::Unknown($_POST['puls_max'], '0'); ?>" />
 				<small>max. Puls</small>
+			</label>
 		</span>
 	</div>
 
@@ -212,9 +243,12 @@ foreach($schuhe as $schuh) {
 		<input type="hidden" name="arr_pace" value="<?php if (isset($_POST['arr_pace'])) echo $_POST['arr_pace']; ?>" />
 
 		<br />
-		<input type="text" size="50" name="strecke" value="<?php echo Helper::Unknown($_POST['strecke'], ''); ?>" />
+		<label>
+			<input type="text" size="50" name="strecke" value="<?php echo Helper::Unknown($_POST['strecke'], ''); ?>" />
 			<small style="margin-right: 100px;">Strecke</small>
-		<select name="wetterid">
+		</label>
+		<label>
+			<select name="wetterid">
 <?php
 $wetter = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'wetter` ORDER BY `order` ASC');
 foreach($wetter as $dat) {
@@ -222,10 +256,13 @@ foreach($wetter as $dat) {
 	echo('<option value="'.$dat['id'].'"'.$selected.'>'.$dat['name'].'</option>');
 }
 ?>
-		</select>
+			</select>
 			<small>Wetter</small>
-		<input type="text" size="2" name="temperatur" value="<?php echo Helper::Unknown($_POST['temperatur'], ''); ?>" />
+		</label>
+		<label>
+			<input type="text" size="2" name="temperatur" value="<?php echo Helper::Unknown($_POST['temperatur'], ''); ?>" />
 			<small style="margin-right: 40px;">&#176;C</small>
+		</label>
 			<br />
 			<br />
 		<input type="hidden" name="kleidung" id="kleidung" />
@@ -233,15 +270,17 @@ foreach($wetter as $dat) {
 $kleidungen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `name_kurz` ASC');
 foreach($kleidungen as $kleidung)
 	echo('
-		<input type="checkbox" name="'.$kleidung['name_kurz'].'"'.Helper::Checked(isset($_POST[$kleidung['name_kurz']]) ? $_POST[$kleidung['name_kurz']] : false).' onClick="document.getElementById(\'kleidung\').value +=\''.$kleidung['id'].',\';" /> <small style="margin-right: 10px;">'.$kleidung['name_kurz'].'</small>');
+		<label><input type="checkbox" name="'.$kleidung['name_kurz'].'"'.Helper::Checked(isset($_POST[$kleidung['name_kurz']]) ? $_POST[$kleidung['name_kurz']] : false).' onClick="document.getElementById(\'kleidung\').value +=\''.$kleidung['id'].',\';" /> <small style="margin-right: 10px;">'.$kleidung['name_kurz'].'</small></label>');
 ?>
 			<br />
 	</span>
 
 	<span id="splits" style="display: none;">
 		<br />
-		<textarea name="splits" cols="70" rows="3"><?php echo Helper::Unknown($_POST['splits'], ''); ?></textarea>
-			<small>Splits</small><br />
+		<label>
+			<textarea name="splits" cols="70" rows="3"><?php echo Helper::Unknown($_POST['splits'], ''); ?></textarea>
+			<small>Splits</small>
+		</label><br />
 	</span>
 
 	<div class="c">

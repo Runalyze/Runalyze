@@ -9,7 +9,6 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- * @uses $global
  *
  * Last modified 2011/07/09 14:30 by Hannes Christiansen
  */

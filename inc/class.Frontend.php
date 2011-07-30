@@ -29,12 +29,6 @@
  */
 class Frontend {
 	/**
-	 * Global array (should be deleted later on)
-	 * @var array
-	 */
-	public $global;
-
-	/**
 	 * Boolean flag if it was an Ajax-request
 	 * @var bool
 	 */
@@ -52,10 +46,7 @@ class Frontend {
 	 * @param string $file
 	 */
 	public function __construct($ajax_request = false, $file = __FILE__) {
-		global $global;
-
 		$this->file = $file;
-		$this->global = $global;
 		$this->ajax_request = $ajax_request;
 
 		$this->initConsts();
@@ -132,6 +123,7 @@ class Frontend {
 		Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
 		Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
 		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
+		Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
 		Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
 
 		// Following lines are only used for MAX_ATL/CTL/TRIMP anymore
@@ -145,8 +137,6 @@ class Frontend {
 	 * Include alle required files
 	 */
 	private function initRequiredFiles() {
-		global $global;
-
 		require_once(FRONTEND_PATH.'class.Training.php');
 		require_once(FRONTEND_PATH.'class.Ajax.php');
 		require_once(FRONTEND_PATH.'class.Helper.php');

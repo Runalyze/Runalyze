@@ -68,11 +68,12 @@ foreach ($categories as $i => $cat) {
 		echo '<em>Keine Konfigurationsvariablen vorhanden vorhanden.</em>';
 
 	foreach ($confs as $i => $conf) {
+		echo '<label>';
 		echo Config::getInputField($conf).NL;
 		echo '<strong>'.$conf['description'].'</strong>';
 		if ($conf['type'] == 'array')
 			echo ' <small>(kommagetrennt)</small>';
-		echo '<br />';
+		echo '</label><br />';
 	}
 
 	echo '</div>';

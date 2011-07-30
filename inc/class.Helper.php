@@ -237,6 +237,9 @@ class Helper {
 	 */
 	public static function DescriptionToDemandedPace($description) {
 		$array = explode("in ", $description);
+		if (count($array) != 2)
+			return 0;
+
 		$array = explode(",", $array[1]);
 		$array = explode(":", $array[0]);
 
@@ -348,8 +351,6 @@ class Helper {
 	 * @return int
 	 */
 	public static function TRIMP($training_id, $trimp = false) {
-		global $config, $global;
-	
 		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $training_id);
 		if ($dat === false)
 			$dat = array();
@@ -430,8 +431,6 @@ class Helper {
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
 		// TODO: New algorithm
-		global $global;
-
 		$points = 0;
 		if ($timestamp == 0)
 			$timestamp = time();
@@ -478,8 +477,6 @@ class Helper {
 	 * @param int $VDOT   Make prognosis for a given VDOT value? (used in plugin/panel.prognose)
 	 */
 	public static function Prognosis($dist, $bahn = false, $VDOT = 0) {
-		global $global;
-	
 		$VDOT_new = ($VDOT == 0) ? VDOT_FORM : $VDOT;
 		$pb = self::PersonalBest($dist, true);
 		// Grundlagenausdauer
@@ -505,6 +502,43 @@ class Helper {
 		</span>
 		<strong>'.self::Km($dist, 0, $bahn).'</strong>
 	</p>'.NL;
+	}
+
+	/**
+	 * Get weather-data from external api if possible
+	 * @return array
+	 */
+	public static function getWeatherData() {
+		if (CONF_PLZ == 0)
+			return array(NULL, 0);
+
+		require_once('tcx/class.ParserTcx.php');
+		$Parser = new ParserTcx(@file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl=de'));
+		$Result = $Parser->getContentAsArray();
+
+		$temp    = @(int)$Result['xml_api_reply']['weather']['current_conditions']['temp_c']['attr']['data'];
+		$weather = @$Result['xml_api_reply']['weather']['current_conditions']['condition']['attr']['data'];
+
+		// Translate weather to default wetter-names in own database
+		switch ($weather) {
+			case 'Meist sonnig':
+			case 'Klar':				$weather = 'sonnig'; break;
+			case 'Teils sonnig':		$weather = 'heiter'; break;
+			case 'Bedeckt':
+			case 'Meistens bewölkt':
+			case 'Bewölkt':				$weather = 'bew&ouml;lkt'; break;
+			case 'Vereinzelt stürmisch':
+			case 'Vereinzelte Schauer':
+			case 'Vereinzelt Regen':	$weather = 'wechselhaft'; break;
+			case 'Regen':
+			case 'Gewitterschauer':		$weather = 'regnerisch'; break;
+			case 'Schnee':				$weather = 'Schnee'; break;
+			default: $weather = 'unbekannt'; break;
+		}
+
+		$data = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'wetter` WHERE `name`="'.$weather.'"');
+
+		return array($temp, $data['id']);
 	}
 
 	/**

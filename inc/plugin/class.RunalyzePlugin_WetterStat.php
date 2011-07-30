@@ -63,7 +63,9 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		$this->displayYearNavigation();
 		echo '<small class="left">'.Helper::Sport(CONF_MAINSPORT).'</small>';
 		echo Helper::clearBreak();
-
+		echo '<br />';
+		
+		$this->displayExtremeTrainings();
 		$this->displayMonthTable();
 		$this->displayClothesTable();
 	}
@@ -289,6 +291,26 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		echo '</tr>';
 		echo Helper::spaceTR(11);
 		echo '</table>';
+	}
+
+	/**
+	 * Display extreme trainings
+	 */
+	private function displayExtremeTrainings() {
+		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperatur`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperatur` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperatur` DESC LIMIT 3');
+		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperatur`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperatur` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperatur` ASC LIMIT 3');
+
+		foreach ($hot as $i => $h)
+			$hot[$i] = $h['temperatur'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
+		foreach ($cold as $i => $c)
+			$cold[$i] = $c['temperatur'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $c['time']));
+
+		echo '<small>';
+		echo '<strong>W&auml;rmsten L&auml;ufe:</strong> '.NL;
+		echo implode(', '.NL, $hot).'<br />'.NL;
+		echo '<strong>K&auml;ltesten L&auml;ufe:</strong> '.NL;
+		echo implode(', '.NL, $cold).'<br />'.NL;
+		echo '</small>';
 	}
 
 	/**
