@@ -82,7 +82,6 @@ foreach ($categories as $i => $cat) {
 </div>
 
 <?php
-$Error->addTodo('Plugin-Verwaltung: Installieren und co', __FILE__, __LINE__);
 // TODO: Download-Link
 ?>
 <div id="config_plugins" class="change" style="display:none;">

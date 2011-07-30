@@ -48,8 +48,14 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader('Schuhe');
-		echo '<table style="width:100%;">';
-		echo('<tr class="b c">
+
+		echo '
+		<style type="text/css">
+		tr.shoe { height:2px; }
+		tr.shoe td { padding: 0; }
+		</style>
+		<table style="width:100%;">
+			<tr class="b c">
 				<td colspan="2" />
 				<td class="small">Kaufdatum</td>
 				<td>&Oslash; km</td>
@@ -57,7 +63,7 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 				<td class="small" colspan="2">max.</td>
 				<td>Dauer</td>
 				<td>Distanz</td>
-			</tr>');
+			</tr>';
 		echo Helper::spaceTr(9);
 
 		if (!empty($this->schuhe)) {
@@ -79,7 +85,7 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 					<td>'.Helper::Time($schuh['dauer']).'</td>
 					<td>'.Helper::Km($schuh['km']).'</td>
 				</tr>
-				<tr style="height:2px; background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
+				<tr class="shoe" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
 					<td colspan="9"></td>
 				</tr>');
 			}

@@ -14,6 +14,10 @@ Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
 	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
 
+Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
+Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
+	array('google' => true, 'geonames' => false), 'Server f&uuml;r H&ouml;henkorrektur',
+	array('maps.googleapis.com', 'ws.geonames.org'));
 Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('tcx' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('tcx-Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
@@ -34,7 +38,7 @@ class Training {
 	 * Minimal difference per step to be recognized for elevation data
 	 * @var int
 	 */
-	public static $minElevationDiff = 3;
+	public static $minElevationDiff = 2;
 
 	/**
 	 * Only every n-th point will be taken for the elevation
@@ -193,13 +197,13 @@ class Training {
 	 * Display header
 	 */
 	public function displayHeader() {
-		echo('<h1>'.NL);
+		echo '<h1>'.NL;
 		$this->displayEditLink();
 		$this->displayTitle();
-		echo('<small class="right">');
+		echo '<small class="right">';
 		$this->displayDate();
-		echo('</small><br class="clear" />');
-		echo('</h1>'.NL.NL.NL);
+		echo '</small><br class="clear" />';
+		echo '</h1>'.NL;
 	}
 
 	/**
@@ -208,21 +212,20 @@ class Training {
 	public function displayPlotsAndMap() {
 		$plots = $this->getPlotTypesAsArray();
 
-		echo('<div class="right">'.NL);
-		if (count($plots) > 0) {
-			echo('<small class="right">'.NL);
+		echo '<div class="right">'.NL;
+		if (!empty($plots)) {
+			echo '<small class="right">'.NL;
 			$this->displayPlotLinks('trainingGraph');
-			echo('</small>'.NL);
-			echo('<br /><br />'.NL);
+			echo '</small>'.NL;
+			echo '<br /><br />'.NL;
 			$this->displayPlot(key($plots));
-			echo('<br />'.NL);
-			echo('<br />'.NL.NL);
+			echo '<br /><br />'.NL;
 		}
 
-		if ($this->hasPositionData()) {
+		if ($this->hasPositionData())
 			$this->displayRoute();
-		}
-		echo('</div>'.NL.NL);
+
+		echo '</div>'.NL;
 	}
 
 	/**
@@ -335,24 +338,219 @@ class Training {
 		if ($this->hasSplitsData())
 			$RoundTypes[] = array('name' => 'gestoppte', 'id' => 'stoppedRounds', 'eval' => '$this->displaySplits();');
 
-		echo('<div id="trainingRounds">');
-			echo('<strong>Rundenzeiten:</strong>');
-			echo('<small class="right">');
-			foreach ($RoundTypes as $i => $RoundType) {
-				echo Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
-				if ($i < count($RoundTypes)-1)
-					echo(' | ');
-			}
-			echo('&nbsp;</small>');
+		echo '<div id="trainingRounds">' ;
+			echo '<strong class="small">Rundenzeiten:&nbsp;</strong>'.NL;
+			echo '<small class="right">'.NL;
+				foreach ($RoundTypes as $i => $RoundType) {
+					echo Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
+					if ($i < count($RoundTypes)-1)
+						echo ' | ';
+				}
+			echo '&nbsp;</small>'.NL;
 
 			if (empty($RoundTypes))
-				echo('<small><em>Keine Daten vorhanden.</em></small>');
+				echo '<small><em>Keine Daten vorhanden.</em></small>'.NL;
+
 			foreach ($RoundTypes as $i => $RoundType) {
-				echo('<div id="'.$RoundType['id'].'" class="change"'.($i==0?'':' style="display:none;"').'>');
-				eval($RoundType['eval']);
-				echo('</div>');
+				echo '<div id="'.$RoundType['id'].'" class="change"'.($i==0?'':' style="display:none;"').'>';
+					eval($RoundType['eval']);
+				echo '</div>';
 			}
-		echo('</div>');
+		echo '</div>';
+	}
+
+	/**
+	 * Display defined splits
+	 */
+	public function displaySplits() {
+		echo '<table class="small" cellspacing="0">
+			<tr class="c b">
+				<td>Distanz</td>
+				<td>Zeit</td>
+				<td>Pace</td>
+				<td>Diff.</td>
+			</tr>
+			<tr class="space"><td colspan="4" /></tr>'.NL;
+
+		$splits       = explode('-', str_replace('\r\n', '-', $this->get('splits')));
+		$Distances    = $this->getSplitsDistancesArray();
+		$Times        = $this->getSplitsTimeArray();
+		$Paces        = $this->getSplitsPacesArray();
+		$demandedPace = Helper::DescriptionToDemandedPace($this->get('bemerkung'));
+		$achievedPace = array_sum($Paces) / count($Paces);
+		$TimeSum      = array_sum($Times);
+		$DistSum      = array_sum($Distances);
+
+		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
+			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);
+			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
+			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
+
+			echo '
+			<tr class="a'.($i%2+2).' r">
+				<td>'.Helper::Km($Distances[$i], 2).'</td>
+				<td>'.Helper::Time($Times[$i]).'</td>
+				<td>'.Helper::Pace($Distances[$i], $Times[$i]).'/km</td>
+				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
+			</tr>'.NL;
+		}
+
+		echo Helper::spaceTR(4);
+
+		if ($demandedPace > 0) {
+			$AvgDiff = $demandedPace - $achievedPace;
+			$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
+			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Helper::Time($AvgDiff, false, 2) : '-'.Helper::Time(-$AvgDiff, false, 2);
+	
+			echo '
+				<tr class="r">
+					<td colspan="2">Vorgabe: </td>
+					<td>'.Helper::Time($demandedPace).'/km</td>
+					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
+				</tr>'.NL;
+		} else {
+			echo '
+				<tr class="r">
+					<td colspan="2">Schnitt: </td>
+					<td>'.Helper::Time($achievedPace).'/km</td>
+					<td></td>
+				</tr>'.NL;
+		}
+
+		echo '</table>'.NL;
+	}
+
+	/**
+	 * Display (computed) rounds
+	 */
+	public function displayRounds() {
+		$km 				= 1;
+		$kmIndex	 		= array(0);
+		$positiveElevation 	= 0;
+		$negativeElevation 	= 0;
+		$distancePoints 	= explode(self::$ARR_SEP, $this->get('arr_dist'));
+		$timePoints 		= explode(self::$ARR_SEP, $this->get('arr_time'));
+		$heartPoints 		= explode(self::$ARR_SEP, $this->get('arr_heart'));
+		$elevationPoints 	= explode(self::$ARR_SEP, $this->get('arr_alt'));
+		$numberOfPoints 	= sizeof($distancePoints);
+		$rounds             = array();
+		$showPulse          = count($heartPoints) > 1;
+		$showElevation      = count($elevationPoints) > 1;
+
+		foreach ($distancePoints as $i => $distance) {
+			if (floor($distance) == $km || $i == $numberOfPoints-1) {
+				$km++;
+				$prevIndex = end($kmIndex);
+				$kmIndex[] = $i;
+
+				if ($showPulse) {
+					$heartRateOfThisKm = array_slice($heartPoints, $prevIndex, ($i - $prevIndex));
+					$bpm = round(array_sum($heartRateOfThisKm) / ($i - $prevIndex));
+				} else
+					$bpm = 0;
+
+				$rounds[] = array(
+					'time' => $timePoints[$i],
+					'dist' => $distance,
+					'km' => $distance - $distancePoints[$prevIndex],
+					's' => $timePoints[$i] - $timePoints[$prevIndex],
+					'bpm' => $bpm,
+					'hm_up' => $positiveElevation,
+					'hm_down' => $negativeElevation,
+					);
+
+				$positiveElevation = 0;
+				$negativeElevation = 0;
+			} elseif ($i != 0 && $showElevation && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
+				$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
+				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
+				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
+			}
+		}
+
+		$this->displayRoundsTable($rounds, $showPulse, $showElevation);
+	}
+
+	/**
+	 * Display the table for all rounds
+	 * @param array $rounds Array containing all rounds
+	 * @param bool $showPulse Flag: Show heartfrequence?
+	 * @param bool $showElevation Flag: Show elevation-data?
+	 */
+	private function displayRoundsTable($rounds, $showPulse, $showElevation) {
+		echo '<table class="small" cellspacing="0">
+			<tr class="c b">
+				<td>Zeit</td>
+				<td>Distanz</td>
+				<td>Tempo</td>
+				'.($showPulse ? '<td>bpm</td>' : '').'
+				'.($showElevation ? '<td>hm</td>' : '').'
+			</tr>'.NL;
+		echo Helper::spaceTR(3 + (int)$showPulse + (int)$showElevation);
+
+		foreach ($rounds as $i => $round) {
+			if ($round['bpm'] == 0)
+				$round['bpm'] = '?';
+			if ($round['hm_up'] != 0)
+				$round['hm_up'] = '+'.$round['hm_up'];
+			if ($round['hm_down'] != 0)
+				$round['hm_down'] = '-'.$round['hm_down'];
+
+			echo '<tr class="a'.($i%2+2).' r">
+				<td>'.Helper::Time($round['time']).'</td>
+				<td>'.Helper::Km($round['dist'], 2).'</td>
+				<td>'.Helper::Speed($round['km'], $round['s'], $this->get('sportid')).'</td>
+				'.($showPulse ? '<td>'.$round['bpm'].'</td>' : '').'
+				'.($showElevation ? '<td>'.$round['hm_up'].'/'.$round['hm_down'].'</td>' : '').'
+			</tr>'.NL;
+		}
+
+		echo '</table>'.NL;
+	}
+
+	/**
+	 * Display route on GoogleMaps
+	 */
+	public function displayRoute() {
+		echo '<iframe src="'.self::$mapURL.'?id='.$this->id.'" style="border:1px solid #000;" width="478" height="300" frameborder="0"></iframe>';
+	}
+
+	/**
+	 * Calculate absolute number for elevation
+	 * @param array $alternateData [optional] Array for arr_alt
+	 * @return int
+	 */
+	static public function calculateElevation($data) {
+		if (empty($data))
+			return 0;
+
+		$elevationPoints 	= explode(self::$ARR_SEP, $data);
+		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
+		$positiveElevation 	= 0;  $up   = false;
+		$negativeElevation 	= 0;  $down = false;
+		$currentElevation   = 0;
+
+		// Algorithm: must be at least 5m up/down without down/up
+		foreach ($elevationPoints as $i => $p) {
+			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
+				$diff = $p - $elevationPoints[$i-1];
+				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
+					$currentElevation += $diff;
+				else {
+					if (abs($currentElevation) >= 5) {
+						if ($up)
+							$positiveElevation += $currentElevation;
+						if ($down)
+							$negativeElevation -= $currentElevation;
+					}
+					$currentElevation = $diff;
+				}
+				$up   = ($diff > 0);
+				$down = ($diff < 0);
+			}
+		}
+
+		return max($minimumElevation, $positiveElevation, $negativeElevation);
 	}
 
 	/**
@@ -414,134 +612,6 @@ class Training {
 		}
 
 		return implode(', ', $splits);
-	}
-
-	/**
-	 * Display defined splits
-	 */
-	public function displaySplits() {
-		echo('<table class="small" cellspacing="0">'.NL);
-		echo('
-			<tr class="c b">
-				<td>Distanz</td>
-				<td>Zeit</td>
-				<td>Pace</td>
-				<td>Diff.</td>
-			</tr>
-			<tr class="space"><td colspan="4" /></tr>');
-
-		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-		Error::getInstance()->addTodo('Training::splits Bitte testen: Ist die Pace-Berechnung korrekt?', __FILE__, __LINE__);
-		Error::getInstance()->addTodo('Training::splits Gesamtschnitt/Vorgabe/etc.', __FILE__, __LINE__);
-
-		$Distances = $this->getSplitsDistancesArray();
-		$Times = $this->getSplitsTimeArray();
-		$Paces = $this->getSplitsPacesArray();
-		$demandedPace = Helper::DescriptionToDemandedPace($this->get('bemerkung'));
-		$achievedPace = array_sum($Paces) / count($Paces);
-		$TimeSum = array_sum($Times);
-		$DistSum = array_sum($Distances);
-
-		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
-			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);
-			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
-			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
-
-			echo('
-			<tr class="a'.($i%2+1).' r">
-				<td>'.Helper::Km($Distances[$i], 2).'</td>
-				<td>'.Helper::Time($Times[$i]).'</td>
-				<td>'.Helper::Pace($Distances[$i], $Times[$i]).'/km</td>
-				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
-			</tr>');
-		}
-
-		if ($demandedPace > 0) {
-			$AvgDiff = $demandedPace - $achievedPace;
-			$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
-			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Helper::Time($AvgDiff, false, 2) : '-'.Helper::Time(-$AvgDiff, false, 2);
-	
-			echo('
-				<tr class="space"><td colspan="4" /></tr>
-				<tr class="r">
-					<td colspan="2">Vorgabe: </td>
-					<td >'.Helper::Time($demandedPace).'/km</td>
-					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
-				</tr>');
-		} else {
-			echo('
-				<tr class="r">
-					<td colspan="2">Schnitt: </td>
-					<td>'.Helper::Time($achievedPace).'/km</td>
-					<td></td>
-				</tr>');
-		}
-
-		echo('</table>'.NL);
-	}
-
-	/**
-	 * Display (computed) rounds
-	 */
-	public function displayRounds() {
-		$km 				= 1;
-		$kmIndex	 		= array(0);
-		$positiveElevation 	= 0;
-		$negativeElevation 	= 0;
-		$distancePoints 	= explode(self::$ARR_SEP, $this->get('arr_dist'));
-		$timePoints 		= explode(self::$ARR_SEP, $this->get('arr_time'));
-		$heartPoints 		= explode(self::$ARR_SEP, $this->get('arr_heart'));
-		$elevationPoints 	= explode(self::$ARR_SEP, $this->get('arr_alt'));
-		$numberOfPoints 	= sizeof($distancePoints);
-
-		echo('<table class="small" cellspacing="0">'.NL);
-		echo('<tr class="c b">
-				<td>Zeitpunkt</td>
-				<td>Distanz</td>
-				<td>Tempo</td>');
-		if (count($heartPoints) > 1)
-			echo(NL.'<td>bpm</td>');
-		if (count($elevationPoints) > 1)
-			echo(NL.'<td>hm</td>');
-		echo(NL.'</tr>'.NL);
-		echo('<tr class="space"><td colspan="5" /></tr>'.NL);
-
-		foreach ($distancePoints as $i => $distance) {
-			if (floor($distance) == $km || $i == $numberOfPoints-1) {
-				$km++;
-				$kmIndex[] = $i;
-				$previousIndex = $kmIndex[count($kmIndex)-2];
-				$pace = Helper::Speed(($distancePoints[$i] - $distancePoints[$previousIndex]), ($timePoints[$i] - $timePoints[$previousIndex]), $this->get('sportid'));
-				echo('<tr class="a'.($i%2+1).' r">
-						<td>'.Helper::Time($timePoints[$i]).'</td>
-						<td>'.Helper::Km($distance, 2).'</td>
-						<td>'.$pace.'</td>');
-				if (count($heartPoints) > 1) {
-					$heartRateOfThisKm = array_slice($heartPoints, $previousIndex, ($i - $previousIndex));
-					if (array_sum($heartRateOfThisKm) > 0)
-						echo('<td>'.round(array_sum($heartRateOfThisKm)/count($heartRateOfThisKm)).'</td>');
-					else
-						echo('<td>?</td>');
-				}
-				if (count($elevationPoints) > 1)
-					echo('<td>'.($positiveElevation != 0 ? '+'.$positiveElevation : '0').'/'.($negativeElevation != 0 ? '-'.$negativeElevation : '0').'</td>
-						</tr>');
-				$positiveElevation = 0;
-				$negativeElevation = 0;
-			} elseif ($i != 0 && count($elevationPoints) > 1 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
-				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
-				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
-			}
-		}
-		echo('</table>'.NL.NL);
-	}
-
-	/**
-	 * Display route on GoogleMaps
-	 */
-	public function displayRoute() {
-		echo '<iframe src="'.self::$mapURL.'?id='.$this->id.'" style="border:0;" width="480" height="300" frameborder="0"></iframe>';
 	}
 
 	/**
@@ -738,7 +808,10 @@ class Training {
 			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
 		}
 
-		// TODO ElevationCorrection
+		if (CONF_TRAINING_DO_ELEVATION) {
+			$Training = new Training($id);
+			$Training->elevationCorrection();
+		}
 
 		return true;
 	}
@@ -879,30 +952,66 @@ class Training {
 		$altitude  = array();
 
 		$num = count($latitude);
+		$numForEachCall = (CONF_TRAINING_ELEVATION_SERVER == 'google') ? 20 : 20; // 400 for google if coding would be okay
+
 		for ($i = 0; $i < $num; $i++) {
 			if ($i%self::$everyNthElevationPoint == 0) {
 				$lats[] = $latitude[$i];
 				$longs[] = $longitude[$i];
+				$points[] = array($latitude[$i], $longitude[$i]);
+				$string[] = $latitude[$i].','.$longitude[$i];
 			}
-			if (($i+1)%(20*self::$everyNthElevationPoint) == 0 || $i == $num-1) {
-				$html = false;
-				while ($html === false) {
-					$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
-					if (substr($html,0,1) == '<')
-						$html = false;
+			if (($i+1)%($numForEachCall*self::$everyNthElevationPoint) == 0 || $i == $num-1) {
+				if (CONF_TRAINING_ELEVATION_SERVER == 'google') {
+					// maps.googleapis.com
+					require_once('tcx/class.googleMapsAPI.php');
+					require_once('tcx/class.ParserTcx.php');
+
+					$enc    = new xmlgooglemaps_googleMapAPIPolylineEnc(32,4);
+					$encArr = $enc->dpEncode($points);
+					$path   = $encArr[2];
+					// Maybe problems with coding? Use numbers instead
+					//$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?path=enc:'.$path.'&samples='.count($points).'&sensor=false';
+					$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?path='.implode('|',$string).'&samples='.count($points).'&sensor=false';
+					$xml    = @file_get_contents($url);
+
+					$Parser = new ParserTcx($xml);
+					$Result = $Parser->getContentAsArray();
+					if (!isset($Result['elevationresponse'])) {
+						Error::getInstance()->addError('GoogleMapsAPI returned bad xml.');
+						Error::getInstance()->addError('Request was: '.$url);
+						return false;
+					} elseif ($Result['elevationresponse']['status']['value'] != 'OK') {
+						Error::getInstance()->addError('GoogleMapsAPI returned bad status: '.$Result['elevationresponse']['status']['value']);
+						Error::getInstance()->addError('Request was: '.$url);
+						return false;
+					}
+					foreach ($Result['elevationresponse']['result'] as $point)
+						for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
+							$altitude[] = round($point['elevation']['value']);
+				} else {
+					// ws.geonames.org
+					$html = false;
+					while ($html === false) {
+						$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+						if (substr($html,0,1) == '<')
+							$html = false;
+					}
+					$data = explode("\r\n", $html);
+	
+					foreach ($data as $k => $v)
+						$data[$k] = trim($v);
+					$data_num = count($data) - 1; // There is always one empty element
+	
+					for ($d = 0; $d < $data_num; $d++)
+						for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
+							$altitude[] = trim($data[$d]);
 				}
-				$data = explode("\r\n", $html);
-
-				foreach ($data as $k => $v)
-					$data[$k] = trim($v);
-				$data_num = count($data) - 1; // There is always one empty element
-
-				for ($d = 0; $d < $data_num; $d++)
-					for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
-						$altitude[] = trim($data[$d]);
 
 				$lats = array();
 				$longs = array();
+				$points = array();
+				$string = array();
 			}
 		}
 

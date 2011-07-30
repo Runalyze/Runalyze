@@ -21,6 +21,9 @@ if (isset($_POST['error']))
 
 $showUploader = empty($_POST);
 
+if (!isset($_POST['hm']) && isset($_POST['arr_alt']))
+	$_POST['hm'] = Training::calculateElevation($_POST['arr_alt']);
+
 if (!isset($_POST['datum']))
 	$_POST['datum'] = date("d.m.Y");
 if (!isset($_POST['zeit']))
