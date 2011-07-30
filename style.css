@@ -8,7 +8,7 @@
 body {
 	padding-bottom: 33px;
 	background: url(img/bg.jpg);
-	color: #444;
+	color: #333;
 	font-family: Verdana, Arial, sans serif;
 	font-size: 11px;
 }
@@ -262,6 +262,11 @@ div#schuhe p {
 	background-repeat: no-repeat;
 }
 
+div#trainingRounds {
+	float: left;
+	margin-top: 10px;
+}
+
 /***  S O N S T I G E S  ***/
 input, select, textarea {
 	font-size: 0.9em;
@@ -314,10 +319,10 @@ table, tr, td {
 
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
 tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
-.a1 td, td.a1 {  }
-.a2 td, td.a2 { background: rgba(255,255,255,0.2); } /* url(img/bg-20.png); }*/
-.a3 td, td.a3 { background: rgba(255,255,255,0.7); } /* url(img/bg-70.png); }*/
-tr.a3 { display: none; }
+.a1 td, td.a1 { background: rgba(255,255,255,0.2); }
+.a2 td, td.a2 { background: rgba(240,240,240,0.4); } /* url(img/bg-20.png); }*/
+.a3 td, td.a3 { background: rgba(230,230,255,0.7); } /* url(img/bg-70.png); }*/
+/*tr.a3 { display: none; }*/
 .space td { height: 1px; background: #000; padding: 0; }
 .nopadding tr, .nopadding td { padding: 0; }
 .nopadding input { margin: 0; }
@@ -331,6 +336,7 @@ tr.a3 { display: none; }
 .l { text-align: left; }
 .r { text-align: right; }
 .small { font-size: 0.8em; }
+.highlight td {	background: #FFE5CC; font-style: italic; }
 .wk td { background: #FFE5CC; }
 .link { padding-bottom: 1px; cursor: pointer; }
 .inline { display: inline; }

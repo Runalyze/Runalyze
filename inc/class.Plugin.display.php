@@ -9,6 +9,9 @@ $Frontend->displayHeader();
 
 $Key = Plugin::getKeyForId($_GET['id']);
 $Plugin = Plugin::getInstanceFor($Key);
+
+if ($Plugin instanceof PluginPanel)
+	$Plugin->setSurroundingDivVisible(false);
 $Plugin->display();
 
 $Frontend->displayFooter();
