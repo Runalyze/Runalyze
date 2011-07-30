@@ -261,31 +261,49 @@ if ($sport['outside'] == 1)
 
 
 	<div id="edit-allg" class="change">
-		<input type="hidden" name="sportid" value="<?php echo $Training->get('sportid'); ?>" />
-		<input type="text" name="sport" value="<?php echo Helper::Sport($Training->get('sportid')); ?>" disabled="disabled" />
-			<small>Sport</small><br />
-		<input type="text" size="10" name="datum" value="<?php echo date("d.m.Y", $Training->get('time')); ?>" />
-		<input type="text" size="4" name="zeit" value="<?php echo date("H:i", $Training->get('time')); ?>" />
-			<small>Datum</small><br />
+		<label>
+			<input type="hidden" name="sportid" value="<?php echo $Training->get('sportid'); ?>" />
+			<input type="text" name="sport" value="<?php echo Helper::Sport($Training->get('sportid')); ?>" disabled="disabled" />
+			<small>Sport</small>
+		</label><br />
+		<label>
+			<input type="text" size="10" name="datum" value="<?php echo date("d.m.Y", $Training->get('time')); ?>" />
+			<input type="text" size="4" name="zeit" value="<?php echo date("H:i", $Training->get('time')); ?>" />
+			<small>Datum</small>
+		</label><br />
 		<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="<?php echo $sport['kalorien']; ?>" />
 		<input type="hidden" name="dauer_old" value="<?php echo $Training->get('dauer'); ?>" />
-		<input type="text" size="9" name="dauer" id="dauer" value="<?php echo Helper::Time($Training->get('dauer'), false, true); ?>" onChange="paceberechnung(); kalorienberechnung();" />
-			<small>Dauer</small><br />
+		<label>
+			<input type="text" size="9" name="dauer" id="dauer" value="<?php echo Helper::Time($Training->get('dauer'), false, true); ?>" onChange="paceberechnung(); kalorienberechnung();" />
+			<small>Dauer</small>
+		</label><br />
 <?php if ($sport['distanztyp'] == 1): ?>
-		<input type="checkbox" size="4" name="bahn" <?php echo Helper::Checked($Training->get('bahn') == 1); ?> />
+		<label>
+			<input type="checkbox" size="4" name="bahn" <?php echo Helper::Checked($Training->get('bahn') == 1); ?> />
 			<small>Bahn</small>
+		</label>
 		<input type="hidden" name="dist_old" value="<?php echo $Training->get('distanz'); ?>" />
-		<input type="text" size="4" name="distanz" id="dist" value="<?php echo $Training->get('distanz'); ?>" onChange="paceberechnung();" />
+		<label>
+			<input type="text" size="4" name="distanz" id="dist" value="<?php echo $Training->get('distanz'); ?>" onChange="paceberechnung();" />
 			<small>km</small><br />
-		<input type="text" size="4" name="pace" id="pace" value="<?php echo $Training->get('pace'); ?>" />
+		</label>
+		<label>
+			<input type="text" size="4" name="pace" id="pace" value="<?php echo $Training->get('pace'); ?>" />
 			<small>/km</small><br />
+		</label>
 <?php endif; ?>
-		<input type="text" size="4" name="kalorien" id="kalorien" value="<?php echo $Training->get('kalorien'); ?>" />
+		<label>
+			<input type="text" size="4" name="kalorien" id="kalorien" value="<?php echo $Training->get('kalorien'); ?>" />
 			<small>kcal</small><br />
-		<input type="text" size="50" name="bemerkung" value="<?php echo Helper::Textarea($Training->get('bemerkung')); ?>" />
+		</label>
+		<label>
+			<input type="text" size="50" name="bemerkung" value="<?php echo Helper::Textarea($Training->get('bemerkung')); ?>" />
 			<small>Bemerkung</small><br />
-		<input type="text" size="50" name="trainingspartner" value="<?php echo Helper::Textarea($Training->get('trainingspartner')); ?>" />
+		</label>
+		<label>
+			<input type="text" size="50" name="trainingspartner" value="<?php echo Helper::Textarea($Training->get('trainingspartner')); ?>" />
 			<small>Trainingspartner</small>
+		</label>
 	</div>
 
 
@@ -311,47 +329,63 @@ foreach ($schuhe as $schuh)
 ?>
 			</select><br />
 
-			<input type="checkbox" size="4" name="laufabc" <?php echo Helper::Checked($Training->get('laufabc') == 1); ?> />
-				Lauf-ABC<br />
+			<label>
+				<input type="checkbox" size="4" name="laufabc" <?php echo Helper::Checked($Training->get('laufabc') == 1); ?> />
+				Lauf-ABC
+			</label><br />
 		</span>
 
 		<span id="puls" style="display:<?php echo $sport['pulstyp'] == 1 ? 'block' : 'none'; ?>;">
-			<input type="text" size="3" name="puls" value="<?php echo $Training->get('puls'); ?>" />
-				<small>Puls</small><br />
-			<input type="text" size="3" name="puls_max" value="<?php echo $Training->get('puls_max'); ?>" />
-				<small>max. Puls</small><br />
+			<label>
+				<input type="text" size="3" name="puls" value="<?php echo $Training->get('puls'); ?>" />
+				<small>Puls</small>
+			</label><br />
+			<label>
+				<input type="text" size="3" name="puls_max" value="<?php echo $Training->get('puls_max'); ?>" />
+				<small>max. Puls</small>
+			</label><br />
 		</span>
 
 		<span style="display:<?php echo Helper::TypeHasSplits($Training->get('typid')) ? 'block' : 'none'; ?>;">
-			<textarea name="splits" cols="70" rows="3"><?php echo $Training->get('splits'); ?></textarea>
-				<small>Splits</small><br />
+			<label>
+				<textarea name="splits" cols="70" rows="3"><?php echo $Training->get('splits'); ?></textarea>
+				<small>Splits</small>
+			</label><br />
 		</span>
 	</div>
 
 
 
 	<div id="edit-out" class="change" style="display:none;">
-		<input type="text" size="50" name="strecke" value="<?php echo Helper::Textarea($Training->get('strecke')); ?>" />
+		<label>
+			<input type="text" size="50" name="strecke" value="<?php echo Helper::Textarea($Training->get('strecke')); ?>" />
 			<small style="margin-right: 63px;">Strecke</small>
-		<input type="text" size="3" name="hm" value="<?php echo $Training->get('hm'); ?>" />
-			<small>HM</small><br />
-		<select name="wetterid">
+		</label>
+		<label>
+			<input type="text" size="3" name="hm" value="<?php echo $Training->get('hm'); ?>" />
+			<small>HM</small>
+		</label><br />
+		<label>
+			<select name="wetterid">
 <?php
 $wetter = $Mysql->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'wetter`');
 foreach ($wetter as $wetter_dat)
 	echo('<option value="'.$wetter_dat['id'].'"'.Helper::Selected($wetter_dat['id'] == $Training->get('wetterid')).'>'.$wetter_dat['name'].'</option>');
 ?>
-		</select>
-			<small>Wetter</small><br />
-		<input type="text" size="2" name="temperatur" value="<?php echo $Training->get('temperatur'); ?>" />
-			<small>&#176;C</small><br />
+			</select>
+			<small>Wetter</small>
+		</label><br />
+		<label>
+			<input type="text" size="2" name="temperatur" value="<?php echo $Training->get('temperatur'); ?>" />
+			<small>&#176;C</small>
+		</label><br />
 		<br />
 		<small>Kleidung</small><br />
 <?php
 $kleidungen = $Mysql->fetchAsArray('SELECT `id`, `name_kurz` FROM `'.PREFIX.'kleidung`');
 foreach ($kleidungen as $kleidung) {
 	$checked = Helper::Checked(in_array($kleidung['id'], explode(',', $Training->get('kleidung'))));
-	echo('<input type="checkbox" name="'.$kleidung['name_kurz'].'"'.$checked.' />&nbsp;<small style="margin-right:12px;">'.$kleidung['name_kurz'].'</small>'.NL);
+	echo('<label><input type="checkbox" name="'.$kleidung['name_kurz'].'"'.$checked.' />&nbsp;<small style="margin-right:12px;">'.$kleidung['name_kurz'].'</small></label>'.NL);
 }
 ?>
 	</div>

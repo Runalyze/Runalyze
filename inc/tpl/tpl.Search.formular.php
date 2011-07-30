@@ -13,23 +13,29 @@
 	</span>
 
 	<strong>Zeitraum:</strong>
-		<span class="spacer">von</span>
-		<input type="text" size="10" name="time-gt" value="<?php echo (isset($_POST['time-gt']) && $_POST['time-gt'] != '') ? $_POST['time-gt'] : date("d.m.Y", START_TIME) ?>" />
-		bis
-		<input type="text" size="10" name="time-lt" value="<?php echo (isset($_POST['time-lt']) && $_POST['time-lt'] != '') ? $_POST['time-lt'] : date("d.m.Y") ?>" />
+		<label>
+			<span class="spacer">von</span>
+			<input type="text" size="10" name="time-gt" value="<?php echo (isset($_POST['time-gt']) && $_POST['time-gt'] != '') ? $_POST['time-gt'] : date("d.m.Y", START_TIME) ?>" />
+		</label>
+		<label>
+			bis
+			<input type="text" size="10" name="time-lt" value="<?php echo (isset($_POST['time-lt']) && $_POST['time-lt'] != '') ? $_POST['time-lt'] : date("d.m.Y") ?>" />
+		</label>
 
 	<strong style="padding-left:200px;">Sortierung:</strong>
-		<span class="spacer">nach</span>
-		<select name="order">
-			<option value="time"<?php       echo Helper::Selected($_POST['order'] == 'time'); ?>>Datum</option>
-			<option value="distanz"<?php    echo Helper::Selected($_POST['order'] == 'distanz'); ?>>Distanz</option>
-			<option value="dauer"<?php      echo Helper::Selected($_POST['order'] == 'dauer'); ?>>Dauer</option>
-			<option value="pace"<?php       echo Helper::Selected($_POST['order'] == 'pace'); ?>>Pace</option>
-			<option value="hm"<?php         echo Helper::Selected($_POST['order'] == 'hm'); ?>>H&ouml;henmeter</option>
-			<option value="puls"<?php       echo Helper::Selected($_POST['order'] == 'puls'); ?>>Puls</option>
-			<option value="temperatur"<?php echo Helper::Selected($_POST['order'] == 'temperatur'); ?>>Temperatur</option>
-			<option value="vdot"<?php       echo Helper::Selected($_POST['order'] == 'vdot'); ?>>VDOT</option>
-		</select>
+		<label>
+			<span class="spacer">nach</span>
+			<select name="order">
+				<option value="time"<?php       echo Helper::Selected($_POST['order'] == 'time'); ?>>Datum</option>
+				<option value="distanz"<?php    echo Helper::Selected($_POST['order'] == 'distanz'); ?>>Distanz</option>
+				<option value="dauer"<?php      echo Helper::Selected($_POST['order'] == 'dauer'); ?>>Dauer</option>
+				<option value="pace"<?php       echo Helper::Selected($_POST['order'] == 'pace'); ?>>Pace</option>
+				<option value="hm"<?php         echo Helper::Selected($_POST['order'] == 'hm'); ?>>H&ouml;henmeter</option>
+				<option value="puls"<?php       echo Helper::Selected($_POST['order'] == 'puls'); ?>>Puls</option>
+				<option value="temperatur"<?php echo Helper::Selected($_POST['order'] == 'temperatur'); ?>>Temperatur</option>
+				<option value="vdot"<?php       echo Helper::Selected($_POST['order'] == 'vdot'); ?>>VDOT</option>
+			</select>
+		</label>
 		<select name="sort">
 			<option value="ASC"<?php  echo Helper::Selected($_POST['sort'] == 'ASC'); ?>>aufsteigend</option>
 			<option value="DESC"<?php echo Helper::Selected($_POST['sort'] != 'ASC'); ?>>absteigend</option>
@@ -42,7 +48,7 @@ $sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` W
 foreach ($sports as $sport) {
 	$checked = Helper::Checked((!$submit && $sport['id'] == CONF_MAINSPORT) || (isset($_POST['sport'][$sport['id']]) && $_POST['sport'][$sport['id']] != false));
 	echo('
-		<input class="spacer" type="checkbox" name="sport['.$sport['id'].']"'.$checked.' /> '.$sport['name']);
+		<label><input class="spacer" type="checkbox" name="sport['.$sport['id'].']"'.$checked.' /> '.$sport['name'].'</label>');
 }
 
 echo('<br />');
@@ -59,9 +65,9 @@ foreach ($conditions as $condition) {
 
 	echo('
 		<div class="right">
-			<strong>'.$condition['text'].'</strong><br />
+			<label for="select_'.$condition['name'].'"><strong>'.$condition['text'].'</strong></label><br />
 			<input type="hidden" name="opt['.$condition['name'].']" value="is" />
-			<select name="val['.$condition['name'].'][]"'.$multiple.' size="5">
+			<select name="val['.$condition['name'].'][]"'.$multiple.' size="5" id="select_'.$condition['name'].'">
 				<option value="egal"'.$selected_egal.'>--- egal</option>');
 
 	$options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC');
@@ -104,7 +110,7 @@ foreach ($inputs as $i => $input) {
 		echo('<tr>');
 
 	echo('
-		<td>'.$input['text'].'</td>
+		<td><label for="input_var_'.$input['name'].'">'.$input['text'].'</label></td>
 		<td>
 			<select name="opt['.$input['name'].']">
 				<option value="is"'.Helper::Selected($opt == 'is').'>=</option>');
@@ -127,7 +133,7 @@ foreach ($inputs as $i => $input) {
 	echo('
 			</select>
 		</td>
-		<td><input type="text" name="val['.$input['name'].']" value="'.Helper::Umlaute($value).'" size="'.($input['typ'] != 'text' ? 1 : 10).'" /></td>');
+		<td><input type="text" name="val['.$input['name'].']" id="input_var_'.$input['name'].'" value="'.Helper::Umlaute($value).'" size="'.($input['typ'] != 'text' ? 1 : 10).'" /></td>');
 
 	if (($i+1)%3 == 0 || ($i-1) == sizeof($inputs))
 		echo('</tr>');

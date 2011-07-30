@@ -263,14 +263,14 @@ class Dataset {
 	 * Dataset for: `puls`
 	 */
 	private function datasetPulse() {
-		return Helper::PulseString($this->Training->get('puls'));
+		return Helper::PulseString($this->Training->get('puls'), $this->Training->get('time'));
 	}
 
 	/**
 	 * Dataset for: `puls_max`
 	 */
 	private function datasetPulseMax() {
-		return Helper::PulseString($this->Training->get('puls_max'));
+		return Helper::PulseString($this->Training->get('puls_max'), $this->Training->get('time'));
 	}
 
 	/**

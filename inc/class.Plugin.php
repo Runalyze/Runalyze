@@ -476,16 +476,16 @@ abstract class Plugin {
 			foreach ($this->config as $name => $config_var) {
 				switch ($config_var['type']) {
 					case 'array':
-						echo('<input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'<br />');
+						echo('<label><input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'</label><br />');
 						break;
 					case 'bool':
-						echo('<input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'<br />');
+						echo('<label><input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'</label><br />');
 						break;
 					case 'int':
-						echo('<input type="text" name="'.$name.'" value="'.$config_var['var'].'" size="5" /> '.$config_var['description'].'<br />');
+						echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" size="5" /> '.$config_var['description'].'</label><br />');
 						break;
 					default:
-						echo('<input type="text" name="'.$name.'" value="'.$config_var['var'].'" /> '.$config_var['description'].'<br />');
+						echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" /> '.$config_var['description'].'</label><br />');
 				}
 			}
 			echo('<input type="hidden" name="edit" value="true" />');

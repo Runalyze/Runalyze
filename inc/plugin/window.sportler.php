@@ -51,23 +51,35 @@ if (isset($submit))
 
 <input type="hidden" name="type" value="user" />
 <input type="hidden" name="time" value="<?php echo(time()); ?>" />
-<input type="text" name="gewicht" value="<?php echo $dat['gewicht']; ?>" size="5" />
-	<small>Gewicht</small><br />
+<label>
+	<input type="text" name="gewicht" value="<?php echo $dat['gewicht']; ?>" size="5" />
+	<small>Gewicht</small>
+</label><br />
 
 <?php if ($Plugin_conf['use_body_fat']): ?>
-<input type="text" name="fett" value="<?php echo $dat['fett']; ?>" size="5" />
-	<small>&#37; Fett</small><br />
-<input type="text" name="wasser" value="<?php echo $dat['wasser']; ?>"	size="5" />
-	<small>&#37; Wasser</small><br />
-<input type="text" name="muskeln" value="<?php echo $dat['muskeln']; ?>" size="5" />
-	<small>&#37; Muskeln</small><br />
+<label>
+	<input type="text" name="fett" value="<?php echo $dat['fett']; ?>" size="5" />
+	<small>&#37; Fett</small>
+</label><br />
+<label>
+	<input type="text" name="wasser" value="<?php echo $dat['wasser']; ?>"	size="5" />
+	<small>&#37; Wasser</small>
+</label><br />
+<label>
+	<input type="text" name="muskeln" value="<?php echo $dat['muskeln']; ?>" size="5" />
+	<small>&#37; Muskeln</small>
+</label><br />
 <?php endif; ?>
 
 <?php if ($Plugin_conf['use_weight']): ?><br />
-<input type="text" name="puls_ruhe" value="<?php echo $dat['puls_ruhe']; ?>" size="5" />
-	<small>Ruhepuls</small><br />
-<input type="text" name="puls_max" value="<?php echo $dat['puls_max']; ?>" size="5" />
-	<small>Maximalpuls</small><br />
+<label>
+	<input type="text" name="puls_ruhe" value="<?php echo $dat['puls_ruhe']; ?>" size="5" />
+	<small>Ruhepuls</small>
+</label><br />
+<label>
+	<input type="text" name="puls_max" value="<?php echo $dat['puls_max']; ?>" size="5" />
+	<small>Maximalpuls</small>
+</label><br />
 <?php endif; ?>
 
 <input type="submit" value="Eintragen" />

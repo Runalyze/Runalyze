@@ -40,12 +40,18 @@ if (isset($submit))
 
 <form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="schuhe" onsubmit="return false;" method="post">
 	<input type="hidden" name="type" value="schuh" />
-	<input type="text" name="name" size="50" />
-		<small>Name</small><br />
-	<input type="text" name="marke" size="15" />
-		<small>Marke</small><br />
-	<input type="text" name="kaufdatum" value="<?php echo date("d.m.Y"); ?>" size="15" />
-		<small>Kaufdatum</small><br />
+	<label>
+		<input type="text" name="name" size="50" />
+		<small>Name</small>
+	</label><br />
+	<label>
+		<input type="text" name="marke" size="15" />
+		<small>Marke</small>
+	</label><br />
+	<label>
+		<input type="text" name="kaufdatum" value="<?php echo date("d.m.Y"); ?>" size="15" />
+		<small>Kaufdatum</small>
+	</label><br />
 	<input type="submit" value="Eintragen" />
 </form>
 

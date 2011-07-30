@@ -28,10 +28,8 @@ Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Mysql
- * @uses class:Error
- * @uses $global
- *
- * Last modified 2011/03/15 10:30 by Hannes Christiansen
+ * @uses class::Error
+ * @uses class::JD
  */
 class Training {
 	/**
@@ -75,27 +73,38 @@ class Training {
 	 * @param int $id
 	 */
 	public function __construct($id) {
-		if ($id == -1) {
-			$this->id = -1;
-			$this->data = array();
-			return;
-		}
+		if (!$this->isValidId($id))
+			return false;
 
+		$this->fillUpDataWithDefaultValues();
+		$this->correctVDOT();
+	}
+
+	/**
+	 * Check id and set internal data if id is valid
+	 * @param int $id
+	 * @return bool
+	 */
+	private function isValidId($id) {
 		if (!is_numeric($id) || $id == NULL) {
 			Error::getInstance()->addError('An object of class::Training must have an ID: <$id='.$id.'>');
 			return false;
 		}
 
-		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $id);
-		if ($dat === false) {
-			Error::getInstance()->addError('This training (ID='.$id.') does not exist.');
-			return false;
+		if ($id == -1) {
+			$dat = array();
+		} else {
+			$dat = Mysql::getInstance()->fetch(PREFIX.'training', $id);
+			if ($dat === false) {
+				Error::getInstance()->addError('This training (ID='.$id.') does not exist.');
+				return false;
+			}
 		}
 
-		$this->id = $id;
+		$this->id   = $id;
 		$this->data = $dat;
-		$this->fillUpDataWithDefaultValues();
-		$this->correctVDOT();
+
+		return true;
 	}
 
 	/**
@@ -129,27 +138,27 @@ class Training {
 	 * Fill internal data with default values for NULL-columns
 	 */
 	private function fillUpDataWithDefaultValues() {
-		if (is_null($this->data['strecke']))
+		if (!isset($this->data['strecke']) || is_null($this->data['strecke']))
 			$this->data['strecke'] = '';
-		if (is_null($this->data['splits']))
+		if (!isset($this->data['splits']) || is_null($this->data['splits']))
 			$this->data['splits'] = '';
-		if (is_null($this->data['bemerkung']))
+		if (!isset($this->data['bemerkung']) || is_null($this->data['bemerkung']))
 			$this->data['bemerkung'] = '';
-		if (is_null($this->data['trainingspartner']))
+		if (!isset($this->data['trainingspartner']) || is_null($this->data['trainingspartner']))
 			$this->data['trainingspartner'] = '';
-		if (is_null($this->data['arr_time']))
+		if (!isset($this->data['arr_time']) || is_null($this->data['arr_time']))
 			$this->data['arr_time'] = '';
-		if (is_null($this->data['arr_lat']))
+		if (!isset($this->data['arr_lat']) || is_null($this->data['arr_lat']))
 			$this->data['arr_lat'] = '';
-		if (is_null($this->data['arr_lon']))
+		if (!isset($this->data['arr_lon']) || is_null($this->data['arr_lon']))
 			$this->data['arr_lon'] = '';
-		if (is_null($this->data['arr_alt']))
+		if (!isset($this->data['arr_alt']) || is_null($this->data['arr_alt']))
 			$this->data['arr_alt'] = '';
-		if (is_null($this->data['arr_dist']))
+		if (!isset($this->data['arr_dist']) || is_null($this->data['arr_dist']))
 			$this->data['arr_dist'] = '';
-		if (is_null($this->data['arr_heart']))
+		if (!isset($this->data['arr_heart']) || is_null($this->data['arr_heart']))
 			$this->data['arr_heart'] = '';
-		if (is_null($this->data['arr_pace']))
+		if (!isset($this->data['arr_pace']) || is_null($this->data['arr_pace']))
 			$this->data['arr_pace'] = '';
 	}
 
@@ -157,7 +166,9 @@ class Training {
 	 * Uses JD::correctVDOT to correct own VDOT-value if specified
 	 */
 	private function correctVDOT() {
-		if ($this->data['vdot'] != 0)
+		if (!isset($this->data['vdot']))
+			$this->data['vdot'] = 0;
+		elseif ($this->data['vdot'] != 0)
 			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
 	}
 
@@ -807,13 +818,11 @@ class Training {
 		if ($TRIMP > CONFIG_MAX_TRIMP)
 			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$TRIMP.'"');
 
-		if (isset($_POST['schuhid'])) {
-			if ($sport['typen'] == 1) // Why the hell this if?
-				$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
+		if (isset($_POST['schuhid']))
+			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
 
-			// TODO Is this distance used anymore?
-			$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
-		}
+		// TODO Is this distance used anymore?
+		$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
 
 		if (CONF_TRAINING_DO_ELEVATION) {
 			$Training = new Training($id);
@@ -927,16 +936,6 @@ class Training {
 		if (isset($xml['trainingcenterdatabase']['activities']['activity']['training']))
 			$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
 		$array['splits']    = implode('-', $splits);
-		//$array['hm']
-		
-		//$array['strecke']
-		//$array['wetterid']
-		//$array['temperatur']
-		//$array['trainingspartner']
-		//$array['typid']
-		//$array['schuhid']
-		//$array['laufabc']
-		//$array['bahn']
 
 		$array['arr_time']  = implode(self::$ARR_SEP, $time);
 		$array['arr_lat']   = implode(self::$ARR_SEP, $latitude);
@@ -945,6 +944,7 @@ class Training {
 		$array['arr_dist']  = implode(self::$ARR_SEP, $distance);
 		$array['arr_heart'] = implode(self::$ARR_SEP, $heartrate);
 		$array['arr_pace']  = implode(self::$ARR_SEP, $pace);
+		//$array['hm'] - Will be calculated later on
 
 		return $array;
 	}
