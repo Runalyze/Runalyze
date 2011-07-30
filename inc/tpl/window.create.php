@@ -21,9 +21,6 @@ if (isset($_POST['error']))
 
 $showUploader = empty($_POST);
 
-if (!isset($_POST['hm']) && isset($_POST['arr_alt']))
-	$_POST['hm'] = Training::calculateElevation($_POST['arr_alt']);
-
 if (!isset($_POST['datum']))
 	$_POST['datum'] = date("d.m.Y");
 if (!isset($_POST['zeit']))
@@ -190,7 +187,7 @@ foreach($schuhe as $schuh) {
 				<small>/km</small>
 			<input type="text" size="4" name="kmh" id="kmh" value="<?php echo Helper::Unknown($_POST['kmh'], '0,00'); ?>" disabled="disabled" />
 				<small>km/h</small>
-			<input type="text" size="3" name="hm" value="<?php echo Helper::Unknown($_POST['hm'], '0'); ?>" />
+			<input type="text" size="3" name="hm" value="<?php echo Helper::Unknown($_POST['hm'], '0'); if (isset($_POST['arr_alt'])) echo '" disabled="disabled'; ?>" />
 				<small>HM</small>
 		</span>
 

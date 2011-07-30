@@ -50,22 +50,37 @@ class RunalyzePlugin_DatenbankCleanupTool extends PluginTool {
 			$this->cleanDatabase();
 
 			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em>';
-		} else
-			echo self::getLink('<strong>Bereinigen</strong>', 'clean=true');
+		} else {
+			echo '<ul>';
+			echo '<li>'.self::getLink('<strong>Bereinigen</strong> (einfach)', 'clean=true').'</li>'.NL;
+			echo '<li>'.self::getLink('<strong>Bereinigen</strong> (vollst&auml;ndig)*', 'clean=complete').'</li>'.NL;
+			echo '</ul>'.NL;
+			echo '<small>* Dann werden zun&auml;chst f&uuml;r alle Trainings TRIMP und VDOT neu berechnet.</small>';
+		}
 	}
 
 	/**
 	 * Clean the databse
 	 */
 	private function cleanDatabase() {
+		if ($_GET['clean'] == 'complete')
+			$this->resetTrimpAndVdot();
+
 		$this->resetMaxValues();
 		$this->resetShoes();
 
-		// TODO: Optional
-		// $this->resetTrimp();
-		// $this->resetVdot();
-
 		// TODO: Nicht existente Kleidung aus DB löschen
+	}
+
+	/**
+	 * Reset all TRIMP- and VDOT-values in database
+	 */
+	private function resetTrimpAndVdot() {
+		$IDs = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'training`');
+		foreach ($IDs as $ID)
+			Mysql::getInstance()->update(PREFIX.'training', $ID['id'],
+				array('trimp', 'vdot'),
+				array(Helper::TRIMP($ID['id']), JD::Training2VDOT($ID['id'])));
 	}
 
 	/**

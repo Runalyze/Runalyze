@@ -75,8 +75,6 @@ class Training {
 	 * @param int $id
 	 */
 	public function __construct($id) {
-		global $global;
-
 		if ($id == -1) {
 			$this->id = -1;
 			$this->data = array();
@@ -97,9 +95,7 @@ class Training {
 		$this->id = $id;
 		$this->data = $dat;
 		$this->fillUpDataWithDefaultValues();
-
-		if ($this->data['vdot'] != 0)
-			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
+		$this->correctVDOT();
 	}
 
 	/**
@@ -109,7 +105,7 @@ class Training {
 	 */
 	public function set($var, $value) {
 		if ($this->id != -1) {
-			Error::getInstance()->addWarning('Training::set - can\'t set value, Training already loaded');
+			Error::getInstance()->addWarning('Training::set - can\'t set value, Training already loaded.');
 			return;
 		}
 
@@ -125,9 +121,8 @@ class Training {
 		if (isset($this->data[$var]))
 			return $this->data[$var];
 
-		// 'temperatur' is set as NULL on default and will fail on above test
 		if ($var != 'temperatur')
-			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"',__FILE__,__LINE__);
+			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"');
 	}
 
 	/**
@@ -156,6 +151,14 @@ class Training {
 			$this->data['arr_heart'] = '';
 		if (is_null($this->data['arr_pace']))
 			$this->data['arr_pace'] = '';
+	}
+
+	/**
+	 * Uses JD::correctVDOT to correct own VDOT-value if specified
+	 */
+	private function correctVDOT() {
+		if ($this->data['vdot'] != 0)
+			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
 	}
 
 	/**
@@ -721,11 +724,14 @@ class Training {
 
 		if (!isset($_POST['dauer']))
 			return 'Es muss eine Trainingszeit angegeben sein.';
+		$time = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
 		$columns[] = 'time';
-		$values[]  = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
+		$values[]  = $time;
 		// Prepare "Dauer"
 		$ms        = explode(".", Helper::CommaToPoint($_POST['dauer']));
 		$dauer     = explode(":", $ms[0]);
+		if (!isset($ms[1]))
+			$ms[1] = 0;
 		$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 		if ($time_in_s == 0)
 			return 'Es muss eine Trainingszeit angegeben sein.';
@@ -742,9 +748,10 @@ class Training {
 		}
 		// Prepare values for outside-sport
 		if ($sport['outside'] == 1) {
-			$vars[]    = 'hm';
 			$vars[]    = 'wetterid';
 			$vars[]    = 'strecke';
+			$columns[] = 'hm';
+			$values[]  = isset($_POST['hm']) ? $_POST['hm'] : 0;
 			$columns[] = 'kleidung';
 			$values[]  = isset($_POST['kleidung']) ? substr($_POST['kleidung'], 0, -1) : '';
 			$columns[] = 'temperatur';
@@ -772,7 +779,7 @@ class Training {
 			$vars[]    = 'typid';
 			$vars[]    = 'schuhid';
 			$columns[] = 'laufabc';
-			$values[]  = $_POST['laufabc'] ? 1 : 0;
+			$values[]  = isset($_POST['laufabc']) ? 1 : 0;
 			if (Helper::TypeHasSplits($_POST['typid']))
 				$vars[] = 'splits';
 		}
@@ -811,6 +818,8 @@ class Training {
 		if (CONF_TRAINING_DO_ELEVATION) {
 			$Training = new Training($id);
 			$Training->elevationCorrection();
+
+			$Mysql->update(PREFIX.'training', $id, 'hm', Training::calculateElevation($Training->get('arr_alt')));
 		}
 
 		return true;
@@ -1014,8 +1023,9 @@ class Training {
 				$string = array();
 			}
 		}
-
-		Mysql::getInstance()->update(PREFIX.'training', $this->id, 'arr_alt', implode(self::$ARR_SEP, $altitude));
+		
+		$this->data['arr_alt'] = implode(self::$ARR_SEP, $altitude);
+		Mysql::getInstance()->update(PREFIX.'training', $this->id, 'arr_alt', $this->data['arr_alt']);
 	}
 
 	/**
