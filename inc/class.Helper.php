@@ -27,7 +27,15 @@ define('START_TIME', Helper::getStartTime());
  */
 define('START_YEAR', date("Y", START_TIME));
 
-require_once(FRONTEND_PATH.'class.JD.php');
+require_once FRONTEND_PATH.'class.JD.php';
+
+// Be careful: These values shouldn't be taken with CONF_MAX_ATL.
+// This class defines MAX_ATL, MAX_CTL, MAX_TRIMP on its own with correct calculation.
+Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
+Config::register('hidden', 'MAX_CTL', 'int', 0, 'Maximal value for CTL');
+Config::register('hidden', 'MAX_TRIMP', 'int', 0, 'Maximal value for TRIMP');
+
+Helper::defineMaxValues();
 
 /**
  * Class for all helper-functions previously done by functions.php
@@ -41,8 +49,6 @@ require_once(FRONTEND_PATH.'class.JD.php');
  * @uses class::Error
  * @uses class::Mysql
  * @uses class::JD
- *
- * Last modified 2011/04/14 17:30 by Hannes Christiansen
  */
 class Helper {
 	/**
@@ -52,120 +58,10 @@ class Helper {
 	private function __destruct() {}
 
 	/**
-	 * Get the name or all information of a sport
-	 * @param int $sport_id ID of the sport
-	 * @param bool $as_array Return as array, default: false
-	 * @return string|array Name of sport or all information as array
-	 */
-	public static function Sport($sport_id, $as_array = false) {
-		$sport = Mysql::getInstance()->fetch(PREFIX.'sports', $sport_id);
-
-		if ($sport === false)
-			$sport = array('name' => '?', 'bild' => '', 'online' => 0, 'short' => 0, 'kalorien' => 0,
-				'HFavg' => 0, 'RPE' => 0, 'distanztyp' => 0, 'kmh' => 0, 'typen' => 0, 'pulstyp' => 0,
-				'outside' => 0, 'distanz' => 0, 'dauer' => 0);
-
-		return ($as_array) ? $sport : $sport['name'];
-	}
-
-	/**
-	 * Get all information of a type as an array
-	 * @param int $type_id
-	 * @return array
-	 */
-	public static function TypeAsArray($type_id) {
-		$type = Mysql::getInstance()->fetch(PREFIX.'typ', $type_id);
-
-		if ($type === false)
-			return array('name' => '?', 'abk' => '?', 'splits' => 0, 'RPE' => 0);
-
-		return $type;
-	}
-
-	/**
-	 * Get the name of a type
-	 * @param int  $type_id
-	 * @return string
-	 */
-	public static function TypeName($type_id) {
-		$array = self::TypeAsArray($type_id);
-
-		return $array['name'];
-	}
-
-	/**
-	 * Get all information of a type as an array
-	 * @param int $type_id
-	 * @return array
-	 */
-	public static function TypeShort($type_id) {
-		$array = self::TypeAsArray($type_id);
-
-		return $array['abk'];
-	}
-
-	/**
-	 * Get boolean flag wheather type alouds splits
-	 * @param int $type_id
-	 * @return bool
-	 */
-	public static function TypeHasSplits($type_id) {
-		$array = self::TypeAsArray($type_id);
-
-		return ($array['splits'] == 1);
-	}
-
-	/**
-	 * Get boolean flag: Is the RPE of this type higher than 4?
-	 * @param int $type_id
-	 * @return bool
-	 */
-	public static function TypeHasHighRPE($type_id) {
-		$array = self::TypeAsArray($type_id);
-
-		return ($array['RPE'] > 4);
-	}
-
-	/**
-	 * Get the name or all information of a shoe
-	 * @param int  $shoe_id   ID of the shoe
-	 * @param bool $as_array  Return as array, default: false
-	 * @return string|array   Name of shoe or all information as array
-	 */
-	public static function Shoe($shoe_id, $as_array = false) {
-		$shoe = Mysql::getInstance()->fetch(PREFIX.'schuhe', $shoe_id);
-
-		if ($shoe === false)
-			$shoe = array('name' => '?');
-
-		return ($as_array) ? $shoe : $shoe['name'];
-	}
-
-	/**
-	 * Returns the img-Tag for a weather-symbol
-	 * @param int $wetter_id
-	 * @return string img-tag
-	 */
-	public static function WeatherImage($wetterid) {
-		return Icon::getWeatherIcon($wetterid);
-	}
-
-	/**
-	 * Returns the name for a given weather-id
-	 * @param int $wetterid
-	 * @return string name for this weather
-	 */
-	public static function WeatherName($wetterid) {
-		$wetter = Mysql::getInstance()->fetch(PREFIX.'wetter', $wetterid);
-		return ($wetter !== false)
-			? $wetter['name']
-			: '';
-	}
-
-	/**
 	 * Get a string for displaying any pulse
 	 * @param int $pulse
 	 * @param int $time
+	 * @return string
 	 */
 	public static function PulseString($pulse, $time = 0) {
 		if ($pulse == 0)
@@ -177,10 +73,10 @@ class Helper {
 		$hf  = '?&nbsp;&#37;';
 
 		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
-		if ($HFmax !== false && $HFmax['puls_max'] != 0)
-			$hf = round(100*$pulse / $HFmax['puls_max']).'&nbsp;&#37';
+		if ($HFmax !== false && $HFmax['pulse_max'] != 0)
+			$hf = round(100*$pulse / $HFmax['pulse_max']).'&nbsp;&#37';
 
-		if (CONF_PULS_MODE != 'bpm' && $HFmax['puls_max'] != 0)
+		if (CONF_PULS_MODE != 'bpm' && $HFmax['pulse_max'] != 0)
 			return '<span title="'.$bpm.'">'.$hf.'</span>';
 
 		return '<span title="'.$hf.'">'.$bpm.'</span>';
@@ -205,12 +101,9 @@ class Helper {
 		$as_pace = self::Pace($km, $time).'/km';
 		$as_kmh = self::Kmh($km, $time).'&nbsp;km/h';
 
-		if ($sport_id != 0) {
-			$sport = self::Sport($sport_id, true);
-			$kmh_mode = $sport['kmh'];
-		}
-		if ($kmh_mode == 1)
+		if (Sport::usesSpeedInKmh($sport_id))
 			return '<span title="'.$as_pace.'">'.$as_kmh.'</span>';
+
 		return '<span title="'.$as_kmh.'">'.$as_pace.'</span>';
 	}
 
@@ -280,18 +173,23 @@ class Helper {
 	 */
 	public static function Time($time_in_s, $show_days = true, $show_zeros = false) {
 		$string = '';
+
 		if ($show_zeros === true) {
 			$string = floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 			if ($time_in_s - floor($time_in_s) != 0)
 			$string .= ','.self::TwoNumbers(round(100*($time_in_s - floor($time_in_s))));
 			return $string;
 		}
+
 		if ($show_zeros == 2)
 			return (floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
+
 		if ($time_in_s < 60)
 			return number_format($time_in_s, 2, ',', '.').'s';
+
 		if ($time_in_s >= 86400 && $show_days)
 			$string = floor($time_in_s/86400).'d ';
+
 		if ($time_in_s < 3600)
 			$string .= (floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 		elseif ($show_days)
@@ -325,7 +223,8 @@ class Helper {
 	public static function TrainingIsCompetition($id) {
 		if (!is_numeric($id))
 			return false;
-		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `id`='.$id) > 0);
+
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `id`='.$id) > 0);
 	}
 
 	/**
@@ -336,11 +235,11 @@ class Helper {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = Mysql::getInstance()->fetchSingle('SELECT `dauer`, `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `distanz`="'.$dist.'" ORDER BY `dauer` ASC');
+		$pb = Mysql::getInstance()->fetchSingle('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$dist.'" ORDER BY `s` ASC');
 		if ($return_time)
-			return ($pb != '') ? $pb['dauer'] : 0;
+			return ($pb != '') ? $pb['s'] : 0;
 		if ($pb != '')
-			return self::Time($pb['dauer']);
+			return self::Time($pb['s']);
 		return '<em>keine</em>';
 	}
 
@@ -357,13 +256,14 @@ class Helper {
 
 		$factor_a  = (CONF_GENDER == 'm') ? 0.64 : 0.86;
 		$factor_b  = (CONF_GENDER == 'm') ? 1.92 : 1.67;
-		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : 1;
-		$sport     = Helper::Sport($sportid, true);
-		$typ       = ($dat['typid'] != 0) ? self::TypeAsArray($dat['typid']) : 0;
-		$HFavg     = ($dat['puls'] != 0) ? $dat['puls'] : $sport['HFavg'];
-		$RPE       = ($typ != 0) ? $typ['RPE'] : $sport['RPE'];
+		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : CONF_MAINSPORT;
+		$Sport     = new Sport($sportid);
+		if ($Sport->hasTypes() && $dat['typeid'] != 0)
+			$Type  = new Type($dat['typeid']);
+		$HFavg     = ($dat['pulse_avg'] != 0) ? $dat['pulse_avg'] : $Sport->avgHF();
+		$RPE       = (isset($Type)) ? $Type->RPE() : $Sport->RPE();
 		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
-		$TRIMP     = $dat['dauer']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
+		$TRIMP     = $dat['s']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
 	
 		if ($trimp === false)
 			return round($TRIMP);
@@ -417,9 +317,12 @@ class Helper {
 	public static function Stresscolor($stress) {
 		if ($stress > 100)
 			$stress = 100;
+
 		$gb = dechex(200 - 2*$stress);
+
 		if ((200 - 2*$stress) < 16)
 			$gb = '0'.$gb;
+
 		return 'C8'.$gb.$gb;
 	}
 
@@ -437,19 +340,19 @@ class Helper {
 
 		// Weekkilometers
 		$wk_sum = 0;
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distanz` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distance` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
 			$tage = round ( ($timestamp - $dat['time']) / DAY_IN_S , 1 );
-			$wk_sum += (2 - (1/70) * $tage) * $dat['distanz'];
+			$wk_sum += (2 - (1/70) * $tage) * $dat['distance'];
 		}
 		$points += $wk_sum / 20;
 
 		// LongJogs ...
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `distanz` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `distance` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
-			$p = ($dat['distanz']-15) / 2;
+			$p = ($dat['distance']-15) / 2;
 			if ($p > 0)
-				$points += ($dat['distanz']-15) / 2;
+				$points += ($dat['distance']-15) / 2;
 		}
 
 		$points = round($points - 50);
@@ -479,66 +382,34 @@ class Helper {
 	public static function Prognosis($dist, $bahn = false, $VDOT = 0) {
 		$VDOT_new = ($VDOT == 0) ? VDOT_FORM : $VDOT;
 		$pb = self::PersonalBest($dist, true);
+
 		// Grundlagenausdauer
 		if ($dist > 5)
 			$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
+
 		$prognose_dauer = JD::CompetitionPrognosis($VDOT_new, $dist);
+
 		if ($VDOT != 0)
 			return self::Time($prognose_dauer);
+
 		$bisher_tag = ($prognose_dauer < $pb) ? 'del' : 'strong';
 		$neu_tag = ($prognose_dauer > $pb) ? 'del' : 'strong';
+
 		return '
-	<p>
-		<span>
-			<small>von</small>
-				<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">
-					'.self::Time($pb).'
-				</'.$bisher_tag.'>
-			<small>auf</small>
-				<'.$neu_tag.' title="VDOT '.$VDOT_new.'">
-					'.self::Time($prognose_dauer).'
-				</'.$neu_tag.'>
-			<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
-		</span>
-		<strong>'.self::Km($dist, 0, $bahn).'</strong>
-	</p>'.NL;
-	}
-
-	/**
-	 * Get weather-data from external api if possible
-	 * @return array
-	 */
-	public static function getWeatherData() {
-		if (CONF_PLZ == 0)
-			return array(NULL, 0);
-
-		require_once('tcx/class.ParserTcx.php');
-		$Parser = new ParserTcx(@file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl=de'));
-		$Result = $Parser->getContentAsArray();
-
-		$temp    = @(int)$Result['xml_api_reply']['weather']['current_conditions']['temp_c']['attr']['data'];
-		$weather = @$Result['xml_api_reply']['weather']['current_conditions']['condition']['attr']['data'];
-
-		// Translate weather to default wetter-names in own database
-		switch ($weather) {
-			case 'Meist sonnig':
-			case 'Klar':				$weather = 'sonnig'; break;
-			case 'Teils sonnig':		$weather = 'heiter'; break;
-			case 'Bedeckt':
-			case 'Meistens bewölkt':
-			case 'Bewölkt':				$weather = 'bew&ouml;lkt'; break;
-			case 'Vereinzelt stürmisch':
-			case 'Vereinzelte Schauer':
-			case 'Vereinzelt Regen':	$weather = 'wechselhaft'; break;
-			case 'Regen':
-			case 'Gewitterschauer':		$weather = 'regnerisch'; break;
-			case 'Schnee':				$weather = 'Schnee'; break;
-			default: $weather = 'unbekannt'; break;
-		}
-
-		$data = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'wetter` WHERE `name`="'.$weather.'"');
-
-		return array($temp, $data['id']);
+			<p>
+				<span>
+					<small>von</small>
+						<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">
+							'.self::Time($pb).'
+						</'.$bisher_tag.'>
+					<small>auf</small>
+						<'.$neu_tag.' title="VDOT '.$VDOT_new.'">
+							'.self::Time($prognose_dauer).'
+						</'.$neu_tag.'>
+					<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
+				</span>
+				<strong>'.self::Km($dist, 0, $bahn).'</strong>
+			</p>'.NL;
 	}
 
 	/**
@@ -649,44 +520,12 @@ class Helper {
 	}
 
 	/**
-	 * Replace ampersands for a textarea
-	 * @param string $text
-	 * @return string
+	 * Is the given array an associative one?
+	 * @param array $array
+	 * @return bool
 	 */
-	public static function Textarea($text) {
-		return stripslashes(str_replace("&", "&amp;", $text));
-	}
-
-	/**
-	 * Get ' checked="checked"' if boolean value is true
-	 * @param bool $value
-	 * @param mixed $value_to_be_checked [optional]
-	 * @return string
-	 */
-	public static function Checked($value, $value_to_be_checked = NULL) {
-		if ($value_to_be_checked != NULL)
-			$value = ($value == $value_to_be_checked);
-		if ($value == NULL || !isset($value))
-			$value = false;
-
-		return $value
-			? ' checked="checked"'
-			: '';
-	}
-
-	/**
-	 * Get ' selected="selected"' if boolean value is true
-	 * @param bool $value
-	 * @param mixed $value_to_be_checked [optional]
-	 * @return string
-	 */
-	public static function Selected($value, $value_to_be_checked = NULL) {
-		if ($value_to_be_checked != NULL)
-			$value = ($value == $value_to_be_checked);
-
-		return $value
-			? ' selected="selected"'
-			: '';
+	public static function isAssoc($array) {
+		return array_keys($array) !== range(0, count($array) - 1);
 	}
 
 	/**
@@ -729,79 +568,6 @@ class Helper {
 	}
 
 	/**
-	 * Return an empty td-Tag
-	 * @param int $colspan
-	 * @return string
-	 */
-	public static function emptyTD($colspan = 0) {
-		$colspan = ($colspan > 0) ? ' colspan="'.$colspan.'"' : '';
-
-		return '<td'.$colspan.'>&nbsp;</td>'.NL;
-	}
-
-	/**
-	 * Get a tr-tag for a bold header-line containing all month-names
-	 * @param int $fixedWidth Fixed width for every month-td in percent [set '0' for no fixed width]
-	 * @param int $emptyTDs Number of empty td before the month-td
-	 * @return string
-	 */
-	public static function monthTR($fixedWidth = 0, $emptyTDs = 1) {
-		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
-		$html = '<tr class="b">'.NL;
-
-		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<td />'.NL;
-
-		for ($m = 1; $m <= 12; $m++)
-			$html .= '<td'.$width.'>'.Helper::Month($m, true).'</td>'.NL;
-
-		$html .= '</tr>'.NL;
-
-		return $html;
-	}
-
-	/**
-	 * Get a tr-tag for a bold header-line containing all years
-	 * @param int $fixedWidth Fixed width for every year-td in percent [set '0' for no fixed width]
-	 * @param int $emptyTDs Number of empty td before the year-td
-	 * @return string
-	 */
-	public static function yearTR($fixedWidth = 0, $emptyTDs = 1) {
-		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
-		$html = '<tr class="b">'.NL;
-
-		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<td />'.NL;
-
-		for ($y = START_YEAR; $y <= date("Y"); $y++)
-			$html .= '<td'.$width.'>'.$y.'</td>'.NL;
-
-		$html .= '</tr>'.NL;
-
-		return $html;
-	}
-
-	/**
-	 * Get a tr-tag for a space-line
-	 * @param int $colspan
-	 */
-	public static function spaceTR($colspan) {
-		return '
-			<tr class="space">
-				<td colspan="'.$colspan.'">
-				</td>
-			</tr>'.NL;
-	}
-
-	/**
-	 * Return a break with class="clear"
-	 * @return string
-	 */
-	public static function clearBreak() {
-		return '<br class="clear" />';
-	}
-
-	/**
 	 * Get the HFmax from user-table
 	 * @return int   HFmax
 	 */
@@ -809,17 +575,17 @@ class Helper {
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
 			return 200;
-		} elseif ($userdata['puls_max'] == 0) {
+		} elseif ($userdata['pulse_max'] == 0) {
 			Error::getInstance()->addWarning('HFmax is 0, taking 200 as default.');
 			return 200;
 		}
 
-		return $userdata['puls_max'];
+		return $userdata['pulse_max'];
 	}
 
 	/**
@@ -830,14 +596,14 @@ class Helper {
 		if (defined('HF_REST'))
 			return HF_MAX;
 
-		$userdata = Mysql::getInstance()->fetchSingle('SELECT `puls_ruhe` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
 			Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
 			return 60;
 		}
 
-		return $userdata['puls_ruhe'];
+		return $userdata['pulse_rest'];
 	}
 
 	/**
@@ -851,6 +617,73 @@ class Helper {
 			return time();
 
 		return $data['time'];
+	}
+
+	/**
+	 * Calculate max values for atl/ctl/trimp again
+	 * @return array array($maxATL, $maxCTL, $maxTRIMP)
+	 */
+	public static function calculateMaxValues() {
+		// Here ATL/CTL will be implemented again
+		// Normal functions are too slow, calling them for each day would trigger each time a query
+		// - ATL/CTL: SUM(`trimp`) for ATL_DAYS / CTL_DAYS
+		$start_i = 365*START_YEAR;
+		$end_i   = 365*(date("Y") + 1) - $start_i;
+		$Trimp   = array_fill(0, $end_i, 0);
+		$Data    = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				YEAR(FROM_UNIXTIME(`time`)) as `y`,
+				DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
+				SUM(`trimp`) as `trimp`
+			FROM `'.PREFIX.'training`
+			GROUP BY `y`, `d`
+			ORDER BY `y` ASC, `d` ASC');
+		
+		if (empty($Data))
+			return array(0, 0, 0);
+		
+		$maxATL   = 0;
+		$maxCTL   = 0;
+		
+		foreach ($Data as $dat) {
+			$atl = 0;
+			$ctl = 0;
+			
+			$i = $dat['y']*365 + $dat['d'] - $start_i;
+			$Trimp[$i] = $dat['trimp'];
+			
+			if ($i >= ATL_DAYS)
+				$atl   = array_sum(array_slice($Trimp, $i - ATL_DAYS, ATL_DAYS)) / ATL_DAYS;
+			if ($i >= CTL_DAYS)
+				$ctl   = array_sum(array_slice($Trimp, $i - CTL_DAYS, CTL_DAYS)) / CTL_DAYS;
+			
+			if ($atl > $maxATL)
+				$maxATL = $atl;
+			if ($ctl > $maxCTL)
+				$maxCTL = $ctl;
+		}
+		
+		$maxTRIMP = max($Trimp);
+
+		return array($maxATL, $maxCTL, $maxTRIMP);
+	}
+
+	/**
+	 * Define consts MAX_ATL, MAX_CTL, MAX_TRIMP
+	 */
+	public static function defineMaxValues() {
+		if (CONF_MAX_ATL != 0 || CONF_MAX_CTL != 0 || CONF_MAX_TRIMP != 0)
+			$values = array(CONF_MAX_ATL, CONF_MAX_CTL, CONF_MAX_TRIMP);
+		else
+			$values = self::calculateMaxValues();
+
+		Config::update('MAX_ATL', $values[0]);
+		Config::update('MAX_CTL', $values[1]);
+		Config::update('MAX_TRIMP', $values[2]);
+
+		define('MAX_ATL', $values[0]);
+		define('MAX_CTL', $values[1]);
+		define('MAX_TRIMP', $values[2]);
 	}
 }
 ?>

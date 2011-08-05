@@ -83,7 +83,7 @@ class ParserTcx {
 			extract($data);
 			$result = '';
 			$tag = strtolower($tag);
-	
+
 			$result = array();
 			if (isset($value))
 				$result['value'] = $value;

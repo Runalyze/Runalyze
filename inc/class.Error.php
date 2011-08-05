@@ -11,8 +11,6 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses error_handler()
- *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 class Error {
 	/**
@@ -239,6 +237,7 @@ class Error {
 
 		if (class_exists('Ajax'))
 			$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
+
 		$message .= '<div id="'.$id.'" class="hide"><br />'.$trace.'</div>';
 
 		return $message;
@@ -250,7 +249,7 @@ class Error {
 	 */
 	public function displayFatalErrorMessage($message) {
 		if (!$this->header_sent)
-			include('tpl/tpl.Frontend.header.php');
+			include 'tpl/tpl.Frontend.header.php';
 
 		echo '<div class="panel">';
 		echo '<h1>Fataler Fehler</h1>';
@@ -258,7 +257,7 @@ class Error {
 		echo '</div>';
 		
 		if (!$this->footer_sent)
-			include('tpl/tpl.Frontend.footer.php');
+			include 'tpl/tpl.Frontend.footer.php';
 
 		exit();
 	}
@@ -279,7 +278,9 @@ class Error {
 	}
 }
 
+
 set_error_handler("error_handler");
+
 /**
  * Own function to handle the errors using class::Error.
  * @param $type      type of error (E_USER_ERROR | E_USER_WARNING | E_USER_NOTICE)
@@ -306,7 +307,6 @@ function error_handler($type, $message, $file, $line) {
 
 	Error::getInstance()->add($type, $message, $file, $line);
 
-    // Don't execute PHP internal error handler
     return true;
 }
 ?>

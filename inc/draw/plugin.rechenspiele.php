@@ -44,7 +44,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		SELECT
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-			AVG(`trimp`) as `trimp`
+			SUM(`trimp`) as `trimp`
 		FROM `'.PREFIX.'training`
 		WHERE
 			YEAR(FROM_UNIXTIME(`time`))='.$Year.' OR (
@@ -89,8 +89,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$max = date('z');
 
 	for ($d = 1; $d <= $max; $d++) {
-		$ATLs[$d-1]   = 100 * array_sum(array_slice($Trimps_raw, CTL_DAYS + $d - ATL_DAYS, ATL_DAYS)) / ATL_DAYS / CONFIG_MAX_ATL;
-		$CTLs[$d-1]   = 100 * array_sum(array_slice($Trimps_raw, CTL_DAYS + $d - CTL_DAYS, CTL_DAYS)) / CTL_DAYS / CONFIG_MAX_CTL;
+		$ATLs[$d-1]   = 100 * array_sum(array_slice($Trimps_raw, CTL_DAYS + $d - ATL_DAYS, ATL_DAYS)) / ATL_DAYS / MAX_ATL;
+		$CTLs[$d-1]   = 100 * array_sum(array_slice($Trimps_raw, CTL_DAYS + $d - CTL_DAYS, CTL_DAYS)) / CTL_DAYS / MAX_CTL;
 
 		$VDOT_slice = array_slice($VDOTs_raw, VDOT_DAYS + $d - VDOT_DAYS, VDOT_DAYS);
 		$VDOT_num_data = array_count_values($VDOT_slice);

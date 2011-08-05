@@ -1,9 +1,10 @@
 <?php
 /**
  * File displaying the calendar for the DataBrowser
- * Call:   inc/tpl/window.DataBrowser.calendar.php
+ * Call:   call/window.DataBrowser.calendar.php
  */
-require('../class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 ?>
@@ -18,7 +19,7 @@ $Frontend->displayHeader();
 	</div>
 </div>
 
-<div style="height:180px;" />
+<div style="height:180px;"></div>
 
 <?php
 #$Frontend->displayFooter();

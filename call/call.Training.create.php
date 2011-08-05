@@ -1,9 +1,10 @@
 <?php
 /**
  * File for displaying the formular for creating a new training.
- * Call:   class.Training.create.php
+ * Call:   call.Training.create.php
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 

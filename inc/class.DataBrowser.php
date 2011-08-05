@@ -32,8 +32,6 @@ Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Se
  * @uses class::Error
  * @uses class::Ajax
  * @uses class::Training
- *
- * Last modified 2011/04/14 17:30 by Hannes Christiansen
  */
 class DataBrowser {
 	/**
@@ -83,6 +81,8 @@ class DataBrowser {
 	 * @var Dataset
 	 */
 	private $Dataset;
+
+	// TODO self::$SEARCH_URL
 
 	/**
 	 * Default constructor
@@ -152,7 +152,7 @@ class DataBrowser {
 	 */
 	private function initShortSports() {
 		$this->sports_short = array();
-		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports` WHERE `short`=1');
+		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1');
 		foreach ($sports as $sport)
 			$this->sports_short[] = $sport['id'];
 	}
@@ -161,7 +161,7 @@ class DataBrowser {
 	 * Display the DataBrowser
 	 */
 	public function display() {
-		include('tpl/tpl.DataBrowser.php');
+		include 'tpl/tpl.DataBrowser.php';
 	}
 
 	/**
@@ -195,6 +195,7 @@ class DataBrowser {
 
 	/**
 	 * Get link to navigation back
+	 * @return string
 	 */
 	private function getPrevLink() {
 		$icon = Icon::get(Icon::$ARR_BACK, 'zur&uuml;ck');
@@ -205,6 +206,7 @@ class DataBrowser {
 
 	/**
 	 * Get link to navigation forward
+	 * @return string
 	 */
 	private function getNextLink() {
 		$icon = Icon::get(Icon::$ARR_NEXT, 'vorw&auml;rts');
@@ -215,6 +217,7 @@ class DataBrowser {
 
 	/**
 	 * Get ajax-link for reload this DataBrowser
+	 * @return string
 	 */
 	private function getRefreshLink() {
 		$icon = Icon::get(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen');
@@ -223,50 +226,66 @@ class DataBrowser {
 
 	/**
 	 * Get ajax-link for choosing timestamps from calendar
+	 * @return string
 	 */
 	private function getCalenderLink() {
 		$icon = Icon::get(Icon::$CALENDAR, 'Kalender-Auswahl');
-		return Ajax::window('<a href="inc/tpl/window.DataBrowser.calendar.php" title="Kalender-Auswahl">'.$icon.'</a>');
+		return Ajax::window('<a href="call/window.DataBrowser.calendar.php" title="Kalender-Auswahl">'.$icon.'</a>');
 	}
 
 	/**
 	 * Get ajax-link for showing month-kilometer
+	 * @return string
 	 */
 	private function getMonthKmLink() {
 		$icon = Icon::get(Icon::$MONTH_KM, 'Monatskilometer');
-		return Ajax::window('<a href="inc/plugin/window.monatskilometer.php" title="Monatskilometer anzeigen">'.$icon.'</a>');
+		return Ajax::window('<a href="call/window.monatskilometer.php" title="Monatskilometer anzeigen">'.$icon.'</a>');
 	}
 
 	/**
 	 * Get ajax-link for showing week-kilometer
+	 * @return string
 	 */
 	private function getWeekKmLink() {
 		$icon = Icon::get(Icon::$WEEK_KM, 'Wochenkilometer');
-		return Ajax::window('<a href="inc/plugin/window.wochenkilometer.php" title="Wochenkilometer anzeigen">'.$icon.'</a>');
+		return Ajax::window('<a href="call/window.wochenkilometer.php" title="Wochenkilometer anzeigen">'.$icon.'</a>');
 	}
 
 	/**
 	 * Get ajax-link for searching
+	 * @return string
 	 */
 	private function getNaviSearchLink() {
-		$href = 'inc/class.DataBrowser.search.php';
 		$icon = Icon::get(Icon::$SEARCH, 'Suche');
+		//$href = 'inc/class.DataBrowser.search.php';
 		// TODO For displaying search inside the databrowser ...
 		// return Ajax::link($icon, DATA_BROWSER_ID, $href);
-		return Ajax::window('<a href="inc/tpl/window.search.php" title="Suche">'.$icon.'</a>', 'big');
+		return Ajax::window('<a href="call/window.search.php" title="Suche">'.$icon.'</a>', 'big');
 	}
 
 	/**
 	 * Get complete HTML-link for the search
 	 * @param string $name
 	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
+	 * @return string
 	 */
 	static function getSearchLink($name, $var) {
-		return Ajax::window('<a href="inc/tpl/window.search.php?get=true&'.$var.'">'.$name.'</a>', 'big');
+		// TODO: Just get $name, $column, $option, $value (may be arrays)
+		return Ajax::window('<a href="call/window.search.php?get=true&'.$var.'">'.$name.'</a>', 'big');
+	}
+
+	/**
+	 * Get complete HTML-link for the search
+	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
+	 * @return string
+	 */
+	static function getSearchLinkUrl($var) {
+		return 'call/window.search.php?get=true&'.$var;
 	}
 
 	/**
 	 * Get ajax-link for adding a training
+	 * @return string
 	 */
 	private function getAddLink() {
 		return Training::getCreateWindowLink();
@@ -274,20 +293,20 @@ class DataBrowser {
 
 	/**
 	 * Get a ajax-link to a specified DataBrowser
-	 * @param string $name
-	 * @param int $start
-	 * @param int $end
+	 * @param string $name Name to be displayed as link
+	 * @param int $start Timestamp for first date in browser
+	 * @param int $end Timestamp for last date in browser
 	 * @return string HTML-link
 	 */
 	static function getLink($name, $start, $end) {
-		$href = 'inc/class.DataBrowser.display.php?start='.$start.'&end='.$end;
+		$href = 'call/call.DataBrowser.display.php?start='.$start.'&end='.$end;
 		return Ajax::link($name, DATA_BROWSER_ID, $href);
 	}
 
 	/**
 	 * Get previous timestamps depending on current time-interval (just an alias for getNextTimestamps($start, $end, true);)
-	 * @param int $start
-	 * @param int $end
+	 * @param int $start Timestamp for first date in browser
+	 * @param int $end Timestamp for last date in browser
 	 * @return array Returns an array {'start', 'end'}
 	 */
 	static function getPrevTimestamps($start, $end) {
@@ -296,8 +315,8 @@ class DataBrowser {
 
 	/**
 	 * Get next timestamps depending on current time-interval
-	 * @param int $start
-	 * @param int $end
+	 * @param int $start Timestamp for first date in browser
+	 * @param int $end Timestamp for last date in browser
 	 * @return array Returns an array {'start', 'end'}
 	 */
 	static function getNextTimestamps($start, $end, $getPrev = false) {

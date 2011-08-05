@@ -15,17 +15,17 @@
  * @uses class::Config
  * @uses class::Icon
  * @uses class::Ajax
+ * @uses class::HTML
  * @uses class::Plugin
  * @uses class::PluginPanel
  * @uses class::PluginStat
  * @uses class::PluginTool
  * //@uses class::PluginDraw
  * @uses class::Training
+ * @uses class::TrainingDisplay
  * @uses class::DataBrowser
  * @uses class::Dataset
  * @uses class::Draw
- *
- * Last modified 2011/03/14 16:00 by Hannes Christiansen
  */
 class Frontend {
 	/**
@@ -42,8 +42,8 @@ class Frontend {
 
 	/**
 	 * Constructor for frontend
-	 * @param bool $ajax_request
-	 * @param string $file
+	 * @param bool $ajax_request Is the call an Ajax-request?
+	 * @param string $file Current filename
 	 */
 	public function __construct($ajax_request = false, $file = __FILE__) {
 		$this->file = $file;
@@ -55,6 +55,7 @@ class Frontend {
 		$this->initMySql();
 		$this->initConfigConsts();
 		$this->initRequiredFiles();
+		$this->initDebugMode();
 	}
 
 	/**
@@ -75,9 +76,6 @@ class Frontend {
 	private function initConsts() {
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		define('RUNALYZE_VERSION', '0.5');
-		define('RUNALYZE_DEBUG', false);
-		//	define('RUNALYZE_DEBUG', true); // TODO: Move debug-mode to config
-		//	error_reporting(E_ALL);
 		define('INFINITY', PHP_INT_MAX);
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
@@ -99,7 +97,7 @@ class Frontend {
 	 * Include class::Error and and initialise it
 	 */
 	private function initErrorHandling() {
-		require_once(FRONTEND_PATH.'class.Error.php');
+		require_once FRONTEND_PATH.'class.Error.php';
 		Error::init();
 	}
 
@@ -107,8 +105,9 @@ class Frontend {
 	 * Include class::Mysql and connect to database
 	 */
 	private function initMySql() {
-		require_once(FRONTEND_PATH.'class.Mysql.php');
-		require_once(FRONTEND_PATH.'config.inc.php');
+		require_once FRONTEND_PATH.'class.Mysql.php';
+		require_once FRONTEND_PATH.'../config.php';
+
 		Mysql::connect($host, $username, $password, $database);
 		unset($host, $username, $password, $database);
 	}
@@ -117,7 +116,7 @@ class Frontend {
 	 * Define all CONF_CONSTS
 	 */
 	private function initConfigConsts() {
-		require_once(FRONTEND_PATH.'class.Config.php');
+		require_once FRONTEND_PATH.'class.Config.php';
 
 		Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
 		Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
@@ -125,30 +124,43 @@ class Frontend {
 		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
 		Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
 		Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
-
-		// Following lines are only used for MAX_ATL/CTL/TRIMP anymore
-		$config = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'config`');
-		foreach ($config as $key => $value)
-			define('CONFIG_'.strtoupper($key), $value);
-		unset($config);
 	}
 
 	/**
 	 * Include alle required files
 	 */
 	private function initRequiredFiles() {
-		require_once(FRONTEND_PATH.'class.Training.php');
-		require_once(FRONTEND_PATH.'class.Ajax.php');
-		require_once(FRONTEND_PATH.'class.Helper.php');
-		require_once(FRONTEND_PATH.'class.Icon.php');
-		require_once(FRONTEND_PATH.'class.DataBrowser.php');
-		require_once(FRONTEND_PATH.'class.Dataset.php');
-		require_once(FRONTEND_PATH.'class.Plugin.php');
-		require_once(FRONTEND_PATH.'class.PluginPanel.php');
-		require_once(FRONTEND_PATH.'class.PluginStat.php');
-		//require_once(FRONTEND_PATH.'class.PluginDraw.php');
-		require_once(FRONTEND_PATH.'class.PluginTool.php');
-		require_once(FRONTEND_PATH.'class.Draw.php');
+		require_once FRONTEND_PATH.'class.Training.php';
+		require_once FRONTEND_PATH.'class.TrainingDisplay.php';
+		require_once FRONTEND_PATH.'class.Ajax.php';
+		require_once FRONTEND_PATH.'class.HTML.php';
+		require_once FRONTEND_PATH.'class.Helper.php';
+		require_once FRONTEND_PATH.'class.Icon.php';
+		require_once FRONTEND_PATH.'class.DataBrowser.php';
+		require_once FRONTEND_PATH.'class.Dataset.php';
+		require_once FRONTEND_PATH.'class.Plugin.php';
+		require_once FRONTEND_PATH.'class.PluginPanel.php';
+		require_once FRONTEND_PATH.'class.PluginStat.php';
+		//require_once FRONTEND_PATH.'class.PluginDraw.php';
+		require_once FRONTEND_PATH.'class.PluginTool.php';
+		require_once FRONTEND_PATH.'class.Draw.php';
+		require_once FRONTEND_PATH.'class.Clothes.php';
+		require_once FRONTEND_PATH.'class.Shoe.php';
+		require_once FRONTEND_PATH.'class.Sport.php';
+		require_once FRONTEND_PATH.'class.Type.php';
+		require_once FRONTEND_PATH.'class.User.php';
+		require_once FRONTEND_PATH.'class.Weather.php';
+	}
+
+	/**
+	 * Init internal debug-mode. Can be defined in config.php - otherwise is set to false here
+	 */
+	private function initDebugMode() {
+		if (!defined('RUNALYZE_DEBUG'))
+			define('RUNALYZE_DEBUG', false);
+
+		if (RUNALYZE_DEBUG)
+			error_reporting(E_ALL);
 	}
 
 	/**
@@ -158,7 +170,7 @@ class Frontend {
 		header('Content-type: text/html; charset=ISO-8859-1');
 
 		if (!$this->ajax_request)
-			include('tpl/tpl.Frontend.header.php');
+			include 'tpl/tpl.Frontend.header.php';
 
 		Error::getInstance()->header_sent = true;
 	}
@@ -168,10 +180,10 @@ class Frontend {
 	 */
 	public function displayFooter() {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
-			include('tpl/tpl.Frontend.debug.php');
+			include 'tpl/tpl.Frontend.debug.php';
 
 		if (!$this->ajax_request)
-			include('tpl/tpl.Frontend.footer.php');
+			include 'tpl/tpl.Frontend.footer.php';
 
 		Error::getInstance()->footer_sent = true;
 	}

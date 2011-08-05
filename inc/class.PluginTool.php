@@ -9,11 +9,15 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- *
- * Last modified 2011/07/28 16:00 by Hannes Christiansen
  */
 
 abstract class PluginTool extends Plugin {
+	/**
+	 * Url for displaying the plugin
+	 * @var string
+	 */
+	public static $DISPLAY_URL = 'call/call.PluginTool.display.php';
+
 	/**
 	 * Surrounding div for every tool
 	 * @var string
@@ -55,7 +59,7 @@ abstract class PluginTool extends Plugin {
 	 */
 	public static function displayToolsHeader() {
 		echo '<small class="right">'.NL;
-		echo Ajax::link('Alle Tools:', self::$TOOLS_DIV_ID, 'inc/class.PluginTool.display.php?list=true').NL;
+		echo Ajax::link('Alle Tools:', self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true').NL;
 
 		$tools = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC');
 		foreach ($tools as $i => $tool) {
@@ -77,7 +81,7 @@ abstract class PluginTool extends Plugin {
 		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br /><br />'.NL;
 		echo 'Folgende Tools sind installiert:'.NL;
 		echo '<table>'.NL;
-		echo Helper::spaceTR(3);
+		echo HTML::spaceTR(3);
 
 		$tools = self::getKeysAsArray(self::$TOOL, self::$ACTIVE);
 		
@@ -95,7 +99,7 @@ abstract class PluginTool extends Plugin {
 				</tr>');
 		}
 				
-		echo Helper::spaceTR(3);
+		echo HTML::spaceTR(3);
 		echo '</table>'.NL;
 		echo '</div>'.NL;
 	}
@@ -114,7 +118,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="inc/class.PluginTool.display.php" title="Tools">'.Icon::get(Icon::$CONF_TOOL, 'Tools').'</a>');
+		return Ajax::window('<a class="left" href="'.self::$DISPLAY_URL.'" title="Tools">'.Icon::get(Icon::$CONF_TOOL, 'Tools').'</a>');
 	}
 
 	/**
@@ -125,7 +129,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	static public function getLinkFor($id, $name, $data = '') {
-		return Ajax::link($name, self::$TOOLS_DIV_ID, 'inc/class.Plugin.display.php?id='.$id, $data);
+		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$id, $data);
 	}
 
 	/**

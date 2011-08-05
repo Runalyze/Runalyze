@@ -67,8 +67,7 @@ if ($Distance >= 15)
 $Draw->setCaching(false);
 
 if ($titleError == '') {
-	$sport = Helper::Sport($Training->get('sportid'), true);
-	if ($sport['kmh'] == 1) {
+	if ($Training->Sport()->usesKmh()) {
 		foreach ($Paces as $k => $v)
 			$Paces[$k] = 3600/$v;
 
@@ -104,7 +103,7 @@ $SplineFormat   = array("R" => 0, "G" => 0, "B" => 136);
 $Draw->pData->addPoints($Distances, 'Distanz');
 $Draw->pData->addPoints($Paces, 'Pace');
 $Draw->pData->setXAxisUnit(' km');
-if ($sport['kmh'] == 1)
+if ($Training->Sport()->usesKmh())
 	$Draw->pData->setAxisUnit(0, ' km/h');
 else
 	$Draw->pData->setAxisDisplay(0, AXIS_FORMAT_TIME, 'i:s');

@@ -7,8 +7,6 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- *
- * Last modified 2011/04/14 11:00 by Hannes Christiansen
  */
 class Icon {
 	/**
@@ -24,11 +22,11 @@ class Icon {
 	static public $CLIPBOARD		= 'img/clipboard.png';
 	static public $CLIPBOARD_PLUS	= 'img/clipboard__plus.png';
 	static public $CLOCK			= 'img/clock.png';
-	static public $SEARCH			= 'img/suche.png';
+	static public $SEARCH			= 'img/search.png';
 	static public $WARNING			= 'img/warning.png';
 	// Arrows
-	static public $ARR_NEXT			= 'img/vor.png';
-	static public $ARR_BACK			= 'img/zurueck.png';
+	static public $ARR_NEXT			= 'img/next.png';
+	static public $ARR_BACK			= 'img/back.png';
 	static public $ARR_BACK_BIG		= 'img/arrBack.png';
 	static public $ARR_DOWN_BIG		= 'img/arrDown.png';
 	static public $ARR_UP_BIG		= 'img/arrUp.png';
@@ -39,10 +37,10 @@ class Icon {
 	static public $CONF_TOOL		= 'img/confTool.png';
 	// Running-specific
 	static public $ABC				= 'img/abc.png';
-	static public $RUNNINGSHOE		= 'img/laufschuhe.png';
+	static public $RUNNINGSHOE		= 'img/runningshoe.png';
 	static public $MONTH_KM			= 'img/mk.png';
 	static public $WEEK_KM			= 'img/wk.png';
-	static public $FATIGUE			= 'img/mued.png';
+	static public $FATIGUE			= 'img/fatigue.png';
 	// Form
 	static public $FORM_NORMAL		= 'img/form0.png';
 	static public $FORM_UP			= 'img/form++.png';
@@ -79,14 +77,14 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getSportIcon($id, $title = '') {
-		$data = Mysql::getInstance()->fetch(PREFIX.'sports', $id);
+		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
 		if ($data === false)
 			return '';
 
 		if ($title == '')
 			$title = $data['name'];
 
-		return '<img src="img/sports/'.$data['bild'].'" alt="'.$title.'" />';
+		return '<img src="img/sports/'.$data['img'].'" alt="'.$title.'" />';
 	}
 
 	/**
@@ -95,14 +93,14 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getWeatherIcon($id, $title = '') {
-		$data = Mysql::getInstance()->fetch(PREFIX.'wetter', $id);
+		$data = Mysql::getInstance()->fetch(PREFIX.'weather', $id);
 		if ($data === false)
 			return '';
 
 		if ($title == '')
 			$title = $data['name'];
 
-		return '<img src="img/wetter/'.$data['bild'].'" alt="'.$title.'" style="vertical-align:bottom;" />';
+		return '<img src="img/wetter/'.$data['img'].'" alt="'.$title.'" style="vertical-align:bottom;" />';
 	}
 }
 ?>

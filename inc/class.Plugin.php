@@ -9,8 +9,6 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
 abstract class Plugin {
 	/**
@@ -56,10 +54,22 @@ abstract class Plugin {
 	public static $ACTIVE_VARIOUS = 2;
 
 	/**
+	 * Url for displaying the install-window
+	 * @var string
+	 */
+	public static $INSTALL_URL = 'call/call.Plugin.install.php';
+
+	/**
 	 * Url for displaying the config-window
 	 * @var string
 	 */
-	public static $CONFIG_URL = 'inc/class.Plugin.config.php';
+	public static $CONFIG_URL = 'call/call.Plugin.config.php';
+
+	/**
+	 * Url for displaying the plugin
+	 * @var string
+	 */
+	public static $DISPLAY_URL = 'call/call.Plugin.display.php';
 
 	/**
 	 * Id for not installed plugin
@@ -181,7 +191,7 @@ abstract class Plugin {
 	 * @return Plugin
 	 */
 	static public function getInstanceFor($PLUGINKEY) {
-		include_once('plugin/class.'.$PLUGINKEY.'.php');
+		include_once FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php';
 
 		if (!class_exists($PLUGINKEY)) {
 			Error::getInstance()->addError('Can\'t find \'plugin/class.'.$PLUGINKEY.'.php\'.');
@@ -206,7 +216,7 @@ abstract class Plugin {
 	 */
 	static public function getPluginsToInstallAsArray() {
 		$plugins   = array();
-		$dir = opendir(FRONTEND_PATH.'plugin/');
+		$dir = opendir(FRONTEND_PATH.'../plugin/');
 		while ($file = readdir($dir))
 			if (substr($file, 0, 6) == 'class.' && !self::isInstalled(substr($file, 6, -4)))
 				$plugins[] = array('key' => substr($file, 6, -4));
@@ -225,7 +235,7 @@ abstract class Plugin {
 		if ($name == '')
 			$name = Icon::get(Icon::$ADD, 'Plugin installieren');
 
-		return Ajax::window('<a href="inc/class.Plugin.install.php?key='.$this->key.'" title="Plugin installieren">'.$name.'</a>');
+		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'" title="Plugin installieren">'.$name.'</a>');
 	}
 
 	/**

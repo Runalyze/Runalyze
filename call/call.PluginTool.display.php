@@ -1,14 +1,16 @@
 <?php
 /**
  * File for displaying div for tools.
- * Call:   class.PluginTool.display.php [?list=true]
+ * Call:   call.PluginTool.display.php [?list=true]
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
 if (!isset($_GET['list']))
 	PluginTool::displayToolsHeader();
+
 PluginTool::displayToolsContent();
 
 $Frontend->displayFooter();

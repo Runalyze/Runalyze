@@ -21,8 +21,8 @@ $data = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'user` ORDER
 
 if (!empty($data)) {
 	foreach ($data as $dat) {
-		$Weights[] = $dat['gewicht'];
-		$HRrests[] = $dat['puls_ruhe'];
+		$Weights[] = $dat['weight'];
+		$HRrests[] = $dat['pulse_rest'];
 	}
 
 	$Weights = array_reverse($Weights);

@@ -1,9 +1,10 @@
 <?php
 /**
  * File for displaying statistic plugins.
- * Call:   class.Plugin.install.php?key=
+ * Call:   call.Plugin.install.php?key=
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 

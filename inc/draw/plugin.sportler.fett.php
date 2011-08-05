@@ -22,9 +22,9 @@ $data = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'user` ORDER
 
 if (!empty($data)) {
 	foreach ($data as $dat) {
-		$Adiposes[] = $dat['fett'];
-		$Water[]    = $dat['wasser'];
-		$Muscles[]  = $dat['muskeln'];
+		$Adiposes[] = $dat['fat'];
+		$Water[]    = $dat['water'];
+		$Muscles[]  = $dat['muscles'];
 	}
 
 	$Adiposes = array_reverse($Adiposes);

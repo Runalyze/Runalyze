@@ -9,8 +9,9 @@
 
 	<title>Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
 
-	<script type="text/javascript" src="lib/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="lib/jquery.scrollTo-min.js"></script>
+	<script type="text/javascript" src="lib/jQuery.1.4.2.js"></script>
+	<script type="text/javascript" src="lib/jQuery.scrollTo.js"></script>
+	<script type="text/javascript" src="lib/jQuery.form.js"></script>
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>

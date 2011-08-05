@@ -62,15 +62,16 @@ foreach ($this->days as $i => $day) {
 #
 // Z U S A M M E N F A S S U N G
 $sports = $this->Mysql->fetchAsArray('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' GROUP BY `sportid`');
-foreach ($sports as $sport) {
+foreach ($sports as $sportdata) {
+	$Sport = new Sport($sportdata['sportid']);
 	echo('
 <tr class="a'.(($i++)%2+1).' r">
 	<td colspan="2">
-		<small>'.$sport['num'].'x</small>
-		'.Helper::Sport($sport['sportid']).'
+		<small>'.$sportdata['num'].'x</small>
+		'.$Sport->name().'
 	</td>');
 
-	$this->Dataset->loadGroupOfTrainings($sport['sportid'], $this->timestamp_start, $this->timestamp_end);
+	$this->Dataset->loadGroupOfTrainings($sportdata['sportid'], $this->timestamp_start, $this->timestamp_end);
 	$this->Dataset->displayTableColumns();
 
 	echo('

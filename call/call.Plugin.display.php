@@ -1,9 +1,9 @@
 <?php
 /**
- * File for displaying statistic plugins.
- * Call:   class.Plugin.display.php?id= [&sport= &jahr= &dat= ]
+ * File for displaying plugins.
+ * Call:   call.Plugin.display.php?id= [&sport= &jahr= &dat= ]
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
@@ -12,6 +12,7 @@ $Plugin = Plugin::getInstanceFor($Key);
 
 if ($Plugin instanceof PluginPanel)
 	$Plugin->setSurroundingDivVisible(false);
+
 $Plugin->display();
 
 $Frontend->displayFooter();
