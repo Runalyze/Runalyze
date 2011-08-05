@@ -8,18 +8,17 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Error
- *
- * Last modified 2011/07/07 19:00 by Hannes Christiansen
  */
 class Ajax {
 	/**
 	 * Gives a HTML-link for using jTraining
-	 * @param int $training_id
-	 * @param string $name
+	 * @param int $training_id ID of the training
+	 * @param string $name Name of the link to be displayed
+	 * @param bool $closeOverlay [optional] Boolean flag: Should the overlay be closed after clicking? (default: false)
 	 * @return string
 	 */
 	static function trainingLink($training_id, $name, $closeOverlay = false) {
-		return '<a class="training" href="inc/class.Training.display.php?id='.$training_id.'" rel="'.$training_id.'" '.($closeOverlay ? ' onclick="closeOverlay()"' : '').'>'.$name.'</a>';
+		return '<a class="training" href="call/call.Training.display.php?id='.$training_id.'" rel="'.$training_id.'" '.($closeOverlay ? ' onclick="closeOverlay()"' : '').'>'.$name.'</a>';
 	}
 
 	/**

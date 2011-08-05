@@ -1,9 +1,10 @@
 <?php
 /**
  * File for correction the elevation data of this training.
- * Call:   class.Training.elevationCorrection.php?id=
+ * Call:   call/call.Training.elevationCorrection.php?id=
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 

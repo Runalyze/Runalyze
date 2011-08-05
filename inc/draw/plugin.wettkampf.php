@@ -17,11 +17,11 @@ $timeFormat  = 'i:s';
 
 $titleCenter = str_replace('&nbsp;', ' ', $titleCenter);
 
-$competitions = Mysql::getInstance()->fetchAsArray('SELECT `time`, `dauer` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `distanz`="'.$distance.'" ORDER BY `time` ASC');
+$competitions = Mysql::getInstance()->fetchAsArray('SELECT `time`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$distance.'" ORDER BY `time` ASC');
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		$Dates[]   = $competition['time'];
-		$Results[] = $competition['dauer'] + 23*3600; // Attention: timestamp(0) => 1:00:00
+		$Results[] = $competition['s'] + 23*3600; // Attention: timestamp(0) => 1:00:00
 	}
 
 	if (max($Results) > 24*3600)

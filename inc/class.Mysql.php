@@ -8,8 +8,6 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Error
- *
- * Last modified 2011/03/05 13:00 by Hannes Christiansen
  */
 final class Mysql {
 	/**

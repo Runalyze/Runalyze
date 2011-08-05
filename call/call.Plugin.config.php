@@ -1,5 +1,9 @@
 <?php
-require_once('class.Frontend.php');
+/**
+ * File for displaying the config-window for a plugin.
+ * Call:   call.Plugin.config.php?id=
+ */
+require_once '../inc/class.Frontend.php';
 $Frontend = new Frontend(true);
 $Frontend->displayHeader();
 

@@ -9,8 +9,6 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
 
 abstract class PluginPanel extends Plugin {
@@ -76,7 +74,7 @@ abstract class PluginPanel extends Plugin {
 	public function displayConfigDiv() {
 		echo('
 			<div class="config">
-				'.Ajax::window('<a href="inc/class.Plugin.config.php?id='.$this->id.'" title="Plugin bearbeiten"><img src="'.Icon::getSrc(Icon::$CONF_SETTINGS).'" alt="Plugin bearbeiten" /></a>','small').'
+				'.Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.'" title="Plugin bearbeiten"><img src="'.Icon::getSrc(Icon::$CONF_SETTINGS).'" alt="Plugin bearbeiten" /></a>','small').'
 				<img class="link up" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_UP_BIG).'" alt="Nach oben verschieben" />
 				<img class="link down" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_DOWN_BIG).'" alt="Nach unten verschieben" />
 			</div>'.NL);

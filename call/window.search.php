@@ -1,11 +1,11 @@
 <?php
 /**
  * File the search
- * Call:   inc/tpl/window.search.php
+ * Call:   call/window.search.php
  */
-require('../class.Frontend.php');
-$Frontend = new Frontend(true, __FILE__);
+require '../inc/class.Frontend.php';
 
+$Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
 $submit = false;
@@ -24,23 +24,22 @@ if (!isset($_GET['pager']))
 
 
 if (!($_GET['pager'] == 'true')) {
-	// TODO: Laden von vorgefertigten Suchen => Zweimal <h1>
 	echo '<div id="'.DATA_BROWSER_SEARCH_ID.'">';
 	echo '<h1>Suche</h1>';
 
-	include('tpl.Search.formular.php');
+	include '../inc/tpl/tpl.Search.formular.php';
 }
 
-echo('<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">');
+echo '<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">';
 
 if ($submit)
-	include('tpl.Search.result.php');
+	include '../inc/tpl/tpl.Search.result.php';
 	
 $Frontend->displayFooter();
-echo('</div>');
+echo '</div>';
 
 if (!($_GET['pager'] == 'true'))
-	echo('</div>');
+	echo '</div>';
 
 $Frontend->close();
 ?>

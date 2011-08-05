@@ -8,8 +8,6 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses pChart2.1.1
- *
- * Last modified 2011/04/22 20:00 by Hannes Christiansen
  */
 class Draw {
 	/**
@@ -86,9 +84,6 @@ class Draw {
 	function __construct($width = 480, $height = 190) {
 		$this->includePChart();
 
-		$this->pData = new pData();
-		$this->pCache = new pCache();
-
 		$this->setSize($width, $height);
 		$this->setCaching(true);
 		$this->setBorder(true);
@@ -103,6 +98,9 @@ class Draw {
 		require_once 'draw/pChart/pImage.class.php';
 		require_once 'draw/pChart/pCache.class.php';
 		require_once 'draw/pChart/pScatter.class.php';
+
+		$this->pData = new pData();
+		$this->pCache = new pCache();
 	}
 
 	/**

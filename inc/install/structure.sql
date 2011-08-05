@@ -3,21 +3,29 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Juli 2011 um 19:34
+-- Erstellungszeit: 05. August 2011 um 22:03
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+--
+-- Datenbank: `runalyze_empty`
+--
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+-- --------------------------------------------------------
 
 --
--- Datenbank: `runalyze`
+-- Tabellenstruktur für Tabelle `runalyze_clothes`
 --
+
+CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `short` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `order` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -26,48 +34,16 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `category` tinytext NOT NULL,
-  `key` varchar(100) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `value` text NOT NULL,
-  `description` tinytext NOT NULL,
-  `select_description` tinytext NOT NULL,
-  UNIQUE (
-    `key`
-  )
-) ENGINE = MYISAM ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_config`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `geschlecht` varchar(1) COLLATE latin1_general_ci NOT NULL DEFAULT 'm',
-  `wunschgewicht` decimal(4,1) NOT NULL DEFAULT '0.0',
-  `use_schuhe` tinyint(1) NOT NULL DEFAULT '1',
-  `use_kleidung` tinyint(1) NOT NULL DEFAULT '1',
-  `use_temperatur` tinyint(1) NOT NULL DEFAULT '1',
-  `use_wetter` tinyint(1) NOT NULL DEFAULT '1',
-  `use_strecke` tinyint(1) NOT NULL DEFAULT '1',
-  `use_splits` tinyint(1) NOT NULL DEFAULT '1',
-  `use_puls` tinyint(1) NOT NULL DEFAULT '1',
-  `use_koerperfett` tinyint(1) NOT NULL DEFAULT '0',
-  `puls_mode` varchar(5) COLLATE latin1_general_ci NOT NULL DEFAULT 'bpm',
-  `use_gewicht` tinyint(1) NOT NULL DEFAULT '1',
-  `use_ruhepuls` tinyint(1) NOT NULL DEFAULT '1',
-  `show_user` tinyint(1) NOT NULL DEFAULT '1',
-  `show_prognose` tinyint(1) NOT NULL DEFAULT '1',
-  `show_rechenspiele` tinyint(1) NOT NULL DEFAULT '1',
-  `max_belastung` smallint(3) NOT NULL,
-  `max_atl` int(4) NOT NULL DEFAULT '0',
-  `max_ctl` int(4) NOT NULL DEFAULT '0',
-  `max_trimp` int(5) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=2 ;
+  `category` tinytext COLLATE latin1_general_ci NOT NULL,
+  `key` varchar(100) COLLATE latin1_general_ci NOT NULL,
+  `type` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `value` text COLLATE latin1_general_ci NOT NULL,
+  `description` tinytext COLLATE latin1_general_ci NOT NULL,
+  `select_description` tinytext COLLATE latin1_general_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `key` (`key`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=23 ;
 
 -- --------------------------------------------------------
 
@@ -78,34 +54,19 @@ CREATE TABLE IF NOT EXISTS `runalyze_config` (
 CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `function` varchar(50) COLLATE latin1_general_ci NOT NULL,
-  `beschreibung` text COLLATE latin1_general_ci NOT NULL,
-  `distanz` tinyint(1) NOT NULL DEFAULT '0',
+  `description` text COLLATE latin1_general_ci NOT NULL,
+  `distance` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
-  `puls` tinyint(1) NOT NULL DEFAULT '0',
-  `typ` tinyint(1) NOT NULL DEFAULT '0',
+  `pulse` tinyint(1) NOT NULL DEFAULT '0',
+  `type` tinyint(1) NOT NULL DEFAULT '0',
   `modus` tinyint(1) NOT NULL DEFAULT '0',
   `class` varchar(25) COLLATE latin1_general_ci NOT NULL,
   `style` varchar(100) COLLATE latin1_general_ci NOT NULL,
   `position` smallint(6) NOT NULL DEFAULT '0',
-  `zusammenfassung` tinyint(1) NOT NULL DEFAULT '0',
-  `zf_mode` varchar(3) COLLATE latin1_general_ci NOT NULL DEFAULT 'SUM',
+  `summary` tinyint(1) NOT NULL DEFAULT '0',
+  `summary_mode` varchar(3) COLLATE latin1_general_ci NOT NULL DEFAULT 'SUM',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=22 ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_kleidung`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_kleidung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE latin1_general_ci NOT NULL,
-  `name_kurz` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `order` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -124,21 +85,21 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=17 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_schuhe`
+-- Tabellenstruktur für Tabelle `runalyze_shoe`
 --
 
-CREATE TABLE IF NOT EXISTS `runalyze_schuhe` (
+CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) COLLATE latin1_general_ci NOT NULL,
-  `marke` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `kaufdatum` varchar(10) COLLATE latin1_general_ci NOT NULL DEFAULT '01.01.2000',
+  `brand` varchar(20) COLLATE latin1_general_ci NOT NULL,
+  `since` varchar(10) COLLATE latin1_general_ci NOT NULL DEFAULT '01.01.2000',
   `km` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `dauer` int(11) NOT NULL DEFAULT '0',
+  `time` int(11) NOT NULL DEFAULT '0',
   `inuse` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=21 ;
@@ -146,25 +107,23 @@ CREATE TABLE IF NOT EXISTS `runalyze_schuhe` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_sports`
+-- Tabellenstruktur für Tabelle `runalyze_sport`
 --
 
-CREATE TABLE IF NOT EXISTS `runalyze_sports` (
+CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
-  `bild` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'unknown.gif',
+  `img` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'unknown.gif',
   `online` tinyint(1) NOT NULL DEFAULT '1',
   `short` tinyint(1) NOT NULL DEFAULT '0',
-  `kalorien` smallint(4) NOT NULL DEFAULT '0',
+  `kcal` smallint(4) NOT NULL DEFAULT '0',
   `HFavg` smallint(3) NOT NULL DEFAULT '120',
   `RPE` tinyint(2) NOT NULL DEFAULT '2',
-  `distanztyp` tinyint(1) NOT NULL DEFAULT '1',
+  `distances` tinyint(1) NOT NULL DEFAULT '1',
   `kmh` tinyint(1) NOT NULL DEFAULT '0',
-  `typen` tinyint(1) NOT NULL DEFAULT '0',
-  `pulstyp` tinyint(1) NOT NULL DEFAULT '0',
+  `types` tinyint(1) NOT NULL DEFAULT '0',
+  `pulse` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
-  `distanz` decimal(8,2) NOT NULL DEFAULT '0.00',
-  `dauer` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=6 ;
 
@@ -177,26 +136,26 @@ CREATE TABLE IF NOT EXISTS `runalyze_sports` (
 CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sportid` int(11) NOT NULL DEFAULT '0',
-  `typid` int(11) NOT NULL DEFAULT '0',
+  `typeid` int(11) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
-  `bahn` tinyint(1) NOT NULL DEFAULT '0',
-  `distanz` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `dauer` decimal(7,2) NOT NULL DEFAULT '0.00',
+  `is_track` tinyint(1) NOT NULL DEFAULT '0',
+  `distance` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `s` decimal(7,2) NOT NULL DEFAULT '0.00',
   `pace` varchar(5) COLLATE latin1_general_ci NOT NULL DEFAULT '?:??',
-  `hm` int(5) NOT NULL DEFAULT '0',
-  `kalorien` int(4) NOT NULL DEFAULT '0',
-  `puls` int(3) NOT NULL DEFAULT '0',
-  `puls_max` int(3) NOT NULL DEFAULT '0',
+  `elevation` int(5) NOT NULL DEFAULT '0',
+  `kcal` int(4) NOT NULL DEFAULT '0',
+  `pulse_avg` int(3) NOT NULL DEFAULT '0',
+  `pulse_max` int(3) NOT NULL DEFAULT '0',
   `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
   `trimp` int(4) NOT NULL DEFAULT '0',
-  `temperatur` float DEFAULT NULL,
-  `wetterid` smallint(6) NOT NULL DEFAULT '1',
-  `strecke` tinytext COLLATE latin1_general_ci,
-  `kleidung` set('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24') COLLATE latin1_general_ci NOT NULL DEFAULT '',
+  `temperature` float DEFAULT NULL,
+  `weatherid` smallint(6) NOT NULL DEFAULT '1',
+  `route` tinytext COLLATE latin1_general_ci,
+  `clothes` set('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24') COLLATE latin1_general_ci NOT NULL DEFAULT '',
   `splits` text COLLATE latin1_general_ci,
-  `bemerkung` tinytext COLLATE latin1_general_ci,
-  `trainingspartner` tinytext COLLATE latin1_general_ci,
-  `laufabc` smallint(1) NOT NULL DEFAULT '0',
+  `comment` tinytext COLLATE latin1_general_ci,
+  `partner` tinytext COLLATE latin1_general_ci,
+  `abc` smallint(1) NOT NULL DEFAULT '0',
   `schuhid` int(11) NOT NULL DEFAULT '0',
   `arr_time` longtext COLLATE latin1_general_ci,
   `arr_lat` longtext COLLATE latin1_general_ci,
@@ -206,23 +165,22 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `arr_heart` longtext COLLATE latin1_general_ci,
   `arr_pace` longtext COLLATE latin1_general_ci,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci PACK_KEYS=0 AUTO_INCREMENT=1480 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci PACK_KEYS=0 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_typ`
+-- Tabellenstruktur für Tabelle `runalyze_type`
 --
 
-CREATE TABLE IF NOT EXISTS `runalyze_typ` (
+CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
-  `abk` varchar(5) COLLATE latin1_general_ci NOT NULL,
+  `abbr` varchar(5) COLLATE latin1_general_ci NOT NULL,
   `RPE` smallint(2) NOT NULL DEFAULT '2',
   `splits` tinyint(1) NOT NULL DEFAULT '0',
-  `count` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=9 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -233,29 +191,25 @@ CREATE TABLE IF NOT EXISTS `runalyze_typ` (
 CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` int(11) NOT NULL,
-  `gewicht` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `puls_ruhe` smallint(3) NOT NULL DEFAULT '0',
-  `puls_max` smallint(3) NOT NULL DEFAULT '0',
-  `fett` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `wasser` decimal(3,1) NOT NULL DEFAULT '0.0',
-  `muskeln` decimal(3,1) NOT NULL DEFAULT '0.0',
+  `weight` decimal(3,1) NOT NULL DEFAULT '0.0',
+  `pulse_rest` smallint(3) NOT NULL DEFAULT '0',
+  `pulse_max` smallint(3) NOT NULL DEFAULT '0',
+  `fat` decimal(3,1) NOT NULL DEFAULT '0.0',
+  `water` decimal(3,1) NOT NULL DEFAULT '0.0',
+  `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=193 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_wetter`
+-- Tabellenstruktur für Tabelle `runalyze_weather`
 --
 
-CREATE TABLE IF NOT EXISTS `runalyze_wetter` (
+CREATE TABLE IF NOT EXISTS `runalyze_weather` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `bild` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'ka.gif',
+  `img` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'ka.gif',
   `order` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

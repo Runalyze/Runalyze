@@ -19,10 +19,10 @@ if (is_numeric($_GET['id'])) {
 	$Training = new Training($_GET['id']);
 
 	$titleLeft = $Training->getTitle().', '.$Training->getDate();
-	$titleRight = $Training->get('bemerkung');
+	$titleRight = $Training->get('comment');
 
 	if ($Training->hasSplitsData()) {
-		$demandedPace = Helper::DescriptionToDemandedPace($Training->get('bemerkung'));
+		$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
 		$achievedPace = array_sum($Training->getSplitsPacesArray()) / count($Training->getSplitsPacesArray());
 
 		if (count($Training->getSplitsPacesArray()) > 10)

@@ -7,10 +7,16 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- *
- * Last modified 2011/07/24 16:00 by Hannes Christiansen
+ * @uses class::Error
+ * @uses class::Mysql
  */
 class Config {
+	/**
+	 * Name for hidden category, not editable
+	 * @var string
+	 */
+	public static $HIDDEN_CAT = 'hidden';
+
 	/**
 	 * Config-Array
 	 * @var array
@@ -32,7 +38,16 @@ class Config {
 	 * @return string
 	 */
 	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="inc/tpl/window.config.php" title="Einstellungen">'.Icon::get(Icon::$CONF_EDIT, 'Einstellungen').'</a>');
+		return Ajax::window('<a class="left" href="call/window.config.php" title="Einstellungen">'.Icon::get(Icon::$CONF_EDIT, 'Einstellungen').'</a>');
+	}
+
+	/**
+	 * Update a value, should primary be used for hidden keys
+	 * @param string $KEY
+	 * @param mixed $value
+	 */
+	static public function update($KEY, $value) {
+		Mysql::getInstance()->query('UPDATE `'.PREFIX.'conf` SET `value`="'.$value.'" WHERE `key`="'.$KEY.'" LIMIT 1');
 	}
 
 	/**
@@ -66,8 +81,6 @@ class Config {
 					$value = $k;
 		}
 
-		// TODO: Can only save scalar falues ...
-		// TODO: Config::get($KEY);
 		define('CONF_'.$KEY, $value);
 	}
 
@@ -90,7 +103,6 @@ class Config {
 				return ($value ? 'true' : 'false');
 			case 'selectdb':
 			case 'int':
-				return (string)$value;
 			case 'float':
 				return (string)$value;
 			case 'string':
@@ -152,7 +164,7 @@ class Config {
 				$select = '<select name="'.$name.'">';
 				$values = Mysql::getInstance()->fetchAsArray('SELECT `id`, `'.$col.'` FROM `'.PREFIX.$db.'` ORDER BY `'.$col.'` ASC');
 				foreach ($values as $v)
-					$select .= '<option value="'.$v['id'].'"'.Helper::Selected($v['id'] == $conf['value']).'>'.$v[$col].'&nbsp;</option>';
+					$select .= '<option value="'.$v['id'].'"'.HTML::Selected($v['id'] == $conf['value']).'>'.$v[$col].'&nbsp;</option>';
 				$select .= '</select>';
 				return $select;
 			case 'select':
@@ -160,7 +172,7 @@ class Config {
 				$select = '<select name="'.$name.'">';
 				$i      = 0;
 				foreach ($value as $key => $val) {
-					$select .= '<option value="'.$key.'"'.Helper::Selected($val).'>'.$descr[$i].'&nbsp;</option>';
+					$select .= '<option value="'.$key.'"'.HTML::Selected($val).'>'.$descr[$i].'&nbsp;</option>';
 					$i++;
 				}
 				$select .= '</select>';
@@ -168,7 +180,7 @@ class Config {
 			case 'array':
 				return '<input type="text" name="'.$name.'" value="'.$value.'" />';
 			case 'bool':
-				return '<input type="checkbox" name="'.$name.'"'.Helper::Checked($value).' />';
+				return '<input type="checkbox" name="'.$name.'"'.HTML::Checked($value).' />';
 			case 'int':
 			case 'float':
 				return '<input type="text" size="6" name="'.$name.'" value="'.$value.'" />';
@@ -182,7 +194,7 @@ class Config {
 	 * Parse post-data for editing conf-data in databse
 	 */
 	static public function parsePostDataForConf() {
-		$confs = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'conf`');
+		$confs = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`!="'.self::$HIDDEN_CAT.'"');
 		foreach ($confs as $conf) {
 			$str_value = $conf['value']; // TODO
 			$value     = self::stringToValue($str_value, $conf['type']);
@@ -248,11 +260,11 @@ class Config {
 
 			$columns = array(
 				'modus',
-				'zusammenfassung',
+				'summary',
 				'position');
 			$values  = array(
 				$modus,
-				(isset($_POST[$id.'_zusammenfassung']) && $_POST[$id.'_zusammenfassung'] == 'on' ? 1 : 0),
+				(isset($_POST[$id.'_summary']) && $_POST[$id.'_summary'] == 'on' ? 1 : 0),
 				isset($_POST[$id.'_position']) ? $_POST[$id.'_position'] : 0);
 
 			Mysql::getInstance()->update(PREFIX.'dataset', $id, $columns, $values);
@@ -263,7 +275,7 @@ class Config {
 	 * Parse post-data for editing sports
 	 */
 	static public function parsePostDataForSports() {
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sports`');
+		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport`');
 		$sports[] = array('id' => -1);
 
 		foreach ($sports as $i => $sport) {
@@ -271,33 +283,33 @@ class Config {
 				'name',
 				'short',
 				'online',
-				'kalorien',
+				'kcal',
 				'HFavg',
 				'RPE',
-				'distanztyp',
+				'distances',
 				'kmh',
-				'typen',
-				'pulstyp',
+				'types',
+				'pulse',
 				'outside',
 				);
 			$values  = array(
 				$_POST['sport']['name'][$i],
 				isset($_POST['sport']['short'][$i]),
 				isset($_POST['sport']['online'][$i]),
-				$_POST['sport']['kalorien'][$i],
+				$_POST['sport']['kcal'][$i],
 				$_POST['sport']['HFavg'][$i],
 				$_POST['sport']['RPE'][$i],
-				isset($_POST['sport']['distanztyp'][$i]),
+				isset($_POST['sport']['distances'][$i]),
 				isset($_POST['sport']['kmh'][$i]),
-				isset($_POST['sport']['typen'][$i]),
-				isset($_POST['sport']['pulstyp'][$i]),
+				isset($_POST['sport']['types'][$i]),
+				isset($_POST['sport']['pulse'][$i]),
 				isset($_POST['sport']['outside'][$i]),
 				);
 
 			if ($sport['id'] != -1)
-				Mysql::getInstance()->update(PREFIX.'sports', $sport['id'], $columns, $values);
+				Mysql::getInstance()->update(PREFIX.'sport', $sport['id'], $columns, $values);
 			elseif (strlen($_POST['sport']['name'][$i]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'sports', $columns, $values);
+				Mysql::getInstance()->insert(PREFIX.'sport', $columns, $values);
 		}
 	}
 
@@ -305,11 +317,11 @@ class Config {
 	 * Parse post-data for editing trainingtypes
 	 */
 	static public function parsePostDataForTypes() {
-		$typen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'typ`');
+		$typen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'type`');
 		$typen[] = array('id' => -1);
 
 		foreach ($typen as $i => $typ) {
-			$rpe = (int)$_POST['typ']['RPE'][$i];
+			$rpe = (int)$_POST['type']['RPE'][$i];
 			if ($rpe < 1)
 				$rpe = 1;
 			elseif ($rpe > 10)
@@ -317,23 +329,23 @@ class Config {
 
 			$columns = array(
 				'name',
-				'abk',
+				'abbr',
 				'RPE',
 				'splits',
 				);
 			$values  = array(
-				$_POST['typ']['name'][$i],
-				$_POST['typ']['abk'][$i],
+				$_POST['type']['name'][$i],
+				$_POST['type']['abbr'][$i],
 				$rpe,
-				isset($_POST['typ']['splits'][$i]),
+				isset($_POST['type']['splits'][$i]),
 				);
 
-			if (isset($_POST['typ']['delete'][$i]))
-				Mysql::getInstance()->delete(PREFIX.'typ', (int)$typ['id']);
+			if (isset($_POST['type']['delete'][$i]))
+				Mysql::getInstance()->delete(PREFIX.'type', (int)$typ['id']);
 			elseif ($typ['id'] != -1)
-				Mysql::getInstance()->update(PREFIX.'typ', $typ['id'], $columns, $values);
-			elseif (strlen($_POST['typ']['name'][$i]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'typ', $columns, $values);
+				Mysql::getInstance()->update(PREFIX.'type', $typ['id'], $columns, $values);
+			elseif (strlen($_POST['type']['name'][$i]) > 2)
+				Mysql::getInstance()->insert(PREFIX.'type', $columns, $values);
 		}
 	}
 
@@ -341,27 +353,27 @@ class Config {
 	 * Parse post-data for editing clothes
 	 */
 	static public function parsePostDataForClothes() {
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'kleidung`');
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'clothes`');
 		$kleidungen[] = array('id' => -1);
 
 		foreach ($kleidungen as $i => $kleidung) {
 			$columns = array(
 				'name',
-				'name_kurz',
+				'short',
 				'order',
 				);
 			$values  = array(
-				$_POST['kleidung']['name'][$i],
-				$_POST['kleidung']['name_kurz'][$i],
-				$_POST['kleidung']['order'][$i],
+				$_POST['clothes']['name'][$i],
+				$_POST['clothes']['short'][$i],
+				$_POST['clothes']['order'][$i],
 				);
 
-			if (isset($_POST['kleidung']['delete'][$i]))
-				Mysql::getInstance()->delete(PREFIX.'kleidung', (int)$kleidung['id']);
+			if (isset($_POST['clothes']['delete'][$i]))
+				Mysql::getInstance()->delete(PREFIX.'clothes', (int)$kleidung['id']);
 			elseif ($kleidung['id'] != -1)
-				Mysql::getInstance()->update(PREFIX.'kleidung', $kleidung['id'], $columns, $values);
-			elseif (strlen($_POST['kleidung']['name'][$i]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'kleidung', $columns, $values);
+				Mysql::getInstance()->update(PREFIX.'clothes', $kleidung['id'], $columns, $values);
+			elseif (strlen($_POST['clothes']['name'][$i]) > 2)
+				Mysql::getInstance()->insert(PREFIX.'clothes', $columns, $values);
 		}
 	}
 }

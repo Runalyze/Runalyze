@@ -35,9 +35,9 @@ if (isset($_POST['val']) && is_array($_POST['val'])) {
 				case 'like':  $opt = ' LIKE '; $value = '%'.$value.'%'; break;
 				default:      $opt = '=';
 			}
-			if ($name == 'kleidung') {
+			if ($name == 'clothes') {
 				foreach ($value as $clothes_name)
-					$where .= ' FIND_IN_SET('.$clothes_name.',`kleidung`) AND ';
+					$where .= ' FIND_IN_SET('.$clothes_name.',`clothes`) AND ';
 			} elseif (is_array($value)) {
 				$where .= '`'.$name.'` IN('.implode(',', $value).', -1) AND ';
 			} else
@@ -88,13 +88,13 @@ if ($num_all > CONF_RESULTS_AT_PAGE) {
 	if ($num_all > $_POST['seite']*CONF_RESULTS_AT_PAGE) {
 		$name   = Icon::get(Icon::$ARR_NEXT, 'Seite vor');
 		$data   = $submit_search.'seite='.($_POST['seite']+1);
-		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&get=true&'.$data);
+		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'call/window.search.php?pager=true&get=true&'.$data);
 	}
 
 	if ($_POST['seite'] > 1) {
 		$name   = Icon::get(Icon::$ARR_BACK, 'Seite zur&uuml;ck');
 		$data   = $submit_search.'seite='.($_POST['seite']-1);
-		$back = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'inc/tpl/window.search.php?pager=true&'.$data);
+		$back = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'call/window.search.php?pager=true&'.$data);
 	}
 }
 

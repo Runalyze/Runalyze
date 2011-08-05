@@ -9,8 +9,6 @@
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
 
 abstract class PluginStat extends Plugin {
@@ -100,7 +98,7 @@ abstract class PluginStat extends Plugin {
 	protected function displaySportsNavigation() {
 		echo '<small class="left">';
 		
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sports` ORDER BY `id` ASC');
+		$sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 		foreach ($sports as $i => $sportlink) {
 			if ($i != 0)
 				echo(' |'.NL);
@@ -124,8 +122,8 @@ abstract class PluginStat extends Plugin {
 	 */
 	public function getLink() {
 		if ($this->isVariousStat())
-			return '<a rel="statistiken" href="inc/class.Plugin.display.php?id='.$this->id.'" alt="Kleinere Statistiken">Sonstiges</a>';
-		return '<a rel="statistiken" href="inc/class.Plugin.display.php?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
+			return '<a rel="statistiken" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="Kleinere Statistiken">Sonstiges</a>';
+		return '<a rel="statistiken" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
 	}
 
 	/**
@@ -142,7 +140,7 @@ abstract class PluginStat extends Plugin {
 		if ($year == 0)
 			$year = $this->year;
 
-		return Ajax::link($name, 'tab_content', 'inc/class.Plugin.display.php?id='.$this->id.'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
+		return Ajax::link($name, 'tab_content', self::$DISPLAY_URL.'?id='.$this->id.'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
 	}
 
 	/**
@@ -157,7 +155,7 @@ abstract class PluginStat extends Plugin {
 			$key  = $dat['key'];
 		}
 
-		return Ajax::link($name, 'tab_content', 'inc/class.Plugin.display.php?id='.$id);
+		return Ajax::link($name, 'tab_content', self::$DISPLAY_URL.'?id='.$id);
 	}
 
 	/**

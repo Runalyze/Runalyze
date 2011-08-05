@@ -3,33 +3,35 @@
  * This file contains the class to handle every training.
  */
 
-Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sports', 'name'));
-Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sports', 'name'));
-Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('typ', 'name'));
-Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('typ', 'name'));
+Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sport', 'name'));
+Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sport', 'name'));
+Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('type', 'name'));
+Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('type', 'name'));
 
-Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienfarbe auf GoogleMaps-Karte (#RGB)');
-Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
-Config::register('Training', 'TRAINING_MAPTYPE', 'select',
-	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
-	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
-
-Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
-Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
-	array('google' => true, 'geonames' => false), 'Server f&uuml;r H&ouml;henkorrektur',
-	array('maps.googleapis.com', 'ws.geonames.org'));
+Config::register('Eingabeformular', 'COMPUTE_KCAL', 'bool', true, 'Kalorienverbrauch automatisch berechnen');
 Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('tcx' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('tcx-Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
+Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
+	array('google' => true, 'geonames' => false), 'Server f&uuml;r H&ouml;henkorrektur',
+	array('maps.googleapis.com', 'ws.geonames.org'));
+Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
 
 /**
- * Class: Stat
+ * Class: Training
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Mysql
  * @uses class::Error
+ * @uses class::Config
  * @uses class::JD
+ * @uses class::TrainingDisplay
+ * @uses class::Clothes
+ * @uses class::Sport
+ * @uses class::Type
+ * @uses class::Weather
+ * @uses class::Shoe
  */
 class Training {
 	/**
@@ -43,12 +45,6 @@ class Training {
 	 * @var int
 	 */
 	public static $everyNthElevationPoint = 5;
-
-	/**
-	 * Path to file for displaying the map (used for iframe)
-	 * @var string
-	 */
-	public static $mapURL = 'inc/tcx/window.map.php';
 
 	/**
 	 * Array seperator for gps-data in database
@@ -66,7 +62,31 @@ class Training {
 	 * Data array from database
 	 * @var array
 	 */
-	private $data;
+	private $data = array();
+
+	/**
+	 * Object for given clothes
+	 * @var Clothes
+	 */
+	private $Clothes = null;
+
+	/**
+	 * Object for given sport
+	 * @var Sport
+	 */
+	private $Sport = null;
+
+	/**
+	 * Object for given type
+	 * @var Type
+	 */
+	private $Type = null;
+
+	/**
+	 * Object for given weather
+	 * @var Weather
+	 */
+	private $Weather = null;
 
 	/**
 	 * Constructor (needs ID, can be -1 for set($var) on it's own
@@ -77,6 +97,7 @@ class Training {
 			return false;
 
 		$this->fillUpDataWithDefaultValues();
+		$this->createObjects();
 		$this->correctVDOT();
 	}
 
@@ -108,6 +129,71 @@ class Training {
 	}
 
 	/**
+	 * Create all needed objects
+	 */
+	private function createObjects() {
+		if ($this->id == -1)
+			return;
+
+		$this->Clothes = new Clothes($this->get('clothes'));
+		$this->Sport = new Sport($this->get('sportid'));
+
+		if ($this->hasType())
+			$this->Type = new Type($this->get('typeid'));
+
+		if ($this->isOutside())
+			$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
+	}
+
+	/**
+	 * Get object for clothes
+	 * @return Clothes
+	 */
+	public function Clothes() {
+		return $this->Clothes;
+	}
+
+	/**
+	 * Get object for sport
+	 * @return Sport
+	 */
+	public function Sport() {
+		return $this->Sport;
+	}
+
+	/**
+	 * Get object for type
+	 * @return Type
+	 */
+	public function Type() {
+		return $this->Type;
+	}
+
+	/**
+	 * Get object for weather
+	 * @return Weather
+	 */
+	public function Weather() {
+		return $this->Weather;
+	}
+
+	/**
+	 * Has this training a trainingtype?
+	 * @return bool
+	 */
+	public function hasType() {
+		return $this->Sport()->hasTypes();
+	}
+
+	/**
+	 * Has this training data for outside-trainings?
+	 * @return bool
+	 */
+	public function isOutside() {
+		return $this->Sport()->isOutside();
+	}
+
+	/**
 	 * Set a column
 	 * @param string $var
 	 * @param string $value
@@ -130,36 +216,52 @@ class Training {
 		if (isset($this->data[$var]))
 			return $this->data[$var];
 
-		if ($var != 'temperatur')
+		if ($var != 'temperature')
 			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"');
+	}
+
+	/**
+	 * Override global post-array for edit-window
+	 * @return array
+	 */
+	public function overridePostArray() {
+		$_POST = array_merge($_POST, $this->data);
+		$_POST['sport'] = $this->Sport()->name();
+		$_POST['datum'] = date("d.m.Y", $this->get('time'));
+		$_POST['zeit'] = date("H:i", $this->get('time'));
+		$_POST['s'] = Helper::Time($this->get('s'), false, true);
+
+		$_POST['s_old'] = $_POST['s'];
+		$_POST['dist_old'] = $this->get('distance');
+		$_POST['shoeid_old'] = $this->get('shoeid');
+
+		$_POST['clothes'] = $this->Clothes()->arrayForPostdata();
+		$_POST['kcalPerHour'] = $this->Sport()->kcalPerHour();
+		$_POST['pace'] = $this->getPace();
+		$_POST['kmh'] = $this->getKmh();
 	}
 
 	/**
 	 * Fill internal data with default values for NULL-columns
 	 */
 	private function fillUpDataWithDefaultValues() {
-		if (!isset($this->data['strecke']) || is_null($this->data['strecke']))
-			$this->data['strecke'] = '';
-		if (!isset($this->data['splits']) || is_null($this->data['splits']))
-			$this->data['splits'] = '';
-		if (!isset($this->data['bemerkung']) || is_null($this->data['bemerkung']))
-			$this->data['bemerkung'] = '';
-		if (!isset($this->data['trainingspartner']) || is_null($this->data['trainingspartner']))
-			$this->data['trainingspartner'] = '';
-		if (!isset($this->data['arr_time']) || is_null($this->data['arr_time']))
-			$this->data['arr_time'] = '';
-		if (!isset($this->data['arr_lat']) || is_null($this->data['arr_lat']))
-			$this->data['arr_lat'] = '';
-		if (!isset($this->data['arr_lon']) || is_null($this->data['arr_lon']))
-			$this->data['arr_lon'] = '';
-		if (!isset($this->data['arr_alt']) || is_null($this->data['arr_alt']))
-			$this->data['arr_alt'] = '';
-		if (!isset($this->data['arr_dist']) || is_null($this->data['arr_dist']))
-			$this->data['arr_dist'] = '';
-		if (!isset($this->data['arr_heart']) || is_null($this->data['arr_heart']))
-			$this->data['arr_heart'] = '';
-		if (!isset($this->data['arr_pace']) || is_null($this->data['arr_pace']))
-			$this->data['arr_pace'] = '';
+		$vars = array(
+			'route',
+			'splits',
+			'comment',
+			'partner',
+			'arr_time',
+			'arr_lat',
+			'arr_lon',
+			'arr_alt',
+			'arr_dist',
+			'arr_heart',
+			'arr_pace');
+
+		foreach ($vars as $var) {
+			if (!isset($this->data[$var]) || is_null($this->data[$var]))
+				$this->data[$var] = '';
+		}
 	}
 
 	/**
@@ -177,15 +279,7 @@ class Training {
 	 * @return string all clothes comma seperated
 	 */
 	public function getStringForClothes() {
-		if ($this->get('kleidung') != '') {
-			$kleidungen = array();
-			$kleidungen_data = Mysql::getInstance()->fetchAsArray('SELECT `name` FROM `'.PREFIX.'kleidung` WHERE `id` IN ('.$this->get('kleidung').') ORDER BY `order` ASC');
-			foreach ($kleidungen_data as $data)
-				$kleidungen[] = $data['name'];
-			return implode(', ', $kleidungen);
-		}
-
-		return '';
+		return Clothes::getStringForClothes($this->get('clothes'));
 	}
 
 	/**
@@ -198,58 +292,42 @@ class Training {
 	}
 
 	/**
+	 * Gives a HTML-link for using jTraining which is calling the training-tpl
+	 * @return string HTML-link to this training
+	 */
+	public function trainingLinkWithComment() {
+		return $this->trainingLink($this->get('comment'));
+	}
+
+	/**
+	 * Gives a HTML-link for using jTraining which is calling the training-tpl
+	 * @return string HTML-link to this training
+	 */
+	public function trainingLinkWithSportIcon() {
+		return $this->trainingLink($this->Sport()->Icon());
+	}
+
+	/**
+	 * Get date as link to that week in DataBrowser
+	 * @return string
+	 */
+	public function getDateAsWeeklink() {
+		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Helper::Weekstart($this->data['time']), Helper::Weekend($this->data['time']));
+	}
+
+	/**
 	 * Display the whole training
 	 */
 	public function display() {
-		$this->displayHeader();
-		$this->displayPlotsAndMap();
-		$this->displayTrainingData();
-		echo Helper::clearBreak();
+		$Display = new TrainingDisplay($this);
+		$Display->display();
 	}
 
 	/**
-	 * Display header
+	 * Display table with all training data
 	 */
-	public function displayHeader() {
-		echo '<h1>'.NL;
-		$this->displayEditLink();
-		$this->displayTitle();
-		echo '<small class="right">';
-		$this->displayDate();
-		echo '</small><br class="clear" />';
-		echo '</h1>'.NL;
-	}
-
-	/**
-	 * Display plot links, first plot and map
-	 */
-	public function displayPlotsAndMap() {
-		$plots = $this->getPlotTypesAsArray();
-
-		echo '<div class="right">'.NL;
-		if (!empty($plots)) {
-			echo '<small class="right">'.NL;
-			$this->displayPlotLinks('trainingGraph');
-			echo '</small>'.NL;
-			echo '<br /><br />'.NL;
-			$this->displayPlot(key($plots));
-			echo '<br /><br />'.NL;
-		}
-
-		if ($this->hasPositionData())
-			$this->displayRoute();
-
-		echo '</div>'.NL;
-	}
-
-	/**
-	 * Display training data
-	 */
-	public function displayTrainingData() {
-		$this->displayTable();
-
-		if ($this->get('distanz') > 0)
-			$this->displayRoundsContainer();
+	public function displayTable() {
+		include('tpl/tpl.Training.table.php');
 	}
 
 	/**
@@ -259,10 +337,10 @@ class Training {
 	public function displayTitle($short = false) {
 		echo $this->getTitle();
 		if (!$short) {
-			if ($this->get('laufabc') == 1)
+			if ($this->get('abc') == 1)
 				echo(' '.Icon::get(Icon::$ABC, 'Lauf-ABC'));
-			if ($this->get('bemerkung') != '')
-				echo (': '.$this->get('bemerkung'));
+			if ($this->get('comment') != '')
+				echo (': '.$this->get('comment'));
 		}
 	}
 
@@ -271,9 +349,9 @@ class Training {
 	 * @return string
 	 */
 	public function getTitle() {
-		return ($this->get('sportid') == CONF_RUNNINGSPORT)
-			? Helper::TypeName($this->get('typid'))
-			: Helper::Sport($this->get('sportid'));
+		return ($this->hasType())
+			? $this->Type()->name()
+			: $this->Sport()->name();
 	}
 
 	/**
@@ -285,248 +363,100 @@ class Training {
 
 	/**
 	 * Get the date for this training
+	 * @param bool $withTime [optional] adding daytime to string
+	 * @return string
 	 */
-	public function getDate() {
+	public function getDate($withTime = true) {
+		$day = date('d.m.Y', $this->get('time'));
+
+		if ($withTime && strlen($this->getDaytimeString()) > 0)
+			return $day.' '.$this->getDaytimeString();
+
+		return $day;
+	}
+
+	/**
+	 * Get string for datetime
+	 * @return string
+	 */
+	public function getDaytimeString() {
 		$time = $this->get('time');
-		return date('H:i', $time) != '00:00'
-			? date('d.m.Y, H:i', $time).' Uhr'
-			: date('d.m.Y', $time);
+
+		return date('H:i', $time) != '00:00' ? date('H:i', $time).' Uhr' : '';
 	}
 
 	/**
-	 * Get array for all plot types
-	 * @return array
+	 * Get trainingtime as string
+	 * @return string
 	 */
-	private function getPlotTypesAsArray() {
-		$plots = array();
-		if ($this->hasPaceData())
-			$plots['pace'] = array('name' => 'Pace', 'src' => 'inc/draw/training.pace.php?id='.$this->id);
-		if ($this->hasSplitsData())
-			$plots['splits'] = array('name' => 'Splits', 'src' => 'inc/draw/training.splits.php?id='.$this->id);
-		if ($this->hasPulseData())
-			$plots['pulse'] = array('name' => 'Puls', 'src' => 'inc/draw/training.heartrate.php?id='.$this->id);
-		if ($this->hasElevationData())
-			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->id);
-
-		return $plots;
+	public function getTimeString() {
+		return Helper::Time($this->get('s'));
 	}
 
 	/**
-	 * Display links for all plots
-	 * @param string $rel related string (id of img)
+	 * Get distance as string
+	 * @return string
 	 */
-	public function displayPlotLinks($rel = 'trainingGraph') {
-		$links = array();
-		$plots = $this->getPlotTypesAsArray();
-		foreach ($plots as $key => $array)
-			$links[] = Ajax::imgChange('<a href="'.$array['src'].'">'.$array['name'].'</a>', 'trainingGraph').NL;
-		echo implode(' | ', $links);
+	public function getDistanceString() {
+		// TODO Use Config for number of decimals
+		if ($this->hasDistance())
+			return Helper::Km($this->get('distance'), 2, $this->get('is_track'));
+
+		return '';
 	}
 
 	/**
-	 * Display a plot
-	 * @param string $type name of the plot, should be in getPlotTypesAsArray
+	 * Get distance as string
+	 * @return string
 	 */
-	public function displayPlot($type = 'undefined') {
-		$plots = $this->getPlotTypesAsArray();
-		if (isset($plots[$type]))
-			echo '<div class="bigImg" style="height:190px; width:480px;"><img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" /></div>'.NL;
-		else
-			Error::getInstance()->addWarning('Training::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
+	public function getDistanceStringWithoudEmptyDecimals() {
+		if ($this->hasDistance())
+			return Helper::Km($this->get('distance'), (round($this->get('distance')) != $this->get('distance') ? 1 : 0), $this->get('is_track'));
+
+		return '';
 	}
 
 	/**
-	 * Display table with all training data
+	 * Get distance or time if distance is zero
+	 * @return string
 	 */
-	public function displayTable() {
-		include('tpl/tpl.Training.table.php');
+	public function getKmOrTime() {
+		if ($this->hasDistance())
+			return $this->getTimeString();
+
+		return $this->getDistanceString();
 	}
 
 	/**
-	 * Display surrounding container for rounds-data
+	 * Get a string for the speed depending on sportid
+	 * @return string
 	 */
-	public function displayRoundsContainer() {
-		$RoundTypes = array();
-		if ($this->hasPaceData())
-			$RoundTypes[] = array('name' => 'berechnete', 'id' => 'computedRounds', 'eval' => '$this->displayRounds();');
-		if ($this->hasSplitsData())
-			$RoundTypes[] = array('name' => 'gestoppte', 'id' => 'stoppedRounds', 'eval' => '$this->displaySplits();');
-
-		echo '<div id="trainingRounds">' ;
-			echo '<strong class="small">Rundenzeiten:&nbsp;</strong>'.NL;
-			echo '<small class="right">'.NL;
-				foreach ($RoundTypes as $i => $RoundType) {
-					echo Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
-					if ($i < count($RoundTypes)-1)
-						echo ' | ';
-				}
-			echo '&nbsp;</small>'.NL;
-
-			if (empty($RoundTypes))
-				echo '<small><em>Keine Daten vorhanden.</em></small>'.NL;
-
-			foreach ($RoundTypes as $i => $RoundType) {
-				echo '<div id="'.$RoundType['id'].'" class="change"'.($i==0?'':' style="display:none;"').'>';
-					eval($RoundType['eval']);
-				echo '</div>';
-			}
-		echo '</div>';
+	public function getSpeedString() {
+		return Helper::Speed($this->get('distance'), $this->get('s'), $this->get('sportid'));
 	}
-
-	/**
-	 * Display defined splits
-	 */
-	public function displaySplits() {
-		echo '<table class="small" cellspacing="0">
-			<tr class="c b">
-				<td>Distanz</td>
-				<td>Zeit</td>
-				<td>Pace</td>
-				<td>Diff.</td>
-			</tr>
-			<tr class="space"><td colspan="4" /></tr>'.NL;
-
-		$splits       = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-		$Distances    = $this->getSplitsDistancesArray();
-		$Times        = $this->getSplitsTimeArray();
-		$Paces        = $this->getSplitsPacesArray();
-		$demandedPace = Helper::DescriptionToDemandedPace($this->get('bemerkung'));
-		$achievedPace = array_sum($Paces) / count($Paces);
-		$TimeSum      = array_sum($Times);
-		$DistSum      = array_sum($Distances);
-
-		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
-			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);
-			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
-			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
-
-			echo '
-			<tr class="a'.($i%2+2).' r">
-				<td>'.Helper::Km($Distances[$i], 2).'</td>
-				<td>'.Helper::Time($Times[$i]).'</td>
-				<td>'.Helper::Pace($Distances[$i], $Times[$i]).'/km</td>
-				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
-			</tr>'.NL;
-		}
-
-		echo Helper::spaceTR(4);
-
-		if ($demandedPace > 0) {
-			$AvgDiff = $demandedPace - $achievedPace;
-			$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
-			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Helper::Time($AvgDiff, false, 2) : '-'.Helper::Time(-$AvgDiff, false, 2);
 	
-			echo '
-				<tr class="r">
-					<td colspan="2">Vorgabe: </td>
-					<td>'.Helper::Time($demandedPace).'/km</td>
-					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
-				</tr>'.NL;
-		} else {
-			echo '
-				<tr class="r">
-					<td colspan="2">Schnitt: </td>
-					<td>'.Helper::Time($achievedPace).'/km</td>
-					<td></td>
-				</tr>'.NL;
-		}
-
-		echo '</table>'.NL;
+	/**
+	* Get pace as string without unit
+	* @return string
+	*/
+	public function getPace() {
+		return Helper::Pace($this->get('distance'), $this->get('s'));
+	}
+	
+	/**
+	* Get km/h as string without unit
+	* @return string
+	*/
+	public function getKmh() {
+		return Helper::Kmh($this->get('distance'), $this->get('s'));
 	}
 
 	/**
-	 * Display (computed) rounds
+	 * Is a positive distance set?
+	 * @return bool
 	 */
-	public function displayRounds() {
-		$km 				= 1;
-		$kmIndex	 		= array(0);
-		$positiveElevation 	= 0;
-		$negativeElevation 	= 0;
-		$distancePoints 	= explode(self::$ARR_SEP, $this->get('arr_dist'));
-		$timePoints 		= explode(self::$ARR_SEP, $this->get('arr_time'));
-		$heartPoints 		= explode(self::$ARR_SEP, $this->get('arr_heart'));
-		$elevationPoints 	= explode(self::$ARR_SEP, $this->get('arr_alt'));
-		$numberOfPoints 	= sizeof($distancePoints);
-		$rounds             = array();
-		$showPulse          = count($heartPoints) > 1;
-		$showElevation      = count($elevationPoints) > 1;
-
-		foreach ($distancePoints as $i => $distance) {
-			if (floor($distance) == $km || $i == $numberOfPoints-1) {
-				$km++;
-				$prevIndex = end($kmIndex);
-				$kmIndex[] = $i;
-
-				if ($showPulse) {
-					$heartRateOfThisKm = array_slice($heartPoints, $prevIndex, ($i - $prevIndex));
-					$bpm = round(array_sum($heartRateOfThisKm) / ($i - $prevIndex));
-				} else
-					$bpm = 0;
-
-				$rounds[] = array(
-					'time' => $timePoints[$i],
-					'dist' => $distance,
-					'km' => $distance - $distancePoints[$prevIndex],
-					's' => $timePoints[$i] - $timePoints[$prevIndex],
-					'bpm' => $bpm,
-					'hm_up' => $positiveElevation,
-					'hm_down' => $negativeElevation,
-					);
-
-				$positiveElevation = 0;
-				$negativeElevation = 0;
-			} elseif ($i != 0 && $showElevation && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
-				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
-				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
-			}
-		}
-
-		$this->displayRoundsTable($rounds, $showPulse, $showElevation);
-	}
-
-	/**
-	 * Display the table for all rounds
-	 * @param array $rounds Array containing all rounds
-	 * @param bool $showPulse Flag: Show heartfrequence?
-	 * @param bool $showElevation Flag: Show elevation-data?
-	 */
-	private function displayRoundsTable($rounds, $showPulse, $showElevation) {
-		echo '<table class="small" cellspacing="0">
-			<tr class="c b">
-				<td>Zeit</td>
-				<td>Distanz</td>
-				<td>Tempo</td>
-				'.($showPulse ? '<td>bpm</td>' : '').'
-				'.($showElevation ? '<td>hm</td>' : '').'
-			</tr>'.NL;
-		echo Helper::spaceTR(3 + (int)$showPulse + (int)$showElevation);
-
-		foreach ($rounds as $i => $round) {
-			if ($round['bpm'] == 0)
-				$round['bpm'] = '?';
-			if ($round['hm_up'] != 0)
-				$round['hm_up'] = '+'.$round['hm_up'];
-			if ($round['hm_down'] != 0)
-				$round['hm_down'] = '-'.$round['hm_down'];
-
-			echo '<tr class="a'.($i%2+2).' r">
-				<td>'.Helper::Time($round['time']).'</td>
-				<td>'.Helper::Km($round['dist'], 2).'</td>
-				<td>'.Helper::Speed($round['km'], $round['s'], $this->get('sportid')).'</td>
-				'.($showPulse ? '<td>'.$round['bpm'].'</td>' : '').'
-				'.($showElevation ? '<td>'.$round['hm_up'].'/'.$round['hm_down'].'</td>' : '').'
-			</tr>'.NL;
-		}
-
-		echo '</table>'.NL;
-	}
-
-	/**
-	 * Display route on GoogleMaps
-	 */
-	public function displayRoute() {
-		echo '<iframe src="'.self::$mapURL.'?id='.$this->id.'" style="border:1px solid #000;" width="478" height="300" frameborder="0"></iframe>';
+	public function hasDistance() {
+		return ($this->get('distance') > 0);
 	}
 
 	/**
@@ -664,18 +594,11 @@ class Training {
 	}
 
 	/**
-	 * Display link for edit window
-	 */
-	public function displayEditLink() {
-		echo Ajax::window('<a href="inc/class.Training.edit.php?id='.$this->id.'" title="Training editieren">'.Icon::get(Icon::$EDIT, 'Training editieren').'</a> ','small');
-	}
-
-	/**
 	 * Get link for create window
 	 */
 	static public function getCreateWindowLink() {
 		$icon = Icon::get(Icon::$ADD, 'Training hinzuf&uuml;gen');
-		return Ajax::window('<a href="inc/class.Training.create.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
+		return Ajax::window('<a href="call/call.Training.create.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
 	}
 
 	/**
@@ -686,41 +609,40 @@ class Training {
 			$returnCode = self::parsePostdataForCreation();
 
 			if ($returnCode === true) {
-				echo('<em>Das Training wurde erfolgreich eingetragen.</em>');
-				echo('<script type="text/javascript">closeOverlay();</script>');
+				echo '<em>Das Training wurde erfolgreich eingetragen.</em>';
+				echo '<script type="text/javascript">closeOverlay();</script>';
 				return;
 			} else {
-				echo('<em>Es ist ein Fehler aufgetreten.</em><br />');
+				echo '<em>Es ist ein Fehler aufgetreten.</em><br />';
 				if (is_string($returnCode))
-					echo($returnCode.'<br />');
-				echo('<br />');
+					echo $returnCode.'<br />';
+				echo '<br />';
 			}
 		}
 
-		include('tpl/window.create.php');
+		include 'tpl/tpl.Training.create.php';
 	}
 
 	/**
 	 * Parse posted data to create a new training
 	 */
 	static private function parsePostdataForCreation() {
+		// TODO: CleanCode!
 		$Mysql   = Mysql::getInstance();
 		$vars    = array(); // Values beeing parsed with Helper::Umlaute/CommaToPoint() for each $_POST[$vars[]]
 		$columns = array(); // Columns inserted directly
 		$values  = array(); // Values inserted directly
-		$vars[]  = 'kalorien';
-		$vars[]  = 'bemerkung';
-		$vars[]  = 'trainingspartner';
+		$vars[]  = 'kcal';
+		$vars[]  = 'comment';
+		$vars[]  = 'partner';
 
 		if (!isset($_POST['sportid']))
 			return 'Es muss eine Sportart ausgew&auml;hlt werden.';
-		$sport = $Mysql->fetch(PREFIX.'sports', $_POST['sportid']);
-		if ($sport === false)
-			return 'Es wurde keine Sportart ausgew&auml;hlt.';
+		$Sport = new Sport($_POST['sportid']);
 
-		$distance = ($sport['distanztyp'] == 1 && isset($_POST['distanz'])) ? Helper::CommaToPoint($_POST['distanz']) : 0;
+		$distance = ($Sport->usesDistance() && isset($_POST['distance'])) ? Helper::CommaToPoint($_POST['distance']) : 0;
 		$columns[] = 'sportid';
-		$values[]  = $sport['id'];
+		$values[]  = $_POST['sportid'];
 	
 		// Prepare "Time"
 		if (!isset($_POST['zeit']))
@@ -733,13 +655,13 @@ class Training {
 		if (count($post_day) != 3 || count($post_time) != 2)
 			return 'Das Datum konnte nicht gelesen werden.';
 
-		if (!isset($_POST['dauer']))
+		if (!isset($_POST['s']))
 			return 'Es muss eine Trainingszeit angegeben sein.';
 		$time = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
 		$columns[] = 'time';
 		$values[]  = $time;
 		// Prepare "Dauer"
-		$ms        = explode(".", Helper::CommaToPoint($_POST['dauer']));
+		$ms        = explode(".", Helper::CommaToPoint($_POST['s']));
 		$dauer     = explode(":", $ms[0]);
 		if (!isset($ms[1]))
 			$ms[1] = 0;
@@ -747,26 +669,26 @@ class Training {
 		if ($time_in_s == 0)
 			return 'Es muss eine Trainingszeit angegeben sein.';
 
-		$columns[] = 'dauer';
+		$columns[] = 's';
 		$values[]  = $time_in_s;
 		// Prepare values for distances
-		if ($sport['distanztyp'] == 1) {
-			$vars[]    = 'distanz';
-			$columns[] = 'bahn';
-			$values[]  = isset($_POST['bahn']) ? 1 : 0;
+		if ($Sport->usesDistance()) {
+			$vars[]    = 'distance';
+			$columns[] = 'is_track';
+			$values[]  = isset($_POST['is_track']) ? 1 : 0;
 			$columns[] = 'pace';
 			$values[]  = Helper::Pace($distance, $time_in_s);
 		}
 		// Prepare values for outside-sport
-		if ($sport['outside'] == 1) {
-			$vars[]    = 'wetterid';
-			$vars[]    = 'strecke';
-			$columns[] = 'hm';
-			$values[]  = isset($_POST['hm']) ? $_POST['hm'] : 0;
-			$columns[] = 'kleidung';
-			$values[]  = isset($_POST['kleidung']) ? substr($_POST['kleidung'], 0, -1) : '';
-			$columns[] = 'temperatur';
-			$values[]  = isset($_POST['temperatur']) && is_numeric($_POST['temperatur']) ? $_POST['temperatur'] : NULL;
+		if ($Sport->isOutside()) {
+			$vars[]    = 'weatherid';
+			$vars[]    = 'route';
+			$columns[] = 'elevation';
+			$values[]  = isset($_POST['elevation']) ? $_POST['elevation'] : 0;
+			$columns[] = 'clothes';
+			$values[]  = isset($_POST['clothes']) ? implode(',', array_keys($_POST['clothes'])) : '';
+			$columns[] = 'temperature';
+			$values[]  = isset($_POST['temperature']) && is_numeric($_POST['temperature']) ? $_POST['temperature'] : NULL;
 
 			$vars[]    = 'arr_time';
 			$vars[]    = 'arr_lat';
@@ -777,22 +699,25 @@ class Training {
 			$vars[]    = 'arr_pace';
 		} else {
 			// Set NULL to temperatur otherwise
-			$columns[] = 'temperatur';
+			$columns[] = 'temperature';
 			$values[]  = NULL;
 		}
 		// Prepare values if using heartfrequence
-		if ($sport['pulstyp'] == 1) {
-			$vars[]    = 'puls';
-			$vars[]    = 'puls_max';
+		if ($Sport->usesPulse()) {
+			$vars[]    = 'pulse_avg';
+			$vars[]    = 'pulse_max';
 		}
 		// Prepare values for running (checked via "type")
-		if ($sport['typen'] == 1) {
-			$vars[]    = 'typid';
-			$vars[]    = 'schuhid';
-			$columns[] = 'laufabc';
-			$values[]  = isset($_POST['laufabc']) ? 1 : 0;
-			if (Helper::TypeHasSplits($_POST['typid']))
+		if ($Sport->hasTypes()) {
+			$Type = new Type($_POST['typeid']);
+			$vars[]    = 'typeid';
+			if ($Type->hasSplits())
 				$vars[] = 'splits';
+		}
+		if ($Sport->isRunning()) {
+			$vars[]    = 'shoeid';
+			$columns[] = 'abc';
+			$values[]  = isset($_POST['abc']) ? 1 : 0;
 		}
 	
 		foreach($vars as $var) {
@@ -810,25 +735,22 @@ class Training {
 
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `trimp`="'.$TRIMP.'" WHERE `id`='.$id.' LIMIT 1');
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
+		
+		if ($ATL > MAX_ATL)
+			Config::update('MAX_ATL', $ATL);
+		if ($CTL > MAX_CTL)
+			Config::update('MAX_ATL', $CTL);
+		if ($TRIMP > MAX_TRIMP)
+			Config::update('MAX_ATL', $TRIMP);
 
-		if ($ATL > CONFIG_MAX_ATL)
-			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_atl`="'.$ATL.'"');
-		if ($CTL > CONFIG_MAX_CTL)
-			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_ctl`="'.$CTL.'"');
-		if ($TRIMP > CONFIG_MAX_TRIMP)
-			$Mysql->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$TRIMP.'"');
-
-		if (isset($_POST['schuhid']))
-			$Mysql->query('UPDATE `'.PREFIX.'schuhe` SET `km`=`km`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['schuhid'].' LIMIT 1');
-
-		// TODO Is this distance used anymore?
-		$Mysql->query('UPDATE `'.PREFIX.'sports` SET `distanz`=`distanz`+'.$distance.', `dauer`=`dauer`+'.$time_in_s.' WHERE `id`='.$_POST['sportid'].' LIMIT 1');	
+		if (isset($_POST['shoeid']))
+			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$distance.', `time`=`time`+'.$time_in_s.' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
 
 		if (CONF_TRAINING_DO_ELEVATION) {
 			$Training = new Training($id);
 			$Training->elevationCorrection();
 
-			$Mysql->update(PREFIX.'training', $id, 'hm', Training::calculateElevation($Training->get('arr_alt')));
+			$Mysql->update(PREFIX.'training', $id, 'elevation', Training::calculateElevation($Training->get('arr_alt')));
 		}
 
 		return true;
@@ -865,11 +787,15 @@ class Training {
 
 		$starttime = strtotime($xml['trainingcenterdatabase']['activities']['activity']['id']['value']);
 		$start_tmp = $starttime;
+		$laps = $xml['trainingcenterdatabase']['activities']['activity']['lap'];
 
-		if (!is_array($xml['trainingcenterdatabase']['activities']['activity']['lap']))
+		if (!is_array($laps))
 			return array('error' => 'Es konnten keine gestoppten Runden gefunden werden.');
 
-		foreach($xml['trainingcenterdatabase']['activities']['activity']['lap'] as $lap) {
+		if (Helper::isAssoc($laps))
+			$laps = array($laps);
+
+		foreach($laps as $lap) {
 			$i++;
 
 			if (isset($lap['calories']))
@@ -877,6 +803,9 @@ class Training {
 			if (isset($lap['intensity']) && strtolower($lap['intensity']['value']) == 'active') {
 				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']), false, 2);
 			}
+
+			if (Helper::isAssoc($lap['track']))
+				$lap['track'] = array($lap['track']);
 
 			if (!isset($lap['track']) || !is_array($lap['track']) || empty($lap['track']))
 				Error::getInstance()->addWarning('Training::parseTcx(): Keine Track-Daten vorhanden.');
@@ -922,19 +851,19 @@ class Training {
 		$array['sportid']   = CONF_RUNNINGSPORT;
 		$array['datum']     = date("d.m.Y", $starttime);
 		$array['zeit']      = date("H:i", $starttime);
-		$array['distanz']   = round(end($distance), 2);
+		$array['distance']   = round(end($distance), 2);
 		if (!empty($time)) {
-			$array['dauer']     = Helper::Time(end($time), false, true);
-			$array['pace']      = Helper::Pace($array['distanz'], end($time));
-			$array['kmh']       = Helper::Kmh($array['distanz'], end($time));
+			$array['s']     = Helper::Time(end($time), false, true);
+			$array['pace']      = Helper::Pace($array['distance'], end($time));
+			$array['kmh']       = Helper::Kmh($array['distance'], end($time));
 		}
 		if (!empty($heartrate)) {
-			$array['puls']      = round(array_sum($heartrate)/count($heartrate));
-			$array['puls_max']  = max($heartrate);
+			$array['pulse_avg']      = round(array_sum($heartrate)/count($heartrate));
+			$array['pulse_max']  = max($heartrate);
 		}
-		$array['kalorien']  = $calories;
+		$array['kcal']  = $calories;
 		if (isset($xml['trainingcenterdatabase']['activities']['activity']['training']))
-			$array['bemerkung'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
+			$array['comment'] = $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value'];
 		$array['splits']    = implode('-', $splits);
 
 		$array['arr_time']  = implode(self::$ARR_SEP, $time);
@@ -944,7 +873,7 @@ class Training {
 		$array['arr_dist']  = implode(self::$ARR_SEP, $distance);
 		$array['arr_heart'] = implode(self::$ARR_SEP, $heartrate);
 		$array['arr_pace']  = implode(self::$ARR_SEP, $pace);
-		//$array['hm'] - Will be calculated later on
+		//$array['elevation'] - Will be calculated later on
 
 		return $array;
 	}
@@ -976,12 +905,12 @@ class Training {
 					require_once('tcx/class.googleMapsAPI.php');
 					require_once('tcx/class.ParserTcx.php');
 
-					$enc    = new xmlgooglemaps_googleMapAPIPolylineEnc(32,4);
-					$encArr = $enc->dpEncode($points);
-					$path   = $encArr[2];
+					//$enc    = new xmlgooglemaps_googleMapAPIPolylineEnc(32,4);
+					//$encArr = $enc->dpEncode($points);
+					//$path   = $encArr[2];
 					// Maybe problems with coding? Use numbers instead
 					//$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?path=enc:'.$path.'&samples='.count($points).'&sensor=false';
-					$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?path='.implode('|',$string).'&samples='.count($points).'&sensor=false';
+					$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|',$string).'&sensor=false';
 					$xml    = @file_get_contents($url);
 
 					$Parser = new ParserTcx($xml);
@@ -995,9 +924,18 @@ class Training {
 						Error::getInstance()->addError('Request was: '.$url);
 						return false;
 					}
-					foreach ($Result['elevationresponse']['result'] as $point)
+
+					if (count($string) == 1)
 						for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
-							$altitude[] = round($point['elevation']['value']);
+							$altitude[] = round($Result['elevationresponse']['result']['elevation']['value']);
+					else
+						foreach ($Result['elevationresponse']['result'] as $point) {
+							if (!isset($point['elevation']) || !isset($point['elevation']['value']))
+								Error::getInstance()->addWarning('Probably malformed response from Google: '.print_r($point, true));
+							else 
+								for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
+									$altitude[] = round($point['elevation']['value']);
+					}
 				} else {
 					// ws.geonames.org
 					$html = false;

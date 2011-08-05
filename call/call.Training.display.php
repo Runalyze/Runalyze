@@ -1,9 +1,10 @@
 <?php
 /**
  * File for displaying a training.
- * Call:   class.Training.display.php?id=
+ * Call:   call.Training.display.php?id=
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 

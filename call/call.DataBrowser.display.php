@@ -1,9 +1,10 @@
 <?php
 /**
  * File for displaying the databrowser.
- * Call:   class.Databrowser.display.php?start=&end=
+ * Call:   call.Databrowser.display.php?start=&end=
  */
-require('class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
