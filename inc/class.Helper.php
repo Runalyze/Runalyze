@@ -29,6 +29,9 @@ define('START_YEAR', date("Y", START_TIME));
 
 require_once FRONTEND_PATH.'class.JD.php';
 
+
+Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r ATL');
+Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r CTL');
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL.
 // This class defines MAX_ATL, MAX_CTL, MAX_TRIMP on its own with correct calculation.
 Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
@@ -274,7 +277,7 @@ class Helper {
 
 	/**
 	 * Calculating ActualTrainingLoad (at a given timestamp)
-	 * @uses ATL_DAYS
+	 * @uses CONF_ATL_DAYS
 	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
@@ -282,13 +285,13 @@ class Helper {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
-		return round($dat['sum']/ATL_DAYS);
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		return round($dat['sum']/CONF_ATL_DAYS);
 	}
 
 	/**
 	 * Calculating ChronicTrainingLoad (at a given timestamp)
-	 * @uses CTL_DAYS
+	 * @uses CONF_CTL_DAYS
 	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
@@ -296,8 +299,8 @@ class Helper {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
-		return round($dat['sum']/CTL_DAYS);
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		return round($dat['sum']/CONF_CTL_DAYS);
 	}
 
 	/**
@@ -626,7 +629,7 @@ class Helper {
 	public static function calculateMaxValues() {
 		// Here ATL/CTL will be implemented again
 		// Normal functions are too slow, calling them for each day would trigger each time a query
-		// - ATL/CTL: SUM(`trimp`) for ATL_DAYS / CTL_DAYS
+		// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
 		$start_i = 365*START_YEAR;
 		$end_i   = 365*(date("Y") + 1) - $start_i;
 		$Trimp   = array_fill(0, $end_i, 0);
@@ -652,10 +655,10 @@ class Helper {
 			$i = $dat['y']*365 + $dat['d'] - $start_i;
 			$Trimp[$i] = $dat['trimp'];
 			
-			if ($i >= ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, $i - ATL_DAYS, ATL_DAYS)) / ATL_DAYS;
-			if ($i >= CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, $i - CTL_DAYS, CTL_DAYS)) / CTL_DAYS;
+			if ($i >= CONF_ATL_DAYS)
+				$atl   = array_sum(array_slice($Trimp, $i - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
+			if ($i >= CONF_CTL_DAYS)
+				$ctl   = array_sum(array_slice($Trimp, $i - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
 			
 			if ($atl > $maxATL)
 				$maxATL = $atl;

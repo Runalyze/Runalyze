@@ -17,24 +17,19 @@
  * @var string $passwort   The password for the given user. Please note: Never leave a mysql-user without password.
  */
 $host = 'localhost';
-$database = 'runalyze_empty';
+$database = 'runalyze';
 $username = 'runalyze';
 $password = 'runalyze';
 
 /**
- * Please set these global constants.
- * 
- * @var string PREFIX		Database prefix, normally 'runalyze_'
- * @var int ATL_DAYS		Number of days considered for 'Actual Training Load', default 7
- * @var int CTL_DAYS		Number of days considered for 'Chroni Training Load', default 42
+ * Please set this global constant.
+ * @var string PREFIX Database prefix, normally 'runalyze_'
  */
 define('PREFIX', 'runalyze_');
-define('ATL_DAYS', 7); // TODO
-define('CTL_DAYS', 42); // TODO
 
 /**
  * To set off debugging, just comment out the line with "//" at the beginning.
  * @var bool RUNALYZE_DEBUG Set to true for debugging mode
  */
-define('RUNALYZE_DEBUG', true);
+//define('RUNALYZE_DEBUG', true);
 ?>
