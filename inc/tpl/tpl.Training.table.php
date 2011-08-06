@@ -3,7 +3,7 @@
 <?php if ($this->hasDistance()): ?>
 	<tr>
 		<td class="small b">Distanz:</td>
-		<td><?php echo $this->getDistanceString(); ?></td>
+		<td><?php echo $this->getDistanceStringWithFullDecimals(); ?></td>
 	</tr>
 <?php endif; ?>
 

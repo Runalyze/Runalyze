@@ -7,6 +7,9 @@ Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array
 Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sport', 'name'));
 Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('type', 'name'));
 Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('type', 'name'));
+Config::register('Training', 'TRAINING_DECIMALS', 'select',
+	array('0' => false, '1' => true, '2' => false), 'Anzahl angezeigter Nachkommastellen',
+	array('0', '1', '2'));
 
 Config::register('Eingabeformular', 'COMPUTE_KCAL', 'bool', true, 'Kalorienverbrauch automatisch berechnen');
 Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
@@ -398,9 +401,8 @@ class Training {
 	 * @return string
 	 */
 	public function getDistanceString() {
-		// TODO Use Config for number of decimals
 		if ($this->hasDistance())
-			return Helper::Km($this->get('distance'), 2, $this->get('is_track'));
+			return Helper::Km($this->get('distance'), CONF_TRAINING_DECIMALS, $this->get('is_track'));
 
 		return '';
 	}
@@ -409,9 +411,20 @@ class Training {
 	 * Get distance as string
 	 * @return string
 	 */
-	public function getDistanceStringWithoudEmptyDecimals() {
+	public function getDistanceStringWithoutEmptyDecimals() {
 		if ($this->hasDistance())
 			return Helper::Km($this->get('distance'), (round($this->get('distance')) != $this->get('distance') ? 1 : 0), $this->get('is_track'));
+
+		return '';
+	}
+
+	/**
+	 * Get distance as string
+	 * @return string
+	 */
+	public function getDistanceStringWithFullDecimals() {
+		if ($this->hasDistance())
+			return Helper::Km($this->get('distance'), 2, $this->get('is_track'));
 
 		return '';
 	}
