@@ -33,8 +33,8 @@ class TrainingDisplay {
 	private $Training;
 
 	/**
-	 * Constructor (needs ID, can be -1 for set($var) on it's own
-	 * @param int $id
+	 * Constructor
+	 * @param Training $Training
 	 */
 	public function __construct($Training) {
 		$this->Training = $Training;
@@ -71,15 +71,15 @@ class TrainingDisplay {
 	 * Display plot links, first plot and map
 	 */
 	public function displayPlotsAndMap() {
-		$plots = $this->getPlotTypesAsArray();
+		$Plots = $this->getPlotTypesAsArray();
 
 		echo '<div class="right">'.NL;
-		if (!empty($plots)) {
+		if (!empty($Plots)) {
 			echo '<small class="right">'.NL;
 			$this->displayPlotLinks('trainingGraph');
 			echo '</small>'.NL;
 			echo '<br /><br />'.NL;
-			$this->displayPlot(key($plots));
+			$this->displayPlot(key($Plots));
 			echo '<br /><br />'.NL;
 		}
 
@@ -87,16 +87,6 @@ class TrainingDisplay {
 			$this->displayRoute();
 
 		echo '</div>'.NL;
-	}
-
-	/**
-	 * Display training data
-	 */
-	public function displayTrainingData() {
-		$this->Training->displayTable();
-
-		if ($this->Training->hasDistance())
-			$this->displayRoundsContainer();
 	}
 
 	/**
@@ -145,6 +135,14 @@ class TrainingDisplay {
 	}
 
 	/**
+	 * Display training data
+	 */
+	public function displayTrainingData() {
+		$this->Training->displayTable();
+		$this->displayRoundsContainer();
+	}
+
+	/**
 	 * Display surrounding container for rounds-data
 	 */
 	public function displayRoundsContainer() {
@@ -153,6 +151,9 @@ class TrainingDisplay {
 			$RoundTypes[] = array('name' => 'berechnete', 'id' => 'computedRounds', 'eval' => '$this->displayRounds();');
 		if ($this->Training->hasSplitsData())
 			$RoundTypes[] = array('name' => 'gestoppte', 'id' => 'stoppedRounds', 'eval' => '$this->displaySplits();');
+
+		if (empty($RoundTypes))
+			return;
 
 		echo '<div id="trainingRounds">' ;
 			echo '<strong class="small">Rundenzeiten:&nbsp;</strong>'.NL;
@@ -224,14 +225,14 @@ class TrainingDisplay {
 					<td>'.Helper::Time($demandedPace).'/km</td>
 					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
 				</tr>'.NL;
-		} else {
-			echo '
-				<tr class="r">
-					<td colspan="2">Schnitt: </td>
-					<td>'.Helper::Time($achievedPace).'/km</td>
-					<td></td>
-				</tr>'.NL;
 		}
+	
+		echo '
+			<tr class="r">
+				<td colspan="2">Schnitt: </td>
+				<td>'.Helper::Time($achievedPace).'/km</td>
+				<td></td>
+			</tr>'.NL;
 
 		echo '</table>'.NL;
 	}

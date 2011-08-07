@@ -356,23 +356,24 @@ class Config {
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'clothes`');
 		$kleidungen[] = array('id' => -1);
 
-		foreach ($kleidungen as $i => $kleidung) {
+		foreach ($kleidungen as $kleidung) {
+			$id = $kleidung['id'];
 			$columns = array(
 				'name',
 				'short',
 				'order',
 				);
 			$values  = array(
-				$_POST['clothes']['name'][$i],
-				$_POST['clothes']['short'][$i],
-				$_POST['clothes']['order'][$i],
+				$_POST['clothes']['name'][$id],
+				$_POST['clothes']['short'][$id],
+				$_POST['clothes']['order'][$id],
 				);
 
-			if (isset($_POST['clothes']['delete'][$i]))
+			if (isset($_POST['clothes']['delete'][$id]))
 				Mysql::getInstance()->delete(PREFIX.'clothes', (int)$kleidung['id']);
 			elseif ($kleidung['id'] != -1)
 				Mysql::getInstance()->update(PREFIX.'clothes', $kleidung['id'], $columns, $values);
-			elseif (strlen($_POST['clothes']['name'][$i]) > 2)
+			elseif (strlen($_POST['clothes']['name'][$id]) > 2)
 				Mysql::getInstance()->insert(PREFIX.'clothes', $columns, $values);
 		}
 	}

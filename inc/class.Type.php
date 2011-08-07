@@ -148,7 +148,7 @@ class Type {
 		if (empty($types))
 			$types[0] = 'Keine Typen vorhanden';
 		elseif ($showUnknown)
-			$types = array_merge(array('?'), $types);
+			$types = array(0 => '?') + $types;
 
 		return HTML::selectBox('typeid', $types, $selected);
 	}

@@ -35,6 +35,12 @@ Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Se
  */
 class DataBrowser {
 	/**
+	 * URL for search to be called via jQuery
+	 * @var string
+	 */
+	static private $SEARCH_URL = 'call/window.search.php';
+
+	/**
 	 * Timestamp for first day to be displayed
 	 * @var int
 	 */
@@ -81,8 +87,6 @@ class DataBrowser {
 	 * @var Dataset
 	 */
 	private $Dataset;
-
-	// TODO self::$SEARCH_URL
 
 	/**
 	 * Default constructor
@@ -169,6 +173,7 @@ class DataBrowser {
 	 */
 	private function displayNavigationLinks() {
 		echo $this->getPrevLink().NL;
+		echo $this->getCalenderLink().NL;
 		echo $this->getLink(Helper::Month(date("m", $this->timestamp_start)),
 							mktime(0, 0, 0, date("m", $this->timestamp_start), 1, date("Y", $this->timestamp_start)),
 							mktime(23, 59, 50, date("m", $this->timestamp_start)+1, 0, date("Y", $this->timestamp_start))).', ';
@@ -186,7 +191,6 @@ class DataBrowser {
 	 */
 	private function displayIconLinks() {
 		echo $this->getRefreshLink();
-		echo $this->getCalenderLink();
 		echo $this->getMonthKmLink();
 		echo $this->getWeekKmLink();
 		echo $this->getNaviSearchLink();
@@ -271,7 +275,7 @@ class DataBrowser {
 	 */
 	static function getSearchLink($name, $var) {
 		// TODO: Just get $name, $column, $option, $value (may be arrays)
-		return Ajax::window('<a href="call/window.search.php?get=true&'.$var.'">'.$name.'</a>', 'big');
+		return Ajax::window('<a href="'.self::getSearchLinkUrl($var).'">'.$name.'</a>', 'big');
 	}
 
 	/**
@@ -280,7 +284,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	static function getSearchLinkUrl($var) {
-		return 'call/window.search.php?get=true&'.$var;
+		$var = str_replace(' ', '+', $var);
+
+		return self::$SEARCH_URL.'?get=true&'.$var;
 	}
 
 	/**

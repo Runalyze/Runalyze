@@ -323,6 +323,7 @@ table, tr, td {
 	vertical-align: top;
 }
 
+td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
 tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .a1 td, td.a1 { background: rgba(255,255,255,0.2); }

@@ -89,9 +89,8 @@ class Dataset {
 		foreach ($this->data as $set)
 			if ($set['summary'] == 1 && $set['summary_mode'] == 'AVG') {
 				$avg_data = Mysql::getInstance()->fetch('SELECT COUNT(1) as `num`, SUM(`s`) as `ssum`, AVG(`'.$set['name'].'`*`s`) as `'.$set['name'].'` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' AND `'.$set['name'].'`!=0 AND `'.$set['name'].'`!="" AND `sportid`="'.$sportid.'" GROUP BY `sportid`');
-				if ($avg_data === false)
-					$avg_data[$set['name']] = '';
-				$this->Training->set($set['name'], ($avg_data['num']*$avg_data[$set['name']]/$avg_data['ssum']));
+				if ($avg_data !== false)
+					$this->Training->set($set['name'], ($avg_data['num']*$avg_data[$set['name']]/$avg_data['ssum']));
 			}
 	}
 
@@ -185,9 +184,9 @@ class Dataset {
 				return $this->datasetShoe();
 			case 'vdot':
 				return $this->datasetVDOT();
-			default:
-				return '&nbsp;';
 		}
+
+		return '&nbsp;';
 	}
 
 	/**
@@ -203,10 +202,10 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetType() {
-		if ($this->Training->hasType())
-			return $this->Training->Type()->formattedAbbr();
+		if (!$this->Training->hasType())
+			return '';
 
-		return '';
+		return $this->Training->Type()->formattedAbbr();
 	}
 
 	/**
@@ -246,9 +245,10 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetElevation() {
-		return ($this->Training->get('elevation') != 0)
-			? '<span title="&oslash; '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;">'.$this->Training->get('elevation').'&nbsp;hm</span>'
-			: '';
+		if (!$this->Training->hasElevation())
+			return '';
+
+		return '<span title="&oslash; '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;">'.$this->Training->get('elevation').'&nbsp;hm</span>';
 	}
 
 	/**
@@ -280,7 +280,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetTRIMP() {
-		return '<span style="color:#'.Helper::Stresscolor($this->Training->get('trimp')).';">'.$this->Training->get('trimp').'</span>';
+		return $this->Training->getTrimpString();
 	}
 
 	/**
@@ -288,6 +288,9 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetTemperature() {
+		if (is_null($this->Training->Weather()))
+			return '';
+
 		return $this->Training->Weather()->temperatureString();
 	}
 
@@ -296,10 +299,10 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetWeather() {
-		if (!$this->Training->Weather()->isUnknown())
-			return $this->Training->Weather()->icon();
+		if (is_null($this->Training->Weather()) || $this->Training->Weather()->isUnknown())
+			return '';
 
-		return '';
+		return $this->Training->Weather()->icon();
 	}
 
 	/**
@@ -307,7 +310,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetPath() {
-		return ($this->Training->get('route') != '') ? Helper::Cut($this->Training->get('route'), 20) : '';
+		return ($this->Training->hasRoute()) ? Helper::Cut($this->Training->get('route'), 20) : '';
 	}
 
 	/**
@@ -323,7 +326,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetSplits() {
-		if ($this->Training->get('splits') == '')
+		if (is_null($this->Training->Type()) || !$this->Training->Type()->hasSplits() || $this->Training->get('splits') == '')
 			return;
 
 		return Icon::get( Icon::$CLOCK, $this->Training->getSplitsAsString() );
@@ -361,7 +364,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetShoe() {
-		return Helper::Shoe($this->Training->get('shoeid'));
+		return Shoe::getName($this->Training->get('shoeid'));
 	}
 
 	/**
@@ -369,30 +372,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetVDOT() {
-		$VDOT = round($this->Training->get('vdot'), 2);
-		if ($VDOT == 0)
-			return '';
-
-		if ($this->trainingId == -1)
-			$VDOT = round(JD::correctVDOT($VDOT), 2);
-
-		if ( $VDOT > (VDOT_FORM+3) )
-			$icon = Icon::$FORM_UP;
-		elseif ( $VDOT > (VDOT_FORM+1) )
-			$icon = Icon::$FORM_UP_HALF;
-		elseif ( $VDOT < (VDOT_FORM-3) )
-			$icon = Icon::$FORM_DOWN;
-		elseif ( $VDOT < (VDOT_FORM-1) )
-			$icon = Icon::$FORM_DOWN_HALF;
-		else
-			$icon = Icon::$FORM_NORMAL;
-
-		$title = $VDOT.': 3.000m in '.Helper::Prognosis(3, 0, $VDOT).',
-			5 km in '.Helper::Prognosis(5, 0, $VDOT).',
-			10 km in '.Helper::Prognosis(10, 0, $VDOT).',
-			HM in '.Helper::Prognosis(21.1, 0, $VDOT);
-
-		return Icon::get($icon, $title);
+		return $this->Training->getVDOTicon();
 	}
 }
 ?>

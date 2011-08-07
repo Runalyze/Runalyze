@@ -11,10 +11,15 @@ $Frontend->displayHeader();
 <h1>Kalenderauswahl</h1>
 
 <div id="widget">
+	<small class="right">
+		zur Best&auml;tigung wieder das Icon anklicken
+	</small>
+
 	<div id="widgetField">
 		<span>W&auml;hle ein Datum aus ...</span>
 		<a href="#">Ausw&auml;hlen</a>
 	</div>
+
 	<div id="widgetCalendar">
 	</div>
 </div>
