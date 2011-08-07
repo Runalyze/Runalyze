@@ -337,11 +337,20 @@ class Helper {
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
 		// TODO: New algorithm
+		// Auch in Abhängigkeit vom Zeitziel?
+		// Bisher: 50 Punkte = 0 %
+		// WK-Schnitt: XX Punkte (gewichtet)
+		// LL über 15 km: XX/2 Punkte (10 Wochen)
+
+		// SOLL:
+		// 40 Wkm, 6 15er => 30 %? <- genügt für langsamen Halbmarathon
+		// 100 Wkm, 10 30er => 100 % <- schneller Marathon
 		$points = 0;
 		if ($timestamp == 0)
 			$timestamp = time();
 
-		// Weekkilometers
+		// Weekkilometers (gewichtet)
+		// Zeitraum: 140 Tage = 20 Wochen
 		$wk_sum = 0;
 		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distance` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
@@ -351,6 +360,8 @@ class Helper {
 		$points += $wk_sum / 20;
 
 		// LongJogs ...
+		// derzeit: ab 15 km
+		// Zeitraum: 70 Tage = 10 Wochen
 		$data = Mysql::getInstance()->fetchAsArray('SELECT `distance` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
 		foreach($data as $dat) {
 			$p = ($dat['distance']-15) / 2;

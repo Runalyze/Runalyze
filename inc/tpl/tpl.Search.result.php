@@ -1,4 +1,6 @@
 <?php
+// TODO: CleanCode
+// -> Mysql-Query to class
 $Dataset = new Dataset();
 $Dataset->loadCompleteDataset();
 
@@ -17,6 +19,8 @@ if (isset($_POST['sport']) && sizeof($_POST['sport']) > 0) {
 
 if (isset($_POST['val']) && is_array($_POST['val'])) {
 	foreach ($_POST['val'] as $name => $value) {
+		$value = str_replace('+', ' ', $value);
+
 		if (is_numeric($name))
 			$name = $conditions[$name]['name'];
 
@@ -77,12 +81,12 @@ if ($num_all > CONF_RESULTS_AT_PAGE) {
 			foreach ($_POST[$var] as $inner_var => $inner_val) {
 				if (is_array($inner_val))
 					foreach ($inner_val as $i_var => $i_val)
-						$submit_search .= $var.'['.$inner_var.']['.$i_var.']='.$i_val.'&';
+						$submit_search .= $var.'['.$inner_var.']['.$i_var.']='.str_replace(' ', '+', $i_val).'&';
 				else
-					$submit_search .= $var.'['.$inner_var.']='.$inner_val.'&';
+					$submit_search .= $var.'['.$inner_var.']='.str_replace(' ', '+', $inner_val).'&';
 			}
 		elseif ($var != 'seite')
-			$submit_search .= $var.'='.$val.'&';
+			$submit_search .= $var.'='.str_replace(' ', '+', $val).'&';
 	}
 
 	if ($num_all > $_POST['seite']*CONF_RESULTS_AT_PAGE) {

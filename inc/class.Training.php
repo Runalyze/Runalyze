@@ -149,6 +149,56 @@ class Training {
 	}
 
 	/**
+	 * Fill internal data with default values for NULL-columns
+	 */
+	private function fillUpDataWithDefaultValues() {
+		$vars = array(
+			'route',
+			'splits',
+			'comment',
+			'partner',
+			'arr_time',
+			'arr_lat',
+			'arr_lon',
+			'arr_alt',
+			'arr_dist',
+			'arr_heart',
+			'arr_pace');
+
+		foreach ($vars as $var) {
+			if (!isset($this->data[$var]) || is_null($this->data[$var]))
+				$this->data[$var] = '';
+		}
+	}
+
+	/**
+	 * Set a column
+	 * @param string $var
+	 * @param string $value
+	 */
+	public function set($var, $value) {
+		if ($this->id != -1) {
+			Error::getInstance()->addWarning('Training::set - can\'t set value, Training already loaded.');
+			return;
+		}
+
+		$this->data[$var] = $value;
+	}
+
+	/**
+	 * Get a column from DB-row
+	 * @param string $var wanted column from database
+	 * @return mixed
+	 */
+	public function get($var) {
+		if (isset($this->data[$var]))
+			return $this->data[$var];
+
+		if ($var != 'temperature')
+			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"');
+	}
+
+	/**
 	 * Get object for clothes
 	 * @return Clothes
 	 */
@@ -181,49 +231,6 @@ class Training {
 	}
 
 	/**
-	 * Has this training a trainingtype?
-	 * @return bool
-	 */
-	public function hasType() {
-		return $this->Sport()->hasTypes();
-	}
-
-	/**
-	 * Has this training data for outside-trainings?
-	 * @return bool
-	 */
-	public function isOutside() {
-		return $this->Sport()->isOutside();
-	}
-
-	/**
-	 * Set a column
-	 * @param string $var
-	 * @param string $value
-	 */
-	public function set($var, $value) {
-		if ($this->id != -1) {
-			Error::getInstance()->addWarning('Training::set - can\'t set value, Training already loaded.');
-			return;
-		}
-
-		$this->data[$var] = $value;
-	}
-
-	/**
-	 * Get a column from DB-row
-	 * @param string $var wanted column from database
-	 * @return mixed
-	 */
-	public function get($var) {
-		if (isset($this->data[$var]))
-			return $this->data[$var];
-
-		if ($var != 'temperature')
-			Error::getInstance()->addWarning('Training::get - unknown column "'.$var.'"');
-	}
-
-	/**
 	 * Override global post-array for edit-window
 	 * @return array
 	 */
@@ -234,7 +241,7 @@ class Training {
 		$_POST['zeit'] = date("H:i", $this->get('time'));
 		$_POST['s'] = Helper::Time($this->get('s'), false, true);
 
-		$_POST['s_old'] = $_POST['s'];
+		$_POST['s_old'] = $this->get('s');
 		$_POST['dist_old'] = $this->get('distance');
 		$_POST['shoeid_old'] = $this->get('shoeid');
 
@@ -242,47 +249,6 @@ class Training {
 		$_POST['kcalPerHour'] = $this->Sport()->kcalPerHour();
 		$_POST['pace'] = $this->getPace();
 		$_POST['kmh'] = $this->getKmh();
-	}
-
-	/**
-	 * Fill internal data with default values for NULL-columns
-	 */
-	private function fillUpDataWithDefaultValues() {
-		$vars = array(
-			'route',
-			'splits',
-			'comment',
-			'partner',
-			'arr_time',
-			'arr_lat',
-			'arr_lon',
-			'arr_alt',
-			'arr_dist',
-			'arr_heart',
-			'arr_pace');
-
-		foreach ($vars as $var) {
-			if (!isset($this->data[$var]) || is_null($this->data[$var]))
-				$this->data[$var] = '';
-		}
-	}
-
-	/**
-	 * Uses JD::correctVDOT to correct own VDOT-value if specified
-	 */
-	private function correctVDOT() {
-		if (!isset($this->data['vdot']))
-			$this->data['vdot'] = 0;
-		elseif ($this->data['vdot'] != 0)
-			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
-	}
-
-	/**
-	 * Get string for clothes
-	 * @return string all clothes comma seperated
-	 */
-	public function getStringForClothes() {
-		return Clothes::getStringForClothes($this->get('clothes'));
 	}
 
 	/**
@@ -308,14 +274,6 @@ class Training {
 	 */
 	public function trainingLinkWithSportIcon() {
 		return $this->trainingLink($this->Sport()->Icon());
-	}
-
-	/**
-	 * Get date as link to that week in DataBrowser
-	 * @return string
-	 */
-	public function getDateAsWeeklink() {
-		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Helper::Weekstart($this->data['time']), Helper::Weekend($this->data['time']));
 	}
 
 	/**
@@ -348,6 +306,21 @@ class Training {
 	}
 
 	/**
+	 * Display the formatted date
+	 */
+	public function displayDate() {
+		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDate());
+	}
+
+	/**
+	 * Get date as link to that week in DataBrowser
+	 * @return string
+	 */
+	public function getDateAsWeeklink() {
+		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Helper::Weekstart($this->data['time']), Helper::Weekend($this->data['time']));
+	}
+
+	/**
 	 * Get the title for this training
 	 * @return string
 	 */
@@ -355,13 +328,6 @@ class Training {
 		return ($this->hasType())
 			? $this->Type()->name()
 			: $this->Sport()->name();
-	}
-
-	/**
-	 * Display the formatted date
-	 */
-	public function displayDate() {
-		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDate());
 	}
 
 	/**
@@ -447,6 +413,14 @@ class Training {
 	public function getSpeedString() {
 		return Helper::Speed($this->get('distance'), $this->get('s'), $this->get('sportid'));
 	}
+
+	/**
+	 * Get string for displaying colored trimp
+	 * @return string
+	 */
+	public function getTrimpString() {
+		return '<span style="color:#'.Helper::Stresscolor($this->get('trimp')).';">'.$this->get('trimp').'</span>';
+	}
 	
 	/**
 	* Get pace as string without unit
@@ -465,6 +439,54 @@ class Training {
 	}
 
 	/**
+	 * Get trainingspartner
+	 * @return string
+	 */
+	public function getPartner() {
+		return $this->get('partner');
+	}
+
+	/**
+	 * Get trainingspartner as links
+	 * @return string
+	 */
+	public function getPartnerAsLinks() {
+		if (!$this->hasPartner())
+			return '';
+
+		$links = array();
+		$partners = explode(', ', $this->getPartner());
+		foreach ($partners as $partner)
+			$links[] = DataBrowser::getSearchLink($partner, 'opt[partner]=is&val[partner]='.$partner);
+
+		return implode(', ', $links);
+	}
+
+	/**
+	 * Get string for clothes
+	 * @return string all clothes comma seperated
+	 */
+	public function getStringForClothes() {
+		return Clothes::getStringForClothes($this->get('clothes'));
+	}
+
+	/**
+	 * Has this training data for outside-trainings?
+	 * @return bool
+	 */
+	public function isOutside() {
+		return $this->Sport()->isOutside();
+	}
+
+	/**
+	 * Has this training a trainingtype?
+	 * @return bool
+	 */
+	public function hasType() {
+		return $this->Sport()->hasTypes();
+	}
+
+	/**
 	 * Is a positive distance set?
 	 * @return bool
 	 */
@@ -473,41 +495,69 @@ class Training {
 	}
 
 	/**
-	 * Calculate absolute number for elevation
-	 * @param array $alternateData [optional] Array for arr_alt
-	 * @return int
+	 * Is an heartfrequence set?
+	 * @return bool
 	 */
-	static public function calculateElevation($data) {
-		if (empty($data))
-			return 0;
+	public function hasPulse() {
+		return ($this->get('pulse_avg') > 0 || $this->get('pulse_max') > 0);
+	}
 
-		$elevationPoints 	= explode(self::$ARR_SEP, $data);
-		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
-		$positiveElevation 	= 0;  $up   = false;
-		$negativeElevation 	= 0;  $down = false;
-		$currentElevation   = 0;
+	/**
+	 * Is a positive elevation set?
+	 * @return bool
+	 */
+	public function hasElevation() {
+		return ($this->get('elevation') > 0);
+	}
 
-		// Algorithm: must be at least 5m up/down without down/up
-		foreach ($elevationPoints as $i => $p) {
-			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$diff = $p - $elevationPoints[$i-1];
-				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
-					$currentElevation += $diff;
-				else {
-					if (abs($currentElevation) >= 5) {
-						if ($up)
-							$positiveElevation += $currentElevation;
-						if ($down)
-							$negativeElevation -= $currentElevation;
-					}
-					$currentElevation = $diff;
-				}
-				$up   = ($diff > 0);
-				$down = ($diff < 0);
-			}
-		}
+	/**
+	 * Is a route set?
+	 * @return bool
+	 */
+	public function hasRoute() {
+		return ($this->get('route') != '');
+	}
 
-		return max($minimumElevation, $positiveElevation, $negativeElevation);
+	/**
+	 * Has the training information about splits?
+	 */
+	public function hasSplitsData() {
+		return $this->get('splits') != '';
+	}
+
+	/**
+	 * Has the training information about trainingspartner?
+	 */
+	public function hasPartner() {
+		return $this->get('partner') != '';
+	}
+
+	/**
+	 * Has the training information about pace?
+	 */
+	public function hasPaceData() {
+		return $this->get('arr_pace') != '';
+	}
+
+	/**
+	 * Has the training information about elevation?
+	 */
+	public function hasElevationData() {
+		return $this->get('arr_alt') != '';
+	}
+
+	/**
+	 * Has the training information about pulse?
+	 */
+	public function hasPulseData() {
+		return $this->get('arr_heart') != '' && max(explode('|',$this->get('arr_heart'))) > 60;
+	}
+
+	/**
+	 * Has the training information about position?
+	 */
+	public function hasPositionData() {
+		return $this->get('arr_lat') != '' && $this->get('arr_lon') != '';
 	}
 
 	/**
@@ -569,41 +619,6 @@ class Training {
 		}
 
 		return implode(', ', $splits);
-	}
-
-	/**
-	 * Has the training information about splits?
-	 */
-	public function hasSplitsData() {
-		return $this->get('splits') != '';
-	}
-
-	/**
-	 * Has the training information about pace?
-	 */
-	public function hasPaceData() {
-		return $this->get('arr_pace') != '';
-	}
-
-	/**
-	 * Has the training information about elevation?
-	 */
-	public function hasElevationData() {
-		return $this->get('arr_alt') != '';
-	}
-
-	/**
-	 * Has the training information about pulse?
-	 */
-	public function hasPulseData() {
-		return $this->get('arr_heart') != '' && max(explode('|',$this->get('arr_heart'))) > 60;
-	}
-
-	/**
-	 * Has the training information about position?
-	 */
-	public function hasPositionData() {
-		return $this->get('arr_lat') != '' && $this->get('arr_lon') != '';
 	}
 
 	/**
@@ -980,11 +995,98 @@ class Training {
 	}
 
 	/**
+	 * Calculate absolute number for elevation
+	 * @param array $alternateData [optional] Array for arr_alt
+	 * @return int
+	 */
+	static public function calculateElevation($data) {
+		if (empty($data))
+			return 0;
+
+		$elevationPoints 	= explode(self::$ARR_SEP, $data);
+		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
+		$positiveElevation 	= 0;  $up   = false;
+		$negativeElevation 	= 0;  $down = false;
+		$currentElevation   = 0;
+
+		// Algorithm: must be at least 5m up/down without down/up
+		foreach ($elevationPoints as $i => $p) {
+			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
+				$diff = $p - $elevationPoints[$i-1];
+				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
+					$currentElevation += $diff;
+				else {
+					if (abs($currentElevation) >= 5) {
+						if ($up)
+							$positiveElevation += $currentElevation;
+						if ($down)
+							$negativeElevation -= $currentElevation;
+					}
+					$currentElevation = $diff;
+				}
+				$up   = ($diff > 0);
+				$down = ($diff < 0);
+			}
+		}
+
+		return max($minimumElevation, $positiveElevation, $negativeElevation);
+	}
+
+	/**
 	 * Compress data for lower database-traffic
 	 */
 	private function compressData() {
 		// TODO
 		Error::getInstance()->addTodo('Set up class::Training::compressData()');
+	}
+
+	/**
+	 * Uses JD::correctVDOT to correct own VDOT-value if specified
+	 */
+	private function correctVDOT() {
+		if (!isset($this->data['vdot']))
+			$this->data['vdot'] = 0;
+		elseif ($this->data['vdot'] != 0)
+			$this->data['vdot'] = JD::correctVDOT($this->data['vdot']);
+	}
+
+	/**
+	 * Get rounded and corrected VDOT-value
+	 * @return number
+	 */
+	public function getVDOT() {
+		return round($this->get('vdot'), 2);
+	}
+
+	/**
+	 * Get icon with prognosis as title for VDOT-value
+	 * @return string
+	 */
+	public function getVDOTicon() {
+		$VDOT = $this->getVDOT();
+		if ($VDOT == 0)
+			return '';
+
+		if ($this->id == -1)
+			$VDOT = round(JD::correctVDOT($VDOT), 2);
+
+		if ( $VDOT > (VDOT_FORM+3) )
+			$icon = Icon::$FORM_UP;
+		elseif ( $VDOT > (VDOT_FORM+1) )
+			$icon = Icon::$FORM_UP_HALF;
+		elseif ( $VDOT < (VDOT_FORM-3) )
+			$icon = Icon::$FORM_DOWN;
+		elseif ( $VDOT < (VDOT_FORM-1) )
+			$icon = Icon::$FORM_DOWN_HALF;
+		else
+			$icon = Icon::$FORM_NORMAL;
+
+		$title = $VDOT.': 3.000m in '.Helper::Prognosis(3, 0, $VDOT).',
+			5 km in '.Helper::Prognosis(5, 0, $VDOT).',
+			10 km in '.Helper::Prognosis(10, 0, $VDOT).',
+			HM in '.Helper::Prognosis(21.1, 0, $VDOT);
+
+		return Icon::get($icon, $title);
 	}
 }
 ?>

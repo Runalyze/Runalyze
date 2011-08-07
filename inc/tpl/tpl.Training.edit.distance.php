@@ -2,7 +2,7 @@
 <br />
 
 <?php if ($Training->Sport()->isRunning()): ?>
-	<?php echo Shoe::getSelectBox(); ?>
+	<?php echo Shoe::getSelectBox(false); ?>
 	<br />
 
 	<label>
@@ -22,7 +22,7 @@
 	</label><br />
 <?php endif; ?>
 
-<?php if ($Training->Type()->hasSplits()): ?>
+<?php if ($Training->hasType() && $Training->Type()->hasSplits()): ?>
 	<label>
 		<?php echo HTML::textarea('splits', 70, 3); ?>
 		<small>Splits</small>

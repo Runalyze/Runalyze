@@ -116,7 +116,7 @@ class Shoe {
 		if (empty($shoes))
 			$shoes[0] = 'Keine Schuhe vorhanden';
 		elseif ($showUnknown)
-			$shoes = array_merge(array('?'), $shoes);
+			$shoes = array(0 => '?') + $shoes;
 
 		return HTML::selectBox('shoeid', $shoes, $selected);
 	}
