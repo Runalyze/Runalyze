@@ -1,16 +1,16 @@
 <?php
 /**
  * File displaying the formular for shoes
- * Call:   inc/plugin/window.schuhe.php
+ * Call:   plugin/window.schuhe.php
  */
-require('../class.Frontend.php');
+require '../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 
 if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 	$columns = array('inuse');
 	$values = array(1);
-	$vars = array('name', 'marke', 'kaufdatum');
+	$vars = array('name', 'brand', 'since');
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
 			$columns[] = $var;
@@ -18,13 +18,13 @@ if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 		}
 
 	if (strlen($_POST['name']) > 1) {
-		$Mysql->insert(PREFIX.'schuhe', $columns, $values);
+		$Mysql->insert(PREFIX.'shoe', $columns, $values);
 		$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
 	} else {
 		$submit = '<em class="error">Der Schuh muss einen Namen haben!</em><br /><br />';
 	}
-} elseif (isset($_POST['type']) && $_POST['type'] == 'schuh_unuse') {
-	$Mysql->update(PREFIX.'schuhe', $_POST['schuhid'], 'inuse', 0);
+} elseif (isset($_POST['type']) && $_POST['type'] == 'shoe_unuse') {
+	$Mysql->update(PREFIX.'shoe', $_POST['shoeid'], 'inuse', 0);
 
 	$submit = '<em>Der Schuh kann nun nicht mehr benutzt werden!</em><br /><br />';
 }
@@ -45,11 +45,11 @@ if (isset($submit))
 		<small>Name</small>
 	</label><br />
 	<label>
-		<input type="text" name="marke" size="15" />
+		<input type="text" name="brand" size="15" />
 		<small>Marke</small>
 	</label><br />
 	<label>
-		<input type="text" name="kaufdatum" value="<?php echo date("d.m.Y"); ?>" size="15" />
+		<input type="text" name="since" value="<?php echo date("d.m.Y"); ?>" size="15" />
 		<small>Kaufdatum</small>
 	</label><br />
 	<input type="submit" value="Eintragen" />
@@ -61,15 +61,9 @@ if (isset($submit))
 <h1>Schuhe bearbeiten</h1>
 
 <form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="schuhe_edit" onsubmit="return false;" method="post">
-	<input type="hidden" name="type" value="schuh_unuse" />
-	<select name="schuhid">
-<?php
-$schuhe = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` WHERE `inuse`=1 ORDER BY `id` ASC');
-foreach($schuhe as $schuh)
-	echo('
-		<option value="'.$schuh['id'].'">'.$schuh['name'].'</option>');
-?>
-	</select>
+	<input type="hidden" name="type" value="shoe_unuse" />
+	<?php echo Shoe::getSelectBox(true, false); ?>
+
 	<input type="submit" value="Nicht mehr nutzen" />
 </form>
 

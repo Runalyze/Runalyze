@@ -1,20 +1,18 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "PrognosePanel".
+ * This file contains the class of the RunalyzePluginPanel "Prognose".
  */
-$PLUGINKEY = 'RunalyzePlugin_PrognosePanel';
+$PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
- * Class: RunalyzePlugin_PrognosePanel
+ * Class: RunalyzePluginPanel_Prognose
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Plugin
  * @uses class::PluginPanel
  * @uses class::Helper
- *
- * Last modified 2011/07/10 16:00 by Hannes Christiansen
  */
-class RunalyzePlugin_PrognosePanel extends PluginPanel {
+class RunalyzePluginPanel_Prognose extends PluginPanel {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()

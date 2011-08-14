@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "StreckenStat".
+ * This file contains the class of the RunalyzePluginStat "Strecken".
  */
-$PLUGINKEY = 'RunalyzePlugin_StreckenStat';
+$PLUGINKEY = 'RunalyzePluginStat_Strecken';
 /**
- * Class: RunalyzePlugin_StreckenStat
+ * Class: RunalyzePluginStat_Strecken
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_StreckenStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_StreckenStat extends PluginStat {
+class RunalyzePluginStat_Strecken extends PluginStat {
 	private $orte = array();
 
 	/**
@@ -50,8 +48,8 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 		$this->displayRoutes();
 		$this->displayCities();
 
-		echo Helper::clearBreak();
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
+		echo HTML::clearBreak();
 
 		$this->displayLonelyCities();
 	}
@@ -62,13 +60,13 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 	private function displayRoutes() {
 		echo '<table style="width:70%;" style="margin:0 5px;" class="left small">';
 		echo '<tr class="b c"><td colspan="3">H&auml;ufigsten Strecken</td></tr>';
-		echo Helper::spaceTR(3);
+		echo HTML::spaceTR(3);
 
 		$strecken = Mysql::getInstance()->fetchAsArray('
-			SELECT `strecke`, SUM(`distanz`) as `km`, SUM(1) as `num`
+			SELECT `route`, SUM(`distance`) as `km`, SUM(1) as `num`
 			FROM `'.PREFIX.'training`
-			WHERE `strecke`!=""
-			GROUP BY `strecke`
+			WHERE `route`!=""
+			GROUP BY `route`
 			ORDER BY `num` DESC
 			LIMIT 10');
 		foreach ($strecken as $i => $strecke) {
@@ -76,7 +74,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 				<tr class="a'.($i%2+1).' r">
 					<td>'.$strecke['num'].'x</td>
 					<td class="l">	
-						'.DataBrowser::getSearchLink(Helper::Cut($strecke['strecke'],100), 'opt[strecke]=is&val[strecke]='.$strecke['strecke']).'
+						'.DataBrowser::getSearchLink(Helper::Cut($strecke['route'],100), 'opt[route]=is&val[route]='.$strecke['route']).'
 					</td>
 					<td>'.Helper::Km($strecke['km']).'</td>
 				</tr>');
@@ -91,7 +89,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 	private function displayCities() {
 		echo '<table style="width:25%;" style="margin:0 5px;" class="left small">';
 		echo '<tr class="b c"><td colspan="2">H&auml;ufigsten Orte</td></tr>';
-		echo Helper::spaceTR(2);
+		echo HTML::spaceTR(2);
 		
 		$i = 1;
 		array_multisort($this->orte, SORT_DESC);
@@ -101,7 +99,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 			echo('
 				<tr class="a'.($i%2+1).'">
 					<td>'.$num.'x</td>
-					<td>'.DataBrowser::getSearchLink($ort, 'opt[strecke]=like&val[strecke]='.$ort).'</td>
+					<td>'.DataBrowser::getSearchLink($ort, 'opt[route]=like&val[route]='.$ort).'</td>
 				</tr>');
 
 			if ($i == 11)
@@ -117,7 +115,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 	private function displayLonelyCities() {
 		echo '<table style="width:95%;" style="margin:0 5px;" class="small">';
 		echo '<tr class="b c"><td colspan="2">Seltensten Orte</td></tr>';
-		echo Helper::spaceTR(2);
+		echo HTML::spaceTR(2);
 
 		$num_x = 0;
 		array_multisort($this->orte);
@@ -132,7 +130,7 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 				} else
 					echo(', ');
 
-				echo DataBrowser::getSearchLink($ort, 'opt[strecke]=like&val[strecke]='.$ort);
+				echo DataBrowser::getSearchLink($ort, 'opt[route]=like&val[route]='.$ort);
 			}
 			else {
 				echo '</td></tr>';
@@ -154,9 +152,9 @@ class RunalyzePlugin_StreckenStat extends PluginStat {
 	 */
 	private function initCities() {
 		$this->orte = array();
-		$strecken = Mysql::getInstance()->fetchAsArray('SELECT `strecke`, `distanz` FROM `'.PREFIX.'training` WHERE `strecke`!=""');
+		$strecken = Mysql::getInstance()->fetchAsArray('SELECT `route`, `distance` FROM `'.PREFIX.'training` WHERE `route`!=""');
 		foreach ($strecken as $strecke) {
-			$streckenorte = explode(" - ", $strecke['strecke']);
+			$streckenorte = explode(" - ", $strecke['route']);
 			foreach ($streckenorte as $streckenort) {
 				if (!isset($this->orte[$streckenort]))
 					$this->orte[$streckenort] = 1;

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "WetterStat".
+ * This file contains the class of the RunalyzePluginStat "Wetter".
  */
-$PLUGINKEY = 'RunalyzePlugin_WetterStat';
+$PLUGINKEY = 'RunalyzePluginStat_Wetter';
 /**
- * Class: RunalyzePlugin_WetterStat
+ * Class: RunalyzePluginStat_Wetter
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_WetterStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_WetterStat extends PluginStat {
+class RunalyzePluginStat_Wetter extends PluginStat {
 	private $i      = 0;
 	private $jahr   = '';
 	private $jstart = 0;
@@ -56,13 +54,15 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			return;
 		}
 
+		$Sport = new Sport(CONF_MAINSPORT);
+
 		if ($this->config['for_weather']['var'])
-			echo Ajax::window('<a class="right" href="inc/plugin/window.wetter.php" title="Wetter-Diagramme anzeigen">'.Icon::get(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>');
+			echo Ajax::window('<a class="right" href="plugin/window.wetter.php" title="Wetter-Diagramme anzeigen">'.Icon::get(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>');
 
 		$this->displayHeader($this->getHeader());
 		$this->displayYearNavigation();
-		echo '<small class="left">'.Helper::Sport(CONF_MAINSPORT).'</small>';
-		echo Helper::clearBreak();
+		echo '<small class="left">'.$Sport->name().'</small>';
+		echo HTML::clearBreak();
 		echo '<br />';
 		
 		$this->displayExtremeTrainings();
@@ -75,21 +75,21 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 	 */
 	private function displayMonthTable() {
 		echo '<table style="width:100%;" class="small">';
-		echo Helper::monthTR(8, 1);
+		echo HTML::monthTR(8, 1);
 
 		if ($this->config['for_weather']['var']) {
-			echo Helper::spaceTR(13);
+			echo HTML::spaceTR(13);
 			$this->displayMonthTableTemp();
 			$this->displayMonthTableWeather();
 		}
 
 		if ($this->config['for_clothes']['var']) {
-			echo Helper::spaceTR(13);
+			echo HTML::spaceTR(13);
 			$this->displayMonthTableClothes();
 		}
 
-		echo Helper::spaceTR(13);
-		echo '<tr>'.Helper::emptyTD(13).'</tr>';
+		echo HTML::spaceTR(13);
+		echo '<tr>'.HTML::emptyTD(13).'</tr>';
 		echo '</table>';
 	}
 
@@ -101,11 +101,11 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 
 		$i = 1;
 		$temps = Mysql::getInstance()->fetchAsArray('SELECT
-				AVG(`temperatur`) as `temp`,
+				AVG(`temperature`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.CONF_MAINSPORT.'" AND
-				`temperatur` IS NOT NULL
+				`temperature` IS NOT NULL
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
@@ -114,16 +114,16 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 		if (!empty($temps)) {
 			foreach ($temps as $temp) {
 				for (; $i < $temp['m']; $i++)
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 				$i++;
 		
 				echo '<td>'.round($temp['temp']).' &deg;C</td>'.NL;
 			}
 
 			for (; $i <= 12; $i++)
-				echo Helper::emptyTD();
+				echo HTML::emptyTD();
 		} else {
-			echo Helper::emptyTD(12);
+			echo HTML::emptyTD(12);
 		}
 
 		echo '</tr>';
@@ -133,9 +133,10 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 	* Display month-table for weather
 	*/
 	private function displayMonthTableWeather() {
-		$wetter_all = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'wetter` WHERE `name`!="unbekannt" ORDER BY `order` ASC');
+		$wetter_all = Weather::getArrayWithoutUnknown();
 		foreach ($wetter_all as $w => $wetter) {
-			echo '<tr class="a'.($w%2+1).' r"><td class="c">'.Helper::WeatherImage($wetter['id']).'</td>';
+			$Weather = new Weather($wetter['id']);
+			echo '<tr class="a'.($w%2+1).' r"><td class="c">'.$Weather->icon().'</td>';
 		
 			$i = 1;
 			$data = Mysql::getInstance()->fetchAsArray('SELECT
@@ -143,7 +144,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 					MONTH(FROM_UNIXTIME(`time`)) as `m`
 				FROM `'.PREFIX.'training` WHERE
 					`sportid`="'.CONF_MAINSPORT.'" AND
-					`wetterid`='.$wetter['id'].'
+					`weatherid`='.$wetter['id'].'
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 				GROUP BY MONTH(FROM_UNIXTIME(`time`))
 				ORDER BY `m` ASC
@@ -152,18 +153,18 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			if (!empty($data)) {
 				foreach ($data as $dat) {
 					for (; $i < $dat['m']; $i++)
-						echo Helper::emptyTD();
+						echo HTML::emptyTD();
 					$i++;
 			
 					echo ($dat['num'] != 0)
 						? ('<td>'.$dat['num'].'x</td>'.NL)
-						: Helper::emptyTD();
+						: HTML::emptyTD();
 				}
 			
 				for (; $i <= 12; $i++)
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 			} else {
-				echo Helper::emptyTD(12);
+				echo HTML::emptyTD(12);
 			}
 		}
 	
@@ -179,7 +180,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.CONF_MAINSPORT.'" AND
-				`kleidung`!=""
+				`clothes`!=""
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
@@ -192,14 +193,14 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			Error::getInstance()->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
 		}
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'kleidung` ORDER BY `order` ASC');
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
 				echo '<tr class="a'.($k%2+1).' r"><td class="r">'.$kleidung['name'].'</td>';
 			
 				$i = 1;
 				$data = Mysql::getInstance()->fetchAsArray('SELECT
-						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `kleidung`)!=0,1,0)) as `num`,
+						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `clothes`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
 					FROM `'.PREFIX.'training` WHERE
 						`sportid`="'.CONF_MAINSPORT.'"
@@ -212,7 +213,7 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				if (!empty($data)) {
 					foreach ($data as $dat) {
 						for (; $i < $dat['m']; $i++)
-							echo Helper::emptyTD();
+							echo HTML::emptyTD();
 						$i++;
 
 						if ($dat['num'] != 0)
@@ -221,11 +222,11 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 										'.round($dat['num']*100/$num[$dat['m']]).' &#37;
 								</span></td>'.NL);
 						else
-							echo Helper::emptyTD();
+							echo HTML::emptyTD();
 					}
 
 					for (; $i <= 12; $i++)
-						echo Helper::emptyTD();
+						echo HTML::emptyTD();
 				} else {
 					echo('		<td colspan="12" />'.NL);
 				}
@@ -253,10 +254,10 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 				<td>Temperaturen</td>
 				<td>&Oslash;</td>
 			</tr>';
-		echo Helper::spaceTR(11);
+		echo HTML::spaceTR(11);
 		echo '<tr class="a1 r">';
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'kleidung` ORDER BY `order` ASC');
+		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $i => $kleidung) {
 				if ($i%3 == 0)
@@ -265,12 +266,12 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 					echo '<td>&nbsp;&nbsp;</td>';
 
 				$dat = Mysql::getInstance()->fetch('SELECT
-						AVG(`temperatur`) as `avg`,
-						MAX(`temperatur`) as `max`,
-						MIN(`temperatur`) as `min`
+						AVG(`temperature`) as `avg`,
+						MAX(`temperature`) as `max`,
+						MIN(`temperature`) as `min`
 					FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_MAINSPORT.'" AND
-					`temperatur` IS NOT NULL AND
-					FIND_IN_SET('.$kleidung['id'].',`kleidung`) != 0
+					`temperature` IS NOT NULL AND
+					FIND_IN_SET('.$kleidung['id'].',`clothes`) != 0
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));
 
 				echo '<td class="l">'.$kleidung['name'].'</td>';
@@ -286,10 +287,10 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 			$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
 
 		for (; $i%3 != 1; $i++)
-			echo Helper::emptyTD(3);
+			echo HTML::emptyTD(3);
 
 		echo '</tr>';
-		echo Helper::spaceTR(11);
+		echo HTML::spaceTR(11);
 		echo '</table>';
 	}
 
@@ -297,13 +298,13 @@ class RunalyzePlugin_WetterStat extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperatur`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperatur` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperatur` DESC LIMIT 3');
-		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperatur`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperatur` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperatur` ASC LIMIT 3');
+		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` DESC LIMIT 3');
+		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 3');
 
 		foreach ($hot as $i => $h)
-			$hot[$i] = $h['temperatur'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
+			$hot[$i] = $h['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
 		foreach ($cold as $i => $c)
-			$cold[$i] = $c['temperatur'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $c['time']));
+			$cold[$i] = $c['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $c['time']));
 
 		echo '<small>';
 		echo '<strong>W&auml;rmsten L&auml;ufe:</strong> '.NL;

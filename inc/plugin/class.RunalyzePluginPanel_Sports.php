@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "SportsPanel".
+ * This file contains the class of the RunalyzePluginPanel "Sports".
  */
-$PLUGINKEY = 'RunalyzePlugin_SportsPanel';
+$PLUGINKEY = 'RunalyzePluginPanel_Sports';
 /**
- * Class: RunalyzePlugin_SportsPanel
+ * Class: RunalyzePluginPanel_Sports
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_SportsPanel';
  * @uses class::Mysql
  * @uses class::Helper
  * @uses START_TIME
- *
- * Last modified 2011/07/10 16:00 by Hannes Christiansen
  */
-class RunalyzePlugin_SportsPanel extends PluginPanel {
+class RunalyzePluginPanel_Sports extends PluginPanel {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -64,26 +62,29 @@ class RunalyzePlugin_SportsPanel extends PluginPanel {
 		foreach ($this->getTimeset() as $i => $timeset) {
 			echo('<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : 'style="display:none;"').'>');
 	
-			$sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sports` WHERE `online`=1 ORDER BY `distanz` DESC, `dauer` DESC');
-			foreach ($sports as $sport) {
-				$data = $Mysql->fetchSingle('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distanz`) as `distanz_sum`, SUM(`dauer`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `sportid`='.$sport['id'].' AND `time` >= '.$timeset['start'].' GROUP BY `sportid`');
-				$leistung = ($sport['distanztyp'] == 1)
-					? Helper::Unknown(Helper::Km($data['distanz_sum']), '0,0 km')
-					: Helper::Time($data['dauer_sum']); 		
+			$data = $Mysql->fetchAsArray('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distance`) as `distanz_sum`, SUM(`s`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `time` >= '.$timeset['start'].' GROUP BY `sportid` ORDER BY `distanz_sum` DESC, `dauer_sum` DESC');
+			foreach ($data as $dat) {
+				$Sport = new Sport($dat['sportid']);
+				$leistung = $Sport->usesDistance()
+					? Helper::Unknown(Helper::Km($dat['distanz_sum']), '0,0 km')
+					: Helper::Time($dat['dauer_sum']); 		
 			
 				echo('
 		<p>
 			<span>
-				<small><small>('.Helper::Unknown($data['anzahl'], '0').'-mal)</small></small>
+				<small><small>('.Helper::Unknown($dat['anzahl'], '0').'-mal)</small></small>
 				'.$leistung.'
 			</span>
-			'.Icon::getSportIcon($sport['id']).'
-			<strong>'.$sport['name'].'</strong>
+			'.$Sport->Icon().'
+			<strong>'.$Sport->name().'</strong>
 		</p>'.NL);	
 			}
+
+			if (empty($data))
+				echo('<p><em>Noch keine Daten vorhanden.</em></p>');
 	
-			echo('<small class="right">seit '.date("d.m.Y",$timeset['start']).'</small>');
-			echo Helper::clearBreak();
+			echo('<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>');
+			echo HTML::clearBreak();
 			echo('</div>');
 		}
 	

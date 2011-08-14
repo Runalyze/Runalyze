@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "LaufabcStat".
+ * This file contains the class of the RunalyzePluginStat "Laufabc".
  */
-$PLUGINKEY = 'RunalyzePlugin_LaufabcStat';
+$PLUGINKEY = 'RunalyzePluginStat_Laufabc';
 /**
- * Class: RunalyzePlugin_LaufabcStat
+ * Class: RunalyzePluginStat_Laufabc
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_LaufabcStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_LaufabcStat extends PluginStat {
+class RunalyzePluginStat_Laufabc extends PluginStat {
 	private $ABCData = array();
 
 	/**
@@ -55,8 +53,8 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 	 */
 	private function displayData() {
 		echo '<table style="width:100%;" class="small">';
-		echo Helper::monthTr(8, 1);
-		echo Helper::spaceTR(13);
+		echo HTML::monthTr(8, 1);
+		echo HTML::spaceTR(13);
 		
 		if (empty($this->ABCData))
 			echo '<tr><td colspan="12"><em>Keine Daten gefunden.</em></td></tr>';
@@ -69,13 +67,13 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 				if (isset($Data[$m]) && $Data[$m]['num'] > 0)
 					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>'.NL;
 				else
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 			}
 
 			echo '</tr>'.NL;
 		}
 
-		echo Helper::spaceTR(13);
+		echo HTML::spaceTR(13);
 		echo '</table>';
 	}
 
@@ -85,7 +83,7 @@ class RunalyzePlugin_LaufabcStat extends PluginStat {
 	private function initData() {
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				SUM(`laufabc`) as `abc`,
+				SUM(`abc`) as `abc`,
 				SUM(1) as `num`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "SportlerPanel".
+ * This file contains the class of the RunalyzePluginPanel "Sportler".
  */
-$PLUGINKEY = 'RunalyzePlugin_SportlerPanel';
+$PLUGINKEY = 'RunalyzePluginPanel_Sportler';
 /**
- * Class: RunalyzePlugin_SportlerPanel
+ * Class: RunalyzePluginPanel_Sportler
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -14,10 +14,8 @@ $PLUGINKEY = 'RunalyzePlugin_SportlerPanel';
  * @uses class::Ajax
  * @uses inc/draw/plugin.sportler.fett.php
  * @uses inc/draw/plugin.sportler.gewicht.php
- *
- * Last modified 2011/07/10 16:00 by Hannes Christiansen
  */
-class RunalyzePlugin_SportlerPanel extends PluginPanel {
+class RunalyzePluginPanel_Sportler extends PluginPanel {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -47,7 +45,7 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="inc/plugin/window.sportler.php" title="Daten hinzuf&uuml;gen">'.Icon::get(Icon::$ADD, 'Daten hinzuf&uuml;gen').'</a>');
+		return Ajax::window('<a href="plugin/window.sportler.php" title="Daten hinzuf&uuml;gen">'.Icon::get(Icon::$ADD, 'Daten hinzuf&uuml;gen').'</a>');
 	}
 
 	/**
@@ -59,12 +57,12 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 			<div id="sportler">
 				<div id="sportler-gewicht" class="change">');
 
-		$dat = Mysql::getInstance()->fetch(PREFIX.'user', 'LAST');
+		$dat = User::getLastRow();
 		if ($this->config['use_weight'])
-			$left = '<strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['gewicht']).' kg</strong>';
+			$left = '<strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['weight']).' kg</strong>';
 		
 		if ($this->config['use_pulse'])
-			$right = Helper::Unknown($dat['puls_ruhe']).' bpm / '.Helper::Unknown($dat['puls_max']).' bpm';
+			$right = Helper::Unknown($dat['pulse_rest']).' bpm / '.Helper::Unknown($dat['pulse_max']).' bpm';
 		
 		echo('		<p>
 						<span>'.$right.'</span>
@@ -80,7 +78,7 @@ class RunalyzePlugin_SportlerPanel extends PluginPanel {
 
 		$left = ''; $right = '';
 		if ($this->config['use_body_fat'])
-			$left = '<small>'.Helper::Unknown($dat['fett']).'&#37;Fett, '.Helper::Unknown($dat['wasser']).'&#37;Wasser, '.Helper::Unknown($dat['muskeln']).'&#37;Muskeln</small>';
+			$left = '<small>'.Helper::Unknown($dat['fat']).'&#37;Fett, '.Helper::Unknown($dat['water']).'&#37;Wasser, '.Helper::Unknown($dat['muscles']).'&#37;Muskeln</small>';
 	
 		echo('		<p>
 						<span>'.$right.'</span>

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "CachecleanTool".
+ * This file contains the class of the RunalyzePluginTool "Cacheclean".
  */
-$PLUGINKEY = 'RunalyzePlugin_CachecleanTool';
+$PLUGINKEY = 'RunalyzePluginTool_Cacheclean';
 /**
- * Class: RunalyzePlugin_CachecleanTool
+ * Class: RunalyzePluginTool_Cacheclean
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_CachecleanTool';
  * @uses class::Mysql
  * @uses class::Helper
  * @uses class::Draw
- *
- * Last modified 2011/07/28 22:00 by Hannes Christiansen
  */
-class RunalyzePlugin_CachecleanTool extends PluginTool {
+class RunalyzePluginTool_Cacheclean extends PluginTool {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()

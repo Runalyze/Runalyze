@@ -1,9 +1,9 @@
 <?php
 /**
  * File for displaying statistic plugins.
- * Call:   inc/plugin/window.wetter.php
+ * Call:   plugin/window.wetter.php
  */
-require('../class.Frontend.php');
+require '../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 ?>

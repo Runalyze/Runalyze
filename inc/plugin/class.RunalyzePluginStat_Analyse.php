@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "AnalyseStat".
+ * This file contains the class of the RunalyzePluginStat "Analyse".
  */
-$PLUGINKEY = 'RunalyzePlugin_AnalyseStat';
+$PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
- * Class: RunalyzePlugin_AnalyseStat
+ * Class: RunalyzePluginStat_Analyse
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -14,10 +14,8 @@ $PLUGINKEY = 'RunalyzePlugin_AnalyseStat';
  * @uses class::Error
  * @uses START_YEAR
  * @uses HF_MAX
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_AnalyseStat extends PluginStat {
+class RunalyzePluginStat_Analyse extends PluginStat {
 	private $where_time = '';
 	private $group_time = '';
 	private $timer = '';
@@ -67,7 +65,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		$this->displayHeader('Training '.$this->getYearString());
 		$this->displayYearNavigation();
 
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 
 		$this->displayAnalysis();
 	}
@@ -118,12 +116,12 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 				for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 					if (isset($Data['array'][$Each['id']][$t])) {
 						$num     = $Data['array'][$Each['id']][$t]['num'];
-						$dist    = $Data['array'][$Each['id']][$t]['distanz'];
+						$dist    = $Data['array'][$Each['id']][$t]['distance'];
 						$percent = round(100 * $dist / $Data['array']['timer_sum'][$t], 1);
 
 						echo '<td title="'.$num.'x - '.Helper::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
 					} else {
-						echo Helper::emptyTD();
+						echo HTML::emptyTD();
 					}
 				}
 
@@ -133,7 +131,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 
 					echo '<td title="'.Helper::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
 				} else {
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 				}
 
 				echo('
@@ -150,7 +148,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 					if (isset($Data['array']['timer_sum'][$t])) {
 						echo '<td>'.Helper::Km($Data['array']['timer_sum'][$t], 0).'</td>'.NL;
 					} else {
-						echo Helper::emptyTD();
+						echo HTML::emptyTD();
 					}
 				}
 
@@ -170,13 +168,13 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
-				SUM(`distanz`) AS `distanz`,
-				`typid`,
+				SUM(`distance`) AS `distance`,
+				`typeid`,
 				`RPE`
 			FROM `'.PREFIX.'training`
-			LEFT JOIN `'.PREFIX.'typ` ON ('.PREFIX.'training.typid='.PREFIX.'typ.id)
+			LEFT JOIN `'.PREFIX.'type` ON ('.PREFIX.'training.typeid='.PREFIX.'type.id)
 			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
-			GROUP BY `typid`, '.$this->group_time.'
+			GROUP BY `typeid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
 		
 		$type_data = array(
@@ -187,23 +185,23 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		foreach ($result as $dat) {
 			if (!isset($type_data['timer_sum'][$dat['timer']]))
 				$type_data['timer_sum'][$dat['timer']] = 0;
-			if (!isset($type_data['id_sum'][$dat['typid']]))
-				$type_data['id_sum'][$dat['typid']] = 0;
+			if (!isset($type_data['id_sum'][$dat['typeid']]))
+				$type_data['id_sum'][$dat['typeid']] = 0;
 
-			$type_data[$dat['typid']][$dat['timer']] = array(
+			$type_data[$dat['typeid']][$dat['timer']] = array(
 				'num' => $dat['num'],
-				'distanz' => $dat['distanz']);
-			$type_data['all_sum'] += $dat['distanz'];
-			$type_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			$type_data['id_sum'][$dat['typid']] += $dat['distanz'];
+				'distance' => $dat['distance']);
+			$type_data['all_sum'] += $dat['distance'];
+			$type_data['timer_sum'][$dat['timer']] += $dat['distance'];
+			$type_data['id_sum'][$dat['typeid']] += $dat['distance'];
 		}
 	
 		$type_foreach = array();
 	
-		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abk` FROM `'.PREFIX.'typ` ORDER BY `RPE` ASC');
+		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` ORDER BY `RPE` ASC');
 		foreach ($types as $i => $type) {
 			$type_foreach[] = array(
-				'name' => '<span title="'.$type['name'].'">'.$type['abk'].'</span>',
+				'name' => '<span title="'.$type['name'].'">'.$type['abbr'].'</span>',
 				'id' => $type['id']);
 		}
 
@@ -220,8 +218,8 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
-				SUM(`distanz`) AS `distanz`,
-				FLOOR( (`dauer`/`distanz`)/'.$speed_step.')*'.$speed_step.' AS `pacegroup`
+				SUM(`distance`) AS `distance`,
+				FLOOR( (`s`/`distance`)/'.$speed_step.')*'.$speed_step.' AS `pacegroup`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `pacegroup`, '.$this->group_time.'
@@ -241,17 +239,17 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 			if (!isset($speed_data[$dat['pacegroup']]))
 				$speed_data[$dat['pacegroup']] = array();
 			if (!isset($speed_data[$dat['pacegroup']][$dat['timer']]))
-				$speed_data[$dat['pacegroup']][$dat['timer']] = array('num' => 0, 'distanz' => 0);
+				$speed_data[$dat['pacegroup']][$dat['timer']] = array('num' => 0, 'distance' => 0);
 			if (!isset($speed_data['timer_sum'][$dat['timer']]))
 				$speed_data['timer_sum'][$dat['timer']] = 0;
 			if (!isset($speed_data['id_sum'][$dat['pacegroup']]))
 				$speed_data['id_sum'][$dat['pacegroup']] = 0;
 	
 			$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
-			$speed_data[$dat['pacegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
-			$speed_data['all_sum'] += $dat['distanz'];
-			$speed_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			$speed_data['id_sum'][$dat['pacegroup']] += $dat['distanz'];
+			$speed_data[$dat['pacegroup']][$dat['timer']]['distance'] += $dat['distance'];
+			$speed_data['all_sum'] += $dat['distance'];
+			$speed_data['timer_sum'][$dat['timer']] += $dat['distance'];
+			$speed_data['id_sum'][$dat['pacegroup']] += $dat['distance'];
 		}
 	
 		$speed_foreach = array();
@@ -275,10 +273,10 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
-				SUM(`distanz`) AS `distanz`,
-				CEIL( (100 * `puls` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `pulsegroup`
+				SUM(`distance`) AS `distance`,
+				CEIL( (100 * `pulse_avg` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `pulsegroup`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.' && `puls`!=0
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `pulsegroup`, '.$this->group_time.'
 			ORDER BY `pulsegroup`, `timer` ASC');
 		
@@ -294,17 +292,17 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 			if (!isset($pulse_data[$dat['pulsegroup']]))
 				$pulse_data[$dat['pulsegroup']] = array();
 			if (!isset($pulse_data[$dat['pulsegroup']][$dat['timer']]))
-				$pulse_data[$dat['pulsegroup']][$dat['timer']] = array('num' => 0, 'distanz' => 0);
+				$pulse_data[$dat['pulsegroup']][$dat['timer']] = array('num' => 0, 'distance' => 0);
 			if (!isset($pulse_data['timer_sum'][$dat['timer']]))
 				$pulse_data['timer_sum'][$dat['timer']] = 0;
 			if (!isset($pulse_data['id_sum'][$dat['pulsegroup']]))
 				$pulse_data['id_sum'][$dat['pulsegroup']] = 0;
 	
 			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['num'] += $dat['num'];
-			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['distanz'] += $dat['distanz'];
-			$pulse_data['all_sum'] += $dat['distanz'];
-			@$pulse_data['timer_sum'][$dat['timer']] += $dat['distanz'];
-			@$pulse_data['id_sum'][$dat['pulsegroup']] += $dat['distanz'];
+			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['distance'] += $dat['distance'];
+			$pulse_data['all_sum'] += $dat['distance'];
+			@$pulse_data['timer_sum'][$dat['timer']] += $dat['distance'];
+			@$pulse_data['id_sum'][$dat['pulsegroup']] += $dat['distance'];
 		}
 	
 		$pulse_foreach = array();
@@ -351,7 +349,7 @@ class RunalyzePlugin_AnalyseStat extends PluginStat {
 	 * Print the ending of a table for one analysis
 	 */
 	private function printTableEnd() {
-		echo('</table>'.Helper::clearBreak());
+		echo('</table>'.HTML::clearBreak());
 	}
 }
 ?>

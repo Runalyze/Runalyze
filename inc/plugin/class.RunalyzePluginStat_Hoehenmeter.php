@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "HoehenmeterStat".
+ * This file contains the class of the RunalyzePluginStat "Hoehenmeter".
  */
-$PLUGINKEY = 'RunalyzePlugin_HoehenmeterStat';
+$PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
- * Class: RunalyzePlugin_HoehenmeterStat
+ * Class: RunalyzePluginStat_Hoehenmeter
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -14,10 +14,8 @@ $PLUGINKEY = 'RunalyzePlugin_HoehenmeterStat';
  * @uses class::Error
  * @uses class::Helper
  * @uses START_YEAR
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_HoehenmeterStat extends PluginStat {
+class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	private $ElevationData = array();
 	private $SumData       = array();
 	private $UpwardData    = array();
@@ -56,7 +54,7 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 		$this->displaySumData();
 		$this->displayUpwardData();
 
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 	}
 
 	/**
@@ -64,8 +62,8 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	 */
 	private function displayElevationData() {
 		echo '<table style="width:100%;" class="small">';
-		echo Helper::monthTr(8, 1);
-		echo Helper::spaceTR(13);
+		echo HTML::monthTr(8, 1);
+		echo HTML::spaceTR(13);
 
 		if (empty($this->ElevationData))
 			echo '<tr><td colspan="12"><em>Keine Strecken gefunden.</em></td></tr>';
@@ -75,16 +73,16 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
-				if (isset($Data[$m]) && $Data[$m]['hm'] > 0)
-					echo '<td>'.DataBrowser::getSearchLink($Data[$m]['hm'].' hm', 'sort=DESC&order=hm&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y).'</td>'.NL;
+				if (isset($Data[$m]) && $Data[$m]['elevation'] > 0)
+					echo '<td>'.DataBrowser::getSearchLink($Data[$m]['elevation'].' hm', 'sort=DESC&order=elevation&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y).'</td>'.NL;
 				else
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 			}
 
 			echo '</tr>'.NL;
 		}
 
-		echo Helper::spaceTR(13);
+		echo HTML::spaceTR(13);
 		echo '</table>';
 	}
 
@@ -94,25 +92,25 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	private function displaySumData() {
 		echo '<table style="width:48%;" style="margin:0 5px;" class="left small">';
 		echo '<tr class="b c"><td colspan="3">Meisten H&ouml;henmeter</td></tr>';
-		echo Helper::spaceTR(4);
+		echo HTML::spaceTR(4);
 
 		if (empty($this->SumData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
 
 		foreach ($this->SumData as $i => $Strecke) {
-			$icon = Icon::getSportIcon($Strecke['sportid']);
+			$Training = new Training($Strecke['id']);
 
 			echo('
 			<tr class="a'.($i%2+1).'">
-				<td class="small">'.date("d.m.Y", $Strecke['time']).'</td>
-				<td>'.Ajax::trainingLink($Strecke['id'], $icon).'</td>
-				<td title="'.($Strecke['bemerkung'] != "" ? $Strecke['bemerkung'].': ' : '').$Strecke['strecke'].'">'.$Strecke['strecke'].'</td>
-				<td class="r">'.$Strecke['hm'].'&nbsp;hm</td>
+				<td class="small">'.$Training->getDate(false).'</td>
+				<td>'.$Training->trainingLinkWithSportIcon().'</td>
+				<td title="'.($Strecke['comment'] != "" ? $Strecke['comment'].': ' : '').$Strecke['route'].'">'.$Strecke['route'].'</td>
+				<td class="r">'.$Strecke['elevation'].'&nbsp;hm</td>
 			</tr>
 				'.NL);
 		}
 
-		echo Helper::spaceTR(4);
+		echo HTML::spaceTR(4);
 		echo '</table>';
 	}
 
@@ -122,28 +120,28 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	private function displayUpwardData() {
 		echo '<table style="width:48%;" style="margin:0 5px;" class="right small">';
 		echo '<tr class="b c"><td colspan="3">Steilsten Strecken</td></tr>';
-		echo Helper::spaceTR(4);
+		echo HTML::spaceTR(4);
 
 		if (empty($this->UpwardData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
 
 		foreach ($this->UpwardData as $i => $Strecke) {
-			$icon = Icon::getSportIcon($Strecke['sportid']);
+			$Training = new Training($Strecke['id']);
 
 			echo('
 			<tr class="a'.($i%2+1).'">
-				<td class="small">'.date("d.m.Y", $Strecke['time']).'</td>
-				<td>'.Ajax::trainingLink($Strecke['id'], $icon).'</td>
-				<td title="'.($Strecke['bemerkung'] != "" ? $Strecke['bemerkung'].': ' : '').$Strecke['strecke'].'">'.$Strecke['strecke'].'</td>
+				<td class="small">'.$Training->getDate(false).'</td>
+				<td>'.$Training->trainingLinkWithSportIcon().'</td>
+				<td title="'.($Strecke['comment'] != "" ? $Strecke['comment'].': ' : '').$Strecke['route'].'">'.$Strecke['route'].'</td>
 				<td class="r">
 					'.round($Strecke['steigung']/10, 2).'&nbsp;&#37;<br />
-					<small>('.$Strecke['hm'].'&nbsp;hm/'.$Strecke['distanz'].'&nbsp;km</small>
+					<small>('.$Strecke['elevation'].'&nbsp;hm/'.$Strecke['distance'].'&nbsp;km</small>
 				</td>
 			</tr>
 				'.NL);
 		}
 
-		echo Helper::spaceTR(4);
+		echo HTML::spaceTR(4);
 		echo '</table>';
 	}
 
@@ -153,17 +151,17 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	private function initElevationData() {
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				SUM(`hm`) as `hm`,
-				SUM(`distanz`) as `km`,
+				SUM(`elevation`) as `elevation`,
+				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			WHERE `hm` > 0
+			WHERE `elevation` > 0
 			GROUP BY `year`, `month`');
 
 		foreach ($result as $dat) {
 			$this->ElevationData[$dat['year']][$dat['month']] = array(
-				'hm' => $dat['hm'],
+				'elevation' => $dat['elevation'],
 				'km' => $dat['km'],
 			);
 		}
@@ -175,10 +173,10 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	private function initSumData() {
 		$this->SumData = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`
+				`time`, `sportid`, `id`, `elevation`, `route`, `comment`
 			FROM `'.PREFIX.'training`
-			WHERE `hm` > 0
-			ORDER BY `hm` DESC
+			WHERE `elevation` > 0
+			ORDER BY `elevation` DESC
 			LIMIT 10');
 	}
 
@@ -188,10 +186,10 @@ class RunalyzePlugin_HoehenmeterStat extends PluginStat {
 	private function initUpwardData() {
 		$this->UpwardData = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				`time`, `sportid`, `id`, `hm`, `strecke`, `bemerkung`,
-				(`hm`/`distanz`) as `steigung`, `distanz`
+				`time`, `sportid`, `id`, `elevation`, `route`, `comment`,
+				(`elevation`/`distance`) as `steigung`, `distance`
 			FROM `'.PREFIX.'training`
-			WHERE `hm` > 0
+			WHERE `elevation` > 0
 			ORDER BY `steigung` DESC
 			LIMIT 10');
 	}
