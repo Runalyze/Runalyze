@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "TrainingspartnerStat".
+ * This file contains the class of the RunalyzePluginStat "Trainingspartner".
  */
-$PLUGINKEY = 'RunalyzePlugin_TrainingspartnerStat';
+$PLUGINKEY = 'RunalyzePluginStat_Trainingspartner';
 /**
- * Class: RunalyzePlugin_TrainingspartnerStat
+ * Class: RunalyzePluginStat_Trainingspartner
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_TrainingspartnerStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_TrainingspartnerStat extends PluginStat {
+class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
@@ -45,10 +43,10 @@ class RunalyzePlugin_TrainingspartnerStat extends PluginStat {
 		$this->displayHeader('Trainingspartner');
 		echo '<table style="width:95%;" style="margin:0 5px;" class="small">';
 		echo '<tr class="b c"><td colspan="2">Alle Trainingspartner</td></tr>';
-		echo Helper::spaceTR(2);
+		echo HTML::spaceTR(2);
 
 		$partner = array();
-		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `trainingspartner` FROM `'.PREFIX.'training` WHERE `trainingspartner` != ""');
+		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner` != ""');
 		if (empty($trainings))
 			echo('
 				<tr class="a1">
@@ -57,7 +55,7 @@ class RunalyzePlugin_TrainingspartnerStat extends PluginStat {
 				</tr>');
 		else {
 			foreach ($trainings as $training) {
-				$trainingspartner = explode(', ', $training['trainingspartner']);
+				$trainingspartner = explode(', ', $training['partner']);
 				foreach ($trainingspartner as $name) {
 					if (!isset($partner[$name]))
 						$partner[$name] = 1;
@@ -82,7 +80,7 @@ class RunalyzePlugin_TrainingspartnerStat extends PluginStat {
 					echo '<tr class="a'.($i%2+1).'"><td class="b">'.$row_num.'x</td><td>';
 				}
 		
-				echo DataBrowser::getSearchLink($name, 'opt[trainingspartner]=like&val[trainingspartner]='.$name);
+				echo DataBrowser::getSearchLink($name, 'opt[partner]=like&val[partner]='.$name);
 			}
 			echo '</td></tr>';
 		}

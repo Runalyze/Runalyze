@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "WettkampfStat".
+ * This file contains the class of the RunalyzePluginStat "Wettkampf".
  */
-$PLUGINKEY = 'RunalyzePlugin_WettkampfStat';
+$PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
- * Class: RunalyzePlugin_WettkampfStat
+ * Class: RunalyzePluginStat_Wettkampf
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_WettkampfStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_WettkampfStat extends PluginStat {
+class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private $distances = array();
 
 	/**
@@ -49,7 +47,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	protected function displayContent() {
 		$this->displayHeader($this->name);
 		$this->displayNavigation();
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 
 		echo '<div id="alle" class="change" style="display:none;">'.NL;
 			$this->displayAllCompetitions();
@@ -79,7 +77,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	private function displayAllCompetitions() {
 		$this->displayTableStart();
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `time` DESC');
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `time` DESC');
 		foreach ($wks as $i => $wk)
 			$this->displayWKTr($wk, $i);
 		
@@ -92,7 +90,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	private function displayLastCompetitions() {
 		$this->displayTableStart();
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `time` DESC LIMIT '.$this->config['last_wk_num']['var']);
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `time` DESC LIMIT '.$this->config['last_wk_num']['var']);
 		if (count($wks) > 0) {
 			foreach($wks as $i => $wk)
 				$this->displayWkTr($wk, $i);
@@ -123,12 +121,12 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	 */
 	private function displayPersonalBestsTRs() {
 		$this->distances = array();
-		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distanz`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' GROUP BY `distanz`');
+		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' GROUP BY `distance`');
 		foreach ($dists as $i => $dist) {
 			if ($dist['wks'] > 1) {
-				$this->distances[] = $dist['distanz'];
+				$this->distances[] = $dist['distance'];
 		
-				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' AND `distanz`='.$dist['distanz'].' ORDER BY `dauer` ASC');
+				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`='.$dist['distance'].' ORDER BY `s` ASC');
 				$this->displayWKTr($wk, $i);
 			}
 		}
@@ -169,7 +167,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distanz`, `dauer` FROM `'.PREFIX.'training` WHERE `typid`='.CONF_WK_TYPID.' ORDER BY `y` ASC');
+		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `y` ASC');
 		foreach ($wks as $wk) {
 			if (!isset($year[$wk['y']])) {
 				$year[$wk['y']] = $dists;
@@ -178,10 +176,10 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 			}
 			$year[$wk['y']]['sum']++;
 			foreach($kms as $km)
-				if ($km == $wk['distanz']) {
+				if ($km == $wk['distance']) {
 					$year[$wk['y']][$km]['sum']++;
-					if ($wk['dauer'] < $year[$wk['y']][$km]['pb'])
-						$year[$wk['y']][$km]['pb'] = $wk['dauer'];
+					if ($wk['s'] < $year[$wk['y']][$km]['pb'])
+						$year[$wk['y']][$km]['pb'] = $wk['s'];
 				}
 		}
 
@@ -195,7 +193,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 					<td>'.$y.'</td>');
 
 		echo '</tr>';
-		echo Helper::spaceTR(count($year));
+		echo HTML::spaceTR(count($year));
 
 		foreach ($kms as $i => $km) {
 			echo '<tr class="a'.($i%2+1).' r"><td class="b">'.Helper::Km($km, 1, $km <= 3).'</td>';
@@ -207,7 +205,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 			echo '</tr>';
 		}
 
-		echo Helper::spaceTR(count($year));
+		echo HTML::spaceTR(count($year));
 
 		echo '<tr class="a'.(($i+1)%2+1).' r">';
 		echo '<td class="b">Gesamt</td>';
@@ -236,7 +234,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 					<td>Puls</td>' : '').''.(CONF_USE_WETTER ? '
 					<td>Wetter</td>' : '').'
 				</tr>');
-		echo Helper::spaceTR(7);
+		echo HTML::spaceTR(7);
 	}
 
 	/**
@@ -245,15 +243,17 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	 * @param unknown_type $i
 	 */
 	private function displayWKTr($wk, $i) {
+		$Training = new Training($wk['id']);
+
 		echo('
 			<tr class="a'.($i%2 + 1).' r">
-				<td class="c small">'.DataBrowser::getLink(date("d.m.Y", $wk['time']), Helper::Weekstart($wk['time']), Helper::Weekend($wk['time'])).'</a></td>
-				<td class="l"><strong>'.Ajax::trainingLink($wk['id'], $wk['bemerkung']).'</strong></td>
-				<td>'.Helper::Km($wk['distanz'], (round($wk['distanz']) != $wk['distanz'] ? 1 : 0), $wk['bahn']).'</td>
-				<td>'.Helper::Time($wk['dauer']).'</td>
-				<td class="small">'.$wk['pace'].'/km</td>'.(CONF_USE_PULS ? '
-				<td class="small">'.Helper::Unknown($wk['puls']).' / '.Helper::Unknown($wk['puls_max']).' bpm</td>' : '').''.(CONF_USE_WETTER ? '
-				<td class="small">'.($wk['temperatur'] != 0 && $wk['wetterid'] != 0 ? $wk['temperatur'].' &deg;C '.Helper::WeatherImage($wk['wetterid']) : '').'</td>' : '').'
+				<td class="c small">'.$Training->getDateAsWeeklink().'</a></td>
+				<td class="l"><strong>'.$Training->trainingLinkWithComment().'</strong></td>
+				<td>'.$Training->getDistanceStringWithoutEmptyDecimals().'</td>
+				<td>'.$Training->getTimeString().'</td>
+				<td class="small">'.$Training->getSpeedString().'</td>'.(CONF_USE_PULS ? '
+				<td class="small">'.Helper::Unknown($Training->get('pulse_avg')).' / '.Helper::Unknown($Training->get('pulse_max')).' bpm</td>' : '').''.(CONF_USE_WETTER ? '
+				<td class="small">'.$Training->Weather()->asString().'</td>' : '').'
 			</tr>');	
 	}
 
@@ -273,7 +273,7 @@ class RunalyzePlugin_WettkampfStat extends PluginStat {
 	 * Display table end
 	 */
 	private function displayTableEnd() {
-		echo Helper::spaceTR(7);
+		echo HTML::spaceTR(7);
 		echo '</table>';
 	}
 }

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "SchuheStat".
+ * This file contains the class of the RunalyzePluginStat "Schuhe".
  */
-$PLUGINKEY = 'RunalyzePlugin_SchuheStat';
+$PLUGINKEY = 'RunalyzePluginStat_Schuhe';
 /**
- * Class: RunalyzePlugin_SchuheStat
+ * Class: RunalyzePluginStat_Schuhe
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -14,10 +14,8 @@ $PLUGINKEY = 'RunalyzePlugin_SchuheStat';
  * @uses class::Error
  * @uses class::Helper
  * @uses inc/draw/plugin.schuhe.php
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_SchuheStat extends PluginStat {
+class RunalyzePluginStat_Schuhe extends PluginStat {
 	private $schuhe = array();
 
 	/**
@@ -64,25 +62,25 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 				<td>Dauer</td>
 				<td>Distanz</td>
 			</tr>';
-		echo Helper::spaceTr(9);
+		echo HTML::spaceTr(9);
 
 		if (!empty($this->schuhe)) {
 			foreach ($this->schuhe as $i => $schuh) {
-				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `distanz` DESC');
-				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`='.$schuh['id'].' ORDER BY `pace` ASC');
-				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `schuhid`="'.$schuh['id'].'"');
+				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `distance` DESC');
+				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `pace` ASC');
+				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`="'.$schuh['id'].'"');
 				$in_use = $schuh['inuse']==1 ? '' : ' small';
 
 				echo('
 				<tr class="a'.($i%2 + 1).' r">
 					<td class="small">'.$trainings.'x</td>
-					<td class="b'.$in_use.' l">'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</td>
-					<td class="small">'.$schuh['kaufdatum'].'</td>
+					<td class="b'.$in_use.' l">'.Shoe::getSeachLink($schuh['id']).'</td>
+					<td class="small">'.$schuh['since'].'</td>
 					<td >'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
-					<td >'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['dauer']) : '-').'</td>
-					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distanz'])).'</td>
+					<td >'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['time']) : '-').'</td>
+					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distance'])).'</td>
 					<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
-					<td>'.Helper::Time($schuh['dauer']).'</td>
+					<td>'.Helper::Time($schuh['time']).'</td>
 					<td>'.Helper::Km($schuh['km']).'</td>
 				</tr>
 				<tr class="shoe" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
@@ -94,7 +92,7 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 			Error::getInstance()->addWarning('Bisher keine Schuhe eingetragen', __FILE__, __LINE__);
 		}
 
-		echo Helper::spaceTR(9);
+		echo HTML::spaceTR(9);
 		echo '</table>';
 	}
 
@@ -102,7 +100,7 @@ class RunalyzePlugin_SchuheStat extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'schuhe` ORDER BY `inuse` DESC, `km` DESC');
+		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
 	}
 }
 ?>

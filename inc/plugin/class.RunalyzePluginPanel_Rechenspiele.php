@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "RechenspielePanel".
+ * This file contains the class of the RunalyzePluginPanel "Rechenspiele".
  */
-$PLUGINKEY = 'RunalyzePlugin_RechenspielePanel';
+$PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 /**
- * Class: RunalyzePlugin_RechenspielePanel
+ * Class: RunalyzePluginPanel_Rechenspiele
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,13 +13,11 @@ $PLUGINKEY = 'RunalyzePlugin_RechenspielePanel';
  * @uses class::Helper
  * @uses class::JD
  * @uses class::Ajax
- * @uses CONFIG_MAX_ATL
- * @uses CONFIG_MAX_CTL
+ * @uses MAX_ATL
+ * @uses MAX_CTL
  * @uses VDOT_FORM
- *
- * Last modified 2011/07/10 16:00 by Hannes Christiansen
  */
-class RunalyzePlugin_RechenspielePanel extends PluginPanel {
+class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -45,7 +43,7 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="inc/plugin/window.rechenspiele.form.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
+		return Ajax::window('<a href="plugin/window.rechenspiele.form.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
 	}
 
 	/**
@@ -71,8 +69,8 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 				'.$train['kurz'].': <em>'.JD::v2Pace($vVDOT*$train_tempo[1]/100).'</em> - <em>'.JD::v2Pace($vVDOT*$train_tempo[0]/100).'</em>/km<br />');
 		}
 
-		$atl = (CONFIG_MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/CONFIG_MAX_ATL);
-		$ctl = (CONFIG_MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/CONFIG_MAX_CTL);
+		$atl = (MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/MAX_ATL);
+		$ctl = (MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/MAX_CTL);
 
 		echo('</small>
 			<div class="left" style="width:60%;">
@@ -83,7 +81,7 @@ class RunalyzePlugin_RechenspielePanel extends PluginPanel {
 				<p><span>'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
 			</div>');
 
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 
 		// Fix for clear break in IE
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)

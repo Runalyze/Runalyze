@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "SchuhePanel".
+ * This file contains the class of the RunalyzePluginPanel "Schuhe".
  */
-$PLUGINKEY = 'RunalyzePlugin_SchuhePanel';
+$PLUGINKEY = 'RunalyzePluginPanel_Schuhe';
 /**
- * Class: RunalyzePlugin_SchuhePanel
+ * Class: RunalyzePluginPanel_Schuhe
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -12,10 +12,8 @@ $PLUGINKEY = 'RunalyzePlugin_SchuhePanel';
  * @uses class::PluginPanel
  * @uses class::Mysql
  * @uses inc/draw/plugin.schuhe.php
- *
- * Last modified 2011/07/10 16:00 by Hannes Christiansen
  */
-class RunalyzePlugin_SchuhePanel extends PluginPanel {
+class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -41,7 +39,7 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="inc/plugin/window.schuhe.php" title="Schuh hinzuf&uuml;gen">'.Icon::get(Icon::$RUNNINGSHOE, 'Schuh hinzuf&uuml;gen').'</a>');
+		return Ajax::window('<a href="plugin/window.schuhe.php" title="Schuh hinzuf&uuml;gen">'.Icon::get(Icon::$RUNNINGSHOE, 'Schuh hinzuf&uuml;gen').'</a>');
 	}
 
 	/**
@@ -52,7 +50,7 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 		echo('<div id="schuhe">');
 
 		$inuse = true;
-		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `'.PREFIX.'schuhe` ORDER BY `inuse` DESC, `km` DESC');
+		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
 		foreach ($schuhe as $i => $schuh) {
 			if ($inuse && $schuh['inuse'] == 0) {
 				echo('<div id="hiddenschuhe" style="display:none;">'.NL);
@@ -62,7 +60,7 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 			echo('
 			<p style="background-image:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).');">
 				<span>'.Helper::Km($schuh['km']).'</span>
-				<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[schuhid]=is&val[schuhid][0]='.$schuh['id']).'</strong>
+				<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[shoeid]=is&val[shoeid][0]='.$schuh['id']).'</strong>
 			</p>'.NL);	
 		}
 
@@ -71,7 +69,7 @@ class RunalyzePlugin_SchuhePanel extends PluginPanel {
 		echo '</div>';
 
 		echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 	}
 }
 ?>

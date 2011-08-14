@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "StatistikenStat".
+ * This file contains the class of the RunalyzePluginStat "Statistiken".
  */
-$PLUGINKEY = 'RunalyzePlugin_StatistikenStat';
+$PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
- * Class: RunalyzePlugin_StatistikenStat
+ * Class: RunalyzePluginStat_Statistiken
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -16,10 +16,8 @@ $PLUGINKEY = 'RunalyzePlugin_StatistikenStat';
  * @uses class:JD
  * @uses CONF_RECHENSPIELE
  * @uses START_YEAR
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_StatistikenStat extends PluginStat {
+class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $sport     = array();
 	private $colspan   = 0;
 	private $num       = 0;
@@ -64,16 +62,16 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 		$this->displayHeader($this->sport['name'].' '.$this->getYearString());
 		$this->displayYearNavigation();
 		$this->displaySportsNavigation();
-		echo Helper::clearBreak();
+		echo HTML::clearBreak();
 
 		echo '<table style="width:100%;" class="small r">';
 
-		echo ($this->year == -1) ? Helper::yearTR(0, 1) : Helper::monthTR(8, 1);
-		echo Helper::spaceTR($this->colspan);
+		echo ($this->year == -1) ? HTML::yearTR(0, 1) : HTML::monthTR(8, 1);
+		echo HTML::spaceTR($this->colspan);
 
 		$this->displayLine('Stunden', $this->StundenData);
 
-		if ($this->sport['distanztyp'] != 0) {
+		if ($this->sport['distances'] != 0) {
 			$this->displayLine('KM', $this->KMData);
 			$this->displayLine('&Oslash;Tempo', $this->TempoData);
 		}
@@ -99,30 +97,30 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 		echo '<td class="b">'.$title.'</td>';
 
 		if (empty($data)) {
-			echo Helper::emptyTD($this->colspan);
+			echo HTML::emptyTD($this->colspan);
 		} else {
 			$td_i = 0;
 			foreach ($data as $i => $dat) {
 				for (; ($this->num_start + $td_i) < $dat['i']; $td_i++)
-					echo Helper::emptyTD();
+					echo HTML::emptyTD();
 				$td_i++;
 
 				echo '<td>'.$dat['text'].'</td>'.NL;
 			}
 
 			for (; $td_i < $this->num; $td_i++)
-				echo Helper::emptyTD();
+				echo HTML::emptyTD();
 		}
 
 		echo '</tr>';
-		echo Helper::spaceTr($this->colspan);
+		echo HTML::spaceTr($this->colspan);
 	}
 
 	/**
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->sport = Mysql::getInstance()->fetch(''.PREFIX.'sports', $this->sportid);
+		$this->sport = Mysql::getInstance()->fetch(PREFIX.'sport', $this->sportid);
 
 		if ($this->year != -1) {
 			$this->num = 12;
@@ -153,10 +151,10 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initStundenData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
-			$text = ($dat['dauer'] == 0) ? '&nbsp;' : Helper::Time($dat['dauer'], false);
+			$text = ($dat['s'] == 0) ? '&nbsp;' : Helper::Time($dat['s'], false);
 			$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}
@@ -166,10 +164,10 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initKMData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
-			$text = ($dat['distanz'] == 0) ? '&nbsp;' : Helper::Km($dat['distanz'], 0);
+			$text = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
 			$this->KMData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}
@@ -179,10 +177,10 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	 */
 	private function initTempoData() {
 		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distanz`) as `distanz`, SUM(`dauer`) as `dauer`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
+			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
-			$text = ($dat['dauer'] == 0) ? '&nbsp;' : Helper::Speed($dat['distanz'], $dat['dauer'], $this->sportid);
+			$text = ($dat['s'] == 0) ? '&nbsp;' : Helper::Speed($dat['distance'], $dat['s'], $this->sportid);
 			$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}
@@ -193,8 +191,8 @@ class RunalyzePlugin_StatistikenStat extends PluginStat {
 	private function initVDOTData() {
 		for ($i = $this->num_start; $i <= $this->num_end; $i++) {
 			$result = ($this->year != -1)
-				? Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
-				: Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `puls`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
+				? Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `pulse_avg`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
+				: Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `pulse_avg`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
 			if ($result !== false)
 				$VDOT = JD::correctVDOT($result['vdot']);
 			else

@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "RekordeStat".
+ * This file contains the class of the RunalyzePluginStat "Rekorde".
  */
-$PLUGINKEY = 'RunalyzePlugin_RekordeStat';
+$PLUGINKEY = 'RunalyzePluginStat_Rekorde';
 /**
- * Class: RunalyzePlugin_RekordeStat
+ * Class: RunalyzePluginStat_Rekorde
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_RekordeStat';
  * @uses class::Mysql
  * @uses class::Error
  * @uses class::Helper
- *
- * Last modified 2011/07/10 13:00 by Hannes Christiansen
  */
-class RunalyzePlugin_RekordeStat extends PluginStat {
+class RunalyzePluginStat_Rekorde extends PluginStat {
 	private $rekorde = array();
 	private $monts  = array();
 	private $weeks  = array();
@@ -61,7 +59,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		foreach ($this->rekorde as $rekord) {
 			echo '<table style="width:100%;" class="small">';
 			echo '<tr class="b"><td colspan="11">'.$rekord['name'].'</td></tr>';
-			echo Helper::spaceTR(11);
+			echo HTML::spaceTR(11);
 
 			$output = false;
 			eval('$sports = Mysql::getInstance()->fetchAsArray(\''.$rekord['sportquery'].'\');');
@@ -76,9 +74,9 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 					$j = 0;
 					foreach ($data as $j => $dat) {
 						if ($rekord['eval'] == 0)
-							$code = Helper::Speed($dat['distanz'], $dat['dauer'], $sport['id']);
+							$code = Helper::Speed($dat['distance'], $dat['s'], $sport['id']);
 						elseif ($rekord['eval'] == 1)
-							$code = ($dat['distanz'] != 0 ? Helper::Km($dat['distanz']) : Helper::Time($dat['dauer']));
+							$code = ($dat['distance'] != 0 ? Helper::Km($dat['distance']) : Helper::Time($dat['s']));
 	
 						echo('<td><span title="'.date("d.m.Y",$dat['time']).'">
 								'.Ajax::trainingLink($dat['id'], $code).'
@@ -86,7 +84,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 					}
 	
 					for (; $j < 10; $j++)
-						echo Helper::emptyTD();
+						echo HTML::emptyTD();
 	
 					echo '</tr>';
 				}
@@ -95,7 +93,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			if (!$output)
 				echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
 
-			echo Helper::spaceTR(11);
+			echo HTML::spaceTR(11);
 			echo '</table>';
 		}
 	}
@@ -106,11 +104,11 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 	private function displayMostKilometer() {
 		echo '<table style="width:100%;" class="small">';
 		echo '<tr class="b"><td colspan="11">Trainingsreichsten Laufphasen</td></tr>';
-		echo Helper::spaceTR(11);
+		echo HTML::spaceTR(11);
 
 		if (empty($this->years)) {
 			echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
-			echo Helper::spaceTR(11);
+			echo HTML::spaceTR(11);
 			echo '</table>';
 			return;
 		}
@@ -123,7 +121,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			echo '<td><span title="'.$year['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 10; $i++)
-			echo Helper::emptyTD();
+			echo HTML::emptyTD();
 		echo '</tr>';
 
 		// Months
@@ -134,7 +132,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			echo '<td><span title="'.Helper::Month($month['month']).' '.$month['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 10; $i++)
-			echo Helper::emptyTD();
+			echo HTML::emptyTD();
 		echo '</tr>';
 
 		// Weeks
@@ -145,10 +143,10 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 			echo '<td><span title="KW '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 10; $i++)
-			echo Helper::emptyTD();
+			echo HTML::emptyTD();
 		echo '</tr>';
 
-		echo Helper::spaceTR(11);
+		echo HTML::spaceTR(11);
 		echo '</table>';
 	}
 
@@ -158,18 +156,18 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 	private function initData() {
 		$this->rekorde = array();
 		$this->rekorde[] = array('name' => 'Schnellsten Trainings',
-			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` WHERE `distanztyp`=1 ORDER BY `id` ASC',
-			'datquery' => 'SELECT `id`, `time`, `dauer`, `distanz`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY (`distanz`/`dauer`) DESC, `dauer` DESC LIMIT 10',
+			'sportquery' => 'SELECT * FROM `'.PREFIX.'sport` WHERE `distances`=1 ORDER BY `id` ASC',
+			'datquery' => 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
 			'eval' => '0');
 		$this->rekorde[] = array('name' => 'L&auml;ngsten Trainings',
-			'sportquery' => 'SELECT * FROM `'.PREFIX.'sports` ORDER BY `id` ASC',
-			'datquery' => 'SELECT * FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distanz` DESC, `dauer` DESC LIMIT 10',
+			'sportquery' => 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
+			'datquery' => 'SELECT * FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'eval' => '1');
 
 		$this->years = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`sportid`,
-				SUM(`distanz`) as `km`,
+				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.CONF_RUNNINGSPORT.'
@@ -180,7 +178,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		$this->months = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`sportid`,
-				SUM(`distanz`) as `km`,
+				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
@@ -193,7 +191,7 @@ class RunalyzePlugin_RekordeStat extends PluginStat {
 		$this->weeks = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`sportid`,
-				SUM(`distanz`) as `km`,
+				SUM(`distance`) as `km`,
 				WEEK(FROM_UNIXTIME(`time`),1) as `week`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,

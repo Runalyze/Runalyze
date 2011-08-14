@@ -1,10 +1,10 @@
 <?php
 /**
- * This file contains the class of the RunalyzePlugin "DatenbankCleanupTool".
+ * This file contains the class of the RunalyzePluginTool "DatenbankCleanup".
  */
-$PLUGINKEY = 'RunalyzePlugin_DatenbankCleanupTool';
+$PLUGINKEY = 'RunalyzePluginTool_DatenbankCleanup';
 /**
- * Class: RunalyzePlugin_DatenbankCleanupTool
+ * Class: RunalyzePluginTool_DatenbankCleanup
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
@@ -13,10 +13,8 @@ $PLUGINKEY = 'RunalyzePlugin_DatenbankCleanupTool';
  * @uses class::Mysql
  * @uses class::Helper
  * @uses class::Draw
- *
- * Last modified 2011/07/29 11:00 by Hannes Christiansen
  */
-class RunalyzePlugin_DatenbankCleanupTool extends PluginTool {
+class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -87,60 +85,21 @@ class RunalyzePlugin_DatenbankCleanupTool extends PluginTool {
 	 * Clean the databse for max_atl, max_ctl, max_trimp
 	 */
 	private function resetMaxValues() {
-		// Here ATL/CTL will be implemented again
-		// Normal functions are too slow, calling them for each day would trigger each time a query
-		// - ATL/CTL: SUM(`trimp`) for ATL_DAYS / CTL_DAYS
-		$start_i = 365*START_YEAR;
-		$end_i   = 365*(date("Y") + 1) - $start_i;
-		$Trimp   = array_fill(0, $end_i, 0);
-		$Data    = Mysql::getInstance()->fetchAsArray('
-			SELECT
-				YEAR(FROM_UNIXTIME(`time`)) as `y`,
-				DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-				SUM(`trimp`) as `trimp`
-			FROM `'.PREFIX.'training`
-			GROUP BY `y`, `d`
-			ORDER BY `y` ASC, `d` ASC');
+		$values = Helper::calculateMaxValues();
 
-		if (empty($Data))
-			return;
-
-		$maxATL   = 0;
-		$maxCTL   = 0;
-
-		foreach ($Data as $dat) {
-			$atl = 0;
-			$ctl = 0;
-
-			$i = $dat['y']*365 + $dat['d'] - $start_i;
-			$Trimp[$i] = $dat['trimp'];
-
-			if ($i >= ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, $i - ATL_DAYS, ATL_DAYS)) / ATL_DAYS;
-			if ($i >= CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, $i - CTL_DAYS, CTL_DAYS)) / CTL_DAYS;
-
-			if ($atl > $maxATL)
-				$maxATL = $atl;
-			if ($ctl > $maxCTL)
-				$maxCTL = $ctl;
-		}
-
-		$maxTRIMP = max($Trimp);
-
-		Mysql::getInstance()->query('UPDATE `'.PREFIX.'config` SET `max_atl`="'.$maxATL.'"');
-		Mysql::getInstance()->query('UPDATE `'.PREFIX.'config` SET `max_ctl`="'.$maxCTL.'"');
-		Mysql::getInstance()->query('UPDATE `'.PREFIX.'config` SET `max_trimp`="'.$maxTRIMP.'"');
+		Config::update('MAX_ATL', $values[0]);
+		Config::update('MAX_CTL', $values[1]);
+		Config::update('MAX_TRIMP', $values[2]);
 	}
 
 	/**
 	 * Clean the databse for shoes
 	 */
 	private function resetShoes() {
-		$shoes = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'schuhe`');
+		$shoes = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'shoe`');
 		foreach ($shoes as $shoe) {
-			$data = Mysql::getInstance()->fetchSingle('SELECT SUM(`distanz`) as `km`, SUM(`dauer`) as `s` FROM `'.PREFIX.'training` WHERE `schuhid`="'.$shoe['id'].'" GROUP BY `schuhid`');
-			Mysql::getInstance()->update(PREFIX.'schuhe', $shoe['id'], array('km', 'dauer'), array($data['km'], $data['s']));
+			$data = Mysql::getInstance()->fetchSingle('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$shoe['id'].'" GROUP BY `shoeid`');
+			Mysql::getInstance()->update(PREFIX.'shoe', $shoe['id'], array('km', 'time'), array($data['km'], $data['s']));
 		}
 	}
 }

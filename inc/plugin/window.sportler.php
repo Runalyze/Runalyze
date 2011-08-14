@@ -1,28 +1,30 @@
 <?php
 /**
  * File displaying the formular with new sportler information
- * Call:   inc/plugin/window.sportler.php
+ * Call:   plugin/window.sportler.php
  */
-require('../class.Frontend.php');
+require '../inc/class.Frontend.php';
+
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
-$Plugin = Plugin::getInstanceFor('RunalyzePlugin_SportlerPanel');
+$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 
 if (isset($_POST['type']) && $_POST['type'] == "user") {
 	$columns = array('time');
 	$values = array(time());
-	$vars = array('gewicht');
+	$vars = array('weight');
+
 	if ($Plugin_conf['use_body_fat']) {
-		$vars[] = 'fett';
-		$vars[] = 'wasser';
-		$vars[] = 'muskeln';
+		$vars[] = 'fat';
+		$vars[] = 'water';
+		$vars[] = 'muscles';
 	}
 	if ($Plugin_conf['use_pulse']) {
-		$vars[] = 'puls_ruhe';
-		$vars[] = 'puls_max';
+		$vars[] = 'pulse_rest';
+		$vars[] = 'pulse_max';
 	}
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
@@ -36,9 +38,9 @@ if (isset($_POST['type']) && $_POST['type'] == "user") {
 
 $Frontend->displayHeader();
 
-$dat = $Mysql->fetch(PREFIX.'user','LAST');
+$dat = User::getLastRow();
 if (empty($dat))
-	$dat = array('gewicht' => '', 'fett' => '', 'wasser' => '', 'muskeln' => '', 'puls_ruhe' => '', 'puls_max' => '');
+	$dat = User::getDefaultArray();
 ?>
 <h1>K&ouml;rper-Daten eingeben</h1>
 
@@ -52,32 +54,32 @@ if (isset($submit))
 <input type="hidden" name="type" value="user" />
 <input type="hidden" name="time" value="<?php echo(time()); ?>" />
 <label>
-	<input type="text" name="gewicht" value="<?php echo $dat['gewicht']; ?>" size="5" />
+	<input type="text" name="weight" value="<?php echo $dat['weight']; ?>" size="5" />
 	<small>Gewicht</small>
 </label><br />
 
 <?php if ($Plugin_conf['use_body_fat']): ?>
 <label>
-	<input type="text" name="fett" value="<?php echo $dat['fett']; ?>" size="5" />
+	<input type="text" name="fat" value="<?php echo $dat['fat']; ?>" size="5" />
 	<small>&#37; Fett</small>
 </label><br />
 <label>
-	<input type="text" name="wasser" value="<?php echo $dat['wasser']; ?>"	size="5" />
+	<input type="text" name="water" value="<?php echo $dat['water']; ?>"	size="5" />
 	<small>&#37; Wasser</small>
 </label><br />
 <label>
-	<input type="text" name="muskeln" value="<?php echo $dat['muskeln']; ?>" size="5" />
+	<input type="text" name="muscles" value="<?php echo $dat['muscles']; ?>" size="5" />
 	<small>&#37; Muskeln</small>
 </label><br />
 <?php endif; ?>
 
-<?php if ($Plugin_conf['use_weight']): ?><br />
+<?php if ($Plugin_conf['use_pulse']): ?><br />
 <label>
-	<input type="text" name="puls_ruhe" value="<?php echo $dat['puls_ruhe']; ?>" size="5" />
+	<input type="text" name="pulse_rest" value="<?php echo $dat['pulse_rest']; ?>" size="5" />
 	<small>Ruhepuls</small>
 </label><br />
 <label>
-	<input type="text" name="puls_max" value="<?php echo $dat['puls_max']; ?>" size="5" />
+	<input type="text" name="pulse_max" value="<?php echo $dat['pulse_max']; ?>" size="5" />
 	<small>Maximalpuls</small>
 </label><br />
 <?php endif; ?>
