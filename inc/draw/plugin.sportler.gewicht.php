@@ -67,7 +67,7 @@ $Draw->drawLineChart();
 
 $Draw->pImage->drawLegend(130, 15, $LegendFormat);
 
-$Plugin = Plugin::getInstanceFor('RunalyzePlugin_SportlerPanel');
+$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 if ($Plugin_conf['wunschgewicht'] > 1 && $Plugin_conf['wunschgewicht'] > $Draw->pData->getMin('Gewicht'))
 	$Draw->pImage->drawThreshold($Plugin_conf['wunschgewicht'], $TresholdFormat);
