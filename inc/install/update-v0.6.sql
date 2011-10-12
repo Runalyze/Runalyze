@@ -37,6 +37,7 @@ ALTER TABLE `runalyze_training` CHANGE `hm` `elevation` INT( 5 ) NOT NULL DEFAUL
 ALTER TABLE `runalyze_training` CHANGE `kalorien` `kcal` INT( 4 ) NOT NULL DEFAULT '0';
 ALTER TABLE `runalyze_training` CHANGE `puls` `pulse_avg` INT( 3 ) NOT NULL DEFAULT '0';
 ALTER TABLE `runalyze_training` CHANGE `puls_max` `pulse_max` INT( 3 ) NOT NULL DEFAULT '0';
+ALTER TABLE `runalyze_training` CHANGE `schuhid` `shoeid` INT( 11 ) NOT NULL DEFAULT '0';
 ALTER TABLE `runalyze_training` CHANGE `temperatur` `temperature` FLOAT NULL DEFAULT NULL ;
 ALTER TABLE `runalyze_training` CHANGE `wetterid` `weatherid` SMALLINT( 6 ) NOT NULL DEFAULT '1';
 ALTER TABLE `runalyze_training` CHANGE `strecke` `route` TINYTEXT CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL ;

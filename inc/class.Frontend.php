@@ -124,6 +124,15 @@ class Frontend {
 		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
 		Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
 		Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
+
+		$this->initDesignConsts();
+	}
+
+	/**
+	 * Define all CONF_CONSTS
+	 */
+	private function initDesignConsts() {
+		Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, 'Hintergrundbild skalieren');
 	}
 
 	/**

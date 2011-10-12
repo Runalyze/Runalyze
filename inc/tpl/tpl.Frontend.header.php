@@ -12,6 +12,9 @@
 	<script type="text/javascript" src="lib/jQuery.1.4.2.js"></script>
 	<script type="text/javascript" src="lib/jQuery.scrollTo.js"></script>
 	<script type="text/javascript" src="lib/jQuery.form.js"></script>
+	<?php if (CONF_DESIGN_BG_FIX_AND_STRETCH): ?>
+	<script type="text/javascript" src="lib/jQuery.backgroundStretch.js"></script>
+	<?php endif; ?>
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
