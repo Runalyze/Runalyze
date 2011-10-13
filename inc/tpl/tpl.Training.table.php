@@ -21,7 +21,7 @@
 <?php endif; ?>
 
 <?php if (CONF_RECHENSPIELE): ?>
-	<?php if ($this->Sport()->isRunning()): ?>
+	<?php if ($this->Sport()->isRunning() && $this->getVDOT() > 0): ?>
 	<tr>
 		<td class="small b">Vdot:</td>
 		<td><?php echo $this->getVDOT(); ?> <?php echo $this->getVDOTicon(); ?></td>

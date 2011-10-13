@@ -137,7 +137,7 @@ class Error {
 	private function getErrorTable() {
 		$table = '<table style="width:90%;margin:0;">';
 		foreach ($this->errors as $error)
-			$table .= '<tr><td class="b">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>';
+			$table .= '<tr class="'.$error['type'].'"><td class="b errortype">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>';
 
 		$table .= '</table>';
 
