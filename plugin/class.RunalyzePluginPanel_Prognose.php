@@ -21,8 +21,6 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$this->type = Plugin::$PANEL;
 		$this->name = 'Prognose';
 		$this->description = 'Anzeige der aktuellen Wettkampfprognose.';
-		
-		Error::getInstance()->addTodo('PrognosePanel: Add Zwischenzeiten/Marschtabelle', __FILE__, __LINE__);
 	}
 
 	/**

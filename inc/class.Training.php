@@ -309,7 +309,7 @@ class Training {
 	 * Display the formatted date
 	 */
 	public function displayDate() {
-		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDate());
+		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDateWithWeekLink());
 	}
 
 	/**
@@ -342,6 +342,18 @@ class Training {
 			return $day.' '.$this->getDaytimeString();
 
 		return $day;
+	}
+
+	/**
+	 * Get the date for this training, linked to DataBrowser
+	 * @param bool $withTime [optional] adding daytime to string
+	 * @return string
+	 */
+	public function getDateWithWeekLink($withTime = true) {
+		$string = explode(' ', $this->getDate($withTime));
+		$string[0] = DataBrowser::getWeekLink($string[0], $this->get('time'));
+
+		return implode(' ', $string);
 	}
 
 	/**

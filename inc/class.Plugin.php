@@ -450,9 +450,9 @@ abstract class Plugin {
 					default:
 						$this->config[$name]['var'] = trim($_POST[$name]);
 				}
-			}
 
-			$this->updateConfigVarToDatabase();
+				$this->updateConfigVarToDatabase();
+			}
 		}
 	}
 
@@ -507,7 +507,7 @@ abstract class Plugin {
 	/**
 	 * Update current values from $this->config to database
 	 */
-	private function updateConfigVarToDatabase() {
+	protected function updateConfigVarToDatabase() {
 		$string = '';
 		foreach($this->config as $name => $dat) {
 			switch ($dat['type']) {
@@ -524,7 +524,6 @@ abstract class Plugin {
 
 			$string .= $name.'|'.$dat['type'].'='.$var.'|'.trim($dat['description']).NL;
 		}
-		return;
 
 		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'config', $string);
 	}

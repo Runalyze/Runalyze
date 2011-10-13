@@ -246,5 +246,13 @@ class HTML {
 
 		return '<div class="bigImg'.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
 	}
+
+	/**
+	 * Check if currently used browser is IE
+	 * @return bool
+	 */
+	public static function isInternetExplorer() {
+		return (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false);
+	}
 }
 ?>

@@ -36,6 +36,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$config['last_wk_num']    = array('type' => 'int', 'var' => 10, 'description' => 'Anzahl f&uuml;r letzte Wettk&auml;mpfe');
 		$config['main_distance']  = array('type' => 'int', 'var' => 10, 'description' => 'Hauptdistanz (wird als Diagramm dargestellt)');
 		$config['pb_distances']   = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => 'Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt)');
+		$config['fun_ids']        = array('type' => 'array', 'var' => array(), 'description' => 'IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)');
 
 		return $config;
 	}
@@ -45,6 +46,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
+		$this->handleGetData();
+
 		$this->displayHeader($this->name);
 		$this->displayNavigation();
 		echo HTML::clearBreak();
@@ -226,6 +229,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo('
 			<table cellspacing="0" width="100%">
 				<tr class="b c">
+					<td>&nbsp;</td>
 					<td>Datum</td>
 					<td>Lauf</td>
 					<td>Distanz</td>
@@ -234,7 +238,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 					<td>Puls</td>' : '').''.(CONF_USE_WETTER ? '
 					<td>Wetter</td>' : '').'
 				</tr>');
-		echo HTML::spaceTR(7);
+		echo HTML::spaceTR(8);
 	}
 
 	/**
@@ -247,6 +251,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		echo('
 			<tr class="a'.($i%2 + 1).' r">
+				<td>'.$this->getIconForCompetition($wk['id']).'</td>
 				<td class="c small">'.$Training->getDateAsWeeklink().'</a></td>
 				<td class="l"><strong>'.$Training->trainingLinkWithComment().'</strong></td>
 				<td>'.$Training->getDistanceStringWithoutEmptyDecimals().'</td>
@@ -265,7 +270,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayEmptyTr($i, $text = '') {
 		echo('
 			<tr class="a'.($i%2 + 1).'">
-				<td colspan="7">'.$text.'</td>
+				<td colspan="8">'.$text.'</td>
 			</tr>');
 	}
 
@@ -273,8 +278,54 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display table end
 	 */
 	private function displayTableEnd() {
-		echo HTML::spaceTR(7);
+		echo HTML::spaceTR(8);
 		echo '</table>';
+	}
+
+	/**
+	 * Get linked icon for this competition
+	 * @param int $id ID of the training
+	 * @return string
+	 */
+	private function getIconForCompetition($id) {
+		if ($this->isFunCompetition($id)) {
+			$tag = 'nofun';
+			$icon = Icon::get(Icon::$COMPETITION_FUN, "Spa&szlig;-Wettkampf");
+		} else {
+			$tag = 'fun';
+			$icon = Icon::get(Icon::$COMPETITION, "Wettkampf");
+		}
+
+		return $this->getInnerLink($icon, 0, 0, $tag.'-'.$id);
+	}
+
+	/**
+	 * Handle data from get-variables
+	 */
+	private function handleGetData() {
+		if (isset($_GET['dat']) && strlen($_GET['dat']) > 0) {
+			$parts = explode('-', $_GET['dat']);
+			$tag   = $parts[0];
+			$id    = $parts[1];
+
+			if ($tag == 'fun' && is_numeric($id)) {
+				$this->config['fun_ids']['var'][] = $id;
+			} elseif ($tag == 'nofun' && is_numeric($id)) {
+				if (($index = array_search($id, $this->config['fun_ids']['var'])) !== FALSE)
+					unset($this->config['fun_ids']['var'][$index]);
+			}
+
+			$this->updateConfigVarToDatabase();
+		}
+	}
+
+	/**
+	 * Is this competition just for fun?
+	 * @param int $id
+	 * @return bool
+	 */
+	public function isFunCompetition($id) {
+		return (in_array($id, $this->config['fun_ids']['var']));
 	}
 }
 ?>
