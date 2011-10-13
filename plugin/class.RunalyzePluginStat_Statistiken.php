@@ -59,7 +59,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader($this->sport['name'].' '.$this->getYearString());
+		$this->displayHeader($this->sport['name'].': '.$this->getYearString());
 		$this->displayYearNavigation();
 		$this->displaySportsNavigation();
 		echo HTML::clearBreak();
@@ -113,7 +113,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 
 		echo '</tr>';
-		echo HTML::spaceTr($this->colspan);
+		//echo HTML::spaceTr($this->colspan);
 	}
 
 	/**

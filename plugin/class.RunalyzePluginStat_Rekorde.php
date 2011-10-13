@@ -83,7 +83,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 							</span></td>');
 					}
 	
-					for (; $j < 10; $j++)
+					for (; $j < 9; $j++)
 						echo HTML::emptyTD();
 	
 					echo '</tr>';
@@ -120,7 +120,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			$link = DataBrowser::getLink(Helper::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
 			echo '<td><span title="'.$year['year'].'">'.$link.'</span></td>';
 		}
-		for (; $i < 10; $i++)
+		for (; $i < 9; $i++)
 			echo HTML::emptyTD();
 		echo '</tr>';
 
@@ -131,7 +131,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			$link = DataBrowser::getLink(Helper::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
 			echo '<td><span title="'.Helper::Month($month['month']).' '.$month['year'].'">'.$link.'</span></td>';
 		}
-		for (; $i < 10; $i++)
+		for (; $i < 9; $i++)
 			echo HTML::emptyTD();
 		echo '</tr>';
 
@@ -142,7 +142,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			$link = DataBrowser::getLink(Helper::Km($week['km']), Helper::Weekstart($week['time']), Helper::Weekend($week['time']));
 			echo '<td><span title="KW '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
 		}
-		for (; $i < 10; $i++)
+		for (; $i < 9; $i++)
 			echo HTML::emptyTD();
 		echo '</tr>';
 

@@ -38,12 +38,12 @@ div.panel {
 	position: relative;
 }
 .panel h1 {
-	font-size: 14px;
-	font-family: Georgia;
+	font-size: 13px;
+	/*font-family: Georgia;*/
 	color: #800;
-	padding-bottom: 2px;
-	margin-bottom: 5px;
-	border-bottom: 1px solid #EEE;
+	padding-bottom: 1px;
+	margin-bottom: 7px;
+	border-bottom: 1px solid #D0D0D0;
 }
 .panel h1 a:link {
 	color: #800 !important;
@@ -277,9 +277,12 @@ ul {
 input, select, textarea {
 	font-size: 0.9em;
 	margin: 4px 2px;
-	padding: 1px;
 	background-color: rgba(255,255,255,0.7); /* url(img/bg-70.png);*/
-	border: 1px solid #D2D2D3;
+	/*border: 1px solid #D2D2D3;
+	padding: 1px;*/
+	border: 1px solid #B8B8B8;
+	border-radius: 3px 3px 3px 3px;
+	padding: 2px;
 }
 
 table input, table select, table textarea {
@@ -295,10 +298,26 @@ table input, table select, table textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-	border: 1px solid #41414C;
+	/*border: 1px solid #41414C;*/
+	background-color: #EBFDD7;
 }
 .spacer {
 	margin-left: 20px;
+}
+
+input[type=submit], div.button {
+	background-color: #808080;
+	box-shadow: 0 1px 3px #BBBBBB;
+	color: #FFF;
+	cursor: pointer;
+	padding: 5px 12px;
+	text-shadow: 1px 1px 0 #666;
+}
+input[type=submit]:hover, div.button:hover { box-shadow: 0 0 6px #8AB856; }
+
+div.button {
+	width: 127px;
+	margin: 0 auto;
 }
 
 hr {
@@ -322,6 +341,15 @@ table, tr, td {
 	padding: 2px 3px;
 	vertical-align: top;
 }
+
+th {
+	border-color: #E9E9E9;
+	border-style: solid none solid solid;
+	border-width: 1px 0 1px 1px;
+	padding: 2px 6px 3px;
+	text-align: left;
+}
+th.col_last { border-right: 1px solid #E9E9E9; }
 
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
@@ -358,6 +386,14 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .unimportant { opacity: 0.5; }
 .unimportant:hover { opacity: 1; }
 
+tr.TODO td, tr.NOTICE td { color: #5C9AC9; background-color: #EFF5FA; padding: 4px 2px 5px 2px; }
+tr.WARNING td { color: #D49822; background-color: #FFFFDD; padding: 4px 2px 5px 2px; }
+tr.ERROR td { color: #CC5555; background-color: #FAEEEE; padding: 4px 2px 5px 2px; }
+tr.TODO td.errortype, tr.NOTICE td.errortype { background: url(img/info.gif) no-repeat 3px center #EFF5FA; }
+tr.WARNING td.errortype { background: url(img/warning.png) no-repeat 3px center #FFFFDD; }
+tr.ERROR td.errortype { background: url(img/error.gif) no-repeat 2px center #FAEEEE; }
+td.errortype { padding: 4px 2px 5px 22px !important; }
+
 /***  L I N K S  ***/
 a:link, a:visited {
 	text-decoration: none;
@@ -376,6 +412,7 @@ a#copy:hover, a#copy:active {
 }
 
 /*** O T H E R  T H I N G S ***/
+/*
 div.button {
 	border: 0;
 	cursor: pointer;
@@ -390,4 +427,4 @@ div.button {
 
 div.button.hover {
 	background: url(inc/tcx/garmin/button_bg.jpg) no-repeat 0 bottom;
-}
+}*/

@@ -9,11 +9,9 @@
 </label>
 <br />
 
-<label>
 	<?php echo HTML::simpleInputField('datum', 10); ?>
 	<?php echo HTML::simpleInputField('zeit', 4); ?>
 	<small>Datum</small>
-</label>
 <br />
 
 <?php echo HTML::hiddenInput('kcalPerHour'); ?>

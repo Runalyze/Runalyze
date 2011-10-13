@@ -571,7 +571,11 @@ class Training {
 		for ($i = 0, $num = count($splits); $i < $num; $i++) {
 			$split = explode('|', $splits[$i]);
 			$timedata = explode(':', $split[1]);
-			$array[] = $timedata[0]*60 + $timedata[1];
+
+			if (!is_numeric($timedata[0]) || !is_numeric($timedata[1]))
+				Error::getInstance()->addNotice('Training-Splits: Keine korrekte Form (&quot;'.$splits[$i].'&quot;)');
+			else
+				$array[] = $timedata[0]*60 + $timedata[1];
 		}
 
 		return $array;
@@ -586,8 +590,13 @@ class Training {
 		$times = $this->getSplitsTimeArray();
 		$distances = $this->getSplitsDistancesArray();
 
+		$n = count($times);
+		if ($n != count($distances))
+			Error::getInstance()->addWarning('Training-Splits: Menge von Distanzen/Zeiten stimmen nicht &uuml;berein.');
+
 		for ($i = 0, $n = count($times); $i < $n; $i++)
-			$paces[] = round($times[$i]/$distances[$i]);
+			if (isset($times[$i]) && isset($distances[$i]))
+				$paces[] = round($times[$i]/$distances[$i]);
 
 		return $paces;
 	}
@@ -602,7 +611,11 @@ class Training {
 
 		for ($i = 0, $num = count($splits); $i < $num; $i++) {
 			$split = explode('|', $splits[$i]);
-			$array[] = $split[0];
+
+			if (!is_numeric($split[0]))
+				Error::getInstance()->addNotice('Training-Splits: Keine korrekte Form (&quot;'.$splits[$i].'&quot;)');
+			else
+				$array[] = $split[0];
 		}
 
 		return $array;
