@@ -41,6 +41,8 @@ class Icon {
 	static public $MONTH_KM			= 'img/mk.png';
 	static public $WEEK_KM			= 'img/wk.png';
 	static public $FATIGUE			= 'img/fatigue.png';
+	static public $COMPETITION		= 'img/competition.png';
+	static public $COMPETITION_FUN	= 'img/competition_fun.png';
 	// Form
 	static public $FORM_NORMAL		= 'img/form0.png';
 	static public $FORM_UP			= 'img/form++.png';

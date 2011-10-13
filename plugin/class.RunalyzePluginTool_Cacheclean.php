@@ -44,10 +44,10 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		echo 'Es gehen dabei keine Daten verloren - es m&uuml;ssen lediglich alle Diagramme beim n&auml;chsten Aufruf neu berechnet werden.<br />'.NL;
 		echo '<br />';
 
-		if (!file_exists('draw/cache/cache.db') && !file_exists('draw/cache/index.db'))
+		if (!file_exists('../inc/draw/cache/cache.db') && !file_exists('../inc/draw/cache/index.db'))
 			echo '<em>Es sind keine Cache-Dateien vorhanden.';
 		elseif (isset($_GET['delete'])) {
-			if (unlink('draw/cache/cache.db') && unlink('draw/cache/index.db'))
+			if (unlink('../inc/draw/cache/cache.db') && unlink('../inc/draw/cache/index.db'))
 				echo '<em>Der Cache wurde erfolgreich gel&ouml;scht.</em>';
 			else
 				echo '<em>Der Cache konnte nicht gel&ouml;scht werden.</em>';

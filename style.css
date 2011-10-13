@@ -97,18 +97,17 @@ ul.tabs {
 	list-style: none;
 	height: 26px;
 	border-bottom: 1px solid #000;
-	border-left: 1px solid #000;
 }
 ul.tabs li {
 	float: left;
 	opacity: 0.7;
-	height: 25px;
-	line-height: 25px;
+	height: 20px;
+	line-height: 20px;
 	border: 1px solid #000;
-	border-left: none;
+	margin-right: -1px;
 	overflow: hidden;
 	position: relative;
-	top: 1px;
+	top: 6px;
 	background: url(img/bg.png);
 }
 ul.tabs li a {
@@ -120,6 +119,9 @@ ul.tabs li a {
 ul.tabs li.active, ul.tabs li:hover  {
 	opacity: 1;
 	border-bottom: none;
+	height: 25px;
+	line-height: 25px;
+	top: 1px;
 }
 
 #tab_content_prev, #tabs_back {
@@ -342,14 +344,14 @@ table, tr, td {
 	vertical-align: top;
 }
 
-th {
+/*thead th {
 	border-color: #E9E9E9;
 	border-style: solid none solid solid;
 	border-width: 1px 0 1px 1px;
 	padding: 2px 6px 3px;
 	text-align: left;
 }
-th.col_last { border-right: 1px solid #E9E9E9; }
+thead th.col_last { border-right: 1px solid #E9E9E9; }*/
 
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }

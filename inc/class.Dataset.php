@@ -288,7 +288,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetTemperature() {
-		if (is_null($this->Training->Weather()))
+		if (is_null($this->Training->Weather()) || $this->Training->Weather()->isEmpty())
 			return '';
 
 		return $this->Training->Weather()->temperatureString();

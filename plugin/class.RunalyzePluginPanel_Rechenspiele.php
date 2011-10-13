@@ -34,6 +34,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => 'Empfohlene Trainingstempi anzeigen');
 
 		return $config;
 	}
@@ -51,28 +52,32 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		echo('<small class="right r">');
-
-		$vVDOT = JD::VDOT2v(VDOT_FORM);
-
-		$t = array();
-		$t[] = array('kurz' => 'RL', 'pVDOT' => '59-64');
-		$t[] = array('kurz' => 'DL', 'pVDOT' => '65-74');
-		$t[] = array('kurz' => 'LL', 'pVDOT' => '65-74');
-		$t[] = array('kurz' => 'TDL', 'pVDOT' => '83-88');
-		$t[] = array('kurz' => 'IT', 'pVDOT' => '95-100');
-		$t[] = array('kurz' => 'WHL', 'pVDOT' => '105-110');
-
-		foreach ($t as $train) {
-			$train_tempo = explode('-',$train['pVDOT']);
-			echo ('
-				'.$train['kurz'].': <em>'.JD::v2Pace($vVDOT*$train_tempo[1]/100).'</em> - <em>'.JD::v2Pace($vVDOT*$train_tempo[0]/100).'</em>/km<br />');
-		}
-
 		$atl = (MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/MAX_ATL);
 		$ctl = (MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/MAX_CTL);
 
-		echo('</small>
+		if ($this->config['show_trainingpaces']['var']) {
+			$t = array();
+			$t[] = array('kurz' => 'RL', 'pVDOT' => '59-64');
+			$t[] = array('kurz' => 'DL', 'pVDOT' => '65-74');
+			$t[] = array('kurz' => 'LL', 'pVDOT' => '65-74');
+			$t[] = array('kurz' => 'TDL', 'pVDOT' => '83-88');
+			$t[] = array('kurz' => 'IT', 'pVDOT' => '95-100');
+			$t[] = array('kurz' => 'WHL', 'pVDOT' => '105-110');
+
+			$vVDOT = JD::VDOT2v(VDOT_FORM);
+		
+			echo '<small class="right r">';
+
+			foreach ($t as $train) {
+				$train_tempo = explode('-',$train['pVDOT']);
+				echo ('
+					'.$train['kurz'].': <em>'.JD::v2Pace($vVDOT*$train_tempo[1]/100).'</em> - <em>'.JD::v2Pace($vVDOT*$train_tempo[0]/100).'</em>/km<br />');
+			}
+
+			echo '</small>';
+		}
+
+		echo('
 			<div class="left" style="width:60%;">
 				<p><span>'.$atl.' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
 				<p><span>'.$ctl.' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
@@ -83,8 +88,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		echo HTML::clearBreak();
 
-		// Fix for clear break in IE
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)
+		if (HTML::isInternetExplorer())
 			echo '&nbsp;';
 	}
 }

@@ -35,8 +35,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 		$this->initTimer();
 		$this->initData();
-
-		Error::getInstance()->addTodo('Add plot for trainingtypes', __FILE__, __LINE__);
 	}
 
 	/**

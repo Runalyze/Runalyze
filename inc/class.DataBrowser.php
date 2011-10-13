@@ -310,6 +310,16 @@ class DataBrowser {
 	}
 
 	/**
+	 * Get a ajax-link to a specified DataBrowser
+	 * @param string $name Name to be displayed as link
+	 * @param int $int Timestamp of the week
+	 * @return string HTML-link
+	 */
+	static function getWeekLink($name, $time) {
+		return self::getLink($name, Helper::Weekstart($time), Helper::Weekend($time));
+	}
+
+	/**
 	 * Get previous timestamps depending on current time-interval (just an alias for getNextTimestamps($start, $end, true);)
 	 * @param int $start Timestamp for first date in browser
 	 * @param int $end Timestamp for last date in browser

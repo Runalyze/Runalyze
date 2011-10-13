@@ -1,0 +1,2 @@
+UPDATE `runalyze_plugin` SET `config` = 'last_wk_num|int=10|Anzahl f&uuml;r letzte Wettk&auml;mpfe main_distance|int=10|Hauptdistanz (wird als Diagramm dargestellt) pb_distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt) fun_ids|array=|IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)' WHERE `runalyze_plugin`.`key`="RunalyzePluginStat_Wettkampf";
+UPDATE `runalyze_plugin` SET `config` = 'show_trainingpaces|bool=true|Empfohlene Trainingstempi anzeigen' WHERE `runalyze_plugin`.`key`="RunalyzePluginPanel_Rechenspiele";
