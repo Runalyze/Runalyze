@@ -472,35 +472,39 @@ abstract class Plugin {
 				'.$activationLink.'
 			</small><br />
 
-			<strong>Beschreibung:</strong><br />
-			'.$this->description.'<br />
-			<br />'.NL);
+			<p class="text-headline">Beschreibung</p>
+			<p class="text">
+				'.$this->description.'
+			</p>'.NL);
 
 		if ($this->active == self::$ACTIVE_NOT)
-			echo('<em>Das Plugin ist derzeit deaktiviert.</em><br /><br />');
+			echo '<p class="warning">Das Plugin ist derzeit deaktiviert.</p>';
 
 		if (count($this->config) == 0)
-			echo('Es sind <em>keine</em> <strong>Konfigurations-Variablen</strong> vorhanden<br />');
+			echo '<p class="info">Es sind <em>keine</em> Optionen vorhanden</p>';
 		else {
-			echo('<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" class="ajax" id="pluginconfig" method="post">');
-			foreach ($this->config as $name => $config_var) {
-				switch ($config_var['type']) {
-					case 'array':
-						echo('<label><input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'</label><br />');
-						break;
-					case 'bool':
-						echo('<label><input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'</label><br />');
-						break;
-					case 'int':
-						echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" size="5" /> '.$config_var['description'].'</label><br />');
-						break;
-					default:
-						echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" /> '.$config_var['description'].'</label><br />');
+			echo '<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" class="ajax" id="pluginconfig" method="post">';
+			echo '<p class="text-headline">Einstellungen</p>';
+			echo '<p class="text">';
+				foreach ($this->config as $name => $config_var) {
+					switch ($config_var['type']) {
+						case 'array':
+							echo('<label><input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'</label><br />');
+							break;
+						case 'bool':
+							echo('<label><input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'</label><br />');
+							break;
+						case 'int':
+							echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" size="5" /> '.$config_var['description'].'</label><br />');
+							break;
+						default:
+							echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" /> '.$config_var['description'].'</label><br />');
+					}
 				}
-			}
-			echo('<input type="hidden" name="edit" value="true" />');
-			echo('<input type="submit" value="Bearbeiten" />');
-			echo('</form>');
+				echo '<input type="hidden" name="edit" value="true" />';
+				echo '<input type="submit" value="Bearbeiten" />';
+			echo '</p>';
+			echo '</form>';
 		}
 	}
 

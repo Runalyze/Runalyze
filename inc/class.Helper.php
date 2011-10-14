@@ -336,49 +336,38 @@ class Helper {
 	 * @param int $timestamp [optional] timestamp
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
-		// TODO: New algorithm
-		// Auch in Abhängigkeit vom Zeitziel?
-		// Bisher: 50 Punkte = 0 %
-		// WK-Schnitt: XX Punkte (gewichtet)
-		// LL über 15 km: XX/2 Punkte (10 Wochen)
-
-		// SOLL:
-		// 40 Wkm, 6 15er => 30 %? <- genügt für langsamen Halbmarathon
-		// 100 Wkm, 10 30er => 100 % <- schneller Marathon
-		$points = 0;
 		if ($timestamp == 0)
 			$timestamp = time();
+		if (VDOT_FORM == 0)
+			return ($as_int) ? 0 : '0 &#37;';
 
-		// Weekkilometers (gewichtet)
-		// Zeitraum: 140 Tage = 20 Wochen
-		$wk_sum = 0;
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `time`, `distance` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp-140*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
-		foreach($data as $dat) {
-			$tage = round ( ($timestamp - $dat['time']) / DAY_IN_S , 1 );
-			$wk_sum += (2 - (1/70) * $tage) * $dat['distance'];
+		$DaysForLongjogs        = 70;  // 10 Wochen
+		$DaysForWeekKm          = 182; // 26 Wochen
+		$StartTimeForLongjogs   = $timestamp - $DaysForLongjogs * DAY_IN_S;
+		$StartTimeForWeekKm     = $timestamp - $DaysForWeekKm * DAY_IN_S;
+		$minKmForLongjog        = 13;
+		$TargetWeekKm           = pow(VDOT_FORM, 1.135);
+		$TargetLongjogKmPerWeek = log(VDOT_FORM/4) * 12 - $minKmForLongjog;
+
+		$LongjogResult = 0;
+		$Longjogs      = Mysql::getInstance()->fetchAsArray('SELECT distance,time FROM '.PREFIX.'training WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.$StartTimeForLongjogs.' AND distance>'.$minKmForLongjog.'  ORDER BY time DESC');
+		$WeekKmResult  = Mysql::getInstance()->fetchSingle('SELECT SUM(distance) as km FROM '.PREFIX.'training WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.$StartTimeForWeekKm);
+
+		foreach ($Longjogs as $Longjog) {
+			$Timefactor     = 2 - (2/$DaysForLongjogs) * round ( ($timestamp - $Longjog['time']) / DAY_IN_S , 1 );
+			$LongjogResult += $Timefactor * pow( ($Longjog['distance'] - $minKmForLongjog) / $TargetLongjogKmPerWeek, 2 );
 		}
-		$points += $wk_sum / 20;
 
-		// LongJogs ...
-		// derzeit: ab 15 km
-		// Zeitraum: 70 Tage = 10 Wochen
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `distance` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_LL_TYPID.' AND `time` BETWEEN '.($timestamp-70*DAY_IN_S).' AND '.$timestamp.' ORDER BY `time` DESC');
-		foreach($data as $dat) {
-			$p = ($dat['distance']-15) / 2;
-			if ($p > 0)
-				$points += ($dat['distance']-15) / 2;
-		}
+		$WeekPercentage    = $WeekKmResult['km'] * 7 / $DaysForWeekKm / $TargetWeekKm;
+		$LongjogPercentage = $LongjogResult * 7 / $DaysForLongjogs;
+		$Percentage        = round( 100 * ( $WeekPercentage*2/3 + $LongjogPercentage*1/3 ) );
 
-		$points = round($points - 50);
-		if ($points < 0)
-			$points = 0;
-		if ($points > 100)
-			$points = 100;
-	
-		if ($as_int)
-			return $points;
+		if ($Percentage < 0)
+			$Percentage = 0;
+		if ($Percentage > 100)
+			$Percentage = 100;
 
-		return ($as_int) ? $points : $points.' &#37;';
+		return ($as_int) ? $Percentage : $Percentage.' &#37;';
 	}
 
 	/**
@@ -397,9 +386,18 @@ class Helper {
 		$VDOT_new = ($VDOT == 0) ? VDOT_FORM : $VDOT;
 		$pb = self::PersonalBest($dist, true);
 
-		// Grundlagenausdauer
-		if ($dist > 5)
-			$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
+		// (Distanz)!^1.23 = notwendige GA in %
+		$BasicEndurance         = self::BasicEndurance(true);
+		$RequiredBasicEndurance = pow($dist, 1.23);
+		$BasicEnduranceFactor   = $BasicEndurance/$RequiredBasicEndurance;
+
+		if ($BasicEnduranceFactor > 1)
+			$BasicEnduranceFactor = 1;
+
+		$VDOT_new = (0.6 + 0.4 * $BasicEnduranceFactor) * $VDOT_new;
+
+		//if ($dist > 5)
+		//	$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
 
 		$prognose_dauer = JD::CompetitionPrognosis($VDOT_new, $dist);
 

@@ -13,6 +13,7 @@ body {
 	font-size: 11px;
 }
 body#main { min-width: 1000px; }
+body#installer { font-size: 12px; }
 
 div#l {
 	width: 66%;
@@ -271,12 +272,21 @@ div#trainingRounds {
 }
 
 /***  S O N S T I G E S  ***/
+code {
+	width: 98%;
+	margin: 0 auto;
+	height: 100px;
+	overflow: scroll;
+	display: block;
+	white-space: nowrap;
+}
+
 ul {
 	margin: 5px 10px 15px 10px;
 	padding-left: 20px;
 }
 
-input, select, textarea {
+input, select, textarea, code {
 	font-size: 0.9em;
 	margin: 4px 2px;
 	background-color: rgba(255,255,255,0.7); /* url(img/bg-70.png);*/
@@ -284,6 +294,14 @@ input, select, textarea {
 	padding: 1px;*/
 	border: 1px solid #B8B8B8;
 	border-radius: 3px 3px 3px 3px;
+	padding: 2px;
+}
+
+#installer label strong {
+	display: block;
+	float: left;
+	width: 100px;
+	margin: 4px 2px;
 	padding: 2px;
 }
 
@@ -307,19 +325,23 @@ input:focus, select:focus, textarea:focus {
 	margin-left: 20px;
 }
 
-input[type=submit], div.button {
+input[type=submit], .button {
 	background-color: #808080;
 	box-shadow: 0 1px 3px #BBBBBB;
-	color: #FFF;
+	color: #FFF !important;
 	cursor: pointer;
-	padding: 5px 12px;
+	padding: 5px 12px !important;
 	text-shadow: 1px 1px 0 #666;
 }
-input[type=submit]:hover, div.button:hover { box-shadow: 0 0 6px #8AB856; }
+input[type=submit]:hover, .button:hover { box-shadow: 0 0 6px #8AB856; }
 
-div.button {
+.button {
+	display: block;
+	text-align: center;
 	width: 127px;
 	margin: 0 auto;
+	border: 1px solid #B8B8B8 !important;
+	border-radius: 3px 3px 3px 3px !important;
 }
 
 hr {
@@ -384,6 +406,8 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .minus { color: #CA3030; }
 .plus { color: #30AA30; }
 .error { color: #F00; font-weight: bold; }
+.margin-5 { margin: 0 5px; }
+.margin-10 { margin: 0 10px; }
 
 .unimportant { opacity: 0.5; }
 .unimportant:hover { opacity: 1; }
@@ -395,6 +419,14 @@ tr.TODO td.errortype, tr.NOTICE td.errortype { background: url(img/info.gif) no-
 tr.WARNING td.errortype { background: url(img/warning.png) no-repeat 3px center #FFFFDD; }
 tr.ERROR td.errortype { background: url(img/error.gif) no-repeat 2px center #FAEEEE; }
 td.errortype { padding: 4px 2px 5px 22px !important; }
+
+p.text { margin: 0 0 12px; }
+p.text-headline { margin: 0 0 8px; font-weight: bold; }
+
+p.okay { background: url(img/ok.gif) no-repeat 3px center #F5FAF0; color: #8AB856; padding: 4px 2px 5px 22px; }
+p.info { background: url(img/info.gif) no-repeat 3px center #EFF5FA; color: #5C9AC9; padding: 4px 2px 5px 22px; }
+p.warning { background: url(img/warning.png) no-repeat 3px center #FFFFDD; color: #D49822; padding: 4px 2px 5px 22px; }
+p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #CC5555; padding: 4px 2px 5px 22px; font-weight: normal; }
 
 /***  L I N K S  ***/
 a:link, a:visited {

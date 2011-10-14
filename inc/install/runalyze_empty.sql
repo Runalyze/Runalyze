@@ -29,34 +29,6 @@ INSERT INTO `runalyze_clothes` (`id`, `name`, `short`, `order`) VALUES
 (9, 'Muetze', 'Muetze', 4);
 
 --
--- Daten für Tabelle `runalyze_conf`
---
-
-INSERT INTO `runalyze_conf` (`id`, `category`, `key`, `type`, `value`, `description`, `select_description`) VALUES
-(1, 'Allgemein', 'GENDER', 'select', 'm=true|f=false', 'Geschlecht', 'm&auml;nnlich, weiblich'),
-(2, 'Allgemein', 'PULS_MODE', 'select', 'bpm=false|hfmax=true', 'Pulsanzeige', 'absoluter Wert, &#37; HFmax'),
-(3, 'Allgemein', 'USE_PULS', 'bool', 'true', 'Pulsdaten speichern', ''),
-(4, 'Allgemein', 'USE_WETTER', 'bool', 'true', 'Wetter speichern', ''),
-(5, 'Allgemein', 'PLZ', 'int', '0', 'f&uuml;r Wetter-Daten: PLZ', ''),
-(6, 'Rechenspiele', 'RECHENSPIELE', 'bool', 'true', 'Rechenspiele aktivieren', ''),
-(7, 'Training', 'MAINSPORT', 'selectdb', '1', 'Haupt-Sportart', 'sport, name'),
-(8, 'Training', 'RUNNINGSPORT', 'selectdb', '1', 'Lauf-Sportart', 'sport, name'),
-(9, 'Training', 'WK_TYPID', 'selectdb', '5', 'Trainingstyp: Wettkampf', 'type, name'),
-(10, 'Training', 'LL_TYPID', 'selectdb', '7', 'Trainingstyp: Langer Lauf', 'type, name'),
-(11, 'Eingabeformular', 'COMPUTE_KCAL', 'bool', 'true', 'Kalorienverbrauch automatisch berechnen', ''),
-(12, 'Eingabeformular', 'TRAINING_CREATE_MODE', 'select', 'tcx=false|garmin=true|form=false', 'Standard-Eingabemodus', 'tcx-Datei hochladen, GarminCommunicator, Standard-Formular'),
-(13, 'Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select', 'google=true|geonames=false', 'Server f&uuml;r H&ouml;henkorrektur', 'maps.googleapis.com, ws.geonames.org'),
-(14, 'Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', 'true', 'H&ouml;henkorrektur verwenden', ''),
-(15, 'Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienfarbe auf GoogleMaps-Karte (#RGB)', ''),
-(16, 'Training', 'TRAINING_MAP_MARKER', 'bool', 'true', 'Kilometer-Markierungen anzeigen', ''),
-(17, 'Training', 'TRAINING_MAPTYPE', 'select', 'G_NORMAL_MAP=false|G_HYBRID_MAP=true|G_SATELLITE_MAP=false|G_PHYSICAL_MAP=false', 'Typ der GoogleMaps-Karte', 'Normal, Hybrid, Sattelit, Physikalisch'),
-(18, 'Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', 'true', 'Individuelle VDOT-Korrektur verwenden', ''),
-(19, 'hidden', 'MAX_ATL', 'int', '0', 'Maximal value for ATL', ''),
-(20, 'hidden', 'MAX_CTL', 'int', '0', 'Maximal value for CTL', ''),
-(21, 'hidden', 'MAX_TRIMP', 'int', '0', 'Maximal value for TRIMP', ''),
-(22, 'Suchfenster', 'RESULTS_AT_PAGE', 'int', '15', 'Ergebnisse pro Seite', '');
-
---
 -- Daten für Tabelle `runalyze_dataset`
 --
 
@@ -88,23 +60,23 @@ INSERT INTO `runalyze_dataset` (`id`, `name`, `description`, `distance`, `outsid
 --
 
 INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `filename`, `name`, `description`, `config`, `active`, `order`) VALUES
-(1, 'RunalyzePluginPanel_Sports', 'panel', 'panel.sports.inc.php', 'Sportarten', '&Uuml;bersicht der Leistungen aller Sportarten für den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.', '', 1, 1),
-(2, 'RunalyzePluginPanel_Rechenspiele', 'panel', 'panel.rechenspiele.inc.php', 'Rechenspiele', 'Anzeige der Rechenspiele M&uuml;digkeit, Grundlagenausdauer und Trainingsform.', 'show_trainingpaces|bool=true|Empfohlene Trainingstempi anzeigen', 1, 2),
-(3, 'RunalyzePluginPanel_Prognose', 'panel', 'panel.prognose.inc.php', 'Prognose', 'Anzeige der aktuellen Wettkampfprognose.', 'distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r die Prognose (kommagetrennt)', 2, 3),
-(4, 'RunalyzePluginPanel_Schuhe', 'panel', 'panel.schuhe.inc.php', 'Schuhe', 'Anzeige der bisher gelaufenen Kilometer mit den aktiven Schuhen, bei Bedarf auch der alten Schuhe.', '', 2, 4),
-(5, 'RunalyzePluginPanel_Sportler', 'panel', 'panel.sportler.inc.php', 'Sportler', 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).', 'use_weight|bool=true|Gewicht protokollieren\r\nuse_body_fat|bool=true|Fettanteil protokollieren\r\nuse_pulse|bool=true|Ruhepuls protokollieren\r\nwunschgewicht|int=68.0|Wunschgewicht', 1, 5),
+(1, 'RunalyzePluginPanel_Sports', 'panel', 'class.RunalyzePluginPanel_Sports.php', 'Sportarten', '&Uuml;bersicht der Leistungen aller Sportarten für den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.', '', 1, 1),
+(2, 'RunalyzePluginPanel_Rechenspiele', 'panel', 'class.RunalyzePluginPanel_Rechenspiele.php', 'Rechenspiele', 'Anzeige der Rechenspiele M&uuml;digkeit, Grundlagenausdauer und Trainingsform.', 'show_trainingpaces|bool=true|Empfohlene Trainingstempi anzeigen', 1, 2),
+(3, 'RunalyzePluginPanel_Prognose', 'panel', 'class.RunalyzePluginPanel_Prognose.php', 'Prognose', 'Anzeige der aktuellen Wettkampfprognose.', 'distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r die Prognose (kommagetrennt)', 2, 3),
+(4, 'RunalyzePluginPanel_Schuhe', 'panel', 'class.RunalyzePluginPanel_Schuhe.php', 'Schuhe', 'Anzeige der bisher gelaufenen Kilometer mit den aktiven Schuhen, bei Bedarf auch der alten Schuhe.', '', 2, 4),
+(5, 'RunalyzePluginPanel_Sportler', 'panel', 'class.RunalyzePluginPanel_Sportler.php', 'Sportler', 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).', 'use_weight|bool=true|Gewicht protokollieren\r\nuse_body_fat|bool=true|Fettanteil protokollieren\r\nuse_pulse|bool=true|Ruhepuls protokollieren\r\nwunschgewicht|int=68.0|Wunschgewicht', 1, 5),
+(6, 'RunalyzePluginStat_Schuhe', 'stat', 'class.RunalyzePluginStat_Schuhe.php', 'Schuhe', 'Ausf&uuml;hrliche Statistiken zu den Schuhen: Durchschnittliche, maximale und absolute Leistung (Kilometer / Tempo).', '', 1, 4),
+(7, 'RunalyzePluginStat_Analyse', 'stat', 'class.RunalyzePluginStat_Analyse.php', 'Analyse', 'Analyse des Trainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.', 'use_type|bool=true|Trainingstypen analysieren\r\nuse_pace|bool=true|Tempobereiche analysieren\r\nuse_pulse|bool=true|Pulsbereiche analysieren\r\nlowest_pulsegroup|int=65|Niedrigster Pulsbereich (%HFmax)\r\npulsegroup_step|int=5|Pulsbereich: Schrittweite\r\nlowest_pacegroup|int=360|Niedrigster Tempobereich (s/km)\r\nhighest_pacegroup|int=210|H&ouml;chster Tempobereich (s/km)\r\npacegroup_step|int=15|Tempobereich: Schrittweite', 1, 2),
+(8, 'RunalyzePluginStat_Statistiken', 'stat', 'class.RunalyzePluginStat_Statistiken.php', 'Statistiken', 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht für alle Sportarten.', '', 1, 1),
+(9, 'RunalyzePluginStat_Wettkampf', 'stat', 'class.RunalyzePluginStat_Wettkampf.php', 'Wettk&auml;mpfe', 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk&auml;mpfen.', 'last_wk_num|int=10|Anzahl f&uuml;r letzte Wettk&auml;mpfe main_distance|int=10|Hauptdistanz (wird als Diagramm dargestellt) pb_distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt) fun_ids|array=|IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)', 1, 3),
+(10, 'RunalyzePluginStat_Wetter', 'stat', 'class.RunalyzePluginStat_Wetter.php', 'Wetter', 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.', 'for_weather|bool=true|Wetter-Statistiken anzeigen\r\nfor_clothes|bool=true|Kleidung-Statistiken anezigen', 1, 5),
+(11, 'RunalyzePluginStat_Rekorde', 'stat', 'class.RunalyzePluginStat_Rekorde.php', 'Rekorde', 'Am schnellsten, am l&auml;ngsten, am weitesten: Die Rekorde aus dem Training.', '', 2, 6),
+(12, 'RunalyzePluginStat_Strecken', 'stat', 'class.RunalyzePluginStat_Strecken.php', 'Strecken', 'Auflistung der h&auml;ufigsten und seltensten Strecken/Orte.', '', 2, 7),
+(13, 'RunalyzePluginStat_Trainingszeiten', 'stat', 'class.RunalyzePluginStat_Trainingszeiten.php', 'Trainingszeiten', 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.', '', 2, 8),
+(14, 'RunalyzePluginStat_Trainingspartner', 'stat', 'class.RunalyzePluginStat_Trainingspartner.php', 'Trainingspartner', 'Wie oft hast du mit wem gemeinsam trainiert?', '', 2, 9),
+(15, 'RunalyzePluginStat_Hoehenmeter', 'stat', 'class.RunalyzePluginStat_Hoehenmeter.php', 'H&ouml;henmeter', 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.', '', 2, 10),
+(16, 'RunalyzePluginStat_Laufabc', 'stat', 'class.RunalyzePluginStat_Laufabc.php', 'Lauf-ABC', 'Wie oft hast du Lauf-ABC absolviert?', '', 2, 11),
 (17, 'RunalyzePluginTool_Cacheclean', 'tool', 'class.RunalyzePlugin_CachecleanTool.php', 'Cacheclean', 'L&ouml;scht den Cache der Diagramme. Sollte genutzt werden, falls Probleme mit Diagrammen auftauchen.', '', 1, 99),
-(6, 'RunalyzePluginStat_Schuhe', 'stat', 'stat.schuhe.inc.php', 'Schuhe', 'Ausf&uuml;hrliche Statistiken zu den Schuhen: Durchschnittliche, maximale und absolute Leistung (Kilometer / Tempo).', '', 1, 4),
-(7, 'RunalyzePluginStat_Analyse', 'stat', 'stat.analyse.inc.php', 'Analyse', 'Analyse des Trainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.', 'use_type|bool=true|Trainingstypen analysieren\r\nuse_pace|bool=true|Tempobereiche analysieren\r\nuse_pulse|bool=true|Pulsbereiche analysieren\r\nlowest_pulsegroup|int=65|Niedrigster Pulsbereich (%HFmax)\r\npulsegroup_step|int=5|Pulsbereich: Schrittweite\r\nlowest_pacegroup|int=360|Niedrigster Tempobereich (s/km)\r\nhighest_pacegroup|int=210|H&ouml;chster Tempobereich (s/km)\r\npacegroup_step|int=15|Tempobereich: Schrittweite', 1, 2),
-(8, 'RunalyzePluginStat_Statistiken', 'stat', 'stat.statistiken.inc.php', 'Statistiken', 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht für alle Sportarten.', '', 1, 1),
-(9, 'RunalyzePluginStat_Wettkampf', 'stat', 'stat.wettkampf.inc.php', 'Wettk&auml;mpfe', 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk&auml;mpfen.', 'last_wk_num|int=10|Anzahl f&uuml;r letzte Wettk&auml;mpfe main_distance|int=10|Hauptdistanz (wird als Diagramm dargestellt) pb_distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt) fun_ids|array=|IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)', 1, 3),
-(10, 'RunalyzePluginStat_Wetter', 'stat', 'stat.wetter.inc.php', 'Wetter', 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.', 'for_weather|bool=true|Wetter-Statistiken anzeigen\r\nfor_clothes|bool=true|Kleidung-Statistiken anezigen', 1, 5),
-(11, 'RunalyzePluginStat_Rekorde', 'stat', 'stat.rekorde.inc.php', 'Rekorde', 'Am schnellsten, am l&auml;ngsten, am weitesten: Die Rekorde aus dem Training.', '', 2, 6),
-(12, 'RunalyzePluginStat_Strecken', 'stat', 'stat.strecken.inc.php', 'Strecken', 'Auflistung der h&auml;ufigsten und seltensten Strecken/Orte.', '', 2, 7),
-(13, 'RunalyzePluginStat_Trainingszeiten', 'stat', 'stat.trainingszeiten.inc.php', 'Trainingszeiten', 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.', '', 2, 8),
-(14, 'RunalyzePluginStat_Trainingspartner', 'stat', 'stat.trainingspartner.inc.php', 'Trainingspartner', 'Wie oft hast du mit wem gemeinsam trainiert?', '', 2, 9),
-(15, 'RunalyzePluginStat_Hoehenmeter', 'stat', 'stat.hoehenmeter.inc.php', 'H&ouml;henmeter', 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.', '', 2, 10),
-(16, 'RunalyzePluginStat_Laufabc', 'stat', 'stat.laufabc.inc.php', 'Lauf-ABC', 'Wie oft hast du Lauf-ABC absolviert?', '', 2, 11),
 (18, 'RunalyzePluginTool_DatenbankCleanup', 'tool', 'class.RunalyzePlugin_DatenbankCleanupTool.php', 'Datenbank-Cleanup', 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.', '', 1, 99);
 
 --
@@ -141,10 +113,6 @@ INSERT INTO `runalyze_type` (`id`, `name`, `abbr`, `RPE`, `splits`) VALUES
 (6, 'Regenerationslauf', 'RL', 2, 0),
 (7, 'Langer Lauf', 'LL', 5, 0),
 (8, 'Warm-/Auslaufen', 'WA', 1, 0);
-
---
--- Daten für Tabelle `runalyze_user`
---
 
 
 --
