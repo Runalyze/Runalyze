@@ -43,6 +43,8 @@ abstract class PluginStat extends Plugin {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
+		$this->displayConfigLinkForHeader();
+
 		if ($this->isVariousStat())
 			$this->displayLinksForVariousStatistics();
 
@@ -53,7 +55,7 @@ abstract class PluginStat extends Plugin {
 	 * Display links to all various statistics
 	 */
 	protected function displayLinksForVariousStatistics() {
-		echo(NL.'<small class="right">'.NL);
+		echo(NL.'<small class="right margin-5">'.NL);
 		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 		foreach ($others as $i => $other) {
 			if ($i != 0)
@@ -71,7 +73,14 @@ abstract class PluginStat extends Plugin {
 		if ($name == '')
 			$name = $this->name;
 
-		echo('<h1>'.$name.'</h1>'.NL);
+		echo '<h1>'.$name.'</h1>'.NL;
+	}
+
+	/**
+	 * Display config link
+	 */
+	protected function displayConfigLinkForHeader() {
+		echo '<span class="right">'.$this->getConfigLink().'</span>'.NL;
 	}
 
 	

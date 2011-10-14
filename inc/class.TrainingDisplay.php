@@ -8,6 +8,7 @@ Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Mar
 Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
 	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
+Config::register('Training', 'TRAINING_PLOTS_BELOW', 'bool', false, 'Diagramme untereinander anstatt im Wechsel anzeigen');
 
 /**
 * Class: TrainingDisplay
@@ -75,11 +76,18 @@ class TrainingDisplay {
 
 		echo '<div class="right">'.NL;
 		if (!empty($Plots)) {
-			echo '<small class="right">'.NL;
-			$this->displayPlotLinks('trainingGraph');
-			echo '</small>'.NL;
-			echo '<br /><br />'.NL;
-			$this->displayPlot(key($Plots));
+			if (CONF_TRAINING_PLOTS_BELOW) {
+				foreach ($Plots as $Key => $Plot) {
+					$this->displayPlot($Key);
+					echo '<br />'.NL;
+				}
+			} else {
+				echo '<small class="right">'.NL;
+				$this->displayPlotLinks('trainingGraph');
+				echo '</small>'.NL;
+				echo '<br /><br />'.NL;
+				$this->displayPlot(key($Plots));
+			}
 			echo '<br /><br />'.NL;
 		}
 
