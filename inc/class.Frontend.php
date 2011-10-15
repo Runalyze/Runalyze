@@ -159,6 +159,7 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.Type.php';
 		require_once FRONTEND_PATH.'class.User.php';
 		require_once FRONTEND_PATH.'class.Weather.php';
+		require_once FRONTEND_PATH.'class.GpsData.php';
 	}
 
 	/**

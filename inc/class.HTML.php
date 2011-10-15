@@ -248,6 +248,26 @@ class HTML {
 	}
 
 	/**
+	 * Get class for table-row depending on index
+	 * @param int $i
+	 * @param string $style style-class for this row, look at CSS-file for more information
+	 * @return string eg. 'a1'/'a2'
+	 */
+	public static function trClass($i, $style = 'a') {
+		return $style.($i%2 == 0 ? '1' : '2');
+	}
+
+	/**
+	 * Get class for table-row depending on index
+	 * @param int $i
+	 * @param string $style style-class for this row, look at CSS-file for more information
+	 * @return string eg. 'a2'/'a3'
+	 */
+	public static function trClass2($i, $style = 'a') {
+		return $style.($i%2 == 0 ? '2' : '3');
+	}
+
+	/**
 	 * Check if currently used browser is IE
 	 * @return bool
 	 */

@@ -1,3 +1,24 @@
+#calendar {
+	width: 525px;
+	margin: 0 auto;
+	background-color: rgba(255,255,255,0.7);
+	border: 1px solid #B8B8B8;
+	border-radius: 3px 3px 3px 3px;
+	padding: 5px;
+	font-size: 0.9em;
+	position:relative;
+}
+#calendarSubmit {
+	position:absolute;
+	right: -40px;
+	top: 59px;
+}
+#widgetCalendar {
+	position:relative;
+	width: 520px;
+	height: 130px;
+	margin: 0 auto;
+}
 div.datepicker {
 	position: relative;
 	font-family: Arial, Helvetica, sans-serif;
@@ -10,87 +31,15 @@ div.datepicker {
 	left: 0;
 	display: none;
 }
-.datepickerContainer {
-	background: #121212;
-	position: absolute;
-	top: 10px;
-	left: 10px;
-}
-.datepickerBorderT {
-	position: absolute;
-	left: 10px;
-	top: 0;
-	right: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_t.png);
-}
-.datepickerBorderB {
-	position: absolute;
-	left: 10px;
-	bottom: 0;
-	right: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_b.png);
-}
-.datepickerBorderL {
-	position: absolute;
-	left: 0;
-	bottom: 10px;
-	top: 10px;
-	width: 10px;
-	background: url(../img/datepicker/datepicker_l.png);
-}
-.datepickerBorderR {
-	position: absolute;
-	right: 0;
-	bottom: 10px;
-	top: 10px;
-	width: 10px;
-	background: url(../img/datepicker/datepicker_r.png);
-}
-.datepickerBorderTL {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_tl.png);
-}
-.datepickerBorderTR {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_tr.png);
-}
-.datepickerBorderBL {
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_bl.png);
-}
-.datepickerBorderBR {
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	width: 10px;
-	height: 10px;
-	background: url(../img/datepicker/datepicker_br.png);
+div.datepicker table {
+	padding: 0 !important;
+	margin: 0 !important;
 }
 .datepickerHidden {
 	display: none;
 }
 div.datepicker table {
 	border-collapse:collapse;
-}
-div.datepicker a {
-	color: #eee;
-	text-decoration: none;
-	cursor: default;
-	outline: none;
 }
 div.datepicker table td {
 	text-align: right;
@@ -109,34 +58,31 @@ div.datepicker tbody a {
 	display: block;
 }
 .datepickerDays a {
-	width: 20px;
-	line-height: 16px;
-	height: 16px;
+	width: 18px;
+	line-height: 15px;
+	height: 15px;
 	padding-right: 2px;
 }
 .datepickerYears a,
 .datepickerMonths a{
-	width: 44px;
-	line-height: 36px;
-	height: 36px;
+	width: 42px;
+	line-height: 32px;
+	height: 32px;
 	text-align: center;
 }
 td.datepickerNotInMonth a {
 	color: #666;
 }
 tbody.datepickerDays td.datepickerSelected{
-	background: #136A9F;
+	background: #FFE5CC;
 }
 tbody.datepickerDays td.datepickerNotInMonth.datepickerSelected {
-	background: #17384d;
+	background: #FFE5CC;
+	font-style: italic;
 }
 tbody.datepickerYears td.datepickerSelected,
 tbody.datepickerMonths td.datepickerSelected{
-	background: #17384d;
-}
-div.datepicker a:hover,
-div.datepicker a:hover {
-	color: #88c5eb;
+	background: #FFF5DC;
 }
 div.datepicker td.datepickerNotInMonth a:hover {
 	color: #999;
@@ -151,8 +97,6 @@ div.datepicker tbody th {
 .datepickerGoPrev a,
 .datepickerMonth a {
 	text-align: center;
-	height: 20px;
-	line-height: 20px;
 }
 .datepickerGoNext a {
 	float: right;
@@ -188,65 +132,4 @@ td.datepickerSpecial a {
 }
 td.datepickerSpecial.datepickerSelected a {
 	background: #a00;
-}
-
-#customWidget {
-	position: relative;
-	height: 36px;
-}
-
-input.inputDate {
-	border: 1px solid #999;
-	padding: 4px;
-	border-bottom-color: #ddd;
-	border-right-color: #ddd;
-	width: 65px;
-}
-#widget {
-	position: relative;
-}
-#widgetField {
-	width: 290px;
-	height: 26px;
-	background: url(../img/datepicker/field.png);
-	overflow: hidden;
-	position: relative;
-}
-#widgetField a {
-	display: block;
-	position: absolute;
-	width: 26px;
-	height: 26px;
-	top: 0;
-	right: 0;
-	text-decoration: none;
-	text-indent: -3000px;
-}
-#widgetField span {
-	font-size: 12px;
-	font-weight: bold;
-	color: #000;
-	position: absolute;
-	top: 0;
-	height: 26px;
-	line-height: 26px;
-	left: 5px;
-	width: 250px;
-	text-align: center;
-}
-#widgetCalendar {
-	position: absolute;
-	top: 26px;
-	left: 0;
-	height: 0;
-	overflow: hidden;
-	width: 588px;
-}
-#widgetCalendar .datepicker {
-	position: absolute;
-	bottom: 0;
-	top: auto;
-}
-#widgetCalendar .datepicker a:hover{
-	color: #b6f063;
 }

@@ -78,15 +78,15 @@ class TrainingDisplay {
 		if (!empty($Plots)) {
 			if (CONF_TRAINING_PLOTS_BELOW) {
 				foreach ($Plots as $Key => $Plot) {
-					$this->displayPlot($Key);
+						$this->displayPlot($Key);
 					echo '<br />'.NL;
 				}
 			} else {
-				echo '<small class="right">'.NL;
-				$this->displayPlotLinks('trainingGraph');
+				echo '<small class="right margin-5">'.NL;
+					$this->displayPlotLinks('trainingGraph');
 				echo '</small>'.NL;
 				echo '<br /><br />'.NL;
-				$this->displayPlot(key($Plots));
+					$this->displayPlot(key($Plots));
 			}
 			echo '<br /><br />'.NL;
 		}
@@ -148,6 +148,68 @@ class TrainingDisplay {
 	public function displayTrainingData() {
 		$this->Training->displayTable();
 		$this->displayRoundsContainer();
+		$this->displayPaceZones();
+		$this->displayPulseZones();
+	}
+
+	/**
+	 * Display pace-zones
+	 */
+	public function displayPaceZones() {
+		$Data = array();
+		$Zones = $this->Training->GpsData()->getPaceZonesAsFilledArrays();
+
+		foreach ($Zones as $min => $Info) {
+			if ($Info['distance'] > 0.05)
+				$Data[] = array(
+					'zone'     => 'bis '.Helper::Pace(1, $min*60).'/km',
+					'time'     => $Info['time'],
+					'distance' => $Info['distance'],
+					'average'  => round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).' &#37;');
+		}
+
+		$this->displayZone('Tempozonen', $Data, '&oslash; Puls');
+	}
+
+	/**
+	 * Display pace-zones
+	 */
+	public function displayPulseZones() {
+		$Data = array();
+		$Zones = $this->Training->GpsData()->getPulseZonesAsFilledArrays();
+
+		foreach ($Zones as $hf => $Info) {
+			if ($Info['distance'] > 0.05)
+				$Data[] = array(
+					'zone'     => 'bis '.(10*$hf).' &#37;',
+					'time'     => $Info['time'],
+					'distance' => $Info['distance'],
+					'average'  => Helper::Pace($Info['num'], $Info['pace-sum']).'/km');
+		}
+
+		$this->displayZone('Pulszonen', $Data, 'Pace');
+	}
+
+	/**
+	 * Display pace-zones
+	 */
+	public function displayZone($title, $Data, $titleForAverage = '') {
+		$showCellForAverageData = ($titleForAverage != '');
+		$totalTime = 0;
+
+		if (empty($Data))
+			return;
+
+		foreach ($Data as $i => $Info)
+			$totalTime += $Info['time'];
+
+		foreach ($Data as $i => $Info) {
+			$Data[$i]['percentage'] = round(100 * $Info['time'] / $totalTime, 1);
+			$Data[$i]['time']       = Helper::Time($Info['time'], false, $Info['time'] < 60 ? 2 : false);
+			$Data[$i]['distance']   = Helper::Km($Info['distance'], 2);
+		}
+
+		include 'tpl/tpl.Training.zone.php';
 	}
 
 	/**
@@ -163,31 +225,19 @@ class TrainingDisplay {
 		if (empty($RoundTypes))
 			return;
 
-		echo '<div id="trainingRounds">' ;
-			echo '<strong class="small">Rundenzeiten:&nbsp;</strong>'.NL;
-			echo '<small class="right">'.NL;
-				foreach ($RoundTypes as $i => $RoundType) {
-					echo Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
-					if ($i < count($RoundTypes)-1)
-						echo ' | ';
-				}
-			echo '&nbsp;</small>'.NL;
+		$RoundLinksArray = array();
+		foreach ($RoundTypes as $i => $RoundType)
+			$RoundLinksArray[] = Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
+		$RoundLinks = implode(' | ', $RoundLinksArray);
 
-			if (empty($RoundTypes))
-				echo '<small><em>Keine Daten vorhanden.</em></small>'.NL;
-
-			foreach ($RoundTypes as $i => $RoundType) {
-				echo '<div id="'.$RoundType['id'].'" class="change"'.($i==0?'':' style="display:none;"').'>';
-					eval($RoundType['eval']);
-				echo '</div>';
-			}
-		echo '</div>';
+		include 'tpl/tpl.Training.roundContainer.php';
 	}
 
 	/**
 	 * Display defined splits
 	 */
 	public function displaySplits() {
+		// TODO: Clean Code
 		echo '<table class="small" cellspacing="0">
 			<tr class="c b">
 				<td>Distanz</td>
@@ -249,88 +299,21 @@ class TrainingDisplay {
 	 * Display (computed) rounds
 	 */
 	public function displayRounds() {
-		$km 				= 1;
-		$kmIndex	 		= array(0);
-		$positiveElevation 	= 0;
-		$negativeElevation 	= 0;
-		$distancePoints 	= explode(Training::$ARR_SEP, $this->Training->get('arr_dist'));
-		$timePoints 		= explode(Training::$ARR_SEP, $this->Training->get('arr_time'));
-		$heartPoints 		= explode(Training::$ARR_SEP, $this->Training->get('arr_heart'));
-		$elevationPoints 	= explode(Training::$ARR_SEP, $this->Training->get('arr_alt'));
-		$numberOfPoints 	= sizeof($distancePoints);
-		$rounds             = array();
-		$showPulse          = count($heartPoints) > 1;
-		$showElevation      = count($elevationPoints) > 1;
+		$Data   = array();
+		$Rounds = $this->Training->GpsData()->getRoundsAsFilledArray();
+		$showCellForHeartrate = $this->Training->GpsData()->hasHeartrateData();
+		$showCellForElevation = $this->Training->GpsData()->hasElevationData();
 
-		foreach ($distancePoints as $i => $distance) {
-			if (floor($distance) == $km || $i == $numberOfPoints-1) {
-				$km++;
-				$prevIndex = end($kmIndex);
-				$kmIndex[] = $i;
-
-				if ($showPulse) {
-					$heartRateOfThisKm = array_slice($heartPoints, $prevIndex, ($i - $prevIndex));
-					$bpm = round(array_sum($heartRateOfThisKm) / ($i - $prevIndex));
-				} else
-					$bpm = 0;
-
-				$rounds[] = array(
-					'time' => $timePoints[$i],
-					'dist' => $distance,
-					'km' => $distance - $distancePoints[$prevIndex],
-					's' => $timePoints[$i] - $timePoints[$prevIndex],
-					'bpm' => $bpm,
-					'hm_up' => $positiveElevation,
-					'hm_down' => $negativeElevation,
-					);
-
-				$positiveElevation = 0;
-				$negativeElevation = 0;
-			} elseif ($i != 0 && $showElevation && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$elevationDifference = $elevationPoints[$i] - $elevationPoints[$i-1];
-				$positiveElevation += ($elevationDifference > Training::$minElevationDiff) ? $elevationDifference : 0;
-				$negativeElevation -= ($elevationDifference < -1*Training::$minElevationDiff) ? $elevationDifference : 0;
-			}
+		foreach ($Rounds as $i => $Round) {
+			$Data[] = array(
+				'time'      => Helper::Time($Round['time']),
+				'distance'  => Helper::Km($Round['distance'], 2),
+				'pace'      => Helper::Speed($Round['km'], $Round['s'], $this->Training->get('sportid')),
+				'heartrate' => Helper::Unknown($Round['heartrate']),
+				'elevation' => Helper::WithSign($Round['hm-up']).'/'.Helper::WithSign(-$Round['hm-down']));
 		}
-
-		$this->displayRoundsTable($rounds, $showPulse, $showElevation);
-	}
-
-	/**
-	 * Display the table for all rounds
-	 * @param array $rounds Array containing all rounds
-	 * @param bool $showPulse Flag: Show heartfrequence?
-	 * @param bool $showElevation Flag: Show elevation-data?
-	 */
-	private function displayRoundsTable($rounds, $showPulse, $showElevation) {
-		echo '<table class="small" cellspacing="0">
-			<tr class="c b">
-				<td>Zeit</td>
-				<td>Distanz</td>
-				<td>Tempo</td>
-				'.($showPulse ? '<td>bpm</td>' : '').'
-				'.($showElevation ? '<td>hm</td>' : '').'
-			</tr>'.NL;
-		echo HTML::spaceTR(3 + (int)$showPulse + (int)$showElevation);
-
-		foreach ($rounds as $i => $round) {
-			if ($round['bpm'] == 0)
-				$round['bpm'] = '?';
-			if ($round['hm_up'] != 0)
-				$round['hm_up'] = '+'.$round['hm_up'];
-			if ($round['hm_down'] != 0)
-				$round['hm_down'] = '-'.$round['hm_down'];
-
-			echo '<tr class="a'.($i%2+2).' r">
-				<td>'.Helper::Time($round['time']).'</td>
-				<td>'.Helper::Km($round['dist'], 2).'</td>
-				<td>'.Helper::Speed($round['km'], $round['s'], $this->Training->get('sportid')).'</td>
-				'.($showPulse ? '<td>'.$round['bpm'].'</td>' : '').'
-				'.($showElevation ? '<td>'.$round['hm_up'].'/'.$round['hm_down'].'</td>' : '').'
-			</tr>'.NL;
-		}
-
-		echo '</table>'.NL;
+		
+		include 'tpl/tpl.Training.round.php';
 	}
 
 	/**
