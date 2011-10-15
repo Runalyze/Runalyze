@@ -6,6 +6,15 @@
 <?php $this->displayNavigationLinks(); ?>
 </h1>
 
+<div id="<?php echo self::$CALENDAR_ID; ?>">
+	<div id="widgetCalendar">
+	</div>
+
+	<span id="calendarResult" class="hide">W&auml;hle ein Datum aus ...</span>
+
+	<img class="link" id="calendarSubmit" src="<?php echo Icon::$ARR_NEXT_BIG; ?>" />
+</div>
+
 <table style="width:100%;">
 	<tr class="space">
 		<td colspan="<?php echo ($this->Dataset->column_count + 2); ?>" />

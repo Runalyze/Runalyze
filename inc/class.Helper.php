@@ -448,6 +448,20 @@ class Helper {
 	}
 
 	/**
+	 * Get a value with leading sign
+	 * @param mixed $value
+	 * @return string
+	 */
+	public static function WithSign($value) {
+		if ($value == 0)
+			return 0;
+		if ($value > 0)
+			return '+'.$value;
+		if ($value < 0)
+			return $value;
+	}
+
+	/**
 	 * Cut a string if it is longer than $cut (default CUT_LENGTH)
 	 * @uses CUT_LENGTH
 	 * @param string $text

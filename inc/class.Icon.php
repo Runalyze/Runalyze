@@ -28,6 +28,7 @@ class Icon {
 	static public $ARR_NEXT			= 'img/next.png';
 	static public $ARR_BACK			= 'img/back.png';
 	static public $ARR_BACK_BIG		= 'img/arrBack.png';
+	static public $ARR_NEXT_BIG		= 'img/arrNext.png';
 	static public $ARR_DOWN_BIG		= 'img/arrDown.png';
 	static public $ARR_UP_BIG		= 'img/arrUp.png';
 	// Config

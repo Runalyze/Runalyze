@@ -35,6 +35,7 @@ Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ou
  * @uses class::Type
  * @uses class::Weather
  * @uses class::Shoe
+ * @uses class::GpsData
  */
 class Training {
 	/**
@@ -92,6 +93,12 @@ class Training {
 	private $Weather = null;
 
 	/**
+	 * Object for given GPS-data
+	 * @var GpsData
+	 */
+	private $GpsData = null;
+
+	/**
 	 * Constructor (needs ID, can be -1 for set($var) on it's own
 	 * @param int $id
 	 */
@@ -139,13 +146,13 @@ class Training {
 			return;
 
 		$this->Clothes = new Clothes($this->get('clothes'));
-		$this->Sport = new Sport($this->get('sportid'));
+		$this->Sport   = new Sport($this->get('sportid'));
+		$this->GpsData = new GpsData($this->data);
 
 		if ($this->hasType())
 			$this->Type = new Type($this->get('typeid'));
 
-		if ($this->isOutside())
-			$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
+		$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
 	}
 
 	/**
@@ -231,6 +238,14 @@ class Training {
 	}
 
 	/**
+	 * Get object for GPS-data
+	 * @return GpsData
+	 */
+	public function GpsData() {
+		return $this->GpsData;
+	}
+
+	/**
 	 * Override global post-array for edit-window
 	 * @return array
 	 */
@@ -288,7 +303,7 @@ class Training {
 	 * Display table with all training data
 	 */
 	public function displayTable() {
-		include('tpl/tpl.Training.table.php');
+		include 'tpl/tpl.Training.table.php';
 	}
 
 	/**
@@ -548,28 +563,28 @@ class Training {
 	 * Has the training information about pace?
 	 */
 	public function hasPaceData() {
-		return $this->get('arr_pace') != '';
+		return $this->GpsData->hasPaceData();
 	}
 
 	/**
 	 * Has the training information about elevation?
 	 */
 	public function hasElevationData() {
-		return $this->get('arr_alt') != '';
+		return $this->GpsData->hasElevationData();
 	}
 
 	/**
 	 * Has the training information about pulse?
 	 */
 	public function hasPulseData() {
-		return $this->get('arr_heart') != '' && max(explode('|',$this->get('arr_heart'))) > 60;
+		return $this->GpsData->hasHeartrateData();
 	}
 
 	/**
 	 * Has the training information about position?
 	 */
 	public function hasPositionData() {
-		return $this->get('arr_lat') != '' && $this->get('arr_lon') != '';
+		return $this->GpsData->hasPositionData();
 	}
 
 	/**
@@ -815,7 +830,8 @@ class Training {
 	 * @return array Used as $_POST
 	 */
 	static public function parseTcx($xml) {
-		require_once('tcx/class.ParserTcx.php');
+		// TODO: Move to ImporterExporter
+		require_once 'tcx/class.ParserTcx.php';
 
 		if (!is_array($xml)) {
 			$Parser = new ParserTcx($xml);

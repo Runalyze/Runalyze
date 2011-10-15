@@ -41,6 +41,12 @@ class DataBrowser {
 	static private $SEARCH_URL = 'call/window.search.php';
 
 	/**
+	 * CSS-ID for calendar-widget
+	 * @var string
+	 */
+	static public $CALENDAR_ID = 'calendar';
+
+	/**
 	 * Timestamp for first day to be displayed
 	 * @var int
 	 */
@@ -233,8 +239,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getCalenderLink() {
-		$icon = Icon::get(Icon::$CALENDAR, 'Kalender-Auswahl');
-		return Ajax::window('<a href="call/window.DataBrowser.calendar.php" title="Kalender-Auswahl">'.$icon.'</a>');
+		return '<span id="calendarLink" class="link">'.Icon::get(Icon::$CALENDAR, 'Kalender-Auswahl').'</span>';
 	}
 
 	/**
