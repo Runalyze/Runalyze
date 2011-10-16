@@ -7,7 +7,7 @@
 /***  L A Y O U T  ***/
 body {
 	padding-bottom: 33px;
-	background: url(img/bg.jpg);
+	background: url(img/backgrounds/Default.jpg);
 	color: #333;
 	font-family: Verdana, Arial, sans serif;
 	font-size: 11px;
@@ -133,30 +133,6 @@ ul.tabs li.active, ul.tabs li:hover  {
 	cursor: pointer;
 }
 
-/*** Toplinks (old, to be deleted) ***/
-div#toplinks {
-	position: absolute;
-	top: -25px;
-	margin: 0;
-	padding: 0;
-	height: 25px;
-}
-div#toplinks span {
-	position: relative;
-	top: 6px;
-	margin: 0 5px;
-	padding: 5px;
-	height: 13px;
-	background: url(img/bg.png);
-	border-top: 1px solid #000;
-	border-left: 1px solid #000;
-	border-right: 1px solid #000;
-	border-bottom: 1px solid transparent;
-}
-div#toplinks span:hover {
-	border-bottom: 1px solid #FF8000;
-}
-
 /*** Waiter for jQuery ***/
 img#wait {
 	display: none;
@@ -251,9 +227,6 @@ div#copy {
 	bottom: 0px;
 	line-height: 30px;
 	width: 100%;
-	/*background-image: url(img/content-ende.png);
-	background-position: bottom center;
-	background-repeat: no-repeat;*/ 
 	background-color: #000;
 	border-top: 1px solid #494944;
 	color: #888;
@@ -288,9 +261,7 @@ ul {
 input, select, textarea, code {
 	font-size: 0.9em;
 	margin: 4px 2px;
-	background-color: rgba(255,255,255,0.7); /* url(img/bg-70.png);*/
-	/*border: 1px solid #D2D2D3;
-	padding: 1px;*/
+	background-color: rgba(255,255,255,0.7);
 	border: 1px solid #B8B8B8;
 	border-radius: 3px 3px 3px 3px;
 	padding: 2px;
@@ -317,7 +288,6 @@ table input, table select, table textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-	/*border: 1px solid #41414C;*/
 	background-color: #EBFDD7;
 }
 .spacer {
@@ -365,14 +335,13 @@ table, tr, td {
 	vertical-align: top;
 }
 
-/*thead th {
-	border-color: #E9E9E9;
-	border-style: solid none solid solid;
-	border-width: 1px 0 1px 1px;
-	padding: 2px 6px 3px;
-	text-align: left;
+thead th {
+	border-color: #666;
+	border-style: none none solid none;
+	border-width: 0 0 1px 0;
+	padding-right: 5px;
+	text-align: center;
 }
-thead th.col_last { border-right: 1px solid #E9E9E9; }*/
 
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
@@ -386,7 +355,7 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .highlight td {	background: #FFE5CC; font-style: italic; }
 .highlight:hover td { background: #FFCCAA; }
 /*tr.a3 { display: none; }*/
-.space td { height: 1px; background: #000; padding: 0; }
+.space td { height: 1px; background: #666; padding: 0; }
 .nopadding tr, .nopadding td { padding: 0; }
 .nopadding input { margin: 0; }
 
@@ -443,21 +412,3 @@ a:hover, a:active, .link:hover {
 a#copy:hover, a#copy:active {
 	color: #DDD;
 }
-
-/*** O T H E R  T H I N G S ***/
-/*
-div.button {
-	border: 0;
-	cursor: pointer;
-	text-align: center;
-	width: 127px;
-	height: 19px;
-	padding-top: 6px;
-	margin: 0 auto;
-	background: url(inc/tcx/garmin/button_bg.jpg) no-repeat 0 top;
-	color: #fff;
-}
-
-div.button.hover {
-	background: url(inc/tcx/garmin/button_bg.jpg) no-repeat 0 bottom;
-}*/

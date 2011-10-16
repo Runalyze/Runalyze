@@ -105,6 +105,7 @@ class Config {
 			case 'int':
 			case 'float':
 				return (string)$value;
+			case 'selectfile':
 			case 'string':
 			default:
 				return $value;
@@ -141,6 +142,7 @@ class Config {
 				return (int)$value;
 			case 'float':
 				return (float)$value;
+			case 'selectfile':
 			case 'string':
 			default:
 				return $value;
@@ -156,6 +158,25 @@ class Config {
 		$value = self::stringToValue($conf['value'], $conf['type']);
 
 		switch ($conf['type']) {
+			case 'selectfile':
+				$folder   = self::stringToValue($conf['select_description'], 'array');
+				$options  = array();
+				foreach ($folder as $fold) {
+					if ($handle = opendir(FRONTEND_PATH.'../'.$fold)) {
+						while (false !== ($file = readdir($handle))) {
+							if ($file != "." && $file != "..") {
+								$options[] = array('name' => $file, 'value' => $fold.$file);
+							}
+						}
+						closedir($handle);
+					}
+				}
+
+				$select   = '<select name="'.$name.'">';
+				foreach ($options as $v)
+					$select .= '<option value="'.$v['value'].'"'.HTML::Selected($v['value'] == $conf['value']).'>'.$v['name'].'&nbsp;</option>';
+				$select  .= '</select>';
+				return $select;
 			case 'selectdb':
 				$settings = self::stringToValue($conf['select_description'], 'array');
 				$db       = $settings[0];
@@ -196,12 +217,13 @@ class Config {
 	static public function parsePostDataForConf() {
 		$confs = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`!="'.self::$HIDDEN_CAT.'"');
 		foreach ($confs as $conf) {
-			$str_value = $conf['value']; // TODO
+			$str_value = $conf['value'];
 			$value     = self::stringToValue($str_value, $conf['type']);
 			$post      = isset($_POST['CONF_'.$conf['key']]) ? $_POST['CONF_'.$conf['key']] : false;
 
 			switch ($conf['type']) {
 				case 'selectdb':
+				case 'selectfile':
 					$str_value = $post;
 					break;
 				case 'select':

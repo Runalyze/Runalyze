@@ -248,7 +248,7 @@ abstract class Plugin {
 			return false;
 		}
 
-		include_once($file);
+		include_once $file;
 
 		if (!isset($PLUGINKEY)) {
 			Error::getInstance()->addError('$PLUGINKEY must be set in the pluginfile \''.$file.'\'.');

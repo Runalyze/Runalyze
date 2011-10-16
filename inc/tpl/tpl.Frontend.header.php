@@ -5,6 +5,7 @@
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="stylesheet"  type="text/css"href="lib/datepicker.css" />
+	<link rel="stylesheet"  type="text/css"href="lib/tablesorter.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title>Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
@@ -15,6 +16,8 @@
 	<?php if (CONF_DESIGN_BG_FIX_AND_STRETCH): ?>
 	<script type="text/javascript" src="lib/jQuery.backgroundStretch.js"></script>
 	<?php endif; ?>
+	<script type="text/javascript" src="lib/jQuery.metadata.js"></script>
+	<script type="text/javascript" src="lib/jQuery.tablesorter.js"></script>
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
@@ -26,7 +29,7 @@
 	<![endif]-->
 </head>
 
-<body id="main">
+<body id="main" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="overlay"></div>
 <div id="ajax" class="panel"></div>

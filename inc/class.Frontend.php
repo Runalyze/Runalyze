@@ -132,7 +132,8 @@ class Frontend {
 	 * Define all CONF_CONSTS
 	 */
 	private function initDesignConsts() {
-		Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, 'Hintergrundbild skalieren');
+		Config::register('Design', 'DESIGN_BG_FILE', 'selectfile', 'Default.jpg', 'Hintergrundbild (Neuladen notwendig, eigene Bilder in img/backgrounds/)', array('img/backgrounds/'));
+		Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, 'Hintergrundbild skalieren (Neuladen notwendig)');
 	}
 
 	/**

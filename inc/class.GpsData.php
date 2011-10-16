@@ -87,14 +87,28 @@ class GpsData {
 	 * Constructor
 	 */
 	public function __construct($TrainingData) {
-		$this->arrayForTime      = explode(Training::$ARR_SEP, $TrainingData['arr_time']);
-		$this->arrayForLatitude  = explode(Training::$ARR_SEP, $TrainingData['arr_lat']);
-		$this->arrayForLongitude = explode(Training::$ARR_SEP, $TrainingData['arr_lon']);
-		$this->arrayForElevation = explode(Training::$ARR_SEP, $TrainingData['arr_alt']);
-		$this->arrayForDistance  = explode(Training::$ARR_SEP, $TrainingData['arr_dist']);
-		$this->arrayForHeartrate = explode(Training::$ARR_SEP, $TrainingData['arr_heart']);
-		$this->arrayForPace      = explode(Training::$ARR_SEP, $TrainingData['arr_pace']);
+		$this->arrayForTime      = $this->loadArrayDataFrom($TrainingData['arr_time']);
+		$this->arrayForLatitude  = $this->loadArrayDataFrom($TrainingData['arr_lat']);
+		$this->arrayForLongitude = $this->loadArrayDataFrom($TrainingData['arr_lon']);
+		$this->arrayForElevation = $this->loadArrayDataFrom($TrainingData['arr_alt']);
+		$this->arrayForDistance  = $this->loadArrayDataFrom($TrainingData['arr_dist']);
+		$this->arrayForHeartrate = $this->loadArrayDataFrom($TrainingData['arr_heart']);
+		$this->arrayForPace      = $this->loadArrayDataFrom($TrainingData['arr_pace']);
 		$this->arraySizes        = count($this->arrayForTime);
+	}
+
+	/**
+	 * Load array for internal data from string
+	 * @param string $string
+	 * @return array
+	 */
+	private function loadArrayDataFrom($string) {
+		$array = explode(Training::$ARR_SEP, $string);
+
+		if (count($array) == 1)
+			return array();
+
+		return $array;
 	}
 
 	/**
@@ -323,6 +337,26 @@ class GpsData {
 	 */
 	public function getPace() {
 		return $this->get($this->arrayForPace);
+	}
+
+	/**
+	 * Get maximum of elevation
+	 */
+	public function getMaximumOfElevation() {
+		if (!empty($this->arrayForElevation))
+			return max($this->arrayForElevation);
+
+		return 0;
+	}
+
+	/**
+	 * Get minimum of elevation
+	 */
+	public function getMinimumOfElevation() {
+		if (!empty($this->arrayForElevation))
+			return min($this->arrayForElevation);
+
+		return 0;
 	}
 
 	/**

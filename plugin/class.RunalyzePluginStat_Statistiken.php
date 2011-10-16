@@ -27,6 +27,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 	private $StundenData = array();
 	private $KMData      = array();
+	private $KMDataWeek  = array(); // = KMData / 52
+	private $KMDataMonth = array(); // = KMData / 12
 	private $TempoData   = array();
 	private $VDOTData    = array();
 	private $TRIMPData   = array();
@@ -73,7 +75,11 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		if ($this->sport['distances'] != 0) {
 			$this->displayLine('KM', $this->KMData);
-			$this->displayLine('&Oslash;Tempo', $this->TempoData);
+			if ($this->year == -1) {
+				$this->displayLine('&oslash;&nbsp;Wochen-KM', $this->KMDataWeek);
+				$this->displayLine('&oslash;&nbsp;Monats-KM', $this->KMDataMonth);
+			}
+			$this->displayLine('&oslash;&nbsp;Tempo', $this->TempoData);
 		}
 
 		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
@@ -166,9 +172,24 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$result = ($this->year != -1)
 			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
 			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+
 		foreach ($result as $dat) {
-			$text = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
-			$this->KMData[] = array('i' => $dat['i'], 'text' => $text);
+			if ($dat['i'] == START_YEAR) {
+				$WeekFactor  = 53 - date("W", START_TIME);
+				$MonthFactor = 13 - date("n", START_TIME);
+			} elseif ($dat['i'] == date("Y")) {
+				$WeekFactor  = date("W");
+				$MonthFactor = date("n");
+			} else {
+				$WeekFactor  = 52;
+				$MonthFactor = 12;
+			}
+			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
+			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$WeekFactor, 0);
+			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$MonthFactor, 0);
+			$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
+			$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
+			$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
 		}
 	}
 
