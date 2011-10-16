@@ -121,5 +121,16 @@ class Ajax {
 
 		return $text;
 	}
+
+	/**
+	 * Wrap JavaScript into code block for beeing executed on document ready
+	 * @param string $code
+	 * @return string
+	 */
+	public static function wrapJSforDocumentReady($code) {
+		$code = '$(document).ready(function(){ '.$code.' });';
+
+		return '<script type="text/javascript">'.$code.'</script>';
+	}
 }
 ?>

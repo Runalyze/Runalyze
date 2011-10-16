@@ -18,9 +18,11 @@
 	width: 520px;
 	height: 130px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 div.datepicker {
-	position: relative;
+	position: absolute;
+	overflow: hidden;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	width: 196px;
