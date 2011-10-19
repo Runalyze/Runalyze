@@ -18,6 +18,7 @@
 	<?php endif; ?>
 	<script type="text/javascript" src="lib/jQuery.metadata.js"></script>
 	<script type="text/javascript" src="lib/jQuery.tablesorter.js"></script>
+	<script type="text/javascript" src="lib/jQuery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="lib/form_scripts.js"></script>
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>

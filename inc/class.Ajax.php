@@ -123,14 +123,45 @@ class Ajax {
 	}
 
 	/**
+	 * Wrap JavaScript into code block
+	 * @param string $code
+	 * @return string
+	 */
+	public static function wrapJS($code) {
+		return '<script type="text/javascript">'.$code.'</script>';
+	}
+
+	/**
 	 * Wrap JavaScript into code block for beeing executed on document ready
 	 * @param string $code
 	 * @return string
 	 */
 	public static function wrapJSforDocumentReady($code) {
-		$code = '$(document).ready(function(){ '.$code.' });';
+		return self::wrapJS('$(document).ready(function(){ '.$code.' });');
+	}
 
-		return '<script type="text/javascript">'.$code.'</script>';
+	/**
+	 * Print div for pager for tables
+	 */
+	public static function printPagerDiv() {
+		echo '
+<div id="pager" class="pager c">
+	<form>
+		<a href="#main" class="first">|&laquo; Start</a>
+		<a href="#main" class="prev">&laquo; zur&uuml;ck</a>
+		<input type="text" class="pagedisplay" />
+		<a href="#main" class="next">weiter &raquo;</a>
+		<a href="#main" class="last">Ende &raquo;|</a>
+
+		<select class="pagesize">
+			<option value="10">10 pro Seite&nbsp;</option>
+			<option selected="selected" value="20">20 pro Seite&nbsp;</option>
+			<option value="30">30 pro Seite&nbsp;</option>
+			<option value="40">40 pro Seite&nbsp;</option>
+			<option value="50">50 pro Seite&nbsp;</option>
+		</select>
+	</form>
+</div>';
 	}
 }
 ?>

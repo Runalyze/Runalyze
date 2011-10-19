@@ -45,7 +45,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="plugin/window.sportler.php" title="Daten hinzuf&uuml;gen">'.Icon::get(Icon::$ADD, 'Daten hinzuf&uuml;gen').'</a>');
+		$Links = array();
+		$Links[] = Ajax::window('<a href="plugin/window.sportler.php" title="Daten hinzuf&uuml;gen">'.Icon::get(Icon::$ADD, 'Daten hinzuf&uuml;gen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/window.sportler.table.php" title="Daten in Tabelle anzeigen">'.Icon::get(Icon::$TABLE, 'Daten in Tabelle anzeigen').'</a>');
+
+		return implode(' ', $Links);
 	}
 
 	/**

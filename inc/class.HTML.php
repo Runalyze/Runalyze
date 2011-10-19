@@ -2,6 +2,19 @@
 /**
  * This file contains the class::HTML for easy html-manipulation.
  */
+
+/**
+ * New line for echoing text
+ * @var string
+ */
+define('NL', "\n");
+
+/**
+ * HTML-tag: break
+ * @var string
+ */
+define('BR', '<br />');
+
 /**
  * Class: HTML
  * 
@@ -101,6 +114,30 @@ class HTML {
 	 */
 	public static function clearBreak() {
 		return '<br class="clear" />';
+	}
+
+	/**
+	 * Wrap a string into emphasize-tag
+	 * @param string $string
+	 */
+	public static function em($string) {
+		return '<em>'.$string.'</em>';
+	}
+
+	/**
+	 * Wrap a string into p-tag with class="info"
+	 * @param string $string
+	 */
+	public static function info($string) {
+		return '<p class="info">'.$string.'</p>';
+	}
+
+	/**
+	 * Wrap a string into p-tag with class="error"
+	 * @param string $string
+	 */
+	public static function error($string) {
+		return '<p class="error">'.$string.'</p>';
 	}
 
 	/**

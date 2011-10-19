@@ -1,19 +1,17 @@
 <?php
 /**
- * This file contains the class parsing tcx-files.
+ * This file contains the class parsing xml styled files.
  */
 /**
- * Class: ParserTcx
+ * Class: XmlParser
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
  * @uses class::Mysql
  * @uses class:Error
- *
- * Last modified 2011/07/09 14:30 by Hannes Christiansen
  */
 
-class ParserTcx {
+class XmlParser {
 	/**
 	 * File path to load
 	 * @var string

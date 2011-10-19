@@ -26,6 +26,12 @@ class Error {
 	private $errors = array();
 
 	/**
+	 * Number of arrays
+	 * @var array
+	 */
+	private $numErrors = 0;
+
+	/**
 	 * Filename creating these errors
 	 * @var string
 	 */
@@ -152,14 +158,22 @@ class Error {
 	 * @param int    $line      line number containing the error
 	 */
 	public function add($type, $message, $file = '', $line = -1) {
+		$this->numErrors++;
+
 		if ($file != '') {
 			$message .= ' (in '.$file;
 			if ($line != -1)
 				$message .= '::'.$line;
 			$message .= ')';
 		}
-		
-		$this->errors[] = array('type' => $type, 'message' => $message);
+
+		if ($this->numErrors < 50)
+			$this->errors[] = array('type' => $type, 'message' => $message);
+		elseif ($this->numErrors == 50) {
+			$this->errors[] = array('type' => 'ERROR', 'message' => 'FATAL ERROR: TOO MANY ERRORS.');
+			$this->display();
+			exit();
+		}
 	}
 
 	/**

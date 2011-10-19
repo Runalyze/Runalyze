@@ -19,6 +19,7 @@ class Icon {
 	static public $ADD				= 'img/add.png';
 	static public $CROSS			= 'img/cross.png';
 	static public $CALENDAR			= 'img/calendar_month.png';
+	static public $TABLE			= 'img/table.png';
 	static public $CLIPBOARD		= 'img/clipboard.png';
 	static public $CLIPBOARD_PLUS	= 'img/clipboard__plus.png';
 	static public $CLOCK			= 'img/clock.png';
@@ -44,12 +45,18 @@ class Icon {
 	static public $FATIGUE			= 'img/fatigue.png';
 	static public $COMPETITION		= 'img/competition.png';
 	static public $COMPETITION_FUN	= 'img/competition_fun.png';
-	// Form
+	// Shape
 	static public $FORM_NORMAL		= 'img/form0.png';
 	static public $FORM_UP			= 'img/form++.png';
 	static public $FORM_UP_HALF		= 'img/form+.png';
 	static public $FORM_DOWN_HALF	= 'img/form-.png';
 	static public $FORM_DOWN		= 'img/form--.png';
+	// Shoes
+	static public $BROKEN_1			= 'img/running/broken-1.png';
+	static public $BROKEN_2			= 'img/running/broken-2.png';
+	static public $BROKEN_3			= 'img/running/broken-3.png';
+	static public $BROKEN_4			= 'img/running/broken-4.png';
+	static public $BROKEN_5			= 'img/running/broken-5.png';
 
 	/**
 	 * This class contains only static methods
@@ -104,6 +111,31 @@ class Icon {
 			$title = $data['name'];
 
 		return '<img src="img/wetter/'.$data['img'].'" alt="'.$title.'" style="vertical-align:bottom;" />';
+	}
+
+	/**
+	 * Get icon for VDOT as shape
+	 * @param double $VDOT
+	 * @return string
+	 */
+	public static function getVDOTicon($VDOT) {
+		if ( $VDOT > (VDOT_FORM+3) )
+			$icon = self::$FORM_UP;
+		elseif ( $VDOT > (VDOT_FORM+1) )
+			$icon = self::$FORM_UP_HALF;
+		elseif ( $VDOT < (VDOT_FORM-3) )
+			$icon = self::$FORM_DOWN;
+		elseif ( $VDOT < (VDOT_FORM-1) )
+			$icon = self::$FORM_DOWN_HALF;
+		else
+			$icon = self::$FORM_NORMAL;
+
+		$title = $VDOT.': 3.000m in '.Helper::Prognosis(3, 0, $VDOT).',
+			5 km in '.Helper::Prognosis(5, 0, $VDOT).',
+			10 km in '.Helper::Prognosis(10, 0, $VDOT).',
+			HM in '.Helper::Prognosis(21.1, 0, $VDOT);
+
+		return self::get($icon, $title);
 	}
 }
 ?>

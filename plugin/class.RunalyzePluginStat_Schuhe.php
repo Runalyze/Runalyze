@@ -52,47 +52,51 @@ class RunalyzePluginStat_Schuhe extends PluginStat {
 		tr.shoe { height:2px; }
 		tr.shoe td { padding: 0; }
 		</style>
-		<table style="width:100%;">
-			<tr class="b c">
-				<td colspan="2" />
-				<td class="small">Kaufdatum</td>
-				<td>&Oslash; km</td>
-				<td>&Oslash; Pace</td>
-				<td class="small" colspan="2">max.</td>
-				<td>Dauer</td>
-				<td>Distanz</td>
-			</tr>';
-		echo HTML::spaceTr(9);
+		<table class="sortable autosort fullWidth">
+			<thead>
+				<tr class="b c">
+					<th class="{sorter: \'x\'} small">x-mal</th>
+					<th>Name</th>
+					<th class="{sorter: \'germandate\'} small">Kaufdatum</th>
+					<th class="{sorter: \'distance\'}">&Oslash; km</th>
+					<th>&Oslash; Pace</th>
+					<th class="{sorter: \'distance\'} small"><small>max.</small> km</th>
+					<th class="small"><small>max.</small> Pace</th>
+					<th class="{sorter: \'resulttime\'}">Dauer</th>
+					<th class="{sorter: \'distance\'}">Distanz</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 		if (!empty($this->schuhe)) {
 			foreach ($this->schuhe as $i => $schuh) {
 				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `distance` DESC');
 				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `pace` ASC');
 				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`="'.$schuh['id'].'"');
-				$in_use = $schuh['inuse']==1 ? '' : ' small';
+				$in_use = ($schuh['inuse'] == 1) ? '' : ' unimportant';
 
 				echo('
-				<tr class="a'.($i%2 + 1).' r">
+				<tr class="'.HTML::trClass($i).$in_use.' r">
 					<td class="small">'.$trainings.'x</td>
-					<td class="b'.$in_use.' l">'.Shoe::getSeachLink($schuh['id']).'</td>
+					<td class="b l">'.Shoe::getSeachLink($schuh['id']).'</td>
 					<td class="small">'.$schuh['since'].'</td>
 					<td >'.(($trainings != 0) ? Helper::Km($schuh['km']/$trainings) : '-').'</td>
 					<td >'.(($trainings != 0) ? Helper::Speed($schuh['km'], $schuh['time']) : '-').'</td>
 					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distance'])).'</td>
 					<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
 					<td>'.Helper::Time($schuh['time']).'</td>
-					<td>'.Helper::Km($schuh['km']).'</td>
-				</tr>
-				<tr class="shoe" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
-					<td colspan="9"></td>
+					<td>'.Helper::Km($schuh['km']).' '.Shoe::getIcon($schuh['km']).'</td>
 				</tr>');
+				//<tr class="shoe" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
+				//	<td colspan="9"></td>
+				//</tr>');
 			}
 		} else {
 			echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
 			Error::getInstance()->addWarning('Bisher keine Schuhe eingetragen', __FILE__, __LINE__);
 		}
 
-		echo HTML::spaceTR(9);
+		echo '</tbody>';
 		echo '</table>';
 	}
 
