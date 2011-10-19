@@ -83,7 +83,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			if ($i%2 == 0)
 				echo('<tr class="a'.(round($i/2)%2+1).'">');
 			echo('
-				<td class="b">'.$Training->getTimeString().'</td>
+				<td class="b">'.$Training->getDaytimeString().'</td>
 				<td>'.$Training->trainingLinkWithSportIcon().'</td>
 				<td>'.$Training->getKmOrTime().' '.$Training->Sport()->name().'</td>
 				<td>'.$Training->getDateAsWeeklink().'</td>');

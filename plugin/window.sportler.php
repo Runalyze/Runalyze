@@ -17,12 +17,12 @@ if (isset($_POST['type']) && $_POST['type'] == "user") {
 	$values = array(time());
 	$vars = array('weight');
 
-	if ($Plugin_conf['use_body_fat']) {
+	if ($Plugin_conf['use_body_fat']['var']) {
 		$vars[] = 'fat';
 		$vars[] = 'water';
 		$vars[] = 'muscles';
 	}
-	if ($Plugin_conf['use_pulse']) {
+	if ($Plugin_conf['use_pulse']['var']) {
 		$vars[] = 'pulse_rest';
 		$vars[] = 'pulse_max';
 	}
@@ -58,7 +58,7 @@ if (isset($submit))
 	<small>Gewicht</small>
 </label><br />
 
-<?php if ($Plugin_conf['use_body_fat']): ?>
+<?php if ($Plugin_conf['use_body_fat']['var']): ?>
 <label>
 	<input type="text" name="fat" value="<?php echo $dat['fat']; ?>" size="5" />
 	<small>&#37; Fett</small>
@@ -73,7 +73,7 @@ if (isset($submit))
 </label><br />
 <?php endif; ?>
 
-<?php if ($Plugin_conf['use_pulse']): ?><br />
+<?php if ($Plugin_conf['use_pulse']['var']): ?><br />
 <label>
 	<input type="text" name="pulse_rest" value="<?php echo $dat['pulse_rest']; ?>" size="5" />
 	<small>Ruhepuls</small>

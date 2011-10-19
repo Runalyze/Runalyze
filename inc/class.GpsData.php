@@ -184,28 +184,28 @@ class GpsData {
 	 * Are information for pace available?
 	 */
 	public function hasPaceData() {
-		return (count($this->arrayForPace) > 1);
+		return !empty($this->arrayForPace);
 	}
 
 	/**
 	 * Are information for elevation available?
 	 */
 	public function hasElevationData() {
-		return (count($this->arrayForElevation) > 1);
+		return !empty($this->arrayForElevation);
 	}
 
 	/**
 	 * Are information for heartrate available?
 	 */
 	public function hasHeartrateData() {
-		return (count($this->arrayForHeartrate) > 1) && max($this->arrayForHeartrate) > 60;
+		return !empty($this->arrayForHeartrate) && (max($this->arrayForHeartrate) > 60);
 	}
 
 	/**
 	 * Are information for latitude/longitude available?
 	 */
 	public function hasPositionData() {
-		return (count($this->arrayForLatitude) > 1) && (count($this->arrayForLongitude) > 1);
+		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1);
 	}
 
 	/**
@@ -407,6 +407,9 @@ class GpsData {
 	 * @return array
 	 */
 	public function getPulseZonesAsFilledArrays() {
+		if (!$this->hasHeartrateData())
+			return array();
+
 		$Zones = array();
 		$this->startLoop();
 
@@ -432,6 +435,9 @@ class GpsData {
 	 * @return array
 	 */
 	public function getPaceZonesAsFilledArrays() {
+		if (!$this->hasPaceData())
+			return array();
+
 		$Zones = array();
 		$this->startLoop();
 

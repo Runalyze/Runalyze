@@ -329,7 +329,7 @@ table {
 	margin: 5px 0 10px;
 }
 
-table, tr, td {
+table, tr, td, th {
 	border-spacing: 0;
 	padding: 2px 3px;
 	vertical-align: top;
@@ -339,7 +339,7 @@ thead th {
 	border-color: #666;
 	border-style: none none solid none;
 	border-width: 0 0 1px 0;
-	padding-right: 5px;
+	padding-right: 12px;
 	text-align: center;
 }
 
@@ -376,6 +376,8 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .error { color: #F00; font-weight: bold; }
 .margin-5 { margin: 0 5px; }
 .margin-10 { margin: 0 10px; }
+.fullWidth { width: 100%; }
+.transparent-70 { opacity: 0.7; }
 
 .unimportant { opacity: 0.5; }
 .unimportant:hover { opacity: 1; }

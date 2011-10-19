@@ -1,8 +1,8 @@
-/* tables */
 table.sortable thead tr th, table.tablesorter tfoot tr th {
 	border-color: #CCC;
 	border-style: solid solid solid solid;
 	border-width: 1px 1px 1px 1px;
+	background-color: #EFEFEF;
 }
 table.sortable thead tr .header {
 	background-image: url(../img/tablesorter/bg.gif);

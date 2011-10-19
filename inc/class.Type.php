@@ -35,6 +35,9 @@ class Type {
 	public function __construct($id) {
 		self::initTypes();
 
+		if (!isset(self::$types[$id]))
+			return false;
+
 		$this->id = $id;
 		$this->data = self::$types[$id];
 	}

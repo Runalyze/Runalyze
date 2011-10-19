@@ -23,6 +23,7 @@
  * //@uses class::PluginDraw
  * @uses class::Training
  * @uses class::TrainingDisplay
+ * @uses class::Importer
  * @uses class::DataBrowser
  * @uses class::Dataset
  * @uses class::Draw
@@ -80,7 +81,6 @@ class Frontend {
 		define('DAY_IN_S', 86400);
 		define('YEAR', date("Y"));
 		define('CUT_LENGTH', 29);
-		define('NL', "\n");
 	}
 
 	/**
@@ -161,6 +161,15 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.User.php';
 		require_once FRONTEND_PATH.'class.Weather.php';
 		require_once FRONTEND_PATH.'class.GpsData.php';
+
+		$this->initImporterExporter();
+	}
+
+	private function initImporterExporter() {
+		require_once FRONTEND_PATH.'class.Importer.php';
+		require_once FRONTEND_PATH.'class.ImporterFormular.php';
+
+		Importer::registerImporter('TCX', 'ImporterTCX');
 	}
 
 	/**

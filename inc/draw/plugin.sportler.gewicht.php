@@ -36,7 +36,7 @@ $ScaleFormat    = array("DrawYLines" => array(1), "TickAlpha" => 50);
 $LegendFormat   = array("Style" => LEGEND_NOBORDER, "Mode" => LEGEND_HORIZONTAL);
 $TresholdFormat = array("AxisID" => 1,
 	"WriteCaption" => TRUE, "Caption" => "Wunschgewicht", "CaptionAlign" => CAPTION_LEFT_TOP,
-	"R" => 0, "G" => 136, "B" => 0, "Alpha" => 50);
+	"R" => 0, "G" => 136, "B" => 0, "Alpha" => 100);
 
 if (!empty($Weights)) {
 	$WeightFormat = array("R" => 0, "G" => 0, "B" => 136);
@@ -69,8 +69,8 @@ $Draw->pImage->drawLegend(130, 15, $LegendFormat);
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
-if ($Plugin_conf['wunschgewicht'] > 1 && $Plugin_conf['wunschgewicht'] > $Draw->pData->getMin('Gewicht'))
-	$Draw->pImage->drawThreshold($Plugin_conf['wunschgewicht'], $TresholdFormat);
+if ($Plugin_conf['wunschgewicht']['var'] > 1 && $Plugin_conf['wunschgewicht']['var'] > $Draw->pData->getMin('Gewicht'))
+	$Draw->pImage->drawThreshold($Plugin_conf['wunschgewicht']['var'], $TresholdFormat);
 
 if ($titleError != '')
 	$Draw->drawCenteredTitle($titleError);

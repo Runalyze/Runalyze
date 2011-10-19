@@ -197,10 +197,10 @@ class Weather {
 	 * @return array
 	 */
 	private function loadWeatherAsArrayFromAPI() {
-		require_once 'tcx/class.ParserTcx.php';
+		require_once 'tcx/class.XmlParser.php';
 
 		$Xml = @file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl=de');
-		$Parser = new ParserTcx($Xml);
+		$Parser = new XmlParser($Xml);
 
 		return $Parser->getContentAsArray();
 	}
@@ -236,6 +236,7 @@ class Weather {
 			case 'Vereinzelt stürmisch':
 			case 'Vereinzelte Schauer':
 			case 'Vereinzelt Regen':
+			case 'Leichter Regen':
 				return 'wechselhaft';
 			case 'Regen':
 			case 'Gewitterschauer':
@@ -243,6 +244,7 @@ class Weather {
 			case 'Schnee':
 				return 'Schnee';
 			default:
+				Error::getInstance()->addNotice('Unknown condition from GoogleAPI: "'.$string.'"');
 				return 'unbekannt';
 		}
 	}

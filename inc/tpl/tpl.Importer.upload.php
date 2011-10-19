@@ -1,0 +1,24 @@
+	<h1>Eine tcx-Datei hochladen</h1>
+
+	<div class="c button hide" id="file-upload">Datei hochladen</div>
+
+<script>
+function createUploader() {
+	$("#file-upload").removeClass("hide");
+	new AjaxUpload('#file-upload', {
+		allowedExtensions: [<?php echo $AllowedFormatsForJS; ?>],
+		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
+		onComplete : function(file, response){
+			jLoadLink('ajax', '<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+file);
+		}		
+	});
+}
+</script>
+
+	<p class="text">
+		&nbsp;
+	</p>
+
+	<p class="info">
+		Unterst&uuml;tzte Formate: <?php echo $AllowedFormats; ?>
+	</p>

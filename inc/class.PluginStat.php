@@ -80,7 +80,7 @@ abstract class PluginStat extends Plugin {
 	 * Display config link
 	 */
 	protected function displayConfigLinkForHeader() {
-		echo '<span class="right">'.$this->getConfigLink().'</span>'.NL;
+		echo '<span class="right margin-5">'.$this->getConfigLink().'</span>'.NL;
 	}
 
 	

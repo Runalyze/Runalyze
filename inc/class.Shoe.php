@@ -136,5 +136,25 @@ class Shoe {
 	static public function hasShoesInUse() {
 		return count(self::getFullArray()) > 0;
 	}
+
+	/**
+	 * Get an icon for the abrasion of the shoe
+	 * @param double $distance
+	 * @return string
+	 */
+	static public function getIcon($distance) {
+		$title = 'bisher '.Helper::Km($distance);
+
+		if ($distance > 900)
+			return Icon::get(Icon::$BROKEN_5, $title);
+		elseif ($distance > 700)
+			return Icon::get(Icon::$BROKEN_4, $title);
+		elseif ($distance > 500)
+			return Icon::get(Icon::$BROKEN_3, $title);
+		elseif ($distance > 200)
+			return Icon::get(Icon::$BROKEN_2, $title);
+		else
+			return Icon::get(Icon::$BROKEN_1, $title);
+	}
 }
 ?>

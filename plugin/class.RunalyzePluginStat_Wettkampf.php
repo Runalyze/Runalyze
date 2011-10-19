@@ -219,7 +219,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayTableStart() {
 		echo('
-			<table cellspacing="0" width="100%" class="sortable" id="wk-table">
+			<table cellspacing="0" width="100%" class="sortable autosort" id="wk-table">
 				<thead>
 					<tr class="c">
 						<th class="{sorter: false}">&nbsp;</th>

@@ -267,6 +267,10 @@ class Helper {
 		$RPE       = (isset($Type)) ? $Type->RPE() : $Sport->RPE();
 		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
 		$TRIMP     = $dat['s']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
+
+		// Berechnung mit Trainingszonen wäre:
+		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
+		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
 	
 		if ($trimp === false)
 			return round($TRIMP);
