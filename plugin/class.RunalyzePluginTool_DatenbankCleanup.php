@@ -41,7 +41,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	protected function displayContent() {
 		echo 'Mit diesem Tool l&auml;sst sich die Datenbank bereinigen.<br />'.NL;
-		echo 'Dieser Vorgang betrifft lediglich einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.<br />'.NL;
+		echo 'Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.<br />'.NL;
 		echo '<br />';
 
 		if (isset($_GET['clean'])) {

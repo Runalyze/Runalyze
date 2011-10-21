@@ -61,7 +61,7 @@
 	<tr>
 		<td class="small b">Strecke:</td>
 		<td><?php echo Helper::Unknown($this->get('route')); ?>
-				<?php $berechnet = Training::calculateElevation($this->get('arr_alt')); ?>
+				<?php $berechnet = $this->GpsData()->calculateElevation(); ?>
 			<?php if ($this->hasElevation() > 0 || $berechnet > 0): ?><br />
 			<small>
 				&nbsp;<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />

@@ -298,8 +298,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` DESC LIMIT 3');
-		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 3');
+		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` DESC LIMIT 5');
+		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 5');
 
 		foreach ($hot as $i => $h)
 			$hot[$i] = $h['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));

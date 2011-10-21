@@ -28,6 +28,12 @@ class ImporterFormular extends Importer {
 	private $errorString = '';
 
 	/**
+	 * Timestamp of training
+	 * @var int
+	 */
+	private $time = 0;
+
+	/**
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
@@ -200,7 +206,9 @@ class ImporterFormular extends Importer {
 			return false;
 		}
 
-		return $time = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
+		$this->time = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
+
+		return $this->time;
 	}
 
 	/**
@@ -264,7 +272,7 @@ class ImporterFormular extends Importer {
 		if (CONF_TRAINING_DO_ELEVATION) {
 			$Training->elevationCorrection();
 		
-			$Mysql->update(PREFIX.'training', $id, 'elevation', Training::calculateElevation($Training->get('arr_alt')));
+			$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());
 		}
 	}
 }
