@@ -490,9 +490,39 @@ class GpsData {
 
 	/**
 	 * Calculate complete elevation
+	 * @return int
 	 */
 	public function calculateElevation() {
-		// TODO
+		if (!$this->hasElevationData())
+			return 0;
+
+		$elevationPoints 	= $this->arrayForElevation;
+		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
+		$positiveElevation 	= 0;  $up   = false;
+		$negativeElevation 	= 0;  $down = false;
+		$currentElevation   = 0;
+
+		// Algorithm: must be at least 5m up/down without down/up
+		foreach ($elevationPoints as $i => $p) {
+			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
+				$diff = $p - $elevationPoints[$i-1];
+				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
+					$currentElevation += $diff;
+				else {
+					if (abs($currentElevation) >= 5) {
+						if ($up)
+							$positiveElevation += $currentElevation;
+						if ($down)
+							$negativeElevation -= $currentElevation;
+					}
+					$currentElevation = $diff;
+				}
+				$up   = ($diff > 0);
+				$down = ($diff < 0);
+			}
+		}
+
+		return max($minimumElevation, $positiveElevation, $negativeElevation);
 	}
 
 	/**

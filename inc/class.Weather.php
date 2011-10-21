@@ -232,6 +232,7 @@ class Weather {
 			case 'Bedeckt':
 			case 'Meistens bewölkt':
 			case 'Bewölkt':
+			case 'Nebel':
 				return 'bew&ouml;lkt';
 			case 'Vereinzelt stürmisch':
 			case 'Vereinzelte Schauer':
@@ -244,7 +245,7 @@ class Weather {
 			case 'Schnee':
 				return 'Schnee';
 			default:
-				Error::getInstance()->addNotice('Unknown condition from GoogleAPI: "'.$string.'"');
+				Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
 				return 'unbekannt';
 		}
 	}

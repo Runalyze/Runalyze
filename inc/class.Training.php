@@ -791,45 +791,6 @@ class Training {
 	}
 
 	/**
-	 * Calculate absolute number for elevation
-	 * @param array $alternateData [optional] Array for arr_alt
-	 * @return int
-	 */
-	static public function calculateElevation($data) {
-		// TODO: Move to class::GpsData
-		if (empty($data))
-			return 0;
-
-		$elevationPoints 	= explode(self::$ARR_SEP, $data);
-		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
-		$positiveElevation 	= 0;  $up   = false;
-		$negativeElevation 	= 0;  $down = false;
-		$currentElevation   = 0;
-
-		// Algorithm: must be at least 5m up/down without down/up
-		foreach ($elevationPoints as $i => $p) {
-			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$diff = $p - $elevationPoints[$i-1];
-				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
-					$currentElevation += $diff;
-				else {
-					if (abs($currentElevation) >= 5) {
-						if ($up)
-							$positiveElevation += $currentElevation;
-						if ($down)
-							$negativeElevation -= $currentElevation;
-					}
-					$currentElevation = $diff;
-				}
-				$up   = ($diff > 0);
-				$down = ($diff < 0);
-			}
-		}
-
-		return max($minimumElevation, $positiveElevation, $negativeElevation);
-	}
-
-	/**
 	 * Uses JD::correctVDOT to correct own VDOT-value if specified
 	 */
 	private function correctVDOT() {
