@@ -274,6 +274,8 @@ class ImporterFormular extends Importer {
 		
 			$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());
 		}
+
+		$this->insertFailed = false;
 	}
 }
 ?>

@@ -335,6 +335,10 @@ table, tr, td, th {
 	vertical-align: top;
 }
 
+.datepicker th, .datepicker td {
+	padding: 0 !important;
+}
+
 thead th {
 	border-color: #666;
 	border-style: none none solid none;

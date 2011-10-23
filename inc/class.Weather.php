@@ -79,7 +79,8 @@ class Weather {
 	private function setData() {
 		$array = self::getFullArray();
 
-		$this->data = $array[$this->id];
+		if (isset($array[$this->id]))
+			$this->data = $array[$this->id];
 	}
 
 	/**
