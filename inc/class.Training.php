@@ -788,6 +788,7 @@ class Training {
 		
 		$this->data['arr_alt'] = implode(self::$ARR_SEP, $altitude);
 		Mysql::getInstance()->update(PREFIX.'training', $this->id, 'arr_alt', $this->data['arr_alt']);
+		$this->GpsData = new GpsData($this->data);
 	}
 
 	/**
