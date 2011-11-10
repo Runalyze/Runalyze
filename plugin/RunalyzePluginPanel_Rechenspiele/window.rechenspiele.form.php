@@ -1,9 +1,5 @@
 <?php
-/**
- * File for displaying statistic plugins.
- * Call:   plugin/window.rechenspiele.form.php
- */
-require '../inc/class.Frontend.php';
+require '../../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
