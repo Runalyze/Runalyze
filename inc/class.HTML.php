@@ -131,6 +131,21 @@ class HTML {
 	}
 
 	/**
+	 * Wrap value in span for plus/minus
+	 * @param float $value
+	 * @param float $ignorance
+	 * @return string
+	 */
+	public static function plusMinus($value, $ignorance = 0) {
+		if ($value > +$ignorance)
+			return '<span class="plus">'.$value.'</span>';
+		if ($value < -$ignorance)
+			return '<span class="minus">'.$value.'</span>';
+
+		return $value;
+	}
+
+	/**
 	 * Wrap a string into emphasize-tag
 	 * @param string $string
 	 */
