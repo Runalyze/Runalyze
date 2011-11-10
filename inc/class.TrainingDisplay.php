@@ -237,7 +237,7 @@ class TrainingDisplay {
 	 * Display defined splits
 	 */
 	public function displaySplits() {
-		// TODO: Clean Code
+		// TODO: Clean Code - will be done with new splits-system
 		echo '<table class="small" cellspacing="0">
 			<tr class="c b">
 				<td>Distanz</td>

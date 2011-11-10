@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the class::Importer for installing Runalyze
+ * This file contains the class::Importer for importing trainings
  */
 /**
  * Class: Importer

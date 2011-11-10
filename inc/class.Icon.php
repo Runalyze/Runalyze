@@ -18,6 +18,8 @@ class Icon {
 	static public $REFRESH			= 'img/Refresh.png';
 	static public $ADD				= 'img/add.png';
 	static public $CROSS			= 'img/cross.png';
+	static public $DELETE           = 'img/delete.gif';
+	static public $DELETE_GRAY      = 'img/delete_gray.gif';
 	static public $CALENDAR			= 'img/calendar_month.png';
 	static public $TABLE			= 'img/table.png';
 	static public $CLIPBOARD		= 'img/clipboard.png';
@@ -69,7 +71,10 @@ class Icon {
 	 * @param enum $icon
 	 * @param string $title [optional]
 	 */
-	public static function get($icon, $title = '') {
+	public static function get($icon, $title = '', $onclick= '') {
+		if ($onclick != '')
+			return '<img class="link" src="'.$icon.'" alt="'.$title.'" title="'.$title.'" onclick="'.$onclick.'" />';
+
 		return '<img src="'.$icon.'" alt="'.$title.'" title="'.$title.'" />';
 	}
 

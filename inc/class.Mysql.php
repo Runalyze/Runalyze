@@ -87,9 +87,9 @@ final class Mysql {
 		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
 			foreach ($column as $i => $col)
-				$set .= '`'.$col.'`="'.$value[$i].'", ';
+				$set .= '`'.$col.'`='.self::escape($value[$i], true, ($col=='clothes')).', ';
 		} else {
-			$set = '`'.$column.'`="'.$value.'", ';
+			$set = '`'.$column.'`='.self::escape($value, true, ($column=='clothes')).', ';
 		}
 
 		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" LIMIT 1');
@@ -204,17 +204,18 @@ final class Mysql {
 	 *    - Sets strings to "$value"
 	 * @param $values mixed might be an array
 	 * @param $quotes bool  true for adding quotes for strings
+	 * @param $forceAsString bool
 	 * @return mixed        safe value(s)
 	 */
-	public static function escape($values, $quotes = true) {
+	public static function escape($values, $quotes = true, $forceAsString = false) {
 		if (is_array($values)) {
 			foreach ($values as $key => $value)
 				$values[$key] = self::escape($value, $quotes);
-		} else if ($values === null) {
+		} else if ($values === null || $values == 'NULL') {
 			$values = 'NULL';
 		} else if (is_bool($values)) {
 			$values = $values ? 1 : 0;
-		} else if (!is_numeric($values)) {
+		} else if (!is_numeric($values) || $forceAsString) {
 			$values = mysql_real_escape_string($values);
         	if ($quotes)
             	$values = '"'.$values.'"';

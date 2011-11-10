@@ -242,7 +242,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayWKTr($wk, $i) {
 		$Training = new Training($wk['id']);
-		$hide = ($i >= $this->config['last_wk_num']['var']) ? ' allWKs hide' : ' allWKs';
+		$hide = ($i >= $this->config['last_wk_num']['var']) ? ' allWKs hide' : '';
 
 		echo('
 			<tr class="a'.($i%2 + 1).$hide.' r">

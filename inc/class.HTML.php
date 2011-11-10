@@ -25,6 +25,12 @@ define('BR', '<br />');
  */
 class HTML {
 	/**
+	 * MultiIndex for "multi[value][index]" instead of "value"
+	 * @var mixed
+	 */
+	private static $MultiIndex = false;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {}
@@ -33,6 +39,14 @@ class HTML {
 	 * Destructor
 	 */
 	public function __destruct() {}
+
+	/**
+	 * Set internal MultiIndex
+	 * @param int $index
+	 */
+	public static function setMultiIndex($index) {
+		self::$MultiIndex = $index;
+	}
 
 	/**
 	 * Encode opening and ending tag-character
@@ -150,6 +164,22 @@ class HTML {
 	}
 
 	/**
+	 * Transform given name if MultiIndex is in use
+	 * @param string $name
+	 */
+	private static function transformNameForMultiIndex($name) {
+		if (self::$MultiIndex == false)
+			return $name;
+
+		$parts = explode('[', $name);
+
+		if (count($parts) == 2)
+			return 'multi['.self::$MultiIndex.']['.$parts[0].']['.$parts[1];
+
+		return 'multi['.self::$MultiIndex.']['.$name.']';
+	}
+
+	/**
 	 * Get html-tag for a textarea
 	 * @param string $name
 	 * @param int $cols
@@ -159,6 +189,8 @@ class HTML {
 	public static function textarea($name, $cols = 70, $rows = 3, $value = '') {
 		if ($value == '' && isset($_POST[$name]))
 			$value = $_POST[$name];
+
+		$name = self::transformNameForMultiIndex($name);
 
 		return '<textarea name="'.$name.'" cols="'.$cols.'" rows="'.$rows.'">'.$value.'</textarea>'.NL;
 		
@@ -175,6 +207,8 @@ class HTML {
 		$value = isset($_POST[$name]) ? $_POST[$name] : $default;
 		$value = self::textareaTransform($value);
 
+		$name = self::transformNameForMultiIndex($name);
+
 		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'" />';
 	}
 
@@ -189,6 +223,8 @@ class HTML {
 		$value = isset($_POST[$name]) ? $_POST[$name] : $default;
 		$value = self::textareaTransform($value);
 
+		$name = self::transformNameForMultiIndex($name);
+
 		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'" disabled="disabled" />';
 	}
 
@@ -202,6 +238,8 @@ class HTML {
 		if ($value == '' && isset($_POST[$name]))
 			$value = $_POST[$name];
 
+		$name = self::transformNameForMultiIndex($name);
+
 		return '<input type="hidden" name="'.$name.'" value="'.$value.'" />';
 	}
 
@@ -209,13 +247,17 @@ class HTML {
 	 * Get a select box with given options
 	 * @param string $name Name for this select-box
 	 * @param mixed $checked [optional] bool for beeing checked or not, otherwise checks for post-data
+	 * @param bool $noHiddenSent
 	 * @return string
 	 */
-	public static function checkBox($name, $checked = -1) {
-		if ($checked == -1)
+	public static function checkBox($name, $checked = -1, $noHiddenSent = false) {
+		if ($checked === -1)
 			$checked = isset($_POST[$name]) && $_POST[$name] != 0;
 
-		return '<input type="checkbox" name="'.$name.'"'.self::Checked($checked).' />';
+		$key = self::transformNameForMultiIndex($name);
+		$hiddenSent = self::hiddenInput($name.'_sent','true');
+
+		return (!$noHiddenSent ? $hiddenSent : '').'<input type="checkbox" name="'.$key.'"'.self::Checked($checked).' />';
 	}
 
 	/**
@@ -245,6 +287,8 @@ class HTML {
 	public static function selectBox($name, $options, $selected = -1) {
 		if ($selected == -1 && isset($_POST[$name]))
 			$selected = $_POST[$name];
+
+		$name = self::transformNameForMultiIndex($name);
 
 		$html = '<select name="'.$name.'">'.NL;
 

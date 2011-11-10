@@ -23,7 +23,7 @@ if (!isset($_GET['pager']))
 	$_GET['pager'] = 'false';
 
 
-if (!($_GET['pager'] == 'true')) {
+if (!($_GET['pager'] == 'true') && !isset($_POST['send_to_multiEditor'])) {
 	echo '<div id="'.DATA_BROWSER_SEARCH_ID.'">';
 	echo '<h1>Suche</h1>';
 

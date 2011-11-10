@@ -179,6 +179,22 @@ class Sport {
 	}
 
 	/**
+	 * Get select-box for all sport-ids
+	 * @param mixed $selected [optional] Value to be selected
+	 * @return string
+	 */
+	static public function getSelectBox($selected = -1) {
+		if ($selected == -1 && isset($_POST['sportid']))
+			$selected = $_POST['sportid'];
+
+		$sport = self::getSports();
+		foreach ($sport as $id => $data)
+			$sport[$id] = $data['name'];
+
+		return HTML::selectBox('sportid', $sport, $selected);
+	}
+
+	/**
 	 * Get array with alle names, indizes are IDs
 	 * @return array
 	 */

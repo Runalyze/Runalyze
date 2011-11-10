@@ -108,6 +108,8 @@ abstract class PluginTool extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
+		echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
+
 		echo '<h1>'.$this->name.'</h1>'.NL;
 		echo $this->description.'<br />'.NL;
 		echo '<br />'.NL;
@@ -142,6 +144,13 @@ abstract class PluginTool extends Plugin {
 			$name = $this->name;
 
 		return self::getLinkFor($this->id, $name, $data);
+	}
+
+	/**
+	 * Get link to this tool as overlay
+	 */
+	public function getWindowLink() {
+		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.'" title="'.$this->name.'">'.$this->name.'</a>', 'big');
 	}
 
 	/**

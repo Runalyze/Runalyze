@@ -143,6 +143,13 @@ foreach ($inputs as $i => $input) {
 
 
 	<div class="c" style="clear:both;">
+<?php
+$Editor = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'plugin WHERE `key`="RunalyzePluginTool_MultiEditor"');
+if (isset($Editor['id'])):
+?>
+		<label class="small"><input type="checkbox" name="send_to_multiEditor" /> an den MultiEditor senden</label>
+			<br />
+<?php endif; ?>
 		<input style="margin-top: 10px;" type="submit" value="Suchen!" />
 	</div>
 </form>
