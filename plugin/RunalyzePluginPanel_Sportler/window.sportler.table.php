@@ -1,9 +1,5 @@
 <?php
-/**
- * File displaying the formular with new sportler information
- * Call:   plugin/window.sportler.table.php
- */
-require '../inc/class.Frontend.php';
+require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true, __FILE__);
 

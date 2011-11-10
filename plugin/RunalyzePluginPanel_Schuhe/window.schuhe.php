@@ -1,9 +1,5 @@
 <?php
-/**
- * File displaying the formular for shoes
- * Call:   plugin/window.schuhe.php
- */
-require '../inc/class.Frontend.php';
+require '../../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Mysql = Mysql::getInstance();
 
