@@ -6,6 +6,10 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="stylesheet"  type="text/css"href="lib/datepicker.css" />
 	<link rel="stylesheet"  type="text/css"href="lib/tablesorter.css" />
+	<?php foreach ($this->CSS_FILES as $file): ?>
+		<link rel="stylesheet"  type="text/css"href="<?php echo $file; ?>" />
+	<?php endforeach; ?>
+
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title>Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
@@ -23,6 +27,10 @@
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
 	<script type="text/javascript" src="lib/fileuploader.js"></script>
+	<?php foreach ($this->JS_FILES as $file): ?>
+		<script type="text/javascript" src="<?php echo $file; ?>"></script>
+	<?php endforeach; ?>
+
 	<!--[if IE]>
 	<style type="text/css">
 	table { border-collapse: collapse; }

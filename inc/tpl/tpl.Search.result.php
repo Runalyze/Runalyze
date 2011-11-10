@@ -64,6 +64,19 @@ $limit = $_POST['seite']*CONF_RESULTS_AT_PAGE - CONF_RESULTS_AT_PAGE;
 
 $trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', '.CONF_RESULTS_AT_PAGE);
 $num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
+
+if (isset($_POST['send_to_multiEditor'])) {
+	$IDs = array();
+	foreach ($trainings as $training)
+		$IDs[] = $training['id'];
+
+	$_GET['ids'] = implode(',', $IDs);
+	$MultiEditor = Plugin::getInstanceFor('RunalyzePluginTool_MultiEditor');
+	$MultiEditor->display();
+	echo '</div>';
+	exit();
+}
+
 ?>
 
 <table style="width=100%;">

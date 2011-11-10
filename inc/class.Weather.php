@@ -239,6 +239,8 @@ class Weather {
 			case 'Vereinzelte Schauer':
 			case 'Vereinzelt Regen':
 			case 'Leichter Regen':
+			case 'Nieselregen':
+			case 'Dunst':
 				return 'wechselhaft';
 			case 'Regen':
 			case 'Gewitterschauer':

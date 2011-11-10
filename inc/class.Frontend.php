@@ -23,6 +23,7 @@
  * //@uses class::PluginDraw
  * @uses class::Training
  * @uses class::TrainingDisplay
+ * @uses class::Editor
  * @uses class::Importer
  * @uses class::DataBrowser
  * @uses class::Dataset
@@ -40,6 +41,16 @@ class Frontend {
 	 * @var string
 	 */
 	private $file;
+
+	/**
+	 * Additional JavaScript-files
+	 */
+	private $JS_FILES = array();
+
+	/**
+	 * Additional CSS-files
+	 */
+	private $CSS_FILES = array();
 
 	/**
 	 * Constructor for frontend
@@ -161,15 +172,35 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.User.php';
 		require_once FRONTEND_PATH.'class.Weather.php';
 		require_once FRONTEND_PATH.'class.GpsData.php';
+		require_once FRONTEND_PATH.'class.Editor.php';
 
 		$this->initImporterExporter();
+		$this->initAdditionalFiles();
 	}
 
+	/**
+	 * Init classes for Importer/Exporter
+	 */
 	private function initImporterExporter() {
 		require_once FRONTEND_PATH.'class.Importer.php';
 		require_once FRONTEND_PATH.'class.ImporterFormular.php';
 
 		Importer::registerImporter('TCX', 'ImporterTCX');
+	}
+
+	/**
+	 * Init all additional files for JS/CSS
+	 */
+	private function initAdditionalFiles() {
+		foreach (glob('plugin/*/*.js') as $file)
+			$this->JS_FILES[] = $file;
+		foreach (glob('plugin/*/*/*.js') as $file)
+			$this->JS_FILES[] = $file;
+
+		foreach (glob('plugin/*/*.css') as $file)
+			$this->CSS_FILES[] = $file;
+		foreach (glob('plugin/*/*/*.css') as $file)
+			$this->CSS_FILES[] = $file;
 	}
 
 	/**

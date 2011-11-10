@@ -8,7 +8,7 @@ require '../inc/class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
-if (Plugin::installPlugin('plugin/class.'.$_GET['key'].'.php')) {
+if (Plugin::installPlugin($_GET['key'])) {
 	$Plugin = Plugin::getInstanceFor($_GET['key']);
 	$Plugin->displayConfigWindow();
 } else {

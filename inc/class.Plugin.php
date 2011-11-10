@@ -191,10 +191,17 @@ abstract class Plugin {
 	 * @return Plugin
 	 */
 	static public function getInstanceFor($PLUGINKEY) {
-		include_once FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php';
+		$pluginFile = self::getFileForKey($PLUGINKEY);
+
+		if ($pluginFile === false) {
+			Error::getInstance()->addError('Can\'t find plugin-file or -directory in system.');
+			return false;
+		}
+
+		include_once $pluginFile;
 
 		if (!class_exists($PLUGINKEY)) {
-			Error::getInstance()->addError('Can\'t find \'plugin/class.'.$PLUGINKEY.'.php\'.');
+			Error::getInstance()->addError('The plugin-file must contain class::'.$PLUGINKEY.'.');
 			return false;
 		} else {
 			$dat = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="'.$PLUGINKEY.'"');
@@ -217,9 +224,12 @@ abstract class Plugin {
 	static public function getPluginsToInstallAsArray() {
 		$plugins   = array();
 		$dir = opendir(FRONTEND_PATH.'../plugin/');
-		while ($file = readdir($dir))
+		while ($file = readdir($dir)) {
 			if (substr($file, 0, 6) == 'class.' && !self::isInstalled(substr($file, 6, -4)))
 				$plugins[] = array('key' => substr($file, 6, -4));
+			elseif (strpos($file, '.') === false && is_dir(FRONTEND_PATH.'../plugin/'.$file))
+				$plugins[] = array('key' => $file);
+		}
 
 		closedir($dir);
 
@@ -240,11 +250,13 @@ abstract class Plugin {
 
 	/**
 	 * Install a new plugin
-	 * @param string $file Filepath relative to inc/plugin/
+	 * @param string $key
 	 */
-	static public function installPlugin($file) {
-		if (!file_exists($file)) {
-			Error::getInstance()->addError('Pluginfile \''.$file.'\' can\'t be found. Installing impossible.');
+	static public function installPlugin($key) {
+		$file = self::getFileForKey($key);
+
+		if ($file === false) {
+			Error::getInstance()->addError('Pluginfile for \''.$key.'\' can\'t be found. Installing impossible.');
 			return false;
 		}
 
@@ -253,8 +265,8 @@ abstract class Plugin {
 		if (!isset($PLUGINKEY)) {
 			Error::getInstance()->addError('$PLUGINKEY must be set in the pluginfile \''.$file.'\'.');
 			return false;
-		} elseif (substr($PLUGINKEY, 0, 15) != 'RunalyzePlugin_') {
-			Error::getInstance()->addError('$PLUGINKEY must start with \'RunalyzePlugin_\', but it is\''.$PLUGINKEY.'\'.');
+		} elseif (substr($PLUGINKEY, 0, 14) != 'RunalyzePlugin') {
+			Error::getInstance()->addError('$PLUGINKEY must start with \'RunalyzePlugin\', but it is\''.$PLUGINKEY.'\'.');
 			return false;
 		}
 
@@ -466,8 +478,12 @@ abstract class Plugin {
 			? $this->getConfigLink('Plugin aktivieren', '&active='.Plugin::$ACTIVE)
 			: $this->getConfigLink('Plugin deaktivieren', '&active='.Plugin::$ACTIVE_NOT);
 
+		$name = ($this instanceof PluginTool)
+			? $this->getWindowLink()
+			: $this->name;
+
 		echo('
-			<h1>Konfiguration: '.$this->name.'</h1>
+			<h1>Konfiguration: '.$name.'</h1>
 			<small class="right">
 				'.$activationLink.'
 			</small><br />
@@ -621,6 +637,21 @@ abstract class Plugin {
 		}
 
 		return $dat['key'];
+	}
+
+	/**
+	 * Get the filename for a given PLUGINKEY
+	 * @param string $PLUGINKEY
+	 * @return string
+	 */
+	static public function getFileForKey($PLUGINKEY) {
+		if (file_exists(FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php'))
+			return FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php';
+
+		if (file_exists(FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php'))
+			return FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php';
+
+		return false;
 	}
 }
 ?>

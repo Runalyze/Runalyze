@@ -129,7 +129,7 @@ class Clothes {
 	 * @return string
 	 */
 	static public function getCheckboxes() {
-		$html = '';
+		$html = HTML::hiddenInput('clothes_sent', 'true');
 		$clothes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		foreach ($clothes as $data)
 			$html .= self::getCheckbox($data);
@@ -144,9 +144,9 @@ class Clothes {
 	 */
 	static private function getCheckbox($dataArray) {
 		$name = 'clothes['.$dataArray['id'].']';
-		$checked = HTML::Checked(isset($_POST['clothes'][$dataArray['id']]));
+		$checked = isset($_POST['clothes'][$dataArray['id']]);
 
-		return '<label><input type="checkbox" name="'.$name.'"'.$checked.' /> <small style="margin-right: 10px;">'.$dataArray['short'].'</small></label>';
+		return '<label>'.HTML::checkBox($name, $checked, true).' <small style="margin-right: 10px;">'.$dataArray['short'].'</small></label>';
 	}
 
 	/**
