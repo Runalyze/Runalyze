@@ -225,10 +225,15 @@ abstract class Plugin {
 		$plugins   = array();
 		$dir = opendir(FRONTEND_PATH.'../plugin/');
 		while ($file = readdir($dir)) {
-			if (substr($file, 0, 6) == 'class.' && !self::isInstalled(substr($file, 6, -4)))
-				$plugins[] = array('key' => substr($file, 6, -4));
+			if (substr($file, 0, 6) == 'class.')
+				$key = substr($file, 6, -4);
 			elseif (strpos($file, '.') === false && is_dir(FRONTEND_PATH.'../plugin/'.$file))
-				$plugins[] = array('key' => $file);
+				$key = $file;
+			else
+				continue;
+
+			if (!self::isInstalled($key))
+				$plugins[] = array('key' => $key);
 		}
 
 		closedir($dir);

@@ -329,10 +329,16 @@ table {
 	margin: 5px 0 10px;
 }
 
-table, tr, td, th {
+table, tr, td {
 	border-spacing: 0;
 	padding: 2px 3px;
 	vertical-align: top;
+}
+
+th {
+	border-spacing: 0;
+	padding: 2px 3px;
+	vertical-align: middle;
 }
 
 .datepicker th, .datepicker td {

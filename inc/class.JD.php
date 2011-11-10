@@ -150,7 +150,7 @@ class JD {
 		if ($VDOTactual == 0)
 			return 0;
 
-		$dauer = 60*$distance;
+		$dauer = round(60*$distance);
 		$VDOT_low = 150;
 		while (true) {
 			$dauer++;
@@ -162,6 +162,7 @@ class JD {
 			if ($dauer >= 60 * 60 * $distance / 4)
 				break;
 		}
+
 		return $dauer;
 	}
 
