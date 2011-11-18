@@ -211,10 +211,12 @@ final class Mysql {
 		if (is_array($values)) {
 			foreach ($values as $key => $value)
 				$values[$key] = self::escape($value, $quotes);
-		} else if ($values === null || $values == 'NULL') {
-			$values = 'NULL';
 		} else if (is_bool($values)) {
 			$values = $values ? 1 : 0;
+		} else if (is_numeric($values)) {
+			$values = $values;
+		} else if ($values === null || $values == 'NULL') {
+			$values = 'NULL';
 		} else if (!is_numeric($values) || $forceAsString) {
 			$values = mysql_real_escape_string($values);
         	if ($quotes)

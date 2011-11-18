@@ -7,22 +7,30 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
+
+if (!isset($_GET['y']))
+	$_GET['y'] = date("Y");
 ?>
 
 <h1>Wochenkilometer</h1>
 
-<div class="bigImg" style="width:800px;height:500px;">
-	<img id="wochenkilometer" src="inc/draw/kilometer.week.php?y=<?php echo date("Y"); ?>" />
+<div style="position:relative;width:802px;height:502px;margin:2px auto;">
+	<div class="flot waitImg" id="weekKM<?php echo $_GET['y']; ?>" style="width:800px;height:500px;position:absolute;"></div>
 </div>
 
-	<br />
-	<br />
+<?php
+include FRONTEND_PATH.'draw/Plot.WeekKM.php';
+?>
 
 <center>
-	<?php
-	for ($j = START_YEAR; $j <= date("Y"); $j++)
-		echo NL.Ajax::imgChange('<a href="inc/draw/kilometer.week.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>','wochenkilometer');
-	?>
+<?php
+for ($j = START_YEAR; $j <= date("Y"); $j++) {
+	if ($j == $_GET['y'])
+		echo '<strong style="margin-right:20px;">'.$j.'</strong>';
+	else
+		echo Ajax::window('<a href="call/window.wochenkilometer.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');	
+}
+?>
 </center>
 
 <?php

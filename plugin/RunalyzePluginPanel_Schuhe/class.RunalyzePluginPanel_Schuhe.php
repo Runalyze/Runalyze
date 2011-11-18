@@ -58,7 +58,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			}
 
 			echo('
-			<p style="background-image:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).');">
+			<p style="background-image:url(plugin/'.$this->key.'/schuhbalken.php?km='.round($schuh['km']).');">
 				<span>'.Helper::Km($schuh['km']).'</span>
 				<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[shoeid]=is&val[shoeid][0]='.$schuh['id']).'</strong>
 			</p>'.NL);	

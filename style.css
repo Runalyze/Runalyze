@@ -40,7 +40,6 @@ div.panel {
 }
 .panel h1 {
 	font-size: 13px;
-	/*font-family: Georgia;*/
 	color: #800;
 	padding-bottom: 1px;
 	margin-bottom: 7px;
@@ -140,6 +139,10 @@ img#wait {
 
 div.bigImg {
 	background: url(img/ajax-loader-download.gif) center center no-repeat #000;
+}
+
+div.waitImg {
+	background: url(img/ajax-loader-download.gif) center center no-repeat #000 !important;
 }
 
 /*** Define panels ***/
@@ -423,4 +426,13 @@ a:hover, a:active, .link:hover {
 
 a#copy:hover, a#copy:active {
 	color: #DDD;
+}
+
+#flotLoader {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    width: 500px;
+    height: 150px;
 }

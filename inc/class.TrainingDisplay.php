@@ -78,15 +78,18 @@ class TrainingDisplay {
 		if (!empty($Plots)) {
 			if (CONF_TRAINING_PLOTS_BELOW) {
 				foreach ($Plots as $Key => $Plot) {
-						$this->displayPlot($Key);
+					$this->displayPlot($Key, false);
 					echo '<br />'.NL;
 				}
 			} else {
 				echo '<small class="right margin-5">'.NL;
-					$this->displayPlotLinks('trainingGraph');
+					$this->displayPlotLinks();
 				echo '</small>'.NL;
 				echo '<br /><br />'.NL;
-					$this->displayPlot(key($Plots));
+				echo '<div id="trainingPlots" style="position:relative;width:482px;height:192px;margin:2px auto;">';
+				foreach ($Plots as $Key => $Plot)
+					$this->displayPlot($Key, $Key == key($Plots));
+				echo '</div>';
 			}
 			echo '<br /><br />'.NL;
 		}
@@ -104,27 +107,27 @@ class TrainingDisplay {
 	private function getPlotTypesAsArray() {
 		$plots = array();
 		if ($this->Training->hasPaceData())
-			$plots['pace'] = array('name' => 'Pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
+			$plots['pace'] = array('name' => 'Pace', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasSplitsData())
-			$plots['splits'] = array('name' => 'Splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
+			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasPulseData())
-			$plots['pulse'] = array('name' => 'Puls', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
+			$plots['pulse'] = array('name' => 'Puls', 'key' => 'pulse', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasElevationData())
-			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
+			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'key' => 'elevation', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
 
 		return $plots;
 	}
 
 	/**
 	 * Display links for all plots
-	 * @param string $rel related string (id of img)
 	 */
-	public function displayPlotLinks($rel = 'trainingGraph') {
+	public function displayPlotLinks() {
 		$links = array();
 		$plots = $this->getPlotTypesAsArray();
 
 		foreach ($plots as $key => $array)
-			$links[] = Ajax::imgChange('<a href="'.$array['src'].'">'.$array['name'].'</a>', 'trainingGraph').NL;
+			$links[] = Ajax::flotChange($array['name'], 'trainingPlots', $array['key'].'_'.$this->Training->get('id'));
+			//$links[] = Ajax::imgChange('<a href="'.$array['src'].'">'.$array['name'].'</a>', 'trainingGraph').NL;
 
 		echo implode(' | ', $links);
 	}
@@ -132,12 +135,15 @@ class TrainingDisplay {
 	/**
 	 * Display a plot
 	 * @param string $type name of the plot, should be in getPlotTypesAsArray
+	 * @param bool $hidden
 	 */
-	public function displayPlot($type = 'undefined') {
+	public function displayPlot($type = 'undefined', $hidden = false) {
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type])) {
-			$img = '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />';
-			echo HTML::wrapImgForLoading($img, 480, 190);
+			//$img = '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />';
+			//echo HTML::wrapImgForLoading($img, 480, 190);
+			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden);
+			include FRONTEND_PATH.'draw/Plot.Training.'.$plots[$type]['key'].'.php';
 		} else
 			Error::getInstance()->addWarning('TrainingDisplay::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}

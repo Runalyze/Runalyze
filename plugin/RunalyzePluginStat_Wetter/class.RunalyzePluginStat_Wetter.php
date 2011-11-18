@@ -57,7 +57,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$Sport = new Sport(CONF_MAINSPORT);
 
 		if ($this->config['for_weather']['var'])
-			echo Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.wetter.php" title="Wetter-Diagramme anzeigen">'.Icon::get(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>');
+			echo Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php" title="Wetter-Diagramme anzeigen">'.Icon::get(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>');
 
 		$this->displayHeader($this->getHeader());
 		$this->displayYearNavigation();

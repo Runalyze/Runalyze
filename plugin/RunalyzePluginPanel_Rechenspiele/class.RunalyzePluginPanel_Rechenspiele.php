@@ -44,7 +44,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.rechenspiele.form.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
 	}
 
 	/**
