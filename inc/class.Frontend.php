@@ -20,7 +20,7 @@
  * @uses class::PluginPanel
  * @uses class::PluginStat
  * @uses class::PluginTool
- * //@uses class::PluginDraw
+ * @uses class::Plot
  * @uses class::Training
  * @uses class::TrainingDisplay
  * @uses class::Editor
@@ -162,7 +162,7 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.Plugin.php';
 		require_once FRONTEND_PATH.'class.PluginPanel.php';
 		require_once FRONTEND_PATH.'class.PluginStat.php';
-		//require_once FRONTEND_PATH.'class.PluginDraw.php';
+		require_once FRONTEND_PATH.'class.Plot.php';
 		require_once FRONTEND_PATH.'class.PluginTool.php';
 		require_once FRONTEND_PATH.'class.Draw.php';
 		require_once FRONTEND_PATH.'class.Clothes.php';

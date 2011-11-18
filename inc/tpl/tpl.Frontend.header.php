@@ -6,6 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="stylesheet"  type="text/css"href="lib/datepicker.css" />
 	<link rel="stylesheet"  type="text/css"href="lib/tablesorter.css" />
+	<link rel="stylesheet"  type="text/css"href="lib/flot.css" />
+	<link rel="stylesheet"  type="text/css"href="lib/flot/qtip.css" />
 	<?php foreach ($this->CSS_FILES as $file): ?>
 		<link rel="stylesheet"  type="text/css"href="<?php echo $file; ?>" />
 	<?php endforeach; ?>
@@ -27,18 +29,21 @@
 	<script type="text/javascript" src="lib/ajax.js"></script>
 	<script type="text/javascript" src="lib/datepicker.js"></script>
 	<script type="text/javascript" src="lib/fileuploader.js"></script>
+
+	<?php foreach (Plot::getNeededJSFilesAsArray() as $file): ?>
+		<script type="text/javascript" src="<?php echo $file; ?>"></script>
+	<?php endforeach; ?>
+
 	<?php foreach ($this->JS_FILES as $file): ?>
 		<script type="text/javascript" src="<?php echo $file; ?>"></script>
 	<?php endforeach; ?>
 
-	<!--[if IE]>
-	<style type="text/css">
-	table { border-collapse: collapse; }
-	</style>
-	<![endif]-->
+	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
 </head>
 
 <body id="main" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
+<div id="flotLoader"></div>
 <div id="overlay"></div>
 <div id="ajax" class="panel"></div>

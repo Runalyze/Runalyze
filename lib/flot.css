@@ -1,0 +1,69 @@
+.flot {
+	position: relative;
+	margin: 0 auto;
+	border: 1px solid #000;
+	width: 480px;
+	height: 190px;
+	background-color: #AAB757;
+	background-image: url(../img/dash.png);
+	background-image: url(../img/dash.png), linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
+	background-image: url(../img/dash.png), -o-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
+	background-image: url(../img/dash.png), -moz-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
+	background-image: url(../img/dash.png), -webkit-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
+	background-image: url(../img/dash.png), -ms-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
+	background-image: url(../img/dash.png), -webkit-gradient(
+		linear, left bottom, left top,
+		color-stop(0, rgb(96,165,80)),
+		color-stop(1, rgb(193,206,112))
+	);
+}
+
+.flot .tickLabels, .flot .legend td {
+	color: #FFF;
+	font-size: 9px !important;
+}
+
+.flot .legend table {
+	padding: 0;
+	margin: 0 !important;
+}
+
+.flot .legend td {
+	color: #545454;
+	vertical-align: middle;
+	padding: 1px 2px;
+}
+
+.flot td.legendLabel {
+}
+
+.flot .arrow {
+	position: absolute;
+	cursor: pointer;
+}
+.flot div.arrow {
+	font-size: smaller;
+	color: #999;
+	background-color: #eee;
+	padding: 2px;
+}
+
+.flotHide {
+	visibility: hidden;
+}
+
+.flot .hoverTip {
+	display: none;
+	padding: 2px;
+	border: 1px solid #CCC;
+	background-color: rgba(255,255,255,0.8);
+	position: fixed;
+	text-align: left;
+	z-index: 50;
+	overflow: visible;
+	font-size: .9em;
+}
+
+.flot .hoverTip em {
+	font-weight: bold;
+}

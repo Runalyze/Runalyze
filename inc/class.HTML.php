@@ -146,6 +146,22 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string as span
+	 * @param string $string
+	 */
+	public static function left($string) {
+		return '<span class="left">'.$string.'</span>';
+	}
+
+	/**
+	 * Wrap a string as span
+	 * @param string $string
+	 */
+	public static function right($string) {
+		return '<span class="right">'.$string.'</span>';
+	}
+
+	/**
 	 * Wrap a string into emphasize-tag
 	 * @param string $string
 	 */

@@ -11,6 +11,12 @@
  */
 class Ajax {
 	/**
+	 * CSS-class for waiter-image
+	 * @var string
+	 */
+	public static $IMG_WAIT = 'waitImg';
+
+	/**
 	 * Gives a HTML-link for using jTraining
 	 * @param int $training_id ID of the training
 	 * @param string $name Name of the link to be displayed
@@ -91,6 +97,16 @@ class Ajax {
 	}
 
 	/**
+	 * Transform text to link for changing flot
+	 * @param string $text
+	 * @param string $divID
+	 * @param string $flotID
+	 */
+	public static function flotChange($text, $divID, $flotID) {
+		return '<span class="link" onclick="flotChange(\''.$divID.'\',\''.$flotID.'\')">'.$text.'</span>';
+	}
+
+	/**
 	 * Adds a new class-value or creates a class-attribute
 	 * @param string $link    The full HTML-link
 	 * @param string $class   The new css-class
@@ -138,6 +154,43 @@ class Ajax {
 	 */
 	public static function wrapJSforDocumentReady($code) {
 		return self::wrapJS('$(document).ready(function(){ '.$code.' });');
+	}
+
+	/**
+	 * Wrap JavaScript into code block for beeing an unnamed function
+	 * @param string $code
+	 * @return string
+	 */
+	public static function wrapJSasFunction($code) {
+		return self::wrapJS('$(function(){ '.$code.' });');
+	}
+
+	/**
+	 * JSON encode with function
+	 * @param array $input
+	 * @param array $funcs
+	 * @param int $level
+	 */
+	public static function json_encode_jsfunc($input, $funcs = array(), $level = 0) {
+		foreach($input as $key => $value) {
+			if (is_array($value)) {
+				$ret = self::json_encode_jsfunc($value, $funcs, 1);
+				$input[$key] = $ret[0];
+				$funcs = $ret[1];
+			} elseif (substr($value,0,8) == 'function') {
+                  $func_key = "#".uniqid()."#";
+                  $funcs[$func_key] = $value;
+                  $input[$key] = $func_key;
+			}
+		}
+		if ($level == 1)
+			return array($input, $funcs);
+		else {
+			$input_json = json_encode($input);
+			foreach($funcs as $key => $value)
+				$input_json = str_replace('"'.$key.'"', $value, $input_json);
+			return $input_json;
+		}
 	}
 
 	/**

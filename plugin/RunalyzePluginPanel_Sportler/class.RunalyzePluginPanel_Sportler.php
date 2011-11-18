@@ -57,44 +57,34 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		echo('
-			<div id="sportler">
-				<div id="sportler-gewicht" class="change">');
-
+		$Weight  = '';
+		$Pulse   = '';
+		$Analyse = '';
 		$dat = User::getLastRow();
+
 		if ($this->config['use_weight'])
-			$left = '<strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['weight']).' kg</strong>';
+			$Weight = 'Gewicht: <strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['weight']).' kg</strong><br />';
 		
 		if ($this->config['use_pulse'])
-			$right = Helper::Unknown($dat['pulse_rest']).' bpm / '.Helper::Unknown($dat['pulse_max']).' bpm';
-		
-		echo('		<p>
-						<span>'.$right.'</span>
-						<a class="change" href="sportler-analyse" target="sportler"><del>Analyse</del>/Allgemein:</a>
-						'.$left.'
-					</p>
-	
-					<div class="c">
-						<img src="inc/draw/plugin.sportler.gewicht.php" alt="Diagramm" style="width:320px; height:148px;" />
-					</div> 
-				</div>
-			<div id="sportler-analyse" class="change" style="display:none;">');
+			$Pulse = Helper::Unknown($dat['pulse_rest']).' bpm / '.Helper::Unknown($dat['pulse_max']).' bpm';
 
-		$left = ''; $right = '';
 		if ($this->config['use_body_fat'])
-			$left = '<small>'.Helper::Unknown($dat['fat']).'&#37;Fett, '.Helper::Unknown($dat['water']).'&#37;Wasser, '.Helper::Unknown($dat['muscles']).'&#37;Muskeln</small>';
-	
-		echo('		<p>
-						<span>'.$right.'</span>
-						<a class="change" href="sportler-gewicht" target="sportler">Analyse/<del>Allgemein</del>:</a>
-						'.$left.'
-					</p>
-	
-					<div class="c">
-						<img src="inc/draw/plugin.sportler.fett.php" alt="Diagramm" style="width:320px; height:148px;" />
-					</div> 
+			$Analyse = 'Analyse: <small>Fett: '.Helper::Unknown($dat['fat']).' &#37;, Wasser: '.Helper::Unknown($dat['water']).' &#37;, Muskeln: '.Helper::Unknown($dat['muscles']).' &#37;</small>';
+		
+		echo('
+			<div id="sportler">
+				<span class="right">'.$Pulse.'</span>
+				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
+				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse').'
+
+				<div id="sportler_flots" style="position:relative;width:322px;height:150px;margin:2px auto;">
+					<div class="flot waitImg" id="sportler_weights" style="width:320px;height:148px;position:absolute;"></div>
+					<div class="flot waitImg flotHide" id="sportler_analyse" style="width:320px;height:148px;position:absolute;"></div>
 				</div>
 			</div>');
+
+		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
 	}
 }
 ?>

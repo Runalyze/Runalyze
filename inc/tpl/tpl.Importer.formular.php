@@ -80,9 +80,9 @@ foreach($typen as $typ) {
 			</select>
 
 			<?php echo Shoe::getSelectBox(); ?>
-
+			
 			<label>
-				<?php echo HTML::checkBox('abc'); ?>
+				<?php echo HTML::checkBox('abc', -1, true); ?>
 				<small>Lauf-ABC</small>
 			</label>
 		</span>
@@ -93,7 +93,7 @@ foreach($typen as $typ) {
 				<small>km</small>
 			</label>
 			<label>
-				<?php echo HTML::checkBox('is_track'); ?>
+				<?php echo HTML::checkBox('is_track', -1, true); ?>
 				<small style="margin-right: 25px;">Bahn</small>
 			</label>
 			<label>

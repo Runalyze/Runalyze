@@ -3,7 +3,7 @@
  * RUNALYZE
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @copyright http://runalyze.laufhannes.de/
+ * @copyright http://www.runalyze.de/
  * 
  * This main file loads the frontend class and controls the output.
  */
@@ -11,6 +11,18 @@ require 'inc/class.Frontend.php';
 
 $Frontend = new Frontend(false, __FILE__);
 $Frontend->displayHeader();
+?>
+<!-- JUST FOR TESTING NEW PLOTS
+<div class="c" style="width:480px;height:190px;margin:0 auto;">
+	<div class="flot waitImg" id="splits_1569" style="width:480px;height:190px;position:absolute;"></div>
+</div>
+-->
+<?php
+/*$_GET['y'] = 2011;
+$_GET['id'] = 1569;
+include FRONTEND_PATH.'../inc/draw/Plot.Training.splits.php';
+$Frontend->displayFooter();
+exit();*/
 ?>
 
 <div id="r">
