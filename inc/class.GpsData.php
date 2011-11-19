@@ -120,6 +120,14 @@ class GpsData {
 	}
 
 	/**
+	 * Set individual step-size
+	 * @param int $size
+	 */
+	public function setStepSize($size) {
+		$this->stepSize   = (int)$size;
+	}
+
+	/**
 	 * Is the iterator at default index?
 	 * @return bool
 	 */
@@ -145,22 +153,23 @@ class GpsData {
 		if ($this->loopIsAtEnd())
 			return false;
 
-		$this->arrayIndex++;
+		$this->arrayIndex += $this->stepSize;
 
 		return true;
 	}
 
 	/**
 	 * Go to next kilometer if possible
+	 * @param double $distance
 	 * @return bool
 	 */
-	public function nextKilometer() {
+	public function nextKilometer($distance = 1) {
 		$this->arrayLastIndex = $this->arrayIndex;
 
 		if ($this->loopIsAtEnd())
 			return false;
 
-		while ($this->currentKilometer() == floor($this->arrayForDistance[$this->arrayLastIndex]))
+		while ($this->currentKilometer($distance) == floor($this->arrayForDistance[$this->arrayLastIndex]/$distance)*$distance)
 			$this->arrayIndex++;
 
 		return true;
@@ -168,16 +177,17 @@ class GpsData {
 
 	/**
 	 * Get the current kilometer
+	 * @param double $distance
 	 * @return float
 	 */
-	public function currentKilometer() {
+	public function currentKilometer($distance = 1) {
 		if ($this->loopIsAtDefaultIndex())
 			return 0;
 
 		if ($this->loopIsAtEnd())
 			return end($this->arrayForDistance);
 
-		return floor($this->arrayForDistance[$this->arrayIndex]);
+		return floor($this->arrayForDistance[$this->arrayIndex]/$distance)*$distance;
 	}
 
 	/**
@@ -251,6 +261,7 @@ class GpsData {
 			return 0;
 
 		$stepArray = array_slice($array, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex), true);
+		$stepArray = array_filter($stepArray);
 
 		return (array_sum($stepArray) / count($stepArray));
 	}
@@ -288,6 +299,13 @@ class GpsData {
 	 */
 	public function getAveragePaceOfStep() {
 		return round($this->getAverageOfStep($this->arrayForPace));
+	}
+
+	/**
+	 * Get average elevation since last step
+	 */
+	public function getAverageElevationOfStep() {
+		return round($this->getAverageOfStep($this->arrayForElevation));
 	}
 
 	/**
@@ -479,6 +497,67 @@ class GpsData {
 		}
 
 		return $rounds;
+	}
+
+	/**
+	 * Get plot data for a given key
+	 * @param unknown_type $key
+	 */
+	protected function getPlotDataFor($key) {
+		$Data = array();
+
+		$this->startLoop();
+		while ($this->nextKilometer(0.1)) {
+			switch ($key) {
+				case "elevation":
+					$value = $this->getAverageElevationOfStep();
+					break;
+				case "heartrate100":
+					$value = 100*$this->getAverageHeartrateOfStep()/HF_MAX;
+					break;
+				case "heartrate":
+					$value = $this->getAverageHeartrateOfStep();
+					break;
+				case "pace":
+					$value = $this->getAveragePaceOfStep();
+					break;
+				default:
+					$value = 0;
+			}
+
+			$km = (string)($this->getDistance());
+			$Data[$km] = $value;
+		}
+
+		return $Data;
+	}
+
+	/**
+	 * Get array as plot-data for elevation
+	 */
+	public function getPlotDataForElevation() {
+		return $this->getPlotDataFor('elevation');
+	}
+
+	/**
+	 * Get array as plot-data for heartrate
+	 */
+	public function getPlotDataForHeartrate() {
+		return $this->getPlotDataFor('heartrate');
+	}
+
+	/**
+	 * Get array as plot-data for heartrate in percent
+	 */
+	public function getPlotDataForHeartrateInPercent() {
+		return $this->getPlotDataFor('heartrate100');
+	}
+
+	/**
+	 * Get array as plot-data for pace
+	 */
+	public function getPlotDataForPace() {
+		return $this->getPlotDataFor('pace');
 	}
 
 	/**

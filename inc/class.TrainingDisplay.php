@@ -82,13 +82,16 @@ class TrainingDisplay {
 					echo '<br />'.NL;
 				}
 			} else {
+				reset($Plots);
+				$firstKey = key($Plots);
+
 				echo '<small class="right margin-5">'.NL;
 					$this->displayPlotLinks();
 				echo '</small>'.NL;
 				echo '<br /><br />'.NL;
 				echo '<div id="trainingPlots" style="position:relative;width:482px;height:192px;margin:2px auto;">';
 				foreach ($Plots as $Key => $Plot)
-					$this->displayPlot($Key, $Key == key($Plots));
+					$this->displayPlot($Key, $Key != $firstKey);
 				echo '</div>';
 			}
 			echo '<br /><br />'.NL;

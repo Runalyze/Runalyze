@@ -93,8 +93,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 $Plot = new Plot("form".$Year, 800, 450);
 $Plot->Data[] = array('label' => 'Form (CTL)', 'color' => '#008800', 'data' => $CTLs);
-$Plot->Data[] = array('label' => 'Muedigkeit (ATL)', 'color' => '#880000', 'data' => $ATLs);
-$Plot->Data[] = array('label' => 'VDOT (rechts)', 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'M&uuml;digkeit (ATL)', 'color' => '#880000', 'data' => $ATLs);
+$Plot->Data[] = array('label' => 'VDOT', 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 
 $Plot->enableTracking();
 
@@ -105,10 +105,12 @@ $Plot->setXAxisLimitedTo($Year);
 
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '%');
-$Plot->setYTicks(1, 1, 0);
+$Plot->setYTicks(1, 1);
 $Plot->setYLimits(1, 0, 100);
 $Plot->addYAxis(2, 'right');
-$Plot->setYTicks(2, 1, 0);
+$Plot->setYTicks(2, 1, 1);
+
+$Plot->setTitle('Formkurve '.$Year);
 
 $Plot->outputJavaScript();
 ?>
