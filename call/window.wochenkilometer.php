@@ -22,6 +22,9 @@ if (!isset($_GET['y']))
 include FRONTEND_PATH.'draw/Plot.WeekKM.php';
 ?>
 
+	<br />
+	<br />
+
 <center>
 <?php
 for ($j = START_YEAR; $j <= date("Y"); $j++) {

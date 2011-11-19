@@ -31,7 +31,7 @@ $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '°C');
 $Plot->setYTicks(1, 5, 0);
 
-$Plot->addTreshold('y', 0);
+$Plot->addThreshold('y', 0);
 $Plot->addMarkingArea('y', -99, 0);
 $Plot->lineWithPoints();
 

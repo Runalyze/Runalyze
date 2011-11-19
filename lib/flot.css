@@ -34,22 +34,59 @@
 	padding: 1px 2px;
 }
 
-.flot td.legendLabel {
-}
-
-.flot .arrow {
-	position: absolute;
-	cursor: pointer;
-}
-.flot div.arrow {
-	font-size: smaller;
-	color: #999;
-	background-color: #eee;
-	padding: 2px;
-}
-
 .flotHide {
 	visibility: hidden;
+}
+
+.flotHide .legend, .flotHide .tickLabels {
+	display: none;
+}
+
+.flot .flotTitle {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: #000;
+	color: #999;
+	opacity: 0.8;
+	height: 12px;
+	line-height: 12px;
+	font-size: 9px;
+	text-align: center;
+	width: 100%;
+	padding: 1px;
+	margin: 2px 0 0 -1px;
+}
+
+.flot .flotTitle span {
+	margin: 0 5px;
+}
+
+.flot .flotError {
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	text-align: center;
+}
+
+.flot .flotError span {
+	border: 1px solid #CCC;
+	background-color: rgba(255,255,255,0.4);
+	margin: 0 auto;
+	padding: 5px;
+	font-weight: bold;
+	font-size: 9px;
+	color: #545454;
+}
+
+.flot .annotation {
+	position: absolute;
+	background-color: rgba(255,255,255,0.6);
+	padding: 1px;
+	margin: 2px 0 0 2px;
+	font-size: 9px;
+	color: #545454;
 }
 
 .flot .hoverTip {
@@ -66,4 +103,15 @@
 
 .flot .hoverTip em {
 	font-weight: bold;
+}
+
+.flot .arrow {
+	position: absolute;
+	cursor: pointer;
+}
+.flot div.arrow {
+	font-size: smaller;
+	color: #999;
+	background-color: #eee;
+	padding: 2px;
 }

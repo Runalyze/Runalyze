@@ -52,6 +52,24 @@ class Plot {
 	public $Options = array();
 
 	/**
+	 * Array containing titles for this plot
+	 * @var array
+	 */
+	private $Titles = array();
+
+	/**
+	 * Array containing annotations for this plot
+	 * @var array
+	 */
+	private $Annotations = array();
+
+	/**
+	 * Error string
+	 * @var string
+	 */
+	private $ErrorString = '';
+
+	/**
 	 * Get all needed JavaScript-files for this class as array
 	 */
 	public static function getNeededJSFilesAsArray() {
@@ -59,10 +77,10 @@ class Plot {
 		$Files[] = "lib/flot/jquery.plot.js";
 		$Files[] = "lib/flot/jquery.qtip.min.js";
 		$Files[] = "lib/flot/jquery.flot.min.js";
-		$Files[] = "lib/flot/jquery.flot.selection.js";
-		$Files[] = "lib/flot/jquery.flot.crosshair.js";
-		$Files[] = "lib/flot/jquery.flot.navigate.js";
-		$Files[] = "lib/flot/jquery.flot.stack.js";
+		$Files[] = "lib/flot/jquery.flot.selection.min.js";
+		$Files[] = "lib/flot/jquery.flot.crosshair.min.js";
+		$Files[] = "lib/flot/jquery.flot.navigate.min.js";
+		$Files[] = "lib/flot/jquery.flot.stack.min.js";
 
 		return $Files;
 	}
@@ -81,6 +99,14 @@ class Plot {
 		$this->plot    = 'plot_'.$this->cssID;
 
 		$this->setDefaultOptions();
+	}
+
+	/**
+	 * Raise an error
+	 * @param string $string
+	 */
+	public function raiseError($string) {
+		$this->ErrorString = $string;
 	}
 
 	/**
@@ -113,6 +139,8 @@ class Plot {
 		$this->Options['grid']['borderWidth'] = 1;
 		$this->Options['grid']['labelMargin'] = 2;
 		$this->Options['grid']['axisMargin'] = 2;
+
+		$this->setMarginForGrid(5);
 	}
 
 	/**
@@ -173,19 +201,35 @@ class Plot {
 	 */
 	private function getJavaScript() {
 		$this->convertData();
+		$bindedCode  = '$("#'.$this->cssID.'").width('.$this->width.'-2);'.NL;
+		$bindedCode .= '$("#'.$this->cssID.'").height('.$this->height.'-2-'.(empty($this->Titles)?0:15).');'.NL;
+		$padding     = '1px';
 
-		$bindedCode = $this->getMainJS();
+		if (strlen($this->ErrorString) > 0) {
+			$bindedCode .= $this->getJSForError();
+		} else {
+			$bindedCode .= $this->getMainJS();
 
-		if (isset($this->Options['pan']) && $this->Options['pan']['interactive'])
-			$bindedCode .= $this->getJSForPanning();
+			if (isset($this->Options['pan']) && $this->Options['pan']['interactive'])
+				$bindedCode .= $this->getJSForPanning();
 
-		if (isset($this->Options['zoom']) && $this->Options['zoom']['interactive'])
-			$bindedCode .= $this->getJSForZooming();
+			if (isset($this->Options['zoom']) && $this->Options['zoom']['interactive'])
+				$bindedCode .= $this->getJSForZooming();
 
-		if (isset($this->Options['crosshair']))
-			$bindedCode .= $this->getJSForTracking();
+			if (isset($this->Options['crosshair']))
+				$bindedCode .= $this->getJSForTracking();
 
-		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\'1px\');';
+			if (!empty($this->Annotations))
+				$bindedCode .= $this->getJSForAnnotations();
+		}
+
+		if (!empty($this->Titles)) {
+			$bindedCode .= $this->getJSForTitles();
+			$padding     = '1px 1px 16px 1px';
+		}
+
+		$bindedCode .= '$("#'.$this->cssID.'").removeClass("'.Ajax::$IMG_WAIT.'");';
+		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\''.$padding.'\');';
 
 		return Ajax::wrapJS('
 			var '.$this->created.';
@@ -200,21 +244,59 @@ class Plot {
 
 	/**
 	 * Get main functionalities for this plot
+	 * @return string
 	 */
 	private function getMainJS() {
 		return '
-			$("#'.$this->cssID.'").width('.$this->width.'-2);
-			$("#'.$this->cssID.'").height('.$this->height.'-2);
 			var '.$this->plot.' = $.plot(
 				$("#'.$this->cssID.'"),
 				'.json_encode($this->Data).',
 				'.Ajax::json_encode_jsfunc($this->Options).'
-			);
-			$("#'.$this->cssID.'").removeClass("'.Ajax::$IMG_WAIT.'");'.NL;
+			);'.NL;
+	}
+
+	/**
+	 * Get code for displaying titles
+	 * @return string
+	 */
+	private function getJSForTitles() {
+		$title  = '<div class="flotTitle">';
+		if (isset($this->Titles['left']))
+			$title .= '<span class="left">'.$this->Titles['left'].'</span>';
+		if (isset($this->Titles['right']))
+			$title .= '<span class="right">'.$this->Titles['right'].'</span>';
+		if (isset($this->Titles['center']))
+			$title .= $this->Titles['center'];
+		$title .= '</div>';
+
+		return '$("#'.$this->cssID.'").append(\''.$title.'\');'.NL;
+	}
+	
+	/**
+	 * Get code for enable tracking
+	 * @return string
+	 */
+	private function getJSForError() {
+		return'$("#'.$this->cssID.'").append(\'<div class="flotError"><span>'.$this->ErrorString.'</span></div>\');'.NL;
+	}
+
+	/**
+	 * Get code for adding annotations
+	 * @return string
+	 */
+	private function getJSForAnnotations() {
+		$code = '';
+		foreach ($this->Annotations as $Array)
+			$code .= '
+				o = '.$this->plot.'.pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
+				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
+
+		return $code;
 	}
 
 	/**
 	 * Get code for enable zooming
+	 * @return string
 	 */
 	private function getJSForZooming() {
 		return '
@@ -226,6 +308,7 @@ class Plot {
 
 	/**
 	 * Get code for enable panning
+	 * @return string
 	 */
 	private function getJSForPanning() {
 		return '
@@ -244,6 +327,7 @@ class Plot {
 
 	/**
 	 * Get code for enable tracking
+	 * @return string
 	 */
 	private function getJSForTracking() {
 		return '
@@ -268,6 +352,18 @@ class Plot {
 			}
 			$this->Data[$i]['data'] = $Points;
 		}
+
+		if (empty($this->Data) && strlen($this->ErrorString) == 0)
+			$this->raiseError('Es sind keine Daten vorhanden.');
+	}
+
+	/**
+	 * Correct all values as JS-timestamps
+	 * @param array $array
+	 * @return array
+	 */
+	static public function correctValuesForTime($array) {
+		return array_map(function($v){return $v*1000;}, $array);
 	}
 
 	/**
@@ -277,6 +373,25 @@ class Plot {
 	 */
 	static public function dayOfYearToJStime($year, $day) {
 		return mktime(1,0,0,1,$day,$year).'000';
+	}
+
+	/**
+	 * Set title to plot
+	 * @param string $title
+	 * @param string $position
+	 */
+	public function setTitle($title, $position = 'center') {
+		$this->Titles[$position] = $title;
+	}
+
+	/**
+	 * Add an annotation to plot
+	 * @param double $x
+	 * @param double $y
+	 * @param string $text
+	 */
+	public function addAnnotation($x, $y, $text) {
+		$this->Annotations[] = array('x' => $x, 'y' => $y, 'text' => $text);
 	}
 
 	/**
@@ -354,13 +469,13 @@ class Plot {
 	}
 
 	/**
-	 * Add a treshold lind
+	 * Add a threshold
 	 * @param string $axis
 	 * @param double $from
 	 * @param string $color
 	 * @param int $lineWidth
 	 */
-	public function addTreshold($axis, $from, $color ='#000', $lineWidth = 1) {
+	public function addThreshold($axis, $from, $color ='#000', $lineWidth = 1) {
 		$this->Options['grid']['markings'][] = array(
 			'color' => $color,
 			'lineWidth' => $lineWidth,
@@ -502,9 +617,11 @@ class Plot {
 	 * @param int $tickSize
 	 * @param int $decimals
 	 */
-	public function setYTicks($axis, $tickSize, $decimals = 0) {
+	public function setYTicks($axis, $tickSize, $decimals = false) {
 		$this->Options['yaxes'][$axis-1]['minTickSize'] = $tickSize;
-		$this->Options['yaxes'][$axis-1]['tickDecimals'] = $decimals;
+
+		if ($decimals !== false)
+			$this->Options['yaxes'][$axis-1]['tickDecimals'] = $decimals;
 	}
 
 	/**

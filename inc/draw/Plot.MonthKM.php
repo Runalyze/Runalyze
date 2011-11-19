@@ -5,6 +5,8 @@
  */
 $Year = (int)$_GET['y'];
 
+$Plot = new Plot("monthKM".$Year, 800, 500);
+
 $titleCenter           = 'Monatskilometer '.$Year;
 $Months                = array();
 $Kilometers            = array();
@@ -31,9 +33,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
 		$possibleKM    = 10 * round($TrimpPerMonth / $AvgMonthPace['avg'] / 10);
 	}
+} else {
+	$Plot->raiseError('F&uuml;r dieses Jahr liegen keine Daten vor.');
 }
 
-$Plot = new Plot("monthKM".$Year, 800, 500);
 $Plot->Data[] = array('label' => 'Wettkampf-Kilometer', 'data' => $KilometersCompetition);
 $Plot->Data[] = array('label' => 'Kilometer', 'data' => $Kilometers);
 
@@ -46,8 +49,12 @@ $Plot->setYTicks(1, 10, 0);
 $Plot->showBars(true);
 $Plot->stacked();
 
-if ($possibleKM > 0)
-	$Plot->addTreshold('y', $possibleKM);
+$Plot->setTitle('Monatskilometer '.$Year);
+
+if ($possibleKM > 0) {
+	$Plot->addThreshold('y', $possibleKM);
+	$Plot->addAnnotation(0, $possibleKM, 'Leistungslevel');
+}
 
 $Plot->outputJavaScript();
 ?>

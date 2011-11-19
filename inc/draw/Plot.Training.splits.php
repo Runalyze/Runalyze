@@ -4,13 +4,16 @@
  * Call:   include Plot.Training.splits.php
  */
 
-if (is_numeric($_GET['id'])) {
-	$Training = new Training($_GET['id']);
+$Plot = new Plot("splits_".$_GET['id'], 480, 190);
 
-	if ($Training->hasSplitsData()) {
-		$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
-		$achievedPace = array_sum($Training->getSplitsPacesArray()) / count($Training->getSplitsPacesArray());
-	}
+if (!is_numeric($_GET['id']))
+	$Plot->raiseError('Es ist kein Training angegeben.');
+
+$Training = new Training($_GET['id']);
+
+if ($Training->hasSplitsData()) {
+	$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
+	$achievedPace = array_sum($Training->getSplitsPacesArray()) / count($Training->getSplitsPacesArray());
 }
 
 $Labels = $Training->getSplitsDistancesArray();
@@ -24,15 +27,18 @@ foreach ($Data as $key => $val) {
 $Plot = new Plot("splits_".$_GET['id'], 480, 190);
 $Plot->Data[] = array('label' => 'Zwischenzeiten', 'data' => $Data);
 
-$Plot->setMarginForGrid(5);
 $Plot->setYAxisTimeFormat('%M:%S');
 $Plot->setXLabels($Labels);
 $Plot->showBars(true);
 
+$Plot->hideLegend();
+$Plot->setTitle('Zwischenzeiten', 'right');
+$Plot->setTitle($Training->getPlotTitle(), 'left');
+
 if ($demandedPace > 0)
-	$Plot->addTreshold("y", $demandedPace*1000, 'rgb(180,0,0)');
+	$Plot->addThreshold("y", $demandedPace*1000, 'rgb(180,0,0)');
 if ($achievedPace > 0)
-	$Plot->addTreshold("y", $achievedPace*1000, 'rgb(0,180,0)');
+	$Plot->addThreshold("y", $achievedPace*1000, 'rgb(0,180,0)');
 
 $Plot->outputJavaScript();
 ?>

@@ -21,6 +21,9 @@ if (!isset($_GET['y']))
 include FRONTEND_PATH.'draw/Plot.MonthKM.php';
 ?>
 
+	<br />
+	<br />
+
 <center>
 <?php
 for ($j = START_YEAR; $j <= date("Y"); $j++) {

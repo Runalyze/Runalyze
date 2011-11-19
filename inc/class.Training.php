@@ -336,6 +336,20 @@ class Training {
 	}
 
 	/**
+	 * Get title for a training-plot
+	 * @return string
+	 */
+	public function getPlotTitle() {
+		$text  = $this->getDate(false).', ';
+		$text .= $this->getTitle();
+
+		if ($this->get('comment') != '')
+			$text .= ': '.$this->get('comment');
+
+		return $text;
+	}
+
+	/**
 	 * Display the formatted date
 	 */
 	public function displayDate() {

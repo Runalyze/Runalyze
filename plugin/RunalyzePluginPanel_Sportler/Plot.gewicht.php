@@ -39,7 +39,7 @@ $Plot->addYUnit(2, 'kg');
 $Plot->setYTicks(2, 2, 0);
 
 if ($Wunschgewicht > 1) {
-	$Plot->addTreshold('y2', $Wunschgewicht);
+	$Plot->addThreshold('y2', $Wunschgewicht);
 	$Plot->addMarkingArea('y2', $Wunschgewicht, 0);
 }
 
