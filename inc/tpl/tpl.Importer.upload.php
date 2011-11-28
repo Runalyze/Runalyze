@@ -1,4 +1,4 @@
-	<h1>Eine tcx-Datei hochladen</h1>
+	<h1>Eine Trainings-Datei hochladen</h1>
 
 	<div class="c button hide" id="file-upload">Datei hochladen</div>
 

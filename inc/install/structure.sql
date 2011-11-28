@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `comment` tinytext COLLATE latin1_general_ci,
   `partner` tinytext COLLATE latin1_general_ci,
   `abc` smallint(1) NOT NULL DEFAULT '0',
-  `schuhid` int(11) NOT NULL DEFAULT '0',
+  `shoeid` int(11) NOT NULL DEFAULT '0',
   `arr_time` longtext COLLATE latin1_general_ci,
   `arr_lat` longtext COLLATE latin1_general_ci,
   `arr_lon` longtext COLLATE latin1_general_ci,

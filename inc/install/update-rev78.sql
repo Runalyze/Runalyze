@@ -13,6 +13,7 @@ ALTER TABLE `runalyze_training` CHANGE `puls` `pulse_avg` INT( 3 ) NOT NULL DEFA
 ALTER TABLE `runalyze_training` CHANGE `puls_max` `pulse_max` INT( 3 ) NOT NULL DEFAULT '0';
 ALTER TABLE `runalyze_training` CHANGE `temperatur` `temperature` FLOAT NULL DEFAULT NULL ;
 ALTER TABLE `runalyze_training` CHANGE `wetterid` `weatherid` SMALLINT( 6 ) NOT NULL DEFAULT '1';
+ALTER TABLE `runalyze_training` CHANGE `schuhid` `shoeid` int(11) NOT NULL DEFAULT '0',
 ALTER TABLE `runalyze_training` CHANGE `strecke` `route` TINYTEXT CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL ;
 ALTER TABLE `runalyze_training` CHANGE `kleidung` `clothes` SET( '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24' ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '';
 ALTER TABLE `runalyze_training` CHANGE `bemerkung` `comment` TINYTEXT CHARACTER SET latin1 COLLATE latin1_general_ci NULL DEFAULT NULL ;
@@ -75,7 +76,6 @@ INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `filename`, `name`, `descrip
 (3, 'RunalyzePluginPanel_Prognose', 'panel', 'panel.prognose.inc.php', 'Prognose', 'Anzeige der aktuellen Wettkampfprognose.', 'distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r die Prognose (kommagetrennt)', 2, 3),
 (4, 'RunalyzePluginPanel_Schuhe', 'panel', 'panel.schuhe.inc.php', 'Schuhe', 'Anzeige der bisher gelaufenen Kilometer mit den aktiven Schuhen, bei Bedarf auch der alten Schuhe.', '', 2, 4),
 (5, 'RunalyzePluginPanel_Sportler', 'panel', 'panel.sportler.inc.php', 'Sportler', 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).', 'use_weight|bool=true|Gewicht protokollieren\r\nuse_body_fat|bool=true|Fettanteil protokollieren\r\nuse_pulse|bool=true|Ruhepuls protokollieren\r\nwunschgewicht|int=68.0|Wunschgewicht', 1, 5),
-(17, 'RunalyzePluginTool_Cacheclean', 'tool', 'class.RunalyzePlugin_CachecleanTool.php', 'Cacheclean', 'L&ouml;scht den Cache der Diagramme. Sollte genutzt werden, falls Probleme mit Diagrammen auftauchen.', '', 1, 99),
 (6, 'RunalyzePluginStat_Schuhe', 'stat', 'stat.schuhe.inc.php', 'Schuhe', 'Ausf&uuml;hrliche Statistiken zu den Schuhen: Durchschnittliche, maximale und absolute Leistung (Kilometer / Tempo).', '', 1, 4),
 (7, 'RunalyzePluginStat_Analyse', 'stat', 'stat.analyse.inc.php', 'Analyse', 'Analyse des Trainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.', 'use_type|bool=true|Trainingstypen analysieren\r\nuse_pace|bool=true|Tempobereiche analysieren\r\nuse_pulse|bool=true|Pulsbereiche analysieren\r\nlowest_pulsegroup|int=65|Niedrigster Pulsbereich (%HFmax)\r\npulsegroup_step|int=5|Pulsbereich: Schrittweite\r\nlowest_pacegroup|int=360|Niedrigster Tempobereich (s/km)\r\nhighest_pacegroup|int=210|H&ouml;chster Tempobereich (s/km)\r\npacegroup_step|int=15|Tempobereich: Schrittweite', 1, 2),
 (8, 'RunalyzePluginStat_Statistiken', 'stat', 'stat.statistiken.inc.php', 'Statistiken', 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht für alle Sportarten.', '', 1, 1),
@@ -87,6 +87,7 @@ INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `filename`, `name`, `descrip
 (14, 'RunalyzePluginStat_Trainingspartner', 'stat', 'stat.trainingspartner.inc.php', 'Trainingspartner', 'Wie oft hast du mit wem gemeinsam trainiert?', '', 2, 9),
 (15, 'RunalyzePluginStat_Hoehenmeter', 'stat', 'stat.hoehenmeter.inc.php', 'H&ouml;henmeter', 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.', '', 2, 10),
 (16, 'RunalyzePluginStat_Laufabc', 'stat', 'stat.laufabc.inc.php', 'Lauf-ABC', 'Wie oft hast du Lauf-ABC absolviert?', '', 2, 11),
+(17, 'RunalyzePluginTool_Cacheclean', 'tool', 'class.RunalyzePlugin_CachecleanTool.php', 'Cacheclean', 'L&ouml;scht den Cache der Diagramme. Sollte genutzt werden, falls Probleme mit Diagrammen auftauchen.', '', 1, 99),
 (18, 'RunalyzePluginTool_DatenbankCleanup', 'tool', 'class.RunalyzePlugin_DatenbankCleanupTool.php', 'Datenbank-Cleanup', 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.', '', 1, 99);
 
 --

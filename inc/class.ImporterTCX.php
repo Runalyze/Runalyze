@@ -27,7 +27,6 @@ class ImporterTCX extends Importer {
 
 		$xml = $this->xml;
 
-		$i = 0;
 		$starttime = 0;
 		$calories  = 0;
 		$time      = array();
@@ -39,10 +38,8 @@ class ImporterTCX extends Importer {
 		$pace      = array();
 		$splits    = array();
 
-		if (!isset($xml['trainingcenterdatabase']['activities']['activity']) || !is_array($xml['trainingcenterdatabase']['activities']['activity'])) {
-			$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
+		if (!$this->isGarminFile())
 			return;
-		}
 
 		$starttime = strtotime($xml['trainingcenterdatabase']['activities']['activity']['id']['value']);
 		$start_tmp = $starttime;
@@ -55,8 +52,6 @@ class ImporterTCX extends Importer {
 			$laps = array($laps);
 
 		foreach($laps as $lap) {
-			$i++;
-
 			if (isset($lap['calories']))
 				$calories += $lap['calories']['value'];
 			if (isset($lap['intensity']) && strtolower($lap['intensity']['value']) == 'active') {
@@ -113,9 +108,9 @@ class ImporterTCX extends Importer {
 		$this->set('kcal', $calories);
 		$this->set('splits', implode('-', $splits));
 
-		if (!empty($time)) {
+		if (!empty($time))
 			$this->set('s', end($time));
-		}
+
 		if (!empty($heartrate)) {
 			$this->set('pulse_avg', round(array_sum($heartrate)/count($heartrate)));
 			$this->set('pulse_max', max($heartrate));
@@ -131,6 +126,18 @@ class ImporterTCX extends Importer {
 		$this->setArrayForDistance($distance);
 		$this->setArrayForHeartrate($heartrate);
 		$this->setArrayForPace($pace);
+	}
+
+	/**
+	 * Is the given file an garmin-TCX-file?
+	 * @return bool
+	 */
+	private function isGarminFile() {
+		if (isset($this->xml['trainingcenterdatabase']['activities']['activity']) && is_array($this->xml['trainingcenterdatabase']['activities']['activity']))
+			return true;
+
+		$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
+		return false;
 	}
 }
 ?>
