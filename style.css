@@ -389,8 +389,10 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .error { color: #F00; font-weight: bold; }
 .margin-5 { margin: 0 5px; }
 .margin-10 { margin: 0 10px; }
-.fullWidth { width: 100%; }
 .transparent-70 { opacity: 0.7; }
+.fullWidth { width: 100%; }
+.w50 { width: 50%; }
+.w33 { width: 33%; }
 
 .unimportant { opacity: 0.5; }
 .unimportant:hover { opacity: 1; }

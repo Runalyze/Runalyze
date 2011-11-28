@@ -364,6 +364,9 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetShoe() {
+		if (!$this->Training->Sport()->isRunning())
+			return '';
+
 		return Shoe::getName($this->Training->get('shoeid'));
 	}
 

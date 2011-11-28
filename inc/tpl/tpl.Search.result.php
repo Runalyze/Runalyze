@@ -24,8 +24,8 @@ if (isset($_POST['val']) && is_array($_POST['val'])) {
 		if (is_numeric($name))
 			$name = $conditions[$name]['name'];
 
-		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && (isset($value[0]) && $value[0] != 'egal')) {
-			if ($name == 'dauer')
+		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && (!isset($value[0]) || (isset($value[0]) && $value[0] != 'egal'))) {
+			if ($name == 's')
 				$value *= 60;
 			elseif (!is_array($value))
 				$value = Helper::Umlaute($value);

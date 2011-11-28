@@ -15,9 +15,6 @@ Config::register('Eingabeformular', 'COMPUTE_KCAL', 'bool', true, 'Kalorienverbr
 Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('upload' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
-Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
-	array('google' => true, 'geonames' => false), 'Server f&uuml;r H&ouml;henkorrektur',
-	array('maps.googleapis.com', 'ws.geonames.org'));
 Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
 
 /**
@@ -43,12 +40,6 @@ class Training {
 	 * @var int
 	 */
 	public static $CONSTRUCTOR_ID = -1;
-
-	/**
-	 * Minimal difference per step to be recognized for elevation data
-	 * @var int
-	 */
-	public static $minElevationDiff = 2;
 
 	/**
 	 * Only every n-th point will be taken for the elevation
@@ -702,6 +693,9 @@ class Training {
 	 * Display the window/formular for creation
 	 */
 	static public function displayCreateWindow() {
+		if (isset($_POST['forceAsFileName']))
+			$_GET['file'] = $_POST['forceAsFileName'];
+
 		$fileName     = isset($_GET['file']) ? $_GET['file'] : '';
 		$showUploader = empty($_POST) && !isset($_GET['file']);
 		$Importer     = Importer::getInstance($fileName);
@@ -719,90 +713,9 @@ class Training {
 	 * Correct the elevation data
 	 */
 	public function elevationCorrection() {
-		// TODO: Move to class::GpsData
-		if (!$this->hasPositionData())
-			return;
-
-		$latitude  = explode(self::$ARR_SEP, $this->get('arr_lat'));
-		$longitude = explode(self::$ARR_SEP, $this->get('arr_lon'));
-		$altitude  = array();
-
-		$num = count($latitude);
-		$numForEachCall = (CONF_TRAINING_ELEVATION_SERVER == 'google') ? 20 : 20; // 400 for google if coding would be okay
-
-		for ($i = 0; $i < $num; $i++) {
-			if ($i%self::$everyNthElevationPoint == 0) {
-				$lats[] = $latitude[$i];
-				$longs[] = $longitude[$i];
-				$points[] = array($latitude[$i], $longitude[$i]);
-				$string[] = $latitude[$i].','.$longitude[$i];
-			}
-			if (($i+1)%($numForEachCall*self::$everyNthElevationPoint) == 0 || $i == $num-1) {
-				if (CONF_TRAINING_ELEVATION_SERVER == 'google') {
-					// maps.googleapis.com
-					require_once 'tcx/class.googleMapsAPI.php';
-					require_once 'tcx/class.XmlParser.php';
-
-					//$enc    = new xmlgooglemaps_googleMapAPIPolylineEnc(32,4);
-					//$encArr = $enc->dpEncode($points);
-					//$path   = $encArr[2];
-					// Maybe problems with coding? Use numbers instead
-					//$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?path=enc:'.$path.'&samples='.count($points).'&sensor=false';
-					$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|',$string).'&sensor=false';
-					$xml    = @file_get_contents($url);
-
-					$Parser = new XmlParser($xml);
-					$Result = $Parser->getContentAsArray();
-					if (!isset($Result['elevationresponse'])) {
-						Error::getInstance()->addError('GoogleMapsAPI returned bad xml.');
-						Error::getInstance()->addError('Request was: '.$url);
-						return false;
-					} elseif ($Result['elevationresponse']['status']['value'] != 'OK') {
-						Error::getInstance()->addError('GoogleMapsAPI returned bad status: '.$Result['elevationresponse']['status']['value']);
-						Error::getInstance()->addError('Request was: '.$url);
-						return false;
-					}
-
-					if (count($string) == 1)
-						for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
-							$altitude[] = round($Result['elevationresponse']['result']['elevation']['value']);
-					else
-						foreach ($Result['elevationresponse']['result'] as $point) {
-							if (!isset($point['elevation']) || !isset($point['elevation']['value']))
-								Error::getInstance()->addWarning('Probably malformed response from Google: '.print_r($point, true));
-							else 
-								for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
-									$altitude[] = round($point['elevation']['value']);
-					}
-				} else {
-					// ws.geonames.org
-					$html = false;
-					while ($html === false) {
-						$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
-						if (substr($html,0,1) == '<')
-							$html = false;
-					}
-					$data = explode("\r\n", $html);
-	
-					foreach ($data as $k => $v)
-						$data[$k] = trim($v);
-					$data_num = count($data) - 1; // There is always one empty element
-	
-					for ($d = 0; $d < $data_num; $d++)
-						for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
-							$altitude[] = trim($data[$d]);
-				}
-
-				$lats = array();
-				$longs = array();
-				$points = array();
-				$string = array();
-			}
-		}
-		
-		$this->data['arr_alt'] = implode(self::$ARR_SEP, $altitude);
-		Mysql::getInstance()->update(PREFIX.'training', $this->id, 'arr_alt', $this->data['arr_alt']);
-		$this->GpsData = new GpsData($this->data);
+		Mysql::getInstance()->update(PREFIX.'training', $this->id,
+			'arr_alt',
+			implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()));
 	}
 
 	/**
