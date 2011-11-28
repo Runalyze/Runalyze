@@ -60,12 +60,13 @@ class HTML {
 	/**
 	 * Return an empty td-Tag
 	 * @param int $colspan
+	 * @param string $string
 	 * @return string
 	 */
-	public static function emptyTD($colspan = 0) {
+	public static function emptyTD($colspan = 0, $string = '&nbsp;') {
 		$colspan = ($colspan > 0) ? ' colspan="'.$colspan.'"' : '';
 
-		return '<td'.$colspan.'>&nbsp;</td>'.NL;
+		return '<td'.$colspan.'>'.$string.'</td>'.NL;
 	}
 
 	/**

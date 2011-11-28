@@ -30,9 +30,11 @@
 	<script type="text/javascript" src="lib/datepicker.js"></script>
 	<script type="text/javascript" src="lib/fileuploader.js"></script>
 
+	<?php if (class_exists('Plot')): ?>
 	<?php foreach (Plot::getNeededJSFilesAsArray() as $file): ?>
 		<script type="text/javascript" src="<?php echo $file; ?>"></script>
 	<?php endforeach; ?>
+	<?php endif; ?>
 
 	<?php foreach ($this->JS_FILES as $file): ?>
 		<script type="text/javascript" src="<?php echo $file; ?>"></script>

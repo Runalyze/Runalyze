@@ -69,6 +69,10 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			GROUP BY `route`
 			ORDER BY `num` DESC
 			LIMIT 10');
+
+		if (empty($strecken))
+			echo HTML::emptyTD(3, HTML::em('Keine Strecken vorhanden.'));
+
 		foreach ($strecken as $i => $strecke) {
 			echo('
 				<tr class="a'.($i%2+1).' r">
@@ -93,6 +97,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		
 		$i = 1;
 		array_multisort($this->orte, SORT_DESC);
+
+		if (empty($this->orte))
+			echo HTML::emptyTD(2, HTML::em('Keine Strecken vorhanden.'));
 
 		foreach ($this->orte as $ort => $num) {
 			$i++;

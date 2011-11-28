@@ -130,7 +130,6 @@ class TrainingDisplay {
 
 		foreach ($plots as $key => $array)
 			$links[] = Ajax::flotChange($array['name'], 'trainingPlots', $array['key'].'_'.$this->Training->get('id'));
-			//$links[] = Ajax::imgChange('<a href="'.$array['src'].'">'.$array['name'].'</a>', 'trainingGraph').NL;
 
 		echo implode(' | ', $links);
 	}
@@ -143,8 +142,6 @@ class TrainingDisplay {
 	public function displayPlot($type = 'undefined', $hidden = false) {
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type])) {
-			//$img = '<img id="trainingGraph" src="'.$plots[$type]['src'].'" alt="'.$plots[$type]['name'].'" />';
-			//echo HTML::wrapImgForLoading($img, 480, 190);
 			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden);
 			include FRONTEND_PATH.'draw/Plot.Training.'.$plots[$type]['key'].'.php';
 		} else
