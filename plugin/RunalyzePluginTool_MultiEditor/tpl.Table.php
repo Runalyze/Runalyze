@@ -26,7 +26,7 @@
 	<?php else: ?>
 	<?php foreach ($this->Trainings as $i => $Training): ?>
 		<?php HTML::setMultiIndex($Training->get('id')); ?>
-		<?php $Training->overridePostArray(); ?>
+		<?php $Training->overwritePostArray(); ?>
 		<tr class="<?php echo HTML::trClass($i); ?>">
 			<td><?php echo Icon::get(Icon::$DELETE_GRAY, 'Zeile entfernen', '$(this).parent().parent().remove();'); ?></td>
 			<td nowrap="nowrap">

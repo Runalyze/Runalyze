@@ -14,13 +14,13 @@ $Frontend->displayHeader();
 ?>
 <!-- JUST FOR TESTING NEW PLOTS
 <div class="c" style="width:480px;height:190px;margin:0 auto;">
-	<div class="flot waitImg" id="splits_1569" style="width:480px;height:190px;position:absolute;"></div>
+	<div class="flot waitImg" id="pulse_1569" style="width:480px;height:190px;position:absolute;"></div>
 </div>
 -->
 <?php
 /*$_GET['y'] = 2011;
 $_GET['id'] = 1569;
-include FRONTEND_PATH.'../inc/draw/Plot.Training.splits.php';
+include FRONTEND_PATH.'../inc/draw/Plot.Training.pulse.php';
 $Frontend->displayFooter();
 exit();*/
 ?>

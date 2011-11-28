@@ -58,8 +58,9 @@ abstract class Importer {
 
 	/**
 	 * Constructor
+	 * @param string $fileName
 	 */
-	protected function __construct($fileName) {
+	protected function __construct($fileName = '') {
 		$this->fileName = $fileName;
 
 		$this->setAllowedKeys();
@@ -114,7 +115,7 @@ abstract class Importer {
 			if (isset($_POST['data']))
 				$format = 'TCX';
 			else
-				return new ImporterFormular($fileName);
+				return new ImporterFormular();
 		}
 
 		if (isset(self::$formats[$format]) && class_exists(self::$formats[$format]))
@@ -237,7 +238,7 @@ abstract class Importer {
 	}
 
 	/**
-	 * Include template for displaying standard formular
+	 * Include template for displaying standard formular, can be overwritten from subclass
 	 */
 	public function displayHTMLformular() {
 		$Mysql = Mysql::getInstance();
@@ -273,7 +274,7 @@ abstract class Importer {
 			return $this->TrainingData[$key];
 		}
 
-		$this->addError('Importer: Can\'t get "'.$key.'" to "'.$value.'" - not allowed.');
+		$this->addError('Importer: Can\'t get "'.$key.'" - not allowed.');
 
 		return '';
 	}
@@ -281,7 +282,7 @@ abstract class Importer {
 	/**
 	 * Transform internal training data to post data
 	 */
-	private function transformTrainingDataToPostData() {
+	public function transformTrainingDataToPostData() {
 		$_POST = array_merge($_POST, $this->TrainingData);
 	}
 

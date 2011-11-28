@@ -251,11 +251,14 @@ class Training {
 	}
 
 	/**
-	 * Override global post-array for edit-window
+	 * Overwrite global post-array for edit-window
 	 * @return array
 	 */
-	public function overridePostArray() {
+	public function overwritePostArray() {
 		$_POST = array_merge($_POST, $this->data);
+
+		if ($this->id == self::$CONSTRUCTOR_ID)
+			return;
 
 		$_POST['sport']       = $this->Sport()->name();
 		$_POST['datum']       = date("d.m.Y", $this->get('time'));
@@ -713,9 +716,10 @@ class Training {
 	 * Correct the elevation data
 	 */
 	public function elevationCorrection() {
-		Mysql::getInstance()->update(PREFIX.'training', $this->id,
-			'arr_alt',
-			implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()));
+		if ($this->GpsData()->hasElevationData())
+			Mysql::getInstance()->update(PREFIX.'training', $this->id,
+				'arr_alt',
+				implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()));
 	}
 
 	/**

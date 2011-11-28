@@ -194,7 +194,7 @@ if (isset($_POST['type']) && $_POST['type'] == "training") {
 $Frontend->displayHeader();
 
 $Training = new Training($id);
-$Training->overridePostArray();
+$Training->overwritePostArray();
 
 include '../inc/tpl/tpl.Training.edit.php';
 

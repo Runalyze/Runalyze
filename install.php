@@ -41,14 +41,9 @@ $Installer = new Installer();
 
 <div id="copy">
 
-	<span class="right">
-		&copy; Programmierung und Design von
-		<a id="copy" href="http://www.laufhannes.de/" title="Laufhannes" target="_blank">laufhannes.de</a>
-	</span>
-
-	<span class="left b">
-		Runalyze
-	</span>
+	<a class="right" id="copy" href="http://www.runalyze.de/" title="Runalyze" target="_blank">
+		<strong>&copy; Runalyze</strong>
+	</a>
 
 </div>
 

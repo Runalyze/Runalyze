@@ -34,6 +34,12 @@ class ImporterFormular extends Importer {
 	private $time = 0;
 
 	/**
+	 * ID of the new training, If a new training has been inserted
+	 * @var int
+	 */
+	public $insertedID = -1;
+
+	/**
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
@@ -97,7 +103,7 @@ class ImporterFormular extends Importer {
 	/**
 	* Parse post data and try to insert training to database
 	*/
-	private function parsePostData() {
+	public function parsePostData() {
 		$Mysql = Mysql::getInstance();
 
 		$AutoParseKeys   = array();
@@ -127,6 +133,7 @@ class ImporterFormular extends Importer {
 		// Prepare values for distances
 		if ($Sport->usesDistance()) {
 			$AutoParseKeys[]     = 'distance';
+
 			$this->columns[]     = 'is_track';
 			$this->values[]      = isset($_POST['is_track']) ? 1 : 0;
 			$this->columns[]     = 'pace';
@@ -135,15 +142,15 @@ class ImporterFormular extends Importer {
 
 		// Prepare values for outside-sport
 		if ($Sport->isOutside()) {
-			$AutoParseKeys[]     = 'weatherid';
-			$AutoParseKeys[]     = 'route';
 			$this->columns[]     = 'elevation';
 			$this->values[]      = isset($_POST['elevation']) ? $_POST['elevation'] : 0;
 			$this->columns[]     = 'clothes';
 			$this->values[]      = isset($_POST['clothes']) ? implode(',', array_keys($_POST['clothes'])) : '';
 			$this->columns[]     = 'temperature';
 			$this->values[]      = isset($_POST['temperature']) && is_numeric($_POST['temperature']) ? $_POST['temperature'] : NULL;
-		
+
+			$AutoParseKeys[]     = 'weatherid';
+			$AutoParseKeys[]     = 'route';
 			$AutoParseKeys[]     = 'arr_time';
 			$AutoParseKeys[]     = 'arr_lat';
 			$AutoParseKeys[]     = 'arr_lon';
@@ -177,7 +184,7 @@ class ImporterFormular extends Importer {
 		
 		foreach ($AutoParseKeys as $var) {
 			$this->columns[] = $var;
-			$this->values[]  = isset($_POST[$var]) ? Helper::Umlaute(Helper::CommaToPoint($_POST[$var])) : NULL;
+			$this->values[]  = isset($_POST[$var]) ? Helper::Umlaute(Helper::CommaToPoint($_POST[$var])) : 0;
 		}
 	}
 
@@ -186,6 +193,11 @@ class ImporterFormular extends Importer {
 	 * @return mixed
 	 */
 	private function getTimeFromPost() {
+		if (isset($_POST['time'])) {
+			$this->time = $_POST['time'];
+			return $this->time;
+		}
+
 		if (!isset($_POST['zeit']))
 			$_POST['zeit'] = '00:00';
 		if (isset($_POST['datum'])) {
@@ -200,11 +212,6 @@ class ImporterFormular extends Importer {
 			$this->errorString = 'Das Datum konnte nicht gelesen werden.';
 			return false;
 		}
-		
-		if (!isset($_POST['s'])) {
-			$this->errorString = 'Es muss eine Trainingszeit angegeben sein.';
-			return false;
-		}
 
 		$this->time = mktime($post_time[0], $post_time[1], 0, $post_day[1], $post_day[0], $post_day[2]);
 
@@ -216,13 +223,7 @@ class ImporterFormular extends Importer {
 	 * @return mixed
 	 */
 	private function getTrainingTimeFromPost() {
-		$ms        = explode(".", Helper::CommaToPoint($_POST['s']));
-		$dauer     = explode(":", $ms[0]);
-
-		if (!isset($ms[1]))
-			$ms[1] = 0;
-
-		$time_in_s = round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
+		$time_in_s = self::timeStringToSeconds($_POST['s']);
 
 		if ($time_in_s == 0) {
 			$this->errorString = 'Es muss eine Trainingszeit angegeben sein.';
@@ -231,11 +232,29 @@ class ImporterFormular extends Importer {
 
 		return $time_in_s;
 	}
-	
+
+	/**
+	 * Parse string and get executet time in seconds
+	 * @param string $string
+	 * @return int
+	 */
+	static public function timeStringToSeconds($string) {
+		$ms        = explode(".", Helper::CommaToPoint($string));
+		$dauer     = explode(":", $ms[0]);
+
+		if (!isset($ms[1]))
+			$ms[1] = 0;
+
+		if (!isset($dauer[1]))
+			return 3600*$dauer[0];
+
+		return round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
+	}
+
 	/**
 	* Insert training to database
 	*/
-	private function insertTraining() {
+	public function insertTraining() {
 		if (!empty($this->errorString))
 			$this->insertFailed = true;
 
@@ -275,6 +294,7 @@ class ImporterFormular extends Importer {
 			$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());
 		}
 
+		$this->insertedID   = $id;
 		$this->insertFailed = false;
 	}
 }

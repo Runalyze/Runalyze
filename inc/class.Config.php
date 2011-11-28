@@ -245,7 +245,7 @@ class Config {
 				case 'float':
 				case 'string':
 				default:
-					$str_value = trim(Helper::CommaToPoint($post));
+					$str_value = trim(Helper::Umlaute(Helper::CommaToPoint($post)));
 			}
 
 			Mysql::getInstance()->update(PREFIX.'conf', $conf['id'], 'value', $str_value);

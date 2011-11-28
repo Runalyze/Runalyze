@@ -12,7 +12,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
 			$columns[] = $var;
-			$values[] = $_POST[$var];
+			$values[] = Helper::Umlaute($_POST[$var]);
 		}
 
 	if (strlen($_POST['name']) > 1) {
