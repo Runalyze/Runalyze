@@ -20,8 +20,10 @@
 		<td colspan="<?php echo ($this->Dataset->column_count + 2); ?>" />
 	</tr>
 <?php
+$todayString = date("d.m.Y");
 foreach ($this->days as $i => $day) {
-	$date_string = '<small>'.date("d.m.", $day['date']).'</small> '.Helper::Weekday(date("w", $day['date']), true);
+	$today       = CONF_DB_HIGHLIGHT_TODAY && ($todayString == date("d.m.Y", $day['date'])) ? ' class="b"' : '';
+	$date_string = '<small>'.date("d.m.", $day['date']).'</small> <span'.$today.'>'.Helper::Weekday(date("w", $day['date']), true).'</span>';
 
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $training) {
