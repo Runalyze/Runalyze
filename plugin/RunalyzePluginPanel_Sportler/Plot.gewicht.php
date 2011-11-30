@@ -18,7 +18,8 @@ if (!empty($Data)) {
 
 	$Weights = array_reverse($Weights);
 	$HRrests = array_reverse($HRrests);
-}
+} 
+
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
@@ -42,6 +43,9 @@ if ($Wunschgewicht > 1) {
 	$Plot->addThreshold('y2', $Wunschgewicht);
 	$Plot->addMarkingArea('y2', $Wunschgewicht, 0);
 }
+
+if(empty($Data)) 
+	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
 
 $Plot->outputJavaScript();
 ?>
