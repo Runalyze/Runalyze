@@ -22,6 +22,7 @@ define('DATA_BROWSER_SEARCH_ID', 'search');
 define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
 
 Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Seite');
+Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', 'Heutigen Tag im Kalender hervorheben');
 
 /**
  * Class: Frontend
