@@ -157,7 +157,7 @@ class GpsData {
 	 * @return bool
 	 */
 	protected function loopIsAtEnd() {
-		return ($this->arrayIndex == $this->arraySizes-1);
+		return ($this->arrayIndex >= $this->arraySizes-1);
 	}
 
 	/**
@@ -279,6 +279,9 @@ class GpsData {
 
 		$stepArray = array_slice($array, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex), true);
 		$stepArray = array_filter($stepArray);
+
+		if (count($stepArray) == 0)
+			return 0;
 
 		return (array_sum($stepArray) / count($stepArray));
 	}
@@ -449,18 +452,18 @@ class GpsData {
 		$this->startLoop();
 
 		while ($this->nextStep()) {
-			$zone = round(100 * $this->getHeartrate() / Helper::getHFmax() / 10);
+			$zone = ceil(100 * $this->getAverageHeartrateOfStep() / Helper::getHFmax() / 10);
 		
 			if (!isset($Zones[$zone]))
 				$Zones[$zone] = array('time' => 0, 'distance' => 0, 'pace-sum' => 0, 'num' => 0);
 		
 			$Zones[$zone]['time']     += $this->getTimeOfStep();
 			$Zones[$zone]['distance'] += $this->getDistanceOfStep();
-			$Zones[$zone]['pace-sum'] += $this->getPace();
+			$Zones[$zone]['pace-sum'] += $this->getAveragePaceOfStep();
 			$Zones[$zone]['num']++;
 		}
 		
-		krsort($Zones);
+		ksort($Zones);
 
 		return $Zones;
 	}
@@ -477,14 +480,14 @@ class GpsData {
 		$this->startLoop();
 
 		while ($this->nextStep()) {
-			$zone = round($this->getPace() / 60);
+			$zone = floor($this->getAveragePaceOfStep() / 60);
 
 			if (!isset($Zones[$zone]))
 				$Zones[$zone] = array('time' => 0, 'distance' => 0, 'hf-sum' => 0, 'num' => 0);
 
 			$Zones[$zone]['time']     += $this->getTimeOfStep();
 			$Zones[$zone]['distance'] += $this->getDistanceOfStep();
-			$Zones[$zone]['hf-sum']   += $this->getHeartrate();
+			$Zones[$zone]['hf-sum']   += $this->getAverageHeartrateOfStep();
 			$Zones[$zone]['num']++;
 		}
 

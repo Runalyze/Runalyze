@@ -42,5 +42,8 @@ $Plot->addYAxis(2, 'right');
 $Plot->addYUnit(2, '%');
 $Plot->setYTicks(1, 1, 0);
 
+if(empty($Data)) 
+	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+
 $Plot->outputJavaScript();
 ?>

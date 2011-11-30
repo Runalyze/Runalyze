@@ -1,4 +1,4 @@
-<p>
+<p<?php if (strlen($_GET['ids']) > 0) echo ' class="hide"'; ?>>
 	Suchergebnisse k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.<br />
 	Standardm&auml;&szlig;ig werden die letzten Trainings zum Bearbeiten angezeigt.
 </p>
@@ -6,6 +6,7 @@
 <form class="ajax" action="<?php echo Plugin::$DISPLAY_URL.'?id='.$this->id; ?>" id="training" onsubmit="return false;" method="post">
 
 <input type="hidden" name="type" value="training" />
+<input type="hidden" name="getIDs" value="<?php echo $_GET['ids']; ?>" />
 
 <div style="width:100%;max-height:400px;overflow:scroll;">
 <table>

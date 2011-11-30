@@ -168,7 +168,7 @@ class ImporterFormular extends Importer {
 			$AutoParseKeys[]     = 'pulse_max';
 		}
 
-		if ($Sport->hasTypes() && $_POST['typeid'] > 0) {
+		if ($Sport->hasTypes() && isset($_POST['typeid']) && $_POST['typeid'] > 0) {
 			$Type = new Type($_POST['typeid']);
 
 			$AutoParseKeys[]     = 'typeid';
@@ -184,7 +184,7 @@ class ImporterFormular extends Importer {
 		
 		foreach ($AutoParseKeys as $var) {
 			$this->columns[] = $var;
-			$this->values[]  = isset($_POST[$var]) ? Helper::Umlaute(Helper::CommaToPoint($_POST[$var])) : 0;
+			$this->values[]  = isset($_POST[$var]) ? Helper::CommaToPoint($_POST[$var]) : 0;
 		}
 	}
 
@@ -223,7 +223,7 @@ class ImporterFormular extends Importer {
 	 * @return mixed
 	 */
 	private function getTrainingTimeFromPost() {
-		$time_in_s = self::timeStringToSeconds($_POST['s']);
+		$time_in_s = is_numeric($_POST['s']) ? $_POST['s'] : self::timeStringToSeconds($_POST['s']);
 
 		if ($time_in_s == 0) {
 			$this->errorString = 'Es muss eine Trainingszeit angegeben sein.';

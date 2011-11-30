@@ -137,8 +137,15 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 * Init internal array with all trainings
 	 */
 	private function initTrainings() {
-		foreach ($this->IDs as $id)
-			$this->Trainings[] = new Training($id);
+		foreach ($this->IDs as $id) {
+			if ($id == Training::$CONSTRUCTOR_ID)
+				continue;
+
+			$Training = new Training($id);
+
+			if ($Training !== false)
+				$this->Trainings[] = new Training($id);
+		}
 	}
 
 	/**

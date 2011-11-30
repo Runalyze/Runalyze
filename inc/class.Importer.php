@@ -153,6 +153,11 @@ abstract class Importer {
 
 		$PathInfo = pathinfo($fileName);
 
+		if (!isset($PathInfo['extension'])) {
+			Error::getInstance()->addError('Die hochgeladene Datei hat keine Endung. Leerzeichen d&uuml;rfen nicht enthalten sein.');
+			return '';
+		}
+
 		return $PathInfo['extension'];
 	}
 
