@@ -17,6 +17,7 @@ foreach ($Sports as $sport) {
 	$yAxis[$id] = array(0, 0, 0, 0, 0, 0, 0);
 
 	$data = Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `value`, (DAYOFWEEK(FROM_UNIXTIME(`time`))-1) as `day` FROM `'.PREFIX.'training` WHERE `sportid`="'.$sport['id'].'" GROUP BY `day` ORDER BY ((`day`+6)%7) ASC');
+
 	foreach ($data as $dat)
 		$yAxis[$id][($dat['day']+6)%7] = $dat['value']/3600;
 }
@@ -35,6 +36,15 @@ $Plot->setYTicks(1, 1, 0);
 
 $Plot->showBars(true);
 $Plot->stacked();
+
+$error = true;
+foreach($yAxis as $t) 
+	foreach($t as $e) 
+		if($e != "0") 
+			$error = false;
+
+if($error === true) 
+	$Plot->raiseError('Keine Trainingsdaten vorhanden.');
 
 $Plot->outputJavaScript();
 ?>

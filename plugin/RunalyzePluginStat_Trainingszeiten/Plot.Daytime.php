@@ -32,5 +32,16 @@ $Plot->setYTicks(1, 1, 0);
 $Plot->showBars();
 $Plot->stacked();
 
+$error = true;
+foreach($yAxis as $t) 
+	foreach($t as $e) 
+		if($e != "0") 
+			$error = false;
+
+if($error === true) 
+	$Plot->raiseError('Keine Trainingsdaten vorhanden.');
+	
+	
+	
 $Plot->outputJavaScript();
 ?>

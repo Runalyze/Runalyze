@@ -25,6 +25,8 @@ $Plot->addThreshold('y', 0);
 $Plot->addMarkingArea('y', -99, 0);
 $Plot->showPoints(2);
 
+if(empty($Data))
+	$Plot->raiseError('Es sind keine Daten vorhanden.');
 
 $Plot->outputJavaScript();
 ?>
