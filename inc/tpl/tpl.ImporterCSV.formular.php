@@ -2,7 +2,7 @@
 	<em>Die Trainings wurden hinzugef&uuml;gt.</em>
 	<br />
 	<br />
-	<?php if ($this->MultiEditor !== false) $this->MultiEditor->display(); ?>
+	<?php if (!is_null($this->MultiEditor)) $this->MultiEditor->display(); ?>
 </div>
 <?php exit; ?>
 <?php else: ?>

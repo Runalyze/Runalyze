@@ -195,7 +195,7 @@ class Editor {
 				&& isset($this->TrainingData['shoeid'])
 				&& $this->TrainingData['shoeid'] != 0) {
 			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
-			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$distanz.'", `time`=`time`+'.$time_in_s.' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
+			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->TrainingData['distance'].'", `time`=`time`+'.$this->TrainingData['s'].' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
 		}
 
 		$Mysql->update(PREFIX.'training', $this->Id, 'trimp', Helper::TRIMP($this->Id));

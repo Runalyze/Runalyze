@@ -315,7 +315,7 @@ class Config {
 				'outside',
 				);
 			$values  = array(
-				$_POST['sport']['name'][$i],
+				Helper::Umlaute($_POST['sport']['name'][$i]),
 				isset($_POST['sport']['short'][$i]),
 				isset($_POST['sport']['online'][$i]),
 				$_POST['sport']['kcal'][$i],
@@ -356,8 +356,8 @@ class Config {
 				'splits',
 				);
 			$values  = array(
-				$_POST['type']['name'][$i],
-				$_POST['type']['abbr'][$i],
+				Helper::Umlaute($_POST['type']['name'][$i]),
+				Helper::Umlaute($_POST['type']['abbr'][$i]),
 				$rpe,
 				isset($_POST['type']['splits'][$i]),
 				);
@@ -386,8 +386,8 @@ class Config {
 				'order',
 				);
 			$values  = array(
-				$_POST['clothes']['name'][$id],
-				$_POST['clothes']['short'][$id],
+				Helper::Umlaute($_POST['clothes']['name'][$id]),
+				Helper::Umlaute($_POST['clothes']['short'][$id]),
 				$_POST['clothes']['order'][$id],
 				);
 

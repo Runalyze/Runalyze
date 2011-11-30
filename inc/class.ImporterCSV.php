@@ -55,7 +55,7 @@ class ImporterCSV extends Importer {
 	 * Plugin for MultiEditor
 	 * @var Plugin
 	 */
-	private $MutliEditor = false;
+	private $MultiEditor = null;
 
 	/**
 	 * Boolean flag for having inserted all trainings

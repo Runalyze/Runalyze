@@ -670,7 +670,7 @@ class Helper {
 			ORDER BY `y` ASC, `d` ASC');
 		
 		if (empty($Data))
-			return array(0, 0, 0);
+			return array(1, 1, 1);
 		
 		$maxATL   = 0;
 		$maxCTL   = 0;

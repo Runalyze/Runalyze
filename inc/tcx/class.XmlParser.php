@@ -72,6 +72,7 @@ class XmlParser {
 		$opened_tags = array();
 		$arr = array();
 		$current = &$xml_array;
+		$get_attributes = 1;
 
 		//Go through the tags.
 		foreach ($Values as $data) {
