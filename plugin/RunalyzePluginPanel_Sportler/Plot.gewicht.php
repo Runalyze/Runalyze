@@ -27,17 +27,17 @@ $Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
 
 
 $Plot = new Plot("sportler_weights", 320, 148);
-$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests);
-$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
 
 $Plot->setMarginForGrid(5);
 $Plot->hideXLabels();
-$Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, 'bpm');
-$Plot->setYTicks(1, 1, 0);
-$Plot->addYAxis(2, 'right');
-$Plot->addYUnit(2, 'kg');
-$Plot->setYTicks(2, 2, 0);
+$Plot->addYAxis(2, 'left');
+$Plot->addYUnit(2, 'bpm');
+$Plot->setYTicks(2, 1, 0);
+$Plot->addYAxis(1, 'right', false);
+$Plot->addYUnit(1, 'kg');
+$Plot->setYTicks(1, 2, 0);
 
 if ($Wunschgewicht > 1) {
 	$Plot->addThreshold('y2', $Wunschgewicht);
