@@ -585,12 +585,15 @@ class Plot {
 
 	/**
 	 * Add y axis
+	 * @param int $i
+	 * @param string $position
+	 * @param bool $align
 	 * @return int
 	 */
-	public function addYAxis($i, $position) {
+	public function addYAxis($i, $position, $align = true) {
 		$this->Options['yaxes'][$i-1]['position'] = $position;
 
-		if ($position == 'right')
+		if ($position == 'right' && $align)
 			$this->Options['yaxes'][$i-1]['alignTicksWithAxis'] = 1;
 	}
 
