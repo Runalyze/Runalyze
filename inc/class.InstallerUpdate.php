@@ -10,7 +10,7 @@
  * @uses class::Error
  * @uses class::Mysql
  */
-class InstallerUpdate {
+class InstallerUpdate extends Installer {
 	/**
 	 * All possible files to update Runalyze
 	 * @var array
@@ -36,18 +36,29 @@ class InstallerUpdate {
 	 * Init all possible updates
 	 */
 	protected function initPossibleUpdates() {
-		$this->PossibleUpdates[] = array('file' => '', 'text' => '----- bitte w&auml;hlen');
-		$this->PossibleUpdates[] = array('file' => 'update-v0.6-to-v1.0alpha.sql', 'text' => 'v1.0 alpha - Update von v0.6 (Mitte August)');
-		$this->PossibleUpdates[] = array('file' => 'update-v0.5-to-v1.0alpha.sql', 'text' => 'v1.0 alpha - Update von v0.5 (Mitte Juli)');
-		$this->PossibleUpdates[] = array('file' => 'update-v0.5-to-v0.6.sql', 'text' => 'v0.6 - Update von v0.5 (Mitte Juli)');
+		$this->PossibleUpdates[] = array(
+			'file' => '',
+			'text' => '----- bitte w&auml;hlen');
+		$this->PossibleUpdates[] = array(
+			'file' => 'update-v0.6-to-v1.0alpha.sql',
+			'text' => 'Update zu: v1.0 alpha - vorherige Version v0.6 (Mitte August)');
+		$this->PossibleUpdates[] = array(
+			'file' => 'update-v0.5-to-v1.0alpha.sql',
+			'text' => 'Update zu: v1.0 alpha - vorherige Version v0.5 (Mitte Juli)');
+		$this->PossibleUpdates[] = array(
+			'file' => 'update-v0.5-to-v0.6.sql',
+			'text' => 'Update zu: v0.6 - vorherige Version v0.5 (Mitte Juli)');
 	}
 
 	/**
 	 * Import selected file
 	 */
 	protected function importUpdateFile() {
+		mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		mysql_select_db($this->mysqlConfig[3]);
+
 		if (isset($_POST['importFile']) && strlen($_POST['importFile']) > 4)
-			$this->Errors = self::importSqlFile($_POST['importFile']);
+			$this->Errors = self::importSqlFile('inc/install/'.$_POST['importFile']);
 	}
 
 	/**

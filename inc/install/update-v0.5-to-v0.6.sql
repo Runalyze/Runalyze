@@ -84,9 +84,7 @@ ALTER TABLE `runalyze_shoe` CHANGE `dauer` `time` INT( 11 ) NOT NULL DEFAULT '0'
 
 --
 
-ALTER TABLE `runalyze_sport`
-  DROP `distanz`,
-  DROP `dauer`;
+ALTER TABLE `runalyze_sport` DROP `distanz`, DROP `dauer`;
   
 --
 
