@@ -1,4 +1,4 @@
-<form action="install.php" method="post">
+<form action="update.php" method="post">
 	<p class="text">
 		<strong>Runalyze updaten:</strong>
 	</p>
@@ -23,9 +23,9 @@
 		</select>
 	</p>
 
-	<?php if (!empty($this->Errors)): ?>
+	<?php if (!empty($this->Errors) && (count($this->Errors) > 1 || strlen(trim($this->Errors[0])) > 3)): ?>
 	<p class="error">
-		<?php implode('<br />', $this->Errors); ?>
+		<?php echo implode('<br />', $this->Errors); ?>
 	</p>
 	<?php endif; ?>
 
