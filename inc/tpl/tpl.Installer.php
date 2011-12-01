@@ -112,7 +112,7 @@ foreach ($Steps as $i => $Name) {
 		</label><br />
 		<label>
 			<strong>Passwort</strong>
-			<input type="password" name="password" value="<?php echo ($_POST['password'] ? $_POST['password'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="password" name="password" value="<?php echo ($_POST['password'] ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label><br />
 	</p>
 
