@@ -63,31 +63,31 @@ class Installer {
 	 * Current step of installation
 	 * @var int
 	 */
-	private $currentStep = 1;
+	protected $currentStep = 1;
 
 	/**
 	 * Ready to move to next step?
 	 * @var int
 	 */
-	private $readyForNextStep = false;
+	protected $readyForNextStep = false;
 
 	/**
 	 * Boolean flag: connection is set but incorrect
 	 * @var bool
 	 */
-	private $connectionIsIncorrect = false;
+	protected $connectionIsIncorrect = false;
 
 	/**
 	 * Boolean flag: prefix is set but already used
 	 * @var bool
 	 */
-	private $prefixIsAlreadyUsed = false;
+	protected $prefixIsAlreadyUsed = false;
 
 	/**
 	 * Array with configuration for mysql-connection
 	 * @var array
 	 */
-	private $mysqlConfig = array();
+	protected $mysqlConfig = array();
 
 	/**
 	 * Constructor
@@ -102,7 +102,7 @@ class Installer {
 	/**
 	 * Load configuration file
 	 */
-	private function loadConfig() {
+	protected function loadConfig() {
 		if (file_exists('config.php')) {
 			if ($this->currentStep == self::$START)
 				$this->currentStep = self::$ALREADY_INSTALLED;
@@ -110,13 +110,13 @@ class Installer {
 			include 'config.php';
 		}
 
-		$this->mysqlConfig = array($host, $database, $username, $password);
+		$this->mysqlConfig = array($host, $username, $password, $database);
 	}
 
 	/**
 	 * Findout which is the current step
 	 */
-	private function findoutCurrentStep() {
+	protected function findoutCurrentStep() {
 		if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'] <= self::$numberOfSteps)
 			$this->currentStep = $_POST['step'];
 		else
@@ -126,7 +126,7 @@ class Installer {
 	/**
 	 * Execute current step of installation
 	 */
-	private function executeCurrentStep() {
+	protected function executeCurrentStep() {
 		switch ($this->currentStep) {
 			case self::$SETUP_CONFIG:
 				if (isset($_POST['write_config'])) {
@@ -152,21 +152,21 @@ class Installer {
 	/**
 	 * Execute current step of installation
 	 */
-	private function displayCurrentStep() {
+	protected function displayCurrentStep() {
 		include 'tpl/tpl.Installer.php';
 	}
 
 	/**
 	 * Move to the next step
 	 */
-	private function moveToNextStep() {
+	protected function moveToNextStep() {
 		$this->currentStep++;
 	}
 
 	/**
 	 * Is the connection to the MySql-server setup and correct?
 	 */
-	private function connectionIsSetAndCorrect() {
+	protected function connectionIsSetAndCorrect() {
 		if (!@mysql_connect($_POST['host'], $_POST['username'], $_POST['password']))
 			return false;
 		if (!@mysql_select_db($_POST['database']))
@@ -178,7 +178,7 @@ class Installer {
 	/**
 	 * Is the prefix free for this installation?
 	 */
-	private function prefixIsUnused() {
+	protected function prefixIsUnused() {
 		if (strlen($_POST['prefix']) < 2)
 			return false;
 
@@ -188,28 +188,28 @@ class Installer {
 	/**
 	 * Is PHP-version high enough?
 	 */
-	private function phpVersionIsOkay() {
+	protected function phpVersionIsOkay() {
 		return (version_compare(PHP_VERSION, self::$REQUIRED_PHP_VERSION) >= 0);
 	}
 
 	/**
 	 * Is MySQL-version high enough?
 	 */
-	private function mysqlVersionIsOkay() {
+	protected function mysqlVersionIsOkay() {
 		return (version_compare($this->getMysqlVersion(), self::$REQUIRED_MYSQL_VERSION) >= 0);
 	}
 
 	/**
 	 * Get current MySQL-version
 	 */
-	private function getMysqlVersion() {
+	protected function getMysqlVersion() {
 		return @mysql_get_server_info();
 	}
 
 	/**
 	 * Write config-variables to file
 	 */
-	private function writeConfigFile() {
+	protected function writeConfigFile() {
 		$config['host']          = $_POST['host'];
 		$config['database']      = $_POST['database'];
 		$config['username']      = $_POST['username'];
@@ -228,30 +228,37 @@ class Installer {
 	 * @param string $filename
 	 * @return string
 	 */
-	private function getSqlContentForFrontend($filename) {
+	protected function getSqlContentForFrontend($filename) {
 		return implode('<br />', $this->getSqlFileAsArray($filename));
 	}
 
 	/**
 	 * Import all needed sql-dumps to database
 	 */
-	private function importSqlFiles() {
-		@mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		@mysql_select_db($this->mysqlConfig[3]);
+	protected function importSqlFiles() {
+		mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		mysql_select_db($this->mysqlConfig[3]);
 
-		$this->importSqlFile('inc/install/structure.sql');
-		$this->importSqlFile('inc/install/runalyze_empty.sql');
+		self::importSqlFile('inc/install/structure.sql');
+		self::importSqlFile('inc/install/runalyze_empty.sql');
 	}
 
 	/**
 	 * Import a sql-file to database
-	 * @param unknown_type $filename
+	 * @param string $filename
+	 * @return array
 	 */
-	private function importSqlFile($filename) {
-		$Queries = $this->getSqlFileAsArray($filename);
+	static public function importSqlFile($filename) {
+		$Errors  = array();
+		$Queries = self::getSqlFileAsArray($filename);
 		foreach ($Queries as $Query) {
-			mysql_query($Query);
+			@mysql_query($Query);
+
+			if (mysql_errno())
+				$Errors[] = mysql_error();
 		}
+
+		return $Errors;
 	}
 
 	/**
@@ -259,7 +266,7 @@ class Installer {
 	 * @param string $filename
 	 * @return array
 	 */
-	private function getSqlFileAsArray($filename) {
+	static public function getSqlFileAsArray($filename) {
 		$MRK = array('USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE');
 		$SQL = file($filename);
 		$query  = '';
