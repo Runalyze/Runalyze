@@ -269,7 +269,7 @@ class Plot {
 			$title .= $this->Titles['center'];
 		$title .= '</div>';
 
-		return '$("#'.$this->cssID.'").append(\''.$title.'\');'.NL;
+		return '$("#'.$this->cssID.'").append(\''.addslashes($title).'\');'.NL;
 	}
 	
 	/**

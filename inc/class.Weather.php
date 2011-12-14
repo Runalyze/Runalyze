@@ -243,6 +243,7 @@ class Weather {
 			case 'Dunst':
 				return 'wechselhaft';
 			case 'Regen':
+			case 'Starker Regen':
 			case 'Gewitterschauer':
 				return 'regnerisch';
 			case 'Schnee':
