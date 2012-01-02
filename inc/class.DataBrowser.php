@@ -140,6 +140,8 @@ class DataBrowser {
 	 * @return array
 	 */
 	private function initDay($w) {
+		// TODO: Make faster
+		// TODO: Clean code to only one query
 		$shorts     = array();
 		$trainings  = array();
 		$time       = $this->timestamp_start;
@@ -186,7 +188,7 @@ class DataBrowser {
 							mktime(23, 59, 50, date("m", $this->timestamp_start)+1, 0, date("Y", $this->timestamp_start))).', ';
 		echo $this->getLink(date("Y", $this->timestamp_start),
 							mktime(0, 0, 0, 1, 1, date("Y", $this->timestamp_start)),
-							mktime(0, 0, 0, 12, 31, date("Y", $this->timestamp_start))).', ';
+							mktime(23, 59, 50, 12, 31, date("Y", $this->timestamp_start))).', ';
 		echo $this->getLink(strftime("%W", $this->timestamp_start).'. Woche ',
 							Helper::Weekstart($this->timestamp_start),
 							Helper::Weekend($this->timestamp_end));

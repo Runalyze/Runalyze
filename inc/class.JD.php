@@ -24,9 +24,16 @@ define('VDOT_CORRECTOR', JD::calculateVDOTcorrector());
 define('VDOT_FORM', JD::calculateVDOTform());
 
 /**
+ * Basic endurance as percentage
+ * @const BASIC_ENDURANCE
+ */
+define('BASIC_ENDURANCE', Helper::BasicEndurance(true));
+
+/**
  * Class for calculating based on "Jack Daniels' Running Formula"
  * @defines   VDOT_CORRECTOR   float   Factor to correct the user-specific VDOT
  * @defines   VDOT_FORM        float   Actual VDOT-value
+ * @defines   BASIC_ENDURANCE  int     Basic endurance as percentage
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0

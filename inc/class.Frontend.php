@@ -5,6 +5,9 @@
  * It will include all needed classes.
  * For using it's enough to include this class.
  */
+
+date_default_timezone_set('Europe/Berlin');
+
 /**
  * Class: Frontend
  * 

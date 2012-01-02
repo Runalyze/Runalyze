@@ -72,6 +72,9 @@ class ImporterTCX extends Importer {
 				else
 					$trackpointArray = $track;
 
+				if (isset($trackpointArray['time']))
+					$trackpointArray = array($trackpointArray);
+
 				foreach($trackpointArray as $trackpoint) {
 					if (isset($trackpoint['distancemeters']) && $trackpoint['distancemeters']['value'] > $last_point) {
 						$last_point = $trackpoint['distancemeters']['value'];
@@ -94,7 +97,7 @@ class ImporterTCX extends Importer {
 							? $trackpoint['heartratebpm']['value']['value']
 							: 0;
 					} else { // Delete pause from timeline
-						//Error::getInstance()->addDebug('Training::parseTcx(): '.Helper::Time(strtotime($trackpoint['time']['value'])-$start_tmp-end($time)).' pause after '.Helper::Km(end($distance),2).'.');
+						// Error::getInstance()->addDebug('Training::parseTcx(): '.Helper::Time(strtotime($trackpoint['time']['value'])-$start_tmp-end($time)).' pause after '.Helper::Km(end($distance),2).'.');
 						$start_tmp += (strtotime($trackpoint['time']['value'])-$start_tmp) - end($time);
 					}
 				}

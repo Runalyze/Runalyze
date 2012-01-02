@@ -17,6 +17,12 @@ final class Mysql {
 	private static $instance = NULL;
 
 	/**
+	 * Boolean flag: Debug all queries
+	 * @var bool
+	 */
+	public static $debugQuery = false;
+
+	/**
 	 * Static getter for the singleton instnace
 	 * @return Mysql
 	 */
@@ -65,7 +71,8 @@ final class Mysql {
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
 	public function query($query) {
-		//Error::getInstance()->addDebug($query);
+		if (self::$debugQuery)
+			Error::getInstance()->addDebug($query);
 
 		$result = false;
 		$result = mysql_query($query)
