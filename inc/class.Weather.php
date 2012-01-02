@@ -246,6 +246,8 @@ class Weather {
 			case 'Starker Regen':
 			case 'Gewitterschauer':
 				return 'regnerisch';
+			case 'Leichter Schneefall':
+			case 'Starker Schneefall':
 			case 'Schnee':
 				return 'Schnee';
 			default:

@@ -340,8 +340,12 @@ class Helper {
 	 * @param int $timestamp [optional] timestamp
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
-		if ($timestamp == 0)
+		if ($timestamp == 0) {
+			if (defined('BASIC_ENDURANCE'))
+				return ($as_int) ? BASIC_ENDURANCE : BASIC_ENDURANCE.' &#37;';
 			$timestamp = time();
+		}
+
 		if (VDOT_FORM == 0)
 			return ($as_int) ? 0 : '0 &#37;';
 
