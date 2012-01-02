@@ -191,7 +191,7 @@ class DataBrowser {
 							mktime(23, 59, 50, 12, 31, date("Y", $this->timestamp_start))).', ';
 		echo $this->getLink(strftime("%W", $this->timestamp_start).'. Woche ',
 							Helper::Weekstart($this->timestamp_start),
-							Helper::Weekend($this->timestamp_end));
+							Helper::Weekend($this->timestamp_start));
 		echo $this->getNextLink().NL;	
 	}
 
