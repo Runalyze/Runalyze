@@ -22,3 +22,9 @@ function createUploader() {
 	<p class="info">
 		Unterst&uuml;tzte Formate: <?php echo $AllowedFormats; ?>
 	</p>
+
+<?php foreach (self::$additionalImporterInfo as $info): ?>
+	<p class="info">
+		<?php echo $info; ?>
+	</p>
+<?php endforeach; ?>

@@ -52,6 +52,12 @@ abstract class Importer {
 	protected $allowedKeysForGet = array();
 
 	/**
+	 * Additional information for importer
+	 * @var array
+	 */
+	static protected $additionalImporterInfo = array();
+
+	/**
 	 * Set values for training from file or post-data
 	 */
 	abstract protected function setTrainingValues();
@@ -140,6 +146,14 @@ abstract class Importer {
 		} else {
 			Error::getInstance()->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
 		}
+	}
+
+	/**
+	 * Add an information to importer formular
+	 * @param string $string
+	 */
+	static public function addAdditionalInfo($string) {
+		self::$additionalImporterInfo[] = $string;
 	}
 
 	/**
