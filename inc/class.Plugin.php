@@ -24,16 +24,10 @@ abstract class Plugin {
 	public static $PANEL = 1;
 	
 	/**
-	* Enum for plugin-type: Draw
-	* @var int
-	*/
-	public static $DRAW = 2;
-	
-	/**
 	* Enum for plugin-type: Tool
 	* @var int
 	*/
-	public static $TOOL = 3;
+	public static $TOOL = 2;
 
 	/**
 	* Enum for active-flag: hidden
@@ -573,8 +567,6 @@ abstract class Plugin {
 				return 'stat';
 			case self::$PANEL:
 				return 'panel';
-			case self::$DRAW:
-				return 'draw';
 			case self::$TOOL:
 				return 'tool';
 		}
@@ -591,8 +583,6 @@ abstract class Plugin {
 				return 'Statistik';
 			case self::$PANEL:
 				return 'Panel';
-			case self::$DRAW:
-				return 'Diagramm';
 			case self::$TOOL:
 				return 'Tool';
 		}

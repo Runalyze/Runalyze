@@ -139,6 +139,13 @@ class Ajax {
 	}
 
 	/**
+	 * Reload complete page
+	 */
+	public static function reloadPage() {
+		self::wrapJS('location.reload();');
+	}
+
+	/**
 	 * Wrap JavaScript into code block
 	 * @param string $code
 	 * @return string
