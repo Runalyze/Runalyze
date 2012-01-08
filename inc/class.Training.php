@@ -16,6 +16,7 @@ Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('upload' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
 Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
+Config::register('Eingabeformular', 'GARMIN_API_KEY', 'string', '', 'GarminCommunicator API-Key');
 
 /**
  * Class: Training
