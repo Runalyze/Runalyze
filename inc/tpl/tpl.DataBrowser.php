@@ -7,6 +7,13 @@
 </h1>
 
 <div id="<?php echo self::$CALENDAR_ID; ?>">
+
+	<div class="c">
+		<?php echo self::getWeekLink('aktuelle Woche', time()); ?>
+		- <?php echo self::getMonthLink('aktueller Monat', time()); ?>
+		- <?php echo self::getYearLink('aktuelles Jahr', time()); ?>
+	</div>
+
 	<div id="widgetCalendar">
 	</div>
 

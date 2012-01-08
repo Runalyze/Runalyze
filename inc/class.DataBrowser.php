@@ -183,15 +183,11 @@ class DataBrowser {
 	private function displayNavigationLinks() {
 		echo $this->getPrevLink().NL;
 		echo $this->getCalenderLink().NL;
-		echo $this->getLink(Helper::Month(date("m", $this->timestamp_start)),
-							mktime(0, 0, 0, date("m", $this->timestamp_start), 1, date("Y", $this->timestamp_start)),
-							mktime(23, 59, 50, date("m", $this->timestamp_start)+1, 0, date("Y", $this->timestamp_start))).', ';
-		echo $this->getLink(date("Y", $this->timestamp_start),
-							mktime(0, 0, 0, 1, 1, date("Y", $this->timestamp_start)),
-							mktime(23, 59, 50, 12, 31, date("Y", $this->timestamp_start))).', ';
-		echo $this->getLink(strftime("%W", $this->timestamp_start).'. Woche ',
-							Helper::Weekstart($this->timestamp_start),
-							Helper::Weekend($this->timestamp_start));
+
+		echo self::getMonthLink(Helper::Month(date("m", $this->timestamp_start)), $this->timestamp_start).', ';
+		echo self::getYearLink(date("Y", $this->timestamp_start), $this->timestamp_start).', ';
+		echo self::getWeekLink(strftime("%W", $this->timestamp_start).'. Woche ', $this->timestamp_start);
+
 		echo $this->getNextLink().NL;	
 	}
 
@@ -325,6 +321,30 @@ class DataBrowser {
 	 */
 	static function getWeekLink($name, $time) {
 		return self::getLink($name, Helper::Weekstart($time), Helper::Weekend($time));
+	}
+
+	/**
+	 * Get a ajax-link to a specified DataBrowser
+	 * @param string $name Name to be displayed as link
+	 * @param int $int Timestamp of the month
+	 * @return string HTML-link
+	 */
+	static function getMonthLink($name, $time) {
+		return self::getLink($name,
+			mktime(0, 0, 0, date("m", $time), 1, date("Y", $time)),
+			mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time)));
+	}
+
+	/**
+	 * Get a ajax-link to a specified DataBrowser
+	 * @param string $name Name to be displayed as link
+	 * @param int $int Timestamp of the year
+	 * @return string HTML-link
+	 */
+	static function getYearLink($name, $time) {
+		return self::getLink($name,
+			mktime(0, 0, 0, 1, 1, date("Y", $time)),
+			mktime(23, 59, 50, 12, 31, date("Y", $time)));
 	}
 
 	/**
