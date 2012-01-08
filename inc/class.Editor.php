@@ -71,9 +71,9 @@ class Editor {
 	 */
 	private function addSimpleValues() {
 		$this->addValue('kcal');
-		$this->addValue('comment');
-		$this->addValue('partner');
-		$this->addValue('route');
+		$this->addTextValue('comment');
+		$this->addTextValue('partner');
+		$this->addTextValue('route');
 
 		$this->addValue('distance');
 		$this->addValue('elevation');
@@ -168,13 +168,24 @@ class Editor {
 	}
 
 	/**
-	 * Add value with automatic transforming (umlaute/commas)
+	 * Add value with automatic transforming (commas)
 	 * @param string $key
 	 */
 	private function addValue($key) {
 		if (isset($this->TrainingData[$key])) {
 			$this->UpdateColumns[] = $key;
 			$this->UpdateValues[] = Helper::Umlaute(Helper::CommaToPoint($this->TrainingData[$key]));
+		}
+	}
+
+	/**
+	 * Add value with automatic transforming (umlaute)
+	 * @param string $key
+	 */
+	private function addTextValue($key) {
+		if (isset($this->TrainingData[$key])) {
+			$this->UpdateColumns[] = $key;
+			$this->UpdateValues[] = Helper::Umlaute($this->TrainingData[$key]);
 		}
 	}
 
