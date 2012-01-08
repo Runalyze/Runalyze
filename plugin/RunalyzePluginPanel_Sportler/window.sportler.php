@@ -30,6 +30,7 @@ if (isset($_POST['type']) && $_POST['type'] == "user") {
 	$id = $Mysql->insert(PREFIX.'user', $columns, $values);
 
 	$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
+	$submit .= Ajax::reloadPage();
 }
 
 $Frontend->displayHeader();

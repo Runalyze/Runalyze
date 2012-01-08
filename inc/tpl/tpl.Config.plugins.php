@@ -12,7 +12,6 @@ Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Beli
 	$plugin_types = array();
 	$plugin_types[] = array('type' => 'stat', 'name' => 'Statistiken', 'text' => 'Gro&szlig;e Statistiken unterhalb des Kalenders.');
 	$plugin_types[] = array('type' => 'panel', 'name' => 'Panels', 'text' => 'Erweiterte Ansichten und Zusammenfassungen in der rechten Spalte');
-	$plugin_types[] = array('type' => 'draw', 'name' => 'Diagramme', 'text' => 'Zus&auml;tzliche Diagramme, meist eingebunden durch ein Statistik-Plugin.');
 	$plugin_types[] = array('type' => 'tool', 'name' => 'Tool', 'text' => 'Extra ansteuerbare Tools, meist zur Auswertung oder Aufbereitung der kompletten Datenbank.');
 	
 	foreach ($plugin_types as $i => $type)

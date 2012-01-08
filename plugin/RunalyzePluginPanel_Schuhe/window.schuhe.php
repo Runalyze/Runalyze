@@ -24,6 +24,7 @@ if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 		} else {
 			$Mysql->insert(PREFIX.'shoe', $columns, $values);
 			$submit = '<em>Der Schuh wurde gespeichert!</em><br /><br />';
+			unset($_POST);
 		}
 	} else {
 		$submit = '<em class="error">Der Schuh muss einen Namen haben!</em><br /><br />';
