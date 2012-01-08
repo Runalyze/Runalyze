@@ -119,9 +119,14 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 * Init all data
 	 */
 	private function initData() {
+		$this->IDs = array();
+
 		if (isset($_GET['ids']))
 			$this->IDs = explode(',', $_GET['ids']);
-		else {
+		if (isset($_POST['ids']))
+			$this->IDs = explode(',', $_POST['ids']);
+
+		if (empty($this->IDs)) {
 			$Trainings = Mysql::getInstance()->fetchAsArray('SELECT id FROM '.PREFIX.'training ORDER BY id DESC LIMIT 5');
 			foreach ($Trainings as $Data)
 				$this->IDs[] = $Data['id'];
@@ -138,7 +143,7 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 */
 	private function initTrainings() {
 		foreach ($this->IDs as $id) {
-			if ($id == Training::$CONSTRUCTOR_ID)
+			if ($id == Training::$CONSTRUCTOR_ID || empty($id))
 				continue;
 
 			$Training = new Training($id);
