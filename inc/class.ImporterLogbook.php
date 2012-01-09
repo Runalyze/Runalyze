@@ -13,37 +13,37 @@ class ImporterLogbook extends Importer {
 	 * Filecontent as xml-array
 	 * @var array
 	 */
-	private $XML = array();
+	protected $XML = array();
 
 	/**
 	 * Categories
 	 * @var array
 	 */
-	private $Categories = array();
+	protected $Categories = array();
 
 	/**
 	 * Array of Training-objects
 	 * @var array
 	 */
-	private $Trainings = array();
+	protected $Trainings = array();
 
 	/**
 	 * Plugin for MultiEditor
 	 * @var Plugin
 	 */
-	private $MultiEditor = null;
+	protected $MultiEditor = null;
 
 	/**
 	 * Boolean flag for having inserted all trainings
 	 * @var bool
 	 */
-	private $inserted = false;
+	protected $inserted = false;
 
 	/**
 	 * Array with all errors
 	 * @var array
 	 */
-	private $Errors = array();
+	protected $Errors = array();
 
 
 	/**
@@ -73,7 +73,7 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Display error-messages
 	 */
-	private function displayErrors() {
+	protected function displayErrors() {
 		echo '<h1>Probleme beim Import des SportTracks-Logbook</h1>';
 		echo HTML::em('Beim Importieren ist ein Fehler aufgetreten.');
 		echo HTML::clearBreak();
@@ -85,7 +85,7 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Create all trainings
 	 */
-	private function createAllTrainings() {
+	protected function createAllTrainings() {
 		if (empty($this->Trainings))
 			return;
 
@@ -110,7 +110,7 @@ class ImporterLogbook extends Importer {
 	 * Forward to MultiEditor
 	 * @param array $IDs
 	 */
-	private function forwardToMultiEditor($IDs) {
+	protected function forwardToMultiEditor($IDs) {
 		if (empty($IDs))
 			return;
 
@@ -123,7 +123,7 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Parse internal XML-array
 	 */
-	private function parseXML() {
+	protected function parseXML() {
 		if (!isset($this->XML['logbook'])) {
 			$this->Errors[] = 'Es scheint keine korrekte Logbook-Datei zu sein.';
 			return;
@@ -138,7 +138,7 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Parse all categories in xml-file
 	 */
-	private function parseCategories() {
+	protected function parseCategories() {
 		if (!isset($this->XML['activitycategories']) || !isset($this->XML['activitycategories']['category']))
 			return;
 
@@ -156,7 +156,7 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Parse all activities in xml-file
 	 */
-	private function parseActivities() {
+	protected function parseActivities() {
 		if (!isset($this->XML['activities']))
 			return;
 
@@ -172,7 +172,7 @@ class ImporterLogbook extends Importer {
 	 * @param array $XML
 	 * @return Training
 	 */
-	private function createTrainingFromXML($XML) {
+	protected function createTrainingFromXML($XML) {
 		if (!isset($XML['attr']))
 			return;
 
@@ -201,7 +201,7 @@ class ImporterLogbook extends Importer {
 	 * @param string $string
 	 * @return int
 	 */
-	static private function getIDforDatabaseString($table, $string) {
+	static protected function getIDforDatabaseString($table, $string) {
 		$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
 		$Result = Mysql::getInstance()->fetchSingle($SearchQuery);
 
@@ -221,7 +221,7 @@ class ImporterLogbook extends Importer {
 	 * @param mixed $default
 	 * @return double
 	 */
-	static private function getNumericFromString($string, $default = 0) {
+	static protected function getNumericFromString($string, $default = 0) {
 		$array  = explode(' ', trim($string));
 		$string = preg_replace('/[^0-9\.,]/Uis', '', $array[0]);
 
