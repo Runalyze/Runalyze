@@ -438,3 +438,7 @@ a#copy:hover, a#copy:active {
     width: 500px;
     height: 150px;
 }
+
+.flot {
+	position: relative !important;
+}
