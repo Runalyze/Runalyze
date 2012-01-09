@@ -232,8 +232,7 @@ class Plot {
 		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\''.$padding.'\');';
 
 		return Ajax::wrapJS('
-			var '.$this->created.';
-			'.$this->created.' = false;
+			var '.$this->created.'=false;
 			$(document).bind("createFlot",function () {
 				if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0) {
 					'.$this->created.'=true;

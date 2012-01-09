@@ -142,5 +142,46 @@ class ImporterTCX extends Importer {
 		$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
 		return false;
 	}
+
+	/**
+	 * Add information from temporary file to existing training
+	 * @param int $id
+	 * @param string $tempFileName
+	 */
+	public static function addTCXdataToTraining($id, $tempFileName) {
+		$Training = new Training($id);
+		$Importer = Importer::getInstance($tempFileName);
+		$Data     = array();
+		$Vars     = array();
+		
+		if ($Training->get('elevation') == 0)
+			$Vars[] = 'elevation';
+		
+		$Vars[] = 'arr_time';
+		$Vars[] = 'arr_lat';
+		$Vars[] = 'arr_lon';
+		$Vars[] = 'arr_alt';
+		$Vars[] = 'arr_dist';
+		$Vars[] = 'arr_heart';
+		$Vars[] = 'arr_pace';
+		
+		if ($Training->get('pulse_avg') == 0 && $Training->get('pulse_max') == 0) {
+			$Vars[] = 'pulse_avg';
+			$Vars[] = 'pulse_max';
+		}
+			
+		if ($Training->Type()->hasSplits() && strlen($Training->get('splits')) == 0)
+			$vars[] = 'splits';
+		
+		foreach ($Vars as $var)
+			$Data[$var] = $Importer->get($var);
+		
+		$Editor = new Editor($id, $Data);
+		$Editor->performUpdate();
+		
+		$Errors = $Editor->getErrorsAsArray();
+		if (!empty($Errors))
+			echo HTML::error(implode('<br />', $Errors));
+	}
 }
 ?>
