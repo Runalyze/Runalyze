@@ -44,9 +44,9 @@ class ImporterFITLOG extends Importer {
 		$this->set('zeit', date("H:i", $time));
 		$this->set('time', $time);
 
-		$this->parseOptionalValues();
 		$this->parseLaps();
 		$this->parseTrack();
+		$this->parseOptionalValues();
 	}
 
 	/**
@@ -106,11 +106,27 @@ class ImporterFITLOG extends Importer {
 	 * Parse laps
 	 */
 	private function parseLaps() {
-		// Can't parse laps as splits, no distance set
+		if (!isset($this->XML['laps']))
+			return;
+
+		$Distance = 0;
+		$Calories = 0;
+		$Laps = $this->XML['laps']['lap'];
+		foreach ($Laps as $i => $Lap) {
+			if (isset($Lap['distance']))
+				$Distance += $Lap['distance']['attr']['TotalMeters'];
+			if (isset($Lap['calories']))
+				$Calories += $Lap['calories']['attr']['TotalCal'];
+		}
+
+		if ($Distance > 0)
+			$this->set('distance', round($Distance)/1000);
+		if ($Calories > 0)
+			$this->set('kcal', $Calories);
 	}
 
 	/**
-	 * Parse optional values
+	 * Parse optional values, may overwrite previous distance and so on
 	 */
 	private function parseOptionalValues() {
 		if (isset($this->XML['duration']))

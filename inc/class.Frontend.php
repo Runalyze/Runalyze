@@ -191,6 +191,7 @@ class Frontend {
 		Importer::registerImporter('TCX', 'ImporterTCX');
 		Importer::registerImporter('CSV', 'ImporterCSV');
 		Importer::registerImporter('LOGBOOK', 'ImporterLogbook');
+		Importer::registerImporter('LOGBOOK3', 'ImporterLogbook3');
 		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
 	}
 

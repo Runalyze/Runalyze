@@ -118,10 +118,8 @@ class Helper {
 	 * @return string
 	 */
 	public static function Pace($km, $time) {
-		if ($km == 0) {
-			Error::getInstance()->addWarning("Helper::Pace($km, $time): Division by zero.");
+		if ($km == 0)
 			return '-:--';
-		}
 
 		return self::Time(round($time/$km));
 	}

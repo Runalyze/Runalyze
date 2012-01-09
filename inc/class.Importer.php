@@ -58,6 +58,12 @@ abstract class Importer {
 	static protected $additionalImporterInfo = array();
 
 	/**
+	 * Array with all internal errors
+	 * @var array
+	 */
+	private $Errors = array();
+
+	/**
 	 * Set values for training from file or post-data
 	 */
 	abstract protected function setTrainingValues();
@@ -127,7 +133,7 @@ abstract class Importer {
 		if (isset(self::$formats[$format]) && class_exists(self::$formats[$format]))
 			return new self::$formats[$format]($fileName);
 
-		Error::getInstance()->addError('Importer: unknown input format "'.$format.'".');
+		$this->addError('Importer: unknown input format "'.$format.'".');
 
 		return new ImporterFormular();
 	}
@@ -144,7 +150,7 @@ abstract class Importer {
 
 			require_once FRONTEND_PATH.$fileName;
 		} else {
-			Error::getInstance()->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
+			$this->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
 		}
 	}
 
@@ -168,7 +174,7 @@ abstract class Importer {
 		$PathInfo = pathinfo($fileName);
 
 		if (!isset($PathInfo['extension'])) {
-			Error::getInstance()->addError('Die hochgeladene Datei hat keine Endung. Leerzeichen d&uuml;rfen nicht enthalten sein.');
+			$this->addError('Die hochgeladene Datei hat keine Endung. Leerzeichen d&uuml;rfen nicht enthalten sein.');
 			return '';
 		}
 
@@ -195,7 +201,29 @@ abstract class Importer {
 	 * Upload file
 	 */
 	private function uploadFile() {
-		move_uploaded_file($_FILES['userfile']['tmp_name'], $_FILES['userfile']['name']);
+		if (self::uploadedFileWasTooBig()) {
+			$this->addError('Uploaded file was too big.');
+			return;
+		}
+
+		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $_FILES['userfile']['name']))
+			$this->addError('Can\'t move uploaded file '.$_FILES['userfile']['name']);
+	}
+
+	/**
+	 * Check whether the uploaded file was too big to handle
+	 */
+	static public function uploadedFileWasTooBig() {
+		$Max = ini_get('post_max_size');
+		$factor = substr($Max, -1);
+		$factor = ($factor == 'M' ? 1048576
+				: ($factor == 'K' ? 1024
+				: ($factor == 'G' ? 1073741824 : 1)));
+
+		if ($Max && $_SERVER['CONTENT_LENGTH'] > $factor*(int)$Max)
+			return true;
+
+		return false;
 	}
 
 	/**
@@ -217,7 +245,7 @@ abstract class Importer {
 			return $_POST['data'];
 
 		if (!file_exists($this->fileName)) {
-			Error::getInstance()->addError('class::Importer: Uploaded file "'.$this->fileName.'" can\'t be found.');
+			$this->addError('class::Importer: Uploaded file "'.$this->fileName.'" can\'t be found.');
 			return;
 		}
 
@@ -232,6 +260,8 @@ abstract class Importer {
 	 * @param string $message
 	 */
 	protected function addError($message) {
+		$this->Errors[] = $message;
+
 		Error::getInstance()->addError($message);
 	}
 
@@ -266,7 +296,26 @@ abstract class Importer {
 		$this->setDefaultTrainingDataForCreation();
 		$this->transformTrainingDataToPostData();
 
+		$this->displayErrors();
+
 		include 'tpl/tpl.Importer.formular.php';
+	}
+
+	/**
+	 * Display error-messages
+	 */
+	private function displayErrors() {
+		if (empty($this->Errors))
+			return;
+
+		echo '<h1>Probleme beim Import</h1>';
+		echo HTML::em('Beim Importieren ist ein Fehler aufgetreten.');
+		echo HTML::clearBreak();
+
+		foreach ($this->Errors as $Error)
+			echo HTML::error($Error);
+
+		echo HTML::clearBreak();
 	}
 
 	/**
@@ -278,7 +327,7 @@ abstract class Importer {
 		if (in_array($key, $this->allowedKeysForSet))
 			$this->TrainingData[$key] = $value;
 		else
-			$this->addError('Importer: Can\'t set "'.$key.'" to "'.$value.'" - not allowed.');
+			Error::getInstance()->addError('Importer: Can\'t set "'.$key.'" to "'.$value.'" - not allowed.');
 	}
 
 	/**
@@ -293,7 +342,7 @@ abstract class Importer {
 			return $this->TrainingData[$key];
 		}
 
-		$this->addError('Importer: Can\'t get "'.$key.'" - not allowed.');
+		Error::getInstance()->addError('Importer: Can\'t get "'.$key.'" - not allowed.');
 
 		return '';
 	}
