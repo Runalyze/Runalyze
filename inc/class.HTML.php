@@ -124,6 +124,14 @@ class HTML {
 	}
 
 	/**
+	 * Return a break
+	 * @return string
+	 */
+	public static function br() {
+		return '<br />';
+	}
+
+	/**
 	 * Return a break with class="clear"
 	 * @return string
 	 */
