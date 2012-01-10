@@ -410,6 +410,13 @@ class Helper {
 		if ($VDOT != 0)
 			return self::Time($prognose_dauer);
 
+		if ($pb == 0) {
+			$pb = PHP_INT_MAX;
+			$pbString = '&nbsp;';
+		} else {
+			$pbString = self::Time($pb);
+		}
+
 		$bisher_tag = ($prognose_dauer < $pb) ? 'del' : 'strong';
 		$neu_tag = ($prognose_dauer > $pb) ? 'del' : 'strong';
 
@@ -417,13 +424,9 @@ class Helper {
 			<p>
 				<span>
 					<small>von</small>
-						<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">
-							'.self::Time($pb).'
-						</'.$bisher_tag.'>
+					<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">'.$pbString.'</'.$bisher_tag.'>
 					<small>auf</small>
-						<'.$neu_tag.' title="VDOT '.$VDOT_new.'">
-							'.self::Time($prognose_dauer).'
-						</'.$neu_tag.'>
+					<'.$neu_tag.' title="VDOT '.$VDOT_new.'">'.self::Time($prognose_dauer).'</'.$neu_tag.'>
 					<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
 				</span>
 				<strong>'.self::Km($dist, 0, $bahn).'</strong>

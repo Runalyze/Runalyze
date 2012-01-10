@@ -199,15 +199,25 @@ class Frontend {
 	 * Init all additional files for JS/CSS
 	 */
 	private function initAdditionalFiles() {
-		foreach (glob('plugin/*/*.js') as $file)
-			$this->JS_FILES[] = $file;
-		foreach (glob('plugin/*/*/*.js') as $file)
-			$this->JS_FILES[] = $file;
+		$Files = glob('plugin/*/*.js');
+		if (is_array($Files))
+			foreach ($Files as $file)
+				$this->JS_FILES[] = $file;
 
-		foreach (glob('plugin/*/*.css') as $file)
-			$this->CSS_FILES[] = $file;
-		foreach (glob('plugin/*/*/*.css') as $file)
-			$this->CSS_FILES[] = $file;
+		$Files = glob('plugin/*/*.js');
+		if (is_array($Files))
+			foreach ($Files as $file)
+				$this->JS_FILES[] = $file;
+
+		$Files = glob('plugin/*/*.js');
+		if (is_array($Files))
+			foreach ($Files as $file)
+				$this->CSS_FILES[] = $file;
+
+		$Files = glob('plugin/*/*.js');
+		if (is_array($Files))
+			foreach ($Files as $file)
+				$this->CSS_FILES[] = $file;
 	}
 
 	/**
