@@ -99,18 +99,22 @@ class Error {
 	 * @param string $log_file   File for logging errors
 	 */
 	public static function init($file = __FILE__, $log = false, $log_file = '') {
-		if ($log_file == '')
-			$log_file = 'log/'.$file.'.log.'.date("Ymd.Hi").'.html';
-
-		self::getInstance()->setLogVars($log, $log_file);
+		self::getInstance()->setLogVars($log, $log_file, $file);
 	}
 
 	/**
 	 * Set private variables from self::init()
 	 * @param bool   $log        Logging errors?
 	 * @param string $log_file   File for logging errors
+	 * @param string $file       filename
 	 */
-	public function setLogVars($log, $log_file) {
+	public function setLogVars($log, $log_file = '', $file = '') {
+		if ($file != '' && $this->file == '')
+			$this->file = $file;
+
+		if ($log_file == '')
+			$log_file = 'log/'.$this->file.'.log.'.date("Ymd.Hi").'.html';
+
 		$this->log = $log;
 		$this->log_file = $log_file;
 	}
@@ -167,13 +171,13 @@ class Error {
 			$message .= ')';
 		}
 
-		if ($this->numErrors < 50)
-			$this->errors[] = array('type' => $type, 'message' => $message);
-		elseif ($this->numErrors == 50) {
+		if ($this->numErrors >= 100) {
 			$this->errors[] = array('type' => 'ERROR', 'message' => 'FATAL ERROR: TOO MANY ERRORS.');
 			$this->display();
 			exit();
 		}
+
+		$this->errors[] = array('type' => $type, 'message' => $message);
 	}
 
 	/**
