@@ -48,6 +48,12 @@ class Weather {
 	private $data;
 
 	/**
+	* Language used
+	* @var string
+	*/
+	private $lang = 'en';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct($weather_id, $temperature = null) {
@@ -81,6 +87,47 @@ class Weather {
 
 		if (isset($array[$this->id]))
 			$this->data = $array[$this->id];
+	}
+
+	/**
+	 * Get all rows from database
+	 * @return array
+	 */
+	static public function getFullArray() {
+		if (is_null(self::$fullArray)) {
+			$array = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'weather` ORDER BY `id` ASC');
+			foreach ($array as $data)
+				self::$fullArray[$data['id']] = $data;
+		}
+
+		return self::$fullArray;
+	}
+
+	/**
+	 * Get all rows except the one for unknown weather
+	 * @return array
+	 */
+	static public function getArrayWithoutUnknown() {
+		$array = self::getFullArray();
+		unset($array[self::$UNKNOWN_ID]);
+
+		return $array;
+	}
+
+	/**
+	 * Get select-box for all weather-ids
+	 * @param mixed $selected [optional] Value to be selected
+	 * @return string
+	 */
+	static public function getSelectBox($selected = -1) {
+		if ($selected == -1 && isset($_POST['weatherid']))
+			$selected = $_POST['weatherid'];
+
+		$weather = self::getFullArray();
+		foreach ($weather as $id => $data)
+			$weather[$id] = $data['name'];
+
+		return HTML::selectBox('weatherid', $weather, $selected);
 	}
 
 	/**
@@ -200,7 +247,7 @@ class Weather {
 	private function loadWeatherAsArrayFromAPI() {
 		require_once 'tcx/class.XmlParser.php';
 
-		$Xml = @file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl=de');
+		$Xml = @file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 		$Parser = new XmlParser($Xml);
 
 		return $Parser->getContentAsArray();
@@ -224,77 +271,78 @@ class Weather {
 	 * @return string
 	 */
 	private function translateGoogleConditionToInternalName($string) {
-		switch ($string) {
-			case 'Meist sonnig':
-			case 'Klar':
-				return 'sonnig';
-			case 'Teils sonnig':
-				return 'heiter';
-			case 'Bedeckt':
-			case 'Meistens bewölkt':
-			case 'Bewölkt':
-			case 'Nebel':
-				return 'bew&ouml;lkt';
-			case 'Vereinzelt stürmisch':
-			case 'Vereinzelte Schauer':
-			case 'Vereinzelt Regen':
-			case 'Leichter Regen':
-			case 'Nieselregen':
-			case 'Dunst':
-				return 'wechselhaft';
-			case 'Regen':
-			case 'Starker Regen':
-			case 'Gewitterschauer':
-				return 'regnerisch';
-			case 'Leichter Schneefall':
-			case 'Starker Schneefall':
-			case 'Schnee':
-				return 'Schnee';
-			default:
-				Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
-				return 'unbekannt';
-		}
-	}
-
-	/**
-	 * Get all rows from database
-	 * @return array
-	 */
-	static public function getFullArray() {
-		if (is_null(self::$fullArray)) {
-			$array = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'weather` ORDER BY `id` ASC');
-			foreach ($array as $data)
-				self::$fullArray[$data['id']] = $data;
-		}
-
-		return self::$fullArray;
-	}
-
-	/**
-	 * Get all rows except the one for unknown weather
-	 * @return array
-	 */
-	static public function getArrayWithoutUnknown() {
-		$array = self::getFullArray();
-		unset($array[self::$UNKNOWN_ID]);
-
-		return $array;
-	}
-
-	/**
-	 * Get select-box for all weather-ids
-	 * @param mixed $selected [optional] Value to be selected
-	 * @return string
-	 */
-	static public function getSelectBox($selected = -1) {
-		if ($selected == -1 && isset($_POST['weatherid']))
-			$selected = $_POST['weatherid'];
-
-		$weather = self::getFullArray();
-		foreach ($weather as $id => $data)
-			$weather[$id] = $data['name'];
-
-		return HTML::selectBox('weatherid', $weather, $selected);
+		if ($this->lang == 'de')
+			switch ($string) {
+				case 'Meist sonnig':
+				case 'Klar':
+					return 'sonnig';
+				case 'Teils sonnig':
+					return 'heiter';
+				case 'Bedeckt':
+				case 'Meistens bewölkt':
+				case 'Bewölkt':
+				case 'Nebel':
+					return 'bew&ouml;lkt';
+				case 'Vereinzelt stürmisch':
+				case 'Vereinzelte Schauer':
+				case 'Vereinzelt Regen':
+				case 'Leichter Regen':
+				case 'Nieselregen':
+				case 'Dunst':
+					return 'wechselhaft';
+				case 'Regen':
+				case 'Starker Regen':
+				case 'Gewitterschauer':
+					return 'regnerisch';
+				case 'Leichter Schneefall':
+				case 'Starker Schneefall':
+				case 'Schnee':
+					return 'Schnee';
+				default:
+					Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
+					return 'unbekannt';
+			}
+		else
+			switch ($string) {
+				case 'Mostly sunny':
+				case 'Sunny':
+				case 'Clear':
+					return 'sonnig';
+				case 'Partly sunny':
+				case 'Partly cloudy':
+					return 'heiter';
+				case 'Overcast':
+				case 'Mostly cloudy':
+				case 'Cloudy':
+				case 'Fog':
+					return 'bew&ouml;lkt';
+				case 'Mist':
+				case 'Storm':
+				case 'Chance of rain':
+				case 'Scattered showers':
+				case 'Scattered thunderstorms':
+				case 'Windy':
+					return 'wechselhaft';
+				case 'Rain':
+				case 'Showers':
+				case 'Rain and snow':
+				case 'Freezing drizzle':
+				case 'Chance of tstorm':
+				case 'Thunderstorm':
+				case 'Sleet':
+					return 'regnerisch';
+				case 'Haze':
+				case 'Flurries':
+				case 'Icy':
+				case 'Snow':
+				case 'Light snow':
+				case 'Chance of snow':
+				case 'Scattered snow showers':
+					return 'Schnee';
+				default:
+					Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
+					return 'unbekannt';
+			}
 	}
 }
 ?>
