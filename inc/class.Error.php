@@ -113,10 +113,21 @@ class Error {
 			$this->file = $file;
 
 		if ($log_file == '')
-			$log_file = 'log/'.$this->file.'.log.'.date("Ymd.Hi").'.html';
+			$log_file = 'log/'.self::getFilenameFromPath($this->file).'.log.'.date("Ymd.Hi").'.html';
 
 		$this->log = $log;
 		$this->log_file = $log_file;
+	}
+
+	/**
+	 * Get only filename from path
+	 * @param string $path
+	 * @return string
+	 */
+	private function getFilenameFromPath($path) {
+		$split = explode('/', $path);
+		$split = explode('\\', end($split));
+		return end($split);
 	}
 
 	/**
@@ -137,6 +148,7 @@ class Error {
 	 * @return bool
 	 */
 	public function hasErrors() {
+		var_dump($this);
 		return !empty($this->errors);
 	}
 

@@ -112,7 +112,7 @@ class Frontend {
 	 */
 	private function initErrorHandling() {
 		require_once FRONTEND_PATH.'class.Error.php';
-		Error::init();
+		Error::init($this->file);
 	}
 
 	/**
