@@ -62,6 +62,12 @@ class Error {
 	public $footer_sent = false;
 
 	/**
+	 * Boolean flag: Has the debug been displayed?
+	 * @var bool
+	 */
+	public $debug_displayed = false;
+
+	/**
 	 * Static getter for the singleton instnace
 	 * @return Error
 	 */
@@ -82,9 +88,7 @@ class Error {
 	 * Prints error messages to logfile if wanted
 	 */
 	function __destruct() {
-		if ($this->log) {
-			$this->display();
-		}
+		$this->display();
 	}
 
 	/**
@@ -134,13 +138,18 @@ class Error {
 	 * Prints all errors to screen or into the log-file
 	 */
 	public function display() {
+		if ($this->debug_displayed)
+			return;
+
 		if (!$this->log) {
 			echo $this->getErrorTable();
 		} else {
-			$handle = fopen($this->log_file, 'w+');
+			$handle = fopen(FRONTEND_PATH.'../'.$this->log_file, 'w+');
 			fwrite($handle, $this->getErrorTable());
 			fclose($handle);
 		}
+
+		$this->debug_displayed = true;
 	}
 
 	/**
@@ -148,7 +157,6 @@ class Error {
 	 * @return bool
 	 */
 	public function hasErrors() {
-		var_dump($this);
 		return !empty($this->errors);
 	}
 

@@ -229,6 +229,8 @@ class Frontend {
 
 		if (RUNALYZE_DEBUG)
 			error_reporting(E_ALL);
+		else
+			Error::getInstance()->setLogVars(true);
 	}
 
 	/**
