@@ -270,19 +270,6 @@ class Weather {
 	}
 
 	/**
-	 * Load API-file and parse XML
-	 * @return array
-	 */
-	private function loadWeatherAsArrayFromAPI() {
-		require_once 'tcx/class.XmlParser.php';
-
-		$Xml = file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
-		$Parser = new XmlParser($Xml);
-
-		return $Parser->getContentAsArray();
-	}
-
-	/**
 	 * Translate condition-data from API to internal ID
 	 * @param string $condition
 	 * @return int

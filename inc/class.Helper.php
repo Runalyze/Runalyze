@@ -728,7 +728,7 @@ class Helper {
  * @return SimpleXMLElement
  */
 function simplexml_load_file_utf8($filePath) {
-	return simplexml_load_string_utf8(file_get_contents($filePath));
+	return simplexml_load_string_utf8(simplexml_correct_ns(file_get_contents($filePath)));
 }
 
 /**
@@ -737,6 +737,15 @@ function simplexml_load_file_utf8($filePath) {
  * @return SimpleXMLElement
  */
 function simplexml_load_string_utf8($Xml) {
-	return simplexml_load_string(utf8_encode($Xml));
+	return simplexml_load_string(simplexml_correct_ns(utf8_encode($Xml)));
+}
+
+/**
+ * Correct namespace for using xpath in simplexml
+ * @param string $string
+ * @return string
+ */
+function simplexml_correct_ns($string) {
+	return str_replace('xmlns=', 'ns=', $string);
 }
 ?>

@@ -50,10 +50,7 @@ class ImporterLogbook extends Importer {
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		$FileContent = $this->getFileContentAsString();
-		$Parser      = new XmlParser($FileContent);
-		$this->XML   = $Parser->getContentAsArray();
-
+		$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
 		$this->parseXML();
 		$this->createAllTrainings();
 	}
@@ -124,12 +121,10 @@ class ImporterLogbook extends Importer {
 	 * Parse internal XML-array
 	 */
 	protected function parseXML() {
-		if (!isset($this->XML['logbook'])) {
+		if (empty($this->XML->Activities)) {
 			$this->Errors[] = 'Es scheint keine korrekte Logbook-Datei zu sein.';
 			return;
 		}
-
-		$this->XML = $this->XML['logbook'];
 
 		$this->parseCategories();
 		$this->parseActivities();
@@ -139,17 +134,14 @@ class ImporterLogbook extends Importer {
 	 * Parse all categories in xml-file
 	 */
 	protected function parseCategories() {
-		if (!isset($this->XML['activitycategories']) || !isset($this->XML['activitycategories']['category']))
+		if (empty($this->XML->ActivityCategories))
 			return;
 
-		foreach ($this->XML['activitycategories']['category'][0]['categories']['activitycategory'] as $key => $Category) {
-			if ($key == 'attr' && isset($Category['name']))
-				$this->Categories[$Category['referenceId']] = $Category['name'];
-
-			if (!isset($Category['attr']) || !isset($Category['attr']['name']))
+		foreach ($this->XML->xpath('//ActivityCategory/Categories/ActivityCategory') as $Category) {
+			if (!isset($Category['referenceId']) || !isset($Category['name']))
 				break;
 
-			$this->Categories[$Category['attr']['referenceId']] = $Category['attr']['name'];
+			$this->Categories[(string)$Category['referenceId']] = (string)$Category['name'];
 		}
 	}
 
@@ -157,13 +149,9 @@ class ImporterLogbook extends Importer {
 	 * Parse all activities in xml-file
 	 */
 	protected function parseActivities() {
-		if (!isset($this->XML['activities']))
-			return;
+		$Activities = $this->XML->xpath('//Activity');
 
-		if (!isset($this->XML['activities']['activity']['attr']))
-			$this->XML['activities'] = $this->XML['activities']['activity'];
-
-		foreach ($this->XML['activities'] as $key => $Activity)
+		foreach ($Activities as $Activity)
 			$this->createTrainingFromXML($Activity);
 	}
 
@@ -173,24 +161,24 @@ class ImporterLogbook extends Importer {
 	 * @return Training
 	 */
 	protected function createTrainingFromXML($XML) {
-		if (!isset($XML['attr']))
-			return;
-
-		$Attr          = $XML['attr'];
-		$categoryName  = isset($Attr['categoryName'])  ? $Attr['categoryName']              : '?';
-		$startTime     = isset($Attr['startTime'])     ? strtotime($Attr['startTime'])      : time();
-		$location      = isset($Attr['location'])      ? $Attr['location']                  : '';
-		$totalCalories = isset($Attr['totalCalories']) ? $Attr['totalCalories']             : 0;
-		$totalDistance = isset($Attr['totalDistance']) ? round($Attr['totalDistance'])/1000 : 0;
-		$totalTime     = isset($Attr['totalTime'])     ? round($Attr['totalTime'])          : 0;
+		$categoryName  = isset($XML['categoryName'])  ? (string)$XML['categoryName']           : '?';
+		$startTime     = isset($XML['startTime'])     ? strtotime((string)$XML['startTime'])   : time();
+		$comment       = isset($XML['name'])          ? (string)$XML['name']                   : '';
+		$location      = isset($XML['location'])      ? (string)$XML['location']               : '';
+		$totalCalories = isset($XML['totalCalories']) ? (int)$XML['totalCalories']             : 0;
+		$totalDistance = isset($XML['totalDistance']) ? round((int)$XML['totalDistance'])/1000 : 0;
+		$totalTime     = isset($XML['totalTime'])     ? round((int)$XML['totalTime'])          : 0;
+		$elevation     = isset($XML['totalAscend'])   ? round((int)$XML['totalAscend'])        : 0;
 
 		$Training = new Training(Training::$CONSTRUCTOR_ID);
 		$Training->set('sportid', self::getIDforDatabaseString('sport', $categoryName));
 		$Training->set('time', $startTime);
+		$Training->set('comment', $comment);
 		$Training->set('route', $location);
 		$Training->set('kcal', $totalCalories);
 		$Training->set('distance', $totalDistance);
 		$Training->set('s', $totalTime);
+		$Training->set('elevation', $elevation);
 
 		$this->Trainings[] = $Training;
 	}

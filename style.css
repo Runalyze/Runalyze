@@ -439,6 +439,10 @@ a#copy:hover, a#copy:active {
     height: 150px;
 }
 
+#trainingPlots .flot {
+	position: absolute !important;
+}
+
 .flot {
 	position: relative !important;
 }
