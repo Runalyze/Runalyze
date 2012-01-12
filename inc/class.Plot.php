@@ -622,6 +622,9 @@ class Plot {
 	public function setYTicks($axis, $tickSize, $decimals = false) {
 		$this->Options['yaxes'][$axis-1]['minTickSize'] = $tickSize;
 
+		if ($tickSize == null)
+			unset($this->Options['yaxes'][$axis-1]['minTickSize']);
+
 		if ($decimals !== false)
 			$this->Options['yaxes'][$axis-1]['tickDecimals'] = $decimals;
 	}
