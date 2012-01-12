@@ -228,16 +228,45 @@ class Weather {
 		if (CONF_PLZ == 0) {
 			$this->setDefaultVars();
 		} else {
-			$Array = $this->loadWeatherAsArrayFromAPI();
-			$Current = $Array['xml_api_reply']['weather']['current_conditions'];
+			$Xml         = simplexml_load_file_utf8('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
+			$Temperature = $this->getTemperatureFromXML($Xml);
+			$WeatherID   = $this->getWeatherIdFromXML($Xml);
 
-			if (!isset($Current['temp_c']) || !isset($Current['condition'])) {
+			if (is_null($Temperature) || is_null($WeatherID)) {
 				$this->setDefaultVars();
 			} else {
-				$this->temperature = (int)$Current['temp_c']['attr']['data'];
-				$this->id = $this->getIdFromAPICondition($Current['condition']['attr']['data']);
+				$this->temperature = (int)$Temperature;
+				$this->id          = $WeatherID;
 			}
 		}
+	}
+
+	/**
+	 * Get current temperature (in celsius) from Xml
+	 * @param object $Xml
+	 * @return mixed
+	 */
+	private function getTemperatureFromXML(&$Xml) {
+		$temp = $Xml->xpath('//current_conditions/temp_c');
+
+		if (is_array($temp) && isset($temp[0]['data']))
+			return (string)$temp[0]['data'];
+
+		return NULL;
+	}
+
+	/**
+	 * Get current temperature (in celsius) from Xml
+	 * @param object $Xml
+	 * @return mixed
+	 */
+	private function getWeatherIdFromXML(&$Xml) {
+		$temp = $Xml->xpath('//current_conditions/condition');
+
+		if (is_array($temp) && isset($temp[0]['data']))
+			return $this->getIdFromAPICondition((string)$temp[0]['data']);
+
+		return NULL;
 	}
 
 	/**
@@ -247,7 +276,7 @@ class Weather {
 	private function loadWeatherAsArrayFromAPI() {
 		require_once 'tcx/class.XmlParser.php';
 
-		$Xml = @file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
+		$Xml = file_get_contents('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 		$Parser = new XmlParser($Xml);
 
 		return $Parser->getContentAsArray();
@@ -304,15 +333,15 @@ class Weather {
 			}
 		else
 			switch ($string) {
-				case 'Mostly sunny':
+				case 'Mostly Sunny':
 				case 'Sunny':
 				case 'Clear':
 					return 'sonnig';
-				case 'Partly sunny':
-				case 'Partly cloudy':
+				case 'Partly Sunny':
+				case 'Partly Cloudy':
 					return 'heiter';
 				case 'Overcast':
-				case 'Mostly cloudy':
+				case 'Mostly Cloudy':
 				case 'Cloudy':
 				case 'Fog':
 					return 'bew&ouml;lkt';

@@ -204,6 +204,15 @@ class HTML {
 	}
 
 	/**
+	 * Transform html-code
+	 * @param string $code
+	 * @return string
+	 */
+	public static function codeTransform($code) {
+		return str_replace(array('<','>'), array('&lt;','&gt;'), $code);
+	}
+
+	/**
 	 * Transform given name if MultiIndex is in use
 	 * @param string $name
 	 */

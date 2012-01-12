@@ -721,4 +721,22 @@ class Helper {
 		define('MAX_TRIMP', $values[2]);
 	}
 }
+
+/**
+ * Load a file with simplexml, correcting encoding
+ * @param string $filePath
+ * @return SimpleXMLElement
+ */
+function simplexml_load_file_utf8($filePath) {
+	return simplexml_load_string_utf8(file_get_contents($filePath));
+}
+
+/**
+ * Load a given XML-string with simplexml, correcting encoding
+ * @param string $Xml
+ * @return SimpleXMLElement
+ */
+function simplexml_load_string_utf8($Xml) {
+	return simplexml_load_string(utf8_encode($Xml));
+}
 ?>

@@ -10,6 +10,12 @@
  */
 abstract class Importer {
 	/**
+	 * Boolean flag: log all filecontents?
+	 * @var bool
+	 */
+	protected $logFileContents = false;
+
+	/**
 	 * Boolean flag: has the try to insert training to database failed?
 	 * @var mixed
 	 */
@@ -241,8 +247,10 @@ abstract class Importer {
 	protected function getFileContentAsString() {
 		require_once 'tcx/class.XmlParser.php';
 
-		if (empty($this->fileName) && isset($_POST['data']))
+		if (empty($this->fileName) && isset($_POST['data'])) {
+			$this->logFileContent($_POST['data']);
 			return $_POST['data'];
+		}
 
 		if (!file_exists($this->fileName)) {
 			$this->addError('class::Importer: Uploaded file "'.$this->fileName.'" can\'t be found.');
@@ -250,9 +258,19 @@ abstract class Importer {
 		}
 
 		$Content = file_get_contents($this->fileName);
+		$this->logFileContent($Content);
 		unlink($this->fileName);
 
 		return $Content;
+	}
+
+	/**
+	 * Log file content
+	 * @param string $fileContent
+	 */
+	protected function logFileContent($fileContent) {
+		if ($this->logFileContents)
+			Error::getInstance()->addDebug('Importer::fileContent(file="'.$this->fileName.'"): '.$fileContent);
 	}
 
 	/**
