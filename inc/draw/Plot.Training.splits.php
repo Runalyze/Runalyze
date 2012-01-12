@@ -24,12 +24,18 @@ foreach ($Data as $key => $val) {
 	$Data[$key] = $val*1000;
 }
 
+$min = min($Data); $min = floor($min/30000)*30000;
+$max = max($Data); $max = ceil($max/30000)*30000;
+
 $Plot = new Plot("splits_".$_GET['id'], 480, 190);
 $Plot->Data[] = array('label' => 'Zwischenzeiten', 'data' => $Data);
 
 $Plot->setYAxisTimeFormat('%M:%S');
 $Plot->setXLabels($Labels);
 $Plot->showBars(true);
+
+$Plot->setYLimits(1, $min, $max, false);
+$Plot->setYTicks(1, null);
 
 $Plot->hideLegend();
 $Plot->setTitle('Zwischenzeiten', 'right');

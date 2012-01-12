@@ -15,8 +15,13 @@ $Data = $Training->GpsData()->getPlotDataForElevation();
 $min = min($Data); $min_x = array_keys($Data, $min);
 $max = max($Data); $max_x = array_keys($Data, $max);
 
-if ($max - $min < 25) { $minL = $min - 10; $maxL = $max + 10;
-} else { $minL = $min; $maxL = $max; }
+if ($max - $min <= 50) {
+	$minL = $min - 20;
+	$maxL = $max + 20;
+} else {
+	$minL = $min;
+	$maxL = $max;
+}
 
 
 $Plot->Data[] = array('label' => 'H&ouml;he', 'color' => 'rgba(227,217,187,1)', 'data' => $Data);

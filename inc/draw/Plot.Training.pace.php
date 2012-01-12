@@ -13,9 +13,26 @@ $Training = new Training($_GET['id']);
 $Data = $Training->GpsData()->getPlotDataForPace();
 $Data = Plot::correctValuesForTime($Data);
 
+$min = min($Data);
+$max = max($Data);
+
+if ($max >= 10*60*1000) {
+	$minL = $min;
+	$maxL = 10*60*1000;
+	$correctYAxis = true;
+} else {
+	$correctYAxis = false;
+}
+
 $Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $Data);
 
 $Plot->setYAxisTimeFormat('%M:%S');
+
+if ($correctYAxis) {
+	$Plot->setYLimits(1, $minL, $maxL, true);
+	$Plot->setYTicks(1, null);
+}
+
 $Plot->setXUnit('km');
 $Plot->enableTracking();
 
