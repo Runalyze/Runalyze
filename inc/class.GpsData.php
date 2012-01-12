@@ -545,6 +545,9 @@ class GpsData {
 					$value = 0;
 			}
 
+			if ($value < 0)
+				$value = 0;
+
 			$km = (string)($this->getDistance());
 			$Data[$km] = $value;
 		}
