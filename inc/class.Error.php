@@ -138,7 +138,7 @@ class Error {
 	 * Prints all errors to screen or into the log-file
 	 */
 	public function display() {
-		if ($this->debug_displayed)
+		if ($this->debug_displayed || !$this->hasErrors())
 			return;
 
 		if (!$this->log) {
@@ -165,11 +165,11 @@ class Error {
 	 * @return string
 	 */
 	private function getErrorTable() {
-		$table = '<table style="width:90%;margin:0;">';
+		$table = '<table style="width:90%;margin:0;">'.NL;
 		foreach ($this->errors as $error)
-			$table .= '<tr class="'.$error['type'].'"><td class="b errortype">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>';
+			$table .= '<tr class="'.$error['type'].'"><td class="b errortype">'.$error['type'].'</td><td>'.$error['message'].'</td></tr>'.NL;
 
-		$table .= '</table>';
+		$table .= '</table>'.NL;
 
 		return $table;
 	}

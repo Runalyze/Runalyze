@@ -46,6 +46,12 @@ class Frontend {
 	private $file;
 
 	/**
+	 * Boolean flag: log GET- and POST-data
+	 * @var bool
+	 */
+	private $logGetAndPost = false;
+
+	/**
 	 * Additional JavaScript-files
 	 */
 	private $JS_FILES = array();
@@ -113,6 +119,13 @@ class Frontend {
 	private function initErrorHandling() {
 		require_once FRONTEND_PATH.'class.Error.php';
 		Error::init($this->file);
+
+		if ($this->logGetAndPost) {
+			if (!empty($_POST))
+				Error::getInstance()->addDebug('POST-Data: '.print_r($_POST, true));
+			if (!empty($_GET))
+				Error::getInstance()->addDebug('GET-Data: '.print_r($_GET, true));
+		}
 	}
 
 	/**
