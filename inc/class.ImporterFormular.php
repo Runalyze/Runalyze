@@ -281,9 +281,9 @@ class ImporterFormular extends Importer {
 		if ($ATL > MAX_ATL)
 			Config::update('MAX_ATL', $ATL);
 		if ($CTL > MAX_CTL)
-			Config::update('MAX_ATL', $CTL);
+			Config::update('MAX_CTL', $CTL);
 		if ($TRIMP > MAX_TRIMP)
-			Config::update('MAX_ATL', $TRIMP);
+			Config::update('MAX_TRIMP', $TRIMP);
 		
 		if ($Training->get('shoeid') > 0)
 			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$Training->get('distance').', `time`=`time`+'.$Training->get('s').' WHERE `id`='.$Training->get('shoeid').' LIMIT 1');
