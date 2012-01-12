@@ -245,8 +245,6 @@ abstract class Importer {
 	 * @return string
 	 */
 	protected function getFileContentAsString() {
-		require_once 'tcx/class.XmlParser.php';
-
 		if (empty($this->fileName) && isset($_POST['data'])) {
 			$this->logFileContent($_POST['data']);
 			return $_POST['data'];

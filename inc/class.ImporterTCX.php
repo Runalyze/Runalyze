@@ -13,122 +13,201 @@ class ImporterTCX extends Importer {
 	 * Parsed XML as array
 	 * @var array
 	 */
-	private $xml;
+	private $XML;
+
+	/**
+	 * Internal array for all arrays
+	 * @var array
+	 */
+	private $data = array();
+
+	/**
+	 * Starttime, can be changed for pauses
+	 * @var int
+	 */
+	private $starttime = 0;
+
+	/**
+	 * Calories
+	 * @var int
+	 */
+	private $calories = 0;
+
+	/**
+	 * Last point
+	 * @var int
+	 */
+	private $lastPoint = 0;
 
 	/**
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		$FileContent = $this->getFileContentAsString();
-		$Parser      = new XmlParser($FileContent);
-		$this->xml   = $Parser->getContentAsArray();
+		$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
+		$this->parseXML();
+	}
 
-		// TODO: CodeCleaning
-
-		$xml = $this->xml;
-
-		$starttime = 0;
-		$calories  = 0;
-		$time      = array();
-		$latitude  = array();
-		$longitude = array();
-		$altitude  = array();
-		$distance  = array();
-		$heartrate = array();
-		$pace      = array();
-		$splits    = array();
-
+	/**
+	 * Parse internal XML-array
+	 */
+	protected function parseXML() {
 		if (!$this->isGarminFile())
 			return;
 
-		$starttime = strtotime($xml['trainingcenterdatabase']['activities']['activity']['id']['value']);
-		$start_tmp = $starttime;
-		$laps = $xml['trainingcenterdatabase']['activities']['activity']['lap'];
+		$this->initParser();
+		$this->parseStarttime();
+		$this->parseLaps();
+		$this->setValues();
+	}
 
-		if (!is_array($laps))
-			return array('error' => 'Es konnten keine gestoppten Runden gefunden werden.');
+	/**
+	 * Set all parsed values
+	 */
+	protected function setValues() {
+		$this->setGeneralValues();
+		$this->setOptionalValue();
+		$this->setAllArrays();
+	}
 
-		if (Helper::isAssoc($laps))
-			$laps = array($laps);
-
-		foreach($laps as $lap) {
-			if (isset($lap['calories']))
-				$calories += $lap['calories']['value'];
-			if (isset($lap['intensity']) && strtolower($lap['intensity']['value']) == 'active') {
-				$splits[] = round($lap['distancemeters']['value']/1000, 2).'|'.Helper::Time(round($lap['totaltimeseconds']['value']), false, 2);
-			}
-
-			if (Helper::isAssoc($lap['track']))
-				$lap['track'] = array($lap['track']);
-
-			if (!isset($lap['track']) || !is_array($lap['track']) || empty($lap['track']))
-				Error::getInstance()->addWarning('ImporterTCX: Keine Track-Daten vorhanden.');
-
-			foreach ($lap['track'] as $track) {
-				$last_point = 0;
-
-				if (isset($track['trackpoint']))
-					$trackpointArray = $track['trackpoint'];
-				else
-					$trackpointArray = $track;
-
-				if (isset($trackpointArray['time']))
-					$trackpointArray = array($trackpointArray);
-
-				foreach($trackpointArray as $trackpoint) {
-					if (isset($trackpoint['distancemeters']) && $trackpoint['distancemeters']['value'] > $last_point) {
-						$last_point = $trackpoint['distancemeters']['value'];
-						$time[]     = strtotime($trackpoint['time']['value']) - $start_tmp;
-						$distance[] = round($trackpoint['distancemeters']['value'])/1000;
-						$pace[]     = ((end($distance) - prev($distance)) != 0)
-							? round((end($time) - prev($time)) / (end($distance) - prev($distance)))
-							: 0;
-						if (isset($trackpoint['position'])) {
-							$latitude[]  = $trackpoint['position']['latitudedegrees']['value'];
-							$longitude[] = $trackpoint['position']['longitudedegrees']['value'];
-						} else {
-							$latitude[]  = 0;
-							$longitude[] = 0;
-						}
-						$altitude[] = (isset($trackpoint['altitudemeters']))
-							? round($trackpoint['altitudemeters']['value'])
-							: 0;
-						$heartrate[] = (isset($trackpoint['heartratebpm']))
-							? $trackpoint['heartratebpm']['value']['value']
-							: 0;
-					} else { // Delete pause from timeline
-						// Error::getInstance()->addDebug('Training::parseTcx(): '.Helper::Time(strtotime($trackpoint['time']['value'])-$start_tmp-end($time)).' pause after '.Helper::Km(end($distance),2).'.');
-						$start_tmp += (strtotime($trackpoint['time']['value'])-$start_tmp) - end($time);
-					}
-				}
-			}
-		}
-
+	/**
+	 * Set general values
+	 */
+	protected function setGeneralValues() {
 		$this->set('sportid', CONF_RUNNINGSPORT);
-		$this->set('datum', date("d.m.Y", $starttime));
-		$this->set('zeit', date("H:i", $starttime));
-		$this->set('distance', round(end($distance), 2));
-		$this->set('kcal', $calories);
-		$this->set('splits', implode('-', $splits));
+		$this->set('kcal', $this->calories);
+		$this->set('splits', implode('-', $this->data['splits']));
+	}
 
-		if (!empty($time))
-			$this->set('s', end($time));
+	/**
+	 * Set optional values
+	 */
+	protected function setOptionalValue() {
+		if (!empty($this->data['distance']))
+			$this->set('distance', round(end($this->data['distance']), 2));
 
-		if (!empty($heartrate)) {
-			$this->set('pulse_avg', round(array_sum($heartrate)/count($heartrate)));
-			$this->set('pulse_max', max($heartrate));
+		if (!empty($this->data['time']))
+			$this->set('s', end($this->data['time']));
+
+		if (!empty($this->data['heartrate'])) {
+			$this->set('pulse_avg', round(array_sum($this->data['heartrate'])/count($this->data['heartrate'])));
+			$this->set('pulse_max', max($this->data['heartrate']));
 		}
 
-		if (isset($xml['trainingcenterdatabase']['activities']['activity']['training']))
-			$this->set('comment', $xml['trainingcenterdatabase']['activities']['activity']['training']['plan']['name']['value']);
+		if (!empty($this->XML->Training))
+			$this->set('comment', (string)$this->XML->Training->Plan->Name);
+	}
 
-		$this->setArrayForTime($time);
-		$this->setArrayForLatitude($latitude);
-		$this->setArrayForLongitude($longitude);
-		$this->setArrayForElevation($altitude);
-		$this->setArrayForDistance($distance);
-		$this->setArrayForHeartrate($heartrate);
-		$this->setArrayForPace($pace);
+	/**
+	 * Set all arrays
+	 */
+	protected function setAllArrays() {
+		$this->setArrayForTime($this->data['time']);
+		$this->setArrayForLatitude($this->data['latitude']);
+		$this->setArrayForLongitude($this->data['longitude']);
+		$this->setArrayForElevation($this->data['altitude']);
+		$this->setArrayForDistance($this->data['distance']);
+		$this->setArrayForHeartrate($this->data['heartrate']);
+		$this->setArrayForPace($this->data['pace']);
+	}
+
+	/**
+	 * Init the parser
+	 */
+	protected function initParser() {
+		$this->XML       = $this->XML->Activities->Activity;
+		$this->starttime = 0;
+		$this->calories  = 0;
+		$this->data      = array(
+			'time'      => array(),
+			'latitude'  => array(),
+			'longitude' => array(),
+			'altitude'  => array(),
+			'distance'  => array(),
+			'heartrate' => array(),
+			'pace'      => array(),
+			'splits'    => array());
+	}
+
+	/**
+	 * Parse starttime
+	 */
+	protected function parseStarttime() {
+		$this->starttime = strtotime((string)$this->XML->Id);
+
+		$this->set('time', $this->starttime);
+		$this->set('datum', date("d.m.Y", $this->starttime));
+		$this->set('zeit', date("H:i", $this->starttime));
+	}
+
+	/**
+	 * Parse all laps
+	 */
+	protected function parseLaps() {
+		foreach ($this->XML->Lap as $Lap)
+			$this->parseLap($Lap);
+	}
+
+	/**
+	 * Parse one single lap
+	 * @param SimpleXMLElement $Lap
+	 */
+	protected function parseLap($Lap) {
+		$this->parseLapValues($Lap);
+		$this->parseTrackpoints($Lap);
+	}
+
+	/**
+	 * Parse general lap-values
+	 * @param SimpleXMLElement $Lap
+	 */
+	protected function parseLapValues($Lap) {
+		if (!empty($Lap->Calories))
+			$this->calories += (int)$Lap->Calories;
+
+		if ((string)$Lap->Intensity == 'Active')
+			$this->data['splits'][] = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
+	}
+
+	/**
+	 * Parse all trackpoints for one lap
+	 * @param SimpleXMLElement $Lap
+	 */
+	protected function parseTrackpoints($Lap) {
+		$this->lastPoint = 0;
+
+		foreach ($Lap->Track as $Track)
+			foreach ($Track->Trackpoint as $Trackpoint)
+				$this->parseTrackpoint($Trackpoint);
+	}
+
+	/**
+	 * Parse one trackpoint
+	 * @param SimpleXMLElement $TP
+	 */
+	protected function parseTrackpoint($TP) {
+		if (empty($TP->DistanceMeters) || (int)$TP->DistanceMeters <= $this->lastPoint) {
+			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time']);
+			return;
+		}
+
+		$this->lastPoint           = (int)$TP->DistanceMeters;
+		$this->data['time'][]      = strtotime((string)$TP->Time) - $this->starttime;
+		$this->data['distance'][]  = round((int)$TP->DistanceMeters)/1000;
+		$this->data['altitude'][]  = (int)$TP->AltitudeMeters;
+		$this->data['pace'][]      = ((end($this->data['distance']) - prev($this->data['distance'])) != 0)
+									? round((end($this->data['time']) - prev($this->data['time'])) / (end($this->data['distance']) - prev($this->data['distance'])))
+									: 0;
+		$this->data['heartrate'][] = (!empty($TP->HeartRateBpm))
+									? round($TP->HeartRateBpm->Value)
+									: 0;
+
+		if (!empty($TP->Position)) {
+			$this->data['latitude'][]  = (double)$TP->Position->LatitudeDegrees;
+			$this->data['longitude'][] = (double)$TP->Position->LongitudeDegrees;
+		} else {
+			$this->data['latitude'][]  = 0;
+			$this->data['longitude'][] = 0;
+		}
 	}
 
 	/**
@@ -136,7 +215,7 @@ class ImporterTCX extends Importer {
 	 * @return bool
 	 */
 	private function isGarminFile() {
-		if (isset($this->xml['trainingcenterdatabase']['activities']['activity']) && is_array($this->xml['trainingcenterdatabase']['activities']['activity']))
+		if (!empty($this->XML->Activities->Activity))
 			return true;
 
 		$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
