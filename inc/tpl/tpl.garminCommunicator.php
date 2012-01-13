@@ -15,7 +15,7 @@ require_once '../class.Frontend.php';
 $Frontend = new Frontend(true, __FILE__);
 
 if (strlen(CONF_GARMIN_API_KEY) > 10)
-	echo 'pathKeyPairsArray: ["http://'.$_SERVER['HTTP_HOST'].'/","'.CONF_GARMIN_API_KEY.'"],';
+	echo 'pathKeyPairsArray: ["http://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"],';
 ?>
 				/*pathKeyPairsArray: ["http://developer.garmin.com/","ee3934433a35ee348583236c2eeadbc1"],*/
 				showReadDataElement: true,
