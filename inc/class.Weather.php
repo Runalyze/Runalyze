@@ -225,20 +225,25 @@ class Weather {
 	 * Load current conditions from API and set as internal data
 	 */
 	private function loadForecast() {
-		if (CONF_PLZ == 0) {
-			$this->setDefaultVars();
-		} else {
-			$Xml         = simplexml_load_file_utf8('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
-			$Temperature = $this->getTemperatureFromXML($Xml);
-			$WeatherID   = $this->getWeatherIdFromXML($Xml);
+		if (CONF_PLZ > 0) {
+			$Xml         = Helper::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 
-			if (is_null($Temperature) || is_null($WeatherID)) {
-				$this->setDefaultVars();
+			if (strlen($Xml) > 1) {
+				$Xml         = simplexml_load_string_utf8($Xml);
+				$Temperature = $this->getTemperatureFromXML($Xml);
+				$WeatherID   = $this->getWeatherIdFromXML($Xml);
+
+				if (!is_null($Temperature) && !is_null($WeatherID)) {
+					$this->temperature = (int)$Temperature;
+					$this->id          = $WeatherID;
+					return;
+				}
 			} else {
-				$this->temperature = (int)$Temperature;
-				$this->id          = $WeatherID;
+				Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
 			}
 		}
+
+		$this->setDefaultVars();
 	}
 
 	/**

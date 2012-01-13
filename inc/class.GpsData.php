@@ -654,7 +654,7 @@ class GpsData {
 				$html = false;
 
 				while ($html === false) {
-					$html = @file_get_contents('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+					$html = Helper::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
 					if (substr($html,0,1) == '<')
 						$html = false;
 					else {
@@ -680,7 +680,14 @@ class GpsData {
 	 */
 	private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
 		$url = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
-		$Xml = simplexml_load_file_utf8($url);
+		$Xml = Helper::getExternUrlContent($url);
+
+		if (strlen($Xml) == 0) {
+			Error::getInstance()->addError('Es konnten keine H&ouml;hendaten von Google empfangen werden.');
+			return false;
+		}
+
+		$Xml = simplexml_load_string_utf8($Xml);
 
 		if (!isset($Xml->status) || (string)$Xml->status != 'OK') {
 			Error::getInstance()->addError('GoogleMapsAPI returned bad xml');
