@@ -571,6 +571,10 @@ class googleMapsAPI {
 			$pointcol = array();
 			$pointcol_i = 0;
 			$point_i=0;
+
+			if (!isset($polyline["points"]))
+				$polyline["points"] = array();
+
 			foreach($polyline["points"] as $point) {
 				$pointcol[$pointcol_i][$point_i][0] = $point["lat"];
 				$pointcol[$pointcol_i][$point_i][1] = $point["lon"];
@@ -634,6 +638,9 @@ class xmlgooglemaps_googleMapAPIPolylineEnc {
 
 	function dpEncode($points)
 	{
+		if (!isset($dists))
+			$dists = array();
+
 		$absMaxDist = 0;
 		if(count($points) > 2)
 		{
