@@ -28,6 +28,12 @@ class TrainingDisplay {
 	public static $mapURL = 'inc/tcx/window.map.php';
 
 	/**
+	 * Minimum distance to be shown as a zone
+	 * @var double
+	 */
+	private static $MINIMUM_DISTANCE_FOR_ZONE = 0.1;
+
+	/**
 	 * Object for training
 	 * @var Training
 	 */
@@ -166,12 +172,12 @@ class TrainingDisplay {
 		$Zones = $this->Training->GpsData()->getPaceZonesAsFilledArrays();
 
 		foreach ($Zones as $min => $Info) {
-			if ($Info['distance'] > 0.05)
+			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE)
 				$Data[] = array(
-					'zone'     => 'bis '.Helper::Pace(1, $min*60).'/km',
+					'zone'     => ($min == 0 ? 'schneller' : 'bis '.Helper::Pace(1, $min*60).'/km'),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).' &#37;');
+					'average'  => round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).'&nbsp;&#37;');
 		}
 
 		$this->displayZone('Tempozonen', $Data, '&oslash; Puls');
@@ -185,9 +191,9 @@ class TrainingDisplay {
 		$Zones = $this->Training->GpsData()->getPulseZonesAsFilledArrays();
 
 		foreach ($Zones as $hf => $Info) {
-			if ($Info['distance'] > 0.05)
+			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE)
 				$Data[] = array(
-					'zone'     => 'bis '.(10*$hf).' &#37;',
+					'zone'     => 'bis '.(10*$hf).'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => Helper::Pace($Info['num'], $Info['pace-sum']).'/km');

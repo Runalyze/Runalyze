@@ -13,7 +13,7 @@
 <?php foreach ($Data as $i => $Info): ?>
 		<tr class="r <?php echo HTML::trClass2($i); ?>" style="opacity:<?php echo (0.5 + $Info['percentage']/200); ?>;">
 			<td><?php echo $Info['zone']; ?></td>
-			<td><?php echo $Info['percentage']; ?> &#37;</td>
+			<td><?php echo $Info['percentage']; ?>&nbsp;&#37;</td>
 			<td><?php echo $Info['time']; ?></td>
 			<td><?php echo $Info['distance']; ?></td>
 			<?php if ($showCellForAverageData) echo '<td>'.$Info['average'].'</td>'; ?>

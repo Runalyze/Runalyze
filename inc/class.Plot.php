@@ -329,6 +329,13 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForTracking() {
+		if ($this->usesPoints())
+			$Type = 'Points';
+		elseif ($this->usesBars())
+			$Type = 'Bars';
+		else
+			$Type = '';
+
 		return '
 			$("#'.$this->cssID.'").qtip({
 				prerender: true,
@@ -337,7 +344,7 @@ class Plot {
 				show: false,
 				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
 			});
-			bindFlotForQTip'.($this->usesPoints()?'Points':'').'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
+			bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
 	}
 
 	/**
@@ -430,6 +437,8 @@ class Plot {
 
 		if ($this->usesPoints())
 			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0.2)';
+		if ($this->usesBars())
+			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0)';
 	}
 
 	/**
@@ -441,6 +450,17 @@ class Plot {
 				&& isset($this->Options['series']['points'])
 				&& isset($this->Options['series']['points']['show'])
 				&& $this->Options['series']['points']['show']);
+	}
+
+	/**
+	 * Does this plot uses bars?
+	 * @return bool
+	 */
+	private function usesBars() {
+		return (isset($this->Options['series'])
+				&& isset($this->Options['series']['bars'])
+				&& isset($this->Options['series']['bars']['show'])
+				&& $this->Options['series']['bars']['show']);
 	}
 
 	/**
