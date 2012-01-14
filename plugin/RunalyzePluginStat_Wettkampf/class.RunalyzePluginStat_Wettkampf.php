@@ -138,7 +138,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 			echo (!$first ? ' | ' : '');
 			echo Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
-			//echo Ajax::imgChange('<a href="inc/draw/plugin.wettkampf.php?km='.$km.'">'.$name.'</a>','bestzeit-diagramm');
 			$first = false;
 		}
 		
@@ -147,7 +146,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$display_km = $this->config['main_distance']['var'];
 
 		echo '</small>';
-		echo '<div id="bestzeitenFlots" style="position:relative;width:482px;height:192px;margin:5px auto;">';
+		echo '<div id="bestzeitenFlots" class="flotChangeable" style="position:relative;width:482px;height:192px;margin:5px auto;">';
 		foreach ($this->distances as $km) {
 			echo Plot::getInnerDivFor('bestzeit'.($km*1000), 480, 190, $km != $display_km);
 			$_GET['km'] = $km;

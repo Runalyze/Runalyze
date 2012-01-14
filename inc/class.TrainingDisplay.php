@@ -89,7 +89,7 @@ class TrainingDisplay {
 					$this->displayPlotLinks();
 				echo '</small>'.NL;
 				echo '<br /><br />'.NL;
-				echo '<div id="trainingPlots" style="position:relative;width:482px;height:192px;margin:2px auto;">';
+				echo '<div id="trainingPlots" class="flotChangeable" style="position:relative;width:482px;height:192px;margin:2px auto;">';
 				foreach ($Plots as $Key => $Plot)
 					$this->displayPlot($Key, $Key != $firstKey);
 				echo '</div>';
