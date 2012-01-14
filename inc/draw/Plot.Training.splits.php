@@ -41,6 +41,8 @@ $Plot->hideLegend();
 $Plot->setTitle('Zwischenzeiten', 'right');
 $Plot->setTitle($Training->getPlotTitle(), 'left');
 
+$Plot->enableTracking();
+
 if ($demandedPace > 0)
 	$Plot->addThreshold("y", $demandedPace*1000, 'rgb(180,0,0)');
 if ($achievedPace > 0)
