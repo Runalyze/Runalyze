@@ -337,7 +337,7 @@ class Plot {
 				show: false,
 				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
 			});
-			bindFlotForQTip'.($this->Options['series']['points']['show']?'Points':'').'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
+			bindFlotForQTip'.($this->usesPoints()?'Points':'').'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
 	}
 
 	/**
@@ -428,8 +428,19 @@ class Plot {
 		$this->Options['grid']['hoverable'] = true;
 		$this->Options['grid']['autoHighlight'] = false;
 
-		if ($this->Options['series']['points']['show'])
+		if ($this->usesPoints())
 			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0.2)';
+	}
+
+	/**
+	 * Does this plot uses points?
+	 * @return bool
+	 */
+	private function usesPoints() {
+		return (isset($this->Options['series'])
+				&& isset($this->Options['series']['points'])
+				&& isset($this->Options['series']['points']['show'])
+				&& $this->Options['series']['points']['show']);
 	}
 
 	/**
