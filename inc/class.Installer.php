@@ -84,6 +84,18 @@ class Installer {
 	protected $prefixIsAlreadyUsed = false;
 
 	/**
+	 * Boolean flag: writing config-file fails
+	 * @var bool
+	 */
+	protected $cantWriteConfig = false;
+
+	/**
+	 * Boolean flag: filling database fails
+	 * @var bool
+	 */
+	protected $cantSetupDatabase = false;
+
+	/**
 	 * Array with configuration for mysql-connection
 	 * @var array
 	 */
@@ -93,6 +105,8 @@ class Installer {
 	 * Constructor
 	 */
 	public function __construct() {
+		define('PATH', dirname(__FILE__).'/');
+
 		$this->findoutCurrentStep();
 		$this->loadConfig();
 		$this->executeCurrentStep();
@@ -103,14 +117,21 @@ class Installer {
 	 * Load configuration file
 	 */
 	protected function loadConfig() {
-		if (file_exists('config.php')) {
-			if ($this->currentStep == self::$START)
-				$this->currentStep = self::$ALREADY_INSTALLED;
+		if (file_exists(PATH.'../config.php')) {
+			include PATH.'../config.php';
 
-			include 'config.php';
+			$this->mysqlConfig = array($host, $username, $password, $database);
+
+			if ($this->currentStep == self::$START) {
+				if ($this->databaseIsCorrect())
+					$this->currentStep = self::$ALREADY_INSTALLED;
+				else
+					$this->currentStep = self::$SETUP_DATABASE;
+			}
+		} else {
+			$this->mysqlConfig = array('localhost', '', '', 'runalyze');
 		}
 
-		$this->mysqlConfig = array($host, $username, $password, $database);
 	}
 
 	/**
@@ -131,7 +152,11 @@ class Installer {
 			case self::$SETUP_CONFIG:
 				if (isset($_POST['write_config'])) {
 					$this->writeConfigFile();
-					$this->moveToNextStep();
+
+					if ($this->loadConfig())
+						$this->moveToNextStep();
+					else
+						$this->cantWriteConfig = true;
 				} else {
 					if (!$this->connectionIsSetAndCorrect())
 						$this->connectionIsIncorrect = true;
@@ -144,7 +169,11 @@ class Installer {
 
 			case self::$SETUP_DATABASE:
 				$this->importSqlFiles();
-				$this->moveToNextStep();
+
+				if ($this->databaseIsCorrect())
+					$this->moveToNextStep();
+				else
+					$this->cantSetupDatabase = true;
 				break;
 		}
 	}
@@ -153,7 +182,7 @@ class Installer {
 	 * Execute current step of installation
 	 */
 	protected function displayCurrentStep() {
-		include 'tpl/tpl.Installer.php';
+		include PATH.'tpl/tpl.Installer.php';
 	}
 
 	/**
@@ -217,10 +246,10 @@ class Installer {
 		$config['prefix']        = $_POST['prefix'];
 		$config['debug_slashes'] = isset($_POST['debug']) ? '' : '//';
 
-		$file_string = file_get_contents('inc/install/config.php');
+		$file_string = file_get_contents(PATH.'install/config.php');
 		$file_string = preg_replace('/{config::([^}]*)}/ie', 'isset($config["$1"])?$config["$1"]:"$0"', $file_string);
 
-		file_put_contents('config.php', $file_string);
+		file_put_contents(PATH.'../config.php', $file_string);
 	}
 
 	/**
@@ -236,11 +265,22 @@ class Installer {
 	 * Import all needed sql-dumps to database
 	 */
 	protected function importSqlFiles() {
-		mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		mysql_select_db($this->mysqlConfig[3]);
+		@mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		@mysql_select_db($this->mysqlConfig[3]);
 
-		self::importSqlFile('inc/install/structure.sql');
-		self::importSqlFile('inc/install/runalyze_empty.sql');
+		self::importSqlFile(PATH.'install/structure.sql');
+		self::importSqlFile(PATH.'install/runalyze_empty.sql');
+	}
+
+	/**
+	 * Check if the database is filled
+	 * @return bool
+	 */
+	protected function databaseIsCorrect() {
+		@mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		@mysql_select_db($this->mysqlConfig[3]);
+
+		return (@mysql_num_rows(@mysql_query('SHOW TABLES LIKE "'.PREFIX.'training"')) > 0);
 	}
 
 	/**
