@@ -272,7 +272,7 @@ class Plot {
 	}
 	
 	/**
-	 * Get code for enable tracking
+	 * Get code for an error
 	 * @return string
 	 */
 	private function getJSForError() {
@@ -337,7 +337,7 @@ class Plot {
 				show: false,
 				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
 			});
-			bindFlotForQTip($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
+			bindFlotForQTip'.($this->Options['series']['points']['show']?'Points':'').'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
 	}
 
 	/**
@@ -362,7 +362,14 @@ class Plot {
 	 * @return array
 	 */
 	static public function correctValuesForTime($array) {
-		return array_map(function($v){return $v*1000;}, $array);
+		return array_map("self::correctValuesMapper", $array);
+	}
+
+	/**
+	 * Mapper for self::correctValuesForTime
+	 */
+	static private function correctValuesMapper($v) {
+		return $v*1000;
 	}
 
 	/**

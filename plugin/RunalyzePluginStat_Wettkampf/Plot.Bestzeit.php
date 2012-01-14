@@ -35,6 +35,7 @@ $Plot->setXAxisAsTime();
 $Plot->setYAxisTimeFormat($timeFormat);
 
 $Plot->lineWithPoints();
+$Plot->enableTracking();
 
 $Plot->outputJavaScript();
 ?>
