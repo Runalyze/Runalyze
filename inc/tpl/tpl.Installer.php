@@ -90,7 +90,7 @@ foreach ($Steps as $i => $Name) {
 		<p class="okay">
 			Es l&auml;uft MySQL <?php echo $this->getMysqlVersion(); ?>
 		</p>
-		<?php else: ?>
+		<?php elseif (!$this->cantWriteConfig): ?>
 		<p class="error">
 			Es wird mindestens MySQL <?php echo self::$REQUIRED_MYSQL_VERSION; ?> ben&ouml;tigt. Derzeit l&auml;uft MySQL <?php echo $this->getMysqlVersion(); ?>
 		</p>
@@ -150,6 +150,12 @@ foreach ($Steps as $i => $Name) {
 		</label>
 	</p>
 
+	<?php if ($this->cantWriteConfig): ?>
+	<p class="error">
+		Die Konfigurations-Datei kann nicht geschrieben werden.<br />
+		Bitte kopiere <strong>/inc/install/config.php</strong> in das Hauptverzeichnis und trage die Verbindungsdaten von Hand ein.
+	<?php endif; ?>
+
 	<p class="text">
 		<?php if ($this->readyForNextStep): ?>
 			<input type="hidden" name="write_config" value="true" />
@@ -175,6 +181,12 @@ foreach ($Steps as $i => $Name) {
 	<code><?php echo $this->getSqlContentForFrontend('inc/install/structure.sql'); ?></code>
 
 	<code><?php echo $this->getSqlContentForFrontend('inc/install/runalyze_empty.sql'); ?></code>
+
+	<?php if ($this->cantSetupDatabase): ?>
+	<p class="error">
+		Die Datenbank kann nicht bef&uuml;llt werden.<br />
+		Bitte importiere die beiden obigen Daten nacheinander in die Datenbank.
+	<?php endif; ?>
 
 	<p class="text">
 		<input type="hidden" name="step" value="3" />

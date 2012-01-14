@@ -427,6 +427,9 @@ class Plot {
 		$this->Options['crosshair']['mode'] = "x";
 		$this->Options['grid']['hoverable'] = true;
 		$this->Options['grid']['autoHighlight'] = false;
+
+		if ($this->Options['series']['points']['show'])
+			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0.2)';
 	}
 
 	/**
