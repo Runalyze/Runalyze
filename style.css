@@ -160,10 +160,9 @@ div#overlay {
 div#ajax {
 	display: none;
 	z-index: 11;
-	position: fixed;
+	position: absolute;
 	left: 50%;
 	width: 800px;
-	max-height: 600px;
 	margin-top: 10px;
 	margin-left: -400px;
 	padding: 10px;

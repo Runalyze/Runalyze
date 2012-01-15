@@ -77,7 +77,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
 				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse').'
 
-				<div id="sportler_flots" style="position:relative;width:322px;height:150px;margin:2px auto;">
+				<div id="sportler_flots" class="flotChangeable" style="position:relative;width:322px;height:150px;margin:2px auto;">
 					<div class="flot waitImg" id="sportler_weights" style="width:320px;height:148px;position:absolute;"></div>
 					<div class="flot waitImg flotHide" id="sportler_analyse" style="width:320px;height:148px;position:absolute;"></div>
 				</div>
