@@ -224,3 +224,9 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 <?php endif; ?>
+
+	<p class="error" id="JSerror">
+		JavaScript ist deaktiviert. Ohne JavaScript wird Runalyze nicht funktionieren!
+	</p>
+
+	<script type="text/javascript">$(document).ready(function(){ $("#JSerror").remove(); });</script>

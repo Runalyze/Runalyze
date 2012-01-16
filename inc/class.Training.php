@@ -290,7 +290,10 @@ class Training {
 	 * @return string HTML-link to this training
 	 */
 	public function trainingLinkWithComment() {
-		return $this->trainingLink($this->get('comment'));
+		if (strlen($this->get('comment')) > 0)
+			return $this->trainingLink($this->get('comment'));
+
+		return $this->trainingLink('<em>unbekannt</em>');
 	}
 
 	/**
@@ -364,7 +367,7 @@ class Training {
 	 * @return string
 	 */
 	public function getTitle() {
-		return ($this->hasType())
+		return ($this->hasType() && !$this->Type()->isUnknown())
 			? $this->Type()->name()
 			: $this->Sport()->name();
 	}

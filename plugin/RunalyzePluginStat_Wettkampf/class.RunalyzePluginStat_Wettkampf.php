@@ -117,13 +117,16 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->distances = array();
 		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' GROUP BY `distance`');
 		foreach ($dists as $i => $dist) {
-			if ($dist['wks'] > 1) {
+			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->config['pb_distances']['var'])) {
 				$this->distances[] = $dist['distance'];
 		
 				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`='.$dist['distance'].' ORDER BY `s` ASC');
 				$this->displayWKTr($wk, $i, true);
 			}
 		}
+
+		if (empty($this->distances))
+			$this->displayEmptyTr(1, '<em>Es konnten auf den eingetragenen Distanzen keine Bestzeiten gefunden werden.</em>');
 	}
 
 	/**
@@ -199,7 +202,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		
 			foreach ($year as $key => $y)
 				if ($key != 'sum')
-					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Helper::Time($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '&nbsp;').'</td>';
+					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Helper::Time($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>kein Ergebnis</small></em>').'</td>';
 		
 			echo '</tr>';
 		}

@@ -345,6 +345,7 @@ abstract class Plugin {
 	 * @param string $config_dat as $dat['config'] from database
 	 */
 	private function initConfigVars($config_dat) {
+		// TODO: Add vars to config if not in DB
 		$this->config = array();
 		$config_dat = explode("\n", $config_dat);
 

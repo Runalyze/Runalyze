@@ -100,6 +100,9 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		foreach ($this->SumData as $i => $Strecke) {
 			$Training = new Training($Strecke['id']);
 
+			if (strlen($Strecke['route']) == 0)
+				$Strecke['route'] = '<em>unbekannte Strecke</em>';
+
 			echo('
 			<tr class="a'.($i%2+1).'">
 				<td class="small">'.$Training->getDate(false).'</td>
@@ -127,6 +130,9 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 
 		foreach ($this->UpwardData as $i => $Strecke) {
 			$Training = new Training($Strecke['id']);
+
+			if (strlen($Strecke['route']) == 0)
+				$Strecke['route'] = '<em>unbekannte Strecke</em>';
 
 			echo('
 			<tr class="a'.($i%2+1).'">

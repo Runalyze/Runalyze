@@ -99,6 +99,14 @@ class Type {
 	}
 
 	/**
+	 * Is this type unknown? (id=0)
+	 * @return bool
+	 */
+	public function isUnknown() {
+		return ($this->id == 0);
+	}
+
+	/**
 	 * Initialize internal types-array from database
 	 */
 	static private function initTypes() {
