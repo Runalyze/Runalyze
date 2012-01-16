@@ -151,7 +151,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 					Insgesamt wurden <strong>'.count($this->orte).' verschiedene Orte</strong> sportlich besucht.
 				</td>
 			</tr>
-		</table>');
+		</table>
+
+		<p class="small c"><em>Alles was bei der eingetragenen Strecke mit &quot; - &quot; getrennt wird, wird als eigener Ort betrachtet.</em></p>');
 	}
 
 	/**
