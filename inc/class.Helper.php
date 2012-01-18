@@ -769,6 +769,15 @@ function simplexml_load_string_utf8($Xml) {
  * @return string
  */
 function simplexml_correct_ns($string) {
-	return str_replace('xmlns=', 'ns=', $string);
+	return str_replace('xmlns=', 'ns=', removeBOMfromString($string));
+}
+
+/**
+ * Remove leading BOM from string
+ * @param string $string
+ * @return string
+ */
+function removeBOMfromString($string) {
+	return substr($string, strpos($string, "<"));
 }
 ?>
