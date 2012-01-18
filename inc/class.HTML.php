@@ -402,6 +402,9 @@ class HTML {
 	 * @return bool
 	 */
 	public static function isInternetExplorer() {
+		if (!isset($_SERVER['HTTP_USER_AGENT']))
+			return false;
+
 		return (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false);
 	}
 }
