@@ -345,6 +345,7 @@ class Weather {
 				case 'Windy':
 					return 'wechselhaft';
 				case 'Rain':
+				case 'Light rain':
 				case 'Showers':
 				case 'Rain and snow':
 				case 'Freezing drizzle':
