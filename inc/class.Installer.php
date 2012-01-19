@@ -130,8 +130,10 @@ class Installer {
 			}
 		} else {
 			$this->mysqlConfig = array('localhost', '', '', 'runalyze');
+			return false;
 		}
 
+		return true;
 	}
 
 	/**
