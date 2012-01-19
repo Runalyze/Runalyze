@@ -145,7 +145,7 @@ foreach ($Steps as $i => $Name) {
 
 	<p class="text">
 		<label>
-			<input type="checkbox" name="debug" <?php if ($_POST['debug']) echo 'checked="checked"' ?> />
+			<input type="checkbox" name="debug" <?php if (isset($_POST['debug']) && $_POST['debug']) echo 'checked="checked"' ?> />
 			Debug-Modus
 		</label>
 	</p>

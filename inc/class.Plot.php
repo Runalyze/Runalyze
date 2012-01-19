@@ -369,14 +369,7 @@ class Plot {
 	 * @return array
 	 */
 	static public function correctValuesForTime($array) {
-		return array_map("self::correctValuesMapper", $array);
-	}
-
-	/**
-	 * Mapper for self::correctValuesForTime
-	 */
-	static private function correctValuesMapper($v) {
-		return $v*1000;
+		return array_map("PLOT__correctValuesMapperForTime", $array);
 	}
 
 	/**
@@ -711,5 +704,12 @@ class Plot {
 
 		return str_replace($encrypted, $correct, $string);
 	}
+}
+
+/**
+ * Mapper for Plot::correctValuesForTime
+ */
+function PLOT__correctValuesMapperForTime($v) {
+	return $v*1000;
 }
 ?>
