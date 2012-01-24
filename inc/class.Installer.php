@@ -105,12 +105,18 @@ class Installer {
 	 * Constructor
 	 */
 	public function __construct() {
-		define('PATH', dirname(__FILE__).'/');
-
+		$this->definePath();
 		$this->findoutCurrentStep();
 		$this->loadConfig();
 		$this->executeCurrentStep();
 		$this->displayCurrentStep();
+	}
+	
+	/**
+	* Define const PATH
+	*/
+	public function definePath() {
+		define('PATH', dirname(__FILE__).'/');
 	}
 
 	/**
