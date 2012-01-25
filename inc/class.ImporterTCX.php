@@ -54,6 +54,8 @@ class ImporterTCX extends Importer {
 		if (!$this->isGarminFile())
 			return;
 
+		// TODO: Mehrere Trainings
+
 		$this->initParser();
 		$this->parseStarttime();
 		$this->parseLaps();
@@ -261,6 +263,16 @@ class ImporterTCX extends Importer {
 		$Errors = $Editor->getErrorsAsArray();
 		if (!empty($Errors))
 			echo HTML::error(implode('<br />', $Errors));
+	}
+
+	/**
+	 * Decode from Garmin-Communicator compressed data (base64, gzip)
+	 * @param string $string
+	 * @return string
+	 */
+	static public function decodeCompressedData($string) {
+		$string = substr($string, strpos($string, "\n") + 1);
+		return gzinflate(substr(base64_decode($string),10,-8));
 	}
 }
 ?>

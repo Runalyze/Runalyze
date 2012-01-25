@@ -246,8 +246,9 @@ abstract class Importer {
 	 */
 	protected function getFileContentAsString() {
 		if (empty($this->fileName) && isset($_POST['data'])) {
-			$this->logFileContent($_POST['data']);
-			return $_POST['data'];
+			$string = ImporterTCX::decodeCompressedData($_POST['data']);
+			$this->logFileContent($string);
+			return $string;
 		}
 
 		if (!file_exists($this->fileName)) {

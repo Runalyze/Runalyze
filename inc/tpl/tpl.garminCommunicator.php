@@ -35,12 +35,15 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 				lookingForDevices: 'Suche nach Ger&auml;ten<br /><br /><img src="../tcx/garmin/ajax-loader.gif" />',
 				uploadsFinished: "&Uuml;bertragung vollst&auml;ndig",
 				uploadSelectedActivities: true,
-				uploadCompressedData: false,    // Turn on data compression by setting to true.
-				uploadMaximum: 1, 
+				uploadCompressedData: true,
+				uploadMaximum: 20, 
 				dataFound: "#{tracks} Trainings gefunden",
 				showReadDataElementOnDeviceFound: true,
 				postActivityHandler: function(activityXml, display) {
 					window.parent.getXmlFromIFrame(activityXml);
+				},
+				afterFinishUploads: function(display) {
+					//window.alert("Das waren alle.");
 				}
 			});
 		}
