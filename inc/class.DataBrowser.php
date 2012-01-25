@@ -380,6 +380,11 @@ class DataBrowser {
 		} elseif (28 <= $diff_in_days && $diff_in_days <= 31) {
 			$start_month += 1*$factor;
 			$end_month   += 1*$factor;
+
+			if ($start_day == 1 && $end_day != 0) {
+				$end_month = $start_month + 1;
+				$end_day = 0;
+			}
 		} else {
 			$start_day   += $diff_in_days*$factor;
 			$end_day     += $diff_in_days*$factor;

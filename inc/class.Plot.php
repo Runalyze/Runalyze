@@ -364,24 +364,6 @@ class Plot {
 	}
 
 	/**
-	 * Correct all values as JS-timestamps
-	 * @param array $array
-	 * @return array
-	 */
-	static public function correctValuesForTime($array) {
-		return array_map("PLOT__correctValuesMapperForTime", $array);
-	}
-
-	/**
-	 * Get JavaScript-timestamp for a day of a year
-	 * @param int $year
-	 * @param int $day
-	 */
-	static public function dayOfYearToJStime($year, $day) {
-		return mktime(1,0,0,1,$day,$year).'000';
-	}
-
-	/**
 	 * Set title to plot
 	 * @param string $title
 	 * @param string $position
@@ -704,6 +686,33 @@ class Plot {
 
 		return str_replace($encrypted, $correct, $string);
 	}
+
+	/**
+	 * Get JavaScript-timestamp for a day of a year
+	 * @param int $year
+	 * @param int $day
+	 */
+	static public function dayOfYearToJStime($year, $day) {
+		return mktime(1,0,0,1,$day,$year).'000';
+	}
+
+	/**
+	 * Correct all values as JS-timestamps
+	 * @param array $array
+	 * @return array
+	 */
+	static public function correctValuesForTime($array) {
+		return array_map("PLOT__correctValuesMapperForTime", $array);
+	}
+
+	/**
+	 * Correct all pace-values to km/h
+	 * @param array $array
+	 * @return array
+	 */
+	static public function correctValuesFromPaceToKmh($array) {
+		return array_map("PLOT__correctValuesMapperFromPaceToKmh", $array);
+	}
 }
 
 /**
@@ -711,5 +720,12 @@ class Plot {
  */
 function PLOT__correctValuesMapperForTime($v) {
 	return $v*1000;
+}
+
+/**
+ * Mapper for Plot::correctValuesFromPaceToKmh
+ */
+function PLOT__correctValuesMapperFromPaceToKmh($v) {
+	return 3600/$v;
 }
 ?>

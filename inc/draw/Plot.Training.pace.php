@@ -11,22 +11,30 @@ if (!is_numeric($_GET['id']))
 
 $Training = new Training($_GET['id']);
 $Data = $Training->GpsData()->getPlotDataForPace();
-$Data = Plot::correctValuesForTime($Data);
-
-$min = min($Data);
-$max = max($Data);
-
-if ($max >= 10*60*1000) {
-	$minL = $min;
-	$maxL = 10*60*1000;
-	$correctYAxis = true;
-} else {
+if ($Training->Sport()->usesKmh()) {
+	$Data = Plot::correctValuesFromPaceToKmh($Data);
 	$correctYAxis = false;
+} else {
+	$Data = Plot::correctValuesForTime($Data);
+
+	$min = min($Data);
+	$max = max($Data);
+	
+	if ($max >= 10*60*1000) {
+		$minL = $min;
+		$maxL = 10*60*1000;
+		$correctYAxis = true;
+	} else {
+		$correctYAxis = false;
+	}
 }
 
 $Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $Data);
 
-$Plot->setYAxisTimeFormat('%M:%S');
+if ($Training->Sport()->usesKmh())
+	$Plot->addYUnit(1, 'km/h');
+else
+	$Plot->setYAxisTimeFormat('%M:%S');
 
 if ($correctYAxis) {
 	$Plot->setYLimits(1, $minL, $maxL, true);
