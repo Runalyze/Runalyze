@@ -14,5 +14,7 @@
 	<div class="c"><img id="wait" src="img/ajax-loader-download.gif" alt="Bitte warten ... es wird geladen." /></div>
 </div>
 
+<?php Ajax::initJSlibrary(); ?>
+
 </body>
 </html>

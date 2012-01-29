@@ -2,6 +2,9 @@
 /**
  * This file contains the class to handle all AJAX-Links
  */
+
+Config::register('Design', 'JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
+
 /**
  * Class: Ajax
  * 
@@ -15,6 +18,16 @@ class Ajax {
 	 * @var string
 	 */
 	public static $IMG_WAIT = 'waitImg';
+
+	/**
+	 * Init own JS-library on frontend (direct output)
+	 */
+	public static function initJSlibrary() {
+		$Options = array();
+		$Options['useTooltip'] = CONF_JS_USE_TOOLTIP;
+
+		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');
+	}
 
 	/**
 	 * Gives a HTML-link for using jTraining
