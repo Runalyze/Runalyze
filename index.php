@@ -18,11 +18,11 @@ $Frontend = new Frontend(false, __FILE__);
 $Frontend->displayHeader();
 ?>
 
-<div id="r">
+<div id="panels">
 	<?php $Frontend->displayPanels(); ?>
 </div>
 
-<div id="l">
+<div id="main">
 	<div id="dataPanel" class="panel">
 		<div id="daten">
 			<?php

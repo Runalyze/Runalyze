@@ -12,10 +12,10 @@ body {
 	font-family: Verdana, Arial, sans serif;
 	font-size: 11px;
 }
-body#main { min-width: 1000px; }
+body#home { min-width: 1024px; }
 body#installer { font-size: 12px; }
 
-div#l {
+div#main {
 	width: 66%;
 	min-width: 680px;
 	float: left;
@@ -23,9 +23,9 @@ div#l {
 	margin-bottom: 33px;
 }
 
-div#r {
+div#panels {
 	width: 32%;
-	min-width: 320px;
+	min-width: 344px;
 	float: right;
 	text-align: left;
 	margin-bottom: 33px;
@@ -183,10 +183,13 @@ div#ajax.bigWin {
 	width: 90%;
 	margin-left: -45%;
 }
+div#ajax.bigWin.tooBig {
+	left: 50%;
+	width: 900px;
+	margin-left: -450px;
+}
 
 div#ajax.tooBig {
-	position: absolute;
-	top: 10px;
 	left: 10px;
 	margin-left: 0 !important;
 }
