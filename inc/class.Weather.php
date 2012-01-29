@@ -166,7 +166,7 @@ class Weather {
 	 * @return string
 	 */
 	public function temperatureString() {
-		return Helper::Unknown($this->temperature).' &#176;C';
+		return (is_null($this->temperature) ? '?' : $this->temperature).' &#176;C';
 	}
 
 	/**
