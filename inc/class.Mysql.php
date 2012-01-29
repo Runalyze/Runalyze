@@ -125,12 +125,21 @@ final class Mysql {
 	}
 
 	/**
-	 * Fetch data from database as array
+	 * Fetch data from database as associative array
 	 * @param string $query
 	 * @return array $return[$i]['column']
 	 */
 	public function fetchAsArray($query) {
 		return $this->fetch($query, false, true);
+	}
+
+	/**
+	 * Fetch data from database as numeric array
+	 * @param string $query
+	 * @return array $return[$i]['column']
+	 */
+	public function fetchAsNumericArray($query) {
+		return $this->fetch($query, false, true, true);
 	}
 
 	/**
@@ -149,10 +158,11 @@ final class Mysql {
 	 * Fetches the row of an given $id or all rows of a $query
 	 * @param string $table    name of table or whole query
 	 * @param int|bool $id     Must not be set if first argument is a query (default: false), otherwise the ID. Can be 'LAST' to get the highest ID
-	 * @param bool $as_array   Method returns always $return[$i]['column'] if true, default: false 
+	 * @param bool $as_array   Method returns always $return[$i]['column'] if true, default: false
+	 * @param bool $numeric    Use mysql_fetch_row instead of mysql_fetch_assoc 
 	 * @return array           For count($return)=1: $return['column'], otherwise: $return[$i]['column']. For count($return)=0 && !$as_array: false.
 	 */
-	public function fetch($table, $id = false, $as_array = false) {
+	public function fetch($table, $id = false, $as_array = false, $numeric = false) {
 		$return = array();
 		if ($id !== false && strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
@@ -167,8 +177,12 @@ final class Mysql {
 		if ($result === false) {
 			Error::getInstance()->addWarning(mysql_error());
 		} else {
-			while($data = mysql_fetch_assoc($result))
-				$return[] = $data;
+			if ($numeric)
+				while($data = mysql_fetch_array($result, MYSQL_NUM))
+					$return[] = $data;
+			else
+				while($data = mysql_fetch_array($result, MYSQL_ASSOC))
+					$return[] = $data;
 		}
 
 		if (sizeof($return) == 0 && !$as_array)
