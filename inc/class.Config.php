@@ -164,7 +164,7 @@ class Config {
 				foreach ($folder as $fold) {
 					if ($handle = opendir(FRONTEND_PATH.'../'.$fold)) {
 						while (false !== ($file = readdir($handle))) {
-							if ($file != "." && $file != "..") {
+							if (substr($file,0,1) != ".") {
 								$options[] = array('name' => $file, 'value' => $fold.$file);
 							}
 						}
