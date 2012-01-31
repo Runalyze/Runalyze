@@ -3,7 +3,7 @@
 		<tr class="small">
 			<th class="{sorter:'germandate'}">Datum</th>
 			<th>Lauf</th>
-			<th>km</th>
+			<th class="{sorter:'distance'}">km</th>
 			<th>Zeit</th>
 			<th>Puls</th>
 			<th>VDOT<br />Wert</th>
@@ -44,4 +44,8 @@
 <?php Ajax::printPagerDiv(); ?>
 <?php echo Ajax::wrapJSforDocumentReady('jTablesorterWithPagination()'); ?>
 
-<p class="info">VDOT-Corrector: <?php echo VDOT_CORRECTOR; ?></p>
+<p class="info small">
+	<strong>VDOT Wert:</strong> VDOT aus Pace-Puls-Verh&auml;ltnis<br />
+	<strong>korr. Wert:</strong> VDOT nach individueller VDOT-Korrektur (Faktor <?php echo VDOT_CORRECTOR; ?>)<br />
+	<strong>Form Wert:</strong> VDOT der damaligen Trainingsform bzw. Prognose
+</p>

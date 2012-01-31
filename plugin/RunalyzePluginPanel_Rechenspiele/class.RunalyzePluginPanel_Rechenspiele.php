@@ -44,7 +44,11 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>').NL;
+		$Links = array();
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" title="Form anzeigen">'.Icon::get(Icon::$FATIGUE, 'Form anzeigen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" title="Erl&auml;uterungen zu den Rechenspielen">'.Icon::get(Icon::$INFO, '').'</a>');
+
+		return implode(' ', $Links);
 	}
 
 	/**
@@ -79,11 +83,11 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		echo('
 			<div class="left" style="width:60%;">
-				<p><span>'.$atl.' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
-				<p><span>'.$ctl.' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
-				<p><span>'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
-				<p><span>'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
-				<p><span>'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
+				<p><span class="right">'.$atl.' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
+				<p><span class="right">'.$ctl.' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
+				<p><span class="right">'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
+				<p><span class="right">'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
+				<p><span class="right">'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
 			</div>');
 
 		echo HTML::clearBreak();
