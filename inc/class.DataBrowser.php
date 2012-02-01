@@ -127,37 +127,36 @@ class DataBrowser {
 	 * Init all days for beeing displayed
 	 */
 	private function initDays() {
-		$this->days = array();
 		$this->initShortSports();
+		$this->initEmptyDays();
 
-		for ($w = 0; $w <= ($this->day_count-1); $w++)
-			$this->days[] = $this->initDay($w);
+		$AllTrainings = $this->Mysql->fetchAsArray('
+			SELECT *, DATE(FROM_UNIXTIME(time)) as `date`
+			FROM `'.PREFIX.'training`
+			WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).'
+			ORDER BY `time` ASC');
+
+		foreach ($AllTrainings as $Training) {
+			$w = floor(($Training['time'] - $this->timestamp_start)/(3600*24));
+
+			if (in_array($Training['sportid'], $this->sports_short))
+				$this->days[$w]['shorts'][]    = $Training;
+			else
+				$this->days[$w]['trainings'][] = $Training;
+		}
 	}
 
 	/**
-	 * Init array for one day {'date', 'shorts', 'trainings'}
-	 * @param int $w Number of day in DataBrowser
-	 * @return array
+	 * Init array with empty days
 	 */
-	private function initDay($w) {
-		// TODO: Make faster
-		// TODO: Clean code to only one query
-		$shorts     = array();
-		$trainings  = array();
-		$time       = $this->timestamp_start;
-		$time_start = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w,   date("Y",$time));
-		$time_end   = mktime(0, 0, 0, date("m",$time), date("d",$time)+$w+1, date("Y",$time));
+	private function initEmptyDays() {
+		$this->days = array();
 
-		$data = $this->Mysql->fetchAsArray('SELECT `id`, `sportid` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time_start-10).' AND '.($time_end-10).' ORDER BY `time` ASC');
-		if (!empty($data)) {
-			foreach ($data as $short)
-				if (in_array($short['sportid'], $this->sports_short))
-					$shorts[]    = $short['id'];
-				else
-					$trainings[] = $short['id'];
-		}
-
-		return array('date' => $time_start, 'shorts' => $shorts, 'trainings' => $trainings);
+		for ($w = 0; $w <= ($this->day_count-1); $w++)
+			$this->days[] = array(
+				'date' => mktime(0, 0, 0, date("m",$this->timestamp_start), date("d",$this->timestamp_start)+$w, date("Y",$this->timestamp_start)),
+				'shorts' => array(),
+				'trainings' => array());
 	}
 
 	/**

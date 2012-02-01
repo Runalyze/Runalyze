@@ -394,8 +394,18 @@ abstract class Importer {
 		$this->setDefaultValue('elevation', '0');
 		$this->setDefaultValue('splits', '');
 
-		$Weather = Weather::Forecaster();
-		$Weather->setPostDataIfEmpty();
+		if ($this->trainingWasToday()) {
+			$Weather = Weather::Forecaster();
+			$Weather->setPostDataIfEmpty();
+		}
+	}
+
+	/**
+	 * Is the training less than 24h old?
+	 * @return bool
+	 */
+	private function trainingWasToday() {
+		return empty($_POST) || ($this->get('time') > 0 && (time() - $this->get('time')) < 24*3600) || ($this->get('datum') == date("d.m.Y"));
 	}
 
 	/**

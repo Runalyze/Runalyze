@@ -125,12 +125,6 @@ class Icon {
 	 * @return string
 	 */
 	public static function getVDOTicon($VDOT) {
-		$distances = array();
-		$distances['3.000m'] = 3;
-		$distances['5 km']   = 5;
-		$distances['10 km']  = 10;
-		$distances['HM']     = 21.1;
-
 		if ( $VDOT > (VDOT_FORM+3) )
 			$icon = self::$FORM_UP;
 		elseif ( $VDOT > (VDOT_FORM+1) )
@@ -142,11 +136,7 @@ class Icon {
 		else
 			$icon = self::$FORM_NORMAL;
 
-		$title = $VDOT.': ';
-		foreach ($distances as $key => $km)
-			$title .= $key.' in '.Helper::Prognosis($km, 0, $VDOT).', ';
-
-		return self::get($icon, substr($title, 0, -2));
+		return self::get($icon, 'VDOT: '.$VDOT);
 	}
 }
 ?>

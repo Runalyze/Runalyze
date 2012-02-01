@@ -99,9 +99,12 @@ class Training {
 	/**
 	 * Constructor (needs ID, can be -1 for set($var) on it's own
 	 * @param int $id
+	 * @param array $data [optional]
 	 */
-	public function __construct($id) {
-		if (!$this->canSetDataFromId($id))
+	public function __construct($id, $data = array()) {
+		if (!empty($data))
+			$this->data = $data;
+		elseif (!$this->canSetDataFromId($id))
 			return false;
 
 		$this->fillUpDataWithDefaultValues();

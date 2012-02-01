@@ -96,7 +96,7 @@ class ImporterFormular extends Importer {
 			echo BR;
 		} else {
 			echo HTML::em('Das Training wurde erfolgreich eingetragen.');
-			echo Ajax::wrapJS('closeOverlay();');
+			echo Ajax::closeOverlay();
 		}
 	}
 	

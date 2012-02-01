@@ -239,6 +239,14 @@ class Ajax {
 	}
 
 	/**
+	 * Get code for closing overlay
+	 * @return string
+	 */
+	public static function closeOverlay() {
+		return self::wrapJS('Runalyze.closeOverlay();');
+	}
+
+	/**
 	 * Create code for binding tablesorter
 	 * @param string $selector
 	 */

@@ -33,7 +33,8 @@ foreach ($this->days as $i => $day) {
 	$date_string = '<small>'.date("d.m.", $day['date']).'</small> <span'.$today.'>'.Helper::Weekday(date("w", $day['date']), true).'</span>';
 
 	if (!empty($day['trainings'])) {
-		foreach ($day['trainings'] as $t => $id) {
+		foreach ($day['trainings'] as $t => $Training) {
+			$id = $Training['id'];
 			$wk_class = Helper::TrainingIsCompetition($id) ? ' wk' : '';
 			echo('<tr class="a'.($i%2+1).' r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>');
 
@@ -43,14 +44,14 @@ foreach ($this->days as $i => $day) {
 				echo('<td class="l" style="width:24px;">');
 
 				foreach ($day['shorts'] as $short) {
-					$this->Dataset->setTrainingId($short);
+					$this->Dataset->setTrainingId($short['id'], $short);
 					$this->Dataset->displayShortLink();
 				}
 
 				echo('</td><td class="l">'.$date_string.'</td>');
 			}
 
-			$this->Dataset->setTrainingId($id);
+			$this->Dataset->setTrainingId($id, $Training);
 			$this->Dataset->displayTableColumns();
 
 			echo('</tr>');
@@ -61,7 +62,7 @@ foreach ($this->days as $i => $day) {
 			<td class="l" style="width:24px;">');
 
 		foreach ($day['shorts'] as $short) {
-			$this->Dataset->setTrainingId($short);
+			$this->Dataset->setTrainingId($short['id'], $short);
 			$this->Dataset->displayShortLink();
 		}
 
@@ -77,7 +78,7 @@ foreach ($this->days as $i => $day) {
 		<td colspan="'.($this->Dataset->column_count+2).'" />
 	</tr>'.NL);
 }
-#
+
 // Z U S A M M E N F A S S U N G
 $sports = $this->Mysql->fetchAsArray('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' GROUP BY `sportid`');
 foreach ($sports as $sportdata) {

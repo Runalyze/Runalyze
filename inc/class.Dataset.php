@@ -61,10 +61,11 @@ class Dataset {
 	/**
 	 * Set training
 	 * @param int $id
+	 * @param array $data [optional]
 	 */
-	public function setTrainingId($id) {
+	public function setTrainingId($id, $data = array()) {
 		$this->trainingId = $id;
-		$this->Training = new Training($id);
+		$this->Training = new Training($id, $data);
 	}
 
 	/**

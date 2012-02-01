@@ -18,10 +18,6 @@ $Frontend = new Frontend(false, __FILE__);
 $Frontend->displayHeader();
 ?>
 
-<div id="panels">
-	<?php $Frontend->displayPanels(); ?>
-</div>
-
 <div id="main">
 	<div id="dataPanel" class="panel">
 		<div id="daten">
@@ -54,6 +50,10 @@ $Frontend->displayHeader();
 		</div>
 	</div>
 
+</div>
+
+<div id="panels">
+	<?php $Frontend->displayPanels(); ?>
 </div>
 
 <?php
