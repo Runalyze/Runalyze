@@ -36,7 +36,7 @@ class Ajax {
 	static public function getNeededJSFilesAsArray() {
 		$Files = array();
 
-		$Files[] = 'lib/jQuery.1.4.2.js';
+		$Files[] = 'lib/jquery-1.7.1.min.js';
 		$Files[] = 'lib/jQuery.scrollTo.js';
 		$Files[] = 'lib/jQuery.form.js';
 		$Files[] = 'lib/jQuery.metadata.js';
