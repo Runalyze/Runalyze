@@ -27,6 +27,7 @@ class Icon {
 	static public $CLOCK			= 'img/clock.png';
 	static public $SEARCH			= 'img/search.png';
 	static public $WARNING			= 'img/warning.png';
+	static public $INFO				= 'img/info.gif';
 	// Arrows
 	static public $ARR_NEXT			= 'img/next.png';
 	static public $ARR_BACK			= 'img/back.png';
@@ -124,6 +125,12 @@ class Icon {
 	 * @return string
 	 */
 	public static function getVDOTicon($VDOT) {
+		$distances = array();
+		$distances['3.000m'] = 3;
+		$distances['5 km']   = 5;
+		$distances['10 km']  = 10;
+		$distances['HM']     = 21.1;
+
 		if ( $VDOT > (VDOT_FORM+3) )
 			$icon = self::$FORM_UP;
 		elseif ( $VDOT > (VDOT_FORM+1) )
@@ -135,12 +142,11 @@ class Icon {
 		else
 			$icon = self::$FORM_NORMAL;
 
-		$title = $VDOT.': 3.000m in '.Helper::Prognosis(3, 0, $VDOT).',
-			5 km in '.Helper::Prognosis(5, 0, $VDOT).',
-			10 km in '.Helper::Prognosis(10, 0, $VDOT).',
-			HM in '.Helper::Prognosis(21.1, 0, $VDOT);
+		$title = $VDOT.': ';
+		foreach ($distances as $key => $km)
+			$title .= $key.' in '.Helper::Prognosis($km, 0, $VDOT).', ';
 
-		return self::get($icon, $title);
+		return self::get($icon, substr($title, 0, -2));
 	}
 }
 ?>

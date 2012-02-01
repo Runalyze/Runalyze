@@ -51,7 +51,7 @@ if ($Training->isOutside())
 
 <br />
 
-<input type="submit" value="Bearbeiten" />
+<input type="submit" value="Speichern" />
 
 </form>
 

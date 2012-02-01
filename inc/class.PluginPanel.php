@@ -19,6 +19,12 @@ abstract class PluginPanel extends Plugin {
 	public $SurroundingDivIsVisible = true;
 
 	/**
+	 * Use only text as right symbol
+	 * @var bool
+	 */
+	protected $textAsRightSymbol = false;
+
+	/**
 	 * Method for initializing default config-vars (should be implemented in each plugin)
 	 */
 	protected function getDefaultConfigVars() { return array(); }
@@ -84,7 +90,7 @@ abstract class PluginPanel extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo('<span class="right">'.$this->getRightSymbol().'</span>
+		echo('<span class="right '.($this->textAsRightSymbol?'smallHeadNavi':'').'">'.$this->getRightSymbol().'</span>
 			<h1>
 				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">
 					'.$this->name.'

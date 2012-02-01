@@ -69,7 +69,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Pulse = Helper::Unknown($dat['pulse_rest']).' bpm / '.Helper::Unknown($dat['pulse_max']).' bpm';
 
 		if ($this->config['use_body_fat'])
-			$Analyse = 'Analyse: <small>Fett: '.Helper::Unknown($dat['fat']).' &#37;, Wasser: '.Helper::Unknown($dat['water']).' &#37;, Muskeln: '.Helper::Unknown($dat['muscles']).' &#37;</small>';
+			$Analyse = 'Fett: '.Helper::Unknown($dat['fat']).' &#37;, Wasser: '.Helper::Unknown($dat['water']).' &#37;, Muskeln: '.Helper::Unknown($dat['muscles']).' &#37;';
 		
 		echo('
 			<div id="sportler">

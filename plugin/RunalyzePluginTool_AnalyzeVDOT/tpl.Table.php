@@ -1,4 +1,4 @@
-<table style="width:100%" class="sortable pager">
+<table style="width:100%" id="vdotAnalysisTable">
 	<thead>
 		<tr class="small">
 			<th class="{sorter:'germandate'}">Datum</th>
@@ -41,8 +41,7 @@
 	</tbody>
 </table>
 
-<?php Ajax::printPagerDiv(); ?>
-<?php echo Ajax::wrapJSforDocumentReady('jTablesorterWithPagination()'); ?>
+<?php Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable'); ?>
 
 <p class="info small">
 	<strong>VDOT Wert:</strong> VDOT aus Pace-Puls-Verh&auml;ltnis<br />

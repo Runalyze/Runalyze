@@ -40,7 +40,7 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 				dataFound: "#{tracks} Trainings gefunden",
 				showReadDataElementOnDeviceFound: true,
 				postActivityHandler: function(activityXml, display) {
-					window.parent.getXmlFromIFrame(activityXml);
+					window.parent.Runalyze.loadXML(activityXml);
 				},
 				afterFinishUploads: function(display) {
 					//window.alert("Das waren alle.");

@@ -30,14 +30,52 @@ class Ajax {
 	}
 
 	/**
+	 * Get all js-files needed for included in header
+	 * @return array
+	 */
+	static public function getNeededJSFilesAsArray() {
+		$Files = array();
+
+		$Files[] = 'lib/jQuery.1.4.2.js';
+		$Files[] = 'lib/jQuery.scrollTo.js';
+		$Files[] = 'lib/jQuery.form.js';
+		$Files[] = 'lib/jQuery.metadata.js';
+		$Files[] = 'lib/jQuery.tablesorter.js';
+		$Files[] = 'lib/jQuery.tablesorter.pager.js';
+		$Files[] = 'lib/jquery.tooltip.js';
+
+		$Files[] = 'lib/datepicker.js';
+		$Files[] = 'lib/fileuploader.js';
+
+		$Files[] = 'lib/runalyze.lib.js';
+		$Files[] = 'lib/runalyze.lib.tablesorter.js';
+
+		$Files[] = 'lib/form_scripts.js';
+
+		if (CONF_DESIGN_BG_FIX_AND_STRETCH)
+			$Files[] = 'lib/jQuery.backgroundStretch.js';
+
+		return $Files;
+	}
+
+	/**
 	 * Gives a HTML-link for using jTraining
 	 * @param int $training_id ID of the training
 	 * @param string $name Name of the link to be displayed
 	 * @param bool $closeOverlay [optional] Boolean flag: Should the overlay be closed after clicking? (default: false)
 	 * @return string
 	 */
-	static function trainingLink($training_id, $name, $closeOverlay = false) {
-		return '<a class="training" href="call/call.Training.display.php?id='.$training_id.'" rel="'.$training_id.'" '.($closeOverlay ? ' onclick="closeOverlay()"' : '').'>'.$name.'</a>';
+	static function trainingLink($id, $name, $closeOverlay = false) {
+		return '<a class="training" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.closeOverlay()"' : '').'>'.$name.'</a>';
+	}
+
+	/**
+	 * Get onclick-string for loading training
+	 * @param int $training_id ID of the training
+	 * @return string
+	 */
+	static function trainingLinkAsOnclick($id) {
+		return 'onclick="Runalyze.loadTraining('.$id.')"';
 	}
 
 	/**
@@ -49,19 +87,6 @@ class Ajax {
 	static function toggle($link, $toggle_id) {
 		$link = self::insertClass($link, 'toggle');
 		$link = self::insertRel($link, $toggle_id);
-
-		return $link;
-	}
-
-	/**
-	 * Gives a HTML-link for using jImgChange()
-	 * @param string $link      The normal HTML-link
-	 * @param string $imgID     <img id="$imgID" ...
-	 * @return string
-	 */
-	static function imgChange($link, $imgID) {
-		$link = self::insertClass($link, 'jImg');
-		$link = self::insertRel($link, $imgID);
 
 		return $link;
 	}
@@ -99,14 +124,14 @@ class Ajax {
 
 	/**
 	 * Gives a HTML-link for using jLinks()
-	 * @param string $name   Displayed name for this link
-	 * @param string $target ID of target div-container
-	 * @param string $href   URL to be loaded
-	 * @param string $data   data to be passed
+	 * @param string $name    Displayed name for this link
+	 * @param string $target  ID of target div-container
+	 * @param string $href    URL to be loaded
+	 * @param string $data    data to be passed
 	 * @return string
 	 */
 	static function link($name, $target, $href, $data = '') {
-		return '<a class="ajax" href="'.$href.'"target="'.$target.'" rel="'.$data.'" >'.$name.'</a>';
+		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'">'.$name.'</a>';
 	}
 
 	/**
@@ -116,7 +141,7 @@ class Ajax {
 	 * @param string $flotID
 	 */
 	public static function flotChange($text, $divID, $flotID) {
-		return '<span class="link" onclick="flotChange(\''.$divID.'\',\''.$flotID.'\')">'.$text.'</span>';
+		return '<span class="link" onclick="Runalyze.flotChange(\''.$divID.'\',\''.$flotID.'\')">'.$text.'</span>';
 	}
 
 	/**
@@ -214,9 +239,27 @@ class Ajax {
 	}
 
 	/**
+	 * Create code for binding tablesorter
+	 * @param string $selector
+	 */
+	public static function createTablesorterFor($selector) {
+		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterAutosort();');
+	}
+
+	/**
+	 * Create code for binding tablesorter with pager
+	 * @param string $selector
+	 */
+	public static function createTablesorterWithPagerFor($selector) {
+		self::printPagerDiv();
+
+		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager();');
+	}
+
+	/**
 	 * Print div for pager for tables
 	 */
-	public static function printPagerDiv() {
+	private static function printPagerDiv() {
 		echo '
 <div id="pager" class="pager c">
 	<form>

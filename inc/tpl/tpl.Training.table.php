@@ -20,16 +20,11 @@
 	</tr>
 <?php endif; ?>
 
-<?php if (CONF_RECHENSPIELE): ?>
-	<?php if ($this->Sport()->isRunning() && $this->getVDOT() > 0): ?>
+<?php if ($this->hasPulse()): ?>
 	<tr>
-		<td class="small b">Vdot:</td>
-		<td><?php echo $this->getVDOT(); ?> <?php echo $this->getVDOTicon(); ?></td>
-	</tr>
-	<?php endif; ?>
-	<tr>
-		<td class="small b">Trimp:</td>
-		<td><?php echo $this->getTrimpString(); ?></td>
+		<td class="small b">Puls:</td>
+		<td>&oslash; <?php echo Helper::Unknown($this->get('pulse_avg')); ?>bpm<br />
+			max. <?php echo Helper::Unknown($this->get('pulse_max')); ?>bpm</td>
 	</tr>
 <?php endif; ?>
 
@@ -38,12 +33,17 @@
 		<td><?php echo Helper::Unknown($this->get('kcal')); ?> kcal</td>
 	</tr>
 
-<?php if ($this->hasPulse()): ?>
+<?php if (CONF_RECHENSPIELE): ?>
 	<tr>
-		<td class="small b">Puls:</td>
-		<td>&oslash; <?php echo Helper::Unknown($this->get('pulse_avg')); ?>bpm<br />
-			max. <?php echo Helper::Unknown($this->get('pulse_max')); ?>bpm</td>
+		<td class="small b">Trimp:</td>
+		<td><?php echo $this->getTrimpString(); ?></td>
 	</tr>
+	<?php if ($this->Sport()->isRunning() && $this->getVDOT() > 0): ?>
+	<tr>
+		<td class="small b">Vdot:</td>
+		<td><?php echo $this->getVDOT(); ?> <?php echo $this->getVDOTicon(); ?></td>
+	</tr>
+	<?php endif; ?>
 <?php endif; ?>
 
 <?php if (!$this->Weather()->isEmpty() || $this->hasRoute() || !$this->Clothes()->areEmpty()): ?>
