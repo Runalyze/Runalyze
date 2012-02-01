@@ -241,7 +241,7 @@ h1 a:link, h1 a:visited {
 	text-indent: -9999px;
 	background: url(img/roundNav.png) no-repeat 0 0 transparent; }
 
-#ajax.smallWin {
+#ajax.smallWin, #ajax.smallWin.tooBig {
 	width: 500px;
 	margin-left: -250px; }
 
@@ -250,13 +250,13 @@ h1 a:link, h1 a:visited {
 	margin-left: -45%; }
 
 #ajax.bigWin.tooBig {
-	left: 15px;
-	width: 1024px;
-	margin-left: -450px; }
+	left: 12px;
+	width: 1000px;
+	margin-left: 0; }
 
 #ajax.tooBig {
-	left: 15px;
-	margin-left: 0 !important; }
+	left: 112px;
+	margin-left: 0; }
 
 
 /*** SPECIFIC STYLES ***/
