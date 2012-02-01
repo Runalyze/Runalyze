@@ -91,7 +91,7 @@ $inputs[] = array('name' => 'route', 'text' => 'Strecke', 'typ' => 'text');
 $inputs[] = array('name' => 'elevation', 'text' => 'H&ouml;henmeter', 'typ' => 'int');
 $inputs[] = array('name' => 's', 'text' => 'Dauer <small>(min)</small>', 'typ' => 'time');
 $inputs[] = array('name' => 'comment', 'text' => 'Bemerkung', 'typ' => 'text');
-$inputs[] = array('name' => 'temperature', 'text' => 'Temperatur <small>(&deg;C)</small>', 'typ' => 'int');
+$inputs[] = array('name' => 'temperature', 'text' => 'Temperatur', 'typ' => 'int');
 $inputs[] = array('name' => 'pulse_avg', 'text' => 'Puls <small>(bpm)</small>', 'typ' => 'int');
 $inputs[] = array('name' => 'partner', 'text' => 'Trainingspartner', 'typ' => 'text');
 $inputs[] = array('name' => 'kcal', 'text' => 'Kalorien', 'typ' => 'int');
