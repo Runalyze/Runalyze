@@ -137,7 +137,7 @@ class DataBrowser {
 			ORDER BY `time` ASC');
 
 		foreach ($AllTrainings as $Training) {
-			$w = floor(($Training['time'] - $this->timestamp_start)/(3600*24));
+			$w = Helper::diffInDays($Training['time'], $this->timestamp_start);
 
 			if (in_array($Training['sportid'], $this->sports_short))
 				$this->days[$w]['shorts'][]    = $Training;

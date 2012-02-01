@@ -636,7 +636,7 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Get the filename for a given PLUGINKEY
+	 * Get the filename for a given PLUGINKEY, searches for folder first
 	 * @param string $PLUGINKEY
 	 * @return string
 	 */
