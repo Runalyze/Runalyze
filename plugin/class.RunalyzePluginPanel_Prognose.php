@@ -49,6 +49,17 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected function displayContent() {
 		foreach ($this->config['distances']['var'] as $km)
 			echo Helper::Prognosis((double)$km, ((double)$km <= 3));
+
+		if ($this->thereAreNotEnoughCompetitions())
+			echo HTML::info('F&uuml;r gute Prognosen sind nicht genug Wettk&auml;mpfe da.');
+	}
+
+	/**
+	 * Are there not enough competitions?
+	 * @return bool
+	 */
+	protected function thereAreNotEnoughCompetitions() {
+		return 1 >= Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID);
 	}
 }
 ?>

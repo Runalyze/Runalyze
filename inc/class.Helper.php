@@ -370,8 +370,15 @@ class Helper {
 		if (VDOT_FORM == 0)
 			return ($as_int) ? 0 : '0 &#37;';
 
+		$diff = Helper::diffInDays(START_TIME);
+		if ($diff > 182)
+			$DaysForWeekKm = 182; // 26 Wochen
+		elseif ($diff < 70)
+			$DaysForWeekKm = 70;
+		else
+			$DaysForWeekKm = $diff;
+
 		$DaysForLongjogs        = 70;  // 10 Wochen
-		$DaysForWeekKm          = 182; // 26 Wochen
 		$StartTimeForLongjogs   = $timestamp - $DaysForLongjogs * DAY_IN_S;
 		$StartTimeForWeekKm     = $timestamp - $DaysForWeekKm * DAY_IN_S;
 		$minKmForLongjog        = 13;
@@ -507,6 +514,19 @@ class Helper {
 			return '<span title="'.$text.'">'.substr ($text, 0, $cut-3).'...</span>';
 
 		return $text;
+	}
+
+	/**
+	 * Absolute difference in days between two timestamps
+	 * @param int $time_1
+	 * @param int $time_2 optional
+	 * @return int
+	 */
+	public static function diffInDays($time_1, $time_2 = 0) {
+		if ($time_2 == 0)
+			$time_2 = time();
+
+		return floor(abs(($time_1 - $time_2)/(3600*24)));
 	}
 
 	/**
