@@ -23,6 +23,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		$this->type = Plugin::$PANEL;
 		$this->name = 'Sports';
 		$this->description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
+
+		$this->textAsRightSymbol = true;
 	}
 
 	/**
@@ -47,7 +49,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			$html .= Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
 		}
 	
-		return '<small>'.$html.'</small>';
+		return '<span class="smallHeadNavi">'.$html.'</span>';
 	}
 
 	/**
@@ -71,10 +73,11 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			
 				echo('
 		<p>
-			<span>
+			<span class="right">
 				<small><small>('.Helper::Unknown($dat['anzahl'], '0').'-mal)</small></small>
 				'.$leistung.'
 			</span>
+
 			'.$Sport->Icon().'
 			<strong>'.$Sport->name().'</strong>
 		</p>'.NL);	

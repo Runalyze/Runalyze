@@ -16,7 +16,7 @@ $Data        = array_reverse(User::getFullArray());
 ?>
 <h1>K&ouml;rper-Daten</h1>
 
-<table class="sortable pager">
+<table id="sportlerTable">
 	<thead>
 		<tr>
 			<th class="{sorter:'germandate'}">Datum</th>
@@ -54,8 +54,7 @@ $Data        = array_reverse(User::getFullArray());
 	</tbody>
 </table>
 
-<?php Ajax::printPagerDiv(); ?>
-<?php echo Ajax::wrapJSforDocumentReady('jTablesorterWithPagination()'); ?>
+<?php Ajax::createTablesorterWithPagerFor('#sportlerTable'); ?>
 
 <?php
 $Frontend->displayFooter();

@@ -1,5 +1,5 @@
 <h1>
-	<span class="right">
+	<span class="right linksWithMargin">
 <?php $this->displayIconLinks(); ?>
 	</span>
 
@@ -33,9 +33,9 @@ foreach ($this->days as $i => $day) {
 	$date_string = '<small>'.date("d.m.", $day['date']).'</small> <span'.$today.'>'.Helper::Weekday(date("w", $day['date']), true).'</span>';
 
 	if (!empty($day['trainings'])) {
-		foreach ($day['trainings'] as $t => $training) {
-			$wk_class = Helper::TrainingIsCompetition($training) ? ' wk' : '';
-			echo('<tr class="a'.($i%2+1).' r training'.$wk_class.'" rel="'.$training.'">');
+		foreach ($day['trainings'] as $t => $id) {
+			$wk_class = Helper::TrainingIsCompetition($id) ? ' wk' : '';
+			echo('<tr class="a'.($i%2+1).' r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>');
 
 			if ($t != 0)
 				echo('<td colspan="2" />');
@@ -50,7 +50,7 @@ foreach ($this->days as $i => $day) {
 				echo('</td><td class="l">'.$date_string.'</td>');
 			}
 
-			$this->Dataset->setTrainingId($training);
+			$this->Dataset->setTrainingId($id);
 			$this->Dataset->displayTableColumns();
 
 			echo('</tr>');

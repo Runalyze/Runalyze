@@ -212,6 +212,8 @@ class Frontend {
 	 * Init all additional files for JS/CSS
 	 */
 	private function initAdditionalFiles() {
+		$this->JS_FILES = array_merge($this->JS_FILES, Ajax::getNeededJSFilesAsArray());
+
 		$Files = glob('plugin/*/*.js');
 		if (is_array($Files))
 			foreach ($Files as $file)

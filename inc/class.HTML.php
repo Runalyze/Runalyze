@@ -374,7 +374,7 @@ class HTML {
 		if (!empty($addClass))
 			$addClass = ' '.$addClass;
 
-		return '<div class="bigImg'.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
+		return '<div class="waitImg'.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
 	}
 
 	/**

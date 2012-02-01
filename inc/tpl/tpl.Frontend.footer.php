@@ -1,7 +1,7 @@
 <br class="clear" />
 
 <div id="copy">
-	<a class="right" id="copy" href="http://www.runalyze.de/" title="Runalyze" target="_blank">
+	<a class="right" href="http://www.runalyze.de/" title="Runalyze" target="_blank">
 		<strong>&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></strong>
 	</a>
 
@@ -10,8 +10,6 @@
 		<?php echo PluginTool::getOverlayLink(); ?>
 		<?php echo Frontend::getHelpOverlayLink(); ?>
 	</span>
-
-	<div class="c"><img id="wait" src="img/ajax-loader-download.gif" alt="Bitte warten ... es wird geladen." /></div>
 </div>
 
 <?php Ajax::initJSlibrary(); ?>

@@ -132,7 +132,7 @@ class Dataset {
 		$class = $set['class'] != '' ? ' class="'.$set['class'].'"' : '';
 		$style = $set['style'] != '' ? ' style="'.$set['style'].'"' : '';
 
-		echo '<td'.$class.$style.'>'.$this->getDataset($set['name']).'</td>';
+		echo '<td'.$class.$style.'>'.$this->getDataset($set['name']).'</td>'.NL;
 	}
 
 	/**

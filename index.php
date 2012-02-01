@@ -32,8 +32,8 @@ $Frontend->displayHeader();
 		</div>
 	</div>
 
-	<ul class="tabs">
-		<li id="tabs_back"><img src="img/arrBack.png" /></li>
+
+	<ul id="statisticTabs">
 		<?php
 		$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
 		foreach ($Stats as $i => $key)
@@ -43,11 +43,7 @@ $Frontend->displayHeader();
 			echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
 		?>
 	</ul>
-	<div id="statistiken" class="panel tabs">
-		<div id="tab_content_prev">
-			<em>Es wurde zuvor nichts geladen.</em>
-		</div>
-
+	<div id="statistiken" class="panel">
 		<div id="tab_content">
 			<?php
 			if (empty($Stats))

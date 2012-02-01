@@ -1,9 +1,10 @@
 <?php if ($Training->hasPositionData()): ?>
 <?php // TODO: Check if elevationCorrection is already done ?>
-	<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="H&ouml;hendaten korrigieren"><strong>ElevationCorrection</strong></a><br />
+	<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id=<?php echo $id; ?>" title="H&ouml;hendaten korrigieren"><strong>H&ouml;henkorrektur</strong></a><br />
 	<br />
 	<small>
-		Mit der ElevationCorrection k&ouml;nnen die H&ouml;hendaten korrigiert werden.<br />
+		Mit der H&ouml;henkorrektur k&ouml;nnen die H&ouml;hendaten korrigiert werden,
+		da diese bei GPS-Messung sehr ungenau sein k&ouml;nnen.<br />
 		Vorsicht: Die Abfrage kann lange dauern, bitte nicht abbrechen, bevor das Laden beendet ist.
 	</small><br />
 	<br />

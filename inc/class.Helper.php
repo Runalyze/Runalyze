@@ -445,7 +445,7 @@ class Helper {
 
 		return '
 			<p>
-				<span>
+				<span class="right">
 					<small>von</small>
 					<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">'.$pbString.'</'.$bisher_tag.'>
 					<small>auf</small>

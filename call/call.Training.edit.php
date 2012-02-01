@@ -22,7 +22,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
 
 	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';
-	echo '<script type="text/javascript">jReloadContent();</script>';
+	echo '<script type="text/javascript">Runalyze.reloadContent();</script>';
 	exit();
 }
 

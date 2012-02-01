@@ -55,14 +55,14 @@ abstract class PluginStat extends Plugin {
 	 * Display links to all various statistics
 	 */
 	protected function displayLinksForVariousStatistics() {
-		echo(NL.'<small class="right margin-5">'.NL);
+		echo(NL.'<span class="smallHeadNavi right margin-5">'.NL);
 		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 		foreach ($others as $i => $other) {
 			if ($i != 0)
 				echo(' | ');
 			echo self::getInnerLinkFor($other['id'], $other['name']);
 		}
-		echo(NL.'</small>'.NL);
+		echo(NL.'</span>'.NL);
 	}
 
 	/**
