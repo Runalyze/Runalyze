@@ -19,7 +19,7 @@
 
 	<title>Update von Runalyze</title>
 
-	<script type="text/javascript" src="lib/jQuery.1.4.2.js"></script>
+	<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="lib/jQuery.backgroundStretch.js"></script>
 </head>
 
