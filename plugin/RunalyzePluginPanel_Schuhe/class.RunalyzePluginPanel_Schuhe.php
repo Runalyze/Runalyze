@@ -39,7 +39,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" title="Schuh hinzuf&uuml;gen">'.Icon::get(Icon::$RUNNINGSHOE, 'Schuh hinzuf&uuml;gen').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php">'.Icon::get(Icon::$RUNNINGSHOE, '', '', 'Laufschuh hinzuf&uuml;gen').'</a>');
 	}
 
 	/**

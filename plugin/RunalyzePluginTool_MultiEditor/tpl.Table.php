@@ -29,7 +29,7 @@
 		<?php HTML::setMultiIndex($Training->get('id')); ?>
 		<?php $Training->overwritePostArray(); ?>
 		<tr class="<?php echo HTML::trClass($i); ?>">
-			<td><?php echo Icon::get(Icon::$DELETE_GRAY, 'Zeile entfernen', '$(this).parent().parent().remove();'); ?></td>
+			<td><?php echo Icon::get(Icon::$DELETE_GRAY, '', '$(this).parent().parent().remove();', 'Zeile entfernen'); ?></td>
 			<td nowrap="nowrap">
 				<?php echo HTML::hiddenInput('sportid_old'); ?>
 				<?php echo HTML::hiddenInput('s_old'); ?>

@@ -71,12 +71,16 @@ class Icon {
 	 * Get an icon as img-tag
 	 * @param enum $icon
 	 * @param string $title [optional]
+	 * @param string $onclick [optional]
+	 * @param string $tooltip [optional]
 	 */
-	public static function get($icon, $title = '', $onclick= '') {
+	public static function get($icon, $title = '', $onclick= '', $tooltip = '') {
 		if ($onclick != '')
-			return '<img class="link" src="'.$icon.'" alt="'.$title.'" title="'.$title.'" onclick="'.$onclick.'" />';
+			$Image = '<img class="link" src="'.$icon.'" alt="'.$title.'" title="'.$title.'" onclick="'.$onclick.'" />';
+		else
+			$Image = '<img src="'.$icon.'" alt="'.$title.'" title="'.$title.'" />';
 
-		return '<img src="'.$icon.'" alt="'.$title.'" title="'.$title.'" />';
+		return Ajax::tooltip($Image, $tooltip);
 	}
 
 	/**
@@ -92,7 +96,7 @@ class Icon {
 	 * @param int $id
 	 * @param string $title
 	 */
-	public static function getSportIcon($id, $title = '') {
+	public static function getSportIcon($id, $title = '', $tooltip = '') {
 		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
 		if ($data === false)
 			return '';
@@ -100,7 +104,9 @@ class Icon {
 		if ($title == '')
 			$title = $data['name'];
 
-		return '<img src="img/sports/'.$data['img'].'" alt="'.$title.'" />';
+		$Image = '<img src="img/sports/'.$data['img'].'" alt="'.$title.'" />';
+
+		return Ajax::tooltip($Image, $tooltip);
 	}
 
 	/**
@@ -136,7 +142,7 @@ class Icon {
 		else
 			$icon = self::$FORM_NORMAL;
 
-		return self::get($icon, 'VDOT: '.$VDOT);
+		return self::get($icon, '', '', 'VDOT: '.$VDOT);
 	}
 }
 ?>

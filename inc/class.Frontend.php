@@ -213,6 +213,7 @@ class Frontend {
 	 */
 	private function initAdditionalFiles() {
 		$this->JS_FILES = array_merge($this->JS_FILES, Ajax::getNeededJSFilesAsArray());
+		$this->CSS_FILES = array_merge($this->CSS_FILES, Ajax::getNeededCSSFilesAsArray());
 
 		$Files = glob('plugin/*/*.js');
 		if (is_array($Files))
@@ -289,7 +290,7 @@ class Frontend {
 	 * @return string
 	 */
 	static public function getHelpOverlayLink() {
-		return Ajax::window('<a class="left" href="inc/tpl/tpl.help.html" title="Hilfe">'.Icon::get(Icon::$CONF_HELP, 'Hilfe').'</a>');
+		return Ajax::window('<a class="left" href="inc/tpl/tpl.help.html">'.Icon::get(Icon::$CONF_HELP, '', '', 'Hilfe').'</a>');
 	}
 }
 ?>
