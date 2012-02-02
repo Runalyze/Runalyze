@@ -78,6 +78,9 @@
 	font-weight: bold;
 	font-size: 9px;
 	color: #545454;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .flot .annotation {
@@ -87,18 +90,24 @@
 	margin: 2px 0 0 2px;
 	font-size: 9px;
 	color: #545454;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .flot .hoverTip {
-	display: none;
-	padding: 2px;
-	border: 1px solid #CCC;
-	background-color: rgba(255,255,255,0.8);
-	position: fixed;
-	text-align: left;
 	z-index: 50;
+	display: none;
+	position: fixed;
+	padding: 2px;
+	text-align: left;
 	overflow: visible;
 	font-size: .9em;
+	background-color: rgba(255,255,255,0.8);
+	border: 1px solid #CCC;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
 }
 
 .flot .hoverTip em {

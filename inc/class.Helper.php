@@ -92,20 +92,44 @@ class Helper {
 	public static function PulseString($pulse, $time = 0) {
 		if ($pulse == 0)
 			return '';
-		if ($time == 0)
-			$time = time();
 
-		$bpm = round($pulse).'bpm';
-		$hf  = '?&nbsp;&#37;';
+		$hf_max = 0;
 
-		$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
-		if ($HFmax !== false && $HFmax['pulse_max'] != 0)
-			$hf = round(100*$pulse / $HFmax['pulse_max']).'&nbsp;&#37';
+		if ($time != 0) {
+			$HFmax = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
+			if ($HFmax !== false && $HFmax['pulse_max'] != 0)
+				$hf_max = $HFmax['pulse_max'];
+		}
 
-		if (CONF_PULS_MODE != 'bpm' && $HFmax['pulse_max'] != 0)
+		$bpm = self::PulseStringInBpm($pulse);
+		$hf  = self::PulseStringInPercent($pulse, $hf_max);
+
+		if (CONF_PULS_MODE != 'bpm')
 			return '<span title="'.$bpm.'">'.$hf.'</span>';
 
 		return '<span title="'.$hf.'">'.$bpm.'</span>';
+	}
+
+	/**
+	 * Get string for pulse [bpm]
+	 * @param int $pulse
+	 * @return string
+	 */
+	public static function PulseStringInBpm($pulse) {
+		return round($pulse).'bpm';
+	}
+
+	/**
+	 * Get string for pulse [%]
+	 * @param int $pulse
+	 * @param int $hf_max
+	 * @return string
+	 */
+	public static function PulseStringInPercent($pulse, $hf_max = 0) {
+		if ($hf_max == 0)
+			$hf_max = HF_MAX;
+		
+		return round(100*$pulse / $hf_max).'&nbsp;&#37';
 	}
 
 	/**

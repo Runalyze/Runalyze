@@ -22,9 +22,13 @@
 
 <?php if ($this->hasPulse()): ?>
 	<tr>
-		<td class="small b">Puls:</td>
-		<td>&oslash; <?php echo Helper::Unknown($this->get('pulse_avg')); ?>bpm<br />
-			max. <?php echo Helper::Unknown($this->get('pulse_max')); ?>bpm</td>
+		<td class="small b">
+			&oslash; Puls:<br />
+			max.&nbsp;Puls:</td>
+		<td><?php echo Helper::PulseStringInBpm($this->get('pulse_avg')); ?>
+			 (<?php echo Helper::PulseStringInPercent($this->get('pulse_avg')); ?>)<br />
+			<?php echo Helper::PulseStringInBpm($this->get('pulse_max')); ?>
+			(<?php echo Helper::PulseStringInPercent($this->get('pulse_max')); ?>)</td>
 	</tr>
 <?php endif; ?>
 
