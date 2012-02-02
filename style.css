@@ -28,7 +28,7 @@ body#installer {
 
 #panels {
 	position: absolute;
-	top: 0;
+	top: -5px;
 	right: 0;
 	width: 344px;
 	padding-bottom: 41px; }
