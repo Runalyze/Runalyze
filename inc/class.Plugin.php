@@ -242,9 +242,9 @@ abstract class Plugin {
 	 */
 	public function getInstallLink($name = '') {
 		if ($name == '')
-			$name = Icon::get(Icon::$ADD, 'Plugin installieren');
+			$name = Icon::get(Icon::$ADD, '', '', 'Plugin installieren');
 
-		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'" title="Plugin installieren">'.$name.'</a>');
+		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.$name.'</a>');
 	}
 
 	/**
@@ -432,9 +432,9 @@ abstract class Plugin {
 	 */
 	public function getConfigLink($name = '', $add_param = '') {
 		if ($name == '')
-			$name = Icon::get(Icon::$CONF_SETTINGS, 'Plugin bearbeiten');
+			$name = Icon::get(Icon::$CONF_SETTINGS, '', '', 'Plugin bearbeiten');
 
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'" title="Plugin bearbeiten">'.$name.'</a>','small');
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
 	}
 
 	/**

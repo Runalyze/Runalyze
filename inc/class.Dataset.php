@@ -107,8 +107,9 @@ class Dataset {
 	 * Display short link for e.g. 'Gymnastik'
 	 */
 	public function displayShortLink() {
-		$name = Helper::Time( $this->Training->get('s') ); 
-		$icon = Icon::getSportIcon($this->Training->get('sportid'), $name);
+		$icon = Icon::getSportIcon($this->Training->get('sportid'), '',
+			$this->Training->Sport()->name().': '.Helper::Time( $this->Training->get('s') ));
+
 		echo $this->Training->trainingLink($icon);
 	}
 
@@ -249,7 +250,10 @@ class Dataset {
 		if (!$this->Training->hasElevation())
 			return '';
 
-		return '<span title="&oslash; '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;">'.$this->Training->get('elevation').'&nbsp;hm</span>';
+		$displayString = $this->Training->get('elevation').'&nbsp;hm</span>';
+		$tooltipString = '&oslash; Steigung: '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;';
+
+		return Ajax::tooltip($displayString, $tooltipString);
 	}
 
 	/**
@@ -330,7 +334,7 @@ class Dataset {
 		if (is_null($this->Training->Type()) || !$this->Training->Type()->hasSplits() || $this->Training->get('splits') == '')
 			return;
 
-		return Icon::get( Icon::$CLOCK, $this->Training->getSplitsAsString() );
+		return Icon::get( Icon::$CLOCK, '', '', $this->Training->getSplitsAsString() );
 	}
 
 	/**
@@ -338,7 +342,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetDescription() {
-		return '<span title="'.$this->Training->get('comment').'">'.Helper::Cut($this->Training->get('comment'), 20).'</span>';
+		return Helper::Cut($this->Training->get('comment'), 20);
 	}
 
 	/**

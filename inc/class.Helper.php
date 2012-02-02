@@ -105,9 +105,9 @@ class Helper {
 		$hf  = self::PulseStringInPercent($pulse, $hf_max);
 
 		if (CONF_PULS_MODE != 'bpm')
-			return '<span title="'.$bpm.'">'.$hf.'</span>';
-
-		return '<span title="'.$hf.'">'.$bpm.'</span>';
+			return Ajax::tooltip($hf, $bpm);
+			
+		return Ajax::tooltip($bpm, $hf);
 	}
 
 	/**
@@ -152,9 +152,9 @@ class Helper {
 		$as_kmh = self::Kmh($km, $time).'&nbsp;km/h';
 
 		if (Sport::usesSpeedInKmh($sport_id))
-			return '<span title="'.$as_pace.'">'.$as_kmh.'</span>';
-
-		return '<span title="'.$as_kmh.'">'.$as_pace.'</span>';
+			return Ajax::tooltip($as_kmh, $as_pace);
+			
+		return Ajax::tooltip($as_pace, $as_kmh);
 	}
 
 	/**
@@ -272,7 +272,7 @@ class Helper {
 		if (!is_numeric($id))
 			return false;
 
-		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `id`='.$id) > 0);
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `id`='.$id.' AND `typeid`='.CONF_WK_TYPID) > 0);
 	}
 
 	/**
@@ -478,9 +478,9 @@ class Helper {
 			<p>
 				<span class="right">
 					<small>von</small>
-					<'.$bisher_tag.' title="VDOT '.JD::Competition2VDOT($dist, $pb).'">'.$pbString.'</'.$bisher_tag.'>
+					'.Ajax::tooltip('<'.$bisher_tag.'>'.$pbString.'</'.$bisher_tag.'>', 'VDOT: '.JD::Competition2VDOT($dist, $pb)).'
 					<small>auf</small>
-					<'.$neu_tag.' title="VDOT '.$VDOT_new.'">'.self::Time($prognose_dauer).'</'.$neu_tag.'>
+					'.Ajax::tooltip('<'.$neu_tag.'>'.self::Time($prognose_dauer).'</'.$neu_tag.'>', 'VDOT: '.$VDOT_new).'
 					<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
 				</span>
 				<strong>'.self::Km($dist, 0, $bahn).'</strong>
@@ -535,7 +535,7 @@ class Helper {
 			$cut = CUT_LENGTH;
 
 		if (strlen($text) >= $cut)
-			return '<span title="'.$text.'">'.substr ($text, 0, $cut-3).'...</span>';
+			return Ajax::tooltip(substr($text, 0, $cut-3).'...', $text);
 
 		return $text;
 	}

@@ -4,11 +4,6 @@
 	<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<link rel="stylesheet"  type="text/css"href="lib/datepicker.css" />
-	<link rel="stylesheet"  type="text/css"href="lib/tablesorter.css" />
-	<link rel="stylesheet"  type="text/css"href="lib/jquery.tooltip.css" />
-	<link rel="stylesheet"  type="text/css"href="lib/flot.css" />
-	<link rel="stylesheet"  type="text/css"href="lib/flot/qtip.css" />
 	<?php foreach ($this->CSS_FILES as $file): ?>
 		<link rel="stylesheet"  type="text/css"href="<?php echo $file; ?>" />
 	<?php endforeach; ?>

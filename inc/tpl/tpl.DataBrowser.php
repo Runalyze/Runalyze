@@ -22,7 +22,7 @@
 	<img class="link" id="calendarSubmit" src="<?php echo Icon::$ARR_NEXT_BIG; ?>" />
 </div>
 
-<table style="width:100%;">
+<table id="dataBrowser">
 	<tr class="space">
 		<td colspan="<?php echo ($this->Dataset->column_count + 2); ?>" />
 	</tr>
@@ -80,6 +80,7 @@ foreach ($this->days as $i => $day) {
 }
 
 // Z U S A M M E N F A S S U N G
+echo '<tfoot>';
 $sports = $this->Mysql->fetchAsArray('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' GROUP BY `sportid`');
 foreach ($sports as $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);
@@ -96,6 +97,7 @@ foreach ($sports as $sportdata) {
 	echo('
 </tr>'.NL);
 }
+echo '</tfoot>';
 ?>
 
 </table>

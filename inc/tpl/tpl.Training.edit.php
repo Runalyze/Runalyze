@@ -11,7 +11,7 @@ if (isset($submit))
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
 
 <?php
-echo Ajax::change(Icon::get(Icon::$CROSS, 'Training l&ouml;schen'), 'edit-div', '#delete', 'right').NL;
+echo Ajax::change(Icon::get(Icon::$CROSS, '', '', 'Training l&ouml;schen'), 'edit-div', '#delete', 'right').NL;
 
 if ($Training->isOutside())
 	echo '<span class="right">&nbsp;|&nbsp;</span> '.Ajax::change('GPS-Daten', 'edit-div', '#edit-gps', 'right').NL;

@@ -42,7 +42,8 @@ class Ajax {
 		$Files[] = 'lib/jQuery.metadata.js';
 		$Files[] = 'lib/jQuery.tablesorter.js';
 		$Files[] = 'lib/jQuery.tablesorter.pager.js';
-		$Files[] = 'lib/jquery.tooltip.js';
+		//$Files[] = 'lib/jquery.tooltip.js';
+		$Files[] = 'lib/jquery.tipTip.minified.js';
 
 		$Files[] = 'lib/datepicker.js';
 		$Files[] = 'lib/fileuploader.js';
@@ -54,6 +55,23 @@ class Ajax {
 
 		if (CONF_DESIGN_BG_FIX_AND_STRETCH)
 			$Files[] = 'lib/jQuery.backgroundStretch.js';
+
+		return $Files;
+	}
+
+	/**
+	 * Get all css-files needed for included in header
+	 * @return array
+	 */
+	static public function getNeededCSSFilesAsArray() {
+		$Files = array();
+
+		$Files[] = 'lib/datepicker.css';
+		$Files[] = 'lib/tablesorter.css';
+		//$Files[] = 'lib/jquery.tooltip.css';
+		$Files[] = 'lib/tipTip.css';
+		$Files[] = 'lib/flot.css';
+		$Files[] = 'lib/flot/qtip.css';
 
 		return $Files;
 	}
@@ -76,6 +94,19 @@ class Ajax {
 	 */
 	static function trainingLinkAsOnclick($id) {
 		return 'onclick="Runalyze.loadTraining('.$id.')"';
+	}
+
+	/**
+	 * Get html-code for jquery-tooltip
+	 * @param string $html
+	 * @param string $tooltip
+	 * @return string
+	 */
+	static function tooltip($html, $tooltip) {
+		if ($tooltip == '')
+			return $html;
+
+		return '<abbr tooltip="'.$tooltip.'">'.$html.'</abbr>';
 	}
 
 	/**
@@ -153,7 +184,7 @@ class Ajax {
 	private static function insertClass($link, $class) {
 		$text = preg_replace('#class="(.+?)"#i', 'class="'.$class.' \\1"', $link);
 		if ($text == $link)
-			$text = str_replace('<a', '<a class="'.$class.'"', $text);
+			$text = str_replace('<a ', '<a class="'.$class.'" ', $text);
 		if ($text == $link)
 			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
 
@@ -169,7 +200,7 @@ class Ajax {
 	private static function insertRel($link, $rel) {
 		$text = preg_replace('#rel="(.+?)"#i', 'rel="'.$rel.'"', $link);
 		if ($text == $link)
-			$text = str_replace('<a', '<a rel="'.$rel.'"', $text);
+			$text = str_replace('<a ', '<a rel="'.$rel.'" ', $text);
 		if ($text == $link)
 			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
 

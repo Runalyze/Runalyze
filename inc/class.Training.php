@@ -102,9 +102,10 @@ class Training {
 	 * @param array $data [optional]
 	 */
 	public function __construct($id, $data = array()) {
-		if (!empty($data))
+		if (!empty($data)) {
+			$this->id   = $id;
 			$this->data = $data;
-		elseif (!$this->canSetDataFromId($id))
+		} elseif (!$this->canSetDataFromId($id))
 			return false;
 
 		$this->fillUpDataWithDefaultValues();
@@ -685,7 +686,7 @@ class Training {
 	public function getSplitsAsString() {
 		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
 		foreach ($splits as $i => $split) {
-			$splits[$i] = str_replace('|', ' km in ', $split);
+			$splits[$i] = str_replace('|', '&nbsp;km&nbsp;in&nbsp;', $split);
 		}
 
 		return implode(', ', $splits);
@@ -695,8 +696,8 @@ class Training {
 	 * Get link for create window
 	 */
 	static public function getCreateWindowLink() {
-		$icon = Icon::get(Icon::$ADD, 'Training hinzuf&uuml;gen');
-		return Ajax::window('<a href="call/call.Training.create.php" title="Training hinzuf&uuml;gen">'.$icon.'</a>', 'normal');
+		$icon = Icon::get(Icon::$ADD, '', '', 'Training hinzuf&uuml;gen');
+		return Ajax::window('<a href="call/call.Training.create.php">'.$icon.'</a>', 'normal');
 	}
 
 	/**

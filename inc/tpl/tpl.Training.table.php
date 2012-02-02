@@ -67,13 +67,11 @@
 		<td><?php echo Helper::Unknown($this->get('route')); ?>
 				<?php $berechnet = $this->GpsData()->calculateElevation(); ?>
 			<?php if ($this->hasElevation() > 0 || $berechnet > 0): ?><br />
-			<small>
-				&nbsp;<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />
+				<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />
 				<?php if ($berechnet != $this->get('elevation')): ?>
-					&nbsp;<?php echo $berechnet ?> H&ouml;henmeter (berechnet)<br />
+					<?php echo $berechnet ?> H&ouml;henmeter (berechnet)<br />
 				<?php endif; ?>
-				&nbsp;&oslash; <?php echo number_format($this->get('elevation')/10/$this->get('distance'), 2, ',', '.'); ?>&#37; Steigung
-			</small>
+				&oslash; <?php echo number_format($this->get('elevation')/10/$this->get('distance'), 2, ',', '.'); ?>&#37; Steigung
 			<?php endif; ?>
 	</tr>
 <?php endif; ?>

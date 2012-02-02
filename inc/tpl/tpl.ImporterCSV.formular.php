@@ -25,7 +25,7 @@
 	<table>
 		<thead>
 			<tr>
-				<td><?php echo Icon::get(Icon::$ADD, 'Importieren'); ?></td>
+				<td><?php echo Icon::get(Icon::$ADD, '', '', 'Importieren'); ?></td>
 				<?php for ($i = 0; $i < $this->RowLength; $i++): ?>
 				<td>
 					<select name="key[<?php echo $i; ?>]">
