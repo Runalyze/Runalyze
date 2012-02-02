@@ -17,17 +17,23 @@ body#installer {
 
 
 /*** MAIN DIVS ***/
-div#main {
-	float: left;
-	width: 66%;
-	min-width: 680px; }
+#container {
+	min-width: 654px;
+	padding-right: 370px;
+	position: relative;
+}
 
-div#panels {
-	float: right;
-	width: 32%;
-	min-width: 344px; }
+#main {
+	width: 100%; }
 
-div#copy {
+#panels {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 344px;
+	padding-bottom: 41px; }
+
+#copy {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -36,10 +42,10 @@ div#copy {
 	background-color: #000;
 	border-top: 1px solid #494944; }
 
-div#copy * {
+#copy * {
 	margin: 2px 10px; }
 
-div#copy a img {
+#copy a img {
 	margin: 1px 0 0; }
 
 

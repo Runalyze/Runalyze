@@ -32,12 +32,12 @@ $Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weight
 
 $Plot->setMarginForGrid(5);
 $Plot->hideXLabels();
-$Plot->addYAxis(2, 'left');
-$Plot->addYUnit(2, 'bpm');
-$Plot->setYTicks(2, 1, 0);
 $Plot->addYAxis(1, 'right', false);
 $Plot->addYUnit(1, 'kg');
 $Plot->setYTicks(1, 2, 0);
+$Plot->addYAxis(2, 'left');
+$Plot->addYUnit(2, 'bpm');
+$Plot->setYTicks(2, 1, 0);
 
 if ($Wunschgewicht > 1) {
 	$Plot->addThreshold('y2', $Wunschgewicht);
