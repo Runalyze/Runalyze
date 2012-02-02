@@ -17,43 +17,44 @@ require 'inc/class.Frontend.php';
 $Frontend = new Frontend(false, __FILE__);
 $Frontend->displayHeader();
 ?>
-
-<div id="main">
-	<div id="dataPanel" class="panel">
-		<div id="daten">
-			<?php
-			$DataBrowser = new DataBrowser();
-			$DataBrowser->display();
-			?>
+<div id="container">
+	<div id="main">
+		<div id="dataPanel" class="panel">
+			<div id="daten">
+				<?php
+				$DataBrowser = new DataBrowser();
+				$DataBrowser->display();
+				?>
+			</div>
 		</div>
-	</div>
 
 
-	<ul id="statisticTabs">
-		<?php
-		$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
-		foreach ($Stats as $i => $key)
-			echo '<li'.($i == 0 ? ' class="active"' : '').'>'.Plugin::getInstanceFor($key)->getLink().'</li>'.NL;
+		<ul id="statisticTabs">
+			<?php
+			$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
+			foreach ($Stats as $i => $key)
+				echo '<li'.($i == 0 ? ' class="active"' : '').'>'.Plugin::getInstanceFor($key)->getLink().'</li>'.NL;
 		
-		if (PluginStat::hasVariousStats())
-			echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
-		?>
-	</ul>
-	<div id="statistiken" class="panel">
-		<div id="tab_content">
-			<?php
-			if (empty($Stats))
-				echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');
-			else
-				Plugin::getInstanceFor($Stats[0])->display();
+			if (PluginStat::hasVariousStats())
+				echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
 			?>
+		</ul>
+		<div id="statistiken" class="panel">
+			<div id="tab_content">
+				<?php
+				if (empty($Stats))
+					echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');
+				else
+					Plugin::getInstanceFor($Stats[0])->display();
+				?>
+			</div>
 		</div>
+
 	</div>
 
-</div>
-
-<div id="panels">
-	<?php $Frontend->displayPanels(); ?>
+	<div id="panels">
+		<?php $Frontend->displayPanels(); ?>
+	</div>
 </div>
 
 <?php
