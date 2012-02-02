@@ -37,16 +37,15 @@ class Ajax {
 		$Files = array();
 
 		$Files[] = 'lib/jquery-1.7.1.min.js';
-		$Files[] = 'lib/jQuery.scrollTo.js';
-		$Files[] = 'lib/jQuery.form.js';
-		$Files[] = 'lib/jQuery.metadata.js';
-		$Files[] = 'lib/jQuery.tablesorter.js';
-		$Files[] = 'lib/jQuery.tablesorter.pager.js';
-		//$Files[] = 'lib/jquery.tooltip.js';
+		$Files[] = 'lib/jquery.scrollTo.js';
+		$Files[] = 'lib/jquery.form.js';
+		$Files[] = 'lib/jquery.metadata.js';
+		$Files[] = 'lib/jquery.tablesorter.js';
+		$Files[] = 'lib/jquery.tablesorter.pager.js';
 		$Files[] = 'lib/jquery.tipTip.minified.js';
 
-		$Files[] = 'lib/datepicker.js';
-		$Files[] = 'lib/fileuploader.js';
+		$Files[] = 'lib/jquery.datepicker.js';
+		$Files[] = 'lib/jquery.fileuploader.js';
 
 		$Files[] = 'lib/runalyze.lib.js';
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
@@ -54,7 +53,7 @@ class Ajax {
 		$Files[] = 'lib/form_scripts.js';
 
 		if (CONF_DESIGN_BG_FIX_AND_STRETCH)
-			$Files[] = 'lib/jQuery.backgroundStretch.js';
+			$Files[] = 'lib/jquery.backgroundStretch.js';
 
 		return $Files;
 	}
@@ -66,10 +65,9 @@ class Ajax {
 	static public function getNeededCSSFilesAsArray() {
 		$Files = array();
 
-		$Files[] = 'lib/datepicker.css';
-		$Files[] = 'lib/tablesorter.css';
-		//$Files[] = 'lib/jquery.tooltip.css';
-		$Files[] = 'lib/tipTip.css';
+		$Files[] = 'lib/jquery.datepicker.css';
+		$Files[] = 'lib/jquery.tablesorter.css';
+		$Files[] = 'lib/jquery.tipTip.css';
 		$Files[] = 'lib/flot.css';
 		$Files[] = 'lib/flot/qtip.css';
 
