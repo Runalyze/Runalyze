@@ -38,7 +38,7 @@ class Config {
 	 * @return string
 	 */
 	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="call/window.config.php" title="Einstellungen">'.Icon::get(Icon::$CONF_EDIT, '', '', 'Einstellungen').'</a>');
+		return Ajax::window('<a class="left" href="call/window.config.php">'.Icon::get(Icon::$CONF_EDIT, '', '', 'Einstellungen').'</a>');
 	}
 
 	/**
