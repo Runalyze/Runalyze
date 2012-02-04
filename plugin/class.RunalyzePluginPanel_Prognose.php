@@ -48,10 +48,45 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function displayContent() {
 		foreach ($this->config['distances']['var'] as $km)
-			echo Helper::Prognosis((double)$km, ((double)$km <= 3));
+			$this->showPrognosis($km);
 
 		if ($this->thereAreNotEnoughCompetitions())
 			echo HTML::info('F&uuml;r gute Prognosen sind nicht genug Wettk&auml;mpfe da.');
+	}
+
+	/**
+	 * Show prognosis for a given distance
+	 * @param double $distance
+	 */
+	protected function showPrognosis($distance) {
+		$Prognosis             = Helper::PrognosisAsArray($distance);
+		$PersonalBestInSeconds = Helper::PersonalBest($distance, true);
+		$PrognosisInSeconds    = $Prognosis['seconds'];
+		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
+		$VDOTnew               = round($Prognosis['vdot'], 2);
+
+		if ($PersonalBestInSeconds > 0 && $PersonalBestInSeconds < $PrognosisInSeconds) {
+			$oldTag = 'strong';
+			$newTag = 'del';
+		} else {
+			$oldTag = 'del';
+			$newTag = 'strong';
+		}
+
+		$oldTimeString  = Helper::Time($PersonalBestInSeconds);
+		$newTimeString  = Helper::Time($PrognosisInSeconds);
+		$paceString     = Helper::Pace($distance, $PrognosisInSeconds);
+		$distanceString = Helper::Km($distance, 0, ($distance <= 3));
+
+		echo '
+			<p>
+				<span class="right">
+					<small>von</small> '.Ajax::tooltip('<'.$oldTag.'>'.$oldTimeString.'</'.$oldTag.'>', 'VDOT: '.$VDOTold).'
+					<small>auf</small> '.Ajax::tooltip('<'.$newTag.'>'.$newTimeString.'</'.$newTag.'>', 'VDOT: '.$VDOTnew).'
+					<small>('.$paceString.'/km)</small>
+				</span>
+				<strong>'.$distanceString.'</strong>
+			</p>'.NL;
 	}
 
 	/**

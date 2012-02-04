@@ -120,7 +120,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="'.self::$DISPLAY_URL.'" title="Tools">'.Icon::get(Icon::$CONF_TOOL, '', '', 'Tools').'</a>');
+		return Ajax::window('<a class="left" href="'.self::$DISPLAY_URL.'">'.Icon::get(Icon::$CONF_TOOL, '', '', 'Tools').'</a>');
 	}
 
 	/**

@@ -220,6 +220,9 @@ class Helper {
 	 * @return string
 	 */
 	public static function Time($time_in_s, $show_days = true, $show_zeros = false) {
+		if ($time_in_s < 0)
+			return '&nbsp;';
+
 		$string = '';
 
 		if ($show_zeros === true) {
@@ -431,60 +434,35 @@ class Helper {
 	}
 
 	/**
-	 * Calculate a prognosis for a given distance
-	 * @uses VDOT_FORM
-	 * @uses self::BasicEndurance
-	 * @uses self::PersonalBest
-	 * @uses self::Time
-	 * @uses self::Km
-	 * @uses JD::CompetitionPrognosis
-	 * @param float $dist Distance [km]
-	 * @param bool $bahn  A track run?, default: false
-	 * @param int $VDOT   Make prognosis for a given VDOT value? (used in plugin/panel.prognose)
+	 * Calculate factor concerning to basic endurance
+	 * @param double $distance
+	 * @return double
 	 */
-	public static function Prognosis($dist, $bahn = false, $VDOT = 0) {
-		$VDOT_new = ($VDOT == 0) ? VDOT_FORM : $VDOT;
-		$pb = self::PersonalBest($dist, true);
-
-		// (Distanz)!^1.23 = notwendige GA in %
+	static public function VDOTfactorOfBasicEndurance($distance) {
 		$BasicEndurance         = self::BasicEndurance(true);
-		$RequiredBasicEndurance = pow($dist, 1.23);
-		$BasicEnduranceFactor   = $BasicEndurance/$RequiredBasicEndurance;
+		$RequiredBasicEndurance = pow($distance, 1.23);
+		$BasicEnduranceFactor   = 1 - ($RequiredBasicEndurance - $BasicEndurance) / 100;
 
 		if ($BasicEnduranceFactor > 1)
-			$BasicEnduranceFactor = 1;
+			return 1;
+		if ($BasicEnduranceFactor < 0)
+			return 0.01;
 
-		$VDOT_new = (0.6 + 0.4 * $BasicEnduranceFactor) * $VDOT_new;
+		return (0.6 + 0.4 * $BasicEnduranceFactor);
+	}
 
-		//if ($dist > 5)
-		//	$VDOT_new *= 1 - (1 - self::BasicEndurance(true)/100) * (exp(0.005*($dist-5)) - 1);
+	/**
+	 * Get prognosis (vdot/seconds) as array
+	 * @param double $distance
+	 * @param double $VDOT [optional]
+	 * @return array
+	 */
+	static public function PrognosisAsArray($distance, $VDOT = 0) {
+		$VDOT  = ($VDOT == 0) ? VDOT_FORM : $VDOT;
+		$VDOT *= self::VDOTfactorOfBasicEndurance($distance);
+		$PrognosisInSeconds = JD::CompetitionPrognosis($VDOT, $distance);
 
-		$prognose_dauer = JD::CompetitionPrognosis($VDOT_new, $dist);
-
-		if ($VDOT != 0)
-			return self::Time($prognose_dauer);
-
-		if ($pb == 0) {
-			$pb = PHP_INT_MAX;
-			$pbString = '&nbsp;';
-		} else {
-			$pbString = self::Time($pb);
-		}
-
-		$bisher_tag = ($prognose_dauer < $pb) ? 'del' : 'strong';
-		$neu_tag = ($prognose_dauer > $pb) ? 'del' : 'strong';
-
-		return '
-			<p>
-				<span class="right">
-					<small>von</small>
-					'.Ajax::tooltip('<'.$bisher_tag.'>'.$pbString.'</'.$bisher_tag.'>', 'VDOT: '.JD::Competition2VDOT($dist, $pb)).'
-					<small>auf</small>
-					'.Ajax::tooltip('<'.$neu_tag.'>'.self::Time($prognose_dauer).'</'.$neu_tag.'>', 'VDOT: '.$VDOT_new).'
-					<small>('.self::Pace($dist, $prognose_dauer).'/km)</small>
-				</span>
-				<strong>'.self::Km($dist, 0, $bahn).'</strong>
-			</p>'.NL;
+		return array('vdot' => $VDOT, 'seconds' => $PrognosisInSeconds);
 	}
 
 	/**
