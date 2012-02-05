@@ -52,9 +52,9 @@ class RunalyzePluginStat_Schuhe extends PluginStat {
 		tr.shoe { height:2px; }
 		tr.shoe td { padding: 0; }
 		</style>
-		<table class="sortable autosort fullWidth">
+		<table id="listOfAllShoes" class="fullWidth">
 			<thead>
-				<tr class="b c">
+				<tr>
 					<th class="{sorter: \'x\'} small">x-mal</th>
 					<th>Name</th>
 					<th class="{sorter: \'germandate\'} small">Kaufdatum</th>
@@ -87,9 +87,6 @@ class RunalyzePluginStat_Schuhe extends PluginStat {
 					<td>'.Helper::Time($schuh['time']).'</td>
 					<td>'.Helper::Km($schuh['km']).' '.Shoe::getIcon($schuh['km']).'</td>
 				</tr>');
-				//<tr class="shoe" style="background:url(inc/draw/plugin.schuhe.php?km='.round($schuh['km']).') no-repeat bottom left;">
-				//	<td colspan="9"></td>
-				//</tr>');
 			}
 		} else {
 			echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
@@ -98,6 +95,8 @@ class RunalyzePluginStat_Schuhe extends PluginStat {
 
 		echo '</tbody>';
 		echo '</table>';
+
+		Ajax::createTablesorterFor("#listOfAllShoes");
 	}
 
 	/**

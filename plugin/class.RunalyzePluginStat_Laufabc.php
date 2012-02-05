@@ -52,7 +52,7 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayData() {
-		echo '<table style="width:100%;" class="small">';
+		echo '<table class="fullWidth small">';
 		echo HTML::monthTr(8, 1);
 		echo HTML::spaceTR(13);
 		

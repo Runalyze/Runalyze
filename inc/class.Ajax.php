@@ -46,6 +46,7 @@ class Ajax {
 
 		$Files[] = 'lib/jquery.datepicker.js';
 		$Files[] = 'lib/jquery.fileuploader.js';
+		$Files[] = 'lib/jquery.jbar.js';
 
 		$Files[] = 'lib/runalyze.lib.js';
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
@@ -67,6 +68,7 @@ class Ajax {
 
 		$Files[] = 'lib/jquery.datepicker.css';
 		$Files[] = 'lib/jquery.tablesorter.css';
+		$Files[] = 'lib/jquery.jbar.css';
 		$Files[] = 'lib/jquery.tipTip.css';
 		$Files[] = 'lib/flot.css';
 		$Files[] = 'lib/flot/qtip.css';
@@ -105,6 +107,35 @@ class Ajax {
 			return $html;
 
 		return '<abbr tooltip="'.$tooltip.'">'.$html.'</abbr>';
+	}
+
+	/**
+	 * Get code for toolbar navigation for links as array (tag => ..., subs => array(..., ...))
+	 * @param array $Links
+	 * @param string $AdditionalClasses
+	 */
+	static function toolbarNavigation($Links, $AdditionalClasses = '') {
+		$code  = '<ul class="jbar '.$AdditionalClasses.'">';
+
+		foreach ($Links as $Link) {
+			$code .= '<li>';
+			$code .= $Link['tag'];
+
+			if (isset($Link['subs']) && is_array($Link['subs'])) {
+				$code .= '<ul>';
+
+				foreach ($Link['subs'] as $Sublink)
+					$code .= '<li>'.$Sublink.'</li>';
+
+				$code .= '</ul>';
+			}
+
+			$code .= '</li>';
+		}
+
+		$code .= '</ul>';
+
+		return $code;
 	}
 
 	/**

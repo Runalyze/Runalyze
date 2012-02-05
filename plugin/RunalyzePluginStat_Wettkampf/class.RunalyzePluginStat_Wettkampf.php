@@ -49,14 +49,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->handleGetData();
 
 		$this->displayHeader($this->name);
-		$this->displayNavigation();
-		echo HTML::clearBreak();
+		$this->displayOwnNavigation();
 
 		echo '<div id="wk-tablelist" class="change">'.NL;
 			$this->displayWeatherStatistics();
 			$this->displayAllCompetitions();
 		echo '</div>'.NL;
 		echo '<div id="bestzeiten" class="change" style="display:none;">'.NL;
+			echo HTML::clearBreak();
 			$this->displayPersonalBests();
 		echo '</div>'.NL;
 	}
@@ -64,7 +64,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	/**
 	 * Display navigation for all container
 	 */
-	private function displayNavigation() {
+	private function displayOwnNavigation() {
 		echo '<small class="right">';
 		echo Ajax::change('Wettk&auml;mpfe', 'tab_content', '#wk-tablelist').' |'.NL;
 		echo Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten').NL;

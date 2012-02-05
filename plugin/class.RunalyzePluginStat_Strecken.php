@@ -15,6 +15,10 @@ $PLUGINKEY = 'RunalyzePluginStat_Strecken';
  * @uses class::Helper
  */
 class RunalyzePluginStat_Strecken extends PluginStat {
+	/**
+	 * Array with all cities
+	 * @var array
+	 */
 	private $orte = array();
 
 	/**
@@ -58,9 +62,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display routes
 	 */
 	private function displayRoutes() {
-		echo '<table style="width:70%;" style="margin:0 5px;" class="left small">';
-		echo '<tr class="b c"><td colspan="3">H&auml;ufigsten Strecken</td></tr>';
-		echo HTML::spaceTR(3);
+		echo '<table style="width:70%;" class="left small margin-5">';
+		echo '<thead><tr><th colspan="3">H&auml;ufigsten Strecken</th></tr></thead>';
+		echo '<tbody class="r">';
 
 		$strecken = Mysql::getInstance()->fetchAsArray('
 			SELECT `route`, SUM(`distance`) as `km`, SUM(1) as `num`
@@ -75,7 +79,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 
 		foreach ($strecken as $i => $strecke) {
 			echo('
-				<tr class="a'.($i%2+1).' r">
+				<tr class="a'.($i%2+1).'">
 					<td>'.$strecke['num'].'x</td>
 					<td class="l">	
 						'.DataBrowser::getSearchLink(Helper::Cut($strecke['route'],100), 'opt[route]=is&val[route]='.$strecke['route']).'
@@ -84,6 +88,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				</tr>');
 		}
 
+		echo '</tbody>';
 		echo '</table>';
 	}
 
@@ -91,9 +96,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display most visited cities
 	 */
 	private function displayCities() {
-		echo '<table style="width:25%;" style="margin:0 5px;" class="left small">';
-		echo '<tr class="b c"><td colspan="2">H&auml;ufigsten Orte</td></tr>';
-		echo HTML::spaceTR(2);
+		echo '<table style="width:25%;" class="right small margin-5">';
+		echo '<thead><tr><th colspan="2">H&auml;ufigsten Orte</th></tr></thead>';
+		echo '<tbody>';
 		
 		$i = 1;
 		array_multisort($this->orte, SORT_DESC);
@@ -113,6 +118,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				break;
 		}
 
+		echo '</tbody>';
 		echo '</table>';
 	}
 
@@ -120,9 +126,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display less visited cities
 	 */
 	private function displayLonelyCities() {
-		echo '<table style="width:95%;" style="margin:0 5px;" class="small">';
-		echo '<tr class="b c"><td colspan="2">Seltensten Orte</td></tr>';
-		echo HTML::spaceTR(2);
+		echo '<table class="margin-5 fullWidth small">';
+		echo '<thead><tr><th colspan="2">Seltensten Orte</th></tr></thead>';
+		echo '<tbody>';
 
 		$num_x = 0;
 		array_multisort($this->orte);
@@ -151,6 +157,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 					Insgesamt wurden <strong>'.count($this->orte).' verschiedene Orte</strong> sportlich besucht.
 				</td>
 			</tr>
+		</tbody>
 		</table>
 
 		<p class="small c"><em>Alles was bei der eingetragenen Strecke mit &quot; - &quot; getrennt wird, wird als eigener Ort betrachtet.</em></p>');

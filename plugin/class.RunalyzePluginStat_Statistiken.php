@@ -44,6 +44,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$this->initData();
 		$this->initLineData();
+
+		$this->setSportsNavigation();
+		$this->setYearsNavigation();
 	}
 
 	/**
@@ -62,11 +65,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader($this->sport['name'].': '.$this->getYearString());
-		$this->displayYearNavigation();
-		$this->displaySportsNavigation();
-		echo HTML::clearBreak();
 
-		echo '<table style="width:100%;" class="small r">';
+		echo '<table class="small r fullWidth">';
 
 		echo ($this->year == -1) ? HTML::yearTR(0, 1) : HTML::monthTR(8, 1);
 		echo HTML::spaceTR($this->colspan);
@@ -119,7 +119,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 
 		echo '</tr>';
-		//echo HTML::spaceTr($this->colspan);
 	}
 
 	/**

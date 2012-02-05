@@ -30,6 +30,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$this->description = 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.';
 
 		$this->initData();
+
+		$this->setYearsNavigation();
+		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
 	}
 
 	/**
@@ -45,6 +48,19 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	}
 
 	/**
+	 * Get own links for toolbar navigation
+	 * @return array
+	 */
+	protected function getToolbarNavigationLinks() {
+		$Links = array();
+
+		if ($this->config['for_weather']['var'])
+			$Links[] = array('tag' => Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Icon::get(Icon::$FATIGUE, '', '', 'Wetter-Diagramme anzeigen').'</a>'));
+
+		return $Links;
+	}
+
+	/**
 	 * Display the content
 	 * @see PluginStat::displayContent()
 	 */
@@ -54,16 +70,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			return;
 		}
 
-		$Sport = new Sport(CONF_MAINSPORT);
-
-		if ($this->config['for_weather']['var'])
-			echo Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Icon::get(Icon::$FATIGUE, '', '', 'Wetter-Diagramme anzeigen').'</a>');
-
 		$this->displayHeader($this->getHeader());
-		$this->displayYearNavigation();
-		echo '<small class="left">'.$Sport->name().'</small>';
-		echo HTML::clearBreak();
-		echo '<br />';
 		
 		$this->displayExtremeTrainings();
 		$this->displayMonthTable();
@@ -74,7 +81,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display month-table
 	 */
 	private function displayMonthTable() {
-		echo '<table style="width:100%;" class="small">';
+		echo '<table class="small fullWidth">';
 		echo HTML::monthTR(8, 1);
 
 		if ($this->config['for_weather']['var']) {
@@ -242,19 +249,18 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display table for clothes
 	 */
 	private function displayClothesTable() {
-		echo '<table style="width:100%;" class="small">
-			<tr class="b c">
-				<td />
-				<td>Temperaturen</td>
-				<td>&Oslash;</td>
-				<td colspan="2" />
-				<td>Temperaturen</td>
-				<td>&Oslash;</td>
-				<td colspan="2" />
-				<td>Temperaturen</td>
-				<td>&Oslash;</td>
-			</tr>';
-		echo HTML::spaceTR(11);
+		echo '<table class="small fullWidth">
+			<thead><tr>
+				<th />
+				<th>Temperaturen</th>
+				<th>&Oslash;</th>
+				<th colspan="2" />
+				<th>Temperaturen</th>
+				<th>&Oslash;</th>
+				<th colspan="2" />
+				<th>Temperaturen</th>
+				<th>&Oslash;</th>
+			</tr></thead>';
 		echo '<tr class="a1 r">';
 
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');

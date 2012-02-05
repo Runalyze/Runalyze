@@ -57,9 +57,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 */
 	private function displayRekorde() {
 		foreach ($this->rekorde as $rekord) {
-			echo '<table style="width:100%;" class="small">';
-			echo '<tr class="b"><td colspan="11">'.$rekord['name'].'</td></tr>';
-			echo HTML::spaceTR(11);
+			echo '<table class="small fullWidth">';
+			echo '<thead><tr><th colspan="11" class="l">'.$rekord['name'].'</th></tr></thead>';
 
 			$output = false;
 			eval('$sports = Mysql::getInstance()->fetchAsArray(\''.$rekord['sportquery'].'\');');
@@ -68,6 +67,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 
 				if (!empty($data)) {
 					$output = true;
+					echo '<tbody>';
 					echo '<tr class="a'.($i%2 + 1).' r">';
 					echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
 	
@@ -94,6 +94,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
 
 			echo HTML::spaceTR(11);
+			echo '</tbody>';
 			echo '</table>';
 		}
 	}
@@ -102,13 +103,14 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * Display the table with most kilometer for each year/month/week
 	 */
 	private function displayMostKilometer() {
-		echo '<table style="width:100%;" class="small">';
-		echo '<tr class="b"><td colspan="11">Trainingsreichsten Laufphasen</td></tr>';
-		echo HTML::spaceTR(11);
+		echo '<table class="small fullWidth">';
+		echo '<thead><tr><th colspan="11" class="l">Trainingsreichsten Laufphasen</th></tr></thead>';
+		echo '<tbody>';
 
 		if (empty($this->years)) {
 			echo '<tr class="a1"><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
 			echo HTML::spaceTR(11);
+			echo '</tbody>';
 			echo '</table>';
 			return;
 		}
@@ -147,6 +149,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		echo '</tr>';
 
 		echo HTML::spaceTR(11);
+		echo '</tbody>';
 		echo '</table>';
 	}
 

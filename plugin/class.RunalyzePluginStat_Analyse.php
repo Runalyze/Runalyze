@@ -35,6 +35,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 		$this->initTimer();
 		$this->initData();
+
+		$this->setYearsNavigation();
 	}
 
 	/**
@@ -61,9 +63,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader('Training '.$this->getYearString());
-		$this->displayYearNavigation();
-
-		echo HTML::clearBreak();
 
 		$this->displayAnalysis();
 	}
