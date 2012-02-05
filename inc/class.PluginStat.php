@@ -13,6 +13,30 @@
 
 abstract class PluginStat extends Plugin {
 	/**
+	 * Boolean flag: show sports-navigation
+	 * @var bool
+	 */
+	protected $ShowSportsNavigation = false;
+
+	/**
+	 * Boolean flag: show years-navigation
+	 * @var bool
+	 */
+	protected $ShowYearsNavigation = false;
+
+	/**
+	 * Boolean flag: show compare-link in years-navigation
+	 * @var bool
+	 */
+	protected $ShowCompareYearsLink = true;
+
+	/**
+	 * Array of links for toolbar-navigation
+	 * @var array
+	 */
+	protected $Links = array();
+
+	/**
 	 * Method for initializing default config-vars (implemented in each plugin)
 	 */
 	protected function getDefaultConfigVars() { return array(); }
@@ -40,29 +64,39 @@ abstract class PluginStat extends Plugin {
 	}
 
 	/**
+	 * Set flag for sports-navigation
+	 * @param bool $flag
+	 */
+	protected function setSportsNavigation($flag = true) {
+		$this->ShowSportsNavigation = $flag;
+	}
+
+	/**
+	 * Set flag for years-navigation
+	 * @param bool $flag
+	 * @param bool $compareFlag [optional]
+	 */
+	protected function setYearsNavigation($flag = true, $compareFlag = true) {
+		$this->ShowYearsNavigation = $flag;
+		$this->ShowCompareYearsLink = $compareFlag;
+	}
+
+	/**
+	 * Set array of links for toolbar-navigation
+	 * @param array $Links
+	 */
+	protected function setToolbarNavigationLinks($Links) {
+		$this->Links = $Links;
+	}
+
+	/**
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
 		$this->displayConfigLinkForHeader();
-
-		if ($this->isVariousStat())
-			$this->displayLinksForVariousStatistics();
+		$this->displayNavigation();
 
 		$this->displayContent();
-	}
-
-	/**
-	 * Display links to all various statistics
-	 */
-	protected function displayLinksForVariousStatistics() {
-		echo(NL.'<span class="smallHeadNavi right margin-5">'.NL);
-		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
-		foreach ($others as $i => $other) {
-			if ($i != 0)
-				echo(' | ');
-			echo self::getInnerLinkFor($other['id'], $other['name']);
-		}
-		echo(NL.'</span>'.NL);
 	}
 
 	/**
@@ -79,42 +113,67 @@ abstract class PluginStat extends Plugin {
 	/**
 	 * Display config link
 	 */
-	protected function displayConfigLinkForHeader() {
-		echo '<span class="right margin-5">'.$this->getConfigLink().'</span>'.NL;
+	private function displayConfigLinkForHeader() {
+		//echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
 	}
 
-	
 	/**
-	 * Print inner links to every year
+	 * Display navigation
+	 */
+	private function displayNavigation() {
+		if ($this->ShowSportsNavigation)
+			$this->Links[] = array('tag' => '<a href="#">Sportart w&auml;hlen</a>', 'subs' => $this->getSportLinksAsArray());
+		if ($this->ShowYearsNavigation)
+			$this->Links[] = array('tag' => '<a href="#">Jahr w&auml;hlen</a>', 'subs' => $this->getYearLinksAsArray($this->ShowCompareYearsLink));
+
+		if ($this->isVariousStat())
+			$this->Links = array_merge($this->Links, $this->getLinksForVariousStatistics());
+
+		echo Ajax::toolbarNavigation($this->Links, 'right');
+	}
+
+	/**
+	 * Get links to all various statistics
+	 * @return array
+	 */
+	private function getLinksForVariousStatistics() {
+		$Links = array();
+
+		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
+		foreach ($others as $other)
+			$Links[] = self::getInnerLinkFor($other['id'], $other['name']);
+
+		return array( array('tag' => '<a href="#">Statistik w&auml;hlen</a>', 'subs' => $Links) );
+	}
+
+	/**
+	 * Get links for all sports
+	 * @return array
+	 */
+	private function getSportLinksAsArray() {
+		$Links = '';
+
+		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+		foreach ($Sports as $i => $Sport)
+			$Links[] = $this->getInnerLink($Sport['name'], $Sport['id'], $this->year);
+
+		return $Links;
+	}
+
+	/**
+	 * Get links for all years
 	 * @param bool $CompareYears If set, adds a link with year=-1
 	 */
-	protected function displayYearNavigation($CompareYears = true) {
-		echo '<small class="right">';
-
-		for ($x = START_YEAR; $x <= date("Y"); $x++)
-			echo $this->getInnerLink($x, $this->sportid, $x).' | ';
+	private function getYearLinksAsArray($CompareYears = true) {
+		$Links = '';
 
 		if ($CompareYears)
-			echo $this->getInnerLink('Jahresvergleich', $this->sportid, -1);
+			$Links[] = $this->getInnerLink('Jahresvergleich', $this->sportid, -1);
 
-		echo '</small>';
-	}
+		for ($x = date("Y"); $x >= START_YEAR; $x--)
+			$Links[] = $this->getInnerLink($x, $this->sportid, $x);
 
-	
-	/**
-	 * Print inner links to every sport
-	 */
-	protected function displaySportsNavigation() {
-		echo '<small class="left">';
-		
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
-		foreach ($sports as $i => $sportlink) {
-			if ($i != 0)
-				echo(' |'.NL);
-			echo $this->getInnerLink($sportlink['name'], $sportlink['id'], $this->year);
-		}
-
-		echo '</small>';
+		return $Links;
 	}
 		
 	/**

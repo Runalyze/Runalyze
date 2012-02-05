@@ -16,6 +16,12 @@ $PLUGINKEY = 'RunalyzePluginStat_Trainingspartner';
  */
 class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	/**
+	 * Array for all trainingspartner
+	 * @var array
+	 */
+	protected $Partner = array();
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
 	 */
@@ -23,6 +29,8 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Trainingspartner';
 		$this->description = 'Wie oft hast du mit wem gemeinsam trainiert?';
+
+		$this->initTrainingspartner();
 	}
 
 	/**
@@ -41,34 +49,22 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader('Trainingspartner');
-		echo '<table style="width:95%;" style="margin:0 5px;" class="small">';
-		echo '<tr class="b c"><td colspan="2">Alle Trainingspartner</td></tr>';
-		echo HTML::spaceTR(2);
 
-		$partner = array();
-		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner` != ""');
-		if (empty($trainings))
+		echo '<table class="fullWidth margin-5 small">';
+		echo '<thead><tr><th colspan="2">Alle Trainingspartner</th></tr></thead>';
+		echo '<tbody>';
+
+		if (empty($this->Partner))
 			echo('
 				<tr class="a1">
 					<td class="b">0x</td>
 					<td><em>Du hast bisher nur alleine trainiert.</em></td>
 				</tr>');
 		else {
-			foreach ($trainings as $training) {
-				$trainingspartner = explode(', ', $training['partner']);
-				foreach ($trainingspartner as $name) {
-					if (!isset($partner[$name]))
-						$partner[$name] = 1;
-					else
-						$partner[$name]++;
-				}
-			}
-		
 			$row_num = INFINITY;
 			$i = 0;
-			array_multisort($partner, SORT_DESC);
 		
-			foreach ($partner as $name => $name_num) {
+			foreach ($this->Partner as $name => $name_num) {
 				if ($row_num == $name_num)
 					echo(', ');
 				else {
@@ -85,7 +81,30 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 			echo '</td></tr>';
 		}
 
+		echo '</tobdy>';
 		echo '</table>';
+	}
+
+	/**
+	 * Init all trainingspartner
+	 */
+	protected function initTrainingspartner() {
+		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner` != ""');
+
+		if (empty($trainings))
+			return;
+
+		foreach ($trainings as $training) {
+			$trainingspartner = explode(', ', $training['partner']);
+			foreach ($trainingspartner as $name) {
+				if (!isset($this->Partner[$name]))
+					$this->Partner[$name] = 1;
+				else
+					$this->Partner[$name]++;
+			}
+		}
+
+		array_multisort($this->Partner, SORT_DESC);
 	}
 }
 ?>
