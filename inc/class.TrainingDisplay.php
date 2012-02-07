@@ -3,11 +3,6 @@
  * This file contains the class to handle the displaying for every training.
  */
 
-Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienfarbe auf GoogleMaps-Karte (#RGB)');
-Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
-Config::register('Training', 'TRAINING_MAPTYPE', 'select',
-	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
-	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
 Config::register('Training', 'TRAINING_PLOTS_BELOW', 'bool', false, 'Diagramme untereinander anstatt im Wechsel anzeigen');
 
 /**
@@ -332,7 +327,8 @@ class TrainingDisplay {
 	 * Display route on GoogleMaps
 	 */
 	public function displayRoute() {
-		echo '<iframe src="'.self::$mapURL.'?id='.$this->Training->get('id').'" style="border:1px solid #000;" width="478" height="300" frameborder="0"></iframe>';
+		$Map = new Gmap($this->Training->get('id'), $this->Training->GpsData());
+		$Map->displayMap();
 	}
 
 	/**

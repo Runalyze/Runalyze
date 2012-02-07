@@ -32,7 +32,7 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 				deviceSelectLabel: "Ausw&auml;hlen:<br />",
 				readDataButtonText: "Verbinden",
 				showCancelReadDataButton: false,
-				lookingForDevices: 'Suche nach Ger&auml;ten<br /><br /><img src="../tcx/garmin/ajax-loader.gif" />',
+				lookingForDevices: 'Suche nach Ger&auml;ten<br /><br /><img src="../../img/wait.gif" />',
 				uploadsFinished: "&Uuml;bertragung vollst&auml;ndig",
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
@@ -50,7 +50,7 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 	</script>
 </head>
 
-<body onload="load()">
+<body onload="load()" style="background:none;">
 
 	<div id="garminDisplay"></div>
 

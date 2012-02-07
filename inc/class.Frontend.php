@@ -26,6 +26,7 @@ date_default_timezone_set('Europe/Berlin');
  * @uses class::Plot
  * @uses class::Training
  * @uses class::TrainingDisplay
+ * @uses class::Gmap
  * @uses class::Editor
  * @uses class::Importer
  * @uses class::DataBrowser
@@ -188,6 +189,7 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.User.php';
 		require_once FRONTEND_PATH.'class.Weather.php';
 		require_once FRONTEND_PATH.'class.GpsData.php';
+		require_once FRONTEND_PATH.'class.Gmap.php';
 		require_once FRONTEND_PATH.'class.Editor.php';
 
 		$this->initImporterExporter();

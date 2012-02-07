@@ -42,6 +42,11 @@ body#installer {
 	background-color: #000;
 	border-top: 1px solid #494944; }
 
+#copy abbr {
+	display: block;
+	width: 24px;
+	height: 24px; }
+
 #copy a {
 	margin: 6px 15px; }
 
@@ -162,11 +167,12 @@ h1 a:link, h1 a:visited {
 	border-bottom: 1px solid #000; }
 
 #statisticTabs li {
+	opacity: 0.7;
+	filter: alpha(opacity=70);
 	float: left;
 	position: relative;
 	top: 6px;
 	height: 20px;
-	opacity: 0.7;
 	margin-right: -1px;
 	line-height: 20px;
 	border: 1px solid #000;
@@ -178,9 +184,10 @@ h1 a:link, h1 a:visited {
 	padding: 0 10px; }
 
 #statisticTabs li.active, #statisticTabs li:hover  {
+	opacity: 1;
+	filter: alpha(opacity=100);
 	top: 1px;
 	height: 25px;
-	opacity: 1;
 	line-height: 25px;
 	border-bottom: none; }
 
@@ -286,7 +293,8 @@ h1 a:link, h1 a:visited {
 	background: url(img/wait.gif) center center no-repeat rgba(255,255,255,0.9); }
 
 .loading * {
-	opacity: 0; }
+	opacity: 0;
+	filter: alpha(opacity=0); }
 
 .waitImg {
 	background: url(img/wait-black.gif) center center no-repeat #000 !important; }
@@ -320,13 +328,13 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .error { color: #F00; font-weight: bold; }
 .margin-5 { margin: 0 5px; }
 .margin-10 { margin: 0 10px; }
-.transparent-70 { opacity: 0.7; }
+.transparent-70 { opacity: 0.7; filter: alpha(opacity=70); }
 .fullWidth { width: 100%; }
 .w50 { width: 50%; }
 .w33 { width: 33%; }
 
-.unimportant { opacity: 0.5; }
-.unimportant:hover { opacity: 1; }
+.unimportant { opacity: 0.5; filter: alpha(opacity=50); }
+.unimportant:hover { opacity: 1; filter: alpha(opacity=100); }
 
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
@@ -412,3 +420,32 @@ code {
 
 .flot {
 	position: relative !important; }
+
+/*** Map ***/
+.map {
+	border: 1px solid #000;
+	width: 478px;
+	height: 300px; }
+
+.map .hoverTip {
+	position: absolute;
+	background-color: rgba(255,255,255,0.8);
+	padding: 1px;
+	margin: 2px 0 0 2px;
+	font-size: 9px;
+	color: #545454;
+	border: 1px solid #CCC;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px; }
+
+.withLeftArrow:after {
+	content: ' ';
+	position: absolute;
+	height: 0;
+	width: 0;
+	border: 5px solid transparent;
+	border-right-color: rgba(255,255,255,0.8);
+	left: -11px;
+	top: 50%;
+	margin-top: -5px; }
