@@ -195,7 +195,7 @@ class GpsData {
 	/**
 	 * Get the current kilometer
 	 * @param double $distance
-	 * @return float
+	 * @return int
 	 */
 	public function currentKilometer($distance = 1) {
 		if ($this->loopIsAtDefaultIndex())
@@ -205,6 +205,14 @@ class GpsData {
 			return end($this->arrayForDistance);
 
 		return floor($this->arrayForDistance[$this->arrayIndex]/$distance)*$distance;
+	}
+
+	/**
+	 * Get total distance
+	 * @return float
+	 */
+	public function getTotalDistance() {
+		return end($this->arrayForDistance);
 	}
 
 	/**
@@ -758,6 +766,18 @@ class GpsData {
 	 */
 	public function compressData() {
 		// TODO
+	}
+
+	/**
+	 * Calculate distance of current step from latitude/longitude
+	 * @return double
+	 */
+	public function getCalculatedDistanceOfStep() {
+		return self::distance(
+			$this->arrayForLatitude[$this->arrayLastIndex],
+			$this->arrayForLongitude[$this->arrayLastIndex],
+			$this->arrayForLatitude[$this->arrayIndex],
+			$this->arrayForLongitude[$this->arrayIndex]);
 	}
 
 	/**

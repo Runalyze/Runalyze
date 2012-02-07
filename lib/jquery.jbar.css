@@ -126,9 +126,11 @@ ul.jbar.jbar_browser_IE6 a.has_lonely_down_arrow span.down_arrow em {
 ul.jbar div.submenu_container {
 	display: none;
 	position: absolute;
+	left: 0;
 	z-index: 1000;
 	width: 150px;
 	text-align: left;
+	background-color: #e1e1e1;
 }
 
 
@@ -165,7 +167,6 @@ ul.jbar ul li a {
 	color: #000 !important;
 	text-decoration: none;
 	text-shadow: 1px 1px 2px #d6d6d6;
-	background-color: #e1e1e1;
 	background-image: none;
 	-moz-border-radius: 0; 
 	-webkit-border-radius: 0;

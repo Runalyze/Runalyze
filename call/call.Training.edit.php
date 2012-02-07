@@ -19,6 +19,7 @@ if (isset($_GET['json'])) {
 }
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
+	// TODO: Datenbank bereinigen
 	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
 
 	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';

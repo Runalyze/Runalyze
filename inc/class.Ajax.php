@@ -47,9 +47,13 @@ class Ajax {
 		$Files[] = 'lib/jquery.datepicker.js';
 		$Files[] = 'lib/jquery.fileuploader.js';
 		$Files[] = 'lib/jquery.jbar.js';
+		
+		$Files[] = 'http://maps.google.com/maps/api/js?sensor=false';
+		$Files[] = 'lib/jquery.gmap3.min.js';
 
-		$Files[] = 'lib/runalyze.lib.js';
+		$Files[] = 'lib/runalyze.lib.gmap.js';
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
+		$Files[] = 'lib/runalyze.lib.js';
 
 		$Files[] = 'lib/form_scripts.js';
 

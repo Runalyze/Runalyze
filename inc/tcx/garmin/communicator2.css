@@ -1,11 +1,8 @@
 body { padding: 0; margin: 0; }
 
-textarea#result { display: none; }
-
 #garminDisplay {
-	color: #444;
-	font-family: Verdana, Arial, sans serif;
-	font-size: 11px;
+	font: normal normal normal 11px/1.2em Verdana, Arial, sans-serif;
+	color: #333;
 	text-align: center;
 	height: 170px;
 	width: 530px;
@@ -17,7 +14,7 @@ textarea#result { display: none; }
 
 #progressBar {
 	position: relative;
-    height: 17px;
+    height: 20px;
     border: 1px solid black;
     background-color: #CCCAC1;
 	-webkit-border-radius: 3px;
@@ -30,14 +27,29 @@ textarea#result { display: none; }
 
 #progressBarDisplay {
     position:absolute;
-    top:0px;
-    height:17px;
+    top: 0;
+	left: 0;
     z-index: 5;
     margin: 0;
     padding: 0;
     text-align: left;
-	background: url(button_bg.jpg) repeat-x -5px -5px;
+	/*background: url(button_bg.jpg) repeat-x -5px -5px;*/
     /*background-color:#005E9D;*/
+	height: 100%;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+	background: rgb(73,155,234);
+	background: -moz-linear-gradient(top,  rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(73,155,234,1)), color-stop(100%,rgba(32,124,229,1)));
+	background: -webkit-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
+	background: -o-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
+	background: -ms-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
+	background: linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 );
 }
 
 #progressBarText {
@@ -45,7 +57,7 @@ textarea#result { display: none; }
 	color: #FFF;
 	text-align: center;
 	height: 13px;
-	padding: 2px 0;
+	padding: 3px 0;
 	width: 100%;
 	position: absolute;
 }
@@ -53,29 +65,6 @@ textarea#result { display: none; }
 #aboutElement, #deviceBrowserBox, #cancelUploadButton {
 	display: none;
 }
-
-/*#garminDisplay input {
-	font-size:10px;
-	font-weight: bold;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-    color:#ffffff;
-    height:18px;
-    background-color: #005E9D;
-    border:1px outset #3D3A21;
-    padding: 3px;
-}*/
-
-/*#garminDisplay input.actionButton {
-	font-size:16px;
-	font-weight: bold;
-	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-    color:#ffffff;
-    background-color: #0077AA;
-    border:1px outset #3D3A21;
-    padding: 3px;
-    width: 150px;
-    height: 35px;
-}*/
 
 #garminDisplay input:disabled {
     background-color: #D0D0D0;
@@ -141,14 +130,14 @@ textarea#result { display: none; }
 }
 
 #activityTableHeader {
-    color: #FFFFFF;
-	background: url(button_bg.jpg) repeat-x -5px -5px;
-    /*background-color: #0077AA;*/
-    width: 410px;
+    color: #000;
+    width: 405px;
     margin: 0 auto;
 }
 #activityTableHeader td {
+	padding: 2px 0;
 	text-align: center !important;
+	border-bottom: 1px solid #000;
 }
 
 #activityTable {
@@ -189,41 +178,28 @@ textarea#result { display: none; }
 .readResultsSelect {
 }
 
+#shortStatus {
+	display: none;
+}
+
 /* Style for the Preview button */
-#readDataButton{
-	border: 0;
-	cursor: pointer;
-	text-align: center;
-	width: 127px;
-	height: 25px;
-	margin: 0;
-	padding: 0;
-	background: url(button_bg.jpg) no-repeat 0 top;
-	color: #fff;
-}
-
 /* Style for the Upload button */
-#readSelectedButton {
-	border: 0;
-	cursor: pointer;
+#readDataButton, #readSelectedButton {
+	display: block;
 	text-align: center;
 	width: 127px;
-	height: 25px;
-	background: url(button_bg.jpg) no-repeat 0 top;
-	color: #fff;
+	margin: 10px auto 0 auto;
+	padding: 5px 12px;
+	color: #FFF;
+	text-shadow: 1px 1px 0 #666;
+	background-color: #808080;
+	border: 1px solid #B8B8B8;
+	border-radius: 3px 3px 3px 3px;
+	box-shadow: 0 1px 3px #BBBBBB;
+	cursor: pointer;
 }
 
-#readDataButton:hover, #readSelectedButton:hover {
-	background: url(button_bg.jpg) no-repeat 0 bottom;
-}
-
+#readDataButton:hover, #readSelectedButton:hover,
 #readDataButton:active, #readSelectedButton:active {
-	background: url(button_bg.jpg) no-repeat 0 top;
-}
-
-
-#readBox {
-	/*position: absolute;
-	bottom: 60px;
-	left: 70px;*/
+	box-shadow: 0 0 6px #8AB856;
 }
