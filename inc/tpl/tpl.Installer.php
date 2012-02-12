@@ -100,19 +100,19 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Host-Server</strong>
-			<input type="text" name="host" value="<?php echo ($_POST['host'] ? $_POST['host'] : 'localhost'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="text" name="host" value="<?php echo (isset($_POST['host']) ? $_POST['host'] : 'localhost'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label><br />
 		<label>
 			<strong>Datenbank</strong>
-			<input type="text" name="database" value="<?php echo ($_POST['database'] ? $_POST['database'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="text" name="database" value="<?php echo (isset($_POST['database']) ? $_POST['database'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label><br />
 		<label>
 			<strong>Benutzer</strong>
-			<input type="text" name="username" value="<?php echo ($_POST['username'] ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label><br />
 		<label>
 			<strong>Passwort</strong>
-			<input type="password" name="password" value="<?php echo ($_POST['password'] ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="password" name="password" value="<?php echo (isset($_POST['password']) ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label><br />
 	</p>
 
@@ -133,7 +133,7 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Pr&auml;fix</strong>
-			<input type="text" name="prefix" value="<?php echo ($_POST['prefix'] ? $_POST['prefix'] : 'runalyze_'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="text" name="prefix" value="<?php echo (isset($_POST['prefix']) ? $_POST['prefix'] : 'runalyze_'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
 		</label>
 	</p>
 

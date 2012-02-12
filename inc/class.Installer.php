@@ -216,7 +216,7 @@ class Installer {
 	 * Is the prefix free for this installation?
 	 */
 	protected function prefixIsUnused() {
-		if (strlen($_POST['prefix']) < 2)
+		if (!isset($_POST['prefix']) || strlen($_POST['prefix']) < 2)
 			return false;
 
 		return (mysql_num_rows(mysql_query('SHOW TABLES LIKE "'.$_POST['prefix'].'training"')) == 0);
