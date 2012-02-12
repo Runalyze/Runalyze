@@ -143,7 +143,7 @@ class Gmap {
 
 		if ($TotalDistance > 20) {
 			if ($km%5 == 0 && $km <= 50)
-				return 'img/marker/marker-'.($km%5).'.png';
+				return 'img/marker/marker-'.$km.'.png';
 			else
 				return 'img/marker/point.gif';
 		} else {
