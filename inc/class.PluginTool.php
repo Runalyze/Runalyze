@@ -58,18 +58,17 @@ abstract class PluginTool extends Plugin {
 	 * Display header for all tools
 	 */
 	public static function displayToolsHeader() {
-		echo '<small class="right">'.NL;
-		echo Ajax::link('Alle Tools:', self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true').NL;
+		$Sublinks = array();
+		$Sublinks[] = Ajax::link('--- Alle Tools', self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
 
 		$tools = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC');
-		foreach ($tools as $i => $tool) {
-			if ($i != 0)
-				echo ' | ' ;
+		foreach ($tools as $i => $tool)
+			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
 
-			echo self::getLinkFor($tool['id'], $tool['name']);
-		}
+		$Links = array();
+		$Links[] = array('tag' => '<a href="#">Plugin w&auml;hlen</a>', 'subs' => $Sublinks);
 
-		echo '</small>'.NL;
+		echo Ajax::toolbarNavigation($Links, 'right');
 	}
 
 	/**

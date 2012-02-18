@@ -9,7 +9,7 @@ function createUploader() {
 		allowedExtensions: [<?php echo $AllowedFormatsForJS; ?>],
 		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
 		onComplete : function(file, response){
-			jLoadLink('ajax', '<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
+			$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
 		}		
 	});
 }

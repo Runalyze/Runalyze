@@ -41,16 +41,19 @@ class ImporterFormular extends Importer {
 
 	/**
 	 * Set values for training from file or post-data
+	 * @param boolean $decode [optional]
 	 */
-	protected function setTrainingValues() {
+	protected function setTrainingValues($decode = true) {
 		$this->tryToSetFromPostData('sportid');
 
 		$this->set('abc', isset($_POST['abc']) ? 1 : 0);
 		$this->set('is_track', isset($_POST['is_track']) ? 1 : 0);
 
-		$this->decodeIfSet('route');
-		$this->decodeIfSet('comment');
-		$this->decodeIfSet('partner');
+		if ($decode) {
+			$this->decodeIfSet('route');
+			$this->decodeIfSet('comment');
+			$this->decodeIfSet('partner');
+		}
 
 		if ($this->postDataHasBeenSent())
 			$this->parsePostDataAndTryToInsert();
@@ -108,9 +111,10 @@ class ImporterFormular extends Importer {
 
 		$AutoParseKeys   = array();
 		$AutoParseKeys[] = 'kcal';
-		$AutoParseKeys[] = 'comment';
-		$AutoParseKeys[] = 'partner';
 		$AutoParseKeys[] = 'sportid';
+		$StringKeys      = array();
+		$StringKeys[]    = 'partner';
+		$StringKeys[]    = 'comment';
 
 		if (!isset($_POST['sportid'])) {
 			$this->errorString = 'Es muss eine Sportart ausgew&auml;hlt werden.';
@@ -148,9 +152,9 @@ class ImporterFormular extends Importer {
 			$this->values[]      = isset($_POST['clothes']) ? implode(',', array_keys($_POST['clothes'])) : '';
 			$this->columns[]     = 'temperature';
 			$this->values[]      = isset($_POST['temperature']) && is_numeric($_POST['temperature']) ? $_POST['temperature'] : NULL;
-
+			
+			$StringKeys[]        = 'route';
 			$AutoParseKeys[]     = 'weatherid';
-			$AutoParseKeys[]     = 'route';
 			$AutoParseKeys[]     = 'arr_time';
 			$AutoParseKeys[]     = 'arr_lat';
 			$AutoParseKeys[]     = 'arr_lon';
@@ -180,6 +184,11 @@ class ImporterFormular extends Importer {
 			$AutoParseKeys[]     = 'shoeid';
 			$this->columns[]     = 'abc';
 			$this->values[]      = isset($_POST['abc']) ? 1 : 0;
+		}
+		
+		foreach ($StringKeys as $var) {
+			$this->columns[] = $var;
+			$this->values[]  = isset($_POST[$var]) ? $_POST[$var] : '';
 		}
 		
 		foreach ($AutoParseKeys as $var) {

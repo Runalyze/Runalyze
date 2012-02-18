@@ -85,7 +85,7 @@ class ImporterCSV extends Importer {
 		$this->PossibleKeys['s']           = 'Dauer';
 		$this->PossibleKeys['distance']    = 'Distanz';
 		$this->PossibleKeys['kcal']        = 'kcal';
-		$this->PossibleKeys['pulse_avg']   = '&oslash;-Plus';
+		$this->PossibleKeys['pulse_avg']   = '&oslash;-Puls';
 		$this->PossibleKeys['pulse_max']   = 'max-Puls';
 		$this->PossibleKeys['comment']     = 'Bemerkung';
 		$this->PossibleKeys['partner']     = 'Partner';
@@ -166,7 +166,7 @@ class ImporterCSV extends Importer {
 			$Training->overwritePostArray();
 
 			$Importer = Importer::getInstance();
-			$Importer->setTrainingValues();
+			$Importer->setTrainingValues(false);
 			$Importer->parsePostData();
 			$Importer->insertTraining();
 
@@ -261,8 +261,10 @@ class ImporterCSV extends Importer {
 
 			case 'sportid':
 				$table = 'sport';
+				return self::getIDforDatabaseString($table, $value);
 			case 'typeid':
 				$table = 'type';
+				return self::getIDforDatabaseString($table, $value);
 			case 'shoeid':
 				$table = 'shoe';
 				return self::getIDforDatabaseString($table, $value);
@@ -273,7 +275,7 @@ class ImporterCSV extends Importer {
 			case 'partner':
 			case 'route':
 			default:
-				return Helper::Umlaute($value);
+				return $value;
 		}
 	}
 
@@ -284,11 +286,21 @@ class ImporterCSV extends Importer {
 	 * @return int
 	 */
 	static private function getIDforDatabaseString($table, $string) {
-		$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
+		if ($table == 'type')
+			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" OR abbr="'.$string.'" LIMIT 1';
+		else
+			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
+
 		$Result = Mysql::getInstance()->fetchSingle($SearchQuery);
 
-		if ($Result === false)
+		if ($Result === false) {
+			if ($table == 'type')
+				return $_POST['typeid'];
+			if ($table == 'sport')
+				return $_POST['sportid'];
+
 			return 0;
+		}
 
 		return $Result['id'];
 	}
