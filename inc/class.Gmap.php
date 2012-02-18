@@ -7,7 +7,7 @@ Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienf
 Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
 Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
-	array('Normal', 'Hybrid', 'Sattelit', 'Physikalisch'));
+	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
 
 /**
  * Class: GMap
