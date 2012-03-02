@@ -10,6 +10,9 @@ $Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest FROM `'
 $Weights  = array();
 $HRrests  = array();
 
+if (count($Data) == 1)
+	$Data[1] = $Data[0];
+
 if (!empty($Data)) {
 	foreach ($Data as $D) {
 		$Weights[] = (double)$D['weight'];
