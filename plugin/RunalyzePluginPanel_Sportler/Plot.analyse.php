@@ -12,6 +12,9 @@ $Adiposes   = array();
 $Water      = array();
 $Muscles    = array();
 
+if (count($Data) == 1)
+	$Data[1] = $Data[0];
+
 if (!empty($Data)) {
 	foreach ($Data as $D) {
 		$Adiposes[] = $D['fat'];

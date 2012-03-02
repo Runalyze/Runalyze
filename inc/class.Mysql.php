@@ -169,7 +169,7 @@ final class Mysql {
 
 		if ($id === false)
 			$result = $this->query($table);
-		elseif ($id == 'LAST')
+		elseif ($id === 'LAST')
 			$result = $this->query('SELECT * FROM `'.$table.'` ORDER BY `id` DESC LIMIT 1');
 		else
 			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`="'.$id.'" LIMIT 1');
