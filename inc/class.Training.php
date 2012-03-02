@@ -701,6 +701,19 @@ class Training {
 	}
 
 	/**
+	 * Get link for create window for a given date
+	 * @param string $date
+	 * @return string
+	 */
+	static public function getCreateWindowLinkForDate($date) {
+		if (is_int($date))
+			$date = date('d.m.Y', $date);
+
+		$icon = Icon::get(Icon::$ADD_GRAY, '');
+		return Ajax::window('<a href="call/call.Training.create.php?date='.$date.'">'.$icon.'</a>', 'normal');
+	}
+
+	/**
 	 * Display the window/formular for creation
 	 */
 	static public function displayCreateWindow() {
@@ -710,6 +723,11 @@ class Training {
 		$fileName     = isset($_GET['file']) ? $_GET['file'] : '';
 		$showUploader = empty($_POST) && !isset($_GET['file']);
 		$Importer     = Importer::getInstance($fileName);
+
+		if (!isset($_POST['datum']) && isset($_GET['date'])) {
+			$_POST['datum'] = $_GET['date'];
+			$showUploader = false;
+		}
 
 		if ($Importer->tryToUploadFileHasSuccess())
 			return;

@@ -29,9 +29,6 @@
 <?php
 $todayString = date("d.m.Y");
 foreach ($this->days as $i => $day) {
-	$today       = CONF_DB_HIGHLIGHT_TODAY && ($todayString == date("d.m.Y", $day['date'])) ? ' class="b"' : '';
-	$date_string = '<small>'.date("d.m.", $day['date']).'</small> <span'.$today.'>'.Helper::Weekday(date("w", $day['date']), true).'</span>';
-
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
 			$id = $Training['id'];
@@ -48,7 +45,7 @@ foreach ($this->days as $i => $day) {
 					$this->Dataset->displayShortLink();
 				}
 
-				echo('</td><td class="l">'.$date_string.'</td>');
+				echo('</td><td class="l">'.Dataset::getDateString($day['date']).'</td>');
 			}
 
 			$this->Dataset->setTrainingId($id, $Training);
@@ -67,7 +64,7 @@ foreach ($this->days as $i => $day) {
 		}
 
 		echo('</td>
-			<td class="l">'.$date_string.'</td>
+			<td class="l">'.Dataset::getDateString($day['date']).'</td>
 			<td colspan="'.$this->Dataset->column_count.'" />
 		</tr>');
 	}

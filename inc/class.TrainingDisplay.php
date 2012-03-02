@@ -337,5 +337,14 @@ class TrainingDisplay {
 	public function displayEditLink() {
 		echo Ajax::window('<a href="call/call.Training.edit.php?id='.$this->Training->get('id').'">'.Icon::get(Icon::$EDIT, '', '', 'Training bearbeiten').'</a> ','small');
 	}
+
+	/**
+	 * Display link for edit window
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getSmallEditLinkFor($id) {
+		return Ajax::window('<a href="call/call.Training.edit.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, '').'</a> ','small');
+	}
 }
 ?>

@@ -15,8 +15,10 @@ class Icon {
 	// General
 	static public $AJAX_LOADER		= 'img/ajax-loader-download.gif';
 	static public $EDIT				= 'img/edit.gif';
+	static public $EDIT_SMALL		= 'img/edit.png';
 	static public $REFRESH			= 'img/Refresh.png';
 	static public $ADD				= 'img/add.png';
+	static public $ADD_GRAY			= 'img/addGray.gif';
 	static public $CROSS			= 'img/cross.png';
 	static public $DELETE           = 'img/delete.gif';
 	static public $DELETE_GRAY      = 'img/delete_gray.gif';
