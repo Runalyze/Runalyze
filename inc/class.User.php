@@ -39,7 +39,7 @@ class User {
 	 */
 	static public function getLastRow() {
 		if (is_null(self::$lastRow)) {
-			self::$lastRow = Mysql::getInstance()->fetch(PREFIX.'user', 'LAST');
+			self::$lastRow = Mysql::getInstance()->fetchSingle('SELECT * FROM '.PREFIX.'user ORDER BY time DESC');
 
 			if (self::$lastRow === false) {
 				self::$lastRow = self::getDefaultArray();
