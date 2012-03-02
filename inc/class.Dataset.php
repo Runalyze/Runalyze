@@ -114,6 +114,25 @@ class Dataset {
 	}
 
 	/**
+	 * Get date string for given timestamp
+	 * @param int $timestamp
+	 * @return string
+	 */
+	static public function getDateString($timestamp) {
+		$date    = date('d.m.', $timestamp);
+		$addLink = '';
+		$weekDay = Helper::Weekday(date('w', $timestamp), true);
+
+		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS)
+			$addLink = Training::getCreateWindowLinkForDate($timestamp);
+
+		if (CONF_DB_HIGHLIGHT_TODAY && Helper::isToday($timestamp))
+			$weekDay = '<strong>'.$weekDay.'</strong>';
+
+		return $date.' '.$addLink.' '.$weekDay;
+	}
+
+	/**
 	 * Display this dataset as a table-row
 	 */
 	public function displayTableColumns() {
@@ -204,10 +223,16 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetType() {
-		if (!$this->Training->hasType())
-			return '';
+		$Type = '';
+		$Edit = '';
 
-		return $this->Training->Type()->formattedAbbr();
+		if ($this->Training->hasType())
+			$Type = $this->Training->Type()->formattedAbbr();
+
+		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+			$Edit = TrainingDisplay::getSmallEditLinkFor($this->Training->get('id')).' ';
+
+		return $Edit.$Type;
 	}
 
 	/**

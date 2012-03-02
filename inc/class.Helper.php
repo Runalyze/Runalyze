@@ -532,6 +532,15 @@ class Helper {
 	}
 
 	/**
+	 * Is given timestamp from today?
+	 * @param int $timestamp
+	 * @return boolean
+	 */
+	public static function isToday($timestamp) {
+		return date('d.m.Y') == date('d.m.Y', $timestamp);
+	}
+
+	/**
 	 * Get the timestamp of the start of the week
 	 * @param int $time
 	 */
