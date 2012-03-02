@@ -346,5 +346,33 @@ class TrainingDisplay {
 	static public function getSmallEditLinkFor($id) {
 		return Ajax::window('<a href="call/call.Training.edit.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, '').'</a> ','small');
 	}
+
+	/**
+	 * Get array for navigating back to previous training in editor
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getEditPrevLinkFor($id) {
+		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id<'.$id.' ORDER BY time DESC');
+
+		if (isset($PrevTraining['id']))
+			return Ajax::window('<a href="call/call.Training.edit.php?id='.$PrevTraining['id'].'">'.Icon::get(Icon::$ARR_BACK, '').'</a> ','small');
+
+		return '';
+	}
+
+	/**
+	 * Get array for navigating for to next training in editor
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getEditNextLinkFor($id) {
+		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id>'.$id.' ORDER BY time ASC');
+
+		if (isset($NextTraining['id']))
+			return Ajax::window('<a href="call/call.Training.edit.php?id='.$NextTraining['id'].'">'.Icon::get(Icon::$ARR_NEXT, '').'</a> ','small');
+
+		return '';
+	}
 }
 ?>

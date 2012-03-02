@@ -1,4 +1,8 @@
-<h1><?php $Training->displayTitle(true); ?>, <?php $Training->displayDate(); ?></h1>
+<h1>
+	<?php echo TrainingDisplay::getEditPrevLinkFor( $Training->get('id') ); ?>
+	<?php $Training->displayTitle(true); ?>, <?php $Training->displayDate(); ?>
+	<?php echo TrainingDisplay::getEditNextLinkFor( $Training->get('id') ); ?>
+</h1>
 
 <?php
 if (isset($submit))
