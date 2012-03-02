@@ -9,9 +9,17 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 
 if (isset($_POST['type']) && $_POST['type'] == "user") {
-	$columns = array('time');
-	$values = array(time());
+	$columns = array();
+	$values = array();
 	$vars = array('weight');
+
+	if (isset($_POST['date'])) {
+		$columns[] = 'time';
+		$values[]  = Validator::dateToTimestamp($_POST['date'], time());
+	} else {
+		$columns[] = 'time';
+		$values[]  = time();
+	}
 
 	if ($Plugin_conf['use_body_fat']['var']) {
 		$vars[] = 'fat';
@@ -49,7 +57,12 @@ if (isset($submit))
 <form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="sportler" onsubmit="return false;" method="post">
 
 <input type="hidden" name="type" value="user" />
-<input type="hidden" name="time" value="<?php echo(time()); ?>" />
+
+<label>
+	<input type="text" name="date" value="<?php echo date('d.m.Y'); ?>" size="10" />
+	<small>Datum</small>
+</label><br />
+
 <label>
 	<input type="text" name="weight" value="<?php echo $dat['weight']; ?>" size="5" />
 	<small>Gewicht</small>

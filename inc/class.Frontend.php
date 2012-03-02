@@ -32,6 +32,7 @@ date_default_timezone_set('Europe/Berlin');
  * @uses class::DataBrowser
  * @uses class::Dataset
  * @uses class::Draw
+ * @uses class::Validator
  */
 class Frontend {
 	/**
@@ -191,6 +192,7 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.GpsData.php';
 		require_once FRONTEND_PATH.'class.Gmap.php';
 		require_once FRONTEND_PATH.'class.Editor.php';
+		require_once FRONTEND_PATH.'class.Validator.php';
 
 		$this->initImporterExporter();
 		$this->initAdditionalFiles();
