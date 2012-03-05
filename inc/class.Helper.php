@@ -661,6 +661,7 @@ class Helper {
 	 * @return int   HFmax
 	 */
 	public static function getHFmax() {
+		// TODO: Move to class::UserData - possible problem in loading order?
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
@@ -682,6 +683,7 @@ class Helper {
 	 * @return int   HFrest
 	 */
 	public static function getHFrest() {
+		// TODO: Move to class::UserData - possible problem in loading order?
 		if (defined('HF_REST'))
 			return HF_MAX;
 
