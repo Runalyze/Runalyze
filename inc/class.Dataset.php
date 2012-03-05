@@ -48,6 +48,9 @@ class Dataset {
 
 		$this->data = $dat;
 		$this->column_count = count($dat);
+
+		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+			$this->column_count++;
 	}
 
 	/**
@@ -136,6 +139,8 @@ class Dataset {
 	 * Display this dataset as a table-row
 	 */
 	public function displayTableColumns() {
+		$this->displayEditLink();
+
 		foreach ($this->data as $set)
 			$this->displayDataset($set);
 	}
@@ -154,6 +159,17 @@ class Dataset {
 		$style = $set['style'] != '' ? ' style="'.$set['style'].'"' : '';
 
 		echo '<td'.$class.$style.'>'.$this->getDataset($set['name']).'</td>'.NL;
+	}
+
+	/**
+	 * Display edit link if used in DataBrowser 
+	 */
+	public function displayEditLink() {
+		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+			if ($this->isSummaryMode())
+				echo HTML::emptyTD ();
+			else
+				echo '<td>'.TrainingDisplay::getSmallEditLinkFor($this->Training->get('id')).'</td>'.NL;
 	}
 
 	/**
@@ -224,15 +240,11 @@ class Dataset {
 	 */
 	private function datasetType() {
 		$Type = '';
-		$Edit = '';
 
 		if ($this->Training->hasType())
 			$Type = $this->Training->Type()->formattedAbbr();
 
-		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
-			$Edit = TrainingDisplay::getSmallEditLinkFor($this->Training->get('id')).' ';
-
-		return $Edit.$Type;
+		return $Type;
 	}
 
 	/**

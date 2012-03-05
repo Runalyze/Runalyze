@@ -27,7 +27,6 @@
 		<td colspan="<?php echo ($this->Dataset->column_count + 2); ?>" />
 	</tr>
 <?php
-$todayString = date("d.m.Y");
 foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
