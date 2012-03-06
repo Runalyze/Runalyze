@@ -2,103 +2,29 @@
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true, __FILE__);
-$Mysql = Mysql::getInstance();
-$Error = Error::getInstance();
-
-$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->get('config');
-
-if (isset($_POST['type']) && $_POST['type'] == "user") {
-	$columns = array();
-	$values = array();
-	$vars = array('weight');
-
-	if (isset($_POST['date'])) {
-		$columns[] = 'time';
-		$values[]  = Validator::dateToTimestamp($_POST['date'], time());
-	} else {
-		$columns[] = 'time';
-		$values[]  = time();
-	}
-
-	if ($Plugin_conf['use_body_fat']['var']) {
-		$vars[] = 'fat';
-		$vars[] = 'water';
-		$vars[] = 'muscles';
-	}
-	if ($Plugin_conf['use_pulse']['var']) {
-		$vars[] = 'pulse_rest';
-		$vars[] = 'pulse_max';
-	}
-	foreach($vars as $var)
-		if (isset($_POST[$var])) {
-			$columns[] = $var;
-			$values[] = Helper::CommaToPoint($_POST[$var]);
-		}
-	$id = $Mysql->insert(PREFIX.'user', $columns, $values);
-
-	$submit = '<em>Die Daten wurden gespeichert!</em><br /><br />';
-	$submit .= Ajax::reloadPage();
-}
-
 $Frontend->displayHeader();
 
-$dat = User::getLastRow();
-if (empty($dat))
-	$dat = User::getDefaultArray();
-?>
-<h1>K&ouml;rper-Daten eingeben</h1>
+if (Request::sendId() === false) {
+	$Header   = 'K&ouml;rper-Daten eintragen';
+	$Mode     = StandardFormular::$SUBMIT_MODE_CREATE;
+	$UserData = new UserData( DataObject::$LAST_OBJECT );
+	$UserData->setCurrentTimestamp();
+} else {
+	$Header   = 'K&ouml;rper-Daten bearbeiten';
+	$Mode     = StandardFormular::$SUBMIT_MODE_EDIT;
+	$UserData = new UserData( Request::sendId() );
+}
 
-<?php
-if (isset($submit))
-	echo ('<div id="submit-info">'.$submit.'</div>');
-?>
+$Formular = new StandardFormular($UserData, $Mode);
 
-<form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="sportler" onsubmit="return false;" method="post">
+if ($Formular->submitSucceeded())
+	header('Location: window.sportler.table.php');
 
-<input type="hidden" name="type" value="user" />
+$Formular->setId('sportler');
+$Formular->setHeader($Header);
+$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
+$Formular->display();
 
-<label>
-	<input type="text" name="date" value="<?php echo date('d.m.Y'); ?>" size="10" />
-	<small>Datum</small>
-</label><br />
-
-<label>
-	<input type="text" name="weight" value="<?php echo $dat['weight']; ?>" size="5" />
-	<small>Gewicht</small>
-</label><br />
-
-<?php if ($Plugin_conf['use_body_fat']['var']): ?>
-<label>
-	<input type="text" name="fat" value="<?php echo $dat['fat']; ?>" size="5" />
-	<small>&#37; Fett</small>
-</label><br />
-<label>
-	<input type="text" name="water" value="<?php echo $dat['water']; ?>"	size="5" />
-	<small>&#37; Wasser</small>
-</label><br />
-<label>
-	<input type="text" name="muscles" value="<?php echo $dat['muscles']; ?>" size="5" />
-	<small>&#37; Muskeln</small>
-</label><br />
-<?php endif; ?>
-
-<?php if ($Plugin_conf['use_pulse']['var']): ?><br />
-<label>
-	<input type="text" name="pulse_rest" value="<?php echo $dat['pulse_rest']; ?>" size="5" />
-	<small>Ruhepuls</small>
-</label><br />
-<label>
-	<input type="text" name="pulse_max" value="<?php echo $dat['pulse_max']; ?>" size="5" />
-	<small>Maximalpuls</small>
-</label><br />
-<?php endif; ?>
-
-<input type="submit" value="Eintragen" />
-
-</form>
-
-<?php
 $Frontend->displayFooter();
 $Frontend->close();
 ?>

@@ -13,26 +13,6 @@ date_default_timezone_set('Europe/Berlin');
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @version 1.0
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Config
- * @uses class::Icon
- * @uses class::Ajax
- * @uses class::HTML
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::PluginStat
- * @uses class::PluginTool
- * @uses class::Plot
- * @uses class::Training
- * @uses class::TrainingDisplay
- * @uses class::Gmap
- * @uses class::Editor
- * @uses class::Importer
- * @uses class::DataBrowser
- * @uses class::Dataset
- * @uses class::Draw
- * @uses class::Validator
  */
 class Frontend {
 	/**
@@ -187,12 +167,26 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.Shoe.php';
 		require_once FRONTEND_PATH.'class.Sport.php';
 		require_once FRONTEND_PATH.'class.Type.php';
-		require_once FRONTEND_PATH.'class.User.php';
 		require_once FRONTEND_PATH.'class.Weather.php';
 		require_once FRONTEND_PATH.'class.GpsData.php';
 		require_once FRONTEND_PATH.'class.Gmap.php';
 		require_once FRONTEND_PATH.'class.Editor.php';
 		require_once FRONTEND_PATH.'class.Validator.php';
+
+		require_once FRONTEND_PATH.'system/class.Request.php';
+		require_once FRONTEND_PATH.'system/class.DatabaseScheme.php';
+		require_once FRONTEND_PATH.'system/class.DatabaseSchemePool.php';
+
+		require_once FRONTEND_PATH.'training/class.DataObject.php';
+		require_once FRONTEND_PATH.'training/class.UserData.php';
+
+		require_once FRONTEND_PATH.'html/class.HtmlTag.php';
+		require_once FRONTEND_PATH.'html/class.FormularValueParser.php';
+		require_once FRONTEND_PATH.'html/class.Formular.php';
+		require_once FRONTEND_PATH.'html/class.FormularFieldset.php';
+		require_once FRONTEND_PATH.'html/class.FormularField.php';
+		require_once FRONTEND_PATH.'html/class.FormularInput.php';
+		require_once FRONTEND_PATH.'html/class.StandardFormular.php';
 
 		$this->initImporterExporter();
 		$this->initAdditionalFiles();

@@ -57,19 +57,19 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		$Weight  = '';
-		$Pulse   = '';
-		$Analyse = '';
-		$dat = User::getLastRow();
+		$Weight   = '';
+		$Pulse    = '';
+		$Analyse  = '';
+		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
 		if ($this->config['use_weight'])
-			$Weight = 'Gewicht: <strong title="'.date("d.m.Y", $dat['time']).'">'.Helper::Unknown($dat['weight']).' kg</strong><br />';
+			$Weight = 'Gewicht: <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br />';
 		
 		if ($this->config['use_pulse'])
-			$Pulse = Helper::Unknown($dat['pulse_rest']).' bpm / '.Helper::Unknown($dat['pulse_max']).' bpm';
+			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
 
 		if ($this->config['use_body_fat'])
-			$Analyse = 'Fett: '.Helper::Unknown($dat['fat']).' &#37;, Wasser: '.Helper::Unknown($dat['water']).' &#37;, Muskeln: '.Helper::Unknown($dat['muscles']).' &#37;';
+			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 		
 		echo('
 			<div id="sportler">
@@ -85,6 +85,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
+	}
+
+	/**
+	 * Get edit link for an entry
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getEditLinkFor($id) {
+		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, '').'</a>');
 	}
 }
 ?>
