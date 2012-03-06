@@ -12,13 +12,14 @@ $colspan     = 2;
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');
 $FieldsFat   = array('fat' => ' &#37;', 'water' => ' &#37;', 'muscles' => ' &#37;');
-$Data        = array_reverse(User::getFullArray());
+$Data        = array_reverse(UserData::getFullArray());
 ?>
 <h1>K&ouml;rper-Daten</h1>
 
 <table id="sportlerTable">
 	<thead>
 		<tr>
+			<th class="{sorter: false}">&nbsp;</th>
 			<th class="{sorter:'germandate'}">Datum</th>
 			<th>Gewicht</th>
 		<?php if ($Plugin_conf['use_pulse']['var']): ?>
@@ -43,6 +44,7 @@ $Data        = array_reverse(User::getFullArray());
 	<?php else: ?>
 	<?php foreach ($Data as $i => $Info): ?>
 		<tr class="<?php HTML::trClass($i); ?> c">
+			<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
 		<?php foreach ($Fields as $Key => $Unit): ?>
 			<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
 			<?php if ($Unit == 'date') $Unit = ''; ?>
