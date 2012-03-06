@@ -43,12 +43,12 @@ $Plot->addYUnit(2, 'bpm');
 $Plot->setYTicks(2, 1, 0);
 
 if ($Wunschgewicht > 1) {
-	$Plot->addThreshold('y2', $Wunschgewicht);
-	$Plot->addMarkingArea('y2', $Wunschgewicht, 0);
+	$Plot->addThreshold('y1', $Wunschgewicht);
+	$Plot->addMarkingArea('y1', $Wunschgewicht, 0);
 }
 
 if(empty($Data)) 
-	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+	$Plot->raiseError('Es wurden keine Daten ï¿½ber den Sportler hinterlegt');
 
 $Plot->outputJavaScript();
 ?>
