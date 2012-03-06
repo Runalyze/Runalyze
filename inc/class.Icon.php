@@ -124,7 +124,7 @@ class Icon {
 		if ($title == '')
 			$title = $data['name'];
 
-		return '<img src="img/wetter/'.$data['img'].'" alt="'.$title.'" style="vertical-align:bottom;" />';
+		return '<img src="img/wetter/'.$data['img'].'" alt="'.$title.'" />';
 	}
 
 	/**
