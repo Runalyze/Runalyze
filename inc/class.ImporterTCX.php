@@ -271,8 +271,8 @@ class ImporterTCX extends Importer {
 	 * @return string
 	 */
 	static public function decodeCompressedData($string) {
-		$string = substr($string, strpos($string, "\n") + 1);
-		return gzinflate(substr(base64_decode($string),10,-8));
+		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
+		return gzinflate(mb_substr(base64_decode($string),10,-8));
 	}
 }
 ?>

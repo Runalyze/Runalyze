@@ -57,7 +57,7 @@ if (isset($_POST['time-gt']) && isset($_POST['time-lt'])) {
 	$time_lt = mktime(23, 59, 59, $time_lt_dat[1], $time_lt_dat[0], $time_lt_dat[2]);
 	$where .= '`time` BETWEEN '.$time_gt.' AND '.$time_lt;
 } else
-	$where = substr($where, 0, -5);
+	$where = mb_substr($where, 0, -5);
 if (!isset($_POST['seite']))
 	$_POST['seite'] = 1;
 $limit = $_POST['seite']*CONF_RESULTS_AT_PAGE - CONF_RESULTS_AT_PAGE;

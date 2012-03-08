@@ -334,7 +334,7 @@ class Installer {
 			}
 
 			$x = strlen($query) - 1;
-			if (substr($query,$x) == ';') {
+			if (mb_substr($query,$x) == ';') {
 				$array[] = $query;
 				$query = '';
 			}

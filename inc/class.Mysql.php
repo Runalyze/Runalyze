@@ -36,7 +36,9 @@ final class Mysql {
 	/**
 	 * Prohibit creating an object from outside
 	 */
-	private function __construct() {}
+	private function __construct() {
+		$this->query('SET NAMES utf8');
+	}
 
 	/**
 	 * Automatically closes connection after execution
@@ -148,7 +150,7 @@ final class Mysql {
 	 * @return array $return['column']
 	 */
 	public function fetchSingle($query) {
-		if (substr($query, -7, 7) != 'LIMIT 1')
+		if (mb_substr($query, -7, 7) != 'LIMIT 1')
 			$query .= ' LIMIT 1';
 
 		return $this->fetch($query);

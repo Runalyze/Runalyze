@@ -52,6 +52,7 @@ class Frontend {
 		$this->file = $file;
 		$this->ajax_request = $ajax_request;
 
+		$this->setAutloader();
 		$this->initConsts();
 		$this->initVars();
 		$this->initErrorHandling();
@@ -71,6 +72,16 @@ class Frontend {
 	 */
 	public function close() {
 		$this->__destruct();
+	}
+
+	/**
+	 * Set up Autloader 
+	 */
+	private function setAutloader() {
+		// TODO: Won't work so far, some files are required always ...
+		//require_once dirname(__FILE__).'/system/class.Autoloader.php';
+
+		//$Autoloader = new Autoloader();
 	}
 
 	/**
@@ -251,12 +262,20 @@ class Frontend {
 	 * Function to display the HTML-Header
 	 */
 	public function displayHeader() {
-		header('Content-type: text/html; charset=ISO-8859-1');
+		$this->setEncoding();
 
 		if (!$this->ajax_request)
 			include 'tpl/tpl.Frontend.header.php';
 
 		Error::getInstance()->header_sent = true;
+	}
+
+	/**
+	 * Set correct character encoding 
+	 */
+	public function setEncoding() {
+		header('Content-type: text/html; charset=UTF-8');
+		mb_internal_encoding("UTF-8");
 	}
 
 	/**

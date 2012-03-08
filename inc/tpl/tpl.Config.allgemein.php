@@ -4,7 +4,7 @@
 	<?php
 	$categories = $Mysql->fetch('SELECT `category` FROM `'.PREFIX.'conf` WHERE `category`!="'.Config::$HIDDEN_CAT.'" GROUP BY `category`');
 	foreach ($categories as $i => $cat)
-		echo Ajax::change('<strong>'.$cat['category'].'</strong>', 'conf_div', strtolower($cat['category'])).($i < count($categories)-1 ? ' &nbsp; - &nbsp; ' : '').NL;
+		echo Ajax::change('<strong>'.$cat['category'].'</strong>', 'conf_div', mb_strtolower($cat['category'])).($i < count($categories)-1 ? ' &nbsp; - &nbsp; ' : '').NL;
 	?>
 </div>
 
@@ -13,7 +13,7 @@
 <div id="conf_div">
 	<?php
 	foreach ($categories as $i => $cat) {
-		echo '<div id="'.strtolower($cat['category']).'" class="change"'.($i == 0 ? '' : ' style="display:none;"').'>';
+		echo '<div id="'.mb_strtolower($cat['category']).'" class="change"'.($i == 0 ? '' : ' style="display:none;"').'>';
 	
 		$confs = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`="'.$cat['category'].'"');
 	
