@@ -1,7 +1,7 @@
 <h1>
-	<?php echo TrainingDisplay::getEditPrevLinkFor( $Training->get('id') ); ?>
+	<?php echo TrainingDisplay::getEditPrevLinkFor( $Training->get('id'), $Training->get('time') ); ?>
 	<?php $Training->displayTitle(true); ?>, <?php $Training->displayDate(); ?>
-	<?php echo TrainingDisplay::getEditNextLinkFor( $Training->get('id') ); ?>
+	<?php echo TrainingDisplay::getEditNextLinkFor( $Training->get('id'), $Training->get('time') ); ?>
 </h1>
 
 <?php
