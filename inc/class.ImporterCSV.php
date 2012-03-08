@@ -166,7 +166,7 @@ class ImporterCSV extends Importer {
 			$Training->overwritePostArray();
 
 			$Importer = Importer::getInstance();
-			$Importer->setTrainingValues(false);
+			$Importer->setTrainingValues();
 			$Importer->parsePostData();
 			$Importer->insertTraining();
 

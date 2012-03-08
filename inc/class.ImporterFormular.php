@@ -41,31 +41,15 @@ class ImporterFormular extends Importer {
 
 	/**
 	 * Set values for training from file or post-data
-	 * @param boolean $decode [optional]
 	 */
-	protected function setTrainingValues($decode = true) {
+	protected function setTrainingValues() {
 		$this->tryToSetFromPostData('sportid');
 
 		$this->set('abc', isset($_POST['abc']) ? 1 : 0);
 		$this->set('is_track', isset($_POST['is_track']) ? 1 : 0);
 
-		if ($decode) {
-			$this->decodeIfSet('route');
-			$this->decodeIfSet('comment');
-			$this->decodeIfSet('partner');
-		}
-
 		if ($this->postDataHasBeenSent())
 			$this->parsePostDataAndTryToInsert();
-	}
-
-	/**
-	 * UTF8-decode if set
-	 * @param unknown_type $key
-	 */
-	private function decodeIfSet($key) {
-		if (isset($_POST[$key]))
-			$_POST[$key] = utf8_decode($_POST[$key]);
 	}
 
 	/**

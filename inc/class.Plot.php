@@ -77,6 +77,7 @@ class Plot {
 		$Files[] = "lib/flot/jquery.plot.js";
 		$Files[] = "lib/flot/jquery.qtip.min.js";
 		$Files[] = "lib/flot/jquery.flot.min.js";
+		$Files[] = "lib/flot/jquery.flot.resize.min.js";
 		$Files[] = "lib/flot/jquery.flot.selection.min.js";
 		$Files[] = "lib/flot/jquery.flot.crosshair.min.js";
 		$Files[] = "lib/flot/jquery.flot.navigate.min.js";
@@ -246,12 +247,16 @@ class Plot {
 	 * @return string
 	 */
 	private function getMainJS() {
-		return '
-			var '.$this->plot.' = $.plot(
-				$("#'.$this->cssID.'"),
+		return 'RunalyzePlot.addPlot(
+				"'.$this->cssID.'",
 				'.json_encode($this->Data).',
-				'.Ajax::json_encode_jsfunc($this->Options).'
-			);'.NL;
+				'.Ajax::json_encode_jsfunc($this->Options).');'.NL;
+//		return '
+//			var '.$this->plot.' = $.plot(
+//				$("#'.$this->cssID.'"),
+//				'.json_encode($this->Data).',
+//				'.Ajax::json_encode_jsfunc($this->Options).'
+//			);'.NL;
 	}
 
 	/**
@@ -287,8 +292,11 @@ class Plot {
 		$code = '';
 		foreach ($this->Annotations as $Array)
 			$code .= '
-				o = '.$this->plot.'.pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
+				o = RunalyzePlot.getPlot("'.$this->cssID.'").pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
 				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
+//			$code .= '
+//				o = '.$this->plot.'.pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
+//				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
 
 		return $code;
 	}
@@ -301,7 +309,8 @@ class Plot {
 		return '
 			$(\'<div class="arrow" style="right:20px;top:20px">zoom out</div>\').appendTo("#'.$this->cssID.'").click(function (e) {
 				e.preventDefault();
-				'.$this->plot.'.zoomOut();
+				RunalyzePlot.getPlot("'.$this->cssID.'").zoomOut();
+				/*'.$this->plot.'.zoomOut();*/
 			});'.NL;
 	}
 
@@ -312,12 +321,13 @@ class Plot {
 	private function getJSForPanning() {
 		return '
 			function addArrow(dir, right, top, offset) {
-					$(\'<img class="arrow" src="lib/flot/arrow-\' + dir + \'.gif" style="right:\' + right + \'px;top:\' + top + \'px">\').appendTo("#'.$this->cssID.'").click(function (e) {
+				$(\'<img class="arrow" src="lib/flot/arrow-\' + dir + \'.gif" style="right:\' + right + \'px;top:\' + top + \'px">\').appendTo("#'.$this->cssID.'").click(function (e) {
 					e.preventDefault();
-					'.$this->plot.'.pan(offset);
+					RunalyzePlot.getPlot("'.$this->cssID.'").pan(offset);
+					/*'.$this->plot.'.pan(offset);*/
 				});
 			}
-		
+
 			addArrow(\'left\', 55, 60, { left: -100 });
 			addArrow(\'right\', 25, 60, { left: 100 });
 			addArrow(\'up\', 40, 45, { top: -100 });
@@ -344,7 +354,8 @@ class Plot {
 				show: false,
 				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
 			});
-			bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
+			bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
+			//bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
 	}
 
 	/**

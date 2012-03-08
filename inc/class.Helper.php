@@ -316,7 +316,7 @@ class Helper {
 		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
 		$TRIMP     = $dat['s']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
 
-		// Berechnung mit Trainingszonen w�re:
+		// Berechnung mit Trainingszonen waere:
 		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
 		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
 	
@@ -512,8 +512,8 @@ class Helper {
 		if ($cut == 0)
 			$cut = CUT_LENGTH;
 
-		if (strlen($text) >= $cut)
-			return Ajax::tooltip(substr($text, 0, $cut-3).'...', $text);
+		if (mb_strlen($text) >= $cut)
+			return Ajax::tooltip(mb_substr($text, 0, $cut-3).'...', $text);
 
 		return $text;
 	}
@@ -623,11 +623,8 @@ class Helper {
 	 * @return string
 	 */
 	public static function Umlaute($text) {
-		$encrypted = array("ÃŸ", "Ã„", "Ã–", "Ãœ", "Ã¤", "Ã¶", "Ã¼");
-		$correct   = array("ß",  "Ä",  "Ö",  "Ü",  "ä",  "ö",  "ü");
-		$text = utf8_decode($text);
-
-		return str_replace($encrypted, $correct, $text);
+		// TODO: Remove this function
+		return $text;
 	}
 
 	/**

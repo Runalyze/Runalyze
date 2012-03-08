@@ -127,7 +127,7 @@ abstract class Importer {
 	 * @param string $fileName
 	 */
 	static public function getInstance($fileName = '') {
-		$format = strtoupper(self::getExtensionFrom($fileName));
+		$format = mb_strtoupper(self::getExtensionFrom($fileName));
 
 		if ($format == '') {
 			if (isset($_POST['data']))
@@ -288,7 +288,7 @@ abstract class Importer {
 	public function displayUploadFormular() {
 		$Formats = array();
 		foreach (self::$formats as $Format => $ClassName)
-			$Formats[] = strtolower($Format);
+			$Formats[] = mb_strtolower($Format);
 
 		$AllowedFormatsForJS = "'".implode("', '", $Formats)."'";
 		$AllowedFormats      = '*.'.implode(', *.', $Formats);
