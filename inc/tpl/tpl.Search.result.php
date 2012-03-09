@@ -27,8 +27,7 @@ if (isset($_POST['val']) && is_array($_POST['val'])) {
 		if (($value != '' || $_POST['opt'][$name] == 'isnot') && $value != 'egal' && (!isset($value[0]) || (isset($value[0]) && $value[0] != 'egal'))) {
 			if ($name == 's')
 				$value *= 60;
-			elseif (!is_array($value))
-				$value = Helper::Umlaute($value);
+
 			switch ($_POST['opt'][$name]) {
 				case 'is':    $opt = '=';  break;
 				case 'gt':    $opt = '>';  break;

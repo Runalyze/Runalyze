@@ -174,7 +174,7 @@ class Editor {
 	private function addValue($key) {
 		if (isset($this->TrainingData[$key])) {
 			$this->UpdateColumns[] = $key;
-			$this->UpdateValues[] = Helper::Umlaute(Helper::CommaToPoint($this->TrainingData[$key]));
+			$this->UpdateValues[] = Helper::CommaToPoint($this->TrainingData[$key]);
 		}
 	}
 
@@ -185,7 +185,7 @@ class Editor {
 	private function addTextValue($key) {
 		if (isset($this->TrainingData[$key])) {
 			$this->UpdateColumns[] = $key;
-			$this->UpdateValues[] = Helper::Umlaute($this->TrainingData[$key]);
+			$this->UpdateValues[] = $this->TrainingData[$key];
 		}
 	}
 

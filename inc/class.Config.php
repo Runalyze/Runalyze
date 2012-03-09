@@ -139,7 +139,7 @@ class Config {
 				return ($value == 'true');
 			case 'selectdb':
 			case 'int':
-				return (int)$value;
+				return (int)ceil($value);
 			case 'float':
 				return (float)$value;
 			case 'selectfile':
@@ -245,7 +245,7 @@ class Config {
 				case 'float':
 				case 'string':
 				default:
-					$str_value = trim(Helper::Umlaute(Helper::CommaToPoint($post)));
+					$str_value = trim(Helper::CommaToPoint($post));
 			}
 
 			Mysql::getInstance()->update(PREFIX.'conf', $conf['id'], 'value', $str_value);
@@ -315,7 +315,7 @@ class Config {
 				'outside',
 				);
 			$values  = array(
-				Helper::Umlaute($_POST['sport']['name'][$i]),
+				$_POST['sport']['name'][$i],
 				isset($_POST['sport']['short'][$i]),
 				isset($_POST['sport']['online'][$i]),
 				$_POST['sport']['kcal'][$i],
@@ -356,8 +356,8 @@ class Config {
 				'splits',
 				);
 			$values  = array(
-				Helper::Umlaute($_POST['type']['name'][$i]),
-				Helper::Umlaute($_POST['type']['abbr'][$i]),
+				$_POST['type']['name'][$i],
+				$_POST['type']['abbr'][$i],
 				$rpe,
 				isset($_POST['type']['splits'][$i]),
 				);
@@ -386,8 +386,8 @@ class Config {
 				'order',
 				);
 			$values  = array(
-				Helper::Umlaute($_POST['clothes']['name'][$id]),
-				Helper::Umlaute($_POST['clothes']['short'][$id]),
+				$_POST['clothes']['name'][$id],
+				$_POST['clothes']['short'][$id],
 				$_POST['clothes']['order'][$id],
 				);
 

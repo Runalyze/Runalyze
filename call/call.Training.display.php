@@ -9,6 +9,10 @@ $Frontend = new Frontend(true, __FILE__);
 $Frontend->displayHeader();
 
 $Training = new Training($_GET['id']);
+
+if (!$Training->isValid())
+	return;
+
 $Training->display();
 
 $Frontend->displayFooter();
