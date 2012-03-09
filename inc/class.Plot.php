@@ -579,9 +579,29 @@ class Plot {
 		$this->Options['xaxis']['mode'] = "time";
 	}
 
+	/**
+	 * Set axis-mode to time with specific format
+	 * @param string $format
+	 */
+	public function setXAxisTimeFormat($format) {
+		$this->setXAxisAsTime();
+		$this->Options['xaxis']['timeformat'] = $format;
+	}
+
+	/**
+	 * Set x-axis limits to a specific year
+	 * @param int $Year 
+	 */
 	public function setXAxisLimitedTo($Year) {
 		$this->Options['xaxis']['min'] = mktime(1,0,0,1,1,$Year).'000';
 		$this->Options['xaxis']['max'] = mktime(1,0,0,1,0,$Year+1).'000';
+	}
+
+	/**
+	 * Set maximum of x-axis as today 
+	 */
+	public function setXAxisMaxToToday() {
+		$this->Options['xaxis']['max'] = time().'000';
 	}
 
 	/**
