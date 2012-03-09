@@ -6,7 +6,7 @@
 
 // TODO: Config: num=20
 $data_num = 20;
-$Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT '.$data_num);
+$Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT '.$data_num);
 $Weights  = array();
 $HRrests  = array();
 
@@ -15,8 +15,8 @@ if (count($Data) == 1)
 
 if (!empty($Data)) {
 	foreach ($Data as $D) {
-		$Weights[] = (double)$D['weight'];
-		$HRrests[] = (int)$D['pulse_rest'];
+		$Weights[$D['time'].'000'] = (double)$D['weight'];
+		$HRrests[$D['time'].'000'] = (int)$D['pulse_rest'];
 	}
 
 	$Weights = array_reverse($Weights);
@@ -28,13 +28,22 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 $Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
 
+$Labels = array_keys($Weights);
+foreach ($Labels as $i => &$value)
+	if ($i != 0 && $i != count($Labels)-1)
+		$value = '';
 
 $Plot = new Plot("sportler_weights", 320, 148);
 $Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
 
 $Plot->setMarginForGrid(5);
-$Plot->hideXLabels();
+
+//$Plot->hideXLabels();
+$Plot->setXLabels($Labels);
+$Plot->setXAxisTimeFormat('%d.%m.%y');
+$Plot->setXAxisMaxToToday();
+
 $Plot->addYAxis(1, 'right', false);
 $Plot->addYUnit(1, 'kg');
 $Plot->setYTicks(1, 2, 0);
@@ -48,7 +57,7 @@ if ($Wunschgewicht > 1) {
 }
 
 if(empty($Data)) 
-	$Plot->raiseError('Es wurden keine Daten �ber den Sportler hinterlegt');
+	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
 
 $Plot->outputJavaScript();
 ?>
