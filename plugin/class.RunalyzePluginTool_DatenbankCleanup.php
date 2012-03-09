@@ -67,7 +67,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$this->resetMaxValues();
 		$this->resetShoes();
 
-		// TODO: Nicht existente Kleidung aus DB löschen
+		// TODO: Nicht existente Kleidung aus DB loeschen
 	}
 
 	/**

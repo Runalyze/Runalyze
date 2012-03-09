@@ -739,12 +739,12 @@ class Helper {
 			
 			$i = $dat['y']*365 + $dat['d'] - $start_i;
 			$Trimp[$i] = $dat['trimp'];
-			
+
 			if ($i >= CONF_ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, $i - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
+				$atl   = array_sum(array_slice($Trimp, 1 + $i - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
 			if ($i >= CONF_CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, $i - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
-			
+				$ctl   = array_sum(array_slice($Trimp, 1 + $i - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
+
 			if ($atl > $maxATL)
 				$maxATL = $atl;
 			if ($ctl > $maxCTL)
@@ -760,14 +760,14 @@ class Helper {
 	 * Define consts MAX_ATL, MAX_CTL, MAX_TRIMP
 	 */
 	public static function defineMaxValues() {
-		if (CONF_MAX_ATL != 0 || CONF_MAX_CTL != 0 || CONF_MAX_TRIMP != 0)
+		if (CONF_MAX_ATL != 0 || CONF_MAX_CTL != 0 || CONF_MAX_TRIMP != 0) {
 			$values = array(CONF_MAX_ATL, CONF_MAX_CTL, CONF_MAX_TRIMP);
-		else
+		} else {
 			$values = self::calculateMaxValues();
-
-		Config::update('MAX_ATL', $values[0]);
-		Config::update('MAX_CTL', $values[1]);
-		Config::update('MAX_TRIMP', $values[2]);
+			Config::update('MAX_ATL', $values[0]);
+			Config::update('MAX_CTL', $values[1]);
+			Config::update('MAX_TRIMP', $values[2]);
+		}
 
 		define('MAX_ATL', $values[0]);
 		define('MAX_CTL', $values[1]);

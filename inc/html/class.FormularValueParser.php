@@ -75,7 +75,7 @@ class FormularValueParser {
 	 * @return boolean 
 	 */
 	static protected function validateString($key) {
-		$_POST[$key] = Helper::Umlaute($_POST[$key]);
+		// Nothing to do because of correct encoding
 
 		return true;
 	}

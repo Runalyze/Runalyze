@@ -11,7 +11,6 @@ if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 	$vars = array('name', 'brand', 'since');
 	foreach($vars as $var)
 		if (isset($_POST[$var])) {
-			$_POST[$var] = Helper::Umlaute($_POST[$var]);
 			$columns[]   = $var;
 			$values[]    = $_POST[$var];
 		}

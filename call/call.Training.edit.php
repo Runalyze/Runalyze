@@ -7,7 +7,7 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true, __FILE__);
 $Mysql    = Mysql::getInstance();
-$id       = $_GET['id'];
+$id       = isset($_GET['id']) ? $_GET['id'] : 0;
 
 if (isset($_GET['json'])) {
 	Error::getInstance()->footer_sent = true;
@@ -19,11 +19,25 @@ if (isset($_GET['json'])) {
 }
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-	// TODO: Datenbank bereinigen
 	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
 
+	$values = Helper::calculateMaxValues();
+	Config::update('MAX_ATL', $values[0]);
+	Config::update('MAX_CTL', $values[1]);
+	Config::update('MAX_TRIMP', $values[2]);
+
+	$shoes = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'shoe`');
+	foreach ($shoes as $shoe) {
+		$data = $Mysql->fetchSingle('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$shoe['id'].'" GROUP BY `shoeid`');
+
+		if ($data === false)
+			$data = array('km' => 0, 's' => 0);
+
+		$Mysql->update(PREFIX.'shoe', $shoe['id'], array('km', 'time'), array($data['km'], $data['s']));
+	}
+
 	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';
-	echo '<script type="text/javascript">Runalyze.reloadContent();</script>';
+	echo '<script type="text/javascript">Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
 	exit();
 }
 

@@ -114,6 +114,14 @@ class Training {
 	}
 
 	/**
+	 * Is this a valid training?
+	 * @return boolean
+	 */
+	public function isValid() {
+		return !empty($this->data);
+	}
+
+	/**
 	 * Is the ID of this training just for construction? (not in database)
 	 * @return bool
 	 */
