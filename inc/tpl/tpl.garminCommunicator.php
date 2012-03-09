@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Garmin Display - Upload Selected Fitness Activities</title>
 
 	<style type="text/css" media="all">@import "../tcx/garmin/communicator2.css";</style>
-	<script type="text/javascript" src="../tcx/communicator-api/prototype/prototype.js">&#160;</script>
-	<script type="text/javascript" src="../tcx/communicator-api/garmin/device/GarminDeviceDisplay.js">&#160;</script>
+	<script type="text/javascript" src="../tcx/communicator-api/prototype/prototype.js"></script>
+	<script type="text/javascript" src="../tcx/communicator-api/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">	
 		function load() {
 		    var display = new Garmin.DeviceDisplay("garminDisplay", { 

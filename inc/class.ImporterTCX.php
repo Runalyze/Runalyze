@@ -272,7 +272,7 @@ class ImporterTCX extends Importer {
 	 */
 	static public function decodeCompressedData($string) {
 		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
-		return gzinflate(mb_substr(base64_decode($string),10,-8));
+		return gzinflate(substr(base64_decode($string),10,-8));
 	}
 }
 ?>

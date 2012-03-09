@@ -790,7 +790,7 @@ function simplexml_load_file_utf8($filePath) {
  * @return SimpleXMLElement
  */
 function simplexml_load_string_utf8($Xml) {
-	return simplexml_load_string(simplexml_correct_ns(utf8_encode($Xml)));
+	return simplexml_load_string(simplexml_correct_ns($Xml));
 }
 
 /**
@@ -808,6 +808,6 @@ function simplexml_correct_ns($string) {
  * @return string
  */
 function removeBOMfromString($string) {
-	return substr($string, strpos($string, "<"));
+	return mb_substr($string, mb_strpos($string, "<"));
 }
 ?>
