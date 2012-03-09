@@ -256,7 +256,7 @@ abstract class Importer {
 			return;
 		}
 
-		$Content = file_get_contents($this->fileName);
+		$Content = utf8_encode(file_get_contents($this->fileName));
 		$this->logFileContent($Content);
 		unlink($this->fileName);
 

@@ -58,6 +58,20 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<?php endif; ?>
 
+	<p class="text">&nbsp;</p>
+
+	<p class="text">
+		Das Importieren von gro&szlig;en Dateien (lange Trainings oder mehrere, z.B. SportTracks-Logbook)
+		kann rechenaufw&auml;ndig sein. Je nach Servereinstellungen kann es daher zu Problemen kommen,
+		da nicht jeder Anbieter das Hochsetzen der Limits erlaubt.
+	</p>
+
+	<p class="info">Zeit-Limit: <?php echo ini_get('max_execution_time'); ?>s</p>
+	<p class="info">Memory-Limit: <?php echo ini_get('memory_limit'); ?></p>
+	<p class="info">Upload-Limit: <?php echo ini_get('upload_max_filesize'); ?></p>
+
+	<p class="text">&nbsp;</p>
+
 	<p class="text">
 			<input type="hidden" name="step" value="2" />
 
