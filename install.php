@@ -36,15 +36,15 @@ require_once 'inc/class.Installer.php';
 
 $Installer = new Installer();
 ?>
+
+		<p class="c small" style="border-top:1px solid #ccc; margin-top:20px; padding-top:7px;">
+			<a href="http://www.runalyze.de/" title="Runalyze">www.runalyze.de</a>
+			| <a href="https://www.facebook.com/Runalyze" title="Runalyze bei Facebook">bei Facebook</a>
+			| <a href="http://twitter.com/RunalyzeDE" title="Runalyze bei Twitter">bei Twitter</a>
+			| <a href="http://sourceforge.net/projects/runalyze/" title="Runalyze bei Twitter">bei SourceForge</a>
+		</p>
+
 	</div>
-</div>
-
-<div id="copy">
-
-	<a class="right" id="copy" href="http://www.runalyze.de/" title="Runalyze" target="_blank">
-		<strong>&copy; Runalyze</strong>
-	</a>
-
 </div>
 
 </body>

@@ -252,7 +252,7 @@ class ImporterTCX extends Importer {
 		}
 			
 		if ($Training->Type()->hasSplits() && strlen($Training->get('splits')) == 0)
-			$vars[] = 'splits';
+			$Vars[] = 'splits';
 		
 		foreach ($Vars as $var)
 			$Data[$var] = $Importer->get($var);
