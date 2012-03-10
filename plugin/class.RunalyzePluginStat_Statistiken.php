@@ -173,16 +173,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 
 		foreach ($result as $dat) {
-			if ($dat['i'] == START_YEAR) {
-				$WeekFactor  = 53 - date("W", START_TIME);
-				$MonthFactor = 13 - date("n", START_TIME);
-			} elseif ($dat['i'] == date("Y")) {
+			$WeekFactor  = 52;
+			$MonthFactor = 12;
+ 
+			if ($dat['i'] == date("Y")) {
 				$WeekFactor  = date("W");
 				$MonthFactor = date("n");
-			} else {
-				$WeekFactor  = 52;
-				$MonthFactor = 12;
+			} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
+				$WeekFactor  = 53 - date("W", START_TIME);
+				$MonthFactor = 13 - date("n", START_TIME);
 			}
+
+			var_dump($dat['i']);
+			var_dump($WeekFactor); var_dump($MonthFactor);
 			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
 			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$WeekFactor, 0);
 			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$MonthFactor, 0);
