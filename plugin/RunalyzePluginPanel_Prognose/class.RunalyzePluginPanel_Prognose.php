@@ -39,7 +39,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return '';
+		$Links = array();
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html">'.Icon::get(Icon::$INFO, '', '', 'Erl&auml;uterungen zu den Prognosen').'</a>');
+
+		return implode(' ', $Links);
 	}
 
 	/**
@@ -51,7 +54,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$this->showPrognosis($km);
 
 		if ($this->thereAreNotEnoughCompetitions())
-			echo HTML::info('F&uuml;r gute Prognosen sind nicht genug Wettk&auml;mpfe da.');
+			echo HTML::info('F&uuml;r gute Prognosen sind zu wenig Wettk&auml;mpfe da.');
 	}
 
 	/**
