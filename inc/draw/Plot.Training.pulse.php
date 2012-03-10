@@ -16,11 +16,17 @@ $average = round(array_sum($Data)/count($Data));
 
 $Plot->Data[] = array('label' => 'Herzfrequenz', 'color' => 'rgb(136,0,0)', 'data' => $Data);
 
+if ($Training->GpsData()->plotUsesTimeOnXAxis()) {
+	$Plot->setXAxisAsTime();
+	$Plot->setXAxisTimeFormat("%h:%M:%S");
+	$Plot->Options['xaxis']['ticks'] = 5;
+} else
+	$Plot->setXUnit('km');
+
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '%');
 $Plot->setYTicks(1, 5, 0);
 $Plot->setYLimits(1, 50, 100);
-$Plot->setXUnit('km');
 $Plot->enableTracking();
 
 $Plot->hideLegend();
