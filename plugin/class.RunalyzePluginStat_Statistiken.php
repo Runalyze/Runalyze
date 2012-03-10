@@ -184,8 +184,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				$MonthFactor = 13 - date("n", START_TIME);
 			}
 
-			var_dump($dat['i']);
-			var_dump($WeekFactor); var_dump($MonthFactor);
 			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
 			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$WeekFactor, 0);
 			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$MonthFactor, 0);
