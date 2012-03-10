@@ -70,7 +70,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 			$vVDOT = JD::VDOT2v(VDOT_FORM);
 		
-			echo '<small class="right r">';
+			echo '<small class="right r '.(VDOT_FORM==0?'unimportant':'').'">';
 
 			foreach ($t as $train) {
 				$train_tempo = explode('-',$train['pVDOT']);
@@ -96,7 +96,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			echo '&nbsp;';
 
 		if (Helper::diffInDays(START_TIME) < 70)
-			echo HTML::info('F&uuml;r gute Ergebnisse sind nicht genug Daten da.');
+			echo HTML::info('F&uuml;r sinnvolle Werte sind zu wenig Daten da.');
 	}
 }
 ?>

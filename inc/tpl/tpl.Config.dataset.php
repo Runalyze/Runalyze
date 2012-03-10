@@ -30,7 +30,7 @@ foreach($datasets as $i => $dataset) {
 			<input type="checkbox" name="'.$dataset['id'].'_modus"'.$checked_2.$disabled.' />
 		</td>
 		<td><input type="checkbox" name="'.$dataset['id'].'_summary"'.$checked.' /></td>
-		<td title="'.$dataset['description'].'">'.$dataset['name'].'</td>
+		<td title="'.$dataset['description'].'">'.$dataset['label'].'</td>
 		<td><input type="text" name="'.$dataset['id'].'_position" value="'.$dataset['position'].'" size="2" /></td>
 	</tr>');
 }
