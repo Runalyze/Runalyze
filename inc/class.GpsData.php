@@ -177,17 +177,23 @@ class GpsData {
 
 	/**
 	 * Go to next kilometer if possible
+	 * If there is no distance time (5:00 as 1 km) is taken
 	 * @param double $distance
 	 * @return bool
 	 */
 	public function nextKilometer($distance = 1) {
+		$timeStepFromDistance = $distance * 5 * 60;
 		$this->arrayLastIndex = $this->arrayIndex;
 
 		if ($this->loopIsAtEnd())
 			return false;
 
-		while ($this->currentKilometer($distance) == floor($this->arrayForDistance[$this->arrayLastIndex]/$distance)*$distance)
-			$this->arrayIndex++;
+		if ($this->plotUsesTimeOnXAxis())
+			while ($this->currentTimeStep($timeStepFromDistance) == floor($this->arrayForTime[$this->arrayLastIndex]/$timeStepFromDistance)*$timeStepFromDistance)
+				$this->arrayIndex++;
+		else
+			while ($this->currentKilometer($distance) == floor($this->arrayForDistance[$this->arrayLastIndex]/$distance)*$distance)
+				$this->arrayIndex++;
 
 		return true;
 	}
@@ -208,6 +214,21 @@ class GpsData {
 	}
 
 	/**
+	 * Get the time step (if no distance is available, default: 5 minutes)
+	 * @param int $timestep in seconds
+	 * @return int
+	 */
+	public function currentTimeStep($timestep = 300) {
+		if ($this->loopIsAtDefaultIndex())
+			return 0;
+
+		if ($this->loopIsAtEnd())
+			return end($this->arrayForTime);
+
+		return floor($this->arrayForTime[$this->arrayIndex]/$timestep)*$timestep;
+	}
+
+	/**
 	 * Get total distance
 	 * @return float
 	 */
@@ -219,14 +240,14 @@ class GpsData {
 	 * Are information for pace available?
 	 */
 	public function hasPaceData() {
-		return !empty($this->arrayForPace);
+		return !empty($this->arrayForPace) && $this->getTotalDistance() > 0;
 	}
 
 	/**
 	 * Are information for elevation available?
 	 */
 	public function hasElevationData() {
-		return !empty($this->arrayForElevation);
+		return !empty($this->arrayForElevation) && $this->arrayForElevation[0] > 0;
 	}
 
 	/**
@@ -240,7 +261,7 @@ class GpsData {
 	 * Are information for latitude/longitude available?
 	 */
 	public function hasPositionData() {
-		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1);
+		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1) && $this->arrayForLatitude[0] > 0;
 	}
 
 	/**
@@ -528,6 +549,14 @@ class GpsData {
 	}
 
 	/**
+	 * Does the plot uses time on x-axis? (due to missing distance-values)
+	 * @return boolean
+	 */
+	public function plotUsesTimeOnXAxis() {
+		return $this->getTotalDistance() == 0;
+	}
+
+	/**
 	 * Get plot data for a given key
 	 * @param unknown_type $key
 	 */
@@ -556,8 +585,12 @@ class GpsData {
 			if ($value < 0)
 				$value = 0;
 
-			$km = (string)($this->getDistance());
-			$Data[$km] = $value;
+			if ($this->plotUsesTimeOnXAxis())
+				$index = (string)($this->getTime()).'000';
+			else
+				$index = (string)($this->getDistance());
+
+			$Data[$index] = $value;
 		}
 
 		return $Data;

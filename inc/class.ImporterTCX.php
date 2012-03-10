@@ -187,7 +187,7 @@ class ImporterTCX extends Importer {
 	 * @param SimpleXMLElement $TP
 	 */
 	protected function parseTrackpoint($TP) {
-		if (empty($TP->DistanceMeters) || (int)$TP->DistanceMeters <= $this->lastPoint) {
+		if (empty($TP->DistanceMeters) || ((int)$TP->DistanceMeters <= $this->lastPoint && (int)$TP->DistanceMeters > 0)) {
 			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time']);
 			return;
 		}
