@@ -1,4 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+require_once '../class.Frontend.php';
+
+new Frontend(true);
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,15 +13,7 @@
 	<script type="text/javascript" src="../tcx/communicator-api/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">	
 		function load() {
-		    var display = new Garmin.DeviceDisplay("garminDisplay", { 
-<?php
-require_once '../class.Frontend.php';
-$Frontend = new Frontend(true, __FILE__);
-
-if (strlen(CONF_GARMIN_API_KEY) > 10)
-	echo 'pathKeyPairsArray: ["http://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"],';
-?>
-				/*pathKeyPairsArray: ["http://developer.garmin.com/","ee3934433a35ee348583236c2eeadbc1"],*/
+		    var display = new Garmin.DeviceDisplay("garminDisplay", {
 				showReadDataElement: true,
 				showProgressBar: true,
 				showFindDevicesElement: true,
@@ -45,6 +41,10 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 				afterFinishUploads: function(display) {
 					//window.alert("Das waren alle.");
 				}
+<?php
+if (strlen(CONF_GARMIN_API_KEY) > 10)
+	echo ',pathKeyPairsArray: ["http://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"]';
+?>
 			});
 		}
 	</script>

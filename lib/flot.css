@@ -4,7 +4,8 @@
 	border: 1px solid #000;
 	width: 480px;
 	height: 190px;
-	background-color: #AAB757;
+	background: url(../img/dash.png) repeat #60a920;
+	/*background-color: #AAB757;
 	background-image: url(../img/dash.png);
 	background-image: url(../img/dash.png), linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
 	background-image: url(../img/dash.png), -o-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
@@ -15,7 +16,7 @@
 		linear, left bottom, left top,
 		color-stop(0, rgb(96,165,80)),
 		color-stop(1, rgb(193,206,112))
-	);
+	);*/
 }
 
 .flot .tickLabels, .flot .legend td {

@@ -1,21 +1,8 @@
 <?php
 /**
- * This file contains the class::GMap for displaying GoogleMaps
- */
-
-Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Linienfarbe auf GoogleMaps-Karte (#RGB)');
-Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Markierungen anzeigen');
-Config::register('Training', 'TRAINING_MAPTYPE', 'select',
-	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
-	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
-
-/**
  * Class: GMap
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Gmap {
 	/**
@@ -60,9 +47,10 @@ class Gmap {
 		$Code  = $this->getCodeForInit();
 		$Code .= $this->getCodeForPolylines();
 		$Code .= $this->getCodeForKmMarker();
-		
+
 		echo Ajax::wrapJSasFunction($Code);
-		echo '<div id="'.$this->StringID.'" class="map"></div>';
+
+		include 'tpl/tpl.Gmap.toolbar.php';
 	}
 
 	/**
@@ -82,6 +70,10 @@ class Gmap {
 	protected function getCodeForPolylines() {
 		$Code = '';
 		$Path = array();
+
+		$AvgPace = $this->GpsData->getAveragePace();
+		if ($AvgPace > 0)
+			self::$MAXIMUM_DISTANCE_OF_STEP = 15 / $AvgPace;
 
 		$this->GpsData->startLoop();
 		while ($this->GpsData->nextStep()) {
@@ -105,9 +97,6 @@ class Gmap {
 	 * @return string
 	 */
 	protected function getCodeForKmMarker() {
-		if (!CONF_TRAINING_MAP_MARKER)
-			return '';
-		
 		$Training = new Training($this->TrainingId);
 		$SportId  = $Training->get('sportid');
 		$Code     = '';
@@ -122,6 +111,9 @@ class Gmap {
 		}
 
 		$Code .= 'RunalyzeGMap.addMarkers(['.implode(',', $Marker).']);';
+
+		if (!CONF_TRAINING_MAP_MARKER)
+			$Code .= 'RunalyzeGMap.hideMarkers();';
 
 		return $Code;
 	}

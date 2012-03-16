@@ -139,7 +139,7 @@ abstract class Importer {
 		if (isset(self::$formats[$format]) && class_exists(self::$formats[$format]))
 			return new self::$formats[$format]($fileName);
 
-		$this->addError('Importer: unknown input format "'.$format.'".');
+		Error::getInstance()->addError('Importer: unknown input format "'.$format.'".');
 
 		return new ImporterFormular();
 	}
@@ -156,7 +156,7 @@ abstract class Importer {
 
 			require_once FRONTEND_PATH.$fileName;
 		} else {
-			$this->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
+			Error::getInstance()->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
 		}
 	}
 
@@ -193,7 +193,9 @@ abstract class Importer {
 	 */
 	public function tryToUploadFileHasSuccess() {
 		if (isset($_GET['json'])) {
-			$this->uploadFile();
+			// TODO: Fehlermeldungen klappen nicht so recht
+			if (!$this->uploadFile())
+				return false;
 		
 			Error::getInstance()->footer_sent = true;
 			echo 'success';
@@ -205,15 +207,18 @@ abstract class Importer {
 
 	/**
 	 * Upload file
+	 * @return bool
 	 */
 	private function uploadFile() {
 		if (self::uploadedFileWasTooBig()) {
 			$this->addError('Uploaded file was too big.');
-			return;
+			return false;
 		}
 
-		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $_FILES['userfile']['name']))
+		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $_FILES['userfile']['name'])) {
 			$this->addError('Can\'t move uploaded file '.$_FILES['userfile']['name']);
+			return false;
+		}
 	}
 
 	/**
@@ -327,6 +332,7 @@ abstract class Importer {
 
 		echo '<h1>Probleme beim Import</h1>';
 		echo HTML::em('Beim Importieren ist ein Fehler aufgetreten.');
+		echo HTML::clearBreak();
 		echo HTML::clearBreak();
 
 		foreach ($this->Errors as $Error)

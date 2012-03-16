@@ -115,14 +115,6 @@ abstract class PluginTool extends Plugin {
 	}
 
 	/**
-	 * Get link to the tools-overlay
-	 * @return string
-	 */
-	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="'.self::$DISPLAY_URL.'">'.Icon::get(Icon::$CONF_TOOL, '', '', 'Tools').'</a>');
-	}
-
-	/**
 	 * Returns the html-link to this plugin for tab-navigation
 	 * @param int $id Id for the plugin
 	 * @param string $name Name for the link

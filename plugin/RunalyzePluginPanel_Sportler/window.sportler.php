@@ -1,8 +1,7 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
-$Frontend->displayHeader();
+new Frontend();
 
 if (Request::sendId() === false) {
 	$Header   = 'K&ouml;rper-Daten eintragen';
@@ -24,7 +23,4 @@ $Formular->setId('sportler');
 $Formular->setHeader($Header);
 $Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
 $Formular->display();
-
-$Frontend->displayFooter();
-$Frontend->close();
 ?>

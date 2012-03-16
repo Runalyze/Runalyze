@@ -5,8 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
-$Frontend->displayHeader();
+new Frontend();
 
 $submit = false;
 
@@ -34,12 +33,9 @@ echo '<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">';
 
 if ($submit)
 	include '../inc/tpl/tpl.Search.result.php';
-	
-$Frontend->displayFooter();
+
 echo '</div>';
 
 if (!($_GET['pager'] == 'true'))
 	echo '</div>';
-
-$Frontend->close();
 ?>

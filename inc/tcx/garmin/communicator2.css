@@ -175,9 +175,6 @@ body { padding: 0; margin: 0; }
     padding-top: 6px;
 }
 
-.readResultsSelect {
-}
-
 #shortStatus {
 	display: none;
 }
@@ -192,7 +189,7 @@ body { padding: 0; margin: 0; }
 	padding: 5px 12px;
 	color: #FFF;
 	text-shadow: 1px 1px 0 #666;
-	background-color: #808080;
+	background-color: #555;
 	border: 1px solid #B8B8B8;
 	border-radius: 3px 3px 3px 3px;
 	box-shadow: 0 1px 3px #BBBBBB;

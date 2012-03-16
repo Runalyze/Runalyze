@@ -226,7 +226,7 @@ class Weather {
 	 */
 	private function loadForecast() {
 		if (CONF_PLZ > 0) {
-			$Xml         = Helper::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
+			$Xml = Filesystem::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 
 			if (strlen($Xml) > 1) {
 				$Xml         = simplexml_load_string_utf8($Xml);
@@ -300,11 +300,11 @@ class Weather {
 				case 'Teils sonnig':
 					return 'heiter';
 				case 'Bedeckt':
-				case 'Meistens bewölkt':
-				case 'Bewölkt':
+				case 'Meistens bewï¿½lkt':
+				case 'Bewï¿½lkt':
 				case 'Nebel':
 					return 'bew&ouml;lkt';
-				case 'Vereinzelt stürmisch':
+				case 'Vereinzelt stï¿½rmisch':
 				case 'Vereinzelte Schauer':
 				case 'Vereinzelt Regen':
 				case 'Leichter Regen':

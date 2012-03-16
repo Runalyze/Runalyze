@@ -5,7 +5,8 @@
  */
 require '../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
+new Frontend();
+
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();
 
@@ -19,8 +20,6 @@ if (isset($_POST) && isset($_POST['formID']) && $_POST['formID'] == "config") {
 
 	$submit = '<em>Die Einstellungen wurden gespeichert!</em><br /><br />';
 }
-
-$Frontend->displayHeader();
 
 if (isset($submit))
 	echo ('<div id="submit-info">'.$submit.'</div>');
@@ -69,8 +68,3 @@ if (isset($submit))
 		</div>
 	</div>
 </form>
-
-<?php
-$Frontend->displayFooter();
-$Frontend->close();
-?>

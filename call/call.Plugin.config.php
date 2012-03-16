@@ -4,8 +4,8 @@
  * Call:   call.Plugin.config.php?id=
  */
 require_once '../inc/class.Frontend.php';
-$Frontend = new Frontend(true);
-$Frontend->displayHeader();
+
+new Frontend(true);
 
 if (is_numeric($_GET['id'])) {
 	$key = Plugin::getKeyForId($_GET['id']);
@@ -15,6 +15,4 @@ if (is_numeric($_GET['id'])) {
 	Error::getInstance()->addError('ID must be set as GET-variable', __FILE__, __LINE__);
 	echo('<em>Hier ist etwas schiefgelaufen ...</em>');
 }
-
-$Frontend->displayFooter();
 ?>

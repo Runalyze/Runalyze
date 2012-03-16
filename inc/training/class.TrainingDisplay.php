@@ -3,8 +3,6 @@
  * This file contains the class to handle the displaying for every training.
  */
 
-Config::register('Training', 'TRAINING_PLOTS_BELOW', 'bool', false, 'Diagramme untereinander anstatt im Wechsel anzeigen');
-
 /**
 * Class: TrainingDisplay
 *
@@ -46,62 +44,11 @@ class TrainingDisplay {
 	 * Display the whole training
 	 */
 	public function display() {
-		$this->displayHeader();
-		$this->displayPlotsAndMap();
+		include 'tpl/tpl.Training.php';
+
 		$this->displayTrainingData();
 
 		echo HTML::clearBreak();
-	}
-
-	/**
-	 * Display header
-	 */
-	public function displayHeader() {
-		echo '<h1>'.NL;
-		$this->displayEditLink();
-		$this->Training->displayTitle();
-
-		echo '<small class="right">';
-		$this->Training->displayDate();
-		echo '</small>';
-		echo HTML::clearBreak();
-
-		echo '</h1>'.NL;
-	}
-
-	/**
-	 * Display plot links, first plot and map
-	 */
-	public function displayPlotsAndMap() {
-		$Plots = $this->getPlotTypesAsArray();
-
-		echo '<div class="right">'.NL;
-		if (!empty($Plots)) {
-			if (CONF_TRAINING_PLOTS_BELOW) {
-				foreach ($Plots as $Key => $Plot) {
-					$this->displayPlot($Key, false);
-					echo '<br />'.NL;
-				}
-			} else {
-				reset($Plots);
-				$firstKey = key($Plots);
-
-				echo '<small class="right margin-5">'.NL;
-					$this->displayPlotLinks();
-				echo '</small>'.NL;
-				echo '<br /><br />'.NL;
-				echo '<div id="trainingPlots" class="flotChangeable" style="position:relative;width:482px;height:192px;margin:2px auto;">';
-				foreach ($Plots as $Key => $Plot)
-					$this->displayPlot($Key, $Key != $firstKey);
-				echo '</div>';
-			}
-			echo '<br /><br />'.NL;
-		}
-
-		if ($this->Training->hasPositionData())
-			$this->displayRoute();
-
-		echo '</div>'.NL;
 	}
 
 	/**
@@ -110,10 +57,10 @@ class TrainingDisplay {
 	 */
 	private function getPlotTypesAsArray() {
 		$plots = array();
-		if ($this->Training->hasPaceData())
-			$plots['pace'] = array('name' => 'Pace', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasSplitsData())
 			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
+		if ($this->Training->hasPaceData())
+			$plots['pace'] = array('name' => 'Pace', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasPulseData())
 			$plots['pulse'] = array('name' => 'Puls', 'key' => 'pulse', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasElevationData())
@@ -143,7 +90,7 @@ class TrainingDisplay {
 	public function displayPlot($type = 'undefined', $hidden = false) {
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type])) {
-			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden);
+			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden, 'trainingChart');
 			include FRONTEND_PATH.'draw/Plot.Training.'.$plots[$type]['key'].'.php';
 		} else
 			Error::getInstance()->addWarning('TrainingDisplay::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
@@ -153,7 +100,6 @@ class TrainingDisplay {
 	 * Display training data
 	 */
 	public function displayTrainingData() {
-		$this->Training->displayTable();
 		$this->displayRoundsContainer();
 		$this->displayPaceZones();
 		$this->displayPulseZones();
@@ -317,7 +263,7 @@ class TrainingDisplay {
 				'distance'  => Helper::Km($Round['distance'], 2),
 				'pace'      => Helper::Speed($Round['km'], $Round['s'], $this->Training->get('sportid')),
 				'heartrate' => Helper::Unknown($Round['heartrate']),
-				'elevation' => Helper::WithSign($Round['hm-up']).'/'.Helper::WithSign(-$Round['hm-down']));
+				'elevation' => Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']));
 		}
 		
 		include 'tpl/tpl.Training.round.php';

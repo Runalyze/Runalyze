@@ -4,8 +4,6 @@
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @copyright http://www.runalyze.de/
- * 
- * This main file loads the frontend class and controls the output.
  */
 if (!file_exists('config.php')) {
 	include 'install.php';
@@ -14,8 +12,7 @@ if (!file_exists('config.php')) {
 
 require 'inc/class.Frontend.php';
 
-$Frontend = new Frontend(false, __FILE__);
-$Frontend->displayHeader();
+$Frontend = new Frontend();
 ?>
 <div id="container">
 	<div id="main">
@@ -56,8 +53,3 @@ $Frontend->displayHeader();
 		<?php $Frontend->displayPanels(); ?>
 	</div>
 </div>
-
-<?php
-$Frontend->displayFooter();
-$Frontend->close();
-?>

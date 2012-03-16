@@ -6,8 +6,11 @@
 body {
 	font: normal normal normal 11px/1.2em Verdana, Arial, sans-serif;
 	color: #333;
-	background: url(img/backgrounds/Default.jpg);
-	padding-bottom: 41px; }
+	background: url(img/backgrounds/Default.jpg); }
+
+body.toolbar-top { padding-top: 41px; }
+body.toolbar-bottom { padding-bottom: 41px; }
+body.toolbar-bottom #panels { padding-bottom: 41px; }
 
 body#home {
 	min-width: 1024px; }
@@ -30,28 +33,34 @@ body#installer {
 	position: absolute;
 	top: -5px;
 	right: 0;
-	width: 344px;
-	padding-bottom: 41px; }
+	width: 344px; }
 
 #copy {
 	position: fixed;
-	bottom: 0;
+	z-index: 5;
 	width: 100%;
-	color: #888;
 	line-height: 24px;
-	background-color: #000;
-	border-top: 1px solid #494944; }
+	background-color:#555; }
 
-#copy abbr {
+#copy.top { top: 0; box-shadow:0 2px 3px rgba(0, 0, 0, 0.25); }
+#copy.bottom { bottom: 0; box-shadow:0 -2px 3px rgba(0, 0, 0, 0.25); }
+
+#copy a.tab {
 	display: block;
-	width: 24px;
-	height: 24px; }
+	float: left;
+	padding: 2px 10px 2px 30px;
+	margin: 4px 8px;
+	color: #DDD; }
 
-#copy a {
-	margin: 6px 15px; }
+#copy a.tab.singleTab {
+	float: right;
+	padding: 2px 10px; }
 
-#copy a img {
-	margin: 1px 0 0; }
+#copy a.tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
+
+#copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
+#copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
+#copy a#confHelp { background: url(img/confHelp.png) 2px center no-repeat; }
 
 
 /*** GENERAL STYLES ***/
@@ -116,8 +125,16 @@ table input, table select, table textarea {
 input:focus, select:focus, textarea:focus {
 	background-color: #EBFDD7; }
 
+input[type=checkbox] {
+	position: relative;
+	top: 2px; }
+
+label.checkable,
+input[type=checkbox] {
+	cursor: pointer; }
+
 input[type=submit], .button {
-	background-color: #808080;
+	background-color: #555;
 	box-shadow: 0 1px 3px #BBBBBB;
 	color: #FFF !important;
 	cursor: pointer;
@@ -188,6 +205,89 @@ fieldset .validationFailed {
 	background-color: #FDEBD7;
 	border-color: #CC0000; }
 
+/*** TOOLBAR ***/
+.toolbar {
+	 }
+
+.toolbar.asBox {
+	position: relative;
+	margin: 5px 5px 14px 5px;
+	border: solid #ccc;
+	border-radius: 5px 5px 0 0;
+	border-width: 1px 1px 0 1px;
+	background-color: #f6f6f6; }
+
+.toolbar.asBox .toolbar-content {
+	border-width: 0; }
+
+.toolbar-box-content {
+	padding: 3px; }
+
+.toolbar.toHeader {
+	margin-top: -7px; }
+
+.toolbar-line {
+	min-height: 16px;
+	padding: 4px 10px 6px; }
+
+.toolbar-content {
+	display: none;
+	background-color: #eee;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc; }
+
+.toolbar-line .labeledLink {
+	display: block;
+	float: left;
+	background-position: left center;
+	background-repeat: no-repeat;
+	min-height: 12px;
+	margin: 0 5px;
+	padding: 2px 2px 2px 16px; }
+
+.toolbar-line .labeledLink:hover { padding-bottom: 1px; }
+
+.labeledLink.editLink { background-image:url(img/edit.png); }
+.labeledLink.exportLink { background-image:url(img/export.png); }
+.labeledLink.zoomInLink { background-image:url(img/zoomIn.png); }
+.labeledLink.zoomOutLink { background-image:url(img/zoomOut.png); }
+.labeledLink.zoomFitLink { background-image:url(img/zoomFit.png); }
+
+.toolbar-line input, .toolbar-line label {
+	font-size: .9em; }
+
+.toolbar.open .toolbar-content {
+	display: block; }
+
+.toolbar-nav {
+	border-top: 1px solid #ccc;
+	margin: 0 1px 1em; }
+
+.asBox .toolbar-nav {
+	position: absolute;
+	bottom: -9px;
+	width: 100%; }
+
+.toolbar-opener {
+	position: relative;
+	display: block;
+	cursor: pointer;
+	height: 9px;
+	width: 50px;
+	margin: -1px auto 0;
+	background: url(img/updown.png) no-repeat scroll 0 -9px transparent; }
+
+.toolbar.open .toolbar-opener {
+	background-position: 0 0; }
+
+.toolbar input {
+	margin: 0 2px; }
+
+.toolbar label,
+.toolbar select {
+	margin: 0 5px;
+	padding: 1px; }
+
 
 /*** LINKS ***/
 a:link, a:visited {
@@ -197,8 +297,8 @@ a:link, a:visited {
 
 a:hover, a:active, .link:hover {
 	color: #000;
-	border-bottom: 1px solid #FF8000;
-	padding: 0; }
+	border-bottom: 1px solid #800;
+	padding-bottom: 0; }
 
 .linksWithMargin a {
 	margin-left: 15px; }
@@ -358,6 +458,75 @@ h1 a:link, h1 a:visited {
 .spacer {
 	margin-left: 20px; }
 
+.dataBox {
+	float: left;
+	margin: 5px;
+	padding: 3px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	background: #f6f6f6; }
+
+.dataBox tr, .dataBox td {
+	padding: 3px; }
+
+#trainingChartsAndMap .dataBox,
+.right .dataBox {
+	float: none; }
+
+.inlineHead, .dataBox td.inlineHead {
+	font-weight: bold;
+	padding-right: 10px; }
+
+#trainingPlots {
+	position: relative;
+	margin-left: 55px; }
+
+#plotNavigation {
+	position: absolute;
+	top: -2px;
+	left: -50px;
+	width: 38px;
+	border-right: none;
+	border-radius: 3px 0 0 3px;
+}
+
+#plotNavigation .plotToggler {
+	display: block;
+	cursor: pointer;
+	margin: 2px;
+	padding: 2px;
+	border: 1px solid transparent;
+	border-radius: 3px;
+}
+
+#plotNavigation .plotToggler.active,
+#plotNavigation label:hover img {
+	border-color: #aaa;
+	background-color: #eee; }
+
+#plotNavigation label {
+	cursor: pointer;
+	margin-top: 10px;
+	display: block;
+	padding-top: 10px;
+	border-top: 1px solid #ccc; }
+
+#plotNavigation input {
+	top: -2px;
+	margin-left: 6px; }
+
+#chartWidther {
+	display: block;
+	cursor: pointer;
+	width: 39px;
+	height: 9px;
+	margin: 2px 0;
+	background-image: url(img/chart-widther.png);
+	background-repeat: no-repeat;
+	background-position: 0 0; }
+
+#chartWidther.widtherIsBig { background-position: 0 -9px; }
+
 
 p.text { margin: 0 0 12px; }
 p.text-headline { margin: 0 0 8px; font-weight: bold; }
@@ -376,12 +545,13 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .l { text-align: left; }
 .r { text-align: right; }
 .small { font-size: 0.8em; }
-.wk td { background: #FFE5CC !important; }
+.wk td { background: #FFD !important; font-weight: bold; }
 .link { padding-bottom: 1px; cursor: pointer; }
 .inline { display: inline; }
 .minus { color: #CA3030; }
 .plus { color: #30AA30; }
 .error { color: #F00; font-weight: bold; }
+.nomargin { margin: 0; }
 .margin-5 { margin: 0 5px; }
 .margin-10 { margin: 0 10px; }
 .transparent-70 { opacity: 0.7; filter: alpha(opacity=70); }
@@ -401,8 +571,10 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .a1:hover td, td.a1:hover { background: rgba(255,255,255,0.5); }
 .a2:hover td, td.a2:hover { background: rgba(255,255,255,0.5); }
 .a3:hover td, td.a3:hover { background: rgba(255,255,255,0.5); }
-.highlight td {	background: #FFE5CC; font-style: italic; }
-.highlight:hover td { background: #FFCCAA; }
+.a1.highlight td {	background: #FF3; font-style: italic; }
+.a2.highlight td {	background: #FF6; font-style: italic; }
+.a3.highlight td {	background: #FF9; font-style: italic; }
+.highlight:hover td { background: #FF0; }
 .space td { height: 1px; background: #666; padding: 0; }
 .nopadding tr, .nopadding td { padding: 0; }
 .nopadding input { margin: 0; }
@@ -427,9 +599,8 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 	background-position: bottom left;
 	background-repeat: no-repeat; }
 
-#trainingRounds {
-	float: left;
-	margin-top: 10px; }
+#trainingChartsAndMap {
+	float: right; }
 
 #tab_content table {
 	margin: 5px 0 10px; }
@@ -479,8 +650,8 @@ code {
 
 /*** Map ***/
 .map {
-	border: 1px solid #000;
-	width: 478px;
+	/*border: 1px solid #000;*/
+	width: 100%;
 	height: 300px; }
 
 .map .hoverTip {

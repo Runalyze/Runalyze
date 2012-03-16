@@ -1,40 +1,8 @@
 <?php
 /**
- * This file contains the class::DataBrowser
- * The class::DataBrowser is is used to handle and display a list of trainings.
- */
-/**
- * Tag-ID for the whole databrowser
- * @const DATA_BROWSER_ID
- */
-define('DATA_BROWSER_ID', 'daten');
-
-/**
- * Tag-ID for the search
- * @const DATA_BROWSER_SEARCH_ID
- */
-define('DATA_BROWSER_SEARCH_ID', 'search');
-
-/**
- * Tag-ID for the resultbrowser of the search
- * @const DATA_BROWSER_SEARCHRESULT_ID
- */
-define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
-
-Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Seite');
-Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', 'Heutigen Tag im Kalender hervorheben');
-Config::register('Design', 'DB_SHOW_CREATELINK_FOR_DAYS', 'bool', '1', 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen');
-Config::register('Design', 'DB_SHOW_DIRECT_EDIT_LINK', 'bool', '1', 'Training-Bearbeiten-Link im Kalender anzeigen');
-
-/**
  * Class: Frontend
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Ajax
- * @uses class::Training
  */
 class DataBrowser {
 	/**
@@ -119,8 +87,8 @@ class DataBrowser {
 	 * Init private timestamps from request
 	 */
 	private function initTimestamps() {
-		$this->timestamp_start = isset($_GET['start']) ? $_GET['start'] : Helper::Weekstart(time());
-		$this->timestamp_end   = isset($_GET['end'])   ? $_GET['end']   : Helper::Weekend(time());
+		$this->timestamp_start = isset($_GET['start']) ? $_GET['start'] : Time::Weekstart(time());
+		$this->timestamp_end   = isset($_GET['end'])   ? $_GET['end']   : Time::Weekend(time());
 
 		$this->day_count = round(($this->timestamp_end - $this->timestamp_start) / 86400);
 	}
@@ -139,7 +107,7 @@ class DataBrowser {
 			ORDER BY `time` ASC');
 
 		foreach ($AllTrainings as $Training) {
-			$w = Helper::diffInDays($Training['time'], $this->timestamp_start);
+			$w = Time::diffInDays($Training['time'], $this->timestamp_start);
 
 			if (in_array($Training['sportid'], $this->sports_short))
 				$this->days[$w]['shorts'][]    = $Training;
@@ -185,7 +153,7 @@ class DataBrowser {
 		echo $this->getPrevLink().NL;
 		echo $this->getCalenderLink().NL;
 
-		echo self::getMonthLink(Helper::Month(date("m", $this->timestamp_start)), $this->timestamp_start).', ';
+		echo self::getMonthLink(Time::Month(date("m", $this->timestamp_start)), $this->timestamp_start).', ';
 		echo self::getYearLink(date("Y", $this->timestamp_start), $this->timestamp_start).', ';
 		echo self::getWeekLink(strftime("%W", $this->timestamp_start).'. Woche ', $this->timestamp_start);
 
@@ -321,7 +289,7 @@ class DataBrowser {
 	 * @return string HTML-link
 	 */
 	static function getWeekLink($name, $time) {
-		return self::getLink($name, Helper::Weekstart($time), Helper::Weekend($time));
+		return self::getLink($name, Time::Weekstart($time), Time::Weekend($time));
 	}
 
 	/**

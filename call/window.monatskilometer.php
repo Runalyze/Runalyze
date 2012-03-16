@@ -4,8 +4,8 @@
  * Call:   call/window.monatskilometer.php
  */
 require '../inc/class.Frontend.php';
-$Frontend = new Frontend(true, __FILE__);
-$Frontend->displayHeader();
+
+new Frontend();
 
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
@@ -34,8 +34,3 @@ for ($j = START_YEAR; $j <= date("Y"); $j++) {
 }
 ?>
 </center>
-
-<?php
-$Frontend->displayFooter();
-$Frontend->close();
-?>

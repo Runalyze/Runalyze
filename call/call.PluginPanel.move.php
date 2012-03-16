@@ -5,7 +5,7 @@
  */
 require_once '../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true);
+new Frontend();
 
 if (is_numeric($_GET['id'])) {
 	$key   = Plugin::getKeyForId($_GET['id']);
@@ -13,6 +13,4 @@ if (is_numeric($_GET['id'])) {
 	if ($Panel->get('type') == Plugin::$PANEL)
 		$Panel->move($_GET['mode']);
 }
-
-Error::getInstance()->display();
 ?>
