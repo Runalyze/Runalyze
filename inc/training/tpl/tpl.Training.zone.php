@@ -1,7 +1,7 @@
-<div class="zones">
+<div class="dataBox trainingZones">
 	<strong class="small"><?php echo $title; ?>:</strong>
 
-	<table class="small">
+	<table class="small" style="white-space:nowrap;">
 		<thead>
 			<tr>
 				<th>Zone</th>

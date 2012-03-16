@@ -1,6 +1,8 @@
 <?php
 require '../../inc/class.Frontend.php';
-$Frontend = new Frontend(true, __FILE__);
+
+new Frontend();
+
 $Mysql = Mysql::getInstance();
 
 $isEditingMode = false;
@@ -39,8 +41,6 @@ if (isset($_POST['type']) && $_POST['type'] == 'schuh') {
 	$_POST['brand'] = $Shoe['brand'];
 	$_POST['since'] = $Shoe['since'];
 }
-
-$Frontend->displayHeader();
 ?>
 <h1>Neuen Schuh erstellen</h1>
 
@@ -91,8 +91,3 @@ if (isset($submit))
 
 	<input type="submit" value="Nicht mehr nutzen" />
 </form>
-
-<?php
-$Frontend->displayFooter();
-$Frontend->close();
-?>

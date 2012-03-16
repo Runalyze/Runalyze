@@ -136,7 +136,7 @@ class Plot {
 		$this->Options['xaxis']['color'] = "#FFF";
 		$this->Options['xaxis']['monthNames'] = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
 
-		$this->Options['grid']['backgroundColor'] = "rgba(255,255,255,0.2)";
+		$this->Options['grid']['backgroundColor'] = "rgba(255,255,255,0.3)";
 		$this->Options['grid']['borderWidth'] = 1;
 		$this->Options['grid']['labelMargin'] = 2;
 		$this->Options['grid']['axisMargin'] = 2;
@@ -177,9 +177,10 @@ class Plot {
 	 * @param int $width
 	 * @param int $height
 	 * @param bool $hidden
+	 * @param string $class
 	 */
-	static public function getInnerDivFor($id, $width, $height, $hidden = false) {
-		return '<div class="flot waitImg'.($hidden ? ' flotHide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
+	static public function getInnerDivFor($id, $width, $height, $hidden = false, $class = '') {
+		return '<div class="flot waitImg '.$class.($hidden ? ' flotHide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
 	}
 
 	/**
@@ -248,15 +249,9 @@ class Plot {
 	 */
 	private function getMainJS() {
 		return 'RunalyzePlot.addPlot(
-				"'.$this->cssID.'",
-				'.json_encode($this->Data).',
-				'.Ajax::json_encode_jsfunc($this->Options).');'.NL;
-//		return '
-//			var '.$this->plot.' = $.plot(
-//				$("#'.$this->cssID.'"),
-//				'.json_encode($this->Data).',
-//				'.Ajax::json_encode_jsfunc($this->Options).'
-//			);'.NL;
+					"'.$this->cssID.'",
+					'.json_encode($this->Data).',
+					'.Ajax::json_encode_jsfunc($this->Options).');'.NL;
 	}
 
 	/**
@@ -294,9 +289,6 @@ class Plot {
 			$code .= '
 				o = RunalyzePlot.getPlot("'.$this->cssID.'").pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
 				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
-//			$code .= '
-//				o = '.$this->plot.'.pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
-//				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
 
 		return $code;
 	}
@@ -355,7 +347,6 @@ class Plot {
 				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
 			});
 			bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
-			//bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), '.$this->plot.');'.NL;
 	}
 
 	/**

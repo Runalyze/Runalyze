@@ -9,7 +9,7 @@ $yAxis       = array();
 $xAxis       = array();
 
 for ($w = 1; $w <= 7; $w++)
-	$xAxis[] = array($w-1, Helper::Weekday($w, true));
+	$xAxis[] = array($w-1, Time::Weekday($w, true));
 
 $Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 foreach ($Sports as $sport) {

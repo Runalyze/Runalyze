@@ -15,7 +15,7 @@ $possibleKM            = 0;
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	for ($m = 1; $m <= 12; $m++) {
-		$Months[]                = array($m-1, Helper::Month($m, true));
+		$Months[]                = array($m-1, Time::Month($m, true));
 		$Kilometers[]            = 0;
 		$KilometersCompetition[] = 0;
 	}

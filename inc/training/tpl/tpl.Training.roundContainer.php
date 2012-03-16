@@ -1,4 +1,4 @@
-<div id="trainingRounds">
+<div id="trainingRounds" class="dataBox">
 	<strong class="small">Rundenzeiten:&nbsp;</strong>
 	<small class="right margin-5"><?php echo $RoundLinks; ?></small>
 

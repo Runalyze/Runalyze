@@ -1,27 +1,8 @@
 <?php
 /**
- * This file contains the class::HTML for easy html-manipulation.
- */
-
-/**
- * New line for echoing text
- * @var string
- */
-define('NL', "\n");
-
-/**
- * HTML-tag: break
- * @var string
- */
-define('BR', '<br />');
-
-/**
  * Class: HTML
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class HTML {
 	/**
@@ -83,7 +64,7 @@ class HTML {
 			$html .= '<td />'.NL;
 
 		for ($m = 1; $m <= 12; $m++)
-			$html .= '<td'.$width.'>'.Helper::Month($m, true).'</td>'.NL;
+			$html .= '<td'.$width.'>'.Time::Month($m, true).'</td>'.NL;
 
 		$html .= '</tr>'.NL;
 

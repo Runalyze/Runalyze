@@ -44,8 +44,10 @@ $Plot->setLinesFilled(array(0,1));
 
 //$Plot->hideXLabels();
 $Plot->setXLabels($Labels);
-$Plot->setXAxisTimeFormat('%d.%m.%y');
+$Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
+$Plot->Options['xaxis']['labelWidth'] = 50;
+$Plot->Options['xaxis']['tickLength'] = 3;
 
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '%');

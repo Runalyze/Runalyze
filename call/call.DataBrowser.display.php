@@ -5,12 +5,8 @@
  */
 require '../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
-$Frontend->displayHeader();
+new Frontend();
 
 $DataBrowser = new DataBrowser();
 $DataBrowser->display();
-
-$Frontend->displayFooter();
-$Frontend->close();
 ?>

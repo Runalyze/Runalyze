@@ -1,12 +1,8 @@
 <?php
 /**
- * This file contains the class::Icon
- */
-/**
  * Class for all icons used in Runalyze
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class Icon {
 	/**

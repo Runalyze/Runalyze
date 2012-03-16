@@ -33,23 +33,23 @@ if ($Training->isOutside())
 
 <div id="edit-div">
 	<div id="delete" class="change" style="display:none;">
-		<?php include '../inc/tpl/tpl.Training.edit.delete.php'; ?>
+		<?php include '../inc/training/tpl/tpl.Training.edit.delete.php'; ?>
 	</div>
 
 	<div id="edit-gps" class="change" style="display:none;">
-		<?php include '../inc/tpl/tpl.Training.edit.gps.php'; ?>
+		<?php include '../inc/training/tpl/tpl.Training.edit.gps.php'; ?>
 	</div>
 
 	<div id="edit-general" class="change">
-		<?php include '../inc/tpl/tpl.Training.edit.general.php'; ?>
+		<?php include '../inc/training/tpl/tpl.Training.edit.general.php'; ?>
 	</div>
 
 	<div id="edit-train" class="change" style="display:none;">
-		<?php include '../inc/tpl/tpl.Training.edit.distance.php'; ?>
+		<?php include '../inc/training/tpl/tpl.Training.edit.distance.php'; ?>
 	</div>
 
 	<div id="edit-out" class="change" style="display:none;">
-		<?php include '../inc/tpl/tpl.Training.edit.outside.php'; ?>
+		<?php include '../inc/training/tpl/tpl.Training.edit.outside.php'; ?>
 	</div>
 </div>
 

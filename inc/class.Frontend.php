@@ -5,27 +5,17 @@
  * It will include all needed classes.
  * For using it's enough to include this class.
  */
-
-date_default_timezone_set('Europe/Berlin');
-
 /**
  * Class: Frontend
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class Frontend {
 	/**
-	 * Boolean flag if it was an Ajax-request
-	 * @var bool
-	 */
-	private $ajax_request;
-
-	/**
-	 * Called filename
+	 * URL for help-window
 	 * @var string
 	 */
-	private $file;
+	public static $HELP_URL = 'inc/tpl/tpl.help.html';
 
 	/**
 	 * Boolean flag: log GET- and POST-data
@@ -44,74 +34,64 @@ class Frontend {
 	private $CSS_FILES = array();
 
 	/**
-	 * Constructor for frontend
-	 * @param bool $ajax_request Is the call an Ajax-request?
-	 * @param string $file Current filename
+	 * Constructor for Frontend
+	 * @param bool $hideHeaderAndFooter optional
 	 */
-	public function __construct($ajax_request = false, $file = __FILE__) {
-		$this->file = $file;
-		$this->ajax_request = $ajax_request;
+	public function __construct($hideHeaderAndFooter = false) {
+		$this->initSystem();
 
-		$this->setAutloader();
-		$this->initConsts();
-		$this->initVars();
-		$this->initErrorHandling();
-		$this->initMySql();
-		$this->initConfigConsts();
 		$this->initRequiredFiles();
 		$this->initDebugMode();
+
+		if (!$hideHeaderAndFooter)
+			$this->displayHeader();
+		else
+			Error::getInstance()->footer_sent = true;
 	}
 
 	/**
-	 * Destructer, closes mysql-connection and prints error-log if set (hopefully without another call?)
+	 * Destructor
 	 */
-	public function __destruct() {}
+	public function __destruct() {
+		if (!Error::getInstance()->footer_sent)
+			$this->displayFooter();
+	}
 
 	/**
-	 * Calls the destructer
+	 * Init system 
 	 */
-	public function close() {
-		$this->__destruct();
+	private function initSystem() {
+		define('FRONTEND_PATH', dirname(__FILE__).'/');
+
+		$this->setAutoloader();
+		$this->initErrorHandling();
+		$this->initMySql();
+		$this->defineConsts();
 	}
 
 	/**
 	 * Set up Autloader 
 	 */
-	private function setAutloader() {
-		// TODO: Won't work so far, some files are required always ...
-		//require_once dirname(__FILE__).'/system/class.Autoloader.php';
-
-		//$Autoloader = new Autoloader();
+	private function setAutoloader() {
+		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
+		new Autoloader();
 	}
 
 	/**
 	 * Init constants
 	 */
-	private function initConsts() {
-		define('FRONTEND_PATH', dirname(__FILE__).'/');
-		define('RUNALYZE_VERSION', '1.0');
-		define('INFINITY', PHP_INT_MAX);
-		define('DAY_IN_S', 86400);
-		define('YEAR', date("Y"));
-		define('CUT_LENGTH', 29);
-	}
+	private function defineConsts() {
+		require_once FRONTEND_PATH.'system/define.consts.php';
+		require_once FRONTEND_PATH.'system/register.consts.php';
 
-	/**
-	 * Init class-variables
-	 */
-	private function initVars() {
-		if (!is_bool($this->ajax_request)) {
-			Error::getInstance()->add('WARNING',' First argument for class::Frontend__construct() is expected to be boolean.');
-			$this->ajax_request = true;
-		}
+		require_once FRONTEND_PATH.'class.Helper.php';
 	}
 
 	/**
 	 * Include class::Error and and initialise it
 	 */
 	private function initErrorHandling() {
-		require_once FRONTEND_PATH.'class.Error.php';
-		Error::init($this->file);
+		Error::init(Request::Uri());
 
 		if ($this->logGetAndPost) {
 			if (!empty($_POST))
@@ -125,7 +105,7 @@ class Frontend {
 	 * Include class::Mysql and connect to database
 	 */
 	private function initMySql() {
-		require_once FRONTEND_PATH.'class.Mysql.php';
+		//require_once FRONTEND_PATH.'class.Mysql.php';
 		require_once FRONTEND_PATH.'../config.php';
 
 		Mysql::connect($host, $username, $password, $database);
@@ -133,34 +113,10 @@ class Frontend {
 	}
 
 	/**
-	 * Define all CONF_CONSTS
-	 */
-	private function initConfigConsts() {
-		require_once FRONTEND_PATH.'class.Config.php';
-
-		Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
-		Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
-		Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
-		Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
-		Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
-		Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
-
-		$this->initDesignConsts();
-	}
-
-	/**
-	 * Define all CONF_CONSTS
-	 */
-	private function initDesignConsts() {
-		Config::register('Design', 'DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', 'Hintergrundbild (Neuladen notwendig, eigene Bilder in img/backgrounds/)', array('img/backgrounds/'));
-		Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, 'Hintergrundbild skalieren (Neuladen notwendig)');
-	}
-
-	/**
 	 * Include alle required files
 	 */
 	private function initRequiredFiles() {
-		require_once FRONTEND_PATH.'class.Training.php';
+		/*require_once FRONTEND_PATH.'class.Training.php';
 		require_once FRONTEND_PATH.'class.TrainingDisplay.php';
 		require_once FRONTEND_PATH.'class.Ajax.php';
 		require_once FRONTEND_PATH.'class.HTML.php';
@@ -184,7 +140,9 @@ class Frontend {
 		require_once FRONTEND_PATH.'class.Editor.php';
 		require_once FRONTEND_PATH.'class.Validator.php';
 
-		require_once FRONTEND_PATH.'system/class.Request.php';
+		require_once FRONTEND_PATH.'calculate/class.Math.php';
+		require_once FRONTEND_PATH.'calculate/class.Trimp.php';
+
 		require_once FRONTEND_PATH.'system/class.DatabaseScheme.php';
 		require_once FRONTEND_PATH.'system/class.DatabaseSchemePool.php';
 
@@ -197,7 +155,7 @@ class Frontend {
 		require_once FRONTEND_PATH.'html/class.FormularFieldset.php';
 		require_once FRONTEND_PATH.'html/class.FormularField.php';
 		require_once FRONTEND_PATH.'html/class.FormularInput.php';
-		require_once FRONTEND_PATH.'html/class.StandardFormular.php';
+		require_once FRONTEND_PATH.'html/class.StandardFormular.php';*/
 
 		$this->initImporterExporter();
 		$this->initAdditionalFiles();
@@ -259,23 +217,23 @@ class Frontend {
 	}
 
 	/**
-	 * Function to display the HTML-Header
-	 */
-	public function displayHeader() {
-		$this->setEncoding();
-
-		if (!$this->ajax_request)
-			include 'tpl/tpl.Frontend.header.php';
-
-		Error::getInstance()->header_sent = true;
-	}
-
-	/**
 	 * Set correct character encoding 
 	 */
 	public function setEncoding() {
 		header('Content-type: text/html; charset=UTF-8');
 		mb_internal_encoding("UTF-8");
+	}
+
+	/**
+	 * Function to display the HTML-Header
+	 */
+	public function displayHeader() {
+		$this->setEncoding();
+
+		if (!Request::isAjax())
+			include 'tpl/tpl.Frontend.header.php';
+
+		Error::getInstance()->header_sent = true;
 	}
 
 	/**
@@ -285,7 +243,7 @@ class Frontend {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
 			include 'tpl/tpl.Frontend.debug.php';
 
-		if (!$this->ajax_request)
+		if (!Request::isAjax())
 			include 'tpl/tpl.Frontend.footer.php';
 
 		Error::getInstance()->footer_sent = true;
@@ -296,18 +254,10 @@ class Frontend {
 	 */
 	public function displayPanels() {
 		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
-		foreach ($panels as $i => $panel) {
+		foreach ($panels as $panel) {
 			$Panel = Plugin::getInstanceFor($panel['key']);
 			$Panel->display();
 		}
-	}
-
-	/**
-	 * Get link to the help window
-	 * @return string
-	 */
-	static public function getHelpOverlayLink() {
-		return Ajax::window('<a class="left" href="inc/tpl/tpl.help.html">'.Icon::get(Icon::$CONF_HELP, '', '', 'Hilfe').'</a>');
 	}
 }
 ?>

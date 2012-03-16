@@ -9,6 +9,7 @@ class Autoloader {
 	 */
 	public function __construct() {
 		spl_autoload_register( array($this, 'autoload') );
+		spl_autoload_register( array($this, 'autoloadCalculate') );
 		spl_autoload_register( array($this, 'autoloadHtml') );
 		spl_autoload_register( array($this, 'autoloadSystem') );
 		spl_autoload_register( array($this, 'autoloadTraining') );
@@ -29,6 +30,14 @@ class Autoloader {
 	 */
 	private function autoload($className) {
 		$this->tryToLoad('class.'.$className.'.php');
+	}
+
+	/**
+	 * HTML-Autloader: check in /html/-folder
+	 * @return boolean 
+	 */
+	private function autoloadCalculate($className) {
+		$this->tryToLoad('calculate/class.'.$className.'.php');
 	}
 
 	/**

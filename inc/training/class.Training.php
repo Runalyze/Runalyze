@@ -1,39 +1,8 @@
 <?php
 /**
- * This file contains the class to handle every training.
- */
-
-Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sport', 'name'));
-Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sport', 'name'));
-Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('type', 'name'));
-Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('type', 'name'));
-Config::register('Training', 'TRAINING_DECIMALS', 'select',
-	array('0' => false, '1' => true, '2' => false), 'Anzahl angezeigter Nachkommastellen',
-	array('0', '1', '2'));
-
-Config::register('Eingabeformular', 'COMPUTE_KCAL', 'bool', true, 'Kalorienverbrauch automatisch berechnen');
-Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
-	array('upload' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
-	array('Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
-Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
-Config::register('Eingabeformular', 'GARMIN_API_KEY', 'string', '', 'GarminCommunicator API-Key');
-
-/**
  * Class: Training
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Config
- * @uses class::JD
- * @uses class::TrainingDisplay
- * @uses class::Clothes
- * @uses class::Sport
- * @uses class::Type
- * @uses class::Weather
- * @uses class::Shoe
- * @uses class::GpsData
  */
 class Training {
 	/**
@@ -363,7 +332,7 @@ class Training {
 	 * Display the formatted date
 	 */
 	public function displayDate() {
-		echo (Helper::Weekday( date('w', $this->get('time')) ).', '.$this->getDateWithWeekLink());
+		echo (Time::Weekday( date('w', $this->get('time')) ).', '.$this->getDateWithWeekLink());
 	}
 
 	/**
@@ -371,7 +340,7 @@ class Training {
 	 * @return string
 	 */
 	public function getDateAsWeeklink() {
-		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Helper::Weekstart($this->data['time']), Helper::Weekend($this->data['time']));
+		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Time::Weekstart($this->data['time']), Time::Weekend($this->data['time']));
 	}
 
 	/**

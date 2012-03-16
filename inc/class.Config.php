@@ -1,16 +1,17 @@
 <?php
-/**
- * This file contains the class::Config for handling all config-data.
- */
+// TODO: 'hidden' for select / bool / ...
 /**
  * Class: Config
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Config {
+	/**
+	 * URL for config-window
+	 * @var string
+	 */
+	public static $CONFIG_URL = 'call/window.config.php';
+
 	/**
 	 * Name for hidden category, not editable
 	 * @var string
@@ -32,14 +33,6 @@ class Config {
 	 * Destructor
 	 */
 	public function __destruct() {}
-
-	/**
-	 * Get link to the configuration overlay
-	 * @return string
-	 */
-	static public function getOverlayLink() {
-		return Ajax::window('<a class="left" href="call/window.config.php">'.Icon::get(Icon::$CONF_EDIT, '', '', 'Einstellungen').'</a>');
-	}
 
 	/**
 	 * Update a value, should primary be used for hidden keys
@@ -113,7 +106,7 @@ class Config {
 	}
 
 	/**
-	 * Transform given value to string for saving in database
+	 * Transform given string from database to value
 	 * @param string $value
 	 * @param string $type
 	 * @return mixed

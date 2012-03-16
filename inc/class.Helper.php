@@ -1,9 +1,5 @@
 <?php
 /**
- * This file contains the class::Helper
- */
-
-/**
  * Maximal heart-frequence of the user
  * @const HF_MAX
  */
@@ -27,9 +23,10 @@ define('START_TIME', Helper::getStartTime());
  */
 define('START_YEAR', date("Y", START_TIME));
 
-require_once FRONTEND_PATH.'class.JD.php';
+require_once FRONTEND_PATH.'calculate/class.JD.php';
+require_once FRONTEND_PATH.'calculate/class.Trimp.php';
 
-
+// TODO: move to definition-/registration-list for consts
 Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r ATL');
 Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r CTL');
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL.
@@ -42,16 +39,8 @@ Helper::defineMaxValues();
 
 /**
  * Class for all helper-functions previously done by functions.php
- * @defines   HF_MAX       int   Maximal heart-frequence [bpm]
- * @defines   HF_REST      int   Heart-frequence in rest [bpm]
- * @defines   START_TIME   int   Timestamp of first training
- * @defines   START_YEAR   int   Year of first training
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.1
- * @uses class::Error
- * @uses class::Mysql
- * @uses class::JD
  */
 class Helper {
 	/**
@@ -59,29 +48,6 @@ class Helper {
 	 */
 	private function __construct() {}
 	private function __destruct() {}
-
-	/**
-	 * Get content from extern url
-	 * @param string $url
-	 * @return string
-	 */
-	public static function getExternUrlContent($url) {
-		if (self::canOpenExternUrl())
-			return file_get_contents($url);
-
-		Error::getInstance()->addError('Der Server erlaubt keine externen Seitenzugriffe. (allow_url_fopen=0)');
-		// TODO
-		// use curl()
-		return '';
-	}
-
-	/**
-	 * Are fopen-wrapper allowed for using file_get_contents on extern sources
-	 * @return bool
-	 */
-	private static function canOpenExternUrl() {
-		return ini_get('allow_url_fopen');
-	}
 
 	/**
 	 * Get a string for displaying any pulse
@@ -397,7 +363,7 @@ class Helper {
 		if (VDOT_FORM == 0)
 			return ($as_int) ? 0 : '0 &#37;';
 
-		$diff = Helper::diffInDays(START_TIME);
+		$diff = Time::diffInDays(START_TIME);
 		if ($diff > 182)
 			$DaysForWeekKm = 182; // 26 Wochen
 		elseif ($diff < 70)
@@ -489,20 +455,6 @@ class Helper {
 	}
 
 	/**
-	 * Get a value with leading sign
-	 * @param mixed $value
-	 * @return string
-	 */
-	public static function WithSign($value) {
-		if ($value == 0)
-			return 0;
-		if ($value > 0)
-			return '+'.$value;
-		if ($value < 0)
-			return $value;
-	}
-
-	/**
 	 * Cut a string if it is longer than $cut (default CUT_LENGTH)
 	 * @uses CUT_LENGTH
 	 * @param string $text
@@ -516,88 +468,6 @@ class Helper {
 			return Ajax::tooltip(mb_substr($text, 0, $cut-3).'...', $text);
 
 		return $text;
-	}
-
-	/**
-	 * Absolute difference in days between two timestamps
-	 * @param int $time_1
-	 * @param int $time_2 optional
-	 * @return int
-	 */
-	public static function diffInDays($time_1, $time_2 = 0) {
-		if ($time_2 == 0)
-			$time_2 = time();
-
-		return floor(abs(($time_1 - $time_2)/(3600*24)));
-	}
-
-	/**
-	 * Is given timestamp from today?
-	 * @param int $timestamp
-	 * @return boolean
-	 */
-	public static function isToday($timestamp) {
-		return date('d.m.Y') == date('d.m.Y', $timestamp);
-	}
-
-	/**
-	 * Get the timestamp of the start of the week
-	 * @param int $time
-	 */
-	public static function Weekstart($time) {
-		$w = date("w", $time);
-		if ($w == 0)
-			$w = 7;
-		$w -= 1;
-		return mktime(0, 0, 0, date("m",$time), date("d",$time)-$w, date("Y",$time));
-	}
-
-	/**
-	 * Get the timestamp of the end of the week
-	 * @param int $time
-	 */
-	public static function Weekend($time) {
-		$start = self::Weekstart($time);
-		return mktime(23, 59, 50, date("m",$start), date("d",$start)+6, date("Y",$start));
-	}
-
-	/**
-	 * Get the name of a day
-	 * @param string $w     date('w');
-	 * @param bool $short   short version, default: false
-	 */
-	public static function Weekday($w, $short = false) {
-		switch($w%7) {
-			case 0: return ($short) ? 'So' : 'Sonntag';
-			case 1: return ($short) ? 'Mo' : 'Montag';
-			case 2: return ($short) ? 'Di' : 'Dienstag';
-			case 3: return ($short) ? 'Mi' : 'Mittwoch';
-			case 4: return ($short) ? 'Do' : 'Donnerstag';
-			case 5: return ($short) ? 'Fr' : 'Freitag';
-			case 6: return ($short) ? 'Sa' : 'Samstag';
-		}
-	}
-
-	/**
-	 * Get the name of the month
-	 * @param string $m     date('m');
-	 * @param bool $short   short version, default: false
-	 */
-	public static function Month($m, $short = false) {
-		switch($m) {
-			case 1: return ($short) ? 'Jan' : 'Januar';
-			case 2: return ($short) ? 'Feb' : 'Februar';
-			case 3: return ($short) ? 'Mrz' : 'M&auml;rz';
-			case 4: return ($short) ? 'Apr' : 'April';
-			case 5: return ($short) ? 'Mai' : 'Mai';
-			case 6: return ($short) ? 'Jun' : 'Juni';
-			case 7: return ($short) ? 'Jul' : 'Juli';
-			case 8: return ($short) ? 'Aug' : 'August';
-			case 9: return ($short) ? 'Sep' : 'September';
-			case 10: return ($short) ? 'Okt' : 'Oktober';
-			case 11: return ($short) ? 'Nov' : 'November';
-			case 12: return ($short) ? 'Dez' : 'Dezember';
-		}
 	}
 
 	/**
@@ -615,32 +485,6 @@ class Helper {
 	 */
 	public static function isAssoc($array) {
 		return array_keys($array) !== range(0, count($array) - 1);
-	}
-
-	/**
-	 * Replace umlauts from AJAX
-	 * @param string $text
-	 * @return string
-	 */
-	public static function Umlaute($text) {
-		// TODO: Remove this function
-		return $text;
-	}
-
-	/**
-	 * Calculate the variance of a given (numeric) array
-	 * @param array $array
-	 * @return double
-	 */
-	public static function getVariance($array) {
-		$avg = array_sum($array) / count($array);
-		$d   = 0;
-
-		foreach ($array as $dat)
-			if (is_numeric($dat))
-				$d += pow($dat - $avg, 2);
-
-		return ($d / count($array));
 	}
 
 	/**

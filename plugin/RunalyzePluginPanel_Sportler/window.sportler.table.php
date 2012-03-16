@@ -1,12 +1,10 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
+new Frontend();
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
-
-$Frontend->displayHeader();
 
 $colspan     = 2;
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
@@ -57,8 +55,3 @@ $Data        = array_reverse(UserData::getFullArray());
 </table>
 
 <?php Ajax::createTablesorterWithPagerFor('#sportlerTable'); ?>
-
-<?php
-$Frontend->displayFooter();
-$Frontend->close();
-?>

@@ -1,14 +1,8 @@
 <?php
 /**
- * This file contains the class::Clothes for handling clothes
- */
-/**
  * Class: Clothes
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Clothes {
 	/**

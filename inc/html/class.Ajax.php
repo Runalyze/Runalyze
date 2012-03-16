@@ -1,16 +1,8 @@
 <?php
 /**
- * This file contains the class to handle all AJAX-Links
- */
-
-Config::register('Design', 'JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
-
-/**
  * Class: Ajax
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
  */
 class Ajax {
 	/**

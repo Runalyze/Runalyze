@@ -24,6 +24,16 @@
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
 </head>
 
-<body id="home" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="home" class="toolbar-<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="flotLoader"></div>
+
+<div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
+	<a class="tab singleTab" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+
+	<span class="left b">
+		<?php echo Ajax::window('<a class="tab" id="confEdit" href="'.Config::$CONFIG_URL.'">Konfiguration</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" id="confTool" href="'.PluginTool::$DISPLAY_URL.'">Tools</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" id="confHelp" href="'.Frontend::$HELP_URL.'">Hilfe</a>'); ?>
+	</span>
+</div>

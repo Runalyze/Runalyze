@@ -41,8 +41,10 @@ $Plot->setMarginForGrid(5);
 
 //$Plot->hideXLabels();
 $Plot->setXLabels($Labels);
-$Plot->setXAxisTimeFormat('%d.%m.%y');
+$Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
+$Plot->Options['xaxis']['labelWidth'] = 50;
+$Plot->Options['xaxis']['tickLength'] = 3;
 
 $Plot->addYAxis(1, 'right', false);
 $Plot->addYUnit(1, 'kg');

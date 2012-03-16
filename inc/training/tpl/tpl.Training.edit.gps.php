@@ -21,7 +21,7 @@
 				new AjaxUpload('#file-upload-tcx', {
 					action: '<?php echo $_SERVER['SCRIPT_NAME'].'?id='.$id.'&json=true'; ?>',
 					onComplete : function(file, response){
-						jLoadLink('ajax', '<?php echo $_SERVER['SCRIPT_NAME'].'?id='.$id.'&tmp=true'; ?>');
+						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME'].'?id='.$id.'&tmp=true'; ?>');
 					}		
 				});
 			}

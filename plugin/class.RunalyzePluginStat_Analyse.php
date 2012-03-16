@@ -336,7 +336,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private function printTableHeader() {
 		for ($i = $this->timer_start; $i <= $this->timer_end; $i++)
 			echo ($this->year != -1)
-				? '<td width="7%">'.Helper::Month($i, true).'</td>'.NL
+				? '<td width="7%">'.Time::Month($i, true).'</td>'.NL
 				: '<td>'.$i.'</td>'.NL;
 
 		echo ('<td>Gesamt</td>'.NL);

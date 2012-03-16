@@ -1,19 +1,8 @@
 <?php
 /**
- * This file contains the class::GpsData for handling GPS-data of a training
- */
-
-Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
-	array('google' => true, 'geonames' => false), 'Server f&uuml;r H&ouml;henkorrektur',
-	array('maps.googleapis.com', 'ws.geonames.org'));
-
-/**
  * Class: GpsData
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class GpsData {
 	/**
@@ -254,7 +243,7 @@ class GpsData {
 	 * Are information for heartrate available?
 	 */
 	public function hasHeartrateData() {
-		return !empty($this->arrayForHeartrate) && (max($this->arrayForHeartrate) > 60);
+		return !empty($this->arrayForHeartrate) && (max($this->arrayForHeartrate) > 0.5*HF_MAX);
 	}
 
 	/**
@@ -355,6 +344,17 @@ class GpsData {
 	 */
 	public function getAverageElevationOfStep() {
 		return round($this->getAverageOfStep($this->arrayForElevation));
+	}
+
+	/**
+	 * Get average pace of training in seconds
+	 * @return int 
+	 */
+	public function getAveragePace() {
+		if ($this->hasPaceData())
+			return round(array_sum($this->arrayForPace)/count($this->arrayForPace));
+
+		return 0;
 	}
 
 	/**
@@ -716,7 +716,7 @@ class GpsData {
 				$html = false;
 
 				while ($html === false) {
-					$html = Helper::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
 					if (substr($html,0,1) == '<')
 						$html = false;
 					else {
@@ -742,7 +742,7 @@ class GpsData {
 	 */
 	private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
 		$url = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
-		$Xml = Helper::getExternUrlContent($url);
+		$Xml = Filesystem::getExternUrlContent($url);
 
 		if (strlen($Xml) == 0) {
 			Error::getInstance()->addError('Es konnten keine H&ouml;hendaten von Google empfangen werden.');

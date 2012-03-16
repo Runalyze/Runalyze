@@ -220,7 +220,11 @@ class ImporterTCX extends Importer {
 		if (!empty($this->XML->Activities->Activity))
 			return true;
 
-		$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
+		if (!empty($this->XML->Courses))
+			$this->addError('Dies ist eine Garmin Course TCX-Datei und enth&auml;lt keine Trainingsdaten.');
+		else
+			$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
+
 		return false;
 	}
 
@@ -251,7 +255,7 @@ class ImporterTCX extends Importer {
 			$Vars[] = 'pulse_max';
 		}
 			
-		if ($Training->Type()->hasSplits() && strlen($Training->get('splits')) == 0)
+		if ($Training->Sport()->hasTypes() && $Training->Type()->hasSplits() && strlen($Training->get('splits')) == 0)
 			$Vars[] = 'splits';
 		
 		foreach ($Vars as $var)

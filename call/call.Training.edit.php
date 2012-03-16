@@ -5,7 +5,8 @@
  */
 require '../inc/class.Frontend.php';
 
-$Frontend = new Frontend(true, __FILE__);
+new Frontend();
+
 $Mysql    = Mysql::getInstance();
 $id       = isset($_GET['id']) ? $_GET['id'] : 0;
 
@@ -51,13 +52,8 @@ if (isset($_POST['type']) && $_POST['type'] == "training") {
 		echo HTML::error(implode('<br />', $Errors));
 }
 
-$Frontend->displayHeader();
-
 $Training = new Training($id);
 $Training->overwritePostArray();
 
-include '../inc/tpl/tpl.Training.edit.php';
-
-$Frontend->displayFooter();
-$Frontend->close();
+include '../inc/training/tpl/tpl.Training.edit.php';
 ?>

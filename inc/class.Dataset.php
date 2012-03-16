@@ -1,14 +1,8 @@
 <?php
 /**
- * This file contains the class to handle and display the datasat for any training
- */
-/**
  * Class: Dataset
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class:Error
  */
 
 class Dataset {
@@ -124,12 +118,12 @@ class Dataset {
 	static public function getDateString($timestamp) {
 		$date    = date('d.m.', $timestamp);
 		$addLink = '';
-		$weekDay = Helper::Weekday(date('w', $timestamp), true);
+		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
 		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS)
 			$addLink = Training::getCreateWindowLinkForDate($timestamp);
 
-		if (CONF_DB_HIGHLIGHT_TODAY && Helper::isToday($timestamp))
+		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';
 
 		return $date.' '.$addLink.' '.$weekDay;

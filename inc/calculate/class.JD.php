@@ -3,7 +3,6 @@
  * This file contains the class::JD
  */
 
-Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, 'Individuelle VDOT-Korrektur verwenden');
 
 /**
  * Number of days to be used for calculating VDOT-form

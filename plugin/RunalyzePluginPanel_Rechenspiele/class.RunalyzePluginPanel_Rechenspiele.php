@@ -95,7 +95,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		if (HTML::isInternetExplorer())
 			echo '&nbsp;';
 
-		if (Helper::diffInDays(START_TIME) < 70)
+		if (Time::diffInDays(START_TIME) < 70)
 			echo HTML::info('F&uuml;r sinnvolle Werte sind zu wenig Daten da.');
 	}
 }
