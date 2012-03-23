@@ -28,6 +28,12 @@ class FormularValueParser {
 	static public $PARSER_DECIMAL = 'decimal';
 
 	/**
+	 * Parser: check for boolean
+	 * @var string 
+	 */
+	static public $PARSER_BOOL = 'bool';
+
+	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param enum $parser
@@ -47,6 +53,8 @@ class FormularValueParser {
 				return self::validateInt($key, $parserOptions);
 			case self::$PARSER_DECIMAL:
 				return self::validateDecimal($key, $parserOptions);
+			case self::$PARSER_BOOL:
+				return self::validateBool($key);
 			default:
 				return true;
 		}
@@ -76,6 +84,17 @@ class FormularValueParser {
 	 */
 	static protected function validateString($key) {
 		// Nothing to do because of correct encoding
+
+		return true;
+	}
+
+	/**
+	 * Validator: boolean
+	 * @param string $key
+	 * @return boolean 
+	 */
+	static protected function validateBool($key) {
+		// Nothing to do, formular has to handle true/false itself
 
 		return true;
 	}

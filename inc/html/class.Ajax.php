@@ -43,6 +43,7 @@ class Ajax {
 		$Files[] = 'http://maps.google.com/maps/api/js?sensor=false';
 		$Files[] = 'lib/jquery.gmap3.min.js';
 
+		$Files[] = 'lib/runalyze.lib.log.js';
 		$Files[] = 'lib/runalyze.lib.plot.js';
 		$Files[] = 'lib/runalyze.lib.gmap.js';
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
