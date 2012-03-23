@@ -22,6 +22,12 @@ class FormularInput extends FormularField {
 	static public $UNIT_KG = 'unitKg';
 
 	/**
+	 * Unit: km
+	 * @var string
+	 */
+	static public $UNIT_KM = 'unitKm';
+
+	/**
 	 * Size: full
 	 * @var string 
 	 */

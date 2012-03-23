@@ -271,10 +271,14 @@ class DatabaseScheme {
 		$label = $this->fieldLabel($fieldKey);
 		$unit  = $this->fieldUnit($fieldKey);
 
-		switch ($this->fieldType($fieldKey)) {
-			default:
-				$Field = new FormularInput( $fieldKey, $label );
-				break;
+		if ($this->fieldParser($fieldKey) == FormularValueParser::$PARSER_BOOL)
+			$Field = new FormularCheckbox($fieldKey, $label);
+		else {
+			switch ($this->fieldType($fieldKey)) {
+				default:
+					$Field = new FormularInput( $fieldKey, $label );
+					break;
+			}
 		}
 
 		$Field->setParser( $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey) );

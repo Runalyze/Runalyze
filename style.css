@@ -200,6 +200,7 @@ input.withUnit {
 fieldset input.unitPercent { background-image: url('img/units/percent.png'); }
 fieldset input.unitBpm { background-image: url('img/units/bpm.png'); }
 fieldset input.unitKg { background-image: url('img/units/kg.png'); }
+fieldset input.unitKm { background-image: url('img/units/km.png'); }
 
 fieldset .validationFailed {
 	background-color: #FDEBD7;
@@ -268,6 +269,15 @@ fieldset .validationFailed {
 	bottom: -9px;
 	width: 100%; }
 
+.atTop { opacity: .5; }
+.open.atTop, .atTop:hover { opacity: 1; }
+
+.atTop .toolbar-nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%; }
+
 .toolbar-opener {
 	position: relative;
 	display: block;
@@ -277,8 +287,9 @@ fieldset .validationFailed {
 	margin: -1px auto 0;
 	background: url(img/updown.png) no-repeat scroll 0 -9px transparent; }
 
-.toolbar.open .toolbar-opener {
-	background-position: 0 0; }
+.toolbar.open .toolbar-opener { background-position: 0 0; }
+.atTop .toolbar-opener { margin-top: -9px; background-position: 0 -18px; }
+.toolbar.open.atTop .toolbar-opener { background-position: 0 -27px; }
 
 .toolbar input {
 	margin: 0 2px; }
@@ -579,10 +590,10 @@ tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
 .nopadding tr, .nopadding td { padding: 0; }
 .nopadding input { margin: 0; }
 
-tr.TODO td, tr.NOTICE td { color: #5C9AC9; background-color: #EFF5FA; padding: 4px 2px 5px 2px; }
+tr.TODO td, tr.NOTICE td, tr.DEBUG td { color: #5C9AC9; background-color: #EFF5FA; padding: 4px 2px 5px 2px; }
 tr.WARNING td { color: #D49822; background-color: #FFFFDD; padding: 4px 2px 5px 2px; }
 tr.ERROR td { color: #CC5555; background-color: #FAEEEE; padding: 4px 2px 5px 2px; }
-tr.TODO td.errortype, tr.NOTICE td.errortype { background: url(img/info.gif) no-repeat 3px center #EFF5FA; }
+tr.TODO td.errortype, tr.NOTICE td.errortype, tr.DEBUG td.errortype { background: url(img/info.gif) no-repeat 3px center #EFF5FA; }
 tr.WARNING td.errortype { background: url(img/warning.png) no-repeat 3px center #FFFFDD; }
 tr.ERROR td.errortype { background: url(img/error.gif) no-repeat 2px center #FAEEEE; }
 td.errortype { padding: 4px 2px 5px 22px !important; }
@@ -629,8 +640,19 @@ code {
 	border-top: none !important;
 	border-left: none !important;
 	border-right: none !important;
-	border-bottom: 1px solid #D2D2D3 !important;
-}
+	border-bottom: 1px solid #D2D2D3 !important; }
+
+#errorToolbar {
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	width: 800px;
+	margin-left: -400px;
+	background-color: #efefef;
+	max-height: 400px; }
+
+#errorTable tr {
+	border-bottom: 1px solid #CCC; }
 
 
 /*** FLOT ***/

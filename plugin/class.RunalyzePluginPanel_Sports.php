@@ -62,7 +62,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		echo('<div id="sports">');
 	
 		foreach ($this->getTimeset() as $i => $timeset) {
-			echo('<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : 'style="display:none;"').'>');
+			echo('<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>');
 	
 			$data = $Mysql->fetchAsArray('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distance`) as `distanz_sum`, SUM(`s`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `time` >= '.$timeset['start'].' GROUP BY `sportid` ORDER BY `distanz_sum` DESC, `dauer_sum` DESC');
 			foreach ($data as $dat) {

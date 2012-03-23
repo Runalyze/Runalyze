@@ -241,7 +241,7 @@ class Frontend {
 	 */
 	public function displayFooter() {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
-			include 'tpl/tpl.Frontend.debug.php';
+			Error::getInstance()->display(); //include 'tpl/tpl.Frontend.debug.php';
 
 		if (!Request::isAjax())
 			include 'tpl/tpl.Frontend.footer.php';

@@ -142,7 +142,8 @@ class Error {
 			return;
 
 		if (!$this->log) {
-			echo $this->getErrorTable();
+			echo $this->sendErrorsToJSLog();
+			//echo $this->getErrorTable();
 		} else {
 			$handle = fopen(FRONTEND_PATH.'../'.$this->log_file, 'w+');
 			fwrite($handle, $this->getErrorTable());
@@ -158,6 +159,13 @@ class Error {
 	 */
 	public function hasErrors() {
 		return !empty($this->errors);
+	}
+
+	/**
+	 * Send all errors to JS-Log 
+	 */
+	private function sendErrorsToJSLog() {
+		echo Ajax::wrapJSforDocumentReady('RunalyzeLog.addArray('.json_encode($this->errors).')');
 	}
 
 	/**
@@ -247,7 +255,7 @@ class Error {
 	 * @param int $line
 	 */
 	public function addDebug($message, $file = '', $line = -1) {
-		$this->add('debug', $message, $file, $line);
+		$this->add('DEBUG', $message, $file, $line);
 	}
 
 	/**
@@ -262,13 +270,18 @@ class Error {
 		foreach ($backtrace as $i => $part) {
 			if (!isset($part['args']))
 				$args = '';
-			if (is_array($part['args']))
+			elseif (is_array($part['args']))
 				$args = self::r_implode(', ', $part['args']);
 
 			$class = isset($part['class']) ? $part['class'].'::' : '';
+			$func  = isset($part['function']) ? $part['function'] : '';
 			if ($i != 0) {
-				$trace .= $part['file'].'<small>::'.$part['line'].'</small><br />';
-				$trace .= '<strong>'.$class.$part['function'].'</strong>';
+				if (isset($part['file'])) {
+					$trace .= $part['file'];
+					if (isset($part['line']))
+						$trace .= '<small>::'.$part['line'].'</small><br />';
+				}
+				$trace .= '<strong>'.$class.$func.'</strong>';
 				$trace .= '<small>('.$args.')</small><br /><br />';
 			}
 		}
