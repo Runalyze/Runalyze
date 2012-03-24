@@ -286,9 +286,7 @@ class Plot {
 	private function getJSForAnnotations() {
 		$code = '';
 		foreach ($this->Annotations as $Array)
-			$code .= '
-				o = RunalyzePlot.getPlot("'.$this->cssID.'").pointOffset({x:'.$Array['x'].', y:'.$Array['y'].'});
-				$("#'.$this->cssID.'").append(\'<div class="annotation" style="left:\'+(o.left)+\'px;top:\'+o.top+\'px;">'.$Array['text'].'</div>\');';
+			$code .= 'RunalyzePlot.addAnnotationTo("'.$this->cssID.'", '.$Array['x'].', '.$Array['y'].', "'.$Array['text'].'");';
 
 		return $code;
 	}
@@ -298,12 +296,7 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForZooming() {
-		return '
-			$(\'<div class="arrow" style="right:20px;top:20px">zoom out</div>\').appendTo("#'.$this->cssID.'").click(function (e) {
-				e.preventDefault();
-				RunalyzePlot.getPlot("'.$this->cssID.'").zoomOut();
-				/*'.$this->plot.'.zoomOut();*/
-			});'.NL;
+		return 'RunalyzePlot.enableZoomingFor("'.$this->cssID.'");';
 	}
 
 	/**
