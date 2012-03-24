@@ -127,6 +127,9 @@ class StandardFormular extends Formular {
 
 			$this->initFields($Fieldset, $FieldsetArray['fields']);
 
+			if (isset($FieldsetArray['layout']))
+				$Fieldset->setLayoutForFields($FieldsetArray['layout']);
+
 			$this->addFieldset($Fieldset);
 		}
 	}

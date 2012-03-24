@@ -201,7 +201,10 @@ class DatabaseScheme {
 		$values  = array();
 
 		foreach (array_keys($this->fields) as $key)
-			if ($key != 'id' && isset($_POST[$key])) {
+			if ($this->fieldParser($key) == FormularValueParser::$PARSER_BOOL) {
+				$columns[] = $key;
+				$values[]  = isset($_POST[$key]) ? 1 : 0;
+			} elseif ($key != 'id' && isset($_POST[$key])) {
 				$columns[] = $key;
 				$values[]  = $_POST[$key];
 			}
@@ -270,13 +273,14 @@ class DatabaseScheme {
 	public function FieldFor($fieldKey) {
 		$label = $this->fieldLabel($fieldKey);
 		$unit  = $this->fieldUnit($fieldKey);
+		$size  = $this->fieldSize($fieldKey);
 
 		if ($this->fieldParser($fieldKey) == FormularValueParser::$PARSER_BOOL)
 			$Field = new FormularCheckbox($fieldKey, $label);
 		else {
 			switch ($this->fieldType($fieldKey)) {
 				default:
-					$Field = new FormularInput( $fieldKey, $label );
+					$Field = new FormularInput($fieldKey, $label);
 					break;
 			}
 		}
@@ -284,10 +288,13 @@ class DatabaseScheme {
 		$Field->setParser( $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey) );
 
 		if (!empty($unit))
-			$Field->setUnit( $unit );
+			$Field->setUnit($unit);
+
+		if (!empty($size))
+			$Field->setSize($size);
 
 		if (in_array($fieldKey, $this->validationFailedKeys))
-			$Field->addCSSclass( FormularField::$CSS_VALIDATION_FAILED );
+			$Field->addCSSclass(FormularField::$CSS_VALIDATION_FAILED);
 
 		return $Field;
 	}
@@ -381,6 +388,18 @@ class DatabaseScheme {
 	public function fieldUnit($fieldKey) {
 		if (isset($this->fields[$fieldKey]['formular']['unit']))
 			return $this->fields[$fieldKey]['formular']['unit'];
+
+		return '';
+	}
+
+	/**
+	 * Get size for a given key
+	 * @param string $fieldKey
+	 * @return mixed
+	 */
+	public function fieldSize($fieldKey) {
+		if (isset($this->fields[$fieldKey]['formular']['size']))
+			return $this->fields[$fieldKey]['formular']['size'];
 
 		return '';
 	}

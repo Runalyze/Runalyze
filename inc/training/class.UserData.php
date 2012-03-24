@@ -6,7 +6,6 @@
  * Class: UserData
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class UserData extends DataObject {	
 	/**

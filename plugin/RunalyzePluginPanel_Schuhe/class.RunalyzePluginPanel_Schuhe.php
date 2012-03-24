@@ -7,13 +7,14 @@ $PLUGINKEY = 'RunalyzePluginPanel_Schuhe';
  * Class: RunalyzePluginPanel_Schuhe
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::Mysql
- * @uses inc/draw/plugin.schuhe.php
  */
 class RunalyzePluginPanel_Schuhe extends PluginPanel {
+	/**
+	 * Internal array with all shoes from database and statistic values
+	 * @var array 
+	 */
+	private $schuhe = null;
+
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -39,7 +40,11 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php">'.Icon::get(Icon::$ADD, '', '', 'Laufschuh hinzuf&uuml;gen').'</a>');
+		$Links = array();
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php">'.Icon::get(Icon::$ADD, '', '', 'Laufschuh hinzuf&uuml;gen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php">'.Icon::get(Icon::$TABLE, '', '', 'Schuhe in Tabelle anzeigen').'</a>');
+
+		return implode(' ', $Links);
 	}
 
 	/**
@@ -50,17 +55,19 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo('<div id="schuhe">');
 
 		$inuse = true;
-		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `km`, `inuse` FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
-		foreach ($schuhe as $i => $schuh) {
-			if ($inuse && $schuh['inuse'] == 0) {
-				echo('<div id="hiddenschuhe" style="display:none;">'.NL);
+		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
+		foreach ($schuhe as $schuh) {
+			$Shoe = new Shoe($schuh);
+
+			if ($inuse && $Shoe->isInUse() == 0) {
+				echo '<div id="hiddenschuhe" style="display:none;">'.NL;
 				$inuse = false;
 			}
 
 			echo('
-			<p style="background-image:url(plugin/'.$this->key.'/schuhbalken.php?km='.round($schuh['km']).');">
-				<span class="right">'.Helper::Km($schuh['km']).'</span>
-				<strong>'.DataBrowser::getSearchLink($schuh['name'], 'opt[shoeid]=is&val[shoeid][0]='.$schuh['id']).'</strong>
+			<p style="background-image:url(plugin/'.$this->key.'/schuhbalken.php?km='.round($Shoe->getKm()).');">
+				<span class="right">'.$Shoe->getKmString().'</span>
+				<strong>'.Shoe::getSearchLink($schuh['id']).'</strong>
 			</p>'.NL);	
 		}
 
@@ -70,6 +77,86 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 
 		echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
 		echo HTML::clearBreak();
+	}
+
+	/**
+	 * Display table
+	 */
+	public function displayTable() {
+		if (is_null($this->schuhe))
+			$this->initTableData();
+
+		echo '
+		<style type="text/css">
+		tr.shoe { height:2px; }
+		tr.shoe td { padding: 0; }
+		</style>
+		<table id="listOfAllShoes" class="fullWidth">
+			<thead>
+				<tr>
+					<th class="{sorter: \'x\'} small">x-mal</th>
+					<th class="{sorter: false}"></th>
+					<th>Name</th>
+					<th class="{sorter: \'germandate\'} small">seit</th>
+					<th class="{sorter: \'distance\'}">&Oslash; km</th>
+					<th>&Oslash; Pace</th>
+					<th class="{sorter: \'distance\'} small"><small>max.</small> km</th>
+					<th class="small"><small>max.</small> Pace</th>
+					<th class="{sorter: \'resulttime\'}">Dauer</th>
+					<th class="{sorter: \'distance\'}">Distanz</th>
+				</tr>
+			</thead>
+			<tbody>';
+
+		if (!empty($this->schuhe)) {
+			foreach ($this->schuhe as $i => $schuh) {
+				$Shoe = new Shoe($schuh);
+
+				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `distance` DESC');
+				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `pace` ASC');
+				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`="'.$schuh['id'].'"');
+				$in_use = $Shoe->isInUse() ? '' : ' unimportant';
+
+				echo('
+				<tr class="'.HTML::trClass($i).$in_use.' r">
+					<td class="small">'.$trainings.'x</td>
+					<td>'.$this->editLinkFor($schuh['id']).'</td>
+					<td class="b l">'.Shoe::getSearchLink($schuh['id']).'</td>
+					<td class="small">'.$Shoe->getSince().'</td>
+					<td >'.(($trainings != 0) ? Helper::Km($Shoe->getKmInDatabase()/$trainings) : '-').'</td>
+					<td >'.(($trainings != 0) ? Helper::Speed($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
+					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distance'])).'</td>
+					<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
+					<td>'.$Shoe->getTimeString().'</td>
+					<td>'.$Shoe->getKmString().' '.$Shoe->getKmIcon().'</td>
+				</tr>');
+			}
+		} else {
+			echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
+			Error::getInstance()->addWarning('Bisher keine Schuhe eingetragen', __FILE__, __LINE__);
+		}
+
+		echo '</tbody>';
+		echo '</table>';
+
+		Ajax::createTablesorterFor("#listOfAllShoes");
+	}
+
+	/**
+	 * Initialize internal data
+	 */
+	private function initTableData() {
+		// TODO: Join-Query
+		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
+	}
+
+	/**
+	 * Get link for editing a shoe
+	 * @param int $id
+	 * @return string
+	 */
+	private function editLinkFor($id) {
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, 'Bearbeiten').'</a>');
 	}
 }
 ?>

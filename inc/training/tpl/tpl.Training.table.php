@@ -84,7 +84,7 @@
 <?php if ($this->get('shoeid') != 0): ?>
 	<tr>
 		<td class="inlineHead">Schuh:</td>
-		<td><?php echo Shoe::getSeachLink($this->get('shoeid')); ?></td>
+		<td><?php echo Shoe::getSearchLink($this->get('shoeid')); ?></td>
 	</tr>
 <?php endif; ?>
 

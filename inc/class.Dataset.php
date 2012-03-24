@@ -403,7 +403,7 @@ class Dataset {
 		if (!$this->Training->Sport()->isRunning())
 			return '';
 
-		return Shoe::getName($this->Training->get('shoeid'));
+		return Shoe::getNameOf($this->Training->get('shoeid'));
 	}
 
 	/**

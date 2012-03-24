@@ -12,6 +12,8 @@
 		</select>
 	</span>
 
+	<h1><?php echo Icon::get(Icon::$SEARCH, 'Suche'); ?> Trainings suchen</h1>
+
 	<strong>Zeitraum:</strong>
 		<label>
 			<span class="spacer">von</span>

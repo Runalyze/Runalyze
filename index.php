@@ -29,9 +29,12 @@ $Frontend = new Frontend();
 		<ul id="statisticTabs">
 			<?php
 			$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
-			foreach ($Stats as $i => $key)
-				echo '<li'.($i == 0 ? ' class="active"' : '').'>'.Plugin::getInstanceFor($key)->getLink().'</li>'.NL;
-		
+			foreach ($Stats as $i => $key) {
+				$Plugin = Plugin::getInstanceFor($key);
+				if ($Plugin !== false)
+					echo '<li'.($i == 0 ? ' class="active"' : '').'>'.$Plugin->getLink().'</li>'.NL;
+			}
+
 			if (PluginStat::hasVariousStats())
 				echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
 			?>
