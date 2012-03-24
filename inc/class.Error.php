@@ -143,7 +143,6 @@ class Error {
 
 		if (!$this->log) {
 			echo $this->sendErrorsToJSLog();
-			//echo $this->getErrorTable();
 		} else {
 			$handle = fopen(FRONTEND_PATH.'../'.$this->log_file, 'w+');
 			fwrite($handle, $this->getErrorTable());

@@ -114,10 +114,15 @@ thead th {
 input, select, textarea, code {
 	font-size: 0.9em;
 	margin: 4px 2px;
-	padding: 2px; 
 	background-color: rgba(255,255,255,0.7);
 	border: 1px solid #B8B8B8;
 	border-radius: 3px 3px 3px 3px; }
+
+input, textarea, code {
+	padding: 2px; }
+
+select {
+	padding: 1px; }
 
 table input, table select, table textarea {
 	margin: 0 2px; }
@@ -226,6 +231,9 @@ fieldset .validationFailed {
 
 .toolbar.toHeader {
 	margin-top: -7px; }
+
+.toolbar.toHeader .toolbar-nav { border-top-color: #ddd; }
+.toolbar.toHeader.open .toolbar-nav { border-top-color: #ccc; }
 
 .toolbar-line {
 	min-height: 16px;
@@ -356,7 +364,8 @@ h1 a:link, h1 a:visited {
 	top: 1px;
 	height: 25px;
 	line-height: 25px;
-	border-bottom: none; }
+	border-bottom: none;
+	border-radius: 3px 3px 0 0; }
 
 
 /*** PANEL-CONFIG NAVIGATION ***/

@@ -60,19 +60,27 @@ Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Beli
 	
 			foreach ($plugins as $i => $plug) {
 				$Plugin = Plugin::getInstanceFor($plug['key']);
-			
-				echo('
-					<tr class="a'.($i%2+1).($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
-						<td>'.$Plugin->getConfigLink().'</td>
-						<td class="b">'.$Plugin->get('name').'</td>
-						<td class="small">'.$Plugin->get('description').'</td>
-						<td><select name="plugin_modus_'.$Plugin->get('id').'">
-								<option value="'.Plugin::$ACTIVE.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE).'>aktiviert</option>
-								<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>versteckt*</option>
-								<option value="'.Plugin::$ACTIVE_NOT.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_NOT).'>nicht aktiviert</option>
-							</select></td>
-						<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'" /></td>
-					</tr>');
+
+				if ($Plugin === false) {
+					echo '
+						<tr class="a'.($i%2+1).' unimportant">
+							<td></td>
+							<td class="b">'.$plug['key'].'</td>
+							<td colspan="3">Das Plugin konnte nicht gefunden werden.</td>
+						</tr>';
+				} else
+					echo '
+						<tr class="a'.($i%2+1).($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
+							<td>'.$Plugin->getConfigLink().'</td>
+							<td class="b">'.$Plugin->get('name').'</td>
+							<td class="small">'.$Plugin->get('description').'</td>
+							<td><select name="plugin_modus_'.$Plugin->get('id').'">
+									<option value="'.Plugin::$ACTIVE.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE).'>aktiviert</option>
+									<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>versteckt*</option>
+									<option value="'.Plugin::$ACTIVE_NOT.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_NOT).'>nicht aktiviert</option>
+								</select></td>
+							<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'" /></td>
+						</tr>';
 			}
 		}
 		

@@ -105,7 +105,6 @@ class Frontend {
 	 * Include class::Mysql and connect to database
 	 */
 	private function initMySql() {
-		//require_once FRONTEND_PATH.'class.Mysql.php';
 		require_once FRONTEND_PATH.'../config.php';
 
 		Mysql::connect($host, $username, $password, $database);
@@ -116,47 +115,6 @@ class Frontend {
 	 * Include alle required files
 	 */
 	private function initRequiredFiles() {
-		/*require_once FRONTEND_PATH.'class.Training.php';
-		require_once FRONTEND_PATH.'class.TrainingDisplay.php';
-		require_once FRONTEND_PATH.'class.Ajax.php';
-		require_once FRONTEND_PATH.'class.HTML.php';
-		require_once FRONTEND_PATH.'class.Helper.php';
-		require_once FRONTEND_PATH.'class.Icon.php';
-		require_once FRONTEND_PATH.'class.DataBrowser.php';
-		require_once FRONTEND_PATH.'class.Dataset.php';
-		require_once FRONTEND_PATH.'class.Plugin.php';
-		require_once FRONTEND_PATH.'class.PluginPanel.php';
-		require_once FRONTEND_PATH.'class.PluginStat.php';
-		require_once FRONTEND_PATH.'class.Plot.php';
-		require_once FRONTEND_PATH.'class.PluginTool.php';
-		require_once FRONTEND_PATH.'class.Draw.php';
-		require_once FRONTEND_PATH.'class.Clothes.php';
-		require_once FRONTEND_PATH.'class.Shoe.php';
-		require_once FRONTEND_PATH.'class.Sport.php';
-		require_once FRONTEND_PATH.'class.Type.php';
-		require_once FRONTEND_PATH.'class.Weather.php';
-		require_once FRONTEND_PATH.'class.GpsData.php';
-		require_once FRONTEND_PATH.'class.Gmap.php';
-		require_once FRONTEND_PATH.'class.Editor.php';
-		require_once FRONTEND_PATH.'class.Validator.php';
-
-		require_once FRONTEND_PATH.'calculate/class.Math.php';
-		require_once FRONTEND_PATH.'calculate/class.Trimp.php';
-
-		require_once FRONTEND_PATH.'system/class.DatabaseScheme.php';
-		require_once FRONTEND_PATH.'system/class.DatabaseSchemePool.php';
-
-		require_once FRONTEND_PATH.'training/class.DataObject.php';
-		require_once FRONTEND_PATH.'training/class.UserData.php';
-
-		require_once FRONTEND_PATH.'html/class.HtmlTag.php';
-		require_once FRONTEND_PATH.'html/class.FormularValueParser.php';
-		require_once FRONTEND_PATH.'html/class.Formular.php';
-		require_once FRONTEND_PATH.'html/class.FormularFieldset.php';
-		require_once FRONTEND_PATH.'html/class.FormularField.php';
-		require_once FRONTEND_PATH.'html/class.FormularInput.php';
-		require_once FRONTEND_PATH.'html/class.StandardFormular.php';*/
-
 		$this->initImporterExporter();
 		$this->initAdditionalFiles();
 	}
@@ -187,17 +145,7 @@ class Frontend {
 			foreach ($Files as $file)
 				$this->JS_FILES[] = $file;
 
-		$Files = glob('plugin/*/*.js');
-		if (is_array($Files))
-			foreach ($Files as $file)
-				$this->JS_FILES[] = $file;
-
-		$Files = glob('plugin/*/*.js');
-		if (is_array($Files))
-			foreach ($Files as $file)
-				$this->CSS_FILES[] = $file;
-
-		$Files = glob('plugin/*/*.js');
+		$Files = glob('plugin/*/*.css');
 		if (is_array($Files))
 			foreach ($Files as $file)
 				$this->CSS_FILES[] = $file;
@@ -241,7 +189,7 @@ class Frontend {
 	 */
 	public function displayFooter() {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
-			Error::getInstance()->display(); //include 'tpl/tpl.Frontend.debug.php';
+			Error::getInstance()->display();
 
 		if (!Request::isAjax())
 			include 'tpl/tpl.Frontend.footer.php';
@@ -260,4 +208,3 @@ class Frontend {
 		}
 	}
 }
-?>

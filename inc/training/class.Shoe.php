@@ -1,16 +1,13 @@
 <?php
 /**
- * This file contains the class::Shoe for handling shoes
+ * This file contains the class::Shoe for handling running shoes
  */
 /**
  * Class: Shoe
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
-class Shoe {
+class Shoe extends DataObject {
 	/**
 	 * Array containing all shoe-data from database
 	 * @var array
@@ -18,25 +15,124 @@ class Shoe {
 	static private $shoes = null;
 
 	/**
-	 * Constructor
+	 * Init DatabaseScheme 
 	 */
-	public function __construct() {}
+	protected function initDatabaseScheme() {
+		$this->DatabaseScheme = DatabaseSchemePool::get('training/schemes/scheme.Shoe.php');
+	}
+	
+	/**
+	* Get name
+	* @return string
+	*/
+	public function getName() {
+		return $this->get('name');
+	}
+	
+	/**
+	* Get brand
+	* @return string
+	*/
+	public function getBrand() {
+		return $this->get('brand');
+	}
+	
+	/**
+	* Get since
+	* @return string
+	*/
+	public function getSince() {
+		return $this->get('since');
+	}
 
 	/**
-	 * Destructor
+	* Get time
+	* @return int
+	*/
+	public function getTime() {
+		return $this->get('time');
+	}
+
+	/**
+	 * Get string for time
+	 * @return string
 	 */
-	public function __destruct() {}
+	public function getTimeString() {
+		return Helper::Time($this->getTime());
+	}
+
+	/**
+	* Get km
+	* @return float
+	*/
+	public function getKm() {
+		return $this->getKmInDatabase() + $this->getAdditionalKm();
+	}
+
+	/**
+	 * Get string for km
+	 * @return string
+	 */
+	public function getKmString() {
+		return Helper::Km($this->getKm());
+	}
+
+	/**
+	 * Get icon for usage
+	 * @return string
+	 */
+	public function getKmIcon() {
+		return self::getIcon($this->getKm());
+	}
+
+	/**
+	* Get km from trainings in database
+	* @return float
+	*/
+	public function getKmInDatabase() {
+		return $this->get('km');
+	}
+
+	/**
+	* Get additional km
+	* @return float
+	*/
+	public function getAdditionalKm() {
+		return $this->get('additionalKm');
+	}
+
+	/**
+	* Is this shoe in use?
+	* @return boolean
+	*/
+	public function isInUse() {
+		return $this->get('inuse') == 1;
+	}
+
+	/**
+	 * Are any shoes in database?
+	 * @return bool
+	 */
+	static public function hasShoes() {
+		return count(self::getShoes()) > 0;
+	}
+
+	/**
+	 * Are shoes in use?
+	 * @return bool
+	 */
+	static public function hasShoesInUse() {
+		return count(self::getFullArray()) > 0;
+	}
 
 	/**
 	 * Initialize internal shoes-array from database
 	 */
 	static private function initShoes() {
-		if (is_null(self::$shoes)) {
-			self::$shoes = array();
-			$shoes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe`');
-			foreach ($shoes as $shoe)
-				self::$shoes[$shoe['id']] = $shoe;
-		}
+		self::$shoes = array();
+		$shoes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe`');
+		foreach ($shoes as $shoe)
+			self::$shoes[$shoe['id']] = $shoe;
 	}
 
 	/**
@@ -44,13 +140,15 @@ class Shoe {
 	 * @return array
 	 */
 	static private function getShoes() {
-		self::initShoes();
+		if (is_null(self::$shoes))
+			self::initShoes();
 
 		return self::$shoes;
 	}
 
 	/**
 	 * Get array with all shoe-data
+	 * @param bool $inUse [optional] default: true
 	 * @return array
 	 */
 	static public function getFullArray($inUse = true) {
@@ -64,6 +162,7 @@ class Shoe {
 
 	/**
 	 * Get array with alle names, indizes are IDs
+	 * @param bool $inUse [optional] default: true
 	 * @return array
 	 */
 	static public function getNamesAsArray($inUse = true) {
@@ -82,7 +181,7 @@ class Shoe {
 	 * @param int $id ID for the shoe
 	 * @return string
 	 */
-	static public function getName($id) {
+	static public function getNameOf($id) {
 		$shoes = self::getShoes();
 
 		if (isset($shoes[$id]))
@@ -97,7 +196,7 @@ class Shoe {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getSeachLink($id) {
+	static public function getSearchLink($id) {
 		$shoes = self::getShoes();
 
 		return DataBrowser::getSearchLink($shoes[$id]['name'], 'opt[shoeid]=is&val[shoeid][0]='.$id);
@@ -122,22 +221,6 @@ class Shoe {
 	}
 
 	/**
-	 * Are any shoes in database?
-	 * @return bool
-	 */
-	static public function hasShoes() {
-		return count(self::getShoes()) > 0;
-	}
-
-	/**
-	 * Are shoes in use?
-	 * @return bool
-	 */
-	static public function hasShoesInUse() {
-		return count(self::getFullArray()) > 0;
-	}
-
-	/**
 	 * Get an icon for the abrasion of the shoe
 	 * @param double $distance
 	 * @return string
@@ -157,4 +240,3 @@ class Shoe {
 			return Icon::get(Icon::$BROKEN_1, $title);
 	}
 }
-?>
