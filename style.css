@@ -652,6 +652,7 @@ code {
 	border-bottom: 1px solid #D2D2D3 !important; }
 
 #errorToolbar {
+	z-index: 11;
 	position: fixed;
 	bottom: 0;
 	left: 50%;
