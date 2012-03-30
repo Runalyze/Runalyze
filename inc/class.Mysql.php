@@ -72,16 +72,38 @@ final class Mysql {
 	 * @param $query string full mysql-query
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
-	public function query($query) {
+	public function query($query, $AddAccountId=TRUE) {
 		if (self::$debugQuery)
 			Error::getInstance()->addDebug($query);
 
 		$result = false;
+		if($AddAccountId == TRUE) {
+			$query = $this->AddAccountId($query);
+		}
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
 		return $result;
 	}
 
+	/**
+	 *	Adds a WHERE clause to the Query.
+	 *	@param $query string full mysql-query
+	 *	@return string $query (MySQL query)
+	 **/
+	private function AddAccountId($query) {
+		if ($this->withAccId && !empty($_SESSION['accountid']) && strpos($query, '`accountid`=')===FALSE && !strpos($query, 'SET NAMES')) { //  && strpos($query, '`accountid`=') <=5 && strpos($query, 'JOIN')!==FALSE
+			if(strpos($query, 'WHERE') >= 7) {
+				$query = str_replace('WHERE', 'WHERE `accountid`="'.$_SESSION['accountid'].'" AND ', $query);
+			} elseif(strpos($query, 'GROUP BY') >= 7) {
+				$query = str_replace('GROUP BY', 'WHERE `accountid`="'.$_SESSION['accountid'].'" GROUP BY ', $query);
+			} else {
+				$query .= ' WHERE `accountid`="'.$_SESSION['accountid'].'"';
+			}
+			$this->withAccId = false;
+			echo $query."<b>should</b><br>";
+		} 
+		return $query;
+	}
 	/**
 	 * Updates a table for a given ID.
 	 * @param $table  string
@@ -101,7 +123,7 @@ final class Mysql {
 			$set = '`'.$column.'`='.self::escape($value, true, ($column=='clothes')).', ';
 		}
 
-		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" LIMIT 1');
+		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" AND `accountid`=`'.$_SESSION['accountid'].'` LIMIT 1');
 	}
 
 	/**
@@ -120,7 +142,7 @@ final class Mysql {
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
-		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.')'))
+		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.') WHERE `accountid`=`'.$_SESSION['accountid'].'`'))
 			return false;
 
 		return mysql_insert_id();
