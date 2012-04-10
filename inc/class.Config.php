@@ -255,9 +255,10 @@ class Config {
 		$plugins = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'plugin`');
 		foreach ($plugins as $plugin) {
 			$id = $plugin['id'];
-			Mysql::getInstance()->update(PREFIX.'plugin', $id,
-				array('active', 'order'),
-				array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
+			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id]))
+				Mysql::getInstance()->update(PREFIX.'plugin', $id,
+					array('active', 'order'),
+					array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
 		}
 	}
 

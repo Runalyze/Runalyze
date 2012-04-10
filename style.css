@@ -354,6 +354,9 @@ h1 a:link, h1 a:visited {
 	background: url(img/bg.png);
 	overflow: hidden; }
 
+#statisticTabs li:first-child { border-radius: 3px 0 0 0; }
+#statisticTabs li:last-child { border-radius: 0 3px 0 0; }
+
 #statisticTabs li a {
 	display: block;
 	padding: 0 10px; }
@@ -454,7 +457,8 @@ h1 a:link, h1 a:visited {
 	margin: 5px;
 	padding: 5px;
 	background: url(img/bg.png);
-	border: 1px solid #000; }
+	border: 1px solid #000;
+	box-shadow: 0 1px 3px #888; }
 
 .smallHeadNavi {
 	font-size: .9em;

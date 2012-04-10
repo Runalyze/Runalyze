@@ -7,7 +7,10 @@ require_once '../inc/class.Frontend.php';
 
 new Frontend(true);
 
-if (is_numeric($_GET['id'])) {
+if (isset($_GET['key'])) {
+	Plugin::uninstallPlugin($_GET['key']);
+	echo Ajax::wrapJSforDocumentReady('Runalyze.loadOverlay("call/window.config.php");');
+} elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	$key = Plugin::getKeyForId($_GET['id']);
 	$Plugin = Plugin::getInstanceFor($key);
 	$Plugin->displayConfigWindow();

@@ -4,11 +4,22 @@
  */
 ?>
 
+<?php
+$Links = array();
+$Links[] = array('tag' => Ajax::change('Hochladen', 'ajax', 'upload'));
+$Links[] = array('tag' => Ajax::change('GarminCommunicator', 'ajax', 'garmin'));
+$Links[] = array('tag' => Ajax::change('Formular', 'ajax', 'formular'));
+
+echo Ajax::toolbarNavigation($Links, 'right');
+
+Error::getInstance()->addError('Testing');
+?>
+<!--
 <span class="right" id="ajaxLinks">
 	<?php echo Ajax::change('Hochladen', 'ajax', 'upload'); ?> |
 	<?php echo Ajax::change('Garmin Connect', 'ajax', 'garmin'); ?> |
 	<?php echo Ajax::change('Formular', 'ajax', 'formular'); ?>
-</span>
+</span>-->
 
 <div class="change" id="upload"<?php if (CONF_TRAINING_CREATE_MODE != 'upload' || !$showUploader) echo ' style="display:none;"'; ?> onmouseover="javascript:createUploader()">
 	<?php $Importer->displayUploadFormular(); ?>

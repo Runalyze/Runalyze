@@ -64,9 +64,9 @@ Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Beli
 				if ($Plugin === false) {
 					echo '
 						<tr class="a'.($i%2+1).' unimportant">
-							<td></td>
+							<td>'.Plugin::getRemoveLink($plug['key']).'</td>
 							<td class="b">'.$plug['key'].'</td>
-							<td colspan="3">Das Plugin konnte nicht gefunden werden.</td>
+							<td class="small" colspan="3">Das Plugin konnte nicht gefunden werden.</td>
 						</tr>';
 				} else
 					echo '
