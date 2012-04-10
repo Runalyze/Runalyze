@@ -8,7 +8,7 @@ $Months       = array();
 $Temperatures = array();
 
 for ($m = 1; $m <= 12; $m++) {
-	$Months[] = array($m-1, Helper::Month($m, true));
+	$Months[] = array($m-1, Time::Month($m, true));
 
 	for ($y = START_YEAR, $n = date('Y'); $y <= $n; $y++)
 		$Temperatures[$y] = array(null,null,null,null,null,null,null,null,null,null,null,null);
@@ -28,7 +28,7 @@ for ($y = START_YEAR, $n = date('Y'); $y <= $n; $y++) {
 $Plot->setMarginForGrid(5);
 $Plot->setXLabels($Months);
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '°C');
+$Plot->addYUnit(1, 'Â°C');
 $Plot->setYTicks(1, 5, 0);
 
 $Plot->addThreshold('y', 0);

@@ -188,7 +188,7 @@ abstract class Plugin {
 		$pluginFile = self::getFileForKey($PLUGINKEY);
 
 		if ($pluginFile === false) {
-			Error::getInstance()->addError('Can\'t find plugin-file or -directory in system.');
+			Error::getInstance()->addError('Can\'t find plugin-file or -directory in system: '.$PLUGINKEY);
 			return false;
 		}
 
@@ -274,6 +274,14 @@ abstract class Plugin {
 	}
 
 	/**
+	 * Uninstall plugin
+	 * @param string $key 
+	 */
+	static public function uninstallPlugin($key) {
+		Mysql::getInstance()->query('DELETE FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($key).'" LIMIT 1');
+	}
+
+	/**
 	 * Install this plugin
 	 * @return bool
 	 */
@@ -318,6 +326,7 @@ abstract class Plugin {
 
 		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $this->id);
 
+		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];
 		$this->order       = $dat['order'];
 		$this->filename    = $dat['filename'];
@@ -435,6 +444,17 @@ abstract class Plugin {
 			$name = Icon::get(Icon::$CONF_SETTINGS, '', '', 'Plugin bearbeiten');
 
 		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
+	}
+
+	/**
+	 * Get link for removing plugin
+	 * @param string $key PLUGINKEY
+	 * @return string
+	 */
+	static public function getRemoveLink($key) {
+		$name = Icon::get(Icon::$CROSS, '', '', 'Plugin entfernen');
+
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.$name.'</a>','small');
 	}
 
 	/**

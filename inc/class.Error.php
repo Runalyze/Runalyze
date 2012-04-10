@@ -298,6 +298,8 @@ class Error {
 	 * @param string $message
 	 */
 	public function displayFatalErrorMessage($message) {
+		// TODO: Per jQuery Overlay
+
 		if (!$this->header_sent)
 			include 'tpl/tpl.Frontend.header.php';
 

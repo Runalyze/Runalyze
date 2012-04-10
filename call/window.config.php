@@ -68,3 +68,5 @@ if (isset($submit))
 		</div>
 	</div>
 </form>
+
+<?php echo Ajax::wrapJSforDocumentReady('Runalyze.ajax.removeClass("smallWin");'); ?>

@@ -43,6 +43,7 @@ class Frontend {
 		$this->initRequiredFiles();
 		$this->initDebugMode();
 		$this->initSessionHandler();
+
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
 		else
@@ -112,15 +113,13 @@ class Frontend {
 	}
 
 	/**
-	 * Include class::Mysql and create Session
+	 * Init SessionHandler
 	 */
 	private function initSessionHandler() {
-		//SessionHandler::;
 		$Session = new SessionHandler();
-		if(isset($_POST['user']) && isset($_POST['password'])) {
-			//SessionHandler::checkLogin($_POST['user'], $_POST['password']);
-			$Session->checkLogin(isset($_POST['user']) && isset($_POST['password']));
-		}
+
+		if (isset($_POST['user']) && isset($_POST['password']))
+			$Session->tryToLogin($_POST['user'], $_POST['password']);
 	}
 	
 	/**

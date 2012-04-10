@@ -70,16 +70,34 @@ final class Mysql {
 	 * Calls mysql_query and returns the result if there is any
 	 * Be careful, unsafe query! Use $mysql->escape($values)!
 	 * @param $query string full mysql-query
+	 * @param $addAccountId bool flag for automatic adding of accountid
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
-	public function query($query, $AddAccountId=TRUE) {
+	public function query($query, $addAccountId = true) {
 		if (self::$debugQuery)
 			Error::getInstance()->addDebug($query);
 
 		$result = false;
-		if($AddAccountId == TRUE) {
-			$query = $this->AddAccountId($query);
-		}
+		if ($addAccountId)
+			$query = $this->addAccountId($query);
+
+		$result = mysql_query($query)
+			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
+		return $result;
+	}
+
+	/**
+	 * Calls mysql_query and returns the result if there is any
+	 * Be careful, unsafe query! Use $mysql->escape($values) and add accountid if needed
+	 * @param $query string full mysql-query
+	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
+	 */
+	public function untouchedQuery($query) {
+		if (self::$debugQuery)
+			Error::getInstance()->addDebug($query);
+
+		$result = false;
+
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
 		return $result;
@@ -90,18 +108,25 @@ final class Mysql {
 	 *	@param $query string full mysql-query
 	 *	@return string $query (MySQL query)
 	 **/
-	private function AddAccountId($query) {
-		if ($this->withAccId && !empty($_SESSION['accountid']) && strpos($query, '`accountid`=')===FALSE && !strpos($query, 'SET NAMES')) { //  && strpos($query, '`accountid`=') <=5 && strpos($query, 'JOIN')!==FALSE
-			if(strpos($query, 'WHERE') >= 7) {
-				$query = str_replace('WHERE', 'WHERE `accountid`="'.$_SESSION['accountid'].'" AND ', $query);
-			} elseif(strpos($query, 'GROUP BY') >= 7) {
-				$query = str_replace('GROUP BY', 'WHERE `accountid`="'.$_SESSION['accountid'].'" GROUP BY ', $query);
+	private function addAccountId($query) {
+		if (!SessionHandler::isLoggedIn())
+			return $query;
+
+		$ID = SessionHandler::getId();
+
+		if (strpos($query, 'SET NAMES') !== false || empty($ID))
+			return $query;
+
+		if (strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {
+			if (strpos($query, 'WHERE') >= 7) {
+				return str_replace('WHERE', 'WHERE `accountid`="'.$ID.'" AND ', $query);
+			} elseif (strpos($query, 'GROUP BY') >= 7) {
+				return str_replace('GROUP BY', 'WHERE `accountid`="'.$ID.'" GROUP BY ', $query);
 			} else {
-				$query .= ' WHERE `accountid`="'.$_SESSION['accountid'].'"';
+				return $query.' WHERE `accountid`="'.$ID.'"';
 			}
-			$this->withAccId = false;
-			echo $query."<b>should</b><br>";
-		} 
+		}
+
 		return $query;
 	}
 	/**
@@ -110,8 +135,9 @@ final class Mysql {
 	 * @param $id     int
 	 * @param $column mixed  might be an array
 	 * @param $value  mixed  might be an array
+	 * @param $addAccountId bool flag for adding accountid
 	 */
-	public function update($table, $id, $column, $value) {
+	public function update($table, $id, $column, $value, $addAccountId = true) {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
@@ -123,7 +149,7 @@ final class Mysql {
 			$set = '`'.$column.'`='.self::escape($value, true, ($column=='clothes')).', ';
 		}
 
-		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" AND `accountid`=`'.$_SESSION['accountid'].'` LIMIT 1');
+		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" LIMIT 1', $addAccountId);
 	}
 
 	/**
@@ -142,7 +168,7 @@ final class Mysql {
 		$columns = implode(', ', $columns);
 		$values = implode(', ', self::escape($values));
 
-		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.') WHERE `accountid`=`'.$_SESSION['accountid'].'`'))
+		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.')'))
 			return false;
 
 		return mysql_insert_id();

@@ -113,22 +113,31 @@ class Ajax {
 	 * @param string $AdditionalClasses
 	 */
 	static function toolbarNavigation($Links, $AdditionalClasses = '') {
+		if (empty($Links)) {
+			Error::getInstance()->addError('Links for toolbar navigation are empty.');
+			return '';
+		}
+
 		$code  = '<ul class="jbar '.$AdditionalClasses.'">';
 
 		foreach ($Links as $Link) {
-			$code .= '<li>';
-			$code .= $Link['tag'];
+			if (is_array($Link) && isset($Link['tag'])) {
+				$code .= '<li>';
+				$code .= $Link['tag'];
 
-			if (isset($Link['subs']) && is_array($Link['subs'])) {
-				$code .= '<ul>';
+				if (isset($Link['subs']) && is_array($Link['subs'])) {
+					$code .= '<ul>';
 
-				foreach ($Link['subs'] as $Sublink)
-					$code .= '<li>'.$Sublink.'</li>';
+					foreach ($Link['subs'] as $Sublink)
+						$code .= '<li>'.$Sublink.'</li>';
 
-				$code .= '</ul>';
+					$code .= '</ul>';
+				}
+
+				$code .= '</li>';
+			} else {
+				Error::getInstance()->addWarning('No tag set for link in toolbar navigation.');
 			}
-
-			$code .= '</li>';
 		}
 
 		$code .= '</ul>';
@@ -256,7 +265,7 @@ class Ajax {
 	 * @return string
 	 */
 	public static function wrapJSforDocumentReady($code) {
-		return self::wrapJS('$(document).ready(function(){ '.$code.' });');
+		return self::wrapJS('(function($){$(document).ready(function(){ '.$code.' });})(jQuery);');
 	}
 
 	/**
