@@ -5,7 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 $Mysql = Mysql::getInstance();
 $Error = Error::getInstance();

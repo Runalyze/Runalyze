@@ -5,7 +5,7 @@
  */
 require_once '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 if (is_numeric($_GET['id'])) {
 	$key   = Plugin::getKeyForId($_GET['id']);

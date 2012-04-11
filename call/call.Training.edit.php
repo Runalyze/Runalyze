@@ -5,7 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 $Mysql    = Mysql::getInstance();
 $id       = isset($_GET['id']) ? $_GET['id'] : 0;

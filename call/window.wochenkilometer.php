@@ -5,7 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");

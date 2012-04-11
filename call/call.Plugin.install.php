@@ -5,7 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 if (Plugin::installPlugin($_GET['key'])) {
 	$Plugin = Plugin::getInstanceFor($_GET['key']);
