@@ -5,7 +5,7 @@
  */
 require_once '../inc/class.Frontend.php';
 
-new Frontend(true);
+$Frontend = new Frontend(true);
 
 if (isset($_GET['key'])) {
 	Plugin::uninstallPlugin($_GET['key']);
