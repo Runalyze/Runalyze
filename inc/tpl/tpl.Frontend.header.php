@@ -30,6 +30,7 @@
 
 <div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
 	<a class="tab singleTab" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<?php if (SessionHandler::isLoggedIn()): ?><a class="tab" id="logout" href="login.php?out" title="Ausloggen">Logout</a><?php endif; ?>
 
 	<span class="left b">
 		<?php echo Ajax::window('<a class="tab" id="confEdit" href="'.Config::$CONFIG_URL.'">Konfiguration</a>'); ?>

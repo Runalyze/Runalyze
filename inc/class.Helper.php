@@ -354,6 +354,7 @@ class Helper {
 	 * @param int $timestamp [optional] timestamp
 	 */
 	public static function BasicEndurance($as_int = false, $timestamp = 0) {
+		// TODO: Unittests
 		if ($timestamp == 0) {
 			if (defined('BASIC_ENDURANCE'))
 				return ($as_int) ? BASIC_ENDURANCE : BASIC_ENDURANCE.' &#37;';
