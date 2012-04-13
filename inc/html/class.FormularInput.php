@@ -28,6 +28,18 @@ class FormularInput extends FormularField {
 	static public $UNIT_KM = 'unitKm';
 
 	/**
+	 * Unit: user
+	 * @var string
+	 */
+	static public $UNIT_USER = 'unitUser';
+
+	/**
+	 * Unit: password
+	 * @var string
+	 */
+	static public $UNIT_PASS = 'unitPass';
+
+	/**
 	 * Size: full
 	 * @var string 
 	 */

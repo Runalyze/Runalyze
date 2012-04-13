@@ -72,4 +72,3 @@ class InstallerUpdate extends Installer {
 		include 'tpl/tpl.InstallerUpdate.php';
 	}
 }
-?>

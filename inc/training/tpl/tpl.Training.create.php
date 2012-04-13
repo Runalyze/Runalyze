@@ -2,17 +2,13 @@
 /**
  * File displaying the formular for adding a new training, called via Training::displayCreateWindow()
  */
-?>
 
-<?php
 $Links = array();
 $Links[] = array('tag' => Ajax::change('Hochladen', 'ajax', 'upload'));
 $Links[] = array('tag' => Ajax::change('GarminCommunicator', 'ajax', 'garmin'));
 $Links[] = array('tag' => Ajax::change('Formular', 'ajax', 'formular'));
 
 echo Ajax::toolbarNavigation($Links, 'right');
-
-Error::getInstance()->addError('Testing');
 ?>
 
 <div class="change" id="upload"<?php if (CONF_TRAINING_CREATE_MODE != 'upload' || !$showUploader) echo ' style="display:none;"'; ?> onmouseover="javascript:createUploader()">

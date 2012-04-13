@@ -29,6 +29,14 @@ class System {
 	}
 
 	/**
+	 * Get full domain
+	 * @return string
+	 */
+	static public function getFullDomain() {
+		return self::getDomain().substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
+	}
+
+	/**
 	 * Is this script running on localhost?
 	 * @return boolean
 	 */

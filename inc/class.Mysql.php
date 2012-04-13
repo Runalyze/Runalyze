@@ -104,6 +104,15 @@ final class Mysql {
 	}
 
 	/**
+	 * Fetch from database without adding accountid
+	 * @param string $query
+	 * @return boolean|array
+	 */
+	public function untouchedFetch($query) {
+		return $this->fetchAsCorrectType( $this->untouchedQuery($query) );
+	}
+
+	/**
 	 *	Adds a WHERE clause to the Query.
 	 *	@param $query string full mysql-query
 	 *	@return string $query (MySQL query)
@@ -122,6 +131,8 @@ final class Mysql {
 				return str_replace('WHERE', 'WHERE `accountid`="'.$ID.'" AND ', $query);
 			} elseif (strpos($query, 'GROUP BY') >= 7) {
 				return str_replace('GROUP BY', 'WHERE `accountid`="'.$ID.'" GROUP BY ', $query);
+			} elseif (strpos($query, 'ORDER BY') >= 7) {
+				return str_replace('ORDER BY', 'WHERE `accountid`="'.$ID.'" ORDER BY ', $query);
 			} else {
 				return $query.' WHERE `accountid`="'.$ID.'"';
 			}
@@ -140,6 +151,9 @@ final class Mysql {
 	public function update($table, $id, $column, $value, $addAccountId = true) {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+
+		if ($table == PREFIX.'account')
+			$addAccountId = false;
 
 		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
@@ -162,6 +176,11 @@ final class Mysql {
 	public function insert($table, $columns, $values) {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+
+		if ($table != PREFIX.'account' && !key_exists('accountid', $columns)) {
+			$columns[] = 'accountid';
+			$values[] = SessionHandler::getId();
+		}
 
 		foreach ($columns as $k => $v)
 			$columns[$k] = '`'.$v.'`';
@@ -224,8 +243,21 @@ final class Mysql {
 		else
 			$result = $this->query('SELECT * FROM `'.$table.'` WHERE `id`="'.$id.'" LIMIT 1');
 
+		return $this->fetchAsCorrectType($result, $as_array, $numeric);
+	}
+
+	/**
+	 * Fetch rows from result in given format
+	 * @param mysql_result $result
+	 * @param boolean $as_array [optional]
+	 * @param boolean $numeric [optional]
+	 * @return array|boolean 
+	 */
+	public function fetchAsCorrectType($result, $as_array = false, $numeric = false) {
+		$return = array();
+
 		if ($result === false) {
-			Error::getInstance()->addWarning(mysql_error());
+			return $return;
 		} else {
 			if ($numeric)
 				while($data = mysql_fetch_array($result, MYSQL_NUM))

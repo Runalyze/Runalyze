@@ -33,6 +33,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $VDOTData    = array();
 	private $TRIMPData   = array();
 
+	private $WeekData    = array();
+
 	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
@@ -65,7 +67,14 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader($this->sport['name'].': '.$this->getYearString());
+		$this->displayYearTable();
+		$this->displayWeekTable();
+	}
 
+	/**
+	 * Display table with data for each month 
+	 */
+	private function displayYearTable() {
 		echo '<table class="small r fullWidth">';
 
 		echo ($this->year == -1) ? HTML::yearTR(0, 1) : HTML::monthTR(8, 1);
@@ -119,6 +128,40 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 
 		echo '</tr>';
+	}
+
+	/**
+	 * Display table with last week-statistics 
+	 */
+	private function displayWeekTable() {
+		if ($this->year != date("Y"))
+			return;
+
+		$Dataset = new Dataset();
+
+		echo '<table class="small notSmaller r fullWidth">';
+		echo '<thead><tr><th colspan="'.($Dataset->column_count+1).'">Letzten 10 Trainingswochen</th></tr></thead>';
+		echo '<tbody>';
+
+		for ($w = 0; $w <= 9; $w++) {
+			$time  = time() - $w*7*DAY_IN_S;
+			$start = Time::Weekstart($time);
+			$end   = Time::Weekend($time);
+
+			echo '<tr class="a'.(($w%2)+1).'"><td class="b">'.Ajax::tooltip('KW '.strftime("%W", $time), date("d.m.Y", $start).' bis '.date("d.m.Y", $end)).'</td>';
+
+			$Dataset->loadGroupOfTrainings($this->sportid, $start, $end);
+			$Dataset->displayTableColumns();
+
+			echo '</tr>';
+		}
+
+		echo '</tbody>';
+		echo '</table>';
+
+/* (hover: Datum)
+ * KW 33 - 5x - 57,3 km - 4:33:19 - 4:17/km - 73%
+ */
 	}
 
 	/**

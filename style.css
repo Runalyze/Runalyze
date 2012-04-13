@@ -61,6 +61,7 @@ body#installer {
 #copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
 #copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
 #copy a#confHelp { background: url(img/confHelp.png) 2px center no-repeat; }
+#copy a#logout { float: right; background: url(img/user.png) 2px center no-repeat; }
 
 
 /*** GENERAL STYLES ***/
@@ -180,7 +181,11 @@ fieldset label {
 	font-weight: bold;
 	width: 40%;
 	float: left;
+	margin: 0 !important;
 	padding: 3px 0; }
+
+fieldset .w33, fieldset .w50, fieldset .w100 {
+	padding: 2px 0; }
 
 fieldset .w50, fieldset .w33 {
 	float: left;
@@ -192,6 +197,7 @@ fieldset .w100 *, fieldset .w50 *, fieldset .w33 * {
 
 fieldset input { padding: 2px; }
 fieldset input.withUnit { padding: 2px 30px 2px 0; }
+fieldset input.withUnitLeft { padding: 2px 0 2px 30px; }
 fieldset .smallSize { width: 60px; }
 fieldset .smallSize.withUnit { width: 34px; }
 fieldset .middleSize { width: 120px; }
@@ -202,10 +208,15 @@ input.withUnit {
 	text-align: right;
 	background-position: right center;
 	background-repeat: no-repeat; }
+input.withUnitLeft {
+	background-position: left center;
+	background-repeat: no-repeat; }
 fieldset input.unitPercent { background-image: url('img/units/percent.png'); }
 fieldset input.unitBpm { background-image: url('img/units/bpm.png'); }
 fieldset input.unitKg { background-image: url('img/units/kg.png'); }
 fieldset input.unitKm { background-image: url('img/units/km.png'); }
+fieldset input.unitUser { background-image: url('img/units/user.png'); }
+fieldset input.unitPass{ background-image: url('img/units/pass.png'); }
 
 fieldset .validationFailed {
 	background-color: #FDEBD7;
@@ -569,6 +580,7 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .l { text-align: left; }
 .r { text-align: right; }
 .small { font-size: 0.8em; }
+.small.notSmaller .small { font-size: 1em; }
 .wk td { background: #FFD !important; font-weight: bold; }
 .link { padding-bottom: 1px; cursor: pointer; }
 .inline { display: inline; }
@@ -639,6 +651,32 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 	width: 100px;
 	margin: 4px 2px;
 	padding: 2px; }
+
+#loginWindow {
+	margin: 0 auto; }
+#loginWindow input.withUnit {
+	padding-left: 2px;
+	text-align: left; }
+
+#loginPanel {
+	position: absolute;
+	top: 40px;
+	right: 20px;
+	width: 160px;
+	padding-left: 10px;
+	border-left: 1px solid #DDD;
+	font-size: .9em; }
+
+#loginPanel a {
+	display: block;
+	line-height: 24px;
+	padding: 2px 2px 2px 30px;
+	border-bottom: none !important;
+	background-position: left center;
+	background-repeat: no-repeat; }
+
+#loginPanel #registerLink { background-image:url(img/register.png); }
+#loginPanel #passLink { background-image:url(img/registerPass.png); }
 
 code {
 	width: 98%;
