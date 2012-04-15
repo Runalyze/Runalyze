@@ -1,5 +1,6 @@
 <p<?php if (isset($_GET['ids'])) echo ' class="hide"'; ?>>
-	Suchergebnisse k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.<br />
+	<?php echo DataBrowser::getSearchLink('Suchergebnisse'); ?>
+	k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.<br />
 	Standardm&auml;&szlig;ig werden die letzten Trainings zum Bearbeiten angezeigt.
 </p>
 

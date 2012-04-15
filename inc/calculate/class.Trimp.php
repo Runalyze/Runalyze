@@ -94,4 +94,3 @@ class Trimp {
 		return self::CTL($time) - self::ATL($time);
 	}
 }
-?>

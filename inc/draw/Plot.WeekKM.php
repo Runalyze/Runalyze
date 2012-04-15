@@ -58,7 +58,7 @@ $Plot->setTitle('Wochenkilometer '.$Year);
 
 if ($possibleKM > 0) {
 	$Plot->addThreshold('y', $possibleKM);
-	$Plot->addAnnotation(0, $possibleKM, 'Leistungslevel');
+	$Plot->addAnnotation(0, $possibleKM, 'aktuelles Leistungslevel');
 }
 
 $Plot->outputJavaScript();

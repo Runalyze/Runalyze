@@ -246,7 +246,7 @@ class DataBrowser {
 	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
 	 * @return string
 	 */
-	static function getSearchLink($name, $var) {
+	static function getSearchLink($name, $var = '') {
 		// TODO: Just get $name, $column, $option, $value (may be arrays)
 		return Ajax::window('<a href="'.self::getSearchLinkUrl($var).'">'.$name.'</a>', 'big');
 	}
@@ -257,6 +257,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	static function getSearchLinkUrl($var) {
+		if (empty($var))
+			return self::$SEARCH_URL;
+
 		$var = str_replace(' ', '+', $var);
 
 		return self::$SEARCH_URL.'?get=true&'.$var;

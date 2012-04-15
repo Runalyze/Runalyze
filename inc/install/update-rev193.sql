@@ -6,5 +6,5 @@ UPDATE `runalyze_weather` SET `img` = 'wechselhaft.png' WHERE `runalyze_weather`
 UPDATE `runalyze_weather` SET `img` = 'regnerisch.png' WHERE `runalyze_weather`.`id` =6;
 UPDATE `runalyze_weather` SET `img` = 'Schnee.png' WHERE `runalyze_weather`.`id` =7;
 
-ALTER TABLE `runalyze_account` ADD `registerdate` INT NOT NULL, ADD `lastaction` INT NOT NULL, ADD `lastlogin` INT NOT NULL, ADD `autologin_hash` VARCHAR( 32 ) NOT NULL, ADD `changepw_hash` VARCHAR( 32 ) NOT NULL, ADD `changepw_timelimit` INT NOT NULL;
+ALTER TABLE `runalyze_account` ADD `registerdate` INT NOT NULL, ADD `lastaction` INT NOT NULL, ADD `lastlogin` INT NOT NULL, ADD `autologin_hash` VARCHAR( 32 ) NOT NULL, ADD `changepw_hash` VARCHAR( 32 ) NOT NULL, ADD `changepw_timelimit` INT NOT NULL, ADD `activation_hash` VARCHAR( 32 ) NOT NULL;
 ALTER TABLE `runalyze_account` CHANGE `session_id` `session_id` VARCHAR( 32 ) NULL DEFAULT NULL;
