@@ -9,12 +9,14 @@
  * Don't change anything in this file!
  */
 
-$title = 'Installation: Runalyze';
-include 'inc/html/tpl/tpl.installerHeader.php';
-
-require_once 'inc/class.Mysql.php';
+require_once 'inc/html/class.Ajax.php';
+require_once 'inc/system/class.Mysql.php';
+require_once 'inc/system/class.System.php';
 require_once 'inc/class.Installer.php';
+
+$title = 'Installation: Runalyze';
+include 'inc/tpl/tpl.installerHeader.php';
 
 $Installer = new Installer();
 
-include 'inc/html/tpl/tpl.installerFooter.php';
+include 'inc/tpl/tpl.installerFooter.php';

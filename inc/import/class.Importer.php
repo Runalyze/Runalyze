@@ -1,12 +1,8 @@
 <?php
 /**
- * This file contains the class::Importer for importing trainings
- */
-/**
  * Class: Importer
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 abstract class Importer {
 	/**
@@ -150,7 +146,7 @@ abstract class Importer {
 	 * @param string $className
 	 */
 	static public function registerImporter($format, $className) {
-		$fileName = 'class.'.$className.'.php';
+		$fileName = 'import/class.'.$className.'.php';
 		if (file_exists(FRONTEND_PATH.$fileName)) {
 			self::$formats[$format] = $className;
 
@@ -489,4 +485,3 @@ abstract class Importer {
 		$this->setArrayFor('arr_pace', $array);
 	}
 }
-?>

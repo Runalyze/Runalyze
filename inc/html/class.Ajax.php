@@ -29,7 +29,6 @@ class Ajax {
 		$Files = array();
 
 		$Files[] = 'lib/jquery-1.7.1.min.js';
-		$Files[] = 'lib/jquery.scrollTo.js';
 		$Files[] = 'lib/jquery.form.js';
 		$Files[] = 'lib/jquery.metadata.js';
 		$Files[] = 'lib/jquery.tablesorter.js';
@@ -48,8 +47,6 @@ class Ajax {
 		$Files[] = 'lib/runalyze.lib.gmap.js';
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
 		$Files[] = 'lib/runalyze.lib.js';
-
-		$Files[] = 'lib/form_scripts.js';
 
 		if (CONF_DESIGN_BG_FIX_AND_STRETCH)
 			$Files[] = 'lib/jquery.backgroundStretch.js';

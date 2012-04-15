@@ -7,6 +7,12 @@
  */
 class SessionHandler {
 	/**
+	 * Boolean flag: user must be logged in
+	 * @var boolean
+	 */
+	static public $USER_MUST_LOGIN = false; // TODO: as const in config.php
+
+	/**
 	 * Array containing userrow from database
 	 * @var array
 	 */
@@ -42,14 +48,14 @@ class SessionHandler {
 	function __construct() {
 		session_start();
 
-		if (self::isLoggedIn()) {
-			self::$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.mysql_real_escape_string($_SESSION['accountid']).' LIMIT 1');
-			Mysql::getInstance()->untouchedQuery('UPDATE `'.PREFIX.'account` SET `lastaction`="'.time().'" WHERE `id`="'.self::getId().'" LIMIT 1');
-		} elseif (isset($_POST['username']) && isset($_POST['password']))
-			if ($this->tryToLogin($_POST['username'], $_POST['password']))
+		if (!$this->tryToUseSession()) {
+			if ($this->tryToLoginFromPost())
 				header('Location: index.php');
-		elseif (isset($_COOKIE['autologin']) && $this->tryToLoginFromCookie())
-			header('Location: index.php');
+			elseif ($this->tryToLoginFromCookie())
+				header('Location: index.php');
+			elseif (self::$USER_MUST_LOGIN && Request::Basename() != 'login.php')
+				header('Location: login.php');
+		}
 	}
 
 	/**
@@ -69,6 +75,44 @@ class SessionHandler {
 	}
 
 	/**
+	 * Try to use current session
+	 * @return boolean 
+	 */
+	private function tryToUseSession() {
+		if (isset($_SESSION['accountid'])) {
+			$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.mysql_real_escape_string($_SESSION['accountid']).' LIMIT 1');
+
+			if ($Account['session_id'] == session_id()) {
+				$this->setAccount($Account);
+				$this->updateLastAction();
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Update last action to current account 
+	 */
+	private function updateLastAction() {
+		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'lastaction', time());
+	}
+
+	/**
+	 * Try to login from post data
+	 * @return boolean
+	 */
+	private function tryToLoginFromPost() {
+		if (isset($_POST['username']) && isset($_POST['password']))
+			if ($this->tryToLogin($_POST['username'], $_POST['password']))
+				return true;
+
+		return false;
+	}
+
+	/**
 	 * Try to login
 	 * @param string $username
 	 * @param string $password
@@ -76,14 +120,14 @@ class SessionHandler {
 	 */
 	public function tryToLogin($username, $password) {
 		if (isset($_POST['chpw_hash']))
-			AccountHandler::tryToSetNewPassword ();
+			AccountHandler::tryToSetNewPassword();
 
 		Error::getInstance()->addDebug('User "'.$username.'" tries to login.');
 
 		$Account = Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1') );
 		if ($Account) {
 			if (AccountHandler::comparePasswords($password, $Account['password'])) {
-				self::$Account = $Account;
+				$this->setAccount($Account);
 				$this->setSession();
 
 				return true;
@@ -97,50 +141,71 @@ class SessionHandler {
 		return false;
 	}
 
+	/**
+	 * Try to autologin from cookie
+	 * @return boolean 
+	 */
 	private function tryToLoginFromCookie() {
-		$Account = Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`="'.  mysql_real_escape_string($_COOKIE['autologin']).'" LIMIT 1') );
-		if ($Account) {
-			self::$Account = $Account;
-			$this->setSession();
+		if (isset($_COOKIE['autologin'])) {
+			$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`="'.mysql_real_escape_string($_COOKIE['autologin']).'" LIMIT 1');
+	
+			if ($Account) {
+				$this->setAccount($Account);
+				$this->setSession();
 
-			return true;
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	/**
-	 * Throw error: Wrong password 
+	 * Set internal account-data
+	 * @param array $Account 
 	 */
-	private function throwErrorForWrongPassword() {
-		self::$ErrorType = self::$ERROR_TYPE_WRONG_PASSWORD;
-	}
-
-	/**
-	 * Throw error: Wrong username 
-	 */
-	private function throwErrorForWrongUsername() {
-		self::$ErrorType = self::$ERROR_TYPE_WRONG_USERNAME;
+	private function setAccount($Account = array()) {
+		self::$Account = $Account;
 	}
 
 	/**
 	 * Set up session 
 	 */
 	private function setSession() {
-		$_SESSION['username'] = self::$Account['username'];
+		$this->setSessionValues();
+		$this->setSessionToDatabase();
+	}
+
+	/**
+	 * Set account-values to session 
+	 */
+	private function setSessionValues() {
+		$_SESSION['username']  = self::$Account['username'];
 		$_SESSION['accountid'] = self::$Account['id'];
+	}
+
+	/**
+	 * Set session to database 
+	 */
+	private function setSessionToDatabase() {
+		$columns = array('session_id', 'lastlogin', 'autologin_hash');
+		$values  = array(session_id(), time(), $this->getAutologinHash());
+		Mysql::getInstance()->update(PREFIX.'account', self::getId(), $columns, $values);
+	}
+
+	/**
+	 * Get autologin_hash and set it as cookie
+	 * @return string
+	 */
+	private function getAutologinHash() {
+		$autologinHash = '';
 
 		if (isset($_POST['autologin'])) {
 			$autologinHash = AccountHandler::getAutologinHash();
 			setcookie('autologin', $autologinHash, time()+30*DAY_IN_S);
-		} else
-			$autologinHash = '';
-		
+		}
 
-		Mysql::getInstance()->untouchedQuery('
-			UPDATE `'.PREFIX.'account` SET
-				`session_id`="'.session_id().'",
-				`lastlogin`="'.time().'",
-				`autologin_hash`="'.$autologinHash.'"
-			WHERE `id`="'.self::getId().'" LIMIT 1');
+		return $autologinHash;
 	}
 
 	/**
@@ -157,6 +222,9 @@ class SessionHandler {
 	 * @return type 
 	 */
 	static public function getId() {
+		if (!isset(self::$Account['id']))
+			return 0;
+
 		return self::$Account['id'];
 	}
 
@@ -165,6 +233,9 @@ class SessionHandler {
 	 * @return type 
 	 */
 	static public function getMail() {
+		if (!isset(self::$Account['mail']))
+			return '';
+
 		return self::$Account['mail'];
 	}
 
@@ -173,6 +244,23 @@ class SessionHandler {
 	 * @return type 
 	 */
 	static public function getName() {
+		if (!isset(self::$Account['name']))
+			return '';
+
 		return self::$Account['name'];
+	}
+
+	/**
+	 * Throw error: Wrong password 
+	 */
+	private function throwErrorForWrongPassword() {
+		self::$ErrorType = self::$ERROR_TYPE_WRONG_PASSWORD;
+	}
+
+	/**
+	 * Throw error: Wrong username 
+	 */
+	private function throwErrorForWrongUsername() {
+		self::$ErrorType = self::$ERROR_TYPE_WRONG_USERNAME;
 	}
 }

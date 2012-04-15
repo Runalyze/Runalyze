@@ -40,6 +40,36 @@ class FormularInput extends FormularField {
 	static public $UNIT_PASS = 'unitPass';
 
 	/**
+	 * Unit: temperature in degree celsius
+	 * @var string
+	 */
+	static public $UNIT_CELSIUS = 'unitCelsius';
+
+	/**
+	 * Unit: elevation
+	 * @var string
+	 */
+	static public $UNIT_ELEVATION = 'unitElevation';
+
+	/**
+	 * Unit: kcal
+	 * @var string
+	 */
+	static public $UNIT_KCAL = 'unitKcal';
+
+	/**
+	 * Unit: pace in km/h
+	 * @var string
+	 */
+	static public $UNIT_KMH = 'unitKmh';
+
+	/**
+	 * Unit: pace in min/km
+	 * @var string
+	 */
+	static public $UNIT_PACE = 'unitPace';
+
+	/**
 	 * Size: full
 	 * @var string 
 	 */

@@ -67,6 +67,8 @@
 				if (is_array($Errors))
 					foreach ($Errors as $Error)
 						echo Html::error($Error);
+				else
+					echo Html::info('Danke f&uuml;r deine Anmeldung! Du solltest in den n&auml;chsten Minuten eine E-Mail erhalten, in der du den Account best&auml;tigen kannst.');
 			}
 			?>
 			</fieldset>
