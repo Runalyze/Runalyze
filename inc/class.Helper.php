@@ -221,12 +221,22 @@ class Helper {
 	}
 
 	/**
-	 * Calculate time in seconds from a given string (min:s)
+	 * Calculate time in seconds from a given string (m:s|h:m:s)
 	 * @param string $string
 	 * @return int
 	 */
 	public static function TimeToSeconds($string) {
 		$TimeArray = explode(':', $string);
+
+		switch (count($TimeArray)) {
+			case 3:
+				return ($TimeArray[0]*60 + $TimeArray[1])*60 + $TimeArray[2];
+			case 2:
+				return $TimeArray[0]*60 + $TimeArray[1];
+			default:
+				return $string;
+		}
+
 		if (count($TimeArray) == 2)
 			return $TimeArray[0]*60 + $TimeArray[1];
 
@@ -266,10 +276,13 @@ class Helper {
 	 * @param bool $trimp        [optional] If set, calculate backwards, default: false     
 	 * @return int
 	 */
-	public static function TRIMP($training_id, $trimp = false) {
+	public static function TRIMP($training_id, $trimpToReach = false) {
 		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $training_id);
-		if ($dat === false)
-			$dat = array();
+
+		if ($dat === false && $trimpToReach === false)
+			return 0;
+		elseif ($dat === false)
+			$dat = array('sportid' => CONF_MAINSPORT, 'typeid' => 0, 'pulse_avg' => 0, 's' => 0);
 
 		$factor_a  = (CONF_GENDER == 'm') ? 0.64 : 0.86;
 		$factor_b  = (CONF_GENDER == 'm') ? 1.92 : 1.67;
@@ -286,11 +299,11 @@ class Helper {
 		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
 		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
 	
-		if ($trimp === false)
+		if ($trimpToReach === false)
 			return round($TRIMP);
 
 		// Anzahl der noetigen Minuten fuer $back als TRIMP-Wert
-		return $trimp / ( $HFperRest * $factor_a * exp($factor_b * $HFperRest) * 5.35 / 10 );
+		return $trimpToReach / ( $HFperRest * $factor_a * exp($factor_b * $HFperRest) * 5.35 / 10 );
 	}
 
 	/**

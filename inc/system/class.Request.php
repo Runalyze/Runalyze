@@ -9,6 +9,14 @@ class Request {
 	}
 
 	/**
+	 * Get requested filename
+	 * @return string
+	 */
+	static public function Basename() {
+		return basename(self::Uri());
+	}
+
+	/**
 	 * Was the request an AJAX-request?
 	 * @return boolean
 	 */

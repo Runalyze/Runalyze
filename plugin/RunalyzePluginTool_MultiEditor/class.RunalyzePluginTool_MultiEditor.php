@@ -7,12 +7,6 @@ $PLUGINKEY = 'RunalyzePluginTool_MultiEditor';
  * Class: RunalyzePluginTool_MultiEditor
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginTool
- * @uses class::Mysql
- * @uses class::Helper
- * @uses class::Draw
  */
 class RunalyzePluginTool_MultiEditor extends PluginTool {
 	/**

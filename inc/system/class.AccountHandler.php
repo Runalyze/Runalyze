@@ -12,12 +12,28 @@ class AccountHandler {
 	static private $SALT = 'USE_YOUR_OWN';
 
 	/**
+	 * Minimum length for passwords
+	 * @var int
+	 */
+	static private $PASS_MIN_LENGTH = 6;
+
+	/**
+	 * Update account-values
+	 * @param string $username
+	 * @param mixed $column
+	 * @param mixed $value 
+	 */
+	static private function updateAccount($username, $column, $value) {
+		Mysql::getInstance()->updateWhere(PREFIX.'account', '`username`="'.$username.'" LIMIT = 1', $column, $value, false);
+	}
+
+	/**
 	 * Get account-data from database
 	 * @param string $username
 	 * @return mixed
 	 */
 	static public function getDataFor($username) {
-		return Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1') );
+		return Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1');
 	}
 
 	/**
@@ -26,7 +42,7 @@ class AccountHandler {
 	 * @return boolean|string 
 	 */
 	static public function getMailFor($username) {
-		$result = Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT mail FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1') );
+		$result = Mysql::getInstance()->untouchedFetch('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1');
 
 		if (is_array($result) && isset($result['mail']))
 			return $result['mail'];
@@ -40,7 +56,7 @@ class AccountHandler {
 	 * @return boolean
 	 */
 	static public function usernameExists($username) {
-		return (1 == Mysql::getInstance()->num('SELECT 1 FROM '.PREFIX.'account WHERE username="'.mysql_real_escape_string($username).'" LIMIT 1'));
+		return (1 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1'));
 	}
 
 	/**
@@ -77,25 +93,34 @@ class AccountHandler {
 	static public function tryToRegisterNewUser() {
 		$errors = array();
 
-		// TODO
 		if (self::usernameExists($_POST['new_username']))
 			$errors[] = 'Der Benutzername ist bereits vergeben.';
 		else {
 			if ($_POST['password'] != $_POST['password_again'])
 				$errors[] = 'Die Passw&ouml;rter waren unterschiedlich.';
-			elseif (strlen($_POST['password']) < 6)
-				$errors[] = 'Das Passwort muss mindestens 6 Zeichen lang sein.';
-			else {
-				// 3) insert to PREFIX.'account
-				// 4) import sql-files: PROBLEM - accountid is missing
-				$errors[] = 'Das Registrieren von neuen Benutzern ist noch nicht m&ouml;glich.';
-			}
+			elseif (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
+				$errors[] = 'Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.';
+			else
+				$errors = self::createNewUserFromPost();
 		}
 
 		if (empty($errors)) {
 			header('Location: index.php');
 			return true;
 		}
+
+		return $errors;
+	}
+
+	/**
+	 * Create a new user from post-data 
+	 */
+	static private function createNewUserFromPost() {
+		$errors = array('Das Registrieren von neuen Benutzern ist noch nicht m&ouml;glich.');
+		// TODO
+		// 3) insert to PREFIX.'account
+		// 4) import sql-files: PROBLEM - accountid is missing
+		// 5) (try to) send email with activation-key
 
 		return $errors;
 	}
@@ -110,15 +135,14 @@ class AccountHandler {
 
 		if ($account) {
 			$pwHash = self::getChangePasswordHash();
-			Mysql::getInstance()->untouchedQuery('UPDATE '.PREFIX.'account SET changepw_hash="'.$pwHash.'", changepw_timelimit="'.(time()+24*DAY_IN_S).'" WHERE username="'.$username.'" LIMIT 1');
+			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Zugangsdaten';
 			$message  = "Passwort vergessen, ".$account['name']."?\n\n";
 			$message .= "Unter folgendem Link kannst du innerhalb der n&auml;chsten 24 Stunden dein Passwort &auml;ndern:\n";
 			$message .= self::getChangePasswordLink($pwHash);
-			$header   = "From: Runalyze <mail@runalyze.de>\nMIME-Version: 1.0\nContent-type: text/html; charset=UTF-8\n";
 
-			if (mail($account['mail'], $subject, $message, $header))
+			if (System::sendMail($account['mail'], $subject, $message))
 				return 'Der Passwort-Link wurde dir zugesandt und ist 24h g&uuml;ltig.';
 			else {
 				$string = 'Das Versenden der E-Mail hat nicht geklappt.';
@@ -180,10 +204,12 @@ class AccountHandler {
 		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
 				return array('Die Passw&ouml;rter waren unterschiedlich.');
-			elseif (strlen($_POST['new_pw']) < 6)
-				return array('Das Passwort muss mindestens 6 Zeichen lang sein.');
+			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
+				return array('Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.');
 			else {
-				Mysql::getInstance()->untouchedQuery('UPDATE '.PREFIX.'account SET password="'.self::passwordToHash($_POST['new_pw']).'", changepw_hash="", changepw_timelimit=0 WHERE username="'.$_POST['chpw_username'].'" LIMIT 1');
+				self::updateAccount($_POST['chpw_username'],
+					array('password', 'changepw_hash', 'changepw_timelimit'),
+					array(self::passwordToHash($_POST['new_pw']), '', 0));
 				header('Location: login.php');
 			}
 		} else

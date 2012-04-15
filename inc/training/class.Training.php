@@ -605,12 +605,9 @@ class Training {
 
 		for ($i = 0, $num = count($splits); $i < $num; $i++) {
 			$split = explode('|', $splits[$i]);
-			$timedata = explode(':', $split[1]);
 
-			if (!is_numeric($timedata[0]) || !is_numeric($timedata[1]))
-				Error::getInstance()->addNotice('Training-Splits: Keine korrekte Form (&quot;'.$splits[$i].'&quot;)');
-			else
-				$array[] = $timedata[0]*60 + $timedata[1];
+			if (isset($split[1]))
+				$array[] = Helper::TimeToSeconds($split[1]);
 		}
 
 		return $array;

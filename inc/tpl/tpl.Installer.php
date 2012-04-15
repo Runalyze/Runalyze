@@ -229,6 +229,15 @@ foreach ($Steps as $i => $Name) {
 		Trainings k&ouml;nnen sowohl hochgeladen als auch manuell eingegeben werden.
 	</p>
 
+	<?php if (!System::isAtLocalhost()): ?>
+	<p class="warning">
+		F&uuml;r die Nutzung des <em>GarminCommunicators</em> (f&uuml;r alle Forerunner) ist bei der
+		Online-Nutzung von Runalyze ein API-Key notwendig. Diesen kannst du bei
+		<a href="http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/" title="Garmin API-Key">Garmin</a>
+		f&uuml;r die Domain <em>http://<?php echo $_SERVER['HTTP_HOST']; ?></em> erstellen und in der Konfiguration eintragen.
+	</p>
+	<?php endif; ?>
+
 	<p class="text">
 		Viel Spa&szlig; mit Runalyze w&uuml;nschen die Entwickler!
 	</p>

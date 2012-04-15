@@ -6,7 +6,21 @@ class System {
 	 */
 	static public function hasDatabaseConnection() {
 		// TODO
-		return true;
+		return mysql_ping();
+	}
+
+	/**
+	 * Send an email via smtp
+	 * @param string $to
+	 * @param string $subject
+	 * @param string $message
+	 * @return boolean 
+	 */
+	static public function sendMail($to, $subject, $message) {
+		//ini_set('SMTP', "smtp.runalyze.de");
+		$header = "From: Runalyze <mail@runalyze.de>\nMIME-Version: 1.0\nContent-type: text/html; charset=UTF-8\n";
+
+		return mail($to, $subject, $message, $header);
 	}
 
 	/**
