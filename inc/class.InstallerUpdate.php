@@ -1,14 +1,7 @@
 <?php
 /**
- * This file contains the class::InstallerUpdate for updating Runalyze
- */
-/**
  * Class: InstallerUpdate
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class InstallerUpdate extends Installer {
 	/**
@@ -69,6 +62,6 @@ class InstallerUpdate extends Installer {
 	 * Display the Updater
 	 */
 	public function display() {
-		include 'tpl/tpl.InstallerUpdate.php';
+		include PATH.'tpl/tpl.InstallerUpdate.php';
 	}
 }

@@ -1,7 +1,6 @@
 <form id="newtraining" class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" method="post">
-
 	<input type="hidden" name="type" value="newtraining" />
-	<input type="hidden" id="kalorien_stunde" name="kalorienprostunde" value="0" />
+	<input type="hidden" id="kcalPerHour" name="kcalPerHour" value="0" />
 
 	<h1>Neues Training</h1>
 
@@ -9,14 +8,14 @@
 <?php
 $sports = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 foreach($sports as $sport) {
-	$onclick = 'kps('.$sport['kcal'].');';
-	$onclick .= ($sport['distances'] == 1) ? 'show(\'distanz\');' : 'unshow(\'distanz\');';
-	$onclick .= ($sport['types'] == 1) ? 'show(\'typen\');' : 'unshow(\'typen\');unshow(\'splits\');';
-	$onclick .= ($sport['pulse'] == 1) ? 'show(\'puls\');' : 'unshow(\'puls\');';
-	$onclick .= ($sport['outside'] == 1) ? 'show(\'outside\');' : 'unshow(\'outside\');';
+	$onclick = '$(\'#kcalPerHour\').val(\''.$sport['kcal'].'\');';
+	$onclick .= ($sport['distances'] == 1) ? '$(\'#distanz\').show();' : '$(\'#distanz\').hide();';
+	$onclick .= ($sport['types'] == 1) ? '$(\'#typen\').show();' : '$(\'#typen\').hide();$(\'#splits\').hide();';
+	$onclick .= ($sport['pulse'] == 1) ? '$(\'#puls\').show();' : '$(\'#puls\').hide();';
+	$onclick .= ($sport['outside'] == 1) ? '$(\'#outside\').show();' : '$(\'#outside\').hide();';
 
 	echo('
-		<label><input type="radio" name="sportid" value="'.$sport['id'].'" onClick="show(\'normal\');'.$onclick.'" /> '.$sport['name'].'</label> &nbsp; '.NL);
+		<label><input type="radio" name="sportid" value="'.$sport['id'].'" onClick="$(\'#normal\').show();'.$onclick.'" /> '.$sport['name'].'</label> &nbsp; '.NL);
 }
 
 if (isset($_POST['sportid']))
@@ -27,13 +26,11 @@ if (isset($_POST['sportid']))
 
 	<div style="float: left;">
 		<span id="normal" style="display: none;">
-			<label>
 				<?php echo HTML::simpleInputField('datum', 10, date('d.m.Y')); ?>
 				<?php echo HTML::simpleInputField('zeit', 4, '00:00'); ?>
-				<small>Datum</small>
-			</label><br />
+			<br />
 			<label>
-				<input type="text" size="8" name="s" id="dauer" value="<?php echo $_POST['s']; ?>" onChange="paceberechnung(); kalorienberechnung(); kmhberechnung();" />
+				<input type="text" size="8" name="s" id="dauer" value="<?php echo $_POST['s']; ?>" />
 				<small style="margin-right: 75px;">Dauer</small>
 			</label>
 			<label>
@@ -89,7 +86,7 @@ foreach($typen as $typ) {
 
 		<span id="distanz" style="display: none;">
 			<label>
-				<input type="text" size="4" name="distance" id="dist" value="<?php echo Helper::Unknown($_POST['distance'], '0.00'); ?>" onChange="paceberechnung(); kmhberechnung();" />
+				<input type="text" size="4" name="distance" id="dist" value="<?php echo Helper::Unknown($_POST['distance'], '0.00'); ?>" />
 				<small>km</small>
 			</label>
 			<label>
@@ -165,3 +162,7 @@ foreach($typen as $typ) {
 		<input style="margin-top: 10px;" type="submit" value="Eintragen!" />
 	</div>
 </form>
+
+<script type="text/javascript">
+<?php include FRONTEND_PATH.'../lib/jquery.form.include.php'; ?>
+</script>

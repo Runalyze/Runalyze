@@ -8,9 +8,9 @@ new Frontend(true);
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Garmin Display - Upload Selected Fitness Activities</title>
 
-	<style type="text/css" media="all">@import "../tcx/garmin/communicator2.css";</style>
-	<script type="text/javascript" src="../tcx/communicator-api/prototype/prototype.js"></script>
-	<script type="text/javascript" src="../tcx/communicator-api/garmin/device/GarminDeviceDisplay.js"></script>
+	<style type="text/css" media="all">@import "../../lib/garmin/communicator2.css";</style>
+	<script type="text/javascript" src="../../lib/garmin/prototype/prototype.js"></script>
+	<script type="text/javascript" src="../../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">	
 		function load() {
 		    var display = new Garmin.DeviceDisplay("garminDisplay", {
@@ -33,7 +33,16 @@ new Frontend(true);
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
 				uploadMaximum: 20, 
+				browseComputerButtonText: "Computer durchsuchen",
+				cancelUploadButtonText: "Abbrechen",
+				changeDeviceButtonText: "Abbrechen",
+				connectedDevicesLabel: "Verbundene Ger&auml;te: ",
+				deviceBrowserLabel: "Ger&auml;te durchsuchen: ",
+				deviceSelectLabel: "Ger&auml;te: ",
+				findDevicesButtonText: "Ger&auml;te suchen",
 				dataFound: "#{tracks} Trainings gefunden",
+				noDeviceDetectedStatusText: "Keine Ger&auml;te gefunden",
+				singleDeviceDetectedStatusText: "Gefunden: ",
 				showReadDataElementOnDeviceFound: true,
 				postActivityHandler: function(activityXml, display) {
 					window.parent.Runalyze.loadXML(activityXml);

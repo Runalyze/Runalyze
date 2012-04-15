@@ -5,7 +5,7 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  * @copyright http://runalyze.laufhannes.de/
  *
- * With this file you are able to install RUNALYZE.
+ * With this file you are able to update RUNALYZE.
  * Don't change anything in this file!
  */
 ?>
@@ -31,7 +31,7 @@
 
 	<div style="padding:0 70px;">
 <?php
-require_once 'inc/class.Mysql.php';
+require_once 'inc/system/class.Mysql.php';
 require_once 'inc/class.Installer.php';
 require_once 'inc/class.InstallerUpdate.php';
 

@@ -19,16 +19,12 @@ if (isset($_GET['out']))
 if (SessionHandler::isLoggedIn())
 	header('Location: index.php');
 
-// TODO: Register?
-//include 'inc/system/class.SessionHandler.php';
-//include 'inc/system/define.consts.php';
-
 $title = 'Runalyze v'.RUNALYZE_VERSION;
 $tpl   = 'tpl.loginWindow.php';
 
 if (isset($_GET['chpw']))
 	$tpl = 'tpl.loginWindow.setNewPassword.php';
 
-include 'inc/html/tpl/tpl.installerHeader.php';
-include 'inc/html/tpl/'.$tpl;
-include 'inc/html/tpl/tpl.installerFooter.php';
+include 'inc/tpl/tpl.installerHeader.php';
+include 'inc/tpl/'.$tpl;
+include 'inc/tpl/tpl.installerFooter.php';

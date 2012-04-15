@@ -343,4 +343,3 @@ class Installer {
 		return $array;
 	}
 }
-?>

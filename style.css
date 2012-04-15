@@ -216,7 +216,12 @@ fieldset input.unitBpm { background-image: url('img/units/bpm.png'); }
 fieldset input.unitKg { background-image: url('img/units/kg.png'); }
 fieldset input.unitKm { background-image: url('img/units/km.png'); }
 fieldset input.unitUser { background-image: url('img/units/user.png'); }
-fieldset input.unitPass{ background-image: url('img/units/pass.png'); }
+fieldset input.unitPass { background-image: url('img/units/pass.png'); }
+fieldset input.unitCelsius { background-image: url('img/units/celsius.png'); }
+fieldset input.unitElevation { background-image: url('img/units/hm.png'); }
+fieldset input.unitKcal { background-image: url('img/units/kcal.png'); }
+fieldset input.unitKmh { background-image: url('img/units/kmh.png'); }
+fieldset input.unitPace { background-image: url('img/units/pace.png'); }
 
 fieldset .validationFailed {
 	background-color: #FDEBD7;

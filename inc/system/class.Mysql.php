@@ -1,13 +1,7 @@
 <?php
 /**
- * This file contains the class::Mysql
- */
-/**
  * Class for handling a mysql-connection and getting rows from database
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
  */
 final class Mysql {
 	/**
@@ -78,11 +72,13 @@ final class Mysql {
 			Error::getInstance()->addDebug($query);
 
 		$result = false;
+
 		if ($addAccountId)
 			$query = $this->addAccountId($query);
 
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
+
 		return $result;
 	}
 
@@ -100,6 +96,7 @@ final class Mysql {
 
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);
+
 		return $result;
 	}
 
@@ -113,42 +110,26 @@ final class Mysql {
 	}
 
 	/**
-	 *	Adds a WHERE clause to the Query.
-	 *	@param $query string full mysql-query
-	 *	@return string $query (MySQL query)
-	 **/
-	private function addAccountId($query) {
-		if (!SessionHandler::isLoggedIn())
-			return $query;
-
-		$ID = SessionHandler::getId();
-
-		if (strpos($query, 'SET NAMES') !== false || empty($ID))
-			return $query;
-
-		if (strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {
-			if (strpos($query, 'WHERE') >= 7) {
-				return str_replace('WHERE', 'WHERE `accountid`="'.$ID.'" AND ', $query);
-			} elseif (strpos($query, 'GROUP BY') >= 7) {
-				return str_replace('GROUP BY', 'WHERE `accountid`="'.$ID.'" GROUP BY ', $query);
-			} elseif (strpos($query, 'ORDER BY') >= 7) {
-				return str_replace('ORDER BY', 'WHERE `accountid`="'.$ID.'" ORDER BY ', $query);
-			} else {
-				return $query.' WHERE `accountid`="'.$ID.'"';
-			}
-		}
-
-		return $query;
-	}
-	/**
 	 * Updates a table for a given ID.
-	 * @param $table  string
-	 * @param $id     int
-	 * @param $column mixed  might be an array
-	 * @param $value  mixed  might be an array
-	 * @param $addAccountId bool flag for adding accountid
+	 * @param string  $table
+	 * @param int     $id
+	 * @param mixed   $column might be an array
+	 * @param mixed   $value  might be an array
+	 * @param boolean $addAccountId bool flag for adding accountid
 	 */
 	public function update($table, $id, $column, $value, $addAccountId = true) {
+		$this->updateWhere($table, '`id`="'.$id.'" LIMIT 1', $column, $value, $addAccountId);
+	}
+
+	/**
+	 * Update all rows for a given where-clause
+	 * @param string  $table
+	 * @param string  $where
+	 * @param mixed   $column might be an array
+	 * @param mixed   $value  might be an array
+	 * @param boolean $addAccountId bool flag for adding accountid
+	 */
+	public function updateWhere($table, $where, $column, $value, $addAccountId = true) {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
@@ -163,7 +144,7 @@ final class Mysql {
 			$set = '`'.$column.'`='.self::escape($value, true, ($column=='clothes')).', ';
 		}
 
-		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE `id`="'.$id.'" LIMIT 1', $addAccountId);
+		$this->query('UPDATE `'.$table.'` SET '.substr($set,0,-2).' WHERE '.$where, $addAccountId);
 	}
 
 	/**
@@ -179,13 +160,14 @@ final class Mysql {
 
 		if ($table != PREFIX.'account' && !key_exists('accountid', $columns)) {
 			$columns[] = 'accountid';
-			$values[] = SessionHandler::getId();
+			$values[]  = SessionHandler::getId();
 		}
 
 		foreach ($columns as $k => $v)
 			$columns[$k] = '`'.$v.'`';
+
 		$columns = implode(', ', $columns);
-		$values = implode(', ', self::escape($values));
+		$values  = implode(', ', self::escape($values));
 
 		if (!$this->query('INSERT INTO `'.$table.'` ('.$columns.') VALUES('.$values.')'))
 			return false;
@@ -233,6 +215,7 @@ final class Mysql {
 	 */
 	public function fetch($table, $id = false, $as_array = false, $numeric = false) {
 		$return = array();
+
 		if ($id !== false && strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
@@ -291,13 +274,43 @@ final class Mysql {
 	 */
 	public function delete($table, $id) {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
-		Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
+			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 		
 		if (!is_int($id)) {
 			Error::getInstance()->addError('Second parameter for Mysql::delete() must be an integer. <$id='.$id.'>', __FILE__, __LINE__);
 			return;
 		}
+
 		$this->query('DELETE FROM `'.$table.'` WHERE `id`="'.$id.'" LIMIT 1');
+	}
+
+	/**
+	 *	Adds a WHERE clause to the Query.
+	 *	@param $query string full mysql-query
+	 *	@return string $query (MySQL query)
+	 **/
+	private function addAccountId($query) {
+		if (!SessionHandler::isLoggedIn())
+			return $query;
+
+		$ID = SessionHandler::getId();
+
+		if (strpos($query, 'SET NAMES') !== false || empty($ID))
+			return $query;
+
+		if (strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {
+			if (strpos($query, 'WHERE') >= 7) {
+				return str_replace('WHERE', 'WHERE `accountid`="'.$ID.'" AND ', $query);
+			} elseif (strpos($query, 'GROUP BY') >= 7) {
+				return str_replace('GROUP BY', 'WHERE `accountid`="'.$ID.'" GROUP BY ', $query);
+			} elseif (strpos($query, 'ORDER BY') >= 7) {
+				return str_replace('ORDER BY', 'WHERE `accountid`="'.$ID.'" ORDER BY ', $query);
+			} else {
+				return $query.' WHERE `accountid`="'.$ID.'"';
+			}
+		}
+
+		return $query;
 	}
 
 	/**

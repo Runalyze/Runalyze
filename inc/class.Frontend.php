@@ -134,8 +134,8 @@ class Frontend {
 	 * Init classes for Importer/Exporter
 	 */
 	private function initImporterExporter() {
-		require_once FRONTEND_PATH.'class.Importer.php';
-		require_once FRONTEND_PATH.'class.ImporterFormular.php';
+		require_once FRONTEND_PATH.'import/class.Importer.php';
+		require_once FRONTEND_PATH.'import/class.ImporterFormular.php';
 
 		Importer::registerImporter('TCX', 'ImporterTCX');
 		Importer::registerImporter('CSV', 'ImporterCSV');
