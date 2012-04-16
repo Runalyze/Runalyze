@@ -93,7 +93,7 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$this->addKey('elevation',   'hm', "echo HTML::simpleInputField('elevation', 3);", false);
 		$this->addKey('partner',     'Trainingspartner', "echo HTML::simpleInputField('partner', 20);", false);
 		$this->addKey('temperature', 'Temperatur', "echo HTML::simpleInputField('temperature', 2);", false);
-		$this->addKey('weather',     'Wetter', "echo Weather::getSelectBox();", false);
+		$this->addKey('weatherid',   'Wetter', "echo Weather::getSelectBox();", false);
 		$this->addKey('clothes',     'Kleidung', "echo Clothes::getCheckboxes();", false);
 		$this->addKey('splits',      'Zwischenzeiten', "echo HTML::textarea('splits', 70, 3);", false);
 	}

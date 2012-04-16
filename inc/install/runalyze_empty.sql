@@ -98,11 +98,6 @@ INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `online`, `short`, `kcal`, `H
 (5, 'Sonstiges', 'unknown.gif', 1, 0, 500, 120, 3, 0, 0, 0, 0, 0);
 
 --
--- Daten für Tabelle `runalyze_training`
---
-
-
---
 -- Daten für Tabelle `runalyze_type`
 --
 
@@ -115,17 +110,3 @@ INSERT INTO `runalyze_type` (`id`, `name`, `abbr`, `RPE`, `splits`) VALUES
 (6, 'Regenerationslauf', 'RL', 2, 0),
 (7, 'Langer Lauf', 'LL', 5, 0),
 (8, 'Warm-/Auslaufen', 'WA', 1, 0);
-
-
---
--- Daten für Tabelle `runalyze_weather`
---
-
-INSERT INTO `runalyze_weather` (`id`, `name`, `img`, `order`) VALUES
-(1, 'unbekannt', 'ka.gif', 0),
-(2, 'sonnig', 'sonnig.gif', 1),
-(3, 'heiter', 'heiter.gif', 2),
-(4, 'bew&ouml;lkt', 'bewoelkt.gif', 3),
-(5, 'wechselhaft', 'wechselhaft.gif', 4),
-(6, 'regnerisch', 'regnerisch.gif', 5),
-(7, 'Schnee', 'Schnee.gif', 6);

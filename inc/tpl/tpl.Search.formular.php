@@ -56,10 +56,10 @@ foreach ($sports as $sport) {
 echo('<br />');
 
 $conditions = array();
-$conditions[] = array('name' => 'shoeid', 'text' => 'Schuh', 'table' => ''.PREFIX.'shoe', 'multiple' => false);
-$conditions[] = array('name' => 'weatherid', 'text' => 'Wetter', 'table' => ''.PREFIX.'weather', 'multiple' => true);
-$conditions[] = array('name' => 'clothes', 'text' => 'Kleidung', 'table' => ''.PREFIX.'clothes', 'multiple' => true);
-$conditions[] = array('name' => 'typeid', 'text' => 'Trainingstyp', 'table' => ''.PREFIX.'type', 'multiple' => true);
+$conditions[] = array('name' => 'shoeid', 'text' => 'Schuh', 'table' => PREFIX.'shoe', 'multiple' => false);
+$conditions[] = array('name' => 'weatherid', 'text' => 'Wetter', 'table' => 'NO_TABLE', 'multiple' => true, 'options' => Weather::getFullArray());
+$conditions[] = array('name' => 'clothes', 'text' => 'Kleidung', 'table' => PREFIX.'clothes', 'multiple' => true);
+$conditions[] = array('name' => 'typeid', 'text' => 'Trainingstyp', 'table' => PREFIX.'type', 'multiple' => true);
 
 foreach ($conditions as $condition) {
 	$multiple      = ($condition['multiple'] !== false) ? ' multiple="multiple"' : '';
@@ -72,7 +72,10 @@ foreach ($conditions as $condition) {
 			<select name="val['.$condition['name'].'][]"'.$multiple.' size="5" id="select_'.$condition['name'].'">
 				<option value="egal"'.$selected_egal.'>--- egal</option>');
 
-	$options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC');
+	if (isset($condition['options']))
+		$options = $condition['options'];
+	else
+		$options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.$condition['table'].'` ORDER BY `id` ASC');
 	foreach ($options as $option) {
 		$selected        = HTML::Selected(isset($_POST['val']) && isset($_POST['val'][$condition['name']]) && in_array($option['id'], $_POST['val'][$condition['name']]));
 		echo('

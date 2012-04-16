@@ -113,9 +113,7 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getWeatherIcon($id, $title = '') {
-		$data = Mysql::getInstance()->fetch(PREFIX.'weather', $id);
-		if ($data === false)
-			return '';
+		$data = Weather::getDataFor($id);
 
 		if ($title == '')
 			$title = $data['name'];

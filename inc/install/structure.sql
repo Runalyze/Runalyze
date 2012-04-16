@@ -199,17 +199,3 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_weather`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_weather` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) COLLATE latin1_general_ci NOT NULL,
-  `img` varchar(100) COLLATE latin1_general_ci NOT NULL DEFAULT 'ka.gif',
-  `order` smallint(6) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=8 ;
