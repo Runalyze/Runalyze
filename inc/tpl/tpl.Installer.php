@@ -246,6 +246,17 @@ foreach ($Steps as $i => $Name) {
 		<a class="button" href="index.php" title="zu Runalyze">Runalyze starten</a>
 	</p>
 
+<?php
+$perms = substr(sprintf('%o', fileperms(PATH.'/import/files/')), -4);
+if ($perms != "0777")
+	if (chmod(PATH.'/import/files/', 0777))
+		echo '<p class="info">Die Dateirechte f&uuml;r <em>/inc/import/files/</em> wurden auf <em>chmod 777</em> gestellt.</p>';
+	else
+		echo '<p class="error">Bitte setze die Dateirechte f&uuml;r <em>/inc/import/files/</em> auf <em>chmod 777</em>.</p>';
+else
+	echo '<p class="okay">Der Upload-Ordner hat folgende Dateirechte: '.substr(sprintf('%o', fileperms(PATH.'/import/files/')), -4).'</p>';
+?>
+
 <?php endif; ?>
 
 	<p class="error" id="JSerror">

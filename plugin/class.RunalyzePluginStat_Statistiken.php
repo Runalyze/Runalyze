@@ -150,8 +150,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 			echo '<tr class="a'.(($w%2)+1).'"><td class="b">'.Ajax::tooltip('KW '.strftime("%W", $time), date("d.m.Y", $start).' bis '.date("d.m.Y", $end)).'</td>';
 
-			$Dataset->loadGroupOfTrainings($this->sportid, $start, $end);
-			$Dataset->displayTableColumns();
+			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end))
+				$Dataset->displayTableColumns();
+			else
+				echo Html::emptyTD($Dataset->column_count);
 
 			echo '</tr>';
 		}

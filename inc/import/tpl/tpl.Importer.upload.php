@@ -9,7 +9,13 @@ function createUploader() {
 		allowedExtensions: [<?php echo $AllowedFormatsForJS; ?>],
 		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
 		onComplete : function(file, response){
-			$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
+			if (response == 'success')
+				$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
+			else {
+				if (response == '')
+					response = 'An unknown error occured.';
+				$("#ajax").append('<p class="error">'+response+'</p>');
+			}
 		}		
 	});
 }
