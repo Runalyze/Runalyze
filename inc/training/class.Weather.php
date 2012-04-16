@@ -15,7 +15,15 @@ class Weather {
 	* Array containing all rows from database
 	* @var array
 	*/
-	static private $fullArray = null;
+	static private $fullArray = array(
+		1 => array('id' => 1, 'name' => 'unbekannt',	'img' => 'ka.png',			'order' => 0),
+		2 => array('id' => 2, 'name' => 'sonnig',		'img' => 'sonnig.png',		'order' => 1),
+		3 => array('id' => 3, 'name' => 'heiter',		'img' => 'heiter.png',		'order' => 2),
+		4 => array('id' => 4, 'name' => 'bew&ouml;lkt',	'img' => 'bewoelkt.png',	'order' => 3),
+		5 => array('id' => 5, 'name' => 'wechselhaft',	'img' => 'wechselhaft.png',	'order' => 4),
+		6 => array('id' => 6, 'name' => 'regnerisch',	'img' => 'regnerisch.png',	'order' => 5),
+		7 => array('id' => 7, 'name' => 'Schnee',		'img' => 'Schnee.png',		'order' => 6)
+	);
 
 	/**
 	 * ID for unknown weather in database
@@ -90,16 +98,27 @@ class Weather {
 	}
 
 	/**
+	 * Get data array for a given ID
+	 * @param int $id
+	 * @return array 
+	 */
+	static public function getDataFor($id) {
+		if (isset(self::$fullArray[$id]))
+			return self::$fullArray[$id];
+
+		if ($id == self::$UNKNOWN_ID) {
+			Error::getInstance()->addError('Fatal error - ID for unknown weather not set in internal array.');
+			return array('id' => 0, 'name' => '?', 'img' => 'ka.png', 'order' => 0);
+		}
+
+		return getDataFor(self::$UNKNOWN_ID);
+	}
+
+	/**
 	 * Get all rows from database
 	 * @return array
 	 */
 	static public function getFullArray() {
-		if (is_null(self::$fullArray)) {
-			$array = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'weather` ORDER BY `id` ASC');
-			foreach ($array as $data)
-				self::$fullArray[$data['id']] = $data;
-		}
-
 		return self::$fullArray;
 	}
 
@@ -280,10 +299,12 @@ class Weather {
 	 * @return int
 	 */
 	private function getIdFromAPICondition($condition) {
-		$name = $this->translateGoogleConditionToInternalName($condition);
-		$data = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'weather` WHERE `name`="'.$name.'"');
+		$condition = $this->translateGoogleConditionToInternalName($condition);
+		foreach (self::$fullArray as $id => $data)
+			if ($data['name'] == $condition)
+				return $id;
 
-		return $data['id'];
+		return self::$UNKNOWN_ID;
 	}
 
 	/**
@@ -300,11 +321,11 @@ class Weather {
 				case 'Teils sonnig':
 					return 'heiter';
 				case 'Bedeckt':
-				case 'Meistens bew�lkt':
-				case 'Bew�lkt':
+				case 'Meistens bewölkt':
+				case 'Bewölkt':
 				case 'Nebel':
 					return 'bew&ouml;lkt';
-				case 'Vereinzelt st�rmisch':
+				case 'Vereinzelt stürmisch':
 				case 'Vereinzelte Schauer':
 				case 'Vereinzelt Regen':
 				case 'Leichter Regen':
@@ -367,4 +388,3 @@ class Weather {
 			}
 	}
 }
-?>
