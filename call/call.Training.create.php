@@ -5,7 +5,7 @@
  */
 require '../inc/class.Frontend.php';
 
-$Frontend = new Frontend();
+$Frontend = new Frontend(isset($_GET['json']));
 
 System::setMaximalLimits();
 

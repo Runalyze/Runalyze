@@ -62,4 +62,4 @@ ALTER TABLE `runalyze_account` ADD `registerdate` INT NOT NULL, ADD `lastaction`
 ALTER TABLE `runalyze_account` CHANGE `session_id` `session_id` VARCHAR( 32 ) NULL DEFAULT NULL;
 
 /* Rev196 */
-DROP TABLE `runalyze_weather`
+DROP TABLE `runalyze_weather`;

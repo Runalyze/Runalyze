@@ -70,6 +70,7 @@ class Dataset {
 	 * @param int $sportid
 	 * @param int $timestamp_start
 	 * @param int $timestamp_end
+	 * @return boolean Are any trainings loaded?
 	 */
 	public function loadGroupOfTrainings($sportid, $timestamp_start, $timestamp_end) {
 		$this->setTrainingId(-1);
@@ -82,8 +83,8 @@ class Dataset {
 
 		// TODO: Don't use * for selecting
 		$summary = Mysql::getInstance()->fetchSingle('SELECT *, SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' GROUP BY `sportid`');
-		if ($summary === false)
-			return;
+		if ($summary === false || empty($summary))
+			return false;
 
 		foreach ($summary as $var => $value)
 			$this->Training->set($var, $value);
@@ -94,6 +95,8 @@ class Dataset {
 				if ($avg_data !== false)
 					$this->Training->set($set['name'], ($avg_data['num']*$avg_data[$set['name']]/$avg_data['ssum']));
 			}
+
+		return true;
 	}
 
 	/**

@@ -6,6 +6,12 @@
  */
 abstract class Importer {
 	/**
+	 * Path to files, after construction with absolute path
+	 * @var string 
+	 */
+	protected $pathToFiles = '/files/';
+
+	/**
 	 * Boolean flag: log all filecontents?
 	 * @var bool
 	 */
@@ -76,6 +82,7 @@ abstract class Importer {
 	 */
 	protected function __construct($fileName = '') {
 		$this->fileName = $fileName;
+		$this->pathToFiles = realpath(dirname(__FILE__)).$this->pathToFiles;
 
 		$this->setAllowedKeys();
 		$this->setTrainingValues();
@@ -132,7 +139,7 @@ abstract class Importer {
 				return new ImporterFormular();
 		}
 
-		if (isset(self::$formats[$format]) && class_exists(self::$formats[$format]))
+		if (self::isKnownFormat($format))
 			return new self::$formats[$format]($fileName);
 
 		Error::getInstance()->addError('Importer: unknown input format "'.$format.'".');
@@ -141,18 +148,29 @@ abstract class Importer {
 	}
 
 	/**
+	 * Is this format known?
+	 * @param string $format
+	 * @return boolean
+	 */
+	static public function isKnownFormat($format) {
+		$format = mb_strtoupper($format);
+
+		return (isset(self::$formats[$format]) && class_exists(self::$formats[$format]));
+	}
+
+	/**
 	 * Register a new importer
 	 * @param string $format
 	 * @param string $className
 	 */
 	static public function registerImporter($format, $className) {
-		$fileName = 'import/class.'.$className.'.php';
-		if (file_exists(FRONTEND_PATH.$fileName)) {
+		$classFileName = 'import/class.'.$className.'.php';
+		if (file_exists(FRONTEND_PATH.$classFileName)) {
 			self::$formats[$format] = $className;
 
-			require_once FRONTEND_PATH.$fileName;
+			require_once FRONTEND_PATH.$classFileName;
 		} else {
-			Error::getInstance()->addError('Importer: Can\'t find "'.$fileName.'" to register format "'.$format.'".');
+			Error::getInstance()->addError('Importer: Can\'t find "'.$classFileName.'" to register format "'.$format.'".');
 		}
 	}
 
@@ -176,7 +194,7 @@ abstract class Importer {
 		$PathInfo = pathinfo($fileName);
 
 		if (!isset($PathInfo['extension'])) {
-			$this->addError('Die hochgeladene Datei hat keine Endung. Leerzeichen d&uuml;rfen nicht enthalten sein.');
+			Error::getInstance()->addError('Die hochgeladene Datei hat keine Endung. Leerzeichen d&uuml;rfen nicht enthalten sein.');
 			return '';
 		}
 
@@ -188,10 +206,12 @@ abstract class Importer {
 	 * @return bool
 	 */
 	public function tryToUploadFileHasSuccess() {
-		if (isset($_GET['json'])) {
-			// TODO: Fehlermeldungen klappen nicht so recht
-			if (!$this->uploadFile())
-				return false;
+		if (isset($_GET['json'])) { // TODO: Fehlermeldungen klappen nicht so recht
+			$responseCode = $this->uploadFile();
+			if ($responseCode !== true) {
+				echo $responseCode;
+				return true;
+			}
 		
 			Error::getInstance()->footer_sent = true;
 			echo 'success';
@@ -203,18 +223,29 @@ abstract class Importer {
 
 	/**
 	 * Upload file
-	 * @return bool
+	 * @return boolean
 	 */
 	private function uploadFile() {
-		if (self::uploadedFileWasTooBig()) {
-			$this->addError('Uploaded file was too big.');
-			return false;
-		}
+		$format = self::getExtensionFrom($_FILES['userfile']['name']);
+		if (!self::isKnownFormat($format))
+			return 'Unknown input format "'.$format.'".';
 
-		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $_FILES['userfile']['name'])) {
-			$this->addError('Can\'t move uploaded file '.$_FILES['userfile']['name']);
-			return false;
-		}
+		if (self::uploadedFileWasTooBig())
+			return 'Uploaded file was too big.';
+
+		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $this->absolutePathTo($_FILES['userfile']['name'])))
+			return 'Can\'t move uploaded file '.$_FILES['userfile']['name'].'. Check permissions and filesystem.';
+
+		return true;
+	}
+
+	/**
+	 * Absolute path to uploaded files
+	 * @param string $fileName
+	 * @return string 
+	 */
+	private function absolutePathTo($fileName) {
+		return $this->pathToFiles.$fileName;
 	}
 
 	/**
@@ -252,14 +283,16 @@ abstract class Importer {
 			return $string;
 		}
 
-		if (!file_exists($this->fileName)) {
+		$file = $this->absolutePathTo($this->fileName);
+
+		if (!file_exists($file)) {
 			$this->addError('class::Importer: Uploaded file "'.$this->fileName.'" can\'t be found.');
 			return;
 		}
 
-		$Content = utf8_encode(file_get_contents($this->fileName));
+		$Content = utf8_encode(file_get_contents($file));
 		$this->logFileContent($Content);
-		unlink($this->fileName);
+		unlink($file);
 
 		return $Content;
 	}
