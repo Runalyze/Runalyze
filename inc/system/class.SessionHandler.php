@@ -43,6 +43,12 @@ class SessionHandler {
 	static public $ERROR_TYPE_WRONG_PASSWORD = 2;
 
 	/**
+	 * Error: activation needed
+	 * @var enum
+	 */
+	static public $ERROR_TYPE_ACTIVATION_NEEDED = 3;
+
+	/**
 	 * Construct a new SessionHandler 
 	 */
 	function __construct() {
@@ -53,7 +59,7 @@ class SessionHandler {
 				header('Location: index.php');
 			elseif ($this->tryToLoginFromCookie())
 				header('Location: index.php');
-			elseif (self::$USER_MUST_LOGIN && Request::Basename() != 'login.php')
+			elseif (self::$USER_MUST_LOGIN && substr(Request::Basename(), 0, 9) != 'login.php')
 				header('Location: login.php');
 		}
 	}
@@ -122,10 +128,14 @@ class SessionHandler {
 		if (isset($_POST['chpw_hash']))
 			AccountHandler::tryToSetNewPassword();
 
-		Error::getInstance()->addDebug('User "'.$username.'" tries to login.');
-
 		$Account = Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1') );
 		if ($Account) {
+			if (strlen($Account['activation_hash']) > 0) {
+				$this->throwErrorForActivationNeeded();
+
+				return false;
+			}
+
 			if (AccountHandler::comparePasswords($password, $Account['password'])) {
 				$this->setAccount($Account);
 				$this->setSession();
@@ -213,6 +223,7 @@ class SessionHandler {
 	 */
 	static public function logout() {
 		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'session_id', 0);
+		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'autologin_hash', '');
 		session_destroy();
 		unset($_SESSION);
 	}
@@ -251,16 +262,23 @@ class SessionHandler {
 	}
 
 	/**
-	 * Throw error: Wrong password 
+	 * Throw error: wrong password 
 	 */
 	private function throwErrorForWrongPassword() {
 		self::$ErrorType = self::$ERROR_TYPE_WRONG_PASSWORD;
 	}
 
 	/**
-	 * Throw error: Wrong username 
+	 * Throw error: wrong username 
 	 */
 	private function throwErrorForWrongUsername() {
 		self::$ErrorType = self::$ERROR_TYPE_WRONG_USERNAME;
+	}
+
+	/**
+	 * Throw error: activation needed
+	 */
+	private function throwErrorForActivationNeeded() {
+		self::$ErrorType = self::$ERROR_TYPE_ACTIVATION_NEEDED;
 	}
 }

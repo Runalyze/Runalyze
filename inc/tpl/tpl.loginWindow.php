@@ -24,6 +24,8 @@
 					echo '<p class="error">Der Benutzername ist nicht bekannt.</p>';
 				elseif (SessionHandler::$ErrorType == SessionHandler::$ERROR_TYPE_WRONG_PASSWORD)
 					echo '<p class="error">Das Passwort war nicht richtig.</p>';
+				elseif (SessionHandler::$ErrorType == SessionHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
+					echo '<p class="error">Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.</p>';
 			}
 			?>
 

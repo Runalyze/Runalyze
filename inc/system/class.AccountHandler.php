@@ -116,11 +116,20 @@ class AccountHandler {
 	 * Create a new user from post-data 
 	 */
 	static private function createNewUserFromPost() {
+		$errors = array();
 		$errors = array('Das Registrieren von neuen Benutzern ist noch nicht m&ouml;glich.');
-		// TODO
-		// 3) insert to PREFIX.'account
-		// 4) import sql-files: PROBLEM - accountid is missing
-		// 5) (try to) send email with activation-key
+
+		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
+		$newAccountId   = Mysql::getInstance()->insert(PREFIX.'account',
+				array('username', 'name', 'mail', 'password', 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password'], time(), $activationHash)));
+
+		if ($newAccountId === false)
+			$errors[] = 'Beim Registrieren ist etwas schiefgelaufen. Bitte benachrichtige den Administrator.';
+		else {
+			// 4) import sql-files: PROBLEM - accountid is missing
+			// 5) (try to) send email with activation-key
+		}
 
 		return $errors;
 	}
@@ -145,7 +154,7 @@ class AccountHandler {
 			if (System::sendMail($account['mail'], $subject, $message))
 				return 'Der Passwort-Link wurde dir zugesandt und ist 24h g&uuml;ltig.';
 			else {
-				$string = 'Das Versenden der E-Mail hat nicht geklappt.';
+				$string = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
 
 				if (System::isAtLocalhost()) {
 					$string .= '<br />Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
@@ -164,7 +173,15 @@ class AccountHandler {
 	 * @return string 
 	 */
 	static private function getChangePasswordHash() {
-		return md5(substr(time()-rand(100, 100000),5,10).substr(time()-rand(100, 100000),-5)); 
+		return self::getRandomHash();
+	}
+
+	/**
+	 * Get hash
+	 * @return string 
+	 */
+	static private function getRandomHash() {
+		return md5(substr(time()-rand(100, 100000),5,10).substr(time()-rand(100, 100000),-5));
 	}
 
 	/**
@@ -214,5 +231,20 @@ class AccountHandler {
 			}
 		} else
 			return array('Da ist etwas schiefgelaufen.');
+	}
+
+	/**
+	 * Try to activate the account
+	 * @return boolean 
+	 */
+	static public function tryToActivateAccount() {
+		$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.  mysql_real_escape_string($_GET['activate']).'" LIMIT 1');
+		if ($Account) {
+			Mysql::getInstance()->update(PREFIX.'account', $Account['id'], 'activation_hash', '');
+
+			return true;
+		}
+
+		return false;
 	}
 }

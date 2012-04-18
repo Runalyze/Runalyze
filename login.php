@@ -24,6 +24,8 @@ $tpl   = 'tpl.loginWindow.php';
 
 if (isset($_GET['chpw']))
 	$tpl = 'tpl.loginWindow.setNewPassword.php';
+if (isset($_GET['activate']))
+	$tpl = 'tpl.loginWindow.activateAccount.php';
 
 include 'inc/tpl/tpl.installerHeader.php';
 include 'inc/tpl/'.$tpl;
