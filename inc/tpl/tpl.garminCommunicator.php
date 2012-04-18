@@ -44,6 +44,9 @@ new Frontend(true);
 				noDeviceDetectedStatusText: "Keine Ger&auml;te gefunden",
 				singleDeviceDetectedStatusText: "Gefunden: ",
 				showReadDataElementOnDeviceFound: true,
+				getActivityDirectoryHeaderIdLabel: function () { return 'Datum'; },
+				activityDirectoryHeaderDuration: 'Dauer',
+				activityDirectoryHeaderStatus: '',
 				postActivityHandler: function(activityXml, display) {
 					window.parent.Runalyze.loadXML(activityXml);
 				},

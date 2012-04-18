@@ -4,107 +4,84 @@ body { padding: 0; margin: 0; }
 	font: normal normal normal 11px/1.2em Verdana, Arial, sans-serif;
 	color: #333;
 	text-align: center;
-	height: 170px;
+	height: 200px;
 	width: 530px;
 	margin: 0 auto;
 	padding: 3px;
 	border: 1px solid #D2D2D3;
-	background: url(bg.png) no-repeat scroll 0 0 transparent;
+	background: url(bg.jpg) no-repeat scroll center center;
 }
 
 #progressBar {
+	margin-top: 60px;
 	position: relative;
     height: 20px;
-    border: 1px solid black;
+	padding: 1px;
+    border: 1px solid #000;
     background-color: #CCCAC1;
-	-webkit-border-radius: 3px;
-	-khtml-border-radius: 3px;
-	-moz-border-radius: 3px;
-	box-shadow: 3px 2px 5px #999;
-	-webkit-box-shadow: 3px 2px 5px #999;
-	-moz-box-shadow: 3px 2px 5px #999;
+	-webkit-box-shadow: 0 0 5px #777;
+	-moz-box-shadow: 0 0 5px #777;
+	box-shadow: 0 0 5px #777;
+	overflow: hidden;
 }
 
 #progressBarDisplay {
-    position:absolute;
-    top: 0;
-	left: 0;
+    position: absolute;
+    top: 1px;
+	left: 1px;
     z-index: 5;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-	/*background: url(button_bg.jpg) repeat-x -5px -5px;*/
-    /*background-color:#005E9D;*/
-	height: 100%;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-	box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-	background: rgb(73,155,234);
-	background: -moz-linear-gradient(top,  rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(73,155,234,1)), color-stop(100%,rgba(32,124,229,1)));
-	background: -webkit-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
-	background: -o-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
-	background: -ms-linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
-	background: linear-gradient(top,  rgba(73,155,234,1) 0%,rgba(32,124,229,1) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 );
+	height: 20px;
+	-moz-box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
+	-webkit-box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
+	box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
+	background: #800;
 }
 
 #progressBarText {
 	z-index: 10;
 	color: #FFF;
 	text-align: center;
-	height: 13px;
-	padding: 3px 0;
+	height: 12px;
+	padding: 4px 0;
 	width: 100%;
 	position: absolute;
+}
+
+.shortStatus {
+	color: #666;
+	margin-top: 5px;
 }
 
 #aboutElement, #deviceBrowserBox, #cancelUploadButton {
 	display: none;
 }
 
-#garminDisplay input:disabled {
-    background-color: #D0D0D0;
+#garminDisplay select {
+    color: #666;
+    text-align: center;
+    padding: 2px;
+	margin: 4px 2px;
+	border: 1px solid #B8B8B8;
+	border-radius: 3px 3px 3px 3px;
+	background-color: #EBFDD7;
 }
 
-#garminDisplay select { 
+#deviceSelectLabel {
 	font-weight: bold;
-    /*background-color: #666699;*/ 
-    background-color: #FFFFFF;
-    color: #005E9D;
-    text-align: center;
-    
 }
 
 #deviceSelectBox {
-   	background: url(choose_bg.png) no-repeat;
-	width: 259px;
-	height: 101px;
-	/*position: absolute;*/
-	/*bottom: 140px;
-	left: 70px;*/
-	text-align: center;
+	margin: 20px auto;
 }
 
 #readBox {
     text-align: center;
 }
-
-#statusBox {
-    /*font-size: 14px;*/
-    /*margin-top: 60px;*/
-}
 	
 #statusText {
-   	/*position: absolute;
-	top: 65px;
-	left: 18px;*/
 	text-align: center;
 	width: 90%;
-	margin: 0 auto;
+	margin: 60px auto 0;
 	font-weight: bold;
 }
 #buttonDescription {
@@ -115,60 +92,50 @@ body { padding: 0; margin: 0; }
 }
 
 #activityDirectoryData {
-    width: 410px;
+    width: 480px;
     margin-left: auto;
     margin-right: auto;
-    max-height: 100px;
+    max-height: 134px;
     overflow: auto;
     position: relative;
-    /*left: 10px;*/
-    /*border: 2px outset black;*/
 }
 #activityDirectoryData tr {
 	width: 390px;
-    margin-bottom: 30px;
 }
 
 #activityTableHeader {
     color: #000;
-    width: 405px;
+    width: 475px;
     margin: 0 auto;
 }
 #activityTableHeader td {
 	padding: 2px 0;
 	text-align: center !important;
-	border-bottom: 1px solid #000;
+	font-weight: bold;
+}
+
+#durationHeader {
+	padding-right: 18px;
 }
 
 #activityTable {
+	border-top: 1px solid #000;
     color: #000000;
     background-color: #D0D0D0;
     font-weight: normal;
     font-size: 10px;
-    width: 390px;
+}
+
+#activityDirectoryData td {
+	background: rgba(255,255,255,.6);
+}
+
+#activityDirectoryData .odd td {
+	background: rgba(255,255,255,.8);
 }
 
 .pluginElement {
 	margin: 5px;
-}
-
-#deviceSelect {
-	margin-top: 17px;
-    width: 220px;
-    padding: 5px;
-    line-height: 30px;
-}
-
-#deviceSelectLabel {
-	margin-top: 15px;
-	font-weight: bold;
-}
-
-#aboutElement {
-    /*position: absolute;
-    right: 8px;
-    bottom: 5px;*/
-    color: #5e5e5e;
 }
 
 .readResultsElement {

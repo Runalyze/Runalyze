@@ -6,5 +6,5 @@
 			<img class="link" style="vertical-align:middle;" src="<?php echo Icon::getSrc(ICON::$REFRESH); ?>" onclick="$('#GCapi').attr('src', 'inc/tpl/tpl.garminCommunicator.php')" />
 		</small>
 
-		<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="180px"></iframe>
+		<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" width="550px" height="210px"></iframe>
 	</div>
