@@ -77,6 +77,13 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	}
 
 	/**
+	 * Show message that some trainings have been imported, can be called from an Importer 
+	 */
+	public function showImportedMessage() {
+		echo HTML::em('Die Trainings wurden importiert.').'<br /><br />';
+	}
+
+	/**
 	 * Init all keys
 	 */
 	private function initPossibleKeys() {
