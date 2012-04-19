@@ -29,7 +29,7 @@ class ImporterLogbook extends Importer {
 
 	/**
 	 * Plugin for MultiEditor
-	 * @var Plugin
+	 * @var RunalyzePluginTool_MultiEditor
 	 */
 	protected $MultiEditor = null;
 
@@ -62,7 +62,7 @@ class ImporterLogbook extends Importer {
 		if (!empty($this->Errors))
 			$this->displayErrors();
 		elseif (!is_null($this->MultiEditor)) {
-			echo HTML::em('Die Trainings wurden importiert.').'<br /><br />';
+			$this->MultiEditor->showImportedMessage();
 			$this->MultiEditor->display();
 		}
 	}

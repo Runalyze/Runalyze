@@ -10,10 +10,16 @@
  */
 class ImporterTCX extends Importer {
 	/**
-	 * Parsed XML as array
-	 * @var array
+	 * Parsed XML
+	 * @var SimpleXmlElement
 	 */
 	private $XML;
+
+	/**
+	 * Parsed XML
+	 * @var SimpleXmlElement
+	 */
+	private $CompleteXML;
 
 	/**
 	 * Internal array for all arrays
@@ -41,7 +47,7 @@ class ImporterTCX extends Importer {
 
 	/**
 	 * Plugin for MultiEditor
-	 * @var Plugin
+	 * @var RunalyzePluginTool_MultiEditor
 	 */
 	protected $MultiEditor = null;
 
@@ -58,10 +64,10 @@ class ImporterTCX extends Importer {
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		if ($_POST['data'] == 'FINISHED' && is_array($_POST['activityIds'])) {
+		if (isset($_POST['data']) && $_POST['data'] == 'FINISHED' && is_array($_POST['activityIds'])) {
 			$this->createTrainingsFromFiles($_POST['activityIds']);
 		} else {
-			$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
+			$this->CompleteXML = simplexml_load_string_utf8($this->getFileContentAsString());
 			$this->parseXML();
 		}
 	}
@@ -71,7 +77,7 @@ class ImporterTCX extends Importer {
 	 */
 	public function displayHTMLformular() {
 		if (!is_null($this->MultiEditor)) {
-			echo HTML::em('Die Trainings wurden importiert.').'<br /><br />';
+			$this->MultiEditor->showImportedMessage();
 			$this->MultiEditor->display();
 		} else {
 			parent::displayHTMLformular();
@@ -87,8 +93,8 @@ class ImporterTCX extends Importer {
 		$_POST = array();
 
 		foreach ($fileNames as $fileName) {
-			$rawFileContent = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
-			$this->XML      = simplexml_load_string_utf8( ImporterTCX::decodeCompressedData($rawFileContent) );
+			$rawFileContent    = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
+			$this->CompleteXML = simplexml_load_string_utf8( ImporterTCX::decodeCompressedData($rawFileContent) );
 			$this->parseXML();
 			$this->transformTrainingDataToPostData();
 
@@ -124,12 +130,29 @@ class ImporterTCX extends Importer {
 		if (!$this->isGarminFile())
 			return;
 
-		// TODO: Mehrere Trainings
+		$multipleFiles = ($this->CompleteXML->Activities->Activity->count() > 1);
+		$IDs = array();
 
-		$this->initParser();
-		$this->parseStarttime();
-		$this->parseLaps();
-		$this->setValues();
+		foreach ($this->CompleteXML->Activities->Activity as $Activity) {
+			$this->initParser($Activity);
+			$this->parseStarttime();
+			$this->parseLaps();
+			$this->setValues();
+
+			if ($multipleFiles) {
+				$this->transformTrainingDataToPostData();
+
+				$Importer = new ImporterFormular();
+				$Importer->setTrainingValues();
+				$Importer->parsePostData();
+				$Importer->insertTraining();
+
+				$IDs[] = $Importer->insertedID;
+			}
+		}
+
+		if ($multipleFiles)
+			$this->forwardToMultiEditor($IDs);
 	}
 
 	/**
@@ -184,9 +207,17 @@ class ImporterTCX extends Importer {
 
 	/**
 	 * Init the parser
+	 * @param SimpleXmlElement $CurrentActivity
 	 */
-	protected function initParser() {
-		$this->XML       = $this->XML->Activities->Activity;
+	protected function initParser($CurrentActivity) {
+		$this->XML = $CurrentActivity;
+		$this->initEmptyValues();
+	}
+
+	/**
+	 * Init all empty values 
+	 */
+	protected function initEmptyValues() {
 		$this->starttime = 0;
 		$this->calories  = 0;
 		$this->data      = array(
@@ -287,10 +318,10 @@ class ImporterTCX extends Importer {
 	 * @return bool
 	 */
 	private function isGarminFile() {
-		if (!empty($this->XML->Activities->Activity))
+		if (!empty($this->CompleteXML->Activities->Activity))
 			return true;
 
-		if (!empty($this->XML->Courses))
+		if (!empty($this->CompleteXML->Courses))
 			$this->addError('Dies ist eine Garmin Course TCX-Datei und enth&auml;lt keine Trainingsdaten.');
 		else
 			$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
@@ -349,4 +380,3 @@ class ImporterTCX extends Importer {
 		return gzinflate(substr(base64_decode($string),10,-8));
 	}
 }
-?>

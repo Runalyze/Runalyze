@@ -66,7 +66,8 @@ new Frontend(true);
 					currentActivity = currentActivity + 1;
 				},
 				afterFinishUploads: function(display) {
-					window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
+					if (uploadedActivities.length > 1)
+						window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
