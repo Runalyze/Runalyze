@@ -634,12 +634,15 @@ class GpsData {
 
 		switch (CONF_TRAINING_ELEVATION_SERVER) {
 			case 'google':
-				$this->arrayForElevation = $this->getElevationCorrectionFromGoogle();
+				$returnedArray = $this->getElevationCorrectionFromGoogle();
 				break;
 			case 'geonames':
 			default:
-				$this->arrayForElevation = $this->getElevationCorrectionFromGeonames();
+				$returnedArray = $this->getElevationCorrectionFromGeonames();
 		}
+
+		if (is_array($returnedArray) && !empty($returnedArray))
+			$this->arrayForElevation = $returnedArray;
 
 		$this->correctInvalidElevationValues();
 

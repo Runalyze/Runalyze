@@ -12,8 +12,10 @@ new Frontend(true);
 	<script type="text/javascript" src="../../lib/garmin/prototype/prototype.js"></script>
 	<script type="text/javascript" src="../../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">	
+		var currentActivity = 0, uploadedActivities = [];
 		function load() {
 		    var display = new Garmin.DeviceDisplay("garminDisplay", {
+				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br />Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
 				showReadDataElement: true,
 				showProgressBar: true,
 				showFindDevicesElement: true,
@@ -40,18 +42,31 @@ new Frontend(true);
 				deviceBrowserLabel: "Ger&auml;te durchsuchen: ",
 				deviceSelectLabel: "Ger&auml;te: ",
 				findDevicesButtonText: "Ger&auml;te suchen",
+				loadingContentText: "Daten werden von #{deviceName} gelesen, bitte warten...",
+				readSelectedButtonText: "Importieren",
 				dataFound: "#{tracks} Trainings gefunden",
 				noDeviceDetectedStatusText: "Keine Ger&auml;te gefunden",
 				singleDeviceDetectedStatusText: "Gefunden: ",
+				foundDevice: "Gefunden: #{deviceName}",
+				foundDevices: "#{deviceCount} Ger&auml;te gefunden",
 				showReadDataElementOnDeviceFound: true,
 				getActivityDirectoryHeaderIdLabel: function () { return 'Datum'; },
 				activityDirectoryHeaderDuration: 'Dauer',
 				activityDirectoryHeaderStatus: '',
+				statusCellProcessingImg: '<img src="../../img/addGray.gif" />',
 				postActivityHandler: function(activityXml, display) {
-					window.parent.Runalyze.loadXML(activityXml);
+					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
+	
+					if (display.numQueuedActivities > 1)
+						window.parent.Runalyze.saveTcx(activityXml, currentName);
+					else
+						window.parent.Runalyze.loadXML(activityXml);
+	
+					uploadedActivities.push(currentName);
+					currentActivity = currentActivity + 1;
 				},
 				afterFinishUploads: function(display) {
-					//window.alert("Das waren alle.");
+					window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
