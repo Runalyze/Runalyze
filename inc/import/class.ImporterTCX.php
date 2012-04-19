@@ -40,11 +40,81 @@ class ImporterTCX extends Importer {
 	private $lastPoint = 0;
 
 	/**
+	 * Plugin for MultiEditor
+	 * @var Plugin
+	 */
+	protected $MultiEditor = null;
+
+	/**
+	 * Save sent TCX-data as file 
+	 * @param string $fileName extension ".tcx" is added automatically
+	 * @param string $content
+	 */
+	static public function saveTCX($fileName, $content) {
+		Filesystem::writeFile('import/files/'.$fileName.'.tcx', $content);
+	}
+
+	/**
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
-		$this->parseXML();
+		if ($_POST['data'] == 'FINISHED' && is_array($_POST['activityIds'])) {
+			$this->createTrainingsFromFiles($_POST['activityIds']);
+		} else {
+			$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
+			$this->parseXML();
+		}
+	}
+
+	/**
+	 * Overwrite standard method to have own formular
+	 */
+	public function displayHTMLformular() {
+		if (!is_null($this->MultiEditor)) {
+			echo HTML::em('Die Trainings wurden importiert.').'<br /><br />';
+			$this->MultiEditor->display();
+		} else {
+			parent::displayHTMLformular();
+		}
+	}
+
+	/**
+	 * Create all trainings from given files
+	 * @param array $fileNames
+	 */
+	protected function createTrainingsFromFiles($fileNames) {
+		$IDs   = array();
+		$_POST = array();
+
+		foreach ($fileNames as $fileName) {
+			$rawFileContent = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
+			$this->XML      = simplexml_load_string_utf8( ImporterTCX::decodeCompressedData($rawFileContent) );
+			$this->parseXML();
+			$this->transformTrainingDataToPostData();
+
+			$Importer = new ImporterFormular();
+			$Importer->setTrainingValues();
+			$Importer->parsePostData();
+			$Importer->insertTraining();
+
+			$IDs[] = $Importer->insertedID;
+		}
+
+		$this->forwardToMultiEditor($IDs);
+	}
+
+	/**
+	 * Forward to MultiEditor
+	 * @param array $IDs
+	 */
+	protected function forwardToMultiEditor($IDs) {
+		if (empty($IDs))
+			return;
+
+		$_GET['ids'] = implode(',', $IDs);
+		
+		$this->inserted = true;
+		$this->MultiEditor = Plugin::getInstanceFor('RunalyzePluginTool_MultiEditor');
 	}
 
 	/**

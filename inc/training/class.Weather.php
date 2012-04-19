@@ -111,7 +111,7 @@ class Weather {
 			return array('id' => 0, 'name' => '?', 'img' => 'ka.png', 'order' => 0);
 		}
 
-		return getDataFor(self::$UNKNOWN_ID);
+		return self::getDataFor(self::$UNKNOWN_ID);
 	}
 
 	/**

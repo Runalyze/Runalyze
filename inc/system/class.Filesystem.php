@@ -25,5 +25,41 @@ class Filesystem {
 	private static function canOpenExternUrl() {
 		return ini_get('allow_url_fopen');
 	}
+
+	/**
+	 * Write a file
+	 * @param string $fileName relative to FRONTEND_PATH
+	 * @param string $fileContent 
+	 */
+	static public function writeFile($fileName, $fileContent) {
+		$file = fopen(FRONTEND_PATH.$fileName, "w");
+
+		if ($file !== false) {
+			fwrite($file, $fileContent);
+			fclose($file);
+		} else
+			Error::getInstance()->addError('Die Datei "'.$fileName.'" konnte zum Schreiben nicht erstellt/ge&ouml;ffnet werden.');
+	}
+
+	/**
+	 * Get file content and delete it afterwards
+	 * @param string $fileName relative to FRONTEND_PATH
+	 * @return string
+	 */
+	static public function openFileAndDelete($fileName) {
+		$content = self::openFile($fileName);
+		unlink(FRONTEND_PATH.$fileName);
+
+		return $content;
+	}
+
+	/**
+	 * Get file content
+	 * @param string $fileName relative to FRONTEND_PATH
+	 * @return string
+	 */
+	static public function openFile($fileName) {
+		return file_get_contents(FRONTEND_PATH.$fileName);
+	}
 }
 ?>
