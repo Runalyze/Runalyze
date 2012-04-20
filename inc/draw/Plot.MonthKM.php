@@ -29,7 +29,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	if (CONF_RECHENSPIELE) {
-		$TrimpPerMonth = Helper::TRIMP(0, 365 * Helper::CTL() / 12);
+		$TrimpPerMonth = Trimp::TRIMPfor(0, 365 * Trimp::CTL() / 12);
 		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
 
 		if ($AvgMonthPace['avg'] > 0)

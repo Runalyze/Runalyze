@@ -56,9 +56,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		$atl = (MAX_ATL == 0) ? 0 : round(100*Helper::ATL()/MAX_ATL);
-		$ctl = (MAX_CTL == 0) ? 0 : round(100*Helper::CTL()/MAX_CTL);
-
 		if ($this->config['show_trainingpaces']['var']) {
 			$t = array();
 			$t[] = array('kurz' => 'RL', 'pVDOT' => '59-64');
@@ -83,9 +80,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		echo('
 			<div class="left" style="width:60%;">
-				<p><span class="right">'.$atl.' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
-				<p><span class="right">'.$ctl.' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
-				<p><span class="right">'.Helper::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
+				<p><span class="right">'.Trimp::ATLinPercent().' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
+				<p><span class="right">'.Trimp::CTLinPercent().' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
+				<p><span class="right">'.Trimp::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
 				<p><span class="right">'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
 				<p><span class="right">'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
 			</div>');

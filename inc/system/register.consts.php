@@ -11,6 +11,12 @@ Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
 
 Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
 Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, 'Individuelle VDOT-Korrektur verwenden');
+Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r ATL');
+Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r CTL');
+// Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
+Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
+Config::register('hidden', 'MAX_CTL', 'int', 0, 'Maximal value for CTL');
+Config::register('hidden', 'MAX_TRIMP', 'int', 0, 'Maximal value for TRIMP');
 
 Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', 'Heutigen Tag im Kalender hervorheben');
 Config::register('Design', 'DB_SHOW_CREATELINK_FOR_DAYS', 'bool', '1', 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen');

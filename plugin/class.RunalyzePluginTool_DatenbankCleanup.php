@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginTool_DatenbankCleanup';
 /**
  * Class: RunalyzePluginTool_DatenbankCleanup
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginTool
- * @uses class::Mysql
- * @uses class::Helper
- * @uses class::Draw
  */
 class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
@@ -74,22 +67,20 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Reset all TRIMP- and VDOT-values in database
 	 */
 	private function resetTrimpAndVdot() {
-		$IDs = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'training`');
+		$Mysql = Mysql::getInstance();
+		$IDs   = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'training`');
+
 		foreach ($IDs as $ID)
-			Mysql::getInstance()->update(PREFIX.'training', $ID['id'],
+			$Mysql->update(PREFIX.'training', $ID['id'],
 				array('trimp', 'vdot'),
-				array(Helper::TRIMP($ID['id']), JD::Training2VDOT($ID['id'])));
+				array(Trimp::TRIMPfor($ID['id']), JD::Training2VDOT($ID['id'])));
 	}
 
 	/**
 	 * Clean the databse for max_atl, max_ctl, max_trimp
 	 */
 	private function resetMaxValues() {
-		$values = Helper::calculateMaxValues();
-
-		Config::update('MAX_ATL', $values[0]);
-		Config::update('MAX_CTL', $values[1]);
-		Config::update('MAX_TRIMP', $values[2]);
+		Trimp::calculateMaxValues();
 	}
 
 	/**
@@ -107,4 +98,3 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		}
 	}
 }
-?>
