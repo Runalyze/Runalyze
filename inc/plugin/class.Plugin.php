@@ -4,11 +4,7 @@
  */
 /**
  * Class: Plugin
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class:Error
  */
 abstract class Plugin {
 	/**
@@ -346,50 +342,92 @@ abstract class Plugin {
 			$this->dat = $_GET['dat'];
 
 		$this->initConfigVars($dat['config']);
+		$this->checkConfigVarsForChanges();
 	}
 
 	/**
 	 * Initialize all config vars from database
 	 * Each line should be in following format: var_name|type=something|description
-	 * @param string $config_dat as $dat['config'] from database
+	 * @param string $configSetup as $dat['config'] from database
 	 */
-	private function initConfigVars($config_dat) {
-		// TODO: Add vars to config if not in DB
-		$this->config = array();
-		$config_dat = explode("\n", $config_dat);
+	private function initConfigVars($configSetup) {
+		$this->config     = array();
+		$configSetup      = explode("\n", $configSetup);
 
-		foreach ($config_dat as $line) {
-			$parts = explode('|', $line);
-			if (count($parts) != 3)
+		foreach ($configSetup as $configLine) {
+			$configParts = explode('|', $configLine);
+
+			if (count($configParts) != 3)
 				break;
 
-			$var_str = explode('=', $parts[1]);
-			if (count($var_str) == 2) {
-				$var = $var_str[1];
-				switch ($var_str[0]) {
+			$valueParts = explode('=', $configParts[1]);
+			if (count($valueParts) == 2) {
+				$value = $valueParts[1];
+				switch ($valueParts[0]) {
 					case 'array':
-						$type = 'array';
-						$var  = explode(',', $var);
+						$type  = 'array';
+						$value = explode(',', $value);
 						break;
 					case 'bool':
-						$var = ($var == 'true');
+						$value = ($value == 'true');
 					case 'int':
 					case 'float':
-						$type = $var_str[0];
+						$type  = $valueParts[0];
 						break;
 					default:
-						$type = 'string';
+						$type  = 'string';
 				}
 			} else {
-				$var = $var_str[0];
-				$type = 'string';
+				$value = $valueParts[0];
+				$type  = 'string';
 			}
 
-			$this->config[$parts[0]] = array(
-				'type' => $type,
-				'var' => $var,
-				'description' => trim($parts[2]));
+			$this->config[$configParts[0]] = array(
+				'type'			=> $type,
+				'var'			=> $value,
+				'description'	=> trim($configParts[2]));
 		}
+	}
+
+	private function checkConfigVarsForChanges() {
+		$somethingChanged = false;
+
+		$this->checkConfigVarsForMissingValues($somethingChanged);
+		$this->checkConfigVarsForAdditionalValue($somethingChanged);
+
+		if ($somethingChanged)
+			$this->updateConfigVarToDatabase ();
+	}
+
+	/**
+	 * Check config vars: Are any values from default config vars missing?
+	 * @param boolean $somethingChanged 
+	 */
+	private function checkConfigVarsForMissingValues(&$somethingChanged) {
+		$defaultSetup = $this->getDefaultConfigVars();
+
+		foreach ($defaultSetup as $key => $keyArray)
+			if (!isset($this->config[$key])) {
+				$somethingChanged   = true;
+				$this->config[$key] = $keyArray;
+			} elseif ($this->config[$key]['description'] != $keyArray['description']) {
+				$somethingChanged   = true;
+				$this->config[$key]['description'] = $keyArray['description'];
+			}
+	}
+
+	/**
+	 * Check config vars: Are any values not in default config vars?
+	 * @param boolean $somethingChanged 
+	 */
+	private function checkConfigVarsForAdditionalValue(&$somethingChanged) {
+		$defaultSetup = $this->getDefaultConfigVars();
+
+		foreach (array_keys($this->config) as $key)
+			if (!isset($defaultSetup[$key])) {
+				$somethingChanged   = true;
+				unset($this->config[$key]);
+			}
 	}
 
 	/**
@@ -502,45 +540,27 @@ abstract class Plugin {
 			? $this->getWindowLink()
 			: $this->name;
 
-		echo('
-			<h1>Konfiguration: '.$name.'</h1>
-			<small class="right">
-				'.$activationLink.'
-			</small><br />
+		include FRONTEND_PATH.'plugin/tpl.Plugin.config.php';
+	}
 
-			<p class="text-headline">Beschreibung</p>
-			<p class="text">
-				'.$this->description.'
-			</p>'.NL);
+	/**
+	 * Get input-field for configuration formular
+	 * @param string $name
+	 * @param array $config_var
+	 * @return string 
+	 */
+	protected function getInputFor($name, $config_var) {
+		$value = (is_array($config_var['var'])) ? implode(', ', $config_var['var']) : $config_var['var'];
 
-		if ($this->active == self::$ACTIVE_NOT)
-			echo '<p class="warning">Das Plugin ist derzeit deaktiviert.</p>';
-
-		if (count($this->config) == 0)
-			echo '<p class="info">Es sind <em>keine</em> Optionen vorhanden</p>';
-		else {
-			echo '<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" class="ajax" id="pluginconfig" method="post">';
-			echo '<p class="text-headline">Einstellungen</p>';
-			echo '<p class="text">';
-				foreach ($this->config as $name => $config_var) {
-					switch ($config_var['type']) {
-						case 'array':
-							echo('<label><input type="text" name="'.$name.'" value="'.implode(', ', $config_var['var']).'" /> '.$config_var['description'].'</label><br />');
-							break;
-						case 'bool':
-							echo('<label><input type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' /> '.$config_var['description'].'</label><br />');
-							break;
-						case 'int':
-							echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" size="5" /> '.$config_var['description'].'</label><br />');
-							break;
-						default:
-							echo('<label><input type="text" name="'.$name.'" value="'.$config_var['var'].'" /> '.$config_var['description'].'</label><br />');
-					}
-				}
-				echo '<input type="hidden" name="edit" value="true" />';
-				echo '<input type="submit" value="Bearbeiten" />';
-			echo '</p>';
-			echo '</form>';
+		switch ($config_var['type']) {
+			case 'bool':
+				return '<input id="conf_'.$name.'" class="" type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' />';
+			case 'array':
+				return '<input id="conf_'.$name.'" class="fullSize" type="text" name="'.$name.'" value="'.$value.'" />';
+			case 'int':
+				return '<input id="conf_'.$name.'" class="smallSize" type="text" name="'.$name.'" value="'.$value.'" />';
+			default:
+				return '<input id="conf_'.$name.'" class="middleSize" type="text" name="'.$name.'" value="'.$value.'" />';
 		}
 	}
 
@@ -552,7 +572,7 @@ abstract class Plugin {
 		foreach($this->config as $name => $dat) {
 			switch ($dat['type']) {
 				case 'array':
-					$var = implode(', ', $dat['var']);
+					$var = implode(', ', Helper::arrayTrim($dat['var']));
 					break;
 				case 'bool':
 					$var = $dat['var'] ? 'true' : 'false';
@@ -624,7 +644,7 @@ abstract class Plugin {
 			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC');
 
 		$return = array();
-		foreach ($array as $k => $v)
+		foreach ($array as $v)
 			$return[] = $v['key'];
 
 		return $return;
@@ -670,4 +690,3 @@ abstract class Plugin {
 		return false;
 	}
 }
-?>

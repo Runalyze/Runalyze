@@ -205,9 +205,10 @@ class TrainingDisplay {
 		$Times        = $this->Training->getSplitsTimeArray();
 		$Paces        = $this->Training->getSplitsPacesArray();
 		$demandedPace = Helper::DescriptionToDemandedPace($this->Training->get('comment'));
-		$achievedPace = array_sum($Paces) / count($Paces);
+		//$achievedPace = array_sum($Paces) / count($Paces);
 		$TimeSum      = array_sum($Times);
 		$DistSum      = array_sum($Distances);
+		$achievedPace = $TimeSum / $DistSum;
 
 		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
 			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);

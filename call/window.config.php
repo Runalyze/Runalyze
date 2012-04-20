@@ -29,14 +29,17 @@ if (isset($submit))
 	<div id="config_all">
 		<input type="hidden" name="formID" value="config" />
 
-		<span class="right">
-			<a class="change" href="#config_allgemein" target="config_all">Allgemeines</a> |
-			<a class="change" href="#config_plugins" target="config_all">Plugins</a> |
-			<a class="change" href="#config_dataset" target="config_all">Dataset</a> |
-			<a class="change" href="#config_sport" target="config_all">Sportarten</a> |
-			<a class="change" href="#config_typen" target="config_all">Trainingstypen</a> |
-			<a class="change" href="#config_kleidung" target="config_all">Kleidung</a>
-		</span>
+<?php
+$Links   = array();
+$Links[] = array('tag' => Ajax::change('Allgemeines', 'config_all', 'config_allgemein'));
+$Links[] = array('tag' => Ajax::change('Plugins', 'config_all', 'config_plugins'));
+$Links[] = array('tag' => Ajax::change('Dataset', 'config_all', 'config_dataset'));
+$Links[] = array('tag' => Ajax::change('Sportarten', 'config_all', 'config_sport'));
+$Links[] = array('tag' => Ajax::change('Trainingstypen', 'config_all', 'config_typen'));
+$Links[] = array('tag' => Ajax::change('Kleidung', 'config_all', 'config_kleidung'));
+
+echo Ajax::toolbarNavigation($Links, 'right');
+?>
 
 		<div id="config_allgemein" class="change">
 			<?php include '../inc/tpl/tpl.Config.allgemein.php' ?>

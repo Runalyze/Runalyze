@@ -195,6 +195,10 @@ fieldset .w100 *, fieldset .w50 *, fieldset .w33 * {
 	display: block;
 	margin: 2px 0; }
 
+fieldset .w100 {
+	clear: left;
+}
+
 fieldset input { padding: 2px; }
 fieldset input.withUnit { padding: 2px 30px 2px 0; }
 fieldset input.withUnitLeft { padding: 2px 0 2px 30px; }
@@ -202,6 +206,7 @@ fieldset .smallSize { width: 60px; }
 fieldset .smallSize.withUnit { width: 34px; }
 fieldset .middleSize { width: 120px; }
 fieldset .middleSize.withUnit { width: 94px; }
+fieldset .fullSize { width: 55%; }
 fieldset .fullWidth { width: 95%; }
 
 input.withUnit {

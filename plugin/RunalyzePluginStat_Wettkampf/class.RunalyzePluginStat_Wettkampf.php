@@ -33,10 +33,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['last_wk_num']    = array('type' => 'int', 'var' => 10, 'description' => 'Anzahl f&uuml;r letzte Wettk&auml;mpfe');
-		$config['main_distance']  = array('type' => 'int', 'var' => 10, 'description' => 'Hauptdistanz (wird als Diagramm dargestellt)');
-		$config['pb_distances']   = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => 'Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt)');
-		$config['fun_ids']        = array('type' => 'array', 'var' => array(), 'description' => 'IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)');
+		$config['last_wk_num']    = array('type' => 'int', 'var' => 10, 'description' => 'Anzahl letzter Wettk&auml;mpfe');
+		$config['main_distance']  = array('type' => 'int', 'var' => 10, 'description' => '<abbr class="atLeft" tooltip="wird als Diagramm dargestellt">Hauptdistanz</abbr>');
+		$config['pb_distances']   = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<abbr class="atLeft" tooltip="Bestzeiten werden verglichen, kommagetrennt">Distanzen f&uuml;r Jahresvergleich</abbr>');
+		$config['fun_ids']        = array('type' => 'array', 'var' => array(), 'description' => '<abbr class="atLeft" tooltip="Interne IDs, nicht per Hand editieren!">Spa&szlig;-Wettk&auml;mpfe</abbr>');
 
 		return $config;
 	}

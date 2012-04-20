@@ -288,7 +288,12 @@ class ImporterTCX extends Importer {
 	 * @param SimpleXMLElement $TP
 	 */
 	protected function parseTrackpoint($TP) {
-		if (empty($TP->DistanceMeters) || ((int)$TP->DistanceMeters <= $this->lastPoint && (int)$TP->DistanceMeters > 0)) {
+		// TODO:
+		// Just check for empty($TP->DistanceMeters)
+		// Other check was kind of Auto-Pause - but this behavior is NOT the expected one of Runalyze
+		// -> Verify these thoughts with Unittests!
+		//if (empty($TP->DistanceMeters) || ((int)$TP->DistanceMeters <= $this->lastPoint && (int)$TP->DistanceMeters > 0)) {
+		if (empty($TP->DistanceMeters)) {
 			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time']);
 			return;
 		}
@@ -307,6 +312,9 @@ class ImporterTCX extends Importer {
 		if (!empty($TP->Position)) {
 			$this->data['latitude'][]  = (double)$TP->Position->LatitudeDegrees;
 			$this->data['longitude'][] = (double)$TP->Position->LongitudeDegrees;
+		} elseif (!empty($this->data['latitude'])) {
+			$this->data['latitude'][]  = end($this->data['latitude']);
+			$this->data['longitude'][] = end($this->data['longitude']);
 		} else {
 			$this->data['latitude'][]  = 0;
 			$this->data['longitude'][] = 0;
