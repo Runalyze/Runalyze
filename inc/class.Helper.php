@@ -1,45 +1,32 @@
 <?php
 /**
  * Maximal heart-frequence of the user
- * @const HF_MAX
+ * @var HF_MAX
  */
 define('HF_MAX', Helper::getHFmax());
 
 /**
  * Heart-frequence in rest of the user
- * @const HF_REST
+ * @var HF_REST
  */
 define('HF_REST', Helper::getHFrest());
 
 /**
  * Timestamp of the first training
- * @const START_TIME
+ * @var START_TIME
  */
 define('START_TIME', Helper::getStartTime());
 
 /**
  * Year of the first training
- * @const START_YEAR
+ * @var START_YEAR
  */
 define('START_YEAR', date("Y", START_TIME));
 
 require_once FRONTEND_PATH.'calculate/class.JD.php';
-require_once FRONTEND_PATH.'calculate/class.Trimp.php';
-
-// TODO: move to definition-/registration-list for consts
-Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r ATL');
-Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Anzahl ber&uuml;cksichtigter Tage f&uuml;r CTL');
-// Be careful: These values shouldn't be taken with CONF_MAX_ATL.
-// This class defines MAX_ATL, MAX_CTL, MAX_TRIMP on its own with correct calculation.
-Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
-Config::register('hidden', 'MAX_CTL', 'int', 0, 'Maximal value for CTL');
-Config::register('hidden', 'MAX_TRIMP', 'int', 0, 'Maximal value for TRIMP');
-
-Helper::defineMaxValues();
 
 /**
  * Class for all helper-functions previously done by functions.php
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Helper {
@@ -271,80 +258,6 @@ class Helper {
 	}
 
 	/**
-	 * Get the TRIMP for a training or get the minutes needed for a given TRIMP
-	 * @param int $training_id   Training-ID
-	 * @param bool $trimp        [optional] If set, calculate backwards, default: false     
-	 * @return int
-	 */
-	public static function TRIMP($training_id, $trimpToReach = false) {
-		$dat = Mysql::getInstance()->fetch(PREFIX.'training', $training_id);
-
-		if ($dat === false && $trimpToReach === false)
-			return 0;
-		elseif ($dat === false)
-			$dat = array('sportid' => CONF_MAINSPORT, 'typeid' => 0, 'pulse_avg' => 0, 's' => 0);
-
-		$factor_a  = (CONF_GENDER == 'm') ? 0.64 : 0.86;
-		$factor_b  = (CONF_GENDER == 'm') ? 1.92 : 1.67;
-		$sportid   = ($dat['sportid'] != 0) ? $dat['sportid'] : CONF_MAINSPORT;
-		$Sport     = new Sport($sportid);
-		if ($Sport->hasTypes() && $dat['typeid'] != 0)
-			$Type  = new Type($dat['typeid']);
-		$HFavg     = ($dat['pulse_avg'] != 0) ? $dat['pulse_avg'] : $Sport->avgHF();
-		$RPE       = (isset($Type)) ? $Type->RPE() : $Sport->RPE();
-		$HFperRest = ($HFavg - HF_REST) / (HF_MAX - HF_REST);
-		$TRIMP     = $dat['s']/60 * $HFperRest * $factor_a * exp($factor_b * $HFperRest) * $RPE / 10;
-
-		// Berechnung mit Trainingszonen waere:
-		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
-		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
-	
-		if ($trimpToReach === false)
-			return round($TRIMP);
-
-		// Anzahl der noetigen Minuten fuer $back als TRIMP-Wert
-		return $trimpToReach / ( $HFperRest * $factor_a * exp($factor_b * $HFperRest) * 5.35 / 10 );
-	}
-
-	/**
-	 * Calculating ActualTrainingLoad (at a given timestamp)
-	 * @uses CONF_ATL_DAYS
-	 * @uses DAY_IN_S
-	 * @param int $time [optional] timestamp
-	 */
-	public static function ATL($time = 0) {
-		if ($time == 0)
-			$time = time();
-
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
-		return round($dat['sum']/CONF_ATL_DAYS);
-	}
-
-	/**
-	 * Calculating ChronicTrainingLoad (at a given timestamp)
-	 * @uses CONF_CTL_DAYS
-	 * @uses DAY_IN_S
-	 * @param int $time [optional] timestamp
-	 */
-	public static function CTL($time = 0) {
-		if ($time == 0)
-			$time = time();
-
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
-		return round($dat['sum']/CONF_CTL_DAYS);
-	}
-
-	/**
-	 * Calculating TrainingStressBalance (at a given timestamp)
-	 * @uses self::CTL
-	 * @uses self::ATL
-	 * @param int $time [optional] timestamp
-	 */
-	public static function TSB($time = 0) {
-		return self::CTL($time) - self::ATL($time);
-	}
-
-	/**
 	 * Creating a RGB-color for a given stress-value [0-100]
 	 * @param int $stress   Stress-value [0-100]
 	 */
@@ -540,7 +453,7 @@ class Helper {
 	public static function getHFrest() {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (defined('HF_REST'))
-			return HF_MAX;
+			return HF_REST;
 
 		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
@@ -563,73 +476,6 @@ class Helper {
 			return time();
 
 		return $data['time'];
-	}
-
-	/**
-	 * Calculate max values for atl/ctl/trimp again
-	 * @return array array($maxATL, $maxCTL, $maxTRIMP)
-	 */
-	public static function calculateMaxValues() {
-		// Here ATL/CTL will be implemented again
-		// Normal functions are too slow, calling them for each day would trigger each time a query
-		// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
-		$start_i = 365*START_YEAR;
-		$end_i   = 365*(date("Y") + 1) - $start_i;
-		$Trimp   = array_fill(0, $end_i, 0);
-		$Data    = Mysql::getInstance()->fetchAsArray('
-			SELECT
-				YEAR(FROM_UNIXTIME(`time`)) as `y`,
-				DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-				SUM(`trimp`) as `trimp`
-			FROM `'.PREFIX.'training`
-			GROUP BY `y`, `d`
-			ORDER BY `y` ASC, `d` ASC');
-		
-		if (empty($Data))
-			return array(1, 1, 1);
-		
-		$maxATL   = 0;
-		$maxCTL   = 0;
-		
-		foreach ($Data as $dat) {
-			$atl = 0;
-			$ctl = 0;
-			
-			$i = $dat['y']*365 + $dat['d'] - $start_i;
-			$Trimp[$i] = $dat['trimp'];
-
-			if ($i >= CONF_ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, 1 + $i - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
-			if ($i >= CONF_CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, 1 + $i - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
-
-			if ($atl > $maxATL)
-				$maxATL = $atl;
-			if ($ctl > $maxCTL)
-				$maxCTL = $ctl;
-		}
-		
-		$maxTRIMP = max($Trimp);
-
-		return array($maxATL, $maxCTL, $maxTRIMP);
-	}
-
-	/**
-	 * Define consts MAX_ATL, MAX_CTL, MAX_TRIMP
-	 */
-	public static function defineMaxValues() {
-		if (CONF_MAX_ATL != 0 || CONF_MAX_CTL != 0 || CONF_MAX_TRIMP != 0) {
-			$values = array(CONF_MAX_ATL, CONF_MAX_CTL, CONF_MAX_TRIMP);
-		} else {
-			$values = self::calculateMaxValues();
-			Config::update('MAX_ATL', $values[0]);
-			Config::update('MAX_CTL', $values[1]);
-			Config::update('MAX_TRIMP', $values[2]);
-		}
-
-		define('MAX_ATL', $values[0]);
-		define('MAX_CTL', $values[1]);
-		define('MAX_TRIMP', $values[2]);
 	}
 }
 

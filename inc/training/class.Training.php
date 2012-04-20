@@ -193,6 +193,28 @@ class Training {
 	}
 
 	/**
+	 * Get RPE
+	 * @return int 
+	 */
+	public function RPE() {
+		if (!is_null($this->Type))
+			return $this->Type()->RPE();
+
+		return $this->Sport()->RPE();
+	}
+
+	/**
+	 * Get average heartfrequence
+	 * @return int
+	 */
+	public function avgHF() {
+		if ($this->get('pulse_avg') > 0)
+			return $this->get('pulse_avg');
+
+		return $this->Sport()->avgHF();
+	}
+
+	/**
 	 * Get object for clothes
 	 * @return Clothes
 	 */
@@ -205,6 +227,9 @@ class Training {
 	 * @return Sport
 	 */
 	public function Sport() {
+		if (is_null($this->Sport))
+			$this->Sport = new Sport(CONF_MAINSPORT);
+
 		return $this->Sport;
 	}
 

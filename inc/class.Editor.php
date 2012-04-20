@@ -199,31 +199,34 @@ class Editor {
 		$Mysql = Mysql::getInstance();
 
 		$Mysql->update(PREFIX.'training', $this->Id, $this->UpdateColumns, $this->UpdateValues);
-		
+		$Mysql->update(PREFIX.'training', $this->Id, 'trimp', Trimp::TRIMPfor($this->Id));
+		$Mysql->update(PREFIX.'training', $this->Id, 'vdot', JD::Training2VDOT($this->Id));
+
+		$this->updateShoeValues();
+		$this->updateMaxValues();
+	}
+
+	/**
+	 * Update shoe values 
+	 */
+	private function updateShoeValues() {
 		if (isset($this->TrainingData['shoeid_old'])
 				&& isset($this->TrainingData['s_old'])
 				&& isset($this->TrainingData['dist_old'])
 				&& isset($this->TrainingData['shoeid'])
 				&& $this->TrainingData['shoeid'] != 0) {
-			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
-			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->TrainingData['distance'].'", `time`=`time`+'.$this->TrainingData['s'].' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
+			Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
+			Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->TrainingData['distance'].'", `time`=`time`+'.$this->TrainingData['s'].' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
 		}
+	}
 
-		$Mysql->update(PREFIX.'training', $this->Id, 'trimp', Helper::TRIMP($this->Id));
-		$Mysql->update(PREFIX.'training', $this->Id, 'vdot', JD::Training2VDOT($this->Id));
+	/**
+	 * Update max values 
+	 */
+	private function updateMaxValues() {
+		$TimeData = Mysql::getInstance()->fetchSingle('SELECT time FROM `'.PREFIX.'training` WHERE id='.$this->Id);
 
-		$TimeData = $Mysql->fetchSingle('SELECT time FROM `'.PREFIX.'training` WHERE id='.$this->Id);
-
-		$ATL = Helper::ATL($TimeData['time']);
-		$CTL = Helper::CTL($TimeData['time']);
-		$TRIMP = Helper::TRIMP($this->Id);
-		
-		if ($ATL > MAX_ATL)
-			Config::update('MAX_ATL', $ATL);
-		if ($CTL > MAX_CTL)
-			Config::update('MAX_ATL', $CTL);
-		if ($TRIMP > MAX_TRIMP)
-			Config::update('MAX_ATL', $TRIMP);
+		Trimp::checkForMaxValuesAt($TimeData['time']);
 	}
 
 	/**
@@ -233,4 +236,3 @@ class Editor {
 		return $this->Errors;
 	}
 }
-?>
