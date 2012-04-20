@@ -37,6 +37,17 @@ class Helper {
 	private function __destruct() {}
 
 	/**
+	 * Trim all values of an array
+	 * @param array $array
+	 * @return array 
+	 */
+	public static function arrayTrim($array) {
+		array_walk($array, 'trimValuesForArray');
+
+		return $array;
+	}
+
+	/**
 	 * Get a string for displaying any pulse
 	 * @param int $pulse
 	 * @param int $time
@@ -176,12 +187,13 @@ class Helper {
 		if ($time_in_s < 0)
 			return '&nbsp;';
 
-		$string = '';
+		$string    = '';
+		$time_in_s = round($time_in_s, 2); // correct float-problem with floor
 
 		if ($show_zeros === true) {
 			$string = floor($time_in_s/3600).':'.self::TwoNumbers(floor($time_in_s/60)%60).':'.self::TwoNumbers($time_in_s%60);
 			if ($time_in_s - floor($time_in_s) != 0)
-			$string .= ','.self::TwoNumbers(round(100*($time_in_s - floor($time_in_s))));
+				$string .= ','.self::TwoNumbers(round(100*($time_in_s - floor($time_in_s))));
 			return $string;
 		}
 
@@ -514,4 +526,11 @@ function simplexml_correct_ns($string) {
 function removeBOMfromString($string) {
 	return mb_substr($string, mb_strpos($string, "<"));
 }
-?>
+
+/**
+ * Trimmer function for array_walk
+ * @param array $value 
+ */
+function trimValuesForArray(&$value) {
+	$value = trim($value);
+}

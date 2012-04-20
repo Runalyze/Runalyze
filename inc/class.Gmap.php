@@ -72,13 +72,14 @@ class Gmap {
 		$Path = array();
 
 		$AvgPace = $this->GpsData->getAveragePace();
-		if ($AvgPace > 0)
+		if ($AvgPace > 0 && (15/$AvgPace) > self::$MAXIMUM_DISTANCE_OF_STEP)
 			self::$MAXIMUM_DISTANCE_OF_STEP = 15 / $AvgPace;
 
 		$this->GpsData->startLoop();
 		while ($this->GpsData->nextStep()) {
 			$PointData = addslashes(Helper::Km($this->GpsData->getDistance(),2).'<br />'.Helper::Time($this->GpsData->getTime(), false, 2));
 
+			// TODO: Try to find such pauses in a different way - this is not the fastest one
 			if ($this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
 				$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']);';
 				$Path  = array();

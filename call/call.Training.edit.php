@@ -22,10 +22,7 @@ if (isset($_GET['json'])) {
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
 
-	$values = Helper::calculateMaxValues();
-	Config::update('MAX_ATL', $values[0]);
-	Config::update('MAX_CTL', $values[1]);
-	Config::update('MAX_TRIMP', $values[2]);
+	Trimp::calculateMaxValues();
 
 	$shoes = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'shoe`');
 	foreach ($shoes as $shoe) {

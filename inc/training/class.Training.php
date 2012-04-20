@@ -653,7 +653,7 @@ class Training {
 
 		for ($i = 0, $n = count($times); $i < $n; $i++)
 			if (isset($times[$i]) && isset($distances[$i]))
-				$paces[] = round($times[$i]/$distances[$i]);
+				$paces[] = $distances[$i] > 0 ? round($times[$i]/$distances[$i]) : 0;
 
 		return $paces;
 	}

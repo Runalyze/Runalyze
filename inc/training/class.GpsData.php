@@ -18,6 +18,12 @@ class GpsData {
 	public static $everyNthElevationPoint = 5;
 
 	/**
+	 * Number of steps being recognized for zones
+	 * @var int 
+	 */
+	public static $NUM_STEPS_FOR_ZONES = 200;
+
+	/**
 	 * Array with all information for time
 	 * @var array
 	 */
@@ -130,7 +136,10 @@ class GpsData {
 	 * @param int $size
 	 */
 	public function setStepSize($size) {
-		$this->stepSize   = (int)$size;
+		$this->stepSize = (int)$size;
+
+		if ($this->stepSize < 1)
+			$this->stepSize = 1;
 	}
 
 	/**
@@ -479,6 +488,7 @@ class GpsData {
 
 		$Zones = array();
 		$this->startLoop();
+		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
 
 		while ($this->nextStep()) {
 			$zone = ceil(100 * $this->getAverageHeartrateOfStep() / Helper::getHFmax() / 10);
@@ -507,6 +517,7 @@ class GpsData {
 
 		$Zones = array();
 		$this->startLoop();
+		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
 
 		while ($this->nextStep()) {
 			$zone = floor($this->getAveragePaceOfStep() / 60);
