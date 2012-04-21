@@ -160,6 +160,14 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string into paragraph-tag
+	 * @param string $string
+	 */
+	public static function p($string) {
+		return '<p class="text">'.$string.'</p>';
+	}
+
+	/**
 	 * Wrap a string into p-tag with class="info"
 	 * @param string $string
 	 */

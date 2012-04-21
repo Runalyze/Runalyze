@@ -29,12 +29,32 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Bei Runalyze werden viele Tabellen und daraus abgeleitete Formeln von &quot;Jack Daniels - Die Laufformel&quot; verwendet.
+				Unter anderem wird aus dem Verh&auml;ltnis von Herzfrequenz und Tempo auf die aktuelle Form geschlossen.');
+		echo HTML::p('Die Form wird als <strong>VDOT</strong> angegeben, einer rechnerischen Gr&ouml;&szlig;e f&uuml;r die maximale Sauerstoffaufnahme.
+				Mittels dieser k&ouml;nnen ein Trainingstempo und eine m&ouml;gliche Wettkampfzeit berechnet werden.');
+		echo HTML::p('Da die Prognosen f&uuml;r lange Distanzen eher zu gut sind, wird ein eigener Algorithmus zur
+				Bestimmung der <strong>Grundlagenausdauer</strong> verwendet.
+				Dieser Wert ist sehr experimentell und mit Vorsicht zu genie&szlig;en.');
+		echo HTML::p('Fundierter sind die Grundlagen f&uuml;r ATL/CTL/TSB.
+				Aus Dauer und Puls wird eine Trainingsbelastung bestimmt, auch <em>Training Load</em> genannt.');
+		echo HTML::p('Die <strong>M&uuml;digkeit</strong> (<em>Actual Training Load</em>) steht dabei f&uuml;r die Belastung der letzten Woche,
+				der <strong>Fitnessgrad</strong> (<em>Chronic Training Load</em>) f&uuml;r die langfristige Belastung.
+				Zur Vergleichbarkeit wird jeweils der Prozentwert von der bisher maximalen Trainingsbelastung angegeben.');
+		echo HTML::p('Das Verh&auml;ltnis der beiden ist die <strong>Training Stress Balance</strong>.
+				Ein positiver Wert steht hierbei f&uuml;r Erholung, ein negativer f&uuml;r intensives Training.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => 'Empfohlene Trainingstempi anzeigen');
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => '<abbr class="atLeft" tooltip="Empfehlung anzeigen">Trainingstempo</abbr>');
 
 		return $config;
 	}

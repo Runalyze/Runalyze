@@ -24,12 +24,22 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Bei Runalyze werden viele Tabellen und daraus abgeleitete Formeln von &quot;Jack Daniels - Die Laufformel&quot; verwendet.
+					Unter anderem wird aus dem Verh&auml;ltnis von Herzfrequenz und Tempo auf die aktuelle Form geschlossen.');
+		echo HTML::p('Mittels dieser kann f&uuml;r alle gew&uuml;nschten Distanzen eine Prognose berechnet werden.
+					Sinnvolle Werte erh&auml;lt man vor allem f&uuml;r die Distanzen zwischen 3 und 42 km.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['distances']  = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => 'Distanzen f&uuml;r die Prognose (kommagetrennt)');
+		$config['distances']  = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<abbr class="atLeft" tooltip="kommagetrennt">Distanzen f&uuml;r die Prognose</abbr>');
 
 		return $config;
 	}

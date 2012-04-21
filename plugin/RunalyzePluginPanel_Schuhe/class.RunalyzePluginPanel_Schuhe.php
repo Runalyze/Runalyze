@@ -26,6 +26,15 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Mit diesem Plugin k&ouml;nnen die eigenen Laufschuhen mit all ihren Kilometern protkolliert werden.');
+		echo HTML::p('Im Panel werden alle aktuellen Laufschuhe mit ihrem derzeitigen Kilometerstand dargestellt.
+					Au&szlig;erdem kann aber auch ein Extrafenster mit einer ausf&uuml;hrlichen Tabelle ge&ouml;ffnen werden.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */

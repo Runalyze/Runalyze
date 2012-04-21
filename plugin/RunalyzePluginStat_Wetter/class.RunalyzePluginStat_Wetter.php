@@ -36,6 +36,16 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Es gibt kein schlechtes Wetter, es gibt nur schlechte Kleidung.');
+		echo HTML::p('Ob du ein Warmduscher oder ein harter L&auml;ufer bist, kannst du dir in diesen Statistiken anschauen.
+					Wie warm war es, wie oft hat es geregnet und welche Kleidung hast du getragen?
+					Das Plugin verr&auml;t es dir, wenn du die Daten brav erfasst hast.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginStat::getDefaultConfigVars()
 	 */

@@ -53,12 +53,12 @@
 			$Field = new FormularInput('email', 'E-Mail');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 			$Field->display();
-
-			$Field = new FormularInput('password', 'Passwort');
+			
+			$Field = new FormularInputPassword('password', 'Passwort');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 			$Field->display();
 
-			$Field = new FormularInput('password_again', 'Passwort erneut');
+			$Field = new FormularInputPassword('password_again', 'Passwort erneut');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 			$Field->display();
 			?>

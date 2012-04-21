@@ -176,6 +176,13 @@ abstract class Plugin {
 	abstract protected function getInnerLink($name, $sport = 0, $year = 0, $dat = '');
 
 	/**
+	 * Display description, can be overwritten for displaying a longer description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p($this->description);
+	}
+
+	/**
 	 * Get an instance for a given pluginkey (starting with 'RunalyzePlugin');
 	 * @param string $PLUGINKEY
 	 * @return Plugin
@@ -236,7 +243,7 @@ abstract class Plugin {
 	 * @param string $name
 	 * @return string
 	 */
-	public function getInstallLink($name = '') {
+	final public function getInstallLink($name = '') {
 		if ($name == '')
 			$name = Icon::get(Icon::$ADD, '', '', 'Plugin installieren');
 
@@ -281,7 +288,7 @@ abstract class Plugin {
 	 * Install this plugin
 	 * @return bool
 	 */
-	public function install() {
+	final public function install() {
 		if ($this->id != self::$INSTALLER_ID) {
 			Error::getInstance()->addError('Plugin can not be installed, id is set wrong.');
 			return false;
@@ -316,7 +323,7 @@ abstract class Plugin {
 	/**
 	 * Initialize all variables
 	 */
-	protected function initVars() {
+	final protected function initVars() {
 		if ($this->id == self::$INSTALLER_ID)
 			return;
 
@@ -435,7 +442,7 @@ abstract class Plugin {
 	 * @param $property
 	 * @return mixed      objects property or false if property doesn't exist
 	 */
-	public function get($property) {
+	final public function get($property) {
 		switch($property) {
 			case 'id': return $this->id;
 			case 'type': return $this->type;
@@ -459,7 +466,7 @@ abstract class Plugin {
 	 * @param $value
 	 * @return bool       false if property doesn't exist
 	 */
-	public function set($property, $value) {
+	final public function set($property, $value) {
 		switch($property) {
 			case 'name': $this->name = $value;
 			case 'description': $this->description = $value;
@@ -477,7 +484,7 @@ abstract class Plugin {
 	 * @param string $add_param [optional] additional parameter starting with '&...'
 	 * @return string
 	 */
-	public function getConfigLink($name = '', $add_param = '') {
+	final public function getConfigLink($name = '', $add_param = '') {
 		if ($name == '')
 			$name = Icon::get(Icon::$CONF_SETTINGS, '', '', 'Plugin bearbeiten');
 
@@ -529,7 +536,7 @@ abstract class Plugin {
 	/**
 	 * Displays the config window for editing the variables
 	 */
-	public function displayConfigWindow() {
+	final public function displayConfigWindow() {
 		$this->handleGetPostRequest();
 
 		$activationLink = ($this->active == 0)
@@ -549,7 +556,7 @@ abstract class Plugin {
 	 * @param array $config_var
 	 * @return string 
 	 */
-	protected function getInputFor($name, $config_var) {
+	final protected function getInputFor($name, $config_var) {
 		$value = (is_array($config_var['var'])) ? implode(', ', $config_var['var']) : $config_var['var'];
 
 		switch ($config_var['type']) {
@@ -567,7 +574,7 @@ abstract class Plugin {
 	/**
 	 * Update current values from $this->config to database
 	 */
-	protected function updateConfigVarToDatabase() {
+	final protected function updateConfigVarToDatabase() {
 		$string = '';
 		foreach($this->config as $name => $dat) {
 			switch ($dat['type']) {
@@ -592,7 +599,7 @@ abstract class Plugin {
 	 * Function to (in)activate the plugin
 	 * @param int $active
 	 */
-	public function setActive($active = 1) {
+	final public function setActive($active = 1) {
 		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'active', $active);
 		$this->active = $active;
 	}

@@ -42,7 +42,7 @@ ul.jbar li a {
 	line-height: 12px;
 	height: 12px;
 	vertical-align: middle;
-	border-left: none;/*1px solid #c9c9c9;*/
+	border-left: none;
 	border-right: 1px solid #AAAAAA;
 	border-top: 1px solid #AAAAAA;
 	border-bottom: 1px solid #AAAAAA;
@@ -57,32 +57,23 @@ ul.jbar li a {
  * blue2: #3072B3 - #599BDC
  */
 
-ul.jbar li .triggered {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ccc), color-stop(100%, #fff));
-	background: -webkit-linear-gradient(top, #ccc 0%, #fff 100%);
-	background: -moz-linear-gradient(top, #ccc 0%, #fff 100%);
-	background: -ms-linear-gradient(top, #ccc 0%, #fff 100%);
-	background: -o-linear-gradient(top, #ccc 0%, #fff 100%);
-	background: linear-gradient(top, #ccc 0%, #fff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#ffffff',GradientType=0 );
-	color: #111;
-	border-left-color: transparent;
-}
-
+ul.jbar li .triggered,
 ul.jbar li a:hover {
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #767676), color-stop(100%, #9E9E9E));
-	background: -webkit-linear-gradient(top, #767676 0%, #9E9E9E 100%);
-	background: -moz-linear-gradient(top, #767676 0%, #9E9E9E 100%);
-	background: -ms-linear-gradient(top, #767676 0%, #9E9E9E 100%);
-	background: -o-linear-gradient(top, #767676 0%, #9E9E9E 100%);
-	background: linear-gradient(top, #767676 0%, #9E9E9E 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#767676', endColorstr='#9E9E9E',GradientType=0 );
+	box-shadow: 0 1px 3px #BBBBBB;
+	text-shadow: -1px -1px 0 #000;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #666), color-stop(100%, #444));
+	background: -webkit-linear-gradient(top, #666 0%, #444 100%);
+	background: -moz-linear-gradient(top, #666 0%, #444 100%);
+	background: -ms-linear-gradient(top, #666 0%, #444 100%);
+	background: -o-linear-gradient(top, #666 0%, #444 100%);
+	background: linear-gradient(top, #666 0%, #444 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666', endColorstr='#444',GradientType=0 );
 }
 
 ul.jbar ul li a:hover {
-	color: #111 !important;
-	background-color: #8A8A8A !important;
+	background-color: #555 !important;
 	background-image: none;
+	text-shadow: none;
 }
 
 ul.jbar li a.first {
@@ -119,11 +110,12 @@ ul.jbar li a.has_trigger_down_arrow span.link_text {
 	border-right: 1px dotted #333;
 }
 
+ul.jbar ul li a:hover,
 ul.jbar li a.has_no_down_arrow:hover,
 ul.jbar li a.has_lonely_down_arrow:hover,
 ul.jbar li a.trigger:hover,
 ul.jbar li .hovered {
-	color: #000 !important;
+	color: #fff !important;
 }
 
 ul.jbar span.down_arrow {

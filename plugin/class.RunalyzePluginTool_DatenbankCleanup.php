@@ -19,6 +19,15 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Um die Statistiken zu beschleunigen, werden einige Maximalwerte und Summen einzeln abgespeichert,
+					anstatt sie immer neu zu berechnen. Das L&ouml;schen von Trainings kann dabei zu Problemen f&uuml;hren.');
+		echo HTML::p('Wenn irgendwo bei den Statistiken Unstimmigkeiten auftreten, kann dieses Tool eventuell helfen.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */

@@ -522,6 +522,9 @@ class GpsData {
 		while ($this->nextStep()) {
 			$zone = floor($this->getAveragePaceOfStep() / 60);
 
+			if ($zone >= 10)
+				$zone = 10;
+
 			if (!isset($Zones[$zone]))
 				$Zones[$zone] = array('time' => 0, 'distance' => 0, 'hf-sum' => 0, 'num' => 0);
 

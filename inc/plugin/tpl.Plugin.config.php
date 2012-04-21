@@ -1,3 +1,10 @@
+<?php
+$Links = array();
+$Links[] = array('tag' => Ajax::window('<a href="'.Config::$CONFIG_URL.'?plugins" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
+
+echo Ajax::toolbarNavigation($Links, 'right');
+?>
+
 <h1>Plugin: <?php echo $name; ?></h1>
 
 <small class="right">
@@ -8,9 +15,7 @@
 	<fieldset>
 		<legend>Beschreibung</legend>
 		<div class="w100">
-			<p class="text">
-				<?php echo $this->description; ?>
-			</p>
+			<?php echo $this->displayLongDescription(); ?>
 		</div>
 	</fieldset>
 

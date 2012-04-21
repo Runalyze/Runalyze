@@ -40,6 +40,15 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Runalyze soll die perfekte Hilfe sein, um das eigene Training professionell auszuwerten.');
+		echo HTML::p('Dieses Plugin hilft dabei, die eigenen Trainingseinheiten zu analysieren.
+					Es gibt an, wie oft in welchem Trainingsbereich trainiert wurde.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginStat::getDefaultConfigVars()
 	 */
@@ -48,11 +57,11 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$config['use_type']  = array('type' => 'bool', 'var' => true, 'description' => 'Trainingstypen analysieren');
 		$config['use_pace']  = array('type' => 'bool', 'var' => true, 'description' => 'Tempobereiche analysieren');
 		$config['use_pulse'] = array('type' => 'bool', 'var' => true, 'description' => 'Pulsbereiche analysieren');
-		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => 'Niedrigster Pulsbereich (%HFmax)');
-		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => 'Pulsbereich: Schrittweite');
-		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => 'Niedrigster Tempobereich (s/km)');
-		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => 'H&ouml;chster Tempobereich (s/km)');
-		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => 'Tempobereich: Schrittweite');
+		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<abbr class="atLeft" tooltip="in %HFmax">Niedrigster Pulsbereich</abbr>');
+		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<abbr class="atLeft" tooltip="in %HFmax">Pulsbereich: Schrittweite</abbr>');
+		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<abbr class="atLeft" tooltip="in s/km">Niedrigster Tempobereich</abbr>');
+		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<abbr class="atLeft" tooltip="in s/km">H&ouml;chster Tempobereich</abbr>');
+		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<abbr class="atLeft" tooltip="in s/km">Tempobereich: Schrittweite</abbr>');
 
 		return $config;
 	}

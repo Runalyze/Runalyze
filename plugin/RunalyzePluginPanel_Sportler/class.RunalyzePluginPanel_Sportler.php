@@ -27,6 +27,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Das Gewicht ist oft eine Motivation f&uuml;r einen L&auml;ufer.
+					Mit diesem Plugin ist das aktuelle Gewicht immer im Blick.
+					Au&szlig;erdem k&ouml;nnen auch Ruhepuls, K&ouml;rperfett-, Wasser- und Muskelanteil protokolliert werden.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */

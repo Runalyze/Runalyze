@@ -7,12 +7,6 @@ $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
  * Class: RunalyzePluginStat_Wettkampf
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private $distances = array();
@@ -25,6 +19,19 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Wettk&auml;mpfe';
 		$this->description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk&auml;mpfen.';
+	}
+
+	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Abgesehen von der normalen Auflistung aller bisherigen Wettk&auml;mpfe und der
+					&Uuml;bersicht der dabei erzielten Bestzeiten liefert dir diesen Plugin ein einzigartiges Diagramm.
+					Wenn du &uuml;ber eine Distanz bereits mehrere Wettk&auml;mpfe bestritten hast,
+					kannst du dir die Entwicklung deiner Wettkampfzeit im Diagramm anschauen.');
+		echo HTML::p('Falls du mal einen Wettkampf nicht ganz ernst genommen hast,
+					kannst du ihn durch einen Klick auf die kleine Uhr daneben als <em>Spa&szlig;-Wettkampf</em> markieren.
+					Dadurch taucht er im entsprechenden Diagramm nicht mehr auf.');
 	}
 
 	/**
@@ -349,4 +356,3 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		return (in_array($id, $this->config['fun_ids']['var']));
 	}
 }
-?>
