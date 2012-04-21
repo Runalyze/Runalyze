@@ -7,12 +7,6 @@ $PLUGINKEY = 'RunalyzePluginPanel_Sports';
  * Class: RunalyzePluginPanel_Sports
  * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::Mysql
- * @uses class::Helper
- * @uses START_TIME
  */
 class RunalyzePluginPanel_Sports extends PluginPanel {
 	/**
@@ -21,7 +15,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Sports';
+		$this->name = 'Sportarten';
 		$this->description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
 
 		$this->textAsRightSymbol = true;
@@ -106,4 +100,3 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		return $timeset;
 	}
 }
-?>

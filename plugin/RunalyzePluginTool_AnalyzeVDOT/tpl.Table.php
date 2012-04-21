@@ -12,7 +12,7 @@
 			<th>korr.<br />Zeit</th>
 			<th>Form<br />Wert</th>
 			<th>Form<br />Zeit</th>
-			<th>Form<br /><abbr title="Abweichung">Abw.</abbr></th>
+			<th>Form<br /><abbr tooltip="Abweichung">Abw.</abbr></th>
 		</tr>
 	</thead>
 	<tbody>

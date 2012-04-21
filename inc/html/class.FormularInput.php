@@ -138,6 +138,13 @@ class FormularInput extends FormularField {
 		$this->addAttribute('value', $this->value);
 		$this->setId($this->name);
 
+		$this->addUnitAndSize();
+	}
+
+	/**
+	 * Add unit and size as css-classes 
+	 */
+	protected function addUnitAndSize() {
 		if (!empty($this->unit))
 			$this->addCSSclass('withUnit '.$this->unit);
 
@@ -155,4 +162,3 @@ class FormularInput extends FormularField {
 		echo '<input '.$this->attributes().' />';
 	}
 }
-?>

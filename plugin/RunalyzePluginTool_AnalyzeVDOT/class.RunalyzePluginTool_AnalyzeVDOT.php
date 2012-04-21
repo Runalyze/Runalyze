@@ -33,6 +33,16 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Die Trainingsauswertung anhand des berechneten VDOT-Werts birgt einige Gefahren,
+					wenn man sich blind auf ihn verl&auml;sst. Dazu gibt es zu viele Nebeneffekte.');
+		echo HTML::p('Um zu sehen, bei welchen Wettk&auml;mpfen die Prognose mit dem Ergebnis zusammen passt
+					und bei welchen nicht, kannst du dieses Tool verwenden.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginPanel::getDefaultConfigVars()
 	 */

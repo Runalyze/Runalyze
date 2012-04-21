@@ -34,6 +34,15 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Wenn f&uuml;r ein Training eine Strecke angegeben wird, wird davon ausgegangen,
+					dass einzelne Orte durch einen Bindestricht voneinander getrennt werden.
+					Dadurch kann dieses Plugin auswerten, welche Orte man wie oft besucht hat.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginStat::getDefaultConfigVars()
 	 */

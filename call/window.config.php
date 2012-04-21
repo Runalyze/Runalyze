@@ -41,11 +41,11 @@ $Links[] = array('tag' => Ajax::change('Kleidung', 'config_all', 'config_kleidun
 echo Ajax::toolbarNavigation($Links, 'right');
 ?>
 
-		<div id="config_allgemein" class="change">
+		<div id="config_allgemein" class="change"<?php if (isset($_GET['plugins'])) echo ' style="display:none;"'; ?>>
 			<?php include '../inc/tpl/tpl.Config.allgemein.php' ?>
 		</div>
 		
-		<div id="config_plugins" class="change" style="display:none;">
+		<div id="config_plugins" class="change"<?php if (!isset($_GET['plugins'])) echo ' style="display:none;"'; ?>>
 			<?php /* TODO: Download-Link */ ?>
 			<?php include '../inc/tpl/tpl.Config.plugins.php' ?>
 		</div>

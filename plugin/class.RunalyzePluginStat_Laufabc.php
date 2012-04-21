@@ -30,6 +30,14 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('F&uuml;r jedes Training kann angegeben werden, ob dabei etwas Lauf-ABC gemacht wurde.
+					Wie oft das der Fall war, kann mit diesem Plugin ausgewertet werden.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginStat::getDefaultConfigVars()
 	 */

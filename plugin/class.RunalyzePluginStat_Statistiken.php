@@ -52,6 +52,16 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Diese Statistiken bieten eine Auswertung f&uuml;r jeden Monat oder jedes Jahr.
+					Dabei werden die wichtigen Gr&ouml;&szlig;en Dauer, Distanz, Tempo, VDOT und Trimp verglichen.');
+		echo HTML::p('Au&szlig;erdem wird die Zusammenfassung der letzten 10 Trainingswochen so angezeigt,
+					wie sie im Daten-Fenster f&uuml;r die aktuelle Woche zu finden ist.');
+	}
+
+	/**
 	 * Set default config-variables
 	 * @see PluginStat::getDefaultConfigVars()
 	 */

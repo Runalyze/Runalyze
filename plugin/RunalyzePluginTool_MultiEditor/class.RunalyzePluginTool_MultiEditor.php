@@ -47,9 +47,18 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
 		$this->name = 'Multi-Editor';
-		$this->description = 'Bearbeitung von mehreren Trainings gleichzeitig.';
+		$this->description = 'Bearbeitung von mehreren Trainings gleichzeitig. Notwendig f&uuml;r einige Importer.';
 
 		$this->initPossibleKeys();
+	}
+
+	/**
+	 * Display long description 
+	 */
+	protected function displayLongDescription() {
+		echo HTML::p('Dieses Tool erlaubt es, mehrere Trainings auf einmal zu bearbeiten.');
+		echo HTML::p('Diese Funktionalit&auml;t ist absolut empfehlenswert f&uuml;r den Import von mehrere Trainings auf einmal.
+					Nach dem Import k&ouml;nnen die Trainings direkt nacheinander bearbeitet werden.');
 	}
 
 	/**

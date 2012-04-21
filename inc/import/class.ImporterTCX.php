@@ -4,9 +4,7 @@
  */
 /**
  * Class: ImporterTCX
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class ImporterTCX extends Importer {
 	/**
@@ -179,9 +177,13 @@ class ImporterTCX extends Importer {
 	protected function setOptionalValue() {
 		if (!empty($this->data['distance']))
 			$this->set('distance', round(end($this->data['distance']), 2));
+		elseif ($this->data['laps_distance'] > 0)
+			$this->set('distance', round($this->data['laps_distance'], 2));
 
 		if (!empty($this->data['time']))
 			$this->set('s', end($this->data['time']));
+		elseif ($this->data['laps_time'] > 0)
+			$this->set('s', $this->data['laps_time']);
 
 		if (!empty($this->data['heartrate'])) {
 			$this->set('pulse_avg', round(array_sum($this->data['heartrate'])/count($this->data['heartrate'])));
@@ -221,14 +223,16 @@ class ImporterTCX extends Importer {
 		$this->starttime = 0;
 		$this->calories  = 0;
 		$this->data      = array(
-			'time'      => array(),
-			'latitude'  => array(),
-			'longitude' => array(),
-			'altitude'  => array(),
-			'distance'  => array(),
-			'heartrate' => array(),
-			'pace'      => array(),
-			'splits'    => array());
+			'laps_distance' => 0,
+			'laps_time'     => 0,
+			'time'          => array(),
+			'latitude'      => array(),
+			'longitude'     => array(),
+			'altitude'      => array(),
+			'distance'      => array(),
+			'heartrate'     => array(),
+			'pace'          => array(),
+			'splits'        => array());
 	}
 
 	/**
@@ -266,6 +270,9 @@ class ImporterTCX extends Importer {
 	protected function parseLapValues($Lap) {
 		if (!empty($Lap->Calories))
 			$this->calories += (int)$Lap->Calories;
+
+		$this->data['laps_distance'] += round((int)$Lap->DistanceMeters)/1000;
+		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
 
 		if ((string)$Lap->Intensity == 'Active')
 			$this->data['splits'][] = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
