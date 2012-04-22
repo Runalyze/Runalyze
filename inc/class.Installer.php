@@ -247,12 +247,13 @@ class Installer {
 	 * Write config-variables to file
 	 */
 	protected function writeConfigFile() {
-		$config['host']          = $_POST['host'];
-		$config['database']      = $_POST['database'];
-		$config['username']      = $_POST['username'];
-		$config['password']      = $_POST['password'];
-		$config['prefix']        = $_POST['prefix'];
-		$config['debug_slashes'] = isset($_POST['debug']) ? '' : '//';
+		$config['host']     = $_POST['host'];
+		$config['database'] = $_POST['database'];
+		$config['username'] = $_POST['username'];
+		$config['password'] = $_POST['password'];
+		$config['prefix']   = $_POST['prefix'];
+		$config['debug']    = isset($_POST['debug']) ? 'true' : 'false';
+		$config['login']    = isset($_POST['login']) ? 'true' : 'false';
 
 		$file_string = file_get_contents(PATH.'install/config.php');
 		$file_string = preg_replace('/{config::([^}]*)}/ie', 'isset($config["$1"])?$config["$1"]:"$0"', $file_string);

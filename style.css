@@ -179,26 +179,28 @@ fieldset.collapsed legend {
 
 fieldset label {
 	font-weight: bold;
-	width: 40%;
+	width: 45%;
 	float: left;
 	margin: 0 !important;
 	padding: 3px 0; }
 
 fieldset .w33, fieldset .w50, fieldset .w100 {
-	padding: 2px 0; }
+	padding: 2px 0;
+	min-height: 19px; }
 
 fieldset .w50, fieldset .w33 {
 	float: left;
 	display: block; }
 
-fieldset .w100 *, fieldset .w50 *, fieldset .w33 * {
-	margin: 2px 0; }
+/*fieldset .w100 *, fieldset .w50 *, fieldset .w33 * {
+	margin: 2px 0; }*/
 
 fieldset .w100 {
 	clear: left;
 }
 
-fieldset input { padding: 2px; }
+fieldset input { padding: 2px; margin: 0; }
+fieldset select { padding: 1px; margin: 0; }
 fieldset input.withUnit { padding: 2px 30px 2px 0; }
 fieldset input.withUnitLeft { padding: 2px 0 2px 30px; }
 fieldset .smallSize { width: 60px; }
@@ -346,7 +348,8 @@ h1 a:link, h1 a:visited {
 	color: #800; }
 
 #copy a:hover, #copy a:active {
-	color: #DDD; }
+	color: #DDD;
+	text-shadow: -1px -1px 0 #000; }
 
 
 /*** TAB-NAVIGATION ***/

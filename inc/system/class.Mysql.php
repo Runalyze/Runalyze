@@ -72,8 +72,9 @@ final class Mysql {
 			Error::getInstance()->addDebug($query);
 
 		$result = false;
+		$orig = $query;
 
-		if ($addAccountId)
+		if ($addAccountId === true)
 			$query = $this->addAccountId($query);
 
 		$result = mysql_query($query)
@@ -158,7 +159,7 @@ final class Mysql {
 		if (strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
-		if ($table != PREFIX.'account' && !key_exists('accountid', $columns)) {
+		if ($table != PREFIX.'account' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
 			$values[]  = SessionHandler::getId();
 		}
@@ -214,8 +215,6 @@ final class Mysql {
 	 * @return array           For count($return)=1: $return['column'], otherwise: $return[$i]['column']. For count($return)=0 && !$as_array: false.
 	 */
 	public function fetch($table, $id = false, $as_array = false, $numeric = false) {
-		$return = array();
-
 		if ($id !== false && strncmp($table, PREFIX, strlen(PREFIX)) != 0)
 			Error::getInstance()->addWarning('class::Mysql: Tablename should start with global prefix "'.PREFIX.'".');
 
@@ -290,12 +289,9 @@ final class Mysql {
 	 *	@return string $query (MySQL query)
 	 **/
 	private function addAccountId($query) {
-		if (!SessionHandler::isLoggedIn())
-			return $query;
+		$ID = SessionHandler::isLoggedIn() ? SessionHandler::getId() : 0;
 
-		$ID = SessionHandler::getId();
-
-		if (strpos($query, 'SET NAMES') !== false || empty($ID))
+		if (strpos($query, 'SET NAMES') !== false || !is_numeric($ID))
 			return $query;
 
 		if (strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {

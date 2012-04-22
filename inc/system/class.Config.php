@@ -19,10 +19,10 @@ class Config {
 	public static $HIDDEN_CAT = 'hidden';
 
 	/**
-	 * Config-Array
+	 * Array with all constants already in database
 	 * @var array
 	 */
-	public $data;
+	private static $DbConsts = array();
 
 	/**
 	 * Constructor
@@ -44,37 +44,68 @@ class Config {
 	}
 
 	/**
-	 * Register a variable
-	 * @param string $category Descriptive category for config-window
-	 * @param string $KEY Internal key, must be unique, should start with an equivalent for the category
-	 * @param string $type Type of this value
-	 * @param mixed $default Default value 
+	 * Get all consts being already in database
+	 * @return array
 	 */
-	static public function register($category, $KEY, $type, $default, $description = '', $select_description = array()) {
-		$conf = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'conf` WHERE `key`="'.$KEY.'"');
-		if ($conf === false) {
-			$select_description = self::valueToString($select_description, 'array');
-			$default = self::valueToString($default, $type);
-			$columns = array('category', 'key', 'type', 'value', 'description', 'select_description');
-			$values  = array($category,  $KEY,  $type,  $default, $description, $select_description);
-
-			Mysql::getInstance()->insert(PREFIX.'conf', $columns, $values);
-
-			$conf = array('value' => $default);
+	static private function getConsts() {
+		if (empty(self::$DbConsts)) {
+			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf');
+			foreach ($data as $confArray)
+				self::$DbConsts[$confArray['key']] = $confArray;
 		}
 
-		$value = $conf['value'];
-		$value = self::stringToValue($value, $type);
+		return self::$DbConsts;
+	}
 
-		if ($type == 'array')
-			$value = serialize($value);
-		if ($type == 'select') {
-			foreach ($value as $k => $v)
-				if ($v)
-					$value = $k;
+	/**
+	 * Register a variable
+	 * @param type $category Descriptive category for config-window
+	 * @param type $KEY Internal key, must be unique, should start with an equivalent for the category
+	 * @param type $type Type of this value
+	 * @param type $default Default value
+	 * @param type $description Description for config-window
+	 * @param type $select_description Description for options of select
+	 */
+	static public function register($category, $KEY, $type, $default, $description = '', $select_description = array()) {
+		$Consts = self::getConsts();
+
+		if (!isset($Consts[$KEY])) {
+			self::insertNewConst($category, $KEY, $type, $default, $description, $select_description);
+			$value = $default;
+		} else {
+			if ($description != $Consts[$KEY]['description'])
+				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'description', $description);
+
+			$value = self::stringToValue($Consts[$KEY]['value'], $type);
+
+			if ($type == 'array')
+				$value = serialize($value);
+			if ($type == 'select') {
+				foreach ($value as $k => $v)
+					if ($v)
+						$value = $k;
+			}
 		}
 
 		define('CONF_'.$KEY, $value);
+	}
+
+	/**
+	 * Insert a new configuration constant to database
+	 * @param type $category Descriptive category for config-window
+	 * @param type $KEY Internal key, must be unique, should start with an equivalent for the category
+	 * @param type $type Type of this value
+	 * @param type $default Default value
+	 * @param type $description Description for config-window
+	 * @param type $select_description Description for options of select
+	 */
+	static private function insertNewConst($category, $KEY, $type, $default, $description, $select_description) {
+		$select_description = self::valueToString($select_description, 'array');
+		$default = self::valueToString($default, $type);
+		$columns = array('category', 'key', 'type', 'value', 'description', 'select_description');
+		$values  = array($category,  $KEY,  $type,  $default, $description, $select_description);
+
+		Mysql::getInstance()->insert(PREFIX.'conf', $columns, $values);
 	}
 
 	/**
@@ -145,8 +176,9 @@ class Config {
 	/**
 	 * Get input field for formular for a given conf-variable
 	 * @param array $conf Equivalent line from database for conf-variable as array
+	 * @param string $id
 	 */
-	static public function getInputField($conf) {
+	static public function getInputField($conf, $id) {
 		$name  = 'CONF_'.$conf['key'];
 		$value = self::stringToValue($conf['value'], $conf['type']);
 
@@ -165,7 +197,7 @@ class Config {
 					}
 				}
 
-				$select   = '<select name="'.$name.'">';
+				$select   = '<select id="'.$id.'" name="'.$name.'">';
 				foreach ($options as $v)
 					$select .= '<option value="'.$v['value'].'"'.HTML::Selected($v['value'] == $conf['value']).'>'.$v['name'].'&nbsp;</option>';
 				$select  .= '</select>';
@@ -175,32 +207,31 @@ class Config {
 				$db       = $settings[0];
 				$col      = $settings[1];
 
-				$select = '<select name="'.$name.'">';
+				$select = '<select id="'.$id.'" name="'.$name.'">';
 				$values = Mysql::getInstance()->fetchAsArray('SELECT `id`, `'.$col.'` FROM `'.PREFIX.$db.'` ORDER BY `'.$col.'` ASC');
 				foreach ($values as $v)
 					$select .= '<option value="'.$v['id'].'"'.HTML::Selected($v['id'] == $conf['value']).'>'.$v[$col].'&nbsp;</option>';
-				$select .= '</select>';
-				return $select;
+
+				return $select.'</select>';
 			case 'select':
 				$descr  = self::stringToValue($conf['select_description'], 'array');
-				$select = '<select name="'.$name.'">';
+				$select = '<select id="'.$id.'" name="'.$name.'">';
 				$i      = 0;
 				foreach ($value as $key => $val) {
 					$select .= '<option value="'.$key.'"'.HTML::Selected($val).'>'.$descr[$i].'&nbsp;</option>';
 					$i++;
 				}
-				$select .= '</select>';
-				return $select;
+				return $select.'</select>';
 			case 'array':
-				return '<input type="text" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="'.$id.'" type="text" name="'.$name.'" value="'.$value.'" />';
 			case 'bool':
-				return '<input type="checkbox" name="'.$name.'"'.HTML::Checked($value).' />';
+				return '<input id="'.$id.'" type="checkbox" name="'.$name.'"'.HTML::Checked($value).' />';
 			case 'int':
 			case 'float':
-				return '<input type="text" size="6" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="'.$id.'" type="text" size="6" name="'.$name.'" value="'.$value.'" />';
 			case 'string':
 			default:
-				return '<input type="text" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="'.$id.'" type="text" name="'.$name.'" value="'.$value.'" />';
 		}
 	}
 

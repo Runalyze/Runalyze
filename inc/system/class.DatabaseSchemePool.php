@@ -1,4 +1,8 @@
 <?php
+/**
+ * DatabaseSchemePool holds all needed DatabaseSchemes
+ * @author Hannes Christiansen <mail@laufhannes.de> 
+ */
 class DatabaseSchemePool {
 	/**
 	 * Array with all objects
@@ -23,4 +27,3 @@ class DatabaseSchemePool {
 		return self::$Objects[$schemeFile];
 	}
 }
-?>

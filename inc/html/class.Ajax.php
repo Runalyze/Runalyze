@@ -48,9 +48,6 @@ class Ajax {
 		$Files[] = 'lib/runalyze.lib.tablesorter.js';
 		$Files[] = 'lib/runalyze.lib.js';
 
-		if (CONF_DESIGN_BG_FIX_AND_STRETCH)
-			$Files[] = 'lib/jquery.backgroundStretch.js';
-
 		return $Files;
 	}
 

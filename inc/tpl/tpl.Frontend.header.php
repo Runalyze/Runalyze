@@ -15,6 +15,7 @@
 	<?php foreach ($this->JS_FILES as $file): ?>
 		<script type="text/javascript" src="<?php echo $file; ?>"></script>
 	<?php endforeach; ?>
+		<script type="text/javascript" src="lib/jquery.backgroundStretch.js"></script>
 
 	<?php if (class_exists('Plot')): ?><?php foreach (Plot::getNeededJSFilesAsArray() as $file): ?>
 		<script type="text/javascript" src="<?php echo $file; ?>"></script>

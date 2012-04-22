@@ -176,6 +176,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
 		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `y` ASC');
+
+		if (empty($wks))
+			return;
+
 		foreach ($wks as $wk) {
 			if (!isset($year[$wk['y']])) {
 				$year[$wk['y']] = $dists;

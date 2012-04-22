@@ -23,13 +23,7 @@ if (isset($_POST) && isset($_POST['formID']) && $_POST['formID'] == "config") {
 
 if (isset($submit))
 	echo ('<div id="submit-info">'.$submit.'</div>');
-?>
 
-<form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="config" onsubmit="return false;" method="post">
-	<div id="config_all">
-		<input type="hidden" name="formID" value="config" />
-
-<?php
 $Links   = array();
 $Links[] = array('tag' => Ajax::change('Allgemeines', 'config_all', 'config_allgemein'));
 $Links[] = array('tag' => Ajax::change('Plugins', 'config_all', 'config_plugins'));
@@ -40,6 +34,10 @@ $Links[] = array('tag' => Ajax::change('Kleidung', 'config_all', 'config_kleidun
 
 echo Ajax::toolbarNavigation($Links, 'right');
 ?>
+
+<form class="ajax" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" id="config" onsubmit="return false;" method="post">
+	<div id="config_all">
+		<input type="hidden" name="formID" value="config" />
 
 		<div id="config_allgemein" class="change"<?php if (isset($_GET['plugins'])) echo ' style="display:none;"'; ?>>
 			<?php include '../inc/tpl/tpl.Config.allgemein.php' ?>

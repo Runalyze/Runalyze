@@ -18,6 +18,12 @@ class AccountHandler {
 	static private $PASS_MIN_LENGTH = 6;
 
 	/**
+	 * Minimum length for usernames
+	 * @var int
+	 */
+	static private $USER_MIN_LENGTH = 3;
+
+	/**
 	 * Update account-values
 	 * @param string $username
 	 * @param mixed $column
@@ -60,6 +66,15 @@ class AccountHandler {
 	}
 
 	/**
+	 * Does a user with this mail exist?
+	 * @param string $mail
+	 * @return boolean
+	 */
+	static public function mailExists($mail) {
+		return (1 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`="'.mysql_real_escape_string($mail).'" LIMIT 1'));
+	}
+
+	/**
 	 * Compares a password (given as string) with hash from database
 	 * @param string $realString
 	 * @param string $hashFromDb
@@ -93,16 +108,19 @@ class AccountHandler {
 	static public function tryToRegisterNewUser() {
 		$errors = array();
 
+		if (strlen($_POST['new_username']) < self::$USER_MIN_LENGTH)
+			$errors[] = 'Der Benutzername muss mindestens '.self::$USER_MIN_LENGTH.' Zeichen lang sein.';
 		if (self::usernameExists($_POST['new_username']))
 			$errors[] = 'Der Benutzername ist bereits vergeben.';
-		else {
-			if ($_POST['password'] != $_POST['password_again'])
+		if (self::mailExists($_POST['email']))
+			$errors[] = 'Die E-Mail-Adresse wird bereits verwendet.';
+		if ($_POST['password'] != $_POST['password_again'])
 				$errors[] = 'Die Passw&ouml;rter waren unterschiedlich.';
-			elseif (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
+		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
 				$errors[] = 'Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.';
-			else
-				$errors = self::createNewUserFromPost();
-		}
+
+		if (empty($errors))
+			$errors = self::createNewUserFromPost();
 
 		if (empty($errors)) {
 			header('Location: index.php');
@@ -117,18 +135,18 @@ class AccountHandler {
 	 */
 	static private function createNewUserFromPost() {
 		$errors = array();
-		$errors = array('Das Registrieren von neuen Benutzern ist noch nicht m&ouml;glich.');
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newAccountId   = Mysql::getInstance()->insert(PREFIX.'account',
 				array('username', 'name', 'mail', 'password', 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password'], time(), $activationHash)));
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password']), time(), $activationHash));
 
 		if ($newAccountId === false)
 			$errors[] = 'Beim Registrieren ist etwas schiefgelaufen. Bitte benachrichtige den Administrator.';
 		else {
-			// 4) import sql-files: PROBLEM - accountid is missing
-			// 5) (try to) send email with activation-key
+			self::importEmptyValuesFor($newAccountId);
+			self::setSpecialConfigValuesFor($newAccountId);
+			self::setAndSendActivationKeyFor($newAccountId, $errors);
 		}
 
 		return $errors;
@@ -194,6 +212,15 @@ class AccountHandler {
 	}
 
 	/**
+	 * Get link for activate account
+	 * @param string $hash
+	 * @return string
+	 */
+	static private function getActivationLink($hash) {
+		return System::getFullDomain().'login.php?activate='.$hash;
+	}
+
+	/**
 	 * Get username requested for changing password
 	 * @return boolean|string
 	 */
@@ -246,5 +273,72 @@ class AccountHandler {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Import empty values for new account
+	 * Attention: $accountID has to be set here - new registered users are not in session yet!
+	 * @param int $accountID 
+	 */
+	static private function importEmptyValuesFor($accountID) {
+		$Mysql       = Mysql::getInstance();
+		$EmptyTables = array();
+
+		include FRONTEND_PATH.'system/schemes/set.emptyValues.php';
+
+		foreach ($EmptyTables as $table => $data) {
+			$columns   = $data['columns'];
+			$columns[] = 'accountid';
+
+			foreach ($data['values'] as $values) {
+				$values[] = $accountID;
+				$Mysql->insert(PREFIX.$table, $columns, $values);
+			}
+		}
+	}
+
+	/**
+	 * Set activation key for new user and set via email
+	 * @param int $accountId 
+	 * @param array $errors
+	 */
+	static private function setAndSendActivationKeyFor($accountId, &$errors) {
+		$account        = Mysql::getInstance()->fetch(PREFIX.'account', $accountId);
+		$activationHash = self::getRandomHash();
+		$activationLink = self::getActivationLink($activationHash);
+
+		Mysql::getInstance()->update(PREFIX.'account', $accountId, 'activation_hash', $activationHash);
+
+		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Registrierung';
+		$message  = "Danke f&uuml;r deine Anmeldung, ".$account['name']."!\n\n";
+		$message .= "Unter folgendem Link kannst du deinen Account best&auml;tigen:\n";
+		$message .= $activationLink;
+
+		if (!System::sendMail($account['mail'], $subject, $message)) {
+			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
+
+			if (System::isAtLocalhost()) {
+				$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+				Error::getInstance()->addDebug('Link for activating account: '.$activationLink);
+			}
+		}
+	}
+
+	/**
+	 * Set some special configuration values
+	 * @param int $accountId 
+	 */
+	static private function setSpecialConfigValuesFor($accountId) {
+		$Mysql = Mysql::getInstance();
+
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE name="Laufen"');
+		Config::update('MAINSPORT', $data['id']);
+		Config::update('RUNNINGSPORT', $data['id']);
+
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Wettkampf"');
+		Config::update('WK_TYPID', $data['id']);
+
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Langer Lauf"');
+		Config::update('LL_TYPID', $data['id']);
 	}
 }

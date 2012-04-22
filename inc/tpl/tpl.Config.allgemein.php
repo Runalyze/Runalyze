@@ -1,35 +1,30 @@
 <h1>Allgemeine Einstellungen</h1>
 
-<div class="c">
-	<?php
-	$categories = $Mysql->fetch('SELECT `category` FROM `'.PREFIX.'conf` WHERE `category`!="'.Config::$HIDDEN_CAT.'" GROUP BY `category`');
-	foreach ($categories as $i => $cat)
-		echo Ajax::change('<strong>'.$cat['category'].'</strong>', 'conf_div', mb_strtolower($cat['category'])).($i < count($categories)-1 ? ' &nbsp; - &nbsp; ' : '').NL;
-	?>
-</div>
+<?php
+$categories = $Mysql->fetch('SELECT `category` FROM `'.PREFIX.'conf` WHERE `category`!="'.Config::$HIDDEN_CAT.'" GROUP BY `category`');
 
-<hr />
+foreach ($categories as $i => $cat) {
+	$id = mb_strtolower($cat['category']);
 
-<div id="conf_div">
-	<?php
-	foreach ($categories as $i => $cat) {
-		echo '<div id="'.mb_strtolower($cat['category']).'" class="change"'.($i == 0 ? '' : ' style="display:none;"').'>';
-	
-		$confs = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`="'.$cat['category'].'"');
-	
-		if (empty($confs))
-			echo '<em>Keine Konfigurationsvariablen vorhanden vorhanden.</em>';
-	
-		foreach ($confs as $i => $conf) {
-			echo '<label>';
-			echo Config::getInputField($conf).NL;
-			echo '<strong>'.$conf['description'].'</strong>';
-			if ($conf['type'] == 'array')
-				echo ' <small>(kommagetrennt)</small>';
-			echo '</label><br />';
-		}
-	
+	echo '<fieldset id="conf_'.$id.'"'.($i != 0 ? ' class="collapsed"' : '').'>';
+	echo '<legend onclick="Runalyze.toggleFieldset(this, \'conf_'.$id.'\', true)">'.$cat['category'].'</legend>';
+
+	$confs = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`="'.$cat['category'].'"');
+
+	if (empty($confs))
+		echo '<em>Keine Konfigurationsvariablen vorhanden vorhanden.</em>';
+
+	foreach ($confs as $i => $conf) {
+		$id = 'conf_field_'.$conf['key'];
+
+		echo '<div class="w50">';
+		echo '<label for="'.$id.'">'.$conf['description'].'</label>';
+		echo Config::getInputField($conf, $id);
+		if ($conf['type'] == 'array')
+			echo ' <small>(kommagetrennt)</small>';
 		echo '</div>';
 	}
-	?>
-</div>
+
+	echo '</fieldset>';
+}
+?>

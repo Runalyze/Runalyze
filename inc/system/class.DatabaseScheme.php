@@ -440,4 +440,3 @@ class DatabaseScheme {
 		return array();
 	}
 }
-?>
