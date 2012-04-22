@@ -43,6 +43,7 @@ class Frontend {
 		$this->initRequiredFiles();
 		$this->initDebugMode();
 		$this->initSessionHandler();
+		$this->defineConsts();
 
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
@@ -67,7 +68,6 @@ class Frontend {
 		$this->setAutoloader();
 		$this->initErrorHandling();
 		$this->initMySql();
-		$this->defineConsts();
 	}
 
 	/**

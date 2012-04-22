@@ -28,8 +28,14 @@ $password = '{config::password}';
 define('PREFIX', '{config::prefix}');
 
 /**
- * To set off debugging, just comment out the line with "//" at the beginning.
+ * To set off debugging, define this constant as false
  * @var bool RUNALYZE_DEBUG Set to true for debugging mode
  */
-{config::debug_slashes}define('RUNALYZE_DEBUG', true);
+define('RUNALYZE_DEBUG', {config::debug});
+
+/**
+ * To force users to login, define this constant as true
+ * @var bool USER_MUST_LOGIN It set to true, users have to login
+ */
+define('USER_MUST_LOGIN', {config::login});
 ?>

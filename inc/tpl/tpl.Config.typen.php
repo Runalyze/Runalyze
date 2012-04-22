@@ -8,16 +8,16 @@ Daher sind die Trainingstypen mit ihren Trainings verlinkt.
 <hr />
 
 <table class="c">
-	<tr class="b">
-		<td>Trainingstyp</td>
-		<td>Abk&uuml;rzung</td>
-		<td title="Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)">RPE</td>
-		<td title="Es werden einzelne Kilometerabschnitte aufgezeichnet">Splits</td>
-		<td title="Ein Trainingstyp kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen">l&ouml;schen?</td>
-	</tr>
-	<tr class="space">
-		<td colspan="5"></td>
-	</tr>
+	<thead>
+		<tr class="b">
+			<th>Trainingstyp</th>
+			<th>Abk&uuml;rzung</th>
+			<th title="Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)">RPE</th>
+			<th title="Es werden einzelne Kilometerabschnitte aufgezeichnet">Splits</th>
+			<th title="Ein Trainingstyp kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen">l&ouml;schen?</th>
+		</tr>
+	</thead>
+	<tbody>
 <?php
 $typen = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'type` ORDER BY `id` ASC');
 $typen[] = array('id' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5, 'splits' => 0);
@@ -41,4 +41,5 @@ foreach($typen as $i => $typ) {
 		</tr>');
 }
 ?>
+	</tbody>
 </table>

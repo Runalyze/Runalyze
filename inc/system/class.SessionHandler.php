@@ -1,4 +1,11 @@
 <?php
+if (!defined('USER_MUST_LOGIN'))
+/**
+ * Is a login needed?
+ * @var string
+ */
+	define('USER_MUST_LOGIN', false);
+
 /**
  * Class: SessionHandler
  * 
@@ -10,7 +17,7 @@ class SessionHandler {
 	 * Boolean flag: user must be logged in
 	 * @var boolean
 	 */
-	static public $USER_MUST_LOGIN = false; // TODO: as const in config.php
+	static public $USER_MUST_LOGIN = USER_MUST_LOGIN;
 
 	/**
 	 * Array containing userrow from database
@@ -49,7 +56,11 @@ class SessionHandler {
 	static public $ERROR_TYPE_ACTIVATION_NEEDED = 3;
 
 	/**
-	 * Construct a new SessionHandler 
+	 * Construct a new SessionHandler
+	 * ATTENTION:
+	 * - all used methods from constructor must not use any consts (except PREFIX)
+	 * - all these consts will be defined after setting Account-ID,
+	 *   because some of them need database-connection
 	 */
 	function __construct() {
 		session_start();

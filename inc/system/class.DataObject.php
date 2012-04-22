@@ -66,6 +66,7 @@ abstract class DataObject {
 	private function constructAsDefaultObject() {
 		$this->id   = self::$DEFAULT_ID;
 		$this->data = $this->databaseScheme()->getDefaultArray();
+		$this->data['id'] = $this->id;
 	}
 
 	/**
@@ -77,11 +78,15 @@ abstract class DataObject {
 			$this->data = $idOrArrayOrKey;
 		elseif (is_numeric($idOrArrayOrKey))
 			$this->data = Mysql::getInstance()->fetch($this->tableName(), $idOrArrayOrKey);
-		elseif ($idOrArrayOrKey === self::$LAST_OBJECT)
+		elseif ($idOrArrayOrKey === self::$LAST_OBJECT) {
 			if ($this->DatabaseScheme->hasTimestamp())
 				$this->data = Mysql::getInstance()->fetchSingle('SELECT * FROM '.$this->tableName().' ORDER BY time DESC');
 			else
 				$this->data = Mysql::getInstance()->fetch($this->tableName, 'LAST');
+	
+			if (empty($this->data))
+				$this->constructAsDefaultObject();
+		}
 	}
 
 	/**
