@@ -16,13 +16,13 @@ class Weather {
 	* @var array
 	*/
 	static private $fullArray = array(
-		1 => array('id' => 1, 'name' => 'unbekannt',	'img' => 'ka.png',			'order' => 0),
-		2 => array('id' => 2, 'name' => 'sonnig',		'img' => 'sonnig.png',		'order' => 1),
-		3 => array('id' => 3, 'name' => 'heiter',		'img' => 'heiter.png',		'order' => 2),
-		4 => array('id' => 4, 'name' => 'bew&ouml;lkt',	'img' => 'bewoelkt.png',	'order' => 3),
-		5 => array('id' => 5, 'name' => 'wechselhaft',	'img' => 'wechselhaft.png',	'order' => 4),
-		6 => array('id' => 6, 'name' => 'regnerisch',	'img' => 'regnerisch.png',	'order' => 5),
-		7 => array('id' => 7, 'name' => 'Schnee',		'img' => 'Schnee.png',		'order' => 6)
+		1 => array('id' => 1, 'name' => 'unbekannt',	'img-class' => 'weather-1',	'order' => 0),
+		2 => array('id' => 2, 'name' => 'sonnig',		'img-class' => 'weather-2',	'order' => 1),
+		3 => array('id' => 3, 'name' => 'heiter',		'img-class' => 'weather-3',	'order' => 2),
+		4 => array('id' => 4, 'name' => 'bew&ouml;lkt',	'img-class' => 'weather-4',	'order' => 3),
+		5 => array('id' => 5, 'name' => 'wechselhaft',	'img-class' => 'weather-5',	'order' => 4),
+		6 => array('id' => 6, 'name' => 'regnerisch',	'img-class' => 'weather-6',	'order' => 5),
+		7 => array('id' => 7, 'name' => 'Schnee',		'img-class' => 'weather-7',	'order' => 6)
 	);
 
 	/**

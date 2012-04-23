@@ -1,0 +1,27 @@
+.vdot-icon {
+	float: left;
+	width: 9px;
+	height: 12px;
+	background-image: url(../img/vdot.png);
+	background-repeat: no-repeat;
+}
+
+.vdot-icon.vdot-up-2 { background-position: 0 0; }
+.vdot-icon.vdot-up { background-position: 0 -12px; }
+.vdot-icon.vdot-normal { background-position: 0 -24px; }
+.vdot-icon.vdot-down { background-position: 0 -36px; }
+.vdot-icon.vdot-down-2 { background-position: 0 -48px; }
+
+.weather-icon {
+	width: 12px;
+	height: 12px;
+	background-image: url(../img/weather.png);
+}
+
+.weather-icon.weather-1 { background-position: 0 0; }
+.weather-icon.weather-2 { background-position: 0 -12px; }
+.weather-icon.weather-3 { background-position: 0 -24px; }
+.weather-icon.weather-4 { background-position: 0 -36px; }
+.weather-icon.weather-5 { background-position: 0 -48px; }
+.weather-icon.weather-6 { background-position: 0 -60px; }
+.weather-icon.weather-7 { background-position: 0 -72px; }
