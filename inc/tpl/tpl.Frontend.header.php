@@ -4,6 +4,7 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="lib/sprites.css" />
 	<?php foreach ($this->CSS_FILES as $file): ?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $file; ?>" />
 	<?php endforeach; ?>

@@ -9,7 +9,6 @@ class Icon {
 	 * All avaiable icons are set as class members
 	 */
 	// General
-	static public $AJAX_LOADER		= 'img/ajax-loader-download.gif';
 	static public $EDIT				= 'img/edit.gif';
 	static public $EDIT_SMALL		= 'img/edit.png';
 	static public $REFRESH			= 'img/Refresh.png';
@@ -46,12 +45,6 @@ class Icon {
 	static public $FATIGUE			= 'img/fatigue.png';
 	static public $COMPETITION		= 'img/competition.png';
 	static public $COMPETITION_FUN	= 'img/competition_fun.png';
-	// Shape
-	static public $FORM_NORMAL		= 'img/form0.png';
-	static public $FORM_UP			= 'img/form++.png';
-	static public $FORM_UP_HALF		= 'img/form+.png';
-	static public $FORM_DOWN_HALF	= 'img/form-.png';
-	static public $FORM_DOWN		= 'img/form--.png';
 	// Shoes
 	static public $BROKEN_1			= 'img/running/broken-1.png';
 	static public $BROKEN_2			= 'img/running/broken-2.png';
@@ -110,15 +103,12 @@ class Icon {
 	/**
 	 * Get the weather-specific icon
 	 * @param int $id
-	 * @param string $title
+	 * @param string $title deprecated
 	 */
 	public static function getWeatherIcon($id, $title = '') {
 		$data = Weather::getDataFor($id);
 
-		if ($title == '')
-			$title = $data['name'];
-
-		return '<img src="img/wetter/'.$data['img'].'" alt="'.$title.'" />';
+		return '<div class="weather-icon '.$data['img-class'].'"></div>';
 	}
 
 	/**
@@ -128,17 +118,16 @@ class Icon {
 	 */
 	public static function getVDOTicon($VDOT) {
 		if ( $VDOT > (VDOT_FORM+3) )
-			$icon = self::$FORM_UP;
+			$class = 'vdot-up-2';
 		elseif ( $VDOT > (VDOT_FORM+1) )
-			$icon = self::$FORM_UP_HALF;
+			$class = 'vdot-up';
 		elseif ( $VDOT < (VDOT_FORM-3) )
-			$icon = self::$FORM_DOWN;
+			$class = 'vdot-normal';
 		elseif ( $VDOT < (VDOT_FORM-1) )
-			$icon = self::$FORM_DOWN_HALF;
+			$class = 'vdot-down';
 		else
-			$icon = self::$FORM_NORMAL;
+			$class = 'vdot-down-2';
 
-		return self::get($icon, '', '', 'VDOT: '.$VDOT);
+		return Ajax::tooltip('<div class="vdot-icon '.$class.'"></div>', 'VDOT: '.$VDOT);
 	}
 }
-?>
