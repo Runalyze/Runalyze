@@ -1,5 +1,5 @@
 .vdot-icon {
-	float: left;
+	display: inline-block;
 	width: 9px;
 	height: 12px;
 	background-image: url(../img/vdot.png);
@@ -13,9 +13,10 @@
 .vdot-icon.vdot-down-2 { background-position: 0 -48px; }
 
 .weather-icon {
+	display: inline-block;
 	width: 12px;
 	height: 12px;
-	background-image: url(../img/weather.png);
+	background-image: url('../img/weather.png');
 }
 
 .weather-icon.weather-1 { background-position: 0 0; }

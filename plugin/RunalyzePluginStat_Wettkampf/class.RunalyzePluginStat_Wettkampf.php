@@ -140,28 +140,28 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display all image-links for personal bests
 	 */
 	private function displayPersonalBestsImages() {
-		echo '<small style="text-align:center;display:block;">';
-
-		$first = true;
+		$SubLinks = array();
 		foreach ($this->distances as $km) {
-			$name = Helper::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
-
-			echo (!$first ? ' | ' : '');
-			echo Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
-			$first = false;
+			$name       = Helper::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
+			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
-		
+		$Links = array(array('tag' => '<a href="#">Distanz w&auml;hlen</a>', 'subs' => $SubLinks));
+
+		echo '<div class="dataBox" style="float:none;width:590px;margin:0 auto;">';
+		echo Ajax::toolbarNavigation($Links, 'right');
+
 		$display_km = $this->distances[0];
 		if (in_array($this->config['main_distance']['var'], $this->distances))
 			$display_km = $this->config['main_distance']['var'];
 
-		echo '</small>';
-		echo '<div id="bestzeitenFlots" class="flotChangeable" style="position:relative;width:482px;height:192px;margin:5px auto;">';
+		echo '<div id="bestzeitenFlots" class="flotChangeable" style="position:relative;width:482px;height:192px;">';
 		foreach ($this->distances as $km) {
 			echo Plot::getInnerDivFor('bestzeit'.($km*1000), 480, 190, $km != $display_km);
 			$_GET['km'] = $km;
 			include 'Plot.Bestzeit.php';
 		}
+		echo '</div>';
+
 		echo '</div>';
 	}
 

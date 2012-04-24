@@ -1,17 +1,7 @@
 <?php
 /**
- * This file contains the class to handle the displaying for every training.
- */
-
-/**
 * Class: TrainingDisplay
-*
 * @author Hannes Christiansen <mail@laufhannes.de>
-* @version 1.0
-* @uses class::Mysql
-* @uses class::Error
-* @uses class::HTML
-* @uses class::Helper
 */
 class TrainingDisplay {
 	/**
@@ -66,20 +56,10 @@ class TrainingDisplay {
 		if ($this->Training->hasElevationData())
 			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'key' => 'elevation', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
 
+		if (!$this->Training->hasSplitsData() && $this->Training->hasPaceData())
+			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
+
 		return $plots;
-	}
-
-	/**
-	 * Display links for all plots
-	 */
-	public function displayPlotLinks() {
-		$links = array();
-		$plots = $this->getPlotTypesAsArray();
-
-		foreach ($plots as $key => $array)
-			$links[] = Ajax::flotChange($array['name'], 'trainingPlots', $array['key'].'_'.$this->Training->get('id'));
-
-		echo implode(' | ', $links);
 	}
 
 	/**
@@ -91,7 +71,7 @@ class TrainingDisplay {
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type])) {
 			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden, 'trainingChart');
-			include FRONTEND_PATH.'draw/Plot.Training.'.$plots[$type]['key'].'.php';
+			include FRONTEND_PATH.'training/draw/Plot.Training.'.$plots[$type]['key'].'.php';
 		} else
 			Error::getInstance()->addWarning('TrainingDisplay::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}
@@ -324,4 +304,3 @@ class TrainingDisplay {
 		return '';
 	}
 }
-?>

@@ -11,11 +11,11 @@ table.sortable thead tr .header {
 	cursor: pointer;
 }
 table.sortable thead tr .header:hover,
-table.sortable thead tr .headerSortUp:hover,
+table.sortable thead tr .headerSortDown:hover,
 table.sortable thead tr .headerSortDown {
 	background-image: url(../img/tablesorter/desc.gif);
 }
-table.sortable thead tr .headerSortDown:hover,
+table.sortable thead tr .headerSortUp:hover,
 table.sortable thead tr .headerSortUp {
 	background-image: url(../img/tablesorter/asc.gif);
 }

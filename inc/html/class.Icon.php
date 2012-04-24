@@ -108,7 +108,7 @@ class Icon {
 	public static function getWeatherIcon($id, $title = '') {
 		$data = Weather::getDataFor($id);
 
-		return '<div class="weather-icon '.$data['img-class'].'"></div>';
+		return '<span class="weather-icon '.$data['img-class'].'"></span>';
 	}
 
 	/**
@@ -128,6 +128,6 @@ class Icon {
 		else
 			$class = 'vdot-down-2';
 
-		return Ajax::tooltip('<div class="vdot-icon '.$class.'"></div>', 'VDOT: '.$VDOT);
+		return Ajax::tooltip('<span class="vdot-icon '.$class.'"></span>', 'VDOT: '.$VDOT);
 	}
 }
