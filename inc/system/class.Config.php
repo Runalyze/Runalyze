@@ -38,9 +38,12 @@ class Config {
 	 * Update a value, should primary be used for hidden keys
 	 * @param string $KEY
 	 * @param mixed $value
+	 * @param mixed $accountID
 	 */
-	static public function update($KEY, $value) {
-		Mysql::getInstance()->query('UPDATE `'.PREFIX.'conf` SET `value`="'.$value.'" WHERE `key`="'.$KEY.'" LIMIT 1');
+	static public function update($KEY, $value, $accountID = false) {
+		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.$accountID : '';
+
+		Mysql::getInstance()->query('UPDATE `'.PREFIX.'conf` SET `value`="'.$value.'" WHERE `key`="'.$KEY.'"'.$whereAdd.' LIMIT 1');
 	}
 
 	/**
