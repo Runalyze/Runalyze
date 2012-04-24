@@ -332,13 +332,13 @@ class AccountHandler {
 		$Mysql = Mysql::getInstance();
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE name="Laufen"');
-		Config::update('MAINSPORT', $data['id']);
-		Config::update('RUNNINGSPORT', $data['id']);
+		Config::update('MAINSPORT', $data['id'], $accountId);
+		Config::update('RUNNINGSPORT', $data['id'], $accountId);
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Wettkampf"');
-		Config::update('WK_TYPID', $data['id']);
+		Config::update('WK_TYPID', $data['id'], $accountId);
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Langer Lauf"');
-		Config::update('LL_TYPID', $data['id']);
+		Config::update('LL_TYPID', $data['id'], $accountId);
 	}
 }
