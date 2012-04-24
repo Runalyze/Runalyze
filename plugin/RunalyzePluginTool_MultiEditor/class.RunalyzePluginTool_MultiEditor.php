@@ -39,6 +39,12 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 */
 	private $Infos = array();
 
+	/**
+	 * Boolean flag: Keys have been set
+	 * @var boolean
+	 */
+	static public $KEYS_ARE_SET = false;
+
 
 	/**
 	 * Initialize this plugin
@@ -68,6 +74,8 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	protected function getDefaultConfigVars() {
 		$config = array();
 
+		$this->initPossibleKeys();
+
 		foreach ($this->Keys as $key => $Data)
 			$config[$key] = array('type' => 'bool', 'var' => $Data['default'], 'description' => $Data['name'].' bearbeiten');
 
@@ -96,6 +104,9 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 * Init all keys
 	 */
 	private function initPossibleKeys() {
+		if (self::$KEYS_ARE_SET)
+			return;
+
 		$this->addKey('sportid',     'Sportart', "echo Sport::getSelectBox();", true);
 		$this->addKey('s',           'Dauer', "echo HTML::simpleInputField('s', 9);", true);
 		$this->addKey('distance',    'Distanz', "echo HTML::simpleInputField('distance', 4);", true);
@@ -112,6 +123,8 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$this->addKey('weatherid',   'Wetter', "echo Weather::getSelectBox();", false);
 		$this->addKey('clothes',     'Kleidung', "echo Clothes::getCheckboxes();", false);
 		$this->addKey('splits',      'Zwischenzeiten', "echo HTML::textarea('splits', 70, 3);", false);
+
+		self::$KEYS_ARE_SET = true;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../inc/class.Validator.php';
+require_once dirname(__FILE__) . '/../../inc/system/class.Validator.php';
 
 /**
  * Test class for Validator.

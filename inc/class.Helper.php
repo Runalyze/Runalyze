@@ -167,11 +167,16 @@ class Helper {
 	 * @param int $decimals   Decimals after the point, default: 1
 	 * @param bool $track     Run on a tartan track?, default: false
 	 */
-	public static function Km($km, $decimals = 1, $track = false) {
+	public static function Km($km, $decimals = -1, $track = false) {
 		if ($km == 0)
 			return '';
+
 		if ($track)
 			return number_format($km*1000, 0, ',', '.').'m';
+
+		if ($decimals == -1)
+			$decimals = CONF_TRAINING_DECIMALS;
+
 		return number_format($km, $decimals, ',', '.').'&nbsp;km';
 	}
 

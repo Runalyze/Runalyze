@@ -10,7 +10,8 @@ ul.jbar * {
 	outline: 0;
 }
 
-ul.jbar a {
+ul.jbar a,
+ul.jbar span.link {
 	font-size: 11px;
 	line-height: 12px;
 }
@@ -24,7 +25,8 @@ ul.jbar li {
 	float: left;
 }
 
-ul.jbar li a {
+ul.jbar li a,
+ul.jbar li span.link {
 	color: #313131 !important;
 	text-decoration: none;
 	padding: 2px 4px;
@@ -58,7 +60,8 @@ ul.jbar li a {
  */
 
 ul.jbar li .triggered,
-ul.jbar li a:hover {
+ul.jbar li a:hover,
+ul.jbar li span.link:hover {
 	box-shadow: 0 1px 3px #BBBBBB;
 	text-shadow: -1px -1px 0 #000;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #666), color-stop(100%, #444));
@@ -70,13 +73,15 @@ ul.jbar li a:hover {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666', endColorstr='#444',GradientType=0 );
 }
 
-ul.jbar ul li a:hover {
+ul.jbar ul li a:hover
+ul.jbar ul li span.link:hover {
 	background-color: #555 !important;
 	background-image: none;
 	text-shadow: none;
 }
 
-ul.jbar li a.first {
+ul.jbar li a.first,
+ul.jbar li span.link.first {
 	-webkit-border-top-left-radius: 3px;
 	-webkit-border-bottom-left-radius: 3px;
 	-moz-border-radius-topleft: 3px;
@@ -114,7 +119,8 @@ ul.jbar ul li a:hover,
 ul.jbar li a.has_no_down_arrow:hover,
 ul.jbar li a.has_lonely_down_arrow:hover,
 ul.jbar li a.trigger:hover,
-ul.jbar li .hovered {
+ul.jbar li .hovered,
+ul.jbar li span.link:hover {
 	color: #fff !important;
 }
 
@@ -175,7 +181,8 @@ ul.jbar ul li {
 	width: 100%;
 }
 
-ul.jbar ul li a {
+ul.jbar ul li a,
+ul.jbar ul li span.link {
 	display: block;
 	overflow: hidden;
 	text-overflow: ellipsis;
