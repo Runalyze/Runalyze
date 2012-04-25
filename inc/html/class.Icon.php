@@ -122,11 +122,11 @@ class Icon {
 		elseif ( $VDOT > (VDOT_FORM+1) )
 			$class = 'vdot-up';
 		elseif ( $VDOT < (VDOT_FORM-3) )
-			$class = 'vdot-normal';
+			$class = 'vdot-down-2';
 		elseif ( $VDOT < (VDOT_FORM-1) )
 			$class = 'vdot-down';
 		else
-			$class = 'vdot-down-2';
+			$class = 'vdot-normal';
 
 		return Ajax::tooltip('<span class="vdot-icon '.$class.'"></span>', 'VDOT: '.$VDOT);
 	}
