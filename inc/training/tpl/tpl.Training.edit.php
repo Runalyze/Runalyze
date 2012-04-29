@@ -13,6 +13,7 @@ if (isset($submit))
 
 <input type="hidden" name="type" value="training" />
 <input type="hidden" name="id" value="<?php echo $Training->get('id'); ?>" />
+<input type="hidden" id="kcalPerHour" name="kcalPerHour" value="<?php echo $Training->Sport()->kcalPerHour(); ?>" />
 
 <?php
 echo Ajax::change(Icon::get(Icon::$CROSS, '', '', 'Training l&ouml;schen'), 'edit-div', '#delete', 'right').NL;

@@ -51,5 +51,16 @@ class Validator {
 	static public function isInRange($low, $high, $value) {
 		return ($value >= $low && $value <= $high);
 	}
+
+	/**
+	 * Is the given value close to the value it should be?
+	 * @param type $value
+	 * @param type $shouldBe
+	 * @param type $precisionInPercent
+	 * @return boolean 
+	 */
+	static public function isClose($value, $shouldBe, $precisionInPercent = 1) {
+		return (abs($value - $shouldBe) / $shouldBe) <= ($precisionInPercent/100);
+	}
 }
 ?>

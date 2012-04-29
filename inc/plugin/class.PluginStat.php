@@ -129,7 +129,8 @@ abstract class PluginStat extends Plugin {
 		if ($this->isVariousStat())
 			$this->Links = array_merge($this->Links, $this->getLinksForVariousStatistics());
 
-		echo Ajax::toolbarNavigation($this->Links, 'right');
+		if (!empty($this->Links))
+			echo Ajax::toolbarNavigation($this->Links, 'right');
 	}
 
 	/**

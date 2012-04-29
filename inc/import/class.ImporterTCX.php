@@ -128,7 +128,7 @@ class ImporterTCX extends Importer {
 		if (!$this->isGarminFile())
 			return;
 
-		$multipleFiles = ($this->CompleteXML->Activities->Activity->count() > 1);
+		$multipleFiles = (count($this->CompleteXML->Activities->Activity) > 1);
 		$IDs = array();
 
 		foreach ($this->CompleteXML->Activities->Activity as $Activity) {

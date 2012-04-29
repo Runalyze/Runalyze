@@ -72,7 +72,6 @@ final class Mysql {
 			Error::getInstance()->addDebug($query);
 
 		$result = false;
-		$orig = $query;
 
 		if ($addAccountId === true)
 			$query = $this->addAccountId($query);
