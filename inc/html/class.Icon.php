@@ -1,7 +1,6 @@
 <?php
 /**
  * Class for all icons used in Runalyze
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Icon {

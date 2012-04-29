@@ -14,6 +14,9 @@ ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__FILE__)
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
+if (!defined('PREFIX'))
+	define('PREFIX', 'runalyze_');
+
 // put your code here
 spl_autoload_register(function ($className) {
 
@@ -40,4 +43,5 @@ spl_autoload_register(function ($className) {
 });
 
 // TODO: make all frontend files available without errors ;)
+Mysql::connect('localhost', 'root', '', 'runalyze_unittest');
 ?>

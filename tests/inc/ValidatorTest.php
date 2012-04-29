@@ -14,24 +14,7 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	protected $object;
 
 	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
-	protected function setUp() {
-		$this->object = new Validator;
-	}
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() {
-		
-	}
-
-	/**
 	 * @covers Validator::dateToTimestamp
-	 * @todo Implement testDateToTimestamp().
 	 */
 	public function testDateToTimestamp() {
 		$this->assertEquals(mktime(0,0,0,1,1,2000), Validator::dateToTimestamp('1.1.2000'));
@@ -48,7 +31,6 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers Validator::isInRange
-	 * @todo Implement testIsInRange().
 	 */
 	public function testIsInRange() {
 		$this->assertEquals(false, Validator::isInRange(0,100, -1));
@@ -56,6 +38,19 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(true, Validator::isInRange(0,100, 57));
 		$this->assertEquals(true, Validator::isInRange(0,100, 100));
 		$this->assertEquals(false, Validator::isInRange(0,100, 101));
+	}
+
+	/**
+	 * @covers Validator::isClose
+	 */
+	public function testIsClose() {
+		$this->assertEquals(true, Validator::isClose(1, 1));
+		$this->assertEquals(true, Validator::isClose(2, 1, 100));
+		$this->assertEquals(false, Validator::isClose(2, 1));
+		$this->assertEquals(true, Validator::isClose(101, 100));
+		$this->assertEquals(false, Validator::isClose(101.01, 100, 1));
+		$this->assertEquals(false, Validator::isClose(101, 100, 0.9));
+		$this->assertEquals(true, Validator::isClose(99, 100));
 	}
 
 }

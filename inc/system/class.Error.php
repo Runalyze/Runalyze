@@ -323,15 +323,21 @@ class Error {
 	public static function r_implode($glue, $pieces) {
 		$retVal = array();
 
-		foreach ($pieces as $r_pieces)
+		foreach ($pieces as $r_pieces) {
+			if (is_object($r_pieces)) {
+				$retVal[] = 'Object';
+				break;
+			}
+
 			$retVal[] = is_array($r_pieces) ? self::r_implode($glue, $r_pieces) : $r_pieces;
+		}
 
 	  	return implode($glue, $retVal);
 	}
 }
 
-
-set_error_handler("error_handler");
+if (defined('RUNALYZE'))
+	set_error_handler("error_handler");
 
 /**
  * Own function to handle the errors using class::Error.
