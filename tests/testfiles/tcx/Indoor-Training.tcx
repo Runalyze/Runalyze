@@ -1,0 +1,2118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/ActivityExtension/v2 http://www.garmin.com/xmlschemas/ActivityExtensionv2.xsd http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+
+  <Activities>
+    <Activity Sport="Biking">
+      <Id>2012-02-10T15:48:02Z</Id>
+      <Lap StartTime="2012-02-10T15:48:02Z">
+        <TotalTimeSeconds>7204.2200000</TotalTimeSeconds>
+        <DistanceMeters>0.0000000</DistanceMeters>
+        <MaximumSpeed>0.0000000</MaximumSpeed>
+        <Calories>0</Calories>
+        <AverageHeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+          <Value>122</Value>
+        </AverageHeartRateBpm>
+        <MaximumHeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+          <Value>149</Value>
+        </MaximumHeartRateBpm>
+        <Intensity>Active</Intensity>
+        <TriggerMethod>Manual</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2012-02-10T15:48:03Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>104</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:48:11Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>101</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:48:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>104</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:48:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>107</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:49:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>110</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:50:02Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>107</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:50:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>104</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:50:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>101</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:51:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>104</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:53:08Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>107</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:54:45Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>110</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:56:37Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:57:00Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>110</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:57:34Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:57:59Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>109</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:58:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T15:58:57Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>115</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:00:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:01:03Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:01:28Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:01:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>108</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:01:59Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:03:11Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:04:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:04:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:04:59Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:05:08Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:05:31Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:06:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:06:55Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:07:16Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:08:51Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:09:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:09:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:09:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:10:04Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:10:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:10:48Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:12:17Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:12:25Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:14:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:14:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:16:23Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:15Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:18Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>109</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:28Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:31Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>115</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:34Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:35Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:18:54Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:20:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:20:27Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:21:37Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:21:43Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:21:52Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:22:12Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:22:47Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:23:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:24:12Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:24:16Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:25:11Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>115</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:25:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:25:44Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:26:26Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:27:21Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:27:23Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:27:26Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:27:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:29:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:29:38Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:29:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:29:49Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:26Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>114</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:30Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>107</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:32Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>107</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>111</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>115</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:30:44Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:31:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:31:38Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:31:56Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:32:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:32:26Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:32:47Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:33:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:33:23Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:33:57Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:35:21Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>127</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:35:37Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:35:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:35:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:37:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:37:09Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:37:12Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>115</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:37:28Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:37:34Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:38:17Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:38:34Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:38:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:39:37Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:40:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:40:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:41:09Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:41:31Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:42:55Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:04Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:07Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>108</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>112</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:43:58Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:44:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:44:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:45:33Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:45:45Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:45:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:46:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:48:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:49:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:49:17Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>117</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:49:47Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:49:57Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:50:23Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:50:33Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:50:51Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:51:16Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:51:47Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:52:15Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:52:48Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:53:12Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:54:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:54:33Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:54:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:54:44Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:55:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:55:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:56:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>121</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:57:08Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:57:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>127</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:58:28Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>124</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:58:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:59:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:59:25Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:59:31Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T16:59:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:00:32Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:00:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:01:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:01:38Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:03:58Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:04:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:04:37Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:04:48Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:05:16Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:05:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:05:48Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:06:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:06:43Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:07:02Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:07:09Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:07:31Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:08:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>119</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:08:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:08:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:09:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:09:46Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>132</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:09:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:10:00Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:10:26Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:10:59Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:11:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:12:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:14:03Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:14:52Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:15:12Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:15:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:15:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:16:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:17:02Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:17:09Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:17:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:18:03Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:18:34Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:18:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>120</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:18:46Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:19:41Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:20:13Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:07Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>126</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:23Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:46Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>123</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:49Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>118</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:22:52Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>113</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:23:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>116</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:23:04Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>122</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:23:09Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>125</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:23:55Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:24:15Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:24:35Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>134</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:24:53Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>137</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:25:01Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>134</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:25:21Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:25:35Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>134</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:25:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:28:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:28:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:29:29Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>134</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:29:55Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:30:02Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:30:36Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:30:46Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:32:21Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:32:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:33:00Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:33:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>128</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:34:32Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>131</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:35:49Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>134</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:35:54Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>138</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:36:06Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>135</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:36:32Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>138</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:37:00Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>135</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:37:10Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>132</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:37:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>135</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:37:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>132</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:38:20Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>135</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:38:57Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>132</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:39:04Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>129</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:39:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>132</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:39:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>136</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:39:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>139</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:40:14Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>136</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:40:19Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>133</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:40:30Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>136</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:40:43Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>139</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:40:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>142</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:41:04Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>139</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:41:39Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>136</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:42:03Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>139</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:43:40Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>142</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:02Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>145</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>149</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:14Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>146</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:22Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>143</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>140</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:44:50Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>137</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:45:05Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>140</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:45:24Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>143</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:45:30Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>140</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:45:42Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>137</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:45:58Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>140</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:46:58Z</Time>
+            <DistanceMeters>0.0000000</DistanceMeters>
+            <HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
+              <Value>143</Value>
+            </HeartRateBpm>
+            <SensorState>Absent</SensorState>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2012-02-10T17:48:06Z</Time>
+          </Trackpoint>
+        </Track>
+        <Extensions>
+          <LX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
+            <AvgSpeed>0.0000000</AvgSpeed>
+          </LX>
+        </Extensions>
+      </Lap>
+      <Creator xsi:type="Device_t">
+        <Name>Forerunner 405</Name>
+        <UnitId>3730911181</UnitId>
+        <ProductID>717</ProductID>
+        <Version>
+          <VersionMajor>2</VersionMajor>
+          <VersionMinor>50</VersionMinor>
+          <BuildMajor>0</BuildMajor>
+          <BuildMinor>0</BuildMinor>
+        </Version>
+      </Creator>
+    </Activity>
+  </Activities>
+
+  <Author xsi:type="Application_t">
+    <Name>Garmin Training Center(r)</Name>
+    <Build>
+      <Version>
+        <VersionMajor>3</VersionMajor>
+        <VersionMinor>6</VersionMinor>
+        <BuildMajor>5</BuildMajor>
+        <BuildMinor>0</BuildMinor>
+      </Version>
+      <Type>Release</Type>
+      <Time>Aug 17 2011, 11:13:24</Time>
+      <Builder>sqa</Builder>
+    </Build>
+    <LangID>DE</LangID>
+    <PartNumber>006-A0119-00</PartNumber>
+  </Author>
+
+</TrainingCenterDatabase>

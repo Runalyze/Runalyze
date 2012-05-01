@@ -255,7 +255,7 @@ class Helper {
 		if (!is_numeric($id))
 			return false;
 
-		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `id`='.$id.' AND `typeid`='.CONF_WK_TYPID) > 0);
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `id`='.$id.' AND `typeid`="'.CONF_WK_TYPID.'"') > 0);
 	}
 
 	/**
@@ -266,7 +266,7 @@ class Helper {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = Mysql::getInstance()->fetchSingle('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$dist.'" ORDER BY `s` ASC');
+		$pb = Mysql::getInstance()->fetchSingle('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC');
 		if ($return_time)
 			return ($pb != '') ? $pb['s'] : 0;
 		if ($pb != '')
@@ -453,7 +453,7 @@ class Helper {
 		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
-			Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
+			//Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
 			return 200;
 		} elseif ($userdata['pulse_max'] == 0) {
 			Error::getInstance()->addWarning('HFmax is 0, taking 200 as default.');
@@ -475,7 +475,7 @@ class Helper {
 		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
-			Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
+			//Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
 			return 60;
 		}
 
