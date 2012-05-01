@@ -1,47 +1,14 @@
 <?php
 /**
- * This file contains the class::ImporterTCX for importing a training from TCX
- */
-/**
  * Class: ImporterTCX
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ImporterTCX extends Importer {
 	/**
-	 * Parsed XML
-	 * @var SimpleXmlElement
+	 * Parser
+	 * @var ParserTCX
 	 */
-	private $XML;
-
-	/**
-	 * Parsed XML
-	 * @var SimpleXmlElement
-	 */
-	private $CompleteXML;
-
-	/**
-	 * Internal array for all arrays
-	 * @var array
-	 */
-	private $data = array();
-
-	/**
-	 * Starttime, can be changed for pauses
-	 * @var int
-	 */
-	private $starttime = 0;
-
-	/**
-	 * Calories
-	 * @var int
-	 */
-	private $calories = 0;
-
-	/**
-	 * Last point
-	 * @var int
-	 */
-	private $lastPoint = 0;
+	protected $Parser = null;
 
 	/**
 	 * Plugin for MultiEditor
@@ -62,12 +29,18 @@ class ImporterTCX extends Importer {
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		if (isset($_POST['data']) && $_POST['data'] == 'FINISHED' && is_array($_POST['activityIds'])) {
+		if ($this->hasMultipleFiles())
 			$this->createTrainingsFromFiles($_POST['activityIds']);
-		} else {
-			$this->CompleteXML = simplexml_load_string_utf8($this->getFileContentAsString());
-			$this->parseXML();
-		}
+		else
+			$this->parseXML( $this->getFileContentAsString() );
+	}
+
+	/**
+	 * Have multiple files been sent?
+	 * @return boolean
+	 */
+	private function hasMultipleFiles() {
+		return isset($_POST['data']) && $_POST['data'] == 'FINISHED' && is_array($_POST['activityIds']);
 	}
 
 	/**
@@ -83,28 +56,78 @@ class ImporterTCX extends Importer {
 	}
 
 	/**
+	 * Parse internal XML-array
+	 */
+	protected function parseXML( $XML ) {
+		$this->Parser = new ParserTCX($XML);
+
+		if ($this->Parser->hasMultipleTrainings()) {
+			$IDs = array();
+
+			while ($this->Parser->nextTraining())
+				$IDs[] = $this->insertCurrentParserData();
+
+			$this->forwardToMultiEditor($IDs);
+		} else {
+			$this->Parser->parseTraining();
+			$this->setTrainingDataFromParser();
+		}
+
+		if (!$this->Parser->worked())
+			$this->throwErrorsFromParser();
+	}
+
+	/**
 	 * Create all trainings from given files
 	 * @param array $fileNames
 	 */
 	protected function createTrainingsFromFiles($fileNames) {
 		$IDs   = array();
-		$_POST = array();
 
 		foreach ($fileNames as $fileName) {
-			$rawFileContent    = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
-			$this->CompleteXML = simplexml_load_string_utf8( ImporterTCX::decodeCompressedData($rawFileContent) );
-			$this->parseXML();
-			$this->transformTrainingDataToPostData();
+			$_POST           = array();
+			$rawFileContent  = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
+			$this->Parser    = new ParserTCX( ImporterTCX::decodeCompressedData($rawFileContent) );
+			$this->Parser->parseTraining();
 
-			$Importer = new ImporterFormular();
-			$Importer->setTrainingValues();
-			$Importer->parsePostData();
-			$Importer->insertTraining();
-
-			$IDs[] = $Importer->insertedID;
+			if ($this->Parser->worked())
+				$IDs[] = $this->insertCurrentParserData();
+			else
+				$this->throwErrorsFromParser();
 		}
 
 		$this->forwardToMultiEditor($IDs);
+	}
+
+	/**
+	 * Forward all errors from parser to parent class 
+	 */
+	protected function throwErrorsFromParser() {
+		foreach ($this->Parser->getErrors() as $message)
+			$this->addError($message);
+	}
+
+	/**
+	 * Set internal training data from parser 
+	 */
+	protected function setTrainingDataFromParser() {
+		$this->TrainingData = $this->Parser->getFullData();
+	}
+
+	/**
+	 * Insert data from parser as new training and return new ID
+	 * @return int
+	 */
+	protected function insertCurrentParserData() {
+		$this->setTrainingDataFromParser();
+		$this->transformTrainingDataToPostData();
+
+		$Importer = new ImporterFormular();
+		$Importer->setTrainingValues();
+		$Importer->parsePostData();
+		$Importer->insertTraining();
+
+		return $Importer->insertedID;
 	}
 
 	/**
@@ -119,229 +142,6 @@ class ImporterTCX extends Importer {
 		
 		$this->inserted = true;
 		$this->MultiEditor = Plugin::getInstanceFor('RunalyzePluginTool_MultiEditor');
-	}
-
-	/**
-	 * Parse internal XML-array
-	 */
-	protected function parseXML() {
-		if (!$this->isGarminFile())
-			return;
-
-		$multipleFiles = (count($this->CompleteXML->Activities->Activity) > 1);
-		$IDs = array();
-
-		foreach ($this->CompleteXML->Activities->Activity as $Activity) {
-			$this->initParser($Activity);
-			$this->parseStarttime();
-			$this->parseLaps();
-			$this->setValues();
-
-			if ($multipleFiles) {
-				$this->transformTrainingDataToPostData();
-
-				$Importer = new ImporterFormular();
-				$Importer->setTrainingValues();
-				$Importer->parsePostData();
-				$Importer->insertTraining();
-
-				$IDs[] = $Importer->insertedID;
-			}
-		}
-
-		if ($multipleFiles)
-			$this->forwardToMultiEditor($IDs);
-	}
-
-	/**
-	 * Set all parsed values
-	 */
-	protected function setValues() {
-		$this->setGeneralValues();
-		$this->setOptionalValue();
-		$this->setAllArrays();
-	}
-
-	/**
-	 * Set general values
-	 */
-	protected function setGeneralValues() {
-		$this->set('sportid', CONF_RUNNINGSPORT);
-		$this->set('kcal', $this->calories);
-		$this->set('splits', implode('-', $this->data['splits']));
-	}
-
-	/**
-	 * Set optional values
-	 */
-	protected function setOptionalValue() {
-		if (!empty($this->data['distance']))
-			$this->set('distance', round(end($this->data['distance']), 2));
-		elseif ($this->data['laps_distance'] > 0)
-			$this->set('distance', round($this->data['laps_distance'], 2));
-
-		if (!empty($this->data['time']))
-			$this->set('s', end($this->data['time']));
-		elseif ($this->data['laps_time'] > 0)
-			$this->set('s', $this->data['laps_time']);
-
-		if (!empty($this->data['heartrate'])) {
-			$this->set('pulse_avg', round(array_sum($this->data['heartrate'])/count($this->data['heartrate'])));
-			$this->set('pulse_max', max($this->data['heartrate']));
-		}
-
-		if (!empty($this->XML->Training))
-			$this->set('comment', (string)$this->XML->Training->Plan->Name);
-	}
-
-	/**
-	 * Set all arrays
-	 */
-	protected function setAllArrays() {
-		$this->setArrayForTime($this->data['time']);
-		$this->setArrayForLatitude($this->data['latitude']);
-		$this->setArrayForLongitude($this->data['longitude']);
-		$this->setArrayForElevation($this->data['altitude']);
-		$this->setArrayForDistance($this->data['distance']);
-		$this->setArrayForHeartrate($this->data['heartrate']);
-		$this->setArrayForPace($this->data['pace']);
-	}
-
-	/**
-	 * Init the parser
-	 * @param SimpleXmlElement $CurrentActivity
-	 */
-	protected function initParser($CurrentActivity) {
-		$this->XML = $CurrentActivity;
-		$this->initEmptyValues();
-	}
-
-	/**
-	 * Init all empty values 
-	 */
-	protected function initEmptyValues() {
-		$this->starttime = 0;
-		$this->calories  = 0;
-		$this->data      = array(
-			'laps_distance' => 0,
-			'laps_time'     => 0,
-			'time'          => array(),
-			'latitude'      => array(),
-			'longitude'     => array(),
-			'altitude'      => array(),
-			'distance'      => array(),
-			'heartrate'     => array(),
-			'pace'          => array(),
-			'splits'        => array());
-	}
-
-	/**
-	 * Parse starttime
-	 */
-	protected function parseStarttime() {
-		$this->starttime = strtotime((string)$this->XML->Id);
-
-		$this->set('time', $this->starttime);
-		$this->set('datum', date("d.m.Y", $this->starttime));
-		$this->set('zeit', date("H:i", $this->starttime));
-	}
-
-	/**
-	 * Parse all laps
-	 */
-	protected function parseLaps() {
-		foreach ($this->XML->Lap as $Lap)
-			$this->parseLap($Lap);
-	}
-
-	/**
-	 * Parse one single lap
-	 * @param SimpleXMLElement $Lap
-	 */
-	protected function parseLap($Lap) {
-		$this->parseLapValues($Lap);
-		$this->parseTrackpoints($Lap);
-	}
-
-	/**
-	 * Parse general lap-values
-	 * @param SimpleXMLElement $Lap
-	 */
-	protected function parseLapValues($Lap) {
-		if (!empty($Lap->Calories))
-			$this->calories += (int)$Lap->Calories;
-
-		$this->data['laps_distance'] += round((int)$Lap->DistanceMeters)/1000;
-		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
-
-		if ((string)$Lap->Intensity == 'Active')
-			$this->data['splits'][] = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
-	}
-
-	/**
-	 * Parse all trackpoints for one lap
-	 * @param SimpleXMLElement $Lap
-	 */
-	protected function parseTrackpoints($Lap) {
-		$this->lastPoint = 0;
-
-		foreach ($Lap->Track as $Track)
-			foreach ($Track->Trackpoint as $Trackpoint)
-				$this->parseTrackpoint($Trackpoint);
-	}
-
-	/**
-	 * Parse one trackpoint
-	 * @param SimpleXMLElement $TP
-	 */
-	protected function parseTrackpoint($TP) {
-		// TODO:
-		// Just check for empty($TP->DistanceMeters)
-		// Other check was kind of Auto-Pause - but this behavior is NOT the expected one of Runalyze
-		// -> Verify these thoughts with Unittests!
-		//if (empty($TP->DistanceMeters) || ((int)$TP->DistanceMeters <= $this->lastPoint && (int)$TP->DistanceMeters > 0)) {
-		if (empty($TP->DistanceMeters)) {
-			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time']);
-			return;
-		}
-
-		$this->lastPoint           = (int)$TP->DistanceMeters;
-		$this->data['time'][]      = strtotime((string)$TP->Time) - $this->starttime;
-		$this->data['distance'][]  = round((int)$TP->DistanceMeters)/1000;
-		$this->data['altitude'][]  = (int)$TP->AltitudeMeters;
-		$this->data['pace'][]      = ((end($this->data['distance']) - prev($this->data['distance'])) != 0)
-									? round((end($this->data['time']) - prev($this->data['time'])) / (end($this->data['distance']) - prev($this->data['distance'])))
-									: 0;
-		$this->data['heartrate'][] = (!empty($TP->HeartRateBpm))
-									? round($TP->HeartRateBpm->Value)
-									: 0;
-
-		if (!empty($TP->Position)) {
-			$this->data['latitude'][]  = (double)$TP->Position->LatitudeDegrees;
-			$this->data['longitude'][] = (double)$TP->Position->LongitudeDegrees;
-		} elseif (!empty($this->data['latitude'])) {
-			$this->data['latitude'][]  = end($this->data['latitude']);
-			$this->data['longitude'][] = end($this->data['longitude']);
-		} else {
-			$this->data['latitude'][]  = 0;
-			$this->data['longitude'][] = 0;
-		}
-	}
-
-	/**
-	 * Is the given file an garmin-TCX-file?
-	 * @return bool
-	 */
-	private function isGarminFile() {
-		if (!empty($this->CompleteXML->Activities->Activity))
-			return true;
-
-		if (!empty($this->CompleteXML->Courses))
-			$this->addError('Dies ist eine Garmin Course TCX-Datei und enth&auml;lt keine Trainingsdaten.');
-		else
-			$this->addError('Es scheint keine Garmin-Trainingsdatei zu sein.');
-
-		return false;
 	}
 
 	/**
