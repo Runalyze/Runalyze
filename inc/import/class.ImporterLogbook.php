@@ -206,14 +206,12 @@ class ImporterLogbook extends Importer {
 	/**
 	 * Get numeric part of a string
 	 * @param string $string
-	 * @param mixed $default
 	 * @return double
 	 */
-	static protected function getNumericFromString($string, $default = 0) {
+	static protected function getNumericFromString($string) {
 		$array  = explode(' ', trim($string));
 		$string = preg_replace('/[^0-9\.,]/Uis', '', $array[0]);
 
 		return (double)$string;
 	}
 }
-?>

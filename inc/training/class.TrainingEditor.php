@@ -1,14 +1,9 @@
 <?php
 /**
- * This file contains the class::Editor for editing trainings
- */
-/**
- * Class: Editor
- * 
+ * Class: TrainingEditor
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
-class Editor {
+class TrainingEditor {
 	/**
 	 * ID of the current training
 	 * @var int

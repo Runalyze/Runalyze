@@ -1,14 +1,7 @@
 <?php
 /**
- * This file contains the class::Sport for handling sports
- */
-/**
  * Class: Sport
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Sport {
 	/**
@@ -230,4 +223,3 @@ class Sport {
 		return false;
 	} 
 }
-?>

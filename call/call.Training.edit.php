@@ -1,6 +1,6 @@
 <?php
 /**
- * File displaying the formular with new sportler information
+ * Display formular for editing a training
  * Call:   call/call.Training.edit.php?id=
  */
 require '../inc/class.Frontend.php';
@@ -34,14 +34,13 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 		$Mysql->update(PREFIX.'shoe', $shoe['id'], array('km', 'time'), array($data['km'], $data['s']));
 	}
 
-	echo '<div id="submit-info" class="error">Das Training wurde gel&ouml;scht.</div>';
+	echo '<p id="submit-info" class="error">Das Training wurde gel&ouml;scht.</p>';
 	echo '<script type="text/javascript">Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
 	exit();
 }
 
-
 if (isset($_POST['type']) && $_POST['type'] == "training") {
-	$Editor = new Editor($id, $_POST);
+	$Editor = new TrainingEditor($id, $_POST);
 	$Editor->performUpdate();
 
 	$Errors = $Editor->getErrorsAsArray();
@@ -49,8 +48,5 @@ if (isset($_POST['type']) && $_POST['type'] == "training") {
 		echo HTML::error(implode('<br />', $Errors));
 }
 
-$Training = new Training($id);
-$Training->overwritePostArray();
-
-include '../inc/training/tpl/tpl.Training.edit.php';
-?>
+$Formular = new TrainingEditorFormular($id);
+$Formular->display();

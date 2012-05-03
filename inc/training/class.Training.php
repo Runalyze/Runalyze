@@ -83,6 +83,14 @@ class Training {
 	}
 
 	/**
+	 * Get ID
+	 * @return int
+	 */
+	public function id() {
+		return $this->id;
+	}
+
+	/**
 	 * Is this a valid training?
 	 * @return boolean
 	 */
@@ -337,6 +345,28 @@ class Training {
 			if ($this->get('comment') != '')
 				echo (': '.$this->get('comment'));
 		}
+	}
+
+	/**
+	 * Display title and date
+	 * @param bool $short short version without description, default: false
+	 */
+	public function displayTitleWithDate($short = false) {
+		$this->displayTitle($short);
+		echo ', ';
+		$this->displayDate();
+	}
+
+	/**
+	 * Display title with date and navigation links for prev/next training 
+	 */
+	public function displayTitleWithNavigation() {
+		echo TrainingDisplay::getEditPrevLinkFor($this->id(), $this->get('time'));
+
+		$this->displayTitleWithDate(true);
+		echo NL;
+
+		echo TrainingDisplay::getEditNextLinkFor($this->id(), $this->get('time'));
 	}
 
 	/**

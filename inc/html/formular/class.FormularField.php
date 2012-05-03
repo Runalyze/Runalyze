@@ -47,6 +47,12 @@ abstract class FormularField extends HtmlTag {
 	protected $parserOptions = array();
 
 	/**
+	 * Field is prepared for being displayed
+	 * @var boolean
+	 */
+	private $prepared = false;
+
+	/**
 	 * Construct a new field
 	 * @param string $name
 	 * @param string $label
@@ -60,6 +66,14 @@ abstract class FormularField extends HtmlTag {
 			$this->value = $value;
 		elseif (isset($_POST[$name]))
 			$this->value = $_POST[$name];
+		elseif (substr($name, -1) == ']') {
+			$posOfBracket = strpos($name, '[');
+			$mainName     = substr($name, 0, $posOfBracket);
+			$key          = substr($name, $posOfBracket + 1, -1);
+
+			if (isset($_POST[$mainName][$key]))
+				$this->value = $_POST[$mainName][$key];
+		}
 	}
 
 	/**
@@ -80,6 +94,23 @@ abstract class FormularField extends HtmlTag {
 	}
 
 	/**
+	 * Set layout if no layout is set
+	 * @param string $layout 
+	 */
+	public function setLayoutIfEmpty($layout) {
+		if (empty($this->layout))
+			$this->setLayout($layout);
+	}
+
+	/**
+	 * Add layout, used as additional css-class for a surrounding div
+	 * @param string $layout 
+	 */
+	public function addLayout($layout) {
+		$this->layout .= ' '.$layout;
+	}
+
+	/**
 	 * Set parser
 	 * @param enum $parser
 	 * @param array $options 
@@ -95,13 +126,6 @@ abstract class FormularField extends HtmlTag {
 	protected function prepareForDisplay() {}
 
 	/**
-	 * Validate value
-	 */
-	final protected function validate() {
-		// TODO
-	}
-
-	/**
 	 * Parse value for display
 	 */
 	final protected function parseForDisplay() {
@@ -109,20 +133,47 @@ abstract class FormularField extends HtmlTag {
 	}
 
 	/**
-	 * Display this field 
+	 * Validate value
 	 */
-	public function display() {
-		$this->parseForDisplay();
-		$this->prepareForDisplay();
-
-		echo '<div class="'.$this->layout.'">';
-		$this->displayField();
-		echo '</div>';
+	final protected function validate() {
+		// TODO
 	}
 
 	/**
-	 * Each field has its own display-method 
+	 * Display this field 
 	 */
-	abstract public function displayField();
+	public function display() {
+		echo $this->getCode();
+	}
+
+	/**
+	 * Get code for displaying this field with layout
+	 * @return string 
+	 */
+	final public function getCode() {
+		$this->prepare();
+
+		if (!empty($this->layout))
+			return '<div class="'.$this->layout.'">'.$this->getFieldCode().'</div>';
+
+		return $this->getFieldCode();
+	}
+
+	/**
+	 * Prepare field for being displayed 
+	 */
+	private function prepare() {
+		if (!$this->prepared) {
+			$this->parseForDisplay();
+			$this->prepareForDisplay();
+
+			$this->prepared = true;
+		}
+	}
+
+	/**
+	 * Get code for displaying the field
+	 * @return string
+	 */
+	abstract protected function getFieldCode();
 }
-?>

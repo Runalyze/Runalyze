@@ -177,7 +177,7 @@ class ImporterTCX extends Importer {
 		foreach ($Vars as $var)
 			$Data[$var] = $Importer->get($var);
 		
-		$Editor = new Editor($id, $Data);
+		$Editor = new TrainingEditor($id, $Data);
 		$Editor->performUpdate();
 		
 		$Errors = $Editor->getErrorsAsArray();
