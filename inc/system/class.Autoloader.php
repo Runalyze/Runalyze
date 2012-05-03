@@ -13,10 +13,12 @@ class Autoloader {
 		spl_autoload_register( array($this, 'autoloadDraw') );
 		spl_autoload_register( array($this, 'autoloadExport') );
 		spl_autoload_register( array($this, 'autoloadHtml') );
+		spl_autoload_register( array($this, 'autoloadHtmlFormular') );
 		spl_autoload_register( array($this, 'autoloadImport') );
 		spl_autoload_register( array($this, 'autoloadPlugin') );
 		spl_autoload_register( array($this, 'autoloadSystem') );
 		spl_autoload_register( array($this, 'autoloadTraining') );
+		spl_autoload_register( array($this, 'autoloadTrainingFormular') );
 	}
 
 	/**
@@ -69,6 +71,14 @@ class Autoloader {
 	}
 
 	/**
+	 * HTML-Autloader: check in /html/formular/-folder
+	 * @return boolean 
+	 */
+	private function autoloadHtmlFormular($className) {
+		$this->tryToLoad('html/formular/class.'.$className.'.php');
+	}
+
+	/**
 	 * HTML-Autloader: check in /import/-folder
 	 * @return boolean 
 	 */
@@ -98,5 +108,13 @@ class Autoloader {
 	 */
 	private function autoloadTraining($className) {
 		$this->tryToLoad('training/class.'.$className.'.php');
+	}
+
+	/**
+	 * Training-Autloader: check in /training/formular/-folder
+	 * @return boolean 
+	 */
+	private function autoloadTrainingFormular($className) {
+		$this->tryToLoad('training//formular/class.'.$className.'.php');
 	}
 }

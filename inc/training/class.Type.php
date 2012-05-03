@@ -1,14 +1,7 @@
 <?php
 /**
- * This file contains the class::Type for handling training-types
- */
-/**
  * Class: Type
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Type {
 	/**
@@ -164,4 +157,3 @@ class Type {
 		return HTML::selectBox('typeid', $types, $selected);
 	}
 }
-?>

@@ -50,7 +50,10 @@
 	<div id="trainingPlots" class="dataBox">
 		<div id="plotNavigation" class="dataBox">
 			<?php foreach (array_keys($Plots) as $i => $Key): ?>
-			<img class="plotToggler active" id="toggle-<?php echo $Key; ?>" src="img/chart-<?php echo $Key; ?>.png" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Key; ?>');" />
+			<div class="plotToggler active" id="toggle-<?php echo $Key; ?>" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Key; ?>');">
+				<span id="chartLink-<?php echo $Key; ?>"><?php echo $Key; ?> anzeigen</span>
+			</div>
+			<!--<img class="plotToggler active" id="toggle-<?php echo $Key; ?>" src="img/chart-<?php echo $Key; ?>.png" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Key; ?>');" />-->
 			<?php endforeach; ?>
 
 			<label>

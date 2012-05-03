@@ -73,7 +73,10 @@ class Formular extends HtmlTag {
 	 * @param string $name
 	 * @param string $value 
 	 */
-	public function addHiddenValue($name, $value) {
+	public function addHiddenValue($name, $value = '') {
+		if (empty($value) && isset($_POST[$name]))
+			$value = $_POST[$name];
+
 		$this->hiddenValues[$name] = $value;
 	}
 

@@ -41,7 +41,7 @@ $FIELDS['weight'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Gewicht',
-		'unit'		=> FormularInput::$UNIT_KG,
+		'unit'		=> FormularUnit::$KG,
 		'required'	=> true
 	)
 );
@@ -52,7 +52,7 @@ $FIELDS['pulse_rest'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Ruhepuls',
-		'unit'		=> FormularInput::$UNIT_BPM
+		'unit'		=> FormularUnit::$BPM
 	)
 );
 $FIELDS['pulse_max'] = array(
@@ -62,7 +62,7 @@ $FIELDS['pulse_max'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Maximalpuls',
-		'unit'		=> FormularInput::$UNIT_BPM
+		'unit'		=> FormularUnit::$BPM
 	)
 );
 $FIELDS['fat'] = array(
@@ -72,7 +72,7 @@ $FIELDS['fat'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Fettanteil',
-		'unit'		=> FormularInput::$UNIT_PERCENT
+		'unit'		=> FormularUnit::$PERCENT
 	)
 );
 $FIELDS['water'] = array(
@@ -82,7 +82,7 @@ $FIELDS['water'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Wasseranteil',
-		'unit'		=> FormularInput::$UNIT_PERCENT
+		'unit'		=> FormularUnit::$PERCENT
 	)
 );
 $FIELDS['muscles'] = array(
@@ -92,7 +92,6 @@ $FIELDS['muscles'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Muskelanteil',
-		'unit'		=> FormularInput::$UNIT_PERCENT
+		'unit'		=> FormularUnit::$PERCENT
 	)
 );
-?>

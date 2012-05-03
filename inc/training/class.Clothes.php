@@ -54,7 +54,15 @@ class Clothes {
 	}
 
 	/**
-	 * Are clothes given?
+	 * Get ordered array with all clothes
+	 * @return array
+	 */
+	static public function getOrderedClothes() {
+		return Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
+	}
+
+	/**
+	 * Are no clothes given?
 	 * @return bool
 	 */
 	public function areEmpty() {
@@ -101,7 +109,7 @@ class Clothes {
 		$links = array();
 
 		foreach ($this->ids as $id)
-			$links[] = self::getSeachLinkForSingleClothes($id);
+			$links[] = self::getSearchLinkForSingleClothes($id);
 
 		return implode(', ', $links);
 	}
@@ -123,8 +131,9 @@ class Clothes {
 	 * @return string
 	 */
 	static public function getCheckboxes() {
-		$html = HTML::hiddenInput('clothes_sent', 'true');
+		$html    = HTML::hiddenInput('clothes_sent', 'true');
 		$clothes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
+
 		foreach ($clothes as $data)
 			$html .= self::getCheckbox($data);
 
@@ -137,10 +146,13 @@ class Clothes {
 	 * @return string
 	 */
 	static private function getCheckbox($dataArray) {
-		$name = 'clothes['.$dataArray['id'].']';
-		$checked = isset($_POST['clothes'][$dataArray['id']]);
+		$name     = 'clothes['.$dataArray['id'].']';
+		$label    = $dataArray['short'];
+		$Checkbox = new FormularCheckbox($name, $label);
+		$Checkbox->setLayout( FormularFieldset::$LAYOUT_FIELD_SMALL_INLINE );
+		$Checkbox->addLayout( 'margin-5' );
 
-		return '<label>'.HTML::checkBox($name, $checked, true).' <small style="margin-right: 10px;">'.$dataArray['short'].'</small></label>';
+		return $Checkbox->getCode();
 	}
 
 	/**
@@ -155,7 +167,7 @@ class Clothes {
 			return $clothes[$id]['name'];
 
 		Error::getInstance()->addWarning('Asked for unknown clothes-ID: "'.$id.'"');
-		return '';
+		return '?';
 	}
 
 	/**
@@ -163,8 +175,7 @@ class Clothes {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getSeachLinkForSingleClothes($id) {
+	static public function getSearchLinkForSingleClothes($id) {
 		return DataBrowser::getSearchLink(self::getNameFor($id), 'opt[clothes]=is&val[clothes][0]='.$id);
 	}
 }
-?>

@@ -324,7 +324,7 @@ final class Mysql {
 				$values[$key] = self::escape($value, $quotes);
 		} else if (is_bool($values)) {
 			$values = $values ? 1 : 0;
-		} else if (is_numeric($values)) {
+		} else if (is_numeric($values) && !$forceAsString) {
 			$values = $values;
 		} else if ($values === null || $values == 'NULL') {
 			$values = 'NULL';

@@ -56,7 +56,7 @@ $FIELDS['additionalKm'] = array(
 	),
 	'formular'	=> array(
 		'label'		=> 'bish. Leistung',
-		'unit'		=> FormularInput::$UNIT_KM
+		'unit'		=> FormularUnit::$KM
 	)
 );
 $FIELDS['km'] = array(

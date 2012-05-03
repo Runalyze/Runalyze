@@ -110,8 +110,6 @@ class Helper {
 		if ($km == 0 || $time == 0)
 			return '';
 
-		$kmh_mode = 0;
-		$title = '';
 		$as_pace = self::Pace($km, $time).'/km';
 		$as_kmh = self::Kmh($km, $time).'&nbsp;km/h';
 

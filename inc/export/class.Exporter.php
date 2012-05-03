@@ -1,7 +1,6 @@
 <?php
 /**
  * Class: Exporter
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 abstract class Exporter {

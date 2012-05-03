@@ -4,70 +4,10 @@
  */
 class FormularInput extends FormularField {
 	/**
-	 * Unit: percent
-	 * @var string
+	 * Size: full inline
+	 * @var string 
 	 */
-	static public $UNIT_PERCENT = 'unitPercent';
-
-	/**
-	 * Unit: bpm
-	 * @var string
-	 */
-	static public $UNIT_BPM = 'unitBpm';
-
-	/**
-	 * Unit: kg
-	 * @var string
-	 */
-	static public $UNIT_KG = 'unitKg';
-
-	/**
-	 * Unit: km
-	 * @var string
-	 */
-	static public $UNIT_KM = 'unitKm';
-
-	/**
-	 * Unit: user
-	 * @var string
-	 */
-	static public $UNIT_USER = 'unitUser';
-
-	/**
-	 * Unit: password
-	 * @var string
-	 */
-	static public $UNIT_PASS = 'unitPass';
-
-	/**
-	 * Unit: temperature in degree celsius
-	 * @var string
-	 */
-	static public $UNIT_CELSIUS = 'unitCelsius';
-
-	/**
-	 * Unit: elevation
-	 * @var string
-	 */
-	static public $UNIT_ELEVATION = 'unitElevation';
-
-	/**
-	 * Unit: kcal
-	 * @var string
-	 */
-	static public $UNIT_KCAL = 'unitKcal';
-
-	/**
-	 * Unit: pace in km/h
-	 * @var string
-	 */
-	static public $UNIT_KMH = 'unitKmh';
-
-	/**
-	 * Unit: pace in min/km
-	 * @var string
-	 */
-	static public $UNIT_PACE = 'unitPace';
+	static public $SIZE_FULL_INLINE = 'fullSize';
 
 	/**
 	 * Size: full
@@ -155,10 +95,10 @@ class FormularInput extends FormularField {
 	}
 
 	/**
-	 * Display this field 
+	 * Display this field
+	 * @return string
 	 */
-	public function displayField() {
-		echo '<label for="'.$this->name.'">'.$this->label.'</label>';
-		echo '<input '.$this->attributes().' />';
+	protected function getFieldCode() {
+		return '<label for="'.$this->name.'">'.$this->label.'</label> <input '.$this->attributes().' />';
 	}
 }

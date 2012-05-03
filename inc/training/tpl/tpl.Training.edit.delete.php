@@ -1,10 +1,12 @@
-Bist du dir sicher, dass du dieses Training l&ouml;schen m&ouml;chtest?<br />
-<br />
-<?php echo Ajax::link('<strong>Training wirklich l&ouml;schen</strong>', 'ajax', $_SERVER['SCRIPT_NAME'].'?delete='.$id); ?>
-<br />
-<br />
+<?php
+$DeleteText = '<strong>Training unwiderruflich l&ouml;schen &raquo;</strong>';
+$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$id;
+$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
-<small>
-	Falls im Anschluss Probleme mit der Datenbank auftauchen,
-	solltest du das Plugin-Tool zur Datenbankreinigung verwenden.
-</small>
+$Fieldset   = new FormularFieldset();
+$Fieldset->setTitle('Training l&ouml;schen');
+$Fieldset->setId('delete_training');
+$Fieldset->addWarning($DeleteLink);
+$Fieldset->setCollapsed();
+$Fieldset->display();
+?>

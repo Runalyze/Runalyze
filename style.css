@@ -184,21 +184,19 @@ fieldset label {
 	margin: 0 !important;
 	padding: 3px 0; }
 
-fieldset .w33, fieldset .w50, fieldset .w100 {
+fieldset .w25, fieldset .w33, fieldset .w50, fieldset .w100 {
 	padding: 2px 0;
 	min-height: 19px; }
 
-fieldset .w50, fieldset .w33 {
+fieldset .w25, fieldset .w33, fieldset .w50 {
 	float: left;
 	display: block; }
-
-/*fieldset .w100 *, fieldset .w50 *, fieldset .w33 * {
-	margin: 2px 0; }*/
 
 fieldset .w100 {
 	clear: left;
 }
 
+fieldset textarea,
 fieldset input { padding: 2px; margin: 0; }
 fieldset select { padding: 1px; margin: 0; }
 fieldset input.withUnit { padding: 2px 30px 2px 0; }
@@ -209,6 +207,9 @@ fieldset .middleSize { width: 120px; }
 fieldset .middleSize.withUnit { width: 94px; }
 fieldset .fullSize { width: 55%; }
 fieldset .fullWidth { width: 95%; }
+fieldset .with50erLabel label { width: 22.5%; }
+fieldset .with50erLabel .fullSize { width: 75%; }
+fieldset .with50erLabel .inline label { float: none; }
 
 input.withUnit {
 	text-align: right;
@@ -448,16 +449,20 @@ h1 a:hover, h1 a:active {
 	-webkit-box-shadow: 3px 2px 5px #333;
 	-moz-box-shadow: 3px 2px 5px #333; }
 
-#close {
+#close, #ajaxPrev, #ajaxNext {
 	z-index: 12;
 	position: absolute;
-	top: -20px;
-	right: -20px;
 	width: 36px;
 	height: 36px;
 	cursor: pointer;
 	text-indent: -9999px;
-	background: url(img/roundNav.png) no-repeat 0 0 transparent; }
+}
+
+#close { top: -20px; right: -20px; background: url(img/roundNav.png) no-repeat 0 0 transparent; }
+#ajaxPrev { top: 50%; left: -25px; background: url(img/roundNav.png) no-repeat 0 -36px transparent; }
+#ajaxNext { top: 50%; right: -25px; background: url(img/roundNav.png) no-repeat 0 -72px transparent; }
+
+#ajaxPrev:hover, #ajaxNext:hover { border: none; }
 
 #ajax.smallWin, #ajax.smallWin.tooBig {
 	width: 500px;
@@ -547,7 +552,16 @@ h1 a:hover, h1 a:active {
 	padding: 2px;
 	border: 1px solid transparent;
 	border-radius: 3px;
+	width: 29px;
+	height: 24px;
 }
+
+#plotNavigation .plotToggler span { display: block; width: 29px; height: 24px; text-indent:-9999px; }
+
+#chartLink-elevation { background: url(img/chartNavigation.png) no-repeat 0 0; }
+#chartLink-pulse { background: url(img/chartNavigation.png) no-repeat 0 -24px; }
+#chartLink-pace { background: url(img/chartNavigation.png) no-repeat 0 -48px; }
+#chartLink-splits { background: url(img/chartNavigation.png) no-repeat 0 -72px; }
 
 #plotNavigation .plotToggler.active,
 #plotNavigation label:hover img {
@@ -576,7 +590,6 @@ h1 a:hover, h1 a:active {
 	background-position: 0 0; }
 
 #chartWidther.widtherIsBig { background-position: 0 -9px; }
-
 
 p.text { margin: 0 0 12px; }
 p.text-headline { margin: 0 0 8px; font-weight: bold; }
@@ -609,6 +622,7 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .fullWidth, .w100 { width: 100%; }
 .w50 { width: 50%; }
 .w33 { width: 33%; }
+.w25 { width: 25%; }
 
 .unimportant { opacity: 0.5; filter: alpha(opacity=50); }
 .unimportant:hover { opacity: 1; filter: alpha(opacity=100); }

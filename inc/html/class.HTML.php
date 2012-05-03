@@ -320,15 +320,16 @@ class HTML {
 	 * @param string $name Name for this select-box
 	 * @param array $options Array containing values as indices, displayed text as values
 	 * @param mixed $selected Value to be selected
+	 * @param string $id [optional]
 	 * @return string
 	 */
-	public static function selectBox($name, $options, $selected = -1) {
+	public static function selectBox($name, $options, $selected = -1, $id = '') {
 		if ($selected == -1 && isset($_POST[$name]))
 			$selected = $_POST[$name];
 
 		$name = self::transformNameForMultiIndex($name);
 
-		$html = '<select name="'.$name.'">'.NL;
+		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').'>'.NL;
 
 		foreach ($options as $value => $text)
 			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).'>'.$text.'</option>'.NL;
