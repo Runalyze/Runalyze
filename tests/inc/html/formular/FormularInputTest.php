@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../inc/html/class.FormularInput.php';
+require_once dirname(__FILE__) . '/../../../../inc/html/formular/class.FormularInput.php';
 
 /**
  * Test class for FormularInput.

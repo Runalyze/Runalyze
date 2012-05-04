@@ -46,11 +46,24 @@ class FormularInput extends FormularField {
 	protected $unit = '';
 
 	/**
+	 * Boolean flag: label is on the right side
+	 * @var boolean
+	 */
+	private $labelOnRight = false;
+
+	/**
 	 * Set standard size, used when no specific size is set (may be overwritten by css)
 	 * @param string $size 
 	 */
 	static public function setStandardSize($size) {
 		self::$standardSize = $size;
+	}
+
+	/**
+	 * Set label to the right side 
+	 */
+	public function setLabelToRight() {
+		$this->labelOnRight = true;
 	}
 
 	/**
@@ -99,6 +112,12 @@ class FormularInput extends FormularField {
 	 * @return string
 	 */
 	protected function getFieldCode() {
-		return '<label for="'.$this->name.'">'.$this->label.'</label> <input '.$this->attributes().' />';
+		$label = '<label for="'.$this->name.'">'.$this->label.'</label>';
+		$input = '<input '.$this->attributes().' />';
+
+		if ($this->labelOnRight)
+			return $input.' '.$label;
+
+		return $label.' '.$input;
 	}
 }

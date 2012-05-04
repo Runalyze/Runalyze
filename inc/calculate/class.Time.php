@@ -1,4 +1,8 @@
 <?php
+/**
+ * Class for standard operations for timestamps
+ * @author Hannes Christiansen <mail@laufhannes.de> 
+ */
 class Time {
 	/**
 	 * Strings for months

@@ -509,7 +509,7 @@ class Training {
 	 * @return string
 	 */
 	public function getTrimpString() {
-		return '<span style="color:#'.Helper::Stresscolor($this->get('trimp')).';">'.$this->get('trimp').'</span>';
+		return '<span style="color:#'.Running::Stresscolor($this->get('trimp')).';">'.$this->get('trimp').'</span>';
 	}
 	
 	/**

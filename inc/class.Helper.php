@@ -273,22 +273,6 @@ class Helper {
 	}
 
 	/**
-	 * Creating a RGB-color for a given stress-value [0-100]
-	 * @param int $stress   Stress-value [0-100]
-	 */
-	public static function Stresscolor($stress) {
-		if ($stress > 100)
-			$stress = 100;
-
-		$gb = dechex(200 - 2*$stress);
-
-		if ((200 - 2*$stress) < 16)
-			$gb = '0'.$gb;
-
-		return 'C8'.$gb.$gb;
-	}
-
-	/**
 	 * Calculating basic endurance
 	 * @uses DAY_IN_S
 	 * @param bool $as_int as normal integer, default: false
@@ -421,15 +405,6 @@ class Helper {
 	}
 
 	/**
-	 * Is the given array an associative one?
-	 * @param array $array
-	 * @return bool
-	 */
-	public static function isAssoc($array) {
-		return array_keys($array) !== range(0, count($array) - 1);
-	}
-
-	/**
 	 * Check the modus of a row from dataset
 	 * @param string $row   Name of dataset-row
 	 * @return int   Modus
@@ -536,4 +511,14 @@ function removeBOMfromString($string) {
  */
 function trimValuesForArray(&$value) {
 	$value = trim($value);
+}
+
+/**
+ * Reverse use of strstr (same as strstr($haystack, $needle, true) for PHP > 5.3.0)
+ * @param string $haystack
+ * @param string $needle
+ * @return string 
+ */
+function rstrstr($haystack, $needle) {
+	return substr($haystack, 0,strpos($haystack, $needle));
 }

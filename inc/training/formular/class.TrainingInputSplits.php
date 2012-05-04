@@ -3,7 +3,7 @@
  * Class for input fields: splits 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
-class TrainingInputSplits extends FormularTextarea {
+class TrainingInputSplits extends FormularField {
 	/**
 	 * Construct new input field for: splits
 	 * Using $_POST by default
@@ -17,10 +17,44 @@ class TrainingInputSplits extends FormularTextarea {
 	}
 
 	/**
-	 * Get info text
-	 * @return string 
+	 * Get input fields for splits
+	 * @return string
 	 */
-	static public function getInfo() {
-		return '<small>Format: K.M|M:SS-..., z.B. 1.0|4:20-1.0|4:23-1.0|4:21-1.0|4:15</small>';
+	protected function getInputs() {
+		$Inputs = '';
+		$Splits = new Splits( Splits::$FROM_POST );
+
+		foreach ($Splits->asArray() as $split) {
+			$FieldTime = new FormularInput('splits[time][]', '', $split['time']);
+			$FieldTime->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
+			$FieldTime->setLabelToRight();
+
+			$FieldDistance = new FormularInput('splits[km][]', '', $split['km']);
+			$FieldDistance->setUnit( FormularUnit::$KM );
+			$FieldDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
+
+			$Inputs .= '<div>';
+			$Inputs .= $FieldDistance->getCode();
+			$Inputs .= '&nbsp;in&nbsp;';
+			$Inputs .= $FieldTime->getCode();
+			$Inputs .= '<span style="position:relative;top:3px;">';
+			$Inputs .= '<img class="link" src="img/delete_gray.gif" alt="" onclick="$(this).parent().parent().remove()" /> ';
+			$Inputs .= '<img class="link" src="img/addBig.gif" alt="" onclick="$e=$(this);$p=$e.parent().parent();$p.clone().insertAfter($p);" />';
+			$Inputs .= '</span>';
+			$Inputs .= '</div>';
+		}
+
+		return $Inputs;
+	}
+
+	/**
+	 * Display this field
+	 * @return string
+	 */
+	protected function getFieldCode() {
+		$label  = '<label>'.$this->label.'</label>';
+		$inputs = '<div id="formularSplitsContainer" class="fullSize left">'.$this->getInputs().'</div>';
+
+		return $label.$inputs;
 	}
 }

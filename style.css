@@ -184,6 +184,11 @@ fieldset label {
 	margin: 0 !important;
 	padding: 3px 0; }
 
+fieldset .inline label {
+	float: none;
+	width: auto;
+	padding: 3px; }
+
 fieldset .w25, fieldset .w33, fieldset .w50, fieldset .w100 {
 	padding: 2px 0;
 	min-height: 19px; }

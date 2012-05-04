@@ -157,12 +157,9 @@ class TrainingEditorFormular {
 		if (!$this->Training->Sport()->hasTypes() || !$this->Training->Type()->hasSplits())
 			return;
 
-		$Fieldset = new FormularFieldset('Zwischenzeiten');
-		$Fieldset->addField(new TrainingInputSplits());
-		$Fieldset->addInfo( TrainingInputSplits::getInfo() );
-		$Fieldset->setCollapsed();
-
-		$this->Formular->addFieldset($Fieldset);
+		$Splits = new Splits( Splits::$FROM_POST );
+		$this->Formular->addFieldset( $Splits->getFieldset() );
+		$this->Formular->addHiddenValue('splits_sent', 'true');
 	}
 
 	/**
