@@ -10,13 +10,6 @@ class FormularCheckboxes extends FormularField {
 	private $checkboxes = array();
 
 	/**
-	 * Prepare for beeing displayed 
-	 */
-	protected function prepareForDisplay() {
-		// Nothing todo here: no attributes because this field is not a real field itself
-	}
-
-	/**
 	 * Add checkbox
 	 * @param mixed $key
 	 * @param string $label 

@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../inc/system/class.Validator.php';
+require_once dirname(__FILE__) . '/../../../inc/calculate/class.Validator.php';
 
 /**
  * Test class for Validator.
@@ -12,6 +12,17 @@ class ValidatorTest extends PHPUnit_Framework_TestCase {
 	 * @var Validator
 	 */
 	protected $object;
+
+	/**
+	 * @covers Validator::isAssoc
+	 */
+	public function testIsAssoc() {
+		$this->assertTrue( Validator::isAssoc(array('a' => 1)) );
+		$this->assertTrue( Validator::isAssoc(array('a' => 1, 'b' => 'a')) );
+		$this->assertTrue( Validator::isAssoc(array(1, 'foo' => 'bar')) );
+		$this->assertFalse( Validator::isAssoc(array(1)) );
+		$this->assertFalse( Validator::isAssoc(array(6, 23, 'foo', 'bar')) );
+	}
 
 	/**
 	 * @covers Validator::dateToTimestamp

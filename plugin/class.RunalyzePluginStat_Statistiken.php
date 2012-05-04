@@ -290,7 +290,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$avg_num = ($this->year != -1) ? 15 : 180;
 			$text = ($dat['trimp'] == 0)
 				? '&nbsp;'
-				: '<span style="color:#'.Helper::Stresscolor($dat['trimp']/$avg_num).'">'.$dat['trimp'].'</span>';
+				: '<span style="color:#'.Running::Stresscolor($dat['trimp']/$avg_num).'">'.$dat['trimp'].'</span>';
 			$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}

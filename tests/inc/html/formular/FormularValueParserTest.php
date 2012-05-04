@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__) . '/../../../inc/html/class.FormularValueParser.php';
+require_once dirname(__FILE__) . '/../../../../inc/html/formular/class.FormularValueParser.php';
 
 /**
  * Test class for FormularValueParser.

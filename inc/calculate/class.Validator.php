@@ -1,15 +1,18 @@
 <?php
 /**
- * This file contains the class Validator for validating user inputs
- */
-/**
  * Class: Validator
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
-
 class Validator {
+	/**
+	 * Is the given array an associative one? (one associative key is enough for success)
+	 * @param array $array
+	 * @return bool
+	 */
+	public static function isAssoc($array) {
+		return array_keys($array) !== range(0, count($array) - 1);
+	}
+
 	/**
 	 * Transform a datestring to timestamp
 	 * @param string $dateAsString
@@ -63,4 +66,3 @@ class Validator {
 		return (abs($value - $shouldBe) / $shouldBe) <= ($precisionInPercent/100);
 	}
 }
-?>

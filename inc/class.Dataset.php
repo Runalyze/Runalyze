@@ -1,10 +1,8 @@
 <?php
 /**
  * Class: Dataset
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
-
 class Dataset {
 	/**
 	 * Internal ID in database
@@ -421,4 +419,3 @@ class Dataset {
 		return $this->Training->getVDOTicon();
 	}
 }
-?>

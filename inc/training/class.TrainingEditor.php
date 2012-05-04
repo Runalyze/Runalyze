@@ -59,6 +59,7 @@ class TrainingEditor {
 		$this->parseTrainingtime();
 		$this->parseWeather();
 		$this->parseClothes();
+		$this->parseSplits();
 	}
 
 	/**
@@ -79,7 +80,6 @@ class TrainingEditor {
 		$this->addValue('typeid');
 		$this->addValue('pulse_avg');
 		$this->addValue('pulse_max');
-		$this->addValue('splits');
 
 		$this->addBooleanValue('is_track');
 		$this->addBooleanValue('abc');
@@ -149,6 +149,19 @@ class TrainingEditor {
 
 		$this->UpdateColumns[] = 'clothes';
 		$this->UpdateValues[] = isset($this->TrainingData['clothes']) ? implode(',', array_keys($this->TrainingData['clothes'])) : '';
+	}
+
+	/**
+	 * Parse splits 
+	 */
+	private function parseSplits() {
+		if (!isset($this->TrainingData['splits_sent']))
+			return;
+
+		$Splits = new Splits( $this->TrainingData['splits'] );
+
+		$this->UpdateColumns[] = 'splits';
+		$this->UpdateValues[] = $Splits->asString();
 	}
 
 	/**
