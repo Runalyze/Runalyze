@@ -314,6 +314,24 @@ class GpsData {
 	}
 
 	/**
+	 * Get maximum of complete step
+	 * @param array $array
+	 * @return float
+	 */
+	protected function getMaximumOfStep(&$array) {
+		if (empty($array) || !isset($array[$this->arrayIndex]))
+			return 0;
+
+		$stepArray = array_slice($array, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex), true);
+		$stepArray = array_filter($stepArray);
+
+		if (count($stepArray) == 0)
+			return 0;
+
+		return max($stepArray);
+	}
+
+	/**
 	 * Get seconds since last step
 	 */
 	public function getTimeOfStep() {
@@ -339,6 +357,13 @@ class GpsData {
 	 */
 	public function getAverageHeartrateOfStep() {
 		return round($this->getAverageOfStep($this->arrayForHeartrate));
+	}
+
+	/**
+	 * Get maximum heartrate since last step
+	 */
+	public function getMaximumHeartrateOfStep() {
+		return round($this->getMaximumOfStep($this->arrayForHeartrate));
 	}
 
 	/**

@@ -25,7 +25,7 @@
 		</span>
 
 		<?php echo Ajax::window('<a class="labeledLink editLink" href="call/call.Training.edit.php?id='.$this->Training->get('id').'">Bearbeiten</a> ','small'); ?>
-		<a class="labeledLink exportLink" href="#">Exportieren</a>
+		<?php echo Ajax::window('<a class="labeledLink exportLink" href="'.ExporterView::$URL.'?id='.$this->Training->get('id').'">Exportieren</a> ','small'); ?>
 
 		<br class="clear" />
 	</div>
