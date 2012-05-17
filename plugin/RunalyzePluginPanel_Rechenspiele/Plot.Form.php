@@ -77,8 +77,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	for ($d = 1; $d <= $max; $d++) {
 		$index = Plot::dayOfYearToJStime($Year, $d);
-		$ATLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS / MAX_ATL;
-		$CTLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS / MAX_CTL;
+		$ATLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
+		$CTLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
 
 		$VDOT_slice = array_slice($VDOTs_raw, VDOT_DAYS + $d - VDOT_DAYS, VDOT_DAYS);
 		$VDOT_num_data = array_count_values($VDOT_slice);

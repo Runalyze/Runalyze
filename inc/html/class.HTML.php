@@ -113,6 +113,15 @@ class HTML {
 	}
 
 	/**
+	 * Return a header
+	 * @param string $text
+	 * @return string 
+	 */
+	public static function h1($text) {
+		return '<h1>'.$text.'</h1>';
+	}
+
+	/**
 	 * Return a break with class="clear"
 	 * @return string
 	 */

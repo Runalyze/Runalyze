@@ -36,4 +36,16 @@ class Request {
 
 		return false;
 	}
+
+	/**
+	 * Get parameter send via GET
+	 * @param string $key
+	 * @return string 
+	 */
+	static public function param($key) {
+		if (isset($_GET[$key]))
+			return $_GET[$key];
+
+		return '';
+	}
 }

@@ -143,6 +143,9 @@ class Frontend {
 		Importer::registerImporter('LOGBOOK', 'ImporterLogbook');
 		Importer::registerImporter('LOGBOOK3', 'ImporterLogbook3');
 		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
+
+		Exporter::registerExporter('TCX', 'ExporterTCX');
+		Exporter::registerExporter('KML', 'ExporterKML');
 	}
 
 	/**

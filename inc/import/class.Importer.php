@@ -302,8 +302,10 @@ abstract class Importer {
 	 * @param string $fileContent
 	 */
 	protected function logFileContent($fileContent) {
-		if ($this->logFileContents)
+		if ($this->logFileContents) {
+			Filesystem::writeFile('import/files/logFile_'.time().'.tcx', $fileContent);
 			Error::getInstance()->addDebug('Importer::fileContent(file="'.$this->fileName.'"): '.$fileContent);
+		}
 	}
 
 	/**

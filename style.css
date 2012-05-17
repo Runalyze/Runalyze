@@ -487,6 +487,26 @@ h1 a:hover, h1 a:active {
 	margin-left: 0; }
 
 
+/*** BLOCKLIST ***/
+ul.blocklist li {
+	list-style-type: none; }
+
+ul.blocklist a {
+	display: block;
+	width: 130px;
+	line-height: 20px;
+	margin: 5px auto;
+	padding: 5px;
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 1px 1px 7px #E0E0E0;
+	text-align: center;
+	border: 1px solid #ccc;
+	background-color: #F6F6F7; }
+
+ul.blocklist a:hover {
+	box-shadow: 1px 1px 7px #CCC; }
+
+
 /*** SPECIFIC STYLES ***/
 .panel {
 	position: relative;
