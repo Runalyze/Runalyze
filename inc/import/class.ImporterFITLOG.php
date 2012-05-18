@@ -144,4 +144,3 @@ class ImporterFITLOG extends Importer {
 			$this->set('temperature', (int)$this->XML->Weather['Temp']);
 	}
 }
-?>

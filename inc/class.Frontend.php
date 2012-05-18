@@ -139,10 +139,11 @@ class Frontend {
 		require_once FRONTEND_PATH.'import/class.ImporterFormular.php';
 
 		Importer::registerImporter('TCX', 'ImporterTCX');
-		Importer::registerImporter('CSV', 'ImporterCSV');
+		Importer::registerImporter('GPX', 'ImporterGPX');
+		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
 		Importer::registerImporter('LOGBOOK', 'ImporterLogbook');
 		Importer::registerImporter('LOGBOOK3', 'ImporterLogbook3');
-		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
+		Importer::registerImporter('CSV', 'ImporterCSV');
 
 		Exporter::registerExporter('TCX', 'ExporterTCX');
 		Exporter::registerExporter('GPX', 'ExporterGPX');
