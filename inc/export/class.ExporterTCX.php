@@ -50,7 +50,7 @@ class ExporterTCX extends Exporter {
 	 * @return string 
 	 */
 	final protected function timeToString($time) {
-		return strftime("%Y-%m-%dT%H:%M:%SZ", $time);
+		return date("c", $time);
 	}
 
 	/**
@@ -67,6 +67,8 @@ class ExporterTCX extends Exporter {
 	 * Add all laps to xml 
 	 */
 	protected function setLaps() {
+		$Starttime = $this->Training->get('time');
+
 		$GPS = $this->Training->GpsData();
 		$GPS->startLoop();
 
@@ -74,7 +76,7 @@ class ExporterTCX extends Exporter {
 			$TimeInSeconds = $GPS->getTimeOfStep();
 
 			$Lap = $this->Activity->addChild('Lap');
-			$Lap->addAttribute('StartTime', $this->timeToString($GPS->getTime() - $TimeInSeconds));
+			$Lap->addAttribute('StartTime', $this->timeToString($Starttime + $GPS->getTime() - $TimeInSeconds));
 			$Lap->addChild('TotalTimeSeconds', $TimeInSeconds);
 			$Lap->addChild('DistanceMeters', 1000*$GPS->getDistanceOfStep());
 
