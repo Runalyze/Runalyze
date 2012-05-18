@@ -493,15 +493,17 @@ ul.blocklist li {
 
 ul.blocklist a {
 	display: block;
-	width: 130px;
+	width: 70px;
 	line-height: 20px;
 	margin: 5px auto;
-	padding: 5px;
+	padding: 5px 30px;
 	border-radius: 5px 5px 5px 5px;
 	box-shadow: 1px 1px 7px #E0E0E0;
 	text-align: center;
 	border: 1px solid #ccc;
-	background-color: #F6F6F7; }
+	background-color: #F6F6F7;
+	background-position: 3px center;
+	background-repeat: no-repeat; }
 
 ul.blocklist a:hover {
 	box-shadow: 1px 1px 7px #CCC; }

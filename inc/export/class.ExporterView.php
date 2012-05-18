@@ -67,13 +67,13 @@ class ExporterView {
 
 			$Errors = $Exporter->getAllErrors();
 
-			if (empty($Errors))
+			if (empty($Errors) && !is_callable('Exporter'.$this->exportType.'::isWithoutFile'))
 				echo HTML::info('
 					<small>Das Training wurde erfolgreich exportiert.</small><br />
 					<br />
 					<a href="inc/export/files/'.$Exporter->getFilename().'"><strong>Herunterladen: '.$Exporter->getFilename().'</strong></a>
 					');
-			else
+			elseif (!empty($Errors))
 				foreach ($Errors as $errorMessage)
 					echo HTML::error($errorMessage);
 
@@ -95,8 +95,17 @@ class ExporterView {
 		} else {
 			$List = new BlocklinkList();
 
-			foreach ($formats as $format => $className)
-				$List->addStandardLink(self::$URL.'?id='.Request::sendId().'&type='.$format, '*.'.$format, '', 'small');
+			foreach ($formats as $format => $className) {
+				if (!is_callable($className.'::isWithoutFile'))
+					$Name = '*.'.$format;
+				else
+					$Name = $format;
+
+				$URL  = self::$URL.'?id='.Request::sendId().'&type='.$format;
+				$Icon = 'inc/export/icons/'.strtolower($format).'.png';
+				$Link = Ajax::window('<a href="'.$URL.'" style="background-image:url('.$Icon.');"><strong>'.$Name.'</strong></a>', 'small');
+				$List->addCompleteLink($Link);
+			}
 
 			$List->display();
 		}

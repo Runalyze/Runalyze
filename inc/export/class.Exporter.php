@@ -41,8 +41,6 @@ abstract class Exporter {
 	 * @param string $format
 	 */
 	static public function getInstance($format) {
-		$format = mb_strtoupper($format);
-
 		if (isset(self::$formats[$format]) && class_exists(self::$formats[$format]))
 			return new self::$formats[$format]();
 
@@ -106,7 +104,7 @@ abstract class Exporter {
 	 * Write file 
 	 */
 	final protected function writeFile() {
-		if (empty($this->errors))
+		if (empty($this->errors) && !empty($this->FileContent))
 			Filesystem::writeFile('export/files/'.$this->getFilename(), $this->getFileContent());
 	}
 
