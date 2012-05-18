@@ -145,7 +145,14 @@ class Frontend {
 		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
 
 		Exporter::registerExporter('TCX', 'ExporterTCX');
+		Exporter::registerExporter('GPX', 'ExporterGPX');
 		Exporter::registerExporter('KML', 'ExporterKML');
+		Exporter::registerExporter('FITLOG', 'ExporterFITLOG');
+
+		// TODO: add option
+		Exporter::registerExporter('Twitter', 'ExporterTwitter');
+		Exporter::registerExporter('Facebook', 'ExporterFacebook');
+		Exporter::registerExporter('Google', 'ExporterGoogle');
 	}
 
 	/**
