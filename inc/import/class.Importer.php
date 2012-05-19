@@ -343,15 +343,49 @@ abstract class Importer {
 	 * Include template for displaying standard formular, can be overwritten from subclass
 	 */
 	public function displayHTMLformular() {
-		$Mysql = Mysql::getInstance();
-		
 		$this->makeTrainingDataReadable();
 		$this->setDefaultTrainingDataForCreation();
 		$this->transformTrainingDataToPostData();
 
 		$this->displayErrors();
+		$this->displayHTMLcreatorFormular();
 
-		include 'tpl/tpl.Importer.formular.php';
+		//$Mysql = Mysql::getInstance();
+		//include 'tpl/tpl.Importer.formular.php';
+	}
+
+	/**
+	 * Display standard creator formular or list for sports if sportid is not set 
+	 */
+	private function displayHTMLcreatorFormular() {
+		if (!empty($_POST))
+			$_POST['sportid'] = CONF_MAINSPORT;
+
+		if (Request::param('sportid') > 0) {
+			$Formular = new TrainingCreatorFormular( (int)Request::param('sportid') );
+			$Formular->display();
+		} else {
+			$this->displayListForSports();
+		}
+	}
+
+	/**
+	 * Display list for choosing sport 
+	 */
+	private function displayListForSports() {
+		echo HTML::h1('Sportart ausw&auml;hlen');
+
+		$List = new BlocklinkList();
+		$List->addCSSclass('smallImage');
+
+		foreach (Sport::getNamesAsArray() as $id => $name) {
+			$URL  = 'call/call.Training.create.php?sportid='.$id;
+			$Img  = Icon::getSportIconUrl($id);
+			$Link = Ajax::window('<a href="'.$URL.'" style="background-image:url('.$Img.');"><strong>'.$name.'</strong></a>', 'small');
+			$List->addCompleteLink($Link);
+		}
+
+		$List->display();
 	}
 
 	/**

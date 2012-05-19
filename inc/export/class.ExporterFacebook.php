@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: Facebook
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterFacebook extends ExporterSocialShare {
 	/**

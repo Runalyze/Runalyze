@@ -86,6 +86,6 @@ class ImporterGPX extends Importer {
 		$this->setArrayForPace($pace);
 
 		$this->set('s', end($time));
-		$this->set('distance', round(end($distance), 3));
+		$this->set('distance', round(end($distance), 2));
 	}
 }

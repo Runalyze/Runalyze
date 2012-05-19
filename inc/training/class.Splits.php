@@ -8,7 +8,7 @@ class Splits {
 	 * Enum for constructor: Take data from post
 	 * @var enum
 	 */
-	static public $FROM_POST = 'TAKE PARAMETER FROM POST';
+	static public $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
 
 	/**
 	 * Splits as string
@@ -130,6 +130,45 @@ class Splits {
 			$strings[] = $split['km'].'|'.$split['time'];
 
 		$this->asString = implode('-', $strings);
+	}
+
+	/**
+	 * Get all times as array
+	 * @return array 
+	 */
+	public function timesAsArray() {
+		$times = array();
+
+		foreach ($this->asArray as $split)
+			$times[] = Helper::TimeToSeconds($split['time']);
+
+		return $times;
+	}
+
+	/**
+	 * Get all distances as array
+	 * @return array 
+	 */
+	public function distancesAsArray() {
+		$distances = array();
+
+		foreach ($this->asArray as $split)
+			$distances[] = $split['km'];
+
+		return $distances;
+	}
+
+	/**
+	 * Get all paces as array
+	 * @return array 
+	 */
+	public function pacesAsArray() {
+		$paces = array();
+
+		foreach ($this->asArray as $split)
+			$paces[] = $split['km'] > 0 ? (int)round(Helper::TimeToSeconds($split['time'])/$split['km']) : 0;
+
+		return $paces;
 	}
 
 	/**

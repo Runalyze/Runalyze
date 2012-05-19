@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for social sharing
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 abstract class ExporterSocialShare extends Exporter {
 	/**

@@ -71,7 +71,7 @@ class Dataset {
 	 * @return boolean Are any trainings loaded?
 	 */
 	public function loadGroupOfTrainings($sportid, $timestamp_start, $timestamp_end) {
-		$this->setTrainingId(-1);
+		$this->setTrainingId( Training::$CONSTRUCTOR_ID );
 
 		$query_set = '';
 		foreach ($this->data as $set)

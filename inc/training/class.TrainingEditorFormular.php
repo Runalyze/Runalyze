@@ -8,13 +8,13 @@ class TrainingEditorFormular {
 	 * Training to edit
 	 * @var Training
 	 */
-	private $Training = null;
+	protected $Training = null;
 
 	/**
 	 * Formular
 	 * @var Formular 
 	 */
-	private $Formular = null;
+	protected $Formular = null;
 
 	/**
 	 * Constructor 
@@ -40,7 +40,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init all fieldsets 
 	 */
-	private function initFieldsets() {
+	protected function initFieldsets() {
 		$this->initSportFieldset();
 		$this->initGeneralFieldset();
 		$this->initDistanceFieldset();
@@ -65,7 +65,7 @@ class TrainingEditorFormular {
 	/**
 	 * Display header 
 	 */
-	private function displayHeader() {
+	protected function displayHeader() {
 		echo '<h1>';
 		$this->Training->displayTitleWithNavigation();
 		echo '</h1>';
@@ -74,7 +74,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init attributes 
 	 */
-	private function initFormularAttributes() {
+	protected function initFormularAttributes() {
 		$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$this->Formular->setId('training');
 		$this->Formular->addCSSclass('ajax');
@@ -85,7 +85,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init hidden fields 
 	 */
-	private function initHiddenFields() {
+	protected function initHiddenFields() {
 		$this->Formular->addHiddenValue('type', 'training');
 		$this->Formular->addHiddenValue('id', $this->Training->id());
 		$this->Formular->addHiddenValue('kcalPerHour', $this->Training->Sport()->kcalPerHour());
@@ -96,10 +96,15 @@ class TrainingEditorFormular {
 		$this->Formular->addHiddenValue('shoeid_old');
 	}
 
-	private function initSportFieldset() {
+	/**
+	 * Init fieldset for sport 
+	 */
+	protected function initSportFieldset() {
 		$Fieldset = new FormularFieldset('Sportart');
 		$Fieldset->addField(new TrainingInputSport());
-		$Fieldset->setCollapsed();
+
+		if (!$this->Training->Sport()->hasTypes() || (!is_null($this->Training->Type()) && $this->Training->Type()->isUnknown()) )
+			$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 
@@ -110,7 +115,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for general data 
 	 */
-	private function initGeneralFieldset() {
+	protected function initGeneralFieldset() {
 		$Fieldset = new FormularFieldset('Allgemeines');
 
 		$Fieldset->addField(new TrainingInputDate());
@@ -129,7 +134,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for distance data 
 	 */
-	private function initDistanceFieldset() {
+	protected function initDistanceFieldset() {
 		if (!$this->Training->Sport()->usesDistance())
 			return;
 
@@ -153,7 +158,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for splits
 	 */
-	private function initSplitsFieldset() {
+	protected function initSplitsFieldset() {
 		if (!$this->Training->Sport()->hasTypes() || !$this->Training->Type()->hasSplits())
 			return;
 
@@ -165,7 +170,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for weather data 
 	 */
-	private function initWeatherFieldset() {
+	protected function initWeatherFieldset() {
 		if (!$this->Training->isOutside())
 			return;
 
@@ -181,7 +186,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for other data 
 	 */
-	private function initOtherFieldset() {
+	protected function initOtherFieldset() {
 		$Fieldset = new FormularFieldset('Sonstiges');
 
 		if ($this->Training->Sport()->isRunning()) {
@@ -202,7 +207,7 @@ class TrainingEditorFormular {
 	/**
 	 * Display fieldset: Delete training 
 	 */
-	private function initDeleteFieldset() {
+	protected function initDeleteFieldset() {
 		$DeleteText = '<strong>Training unwiderruflich l&ouml;schen &raquo;</strong>';
 		$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$this->Training->id();
 		$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
@@ -217,7 +222,7 @@ class TrainingEditorFormular {
 	/**
 	 * Add fieldset for adding GPS-data 
 	 */
-	private function initGPSFieldset() {
+	protected function initGPSFieldset() {
 		if ($this->Training->hasPositionData())
 			$this->initElevationCorrectionFieldset();
 		else
@@ -227,7 +232,7 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for correct elevation
 	 */
-	private function initElevationCorrectionFieldset() {
+	protected function initElevationCorrectionFieldset() {
 		$Fieldset = new FormularFieldset('H&ouml;henkorrektur anwenden');
 		$Fieldset->setCollapsed();
 		$Fieldset->addInfo('
@@ -246,14 +251,14 @@ class TrainingEditorFormular {
 	/**
 	 * Init fieldset for adding GPS data 
 	 */
-	private function initAddGPSdataFieldset() {
+	protected function initAddGPSdataFieldset() {
 		$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
 		$Fieldset->setCollapsed();
 		$Fieldset->addInfo('
-		<div onmouseover="javascript:createUploader()">
+		<span onmouseover="javascript:createUploader()">
 			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br />
 			<br />
-			<div class="c button" id="file-upload-tcx">Datei hochladen</div>
+			<span class="c button" id="file-upload-tcx">Datei hochladen</span>
 			<script>
 			function createUploader() {
 				$("#file-upload-tcx").removeClass("hide");
@@ -265,7 +270,7 @@ class TrainingEditorFormular {
 				});
 			}
 			</script>
-		</div>');
+		</span>');
 
 		$this->Formular->addFieldset($Fieldset);
 	}
@@ -273,7 +278,7 @@ class TrainingEditorFormular {
 	/**
 	 * Append JavaScript 
 	 */
-	private function appendJavaScript() {
+	protected function appendJavaScript() {
 		echo '<script type="text/javascript">';
 		include '../lib/jQuery.form.include.php';
 		echo '</script>';

@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: KML 
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterKML extends Exporter {
 	/**

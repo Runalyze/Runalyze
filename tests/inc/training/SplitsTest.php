@@ -22,6 +22,9 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEmpty( $Splits->asArray() );
 		$this->assertEmpty( $Splits->asString() );
 		$this->assertEmpty( $Splits->asReadableString() );
+		$this->assertEmpty( $Splits->pacesAsArray() );
+		$this->assertEmpty( $Splits->timesAsArray() );
+		$this->assertEmpty( $Splits->distancesAsArray() );
 		$this->assertTrue( $Splits->areEmpty() );
 	}
 
@@ -61,6 +64,9 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers Splits::asArray
+	 * @covers Splits::distancesAsArray
+	 * @covers Splits::timesAsArray
+	 * @covers Splits::pacesAsArray
 	 */
 	public function testAsArray() {
 		$Splits = new Splits('1|4:20-2.4|10:09-10|1:00:00');
@@ -70,11 +76,14 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 				array('km' => 2.4, 'time' => '10:09'),
 				array('km' => 10, 'time' => '1:00:00')
 			), $Splits->asArray() );
+
+		$this->assertEquals( array(1, 2.4, 10), $Splits->distancesAsArray());
+		$this->assertEquals( array(260, 609, 3600), $Splits->timesAsArray());
+		$this->assertEquals( array(260, 254, 360), $Splits->pacesAsArray());
 	}
 
 	/**
 	 * @covers Splits::asString
-	 * @todo Implement testAsString().
 	 */
 	public function testAsString() {
 		$Splits = new Splits('1|4:20-2.4|10:09-10|1:00:00');

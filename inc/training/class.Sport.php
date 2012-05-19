@@ -30,13 +30,25 @@ class Sport {
 		self::initSports();
 
 		$this->id = $id;
-		$this->data = self::$sports[$id];
+
+		if (isset(self::$sports[$id]))
+			$this->data = self::$sports[$id];
+		else
+			$this->data = array();
 	}
 
 	/**
 	 * Destructor
 	 */
 	public function __destruct() {}
+
+	/**
+	 * Is this sport valid?
+	 * @return boolean
+	 */
+	public function isValid() {
+		return !empty($this->data);
+	}
 
 	/**
 	 * Get name

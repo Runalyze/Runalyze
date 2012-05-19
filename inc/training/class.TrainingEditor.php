@@ -158,6 +158,9 @@ class TrainingEditor {
 		if (!isset($this->TrainingData['splits_sent']))
 			return;
 
+		if (!isset($this->TrainingData['splits']))
+			$this->TrainingData['splits'] = array();
+
 		$Splits = new Splits( $this->TrainingData['splits'] );
 
 		$this->UpdateColumns[] = 'splits';

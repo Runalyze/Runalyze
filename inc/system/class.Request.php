@@ -38,13 +38,15 @@ class Request {
 	}
 
 	/**
-	 * Get parameter send via GET
+	 * Get parameter send via GET or POST
 	 * @param string $key
 	 * @return string 
 	 */
 	static public function param($key) {
 		if (isset($_GET[$key]))
 			return $_GET[$key];
+		if (isset($_POST[$key]))
+			return $_POST[$key];
 
 		return '';
 	}

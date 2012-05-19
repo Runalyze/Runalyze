@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: TCX 
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterTCX extends Exporter {
 	/**

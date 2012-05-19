@@ -1,6 +1,7 @@
 <?php
 /**
  * Class for a list with links as block/big button 
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class BlocklinkList {
 	/**
@@ -8,6 +9,12 @@ class BlocklinkList {
 	 * @var array
 	 */
 	private $links = array();
+
+	/**
+	 * Additional classes for ul
+	 * @var string
+	 */
+	private $classes = '';
 
 	/**
 	 * Constructor 
@@ -21,6 +28,14 @@ class BlocklinkList {
 	 */
 	public function __destruct() {
 		
+	}
+
+	/**
+	 * Add new CSS-class
+	 * @param string $class 
+	 */
+	public function addCSSclass($class) {
+		$this->classes .= ' '.$class;
 	}
 
 	/**
@@ -59,7 +74,7 @@ class BlocklinkList {
 	 * @return string 
 	 */
 	public function getCode() {
-		$code  = '<ul class="blocklist">';
+		$code  = '<ul class="blocklist'.$this->classes.'">';
 
 		foreach ($this->links as $link)
 			$code .= '<li>'.$link.'</li>';
