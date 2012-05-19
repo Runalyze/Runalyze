@@ -7,7 +7,7 @@
 </h1>
 
 
-<div class="toolbar toHeader">
+<div class="toolbar toHeader open">
 	<div class="toolbar-content toolbar-line">
 		<span class="right">
 			<?php if ($this->Training->hasPaceData()): ?>

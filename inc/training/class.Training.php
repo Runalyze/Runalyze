@@ -66,6 +66,12 @@ class Training {
 	private $GpsData = null;
 
 	/**
+	 * Object for splits
+	 * @var Splits
+	 */
+	private $Splits = null;
+
+	/**
 	 * Constructor (needs ID, can be -1 for set($var) on it's own
 	 * @param int $id
 	 * @param array $data [optional]
@@ -102,7 +108,7 @@ class Training {
 	 * Is the ID of this training just for construction? (not in database)
 	 * @return bool
 	 */
-	private function hasConstructorId() {
+	protected function hasConstructorId() {
 		return ($this->id == self::$CONSTRUCTOR_ID);
 	}
 
@@ -112,17 +118,12 @@ class Training {
 	 * @return bool
 	 */
 	private function canSetDataFromId($id) {
-		if (!is_numeric($id) || $id == NULL) {
-			Error::getInstance()->addError('An object of class::Training must have an ID: <$id='.$id.'>');
-			return false;
-		}
-
 		if ($id == self::$CONSTRUCTOR_ID) {
 			$dat = array();
 		} else {
 			$dat = Mysql::getInstance()->fetch(PREFIX.'training', $id);
 			if ($dat === false) {
-				Error::getInstance()->addError('This training (ID='.$id.') does not exist.');
+				Error::getInstance()->addError('This training <$id="'.$id.'"> does not exist.');
 				return false;
 			}
 		}
@@ -137,17 +138,22 @@ class Training {
 	 * Create all needed objects
 	 */
 	private function createObjects() {
-		if ($this->hasConstructorId())
-			return;
+		//if ($this->hasConstructorId())
+		//	return;
 
-		$this->Clothes = new Clothes($this->get('clothes'));
-		$this->Sport   = new Sport($this->get('sportid'));
-		$this->GpsData = new GpsData($this->data);
+		$this->Clothes     = new Clothes($this->get('clothes'));
+		$this->Splits      = new Splits($this->get('splits'));
 
-		if ($this->hasType())
-			$this->Type = new Type($this->get('typeid'));
+		if ($this->has('sportid'))
+			$this->Sport   = new Sport($this->get('sportid'));
 
-		$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
+		$this->GpsData     = new GpsData($this->data);
+
+		if ($this->hasType() && $this->has('typeid'))
+			$this->Type    = new Type($this->get('typeid'));
+
+		if ($this->has('weatherid'))
+			$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
 	}
 
 	/**
@@ -155,6 +161,7 @@ class Training {
 	 */
 	private function fillUpDataWithDefaultValues() {
 		$vars = array(
+			'clothes',
 			'route',
 			'splits',
 			'comment',
@@ -201,11 +208,20 @@ class Training {
 	}
 
 	/**
+	 * Check if internal data is set
+	 * @param string $var
+	 * @return boolean 
+	 */
+	protected function has($var) {
+		return isset($this->data[$var]);
+	}
+
+	/**
 	 * Get RPE
 	 * @return int 
 	 */
 	public function RPE() {
-		if (!is_null($this->Type))
+		if (!is_null($this->Type) && !$this->Type->isUnknown())
 			return $this->Type()->RPE();
 
 		return $this->Sport()->RPE();
@@ -263,6 +279,14 @@ class Training {
 	 */
 	public function GpsData() {
 		return $this->GpsData;
+	}
+
+	/**
+	 * Get object for Splits
+	 * @return Splits
+	 */
+	public function Splits() {
+		return $this->Splits;
 	}
 
 	/**
@@ -612,7 +636,7 @@ class Training {
 	 * Has the training information about splits?
 	 */
 	public function hasSplitsData() {
-		return $this->get('splits') != '';
+		return !$this->Splits->areEmpty();
 	}
 
 	/**
@@ -655,17 +679,7 @@ class Training {
 	 * @return array
 	 */
 	public function getSplitsTimeArray() {
-		$array = array();
-		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-
-		for ($i = 0, $num = count($splits); $i < $num; $i++) {
-			$split = explode('|', $splits[$i]);
-
-			if (isset($split[1]))
-				$array[] = Helper::TimeToSeconds($split[1]);
-		}
-
-		return $array;
+		return $this->Splits->timesAsArray();
 	}
 
 	/**
@@ -673,19 +687,7 @@ class Training {
 	 * @return array
 	 */
 	public function getSplitsPacesArray() {
-		$paces = array();
-		$times = $this->getSplitsTimeArray();
-		$distances = $this->getSplitsDistancesArray();
-
-		$n = count($times);
-		if ($n != count($distances))
-			Error::getInstance()->addWarning('Training-Splits: Menge von Distanzen/Zeiten stimmen nicht &uuml;berein.');
-
-		for ($i = 0, $n = count($times); $i < $n; $i++)
-			if (isset($times[$i]) && isset($distances[$i]))
-				$paces[] = $distances[$i] > 0 ? round($times[$i]/$distances[$i]) : 0;
-
-		return $paces;
+		return $this->Splits->pacesAsArray();
 	}
 
 	/**
@@ -693,19 +695,7 @@ class Training {
 	 * @return array
 	 */
 	public function getSplitsDistancesArray() {
-		$array = array();
-		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-
-		for ($i = 0, $num = count($splits); $i < $num; $i++) {
-			$split = explode('|', $splits[$i]);
-
-			if (!is_numeric($split[0]))
-				Error::getInstance()->addNotice('Training-Splits: Keine korrekte Form (&quot;'.$splits[$i].'&quot;)');
-			else
-				$array[] = $split[0];
-		}
-
-		return $array;
+		return $this->Splits->distancesAsArray();
 	}
 
 	/**
@@ -713,12 +703,7 @@ class Training {
 	 * @return string
 	 */
 	public function getSplitsAsString() {
-		$splits = explode('-', str_replace('\r\n', '-', $this->get('splits')));
-		foreach ($splits as $i => $split) {
-			$splits[$i] = str_replace('|', '&nbsp;km&nbsp;in&nbsp;', $split);
-		}
-
-		return implode(', ', $splits);
+		return $this->Splits->asReadableString();
 	}
 
 	/**
@@ -726,7 +711,7 @@ class Training {
 	 */
 	static public function getCreateWindowLink() {
 		$icon = Icon::get(Icon::$ADD, '', '', 'Training hinzuf&uuml;gen');
-		return Ajax::window('<a href="call/call.Training.create.php">'.$icon.'</a>', 'normal');
+		return Ajax::window('<a href="call/call.Training.create.php">'.$icon.'</a>', 'small');
 	}
 
 	/**
@@ -739,7 +724,7 @@ class Training {
 			$date = date('d.m.Y', $date);
 
 		$icon = Icon::get(Icon::$ADD_GRAY, '');
-		return Ajax::window('<a href="call/call.Training.create.php?date='.$date.'">'.$icon.'</a>', 'normal');
+		return Ajax::window('<a href="call/call.Training.create.php?date='.$date.'">'.$icon.'</a>', 'small');
 	}
 
 	/**
@@ -771,7 +756,7 @@ class Training {
 	 * Correct the elevation data
 	 */
 	public function elevationCorrection() {
-		if ($this->GpsData()->hasElevationData())
+		if ($this->GpsData()->hasPositionData())
 			Mysql::getInstance()->update(PREFIX.'training', $this->id,
 				'arr_alt',
 				implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()));
@@ -810,4 +795,3 @@ class Training {
 		return Icon::getVDOTicon($VDOT);
 	}
 }
-?>

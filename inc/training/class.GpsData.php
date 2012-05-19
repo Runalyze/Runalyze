@@ -783,18 +783,18 @@ class GpsData {
 	 * @return mixed Array for success, otherwise false
 	 */
 	private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
-		$url = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
-		$Xml = Filesystem::getExternUrlContent($url);
+		$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
+		$String = Filesystem::getExternUrlContent($url);
 
-		if (strlen($Xml) == 0) {
+		if (strlen($String) == 0) {
 			Error::getInstance()->addError('Es konnten keine H&ouml;hendaten von Google empfangen werden.');
 			return false;
 		}
 
-		$Xml = simplexml_load_string_utf8($Xml);
+		$Xml = simplexml_load_string_utf8($String);
 
 		if (!isset($Xml->status) || (string)$Xml->status != 'OK') {
-			Error::getInstance()->addError('GoogleMapsAPI returned bad xml');
+			Error::getInstance()->addError('GoogleMapsAPI returned bad xml ("<pre>'.htmlentities($String).'</pre>")');
 			return false;
 		}
 

@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: Google
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterGoogle extends ExporterSocialShare {
 	/**

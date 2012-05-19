@@ -508,6 +508,9 @@ ul.blocklist a {
 ul.blocklist a:hover {
 	box-shadow: 1px 1px 7px #CCC; }
 
+ul.blocklist.smallImage a {
+	background-position: 9px center; }
+
 
 /*** SPECIFIC STYLES ***/
 .panel {

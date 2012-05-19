@@ -5,3 +5,6 @@ $("input[name=distance], input[name=s]").change(function() {
 	jUpdateKcal();
 <?php endif; ?>
 });
+
+if ($("input[name=kcal]").val() == 0)
+	jUpdateKcal();

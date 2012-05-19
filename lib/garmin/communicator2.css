@@ -5,7 +5,7 @@ body { padding: 0; margin: 0; }
 	color: #333;
 	text-align: center;
 	height: 200px;
-	width: 530px;
+	width: 480px;
 	margin: 0 auto;
 	padding: 3px;
 	border: 1px solid #D2D2D3;
@@ -92,7 +92,7 @@ body { padding: 0; margin: 0; }
 }
 
 #activityDirectoryData {
-    width: 480px;
+    width: 430px;
     margin-left: auto;
     margin-right: auto;
     max-height: 134px;
@@ -100,12 +100,12 @@ body { padding: 0; margin: 0; }
     position: relative;
 }
 #activityDirectoryData tr {
-	width: 390px;
+	width: 340px;
 }
 
 #activityTableHeader {
     color: #000;
-    width: 475px;
+    width: 425px;
     margin: 0 auto;
 }
 #activityTableHeader td {

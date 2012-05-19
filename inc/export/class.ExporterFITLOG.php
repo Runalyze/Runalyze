@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: FITLOG 
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterFITLOG extends Exporter {
 	/**

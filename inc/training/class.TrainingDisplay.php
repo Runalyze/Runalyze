@@ -281,7 +281,7 @@ class TrainingDisplay {
 	 * @return string
 	 */
 	static public function getEditPrevLinkFor($id, $timestamp) {
-		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time<='.$timestamp.' ORDER BY time DESC');
+		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time<="'.$timestamp.'" ORDER BY time DESC');
 
 		if (isset($PrevTraining['id']))
 			return Ajax::window('<a id="ajaxPrev" href="call/call.Training.edit.php?id='.$PrevTraining['id'].'">'.Icon::get(Icon::$ARR_BACK, '').'</a> ','small');
@@ -296,7 +296,7 @@ class TrainingDisplay {
 	 * @return string
 	 */
 	static public function getEditNextLinkFor($id, $timestamp) {
-		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time>='.$timestamp.' ORDER BY time ASC');
+		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time>="'.$timestamp.'" ORDER BY time ASC');
 
 		if (isset($NextTraining['id']))
 			return Ajax::window('<a id="ajaxNext" href="call/call.Training.edit.php?id='.$NextTraining['id'].'">'.Icon::get(Icon::$ARR_NEXT, '').'</a> ','small');

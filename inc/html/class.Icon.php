@@ -100,6 +100,17 @@ class Icon {
 	}
 
 	/**
+	 * Get url to icon for given sportid
+	 * @param int $id
+	 * @return string 
+	 */
+	public static function getSportIconUrl($id) {
+		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
+
+		return 'img/sports/'.$data['img'];
+	}
+
+	/**
 	 * Get the weather-specific icon
 	 * @param int $id
 	 * @param string $title deprecated

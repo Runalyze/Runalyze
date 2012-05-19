@@ -14,7 +14,15 @@ class TrainingInputShoe extends FormularSelectBox {
 
 		$this->addOption(0, '---- Laufschuh ausw&auml;hlen');
 
-		foreach (Shoe::getNamesAsArray(false) as $id => $name)
+		foreach (Shoe::getNamesAsArray( !$this->showAll() ) as $id => $name)
 			$this->addOption($id, $name);
+	}
+
+	/**
+	 * Boolean flag: show unused shoes too?
+	 * @return boolean
+	 */
+	protected function showAll() {
+		return !empty($this->value);
 	}
 }

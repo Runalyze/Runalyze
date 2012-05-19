@@ -1,6 +1,7 @@
 <?php
 /**
  * Exporter for: GPX
+ * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class ExporterGPX extends Exporter {
 	/**
