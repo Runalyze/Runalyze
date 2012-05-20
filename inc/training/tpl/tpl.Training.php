@@ -41,7 +41,7 @@
 
 
 
-<div id="trainingTable" class="dataBox">
+<div id="trainingTable" class="dataBox left">
 	<?php $this->Training->displayTable(); ?>
 </div>
 

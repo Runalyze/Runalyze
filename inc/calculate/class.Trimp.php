@@ -128,12 +128,18 @@ class Trimp {
 		// Berechnung mit Trainingszonen waere:
 		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
 		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
-		$Training    = new Training($trainingId);
-		$HFperRest   = ($Training->avgHF() - HF_REST) / (HF_MAX - HF_REST);
+		if ($trimpToReach) {
+			$Sport   = new Sport( CONF_MAINSPORT );
+			$avgHf   = $Sport->avgHF();
+		} else {
+			$Training    = new Training($trainingId);
+			$avgHf       = $Training->avgHF();
+		}
+		$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
 		$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
 
 		if ($trimpToReach !== false)
-			return $trimpToReach / ( TrimpFactor * 5.35 / 10 );
+			return $trimpToReach / ( $TrimpFactor * 5.35 / 10 );
 
 		$Trimp = round($Training->get('s')/60 * $TrimpFactor * $Training->RPE() / 10);
 

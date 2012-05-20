@@ -1,4 +1,4 @@
-<div class="dataBox trainingZones">
+<div class="dataBox trainingZones left">
 	<strong class="small"><?php echo $title; ?>:</strong>
 
 	<table class="small" style="white-space:nowrap;">
