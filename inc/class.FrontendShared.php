@@ -56,9 +56,7 @@ class FrontendShared extends Frontend {
 	protected function displayRequestedTraining() {
 		$_GET['id'] = $this->Training->id();
 
-		echo '<div id="tab_content" class="panel" style="width:960px;margin:5px auto;">';
 		$this->Training->display();
-		echo '</div>';
 	}
 
 	/**
@@ -76,14 +74,36 @@ class FrontendShared extends Frontend {
 	 * Throw error: invalid request 
 	 */
 	protected function throwErrorForUnknownTraining() {
-		Error::getInstance()->displayFatalErrorMessage('Invalid request.');
+		echo HTML::h1('Fehler');
+		echo HTML::error('
+			<strong>Invalid request.</strong><br />
+			<br />
+			Wir wissen mit deiner Anfrage nichts anzufangen ;-)');
+
+		$this->displayLinkToRunalyze();
 	}
 
 	/**
 	 * Throw error: This training is private 
 	 */
 	protected function throwErrorForPrivateTraining() {
-		Error::getInstance()->displayFatalErrorMessage('This training is private.');
+		echo HTML::h1('Fehler');
+		echo HTML::error('
+			<strong>Dieses Training ist privat.</strong><br />
+			<br />
+			Jeder Benutzer von Runalyze kann selbst bestimmen,
+			welche Trainings er anderen zeigt und welche nicht.');
+
+		$this->displayLinkToRunalyze();
+	}
+
+	/**
+	 * Display link to www.runalyze.de 
+	 */
+	protected function displayLinkToRunalyze() {
+		$List = new BlocklinkList();
+		$List->addCompleteLink('<a class="nopadding" href="http://www.runalyze.de/" title="Runalyze - Online Lauftagebuch"><strong>&raquo;&nbsp;runalyze.de</strong></a>');
+		$List->display();
 	}
 
 	/**

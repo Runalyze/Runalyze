@@ -109,9 +109,6 @@ class Training {
 	 * @return boolean 
 	 */
 	public function isPublic() {
-		return true;
-
-		// TODO
 		return $this->get('is_public');
 	}
 
