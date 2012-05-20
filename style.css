@@ -516,6 +516,10 @@ ul.blocklist a:hover {
 ul.blocklist.smallImage a {
 	background-position: 9px center; }
 
+ul.blocklist a.nopadding {
+	width: 120px;
+	padding: 5px; }
+
 
 /*** SPECIFIC STYLES ***/
 .panel {
@@ -656,6 +660,8 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .minus { color: #CA3030; }
 .plus { color: #30AA30; }
 .error { color: #F00; font-weight: bold; }
+.nopadding { padding: 0; }
+.padding-5 { padding: 5px; }
 .nomargin { margin: 0; }
 .margin-5 { margin: 0 5px; }
 .margin-10 { margin: 0 10px; }
