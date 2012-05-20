@@ -126,7 +126,7 @@ class Dataset {
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
 		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS)
-			$addLink = Training::getCreateWindowLinkForDate($timestamp);
+			$addLink = TrainingCreator::getWindowLinkForDate($timestamp);
 
 		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';
@@ -370,7 +370,7 @@ class Dataset {
 		if (is_null($this->Training->Type()) || !$this->Training->Type()->hasSplits() || $this->Training->get('splits') == '')
 			return;
 
-		return Icon::get( Icon::$CLOCK, '', '', $this->Training->getSplitsAsString() );
+		return Icon::get( Icon::$CLOCK, '', '', $this->Training->Splits()->asReadableString() );
 	}
 
 	/**

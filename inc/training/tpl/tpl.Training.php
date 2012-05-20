@@ -24,8 +24,13 @@
 			<?php endif; ?>
 		</span>
 
-		<?php echo Ajax::window('<a class="labeledLink editLink" href="call/call.Training.edit.php?id='.$this->Training->get('id').'">Bearbeiten</a> ','small'); ?>
-		<?php echo Ajax::window('<a class="labeledLink exportLink" href="'.ExporterView::$URL.'?id='.$this->Training->get('id').'">Exportieren</a> ','small'); ?>
+		<?php if (!Request::isOnSharedPage()): ?>
+			<?php echo Ajax::window('<a class="labeledLink editLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">Bearbeiten</a> ','small'); ?>
+			<?php echo Ajax::window('<a class="labeledLink exportLink" href="'.ExporterView::$URL.'?id='.$this->Training->id().'">Exportieren</a> ','small'); ?>
+		<?php endif; ?>
+		<?php if ($this->Training->isPublic()): ?>
+			<?php echo SharedLinker::getToolbarLinkTo($this->Training->id()); ?>
+		<?php endif; ?>
 
 		<br class="clear" />
 	</div>

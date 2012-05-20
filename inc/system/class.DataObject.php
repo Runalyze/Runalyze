@@ -185,4 +185,3 @@ abstract class DataObject {
 		Mysql::getInstance()->update($this->tableName(), $this->id, $columns, $values);
 	}
 }
-?>

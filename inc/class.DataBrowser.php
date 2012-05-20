@@ -1,7 +1,6 @@
 <?php
 /**
- * Class: Frontend
- * 
+ * Class: DataBrowser
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class DataBrowser {
@@ -237,7 +236,7 @@ class DataBrowser {
 		//$href = 'inc/class.DataBrowser.search.php';
 		// TODO For displaying search inside the databrowser ...
 		// return Ajax::link($icon, DATA_BROWSER_ID, $href);
-		return Ajax::window('<a href="call/window.search.php">'.$icon.'</a>', 'big');
+		return Ajax::window('<a href="'.self::$SEARCH_URL.'">'.$icon.'</a>', 'big');
 	}
 
 	/**
@@ -270,7 +269,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getAddLink() {
-		return Training::getCreateWindowLink();
+		return TrainingCreator::getWindowLink();
 	}
 
 	/**
@@ -282,6 +281,7 @@ class DataBrowser {
 	 */
 	static function getLink($name, $start, $end) {
 		$href = 'call/call.DataBrowser.display.php?start='.$start.'&end='.$end;
+
 		return Ajax::link($name, DATA_BROWSER_ID, $href);
 	}
 
@@ -368,4 +368,3 @@ class DataBrowser {
 		return $date;
 	}
 }
-?>

@@ -34,7 +34,7 @@ class Time {
 	 * @param int $time_2 optional
 	 * @return int
 	 */
-	public static function diffInDays($time_1, $time_2 = 0) {
+	static public function diffInDays($time_1, $time_2 = 0) {
 		if ($time_2 == 0)
 			$time_2 = time();
 
@@ -46,15 +46,24 @@ class Time {
 	 * @param int $timestamp
 	 * @return boolean
 	 */
-	public static function isToday($timestamp) {
+	static public function isToday($timestamp) {
 		return date('d.m.Y') == date('d.m.Y', $timestamp);
+	}
+
+	/**
+	 * Get string for daytime if not 0:00
+	 * @param int $timestamp 
+	 * @return string
+	 */
+	static public function daytimeString($timestamp) {
+		return date('H:i', $timestamp) != '00:00' ? date('H:i', $timestamp).' Uhr' : '';
 	}
 
 	/**
 	 * Get the timestamp of the start of the week
 	 * @param int $time
 	 */
-	public static function Weekstart($time) {
+	static public function Weekstart($time) {
 		$w = date("w", $time);
 		if ($w == 0)
 			$w = 7;
@@ -66,7 +75,7 @@ class Time {
 	 * Get the timestamp of the end of the week
 	 * @param int $time
 	 */
-	public static function Weekend($time) {
+	static public function Weekend($time) {
 		$start = self::Weekstart($time);
 		return mktime(23, 59, 50, date("m",$start), date("d",$start)+6, date("Y",$start));
 	}
@@ -76,7 +85,7 @@ class Time {
 	 * @param string $w     date('w');
 	 * @param bool $short   short version, default: false
 	 */
-	public static function Weekday($w, $short = false) {
+	static public function Weekday($w, $short = false) {
 		if ($short)
 			return self::$WEEKDAYS_S[$w%7];
 
@@ -88,7 +97,7 @@ class Time {
 	 * @param string $m     date('m');
 	 * @param bool $short   short version, default: false
 	 */
-	public static function Month($m, $short = false) {
+	static public function Month($m, $short = false) {
 		if ($short)
 			return self::$MONTHS_S[$m-1];
 

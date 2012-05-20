@@ -5,6 +5,12 @@
  */
 class TrainingEditor {
 	/**
+	 * URL for editing trainings
+	 * @var string
+	 */
+	static public $URL = 'call/call.Training.edit.php';
+
+	/**
 	 * ID of the current training
 	 * @var int
 	 */
@@ -245,5 +251,22 @@ class TrainingEditor {
 	 */
 	public function getErrorsAsArray() {
 		return $this->Errors;
+	}
+
+	/**
+	 * Link to editor for a given training
+	 * @param int $id
+	 * @param string $text [optional] by default: Icon::$EDIT_SMALL
+	 * @param string $linkId [optional]
+	 * @return string 
+	 */
+	static public function linkTo($id, $text = '', $linkId = '') {
+		if ($text == '')
+			$text = Icon::get(Icon::$EDIT_SMALL);
+
+		if ($linkId != '')
+			$linkId = ' id="'.$linkId.'"';
+
+		return Ajax::window('<a'.$linkId.' href="'.self::$URL.'?id='.$id.'">'.$text.'</a>', 'small');
 	}
 }

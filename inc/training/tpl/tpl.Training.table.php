@@ -84,21 +84,39 @@
 <?php if ($this->get('shoeid') != 0): ?>
 	<tr>
 		<td class="inlineHead">Schuh:</td>
-		<td><?php echo Shoe::getSearchLink($this->get('shoeid')); ?></td>
+		<td>
+			<?php if (Request::isOnSharedPage()): ?>
+				<?php echo Shoe::getNameOf($this->get('shoeid')); ?>
+			<?php else: ?>
+				<?php echo Shoe::getSearchLink($this->get('shoeid')); ?>
+			<?php endif; ?>
+		</td>
 	</tr>
 <?php endif; ?>
 
 <?php if (!$this->Clothes()->areEmpty()): ?>
 	<tr>
 		<td class="inlineHead">Kleidung:</td>
-		<td><?php echo $this->Clothes()->asLinks(); ?></td>
+		<td>
+			<?php if (Request::isOnSharedPage()): ?>
+				<?php echo $this->Clothes()->asString(); ?>
+			<?php else: ?>
+				<?php echo $this->Clothes()->asLinks(); ?>
+			<?php endif; ?>
+		</td>
 	</tr>
 <?php endif; ?>
 
 <?php if ($this->hasPartner()): ?>
 	<tr>
 		<td class="inlineHead">Partner:</td>
-		<td><?php echo $this->getPartnerAsLinks(); ?></td>
+		<td>
+			<?php if (Request::isOnSharedPage()): ?>
+				<?php echo $this->getPartner(); ?>
+			<?php else: ?>
+				<?php echo $this->getPartnerAsLinks(); ?>
+			<?php endif; ?>
+		</td>
 	</tr>
 <?php endif; ?>
 

@@ -5,12 +5,8 @@
  * Before handling the errors of a script a new object of class::Error has to be created.
  */
 /**
- * Class: Error
- * This class handles all errors 
- * 
+ * Class: Error - This class handles all errors 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses error_handler()
  */
 class Error {
 	/**
@@ -141,13 +137,10 @@ class Error {
 		if ($this->debug_displayed || !$this->hasErrors())
 			return;
 
-		if (!$this->log) {
+		if (!$this->log)
 			echo $this->sendErrorsToJSLog();
-		} else {
-			$handle = fopen(FRONTEND_PATH.'../'.$this->log_file, 'w+');
-			fwrite($handle, $this->getErrorTable());
-			fclose($handle);
-		}
+		else
+			Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
 
 		$this->debug_displayed = true;
 	}
@@ -305,7 +298,7 @@ class Error {
 
 		echo '<div class="panel">';
 		echo '<h1>Fataler Fehler</h1>';
-		echo $message;
+		echo HTML::error($message);
 		echo '</div>';
 		
 		if (!$this->footer_sent)
