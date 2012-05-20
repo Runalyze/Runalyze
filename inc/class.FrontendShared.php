@@ -56,7 +56,7 @@ class FrontendShared extends Frontend {
 	protected function displayRequestedTraining() {
 		$_GET['id'] = $this->Training->id();
 
-		echo '<div class="panel" style="width:960px;margin:5px auto;">';
+		echo '<div id="tab_content" class="panel" style="width:960px;margin:5px auto;">';
 		$this->Training->display();
 		echo '</div>';
 	}
