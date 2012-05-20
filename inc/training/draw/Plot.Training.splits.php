@@ -16,11 +16,11 @@ $Labels       = array();
 $Data         = array();
 
 if ($Training->hasSplitsData()) {
-	$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
-	$achievedPace = array_sum($Training->getSplitsPacesArray()) / count($Training->getSplitsPacesArray());
+	$Labels  = $Training->Splits()->distancesAsArray();
+	$Data    = $Training->Splits()->pacesAsArray();
 
-	$Labels  = $Training->getSplitsDistancesArray();
-	$Data    = $Training->getSplitsPacesArray();
+	$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
+	$achievedPace = array_sum($Data) / count($Data);
 
 	foreach ($Data as $key => $val) {
 		$Labels[$key] = array($key, $Labels[$key].' km');

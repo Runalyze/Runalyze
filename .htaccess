@@ -1,2 +1,6 @@
 php_value upload_max_filesize "32M"
 php_value post_max_size "32M"
+
+RewriteEngine on
+RewriteRule ^shared/([^./]*)$ call/call.SharedTraining.php?url=$1 [L]
+RewriteRule ^shared/(.*)$ $1 [L]

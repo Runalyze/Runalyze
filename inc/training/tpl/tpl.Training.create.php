@@ -1,6 +1,6 @@
 <?php
 /**
- * File displaying the formular for adding a new training, called via Training::displayCreateWindow()
+ * File displaying the formular for adding a new training, called via TrainingCreator::displayWindow()
  */
 
 $Links = array();

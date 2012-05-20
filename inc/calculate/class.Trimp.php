@@ -110,6 +110,15 @@ class Trimp {
 	}
 
 	/**
+	 * Get colored string for a given trimp value
+	 * @param int $trimp
+	 * @return string 
+	 */
+	static public function coloredString($trimp) {
+		return '<span style="color:#'.Running::Stresscolor($trimp).';">'.$trimp.'</span>';
+	}
+
+	/**
 	 * Get the TRIMP for a training or get the minutes needed for a given TRIMP
 	 * @param int $trainingId     Training-ID
 	 * @param mixed $trimpToReach [optional] If set, calculate backwards to this value, default: false     

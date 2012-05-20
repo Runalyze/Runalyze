@@ -45,18 +45,22 @@ body#installer {
 #copy.top { top: 0; box-shadow:0 2px 3px rgba(0, 0, 0, 0.25); }
 #copy.bottom { bottom: 0; box-shadow:0 -2px 3px rgba(0, 0, 0, 0.25); }
 
-#copy a.tab {
+#copy .tab {
 	display: block;
 	float: left;
 	padding: 2px 10px 2px 30px;
 	margin: 4px 8px;
 	color: #DDD; }
 
-#copy a.tab.singleTab {
+#copy .tab.singleTab {
 	float: right;
 	padding: 2px 10px; }
 
-#copy a.tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
+#copy .tab.singleTabLeft {
+	float: left;
+	padding: 2px 10px; }
+
+#copy .tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
 
 #copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
 #copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
@@ -286,6 +290,7 @@ fieldset .validationFailed {
 
 .labeledLink.editLink { background-image:url(img/edit.png); }
 .labeledLink.exportLink { background-image:url(img/export.png); }
+.labeledLink.attachLink { background-image:url(img/attach.png); }
 .labeledLink.zoomInLink { background-image:url(img/zoomIn.png); }
 .labeledLink.zoomOutLink { background-image:url(img/zoomOut.png); }
 .labeledLink.zoomFitLink { background-image:url(img/zoomFit.png); }

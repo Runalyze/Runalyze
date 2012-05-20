@@ -17,6 +17,22 @@ class Request {
 	}
 
 	/**
+	 * Get current folder of request
+	 * @return string
+	 */
+	static public function CurrentFolder() {
+		return basename(dirname(self::Uri()));
+	}
+
+	/**
+	 * Is the user on a shared page?
+	 * @return boolean
+	 */
+	static public function isOnSharedPage() {
+		return SharedLinker::isOnSharedPage();
+	}
+
+	/**
 	 * Was the request an AJAX-request?
 	 * @return boolean
 	 */

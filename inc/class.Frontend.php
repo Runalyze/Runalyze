@@ -7,7 +7,6 @@
  */
 /**
  * Class: Frontend
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Frontend {
@@ -21,17 +20,17 @@ class Frontend {
 	 * Boolean flag: log GET- and POST-data
 	 * @var bool
 	 */
-	private $logGetAndPost = false;
+	protected $logGetAndPost = false;
 
 	/**
 	 * Additional JavaScript-files
 	 */
-	private $JS_FILES = array();
+	protected $JS_FILES = array();
 
 	/**
 	 * Additional CSS-files
 	 */
-	private $CSS_FILES = array();
+	protected $CSS_FILES = array();
 
 	/**
 	 * Constructor for Frontend
@@ -92,7 +91,7 @@ class Frontend {
 	/**
 	 * Include class::Error and and initialise it
 	 */
-	private function initErrorHandling() {
+	protected function initErrorHandling() {
 		Error::init(Request::Uri());
 
 		if ($this->logGetAndPost) {
@@ -116,7 +115,7 @@ class Frontend {
 	/**
 	 * Init SessionHandler
 	 */
-	private function initSessionHandler() {
+	protected function initSessionHandler() {
 		$Session = new SessionHandler();
 
 		if (isset($_POST['user']) && isset($_POST['password']))
@@ -126,7 +125,7 @@ class Frontend {
 	/**
 	 * Include alle required files
 	 */
-	private function initRequiredFiles() {
+	protected function initRequiredFiles() {
 		$this->initImporterExporter();
 		$this->initAdditionalFiles();
 	}
@@ -134,7 +133,7 @@ class Frontend {
 	/**
 	 * Init classes for Importer/Exporter
 	 */
-	private function initImporterExporter() {
+	protected function initImporterExporter() {
 		require_once FRONTEND_PATH.'import/class.Importer.php';
 		require_once FRONTEND_PATH.'import/class.ImporterFormular.php';
 
@@ -179,7 +178,7 @@ class Frontend {
 	/**
 	 * Init internal debug-mode. Can be defined in config.php - otherwise is set to false here
 	 */
-	private function initDebugMode() {
+	protected function initDebugMode() {
 		if (!defined('RUNALYZE_DEBUG'))
 			define('RUNALYZE_DEBUG', false);
 
@@ -192,7 +191,7 @@ class Frontend {
 	/**
 	 * Set correct character encoding 
 	 */
-	public function setEncoding() {
+	final public function setEncoding() {
 		header('Content-type: text/html; charset=UTF-8');
 		mb_internal_encoding("UTF-8");
 	}

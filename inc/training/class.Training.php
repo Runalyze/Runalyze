@@ -105,11 +105,31 @@ class Training {
 	}
 
 	/**
+	 * Is this training public?
+	 * @return boolean 
+	 */
+	public function isPublic() {
+		return true;
+
+		// TODO
+		return $this->get('is_public');
+	}
+
+	/**
+	 * Check if a given ID is equal to constructor ID
+	 * @param int $id
+	 * @return boolean 
+	 */
+	static protected function isConstructorId($id) {
+		return $id == self::$CONSTRUCTOR_ID;
+	}
+
+	/**
 	 * Is the ID of this training just for construction? (not in database)
 	 * @return bool
 	 */
 	protected function hasConstructorId() {
-		return ($this->id == self::$CONSTRUCTOR_ID);
+		return self::isConstructorId($this->id);
 	}
 
 	/**
@@ -118,7 +138,7 @@ class Training {
 	 * @return bool
 	 */
 	private function canSetDataFromId($id) {
-		if ($id == self::$CONSTRUCTOR_ID) {
+		if (self::isConstructorId($id)) {
 			$dat = array();
 		} else {
 			$dat = Mysql::getInstance()->fetch(PREFIX.'training', $id);
@@ -138,9 +158,6 @@ class Training {
 	 * Create all needed objects
 	 */
 	private function createObjects() {
-		//if ($this->hasConstructorId())
-		//	return;
-
 		$this->Clothes     = new Clothes($this->get('clothes'));
 		$this->Splits      = new Splits($this->get('splits'));
 
@@ -463,9 +480,7 @@ class Training {
 	 * @return string
 	 */
 	public function getDaytimeString() {
-		$time = $this->get('time');
-
-		return date('H:i', $time) != '00:00' ? date('H:i', $time).' Uhr' : '';
+		return Time::daytimeString($this->get('time'));
 	}
 
 	/**
@@ -533,7 +548,7 @@ class Training {
 	 * @return string
 	 */
 	public function getTrimpString() {
-		return '<span style="color:#'.Running::Stresscolor($this->get('trimp')).';">'.$this->get('trimp').'</span>';
+		return Trimp::coloredString($this->get('trimp'));
 	}
 	
 	/**
@@ -581,7 +596,7 @@ class Training {
 	 * @return string all clothes comma seperated
 	 */
 	public function getStringForClothes() {
-		return Clothes::getStringForClothes($this->get('clothes'));
+		return $this->Clothes->asString();
 	}
 
 	/**
@@ -672,84 +687,6 @@ class Training {
 	 */
 	public function hasPositionData() {
 		return $this->GpsData->hasPositionData();
-	}
-
-	/**
-	 * Get an array with all times (in seconds) of the splits
-	 * @return array
-	 */
-	public function getSplitsTimeArray() {
-		return $this->Splits->timesAsArray();
-	}
-
-	/**
-	 * Get an array with all paces (in min/km) of the splits
-	 * @return array
-	 */
-	public function getSplitsPacesArray() {
-		return $this->Splits->pacesAsArray();
-	}
-
-	/**
-	 * Get an array with all distances (in kilometer) of the splits
-	 * @return array
-	 */
-	public function getSplitsDistancesArray() {
-		return $this->Splits->distancesAsArray();
-	}
-
-	/**
-	 * Get all splits as a string: '1 km in 3:20, ...'
-	 * @return string
-	 */
-	public function getSplitsAsString() {
-		return $this->Splits->asReadableString();
-	}
-
-	/**
-	 * Get link for create window
-	 */
-	static public function getCreateWindowLink() {
-		$icon = Icon::get(Icon::$ADD, '', '', 'Training hinzuf&uuml;gen');
-		return Ajax::window('<a href="call/call.Training.create.php">'.$icon.'</a>', 'small');
-	}
-
-	/**
-	 * Get link for create window for a given date
-	 * @param string $date
-	 * @return string
-	 */
-	static public function getCreateWindowLinkForDate($date) {
-		if (is_int($date))
-			$date = date('d.m.Y', $date);
-
-		$icon = Icon::get(Icon::$ADD_GRAY, '');
-		return Ajax::window('<a href="call/call.Training.create.php?date='.$date.'">'.$icon.'</a>', 'small');
-	}
-
-	/**
-	 * Display the window/formular for creation
-	 */
-	static public function displayCreateWindow() {
-		if (isset($_POST['forceAsFileName']))
-			$_GET['file'] = $_POST['forceAsFileName'];
-
-		$fileName     = isset($_GET['file']) ? $_GET['file'] : '';
-		$showUploader = empty($_POST) && !isset($_GET['file']);
-		$Importer     = Importer::getInstance($fileName);
-
-		if (!isset($_POST['datum']) && isset($_GET['date'])) {
-			$_POST['datum'] = $_GET['date'];
-			$showUploader = false;
-		}
-
-		if ($Importer->tryToUploadFileHasSuccess())
-			return;
-
-		if ($Importer->tryToCreateTrainingHasSuccess())
-			return;
-
-		include 'tpl/tpl.Training.create.php';
 	}
 
 	/**

@@ -5,12 +5,6 @@
 */
 class TrainingDisplay {
 	/**
-	 * Path to file for displaying the map (used for iframe)
-	 * @var string
-	 */
-	public static $mapURL = 'inc/tcx/window.map.php';
-
-	/**
 	 * Minimum distance to be shown as a zone
 	 * @var double
 	 */
@@ -180,10 +174,10 @@ class TrainingDisplay {
 			</tr>
 			<tr class="space"><td colspan="4" /></tr>'.NL;
 
-		$splits       = explode('-', str_replace('\r\n', '-', $this->Training->get('splits')));
-		$Distances    = $this->Training->getSplitsDistancesArray();
-		$Times        = $this->Training->getSplitsTimeArray();
-		$Paces        = $this->Training->getSplitsPacesArray();
+		// TODO!!!!!
+		$Distances    = $this->Training->Splits()->distancesAsArray();
+		$Times        = $this->Training->Splits()->timesAsArray();
+		$Paces        = $this->Training->Splits()->pacesAsArray();
 		$demandedPace = Helper::DescriptionToDemandedPace($this->Training->get('comment'));
 		//$achievedPace = array_sum($Paces) / count($Paces);
 		$TimeSum      = array_sum($Times);
@@ -262,7 +256,7 @@ class TrainingDisplay {
 	 * Display link for edit window
 	 */
 	public function displayEditLink() {
-		echo Ajax::window('<a href="call/call.Training.edit.php?id='.$this->Training->get('id').'">'.Icon::get(Icon::$EDIT_SMALL, '', '', 'Training bearbeiten').'</a> ','small');
+		echo TrainingEditor::linkTo($this->Training->id());
 	}
 
 	/**
@@ -271,7 +265,7 @@ class TrainingDisplay {
 	 * @return string
 	 */
 	static public function getSmallEditLinkFor($id) {
-		return Ajax::window('<a href="call/call.Training.edit.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, '').'</a> ','small');
+		return TrainingEditor::linkTo($id);
 	}
 
 	/**
@@ -284,7 +278,7 @@ class TrainingDisplay {
 		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time<="'.$timestamp.'" ORDER BY time DESC');
 
 		if (isset($PrevTraining['id']))
-			return Ajax::window('<a id="ajaxPrev" href="call/call.Training.edit.php?id='.$PrevTraining['id'].'">'.Icon::get(Icon::$ARR_BACK, '').'</a> ','small');
+			return TrainingEditor::linkTo($PrevTraining['id'], Icon::get(Icon::$ARR_BACK), 'ajaxPrev');
 
 		return '';
 	}
@@ -299,7 +293,7 @@ class TrainingDisplay {
 		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time>="'.$timestamp.'" ORDER BY time ASC');
 
 		if (isset($NextTraining['id']))
-			return Ajax::window('<a id="ajaxNext" href="call/call.Training.edit.php?id='.$NextTraining['id'].'">'.Icon::get(Icon::$ARR_NEXT, '').'</a> ','small');
+			return TrainingEditor::linkTo($NextTraining['id'], Icon::get(Icon::$ARR_NEXT), 'ajaxNext');
 
 		return '';
 	}
