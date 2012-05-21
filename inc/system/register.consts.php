@@ -39,6 +39,7 @@ Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Kilometer-Mar
 Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Typ der GoogleMaps-Karte',
 	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
+Config::register('Training', 'TRAINING_MAKE_PUBLIC', 'bool', false, '<abbr class="atLeft" tooltip="&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.">Trainings ver&ouml;ffentlichen</abbr>');
 
 Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
 	array('google' => true, 'geonames' => false), 'H&ouml;henkorrektur &uuml;ber',

@@ -5,18 +5,6 @@
 	width: 480px;
 	height: 190px;
 	background: url(../img/dash.png) repeat #60a920;
-	/*background-color: #AAB757;
-	background-image: url(../img/dash.png);
-	background-image: url(../img/dash.png), linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
-	background-image: url(../img/dash.png), -o-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
-	background-image: url(../img/dash.png), -moz-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
-	background-image: url(../img/dash.png), -webkit-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
-	background-image: url(../img/dash.png), -ms-linear-gradient(bottom, rgb(96,165,80) 0%, rgb(193,206,112) 100%);
-	background-image: url(../img/dash.png), -webkit-gradient(
-		linear, left bottom, left top,
-		color-stop(0, rgb(96,165,80)),
-		color-stop(1, rgb(193,206,112))
-	);*/
 }
 
 .flot .tickLabels, .flot .legend td {
@@ -104,6 +92,7 @@
 	text-align: left;
 	overflow: visible;
 	font-size: .9em;
+	background-color: rgb(255,255,255);
 	background-color: rgba(255,255,255,0.8);
 	border: 1px solid #CCC;
 	-webkit-border-radius: 2px;

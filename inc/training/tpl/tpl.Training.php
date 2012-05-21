@@ -1,7 +1,7 @@
 <h1>
-	<?php $this->Training->displayTitle(); ?>
-
 	<small class="right"><?php $this->Training->displayDate(); ?></small>
+
+	<?php $this->Training->displayTitle(); ?>
 
 	<br class="clear" />
 </h1>

@@ -88,6 +88,7 @@ class TrainingEditor {
 		$this->addValue('pulse_max');
 
 		$this->addBooleanValue('is_track');
+		$this->addBooleanValue('is_public');
 		$this->addBooleanValue('abc');
 	}
 
