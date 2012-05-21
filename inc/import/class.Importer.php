@@ -112,6 +112,7 @@ abstract class Importer {
 		$this->allowedKeysForSet[] = 'weatherid';
 		$this->allowedKeysForSet[] = 'temperature';
 		$this->allowedKeysForSet[] = 'splits';
+		$this->allowedKeysForSet[] = 'is_public';
 
 		$this->allowedKeysForGet   = $this->allowedKeysForSet;
 		$this->allowedKeysForGet[] = 'pace';
@@ -349,9 +350,6 @@ abstract class Importer {
 
 		$this->displayErrors();
 		$this->displayHTMLcreatorFormular();
-
-		//$Mysql = Mysql::getInstance();
-		//include 'tpl/tpl.Importer.formular.php';
 	}
 
 	/**

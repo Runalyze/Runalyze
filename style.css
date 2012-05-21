@@ -37,6 +37,7 @@ body#installer {
 
 #copy {
 	position: fixed;
+	left: 0;
 	z-index: 5;
 	width: 100%;
 	line-height: 24px;
@@ -119,6 +120,7 @@ thead th {
 input, select, textarea, code {
 	font-size: 0.9em;
 	margin: 4px 2px;
+	background-color: rgb(255,255,255);
 	background-color: rgba(255,255,255,0.7);
 	border: 1px solid #B8B8B8;
 	border-radius: 3px 3px 3px 3px; }
@@ -137,7 +139,8 @@ input:focus, select:focus, textarea:focus {
 
 input[type=checkbox] {
 	position: relative;
-	top: 2px; }
+	top: 2px;
+	border: none; }
 
 label.checkable,
 input[type=checkbox] {
@@ -806,6 +809,7 @@ code {
 
 .map .hoverTip {
 	position: absolute;
+	background-color: rgb(255,255,255);
 	background-color: rgba(255,255,255,0.8);
 	padding: 1px;
 	margin: 2px 0 0 2px;
@@ -822,6 +826,7 @@ code {
 	height: 0;
 	width: 0;
 	border: 5px solid transparent;
+	border-right-color: rgb(255,255,255);
 	border-right-color: rgba(255,255,255,0.8);
 	left: -11px;
 	top: 50%;

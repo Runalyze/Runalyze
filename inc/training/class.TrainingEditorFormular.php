@@ -47,6 +47,7 @@ class TrainingEditorFormular {
 		$this->initSplitsFieldset();
 		$this->initOtherFieldset();
 		$this->initWeatherFieldset();
+		$this->initPublicFieldset();
 		$this->initDeleteFieldset();
 		$this->initGPSFieldset();
 	}
@@ -178,6 +179,7 @@ class TrainingEditorFormular {
 		$Fieldset->addField(new TrainingInputWeather());
 		$Fieldset->addField(new TrainingInputTemperature());
 		$Fieldset->addField(new TrainingInputClothes());
+		$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 		$this->Formular->addHiddenValue('clothes_sent', 'true');
@@ -200,6 +202,17 @@ class TrainingEditorFormular {
 
 		if ($this->Training->isOutside())
 			$Fieldset->addField(new TrainingInputRoute());
+
+		$this->Formular->addFieldset($Fieldset);
+	}
+
+	/**
+	 * Init fieldset for publishing
+	 */
+	protected function initPublicFieldset() {
+		$Fieldset = new FormularFieldset('Privatsph&auml;re');
+		$Fieldset->addField(new TrainingInputIsPublic());
+		$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 	}
