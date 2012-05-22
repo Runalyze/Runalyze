@@ -35,7 +35,12 @@ class FrontendShared extends Frontend {
 	 * Init training 
 	 */
 	private function initTraining() {
-		$this->Training = new Training ( SharedLinker::getTrainingId() );
+		$id = SharedLinker::getTrainingId();
+
+		if ($id <= 0)
+			return;
+
+		$this->Training = new Training($id);
 	}
 
 	/**
