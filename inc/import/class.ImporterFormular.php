@@ -1,12 +1,7 @@
 <?php
 /**
- * This file contains the class::ImporterFormular for creating a training from formular
- */
-/**
  * Class: ImporterFormular
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class ImporterFormular extends Importer {
 	/**
@@ -117,6 +112,8 @@ class ImporterFormular extends Importer {
 		$this->values[]          = $time;
 		$this->columns[]         = 's';
 		$this->values[]          = $time_in_s;
+		$this->columns[]         = 'is_public';
+		$this->values[]          = isset($_POST['is_public']) ? 1 : 0;
 
 		// Prepare values for distances
 		if ($Sport->usesDistance()) {
@@ -161,8 +158,12 @@ class ImporterFormular extends Importer {
 
 			$AutoParseKeys[]     = 'typeid';
 
-			if ($Type->hasSplits())
-				$AutoParseKeys[] = 'splits';
+			if ($Type->hasSplits()) {
+				$Splits = new Splits( Splits::$FROM_POST );
+
+				$this->columns[] = 'splits';
+				$this->values[]  = $Splits->asString();
+			}
 		}
 		if ($Sport->isRunning()) {
 			$AutoParseKeys[]     = 'shoeid';
