@@ -183,7 +183,7 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$Data = $_POST['multi'];
 
 		foreach ($Data as $id => $Info) {
-			$Editor = new Editor($id, $Info);
+			$Editor = new TrainingEditor($id, $Info);
 			$Editor->performUpdate();
 
 			$this->Errors = array_merge($this->Errors, $Editor->getErrorsAsArray());
@@ -192,4 +192,3 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$this->Infos[] = 'Es wurden '.count($Data).' Trainings bearbeitet.';
 	}
 }
-?>
