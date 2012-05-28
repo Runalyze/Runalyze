@@ -255,9 +255,6 @@ class ImporterFormular extends Importer {
 		if ($this->insertFailed === true)
 			return;
 
-		$this->columns[] = 'is_public';
-		$this->values[]  = (int)CONF_TRAINING_MAKE_PUBLIC;
-
 		$Mysql = Mysql::getInstance();
 		$id    = $Mysql->insert(PREFIX.'training', $this->columns, $this->values);
 
