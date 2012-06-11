@@ -34,7 +34,7 @@ class Sport {
 		if (isset(self::$sports[$id]))
 			$this->data = self::$sports[$id];
 		else
-			$this->data = array();
+			$this->data = self::getDefaultArray();
 	}
 
 	/**

@@ -293,7 +293,7 @@ class TrainingEditorFormular {
 	 */
 	protected function appendJavaScript() {
 		echo '<script type="text/javascript">';
-		include '../lib/jQuery.form.include.php';
+		include FRONTEND_PATH.'../lib/jquery.form.include.php';
 		echo '</script>';
 	}
 }
