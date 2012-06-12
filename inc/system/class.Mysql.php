@@ -293,7 +293,7 @@ final class Mysql {
 		if (strpos($query, 'SET NAMES') !== false || !is_numeric($ID))
 			return $query;
 
-		if (strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {
+		if (strpos($query, PREFIX.'account') === false && strpos($query, '`accountid`') === false && strpos($query, 'accountid=') === false) {
 			if (strpos($query, 'WHERE') >= 7) {
 				return str_replace('WHERE', 'WHERE `accountid`="'.$ID.'" AND ', $query);
 			} elseif (strpos($query, 'GROUP BY') >= 7) {

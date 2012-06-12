@@ -112,7 +112,8 @@ class SessionHandler {
 				$this->updateLastAction();
 
 				return true;
-			}
+			} else
+				unset($_SESSION['accountid']);
 		}
 
 		return false;
