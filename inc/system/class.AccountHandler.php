@@ -30,7 +30,7 @@ class AccountHandler {
 	 * @param mixed $value 
 	 */
 	static private function updateAccount($username, $column, $value) {
-		Mysql::getInstance()->updateWhere(PREFIX.'account', '`username`="'.$username.'" LIMIT = 1', $column, $value, false);
+		Mysql::getInstance()->updateWhere(PREFIX.'account', '`username`="'.$username.'" LIMIT 1', $column, $value, false);
 	}
 
 	/**
@@ -122,10 +122,8 @@ class AccountHandler {
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();
 
-		if (empty($errors)) {
-			header('Location: index.php');
+		if (empty($errors))
 			return true;
-		}
 
 		return $errors;
 	}
@@ -304,14 +302,12 @@ class AccountHandler {
 	 */
 	static private function setAndSendActivationKeyFor($accountId, &$errors) {
 		$account        = Mysql::getInstance()->fetch(PREFIX.'account', $accountId);
-		$activationHash = self::getRandomHash();
+		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
 
-		Mysql::getInstance()->update(PREFIX.'account', $accountId, 'activation_hash', $activationHash);
-
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Registrierung';
-		$message  = "Danke f&uuml;r deine Anmeldung, ".$account['name']."!\n\n";
-		$message .= "Unter folgendem Link kannst du deinen Account best&auml;tigen:\n";
+		$message  = "Danke f&uuml;r deine Anmeldung, ".$account['name']."!<br /><br />\n\n";
+		$message .= "Unter folgendem Link kannst du deinen Account best&auml;tigen:<br />\n";
 		$message .= $activationLink;
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
