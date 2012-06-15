@@ -25,6 +25,9 @@ class FrontendShared extends Frontend {
 		$this->setEncoding();
 		$this->initTraining();
 
+		$UserId = (!is_null($this->Training)) ? $this->Training->get('accountid') : 0;
+		$User   = AccountHandler::getDataForId($UserId);
+
 		include 'tpl/tpl.FrontendShared.header.php';
 
 		Error::getInstance()->header_sent = true;
