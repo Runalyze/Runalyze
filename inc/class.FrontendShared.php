@@ -11,9 +11,17 @@ class FrontendShared extends Frontend {
 	protected $Training = null;
 
 	/**
+	 * Flag: shared view is used
+	 * @var boolean
+	 */
+	static public $IS_SHOWN = false;
+
+	/**
 	 * Function to display the HTML-Header
 	 */
 	public function displayHeader() {
+		self::$IS_SHOWN = true;
+
 		$this->setEncoding();
 		$this->initTraining();
 
