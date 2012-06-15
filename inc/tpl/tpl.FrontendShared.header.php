@@ -33,6 +33,9 @@
 <div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
 	<span class="tab singleTabLeft">
 		&Ouml;ffentliche Trainingsansicht
+		<?php if (strlen($User['username']) > 1): ?>
+			von <strong><?php echo $User['username']; ?></strong>
+		<?php endif; ?>
 	</span>
 
 	<a class="tab singleTab b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>

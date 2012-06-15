@@ -43,6 +43,15 @@ class AccountHandler {
 	}
 
 	/**
+	 * Get account-data from database
+	 * @param int $id
+	 * @return mixed
+	 */
+	static public function getDataForId($id) {
+		return Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.$id.'" LIMIT 1');
+	}
+
+	/**
 	 * Get mail-address for a given username
 	 * @param string $username
 	 * @return boolean|string 
