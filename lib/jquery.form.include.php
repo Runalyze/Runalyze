@@ -1,3 +1,10 @@
+$("#sportid").change(function(){
+	jUpdateSportValues();
+<?php if (CONF_COMPUTE_KCAL): ?>
+	jUpdateKcal();
+<?php endif; ?>
+});
+
 $("input[name=distance], input[name=s]").change(function() {
 	jUpdatePace();
 	jUpdateKmh();

@@ -20,8 +20,14 @@ class FormularSelectBox extends FormularField {
 	 * Add option to selectBox
 	 * @param mixed $key
 	 * @param string $text 
+	 * @param array $attributes
 	 */
-	public function addOption($key, $text) {
+	public function addOption($key, $text, $attributes = array()) {
+		if (!empty($attributes)) {
+			$attributes['text'] = $text;
+			$text = $attributes;
+		}
+
 		$this->options[$key] = $text;
 	}
 

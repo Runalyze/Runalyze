@@ -177,7 +177,7 @@ class Sport {
 	 * Get internal array with all sports
 	 * @return array
 	 */
-	static private function getSports() {
+	static public function getSports() {
 		self::initSports();
 
 		return self::$sports;

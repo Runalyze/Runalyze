@@ -192,7 +192,7 @@ class ImporterFormular extends Importer {
 			return $this->time;
 		}
 
-		if (!isset($_POST['zeit']))
+		if (!isset($_POST['zeit']) || strlen($_POST['zeit']) < 3)
 			$_POST['zeit'] = '00:00';
 		if (isset($_POST['datum'])) {
 			$post_day  = explode(".", $_POST['datum']);
