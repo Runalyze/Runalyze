@@ -12,6 +12,7 @@ class TrainingInputRoute extends FormularInput {
 	public function __construct($value = '') {
 		parent::__construct('route', 'Strecke', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS );
 		$this->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$this->setSize( FormularInput::$SIZE_FULL_INLINE );
 

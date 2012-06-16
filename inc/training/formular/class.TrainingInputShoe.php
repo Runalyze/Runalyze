@@ -12,6 +12,7 @@ class TrainingInputShoe extends FormularSelectBox {
 	public function __construct($value = '') {
 		parent::__construct('shoeid', 'Laufschuh', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
 		$this->addOption(0, '---- Laufschuh ausw&auml;hlen');
 
 		foreach (Shoe::getNamesAsArray( !$this->showAll() ) as $id => $name)

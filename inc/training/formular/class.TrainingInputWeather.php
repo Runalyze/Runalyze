@@ -12,6 +12,7 @@ class TrainingInputWeather extends FormularSelectBox {
 	public function __construct($value = '') {
 		parent::__construct('weatherid', 'Wetter', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS );
 		foreach (Weather::getFullArray() as $id => $data)
 			$this->addOption($id, $data['name']);
 	}

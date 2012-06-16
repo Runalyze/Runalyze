@@ -5,6 +5,24 @@
  */
 class TrainingCreatorFormular extends TrainingEditorFormular {
 	/**
+	 * CSS class for inputs only for running
+	 * @var string
+	 */
+	static public $ONLY_RUNNING_CLASS = "only-running";
+
+	/**
+	 * CSS class for inputs only for sports outside
+	 * @var string
+	 */
+	static public $ONLY_OUTSIDE_CLASS = "only-outside";
+
+	/**
+	 * CSS class for inputs only for sports with types
+	 * @var string
+	 */
+	static public $ONLY_TYPES_CLASS = "only-types";
+
+	/**
 	 * Constructor 
 	 */
 	public function __construct($sportid = -1) {
