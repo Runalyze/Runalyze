@@ -12,6 +12,7 @@ class TrainingInputIsTrack extends FormularCheckbox {
 	public function __construct($value = '') {
 		parent::__construct('is_track', 'Bahn', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
 		$this->addHiddenSentValue();
 	}
 }

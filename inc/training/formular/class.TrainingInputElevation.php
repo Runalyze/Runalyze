@@ -12,6 +12,7 @@ class TrainingInputElevation extends FormularInput {
 	public function __construct($value = '') {
 		parent::__construct('elevation', 'H&ouml;henmeter', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS );
 		$this->setUnit( FormularUnit::$ELEVATION );
 	}
 }

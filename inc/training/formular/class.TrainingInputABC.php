@@ -12,6 +12,7 @@ class TrainingInputABC extends FormularCheckbox {
 	public function __construct($value = '') {
 		parent::__construct('abc', 'Lauf-ABC', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
 		$this->addHiddenSentValue();
 	}
 }

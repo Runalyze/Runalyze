@@ -13,5 +13,7 @@ $("input[name=distance], input[name=s]").change(function() {
 <?php endif; ?>
 });
 
+jUpdateSportValues();
+
 if ($("input[name=kcal]").val() == 0)
 	jUpdateKcal();

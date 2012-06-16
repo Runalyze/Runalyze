@@ -12,6 +12,7 @@ class TrainingInputType extends FormularSelectBox {
 	public function __construct($value = '') {
 		parent::__construct('typeid', 'Trainingstyp', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_TYPES_CLASS );
 		$this->addOption(0, '---- Typ ausw&auml;hlen');
 
 		foreach (Type::getNamesAsArray() as $id => $name)

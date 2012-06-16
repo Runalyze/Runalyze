@@ -35,6 +35,12 @@ abstract class FormularField extends HtmlTag {
 	protected $layout = '';
 
 	/**
+	 * CSS classes for layout
+	 * @var array
+	 */
+	protected $layoutClasses = array();
+
+	/**
 	 * Enum from FormularValueParser
 	 * @var enum
 	 */
@@ -111,6 +117,14 @@ abstract class FormularField extends HtmlTag {
 	}
 
 	/**
+	 * Add CSS class for layout
+	 * @param string $layout 
+	 */
+	public function addLayoutClass($layout) {
+		$this->layoutClasses[] = $layout;
+	}
+
+	/**
 	 * Set parser
 	 * @param enum $parser
 	 * @param array $options 
@@ -154,7 +168,7 @@ abstract class FormularField extends HtmlTag {
 		$this->prepare();
 
 		if (!empty($this->layout))
-			return '<div class="'.$this->layout.'">'.$this->getFieldCode().'</div>';
+			return '<div class="'.$this->layout.' '.implode($this->layoutClasses, ' ').'">'.$this->getFieldCode().'</div>';
 
 		return $this->getFieldCode();
 	}

@@ -12,6 +12,7 @@ class TrainingInputTemperature extends FormularInput {
 	public function __construct($value = '') {
 		parent::__construct('temperature', 'Temperatur', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS );
 		$this->setUnit( FormularUnit::$CELSIUS );
 	}
 }

@@ -12,6 +12,7 @@ class TrainingInputClothes extends FormularCheckboxes {
 	public function __construct($value = '') {
 		parent::__construct('clothes', 'Kleidung', $value);
 
+		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
 		$this->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 
 		foreach (Clothes::getOrderedClothes() as $data)
