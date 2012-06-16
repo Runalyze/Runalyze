@@ -17,10 +17,17 @@ class FrontendShared extends Frontend {
 	static public $IS_SHOWN = false;
 
 	/**
+	 * Flag: shared view is iframe
+	 * @var boolean
+	 */
+	static public $IS_IFRAME = false;
+
+	/**
 	 * Function to display the HTML-Header
 	 */
 	public function displayHeader() {
-		self::$IS_SHOWN = true;
+		self::$IS_SHOWN  = true;
+		self::$IS_IFRAME = Request::param('mode') == 'iframe';
 
 		$this->setEncoding();
 		$this->initTraining();
@@ -28,7 +35,10 @@ class FrontendShared extends Frontend {
 		$UserId = (!is_null($this->Training)) ? $this->Training->get('accountid') : 0;
 		$User   = AccountHandler::getDataForId($UserId);
 
-		include 'tpl/tpl.FrontendShared.header.php';
+		if (self::$IS_IFRAME)
+			include 'tpl/tpl.FrontendSharedIframe.header.php';
+		else
+			include 'tpl/tpl.FrontendShared.header.php';
 
 		Error::getInstance()->header_sent = true;
 	}
@@ -37,6 +47,9 @@ class FrontendShared extends Frontend {
 	 * Function to display the HTML-Footer
 	 */
 	public function displayFooter() {
+		if (self::$IS_IFRAME)
+			include 'tpl/tpl.FrontendSharedIframe.footer.php';
+
 		include 'tpl/tpl.Frontend.footer.php';
 
 		Error::getInstance()->footer_sent = true;
@@ -72,7 +85,10 @@ class FrontendShared extends Frontend {
 	protected function displayRequestedTraining() {
 		$_GET['id'] = $this->Training->id();
 
-		$this->Training->display();
+		if (Request::param('mode') == 'iframe')
+			$this->Training->displayAsIframe();
+		else
+			$this->Training->display();
 	}
 
 	/**

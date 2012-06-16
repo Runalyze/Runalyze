@@ -365,10 +365,25 @@ class Training {
 	}
 
 	/**
+	 * Display the whole training in iframe-style
+	 */
+	public function displayAsIframe() {
+		$Display = new TrainingDisplayIframe($this);
+		$Display->display();
+	}
+
+	/**
 	 * Display table with all training data
 	 */
 	public function displayTable() {
 		include 'tpl/tpl.Training.table.php';
+	}
+
+	/**
+	 * Display table with all training data
+	 */
+	public function displayIframeTable() {
+		include 'tpl/tpl.TrainingIframe.table.php';
 	}
 
 	/**

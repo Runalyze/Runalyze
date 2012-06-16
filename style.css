@@ -1,6 +1,6 @@
-* {
-	padding: 0px;
-	margin: 0px;
+#home *, #shared * {
+	padding: 0;
+	margin: 0;
 	border: none; }
 
 body {
@@ -14,6 +14,13 @@ body.toolbar-bottom #panels { padding-bottom: 41px; }
 
 body#home, body#shared {
 	min-width: 1024px; }
+
+body#sharedIframe {
+	min-width: 400px;
+	max-width: 600px; }
+
+body#sharedIframe.toolbar-top { padding-top: 18px; }
+body#sharedIframe.toolbar-bottom { padding-bottom: 2px; }
 
 body#installer {
 	font-size: 12px; }
@@ -35,33 +42,43 @@ body#installer {
 	right: 0;
 	width: 344px; }
 
-#copy {
+#copy, #copy2 {
 	position: fixed;
 	left: 0;
 	z-index: 5;
 	width: 100%;
 	line-height: 24px;
-	background-color:#555; }
+	background-color:#555;
+	overflow:hidden; }
 
-#copy.top { top: 0; box-shadow:0 2px 3px rgba(0, 0, 0, 0.25); }
-#copy.bottom { bottom: 0; box-shadow:0 -2px 3px rgba(0, 0, 0, 0.25); }
+#sharedIframe #copy, #sharedIframe #copy2 {
+	line-height: 12px; }
 
-#copy .tab {
+#copy.top, #copy2.top { top: 0; box-shadow:0 2px 3px rgba(0, 0, 0, 0.25); }
+#copy.bottom, #copy2.bottom { bottom: 0; box-shadow:0 -2px 3px rgba(0, 0, 0, 0.25); }
+
+#copy .tab, #copy2 .tab {
 	display: block;
 	float: left;
 	padding: 2px 10px 2px 30px;
 	margin: 4px 8px;
 	color: #DDD; }
 
-#copy .tab.singleTab {
+#copy .tab.singleTab, #copy2 .tab.singleTab {
 	float: right;
 	padding: 2px 10px; }
 
-#copy .tab.singleTabLeft {
+#copy .tab.singleTabLeft, #copy2 .tab.singleTabLeft {
 	float: left;
 	padding: 2px 10px; }
 
-#copy .tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
+#sharedIframe #copy { text-align: left; }
+#sharedIframe #copy2 { text-align: right; }
+#sharedIframe #copy .singleTab, #sharedIframe #copy2 .singleTab {
+	display: inline-block;
+	float: none; }
+
+#copy .tab:hover, #copy2 .tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
 
 #copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
 #copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
@@ -568,6 +585,9 @@ ul.blocklist a.nopadding {
 
 #shared .dataBox.left table {
 	width: 100%; }
+
+#sharedIframe #trainingTable, #sharedIframe #trainingChartsAndMap {
+	width: 100%; margin: 0; padding: 0; }
 
 .dataBox tr, .dataBox td {
 	padding: 3px; }

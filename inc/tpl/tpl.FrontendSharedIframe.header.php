@@ -26,17 +26,15 @@
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
 </head>
 
-<body id="shared" class="toolbar-top" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="sharedIframe" class="toolbar-top toolbar-bottom" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="flotLoader"></div>
 
 <div id="copy" class="top">
-	<span class="tab singleTabLeft">
+	<span class="tab singleTab">
 		&Ouml;ffentliche Trainingsansicht
 		<?php if (strlen($User['username']) > 1): ?>
 			von <strong><?php echo $User['username']; ?></strong>
 		<?php endif; ?>
 	</span>
-
-	<a class="tab singleTab b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
 </div>

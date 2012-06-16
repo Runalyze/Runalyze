@@ -52,7 +52,7 @@ class Config {
 	 */
 	static private function getConsts() {
 		if (empty(self::$DbConsts)) {
-			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf');
+			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf WHERE accountid="'.SessionHandler::getId().'"');
 			foreach ($data as $confArray)
 				self::$DbConsts[$confArray['key']] = $confArray;
 		}
@@ -103,6 +103,9 @@ class Config {
 	 * @param type $select_description Description for options of select
 	 */
 	static private function insertNewConst($category, $KEY, $type, $default, $description, $select_description) {
+		if (FrontendShared::$IS_SHOWN)
+			return;
+
 		$select_description = self::valueToString($select_description, 'array');
 		$default = self::valueToString($default, $type);
 		$columns = array('category', 'key', 'type', 'value', 'description', 'select_description');
