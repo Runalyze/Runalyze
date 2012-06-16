@@ -12,7 +12,7 @@ class TrainingInputSport extends FormularSelectBox {
 	public function __construct($value = '') {
 		parent::__construct('sportid', 'Sportart', $value);
 
-		foreach (Sport::getNamesAsArray() as $id => $name)
-			$this->addOption($id, $name);
+		foreach (Sport::getSports() as $id => $sport)
+			$this->addOption($id, $sport['name'], array('data-kcal' => $sport['kcal']));
 	}
 }

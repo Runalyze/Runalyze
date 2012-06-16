@@ -327,7 +327,7 @@ class HTML {
 	/**
 	 * Get a select box with given options
 	 * @param string $name Name for this select-box
-	 * @param array $options Array containing values as indices, displayed text as values
+	 * @param array $options Array containing values as indices, displayed text as values (may be array: 'text' => ..., 'data-...' => ...)
 	 * @param mixed $selected Value to be selected
 	 * @param string $id [optional]
 	 * @return string
@@ -340,8 +340,24 @@ class HTML {
 
 		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').'>'.NL;
 
-		foreach ($options as $value => $text)
-			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).'>'.$text.'</option>'.NL;
+		foreach ($options as $value => $text) {
+			$additionalAttributes = array();
+			$displayedText = $text;
+
+			if (is_array($text)) {
+				if (isset($text['text']))
+					$displayedText = $text['text'];
+				else
+					$displayedText = '?';
+
+				foreach ($text as $attr => $attrVal) {
+					if ($attr != 'text')
+						$additionalAttributes[] = $attr.'="'.$attrVal.'"';
+				}
+			}
+
+			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).implode($additionalAttributes, ' ').'>'.$displayedText.'</option>'.NL;
+		}
 
 		return $html.'</select>'.NL;
 	}
