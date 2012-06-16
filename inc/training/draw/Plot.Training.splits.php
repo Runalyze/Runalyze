@@ -18,19 +18,29 @@ $Data         = array();
 if ($Training->hasSplitsData()) {
 	$Labels  = $Training->Splits()->distancesAsArray();
 	$Data    = $Training->Splits()->pacesAsArray();
+	$num     = count($Data);
+	$unit    = ($num >= 20) ? '' : ' km';
 
 	$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
-	$achievedPace = array_sum($Data) / count($Data);
+	$achievedPace = array_sum($Data) / $num;
 
 	foreach ($Data as $key => $val) {
-		$Labels[$key] = array($key, $Labels[$key].' km');
+		$Labels[$key] = array($key, $Labels[$key].$unit);
 		$Data[$key]   = $val*1000;
 	}
 } else {
 	$RawData = $Training->GpsData()->getRoundsAsFilledArray();
+	$num     = count($RawData);
 
 	foreach ($RawData as $key => $val) {
-		$Labels[$key] = array($key, Helper::Km($val['km']));
+		$km = $key + 1;
+		if ($num < 20) {
+			$label = ($km%2 == 0 && $km > 0) ? $km.'&nbsp;km' : '';
+		} else {
+			$label = ($km%5 == 0 && $km > 0) ? $km.'&nbsp;km' : '';
+		}
+
+		$Labels[$key] = array($key, $label);
 		$Data[$key]   = $val['s']*1000;
 	}
 }

@@ -8,13 +8,13 @@ class TrainingDisplay {
 	 * Minimum distance to be shown as a zone
 	 * @var double
 	 */
-	private static $MINIMUM_DISTANCE_FOR_ZONE = 0.1;
+	protected static $MINIMUM_DISTANCE_FOR_ZONE = 0.1;
 
 	/**
 	 * Object for training
 	 * @var Training
 	 */
-	private $Training;
+	protected $Training;
 
 	/**
 	 * Constructor
@@ -39,7 +39,7 @@ class TrainingDisplay {
 	 * Get array for all plot types
 	 * @return array
 	 */
-	private function getPlotTypesAsArray() {
+	protected function getPlotTypesAsArray() {
 		$plots = array();
 		if ($this->Training->hasSplitsData())
 			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
