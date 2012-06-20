@@ -24,6 +24,18 @@ class AccountHandler {
 	static private $USER_MIN_LENGTH = 3;
 
 	/**
+	 * Boolean flag: registration process
+	 * @var type 
+	 */
+	static public $IS_ON_REGISTER_PROCESS = false;
+
+	/**
+	 * ID for new registered user
+	 * @var int
+	 */
+	static public $NEW_REGISTERED_ID = -1;
+
+	/**
 	 * Update account-values
 	 * @param string $username
 	 * @param mixed $column
@@ -148,6 +160,9 @@ class AccountHandler {
 				array('username', 'name', 'mail', 'password', 'registerdate', 'activation_hash'),
 				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password']), time(), $activationHash));
 
+		self::$IS_ON_REGISTER_PROCESS = true;
+		self::$NEW_REGISTERED_ID = $newAccountId;
+
 		if ($newAccountId === false)
 			$errors[] = 'Beim Registrieren ist etwas schiefgelaufen. Bitte benachrichtige den Administrator.';
 		else {
@@ -155,6 +170,9 @@ class AccountHandler {
 			self::setSpecialConfigValuesFor($newAccountId);
 			self::setAndSendActivationKeyFor($newAccountId, $errors);
 		}
+
+		self::$IS_ON_REGISTER_PROCESS = false;
+		self::$NEW_REGISTERED_ID = -1;
 
 		return $errors;
 	}
@@ -334,16 +352,27 @@ class AccountHandler {
 	 * @param int $accountId 
 	 */
 	static private function setSpecialConfigValuesFor($accountId) {
+		if ($accountId <= 0) {
+			Error::getInstance()->addError('AccountID for special config-values not set.');
+			return;
+		}
+
+		// Register all consts for new user, uses self::$NEW_REGISTERED_ID
+		include FRONTEND_PATH.'system/register.consts.php';
+
 		$Mysql = Mysql::getInstance();
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE name="Laufen"');
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen"');
 		Config::update('MAINSPORT', $data['id'], $accountId);
 		Config::update('RUNNINGSPORT', $data['id'], $accountId);
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Wettkampf"');
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf"');
 		Config::update('WK_TYPID', $data['id'], $accountId);
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE name="Langer Lauf"');
+		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf"');
 		Config::update('LL_TYPID', $data['id'], $accountId);
+
+		$data = $Mysql->fetchSingle('SELECT value FROM '.PREFIX.'conf WHERE `key`="GARMIN_API_KEY" ORDER BY LENGTH(value) DESC');
+		Config::update('GARMIN_API_KEY', $data['value'], $accountId);
 	}
 }
