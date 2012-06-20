@@ -12,12 +12,6 @@ class Training {
 	public static $CONSTRUCTOR_ID = -1;
 
 	/**
-	 * Only every n-th point will be taken for the elevation
-	 * @var int
-	 */
-	public static $everyNthElevationPoint = 5;
-
-	/**
 	 * Array seperator for gps-data in database
 	 * @var char
 	 */

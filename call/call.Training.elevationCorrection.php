@@ -9,4 +9,9 @@ $Frontend = new Frontend();
 
 $Training = new Training($_GET['id']);
 $Training->elevationCorrection();
+
+if (Error::getInstance()->hasErrors())
+	echo 'Es ist ein Problem aufgetreten.';
+else
+	echo 'Die H&ouml;hendaten wurden korrigiert.';
 ?>

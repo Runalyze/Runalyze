@@ -555,6 +555,7 @@ ul.blocklist a.nopadding {
 	padding-top: 4px; }
 
 .loading {
+	display: inline-block;
 	min-height: 50px;
 	color: transparent;
 	background: url(img/wait.gif) center center no-repeat transparent; }
