@@ -72,7 +72,7 @@ class Config {
 	static public function register($category, $KEY, $type, $default, $description = '', $select_description = array()) {
 		$Consts = self::getConsts();
 
-		if (!isset($Consts[$KEY])) {
+		if (!isset($Consts[$KEY]) || AccountHandler::$IS_ON_REGISTER_PROCESS) {
 			self::insertNewConst($category, $KEY, $type, $default, $description, $select_description);
 			$value = $default;
 		} else {
@@ -90,7 +90,8 @@ class Config {
 			}
 		}
 
-		define('CONF_'.$KEY, $value);
+		if (!AccountHandler::$IS_ON_REGISTER_PROCESS)
+			define('CONF_'.$KEY, $value);
 	}
 
 	/**
@@ -110,6 +111,11 @@ class Config {
 		$default = self::valueToString($default, $type);
 		$columns = array('category', 'key', 'type', 'value', 'description', 'select_description');
 		$values  = array($category,  $KEY,  $type,  $default, $description, $select_description);
+
+		if (AccountHandler::$IS_ON_REGISTER_PROCESS) {
+			$columns[] = 'accountid';
+			$values[]  = AccountHandler::$NEW_REGISTERED_ID;
+		}
 
 		Mysql::getInstance()->insert(PREFIX.'conf', $columns, $values);
 	}
