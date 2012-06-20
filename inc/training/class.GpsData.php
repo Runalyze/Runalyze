@@ -712,22 +712,23 @@ class GpsData {
 	 * @return array
 	 */
 	public function getElevationCorrectionFromGoogle() {
+		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
 		$numForEachCall = 20;
 		$altitude       = array();
 		$string         = array();
 
 		for ($i = 0; $i < $this->arraySizes; $i++) {
-			if ($i%Training::$everyNthElevationPoint == 0)
+			if ($i%$everyNthPoint == 0)
 				$string[] = $this->arrayForLatitude[$i].','.$this->arrayForLongitude[$i];
 
-			if (($i+1)%($numForEachCall*Training::$everyNthElevationPoint) == 0 || $i == $this->arraySizes-1) {
+			if (($i+1)%($numForEachCall*$everyNthPoint) == 0 || $i == $this->arraySizes-1) {
 				$Xml = $this->getElevationFromGoogleAsSimpleXml($string);
 
 				if ($Xml === false)
 					return false;
 
 				foreach ($Xml->xpath('result') as $Point) {
-					for ($p = 0; $p < self::$everyNthElevationPoint; $p++)
+					for ($p = 0; $p < $everyNthPoint; $p++)
 						$altitude[] = round((double)$Point->elevation);
 				}
 
@@ -743,18 +744,19 @@ class GpsData {
 	 * @return array
 	 */
 	public function getElevationCorrectionFromGeonames() {
+		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
 		$numForEachCall = 20;
 		$altitude = array();
 		$lats     = array();
 		$longs    = array();
 
 		for ($i = 0; $i < $this->arraySizes; $i++) {
-			if ($i%Training::$everyNthElevationPoint == 0) {
+			if ($i%$everyNthPoint == 0) {
 				$lats[]   = $this->arrayForLatitude[$i];
 				$longs[]  = $this->arrayForLongitude[$i];
 			}
 
-			if (($i+1)%($numForEachCall*Training::$everyNthElevationPoint) == 0 || $i == $this->arraySizes-1) {
+			if (($i+1)%($numForEachCall*$everyNthPoint) == 0 || $i == $this->arraySizes-1) {
 				$html = false;
 
 				while ($html === false) {
@@ -769,7 +771,7 @@ class GpsData {
 				}
 
 				for ($d = 0; $d < count($data)-1; $d++)
-					for ($j = 0; $j < self::$everyNthElevationPoint; $j++)
+					for ($j = 0; $j < $everyNthPoint; $j++)
 						$altitude[] = trim($data[$d]);
 			}
 		}
