@@ -10,7 +10,7 @@
 	<title><?php echo $title; ?></title>
 
 	<script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="lib/jQuery.backgroundStretch.js"></script>
+	<script type="text/javascript" src="lib/jquery.backgroundStretch.js"></script>
 	<script type="text/javascript" src="lib/jquery.jbar.js"></script>
 	<script type="text/javascript" src="lib/jquery.tablesorter.js"></script>
 	<script type="text/javascript" src="lib/runalyze.lib.js"></script>
