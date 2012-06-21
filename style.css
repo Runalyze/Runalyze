@@ -555,7 +555,6 @@ ul.blocklist a.nopadding {
 	padding-top: 4px; }
 
 .loading {
-	display: inline-block;
 	min-height: 50px;
 	color: transparent;
 	background: url(img/wait.gif) center center no-repeat transparent; }
@@ -668,6 +667,7 @@ p.info { background: url(img/info.gif) no-repeat 3px center #EFF5FA; color: #5C9
 p.warning { background: url(img/warning.png) no-repeat 3px center #FFFFDD; color: #D49822; padding: 4px 2px 5px 22px; }
 p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #CC5555; padding: 4px 2px 5px 22px; font-weight: normal; }
 
+.block { display: block; }
 .hide { display: none; }
 .left { float: left; }
 .right { float: right; }
