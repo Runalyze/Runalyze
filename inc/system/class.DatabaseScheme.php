@@ -253,6 +253,14 @@ class DatabaseScheme {
 	}
 
 	/**
+	 * Remove a field
+	 * @param string $fieldKey 
+	 */
+	public function hideField($fieldKey) {
+		$this->fields[$fieldKey]['hidden'] = true;
+	}
+
+	/**
 	 * Get all visible fieldsets
 	 * @return array
 	 */
@@ -438,5 +446,14 @@ class DatabaseScheme {
 			return $this->fields[$fieldKey]['formular']['parserOptions'];
 
 		return array();
+	}
+
+	/**
+	 * Is this field hidden
+	 * @param string $fieldKey
+	 * @return boolean
+	 */
+	public function fieldIsHidden($fieldKey) {
+		return isset($this->fields[$fieldKey]['hidden']) && $this->fields[$fieldKey]['hidden'];
 	}
 }

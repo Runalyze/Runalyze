@@ -27,7 +27,7 @@ class UserData extends DataObject {
 			$this->DatabaseScheme->hideFieldset('analyse');
 
 		if (!$PluginConfiguration['use_pulse']['var'])
-			$this->DatabaseScheme->hideFieldset('pulse');
+			$this->DatabaseScheme->hideField('pulse_rest');
 	}
 
 	/**

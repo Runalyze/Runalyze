@@ -11,7 +11,7 @@ echo Ajax::toolbarNavigation($Links, 'right');
 	<?php echo $activationLink; ?>
 </small><br />
 
-<form action="'.self::$CONFIG_URL.'?id='.$this->id.'" class="ajax" id="pluginconfig" method="post">
+<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax" id="pluginconfig" method="post">
 	<fieldset>
 		<legend>Beschreibung</legend>
 		<div class="w100">
