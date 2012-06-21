@@ -330,6 +330,7 @@ class Weather {
 				case 'Vereinzelt Regen':
 				case 'Leichter Regen':
 				case 'Nieselregen':
+				case 'Sprühregen':
 				case 'Dunst':
 					return 'wechselhaft';
 				case 'Regen':
@@ -364,6 +365,7 @@ class Weather {
 				case 'Scattered showers':
 				case 'Scattered thunderstorms':
 				case 'Windy':
+				case 'Drizzle':
 					return 'wechselhaft';
 				case 'Rain':
 				case 'Light rain':
