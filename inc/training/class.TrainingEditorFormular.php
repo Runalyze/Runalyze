@@ -251,7 +251,7 @@ class TrainingEditorFormular {
 		$Fieldset->addInfo('
 			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->Training->id().'" title="H&ouml;hendaten korrigieren"><strong>H&ouml;hendaten korrigieren</strong></a><br />
 			<br />
-			<small id="gps-results">
+			<small id="gps-results" class="block">
 				Die H&ouml;hendaten k&ouml;nnen korrigiert werden, da diese beim GPS meist sehr ungenau sind.<br />
 				Vorsicht: Die Abfrage kann lange dauern, bitte nicht abbrechen, bevor das Laden beendet ist.
 			</small>');
