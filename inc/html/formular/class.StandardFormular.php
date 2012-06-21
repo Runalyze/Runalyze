@@ -141,7 +141,8 @@ class StandardFormular extends Formular {
 	 */
 	protected function initFields(&$Fieldset, $FieldKeys) {
 		foreach ($FieldKeys as $Key)
-			$Fieldset->addField( $this->databaseScheme()->FieldFor($Key) );
+			if (!$this->databaseScheme()->fieldIsHidden($Key))
+				$Fieldset->addField( $this->databaseScheme()->FieldFor($Key) );
 	}
 
 	/**

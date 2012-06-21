@@ -71,13 +71,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$Analyse  = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
-		if ($this->config['use_weight'])
+		if ($this->config['use_weight']['var'])
 			$Weight = 'Gewicht: <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br />';
-		
-		if ($this->config['use_pulse'])
-			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
 
-		if ($this->config['use_body_fat'])
+		if ($this->config['use_pulse']['var'])
+			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
+		else
+			$Pulse = Helper::Unknown($UserData->getPulseMax()).' bpm';
+
+		if ($this->config['use_body_fat']['var'])
 			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 		
 		echo('

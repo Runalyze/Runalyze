@@ -34,12 +34,13 @@ foreach ($Labels as $i => &$value)
 		$value = '';
 
 $Plot = new Plot("sportler_weights", 320, 148);
-$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
-$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
+if ($Plugin_conf['use_pulse']['var'])
+	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
+if ($Plugin_conf['use_weight']['var'])
+	$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
 
 $Plot->setMarginForGrid(5);
 
-//$Plot->hideXLabels();
 $Plot->setXLabels($Labels);
 $Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
