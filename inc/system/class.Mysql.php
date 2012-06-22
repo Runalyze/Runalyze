@@ -110,6 +110,15 @@ final class Mysql {
 	}
 
 	/**
+	 * Fetch array from database without adding accountid
+	 * @param string $query
+	 * @return array
+	 */
+	public function untouchedFetchArray($query) {
+		return $this->fetchAsCorrectType( $this->untouchedQuery($query), true );
+	}
+
+	/**
 	 * Updates a table for a given ID.
 	 * @param string  $table
 	 * @param int     $id

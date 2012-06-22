@@ -5,6 +5,7 @@
 
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="stylesheet" type="text/css" href="lib/jquery.jbar.css" />
+	<link rel="stylesheet" type="text/css" href="lib/jquery.tablesorter.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title><?php echo $title; ?></title>
@@ -13,6 +14,7 @@
 	<script type="text/javascript" src="lib/jquery.backgroundStretch.js"></script>
 	<script type="text/javascript" src="lib/jquery.jbar.js"></script>
 	<script type="text/javascript" src="lib/jquery.tablesorter.js"></script>
+	<script type="text/javascript" src="lib/jquery.tablesorter.pager.js"></script>
 	<script type="text/javascript" src="lib/runalyze.lib.js"></script>
 	<script type="text/javascript" src="lib/runalyze.lib.log.js"></script>
 	<script type="text/javascript" src="lib/runalyze.lib.tablesorter.js"></script>

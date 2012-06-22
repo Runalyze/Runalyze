@@ -33,6 +33,12 @@ class Frontend {
 	protected $CSS_FILES = array();
 
 	/**
+	 * Admin password as md5
+	 * @var string
+	 */
+	protected $adminPassAsMD5 = '';
+
+	/**
 	 * Constructor for Frontend
 	 * @param bool $hideHeaderAndFooter optional
 	 */
@@ -108,8 +114,19 @@ class Frontend {
 	private function initMySql() {
 		require_once FRONTEND_PATH.'../config.php';
 
+		$this->adminPassAsMD5 = md5($password);
+
 		Mysql::connect($host, $username, $password, $database);
 		unset($host, $username, $password, $database);
+	}
+
+	/**
+	 * Is the given password the right one for the administrator?
+	 * @param string $password
+	 * @return boolean
+	 */
+	public function isAdminPassword($password) {
+		return (md5($password) == $this->adminPassAsMD5);
 	}
 
 	/**
