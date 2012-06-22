@@ -70,7 +70,7 @@ class SessionHandler {
 				header('Location: index.php');
 			elseif ($this->tryToLoginFromCookie())
 				header('Location: index.php');
-			elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage())
+			elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage() && !$this->isOnAdminPage())
 				header('Location: login.php');
 		}
 	}
@@ -86,6 +86,14 @@ class SessionHandler {
 	 */
 	private function isOnLoginPage() {
 		return substr(Request::Basename(), 0, 9) == 'login.php';
+	}
+
+	/**
+	 * Is user on login-page?
+	 * @return boolean
+	 */
+	private function isOnAdminPage() {
+		return substr(Request::Basename(), 0, 9) == 'admin.php';
 	}
 
 	/**
