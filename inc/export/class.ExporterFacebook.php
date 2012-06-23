@@ -32,8 +32,13 @@ class ExporterFacebook extends ExporterSocialShare {
 	 * @return string 
 	 */
 	protected function getLink() {
-		$URL = 'https://facebook.com/sharer.php?u='.urlencode($this->getUrl()).'&t='.urlencode($this->getText());
+		$url   = urlencode($this->getUrl());
+		$title = urlencode($this->Training->getTitle().' am '.$this->Training->getDate(false).' - Trainingsansicht');
+		$text  = urlencode($this->getText());
+		$image = 'http://runalyze.de/wp-content/uploads/Account.png';
 
-		return '<a href="'.$URL.'" style="background-image:url(inc/export/icons/facebook.png);"><strong>Teilen!</strong></a>';
+		$URL = 'https://facebook.com/sharer.php?s=100&amp;p[url]='.$url.'&amp;p[title]='.$title.'&amp;p[summary]='.$text.'&amp;p[images][0]='.$image;
+
+		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/facebook.png);"><strong>Teilen!</strong></a>';
 	}
 }

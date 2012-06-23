@@ -27,7 +27,9 @@ class System {
 	 */
 	static public function setMaximalLimits() {
 		@ini_set('memory_limit', '-1');
-		@set_time_limit(0);
+
+		if (!ini_get('safe_mode'))
+			set_time_limit(0);
 	}
 
 	/**
@@ -43,10 +45,17 @@ class System {
 
 	/**
 	 * Get full domain
+	 * @param boolean $onlyToRunalyze
 	 * @return string
 	 */
-	static public function getFullDomain() {
-		return self::getDomain().substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
+	static public function getFullDomain($onlyToRunalyze = true) {
+		$path = self::getDomain().substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
+
+		if ($onlyToRunalyze) {
+			$path = str_replace(array('call/', 'inc/', 'tpl/'), array('', '', ''), $path);
+		}
+
+		return $path;
 	}
 
 	/**

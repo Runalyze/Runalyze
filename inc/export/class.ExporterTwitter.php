@@ -34,6 +34,6 @@ class ExporterTwitter extends ExporterSocialShare {
 	protected function getLink() {
 		$URL = 'https://twitter.com/share?url='.$this->getUrl().'&text='.$this->getText().'&via=RunalyzeDE';
 
-		return '<a href="'.$URL.'" style="background-image:url(inc/export/icons/twitter.png);"><strong>Twittern!</strong></a>';
+		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/twitter.png);"><strong>Twittern!</strong></a>';
 	}
 }

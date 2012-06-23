@@ -9,7 +9,7 @@ function createUploader() {
 		allowedExtensions: [<?php echo $AllowedFormatsForJS; ?>],
 		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
 		onComplete : function(file, response){
-			if (response == 'success')
+			if (response.substring(0,7) == 'success')
 				$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
 			else {
 				if (response == '')
