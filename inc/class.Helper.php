@@ -429,7 +429,7 @@ class Helper {
 			//Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
 			return 200;
 		} elseif ($userdata['pulse_max'] == 0) {
-			Error::getInstance()->addWarning('HFmax is 0, taking 200 as default.');
+			//Error::getInstance()->addWarning('HFmax is 0, taking 200 as default.');
 			return 200;
 		}
 

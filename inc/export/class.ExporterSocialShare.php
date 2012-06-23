@@ -40,9 +40,6 @@ abstract class ExporterSocialShare extends Exporter {
 	 * @return string 
 	 */
 	final protected function getUrl() {
-		// TODO: get public url for training
-		// TODO: add error if url is needed but training isn't public
-
-		return '';
+		return System::getFullDomain().'/'.SharedLinker::getUrlFor($this->Training->id());
 	}
 }
