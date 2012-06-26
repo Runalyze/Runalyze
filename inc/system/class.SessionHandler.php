@@ -250,7 +250,7 @@ class SessionHandler {
 	 * Logout 
 	 */
 	static public function logout() {
-		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'session_id', 0);
+		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'session_id', null);
 		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'autologin_hash', '');
 		session_destroy();
 		unset($_SESSION);

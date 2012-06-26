@@ -10,6 +10,12 @@
  */
 class Error {
 	/**
+	 * Force log file to be written
+	 * @var boolean
+	 */
+	private static $FORCE_LOG_FILE = false;
+
+	/**
 	 * Internatl instance pointer
 	 * @var Error
 	 */
@@ -112,8 +118,10 @@ class Error {
 		if ($file != '' && $this->file == '')
 			$this->file = $file;
 
-		if ($log_file == '')
+		if ($log_file == '') {
 			$log_file = 'log/'.self::getFilenameFromPath($this->file).'.log.'.date("Ymd.Hi").'.html';
+			$log_file = str_replace(array('?', '&'), array('-', '-'), $log_file);
+		}
 
 		$this->log = $log;
 		$this->log_file = $log_file;
@@ -139,7 +147,7 @@ class Error {
 
 		if (!$this->log)
 			echo $this->sendErrorsToJSLog();
-		else
+		if ($this->log || self::$FORCE_LOG_FILE)
 			Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
 
 		$this->debug_displayed = true;
