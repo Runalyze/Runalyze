@@ -57,13 +57,34 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		$this->displayHeader($this->name);
 		$this->displayOwnNavigation();
+		$this->displayDivs();
+	}
+
+	/**
+	 * Display all divs 
+	 */
+	private function displayDivs() {
 		echo HTML::clearBreak();
 
-		echo '<div id="wk-tablelist" class="change" style="display:none;">'.NL;
-			$this->displayWeatherStatistics();
+		$this->displayDivForWkTable();
+		$this->displayDivForPersonalBest();
+	}
+
+	/**
+	 * Display div for competitions 
+	 */
+	private function displayDivForWkTable() {
+		echo '<div id="wk-tablelist" class="change">'.NL;
 			$this->displayAllCompetitions();
+			$this->displayWeatherStatistics();
 		echo '</div>'.NL;
-		echo '<div id="bestzeiten" class="change">'.NL;
+	}
+
+	/**
+	 * Display div for personal bests 
+	 */
+	private function displayDivForPersonalBest() {
+		echo '<div id="bestzeiten" class="change" style="display:none;">'.NL;
 			$this->displayPersonalBests();
 		echo '</div>'.NL;
 	}
@@ -72,10 +93,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display navigation for all container
 	 */
 	private function displayOwnNavigation() {
-		echo '<small class="right">';
-		echo Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten').' |'.NL;
-		echo Ajax::change('Wettk&auml;mpfe', 'tab_content', '#wk-tablelist').NL;
-		echo '</small>';
+		$Links   = array();
+		$Links[] = array('tag' => Ajax::change('Wettk&auml;mpfe', 'tab_content', '#wk-tablelist'));
+
+		if (true) // TODO
+			$Links[] = array('tag' => Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten'));
+
+		echo Ajax::toolbarNavigation($Links, 'right');
 	}
 
 	/**

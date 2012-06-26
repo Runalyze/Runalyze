@@ -209,7 +209,7 @@ class Frontend {
 	 * Set correct character encoding 
 	 */
 	final public function setEncoding() {
-		header('Content-type: text/html; charset=UTF-8');
+		header('Content-type: text/html; charset=utf-8');
 		mb_internal_encoding("UTF-8");
 	}
 

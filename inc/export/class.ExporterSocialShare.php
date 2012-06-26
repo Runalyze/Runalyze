@@ -40,6 +40,9 @@ abstract class ExporterSocialShare extends Exporter {
 	 * @return string 
 	 */
 	final protected function getUrl() {
-		return System::getFullDomain().'/'.SharedLinker::getUrlFor($this->Training->id());
+		if ($this->Training->isPublic())
+			return System::getFullDomain().SharedLinker::getUrlFor($this->Training->id());
+
+		return '';
 	}
 }

@@ -248,14 +248,17 @@ class Weather {
 			$Xml = Filesystem::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 
 			if (strlen($Xml) > 1) {
-				$Xml         = simplexml_load_string_utf8($Xml);
-				$Temperature = $this->getTemperatureFromXML($Xml);
-				$WeatherID   = $this->getWeatherIdFromXML($Xml);
+				$Xml         = simplexml_load_string_utf8(utf8_decode($Xml));
 
-				if (!is_null($Temperature) && !is_null($WeatherID)) {
-					$this->temperature = (int)$Temperature;
-					$this->id          = $WeatherID;
-					return;
+				if ($Xml) {
+					$Temperature = $this->getTemperatureFromXML($Xml);
+					$WeatherID   = $this->getWeatherIdFromXML($Xml);
+
+					if (!is_null($Temperature) && !is_null($WeatherID)) {
+						$this->temperature = (int)$Temperature;
+						$this->id          = $WeatherID;
+						return;
+					}
 				}
 			} else {
 				Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
