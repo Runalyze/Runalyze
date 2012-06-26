@@ -122,5 +122,19 @@ function show(what) {
 }
 </script>
 
+<?php
+$NumUser = Mysql::getInstance()->untouchedFetch('SELECT COUNT(*) as num FROM '.PREFIX.'account');
+$NumKm   = Mysql::getInstance()->untouchedFetch('SELECT SUM(distance) as num FROM '.PREFIX.'training');
+
+$sind  = ($NumUser['num'] == 1) ? 'ist' : 'sind';
+$haben = ($NumUser['num'] == 1) ? 'hat' : 'haben';
+?>
+
+<p class="text"></p>
+<p class="text small c">
+	Bisher <?php echo $sind; ?> <strong><?php echo $NumUser['num']; ?></strong> L&auml;ufer angemeldet
+	und <?php echo $haben; ?> <strong><?php echo Helper::Km($NumKm['num']); ?></strong> geschafft.
+</p>
+
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>
 <?php if (isset($_POST['send_username'])) echo Ajax::wrapJSforDocumentReady("show('pwf');") ?>
