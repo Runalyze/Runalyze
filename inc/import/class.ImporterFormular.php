@@ -130,7 +130,7 @@ class ImporterFormular extends Importer {
 			$this->columns[]     = 'elevation';
 			$this->values[]      = isset($_POST['elevation']) ? $_POST['elevation'] : 0;
 			$this->columns[]     = 'clothes';
-			$this->values[]      = isset($_POST['clothes']) ? implode(',', array_keys($_POST['clothes'])) : '';
+			$this->values[]      = isset($_POST['clothes']) && is_array($_POST['clothes']) ? implode(',', array_keys($_POST['clothes'])) : '';
 			$this->columns[]     = 'temperature';
 			$this->values[]      = isset($_POST['temperature']) && is_numeric($_POST['temperature']) ? $_POST['temperature'] : NULL;
 			
