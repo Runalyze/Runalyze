@@ -1,6 +1,8 @@
 	<h1>Eine Trainings-Datei hochladen</h1>
 
-	<div class="c button hide" id="file-upload">Datei hochladen</div>
+	<div id="upload-container">
+		<div class="c button hide" id="file-upload">Datei hochladen</div>
+	</div>
 
 <script>
 function createUploader() {
@@ -8,6 +10,9 @@ function createUploader() {
 	new AjaxUpload('#file-upload', {
 		allowedExtensions: [<?php echo $AllowedFormatsForJS; ?>],
 		action: '<?php echo $_SERVER['SCRIPT_NAME']; ?>?json=true',
+		onSubmit : function(file, extension){
+			$("#upload-container").addClass('loading');
+		},
 		onComplete : function(file, response){
 			if (response.substring(0,7) == 'success')
 				$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(file));
