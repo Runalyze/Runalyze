@@ -159,6 +159,7 @@ class ImporterFormular extends Importer {
 			$AutoParseKeys[]     = 'typeid';
 
 			if ($Type->hasSplits()) {
+				// TODO: Always save all of them
 				$Splits = new Splits( Splits::$FROM_POST );
 
 				$this->columns[] = 'splits';

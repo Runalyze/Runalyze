@@ -167,7 +167,7 @@ class ParserTCX extends Parser {
 	 * Set general values
 	 */
 	protected function setGeneralValues() {
-		$this->set('sportid', CONF_RUNNINGSPORT);
+		$this->set('sportid', $this->getCurrentSportId());
 		$this->set('kcal', $this->calories);
 		$this->set('splits', implode('-', $this->data['splits']));
 	}
@@ -297,5 +297,36 @@ class ParserTCX extends Parser {
 			$this->data['latitude'][]  = 0;
 			$this->data['longitude'][] = 0;
 		}
+	}
+
+	/**
+	 * Try to get current sport id
+	 * @return string 
+	 */
+	protected function getCurrentSportId() {
+		if (!is_null($this->XML) && isset($this->XML->attributes()->Sport)) {
+			$Name = $this->XML->attributes()->Sport;
+			$Id   = Sport::getIdByName($Name);
+
+			if ($Id > 0)
+				return $Id;
+			else {
+				if ($Name == 'Running')
+					$Name = 'Laufen';
+				if ($Name == 'Biking')
+					$Name = 'Radfahren';
+				if ($Name == 'Swimming')
+					$Name = 'Schwimmen';
+				if ($Name == 'Other')
+					$Name = 'Sonstiges';
+
+				$Id = Sport::getIdByName($Name);
+
+				if ($Id > 0)
+					return $Id;
+			}
+		}
+
+		return CONF_RUNNINGSPORT;
 	}
 }

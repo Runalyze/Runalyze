@@ -60,6 +60,7 @@ class ParserTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( Validator::isClose($Parser->get('kcal'), 1646) );
 		$this->assertTrue( Validator::isClose($Parser->get('pulse_avg'), 145) );
 		$this->assertTrue( Validator::isClose($Parser->get('pulse_max'), 172) );
+		$this->assertEquals( 1, $Parser->get('sportid') );
 		// TODO: missing values
 	}
 
@@ -181,6 +182,7 @@ class ParserTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( Validator::isClose($Parser->get('s'), 7204) );
 		$this->assertTrue( Validator::isClose($Parser->get('pulse_avg'), 122) );
 		$this->assertTrue( Validator::isClose($Parser->get('pulse_max'), 149) );
+		$this->assertEquals( 2, $Parser->get('sportid') );
 	}
 
 	/**
@@ -194,5 +196,6 @@ class ParserTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $Parser->worked() );
 		$this->assertTrue( Validator::isClose($Parser->get('s'), 2164) );
+		$this->assertEquals( 5, $Parser->get('sportid') ); // "Other" is in the file
 	}
 }
