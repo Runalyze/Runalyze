@@ -174,6 +174,20 @@ class Sport {
 	}
 
 	/**
+	 * Try to get sport by name
+	 * @param string $name
+	 * @return int 
+	 */
+	static public function getIdByName($name) {
+		$Sport = Mysql::getInstance()->fetchSingle('SELECT id FROM `'.PREFIX.'sport` WHERE `name`="'.$name.'"');
+
+		if (isset($Sport['id']))
+			return $Sport['id'];
+
+		return -1;
+	}
+
+	/**
 	 * Get internal array with all sports
 	 * @return array
 	 */

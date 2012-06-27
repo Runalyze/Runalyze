@@ -60,7 +60,7 @@
 </div>
 
 	<div class="c">
-		<input type="submit" value="Bearbeiten" />
+		<input type="submit" value="Speichern" />
 	</div>
 
 <?php if (!empty($this->Errors)) echo HTML::error(implode('<br />', $this->Errors)); ?>
