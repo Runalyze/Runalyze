@@ -26,6 +26,8 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 	 * Constructor 
 	 */
 	public function __construct($sportid = -1) {
+		$this->forceToShowAllFieldsets = true;
+
 		$Sport = new Sport($sportid);
 
 		if (!$Sport->isValid()) {
@@ -45,8 +47,24 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 		if (!isset($_POST['datum']) && !isset($_POST['time']))
 			$_POST['datum'] = date('d.m.Y');
 
-		$Forecaster = Weather::Forecaster();
-		$Forecaster->setPostDataIfEmpty();
+		if ($this->trainingWasToday()) {
+			$Weather = Weather::Forecaster();
+			$Weather->setPostDataIfEmpty();
+		}
+	}
+
+	/**
+	 * Is the training less than 24h old?
+	 * @return bool
+	 */
+	private function trainingWasToday() {
+		if (empty($_POST) || (isset($_POST['datum']) && $_POST['datum'] == date("d.m.Y")))
+			return true;
+
+		if (!isset($_POST['time']))
+			return false;
+
+		return ($_POST['time'] > 0 && (time() - $_POST['time']) < DAY_IN_S) ;
 	}
 
 	/**
@@ -96,9 +114,6 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 	 * Overwrite fieldset for splits
 	 */
 	protected function initSplitsFieldset() {
-		if (!$this->Training->Sport()->hasTypes()) // Ignore if type has splits because type isn't set
-			return;
-
 		$Splits   = new Splits( Splits::$FROM_POST );
 
 		$Fieldset = $Splits->getFieldset();

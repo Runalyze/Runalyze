@@ -17,6 +17,12 @@ class TrainingEditorFormular {
 	protected $Formular = null;
 
 	/**
+	 * Subclass can force formular to show all fieldsets
+	 * @var boolean 
+	 */
+	protected $forceToShowAllFieldsets = false;
+
+	/**
 	 * Constructor 
 	 */
 	public function __construct($id) {
@@ -109,7 +115,7 @@ class TrainingEditorFormular {
 
 		$this->Formular->addFieldset($Fieldset);
 
-		if ($this->Training->Sport()->hasTypes())
+		if ($this->Training->Sport()->hasTypes() || $this->forceToShowAllFieldsets)
 			$Fieldset->addField(new TrainingInputType());
 	}
 
@@ -124,7 +130,7 @@ class TrainingEditorFormular {
 		$Fieldset->addField(new TrainingInputTime());
 		$Fieldset->addField(new TrainingInputKcal());
 
-		if ($this->Training->Sport()->usesPulse()) {
+		if ($this->Training->Sport()->usesPulse() || $this->forceToShowAllFieldsets) {
 			$Fieldset->addField(new TrainingInputPulseAvg());
 			$Fieldset->addField(new TrainingInputPulseMax());
 		}
@@ -136,18 +142,18 @@ class TrainingEditorFormular {
 	 * Init fieldset for distance data 
 	 */
 	protected function initDistanceFieldset() {
-		if (!$this->Training->Sport()->usesDistance())
+		if (!$this->Training->Sport()->usesDistance() && !$this->forceToShowAllFieldsets)
 			return;
 
 		$Fieldset = new FormularFieldset('Distanz');
 		$Fieldset->addField(new TrainingInputDistance());
 
-		if ($this->Training->Sport()->isRunning())
+		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets)
 			$Fieldset->addField(new TrainingInputIsTrack());
 
 		$Fieldset->addField(new TrainingInputElevation());
 
-		if ($this->Training->Sport()->isRunning())
+		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets)
 			$Fieldset->addField(new TrainingInputABC());
 
 		$Fieldset->addField(new TrainingInputPace());
@@ -160,8 +166,9 @@ class TrainingEditorFormular {
 	 * Init fieldset for splits
 	 */
 	protected function initSplitsFieldset() {
-		if (!$this->Training->Sport()->hasTypes() || !$this->Training->Type()->hasSplits())
-			return;
+		if (!$this->forceToShowAllFieldsets)
+			if (!$this->Training->Sport()->hasTypes() || !$this->Training->Type()->hasSplits())
+				return;
 
 		$Splits = new Splits( Splits::$FROM_POST );
 		$this->Formular->addFieldset( $Splits->getFieldset() );
@@ -172,7 +179,7 @@ class TrainingEditorFormular {
 	 * Init fieldset for weather data 
 	 */
 	protected function initWeatherFieldset() {
-		if (!$this->Training->isOutside())
+		if (!$this->Training->isOutside() && !$this->forceToShowAllFieldsets)
 			return;
 
 		$Fieldset = new FormularFieldset('Wetter');
@@ -191,7 +198,7 @@ class TrainingEditorFormular {
 	protected function initOtherFieldset() {
 		$Fieldset = new FormularFieldset('Sonstiges');
 
-		if ($this->Training->Sport()->isRunning()) {
+		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets) {
 			$ShoeInput = new TrainingInputShoe();
 			$ShoeInput->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 			$Fieldset->addField($ShoeInput);
@@ -200,7 +207,7 @@ class TrainingEditorFormular {
 		$Fieldset->addField(new TrainingInputComment());
 		$Fieldset->addField(new TrainingInputPartner());
 
-		if ($this->Training->isOutside())
+		if ($this->Training->isOutside() || $this->forceToShowAllFieldsets)
 			$Fieldset->addField(new TrainingInputRoute());
 
 		$this->Formular->addFieldset($Fieldset);
