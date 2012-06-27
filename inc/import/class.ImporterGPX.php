@@ -28,7 +28,16 @@ class ImporterGPX extends Importer {
 	 * Parse xml
 	 */
 	private function parseXML() {
-		$time      = strtotime((string)$this->XML->time);
+		if (isset($this->XML->trk->desc))
+			$this->set('comment', (string)$this->XML->trk->desc);
+
+		if (isset($this->XML->time))
+			$time = strtotime((string)$this->XML->time);
+		elseif (isset($this->XML->metadata) && isset($this->XML->metadata->time))
+			$time = strtotime((string)$this->XML->metadata->time);
+		else
+			$time = $this->XML->trk->trkseg->trkpt[0]->time;
+
 		$this->XML = $this->XML->trk->trkseg;
 
 		$this->set('sportid', CONF_RUNNINGSPORT);
