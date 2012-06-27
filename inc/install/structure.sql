@@ -186,7 +186,7 @@ CREATE TABLE `runalyze_training` (
   `temperature` float DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `clothes` set('1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '',
+  `clothes` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `splits` text CHARACTER SET latin1 COLLATE latin1_general_ci,
   `comment` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
   `partner` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
