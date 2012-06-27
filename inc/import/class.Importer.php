@@ -356,7 +356,7 @@ abstract class Importer {
 	 * Display standard creator formular or list for sports if sportid is not set 
 	 */
 	private function displayHTMLcreatorFormular() {
-		if (!empty($_POST))
+		if (!empty($_POST) && !isset($_POST['sportid']))
 			$_POST['sportid'] = CONF_MAINSPORT;
 
 		if (Request::param('sportid') > 0) {
@@ -462,19 +462,6 @@ abstract class Importer {
 		$this->setDefaultValue('kmh', '0,00');
 		$this->setDefaultValue('elevation', '0');
 		$this->setDefaultValue('splits', '');
-
-		if ($this->trainingWasToday()) {
-			$Weather = Weather::Forecaster();
-			$Weather->setPostDataIfEmpty();
-		}
-	}
-
-	/**
-	 * Is the training less than 24h old?
-	 * @return bool
-	 */
-	private function trainingWasToday() {
-		return empty($_POST) || ($this->get('time') > 0 && (time() - $this->get('time')) < 24*3600) || ($this->get('datum') == date("d.m.Y"));
 	}
 
 	/**

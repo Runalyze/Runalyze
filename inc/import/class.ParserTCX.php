@@ -148,7 +148,7 @@ class ParserTCX extends Parser {
 			'latitude'      => array(),
 			'longitude'     => array(),
 			'altitude'      => array(),
-			'distance'      => array(),
+			'km'            => array(),
 			'heartrate'     => array(),
 			'pace'          => array(),
 			'splits'        => array());
@@ -176,8 +176,8 @@ class ParserTCX extends Parser {
 	 * Set optional values
 	 */
 	protected function setOptionalValue() {
-		if (!empty($this->data['distance']))
-			$this->set('distance', round(end($this->data['distance']), 2));
+		if (!empty($this->data['km']))
+			$this->set('distance', round(end($this->data['km']), 2));
 		elseif ($this->data['laps_distance'] > 0)
 			$this->set('distance', round($this->data['laps_distance'], 2));
 
@@ -203,7 +203,7 @@ class ParserTCX extends Parser {
 		$this->setArrayForLatitude($this->data['latitude']);
 		$this->setArrayForLongitude($this->data['longitude']);
 		$this->setArrayForElevation($this->data['altitude']);
-		$this->setArrayForDistance($this->data['distance']);
+		$this->setArrayForDistance($this->data['km']);
 		$this->setArrayForHeartrate($this->data['heartrate']);
 		$this->setArrayForPace($this->data['pace']);
 	}
@@ -278,10 +278,10 @@ class ParserTCX extends Parser {
 
 		$this->lastPoint           = (int)$TP->DistanceMeters;
 		$this->data['time_in_s'][] = strtotime((string)$TP->Time) - $this->starttime;
-		$this->data['distance'][]  = round((int)$TP->DistanceMeters)/1000;
+		$this->data['km'][]  = round((int)$TP->DistanceMeters)/1000;
 		$this->data['altitude'][]  = (int)$TP->AltitudeMeters;
-		$this->data['pace'][]      = ((end($this->data['distance']) - prev($this->data['distance'])) != 0)
-									? round((end($this->data['time_in_s']) - prev($this->data['time_in_s'])) / (end($this->data['distance']) - prev($this->data['distance'])))
+		$this->data['pace'][]      = ((end($this->data['km']) - prev($this->data['km'])) != 0)
+									? round((end($this->data['time_in_s']) - prev($this->data['time_in_s'])) / (end($this->data['km']) - prev($this->data['km'])))
 									: 0;
 		$this->data['heartrate'][] = (!empty($TP->HeartRateBpm))
 									? round($TP->HeartRateBpm->Value)
