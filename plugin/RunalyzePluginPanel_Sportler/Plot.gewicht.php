@@ -18,11 +18,7 @@ if (!empty($Data)) {
 		$Weights[$D['time'].'000'] = (double)$D['weight'];
 		$HRrests[$D['time'].'000'] = (int)$D['pulse_rest'];
 	}
-
-	$Weights = array_reverse($Weights);
-	$HRrests = array_reverse($HRrests);
-} 
-
+}
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');

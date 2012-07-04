@@ -21,12 +21,7 @@ if (!empty($Data)) {
 		$Water[$D['time'].'000']    = $D['water'];
 		$Muscles[$D['time'].'000']  = $D['muscles'];
 	}
-
-	$Adiposes = array_reverse($Adiposes);
-	$Water    = array_reverse($Water);
-	$Muscles  = array_reverse($Muscles);
 } 
-
 
 $Labels = array_keys($Water);
 foreach ($Labels as $i => &$value)
