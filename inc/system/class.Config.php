@@ -76,6 +76,8 @@ class Config {
 			self::insertNewConst($category, $KEY, $type, $default, $description, $select_description);
 			$value = $default;
 		} else {
+			if ($type != $Consts[$KEY]['type'])
+				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'type', $type);
 			if ($description != $Consts[$KEY]['description'])
 				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'description', $description);
 

@@ -7,7 +7,7 @@ Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => fals
 Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
 Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
 Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
-Config::register('Allgemein', 'PLZ', 'int', 0, 'f&uuml;r Wetter-Daten: PLZ');
+Config::register('Allgemein', 'PLZ', 'string', '', 'f&uuml;r Wetter-Daten: PLZ');
 
 Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
 Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, ' VDOT-Korrektur verwenden');
