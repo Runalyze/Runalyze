@@ -10,12 +10,49 @@ class Filesystem {
 	 * @return string
 	 */
 	public static function getExternUrlContent($url) {
+		if (self::isCurlInstalled())
+			return self::getFileContentsWithCurl($url);
 		if (self::canOpenExternUrl())
 			return file_get_contents($url);
 
 		Error::getInstance()->addError('Der Server erlaubt keine externen Seitenzugriffe. (allow_url_fopen=0)');
-		// TODO: use curl()
+
 		return '';
+	}
+
+	/**
+	 * Get contents with CUrl
+	 * @param string $url 
+	 * @return string
+	 */
+	private static function getFileContentsWithCurl($url) {
+		$curl = curl_init();
+
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_REFERER, 'http://user.runalyze.de/');
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+
+		$response = curl_exec($curl);
+
+		if (!$response)
+			Error::getInstance()->addError('CUrl-Error: '.curl_error($curl));
+
+		curl_close($curl);
+
+		return $response;
+	}
+
+	/**
+	 * Is CUrl enabled?
+	 * @return boolean 
+	 */
+	private static function isCurlInstalled() {
+		if (in_array('curl', get_loaded_extensions()))
+			return true;
+
+		return false;
 	}
 
 	/**
