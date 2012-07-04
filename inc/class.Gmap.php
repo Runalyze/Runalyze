@@ -135,7 +135,7 @@ class Gmap {
 		$km = round($km);
 
 		if ($TotalDistance > 20) {
-			if ($km%5 == 0 && $km <= 50)
+			if ($km%5 == 0 && $km <= 95)
 				return 'img/marker/marker-'.$km.'.png';
 			else
 				return 'img/marker/point.gif';

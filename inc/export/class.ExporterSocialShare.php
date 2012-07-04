@@ -32,7 +32,7 @@ abstract class ExporterSocialShare extends Exporter {
 		if (strlen($this->Training->get('comment')) > 0)
 			$Text .= ' - '.$this->Training->get('comment');
 
-		return strip_tags($Text);
+		return strip_tags(str_replace('&nbsp;', '', $Text));
 	}
 
 	/**

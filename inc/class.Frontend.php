@@ -167,11 +167,13 @@ class Frontend {
 		Exporter::registerExporter('FITLOG', 'ExporterFITLOG');
 
 		// TODO: add option
-		if (!System::isAtLocalhost() && true) {
+		if (!System::isAtLocalhost()) {
 			Exporter::registerExporter('Twitter', 'ExporterTwitter');
 			Exporter::registerExporter('Facebook', 'ExporterFacebook');
 			Exporter::registerExporter('Google', 'ExporterGoogle');
 		}
+
+		Exporter::registerExporter('HTML', 'ExporterHTML');
 	}
 
 	/**
