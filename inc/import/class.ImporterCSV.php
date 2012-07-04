@@ -6,7 +6,8 @@
 Importer::addAdditionalInfo('CSV-Import: Die CSV-Datei sollte pro Zeile ein Training
 	und in jeder Spalte wiederkehrend die gleichen Informationen enthalten.
 	Im n&auml;chsten Schritt k&ouml;nnen einzelne Trainings abgew&auml;hlt
-	und die einzelnen Spalten zugewiesen werden.');
+	und die einzelnen Spalten zugewiesen werden.
+	Als Trennzeichen wird das Komma &raquo;,&laquo; verwendet!');
 
 /**
  * Class: ImporterCSV
@@ -73,7 +74,7 @@ class ImporterCSV extends Importer {
 	 * Separator
 	 * @var string
 	 */
-	static private $SEPARATOR = ';';
+	static private $SEPARATOR = ',';
 
 	/**
 	 * Set all possible keys to import
@@ -142,7 +143,9 @@ class ImporterCSV extends Importer {
 		if (empty($this->Rows))
 			return;
 
-		$this->RowLength = count($this->Rows[0]);
+		foreach ($this->Rows as $i => $Row)
+			if (count($Row) > $this->RowLength)
+				$this->RowLength = count($Row);
 
 		for ($i = 0; $i < $this->RowLength; $i++) {
 			if (isset($_POST['key'][$i]))
