@@ -72,6 +72,7 @@ class ExporterHTML extends ExporterEmbedded {
 	'.$UrlLink.'
 	<div class="runalyze-clear"></div>
 </div>
-<style media="screen" type="text/css">@import "http://user.runalyze.de/lib/embedded.css"</style>';
+<script type="text/javascript" src="http://user.runalyze.de/lib/embedded.js"></script>';
 	}
+	//<style type="text/css">@import "http://user.runalyze.de/lib/embedded.css"</style>
 }
