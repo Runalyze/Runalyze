@@ -11,14 +11,14 @@
 }
 #calendarSubmit {
 	position:absolute;
-	right: -40px;
-	top: 59px;
+	right: -90px;
+	top: 70px;
 }
 #widgetCalendar {
 	position:relative;
 	width: 520px;
 	height: 130px;
-	margin: 0 auto;
+	margin: 5px auto;
 	overflow: hidden;
 }
 div.datepicker {

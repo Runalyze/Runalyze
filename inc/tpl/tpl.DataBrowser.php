@@ -19,7 +19,11 @@
 
 	<span id="calendarResult" class="hide">W&auml;hle ein Datum aus ...</span>
 
-	<img class="link" id="calendarSubmit" src="<?php echo Icon::$ARR_NEXT_BIG; ?>" />
+	<div class="button" id="calendarSubmit">Auswahl<br />anzeigen</div>
+	
+	<div class="c">
+		Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
+	</div>
 </div>
 
 <table id="dataBrowser">
