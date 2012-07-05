@@ -218,7 +218,10 @@ class ImporterFormular extends Importer {
 	 * @return mixed
 	 */
 	private function getTrainingTimeFromPost() {
-		$time_in_s = is_numeric($_POST['s']) ? $_POST['s'] : self::timeStringToSeconds($_POST['s']);
+		if (!isset($_POST['s']))
+			$time_in_s = 0;
+		else
+			$time_in_s = is_numeric($_POST['s']) ? $_POST['s'] : self::timeStringToSeconds($_POST['s']);
 
 		if ($time_in_s == 0) {
 			$this->errorString = 'Es muss eine Trainingszeit angegeben sein.';

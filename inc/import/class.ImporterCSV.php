@@ -231,10 +231,10 @@ class ImporterCSV extends Importer {
 			case 's':
 				return $value;
 
-			case 'distance':
-				$value = Helper::CommaToPoint($value);
 			case 'kcal':
 				$value = str_replace(".", "", $value);
+			case 'distance':
+				$value = Helper::CommaToPoint($value);
 			case 'pulse_avg':
 			case 'pulse_max':
 			case 'elevation':
