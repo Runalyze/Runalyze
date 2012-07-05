@@ -174,6 +174,7 @@ class Frontend {
 		}
 
 		Exporter::registerExporter('HTML', 'ExporterHTML');
+		Exporter::registerExporter('IFrame', 'ExporterIFrame');
 	}
 
 	/**
