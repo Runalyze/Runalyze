@@ -31,7 +31,7 @@
 		<?php $_POST = array(); ?>
 		<?php $Training->overwritePostArray(); ?>
 		<tr id="multi-edit-row-<?php echo $i; ?>" class="<?php echo HTML::trClass($i); ?>">
-			<td><?php echo Icon::get(Icon::$DELETE_GRAY, '', '$(\'#multi-edit-row-'.$i.'\').remove();', 'Zeile entfernen - l&ouml;scht das Training nicht!'); ?></td>
+			<td><?php /*echo Icon::get(Icon::$DELETE_GRAY, '', '$(\'#multi-edit-row-'.$i.'\').remove();', 'Zeile entfernen - l&ouml;scht das Training nicht!');*/ ?></td>
 			<td nowrap="nowrap">
 				<?php echo HTML::hiddenInput('sportid_old'); ?>
 				<?php echo HTML::hiddenInput('s_old'); ?>
