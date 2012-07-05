@@ -193,6 +193,8 @@ class ParserTCX extends Parser {
 
 		if (!empty($this->XML->Training))
 			$this->set('comment', (string)$this->XML->Training->Plan->Name);
+		else
+			$this->set('comment', '');
 	}
 
 	/**

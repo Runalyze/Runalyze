@@ -28,6 +28,7 @@
 	<?php else: ?>
 	<?php foreach ($this->Trainings as $i => $Training): ?>
 		<?php HTML::setMultiIndex($Training->get('id')); ?>
+		<?php $_POST = array(); ?>
 		<?php $Training->overwritePostArray(); ?>
 		<tr id="multi-edit-row-<?php echo $i; ?>" class="<?php echo HTML::trClass($i); ?>">
 			<td><?php echo Icon::get(Icon::$DELETE_GRAY, '', '$(\'#multi-edit-row-'.$i.'\').remove();', 'Zeile entfernen - l&ouml;scht das Training nicht!'); ?></td>

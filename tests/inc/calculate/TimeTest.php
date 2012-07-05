@@ -112,15 +112,15 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 	public function testGetTimestampFor() {
 		$this->assertEquals(
 				"31.12.2011 12:05:00",
-				date("d.m.Y H:i:s", Time::getTimeFor('31.12.2011', '12:05')));
+				date("d.m.Y H:i:s", Time::getTimestampFor('31.12.2011', '12:05')));
 
 		$this->assertEquals(
 				"31.12.2011 00:00:00",
-				date("d.m.Y H:i:s", Time::getTimeFor('31.12.2011', '')));
+				date("d.m.Y H:i:s", Time::getTimestampFor('31.12.2011', '')));
 
 		$this->assertEquals(
 				"31.12.".date("Y")." 00:00:00",
-				date("d.m.Y H:i:s", Time::getTimeFor('31.12', '')));
+				date("d.m.Y H:i:s", Time::getTimestampFor('31.12', '')));
 	}
 
 }
