@@ -240,8 +240,19 @@ class ImporterFormular extends Importer {
 		if (!isset($ms[1]))
 			$ms[1] = 0;
 
-		if (!isset($dauer[1]))
-			return 3600*$dauer[0];
+		if (strlen($ms[1]) < 2)
+			$ms[1] = $ms[1] * 10;
+
+		if (!isset($dauer[1])) {
+			$dauer[1] = $dauer[0];
+			$dauer[0] = 0;
+		}
+
+		if (!isset($dauer[2])) {
+			$dauer[2] = $dauer[1];
+			$dauer[1] = $dauer[0];
+			$dauer[0] = 0;
+		}
 
 		return round(3600 * $dauer[0] + 60 * $dauer[1] + $dauer[2] + ($ms[1]/100), 2);
 	}
