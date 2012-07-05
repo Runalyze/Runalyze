@@ -53,5 +53,9 @@
 	<div class="c">
 		<input style="margin-top: 10px;" type="submit" value="Trainings erstellen!" />
 	</div>
+
+	<p class="warning">
+		Achtung: Nach dem Absenden des Formulars werden die Trainings ohne weitere &Uuml;berpr&uuml;fung in die Datenbank eingetragen.
+	</p>
 </form>
 <?php endif; ?>

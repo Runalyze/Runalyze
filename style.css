@@ -530,6 +530,11 @@ ul.blocklist a {
 	background-position: 3px center;
 	background-repeat: no-repeat; }
 
+ul.blocklist-inline a, ul.blocklist-inline li {
+	float: left;
+	margin: 5px;
+}
+
 ul.blocklist a:hover {
 	box-shadow: 1px 1px 7px #CCC; }
 

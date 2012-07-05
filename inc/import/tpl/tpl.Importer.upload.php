@@ -39,3 +39,7 @@ function createUploader() {
 		<?php echo $info; ?>
 	</p>
 <?php endforeach; ?>
+
+	<p class="warning">
+		Achtung: Bei *.tcx- und *.logbook-Dateien mit mehreren Trainings werden diese sofort ohne weitere &Uuml;berpr&uuml;fung in die Datenbank eingetragen.
+	</p>
