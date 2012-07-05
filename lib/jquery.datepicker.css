@@ -10,9 +10,7 @@
 	position:relative;
 }
 #calendarSubmit {
-	position:absolute;
-	right: -90px;
-	top: 70px;
+	margin-top: 5px;
 }
 #widgetCalendar {
 	position:relative;

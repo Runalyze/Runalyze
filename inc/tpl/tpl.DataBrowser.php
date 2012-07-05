@@ -19,10 +19,12 @@
 
 	<span id="calendarResult" class="hide">W&auml;hle ein Datum aus ...</span>
 
-	<div class="button" id="calendarSubmit">Auswahl<br />anzeigen</div>
-	
 	<div class="c">
 		Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
+	</div>
+
+	<div class="c">
+		<span class="button" id="calendarSubmit">Auswahl anzeigen</span>
 	</div>
 </div>
 
