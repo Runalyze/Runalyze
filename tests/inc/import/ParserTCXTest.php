@@ -147,18 +147,21 @@ class ParserTCXTest extends PHPUnit_Framework_TestCase {
 				$this->assertTrue( Validator::isClose($Parser->get('kcal'), 970) );
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_avg'), 155) );
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_max'), 165) );
+				$this->assertEquals( 'Training-1', $Parser->get('comment') );
 			} elseif ($i == 1) {
 				$this->assertTrue( Validator::isClose($Parser->get('s'), 2084) );
 				$this->assertTrue( Validator::isClose($Parser->get('distance'), 7.236) );
 				$this->assertTrue( Validator::isClose($Parser->get('kcal'), 615) );
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_avg'), 167, 2) ); // Rechnerisch eigtl. 167/169
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_max'), 182) );
+				$this->assertEquals( '', $Parser->get('comment') );
 			} elseif ($i == 2) {
 				$this->assertTrue( Validator::isClose($Parser->get('s'), 3000) );
 				$this->assertTrue( Validator::isClose($Parser->get('distance'), 9.197) );
 				$this->assertTrue( Validator::isClose($Parser->get('kcal'), 823) );
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_avg'), 155, 2) );
 				$this->assertTrue( Validator::isClose($Parser->get('pulse_max'), 166) );
+				$this->assertEquals( 'Training-3', $Parser->get('comment') );
 			} else {
 				$this->fail('Loop over nextTraining() is too long.');
 			}

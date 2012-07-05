@@ -17958,6 +17958,11 @@
           </LX>
         </Extensions>
       </Lap>
+      <Training VirtualPartner="false">
+        <Plan IntervalWorkout="false" Type="Course">
+          <Name>Training-1</Name>
+        </Plan>
+      </Training>
       <Creator xsi:type="Device_t">
         <Name>Forerunner 610</Name>
         <UnitId>3832013372</UnitId>
@@ -40422,6 +40427,11 @@
           </LX>
         </Extensions>
       </Lap>
+      <Training VirtualPartner="false">
+        <Plan IntervalWorkout="false" Type="Course">
+          <Name>Training-3</Name>
+        </Plan>
+      </Training>
       <Creator xsi:type="Device_t">
         <Name>Forerunner 610</Name>
         <UnitId>3832013372</UnitId>
