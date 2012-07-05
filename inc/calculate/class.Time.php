@@ -103,4 +103,32 @@ class Time {
 
 		return self::$MONTHS[$m-1];
 	}
+
+	/**
+	 * Transform day and daytime to timestamp
+	 * @param string $day
+	 * @param string $time
+	 * @return int
+	 */
+	static public function getTimestampFor($day, $time) {
+		$post_day    = explode(".", $day);
+		$post_time   = explode(":", $time);
+
+		if (count($post_day) < 2) {
+			$timestamp   = strtotime($day);
+
+			if ($timestamp > 0)
+				return $timestamp;
+
+			$post_day[1] = date("m");
+		}
+
+		if (count($post_day) < 3)
+			$post_day[2] = isset($_POST['year']) ? $_POST['year'] : date("Y");
+
+		if (count($post_time) < 2)
+			$post_time[1] = 0;
+
+		return mktime((int)$post_time[0], (int)$post_time[1], 0, (int)$post_day[1], (int)$post_day[0], (int)$post_day[2]);
+	}
 }

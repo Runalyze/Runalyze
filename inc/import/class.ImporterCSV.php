@@ -206,40 +206,18 @@ class ImporterCSV extends Importer {
 		$time = '00:00';
 
 		foreach ($_POST['key'] as $i => $key) {
-			if (!in_array($key, $this->KeysToIgnore))
+			if (!in_array($key, $this->KeysToIgnore) && isset($Row[$i]))
 				$Training->set($key, $this->parseValue($key, $Row[$i]));
 
-			if ($key == 'datum')
+			if ($key == 'datum' && isset($Row[$i]))
 				$day  = $Row[$i];
-			if ($key == 'zeit')
+			if ($key == 'zeit' && isset($Row[$i]))
 				$time = $Row[$i];
 		}
 
-		$Training->set('time', $this->getTimeFor($day, $time));
+		$Training->set('time', Time::getTimestampFor($day, $time));
 
 		$this->Trainings[] = $Training;
-	}
-
-	/**
-	 * Transform day and daytime to timestamp
-	 * @param string $day
-	 * @param string $time
-	 * @return int
-	 */
-	private function getTimeFor($day, $time) {
-		$post_day  = explode(".", $day);
-		$post_time = explode(":", $time);
-
-		if (count($post_day) < 2)
-			$post_day[1] = date("m");
-
-		if (count($post_day) < 3)
-			$post_day[2] = isset($_POST['year']) ? $_POST['year'] : date("Y");
-
-		if (count($post_time) < 2)
-			$post_time[1] = 0;
-
-		return mktime((int)$post_time[0], (int)$post_time[1], 0, (int)$post_day[1], (int)$post_day[0], (int)$post_day[2]);
 	}
 
 	/**
@@ -256,6 +234,7 @@ class ImporterCSV extends Importer {
 			case 'distance':
 				$value = Helper::CommaToPoint($value);
 			case 'kcal':
+				$value = str_replace(".", "", $value);
 			case 'pulse_avg':
 			case 'pulse_max':
 			case 'elevation':
