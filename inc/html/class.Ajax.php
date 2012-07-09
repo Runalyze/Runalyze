@@ -200,9 +200,11 @@ class Ajax {
 	 * @param string $text
 	 * @param string $divID
 	 * @param string $flotID
+	 * @param boolean $active
+	 * @return string
 	 */
-	public static function flotChange($text, $divID, $flotID) {
-		return '<span class="link" onclick="Runalyze.flotChange(\''.$divID.'\',\''.$flotID.'\')">'.$text.'</span>';
+	public static function flotChange($text, $divID, $flotID, $active = true) {
+		return '<span class="link'.($active ? '' : ' unimportant').' flotChanger-'.$divID.' flotChanger-id-'.$flotID.'" onclick="Runalyze.flotChange(\''.$divID.'\',\''.$flotID.'\')">'.$text.'</span>';
 	}
 
 	/**
