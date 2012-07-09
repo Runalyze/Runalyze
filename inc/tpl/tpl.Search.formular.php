@@ -1,16 +1,24 @@
 <form id="search" class="ajax" action="call/window.search.php" method="post">
 	<span class="right">
-		<select name="lorem">
-			<option value="ipsum">... vordefinierte Suchen</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=3','',null);">alle Intervalltrainings</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=4','',null);">alle Tempodauerl&auml;ufe</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=7','',null);">alle Langen L&auml;ufe</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[is_track]=is&val[is_track]=1','',null);">alle Bahnl&auml;ufe</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[partner]=isnot&val[partner]=','',null);">alle Trainings mit Trainingspartner</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[temperature]=lt&val[temperature]=0','',null);">alle Trainings bei Minusgraden</option>
-			<option onclick="jLoadLink('<?php echo DATA_BROWSER_SEARCH_ID; ?>','call/window.search.php?get=true&opt[s]=gtis&val[s]=120','',null);">alle Trainingseinheiten &uuml;ber zwei Stunden</option>
+		<select id="predefinedSearch">
+			<option value="">... vordefinierte Suchen</option>
+<!--			<option value="call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=3">alle Intervalltrainings</option>
+			<option value="call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=4">alle Tempodauerl&auml;ufe</option>
+			<option value="call/window.search.php?get=true&opt[typeid]=is&val[typeid][0]=7">alle Langen L&auml;ufe</option>
+-->			<option value="call/window.search.php?get=true&opt[is_track]=is&val[is_track]=1">alle Bahnl&auml;ufe</option>
+			<option value="call/window.search.php?get=true&opt[partner]=isnot&val[partner]=">alle Trainings mit Trainingspartner</option>
+			<option value="call/window.search.php?get=true&opt[temperature]=lt&val[temperature]=0">alle Trainings bei Minusgraden</option>
+			<option value="call/window.search.php?get=true&opt[s]=gtis&val[s]=120">alle Trainingseinheiten &uuml;ber zwei Stunden</option>
 		</select>
 	</span>
+
+<?php
+echo Ajax::wrapJSforDocumentReady('$("#predefinedSearch").change(function(){
+		var val = $("#predefinedSearch option:selected").val();
+		if (val != "")
+			$("#'.DATA_BROWSER_SEARCH_ID.'").loadDiv(val);
+	});')
+?>
 
 	<h1><?php echo Icon::get(Icon::$SEARCH, 'Suche'); ?> Trainings suchen</h1>
 
