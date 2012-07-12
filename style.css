@@ -78,7 +78,11 @@ body#installer {
 	display: inline-block;
 	float: none; }
 
-#copy .tab:hover, #copy2 .tab:hover { color: #EEE; border-color: #666; padding-bottom: 1px; }
+#copy .tab:hover, #copy2 .tab:hover {
+	color: #EEE;
+	border-color: #666;
+	padding-bottom: 1px;
+}
 
 #copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
 #copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
@@ -403,16 +407,13 @@ h1 a:hover, h1 a:active {
 	filter: alpha(opacity=80);
 	float: left;
 	position: relative;
-	top: 6px;
-	height: 20px;
+	top: 1px;
+	height: 25px;
+	line-height: 25px;
 	margin-right: -1px;
-	line-height: 20px;
 	border: 1px solid #000;
 	background: url(img/bg.png);
 	overflow: hidden; }
-
-#statisticTabs li:first-child { border-radius: 3px 0 0 0; }
-#statisticTabs li:last-child { border-radius: 0 3px 0 0; }
 
 #statisticTabs li a {
 	display: block;
@@ -421,11 +422,8 @@ h1 a:hover, h1 a:active {
 #statisticTabs li.active, #statisticTabs li:hover  {
 	opacity: 1;
 	filter: alpha(opacity=100);
-	top: 1px;
-	height: 25px;
-	line-height: 25px;
-	border-bottom: none;
-	border-radius: 3px 3px 0 0; }
+	border-color: #000;
+	border-bottom: none; }
 
 
 /*** PANEL-CONFIG NAVIGATION ***/
