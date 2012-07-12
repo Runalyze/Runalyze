@@ -88,11 +88,6 @@ class ImporterFITLOG extends Importer {
 			$i++;
 		}
 
-		if (!empty($heartrate)) {
-			$this->set('pulse_avg', round(array_sum($heartrate)/count($heartrate)));
-			$this->set('pulse_max', max($heartrate));
-		}
-
 		$this->setArrayForTime($time);
 		$this->setArrayForLatitude($latitude);
 		$this->setArrayForLongitude($longitude);

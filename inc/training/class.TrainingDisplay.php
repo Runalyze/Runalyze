@@ -41,7 +41,7 @@ class TrainingDisplay {
 	 */
 	protected function getPlotTypesAsArray() {
 		$plots = array();
-		if ($this->Training->hasSplitsData())
+		if ($this->Training->hasSplits())
 			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasPaceData())
 			$plots['pace'] = array('name' => 'Pace', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
@@ -50,7 +50,7 @@ class TrainingDisplay {
 		if ($this->Training->hasElevationData())
 			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'key' => 'elevation', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
 
-		if (!$this->Training->hasSplitsData() && $this->Training->hasPaceData())
+		if (!$this->Training->hasSplits() && $this->Training->hasPaceData())
 			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
 
 		return $plots;

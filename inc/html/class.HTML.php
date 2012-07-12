@@ -44,10 +44,11 @@ class HTML {
 	 * @param string $string
 	 * @return string
 	 */
-	public static function emptyTD($colspan = 0, $string = '&nbsp;') {
+	public static function emptyTD($colspan = 0, $string = '&nbsp;', $class = '') {
 		$colspan = ($colspan > 0) ? ' colspan="'.$colspan.'"' : '';
+		$class   = ($class != '') ? ' class="'.$class.'"' : '';
 
-		return '<td'.$colspan.'>'.$string.'</td>'.NL;
+		return '<td'.$colspan.$class.'>'.$string.'</td>'.NL;
 	}
 
 	/**

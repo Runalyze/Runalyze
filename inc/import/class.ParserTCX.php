@@ -186,11 +186,6 @@ class ParserTCX extends Parser {
 		elseif ($this->data['laps_time'] > 0)
 			$this->set('s', $this->data['laps_time']);
 
-		if (!empty($this->data['heartrate'])) {
-			$this->set('pulse_avg', round(array_sum($this->data['heartrate'])/count($this->data['heartrate'])));
-			$this->set('pulse_max', max($this->data['heartrate']));
-		}
-
 		if (!empty($this->XML->Training))
 			$this->set('comment', (string)$this->XML->Training->Plan->Name);
 		else
@@ -252,6 +247,7 @@ class ParserTCX extends Parser {
 		$this->data['laps_distance'] += round((int)$Lap->DistanceMeters)/1000;
 		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
 
+		// TODO: save pause-laps too with special identification
 		if ((string)$Lap->Intensity == 'Active')
 			$this->data['splits'][] = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
 	}

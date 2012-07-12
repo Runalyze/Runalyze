@@ -154,17 +154,12 @@ class ImporterFormular extends Importer {
 		}
 
 		if ($Sport->hasTypes() && isset($_POST['typeid']) && $_POST['typeid'] > 0) {
-			$Type = new Type($_POST['typeid']);
-
 			$AutoParseKeys[]     = 'typeid';
 
-			if ($Type->hasSplits()) {
-				// TODO: Always save all of them
-				$Splits = new Splits( Splits::$FROM_POST );
+			$Splits = new Splits( Splits::$FROM_POST );
 
-				$this->columns[] = 'splits';
-				$this->values[]  = $Splits->asString();
-			}
+			$this->columns[]     = 'splits';
+			$this->values[]      = $Splits->asString();
 		}
 		if ($Sport->isRunning()) {
 			$AutoParseKeys[]     = 'shoeid';

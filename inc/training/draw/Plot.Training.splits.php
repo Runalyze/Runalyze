@@ -15,7 +15,7 @@ $achievedPace = 0;
 $Labels       = array();
 $Data         = array();
 
-if ($Training->hasSplitsData()) {
+if ($Training->hasSplits()) {
 	$Labels  = $Training->Splits()->distancesAsArray();
 	$Data    = $Training->Splits()->pacesAsArray();
 	$num     = count($Data);

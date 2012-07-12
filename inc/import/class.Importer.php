@@ -529,6 +529,7 @@ abstract class Importer {
 	 */
 	protected function setArrayForHeartrate($array) {
 		$this->setArrayFor('arr_heart', $array);
+		$this->setAvgAndMaxHeartrateFromArray($array);
 	}
 
 	/**
@@ -538,4 +539,26 @@ abstract class Importer {
 	protected function setArrayForPace($array) {
 		$this->setArrayFor('arr_pace', $array);
 	}
+
+	/**
+	 * Set average and maximum heartrate from given array
+	 * @param array $array 
+	 */
+	private function setAvgAndMaxHeartrateFromArray($array) {
+		if (!empty($array) && max($array) > 30) {
+			$array = array_filter($array, 'ImporterArrayFilterForLowEntries');
+
+			$this->set('pulse_avg', round(array_sum($array)/count($array)));
+			$this->set('pulse_max', max($array));
+		}
+	}
+}
+
+/**
+ * Filter-function: Remove all entries lower than 30 from array
+ * @param mixed $value
+ * @return boolean 
+ */
+function ImporterArrayFilterForLowEntries($value) {
+	return ($value > 30);
 }

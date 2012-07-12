@@ -654,7 +654,16 @@ class Training {
 	}
 
 	/**
+	 * Does the training type use splits and are these set?
+	 * @return boolean
+	 */
+	public function hasSplits() {
+		return ($this->hasType() && $this->Type()->hasSplits() && $this->hasSplitsData);
+	}
+
+	/**
 	 * Has the training information about splits?
+	 * @return boolean
 	 */
 	public function hasSplitsData() {
 		return !$this->Splits->areEmpty();
@@ -662,6 +671,7 @@ class Training {
 
 	/**
 	 * Has the training information about trainingspartner?
+	 * @return boolean
 	 */
 	public function hasPartner() {
 		return $this->get('partner') != '';
@@ -669,6 +679,7 @@ class Training {
 
 	/**
 	 * Has the training information about pace?
+	 * @return boolean
 	 */
 	public function hasPaceData() {
 		return $this->GpsData->hasPaceData();
@@ -676,6 +687,7 @@ class Training {
 
 	/**
 	 * Has the training information about elevation?
+	 * @return boolean
 	 */
 	public function hasElevationData() {
 		return $this->GpsData->hasElevationData();
@@ -683,6 +695,7 @@ class Training {
 
 	/**
 	 * Has the training information about pulse?
+	 * @return boolean
 	 */
 	public function hasPulseData() {
 		return $this->GpsData->hasHeartrateData();
@@ -690,6 +703,7 @@ class Training {
 
 	/**
 	 * Has the training information about position?
+	 * @return boolean
 	 */
 	public function hasPositionData() {
 		return $this->GpsData->hasPositionData();

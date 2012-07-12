@@ -127,6 +127,7 @@ class Parser {
 	 */
 	final protected function setArrayForHeartrate($array) {
 		$this->setArrayFor('arr_heart', $array);
+		$this->setAvgAndMaxHeartrateFromArray($array);
 	}
 
 	/**
@@ -136,4 +137,26 @@ class Parser {
 	final protected function setArrayForPace($array) {
 		$this->setArrayFor('arr_pace', $array);
 	}
+
+	/**
+	 * Set average and maximum heartrate from given array
+	 * @param array $array 
+	 */
+	private function setAvgAndMaxHeartrateFromArray($array) {
+		if (!empty($array) && max($array) > 30) {
+			$array = array_filter($array, 'ParserArrayFilterForLowEntries');
+
+			$this->set('pulse_avg', round(array_sum($array)/count($array)));
+			$this->set('pulse_max', max($array));
+		}
+	}
+}
+
+/**
+ * Filter-function: Remove all entries lower than 30 from array
+ * @param mixed $value
+ * @return boolean 
+ */
+function ParserArrayFilterForLowEntries($value) {
+	return ($value > 30);
 }

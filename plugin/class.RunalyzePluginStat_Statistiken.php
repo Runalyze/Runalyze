@@ -5,17 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
  * Class: RunalyzePluginStat_Statistiken
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
- * @uses class:JD
- * @uses CONF_RECHENSPIELE
- * @uses START_YEAR
  */
 class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $sport     = array();
@@ -158,12 +148,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$start = Time::Weekstart($time);
 			$end   = Time::Weekend($time);
 
-			echo '<tr class="a'.(($w%2)+1).'"><td class="b">'.Ajax::tooltip('KW '.strftime("%W", $time), date("d.m.Y", $start).' bis '.date("d.m.Y", $end)).'</td>';
+			echo '<tr class="a'.(($w%2)+1).'"><td class="b l">'.Ajax::tooltip('KW '.strftime("%W", $time), date("d.m.Y", $start).' bis '.date("d.m.Y", $end)).'</td>';
 
 			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end))
 				$Dataset->displayTableColumns();
 			else
-				echo Html::emptyTD($Dataset->column_count);
+				echo Html::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
 
 			echo '</tr>';
 		}
