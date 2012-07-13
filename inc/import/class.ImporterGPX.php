@@ -52,14 +52,17 @@ class ImporterGPX extends Importer {
 	 * Parse track
 	 */
 	private function parseTrack() {
-		$time      = array();
-		$latitude  = array();
-		$longitude = array();
-		$distance  = array();
-		$elevation = array();
-		$heartrate = array();
-		$pace      = array();
-		$i         = 0;
+		$time       = array();
+		$latitude   = array();
+		$longitude  = array();
+		$distance   = array();
+		$elevation  = array();
+		$heartrate  = array();
+		$pace       = array();
+		$startTime  = $this->get('time');
+		$lastTime   = $this->get('time');
+		$timeOfStep = 0;
+		$i          = 0;
 
 		foreach ($this->XML->trkpt as $Point) {
 			if (!empty($Point['lat'])) {
@@ -73,14 +76,21 @@ class ImporterGPX extends Importer {
 			} else
 				continue;
 
-			$time[]      = (int)strtotime((string)$Point->time) - $this->get('time');
+			$currentTime = (int)strtotime((string)$Point->time);
+			$timeOfStep  = $currentTime - $lastTime;
+
+			if ($timeOfStep > 30)
+				$startTime += $timeOfStep;
+
+			$lastTime    = $currentTime;
+			$time[]      = $currentTime - $startTime;
 			$elevation[] = 0;
 			$heartrate[] = 0;
 			$latitude[]  = $lat;
 			$longitude[] = $lon;
 			$distance[]  = ($i==0) ? $dist : end($distance) + $dist;
-			$pace[]      = ((end($distance) - prev($distance)) != 0)
-				? round((end($time) - prev($time)) / (end($distance) - prev($distance)))
+			$pace[]      = ($dist != 0)
+				? round((end($time) - prev($time)) / $dist)
 				: 0;
 
 			$i++;

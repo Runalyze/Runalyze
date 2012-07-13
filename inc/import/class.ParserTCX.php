@@ -47,6 +47,12 @@ class ParserTCX extends Parser {
 	private $lastPoint = 0;
 
 	/**
+	 * Boolean flag: Last point was empty
+	 * @var boolean
+	 */
+	private $lastPointWasEmpty = false;
+
+	/**
 	 * Construct a new parser, needs XML
 	 * @param SimpleXMLElement $XML
 	 */
@@ -270,10 +276,23 @@ class ParserTCX extends Parser {
 	 */
 	protected function parseTrackpoint($TP) {
 		if (empty($TP->DistanceMeters)) {
-			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
+			//$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
+			$this->lastPointWasEmpty = true;
 			return;
 		}
 
+		// TODO:
+		// - last trackpoint was empty
+		// - this trackpoint has distance
+		// - time between trackpoints is large
+		// -> must save if last trackpoint was empty
+		// -> if so: delete time difference
+		if ($this->lastPointWasEmpty) {
+			Error::getInstance()->addDebug('At "'.(string)$TP->Time.'": deleted '.(strtotime((string)$TP->Time) - end($this->data['time_in_s']) - $this->starttime));
+			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
+		}
+
+		$this->lastPointWasEmpty   = false;
 		$this->lastPoint           = (int)$TP->DistanceMeters;
 		$this->data['time_in_s'][] = strtotime((string)$TP->Time) - $this->starttime;
 		$this->data['km'][]  = round((int)$TP->DistanceMeters)/1000;
