@@ -658,7 +658,7 @@ class Training {
 	 * @return boolean
 	 */
 	public function hasSplits() {
-		return ($this->hasType() && $this->Type()->hasSplits() && $this->hasSplitsData);
+		return ($this->hasType() && $this->Type()->hasSplits() && $this->hasSplitsData());
 	}
 
 	/**

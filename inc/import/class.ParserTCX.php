@@ -276,19 +276,11 @@ class ParserTCX extends Parser {
 	 */
 	protected function parseTrackpoint($TP) {
 		if (empty($TP->DistanceMeters)) {
-			//$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
 			$this->lastPointWasEmpty = true;
 			return;
 		}
 
-		// TODO:
-		// - last trackpoint was empty
-		// - this trackpoint has distance
-		// - time between trackpoints is large
-		// -> must save if last trackpoint was empty
-		// -> if so: delete time difference
 		if ($this->lastPointWasEmpty) {
-			Error::getInstance()->addDebug('At "'.(string)$TP->Time.'": deleted '.(strtotime((string)$TP->Time) - end($this->data['time_in_s']) - $this->starttime));
 			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
 		}
 
