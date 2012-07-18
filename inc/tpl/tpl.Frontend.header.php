@@ -32,7 +32,7 @@
 
 <div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
-	<?php if (SessionHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="Ausloggen"><i class="toolbar-icon-user"></i> Logout</a><?php endif; ?>
+	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="Ausloggen"><i class="toolbar-icon-user"></i> Logout</a><?php endif; ?>
 
 	<span class="left b">
 		<?php echo Ajax::window('<a class="tab" href="'.Config::$CONFIG_URL.'"><i class="toolbar-icon-config"></i> Konfiguration</a>'); ?>

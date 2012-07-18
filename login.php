@@ -14,9 +14,9 @@ require 'inc/class.Frontend.php';
 $Frontend = new Frontend(true);
 
 if (isset($_GET['out']))
-	SessionHandler::logout();
+	SessionAccountHandler::logout();
 
-if (SessionHandler::isLoggedIn())
+if (SessionAccountHandler::isLoggedIn())
 	header('Location: index.php');
 
 $title = 'Runalyze v'.RUNALYZE_VERSION;

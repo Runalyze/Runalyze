@@ -52,8 +52,8 @@ class ExporterFITLOG extends Exporter {
 	 * Set general info 
 	 */
 	protected function setGeneralInfo() {
-		if (strlen(SessionHandler::getName()) > 0)
-			$this->XML->AthleteLog->Athlete->addAttribute('Name', SessionHandler::getName());
+		if (strlen(SessionAccountHandler::getName()) > 0)
+			$this->XML->AthleteLog->Athlete->addAttribute('Name', SessionAccountHandler::getName());
 
 		$this->Activity->addAttribute('StartTime', $this->timeToString($this->Training->get('time')));
 

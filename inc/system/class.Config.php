@@ -52,7 +52,7 @@ class Config {
 	 */
 	static private function getConsts() {
 		if (empty(self::$DbConsts)) {
-			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf WHERE accountid="'.SessionHandler::getId().'"');
+			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf WHERE accountid="'.SessionAccountHandler::getId().'"');
 			foreach ($data as $confArray)
 				self::$DbConsts[$confArray['key']] = $confArray;
 		}

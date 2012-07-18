@@ -169,7 +169,7 @@ final class Mysql {
 
 		if ($table != PREFIX.'account' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
-			$values[]  = SessionHandler::getId();
+			$values[]  = SessionAccountHandler::getId();
 		}
 
 		foreach ($columns as $k => $v)
@@ -300,7 +300,7 @@ final class Mysql {
 		if (FrontendShared::$IS_SHOWN)
 			return $query;
 
-		$ID = SessionHandler::isLoggedIn() ? SessionHandler::getId() : 0;
+		$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
 
 		if (strpos($query, 'SET NAMES') !== false || !is_numeric($ID))
 			return $query;
