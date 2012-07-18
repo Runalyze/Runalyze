@@ -1,7 +1,39 @@
+[class^="toolbar-icon-"], [class*=" toolbar-icon-"] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	background-image: url(../img/sprite-toolbar.png);
+	background-repeat: no-repeat;
+	opacity: .75;
+	filter: alpha(75);
+}
+
+.toolbar-icon-tools { background-position: 0 0; }
+.toolbar-icon-help { background-position: -16px 0; }
+.toolbar-icon-config { background-position: -32px 0; }
+.toolbar-icon-user{ background-position: -48px 0; }
+
+.checkbox-icon {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	vertical-align: text-top;
+	background-image: url(../img/checkbox.png);
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+.checkbox-icon.checked { background-position: bottom left; }
+.checkbox-icon.checked:hover, label:hover .checkbox-icon.checked { background-position: bottom right; }
+.checkbox-icon:hover, label:hover .checkbox-icon  { background-position: top right; }
+.checkbox-icon:active, label:active .checkbox-icon { position: relative; top: 1px; }
+
 .vdot-icon {
 	display: inline-block;
 	width: 9px;
 	height: 12px;
+	vertical-align: text-top;
 	background-image: url(../img/vdot.png);
 	background-repeat: no-repeat;
 }
@@ -16,6 +48,7 @@
 	display: inline-block;
 	width: 12px;
 	height: 12px;
+	vertical-align: text-top;
 	background-image: url('../img/weather.png');
 }
 

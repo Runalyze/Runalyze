@@ -9,18 +9,18 @@
 
 <div class="toolbar toHeader open">
 	<div class="toolbar-content toolbar-line">
-		<span class="right">
+		<span class="right" style="margin-top:3px;">
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable"><input type="checkbox" name="" checked="checked" onchange="$('.trainingZones').toggle();" /> Zonen</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('.trainingZones').toggle();"><i class="checkbox-icon checked"></i> Zonen</label>
 			<?php endif; ?>
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable"><input type="checkbox" name="" checked="checked" onchange="$('#trainingRounds').toggle();" /> Rundenzeiten</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingRounds').toggle();"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
 			<?php endif; ?>
 			<?php if (count($this->getPlotTypesAsArray()) > 0): ?>
-				<label class="checkable"><input type="checkbox" name="" checked="checked" onchange="$('#trainingPlots').toggle();" /> Diagramme</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingPlots').toggle();"><i class="checkbox-icon checked"></i> Diagramme</label>
 			<?php endif; ?>
 			<?php if ($this->Training->hasPositionData()): ?>
-				<label class="checkable"><input type="checkbox" name="" checked="checked" onchange="$('#trainingMap').toggle();" /> Karte</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingMap').toggle();"><i class="checkbox-icon checked"></i> Karte</label>
 			<?php endif; ?>
 		</span>
 
