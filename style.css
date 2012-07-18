@@ -49,7 +49,16 @@ body#installer {
 	width: 100%;
 	line-height: 24px;
 	background-color:#555;
-	overflow:hidden; }
+	overflow:hidden;
+	background-color:#2c2c2c;
+	background-image:-moz-linear-gradient(top, #333333, #222222);
+	background-image:-ms-linear-gradient(top, #333333, #222222);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#222222));
+	background-image:-webkit-linear-gradient(top, #333333, #222222);
+	background-image:-o-linear-gradient(top, #333333, #222222);
+	background-image:linear-gradient(top, #333333, #222222);
+	background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
+	}
 
 #sharedIframe #copy, #sharedIframe #copy2 {
 	line-height: 12px; }
@@ -60,44 +69,38 @@ body#installer {
 #copy .tab, #copy2 .tab {
 	display: block;
 	float: left;
-	padding: 2px 10px 2px 30px;
-	margin: 4px 8px;
-	color: #DDD; }
+	padding: 2px;
+	margin: 4px 18px;
+	color: #999; }
 
-#copy .tab.singleTab, #copy2 .tab.singleTab {
-	float: right;
-	padding: 2px 10px; }
+#copy .tab.right, #copy2 .tab.right {
+	float: right; }
 
-#copy .tab.singleTabLeft, #copy2 .tab.singleTabLeft {
-	float: left;
-	padding: 2px 10px; }
+#copy .logo, #copy2 .logo {
+	color: #999 !important;
+	font-size: 20px;
+	font-weight: 200;
+	margin: 4px 25px; 
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
 
 #sharedIframe #copy { text-align: left; }
 #sharedIframe #copy2 { text-align: right; }
-#sharedIframe #copy .singleTab, #sharedIframe #copy2 .singleTab {
-	display: inline-block;
-	float: none; }
 
 #copy .tab:hover, #copy2 .tab:hover {
 	color: #EEE;
 	border-color: #666;
-	padding-bottom: 1px;
 }
-
-#copy a#confEdit { background: url(img/confEdit.png) 2px center no-repeat; }
-#copy a#confTool { background: url(img/confTool.png) 2px center no-repeat; }
-#copy a#confHelp { background: url(img/confHelp.png) 2px center no-repeat; }
-#copy a#logout { float: right; background: url(img/user.png) 2px center no-repeat; }
-
 
 /*** GENERAL STYLES ***/
 h1 {
 	padding-left: 2px;
 	margin-bottom: 7px;
-	font-size: 13px;
+	font-size: 11px;
 	line-height: 18px;
+	text-transform: uppercase;
 	color: #800;
-	border-bottom: 1px solid #D0D0D0; }
+	border-bottom: 1px solid #CCC; }
+h1 img { vertical-align: text-bottom; }
 
 p {
 	display: block;
@@ -310,8 +313,6 @@ fieldset .validationFailed {
 	margin: 0 5px;
 	padding: 2px 2px 2px 16px; }
 
-.toolbar-line .labeledLink:hover { padding-bottom: 1px; }
-
 .labeledLink.editLink { background-image:url(img/edit.png); }
 .labeledLink.exportLink { background-image:url(img/export.png); }
 .labeledLink.attachLink { background-image:url(img/attach.png); }
@@ -367,14 +368,19 @@ fieldset .validationFailed {
 
 /*** LINKS ***/
 a:link, a:visited {
-	color: #444;
+	color: #666;
 	text-decoration: none;
-	padding-bottom: 1px; }
+	/*padding-bottom: 1px;*/ }
 
 a:hover, a:active, .link:hover {
 	color: #000;
-	border-bottom: 1px solid #800;
-	padding-bottom: 0; }
+	/*border-bottom: 1px solid #800;
+	padding-bottom: 0;*/
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out; }
 
 .linksWithMargin a {
 	margin-left: 15px; }
@@ -424,6 +430,9 @@ h1 a:hover, h1 a:active {
 	filter: alpha(opacity=100);
 	border-color: #000;
 	border-bottom: none; }
+
+#statisticTabs li.active a:link, #statisticTabs li.active a:visited {
+	color: #000; }
 
 
 /*** PANEL-CONFIG NAVIGATION ***/
@@ -547,7 +556,7 @@ ul.blocklist a.nopadding {
 /*** SPECIFIC STYLES ***/
 .panel {
 	position: relative;
-	margin: 5px;
+	margin: 5px 5px 10px 5px;
 	padding: 5px;
 	background: url(img/bg.png);
 	border: 1px solid #000;
@@ -567,7 +576,12 @@ ul.blocklist a.nopadding {
 
 .loading * {
 	opacity: 0;
-	filter: alpha(opacity=0); }
+	filter: alpha(opacity=0);
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
+	-ms-transition: all 0.4s linear;
+	-o-transition: all 0.4s linear;
+	transition: all 0.4s linear; }
 
 .waitImg {
 	background: url(img/wait-black.gif) center center no-repeat #000 !important; }
@@ -728,11 +742,9 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 
 
 /*** SNIPPETS ***/
-#dataBrowser {
-	width: 100%; }
+#dataBrowser { width: 100%; }
 
-#datenPanel {
-	margin-bottom: 15px; }
+#datenPanel { margin-bottom: 15px; }
 
 #schuhe p {
 	background-position: bottom left;

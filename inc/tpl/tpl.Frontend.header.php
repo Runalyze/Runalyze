@@ -31,12 +31,12 @@
 <div id="flotLoader"></div>
 
 <div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
-	<a class="tab singleTab" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
-	<?php if (SessionHandler::isLoggedIn()): ?><a class="tab" id="logout" href="login.php?out" title="Ausloggen">Logout</a><?php endif; ?>
+	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<?php if (SessionHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="Ausloggen"><i class="toolbar-icon-user"></i> Logout</a><?php endif; ?>
 
 	<span class="left b">
-		<?php echo Ajax::window('<a class="tab" id="confEdit" href="'.Config::$CONFIG_URL.'">Konfiguration</a>'); ?>
-		<?php echo Ajax::window('<a class="tab" id="confTool" href="'.PluginTool::$DISPLAY_URL.'">Tools</a>'); ?>
-		<?php echo Ajax::window('<a class="tab" id="confHelp" href="'.Frontend::$HELP_URL.'">Hilfe</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" href="'.Config::$CONFIG_URL.'"><i class="toolbar-icon-config"></i> Konfiguration</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" href="'.PluginTool::$DISPLAY_URL.'"><i class="toolbar-icon-tools"></i> Tools</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" href="'.Frontend::$HELP_URL.'"><i class="toolbar-icon-help"></i> Hilfe</a>'); ?>
 	</span>
 </div>

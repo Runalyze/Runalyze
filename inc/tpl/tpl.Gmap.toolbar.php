@@ -17,12 +17,10 @@
 			<option value="G_HYBRID_MAP">Hybrid&nbsp;</option>
 			<option value="G_SATELLITE_MAP">Satellit&nbsp;</option>
 			<option value="G_PHYSICAL_MAP">Physikalisch&nbsp;</option>
+			<option value="OSM">OpenStreetMap&nbsp;</option>
 		</select>
 
-		<label class="checkable">
-			<input id="trainingMapMarkerVisibile" type="checkbox" onchange="RunalyzeGMap.changeMarkerVisibility();" <?php if (CONF_TRAINING_MAP_MARKER) echo ' checked="checked"'; ?> />
-			Marker anzeigen
-		</label>
+		<label class="checkable" onclick="$(this).children('i').toggleClass('checked');RunalyzeGMap.changeMarkerVisibility();"><i id="trainingMapMarkerVisibile" class="checkbox-icon <?php if (CONF_TRAINING_MAP_MARKER) echo 'checked'; ?>"></i> Marker anzeigen</label>
 
 		<?php echo Ajax::wrapJSforDocumentReady('$("#trainingMapTypeSelect").val("'.CONF_TRAINING_MAPTYPE.'");'); ?>
 
