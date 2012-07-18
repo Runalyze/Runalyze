@@ -7,12 +7,12 @@ if (!defined('USER_MUST_LOGIN'))
 	define('USER_MUST_LOGIN', false);
 
 /**
- * Class: SessionHandler
+ * Class: SessionAccountHandler
  * 
  * @author Michael Pohl <michael@michael-pohl.info>
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
-class SessionHandler {
+class SessionAccountHandler {
 	/**
 	 * Boolean flag: user must be logged in
 	 * @var boolean
@@ -56,7 +56,7 @@ class SessionHandler {
 	static public $ERROR_TYPE_ACTIVATION_NEEDED = 3;
 
 	/**
-	 * Construct a new SessionHandler
+	 * Construct a new SessionAccountHandler
 	 * ATTENTION:
 	 * - all used methods from constructor must not use any consts (except PREFIX)
 	 * - all these consts will be defined after setting Account-ID,
@@ -76,7 +76,7 @@ class SessionHandler {
 	}
 
 	/**
-	 * Destruct SessionHandler 
+	 * Destruct SessionAccountHandler 
 	 */
 	function __destruct() {}
 

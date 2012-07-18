@@ -146,9 +146,9 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Init SessionHandler
+	 * Init SessionAccountHandler
 	 */
-	protected function initSessionHandler() {
+	protected function initSessionAccountHandler() {
 		// Nothing to do, no session handler needed
 	}
 }

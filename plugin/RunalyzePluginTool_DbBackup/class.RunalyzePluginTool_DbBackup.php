@@ -84,7 +84,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		echo '<ul>';
 		foreach ($Files as $File)
 			if(USER_MUST_LOGIN) {
-				if(strpos($File, SessionHandler::getId()."-runalyze-backup-")!==false)
+				if(strpos($File, SessionAccountHandler::getId()."-runalyze-backup-")!==false)
 					echo '<li><a href="inc/'.$this->BackupPath.$File.'" target="_blank">'.$File.'</a></li>';
 			} else 
 				echo '<li><a href="inc/'.$this->BackupPath.$File.'" target="_blank">'.$File.'</a></li>';
@@ -109,7 +109,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				
 				
 				if($TableName == "runalyze_account" && USER_MUST_LOGIN)
-					$ArrayOfRows  = $Mysql->fetchAsNumericArray('SELECT * FROM '.$TableName.' WHERE id = \''.SessionHandler::getId().'\'');
+					$ArrayOfRows  = $Mysql->fetchAsNumericArray('SELECT * FROM '.$TableName.' WHERE id = \''.SessionAccountHandler::getId().'\'');
 				else 
 					$ArrayOfRows  = $Mysql->fetchAsNumericArray('SELECT * FROM '.$TableName);
 
@@ -125,7 +125,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			}
 		}
 		if(USER_MUST_LOGIN) 
-			$File = fopen(FRONTEND_PATH.$this->BackupPath.SessionHandler::getId().'-runalyze-backup-'.date("Ymd-Hi").'-'.substr(uniqid(rand()), -4).'.sql.gz', 'w+');
+			$File = fopen(FRONTEND_PATH.$this->BackupPath.SessionAccountHandler::getId().'-runalyze-backup-'.date("Ymd-Hi").'-'.substr(uniqid(rand()), -4).'.sql.gz', 'w+');
 		else
 			$File = fopen(FRONTEND_PATH.$this->BackupPath.'runalyze-backup-'.date("Ymd-Hi").'-'.substr(uniqid(rand()), -4).'.sql.gz', 'w+');
 		fwrite($File, gzencode($Backup));

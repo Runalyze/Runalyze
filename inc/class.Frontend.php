@@ -47,7 +47,7 @@ class Frontend {
 
 		$this->initRequiredFiles();
 		$this->initDebugMode();
-		$this->initSessionHandler();
+		$this->initSessionAccountHandler();
 		$this->defineConsts();
 
 		if (!$hideHeaderAndFooter)
@@ -130,10 +130,10 @@ class Frontend {
 	}
 
 	/**
-	 * Init SessionHandler
+	 * Init SessionAccountHandler
 	 */
-	protected function initSessionHandler() {
-		$Session = new SessionHandler();
+	protected function initSessionAccountHandler() {
+		$Session = new SessionAccountHandler();
 
 		if (isset($_POST['user']) && isset($_POST['password']))
 			$Session->tryToLogin($_POST['user'], $_POST['password']);
