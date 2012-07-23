@@ -39,7 +39,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['distances']  = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<abbr class="atLeft" tooltip="kommagetrennt">Distanzen f&uuml;r die Prognose</abbr>');
+		$config['distances']  = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<span class="atLeft" title="kommagetrennt">Distanzen f&uuml;r die Prognose</span>');
 
 		return $config;
 	}
@@ -50,7 +50,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html">'.Icon::get(Icon::$INFO, '', '', 'Erl&auml;uterungen zu den Prognosen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::get(Icon::$INFO).'</a>');
 
 		return implode(' ', $Links);
 	}

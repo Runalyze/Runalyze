@@ -57,11 +57,11 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$config['use_type']  = array('type' => 'bool', 'var' => true, 'description' => 'Trainingstypen analysieren');
 		$config['use_pace']  = array('type' => 'bool', 'var' => true, 'description' => 'Tempobereiche analysieren');
 		$config['use_pulse'] = array('type' => 'bool', 'var' => true, 'description' => 'Pulsbereiche analysieren');
-		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<abbr class="atLeft" tooltip="in %HFmax">Niedrigster Pulsbereich</abbr>');
-		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<abbr class="atLeft" tooltip="in %HFmax">Pulsbereich: Schrittweite</abbr>');
-		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<abbr class="atLeft" tooltip="in s/km">Niedrigster Tempobereich</abbr>');
-		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<abbr class="atLeft" tooltip="in s/km">H&ouml;chster Tempobereich</abbr>');
-		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<abbr class="atLeft" tooltip="in s/km">Tempobereich: Schrittweite</abbr>');
+		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<span class="atLeft" rel="tooltip" title="in %HFmax">Niedrigster Pulsbereich</span>');
+		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<span class="atLeft" rel="tooltip" title="in %HFmax">Pulsbereich: Schrittweite</span>');
+		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">Niedrigster Tempobereich</span>');
+		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">H&ouml;chster Tempobereich</span>');
+		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">Tempobereich: Schrittweite</span>');
 
 		return $config;
 	}

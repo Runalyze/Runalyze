@@ -11,16 +11,13 @@
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('.trainingZones').toggle();"><i class="checkbox-icon checked"></i> Zonen</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('.training-zones').toggle();"><i class="checkbox-icon checked"></i> Zonen</label>
 			<?php endif; ?>
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingRounds').toggle();"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-rounds').toggle();"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
 			<?php endif; ?>
-			<?php if (count($this->getPlotTypesAsArray()) > 0): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingPlots').toggle();"><i class="checkbox-icon checked"></i> Diagramme</label>
-			<?php endif; ?>
-			<?php if ($this->Training->hasPositionData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#trainingMap').toggle();"><i class="checkbox-icon checked"></i> Karte</label>
+			<?php if (count($this->getPlotTypesAsArray()) > 0 || $this->Training->hasPositionData()): ?>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-plots-and-map').toggle();"><i class="checkbox-icon checked"></i> Karte &amp; Diagramme</label>
 			<?php endif; ?>
 		</span>
 
@@ -39,50 +36,44 @@
 	</div>
 </div>
 
+<div id="training-display">
+	<div id="training-plots-and-map" class="dataBox"><!--"toolbar asBox open">-->
+		<?php
+		$Plots = $this->getPlotTypesAsArray();
+		if (!empty($Plots)):
+		?>
+		<div id="training-plots" class="toolbar-box-content">
+			<div class="toolbar-line">
+				<?php foreach ($Plots as $i => $Plot): ?>
+				<label class="checkable" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Plot['key']; ?>');"><i id="toggle-<?php echo $Plot['key']; ?>" class="toggle-icon-<?php echo $Plot['key']; ?> checked"></i> <?php echo $Plot['name']; ?></label>
+				<?php endforeach; ?>
 
-
-<div id="trainingTable" class="dataBox left">
-	<?php $this->Training->displayTable(); ?>
-</div>
-
-
-
-<div id="trainingChartsAndMap">
-	<?php
-	$Plots = $this->getPlotTypesAsArray();
-	if (!empty($Plots)):
-	?>
-	<div id="trainingPlots" class="dataBox">
-		<div id="plotNavigation" class="dataBox">
-			<?php foreach (array_keys($Plots) as $i => $Key): ?>
-			<div class="plotToggler active" id="toggle-<?php echo $Key; ?>" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Key; ?>');">
-				<span id="chartLink-<?php echo $Key; ?>"><?php echo $Key; ?> anzeigen</span>
+				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-map').toggle();"><i class="toggle-icon-map checked"></i> Karte</label>
 			</div>
-			<?php endforeach; ?>
-
-			<label>
-				<input id="checkForMultiplePlots" type="checkbox"<?php if (CONF_TRAINING_PLOTS_BELOW) echo ' checked="checked"'; ?> title="Mehrere Diagramme anzeigen" />
-				<img src="img/multiple.png" alt="Mehrere Diagramme anzeigen" />
-			</label>
-
-			<div id="chartWidther" class="widtherIsBig" onclick="RunalyzePlot.changeChartWidther();"></div>
 
 			<?php echo Ajax::wrapJSforDocumentReady('RunalyzePlot.initTrainingNavitation();'); ?>
+
+			<?php
+			foreach (array_keys($Plots) as $i => $Key) {
+				echo '<div id="plot-'.$Key.'" class="plot-container">';
+				$this->displayPlot($Key, false);
+				echo '</div>'.NL;
+			}
+			?>
 		</div>
+		<?php endif; ?>
 
-		<?php
-		foreach (array_keys($Plots) as $i => $Key) {
-			echo '<div id="plot-'.$Key.'" style="margin:0 0 5px 0;">';
-			$this->displayPlot($Key, false);
-			echo '</div>'.NL;
-		}
-		?>
+		<div id="training-map">
+			<?php if ($this->Training->hasPositionData()): ?>
+				<?php $this->displayRoute(); ?>
+			<?php endif; ?>
+		</div>
 	</div>
-	<?php endif; ?>
 
 
+	<div id="training-table" class="dataBox left">
+		<?php $this->Training->displayTable(); ?>
+	</div>
 
-	<?php if ($this->Training->hasPositionData()): ?>
-		<?php $this->displayRoute(); ?>
-	<?php endif; ?>
+	<?php $this->displayTrainingData(); ?>
 </div>
