@@ -234,13 +234,14 @@ class Plot {
 		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\''.$padding.'\');';
 
 		return Ajax::wrapJS('
-			var '.$this->created.'=false;
-			$(document).bind("createFlot",function () {
-				if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0) {
-					'.$this->created.'=true;
-					'.$bindedCode.'
-				}
-			});');
+			var '.$this->created.'=false,
+				func_'.$this->created.'=function(){
+					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0) {
+						'.$this->created.'=true;'.$bindedCode.'
+					}
+				};
+			$(document).off("createFlot.'.$this->cssID.'").on("createFlot.'.$this->cssID.'",func_'.$this->created.');
+		');
 	}
 
 	/**
