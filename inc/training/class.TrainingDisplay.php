@@ -87,7 +87,7 @@ class TrainingDisplay {
 		foreach ($Zones as $min => $Info) {
 			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE)
 				$Data[] = array(
-					'zone'     => ($min == 0 ? 'schneller' : 'bis '.Helper::Pace(1, $min*60).'/km'),
+					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.Helper::Pace(1, $min*60).'/km'),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).'&nbsp;&#37;');
@@ -106,7 +106,7 @@ class TrainingDisplay {
 		foreach ($Zones as $hf => $Info) {
 			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE)
 				$Data[] = array(
-					'zone'     => 'bis '.(10*$hf).'&nbsp;&#37;',
+					'zone'     => '&lt; '.(10*$hf).'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => Helper::Pace($Info['num'], $Info['pace-sum']).'/km');
