@@ -36,8 +36,17 @@ class Gmap {
 	 */
 	public function __construct($TrainingId, $GpsData) {
 		$this->TrainingId = $TrainingId;
-		$this->StringID   = 'map_'.$TrainingId;
+		$this->StringID   = self::getStringIDfor($TrainingId);
 		$this->GpsData    = $GpsData;
+	}
+
+	/**
+	 * Get string ID for a given training ID
+	 * @param int $TrainingID
+	 * @return string 
+	 */
+	static public function getStringIDfor($TrainingID) {
+		return 'map_'.$TrainingID;
 	}
 
 	/**

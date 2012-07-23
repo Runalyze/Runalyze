@@ -33,7 +33,7 @@ class Ajax {
 		$Files[] = 'lib/jquery.metadata.js';
 		$Files[] = 'lib/jquery.tablesorter.js';
 		$Files[] = 'lib/jquery.tablesorter.pager.js';
-		$Files[] = 'lib/jquery.tipTip.minified.js';
+		$Files[] = 'lib/bootstrap-tooltip.js';
 
 		$Files[] = 'lib/jquery.datepicker.js';
 		$Files[] = 'lib/jquery.fileuploader.js';
@@ -58,10 +58,10 @@ class Ajax {
 	static public function getNeededCSSFilesAsArray() {
 		$Files = array();
 
+		$Files[] = 'lib/bootstrap-tooltip.css';
 		$Files[] = 'lib/jquery.datepicker.css';
 		$Files[] = 'lib/jquery.tablesorter.css';
 		$Files[] = 'lib/jquery.jbar.css';
-		$Files[] = 'lib/jquery.tipTip.css';
 		$Files[] = 'lib/flot.css';
 		$Files[] = 'lib/flot/qtip.css';
 
@@ -94,11 +94,16 @@ class Ajax {
 	 * @param string $tooltip
 	 * @return string
 	 */
-	static function tooltip($html, $tooltip) {
+	static function tooltip($html, $tooltip, $atLeft = false, $onlyAttributes = false) {
 		if ($tooltip == '')
 			return $html;
 
-		return '<abbr tooltip="'.$tooltip.'">'.$html.'</abbr>';
+		$class = $atLeft ? 'class="atLeft" ' : '';
+
+		if ($onlyAttributes)
+			return $class.'rel="tooltip" title="'.$tooltip.'"';
+
+		return '<span '.$class.'rel="tooltip" title="'.$tooltip.'">'.$html.'</span>';
 	}
 
 	/**
@@ -161,7 +166,7 @@ class Ajax {
 	static function window($link, $size = 'normal') {
 		$link = self::insertClass($link, 'window');
 		if ($size == 'big' || $size == 'small')
-			$link = self::insertRel($link, $size);
+			$link = self::insertDataSize($link, $size);
 
 		return $link;
 	}
@@ -217,8 +222,6 @@ class Ajax {
 		$text = preg_replace('#class="(.+?)"#i', 'class="'.$class.' \\1"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a class="'.$class.'" ', $text);
-		if ($text == $link)
-			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertClass(\''.$link.'\',\''.$class.'\')');
 
 		return $text;
 	}
@@ -233,8 +236,20 @@ class Ajax {
 		$text = preg_replace('#rel="(.+?)"#i', 'rel="'.$rel.'"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a rel="'.$rel.'" ', $text);
+
+		return $text;
+	}
+
+	/**
+	 * Overwrites an existing data-size-attribute or creates a new one
+	 * @param string $link   The full HTML-link
+	 * @param string $rel    The new data-size-value
+	 * @return string
+	 */
+	private static function insertDataSize($link, $rel) {
+		$text = preg_replace('#data-size="(.+?)"#i', 'data-size="'.$rel.'"', $link);
 		if ($text == $link)
-			Error::getInstance()->addWarning('Unexpected error in using Ajax::insertRel(\''.$link.'\',\''.$rel.'\')');
+			$text = str_replace('<a ', '<a data-size="'.$rel.'" ', $text);
 
 		return $text;
 	}

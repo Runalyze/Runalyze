@@ -54,7 +54,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => '<abbr class="atLeft" tooltip="Empfehlung anzeigen">Trainingstempo</abbr>');
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => '<span rel="tooltip" class="atLeft" title="Empfehlung anzeigen">Trainingstempo</span>');
 
 		return $config;
 	}
@@ -65,8 +65,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php">'.Icon::get(Icon::$FATIGUE, '', '', 'Form anzeigen').'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html">'.Icon::get(Icon::$INFO, '', '', 'Erl&auml;uterungen zu den Rechenspielen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Form anzeigen', true, true).'>'.Icon::get(Icon::$FATIGUE).'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Rechenspielen', true, true).'>'.Icon::get(Icon::$INFO).'</a>');
 
 		return implode(' ', $Links);
 	}

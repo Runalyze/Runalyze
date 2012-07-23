@@ -606,75 +606,11 @@ ul.blocklist a.nopadding {
 #sharedIframe #trainingTable, #sharedIframe #trainingChartsAndMap {
 	width: 100%; margin: 0; padding: 0; }
 
-.dataBox tr, .dataBox td {
-	padding: 3px; }
-
-#trainingChartsAndMap .dataBox,
-.right .dataBox {
-	float: none; }
+.dataBox tr, .dataBox td { padding: 3px; }
 
 .inlineHead, .dataBox td.inlineHead {
 	font-weight: bold;
 	padding-right: 10px; }
-
-#trainingPlots {
-	position: relative;
-	margin-left: 55px; }
-
-#plotNavigation {
-	position: absolute;
-	top: -2px;
-	left: -50px;
-	width: 38px;
-	border-right: none;
-	border-radius: 3px 0 0 3px;
-}
-
-#plotNavigation .plotToggler {
-	display: block;
-	cursor: pointer;
-	margin: 2px;
-	padding: 2px;
-	border: 1px solid transparent;
-	border-radius: 3px;
-	width: 29px;
-	height: 24px;
-}
-
-#plotNavigation .plotToggler span { display: block; width: 29px; height: 24px; text-indent:-9999px; }
-
-#chartLink-elevation { background: url(img/chartNavigation.png) no-repeat 0 0; }
-#chartLink-pulse { background: url(img/chartNavigation.png) no-repeat 0 -24px; }
-#chartLink-pace { background: url(img/chartNavigation.png) no-repeat 0 -48px; }
-#chartLink-splits { background: url(img/chartNavigation.png) no-repeat 0 -72px; }
-
-#plotNavigation .plotToggler.active,
-#plotNavigation label:hover img {
-	border-color: #aaa;
-	background-color: #eee; }
-
-#plotNavigation label {
-	cursor: pointer;
-	margin-top: 10px;
-	display: block;
-	padding-top: 10px;
-	border-top: 1px solid #ccc; }
-
-#plotNavigation input {
-	top: -2px;
-	margin-left: 6px; }
-
-#chartWidther {
-	display: block;
-	cursor: pointer;
-	width: 39px;
-	height: 9px;
-	margin: 2px 0;
-	background-image: url(img/chart-widther.png);
-	background-repeat: no-repeat;
-	background-position: 0 0; }
-
-#chartWidther.widtherIsBig { background-position: 0 -9px; }
 
 p.text { margin: 0 0 12px; }
 p.text-headline { margin: 0 0 8px; font-weight: bold; }
@@ -750,9 +686,6 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 	background-position: bottom left;
 	background-repeat: no-repeat; }
 
-#trainingChartsAndMap {
-	float: right; }
-
 #tab_content table {
 	margin: 5px 0 10px; }
 
@@ -821,6 +754,22 @@ code {
 #errorTable tr {
 	border-bottom: 1px solid #CCC; }
 
+#training-display .dataBox.left { width: 260px; }
+#training-display .dataBox.left table { width: 100%; }
+
+#training-plots-and-map { float: right; border-width: 1px; }
+#training-plots-and-map .toolbar-nav { display: none; }
+#training-plots-and-map .dataBox { float: none; }
+#training-plots-and-map #training-plots { padding: 6px 6px 0; }
+#training-plots-and-map #training-map .toolbar-box-content { padding: 0 6px 6px; }
+#training-plots-and-map .plot-container { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #CCC; }
+
+#training-plots .toolbar-line { padding: 4px 4px 6px; }
+#training-plots .toolbar-line label { font-size: 12px; line-height: 16px; margin: 0 5px 0 0; padding-right: 12px; border-right: 1px solid #ccc; }
+#training-plots .toolbar-line label:last-of-type { margin: 0; padding: 0; border-right: none; }
+
+#training-map .toolbar-line { padding: 10px 10px 0; }
+#training-map .toolbar-line select { margin: 0 20px 0 0; }
 
 /*** FLOT ***/
 #flotLoader {

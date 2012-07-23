@@ -1,14 +1,7 @@
 <?php
 /**
- * This file contains the abstract class to handle every panel-plugin.
- */
-/**
  * Class: PluginPanel
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class:Error
  */
 
 abstract class PluginPanel extends Plugin {

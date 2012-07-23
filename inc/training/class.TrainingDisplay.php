@@ -30,8 +30,6 @@ class TrainingDisplay {
 	public function display() {
 		include 'tpl/tpl.Training.php';
 
-		$this->displayTrainingData();
-
 		echo HTML::clearBreak();
 	}
 
@@ -42,11 +40,11 @@ class TrainingDisplay {
 	protected function getPlotTypesAsArray() {
 		$plots = array();
 		if ($this->Training->hasSplits())
-			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
+			$plots['splits'] = array('name' => 'Zwischenzeiten', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasPaceData())
-			$plots['pace'] = array('name' => 'Pace', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
+			$plots['pace'] = array('name' => 'Geschwindigkeit', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasPulseData())
-			$plots['pulse'] = array('name' => 'Puls', 'key' => 'pulse', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
+			$plots['pulse'] = array('name' => 'Herzfrequenz', 'key' => 'pulse', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
 		if ($this->Training->hasElevationData())
 			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'key' => 'elevation', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
 
@@ -64,8 +62,8 @@ class TrainingDisplay {
 	public function displayPlot($type = 'undefined', $hidden = false) {
 		$plots = $this->getPlotTypesAsArray();
 		if (isset($plots[$type])) {
-			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden, 'trainingChart');
-			include FRONTEND_PATH.'training/draw/Plot.Training.'.$plots[$type]['key'].'.php';
+			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden, 'training-chart');
+			include FRONTEND_PATH.'training/plot/Plot.Training.'.$plots[$type]['key'].'.php';
 		} else
 			Error::getInstance()->addWarning('TrainingDisplay::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
 	}
@@ -154,7 +152,7 @@ class TrainingDisplay {
 
 		$RoundLinksArray = array();
 		foreach ($RoundTypes as $i => $RoundType)
-			$RoundLinksArray[] = Ajax::change($RoundType['name'], 'trainingRounds', $RoundType['id']);
+			$RoundLinksArray[] = Ajax::change($RoundType['name'], 'training-rounds', $RoundType['id']);
 		$RoundLinks = implode(' | ', $RoundLinksArray);
 
 		include 'tpl/tpl.Training.roundContainer.php';

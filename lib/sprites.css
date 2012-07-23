@@ -4,15 +4,42 @@
 	height: 16px;
 	vertical-align: middle;
 	background-image: url(../img/sprite-toolbar.png);
-	background-repeat: no-repeat;
 	opacity: .75;
 	filter: alpha(75);
 }
-
 .toolbar-icon-tools { background-position: 0 0; }
 .toolbar-icon-help { background-position: -16px 0; }
 .toolbar-icon-config { background-position: -32px 0; }
 .toolbar-icon-user{ background-position: -48px 0; }
+
+
+[class^="toggle-icon-"], [class*=" toggle-icon-"] {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	vertical-align: text-top;
+	background-image: url(../img/sprite-toggle.png);
+	background-position: 0 0;
+}
+label:active [class^="toggle-icon-"] { position: relative; top: 1px; }
+
+/* splits, pace, pulse, elevation, map */
+.toggle-icon-splits { background-position: 0 0; }
+label:hover .toggle-icon-splits { background-position: 0 -16px; }
+.toggle-icon-splits.checked { background-position: 0 -32px; }
+.toggle-icon-pace { background-position: -16px 0; }
+label:hover .toggle-icon-pace { background-position: -16px -16px; }
+.toggle-icon-pace.checked { background-position: -16px -32px; }
+.toggle-icon-pulse { background-position: -32px 0; }
+label:hover .toggle-icon-pulse { background-position: -32px -16px; }
+.toggle-icon-pulse.checked { background-position: -32px -32px; }
+.toggle-icon-elevation { background-position: -48px 0; }
+label:hover .toggle-icon-elevation { background-position: -48px -16px; }
+.toggle-icon-elevation.checked { background-position: -48px -32px; }
+.toggle-icon-map { background-position: -64px 0; }
+label:hover .toggle-icon-map { background-position: -64px -16px; }
+.toggle-icon-map.checked { background-position: -64px -32px; }
+
 
 .checkbox-icon {
 	display: inline-block;
@@ -20,14 +47,13 @@
 	height: 12px;
 	vertical-align: text-top;
 	background-image: url(../img/checkbox.png);
-	background-repeat: no-repeat;
 	background-position: top left;
 }
-
 .checkbox-icon.checked { background-position: bottom left; }
 .checkbox-icon.checked:hover, label:hover .checkbox-icon.checked { background-position: bottom right; }
 .checkbox-icon:hover, label:hover .checkbox-icon  { background-position: top right; }
 .checkbox-icon:active, label:active .checkbox-icon { position: relative; top: 1px; }
+
 
 .vdot-icon {
 	display: inline-block;
@@ -35,14 +61,13 @@
 	height: 12px;
 	vertical-align: text-top;
 	background-image: url(../img/vdot.png);
-	background-repeat: no-repeat;
 }
-
 .vdot-icon.vdot-up-2 { background-position: 0 0; }
 .vdot-icon.vdot-up { background-position: 0 -12px; }
 .vdot-icon.vdot-normal { background-position: 0 -24px; }
 .vdot-icon.vdot-down { background-position: 0 -36px; }
 .vdot-icon.vdot-down-2 { background-position: 0 -48px; }
+
 
 .weather-icon {
 	display: inline-block;
@@ -51,7 +76,6 @@
 	vertical-align: text-top;
 	background-image: url('../img/weather.png');
 }
-
 .weather-icon.weather-1 { background-position: 0 0; }
 .weather-icon.weather-2 { background-position: 0 -12px; }
 .weather-icon.weather-3 { background-position: 0 -24px; }

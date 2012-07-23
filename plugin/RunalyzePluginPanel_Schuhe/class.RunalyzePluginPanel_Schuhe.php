@@ -50,8 +50,8 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php">'.Icon::get(Icon::$ADD, '', '', 'Laufschuh hinzuf&uuml;gen').'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php">'.Icon::get(Icon::$TABLE, '', '', 'Schuhe in Tabelle anzeigen').'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::get(Icon::$ADD).'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::get(Icon::$TABLE).'</a>');
 
 		return implode(' ', $Links);
 	}
