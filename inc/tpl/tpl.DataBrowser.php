@@ -18,6 +18,8 @@
 	</div>
 
 	<span id="calendarResult" class="hide">W&auml;hle ein Datum aus ...</span>
+	<input id="calendarStart" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
+	<input id="calendarEnd" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
 
 	<div class="c">
 		Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
