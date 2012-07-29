@@ -12,7 +12,7 @@ foreach ($categories as $i => $cat) {
 	$confs = $Mysql->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`="'.$cat['category'].'"');
 
 	if (empty($confs))
-		echo '<em>Keine Konfigurationsvariablen vorhanden vorhanden.</em>';
+		echo '<em>Keine Konfigurationsvariablen vorhanden.</em>';
 
 	foreach ($confs as $i => $conf) {
 		$id = 'conf_field_'.$conf['key'];
@@ -27,4 +27,11 @@ foreach ($categories as $i => $cat) {
 
 	echo '</fieldset>';
 }
+echo '<fieldset id="conf_account" class="collapsed">';
+echo '<legend onclick="Runalyze.toggleFieldset(this, \'conf_account\', true)">Account</legend>';
+    echo '<div class="w50">';
+    echo '<label for="conf_link_DELETE">Account l&ouml;schen</label>';
+    echo '<a href="call/window.delete.php" class="window" id="conf_link_DELETE">Account l&ouml;schen</a>';
+    echo ' <small>(Du bekommst eine Mail mit einem Best&auml;tigungslink zur Löschung.)</small>';
+echo '</fieldset>';
 ?>

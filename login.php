@@ -26,6 +26,8 @@ if (isset($_GET['chpw']))
 	$tpl = 'tpl.loginWindow.setNewPassword.php';
 if (isset($_GET['activate']))
 	$tpl = 'tpl.loginWindow.activateAccount.php';
+if (isset($_GET['delete']))
+	$tpl = 'tpl.loginWindow.deleteAccount.php';
 
 include 'inc/tpl/tpl.installerHeader.php';
 include 'inc/tpl/'.$tpl;
