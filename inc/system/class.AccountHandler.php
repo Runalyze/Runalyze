@@ -382,6 +382,7 @@ class AccountHandler {
 		$message  = "Schade, dass du deinen Account ".$account['name']." l&ouml;schen möchtest!<br /><br />\n\n";
 		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br />\n";
 		$message .= $deletionLink;
+                $message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br />\n";
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
