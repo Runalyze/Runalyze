@@ -244,6 +244,15 @@ class AccountHandler {
 	static private function getActivationLink($hash) {
 		return System::getFullDomain().'login.php?activate='.$hash;
 	}
+        
+        /**
+	 * Get link for activate account
+	 * @param string $hash
+	 * @return string
+	 */
+	static private function getDeletionLink($hash) {
+		return System::getFullDomain().'login.php?delete='.$hash;
+	}
 
 	/**
 	 * Get username requested for changing password
@@ -299,6 +308,16 @@ class AccountHandler {
 
 		return false;
 	}
+        /**
+	 * Try to delete the account
+	 * @return boolean 
+	 */
+	static public function tryToDeleteAccount() {
+		$Account = Mysql::getInstance()->untouchedQuery('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.  mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
+		if ($Account) {
+			return true;
+		}
+	}
 
 	/**
 	 * Import empty values for new account
@@ -347,6 +366,32 @@ class AccountHandler {
 		}
 	}
 
+        	/**
+	 * Set activation key for new user and set via email
+	 * @param array $errors
+	 */
+	static public function setAndSendDeletionKeyFor(&$errors) {
+		$account        = Mysql::getInstance()->fetch(PREFIX.'account', SessionAccountHandler::getId());
+                $deletionHash = self::getRandomHash();
+		$deletionLink = self::getDeletionLink($deletionHash);
+                
+                Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
+             
+                        
+                $subject  = 'Runalyze v'.RUNALYZE_VERSION.': Accountl&ouml;schung best&auml;tigen';
+		$message  = "Schade, dass du deinen Account ".$account['name']." l&ouml;schen möchtest!<br /><br />\n\n";
+		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br />\n";
+		$message .= $deletionLink;
+
+		if (!System::sendMail($account['mail'], $subject, $message)) {
+			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
+
+			if (System::isAtLocalhost()) {
+				$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+				Error::getInstance()->addDebug('Link for deleting account: '.$activationLink);
+			}
+		}
+	}
 	/**
 	 * Set some special configuration values
 	 * @param int $accountId 

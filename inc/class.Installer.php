@@ -321,15 +321,15 @@ class Installer {
 		$query  = '';
 		$array = array();
 
-		foreach($SQL as $line) {
+                foreach($SQL as $line) {
 			$line = trim($line);
 
 			if (defined('PREFIX'))
 				$line = str_replace('runalyze_', PREFIX, $line);
 			
-			if (isset($this->mysqlConfig[3]) && !isset($_POST['database'])) {
-				$line = str_replace('DATABASE runalyze', $this->mysqlConfig[3], $line);
-				$line = str_replace('DATABASE `runalyze`', $this->mysqlConfig[3], $line);
+			if (isset($mysqlConfig[3]) && !isset($_POST['database'])) {
+				$line = str_replace('DATABASE runalyze', $mysqlConfig[3], $line);
+				$line = str_replace('DATABASE `runalyze`', $mysqlConfig[3], $line);
 			}
 
 			$AA = explode(' ', $line);
