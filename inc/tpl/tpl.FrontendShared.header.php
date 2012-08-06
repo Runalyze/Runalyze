@@ -3,6 +3,8 @@
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
+	<base href="<?php echo System::getFullDomain(); ?>" />
+
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link rel="stylesheet" type="text/css" href="lib/sprites.css" />
 	<?php foreach ($this->CSS_FILES as $file): ?>
@@ -31,12 +33,12 @@
 <div id="flotLoader"></div>
 
 <div id="copy" class="top">
-	<span class="tab singleTabLeft">
+	<span class="tab">
 		&Ouml;ffentliche Trainingsansicht
 		<?php if (strlen($User['username']) > 1): ?>
 			von <strong><?php echo $User['username']; ?></strong>
 		<?php endif; ?>
 	</span>
 
-	<a class="tab singleTab b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<a class="tab right b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
 </div>

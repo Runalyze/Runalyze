@@ -190,7 +190,7 @@ class GpsData {
 			while ($this->currentTimeStep($timeStepFromDistance) == floor($this->arrayForTime[$this->arrayLastIndex]/$timeStepFromDistance)*$timeStepFromDistance)
 				$this->arrayIndex++;
 		else
-			while ($this->currentKilometer($distance) == floor($this->arrayForDistance[$this->arrayLastIndex]/$distance)*$distance)
+			while (!$this->loopIsAtEnd() && $this->currentKilometer($distance) == floor($this->arrayForDistance[$this->arrayLastIndex]/$distance)*$distance)
 				$this->arrayIndex++;
 
 		return true;
@@ -597,7 +597,8 @@ class GpsData {
 
 	/**
 	 * Get plot data for a given key
-	 * @param unknown_type $key
+	 * @param string $key
+	 * @return array
 	 */
 	protected function getPlotDataFor($key) {
 		$Data = array();
