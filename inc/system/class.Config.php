@@ -76,10 +76,14 @@ class Config {
 			self::insertNewConst($category, $KEY, $type, $default, $description, $select_description);
 			$value = $default;
 		} else {
+			$selectDescAsString = self::valueToString($select_description, 'array');
+
 			if ($type != $Consts[$KEY]['type'])
 				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'type', $type);
 			if ($description != $Consts[$KEY]['description'])
 				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'description', $description);
+			if ($selectDescAsString != $Consts[$KEY]['select_description'])
+				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'select_description', $selectDescAsString);
 
 			$value = self::stringToValue($Consts[$KEY]['value'], $type);
 
