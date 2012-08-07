@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Strecken';
 /**
  * Class: RunalyzePluginStat_Strecken
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Strecken extends PluginStat {
 	/**
@@ -58,6 +51,10 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader('Strecken');
+
+		echo '<p class="c b">'.Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="toggle-icon-map checked"></i> Streckennetz &ouml;ffnen</a>', 'big').'</p>';
+		echo HTML::clearBreak();
+
 		$this->displayRoutes();
 		$this->displayCities();
 
