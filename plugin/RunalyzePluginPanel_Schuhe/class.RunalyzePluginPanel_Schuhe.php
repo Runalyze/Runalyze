@@ -110,7 +110,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<th class="{sorter: \'distance\'}">&Oslash; km</th>
 					<th>&Oslash; Pace</th>
 					<th class="{sorter: \'distance\'} small"><small>max.</small> km</th>
-					<th class="small"><small>max.</small> Pace</th>
+					<th class="small"><small>min.</small> Pace</th>
 					<th class="{sorter: \'resulttime\'}">Dauer</th>
 					<th class="{sorter: \'distance\'}">Distanz</th>
 				</tr>
@@ -119,23 +119,19 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 
 		if (!empty($this->schuhe)) {
 			foreach ($this->schuhe as $i => $schuh) {
-				$Shoe = new Shoe($schuh);
-
-				$training_dist = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `distance` DESC');
-				$training_pace = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`='.$schuh['id'].' ORDER BY `pace` ASC');
-				$trainings     = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` WHERE `shoeid`="'.$schuh['id'].'"');
+				$Shoe   = new Shoe($schuh);
 				$in_use = $Shoe->isInUse() ? '' : ' unimportant';
 
 				echo('
 				<tr class="'.HTML::trClass($i).$in_use.' r">
-					<td class="small">'.$trainings.'x</td>
+					<td class="small">'.$schuh['num'].'x</td>
 					<td>'.$this->editLinkFor($schuh['id']).'</td>
 					<td class="b l">'.Shoe::getSearchLink($schuh['id']).'</td>
 					<td class="small">'.$Shoe->getSince().'</td>
-					<td >'.(($trainings != 0) ? Helper::Km($Shoe->getKmInDatabase()/$trainings) : '-').'</td>
-					<td >'.(($trainings != 0) ? Helper::Speed($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
-					<td class="small">'.Ajax::trainingLink($training_dist['id'], Helper::Km($training_dist['distance'])).'</td>
-					<td class="small">'.Ajax::trainingLink($training_pace['id'], $training_pace['pace'].'/km').'</td>
+					<td>'.(($schuh['num'] != 0) ? Helper::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
+					<td>'.(($schuh['num'] != 0) ? Helper::Speed($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
+					<td class="small">'.Helper::Km($schuh['dist']).'</td>
+					<td class="small">'.$schuh['pace'].'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>
 					<td>'.$Shoe->getKmString().' '.$Shoe->getKmIcon().'</td>
 				</tr>');
@@ -155,8 +151,19 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * Initialize internal data
 	 */
 	private function initTableData() {
-		// TODO: Join-Query
-		$this->schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
+		$this->schuhe = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				COUNT('.PREFIX.'training.id) as num,
+				MIN(pace) as pace,
+				MAX(distance) as dist,
+				'.PREFIX.'shoe.*
+			FROM '.PREFIX.'shoe
+				LEFT JOIN '.PREFIX.'training ON '.PREFIX.'training.shoeid='.PREFIX.'shoe.id
+			WHERE
+				'.PREFIX.'shoe.accountid="'.SessionAccountHandler::getId().'" AND
+				'.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
+			GROUP BY shoeid
+			ORDER BY inuse DESC, km DESC');
 	}
 
 	/**

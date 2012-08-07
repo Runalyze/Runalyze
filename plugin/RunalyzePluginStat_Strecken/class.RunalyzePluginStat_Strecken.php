@@ -9,6 +9,12 @@ $PLUGINKEY = 'RunalyzePluginStat_Strecken';
  */
 class RunalyzePluginStat_Strecken extends PluginStat {
 	/**
+	 * Maximum number of routes on routenet
+	 * @var int 
+	 */
+	static public $MAX_ROUTES_ON_NET = 100;
+
+	/**
 	 * Array with all cities
 	 * @var array
 	 */
