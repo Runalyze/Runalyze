@@ -1,7 +1,6 @@
 <?php
 /**
  * Class: GMap
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Gmap {
@@ -53,20 +52,33 @@ class Gmap {
 	 * Display 
 	 */
 	public function displayMap() {
+		$this->outputJScode();
+		$this->outputHTML();
+	}
+
+	/**
+	 * Output HTML-code 
+	 */
+	public function outputHTML() {
+		include 'tpl/tpl.Gmap.toolbar.php';
+	}
+
+	/**
+	 * Output JavaScript-Code 
+	 */
+	protected function outputJScode() {
 		$Code  = $this->getCodeForInit();
 		$Code .= $this->getCodeForPolylines();
 		$Code .= $this->getCodeForKmMarker();
 
 		echo Ajax::wrapJSasFunction($Code);
-
-		include 'tpl/tpl.Gmap.toolbar.php';
 	}
 
 	/**
 	 * Get code to init map
 	 * @return string
 	 */
-	protected function getCodeForInit() {
+	public function getCodeForInit() {
 		return 'RunalyzeGMap.setMapType("'.CONF_TRAINING_MAPTYPE.'")'.
 					'.setPolylineOptions({strokeColor:"'.CONF_TRAINING_MAP_COLOR.'"})'.
 					'.init("#'.$this->StringID.'");';
@@ -76,7 +88,7 @@ class Gmap {
 	 * Get JS-code for adding polyline(s)
 	 * @return string
 	 */
-	protected function getCodeForPolylines() {
+	public function getCodeForPolylines($withoutHover = false) {
 		$Code = '';
 		$Path = array();
 
@@ -86,18 +98,24 @@ class Gmap {
 
 		$this->GpsData->startLoop();
 		while ($this->GpsData->nextStep()) {
-			$PointData = addslashes(Helper::Km($this->GpsData->getDistance(),2).'<br />'.Helper::Time($this->GpsData->getTime(), false, 2));
+			if ($this->GpsData->getLatitude() == 0)
+				continue;
+
+			if ($withoutHover)
+				$PointData = '';
+			else
+				$PointData = addslashes(Helper::Km($this->GpsData->getDistance(),2).'<br />'.Helper::Time($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
 			if ($this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
-				$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']);';
+				$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']'.($withoutHover?',true':'').');';
 				$Path  = array();
 			}
 
 			$Path[] = '['.$this->GpsData->getLatitude().','.$this->GpsData->getLongitude().',"'.$PointData.'"]';
 		}
 
-		$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']);';
+		$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']'.($withoutHover?',true':'').');';
 
 		return $Code;
 	}

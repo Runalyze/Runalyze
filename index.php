@@ -14,6 +14,7 @@ require 'inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 ?>
+
 <div id="container">
 	<div id="main">
 		<div id="dataPanel" class="panel">
