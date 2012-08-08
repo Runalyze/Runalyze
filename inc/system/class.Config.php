@@ -78,6 +78,7 @@ class Config {
 		} else {
 			$selectDescAsString = self::valueToString($select_description, 'array');
 
+			// TODO: Update select-keys if they have changed
 			if ($type != $Consts[$KEY]['type'])
 				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'type', $type);
 			if ($description != $Consts[$KEY]['description'])

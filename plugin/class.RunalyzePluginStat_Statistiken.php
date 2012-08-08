@@ -39,6 +39,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$this->setSportsNavigation();
 		$this->setYearsNavigation();
+		$this->setOwnNavigation();
+	}
+
+	protected function setOwnNavigation() {
+		$SubLinks = array();
+
+		for ($x = date("Y"); $x >= START_YEAR; $x--)
+			$SubLinks[] = $this->getInnerLink($x, $this->sportid, $x, 'allWeeks');
+
+		$Links   = array();
+		$Links[] = array('tag' => '<a href="#">Alle Trainingswochen</a>', 'subs' => $SubLinks);
+
+		$this->setToolbarNavigationLinks($Links);
 	}
 
 	/**
@@ -67,8 +80,21 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayHeader($this->sport['name'].': '.$this->getYearString());
-		$this->displayYearTable();
-		$this->displayWeekTable();
+
+		if ($this->wantToShowAllWeeks()) {
+			$this->displayWeekTable(true);
+		} else {
+			$this->displayYearTable();
+			$this->displayWeekTable();
+		}
+	}
+
+	/**
+	 * Boolean flag: Show all weeks?
+	 * @return bool
+	 */
+	private function wantToShowAllWeeks() {
+		return $this->dat == 'allWeeks';
 	}
 
 	/**
@@ -132,23 +158,36 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 	/**
 	 * Display table with last week-statistics 
+	 * @param bool $showAllWeeks
 	 */
-	private function displayWeekTable() {
-		if ($this->year != date("Y"))
+	private function displayWeekTable($showAllWeeks = false) {
+		if ($this->year != date("Y") && !$showAllWeeks)
 			return;
 
 		$Dataset = new Dataset();
 
 		echo '<table class="small notSmaller r fullWidth">';
-		echo '<thead><tr><th colspan="'.($Dataset->column_count+1).'">Letzten 10 Trainingswochen</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($Dataset->column_count+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
 
-		for ($w = 0; $w <= 9; $w++) {
-			$time  = time() - $w*7*DAY_IN_S;
+		if (!$showAllWeeks) {
+			$starttime = time();
+			$maxW      = 9;
+		} else {
+			$starttime = ($this->year == date("Y")) ? time() : mktime(1, 0, 0, 12, 31, $this->year);
+			$maxW = ($starttime - mktime(1, 0, 0, 12, 31, $this->year-1))/(7*DAY_IN_S);
+		}
+
+		for ($w = 0; $w <= $maxW; $w++) {
+			$time  = $starttime - $w*7*DAY_IN_S;
 			$start = Time::Weekstart($time);
 			$end   = Time::Weekend($time);
+			$week  = strftime("KW %W", $time);
 
-			echo '<tr class="a'.(($w%2)+1).'"><td class="b l">'.Ajax::tooltip('KW '.strftime("%W", $time), date("d.m.Y", $start).' bis '.date("d.m.Y", $end)).'</td>';
+			if ($start < START_TIME)
+				break;
+
+			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
 
 			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end))
 				$Dataset->displayTableColumns();
@@ -160,10 +199,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		echo '</tbody>';
 		echo '</table>';
-
-/* (hover: Datum)
- * KW 33 - 5x - 57,3 km - 4:33:19 - 4:17/km - 73%
- */
 	}
 
 	/**

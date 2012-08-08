@@ -94,10 +94,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayOwnNavigation() {
 		$Links   = array();
-		$Links[] = array('tag' => Ajax::change('Wettk&auml;mpfe', 'tab_content', '#wk-tablelist'));
+		$Links[] = array('tag' => Ajax::change('Wettk&auml;mpfe', 'tab_content', '#wk-tablelist', 'triggered'));
 
 		if (true) // TODO
-			$Links[] = array('tag' => Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten', 'triggered'));
+			$Links[] = array('tag' => Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten'));
 
 		echo Ajax::toolbarNavigation($Links, 'right');
 	}

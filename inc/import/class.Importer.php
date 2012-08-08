@@ -335,8 +335,9 @@ abstract class Importer {
 
 	/**
 	 * Include template for displaying formular for uploading a file
+	 * @param bool $hideGarmin
 	 */
-	public function displayGarminCommunicator() {
+	public function displayGarminCommunicator($hideGarmin = false) {
 		include 'tpl/tpl.Importer.garminCommunicator.php';
 	}
 
