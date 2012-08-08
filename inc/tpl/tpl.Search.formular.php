@@ -41,7 +41,7 @@ echo Ajax::wrapJSforDocumentReady('$("#predefinedSearch").change(function(){
 				<option value="s"<?php           echo HTML::Selected($_POST['order'] == 's'); ?>>Dauer</option>
 				<option value="pace"<?php        echo HTML::Selected($_POST['order'] == 'pace'); ?>>Pace</option>
 				<option value="elevation"<?php   echo HTML::Selected($_POST['order'] == 'elevation'); ?>>H&ouml;henmeter</option>
-				<option value="pulse"<?php       echo HTML::Selected($_POST['order'] == 'pulse'); ?>>Puls</option>
+				<option value="pulse_avg"<?php   echo HTML::Selected($_POST['order'] == 'pulse_avg'); ?>>Puls</option>
 				<option value="temperature"<?php echo HTML::Selected($_POST['order'] == 'temperature'); ?>>Temperatur</option>
 				<option value="vdot"<?php        echo HTML::Selected($_POST['order'] == 'vdot'); ?>>VDOT</option>
 			</select>
