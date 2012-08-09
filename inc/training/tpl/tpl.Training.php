@@ -11,14 +11,18 @@
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('.training-zones').toggle();"><i class="checkbox-icon checked"></i> Zonen</label>
+				<label id="training-view-toggler-zones" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('zones');"><i class="checkbox-icon checked"></i> Zonen</label>
 			<?php endif; ?>
 			<?php if ($this->Training->hasPaceData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-rounds').toggle();"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
+				<label id="training-view-toggler-rounds" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('rounds');"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
 			<?php endif; ?>
 			<?php if (count($this->getPlotTypesAsArray()) > 0 || $this->Training->hasPositionData()): ?>
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-plots-and-map').toggle();"><i class="checkbox-icon checked"></i> Karte &amp; Diagramme</label>
+				<label id="training-view-toggler-graphics" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('graphics');"><i class="checkbox-icon checked"></i> Karte &amp; Diagramme</label>
 			<?php endif; ?>
+
+			<?php if (!CONF_TRAINING_SHOW_ZONES) echo Ajax::wrapJSasFunction('$("#training-view-toggler-zones").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_ROUNDS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-rounds").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_GRAPHICS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-graphics").click();'); ?>
 		</span>
 
 		<?php if (!Request::isOnSharedPage()): ?>
@@ -45,13 +49,17 @@
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line">
 				<?php foreach ($Plots as $i => $Plot): ?>
-				<label class="checkable" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Plot['key']; ?>');"><i id="toggle-<?php echo $Plot['key']; ?>" class="toggle-icon-<?php echo $Plot['key']; ?> checked"></i> <?php echo $Plot['name']; ?></label>
+				<label id="training-view-toggler-<?php echo $Plot['key']; ?>" class="checkable" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Plot['key']; ?>');"><i id="toggle-<?php echo $Plot['key']; ?>" class="toggle-icon-<?php echo $Plot['key']; ?> checked"></i> <?php echo $Plot['name']; ?></label>
 				<?php endforeach; ?>
 
-				<label class="checkable" onclick="$(this).children('i').toggleClass('checked');$('#training-map').toggle();"><i class="toggle-icon-map checked"></i> Karte</label>
+				<label id="training-view-toggler-map" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('map');"><i class="toggle-icon-map checked"></i> Karte</label>
 			</div>
-
 			<?php echo Ajax::wrapJSforDocumentReady('RunalyzePlot.initTrainingNavitation();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_PLOT_PACE) echo Ajax::wrapJSasFunction('$("#training-view-toggler-pace").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_PLOT_PULSE) echo Ajax::wrapJSasFunction('$("#training-view-toggler-pulse").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_PLOT_ELEVATION) echo Ajax::wrapJSasFunction('$("#training-view-toggler-elevation").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_PLOT_SPLITS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-splits").click();'); ?>
+			<?php if (!CONF_TRAINING_SHOW_MAP) echo Ajax::wrapJSasFunction('$("#training-view-toggler-map").click();'); ?>
 
 			<?php
 			foreach (array_keys($Plots) as $i => $Key) {
