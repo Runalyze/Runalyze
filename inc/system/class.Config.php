@@ -25,6 +25,12 @@ class Config {
 	private static $DbConsts = array();
 
 	/**
+	 * Array with all fieldsets
+	 * @var array 
+	 */
+	private static $Fieldsets = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {}
@@ -50,7 +56,7 @@ class Config {
 	 * Get all consts being already in database
 	 * @return array
 	 */
-	static private function getConsts() {
+	static public function getConsts() {
 		if (empty(self::$DbConsts)) {
 			$data = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'conf WHERE accountid="'.SessionAccountHandler::getId().'"');
 			foreach ($data as $confArray)
@@ -58,6 +64,23 @@ class Config {
 		}
 
 		return self::$DbConsts;
+	}
+
+	/**
+	 * Get array with all fieldsets
+	 * @return array
+	 */
+	static public function getFieldsets() {
+		return self::$Fieldsets;
+	}
+
+	/**
+	 * Add a new label to fieldset
+	 * @param type $label
+	 * @param type $arrayOfKeys 
+	 */
+	static public function addFieldset($label, $arrayOfKeys) {
+		self::$Fieldsets[$label] = $arrayOfKeys;
 	}
 
 	/**
@@ -206,7 +229,8 @@ class Config {
 				$folder   = self::stringToValue($conf['select_description'], 'array');
 				$options  = array();
 				foreach ($folder as $fold) {
-					if ($handle = opendir(FRONTEND_PATH.'../'.$fold)) {
+					$handle = opendir(FRONTEND_PATH.'../'.$fold);
+					if ($handle) {
 						while (false !== ($file = readdir($handle))) {
 							if (substr($file,0,1) != ".") {
 								$options[] = array('name' => $file, 'value' => $fold.$file);

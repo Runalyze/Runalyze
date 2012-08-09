@@ -25,7 +25,7 @@ if (isset($submit))
 	echo ('<div id="submit-info">'.$submit.'</div>');
 
 $Links   = array();
-$Links[] = array('tag' => Ajax::change('Allgemeines', 'config_all', 'config_allgemein'));
+$Links[] = array('tag' => Ajax::change('Allgemeines', 'config_all', 'config_allgemein', 'triggered'));
 $Links[] = array('tag' => Ajax::change('Plugins', 'config_all', 'config_plugins'));
 $Links[] = array('tag' => Ajax::change('Dataset', 'config_all', 'config_dataset'));
 $Links[] = array('tag' => Ajax::change('Sportarten', 'config_all', 'config_sport'));
