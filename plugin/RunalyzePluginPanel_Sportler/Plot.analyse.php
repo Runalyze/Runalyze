@@ -35,7 +35,6 @@ $Plot->Data[] = array('label' => 'Wasser', 'color' => '#3232FF', 'data' => $Wate
 $Plot->Data[] = array('label' => 'Muskeln', 'color' => '#21FF21', 'data' => $Muscles, 'yaxis' => 2);
 
 $Plot->setMarginForGrid(5);
-$Plot->setLinesFilled(array(0,1));
 
 //$Plot->hideXLabels();
 $Plot->setXLabels($Labels);
@@ -43,6 +42,7 @@ $Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
 $Plot->Options['xaxis']['tickLength'] = 3;
+$Plot->Options['yaxis']['autoscaleMargin'] = 0.1;
 
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '%');
