@@ -46,7 +46,7 @@ Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Karte: Markie
 Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Karte: Typ',
 	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
-Config::register('Training', 'TRAINING_MAKE_PUBLIC', 'bool', false, '<abbr class="atLeft" tooltip="&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.">Trainings ver&ouml;ffentlichen</abbr>');
+Config::register('Training', 'TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
 // Hidden ones
 Config::register('Training', 'TRAINING_SHOW_ZONES', 'bool', true, 'Anzeige: Zonen');
 Config::register('Training', 'TRAINING_SHOW_ROUNDS', 'bool', true, 'Anzeige: Runden');
@@ -68,13 +68,13 @@ Config::addFieldset('Design', array(
 	'DB_SHOW_CREATELINK_FOR_DAYS'
 ));
 
-Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', '<abbr class="atLeft" tooltip="im Kalender">Heute hervorheben</abbr>');
+Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', Ajax::tooltip('Heute hervorheben', 'im Kalender', true));
 Config::register('Design', 'DB_SHOW_CREATELINK_FOR_DAYS', 'bool', '1', 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen');
 Config::register('Design', 'DB_SHOW_DIRECT_EDIT_LINK', 'bool', '1', 'Training-Bearbeiten-Link im Kalender anzeigen');
 // TODO: remove
 Config::register('Design', 'JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
-Config::register('Design', 'DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', '<abbr class="atLeft" tooltip="Neuladen notwendig, eigene Bilder in img/backgrounds/">Hintergrundbild</abbr>', array('img/backgrounds/'));
-Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, '<abbr class="atLeft" tooltip="Neuladen notwendig">Hintergrundbild skalieren</abbr>');
+Config::register('Design', 'DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', Ajax::tooltip('Hintergrundbild', 'Neuladen notwendig, eigene Bilder in img/backgrounds/', true), array('img/backgrounds/'));
+Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, Ajax::tooltip('Hintergrundbild skalieren', 'Neuladen notwendig', true));
 Config::register('Design', 'DESIGN_TOOLBAR_POSITION', 'select', array('top' => true, 'bottom' => false), 'Position der Toolbar', array('oben', 'unten'));
 
 
@@ -112,7 +112,7 @@ Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
 	array('upload' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
 Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
-Config::register('Eingabeformular', 'GARMIN_API_KEY', 'string', '', '<abbr class="atLeft" tooltip="für http://'.$_SERVER['HTTP_HOST'].'">Garmin API-Key</abbr>');
+Config::register('Eingabeformular', 'GARMIN_API_KEY', 'string', '', Ajax::tooltip('Garmin API-Key', 'für http://'.$_SERVER['HTTP_HOST'], true));
 
 
 Config::addFieldset('Suchfenster', array(

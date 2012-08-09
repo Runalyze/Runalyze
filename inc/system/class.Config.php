@@ -282,40 +282,47 @@ class Config {
 	 * Parse post-data for editing conf-data in databse
 	 */
 	static public function parsePostDataForConf() {
-		$confs = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'conf` WHERE `category`!="'.self::$HIDDEN_CAT.'"');
-		foreach ($confs as $conf) {
-			$str_value = $conf['value'];
-			$value     = self::stringToValue($str_value, $conf['type']);
-			$post      = isset($_POST['CONF_'.$conf['key']]) ? $_POST['CONF_'.$conf['key']] : false;
+		$Fieldsets = self::getFieldsets();
+		$Consts    = self::getConsts();
 
-			switch ($conf['type']) {
-				case 'selectdb':
-				case 'selectfile':
-					$str_value = $post;
-					break;
-				case 'select':
-					$array = array();
-					foreach ($value as $key => $val)
-						$array[$key] = ($post == $key);
+		foreach ($Fieldsets as $Category => $Fields) {
+			foreach ($Fields as $Key) {
+				if (!isset($Consts[$Key]))
+					continue;
 
-					$str_value = self::valueToString($array, 'select');
-					break;
-				case 'array':
-					// TODO: Fehlermeldungen bei falschem Parsing (kommagetrennt ...)
-					$str_value = $post;
-					break;
-				case 'bool':
-					$value = $post || $post == 'on';
-					$str_value = self::valueToString($value, 'bool');
-					break;
-				case 'int':
-				case 'float':
-				case 'string':
-				default:
-					$str_value = trim(Helper::CommaToPoint($post));
+				$str_value = $Consts[$Key]['value'];
+				$value     = self::stringToValue($str_value, $Consts[$Key]['type']);
+				$post      = isset($_POST['CONF_'.$Key]) ? $_POST['CONF_'.$Key] : false;
+
+				switch ($Consts[$Key]['type']) {
+					case 'selectdb':
+					case 'selectfile':
+						$str_value = $post;
+						break;
+					case 'select':
+						$array = array();
+						foreach ($value as $key => $val)
+							$array[$key] = ($post == $key);
+
+						$str_value = self::valueToString($array, 'select');
+						break;
+					case 'array':
+						// TODO: Fehlermeldungen bei falschem Parsing (kommagetrennt ...)
+						$str_value = $post;
+						break;
+					case 'bool':
+						$value = $post || $post == 'on';
+						$str_value = self::valueToString($value, 'bool');
+						break;
+					case 'int':
+					case 'float':
+					case 'string':
+					default:
+						$str_value = trim(Helper::CommaToPoint($post));
+				}
+
+				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$Key]['id'], 'value', $str_value);
 			}
-
-			Mysql::getInstance()->update(PREFIX.'conf', $conf['id'], 'value', $str_value);
 		}
 	}
 
