@@ -135,13 +135,34 @@ class Trimp {
 			$Training    = new Training($trainingId);
 			$avgHf       = $Training->avgHF();
 		}
-		$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
-		$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
 
-		if ($trimpToReach !== false)
-			return $trimpToReach / ( $TrimpFactor * 5.35 / 10 );
+		if ($trimpToReach || !$Training->GpsData()->hasHeartrateData()) {
+			$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
+			$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
+	
+			if ($trimpToReach !== false)
+				return $trimpToReach / ( $TrimpFactor * 5.35 / 10 );
+	
+			$Trimp = round($Training->get('s')/60 * $TrimpFactor * $Training->RPE() / 10);
+		} else {
+			$Training->GpsData()->startLoop();
+			/* XXX
+			$Training->GpsData()->setStepSize( round(
+			    $Training->GpsData()->arraySizes /
+			    $Training->GpsData()->$NUM_STEPS_FOR_ZONES ) );
+			*/
+			$Training->GpsData()->setStepSize(1);
 
-		$Trimp = round($Training->get('s')/60 * $TrimpFactor * $Training->RPE() / 10);
+			$Trimp = 0;
+			while ($Training->GpsData()->nextStep()) {
+				$avgHf = $Training->GpsData()->getAverageHeartrateOfStep();
+
+				$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
+				$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
+				$Trimp += $Training->GpsData()->getTimeOfStep()/60 * $TrimpFactor;
+			}
+			$Trimp = round($Trimp * $Training->RPE() / 10);
+		}
 
 		if ($Trimp > self::$MAX_TRIMP)
 			self::setMaxTRIMP($Trimp);
