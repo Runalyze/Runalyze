@@ -40,7 +40,7 @@ if ($Training->Sport()->usesKmh()) {
 $eData = $Training->GpsData()->getPlotDataForElevation();
 $emin = min($eData); $min_x = array_keys($eData, $emin);
 $emax = max($eData); $max_x = array_keys($eData, $emax);
-if ($max - $min <= 50) {
+if ($emax - $emin <= 50) {
 	$minEL = $emin - 20;
 	$maxEL = $emax + 20;
 } else {

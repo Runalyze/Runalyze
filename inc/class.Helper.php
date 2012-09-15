@@ -423,6 +423,17 @@ class Helper {
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
+		if (SharedLinker::getTrainingId() > 0) {
+			$account = Mysql::getInstance()->fetchSingle('SELECT `accountid` FROM `'.PREFIX.'training` WHERE `id`="'.SharedLinker::getTrainingId().'"');
+
+			if (isset($account['accountid']))
+				$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.$account['accountid'].'" ORDER BY `time` DESC');
+			else
+				$userdata = false;
+		} else {
+			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+		}
+
 		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
 		if ($userdata === false) {
@@ -444,6 +455,17 @@ class Helper {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (defined('HF_REST'))
 			return HF_REST;
+
+		if (SharedLinker::getTrainingId() > 0) {
+			$account = Mysql::getInstance()->fetchSingle('SELECT `accountid` FROM `'.PREFIX.'training` WHERE `id`="'.SharedLinker::getTrainingId().'"');
+
+			if (isset($account['accountid']))
+				$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.$account['accountid'].'" ORDER BY `time` DESC');
+			else
+				$userdata = false;
+		} else {
+			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+		}
 
 		$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 
