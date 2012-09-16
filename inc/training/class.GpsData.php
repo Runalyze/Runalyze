@@ -9,7 +9,7 @@ class GpsData {
 	 * Minimal difference per step to be recognized for elevation data
 	 * @var int
 	 */
-	public static $minElevationDiff = 2;
+	public static $minElevationDiff = 3;
 
 	/**
 	 * Only every n-th point will be taken for the elevation
@@ -812,31 +812,14 @@ class GpsData {
 		if (!$this->hasElevationData())
 			return 0;
 
-		$elevationPoints 	= $this->arrayForElevation;
-		$minimumElevation   = (min($elevationPoints) > 0) ? max($elevationPoints) - min($elevationPoints) : 0;
-		$positiveElevation 	= 0;  $up   = false;
-		$negativeElevation 	= 0;  $down = false;
-		$currentElevation   = 0;
+		$this->startLoop();
+		$this->setStepSize($this->arraySizes);
+		$this->nextStep();
 
-		// Algorithm: must be at least 5m up/down without down/up
-		foreach ($elevationPoints as $i => $p) {
-			if ($i != 0 && $elevationPoints[$i] != 0 && $elevationPoints[$i-1] != 0) {
-				$diff = $p - $elevationPoints[$i-1];
-				if ( ($diff > 0 && !$down) || ($diff < 0 && !$up) )
-					$currentElevation += $diff;
-				else {
-					if ($up && abs($currentElevation) >= 5)
-						$positiveElevation += $currentElevation;
-					elseif ($down && abs($currentElevation) >= 5)
-						$negativeElevation -= $currentElevation;
-					$currentElevation = $diff;
-				}
-				$up   = ($diff > 0);
-				$down = ($diff < 0);
-			}
-		}
+		$minimumElevation = (min($this->arrayForElevation) > 0) ? max($this->arrayForElevation) - min($this->arrayForElevation) : 0;
+		$elevationArray   = $this->getElevationUpDownOfStep();
 
-		return max($minimumElevation, $positiveElevation, $negativeElevation);
+		return max($minimumElevation, $elevationArray[0], $elevationArray[1]);
 	}
 
 	/**
