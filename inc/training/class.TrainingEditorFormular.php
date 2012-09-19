@@ -146,6 +146,7 @@ class TrainingEditorFormular {
 			return;
 
 		$Fieldset = new FormularFieldset('Distanz');
+		$Fieldset->addCSSclass( TrainingCreatorFormular::$ONLY_DISTANCES_CLASS );
 		$Fieldset->addField(new TrainingInputDistance());
 
 		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets)
@@ -245,7 +246,7 @@ class TrainingEditorFormular {
 	protected function initGPSFieldset() {
 		if ($this->Training->hasPositionData())
 			$this->initElevationCorrectionFieldset();
-		else
+		elseif ($this->Training->hasDistance())
 			$this->initAddGPSdataFieldset();
 	}
 

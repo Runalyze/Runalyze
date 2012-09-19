@@ -41,11 +41,12 @@
 </div>
 
 <div id="training-display">
+	<?php
+	$Plots = $this->getPlotTypesAsArray();
+	if ($this->Training->hasPositionData() || !empty($Plots)):
+	?>
 	<div id="training-plots-and-map" class="dataBox"><!--"toolbar asBox open">-->
-		<?php
-		$Plots = $this->getPlotTypesAsArray();
-		if (!empty($Plots)):
-		?>
+		<?php if (!empty($Plots)): ?>
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line">
 				<?php foreach ($Plots as $i => $Plot): ?>
@@ -77,6 +78,7 @@
 			<?php endif; ?>
 		</div>
 	</div>
+	<?php endif; ?>
 
 
 	<div id="training-table" class="dataBox left">
