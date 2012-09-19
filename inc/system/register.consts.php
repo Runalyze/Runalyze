@@ -28,7 +28,8 @@ Config::addFieldset('Training', array(
 	'TRAINING_MAPTYPE',
 	'TRAINING_DECIMALS',
 	'TRAINING_MAP_COLOR',
-	'TRAINING_MAKE_PUBLIC'//,
+	'TRAINING_MAKE_PUBLIC',
+	'TRAINING_MAP_BEFORE_PLOTS'//,
 	//'TRAINING_MAP_MARKER'
 ));
 
@@ -47,6 +48,7 @@ Config::register('Training', 'TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Karte: Typ',
 	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
 Config::register('Training', 'TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
+Config::register('Training', 'TRAINING_MAP_BEFORE_PLOTS', 'bool', false, 'Karte: vor Diagrammen');
 // Hidden ones
 Config::register('Training', 'TRAINING_SHOW_ZONES', 'bool', true, 'Anzeige: Zonen');
 Config::register('Training', 'TRAINING_SHOW_ROUNDS', 'bool', true, 'Anzeige: Runden');
