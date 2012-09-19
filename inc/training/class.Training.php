@@ -713,10 +713,18 @@ class Training {
 	 * Correct the elevation data
 	 */
 	public function elevationCorrection() {
-		if ($this->GpsData()->hasPositionData())
+		if ($this->GpsData()->hasPositionData()) {
 			Mysql::getInstance()->update(PREFIX.'training', $this->id,
-				'arr_alt',
-				implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()));
+				array(
+					'arr_alt',
+					'elevation_corrected'
+				),
+				array(
+					implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()),
+					1
+				)
+			);
+		}
 	}
 
 	/**

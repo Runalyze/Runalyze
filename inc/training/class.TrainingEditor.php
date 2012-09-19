@@ -60,12 +60,21 @@ class TrainingEditor {
 	 * Parse data from array and prepare values for database
 	 */
 	private function parseDataForUpdate() {
+		$this->addInternalValues();
 		$this->addSimpleValues();
 		$this->parseDate();
 		$this->parseTrainingtime();
 		$this->parseWeather();
 		$this->parseClothes();
 		$this->parseSplits();
+	}
+
+	/**
+	 * Add internal values 
+	 */
+	private function addInternalValues() {
+		$this->UpdateColumns[] = 'edited';
+		$this->UpdateValues[]  = time();
 	}
 
 	/**

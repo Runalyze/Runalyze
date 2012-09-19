@@ -12,11 +12,11 @@ Config::addFieldset('Allgemein', array(
 	'USE_WETTER'
 ));
 
-Config::register('Allgemein', 'GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
-Config::register('Allgemein', 'PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
-Config::register('Allgemein', 'USE_PULS', 'bool', true, 'Pulsdaten speichern');
-Config::register('Allgemein', 'USE_WETTER', 'bool', true, 'Wetter speichern');
-Config::register('Allgemein', 'PLZ', 'string', '', 'f&uuml;r Wetter-Daten: PLZ');
+Config::register('GENDER', 'select', array('m' => true, 'f' => false), 'Geschlecht', array('m&auml;nnlich', 'weiblich'));
+Config::register('PULS_MODE', 'select', array('bpm' => false, 'hfmax' => true), 'Pulsanzeige', array('absoluter Wert', '&#37; HFmax'));
+Config::register('USE_PULS', 'bool', true, 'Pulsdaten speichern');
+Config::register('USE_WETTER', 'bool', true, 'Wetter speichern');
+Config::register('PLZ', 'string', '', 'f&uuml;r Wetter-Daten: PLZ');
 
 
 Config::addFieldset('Training', array(
@@ -33,31 +33,31 @@ Config::addFieldset('Training', array(
 	//'TRAINING_MAP_MARKER'
 ));
 
-Config::register('Training', 'MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sport', 'name'));
-Config::register('Training', 'RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sport', 'name'));
-Config::register('Training', 'WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('type', 'name'));
-Config::register('Training', 'LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('type', 'name'));
+Config::register('MAINSPORT', 'selectdb', 1, 'Haupt-Sportart', array('sport', 'name'));
+Config::register('RUNNINGSPORT', 'selectdb', 1, 'Lauf-Sportart', array('sport', 'name'));
+Config::register('WK_TYPID', 'selectdb', 5, 'Trainingstyp: Wettkampf', array('type', 'name'));
+Config::register('LL_TYPID', 'selectdb', 7, 'Trainingstyp: Langer Lauf', array('type', 'name'));
 // TODO: remove
-Config::register('Training', 'TRAINING_PLOTS_BELOW', 'bool', false, 'Diagramme untereinander');
-Config::register('Training', 'TRAINING_DECIMALS', 'select',
+Config::register('TRAINING_PLOTS_BELOW', 'bool', false, 'Diagramme untereinander');
+Config::register('TRAINING_DECIMALS', 'select',
 	array('0' => false, '1' => true, '2' => false), 'Anzahl Nachkommastellen',
 	array('0', '1', '2'));
-Config::register('Training', 'TRAINING_MAP_COLOR', 'string', '#FF5500', 'Karte: Linienfarbe');
-Config::register('Training', 'TRAINING_MAP_MARKER', 'bool', true, 'Karte: Markierungen');
-Config::register('Training', 'TRAINING_MAPTYPE', 'select',
+Config::register('TRAINING_MAP_COLOR', 'string', '#FF5500', 'Karte: Linienfarbe');
+Config::register('TRAINING_MAP_MARKER', 'bool', true, 'Karte: Markierungen');
+Config::register('TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Karte: Typ',
 	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
-Config::register('Training', 'TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
-Config::register('Training', 'TRAINING_MAP_BEFORE_PLOTS', 'bool', false, 'Karte: vor Diagrammen');
+Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
+Config::register('TRAINING_MAP_BEFORE_PLOTS', 'bool', false, 'Karte: vor Diagrammen');
 // Hidden ones
-Config::register('Training', 'TRAINING_SHOW_ZONES', 'bool', true, 'Anzeige: Zonen');
-Config::register('Training', 'TRAINING_SHOW_ROUNDS', 'bool', true, 'Anzeige: Runden');
-Config::register('Training', 'TRAINING_SHOW_GRAPHICS', 'bool', true, 'Anzeige: Grafiken');
-Config::register('Training', 'TRAINING_SHOW_PLOT_PACE', 'bool', true, 'Grafik: Geschwindigkeit');
-Config::register('Training', 'TRAINING_SHOW_PLOT_PULSE', 'bool', true, 'Grafik: Herzfrequenz');
-Config::register('Training', 'TRAINING_SHOW_PLOT_ELEVATION', 'bool', true, 'Grafik: H&ouml;henprofil');
-Config::register('Training', 'TRAINING_SHOW_PLOT_SPLITS', 'bool', true, 'Grafik: Splits');
-Config::register('Training', 'TRAINING_SHOW_MAP', 'bool', true, 'Grafik: Karte');
+Config::register('TRAINING_SHOW_ZONES', 'bool', true, 'Anzeige: Zonen');
+Config::register('TRAINING_SHOW_ROUNDS', 'bool', true, 'Anzeige: Runden');
+Config::register('TRAINING_SHOW_GRAPHICS', 'bool', true, 'Anzeige: Grafiken');
+Config::register('TRAINING_SHOW_PLOT_PACE', 'bool', true, 'Grafik: Geschwindigkeit');
+Config::register('TRAINING_SHOW_PLOT_PULSE', 'bool', true, 'Grafik: Herzfrequenz');
+Config::register('TRAINING_SHOW_PLOT_ELEVATION', 'bool', true, 'Grafik: H&ouml;henprofil');
+Config::register('TRAINING_SHOW_PLOT_SPLITS', 'bool', true, 'Grafik: Splits');
+Config::register('TRAINING_SHOW_MAP', 'bool', true, 'Grafik: Karte');
 
 
 Config::addFieldset('Design', array(
@@ -70,14 +70,14 @@ Config::addFieldset('Design', array(
 	'DB_SHOW_CREATELINK_FOR_DAYS'
 ));
 
-Config::register('Design', 'DB_HIGHLIGHT_TODAY', 'bool', '1', Ajax::tooltip('Heute hervorheben', 'im Kalender', true));
-Config::register('Design', 'DB_SHOW_CREATELINK_FOR_DAYS', 'bool', '1', 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen');
-Config::register('Design', 'DB_SHOW_DIRECT_EDIT_LINK', 'bool', '1', 'Training-Bearbeiten-Link im Kalender anzeigen');
+Config::register('DB_HIGHLIGHT_TODAY', 'bool', '1', Ajax::tooltip('Heute hervorheben', 'im Kalender', true));
+Config::register('DB_SHOW_CREATELINK_FOR_DAYS', 'bool', '1', 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen');
+Config::register('DB_SHOW_DIRECT_EDIT_LINK', 'bool', '1', 'Training-Bearbeiten-Link im Kalender anzeigen');
 // TODO: remove
-Config::register('Design', 'JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
-Config::register('Design', 'DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', Ajax::tooltip('Hintergrundbild', 'Neuladen notwendig, eigene Bilder in img/backgrounds/', true), array('img/backgrounds/'));
-Config::register('Design', 'DESIGN_BG_FIX_AND_STRETCH', 'bool', true, Ajax::tooltip('Hintergrundbild skalieren', 'Neuladen notwendig', true));
-Config::register('Design', 'DESIGN_TOOLBAR_POSITION', 'select', array('top' => true, 'bottom' => false), 'Position der Toolbar', array('oben', 'unten'));
+Config::register('JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
+Config::register('DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', Ajax::tooltip('Hintergrundbild', 'Neuladen notwendig, eigene Bilder in img/backgrounds/', true), array('img/backgrounds/'));
+Config::register('DESIGN_BG_FIX_AND_STRETCH', 'bool', true, Ajax::tooltip('Hintergrundbild skalieren', 'Neuladen notwendig', true));
+Config::register('DESIGN_TOOLBAR_POSITION', 'select', array('top' => true, 'bottom' => false), 'Position der Toolbar', array('oben', 'unten'));
 
 
 Config::addFieldset('Rechenspiele', array(
@@ -89,16 +89,16 @@ Config::addFieldset('Rechenspiele', array(
 	'VDOT_DAYS'
 ));
 
-Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
-Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, ' VDOT-Korrektur');
-Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Tage f&uuml;r ATL');
-Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Tage f&uuml;r CTL');
-Config::register('Rechenspiele', 'VDOT_DAYS', 'int', 30, 'Tage f&uuml;r VDOT');
+Config::register('RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
+Config::register('JD_USE_VDOT_CORRECTOR', 'bool', true, ' VDOT-Korrektur');
+Config::register('ATL_DAYS', 'int', 7, 'Tage f&uuml;r ATL');
+Config::register('CTL_DAYS', 'int', 42, 'Tage f&uuml;r CTL');
+Config::register('VDOT_DAYS', 'int', 30, 'Tage f&uuml;r VDOT');
 
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
-Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
-Config::register('hidden', 'MAX_CTL', 'int', 0, 'Maximal value for CTL');
-Config::register('hidden', 'MAX_TRIMP', 'int', 0, 'Maximal value for TRIMP');
+Config::register('MAX_ATL', 'int', 0, 'Maximal value for ATL');
+Config::register('MAX_CTL', 'int', 0, 'Maximal value for CTL');
+Config::register('MAX_TRIMP', 'int', 0, 'Maximal value for TRIMP');
 
 
 Config::addFieldset('Eingabeformular', array(
@@ -109,19 +109,19 @@ Config::addFieldset('Eingabeformular', array(
 	'GARMIN_API_KEY'
 ));
 
-Config::register('Eingabeformular', 'TRAINING_ELEVATION_SERVER', 'select',
+Config::register('TRAINING_ELEVATION_SERVER', 'select',
 	array('google' => true, 'geonames' => false), 'H&ouml;henkorrektur &uuml;ber',
 	array('maps.googleapis.com', 'ws.geonames.org'));
-Config::register('Eingabeformular', 'COMPUTE_KCAL', 'bool', true, 'Kalorien berechnen');
-Config::register('Eingabeformular', 'TRAINING_CREATE_MODE', 'select',
+Config::register('COMPUTE_KCAL', 'bool', true, 'Kalorien berechnen');
+Config::register('TRAINING_CREATE_MODE', 'select',
 	array('upload' => false, 'garmin' => true, 'form' => false), 'Standard-Eingabemodus',
 	array('Datei hochladen', 'GarminCommunicator', 'Standard-Formular'));
-Config::register('Eingabeformular', 'TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
-Config::register('Eingabeformular', 'GARMIN_API_KEY', 'string', '', Ajax::tooltip('Garmin API-Key', 'für http://'.$_SERVER['HTTP_HOST'], true));
+Config::register('TRAINING_DO_ELEVATION', 'bool', true, 'H&ouml;henkorrektur verwenden');
+Config::register('GARMIN_API_KEY', 'string', '', Ajax::tooltip('Garmin API-Key', 'für http://'.$_SERVER['HTTP_HOST'], true));
 
 
 Config::addFieldset('Suchfenster', array(
 	'RESULTS_AT_PAGE'
 ));
 
-Config::register('Suchfenster', 'RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Seite');
+Config::register('RESULTS_AT_PAGE', 'int', 15, 'Ergebnisse pro Seite');

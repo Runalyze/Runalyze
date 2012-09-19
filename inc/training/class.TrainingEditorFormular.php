@@ -254,6 +254,9 @@ class TrainingEditorFormular {
 	 * Init fieldset for correct elevation
 	 */
 	protected function initElevationCorrectionFieldset() {
+		if ($this->Training->get('elevation_corrected') == 1)
+			return;
+
 		$Fieldset = new FormularFieldset('H&ouml;henkorrektur anwenden');
 		$Fieldset->setCollapsed();
 		$Fieldset->addInfo('
