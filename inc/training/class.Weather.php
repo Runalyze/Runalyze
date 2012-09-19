@@ -245,7 +245,7 @@ class Weather {
 	 */
 	private function loadForecast() {
 		if (CONF_PLZ > 0) {
-			$Xml = Filesystem::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
+			/*$Xml = Filesystem::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
 
 			if (strlen($Xml) > 1) {
 				$Xml         = simplexml_load_string_utf8(utf8_decode($Xml));
@@ -262,7 +262,8 @@ class Weather {
 				}
 			} else {
 				Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
-			}
+			}*/
+			Error::getInstance()->addNotice('Google stellt leider keine Wetterdaten mehr zur Verf&uuml;gung.');
 		}
 
 		$this->setDefaultVars();
