@@ -3,24 +3,28 @@
  * Draw analyse of training: ATL/CTL/VDOT
  * Call:   include Plot.form.php
  */
-$ATLs        = array();
-$CTLs        = array();
-$VDOTs       = array();
-$Trimps_raw  = array();
-$VDOTs_raw   = array();
+$ATLs          = array();
+$CTLs          = array();
+$VDOTs         = array();
+$Trimps_raw    = array();
+$VDOTs_raw     = array();
+$Durations_raw = array();
 
 $Year  = (int)$_GET['y'];
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	for ($d = 1; $d <= 366; $d++) {
-		$Trimps_raw[] = 0;
-		$VDOTs_raw[]  = 0;
+		$Trimps_raw[]    = 0;
+		$VDOTs_raw[]     = 0;
+		$Durations_raw[] = 0;
 	}
 
 	for ($i = 0; $i < CONF_CTL_DAYS; $i++)
-		$Trimps_raw[] = 0;
-	for ($i = 0; $i < 30;       $i++)
-		$VDOTs_raw[]  = 0;
+		$Trimps_raw[]    = 0;
+	for ($i = 0; $i < 30;       $i++) {
+		$VDOTs_raw[]     = 0;
+		$Durations_raw[] = 0;
+	}
 
 	// Here ATL/CTL/VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
@@ -53,7 +57,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
 			`id`,
-			`vdot`
+			`vdot`,
+			`s`
 		FROM `'.PREFIX.'training`
 		WHERE
 			`vdot`>0 AND (
@@ -68,25 +73,29 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		if ($dat['y'] == $Year)
 			$index += 366;
 
-		$VDOTs_raw[$index] = $dat['vdot'];
+		$VDOTs_raw[$index]     = $dat['vdot']*$dat['s'];
+		$Durations_raw[$index] = (double)$dat['s'];
 	}
 
 	$max = 366;
+
 	if ($Year == date('Y'))
-		$max = date('z');
+		$max = date('z') + 1;
 
-	for ($d = 1; $d <= $max; $d++) {
+	for ($d = 1; $d <= $max + 1; $d++) {
 		$index = Plot::dayOfYearToJStime($Year, $d);
-		$ATLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
-		$CTLs[$index]   = 100 * array_sum(array_slice($Trimps_raw, CONF_CTL_DAYS + $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
 
-		$VDOT_slice = array_slice($VDOTs_raw, VDOT_DAYS + $d - VDOT_DAYS, VDOT_DAYS);
-		$VDOT_num_data = array_count_values($VDOT_slice);
-		$VDOT_num_zero = (!isset($VDOT_num_data[0])) ? 0 : $VDOT_num_data[0];
-		$VDOT_sum = array_sum($VDOT_slice);
-		$VDOT_num = count($VDOT_slice) - $VDOT_num_zero;
-		if (count($VDOT_slice) != 0 && $VDOT_num != 0)
-			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $VDOT_num);
+		$ATLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
+		$CTLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
+
+		$Durations_slice = array_slice($Durations_raw, $d, VDOT_DAYS);
+		$VDOT_slice      = array_slice($VDOTs_raw, $d, VDOT_DAYS);
+
+		$VDOT_sum        = array_sum($VDOT_slice);
+		$Durations_sum   = array_sum($Durations_slice);
+
+		if (count($VDOT_slice) != 0 && $Durations_sum != 0)
+			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $Durations_sum);
 	}
 }
 
