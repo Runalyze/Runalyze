@@ -82,10 +82,19 @@ class ImporterGPX extends Importer {
 			if ($timeOfStep > 30)
 				$startTime += $timeOfStep;
 
+			$pulse = 0;
+			if (isset($Point->extensions) && count($Point->extensions->children('gpxtpx',true)) > 0) {
+				if (isset($Point->extensions->children('gpxtpx',true)->TrackPointExtension)) {
+					$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
+					if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
+						$pulse = (int)$TPE->children('gpxtpx',true)->hr;
+				}
+			}
+
 			$lastTime    = $currentTime;
 			$time[]      = $currentTime - $startTime;
 			$elevation[] = 0;
-			$heartrate[] = 0;
+			$heartrate[] = $pulse;
 			$latitude[]  = $lat;
 			$longitude[] = $lon;
 			$distance[]  = ($i==0) ? $dist : end($distance) + $dist;
