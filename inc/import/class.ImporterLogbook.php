@@ -161,14 +161,16 @@ class ImporterLogbook extends Importer {
 	 * @return Training
 	 */
 	protected function createTrainingFromXML($XML) {
-		$categoryName  = isset($XML['categoryName'])  ? (string)$XML['categoryName']           : '?';
-		$startTime     = isset($XML['startTime'])     ? strtotime((string)$XML['startTime'])   : time();
-		$comment       = isset($XML['name'])          ? (string)$XML['name']                   : '';
-		$location      = isset($XML['location'])      ? (string)$XML['location']               : '';
-		$totalCalories = isset($XML['totalCalories']) ? (int)$XML['totalCalories']             : 0;
-		$totalDistance = isset($XML['totalDistance']) ? round((int)$XML['totalDistance'])/1000 : 0;
-		$totalTime     = isset($XML['totalTime'])     ? round((int)$XML['totalTime'])          : 0;
-		$elevation     = isset($XML['totalAscend'])   ? round((int)$XML['totalAscend'])        : 0;
+		$categoryName  = isset($XML['categoryName'])     ? (string)$XML['categoryName']           : '?';
+		$startTime     = isset($XML['startTime'])        ? strtotime((string)$XML['startTime'])   : time();
+		$comment       = isset($XML['name'])             ? (string)$XML['name']                   : '';
+		$location      = isset($XML['location'])         ? (string)$XML['location']               : '';
+		$totalCalories = isset($XML['totalCalories'])    ? (int)$XML['totalCalories']             : 0;
+		$totalDistance = isset($XML['totalDistance'])    ? round((int)$XML['totalDistance'])/1000 : 0;
+		$totalTime     = isset($XML['totalTime'])        ? round((int)$XML['totalTime'])          : 0;
+		$elevation     = isset($XML['totalAscend'])      ? round((int)$XML['totalAscend'])        : 0;
+		$pulse_avg     = isset($XML['averageHeartRate']) ? round((int)$XML['averageHeartRate'])   : 0;
+		$pulse_max     = isset($XML['maximumHeartRate']) ? round((int)$XML['maximumHeartRate'])   : 0;
 
 		$Training = new Training(Training::$CONSTRUCTOR_ID);
 		$Training->set('sportid', self::getIDforDatabaseString('sport', $categoryName));
@@ -179,6 +181,8 @@ class ImporterLogbook extends Importer {
 		$Training->set('distance', $totalDistance);
 		$Training->set('s', $totalTime);
 		$Training->set('elevation', $elevation);
+		$Training->set('pulse_avg', $pulse_avg);
+		$Training->set('pulse_max', $pulse_max);
 
 		$this->Trainings[] = $Training;
 	}
