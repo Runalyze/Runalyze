@@ -50,6 +50,9 @@ class Config {
 		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.$accountID : '';
 
 		Mysql::getInstance()->query('UPDATE `'.PREFIX.'conf` SET `value`="'.$value.'" WHERE `key`="'.$KEY.'"'.$whereAdd.' LIMIT 1');
+
+		if (isset(self::$DbConsts[$KEY]))
+			self::$DbConsts[$KEY]['value'] = $value;
 	}
 
 	/**
@@ -321,7 +324,7 @@ class Config {
 						$str_value = trim(Helper::CommaToPoint($post));
 				}
 
-				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$Key]['id'], 'value', $str_value);
+				self::update($Key, $str_value);
 			}
 		}
 	}

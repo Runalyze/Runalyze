@@ -167,10 +167,10 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
-		$Data = Mysql::getInstance()->fetchSingle('SELECT COUNT(1) as `num`, SUM(`s`) as `ssum`, AVG(`vdot`*`s`) as `value` FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_RUNNINGSPORT.'" && `pulse_avg`!=0 && `time`<"'.$time.'" && `time`>"'.($time - VDOT_DAYS*DAY_IN_S).'" GROUP BY `sportid`');
+		$Data = Mysql::getInstance()->fetchSingle('SELECT SUM(`s`) as `ssum`, SUM(`vdot`*`s`) as `value` FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_RUNNINGSPORT.'" && `pulse_avg`!=0 && `time`<"'.$time.'" && `time`>"'.($time - VDOT_DAYS*DAY_IN_S).'" GROUP BY `sportid`');
 
 		if ($Data !== false)
-			return round(self::correctVDOT($Data['num']*$Data['value']/$Data['ssum']), 5);
+			return round(self::correctVDOT($Data['value']/$Data['ssum']), 5);
 
 		return 0;
 	}

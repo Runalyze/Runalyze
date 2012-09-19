@@ -41,7 +41,7 @@ if ($Training->hasSplits()) {
 		}
 
 		$Labels[$key] = array($key, $label);
-		$Data[$key]   = $val['s']*1000;
+		$Data[$key]   = $val['s']*1000/$val['km'];
 	}
 }
 

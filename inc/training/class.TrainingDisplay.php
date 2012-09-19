@@ -142,16 +142,20 @@ class TrainingDisplay {
 	 */
 	public function displayRoundsContainer() {
 		$RoundTypes = array();
+
 		if ($this->Training->hasPaceData())
 			$RoundTypes[] = array('name' => 'berechnete', 'id' => 'computedRounds', 'eval' => '$this->displayRounds();');
 		if ($this->Training->hasSplitsData())
 			$RoundTypes[] = array('name' => 'gestoppte', 'id' => 'stoppedRounds', 'eval' => '$this->displaySplits();');
 
+		if ($this->Training->hasSplits() && $this->Training->hasSplitsData() && $this->Training->hasPaceData())
+			$RoundTypes = array_reverse($RoundTypes);
+
 		if (empty($RoundTypes))
 			return;
 
 		$RoundLinksArray = array();
-		foreach ($RoundTypes as $i => $RoundType)
+		foreach ($RoundTypes as $RoundType)
 			$RoundLinksArray[] = Ajax::change($RoundType['name'], 'training-rounds-container', $RoundType['id']);
 		$RoundLinks = implode(' | ', $RoundLinksArray);
 
