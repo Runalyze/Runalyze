@@ -137,5 +137,11 @@ class ImporterFITLOG extends Importer {
 
 		if (!empty($this->XML->Weather['Temp']))
 			$this->set('temperature', (int)$this->XML->Weather['Temp']);
+
+		if ($this->get('pulse_max') == 0 && !empty($this->XML->HeartRateMaximumBPM))
+			$this->set('pulse_max', (int)$this->XML->HeartRateMaximumBPM);
+
+		if ($this->get('pulse_avg') == 0 && !empty($this->XML->HeartRateAverageBPM))
+			$this->set('pulse_avg', (int)$this->XML->HeartRateAverageBPM);
 	}
 }
