@@ -23,6 +23,12 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 	static public $ONLY_TYPES_CLASS = "only-types";
 
 	/**
+	 * CSS class for inputs only for sports with distance
+	 * @var string
+	 */
+	static public $ONLY_DISTANCES_CLASS = "only-distances";
+
+	/**
 	 * Constructor 
 	 */
 	public function __construct($sportid = -1) {

@@ -220,7 +220,7 @@ class ImporterFormular extends Importer {
 			$time_in_s = is_numeric($_POST['s']) ? $_POST['s'] : self::timeStringToSeconds($_POST['s']);
 
 		if ($time_in_s == 0) {
-			$this->errorString = 'Es muss eine Trainingszeit angegeben sein.';
+			$this->errorString = 'Es muss eine Trainingsdauer angegeben sein.';
 			return false;
 		}
 

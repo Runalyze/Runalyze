@@ -28,7 +28,7 @@ class Splits {
 	 */
 	public function __construct($data = false) {
 		if ($data == self::$FROM_POST)
-			$this->createFromData($_POST['splits']);
+			$this->createFromData( isset($_POST['splits']) ? $_POST['splits'] : array() );
 		elseif ($data)
 			$this->createFromData($data);
 
@@ -178,6 +178,7 @@ class Splits {
 	public function getFieldset() {
 		$Fieldset = new FormularFieldset('Zwischenzeiten');
 		$Fieldset->addField( new TrainingInputSplits() );
+		$Fieldset->addCSSclass( TrainingCreatorFormular::$ONLY_DISTANCES_CLASS );
 
 		if ($this->areEmpty())
 			$Fieldset->setCollapsed();

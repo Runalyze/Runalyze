@@ -10,6 +10,13 @@ class TrainingInputIsPublic extends FormularCheckbox {
 	 * @param string $value [optional]
 	 */
 	public function __construct($value = '') {
+		if ($value == '') {
+			if (isset($_POST['is_public']))
+				$value = $_POST['is_public'];
+			else
+				$value = CONF_TRAINING_MAKE_PUBLIC;
+		}
+
 		parent::__construct('is_public', '&Ouml;ffentlich', $value);
 
 		$this->addHiddenSentValue();

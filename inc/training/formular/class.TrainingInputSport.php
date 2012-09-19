@@ -22,6 +22,8 @@ class TrainingInputSport extends FormularSelectBox {
 				$attributes['data-outside'] = 'true';
 			if ($sport['types'] == 1)
 				$attributes['data-types'] = 'true';
+			if ($sport['distances'] == 1)
+				$attributes['data-distances'] = 'true';
 
 			$this->addOption($id, $sport['name'], $attributes);
 		}
