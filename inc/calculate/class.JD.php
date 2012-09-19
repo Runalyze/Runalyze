@@ -6,7 +6,7 @@
  * Number of days to be used for calculating VDOT-form
  * @var int
  */
-define('VDOT_DAYS', 30);
+define('VDOT_DAYS', CONF_VDOT_DAYS);
 
 /**
  * VDOT-corrector is used to correct the raw VDOT-value to user-specific values

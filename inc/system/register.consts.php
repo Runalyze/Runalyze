@@ -81,14 +81,17 @@ Config::register('Design', 'DESIGN_TOOLBAR_POSITION', 'select', array('top' => t
 Config::addFieldset('Rechenspiele', array(
 	'RECHENSPIELE',
 	'ATL_DAYS',
+	'',
+	'CTL_DAYS',
 	'JD_USE_VDOT_CORRECTOR',
-	'CTL_DAYS'
+	'VDOT_DAYS'
 ));
 
 Config::register('Rechenspiele', 'RECHENSPIELE', 'bool', true, 'Rechenspiele aktivieren');
 Config::register('Rechenspiele', 'JD_USE_VDOT_CORRECTOR', 'bool', true, ' VDOT-Korrektur');
 Config::register('Rechenspiele', 'ATL_DAYS', 'int', 7, 'Tage f&uuml;r ATL');
 Config::register('Rechenspiele', 'CTL_DAYS', 'int', 42, 'Tage f&uuml;r CTL');
+Config::register('Rechenspiele', 'VDOT_DAYS', 'int', 30, 'Tage f&uuml;r VDOT');
 
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
 Config::register('hidden', 'MAX_ATL', 'int', 0, 'Maximal value for ATL');
