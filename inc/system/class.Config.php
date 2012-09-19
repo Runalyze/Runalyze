@@ -13,12 +13,6 @@ class Config {
 	public static $CONFIG_URL = 'call/window.config.php';
 
 	/**
-	 * Name for hidden category, not editable
-	 * @var string
-	 */
-	public static $HIDDEN_CAT = 'hidden';
-
-	/**
 	 * Array with all constants already in database
 	 * @var array
 	 */
@@ -88,18 +82,17 @@ class Config {
 
 	/**
 	 * Register a variable
-	 * @param type $category Descriptive category for config-window
 	 * @param type $KEY Internal key, must be unique, should start with an equivalent for the category
 	 * @param type $type Type of this value
 	 * @param type $default Default value
 	 * @param type $description Description for config-window
 	 * @param type $select_description Description for options of select
 	 */
-	static public function register($category, $KEY, $type, $default, $description = '', $select_description = array()) {
+	static public function register($KEY, $type, $default, $description = '', $select_description = array()) {
 		$Consts = self::getConsts();
 
 		if (!isset($Consts[$KEY]) || AccountHandler::$IS_ON_REGISTER_PROCESS) {
-			self::insertNewConst($category, $KEY, $type, $default, $description, $select_description);
+			self::insertNewConst($KEY, $type, $default, $description, $select_description);
 			$value = $default;
 		} else {
 			$selectDescAsString = self::valueToString($select_description, 'array');
@@ -129,21 +122,20 @@ class Config {
 
 	/**
 	 * Insert a new configuration constant to database
-	 * @param type $category Descriptive category for config-window
 	 * @param type $KEY Internal key, must be unique, should start with an equivalent for the category
 	 * @param type $type Type of this value
 	 * @param type $default Default value
 	 * @param type $description Description for config-window
 	 * @param type $select_description Description for options of select
 	 */
-	static private function insertNewConst($category, $KEY, $type, $default, $description, $select_description) {
+	static private function insertNewConst($KEY, $type, $default, $description, $select_description) {
 		if (FrontendShared::$IS_SHOWN)
 			return;
 
 		$select_description = self::valueToString($select_description, 'array');
 		$default = self::valueToString($default, $type);
-		$columns = array('category', 'key', 'type', 'value', 'description', 'select_description');
-		$values  = array($category,  $KEY,  $type,  $default, $description, $select_description);
+		$columns = array('key', 'type', 'value', 'description', 'select_description');
+		$values  = array($KEY,  $type,  $default, $description, $select_description);
 
 		if (AccountHandler::$IS_ON_REGISTER_PROCESS) {
 			$columns[] = 'accountid';
@@ -288,7 +280,7 @@ class Config {
 		$Fieldsets = self::getFieldsets();
 		$Consts    = self::getConsts();
 
-		foreach ($Fieldsets as $Category => $Fields) {
+		foreach ($Fieldsets as $Fields) {
 			foreach ($Fields as $Key) {
 				if (!isset($Consts[$Key]))
 					continue;

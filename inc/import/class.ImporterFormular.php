@@ -108,6 +108,8 @@ class ImporterFormular extends Importer {
 		if ($time === false || $time_in_s === false)
 			return;
 
+		$this->columns[]         = 'created';
+		$this->values[]          = time();
 		$this->columns[]         = 'time';
 		$this->values[]          = $time;
 		$this->columns[]         = 's';
