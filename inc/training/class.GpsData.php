@@ -646,7 +646,10 @@ class GpsData {
 	/**
 	 * Get array as plot-data for heartrate
 	 */
-	public function getPlotDataForHeartrate() {
+	public function getPlotDataForHeartrate($inPercent = false) {
+		if ($inPercent)
+			return $this->getPlotDataForHeartrateInPercent();
+
 		return $this->getPlotDataFor('heartrate');
 	}
 

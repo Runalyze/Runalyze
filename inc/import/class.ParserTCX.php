@@ -29,6 +29,18 @@ class ParserTCX extends Parser {
 	private $numberOfTrainings = 0;
 
 	/**
+	 * Number of trainings (first sport, for multisport sessions)
+	 * @var int
+	 */
+	private $numberOfTrainingsFirstSport = 0;
+
+	/**
+	 * Number of trainings (next sport, for multisport sessions)
+	 * @var int
+	 */
+	private $numberOfTrainingsNextSport = 0;
+
+	/**
 	 * Starttime, can be changed for pauses
 	 * @var int
 	 */
@@ -96,7 +108,7 @@ class ParserTCX extends Parser {
 	 * @return boolean
 	 */
 	public function hasMultipleTrainings() {
-		return $this->numberOfTrainings > 1;
+		return $this->numberOfTrainings() > 1;
 	}
 
 	/**
@@ -104,13 +116,20 @@ class ParserTCX extends Parser {
 	 * @return int
 	 */
 	public function numberOfTrainings() {
-		return $this->numberOfTrainings;
+		return $this->numberOfTrainings + $this->numberOfTrainingsFirstSport + $this->numberOfTrainingsNextSport;
 	}
 
 	/**
 	 * Init internal XML
 	 */
 	protected function initXML() {
+		if (isset($this->CompleteXML->Activities->MultiSportSession)) {
+			if (isset($this->CompleteXML->Activities->MultiSportSession->FirstSport))
+				$this->numberOfTrainingsFirstSport = count($this->CompleteXML->Activities->MultiSportSession->FirstSport->Activity);
+			if (isset($this->CompleteXML->Activities->MultiSportSession->NextSport))
+				$this->numberOfTrainingsNextSport  = count($this->CompleteXML->Activities->MultiSportSession->NextSport->Activity);
+		}
+
 		$this->currentTraining   = 0;
 		$this->numberOfTrainings = count($this->CompleteXML->Activities->Activity);
 
@@ -122,7 +141,20 @@ class ParserTCX extends Parser {
 	 * @param int $index 
 	 */
 	protected function setXMLfromIndex($index) {
-		$this->XML = $this->CompleteXML->Activities->Activity[$index];
+		if ($index < $this->numberOfTrainings)
+			$this->XML = $this->CompleteXML->Activities->Activity[$index];
+		else {
+			$index -= $this->numberOfTrainings;
+
+			if ($index < $this->numberOfTrainingsFirstSport)
+				$this->XML = $this->CompleteXML->Activities->MultiSportSession->FirstSport->Activity[$index];
+			else {
+				$index -= $this->numberOfTrainingsFirstSport;
+
+				if ($index < $this->numberOfTrainingsNextSport)
+					$this->XML = $this->CompleteXML->Activities->MultiSportSession->NextSport->Activity[$index];
+			}
+		}
 	}
 
 	/**
@@ -130,7 +162,7 @@ class ParserTCX extends Parser {
 	 * @return boolean
 	 */
 	public function nextTraining() {
-		if ($this->currentTraining < $this->numberOfTrainings) {
+		if ($this->currentTraining < $this->numberOfTrainings()) {
 			$this->setXMLfromIndex($this->currentTraining);
 			$this->parseTraining();
 			$this->currentTraining++;
@@ -226,9 +258,10 @@ class ParserTCX extends Parser {
 	 * Parse all laps
 	 */
 	protected function parseLaps() {
-		if (!isset($this->XML->Lap))
+		if (!isset($this->XML->Lap)) {
 			$this->addError('Die Trainingsdatei enth&auml;lt keine Runden.');
-		else
+			print_r($this->XML); exit();
+		} else
 			foreach ($this->XML->Lap as $Lap)
 				$this->parseLap($Lap);
 	}
