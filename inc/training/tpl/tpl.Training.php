@@ -62,6 +62,13 @@
 			<?php if (!CONF_TRAINING_SHOW_PLOT_SPLITS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-splits").click();'); ?>
 			<?php if (!CONF_TRAINING_SHOW_MAP) echo Ajax::wrapJSasFunction('$("#training-view-toggler-map").click();'); ?>
 
+
+			<?php if ($this->Training->hasPositionData() && CONF_TRAINING_MAP_BEFORE_PLOTS): ?>
+			<div id="training-map" class="training-map-before plot-container">
+				<?php $this->displayRoute(); ?>
+			</div>
+			<?php endif; ?>
+
 			<?php
 			foreach (array_keys($Plots) as $i => $Key) {
 				echo '<div id="plot-'.$Key.'" class="plot-container">';
@@ -72,11 +79,11 @@
 		</div>
 		<?php endif; ?>
 
+		<?php if ($this->Training->hasPositionData() && !CONF_TRAINING_MAP_BEFORE_PLOTS): ?>
 		<div id="training-map">
-			<?php if ($this->Training->hasPositionData()): ?>
-				<?php $this->displayRoute(); ?>
-			<?php endif; ?>
+			<?php $this->displayRoute(); ?>
 		</div>
+		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 

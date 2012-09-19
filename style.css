@@ -762,6 +762,7 @@ code {
 #training-plots-and-map .dataBox { float: none; }
 #training-plots-and-map #training-plots { padding: 6px 6px 0; }
 #training-plots-and-map #training-map .toolbar-box-content { padding: 0 6px 6px; }
+#training-plots-and-map #training-map.training-map-before .toolbar-box-content { padding: 0; }
 #training-plots-and-map .plot-container { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #CCC; }
 
 #training-plots .toolbar-line { padding: 4px 4px 6px; }
