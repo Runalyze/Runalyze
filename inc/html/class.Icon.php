@@ -7,79 +7,51 @@ class Icon {
 	/**
 	 * All avaiable icons are set as class members
 	 */
-	// General
-	static public $EDIT				= 'img/edit.gif';
-	static public $EDIT_SMALL		= 'img/edit.png';
-	static public $REFRESH			= 'img/Refresh.png';
-	static public $ADD				= 'img/add.png';
-	static public $ADD_GRAY			= 'img/addGray.gif';
-	static public $CROSS			= 'img/cross.png';
-	static public $DELETE           = 'img/delete.gif';
-	static public $DELETE_GRAY      = 'img/delete_gray.gif';
-	static public $CALENDAR			= 'img/calendar_month.png';
-	static public $TABLE			= 'img/table.png';
-	static public $CLIPBOARD		= 'img/clipboard.png';
-	static public $CLIPBOARD_PLUS	= 'img/clipboard__plus.png';
-	static public $CLOCK			= 'img/clock.png';
-	static public $SEARCH			= 'img/search.png';
-	static public $WARNING			= 'img/warning.png';
-	static public $INFO				= 'img/info.gif';
-	// Arrows
-	static public $ARR_NEXT			= 'img/next.png';
-	static public $ARR_BACK			= 'img/back.png';
-	static public $ARR_BACK_BIG		= 'img/arrBack.png';
-	static public $ARR_NEXT_BIG		= 'img/arrNext.png';
-	static public $ARR_DOWN_BIG		= 'img/arrDown.png';
-	static public $ARR_UP_BIG		= 'img/arrUp.png';
-	// Config
-	static public $CONF_EDIT		= 'img/confEdit.png';
-	static public $CONF_HELP		= 'img/confHelp.png';
-	static public $CONF_SETTINGS	= 'img/confSettings.png';
-	static public $CONF_TOOL		= 'img/confTool.png';
-	// Running-specific
-	static public $ABC				= 'img/abc.png';
-	static public $RUNNINGSHOE		= 'img/runningshoe.png';
-	static public $MONTH_KM			= 'img/mk.png';
-	static public $WEEK_KM			= 'img/wk.png';
-	static public $FATIGUE			= 'img/fatigue.png';
-	static public $COMPETITION		= 'img/competition.png';
-	static public $COMPETITION_FUN	= 'img/competition_fun.png';
+	// Small, 12x12px
+	static public $EDIT             = '<i class="icon-edit"></i>';
+	static public $BACK             = '<i class="icon-back"></i>';
+	static public $NEXT             = '<i class="icon-next"></i>';
+	static public $ABC              = '<i class="icon-abc"></i>';
+	static public $ATTACH           = '<i class="icon-attach"></i>';
+	static public $CLOCK            = '<i class="icon-clock"></i>';
+	static public $CLOCK_ORANGE     = '<i class="icon-clock-orange"></i>';
+	static public $CLOCK_GREY       = '<i class="icon-clock-grey"></i>';
+	static public $DOWNLOAD         = '<i class="icon-download"></i>';
+	static public $DOWN             = '<i class="icon-down"></i>';
+	static public $UP               = '<i class="icon-up"></i>';
+	static public $ADD_SMALL        = '<i class="icon-add-small"></i>';
+	// Big, 16x16px
+	static public $ADD              = '<i class="icon-add"></i>';
+	static public $CROSS            = '<i class="icon-cross"></i>';
+	static public $SEARCH           = '<i class="icon-search"></i>';
+	static public $REFRESH          = '<i class="icon-refresh"></i>';
+	static public $CALENDAR         = '<i class="icon-calendar"></i>';
+	static public $BARS_BIG         = '<i class="icon-bars-big"></i>';
+	static public $BARS_SMALL       = '<i class="icon-bars-small"></i>';
+	static public $FATIGUE          = '<i class="icon-fatigue"></i>';
+	static public $TABLE            = '<i class="icon-table"></i>';
+	static public $DELETE           = '<i class="icon-delete"></i>';
+	static public $PLUS             = '<i class="icon-plus"></i>';
+	static public $ZOOM_IN          = '<i class="icon-zoom-in"></i>';
+	static public $ZOOM_OUT         = '<i class="icon-zoom-out"></i>';
+	static public $ZOOM_FIT         = '<i class="icon-zoom-fit"></i>';
+	// Own pictures
+	static public $INFO             = '<i class="icon-info"></i>';
+	static public $WARNING          = '<i class="icon-warning"></i>';
+	static public $ERROR            = '<i class="icon-error"></i>';
+
 	// Shoes
-	static public $BROKEN_1			= 'img/running/broken-1.png';
-	static public $BROKEN_2			= 'img/running/broken-2.png';
-	static public $BROKEN_3			= 'img/running/broken-3.png';
-	static public $BROKEN_4			= 'img/running/broken-4.png';
-	static public $BROKEN_5			= 'img/running/broken-5.png';
+	static public $BROKEN_1			= '<img src="img/running/broken-1.png" />';
+	static public $BROKEN_2			= '<img src="img/running/broken-2.png" />';
+	static public $BROKEN_3			= '<img src="img/running/broken-3.png" />';
+	static public $BROKEN_4			= '<img src="img/running/broken-4.png" />';
+	static public $BROKEN_5			= '<img src="img/running/broken-5.png" />';
 
 	/**
 	 * This class contains only static methods
 	 */
 	private function __construct() {}
 	private function __destruct() {}
-
-	/**
-	 * Get an icon as img-tag
-	 * @param enum $icon
-	 * @param string $title [optional]
-	 * @param string $onclick [optional]
-	 * @param string $tooltip [optional]
-	 */
-	public static function get($icon, $title = '', $onclick= '', $tooltip = '') {
-		if ($onclick != '')
-			$Image = '<img class="link" src="'.$icon.'" alt="'.$title.'" title="'.$title.'" onclick="'.$onclick.'" />';
-		else
-			$Image = '<img src="'.$icon.'" alt="'.$title.'" title="'.$title.'" />';
-
-		return Ajax::tooltip($Image, $tooltip);
-	}
-
-	/**
-	 * Get only url for this icon
-	 * @param string $icon Should be a valid icon as IconFactory::Help
-	 */
-	public static function getSrc($icon) {
-		return $icon;
-	}
 
 	/**
 	 * Get the sport-specific icon
@@ -113,12 +85,11 @@ class Icon {
 	/**
 	 * Get the weather-specific icon
 	 * @param int $id
-	 * @param string $title deprecated
 	 */
-	public static function getWeatherIcon($id, $title = '') {
+	public static function getWeatherIcon($id) {
 		$data = Weather::getDataFor($id);
 
-		return '<span class="weather-icon '.$data['img-class'].'"></span>';
+		return '<i class="weather-icon '.$data['img-class'].'"></i>';
 	}
 
 	/**
@@ -138,6 +109,6 @@ class Icon {
 		else
 			$class = 'vdot-normal';
 
-		return Ajax::tooltip('<span class="vdot-icon '.$class.'"></span>', 'VDOT: '.$VDOT);
+		return Ajax::tooltip('<i class="vdot-icon '.$class.'"></i>', 'VDOT: '.$VDOT);
 	}
 }

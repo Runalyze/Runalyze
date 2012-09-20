@@ -107,7 +107,8 @@ abstract class PluginTool extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
+		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
+			echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
 
 		echo '<h1>'.$this->name.'</h1>'.NL;
 		echo $this->description.'<br />'.NL;

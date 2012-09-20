@@ -20,7 +20,7 @@ echo Ajax::wrapJSforDocumentReady('$("#predefinedSearch").change(function(){
 	});')
 ?>
 
-	<h1><?php echo Icon::get(Icon::$SEARCH, 'Suche'); ?> Trainings suchen</h1>
+	<h1><?php echo Ajax::tooltip(Icon::$SEARCH, 'Suche'); ?> Trainings suchen</h1>
 
 	<strong>Zeitraum:</strong>
 		<label>

@@ -346,10 +346,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function getIconForCompetition($id) {
 		if ($this->isFunCompetition($id)) {
 			$tag = 'nofun';
-			$icon = Icon::get(Icon::$COMPETITION_FUN, '', '', "Spa&szlig;-Wettkampf | Klicken, um als normalen Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, "Spa&szlig;-Wettkampf | Klicken, um als normalen Wettkampf zu markieren");
 		} else {
 			$tag = 'fun';
-			$icon = Icon::get(Icon::$COMPETITION, '', '', "Wettkampf | Klicken, um als Spa&szlig;-Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, "Wettkampf | Klicken, um als Spa&szlig;-Wettkampf zu markieren");
 		}
 
 		return $this->getInnerLink($icon, 0, 0, $tag.'-'.$id);

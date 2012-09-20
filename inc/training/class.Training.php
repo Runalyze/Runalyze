@@ -388,7 +388,7 @@ class Training {
 		echo $this->getTitle();
 		if (!$short) {
 			if ($this->get('abc') == 1)
-				echo(' '.Icon::get(Icon::$ABC, 'Lauf-ABC'));
+				echo(' '.Icon::$ABC);
 			if ($this->get('comment') != '')
 				echo (': '.$this->get('comment'));
 		}

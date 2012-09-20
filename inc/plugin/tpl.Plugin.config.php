@@ -7,24 +7,19 @@ echo Ajax::toolbarNavigation($Links, 'right');
 
 <h1>Plugin: <?php echo $name; ?></h1>
 
-<small class="right">
-	<?php echo $activationLink; ?>
-</small><br />
-
 <form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax" id="pluginconfig" method="post">
 	<fieldset>
 		<legend>Beschreibung</legend>
 		<div class="w100">
 			<?php echo $this->displayLongDescription(); ?>
 		</div>
-	</fieldset>
-
 
 		<?php if ($this->active == self::$ACTIVE_NOT): ?>
-			<p class="warning">
-				Das Plugin ist derzeit deaktiviert.
-			</p>
+		<p class="warning">
+			Das Plugin ist derzeit deaktiviert.
+		</p>
 		<?php endif; ?>
+	</fieldset>
 
 	<fieldset>
 		<legend>Konfiguration</legend>
@@ -48,6 +43,13 @@ echo Ajax::toolbarNavigation($Links, 'right');
 			<input type="submit" value="Bearbeiten" />
 		</p>
 <?php endif; ?>
+	</fieldset>
+
+	<fieldset>
+		<legend>Aktivierung</legend>
+		<p class="warning">
+			<?php echo $activationLink; ?>
+		</p>
 	</fieldset>
 
 </form>

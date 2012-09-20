@@ -266,13 +266,13 @@ class TrainingEditor {
 	/**
 	 * Link to editor for a given training
 	 * @param int $id
-	 * @param string $text [optional] by default: Icon::$EDIT_SMALL
+	 * @param string $text [optional] by default: Icon::$EDIT
 	 * @param string $linkId [optional]
 	 * @return string 
 	 */
 	static public function linkTo($id, $text = '', $linkId = '') {
 		if ($text == '')
-			$text = Icon::get(Icon::$EDIT_SMALL);
+			$text = Icon::$EDIT;
 
 		if ($linkId != '')
 			$linkId = ' id="'.$linkId.'"';

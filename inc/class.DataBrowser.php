@@ -175,10 +175,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getPrevLink() {
-		$icon = Icon::get(Icon::$ARR_BACK, 'zur&uuml;ck');
 		$timestamp_array = self::getPrevTimestamps($this->timestamp_start, $this->timestamp_end);
 
-		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
+		return self::getLink(Icon::$BACK, $timestamp_array['start'], $timestamp_array['end'], 'zur&uuml;ck');
 	}
 
 	/**
@@ -186,10 +185,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getNextLink() {
-		$icon = Icon::get(Icon::$ARR_NEXT, 'vorw&auml;rts');
 		$timestamp_array = self::getNextTimestamps($this->timestamp_start, $this->timestamp_end);
 
-		return self::getLink($icon, $timestamp_array['start'], $timestamp_array['end']);
+		return self::getLink(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], 'vorw&auml;rts');
 	}
 
 	/**
@@ -197,8 +195,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getRefreshLink() {
-		$icon = Icon::get(Icon::$REFRESH, '', '', 'Aktuelles Datenblatt neuladen');
-		return self::getLink($icon, $this->timestamp_start, $this->timestamp_end);
+		return self::getLink(Ajax::tooltip(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen'), $this->timestamp_start, $this->timestamp_end);
 	}
 
 	/**
@@ -206,7 +203,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getCalenderLink() {
-		return '<span id="calendarLink" class="link">'.Icon::get(Icon::$CALENDAR, '', '', 'Kalender-Auswahl').'</span>';
+		return '<span id="calendarLink" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**
@@ -214,8 +211,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getMonthKmLink() {
-		$icon = Icon::get(Icon::$MONTH_KM, '', '', 'Monatskilometer anzeigen');
-		return Ajax::window('<a href="call/window.monatskilometer.php">'.$icon.'</a>');
+		return Ajax::window('<a href="call/window.monatskilometer.php">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatskilometer anzeigen').'</a>');
 	}
 
 	/**
@@ -223,8 +219,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getWeekKmLink() {
-		$icon = Icon::get(Icon::$WEEK_KM, '', '', 'Wochenkilometer anzeigen');
-		return Ajax::window('<a href="call/window.wochenkilometer.php">'.$icon.'</a>');
+		return Ajax::window('<a href="call/window.wochenkilometer.php">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochenkilometer anzeigen').'</a>');
 	}
 
 	/**
@@ -232,11 +227,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	private function getNaviSearchLink() {
-		$icon = Icon::get(Icon::$SEARCH, '', '', 'Trainings suchen');
-		//$href = 'inc/class.DataBrowser.search.php';
-		// TODO For displaying search inside the databrowser ...
-		// return Ajax::link($icon, DATA_BROWSER_ID, $href);
-		return Ajax::window('<a href="'.self::$SEARCH_URL.'">'.$icon.'</a>', 'big');
+		return Ajax::window('<a href="'.self::$SEARCH_URL.'">'.Ajax::tooltip(Icon::$SEARCH, 'Trainings suchen').'</a>', 'big');
 	}
 
 	/**
@@ -277,12 +268,13 @@ class DataBrowser {
 	 * @param string $name Name to be displayed as link
 	 * @param int $start Timestamp for first date in browser
 	 * @param int $end Timestamp for last date in browser
+	 * @param string $title title for the link
 	 * @return string HTML-link
 	 */
-	static function getLink($name, $start, $end) {
+	static function getLink($name, $start, $end, $title = '') {
 		$href = 'call/call.DataBrowser.display.php?start='.$start.'&end='.$end;
 
-		return Ajax::link($name, DATA_BROWSER_ID, $href);
+		return Ajax::link($name, DATA_BROWSER_ID, $href, '', $title);
 	}
 
 	/**

@@ -50,8 +50,8 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::get(Icon::$ADD).'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::get(Icon::$TABLE).'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
 
 		return implode(' ', $Links);
 	}
@@ -172,7 +172,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	private function editLinkFor($id) {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, 'Bearbeiten').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, 'Bearbeiten').'</a>');
 	}
 }
-?>

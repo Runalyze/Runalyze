@@ -370,7 +370,7 @@ class Dataset {
 		if (is_null($this->Training->Type()) || !$this->Training->Type()->hasSplits() || $this->Training->get('splits') == '')
 			return;
 
-		return Icon::get( Icon::$CLOCK, '', '', $this->Training->Splits()->asReadableString() );
+		return Ajax::tooltip(Icon::$CLOCK, $this->Training->Splits()->asReadableString());
 	}
 
 	/**
@@ -397,7 +397,7 @@ class Dataset {
 		if ($this->Training->get('abc') == 0)
 			return;
 
-		return Icon::get( Icon::$ABC, 'Lauf-ABC');
+		return Ajax::tooltip(Icon::$ABC, 'Lauf-ABC');
 	}
 
 	/**

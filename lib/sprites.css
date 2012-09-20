@@ -1,3 +1,43 @@
+[class^="icon-"], [class*=" icon-"] {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	vertical-align: text-bottom;
+	background-image: url(../img/sprite-icons.png);
+}
+.icon-back { background-position: 0 0; }
+.icon-next { background-position: -12px 0; }
+.icon-abc { background-position: -24px 0; }
+.icon-attach { background-position: -36px 0; }
+.icon-clock { background-position: -48px 0; }
+.icon-clock-orange { background-position: -60px 0; }
+.icon-clock-grey { background-position: -72px 0; }
+.icon-edit { background-position: -84px 0; }
+.icon-download { background-position: -96px 0; }
+.icon-down { background-position: -108px 0; }
+.icon-up { background-position: -120px 0; }
+.icon-add-small { background-position: -132px 0; }
+
+.icon-refresh { width: 16px; height: 16px; background-position: 0 -12px; }
+.icon-calendar { width: 16px; height: 16px; background-position: -16px -12px; }
+.icon-bars-big { width: 16px; height: 16px; background-position: -32px -12px; }
+.icon-bars-small { width: 16px; height: 16px; background-position: -48px -12px; }
+.icon-search { width: 16px; height: 16px; background-position: -64px -12px; }
+.icon-add { width: 16px; height: 16px; background-position: -80px -12px; }
+.icon-cross { width: 16px; height: 16px; background-position: -96px -12px; }
+.icon-fatigue { width: 16px; height: 16px; background-position: -112px -12px; }
+.icon-table { width: 16px; height: 16px; background-position: -128px -12px; }
+.icon-delete { width: 16px; height: 16px; background-position: -144px -12px; }
+.icon-plus { width: 16px; height: 16px; background-position: -160px -12px; }
+.icon-zoom-in { width: 16px; height: 16px; background-position: -176px -12px; }
+.icon-zoom-out { width: 16px; height: 16px; background-position: -192px -12px; }
+.icon-zoom-fit { width: 16px; height: 16px; background-position: -208px -12px; }
+
+.icon-info { width: 14px; height: 16px; background-image: url(../img/info.gif); }
+.icon-warning { width: 16px; height: 16px; background-image: url(../img/warning.gif); }
+.icon-error { width: 16px; height: 16px; background-image: url(../simg/error.gif); }
+
+
 [class^="toolbar-icon-"], [class*=" toolbar-icon-"] {
 	display: inline-block;
 	width: 16px;

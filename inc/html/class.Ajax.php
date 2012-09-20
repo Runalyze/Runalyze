@@ -45,6 +45,8 @@ class Ajax {
 	 * Get html-code for jquery-tooltip
 	 * @param string $html
 	 * @param string $tooltip
+	 * @param boolean $atLeft [optional]
+	 * @param boolean $onlyAttributes [optional]
 	 * @return string
 	 */
 	static function tooltip($html, $tooltip, $atLeft = false, $onlyAttributes = false) {
@@ -147,10 +149,11 @@ class Ajax {
 	 * @param string $target  ID of target div-container
 	 * @param string $href    URL to be loaded
 	 * @param string $data    data to be passed
+	 * @param string $title   title
 	 * @return string
 	 */
-	static function link($name, $target, $href, $data = '') {
-		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'">'.$name.'</a>';
+	static function link($name, $target, $href, $data = '', $title = '') {
+		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'" title="'.$title.'">'.$name.'</a>';
 	}
 
 	/**
@@ -172,7 +175,7 @@ class Ajax {
 	 * @return string
 	 */
 	private static function insertClass($link, $class) {
-		$text = preg_replace('#class="(.+?)"#i', 'class="'.$class.' \\1"', $link);
+		$text = preg_replace('#<a ([^>]*?)class="(.+?)"#i', '<a \\1class="'.$class.' \\2"', $link);
 		if ($text == $link)
 			$text = str_replace('<a ', '<a class="'.$class.'" ', $text);
 

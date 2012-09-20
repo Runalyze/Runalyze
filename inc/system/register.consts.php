@@ -67,7 +67,9 @@ Config::addFieldset('Design', array(
 	'DESIGN_BG_FILE',
 	//'JS_USE_TOOLTIP',
 	'DB_SHOW_DIRECT_EDIT_LINK',
-	'DB_SHOW_CREATELINK_FOR_DAYS'
+	'DB_SHOW_CREATELINK_FOR_DAYS',
+	'PLUGIN_SHOW_CONFIG_LINK',
+	'PLUGIN_SHOW_MOVE_LINK'
 ));
 
 Config::register('DB_HIGHLIGHT_TODAY', 'bool', '1', Ajax::tooltip('Heute hervorheben', 'im Kalender', true));
@@ -78,6 +80,8 @@ Config::register('JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
 Config::register('DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', Ajax::tooltip('Hintergrundbild', 'Neuladen notwendig, eigene Bilder in img/backgrounds/', true), array('img/backgrounds/'));
 Config::register('DESIGN_BG_FIX_AND_STRETCH', 'bool', true, Ajax::tooltip('Hintergrundbild skalieren', 'Neuladen notwendig', true));
 Config::register('DESIGN_TOOLBAR_POSITION', 'select', array('top' => true, 'bottom' => false), 'Position der Toolbar', array('oben', 'unten'));
+Config::register('PLUGIN_SHOW_CONFIG_LINK', 'bool', false, Ajax::tooltip('Plugin: Konfiguration-Link anzeigen', 'Wenn aktiv wird bei jedem Plugin vor dem Namen ein Link zur Plugin-Konfiguration angezeigt', true));
+Config::register('PLUGIN_SHOW_MOVE_LINK', 'bool', false, Ajax::tooltip('Plugin: Verschieben-Link anzeigen', 'Mit diesem Link lassen sich die Panel direkt verschieben.', true));
 
 
 Config::addFieldset('Rechenspiele', array(
