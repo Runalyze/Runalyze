@@ -25,7 +25,6 @@ body#sharedIframe.toolbar-bottom { padding-bottom: 2px; }
 body#installer {
 	font-size: 12px; }
 
-
 /*** MAIN DIVS ***/
 #container {
 	min-width: 654px;

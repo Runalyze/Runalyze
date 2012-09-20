@@ -70,23 +70,6 @@ class Plot {
 	private $ErrorString = '';
 
 	/**
-	 * Get all needed JavaScript-files for this class as array
-	 */
-	public static function getNeededJSFilesAsArray() {
-		$Files = array();
-		$Files[] = "lib/flot/jquery.plot.js";
-		$Files[] = "lib/flot/jquery.qtip.min.js";
-		$Files[] = "lib/flot/jquery.flot.min.js";
-		$Files[] = "lib/flot/jquery.flot.resize.min.js";
-		$Files[] = "lib/flot/jquery.flot.selection.min.js";
-		$Files[] = "lib/flot/jquery.flot.crosshair.min.js";
-		$Files[] = "lib/flot/jquery.flot.navigate.min.js";
-		$Files[] = "lib/flot/jquery.flot.stack.min.js";
-
-		return $Files;
-	}
-
-	/**
 	 * Constructor
 	 * @param string $cssID
 	 * @param mixed $width

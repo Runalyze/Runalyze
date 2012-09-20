@@ -23,16 +23,6 @@ class Frontend {
 	protected $logGetAndPost = false;
 
 	/**
-	 * Additional JavaScript-files
-	 */
-	protected $JS_FILES = array();
-
-	/**
-	 * Additional CSS-files
-	 */
-	protected $CSS_FILES = array();
-
-	/**
 	 * Admin password as md5
 	 * @var string
 	 */
@@ -144,7 +134,6 @@ class Frontend {
 	 */
 	protected function initRequiredFiles() {
 		$this->initImporterExporter();
-		$this->initAdditionalFiles();
 	}
 
 	/**
@@ -175,24 +164,6 @@ class Frontend {
 
 		Exporter::registerExporter('HTML', 'ExporterHTML');
 		Exporter::registerExporter('IFrame', 'ExporterIFrame');
-	}
-
-	/**
-	 * Init all additional files for JS/CSS
-	 */
-	private function initAdditionalFiles() {
-		$this->JS_FILES = array_merge($this->JS_FILES, Ajax::getNeededJSFilesAsArray());
-		$this->CSS_FILES = array_merge($this->CSS_FILES, Ajax::getNeededCSSFilesAsArray());
-
-		$Files = glob('plugin/*/*.js');
-		if (is_array($Files))
-			foreach ($Files as $file)
-				$this->JS_FILES[] = $file;
-
-		$Files = glob('plugin/*/*.css');
-		if (is_array($Files))
-			foreach ($Files as $file)
-				$this->CSS_FILES[] = $file;
 	}
 
 	/**
