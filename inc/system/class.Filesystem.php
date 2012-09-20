@@ -99,4 +99,3 @@ class Filesystem {
 		return file_get_contents(FRONTEND_PATH.$fileName);
 	}
 }
-?>

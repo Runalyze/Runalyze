@@ -22,53 +22,6 @@ class Ajax {
 	}
 
 	/**
-	 * Get all js-files needed for included in header
-	 * @return array
-	 */
-	static public function getNeededJSFilesAsArray() {
-		$Files = array();
-
-		$Files[] = 'lib/jquery-1.7.1.min.js';
-		$Files[] = 'lib/jquery.form.js';
-		$Files[] = 'lib/jquery.metadata.js';
-		$Files[] = 'lib/jquery.tablesorter.js';
-		$Files[] = 'lib/jquery.tablesorter.pager.js';
-		$Files[] = 'lib/bootstrap-tooltip.js';
-
-		$Files[] = 'lib/jquery.datepicker.js';
-		$Files[] = 'lib/jquery.fileuploader.js';
-		$Files[] = 'lib/jquery.jbar.js';
-		
-		$Files[] = 'http://maps.google.com/maps/api/js?sensor=false';
-		$Files[] = 'lib/jquery.gmap3.min.js';
-
-		$Files[] = 'lib/runalyze.lib.log.js';
-		$Files[] = 'lib/runalyze.lib.plot.js';
-		$Files[] = 'lib/runalyze.lib.gmap.js';
-		$Files[] = 'lib/runalyze.lib.tablesorter.js';
-		$Files[] = 'lib/runalyze.lib.js';
-
-		return $Files;
-	}
-
-	/**
-	 * Get all css-files needed for included in header
-	 * @return array
-	 */
-	static public function getNeededCSSFilesAsArray() {
-		$Files = array();
-
-		$Files[] = 'lib/bootstrap-tooltip.css';
-		$Files[] = 'lib/jquery.datepicker.css';
-		$Files[] = 'lib/jquery.tablesorter.css';
-		$Files[] = 'lib/jquery.jbar.css';
-		$Files[] = 'lib/flot.css';
-		$Files[] = 'lib/flot/qtip.css';
-
-		return $Files;
-	}
-
-	/**
 	 * Gives a HTML-link for using jTraining
 	 * @param int $training_id ID of the training
 	 * @param string $name Name of the link to be displayed
