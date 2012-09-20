@@ -57,8 +57,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
 			`id`,
-			`vdot`,
-			`s`
+			SUM(`vdot`*`s`) as `vdot`,
+			SUM(`s`) as `s`
 		FROM `'.PREFIX.'training`
 		WHERE
 			`vdot`>0 AND (
@@ -73,7 +73,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		if ($dat['y'] == $Year)
 			$index += 366;
 
-		$VDOTs_raw[$index]     = $dat['vdot']*$dat['s'];
+		$VDOTs_raw[$index]     = $dat['vdot']; // Remember: These values are already multiplied with `s`
 		$Durations_raw[$index] = (double)$dat['s'];
 	}
 
