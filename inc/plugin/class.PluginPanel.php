@@ -55,8 +55,7 @@ abstract class PluginPanel extends Plugin {
 	public function display() {
 		if ($this->SurroundingDivIsVisible)
 			echo(NL.'<div class="panel" id="panel-'.$this->id.'">'.NL);
-		
-		$this->displayConfigDiv();
+
 		$this->displayHeader();
 
 		echo(NL.'<div class="content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL);
@@ -70,13 +69,18 @@ abstract class PluginPanel extends Plugin {
 	/**
 	 * Displays the config container for this panel
 	 */
-	public function displayConfigDiv() {
-		echo('
-			<div class="config">
-				'.Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.'"><img src="'.Icon::getSrc(Icon::$CONF_SETTINGS).'" alt="Plugin bearbeiten" /></a>','small').'
-				<img class="link up" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_UP_BIG).'" alt="Nach oben verschieben" />
-				<img class="link down" rel="'.$this->id.'" src="'.Icon::getSrc(Icon::$ARR_DOWN_BIG).'" alt="Nach unten verschieben" />
-			</div>'.NL);
+	public function getConfigLinks() {
+		$Links = array();
+
+		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
+			$Links[] = $this->getConfigLink();
+
+		if (CONF_PLUGIN_SHOW_MOVE_LINK) {
+			$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
+			$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
+		}
+
+		return implode('', $Links);
 	}
 
 	/**
@@ -85,6 +89,7 @@ abstract class PluginPanel extends Plugin {
 	private function displayHeader() {
 		echo('<span class="right '.($this->textAsRightSymbol?'smallHeadNavi':'').'">'.$this->getRightSymbol().'</span>
 			<h1>
+				'.$this->getConfigLinks().'
 				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">
 					'.$this->name.'
 				</span>

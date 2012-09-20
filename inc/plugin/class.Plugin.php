@@ -245,9 +245,9 @@ abstract class Plugin {
 	 */
 	final public function getInstallLink($name = '') {
 		if ($name == '')
-			$name = Icon::get(Icon::$ADD, '', '', 'Plugin installieren');
+			$name = Icon::$ADD;
 
-		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.$name.'</a>');
+		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.Ajax::tooltip($name, 'Plugin installieren').'</a>');
 	}
 
 	/**
@@ -486,9 +486,9 @@ abstract class Plugin {
 	 */
 	final public function getConfigLink($name = '', $add_param = '') {
 		if ($name == '')
-			$name = Icon::get(Icon::$CONF_SETTINGS, '', '', 'Plugin bearbeiten');
+			$name = Icon::$EDIT;
 
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.Ajax::tooltip($name, 'Konfiguration &ouml;ffnen').'</a>','small');
 	}
 
 	/**
@@ -497,9 +497,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	static public function getRemoveLink($key) {
-		$name = Icon::get(Icon::$CROSS, '', '', 'Plugin entfernen');
-
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.$name.'</a>','small');
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.Ajax::tooltip(Icon::$CROSS, 'Plugin entfernen').'</a>','small');
 	}
 
 	/**

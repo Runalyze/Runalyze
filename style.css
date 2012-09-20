@@ -306,18 +306,9 @@ fieldset .validationFailed {
 .toolbar-line .labeledLink {
 	display: block;
 	float: left;
-	background-position: left center;
-	background-repeat: no-repeat;
 	min-height: 12px;
 	margin: 0 5px;
-	padding: 2px 2px 2px 16px; }
-
-.labeledLink.editLink { background-image:url(img/edit.png); }
-.labeledLink.exportLink { background-image:url(img/export.png); }
-.labeledLink.attachLink { background-image:url(img/attach.png); }
-.labeledLink.zoomInLink { background-image:url(img/zoomIn.png); }
-.labeledLink.zoomOutLink { background-image:url(img/zoomOut.png); }
-.labeledLink.zoomFitLink { background-image:url(img/zoomFit.png); }
+	padding: 2px; }
 
 .toolbar-line input, .toolbar-line label {
 	font-size: .9em; }
@@ -432,30 +423,6 @@ h1 a:hover, h1 a:active {
 
 #statisticTabs li.active a:link, #statisticTabs li.active a:visited {
 	color: #000; }
-
-
-/*** PANEL-CONFIG NAVIGATION ***/
-.updowns {
-	float: left;
-	height: 17px;
-	line-height: 8px;
-	margin-right: 5px;
-	font-size: 8px; }
-
-.config {
-	display: none;
-	position: absolute;
-	top: 5px;
-	left: -21px;
-	width: 20px;
-	height: 70px;
-	background: url(img/bgPanelConfig.png); }
-
-.config img, .config a {
-	margin: 3px; }
-
-.config a img {
-	margin: 3px 0 !important; }
 
 
 /*** OVERLAYS ***/

@@ -3,7 +3,7 @@
 	<div class="c fullWidth" style="position:relative;">
 		<small style="position:absolute;right:8px;top:2px;">
 			Bei Problemen:
-			<img class="link" style="vertical-align:middle;" src="<?php echo Icon::getSrc(ICON::$REFRESH); ?>" onclick="$('#GCapi').attr('src', 'inc/tpl/tpl.garminCommunicator.php')" />
+			<span class="link" onclick="$('#GCapi').attr('src', 'inc/tpl/tpl.garminCommunicator.php')"><?php echo ICON::$REFRESH; ?></span>
 		</small>
 
 <?php

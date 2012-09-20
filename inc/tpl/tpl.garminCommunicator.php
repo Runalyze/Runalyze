@@ -53,7 +53,7 @@ new Frontend(true);
 				getActivityDirectoryHeaderIdLabel: function () { return 'Datum'; },
 				activityDirectoryHeaderDuration: 'Dauer',
 				activityDirectoryHeaderStatus: '',
-				statusCellProcessingImg: '<img src="../../img/addGray.gif" />',
+				statusCellProcessingImg: ' + ',
 				postActivityHandler: function(activityXml, display) {
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
 	

@@ -35,10 +35,10 @@
 	background-repeat: no-repeat;
 }
 
-.runalyze-emb-time { background-image: url(../img/competition.png); }
-.runalyze-emb-pace { background-image: url(../img/chart.png); }
-.runalyze-emb-heart { background-image: url(../img/heart.png); }
-.runalyze-emb-elev { background-image: url(../img/elevation.png); }
+.runalyze-emb-time { background-image: url(../img/sprite-icons.png); background-position: -60px 0; }
+.runalyze-emb-pace { background-image: url(../img/sprite-toggle.png); background-position: -16px -32px; }
+.runalyze-emb-heart { background-image: url(../img/sprite-toggle.png); background-position: -32px -32px; }
+.runalyze-emb-elev { background-image: url(../img/sprite-toggle.png); background-position: -48px -32px; }
 
 .runalyze-emb a:hover {
 	color: #999 !important;

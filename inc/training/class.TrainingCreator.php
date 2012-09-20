@@ -24,9 +24,7 @@ class TrainingCreator {
 	 * Get link for create window
 	 */
 	static public function getWindowLink() {
-		$icon = Icon::get(Icon::$ADD, '', '', 'Training hinzuf&uuml;gen');
-
-		return Ajax::window('<a href="'.self::$URL.'">'.$icon.'</a>', 'small');
+		return Ajax::window('<a href="'.self::$URL.'">'.Ajax::tooltip(Icon::$ADD, 'Training hinzuf&uuml;gen').'</a>', 'small');
 	}
 
 	/**
@@ -38,9 +36,7 @@ class TrainingCreator {
 		if (is_int($date))
 			$date = date('d.m.Y', $date);
 
-		$icon = Icon::get(Icon::$ADD_GRAY, '');
-
-		return Ajax::window('<a href="'.self::$URL.'?date='.$date.'">'.$icon.'</a>', 'small');
+		return Ajax::window('<a href="'.self::$URL.'?date='.$date.'">'.Icon::$ADD_SMALL.'</a>', 'small');
 	}
 
 	/**

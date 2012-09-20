@@ -102,13 +102,13 @@ if ($num_all > CONF_RESULTS_AT_PAGE) {
 	}
 
 	if ($num_all > $_POST['seite']*CONF_RESULTS_AT_PAGE) {
-		$name   = Icon::get(Icon::$ARR_NEXT, '', '', 'Seite vor');
+		$name   = Ajax::tooltip(Icon::$NEXT, 'Seite vor');
 		$data   = $submit_search.'seite='.($_POST['seite']+1);
 		$next = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'call/window.search.php?pager=true&get=true&'.$data);
 	}
 
 	if ($_POST['seite'] > 1) {
-		$name   = Icon::get(Icon::$ARR_BACK, '', '', 'Seite zur&uuml;ck');
+		$name   = Ajax::tooltip(Icon::$BACK, 'Seite zur&uuml;ck');
 		$data   = $submit_search.'seite='.($_POST['seite']-1);
 		$back = Ajax::link($name, DATA_BROWSER_SEARCHRESULT_ID, 'call/window.search.php?pager=true&'.$data);
 	}

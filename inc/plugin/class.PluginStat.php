@@ -114,7 +114,8 @@ abstract class PluginStat extends Plugin {
 	 * Display config link
 	 */
 	private function displayConfigLinkForHeader() {
-		//echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
+		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
+			echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
 	}
 
 	/**

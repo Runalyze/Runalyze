@@ -1,7 +1,7 @@
 <h1>Plugins</h1>
 
 <small class="right">
-	<?php echo Ajax::change(Icon::get(Icon::$ADD).' Plugin installieren', 'plugin_div', 'install').NL; ?>
+	<?php echo Ajax::change(Icon::$ADD.' Plugin installieren', 'plugin_div', 'install').NL; ?>
 </small>
 
 Plugins erweitern den Funktionsumfang dieses Lauftagebuchs ganz nach deinem Belieben.<br />

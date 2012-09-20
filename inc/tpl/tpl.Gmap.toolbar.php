@@ -3,9 +3,9 @@
 
 		<div class="toolbar-line">
 			<span class="right">
-				<span class="link labeledLink zoomInLink" onclick="RunalyzeGMap.zoomIn();"></span>
-				<span class="link labeledLink zoomOutLink" onclick="RunalyzeGMap.zoomOut();"></span>
-				<span class="link labeledLink zoomFitLink" onclick="RunalyzeGMap.autofit();"></span>
+				<span class="link labeledLink" onclick="RunalyzeGMap.zoomIn();"><?php echo Icon::$ZOOM_IN; ?></span>
+				<span class="link labeledLink" onclick="RunalyzeGMap.zoomOut();"><?php echo Icon::$ZOOM_OUT; ?></span>
+				<span class="link labeledLink" onclick="RunalyzeGMap.autofit();"><?php echo Icon::$ZOOM_FIT; ?></span>
 				<!-- TODO: Fullsize -->
 			</span>
 

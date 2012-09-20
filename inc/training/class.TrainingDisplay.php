@@ -280,7 +280,7 @@ class TrainingDisplay {
 		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time<="'.$timestamp.'" ORDER BY time DESC');
 
 		if (isset($PrevTraining['id']))
-			return TrainingEditor::linkTo($PrevTraining['id'], Icon::get(Icon::$ARR_BACK), 'ajaxPrev');
+			return TrainingEditor::linkTo($PrevTraining['id'], Icon::$BACK, 'ajaxPrev');
 
 		return '';
 	}
@@ -295,7 +295,7 @@ class TrainingDisplay {
 		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE id!='.$id.' AND time>="'.$timestamp.'" ORDER BY time ASC');
 
 		if (isset($NextTraining['id']))
-			return TrainingEditor::linkTo($NextTraining['id'], Icon::get(Icon::$ARR_NEXT), 'ajaxNext');
+			return TrainingEditor::linkTo($NextTraining['id'], Icon::$NEXT, 'ajaxNext');
 
 		return '';
 	}

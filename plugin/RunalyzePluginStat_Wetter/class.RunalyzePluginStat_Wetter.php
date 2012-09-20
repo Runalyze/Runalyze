@@ -65,7 +65,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$Links = array();
 
 		if ($this->config['for_weather']['var'])
-			$Links[] = array('tag' => Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Icon::get(Icon::$FATIGUE, '', '', 'Wetter-Diagramme anzeigen').'</a>'));
+			$Links[] = array('tag' => Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>'));
 
 		return $Links;
 	}

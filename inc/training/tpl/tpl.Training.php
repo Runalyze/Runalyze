@@ -26,8 +26,8 @@
 		</span>
 
 		<?php if (!Request::isOnSharedPage()): ?>
-			<?php echo Ajax::window('<a class="labeledLink editLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">Bearbeiten</a> ','small'); ?>
-			<?php echo Ajax::window('<a class="labeledLink exportLink" href="'.ExporterView::$URL.'?id='.$this->Training->id().'">Exportieren</a> ','small'); ?>
+			<?php echo Ajax::window('<a class="labeledLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' Bearbeiten</a> ','small'); ?>
+			<?php echo Ajax::window('<a class="labeledLink" href="'.ExporterView::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small'); ?>
 		<?php endif; ?>
 		<?php if ($this->Training->isPublic()): ?>
 			<?php echo SharedLinker::getToolbarLinkTo($this->Training->id()); ?>

@@ -55,8 +55,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::get(Icon::$ADD).'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::get(Icon::$TABLE).'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
 
 		return implode(' ', $Links);
 	}
@@ -104,7 +104,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @return string
 	 */
 	static public function getEditLinkFor($id) {
-		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::get(Icon::$EDIT_SMALL, '').'</a>');
+		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
 	}
 }
 ?>

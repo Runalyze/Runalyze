@@ -226,17 +226,15 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	static public function getIcon($distance) {
-		$title = 'bisher '.Helper::Km($distance);
-
 		if ($distance > 900)
-			return Icon::get(Icon::$BROKEN_5, $title);
+			return Icon::$BROKEN_5;
 		elseif ($distance > 700)
-			return Icon::get(Icon::$BROKEN_4, $title);
+			return Icon::$BROKEN_4;
 		elseif ($distance > 500)
-			return Icon::get(Icon::$BROKEN_3, $title);
+			return Icon::$BROKEN_3;
 		elseif ($distance > 200)
-			return Icon::get(Icon::$BROKEN_2, $title);
+			return Icon::$BROKEN_2;
 		else
-			return Icon::get(Icon::$BROKEN_1, $title);
+			return Icon::$BROKEN_1;
 	}
 }
