@@ -5,24 +5,13 @@
 
 	<base href="<?php echo System::getFullDomain(); ?>" />
 
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<link rel="stylesheet" type="text/css" href="lib/sprites.css" />
-	<?php foreach ($this->CSS_FILES as $file): ?>
-		<link rel="stylesheet" type="text/css" href="<?php echo $file; ?>" />
-	<?php endforeach; ?>
+	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title><?php echo $this->getPageTitle(); ?> - Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
 
-	<?php foreach ($this->JS_FILES as $file): ?>
-		<script type="text/javascript" src="<?php echo $file; ?>"></script>
-	<?php endforeach; ?>
-		<script type="text/javascript" src="lib/jquery.backgroundStretch.js"></script>
-
-	<?php if (class_exists('Plot')): ?><?php foreach (Plot::getNeededJSFilesAsArray() as $file): ?>
-		<script type="text/javascript" src="<?php echo $file; ?>"></script>
-	<?php endforeach; ?><?php endif; ?>
+	<?php echo System::getCodeForAllJSFiles(); ?>
 
 	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
