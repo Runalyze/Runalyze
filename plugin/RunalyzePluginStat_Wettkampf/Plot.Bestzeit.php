@@ -34,6 +34,9 @@ $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();
 $Plot->setYAxisTimeFormat($timeFormat);
 
+if (count($Results) == 1)
+	$Plot->setXAxisTimeFormat('%d.%m.%y');
+
 $Plot->lineWithPoints();
 $Plot->enableTracking();
 

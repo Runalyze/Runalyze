@@ -1,7 +1,9 @@
-<p<?php if (isset($_GET['ids'])) echo ' class="hide"'; ?>>
-	<?php echo DataBrowser::getSearchLink('Suchergebnisse'); ?>
-	k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.<br />
-	Standardm&auml;&szlig;ig werden die letzten Trainings zum Bearbeiten angezeigt.
+<p class="info<?php if (isset($_GET['ids'])) echo ' hide'; ?>"">
+	<strong><?php echo DataBrowser::getSearchLink('Suchergebnisse'); ?></strong> k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.
+</p>
+
+<p class="info">
+	In der <strong><?php echo $this->getConfigLink('Konfiguration'); ?></strong> k&ouml;nnen die Spalten festgelegt werden.
 </p>
 
 <form class="ajax" action="<?php echo Plugin::$DISPLAY_URL.'?id='.$this->id; ?>" id="training" onsubmit="return false;" method="post">

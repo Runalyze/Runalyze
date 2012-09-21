@@ -270,7 +270,7 @@ class Plot {
 	private function getJSForAnnotations() {
 		$code = '';
 		foreach ($this->Annotations as $Array)
-			$code .= 'RunalyzePlot.addAnnotationTo("'.$this->cssID.'", '.$Array['x'].', '.$Array['y'].', "'.$Array['text'].'");';
+			$code .= 'RunalyzePlot.addAnnotationTo("'.$this->cssID.'", '.$Array['x'].', '.$Array['y'].', "'.$Array['text'].'", '.$Array['toX'].', '.$Array['toY'].');';
 
 		return $code;
 	}
@@ -356,9 +356,11 @@ class Plot {
 	 * @param double $x
 	 * @param double $y
 	 * @param string $text
+	 * @param double $toX relative repositioning in px
+	 * @param double $toY relative repositioning in px
 	 */
-	public function addAnnotation($x, $y, $text) {
-		$this->Annotations[] = array('x' => $x, 'y' => $y, 'text' => $text);
+	public function addAnnotation($x, $y, $text, $toX = 0, $toY = 0) {
+		$this->Annotations[] = array('x' => $x, 'y' => $y, 'text' => $text, 'toX' => $toX, 'toY' => $toY);
 	}
 
 	/**
