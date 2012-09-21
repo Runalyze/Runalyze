@@ -20,7 +20,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$KilometersCompetition[] = 0;
 	}
 
-	$Data = Mysql::getInstance()->fetchAsArray('SELECT (`typeid` = '.CONF_WK_TYPID.') as `wk`, SUM(`distance`) as `km`, MONTH(FROM_UNIXTIME(`time`)) as `m` FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY (`typeid` = '.CONF_WK_TYPID.'), MONTH(FROM_UNIXTIME(`time`))');
+	$Data = Mysql::getInstance()->fetchAsArray('SELECT (`typeid` = '.CONF_WK_TYPID.') as `wk`, SUM(`distance`) as `km`, MONTH(FROM_UNIXTIME(`time`)) as `m` FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY (`typeid` = '.CONF_WK_TYPID.'), m');
 	foreach ($Data as $dat) {
 		if ($dat['wk'] == 1)
 			$KilometersCompetition[$dat['m']-1] = $dat['km'];
@@ -51,7 +51,7 @@ $Plot->setYTicks(1, 10, 0);
 $Plot->showBars(true);
 $Plot->stacked();
 
-$Plot->setTitle('Monatskilometer '.$Year);
+$Plot->setTitle($titleCenter);
 
 if ($possibleKM > 0) {
 	$Plot->addThreshold('y', $possibleKM);

@@ -141,8 +141,11 @@ abstract class PluginTool extends Plugin {
 	/**
 	 * Get link to this tool as overlay
 	 */
-	public function getWindowLink() {
-		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.'" title="'.$this->name.'">'.$this->name.'</a>', 'big');
+	public function getWindowLink($name = '') {
+		if ($name == '')
+			$name = $this->name;
+
+		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.'" title="'.$this->name.'">'.$name.'</a>', 'big');
 	}
 
 	/**

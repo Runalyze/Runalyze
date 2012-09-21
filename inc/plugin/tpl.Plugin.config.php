@@ -53,3 +53,9 @@ echo Ajax::toolbarNavigation($Links, 'right');
 	</fieldset>
 
 </form>
+
+<?php if ($this->type == Plugin::$TOOL): ?>
+	<ul class="blocklist">
+		<li><?php echo $this->getWindowLink('&raquo; zum Tool'); ?></li>
+	</ul>
+<?php endif; ?>

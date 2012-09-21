@@ -64,10 +64,14 @@ $Plot->setTitle($Training->getPlotTitle(), 'left');
 
 $Plot->enableTracking();
 
-if ($demandedPace > 0)
+if ($demandedPace > 0) {
 	$Plot->addThreshold("y", $demandedPace*1000, 'rgb(180,0,0)');
-if ($achievedPace > 0)
+	//$Plot->addAnnotation(count($Data)-1, $demandedPace*1000, 'Soll: '.Helper::Time($demandedPace), -10, -7);
+}
+if ($achievedPace > 0) {
 	$Plot->addThreshold("y", $achievedPace*1000, 'rgb(0,180,0)');
+	$Plot->addAnnotation(0, $achievedPace*1000, '&oslash; '.Helper::Time(round($achievedPace)), -20, -7);
+}
 
 $Plot->outputJavaScript();
 ?>
