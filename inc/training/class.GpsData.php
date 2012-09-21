@@ -1,7 +1,6 @@
 <?php
 /**
  * Class: GpsData
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class GpsData {

@@ -24,5 +24,10 @@ for ($j = START_YEAR; $j <= date("Y"); $j++) {
 	else
 		echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
 }
+
+if ($_GET['y'] == 'all')
+	echo '<strong style="margin-right:20px;">Gesamt</strong>';
+else
+	echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y=all" style="margin-right:20px;">Gesamt</a>');
 ?>
 </center>
