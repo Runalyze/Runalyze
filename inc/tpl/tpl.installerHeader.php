@@ -3,22 +3,14 @@
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	<link rel="stylesheet" type="text/css" href="lib/jquery.jbar.css" />
-	<link rel="stylesheet" type="text/css" href="lib/jquery.tablesorter.css" />
+	<?php echo System::getCodeForAllCSSFiles(); ?>
+
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 	<title><?php echo $title; ?></title>
 
-	<script type="text/javascript" src="lib/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="lib/jquery.backgroundStretch.js"></script>
-	<script type="text/javascript" src="lib/jquery.jbar.js"></script>
-	<script type="text/javascript" src="lib/jquery.metadata.js"></script>
-	<script type="text/javascript" src="lib/jquery.tablesorter.js"></script>
-	<script type="text/javascript" src="lib/jquery.tablesorter.pager.js"></script>
-	<script type="text/javascript" src="lib/runalyze.lib.js"></script>
-	<script type="text/javascript" src="lib/runalyze.lib.log.js"></script>
-	<script type="text/javascript" src="lib/runalyze.lib.tablesorter.js"></script>
+	<?php echo System::getCodeForAllJSFiles(); ?>
+
 </head>
 
 <body id="installer">

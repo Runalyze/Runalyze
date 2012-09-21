@@ -43,6 +43,7 @@ if ($correctYAxis) {
 
 $Plot->setXUnit('km');
 $Plot->enableTracking();
+$Plot->enableSelection();
 
 $Plot->hideLegend();
 $Plot->setTitle('Pace', 'right');

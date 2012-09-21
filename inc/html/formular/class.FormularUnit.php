@@ -41,6 +41,12 @@ class FormularUnit {
 	static public $PASS = 'unitPass';
 
 	/**
+	 * Unit: mail-adress
+	 * @var string
+	 */
+	static public $MAIL = 'unitMail';
+
+	/**
 	 * Unit: temperature in degree celsius
 	 * @var string
 	 */

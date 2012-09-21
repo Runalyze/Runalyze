@@ -35,4 +35,5 @@ if (isset($_GET['delete']))
 
 include 'inc/tpl/tpl.installerHeader.php';
 include 'inc/tpl/'.$tpl;
+include 'inc/tpl/tpl.installerFooterText.php';
 include 'inc/tpl/tpl.installerFooter.php';

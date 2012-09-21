@@ -154,7 +154,7 @@ class Gmap {
 		$TotalDistance = $this->GpsData->getTotalDistance();
 		$km = $this->GpsData->getDistance();
 
-		if ($km < 0.2)
+		if ($km < 0.5)
 			return 'img/marker/start.png';
 		if ($TotalDistance == $km)
 			return 'img/marker/finish.png';
