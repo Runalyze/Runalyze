@@ -123,3 +123,17 @@ label:hover .toggle-icon-map { background-position: -64px -16px; }
 .weather-icon.weather-5 { background-position: 0 -48px; }
 .weather-icon.weather-6 { background-position: 0 -60px; }
 .weather-icon.weather-7 { background-position: 0 -72px; }
+
+
+[class^="broken-icon-"], [class*=" broken-icon-"] {
+	display: inline-block;
+	width: 26px;
+	height: 16px;
+	vertical-align: middle;
+	background-image: url(../img/sprite-broken.png);
+}
+.broken-icon-1 { background-position: 0 0; }
+.broken-icon-2 { background-position: -26px 0; }
+.broken-icon-3 { background-position: -52px 0; }
+.broken-icon-4 { background-position: -78px 0; }
+.broken-icon-5 { background-position: -104px 0; }

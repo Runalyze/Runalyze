@@ -41,11 +41,11 @@ class Icon {
 	static public $ERROR            = '<i class="icon-error"></i>';
 
 	// Shoes
-	static public $BROKEN_1			= '<img src="img/running/broken-1.png" />';
-	static public $BROKEN_2			= '<img src="img/running/broken-2.png" />';
-	static public $BROKEN_3			= '<img src="img/running/broken-3.png" />';
-	static public $BROKEN_4			= '<img src="img/running/broken-4.png" />';
-	static public $BROKEN_5			= '<img src="img/running/broken-5.png" />';
+	static public $BROKEN_1			= '<i class="broken-icon-1"></i>';
+	static public $BROKEN_2			= '<i class="broken-icon-2"></i>';
+	static public $BROKEN_3			= '<i class="broken-icon-3"></i>';
+	static public $BROKEN_4			= '<i class="broken-icon-4"></i>';
+	static public $BROKEN_5			= '<i class="broken-icon-5"></i>';
 
 	/**
 	 * This class contains only static methods
