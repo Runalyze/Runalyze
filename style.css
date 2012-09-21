@@ -259,6 +259,7 @@ fieldset input.unitKg { background-image: url('img/units/kg.png'); }
 fieldset input.unitKm { background-image: url('img/units/km.png'); }
 fieldset input.unitUser { background-image: url('img/units/user.png'); }
 fieldset input.unitPass { background-image: url('img/units/pass.png'); }
+fieldset input.unitMail { background-image: url('img/units/mail.png'); }
 fieldset input.unitCelsius { background-image: url('img/units/celsius.png'); }
 fieldset input.unitElevation { background-image: url('img/units/hm.png'); }
 fieldset input.unitKcal { background-image: url('img/units/kcal.png'); }
@@ -671,26 +672,44 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 #loginWindow input.withUnit {
 	padding-left: 2px;
 	text-align: left; }
+#loginWindow p {
+	margin: 1em 0; }
 
 #loginPanel {
 	position: absolute;
 	top: 40px;
 	right: 20px;
-	width: 160px;
-	padding-left: 10px;
+	width: 170px;
 	border-left: 1px solid #DDD;
 	font-size: .9em; }
 
 #loginPanel a {
 	display: block;
 	line-height: 24px;
-	padding: 2px 2px 2px 30px;
+	margin-left: 4px;
+	padding: 2px 2px 2px 36px;
 	border-bottom: none !important;
-	background-position: left center;
+	background-position: 3px center;
 	background-repeat: no-repeat; }
+#loginPanel a:hover {
+	background-color: rgba(255,255,255,.5); }
 
+#loginPanel #loginLink { background-image:url(img/registerLogin.png); }
 #loginPanel #registerLink { background-image:url(img/register.png); }
 #loginPanel #passLink { background-image:url(img/registerPass.png); }
+
+.textBadge {
+	width: 33%;
+	float: left;
+	background-position: 10px 5px;
+	background-repeat: no-repeat; }
+
+.textBadge-charts { background-image:url(img/badge-charts.png); }
+.textBadge-tools { background-image:url(img/badge-tools.png); }
+.textBadge-heart { background-image:url(img/badge-heart.png); }
+
+.textBadge strong { display: block; margin-bottom: 5px; text-transform: uppercase; font-weight: normal; }
+.textBadge p { margin: 0 10px 0 45px; color: #666; }
 
 code {
 	width: 98%;

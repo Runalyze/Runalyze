@@ -57,6 +57,7 @@ $Plot->addYUnit(2, '%');
 $Plot->setYTicks(2, 5, 0);
 $Plot->setYLimits(2, 50, 100);
 $Plot->enableTracking();
+$Plot->enableSelection();
 if ($Training->GpsData()->plotUsesTimeOnXAxis()) {
 	$Plot->setXAxisAsTime();
 	$Plot->setXAxisTimeFormat("%h:%M:%S",2);

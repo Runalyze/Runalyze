@@ -204,6 +204,9 @@ class Plot {
 			if (isset($this->Options['crosshair']))
 				$bindedCode .= $this->getJSForTracking();
 
+			if (isset($this->Options['selection']))
+				$bindedCode .= $this->getJSForSelection();
+
 			if (!empty($this->Annotations))
 				$bindedCode .= $this->getJSForAnnotations();
 		}
@@ -327,6 +330,15 @@ class Plot {
 	}
 
 	/**
+	 * Get code for enable selection
+	 * @return string
+	 */
+	private function getJSForSelection() {
+		return '
+			bindFlotForSelection($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
+	}
+
+	/**
 	 * Convert internal data to correct array for JSON
 	 */
 	private function convertData() {
@@ -366,12 +378,15 @@ class Plot {
 	/**
 	 * Enable selection for this plot
 	 * @param mixed $mode can be false
+	 * @param string $color
 	 */
-	public function enableSelection($mode = "x") {
+	public function enableSelection($mode = 'x', $color = 'rgba(170, 0, 0, 0.5)') {
 		if ($mode === false)
 			unset($this->Options['selection']);
-		else
+		else {
 			$this->Options['selection']['mode'] = $mode;
+			$this->Options['selection']['color'] = $color;
+		}
 	}
 
 	/**

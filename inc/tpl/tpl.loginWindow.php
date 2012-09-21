@@ -5,7 +5,7 @@
 			<fieldset>
 				<legend>Login</legend>
 				<div class="w100">
-					<label for="username">Benutzer</label>
+					<label for="username">Benutzername</label>
 					<input id="username" name="username" class="middleSize withUnit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 				<div class="w100 clear">
@@ -30,7 +30,7 @@
 			?>
 
 			<div class="c">
-				<input type="submit" value="Login" name="submit" />
+				<input type="submit" value="Einloggen" name="submit" />
 			</div>
 		</form>
 	</div>
@@ -42,24 +42,29 @@
 			<?php
 			FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);
 
-			$Field = new FormularInput('new_username', 'Benutzer');
+			$Field = new FormularInput('new_username', 'Benutzername');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+			$Field->setUnit( FormularUnit::$USER );
 			$Field->display();
 
 			$Field = new FormularInput('name', 'Name');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+			$Field->setUnit( FormularUnit::$USER );
 			$Field->display();
 
 			$Field = new FormularInput('email', 'E-Mail');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+			$Field->setUnit( FormularUnit::$MAIL );
 			$Field->display();
 			
 			$Field = new FormularInputPassword('password', 'Passwort');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+			$Field->setUnit( FormularUnit::$PASS );
 			$Field->display();
 
 			$Field = new FormularInputPassword('password_again', 'Passwort erneut');
 			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+			$Field->setUnit( FormularUnit::$PASS );
 			$Field->display();
 			?>
 
@@ -86,16 +91,16 @@
 			<fieldset>
 				<legend onclick="show('log');">Passwort vergessen</legend>
 				<div class="w100">
-					<label for="send_username">Benutzer</label>
+					<label for="send_username">Benutzername</label>
 					<input id="send_username" name="send_username" class="middleSize withUnit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 
 			<?php if (isset($_POST['send_username'])): ?>
-				<p class="small">
+				<p class="info small">
 					<?php echo AccountHandler::sendPasswordLinkTo($_POST['send_username']); ?>
 				</p>
 			<?php else: ?>
-				<p class="small">
+				<p class="info small">
 					Ein Link zum &Auml;ndern deines Passworts wird an deine eingetragene E-Mail-Adresse gesendet.
 				</p>
 			<?php endif; ?>
@@ -109,6 +114,7 @@
 </div>
 
 <div id="loginPanel">
+	<a id="loginLink" href="#" onclick="show('log')">Login</a>
 	<a id="registerLink" href="#" onclick="show('reg')">Registrieren</a>
 	<a id="passLink" href="#" onclick="show('pwf');">Passwort vergessen?</a>
 </div>
@@ -132,8 +138,8 @@ $haben = ($NumUser['num'] == 1) ? 'hat' : 'haben';
 
 <p class="text"></p>
 <p class="text small c">
-	Bisher <?php echo $sind; ?> <strong><?php echo $NumUser['num']; ?></strong> L&auml;ufer angemeldet
-	und <?php echo $haben; ?> <strong><?php echo Helper::Km($NumKm['num']); ?></strong> geschafft.
+	Bisher <?php echo $sind; ?> <strong><?php echo $NumUser['num']; ?></strong> L&auml;ufer bei uns angemeldet
+	und <?php echo $haben; ?> <strong><?php echo Helper::Km($NumKm['num']); ?></strong> eingetragen.
 </p>
 
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>

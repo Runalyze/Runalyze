@@ -45,8 +45,8 @@ Config::register('TRAINING_DECIMALS', 'select',
 Config::register('TRAINING_MAP_COLOR', 'string', '#FF5500', 'Karte: Linienfarbe');
 Config::register('TRAINING_MAP_MARKER', 'bool', true, 'Karte: Markierungen');
 Config::register('TRAINING_MAPTYPE', 'select',
-	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false), 'Karte: Typ',
-	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch'));
+	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false, 'OSM' => false), 'Karte: Typ',
+	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch', 'OpenStreetMap'));
 Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
 Config::register('TRAINING_MAP_BEFORE_PLOTS', 'bool', false, 'Karte: vor Diagrammen');
 // Hidden ones

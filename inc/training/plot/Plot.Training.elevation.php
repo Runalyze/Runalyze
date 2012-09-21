@@ -32,6 +32,7 @@ $Plot->setYLimits(1, $minL, $maxL, true);
 $Plot->setXUnit('km');
 $Plot->setLinesFilled();
 $Plot->enableTracking();
+$Plot->enableSelection();
 
 $Plot->hideLegend();
 $Plot->setTitle('H&ouml;henprofil', 'right');

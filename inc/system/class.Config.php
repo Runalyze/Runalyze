@@ -114,6 +114,12 @@ class Config {
 					if ($v)
 						$value = $k;
 			}
+
+			if ($type == 'select' && count($default) != count($Consts[$KEY]['value'])) {
+				foreach ($default as $k => $v)
+					$default[$k] = ($k == $value);
+				Mysql::getInstance()->update(PREFIX.'conf', $Consts[$KEY]['id'], 'value', self::valueToString($default, 'select'));
+			}
 		}
 
 		if (!AccountHandler::$IS_ON_REGISTER_PROCESS)

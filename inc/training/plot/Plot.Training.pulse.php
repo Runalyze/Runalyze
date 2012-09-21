@@ -38,6 +38,7 @@ if ($InPercent) {
 }
 
 $Plot->enableTracking();
+$Plot->enableSelection();
 $Plot->hideLegend();
 $Plot->setTitle('Herzfrequenz', 'right');
 $Plot->setTitle($Training->getPlotTitle(), 'left');
