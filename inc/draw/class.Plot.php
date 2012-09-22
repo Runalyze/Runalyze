@@ -335,7 +335,7 @@ class Plot {
 	 */
 	private function getJSForSelection() {
 		return '
-			bindFlotForSelection($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
+			bindFlotForSelection($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'"), '.($this->Options['selection']['rangeCalculation']?'true':'false').' );'.NL;
 	}
 
 	/**
@@ -379,13 +379,15 @@ class Plot {
 	 * Enable selection for this plot
 	 * @param mixed $mode can be false
 	 * @param string $color
+	 * @param boolean $rangeCalculation
 	 */
-	public function enableSelection($mode = 'x', $color = 'rgba(170, 0, 0, 0.5)') {
+	public function enableSelection($mode = 'x', $color = '', $rangeCalculation = true) {
 		if ($mode === false)
 			unset($this->Options['selection']);
 		else {
 			$this->Options['selection']['mode'] = $mode;
-			$this->Options['selection']['color'] = $color;
+			$this->Options['selection']['color'] = $color=='' ? 'rgba(170, 0, 0, 0.5)' : $color;
+			$this->Options['selection']['rangeCalculation'] = $rangeCalculation;
 		}
 	}
 
