@@ -91,6 +91,9 @@ class ImporterFormular extends Importer {
 		$AutoParseKeys   = array();
 		$AutoParseKeys[] = 'kcal';
 		$AutoParseKeys[] = 'sportid';
+		$AutoParseKeys[] = 'activity_id';
+		$AutoParseKeys[] = 'creator';
+		$AutoParseKeys[] = 'creator_details';
 		$StringKeys      = array();
 		$StringKeys[]    = 'partner';
 		$StringKeys[]    = 'comment';

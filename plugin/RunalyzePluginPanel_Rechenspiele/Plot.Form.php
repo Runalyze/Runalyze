@@ -114,7 +114,7 @@ if (count($ATLs) < $MaxATLPoints)
 $Plot->Data[] = array('label' => 'VDOT', 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 
 $Plot->enableTracking();
-$Plot->enableSelection();
+$Plot->enableSelection('x', '', false);
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));

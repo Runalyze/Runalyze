@@ -95,6 +95,9 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 	 */
 	protected function initHiddenFields() {
 		$this->Formular->addHiddenValue('type', 'newtraining');
+		$this->Formular->addHiddenValue('activity_id');
+		$this->Formular->addHiddenValue('creator');
+		$this->Formular->addHiddenValue('creator_details');
 		$this->Formular->addHiddenValue('kcalPerHour', $this->Training->Sport()->kcalPerHour());
 		$this->Formular->addHiddenValue('arr_time');
 		$this->Formular->addHiddenValue('arr_lat');

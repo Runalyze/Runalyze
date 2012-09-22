@@ -205,6 +205,7 @@ class ParserTCX extends Parser {
 	 * Set general values
 	 */
 	protected function setGeneralValues() {
+		$this->set('activity_id', (string)$this->XML->Id);
 		$this->set('sportid', $this->getCurrentSportId());
 		$this->set('kcal', $this->calories);
 		$this->set('splits', implode('-', $this->data['splits']));

@@ -89,6 +89,7 @@ body { padding: 0; margin: 0; }
 }
 
 #activityDirectory {
+	text-align: left;
 }
 
 #activityDirectoryData {
@@ -109,13 +110,8 @@ body { padding: 0; margin: 0; }
     margin: 0 auto;
 }
 #activityTableHeader td {
-	padding: 2px 0;
-	text-align: center !important;
+	padding: 2px 10px;
 	font-weight: bold;
-}
-
-#durationHeader {
-	padding-right: 18px;
 }
 
 #activityTable {
@@ -124,6 +120,18 @@ body { padding: 0; margin: 0; }
     font-weight: normal;
     font-size: 10px;
 }
+
+#activityTable td {
+	padding: 1px 5px;
+}
+
+.activityStatusCell {
+	width: 80px;
+	text-align: center;
+}
+
+.upload-exists { color: #666; }
+.upload-new { font-weight: bold; }
 
 #activityDirectoryData td {
 	background: rgba(255,255,255,.6);

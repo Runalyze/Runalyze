@@ -113,6 +113,9 @@ abstract class Importer {
 		$this->allowedKeysForSet[] = 'temperature';
 		$this->allowedKeysForSet[] = 'splits';
 		$this->allowedKeysForSet[] = 'is_public';
+		$this->allowedKeysForSet[] = 'activity_id';
+		$this->allowedKeysForSet[] = 'creator';
+		$this->allowedKeysForSet[] = 'creator_details';
 
 		$this->allowedKeysForGet   = $this->allowedKeysForSet;
 		$this->allowedKeysForGet[] = 'pace';

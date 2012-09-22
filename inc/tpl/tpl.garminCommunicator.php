@@ -12,9 +12,9 @@ new Frontend(true);
 	<script type="text/javascript" src="../../lib/garmin/prototype/prototype.js"></script>
 	<script type="text/javascript" src="../../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">	
-		var currentActivity = 0, uploadedActivities = [];
+		var currentActivity = 0, uploadedActivities = [], display;
 		function load() {
-		    var display = new Garmin.DeviceDisplay("garminDisplay", {
+		    display = new Garmin.DeviceDisplay("garminDisplay", {
 				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br />Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
 				showReadDataElement: true,
 				showProgressBar: true,
@@ -52,8 +52,32 @@ new Frontend(true);
 				showReadDataElementOnDeviceFound: true,
 				getActivityDirectoryHeaderIdLabel: function () { return 'Datum'; },
 				activityDirectoryHeaderDuration: 'Dauer',
-				activityDirectoryHeaderStatus: '',
-				statusCellProcessingImg: ' + ',
+				activityDirectoryHeaderStatus: 'Status',
+				statusCellProcessingImg: 'upload',
+				detectNewActivities: true,
+				syncDataUrl: '<?php echo System::getFullDomain(); ?>call/ajax.activityMatcher.php',
+				syncDataOptions: {method:'post'},
+				afterTableInsert: function(index, entry, statusCell, checkbox, row, activityMatcher) {
+					var activityId = entry.id, isMatch = false;
+
+					try {
+						isMatch = activityMatcher.get(activityId).match;
+					} catch(e) {
+						console.log(e);
+					}
+
+					if (isMatch) {
+						entry.isNew = false;
+						checkbox.checked = false;
+						statusCell.className = statusCell.className + ' upload-exists';
+						statusCell.innerHTML = 'vorhanden';
+					} else {
+						entry.isNew = true;
+						checkbox.checked = true;
+						statusCell.className = statusCell.className + ' upload-new';
+						statusCell.innerHTML = 'neu';
+					}
+				},
 				postActivityHandler: function(activityXml, display) {
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
 	
@@ -71,7 +95,7 @@ new Frontend(true);
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
-	echo ',pathKeyPairsArray: ["'.($_SERVER['HTTPS']?'https':'http').'://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"]';
+	echo ',pathKeyPairsArray: ["'.(isset($_SERVER['HTTPS'])?'https':'http').'://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"]';
 ?>
 			});
 		}
