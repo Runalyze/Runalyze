@@ -17,6 +17,7 @@ class Ajax {
 	public static function initJSlibrary() {
 		$Options = array();
 		$Options['useTooltip'] = CONF_JS_USE_TOOLTIP;
+		$Options['sharedView'] = Request::isOnSharedPage();
 
 		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');
 	}

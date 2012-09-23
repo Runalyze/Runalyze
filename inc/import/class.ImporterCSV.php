@@ -167,6 +167,7 @@ class ImporterCSV extends Importer {
 		foreach ($this->Trainings as $Training) {
 			$_POST = array();
 			$Training->overwritePostArray();
+			$this->setCreatorToFileUpload(true);
 
 			$Importer = Importer::getInstance();
 			$Importer->setTrainingValues();

@@ -155,8 +155,10 @@ class TrainingDisplay {
 			return;
 
 		$RoundLinksArray = array();
-		foreach ($RoundTypes as $RoundType)
-			$RoundLinksArray[] = Ajax::change($RoundType['name'], 'training-rounds-container', $RoundType['id']);
+
+		if (count($RoundTypes) > 1)
+			foreach ($RoundTypes as $RoundType)
+				$RoundLinksArray[] = Ajax::change($RoundType['name'], 'training-rounds-container', $RoundType['id']);
 		$RoundLinks = implode(' | ', $RoundLinksArray);
 
 		include 'tpl/tpl.Training.roundContainer.php';

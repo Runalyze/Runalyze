@@ -6,6 +6,24 @@
  */
 abstract class Importer {
 	/**
+	 * Creator: manually via form
+	 * @var string
+	 */
+	public static $CREATOR_FORM = 'form';
+
+	/**
+	 * Creator: file upload
+	 * @var string
+	 */
+	public static $CREATOR_FILE = 'file-upload';
+
+	/**
+	 * Creator: Garmin Communicator API
+	 * @var string
+	 */
+	public static $CREATOR_GARMIN_COMMUNICATOR = 'garmin-communicator';
+
+	/**
 	 * Path to files, after construction with absolute path
 	 * @var string 
 	 */
@@ -244,6 +262,19 @@ abstract class Importer {
 	}
 
 	/**
+	 * Set values for creator to file upload
+	 */
+	protected function setCreatorToFileUpload($asPostData = false) {
+		if ($asPostData) {
+			$_POST['creator'] = self::$CREATOR_FILE;
+			$_POST['creator_details'] = $this->fileName;
+		} else {
+			$this->set('creator', self::$CREATOR_FILE);
+			$this->set('creator_details', $this->fileName);
+		}
+	}
+
+	/**
 	 * Absolute path to uploaded files
 	 * @param string $fileName
 	 * @return string 
@@ -284,8 +315,13 @@ abstract class Importer {
 		if (empty($this->fileName) && isset($_POST['data'])) {
 			$string = ImporterTCX::decodeCompressedData($_POST['data']);
 			$this->logFileContent($string);
+
+			$this->set('creator', self::$CREATOR_GARMIN_COMMUNICATOR);
+
 			return $string;
 		}
+
+		$this->setCreatorToFileUpload();
 
 		$file = $this->absolutePathTo($this->fileName);
 

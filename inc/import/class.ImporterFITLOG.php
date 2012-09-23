@@ -28,6 +28,7 @@ class ImporterFITLOG extends Importer {
 
 		$this->XML   = $XML->AthleteLog;
 		$this->parseXML();
+		$this->setCreatorToFileUpload();
 	}
 
 	/**
