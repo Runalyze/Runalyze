@@ -59,6 +59,9 @@ body#installer {
 	background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
 	}
 
+#installer #copy {
+	z-index: 12; }
+
 #sharedIframe #copy, #sharedIframe #copy2 {
 	line-height: 12px; }
 

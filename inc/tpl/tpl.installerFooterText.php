@@ -26,5 +26,7 @@
 					Sag uns Bescheid, es liegt uns am Herzen!
 				</p>
 			</div>
-			<br class="clear" />
+			<p class="c clear">
+				<a href="http://www.runalyze.de/" title="Runalyze - Lauftagebuch"><strong>&raquo; mehr erfahren</strong></a>
+			</p>
 		</div>
