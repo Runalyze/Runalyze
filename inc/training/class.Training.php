@@ -475,6 +475,9 @@ class Training {
 	 * @return string
 	 */
 	public function getDateWithWeekLink($withTime = true) {
+		if (Request::isOnSharedPage())
+			return $this->getDate($withTime);
+
 		$string = explode(' ', $this->getDate($withTime));
 		$string[0] = DataBrowser::getWeekLink($string[0], $this->get('time'));
 

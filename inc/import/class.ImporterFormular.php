@@ -92,8 +92,6 @@ class ImporterFormular extends Importer {
 		$AutoParseKeys[] = 'kcal';
 		$AutoParseKeys[] = 'sportid';
 		$AutoParseKeys[] = 'activity_id';
-		$AutoParseKeys[] = 'creator';
-		$AutoParseKeys[] = 'creator_details';
 		$StringKeys      = array();
 		$StringKeys[]    = 'partner';
 		$StringKeys[]    = 'comment';
@@ -162,7 +160,6 @@ class ImporterFormular extends Importer {
 			$AutoParseKeys[]     = 'typeid';
 		}
 
-		// Always save the splits
 		$Splits = new Splits( Splits::$FROM_POST );
 		$this->columns[]     = 'splits';
 		$this->values[]      = $Splits->asString();
@@ -172,6 +169,10 @@ class ImporterFormular extends Importer {
 			$this->columns[]     = 'abc';
 			$this->values[]      = isset($_POST['abc']) ? 1 : 0;
 		}
+
+		$this->columns[] = 'creator';
+		$this->values[]  = isset($_POST['creator']) && !empty($_POST['creator']) ? $_POST['creator'] : Importer::$CREATOR_FORM;
+		$AutoParseKeys[] = 'creator_details';
 		
 		foreach ($StringKeys as $var) {
 			$this->columns[] = $var;

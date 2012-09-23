@@ -91,7 +91,7 @@ class ImporterTCX extends Importer {
 			$this->Parser->parseTraining();
 
 			if ($this->Parser->worked())
-				$IDs[] = $this->insertCurrentParserData();
+				$IDs[] = $this->insertCurrentParserData($fileName.'.tcx');
 			else
 				$this->throwErrorsFromParser();
 		}
@@ -111,16 +111,32 @@ class ImporterTCX extends Importer {
 	 * Set internal training data from parser 
 	 */
 	protected function setTrainingDataFromParser() {
+		$creator = $this->get('creator');
+		$details = $this->get('creator_details');
+
 		$this->TrainingData = $this->Parser->getFullData();
+
+		if (!empty($creator))
+			$this->set('creator', $creator);
+		if (!empty($details)) {
+			if ($this->get('creator_details') != '')
+				$this->set('creator_details', $this->get('creator_details').NL.$details);
+			else
+				$this->set('creator_details', $details);
+		}
 	}
 
 	/**
 	 * Insert data from parser as new training and return new ID
+	 * @param string $fileName
 	 * @return int
 	 */
-	protected function insertCurrentParserData() {
+	protected function insertCurrentParserData($fileName = '') {
 		$this->setTrainingDataFromParser();
 		$this->transformTrainingDataToPostData();
+
+		$this->set('creator', Importer::$CREATOR_GARMIN_COMMUNICATOR);
+		$this->set('creator_details', 'Multiple files: '.$filename.NL.$this->get('creator_details'));
 
 		$Importer = new ImporterFormular();
 		$Importer->setTrainingValues();

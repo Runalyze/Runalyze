@@ -205,10 +205,28 @@ class ParserTCX extends Parser {
 	 * Set general values
 	 */
 	protected function setGeneralValues() {
+		$this->setCreatorValues();
 		$this->set('activity_id', (string)$this->XML->Id);
 		$this->set('sportid', $this->getCurrentSportId());
 		$this->set('kcal', $this->calories);
 		$this->set('splits', implode('-', $this->data['splits']));
+	}
+
+	/**
+	 * Set values about creator 
+	 */
+	protected function setCreatorValues() {
+		$this->set('creator_details', 'ID: '.trim($this->getCreator()));
+	}
+
+	/**
+	 * Get name of creator
+	 * @return string
+	 */
+	protected function getCreator() {
+		if (isset($this->XML->Creator))
+			if (isset($this->XML->Creator->Name))
+				return (string)$this->XML->Creator->Name;
 	}
 
 	/**

@@ -91,6 +91,7 @@ class ImporterLogbook extends Importer {
 		foreach ($this->Trainings as $Training) {
 			$_POST = array();
 			$Training->overwritePostArray();
+			$this->setCreatorToFileUpload(false);
 
 			$Importer = Importer::getInstance();
 			$Importer->setTrainingValues();

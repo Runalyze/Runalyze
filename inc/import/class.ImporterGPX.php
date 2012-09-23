@@ -22,6 +22,7 @@ class ImporterGPX extends Importer {
 
 		$this->XML   = $XML;
 		$this->parseXML();
+		$this->setCreatorToFileUpload();
 	}
 
 	/**
@@ -36,8 +37,9 @@ class ImporterGPX extends Importer {
 		elseif (isset($this->XML->metadata) && isset($this->XML->metadata->time))
 			$time = strtotime((string)$this->XML->metadata->time);
 		else
-			$time = $this->XML->trk->trkseg->trkpt[0]->time;
+			$time = strtotime((string)$this->XML->trk->trkseg->trkpt[0]->time);
 
+		$hasMultipleTrkseg = count($this->XML->trk->trkseg) > 1;
 		$this->XML = $this->XML->trk->trkseg;
 
 		$this->set('sportid', CONF_RUNNINGSPORT);
@@ -45,13 +47,13 @@ class ImporterGPX extends Importer {
 		$this->set('zeit', date("H:i", $time));
 		$this->set('time', $time);
 
-		$this->parseTrack();
+		$this->parseTrack( $hasMultipleTrkseg );
 	}
 
 	/**
 	 * Parse track
 	 */
-	private function parseTrack() {
+	private function parseTrack($hasMultipleTrkseg = false) {
 		$time       = array();
 		$latitude   = array();
 		$longitude  = array();
@@ -64,45 +66,50 @@ class ImporterGPX extends Importer {
 		$timeOfStep = 0;
 		$i          = 0;
 
-		foreach ($this->XML->trkpt as $Point) {
-			if (!empty($Point['lat'])) {
-				$lat  = round((double)$Point['lat'], 7);
-				$lon  = round((double)$Point['lon'], 7);
-				$dist = $i==0 ? 0 : round(GpsData::distance($lat, $lon, $latitude[$i-1], $longitude[$i-1]), 3);
-			} elseif (isset($latitude[$i-1])) {
-				$lat  = $latitude[$i-1];
-				$lon  = $longitude[$i-1];
-				$dist = 0;
-			} else
-				continue;
+		foreach ($this->XML as $t => $Trkseg) {
+			$wasBreak = ($t != 0);
 
-			$currentTime = (int)strtotime((string)$Point->time);
-			$timeOfStep  = $currentTime - $lastTime;
+			foreach ($Trkseg->trkpt as $Point) {
+				if (!empty($Point['lat'])) {
+					$lat  = round((double)$Point['lat'], 7);
+					$lon  = round((double)$Point['lon'], 7);
+					$dist = $i==0 ? 0 : round(GpsData::distance($lat, $lon, $latitude[$i-1], $longitude[$i-1]), 3);
+				} elseif (isset($latitude[$i-1])) {
+					$lat  = $latitude[$i-1];
+					$lon  = $longitude[$i-1];
+					$dist = 0;
+				} else
+					continue;
 
-			if ($timeOfStep > 30)
-				$startTime += $timeOfStep;
+				$currentTime = (int)strtotime((string)$Point->time);
+				$timeOfStep  = $currentTime - $lastTime;
 
-			$pulse = 0;
-			if (isset($Point->extensions) && count($Point->extensions->children('gpxtpx',true)) > 0) {
-				if (isset($Point->extensions->children('gpxtpx',true)->TrackPointExtension)) {
-					$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
-					if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
-						$pulse = (int)$TPE->children('gpxtpx',true)->hr;
+				if ($timeOfStep > 30 || $wasBreak)
+					$startTime += $timeOfStep;
+
+				$pulse = 0;
+				if (isset($Point->extensions) && count($Point->extensions->children('gpxtpx',true)) > 0) {
+					if (isset($Point->extensions->children('gpxtpx',true)->TrackPointExtension)) {
+						$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
+						if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
+							$pulse = (int)$TPE->children('gpxtpx',true)->hr;
+					}
 				}
+
+				$lastTime    = $currentTime;
+				$time[]      = $currentTime - $startTime;
+				$elevation[] = 0;
+				$heartrate[] = $pulse;
+				$latitude[]  = $lat;
+				$longitude[] = $lon;
+				$distance[]  = ($i==0) ? $dist : end($distance) + $dist;
+				$pace[]      = ($dist != 0)
+					? round((end($time) - prev($time)) / $dist)
+					: 0;
+
+				$wasBreak = false;
+				$i++;
 			}
-
-			$lastTime    = $currentTime;
-			$time[]      = $currentTime - $startTime;
-			$elevation[] = 0;
-			$heartrate[] = $pulse;
-			$latitude[]  = $lat;
-			$longitude[] = $lon;
-			$distance[]  = ($i==0) ? $dist : end($distance) + $dist;
-			$pace[]      = ($dist != 0)
-				? round((end($time) - prev($time)) / $dist)
-				: 0;
-
-			$i++;
 		}
 
 		$this->setArrayForTime($time);

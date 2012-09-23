@@ -45,7 +45,7 @@
 	$Plots = $this->getPlotTypesAsArray();
 	if ($this->Training->hasPositionData() || !empty($Plots)):
 	?>
-	<div id="training-plots-and-map" class="dataBox"><!--"toolbar asBox open">-->
+	<div id="training-plots-and-map" class="dataBox">
 		<?php if (!empty($Plots)): ?>
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line">
