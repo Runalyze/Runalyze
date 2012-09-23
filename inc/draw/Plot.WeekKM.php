@@ -54,6 +54,8 @@ $Plot->setYTicks(1, 10, 0);
 $Plot->showBars();
 $Plot->stacked();
 
+$Plot->enableTracking();
+
 $Plot->setTitle('Wochenkilometer '.$Year);
 
 if ($possibleKM > 0) {

@@ -51,6 +51,8 @@ $Plot->setYTicks(1, 10, 0);
 $Plot->showBars(true);
 $Plot->stacked();
 
+$Plot->enableTracking();
+
 $Plot->setTitle($titleCenter);
 
 if ($possibleKM > 0) {
