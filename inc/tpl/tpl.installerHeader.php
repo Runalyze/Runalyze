@@ -16,14 +16,8 @@
 <body id="installer" class="toolbar-top">
 
 <div id="copy" class="top">
-	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined(RUNALYZE_VERSION)) echo 'v'.RUNALYZE_VERSION; ?></a>
 	<a class="tab right" href="login.php" title="Please login"><i class="toolbar-icon-user"></i> Please login</a>
-
-	<!--<span class="left b">
-		<?php echo Ajax::window('<a class="tab" href="'.Config::$CONFIG_URL.'"><i class="toolbar-icon-config"></i> Konfiguration</a>'); ?>
-		<?php echo Ajax::window('<a class="tab" href="'.PluginTool::$DISPLAY_URL.'"><i class="toolbar-icon-tools"></i> Tools</a>'); ?>
-		<?php echo Ajax::window('<a class="tab" href="'.Frontend::$HELP_URL.'"><i class="toolbar-icon-help"></i> Hilfe</a>'); ?>
-	</span>-->
 </div>
 
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>

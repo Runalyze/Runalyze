@@ -1,14 +1,7 @@
 <?php
 /**
- * This file contains the class::Installer for installing Runalyze
- */
-/**
  * Class: Installer
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Installer {
 	/**

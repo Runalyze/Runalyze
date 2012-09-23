@@ -22,7 +22,7 @@ if (isset($_GET['out']))
 if (SessionAccountHandler::isLoggedIn())
 	header('Location: index.php');
 
-$title = 'Runalyze v'.RUNALYZE_VERSION;
+$title = 'Runalyze v'.RUNALYZE_VERSION.' - Bitte einloggen';
 $tpl   = 'tpl.loginWindow.php';
 
 if (isset($_GET['chpw']))
