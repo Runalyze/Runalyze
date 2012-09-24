@@ -29,8 +29,6 @@ Config::addFieldset('Training', array(
 	'TRAINING_DECIMALS',
 	'TRAINING_MAP_COLOR',
 	'TRAINING_MAP_BEFORE_PLOTS',
-	'TRAINING_MAKE_PUBLIC',
-	'TRAINING_LIST_PUBLIC'
 	//'TRAINING_MAP_MARKER'
 ));
 
@@ -48,8 +46,6 @@ Config::register('TRAINING_MAP_MARKER', 'bool', true, 'Karte: Markierungen');
 Config::register('TRAINING_MAPTYPE', 'select',
 	array('G_NORMAL_MAP' => false, 'G_HYBRID_MAP' => true, 'G_SATELLITE_MAP' => false, 'G_PHYSICAL_MAP' => false, 'OSM' => false), 'Karte: Typ',
 	array('Normal', 'Hybrid', 'Satellit', 'Physikalisch', 'OpenStreetMap'));
-Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', true));
-Config::register('TRAINING_LIST_PUBLIC', 'bool', false, Ajax::tooltip('Trainingsliste &ouml;ffentlich', 'Andere Nutzer k&ouml;nnen bei dieser Einstellung eine Liste mit all deinen (&ouml;ffentlichen) Trainings sehen.', true));
 Config::register('TRAINING_MAP_BEFORE_PLOTS', 'bool', false, 'Karte: vor Diagrammen');
 // Hidden ones
 Config::register('TRAINING_SHOW_ZONES', 'bool', true, 'Anzeige: Zonen');
@@ -62,9 +58,21 @@ Config::register('TRAINING_SHOW_PLOT_SPLITS', 'bool', true, 'Grafik: Splits');
 Config::register('TRAINING_SHOW_MAP', 'bool', true, 'Grafik: Karte');
 
 
+Config::addFieldset('Privatsph&auml;re', array(
+	'TRAINING_MAKE_PUBLIC',
+	'TRAINING_LIST_PUBLIC',
+	'TRAINING_LIST_ALL'
+));
+
+Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', false));
+Config::register('TRAINING_LIST_PUBLIC', 'bool', false, Ajax::tooltip('Trainingsliste &ouml;ffentlich', 'Andere Nutzer k&ouml;nnen bei dieser Einstellung eine Liste mit all deinen (&ouml;ffentlichen) Trainings sehen.', true));
+Config::register('TRAINING_LIST_ALL', 'bool', false, Ajax::tooltip('Liste: private Trainings', 'Bei dieser Einstellung werden in der &ouml;ffentlichen Liste auch private Trainings (ohne Link) angezeigt.', false));
+
+
+
 Config::addFieldset('Design', array(
 	'DB_HIGHLIGHT_TODAY',
-	'DESIGN_TOOLBAR_POSITION',
+	'', //'DESIGN_TOOLBAR_POSITION',
 	'DESIGN_BG_FIX_AND_STRETCH',
 	'DESIGN_BG_FILE',
 	//'JS_USE_TOOLTIP',

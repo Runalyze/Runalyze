@@ -3,6 +3,8 @@
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
 
+	<base href="<?php echo System::getFullDomain(); ?>" />
+
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />

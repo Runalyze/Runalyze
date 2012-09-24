@@ -33,6 +33,26 @@ class SharedLinker {
 	}
 
 	/**
+	 * Get link to a given training
+	 * @param int $trainingID
+	 * @return string
+	 */
+	static public function getStandardLinkTo($trainingID) {
+		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank" title="Permalink zum Training">'.Icon::$ATTACH.'</a>';
+	}
+
+	/**
+	 * Get link to shared list for current user
+	 * @return string 
+	 */
+	static public function getListLinkForCurrentUser() {
+		if (!CONF_TRAINING_LIST_PUBLIC)
+			return '';
+
+		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" title="&Ouml;ffentliche Trainingsliste" target="_blank">'.Icon::$ATTACH.'</a>';
+	}
+
+	/**
 	 * Get training ID from request
 	 * @return int
 	 */

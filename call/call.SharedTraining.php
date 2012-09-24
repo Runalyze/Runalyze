@@ -10,8 +10,10 @@ $Frontend = new FrontendShared();
 
 if (FrontendShared::$IS_IFRAME)
 	echo '<div id="tab_content" class="panel" style="width:97%;margin:0;padding:1%;">';
-else
+elseif (!Request::isAjax())
 	echo '<div id="tab_content" class="panel" style="width:960px;margin:5px auto;">';
+else
+	echo '<div>';
 
 $Frontend->displaySharedView();
 
