@@ -85,13 +85,16 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$Durations_raw[$index] = (double)$dat['s'];
 	}
 
+	// Don't ask why +2 is needed
+	// - and don't ask, why ATL/CTL need +1 in array_slice
+	// But this way panel and plot have the same last values
 	$HighestIndex  = $index + 2;
 
 	for ($d = $AddDays; $d <= $HighestIndex; $d++) {
 		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays);
 
-		$ATLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
-		$CTLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
+		$ATLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_ATL_DAYS + 1, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
+		$CTLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_CTL_DAYS + 1, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
 
 		$Durations_slice = array_slice($Durations_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
 		$VDOT_slice      = array_slice($VDOTs_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);

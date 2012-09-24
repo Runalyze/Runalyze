@@ -1,16 +1,32 @@
 <div class="w50" id="loginWindow">
 	<div id="login">
 		<form action="login.php" method="post">
-	
+
+			<?php
+			$ErrorString = '';
+			$FailedUsername = '';
+			$FailedPassword = '';
+			if (SessionAccountHandler::$ErrorType != SessionAccountHandler::$ERROR_TYPE_NO) {
+				if (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME) {
+					$ErrorString    = 'Der Benutzername ist nicht bekannt.';
+					$FailedUsername = ' validationFailed';
+				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD) {
+					$ErrorString    = 'Das Passwort war nicht richtig.';
+					$FailedPassword = ' validationFailed';
+				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
+					$ErrorString    = 'Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.';
+			}
+			?>
+
 			<fieldset>
 				<legend>Login</legend>
 				<div class="w100">
 					<label for="username">Benutzername</label>
-					<input id="username" name="username" class="middleSize withUnit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="username" name="username" class="middleSize withUnit unitUser <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 				<div class="w100 clear">
 					<label for="password">Passwort</label>
-					<input id="password" name="password" class="middleSize withUnit unitPass" type="password" />
+					<input id="password" name="password" class="middleSize withUnit unitPass <?php echo $FailedPassword; ?>" type="password" />
 				</div>
 				<div class="w100 clear">
 					<label for="autologin" class="small">Eingeloggt bleiben</label>
@@ -18,16 +34,7 @@
 				</div>
 			</fieldset>
 
-			<?php
-			if (SessionAccountHandler::$ErrorType != SessionAccountHandler::$ERROR_TYPE_NO) {
-				if (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME)
-					echo '<p class="error">Der Benutzername ist nicht bekannt.</p>';
-				elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD)
-					echo '<p class="error">Das Passwort war nicht richtig.</p>';
-				elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
-					echo '<p class="error">Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.</p>';
-			}
-			?>
+			<?php if (!empty($ErrorString)) echo HTML::error($ErrorString); ?>
 
 			<div class="c">
 				<input type="submit" value="Einloggen" name="submit" />
@@ -40,6 +47,15 @@
 			<fieldset>
 				<legend onclick="show('log');">Registrieren</legend>
 			<?php
+			if (isset($_POST['new_username'])) {
+				$Errors = AccountHandler::tryToRegisterNewUser();
+
+				foreach ($Errors as $Error)
+					if (is_array($Error))
+						foreach (array_keys($Error) as $FieldName)
+							FormularField::setKeyAsFailed($FieldName);
+			}
+
 			FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);
 
 			$Field = new FormularInput('new_username', 'Benutzername');
@@ -70,10 +86,14 @@
 
 			<?php
 			if (isset($_POST['new_username'])) {
-				$Errors = AccountHandler::tryToRegisterNewUser();
 				if (is_array($Errors))
-					foreach ($Errors as $Error)
-						echo HTML::error($Error);
+					foreach ($Errors as $Error) {
+						if (is_array($Error))
+							foreach ($Error as $String)
+								echo HTML::error($String);
+						else
+							echo HTML::error($Error);
+					}
 				else
 					echo HTML::info('Danke f&uuml;r deine Anmeldung! Du solltest in den n&auml;chsten Minuten eine E-Mail erhalten, in der du den Account best&auml;tigen kannst.');
 			}
