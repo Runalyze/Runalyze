@@ -130,15 +130,15 @@ class AccountHandler {
 		$errors = array();
 
 		if (strlen($_POST['new_username']) < self::$USER_MIN_LENGTH)
-			$errors[] = 'Der Benutzername muss mindestens '.self::$USER_MIN_LENGTH.' Zeichen lang sein.';
+			$errors[] = array('new_username' => 'Der Benutzername muss mindestens '.self::$USER_MIN_LENGTH.' Zeichen lang sein.');
 		if (self::usernameExists($_POST['new_username']))
-			$errors[] = 'Der Benutzername ist bereits vergeben.';
+			$errors[] = array('new_username' => 'Der Benutzername ist bereits vergeben.');
 		if (self::mailExists($_POST['email']))
-			$errors[] = 'Die E-Mail-Adresse wird bereits verwendet.';
+			$errors[] = array('email' => 'Die E-Mail-Adresse wird bereits verwendet.');
 		if ($_POST['password'] != $_POST['password_again'])
-				$errors[] = 'Die Passw&ouml;rter waren unterschiedlich.';
+				$errors[] = array('password_again' => 'Die Passw&ouml;rter waren unterschiedlich.');
 		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-				$errors[] = 'Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.';
+				$errors[] = array('password' => 'Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.');
 
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();

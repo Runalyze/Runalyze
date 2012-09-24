@@ -11,6 +11,12 @@ abstract class FormularField extends HtmlTag {
 	static public $CSS_VALIDATION_FAILED = 'validationFailed';
 
 	/**
+	 * Array with all failed keys
+	 * @var array
+	 */
+	static private $FAILED_KEYS = array();
+
+	/**
 	 * Name
 	 * @var string 
 	 */
@@ -57,6 +63,22 @@ abstract class FormularField extends HtmlTag {
 	 * @var boolean
 	 */
 	private $prepared = false;
+
+	/**
+	 * Set key as failed
+	 * @param string $key 
+	 */
+	static public function setKeyAsFailed($key) {
+		self::$FAILED_KEYS[] = $key;
+	}
+
+	/**
+	 * Set key as failed
+	 * @param string $key 
+	 */
+	static public function hasKeyFailed($key) {
+		return in_array($key, self::$FAILED_KEYS);
+	}
 
 	/**
 	 * Construct a new field
@@ -144,6 +166,9 @@ abstract class FormularField extends HtmlTag {
 	 */
 	final protected function parseForDisplay() {
 		FormularValueParser::parse($this->value, $this->parser, $this->parserOptions);
+
+		if (self::hasKeyFailed($this->name))
+			$this->addCSSclass(self::$CSS_VALIDATION_FAILED);
 	}
 
 	/**
