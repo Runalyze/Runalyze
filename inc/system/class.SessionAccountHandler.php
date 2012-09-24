@@ -268,7 +268,7 @@ class SessionAccountHandler {
 	}
 
 	/**
-	 * Get Mail of current user
+	 * Get mail of current user
 	 * @return type 
 	 */
 	static public function getMail() {
@@ -279,7 +279,7 @@ class SessionAccountHandler {
 	}
 
 	/**
-	 * Get Name of current user
+	 * Get name of current user
 	 * @return type 
 	 */
 	static public function getName() {
@@ -287,6 +287,17 @@ class SessionAccountHandler {
 			return '';
 
 		return self::$Account['name'];
+	}
+
+	/**
+	 * Get username of current user
+	 * @return type 
+	 */
+	static public function getUsername() {
+		if (!isset(self::$Account['username']))
+			return '';
+
+		return self::$Account['username'];
 	}
 
 	/**

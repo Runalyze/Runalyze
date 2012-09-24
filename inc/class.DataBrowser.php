@@ -20,49 +20,61 @@ class DataBrowser {
 	 * Timestamp for first day to be displayed
 	 * @var int
 	 */
-	private $timestamp_start;
+	protected $timestamp_start;
 
 	/**
 	 * Timestamp for last day to be displayed
 	 * @var int
 	 */
-	private $timestamp_end;
+	protected $timestamp_end;
 
 	/**
 	 * Number of days to be displayed
 	 * @var int
 	 */
-	private $day_count;
+	protected $day_count;
 
 	/**
 	 * Days to be displayed
 	 * @var array
 	 */
-	private $days;
+	protected $days;
 
 	/**
 	 * Array containing IDs for 'short' sports
 	 * @var array
 	 */
-	private $sports_short;
+	protected $sports_short;
 
 	/**
 	 * Internal MySql-object
 	 * @var Mysql
 	 */
-	private $Mysql;
+	protected $Mysql;
 
 	/**
 	 * Internal Error-object
 	 * @var Error
 	 */
-	private $Error;
+	protected $Error;
 
 	/**
 	 * Internal Dataset-object
 	 * @var Dataset
 	 */
-	private $Dataset;
+	protected $Dataset;
+
+	/**
+	 * Number of additional columns
+	 * @var int
+	 */
+	protected $additionalColumns = 2;
+
+	/**
+	 * Boolean flag: show public link for trainings
+	 * @var boolean
+	 */
+	protected $showPublicLink = false;
 
 	/**
 	 * Default constructor
@@ -76,7 +88,7 @@ class DataBrowser {
 	/**
 	 * Init pointer to Mysql/Error-object
 	 */
-	private function initInternalObjects() {
+	protected function initInternalObjects() {
 		$this->Mysql = Mysql::getInstance();
 		$this->Error = Error::getInstance();
 		$this->Dataset = new Dataset();
@@ -85,7 +97,7 @@ class DataBrowser {
 	/**
 	 * Init private timestamps from request
 	 */
-	private function initTimestamps() {
+	protected function initTimestamps() {
 		$this->timestamp_start = isset($_GET['start']) ? $_GET['start'] : Time::Weekstart(time());
 		$this->timestamp_end   = isset($_GET['end'])   ? $_GET['end']   : Time::Weekend(time());
 
@@ -95,14 +107,17 @@ class DataBrowser {
 	/**
 	 * Init all days for beeing displayed
 	 */
-	private function initDays() {
+	protected function initDays() {
 		$this->initShortSports();
 		$this->initEmptyDays();
+
+		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 
 		$AllTrainings = $this->Mysql->fetchAsArray('
 			SELECT *, DATE(FROM_UNIXTIME(time)) as `date`
 			FROM `'.PREFIX.'training`
 			WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).'
+				'.$WhereNotPrivate.'
 			ORDER BY `time` ASC');
 
 		foreach ($AllTrainings as $Training) {
@@ -118,7 +133,7 @@ class DataBrowser {
 	/**
 	 * Init array with empty days
 	 */
-	private function initEmptyDays() {
+	protected function initEmptyDays() {
 		$this->days = array();
 
 		for ($w = 0; $w <= ($this->day_count-1); $w++)
@@ -131,7 +146,7 @@ class DataBrowser {
 	/**
 	 * Init $this->sports_short
 	 */
-	private function initShortSports() {
+	protected function initShortSports() {
 		$this->sports_short = array();
 		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1');
 		foreach ($sports as $sport)
@@ -148,7 +163,7 @@ class DataBrowser {
 	/**
 	 * Display links to navigate in calendar
 	 */
-	private function displayNavigationLinks() {
+	protected function displayNavigationLinks() {
 		echo $this->getPrevLink().NL;
 		echo $this->getCalenderLink().NL;
 
@@ -162,7 +177,8 @@ class DataBrowser {
 	/**
 	 * Display specific icon-links
 	 */
-	private function displayIconLinks() {
+	protected function displayIconLinks() {
+		echo $this->getSharedListLink();
 		echo $this->getRefreshLink();
 		echo $this->getMonthKmLink();
 		echo $this->getWeekKmLink();
@@ -174,7 +190,7 @@ class DataBrowser {
 	 * Get link to navigation back
 	 * @return string
 	 */
-	private function getPrevLink() {
+	protected function getPrevLink() {
 		$timestamp_array = self::getPrevTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink(Icon::$BACK, $timestamp_array['start'], $timestamp_array['end'], 'zur&uuml;ck');
@@ -184,7 +200,7 @@ class DataBrowser {
 	 * Get link to navigation forward
 	 * @return string
 	 */
-	private function getNextLink() {
+	protected function getNextLink() {
 		$timestamp_array = self::getNextTimestamps($this->timestamp_start, $this->timestamp_end);
 
 		return self::getLink(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], 'vorw&auml;rts');
@@ -194,7 +210,7 @@ class DataBrowser {
 	 * Get ajax-link for reload this DataBrowser
 	 * @return string
 	 */
-	private function getRefreshLink() {
+	protected function getRefreshLink() {
 		return self::getLink(Ajax::tooltip(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen'), $this->timestamp_start, $this->timestamp_end);
 	}
 
@@ -202,7 +218,7 @@ class DataBrowser {
 	 * Get ajax-link for choosing timestamps from calendar
 	 * @return string
 	 */
-	private function getCalenderLink() {
+	protected function getCalenderLink() {
 		return '<span id="calendarLink" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
 	}
 
@@ -210,7 +226,7 @@ class DataBrowser {
 	 * Get ajax-link for showing month-kilometer
 	 * @return string
 	 */
-	private function getMonthKmLink() {
+	protected function getMonthKmLink() {
 		return Ajax::window('<a href="call/window.monatskilometer.php">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatskilometer anzeigen').'</a>');
 	}
 
@@ -218,15 +234,23 @@ class DataBrowser {
 	 * Get ajax-link for showing week-kilometer
 	 * @return string
 	 */
-	private function getWeekKmLink() {
+	protected function getWeekKmLink() {
 		return Ajax::window('<a href="call/window.wochenkilometer.php">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochenkilometer anzeigen').'</a>');
+	}
+
+	/**
+	 * Get list to shared list
+	 * @returns tring
+	 */
+	protected function getSharedListLink() {
+		return SharedLinker::getListLinkForCurrentUser();
 	}
 
 	/**
 	 * Get ajax-link for searching
 	 * @return string
 	 */
-	private function getNaviSearchLink() {
+	protected function getNaviSearchLink() {
 		return Ajax::window('<a href="'.self::$SEARCH_URL.'">'.Ajax::tooltip(Icon::$SEARCH, 'Trainings suchen').'</a>', 'big');
 	}
 
@@ -259,7 +283,7 @@ class DataBrowser {
 	 * Get ajax-link for adding a training
 	 * @return string
 	 */
-	private function getAddLink() {
+	protected function getAddLink() {
 		return TrainingCreator::getWindowLink();
 	}
 
@@ -272,6 +296,9 @@ class DataBrowser {
 	 * @return string HTML-link
 	 */
 	static function getLink($name, $start, $end, $title = '') {
+		if (FrontendShared::$IS_SHOWN)
+			return DataBrowserShared::getLink($name, $start, $end, $title = '');
+
 		$href = 'call/call.DataBrowser.display.php?start='.$start.'&end='.$end;
 
 		return Ajax::link($name, DATA_BROWSER_ID, $href, '', $title);

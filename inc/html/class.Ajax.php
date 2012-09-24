@@ -39,6 +39,9 @@ class Ajax {
 	 * @return string
 	 */
 	static function trainingLinkAsOnclick($id) {
+		if (FrontendShared::$IS_SHOWN)
+			return 'onclick="Runalyze.loadTraining('.$id.', \''.SharedLinker::getUrlFor($id).'\')"';
+
 		return 'onclick="Runalyze.loadTraining('.$id.')"';
 	}
 

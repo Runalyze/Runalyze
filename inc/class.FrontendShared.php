@@ -35,10 +35,12 @@ class FrontendShared extends Frontend {
 		$UserId = (!is_null($this->Training)) ? $this->Training->get('accountid') : 0;
 		$User   = AccountHandler::getDataForId($UserId);
 
-		if (self::$IS_IFRAME)
-			include 'tpl/tpl.FrontendSharedIframe.header.php';
-		else
-			include 'tpl/tpl.FrontendShared.header.php';
+		if (!Request::isAjax()) {
+			if (self::$IS_IFRAME)
+				include 'tpl/tpl.FrontendSharedIframe.header.php';
+			else
+				include 'tpl/tpl.FrontendShared.header.php';
+		}
 
 		Error::getInstance()->header_sent = true;
 	}
@@ -47,10 +49,12 @@ class FrontendShared extends Frontend {
 	 * Function to display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (self::$IS_IFRAME)
-			include 'tpl/tpl.FrontendSharedIframe.footer.php';
+		if (!Request::isAjax()) {
+			if (self::$IS_IFRAME)
+				include 'tpl/tpl.FrontendSharedIframe.footer.php';
 
-		include 'tpl/tpl.Frontend.footer.php';
+			include 'tpl/tpl.Frontend.footer.php';
+		}
 
 		Error::getInstance()->footer_sent = true;
 	}
@@ -72,7 +76,7 @@ class FrontendShared extends Frontend {
 	 */
 	public function displaySharedView() {
 		if (is_null($this->Training) || !$this->Training->isValid())
-			$this->throwErrorForUnknownTraining();
+			$this->throwErrorForInvalidRequest();
 		elseif (!$this->Training->isPublic())
 			$this->throwErrorForPrivateTraining();
 		else
@@ -105,7 +109,7 @@ class FrontendShared extends Frontend {
 	/**
 	 * Throw error: invalid request 
 	 */
-	protected function throwErrorForUnknownTraining() {
+	protected function throwErrorForInvalidRequest() {
 		echo HTML::h1('Fehler');
 		echo HTML::error('
 			<strong>Invalid request.</strong><br />

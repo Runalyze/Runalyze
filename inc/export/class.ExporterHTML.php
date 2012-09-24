@@ -30,6 +30,9 @@ class ExporterHTML extends ExporterEmbedded {
 		$FieldsetPreview = new FormularFieldset('Vorschau');
 		$FieldsetPreview->addBlock($Code);
 
+		if (!$this->Training->isPublic())
+			$FieldsetPreview->addWarning('Da das Training privat ist, enth&auml;lt die HTML-Ansicht keinen Link zum Training.');
+
 		$Formular = new Formular();
 		$Formular->addFieldset($FieldsetCode);
 		$Formular->addFieldset($FieldsetPreview);
@@ -74,5 +77,4 @@ class ExporterHTML extends ExporterEmbedded {
 </div>
 <script type="text/javascript" src="http://user.runalyze.de/lib/embedded.js"></script>';
 	}
-	//<style type="text/css">@import "http://user.runalyze.de/lib/embedded.css"</style>
 }

@@ -80,7 +80,9 @@ class Dataset {
 					$query_set .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
 
 		// TODO: Don't use * for selecting
-		$summary = Mysql::getInstance()->fetchSingle('SELECT *, SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' GROUP BY `sportid`');
+		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
+
+		$summary = Mysql::getInstance()->fetchSingle('SELECT *, SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
 		if ($summary === false || empty($summary))
 			return false;
 
@@ -125,7 +127,7 @@ class Dataset {
 		$addLink = '';
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
-		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS)
+		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS && !FrontendShared::$IS_SHOWN)
 			$addLink = TrainingCreator::getWindowLinkForDate($timestamp);
 
 		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
@@ -165,10 +167,22 @@ class Dataset {
 	 */
 	public function displayEditLink() {
 		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
-			if ($this->isSummaryMode())
+			if ($this->isSummaryMode() || FrontendShared::$IS_SHOWN)
 				echo HTML::emptyTD ();
 			else
 				echo '<td>'.TrainingDisplay::getSmallEditLinkFor($this->Training->get('id')).'</td>'.NL;
+	}
+
+	/**
+	 * Display public icon
+	 */
+	public function displayPublicIcon() {
+		if (!is_object($this->Training))
+			echo HTML::emptyTD ();
+		elseif (!$this->Training->isPublic())
+			echo '<td>'.Icon::$ADD_SMALL.'</td>'.NL;
+		else
+			echo '<td class="link">'.Icon::$ADD_SMALL_GREEN.'</td>'.NL;
 	}
 
 	/**

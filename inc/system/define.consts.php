@@ -53,6 +53,12 @@ define('BR', '<br />');
 define('DATA_BROWSER_ID', 'daten');
 
 /**
+ * Tag-ID for the public databrowser
+ * @const DATA_BROWSER_SHARED_ID
+ */
+define('DATA_BROWSER_SHARED_ID', 'publicList');
+
+/**
  * Tag-ID for the search
  * @const DATA_BROWSER_SEARCH_ID
  */

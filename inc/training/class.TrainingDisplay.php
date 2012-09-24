@@ -85,12 +85,18 @@ class TrainingDisplay {
 		$Zones = $this->Training->GpsData()->getPaceZonesAsFilledArrays();
 
 		foreach ($Zones as $min => $Info) {
-			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE)
+			if ($Info['distance'] > self::$MINIMUM_DISTANCE_FOR_ZONE) {
+				if ($Info['hf-sum'] > 0)
+					$Avg = round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).'&nbsp;&#37;';
+				else
+					$Avg = '-';
+
 				$Data[] = array(
 					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.Helper::Pace(1, $min*60).'/km'),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => round(100*$Info['hf-sum']/Helper::getHFmax()/$Info['num']).'&nbsp;&#37;');
+					'average'  => $Avg);
+			}
 		}
 
 		$this->displayZone('Tempozonen', $Data, '&oslash; Puls');
