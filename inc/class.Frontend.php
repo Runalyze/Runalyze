@@ -193,7 +193,7 @@ class Frontend {
 	public function displayHeader() {
 		$this->setEncoding();
 
-		if (!Request::isAjax())
+		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.header.php';
 
 		Error::getInstance()->header_sent = true;
@@ -206,7 +206,7 @@ class Frontend {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
 			Error::getInstance()->display();
 
-		if (!Request::isAjax())
+		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
 			include 'tpl/tpl.Frontend.footer.php';
 
 		Error::getInstance()->footer_sent = true;

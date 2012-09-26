@@ -64,9 +64,9 @@ Config::addFieldset('Privatsph&auml;re', array(
 	'TRAINING_LIST_ALL'
 ));
 
-Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.', false));
-Config::register('TRAINING_LIST_PUBLIC', 'bool', false, Ajax::tooltip('Trainingsliste &ouml;ffentlich', 'Andere Nutzer k&ouml;nnen bei dieser Einstellung eine Liste mit all deinen (&ouml;ffentlichen) Trainings sehen.', true));
-Config::register('TRAINING_LIST_ALL', 'bool', false, Ajax::tooltip('Liste: private Trainings', 'Bei dieser Einstellung werden in der &ouml;ffentlichen Liste auch private Trainings (ohne Link) angezeigt.', false));
+Config::register('TRAINING_MAKE_PUBLIC', 'bool', false, Ajax::tooltip('Trainings ver&ouml;ffentlichen', '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.'));
+Config::register('TRAINING_LIST_PUBLIC', 'bool', false, Ajax::tooltip('Trainingsliste &ouml;ffentlich', 'Andere Nutzer k&ouml;nnen bei dieser Einstellung eine Liste mit all deinen (&ouml;ffentlichen) Trainings sehen.'));
+Config::register('TRAINING_LIST_ALL', 'bool', false, Ajax::tooltip('Liste: private Trainings', 'Bei dieser Einstellung werden in der &ouml;ffentlichen Liste auch private Trainings (ohne Link) angezeigt.'));
 
 
 
@@ -90,7 +90,7 @@ Config::register('JS_USE_TOOLTIP', 'bool', true, 'Tooltip f&uuml;r Icons');
 Config::register('DESIGN_BG_FILE', 'selectfile', 'img/backgrounds/Default.jpg', Ajax::tooltip('Hintergrundbild', 'Neuladen notwendig, eigene Bilder in img/backgrounds/', true), array('img/backgrounds/'));
 Config::register('DESIGN_BG_FIX_AND_STRETCH', 'bool', true, Ajax::tooltip('Hintergrundbild skalieren', 'Neuladen notwendig', true));
 Config::register('DESIGN_TOOLBAR_POSITION', 'select', array('top' => true, 'bottom' => false), 'Position der Toolbar', array('oben', 'unten'));
-Config::register('PLUGIN_SHOW_CONFIG_LINK', 'bool', false, Ajax::tooltip('Plugin: Konfiguration-Link anzeigen', 'Wenn aktiv wird bei jedem Plugin vor dem Namen ein Link zur Plugin-Konfiguration angezeigt', true));
+Config::register('PLUGIN_SHOW_CONFIG_LINK', 'bool', false, Ajax::tooltip('Plugin: Konfiguration-Link anzeigen', 'Wenn aktiv wird bei jedem Plugin vor dem Namen ein Link zur Plugin-Konfiguration angezeigt'));
 Config::register('PLUGIN_SHOW_MOVE_LINK', 'bool', false, Ajax::tooltip('Plugin: Verschieben-Link anzeigen', 'Mit diesem Link lassen sich die Panel direkt verschieben.', true));
 
 

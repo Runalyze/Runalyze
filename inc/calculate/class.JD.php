@@ -191,8 +191,7 @@ class JD {
 			$dist_PB = Helper::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
 				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
-				if ($dist_VDOT > $VDOT_top
-					&& Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1') > 0) {
+				if ($dist_VDOT > $VDOT_top && Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1') > 0) {
 					$VDOT_top = $dist_VDOT;
 					$VDOT_top_dist = $dist;
 				}

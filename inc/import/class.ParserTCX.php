@@ -189,7 +189,8 @@ class ParserTCX extends Parser {
 			'km'            => array(),
 			'heartrate'     => array(),
 			'pace'          => array(),
-			'splits'        => array());
+			'splits'        => array(),
+			'splits_resting'=> array());
 	}
 
 	/**
@@ -209,6 +210,10 @@ class ParserTCX extends Parser {
 		$this->set('activity_id', (string)$this->XML->Id);
 		$this->set('sportid', $this->getCurrentSportId());
 		$this->set('kcal', $this->calories);
+
+		if (empty($this->data['splits']))
+			$this->data['splits'] = $this->data['splits_resting'];
+
 		$this->set('splits', implode('-', $this->data['splits']));
 	}
 
@@ -306,8 +311,9 @@ class ParserTCX extends Parser {
 		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
 
 		// TODO: save pause-laps too with special identification
-		if ((string)$Lap->Intensity == 'Active')
-			$this->data['splits'][] = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
+		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
+		$SplitKey    = ((string)$Lap->Intensity == 'Active') ? 'splits' : 'splits_resting';
+		$this->data[$SplitKey][] = $SplitString;
 	}
 
 	/**
@@ -317,9 +323,13 @@ class ParserTCX extends Parser {
 	protected function parseTrackpoints($Lap) {
 		$this->lastPoint = 0;
 
-		foreach ($Lap->Track as $Track)
+		foreach ($Lap->Track as $i => $Track) {
+			if ($this->lastPoint > 0)
+				$this->lastPointWasEmpty = true;
+
 			foreach ($Track->Trackpoint as $Trackpoint)
 				$this->parseTrackpoint($Trackpoint);
+		}
 	}
 
 	/**

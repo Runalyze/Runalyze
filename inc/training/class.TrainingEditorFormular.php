@@ -285,7 +285,7 @@ class TrainingEditorFormular {
 			function createUploader() {
 				$("#file-upload-tcx").removeClass("hide");
 				new AjaxUpload("#file-upload-tcx", {
-					action: "'.$_SERVER['SCRIPT_NAME'].'?id='.$this->Training->id().'&json=true",
+					action: "'.$_SERVER['SCRIPT_NAME'].'?id='.$this->Training->id().'&json=true&hideHtmlHeader=true",
 					onComplete : function(file, response){
 						$("#ajax").loadDiv("'.$_SERVER['SCRIPT_NAME'].'?id='.$this->Training->id().'&tmp=true");
 					}		
