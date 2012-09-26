@@ -34,6 +34,7 @@ class Request {
 
 	/**
 	 * Was the request an AJAX-request?
+	 * Be careful: Does not work if a file is sent via jQuery!
 	 * @return boolean
 	 */
 	static public function isAjax() {

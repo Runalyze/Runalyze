@@ -99,6 +99,15 @@ class TrainingEditor {
 		$this->addBooleanValue('is_track');
 		$this->addBooleanValue('is_public');
 		$this->addBooleanValue('abc');
+
+		// These values are only set by filling the editor manually
+		$this->addValue('arr_time');
+		$this->addValue('arr_lat');
+		$this->addValue('arr_lon');
+		$this->addValue('arr_alt');
+		$this->addValue('arr_dist');
+		$this->addValue('arr_heart');
+		$this->addValue('arr_pace');
 	}
 
 	/**

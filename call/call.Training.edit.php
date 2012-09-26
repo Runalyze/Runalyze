@@ -12,7 +12,7 @@ $id       = isset($_GET['id']) ? $_GET['id'] : 0;
 
 if (isset($_GET['json'])) {
 	Error::getInstance()->footer_sent = true;
-	move_uploaded_file($_FILES['userfile']['tmp_name'], 'tmp.tcx');
+	move_uploaded_file($_FILES['userfile']['tmp_name'], FRONTEND_PATH.'import/files/tmp.tcx');
 	echo 'success';
 	exit();
 } elseif (isset($_GET['tmp'])) {
