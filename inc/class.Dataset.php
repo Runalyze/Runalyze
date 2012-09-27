@@ -29,6 +29,18 @@ class Dataset {
 	private $data;
 
 	/**
+	 * Boolean flag: compare km of datasets (preferred for group of trainings)
+	 * @var boolean
+	 */
+	private $compare_km = false;
+
+	/**
+	 * Kilometer for last set
+	 * @var double
+	 */
+	private $km_of_last_set = -1;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -43,6 +55,21 @@ class Dataset {
 
 		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
 			$this->column_count++;
+	}
+
+	/**
+	 * Activate kilometer comparison 
+	 */
+	public function activateKilometerComparison() {
+		$this->compare_km = true;
+	}
+
+	/**
+	 * Set manually distance of last set (e.g. for different order)
+	 * @param double $km 
+	 */
+	public function setKilometerToCompareTo($km) {
+		$this->km_of_last_set = $km;
 	}
 
 	/**
@@ -273,6 +300,22 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetDistance() {
+		if ($this->compare_km) {
+			$CurrentDistance  = $this->Training->get('distance');
+			$ColorFactor      = 0;
+			$ComparisonString = '-';
+
+			if ($this->km_of_last_set > 0) {
+				$Percent          = round(100*($CurrentDistance - $this->km_of_last_set ) / $this->km_of_last_set, 1);
+				$ColorFactor      = 100*$Percent / 20;
+				$ComparisonString = Math::WithSign($Percent).' %';
+			}
+
+			$this->km_of_last_set = $CurrentDistance;
+
+			return $this->Training->getDistanceString().' <small style="display:inline-block;width:45px;color:#'.Running::Stresscolor($ColorFactor).'">'.$ComparisonString.'</small>';
+		}
+
 		return $this->Training->getDistanceString();
 	}
 
