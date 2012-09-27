@@ -17,6 +17,12 @@ class DataBrowser {
 	static public $CALENDAR_ID = 'calendar';
 
 	/**
+	 * CSS-ID for refresh button
+	 * @var string
+	 */
+	static public $REFRESH_BUTTON_ID = 'refreshDataBrowser';
+
+	/**
 	 * Timestamp for first day to be displayed
 	 * @var int
 	 */
@@ -211,7 +217,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getRefreshLink() {
-		return self::getLink(Ajax::tooltip(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen'), $this->timestamp_start, $this->timestamp_end);
+		$Link = self::getLink(Ajax::tooltip(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen'), $this->timestamp_start, $this->timestamp_end);
+
+		return str_replace('<a ', '<a id="'.self::$REFRESH_BUTTON_ID.'" ', $Link);
 	}
 
 	/**
