@@ -65,11 +65,23 @@ class ParserTCX extends Parser {
 	private $lastPointWasEmpty = false;
 
 	/**
+	 * Boolean flag: loading xml failed
+	 * @var boolean
+	 */
+	private $loadXmlFailed = false;
+
+	/**
 	 * Construct a new parser, needs XML
 	 * @param SimpleXMLElement $XML
 	 */
 	public function __construct($XML) {
 		$this->CompleteXML = simplexml_load_string_utf8($XML);
+
+		if ($this->CompleteXML == false) {
+			Filesystem::throwErrorForBadXml($XML);
+			$this->loadXmlFailed = true;
+			return false;
+		}
 
 		if ($this->checkXML())
 			$this->initXML();
@@ -80,6 +92,12 @@ class ParserTCX extends Parser {
 	 */
 	public function parseTraining() {
 		$this->initEmptyValues();
+
+		if ($this->loadXmlFailed) {
+			$this->addError('Die XML-Datei konnte nicht erfolgreich geladen werden.');
+			return;
+		}
+
 		$this->parseStarttime();
 		$this->parseLaps();
 		$this->setValues();

@@ -50,7 +50,11 @@ class ImporterLogbook extends Importer {
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		$this->XML = simplexml_load_string_utf8($this->getFileContentAsString());
+		$this->XML = $this->getFileContentAsXml();
+
+		if (!$this->XML)
+			return;
+
 		$this->parseXML();
 		$this->createAllTrainings();
 	}

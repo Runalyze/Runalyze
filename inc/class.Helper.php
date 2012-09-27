@@ -492,15 +492,6 @@ class Helper {
 }
 
 /**
- * Load a file with simplexml, correcting encoding
- * @param string $filePath
- * @return SimpleXMLElement
- */
-function simplexml_load_file_utf8($filePath) {
-	return simplexml_load_string_utf8(simplexml_correct_ns(utf8_encode(file_get_contents($filePath))));
-}
-
-/**
  * Load a given XML-string with simplexml, correcting encoding
  * @param string $Xml
  * @return SimpleXMLElement

@@ -64,6 +64,18 @@ class Filesystem {
 	}
 
 	/**
+	 * Throw an error for a bad XML
+	 * @param string $XML 
+	 */
+	static public function throwErrorForBadXml($XML) {
+		$FileName = 'log/corrupt.xml.'.time().'.xml';
+		self::writeFile('../'.$FileName, $XML);
+
+		Error::getInstance()->addError('Die XML-Datei scheint fehlerhaft zu sein und konnte nicht erfolgreich geladen werden.
+			Zur Analyse kannst du die Datei <a href="'.$FileName.'">'.$FileName.'</a> an einen Administrator schicken.');
+	}
+
+	/**
 	 * Write a file
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @param string $fileContent 

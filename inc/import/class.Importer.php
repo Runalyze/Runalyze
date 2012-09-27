@@ -338,6 +338,23 @@ abstract class Importer {
 	}
 
 	/**
+	 * Get file content as xml
+	 * @return SimpleXmlElement
+	 */
+	protected function getFileContentAsXml() {
+		$FileContent = $this->getFileContentAsString();
+		$XML = simplexml_load_string_utf8($FileContent);
+
+		if (!$XML) {
+			Filesystem::throwErrorForBadXml($XML);
+			$this->addError('Die XML-Datei konnte nicht geladen werden.');
+			return false;
+		}
+
+		return $XML;
+	}
+
+	/**
 	 * Log file content
 	 * @param string $fileContent
 	 */

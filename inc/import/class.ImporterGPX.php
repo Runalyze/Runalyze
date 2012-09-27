@@ -13,7 +13,10 @@ class ImporterGPX extends Importer {
 	 * Set values for training from file or post-data
 	 */
 	protected function setTrainingValues() {
-		$XML = simplexml_load_string_utf8($this->getFileContentAsString());
+		$XML = $this->getFileContentAsXml();
+
+		if (!$XML)
+			return;
 
 		if (empty($XML->trk) || empty($XML->trk->trkseg)) {
 			$this->addError('Es scheint keine GPX-Trainingsdatei zu sein.');

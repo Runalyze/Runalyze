@@ -259,6 +259,8 @@ class Weather {
 						$this->id          = $WeatherID;
 						return;
 					}
+				} else {
+					// TODO
 				}
 			} else {
 				Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
