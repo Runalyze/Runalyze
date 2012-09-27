@@ -798,8 +798,8 @@ class GpsData {
 
 		$Xml = simplexml_load_string_utf8($String);
 
-		if (!isset($Xml->status) || (string)$Xml->status != 'OK') {
-			Error::getInstance()->addError('GoogleMapsAPI returned bad xml ("<pre>'.htmlentities($String).'</pre>")');
+		if (!$Xml || !isset($Xml->status) || (string)$Xml->status != 'OK') {
+			Filesystem::throwErrorForBadXml($String);
 			return false;
 		}
 
