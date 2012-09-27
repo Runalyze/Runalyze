@@ -15,6 +15,8 @@ class Running {
 	public static function Stresscolor($stress) {
 		if ($stress > 100)
 			$stress = 100;
+		if ($stress < 0)
+			$stress = 0;
 
 		$gb = dechex(200 - 2*$stress);
 

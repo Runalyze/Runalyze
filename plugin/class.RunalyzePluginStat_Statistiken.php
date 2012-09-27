@@ -70,6 +70,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['show_streak']   = array('type' => 'bool', 'var' => false, 'description' => 'Streak anzeigen');
+		$config['compare_weeks'] = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
 
 		return $config;
 	}
@@ -85,6 +87,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$this->displayWeekTable(true);
 		} else {
 			$this->displayYearTable();
+
+			if ($this->config['show_streak']['var'])
+				$this->displayStreak();
+
 			$this->displayWeekTable();
 		}
 	}
@@ -166,6 +172,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$Dataset = new Dataset();
 
+		if ($this->config['compare_weeks']['var'])
+			$Dataset->activateKilometerComparison();
+
 		echo '<table class="small notSmaller r fullWidth">';
 		echo '<thead><tr><th colspan="'.($Dataset->column_count+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
@@ -187,11 +196,17 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			if ($start < START_TIME)
 				break;
 
+			$startOfLastWeek  = $start - 7*DAY_IN_S;
+			$endOfLastWeek    = $start;
+			$ResultOfLastWeek = Mysql::getInstance()->fetchSingle('SELECT SUM(distance) as km FROM '.PREFIX.'training WHERE time>='.$startOfLastWeek.' AND time<'.$endOfLastWeek);
+			$kilometerOfPreviousWeek = $ResultOfLastWeek['km'];
+
 			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
 
-			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end))
+			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end)) {
+				$Dataset->setKilometerToCompareTo($kilometerOfPreviousWeek);
 				$Dataset->displayTableColumns();
-			else
+			} else
 				echo Html::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
 
 			echo '</tr>';
@@ -199,6 +214,59 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		echo '</tbody>';
 		echo '</table>';
+	}
+
+	/**
+	 * Display days of streakrunning 
+	 */
+	private function displayStreak() {
+		$Mysql    = Mysql::getInstance();
+		$Result   = $Mysql->query('SELECT time,DATE(FROM_UNIXTIME(time)) as day FROM '.PREFIX.'training GROUP BY DATE(FROM_UNIXTIME(time)) ORDER BY day DESC');
+		$IsStreak = true;
+		$FirstDay = true;
+		$NumDays  = 0;
+		$LastTime = time();
+		$LastDay  = date('Y-m-d');
+		$Text     = '';
+
+		while ($IsStreak) {
+			$Day = mysql_fetch_assoc($Result);
+
+			if ($FirstDay) {
+				if ($Day['day'] != $LastDay) {
+					if (Time::diffOfDates($Day['day'], $LastDay) == 1)
+						$Text = 'Wenn du heute noch l&auml;ufst: ';
+					else
+						$IsStreak = false;
+				}
+
+				$FirstDay = false;
+			}
+
+			if (!$Day || !$IsStreak)
+				$IsStreak = false;
+			else {
+				if (Time::diffOfDates($Day['day'], $LastDay) <= 1) {
+					$NumDays++;
+					$LastDay  = $Day['day'];
+					$LastTime = $Day['time'];
+				} else {
+					$IsStreak = false;
+				}
+			}
+		}
+
+		if ($NumDays == 0) {
+			$Text .= 'Du hast derzeit keinen Streak.';
+			$LastTraining = $Mysql->fetchSingle('SELECT time FROM '.PREFIX.'training ORDER BY time DESC');
+
+			if (isset($LastTraining['time']))
+				$Text .= ' Dein letztes Training war am '.date('d.m.Y', $LastTraining['time']);
+		} else {
+			$Text .= $NumDays.' Tag'.($NumDays == 1 ? '' : 'e').' laufen seit dem '.date('d.m.Y', $LastTime);
+		}
+
+		echo '<p class="text c"><em>'.$Text.'</em></p>';
 	}
 
 	/**
@@ -320,4 +388,3 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 	}
 }
-?>

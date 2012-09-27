@@ -42,6 +42,16 @@ class Time {
 	}
 
 	/**
+	 * Calculates the difference in days of two dates (YYYY-mm-dd)
+	 * @param string $date1
+	 * @param string $date2
+	 * @return int
+	 */
+	static public function diffOfDates($date1, $date2) {
+		return (int)date_diff(date_create($date1), date_create($date2))->format('%d');
+	}
+
+	/**
 	 * Is given timestamp from today?
 	 * @param int $timestamp
 	 * @return boolean
