@@ -18,6 +18,18 @@ abstract class PluginPanel extends Plugin {
 	protected $textAsRightSymbol = false;
 
 	/**
+	 * Boolean flag: Don't reload if config has changed
+	 * @var boolean
+	 */
+	protected $dontReloadForConfig = false;
+
+	/**
+	 * Boolean flag: Don't reload if a training has changed
+	 * @var boolean
+	 */
+	protected $dontReloadForTraining = false;
+
+	/**
 	 * Method for initializing default config-vars (should be implemented in each plugin)
 	 */
 	protected function getDefaultConfigVars() { return array(); }
@@ -53,17 +65,24 @@ abstract class PluginPanel extends Plugin {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
-		if ($this->SurroundingDivIsVisible)
-			echo(NL.'<div class="panel" id="panel-'.$this->id.'">'.NL);
+		if ($this->SurroundingDivIsVisible) {
+			$classes = '';
+			if ($this->dontReloadForConfig)
+				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_CONFIG_FLAG;
+			if ($this->dontReloadForTraining)
+				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_TRAINING_FLAG;
+
+			echo NL.'<div class="panel'.$classes.'" id="panel-'.$this->id.'">'.NL;
+		}
 
 		$this->displayHeader();
 
-		echo(NL.'<div class="content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL);
+		echo NL.'<div class="content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
 		$this->displayContent();
-		echo('</div>');
+		echo '</div>';
 
 		if ($this->SurroundingDivIsVisible)
-			echo(NL.'</div>'.NL);
+			echo NL.'</div>'.NL;
 	}
 
 	/**

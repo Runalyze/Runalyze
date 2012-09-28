@@ -62,6 +62,18 @@ abstract class Plugin {
 	public static $DISPLAY_URL = 'call/call.Plugin.display.php';
 
 	/**
+	 * CSS-Flag for plugins: Don't reload if config has changed
+	 * @var string
+	 */
+	public static $DONT_RELOAD_FOR_CONFIG_FLAG = 'dont-reload-for-config';
+
+	/**
+	 * CSS-Flag for plugins: Don't reload if a training has changed
+	 * @var string
+	 */
+	public static $DONT_RELOAD_FOR_TRAINING_FLAG = 'dont-reload-for-training';
+
+	/**
 	 * Id for not installed plugin
 	 * @var int
 	 */

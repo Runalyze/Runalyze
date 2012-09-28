@@ -234,9 +234,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 			if ($FirstDay) {
 				if ($Day['day'] != $LastDay) {
-					if (Time::diffOfDates($Day['day'], $LastDay) == 1)
+					if (Time::diffOfDates($Day['day'], $LastDay) == 1) {
 						$Text = 'Wenn du heute noch l&auml;ufst: ';
-					else
+						$NumDays++;
+					} else
 						$IsStreak = false;
 				}
 
