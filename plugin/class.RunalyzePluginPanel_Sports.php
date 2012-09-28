@@ -5,7 +5,6 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Sports';
 /**
  * Class: RunalyzePluginPanel_Sports
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class RunalyzePluginPanel_Sports extends PluginPanel {

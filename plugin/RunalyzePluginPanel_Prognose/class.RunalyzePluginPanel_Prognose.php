@@ -5,12 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
  * Class: RunalyzePluginPanel_Prognose
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::Helper
  */
 class RunalyzePluginPanel_Prognose extends PluginPanel {
 	/**

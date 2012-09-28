@@ -5,15 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Sportler';
 /**
  * Class: RunalyzePluginPanel_Sportler
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::Mysql
- * @uses class::Ajax
- * @uses inc/draw/plugin.sportler.fett.php
- * @uses inc/draw/plugin.sportler.gewicht.php
  */
 class RunalyzePluginPanel_Sportler extends PluginPanel {
 	/**
@@ -24,6 +16,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$this->type = Plugin::$PANEL;
 		$this->name = 'Sportler';
 		$this->description = 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).';
+		$this->dontReloadForTraining = true;
 	}
 
 	/**
@@ -107,4 +100,3 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
 	}
 }
-?>

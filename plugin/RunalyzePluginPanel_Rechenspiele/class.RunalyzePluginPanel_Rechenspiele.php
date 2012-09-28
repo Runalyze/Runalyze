@@ -5,17 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginPanel
- * @uses class::Helper
- * @uses class::JD
- * @uses class::Ajax
- * @uses MAX_ATL
- * @uses MAX_CTL
- * @uses VDOT_FORM
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
