@@ -71,11 +71,6 @@ final class Mysql {
 		if (self::$debugQuery)
 			Error::getInstance()->addDebug($query);
 
-		//if (strpos($query, 'UPDATE') !== false || strpos($query, 'INSERT') !== false || strpos($query, 'DELETE') !== false) {
-		//	Error::getInstance()->addNotice($query);
-		//	return false;
-		//}
-
 		if ($addAccountId === true)
 			$query = $this->addAccountId($query);
 

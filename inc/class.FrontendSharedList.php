@@ -19,7 +19,6 @@ class FrontendSharedList extends FrontendShared {
 		$this->setEncoding();
 
 		$this->initUser();
-		$this->initList();
 
 		$User = $this->User;
 
@@ -85,13 +84,6 @@ class FrontendSharedList extends FrontendShared {
 	}
 
 	/**
-	 * Init DataBrowser to show list 
-	 */
-	protected function initList() {
-		// TODO
-	}
-
-	/**
 	 * Display shared view 
 	 */
 	public function displaySharedView() {
@@ -110,8 +102,6 @@ class FrontendSharedList extends FrontendShared {
 		$DataBrowser = new DataBrowserShared();
 		$DataBrowser->display();
 
-		// TODO: Private Trainings ausblenden
-		// TODO: Config: Auch private Trainings (ohne Link) anzeigen
 		// TODO: Diagramme etc?
 	}
 
@@ -132,7 +122,7 @@ class FrontendSharedList extends FrontendShared {
 	protected function throwErrorForPrivateList() {
 		echo HTML::h1('Fehler');
 		echo HTML::error('
-			<strong>Diese Trainingsansicht ist privat.</strong><br />
+			<strong>Diese Trainingsliste ist privat.</strong><br />
 			<br />
 			Jeder Benutzer von Runalyze kann selbst bestimmen,
 			ob er seine Trainings ver&ouml;ffentlicht oder nicht.');
