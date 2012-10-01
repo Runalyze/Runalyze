@@ -20,6 +20,7 @@
 					<th class="{sorter: 'distance'}">km</th>
 					<th class="{sorter: 'germandate'}">seit</th>
 					<th class="{sorter: 'germandate'}">zuletzt</th>
+					<th>Funktionen</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,6 +34,7 @@
 					<td class="small r"><?php echo Helper::Km($User['km']); ?></td>
 					<td class="small c"><?php echo date("d.m.Y", $User['registerdate']); ?></td>
 					<td class="small c"><?php echo date("d.m.Y", $User['lastaction']); ?></td>
+					<td>User aktivieren Neues Passwort zusenden</td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>

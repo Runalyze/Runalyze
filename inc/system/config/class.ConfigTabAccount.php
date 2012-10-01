@@ -48,7 +48,7 @@ class ConfigTabAccount extends ConfigTab {
 
 		$Delete = new FormularFieldset('Account l&ouml;schen');
 		$Delete->setCollapsed();
-		$Delete->addInfo('Das L&ouml;schen des Accounts ist bisher nicht manuell m&ouml;glich.<br />
+		$Delete->addInfo('Das L&ouml;schen des Accounts ist bisher nur manuell m&ouml;glich.<br />
 						Bei einer lokalen Installation kannst du das selbst in der Datenbank vornehmen bzw. den Administrator darum bitten.
 						In der Online-Version gen&uuml;gt eine E-Mail an mail@runalyze.de.');
 
