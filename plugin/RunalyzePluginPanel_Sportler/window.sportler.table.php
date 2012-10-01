@@ -1,7 +1,7 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');

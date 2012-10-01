@@ -1,7 +1,7 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 require 'class.RunalyzePluginStat_Strecken.php';
 ?>

@@ -5,7 +5,7 @@
  */
 require_once '../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 header('Content-type: application/json');
 

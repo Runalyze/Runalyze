@@ -38,6 +38,18 @@ class FormularFieldset extends HtmlTag {
 	private $messages = array();
 
 	/**
+	 * Individual HTML code
+	 * @var string
+	 */
+	private $HtmlCode = '';
+
+	/**
+	 * Boolean flag: only one opened fieldset allowed
+	 * @var boolean
+	 */
+	private $allowOnlyOneOpenedFieldset = false;
+
+	/**
 	 * Constructor for a new fieldset
 	 * @param string $title [optional]
 	 */
@@ -66,7 +78,15 @@ class FormularFieldset extends HtmlTag {
 	 */
 	final public function setLayoutForFields($layout) {
 		foreach ($this->fields as &$Field)
-			$Field->setLayoutIfEmpty($layout);
+			if (is_object($Field))
+				$Field->setLayoutIfEmpty($layout);
+	}
+
+	/**
+	 * For toggle-function: only one opened fieldset 
+	 */
+	final public function allowOnlyOneOpenedFieldset() {
+		$this->allowOnlyOneOpenedFieldset = true;
 	}
 
 	/**
@@ -89,6 +109,7 @@ class FormularFieldset extends HtmlTag {
 		$this->displayLegend();
 		$this->displayFields();
 		$this->displayMessages();
+		$this->displayHtmlCode();
 
 		echo '</fieldset>';
 	}
@@ -97,8 +118,10 @@ class FormularFieldset extends HtmlTag {
 	 * Display all fields 
 	 */
 	private function displayLegend() {
+		$onlyOne = $this->allowOnlyOneOpenedFieldset ? 'true' : 'false';
+
 		if (!empty($this->title))
-			echo '<legend onclick="Runalyze.toggleFieldset(this, \''.$this->Id.'\')">'.$this->title.'</legend>';
+			echo '<legend onclick="Runalyze.toggleFieldset(this, \''.$this->Id.'\', '.$onlyOne.')">'.$this->title.'</legend>';
 	}
 
 	/**
@@ -106,7 +129,26 @@ class FormularFieldset extends HtmlTag {
 	 */
 	private function displayFields() {
 		foreach ($this->fields as $Field)
-			$Field->display();
+			if (is_object($Field))
+				$Field->display();
+			else
+				echo '<div class="w50"></div>';
+	}
+
+	/**
+	 * Set individual HTML code
+	 * @param string $Code 
+	 */
+	public function setHtmlCode($Code) {
+		$this->HtmlCode = $Code;
+	}
+
+	/**
+	 * Display individual html code 
+	 */
+	private function displayHtmlCode() {
+		if (!empty($this->HtmlCode))
+			echo '<div>'.$this->HtmlCode.'</div>';
 	}
 
 	/**
@@ -162,4 +204,3 @@ class FormularFieldset extends HtmlTag {
 		$this->addMessage($message, 'block');
 	}
 }
-?>

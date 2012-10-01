@@ -1,7 +1,7 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 if (isset($_GET['delete'])) {
 	Mysql::getInstance()->delete(PREFIX.'shoe', (int)$_GET['delete']);

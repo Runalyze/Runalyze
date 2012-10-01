@@ -12,14 +12,83 @@ class Ajax {
 	public static $IMG_WAIT = 'waitImg';
 
 	/**
+	 * Enum: Reload flag - no reload
+	 * @var int
+	 */
+	public static $RELOAD_NONE = 0;
+
+	/**
+	 * Enum: Reload flag - reload databrowser
+	 * @var int
+	 */
+	public static $RELOAD_DATABROWSER = 1;
+
+	/**
+	 * Enum: Reload flag - reload all plugins
+	 * @var int
+	 */
+	public static $RELOAD_PLUGINS = 2;
+
+	/**
+	 * Enum: Reload flag - reload all elements with jQuery
+	 * @var int
+	 */
+	public static $RELOAD_ALL = 3;
+
+	/**
+	 * Enum: Reload flag - reload complete page
+	 * @var int
+	 */
+	public static $RELOAD_PAGE = 4;
+
+	/**
+	 * Current reload flag
+	 * @var int
+	 */
+	private static $currentReloadFlag = 0;
+
+	/**
 	 * Init own JS-library on frontend (direct output)
 	 */
-	public static function initJSlibrary() {
+	static public function initJSlibrary() {
 		$Options = array();
 		$Options['useTooltip'] = CONF_JS_USE_TOOLTIP;
 		$Options['sharedView'] = Request::isOnSharedPage();
 
 		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');
+	}
+
+	/**
+	 * Set reload flag
+	 * @param enum $Flag 
+	 */
+	static public function setReloadFlag($Flag) {
+		$BothFlags = array($Flag, self::$currentReloadFlag);
+
+		if (min($BothFlags) == self::$RELOAD_DATABROWSER && max($BothFlags) == self::$RELOAD_PLUGINS)
+			self::$currentReloadFlag = self::$RELOAD_ALL;
+		else
+			self::$currentReloadFlag = max($BothFlags);
+	}
+
+	/**
+	 * Get reload command
+	 * @return string 
+	 */
+	static public function getReloadCommand() {
+		switch(self::$currentReloadFlag) {
+			case self::$RELOAD_PAGE:
+				return self::wrapJS('Runalyze.reloadPage();');
+			case self::$RELOAD_ALL:
+				return self::wrapJS('Runalyze.reloadContent();');
+			case self::$RELOAD_PLUGINS:
+				return self::wrapJS('Runalyze.reloadAllPlugins();');
+			case self::$RELOAD_DATABROWSER:
+				return self::wrapJS('Runalyze.reloadDataBrowser();');
+			case self::$RELOAD_NONE:
+			default:
+				return '';
+		}
 	}
 
 	/**

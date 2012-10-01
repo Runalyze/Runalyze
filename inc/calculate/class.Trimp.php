@@ -293,7 +293,7 @@ class Trimp {
 	 * @param int $maxATL 
 	 */
 	private static function setMaxATL($maxATL) {
-		Config::update('MAX_ATL', $maxATL);
+		ConfigValue::update('MAX_ATL', $maxATL);
 
 		self::$MAX_ATL = $maxATL;
 	}
@@ -303,7 +303,7 @@ class Trimp {
 	 * @param int $maxCTL 
 	 */
 	private static function setMaxCTL($maxCTL) {
-		Config::update('MAX_CTL', $maxCTL);
+		ConfigValue::update('MAX_CTL', $maxCTL);
 
 		self::$MAX_CTL = $maxCTL;
 	}
@@ -313,7 +313,7 @@ class Trimp {
 	 * @param int $maxTRIMP 
 	 */
 	private static function setMaxTRIMP($maxTRIMP) {
-		Config::update('MAX_TRIMP', $maxTRIMP);
+		ConfigValue::update('MAX_TRIMP', $maxTRIMP);
 
 		self::$MAX_TRIMP = $maxTRIMP;
 	}

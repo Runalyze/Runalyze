@@ -17,6 +17,7 @@ class Autoloader {
 		spl_autoload_register( array($this, 'autoloadImport') );
 		spl_autoload_register( array($this, 'autoloadPlugin') );
 		spl_autoload_register( array($this, 'autoloadSystem') );
+		spl_autoload_register( array($this, 'autoloadSystemConfig') );
 		spl_autoload_register( array($this, 'autoloadTraining') );
 		spl_autoload_register( array($this, 'autoloadTrainingFormular') );
 	}
@@ -100,6 +101,14 @@ class Autoloader {
 	 */
 	private function autoloadSystem($className) {
 		$this->tryToLoad('system/class.'.$className.'.php');
+	}
+
+	/**
+	 * System-Autloader: check in /system/config/-folder
+	 * @return boolean 
+	 */
+	private function autoloadSystemConfig($className) {
+		$this->tryToLoad('system/config/class.'.$className.'.php');
 	}
 
 	/**

@@ -116,6 +116,14 @@ class Formular extends HtmlTag {
 	}
 
 	/**
+	 * Set toggle-function: only one opened fieldset 
+	 */
+	public function allowOnlyOneOpenedFieldset() {
+		foreach ($this->fieldsets as &$Fieldset)
+			$Fieldset->allowOnlyOneOpenedFieldset();
+	}
+
+	/**
 	 * Prepare object for beeing displayed 
 	 */
 	protected function prepareForDisplay() {

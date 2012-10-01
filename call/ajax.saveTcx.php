@@ -5,7 +5,6 @@
  */
 require_once '../inc/class.Frontend.php';
 
-new Frontend(true);
+$Frontend = new Frontend(true);
 
 ImporterTCX::saveTCX($_POST['activityId'], $_POST['data']);
-?>

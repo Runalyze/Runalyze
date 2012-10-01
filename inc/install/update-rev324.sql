@@ -1,0 +1,1 @@
+ALTER TABLE  `runalyze_conf` DROP  `type` , DROP  `description` , DROP  `select_description` ;
