@@ -5,13 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginTool_DbBackup';
 /**
  * Class: RunalyzePluginTool_DbBackup
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginTool
- * @uses class::Mysql
- * @uses class::Helper
  */
 class RunalyzePluginTool_DbBackup extends PluginTool {
 	/**
@@ -74,7 +68,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		}
 
 		echo HTML::br();
-		echo '<strong>Vorhandene Backups:</strong>';
+		echo '<strong>Vorhandene Backups:</strong> ';
 
 		if (empty($Files)) {
 			echo '<em>keine</em>';

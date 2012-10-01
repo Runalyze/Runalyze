@@ -83,6 +83,13 @@ class FormularInput extends FormularField {
 	}
 
 	/**
+	 * Set input field disabled 
+	 */
+	public function setDisabled() {
+		$this->addAttribute('disabled', 'disabled');
+	}
+
+	/**
 	 * Prepare for beeing displayed 
 	 */
 	protected function prepareForDisplay() {

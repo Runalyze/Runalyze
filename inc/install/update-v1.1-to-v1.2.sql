@@ -36,3 +36,6 @@ ALTER TABLE  `runalyze_training` ADD  `creator` VARCHAR( 100 ) NOT NULL , ADD  `
 
 /* Rev313 */
 ALTER TABLE  `runalyze_training` ADD  `activity_id` VARCHAR( 50 ) NOT NULL DEFAULT  '' AFTER  `creator_details`;
+
+/* Rev324 */
+ALTER TABLE  `runalyze_conf` DROP  `type` , DROP  `description` , DROP  `select_description` ;

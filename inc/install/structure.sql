@@ -63,10 +63,7 @@ CREATE TABLE `runalyze_clothes` (
 CREATE TABLE `runalyze_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `type` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `value` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `description` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `select_description` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

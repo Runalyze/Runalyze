@@ -619,7 +619,7 @@ abstract class Plugin {
 	 * @param enum $type
 	 * @return string
 	 */
-	static protected function getTypeString($type) {
+	static public function getTypeString($type) {
 		switch ($type) {
 			case self::$STAT:
 				return 'stat';

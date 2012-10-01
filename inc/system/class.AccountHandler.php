@@ -409,16 +409,16 @@ class AccountHandler {
 		$Mysql = Mysql::getInstance();
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen"');
-		Config::update('MAINSPORT', $data['id'], $accountId);
-		Config::update('RUNNINGSPORT', $data['id'], $accountId);
+		ConfigValue::update('MAINSPORT', $data['id'], $accountId);
+		ConfigValue::update('RUNNINGSPORT', $data['id'], $accountId);
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf"');
-		Config::update('WK_TYPID', $data['id'], $accountId);
+		ConfigValue::update('WK_TYPID', $data['id'], $accountId);
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf"');
-		Config::update('LL_TYPID', $data['id'], $accountId);
+		ConfigValue::update('LL_TYPID', $data['id'], $accountId);
 
 		$data = $Mysql->fetchSingle('SELECT value FROM '.PREFIX.'conf WHERE `key`="GARMIN_API_KEY" ORDER BY LENGTH(value) DESC');
-		Config::update('GARMIN_API_KEY', $data['value'], $accountId);
+		ConfigValue::update('GARMIN_API_KEY', $data['value'], $accountId);
 	}
 }

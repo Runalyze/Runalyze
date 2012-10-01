@@ -71,7 +71,10 @@ final class Mysql {
 		if (self::$debugQuery)
 			Error::getInstance()->addDebug($query);
 
-		$result = false;
+		//if (strpos($query, 'UPDATE') !== false || strpos($query, 'INSERT') !== false || strpos($query, 'DELETE') !== false) {
+		//	Error::getInstance()->addNotice($query);
+		//	return false;
+		//}
 
 		if ($addAccountId === true)
 			$query = $this->addAccountId($query);
@@ -91,8 +94,6 @@ final class Mysql {
 	public function untouchedQuery($query) {
 		if (self::$debugQuery)
 			Error::getInstance()->addDebug($query);
-
-		$result = false;
 
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);

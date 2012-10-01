@@ -1,7 +1,7 @@
 <?php
 require '../../inc/class.Frontend.php';
 
-new Frontend();
+$Frontend = new Frontend();
 
 if (Request::sendId() === false) {
 	$Header   = 'K&ouml;rper-Daten eintragen';
@@ -23,4 +23,3 @@ $Formular->setId('sportler');
 $Formular->setHeader($Header);
 $Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
 $Formular->display();
-?>
