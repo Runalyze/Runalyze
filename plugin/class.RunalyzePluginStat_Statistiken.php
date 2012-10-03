@@ -70,8 +70,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_streak']   = array('type' => 'bool', 'var' => false, 'description' => 'Streak anzeigen');
-		$config['compare_weeks'] = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
+		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
+		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => 'Streak anzeigen');
+		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => 'Mindestzahl f&uuml;r Streak zum Anzeigen (0 f&uuml;r immer)');
 
 		return $config;
 	}
@@ -267,7 +268,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$Text .= $NumDays.' Tag'.($NumDays == 1 ? '' : 'e').' laufen seit dem '.date('d.m.Y', $LastTime);
 		}
 
-		echo '<p class="text c"><em>'.$Text.'</em></p>';
+		if ($NumDays >= $this->config['show_streak_days']['var'])
+			echo '<p class="text c"><em>'.$Text.'</em></p>';
 	}
 
 	/**
