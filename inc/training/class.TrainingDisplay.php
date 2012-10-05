@@ -189,7 +189,6 @@ class TrainingDisplay {
 		$Times        = $this->Training->Splits()->timesAsArray();
 		$Paces        = $this->Training->Splits()->pacesAsArray();
 		$demandedPace = Helper::DescriptionToDemandedPace($this->Training->get('comment'));
-		//$achievedPace = array_sum($Paces) / count($Paces);
 		$TimeSum      = array_sum($Times);
 		$DistSum      = array_sum($Distances);
 		$achievedPace = $TimeSum / $DistSum;
@@ -229,6 +228,34 @@ class TrainingDisplay {
 				<td>'.Helper::Time($achievedPace).'/km</td>
 				<td></td>
 			</tr>'.NL;
+
+		if ($this->Training->isCompetition()) {
+			echo '
+				<tr>'.HTML::emptyTD(4).'</td>
+				<tr class="b">
+					<td colspan="4">1./2. Rennh&auml;lfte</td>
+				</tr>'.NL;
+			echo HTML::spaceTR(4);
+
+			$Halfs = $this->Training->GpsData()->getRoundsAsFilledArray($this->Training->GpsData()->getTotalDistance()/2);
+
+			for ($i = 0, $num = count($Halfs); $i < $num; $i++) {
+				$Pace           = $Halfs[$i]['s']/$Halfs[$i]['km'];
+				$PaceDiff       = ($demandedPace != 0) ? ($demandedPace - $Pace) : ($achievedPace - $Pace);
+				$PaceClass      = ($PaceDiff >= 0) ? 'plus' : 'minus';
+				$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
+
+				echo '
+				<tr class="a'.($i%2+2).' r">
+					<td>'.Helper::Km($Halfs[$i]['km'], 2).'</td>
+					<td>'.Helper::Time($Halfs[$i]['s']).'</td>
+					<td>'.Helper::Pace($Halfs[$i]['km'], $Halfs[$i]['s']).'/km</td>
+					<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
+				</tr>'.NL;
+			}
+
+			echo HTML::spaceTR(4);
+		}
 
 		echo '</table>'.NL;
 	}

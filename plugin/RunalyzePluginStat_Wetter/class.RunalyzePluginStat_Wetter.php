@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 /**
  * Class: RunalyzePluginStat_Wetter
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Wetter extends PluginStat {
 	private $i      = 0;
@@ -91,7 +84,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display month-table
 	 */
 	private function displayMonthTable() {
-		echo '<table class="small fullWidth">';
+		echo '<table class="small fullWidth r">';
 		echo HTML::monthTR(8, 1);
 
 		if ($this->config['for_weather']['var']) {
@@ -114,7 +107,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for temperature
 	*/
 	private function displayMonthTableTemp() {
-		echo '<tr class="a2 r"><td class="c">&#176;C</td>';
+		echo '<tr class="a2"><td class="c">&#176;C</td>';
 
 		$i = 1;
 		$temps = Mysql::getInstance()->fetchAsArray('SELECT
@@ -153,7 +146,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$wetter_all = Weather::getArrayWithoutUnknown();
 		foreach ($wetter_all as $w => $wetter) {
 			$Weather = new Weather($wetter['id']);
-			echo '<tr class="a'.($w%2+1).' r"><td class="c">'.$Weather->icon().'</td>';
+			echo '<tr class="a'.($w%2+1).'"><td class="c">'.$Weather->icon().'</td>';
 		
 			$i = 1;
 			$data = Mysql::getInstance()->fetchAsArray('SELECT
@@ -213,7 +206,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
-				echo '<tr class="a'.($k%2+1).' r"><td class="r">'.$kleidung['name'].'</td>';
+				echo '<tr class="a'.($k%2+1).' r"><td>'.$kleidung['name'].'</td>';
 			
 				$i = 1;
 				$data = Mysql::getInstance()->fetchAsArray('SELECT
@@ -251,7 +244,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				echo('</tr>');
 			}
 		} else {
-			$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
+			Error::getInstance()->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
 		}
 	}
 
@@ -260,7 +253,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	private function displayClothesTable() {
 		echo '<table class="small fullWidth">
-			<thead><tr>
+			<thead><tr class="c">
 				<th />
 				<th>Temperaturen</th>
 				<th>&Oslash;</th>
@@ -300,7 +293,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				}
 			}
 		} else
-			$Error->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
+			Error::getInstance()->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
 
 		for (; $i%3 != 1; $i++)
 			echo HTML::emptyTD(3);
@@ -363,4 +356,3 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		return $header.': '.$this->jahr;
 	}
 }
-?>
