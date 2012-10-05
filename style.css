@@ -243,7 +243,7 @@ fieldset .smallSize { width: 60px; }
 fieldset .smallSize.withUnit { width: 34px; }
 fieldset .middleSize { width: 120px; }
 fieldset .middleSize.withUnit { width: 94px; }
-fieldset .fullSize { width: 55%; }
+fieldset .fullSize { width: 53%; }
 fieldset .fullWidth { width: 95%; }
 fieldset .with50erLabel label { width: 22.5%; }
 fieldset .with50erLabel .fullSize { width: 75%; }
@@ -617,6 +617,7 @@ p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #C
 .w50 { width: 50%; }
 .w33 { width: 33%; }
 .w25 { width: 25%; }
+.marginr50 { margin-right: 50%; }
 
 .unimportant { opacity: 0.5; filter: alpha(opacity=50); }
 .unimportant:hover { opacity: 1; filter: alpha(opacity=100); }
