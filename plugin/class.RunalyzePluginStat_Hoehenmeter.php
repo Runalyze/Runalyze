@@ -5,15 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
  * Class: RunalyzePluginStat_Hoehenmeter
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
- * @uses START_YEAR
  */
 class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	private $ElevationData = array();
@@ -61,7 +53,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayElevationData() {
-		echo '<table class="small fullWidth">';
+		echo '<table class="small fullWidth r">';
 		echo HTML::monthTr(8, 1);
 		echo HTML::spaceTR(13);
 
@@ -69,7 +61,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr><td colspan="12"><em>Keine Strecken gefunden.</em></td></tr>';
 		foreach ($this->ElevationData as $y => $Data) {
 			echo('
-				<tr class="a'.($y%2+1).' r">
+				<tr class="a'.($y%2+1).'">
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
@@ -200,4 +192,3 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			LIMIT 10');
 	}
 }
-?>

@@ -98,7 +98,7 @@ class Gmap {
 
 		$this->GpsData->startLoop();
 		while ($this->GpsData->nextStep()) {
-			if ($this->GpsData->getLatitude() == 0)
+			if ($this->GpsData->getLatitude() == 0 && $this->GpsData->getLongitude() == 0)
 				continue;
 
 			if ($withoutHover)
@@ -131,7 +131,9 @@ class Gmap {
 		$Marker   = array();
 
 		$this->GpsData->startLoop();
-		$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start<br />'.$Training->getDate().'",options:{icon:"'.$this->getIconForMarker().'"}}';
+
+		if ($this->GpsData->getLatitude() > 0 && $this->GpsData->getLongitude() > 0)
+			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start<br />'.$Training->getDate().'",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
 			$MarkerData = addslashes(Helper::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Helper::Speed($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));

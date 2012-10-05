@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Laufabc';
 /**
  * Class: RunalyzePluginStat_Laufabc
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Laufabc extends PluginStat {
 	private $ABCData = array();
@@ -60,7 +53,7 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayData() {
-		echo '<table class="fullWidth small">';
+		echo '<table class="fullWidth small r">';
 		echo HTML::monthTr(8, 1);
 		echo HTML::spaceTR(13);
 		
@@ -68,7 +61,7 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 			echo '<tr><td colspan="12"><em>Keine Daten gefunden.</em></td></tr>';
 		foreach ($this->ABCData as $y => $Data) {
 			echo('
-				<tr class="a'.($y%2+1).' r">
+				<tr class="a'.($y%2+1).'">
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
@@ -104,4 +97,3 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		}
 	}
 }
-?>

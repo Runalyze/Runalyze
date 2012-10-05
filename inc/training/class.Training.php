@@ -625,6 +625,14 @@ class Training {
 	}
 
 	/**
+	 * Was this training a competition?
+	 * @return boolean 
+	 */
+	public function isCompetition() {
+		return $this->get('typeid') == CONF_WK_TYPID;
+	}
+
+	/**
 	 * Is a positive distance set?
 	 * @return bool
 	 */

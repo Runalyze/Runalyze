@@ -258,7 +258,7 @@ class GpsData {
 	 * Are information for latitude/longitude available?
 	 */
 	public function hasPositionData() {
-		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1) && $this->arrayForLatitude[0] > 0;
+		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1) && max($this->arrayForLatitude) > 0;
 	}
 
 	/**
@@ -565,13 +565,14 @@ class GpsData {
 
 	/**
 	 * Get rounds as sorted array filled with information for time, distance, km, s, heartrate, hm-up, hm-down
+	 * @param double $distance [optional]
 	 * @return array
 	 */
-	public function getRoundsAsFilledArray() {
+	public function getRoundsAsFilledArray($distance = 1) {
 		$rounds = array();
 		
 		$this->startLoop();
-		while ($this->nextKilometer()) {
+		while ($this->nextKilometer($distance)) {
 			$rounds[] = array(
 				'time'      => $this->getTime(),
 				'distance'  => $this->getDistance(),
