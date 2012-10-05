@@ -33,6 +33,7 @@
 .icon-zoom-in { width: 16px; height: 16px; background-position: -176px -12px; }
 .icon-zoom-out { width: 16px; height: 16px; background-position: -192px -12px; }
 .icon-zoom-fit { width: 16px; height: 16px; background-position: -208px -12px; }
+.icon-calculator { width: 16px; height: 16px; background-position: -224px -12px; }
 
 .icon-info { width: 14px; height: 16px; background-image: url(../img/info.gif); }
 .icon-warning { width: 16px; height: 16px; background-image: url(../img/warning.gif); }

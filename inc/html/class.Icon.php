@@ -36,6 +36,7 @@ class Icon {
 	static public $ZOOM_IN          = '<i class="icon-zoom-in"></i>';
 	static public $ZOOM_OUT         = '<i class="icon-zoom-out"></i>';
 	static public $ZOOM_FIT         = '<i class="icon-zoom-fit"></i>';
+	static public $CALCULATOR       = '<i class="icon-calculator"></i>';
 	// Own pictures
 	static public $INFO             = '<i class="icon-info"></i>';
 	static public $WARNING          = '<i class="icon-warning"></i>';

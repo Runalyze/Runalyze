@@ -45,6 +45,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = array();
+		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Prognose-Rechner', true, true).'>'.Icon::$CALCULATOR.'</a>');
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::$INFO.'</a>');
 
 		return implode(' ', $Links);
@@ -103,6 +104,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function thereAreNotEnoughCompetitions() {
 		return 1 >= Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID);
+	}
+
+	/**
+	 * Get array with distances for prognosis
+	 * @return array
+	 */
+	public function getDistances() {
+		return $this->config['distances']['var'];
 	}
 }
 ?>
