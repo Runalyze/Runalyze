@@ -21,7 +21,7 @@ if ($Training->hasSplits()) {
 	$num     = count($Data);
 	$unit    = ($num >= 20) ? '' : ' km';
 
-	$demandedPace = Helper::DescriptionToDemandedPace($Training->get('comment'));
+	$demandedPace = Running::DescriptionToDemandedPace($Training->get('comment'));
 	$achievedPace = array_sum($Data) / $num;
 
 	foreach ($Data as $key => $val) {
@@ -66,11 +66,11 @@ $Plot->enableTracking();
 
 if ($demandedPace > 0) {
 	$Plot->addThreshold("y", $demandedPace*1000, 'rgb(180,0,0)');
-	//$Plot->addAnnotation(count($Data)-1, $demandedPace*1000, 'Soll: '.Helper::Time($demandedPace), -10, -7);
+	//$Plot->addAnnotation(count($Data)-1, $demandedPace*1000, 'Soll: '.Time::toString($demandedPace), -10, -7);
 }
 if ($achievedPace > 0) {
 	$Plot->addThreshold("y", $achievedPace*1000, 'rgb(0,180,0)');
-	$Plot->addAnnotation(0, $achievedPace*1000, '&oslash; '.Helper::Time(round($achievedPace)), -20, -7);
+	$Plot->addAnnotation(0, $achievedPace*1000, '&oslash; '.Time::toString(round($achievedPace)), -20, -7);
 }
 
 $Plot->outputJavaScript();

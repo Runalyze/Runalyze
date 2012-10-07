@@ -329,7 +329,7 @@ class ParserTCX extends Parser {
 		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
 
 		// TODO: save pause-laps too with special identification
-		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Helper::Time(round((int)$Lap->TotalTimeSeconds), false, 2);
+		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Time::toString(round((int)$Lap->TotalTimeSeconds), false, 2);
 		$SplitKey    = ((string)$Lap->Intensity == 'Active') ? 'splits' : 'splits_resting';
 		$this->data[$SplitKey][] = $SplitString;
 	}

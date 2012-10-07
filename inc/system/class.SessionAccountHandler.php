@@ -247,6 +247,19 @@ class SessionAccountHandler {
 	}
 
 	/**
+	 * Get number of online users
+	 * @return int
+	 */
+	static public function getNumberOfUserOnline() {
+		$result = Mysql::getInstance()->untouchedFetch('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60));
+
+		if ($result !== false && isset($result['num']))
+			return $result['num'];
+
+		return 0;
+	}
+
+	/**
 	 * Logout 
 	 */
 	static public function logout() {

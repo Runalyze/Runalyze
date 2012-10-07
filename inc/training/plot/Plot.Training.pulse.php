@@ -9,7 +9,7 @@ $Plot = new Plot("pulse_".$_GET['id'], 480, 190);
 if (!is_numeric($_GET['id']))
 	$Plot->raiseError('Es ist kein Training angegeben.');
 
-$InPercent = (CONF_PULS_MODE == 'hfmax');
+$InPercent = (CONF_PULS_MODE == 'hfmax' || CONF_PULS_MODE == 'hfres');
 $Training  = new Training($_GET['id']);
 $Data      = $Training->GpsData()->getPlotDataForHeartrate($InPercent);
 $HFmax     = ($InPercent) ? 100 : HF_MAX;

@@ -31,7 +31,7 @@
 					<td><?php echo $User['name']; ?></td>
 					<td class="small"><?php echo $User['mail']; ?></td>
 					<td class="small r"><?php echo $User['num']; ?>x</td>
-					<td class="small r"><?php echo Helper::Km($User['km']); ?></td>
+					<td class="small r"><?php echo Running::Km($User['km']); ?></td>
 					<td class="small c"><?php echo date("d.m.Y", $User['registerdate']); ?></td>
 					<td class="small c"><?php echo date("d.m.Y", $User['lastaction']); ?></td>
 					<td>User aktivieren Neues Passwort zusenden</td>

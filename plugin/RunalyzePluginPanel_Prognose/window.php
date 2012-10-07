@@ -20,22 +20,22 @@ if (empty($_POST)) {
 $Distances = array();
 foreach (explode(',', $_POST['distances']) as $Dist) {
 	$km         = trim($Dist);
-	$PB         = Helper::PersonalBest($km, true);
-	$PrognosisA = Helper::PrognosisAsArray($km, $_POST['vdot'], isset($_POST['endurance']));
+	$PB         = Running::PersonalBest($km, true);
+	$PrognosisA = Running::PrognosisAsArray($km, $_POST['vdot'], isset($_POST['endurance']));
 	$Prognosis  = $PrognosisA['seconds'];
 
 	if ($PB > 0)
 		$PBdate = Mysql::getInstance()->fetchSingle('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$km.'" ORDER BY `s` ASC');
 
 	$Distances[] = array(
-		'distance'	=> Helper::Km($km),
-		'prognosis'		=> Helper::Time($Prognosis),
-		'prognosis-pace'=> Helper::Pace($km, $Prognosis).'/km',
+		'distance'	=> Running::Km($km),
+		'prognosis'		=> Time::toString($Prognosis),
+		'prognosis-pace'=> Running::Pace($km, $Prognosis).'/km',
 		'prognosis-vdot'=> round($PrognosisA['vdot'],2),
-		'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Helper::Time(abs(round($PB-$Prognosis)),false,true),
+		'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Time::toString(abs(round($PB-$Prognosis)),false,true),
 		'diff-class'	=> $PB > $Prognosis ? 'plus' : 'minus',
-		'pb'			=> $PB > 0 ? Helper::Time($PB) : '-',
-		'pb-pace'		=> $PB > 0 ? Helper::Pace($km, $PB).'/km' : '-',
+		'pb'			=> $PB > 0 ? Time::toString($PB) : '-',
+		'pb-pace'		=> $PB > 0 ? Running::Pace($km, $PB).'/km' : '-',
 		'pb-vdot'		=> $PB > 0 ? round(JD::Competition2VDOT($km, $PB),2) : '-',
 		'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
 	);

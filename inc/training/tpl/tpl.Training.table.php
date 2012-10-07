@@ -25,15 +25,15 @@
 		<td class="inlineHead">
 			&oslash; Puls:<!--<br />
 			max.&nbsp;Puls:--></td>
-		<td><?php echo Helper::PulseStringInBpm($this->get('pulse_avg')); ?>
-			 <small>(<?php echo Helper::PulseStringInPercent($this->get('pulse_avg')); ?>)</small><!--<br />
-			<?php echo Helper::PulseStringInBpm($this->get('pulse_max')); ?>
-			(<?php echo Helper::PulseStringInPercent($this->get('pulse_max')); ?>)--></td>
+		<td><?php echo Running::PulseStringInBpm($this->get('pulse_avg')); ?>
+			 <small>(<?php echo Running::PulseStringInPercent($this->get('pulse_avg')); ?>)</small><!--<br />
+			<?php echo Running::PulseStringInBpm($this->get('pulse_max')); ?>
+			(<?php echo Running::PulseStringInPercent($this->get('pulse_max')); ?>)--></td>
 	</tr>
 	<tr>
 		<td class="inlineHead">max.&nbsp;Puls:</td>
-		<td><?php echo Helper::PulseStringInBpm($this->get('pulse_max')); ?>
-			<small>(<?php echo Helper::PulseStringInPercent($this->get('pulse_max')); ?>)</small></td>
+		<td><?php echo Running::PulseStringInBpm($this->get('pulse_max')); ?>
+			<small>(<?php echo Running::PulseStringInPercent($this->get('pulse_max')); ?>)</small></td>
 	</tr>
 <?php endif; ?>
 

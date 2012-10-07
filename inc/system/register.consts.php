@@ -21,7 +21,7 @@ $General->addConfigValue( new ConfigValueSelect('GENDER', array(
 $General->addConfigValue( new ConfigValueSelect('PULS_MODE', array(
 	'default'		=> 'hfmax',
 	'label'			=> 'Pulsanzeige',
-	'options'		=> array('bpm' => 'absoluter Wert', 'hfmax' => '&#37; HFmax'), // TODO 'hfres' => '&#37; HFreserve'
+	'options'		=> array('bpm' => 'absoluter Wert', 'hfmax' => '&#37; HFmax', 'hfres' => '&#37; HFreserve'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $General->addConfigValue( new ConfigValueString('PLZ', array(
@@ -53,8 +53,9 @@ $Training->setKeys(array(
 	'LL_TYPID',
 	'TRAINING_MAPTYPE',
 	'TRAINING_DECIMALS',
+	'TRAINING_MAP_BEFORE_PLOTS',
 	'TRAINING_MAP_COLOR',
-	'TRAINING_MAP_BEFORE_PLOTS'
+	'PACE_Y_AXIS_REVERSE'
 ));
 $Training->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
 	'default'		=> 1,
@@ -83,6 +84,11 @@ $Training->addConfigValue( new ConfigValueSelectDb('LL_TYPID', array(
 	'table'			=> 'type',
 	'column'		=> 'name',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
+	'default'		=> false,
+	'label'			=> 'Pace: Y-Achse umkehren',
+	'tooltip'		=> 'Standardm&auml;&szlig;ig wird ein h&ouml;heres Tempo im Diagramm weiter unten angezeigt als ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden.'
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
 	'default'		=> '1',

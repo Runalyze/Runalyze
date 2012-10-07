@@ -29,6 +29,72 @@ class Time {
 	static private $WEEKDAYS_S = array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
 
 	/**
+	 * Display the time as a formatted string
+	 * @param int $time_in_s
+	 * @param bool $show_days	Show days (default) or count hours > 24, default: true
+	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false, can be '2' for 0:00
+	 * @return string
+	 */
+	public static function toString($time_in_s, $show_days = true, $show_zeros = false) {
+		if ($time_in_s < 0)
+			return '&nbsp;';
+
+		$string    = '';
+		$time_in_s = round($time_in_s, 2); // correct float-problem with floor
+
+		if ($show_zeros === true) {
+			$string = floor($time_in_s/3600).':'.Helper::TwoNumbers(floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
+			if ($time_in_s - floor($time_in_s) != 0)
+				$string .= ','.Helper::TwoNumbers(round(100*($time_in_s - floor($time_in_s))));
+			return $string;
+		}
+
+		if ($show_zeros == 2)
+			return (floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
+
+		if ($time_in_s < 60)
+			return number_format($time_in_s, 2, ',', '.').'s';
+
+		if ($time_in_s >= 86400 && $show_days)
+			$string = floor($time_in_s/86400).'d ';
+
+		if ($time_in_s < 3600)
+			$string .= (floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
+		elseif ($show_days)
+			$string .= (floor($time_in_s/3600)%24).':'.Helper::TwoNumbers(floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
+		else
+			$string .= floor($time_in_s/3600).':'.Helper::TwoNumbers(floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
+
+		if ($time_in_s - floor($time_in_s) != 0 && $time_in_s < 3600)
+			$string .= ','.Helper::TwoNumbers(round(100*($time_in_s - floor($time_in_s))));
+
+		return $string;
+	}
+
+	/**
+	 * Calculate time in seconds from a given string (m:s|h:m:s)
+	 * @param string $string
+	 * @return int
+	 */
+	public static function toSeconds($string) {
+		$TimeArray = explode(':', $string);
+
+		switch (count($TimeArray)) {
+			case 3:
+				return ($TimeArray[0]*60 + $TimeArray[1])*60 + $TimeArray[2];
+			case 2:
+				return $TimeArray[0]*60 + $TimeArray[1];
+			default:
+				return $string;
+		}
+
+		if (count($TimeArray) == 2)
+			return $TimeArray[0]*60 + $TimeArray[1];
+
+		return $string;
+	}
+
+	/**
 	 * Absolute difference in days between two timestamps
 	 * @param int $time_1
 	 * @param int $time_2 optional

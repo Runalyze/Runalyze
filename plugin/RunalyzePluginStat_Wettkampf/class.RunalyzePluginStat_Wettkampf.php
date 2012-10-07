@@ -166,7 +166,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayPersonalBestsImages() {
 		$SubLinks = array();
 		foreach ($this->distances as $km) {
-			$name       = Helper::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
+			$name       = Running::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
 		$Links = array(array('tag' => '<a href="#">Distanz w&auml;hlen</a>', 'subs' => $SubLinks));
@@ -233,11 +233,11 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '</thead>';
 
 		foreach ($kms as $i => $km) {
-			echo '<tr class="a'.($i%2+1).' r"><td class="b">'.Helper::Km($km, 1, $km <= 3).'</td>';
+			echo '<tr class="a'.($i%2+1).' r"><td class="b">'.Running::Km($km, 1, $km <= 3).'</td>';
 		
 			foreach ($year as $key => $y)
 				if ($key != 'sum')
-					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Helper::Time($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>---</small></em>').'</td>';
+					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Time::toString($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>---</small></em>').'</td>';
 		
 			echo '</tr>';
 		}

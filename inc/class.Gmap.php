@@ -104,7 +104,7 @@ class Gmap {
 			if ($withoutHover)
 				$PointData = '';
 			else
-				$PointData = addslashes(Helper::Km($this->GpsData->getDistance(),2).'<br />'.Helper::Time($this->GpsData->getTime(), false, 2));
+				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
 			if ($this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
@@ -136,7 +136,7 @@ class Gmap {
 			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start<br />'.$Training->getDate().'",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
-			$MarkerData = addslashes(Helper::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Helper::Speed($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
+			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Running::Speed($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
 			$Marker[]   = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"'.$MarkerData.'",options:{icon:"'.$this->getIconForMarker().'"}}';
 		}
 

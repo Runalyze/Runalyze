@@ -9,8 +9,8 @@ if ($this->hasDistance()) {
 }
 
 if ($this->hasPulse()) {
-	$INFOS_RIGHT[] = array('&oslash;&nbsp;Puls', Helper::PulseStringInBpm($this->get('pulse_avg')));
-	$INFOS_RIGHT[] = array('max.&nbsp;Puls',     Helper::PulseStringInBpm($this->get('pulse_max')));
+	$INFOS_RIGHT[] = array('&oslash;&nbsp;Puls', Running::PulseStringInBpm($this->get('pulse_avg')));
+	$INFOS_RIGHT[] = array('max.&nbsp;Puls',     Running::PulseStringInBpm($this->get('pulse_max')));
 }
 
 $INFOS_LEFT[] = array('Zeit',     $this->getTimeString());

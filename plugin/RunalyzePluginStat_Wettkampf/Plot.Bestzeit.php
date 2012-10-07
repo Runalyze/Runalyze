@@ -9,7 +9,7 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 $distance    = !is_numeric($_GET['km']) ? 10 : $_GET['km'];
 $Dates       = array();
 $Results     = array();
-$titleCenter = 'Bestzeiten &#252;ber '.Helper::Km($distance, 1, ($distance <= 3));
+$titleCenter = 'Bestzeiten &#252;ber '.Running::Km($distance, 1, ($distance <= 3));
 $timeFormat  = '%M:%S';
 
 $titleCenter = str_replace('&nbsp;', ' ', $titleCenter);

@@ -24,7 +24,7 @@ define('VDOT_FORM', JD::calculateVDOTform());
  * Basic endurance as percentage
  * @const BASIC_ENDURANCE
  */
-define('BASIC_ENDURANCE', Helper::BasicEndurance(true));
+define('BASIC_ENDURANCE', Running::BasicEndurance(true));
 
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
@@ -86,12 +86,12 @@ class JD {
 
 	/**
 	 * Calculates pace from speed
-	 * @uses Helper::Time
+	 * @uses Time::toString
 	 * @param $v        Speed [m/min]
 	 * @return string   1:23 (Pace [min/km])
 	 */
 	public static function v2Pace($v) {
-		return Helper::Time(round(60*1000/$v));
+		return Time::toString(round(60*1000/$v));
 	}
 
 	/**
@@ -188,7 +188,7 @@ class JD {
 		$VDOT_top_dist = 0;
 		$distances = array(5, 10, 21.1, 42.2);
 		foreach ($distances as $dist) {
-			$dist_PB = Helper::PersonalBest($dist, true);
+			$dist_PB = Running::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
 				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
 				if ($dist_VDOT > $VDOT_top && Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1') > 0) {
