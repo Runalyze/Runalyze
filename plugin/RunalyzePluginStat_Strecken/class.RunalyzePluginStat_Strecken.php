@@ -96,7 +96,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 					<td class="l">	
 						'.DataBrowser::getSearchLink(Helper::Cut($strecke['route'],100), 'opt[route]=is&val[route]='.$strecke['route']).'
 					</td>
-					<td>'.Helper::Km($strecke['km']).'</td>
+					<td>'.Running::Km($strecke['km']).'</td>
 				</tr>');
 		}
 

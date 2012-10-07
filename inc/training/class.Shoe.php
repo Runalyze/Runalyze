@@ -58,7 +58,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getTimeString() {
-		return Helper::Time($this->getTime());
+		return Time::toString($this->getTime());
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getKmString() {
-		return Helper::Km($this->getKm());
+		return Running::Km($this->getKm());
 	}
 
 	/**

@@ -41,6 +41,9 @@ if ($correctYAxis) {
 	$Plot->setYTicks(1, null);
 }
 
+if (CONF_PACE_Y_AXIS_REVERSE)
+	$Plot->setYAxisReverse(1);
+
 $Plot->setXUnit('km');
 $Plot->enableTracking();
 $Plot->enableSelection();

@@ -612,6 +612,9 @@ class GpsData {
 				case "heartrate100":
 					$value = 100*$this->getAverageHeartrateOfStep()/HF_MAX;
 					break;
+				case "heartrate100reserve":
+					$value = Running::PulseInPercentReserve($this->getAverageHeartrateOfStep());
+					break;
 				case "heartrate":
 					$value = $this->getAverageHeartrateOfStep();
 					break;
@@ -657,6 +660,9 @@ class GpsData {
 	 * Get array as plot-data for heartrate in percent
 	 */
 	public function getPlotDataForHeartrateInPercent() {
+		if (CONF_PULS_MODE == 'hfres')
+			return $this->getPlotDataFor('heartrate100reserve');
+
 		return $this->getPlotDataFor('heartrate100');
 	}
 

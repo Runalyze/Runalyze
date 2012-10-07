@@ -139,7 +139,7 @@ class Dataset {
 	 */
 	public function displayShortLink() {
 		$icon = Icon::getSportIcon($this->Training->get('sportid'), '',
-			$this->Training->Sport()->name().': '.Helper::Time( $this->Training->get('s') ));
+			$this->Training->Sport()->name().': '.Time::toString( $this->Training->get('s') ));
 
 		echo $this->Training->trainingLink($icon);
 	}
@@ -362,7 +362,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetPulse() {
-		return Helper::PulseString($this->Training->get('pulse_avg'), $this->Training->get('time'));
+		return Running::PulseString($this->Training->get('pulse_avg'), $this->Training->get('time'));
 	}
 
 	/**
@@ -370,7 +370,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function datasetPulseMax() {
-		return Helper::PulseString($this->Training->get('pulse_max'), $this->Training->get('time'));
+		return Running::PulseString($this->Training->get('pulse_max'), $this->Training->get('time'));
 	}
 
 	/**

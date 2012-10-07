@@ -310,7 +310,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
 			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
-			$text = ($dat['s'] == 0) ? '&nbsp;' : Helper::Time($dat['s'], false);
+			$text = ($dat['s'] == 0) ? '&nbsp;' : Time::toString($dat['s'], false);
 			$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}
@@ -335,9 +335,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				$MonthFactor = 13 - date("n", START_TIME);
 			}
 
-			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance'], 0);
-			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$WeekFactor, 0);
-			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Helper::Km($dat['distance']/$MonthFactor, 0);
+			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance'], 0);
+			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$WeekFactor, 0);
+			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$MonthFactor, 0);
 			$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
 			$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
 			$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
@@ -352,7 +352,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
 			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
 		foreach ($result as $dat) {
-			$text = ($dat['s'] == 0) ? '&nbsp;' : Helper::Speed($dat['distance'], $dat['s'], $this->sportid);
+			$text = ($dat['s'] == 0) ? '&nbsp;' : Running::Speed($dat['distance'], $dat['s'], $this->sportid);
 			$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 		}
 	}

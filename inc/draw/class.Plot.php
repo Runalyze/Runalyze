@@ -694,6 +694,15 @@ class Plot {
 	}
 
 	/**
+	 * Set y axis to reverse
+	 * @param int $axis 
+	 */
+	public function setYAxisReverse($axis) {
+		$this->Options['yaxes'][$axis-1]['transform'] = 'function(v){return -v;}';
+		$this->Options['yaxes'][$axis-1]['inverseTransform'] = 'function(v){return -v;}';
+	}
+
+	/**
 	 * Correct special characters like umlaute to unicode-HTML
 	 * @param string $string
 	 */

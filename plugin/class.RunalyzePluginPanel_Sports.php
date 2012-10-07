@@ -61,8 +61,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			foreach ($data as $dat) {
 				$Sport = new Sport($dat['sportid']);
 				$leistung = $Sport->usesDistance()
-					? Helper::Unknown(Helper::Km($dat['distanz_sum']), '0,0 km')
-					: Helper::Time($dat['dauer_sum']); 		
+					? Helper::Unknown(Running::Km($dat['distanz_sum']), '0,0 km')
+					: Time::toString($dat['dauer_sum']); 		
 			
 				echo('
 		<p>

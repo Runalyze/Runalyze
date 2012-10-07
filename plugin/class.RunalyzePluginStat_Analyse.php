@@ -125,7 +125,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 						$dist    = $Data['array'][$Each['id']][$t]['distance'];
 						$percent = round(100 * $dist / $Data['array']['timer_sum'][$t], 1);
 
-						echo '<td title="'.$num.'x - '.Helper::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
+						echo '<td title="'.$num.'x - '.Running::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
 					} else {
 						echo HTML::emptyTD();
 					}
@@ -135,7 +135,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					$dist    = $Data['array']['id_sum'][$Each['id']];
 					$percent = round(100 * $dist / $Data['array']['all_sum'], 1);
 
-					echo '<td title="'.Helper::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
+					echo '<td title="'.Running::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
 				} else {
 					echo HTML::emptyTD();
 				}
@@ -152,14 +152,14 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 				for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 					if (isset($Data['array']['timer_sum'][$t])) {
-						echo '<td>'.Helper::Km($Data['array']['timer_sum'][$t], 0).'</td>'.NL;
+						echo '<td>'.Running::Km($Data['array']['timer_sum'][$t], 0).'</td>'.NL;
 					} else {
 						echo HTML::emptyTD();
 					}
 				}
 
 				echo('
-						<td>'.Helper::Km($Data['array']['all_sum'], 0).'</td>
+						<td>'.Running::Km($Data['array']['all_sum'], 0).'</td>
 					</tr>').NL;
 			}
 
@@ -265,7 +265,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
 			$name = ($speed == $speed_max)
 				? 'schneller'
-				: '<small>bis</small> '.Helper::Speed(1, $speed, CONF_RUNNINGSPORT);
+				: '<small>bis</small> '.Running::Speed(1, $speed, CONF_RUNNINGSPORT);
 			$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
 		}
 

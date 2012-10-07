@@ -68,8 +68,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		$Prognosis             = Helper::PrognosisAsArray($distance);
-		$PersonalBestInSeconds = Helper::PersonalBest($distance, true);
+		$Prognosis             = Running::PrognosisAsArray($distance);
+		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
 		$PrognosisInSeconds    = $Prognosis['seconds'];
 		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
 		$VDOTnew               = round($Prognosis['vdot'], 2);
@@ -82,10 +82,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$newTag = 'strong';
 		}
 
-		$oldTimeString  = Helper::Time($PersonalBestInSeconds);
-		$newTimeString  = Helper::Time($PrognosisInSeconds);
-		$paceString     = Helper::Pace($distance, $PrognosisInSeconds);
-		$distanceString = Helper::Km($distance, 0, ($distance <= 3));
+		$oldTimeString  = Time::toString($PersonalBestInSeconds);
+		$newTimeString  = Time::toString($PrognosisInSeconds);
+		$paceString     = Running::Pace($distance, $PrognosisInSeconds);
+		$distanceString = Running::Km($distance, 0, ($distance <= 3));
 
 		echo '
 			<p>

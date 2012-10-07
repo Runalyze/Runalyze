@@ -310,7 +310,7 @@ class Training {
 		$_POST['sport']       = $this->Sport()->name();
 		$_POST['datum']       = date("d.m.Y", $this->get('time'));
 		$_POST['zeit']        = date("H:i", $this->get('time'));
-		$_POST['s']           = Helper::Time($this->get('s'), false, true);
+		$_POST['s']           = Time::toString($this->get('s'), false, true);
 
 		$_POST['s_old']       = $this->get('s');
 		$_POST['dist_old']    = $this->get('distance');
@@ -497,7 +497,7 @@ class Training {
 	 * @return string
 	 */
 	public function getTimeString() {
-		return Helper::Time($this->get('s'));
+		return Time::toString($this->get('s'));
 	}
 
 	/**
@@ -506,7 +506,7 @@ class Training {
 	 */
 	public function getDistanceString() {
 		if ($this->hasDistance())
-			return Helper::Km($this->get('distance'), CONF_TRAINING_DECIMALS, $this->get('is_track'));
+			return Running::Km($this->get('distance'), CONF_TRAINING_DECIMALS, $this->get('is_track'));
 
 		return '';
 	}
@@ -517,7 +517,7 @@ class Training {
 	 */
 	public function getDistanceStringWithoutEmptyDecimals() {
 		if ($this->hasDistance())
-			return Helper::Km($this->get('distance'), (round($this->get('distance')) != $this->get('distance') ? 1 : 0), $this->get('is_track'));
+			return Running::Km($this->get('distance'), (round($this->get('distance')) != $this->get('distance') ? 1 : 0), $this->get('is_track'));
 
 		return '';
 	}
@@ -528,7 +528,7 @@ class Training {
 	 */
 	public function getDistanceStringWithFullDecimals() {
 		if ($this->hasDistance())
-			return Helper::Km($this->get('distance'), 2, $this->get('is_track'));
+			return Running::Km($this->get('distance'), 2, $this->get('is_track'));
 
 		return '';
 	}
@@ -549,7 +549,7 @@ class Training {
 	 * @return string
 	 */
 	public function getSpeedString() {
-		return Helper::Speed($this->get('distance'), $this->get('s'), $this->get('sportid'));
+		return Running::Speed($this->get('distance'), $this->get('s'), $this->get('sportid'));
 	}
 
 	/**
@@ -565,7 +565,7 @@ class Training {
 	* @return string
 	*/
 	public function getPace() {
-		return Helper::Pace($this->get('distance'), $this->get('s'));
+		return Running::Pace($this->get('distance'), $this->get('s'));
 	}
 	
 	/**
@@ -573,7 +573,7 @@ class Training {
 	* @return string
 	*/
 	public function getKmh() {
-		return Helper::Kmh($this->get('distance'), $this->get('s'));
+		return Running::Kmh($this->get('distance'), $this->get('s'));
 	}
 
 	/**
@@ -630,6 +630,14 @@ class Training {
 	 */
 	public function isCompetition() {
 		return $this->get('typeid') == CONF_WK_TYPID;
+	}
+
+	/**
+	 * Was this training a competition?
+	 * @return boolean 
+	 */
+	static public function idIsCompetition($id) {
+		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `id`='.$id.' AND `typeid`="'.CONF_WK_TYPID.'" LIMIT 1') > 0);
 	}
 
 	/**

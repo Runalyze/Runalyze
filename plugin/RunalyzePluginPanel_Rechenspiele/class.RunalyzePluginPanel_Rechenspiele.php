@@ -94,7 +94,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<p><span class="right">'.Trimp::CTLinPercent().' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
 				<p><span class="right">'.Trimp::TSB().'</span> <strong>Stress Balance</strong> <small>(TSB)</small></p>
 				<p><span class="right">'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
-				<p><span class="right">'.Helper::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
+				<p><span class="right">'.Running::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
 			</div>');
 
 		echo HTML::clearBreak();

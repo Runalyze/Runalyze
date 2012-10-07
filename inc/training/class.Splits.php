@@ -140,7 +140,7 @@ class Splits {
 		$times = array();
 
 		foreach ($this->asArray as $split)
-			$times[] = Helper::TimeToSeconds($split['time']);
+			$times[] = Time::toSeconds($split['time']);
 
 		return $times;
 	}
@@ -166,7 +166,7 @@ class Splits {
 		$paces = array();
 
 		foreach ($this->asArray as $split)
-			$paces[] = $split['km'] > 0 ? (int)round(Helper::TimeToSeconds($split['time'])/$split['km']) : 0;
+			$paces[] = $split['km'] > 0 ? (int)round(Time::toSeconds($split['time'])/$split['km']) : 0;
 
 		return $paces;
 	}

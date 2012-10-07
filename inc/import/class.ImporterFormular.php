@@ -125,7 +125,7 @@ class ImporterFormular extends Importer {
 			$this->columns[]     = 'is_track';
 			$this->values[]      = isset($_POST['is_track']) ? 1 : 0;
 			$this->columns[]     = 'pace';
-			$this->values[]      = Helper::Pace($distance, $time_in_s);
+			$this->values[]      = Running::Pace($distance, $time_in_s);
 		}
 
 		// Prepare values for outside-sport

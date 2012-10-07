@@ -92,7 +92,7 @@ class TrainingDisplay {
 					$Avg = '-';
 
 				$Data[] = array(
-					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.Helper::Pace(1, $min*60).'/km'),
+					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.Running::Pace(1, $min*60).'/km'),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => $Avg);
@@ -115,7 +115,7 @@ class TrainingDisplay {
 					'zone'     => '&lt; '.(10*$hf).'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => Helper::Pace($Info['num'], $Info['pace-sum']).'/km');
+					'average'  => Running::Pace($Info['num'], $Info['pace-sum']).'/km');
 		}
 
 		$this->displayZone('Pulszonen', $Data, 'Pace');
@@ -136,8 +136,8 @@ class TrainingDisplay {
 
 		foreach ($Data as $i => $Info) {
 			$Data[$i]['percentage'] = round(100 * $Info['time'] / $totalTime, 1);
-			$Data[$i]['time']       = Helper::Time($Info['time'], false, $Info['time'] < 60 ? 2 : false);
-			$Data[$i]['distance']   = Helper::Km($Info['distance'], 2);
+			$Data[$i]['time']       = Time::toString($Info['time'], false, $Info['time'] < 60 ? 2 : false);
+			$Data[$i]['distance']   = Running::Km($Info['distance'], 2);
 		}
 
 		include 'tpl/tpl.Training.zone.php';
@@ -188,7 +188,7 @@ class TrainingDisplay {
 		$Distances    = $this->Training->Splits()->distancesAsArray();
 		$Times        = $this->Training->Splits()->timesAsArray();
 		$Paces        = $this->Training->Splits()->pacesAsArray();
-		$demandedPace = Helper::DescriptionToDemandedPace($this->Training->get('comment'));
+		$demandedPace = Running::DescriptionToDemandedPace($this->Training->get('comment'));
 		$TimeSum      = array_sum($Times);
 		$DistSum      = array_sum($Distances);
 		$achievedPace = $TimeSum / $DistSum;
@@ -196,13 +196,13 @@ class TrainingDisplay {
 		for ($i = 0, $num = count($Distances); $i < $num; $i++) {
 			$PaceDiff = ($demandedPace != 0) ? ($demandedPace - $Paces[$i]) : ($achievedPace - $Paces[$i]);
 			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
-			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
+			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
 			echo '
 			<tr class="a'.($i%2+2).' r">
-				<td>'.Helper::Km($Distances[$i], 2).'</td>
-				<td>'.Helper::Time($Times[$i]).'</td>
-				<td>'.Helper::Pace($Distances[$i], $Times[$i]).'/km</td>
+				<td>'.Running::Km($Distances[$i], 2).'</td>
+				<td>'.Time::toString($Times[$i]).'</td>
+				<td>'.Running::Pace($Distances[$i], $Times[$i]).'/km</td>
 				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 			</tr>'.NL;
 		}
@@ -212,12 +212,12 @@ class TrainingDisplay {
 		if ($demandedPace > 0) {
 			$AvgDiff = $demandedPace - $achievedPace;
 			$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
-			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Helper::Time($AvgDiff, false, 2) : '-'.Helper::Time(-$AvgDiff, false, 2);
+			$AvgDiffString = ($AvgDiff >= 0) ? '+'.Time::toString($AvgDiff, false, 2) : '-'.Time::toString(-$AvgDiff, false, 2);
 	
 			echo '
 				<tr class="r">
 					<td colspan="2">Vorgabe: </td>
-					<td>'.Helper::Time($demandedPace).'/km</td>
+					<td>'.Time::toString($demandedPace).'/km</td>
 					<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
 				</tr>'.NL;
 		}
@@ -225,7 +225,7 @@ class TrainingDisplay {
 		echo '
 			<tr class="r">
 				<td colspan="2">Schnitt: </td>
-				<td>'.Helper::Time($achievedPace).'/km</td>
+				<td>'.Time::toString($achievedPace).'/km</td>
 				<td></td>
 			</tr>'.NL;
 
@@ -243,13 +243,13 @@ class TrainingDisplay {
 				$Pace           = $Halfs[$i]['s']/$Halfs[$i]['km'];
 				$PaceDiff       = ($demandedPace != 0) ? ($demandedPace - $Pace) : ($achievedPace - $Pace);
 				$PaceClass      = ($PaceDiff >= 0) ? 'plus' : 'minus';
-				$PaceDiffString = ($PaceDiff >= 0) ? '+'.Helper::Time($PaceDiff, false, 2) : '-'.Helper::Time(-$PaceDiff, false, 2);
+				$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
 				echo '
 				<tr class="a'.($i%2+2).' r">
-					<td>'.Helper::Km($Halfs[$i]['km'], 2).'</td>
-					<td>'.Helper::Time($Halfs[$i]['s']).'</td>
-					<td>'.Helper::Pace($Halfs[$i]['km'], $Halfs[$i]['s']).'/km</td>
+					<td>'.Running::Km($Halfs[$i]['km'], 2).'</td>
+					<td>'.Time::toString($Halfs[$i]['s']).'</td>
+					<td>'.Running::Pace($Halfs[$i]['km'], $Halfs[$i]['s']).'/km</td>
 					<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 				</tr>'.NL;
 			}
@@ -271,9 +271,9 @@ class TrainingDisplay {
 
 		foreach ($Rounds as $i => $Round) {
 			$Data[] = array(
-				'time'      => Helper::Time($Round['time']),
-				'distance'  => Helper::Km($Round['distance'], 2),
-				'pace'      => Helper::Speed($Round['km'], $Round['s'], $this->Training->get('sportid')),
+				'time'      => Time::toString($Round['time']),
+				'distance'  => Running::Km($Round['distance'], 2),
+				'pace'      => Running::Speed($Round['km'], $Round['s'], $this->Training->get('sportid')),
 				'heartrate' => Helper::Unknown($Round['heartrate']),
 				'elevation' => Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']));
 		}
