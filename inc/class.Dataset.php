@@ -217,7 +217,7 @@ class Dataset {
 	 * @param string $name
 	 * @return string
 	 */
-	private function getDataset($name) {
+	public function getDataset($name) {
 		switch($name) {
 			case 'sportid':
 				return $this->datasetSport();

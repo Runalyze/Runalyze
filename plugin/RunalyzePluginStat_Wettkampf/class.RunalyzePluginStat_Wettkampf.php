@@ -5,7 +5,6 @@
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
  * Class: RunalyzePluginStat_Wettkampf
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class RunalyzePluginStat_Wettkampf extends PluginStat {

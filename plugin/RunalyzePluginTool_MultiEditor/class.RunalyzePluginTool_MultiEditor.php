@@ -5,7 +5,6 @@
 $PLUGINKEY = 'RunalyzePluginTool_MultiEditor';
 /**
  * Class: RunalyzePluginTool_MultiEditor
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class RunalyzePluginTool_MultiEditor extends PluginTool {
@@ -54,8 +53,6 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$this->type = Plugin::$TOOL;
 		$this->name = 'Multi-Editor';
 		$this->description = 'Bearbeitung von mehreren Trainings gleichzeitig. Notwendig f&uuml;r einige Importer.';
-
-		$this->initPossibleKeys();
 	}
 
 	/**
@@ -80,6 +77,13 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 			$config[$key] = array('type' => 'bool', 'var' => $Data['default'], 'description' => $Data['name'].' bearbeiten');
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initPossibleKeys();
 	}
 
 	/**

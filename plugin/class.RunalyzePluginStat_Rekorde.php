@@ -5,18 +5,11 @@
 $PLUGINKEY = 'RunalyzePluginStat_Rekorde';
 /**
  * Class: RunalyzePluginStat_Rekorde
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Rekorde extends PluginStat {
 	private $rekorde = array();
-	private $monts  = array();
+	private $months = array();
 	private $weeks  = array();
 	private $years  = array();
 
@@ -28,8 +21,6 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Rekorde';
 		$this->description = 'Am schnellsten, am l&auml;ngsten, am weitesten: Die Rekorde aus dem Training.';
-
-		$this->initData();
 	}
 
 	/**
@@ -40,6 +31,13 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initData();
 	}
 
 	/**

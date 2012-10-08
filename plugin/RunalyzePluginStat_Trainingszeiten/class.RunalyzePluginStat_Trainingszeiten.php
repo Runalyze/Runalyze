@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Trainingszeiten';
 /**
  * Class: RunalyzePluginStat_Trainingszeiten
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	/**

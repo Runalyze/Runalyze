@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Trainingspartner';
 /**
  * Class: RunalyzePluginStat_Trainingspartner
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses class::Helper
  */
 class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	/**
@@ -29,8 +22,6 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Trainingspartner';
 		$this->description = 'Wie oft hast du mit wem gemeinsam trainiert?';
-
-		$this->initTrainingspartner();
 	}
 
 	/**
@@ -41,6 +32,13 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initTrainingspartner();
 	}
 
 	/**

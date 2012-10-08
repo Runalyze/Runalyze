@@ -20,10 +20,6 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'H&ouml;henmeter';
 		$this->description = 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.';
-
-		$this->initElevationData();
-		$this->initSumData();
-		$this->initUpwardData();
 	}
 
 	/**
@@ -34,6 +30,15 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initElevationData();
+		$this->initSumData();
+		$this->initUpwardData();
 	}
 
 	/**

@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginTool_AnalyzeVDOT';
 /**
  * Class: RunalyzePluginTool_AnalyzeVDOT
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginTool
- * @uses class::Mysql
- * @uses class::Helper
- * @uses class::Draw
  */
 class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	/**
@@ -20,7 +13,6 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 * @var array
 	 */
 	private $Trainings = array();
-
 
 	/**
 	 * Initialize this plugin

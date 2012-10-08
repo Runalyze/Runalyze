@@ -28,8 +28,6 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Strecken';
 		$this->description = 'Auflistung der h&auml;ufigsten und seltensten Strecken/Orte.';
-
-		$this->initCities();
 	}
 
 	/**
@@ -49,6 +47,13 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initCities();
 	}
 
 	/**
