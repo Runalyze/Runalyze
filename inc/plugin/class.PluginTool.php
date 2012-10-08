@@ -1,16 +1,8 @@
 <?php
 /**
- * This file contains the abstract class to handle every tool-plugin.
- */
-/**
  * Class: PluginTool
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class:Error
  */
-
 abstract class PluginTool extends Plugin {
 	/**
 	 * Url for displaying the plugin
@@ -50,6 +42,8 @@ abstract class PluginTool extends Plugin {
 	 * Includes the plugin-file for displaying the tool
 	 */
 	public function display() {
+		$this->prepareForDisplay();
+
 		$this->displayHeader();
 		$this->displayContent();
 	}

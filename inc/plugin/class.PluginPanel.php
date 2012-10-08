@@ -3,7 +3,6 @@
  * Class: PluginPanel
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
-
 abstract class PluginPanel extends Plugin {
 	/**
 	 * Internal flag: Show surrounding div
@@ -65,6 +64,8 @@ abstract class PluginPanel extends Plugin {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
+		$this->prepareForDisplay();
+
 		if ($this->SurroundingDivIsVisible) {
 			$classes = '';
 			if ($this->dontReloadForConfig)

@@ -134,28 +134,31 @@ class JD {
 
 	/**
 	 * Calculates a prognosis for a given distance based an an actual VDOT
-	 * @param $VDOTactual   VDOT
-	 * @param $distance     Distance [km]
+	 * @param $VDOTtoReach  VDOT
+	 * @param $km           Distance [km]
 	 * @return int          Time [s]
 	 */
-	public static function CompetitionPrognosis($VDOTactual, $distance = 5) {
-		if ($VDOTactual == 0)
+	public static function CompetitionPrognosis($VDOTtoReach, $km = 5) {
+		if ($VDOTtoReach == 0)
 			return 0;
 
-		$dauer = round(60*$distance);
+		$s        = round(2*60*$km);
 		$VDOT_low = 150;
 		while (true) {
-			$dauer++;
+			//$s++;
+			$s += $km;
+
 			$VDOT_high = $VDOT_low;
-			$VDOT_low = self::Competition2VDOT($distance, $dauer);
-			if ($VDOT_high > $VDOTactual && $VDOTactual > $VDOT_low)
+			$VDOT_low  = self::Competition2VDOT($km, $s);
+
+			if ($VDOT_high > $VDOTtoReach && $VDOTtoReach > $VDOT_low)
 				break;
 
-			if ($dauer >= 60 * 60 * $distance / 4)
+			if ($s >= 60 * 60 * $km / 4)
 				break;
 		}
 
-		return $dauer;
+		return $s;
 	}
 
 	/**

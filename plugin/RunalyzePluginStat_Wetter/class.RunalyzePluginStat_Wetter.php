@@ -21,11 +21,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Wetter';
 		$this->description = 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.';
-
-		$this->initData();
-
-		$this->setYearsNavigation();
-		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
 	}
 
 	/**
@@ -61,6 +56,16 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			$Links[] = array('tag' => Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>'));
 
 		return $Links;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initData();
+
+		$this->setYearsNavigation();
+		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
 	}
 
 	/**

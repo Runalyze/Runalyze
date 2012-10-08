@@ -5,15 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
  * Class: RunalyzePluginStat_Analyse
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginStat
- * @uses class::Mysql
- * @uses class::Error
- * @uses START_YEAR
- * @uses HF_MAX
  */
 class RunalyzePluginStat_Analyse extends PluginStat {
 	private $where_time = '';
@@ -32,11 +24,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Analyse';
 		$this->description = 'Analyse des Trainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.';
-
-		$this->initTimer();
-		$this->initData();
-
-		$this->setYearsNavigation();
 	}
 
 	/**
@@ -64,6 +51,16 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">Tempobereich: Schrittweite</span>');
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initTimer();
+		$this->initData();
+
+		$this->setYearsNavigation();
 	}
 
 	/**

@@ -18,8 +18,6 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Lauf-ABC';
 		$this->description = 'Wie oft hast du Lauf-ABC absolviert?';
-
-		$this->initData();
 	}
 
 	/**
@@ -38,6 +36,13 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initData();
 	}
 
 	/**

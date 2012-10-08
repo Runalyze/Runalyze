@@ -23,8 +23,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $VDOTData    = array();
 	private $TRIMPData   = array();
 
-	private $WeekData    = array();
-
 	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
@@ -33,13 +31,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Statistiken';
 		$this->description = 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht f&uuml;r alle Sportarten.';
-
-		$this->initData();
-		$this->initLineData();
-
-		$this->setSportsNavigation();
-		$this->setYearsNavigation();
-		$this->setOwnNavigation();
 	}
 
 	protected function setOwnNavigation() {
@@ -52,6 +43,18 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$Links[] = array('tag' => '<a href="#">Alle Trainingswochen</a>', 'subs' => $SubLinks);
 
 		$this->setToolbarNavigationLinks($Links);
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->initData();
+		$this->initLineData();
+
+		$this->setSportsNavigation();
+		$this->setYearsNavigation();
+		$this->setOwnNavigation();
 	}
 
 	/**

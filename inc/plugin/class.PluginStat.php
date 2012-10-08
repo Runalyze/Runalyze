@@ -1,16 +1,8 @@
 <?php
 /**
- * This file contains the abstract class to handle every statistic-plugin.
- */
-/**
  * Class: PluginStat
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Mysql
- * @uses class:Error
  */
-
 abstract class PluginStat extends Plugin {
 	/**
 	 * Boolean flag: show sports-navigation
@@ -93,6 +85,8 @@ abstract class PluginStat extends Plugin {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
+		$this->prepareForDisplay();
+
 		$this->displayConfigLinkForHeader();
 		$this->displayNavigation();
 

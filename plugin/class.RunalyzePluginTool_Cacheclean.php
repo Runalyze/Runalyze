@@ -5,14 +5,7 @@
 $PLUGINKEY = 'RunalyzePluginTool_Cacheclean';
 /**
  * Class: RunalyzePluginTool_Cacheclean
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Plugin
- * @uses class::PluginTool
- * @uses class::Mysql
- * @uses class::Helper
- * @uses class::Draw
  */
 class RunalyzePluginTool_Cacheclean extends PluginTool {
 	/**

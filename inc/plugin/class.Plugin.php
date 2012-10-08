@@ -167,6 +167,11 @@ abstract class Plugin {
 	abstract public function display();
 
 	/**
+	 * Inits all data (implemented in each plugin)
+	 */
+	protected function prepareForDisplay() {}
+
+	/**
 	 * Method for displaying the content (implemented in each plugin)
 	 */
 	abstract protected function displayContent();
