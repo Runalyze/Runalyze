@@ -299,7 +299,7 @@ class AccountHandler {
 	 * @return boolean 
 	 */
 	static public function tryToActivateAccount() {
-		$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.  mysql_real_escape_string($_GET['activate']).'" LIMIT 1');
+		$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.mysql_real_escape_string($_GET['activate']).'" LIMIT 1');
 		if ($Account) {
 			Mysql::getInstance()->update(PREFIX.'account', $Account['id'], 'activation_hash', '');
 
@@ -313,7 +313,7 @@ class AccountHandler {
 	 * @return boolean 
 	 */
 	static public function tryToDeleteAccount() {
-		$Account = Mysql::getInstance()->untouchedQuery('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.  mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
+		$Account = Mysql::getInstance()->untouchedQuery('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
 		if ($Account) {
 			return true;
 		}
@@ -360,39 +360,43 @@ class AccountHandler {
 			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
 
 			if (System::isAtLocalhost()) {
-				$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
-				Error::getInstance()->addDebug('Link for activating account: '.$activationLink);
+				if ($activationHash == '') {
+					$errors[] = 'Da kein SMTP-Server vorhanden ist, wurde der Account direkt aktiviert.';
+				} else {
+					$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+					Error::getInstance()->addDebug('Link for activating account: '.$activationLink);
+				}
 			}
 		}
 	}
 
-        	/**
+	/**
 	 * Set activation key for new user and set via email
 	 * @param array $errors
 	 */
 	static public function setAndSendDeletionKeyFor(&$errors) {
-		$account        = Mysql::getInstance()->fetch(PREFIX.'account', SessionAccountHandler::getId());
-                $deletionHash = self::getRandomHash();
+		$account      = Mysql::getInstance()->fetch(PREFIX.'account', SessionAccountHandler::getId());
+		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
+
+		Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
-                Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
-             
-                        
-                $subject  = 'Runalyze v'.RUNALYZE_VERSION.': Accountl&ouml;schung best&auml;tigen';
+		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Accountl&ouml;schung best&auml;tigen';
 		$message  = "Schade, dass du deinen Account ".$account['name']." l&ouml;schen möchtest!<br /><br />\n\n";
 		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br />\n";
 		$message .= $deletionLink;
-                $message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br />\n";
+		$message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br />\n";
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
 			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
 
 			if (System::isAtLocalhost()) {
 				$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
-				Error::getInstance()->addDebug('Link for deleting account: '.$activationLink);
+				Error::getInstance()->addDebug('Link for deleting account: '.$deletionLink);
 			}
 		}
 	}
+
 	/**
 	 * Set some special configuration values
 	 * @param int $accountId 

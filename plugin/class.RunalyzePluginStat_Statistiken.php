@@ -194,9 +194,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$end   = Time::Weekend($time);
 			$week  = strftime("KW %W", $time);
 
-			if ($start < START_TIME)
-				break;
-
 			$startOfLastWeek  = $start - 7*DAY_IN_S;
 			$endOfLastWeek    = $start;
 			$ResultOfLastWeek = Mysql::getInstance()->fetchSingle('SELECT SUM(distance) as km FROM '.PREFIX.'training WHERE time>='.$startOfLastWeek.' AND time<'.$endOfLastWeek);
