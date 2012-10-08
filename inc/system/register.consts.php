@@ -192,7 +192,7 @@ $Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_CONFIG_LINK', array(
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
 )));
 $Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_MOVE_LINK', array(
-	'default'		=> true,
+	'default'		=> false,
 	'label'			=> 'Plugin: Verschieben-Link anzeigen',
 	'tooltip'		=> 'Mit diesem Link lassen sich die Panel direkt verschieben.',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS

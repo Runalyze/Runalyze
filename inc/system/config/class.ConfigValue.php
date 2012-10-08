@@ -49,6 +49,9 @@ abstract class ConfigValue {
 	 * @return mixed
 	 */
 	static public function getDatabaseValue($Key) {
+		if (AccountHandler::$IS_ON_REGISTER_PROCESS)
+			self::setDatabaseValues();
+
 		if (empty(self::$DatabaseValues))
 			self::setDatabaseValues();
 
@@ -62,8 +65,14 @@ abstract class ConfigValue {
 	 * Set all consts from database 
 	 */
 	static private function setDatabaseValues() {
-		// TODO: Should work without accountid-add, not?
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.SessionAccountHandler::getId().'"');
+		self::$DatabaseValues = array();
+
+		if (AccountHandler::$IS_ON_REGISTER_PROCESS)
+			$ID = AccountHandler::$NEW_REGISTERED_ID;
+		else
+			$ID = SessionAccountHandler::getId();
+
+		$data = Mysql::getInstance()->fetchAsArray('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.$ID.'"');
 		foreach ($data as $confArray)
 			self::$DatabaseValues[$confArray['key']] = $confArray['value'];
 	}

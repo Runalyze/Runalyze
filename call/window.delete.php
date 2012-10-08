@@ -6,11 +6,17 @@
 require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
-AccountHandler::setAndSendDeletionKeyFor($errors);
-echo '<i class="toolbar-icon-help"></i><em>Es wurde eine Best&auml;tigungsmail an dich versandt!</em><br>';
-echo 'Schade, dass du dich dazu entschieden hast deinen Account zu l&ouml;schen.<br>';
-echo 'Du bekommst eine Mail mit einem Best&auml;tigungslink zur L&ouml;schung deines Accounts. 
-        <br> Erst danach ist der Account vollständig gel&ouml;scht!';
-echo 'Wir empfehlen dir eine Sicherung mit dem Datenbank-Backup Tool zu machen und diese herunterzuladen';
+$Errors   = array();
+AccountHandler::setAndSendDeletionKeyFor($Errors);
 
-?>
+echo HTML::h1('Account l&ouml;schen');
+
+if (!empty($Errors)) {
+	foreach ($Errors as $Error)
+		echo HTML::error($Error);
+} else {
+	echo HTML::info('<em>Es wurde eine Best&auml;tigungsmail an dich versandt!</em><br />
+		Schade, dass du dich dazu entschieden hast deinen Account zu l&ouml;schen.<br />
+		Du bekommst eine Mail mit einem Best&auml;tigungslink zur L&ouml;schung deines Accounts.<br />
+		Erst danach ist der Account vollst&auml;ndig gel&ouml;scht.');
+}
