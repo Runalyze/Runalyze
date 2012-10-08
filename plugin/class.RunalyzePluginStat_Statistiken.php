@@ -15,13 +15,14 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $num_end   = 0;
 	private $line      = 0;
 
-	private $StundenData = array();
-	private $KMData      = array();
-	private $KMDataWeek  = array(); // = KMData / 52
-	private $KMDataMonth = array(); // = KMData / 12
-	private $TempoData   = array();
-	private $VDOTData    = array();
-	private $TRIMPData   = array();
+	private $CompleteData = array();
+	private $StundenData  = array();
+	private $KMData       = array();
+	private $KMDataWeek   = array(); // = KMData / 52
+	private $KMDataMonth  = array(); // = KMData / 12
+	private $TempoData    = array();
+	private $VDOTData     = array();
+	private $TRIMPData    = array();
 
 	/**
 	 * Initialize this plugin
@@ -191,16 +192,29 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$maxW = ($starttime - mktime(1, 0, 0, 12, 31, $this->year-1))/(7*DAY_IN_S);
 		}
 
+		$WeekKmIndex = 2;
+		$WeekKmData  = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				SUM(distance) as km,
+				CEIL(('.Time::Weekstart($starttime).'-time)/(7*'.DAY_IN_S.')) as wtime
+			FROM
+				'.PREFIX.'training
+			GROUP BY wtime
+			ORDER BY wtime ASC
+			LIMIT 0,'.($maxW+2).'
+		');
+
 		for ($w = 0; $w <= $maxW; $w++) {
 			$time  = $starttime - $w*7*DAY_IN_S;
 			$start = Time::Weekstart($time);
 			$end   = Time::Weekend($time);
 			$week  = strftime("KW %W", $time);
 
-			$startOfLastWeek  = $start - 7*DAY_IN_S;
-			$endOfLastWeek    = $start;
-			$ResultOfLastWeek = Mysql::getInstance()->fetchSingle('SELECT SUM(distance) as km FROM '.PREFIX.'training WHERE time>='.$startOfLastWeek.' AND time<'.$endOfLastWeek);
-			$kilometerOfPreviousWeek = $ResultOfLastWeek['km'];
+			if ($w > 0 && isset($WeekKmData[$WeekKmIndex]) && $WeekKmData[$WeekKmIndex]['wtime'] == $w+1) {
+				$kilometerOfPreviousWeek = $WeekKmData[$WeekKmIndex]['km'];
+				$WeekKmIndex++;
+			} else
+				$kilometerOfPreviousWeek = 0;
 
 			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
 
@@ -295,99 +309,98 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Initialize all line-data-arrays
 	 */
 	private function initLineData() {
-		$this->initStundenData();
-		$this->initKMData();
-		$this->initTempoData();
-		$this->initVDOTData();
-		$this->initTRIMPData();
+		$this->initCompleteData();
+
+		foreach ($this->CompleteData as $Data) {
+			$this->initStundenData($Data);
+			$this->initKMData($Data);
+			$this->initTempoData($Data);
+			$this->initVDOTData($Data);
+			$this->initTRIMPData($Data);
+		}
+	}
+
+	private function initCompleteData() {
+		$Query = '
+			SELECT
+				SUM(`s`) as `s`,
+				SUM(`distance`) as `distance`,
+				AVG(NULLIF(`vdot`,0)) as `vdot`,
+				SUM(`trimp`) as `trimp`,
+				'.($this->year!=-1?'MONTH':'YEAR').'(FROM_UNIXTIME(`time`)) as `i`
+			FROM
+				`'.PREFIX.'training`
+			WHERE
+				`sportid`='.$this->sportid;
+		$Query .= ($this->year != -1)
+			? ' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12'
+			: ' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`';
+
+		$this->CompleteData = Mysql::getInstance()->fetchAsArray($Query);
 	}
 
 	/**
 	 * Initialize line-data-array for 'Stunden'
+	 * @param array $dat
 	 */
-	private function initStundenData() {
-		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
-		foreach ($result as $dat) {
-			$text = ($dat['s'] == 0) ? '&nbsp;' : Time::toString($dat['s'], false);
-			$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
-		}
+	private function initStundenData($dat) {
+		$text = ($dat['s'] == 0) ? '&nbsp;' : Time::toString($dat['s'], false);
+		$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
 	/**
 	 * Initialize line-data-array for 'KM'
+	 * @param array $dat
 	 */
-	private function initKMData() {
-		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
+	private function initKMData($dat) {
+		$WeekFactor  = 52;
+		$MonthFactor = 12;
 
-		foreach ($result as $dat) {
-			$WeekFactor  = 52;
-			$MonthFactor = 12;
- 
-			if ($dat['i'] == date("Y")) {
-				$WeekFactor  = date("W");
-				$MonthFactor = date("n");
-			} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
-				$WeekFactor  = 53 - date("W", START_TIME);
-				$MonthFactor = 13 - date("n", START_TIME);
-			}
-
-			$text        = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance'], 0);
-			$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$WeekFactor, 0);
-			$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$MonthFactor, 0);
-			$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
-			$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
-			$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
+		if ($dat['i'] == date("Y")) {
+			$WeekFactor  = date("W");
+			$MonthFactor = date("n");
+		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
+			$WeekFactor  = 53 - date("W", START_TIME);
+			$MonthFactor = 13 - date("n", START_TIME);
 		}
+
+		$text        = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance'], 0);
+		$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$WeekFactor, 0);
+		$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$MonthFactor, 0);
+		$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
+		$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
+		$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
 	}
 
 	/**
 	 * Initialize line-data-array for 'Tempo'
+	 * @param array $dat
 	 */
-	private function initTempoData() {
-		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`distance`) as `distance`, SUM(`s`) as `s`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
-		foreach ($result as $dat) {
-			$text = ($dat['s'] == 0) ? '&nbsp;' : Running::Speed($dat['distance'], $dat['s'], $this->sportid);
-			$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
-		}
+	private function initTempoData($dat) {
+		$text = ($dat['s'] == 0) ? '&nbsp;' : Running::Speed($dat['distance'], $dat['s'], $this->sportid);
+		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
 	/**
 	 * Initialize line-data-array for 'VDOT'
+	 * @param array $dat
 	 */
-	private function initVDOTData() {
-		for ($i = $this->num_start; $i <= $this->num_end; $i++) {
-			$result = ($this->year != -1)
-				? Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `pulse_avg`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' && MONTH(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1')
-				: Mysql::getInstance()->fetch('SELECT AVG(`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && `pulse_avg`!=0 && YEAR(FROM_UNIXTIME(`time`))='.$i.' GROUP BY `sportid` LIMIT 1');
-			if ($result !== false)
-				$VDOT = JD::correctVDOT($result['vdot']);
-			else
-				$VDOT = 0;
+	private function initVDOTData($dat) {
+		$VDOT = isset($dat['vdot']) ? JD::correctVDOT($dat['vdot']) : 0;
+		$text = ($VDOT == 0) ? '&nbsp;' : number_format($VDOT, 1);
 
-			$text = ($VDOT == 0) ? '&nbsp;' : number_format($VDOT, 1);
-			$this->VDOTData[] = array('i' => $i, 'text' => $text);
-		}
+		$this->VDOTData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
 	/**
 	 * Initialize line-data-array for 'TRIMP'
+	 * @param array $dat
 	 */
-	private function initTRIMPData() {
-		$result = ($this->year != -1)
-			? Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, MONTH(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12')
-			: Mysql::getInstance()->fetchAsArray('SELECT SUM(`trimp`) as `trimp`, YEAR(FROM_UNIXTIME(`time`)) as `i` FROM `'.PREFIX.'training` WHERE `sportid`='.$this->sportid.' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`');
-		foreach ($result as $dat) {
-			$avg_num = ($this->year != -1) ? 15 : 180;
-			$text = ($dat['trimp'] == 0)
-				? '&nbsp;'
-				: '<span style="color:#'.Running::Stresscolor($dat['trimp']/$avg_num).'">'.$dat['trimp'].'</span>';
-			$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
-		}
+	private function initTRIMPData($dat) {
+		$avg_num = ($this->year != -1) ? 15 : 180;
+		$text = ($dat['trimp'] == 0)
+			? '&nbsp;'
+			: '<span style="color:#'.Running::Stresscolor($dat['trimp']/$avg_num).'">'.$dat['trimp'].'</span>';
+		$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 }
