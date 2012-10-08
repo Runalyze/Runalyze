@@ -105,23 +105,17 @@ class Dataset {
 			if ($set['summary'] == 1)
 				if ($set['summary_mode'] != 'AVG')
 					$query_set .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
+				else
+					$query_set .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
 
-		// TODO: Don't use * for selecting
 		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 
-		$summary = Mysql::getInstance()->fetchSingle('SELECT *, SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
+		$summary = Mysql::getInstance()->fetchSingle('SELECT sportid,time,is_track,SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
 		if ($summary === false || empty($summary))
 			return false;
 
 		foreach ($summary as $var => $value)
 			$this->Training->set($var, $value);
-
-		foreach ($this->data as $set)
-			if ($set['summary'] == 1 && $set['summary_mode'] == 'AVG') {
-				$avg_data = Mysql::getInstance()->fetch('SELECT COUNT(1) as `num`, SUM(`s`) as `ssum`, AVG(`'.$set['name'].'`*`s`) as `'.$set['name'].'` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' AND `'.$set['name'].'`!=0 AND `'.$set['name'].'`!="" AND `sportid`="'.$sportid.'" GROUP BY `sportid`');
-				if ($avg_data !== false)
-					$this->Training->set($set['name'], ($avg_data['num']*$avg_data[$set['name']]/$avg_data['ssum']));
-			}
 
 		return true;
 	}
