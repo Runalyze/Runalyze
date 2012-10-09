@@ -110,12 +110,15 @@ class Dataset {
 
 		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 
-		$summary = Mysql::getInstance()->fetchSingle('SELECT sportid,time,is_track,SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
+		$summary = Mysql::getInstance()->fetchSingle('SELECT sportid,time,SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
 		if ($summary === false || empty($summary))
 			return false;
 
 		foreach ($summary as $var => $value)
 			$this->Training->set($var, $value);
+
+		$this->Training->set('is_track', 0);
+		$this->Training->set('use_vdot', 0);
 
 		return true;
 	}
