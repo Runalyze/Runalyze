@@ -192,17 +192,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$maxW = ($starttime - mktime(1, 0, 0, 12, 31, $this->year-1))/(7*DAY_IN_S);
 		}
 
-		$WeekKmIndex = 2;
-		$WeekKmData  = Mysql::getInstance()->fetchAsArray('
-			SELECT
-				SUM(distance) as km,
-				CEIL(('.Time::Weekstart($starttime).'-time)/(7*'.DAY_IN_S.')) as wtime
-			FROM
-				'.PREFIX.'training
-			GROUP BY wtime
-			ORDER BY wtime ASC
-			LIMIT 0,'.($maxW+2).'
-		');
+		$CompleteData   = array();
+		$CurrentWeekEnd = Time::Weekend($starttime);
+		$CompleteResult = $Dataset->getGroupOfTrainingsForTimerange($this->sportid, 7*DAY_IN_S, $CurrentWeekEnd - ($maxW+2)*7*DAY_IN_S, $CurrentWeekEnd);
+
+		foreach ($CompleteResult as $Data) {
+			$CompleteData[$Data['timerange']] = $Data;
+		}
 
 		for ($w = 0; $w <= $maxW; $w++) {
 			$time  = $starttime - $w*7*DAY_IN_S;
@@ -210,16 +206,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$end   = Time::Weekend($time);
 			$week  = strftime("KW %W", $time);
 
-			if ($w > 0 && isset($WeekKmData[$WeekKmIndex]) && $WeekKmData[$WeekKmIndex]['wtime'] == $w+1) {
-				$kilometerOfPreviousWeek = $WeekKmData[$WeekKmIndex]['km'];
-				$WeekKmIndex++;
-			} else
-				$kilometerOfPreviousWeek = 0;
-
 			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
 
-			if ($Dataset->loadGroupOfTrainings($this->sportid, $start, $end)) {
-				$Dataset->setKilometerToCompareTo($kilometerOfPreviousWeek);
+			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
+				if (isset($CompleteData[$w+1]))
+					$Dataset->setKilometerToCompareTo($CompleteData[$w+1]['distance']);
+
 				$Dataset->displayTableColumns();
 			} else
 				echo Html::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
