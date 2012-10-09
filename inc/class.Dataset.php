@@ -93,34 +93,100 @@ class Dataset {
 	/**
 	 * Load a group of trainings for summary
 	 * @param int $sportid
-	 * @param int $timestamp_start
-	 * @param int $timestamp_end
+	 * @param int $timestart
+	 * @param int $timeend
 	 * @return boolean Are any trainings loaded?
 	 */
-	public function loadGroupOfTrainings($sportid, $timestamp_start, $timestamp_end) {
+	public function loadGroupOfTrainings($sportid, $timestart, $timeend) {
+		$SummaryData = Mysql::getInstance()->fetchSingle('
+			SELECT
+				sportid,
+				time,
+				SUM(1) as `num`
+				'.$this->getQuerySelectForSet().'
+			FROM `'.PREFIX.'training`
+			WHERE
+				`sportid`='.$sportid.'
+				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
+				'.$this->getQueryWhereNotPrivate().'
+			GROUP BY `sportid`');
+
+		return $this->setGroupOfTrainings($SummaryData);
+	}
+
+	/**
+	 * Get group of trainings for a given timerange to set them manually (much faster!)
+	 * @param int $sportid
+	 * @param int $timerange default 7*24*60*60
+	 * @param int $timestart default 0
+	 * @param int $timeend   default time()
+	 * @return array 
+	 */
+	public function getGroupOfTrainingsForTimerange($sportid, $timerange = 604800, $timestart = 0, $timeend = 0) {
+		if ($timeend == 0)
+			$timeend = time();
+
+		$SummaryData = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				`sportid`,
+				`time`,
+				SUM(1) as `num`,
+				FLOOR(('.$timeend.'-`time`)/('.$timerange.')) as `timerange`
+				'.$this->getQuerySelectForSet().'
+			FROM `'.PREFIX.'training`
+			WHERE
+				`sportid`='.$sportid.'
+				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
+				'.$this->getQueryWhereNotPrivate().'
+			GROUP BY `timerange`, `sportid`
+			ORDER BY `timerange` ASC');
+
+		return $SummaryData;
+	}
+
+	/**
+	 * Set group of trainings for summary
+	 * @param array $SummaryData
+	 * @return boolean 
+	 */
+	public function setGroupOfTrainings($SummaryData) {
 		$this->setTrainingId( Training::$CONSTRUCTOR_ID );
 
-		$query_set = '';
-		foreach ($this->data as $set)
-			if ($set['summary'] == 1)
-				if ($set['summary_mode'] != 'AVG')
-					$query_set .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
-				else
-					$query_set .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
-
-		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
-
-		$summary = Mysql::getInstance()->fetchSingle('SELECT sportid,time,SUM(1) as `num`'.$query_set.' FROM `'.PREFIX.'training` WHERE `sportid`='.$sportid.' AND `time` BETWEEN '.($timestamp_start-10).' AND '.($timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
-		if ($summary === false || empty($summary))
+		if ($SummaryData === false || empty($SummaryData))
 			return false;
 
-		foreach ($summary as $var => $value)
+		foreach ($SummaryData as $var => $value)
 			$this->Training->set($var, $value);
 
 		$this->Training->set('is_track', 0);
-		$this->Training->set('use_vdot', 0);
+		$this->Training->set('use_vdot', 1);
 
 		return true;
+	}
+
+	/**
+	 * Get string for selecting dataset in query
+	 * @return string 
+	 */
+	private function getQuerySelectForSet() {
+		$String = '';
+
+		foreach ($this->data as $set)
+			if ($set['summary'] == 1)
+				if ($set['summary_mode'] != 'AVG')
+					$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
+				else
+					$String .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
+
+		return $String;
+	}
+
+	/**
+	 * Get string for query to not select private trainings
+	 * @return string
+	 */
+	private function getQueryWhereNotPrivate() {
+		return (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 	}
 
 	/**

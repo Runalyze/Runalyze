@@ -237,6 +237,22 @@ class Trimp {
 	}
 
 	/**
+	 * Get array with ATL/CTL (in percent) and TSB - faster than single calls
+	 * @param int $time [optional] timestamp
+	 * @return array array('ATL' => ..., 'CTL' => ..., 'TSB' => ...)
+	 */
+	static public function arrayForATLandCTLandTSBinPercent($time = 0) {
+		$ATL = self::ATL($time);
+		$CTL = self::CTL($time);
+
+		return array(
+			'ATL'	=> round(100*$ATL/self::maxATL()),
+			'CTL'	=> round(100*$CTL/self::maxCTL()),
+			'TSB'	=> $CTL - $ATL
+		);
+	}
+
+	/**
 	 * Calculate max values for atl/ctl/trimp again
 	 * Calculations are implemented again because normal ones are too slow
 	 * ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS

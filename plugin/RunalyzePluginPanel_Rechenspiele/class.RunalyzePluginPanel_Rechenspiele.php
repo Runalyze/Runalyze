@@ -93,14 +93,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br />
 					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>';
 
-		echo('
+		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
+
+		echo '
 			<div class="left" style="width:60%;">
-				<p><span class="right">'.Trimp::ATLinPercent().' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
-				<p><span class="right">'.Trimp::CTLinPercent().' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
-				<p><span class="right">'.Trimp::TSB().'</span> '.Ajax::tooltip('<strong>Stress Balance</strong> <small>(TSB)</small>', $TSBtooltip).'</p>
+				<p><span class="right">'.$TrimpValues['ATL'].' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
+				<p><span class="right">'.$TrimpValues['CTL'].' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
+				<p><span class="right">'.$TrimpValues['TSB'].'</span> '.Ajax::tooltip('<strong>Stress Balance</strong> <small>(TSB)</small>', $TSBtooltip).'</p>
 				<p><span class="right">'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
 				<p><span class="right">'.Running::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
-			</div>');
+			</div>';
 
 		echo HTML::clearBreak();
 

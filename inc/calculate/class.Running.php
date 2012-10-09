@@ -99,7 +99,7 @@ class Running {
 		$hf_max  = 0;
 		$hf_rest = 0;
 
-		if ($time != 0) {
+		if ($time != 0 && (time() - $time) > 365*DAY_IN_S) {
 			$HFmax = Mysql::getInstance()->fetchSingle('SELECT `time`,`pulse_max`,`pulse_rest` FROM `'.PREFIX.'user` ORDER BY ABS(`time`-'.$time.') ASC');
 			if ($HFmax !== false && $HFmax['pulse_max'] != 0)
 				$hf_max  = $HFmax['pulse_max'];
