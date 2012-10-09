@@ -241,6 +241,7 @@ class TrainingEditor {
 
 		$this->updateShoeValues();
 		$this->updateMaxValues();
+		$this->updateVdotCorrector();
 	}
 
 	/**
@@ -264,6 +265,14 @@ class TrainingEditor {
 		$TimeData = Mysql::getInstance()->fetchSingle('SELECT time FROM `'.PREFIX.'training` WHERE id='.$this->Id);
 
 		Trimp::checkForMaxValuesAt($TimeData['time']);
+	}
+
+	/**
+	 * Update VDOT-corrector 
+	 */
+	private function updateVdotCorrector() {
+		if ($this->TrainingData['typeid'] == CONF_WK_TYPID)
+			JD::recalculateVDOTcorrector();
 	}
 
 	/**

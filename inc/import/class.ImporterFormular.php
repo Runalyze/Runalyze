@@ -287,6 +287,9 @@ class ImporterFormular extends Importer {
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
 
 		Trimp::checkForMaxValuesAt($this->time);
+
+		if ($Training->get('typeid') == CONF_WK_TYPID)
+			JD::recalculateVDOTcorrector();
 		
 		if ($Training->get('shoeid') > 0)
 			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$Training->get('distance').', `time`=`time`+'.$Training->get('s').' WHERE `id`='.$Training->get('shoeid').' LIMIT 1');

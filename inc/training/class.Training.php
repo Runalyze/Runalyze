@@ -1,7 +1,6 @@
 <?php
 /**
  * Class: Training
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Training {
