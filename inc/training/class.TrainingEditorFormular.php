@@ -199,6 +199,8 @@ class TrainingEditorFormular {
 	protected function initOtherFieldset() {
 		$Fieldset = new FormularFieldset('Sonstiges');
 
+		$Fieldset->addField(new TrainingInputUseVdot());
+
 		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets) {
 			$ShoeInput = new TrainingInputShoe();
 			$ShoeInput->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );

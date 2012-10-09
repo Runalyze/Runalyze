@@ -170,7 +170,18 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
-		$Data = Mysql::getInstance()->fetchSingle('SELECT SUM(`s`) as `ssum`, SUM(`vdot`*`s`) as `value` FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_RUNNINGSPORT.'" && `pulse_avg`!=0 && `time`<"'.$time.'" && `time`>"'.($time - VDOT_DAYS*DAY_IN_S).'" GROUP BY `sportid`');
+		$Data = Mysql::getInstance()->fetchSingle('
+			SELECT
+				SUM(`s`) as `ssum`,
+				SUM(`vdot`*`s`) as `value`
+			FROM `'.PREFIX.'training`
+			WHERE
+				`sportid`="'.CONF_RUNNINGSPORT.'"
+				&& `pulse_avg`!=0
+				&& `use_vdot`=1
+				&& `time`<"'.$time.'"
+				&& `time`>"'.($time - VDOT_DAYS*DAY_IN_S).'"
+			GROUP BY `sportid`');
 
 		if ($Data !== false)
 			return round(self::correctVDOT($Data['value']/$Data['ssum']), 5);
@@ -179,7 +190,16 @@ class JD {
 	}
 
 	/**
+	 * Get VDOT corrector 
+	 */
+	public static function getVDOTcorrector() {
+		// TODO
+		return 1;
+	}
+
+	/**
 	 * Calculates a factor for correcting the user-specific VDOT-value
+	 * This function should be only called if a new competition has been submitted (or changed)
 	 * @uses Helper::Bestzeit
 	 * @uses HF_MAX
 	 * @uses CONF_WK_TYPID

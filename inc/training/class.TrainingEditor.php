@@ -98,6 +98,7 @@ class TrainingEditor {
 
 		$this->addBooleanValue('is_track');
 		$this->addBooleanValue('is_public');
+		$this->addBooleanValue('use_vdot');
 		$this->addBooleanValue('abc');
 
 		// These values are only set by filling the editor manually

@@ -99,17 +99,22 @@ class Icon {
 	 * @param double $VDOT
 	 * @return string
 	 */
-	public static function getVDOTicon($VDOT) {
+	public static function getVDOTicon($VDOT, $gray = false) {
+		$class = 'vdot-';
+
+		if ($gray)
+			$class .= 'gray-';
+
 		if ( $VDOT > (VDOT_FORM+3) )
-			$class = 'vdot-up-2';
+			$class .= 'up-2';
 		elseif ( $VDOT > (VDOT_FORM+1) )
-			$class = 'vdot-up';
+			$class .= 'up';
 		elseif ( $VDOT < (VDOT_FORM-3) )
-			$class = 'vdot-down-2';
+			$class .= 'down-2';
 		elseif ( $VDOT < (VDOT_FORM-1) )
-			$class = 'vdot-down';
+			$class .= 'down';
 		else
-			$class = 'vdot-normal';
+			$class .= 'normal';
 
 		return Ajax::tooltip('<i class="vdot-icon '.$class.'"></i>', 'VDOT: '.$VDOT);
 	}

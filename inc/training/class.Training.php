@@ -776,6 +776,6 @@ class Training {
 		if ($this->id == -1)
 			$VDOT = round(JD::correctVDOT($VDOT), 2);
 
-		return Icon::getVDOTicon($VDOT);
+		return Icon::getVDOTicon($VDOT, ($this->get('use_vdot') == 0));
 	}
 }

@@ -287,20 +287,29 @@ class Running {
 		$TargetWeekKm           = pow(VDOT_FORM, 1.135);
 		$TargetLongjogKmPerWeek = log(VDOT_FORM/4) * 12 - $minKmForLongjog;
 
-		$WeekKmResult  = Mysql::getInstance()->fetchSingle('SELECT SUM(distance) as km FROM '.PREFIX.'training WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.$StartTimeForWeekKm);
 		$Query         = '
 			SELECT
 				SUM(
-					(2 - (2/'.$DaysForLongjogs.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
-					* POW((`distance`-'.$minKmForLongjog.')/'.$TargetLongjogKmPerWeek.',2)
+					IF (time >= '.$StartTimeForWeekKm.', `distance`, 0)
+				) as `km`,
+				SUM(
+					IF (
+						`distance` > '.$minKmForLongjog.' AND time >= '.$StartTimeForLongjogs.',
+						(
+							(2 - (2/'.$DaysForLongjogs.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
+							* POW((`distance`-'.$minKmForLongjog.')/'.$TargetLongjogKmPerWeek.',2)
+						),
+						0
+					)
 				) as `sum`
 			FROM '.PREFIX.'training
-			WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.$StartTimeForLongjogs.' AND distance>'.$minKmForLongjog.'
+			WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.min($StartTimeForLongjogs,$StartTimeForWeekKm).'
 			GROUP BY accountid';
-		$LongjogSum    = Mysql::getInstance()->fetchSingle($Query);
-		$LongjogResult = isset($LongjogSum['sum']) ? $LongjogSum['sum'] : 0;
+		$DataSum       = Mysql::getInstance()->fetchSingle($Query);
+		$WeekKmResult  = isset($DataSum['km']) ? $DataSum['km'] : 0;
+		$LongjogResult = isset($DataSum['sum']) ? $DataSum['sum'] : 0;
 
-		$WeekPercentage    = $WeekKmResult['km'] * 7 / $DaysForWeekKm / $TargetWeekKm;
+		$WeekPercentage    = $WeekKmResult * 7 / $DaysForWeekKm / $TargetWeekKm;
 		$LongjogPercentage = $LongjogResult * 7 / $DaysForLongjogs;
 		$Percentage        = round( 100 * ( $WeekPercentage*2/3 + $LongjogPercentage*1/3 ) );
 
