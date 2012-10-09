@@ -12,7 +12,7 @@ define('VDOT_DAYS', CONF_VDOT_DAYS);
  * VDOT-corrector is used to correct the raw VDOT-value to user-specific values
  * @var double
  */
-define('VDOT_CORRECTOR', JD::calculateVDOTcorrector());
+define('VDOT_CORRECTOR', JD::getVDOTcorrector());
 
 /**
  * The actual (corrected) VDOT-value based on last trainings
@@ -193,8 +193,20 @@ class JD {
 	 * Get VDOT corrector 
 	 */
 	public static function getVDOTcorrector() {
-		// TODO
-		return 1;
+		if (!defined('CONF_VDOT_CORRECTOR')) {
+			Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
+			define('CONF_VDOT_CORRECTOR', 1);
+		}
+
+		if (defined('VDOT_CORRECTOR'))
+			return VDOT_CORRECTOR;
+
+		if (CONF_VDOT_CORRECTOR == 1) {
+			if (0 < Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1'))
+					self::recalculateVDOTcorrector();
+		}
+
+		return CONF_VDOT_CORRECTOR;
 	}
 
 	/**
@@ -205,8 +217,10 @@ class JD {
 	 * @uses CONF_WK_TYPID
 	 * @return float   VDOTcorrectionfactor
 	 */
-	public static function calculateVDOTcorrector() {
+	public static function recalculateVDOTcorrector() {
 		// Find best VDOT-value from personal best in competition
+		$VDOT_CORRECTOR = 1;
+
 		$VDOT_top = 0;
 		$VDOT_top_dist = 0;
 		$distances = array(5, 10, 21.1, 42.2);
@@ -228,9 +242,9 @@ class JD {
 				/ self::pHF2pVDOT($VDOT_top_dat['pulse_avg'] / HF_MAX);
 
 			if ($VDOT_top != 0 && $VDOT_max != 0)
-				return $VDOT_top / $VDOT_max;
+				$VDOT_CORRECTOR = $VDOT_top / $VDOT_max;
 		}
 
-		return 1;
+		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
 	}
 }

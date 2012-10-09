@@ -10,7 +10,11 @@ class TrainingInputUseVdot extends FormularCheckbox {
 	 * @param string $value [optional]
 	 */
 	public function __construct($value = '') {
-		parent::__construct('use_vdot', 'VDOT f&uuml;r Form', $value);
+		$Description = 'Trainings mit herausgestoppten Trabpausen oder
+						anderen Gr&uuml;nden f&uuml;r ungew&ouml;hnliche Pulswerte
+						sollten nicht zur Berechnung der VDOT-Form herangezogen werden.';
+
+		parent::__construct('use_vdot', Ajax::tooltip('VDOT f&uuml;r Form',$Description), $value);
 
 		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
 		$this->addHiddenSentValue();

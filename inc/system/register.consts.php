@@ -269,6 +269,8 @@ $Calculations->addConfigValue( new ConfigValueInt('VDOT_DAYS', array(
 $Calculations->addConfigValue(new ConfigValueInt('MAX_ATL', array('default' => 0)));
 $Calculations->addConfigValue(new ConfigValueInt('MAX_CTL', array('default' => 0)));
 $Calculations->addConfigValue(new ConfigValueInt('MAX_TRIMP', array('default' => 0)));
+// Be careful: These values shouldn't be taken with CONF_VDOT_CORRECTOR, use class::JD (will create VDOT_CORRECTOR)
+$Calculations->addConfigValue(new ConfigValueFloat('VDOT_CORRECTOR', array('default' => 1)));
 $Calculations->addToCategoryList();
 
 
