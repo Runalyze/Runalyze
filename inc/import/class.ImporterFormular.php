@@ -168,6 +168,8 @@ class ImporterFormular extends Importer {
 			$AutoParseKeys[]     = 'shoeid';
 			$this->columns[]     = 'abc';
 			$this->values[]      = isset($_POST['abc']) ? 1 : 0;
+			$this->columns[]     = 'use_vdot';
+			$this->values[]      = isset($_POST['use_vdot']) ? 1 : 0;
 		}
 
 		$this->columns[] = 'creator';

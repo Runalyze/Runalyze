@@ -519,6 +519,7 @@ abstract class Importer {
 		$this->setDefaultValue('kmh', '0,00');
 		$this->setDefaultValue('elevation', '0');
 		$this->setDefaultValue('splits', '');
+		$this->setDefaultValue('use_vdot', '1');
 	}
 
 	/**
