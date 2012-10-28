@@ -257,7 +257,7 @@ input.withUnitLeft {
 	background-position: left center;
 	background-repeat: no-repeat; }
 fieldset input.unitPercent { background-image: url('img/units/percent.png'); }
-fieldset input.unitBpm { background-image: url('img/nits/bpm.png'); }
+fieldset input.unitBpm { background-image: url('img/units/bpm.png'); }
 fieldset input.unitKg { background-image: url('img/units/kg.png'); }
 fieldset input.unitKm { background-image: url('img/units/km.png'); }
 fieldset input.unitUser { background-image: url('img/units/user.png'); }
