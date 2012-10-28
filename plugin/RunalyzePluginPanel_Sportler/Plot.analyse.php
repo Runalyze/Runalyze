@@ -54,5 +54,5 @@ $Plot->setYTicks(1, 1, 0);
 if(empty($Data)) 
 	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
 
-$Plot->outputJavaScript();
+$Plot->outputJavaScript( true );
 ?>

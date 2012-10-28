@@ -89,6 +89,8 @@ class ExporterTCX extends Exporter {
 			$Lap->addChild('Intensity', 'Active');
 			$Lap->addChild('TriggerMethod', 'Distance');
 			$Lap->addChild('Track');
+
+			// TODO: Calories?
 		}
 
 		$this->setTrack();

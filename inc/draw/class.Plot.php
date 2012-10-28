@@ -1,12 +1,7 @@
 <?php
 /**
- * This file contains the class to draw a plot
- */
-/**
  * Class: Plot
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class Plot {
 	/**
@@ -124,6 +119,8 @@ class Plot {
 		$this->Options['grid']['labelMargin'] = 2;
 		$this->Options['grid']['axisMargin'] = 2;
 
+		//$this->Options['grid']['canvasText'] = array('show' => true);
+
 		$this->setMarginForGrid(5);
 	}
 
@@ -175,8 +172,12 @@ class Plot {
 
 	/**
 	 * Output JavaScript
+	 * @param boolean $removeOldPlot
 	 */
-	public function outputJavaScript() {
+	public function outputJavaScript($removeOldPlot = false) {
+		if ($removeOldPlot)
+			echo Ajax::wrapJS('RunalyzePlot.remove("'.$this->cssID.'");');
+
 		echo $this->getJavaScript();
 	}
 

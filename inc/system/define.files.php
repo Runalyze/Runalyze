@@ -32,6 +32,7 @@ $JS_FILES = array(
 	'lib/flot/jquery.flot.crosshair.min.js',
 	'lib/flot/jquery.flot.navigate.min.js',
 	'lib/flot/jquery.flot.stack.min.js',
+	//'lib/flot/jquery.flot.text.js',
 );
 	
 $CSS_FILES = array(

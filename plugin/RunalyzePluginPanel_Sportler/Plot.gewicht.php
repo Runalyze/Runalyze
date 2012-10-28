@@ -58,5 +58,5 @@ if ($Wunschgewicht > 1) {
 if(empty($Data)) 
 	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
 
-$Plot->outputJavaScript();
+$Plot->outputJavaScript( true );
 ?>
