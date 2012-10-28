@@ -30,10 +30,10 @@ foreach ($Labels as $i => &$value)
 		$value = '';
 
 $Plot = new Plot("sportler_weights", 320, 148);
-if ($Plugin_conf['use_pulse']['var'])
-	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 if ($Plugin_conf['use_weight']['var'])
 	$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
+if ($Plugin_conf['use_pulse']['var'])
+	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 
 $Plot->setMarginForGrid(5);
 
@@ -43,11 +43,11 @@ $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
 $Plot->Options['xaxis']['tickLength'] = 3;
 
-$Plot->addYAxis(1, 'right', false);
-$Plot->addYUnit(1, 'kg');
+$Plot->addYAxis(1, 'left');
+$Plot->addYUnit(1, 'bpm');
 $Plot->setYTicks(1, 2, 0);
-$Plot->addYAxis(2, 'left');
-$Plot->addYUnit(2, 'bpm');
+$Plot->addYAxis(2, 'right', false);
+$Plot->addYUnit(2, 'kg');
 $Plot->setYTicks(2, 1, 0);
 
 if ($Wunschgewicht > 1) {

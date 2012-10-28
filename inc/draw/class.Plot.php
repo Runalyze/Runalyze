@@ -119,7 +119,7 @@ class Plot {
 		$this->Options['grid']['labelMargin'] = 2;
 		$this->Options['grid']['axisMargin'] = 2;
 
-		//$this->Options['grid']['canvasText'] = array('show' => true);
+		$this->Options['grid']['canvasText'] = array('show' => false, 'font' => 'Verdana 8px');
 
 		$this->setMarginForGrid(5);
 	}

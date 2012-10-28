@@ -24,6 +24,9 @@ $JS_FILES = array(
 	'lib/runalyze.lib.tablesorter.js',
 	'lib/runalyze.lib.js',
 
+	'lib/flot/canvas2image.js',
+	'lib/flot/base64.js',
+
 	'lib/flot/jquery.plot.js',
 	'lib/flot/jquery.qtip.min.js',
 	'lib/flot/jquery.flot.min.js',
@@ -32,7 +35,7 @@ $JS_FILES = array(
 	'lib/flot/jquery.flot.crosshair.min.js',
 	'lib/flot/jquery.flot.navigate.min.js',
 	'lib/flot/jquery.flot.stack.min.js',
-	//'lib/flot/jquery.flot.text.js',
+	'lib/flot/jquery.flot.text.js',
 );
 	
 $CSS_FILES = array(
