@@ -95,6 +95,12 @@ class Installer {
 	protected $mysqlConfig = array();
 
 	/**
+	 * String to write to config file
+	 * @var string
+	 */
+	protected $writeConfigFileString = '';
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -249,9 +255,15 @@ class Installer {
 		$config['login']    = isset($_POST['login']) ? 'true' : 'false';
 
 		$file_string = file_get_contents(PATH.'install/config.php');
+
+		if ($file_string === false)
+			return;
+
 		$file_string = preg_replace('/{config::([^}]*)}/ie', 'isset($config["$1"])?$config["$1"]:"$0"', $file_string);
 
 		file_put_contents(PATH.'../config.php', $file_string);
+
+		$this->writeConfigFileString = $file_string;
 	}
 
 	/**
@@ -293,6 +305,7 @@ class Installer {
 	static public function importSqlFile($filename) {
 		$Errors  = array();
 		$Queries = self::getSqlFileAsArray($filename);
+
 		foreach ($Queries as $Query) {
 			mysql_query($Query);
 
@@ -305,7 +318,7 @@ class Installer {
 
 	/**
 	 * Import a sql-file
-	 * @param string $filename
+	 * @param string $filename relative to PATH!
 	 * @return array
 	 */
 	static public function getSqlFileAsArray($filename) {
@@ -314,7 +327,7 @@ class Installer {
 		$query  = '';
 		$array = array();
 
-                foreach($SQL as $line) {
+		foreach ($SQL as $line) {
 			$line = trim($line);
 
 			if (defined('PREFIX'))
