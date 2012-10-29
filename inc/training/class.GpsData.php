@@ -244,7 +244,7 @@ class GpsData {
 	 * Are information for elevation available?
 	 */
 	public function hasElevationData() {
-		return !empty($this->arrayForElevation) && $this->arrayForElevation[0] > 0;
+		return !empty($this->arrayForElevation) && max($this->arrayForElevation) > 0;
 	}
 
 	/**
@@ -481,15 +481,16 @@ class GpsData {
 
 	/**
 	 * Get array with up/down of current step
+	 * @parameter boolean $complete
 	 * @return array
 	 */
-	protected function getElevationUpDownOfStep() {
-		if (empty($this->arrayForElevation) || !isset($this->arrayForElevation[$this->arrayIndex]))
+	protected function getElevationUpDownOfStep($complete = false) {
+		if (empty($this->arrayForElevation) || (!$complete && !isset($this->arrayForElevation[$this->arrayIndex])))
 			return array(0, 0);
 
 		$positiveElevation = 0;
 		$negativeElevation = 0;
-		$stepArray = array_slice($this->arrayForElevation, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
+		$stepArray = $complete ? $this->arrayForElevation : array_slice($this->arrayForElevation, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
 
 		foreach ($stepArray as $i => $step) {
 			if ($i != 0 && $stepArray[$i] != 0 && $stepArray[$i-1] != 0) {
@@ -821,12 +822,8 @@ class GpsData {
 		if (!$this->hasElevationData())
 			return 0;
 
-		$this->startLoop();
-		$this->setStepSize($this->arraySizes);
-		$this->nextStep();
-
 		$minimumElevation = (min($this->arrayForElevation) > 0) ? max($this->arrayForElevation) - min($this->arrayForElevation) : 0;
-		$elevationArray   = $this->getElevationUpDownOfStep();
+		$elevationArray   = $this->getElevationUpDownOfStep(true);
 
 		return max($minimumElevation, $elevationArray[0], $elevationArray[1]);
 	}

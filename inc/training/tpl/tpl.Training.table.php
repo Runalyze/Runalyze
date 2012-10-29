@@ -66,12 +66,12 @@
 	<tr>
 		<td class="inlineHead">Strecke:</td>
 		<td><?php echo Helper::Unknown($this->get('route')); ?>
-				<?php $berechnet = $this->GpsData()->calculateElevation(); ?>
+				<?php $calculated = $this->GpsData()->calculateElevation(); ?>
 				<?php $difference = $this->GpsData()->getElevationDifference(); ?>
-			<?php if ($this->hasElevation() > 0 || $berechnet > 0): ?><br />
+			<?php if ($this->hasElevation() > 0 || $calculated > 0): ?><br />
 				<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />
-				<?php if ($berechnet != $this->get('elevation')): ?>
-					<?php echo $berechnet ?> H&ouml;henmeter (berechnet)<br />
+				<?php if ($calculated != $this->get('elevation')): ?>
+					<?php echo $calculated; ?> H&ouml;henmeter (berechnet)<br />
 				<?php endif; ?>
 				<?php if ($difference > 20): ?>
 					<?php echo Math::WithSign($difference); ?>m H&ouml;henunterschied<br />
