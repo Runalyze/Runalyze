@@ -155,11 +155,14 @@ class Dataset {
 		if ($SummaryData === false || empty($SummaryData))
 			return false;
 
-		foreach ($SummaryData as $var => $value)
-			$this->Training->set($var, $value);
-
 		$this->Training->set('is_track', 0);
 		$this->Training->set('use_vdot', 1);
+		$this->Training->set('vdot', 0);
+		$this->Training->set('pulse_avg', 0);
+
+		foreach ($SummaryData as $var => $value)
+			if (!is_null($value))
+				$this->Training->set($var, $value);
 
 		return true;
 	}

@@ -832,6 +832,17 @@ class GpsData {
 	}
 
 	/**
+	 * Calculate difference in elevation
+	 * @return int
+	 */
+	public function getElevationDifference() {
+		if (!$this->hasElevationData())
+			return 0;
+
+		return end($this->arrayForElevation) - $this->arrayForElevation[0];
+	}
+
+	/**
 	 * Compress data to a minimum
 	 */
 	public function compressData() {
