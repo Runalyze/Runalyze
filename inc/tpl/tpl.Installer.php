@@ -225,7 +225,9 @@ foreach ($Steps as $i => $Name) {
 	<?php if ($this->cantSetupDatabase): ?>
 	<p class="error">
 		Die Datenbank kann nicht bef&uuml;llt werden.<br />
-		Bitte importiere die beiden obigen Daten nacheinander in die Datenbank.
+		Bitte importiere die beiden obigen Daten nacheinander in die Datenbank.<br />
+		<br />
+		Danach kannst du hier fortfahren.
 	<?php endif; ?>
 
 	<p class="text">

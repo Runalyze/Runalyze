@@ -22,13 +22,9 @@
 
 <?php if ($this->hasPulse()): ?>
 	<tr>
-		<td class="inlineHead">
-			&oslash; Puls:<!--<br />
-			max.&nbsp;Puls:--></td>
+		<td class="inlineHead">&oslash; Puls:</td>
 		<td><?php echo Running::PulseStringInBpm($this->get('pulse_avg')); ?>
-			 <small>(<?php echo Running::PulseStringInPercent($this->get('pulse_avg')); ?>)</small><!--<br />
-			<?php echo Running::PulseStringInBpm($this->get('pulse_max')); ?>
-			(<?php echo Running::PulseStringInPercent($this->get('pulse_max')); ?>)--></td>
+			 <small>(<?php echo Running::PulseStringInPercent($this->get('pulse_avg')); ?>)</small></td>
 	</tr>
 	<tr>
 		<td class="inlineHead">max.&nbsp;Puls:</td>
@@ -71,10 +67,14 @@
 		<td class="inlineHead">Strecke:</td>
 		<td><?php echo Helper::Unknown($this->get('route')); ?>
 				<?php $berechnet = $this->GpsData()->calculateElevation(); ?>
+				<?php $difference = $this->GpsData()->getElevationDifference(); ?>
 			<?php if ($this->hasElevation() > 0 || $berechnet > 0): ?><br />
 				<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />
 				<?php if ($berechnet != $this->get('elevation')): ?>
 					<?php echo $berechnet ?> H&ouml;henmeter (berechnet)<br />
+				<?php endif; ?>
+				<?php if ($difference > 20): ?>
+					<?php echo Math::WithSign($difference); ?>m H&ouml;henunterschied<br />
 				<?php endif; ?>
 				&oslash; <?php echo number_format($this->get('elevation')/10/$this->get('distance'), 2, ',', '.'); ?>&#37; Steigung
 			<?php endif; ?>
