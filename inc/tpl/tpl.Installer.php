@@ -164,10 +164,36 @@ foreach ($Steps as $i => $Name) {
 		</label>
 	</p>
 
+	<p class="text">
+		<label>
+			<input type="checkbox" name="login" <?php if (isset($_POST['login']) && $_POST['login']) echo 'checked="checked"' ?> />
+			Benutzer m&uuml;ssen sich registrieren und einloggen
+		</label>
+	</p>
+
 	<?php if ($this->cantWriteConfig): ?>
 	<p class="error">
 		Die Konfigurations-Datei kann nicht geschrieben werden.<br />
-		Bitte kopiere <strong>/inc/install/config.php</strong> in das Hauptverzeichnis und trage die Verbindungsdaten von Hand ein.
+	</p>
+
+	<?php if (empty($this->writeConfigFileString)): ?>
+	<p class="error">
+		Bitte kopiere <strong>/runalyze/inc/install/config.php</strong> in das Hauptverzeichnis <strong>/runalyze/</strong> und trage die Verbindungsdaten von Hand ein.
+		Dabei musst du folgende &Auml;nderungen vornehmen:<br />
+		<em>'{config::host}'</em> &raquo; <em>'<?php echo $_POST['host']; ?>'</em><br />
+		<em>'{config::database}'</em> &raquo; <em>'<?php echo $_POST['database']; ?>'</em><br />
+		<em>'{config::username}'</em> &raquo; <em>'<?php echo $_POST['username']; ?>'</em><br />
+		<em>'{config::password}'</em> &raquo; <em>'<?php echo $_POST['password']; ?>'</em><br />
+		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br />
+		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br />
+		<em>{config::login}</em> &raquo; <em><?php echo isset($_POST['login']) ? 'true' : 'false'; ?><br />
+	</p>
+	<?php else: ?>
+	<p class="error">
+		Bitte speichere folgenden Code als <strong>/runalyze/config.php</strong>:
+	</p>
+	<code><?php echo nl2br(htmlspecialchars($this->writeConfigFileString)); ?></code>
+	<?php endif; ?>
 	<?php endif; ?>
 
 	<p class="text">
