@@ -6,7 +6,7 @@
 	<br class="clear" />
 </h1>
 
-
+<?php $PlotsList = new TrainingPlotsList($this->Training); ?>
 <div class="toolbar toHeader open">
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
@@ -16,7 +16,7 @@
 			<?php if ($this->Training->hasPaceData()): ?>
 				<label id="training-view-toggler-rounds" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('rounds');"><i class="checkbox-icon checked"></i> Rundenzeiten</label>
 			<?php endif; ?>
-			<?php if (count($this->getPlotTypesAsArray()) > 0 || $this->Training->hasPositionData()): ?>
+			<?php if (!$PlotsList->isEmpty() || $this->Training->hasPositionData()): ?>
 				<label id="training-view-toggler-graphics" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('graphics');"><i class="checkbox-icon checked"></i> Karte &amp; Diagramme</label>
 			<?php endif; ?>
 
@@ -41,26 +41,16 @@
 </div>
 
 <div id="training-display">
-	<?php
-	$Plots = $this->getPlotTypesAsArray();
-	if ($this->Training->hasPositionData() || !empty($Plots)):
-	?>
+	<?php if ($this->Training->hasPositionData() || !$PlotsList->isEmpty()): ?>
 	<div id="training-plots-and-map" class="dataBox">
-		<?php if (!empty($Plots)): ?>
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line">
-				<?php foreach ($Plots as $i => $Plot): ?>
-				<label id="training-view-toggler-<?php echo $Plot['key']; ?>" class="checkable" onclick="RunalyzePlot.toggleTrainingChart('<?php echo $Plot['key']; ?>');"><i id="toggle-<?php echo $Plot['key']; ?>" class="toggle-icon-<?php echo $Plot['key']; ?> checked"></i> <?php echo $Plot['name']; ?></label>
-				<?php endforeach; ?>
-
+				<?php $PlotsList->displayLabels(); ?>
 				<label id="training-view-toggler-map" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('map');"><i class="toggle-icon-map checked"></i> Karte</label>
+
+				<?php $PlotsList->displayJScode(); ?>
+				<?php if (!CONF_TRAINING_SHOW_MAP) echo Ajax::wrapJSasFunction('$("#training-view-toggler-map").click();'); ?>
 			</div>
-			<?php echo Ajax::wrapJSforDocumentReady('RunalyzePlot.initTrainingNavitation();'); ?>
-			<?php if (!CONF_TRAINING_SHOW_PLOT_PACE) echo Ajax::wrapJSasFunction('$("#training-view-toggler-pace").click();'); ?>
-			<?php if (!CONF_TRAINING_SHOW_PLOT_PULSE) echo Ajax::wrapJSasFunction('$("#training-view-toggler-pulse").click();'); ?>
-			<?php if (!CONF_TRAINING_SHOW_PLOT_ELEVATION) echo Ajax::wrapJSasFunction('$("#training-view-toggler-elevation").click();'); ?>
-			<?php if (!CONF_TRAINING_SHOW_PLOT_SPLITS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-splits").click();'); ?>
-			<?php if (!CONF_TRAINING_SHOW_MAP) echo Ajax::wrapJSasFunction('$("#training-view-toggler-map").click();'); ?>
 
 
 			<?php if ($this->Training->hasPositionData() && CONF_TRAINING_MAP_BEFORE_PLOTS): ?>
@@ -69,13 +59,7 @@
 			</div>
 			<?php endif; ?>
 
-			<?php
-			foreach (array_keys($Plots) as $i => $Key) {
-				echo '<div id="plot-'.$Key.'" class="plot-container">';
-				$this->displayPlot($Key, false);
-				echo '</div>'.NL;
-			}
-			?>
+			<?php $PlotsList->displayAllPlots(); ?>
 		</div>
 		<?php endif; ?>
 
@@ -83,7 +67,6 @@
 		<div id="training-map">
 			<?php $this->displayRoute(); ?>
 		</div>
-		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 

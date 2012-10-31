@@ -34,41 +34,6 @@ class TrainingDisplay {
 	}
 
 	/**
-	 * Get array for all plot types
-	 * @return array
-	 */
-	protected function getPlotTypesAsArray() {
-		$plots = array();
-		if ($this->Training->hasSplits())
-			$plots['splits'] = array('name' => 'Zwischenzeiten', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
-		if ($this->Training->hasPaceData())
-			$plots['pace'] = array('name' => 'Geschwindigkeit', 'key' => 'pace', 'src' => 'inc/draw/training.pace.php?id='.$this->Training->get('id'));
-		if ($this->Training->hasPulseData())
-			$plots['pulse'] = array('name' => 'Herzfrequenz', 'key' => 'pulse', 'src' => 'inc/draw/training.heartrate.php?id='.$this->Training->get('id'));
-		if ($this->Training->hasElevationData())
-			$plots['elevation'] = array('name' => 'H&ouml;henprofil', 'key' => 'elevation', 'col' => 'arr_alt', 'src' => 'inc/draw/training.elevation.php?id='.$this->Training->get('id'));
-
-		if (!$this->Training->hasSplits() && $this->Training->hasPaceData())
-			$plots['splits'] = array('name' => 'Splits', 'key' => 'splits', 'src' => 'inc/draw/training.splits.php?id='.$this->Training->get('id'));
-
-		return $plots;
-	}
-
-	/**
-	 * Display a plot
-	 * @param string $type name of the plot, should be in getPlotTypesAsArray
-	 * @param bool $hidden
-	 */
-	public function displayPlot($type = 'undefined', $hidden = false) {
-		$plots = $this->getPlotTypesAsArray();
-		if (isset($plots[$type])) {
-			echo Plot::getInnerDivFor($plots[$type]['key'].'_'.$this->Training->get('id'), 480, 190, $hidden, 'training-chart');
-			include FRONTEND_PATH.'training/plot/Plot.Training.'.$plots[$type]['key'].'.php';
-		} else
-			Error::getInstance()->addWarning('TrainingDisplay::displayPlot - Unknown plottype "'.$type.'"', __FILE__, __LINE__);
-	}
-
-	/**
 	 * Display training data
 	 */
 	public function displayTrainingData() {

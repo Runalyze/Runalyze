@@ -55,7 +55,8 @@ $Training->setKeys(array(
 	'TRAINING_DECIMALS',
 	'TRAINING_MAP_BEFORE_PLOTS',
 	'TRAINING_MAP_COLOR',
-	'PACE_Y_AXIS_REVERSE'
+	'PACE_Y_AXIS_REVERSE',
+	'PACE_HIDE_OUTLIERS'
 ));
 $Training->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
 	'default'		=> 1,
@@ -89,6 +90,11 @@ $Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
 	'default'		=> false,
 	'label'			=> 'Pace: Y-Achse umkehren',
 	'tooltip'		=> 'Standardm&auml;&szlig;ig wird ein h&ouml;heres Tempo im Diagramm weiter unten angezeigt als ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden.'
+)));
+$Training->addConfigValue( new ConfigValueBool('PACE_HIDE_OUTLIERS', array(
+	'default'		=> false,
+	'label'			=> 'Pace: Ausrei&szlig;er egal',
+	'tooltip'		=> 'Wenn aktiviert, werden im Pace-Diagramm Ausrei&szlig;er nicht ber&uuml;cksichtigt.'
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
 	'default'		=> '1',
