@@ -61,8 +61,16 @@ if (!isset($_POST['seite']))
 	$_POST['seite'] = 1;
 $limit = $_POST['seite']*CONF_RESULTS_AT_PAGE - CONF_RESULTS_AT_PAGE;
 
-$trainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].' LIMIT '.$limit.', '.CONF_RESULTS_AT_PAGE);
-$num_all   = Mysql::getInstance()->num('SELECT * FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
+$trainings = Mysql::getInstance()->fetchAsArray('
+	SELECT
+		id,
+		time
+		'.$Dataset->getQuerySelectForAllDatasets().'
+	FROM `'.PREFIX.'training`
+	'.$where.'
+	ORDER BY `'.$_POST['order'].'` '.$_POST['sort'].'
+	LIMIT '.$limit.', '.CONF_RESULTS_AT_PAGE);
+$num_all   = Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` '.$where.' ORDER BY `'.$_POST['order'].'` '.$_POST['sort']);
 
 if (isset($_POST['send_to_multiEditor'])) {
 	$IDs = array();
@@ -78,7 +86,7 @@ if (isset($_POST['send_to_multiEditor'])) {
 
 ?>
 
-<table style="width=100%;">
+<table class="fullWidth">
 	<tr class="c">
 		<td colspan="<?php echo($max_colspan); ?>">
 <?php

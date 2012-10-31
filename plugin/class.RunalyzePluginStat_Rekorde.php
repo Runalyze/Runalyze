@@ -162,7 +162,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			'eval' => '0');
 		$this->rekorde[] = array('name' => 'L&auml;ngsten Trainings',
 			'sportquery' => 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery' => 'SELECT * FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
+			'datquery' => 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'eval' => '1');
 
 		$this->years = Mysql::getInstance()->fetchAsArray('
@@ -204,4 +204,3 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			LIMIT 10');
 	}
 }
-?>

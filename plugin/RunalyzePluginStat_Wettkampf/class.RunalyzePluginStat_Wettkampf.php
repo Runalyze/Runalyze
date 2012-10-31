@@ -106,8 +106,24 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayAllCompetitions() {
 		$this->displayTableStart('wk-table');
-		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `time` DESC');
+
+		$wks = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				id,
+				time,
+				sportid,
+				typeid,
+				comment,
+				distance,
+				s,
+				is_track,
+				pulse_avg,
+				pulse_max,
+				weatherid,
+				temperature
+			FROM `'.PREFIX.'training`
+			WHERE `typeid`='.CONF_WK_TYPID.'
+			ORDER BY `time` DESC');
 		$num = count($wks);
 		if ($num > 0) {
 			foreach($wks as $i => $wk) {
@@ -150,7 +166,24 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->config['pb_distances']['var'])) {
 				$this->distances[] = $dist['distance'];
 		
-				$wk = Mysql::getInstance()->fetchSingle('SELECT * FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`='.$dist['distance'].' ORDER BY `s` ASC');
+				$wk = Mysql::getInstance()->fetchSingle('
+					SELECT
+						id,
+						time,
+						sportid,
+						typeid,
+						comment,
+						distance,
+						s,
+						is_track,
+						pulse_avg,
+						pulse_max,
+						weatherid,
+						temperature
+					FROM `'.PREFIX.'training`
+					WHERE `typeid`='.CONF_WK_TYPID.'
+						AND `distance`='.$dist['distance'].'
+					ORDER BY `s` ASC');
 				$this->displayWKTr($wk, $i, true);
 			}
 		}
@@ -284,7 +317,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @param bool $all Show all rows
 	 */
 	private function displayWKTr($wk, $i, $all = false) {
-		$Training = new Training($wk['id']);
+		$Training = new Training($wk['id'], $wk);
 		$hide = (!$all && $i >= $this->config['last_wk_num']['var']) ? ' allWKs hide' : '';
 
 		echo('

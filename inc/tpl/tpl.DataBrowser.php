@@ -32,8 +32,8 @@
 foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
-			$id = $Training['id'];
-			$wk_class = Training::idIsCompetition($id) ? ' wk' : '';
+			$id       = $Training['id'];
+			$wk_class = isset($Training['typeid']) && $Training['typeid'] == CONF_WK_TYPID ? ' wk' : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public'])
 				echo '<tr class="a'.($i%2+1).' r training'.$wk_class.'">';

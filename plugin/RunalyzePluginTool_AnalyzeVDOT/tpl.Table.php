@@ -25,16 +25,16 @@
 		<td><?php echo $Training['pulse_avg']; ?></td>
 
 		<td><?php echo $Training['vdot']; ?></td>
-		<td class="b"><?php echo Time::toString(JD::CompetitionPrognosis($Training['vdot'], $Training['distance']), false, true); ?></td>
+		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($Training['vdot'], $Training['distance'])), false, true); ?></td>
 
 		<?php $c_vdot = round(JD::correctVDOT($Training['vdot']),2); ?>
 		<td><?php echo $c_vdot; ?></td>
-		<td class="b"><?php echo Time::toString(JD::CompetitionPrognosis($c_vdot, $Training['distance']), false, true); ?></td>
+		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($c_vdot, $Training['distance'])), false, true); ?></td>
 
 		<?php $shape     = round(JD::calculateVDOTform($Training['time']),2); ?>
 		<?php $prognosis = JD::CompetitionPrognosis($shape, $Training['distance']); ?>
 		<td><?php echo $shape; ?></td>
-		<td class="b"><?php echo Time::toString($prognosis, false, true); ?></td>
+		<td class="b"><?php echo Time::toString(round($prognosis, false, true)); ?></td>
 		<td><?php echo HTML::plusMinus(sprintf("%01.2f", 100*($Training['s'] - $prognosis)/$Training['s']), 2); ?> &#37;</td>
 	</tr>
 <?php endforeach; ?>
@@ -43,8 +43,15 @@
 
 <?php Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable'); ?>
 
-<p class="info small">
-	<strong>VDOT Wert:</strong> VDOT aus Pace-Puls-Verh&auml;ltnis<br />
-	<strong>korr. Wert:</strong> VDOT nach individueller VDOT-Korrektur (Faktor <?php echo VDOT_CORRECTOR; ?>)<br />
-	<strong>Form Wert:</strong> VDOT der damaligen Trainingsform bzw. Prognose
+<p class="info">
+	<strong>VDOT Wert/Zeit:</strong> aus Pace-Puls-Verh&auml;ltnis<br />
+	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels) laufen k&ouml;nnen.
+</p>
+<p class="info">
+	<strong>korr. Wert/Zeit:</strong> nach individueller VDOT-Korrektur (Faktor <?php echo VDOT_CORRECTOR; ?>)<br />
+	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels, an dich angepasst) laufen k&ouml;nnen.
+</p>
+<p class="info">
+	<strong>Form Wert:</strong> aus der damaligen Trainingsform bzw. Prognose<br />
+	Das h&auml;ttest du Runalyze zufolge laufen k&ouml;nnen.
 </p>
