@@ -13,11 +13,27 @@ $EmptyMap->outputHTML();
 
 echo Ajax::wrapJSasFunction( $EmptyMap->getCodeForInit() );
 
-$AllTrainings = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'training` WHERE `arr_lat`!="" ORDER BY `id` DESC LIMIT '.RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET);
+$AllTrainings = Mysql::getInstance()->fetchAsArray('
+	SELECT
+		id,
+		time,
+		arr_time,
+		arr_lat,
+		arr_lon,
+		arr_alt,
+		arr_dist,
+		arr_heart,
+		arr_pace
+	FROM `'.PREFIX.'training`
+	WHERE `arr_lat`!=""
+	ORDER BY `id` DESC
+	LIMIT '.RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET);
 foreach ($AllTrainings as $Training) {
 	$Map = new Gmap('all', new GpsData($Training));
 	echo Ajax::wrapJSasFunction( $Map->getCodeForPolylines(true) );
 }
+
+echo Ajax::wrapJSasFunction('$("#map_all").height($(window).height()*0.8);');
 ?>
 
 <p class="info small">

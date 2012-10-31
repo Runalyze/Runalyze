@@ -95,6 +95,12 @@ class GpsData {
 	private $stepSize = 1;
 
 	/**
+	 * Cache object
+	 * @var GpsDataCache
+	 */
+	protected $Cache = null;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct($TrainingData) {
@@ -106,6 +112,11 @@ class GpsData {
 		$this->arrayForHeartrate = $this->loadArrayDataFrom($TrainingData['arr_heart']);
 		$this->arrayForPace      = $this->loadArrayDataFrom($TrainingData['arr_pace']);
 		$this->arraySizes        = count($this->arrayForTime);
+
+		if (isset($TrainingData['gps_cache_object']))
+			$this->initCache($TrainingData['id'], $TrainingData['gps_cache_object']);
+		else
+			$this->initCache(0, false);
 	}
 
 	/**
@@ -120,6 +131,38 @@ class GpsData {
 			return array();
 
 		return $array;
+	}
+
+	/**
+	 * Init cache
+	 * @param int $TrainingID
+	 * @param mixed $String [optional]
+	 */
+	private function initCache($TrainingID, $String = null) {
+		$this->Cache = new GpsDataCache($TrainingID, $String);
+
+		if ($this->Cache->isEmpty() && $String !== false) {
+			$this->Cache->set('pulse_zones', $this->getPulseZonesAsFilledArrays());
+			$this->Cache->set('pace_zones', $this->getPaceZonesAsFilledArrays());
+			$this->Cache->set('rounds', $this->getRoundsAsFilledArray());
+
+			$PlotData = $this->getPlotDataForAllPlots();
+			foreach ($PlotData as $key => $value)
+				$this->Cache->set('plot_'.$key, $value);
+
+			$GMap = new Gmap($TrainingID, $this);
+			$GMap->setCacheTo(&$this->Cache);
+
+			$this->Cache->saveInDatabase();
+		}
+	}
+
+	/**
+	 * Get cache
+	 * @return GpsDataCache
+	 */
+	public function getCache() {
+		return $this->Cache;
 	}
 
 	/**
@@ -168,6 +211,9 @@ class GpsData {
 			return false;
 
 		$this->arrayIndex += $this->stepSize;
+
+		if ($this->loopIsAtEnd())
+			$this->arrayIndex = $this->arraySizes-1;
 
 		return true;
 	}
@@ -511,6 +557,9 @@ class GpsData {
 		if (!$this->hasHeartrateData())
 			return array();
 
+		if (!$this->Cache->isEmpty())
+			return $this->Cache->get('pulse_zones');
+
 		$Zones = array();
 		$this->startLoop();
 		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
@@ -539,6 +588,9 @@ class GpsData {
 	public function getPaceZonesAsFilledArrays() {
 		if (!$this->hasPaceData())
 			return array();
+
+		if (!$this->Cache->isEmpty())
+			return $this->Cache->get('pace_zones');
 
 		$Zones = array();
 		$this->startLoop();
@@ -570,6 +622,9 @@ class GpsData {
 	 * @return array
 	 */
 	public function getRoundsAsFilledArray($distance = 1) {
+		if (!$this->Cache->isEmpty() && $distance = 1)
+			return $this->Cache->get('rounds');
+
 		$rounds = array();
 		
 		$this->startLoop();
@@ -602,42 +657,78 @@ class GpsData {
 	 * @return array
 	 */
 	protected function getPlotDataFor($key) {
-		$Data = array();
+		if (!$this->Cache->isEmpty()) {
+			return $this->Cache->get('plot_'.$key);
+		}
 
+		$Data = array();
 		$this->startLoop();
 		while ($this->nextKilometer(0.1)) {
-			switch ($key) {
-				case "elevation":
-					$value = $this->getAverageElevationOfStep();
-					break;
-				case "heartrate100":
-					$value = 100*$this->getAverageHeartrateOfStep()/HF_MAX;
-					break;
-				case "heartrate100reserve":
-					$value = Running::PulseInPercentReserve($this->getAverageHeartrateOfStep());
-					break;
-				case "heartrate":
-					$value = $this->getAverageHeartrateOfStep();
-					break;
-				case "pace":
-					$value = $this->getAveragePaceOfStep();
-					break;
-				default:
-					$value = 0;
-			}
-
-			if ($value < 0)
-				$value = 0;
-
 			if ($this->plotUsesTimeOnXAxis())
 				$index = (string)($this->getTime()).'000';
 			else
 				$index = (string)($this->getDistance());
 
-			$Data[$index] = $value;
+			$Data[$index] = $this->getCurrentPlotDataFor($key);
 		}
 
 		return $Data;
+	}
+
+	/**
+	 * Get data for all plots
+	 * @return type 
+	 */
+	protected function getPlotDataForAllPlots() {
+		$Data = array();
+		$this->startLoop();
+		while ($this->nextKilometer(0.1)) {
+			if ($this->plotUsesTimeOnXAxis())
+				$index = (string)($this->getTime()).'000';
+			else
+				$index = (string)($this->getDistance());
+
+			$Heartrate = $this->getCurrentPlotDataFor('heartrate');
+			$Data['pace'][$index]                = $this->getCurrentPlotDataFor('pace');
+			$Data['elevation'][$index]           = $this->getCurrentPlotDataFor('elevation');
+			$Data['heartrate'][$index]           = $Heartrate;
+			$Data['heartrate100'][$index]        = 100*$Heartrate/HF_MAX;
+			$Data['heartrate100reserve'][$index] = Running::PulseInPercentReserve($Heartrate);
+		}
+
+		return $Data;
+	}
+
+	/**
+	 * Get current plot data
+	 * @param string $key 
+	 * @return mixed
+	 */
+	private function getCurrentPlotDataFor($key) {
+		switch ($key) {
+			case "elevation":
+				$value = $this->getAverageElevationOfStep();
+				break;
+			case "heartrate100":
+				$value = 100*$this->getAverageHeartrateOfStep()/HF_MAX;
+				break;
+			case "heartrate100reserve":
+				$value = Running::PulseInPercentReserve($this->getAverageHeartrateOfStep());
+				break;
+			case "heartrate":
+				$value = $this->getAverageHeartrateOfStep();
+				break;
+			case "pace":
+				$value = $this->getAveragePaceOfStep();
+				break;
+			default:
+				$value = 0;
+		}
+
+		if ($value < 0)
+			$value = 0;
+
+		return $value;
 	}
 
 	/**
@@ -652,7 +743,7 @@ class GpsData {
 	 */
 	public function getPlotDataForHeartrate($inPercent = false) {
 		if ($inPercent)
-			return $this->getPlotDataForHeartrateInPercent();
+			return $this->getPlotDataFor('heartrate100');
 
 		return $this->getPlotDataFor('heartrate');
 	}
@@ -662,9 +753,16 @@ class GpsData {
 	 */
 	public function getPlotDataForHeartrateInPercent() {
 		if (CONF_PULS_MODE == 'hfres')
-			return $this->getPlotDataFor('heartrate100reserve');
+			return $this->getPlotDataForHeartrateInPercentReserve();
 
-		return $this->getPlotDataFor('heartrate100');
+		return $this->getPlotDataForHeartrate(true);
+	}
+
+	/**
+	 * Get array as plot-data for heartrate in percent
+	 */
+	public function getPlotDataForHeartrateInPercentReserve() {
+		return $this->getPlotDataFor('heartrate100reserve');
 	}
 
 	/**

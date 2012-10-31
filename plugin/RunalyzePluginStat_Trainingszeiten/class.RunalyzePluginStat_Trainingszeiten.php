@@ -48,7 +48,12 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			$sports_not_short .= $sport['id'].',';
 	
 		$nights = Mysql::getInstance()->fetchAsArray('SELECT * FROM (
-			SELECT *,
+			SELECT
+				id,
+				time,
+				sportid,
+				distance,
+				is_track,
 				HOUR(FROM_UNIXTIME(`time`)) as `H`,
 				MINUTE(FROM_UNIXTIME(`time`)) as `MIN`
 			FROM `'.PREFIX.'training`
@@ -71,7 +76,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo HTML::spaceTR(8);
 
 		foreach ($nights as $i => $night) {
-			$Training = new Training($night['id']);
+			$Training = new Training($night['id'], $night);
 
 			if ($i%2 == 0)
 				echo('<tr class="a'.(round($i/2)%2+1).'">');

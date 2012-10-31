@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 25. April 2012 um 20:01
+-- Erstellungszeit: 31. Oktober 2012 um 12:01
 -- Server Version: 5.1.41
 -- PHP-Version: 5.3.1
 
@@ -19,7 +19,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Tabellenstruktur für Tabelle `runalyze_account`
 --
 
-CREATE TABLE `runalyze_account` (
+CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(60) NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -33,11 +33,32 @@ CREATE TABLE `runalyze_account` (
   `changepw_hash` varchar(32) NOT NULL,
   `changepw_timelimit` int(11) NOT NULL,
   `activation_hash` varchar(32) NOT NULL,
+  `deletion_hash` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `mail` (`mail`),
   UNIQUE KEY `session_id` (`session_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Trigger `runalyze_account`
+--
+DROP TRIGGER IF EXISTS `del_tr_train`;
+DELIMITER //
+CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
+ FOR EACH ROW BEGIN
+		DELETE FROM runalyze_clothes WHERE accountid = OLD.id;
+		DELETE FROM runalyze_conf WHERE accountid = OLD.id;
+		DELETE FROM runalyze_dataset WHERE accountid = OLD.id;
+		DELETE FROM runalyze_plugin WHERE accountid = OLD.id;
+		DELETE FROM runalyze_shoe WHERE accountid = OLD.id;
+		DELETE FROM runalyze_sport WHERE accountid = OLD.id;
+		DELETE FROM runalyze_training WHERE accountid = OLD.id;
+		DELETE FROM runalyze_type WHERE accountid = OLD.id;
+		DELETE FROM runalyze_user WHERE accountid = OLD.id;
+	END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -45,13 +66,14 @@ CREATE TABLE `runalyze_account` (
 -- Tabellenstruktur für Tabelle `runalyze_clothes`
 --
 
-CREATE TABLE `runalyze_clothes` (
+CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `short` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `order` tinyint(1) NOT NULL,
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -60,12 +82,13 @@ CREATE TABLE `runalyze_clothes` (
 -- Tabellenstruktur für Tabelle `runalyze_conf`
 --
 
-CREATE TABLE `runalyze_conf` (
+CREATE TABLE IF NOT EXISTS `runalyze_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `value` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -74,9 +97,10 @@ CREATE TABLE `runalyze_conf` (
 -- Tabellenstruktur für Tabelle `runalyze_dataset`
 --
 
-CREATE TABLE `runalyze_dataset` (
+CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
   `label` varchar(100) NOT NULL,
   `description` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `distance` tinyint(1) NOT NULL DEFAULT '0',
@@ -90,7 +114,8 @@ CREATE TABLE `runalyze_dataset` (
   `summary` tinyint(1) NOT NULL DEFAULT '0',
   `summary_mode` varchar(3) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'SUM',
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -99,7 +124,7 @@ CREATE TABLE `runalyze_dataset` (
 -- Tabellenstruktur für Tabelle `runalyze_plugin`
 --
 
-CREATE TABLE `runalyze_plugin` (
+CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `type` enum('panel','stat','draw','tool') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
@@ -111,7 +136,8 @@ CREATE TABLE `runalyze_plugin` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(6) NOT NULL,
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -120,7 +146,7 @@ CREATE TABLE `runalyze_plugin` (
 -- Tabellenstruktur für Tabelle `runalyze_shoe`
 --
 
-CREATE TABLE `runalyze_shoe` (
+CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `brand` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
@@ -130,7 +156,8 @@ CREATE TABLE `runalyze_shoe` (
   `inuse` tinyint(1) NOT NULL DEFAULT '1',
   `additionalKm` decimal(6,2) NOT NULL DEFAULT '0.00',
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -139,7 +166,7 @@ CREATE TABLE `runalyze_shoe` (
 -- Tabellenstruktur für Tabelle `runalyze_sport`
 --
 
-CREATE TABLE `runalyze_sport` (
+CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `img` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'unknown.gif',
@@ -154,7 +181,8 @@ CREATE TABLE `runalyze_sport` (
   `pulse` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -163,11 +191,13 @@ CREATE TABLE `runalyze_sport` (
 -- Tabellenstruktur für Tabelle `runalyze_training`
 --
 
-CREATE TABLE `runalyze_training` (
+CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `sportid` int(11) NOT NULL DEFAULT '0',
   `typeid` int(11) NOT NULL DEFAULT '0',
   `time` int(11) NOT NULL DEFAULT '0',
+  `created` int(11) NOT NULL,
+  `edited` int(11) NOT NULL,
   `is_public` tinyint(1) NOT NULL DEFAULT '0',
   `is_track` tinyint(1) NOT NULL DEFAULT '0',
   `distance` decimal(6,2) NOT NULL DEFAULT '0.00',
@@ -178,6 +208,8 @@ CREATE TABLE `runalyze_training` (
   `pulse_avg` int(3) NOT NULL DEFAULT '0',
   `pulse_max` int(3) NOT NULL DEFAULT '0',
   `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
+  `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `trimp` int(4) NOT NULL DEFAULT '0',
   `temperature` float DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
@@ -197,7 +229,13 @@ CREATE TABLE `runalyze_training` (
   `arr_heart` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
   `arr_pace` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  `creator` varchar(100) NOT NULL,
+  `creator_details` tinytext NOT NULL,
+  `activity_id` varchar(50) NOT NULL DEFAULT '',
+  `elevation_corrected` tinyint(1) NOT NULL DEFAULT '0',
+  `gps_cache_object` MEDIUMTEXT NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------
@@ -206,14 +244,15 @@ CREATE TABLE `runalyze_training` (
 -- Tabellenstruktur für Tabelle `runalyze_type`
 --
 
-CREATE TABLE `runalyze_type` (
+CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `abbr` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `RPE` smallint(2) NOT NULL DEFAULT '2',
   `splits` tinyint(1) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -222,7 +261,7 @@ CREATE TABLE `runalyze_type` (
 -- Tabellenstruktur für Tabelle `runalyze_user`
 --
 
-CREATE TABLE `runalyze_user` (
+CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `time` int(11) NOT NULL,
   `weight` decimal(4,1) NOT NULL DEFAULT '0.0',
@@ -232,5 +271,6 @@ CREATE TABLE `runalyze_user` (
   `water` decimal(3,1) NOT NULL DEFAULT '0.0',
   `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
   `accountid` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

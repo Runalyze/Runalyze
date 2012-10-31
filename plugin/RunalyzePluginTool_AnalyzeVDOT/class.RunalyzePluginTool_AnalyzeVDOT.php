@@ -59,9 +59,20 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 */
 	private function initTrainings() {
 		$this->Trainings = Mysql::getInstance()->fetchAsArray('
-			SELECT * FROM `'.PREFIX.'training`
+			SELECT
+				id,
+				time,
+				sportid,
+				distance,
+				s,
+				is_track,
+				comment,
+				pulse_avg,
+				pulse_max,
+				vdot
+			FROM `'.PREFIX.'training`
 			WHERE `pulse_avg`!=0 && `typeid`='.CONF_WK_TYPID.'
-			ORDER BY `time` ASC');
+			ORDER BY `time` DESC');
 	}
 }
 ?>

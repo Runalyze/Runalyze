@@ -40,6 +40,18 @@ class Gmap {
 	}
 
 	/**
+	 * Set cache
+	 * @param GpsDataCache $CacheObject 
+	 */
+	public function setCacheTo(GpsDataCache &$CacheObject) {
+		$CacheObject->set('marker', $this->getCodeForKmMarker());
+
+		$Codes = $this->getCodeForPolylines(true, true);
+		$CacheObject->set('polylines', $Codes[0]);
+		$CacheObject->set('polylines_without_hover', $Codes[1]);
+	}
+
+	/**
 	 * Get string ID for a given training ID
 	 * @param int $TrainingID
 	 * @return string 
@@ -88,8 +100,17 @@ class Gmap {
 	 * Get JS-code for adding polyline(s)
 	 * @return string
 	 */
-	public function getCodeForPolylines($withoutHover = false) {
+	public function getCodeForPolylines($withoutHover = false, $both = false) {
+		if (!$this->GpsData->getCache()->isEmpty()) {
+			if ($withoutHover)
+				return $this->GpsData->getCache()->get('polylines_without_hover');
+			else
+				return $this->GpsData->getCache()->get('polylines');
+		}
+
 		$Code = '';
+		$CodeWith = '';
+		$CodeWithout = '';
 		$Path = array();
 
 		$AvgPace = $this->GpsData->getAveragePace();
@@ -97,25 +118,42 @@ class Gmap {
 			self::$MAXIMUM_DISTANCE_OF_STEP = 15 / $AvgPace;
 
 		$this->GpsData->startLoop();
+		$this->GpsData->setStepSize(5);
+		self::$MAXIMUM_DISTANCE_OF_STEP *= 5;
+
 		while ($this->GpsData->nextStep()) {
-			if ($this->GpsData->getLatitude() == 0 && $this->GpsData->getLongitude() == 0)
+			$Lat = $this->GpsData->getLatitude();
+			$Lon = $this->GpsData->getLongitude();
+			if ($Lat == 0 && $Lon == 0)
 				continue;
 
-			if ($withoutHover)
+			if ($withoutHover && !$both)
 				$PointData = '';
 			else
 				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
 			if ($this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
-				$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']'.($withoutHover?',true':'').');';
+				$PathString = implode(',', $Path);
+				if ($both) {
+					$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
+					$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
+				} else
+					$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover?',true':'').');';
 				$Path  = array();
 			}
 
-			$Path[] = '['.$this->GpsData->getLatitude().','.$this->GpsData->getLongitude().',"'.$PointData.'"]';
+			$Path[] = '['.$Lat.','.$Lon.',"'.$PointData.'"]';
 		}
 
-		$Code .= 'RunalyzeGMap.addPolyline(['.implode(',', $Path).']'.($withoutHover?',true':'').');';
+		$PathString = implode(',', $Path);
+		if ($both) {
+			$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
+			$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
+
+			return array($CodeWith, $CodeWithout);
+		} else
+			$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover?',true':'').');';
 
 		return $Code;
 	}
@@ -125,15 +163,19 @@ class Gmap {
 	 * @return string
 	 */
 	protected function getCodeForKmMarker() {
-		$Training = new Training($this->TrainingId);
-		$SportId  = $Training->get('sportid');
+		if (!$this->GpsData->getCache()->isEmpty()) {
+			return $this->GpsData->getCache()->get('marker');
+		}
+
+		$SportDat = Mysql::getInstance()->fetchSingle('SELECT `sportid` FROM '.PREFIX.'training WHERE `id`='.$this->TrainingId);
+		$SportId  = $SportDat['sportid'];
 		$Code     = '';
 		$Marker   = array();
 
 		$this->GpsData->startLoop();
 
 		if ($this->GpsData->getLatitude() > 0 && $this->GpsData->getLongitude() > 0)
-			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start<br />'.$Training->getDate().'",options:{icon:"'.$this->getIconForMarker().'"}}';
+			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
 			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Running::Speed($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));

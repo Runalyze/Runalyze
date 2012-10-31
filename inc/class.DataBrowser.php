@@ -120,7 +120,11 @@ class DataBrowser {
 		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 
 		$AllTrainings = $this->Mysql->fetchAsArray('
-			SELECT *, DATE(FROM_UNIXTIME(time)) as `date`
+			SELECT
+				id,
+				time,
+				DATE(FROM_UNIXTIME(time)) as `date`
+				'.$this->Dataset->getQuerySelectForAllDatasets().'
 			FROM `'.PREFIX.'training`
 			WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).'
 				'.$WhereNotPrivate.'
