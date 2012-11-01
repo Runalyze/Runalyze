@@ -204,4 +204,12 @@ class FormularFieldset extends HtmlTag {
 	final public function addBlock($message) {
 		$this->addMessage($message, 'block');
 	}
+
+	/**
+	 * Add block to fieldset
+	 * @param string $message 
+	 */
+	final public function addFileBlock($message) {
+		$this->addMessage($message, 'file');
+	}
 }

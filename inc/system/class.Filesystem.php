@@ -110,4 +110,22 @@ class Filesystem {
 	static public function openFile($fileName) {
 		return file_get_contents(FRONTEND_PATH.$fileName);
 	}
+
+	/**
+	 * Get filesize
+	 * @param string $file
+	 * @param mixed $setup
+	 * @return string 
+	 */
+	static public function getFilesize($file, $setup = null) {
+		$FZ = ($file && @is_file($file)) ? filesize($file) : NULL;
+		$FS = array("B","kB","MB","GB","TB","PB","EB","ZB","YB");
+
+		if (!$setup && $setup !== 0)
+			return number_format($FZ/pow(1024, $I=floor(log($FZ, 1024))), ($I >= 1) ? 2 : 0).' '.$FS[$I];
+		elseif ($setup == 'INT')
+			return number_format($FZ);
+
+		return number_format($FZ/pow(1024, $setup), ($setup >= 1) ? 2 : 0 ).' '.$FS[$setup];
+	}
 }
