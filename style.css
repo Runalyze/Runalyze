@@ -589,6 +589,7 @@ p.okay { background: url(img/ok.gif) no-repeat 3px center #F5FAF0; color: #8AB85
 p.info { background: url(img/info.gif) no-repeat 3px center #EFF5FA; color: #5C9AC9; padding: 4px 2px 5px 22px; }
 p.warning { background: url(img/warning.png) no-repeat 3px center #FFFFDD; color: #D49822; padding: 4px 2px 5px 22px; }
 p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #CC5555; padding: 4px 2px 5px 22px; font-weight: normal; }
+p.file { background: url(img/file.png) no-repeat 3px center #F5F5F5; color: #000; padding: 4px 2px 5px 22px; }
 
 .block { display: block; }
 .hide { display: none; }
