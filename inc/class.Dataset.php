@@ -189,7 +189,7 @@ class Dataset {
 	 * @return string 
 	 */
 	public function getQuerySelectForAllDatasets() {
-		$String = ',`is_track`,`use_vdot`';
+		$String = ',`is_track`,`use_vdot`,`is_public`';
 
 		foreach ($this->data as $set)
 			$String .= ', `'.$set['name'].'`';

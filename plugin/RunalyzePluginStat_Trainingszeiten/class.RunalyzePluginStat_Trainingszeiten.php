@@ -71,7 +71,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		if (empty($nights))
 			return;
 		
-		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="left small">';
+		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="small">';
 		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';
 		echo HTML::spaceTR(8);
 
@@ -96,6 +96,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * Display the images
 	 */
 	private function displayImages() {
+		echo '<div style="max-width:750px;margin:0 auto;">';
 		echo '<span class="right">';
 		echo Plot::getDivFor('weekday', 350, 190);
 		echo '</span>';
@@ -103,6 +104,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo Plot::getDivFor('daytime', 350, 190);
 		echo '</span>';
 		echo HTML::clearBreak();
+		echo '</div>';
 
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.Daytime.php';
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.Weekday.php';
