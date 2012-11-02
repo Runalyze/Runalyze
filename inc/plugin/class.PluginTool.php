@@ -133,6 +133,15 @@ abstract class PluginTool extends Plugin {
 	}
 
 	/**
+	 * Returns the html-link to this plugin
+	 * @param string $getParameter
+	 * @return string
+	 */
+	public function getActionLink($name, $getParameter = '') {
+		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$this->id.'&'.$getParameter);
+	}
+
+	/**
 	 * Get link to this tool as overlay
 	 */
 	public function getWindowLink($name = '') {

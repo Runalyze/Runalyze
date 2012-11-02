@@ -52,9 +52,9 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
 			einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.');
 		$Fieldset->addBlock('&nbsp;');
-		$Fieldset->addInfo('<strong>'.self::getLink('Einfache Bereinigung', 'clean=true').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=true').'</strong><br />
 			Hierbei werden die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
 			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
 			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
 
