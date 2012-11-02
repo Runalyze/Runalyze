@@ -222,7 +222,7 @@ class TrainingEditor {
 	private function addTextValue($key) {
 		if (isset($this->TrainingData[$key])) {
 			$this->UpdateColumns[] = $key;
-			$this->UpdateValues[] = $this->TrainingData[$key];
+			$this->UpdateValues[] = HTML::encodeTags($this->TrainingData[$key]);
 		}
 	}
 

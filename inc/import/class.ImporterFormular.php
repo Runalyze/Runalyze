@@ -178,7 +178,7 @@ class ImporterFormular extends Importer {
 		
 		foreach ($StringKeys as $var) {
 			$this->columns[] = $var;
-			$this->values[]  = isset($_POST[$var]) ? $_POST[$var] : '';
+			$this->values[]  = isset($_POST[$var]) ? HTML::encodeTags($_POST[$var]) : '';
 		}
 		
 		foreach ($AutoParseKeys as $var) {
@@ -283,20 +283,22 @@ class ImporterFormular extends Importer {
 			return;
 		}
 
-		$Training  = new Training($id);
+		$Training  = new Training($id, array_combine($this->columns, $this->values));
 		
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `trimp`="'.Trimp::TRIMPfor($id).'" WHERE `id`='.$id.' LIMIT 1');
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
 
 		Trimp::checkForMaxValuesAt($this->time);
 
-		if ($Training->get('typeid') == CONF_WK_TYPID)
-			JD::recalculateVDOTcorrector();
+		if ($Training->Sport()->isRunning()) {
+			if ($Training->hasType() && $Training->get('typeid') == CONF_WK_TYPID)
+				JD::recalculateVDOTcorrector();
 		
-		if ($Training->get('shoeid') > 0)
-			$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$Training->get('distance').', `time`=`time`+'.$Training->get('s').' WHERE `id`='.$Training->get('shoeid').' LIMIT 1');
-		
-		if (CONF_TRAINING_DO_ELEVATION) {
+			if ($Training->get('shoeid') > 0)
+				$Mysql->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$Training->get('distance').', `time`=`time`+'.$Training->get('s').' WHERE `id`='.$Training->get('shoeid').' LIMIT 1');
+		}
+
+		if (CONF_TRAINING_DO_ELEVATION && $Training->hasElevationData()) {
 			$Training->elevationCorrection();
 		
 			$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());

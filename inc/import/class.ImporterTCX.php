@@ -136,7 +136,7 @@ class ImporterTCX extends Importer {
 		$this->transformTrainingDataToPostData();
 
 		$this->set('creator', Importer::$CREATOR_GARMIN_COMMUNICATOR);
-		$this->set('creator_details', 'Multiple files: '.$filename.NL.$this->get('creator_details'));
+		$this->set('creator_details', 'Multiple files: '.$fileName.NL.$this->get('creator_details'));
 
 		$Importer = new ImporterFormular();
 		$Importer->setTrainingValues();
