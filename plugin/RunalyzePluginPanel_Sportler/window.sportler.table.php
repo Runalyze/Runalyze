@@ -6,17 +6,23 @@ $Frontend = new Frontend();
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 
-$colspan     = 2;
+$colspan     = 3;
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');
 $FieldsFat   = array('fat' => ' &#37;', 'water' => ' &#37;', 'muscles' => ' &#37;');
 $Data        = array_reverse(UserData::getFullArray());
+
+if (Request::param('reload') == 'true') {
+	Ajax::setReloadFlag( Ajax::$RELOAD_PLUGINS );
+	echo Ajax::getReloadCommand();
+}
 ?>
 <h1>K&ouml;rper-Daten</h1>
 
 <table id="sportlerTable">
 	<thead>
 		<tr>
+			<th class="{sorter: false}">&nbsp;</th>
 			<th class="{sorter: false}">&nbsp;</th>
 			<th class="{sorter:'germandate'}">Datum</th>
 			<th>Gewicht</th>
@@ -42,6 +48,7 @@ $Data        = array_reverse(UserData::getFullArray());
 	<?php else: ?>
 	<?php foreach ($Data as $i => $Info): ?>
 		<tr class="<?php HTML::trClass($i); ?> c">
+			<td><?php echo RunalyzePluginPanel_Sportler::getDeleteLinkFor($Info['id']); ?></td>
 			<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
 		<?php foreach ($Fields as $Key => $Unit): ?>
 			<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
@@ -54,4 +61,4 @@ $Data        = array_reverse(UserData::getFullArray());
 	</tbody>
 </table>
 
-<?php Ajax::createTablesorterWithPagerFor('#sportlerTable'); ?>
+<?php Ajax::createTablesorterWithPagerFor('#sportlerTable', true); ?>

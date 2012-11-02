@@ -259,10 +259,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		}
 
 		$FileName = $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.substr(uniqid(rand()),-4).$FileType;
-		$File     = fopen(FRONTEND_PATH.$FileName, 'w+');
 
-		fwrite($File, $ExportString);
-		fclose($File);
+		Filesystem::writeFile($FileName, $ExportString);
 	}
 }
 

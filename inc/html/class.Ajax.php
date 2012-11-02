@@ -356,19 +356,21 @@ class Ajax {
 	/**
 	 * Create code for binding tablesorter
 	 * @param string $selector
+	 * @param boolean $reinit [optional]
 	 */
-	public static function createTablesorterFor($selector) {
-		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterAutosort();');
+	public static function createTablesorterFor($selector, $reinit = false) {
+		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterAutosort('.($reinit?'true':'').');');
 	}
 
 	/**
 	 * Create code for binding tablesorter with pager
 	 * @param string $selector
+	 * @param boolean $reinit [optional]
 	 */
-	public static function createTablesorterWithPagerFor($selector) {
+	public static function createTablesorterWithPagerFor($selector, $reinit = false) {
 		self::printPagerDiv();
 
-		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager();');
+		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager('.($reinit?'true':'').');');
 	}
 
 	/**

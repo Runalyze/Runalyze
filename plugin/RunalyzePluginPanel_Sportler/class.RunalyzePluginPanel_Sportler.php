@@ -76,7 +76,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 		
 		echo('
-			<div id="sportler">
+			<div id="sportler-content">
 				<span class="right">'.$Pulse.'</span>
 				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
 				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse', false).'
@@ -98,5 +98,14 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	static public function getEditLinkFor($id) {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
+	}
+
+	/**
+	 * Get delete link for an entry
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getDeleteLinkFor($id) {
+		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'&delete=true">'.Icon::$DELETE.'</a>');
 	}
 }

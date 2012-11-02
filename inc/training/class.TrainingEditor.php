@@ -271,7 +271,7 @@ class TrainingEditor {
 	 * Update VDOT-corrector 
 	 */
 	private function updateVdotCorrector() {
-		if ($this->TrainingData['typeid'] == CONF_WK_TYPID)
+		if (isset($this->TrainingData['typeid']) && $this->TrainingData['typeid'] == CONF_WK_TYPID)
 			JD::recalculateVDOTcorrector();
 	}
 

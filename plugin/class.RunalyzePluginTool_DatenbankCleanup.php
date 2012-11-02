@@ -42,21 +42,26 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		echo 'Mit diesem Tool l&auml;sst sich die Datenbank bereinigen.<br />'.NL;
-		echo 'Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.<br />'.NL;
-		echo '<br />';
-
 		if (isset($_GET['clean'])) {
 			$this->cleanDatabase();
-
 			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em>';
-		} else {
-			echo '<ul>';
-			echo '<li>'.self::getLink('<strong>Bereinigen</strong> (einfach)', 'clean=true').'</li>'.NL;
-			echo '<li>'.self::getLink('<strong>Bereinigen</strong> (vollst&auml;ndig)*', 'clean=complete').'</li>'.NL;
-			echo '</ul>'.NL;
-			echo '<small>* Dann werden zun&auml;chst f&uuml;r alle Trainings TRIMP und VDOT neu berechnet.</small>';
 		}
+
+		$Fieldset = new FormularFieldset('Datenbank bereinigen');
+		$Fieldset->addBlock('Mit diesem Tool l&auml;sst sich die Datenbank bereinigen.
+			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
+			einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.');
+		$Fieldset->addBlock('&nbsp;');
+		$Fieldset->addInfo('<strong>'.self::getLink('Einfache Bereinigung', 'clean=true').'</strong><br />
+			Hierbei werden die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
+		$Fieldset->addInfo('<strong>'.self::getLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
+			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
+			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
+
+		$Formular = new Formular();
+		$Formular->setId('datenbank-cleanup');
+		$Formular->addFieldset($Fieldset);
+		$Formular->display();
 	}
 
 	/**
