@@ -33,19 +33,23 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		echo 'Mit diesem Tool l&auml;sst sich der Cache der Diagramme l&ouml;schen.<br />'.NL;
-		echo 'Es gehen dabei keine Daten verloren - es m&uuml;ssen lediglich alle Diagramme beim n&auml;chsten Aufruf neu berechnet werden.<br />'.NL;
-		echo '<br />';
+		if (isset($_GET['delete'])) {
+			Mysql::getInstance()->query('UPDATE '.PREFIX.'training SET gps_cache_object=""');
+		}
 
-		if (!file_exists('../inc/draw/cache/cache.db') && !file_exists('../inc/draw/cache/index.db'))
-			echo '<em>Es sind keine Cache-Dateien vorhanden.';
-		elseif (isset($_GET['delete'])) {
-			if (unlink('../inc/draw/cache/cache.db') && unlink('../inc/draw/cache/index.db'))
-				echo '<em>Der Cache wurde erfolgreich gel&ouml;scht.</em>';
-			else
-				echo '<em>Der Cache konnte nicht gel&ouml;scht werden.</em>';
-		} else
-			echo self::getLink('<strong>Cache l&ouml;schen</strong>', 'delete=true');
+		$numData = Mysql::getInstance()->fetchSingle('SELECT COUNT(*) as num FROM '.PREFIX.'training WHERE gps_cache_object!="" LIMIT 1');
+		$num     = $numData['num'];
+
+		$Fieldset = new FormularFieldset('Cache l&ouml;schen');
+		$Fieldset->addInfo(self::getActionLink('<strong>Cache l&ouml;schen</strong>', 'delete=true').'<br />
+			Zur schnellen Trainingsanzeige werden die berechneten GPS-Daten (Runden, Zonen, Diagramme und Google-Map)
+			im Cache gespeichert. Falls Probleme dabei auftauchen, kann &uuml;ber dieses Plugin der Cache geleert werden.');
+		$Fieldset->addFileBlock('Insgesamt sind '.$num.' Trainings im Cache.');
+
+		$Formular = new Formular();
+		$Formular->setId('cacheclean-form');
+		$Formular->addFieldset($Fieldset);
+		$Formular->display();
 	}
 }
 ?>
