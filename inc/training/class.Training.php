@@ -580,7 +580,7 @@ class Training {
 	 * @return string
 	 */
 	public function getPartner() {
-		return $this->get('partner');
+		return HTML::encodeTags($this->get('partner'));
 	}
 
 	/**
@@ -735,11 +735,13 @@ class Training {
 			Mysql::getInstance()->update(PREFIX.'training', $this->id,
 				array(
 					'arr_alt',
-					'elevation_corrected'
+					'elevation_corrected',
+					'gps_cache_object'
 				),
 				array(
 					implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()),
-					1
+					1,
+					''
 				)
 			);
 		}

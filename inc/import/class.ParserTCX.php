@@ -233,6 +233,7 @@ class ParserTCX extends Parser {
 			$this->data['splits'] = $this->data['splits_resting'];
 
 		$this->set('splits', implode('-', $this->data['splits']));
+		$this->set('use_vdot', 1);
 	}
 
 	/**

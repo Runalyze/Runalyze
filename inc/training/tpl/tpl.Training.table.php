@@ -65,7 +65,7 @@
 <?php if ($this->hasRoute() || $this->hasElevation()): ?>
 	<tr>
 		<td class="inlineHead">Strecke:</td>
-		<td><?php echo Helper::Unknown($this->get('route')); ?>
+		<td><?php echo Helper::Unknown(HTML::encodeTags($this->get('route'))); ?>
 				<?php $calculated = $this->GpsData()->calculateElevation(); ?>
 				<?php $difference = $this->GpsData()->getElevationDifference(); ?>
 			<?php if ($this->hasElevation() > 0 || $calculated > 0): ?><br />
