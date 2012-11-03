@@ -104,7 +104,7 @@ class DataBrowser {
 	 * Init private timestamps from request
 	 */
 	protected function initTimestamps() {
-		if (isset($_GET['start']) || isset($_GET['end'])) {
+		if (!isset($_GET['start']) || !isset($_GET['end'])) {
 			switch (CONF_DB_DISPLAY_MODE) {
 				case 'month':
 					$this->timestamp_start = mktime(0, 0, 0, date("m"), 1, date("Y"));
