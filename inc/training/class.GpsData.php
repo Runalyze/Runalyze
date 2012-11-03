@@ -151,7 +151,7 @@ class GpsData {
 				$this->Cache->set('plot_'.$key, $value);
 
 			$GMap = new Gmap($TrainingID, $this);
-			$GMap->setCacheTo(&$this->Cache);
+			$GMap->setCacheTo($this->Cache);
 
 			$this->Cache->saveInDatabase();
 		}
