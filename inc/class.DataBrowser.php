@@ -104,8 +104,21 @@ class DataBrowser {
 	 * Init private timestamps from request
 	 */
 	protected function initTimestamps() {
-		$this->timestamp_start = isset($_GET['start']) ? $_GET['start'] : Time::Weekstart(time());
-		$this->timestamp_end   = isset($_GET['end'])   ? $_GET['end']   : Time::Weekend(time());
+		if (isset($_GET['start']) || isset($_GET['end'])) {
+			switch (CONF_DB_DISPLAY_MODE) {
+				case 'month':
+					$this->timestamp_start = mktime(0, 0, 0, date("m"), 1, date("Y"));
+					$this->timestamp_end   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+					break;
+				case 'week':
+				default:
+					$this->timestamp_start = Time::Weekstart(time());
+					$this->timestamp_end   = Time::Weekend(time());
+			}
+		} else {
+			$this->timestamp_start = $_GET['start'];
+			$this->timestamp_end   = $_GET['end'];
+		}
 
 		$this->day_count = round(($this->timestamp_end - $this->timestamp_start) / 86400);
 	}

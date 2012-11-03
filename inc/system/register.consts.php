@@ -167,7 +167,7 @@ $Privacy->addToCategoryList();
 $Design = new ConfigCategory('design', 'Design');
 $Design->setKeys(array(
 	'DB_HIGHLIGHT_TODAY',
-	'',
+	'DB_DISPLAY_MODE',
 	'DESIGN_BG_FIX_AND_STRETCH',
 	'DESIGN_BG_FILE',
 	'DB_SHOW_DIRECT_EDIT_LINK',
@@ -179,6 +179,16 @@ $Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
 	'default'		=> true,
 	'label'			=> 'Heute hervorheben',
 	'tooltip'		=> 'im Kalender',
+	'onchange'		=> Ajax::$RELOAD_DATABROWSER
+)));
+$Design->addConfigValue( new ConfigValueSelect('DB_DISPLAY_MODE', array(
+	'default'		=> 'week',
+	'label'			=> 'Kalender-Modus',
+	'options'		=> array(
+		'week'			=> 'Wochenansicht',
+		'month'			=> 'Monatsansicht'
+	),
+	'tooltip'		=> 'Standardansicht f&uuml;r den Kalender',
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Design->addConfigValue( new ConfigValueBool('DB_SHOW_CREATELINK_FOR_DAYS', array(
