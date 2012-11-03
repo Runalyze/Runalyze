@@ -33,6 +33,17 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	static private $TYPE_SQL = 2;
 
 	/**
+	 * ImportData: json 
+	 * @var array
+	 */
+	protected $ImportData = array();
+	
+	/**
+	 * ImportData Replaces Array 
+	 * @var array
+	 */
+	protected $ImportReplace = array();
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
@@ -77,7 +88,14 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function handleRequest() {
 		if (isset($_GET['file'])) {
-			// TODO: Import json
+			$importdec = gzdecode(Filesystem::openFileAndDelete('../plugin/'.$this->key.'/'.$_GET['file']));
+			$this->ImportData = json_decode($importdec, true);
+			//print_r($this->ImportData);
+			$this->ImportJsonTable('runalyze_shoe');
+			$this->ImportJsonTable('runalyze_clothes');
+			$this->PrepareTrainingTable();
+			
+			//print_r($this->ImportReplace);
 			//Filesystem::openFileAndDelete($fileName);
 		}
 
@@ -87,6 +105,62 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			else
 				$this->createBackup( self::$TYPE_SQL );
 		}
+	}
+	
+	//TODO Ganze Funktion ist schmarn
+	public function PrepareTrainingTable() {
+		echo "Befores";
+		//print_r($this->ImportData['runalyze_training']);
+		echo "</pre>";
+		
+		foreach($this->ImportData['runalyze_training'] as $tid => $training) {
+			
+			if(isset($training['clothes']) && strpos($training['clothes'], ',') === true) {
+				$clothes = explode(',',$training['clothes']);
+				//$clothes = explode(',',$this->ImportData['runalyze_training'][$tid]['clothes']);
+				echo "<pre>before";
+				print_r($clothes);
+				$rcloth = array();
+				foreach($clothes as $cid => $cloth)  {
+					$rcloth[$cloth] = $this->ImportReplace['runalyze_clothes'][$cloth];
+				}
+					print_r($rcloth);
+					
+				
+				echo "after</pre>";
+				
+				//$this->ImportData['runalyze_training'][$tid]['clothes'] = implode(',', $clothes);
+				//foreach($trainings as $tid => $training) {
+				//echo $tid; 
+				//print_r($training);
+				//}
+			}
+		}
+		
+		echo "After<pre>";
+		//print_r($this->ImportData['runalyze_training']);
+		//print_r($ImportData['runalyze_training']);
+		echo "</pre>";
+		
+		
+		
+	}
+	public function ImportJsonTable($table) {
+		if(is_array($this->ImportData[$table])) {
+			foreach($this->ImportData[$table] as $tabl) {
+				$columes = array();
+				$values = array();
+				foreach($tabl as $col => $coldat) {
+					if($col != 'accountid' AND $col != 'id') {
+						$columes[] = $col;
+						$values[] = $coldat;
+					}
+				}
+				$insid = Mysql::getInstance()->insert($table, $columes, $values);
+				//old // new
+				$this->ImportReplace[$table][$tabl['id']] = $insid;
+			}
+		}	
 	}
 
 	/**
