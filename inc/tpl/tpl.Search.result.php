@@ -139,7 +139,7 @@ foreach ($trainings as $i => $training) {
 	<tr class="a'.($i%2+1).' r">
 		<td class="l"><small>'.$link.'</small></td>');
 
-	$Dataset->setTrainingId($training['id']);
+	$Dataset->setTrainingId($training['id'], $training);
 	$Dataset->displayTableColumns();
 
 	echo('</tr>');

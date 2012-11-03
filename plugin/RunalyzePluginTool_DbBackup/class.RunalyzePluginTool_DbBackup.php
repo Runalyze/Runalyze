@@ -78,6 +78,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function handleRequest() {
 		if (isset($_GET['file'])) {
 			// TODO: Import json
+			//Filesystem::openFileAndDelete($fileName);
 		}
 
 		if (isset($_POST['backup'])) {
