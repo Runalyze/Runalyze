@@ -101,7 +101,13 @@ abstract class ConfigValue {
 		$this->setValueAndCheckDatabase();
 		$this->parsePostData();
 		$this->defineConst();
+		$this->subclassSetup();
 	}
+
+	/**
+	 * Init function for subclass - can be overwritten in subclass 
+	 */
+	protected function subclassSetup() {}
 
 	/**
 	 * Parse post data

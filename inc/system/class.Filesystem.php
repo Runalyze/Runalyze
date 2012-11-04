@@ -112,6 +112,14 @@ class Filesystem {
 	}
 
 	/**
+	 * Delete file
+	 * @param string $fileName relative to FRONTEND_PATH
+	 */
+	static public function deleteFile($fileName) {
+		unlink(FRONTEND_PATH.$fileName);
+	}
+
+	/**
 	 * Get filesize
 	 * @param string $file
 	 * @param mixed $setup
