@@ -194,6 +194,14 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string into p-tag with class="warning"
+	 * @param string $string
+	 */
+	public static function warning($string) {
+		return '<p class="warning">'.$string.'</p>';
+	}
+
+	/**
 	 * Replace ampersands for a textarea
 	 * @param string $text
 	 * @return string

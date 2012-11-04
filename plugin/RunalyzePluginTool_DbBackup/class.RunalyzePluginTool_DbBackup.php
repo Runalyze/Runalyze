@@ -37,12 +37,19 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * @var array
 	 */
 	protected $ImportData = array();
-	
+
 	/**
 	 * ImportData Replaces Array 
 	 * @var array
 	 */
 	protected $ImportReplace = array();
+
+	/**
+	 * Boolean flag: import on progress
+	 * @var boolean
+	 */
+	protected $importIsOnProgress = false;
+
 	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
@@ -87,16 +94,10 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Handle request 
 	 */
 	protected function handleRequest() {
-		if (isset($_GET['file'])) {
-			$importdec = gzdecode(Filesystem::openFileAndDelete('../plugin/'.$this->key.'/'.$_GET['file']));
-			$this->ImportData = json_decode($importdec, true);
-			//print_r($this->ImportData);
-			$this->ImportJsonTable('runalyze_shoe');
-			$this->ImportJsonTable('runalyze_clothes');
-			$this->PrepareTrainingTable();
-			
-			//print_r($this->ImportReplace);
-			//Filesystem::openFileAndDelete($fileName);
+		if (isset($_GET['file']) || isset($_POST['file'])) {
+			$this->importIsOnProgress = true;
+			require_once FRONTEND_PATH.'../plugin/'.$this->key.'/class.RunalyzeJsonImporter.php';
+			// Rest will be done in $this->displayImport();
 		}
 
 		if (isset($_POST['backup'])) {
@@ -105,62 +106,6 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			else
 				$this->createBackup( self::$TYPE_SQL );
 		}
-	}
-	
-	//TODO Ganze Funktion ist schmarn
-	public function PrepareTrainingTable() {
-		echo "Befores";
-		//print_r($this->ImportData['runalyze_training']);
-		echo "</pre>";
-		
-		foreach($this->ImportData['runalyze_training'] as $tid => $training) {
-			
-			if(isset($training['clothes']) && strpos($training['clothes'], ',') === true) {
-				$clothes = explode(',',$training['clothes']);
-				//$clothes = explode(',',$this->ImportData['runalyze_training'][$tid]['clothes']);
-				echo "<pre>before";
-				print_r($clothes);
-				$rcloth = array();
-				foreach($clothes as $cid => $cloth)  {
-					$rcloth[$cloth] = $this->ImportReplace['runalyze_clothes'][$cloth];
-				}
-					print_r($rcloth);
-					
-				
-				echo "after</pre>";
-				
-				//$this->ImportData['runalyze_training'][$tid]['clothes'] = implode(',', $clothes);
-				//foreach($trainings as $tid => $training) {
-				//echo $tid; 
-				//print_r($training);
-				//}
-			}
-		}
-		
-		echo "After<pre>";
-		//print_r($this->ImportData['runalyze_training']);
-		//print_r($ImportData['runalyze_training']);
-		echo "</pre>";
-		
-		
-		
-	}
-	public function ImportJsonTable($table) {
-		if(is_array($this->ImportData[$table])) {
-			foreach($this->ImportData[$table] as $tabl) {
-				$columes = array();
-				$values = array();
-				foreach($tabl as $col => $coldat) {
-					if($col != 'accountid' AND $col != 'id') {
-						$columes[] = $col;
-						$values[] = $coldat;
-					}
-				}
-				$insid = Mysql::getInstance()->insert($table, $columes, $values);
-				//old // new
-				$this->ImportReplace[$table][$tabl['id']] = $insid;
-			}
-		}	
 	}
 
 	/**
@@ -192,6 +137,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				in eine Neuinstallation einzuf&uuml;gen.
 			</small>');
 
+		if ($this->importIsOnProgress)
+			$Fieldset->setCollapsed();
+
 		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
 		$Formular->setId('database-backup');
 		$Formular->addCSSclass('ajax');
@@ -205,6 +153,85 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display import form
 	 */
 	protected function displayImport() {
+		echo HTML::warning('Dieser Importer ist <strong>noch nicht</strong> getestet!');
+
+		if (isset($_GET['file'])) {
+			$this->displayImportForm();
+		} elseif (isset($_POST['file'])) {
+			$this->displayImportFinish();
+		} else {
+			$this->displayImportUploader();
+		}
+	}
+
+	/**
+	 * Display import form 
+	 */
+	protected function displayImportForm() {
+		$Fieldset = new FormularFieldset('Daten importieren');
+
+		// TODO: Check for correct file extension
+		if (false) {
+			$Fieldset->addError('Die Datei kann nicht importiert werden.');
+		} else {
+			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_GET['file']);
+
+			$Fieldset->addField( new FormularCheckbox('overwrite_config', 'Konfigurationsvariablen &uuml;berschreiben', true) );
+			$Fieldset->addField( new FormularCheckbox('overwrite_dataset', 'Dataset-Konfiguration &uuml;berschreiben', true) );
+			$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', 'Plugin-Konfigurationen &uuml;berschreiben', true) );
+			$Fieldset->addField( new FormularCheckbox('delete_trainings', 'Alle alten Trainings l&ouml;schen', false) );
+			$Fieldset->addField( new FormularCheckbox('delete_user_data', 'Alle alten K&ouml;rperdaten l&ouml;schen', false) );
+			$Fieldset->addField( new FormularCheckbox('delete_shoes', 'Alle alten Schuhe l&ouml;schen', false) );
+
+			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfTrainings().' Trainings</strong> gefunden.');
+			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfShoes().' Schuhe</strong> gefunden.');
+			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfUserData().' K&ouml;rperdaten</strong> gefunden.');
+
+			$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
+		}
+
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular->setId('import-json-form');
+		$Formular->addCSSclass('ajax');
+		$Formular->addCSSclass('no-automatic-reload');
+		$Formular->addHiddenValue('file', $_GET['file']);
+		$Formular->addFieldset($Fieldset);
+		$Formular->addSubmitButton('Importieren');
+		$Formular->display();
+	}
+
+	/**
+	 * Display form: import finished 
+	 */
+	protected function displayImportFinish() {
+		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_POST['file']);
+		$Importer->importData();
+
+		$Errors   = $Importer->getErrors();
+		$Fieldset = new FormularFieldset('Daten importieren');
+
+		if (empty($Errors)) {
+			$Fieldset->addInfo('Alle Daten wurden importiert.');
+
+			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+			$Fieldset->addBlock(Ajax::getReloadCommand());
+		} else {
+			$Fieldset->addError('Der Import hat nicht geklappt.');
+
+			foreach ($Errors as $Error)
+				$Fieldset->addError($Error);
+		}
+
+		$Formular = new Formular();
+		$Formular->setId('import-finished');
+		$Formular->addFieldset($Fieldset);
+		$Formular->display();
+	}
+
+	/**
+	 * Display uploader 
+	 */
+	protected function displayImportUploader() {
 		$JScode = '
 			$("#file-upload").removeClass("hide");
 			new AjaxUpload(\'#file-upload\', {
@@ -259,6 +286,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			}
 		}
 
+		if ($this->importIsOnProgress)
+			$Fieldset->setCollapsed();
+
 		$Formular = new Formular();
 		$Formular->setId('backup-list');
 		$Formular->addFieldset($Fieldset);
@@ -301,7 +331,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$CreateResult = $Mysql->untouchedFetchArray('SHOW CREATE TABLE '.$TableName);
 				$Query        = 'SELECT * FROM `'.$TableName.'`';
 
-				if ($TableName == "runalyze_account" && USER_MUST_LOGIN)
+				if ($TableName == PREFIX.'account' && USER_MUST_LOGIN)
 					$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
 
 				if ($Type == self::$TYPE_SQL) {

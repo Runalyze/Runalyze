@@ -11,6 +11,27 @@ class ConfigValueSelectDb extends ConfigValue {
 	protected $type = 'selectdb';
 
 	/**
+	 * Array with all config values of this type
+	 * @var array
+	 */
+	static private $ConfigValues = array();
+
+	/**
+	 * Get array with all config values, $Array[KEY] = $Options
+	 * @return array
+	 */
+	static public function getAllValues() {
+		return self::$ConfigValues;
+	}
+
+	/**
+	 * Subclass setup: Save all values in static array
+	 */
+	protected function subclassSetup() {
+		self::$ConfigValues[$this->getKey()] = $this->Options;
+	}
+
+	/**
 	 * Get value as string, should be overwritten
 	 * @return string
 	 */
