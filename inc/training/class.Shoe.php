@@ -187,7 +187,9 @@ class Shoe extends DataObject {
 		if (isset($shoes[$id]))
 			return $shoes[$id]['name'];
 
-		Error::getInstance()->addWarning('Asked for unknown shoe-ID: "'.$id.'"');
+		if ($id > 0)
+			Error::getInstance()->addWarning('Asked for unknown shoe-ID: "'.$id.'"');
+
 		return '?';
 	}
 

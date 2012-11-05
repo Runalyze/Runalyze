@@ -95,8 +95,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function handleRequest() {
 		if (isset($_GET['file']) || isset($_POST['file'])) {
-			$this->importIsOnProgress = true;
 			require_once FRONTEND_PATH.'../plugin/'.$this->key.'/class.RunalyzeJsonImporter.php';
+
+			$this->importIsOnProgress = true;
 			// Rest will be done in $this->displayImport();
 		}
 
@@ -153,8 +154,6 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display import form
 	 */
 	protected function displayImport() {
-		echo HTML::warning('Dieser Importer ist <strong>noch nicht</strong> getestet!');
-
 		if (isset($_GET['file'])) {
 			$this->displayImportForm();
 		} elseif (isset($_POST['file'])) {
@@ -170,9 +169,16 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayImportForm() {
 		$Fieldset = new FormularFieldset('Daten importieren');
 
-		// TODO: Check for correct file extension
-		if (false) {
-			$Fieldset->addError('Die Datei kann nicht importiert werden.');
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular->setId('import-json-form');
+		$Formular->addCSSclass('ajax');
+		$Formular->addCSSclass('no-automatic-reload');
+		$Formular->addHiddenValue('file', $_GET['file']);
+
+		if (substr($_GET['file'], -8) != '.json.gz') {
+			$Fieldset->addError('Es k&ouml;nnen nur *.json.gz-Dateien importiert werden.');
+
+			Filesystem::deleteFile('../plugin/'.$this->key.'/'.$_GET['file']);
 		} else {
 			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_GET['file']);
 
@@ -188,15 +194,11 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfUserData().' K&ouml;rperdaten</strong> gefunden.');
 
 			$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
+
+			$Formular->addSubmitButton('Importieren');
 		}
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
-		$Formular->setId('import-json-form');
-		$Formular->addCSSclass('ajax');
-		$Formular->addCSSclass('no-automatic-reload');
-		$Formular->addHiddenValue('file', $_GET['file']);
 		$Formular->addFieldset($Fieldset);
-		$Formular->addSubmitButton('Importieren');
 		$Formular->display();
 	}
 

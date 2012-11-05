@@ -16,6 +16,12 @@ class Error {
 	private static $FORCE_LOG_FILE = false;
 
 	/**
+	 * Maximum number of errors to stop
+	 * @var int 
+	 */
+	private static $MAX_NUM_OF_ERRORS = 100;
+
+	/**
 	 * Internatl instance pointer
 	 * @var Error
 	 */
@@ -199,7 +205,7 @@ class Error {
 			$message .= ')';
 		}
 
-		if ($this->numErrors >= 100) {
+		if ($this->numErrors >= self::$MAX_NUM_OF_ERRORS) {
 			$this->errors[] = array('type' => 'ERROR', 'message' => 'FATAL ERROR: TOO MANY ERRORS.');
 			$this->display();
 			exit();

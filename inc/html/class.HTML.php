@@ -216,6 +216,9 @@ class HTML {
 	 * @return string
 	 */
 	public static function codeTransform($code) {
+		if (is_null($code))
+			return $code;
+
 		return str_replace(array('<','>'), array('&lt;','&gt;'), $code);
 	}
 
