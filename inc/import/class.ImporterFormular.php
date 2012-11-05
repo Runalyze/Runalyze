@@ -86,8 +86,6 @@ class ImporterFormular extends Importer {
 	* Parse post data and try to insert training to database
 	*/
 	public function parsePostData() {
-		$Mysql = Mysql::getInstance();
-
 		$AutoParseKeys   = array();
 		$AutoParseKeys[] = 'kcal';
 		$AutoParseKeys[] = 'sportid';

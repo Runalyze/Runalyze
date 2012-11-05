@@ -108,6 +108,9 @@ class Gmap {
 				return $this->GpsData->getCache()->get('polylines');
 		}
 
+		if (!$this->GpsData->hasPositionData())
+			return $both ? array('', '') : '';
+
 		$Code = '';
 		$CodeWith = '';
 		$CodeWithout = '';
@@ -166,6 +169,9 @@ class Gmap {
 		if (!$this->GpsData->getCache()->isEmpty()) {
 			return $this->GpsData->getCache()->get('marker');
 		}
+
+		if (!$this->GpsData->hasPositionData())
+			return '';
 
 		$SportDat = Mysql::getInstance()->fetchSingle('SELECT `sportid` FROM '.PREFIX.'training WHERE `id`='.$this->TrainingId);
 		$SportId  = $SportDat['sportid'];

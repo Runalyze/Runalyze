@@ -39,7 +39,7 @@ if (Request::param('reload') == 'true') {
 		<?php endif; ?>
 		</tr>
 	</thead>
-<?php $colspan = count($Fields); ?>
+<?php $colspan = 2 + count($Fields); ?>
 	<tbody>
 	<?php if (empty($Data)): ?>
 		<tr>

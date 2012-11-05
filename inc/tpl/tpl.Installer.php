@@ -250,7 +250,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		Links unten findet sich der Link zur <strong>Konfiguration</strong>.
+		Links oben findet sich der Link zur <strong>Konfiguration</strong>.
 		Hier sollten zun&auml;chst die wichtigsten Einstellungen vorgenommen werden, damit alles ganz deinen W&uuml;nschen entspricht.
 		Im Anschluss ist es empfehlenswert, sich ein wenig mit der Oberfl&auml;che vertraut zu machen und ein erstes Training einzutragen.
 		Dies geschieht durch einen Klick auf das &quot;Hinzuf&uuml;gen&quot;-Zeichen, das sich im <em>Data-Browser</em> <small>(links oben)</small> oben rechts befindet.
@@ -267,7 +267,7 @@ foreach ($Steps as $i => $Name) {
 	<?php endif; ?>
 
 	<p class="text">
-		Viel Spa&szlig; mit Runalyze w&uuml;nschen die Entwickler!
+		Viel Spa&szlig; mit Runalyze!
 	</p>
 
 	<p class="text">

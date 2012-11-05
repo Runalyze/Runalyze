@@ -137,18 +137,15 @@ class RunalyzeJsonImporter {
 	 * Check data 
 	 */
 	private function checkData() {
-		// TODO: Check data
-		// - check for correct table names
-		// - check for html inserts etc.
-		Error::getInstance()->addTodo('Check given data!');
+		// TODO: check for correct table names?
+		// "<" and ">" are transformed directly while inserting
 	}
 
 	/**
 	 * Correct table names for a different prefix 
 	 */
 	private function correctTableNames() {
-		Error::getInstance()->addWarning('Der Import klappt bisher nur, falls das gleiche Datenbankpr&auml;fix verwendet wird.');
-		Error::getInstance()->addTodo('See warning!');
+		Error::getInstance()->addTodo('Der Import klappt bisher nur, falls das gleiche Datenbankpr&auml;fix verwendet wird.');
 	}
 
 	/**
@@ -169,11 +166,15 @@ class RunalyzeJsonImporter {
 	 * Import general tables and set ReplaceIDs 
 	 */
 	private function importGeneralTables() {
-		if ($this->overwriteConfig)
+		if ($this->overwriteConfig) {
+			$this->Mysql->query('DELETE FROM `'.PREFIX.'conf`');
 			$this->importCompleteTable(PREFIX.'conf');
+		}
 
-		if ($this->overwriteDataset)
+		if ($this->overwriteDataset) {
+			$this->Mysql->query('DELETE FROM `'.PREFIX.'dataset`');
 			$this->importCompleteTable(PREFIX.'dataset');
+		}
 
 		$this->importCompleteTable(PREFIX.'user');
 	}
@@ -213,6 +214,9 @@ class RunalyzeJsonImporter {
 		if ($replaceIDs)
 			$this->ReplaceIDs[$tablename] = array();
 
+		if (!isset($this->Data[$tablename]) || !is_array($this->Data[$tablename]))
+			return;
+
 		foreach ($this->Data[$tablename] as $row) {
 			if ($replaceIDs) {
 				$row['name']  = isset($row['name']) ? mysql_real_escape_string($row['name']) : '';
@@ -229,7 +233,7 @@ class RunalyzeJsonImporter {
 				foreach ($row as $column => $value) {
 					if ($column != 'accountid' && $column != 'id') {
 						$columns[] = $column;
-						$values[]  = $value;
+						$values[]  = HTML::codeTransform($value);
 					}
 				}
 
@@ -265,7 +269,7 @@ class RunalyzeJsonImporter {
 		foreach ($Training as $column => $value) {
 			if ($column != 'accountid' && $column != 'id') {
 				$columns[] = $column;
-				$values[]  = $value;
+				$values[]  = HTML::codeTransform($value);
 			}
 		}
 
@@ -296,11 +300,14 @@ class RunalyzeJsonImporter {
 
 		$IDs = explode(',', $String);
 
+		if (!is_array($IDs))
+			return $String;
+
 		foreach ($IDs as $i => $ID)
-			if ((int)$ID > 0)
+			if ((int)$ID > 0 && isset($this->ReplaceIDs[PREFIX.'clothes'][$ID]))
 				$IDs[$i] = $this->ReplaceIDs[PREFIX.'clothes'][$ID];
 
-		return implode(',', $String);
+		return implode(',', $IDs);
 	}
 
 	/**
@@ -310,6 +317,8 @@ class RunalyzeJsonImporter {
 		if ($this->overwriteConfig) {
 			$ConfigValues = ConfigValueSelectDb::getAllValues();
 			foreach ($ConfigValues as $key => $Options) {
+				$Options['table'] = PREFIX.$Options['table'];
+
 				if (isset($this->ReplaceIDs[$Options['table']])) {
 					$InsertedData = $this->Mysql->fetchSingle('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'"');
 					if (isset($InsertedData['value']) && isset($this->ReplaceIDs[$Options['table']][$InsertedData['value']]))

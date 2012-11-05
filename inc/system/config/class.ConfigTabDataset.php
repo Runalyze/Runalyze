@@ -153,7 +153,7 @@ class ConfigTabDataset extends ConfigTab {
 			'pulse_avg'	=> 186,
 			'pulse_max'	=> 193,
 			'vdot'		=> VDOT_FORM + 1,
-			'no_vdot'	=> 0,
+			'use_vdot'	=> 0,
 			'jd_intensity'	=> 0,	// TODO
 			'trimp'		=> 121,
 			'temperature'	=> 17,
@@ -194,6 +194,6 @@ class ConfigTabDataset extends ConfigTab {
 		if (isset($Result['id']))
 			return $Result['id'];
 
-		return 1;
+		return 0;
 	}
 }
