@@ -228,7 +228,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function displayStreak() {
 		$Mysql    = Mysql::getInstance();
-		$Result   = $Mysql->query('SELECT time,DATE(FROM_UNIXTIME(time)) as day FROM '.PREFIX.'training GROUP BY DATE(FROM_UNIXTIME(time)) ORDER BY day DESC');
+		$Result   = $Mysql->query('SELECT time,DATE(FROM_UNIXTIME(time)) as day FROM '.PREFIX.'training WHERE `sportid`='.CONF_RUNNINGSPORT.' GROUP BY DATE(FROM_UNIXTIME(time)) ORDER BY day DESC');
 		$IsStreak = true;
 		$FirstDay = true;
 		$NumDays  = 0;
@@ -266,10 +266,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		if ($NumDays == 0) {
 			$Text .= 'Du hast derzeit keinen Streak.';
-			$LastTraining = $Mysql->fetchSingle('SELECT time FROM '.PREFIX.'training ORDER BY time DESC');
+			$LastTraining = $Mysql->fetchSingle('SELECT time FROM '.PREFIX.'training WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY time DESC');
 
 			if (isset($LastTraining['time']))
-				$Text .= ' Dein letztes Training war am '.date('d.m.Y', $LastTraining['time']);
+				$Text .= ' Dein letzter Lauf war am '.date('d.m.Y', $LastTraining['time']);
 		} else {
 			$Text .= $NumDays.' Tag'.($NumDays == 1 ? '' : 'e').' laufen seit dem '.date('d.m.Y', $LastTime);
 		}
