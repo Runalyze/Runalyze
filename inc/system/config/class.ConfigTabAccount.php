@@ -43,8 +43,14 @@ class ConfigTabAccount extends ConfigTab {
 
 		$Backup = new FormularFieldset('Daten sichern');
 		$Backup->setCollapsed();
-		$Backup->addInfo('Das Sichern aller Daten ist bisher nicht manuell m&ouml;glich.<br />
-						In wichtigen Einzelf&auml;llen kannst du uns eine E-Mail an mail@runalyze.de schicken und wir k&uuml;mmern uns darum.');
+
+		if (Plugin::isInstalled('RunalyzePluginTool_DbBackup')) {
+			$Plugin = Plugin::getInstanceFor('RunalyzePluginTool_DbBackup');
+			$Backup->addInfo('Bitte nutze das Plugin <strong>'.$Plugin->getWindowLink().'</strong>');
+		} else {
+			$Backup->addInfo('Das Sichern aller Daten ist bisher nicht manuell m&ouml;glich.<br />
+							In wichtigen Einzelf&auml;llen kannst du uns eine E-Mail an mail@runalyze.de schicken und wir k&uuml;mmern uns darum.');
+		}
 
 		$DeleteLink  = Ajax::window('<a href="call/window.delete.php"><strong>Account unwiderruflich l&ouml;schen &raquo;</strong></a>');
 		$DeleteLink .= '<br /><small>Nach dem L&ouml;schen erh&auml;lst du eine E-Mail mit dem Link zum L&ouml;schen deines Accounts.

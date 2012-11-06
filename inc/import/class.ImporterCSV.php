@@ -1,8 +1,4 @@
 <?php
-/**
- * This file contains the class::ImporterCSV for importing trainings from CSV
- */
-
 Importer::addAdditionalInfo('CSV-Import: Die CSV-Datei sollte pro Zeile ein Training
 	und in jeder Spalte wiederkehrend die gleichen Informationen enthalten.
 	Im n&auml;chsten Schritt k&ouml;nnen einzelne Trainings abgew&auml;hlt
@@ -11,9 +7,7 @@ Importer::addAdditionalInfo('CSV-Import: Die CSV-Datei sollte pro Zeile ein Trai
 
 /**
  * Class: ImporterCSV
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
  */
 class ImporterCSV extends Importer {
 	/**
