@@ -303,7 +303,6 @@ class ParserTCX extends Parser {
 	protected function parseLaps() {
 		if (!isset($this->XML->Lap)) {
 			$this->addError('Die Trainingsdatei enth&auml;lt keine Runden.');
-			print_r($this->XML); exit();
 		} else
 			foreach ($this->XML->Lap as $Lap)
 				$this->parseLap($Lap);

@@ -11,6 +11,12 @@ if (!defined('FRONTEND_PATH'))
 if (!defined('PREFIX'))
 	define('PREFIX', 'runalyze_');
 
+if (!defined('CONF_VDOT_CORRECTOR'))
+	define('CONF_VDOT_CORRECTOR', 1);
+
+if (!defined('RUNALYZE_TEST'))
+	define('RUNALYZE_TEST', true);
+
 spl_autoload_register(function ($className) {
     $possibilities = array(
 		__DIR__.'/../inc/class.'.$className.'.php',

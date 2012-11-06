@@ -21,6 +21,7 @@ class ConfigTabClothes extends ConfigTab {
 		$Clothes->addInfo('Die Kleidung kann wenn gew&uuml;nscht f&uuml;r weitere Statistiken bei jedem Training protokolliert werden.<br />
 						Alle Kleidungsst&uuml;cke werden nach Kategorie geordnet mit der Abk&uuml;rzung im Formular angezeigt.');
 		$Clothes->addInfo('Die Kategorie sollte eine Zahl sein und dient der Ordnung der Kleidungsst&uuml;cke.');
+		$Clothes->addInfo('F&uuml;lle einfach die leere letzte Zeile aus, um ein neues Kleidungsst&uuml;ck hinzuzuf&uuml;gen.');
 
 		$this->Formular->addFieldset($Clothes);
 	}
@@ -47,7 +48,7 @@ class ConfigTabClothes extends ConfigTab {
 
 		foreach ($Clothes as $i => $Data) {
 			$id     = $Data['id'];
-			$delete = (isset($Data['new'])) ? '' : '<input type="checkbox" name="clothes[delete]['.$id.']" />';
+			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="clothes[delete]['.$id.']" />';
 
 			$Code .= '
 					<tr class="a'.($i%2+1).($delete == '' ? ' unimportant' : '').'">
