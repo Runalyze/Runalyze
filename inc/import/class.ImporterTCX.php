@@ -1,4 +1,8 @@
 <?php
+Importer::addAdditionalInfo('HRM-Import: aus einer hrm- und gpx-Datei kann mit
+	<a href="http://polar2tcx.runalyze.de" title="Polar-Daten in *.tcx-Datei umwandeln">polar2tcx.runalyze.de</a>
+	eine tcx-Datei erstellt werden, die hier importiert werden kann.');
+
 /**
  * Class: ImporterTCX
  * @author Hannes Christiansen <mail@laufhannes.de>
