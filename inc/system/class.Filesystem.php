@@ -68,6 +68,9 @@ class Filesystem {
 	 * @param string $XML 
 	 */
 	static public function throwErrorForBadXml($XML) {
+		if (empty($XML) || defined('RUNALYZE_TEST'))
+			return;
+
 		$FileName = 'log/corrupt.xml.'.time().'.xml';
 		self::writeFile('../'.$FileName, $XML);
 

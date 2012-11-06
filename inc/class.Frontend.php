@@ -145,6 +145,7 @@ class Frontend {
 
 		Importer::registerImporter('TCX', 'ImporterTCX');
 		Importer::registerImporter('GPX', 'ImporterGPX');
+		Importer::registerImporter('SLF', 'ImporterSLF');
 		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
 		Importer::registerImporter('LOGBOOK', 'ImporterLogbook');
 		Importer::registerImporter('LOGBOOK3', 'ImporterLogbook3');

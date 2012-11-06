@@ -61,12 +61,12 @@
 
 			<?php $PlotsList->displayAllPlots(); ?>
 		</div>
-		<?php endif; ?>
 
 		<?php if ($this->Training->hasPositionData() && !CONF_TRAINING_MAP_BEFORE_PLOTS): ?>
 		<div id="training-map">
 			<?php $this->displayRoute(); ?>
 		</div>
+		<?php endif; ?>
 	</div>
 	<?php endif; ?>
 
