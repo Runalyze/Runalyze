@@ -62,7 +62,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$this->fileNameStart = SessionAccountHandler::getId().'-runalyze-backup';
 
 		if (isset($_GET['json'])) {
-			move_uploaded_file($_FILES['userfile']['tmp_name'], realpath(dirname(__FILE__)).'/'.$_FILES['userfile']['name']);
+			move_uploaded_file($_FILES['userfile']['tmp_name'], realpath(dirname(__FILE__)).'/import/'.$_FILES['userfile']['name']);
 			Error::getInstance()->footer_sent = true;
 			echo 'success';
 			exit;
@@ -178,9 +178,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if (substr($_GET['file'], -8) != '.json.gz') {
 			$Fieldset->addError('Es k&ouml;nnen nur *.json.gz-Dateien importiert werden.');
 
-			Filesystem::deleteFile('../plugin/'.$this->key.'/'.$_GET['file']);
+			Filesystem::deleteFile('../plugin/'.$this->key.'/import/'.$_GET['file']);
 		} else {
-			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_GET['file']);
+			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/import/'.$_GET['file']);
 			$Errors   = $Importer->getErrors();
 
 			if (empty($Errors)) {
@@ -214,7 +214,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display form: import finished 
 	 */
 	protected function displayImportFinish() {
-		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_POST['file']);
+		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/import/'.$_POST['file']);
 		$Importer->importData();
 
 		$Errors   = $Importer->getErrors();
@@ -360,6 +360,10 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 					foreach ($ArrayOfRows as $Row) {
 						if (PREFIX != 'runalyze_')
 							$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
+
+						// Don't save the cache!
+						if ($TableName == 'runalyze_training')
+							$Row['gps_cache_object'] = '';
 
 						$ExportData[$TableName][$Row['id']] = $Row;
 					}

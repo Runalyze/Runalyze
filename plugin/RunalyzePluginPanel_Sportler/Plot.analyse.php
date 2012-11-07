@@ -30,9 +30,9 @@ foreach ($Labels as $i => &$value)
 
 $Plot = new Plot("sportler_analyse", 320, 148);
 
-$Plot->Data[] = array('label' => 'Fett (links)&nbsp;&nbsp;&nbsp;&nbsp;', 'color' => '#FF3232', 'data' => $Adiposes);
-$Plot->Data[] = array('label' => 'Wasser', 'color' => '#3232FF', 'data' => $Water, 'yaxis' => 2);
-$Plot->Data[] = array('label' => 'Muskeln', 'color' => '#21FF21', 'data' => $Muscles, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'Fett (links)&nbsp;&nbsp;&nbsp;&nbsp;', 'color' => '#800', 'data' => $Adiposes);
+$Plot->Data[] = array('label' => 'Wasser', 'color' => '#008', 'data' => $Water, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'Muskeln', 'color' => '#080', 'data' => $Muscles, 'yaxis' => 2);
 
 
 if (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
