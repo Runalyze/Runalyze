@@ -34,6 +34,12 @@ $Plot->Data[] = array('label' => 'Fett (links)&nbsp;&nbsp;&nbsp;&nbsp;', 'color'
 $Plot->Data[] = array('label' => 'Wasser', 'color' => '#3232FF', 'data' => $Water, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'Muskeln', 'color' => '#21FF21', 'data' => $Muscles, 'yaxis' => 2);
 
+
+if (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
+	$Plot->setZeroPointsToNull();
+	$Plot->lineWithPoints();
+}
+
 $Plot->setMarginForGrid(5);
 
 //$Plot->hideXLabels();

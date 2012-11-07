@@ -74,16 +74,18 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		if ($this->config['use_body_fat']['var'])
 			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
-		
+
+		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
+
 		echo('
 			<div id="sportler-content">
 				<span class="right">'.$Pulse.'</span>
 				'.Ajax::flotChange($Weight, 'sportler_flots', 'sportler_weights').'
-				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse', false).'
+				'.Ajax::flotChange($Analyse, 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden).'
 
 				<div id="sportler_flots" class="flotChangeable" style="position:relative;width:322px;height:150px;margin:2px auto;">
 					<div class="flot waitImg" id="sportler_weights" style="width:320px;height:148px;position:absolute;"></div>
-					<div class="flot waitImg flotHide" id="sportler_analyse" style="width:320px;height:148px;position:absolute;"></div>
+					<div class="flot waitImg '.($AnalyseIsHidden ? 'flotHide' : '').'" id="sportler_analyse" style="width:320px;height:148px;position:absolute;"></div>
 				</div>
 			</div>');
 
