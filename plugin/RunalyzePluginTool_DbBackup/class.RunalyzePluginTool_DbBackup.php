@@ -181,21 +181,29 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			Filesystem::deleteFile('../plugin/'.$this->key.'/'.$_GET['file']);
 		} else {
 			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/'.$_GET['file']);
+			$Errors   = $Importer->getErrors();
 
-			$Fieldset->addField( new FormularCheckbox('overwrite_config', 'Konfigurationsvariablen &uuml;berschreiben', true) );
-			$Fieldset->addField( new FormularCheckbox('overwrite_dataset', 'Dataset-Konfiguration &uuml;berschreiben', true) );
-			$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', 'Plugin-Konfigurationen &uuml;berschreiben', true) );
-			$Fieldset->addField( new FormularCheckbox('delete_trainings', 'Alle alten Trainings l&ouml;schen', false) );
-			$Fieldset->addField( new FormularCheckbox('delete_user_data', 'Alle alten K&ouml;rperdaten l&ouml;schen', false) );
-			$Fieldset->addField( new FormularCheckbox('delete_shoes', 'Alle alten Schuhe l&ouml;schen', false) );
+			if (empty($Errors)) {
+				$Fieldset->addField( new FormularCheckbox('overwrite_config', 'Konfigurationsvariablen &uuml;berschreiben', true) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_dataset', 'Dataset-Konfiguration &uuml;berschreiben', true) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', 'Plugin-Konfigurationen &uuml;berschreiben', true) );
+				$Fieldset->addField( new FormularCheckbox('delete_trainings', 'Alle alten Trainings l&ouml;schen', false) );
+				$Fieldset->addField( new FormularCheckbox('delete_user_data', 'Alle alten K&ouml;rperdaten l&ouml;schen', false) );
+				$Fieldset->addField( new FormularCheckbox('delete_shoes', 'Alle alten Schuhe l&ouml;schen', false) );
 
-			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfTrainings().' Trainings</strong> gefunden.');
-			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfShoes().' Schuhe</strong> gefunden.');
-			$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfUserData().' K&ouml;rperdaten</strong> gefunden.');
+				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfTrainings().' Trainings</strong> gefunden.');
+				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfShoes().' Schuhe</strong> gefunden.');
+				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfUserData().' K&ouml;rperdaten</strong> gefunden.');
 
-			$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
-			$Formular->addSubmitButton('Importieren');
+				$Formular->addSubmitButton('Importieren');
+			} else {
+				$Fieldset->addError('Die Backup-Datei scheint fehlerhaft zu sein.');
+
+				foreach ($Errors as $Error)
+					$Fieldset->addError($Error);
+			}
 		}
 
 		$Formular->addFieldset($Fieldset);
@@ -328,8 +336,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$AllTables    = $Mysql->untouchedFetchArray('SHOW TABLES');
 
 		foreach ($AllTables as $Tables) {
-			foreach ($Tables as $Table) {
-				$TableName    = $Table;
+			foreach ($Tables as $TableName) {
 				$CreateResult = $Mysql->untouchedFetchArray('SHOW CREATE TABLE '.$TableName);
 				$Query        = 'SELECT * FROM `'.$TableName.'`';
 
@@ -351,7 +358,10 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 					$ArrayOfRows = $Mysql->fetchAsArray($Query);
 
 					foreach ($ArrayOfRows as $Row) {
-						$ExportData[$Table][$Row['id']] = $Row;
+						if (PREFIX != 'runalyze_')
+							$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
+
+						$ExportData[$TableName][$Row['id']] = $Row;
 					}
 				}
 			}

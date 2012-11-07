@@ -101,6 +101,11 @@ class RunalyzeJsonImporter {
 	 * Import data 
 	 */
 	public function importData() {
+		if (!empty($this->Errors)) {
+			Filesystem::deleteFile($this->filename);
+			return;
+		}
+
 		$this->deleteOldData();
 		$this->importGeneralTables();
 		$this->importTablesWithConflictingIDs();
@@ -137,7 +142,23 @@ class RunalyzeJsonImporter {
 	 * Check data 
 	 */
 	private function checkData() {
-		// TODO: check for correct table names?
+		$DesiredTables = array(
+			'runalyze_account',
+			'runalyze_clothes',
+			'runalyze_conf',
+			'runalyze_dataset',
+			'runalyze_plugin',
+			'runalyze_shoe',
+			'runalyze_sport',
+			'runalyze_training',
+			'runalyze_type',
+			'runalyze_user'
+		);
+
+		foreach ($DesiredTables as $Table)
+			if (!array_key_exists($Table, $this->Data))
+				$this->Errors[] = 'Die erforderliche Tabelle "'.$Table.'" ist nicht vorhanden.';
+
 		// "<" and ">" are transformed directly while inserting
 	}
 
@@ -145,7 +166,7 @@ class RunalyzeJsonImporter {
 	 * Correct table names for a different prefix 
 	 */
 	private function correctTableNames() {
-		Error::getInstance()->addTodo('Der Import klappt bisher nur, falls das gleiche Datenbankpr&auml;fix verwendet wird.');
+		// Nothing to do, DbBackup changes tablenames when saving as json
 	}
 
 	/**
