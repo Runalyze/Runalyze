@@ -704,6 +704,15 @@ class Plot {
 	}
 
 	/**
+	 * Set all zero points to null 
+	 */
+	public function setZeroPointsToNull() {
+		foreach ($this->Data as $series => $data) {
+			$this->Data[$series]['data'] = array_map("PLOT__setZeroToNullMapper", $data['data']);
+		}
+	}
+
+	/**
 	 * Correct special characters like umlaute to unicode-HTML
 	 * @param string $string
 	 */
@@ -755,5 +764,15 @@ function PLOT__correctValuesMapperForTime($v) {
  */
 function PLOT__correctValuesMapperFromPaceToKmh($v) {
 	return 3600/$v;
+}
+
+/**
+ * Mapper for Plot::setZeroPointsToNull
+ */
+function PLOT__setZeroToNullMapper($v) {
+	if ($v == 0)
+		return null;
+
+	return $v;
 }
 ?>

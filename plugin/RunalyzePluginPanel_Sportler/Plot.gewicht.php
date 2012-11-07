@@ -35,6 +35,11 @@ if ($Plugin_conf['use_weight']['var'])
 if ($Plugin_conf['use_pulse']['var'])
 	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 
+if (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
+	$Plot->setZeroPointsToNull();
+	$Plot->lineWithPoints();
+}
+
 $Plot->setMarginForGrid(5);
 
 $Plot->setXLabels($Labels);
