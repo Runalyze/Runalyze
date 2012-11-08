@@ -3,11 +3,16 @@ $Links = array();
 $Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
 
 echo Ajax::toolbarNavigation($Links, 'right');
+
+if (!empty($_POST)) {
+	Ajax::setReloadFlag( Ajax::$RELOAD_PLUGINS );
+	echo Ajax::getReloadCommand();
+}
 ?>
 
 <h1>Plugin: <?php echo $name; ?></h1>
 
-<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax" id="pluginconfig" method="post">
+<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax no-automatic-reload" id="pluginconfig" method="post">
 	<fieldset>
 		<legend>Beschreibung</legend>
 		<div class="w100">
