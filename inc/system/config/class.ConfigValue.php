@@ -72,6 +72,11 @@ abstract class ConfigValue {
 		else
 			$ID = SessionAccountHandler::getId();
 
+		if ($ID == 0 && strlen(Request::param('user')) > 0) {
+			$Data = AccountHandler::getDataFor(Request::param('user'));
+			$ID = $Data['id'];
+		}
+
 		$data = Mysql::getInstance()->fetchAsArray('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.$ID.'"');
 		foreach ($data as $confArray)
 			self::$DatabaseValues[$confArray['key']] = $confArray['value'];

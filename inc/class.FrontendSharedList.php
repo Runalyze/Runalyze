@@ -62,6 +62,13 @@ class FrontendSharedList extends FrontendShared {
 	}
 
 	/**
+	 * Init SessionAccountHandler
+	 */
+	protected function initSessionAccountHandler() {
+		SessionAccountHandler::setAccountFromRequest();
+	}
+
+	/**
 	 * Get ID of this user
 	 * @return int 
 	 */

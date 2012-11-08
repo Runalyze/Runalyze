@@ -207,6 +207,15 @@ class SessionAccountHandler {
 	}
 
 	/**
+	 * Try to set account from request 
+	 */
+	static public function setAccountFromRequest() {
+		if (empty(self::$Account) && strlen(Request::param('user')) > 0) {
+			self::$Account = AccountHandler::getDataFor(Request::param('user'));
+		}
+	}
+
+	/**
 	 * Set up session 
 	 */
 	private function setSession() {

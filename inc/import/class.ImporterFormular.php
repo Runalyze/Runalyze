@@ -289,7 +289,7 @@ class ImporterFormular extends Importer {
 		Trimp::checkForMaxValuesAt($this->time);
 
 		if ($Training->Sport()->isRunning()) {
-			if ($Training->hasType() && $Training->get('typeid') == CONF_WK_TYPID)
+			if ($Training->hasType() && isset($_POST['typeid']) && $Training->get('typeid') == CONF_WK_TYPID)
 				JD::recalculateVDOTcorrector();
 		
 			if ($Training->get('shoeid') > 0)
