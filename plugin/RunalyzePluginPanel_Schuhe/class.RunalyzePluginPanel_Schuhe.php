@@ -143,7 +143,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			}
 		} else {
 			echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
-			Error::getInstance()->addWarning('Bisher keine Schuhe eingetragen', __FILE__, __LINE__);
 		}
 
 		echo '</tbody>';

@@ -365,9 +365,11 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		foreach ($Weather as $W)
 			$Strings[] = $W['num'].'x '.Icon::getWeatherIcon($W['weatherid']);
 
-		echo '<strong>Wetterstatistiken:</strong> ';
-		echo implode(', ', $Strings);
-		echo '<br /><br />';
+		if (!empty($Strings)) {
+			echo '<strong>Wetterstatistiken:</strong> ';
+			echo implode(', ', $Strings);
+			echo '<br /><br />';
+		}
 	}
 
 	/**
