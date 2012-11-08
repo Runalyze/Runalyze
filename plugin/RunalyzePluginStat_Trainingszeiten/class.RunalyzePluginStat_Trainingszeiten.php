@@ -8,6 +8,8 @@ $PLUGINKEY = 'RunalyzePluginStat_Trainingszeiten';
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class RunalyzePluginStat_Trainingszeiten extends PluginStat {
+	protected $dataIsMissing = false;
+
 	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
@@ -35,7 +37,11 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	protected function displayContent() {
 		$this->displayHeader('Trainingszeiten');
 		$this->displayTable();
-		$this->displayImages();
+
+		if (!$this->dataIsMissing)
+			$this->displayImages();
+		else
+			echo HTML::em('Es sind leider noch keine Trainingsdaten vorhanden.');
 	}
 
 	/**
@@ -68,8 +74,10 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			(`H`+12)%24 ASC,
 			`MIN` ASC');
 
-		if (empty($nights))
+		if (empty($nights)) {
+			$this->dataIsMissing = true;
 			return;
+		}
 		
 		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="small">';
 		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';

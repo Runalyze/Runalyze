@@ -204,8 +204,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		if (!empty($nums)) {
 			foreach ($nums as $dat)
 				$num[$dat['m']] = $dat['num'];
-		} else {
-			Error::getInstance()->addWarning('Bisher keine Trainingsdaten eingetragen', __FILE__, 169);
 		}
 
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
@@ -248,8 +246,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 				echo('</tr>');
 			}
-		} else {
-			Error::getInstance()->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__); 
 		}
 	}
 
@@ -297,8 +293,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					echo '<td colspan="2" class="c"><em>-</em></td>';
 				}
 			}
-		} else
-			Error::getInstance()->addWarning('Keine Kleidung eingetragen', __FILE__, __LINE__);
+		}
 
 		for (; $i%3 != 1; $i++)
 			echo HTML::emptyTD(3);

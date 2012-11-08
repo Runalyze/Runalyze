@@ -190,8 +190,8 @@ class AccountHandler {
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Zugangsdaten';
-			$message  = "Passwort vergessen, ".$account['name']."?\n\n";
-			$message .= "Unter folgendem Link kannst du innerhalb der n&auml;chsten 24 Stunden dein Passwort &auml;ndern:\n";
+			$message  = "Passwort vergessen, ".$account['name']."?<br /><br />\n\n";
+			$message .= "Unter folgendem Link kannst du innerhalb der n&auml;chsten 24 Stunden dein Passwort &auml;ndern:<br />\n";
 			$message .= self::getChangePasswordLink($pwHash);
 
 			if (System::sendMail($account['mail'], $subject, $message))
@@ -381,8 +381,8 @@ class AccountHandler {
 
 		Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Accountl&ouml;schung best&auml;tigen';
-		$message  = "Schade, dass du deinen Account ".$account['name']." l&ouml;schen möchtest!<br /><br />\n\n";
+		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Account löschen';
+		$message  = "Schade, dass du deinen Account ".$account['username']." l&ouml;schen möchtest, ".$account['name']."!<br /><br />\n\n";
 		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br />\n";
 		$message .= $deletionLink;
 		$message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br />\n";
