@@ -80,11 +80,16 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			</p>'.NL);	
 		}
 
+		if (empty($schuhe))
+			echo HTML::em('Du hast noch keine Schuhe eingetragen.');
+
 		if (!$inuse)
 			echo '</div>';
 		echo '</div>';
 
-		echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
+		if (!$inuse)
+			echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
+
 		echo HTML::clearBreak();
 	}
 

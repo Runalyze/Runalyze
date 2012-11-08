@@ -124,7 +124,7 @@ class AccountHandler {
 
 	/**
 	 * Try to register new user with data from $_POST
-	 * @return boolean|array true for success, array with errors otherwise 
+	 * @return boolean|array true for success, array with errors otherwise
 	 */
 	static public function tryToRegisterNewUser() {
 		$errors = array();
@@ -353,7 +353,7 @@ class AccountHandler {
 
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Registrierung';
 		$message  = "Danke f&uuml;r deine Anmeldung, ".$account['name']."!<br /><br />\n\n";
-		$message .= "Unter folgendem Link kannst du deinen Account best&auml;tigen:<br />\n";
+		$message .= "Unter folgendem Link kannst du deinen Account (Benutzername: ".$account['username'].") best&auml;tigen:<br />\n";
 		$message .= $activationLink;
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
