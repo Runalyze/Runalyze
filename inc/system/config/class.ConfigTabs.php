@@ -86,7 +86,7 @@ class ConfigTabs {
 	 * @return boolean
 	 */
 	private function hasToShowDiv() {
-		return (Request::param('key') == '' || Request::param('form') == 'true');
+		return (Request::param('key') == '' || Request::param('form') == 'true' || Request::param('external') == 'true');
 	}
 
 	/**
