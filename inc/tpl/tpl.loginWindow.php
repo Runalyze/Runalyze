@@ -50,10 +50,11 @@
 			if (isset($_POST['new_username'])) {
 				$Errors = AccountHandler::tryToRegisterNewUser();
 
-				foreach ($Errors as $Error)
-					if (is_array($Error))
-						foreach (array_keys($Error) as $FieldName)
-							FormularField::setKeyAsFailed($FieldName);
+				if (is_array($Errors))
+					foreach ($Errors as $Error)
+						if (is_array($Error))
+							foreach (array_keys($Error) as $FieldName)
+								FormularField::setKeyAsFailed($FieldName);
 			}
 
 			FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);

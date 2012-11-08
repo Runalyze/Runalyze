@@ -34,12 +34,6 @@ $Plot->Data[] = array('label' => 'Fett (links)&nbsp;&nbsp;&nbsp;&nbsp;', 'color'
 $Plot->Data[] = array('label' => 'Wasser', 'color' => '#008', 'data' => $Water, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'Muskeln', 'color' => '#080', 'data' => $Muscles, 'yaxis' => 2);
 
-
-if (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
-	$Plot->setZeroPointsToNull();
-	$Plot->lineWithPoints();
-}
-
 $Plot->setMarginForGrid(5);
 
 //$Plot->hideXLabels();
@@ -59,6 +53,10 @@ $Plot->setYTicks(1, 1, 0);
 
 if(empty($Data)) 
 	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
+	$Plot->setZeroPointsToNull();
+	$Plot->lineWithPoints();
+}
 
 $Plot->outputJavaScript( true );
 ?>

@@ -35,11 +35,6 @@ if ($Plugin_conf['use_weight']['var'])
 if ($Plugin_conf['use_pulse']['var'])
 	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 
-if (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
-	$Plot->setZeroPointsToNull();
-	$Plot->lineWithPoints();
-}
-
 $Plot->setMarginForGrid(5);
 
 $Plot->setXLabels($Labels);
@@ -60,8 +55,12 @@ if ($Wunschgewicht > 1) {
 	$Plot->addMarkingArea('y1', $Wunschgewicht, 0);
 }
 
-if(empty($Data)) 
+if (empty($Data)) 
 	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
+	$Plot->setZeroPointsToNull();
+	$Plot->lineWithPoints();
+}
 
 $Plot->outputJavaScript( true );
 ?>
