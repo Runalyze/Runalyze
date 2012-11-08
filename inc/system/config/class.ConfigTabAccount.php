@@ -65,7 +65,6 @@ class ConfigTabAccount extends ConfigTab {
 		$this->Formular->addFieldset($Backup);
 		$this->Formular->addFieldset($Delete);
 		$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
-		$this->Formular->allowOnlyOneOpenedFieldset();
 	}
 
 	/**
