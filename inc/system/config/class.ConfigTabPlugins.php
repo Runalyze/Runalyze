@@ -13,6 +13,14 @@ class ConfigTabPlugins extends ConfigTab {
 	}
 
 	/**
+	 * Get URL
+	 * @return string 
+	 */
+	static public function getExternalUrl() {
+		return ConfigTabs::$CONFIG_URL.'?key=config_tab_plugins&external=true';
+	}
+
+	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {

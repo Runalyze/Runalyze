@@ -1,6 +1,6 @@
 <?php
 $Links = array();
-$Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=plugins" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
+$Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
 
 echo Ajax::toolbarNavigation($Links, 'right');
 ?>
