@@ -905,7 +905,10 @@ class GpsData {
 		$Xml = simplexml_load_string_utf8($String);
 
 		if (!$Xml || !isset($Xml->status) || (string)$Xml->status != 'OK') {
-			Filesystem::throwErrorForBadXml($String);
+			if (isset($Xml->status))
+				Error::getInstance()->addError('Google-Service f&uuml;r H&ouml;hendaten liefert: '.((string)$Xml->status));
+			else
+				Filesystem::throwErrorForBadXml($String);
 			return false;
 		}
 

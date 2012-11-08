@@ -293,10 +293,13 @@ final class Mysql {
 	 *	@return string $query (MySQL query)
 	 **/
 	private function addAccountId($query) {
-		if (FrontendShared::$IS_SHOWN)
-			return $query;
+		if (FrontendShared::$IS_SHOWN) {
+			$ID = SessionAccountHandler::getId();
 
-		$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
+			if ($ID == 0)
+				return $query;
+		} else
+			$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
 
 		if (strpos($query, 'SET NAMES') !== false || !is_numeric($ID))
 			return $query;
