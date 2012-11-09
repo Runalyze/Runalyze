@@ -316,7 +316,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if ($handle = opendir(FRONTEND_PATH.$this->BackupPath)) {
 			while (false !== ($file = readdir($handle))) {
 				if (substr($file,0,1) != ".") {
-					if (strpos($file, $this->fileNameStart) !== false)
+					if (strpos($file, $this->fileNameStart) === 0)
 						$Files[] = $file;
 				}
 			}
