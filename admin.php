@@ -14,7 +14,7 @@ require 'inc/class.Frontend.php';
 $Frontend = new Frontend(true);
 
 $title = 'Runalyze v'.RUNALYZE_VERSION;
-$tpl   = 'tpl.adminWindow.php';
+$tpl   = 'tpl.adminWindow.login.php';
 
 $AdminIsLoggedIn = isset($_POST['password']) && $Frontend->isAdminPassword($_POST['password']);
 $AllUser         = Mysql::getInstance()->untouchedFetchArray('
@@ -31,6 +31,11 @@ $AllUser         = Mysql::getInstance()->untouchedFetchArray('
 		)	AS num
 	FROM '.PREFIX.'account
 	ORDER BY id ASC');
+
+if ($AdminIsLoggedIn) {
+	define('ADMIN_WINDOW', true);
+	$tpl = 'tpl.adminWindow.php';
+}
 
 include 'inc/tpl/tpl.installerHeader.php';
 include 'inc/tpl/'.$tpl;

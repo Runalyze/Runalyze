@@ -214,7 +214,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 				$Dataset->displayTableColumns();
 			} else
-				echo Html::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
+				echo HTML::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
 
 			echo '</tr>';
 		}

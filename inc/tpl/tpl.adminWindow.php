@@ -1,76 +1,80 @@
-<?php if ($AdminIsLoggedIn): ?>
-	<p class="text">
-		<strong>Willkommen im Administrationsbereich!</strong>
-	</p>
+<?php
+// TODO
+// Passwort "senden"?
+/*
+$Configuration = new FormularFieldset('Einstellungen');
+$Configuration->addField( new FormularCheckbox('can_register', 'Benutzer k&ouml;nnen sich registrieren') );
+$Configuration->setCollapsed();
+$Configuration->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 
-	<fieldset>
-		<legend>Nutzer</legend>
+$ConfigFormular = new Formular();
+$ConfigFormular->setId('admin-window');
+$ConfigFormular->addFieldset($Configuration);
+$ConfigFormular->addSubmitButton('Speichern');
+$ConfigFormular->display();
+*/
 
-	<?php if (empty($AllUser)): ?>
-		<p class="warning">Es sind keine Benutzer registriert.</p>
-	<?php else: ?>
-		<table class="small fullWidth" id="userTable">
-			<thead>
-				<tr>
-					<th>#id</th>
-					<th>User</th>
-					<th>Name</th>
-					<th>E-Mail</th>
-					<th class="{sorter: 'x'}">Anz.</th>
-					<th class="{sorter: 'distance'}">km</th>
-					<th class="{sorter: 'germandate'}">seit</th>
-					<th class="{sorter: 'germandate'}">zuletzt</th>
-					<th>Funktionen</th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php foreach ($AllUser as $i => $User): ?>
-				<tr class="<?php echo HTML::trClass($i); ?>">
-					<td class="small r"><?php echo $User['id']; ?></td>
-					<td><?php echo $User['username']; ?></td>
-					<td><?php echo $User['name']; ?></td>
-					<td class="small"><?php echo $User['mail']; ?></td>
-					<td class="small r"><?php echo $User['num']; ?>x</td>
-					<td class="small r"><?php echo Running::Km($User['km']); ?></td>
-					<td class="small c"><?php echo date("d.m.Y", $User['registerdate']); ?></td>
-					<td class="small c"><?php echo date("d.m.Y", $User['lastaction']); ?></td>
-					<td>User aktivieren Neues Passwort zusenden</td>
-				</tr>
-			<?php endforeach; ?>
-			</tbody>
-		</table>
+$UserList = new FormularFieldset('Benutzerliste');
 
-		<div class="small">
-		<?php Ajax::createTablesorterWithPagerFor('#userTable'); ?>
-		</div>
-	<?php endif; ?>
-	</fieldset>
+if (empty($AllUser)) {
+	$UserList->addWarning('Es ist noch niemand registriert.');
+} else {
+	$Code = '
+	<table class="small fullWidth" id="userTable">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>User</th>
+				<th>Name</th>
+				<th>E-Mail</th>
+				<th class="{sorter: \'x\'}">Anz.</th>
+				<th class="{sorter: \'distance\'}">km</th>
+				<th class="{sorter: \'germandate\'}">seit</th>
+				<th class="{sorter: \'germandate\'}">zuletzt</th>
+				<!--<th class="{sorter: false}">Funktionen</th>-->
+			</tr>
+		</thead>
+		<tbody>';
 
-	<?php
-	$Fieldset = new FormularFieldset('Serverdaten');
-	$Fieldset->addInfo('Derzeit l&auml;uft PHP '.PHP_VERSION);
-	$Fieldset->addInfo('Es l&auml;uft MySQL '.@mysql_get_server_info());
-	$Fieldset->addInfo('Zeit-Limit: '.ini_get('max_execution_time'));
-	$Fieldset->addInfo('Memory-Limit: '.ini_get('memory_limit'));
-	$Fieldset->addInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
-	$Fieldset->display();
-	?>
-<?php else: ?>
-<div class="w50" id="loginWindow">
-	<form action="" method="post">
-		<fieldset>
-			<legend>Administration</legend>
-			<div class="w100 clear">
-				<label for="password">Passwort</label>
-				<input id="password" name="password" class="middleSize withUnit unitPass" type="password" />
-			</div>
+	foreach ($AllUser as $i => $User) {
+		$Code .= '
+			<tr class="'.HTML::trClass($i).'">
+				<td class="small r">'.$User['id'].'</td>
+				<td>'.$User['username'].'</td>
+				<td>'.$User['name'].'</td>
+				<td class="small">'.$User['mail'].'</td>
+				<td class="small r">'.$User['num'].'x</td>
+				<td class="small r">'.Running::Km($User['km']).'</td>
+				<td class="small c">'.date("d.m.Y", $User['registerdate']).'</td>
+				<td class="small c">'.date("d.m.Y", $User['lastaction']).'</td>
+				<!--<td>User aktivieren Neues Passwort zusenden</td>-->
+			</tr>';
+	}
 
-			<p class="text">&nbsp;</p>
+	$Code .= '
+		</tbody>
+	</table>
 
-			<div class="c">
-				<input type="submit" value="Login" name="submit" />
-			</div>
-		</fieldset>
-	</form>
-</div>
-<?php endif; ?>
+	<div class="small">
+		'.Ajax::getTablesorterWithPagerFor('#userTable').'
+	</div>';
+
+	$UserList->addBlock($Code);
+}
+
+
+$ServerInformation = new FormularFieldset('Serverdaten');
+$ServerInformation->addSmallInfo('Derzeit l&auml;uft PHP '.PHP_VERSION);
+$ServerInformation->addSmallInfo('Es l&auml;uft MySQL '.@mysql_get_server_info());
+$ServerInformation->addSmallInfo('Zeit-Limit: '.ini_get('max_execution_time'));
+$ServerInformation->addSmallInfo('Memory-Limit: '.ini_get('memory_limit'));
+$ServerInformation->addSmallInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
+$ServerInformation->setCollapsed();
+
+
+$Formular = new Formular();
+$Formular->setId('admin-window');
+$Formular->addFieldset($UserList);
+$Formular->addFieldset($ServerInformation);
+$Formular->display();
+?>

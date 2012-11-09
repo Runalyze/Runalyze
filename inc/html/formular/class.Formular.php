@@ -24,6 +24,12 @@ class Formular extends HtmlTag {
 	protected $submitButtons = array();
 
 	/**
+	 * Boolean flag: submit buttons centered
+	 * @var boolean 
+	 */
+	protected $submitButtonsCentered = false;
+
+	/**
 	 * Formular action
 	 * @var string 
 	 */
@@ -100,6 +106,13 @@ class Formular extends HtmlTag {
 	}
 
 	/**
+	 * Set submit buttons centered 
+	 */
+	public function setSubmitButtonsCentered() {
+		$this->submitButtonsCentered = true;
+	}
+
+	/**
 	 * Add a failure, displayed above submit-button
 	 * @param string $message 
 	 */
@@ -158,8 +171,14 @@ class Formular extends HtmlTag {
 		foreach ($this->failures as $message)
 			echo HTML::error($message);
 
+		if ($this->submitButtonsCentered)
+			echo '<div class="c">';
+
 		foreach ($this->submitButtons as $name => $value)
 			echo '<input type="submit" name="'.$name.'" value="'.$value.'" />';
+
+		if ($this->submitButtonsCentered)
+			echo '</div>';
 
 		echo '</form>';
 	}
