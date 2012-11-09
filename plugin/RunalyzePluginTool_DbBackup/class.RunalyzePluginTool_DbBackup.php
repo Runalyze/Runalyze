@@ -259,6 +259,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button small hide" id="file-upload">Datei hochladen</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
 		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json');
+		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br />
+			F&uuml;r einen Import von v1.1 in v1.2 muss v1.1 zun&auml;chst aktualisiert werden.');
 
 		$Fieldset = new FormularFieldset('Daten importieren');
 		$Fieldset->setCollapsed();
