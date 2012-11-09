@@ -43,7 +43,7 @@ $Frontend = new Frontend(true);
 				deviceSelectLabel: "Ger&auml;te: ",
 				findDevicesButtonText: "Ger&auml;te suchen",
 				loadingContentText: "Daten werden von #{deviceName} gelesen, bitte warten...",
-				readSelectedButtonText: "Importieren",
+				readSelectedButtonText: "Bitte warten ...", // "Importieren"
 				dataFound: "#{tracks} Trainings gefunden",
 				noDeviceDetectedStatusText: "Keine Ger&auml;te gefunden",
 				singleDeviceDetectedStatusText: "Gefunden: ",
@@ -79,6 +79,7 @@ $Frontend = new Frontend(true);
 					}
 				},
 				postActivityHandler: function(activityXml, display) {
+					$("readSelectedButton").value = "Importieren";
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
 	
 					if (display.numQueuedActivities > 1)
@@ -92,6 +93,9 @@ $Frontend = new Frontend(true);
 				afterFinishUploads: function(display) {
 					if (uploadedActivities.length > 1)
 						window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
+				},
+				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
+					$("readSelectedButton").value = "Importieren";
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
