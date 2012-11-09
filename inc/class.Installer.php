@@ -322,7 +322,7 @@ class Installer {
 	 * @return array
 	 */
 	static public function getSqlFileAsArray($filename) {
-		$MRK = array('USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
+		$MRK = array('delimiter', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
 		$SQL = file($filename);
 		$query  = '';
 		$array = array();
