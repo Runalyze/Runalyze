@@ -24,7 +24,7 @@ $JS_FILES = array(
 	'lib/runalyze.lib.tablesorter.js',
 	'lib/runalyze.lib.js',
 
-	'lib/flot/canvas2image.js',
+	//'lib/flot/canvas2image.js',
 	'lib/flot/base64.js',
 
 	'lib/flot/jquery.plot.js',

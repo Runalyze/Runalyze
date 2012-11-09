@@ -150,6 +150,8 @@ class Dataset {
 	 * @return boolean 
 	 */
 	public function setGroupOfTrainings($SummaryData) {
+		$this->km_of_last_set = 0;
+
 		$this->setTrainingId( Training::$CONSTRUCTOR_ID );
 
 		if ($SummaryData === false || empty($SummaryData))

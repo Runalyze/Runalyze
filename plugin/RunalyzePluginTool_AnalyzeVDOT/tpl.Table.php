@@ -38,10 +38,15 @@
 		<td><?php echo HTML::plusMinus(sprintf("%01.2f", 100*($Training['s'] - $prognosis)/$Training['s']), 2); ?> &#37;</td>
 	</tr>
 <?php endforeach; ?>
+<?php if (empty($this->Trainings)): ?>
+	<tr>
+		<td colspan="12"><em>Du hast noch keine Wettk&auml;pfe eingetragen.</td>
+	</tr>
+<?php endif; ?>
 	</tbody>
 </table>
 
-<?php Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable'); ?>
+<?php if (!empty($this->Trainings)) Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable'); ?>
 
 <p class="info">
 	<strong>VDOT Wert/Zeit:</strong> aus Pace-Puls-Verh&auml;ltnis<br />

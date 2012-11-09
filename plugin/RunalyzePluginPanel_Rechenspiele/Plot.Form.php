@@ -22,17 +22,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$AddDays    = max(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
 	$MinAddDays = min(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
 
-	for ($d = 1; $d <= $MaxDays; $d++) {
-		$Trimps_raw[]    = 0;
-		$VDOTs_raw[]     = 0;
-		$Durations_raw[] = 0;
-	}
-
-	for ($i = 0; $i < $AddDays; $i++) {
-		$Trimps_raw[]    = 0;
-		$VDOTs_raw[]     = 0;
-		$Durations_raw[] = 0;
-	}
+	$EmptyArray    = array_fill(0, $MaxDays + $AddDays, 0);
+	$Trimps_raw    = $EmptyArray;
+	$VDOTs_raw     = $EmptyArray;
+	$Durations_raw = $EmptyArray;
 
 	// Here ATL/CTL/VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
@@ -48,11 +41,13 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		FROM `'.PREFIX.'training`
 		WHERE
 			(
-				YEAR(FROM_UNIXTIME(`time`))>='.$StartYear.' AND
-				YEAR(FROM_UNIXTIME(`time`))<='.$EndYear.'
-			) OR (
-				YEAR(FROM_UNIXTIME(`time`))='.($StartYear-1).' AND
-				DAYOFYEAR(FROM_UNIXTIME(`time`)) >= '.(366-$AddDays).'
+				(
+					YEAR(FROM_UNIXTIME(`time`))>='.$StartYear.' AND
+					YEAR(FROM_UNIXTIME(`time`))<='.$EndYear.'
+				) OR (
+					YEAR(FROM_UNIXTIME(`time`))='.($StartYear-1).' AND
+					DAYOFYEAR(FROM_UNIXTIME(`time`)) >= '.(366-$AddDays).'
+				)
 			)
 		GROUP BY `y`, `d`');
 
