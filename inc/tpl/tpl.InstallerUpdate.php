@@ -27,6 +27,10 @@
 	<p class="error">
 		<?php echo implode('<br />', $this->Errors); ?>
 	</p>
+	<?php elseif (isset($_POST['importFile'])): ?>
+	<p class="info">
+		Runalyze wurde erfolgreich auf die gew&uuml;nschte Version aktualisiert.
+	</p>
 	<?php endif; ?>
 
 	<p class="text">
