@@ -68,11 +68,11 @@ final class Mysql {
 	 * @return resource|bool   resource for 'SELECT' and otherwise true, false for errors 
 	 */
 	public function query($query, $addAccountId = true) {
-		if (self::$debugQuery)
-			Error::getInstance()->addDebug($query);
-
 		if ($addAccountId === true)
 			$query = $this->addAccountId($query);
+
+		if (self::$debugQuery)
+			Error::getInstance()->addDebug($query);
 
 		$result = mysql_query($query)
 			or Error::getInstance()->addError(mysql_error().' &lt;Query: '.$query.'&gt;', __FILE__, __LINE__);

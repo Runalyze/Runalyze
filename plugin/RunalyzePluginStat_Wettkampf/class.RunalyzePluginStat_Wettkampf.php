@@ -131,7 +131,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			}
 		} else {
 			$this->displayEmptyTr(1, 'Keine Wettk&auml;mpfe gefunden.');
-			Error::getInstance()->addWarning('Keine Trainingsdaten vorhanden', __FILE__, __LINE__);
 		}
 		
 		$this->displayTableEnd('wk-table');

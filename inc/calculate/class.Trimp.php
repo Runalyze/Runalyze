@@ -128,15 +128,16 @@ class Trimp {
 		// Berechnung mit Trainingszonen waere:
 		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
 		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
-		if ($trimpToReach) {
+		if ($trimpToReach !== false) {
 			$Sport   = new Sport( CONF_MAINSPORT );
 			$avgHf   = $Sport->avgHF();
 		} else {
+			// TODO: Don't create new Training!
 			$Training    = new Training($trainingId);
 			$avgHf       = $Training->avgHF();
 		}
 
-		if ($trimpToReach || !$Training->GpsData()->hasHeartrateData()) {
+		if ($trimpToReach !== false || !$Training->GpsData()->hasHeartrateData()) {
 			$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
 			$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
 	
