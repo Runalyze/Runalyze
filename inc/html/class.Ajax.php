@@ -368,16 +368,33 @@ class Ajax {
 	 * @param boolean $reinit [optional]
 	 */
 	public static function createTablesorterWithPagerFor($selector, $reinit = false) {
-		self::printPagerDiv();
+		echo self::getTablesorterWithPagerFor($selector, $reinit);
+	}
 
-		echo self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager('.($reinit?'true':'').');');
+	/**
+	 * Create code for binding tablesorter with pager
+	 * @param string $selector
+	 * @param boolean $reinit [optional]
+	 */
+	public static function getTablesorterWithPagerFor($selector, $reinit = false) {
+		$Code = self::getPagerDiv();
+		$Code .= self::wrapJSforDocumentReady('$("'.$selector.'").tablesorterWithPager('.($reinit?'true':'').');');
+
+		return $Code;
 	}
 
 	/**
 	 * Print div for pager for tables
 	 */
 	private static function printPagerDiv() {
-		echo '
+		echo self::getPagerDiv();
+	}
+
+	/**
+	 * Get div for pager for tables
+	 */
+	private static function getPagerDiv() {
+		return '
 <div id="pager" class="pager c">
 	<form>
 		<a href="#main" class="first">|&laquo; Start</a>

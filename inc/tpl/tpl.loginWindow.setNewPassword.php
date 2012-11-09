@@ -22,9 +22,9 @@
 				<input id="new_pw_again" name="new_pw_again" class="middleSize" type="password" />
 			</div>
 		<?php else: ?>
-			<?php echo Html::error('Der Link ist nicht mehr g&uuml;ltig'); ?>
+			<?php echo HTML::error('Der Link ist nicht mehr g&uuml;ltig'); ?>
 		<?php endif; ?>
-		<?php if (is_array($errors) && !empty($errors)) foreach ($errors as $error) echo Html::error($error); ?>
+		<?php if (is_array($errors) && !empty($errors)) foreach ($errors as $error) echo HTML::error($error); ?>
 		</fieldset>
 
 		<div class="c">

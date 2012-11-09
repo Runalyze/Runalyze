@@ -23,7 +23,7 @@
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>
 
 <div id="overlay" style="display:block;"></div>
-<div id="ajax" class="panel" style="display:block;">
+<div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' bigWin'; ?>" style="display:block;">
 	<h1><?php echo $title; ?></h1>
 
 	<div style="padding:0 70px;">
