@@ -34,6 +34,9 @@ class InstallerUpdate extends Installer {
 			'file' => '',
 			'text' => '----- bitte w&auml;hlen');
 		$this->PossibleUpdates[] = array(
+			'file' => 'update-v1.1-to-v1.2.sql',
+			'text' => 'Update zu: v1.2 - vorherige Version v1.1 (von 2012/07)');
+		$this->PossibleUpdates[] = array(
 			'file' => 'update-v1.0-to-v1.1.sql',
 			'text' => 'Update zu: v1.1 - vorherige Version v1.0 (von 2012/01)');
 		$this->PossibleUpdates[] = array(

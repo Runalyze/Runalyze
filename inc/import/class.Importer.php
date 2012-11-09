@@ -256,7 +256,13 @@ abstract class Importer {
 			return 'Uploaded file was too big.';
 
 		if (!move_uploaded_file($_FILES['userfile']['tmp_name'], $this->absolutePathTo($_FILES['userfile']['name'])))
-			return 'Can\'t move uploaded file '.$_FILES['userfile']['name'].'. Check permissions and filesystem.';
+			return 'Can\'t move uploaded file '.$_FILES['userfile']['name'].'.<br />
+					The following paths need chmod 777 (write permissions):<br />
+						/log/<br />
+						/inc/export/files/<br />
+						/inc/import/files/<br />
+						/plugin/RunalyzePluginTool_DbBackup/backup/<br />
+						/plugin/RunalyzePluginTool_DbBackup/import/';
 
 		return true;
 	}
