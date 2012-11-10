@@ -1,9 +1,13 @@
+# Problems? Comment the following two lines out
 php_value upload_max_filesize "32M"
 php_value post_max_size "32M"
 
+<IfModule mod_rewrite.c>
 RewriteEngine on
+
 # Shared views do not work? Try uncommenting the following line:
 #RewriteBase /
 
 RewriteRule ^shared/([^./]*)$ call/call.SharedTraining.php?url=$1 [L]
 RewriteRule ^shared/([^./]*)/$ call/call.SharedList.php?user=$1&%{QUERY_STRING} [L]
+</IfModule>

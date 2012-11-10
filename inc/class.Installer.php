@@ -339,7 +339,7 @@ class Installer {
 			}
 
 			$AA = explode(' ', $line);
-			if (in_Array(strtoupper($AA[0]), $MRK)) {
+			if (in_array(strtoupper($AA[0]), $MRK)) {
 				$query = $line;
 			} elseif (strlen($query) > 1) {
 				$query .= " ".$line;
