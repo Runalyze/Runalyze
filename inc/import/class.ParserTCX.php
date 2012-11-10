@@ -355,6 +355,10 @@ class ParserTCX extends Parser {
 	 * @param SimpleXMLElement $TP
 	 */
 	protected function parseTrackpoint($TP) {
+		// TODO: What the fuck?
+		// - FR305: Pause when DistanceMeters is empty
+		// -> should be only if trackpoint has ONLY time as child
+		// - FR310XT: Pause -> new Track?
 		if (empty($TP->DistanceMeters)) {
 			$this->lastPointWasEmpty = true;
 			return;
