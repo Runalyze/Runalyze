@@ -289,7 +289,7 @@ class ImporterFormular extends Importer {
 		Trimp::checkForMaxValuesAt($this->time);
 
 		if ($Training->Sport()->isRunning()) {
-			if ($Training->hasType() && isset($_POST['typeid']) && $Training->get('typeid') == CONF_WK_TYPID)
+			if ($Training->hasType() && in_array('typeid', $this->columns) && $Training->get('typeid') == CONF_WK_TYPID)
 				JD::recalculateVDOTcorrector();
 		
 			if ($Training->get('shoeid') > 0)
@@ -300,6 +300,8 @@ class ImporterFormular extends Importer {
 			$Training->elevationCorrection();
 		
 			$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());
+		} elseif ($Training->hasElevationData() && (!in_array('elevation', $this->columns) || $Training->get('elevation') == 0)) {
+				$Mysql->update(PREFIX.'training', $id, 'elevation', $Training->GpsData()->calculateElevation());
 		}
 
 		$this->insertedID   = $id;

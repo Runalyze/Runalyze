@@ -11,7 +11,7 @@ $Frontend = new Frontend(true);
 	<style type="text/css" media="all">@import "../../lib/garmin/communicator2.css";</style>
 	<script type="text/javascript" src="../../lib/garmin/prototype/prototype.js"></script>
 	<script type="text/javascript" src="../../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
-	<script type="text/javascript">	
+	<script type="text/javascript">
 		var currentActivity = 0, uploadedActivities = [], display;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
@@ -96,6 +96,17 @@ $Frontend = new Frontend(true);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
 					$("readSelectedButton").value = "Importieren";
+					$("selectAllButton").setStyle({display:'inline'});
+
+					var checkboxes = $$("input[type=checkbox]");
+					var cbControl = $("selectAllButton");
+
+					cbControl.observe("click", function(){
+						cbControl.toggleClassName('checked');
+						checkboxes.each(function(box){
+							box.checked = cbControl.hasClassName('checked');
+						});
+					});
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
@@ -107,6 +118,8 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 </head>
 
 <body onload="load()" style="background:none;">
+
+	<span href="#" id="selectAllButton" style="position:absolute;top:1px;left:8px;display:inline;cursor:pointer;font-size:.8em;color:#666;">alle w&auml;hlen</span>
 
 	<div id="garminDisplay"></div>
 
