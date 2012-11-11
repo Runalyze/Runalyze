@@ -3,9 +3,10 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-if (isset($_GET['delete'])) {
-	Mysql::getInstance()->delete(PREFIX.'shoe', (int)$_GET['delete']);
-	header('Location: window.schuhe.table.php');
+if (Request::param('delete') == 'true') {
+	Mysql::getInstance()->delete(PREFIX.'shoe', (int)Request::sendId());
+	Mysql::getInstance()->updateWhere(PREFIX.'training', 'shoeid ='.(int)Request::sendId(), shoeid, 0);
+	header('Location: window.schuhe.table.php?reload=true');
 }
 
 if (Request::sendId() === false) {
