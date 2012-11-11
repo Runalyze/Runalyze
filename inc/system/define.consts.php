@@ -69,8 +69,3 @@ define('DATA_BROWSER_SEARCH_ID', 'search');
  * @const DATA_BROWSER_SEARCHRESULT_ID
  */
 define('DATA_BROWSER_SEARCHRESULT_ID', 'searchResult');
-
-/**
- * Other definitions 
- */
-date_default_timezone_set('Europe/Berlin');
