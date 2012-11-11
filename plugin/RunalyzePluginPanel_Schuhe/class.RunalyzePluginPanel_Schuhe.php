@@ -130,7 +130,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				echo('
 				<tr class="'.HTML::trClass($i).$in_use.' r">
 					<td class="small">'.$schuh['num'].'x</td>
-					<td>'.$this->editLinkFor($schuh['id']).'</td>
+					<td>'.$this->editLinkFor($schuh['id']).''.$this->getDeleteLinkFor($schuh['id']).'</td>
 					<td class="b l">'.Shoe::getSearchLink($schuh['id']).'</td>
 					<td class="small">'.$Shoe->getSince().'</td>
 					<td>'.(($schuh['num'] != 0) ? Running::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
@@ -177,5 +177,14 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	private function editLinkFor($id) {
 		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, 'Bearbeiten').'</a>');
+	}
+	
+	/**
+	 * Get delete link for an entry
+	 * @param int $id
+	 * @return string
+	 */
+	private function getDeleteLinkFor($id) {
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'&delete=true">'.Ajax::tooltip(Icon::$DELETE, 'L&ouml;schen').'</a>');
 	}
 }
