@@ -60,6 +60,7 @@ class Frontend {
 	private function initSystem() {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
+		date_default_timezone_set('Europe/Berlin');
 
 		$this->setAutoloader();
 		$this->initErrorHandling();
