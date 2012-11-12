@@ -148,7 +148,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo '</tbody>';
 		echo '</table>';
 
-		Ajax::createTablesorterFor("#listOfAllShoes");
+		Ajax::createTablesorterFor("#listOfAllShoes", true);
 	}
 
 	/**
@@ -162,11 +162,10 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				MAX(distance) as dist,
 				'.PREFIX.'shoe.*
 			FROM '.PREFIX.'shoe
-				LEFT JOIN '.PREFIX.'training ON '.PREFIX.'training.shoeid='.PREFIX.'shoe.id
+				LEFT JOIN '.PREFIX.'training ON '.PREFIX.'shoe.id='.PREFIX.'training.shoeid
 			WHERE
-				'.PREFIX.'shoe.accountid="'.SessionAccountHandler::getId().'" AND
-				'.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
-			GROUP BY shoeid
+				'.PREFIX.'shoe.accountid="'.SessionAccountHandler::getId().'"
+			GROUP BY id
 			ORDER BY inuse DESC, km DESC');
 	}
 
