@@ -119,7 +119,7 @@ if (strlen(CONF_GARMIN_API_KEY) > 10)
 
 <body onload="load()" style="background:none;">
 
-	<span href="#" id="selectAllButton" style="position:absolute;top:1px;left:8px;display:inline;cursor:pointer;font-size:.8em;color:#666;">alle w&auml;hlen</span>
+	<span href="#" id="selectAllButton" style="position:absolute;top:1px;left:8px;display:none;cursor:pointer;font-size:.8em;color:#666;">alle w&auml;hlen</span>
 
 	<div id="garminDisplay"></div>
 

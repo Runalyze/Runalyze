@@ -341,6 +341,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			foreach ($Tables as $TableName) {
 				$CreateResult = $Mysql->untouchedFetchArray('SHOW CREATE TABLE '.$TableName);
 				$Query        = 'SELECT * FROM `'.$TableName.'`';
+				$ExportData[$TableName] = array();
 
 				if ($TableName == PREFIX.'account' && USER_MUST_LOGIN)
 					$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';

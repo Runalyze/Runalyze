@@ -143,16 +143,16 @@ class RunalyzeJsonImporter {
 	 */
 	private function checkData() {
 		$DesiredTables = array(
-			'runalyze_account',
+		//	'runalyze_account',
 			'runalyze_clothes',
 			'runalyze_conf',
 			'runalyze_dataset',
 			'runalyze_plugin',
-			'runalyze_shoe',
+		//	'runalyze_shoe',
 			'runalyze_sport',
 			'runalyze_training',
 			'runalyze_type',
-			'runalyze_user'
+		//	'runalyze_user'
 		);
 
 		foreach ($DesiredTables as $Table)
