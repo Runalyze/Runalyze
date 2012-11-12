@@ -308,6 +308,13 @@ class GpsData {
 	}
 
 	/**
+	 * Are information for elevation available?
+	 */
+	public function hasDistanceData() {
+		return !empty($this->arrayForDistance) && max($this->arrayForDistance) > 0;
+	}
+
+	/**
 	 * Get a value from one of the internal arrays
 	 * @param array $array
 	 * @return int

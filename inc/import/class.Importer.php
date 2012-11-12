@@ -285,7 +285,7 @@ abstract class Importer {
 	 * @param string $fileName
 	 * @return string 
 	 */
-	private function absolutePathTo($fileName) {
+	final protected function absolutePathTo($fileName) {
 		return $this->pathToFiles.$fileName;
 	}
 

@@ -172,6 +172,7 @@ class Training {
 			'route',
 			'splits',
 			'comment',
+			'notes',
 			'partner',
 			'arr_time',
 			'arr_lat',

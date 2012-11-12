@@ -330,6 +330,9 @@ class Trimp {
 	 * @param int $maxTRIMP 
 	 */
 	private static function setMaxTRIMP($maxTRIMP) {
+		if (is_nan($maxTRIMP))
+			return;
+
 		ConfigValue::update('MAX_TRIMP', $maxTRIMP);
 
 		self::$MAX_TRIMP = $maxTRIMP;

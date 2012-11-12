@@ -45,7 +45,7 @@ class FormularSelectBox extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label  = '<label for="'.$this->name.'">'.$this->label.'</label>';
-		$select = HTML::selectBox($this->name, $this->options, $this->value, $this->name);
+		$select = HTML::selectBox($this->name, $this->options, $this->value, $this->name.'" class="'.implode(' ', $this->cssClasses));
 
 		return $label.$select;
 	}

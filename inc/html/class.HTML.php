@@ -344,8 +344,8 @@ class HTML {
 	 * @param string $id [optional]
 	 * @return string
 	 */
-	public static function selectBox($name, $options, $selected = -1, $id = '') {
-		if ($selected == -1 && isset($_POST[$name]))
+	public static function selectBox($name, $options, $selected = false, $id = '') {
+		if ($selected === false && isset($_POST[$name]))
 			$selected = $_POST[$name];
 
 		$name = self::transformNameForMultiIndex($name);
