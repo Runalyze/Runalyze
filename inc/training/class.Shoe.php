@@ -1,10 +1,6 @@
 <?php
 /**
- * This file contains the class::Shoe for handling running shoes
- */
-/**
  * Class: Shoe
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Shoe extends DataObject {

@@ -130,7 +130,7 @@ class Gmap {
 			if ($Lat == 0 && $Lon == 0)
 				continue;
 
-			if ($withoutHover && !$both)
+			if (($withoutHover && !$both) || !$this->GpsData->hasDistanceData())
 				$PointData = '';
 			else
 				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
@@ -170,7 +170,7 @@ class Gmap {
 			return $this->GpsData->getCache()->get('marker');
 		}
 
-		if (!$this->GpsData->hasPositionData())
+		if (!$this->GpsData->hasPositionData() || !$this->GpsData->hasDistanceData())
 			return '';
 
 		$SportDat = Mysql::getInstance()->fetchSingle('SELECT `sportid` FROM '.PREFIX.'training WHERE `id`='.$this->TrainingId);

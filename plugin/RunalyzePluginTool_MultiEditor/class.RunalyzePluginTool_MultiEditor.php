@@ -169,11 +169,14 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 * Init internal array with all trainings
 	 */
 	private function initTrainings() {
+		$Mysql = Mysql::getInstance();
 		foreach ($this->IDs as $id) {
 			if ($id == Training::$CONSTRUCTOR_ID || empty($id))
 				continue;
 
-			$Training = new Training($id);
+			$Data = $Mysql->fetch(PREFIX.'training', $id);
+			unset($Data['gps_cache_object']);
+			$Training = new Training($id, $Data);
 
 			if ($Training !== false)
 				$this->Trainings[] = new Training($id);

@@ -4,11 +4,7 @@
  */
 /**
  * Class: Weather
- * 
  * @author Hannes Christiansen <mail@laufhannes.de>
- * @version 1.0
- * @uses class::Error
- * @uses class::Mysql
  */
 class Weather {
 	/**
@@ -294,7 +290,7 @@ class Weather {
 		$temp = $Xml->xpath('//current_conditions/condition');
 
 		if (is_array($temp) && isset($temp[0]['data']))
-			return $this->getIdFromAPICondition((string)$temp[0]['data']);
+			return self::getIdFromAPICondition((string)$temp[0]['data']);
 
 		return NULL;
 	}
@@ -304,8 +300,8 @@ class Weather {
 	 * @param string $condition
 	 * @return int
 	 */
-	private function getIdFromAPICondition($condition) {
-		$condition = $this->translateGoogleConditionToInternalName($condition);
+	public static function getIdFromAPICondition($condition) {
+		$condition = self::translateGoogleConditionToInternalName($condition);
 		foreach (self::$fullArray as $id => $data)
 			if ($data['name'] == $condition)
 				return $id;
@@ -316,10 +312,11 @@ class Weather {
 	/**
 	 * Translate google string for condition to database-string
 	 * @param string $string
+	 * @param string $lang [optional]
 	 * @return string
 	 */
-	private function translateGoogleConditionToInternalName($string) {
-		if ($this->lang == 'de')
+	private static function translateGoogleConditionToInternalName($string, $lang = 'en') {
+		if ($lang == 'de')
 			switch ($string) {
 				case 'Meist sonnig':
 				case 'Klar':
@@ -348,7 +345,7 @@ class Weather {
 				case 'Schnee':
 					return 'Schnee';
 				default:
-					Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
+					//Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
 					return 'unbekannt';
 			}
 		else
@@ -391,7 +388,7 @@ class Weather {
 				case 'Scattered snow showers':
 					return 'Schnee';
 				default:
-					Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
+					//Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
 					return 'unbekannt';
 			}
 	}
