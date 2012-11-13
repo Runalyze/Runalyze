@@ -80,7 +80,7 @@ class ImporterXML extends Importer {
 			$this->parseAllTrainings();
 			$this->createAllTrainings();
 		} else {
-			Filesystem::writeFile('import/files/'.$this->fileName, $this->FileContent);
+			Filesystem::writeFile('import/files/'.$this->fileName, utf8_decode($this->FileContent));
 
 			$this->readSportsAndTypes();
 			$this->readShoes();
@@ -228,15 +228,29 @@ class ImporterXML extends Importer {
 
 		foreach ($this->CompleteXML->CourseCollection->Course as $Course) {
 			if (isset($Course->Route) && isset($Course->Route->WayPoints)) {
-				$Lat = array();
-				$Lon = array();
+				$Lat  = array();
+				$Lon  = array();
+				$Alt  = array();
+				$Dist = array();
 
 				foreach ($Course->Route->WayPoints->LatLng as $Point) {
-					$Lat[] = (string)$Point['lat'];
-					$Lon[] = (string)$Point['lng'];
+					if (empty($Lat))
+						$CurrentDist = 0;
+					else
+						$CurrentDist += GpsData::distance(end($Lat), end($Lon), (string)$Point['lat'], (string)$Point['lng']);
+
+					$Lat[]  = (string)$Point['lat'];
+					$Lon[]  = (string)$Point['lng'];
+					$Alt[]  = 0;
+					$Dist[] = round($CurrentDist,3);
 				}
 
-				$this->Routes[(string)$Course['id']] = array('arr_lat' => implode('|', $Lat), 'arr_lon' => implode('|', $Lon));
+				$this->Routes[(string)$Course['id']] = array(
+					'arr_lat' => implode('|', $Lat),
+					'arr_lon' => implode('|', $Lon),
+					'arr_alt' => implode('|', $Alt),
+					'arr_dist' => implode('|', $Dist)
+				);
 			}
 		}
 	}
@@ -246,7 +260,7 @@ class ImporterXML extends Importer {
 	 * @param SimpleXMLElement $Event
 	 */
 	private function createTrainingFromEvent($Event) {
-		$time    = strtotime((string)$Event['time']);
+		$time    = self::timeFromString((string)$Event['time']);
 		$SportID = isset($_POST['sport'][(int)$Event['type']]) ? $_POST['sport'][(int)$Event['type']] : 0;
 		$TypeID  = isset($_POST['type'][(int)$Event['subtype']]) ? $_POST['type'][(int)$Event['subtype']] : 0;
 
@@ -262,18 +276,21 @@ class ImporterXML extends Importer {
 		if (isset($Event->Distance))
 			$Training->set('distance', $this->distanceFromUnit((double)$Event->Distance, (string)$Event->Distance['unit']));
 
-		if (isset($Event->Duration))
+		if (isset($Event->Duration)) {
 			$Training->set('s', (double)$Event->Duration['seconds']);
+			$Training->set('kcal', round(Sport::kcalPerHourFor($SportID)*(double)$Event->Duration['seconds']/3600));
+		}
 
 		if (isset($Event->HeartRate)) {
 			if (isset($Event->HeartRate->AvgHR))
 				$Training->set('pulse_avg', (int)$Event->HeartRate->AvgHR);
 			if (isset($Event->HeartRate->MaxHR))
-				$Training->set('pulse_avg', (int)$Event->HeartRate->MaxHR);
+				$Training->set('pulse_max', (int)$Event->HeartRate->MaxHR);
 		}
 
 		if (isset($Event->IntervalCollection)) {
-			$Training->set('comment', (string)$Event->IntervalCollection['name']);
+			if ((string)$Event->IntervalCollection['name'] != 'GPS Interval')
+				$Training->set('comment', utf8_decode((string)$Event->IntervalCollection['name']));
 
 			$Km   = array();
 			$Time = array();
@@ -281,7 +298,7 @@ class ImporterXML extends Importer {
 			foreach ($Event->IntervalCollection->Interval as $Interval) {
 				if ($Interval['typeName'] == 'Interval') {
 					$Km[]   = $this->distanceFromUnit((double)$Interval->Distance, (string)$Interval->Distance['unit']);
-					$Time[] = (double)$Interval->Duration['seconds'];
+					$Time[] = round((double)$Interval->Duration['seconds']);
 				}
 			}
 
@@ -289,18 +306,22 @@ class ImporterXML extends Importer {
 			$Training->set('splits', $Splits->asString());
 		}
 
-		if (isset($Event->Equipment) && isset($_POST['shoe'][(int)$Event->Equipment['id']]) && $_POST['shoe'][(int)$Event->Equipment['id']] != -1)
-			$Training->set('shoeid', $_POST['shoe'][(int)$Event->Equipment['id']]);
+		if (isset($Event->Equipment) && isset($_POST['shoe'][(string)$Event->Equipment['id']]) && $_POST['shoe'][(string)$Event->Equipment['id']] != -1)
+			$Training->set('shoeid', $_POST['shoe'][(string)$Event->Equipment['id']]);
 
 		if (isset($Event->Route)) {
-			$Training->set('route', (string)$Event->Route);
+			$Training->set('route', utf8_decode((string)$Event->Route));
 
 			if (isset($this->Routes[(string)$Event->Route['id']])) {
 				$LatLon = $this->Routes[(string)$Event->Route['id']];
 				$Training->set('arr_lat', $LatLon['arr_lat']);
 				$Training->set('arr_lon', $LatLon['arr_lon']);
+				$Training->set('arr_alt', $LatLon['arr_alt']);
+				$Training->set('arr_dist', $LatLon['arr_dist']);
 			}
 		}
+
+		$Training->set('weatherid', Weather::$UNKNOWN_ID);
 
 		if (isset($Event->EnvironmentalConditions)) {
 			if (isset($Event->EnvironmentalConditions->Temperature)) {
@@ -320,7 +341,7 @@ class ImporterXML extends Importer {
 		}
 
 		if (isset($Event->Notes))
-			$Training->set('notes', (string)$Event->Notes);
+			$Training->set('notes', utf8_decode((string)$Event->Notes));
 
 		$this->Trainings[] = $Training;
 	}
@@ -344,6 +365,17 @@ class ImporterXML extends Importer {
 			default:
 				return $Distance;
 		}
+	}
+
+	/**
+	 * Get time from string, correcting wrong UTC
+	 * @param string $string
+	 * @return int
+	 */
+	static protected function timeFromString($string) {
+		$offset = strlen($string) > 10 ? date('Z', strtotime($string)) : 0;
+
+		return strtotime($string) - $offset;
 	}
 
 	/**

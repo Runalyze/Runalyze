@@ -111,7 +111,7 @@ class GpsData {
 		$this->arrayForDistance  = $this->loadArrayDataFrom($TrainingData['arr_dist']);
 		$this->arrayForHeartrate = $this->loadArrayDataFrom($TrainingData['arr_heart']);
 		$this->arrayForPace      = $this->loadArrayDataFrom($TrainingData['arr_pace']);
-		$this->arraySizes        = count($this->arrayForTime);
+		$this->arraySizes        = max(count($this->arrayForTime), count($this->arrayForLatitude));
 
 		if (isset($TrainingData['gps_cache_object']))
 			$this->initCache($TrainingData['id'], $TrainingData['gps_cache_object']);
@@ -312,6 +312,13 @@ class GpsData {
 	 */
 	public function hasDistanceData() {
 		return !empty($this->arrayForDistance) && max($this->arrayForDistance) > 0;
+	}
+
+	/**
+	 * Are information for elevation available?
+	 */
+	public function hasTimeData() {
+		return !empty($this->arrayForTime) && max($this->arrayForTime) > 0;
 	}
 
 	/**
@@ -633,6 +640,9 @@ class GpsData {
 			return $this->Cache->get('rounds');
 
 		$rounds = array();
+
+		if (!$this->hasDistanceData() || !$this->hasTimeData())
+			return array();
 		
 		$this->startLoop();
 		while ($this->nextKilometer($distance)) {
