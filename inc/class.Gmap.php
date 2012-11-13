@@ -101,12 +101,12 @@ class Gmap {
 	 * @return string
 	 */
 	public function getCodeForPolylines($withoutHover = false, $both = false) {
-		/*if (!$this->GpsData->getCache()->isEmpty()) {
+		if (!$this->GpsData->getCache()->isEmpty()) {
 			if ($withoutHover)
 				return $this->GpsData->getCache()->get('polylines_without_hover');
 			else
 				return $this->GpsData->getCache()->get('polylines');
-		}*/
+		}
 
 		if (!$this->GpsData->hasPositionData())
 			return $both ? array('', '') : '';
