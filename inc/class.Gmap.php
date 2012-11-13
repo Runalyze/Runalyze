@@ -101,12 +101,12 @@ class Gmap {
 	 * @return string
 	 */
 	public function getCodeForPolylines($withoutHover = false, $both = false) {
-		if (!$this->GpsData->getCache()->isEmpty()) {
+		/*if (!$this->GpsData->getCache()->isEmpty()) {
 			if ($withoutHover)
 				return $this->GpsData->getCache()->get('polylines_without_hover');
 			else
 				return $this->GpsData->getCache()->get('polylines');
-		}
+		}*/
 
 		if (!$this->GpsData->hasPositionData())
 			return $both ? array('', '') : '';
@@ -117,7 +117,9 @@ class Gmap {
 		$Path = array();
 
 		$AvgPace = $this->GpsData->getAveragePace();
-		if ($AvgPace > 0 && (15/$AvgPace) > self::$MAXIMUM_DISTANCE_OF_STEP)
+		if ($AvgPace == 0)
+			$withoutHover = true;
+		elseif ($AvgPace > 0 && (15/$AvgPace) > self::$MAXIMUM_DISTANCE_OF_STEP)
 			self::$MAXIMUM_DISTANCE_OF_STEP = 15 / $AvgPace;
 
 		$this->GpsData->startLoop();
@@ -130,19 +132,19 @@ class Gmap {
 			if ($Lat == 0 && $Lon == 0)
 				continue;
 
-			if (($withoutHover && !$both) || !$this->GpsData->hasDistanceData())
+			if (($withoutHover && !$both) || $AvgPace == 0)
 				$PointData = '';
 			else
 				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
-			if ($this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
+			if ($AvgPace > 0 && $this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
 				$PathString = implode(',', $Path);
 				if ($both) {
 					$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
 					$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
 				} else
-					$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover?',true':'').');';
+					$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover || $AvgPace == 0 ? ',true' : '').');';
 				$Path  = array();
 			}
 
@@ -151,7 +153,7 @@ class Gmap {
 
 		$PathString = implode(',', $Path);
 		if ($both) {
-			$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
+			$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($AvgPace == 0 ? ',true' : '').');';
 			$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
 
 			return array($CodeWith, $CodeWithout);

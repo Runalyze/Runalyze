@@ -46,7 +46,9 @@
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line">
 				<?php $PlotsList->displayLabels(); ?>
+				<?php if ($this->Training->hasPositionData()): ?>
 				<label id="training-view-toggler-map" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('map');"><i class="toggle-icon-map checked"></i> Karte</label>
+				<?php endif; ?>
 
 				<?php $PlotsList->displayJScode(); ?>
 				<?php if (!CONF_TRAINING_SHOW_MAP) echo Ajax::wrapJSasFunction('$("#training-view-toggler-map").click();'); ?>

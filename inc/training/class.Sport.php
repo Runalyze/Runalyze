@@ -99,6 +99,17 @@ class Sport {
 	}
 	
 	/**
+	* Get normal kcal per hour
+	* @return int
+	*/
+	static public function kcalPerHourFor($SportID) {
+		if (isset(self::$sports[$SportID]))
+			return self::$sports[$SportID]['kcal'];
+
+		return 0;
+	}
+	
+	/**
 	* Get average heartfrequence
 	* @return int
 	*/
