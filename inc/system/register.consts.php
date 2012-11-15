@@ -120,6 +120,7 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
 )));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array('default' => false, 'label' => 'Karte: vor Diagrammen')));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_DETAILS', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ZONES', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ROUNDS', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_GRAPHICS', array('default' => true)));
@@ -172,8 +173,8 @@ $Design->setKeys(array(
 	'DESIGN_BG_FILE',
 	'DB_SHOW_DIRECT_EDIT_LINK',
 	'DB_SHOW_CREATELINK_FOR_DAYS',
-	'PLUGIN_SHOW_CONFIG_LINK',
-	'PLUGIN_SHOW_MOVE_LINK'
+	//'PLUGIN_SHOW_CONFIG_LINK',
+	//'PLUGIN_SHOW_MOVE_LINK'
 ));
 $Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
 	'default'		=> true,
@@ -201,12 +202,14 @@ $Design->addConfigValue( new ConfigValueBool('DB_SHOW_DIRECT_EDIT_LINK', array(
 	'label'			=> 'Training-Bearbeiten-Link im Kalender anzeigen',
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
+// TODO: remove
 $Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_CONFIG_LINK', array(
 	'default'		=> true,
 	'label'			=> 'Plugin: Konfiguration-Link anzeigen',
 	'tooltip'		=> 'Wenn aktiv wird bei jedem Plugin vor dem Namen ein Link zur Plugin-Konfiguration angezeigt',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
 )));
+// TODO: remove
 $Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_MOVE_LINK', array(
 	'default'		=> false,
 	'label'			=> 'Plugin: Verschieben-Link anzeigen',

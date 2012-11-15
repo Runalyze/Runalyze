@@ -10,6 +10,7 @@
 <div class="toolbar toHeader open">
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
+			<label id="training-view-toggler-details" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('details');"><i class="checkbox-icon checked"></i> Details</label>
 			<?php if ($this->Training->hasPaceData()): ?>
 				<label id="training-view-toggler-zones" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('zones');"><i class="checkbox-icon checked"></i> Zonen</label>
 			<?php endif; ?>
@@ -20,6 +21,7 @@
 				<label id="training-view-toggler-graphics" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('graphics');"><i class="checkbox-icon checked"></i> Karte &amp; Diagramme</label>
 			<?php endif; ?>
 
+			<?php if (!CONF_TRAINING_SHOW_DETAILS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-details").click();'); ?>
 			<?php if (!CONF_TRAINING_SHOW_ZONES) echo Ajax::wrapJSasFunction('$("#training-view-toggler-zones").click();'); ?>
 			<?php if (!CONF_TRAINING_SHOW_ROUNDS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-rounds").click();'); ?>
 			<?php if (!CONF_TRAINING_SHOW_GRAPHICS) echo Ajax::wrapJSasFunction('$("#training-view-toggler-graphics").click();'); ?>

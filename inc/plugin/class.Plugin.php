@@ -503,7 +503,7 @@ abstract class Plugin {
 	 */
 	final public function getConfigLink($name = '', $add_param = '') {
 		if ($name == '')
-			$name = Icon::$EDIT;
+			$name = Icon::$CONF;
 
 		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.Ajax::tooltip($name, 'Konfiguration &ouml;ffnen').'</a>','small');
 	}

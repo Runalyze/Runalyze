@@ -92,13 +92,13 @@ abstract class PluginPanel extends Plugin {
 	public function getConfigLinks() {
 		$Links = array();
 
-		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
+		//if (CONF_PLUGIN_SHOW_CONFIG_LINK)
 			$Links[] = $this->getConfigLink();
 
-		if (CONF_PLUGIN_SHOW_MOVE_LINK) {
+		//if (CONF_PLUGIN_SHOW_MOVE_LINK) {
 			$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
 			$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
-		}
+		//}
 
 		return implode('', $Links);
 	}
@@ -108,10 +108,12 @@ abstract class PluginPanel extends Plugin {
 	 */
 	private function displayHeader() {
 		echo('<span class="right '.($this->textAsRightSymbol?'smallHeadNavi':'').'">'.$this->getRightSymbol().'</span>
-			<h1>
-				'.$this->getConfigLinks().'
+			<h1 class="show-on-hover-parent">
 				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">
 					'.$this->name.'
+				</span>
+				<span class="show-on-hover">
+				'.$this->getConfigLinks().'
 				</span>
 			</h1>'.NL);
 	}

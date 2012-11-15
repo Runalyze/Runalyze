@@ -24,4 +24,4 @@ foreach ($IDs as $ID) {
 
 $Response = array('matches' => $Matches);
 
-echo json_encode($Response, JSON_FORCE_OBJECT);
+echo json_encode((object)$Response);
