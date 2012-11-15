@@ -1,123 +1,105 @@
+<?php
+$Lines = array();
+
+if ($this->hasDistance())
+	$Lines[] = array('Distanz', $this->getDistanceStringWithFullDecimals());
+
+	$Lines[] = array('Zeit', $this->getTimeString());
+
+if ($this->hasDistance())
+	$Lines[] = array('Tempo', $this->getSpeedInMainUnit().' <small>('.$this->getSpeedInAlternativeUnit().')</small>');
+
+if ($this->hasPulse()) {
+	$Lines[] = array('&oslash;&nbsp;Puls', Running::PulseStringInBpm($this->get('pulse_avg')).' <small>('.Running::PulseStringInPercent($this->get('pulse_avg')).')</small>');
+	$Lines[] = array('max.&nbsp;Puls', Running::PulseStringInBpm($this->get('pulse_max')).' <small>('.Running::PulseStringInPercent($this->get('pulse_max')).')</small>');
+}
+
+if ($this->get('kcal') > 0)
+	$Lines[] = array('Kalorien', $this->get('kcal').' kcal');
+
+if (CONF_RECHENSPIELE)
+	$Lines[] = array('Trimp', $this->getTrimpString());
+
+if (CONF_RECHENSPIELE && $this->Sport()->isRunning() && $this->getVDOT() > 0)
+	$Lines[] = array('Vdot', $this->getVDOT().' '.$this->getVDOTicon());
+
+
+$Outsides = array();
+
+if (!$this->Weather()->isEmpty())
+	$Outsides[] = array('Wetter', $this->Weather()->fullString());
+
+if ($this->hasRoute())
+	$Outsides[] = array('Strecke', HTML::encodeTags($this->get('route')));
+
+$calculated = $this->GpsData()->calculateElevation();
+$difference = $this->GpsData()->getElevationDifference();
+if ($this->hasElevation() || $calculated > 0)
+	$Outsides[] = array('H&ouml;henmeter', $this->get('elevation').'&nbsp;m'.($calculated != $this->get('elevation') ? ' <small>('.$calculated.'&nbsp;m berechnet)</small>' : ''));
+if ($difference > 20)
+	$Outsides[] = array('H&ouml;henunterschied', Math::WithSign($difference).'m');
+if ($this->hasElevation())
+	$Outsides[] = array('Steigung', number_format($this->get('elevation')/10/$this->get('distance'), 2, ',', '.').'&nbsp;&#37;');
+
+if ($this->get('shoeid') > 0)
+	$Outsides[] = array('Schuh', Request::isOnSharedPage() ? Shoe::getNameOf($this->get('shoeid')) : Shoe::getSearchLink($this->get('shoeid')));
+
+if (!$this->Clothes()->areEmpty())
+	$Outsides[] = array('Kleidung', Request::isOnSharedPage() ? $this->Clothes()->asString() : $this->Clothes()->asLinks());
+
+if ($this->hasPartner())
+	$Outsides[] = array('Partner', Request::isOnSharedPage() ? $this->getPartner() : $this->getPartnerAsLinks());
+
+if ($this->hasNotes())
+	$Outsides[] = array('Notizen', $this->getNotes());
+
+if (!empty($Outsides))
+	$Lines = array_merge($Lines, array(array('&nbsp;', '')), $Outsides);
+?>
 <table class="small">
+	<tbody>
+	<?php foreach ($Lines as $Line): ?>
+		<tr>
+			<td class="inlineHead"><?php echo $Line[0]; ?></td>
+			<td><?php echo $Line[1]; ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
 
-<?php if ($this->hasDistance()): ?>
-	<tr>
-		<td class="inlineHead">Distanz:</td>
-		<td><?php echo $this->getDistanceStringWithFullDecimals(); ?></td>
-	</tr>
+<?php
+$ExtraLines = array();
+
+if ($this->get('created') > 0)
+	$ExtraLines[] = array('Erstellt', 'am '.date('d.m.Y', $this->get('created')));
+if ($this->get('edited') > 0)
+	$ExtraLines[] = array('Bearbeitet', 'zuletzt am '.date('d.m.Y', $this->get('edited')));
+
+if ($this->get('creator') == Importer::$CREATOR_FILE)
+	$ExtraLines[] = array('Importer', 'Datei-Upload');
+elseif ($this->get('creator') == Importer::$CREATOR_GARMIN_COMMUNICATOR)
+	$ExtraLines[] = array('Importer', 'Garmin-Communicator');
+
+if ($this->hasElevationData())
+	$ExtraLines[] = array('H&ouml;hendaten', ($this->get('elevation_corrected') == 0 ? 'noch nicht ' : '').'korrigiert');
+
+if (!empty($ExtraLines)):
+?>
+
+	<tbody id="training-table-extra">
+		<tr><td colspan="2">&nbsp;</td></tr>
+		<tr class="space">
+			<td colspan="2"></td>
+		</tr>
+		<tr><td colspan="2">&nbsp;</td></tr>
+
+		<?php foreach ($ExtraLines as $Line): ?>
+		<tr>
+			<td class="inlineHead"><?php echo $Line[0]; ?>:</td>
+			<td><?php echo $Line[1]; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+<?php else: ?>
+	<?php echo Ajax::wrapJSasFunction('$("#training-view-toggler-details").remove();'); ?>
 <?php endif; ?>
-
-	<tr>
-		<td class="inlineHead">Zeit:</td>
-		<td><?php echo $this->getTimeString(); ?></td>
-	</tr>
-
-<?php if ($this->hasDistance()): ?>
-	<tr>
-		<td class="inlineHead">Tempo:</td>
-		<td><?php echo $this->getPace(); ?>/km
-			<small>(<?php echo $this->getKmh(); ?> km/h)</small></td>
-	</tr>
-<?php endif; ?>
-
-<?php if ($this->hasPulse()): ?>
-	<tr>
-		<td class="inlineHead">&oslash; Puls:</td>
-		<td><?php echo Running::PulseStringInBpm($this->get('pulse_avg')); ?>
-			 <small>(<?php echo Running::PulseStringInPercent($this->get('pulse_avg')); ?>)</small></td>
-	</tr>
-	<tr>
-		<td class="inlineHead">max.&nbsp;Puls:</td>
-		<td><?php echo Running::PulseStringInBpm($this->get('pulse_max')); ?>
-			<small>(<?php echo Running::PulseStringInPercent($this->get('pulse_max')); ?>)</small></td>
-	</tr>
-<?php endif; ?>
-
-	<tr>
-		<td class="inlineHead">Kalorien:</td>
-		<td><?php echo Helper::Unknown($this->get('kcal')); ?> kcal</td>
-	</tr>
-
-<?php if (CONF_RECHENSPIELE): ?>
-	<tr>
-		<td class="inlineHead">Trimp:</td>
-		<td><?php echo $this->getTrimpString(); ?></td>
-	</tr>
-	<?php if ($this->Sport()->isRunning() && $this->getVDOT() > 0): ?>
-	<tr>
-		<td class="inlineHead">Vdot:</td>
-		<td><?php echo $this->getVDOT(); ?> <?php echo $this->getVDOTicon(); ?></td>
-	</tr>
-	<?php endif; ?>
-<?php endif; ?>
-
-<?php if (!$this->Weather()->isEmpty() || $this->hasRoute() || !$this->Clothes()->areEmpty()): ?>
-	<tr><td colspan="5">&nbsp;</td></tr>
-<?php endif; ?>
-
-<?php if (!$this->Weather()->isEmpty()): ?>
-	<tr>
-		<td class="inlineHead">Wetter:</td>
-		<td><?php echo $this->Weather()->fullString(); ?></td>
-	</tr>
-<?php endif; ?>
-
-<?php if ($this->hasRoute() || $this->hasElevation()): ?>
-	<tr>
-		<td class="inlineHead">Strecke:</td>
-		<td><?php echo Helper::Unknown(HTML::encodeTags($this->get('route'))); ?>
-				<?php $calculated = $this->GpsData()->calculateElevation(); ?>
-				<?php $difference = $this->GpsData()->getElevationDifference(); ?>
-			<?php if ($this->hasElevation() > 0 || $calculated > 0): ?><br />
-				<?php echo $this->get('elevation'); ?> H&ouml;henmeter<br />
-				<?php if ($calculated != $this->get('elevation')): ?>
-					<?php echo $calculated; ?> H&ouml;henmeter (berechnet)<br />
-				<?php endif; ?>
-				<?php if ($difference > 20): ?>
-					<?php echo Math::WithSign($difference); ?>m H&ouml;henunterschied<br />
-				<?php endif; ?>
-				&oslash; <?php echo number_format($this->get('elevation')/10/$this->get('distance'), 2, ',', '.'); ?>&#37; Steigung
-			<?php endif; ?>
-	</tr>
-<?php endif; ?>
-
-<?php if ($this->get('shoeid') != 0): ?>
-	<tr>
-		<td class="inlineHead">Schuh:</td>
-		<td>
-			<?php if (Request::isOnSharedPage()): ?>
-				<?php echo Shoe::getNameOf($this->get('shoeid')); ?>
-			<?php else: ?>
-				<?php echo Shoe::getSearchLink($this->get('shoeid')); ?>
-			<?php endif; ?>
-		</td>
-	</tr>
-<?php endif; ?>
-
-<?php if (!$this->Clothes()->areEmpty()): ?>
-	<tr>
-		<td class="inlineHead">Kleidung:</td>
-		<td>
-			<?php if (Request::isOnSharedPage()): ?>
-				<?php echo $this->Clothes()->asString(); ?>
-			<?php else: ?>
-				<?php echo $this->Clothes()->asLinks(); ?>
-			<?php endif; ?>
-		</td>
-	</tr>
-<?php endif; ?>
-
-<?php if ($this->hasPartner()): ?>
-	<tr>
-		<td class="inlineHead">Partner:</td>
-		<td>
-			<?php if (Request::isOnSharedPage()): ?>
-				<?php echo $this->getPartner(); ?>
-			<?php else: ?>
-				<?php echo $this->getPartnerAsLinks(); ?>
-			<?php endif; ?>
-		</td>
-	</tr>
-<?php endif; ?>
-
 </table>

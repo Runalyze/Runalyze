@@ -87,7 +87,7 @@ abstract class PluginStat extends Plugin {
 	public function display() {
 		$this->prepareForDisplay();
 
-		$this->displayConfigLinkForHeader();
+		//$this->displayConfigLinkForHeader();
 		$this->displayNavigation();
 
 		$this->displayContent();
@@ -101,16 +101,21 @@ abstract class PluginStat extends Plugin {
 		if ($name == '')
 			$name = $this->name;
 
-		echo '<h1>'.$name.'</h1>'.NL;
+		echo '<h1 class="show-on-hover-parent">
+			'.$name.'
+				<span class="show-on-hover">
+				'.$this->getConfigLink().'
+				</span>
+			</h1>'.NL;
 	}
 
 	/**
 	 * Display config link
 	 */
-	private function displayConfigLinkForHeader() {
+	/*private function displayConfigLinkForHeader() {
 		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
 			echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
-	}
+	}*/
 
 	/**
 	 * Display navigation

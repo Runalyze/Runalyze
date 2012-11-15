@@ -553,6 +553,28 @@ class Training {
 	}
 
 	/**
+	 * Get speed as string
+	 * @return string 
+	 */
+	public function getSpeedInMainUnit() {
+		if (Sport::usesSpeedInKmh($this->get('sportid')))
+			return $this->getKmh().'&nbsp;km/h';
+
+		return $this->getPace().'/km';
+	}
+
+	/**
+	 * Get speed in alternative unit as string
+	 * @return string
+	 */
+	public function getSpeedInAlternativeUnit() {
+		if (!Sport::usesSpeedInKmh($this->get('sportid')))
+			return $this->getKmh().'&nbsp;km/h';
+
+		return $this->getPace().'/km';
+	}
+
+	/**
 	 * Get string for displaying colored trimp
 	 * @return string
 	 */
@@ -598,6 +620,14 @@ class Training {
 			$links[] = DataBrowser::getSearchLink($partner, 'opt[partner]=is&val[partner]='.$partner);
 
 		return implode(', ', $links);
+	}
+
+	/**
+	 * Get notes
+	 * @return string
+	 */
+	public function getNotes() {
+		return nl2br(HTML::encodeTags($this->get('notes')));
 	}
 
 	/**
@@ -694,6 +724,14 @@ class Training {
 	 */
 	public function hasPartner() {
 		return $this->get('partner') != '';
+	}
+
+	/**
+	 * Has the training information about trainingspartner?
+	 * @return boolean
+	 */
+	public function hasNotes() {
+		return $this->get('notes') != '';
 	}
 
 	/**

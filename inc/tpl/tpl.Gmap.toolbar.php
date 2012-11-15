@@ -3,10 +3,11 @@
 
 		<div class="toolbar-line">
 			<span class="right">
+				<span class="link labeledLink" id="map-fullscreen-link" onclick="RunalyzeGMap.toggleFullScreen();">Vollbild</span>
+
 				<span class="link labeledLink" onclick="RunalyzeGMap.zoomIn();"><?php echo Icon::$ZOOM_IN; ?></span>
 				<span class="link labeledLink" onclick="RunalyzeGMap.zoomOut();"><?php echo Icon::$ZOOM_OUT; ?></span>
 				<span class="link labeledLink" onclick="RunalyzeGMap.autofit();"><?php echo Icon::$ZOOM_FIT; ?></span>
-				<!-- TODO: Fullsize -->
 			</span>
 
 			<select id="trainingMapTypeSelect" onchange="RunalyzeGMap.changeMapType($(this).val());">

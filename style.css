@@ -591,6 +591,18 @@ p.warning { background: url(img/warning.png) no-repeat 3px center #FFFFDD; color
 p.error { background: url(img/error.gif) no-repeat 3px center #FAEEEE; color: #CC5555; padding: 4px 2px 5px 22px; font-weight: normal; }
 p.file { background: url(img/file.png) no-repeat 3px center #F5F5F5; color: #000; padding: 4px 2px 5px 22px; }
 
+.show-on-hover {
+	opacity: 0;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+}
+.show-on-hover-parent:hover .show-on-hover {
+	opacity: 1;
+}
+
 .block { display: block; }
 .hide { display: none; }
 .left { float: left; }
@@ -761,6 +773,20 @@ code {
 
 #training-map .toolbar-line { padding: 10px 10px 0; }
 #training-map .toolbar-line select { margin: 0 20px 0 0; }
+
+#training-map.fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #F6F6F7;
+	z-index: 500;
+}
+
+#training-map.fullscreen .toolbar-box-content {
+	padding: 6px 6px 6px;
+}
 
 /*** FLOT ***/
 #flotLoader {

@@ -548,13 +548,16 @@ class GpsData {
 		if (empty($this->arrayForElevation) || (!$complete && !isset($this->arrayForElevation[$this->arrayIndex])))
 			return array(0, 0);
 
+		// TODO
+		//self::$minElevationDiff = 0;
+		$eachXthStep = 1;
 		$positiveElevation = 0;
 		$negativeElevation = 0;
 		$stepArray = $complete ? $this->arrayForElevation : array_slice($this->arrayForElevation, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
 
 		foreach ($stepArray as $i => $step) {
-			if ($i != 0 && $stepArray[$i] != 0 && $stepArray[$i-1] != 0) {
-				$elevationDifference = $stepArray[$i] - $stepArray[$i-1];
+			if ($i >= $eachXthStep && $stepArray[$i] != 0 && $stepArray[$i-$eachXthStep] != 0 && $i%$eachXthStep == 0) {
+				$elevationDifference = $stepArray[$i] - $stepArray[$i-$eachXthStep];
 				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
 				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
 			}
@@ -636,7 +639,7 @@ class GpsData {
 	 * @return array
 	 */
 	public function getRoundsAsFilledArray($distance = 1) {
-		if (!$this->Cache->isEmpty() && $distance = 1)
+		if (!$this->Cache->isEmpty() && $distance == 1)
 			return $this->Cache->get('rounds');
 
 		$rounds = array();

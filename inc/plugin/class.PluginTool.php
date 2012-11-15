@@ -101,12 +101,16 @@ abstract class PluginTool extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
-			echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
+		echo '<h1 class="show-on-hover-parent">
+			'.$this->name.'
+				<span class="show-on-hover">
+				'.$this->getConfigLink().'
+				</span>
+			</h1>
 
-		echo '<h1>'.$this->name.'</h1>'.NL;
-		echo $this->description.'<br />'.NL;
-		echo '<br />'.NL;
+			'.$this->description.'<br />
+			<br />
+			'.NL;
 	}
 
 	/**

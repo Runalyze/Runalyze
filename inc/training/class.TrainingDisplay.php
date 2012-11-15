@@ -166,7 +166,7 @@ class TrainingDisplay {
 			echo '
 			<tr class="a'.($i%2+2).' r">
 				<td>'.Running::Km($Distances[$i], 2).'</td>
-				<td>'.Time::toString($Times[$i]).'</td>
+				<td>'.($Times[$i] < 60 ? Time::toString($Times[$i], true, 2) : Time::toString($Times[$i])).'</td>
 				<td>'.Running::Pace($Distances[$i], $Times[$i]).'/km</td>
 				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 			</tr>'.NL;
