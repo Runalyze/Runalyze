@@ -3,6 +3,9 @@
  * Draw prognosis as function of time
  * Call:   include Plot.form.php
  */
+if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf'))
+	$WKplugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
+
 $DataFailed = false;
 $Prognosis  = array();
 $Results    = array();
@@ -27,6 +30,7 @@ if (START_TIME != time()) {
 	$ResultsData = Mysql::getInstance()->fetchAsArray('
 		SELECT
 			`time`,
+			`id`,
 			`s`
 		FROM `'.PREFIX.'training`
 		WHERE
@@ -35,8 +39,10 @@ if (START_TIME != time()) {
 		ORDER BY
 			`time` ASC');
 
-	foreach ($ResultsData as $dat)
-		$Results[$dat['time'].'000'] = $dat['s']*1000;
+	foreach ($ResultsData as $dat) {
+		if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
+			$Results[$dat['time'].'000'] = $dat['s']*1000;
+	}
 } else {
 	$DataFailed = true;
 }
