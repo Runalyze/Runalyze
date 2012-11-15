@@ -41,6 +41,11 @@ class TrainingPlotSplits extends TrainingPlot {
 			$this->achievedPace = array_sum($this->Data) / $num;
 
 			foreach ($this->Data as $key => $val) {
+				if ($num > 35)
+					$this->Labels[$key] = round($this->Labels[$key], 1);
+				elseif ($num > 25)
+					$this->Labels[$key] = number_format($this->Labels[$key], 1, ',', '.');
+
 				$this->Labels[$key] = array($key, $this->Labels[$key].$unit);
 				$this->Data[$key]   = $val*1000;
 			}
