@@ -342,7 +342,7 @@ class ParserTCX extends Parser {
 		$this->lastPoint = 0;
 
 		foreach ($Lap->Track as $i => $Track) {
-			if ($this->lastPoint > 0)
+			if ($this->lastPoint > 0 || strtotime((string)$Lap['StartTime']) != strtotime((string)$Lap->Track[0]->Trackpoint[0]))
 				$this->lastPointWasEmpty = true;
 
 			foreach ($Track->Trackpoint as $Trackpoint)

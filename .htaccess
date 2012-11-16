@@ -10,4 +10,5 @@ RewriteEngine on
 
 RewriteRule ^shared/([^./]*)$ call/call.SharedTraining.php?url=$1 [L]
 RewriteRule ^shared/([^./]*)/$ call/call.SharedList.php?user=$1&%{QUERY_STRING} [L]
+RewriteRule ([^./]*)/login.php$ login.php [L]
 </IfModule>
