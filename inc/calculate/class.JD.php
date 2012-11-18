@@ -118,10 +118,13 @@ class JD {
 	/**
 	 * Calculates VDOT for a training (without correction!)
 	 * @uses HF_MAX
-	 * @param $training_id
+	 * @param int $training_id
+	 * @param array $training [optional]
+	 * @return double
 	 */
-	public static function Training2VDOT($training_id) {
-		$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
+	public static function Training2VDOT($training_id, $training = array()) {
+		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']))
+			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
 
 		if ($training['pulse_avg'] != 0 && $training['sportid'] == CONF_RUNNINGSPORT) {
 			$VDOT = self::Competition2VDOT($training['distance'],  $training['s']);
@@ -246,5 +249,28 @@ class JD {
 		}
 
 		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
+	}
+
+	/**
+	 * Get VDOT corrector for a given training
+	 * @param int $ID
+	 * @param array $Training [optional]
+	 * @return float 
+	 */
+	public static function VDOTcorrectorFor($ID, $Training = array()) {
+		if (empty($Training))
+			$Training = Mysql::getInstance()->fetchSingle('
+				SELECT
+					`pulse_avg`,
+					`s`,
+					`distance`,
+					`vdot`
+				FROM `'.PREFIX.'training`
+				WHERE `id`='.$ID);
+
+		$VDOTtimeDistance = JD::Competition2VDOT($Training['distance'], $Training['s']);
+		$VDOTpulsePace    = $Training['vdot'];
+
+		return $VDOTtimeDistance/$VDOTpulsePace;
 	}
 }
