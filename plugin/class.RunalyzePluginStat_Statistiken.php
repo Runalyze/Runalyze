@@ -204,7 +204,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$time  = $starttime - $w*7*DAY_IN_S;
 			$start = Time::Weekstart($time);
 			$end   = Time::Weekend($time);
-			$week  = strftime("KW %W", $time);
+			$week  = 'KW '.date('W', $time);
 
 			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
 
@@ -349,7 +349,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$MonthFactor = 12;
 
 		if ($dat['i'] == date("Y")) {
-			$WeekFactor  = date("W");
+			$WeekFactor  = (date('n') == 12 && date('W') < 10) ? 52 : date("W");
 			$MonthFactor = date("n");
 		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
 			$WeekFactor  = 53 - date("W", START_TIME);
