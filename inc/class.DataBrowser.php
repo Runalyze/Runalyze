@@ -190,9 +190,14 @@ class DataBrowser {
 		echo $this->getPrevLink().NL;
 		echo $this->getCalenderLink().NL;
 
-		echo self::getMonthLink(Time::Month(date("m", $this->timestamp_start)), $this->timestamp_start).', ';
-		echo self::getYearLink(date("Y", $this->timestamp_start), $this->timestamp_start).', ';
-		echo self::getWeekLink(date("W", $this->timestamp_start).'. Woche ', $this->timestamp_start);
+		if ($this->timestamp_start < time() && time() < $this->timestamp_end)
+			$timeForLinks = time();
+		else
+			$timeForLinks = $this->timestamp_start;
+
+		echo self::getMonthLink(Time::Month(date("m", $timeForLinks)), $this->timestamp_start).', ';
+		echo self::getYearLink(date("Y", $timeForLinks), $this->timestamp_start).', ';
+		echo self::getWeekLink(date("W", $timeForLinks).'. Woche ', $this->timestamp_start);
 
 		echo $this->getNextLink().NL;	
 	}
