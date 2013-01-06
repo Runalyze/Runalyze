@@ -5,6 +5,12 @@
  */
 class ParserTCX extends Parser {
 	/**
+	 * Debug splits
+	 * @var boolean
+	 */
+	static public $DEBUG_SPLITS = false;
+
+	/**
 	 * Complete XML
 	 * @var SimpleXMLElement
 	 */
@@ -332,6 +338,9 @@ class ParserTCX extends Parser {
 		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2);
 		$SplitKey    = ((string)$Lap->Intensity == 'Active') ? 'splits' : 'splits_resting';
 		$this->data[$SplitKey][] = $SplitString;
+
+		if (self::$DEBUG_SPLITS)
+			echo 'LAPS-TIME: '.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2).'<br />';
 	}
 
 	/**
@@ -350,6 +359,9 @@ class ParserTCX extends Parser {
 			foreach ($Track->Trackpoint as $Trackpoint)
 				$this->parseTrackpoint($Trackpoint);
 		}
+
+		if (self::$DEBUG_SPLITS)
+			echo Time::toString(end($this->data['time_in_s'])).'<br />';
 	}
 
 	/**
@@ -369,6 +381,9 @@ class ParserTCX extends Parser {
 		}
 
 		if ($this->lastPointWasEmpty) {
+			if (self::$DEBUG_SPLITS)
+				echo 'PAUSE at '.(string)$TP->Time.'<br />';
+
 			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
 		}
 
