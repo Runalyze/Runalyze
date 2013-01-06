@@ -326,10 +326,10 @@ class ParserTCX extends Parser {
 			$this->calories += (int)$Lap->Calories;
 
 		$this->data['laps_distance'] += round((int)$Lap->DistanceMeters)/1000;
-		$this->data['laps_time']     += round((int)$Lap->TotalTimeSeconds);
+		$this->data['laps_time']     += round((float)$Lap->TotalTimeSeconds);
 
 		// TODO: save pause-laps too with special identification
-		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Time::toString(round((int)$Lap->TotalTimeSeconds), false, 2);
+		$SplitString = round((int)$Lap->DistanceMeters/1000, 2).'|'.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2);
 		$SplitKey    = ((string)$Lap->Intensity == 'Active') ? 'splits' : 'splits_resting';
 		$this->data[$SplitKey][] = $SplitString;
 	}
@@ -341,8 +341,10 @@ class ParserTCX extends Parser {
 	protected function parseTrackpoints($Lap) {
 		$this->lastPoint = 0;
 
-		foreach ($Lap->Track as $i => $Track) {
-			if ($this->lastPoint > 0 || strtotime((string)$Lap['StartTime']) != strtotime((string)$Lap->Track[0]->Trackpoint[0]))
+		foreach ($Lap->Track as $Track) {
+			if ($this->lastPoint > 0)
+				$this->lastPointWasEmpty = true;
+			if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time))
 				$this->lastPointWasEmpty = true;
 
 			foreach ($Track->Trackpoint as $Trackpoint)
@@ -360,7 +362,9 @@ class ParserTCX extends Parser {
 		// -> should be only if trackpoint has ONLY time as child
 		// - FR310XT: Pause -> new Track?
 		if (empty($TP->DistanceMeters)) {
-			$this->lastPointWasEmpty = true;
+			if (count($TP->children()) == 1)
+				$this->lastPointWasEmpty = true;
+
 			return;
 		}
 
