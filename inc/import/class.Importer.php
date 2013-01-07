@@ -366,9 +366,17 @@ abstract class Importer {
 	 */
 	protected function logFileContent($fileContent) {
 		if ($this->logFileContents) {
-			Filesystem::writeFile('import/files/logFile_'.time().'.tcx', $fileContent);
-			Error::getInstance()->addDebug('Importer::fileContent(file="'.$this->fileName.'"): '.$fileContent);
+			self::logFile($this->fileName, $fileContent);
 		}
+	}
+
+	/**
+	 * Log file
+	 * @param string $fileName
+	 * @param string $fileContent 
+	 */
+	static public function logFile($fileName, $fileContent) {
+		Filesystem::writeFile('import/files/logFile_'.time().'_'.$fileName.'.tcx', $fileContent);
 	}
 
 	/**

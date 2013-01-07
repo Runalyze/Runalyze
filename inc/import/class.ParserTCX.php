@@ -8,7 +8,7 @@ class ParserTCX extends Parser {
 	 * Debug splits
 	 * @var boolean
 	 */
-	static public $DEBUG_SPLITS = false;
+	static public $DEBUG_SPLITS = true;
 
 	/**
 	 * Complete XML
@@ -63,6 +63,12 @@ class ParserTCX extends Parser {
 	 * @var int
 	 */
 	private $lastPoint = 0;
+
+	/**
+	 * Last distance (exact)
+	 * @var float
+	 */
+	private $lastDistance = -1;
 
 	/**
 	 * Boolean flag: Last point was empty
@@ -385,8 +391,8 @@ class ParserTCX extends Parser {
 		// - FR305: Pause when DistanceMeters is empty
 		// -> should be only if trackpoint has ONLY time as child
 		// - FR310XT: Pause -> new Track?
-		if (empty($TP->DistanceMeters)) {
-			if (count($TP->children()) == 1)
+		if (empty($TP->DistanceMeters) || $this->lastDistance == (float)$TP->DistanceMeters) {
+			if (count($TP->children()) == 1 || !empty($TP->DistanceMeters))
 				$this->lastPointWasEmpty = true;
 
 			return;
@@ -404,6 +410,7 @@ class ParserTCX extends Parser {
 
 		$this->lastPointWasEmpty   = false;
 		$this->lastPoint           = (int)$TP->DistanceMeters;
+		$this->lastDistance        = (float)$TP->DistanceMeters;
 		$this->data['time_in_s'][] = strtotime((string)$TP->Time) - $this->starttime;
 		$this->data['km'][]  = round((int)$TP->DistanceMeters)/1000;
 		$this->data['altitude'][]  = (int)$TP->AltitudeMeters;

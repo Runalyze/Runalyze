@@ -35,12 +35,7 @@ class ImporterGPX extends Importer {
 		if (isset($this->XML->trk->desc))
 			$this->set('comment', (string)$this->XML->trk->desc);
 
-		//if (isset($this->XML->time))
-		//	$time = strtotime((string)$this->XML->time);
-		//elseif (isset($this->XML->metadata) && isset($this->XML->metadata->time))
-		//	$time = strtotime((string)$this->XML->metadata->time);
-		//else
-			$time = strtotime((string)$this->XML->trk->trkseg->trkpt[0]->time);
+		$time = strtotime((string)$this->XML->trk->trkseg->trkpt[0]->time);
 
 		$hasMultipleTrkseg = count($this->XML->trk->trkseg) > 1;
 		$this->XML = $this->XML->trk->trkseg;
