@@ -11,6 +11,12 @@ class SharedLinker {
 	static public $URL = 'shared/';
 
 	/**
+	 * User ID
+	 * @var int
+	 */
+	static public $USER_ID = 0;
+
+	/**
 	 * Private constructor 
 	 */
 	private function __construct() {}
@@ -58,6 +64,24 @@ class SharedLinker {
 	 */
 	static public function getTrainingId() {
 		return self::urlToId( Request::param('url') );
+	}
+
+	/**
+	 * Get user ID
+	 * @return int
+	 */
+	static public function getUserId() {
+		if (self::$USER_ID <= 0) {
+			if (strlen(Request::param('user')) > 0) {
+				$Data = AccountHandler::getDataFor(Request::param('user'));
+				self::$USER_ID = $Data['id'];
+			} elseif (strlen(Request::param('url')) > 0) {
+				$Data = Mysql::getInstance()->untouchedFetch('SELECT `accountid` FROM `'.PREFIX.'training` WHERE id="'.self::getTrainingId().'" LIMIT 1');
+				self::$USER_ID = $Data['accountid'];
+			}
+		}
+
+		return self::$USER_ID;
 	}
 
 	/**

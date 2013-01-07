@@ -210,9 +210,8 @@ class SessionAccountHandler {
 	 * Try to set account from request 
 	 */
 	static public function setAccountFromRequest() {
-		if (empty(self::$Account) && strlen(Request::param('user')) > 0) {
-			self::$Account = AccountHandler::getDataFor(Request::param('user'));
-		}
+		if (empty(self::$Account))
+			self::$Account = AccountHandler::getDataForId( SharedLinker::getUserId() );
 	}
 
 	/**
@@ -283,6 +282,9 @@ class SessionAccountHandler {
 	 * @return type 
 	 */
 	static public function getId() {
+		if (SharedLinker::isOnSharedPage())
+			return SharedLinker::getUserId();
+
 		if (!isset(self::$Account['id']))
 			return 0;
 
