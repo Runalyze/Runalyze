@@ -296,7 +296,19 @@ class ParserTCX extends Parser {
 	 * Parse starttime
 	 */
 	protected function parseStarttime() {
-		$this->starttime = strtotime((string)$this->XML->Id);
+		$this->setStarttimeFromString((string)$this->XML->Id);
+
+		$this->set('time', $this->starttime);
+		$this->set('datum', date("d.m.Y", $this->starttime));
+		$this->set('zeit', date("H:i", $this->starttime));
+	}
+
+	/**
+	 * Set starttime
+	 * @param string $string 
+	 */
+	protected function setStarttimeFromString($string) {
+		$this->starttime = strtotime($string);
 
 		$this->set('time', $this->starttime);
 		$this->set('datum', date("d.m.Y", $this->starttime));
@@ -379,6 +391,9 @@ class ParserTCX extends Parser {
 
 			return;
 		}
+
+		if ($this->starttime == 0)
+			$this->setStarttimeFromString((string)$TP->Time);
 
 		if ($this->lastPointWasEmpty) {
 			if (self::$DEBUG_SPLITS)
