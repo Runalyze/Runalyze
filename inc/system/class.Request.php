@@ -42,6 +42,25 @@ class Request {
 	}
 
 	/**
+	 * Is request HTTPS?
+	 * @return boolean
+	 */
+	static public function isHttps() {
+		return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off';
+	}
+
+	/**
+	 * Get protocol (http/https)
+	 * @return string
+	 */
+	static public function getProtocol() {
+		if (self::isHttps())
+			return 'https';
+
+		return 'http';
+	}
+
+	/**
 	 * Get ID send as post or get
 	 * @return mixed
 	 */

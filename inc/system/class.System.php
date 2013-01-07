@@ -5,7 +5,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForAllJSFiles() {
-		return '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		return '<script type="text/javascript" src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript" src="lib/min/g=js"></script>';
 	}
 
