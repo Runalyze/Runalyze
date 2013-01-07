@@ -8,7 +8,7 @@ class GpsData {
 	 * Minimal difference per step to be recognized for elevation data
 	 * @var int
 	 */
-	public static $minElevationDiff = 3;
+	public static $minElevationDiff = CONF_ELEVATION_MIN_DIFF;
 
 	/**
 	 * Only every n-th point will be taken for the elevation
@@ -826,6 +826,11 @@ class GpsData {
 
 		while ($this->nextStep())
 			$this->correctInvalidElevationValuesAtCurrentPoint();
+
+		if ($this->arrayForElevation[0] == 0) {
+			$min = reset(array_filter($this->arrayForElevation, 'GpsData_Filter_Zero'));
+			array_walk($this->arrayForElevation, 'GpsData_Walk_Replace_Zero', $min);
+		}
 	}
 
 	/**
@@ -1007,4 +1012,24 @@ class GpsData {
 	
 		return ($miles * 1.609344);
 	}
+}
+
+/**
+ * Filter function to filter all negative/zero values out
+ * @param mixed $value
+ * @return boolean
+ */
+function GpsData_Filter_Zero($value) {
+	return $value > 0;
+}
+
+/**
+ * Walk function to replace zeros/negative values with another value
+ * @param mixed $value
+ * @param int $key
+ * @param float $newValueForZeroes 
+ */
+function GpsData_Walk_Replace_Zero(&$value, $key, $newValueForZeros) {
+	if ($value <= 0)
+		$value = $newValueForZeros;
 }

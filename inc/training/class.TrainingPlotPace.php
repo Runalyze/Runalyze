@@ -51,17 +51,15 @@ class TrainingPlotPace extends TrainingPlot {
 			$this->Plot->setYAxisTimeFormat('%M:%S');
 
 		if (!$this->Training->Sport()->usesKmh()) {
-			$min = min($this->Data);
-			$max = max($this->Data);
-
-			if ($max >= 10*60*1000) {
-				$this->Plot->setYLimits(1, $min, 10*60*1000, true);
-				$this->Plot->setYTicks(1, null);
-			}
+			$setLimits = false;
+			$autoscale = true;
+			$min       = min($this->Data);
+			$max       = max($this->Data);
 
 			if (CONF_PACE_HIDE_OUTLIERS && ($max - $min) > 2*60*1000) {
-				$num    = count($this->Data);
-				$sorted = $this->Data;
+				$setLimits = true;
+				$num       = count($this->Data);
+				$sorted    = $this->Data;
 				sort($sorted);
 
 				$min = $sorted[round((self::$CUT_OUTLIER_PERCENTAGE/2/100)*$num)];
@@ -69,8 +67,25 @@ class TrainingPlotPace extends TrainingPlot {
 
 				$min = 10*1000*floor($min/10/1000);
 				$max = 10*1000*ceil($max/10/1000);
+			}
 
-				$this->Plot->setYLimits(1, $min, $max, true);
+			if (CONF_PACE_Y_LIMIT_MIN != 0 || CONF_PACE_Y_LIMIT_MAX != 0) {
+				$setLimits = true;
+				$autoscale = false;
+
+				if (CONF_PACE_Y_LIMIT_MIN != 0 && $min < 1000*CONF_PACE_Y_LIMIT_MIN)
+					$min = 1000*CONF_PACE_Y_LIMIT_MIN;
+				else
+					$min = 60*1000*floor($min/60/1000);
+
+				if (CONF_PACE_Y_LIMIT_MAX != 0 && $max > 1000*CONF_PACE_Y_LIMIT_MAX)
+					$max = 1000*CONF_PACE_Y_LIMIT_MAX;
+				else
+					$max = 60*1000*ceil($max/60/1000);
+			}
+
+			if ($setLimits) {
+				$this->Plot->setYLimits(1, $min, $max, $autoscale);
 				$this->Plot->setYTicks(1, null);
 			}
 		}

@@ -6,11 +6,13 @@
 $General = new ConfigCategory('general', 'Allgemein');
 $General->setKeys(array(
 	'GENDER',
-	'',
 	'PULS_MODE',
-	'USE_PULS',
 	'PLZ',
-	'USE_WETTER'
+	'',
+	'MAINSPORT',
+	'WK_TYPID',
+	'RUNNINGSPORT',
+	'LL_TYPID'
 ));
 $General->addConfigValue( new ConfigValueSelect('GENDER', array(
 	'default'		=> 'm',
@@ -29,15 +31,33 @@ $General->addConfigValue( new ConfigValueString('PLZ', array(
 	'label'			=> 'Postleitzahl',
 	'tooltip'		=> 'zum Laden von Wetterdaten'
 )));
-// TODO: remove - only used in Stat_Wettkampf
-$General->addConfigValue( new ConfigValueBool('USE_PULS', array(
-	'default'		=> true,
-	'label'			=> 'Pulsdaten speichern'
+$General->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
+	'default'		=> 1,
+	'label'			=> 'Hauptsportart',
+	'table'			=> 'sport',
+	'column'		=> 'name',
+	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
-// TODO: remove - only used in Stat_Wettkampf
-$General->addConfigValue( new ConfigValueBool('USE_WETTER', array(
-	'default'		=> true,
-	'label'			=> 'Wetter speichern'
+$General->addConfigValue( new ConfigValueSelectDb('RUNNINGSPORT', array(
+	'default'		=> 1,
+	'label'			=> 'Laufsportart',
+	'table'			=> 'sport',
+	'column'		=> 'name',
+	'onchange'		=> Ajax::$RELOAD_PAGE
+)));
+$General->addConfigValue( new ConfigValueSelectDb('WK_TYPID', array(
+	'default'		=> 5,
+	'label'			=> 'Trainingstyp: Wettkampf',
+	'table'			=> 'type',
+	'column'		=> 'name',
+	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$General->addConfigValue( new ConfigValueSelectDb('LL_TYPID', array(
+	'default'		=> 7,
+	'label'			=> 'Trainingstyp: Langer Lauf',
+	'table'			=> 'type',
+	'column'		=> 'name',
+	'onchange'		=> Ajax::$RELOAD_PLUGINS
 )));
 $General->addToCategoryList();
 
@@ -45,46 +65,56 @@ $General->addToCategoryList();
 
 
 
-$Training = new ConfigCategory('training', 'Training');
+$Training = new ConfigCategory('training', 'Trainingsansicht');
 $Training->setKeys(array(
-	'MAINSPORT',
-	'WK_TYPID',
-	'RUNNINGSPORT',
-	'LL_TYPID',
-	'TRAINING_MAPTYPE',
 	'TRAINING_DECIMALS',
-	'TRAINING_MAP_BEFORE_PLOTS',
+	'ELEVATION_MIN_DIFF',
+	'TRAINING_MAPTYPE',
+	'PACE_Y_LIMIT_MIN',
 	'TRAINING_MAP_COLOR',
+	'PACE_Y_LIMIT_MAX',
+	'TRAINING_MAP_BEFORE_PLOTS',
 	'PACE_Y_AXIS_REVERSE',
+	'',
 	'PACE_HIDE_OUTLIERS'
 ));
-$Training->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
-	'default'		=> 1,
-	'label'			=> 'Hauptsportart',
-	'table'			=> 'sport',
-	'column'		=> 'name',
-	'onchange'		=> Ajax::$RELOAD_PAGE
+$Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
+	'default'		=> '0',
+	'label'			=> 'Pace: Y-Achsen-Minimum',
+	'tooltip'		=> 'Alternativ zum allgemeinen Ignorieren von Ausrei&szlig;ern kann hier eine maximale Grenze festgelegt werden.',
+	'options'		=> array(
+		0				=> 'automatisch',
+		60				=> '1:00/km',
+		120				=> '2:00/km',
+		180				=> '3:00/km',
+		240				=> '4:00/km',
+		300				=> '5:00/km',
+		360				=> '6:00/km',
+		420				=> '7:00/km',
+		480				=> '8:00/km',
+		540				=> '9:00/km',
+		600				=> '10:00/km'
+	),
 )));
-$Training->addConfigValue( new ConfigValueSelectDb('RUNNINGSPORT', array(
-	'default'		=> 1,
-	'label'			=> 'Laufsportart',
-	'table'			=> 'sport',
-	'column'		=> 'name',
-	'onchange'		=> Ajax::$RELOAD_PAGE
-)));
-$Training->addConfigValue( new ConfigValueSelectDb('WK_TYPID', array(
-	'default'		=> 5,
-	'label'			=> 'Trainingstyp: Wettkampf',
-	'table'			=> 'type',
-	'column'		=> 'name',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
-)));
-$Training->addConfigValue( new ConfigValueSelectDb('LL_TYPID', array(
-	'default'		=> 7,
-	'label'			=> 'Trainingstyp: Langer Lauf',
-	'table'			=> 'type',
-	'column'		=> 'name',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
+$Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
+	'default'		=> '0',
+	'label'			=> 'Pace: Y-Achsen-Maximum',
+	'tooltip'		=> 'Alternativ zum allgemeinen Ignorieren von Ausrei&szlig;ern kann hier eine maximale Grenze festgelegt werden.',
+	'options'		=> array(
+		0				=> 'automatisch',
+		240				=> '4:00/km',
+		300				=> '5:00/km',
+		360				=> '6:00/km',
+		420				=> '7:00/km',
+		480				=> '8:00/km',
+		540				=> '9:00/km',
+		600				=> '10:00/km',
+		660				=> '11:00/km',
+		720				=> '12:00/km',
+		780				=> '13:00/km',
+		840				=> '14:00/km',
+		900				=> '15:00/km'
+	),
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
 	'default'		=> false,
@@ -117,6 +147,12 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
 		'G_PHYSICAL_MAP'	=> 'Physikalisch',
 		'OSM'				=> 'OpenStreetMap'
 	),
+)));
+$Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
+	'default'		=> 3,
+	'label'			=> 'H&ouml;henmeterberechnung: minimale Differenz',
+	'tooltip'		=> 'Ab welchem H&ouml;henunterschied zwischen zwei Datenpunkten soll dieser f&uuml;r die H&ouml;henmeter herangezogen werden?
+						<br />(2 oder 3 liefert unserer Ansicht nach realistische Werte)'
 )));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array('default' => false, 'label' => 'Karte: vor Diagrammen')));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));

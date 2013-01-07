@@ -301,9 +301,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						<th>Lauf</th>
 						<th class="{sorter: \'distance\'}">Distanz</th>
 						<th class="{sorter: \'resulttime\'}">Zeit</th>
-						<th>Pace</th>'.(CONF_USE_PULS ? '
-						<th>Puls</th>' : '').''.(CONF_USE_WETTER ? '
-						<th class="{sorter: \'temperature\'}">Wetter</th>' : '').'
+						<th>Pace</th>
+						<th>Puls</th>
+						<th class="{sorter: \'temperature\'}">Wetter</th>
 					</tr>
 				</thead>
 				<tbody>');
