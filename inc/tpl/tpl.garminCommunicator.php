@@ -110,7 +110,7 @@ $Frontend = new Frontend(true);
 				}
 <?php
 if (strlen(CONF_GARMIN_API_KEY) > 10)
-	echo ',pathKeyPairsArray: ["'.(isset($_SERVER['HTTPS'])?'https':'http').'://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"]';
+	echo ',pathKeyPairsArray: ["'.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'].'","'.CONF_GARMIN_API_KEY.'"]';
 ?>
 			});
 		}
