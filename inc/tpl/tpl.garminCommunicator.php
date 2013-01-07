@@ -26,7 +26,7 @@ $Frontend = new Frontend(true);
 				showDeviceSelectOnLoad: true,
 				autoHideUnusedElements: true,
 				showReadDataTypesSelect: false,
-				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
+				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
 				deviceSelectLabel: "Ausw&auml;hlen:<br />",
 				readDataButtonText: "Verbinden",
 				showCancelReadDataButton: false,

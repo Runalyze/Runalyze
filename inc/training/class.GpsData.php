@@ -822,16 +822,23 @@ class GpsData {
 	 */
 	private function correctInvalidElevationValues() {
 		$this->startLoop();
+		$this->correctInvalidElevationValuesAtCurrentPoint();
 
-		while ($this->nextStep()) {
-			if ($this->getLatitude() == 0 || $this->getLongitude() == 0 || $this->getElevation() <= 0) {
-				if (isset($this->arrayForLatitude[$this->arrayLastIndex])) {
-					$this->arrayForLatitude[$this->arrayIndex] = $this->arrayForLatitude[$this->arrayLastIndex];
-					$this->arrayForLongitude[$this->arrayIndex] = $this->arrayForLongitude[$this->arrayLastIndex];
-					$this->arrayForElevation[$this->arrayIndex] = $this->arrayForElevation[$this->arrayLastIndex];
-				} else {
-					$this->arrayForElevation[$this->arrayIndex] = 0;
-				}
+		while ($this->nextStep())
+			$this->correctInvalidElevationValuesAtCurrentPoint();
+	}
+
+	/**
+	 * Correct invalid values at current point 
+	 */
+	private function correctInvalidElevationValuesAtCurrentPoint() {
+		if ($this->getLatitude() == 0 || $this->getLongitude() == 0 || $this->getElevation() <= 0) {
+			if (isset($this->arrayForLatitude[$this->arrayLastIndex])) {
+				$this->arrayForLatitude[$this->arrayIndex] = $this->arrayForLatitude[$this->arrayLastIndex];
+				$this->arrayForLongitude[$this->arrayIndex] = $this->arrayForLongitude[$this->arrayLastIndex];
+				$this->arrayForElevation[$this->arrayIndex] = $this->arrayForElevation[$this->arrayLastIndex];
+			} else {
+				$this->arrayForElevation[$this->arrayIndex] = 0;
 			}
 		}
 	}

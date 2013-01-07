@@ -91,6 +91,10 @@ class ImporterTCX extends Importer {
 		foreach ($fileNames as $fileName) {
 			$_POST           = array();
 			$rawFileContent  = Filesystem::openFileAndDelete('import/files/'.$fileName.'.tcx');
+
+			if ($this->logFileContents)
+				Importer::logFile($fileName, $rawFileContent);
+
 			$this->Parser    = new ParserTCX( ImporterTCX::decodeCompressedData($rawFileContent) );
 			$this->Parser->parseTraining();
 
