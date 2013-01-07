@@ -8,7 +8,7 @@ class ParserTCX extends Parser {
 	 * Debug splits
 	 * @var boolean
 	 */
-	static public $DEBUG_SPLITS = true;
+	static public $DEBUG_SPLITS = false;
 
 	/**
 	 * Complete XML
