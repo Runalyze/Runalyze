@@ -72,10 +72,8 @@ abstract class ConfigValue {
 		else
 			$ID = SessionAccountHandler::getId();
 
-		if ($ID == 0 && strlen(Request::param('user')) > 0) {
-			$Data = AccountHandler::getDataFor(Request::param('user'));
-			$ID = $Data['id'];
-		}
+		if ($ID == 0 && SharedLinker::isOnSharedPage())
+			$ID = SharedLinker::getUserId();
 
 		$data = Mysql::getInstance()->fetchAsArray('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.$ID.'"');
 		foreach ($data as $confArray)

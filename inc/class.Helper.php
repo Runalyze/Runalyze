@@ -115,16 +115,8 @@ class Helper {
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
-		if (SharedLinker::getTrainingId() > 0 || strlen(Request::param('user')) > 0) {
-			if (SharedLinker::getTrainingId() > 0)
-				$account = Mysql::getInstance()->fetchSingle('SELECT `accountid` FROM `'.PREFIX.'training` WHERE `id`="'.SharedLinker::getTrainingId().'"');
-			else
-				$account = Mysql::getInstance()->fetchSingle('SELECT `id` as `accountid` FROM `'.PREFIX.'account` WHERE `username`="'.Request::param('user').'"');
-
-			if (isset($account['accountid']))
-				$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.$account['accountid'].'" ORDER BY `time` DESC');
-			else
-				$userdata = false;
+		if (SharedLinker::isOnSharedPage()) {
+			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
 		} else {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 		}
@@ -146,16 +138,8 @@ class Helper {
 		if (defined('HF_REST'))
 			return HF_REST;
 
-		if (SharedLinker::getTrainingId() > 0 || strlen(Request::param('user')) > 0) {
-			if (SharedLinker::getTrainingId() > 0)
-				$account = Mysql::getInstance()->fetchSingle('SELECT `accountid` FROM `'.PREFIX.'training` WHERE `id`="'.SharedLinker::getTrainingId().'"');
-			else
-				$account = Mysql::getInstance()->fetchSingle('SELECT `id` as `accountid` FROM `'.PREFIX.'account` WHERE `username`="'.Request::param('user').'"');
-
-			if (isset($account['accountid']))
-				$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.$account['accountid'].'" ORDER BY `time` DESC');
-			else
-				$userdata = false;
+		if (SharedLinker::isOnSharedPage()) {
+			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
 		} else {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 		}

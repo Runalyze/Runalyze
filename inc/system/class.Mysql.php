@@ -31,7 +31,7 @@ final class Mysql {
 	 * Prohibit creating an object from outside
 	 */
 	private function __construct() {
-		$this->query('SET NAMES utf8');
+		$this->query('SET NAMES utf8', false);
 	}
 
 	/**
@@ -293,8 +293,10 @@ final class Mysql {
 	 *	@return string $query (MySQL query)
 	 **/
 	private function addAccountId($query) {
-		if (FrontendShared::$IS_SHOWN) {
-			$ID = SessionAccountHandler::getId();
+		if (SharedLinker::isOnSharedPage()) {
+			$ID = SharedLinker::getUserId();
+		//if (FrontendShared::$IS_SHOWN) {
+		//	$ID = SessionAccountHandler::getId();
 
 			if ($ID == 0)
 				return $query;

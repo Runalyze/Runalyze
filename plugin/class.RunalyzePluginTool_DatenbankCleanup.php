@@ -95,6 +95,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function resetMaxValues() {
 		Trimp::calculateMaxValues();
+		JD::recalculateVDOTcorrector();
 	}
 
 	/**
