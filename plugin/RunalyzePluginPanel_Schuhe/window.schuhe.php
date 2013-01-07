@@ -25,10 +25,13 @@ if ($Formular->submitSucceeded())
 	header('Location: window.schuhe.table.php');
 
 
-if (Request::sendId() > 0 && $Shoe->getKm() == $Shoe->getAdditionalKm()) {
+if (Request::sendId() > 0) {
 	$DeleteText = '<strong>Schuh wieder l&ouml;schen &raquo;</strong>';
 	$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$Shoe->id();
 	$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
+
+	if ($Shoe->getKm() != $Shoe->getAdditionalKm())
+		$DeleteLink = 'Der Schuh ist noch mit einigen Trainings verkn&uuml;pft und kann daher nicht gel&ouml;scht werden.';
 
 	$DeleteFieldset = new FormularFieldset('Schuh l&ouml;schen');
 	$DeleteFieldset->addWarning($DeleteLink);
