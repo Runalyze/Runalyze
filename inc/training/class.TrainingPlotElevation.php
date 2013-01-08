@@ -24,7 +24,7 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		$this->Data = $this->Training->GpsData()->getPlotDataForElevation();
+		$this->Data = self::getData($this->Training);
 		$this->Plot->Data[] = array('label' => 'H&ouml;he', 'color' => 'rgba(227,217,187,1)', 'data' => $this->Data);
 	}
 
@@ -32,8 +32,27 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		$min = min($this->Data); $minXvalues = array_keys($this->Data, $min);
-		$max = max($this->Data); $maxXvalues = array_keys($this->Data, $max);
+		self::setPropertiesTo($this->Plot, 1, $this->Training, $this->Data);
+	}
+
+	/**
+	 * Get data
+	 * @return array
+	 */
+	static public function getData(Training &$Training) {
+		return $Training->GpsData()->getPlotDataForElevation();
+	}
+
+	/**
+	 * Set properties
+	 * @param Plot $Plot
+	 * @param int $YAxis
+	 * @param Training $Training
+	 * @param array $Data 
+	 */
+	static public function setPropertiesTo(Plot &$Plot, $YAxis, Training &$Training, array $Data) {
+		$min = min($Data); $minXvalues = array_keys($Data, $min);
+		$max = max($Data); $maxXvalues = array_keys($Data, $max);
 
 		if ($max - $min <= 50) {
 			$minLimit = $min - 20;
@@ -43,13 +62,13 @@ class TrainingPlotElevation extends TrainingPlot {
 			$maxLimit = $max;
 		}
 
-		$this->Plot->addYAxis(1, 'left');
-		$this->Plot->addYUnit(1, 'm');
-		$this->Plot->setYLimits(1, $minLimit, $maxLimit, true);
+		$Plot->addYAxis($YAxis, 'left');
+		$Plot->addYUnit($YAxis, 'm');
+		$Plot->setYLimits($YAxis, $minLimit, $maxLimit, true);
 
-		$this->Plot->setLinesFilled();
+		$Plot->setLinesFilled(array($YAxis - 1));
 
-		$this->Plot->addAnnotation($minXvalues[0], $min, $min.'m');
-		$this->Plot->addAnnotation($maxXvalues[0], $max, $max.'m');
+		$Plot->addAnnotation($minXvalues[0], $min, $min.'m');
+		$Plot->addAnnotation($maxXvalues[0], $max, $max.'m');
 	}
 }

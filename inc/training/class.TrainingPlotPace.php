@@ -30,13 +30,7 @@ class TrainingPlotPace extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		$this->Data = $this->Training->GpsData()->getPlotDataForPace();
-
-		if ($this->Training->Sport()->usesKmh()) {
-			$this->Data = Plot::correctValuesFromPaceToKmh($this->Data);
-		} else {
-			$this->Data = Plot::correctValuesForTime($this->Data);
-		}
+		$this->Data = self::getData($this->Training);
 
 		$this->Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $this->Data);
 	}
@@ -45,21 +39,49 @@ class TrainingPlotPace extends TrainingPlot {
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		if ($this->Training->Sport()->usesKmh())
-			$this->Plot->addYUnit(1, 'km/h');
-		else
-			$this->Plot->setYAxisTimeFormat('%M:%S');
+		self::setPropertiesTo($this->Plot, 1, $this->Training, $this->Data);
+	}
 
-		if (!$this->Training->Sport()->usesKmh()) {
+	/**
+	 * Get data
+	 * @param Training $Training
+	 * @return array
+	 */
+	static public function getData(Training &$Training) {
+		$Data = $Training->GpsData()->getPlotDataForPace();
+
+		if ($Training->Sport()->usesKmh()) {
+			$Data = Plot::correctValuesFromPaceToKmh($Data);
+		} else {
+			$Data = Plot::correctValuesForTime($Data);
+		}
+
+		return $Data;
+	}
+
+	/**
+	 * Set properties
+	 * @param Plot $Plot
+	 * @param int $YAxis
+	 * @param Training $Training
+	 * @param array $Data 
+	 */
+	static public function setPropertiesTo(Plot &$Plot, $YAxis, Training &$Training, array $Data) {
+		if ($Training->Sport()->usesKmh())
+			$Plot->addYUnit($YAxis, 'km/h');
+		else
+			$Plot->setYAxisTimeFormat('%M:%S', $YAxis);
+
+		if (!$Training->Sport()->usesKmh()) {
 			$setLimits = false;
 			$autoscale = true;
-			$min       = min($this->Data);
-			$max       = max($this->Data);
+			$min       = min($Data);
+			$max       = max($Data);
 
 			if (CONF_PACE_HIDE_OUTLIERS && ($max - $min) > 2*60*1000) {
 				$setLimits = true;
-				$num       = count($this->Data);
-				$sorted    = $this->Data;
+				$num       = count($Data);
+				$sorted    = $Data;
 				sort($sorted);
 
 				$min = $sorted[round((self::$CUT_OUTLIER_PERCENTAGE/2/100)*$num)];
@@ -85,12 +107,12 @@ class TrainingPlotPace extends TrainingPlot {
 			}
 
 			if ($setLimits) {
-				$this->Plot->setYLimits(1, $min, $max, $autoscale);
-				$this->Plot->setYTicks(1, null);
+				$Plot->setYLimits($YAxis, $min, $max, $autoscale);
+				$Plot->setYTicks($YAxis, null);
 			}
 		}
 
 		if (CONF_PACE_Y_AXIS_REVERSE)
-			$this->Plot->setYAxisReverse(1);
+			$Plot->setYAxisReverse($YAxis);
 	}
 }

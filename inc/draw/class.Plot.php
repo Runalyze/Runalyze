@@ -377,6 +377,13 @@ class Plot {
 	}
 
 	/**
+	 * Clear all annotations 
+	 */
+	public function clearAnnotations() {
+		$this->Annotations = array();
+	}
+
+	/**
 	 * Enable selection for this plot
 	 * @param mixed $mode can be false
 	 * @param string $color
@@ -622,13 +629,14 @@ class Plot {
 	 * @param int $i
 	 * @param string $position
 	 * @param bool $align
+	 * @param int $alignTo
 	 * @return int
 	 */
-	public function addYAxis($i, $position, $align = true) {
+	public function addYAxis($i, $position, $align = true, $alignTo = 1) {
 		$this->Options['yaxes'][$i-1]['position'] = $position;
 
 		if ($position == 'right' && $align)
-			$this->Options['yaxes'][$i-1]['alignTicksWithAxis'] = 1;
+			$this->Options['yaxes'][$i-1]['alignTicksWithAxis'] = $alignTo;
 	}
 
 	/**

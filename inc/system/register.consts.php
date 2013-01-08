@@ -69,15 +69,25 @@ $Training = new ConfigCategory('training', 'Trainingsansicht');
 $Training->setKeys(array(
 	'TRAINING_DECIMALS',
 	'ELEVATION_MIN_DIFF',
-	'TRAINING_MAPTYPE',
+	'TRAINING_PLOT_MODE',
 	'PACE_Y_LIMIT_MIN',
-	'TRAINING_MAP_COLOR',
+	'TRAINING_MAPTYPE',
 	'PACE_Y_LIMIT_MAX',
-	'TRAINING_MAP_BEFORE_PLOTS',
+	'TRAINING_MAP_COLOR',
 	'PACE_Y_AXIS_REVERSE',
-	'',
+	'TRAINING_MAP_BEFORE_PLOTS',
 	'PACE_HIDE_OUTLIERS'
 ));
+$Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
+	'default'		=> 'all',
+	'label'			=> 'Diagrammankombination',
+	'tooltip'		=> 'Normalerweise werden alle Diagramme einzeln angezeigt. Sie k&ouml;nnen aber auch kombiniert werden.',
+	'options'		=> array(
+		'all'			=> 'alle einzeln',
+		'pacepulse'		=> 'Pace/Herzfrequenz',
+		'collection'	=> 'Pace/Herzfrequenz/H&ouml;he'
+	),
+)));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 	'default'		=> '0',
 	'label'			=> 'Pace: Y-Achsen-Minimum',
@@ -164,6 +174,8 @@ $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_PACE', array('
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_PULSE', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_ELEVATION', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_SPLITS', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_PACEPULSE', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_COLLECTION', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_MAP', array('default' => true)));
 // TODO: remove
 $Training->addConfigValue(new ConfigValueBool('TRAINING_PLOTS_BELOW', array('default' => false)));
