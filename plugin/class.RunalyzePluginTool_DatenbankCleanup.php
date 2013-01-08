@@ -92,7 +92,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 					'vdot_by_time'
 				),
 				array(
-					Trimp::TRIMPfor($Training['id'], false, $Training),
+					Trimp::forTraining($Training),
 					JD::Training2VDOT($Training['id'], $Training),
 					JD::Competition2VDOT($Training['distance'], $Training['s'])
 				));

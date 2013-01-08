@@ -236,8 +236,8 @@ class TrainingEditor {
 		$Mysql = Mysql::getInstance();
 
 		$Mysql->update(PREFIX.'training', $this->Id, $this->UpdateColumns, $this->UpdateValues);
-		$Mysql->update(PREFIX.'training', $this->Id, 'trimp', Trimp::TRIMPfor($this->Id));
-		$Mysql->update(PREFIX.'training', $this->Id, 'vdot', JD::Training2VDOT($this->Id));
+		$Mysql->update(PREFIX.'training', $this->Id, 'trimp', Trimp::forTraining($this->TrainingData));
+		$Mysql->update(PREFIX.'training', $this->Id, 'vdot', JD::Training2VDOT($this->Id, $this->TrainingData));
 
 		$this->updateShoeValues();
 		$this->updateMaxValues();

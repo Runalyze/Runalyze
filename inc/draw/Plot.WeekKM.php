@@ -34,11 +34,11 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	$CTL = Trimp::CTL();
 	if (CONF_RECHENSPIELE && $CTL > 0) {
-		$TrimpPerMonth = Trimp::TRIMPfor(0, 7 * $CTL);
-		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
+		$TrimpPerWeek = Trimp::minutesForTrimp(7 * $CTL);
+		$AvgMonthPace = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
 
 		if ($AvgMonthPace['avg'] > 0)
-			$possibleKM    = 5 * round($TrimpPerMonth / $AvgMonthPace['avg'] / 5);
+			$possibleKM    = 5 * round($TrimpPerWeek / $AvgMonthPace['avg'] / 5);
 	}
 } else {
 	$Plot->raiseError('F&uuml;r dieses Jahr liegen keine Daten vor.');
