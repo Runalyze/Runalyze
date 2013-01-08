@@ -358,7 +358,7 @@ class ParserTCX extends Parser {
 		$this->data[$SplitKey][] = $SplitString;
 
 		if (self::$DEBUG_SPLITS)
-			echo 'LAPS-TIME: '.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2).'<br />';
+			Error::getInstance()->addDebug('LAPS-TIME: '.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2));
 	}
 
 	/**
@@ -369,17 +369,26 @@ class ParserTCX extends Parser {
 		$this->lastPoint = 0;
 
 		foreach ($Lap->Track as $Track) {
-			if ($this->lastPoint > 0)
+			if ($this->lastPoint > 0) {
+				if (self::$DEBUG_SPLITS)
+					Error::getInstance()->addDebug('empty point: splitted tracks');
+
 				$this->lastPointWasEmpty = true;
-			if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time))
+			}
+
+			if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time)) {
+				if (self::$DEBUG_SPLITS)
+					Error::getInstance()->addDebug('empty point: difference in StartTime for lap');
+
 				$this->lastPointWasEmpty = true;
+			}
 
 			foreach ($Track->Trackpoint as $Trackpoint)
 				$this->parseTrackpoint($Trackpoint);
 		}
 
 		if (self::$DEBUG_SPLITS)
-			echo Time::toString(end($this->data['time_in_s'])).'<br />';
+			Error::getInstance()->addDebug( Time::toString(end($this->data['time_in_s'])) );
 	}
 
 	/**
@@ -391,9 +400,20 @@ class ParserTCX extends Parser {
 		// - FR305: Pause when DistanceMeters is empty
 		// -> should be only if trackpoint has ONLY time as child
 		// - FR310XT: Pause -> new Track?
-		if (empty($TP->DistanceMeters) || $this->lastDistance == (float)$TP->DistanceMeters) {
-			if (count($TP->children()) == 1 || !empty($TP->DistanceMeters))
-				$this->lastPointWasEmpty = true;
+		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters);
+					//&& ((double)$TP->Position->LatitudeDegrees == end($this->data['latitude']))
+					//&& ((double)$TP->Position->LongitudeDegrees == end($this->data['longitude']));
+
+		if (empty($TP->DistanceMeters) || $NoMove) {
+			if (count($TP->children()) == 1 || $NoMove) {
+				if (self::$DEBUG_SPLITS)
+					Error::getInstance()->addDebug('empty point: '.($NoMove ? 'no move' : 'empty trackpoint'));
+
+				if (self::$DEBUG_SPLITS)
+					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.(strtotime((string)$TP->Time) - $this->starttime - end($this->data['time_in_s'])));
+
+				$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
+			}
 
 			return;
 		}
@@ -403,7 +423,7 @@ class ParserTCX extends Parser {
 
 		if ($this->lastPointWasEmpty) {
 			if (self::$DEBUG_SPLITS)
-				echo 'PAUSE at '.(string)$TP->Time.'<br />';
+				Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.(strtotime((string)$TP->Time) - $this->starttime - end($this->data['time_in_s'])));
 
 			$this->starttime = strtotime((string)$TP->Time) - end($this->data['time_in_s']);
 		}
