@@ -121,54 +121,41 @@ class Trimp {
 	/**
 	 * Get the TRIMP for a training or get the minutes needed for a given TRIMP
 	 * @param int $trainingId     Training-ID
-	 * @param mixed $trimpToReach [optional] If set, calculate backwards to this value, default: false     
+	 * @param mixed $trimpToReach [optional] If set, calculate backwards to this value, default: false
+	 * @param array $trainingData [optional]   
 	 * @return int
 	 */
-	static public function TRIMPfor($trainingId, $trimpToReach = false) {
-		// Berechnung mit Trainingszonen waere:
-		// 50%-60% (zone 1), 60%-70% (zone 2), 70%-80% (zone 3), 80%-90% (zone 4) and 90%-100% (zone 5)
-		// default settings are 1 (zone 1), 1.1 (zone 2), 1.2 (zone 3), 2.2 (zone 4), and 4.5 (zone 5)
+	static public function TRIMPfor($trainingId, $trimpToReach = false, $trainingData = array()) {
 		if ($trimpToReach !== false) {
 			$Sport   = new Sport( CONF_MAINSPORT );
-			$avgHf   = $Sport->avgHF();
-		} else {
-			// TODO: Don't create new Training!
-			$Training    = new Training($trainingId);
-			$avgHf       = $Training->avgHF();
+			$avgHF   = $Sport->avgHF();
+
+			return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
 		}
 
-//		if ($trimpToReach !== false || !$Training->GpsData()->hasHeartrateData()) {
-			$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
-			$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
-	
-			if ($trimpToReach !== false)
-				return $trimpToReach / ( $TrimpFactor * 5.35 / 10 );
-	
-			$Trimp = round($Training->get('s')/60 * $TrimpFactor * $Training->RPE() / 10);
-//		} else {
-//			$Training->GpsData()->startLoop();
-//			/* XXX
-//			$Training->GpsData()->setStepSize( round(
-//			    $Training->GpsData()->arraySizes /
-//			    $Training->GpsData()->$NUM_STEPS_FOR_ZONES ) );
-//			*/
-//			$Training->GpsData()->setStepSize(1000);
-//
-//			$Trimp = 0;
-//			while ($Training->GpsData()->nextStep()) {
-//				$avgHf = $Training->GpsData()->getAverageHeartrateOfStep();
-//
-//				$HFperRest   = ($avgHf - HF_REST) / (HF_MAX - HF_REST);
-//				$TrimpFactor = $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
-//				$Trimp += $Training->GpsData()->getTimeOfStep()/60 * $TrimpFactor;
-//			}
-//			$Trimp = round($Trimp * $Training->RPE() / 10);
-//		}
+		// TODO: Don't create new Training!
+		$Training = new Training($trainingId, $trainingData);
+		$avgHF    = $Training->avgHF();
+		$s        = $Training->get('s');
+		$RPE      = $Training->RPE();
+
+		$Trimp = round($s/60 * self::TrimpFactor($avgHF) * $RPE / 10);
 
 		if ($Trimp > self::$MAX_TRIMP)
 			self::setMaxTRIMP($Trimp);
 
 		return $Trimp;
+	}
+
+	/**
+	 * Get trimp factor
+	 * @param int $avgHF
+	 * @return float 
+	 */
+	static private function TrimpFactor($avgHF) {
+		$HFperRest = ($avgHF - HF_REST) / (HF_MAX - HF_REST);
+
+		return $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);
 	}
 
 	/**

@@ -81,13 +81,21 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Reset all TRIMP- and VDOT-values in database
 	 */
 	private function resetTrimpAndVdot() {
-		$Mysql = Mysql::getInstance();
-		$IDs   = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'training`');
+		$Mysql     = Mysql::getInstance();
+		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg` FROM `'.PREFIX.'training`');
 
-		foreach ($IDs as $ID)
-			$Mysql->update(PREFIX.'training', $ID['id'],
-				array('trimp', 'vdot'),
-				array(Trimp::TRIMPfor($ID['id']), JD::Training2VDOT($ID['id'])));
+		foreach ($Trainings as $Training)
+			$Mysql->update(PREFIX.'training', $Training['id'],
+				array(
+					'trimp',
+					'vdot',
+					'vdot_by_time'
+				),
+				array(
+					Trimp::TRIMPfor($Training['id'], false, $Training),
+					JD::Training2VDOT($Training['id'], $Training),
+					JD::Competition2VDOT($Training['distance'], $Training['s'])
+				));
 	}
 
 	/**
