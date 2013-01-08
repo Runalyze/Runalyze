@@ -15,13 +15,27 @@ class TrainingPlotsList {
 	 * @param Training $Training 
 	 */
 	public function __construct(Training &$Training) {
+		$Collection = (CONF_TRAINING_PLOT_MODE == 'collection');
+		$PacePulse  = (CONF_TRAINING_PLOT_MODE == 'pacepulse');
+
+		if ($Collection && !$Training->hasElevationData()) {
+			$Collection = false;
+			$PacePulse  = true;
+		}
+		if ($PacePulse && (!$Training->hasPaceData() || !$Training->hasPulseData()))
+			$PacePulse  = false;
+
 		if ($Training->hasSplits())
 			$this->Plots[] = new TrainingPlotSplits($Training);
-		if ($Training->hasPaceData())
+		if ($Collection)
+			$this->Plots[] = new TrainingPlotCollection($Training);
+		if ($PacePulse)
+			$this->Plots[] = new TrainingPlotPacePulse($Training);
+		if ($Training->hasPaceData() && !$PacePulse && !$Collection)
 			$this->Plots[] = new TrainingPlotPace($Training);
-		if ($Training->hasPulseData())
+		if ($Training->hasPulseData() && !$PacePulse && !$Collection)
 			$this->Plots[] = new TrainingPlotPulse($Training);
-		if ($Training->hasElevationData())
+		if ($Training->hasElevationData() && !$Collection)
 			$this->Plots[] = new TrainingPlotElevation($Training);
 
 		if (!$Training->hasSplits() && $Training->hasPaceData())

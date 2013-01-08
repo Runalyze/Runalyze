@@ -82,6 +82,12 @@ label:hover .toggle-icon-elevation { background-position: -48px -16px; }
 .toggle-icon-map { background-position: -64px 0; }
 label:hover .toggle-icon-map { background-position: -64px -16px; }
 .toggle-icon-map.checked { background-position: -64px -32px; }
+.toggle-icon-pacepulse { background-position: -80px 0; }
+label:hover .toggle-icon-pacepulse { background-position: -80px -16px; }
+.toggle-icon-pacepulse.checked { background-position: -80px -32px; }
+.toggle-icon-collection { background-position: -96px 0; }
+label:hover .toggle-icon-collection { background-position: -96px -16px; }
+.toggle-icon-collection.checked { background-position: -96px -32px; }
 
 
 .checkbox-icon {
