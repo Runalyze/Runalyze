@@ -281,9 +281,12 @@ class ImporterFormular extends Importer {
 			return;
 		}
 
-		$Training  = new Training($id, array_combine($this->columns, $this->values));
+		$TrainingData = array_combine($this->columns, $this->values);
+		$TrainingData['id'] = $id;
+
+		$Training  = new Training($id, $TrainingData);
 		
-		$Mysql->query('UPDATE `'.PREFIX.'training` SET `trimp`="'.Trimp::TRIMPfor($id).'" WHERE `id`='.$id.' LIMIT 1');
+		$Mysql->query('UPDATE `'.PREFIX.'training` SET `trimp`="'.Trimp::forTraining($TrainingData).'" WHERE `id`='.$id.' LIMIT 1');
 		$Mysql->query('UPDATE `'.PREFIX.'training` SET `vdot`="'.JD::Training2VDOT($id).'" WHERE `id`='.$id.' LIMIT 1');
 
 		Trimp::checkForMaxValuesAt($this->time);

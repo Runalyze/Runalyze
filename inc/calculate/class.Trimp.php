@@ -119,21 +119,29 @@ class Trimp {
 	}
 
 	/**
-	 * Get the TRIMP for a training or get the minutes needed for a given TRIMP
-	 * @param int $trainingId     Training-ID
-	 * @param mixed $trimpToReach [optional] If set, calculate backwards to this value, default: false
-	 * @param array $trainingData [optional]   
-	 * @return int
+	 * Get minutes need to reach a given TRIMP-value
+	 * @param float $trimpToReach
+	 * @return float in minutes
 	 */
-	static public function TRIMPfor($trainingId, $trimpToReach = false, $trainingData = array()) {
-		if ($trimpToReach !== false) {
-			$Sport   = new Sport( CONF_MAINSPORT );
-			$avgHF   = $Sport->avgHF();
+	static public function minutesForTrimp($trimpToReach) {
+		$Sport = new Sport(CONF_MAINSPORT);
 
-			return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
+		return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
+	}
+
+	/**
+	 * Get TRIMP for a given training by array
+	 * @param type $trainingData
+	 * @return int 
+	 */
+	static public function forTraining(array $trainingData) {
+		if (!isset($trainingData['pulse_avg']) || !isset($trainingData['s']) || !isset($trainingData['typeid']) || !isset($trainingData['sportid'])) {
+			if (!isset($trainingData['id']))
+				return 0;
+
+			$trainingData = Mysql::getInstance()->fetchSingle('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.$trainingData['id'].'"');
 		}
 
-		// TODO: Don't create new Training!
 		$Training = new Training($trainingId, $trainingData);
 		$avgHF    = $Training->avgHF();
 		$s        = $Training->get('s');
@@ -145,6 +153,15 @@ class Trimp {
 			self::setMaxTRIMP($Trimp);
 
 		return $Trimp;
+	}
+
+	/**
+	 * Get TRIMP for a given training by ID
+	 * @param int $trainingID
+	 * @return int
+	 */
+	static public function forTrainingID($trainingID) {
+		return self::forTraining(array('id' => $trainingID));
 	}
 
 	/**
