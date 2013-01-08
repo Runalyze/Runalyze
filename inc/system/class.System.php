@@ -57,7 +57,7 @@ class System {
 		if (!isset($_SERVER['HTTP_HOST']))
 			return '';
 
-		return 'http://'.$_SERVER['HTTP_HOST'];
+		return Request::getProtocol().'://'.$_SERVER['HTTP_HOST'];
 	}
 
 	/**

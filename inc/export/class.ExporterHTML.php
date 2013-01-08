@@ -75,6 +75,6 @@ class ExporterHTML extends ExporterEmbedded {
 	'.$UrlLink.'
 	<div class="runalyze-clear"></div>
 </div>
-<script type="text/javascript" src="http://user.runalyze.de/lib/embedded.js"></script>';
+<script type="text/javascript" src="'.(Request::isHttps() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
 	}
 }
