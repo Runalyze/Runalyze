@@ -29,6 +29,12 @@ class FormularUnit {
 	static public $KM = 'unitKm';
 
 	/**
+	 * Unit: m
+	 * @var string
+	 */
+	static public $M = 'unitM';
+
+	/**
 	 * Unit: user
 	 * @var string
 	 */

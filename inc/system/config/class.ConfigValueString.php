@@ -25,12 +25,4 @@ class ConfigValueString extends ConfigValue {
 	protected function setValueFromString($Value) {
 		$this->Value = (string)$Value;
 	}
-
-	/**
-	 * Get field, should be overwritten
-	 * @return FormularInput 
-	 */
-	public function getField() {
-		return new FormularInput($this->getKey(), $this->getLabel(), $this->getValue());
-	}
 }

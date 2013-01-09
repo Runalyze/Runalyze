@@ -34,7 +34,9 @@ abstract class ConfigValue {
 		'folder'	=> '', // ConfigValueSelectFile
 		'table'		=> '', // ConfigValueSelectDb
 		'column'	=> '', // ConfigValueSelectDb
-		'onchange'	=> '' // Ajax::$RELOAD_...-flag
+		'onchange'	=> '', // Ajax::$RELOAD_...-flag
+		'unit'		=> '',
+		'size'		=> ''
 		);
 
 	/**
@@ -226,6 +228,14 @@ abstract class ConfigValue {
 	 * @return FormularInput 
 	 */
 	public function getField() {
+		if (!empty($this->Options['unit']) || !empty($this->Options['size'])) {
+			$Field = new FormularInput($this->getKey(), $this->getLabel(), $this->getValue());
+			$Field->setUnit($this->Options['unit']);
+			$Field->setSize($this->Options['size']);
+
+			return $Field;
+		}
+
 		return new FormularInput($this->getKey(), $this->getLabel(), $this->getValue());
 	}
 

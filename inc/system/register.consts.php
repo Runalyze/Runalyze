@@ -69,6 +69,8 @@ $Training = new ConfigCategory('training', 'Trainingsansicht');
 $Training->setKeys(array(
 	'TRAINING_DECIMALS',
 	'ELEVATION_MIN_DIFF',
+	'TRAINING_PLOT_PRECISION',
+	'',
 	'TRAINING_PLOT_MODE',
 	'PACE_Y_LIMIT_MIN',
 	'TRAINING_MAPTYPE',
@@ -80,12 +82,25 @@ $Training->setKeys(array(
 ));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 	'default'		=> 'all',
-	'label'			=> 'Diagrammankombination',
+	'label'			=> 'Diagrammkombination',
 	'tooltip'		=> 'Normalerweise werden alle Diagramme einzeln angezeigt. Sie k&ouml;nnen aber auch kombiniert werden.',
 	'options'		=> array(
 		'all'			=> 'alle einzeln',
 		'pacepulse'		=> 'Pace/Herzfrequenz',
 		'collection'	=> 'Pace/Herzfrequenz/H&ouml;he'
+	),
+)));
+$Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
+	'default'		=> '100m',
+	'label'			=> 'Diagrammegenauigkeit',
+	'tooltip'		=> 'Um die &Auml;nderungen auch f&uuml;r alte Trainings zu &uuml;bernehmen, muss das Tool &quot;Cacheclean&quot; durchgef&uuml;hrt werden.',
+	'options'		=> array(
+		'all'			=> 'alle Datenpunkte',
+		'50m'			=> '50m',
+		'100m'			=> '100m',
+		'200points'		=> 'max. 200 Datenpunkte',
+		'500points'		=> 'max. 500 Datenpunkte',
+		'1000points'	=> 'max. 1000 Datenpunkte'
 	),
 )));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
@@ -162,7 +177,8 @@ $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
 	'label'			=> 'H&ouml;henmeterberechnung: minimale Differenz',
 	'tooltip'		=> 'Ab welchem H&ouml;henunterschied zwischen zwei Datenpunkten soll dieser f&uuml;r die H&ouml;henmeter herangezogen werden?
-						<br />(2 oder 3 liefert unserer Ansicht nach realistische Werte)'
+						<br />(2 oder 3 liefert unserer Ansicht nach realistische Werte)',
+	'unit'			=> FormularUnit::$M
 )));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array('default' => false, 'label' => 'Karte: vor Diagrammen')));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
@@ -384,7 +400,8 @@ $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', arra
 $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(
 	'default'		=> '',
 	'label'			=> 'Garmin API-Key',
-	'tooltip'		=> 'Notwendig f&uuml;r den Garmin-Communicator<br />f&uuml;r http://'.$_SERVER['HTTP_HOST'],
+	'tooltip'		=> 'Notwendig f&uuml;r den Garmin-Communicator<br />f&uuml;r '.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
+	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
 $TrainingForm->addToCategoryList();
 
