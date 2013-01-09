@@ -65,8 +65,8 @@ if (is_array($Files))
 /**
  * Define correct filepaths 
  */
-$root = substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
-$root = '/'.str_replace(array('lib/', 'min/'), array('', ''), $root);
+$root = substr($_SERVER['SCRIPT_FILENAME'], 0, strripos($_SERVER['SCRIPT_FILENAME'], "/"))."/";
+$root = str_replace(array('/lib/', '/min/'), array('/', '/'), $root);
 
 function Runalyze__FileTransformerForMinify($file) {
 	global $root;
