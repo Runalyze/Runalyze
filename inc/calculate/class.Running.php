@@ -4,6 +4,13 @@
  * @author Hannes Christiansen <mail@laufhannes.de>
  */
 class Running {
+	static $BE_MIN_KM_FOR_LONGJOG = 13;
+	static $BE_DAYS_FOR_WEEK_KM = 182;
+	static $BE_DAYS_FOR_WEEK_KM_MIN = 70;
+	static $BE_DAYS_FOR_LONGJOGS = 70;
+	static $BE_PERCENTAGE_WEEK_KM = 0.67;
+	static $BE_PERCENTAGE_LONGJOGS = 0.33;
+
 	static public function possibleKm() {
 		// TODO
 	}
@@ -260,10 +267,12 @@ class Running {
 	 * @uses DAY_IN_S
 	 * @param bool $as_int as normal integer, default: false
 	 * @param int $timestamp [optional] timestamp
+	 * @param boolean $returnArrayWithResults [optional]
 	 */
-	public static function BasicEndurance($as_int = false, $timestamp = 0) {
+	public static function BasicEndurance($as_int = false, $timestamp = 0, $returnArrayWithResults = false) {
+		// TODO: If you change the algorithm, remember to change info in 'RunalyzePluginPanel_Rechenspiele'
 		// TODO: Unittests
-		if ($timestamp == 0) {
+		if ($timestamp == 0 && !$returnArrayWithResults) {
 			if (defined('BASIC_ENDURANCE'))
 				return ($as_int) ? BASIC_ENDURANCE : BASIC_ENDURANCE.' &#37;';
 			$timestamp = time();
@@ -272,46 +281,25 @@ class Running {
 		if (VDOT_FORM == 0)
 			return ($as_int) ? 0 : '0 &#37;';
 
-		$diff = Time::diffInDays(START_TIME);
-		if ($diff > 182)
-			$DaysForWeekKm = 182; // 26 Wochen
-		elseif ($diff < 70)
-			$DaysForWeekKm = 70;
-		else
-			$DaysForWeekKm = $diff;
-
-		$DaysForLongjogs        = 70;  // 10 Wochen
-		$StartTimeForLongjogs   = $timestamp - $DaysForLongjogs * DAY_IN_S;
-		$StartTimeForWeekKm     = $timestamp - $DaysForWeekKm * DAY_IN_S;
-		$minKmForLongjog        = 13;
-		$TargetWeekKm           = pow(VDOT_FORM, 1.135);
-		$TargetLongjogKmPerWeek = log(VDOT_FORM/4) * 12 - $minKmForLongjog;
-
-		$Query         = '
-			SELECT
-				SUM(
-					IF (time >= '.$StartTimeForWeekKm.', `distance`, 0)
-				) as `km`,
-				SUM(
-					IF (
-						`distance` > '.$minKmForLongjog.' AND time >= '.$StartTimeForLongjogs.',
-						(
-							(2 - (2/'.$DaysForLongjogs.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
-							* POW((`distance`-'.$minKmForLongjog.')/'.$TargetLongjogKmPerWeek.',2)
-						),
-						0
-					)
-				) as `sum`
-			FROM '.PREFIX.'training
-			WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.min($StartTimeForLongjogs,$StartTimeForWeekKm).'
-			GROUP BY accountid';
-		$DataSum       = Mysql::getInstance()->fetchSingle($Query);
+		$DataSum       = Mysql::getInstance()->fetchSingle( self::getQueryForBE($timestamp) );
 		$WeekKmResult  = isset($DataSum['km']) ? $DataSum['km'] : 0;
 		$LongjogResult = isset($DataSum['sum']) ? $DataSum['sum'] : 0;
 
-		$WeekPercentage    = $WeekKmResult * 7 / $DaysForWeekKm / $TargetWeekKm;
-		$LongjogPercentage = $LongjogResult * 7 / $DaysForLongjogs;
-		$Percentage        = round( 100 * ( $WeekPercentage*2/3 + $LongjogPercentage*1/3 ) );
+		$WeekPercentage    = $WeekKmResult * 7 / self::getBEDaysForWeekKm() / self::getBETargetWeekKm();
+		$LongjogPercentage = $LongjogResult * 7 / self::$BE_DAYS_FOR_LONGJOGS;
+		$Percentage        = round( 100 * ( $WeekPercentage*self::$BE_PERCENTAGE_WEEK_KM + $LongjogPercentage*self::$BE_PERCENTAGE_LONGJOGS ) );
+
+		if ($returnArrayWithResults) {
+			$Array = array(
+				'weekkm-result'		=> $WeekKmResult,
+				'weekkm-percentage'	=> $WeekPercentage,
+				'longjog-result'	=> $LongjogResult,
+				'longjog-percentage'=> $LongjogPercentage,
+				'percentage'		=> $Percentage
+			);
+
+			return $Array;
+		}
 
 		if ($Percentage < 0)
 			$Percentage = 0;
@@ -319,5 +307,96 @@ class Running {
 			$Percentage = 100;
 
 		return ($as_int) ? $Percentage : $Percentage.' &#37;';
+	}
+
+	/**
+	 * Get query for BE
+	 * @param int $timestamp [optional]
+	 * @param boolean $onlyLongjogs [optional]
+	 * @return string
+	 */
+	static public function getQueryForBE($timestamp = 0, $onlyLongjogs = false) {
+		if ($timestamp == 0)
+			$timestamp = time();
+
+		$StartTimeForLongjogs = $timestamp - self::$BE_DAYS_FOR_LONGJOGS * DAY_IN_S;
+		$StartTimeForWeekKm   = $timestamp - self::getBEDaysForWeekKm() * DAY_IN_S;
+
+		if ($onlyLongjogs) {
+			return '
+				SELECT
+					`id`,
+					`time`,
+					`distance`,
+					IF (
+						`distance` > '.self::$BE_MIN_KM_FOR_LONGJOG.' AND time >= '.$StartTimeForLongjogs.',
+						(
+							(2 - (2/'.self::$BE_DAYS_FOR_LONGJOGS.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
+							* POW((`distance`-'.self::$BE_MIN_KM_FOR_LONGJOG.')/'.self::getBETargetLongjogKmPerWeek().',2)
+						),
+						0
+					) as `points`
+				FROM '.PREFIX.'training
+				WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND distance>'.self::$BE_MIN_KM_FOR_LONGJOG.' AND time>='.$StartTimeForLongjogs.'';
+		}
+
+		return '
+			SELECT
+				SUM(
+					IF (time >= '.$StartTimeForWeekKm.', `distance`, 0)
+				) as `km`,
+				SUM(
+					IF (
+						`distance` > '.self::$BE_MIN_KM_FOR_LONGJOG.' AND time >= '.$StartTimeForLongjogs.',
+						(
+							(2 - (2/'.self::$BE_DAYS_FOR_LONGJOGS.') * ( ('.$timestamp.' - `time`) / '.DAY_IN_S.' ) )
+							* POW((`distance`-'.self::$BE_MIN_KM_FOR_LONGJOG.')/'.self::getBETargetLongjogKmPerWeek().',2)
+						),
+						0
+					)
+				) as `sum`
+			FROM '.PREFIX.'training
+			WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND time>='.min($StartTimeForLongjogs,$StartTimeForWeekKm).'
+			GROUP BY accountid';
+	}
+
+	/**
+	 * Get days used for week km for basic endurance
+	 * @return double 
+	 */
+	static public function getBEDaysForWeekKm() {
+		$diff = Time::diffInDays(START_TIME);
+
+		if ($diff > self::$BE_DAYS_FOR_WEEK_KM)
+			return self::$BE_DAYS_FOR_WEEK_KM;
+		elseif ($diff < self::$BE_AYS_FOR_WEEK_KM_MIN)
+			return self::$BE_DAYS_FOR_WEEK_KM_MIN;
+
+		return $diff;
+	}
+
+	/**
+	 * Get target week km
+	 * @return double
+	 */
+	static public function getBETargetWeekKm() {
+		return pow(VDOT_FORM, 1.135);
+	}
+
+	/**
+	 * Get target longjog km per week
+	 * PAY ATTENTION: self::$BE_MIN_KM_FOR_LONGJOG is already subtracted!
+	 * @return double
+	 */
+	static public function getBETargetLongjogKmPerWeek() {
+		return log(VDOT_FORM/4) * 12 - self::$BE_MIN_KM_FOR_LONGJOG;
+	}
+
+	/**
+	 * Get (real) target longjog km per week
+	 * @return double
+	 */
+	static public function getBErealTargetLongjogKmPerWeek() {
+		return self::getBETargetLongjogKmPerWeek() + self::$BE_MIN_KM_FOR_LONGJOG;
 	}
 }
