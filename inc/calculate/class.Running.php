@@ -369,7 +369,7 @@ class Running {
 
 		if ($diff > self::$BE_DAYS_FOR_WEEK_KM)
 			return self::$BE_DAYS_FOR_WEEK_KM;
-		elseif ($diff < self::$BE_AYS_FOR_WEEK_KM_MIN)
+		elseif ($diff < self::$BE_DAYS_FOR_WEEK_KM_MIN)
 			return self::$BE_DAYS_FOR_WEEK_KM_MIN;
 
 		return $diff;
