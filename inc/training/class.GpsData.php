@@ -683,7 +683,8 @@ class GpsData {
 
 		$Data = array();
 		$this->startLoop();
-		while ($this->nextKilometer(0.1)) {
+		$this->setStepSizeForPlotData();
+		while ($this->nextStepForPlotData()) {
 			if ($this->plotUsesTimeOnXAxis())
 				$index = (string)($this->getTime()).'000';
 			else
@@ -702,7 +703,8 @@ class GpsData {
 	protected function getPlotDataForAllPlots() {
 		$Data = array();
 		$this->startLoop();
-		while ($this->nextKilometer(0.1)) {
+		$this->setStepSizeForPlotData();
+		while ($this->nextStepForPlotData()) {
 			if ($this->plotUsesTimeOnXAxis())
 				$index = (string)($this->getTime()).'000';
 			else
@@ -717,6 +719,50 @@ class GpsData {
 		}
 
 		return $Data;
+	}
+
+	/**
+	 * Get next step for plot data
+	 * @return bool 
+	 */
+	protected function nextStepForPlotData() {
+		switch (CONF_TRAINING_PLOT_PRECISION) {
+			case '200points':
+			case '500points':
+			case '1000points':
+				return $this->nextStep();
+			case '500m':
+				return $this->nextKilometer(0.5);
+			case '200m':
+				return $this->nextKilometer(0.2);
+			case '50m':
+				return $this->nextKilometer(0.05);
+			case '100m':
+			default:
+				return $this->nextKilometer(0.1);
+		}
+	}
+
+	/**
+	 * Set step size for plot data
+	 */
+	protected function setStepSizeForPlotData() {
+		switch (CONF_TRAINING_PLOT_PRECISION) {
+			case '200points':
+				$Points = 200;
+				break;
+			case '500points':
+				$Points = 500;
+				break;
+			case '1000points':
+				$Points = 1000;
+				break;
+			default:
+				return;
+		}
+
+		if ($this->arraySizes > $Points)
+			$this->setStepSize( round($this->arraySizes / $Points) );
 	}
 
 	/**

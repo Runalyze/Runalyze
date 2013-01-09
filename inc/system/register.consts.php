@@ -92,12 +92,13 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
 	'default'		=> '100m',
-	'label'			=> 'Diagrammegenauigkeit',
+	'label'			=> 'Diagrammgenauigkeit',
 	'tooltip'		=> 'Um die &Auml;nderungen auch f&uuml;r alte Trainings zu &uuml;bernehmen, muss das Tool &quot;Cacheclean&quot; durchgef&uuml;hrt werden.',
 	'options'		=> array(
-		'all'			=> 'alle Datenpunkte',
-		'50m'			=> '50m',
-		'100m'			=> '100m',
+		'50m'			=> 'alle 50m ein Datenpunkt',
+		'100m'			=> 'alle 100m ein Datenpunkt',
+		'200m'			=> 'alle 200m ein Datenpunkt',
+		'500m'			=> 'alle 500m ein Datenpunkt',
 		'200points'		=> 'max. 200 Datenpunkte',
 		'500points'		=> 'max. 500 Datenpunkte',
 		'1000points'	=> 'max. 1000 Datenpunkte'
