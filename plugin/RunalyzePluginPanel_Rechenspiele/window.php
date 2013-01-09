@@ -2,32 +2,21 @@
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
-
-if (!isset($_GET['y']))
-	$_GET['y'] = date("Y");
 ?>
-<h1>Formkurve</h1>
+<h1>Wie sich die Werte der Rechenspiele berechnen</h1>
 
 <?php
-echo Plot::getDivFor('form'.$_GET['y'], 800, 450);
+$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Rechenspiele');
 
-include FRONTEND_PATH.'../plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php';
+$Formular = new Formular();
+$Formular->setId('rechenspiele-calculator');
+$Formular->addCSSclass('ajax');
+$Formular->addCSSclass('no-automatic-reload');
+$Formular->addFieldset( $Plugin->getFieldsetTRIMP(), false );
+$Formular->addFieldset( $Plugin->getFieldsetVDOT(), false );
+$Formular->addFieldset( $Plugin->getFieldsetBasicEndurance() );
+$Formular->addFieldset( $Plugin->getFieldsetPaces(), false );
+$Formular->allowOnlyOneOpenedFieldset();
+//$Formular->addSubmitButton('Berechnungen starten');
+$Formular->display();
 ?>
-	<br />
-	<br />
-
-<center>
-<?php
-for ($j = START_YEAR; $j <= date("Y"); $j++) {
-	if ($j == $_GET['y'])
-		echo '<strong style="margin-right:20px;">'.$j.'</strong>';
-	else
-		echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
-}
-
-if ($_GET['y'] == 'all')
-	echo '<strong style="margin-right:20px;">Gesamt</strong>';
-else
-	echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y=all" style="margin-right:20px;">Gesamt</a>');
-?>
-</center>
