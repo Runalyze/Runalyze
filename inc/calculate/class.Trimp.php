@@ -142,7 +142,7 @@ class Trimp {
 			$trainingData = Mysql::getInstance()->fetchSingle('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.$trainingData['id'].'"');
 		}
 
-		$Training = new Training($trainingId, $trainingData);
+		$Training = new Training($trainingData['id'], $trainingData);
 		$avgHF    = $Training->avgHF();
 		$s        = $Training->get('s');
 		$RPE      = $Training->RPE();
