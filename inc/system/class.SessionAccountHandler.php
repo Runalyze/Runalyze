@@ -285,8 +285,12 @@ class SessionAccountHandler {
 		if (SharedLinker::isOnSharedPage())
 			return SharedLinker::getUserId();
 
-		if (!isset(self::$Account['id']))
+		if (!isset(self::$Account['id'])) {
+			if (isset($_SESSION['accountid']))
+				return $_SESSION['accountid'];
+
 			return 0;
+		}
 
 		return self::$Account['id'];
 	}
