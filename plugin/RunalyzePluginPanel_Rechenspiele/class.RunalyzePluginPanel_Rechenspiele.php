@@ -236,10 +236,42 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetVDOT() {
+		$Table = '
+			<table style="width:100%;">
+				<thead>
+					<tr>
+						<th colspan="10">VDOT-Werte der letzten '.CONF_VDOT_DAYS.' Tage</th>
+					</tr>
+				</thead>
+				<tbody>
+				';
+
+		$VDOTs = Mysql::getInstance()->fetchAsArray('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 ORDER BY time ASC');
+		foreach ($VDOTs as $i => $Data) {
+			if ($i%10 == 0)
+				$Table .= '<tr class="'.HTML::trClass(floor($i/10)).'">'.NL;
+
+			$Link   = Ajax::trainingLink($Data['id'], round(JD::correctVDOT($Data['vdot']), 2));
+			$Title  = Running::Km($Data['distance']).' am '.date('d.m.Y', $Data['time']);
+			$Table .= '<td>'.Ajax::tooltip($Link, $Title).'</td>'.NL;
+
+			if ($i%10 == 9)
+				$Table .= '</tr>'.NL;
+		}
+
+		if (count($VDOTs)%10 != 0)
+			$Table .= HTML::emptyTD(10 - count($VDOTs)%10);
+
+		$Table .= '
+				</tbody>
+			</table>
+			';
+
 		$Fieldset = new FormularFieldset('VDOT');
 		$Fieldset->addBlock('Die VDOT-Form berechnet sich aus dem Mittelwert der VDOT-Werte deiner
 							Trainingseinheiten der letzten '.CONF_VDOT_DAYS.' Tage.');
 		$Fieldset->addBlock('Dein aktuelle VDOT-Form: <strong>'.VDOT_FORM.'</strong><br />&nbsp;');
+		$Fieldset->addBlock($Table);
 		$Fieldset->addInfo('Bei Jack Daniels wird der VDOT als fester Wert angesehen und nicht aus Trainingsleistungen berechnet.<br />
 							Die hier verwendeten Berechnung anhand der Pulsdaten wurden lediglich aus seinen Puls-Tabellen abgeleitet.');
 
