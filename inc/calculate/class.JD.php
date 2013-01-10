@@ -18,7 +18,7 @@ define('VDOT_CORRECTOR', JD::getVDOTcorrector());
  * The actual (corrected) VDOT-value based on last trainings
  * @var double
  */
-define('VDOT_FORM', JD::calculateVDOTform());
+define('VDOT_FORM', JD::getConstVDOTform());
 
 /**
  * Basic endurance as percentage
@@ -165,6 +165,20 @@ class JD {
 	}
 
 	/**
+	 * Get const for VDOT_FORM
+	 * @return float
+	 */
+	public static function getConstVDOTform() {
+		if (defined('CONF_VDOT_MANUAL_VALUE')) {
+			$ManualValue = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_VALUE);
+			if ($ManualValue > 0)
+				return $ManualValue;
+		}
+
+		return self::calculateVDOTform();
+	}
+
+	/**
 	 * Calculates an (corrected) actual VDOT value based on the trainings in the last VDOT_DAYS days
 	 * @param int $time optional
 	 * @return float   VDOT
@@ -196,6 +210,12 @@ class JD {
 	 * Get VDOT corrector 
 	 */
 	public static function getVDOTcorrector() {
+		if (defined('CONF_VDOT_MANUAL_CORRECTOR')) {
+			$ManualCorrector = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_CORRECTOR);
+			if ($ManualCorrector > 0)
+				return $ManualCorrector;
+		}
+
 		if (!defined('CONF_VDOT_CORRECTOR')) {
 			Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
 			define('CONF_VDOT_CORRECTOR', 1);

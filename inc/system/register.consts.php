@@ -369,10 +369,11 @@ $Calculations = new ConfigCategory('calculations', 'Rechenspiele');
 $Calculations->setKeys(array(
 	'RECHENSPIELE',
 	'ATL_DAYS',
-	'',
-	'CTL_DAYS',
 	'JD_USE_VDOT_CORRECTOR',
-	'VDOT_DAYS'
+	'CTL_DAYS',
+	'VDOT_MANUAL_CORRECTOR',
+	'VDOT_DAYS',
+	'VDOT_MANUAL_VALUE'
 ));
 $Calculations->addConfigValue( new ConfigValueBool('RECHENSPIELE', array(
 	'default'		=> true,
@@ -402,6 +403,19 @@ $Calculations->addConfigValue( new ConfigValueInt('VDOT_DAYS', array(
 	'default'		=> 30,
 	'label'			=> 'Tage f&uuml;r VDOT',
 	'tooltip'		=> 'Anzahl an Tagen, die zur Berechnung der VDOT-Form genutzt werden',
+	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_CORRECTOR', array(
+	'default'		=> '',
+	'label'			=> 'manuelle VDOT-Korrektur',
+	'tooltip'		=> 'Falls die automatische VDOT-Korrektur nicht passt, kannst du einen manuellen Faktor hier eingeben.',
+	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_VALUE', array(
+	'default'		=> '',
+	'label'			=> 'manueller VDOT-Wert',
+	'tooltip'		=> 'Wenn du keine Pulsmessung verwendest oder der berechnete VDOT-Wert weit daneben liegt,
+						kannst du f&uuml;r die Prognosen hier einen fixen Wert eingeben.',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
 )));
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
