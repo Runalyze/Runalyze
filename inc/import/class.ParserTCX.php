@@ -83,6 +83,12 @@ class ParserTCX extends Parser {
 	private $loadXmlFailed = false;
 
 	/**
+	 * Boolean flag: without distance (indoor training)
+	 * @var boolean
+	 */
+	private $isWithoutDistance = false;
+
+	/**
 	 * Construct a new parser, needs XML
 	 * @param SimpleXMLElement $XML
 	 */
@@ -359,6 +365,9 @@ class ParserTCX extends Parser {
 
 		if (self::$DEBUG_SPLITS)
 			Error::getInstance()->addDebug('LAPS-TIME: '.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2));
+
+		if ((int)$Lap->DistanceMeters == 0 && (int)$Lap->TotalTimeSeconds > 10)
+			$this->isWithoutDistance = true;
 	}
 
 	/**
@@ -400,7 +409,7 @@ class ParserTCX extends Parser {
 		// - FR305: Pause when DistanceMeters is empty
 		// -> should be only if trackpoint has ONLY time as child
 		// - FR310XT: Pause -> new Track?
-		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters);
+		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
 					//&& ((double)$TP->Position->LatitudeDegrees == end($this->data['latitude']))
 					//&& ((double)$TP->Position->LongitudeDegrees == end($this->data['longitude']));
 
