@@ -105,6 +105,10 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 		'15'			=> 'bei zu gro&szlig;em Abstand (15s)',
 		'30'			=> 'bei zu gro&szlig;em Abstand (30s)',
 		'60'			=> 'bei zu gro&szlig;em Abstand (60s)',
+		'120'			=> 'bei zu gro&szlig;em Abstand (120s)',
+		'240'			=> 'bei zu gro&szlig;em Abstand (240s)',
+		'300'			=> 'bei zu gro&szlig;em Abstand (300s)',
+		'600'			=> 'bei zu gro&szlig;em Abstand (600s)',
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'System::clearTrainingCache();'
