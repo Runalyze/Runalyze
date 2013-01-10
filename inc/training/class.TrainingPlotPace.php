@@ -78,6 +78,11 @@ class TrainingPlotPace extends TrainingPlot {
 			$min       = min($Data);
 			$max       = max($Data);
 
+			if ($max > 50*60*1000) {
+				$setLimits = true;
+				$max = 50*60*1000;
+			}
+
 			if (CONF_PACE_HIDE_OUTLIERS && ($max - $min) > 2*60*1000) {
 				$setLimits = true;
 				$num       = count($Data);
