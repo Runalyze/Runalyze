@@ -33,9 +33,8 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		if (isset($_GET['delete'])) {
-			Mysql::getInstance()->query('UPDATE '.PREFIX.'training SET gps_cache_object=""');
-		}
+		if (isset($_GET['delete']))
+			System::clearCache();
 
 		$numData = Mysql::getInstance()->fetchSingle('SELECT COUNT(*) as num FROM '.PREFIX.'training WHERE gps_cache_object!="" LIMIT 1');
 		$num     = $numData['num'];

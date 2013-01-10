@@ -24,22 +24,34 @@ class Ajax {
 	public static $RELOAD_DATABROWSER = 1;
 
 	/**
+	 * Enum: Reload flag - reload training
+	 * @var int
+	 */
+	public static $RELOAD_TRAINING = 2;
+
+	/**
+	 * Enum: Reload flag - reload databrowser and training
+	 * @var int
+	 */
+	public static $RELOAD_DATABROWSER_AND_TRAINING = 3;
+
+	/**
 	 * Enum: Reload flag - reload all plugins
 	 * @var int
 	 */
-	public static $RELOAD_PLUGINS = 2;
+	public static $RELOAD_PLUGINS = 4;
 
 	/**
 	 * Enum: Reload flag - reload all elements with jQuery
 	 * @var int
 	 */
-	public static $RELOAD_ALL = 3;
+	public static $RELOAD_ALL = 5;
 
 	/**
 	 * Enum: Reload flag - reload complete page
 	 * @var int
 	 */
-	public static $RELOAD_PAGE = 4;
+	public static $RELOAD_PAGE = 6;
 
 	/**
 	 * Current reload flag
@@ -67,6 +79,8 @@ class Ajax {
 
 		if (min($BothFlags) == self::$RELOAD_DATABROWSER && max($BothFlags) == self::$RELOAD_PLUGINS)
 			self::$currentReloadFlag = self::$RELOAD_ALL;
+		elseif (min($BothFlags) == self::$RELOAD_DATABROWSER && max($BothFlags) == self::$RELOAD_TRAINING)
+			self::$currentReloadFlag = self::$RELOAD_DATABROWSER_AND_TRAINING;
 		else
 			self::$currentReloadFlag = max($BothFlags);
 	}
@@ -83,6 +97,10 @@ class Ajax {
 				return self::wrapJS('Runalyze.reloadContent();');
 			case self::$RELOAD_PLUGINS:
 				return self::wrapJS('Runalyze.reloadAllPlugins();');
+			case self::$RELOAD_DATABROWSER_AND_TRAINING:
+				return self::wrapJS('Runalyze.reloadDataBrowserAndTraining();');
+			case self::$RELOAD_TRAINING:
+				return self::wrapJS('Runalyze.reloadTraining();');
 			case self::$RELOAD_DATABROWSER:
 				return self::wrapJS('Runalyze.reloadDataBrowser();');
 			case self::$RELOAD_NONE:
@@ -93,13 +111,13 @@ class Ajax {
 
 	/**
 	 * Gives a HTML-link for using jTraining
-	 * @param int $training_id ID of the training
+	 * @param int $id ID of the training
 	 * @param string $name Name of the link to be displayed
 	 * @param bool $closeOverlay [optional] Boolean flag: Should the overlay be closed after clicking? (default: false)
 	 * @return string
 	 */
-	static function trainingLink($id, $name, $closeOverlay = false) {
-		return '<a class="training" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.closeOverlay()"' : '').'>'.$name.'</a>';
+	static function trainingLink($id, $name, $closeOverlay = false, $classes = '', $htmlID = '') {
+		return '<a '.(!empty($htmlID) ? 'id="'.$htmlID.'" ' : '').'class="training '.$classes.'" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.closeOverlay()"' : '').'>'.$name.'</a>';
 	}
 
 	/**

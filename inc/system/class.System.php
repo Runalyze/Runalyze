@@ -85,4 +85,18 @@ class System {
 
 		return $_SERVER['SERVER_NAME'] == 'localhost';
 	}
+
+	/**
+	 * Clear complete cache 
+	 */
+	static public function clearCache() {
+		self::clearTrainingCache();
+	}
+
+	/**
+	 * Clear training cache 
+	 */
+	static public function clearTrainingCache() {
+		Mysql::getInstance()->query('UPDATE '.PREFIX.'training SET gps_cache_object=""');
+	}
 }
