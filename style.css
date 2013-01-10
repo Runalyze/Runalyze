@@ -314,6 +314,8 @@ fieldset .validationFailed {
 	min-height: 12px;
 	margin: 0 5px;
 	padding: 2px; }
+.toolbar-line .labeledLink.hide {
+	display: none; }
 
 .toolbar-line input, .toolbar-line label {
 	font-size: .9em; }

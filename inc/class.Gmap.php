@@ -116,15 +116,16 @@ class Gmap {
 		$CodeWithout = '';
 		$Path = array();
 
-		$AvgPace = $this->GpsData->getAveragePace();
+		$SecondsForDist = (CONF_GMAP_PATH_BREAK != 'no') ? (int)CONF_GMAP_PATH_BREAK : 15;
+		$AvgPace        = $this->GpsData->getAveragePace();
 		if ($AvgPace == 0)
 			$withoutHover = true;
-		elseif ($AvgPace > 0 && (15/$AvgPace) > self::$MAXIMUM_DISTANCE_OF_STEP)
-			self::$MAXIMUM_DISTANCE_OF_STEP = 15 / $AvgPace;
+		elseif ($AvgPace > 0 && ($SecondsForDist/$AvgPace) > self::$MAXIMUM_DISTANCE_OF_STEP)
+			self::$MAXIMUM_DISTANCE_OF_STEP = $SecondsForDist / $AvgPace;
 
 		$this->GpsData->startLoop();
-		$this->GpsData->setStepSize(5);
-		self::$MAXIMUM_DISTANCE_OF_STEP *= 5;
+		$this->GpsData->setStepSize((int)CONF_GMAP_PATH_PRECISION);
+		self::$MAXIMUM_DISTANCE_OF_STEP *= (int)CONF_GMAP_PATH_PRECISION;
 
 		while ($this->GpsData->nextStep()) {
 			$Lat = $this->GpsData->getLatitude();
@@ -138,14 +139,16 @@ class Gmap {
 				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
-			if ($AvgPace > 0 && $this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
-				$PathString = implode(',', $Path);
-				if ($both) {
-					$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
-					$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
-				} else
-					$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover || $AvgPace == 0 ? ',true' : '').');';
-				$Path  = array();
+			if (CONF_GMAP_PATH_BREAK != 'no') {
+				if ($AvgPace > 0 && $this->GpsData->getCalculatedDistanceOfStep() > self::$MAXIMUM_DISTANCE_OF_STEP) {
+					$PathString = implode(',', $Path);
+					if ($both) {
+						$CodeWith    .= 'RunalyzeGMap.addPolyline(['.$PathString.']);';
+						$CodeWithout .= 'RunalyzeGMap.addPolyline(['.$PathString.'],true);';
+					} else
+						$Code        .= 'RunalyzeGMap.addPolyline(['.$PathString.']'.($withoutHover || $AvgPace == 0 ? ',true' : '').');';
+					$Path  = array();
+				}
 			}
 
 			$Path[] = '['.$Lat.','.$Lon.',"'.$PointData.'"]';

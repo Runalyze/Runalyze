@@ -727,19 +727,23 @@ class GpsData {
 	 */
 	protected function nextStepForPlotData() {
 		switch (CONF_TRAINING_PLOT_PRECISION) {
-			case '200points':
-			case '500points':
-			case '1000points':
-				return $this->nextStep();
-			case '500m':
-				return $this->nextKilometer(0.5);
-			case '200m':
-				return $this->nextKilometer(0.2);
 			case '50m':
 				return $this->nextKilometer(0.05);
 			case '100m':
-			default:
 				return $this->nextKilometer(0.1);
+			case '200m':
+				return $this->nextKilometer(0.2);
+			case '500m':
+				return $this->nextKilometer(0.5);
+			case '100points':
+			case '200points':
+			case '300points':
+			case '400points':
+			case '500points':
+			case '750points':
+			case '1000points':
+			default:
+				return $this->nextStep();
 		}
 	}
 
@@ -748,11 +752,23 @@ class GpsData {
 	 */
 	protected function setStepSizeForPlotData() {
 		switch (CONF_TRAINING_PLOT_PRECISION) {
+			case '100points':
+				$Points = 100;
+				break;
 			case '200points':
 				$Points = 200;
 				break;
+			case '300points':
+				$Points = 300;
+				break;
+			case '400points':
+				$Points = 400;
+				break;
 			case '500points':
 				$Points = 500;
+				break;
+			case '750points':
+				$Points = 750;
 				break;
 			case '1000points':
 				$Points = 1000;

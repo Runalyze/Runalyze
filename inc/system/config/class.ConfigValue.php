@@ -27,16 +27,17 @@ abstract class ConfigValue {
 	 * @var array
 	 */
 	protected $Options = array(
-		'default'	=> '',
-		'label'		=> '',
-		'tooltip'	=> '',
-		'options'	=> array(), // ConfigValueSelect: key => label
-		'folder'	=> '', // ConfigValueSelectFile
-		'table'		=> '', // ConfigValueSelectDb
-		'column'	=> '', // ConfigValueSelectDb
-		'onchange'	=> '', // Ajax::$RELOAD_...-flag
-		'unit'		=> '',
-		'size'		=> ''
+		'default'		=> '',
+		'label'			=> '',
+		'tooltip'		=> '',
+		'options'		=> array(), // ConfigValueSelect: key => label
+		'folder'		=> '', // ConfigValueSelectFile
+		'table'			=> '', // ConfigValueSelectDb
+		'column'		=> '', // ConfigValueSelectDb
+		'onchange'		=> '', // Ajax::$RELOAD_...-flag
+		'onchange_eval'	=> '', // onchange: evaluate code
+		'unit'			=> '',
+		'size'			=> ''
 		);
 
 	/**
@@ -133,7 +134,7 @@ abstract class ConfigValue {
 
 			if ($this->Value != $OldValue) {
 				Mysql::getInstance()->updateWhere(PREFIX.'conf', '`key`="'.$this->Key.'"', 'value', $this->getValueAsString());
-				$this->setReloadFlag();
+				$this->doOnchangeJobs();
 			}
 		}
 	}
@@ -248,9 +249,25 @@ abstract class ConfigValue {
 	}
 
 	/**
+	 * Do jobs after value changed 
+	 */
+	final protected function doOnchangeJobs() {
+		$this->evaluateOnchangeCode();
+		$this->setReloadFlag();
+	}
+
+	/**
+	 * Evaluate onchange code (only fire if value has changed!)
+	 */
+	private function evaluateOnchangeCode() {
+		if (!empty($this->Options['onchange_eval']))
+			eval($this->Options['onchange_eval']);
+	}
+
+	/**
 	 * Set reload flag (only fire if value has changed!) 
 	 */
-	final protected function setReloadFlag() {
+	private function setReloadFlag() {
 		if (!empty($this->Options['onchange']))
 			Ajax::setReloadFlag($this->Options['onchange']);
 	}

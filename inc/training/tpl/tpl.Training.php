@@ -28,6 +28,7 @@
 		</span>
 
 		<?php if (!Request::isOnSharedPage()): ?>
+			<?php echo Ajax::trainingLink($this->Training->id(), 'Neuladen', false, 'labeledLink hide', 'reloadTrainingLink'); ?>
 			<?php echo Ajax::window('<a class="labeledLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' Bearbeiten</a> ','small'); ?>
 			<?php echo Ajax::window('<a class="labeledLink" href="'.ExporterView::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small'); ?>
 		<?php endif; ?>

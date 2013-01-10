@@ -70,14 +70,16 @@ $Training->setKeys(array(
 	'TRAINING_DECIMALS',
 	'ELEVATION_MIN_DIFF',
 	'TRAINING_PLOT_PRECISION',
-	'',
+	'GMAP_PATH_BREAK',
 	'TRAINING_PLOT_MODE',
-	'PACE_Y_LIMIT_MIN',
+	'GMAP_PATH_PRECISION',
 	'TRAINING_MAPTYPE',
-	'PACE_Y_LIMIT_MAX',
+	'PACE_Y_LIMIT_MIN',
 	'TRAINING_MAP_COLOR',
-	'PACE_Y_AXIS_REVERSE',
+	'PACE_Y_LIMIT_MAX',
 	'TRAINING_MAP_BEFORE_PLOTS',
+	'PACE_Y_AXIS_REVERSE',
+	'',
 	'PACE_HIDE_OUTLIERS'
 ));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
@@ -89,20 +91,59 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 		'pacepulse'		=> 'Pace/Herzfrequenz',
 		'collection'	=> 'Pace/Herzfrequenz/H&ouml;he'
 	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING
+)));
+$Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
+	'default'		=> '15',
+	'label'			=> 'Strecke unterbrechen',
+	'tooltip'		=> 'Wenn Teile der Strecke anders zur&uuml;ckgelegt wurden (Auto/Bahn/...),
+						sollten diese in der Karte nicht eingezeichnet werden.
+						Die Erkennung einer solchen Unterbrechung ist aber nicht immer eindeutig.<br />
+						15s bedeutet: Distanz, die man bei dem Durchschnittstempo in 15s geschafft h&auml;tte.',
+	'options'		=> array( // see Gmap::getCodeForPolylines
+		'no'			=> 'nie',
+		'15'			=> 'bei zu gro&szlig;em Abstand (15s)',
+		'30'			=> 'bei zu gro&szlig;em Abstand (30s)',
+		'60'			=> 'bei zu gro&szlig;em Abstand (60s)',
+	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'System::clearTrainingCache();'
+)));
+$Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
+	'default'		=> '5',
+	'label'			=> 'Streckengenauigkeit',
+	'tooltip'		=> 'Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?<br />
+						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
+	'options'		=> array( // see GpsData::getCodeForPolylines
+		'1'				=> 'jeder Datenpunkt',
+		'2'				=> 'jeder 2. Datenpunkt',
+		'5'				=> 'jeder 5. Datenpunkt (empfohlen)',
+		'10'			=> 'jeder 10. Datenpunkt',
+		'20'			=> 'jeder 20. Datenpunkte'
+	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
-	'default'		=> '100m',
+	'default'		=> '200points',
 	'label'			=> 'Diagrammgenauigkeit',
-	'tooltip'		=> 'Um die &Auml;nderungen auch f&uuml;r alte Trainings zu &uuml;bernehmen, muss das Tool &quot;Cacheclean&quot; durchgef&uuml;hrt werden.',
-	'options'		=> array(
+	'tooltip'		=> 'Wie viele Datenpunkte sollen in den Diagrammen enthalten sein?<br />
+						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
+	'options'		=> array( // see GpsData::nextStepForPlotData, GpsData::setStepSizeForPlotData
 		'50m'			=> 'alle 50m ein Datenpunkt',
 		'100m'			=> 'alle 100m ein Datenpunkt',
 		'200m'			=> 'alle 200m ein Datenpunkt',
 		'500m'			=> 'alle 500m ein Datenpunkt',
-		'200points'		=> 'max. 200 Datenpunkte',
+		'100points'		=> 'max. 100 Datenpunkte',
+		'200points'		=> 'max. 200 Datenpunkte (empfohlen)',
+		'300points'		=> 'max. 300 Datenpunkte',
+		'400points'		=> 'max. 400 Datenpunkte',
 		'500points'		=> 'max. 500 Datenpunkte',
+		'750points'		=> 'max. 750 Datenpunkte',
 		'1000points'	=> 'max. 1000 Datenpunkte'
 	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 	'default'		=> '0',
@@ -121,6 +162,7 @@ $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 		540				=> '9:00/km',
 		600				=> '10:00/km'
 	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 	'default'		=> '0',
@@ -141,22 +183,25 @@ $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 		840				=> '14:00/km',
 		900				=> '15:00/km'
 	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
 	'default'		=> false,
 	'label'			=> 'Pace: Y-Achse umkehren',
-	'tooltip'		=> 'Standardm&auml;&szlig;ig wird ein h&ouml;heres Tempo im Diagramm weiter unten angezeigt als ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden.'
+	'tooltip'		=> 'Standardm&auml;&szlig;ig wird ein h&ouml;heres Tempo im Diagramm weiter unten angezeigt als ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden.',
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_HIDE_OUTLIERS', array(
 	'default'		=> false,
 	'label'			=> 'Pace: Ausrei&szlig;er egal',
-	'tooltip'		=> 'Wenn aktiviert, werden im Pace-Diagramm Ausrei&szlig;er nicht ber&uuml;cksichtigt.'
+	'tooltip'		=> 'Wenn aktiviert, werden im Pace-Diagramm Ausrei&szlig;er nicht ber&uuml;cksichtigt.',
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
 	'default'		=> '1',
 	'label'			=> 'Anzahl Nachkommastellen',
 	'options'		=> array('0', '1', '2'),
-	'onchange'		=> Ajax::$RELOAD_DATABROWSER
+	'onchange'		=> Ajax::$RELOAD_DATABROWSER_AND_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 	'default'		=> '#FF5500',
@@ -173,15 +218,21 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
 		'G_PHYSICAL_MAP'	=> 'Physikalisch',
 		'OSM'				=> 'OpenStreetMap'
 	),
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
 	'label'			=> 'H&ouml;henmeterberechnung: minimale Differenz',
 	'tooltip'		=> 'Ab welchem H&ouml;henunterschied zwischen zwei Datenpunkten soll dieser f&uuml;r die H&ouml;henmeter herangezogen werden?
 						<br />(2 oder 3 liefert unserer Ansicht nach realistische Werte)',
-	'unit'			=> FormularUnit::$M
+	'unit'			=> FormularUnit::$M,
+	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
-$Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array('default' => false, 'label' => 'Karte: vor Diagrammen')));
+$Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
+	'default'		=> false,
+	'label'			=> 'Karte: vor Diagrammen',
+	'onchange'		=> Ajax::$RELOAD_TRAINING
+)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_DETAILS', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ZONES', array('default' => true)));
