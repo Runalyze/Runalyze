@@ -140,6 +140,7 @@ class ImporterTCX extends Importer {
 	 * @return int
 	 */
 	protected function insertCurrentParserData($fileName = '') {
+		$this->emptyTrainingData();
 		$this->setTrainingDataFromParser();
 		$this->transformTrainingDataToPostData();
 
