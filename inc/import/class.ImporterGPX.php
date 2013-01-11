@@ -33,7 +33,7 @@ class ImporterGPX extends Importer {
 	 */
 	private function parseXML() {
 		if (isset($this->XML->trk->desc))
-			$this->set('comment', (string)$this->XML->trk->desc);
+			$this->set('comment', strip_tags((string)$this->XML->trk->desc));
 
 		$time = strtotime((string)$this->XML->trk->trkseg->trkpt[0]->time);
 
@@ -82,8 +82,13 @@ class ImporterGPX extends Importer {
 				$currentTime = (int)strtotime((string)$Point->time);
 				$timeOfStep  = $currentTime - $lastTime;
 
-				if ($timeOfStep > 30 || $wasBreak)
+				//if ($timeOfStep > 30)
+				//	$wasBreak = true;
+
+				if ($wasBreak) {
 					$startTime += $timeOfStep;
+					//Error::getInstance()->addDebug('Stop at '.((string)$Point->time).', '.$timeOfStep.'s');
+				}
 
 				$pulse = 0;
 				if (isset($Point->extensions) && count($Point->extensions->children('gpxtpx',true)) > 0) {
