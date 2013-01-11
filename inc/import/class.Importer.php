@@ -476,6 +476,13 @@ abstract class Importer {
 	}
 
 	/**
+	 * Empty training data 
+	 */
+	protected function emptyTrainingData() {
+		$this->TrainingData = array();
+	}
+
+	/**
 	 * Set a value for training data
 	 * @param string $key
 	 * @param mixed $value
