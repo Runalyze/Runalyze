@@ -480,6 +480,7 @@ abstract class Importer {
 	 */
 	protected function emptyTrainingData() {
 		$this->TrainingData = array();
+		$_POST              = array();
 	}
 
 	/**

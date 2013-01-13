@@ -92,13 +92,9 @@ abstract class PluginPanel extends Plugin {
 	public function getConfigLinks() {
 		$Links = array();
 
-		//if (CONF_PLUGIN_SHOW_CONFIG_LINK)
-			$Links[] = $this->getConfigLink();
-
-		//if (CONF_PLUGIN_SHOW_MOVE_LINK) {
-			$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
-			$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
-		//}
+		$Links[] = $this->getConfigLink();
+		$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
+		$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
 
 		return implode('', $Links);
 	}
@@ -176,4 +172,3 @@ abstract class PluginPanel extends Plugin {
 		return '';
 	}
 }
-?>

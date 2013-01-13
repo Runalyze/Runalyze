@@ -87,7 +87,6 @@ abstract class PluginStat extends Plugin {
 	public function display() {
 		$this->prepareForDisplay();
 
-		//$this->displayConfigLinkForHeader();
 		$this->displayNavigation();
 
 		$this->displayContent();
@@ -108,14 +107,6 @@ abstract class PluginStat extends Plugin {
 				</span>
 			</h1>'.NL;
 	}
-
-	/**
-	 * Display config link
-	 */
-	/*private function displayConfigLinkForHeader() {
-		if (CONF_PLUGIN_SHOW_CONFIG_LINK)
-			echo '<span class="left margin-5">'.$this->getConfigLink().'</span>'.NL;
-	}*/
 
 	/**
 	 * Display navigation
@@ -155,7 +146,7 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
-		foreach ($Sports as $i => $Sport)
+		foreach ($Sports as $Sport)
 			$Links[] = $this->getInnerLink($Sport['name'], $Sport['id'], $this->year);
 
 		return $Links;
@@ -219,9 +210,8 @@ abstract class PluginStat extends Plugin {
 	 */
 	static public function getInnerLinkFor($id, $name = '') {
 		if ($name == '') {
-			$dat = Mysql::getInstance()->fetchSingle('SELECT `name`, `key` FROM `'.PREFIX.'plugin` WHERE `id`='.$id);
+			$dat = Mysql::getInstance()->fetchSingle('SELECT `name` FROM `'.PREFIX.'plugin` WHERE `id`='.$id);
 			$name = $dat['name'];
-			$key  = $dat['key'];
 		}
 
 		return Ajax::link($name, 'tab_content', self::$DISPLAY_URL.'?id='.$id);
@@ -239,7 +229,7 @@ abstract class PluginStat extends Plugin {
 	 * Are various statistics installed?
 	 * @return bool
 	 */
-	public static function hasVariousStats() {
+	static public function hasVariousStats() {
 		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
 
 		return (!empty($array));
@@ -249,10 +239,9 @@ abstract class PluginStat extends Plugin {
 	 * Get the link for first various statistic
 	 * @return string
 	 */
-	public static function getLinkForVariousStats() {
+	static public function getLinkForVariousStats() {
 		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
 
 		return Plugin::getInstanceFor($array[0])->getLink();
 	}
 }
-?>
