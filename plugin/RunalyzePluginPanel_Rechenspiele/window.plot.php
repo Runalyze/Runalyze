@@ -22,12 +22,12 @@ for ($j = START_YEAR; $j <= date("Y"); $j++) {
 	if ($j == $_GET['y'])
 		echo '<strong style="margin-right:20px;">'.$j.'</strong>';
 	else
-		echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
+		echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
 }
 
 if ($_GET['y'] == 'all')
 	echo '<strong style="margin-right:20px;">Gesamt</strong>';
 else
-	echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.php?y=all" style="margin-right:20px;">Gesamt</a>');
+	echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=all" style="margin-right:20px;">Gesamt</a>');
 ?>
 </center>
