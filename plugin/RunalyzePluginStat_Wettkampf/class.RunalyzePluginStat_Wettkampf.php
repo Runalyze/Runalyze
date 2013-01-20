@@ -326,9 +326,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td class="l"><strong>'.$Training->trainingLinkWithComment().'</strong></td>
 				<td>'.$Training->getDistanceStringWithoutEmptyDecimals().'</td>
 				<td>'.$Training->getTimeString().'</td>
-				<td class="small">'.$Training->getSpeedString().'</td>'.(CONF_USE_PULS ? '
-				<td class="small">'.Helper::Unknown($Training->get('pulse_avg')).' / '.Helper::Unknown($Training->get('pulse_max')).' bpm</td>' : '').''.(CONF_USE_WETTER ? '
-				<td class="small">'.$Training->Weather()->asString().'</td>' : '').'
+				<td class="small">'.$Training->getSpeedString().'</td>
+				<td class="small">'.Helper::Unknown($Training->get('pulse_avg')).' / '.Helper::Unknown($Training->get('pulse_max')).' bpm</td>
+				<td class="small">'.$Training->Weather()->asString().'</td>
 			</tr>');	
 	}
 
