@@ -224,9 +224,9 @@ class JD {
 		if (defined('VDOT_CORRECTOR'))
 			return VDOT_CORRECTOR;
 
-		if (CONF_VDOT_CORRECTOR == 1) {
+		if (CONF_VDOT_CORRECTOR >= 1 || CONF_VDOT_CORRECTOR == 0) {
 			if (0 < Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1'))
-					self::recalculateVDOTcorrector();
+				return self::recalculateVDOTcorrector();
 		}
 
 		return CONF_VDOT_CORRECTOR;
@@ -269,6 +269,8 @@ class JD {
 		}
 
 		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
+
+		return $VDOT_CORRECTOR;
 	}
 
 	/**

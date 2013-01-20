@@ -9,6 +9,14 @@ class Request {
 	}
 
 	/**
+	 * Get requested script name
+	 * @return string
+	 */
+	static public function ScriptName() {
+		return $_SERVER['SCRIPT_NAME'];
+	}
+
+	/**
 	 * Get requested filename
 	 * @return string
 	 */

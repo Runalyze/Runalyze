@@ -26,7 +26,7 @@ class SharedLinker {
 	 * @return boolean
 	 */
 	static public function isOnSharedPage() {
-		return in_array('shared', explode('/', Request::Uri()));
+		return in_array('shared', explode('/', Request::ScriptName()));
 	}
 
 	/**

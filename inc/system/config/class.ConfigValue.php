@@ -90,6 +90,9 @@ abstract class ConfigValue {
 	 * @param mixed $accountID
 	 */
 	static public function update($KEY, $value, $accountID = false) {
+		if (SharedLinker::isOnSharedPage())
+			return;
+
 		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.$accountID : '';
 
 		Mysql::getInstance()->updateWhere(PREFIX.'conf', '`key`="'.$KEY.'"'.$whereAdd, 'value', $value);
