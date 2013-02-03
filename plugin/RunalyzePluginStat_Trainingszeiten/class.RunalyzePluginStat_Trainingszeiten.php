@@ -57,6 +57,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			SELECT
 				id,
 				time,
+				s,
 				sportid,
 				distance,
 				is_track,
