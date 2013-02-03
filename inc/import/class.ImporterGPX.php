@@ -101,7 +101,7 @@ class ImporterGPX extends Importer {
 
 				$lastTime    = $currentTime;
 				$time[]      = $currentTime - $startTime;
-				$elevation[] = 0;
+				$elevation[] = isset($Point->ele) ? (double)$Point->ele : 0;
 				$heartrate[] = $pulse;
 				$latitude[]  = $lat;
 				$longitude[] = $lon;
