@@ -241,155 +241,83 @@ class Weather {
 	 */
 	private function loadForecast() {
 		if (CONF_PLZ > 0) {
-			/*$Xml = Filesystem::getExternUrlContent('http://www.google.de/ig/api?weather='.CONF_PLZ.'&hl='.$this->lang);
-
-			if (strlen($Xml) > 1) {
-				$Xml         = simplexml_load_string_utf8(utf8_decode($Xml));
-
-				if ($Xml) {
-					$Temperature = $this->getTemperatureFromXML($Xml);
-					$WeatherID   = $this->getWeatherIdFromXML($Xml);
-
-					if (!is_null($Temperature) && !is_null($WeatherID)) {
-						$this->temperature = (int)$Temperature;
-						$this->id          = $WeatherID;
+			$JsonAp = Filesystem::getExternUrlContent('http://api.openweathermap.org/data/2.1/find/name?q='.CONF_PLZ.'&units=metric');
+			if ($JsonAp) {
+				$WeatherInfo = json_decode($JsonAp, true);
+				$Temperature = $WeatherInfo['list'][0]['main']['temp'];
+				$WeatherID = $WeatherInfo['list'][0]['weather'][0]['id'];
+				if (!is_null($Temperature) && !is_null($WeatherID)) {
+					$this->temperature = $WeatherInfo['list'][0]['main']['temp'];
+					$transid = self::translateOpenWeatherConditionToInternalName($WeatherID);
+					foreach (self::$fullArray as $id => $data)
+					if ($data['name'] == $transid) 
+						$this->id = $id;
 						return;
+					} else {
+						Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
 					}
-				} else {
-					// TODO
-				}
-			} else {
-				Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
-			}*/
-			Error::getInstance()->addNotice('Google stellt leider keine Wetterdaten mehr zur Verf&uuml;gung.');
-		}
-
-		$this->setDefaultVars();
+			}
+		}	
 	}
 
 	/**
-	 * Get current temperature (in celsius) from Xml
-	 * @param object $Xml
-	 * @return mixed
-	 */
-	private function getTemperatureFromXML(&$Xml) {
-		$temp = $Xml->xpath('//current_conditions/temp_c');
-
-		if (is_array($temp) && isset($temp[0]['data']))
-			return (string)$temp[0]['data'];
-
-		return NULL;
-	}
-
-	/**
-	 * Get current temperature (in celsius) from Xml
-	 * @param object $Xml
-	 * @return mixed
-	 */
-	private function getWeatherIdFromXML(&$Xml) {
-		$temp = $Xml->xpath('//current_conditions/condition');
-
-		if (is_array($temp) && isset($temp[0]['data']))
-			return self::getIdFromAPICondition((string)$temp[0]['data']);
-
-		return NULL;
-	}
-
-	/**
-	 * Translate condition-data from API to internal ID
-	 * @param string $condition
-	 * @return int
-	 */
-	public static function getIdFromAPICondition($condition) {
-		$condition = self::translateGoogleConditionToInternalName($condition);
-		foreach (self::$fullArray as $id => $data)
-			if ($data['name'] == $condition)
-				return $id;
-
-		return self::$UNKNOWN_ID;
-	}
-
-	/**
-	 * Translate google string for condition to database-string
-	 * @param string $string
-	 * @param string $lang [optional]
+	 * Translate google string for condition to database-string (Database: http://openweathermap.org/wiki/API/Weather_Condition_Codes)
+	 * @param int $id
 	 * @return string
 	 */
-	private static function translateGoogleConditionToInternalName($string, $lang = 'en') {
-		if ($lang == 'de')
-			switch ($string) {
-				case 'Meist sonnig':
-				case 'Klar':
-					return 'sonnig';
-				case 'Teils sonnig':
-					return 'heiter';
-				case 'Bedeckt':
-				case 'Meistens bewölkt':
-				case 'Bewölkt':
-				case 'Nebel':
-					return 'bew&ouml;lkt';
-				case 'Vereinzelt stürmisch':
-				case 'Vereinzelte Schauer':
-				case 'Vereinzelt Regen':
-				case 'Leichter Regen':
-				case 'Nieselregen':
-				case 'Sprühregen':
-				case 'Dunst':
-					return 'wechselhaft';
-				case 'Regen':
-				case 'Starker Regen':
-				case 'Gewitterschauer':
-					return 'regnerisch';
-				case 'Leichter Schneefall':
-				case 'Starker Schneefall':
-				case 'Schnee':
-					return 'Schnee';
-				default:
-					//Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
-					return 'unbekannt';
-			}
-		else
-			switch ($string) {
-				case 'Mostly Sunny':
-				case 'Sunny':
-				case 'Clear':
-					return 'sonnig';
-				case 'Partly Sunny':
-				case 'Partly Cloudy':
-					return 'heiter';
-				case 'Overcast':
-				case 'Mostly Cloudy':
-				case 'Cloudy':
-				case 'Fog':
-					return 'bew&ouml;lkt';
-				case 'Mist':
-				case 'Storm':
-				case 'Chance of rain':
-				case 'Scattered showers':
-				case 'Scattered thunderstorms':
-				case 'Windy':
-				case 'Drizzle':
-					return 'wechselhaft';
-				case 'Rain':
-				case 'Light rain':
-				case 'Showers':
-				case 'Rain and snow':
-				case 'Freezing drizzle':
-				case 'Chance of tstorm':
-				case 'Thunderstorm':
-				case 'Sleet':
-					return 'regnerisch';
-				case 'Haze':
-				case 'Flurries':
-				case 'Icy':
-				case 'Snow':
-				case 'Light snow':
-				case 'Chance of snow':
-				case 'Scattered snow showers':
-					return 'Schnee';
-				default:
-					//Error::getInstance()->addNotice('Unknown condition from GoogleWeatherAPI: "'.$string.'"');
-					return 'unbekannt';
-			}
+	private static function translateOpenWeatherConditionToInternalName($id) {
+		switch($id) {
+			case 800:
+				return 'sonnig';
+			case 801:
+				return 'heiter';
+			case 200:
+			case 210:
+			case 211:
+			case 212:
+			case 221:
+			case 230:
+			case 231: 
+			case 232:
+			case 300:
+			case 301:
+			case 802:
+			case 701:
+			case 711:
+			case 721:
+			case 731:
+			case 741:
+				return 'wechselhaft';
+			case 803:
+			case 804:
+				return 'bew&ouml;lkt';
+			case 500:
+			case 501:
+			case 502:
+			case 503:
+			case 504:
+			case 511:
+			case 520:
+			case 521:
+			case 522:
+			case 300:
+			case 301:
+			case 302:
+			case 310:
+			case 311:
+			case 312:
+			case 321:
+			case 201:
+			case 202:
+				return 'regnerisch';
+			case 600:
+			case 601:
+			case 602:
+			case 611:
+			case 621:
+				return 'Schnee';
+			default:
+				return 'unbekannt';
+		}
 	}
 }
