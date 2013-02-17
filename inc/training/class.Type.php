@@ -124,10 +124,15 @@ class Type {
 	 * Get array with alle names, indizes are IDs
 	 * @return array
 	 */
-	static public function getNamesAsArray() {
+	static public function getNamesAsArray($abbr = false) {
 		$types = self::getTypes();
-		foreach ($types as $id => $type)
-			$types[$id] = $type['name'];
+		foreach ($types as $id => $type) {
+			if($abbr == false) {
+				$types[$id] = $type['name'];
+			} else {
+				$types[$id] = $type['abbr'];
+			}
+		}
 
 		return $types;
 	}
@@ -146,10 +151,14 @@ class Type {
 	 * @param mixed $selected value to be selected
 	 * @return string
 	 */
-	static public function getSelectBox($showUnknown = true, $selected = -1) {
-		$types = self::getNamesAsArray();
+	static public function getSelectBox($showUnknown = true, $selected = -1, $abbr = false) {
+		if($abbr == false) {
+				$types = self::getNamesAsArray();
+			} else {
+				$types = self::getNamesAsArray(true);
+		}
 
-		if (empty($types))
+		if (empty($types)) 
 			$types[0] = 'Keine Typen vorhanden';
 		elseif ($showUnknown)
 			$types = array(0 => '?') + $types;
