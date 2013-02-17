@@ -43,16 +43,19 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('Typen', 'Es werden Trainingstypen wie Intervalltraining verwendet').'</th>
 						<th>'.Ajax::tooltip('Puls', 'Der Puls wird dabei aufgezeichnet').'</th>
 						<th>'.Ajax::tooltip('Drau&szlig;en', 'Der Sport wird an der freien Luft betrieben (Strecke/Wetter)').'</th>
+						<th>'.Ajax::tooltip('l&ouml;schen?', 'Eine Sportart kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
 					</tr>
 				</thead>
 				<tbody>';
 
 		$Sports   = Sport::getSports();
 		$Sports[] = array('id' => -1, 'new' => true, 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'kmh' => 0, 'types' => 0, 'pulse' => 0, 'outside' => '');
+		$SportCount = Sport::getSportsCount();
+		foreach($SportCount as $is => $SC)
+			$Sports[$is]['counts'] = $SC;
 
 		foreach ($Sports as $i => $Data) {
 			$id     = $Data['id'];
-
 			if (isset($Data['new'])) {
 				$icon = '?';
 				$name = '<input type="text" name="sport[name]['.$id.']" value="" />';
@@ -60,6 +63,14 @@ class ConfigTabSports extends ConfigTab {
 				$icon = Icon::getSportIcon($id);
 				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'" />'.$Data['name'];
 			}
+			
+			
+			if ($id == -1)
+				$delete = '';
+			elseif ($SportCount[$id] == 0)
+				$delete = '<input type="checkbox" name="sport[delete]['.$id.']" />';
+			else
+				$delete = DataBrowser::getSearchLink('<small>('.$SportCount[$id].')</small>', 'opt[typeid]=is&val[sportid][0]='.$id);
 
 			$Code .= '
 					<tr class="a'.($i%2+1).($icon == '?' ? ' unimportant' : '').'">
@@ -75,6 +86,7 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="checkbox" name="sport[types]['.$id.']" '.($Data['types'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[pulse]['.$id.']" '.($Data['pulse'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']" '.($Data['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td>'.$delete.'</td>
 					</tr>';
 		}
 
@@ -121,8 +133,9 @@ class ConfigTabSports extends ConfigTab {
 				isset($_POST['sport']['pulse'][$id]),
 				isset($_POST['sport']['outside'][$id]),
 			);
-
-			if ($Data['id'] != -1)
+			if (isset($_POST['sport']['delete'][$id]))
+				Mysql::getInstance()->delete(PREFIX.'sport', (int)$id);	
+			elseif ($Data['id'] != -1)
 				Mysql::getInstance()->update(PREFIX.'sport', $id, $columns, $values);
 			elseif (strlen($_POST['sport']['name'][$id]) > 2)
 				Mysql::getInstance()->insert(PREFIX.'sport', $columns, $values);

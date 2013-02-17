@@ -49,10 +49,10 @@ class ConfigTabTypes extends ConfigTab {
 		$Types   = Mysql::getInstance()->untouchedFetchArray('SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.splits, ty.sportid, ty.accountid, (SELECT COUNT(*) 
 					FROM `'.PREFIX.'training` tr
 					WHERE tr.typeid = ty.id AND
-					`accountid`="'.SharedLinker::getUserId().'"
+					`accountid`="'.SessionAccountHandler::getId().'"
 					) AS tcount
 					FROM `'.PREFIX.'type` ty
-					WHERE `accountid`="'.SharedLinker::getUserId().'"
+					WHERE `accountid`="'.SessionAccountHandler::getId().'"
 					ORDER BY `id` ASC');
 		//TODO Change all locations where Typeid is used 
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5, 'splits' => 0);

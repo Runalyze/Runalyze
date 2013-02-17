@@ -207,7 +207,25 @@ class Sport {
 
 		return self::$sports;
 	}
-
+	
+	/**
+	 * Get how often the sport is used
+	 * @return array or $string
+	 */
+	static public function getSportsCount($id = false) {
+		if($id == false) {
+		$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" GROUP BY sportid');
+		foreach($CountSport as $CS)
+			$SportCount[$CS['sportid']] = $CS['scount'];
+		return $SportCount;
+		} else {
+				$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" AND sportid="'.$id.'"');
+				foreach($CountSport as $CS)
+					$SportCount[$CS['sportid']] = $CS['scount'];
+				return $SportCount;
+		}
+	}
+	
 	/**
 	 * Get select-box for all sport-ids
 	 * @param mixed $selected [optional] Value to be selected
