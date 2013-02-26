@@ -133,12 +133,15 @@ th {
 	padding: 2px 3px;
 	vertical-align: middle; }
 
-thead th {
+thead th, tbody.asThead th {
 	border-color: #666;
 	border-style: none none solid none;
 	border-width: 0 0 1px 0;
 	padding-right: 12px;
 	text-align: center; }
+
+thead.r th { text-align: right; }
+tbody.asThead th { text-align: inherit; }
 
 
 
@@ -641,8 +644,8 @@ p.file { background: url(img/file.png) no-repeat 3px center #F5F5F5; color: #000
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
 tr.a1:hover, tr.a2:hover, tr.a3:hover { color: #000; }
-.a1 td, td.a1 { background: rgba(250,250,255,0.2); }
-.a2 td, td.a2 { background: rgba(240,240,245,0.4); }
+.a1 td, td.a1, .a2.swapped td { background: rgba(250,250,255,0.2); }
+.a2 td, td.a2, .a1.swapped td { background: rgba(240,240,245,0.4); }
 .a3 td, td.a3 { background: rgba(230,230,255,0.7); }
 .a1:hover td, td.a1:hover { background: rgba(255,255,255,0.5); }
 .a2:hover td, td.a2:hover { background: rgba(255,255,255,0.5); }

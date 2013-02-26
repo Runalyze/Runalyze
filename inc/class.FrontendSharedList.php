@@ -54,6 +54,14 @@ class FrontendSharedList extends FrontendShared {
 	}
 
 	/**
+	 * Does this user allow general statistics?
+	 * @return boolean 
+	 */
+	public function userAllowsStatistics() {
+		return CONF_TRAINING_LIST_STATISTICS;
+	}
+
+	/**
 	 * Does this user allow a shared list?
 	 * @return boolean 
 	 */
@@ -91,6 +99,14 @@ class FrontendSharedList extends FrontendShared {
 	}
 
 	/**
+	 * Get array for user
+	 * @return array
+	 */
+	public function getUser() {
+		return $this->User;
+	}
+
+	/**
 	 * Display shared view 
 	 */
 	public function displaySharedView() {
@@ -98,8 +114,9 @@ class FrontendSharedList extends FrontendShared {
 			$this->throwErrorForInvalidRequest();
 		elseif (!$this->userAllowsList())
 			$this->throwErrorForPrivateList();
-		else
+		else {
 			$this->displayRequestedList();
+		}
 	}
 
 	/**
@@ -110,6 +127,17 @@ class FrontendSharedList extends FrontendShared {
 		$DataBrowser->display();
 
 		// TODO: Diagramme etc?
+	}
+
+	/**
+	 * Display general statistics
+	 */
+	public function displayGeneralStatistics() {
+		if (!$this->userAllowsStatistics())
+			return;
+
+		$Statistics = new FrontendSharedStatistics($this);
+		$Statistics->display();
 	}
 
 	/**

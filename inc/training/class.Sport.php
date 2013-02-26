@@ -207,7 +207,21 @@ class Sport {
 
 		return self::$sports;
 	}
-	
+
+	/**
+	 * Get all sports with types
+	 * @return array
+	 */
+	static public function getSportsWithTypes() {
+		$Sports = self::getSports();
+
+		foreach ($Sports as $i => $Sport)
+			if ($Sport['types'] == 0)
+				unset($Sports[$i]);
+
+		return $Sports;
+	}
+
 	/**
 	 * Get how often the sport is used
 	 * @return array or $string

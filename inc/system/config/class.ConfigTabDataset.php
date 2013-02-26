@@ -30,7 +30,7 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	private function getCode() {
 		$Code = '
-			<table class="c fullWidth">
+			<table class="c fullWidth" id="conf-tab-dataset">
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
@@ -47,7 +47,7 @@ class ConfigTabDataset extends ConfigTab {
 		$DatasetObject = new Dataset();
 		$DatasetObject->setTrainingId(Training::$CONSTRUCTOR_ID, $this->getExampleTraining());
 
-		$Dataset = Mysql::getInstance()->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `hidden` ASC, ABS(2.5-`modus`) ASC, `position` ASC');
+		$Dataset = Mysql::getInstance()->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC');
 		foreach ($Dataset as $i => $Data) {
 			$disabled    = ($Data['modus'] == 3) ? ' disabled="disabled"' : '';
 			$checked_2   = ($Data['modus'] >= 2) ? ' checked="checked"' : '';
@@ -73,7 +73,7 @@ class ConfigTabDataset extends ConfigTab {
 			$Example = $DatasetObject->getDataset($Data['name']);
 
 			$Code .= '
-				<tr class="a'.($i%2+1).' r">
+				<tr class="a'.($i%2+1).' r" id="'.$Data['id'].'_tr">
 					<td class="l b">'.Ajax::tooltip($Data['label'], $Data['description']).'</td>
 					<td class="c">
 						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'" />
@@ -81,7 +81,13 @@ class ConfigTabDataset extends ConfigTab {
 					</td>
 					<td class="c"><input type="checkbox" name="'.$Data['id'].'_summary"'.$checked.' /></td>
 					<td class="c small">'.$SummarySign.'</td>
-					<td class="c"><input type="text" name="'.$Data['id'].'_position" value="'.$Data['position'].'" size="2" /></td>
+					<td class="c">
+						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.$Data['position'].'" size="2" />
+						'.($Data['position'] > 0 ? '
+						<span class="link" onclick="datasetMove('.$Data['id'].', \'up\')">'.Icon::$UP.'</span>
+						<span class="link" onclick="datasetMove('.$Data['id'].', \'down\')">'.Icon::$DOWN.'</span>
+							' : '').'
+					</td>
 					<td class="c"><input type="text" name="'.$Data['id'].'_class" value="'.$Data['class'].'" size="7" /></td>
 					<td class="c"><input type="text" name="'.$Data['id'].'_style" value="'.$Data['style'].'" size="15" /></td>
 					<td class="'.$Data['class'].'" style="'.$Data['style'].'">'.$Example.'</td>
@@ -91,6 +97,27 @@ class ConfigTabDataset extends ConfigTab {
 		$Code .= '
 				</tbody>
 			</table>';
+
+		$Code .= Ajax::wrapJS('
+			function datasetMove(id, way) {
+				var pos = parseInt($("input[name=\'"+id+"_position\']").val()),
+					tr = $("#"+id+"_tr");
+
+				if (way == "up" && pos > 1) {
+					$("#"+id+"_tr .dataset-position").val(pos-1);
+					tr.prev().find(".dataset-position").val(pos);
+					tr.prev().toggleClass("swapped");
+					tr.prev().before(tr);
+				} else if (way == "down" && tr.next().find(".dataset-position").val() > 0) {
+					$("#"+id+"_tr .dataset-position").val(pos+1);
+					tr.next().find(".dataset-position").val(pos);
+					tr.next().toggleClass("swapped");
+					tr.next().after(tr);
+				}
+
+				tr.toggleClass("swapped");
+			}
+		');
 
 		return $Code;
 	}

@@ -51,6 +51,12 @@ class FormularFieldset extends HtmlTag {
 	private $allowOnlyOneOpenedFieldset = false;
 
 	/**
+	 * Name of configuration value to save current status (collapsed or not)
+	 * @var string
+	 */
+	private $confValueToSaveStatus = '';
+
+	/**
 	 * Constructor for a new fieldset
 	 * @param string $title [optional]
 	 */
@@ -72,6 +78,17 @@ class FormularFieldset extends HtmlTag {
 	 */
 	final public function setCollapsed() {
 		$this->collapsed = true;
+	}
+
+	/**
+	 * Set conf value to save current status
+	 * @param string $confValue
+	 */
+	final public function setConfValueToSaveStatus($confValue) {
+		$this->confValueToSaveStatus = $confValue;
+
+		if (!constant("CONF_".$confValue))
+			$this->setCollapsed();
 	}
 
 	/**
@@ -119,10 +136,18 @@ class FormularFieldset extends HtmlTag {
 	 * Display all fields 
 	 */
 	private function displayLegend() {
+		if (!empty($this->title))
+			echo '<legend onclick="'.$this->getLegendOnclick().'">'.$this->title.'</legend>';
+	}
+
+	/**
+	 * Get onclick attribute for legend
+	 * @return string
+	 */
+	private function getLegendOnclick() {
 		$onlyOne = $this->allowOnlyOneOpenedFieldset ? 'true' : 'false';
 
-		if (!empty($this->title))
-			echo '<legend onclick="Runalyze.toggleFieldset(this, \''.$this->Id.'\', '.$onlyOne.')">'.$this->title.'</legend>';
+		return 'Runalyze.toggleFieldset(this, \''.$this->Id.'\', '.$onlyOne.', \''.$this->confValueToSaveStatus.'\')';
 	}
 
 	/**

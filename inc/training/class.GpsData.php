@@ -856,7 +856,7 @@ class GpsData {
 
 	/**
 	 * Correct the elevation data and return new array
-	 * @return array
+	 * @return mixed
 	 */
 	public function getElevationCorrection() {
 		if (!$this->hasPositionData())
@@ -873,6 +873,8 @@ class GpsData {
 
 		if (is_array($returnedArray) && !empty($returnedArray))
 			$this->arrayForElevation = $returnedArray;
+		else
+			return false;
 
 		$this->correctInvalidElevationValues();
 

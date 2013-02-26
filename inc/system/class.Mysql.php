@@ -298,8 +298,8 @@ final class Mysql {
 		//if (FrontendShared::$IS_SHOWN) {
 		//	$ID = SessionAccountHandler::getId();
 
-			if ($ID == 0)
-				return $query;
+		//	if ($ID == 0)
+		//		return $query;
 		} else
 			$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
 

@@ -108,10 +108,11 @@ class TrainingEditorFormular {
 	 */
 	protected function initSportFieldset() {
 		$Fieldset = new FormularFieldset('Sportart');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_SPORT');
 		$Fieldset->addField(new TrainingInputSport());
 
-		if (!$this->Training->Sport()->hasTypes() || (!is_null($this->Training->Type()) && $this->Training->Type()->isUnknown()) )
-			$Fieldset->setCollapsed();
+		//if (!$this->Training->Sport()->hasTypes() || (!is_null($this->Training->Type()) && $this->Training->Type()->isUnknown()) )
+		//	$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 
@@ -124,6 +125,7 @@ class TrainingEditorFormular {
 	 */
 	protected function initGeneralFieldset() {
 		$Fieldset = new FormularFieldset('Allgemeines');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_GENERAL');
 
 		$Fieldset->addField(new TrainingInputDate());
 		$Fieldset->addField(new TrainingInputDaytime());
@@ -146,7 +148,9 @@ class TrainingEditorFormular {
 			return;
 
 		$Fieldset = new FormularFieldset('Distanz');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_DISTANCE');
 		$Fieldset->addCSSclass( TrainingCreatorFormular::$ONLY_DISTANCES_CLASS );
+
 		$Fieldset->addField(new TrainingInputDistance());
 
 		if ($this->Training->Sport()->isRunning() || $this->forceToShowAllFieldsets)
@@ -171,8 +175,10 @@ class TrainingEditorFormular {
 			if (!$this->Training->Sport()->hasTypes() || !$this->Training->Type()->hasSplits())
 				return;
 
-		$Splits = new Splits( Splits::$FROM_POST );
-		$this->Formular->addFieldset( $Splits->getFieldset() );
+		$Splits   = new Splits( Splits::$FROM_POST );
+		$Fieldset = $Splits->getFieldset();
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_SPLITS');
+		$this->Formular->addFieldset( $Fieldset );
 		$this->Formular->addHiddenValue('splits_sent', 'true');
 	}
 
@@ -184,10 +190,11 @@ class TrainingEditorFormular {
 			return;
 
 		$Fieldset = new FormularFieldset('Wetter');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_WEATHER');
+
 		$Fieldset->addField(new TrainingInputWeather());
 		$Fieldset->addField(new TrainingInputTemperature());
 		$Fieldset->addField(new TrainingInputClothes());
-		$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 		$this->Formular->addHiddenValue('clothes_sent', 'true');
@@ -198,6 +205,7 @@ class TrainingEditorFormular {
 	 */
 	protected function initOtherFieldset() {
 		$Fieldset = new FormularFieldset('Sonstiges');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_OTHER');
 
 		$Fieldset->addField(new TrainingInputUseVdot());
 
@@ -221,8 +229,9 @@ class TrainingEditorFormular {
 	 */
 	protected function initPublicFieldset() {
 		$Fieldset = new FormularFieldset('Privatsph&auml;re');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_PUBLIC');
+
 		$Fieldset->addField(new TrainingInputIsPublic());
-		$Fieldset->setCollapsed();
 
 		$this->Formular->addFieldset($Fieldset);
 	}
@@ -260,7 +269,8 @@ class TrainingEditorFormular {
 			return;
 
 		$Fieldset = new FormularFieldset('H&ouml;henkorrektur anwenden');
-		$Fieldset->setCollapsed();
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_ELEVATION');
+
 		$Fieldset->addInfo('
 			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->Training->id().'" title="H&ouml;hendaten korrigieren"><strong>H&ouml;hendaten korrigieren</strong></a><br />
 			<br />
@@ -277,7 +287,7 @@ class TrainingEditorFormular {
 	 */
 	protected function initAddGPSdataFieldset() {
 		$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
-		$Fieldset->setCollapsed();
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_GPS');
 		$Fieldset->addInfo('
 		<span onmouseover="javascript:createUploader()">
 			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br />

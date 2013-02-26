@@ -3,6 +3,14 @@
  * File for displaying a training.
  * Call:   call.SharedList.php?user=
  */
+if ($_GET['view'] == 'monthkm') {
+	include 'window.monatskilometerShared.php';
+	exit;
+} elseif ($_GET['view'] == 'weekkm') {
+	include 'window.wochenkilometerShared.php';
+	exit;
+}
+
 require '../inc/class.Frontend.php';
 require '../inc/class.FrontendShared.php';
 require '../inc/class.FrontendSharedList.php';
@@ -10,6 +18,12 @@ require '../inc/class.FrontendSharedList.php';
 $Frontend = new FrontendSharedList();
 
 if (!Request::isAjax()) {
+	if ($Frontend->userAllowsStatistics()) {
+		echo '<div class="panel" style="width:960px;margin:5px auto;">';
+		$Frontend->displayGeneralStatistics();
+		echo '</div>';
+	}
+
 	echo '<div id="dataPanel" class="panel" style="width:960px;margin:5px auto;">';
 	echo '<div id="'.DATA_BROWSER_SHARED_ID.'">';
 }

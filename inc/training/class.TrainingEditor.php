@@ -175,6 +175,8 @@ class TrainingEditor {
 
 		$this->UpdateColumns[] = 'clothes';
 		$this->UpdateValues[] = isset($this->TrainingData['clothes']) ? implode(',', array_keys($this->TrainingData['clothes'])) : '';
+
+		$this->TrainingData['clothes'] = end($this->UpdateValues);
 	}
 
 	/**
@@ -253,9 +255,9 @@ class TrainingEditor {
 				&& isset($this->TrainingData['dist_old'])) {
 
 			if (isset($this->TrainingData['shoeid_old']))
-				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
+				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$this->TrainingData['dist_old'].'", `time`=`time`-'.$this->TrainingData['s_old'].' WHERE `id`='.$this->TrainingData['shoeid_old'].' LIMIT 1');
 			if (isset($this->TrainingData['shoeid']))
-				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->TrainingData['distance'].'", `time`=`time`+'.$this->TrainingData['s'].' WHERE `id`='.$_POST['shoeid'].' LIMIT 1');
+				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->TrainingData['distance'].'", `time`=`time`+'.$this->TrainingData['s'].' WHERE `id`='.$this->TrainingData['shoeid'].' LIMIT 1');
 		}
 	}
 

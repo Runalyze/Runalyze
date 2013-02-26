@@ -771,18 +771,22 @@ class Training {
 	 */
 	public function elevationCorrection() {
 		if ($this->GpsData()->hasPositionData()) {
-			Mysql::getInstance()->update(PREFIX.'training', $this->id,
-				array(
-					'arr_alt',
-					'elevation_corrected',
-					'gps_cache_object'
-				),
-				array(
-					implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()),
-					1,
-					''
-				)
-			);
+			$CorrectedArray = $this->GpsData()->getElevationCorrection();
+
+			if (is_array($CorrectedArray)) {
+				Mysql::getInstance()->update(PREFIX.'training', $this->id,
+					array(
+						'arr_alt',
+						'elevation_corrected',
+						'gps_cache_object'
+					),
+					array(
+						implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()),
+						1,
+						''
+					)
+				);
+			}
 		}
 	}
 

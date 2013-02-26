@@ -57,15 +57,15 @@ class HTML {
 	 * @param int $emptyTDs Number of empty td before the month-td
 	 * @return string
 	 */
-	public static function monthTR($fixedWidth = 0, $emptyTDs = 1) {
+	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">'.NL;
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<td />'.NL;
+			$html .= '<'.$tag.' />'.NL;
 
 		for ($m = 1; $m <= 12; $m++)
-			$html .= '<td'.$width.'>'.Time::Month($m, true).'</td>'.NL;
+			$html .= '<'.$tag.$width.'>'.Time::Month($m, true).'</'.$tag.'>'.NL;
 
 		$html .= '</tr>'.NL;
 
@@ -78,15 +78,15 @@ class HTML {
 	 * @param int $emptyTDs Number of empty td before the year-td
 	 * @return string
 	 */
-	public static function yearTR($fixedWidth = 0, $emptyTDs = 1) {
+	public static function yearTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">'.NL;
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<td />'.NL;
+			$html .= '<'.$tag.' />'.NL;
 
 		for ($y = START_YEAR; $y <= date("Y"); $y++)
-			$html .= '<td'.$width.'>'.$y.'</td>'.NL;
+			$html .= '<'.$tag.$width.'>'.$y.'</'.$tag.'>'.NL;
 
 		$html .= '</tr>'.NL;
 
