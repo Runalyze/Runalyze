@@ -22,6 +22,8 @@ class Clothes {
 	 * @param string $id_string comma-seperated string with IDs
 	 */
 	public function __construct($id_string) {
+		if (is_array($id_string))
+			Error::getInstance()->addError('test');
 		$this->ids = self::idStringToArray($id_string);
 
 		self::initClothes();

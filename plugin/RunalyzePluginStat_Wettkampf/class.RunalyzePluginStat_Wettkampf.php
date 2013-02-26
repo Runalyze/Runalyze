@@ -60,6 +60,16 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
+	 * Get table for year comparison - not to use within this plugin!
+	 * @return string
+	 */
+	public function getYearComparisonTable() {
+		ob_start();
+		$this->displayPersonalBestYears();
+		return ob_get_clean();
+	}
+
+	/**
 	 * Display all divs 
 	 */
 	private function displayDivs() {
@@ -352,7 +362,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '</tbody>';
 		echo '</table>';
 
-		Ajax::createTablesorterFor('#'.$id);
+		Ajax::createTablesorterFor('#'.$id, true);
 	}
 
 	/**
@@ -379,10 +389,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function getIconForCompetition($id) {
 		if ($this->isFunCompetition($id)) {
 			$tag = 'nofun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, "Spa&szlig;-Wettkampf | Klicken, um als normalen Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, "Spa&szlig;-Wettkampf | Klicken, um als normalen Wettkampf zu markieren");
 		} else {
 			$tag = 'fun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, "Wettkampf | Klicken, um als Spa&szlig;-Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, "Wettkampf | Klicken, um als Spa&szlig;-Wettkampf zu markieren");
 		}
 
 		return $this->getInnerLink($icon, 0, 0, $tag.'-'.$id);

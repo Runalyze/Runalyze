@@ -49,8 +49,8 @@ class DataBrowserShared extends DataBrowser {
 	 * Display specific icon-links
 	 */
 	protected function displayIconLinks() {
-		//echo $this->getMonthKmLink();
-		//echo $this->getWeekKmLink();
+		echo $this->getMonthKmLink();
+		echo $this->getWeekKmLink();
 	}
 
 	/**
@@ -65,5 +65,37 @@ class DataBrowserShared extends DataBrowser {
 		$href = 'shared/'.Request::param('user').'/?start='.$start.'&end='.$end;
 
 		return Ajax::link($name, DATA_BROWSER_SHARED_ID, $href, '', $title);
+	}
+
+	/**
+	 * Get URL for month km
+	 * @return string
+	 */
+	static public function getUrlForMonthKm() {
+		return 'shared/'.Request::param('user').'/?view=monthkm';
+	}
+
+	/**
+	 * Get URL for month km
+	 * @return string
+	 */
+	static public function getUrlForWeekKm() {
+		return 'shared/'.Request::param('user').'/?view=weekkm';
+	}
+
+	/**
+	 * Get ajax-link for showing month-kilometer
+	 * @return string
+	 */
+	protected function getMonthKmLink() {
+		return Ajax::window('<a href="'.self::getUrlForMonthKm().'">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatskilometer anzeigen').'</a>');
+	}
+
+	/**
+	 * Get ajax-link for showing week-kilometer
+	 * @return string
+	 */
+	protected function getWeekKmLink() {
+		return Ajax::window('<a href="'.self::getUrlForWeekKm().'">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochenkilometer anzeigen').'</a>');
 	}
 }

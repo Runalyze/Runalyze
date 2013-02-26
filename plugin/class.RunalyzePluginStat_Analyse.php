@@ -178,7 +178,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			LEFT JOIN `'.PREFIX.'type` ON ('.PREFIX.'training.typeid='.PREFIX.'type.id)
 			WHERE '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
 				AND '.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
-				AND `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
+				AND '.PREFIX.'training.`sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
 		

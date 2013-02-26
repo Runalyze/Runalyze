@@ -28,8 +28,9 @@ $General->addConfigValue( new ConfigValueSelect('PULS_MODE', array(
 )));
 $General->addConfigValue( new ConfigValueString('PLZ', array(
 	'default'		=> '',
-	'label'			=> 'Postleitzahl',
-	'tooltip'		=> 'zum Laden von Wetterdaten'
+	'label'			=> 'Ort',
+	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br /><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
+	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
 $General->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
 	'default'		=> 1,
@@ -249,6 +250,16 @@ $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_SPLITS', array
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_PACEPULSE', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_COLLECTION', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_MAP', array('default' => true)));
+
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_SPORT', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GENERAL', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_DISTANCE', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_SPLITS', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_WEATHER', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_OTHER', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_PUBLIC', array('default' => false)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_ELEVATION', array('default' => false)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GPS', array('default' => false)));
 // TODO: remove
 $Training->addConfigValue(new ConfigValueBool('TRAINING_PLOTS_BELOW', array('default' => false)));
 $Training->addToCategoryList();
@@ -261,7 +272,8 @@ $Privacy = new ConfigCategory('privacy', 'Privatsph&auml;re');
 $Privacy->setKeys(array(
 	'TRAINING_LIST_PUBLIC',
 	'TRAINING_MAKE_PUBLIC',
-	'TRAINING_LIST_ALL'
+	'TRAINING_LIST_ALL',
+	'TRAINING_LIST_STATISTICS'
 ));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_MAKE_PUBLIC', array(
 	'default'		=> false,
@@ -278,6 +290,11 @@ $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_ALL', array(
 	'default'		=> false,
 	'label'			=> 'Liste: private Trainings',
 	'tooltip'		=> 'Bei dieser Einstellung werden in der &ouml;ffentlichen Liste auch private Trainings (ohne Link) angezeigt.'
+)));
+$Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_STATISTICS', array(
+	'default'		=> false,
+	'label'			=> 'Liste: allgemeine Statistiken',
+	'tooltip'		=> 'Sollen &uuml;ber der Trainingsliste allgemeine Statistiken angezeigt werden?'
 )));
 $Privacy->addToCategoryList();
 

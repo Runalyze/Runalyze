@@ -34,8 +34,21 @@ if ($this->hasRoute())
 
 $calculated = $this->GpsData()->calculateElevation();
 $difference = $this->GpsData()->getElevationDifference();
-if ($this->hasElevation() || $calculated > 0)
-	$Outsides[] = array('H&ouml;henmeter', $this->get('elevation').'&nbsp;m'.($calculated != $this->get('elevation') ? ' <small>('.$calculated.'&nbsp;m berechnet)</small>' : ''));
+if ($this->hasElevation() || $calculated > 0) {
+	$Text = $this->get('elevation').'&nbsp;m';
+
+	if ($calculated != $this->get('elevation'))
+		$Text .= ' <small>('.$calculated.'&nbsp;m berechnet)</small>';
+
+	if (CONF_TRAINING_DO_ELEVATION && $this->get('elevation_corrected') != 1)
+		$Text .= '<br />
+			<em id="gps-results" class="block">
+				Die H&ouml;hendaten sind noch nicht korrigiert.
+				<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->id().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
+			</em>';
+
+	$Outsides[] = array('H&ouml;henmeter', $Text);
+}
 if ($difference > 20)
 	$Outsides[] = array('H&ouml;henunterschied', Math::WithSign($difference).'m');
 if ($this->hasElevation())

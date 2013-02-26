@@ -23,6 +23,8 @@ class ConfigTabTypes extends ConfigTab {
 						Bestehende Trainingstypen k&ouml;nnen aber nur gel&ouml;scht werden, wenn keine Referenzen bestehen.
 						Daher sind die Trainingstypen mit ihren Trainings verlinkt.');
 		$Types->addInfo('Trainingstypen mit einem RPE-Wert gr&ouml;&szlig;er gleich 5 werden in der &Uuml;bersicht hervorgehoben.');
+		$Types->addInfo('Trainingstypen tauchen nur bei der zugeh&ouml;rigen Sportart auf.<br />
+						Sie k&ouml;nnen nur einer Sportart zugeordnet werden, wenn die Sportart Trainingstypen erlaubt.');
 
 		$this->Formular->addFieldset($Types);
 	}
@@ -66,7 +68,9 @@ class ConfigTabTypes extends ConfigTab {
 				$delete = '<input type="checkbox" name="type[delete]['.$id.']" />';
 			else
 				$delete = DataBrowser::getSearchLink('<small>('.$Data['tcount'].')</small>', 'opt[typeid]=is&val[typeid][0]='.$id);
-			$Sports   = Sport::getSports();
+
+			$Sports = Sport::getSportsWithTypes();
+	
 			$Code .= '
 				<tr class="a'.($i%2+1).($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'" /></td>
@@ -74,9 +78,9 @@ class ConfigTabTypes extends ConfigTab {
 					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
 					<td><input type="checkbox" name="type[splits]['.$id.']" '.HTML::Checked($Data['splits'] == 1).'/></td>
 					<td><select name="type[sportid]['.$id.']">';
-					foreach ($Sports as $i => $SData) {
-			$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
-					}
+			foreach ($Sports as $SData)
+				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
+
 			$Code .= '</select></td>
 					<td>'.$delete.'</td>
 				</tr>';

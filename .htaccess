@@ -1,6 +1,6 @@
 # Problems? Comment the following two lines out
-php_value upload_max_filesize "32M"
-php_value post_max_size "32M"
+#php_value upload_max_filesize "32M"
+#php_value post_max_size "32M"
 
 <IfModule mod_rewrite.c>
 RewriteEngine on

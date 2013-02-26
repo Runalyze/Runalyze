@@ -109,13 +109,29 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
+	 * Get table for year comparison - not to use within this plugin!
+	 * @return string
+	 */
+	public function getYearComparisonTable() {
+		$this->year = -1;
+		$this->initData();
+		$this->initLineData();
+
+		ob_start();
+		$this->displayYearTable();
+		return ob_get_clean();
+	}
+
+	/**
 	 * Display table with data for each month 
 	 */
 	private function displayYearTable() {
 		echo '<table class="small r fullWidth">';
 
-		echo ($this->year == -1) ? HTML::yearTR(0, 1) : HTML::monthTR(8, 1);
-		echo HTML::spaceTR($this->colspan);
+		echo '<thead class="r">';
+		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th') : HTML::monthTR(8, 1, 'th');
+		echo '</thead>';
+		echo '<tbody>';
 
 		$this->displayLine('Stunden', $this->StundenData);
 
@@ -134,6 +150,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if (CONF_RECHENSPIELE)
 			$this->displayLine('TRIMP', $this->TRIMPData);
 
+		echo '</tbody>';
 		echo '</table>';
 	}
 

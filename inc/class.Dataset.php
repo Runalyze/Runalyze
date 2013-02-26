@@ -161,6 +161,7 @@ class Dataset {
 		$this->Training->set('use_vdot', 1);
 		$this->Training->set('vdot', 0);
 		$this->Training->set('pulse_avg', 0);
+		$this->Training->set('elevation_corrected', 1);
 
 		foreach ($SummaryData as $var => $value)
 			if (!is_null($value))
@@ -191,7 +192,7 @@ class Dataset {
 	 * @return string 
 	 */
 	public function getQuerySelectForAllDatasets() {
-		$String = ',`is_track`,`use_vdot`,`is_public`';
+		$String = ',`is_track`,`use_vdot`,`is_public`,`elevation_corrected`';
 
 		foreach ($this->data as $set)
 			$String .= ', `'.$set['name'].'`';
@@ -426,6 +427,9 @@ class Dataset {
 
 		$displayString = $this->Training->get('elevation').'&nbsp;hm</span>';
 		$tooltipString = '&oslash; Steigung: '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;';
+
+		if (CONF_TRAINING_DO_ELEVATION && $this->Training->get('elevation_corrected') != 1)
+			$displayString = '~'.$displayString;
 
 		return Ajax::tooltip($displayString, $tooltipString);
 	}
