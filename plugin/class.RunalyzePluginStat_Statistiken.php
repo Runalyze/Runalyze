@@ -386,7 +386,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initTempoData($dat) {
-		$text = ($dat['s'] == 0) ? '&nbsp;' : Running::Speed($dat['distance'], $dat['s'], $this->sportid);
+		$text = ($dat['s'] == 0) ? '&nbsp;' : Sport::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $this->sportid);
 		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 

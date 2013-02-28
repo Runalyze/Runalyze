@@ -52,6 +52,7 @@ class TrainingEditorFormular {
 		$this->initDistanceFieldset();
 		$this->initSplitsFieldset();
 		$this->initOtherFieldset();
+		$this->initNotesFieldset();
 		$this->initWeatherFieldset();
 		$this->initPublicFieldset();
 		$this->initDeleteFieldset();
@@ -198,6 +199,17 @@ class TrainingEditorFormular {
 
 		$this->Formular->addFieldset($Fieldset);
 		$this->Formular->addHiddenValue('clothes_sent', 'true');
+	}
+
+	/**
+	 * Init fieldset for other data 
+	 */
+	protected function initNotesFieldset() {
+		$Fieldset = new FormularFieldset('Notizen');
+		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_NOTES');
+
+		$Fieldset->addField(new TrainingInputNotes());
+		$this->Formular->addFieldset($Fieldset);
 	}
 
 	/**

@@ -15,7 +15,16 @@ class ConfigValueArray extends ConfigValue {
 	 * @return string
 	 */
 	protected function getValueAsString() {
-		return implode(', ', $this->Value);
+		return self::arrayToString($this->Value);
+	}
+
+	/**
+	 * Transform array to string for internal database structure
+	 * @param array $array
+	 * @return string
+	 */
+	static public function arrayToString($array) {
+		return implode(', ', $array);
 	}
 
 	/**
@@ -23,10 +32,15 @@ class ConfigValueArray extends ConfigValue {
 	 * @param string $Value 
 	 */
 	protected function setValueFromString($Value) {
-		$this->Value = explode(',', $Value);
+		if (strlen($Value) == 0)
+			$this->Value = array();
+		else
+			$this->Value = explode(',', $Value);
 
 		foreach ($this->Value as $k => $v)
 			$this->Value[$k] = trim($v);
+
+		$this->Value = serialize($this->Value);
 	}
 
 	/**

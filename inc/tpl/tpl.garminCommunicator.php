@@ -12,6 +12,19 @@ $Frontend = new Frontend(true);
 	<script type="text/javascript" src="../../lib/garmin/prototype/prototype.js"></script>
 	<script type="text/javascript" src="../../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
 	<script type="text/javascript">
+		function ignoreID(id,e) {
+			var p = e.parentNode;
+			p.innerHTML = 'ignoriert';
+			p.toggleClassName('upload-new');
+			p.toggleClassName('upload-exists');
+			p.parentNode.toggleClassName('ignored');
+
+			$$("input[value="+id+"]").each(function(box){
+				box.checked = false;
+			});
+			window.parent.Runalyze.changeConfig('GARMIN_IGNORE_IDS',id,true);
+		}
+
 		var currentActivity = 0, uploadedActivities = [], display;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
@@ -75,7 +88,7 @@ $Frontend = new Frontend(true);
 						entry.isNew = true;
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
-						statusCell.innerHTML = 'neu';
+						statusCell.innerHTML = 'neu<br /><small onclick="ignoreID(\''+activityId+'\', this)">[ignorieren]</small>';
 					}
 				},
 				postActivityHandler: function(activityXml, display) {

@@ -262,7 +262,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
 			$name = ($speed == $speed_max)
 				? 'schneller'
-				: '<small>bis</small> '.Running::Speed(1, $speed, CONF_RUNNINGSPORT);
+				: '<small>bis</small> '.Sport::getSpeedWithAppendix(1, $speed, CONF_RUNNINGSPORT);
 			$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
 		}
 

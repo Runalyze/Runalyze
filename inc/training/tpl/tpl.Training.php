@@ -7,7 +7,7 @@
 </h1>
 
 <?php $PlotsList = new TrainingPlotsList($this->Training); ?>
-<div class="toolbar toHeader open">
+<div class="toolbar toHeader withoutNav open">
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
 			<label id="training-view-toggler-details" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('details');"><i class="checkbox-icon checked"></i> Details</label>
@@ -37,9 +37,6 @@
 		<?php endif; ?>
 
 		<br class="clear" />
-	</div>
-	<div class="toolbar-nav">
-		<div class="toolbar-opener" style=""></div>
 	</div>
 </div>
 

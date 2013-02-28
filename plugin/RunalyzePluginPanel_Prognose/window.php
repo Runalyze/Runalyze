@@ -27,12 +27,12 @@ foreach (explode(',', $_POST['distances']) as $Dist) {
 	$Distances[] = array(
 		'distance'	=> Running::Km($km),
 		'prognosis'		=> Time::toString($Prognosis),
-		'prognosis-pace'=> Running::Pace($km, $Prognosis).'/km',
+		'prognosis-pace'=> SportSpeed::minPerKm($km, $Prognosis).'/km',
 		'prognosis-vdot'=> round($PrognosisA['vdot'],2),
 		'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Time::toString(abs(round($PB-$Prognosis)),false,true),
 		'diff-class'	=> $PB > $Prognosis ? 'plus' : 'minus',
 		'pb'			=> $PB > 0 ? Time::toString($PB) : '-',
-		'pb-pace'		=> $PB > 0 ? Running::Pace($km, $PB).'/km' : '-',
+		'pb-pace'		=> $PB > 0 ? SportSpeed::minPerKm($km, $PB).'/km' : '-',
 		'pb-vdot'		=> $PB > 0 ? round(JD::Competition2VDOT($km, $PB),2) : '-',
 		'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
 	);

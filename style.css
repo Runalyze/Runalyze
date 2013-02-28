@@ -251,6 +251,7 @@ fieldset .fullWidth { width: 95%; }
 fieldset .with50erLabel label { width: 22.5%; }
 fieldset .with50erLabel .fullSize { width: 75%; }
 fieldset .with50erLabel .inline label { float: none; }
+fieldset textarea.fullSize { height: 72px; }
 
 input.withUnit {
 	text-align: right;
@@ -310,6 +311,12 @@ fieldset .validationFailed {
 	background-color: #eee;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc; }
+
+.toolbar.withoutNav .toolbar-content {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 1em;
+	border-radius: 0 0 2px 2px;
+}
 
 .toolbar-line .labeledLink {
 	display: block;
@@ -461,6 +468,16 @@ h1 a:hover, h1 a:active {
 	box-shadow: 3px 2px 5px #333;
 	-webkit-box-shadow: 3px 2px 5px #333;
 	-moz-box-shadow: 3px 2px 5px #333; }
+
+#falseAjax {
+	width: 800px;
+	margin: 25px auto;
+	padding: 10px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
 
 #close, #ajaxPrev, #ajaxNext {
 	z-index: 12;

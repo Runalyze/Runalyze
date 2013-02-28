@@ -57,7 +57,7 @@ class TrainingDisplay {
 					$Avg = '-';
 
 				$Data[] = array(
-					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.Running::Pace(1, $min*60).'/km'),
+					'zone'     => ($min == 0 ? 'schneller' : '&gt; '.SportSpeed::getSpeedWithAppendix(1, $min*60, SportSpeed::$MIN_PER_KM)),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => $Avg);
@@ -80,7 +80,8 @@ class TrainingDisplay {
 					'zone'     => '&lt; '.(10*$hf).'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => Running::Pace($Info['num'], $Info['pace-sum']).'/km');
+					'average'  => SportSpeed::getSpeedWithAppendix($Info['num'], $Info['pace-sum'], SportSpeed::$MIN_PER_KM)
+				);
 		}
 
 		$this->displayZone('Pulszonen', $Data, 'Pace');
@@ -167,7 +168,7 @@ class TrainingDisplay {
 			<tr class="a'.($i%2+2).' r">
 				<td>'.Running::Km($Distances[$i], 2).'</td>
 				<td>'.($Times[$i] < 60 ? Time::toString($Times[$i], true, 2) : Time::toString($Times[$i])).'</td>
-				<td>'.Running::Pace($Distances[$i], $Times[$i]).'/km</td>
+				<td>'.SportSpeed::minPerKm($Distances[$i], $Times[$i]).'/km</td>
 				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 			</tr>'.NL;
 		}
@@ -214,7 +215,7 @@ class TrainingDisplay {
 				<tr class="a'.($i%2+2).' r">
 					<td>'.Running::Km($Halfs[$i]['km'], 2).'</td>
 					<td>'.Time::toString($Halfs[$i]['s']).'</td>
-					<td>'.Running::Pace($Halfs[$i]['km'], $Halfs[$i]['s']).'/km</td>
+					<td>'.SportSpeed::minPerKm($Halfs[$i]['km'], $Halfs[$i]['s']).'/km</td>
 					<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 				</tr>'.NL;
 			}
@@ -238,7 +239,7 @@ class TrainingDisplay {
 			$Data[] = array(
 				'time'      => Time::toString($Round['time']),
 				'distance'  => Running::Km($Round['distance'], 2),
-				'pace'      => Running::Speed($Round['km'], $Round['s'], $this->Training->get('sportid')),
+				'pace'      => Sport::getSpeedWithAppendixAndTooltip($Round['km'], $Round['s'], $this->Training->get('sportid')),
 				'heartrate' => Helper::Unknown($Round['heartrate']),
 				'elevation' => Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']));
 		}

@@ -4,7 +4,7 @@ body { padding: 0; margin: 0; }
 	font: normal normal normal 11px/1.2em Verdana, Arial, sans-serif;
 	color: #333;
 	text-align: center;
-	height: 200px;
+	height: 300px;
 	width: 480px;
 	margin: 0 auto;
 	padding: 3px;
@@ -13,7 +13,7 @@ body { padding: 0; margin: 0; }
 }
 
 #progressBar {
-	margin-top: 60px;
+	margin-top: 110px;
 	position: relative;
     height: 20px;
 	padding: 1px;
@@ -81,7 +81,7 @@ body { padding: 0; margin: 0; }
 #statusText {
 	text-align: center;
 	width: 90%;
-	margin: 60px auto 0;
+	margin: 110px auto 0;
 	font-weight: bold;
 }
 #buttonDescription {
@@ -96,7 +96,7 @@ body { padding: 0; margin: 0; }
     width: 430px;
     margin-left: auto;
     margin-right: auto;
-    max-height: 134px;
+    max-height: 234px;
     overflow: auto;
     position: relative;
 }
@@ -130,8 +130,14 @@ body { padding: 0; margin: 0; }
 	text-align: center;
 }
 
+.ignored { text-decoration: line-through; }
 .upload-exists { color: #666; }
 .upload-new { font-weight: bold; }
+
+.upload-new small {
+	cursor: pointer;
+	font-weight: normal;
+}
 
 #activityDirectoryData td {
 	background: rgba(255,255,255,.6);

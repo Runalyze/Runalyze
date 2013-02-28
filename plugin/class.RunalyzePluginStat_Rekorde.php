@@ -72,7 +72,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 					$j = 0;
 					foreach ($data as $j => $dat) {
 						if ($rekord['eval'] == 0)
-							$code = Running::Speed($dat['distance'], $dat['s'], $sport['id']);
+							$code = Sport::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $sport['id']);
 						elseif ($rekord['eval'] == 1)
 							$code = ($dat['distance'] != 0 ? Running::Km($dat['distance']) : Time::toString($dat['s']));
 	

@@ -134,7 +134,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<td class="b l">'.Shoe::getSearchLink($schuh['id']).'</td>
 					<td class="small">'.$Shoe->getSince().'</td>
 					<td>'.(($schuh['num'] != 0) ? Running::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
-					<td>'.(($schuh['num'] != 0) ? Running::Speed($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
+					<td>'.(($schuh['num'] != 0) ? SportSpeed::minPerKm($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
 					<td class="small">'.Running::Km($schuh['dist']).'</td>
 					<td class="small">'.$schuh['pace'].'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>

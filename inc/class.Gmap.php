@@ -189,7 +189,7 @@ class Gmap {
 			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
-			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Running::Speed($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
+			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Sport::getSpeedWithAppendix($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
 			$Marker[]   = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"'.$MarkerData.'",options:{icon:"'.$this->getIconForMarker().'"}}';
 		}
 

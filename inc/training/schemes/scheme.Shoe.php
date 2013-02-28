@@ -7,7 +7,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'general',
 		'legend'	=> 'Laufschuh',
-		'fields'	=> array('name', 'brand', 'since')
+		'fields'	=> array('name', 'since')
 	),
 	array(
 		'id'		=> 'analyse',
@@ -27,16 +27,6 @@ $FIELDS['name'] = array(
 	'formular'	=> array(
 		'label'		=> 'Name',
 		'required'	=> true,
-		'size'		=> FormularInput::$SIZE_MIDDLE
-	)
-);
-$FIELDS['brand'] = array(
-	'database'	=> array(
-		'type'		=> 'varchar',
-		'precision'	=> '20',
-	),
-	'formular'	=> array(
-		'label'		=> 'Marke',
 		'size'		=> FormularInput::$SIZE_MIDDLE
 	)
 );

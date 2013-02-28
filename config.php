@@ -17,7 +17,7 @@
  * @var string $passwort   The password for the given user. Please note: Never leave a mysql-user without password.
  */
 $host = 'localhost';
-$database = 'runalyze';
+$database = 'runalyze'; // runalyze | runalyze_empty
 $username = 'runalyze';
 $password = 'runalyze';
 
@@ -28,8 +28,14 @@ $password = 'runalyze';
 define('PREFIX', 'runalyze_');
 
 /**
- * To set off debugging, just comment out the line with "//" at the beginning.
+ * To set off debugging, define this constant as false
  * @var bool RUNALYZE_DEBUG Set to true for debugging mode
  */
-//define('RUNALYZE_DEBUG', true);
+define('RUNALYZE_DEBUG', true);
+
+/**
+ * To force users to login, define this constant as true
+ * @var bool USER_MUST_LOGIN It set to true, users have to login
+ */
+define('USER_MUST_LOGIN', true);
 ?>

@@ -1,4 +1,4 @@
-<div class="toolbar open">
+<div class="toolbar withoutNav open">
 	<div class="toolbar-content toolbar-line">
 		<strong>
 			<?php echo $this->Training->getTitle().': '.$this->Training->getDate(); ?>
@@ -10,9 +10,6 @@
 		</span>
 
 		<br class="clear" />
-	</div>
-	<div class="toolbar-nav">
-		<!--<div class="toolbar-opener" style=""></div>-->
 	</div>
 </div>
 
