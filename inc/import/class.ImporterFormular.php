@@ -93,6 +93,7 @@ class ImporterFormular extends Importer {
 		$StringKeys      = array();
 		$StringKeys[]    = 'partner';
 		$StringKeys[]    = 'comment';
+		$StringKeys[]    = 'notes';
 
 		if (!isset($_POST['sportid'])) {
 			$this->errorString = 'Es muss eine Sportart ausgew&auml;hlt werden.';
@@ -123,7 +124,7 @@ class ImporterFormular extends Importer {
 			$this->columns[]     = 'is_track';
 			$this->values[]      = isset($_POST['is_track']) ? 1 : 0;
 			$this->columns[]     = 'pace';
-			$this->values[]      = Running::Pace($distance, $time_in_s);
+			$this->values[]      = SportSpeed::minPerKm($distance, $time_in_s);
 		}
 
 		// Prepare values for outside-sport

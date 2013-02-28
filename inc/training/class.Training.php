@@ -549,29 +549,7 @@ class Training {
 	 * @return string
 	 */
 	public function getSpeedString() {
-		return Running::Speed($this->get('distance'), $this->get('s'), $this->get('sportid'));
-	}
-
-	/**
-	 * Get speed as string
-	 * @return string 
-	 */
-	public function getSpeedInMainUnit() {
-		if (Sport::usesSpeedInKmh($this->get('sportid')))
-			return $this->getKmh().'&nbsp;km/h';
-
-		return $this->getPace().'/km';
-	}
-
-	/**
-	 * Get speed in alternative unit as string
-	 * @return string
-	 */
-	public function getSpeedInAlternativeUnit() {
-		if (!Sport::usesSpeedInKmh($this->get('sportid')))
-			return $this->getKmh().'&nbsp;km/h';
-
-		return $this->getPace().'/km';
+		return Sport::getSpeedWithAppendixAndTooltip($this->get('distance'), $this->get('s'), $this->get('sportid'));
 	}
 
 	/**
@@ -587,7 +565,7 @@ class Training {
 	* @return string
 	*/
 	public function getPace() {
-		return Running::Pace($this->get('distance'), $this->get('s'));
+		return SportSpeed::minPerKm($this->get('distance'), $this->get('s'));
 	}
 	
 	/**
@@ -595,7 +573,7 @@ class Training {
 	* @return string
 	*/
 	public function getKmh() {
-		return Running::Kmh($this->get('distance'), $this->get('s'));
+		return SportSpeed::kmPerHour($this->get('distance'), $this->get('s'));
 	}
 
 	/**

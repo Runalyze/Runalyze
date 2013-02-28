@@ -85,6 +85,7 @@ class TrainingEditor {
 		$this->addTextValue('comment');
 		$this->addTextValue('partner');
 		$this->addTextValue('route');
+		$this->addTextValue('notes');
 
 		$this->addValue('distance');
 		$this->addValue('elevation');

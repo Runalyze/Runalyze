@@ -27,7 +27,7 @@ if ($Formular->submitSucceeded())
 
 if (Request::sendId() > 0) {
 	$DeleteText = '<strong>Schuh wieder l&ouml;schen &raquo;</strong>';
-	$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$Shoe->id();
+	$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete=true&id='.$Shoe->id();
 	$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
 	if ($Shoe->getKm() != $Shoe->getAdditionalKm())

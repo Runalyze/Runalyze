@@ -16,49 +16,6 @@ class Running {
 	}
 
 	/**
-	 * Get the speed depending on the sport as pace or km/h
-	 * @param float $km       Distance [km]
-	 * @param int $time       Time [s]
-	 * @param int $sport_id   ID of sport for choosing pace/kmh
-	 * @return string
-	 */
-	public static function Speed($km, $time, $sport_id = 0) {
-		if ($km == 0 || $time == 0)
-			return '';
-
-		$as_pace = self::Pace($km, $time).'/km';
-		$as_kmh = self::Kmh($km, $time).'&nbsp;km/h';
-
-		if (Sport::usesSpeedInKmh($sport_id))
-			return Ajax::tooltip($as_kmh, $as_pace);
-			
-		return Ajax::tooltip($as_pace, $as_kmh);
-	}
-
-	/**
-	 * Get the speed in min/km without unit
-	 * @param float $km   Distance [km]
-	 * @param int $time   Time [s]
-	 * @return string
-	 */
-	public static function Pace($km, $time) {
-		if ($km == 0)
-			return '-:--';
-
-		return Time::toString(round($time/$km));
-	}
-
-	/**
-	 * Get the speed in km/h without unit
-	 * @param float $km   Distance [km]
-	 * @param int $time   Time [s]
-	 * @return string
-	 */
-	public static function Kmh($km, $time) {
-		return number_format($km*3600/$time, 1, ',', '.');
-	}
-
-	/**
 	 * Display a distance as km or m
 	 * @param float $km       Distance [km]
 	 * @param int $decimals   Decimals after the point, default: 1

@@ -135,10 +135,11 @@ class Sport {
 
 	/**
 	 * Does this sport use km/h as unit for speed?
+	 * @todo REMOVE this function
 	 * @return bool
 	 */
 	public function usesKmh() {
-		return ($this->data['kmh'] == 1);
+		return ($this->data['speed'] == SportSpeed::$KM_PER_H);
 	}
 
 	/**
@@ -227,17 +228,21 @@ class Sport {
 	 * @return array or $string
 	 */
 	static public function getSportsCount($id = false) {
-		if($id == false) {
-		$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" GROUP BY sportid');
+		if ($id === false) {
+			$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" GROUP BY sportid');
+
+			foreach($CountSport as $CS)
+				$SportCount[$CS['sportid']] = $CS['scount'];
+
+			return $SportCount;
+		}
+
+		$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" AND sportid="'.$id.'"');
+
 		foreach($CountSport as $CS)
 			$SportCount[$CS['sportid']] = $CS['scount'];
+
 		return $SportCount;
-		} else {
-				$CountSport = Mysql::getInstance()->untouchedFetchArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid`="'.SessionAccountHandler::getId().'" AND sportid="'.$id.'"');
-				foreach($CountSport as $CS)
-					$SportCount[$CS['sportid']] = $CS['scount'];
-				return $SportCount;
-		}
 	}
 	
 	/**
@@ -274,7 +279,7 @@ class Sport {
 	 */
 	static public function getDefaultArray() {
 		return array('name' => '?', 'img' => '', 'online' => 0, 'short' => 0, 'kcal' => 0,
-			'HFavg' => 0, 'RPE' => 0, 'distances' => 0, 'kmh' => 0, 'types' => 0, 'pulse' => 0,
+			'HFavg' => 0, 'RPE' => 0, 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0,
 			'outside' => 0);
 	}
 
@@ -287,8 +292,71 @@ class Sport {
 		$sports = self::getSports();
 
 		if (isset($sports[$id]))
-			return ($sports[$id]['kmh'] == 1);
+			return ($sports[$id]['speed'] == SportSpeed::$KM_PER_H);
 
 		return false;
-	} 
+	}
+
+	/**
+	 * Get speed unit for given sportid
+	 * @param int $ID
+	 * @return string
+	 */
+	static public function getSpeedUnitFor($ID) {
+		$Sports = self::getSports();
+
+		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : SportSpeed::$DEFAULT;
+	}
+
+	/**
+	 * Get speed for a given sportid
+	 * @param float $Distance
+	 * @param int $Time
+	 * @param int $ID
+	 * @param boolean $withAppendix [optional]
+	 * @param boolean $withTooltip [optional]
+	 * @return string
+	 */
+	static public function getSpeed($Distance, $Time, $ID, $withAppendix = false, $withTooltip = false) {
+		$Unit   = self::getSpeedUnitFor($ID);
+		$Speed  = ($withAppendix) ? SportSpeed::getSpeedWithAppendix($Distance, $Time, $Unit) : SportSpeed::getSpeed($Distance, $Time, $Unit);
+
+		if ($withTooltip && $Unit != SportSpeed::$DEFAULT)
+			return Ajax::tooltip($Speed, SportSpeed::getSpeedWithAppendix($Distance, $Time, SportSpeed::$DEFAULT));
+
+		return $Speed;
+	}
+
+	/**
+	 * Get speed for a given sportid with appendix
+	 * @param float $Distance
+	 * @param int $Time
+	 * @param int $ID
+	 * @return string
+	 */
+	static public function getSpeedWithAppendix($Distance, $Time, $ID) {
+		return self::getSpeed($Distance, $Time, $ID, true);
+	}
+
+	/**
+	 * Get speed for a given sportid with tooltip for default unit
+	 * @param float $Distance
+	 * @param int $Time
+	 * @param int $ID
+	 * @return string
+	 */
+	static public function getSpeedWithTooltip($Distance, $Time, $ID) {
+		return self::getSpeed($Distance, $Time, $ID, false, true);
+	}
+
+	/**
+	 * Get speed for a given sportid with appendix and tooltip for default unit
+	 * @param float $Distance
+	 * @param int $Time
+	 * @param int $ID
+	 * @return string
+	 */
+	static public function getSpeedWithAppendixAndTooltip($Distance, $Time, $ID) {
+		return self::getSpeed($Distance, $Time, $ID, true, true);
+	}
 }

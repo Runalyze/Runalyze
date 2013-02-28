@@ -18,7 +18,7 @@ foreach ($Array as $String) {
 }
 
 foreach ($IDs as $ID) {
-	$found = Mysql::getInstance()->num('SELECT 1 FROM '.PREFIX.'training WHERE activity_id="'.$ID.'" LIMIT 1') > 0;
+	$found = in_array($ID, unserialize(CONF_GARMIN_IGNORE_IDS)) || Mysql::getInstance()->num('SELECT 1 FROM '.PREFIX.'training WHERE activity_id="'.$ID.'" LIMIT 1') > 0;
 	$Matches[$ID] = array('match' => $found);
 }
 

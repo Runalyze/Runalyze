@@ -5,7 +5,7 @@ $INFOS_FULL  = array();
 
 if ($this->hasDistance()) {
 	$INFOS_LEFT[] = array('Distanz', $this->getDistanceStringWithFullDecimals());
-	$INFOS_LEFT[] = array('Tempo',   $this->getPace().'/km');
+	$INFOS_LEFT[] = array('Tempo',   $this->getSpeedString());
 }
 
 if ($this->hasPulse()) {

@@ -149,7 +149,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
 CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `brand` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `since` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '01.01.2000',
   `km` decimal(6,2) NOT NULL DEFAULT '0.00',
   `time` int(11) NOT NULL DEFAULT '0',
@@ -176,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `HFavg` smallint(3) NOT NULL DEFAULT '120',
   `RPE` tinyint(2) NOT NULL DEFAULT '2',
   `distances` tinyint(1) NOT NULL DEFAULT '1',
-  `kmh` tinyint(1) NOT NULL DEFAULT '0',
+  `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `types` tinyint(1) NOT NULL DEFAULT '0',
   `pulse` tinyint(1) NOT NULL DEFAULT '0',
   `outside` tinyint(1) NOT NULL DEFAULT '0',

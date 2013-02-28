@@ -257,6 +257,7 @@ $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_DISTANCE', array('d
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_SPLITS', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_WEATHER', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_OTHER', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_NOTES', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_PUBLIC', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_ELEVATION', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GPS', array('default' => false)));
@@ -490,6 +491,7 @@ $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(
 	'tooltip'		=> 'Notwendig f&uuml;r den Garmin-Communicator<br />f&uuml;r '.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
 	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
+$TrainingForm->addConfigValue(new ConfigValueARRAY('GARMIN_IGNORE_IDS', array('default' => array())));
 $TrainingForm->addToCategoryList();
 
 

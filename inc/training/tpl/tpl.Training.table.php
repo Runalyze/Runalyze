@@ -7,7 +7,7 @@ if ($this->hasDistance())
 	$Lines[] = array('Zeit', $this->getTimeString());
 
 if ($this->hasDistance())
-	$Lines[] = array('Tempo', $this->getSpeedInMainUnit().' <small>('.$this->getSpeedInAlternativeUnit().')</small>');
+	$Lines[] = array('Tempo', $this->getSpeedString());
 
 if ($this->hasPulse()) {
 	$Lines[] = array('&oslash;&nbsp;Puls', Running::PulseStringInBpm($this->get('pulse_avg')).' <small>('.Running::PulseStringInPercent($this->get('pulse_avg')).')</small>');

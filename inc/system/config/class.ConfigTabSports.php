@@ -39,7 +39,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('&Oslash; HF', 'Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)').'</th>
 						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
 						<th>'.Ajax::tooltip('km', 'Es wird eine Distanz zur&uuml;ckgelegt').'</th>
-						<th>'.Ajax::tooltip('km/h', 'Tempoanzeige in km/h statt min/km').'</th>
+						<th>'.Ajax::tooltip('Einheit', 'Einheit f&uuml;r die Geschwindigkeit').'</th>
 						<th>'.Ajax::tooltip('Typen', 'Es werden Trainingstypen wie Intervalltraining verwendet').'</th>
 						<th>'.Ajax::tooltip('Puls', 'Der Puls wird dabei aufgezeichnet').'</th>
 						<th>'.Ajax::tooltip('Drau&szlig;en', 'Der Sport wird an der freien Luft betrieben (Strecke/Wetter)').'</th>
@@ -49,7 +49,7 @@ class ConfigTabSports extends ConfigTab {
 				<tbody>';
 
 		$Sports   = Sport::getSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'kmh' => 0, 'types' => 0, 'pulse' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
 		$SportCount = Sport::getSportsCount();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
@@ -82,7 +82,7 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'" /></td>
 						<td><input type="text" size="1" name="sport[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
 						<td><input type="checkbox" name="sport[distances]['.$id.']" '.($Data['distances'] == 1 ? 'checked="checked" ' : '').'/></td>
-						<td><input type="checkbox" name="sport[kmh]['.$id.']" '.($Data['kmh'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td>'.SportSpeed::getSelectBox($Data['speed'], 'sport[speed]['.$id.']').'</td>
 						<td><input type="checkbox" name="sport[types]['.$id.']" '.($Data['types'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[pulse]['.$id.']" '.($Data['pulse'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']" '.($Data['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
@@ -115,7 +115,7 @@ class ConfigTabSports extends ConfigTab {
 				'HFavg',
 				'RPE',
 				'distances',
-				'kmh',
+				'speed',
 				'types',
 				'pulse',
 				'outside',
@@ -128,7 +128,7 @@ class ConfigTabSports extends ConfigTab {
 				$_POST['sport']['HFavg'][$id],
 				$_POST['sport']['RPE'][$id],
 				isset($_POST['sport']['distances'][$id]),
-				isset($_POST['sport']['kmh'][$id]),
+				$_POST['sport']['speed'][$id],
 				isset($_POST['sport']['types'][$id]),
 				isset($_POST['sport']['pulse'][$id]),
 				isset($_POST['sport']['outside'][$id]),

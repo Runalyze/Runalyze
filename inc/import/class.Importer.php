@@ -524,8 +524,8 @@ abstract class Importer {
 	 */
 	private function makeTrainingDataReadable() {
 		if ($this->get('s') > 0) {
-			$this->TrainingData['pace'] = Running::Pace($this->get('distance'), $this->get('s'));
-			$this->TrainingData['kmh']  = Running::Kmh($this->get('distance'), $this->get('s'));
+			$this->TrainingData['pace'] = SportSpeed::minPerKm($this->get('distance'), $this->get('s'));
+			$this->TrainingData['kmh']  = SportSpeed::kmPerHour($this->get('distance'), $this->get('s'));
 			$this->TrainingData['s']    = Time::toString($this->get('s'), false, true);
 		}
 	}

@@ -8,18 +8,18 @@
 <?php
 if ($hideGarmin):
 ?>
-		<div id="iframe-spacer" style="width:500px;height:210px;">
+		<div id="iframe-spacer" style="width:500px;height:310px;">
 			<em>Der Communicator wird gleich geladen.</em>
 		</div>
 <?php
 	echo Ajax::wrapJSasFunction('$("#iframe-spacer").hover(function(){
-			$(\'<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" name="GCapi" width="500px" height="210px"></iframe>\').insertAfter($("#iframe-spacer"));
+			$(\'<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" name="GCapi" width="500px" height="310px"></iframe>\').insertAfter($("#iframe-spacer"));
 			$("#iframe-spacer").remove();
 		});');
 
 else:
 ?>
-		<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" name="GCapi" width="500px" height="210px"></iframe>
+		<iframe src="inc/tpl/tpl.garminCommunicator.php" id="GCapi" name="GCapi" width="500px" height="310px"></iframe>
 <?php
 endif;
 ?>

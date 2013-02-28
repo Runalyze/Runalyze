@@ -165,7 +165,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 
 		$oldTimeString  = Time::toString($PersonalBestInSeconds);
 		$newTimeString  = Time::toString($PrognosisInSeconds);
-		$paceString     = Running::Pace($distance, $PrognosisInSeconds);
+		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
 		$distanceString = Running::Km($distance, 0, ($distance <= 3));
 
 		echo '
