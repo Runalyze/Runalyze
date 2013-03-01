@@ -491,7 +491,7 @@ $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(
 	'tooltip'		=> 'Notwendig f&uuml;r den Garmin-Communicator<br />f&uuml;r '.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
 	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
-$TrainingForm->addConfigValue(new ConfigValueARRAY('GARMIN_IGNORE_IDS', array('default' => array())));
+$TrainingForm->addConfigValue(new ConfigValueArray('GARMIN_IGNORE_IDS', array('default' => array())));
 $TrainingForm->addToCategoryList();
 
 
