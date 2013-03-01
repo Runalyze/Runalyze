@@ -754,12 +754,14 @@ class Training {
 			if (is_array($CorrectedArray)) {
 				Mysql::getInstance()->update(PREFIX.'training', $this->id,
 					array(
+						'elevation',
 						'arr_alt',
 						'elevation_corrected',
 						'gps_cache_object'
 					),
 					array(
-						implode(self::$ARR_SEP, $this->GpsData()->getElevationCorrection()),
+						$this->GpsData()->calculateElevation(),
+						implode(self::$ARR_SEP, $CorrectedArray),
 						1,
 						''
 					)
