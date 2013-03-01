@@ -1,6 +1,6 @@
 <?php
 /**
- * File displaying the formular for adding a new training, called via TrainingCreator::displayWindow()
+ * File displaying the formular for adding a new training, called via TrainingCreatorWindow::display()
  */
 $hideUpload   = ((CONF_TRAINING_CREATE_MODE != 'upload' && CONF_TRAINING_CREATE_MODE != 'tcx') || !$showUploader);
 $hideGarmin   = (CONF_TRAINING_CREATE_MODE != 'garmin' || !$showUploader);

@@ -5,62 +5,42 @@
  */
 class TrainingCreator {
 	/**
-	 * URL for creator
+	 * Internal array with all columns for insert command
+	 * @var array
+	 */
+	private $columns = array();
+	
+	/**
+	* Internal array with all values for insert command
+	* @var array
+	*/
+	private $values = array();
+
+	/**
+	 * Error string
 	 * @var string
 	 */
-	static public $URL = 'call/call.Training.create.php';
+	private $errorString = '';
 
 	/**
-	 * Constructor is private 
+	 * Timestamp of training
+	 * @var int
 	 */
-	private function __construct() {}
+	private $time = 0;
 
 	/**
-	 * Destructor is private 
+	 * ID of the new training, If a new training has been inserted
+	 * @var int
 	 */
-	private function __destruct() {}
+	public $insertedID = -1;
 
 	/**
-	 * Get link for create window
+	 * Constructor
 	 */
-	static public function getWindowLink() {
-		return Ajax::window('<a href="'.self::$URL.'">'.Ajax::tooltip(Icon::$ADD, 'Training hinzuf&uuml;gen').'</a>', 'small');
-	}
+	public function __construct() {}
 
 	/**
-	 * Get link for create window for a given date
-	 * @param mixed $date string [d.m.Y] or int [timestamp]
-	 * @return string
+	 * Destructor
 	 */
-	static public function getWindowLinkForDate($date) {
-		if (is_int($date))
-			$date = date('d.m.Y', $date);
-
-		return Ajax::window('<a href="'.self::$URL.'?date='.$date.'">'.Icon::$ADD_SMALL.'</a>', 'small');
-	}
-
-	/**
-	 * Display the window/formular for creation
-	 */
-	static public function displayWindow() {
-		if (isset($_POST['forceAsFileName']))
-			$_GET['file'] = $_POST['forceAsFileName'];
-
-		$fileName     = isset($_GET['file']) ? $_GET['file'] : '';
-		$showUploader = empty($_POST) && !isset($_GET['file']);
-		$Importer     = Importer::getInstance($fileName);
-
-		if (!isset($_POST['datum']) && isset($_GET['date'])) {
-			$_POST['datum'] = $_GET['date'];
-			$showUploader = false;
-		}
-
-		if ($Importer->tryToUploadFileHasSuccess())
-			return;
-
-		if ($Importer->tryToCreateTrainingHasSuccess())
-			return;
-
-		include 'tpl/tpl.Training.create.php';
-	}
+	public function __destruct() {}
 }

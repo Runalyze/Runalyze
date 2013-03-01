@@ -240,22 +240,25 @@ class Weather {
 	 * Load current conditions from API and set as internal data
 	 */
 	private function loadForecast() {
-		if (CONF_PLZ > 0) {
+		if (strlen(CONF_PLZ) > 0) {
 			$JsonAp = Filesystem::getExternUrlContent('http://api.openweathermap.org/data/2.1/find/name?q='.CONF_PLZ.'&units=metric');
+
 			if ($JsonAp) {
 				$WeatherInfo = json_decode($JsonAp, true);
 				$Temperature = $WeatherInfo['list'][0]['main']['temp'];
-				$WeatherID = $WeatherInfo['list'][0]['weather'][0]['id'];
+				$WeatherID   = $WeatherInfo['list'][0]['weather'][0]['id'];
+
 				if (!is_null($Temperature) && !is_null($WeatherID)) {
-					$this->temperature = $WeatherInfo['list'][0]['main']['temp'];
+					$this->temperature = round($WeatherInfo['list'][0]['main']['temp']);
 					$transid = self::translateOpenWeatherConditionToInternalName($WeatherID);
+
 					foreach (self::$fullArray as $id => $data)
-					if ($data['name'] == $transid) 
-						$this->id = $id;
-						return;
-					} else {
-						Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
-					}
+						if ($data['name'] == $transid) 
+							$this->id = $id;
+							return;
+						} else {
+							Error::getInstance()->addNotice('Die Wetterdaten konnten nicht geladen werden.');
+				}
 			}
 		}	
 	}

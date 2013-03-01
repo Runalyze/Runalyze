@@ -237,7 +237,7 @@ class Dataset {
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
 		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS && !FrontendShared::$IS_SHOWN)
-			$addLink = TrainingCreator::getWindowLinkForDate($timestamp);
+			$addLink = TrainingCreatorWindow::getLinkForDate($timestamp);
 
 		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';

@@ -20,6 +20,7 @@ class Autoloader {
 		spl_autoload_register( array($this, 'autoloadSystemConfig') );
 		spl_autoload_register( array($this, 'autoloadTraining') );
 		spl_autoload_register( array($this, 'autoloadTrainingFormular') );
+		spl_autoload_register( array($this, 'autoloadTrainingPlot') );
 	}
 
 	/**
@@ -125,5 +126,13 @@ class Autoloader {
 	 */
 	private function autoloadTrainingFormular($className) {
 		$this->tryToLoad('training//formular/class.'.$className.'.php');
+	}
+
+	/**
+	 * Training-Autloader: check in /training/plot/-folder
+	 * @return boolean 
+	 */
+	private function autoloadTrainingPlot($className) {
+		$this->tryToLoad('training//plot/class.'.$className.'.php');
 	}
 }

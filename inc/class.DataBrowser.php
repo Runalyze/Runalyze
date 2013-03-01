@@ -314,7 +314,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getAddLink() {
-		return TrainingCreator::getWindowLink();
+		return TrainingCreatorWindow::getLink();
 	}
 
 	/**

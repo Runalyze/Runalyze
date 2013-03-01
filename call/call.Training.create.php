@@ -9,5 +9,5 @@ $Frontend = new Frontend(isset($_GET['json']));
 
 System::setMaximalLimits();
 
-TrainingCreator::displayWindow();
+TrainingCreatorWindow::display();
 ?>

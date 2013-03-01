@@ -10,8 +10,12 @@ $Frontend = new Frontend();
 $Training = new Training($_GET['id']);
 $Training->elevationCorrection();
 
-if (Error::getInstance()->hasErrors())
+if (Error::getInstance()->hasErrors()) {
 	echo 'Es ist ein Problem aufgetreten.';
-else
+} else {
 	echo 'Die H&ouml;hendaten wurden korrigiert.';
+
+	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
+	echo Ajax::getReloadCommand();
+}
 ?>
