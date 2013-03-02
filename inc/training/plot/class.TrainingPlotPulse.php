@@ -41,7 +41,15 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(Training &$Training) {
-		return $Training->GpsData()->getPlotDataForHeartrate(self::inPercent());
+		switch (CONF_PULS_MODE) {
+			case 'hfmax':
+				return $Training->GpsData()->getPlotDataForHeartrateInPercent();
+			case 'hfres':
+				return $Training->GpsData()->getPlotDataForHeartrateInPercentReserve();
+			case 'bpm':
+			default:
+				return $Training->GpsData()->getPlotDataForHeartrate();
+		}
 	}
 
 	/**
@@ -58,6 +66,22 @@ class TrainingPlotPulse extends TrainingPlot {
 	 */
 	static public function HFmax() {
 		return (self::inPercent()) ? 100 : HF_MAX;
+	}
+
+	/**
+	 * Get unit for current pulse mode
+	 * @return string
+	 */
+	static public function getUnitAsString() {
+		switch (CONF_PULS_MODE) {
+			case 'hfmax':
+				return '&#37; HFmax';
+			case 'hfres':
+				return '&#37; HFreserve';
+			case 'bpm':
+			default:
+				return 'bpm';
+		}
 	}
 
 	/**
@@ -82,7 +106,7 @@ class TrainingPlotPulse extends TrainingPlot {
 
 		if ($YAxis == 1) {
 			$Plot->addThreshold('y'.$YAxis, $average, 'rgba(0,0,0,0.5)');
-			$Plot->addAnnotation(0, $average, '&oslash; '.$average.' '.(self::inPercent() ? '&#37;' : 'bpm'));
+			$Plot->addAnnotation(0, $average, '&oslash; '.$average.' '.self::getUnitAsString());
 		}
 
 		$Plot->addMarkingArea('y'.$YAxis, 10*ceil(self::HFmax()/10)*1,   10*ceil(self::HFmax()/10)*0.9, 'rgba(255,100,100,0.3)');
