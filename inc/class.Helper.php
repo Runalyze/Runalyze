@@ -48,6 +48,16 @@ class Helper {
 	}
 
 	/**
+	 * Round to the next factor of $roundForInt
+	 * @param double $numberToRound
+	 * @param int $roundForInt
+	 * @return int
+	 */
+	public static function roundFor($numberToRound, $roundForInt) {
+		return $roundForInt * round($numberToRound / $roundForInt);
+	}
+
+	/**
 	 * Get a leading 0 if $int is lower than 10
 	 * @param int $int
 	 */
@@ -100,7 +110,12 @@ class Helper {
 	public static function getStartTime() {
 		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`');
 
-		if ($data === false || $data['time'] == 0)
+		if (isset($data['time']) && $data['time'] == 0) {
+			$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0');
+			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970');
+		}
+
+		if ($data === false)
 			return time();
 
 		return $data['time'];
