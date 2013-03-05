@@ -58,12 +58,40 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @covers FormularValueParser::validatePost
 	 */
+	public function testValidatePost_PARSER_DAYTIME() {
+		$Parser = FormularValueParser::$PARSER_DAYTIME;
+		$_POST  = array(
+			'empty'	=> '',
+			'text'	=> 'test',
+			'int'	=> '27',
+			'tooBig'=> '25:17',
+			'time'	=> '13:41',
+			'time2'	=> '02:17'
+		);
+
+		$this->assertTrue( $this->object->validatePost('empty', $Parser) );
+		$this->assertTrue( true !== $this->object->validatePost('text', $Parser) );
+		$this->assertTrue( true !== $this->object->validatePost('int', $Parser) );
+		$this->assertTrue( true !== $this->object->validatePost('tooBig', $Parser) );
+		$this->assertTrue( $this->object->validatePost('time', $Parser) );
+		$this->assertTrue( $this->object->validatePost('time2', $Parser) );
+
+		$this->assertEquals( $_POST['empty'], 0 );
+		$this->assertEquals( $_POST['time'], 13*60*60 + 41*60 );
+		$this->assertEquals( $_POST['time2'], 2*60*60 + 17*60 );
+	}
+
+	/**
+	 * @covers FormularValueParser::validatePost
+	 */
 	public function testValidatePost_PARSER_STRING() {
 		$Parser  = FormularValueParser::$PARSER_STRING;
 		$_POST   = array(
+			'empty'		=> '',
 			'string'	=> 'Test'
 		);
 
+		$this->assertTrue( true !== $this->object->validatePost('empty', $Parser, array('notempty' => true)) );
 		$this->assertTrue( $this->object->validatePost('string', $Parser) );
 	}
 
@@ -122,6 +150,10 @@ class FormularValueParserTest extends PHPUnit_Framework_TestCase {
 		$date = time();
 		$this->object->parse($date, FormularValueParser::$PARSER_DATE);
 		$this->assertEquals($date, date('d.m.Y'));
+
+		$daytime = time();
+		$this->object->parse($daytime, FormularValueParser::$PARSER_DAYTIME);
+		$this->assertEquals($daytime, date('H:i'));
 
 		$int = 27;
 		$this->object->parse($int, FormularValueParser::$PARSER_INT);

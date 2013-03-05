@@ -17,6 +17,12 @@ abstract class FormularField extends HtmlTag {
 	static private $FAILED_KEYS = array();
 
 	/**
+	 * Array with all validation failures
+	 * @var array
+	 */
+	static private $VALIDATION_FAILURES = array();
+
+	/**
 	 * Name
 	 * @var string 
 	 */
@@ -78,6 +84,22 @@ abstract class FormularField extends HtmlTag {
 	 */
 	static public function hasKeyFailed($key) {
 		return in_array($key, self::$FAILED_KEYS);
+	}
+
+	/**
+	 * Add validation failure
+	 * @param string $failure
+	 */
+	static public function addValidationFailure($failure) {
+		self::$VALIDATION_FAILURES[] = $failure;
+	}
+
+	/**
+	 * Get all validation failures
+	 * @return array
+	 */
+	static public function getValidationFailures() {
+		return self::$VALIDATION_FAILURES;
 	}
 
 	/**
@@ -151,7 +173,7 @@ abstract class FormularField extends HtmlTag {
 	 * @param enum $parser
 	 * @param array $options 
 	 */
-	public function setParser($parser, $options) {
+	public function setParser($parser, $options = array()) {
 		$this->parser = $parser;
 		$this->parserOptions = $options;
 	}
@@ -174,8 +196,14 @@ abstract class FormularField extends HtmlTag {
 	/**
 	 * Validate value
 	 */
-	final protected function validate() {
-		// TODO
+	public function validate() {
+		$validation = FormularValueParser::validatePost($this->name, $this->parser, $this->parserOptions);
+
+		if ($validation !== true)
+			self::setKeyAsFailed($this->name);
+
+		if (is_string($validation))
+			self::addValidationFailure($validation);
 	}
 
 	/**
@@ -192,10 +220,19 @@ abstract class FormularField extends HtmlTag {
 	final public function getCode() {
 		$this->prepare();
 
-		if (!empty($this->layout))
-			return '<div class="'.$this->layout.' '.implode($this->layoutClasses, ' ').'">'.$this->getFieldCode().'</div>';
+		return $this->getSurroundedByLayoutDiv($this->getFieldCode());
+	}
 
-		return $this->getFieldCode();
+	/**
+	 * Surround given code by div container for layout
+	 * @param string $Content
+	 * @return string
+	 */
+	final protected function getSurroundedByLayoutDiv($Content) {
+		if (!empty($this->layout))
+			return '<div class="'.$this->layout.' '.implode($this->layoutClasses, ' ').'">'.$Content.'</div>';
+
+		return $Content;
 	}
 
 	/**

@@ -7,13 +7,12 @@ $Year = (int)$_GET['y'];
 
 $Plot = new Plot("weekKM".$Year, 800, 500);
 
-$titleCenter           = 'Wochenkilometer '.$Year;
 $Weeks                 = array();
 $Kilometers            = array();
 $KilometersCompetition = array();
-$possibleKM            = 0;
 $firstWeek             = 1;
 $lastWeek              = date("W", mktime(0,0,0,12,28,$Year)); // http://de.php.net/manual/en/function.date.php#49457
+$possibleKM            = Running::possibleKmInOneWeek();
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {	
 	for ($w = $firstWeek; $w <= $lastWeek; $w++) {
@@ -30,15 +29,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			else
 				$Kilometers[$dat['w']-$firstWeek] = $dat['km'];
 		}
-	}
-
-	$CTL = Trimp::CTL();
-	if (CONF_RECHENSPIELE && $CTL > 0) {
-		$TrimpPerWeek = Trimp::minutesForTrimp(7 * $CTL);
-		$AvgMonthPace = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
-
-		if ($AvgMonthPace['avg'] > 0)
-			$possibleKM    = 5 * round($TrimpPerWeek / $AvgMonthPace['avg'] / 5);
 	}
 } else {
 	$Plot->raiseError('F&uuml;r dieses Jahr liegen keine Daten vor.');

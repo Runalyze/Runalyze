@@ -27,6 +27,7 @@ $FIELDS['name'] = array(
 	'formular'	=> array(
 		'label'		=> 'Name',
 		'required'	=> true,
+		'notempty'	=> true,
 		'size'		=> FormularInput::$SIZE_MIDDLE
 	)
 );
@@ -69,6 +70,7 @@ $FIELDS['inuse'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'In Gebrauch',
+		'class'		=> 'FormularCheckbox',
 		'parser'	=> FormularValueParser::$PARSER_BOOL
 	)
 );

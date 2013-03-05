@@ -10,6 +10,18 @@ class FormularValueParser {
 	static public $PARSER_DATE = 'date';
 
 	/**
+	 * Parser: timestamp <=> daytime-string
+	 * @var string 
+	 */
+	static public $PARSER_DAYTIME = 'daytime';
+
+	/**
+	 * Parser: time in seconds <=> time-string
+	 * @var string
+	 */
+	static public $PARSER_TIME = 'time';
+
+	/**
 	 * Parser: encoded string <=> string
 	 * @var string 
 	 */
@@ -47,8 +59,12 @@ class FormularValueParser {
 		switch ($parser) {
 			case self::$PARSER_DATE:
 				return self::validateDate($key);
+			case self::$PARSER_DAYTIME:
+				return self::validateDaytime($key);
+			case self::$PARSER_TIME:
+				return self::validateTime($key, $parserOptions);
 			case self::$PARSER_STRING:
-				return self::validateString($key);
+				return self::validateString($key, $parserOptions);
 			case self::$PARSER_INT:
 				return self::validateInt($key, $parserOptions);
 			case self::$PARSER_DECIMAL:
@@ -74,16 +90,24 @@ class FormularValueParser {
 			case self::$PARSER_DATE:
 				self::parseDate($value);
 				break;
+			case self::$PARSER_DAYTIME:
+				self::parseDaytime($value);
+				break;
+			case self::$PARSER_TIME:
+				self::parseTime($value);
+				break;
 		}
 	}
 
 	/**
 	 * Validator: string => encoded string
 	 * @param string $key
+	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateString($key) {
-		// Nothing to do because of correct encoding
+	static protected function validateString($key, $options = array()) {
+		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
+			return 'Das Feld darf nicht leer sein.';
 
 		return true;
 	}
@@ -169,7 +193,7 @@ class FormularValueParser {
 		} elseif ($numParts == 2) {
 			$_POST[$key] = mktime(0, 0, 0, $dateParts[1], $dateParts[0], date('Y'));
 		} else {
-			$_POST[$key] = time();
+			//$_POST[$key] = time();
 			return 'Das Datum konnte nicht gelesen werden.';
 		}
 
@@ -183,6 +207,60 @@ class FormularValueParser {
 	static protected function parseDate(&$value) {
 		if (is_numeric($value))
 			$value = date('d.m.Y', $value);
+	}
+
+	/**
+	 * Validator: daytime-string => timestamp
+	 * @param string $key
+	 * @return boolean 
+	 */
+	static protected function validateDaytime($key) {
+		$timeParts = self::removeEmptyValues(explode(':', $_POST[$key]));
+		$numParts  = count($timeParts);
+
+		if ($numParts == 2) {
+			$_POST[$key] = 60*60*$timeParts[0] + 60*$timeParts[1];
+		} else {
+			$_POST[$key] = 0;
+		}
+
+		if ($numParts == 1 || $numParts > 2 || $_POST[$key] > DAY_IN_S)
+			return 'Die Uhrzeit konnte nicht gelesen werden.';
+
+		return true;
+	}
+
+	/**
+	 * Parse: timestamp => date-string
+	 * @param type $value 
+	 */
+	static protected function parseDaytime(&$value) {
+		if (is_numeric($value))
+			$value = date('H:i', $value);
+	}
+
+	/**
+	 * Validator: time-string => time in seconds
+	 * @param string $key
+	 * @return boolean 
+	 */
+	static protected function validateTime($key) {
+		$ms = explode(".", Helper::CommaToPoint($_POST[$key]));
+
+		$_POST[$key] = Time::toSeconds($ms[0]);
+
+		if (isset($ms[1]))
+			$_POST[$key] += $ms[1]/100;
+
+		return true;
+	}
+
+	/**
+	 * Parse: time in seconds => time-string
+	 * @param type $value 
+	 */
+	static protected function parseTime(&$value) {
+		$value = Time::toString($value, false, true);
 	}
 
 	/**

@@ -274,6 +274,7 @@ fieldset input.unitKcal { background-image: url('img/units/kcal.png'); }
 fieldset input.unitKmh { background-image: url('img/units/kmh.png'); }
 fieldset input.unitPace { background-image: url('img/units/pace.png'); }
 
+:invalid,
 fieldset .validationFailed {
 	background-color: #FDEBD7;
 	border-color: #CC0000; }

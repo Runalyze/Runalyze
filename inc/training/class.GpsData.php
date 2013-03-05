@@ -892,7 +892,8 @@ class GpsData {
 			$this->correctInvalidElevationValuesAtCurrentPoint();
 
 		if ($this->arrayForElevation[0] == 0) {
-			$min = reset(array_filter($this->arrayForElevation, 'GpsData_Filter_Zero'));
+			array_filter($this->arrayForElevation, 'GpsData_Filter_Zero');
+			$min = reset($this->arrayForElevation);
 			array_walk($this->arrayForElevation, 'GpsData_Walk_Replace_Zero', $min);
 		}
 	}

@@ -18,6 +18,7 @@
 			}
 			?>
 
+			<?php if (!USER_CANT_LOGIN): ?>
 			<fieldset>
 				<legend>Login</legend>
 				<div class="w100">
@@ -39,6 +40,11 @@
 			<div class="c">
 				<input type="submit" value="Einloggen" name="submit" />
 			</div>
+			<?php else: ?>
+			<fieldset>
+				<legend>Login</legend>
+				<p class="error">Runalyze befindet sich derzeit im Wartungsmodus. Ein Login ist nicht m&ouml;glich.</p>
+			<?php endif; ?>
 		</form>
 	</div>
 
@@ -47,42 +53,46 @@
 			<fieldset>
 				<legend onclick="show('log');">Registrieren</legend>
 			<?php
-			if (isset($_POST['new_username'])) {
-				$Errors = AccountHandler::tryToRegisterNewUser();
+			if (!USER_CAN_REGISTER) {
+				echo HTML::error('Registrierungen sind derzeit deaktiviert.');
+			} else {
+				if (isset($_POST['new_username'])) {
+					$Errors = AccountHandler::tryToRegisterNewUser();
 
-				if (is_array($Errors))
-					foreach ($Errors as $Error)
-						if (is_array($Error))
-							foreach (array_keys($Error) as $FieldName)
-								FormularField::setKeyAsFailed($FieldName);
+					if (is_array($Errors))
+						foreach ($Errors as $Error)
+							if (is_array($Error))
+								foreach (array_keys($Error) as $FieldName)
+									FormularField::setKeyAsFailed($FieldName);
+				}
+
+				FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);
+
+				$Field = new FormularInput('new_username', 'Benutzername');
+				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Field->setUnit( FormularUnit::$USER );
+				$Field->display();
+
+				$Field = new FormularInput('name', 'Name');
+				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Field->setUnit( FormularUnit::$USER );
+				$Field->display();
+
+				$Field = new FormularInput('email', 'E-Mail');
+				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Field->setUnit( FormularUnit::$MAIL );
+				$Field->display();
+
+				$Field = new FormularInputPassword('password', 'Passwort');
+				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Field->setUnit( FormularUnit::$PASS );
+				$Field->display();
+
+				$Field = new FormularInputPassword('password_again', 'Passwort erneut');
+				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
+				$Field->setUnit( FormularUnit::$PASS );
+				$Field->display();
 			}
-
-			FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);
-
-			$Field = new FormularInput('new_username', 'Benutzername');
-			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-			$Field->setUnit( FormularUnit::$USER );
-			$Field->display();
-
-			$Field = new FormularInput('name', 'Name');
-			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-			$Field->setUnit( FormularUnit::$USER );
-			$Field->display();
-
-			$Field = new FormularInput('email', 'E-Mail');
-			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-			$Field->setUnit( FormularUnit::$MAIL );
-			$Field->display();
-			
-			$Field = new FormularInputPassword('password', 'Passwort');
-			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-			$Field->setUnit( FormularUnit::$PASS );
-			$Field->display();
-
-			$Field = new FormularInputPassword('password_again', 'Passwort erneut');
-			$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-			$Field->setUnit( FormularUnit::$PASS );
-			$Field->display();
 			?>
 
 			<?php
@@ -101,9 +111,11 @@
 			?>
 			</fieldset>
 
+			<?php if (USER_CAN_REGISTER): ?>
 			<div class="c">
 				<input type="submit" value="Registrieren" name="submit" />
 			</div>
+			<?php endif; ?>
 		</form>
 	</div>
 

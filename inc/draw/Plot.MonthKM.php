@@ -11,7 +11,7 @@ $titleCenter           = 'Monatskilometer '.$Year;
 $Months                = array();
 $Kilometers            = array();
 $KilometersCompetition = array();
-$possibleKM            = 0;
+$possibleKM            = Running::possibleKmInOneMonth();
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	for ($m = 1; $m <= 12; $m++) {
@@ -26,15 +26,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$KilometersCompetition[$dat['m']-1] = $dat['km'];
 		else
 			$Kilometers[$dat['m']-1] = $dat['km'];
-	}
-
-	$CTL = Trimp::CTL();
-	if (CONF_RECHENSPIELE && $CTL > 0) {
-		$TrimpPerMonth = Trimp::minutesForTrimp(365 * $CTL / 12);
-		$AvgMonthPace  = Mysql::getInstance()->fetchSingle('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT);
-
-		if ($AvgMonthPace['avg'] > 0)
-			$possibleKM    = 10 * round($TrimpPerMonth / $AvgMonthPace['avg'] / 10);
 	}
 } else {
 	$Plot->raiseError('F&uuml;r dieses Jahr liegen keine Daten vor.');
