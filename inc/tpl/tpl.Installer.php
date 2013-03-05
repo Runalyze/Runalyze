@@ -287,8 +287,28 @@ else
 
 <?php endif; ?>
 
-	<p class="error" id="JSerror">
-		JavaScript ist deaktiviert. Ohne JavaScript wird Runalyze nicht funktionieren!
+	<noscript>
+		<p class="error" id="JSerror">
+			JavaScript ist deaktiviert. Ohne JavaScript wird Runalyze nicht funktionieren!
+		</p>
+	</noscript>
+
+<?php
+$URLs = array(
+	System::getFullDomain().'lib/min/?g=js',
+	System::getFullDomain().'lib/min/?g=css'
+);
+?>
+	<p class="error" id="JQueryError">
+		Die JavaScript-Dateien (und CSS-Dateien) wurden nicht erfolgreich eingebunden.<br />
+		Die Folgenden URLs m&uuml;ssen den entsprechenden Code liefern:<br />
+		<br />
+		<?php
+		foreach ($URLs as $URL)
+			echo '<em><a href="'.$URL.'">'.$URL.'</a></em><br />';
+		?>
+		<br />
+		Schaue am besten einmal in unsere <a href="http://runalyze.de/faq/">FAQ</a> und berichte uns ggf. von deinen Problemen.
 	</p>
 
-	<script type="text/javascript">$(document).ready(function(){ $("#JSerror").remove(); });</script>
+	<script type="text/javascript">$(document).ready(function(){ $("#JQueryError").remove(); });</script>

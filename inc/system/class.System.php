@@ -6,7 +6,7 @@ class System {
 	 */
 	static public function getCodeForAllJSFiles() {
 		return '<script type="text/javascript" src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="lib/min/g=js"></script>';
+	<script type="text/javascript" src="lib/min/?g=js"></script>';
 	}
 
 	/**
@@ -14,7 +14,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" type="text/css" href="lib/min/g=css" />';
+		return '<link rel="stylesheet" type="text/css" href="lib/min/?g=css" />';
 	}
 
 	/**

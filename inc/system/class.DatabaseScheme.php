@@ -143,10 +143,6 @@ class DatabaseScheme {
 	 * @return array 
 	 */
 	public function tryToInsertFromPost() {
-		foreach (array_keys($this->fields) as $key)
-			if (isset($_POST[$key]) || $this->fieldIsRequired($key))
-				$this->validatePostedValue($key);
-
 		if (!empty($this->validationFailedKeys) && empty($this->validationFailures)) {
 			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
 		} else {
@@ -180,10 +176,6 @@ class DatabaseScheme {
 	 * @return array 
 	 */
 	public function tryToUpdateFromPost() {
-		foreach (array_keys($this->fields) as $key)
-			if (isset($_POST[$key]) || $this->fieldIsRequired($key))
-				$this->validatePostedValue($key);
-
 		if (!empty($this->validationFailedKeys) && empty($this->validationFailures)) {
 			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
 		} else {
@@ -217,13 +209,13 @@ class DatabaseScheme {
 	 * @param string $fieldKey
 	 */
 	protected function validatePostedValue($fieldKey) {
-		$validation = FormularValueParser::validatePost($fieldKey, $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey));
-	
-		if ($validation !== true)
-			$this->validationFailedKeys[] = $fieldKey;
+		//$validation = FormularValueParser::validatePost($fieldKey, $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey));
 
-		if (is_string($validation))
-			$this->validationFailures[] = $validation;
+		//if ($validation !== true)
+		//	$this->validationFailedKeys[] = $fieldKey;
+
+		//if (is_string($validation))
+		//	$this->validationFailures[] = $validation;
 	}
 
 	/**
@@ -283,16 +275,10 @@ class DatabaseScheme {
 		$unit  = $this->fieldUnit($fieldKey);
 		$size  = $this->fieldSize($fieldKey);
 
-		if ($this->fieldParser($fieldKey) == FormularValueParser::$PARSER_BOOL)
-			$Field = new FormularCheckbox($fieldKey, $label);
-		else {
-			switch ($this->fieldType($fieldKey)) {
-				default:
-					$Field = new FormularInput($fieldKey, $label);
-					break;
-			}
-		}
+		$ClassName = $this->fieldClass($fieldKey);
+		$Field     = new $ClassName($fieldKey, $label);
 
+		// TODO: setParser in class (e.g. PARSER_BOOL for FormularCheckbox)
 		$Field->setParser( $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey) );
 
 		if (!empty($unit))
@@ -319,6 +305,8 @@ class DatabaseScheme {
 					case 'longtext':
 					case 'tinytext':
 						$options['formular']['parser'] = FormularValueParser::$PARSER_STRING;
+						if (isset($options['formular']['notempty']))
+							$options['formular']['parserOptions'] = array('notempty' => $options['formular']['notempty']);
 						break;
 					case 'int':
 					case 'smallint':
@@ -422,6 +410,19 @@ class DatabaseScheme {
 			return $this->fields[$fieldKey]['formular']['required'];
 
 		return false;
+	}
+
+	/**
+	 * Get parser for a given key
+	 * @param string $fieldKey
+	 * @return mixed
+	 */
+	public function fieldClass($fieldKey) {
+		if (isset($this->fields[$fieldKey]['formular']['class']))
+			if (class_exists($this->fields[$fieldKey]['formular']['class']))
+				return $this->fields[$fieldKey]['formular']['class'];
+
+		return 'FormularInput';
 	}
 
 	/**

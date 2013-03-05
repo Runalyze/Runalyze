@@ -211,7 +211,8 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
 $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 	'default'		=> '#FF5500',
 	'label'			=> 'Karte: Linienfarbe',
-	'tooltip'		=> 'als #RGB-Code'
+	'tooltip'		=> 'als #RGB-Code',
+	'type'			=> 'color'
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
 	'default'		=> 'G_HYBRID_MAP',
@@ -454,7 +455,7 @@ $TrainingForm->setKeys(array(
 	'COMPUTE_KCAL',
 	'TRAINING_ELEVATION_SERVER',
 	'TRAINING_DO_ELEVATION',
-	'GARMIN_API_KEY'
+	//'GARMIN_API_KEY'
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
 	'default'		=> 'google',
@@ -484,7 +485,7 @@ $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', arra
 	'label'			=> 'H&ouml;henkorrektur verwenden',
 	'tooltip'		=> 'Die H&ouml;hendaten k&ouml;nnen &uuml;ber externe APIs korrigiert werden. Das ist meist deutlich besser als GPS-Messungen'
 )));
-// TODO: Set as admin-config
+// TODO: remove in Runalyze v1.4
 $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(
 	'default'		=> '',
 	'label'			=> 'Garmin API-Key',

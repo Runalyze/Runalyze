@@ -39,6 +39,7 @@ class Frontend {
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
 		$this->defineConsts();
+		$this->checkConfigFile();
 
 		if (!$hideHeaderAndFooter)
 			$this->displayHeader();
@@ -86,6 +87,13 @@ class Frontend {
 	}
 
 	/**
+	 * Check and update if needed config file
+	 */
+	private function checkConfigFile() {
+		AdminView::checkAndUpdateConfigFile();
+	}
+
+	/**
 	 * Include class::Error and and initialise it
 	 */
 	protected function initErrorHandling() {
@@ -112,12 +120,11 @@ class Frontend {
 	}
 
 	/**
-	 * Is the given password the right one for the administrator?
-	 * @param string $password
-	 * @return boolean
+	 * Display admin view
 	 */
-	public function isAdminPassword($password) {
-		return (md5($password) == $this->adminPassAsMD5);
+	public function displayAdminView() {
+		$AdminView = new AdminView($this->adminPassAsMD5);
+		$AdminView->display();
 	}
 
 	/**

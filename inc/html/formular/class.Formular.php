@@ -101,6 +101,14 @@ class Formular extends HtmlTag {
 	}
 
 	/**
+	 * Validate all fieldsets
+	 */
+	final public function validateAllFieldsets() {
+		foreach ($this->fieldsets as &$Fieldset)
+			$Fieldset->validateAllFields();
+	}
+
+	/**
 	 * Add a submit button
 	 * @param string $value
 	 * @param string $name optional, default 'submit'

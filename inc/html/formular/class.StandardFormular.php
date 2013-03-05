@@ -86,16 +86,23 @@ class StandardFormular extends Formular {
 		if (!$this->wasSubmitted)
 			return;
 
-		if ($this->submitMode == self::$SUBMIT_MODE_CREATE)
-			$Failures = $this->databaseScheme()->tryToInsertFromPost();
-		elseif ($this->submitMode == self::$SUBMIT_MODE_EDIT)
-			$Failures = $this->databaseScheme()->tryToUpdateFromPost();
+		$this->validateAllFieldsets();
+
+		$Failures = FormularField::getValidationFailures();
+
+		if (empty($Failures)) {
+			if ($this->submitMode == self::$SUBMIT_MODE_CREATE)
+				$Failures = $this->databaseScheme()->tryToInsertFromPost();
+			elseif ($this->submitMode == self::$SUBMIT_MODE_EDIT)
+				$Failures = $this->databaseScheme()->tryToUpdateFromPost();
+		}
 
 		foreach ($Failures as $message)
 			$this->addFailure($message);
 
-		if (!$this->submitSucceeded())
-			$this->initFieldsets();
+		// What the fuck? Why again?
+		//if (!$this->submitSucceeded())
+		//	$this->initFieldsets();
 	}
 
 	/**
