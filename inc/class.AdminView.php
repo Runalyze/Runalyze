@@ -42,6 +42,9 @@ class AdminView {
 
 		elseif (isset($_POST['hash']) && $this->isAdminHash($_POST['hash']))
 			$this->isLoggedIn = true;
+
+		elseif (isset($_POST['hash-files']) && $this->isAdminHash($_POST['hash-files']))
+			$this->isLoggedIn = true;
 	}
 
 	/**
@@ -53,7 +56,7 @@ class AdminView {
 
 		define('ADMIN_WINDOW', true);
 
-		$this->handlePostDataForSettings();
+		$this->handlePostData();
 
 		$this->UserList = $this->getUserList();
 	}
@@ -81,6 +84,7 @@ class AdminView {
 		$this->displaySettings();
 		$this->displayUserList();
 		$this->displayServerData();
+		$this->displayFiles();
 	}
 
 	/**
@@ -91,10 +95,7 @@ class AdminView {
 		$Formular->setId('admin-window-settings');
 		$Formular->addHiddenValue('hash', $this->getAdminHash());
 		$Formular->addFieldset( $this->getSettingsFieldset() );
-		$Formular->addSubmitButton('Speichern');
 		$Formular->display();
-
-		echo '<p>&nbsp;</p>';
 	}
 
 	/**
@@ -118,6 +119,17 @@ class AdminView {
 	}
 
 	/**
+	 * Display files
+	 */
+	private function displayFiles() {
+		$Formular = new Formular();
+		$Formular->setId('admin-files');
+		$Formular->addHiddenValue('hash-files', $this->getAdminHash());
+		$Formular->addFieldset( $this->getFilesFieldset() );
+		$Formular->display();
+	}
+
+	/**
 	 * Get fieldset for settings
 	 * @return \FormularFieldset
 	 */
@@ -130,6 +142,7 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', 'Benutzer k&ouml;nnen sich registrieren') );
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', 'Benutzer m&uuml;ssen sich einloggen') );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip('Garmin API-Key', 'In Online-Version notwendig f&uuml;r Garmin-Communicator<br />siehe http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/')) );
+		$Fieldset->addField( new FormularSubmit('Speichern', '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
 		return $Fieldset;
@@ -138,11 +151,15 @@ class AdminView {
 	/**
 	 * Handle post data for updating settings
 	 */
-	private function handlePostDataForSettings() {
+	private function handlePostData() {
 		if (isset($_POST['hash']) && $this->isLoggedIn) {
 			$this->updateConfigFileFromPost();
 		} else {
 			$this->setPostDataFromConfig();
+		}
+
+		if (isset($_POST['hash-files']) && $this->isLoggedIn) {
+			$this->cleanFiles();
 		}
 	}
 
@@ -258,6 +275,81 @@ class AdminView {
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;
+	}
+
+	/**
+	 * Get fieldset for files
+	 * @return \FormularFieldset
+	 */
+	private function getFilesFieldset() {
+		$Fieldset = new FormularFieldset('Nicht mehr ben&ouml;tigte Dateien');
+		$Fieldset->addFileBlock( $this->getBlockForFiles('/import/files/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('/export/files/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
+		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
+		$Fieldset->addBlock( '<input type="submit" value="Verzeichnisse s&auml;ubern" />' );
+		$Fieldset->setCollapsed();
+
+		return $Fieldset;
+	}
+
+	/**
+	 * Get block for files
+	 * @param string $pathToFiles
+	 * @return string
+	 */
+	private function getBlockForFiles($pathToFiles) {
+		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'" /> leeren</label>';
+		$Text .= '<small>';
+		$Text .= '<strong>'.$pathToFiles.'</strong><br />';
+		$Files = $this->getExistingFiles($pathToFiles);
+
+		if (empty($Files)) {
+			$Text .= '<em>Keine Dateien gefunden</em>';
+		} else {
+			foreach ($Files as $File) {
+				$Text .= '<em>'.$File.'</em>, '.Filesystem::getFilesize(FRONTEND_PATH.$pathToFiles.$File).'<br />';
+			}
+		}
+
+		$Text .= '</small>';
+
+		return $Text;
+	}
+
+	/**
+	 * Get array with all existing 
+	 * @param string $pathToFile
+	 * @return array 
+	 */
+	private function getExistingFiles($pathToFile) {
+		$Files = array();
+
+		if ($handle = opendir(FRONTEND_PATH.$pathToFile)) {
+			while (false !== ($file = readdir($handle))) {
+				if (substr($file,0,1) != ".") {
+					$Files[] = $file;
+				}
+			}
+
+			closedir($handle);
+		}
+
+		return $Files;
+	}
+
+	/**
+	 * Clean files
+	 */
+	private function cleanFiles() {
+		if (isset($_POST['clean']) && is_array($_POST['clean'])) {
+			foreach ($_POST['clean'] as $Folder) {
+				$Files = $this->getExistingFiles($Folder);
+				foreach ($Files as $File)
+					unlink(FRONTEND_PATH.$Folder.$File);
+			}
+		}
 	}
 
 	/**
