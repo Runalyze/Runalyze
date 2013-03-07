@@ -56,5 +56,5 @@ define('USER_CAN_REGISTER', true);
  * @var bool GARMIN_API_KEY Garmin API key
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
  */
-define('GARMIN_API_KEY', '');
+define('GARMIN_API_KEY', '{config::garminkey}');
 ?>

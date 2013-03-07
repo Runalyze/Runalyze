@@ -246,13 +246,14 @@ class Installer {
 	 * Write config-variables to file
 	 */
 	protected function writeConfigFile() {
-		$config['host']     = $_POST['host'];
-		$config['database'] = $_POST['database'];
-		$config['username'] = $_POST['username'];
-		$config['password'] = $_POST['password'];
-		$config['prefix']   = $_POST['prefix'];
-		$config['debug']    = isset($_POST['debug']) ? 'true' : 'false';
-		$config['login']    = isset($_POST['login']) ? 'true' : 'false';
+		$config['host']      = $_POST['host'];
+		$config['database']  = $_POST['database'];
+		$config['username']  = $_POST['username'];
+		$config['password']  = $_POST['password'];
+		$config['prefix']    = $_POST['prefix'];
+		$config['debug']     = isset($_POST['debug']) ? 'true' : 'false';
+		$config['login']     = isset($_POST['login']) ? 'true' : 'false';
+		$config['garminkey'] = $_POST['garminkey'];
 
 		$file_string = file_get_contents(PATH.'install/config.php');
 

@@ -152,23 +152,49 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		Wenn du Runalyze in einer Vorab-Entwicklerversion nutzt, kann der Debug-Modus verwendet werden.
-		Bei auftretenden Problemen werden dir alle Fehlermeldungen angezeigt.
+		Wenn du selbst Entwickler bist oder uns beim Beheben von Fehlern helfen m&ouml;chtest,
+		kannst du den Debug-Modus aktivieren. Bei auftretenden Problemen werden die Fehlermeldungen dann
+		in einer Toolbar am unteren Bildschirmrand angezeigt.
 		<small>(normalerweise aus)</small>
 	</p>
 
 	<p class="text">
 		<label>
+			<strong>Debug-Modus</strong>
 			<input type="checkbox" name="debug" <?php if (isset($_POST['debug']) && $_POST['debug']) echo 'checked="checked"' ?> />
-			Debug-Modus
 		</label>
 	</p>
 
 	<p class="text">
 		<label>
+			<strong>Anmeldungen</strong>
 			<input type="checkbox" name="login" <?php if (isset($_POST['login']) && $_POST['login']) echo 'checked="checked"' ?> />
-			Benutzer m&uuml;ssen sich registrieren und einloggen
+			<small>
+				Benutzer m&uuml;ssen sich registrieren und einloggen
+			</small>
 		</label>
+	</p>
+
+	<p class="text">
+		<label>
+			<strong>Garmin API-Key*</strong>
+			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>" />
+			<?php if ($_SERVER['SERVER_NAME'] != 'localhost'): ?>
+				<small>(f&uuml;r <em>localhost</em> nicht notwendig)</small>
+			<?php else: ?>
+				<small>
+					(notwendig f&uuml;r <em><?php echo ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST']; ?></em>,
+					siehe <a href="http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/">developer.garmin.com</a>)
+				</small>
+			<?php endif; ?>
+		</label>
+	</p>
+
+	<p class="text">
+		<small>
+			* Der Garmin API-Key ist notwendig, um den Garmin Communicator nutzen zu k&ouml;nnen,
+			um Trainings direkt von einem Garmin Forerunner in Runalyze zu importieren.
+		</small>
 	</p>
 
 	<?php if ($this->cantWriteConfig): ?>
@@ -187,6 +213,7 @@ foreach ($Steps as $i => $Name) {
 		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br />
 		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br />
 		<em>{config::login}</em> &raquo; <em><?php echo isset($_POST['login']) ? 'true' : 'false'; ?><br />
+		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br />
 	</p>
 	<?php else: ?>
 	<p class="error">
