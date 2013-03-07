@@ -200,7 +200,7 @@ fieldset {
 	padding-bottom: 10px;
 	clear: both; }
 
-fieldset.collapsed div {
+fieldset.collapsed div, fieldset.collapsed > input {
 	display: none !important; }
 
 fieldset legend {
