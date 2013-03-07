@@ -15,7 +15,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
 		$this->name = 'Cacheclean';
-		$this->description = 'L&ouml;scht den Cache der Diagramme. Sollte genutzt werden, falls Probleme mit Diagrammen auftauchen.';
+		$this->description = 'L&ouml;scht den Trainings-Cache.';
 	}
 
 	/**
@@ -41,7 +41,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 
 		$Fieldset = new FormularFieldset('Cache l&ouml;schen');
 		$Fieldset->addInfo(self::getActionLink('<strong>Cache l&ouml;schen</strong>', 'delete=true').'<br />
-			Zur schnellen Trainingsanzeige werden die berechneten GPS-Daten (Runden, Zonen, Diagramme und Google-Map)
+			Zur schnellen Trainingsanzeige werden die berechneten GPS-Daten (Runden, Zonen, Diagramme und Streckenverlauf)
 			im Cache gespeichert. Falls Probleme dabei auftauchen, kann &uuml;ber dieses Plugin der Cache geleert werden.');
 		$Fieldset->addFileBlock('Insgesamt sind '.$num.' Trainings im Cache.');
 
