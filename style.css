@@ -688,6 +688,8 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 /*** SNIPPETS ***/
 #dataBrowser { width: 100%; }
 
+#dataPanel, #tab_content { overflow: auto; }
+
 #datenPanel { margin-bottom: 15px; }
 
 #schuhe p {
