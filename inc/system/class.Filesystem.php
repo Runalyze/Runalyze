@@ -5,6 +5,27 @@
  */
 class Filesystem {
 	/**
+	 * Get all file names from a path
+	 * @param string $Path
+	 * @return array
+	 */
+	static public function getFileNamesFromPath($Path) {
+		$Files = array();
+
+		if ($handle = opendir(FRONTEND_PATH.$Path)) {
+			while (false !== ($file = readdir($handle))) {
+				if (substr($file,0,1) != ".") {
+					$Files[] = $file;
+				}
+			}
+
+			closedir($handle);
+		}
+
+		return $Files;
+	}
+
+	/**
 	 * Get content from extern url
 	 * @param string $url
 	 * @return string

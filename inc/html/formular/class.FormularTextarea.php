@@ -17,4 +17,12 @@ class FormularTextarea extends FormularField {
 	protected function getFieldCode() {
 		return '<label for="'.$this->name.'">'.$this->label.'</label> <textarea '.$this->attributes().'>'.$this->value.'</textarea>';
 	}
+
+	/**
+	 * Size size for this textarea field
+	 * @param string $size 
+	 */
+	public function setSize($size) {
+		$this->addCSSclass($size);
+	}
 }
