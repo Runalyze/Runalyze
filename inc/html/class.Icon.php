@@ -5,6 +5,12 @@
  */
 class Icon {
 	/**
+	 * Path to sport icons
+	 * @var string
+	 */
+	static public $PATH_TO_SPORT_ICONS = 'img/sports/';
+
+	/**
 	 * All avaiable icons are set as class members
 	 */
 	// Small, 12x12px
@@ -69,7 +75,7 @@ class Icon {
 		if ($title == '')
 			$title = $data['name'];
 
-		$Image = '<img src="img/sports/'.$data['img'].'" alt="'.$title.'" />';
+		$Image = '<img src="'.self::$PATH_TO_SPORT_ICONS.$data['img'].'" alt="'.$title.'" />';
 
 		return Ajax::tooltip($Image, $tooltip);
 	}
@@ -82,7 +88,7 @@ class Icon {
 	public static function getSportIconUrl($id) {
 		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
 
-		return 'img/sports/'.$data['img'];
+		return self::$PATH_TO_SPORT_ICONS.$data['img'];
 	}
 
 	/**

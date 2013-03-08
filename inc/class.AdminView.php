@@ -303,7 +303,7 @@ class AdminView {
 		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'" /> leeren</label>';
 		$Text .= '<small>';
 		$Text .= '<strong>'.$pathToFiles.'</strong><br />';
-		$Files = $this->getExistingFiles($pathToFiles);
+		$Files = Filesystem::getFileNamesFromPath($pathToFiles);
 
 		if (empty($Files)) {
 			$Text .= '<em>Keine Dateien gefunden</em>';
@@ -316,27 +316,6 @@ class AdminView {
 		$Text .= '</small>';
 
 		return $Text;
-	}
-
-	/**
-	 * Get array with all existing 
-	 * @param string $pathToFile
-	 * @return array 
-	 */
-	private function getExistingFiles($pathToFile) {
-		$Files = array();
-
-		if ($handle = opendir(FRONTEND_PATH.$pathToFile)) {
-			while (false !== ($file = readdir($handle))) {
-				if (substr($file,0,1) != ".") {
-					$Files[] = $file;
-				}
-			}
-
-			closedir($handle);
-		}
-
-		return $Files;
 	}
 
 	/**

@@ -7,8 +7,6 @@ $General = new ConfigCategory('general', 'Allgemein');
 $General->setKeys(array(
 	'GENDER',
 	'PULS_MODE',
-	'PLZ',
-	'',
 	'MAINSPORT',
 	'WK_TYPID',
 	'RUNNINGSPORT',
@@ -25,12 +23,6 @@ $General->addConfigValue( new ConfigValueSelect('PULS_MODE', array(
 	'label'			=> 'Pulsanzeige',
 	'options'		=> array('bpm' => 'absoluter Wert', 'hfmax' => '&#37; HFmax', 'hfres' => '&#37; HFreserve'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
-)));
-$General->addConfigValue( new ConfigValueString('PLZ', array(
-	'default'		=> '',
-	'label'			=> 'Ort',
-	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br /><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
-	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
 $General->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
 	'default'		=> 1,
@@ -455,6 +447,8 @@ $TrainingForm->setKeys(array(
 	'COMPUTE_KCAL',
 	'TRAINING_ELEVATION_SERVER',
 	'TRAINING_DO_ELEVATION',
+	'PLZ',
+	'TRAINING_LOAD_WEATHER'
 	//'GARMIN_API_KEY'
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
@@ -478,12 +472,23 @@ $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_CREATE_MODE', arr
 $TrainingForm->addConfigValue( new ConfigValueBool('COMPUTE_KCAL', array(
 	'default'		=> true,
 	'label'			=> 'Kalorien berechnen',
-	'tooltip'		=> 'Automatisch Kalorien f&uuml;r ein Training berechnen (falls nicht angegeben)'
+	'tooltip'		=> 'Die Kalorien werden im Formular bei einer &Auml;nderung der Dauer automatisch angepasst. Dabei wird der f&uuml;r die Sportart hinterlegte Wert verwendet.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', array(
 	'default'		=> true,
 	'label'			=> 'H&ouml;henkorrektur verwenden',
 	'tooltip'		=> 'Die H&ouml;hendaten k&ouml;nnen &uuml;ber externe APIs korrigiert werden. Das ist meist deutlich besser als GPS-Messungen'
+)));
+$TrainingForm->addConfigValue( new ConfigValueString('PLZ', array(
+	'default'		=> '',
+	'label'			=> 'Ort',
+	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br /><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
+	'size'			=> FormularInput::$SIZE_FULL_INLINE
+)));
+$TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_LOAD_WEATHER', array(
+	'default'		=> true,
+	'label'			=> 'Wetter laden',
+	'tooltip'		=> 'Das aktuelle Wetter kann beim Eintragen eines neuen Trainings geladen und als Voreingabe eingef&uuml;gt werden.'
 )));
 // TODO: remove in Runalyze v1.4
 $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(

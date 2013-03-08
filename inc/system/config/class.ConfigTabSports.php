@@ -34,7 +34,8 @@ class ConfigTabSports extends ConfigTab {
 					<tr class="b">
 						<th class="small">'.Ajax::tooltip('Aktiv', 'Diese Sportart wird verwendet').'</th>
 						<th class="small">'.Ajax::tooltip('kurz', 'Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt').'</th>
-						<th colspan="2">'.Ajax::tooltip('Sportart', 'Name der Sportart').'</th>
+						<th class="small" colspan="2">Bild</th>
+						<th>'.Ajax::tooltip('Sportart', 'Name der Sportart').'</th>
 						<th>'.Ajax::tooltip('kcal/h', 'Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde').'</th>
 						<th>'.Ajax::tooltip('&Oslash; HF', 'Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)').'</th>
 						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
@@ -49,34 +50,40 @@ class ConfigTabSports extends ConfigTab {
 				<tbody>';
 
 		$Sports   = Sport::getSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
 		$SportCount = Sport::getSportsCount();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
 
+		$IconFileNames = Filesystem::getFileNamesFromPath('../'.Icon::$PATH_TO_SPORT_ICONS);
+		$IconOptions   = array();
+		foreach ($IconFileNames as $FileName)
+			$IconOptions[$FileName] = $FileName;
+
 		foreach ($Sports as $i => $Data) {
-			$id     = $Data['id'];
+			$id         = $Data['id'];
+			$icon       = '<img src="'.Icon::$PATH_TO_SPORT_ICONS.$Data['img'].'" alt="" />';
+			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img']);
 			if (isset($Data['new'])) {
-				$icon = '?';
 				$name = '<input type="text" name="sport[name]['.$id.']" value="" />';
 			} else {
-				$icon = Icon::getSportIcon($id);
 				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'" />'.$Data['name'];
 			}
 			
 			
 			if ($id == -1)
 				$delete = '';
-			elseif ($SportCount[$id] == 0)
+			elseif (!isset($SportCount[$id]) || $SportCount[$id] == 0)
 				$delete = '<input type="checkbox" name="sport[delete]['.$id.']" />';
 			else
 				$delete = DataBrowser::getSearchLink('<small>('.$SportCount[$id].')</small>', 'opt[typeid]=is&val[sportid][0]='.$id);
 
 			$Code .= '
-					<tr class="a'.($i%2+1).($icon == '?' ? ' unimportant' : '').'">
+					<tr class="a'.($i%2+1).(isset($Data['new']) ? ' unimportant' : '').'">
 						<td><input type="checkbox" name="sport[online]['.$id.']" '.($Data['online'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[short]['.$id.']" '.($Data['short'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td>'.$icon.'</td>
+						<td>'.$iconSelect.'</td>
 						<td>'.$name.'</td>
 						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'" /></td>
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'" /></td>
@@ -109,6 +116,7 @@ class ConfigTabSports extends ConfigTab {
 
 			$columns = array(
 				'name',
+				'img',
 				'short',
 				'online',
 				'kcal',
@@ -122,6 +130,7 @@ class ConfigTabSports extends ConfigTab {
 			);
 			$values  = array(
 				$_POST['sport']['name'][$id],
+				$_POST['sport']['img'][$id],
 				isset($_POST['sport']['short'][$id]),
 				isset($_POST['sport']['online'][$id]),
 				$_POST['sport']['kcal'][$id],
