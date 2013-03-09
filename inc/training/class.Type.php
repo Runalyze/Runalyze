@@ -134,6 +134,11 @@ class Type {
 			}
 		}
 
+		if (CONF_TRAINING_SORT_TYPES == 'alpha')
+			asort($types);
+		elseif (CONF_TRAINING_SORT_TYPES == 'id-desc')
+			krsort($types);
+
 		return $types;
 	}
 

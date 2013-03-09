@@ -5,7 +5,7 @@
  */
 class TrainingInputSport extends FormularSelectBox {
 	/**
-	 * Construct new input field for: weather
+	 * Construct new input field for: sport
 	 * Using $_POST by default
 	 * @param string $value [optional]
 	 */

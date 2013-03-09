@@ -31,6 +31,7 @@ $FIELDS['time'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Datum',
+		'required'	=> true,
 		'parser'	=> FormularValueParser::$PARSER_DATE
 	)
 );
@@ -41,8 +42,7 @@ $FIELDS['weight'] = array(
 		),
 	'formular'	=> array(
 		'label'		=> 'Gewicht',
-		'unit'		=> FormularUnit::$KG,
-		'required'	=> true
+		'unit'		=> FormularUnit::$KG
 	)
 );
 $FIELDS['pulse_rest'] = array(
