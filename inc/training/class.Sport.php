@@ -179,7 +179,14 @@ class Sport {
 	 */
 	static private function initSports() {
 		if (is_null(self::$sports)) {
-			$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport`');
+			if (CONF_TRAINING_SORT_SPORTS == 'alpha')
+				$order = 'ORDER BY name ASC';
+			elseif (CONF_TRAINING_SORT_SPORTS == 'id-desc')
+				$order = 'ORDER BY id DESC';
+			else
+				$order = 'ORDER BY id ASC';
+
+			$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` '.$order);
 			foreach ($sports as $sport)
 				self::$sports[$sport['id']] = $sport;
 		}

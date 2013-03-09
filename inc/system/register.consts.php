@@ -444,11 +444,15 @@ $Calculations->addToCategoryList();
 $TrainingForm = new ConfigCategory('trainingform', 'Eingabeformular');
 $TrainingForm->setKeys(array(
 	'TRAINING_CREATE_MODE',
-	'COMPUTE_KCAL',
+	'',
 	'TRAINING_ELEVATION_SERVER',
 	'TRAINING_DO_ELEVATION',
 	'PLZ',
-	'TRAINING_LOAD_WEATHER'
+	'TRAINING_LOAD_WEATHER',
+	'TRAINING_SORT_SPORTS',
+	'COMPUTE_KCAL',
+	'TRAINING_SORT_TYPES',
+	'TRAINING_SORT_SHOES'
 	//'GARMIN_API_KEY'
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
@@ -483,12 +487,39 @@ $TrainingForm->addConfigValue( new ConfigValueString('PLZ', array(
 	'default'		=> '',
 	'label'			=> 'Ort',
 	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br /><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
-	'size'			=> FormularInput::$SIZE_FULL_INLINE
+	'size'			=> FormularInput::$SIZE_MIDDLE
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_LOAD_WEATHER', array(
 	'default'		=> true,
 	'label'			=> 'Wetter laden',
 	'tooltip'		=> 'Das aktuelle Wetter kann beim Eintragen eines neuen Trainings geladen und als Voreingabe eingef&uuml;gt werden.'
+)));
+$TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SPORTS', array(
+	'default'		=> 'id-asc',
+	'label'			=> 'Sortierung: Sportarten',
+	'options'		=> array(
+		'id-asc'		=> 'id (&auml;lteste zuerst)',
+		'id-desc'		=> 'id (neueste zuerst)',
+		'alpha'			=> 'alphabetisch'
+	)
+)));
+$TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_TYPES', array(
+	'default'		=> 'id-asc',
+	'label'			=> 'Sortierung: Typen',
+	'options'		=> array(
+		'id-asc'		=> 'id (&auml;lteste zuerst)',
+		'id-desc'		=> 'id (neueste zuerst)',
+		'alpha'			=> 'alphabetisch'
+	)
+)));
+$TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SHOES', array(
+	'default'		=> 'id-asc',
+	'label'			=> 'Sortierung: Schuhe',
+	'options'		=> array(
+		'id-asc'		=> 'id (&auml;lteste zuerst)',
+		'id-desc'		=> 'id (neueste zuerst)',
+		'alpha'			=> 'alphabetisch'
+	)
 )));
 // TODO: remove in Runalyze v1.4
 $TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(

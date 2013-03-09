@@ -169,6 +169,11 @@ class Shoe extends DataObject {
 			else
 				unset($shoes[$id]);
 
+		if (CONF_TRAINING_SORT_SHOES == 'alpha')
+			asort($shoes);
+		elseif (CONF_TRAINING_SORT_SHOES == 'id-desc')
+			krsort($shoes);
+
 		return $shoes;
 	}
 
