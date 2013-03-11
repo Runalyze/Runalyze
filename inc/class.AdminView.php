@@ -324,7 +324,7 @@ class AdminView {
 	private function cleanFiles() {
 		if (isset($_POST['clean']) && is_array($_POST['clean'])) {
 			foreach ($_POST['clean'] as $Folder) {
-				$Files = $this->getExistingFiles($Folder);
+				$Files = Filesystem::getFileNamesFromPath($Folder);
 				foreach ($Files as $File)
 					unlink(FRONTEND_PATH.$Folder.$File);
 			}

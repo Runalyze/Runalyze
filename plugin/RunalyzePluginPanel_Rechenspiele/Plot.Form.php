@@ -59,8 +59,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			YEAR(FROM_UNIXTIME(`time`))*366+DAYOFYEAR(FROM_UNIXTIME(`time`))-'.$StartYear.'*366+'.$AddDays.' as `index`,
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-			SUM(`vdot`*`s`) as `vdot`,
-			SUM(`s`) as `s`
+			SUM(`vdot`*`s`*`use_vdot`) as `vdot`,
+			SUM(`s`*`use_vdot`) as `s`
 		FROM `'.PREFIX.'training`
 		WHERE
 			`vdot`>0 AND (
