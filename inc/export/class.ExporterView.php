@@ -43,6 +43,10 @@ class ExporterView {
 	public function display() {
 		$this->trainingId = Request::sendId();
 		$this->exportType = Request::param('type');
+		$public           = Request::param('public');
+
+		if (strlen($public) > 0)
+			Mysql::getInstance()->update(PREFIX.'training', $this->trainingId, 'is_public', $public == 'true' ? 1 : 0);
 
 		echo HTML::h1('Training exportieren');
 
@@ -101,13 +105,22 @@ class ExporterView {
 				else
 					$Name = $format;
 
-				$URL  = self::$URL.'?id='.Request::sendId().'&type='.$format;
+				$URL  = self::$URL.'?id='.$this->trainingId.'&type='.$format;
 				$Icon = 'inc/export/icons/'.strtolower($format).'.png';
 				$Link = Ajax::window('<a href="'.$URL.'" style="background-image:url('.$Icon.');"><strong>'.$Name.'</strong></a>', 'small');
 				$List->addCompleteLink($Link);
 			}
 
 			$List->display();
+		}
+
+		$Training = new Training($this->trainingId);
+		if (!$Training->isPublic()) {
+			echo HTML::info('Das Training ist derzeit <strong>privat</strong>.<br />
+				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->trainingId.'&public=true">&nbsp;&raquo; jetzt &ouml;ffentlich machen</a>', 'small'));
+		} else {
+			echo HTML::info('Das Training ist derzeit <strong>&ouml;ffentlich</strong>.<br />
+				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->trainingId.'&public=false">&nbsp;&raquo; jetzt privat machen</a>', 'small'));
 		}
 	}
 }
