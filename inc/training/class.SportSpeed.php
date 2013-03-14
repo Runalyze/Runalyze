@@ -95,6 +95,9 @@ class SportSpeed {
 	 * @return string
 	 */
 	static public function noSpeed($Distance, $Time) {
+		if ($Distance == 0)
+			return '';
+
 		return Running::Km($Distance).' in '.Time::toString($Time);
 	}
 
