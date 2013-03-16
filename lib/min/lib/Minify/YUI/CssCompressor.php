@@ -3,14 +3,14 @@
  * Class Minify_YUI_CssCompressor 
  * @package Minify
  *
- * YUI Compressor
- * Author: Julien Lecomte -  http://www.julienlecomte.net/
- * Author: Isaac Schlueter - http://foohack.com/
- * Author: Stoyan Stefanov - http://phpied.com/
- * Author: Steve Clay      - http://www.mrclay.org/ (PHP port)
- * Copyright (c) 2009 Yahoo! Inc.  All rights reserved.
- * The copyrights embodied in the content of this file are licensed
- * by Yahoo! Inc. under the BSD (revised) open source license.
+ * @copyright YUI Compressor
+ * @copyright Author: Julien Lecomte -  http://www.julienlecomte.net/
+ * @copyright Author: Isaac Schlueter - http://foohack.com/
+ * @copyright Author: Stoyan Stefanov - http://phpied.com/
+ * @copyright Author: Steve Clay      - http://www.mrclay.org/ (PHP port)
+ * @copyright Copyright (c) 2009 Yahoo! Inc.  All rights reserved.
+ * @copyright The copyrights embodied in the content of this file are licensed
+ * @copyright by Yahoo! Inc. under the BSD (revised) open source license.
  */
 
 /**

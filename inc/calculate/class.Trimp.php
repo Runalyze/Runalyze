@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::Trimp
+ * @package Runalyze\Calculations
+ */
+/**
  * Class for calculating Training Load (ATL, CTL, TRIMP)
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
  */
 class Trimp {
 	/**
@@ -47,7 +52,7 @@ class Trimp {
 	static private $MAX_TRIMP = CONF_MAX_TRIMP;
 
 	/**
-	 * Disable constructor for public access 
+	 * Constructor is private
 	 */
 	private function __construct() {}
 

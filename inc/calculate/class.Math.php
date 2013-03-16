@@ -1,14 +1,23 @@
 <?php
+/**
+ * This file contains class::Math
+ * @package Runalyze\Calculations
+ */
+/**
+ * Class for mathematic calculations
+ * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
+ */
 class Math {
 	/**
-	 * Disable constructor for public access 
+	 * Constructor is private
 	 */
 	private function __construct() {}
 
 	/**
-	 * Calculate the variance of a given (numeric) array
-	 * @param array $array
-	 * @return double
+	 * Calculate the variance of an array
+	 * @param array $array Array with numeric values
+	 * @return double Variance of the dataset
 	 */
 	public static function Variance($array) {
 		$avg = array_sum($array) / count($array);
@@ -23,6 +32,14 @@ class Math {
 
 	/**
 	 * Get a value with leading sign
+	 * 
+	 * Examples:
+	 * <code>
+	 *  Math::WithSign(5); // result: "+5"
+	 *  Math::WithSign(0); // result: "0"
+	 *  Math::WithSign(-3); // result: "-3"
+	 * </code>
+	 * 
 	 * @param mixed $value
 	 * @return string
 	 */

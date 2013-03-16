@@ -1,13 +1,23 @@
 <?php
 /**
  * This file contains the class::Frontend to create and print the HTML-Page.
- * The class::Frontend is the main class of this project.
- * It will include all needed classes.
- * For using it's enough to include this class.
+ * @package Runalyze\Frontend
  */
 /**
- * Class: Frontend
+ * Frontend class for setting up everything
+ * 
+ * The frontend initializes everything for Runalyze.
+ * It sets the autoloader, constants and mysql-connection.
+ * By default, constructing a new frontend will print a html-header.
+ * 
+ * Standard initialization of Runalyze:
+ * <code>
+ *  require 'inc/class.Frontend.php';
+ *  $Frontend = new Frontend();
+ * </code>
+ * 
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Frontend
  */
 class Frontend {
 	/**
@@ -29,8 +39,12 @@ class Frontend {
 	protected $adminPassAsMD5 = '';
 
 	/**
-	 * Constructor for Frontend
-	 * @param bool $hideHeaderAndFooter optional
+	 * Constructor
+	 * 
+	 * Constructing a new Frontend includes all files and sets the correct header.
+	 * Runalyze is not usable without setting up the environment with this class.
+	 * 
+	 * @param bool $hideHeaderAndFooter By default a html-header is directly shown
 	 */
 	public function __construct($hideHeaderAndFooter = false) {
 		$this->initSystem();
@@ -199,7 +213,7 @@ class Frontend {
 	}
 
 	/**
-	 * Function to display the HTML-Header
+	 * Display the HTML-Header
 	 */
 	public function displayHeader() {
 		$this->setEncoding();
@@ -211,7 +225,7 @@ class Frontend {
 	}
 
 	/**
-	 * Function to display the HTML-Footer
+	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
 		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
@@ -224,7 +238,7 @@ class Frontend {
 	}
 
 	/**
-	 * Display the panels for the right side
+	 * Display panels
 	 */
 	public function displayPanels() {
 		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
@@ -235,8 +249,13 @@ class Frontend {
 	}
 
 	/**
-	 * Test a plot - Will be displayed instead of the DataBrowser - Only for testing purposes!
+	 * Test a plot
+	 * 
+	 * Will be displayed instead of the DataBrowser - Only for testing purposes!
 	 * @param string $includePath 
+	 * @param string $name
+	 * @param int $width
+	 * @param int $height
 	 */
 	public function testPlot($includePath, $name, $width, $height) {
 		echo '<div id="container"><div id="main"><div id="dataPanel" class="panel c">';

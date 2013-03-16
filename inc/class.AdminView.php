@@ -1,8 +1,13 @@
 <?php
 /**
+ * This file contains class::AdminView
+ * @package Runalyze\Frontend
+ */
+/**
  * Class for admin view
  *
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Frontend
  */
 class AdminView {
 	/**
@@ -25,6 +30,7 @@ class AdminView {
 
 	/**
 	 * Constructor
+	 * @param string $adminHash
 	 */
 	public function __construct($adminHash) {
 		$this->adminHash = $adminHash;

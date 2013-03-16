@@ -1,7 +1,11 @@
 <?php
 /**
+ * @package Runalyze\Frontend
+ */
+/**
  * Class for customizing frontend for displaying shared activity-lists
  * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @package Runalyze\Frontend
  */
 class FrontendSharedList extends FrontendShared {
 	/**
@@ -11,7 +15,7 @@ class FrontendSharedList extends FrontendShared {
 	protected $User = array();
 
 	/**
-	 * Function to display the HTML-Header
+	 * Display the HTML-Header
 	 */
 	public function displayHeader() {
 		FrontendShared::$IS_SHOWN  = true;
@@ -29,7 +33,7 @@ class FrontendSharedList extends FrontendShared {
 	}
 
 	/**
-	 * Function to display the HTML-Footer
+	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
 		if (!Request::isAjax())
