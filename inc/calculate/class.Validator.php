@@ -1,11 +1,20 @@
 <?php
 /**
+ * This file contains class::Validator
+ * @package Runalyze\Calculations
+ */
+/**
  * Class: Validator
+ * 
+ * Validator given input values
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
  */
 class Validator {
 	/**
-	 * Is the given array an associative one? (one associative key is enough for success)
+	 * Is the given array an associative one?
+	 * 
+	 * One associative key is enough
 	 * @param array $array
 	 * @return bool
 	 */

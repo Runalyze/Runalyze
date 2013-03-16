@@ -1,14 +1,48 @@
 <?php
 /**
+ * This file contains class::Running
+ * @package Runalyze\Calculations
+ */
+/**
  * Class: Running
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
  */
 class Running {
+	/**
+	 * Basic endurance: Minimum distance to be recognized as a longjog
+	 * @var double
+	 */
 	static $BE_MIN_KM_FOR_LONGJOG = 13;
+
+	/**
+	 * Basic endurance: Number of days for counting weekkilometer
+	 * @var int 
+	 */
 	static $BE_DAYS_FOR_WEEK_KM = 182;
+
+	/**
+	 * Basic endurance: Minimum number of days for counting weekkilometer
+	 * @var int 
+	 */
 	static $BE_DAYS_FOR_WEEK_KM_MIN = 70;
+
+	/**
+	 * Basic endurance: Number of days for counting longjogs
+	 * @var int
+	 */
 	static $BE_DAYS_FOR_LONGJOGS = 70;
+
+	/**
+	 * Basic endurance: Percentage for weekkilometer
+	 * @var double
+	 */
 	static $BE_PERCENTAGE_WEEK_KM = 0.67;
+
+	/**
+	 * Basic endurance: Percentage for longjogs
+	 * @var double
+	 */
 	static $BE_PERCENTAGE_LONGJOGS = 0.33;
 
 	/**

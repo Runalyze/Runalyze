@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::Time
+ * @package Runalyze\Calculations
+ */
+/**
  * Class for standard operations for timestamps
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
  */
 class Time {
 	/**

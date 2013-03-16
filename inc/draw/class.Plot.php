@@ -1,7 +1,11 @@
 <?php
 /**
+ * This file contains class::Plot
+ */
+/**
  * Class: Plot
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Draw
  */
 class Plot {
 	/**
@@ -762,6 +766,10 @@ class Plot {
 
 /**
  * Mapper for Plot::correctValuesForTime
+ * 
+ * Correct php-timestamps to JS-timestamps
+ * @param mixed $v
+ * @return mixed
  */
 function PLOT__correctValuesMapperForTime($v) {
 	return $v*1000;
@@ -769,6 +777,8 @@ function PLOT__correctValuesMapperForTime($v) {
 
 /**
  * Mapper for Plot::correctValuesFromPaceToKmh
+ * @param mixed $v
+ * @return mixed
  */
 function PLOT__correctValuesMapperFromPaceToKmh($v) {
 	return 3600/$v;
@@ -776,6 +786,8 @@ function PLOT__correctValuesMapperFromPaceToKmh($v) {
 
 /**
  * Mapper for Plot::setZeroPointsToNull
+ * @param mixed $v
+ * @return mixed
  */
 function PLOT__setZeroToNullMapper($v) {
 	if ($v == 0)
@@ -783,4 +795,3 @@ function PLOT__setZeroToNullMapper($v) {
 
 	return $v;
 }
-?>

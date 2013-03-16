@@ -1,6 +1,7 @@
 <?php
 /**
  * This file contains the class::JD
+ * @package Runalyze\Calculations
  */
 /**
  * Number of days to be used for calculating VDOT-form
@@ -29,13 +30,13 @@ define('BASIC_ENDURANCE', Running::BasicEndurance(true));
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Calculations
  */
 class JD {
 	/**
 	 * This class contains only static methods
 	 */
 	private function __construct() {}
-	private function __destruct() {}
 
 	/**
 	 * Calculates VDOT from an official run

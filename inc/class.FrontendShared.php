@@ -1,7 +1,12 @@
 <?php
 /**
+ * @package Runalyze\Frontend
+ */
+/**
  * Class for customizing frontend for displaying shared activities
+ * 
  * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @package Runalyze\Frontend
  */
 class FrontendShared extends Frontend {
 	/**

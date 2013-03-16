@@ -1,8 +1,12 @@
 <?php
 /**
+ * @package Runalyze\Frontend
+ */
+/**
  * Class for general statistics shown in shared list
  *
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\Frontend
  */
 class FrontendSharedStatistics {
 	/**
