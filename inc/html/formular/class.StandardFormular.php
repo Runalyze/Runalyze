@@ -154,121 +154,15 @@ class StandardFormular extends Formular {
 	}
 
 	/**
-	 * Init all fieldsets
+	 * Init fieldsets
 	 */
 	protected function initFieldsets() {
 		$this->fieldsets = array();
 
-		foreach ($this->databaseScheme()->fieldsets() as $FieldsetArray) {
-			$Fieldset = new FormularFieldset();
+		$Scheme = &$this->dataObject->databaseSchemeReference();
 
-			$this->initFields($Fieldset, $FieldsetArray['fields']);
-			$this->setAttributesToFieldset($Fieldset, $FieldsetArray);
-			$this->addFieldset($Fieldset);
-		}
-	}
-
-	/**
-	 * Set attributes to fieldset
-	 * @param Fieldset $Fieldset
-	 * @param array $FieldsetArray
-	 */
-	protected function setAttributesToFieldset(&$Fieldset, $FieldsetArray) {
-			$Fieldset->setTitle($FieldsetArray['legend']);
-
-			if (isset($FieldsetArray['layout']))
-				$Fieldset->setLayoutForFields($FieldsetArray['layout']);
-
-			if (isset($FieldsetArray['css']))
-				$Fieldset->addCSSclass($FieldsetArray['css']);
-
-			if (isset($FieldsetArray['conf']))
-				$Fieldset->setConfValueToSaveStatus ($FieldsetArray['conf']);
-	}
-
-	/**
-	 * Init fields for a given fieldset
-	 * @param FormularFieldset $Fieldset
-	 * @param array $FieldKeys 
-	 */
-	protected function initFields(FormularFieldset &$Fieldset, $FieldKeys) {
-		foreach ($FieldKeys as $Key)
-			if (!$this->databaseScheme()->fieldIsHidden($Key))
-				$Fieldset->addField( $this->getFieldFor($Key) );
-	}
-
-	/**
-	 * Get Field for key
-	 * @param string $Key
-	 * @return FormularField
-	 */
-	protected function getFieldFor($Key) {
-		$FieldArray = $this->databaseScheme()->field($Key);
-
-		$Field = $this->createFieldFor($Key, $FieldArray);
-		$this->setAttributesToField($Field, $Key, $FieldArray);
-
-		return $Field;
-	}
-
-	/**
-	 * Create a field
-	 * @param string $Key
-	 * @param array $FieldArray
-	 * @return object
-	 */
-	protected function createFieldFor($Key, $FieldArray) {
-		$ClassName = $this->fieldClass($FieldArray);
-
-		return new $ClassName($Key, $FieldArray['formular']['label']);
-	}
-
-	/**
-	 * Set attributes to field
-	 * @param FormularField $Field
-	 * @param string $Key
-	 * @param array $FieldArray
-	 */
-	private function setAttributesToField(FormularField &$Field, $Key, $FieldArray) {
-		if (isset($FieldArray['formular']['parser'])) {
-			$Options = array();
-
-			if (isset($FieldArray['formular']['required']))
-				$Options['required'] = $FieldArray['formular']['required'];
-
-			if (isset($FieldArray['formular']['parserOptions']))
-				$Options = array_merge($Options, $FieldArray['formular']['parserOptions']);
-
-			$Field->setParser( $FieldArray['formular']['parser'], $Options );
-		}
-
-		if (isset($FieldArray['formular']['unit']))
-			$Field->setUnit($FieldArray['formular']['unit']);
-
-		if (isset($FieldArray['formular']['size']))
-			$Field->setSize($FieldArray['formular']['size']);
-
-		if (isset($FieldArray['formular']['css']))
-			$Field->addLayoutClass($FieldArray['formular']['css']);
-
-		if (isset($FieldArray['formular']['layout']))
-			$Field->setLayout($FieldArray['formular']['layout']);
-
-		if ($this->fieldClass($FieldArray) == 'FormularSelectDb')
-			$Field->loadOptionsFrom($FieldArray['formular']['table'], $FieldArray['formular']['column']);
-	}
-
-	/**
-	 * Get class name for a field
-	 * @param array $FieldArray
-	 * @return string
-	 */
-	private function fieldClass($FieldArray) {
-		if (isset($FieldArray['formular']['class']))
-			if (class_exists($FieldArray['formular']['class']))
-				return $FieldArray['formular']['class'];
-
-		return 'FormularInput';
+		$FieldsetFactory = new StandardFormularFieldsetFactory($Scheme);
+		$FieldsetFactory->addFieldsets($this);
 	}
 
 	/**
