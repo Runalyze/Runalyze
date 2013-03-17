@@ -17,6 +17,18 @@ class FormularCheckbox extends FormularField {
 	private $addHiddenSent = false;
 
 	/**
+	 * Construct a new field
+	 * @param string $name
+	 * @param string $label
+	 * @param string $value optional, default: loading from $_POST
+	 */
+	public function __construct($name, $label, $value = '') {
+		parent::__construct($name, $label, $value);
+
+		$this->setParser(FormularValueParser::$PARSER_BOOL);
+	}
+
+	/**
 	 * Prepare for beeing displayed 
 	 */
 	protected function prepareForDisplay() {

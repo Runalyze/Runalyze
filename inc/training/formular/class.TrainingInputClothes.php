@@ -17,5 +17,7 @@ class TrainingInputClothes extends FormularCheckboxes {
 
 		foreach (Clothes::getOrderedClothes() as $data)
 			$this->addCheckbox($data['id'], $data['short']);
+
+		$this->setParser( FormularValueParser::$PARSER_ARRAY_CHECKBOXES );
 	}
 }

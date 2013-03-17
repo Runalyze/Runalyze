@@ -1,7 +1,7 @@
 <?php
 /**
  * Class for displaying a formular
- * @TODO Validation befor submitting
+ * 
  * @author Hannes Christiansen 
  */
 class Formular extends HtmlTag {

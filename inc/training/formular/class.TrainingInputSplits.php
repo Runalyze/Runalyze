@@ -1,19 +1,35 @@
 <?php
 /**
+ * This file contains class::TrainingInputSplits
+ */
+/**
  * Class for input fields: splits 
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingInputSplits extends FormularField {
 	/**
 	 * Construct new input field for: splits
-	 * Using $_POST by default
+	 * 
+	 * WARNING: This class was used with @code new TrainingInputSplits([$value]); @endcode previously.
+	 * To be used in a standard formular created by a database scheme,
+	 * this class has to use the default constructor for a FormularField again:
+	 * @code new TrainingInputSplits($name, $label [, $value]); @endcode
+	 * 
+	 * @param string $name
+	 * @param string $label
 	 * @param string $value [optional]
 	 */
-	public function __construct($value = '') {
-		parent::__construct('splits', 'Zwischenzeiten', $value);
+	public function __construct($name = '', $label = '', $value = '') {
+		if ($label == '')
+			parent::__construct('splits', 'Zwischenzeiten', $name);
+		else
+			parent::__construct($name, $label, $value);
 
 		$this->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$this->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
+
+		$this->setParser( FormularValueParser::$PARSER_SPLITS );
 	}
 
 	/**
@@ -28,7 +44,7 @@ class TrainingInputSplits extends FormularField {
 			$Inputs .= $this->getInnerDivForSplit($split);
 
 		$Inputs .= '<p id="addSplitsLink"><span class="link" onclick="$e=$(this);$($(\'#defaultInputSplit\').val()).insertBefore($e.parent());">neue Zwischenzeit hinzuf&uuml;gen</span></p>';
-		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val(Math.round(10*$(this).val())/10);});">Distanzen auf 100m runden</span></p>';
+		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">Distanzen auf 100m runden</span></p>';
 		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">als Gesamtdistanz nehmen</span></p>';
 		$Inputs .= '<textarea id="defaultInputSplit" class="hide">'.HTML::textareaTransform($this->getInnerDivForSplit()).'</textarea>';
 

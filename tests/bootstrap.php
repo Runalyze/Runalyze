@@ -20,6 +20,18 @@ if (!defined('RUNALYZE_TEST'))
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);
 
+if (!defined('CONF_MAINSPORT'))
+	define('CONF_MAINSPORT', 1);
+
+if (!defined('CONF_RUNNINGSPORT'))
+	define('CONF_RUNNINGSPORT', 1);
+
+if (!defined('CONF_VDOT_DAYS'))
+	define('CONF_VDOT_DAYS', 30);
+
+$_SERVER['REQUEST_URI'] = '/runalyze/index.php';
+$_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
+
 date_default_timezone_set('Europe/Berlin');
 
 spl_autoload_register(function ($className) {

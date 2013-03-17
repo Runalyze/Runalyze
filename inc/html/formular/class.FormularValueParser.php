@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularValueParser
+ * @package Runalyze\HTML\Formular\Validation
+ */
+/**
  * Library with parsers for formular values, default behavior: from user input to database value
+ * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\HTML\Formular\Validation
  */
 class FormularValueParser {
 	/**
@@ -46,6 +52,18 @@ class FormularValueParser {
 	static public $PARSER_BOOL = 'bool';
 
 	/**
+	 * Parser: comma seperated string <=> checkboxes
+	 * @var string 
+	 */
+	static public $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
+
+	/**
+	 * Parser: array with splits <=> string for splits
+	 * @var string
+	 */
+	static public $PARSER_SPLITS = 'splits';
+
+	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param enum $parser
@@ -55,6 +73,13 @@ class FormularValueParser {
 	static public function validatePost($key, $parser, $parserOptions = array()) {
 		if (is_null($parser))
 			return true;
+
+		if (isset($parserOptions['null']) && $parserOptions['null']) {
+			if (isset($_POST[$key]) && !is_array($_POST[$key]) && strlen($_POST[$key]) == 0) {
+				$_POST[$key] = null;
+				return true;
+			}
+		}
 
 		switch ($parser) {
 			case self::$PARSER_DATE:
@@ -71,6 +96,10 @@ class FormularValueParser {
 				return self::validateDecimal($key, $parserOptions);
 			case self::$PARSER_BOOL:
 				return self::validateBool($key);
+			case self::$PARSER_ARRAY_CHECKBOXES:
+				return self::validateArrayCheckboxes($key, $parserOptions);
+			case self::$PARSER_SPLITS:
+				return self::validateSplits($key, $parserOptions);
 			default:
 				return true;
 		}
@@ -95,6 +124,12 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_TIME:
 				self::parseTime($value);
+				break;
+			case self::$PARSER_ARRAY_CHECKBOXES:
+				self::parseArrayCheckboxes($value);
+				break;
+			case self::$PARSER_SPLITS:
+				self::parseSplits($value);
 				break;
 		}
 	}
@@ -131,7 +166,7 @@ class FormularValueParser {
 	 */
 	static protected function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
-			return false;
+			return 'Es muss eine Zahl angegeben sein.';
 
 		$_POST[$key] = (int)$_POST[$key];
 
@@ -237,14 +272,18 @@ class FormularValueParser {
 	static protected function parseDaytime(&$value) {
 		if (is_numeric($value))
 			$value = date('H:i', $value);
+
+		if ($value == '00:00')
+			$value = '';
 	}
 
 	/**
 	 * Validator: time-string => time in seconds
 	 * @param string $key
+	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateTime($key) {
+	static protected function validateTime($key, $options) {
 		$ms = explode(".", Helper::CommaToPoint($_POST[$key]));
 
 		$_POST[$key] = Time::toSeconds($ms[0]);
@@ -252,15 +291,72 @@ class FormularValueParser {
 		if (isset($ms[1]))
 			$_POST[$key] += $ms[1]/100;
 
+		if ($_POST[$key] == 0 && (isset($options['required']) || isset($options['notempty'])))
+			return 'Es muss eine Zeit angegeben sein.';
+
 		return true;
 	}
 
 	/**
 	 * Parse: time in seconds => time-string
-	 * @param type $value 
+	 * @param mixed $value 
 	 */
 	static protected function parseTime(&$value) {
 		$value = Time::toString($value, false, true);
+	}
+
+	/**
+	 * Validator: checkbox array => comma seperated string
+	 * @param string $key
+	 * @param array $options
+	 * @return boolean
+	 */
+	static protected function validateArrayCheckboxes($key, $options) {
+		if (!isset($_POST[$key]))
+			return true;
+
+		$_POST[$key] = is_array($_POST[$key]) ? implode(',', array_keys($_POST[$key])) : $_POST[$key];
+
+		return true;
+	}
+
+	/**
+	 * Parse: comma seperated string => checkbox array
+	 * @param string $value
+	 */
+	static protected function parseArrayCheckboxes(&$value) {
+		$Array = array();
+		$IDs   = explode(',', $value);
+
+		foreach ($IDs as $ID)
+			$Array[$ID] = 'on';
+
+		$value = $Array;
+	}
+
+	/**
+	 * Validator: splits array => splits string
+	 * @param string $key
+	 * @param array $options
+	 * @return boolean
+	 */
+	static protected function validateSplits($key, $options) {
+		if (!isset($_POST[$key]))
+			return true;
+
+		$Splits = new Splits($_POST[$key]);
+		$_POST[$key] = $Splits->asString();
+
+		return true;
+	}
+
+	/**
+	 * Parse: splits string => splits array
+	 * @param string $value
+	 */
+	static protected function parseSplits(&$value) {
+		$Splits = new Splits($value);
+		$value = $Splits->asArray();
 	}
 
 	/**
@@ -276,4 +372,3 @@ class FormularValueParser {
 		return $array;
 	}
 }
-?>
