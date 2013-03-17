@@ -67,7 +67,17 @@ abstract class DataObject {
 		$this->id   = self::$DEFAULT_ID;
 		$this->data = $this->databaseScheme()->getDefaultArray();
 		$this->data['id'] = $this->id;
+
+		$this->fillDefaultObject();
 	}
+
+	/**
+	 * Fill default object with values
+	 * 
+	 * This function can be implemented in the subclass.
+	 * With this function, complex values can be set for the default object.
+	 */
+	protected function fillDefaultObject() {}
 
 	/**
 	 * Try to set data
@@ -142,7 +152,7 @@ abstract class DataObject {
 	 * @param mixed $value
 	 */
 	final protected function set($propertyName, $value) {
-		if (!isset($this->data[$propertyName]))
+		if (!array_key_exists($propertyName, $this->data))
 			Error::getInstance()->addWarning('DataObject: tried to set unknown property "'.$propertyName.'"');
 		elseif ($this->isAllowedToSet($propertyName))
 			$this->data[$propertyName] = $value;

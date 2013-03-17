@@ -1,7 +1,12 @@
 <?php
-/*
+/**
+ * This file contains class::DatabaseScheme
+ * @package Runalyze\DataObjects
+ */
+/**
  * Class for a database scheme
  * @author Hannes Christiansen
+ * @package Runalyze\DataObjects
  */
 class DatabaseScheme {
 	/**
@@ -35,12 +40,6 @@ class DatabaseScheme {
 	protected $hiddenKeys = array();
 
 	/**
-	 * Array with keys which failed validation
-	 * @var array 
-	 */
-	protected $validationFailedKeys = array();
-
-	/**
 	 * Failure messages to display
 	 * @var array 
 	 */
@@ -53,7 +52,9 @@ class DatabaseScheme {
 	protected $insertedId = -1;
 
 	/**
-	 * Constructor: Only allowed for DatabaseSchemePool, always use DatabaseSchemePool::get($schemeFile)
+	 * Constructor: Only allowed for DatabaseSchemePool
+	 * 
+	 * Always use DatabaseSchemePool::get($schemeFile) to get a DatabaseScheme!
 	 * @param string $schemeFile 
 	 */
 	public function __construct($schemeFile) {
@@ -143,7 +144,7 @@ class DatabaseScheme {
 	 * @return array 
 	 */
 	public function tryToInsertFromPost() {
-		if (!empty($this->validationFailedKeys) && empty($this->validationFailures)) {
+		if (!empty($this->validationFailures)) {
 			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
 		} else {
 			$this->insertAllPostedValues();
@@ -165,9 +166,11 @@ class DatabaseScheme {
 				$values[]  = $_POST[$key];
 			}
 
-		$this->insertedId = Mysql::getInstance()->insert($this->tableName(), $columns, $values);
+		var_dump(array_combine($columns, $values));
 
-		if ($this->insertedId === false)
+		//$this->insertedId = Mysql::getInstance()->insert($this->tableName(), $columns, $values);
+
+		//if ($this->insertedId === false)
 			$this->validationFailures[] = 'Unbekannter Fehler: '.mysql_error();
 	}
 
@@ -176,7 +179,7 @@ class DatabaseScheme {
 	 * @return array 
 	 */
 	public function tryToUpdateFromPost() {
-		if (!empty($this->validationFailedKeys) && empty($this->validationFailures)) {
+		if (!empty($this->validationFailures)) {
 			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
 		} else {
 			$this->updateAllPostedValues();
@@ -193,7 +196,7 @@ class DatabaseScheme {
 		$values  = array();
 
 		foreach (array_keys($this->fields) as $key)
-			if ($this->fieldParser($key) == FormularValueParser::$PARSER_BOOL) {
+			if (isset($this->fields[$key]['formular']['parser']) && $this->fields[$key]['formular']['parser'] == FormularValueParser::$PARSER_BOOL) {
 				$columns[] = $key;
 				$values[]  = isset($_POST[$key]) ? 1 : 0;
 			} elseif ($key != 'id' && isset($_POST[$key])) {
@@ -202,20 +205,6 @@ class DatabaseScheme {
 			}
 
 		Mysql::getInstance()->update($this->tableName(), Request::sendId(), $columns, $values);
-	}
-
-	/**
-	 * Try to validate a posted value
-	 * @param string $fieldKey
-	 */
-	protected function validatePostedValue($fieldKey) {
-		//$validation = FormularValueParser::validatePost($fieldKey, $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey));
-
-		//if ($validation !== true)
-		//	$this->validationFailedKeys[] = $fieldKey;
-
-		//if (is_string($validation))
-		//	$this->validationFailures[] = $validation;
 	}
 
 	/**
@@ -267,30 +256,24 @@ class DatabaseScheme {
 	}
 
 	/**
-	 * Create a new field for a given key
-	 * @param FormularField $fieldKey 
+	 * Get field
+	 * @param string $key
+	 * @return array
 	 */
-	public function FieldFor($fieldKey) {
-		$label = $this->fieldLabel($fieldKey);
-		$unit  = $this->fieldUnit($fieldKey);
-		$size  = $this->fieldSize($fieldKey);
+	public function field($key) {
+		if (isset($this->fields[$key]))
+			return $this->fields[$key];
 
-		$ClassName = $this->fieldClass($fieldKey);
-		$Field     = new $ClassName($fieldKey, $label);
+		return array();
+	}
 
-		// TODO: setParser in class (e.g. PARSER_BOOL for FormularCheckbox)
-		$Field->setParser( $this->fieldParser($fieldKey), $this->fieldParserOptions($fieldKey) );
-
-		if (!empty($unit))
-			$Field->setUnit($unit);
-
-		if (!empty($size))
-			$Field->setSize($size);
-
-		if (in_array($fieldKey, $this->validationFailedKeys))
-			$Field->addCSSclass(FormularField::$CSS_VALIDATION_FAILED);
-
-		return $Field;
+	/**
+	 * Is this field hidden
+	 * @param string $fieldKey
+	 * @return boolean
+	 */
+	public function fieldIsHidden($fieldKey) {
+		return isset($this->fields[$fieldKey]['hidden']) && $this->fields[$fieldKey]['hidden'];
 	}
 
 	/**
@@ -298,32 +281,44 @@ class DatabaseScheme {
 	 */
 	protected function setDefaultParser() {
 		foreach ($this->fields as $key => &$options) {
-			if (!isset($options['formular']['parser'])) {
-				switch ($this->fieldType($key)) {
+			if (!isset($options['formular']['parser']) && !isset($options['formular']['class'])) {
+				$parserOptions = array();
+
+				if (isset($options['database']['null']))
+					$parserOptions['null'] = $options['database']['null'];
+				if (isset($options['database']['precision']))
+					$parserOptions['precision'] = $options['database']['precision'];
+
+				if (isset($options['formular']['notempty']))
+					$parserOptions['notempty'] = $options['formular']['notempty'];
+
+				$options['formular']['parserOptions'] = $parserOptions;
+
+				switch ($this->fields[$key]['database']['type']) {
 					case 'varchar':
 					case 'text':
 					case 'longtext':
 					case 'tinytext':
 						$options['formular']['parser'] = FormularValueParser::$PARSER_STRING;
-						if (isset($options['formular']['notempty']))
-							$options['formular']['parserOptions'] = array('notempty' => $options['formular']['notempty']);
 						break;
+
 					case 'int':
 					case 'smallint':
 					case 'tinyint':
+						if (isset($options['database']['precision']) && $options['database']['precision'] == 1)
+							break;
+
 						$options['formular']['parser'] = FormularValueParser::$PARSER_INT;
-						if (isset($options['database']['precision']))
-							$options['formular']['parserOptions'] = array('precision' => $options['database']['precision']);
-					case 'decimal':
-						$options['formular']['parser'] = FormularValueParser::$PARSER_DECIMAL;
-						if (isset($options['database']['precision']))
-							$options['formular']['parserOptions'] = array('precision' => $options['database']['precision']);
 						break;
+
+					case 'decimal':
 					case 'float':
 						$options['formular']['parser'] = FormularValueParser::$PARSER_DECIMAL;
 						break;
+
 					case 'enum': // TODO
 						break;
+
 					case 'set':
 						break;
 				}
@@ -343,7 +338,10 @@ class DatabaseScheme {
 		if ($fieldKey == 'time')
 			return time();
 
-		switch ($this->fieldType($fieldKey)) {
+		if (isset($this->fields[$fieldKey]['database']['null']))
+			return null;
+
+		switch ($this->fields[$fieldKey]['database']['type']) {
 			case 'int':
 			case 'smallint':
 			case 'tinyint':
@@ -353,108 +351,5 @@ class DatabaseScheme {
 			default:
 				return '';
 		}
-	}
-
-	/**
-	 * Get type for a given key
-	 * @param string $fieldKey
-	 * @return string
-	 */
-	public function fieldType($fieldKey) {
-		return @$this->fields[$fieldKey]['database']['type'];
-	}
-
-	/**
-	 * Get label for a given key
-	 * @param string $fieldKey
-	 * @return string
-	 */
-	public function fieldLabel($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['label']))
-			return $this->fields[$fieldKey]['formular']['label'];
-
-		return '';
-	}
-
-	/**
-	 * Get unit for a given key
-	 * @param string $fieldKey
-	 * @return string
-	 */
-	public function fieldUnit($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['unit']))
-			return $this->fields[$fieldKey]['formular']['unit'];
-
-		return '';
-	}
-
-	/**
-	 * Get size for a given key
-	 * @param string $fieldKey
-	 * @return mixed
-	 */
-	public function fieldSize($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['size']))
-			return $this->fields[$fieldKey]['formular']['size'];
-
-		return '';
-	}
-
-	/**
-	 * Is this field required?
-	 * @param string $fieldKey
-	 * @return boolean
-	 */
-	public function fieldIsRequired($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['required']))
-			return $this->fields[$fieldKey]['formular']['required'];
-
-		return false;
-	}
-
-	/**
-	 * Get parser for a given key
-	 * @param string $fieldKey
-	 * @return mixed
-	 */
-	public function fieldClass($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['class']))
-			if (class_exists($this->fields[$fieldKey]['formular']['class']))
-				return $this->fields[$fieldKey]['formular']['class'];
-
-		return 'FormularInput';
-	}
-
-	/**
-	 * Get parser for a given key
-	 * @param string $fieldKey
-	 * @return mixed
-	 */
-	public function fieldParser($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['parser']))
-			return $this->fields[$fieldKey]['formular']['parser'];
-
-		return null;
-	}
-
-	/**
-	 * Get parser for a given key
-	 * @param string $fieldKey
-	 * @return array
-	 */
-	public function fieldParserOptions($fieldKey) {
-		if (isset($this->fields[$fieldKey]['formular']['parserOptions']))
-			return $this->fields[$fieldKey]['formular']['parserOptions'];
-
-		return array();
-	}
-
-	/**
-	 * Is this field hidden
-	 * @param string $fieldKey
-	 * @return boolean
-	 */
-	public function fieldIsHidden($fieldKey) {
-		return isset($this->fields[$fieldKey]['hidden']) && $this->fields[$fieldKey]['hidden'];
 	}
 }

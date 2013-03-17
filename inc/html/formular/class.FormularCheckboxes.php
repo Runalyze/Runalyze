@@ -35,7 +35,9 @@ class FormularCheckboxes extends FormularField {
 		$Checkboxes = '';
 
 		foreach ($this->checkboxes as $key => $label) {
-			$Checkbox = new FormularCheckbox($this->getNameForKey($key), $label);
+			$value    = isset($this->value[$key]) && $this->value[$key] == 'on' ? 1 : 0;
+
+			$Checkbox = new FormularCheckbox($this->getNameForKey($key), $label, $value);
 			$Checkbox->setLayout( FormularFieldset::$LAYOUT_FIELD_SMALL_INLINE );
 			$Checkbox->addLayout( FormularFieldset::$LAYOUT_FIELD_W25 );
 			$Checkbox->setLabelToRight();

@@ -112,7 +112,7 @@ abstract class FormularField extends HtmlTag {
 		$this->name = $name;
 		$this->label = $label;
 
-		if (!empty($value))
+		if (strlen($value))
 			$this->value = $value;
 		elseif (isset($_POST[$name]))
 			$this->value = $_POST[$name];
@@ -148,8 +148,9 @@ abstract class FormularField extends HtmlTag {
 	 * @param string $layout 
 	 */
 	public function setLayoutIfEmpty($layout) {
-		if (empty($this->layout))
+		if (empty($this->layout)) {
 			$this->setLayout($layout);
+		}
 	}
 
 	/**
@@ -199,11 +200,10 @@ abstract class FormularField extends HtmlTag {
 	public function validate() {
 		$validation = FormularValueParser::validatePost($this->name, $this->parser, $this->parserOptions);
 
-		if ($validation !== true)
+		if ($validation !== true) {
 			self::setKeyAsFailed($this->name);
-
-		if (is_string($validation))
-			self::addValidationFailure($validation);
+			self::addValidationFailure(is_string($validation) ? $validation : 'Die Eingabe wird nicht akzeptiert. ('.$this->name.')');
+		}
 	}
 
 	/**

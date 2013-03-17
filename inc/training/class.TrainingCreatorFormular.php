@@ -53,9 +53,10 @@ class TrainingCreatorFormular extends TrainingEditorFormular {
 		if (!isset($_POST['datum']) && !isset($_POST['time']))
 			$_POST['datum'] = date('d.m.Y');
 
-		if ($this->trainingWasToday()) {
-			$Weather = Weather::Forecaster();
-			$Weather->setPostDataIfEmpty();
+		if ($this->trainingWasToday() && CONF_TRAINING_LOAD_WEATHER && !isset($_POST['weatherid']) && !isset($_POST['temperature'])) {
+			$Weather = new WeatherForecast();
+			$_POST['weatherid']   = $Weather->id();
+			$_POST['temperature'] = $Weather->temperature();
 		}
 	}
 
