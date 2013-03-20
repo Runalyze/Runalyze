@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::Shoe
+ * @package Runalyze\DataObjects
+ */
+/**
  * Class: Shoe
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\DataObjects
  */
 class Shoe extends DataObject {
 	/**
