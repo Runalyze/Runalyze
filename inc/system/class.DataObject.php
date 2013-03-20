@@ -1,7 +1,19 @@
 <?php
 /**
- * Abstract class for a DataObject, representing data from database
+ * This file contains class::DataObject
+ * @package Runalyze\DataObjects
+ */
+/**
+ * Object for data from database
+ * 
+ * A DataObject represents a row from database.
+ * Each subclass needs its own DatabaseScheme.
+ * All columns (and fields/fieldsets) are defined there.
+ * 
+ * A DataObject has standard get()- and set()-methods for all properties.
+ * 
  * @author Hannes Christiansen
+ * @package Runalyze\DataObjects
  */
 abstract class DataObject {
 	/**
@@ -40,7 +52,7 @@ abstract class DataObject {
 	abstract protected function initDatabaseScheme();
 
 	/**
-	 * Constructor for DataObject, loading data from database
+	 * Constructor
 	 * @param mixed $idOrArrayOrKey id | array from database | 'LAST'
 	 */
 	final public function __construct($idOrArrayOrKey) {
@@ -56,9 +68,30 @@ abstract class DataObject {
 	}
 
 	/**
-	 * Desctrucor
+	 * Try to set data
+	 * @param mixed $idOrArrayOrKey id | array from database | 'LAST'
 	 */
-	final public function __destruct() {}
+	private function tryToSetDataFrom($idOrArrayOrKey) {
+		if (is_array($idOrArrayOrKey) && isset($idOrArrayOrKey['id']))
+			$this->data = $idOrArrayOrKey;
+		elseif (is_numeric($idOrArrayOrKey))
+			$this->data = Mysql::getInstance()->fetch($this->tableName(), $idOrArrayOrKey);
+		elseif ($idOrArrayOrKey === self::$LAST_OBJECT)
+			$this->loadLastObject();
+	}
+
+	/**
+	 * Load last object
+	 */
+	private function loadLastObject() {
+		if ($this->DatabaseScheme->hasTimestamp())
+			$this->data = Mysql::getInstance()->fetchSingle('SELECT * FROM '.$this->tableName().' ORDER BY time DESC');
+		else
+			$this->data = Mysql::getInstance()->fetch($this->tableName(), 'LAST');
+
+		if (empty($this->data))
+			$this->constructAsDefaultObject();
+	}
 
 	/**
 	 * Create object default array for internal data from scheme
@@ -78,26 +111,6 @@ abstract class DataObject {
 	 * With this function, complex values can be set for the default object.
 	 */
 	protected function fillDefaultObject() {}
-
-	/**
-	 * Try to set data
-	 * @param mixed $idOrArrayOrKey id | array from database | 'LAST'
-	 */
-	private function tryToSetDataFrom($idOrArrayOrKey) {
-		if (is_array($idOrArrayOrKey) && isset($idOrArrayOrKey['id']))
-			$this->data = $idOrArrayOrKey;
-		elseif (is_numeric($idOrArrayOrKey))
-			$this->data = Mysql::getInstance()->fetch($this->tableName(), $idOrArrayOrKey);
-		elseif ($idOrArrayOrKey === self::$LAST_OBJECT) {
-			if ($this->DatabaseScheme->hasTimestamp())
-				$this->data = Mysql::getInstance()->fetchSingle('SELECT * FROM '.$this->tableName().' ORDER BY time DESC');
-			else
-				$this->data = Mysql::getInstance()->fetch($this->tableName, 'LAST');
-	
-			if (empty($this->data))
-				$this->constructAsDefaultObject();
-		}
-	}
 
 	/**
 	 * Check internal data or raise error 
@@ -135,6 +148,14 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Get DatabaseScheme
+	 * @return &DatabaseScheme 
+	 */
+	final public function &databaseSchemeReference() {
+		return $this->DatabaseScheme;
+	}
+
+	/**
 	 * Get a value
 	 * @param string $propertyName
 	 * @return mixed
@@ -147,7 +168,9 @@ abstract class DataObject {
 	}
 
 	/**
-	 * Set a given value, can be avoided with isAllowedToSet($propertyName)
+	 * Set a given value
+	 * 
+	 * To avoid properties being set directly, use isAllowedToSet($propertyName) in subclass
 	 * @param string $propertyName
 	 * @param mixed $value
 	 */
@@ -161,7 +184,9 @@ abstract class DataObject {
 	}
 
 	/**
-	 * Is it allowed to set this property? Should be overwritten by subclass
+	 * Is it allowed to set this property?
+	 * 
+	 * Should be overwritten by subclass
 	 * @param string $propertyName
 	 */
 	protected function isAllowedToSet($propertyName) {
@@ -174,21 +199,64 @@ abstract class DataObject {
 	}
 
 	/**
-	 * Set all internal values as post data for StandardFormular 
+	 * Set all internal values as post data
 	 */
 	final public function setValuesAsPostData() {
 		$_POST = array_merge($_POST, $this->data);
 	}
 
 	/**
-	 * Subclasses can set special values as post data, not representing data from database 
+	 * Tasks to perform before insert
 	 */
-	protected function setSpecialValuesAsPostData() {}
+	protected function tasksBeforeInsert() {}
 
 	/**
-	 * Update all set values to database
+	 * Tasks to perform after insert
 	 */
-	final public function updateFromSetValues() {
+	protected function tasksAfterInsert() {}
+
+	/**
+	 * Tasks to perform before update
+	 */
+	protected function tasksBeforeUpdate() {}
+
+	/**
+	 * Tasks to perform after update
+	 */
+	protected function tasksAfterUpdate() {}
+
+	/**
+	 * Insert object to database
+	 */
+	final public function insert() {
+		$this->tasksBeforeInsert();
+		$this->insertToDatabase();
+		$this->tasksAfterInsert();
+	}
+
+	/**
+	 * Insert to database
+	 */
+	private function insertToDatabase() {
+		$dataCopy = $this->data;
+		unset($dataCopy['id']);
+
+		$this->id = Mysql::getInstance()->insert($this->tableName(), array_keys($dataCopy), array_values($dataCopy));
+	}
+
+	/**
+	 * Update object in database
+	 */
+	final public function update() {
+		$this->tasksBeforeUpdate();
+		$this->updateDatabase();
+		$this->tasksAfterUpdate();
+	}
+
+	/**
+	 * Update database
+	 */
+	private function updateDatabase() {
 		$columns = array_keys($this->data);
 		$values  = array_values($this->data);
 

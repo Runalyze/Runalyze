@@ -97,6 +97,8 @@ class StandardFormular extends Formular {
 
 		$Failures = FormularField::getValidationFailures();
 
+		// TODO:
+		// User DataObject::update() / DataObject::insert()
 		if (empty($Failures)) {
 			if ($this->submitMode == self::$SUBMIT_MODE_CREATE) {
 				$this->tasksBeforeInsert();

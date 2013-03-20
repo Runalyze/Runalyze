@@ -1,10 +1,12 @@
 <?php
 /**
- * This file contains the class::Userata for handling user-information
+ * This file contains the class::UserData
+ * @package Runalyze\DataObjects
  */
 /**
  * Class: UserData
  * @author Hannes Christiansen <mail@laufhannes.de>
+ * @package Runalyze\DataObjects
  */
 class UserData extends DataObject {	
 	/**
