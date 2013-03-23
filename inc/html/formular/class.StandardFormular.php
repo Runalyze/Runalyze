@@ -97,17 +97,13 @@ class StandardFormular extends Formular {
 
 		$Failures = FormularField::getValidationFailures();
 
-		// TODO:
-		// User DataObject::update() / DataObject::insert()
 		if (empty($Failures)) {
+			$this->dataObject->setFromArray($_POST);
+
 			if ($this->submitMode == self::$SUBMIT_MODE_CREATE) {
-				$this->tasksBeforeInsert();
-				$Failures = $this->databaseScheme()->tryToInsertFromPost();
-				$this->tasksAfterInsert();
+				$this->dataObject->insert();
 			} elseif ($this->submitMode == self::$SUBMIT_MODE_EDIT) {
-				$this->tasksBeforeUpdate();
-				$Failures = $this->databaseScheme()->tryToUpdateFromPost();
-				$this->tasksAfterUpdate();
+				$this->dataObject->update();
 			}
 		}
 
@@ -180,5 +176,27 @@ class StandardFormular extends Formular {
 	 */
 	protected function databaseScheme() {
 		return $this->dataObject->databaseScheme();
+	}
+
+	/**
+	 * Display formular
+	 * 
+	 * This method overwrites the method of Formular.
+	 * After submitting data, the internal method displayAfterSubmit() is called.
+	 */
+	public function display() {
+		if ($this->submitSucceeded())
+			$this->displayAfterSubmit();
+		else
+			parent::display();
+	}
+
+	/**
+	 * Display after submit
+	 * 
+	 * This function can be overwritten in subclasses.
+	 */
+	protected function displayAfterSubmit() {
+		parent::display();
 	}
 }

@@ -195,4 +195,3 @@ class Formular extends HtmlTag {
 		echo '</form>';
 	}
 }
-?>

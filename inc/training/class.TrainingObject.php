@@ -38,6 +38,36 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
+	 * Tasks to perform before insert
+	 */
+	protected function tasksBeforeInsert() {
+		$this->set('created', time());
+		$this->set('pace', SportSpeed::minPerKm($_POST['distance'], $_POST['s']));
+	}
+
+	/**
+	 * Tasks to perform after insert
+	 */
+	protected function tasksAfterInsert() {
+		// TODO
+	}
+
+	/**
+	 * Tasks to perform before update
+	 */
+	protected function tasksBeforeUpdate() {
+		$this->set('edited', time());
+		$this->set('pace', SportSpeed::minPerKm($_POST['distance'], $_POST['s']));
+	}
+
+	/**
+	 * Tasks to perform after update
+	 */
+	protected function tasksAfterUpdate() {
+		// TODO
+	}
+
+	/**
 	 * Was this training a competition?
 	 * @return boolean 
 	 */

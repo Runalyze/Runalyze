@@ -168,6 +168,14 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Get complete array
+	 * @return array
+	 */
+	final public function getArray() {
+		return $this->data;
+	}
+
+	/**
 	 * Set a given value
 	 * 
 	 * To avoid properties being set directly, use isAllowedToSet($propertyName) in subclass
@@ -181,6 +189,16 @@ abstract class DataObject {
 			$this->data[$propertyName] = $value;
 		else
 			Error::getInstance()->addWarning('DataObject: setting "'.$propertyName.'" is not allowed.');
+	}
+
+	/**
+	 * Set all data from array
+	 * @param array $Array
+	 */
+	final public function setFromArray($Array) {
+		foreach ($Array as $key => $value)
+			if (array_key_exists($key, $this->data) && $this->isAllowedToSet($key))
+				$this->data[$key] = $value;
 	}
 
 	/**

@@ -46,12 +46,6 @@ class DatabaseScheme {
 	protected $validationFailures = array();
 
 	/**
-	 * Inserted ID
-	 * @var int 
-	 */
-	protected $insertedId = -1;
-
-	/**
 	 * Constructor: Only allowed for DatabaseSchemePool
 	 * 
 	 * Always use DatabaseSchemePool::get($schemeFile) to get a DatabaseScheme!
@@ -131,81 +125,81 @@ class DatabaseScheme {
 		return $array;
 	}
 
-	/**
-	 * Get ID of inserted data if succeeded
-	 * @return int
-	 */
-	public function insertedId() {
-		return $this->insertedId;
-	}
+//	/**
+//	 * Get ID of inserted data if succeeded
+//	 * @return int
+//	 */
+//	public function insertedId() {
+//		return $this->insertedId;
+//	}
 
-	/**
-	 * Try to insert from posted values, return array with failure messages
-	 * @return array 
-	 */
-	public function tryToInsertFromPost() {
-		if (!empty($this->validationFailures)) {
-			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
-		} else {
-			$this->insertAllPostedValues();
-		}
-
-		return $this->validationFailures;
-	}
-
-	/**
-	 * Insert all posted values, be sure validation has been done 
-	 */
-	protected function insertAllPostedValues() {
-		$columns = array();
-		$values  = array();
-
-		foreach (array_keys($this->fields) as $key)
-			if ($key != 'id' && isset($_POST[$key])) {
-				$columns[] = $key;
-				$values[]  = $_POST[$key];
-			}
-
-		var_dump(array_combine($columns, $values));
-
-		//$this->insertedId = Mysql::getInstance()->insert($this->tableName(), $columns, $values);
-
-		//if ($this->insertedId === false)
-			$this->validationFailures[] = 'Unbekannter Fehler: '.mysql_error();
-	}
-
-	/**
-	 * Try to update from posted values, return array with failure messages
-	 * @return array 
-	 */
-	public function tryToUpdateFromPost() {
-		if (!empty($this->validationFailures)) {
-			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
-		} else {
-			$this->updateAllPostedValues();
-		}
-
-		return $this->validationFailures;
-	}
-
-	/**
-	 * Update all posted values, be sure validation has been done 
-	 */
-	protected function updateAllPostedValues() {
-		$columns = array();
-		$values  = array();
-
-		foreach (array_keys($this->fields) as $key)
-			if (isset($this->fields[$key]['formular']['parser']) && $this->fields[$key]['formular']['parser'] == FormularValueParser::$PARSER_BOOL) {
-				$columns[] = $key;
-				$values[]  = isset($_POST[$key]) ? 1 : 0;
-			} elseif ($key != 'id' && isset($_POST[$key])) {
-				$columns[] = $key;
-				$values[]  = $_POST[$key];
-			}
-
-		Mysql::getInstance()->update($this->tableName(), Request::sendId(), $columns, $values);
-	}
+//	/**
+//	 * Try to insert from posted values, return array with failure messages
+//	 * @return array 
+//	 */
+//	public function tryToInsertFromPost() {
+//		if (!empty($this->validationFailures)) {
+//			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
+//		} else {
+//			$this->insertAllPostedValues();
+//		}
+//
+//		return $this->validationFailures;
+//	}
+//
+//	/**
+//	 * Insert all posted values, be sure validation has been done 
+//	 */
+//	protected function insertAllPostedValues() {
+//		$columns = array();
+//		$values  = array();
+//
+//		foreach (array_keys($this->fields) as $key)
+//			if ($key != 'id' && isset($_POST[$key])) {
+//				$columns[] = $key;
+//				$values[]  = $_POST[$key];
+//			}
+//
+//		var_dump(array_combine($columns, $values));
+//
+//		//$this->insertedId = Mysql::getInstance()->insert($this->tableName(), $columns, $values);
+//
+//		//if ($this->insertedId === false)
+//			$this->validationFailures[] = 'Unbekannter Fehler: '.mysql_error();
+//	}
+//
+//	/**
+//	 * Try to update from posted values, return array with failure messages
+//	 * @return array 
+//	 */
+//	public function tryToUpdateFromPost() {
+//		if (!empty($this->validationFailures)) {
+//			$this->validationFailures[] = 'Beim Absenden des Formulars ist ein Fehler aufgetreten.';
+//		} else {
+//			$this->updateAllPostedValues();
+//		}
+//
+//		return $this->validationFailures;
+//	}
+//
+//	/**
+//	 * Update all posted values, be sure validation has been done 
+//	 */
+//	protected function updateAllPostedValues() {
+//		$columns = array();
+//		$values  = array();
+//
+//		foreach (array_keys($this->fields) as $key)
+//			if (isset($this->fields[$key]['formular']['parser']) && $this->fields[$key]['formular']['parser'] == FormularValueParser::$PARSER_BOOL) {
+//				$columns[] = $key;
+//				$values[]  = isset($_POST[$key]) ? 1 : 0;
+//			} elseif ($key != 'id' && isset($_POST[$key])) {
+//				$columns[] = $key;
+//				$values[]  = $_POST[$key];
+//			}
+//
+//		Mysql::getInstance()->update($this->tableName(), Request::sendId(), $columns, $values);
+//	}
 
 	/**
 	 * Check if there is a field for timestamp

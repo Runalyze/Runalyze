@@ -32,33 +32,10 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
-	 * Tasks to perform before insert
+	 * Display after submit
 	 */
-	protected function tasksBeforeInsert() {
-		$_POST['created'] = time();
-		$_POST['pace']    = SportSpeed::minPerKm($_POST['distance'], $_POST['s']);
-	}
-
-	/**
-	 * Tasks to perform after insert
-	 */
-	protected function tasksAfterInsert() {
-		// TODO
-	}
-
-	/**
-	 * Tasks to perform before update
-	 */
-	protected function tasksBeforeUpdate() {
-		$_POST['edited'] = time();
-		$_POST['pace']   = SportSpeed::minPerKm($_POST['distance'], $_POST['s']);
-	}
-
-	/**
-	 * Tasks to perform after update
-	 */
-	protected function tasksAfterUpdate() {
-		// TODO
+	protected function displayAfterSubmit() {
+		echo '<em>Das Training wurde erfolgreich eingetragen.</em>';
 	}
 
 	/**
