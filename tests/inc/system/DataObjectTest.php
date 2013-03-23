@@ -34,6 +34,29 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @covers DataObject::setFromArray
+	 * @covers DataObject::getArray
+	 */
+	public function testSetFromArray() {
+		$object = $this->getMock('DataObject', array('initDatabaseScheme'), array(array('id' => 123, 'a' => false, 'b' => '', 'c' => 0)));
+
+		$object->setFromArray(array(
+			'id'	=> false,
+			'a'		=> true,
+			'b'		=> 'test',
+			'c'		=> 15.3,
+			'unknown'	=> 'empty'
+		));
+
+		$this->assertEquals($object->getArray(), array(
+			'id'	=> 123,
+			'a'		=> true,
+			'b'		=> 'test',
+			'c'		=> 15.3
+		));
+	}
+
+	/**
 	 * @covers DataObject::databaseScheme
 	 * @todo   Implement testDatabaseScheme().
 	 */

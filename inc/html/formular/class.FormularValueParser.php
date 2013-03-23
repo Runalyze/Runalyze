@@ -325,6 +325,9 @@ class FormularValueParser {
 	 * @param string $value
 	 */
 	static protected function parseArrayCheckboxes(&$value) {
+		if (is_array($value))
+			return;
+
 		$Array = array();
 		$IDs   = explode(',', $value);
 
