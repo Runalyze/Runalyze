@@ -175,6 +175,16 @@ class Sport {
 	}
 
 	/**
+	 * Reinit sports
+	 * 
+	 * Be careful: Each call requires a mysql-query!
+	 */
+	static public function reinitSports() {
+		self::$sports = null;
+		self::initSports();
+	}
+
+	/**
 	 * Initialize internal sports-array from database
 	 */
 	static private function initSports() {
