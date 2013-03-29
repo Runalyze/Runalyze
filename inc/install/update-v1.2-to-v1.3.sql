@@ -14,3 +14,10 @@ UPDATE `runalyze_sport` SET `speed`="min/km" WHERE `speed`="0";
 UPDATE `runalyze_sport` SET `speed`="" WHERE `distances`="0";
 UPDATE `runalyze_sport` SET `speed`="km/h" WHERE `speed`="1";
 UPDATE `runalyze_sport` SET `speed`="min/100m" WHERE `name`="Schwimmen";
+
+/* Rev456 */
+DELETE FROM `runalyze_conf` WHERE `key`="JS_USE_TOOLTIP";
+DELETE FROM `runalyze_conf` WHERE `key`="DESIGN_TOOLBAR_POSITION";
+DELETE FROM `runalyze_conf` WHERE `key`="PLUGIN_SHOW_MOVE_LINK";
+DELETE FROM `runalyze_conf` WHERE `key`="PLUGIN_SHOW_CONFIG_LINK";
+DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_PLOTS_BELOW";

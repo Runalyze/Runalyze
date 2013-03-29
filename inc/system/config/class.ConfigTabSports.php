@@ -150,6 +150,8 @@ class ConfigTabSports extends ConfigTab {
 				Mysql::getInstance()->insert(PREFIX.'sport', $columns, $values);
 		}
 
+		Sport::reinitSports();
+
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}
 }
