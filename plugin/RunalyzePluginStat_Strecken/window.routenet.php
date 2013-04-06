@@ -26,7 +26,7 @@ $AllTrainings = Mysql::getInstance()->fetchAsArray('
 		arr_pace
 	FROM `'.PREFIX.'training`
 	WHERE `arr_lat`!=""
-	ORDER BY `id` DESC
+	ORDER BY `time` DESC
 	LIMIT '.RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET);
 foreach ($AllTrainings as $Training) {
 	$Map = new Gmap('all', new GpsData($Training));
