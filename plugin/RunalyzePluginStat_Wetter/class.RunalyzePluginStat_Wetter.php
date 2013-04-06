@@ -313,7 +313,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		foreach ($hot as $i => $h)
 			$hot[$i] = $h['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
 		foreach ($cold as $i => $c)
-			$cold[$i] = $c['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $c['time']));
+			$cold[$i] = $c['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
 
 		echo '<small>';
 		echo '<strong>W&auml;rmsten L&auml;ufe:</strong> '.NL;
