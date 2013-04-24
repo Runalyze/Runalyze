@@ -11,10 +11,10 @@ $Training = new TrainingObject( Request::sendId() );
 $Training->tryToCorrectElevation();
 
 if ($Training->elevationWasCorrected()) {
-	echo 'Es ist ein Problem aufgetreten.';
-} else {
 	echo 'Die H&ouml;hendaten wurden korrigiert.';
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
+} else {
+	echo 'Es ist ein Problem aufgetreten.';
 }
