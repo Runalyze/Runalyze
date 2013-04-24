@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::ConfigValue
+ * @package Runalyze\System\Config
+ */
+/**
  * Class: ConfigValue
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 abstract class ConfigValue {
 	/**

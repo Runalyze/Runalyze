@@ -1,20 +1,19 @@
 <?php
 /**
- * Class: TrainingPlot
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlot
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * Abstract class for training plots
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 abstract class TrainingPlot {
 	/**
 	 * Training object
-	 * @var Training
+	 * @var TrainingObject
 	 */
 	protected $Training = null;
-
-	/**
-	 * Training ID
-	 * @var int
-	 */
-	protected $TrainingID = 0;
 
 	/**
 	 * Plot
@@ -105,11 +104,10 @@ abstract class TrainingPlot {
 
 	/**
 	 * Construct a new TrainingPlot
-	 * @param Training $Training
+	 * @param TrainingObject $TrainingObject
 	 */
-	public function __construct(Training &$Training) {
-		$this->Training   = $Training;
-		$this->TrainingID = $Training->id();
+	public function __construct(TrainingObject &$TrainingObject) {
+		$this->Training   = $TrainingObject;
 
 		$this->setKeyAndTitle();
 		$this->initPlot();
@@ -159,7 +157,7 @@ abstract class TrainingPlot {
 			$this->Plot->hideLegend();
 
 		$this->Plot->setTitle($this->title, 'right');
-		$this->Plot->setTitle($this->Training->getPlotTitle(), 'left');
+		$this->Plot->setTitle($this->Training->DataView()->getTitleForPlot(), 'left');
 	}
 
 	/**
@@ -175,6 +173,6 @@ abstract class TrainingPlot {
 	 * @return string
 	 */
 	final protected function getCSSid() {
-		return $this->key.'_'.$this->TrainingID;
+		return $this->key.'_'.$this->Training->id();
 	}
 }

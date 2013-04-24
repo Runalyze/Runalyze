@@ -7,7 +7,7 @@
  * Class for displaying a standard formular
  * 
  * This standard formular is always connected to a given DataObject.
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\HTML\Formular
  */
 class StandardFormular extends Formular {
@@ -52,7 +52,7 @@ class StandardFormular extends Formular {
 	 * @param DataObject $dataObject
 	 * @param enum $mode
 	 */
-	public function __construct($dataObject, $mode) {
+	public function __construct(DataObject &$dataObject, $mode) {
 		parent::__construct();
 
 		$this->setMode($mode);
@@ -63,8 +63,8 @@ class StandardFormular extends Formular {
 	 * Initialize standard formular with validation and database-connection 
 	 * @param DataObject $dataObject
 	 */
-	protected function init(DataObject $dataObject) {
-		$this->wasSubmitted = !empty($_POST);
+	protected function init(DataObject &$dataObject) {
+		$this->wasSubmitted = isset($_POST['submit']);
 		$this->dataObject   = $dataObject;
 
 		if (!$this->wasSubmitted)
@@ -110,29 +110,9 @@ class StandardFormular extends Formular {
 		foreach ($Failures as $message)
 			$this->addFailure($message);
 
-		if (!$this->submitSucceeded())
+		if (!$this->submitSucceeded() || $this->submitMode == self::$SUBMIT_MODE_EDIT)
 			$this->initFieldsets();
 	}
-
-	/**
-	 * Tasks to perform before insert
-	 */
-	protected function tasksBeforeInsert() {}
-
-	/**
-	 * Tasks to perform after insert
-	 */
-	protected function tasksAfterInsert() {}
-
-	/**
-	 * Tasks to perform before update
-	 */
-	protected function tasksBeforeUpdate() {}
-
-	/**
-	 * Tasks to perform after update
-	 */
-	protected function tasksAfterUpdate() {}
 
 	/**
 	 * Has the submit succeeded?

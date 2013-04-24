@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: TrainingPlotsList
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlotsList
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * General class for creating all plots for a given training and displaying them
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 class TrainingPlotsList {
 	/**
@@ -12,33 +17,33 @@ class TrainingPlotsList {
 
 	/**
 	 * Construct new list of plots
-	 * @param Training $Training 
+	 * @param TrainingObject $Training 
 	 */
-	public function __construct(Training &$Training) {
+	public function __construct(TrainingObject &$Training) {
 		$Collection = (CONF_TRAINING_PLOT_MODE == 'collection');
 		$PacePulse  = (CONF_TRAINING_PLOT_MODE == 'pacepulse');
 
-		if ($Collection && !$Training->hasElevationData()) {
+		if ($Collection && !$Training->hasArrayAltitude()) {
 			$Collection = false;
 			$PacePulse  = true;
 		}
-		if ($PacePulse && (!$Training->hasPaceData() || !$Training->hasPulseData()))
+		if ($PacePulse && (!$Training->hasArrayPace() || !$Training->hasArrayHeartrate()))
 			$PacePulse  = false;
 
-		if ($Training->hasSplits())
+		if (!$Training->Splits()->areEmpty())
 			$this->Plots[] = new TrainingPlotSplits($Training);
 		if ($Collection)
 			$this->Plots[] = new TrainingPlotCollection($Training);
 		if ($PacePulse)
 			$this->Plots[] = new TrainingPlotPacePulse($Training);
-		if ($Training->hasPaceData() && !$PacePulse && !$Collection)
+		if ($Training->hasArrayPace() && !$PacePulse && !$Collection)
 			$this->Plots[] = new TrainingPlotPace($Training);
-		if ($Training->hasPulseData() && !$PacePulse && !$Collection)
+		if ($Training->hasArrayHeartrate() && !$PacePulse && !$Collection)
 			$this->Plots[] = new TrainingPlotPulse($Training);
-		if ($Training->hasElevationData() && !$Collection)
+		if ($Training->hasArrayAltitude() && !$Collection)
 			$this->Plots[] = new TrainingPlotElevation($Training);
 
-		if (!$Training->hasSplits() && $Training->hasPaceData())
+		if ($Training->Splits()->areEmpty() && $Training->hasArrayPace())
 			$this->Plots[] = new TrainingPlotSplits($Training);
 	}
 

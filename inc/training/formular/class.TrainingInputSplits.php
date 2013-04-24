@@ -56,10 +56,11 @@ class TrainingInputSplits extends FormularField {
 	 * @param array $split [optional]
 	 * @return string 
 	 */
-	protected function getInnerDivForSplit($split = array('km' => '1.00', 'time' => '6:00')) {
+	protected function getInnerDivForSplit($split = array('km' => '1.00', 'time' => '6:00', 'active' => true)) {
 		$Code  = $this->getDistanceInputCode($split['km']);
 		$Code .= '&nbsp;in&nbsp;';
 		$Code .= $this->getTimeInputCode($split['time']);
+		$Code .= $this->getActiveInputCode($split['active']);
 		$Code .= $this->getSpanForLinks();
 
 		return '<div>'.$Code.'</div>';
@@ -102,6 +103,19 @@ class TrainingInputSplits extends FormularField {
 		$FieldDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
 
 		return $FieldDistance->getCode();
+	}
+
+	/**
+	 * Get input for active
+	 * @param bool $active
+	 * @return FormularSelectBox 
+	 */
+	protected function getActiveInputCode($active) {
+		$FieldActive = new FormularSelectBox('splits[active][]', '', (int)$active);
+		$FieldActive->setOptions(array('Ruhe', 'Aktiv'));
+		$FieldActive->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
+
+		return $FieldActive->getCode();
 	}
 
 	/**

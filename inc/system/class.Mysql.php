@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::Mysql
+ * @package Runalyze\System
+ */
+/**
  * Class for handling a mysql-connection and getting rows from database
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 final class Mysql {
 	/**

@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: TrainingPlotElevation
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlotElevation
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * Training plot for elevation
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 class TrainingPlotElevation extends TrainingPlot {
 	/**
@@ -37,9 +42,10 @@ class TrainingPlotElevation extends TrainingPlot {
 
 	/**
 	 * Get data
+	 * @param TrainingObject $Training
 	 * @return array
 	 */
-	static public function getData(Training &$Training) {
+	static public function getData(TrainingObject &$Training) {
 		return $Training->GpsData()->getPlotDataForElevation();
 	}
 
@@ -47,10 +53,10 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * Set properties
 	 * @param Plot $Plot
 	 * @param int $YAxis
-	 * @param Training $Training
+	 * @param TrainingObject $Training
 	 * @param array $Data 
 	 */
-	static public function setPropertiesTo(Plot &$Plot, $YAxis, Training &$Training, array $Data) {
+	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
 		$min = min($Data); $minXvalues = array_keys($Data, $min);
 		$max = max($Data); $maxXvalues = array_keys($Data, $max);
 

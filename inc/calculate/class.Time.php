@@ -5,7 +5,7 @@
  */
 /**
  * Class for standard operations for timestamps
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Time {

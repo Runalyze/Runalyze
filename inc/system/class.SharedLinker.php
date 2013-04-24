@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::SharedLinker
+ * @package Runalyze\System
+ */
+/**
  * Class for handling links to shared activities
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 class SharedLinker {
 	/**

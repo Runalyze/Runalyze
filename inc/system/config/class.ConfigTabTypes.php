@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigTabTypes
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigTabTypes
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigTabTypes
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigTabTypes extends ConfigTab {
 	/**
@@ -67,9 +72,9 @@ class ConfigTabTypes extends ConfigTab {
 			elseif ($Data['tcount'] == 0)
 				$delete = '<input type="checkbox" name="type[delete]['.$id.']" />';
 			else
-				$delete = DataBrowser::getSearchLink('<small>('.$Data['tcount'].')</small>', 'opt[typeid]=is&val[typeid][0]='.$id);
+				$delete = DataBrowserLinker::searchLink('<small>('.$Data['tcount'].')</small>', 'opt[typeid]=is&val[typeid][0]='.$id);
 
-			$Sports = Sport::getSportsWithTypes();
+			$Sports = SportFactory::AllSportsWithTypes();
 	
 			$Code .= '
 				<tr class="a'.($i%2+1).($id == -1 ? ' unimportant' : '').'">

@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: InstallerUpdate
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::InstallerUpdate
+ * @package Runalyze\Install
+ */
+/**
+ * Updater
+ * @author Hannes Christiansen
+ * @package Runalyze\Install
  */
 class InstallerUpdate extends Installer {
 	/**

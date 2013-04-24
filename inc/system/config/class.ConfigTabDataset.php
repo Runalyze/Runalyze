@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigTabDataset
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigTabDataset
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigTabDataset
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigTabDataset extends ConfigTab {
 	/**
@@ -45,7 +50,7 @@ class ConfigTabDataset extends ConfigTab {
 				<tbody>';
 
 		$DatasetObject = new Dataset();
-		$DatasetObject->setTrainingId(Training::$CONSTRUCTOR_ID, $this->getExampleTraining());
+		$DatasetObject->setTrainingId(DataObject::$DEFAULT_ID, $this->getExampleTraining());
 
 		$Dataset = Mysql::getInstance()->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC');
 		foreach ($Dataset as $i => $Data) {
@@ -164,7 +169,7 @@ class ConfigTabDataset extends ConfigTab {
 		$ShoeID    = $this->getRandIdFor('shoe');
 
 		$Data = array(
-			'id'		=> Training::$CONSTRUCTOR_ID,
+			'id'		=> DataObject::$DEFAULT_ID,
 			'sportid'	=> CONF_RUNNINGSPORT,
 			'typeid'	=> CONF_WK_TYPID,
 			'time'		=> time(),

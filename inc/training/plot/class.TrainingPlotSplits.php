@@ -1,14 +1,42 @@
 <?php
 /**
- * Class: TrainingPlotSplits
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlotSplits
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * Training plot for splits
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 class TrainingPlotSplits extends TrainingPlot {
+	/**
+	 * Selection enabled?
+	 * @var bool
+	 */
 	protected $selecting = false;
+
+	/**
+	 * Uses standard x-axis?
+	 * @var bool
+	 */
 	protected $useStandardXaxis = false;
 
+	/**
+	 * Demanded pace in s/km
+	 * @var int
+	 */
 	private $demandedPace = 0;
+
+	/**
+	 * Achieved pace in s/km
+	 * @var int
+	 */
 	private $achievedPace = 0;
+
+	/**
+	 * Labels
+	 * @var array
+	 */
 	private $Labels = array();
 
 	/**
@@ -31,13 +59,13 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		if ($this->Training->hasSplits()) {
+		if (!$this->Training->Splits()->areEmpty()) {
 			$this->Labels = $this->Training->Splits()->distancesAsArray();
 			$this->Data   = $this->Training->Splits()->pacesAsArray();
 			$num          = count($this->Data);
 			$unit         = ($num >= 20) ? '' : ' km';
 
-			$this->demandedPace = Running::DescriptionToDemandedPace($this->Training->get('comment'));
+			$this->demandedPace = Running::DescriptionToDemandedPace($this->Training->getComment());
 			$this->achievedPace = array_sum($this->Data) / $num;
 
 			foreach ($this->Data as $key => $val) {
@@ -73,8 +101,8 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		$min = min($this->Data); $min = floor($min/30000)*30000;
-		$max = max($this->Data); $max = ceil($max/30000)*30000;
+		$min = Helper::floorFor(min($this->Data), 30000);
+		$max = Helper::ceilFor(max($this->Data), 30000);
 
 		$this->Plot->setYAxisTimeFormat('%M:%S');
 		$this->Plot->setXLabels($this->Labels);

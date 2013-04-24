@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file contains class::SessionAccountHandler
+ * @package Runalyze\System
+ */
+
 if (!defined('USER_MUST_LOGIN'))
 /**
  * Is a login needed?
@@ -9,8 +14,9 @@ if (!defined('USER_MUST_LOGIN'))
 /**
  * Class: SessionAccountHandler
  * 
- * @author Michael Pohl <michael@michael-pohl.info>
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Michael Pohl
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 class SessionAccountHandler {
 	/**

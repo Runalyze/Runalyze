@@ -10,7 +10,7 @@
  * Each subclass needs its own DatabaseScheme.
  * All columns (and fields/fieldsets) are defined there.
  * 
- * A DataObject has standard get()- and set()-methods for all properties.
+ * A DataObject has standard (protected!) get()- and set()-methods for all properties.
  * 
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects
@@ -29,6 +29,18 @@ abstract class DataObject {
 	static public $DEFAULT_ID = -1;
 
 	/**
+	 * Internal flag: debug insert/update-queries
+	 * @var bool
+	 */
+	static private $DEBUG_QUERIES = false;
+
+	/**
+	 * Array seperator for gps-data in database
+	 * @var char
+	 */
+	static public $ARR_SEP = '|';
+
+	/**
 	 * Internal ID of this dataset in database
 	 * @var int
 	 */
@@ -39,6 +51,12 @@ abstract class DataObject {
 	 * @var array
 	 */
 	private $data = array();
+
+	/**
+	 * Cache for exploded arrays from internal data
+	 * @var array
+	 */
+	private $dataArrayCache = array();
 
 	/**
 	 * DatabaseScheme
@@ -58,7 +76,7 @@ abstract class DataObject {
 	final public function __construct($idOrArrayOrKey) {
 		$this->initDatabaseScheme();
 
-		if ($idOrArrayOrKey == self::$DEFAULT_ID) {
+		if ($idOrArrayOrKey == self::$DEFAULT_ID || is_null($idOrArrayOrKey) || $idOrArrayOrKey == 0) {
 			$this->constructAsDefaultObject();
 			return;
 		}
@@ -132,6 +150,14 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Is default id?
+	 * @return bool
+	 */
+	final public function isDefaultId() {
+		return $this->id == self::$DEFAULT_ID;
+	}
+
+	/**
 	 * Get tablename
 	 * @return string
 	 */
@@ -156,12 +182,23 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Update single value
+	 * @param string $column Column to update
+	 * @param mixed $value Value to set
+	 */
+	final protected function updateValue($column, $value) {
+		$this->set($column, $value);
+
+		Mysql::getInstance()->update($this->tableName(), $this->id(), $column, $value);
+	}
+
+	/**
 	 * Get a value
 	 * @param string $propertyName
 	 * @return mixed
 	 */
-	final protected function get($propertyName) {
-		if (!isset($this->data[$propertyName]))
+	final public function get($propertyName) {
+		if (!array_key_exists($propertyName, $this->data))
 			Error::getInstance()->addWarning('DataObject: tried to get unknown property "'.$propertyName.'"');
 		else
 			return $this->data[$propertyName];
@@ -176,19 +213,65 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Get array for key
+	 * @param string $key
+	 * @return array
+	 */
+	final protected function getArrayFor($key) {
+		if (!isset($this->dataArrayCache[$key]))
+			$this->dataArrayCache[$key] = explode(self::$ARR_SEP, $this->get($key));
+
+		return $this->dataArrayCache[$key];
+	}
+
+	/**
+	 * Get last point of array
+	 * @param string $key
+	 * @return mixed
+	 */
+	final protected function getLastArrayPoint($key) {
+		$array = $this->getArrayFor($key);
+
+		return end($array);
+	}
+
+	/**
 	 * Set a given value
 	 * 
 	 * To avoid properties being set directly, use isAllowedToSet($propertyName) in subclass
 	 * @param string $propertyName
 	 * @param mixed $value
 	 */
-	final protected function set($propertyName, $value) {
+	final public function set($propertyName, $value) {
 		if (!array_key_exists($propertyName, $this->data))
 			Error::getInstance()->addWarning('DataObject: tried to set unknown property "'.$propertyName.'"');
 		elseif ($this->isAllowedToSet($propertyName))
 			$this->data[$propertyName] = $value;
 		else
 			Error::getInstance()->addWarning('DataObject: setting "'.$propertyName.'" is not allowed.');
+
+		if (array_key_exists($propertyName, $this->dataArrayCache))
+			unset($this->dataArrayCache[$propertyName]);
+	}
+
+	/**
+	 * Set array for key
+	 * @param string $key
+	 * @param array $array
+	 */
+	final protected function setArrayFor($key, $array) {
+		if (empty($array) || (max($array) == 0 && min($array) == 0))
+			return;
+
+		$this->set($key, implode(self::$ARR_SEP, $array));
+		$this->dataArrayCache[$key] = $array;
+	}
+
+	/**
+	 * Clear internal array cache
+	 */
+	private function clearArrayCache() {
+		$this->dataArrayCache = array();
 	}
 
 	/**
@@ -199,6 +282,8 @@ abstract class DataObject {
 		foreach ($Array as $key => $value)
 			if (array_key_exists($key, $this->data) && $this->isAllowedToSet($key))
 				$this->data[$key] = $value;
+
+		$this->clearArrayCache();
 	}
 
 	/**
@@ -255,11 +340,14 @@ abstract class DataObject {
 	/**
 	 * Insert to database
 	 */
-	private function insertToDatabase() {
+	protected function insertToDatabase() {
 		$dataCopy = $this->data;
 		unset($dataCopy['id']);
 
 		$this->id = Mysql::getInstance()->insert($this->tableName(), array_keys($dataCopy), array_values($dataCopy));
+
+		if (self::$DEBUG_QUERIES)
+			Error::getInstance()->addDebug('Inserted to '.$this->tableName().': '.print_r($dataCopy, true));
 	}
 
 	/**
@@ -279,5 +367,8 @@ abstract class DataObject {
 		$values  = array_values($this->data);
 
 		Mysql::getInstance()->update($this->tableName(), $this->id, $columns, $values);
+
+		if (self::$DEBUG_QUERIES)
+			Error::getInstance()->addDebug('Updated #'.$this->id.' '.$this->tableName().': '.print_r($this->data, true));
 	}
 }

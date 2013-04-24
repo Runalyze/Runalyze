@@ -71,7 +71,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 
 			for ($m = 1; $m <= 12; $m++) {
 				if (isset($Data[$m]) && $Data[$m]['elevation'] > 0)
-					echo '<td>'.DataBrowser::getSearchLink($Data[$m]['elevation'].' hm', 'sort=DESC&order=elevation&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y).'</td>'.NL;
+					echo '<td>'.DataBrowserLinker::searchLink($Data[$m]['elevation'].' hm', 'sort=DESC&order=elevation&time-gt=01.'.$m.'.'.$y.'&time-lt=00.'.($m+1).'.'.$y).'</td>'.NL;
 				else
 					echo HTML::emptyTD();
 			}

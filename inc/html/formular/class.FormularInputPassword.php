@@ -1,6 +1,12 @@
 <?php
 /**
- * Class for a standard password-input field 
+ * This file contains class::FormularInputPassword
+ * @package Runalyze\HTML\Formular
+ */
+/**
+ * Class for a standard password-input field
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularInputPassword extends FormularInput {
 	/**

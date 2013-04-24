@@ -7,10 +7,5 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Training = new Training($_GET['id']);
-
-if (!$Training->isValid())
-	return;
-
-$Training->display();
-?>
+$View = new TrainingView(new TrainingObject(Request::sendId()));
+$View->display();

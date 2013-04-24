@@ -1,11 +1,12 @@
 <?php
 /**
+ * This file contains class::FrontendSharedStatistics
  * @package Runalyze\Frontend
  */
 /**
  * Class for general statistics shown in shared list
  *
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class FrontendSharedStatistics {

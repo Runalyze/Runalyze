@@ -354,30 +354,34 @@ class Training {
 	 * Display the whole training
 	 */
 	public function display() {
-		$Display = new TrainingDisplay($this);
-		$Display->display();
+		Error::getInstance()->addError('Training::display() is not available anymore.');
+		//$Display = new TrainingDisplay($this);
+		//$Display->display();
 	}
 
 	/**
 	 * Display the whole training in iframe-style
 	 */
 	public function displayAsIframe() {
-		$Display = new TrainingDisplayIframe($this);
-		$Display->display();
+		Error::getInstance()->addError('Training::displayAsIframe() is not available anymore.');
+		//Display = new TrainingDisplayIframe($this);
+		//$Display->display();
 	}
 
 	/**
 	 * Display table with all training data
 	 */
 	public function displayTable() {
-		include 'tpl/tpl.Training.table.php';
+		Error::getInstance()->addError('Training::displayTable() is not available anymore.');
+		//include 'tpl/tpl.Training.table.php';
 	}
 
 	/**
 	 * Display table with all training data
 	 */
 	public function displayIframeTable() {
-		include 'tpl/tpl.TrainingIframe.table.php';
+		Error::getInstance()->addError('Training::displayIframeTable() is not available anymore.');
+		//include 'tpl/tpl.TrainingIframe.table.php';
 	}
 
 	/**
@@ -408,12 +412,12 @@ class Training {
 	 * Display title with date and navigation links for prev/next training 
 	 */
 	public function displayTitleWithNavigation() {
-		echo TrainingDisplay::getEditPrevLinkFor($this->id(), $this->get('time'));
+		echo TrainingLinker::editPrevLink($this->id(), $this->get('time'));
 
 		$this->displayTitleWithDate(true);
 		echo NL;
 
-		echo TrainingDisplay::getEditNextLinkFor($this->id(), $this->get('time'));
+		echo TrainingLinker::editNextLink($this->id(), $this->get('time'));
 	}
 
 	/**
@@ -442,7 +446,7 @@ class Training {
 	 * @return string
 	 */
 	public function getDateAsWeeklink() {
-		return DataBrowser::getLink(date("d.m.Y", $this->data['time']), Time::Weekstart($this->data['time']), Time::Weekend($this->data['time']));
+		return DataBrowserLinker::link(date("d.m.Y", $this->data['time']), Time::Weekstart($this->data['time']), Time::Weekend($this->data['time']));
 	}
 
 	/**
@@ -479,7 +483,7 @@ class Training {
 			return $this->getDate($withTime);
 
 		$string = explode(' ', $this->getDate($withTime));
-		$string[0] = DataBrowser::getWeekLink($string[0], $this->get('time'));
+		$string[0] = DataBrowserLinker::weekLink($string[0], $this->get('time'));
 
 		return implode(' ', $string);
 	}
@@ -549,7 +553,7 @@ class Training {
 	 * @return string
 	 */
 	public function getSpeedString() {
-		return Sport::getSpeedWithAppendixAndTooltip($this->get('distance'), $this->get('s'), $this->get('sportid'));
+		return SportFactory::getSpeedWithAppendixAndTooltip($this->get('distance'), $this->get('s'), $this->get('sportid'));
 	}
 
 	/**
@@ -595,7 +599,7 @@ class Training {
 		$links = array();
 		$partners = explode(', ', $this->getPartner());
 		foreach ($partners as $partner)
-			$links[] = DataBrowser::getSearchLink($partner, 'opt[partner]=is&val[partner]='.$partner);
+			$links[] = DataBrowserLinker::searchLink($partner, 'opt[partner]=is&val[partner]='.$partner);
 
 		return implode(', ', $links);
 	}

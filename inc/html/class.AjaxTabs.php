@@ -1,8 +1,13 @@
 <?php
 /**
+ * This file contains class::AjaxTabs
+ * @package Runalyze\HTML
+ */
+/**
  * Ajax tabs
  *
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 class AjaxTabs {
 	/**

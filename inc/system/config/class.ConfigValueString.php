@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigValueString
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigValueString
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigValueString
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigValueString extends ConfigValue {
 	/**

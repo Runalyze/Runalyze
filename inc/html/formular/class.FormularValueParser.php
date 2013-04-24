@@ -5,7 +5,7 @@
  */
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\HTML\Formular\Validation
  */
 class FormularValueParser {

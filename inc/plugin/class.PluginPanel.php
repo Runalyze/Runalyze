@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: PluginPanel
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::PluginPanel
+ * @package Runalyze\Plugin
+ */
+/**
+ * Abstract plugin class for panels
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugin
  */
 abstract class PluginPanel extends Plugin {
 	/**

@@ -76,7 +76,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			echo('
 			<p style="background-image:url(plugin/'.$this->key.'/schuhbalken.php?km='.round($Shoe->getKm()).');">
 				<span class="right">'.$Shoe->getKmString().'</span>
-				<strong>'.Shoe::getSearchLink($schuh['id']).'</strong>
+				<strong>'.ShoeFactory::getSearchLink($schuh['id']).'</strong>
 			</p>'.NL);	
 		}
 
@@ -131,7 +131,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				<tr class="'.HTML::trClass($i).$in_use.' r">
 					<td class="small">'.$schuh['num'].'x</td>
 					<td>'.$this->editLinkFor($schuh['id']).'</td>
-					<td class="b l">'.Shoe::getSearchLink($schuh['id']).'</td>
+					<td class="b l">'.ShoeFactory::getSearchLink($schuh['id']).'</td>
 					<td class="small">'.$Shoe->getSince().'</td>
 					<td>'.(($schuh['num'] != 0) ? Running::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
 					<td>'.(($schuh['num'] != 0) ? SportSpeed::minPerKm($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>

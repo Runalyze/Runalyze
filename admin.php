@@ -2,7 +2,7 @@
 /**
  * RUNALYZE
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Runalyze
  * @copyright http://www.runalyze.de/
  */
 if (!file_exists('config.php')) {

@@ -6,7 +6,8 @@
  */
 /**
  * Class: Error - This class handles all errors 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 class Error {
 	/**

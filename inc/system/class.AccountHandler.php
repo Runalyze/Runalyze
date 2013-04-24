@@ -1,8 +1,13 @@
 <?php
 /**
- * Class: AccountHandler
+ * This file contains class::AccountHandler
+ * @package Runalyze\System
+ */
+/**
+ * AccountHandler
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 class AccountHandler {
 	/**

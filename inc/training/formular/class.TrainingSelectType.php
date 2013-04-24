@@ -18,10 +18,10 @@ class TrainingSelectType extends FormularSelectBox {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
-		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_TYPES_CLASS );
+		$this->addLayoutClass( TrainingFormular::$ONLY_TYPES_CLASS );
 		$this->addOption(0, '---- Typ ausw&auml;hlen');
 
-		foreach (Type::getNamesAsArray() as $id => $name)
+		foreach (TypeFactory::NamesAsArray() as $id => $name)
 			$this->addOption($id, $name);
 	}
 }

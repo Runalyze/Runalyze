@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: DataBrowserShared
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::DataBrowserShared
+ * @package Runalyze\DataBrowser
+ */
+/**
+ * Shared version of DataBrowser
+ * @author Hannes Christiansen
+ * @package Runalyze\DataBrowser
  */
 class DataBrowserShared extends DataBrowser {
 	/**
@@ -27,22 +32,12 @@ class DataBrowserShared extends DataBrowser {
 	}
 
 	/**
-	 * Display links to navigate in calendar
+	 * Get ajax-link for choosing timestamps from calendar
+	 * @return string
 	 */
-	protected function displayNavigationLinks() {
-		echo $this->getPrevLink().NL;
-		// TODO: echo $this->getCalenderLink().NL;
-
-		if ($this->timestamp_start < time() && time() < $this->timestamp_end)
-			$timeForLinks = time();
-		else
-			$timeForLinks = $this->timestamp_start;
-
-		echo self::getMonthLink(Time::Month(date("m", $timeForLinks)), $timeForLinks).', ';
-		echo self::getYearLink(date("Y", $timeForLinks), $timeForLinks).', ';
-		echo self::getWeekLink(date("W", $timeForLinks).'. Woche ', $timeForLinks);
-
-		echo $this->getNextLink().NL;	
+	protected function getCalenderLink() {
+		return '';
+		//return '<span id="calendarLink" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**

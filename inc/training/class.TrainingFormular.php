@@ -13,10 +13,34 @@
  * This class only extends the standard formular with some additional values
  * (e.g. created-timestamp) and additional fieldsets for adding gps-data etc.
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training
  */
 class TrainingFormular extends StandardFormular {
+	/**
+	 * CSS class for inputs only for running
+	 * @var string
+	 */
+	static public $ONLY_RUNNING_CLASS = "only-running";
+
+	/**
+	 * CSS class for inputs only for sports outside
+	 * @var string
+	 */
+	static public $ONLY_OUTSIDE_CLASS = "only-outside";
+
+	/**
+	 * CSS class for inputs only for sports with types
+	 * @var string
+	 */
+	static public $ONLY_TYPES_CLASS = "only-types";
+
+	/**
+	 * CSS class for inputs only for sports with distance
+	 * @var string
+	 */
+	static public $ONLY_DISTANCES_CLASS = "only-distances";
+
 	/**
 	 * Prepare for display
 	 */
@@ -35,7 +59,13 @@ class TrainingFormular extends StandardFormular {
 	 * Display after submit
 	 */
 	protected function displayAfterSubmit() {
-		echo '<em>Das Training wurde erfolgreich eingetragen.</em>';
+		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE) {
+			$this->displayHeader();
+			echo HTML::em('Das Training wurde erfolgreich eingetragen.');
+			echo Ajax::closeOverlay();
+		} else {
+			parent::displayAfterSubmit();
+		}
 	}
 
 	/**

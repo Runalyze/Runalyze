@@ -1,6 +1,12 @@
 <?php
 /**
- * Class for a standard input field 
+ * This file contains class::FormularInput
+ * @package Runalyze\HTML\Formular
+ */
+/**
+ * Class for a standard input field
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularInput extends FormularField {
 	/**

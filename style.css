@@ -456,7 +456,7 @@ h1 a:hover, h1 a:active {
 
 #ajax {
 	display: none;
-	z-index: 11;
+	z-index: 12;
 	position: absolute;
 	left: 50%;
 	width: 800px;
@@ -466,6 +466,24 @@ h1 a:hover, h1 a:active {
 	-webkit-border-radius: 5px;
 	-khtml-border-radius: 5px;
 	-moz-border-radius: 5px;
+	box-shadow: 3px 2px 5px #333;
+	-webkit-box-shadow: 3px 2px 5px #333;
+	-moz-box-shadow: 3px 2px 5px #333; }
+
+#ajax-navigation {
+	max-height: 400px;
+	overflow-y: scroll;
+	display: block;
+	z-index: 11;
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	margin-left: -460px;
+	width: 200px;
+	border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+	-khtml-border-radius: 5px 0 0 5px;
+	-moz-border-radius: 5px 0 0 5px;
 	box-shadow: 3px 2px 5px #333;
 	-webkit-box-shadow: 3px 2px 5px #333;
 	-moz-box-shadow: 3px 2px 5px #333; }
@@ -698,6 +716,11 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 
 #tab_content table {
 	margin: 5px 0 10px; }
+
+.multi-import-table tbody { font: normal normal normal 11px/2em Verdana, Arial, sans-serif; }
+.multi-import-table th { padding: 2px 10px; }
+.multi-import-table td { padding: 1px 5px; }
+.multi-import-table td input { font-size: 1em; top: 0; }
 
 .datepicker th, .datepicker td {
 	padding: 0 !important;

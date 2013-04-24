@@ -7,10 +7,10 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Training = new Training($_GET['id']);
-$Training->elevationCorrection();
+$Training = new TrainingObject( Request::sendId() );
+$Training->tryToCorrectElevation();
 
-if (Error::getInstance()->hasErrors()) {
+if ($Training->elevationWasCorrected()) {
 	echo 'Es ist ein Problem aufgetreten.';
 } else {
 	echo 'Die H&ouml;hendaten wurden korrigiert.';
@@ -18,4 +18,3 @@ if (Error::getInstance()->hasErrors()) {
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
 }
-?>

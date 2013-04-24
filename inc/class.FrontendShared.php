@@ -1,17 +1,18 @@
 <?php
 /**
+ * This file contains class::FrontendShared
  * @package Runalyze\Frontend
  */
 /**
  * Class for customizing frontend for displaying shared activities
  * 
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class FrontendShared extends Frontend {
 	/**
-	 * Training to be display in shared view
-	 * @var Training
+	 * Training object
+	 * @var TrainingObject
 	 */
 	protected $Training = null;
 
@@ -73,14 +74,14 @@ class FrontendShared extends Frontend {
 		if ($id <= 0)
 			return;
 
-		$this->Training = new Training($id);
+		$this->Training = new TrainingObject($id);
 	}
 
 	/**
 	 * Display shared view 
 	 */
 	public function displaySharedView() {
-		if (is_null($this->Training) || !$this->Training->isValid())
+		if (is_null($this->Training) || $this->Training->isDefaultId())
 			$this->throwErrorForInvalidRequest();
 		elseif (!$this->Training->isPublic())
 			$this->throwErrorForPrivateTraining();
@@ -94,10 +95,13 @@ class FrontendShared extends Frontend {
 	protected function displayRequestedTraining() {
 		$_GET['id'] = $this->Training->id();
 
-		if (Request::param('mode') == 'iframe')
-			$this->Training->displayAsIframe();
-		else
-			$this->Training->display();
+		if (Request::param('mode') == 'iframe') {
+			$View = new TrainingViewIFrame($this->Training);
+			$View->display();
+		} else {
+			$View = new TrainingView($this->Training);
+			$View->display();
+		}
 	}
 
 	/**
@@ -105,10 +109,10 @@ class FrontendShared extends Frontend {
 	 * @return string
 	 */
 	protected function getPageTitle() {
-		if (is_null($this->Training) || !$this->Training->isValid() || !$this->Training->isPublic())
+		if (is_null($this->Training) || $this->Training->isDefaultId() || !$this->Training->isPublic())
 			return 'Problem';
 
-		return $this->Training->getTitle().' am '.$this->Training->getDate(false).' - Trainingsansicht';
+		return $this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht';
 	}
 
 	/**

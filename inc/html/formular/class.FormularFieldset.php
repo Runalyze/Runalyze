@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularFieldset
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a fieldset as part of a formular
- * @author Hannes Christiansen 
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularFieldset extends HtmlTag {
 	static public $LAYOUT_FIELD_W100          = 'w100 block';

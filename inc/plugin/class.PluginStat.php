@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: PluginStat
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::PluginStat
+ * @package Runalyze\Plugin
+ */
+/**
+ * Abstract plugin class for statistics
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugin
  */
 abstract class PluginStat extends Plugin {
 	/**

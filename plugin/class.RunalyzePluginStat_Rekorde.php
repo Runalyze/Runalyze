@@ -72,7 +72,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 					$j = 0;
 					foreach ($data as $j => $dat) {
 						if ($rekord['eval'] == 0)
-							$code = Sport::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $sport['id']);
+							$code = SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $sport['id']);
 						elseif ($rekord['eval'] == 1)
 							$code = ($dat['distance'] != 0 ? Running::Km($dat['distance']) : Time::toString($dat['s']));
 	
@@ -117,7 +117,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Jahre</td>';
 		foreach ($this->years as $i => $year) {
-			$link = DataBrowser::getLink(Running::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
+			$link = DataBrowserLinker::link(Running::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
 			echo '<td><span title="'.$year['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)
@@ -128,7 +128,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Monate</td>';
 		foreach ($this->months as $i => $month) {
-			$link = DataBrowser::getLink(Running::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
+			$link = DataBrowserLinker::link(Running::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
 			echo '<td><span title="'.Time::Month($month['month']).' '.$month['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)
@@ -139,7 +139,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$i = 0;
 		echo '<tr class="a1 r"><td class="c b">Wochen</td>';
 		foreach ($this->weeks as $i => $week) {
-			$link = DataBrowser::getLink(Running::Km($week['km']), Time::Weekstart($week['time']), Time::Weekend($week['time']));
+			$link = DataBrowserLinker::link(Running::Km($week['km']), Time::Weekstart($week['time']), Time::Weekend($week['time']));
 			echo '<td><span title="KW '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)

@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigTabPlugins
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigTabPlugins
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigTabPlugins
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigTabPlugins extends ConfigTab {
 	/**

@@ -5,7 +5,7 @@
  */
 /**
  * Class for input field: shoeid
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingSelectShoe extends FormularSelectBox {
@@ -18,10 +18,10 @@ class TrainingSelectShoe extends FormularSelectBox {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
-		$this->addLayoutClass( TrainingCreatorFormular::$ONLY_RUNNING_CLASS );
+		$this->addLayoutClass( TrainingFormular::$ONLY_RUNNING_CLASS );
 		$this->addOption(0, '---- Laufschuh ausw&auml;hlen');
 
-		foreach (Shoe::getNamesAsArray( !$this->showAll() ) as $id => $name)
+		foreach (ShoeFactory::NamesAsArray( !$this->showAll() ) as $id => $name)
 			$this->addOption($id, $name);
 	}
 
@@ -31,5 +31,20 @@ class TrainingSelectShoe extends FormularSelectBox {
 	 */
 	protected function showAll() {
 		return !empty($this->value);
+	}
+
+	/**
+	 * Display field
+	 * 
+	 * This method overwrites parent display method to include some hidden values
+	 */
+	public function display() {
+		parent::display();
+
+		if ($this->value > 0 && isset($_POST['s']) && isset($_POST['distance'])) {
+			echo HTML::hiddenInput('s_old', $_POST['s']);
+			echo HTML::hiddenInput('dist_old', $_POST['distance']);
+			echo HTML::hiddenInput('shoeid_old', $this->value);
+		}
 	}
 }

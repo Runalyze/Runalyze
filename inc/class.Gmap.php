@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: GMap
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::Gmap
+ * @package Runalyze
+ */
+/**
+ * Display Map for gps data
+ * @author Hannes Christiansen
+ * @package Runalyze
  */
 class Gmap {
 	/**
@@ -33,7 +38,7 @@ class Gmap {
 	 * @param int $TrainingId
 	 * @param GpsData $GpsData
 	 */
-	public function __construct($TrainingId, $GpsData) {
+	public function __construct($TrainingId, GpsData $GpsData) {
 		$this->TrainingId = $TrainingId;
 		$this->StringID   = self::getStringIDfor($TrainingId);
 		$this->GpsData    = $GpsData;
@@ -189,7 +194,7 @@ class Gmap {
 			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
-			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(Sport::getSpeedWithAppendix($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
+			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(SportFactory::getSpeedWithAppendix($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
 			$Marker[]   = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"'.$MarkerData.'",options:{icon:"'.$this->getIconForMarker().'"}}';
 		}
 

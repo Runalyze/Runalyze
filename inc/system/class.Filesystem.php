@@ -1,9 +1,31 @@
 <?php
 /**
+ * This file contains class::Filesystem
+ * @package Runalyze\System
+ */
+/**
  * Class for handling files and co
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 class Filesystem {
+	/**
+	 * Get extension of filename
+	 * @param string $PathToFile
+	 * @return string
+	 */
+	static public function extensionOfFile($PathToFile) {
+		if (strlen(trim($PathToFile)) == 0)
+			return '';
+
+		$PathInfo = pathinfo($PathToFile);
+
+		if (isset($PathInfo['extension']))
+			return $PathInfo['extension'];
+
+		return '';
+	}
+
 	/**
 	 * Get all file names from a path
 	 * @param string $Path
@@ -11,8 +33,9 @@ class Filesystem {
 	 */
 	static public function getFileNamesFromPath($Path) {
 		$Files = array();
+		$handle = opendir(FRONTEND_PATH.$Path);
 
-		if ($handle = opendir(FRONTEND_PATH.$Path)) {
+		if ($handle) {
 			while (false !== ($file = readdir($handle))) {
 				if (substr($file,0,1) != ".") {
 					$Files[] = $file;

@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularSubmit
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a submit button as field
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularSubmit extends FormularField {
 	/**

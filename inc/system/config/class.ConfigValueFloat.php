@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigValueFloat
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigValueFloat
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigValueFloat
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigValueFloat extends ConfigValue {
 	/**

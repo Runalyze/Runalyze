@@ -1,14 +1,15 @@
 <?php
 /**
  * Scheme for `runalyze_training`
- * @todo field for day and daytime instead of one field for time
  */
 $TABLENAME = 'training';
 
 $HIDDEN_KEYS = array(
-	'created', 'edited', 'creator', 'creator_details', 'activity_id', 'elevation_corrected', 'gps_cache_object',
+	//'created', 'edited',
+	'creator', 'creator_details', 'activity_id',
+	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_heart', 'arr_dist', 'arr_pace',
-	'vdot', 'vdot_by_time', 'trimp',
+	//'vdot', 'vdot_by_time', 'trimp',
 	// TODO: already prepared attributes
 	'jd_intensity'
 );
@@ -29,16 +30,16 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> 'Distanz',
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace'), // 'speed'
+		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace'),
 		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
-		'css'		=> TrainingCreatorFormular::$ONLY_DISTANCES_CLASS
+		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
 	array(
 		'id'		=> 'splits',
 		'legend'	=> 'Zwischenzeiten',
 		'fields'	=> array('splits'),
 		'conf'		=> 'FORMULAR_SHOW_SPLITS',
-		'css'		=> TrainingCreatorFormular::$ONLY_TYPES_CLASS
+		'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 	),
 	array(
 		'id'		=> 'other',
@@ -92,7 +93,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Trainingstyp',
 						'class'		=> 'TrainingSelectType',
-						'css'		=> TrainingCreatorFormular::$ONLY_TYPES_CLASS
+						'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 					)
 	),
 	'time'				=> array(
@@ -133,8 +134,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> '&Ouml;ffentlich',
-						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingCreatorFormular::$ONLY_RUNNING_CLASS
+						'class'		=> 'FormularCheckbox'
 					)
 	),
 	'is_track'			=> array(
@@ -146,7 +146,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Bahn',
 						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingCreatorFormular::$ONLY_RUNNING_CLASS
+						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
 	),
 	'distance'			=> array(
@@ -169,7 +169,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Dauer',
 						'required'	=> true,
-						'parser'	=> FormularValueParser::$PARSER_TIME // TODO
+						'parser'	=> FormularValueParser::$PARSER_TIME
 					)
 	),
 	'pace'				=> array(
@@ -193,7 +193,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'H&ouml;henmeter',
 						'unit'		=> FormularUnit::$ELEVATION,
-						'css'		=> TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'kcal'				=> array(
@@ -258,7 +258,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'VDOT f&uuml;r Form',
 						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingCreatorFormular::$ONLY_RUNNING_CLASS
+						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
 	),
 	'jd_intensity'		=> array(
@@ -289,7 +289,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Temperatur',
 						'unit'		=> FormularUnit::$CELSIUS,
-						'css'		=> TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'weatherid'			=> array(
@@ -301,7 +301,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Wetter',
 						'class'		=> 'TrainingSelectWeather',
-						'css'		=> TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'route'				=> array(
@@ -312,7 +312,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Strecke',
 						'size'		=> FormularInput::$SIZE_FULL_INLINE,
-						'css'		=> TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
 	'clothes'			=> array(
@@ -324,7 +324,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Kleidung',
 						'class'		=> 'TrainingSelectClothes',
-						'css'		=> TrainingCreatorFormular::$ONLY_OUTSIDE_CLASS,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS,
 						'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 					)
 	),
@@ -368,7 +368,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Lauf-ABC',
 						'class'		=> 'FormularCheckbox',
-						'css'		=> TrainingCreatorFormular::$ONLY_RUNNING_CLASS
+						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)),
 	'shoeid'			=> array(
 					'database'	=> array(
@@ -379,7 +379,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Laufschuh',
 						'class'		=> 'TrainingSelectShoe',
-						'css'		=> TrainingCreatorFormular::$ONLY_RUNNING_CLASS
+						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
 	),
 	'notes'				=> array(
