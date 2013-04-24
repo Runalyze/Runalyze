@@ -183,7 +183,7 @@ class TrainingViewTable {
 			$this->addExtraLine('Importer', 'Garmin-Communicator');
 
 		if ($this->Training->hasArrayAltitude())
-			$this->addExtraLine('H&ouml;hendaten', ($this->Training->elevationWasCorrected() ? 'noch nicht ' : '').'korrigiert');
+			$this->addExtraLine('H&ouml;hendaten', ($this->Training->elevationWasCorrected() ? '' : 'noch nicht ').'korrigiert');
 	}
 
 	/**
