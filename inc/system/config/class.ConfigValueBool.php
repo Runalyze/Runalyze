@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigValueBool
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigValueBool
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigValueBool
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigValueBool extends ConfigValue {
 	/**

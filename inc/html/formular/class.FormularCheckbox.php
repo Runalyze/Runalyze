@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularCheckbox
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a checkbox
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularCheckbox extends FormularField {
 	/**

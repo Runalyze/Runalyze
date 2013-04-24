@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularTextarea
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a standard textarea
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularTextarea extends FormularField {
 	/**

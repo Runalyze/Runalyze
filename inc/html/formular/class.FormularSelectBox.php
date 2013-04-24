@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularSelectBox
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a standard select box
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularSelectBox extends FormularField {
 	/**

@@ -7,7 +7,7 @@
  * Class: Validator
  * 
  * Validator given input values
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Validator {

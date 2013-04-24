@@ -5,7 +5,7 @@
  */
 /**
  * Class for calculating Training Load (ATL, CTL, TRIMP)
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Trimp {
@@ -147,9 +147,9 @@ class Trimp {
 			$trainingData = Mysql::getInstance()->fetchSingle('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.$trainingData['id'].'"');
 		}
 
-		$Training = new Training($trainingData['id'], $trainingData);
+		$Training = new TrainingObject($trainingData);
 		$avgHF    = $Training->avgHF();
-		$s        = $Training->get('s');
+		$s        = $Training->getTimeInSeconds();
 		$RPE      = $Training->RPE();
 
 		$Trimp = round($s/60 * self::TrimpFactor($avgHF) * $RPE / 10);

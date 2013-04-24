@@ -1,8 +1,13 @@
 <?php
 /**
- * Class: Ajax
+ * This file contains class::Ajax
+ * @package Runalyze\HTML
+ */
+/**
+ * JavaScript/jQuery class
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 class Ajax {
 	/**
@@ -64,7 +69,7 @@ class Ajax {
 	 */
 	static public function initJSlibrary() {
 		$Options = array();
-		$Options['useTooltip'] = true; //CONF_JS_USE_TOOLTIP;
+		$Options['useTooltip'] = true;
 		$Options['sharedView'] = Request::isOnSharedPage();
 
 		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');

@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::Icon
+ * @package Runalyze\HTML
+ */
+/**
  * Class for all icons used in Runalyze
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 class Icon {
 	/**
@@ -107,6 +112,9 @@ class Icon {
 	 * @return string
 	 */
 	public static function getVDOTicon($VDOT, $gray = false) {
+		if ($VDOT == 0)
+			return '';
+
 		$class = 'vdot-';
 
 		if ($gray)

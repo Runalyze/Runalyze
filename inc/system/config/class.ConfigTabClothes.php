@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigTabClothes
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigTabClothes
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigTabClothes
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigTabClothes extends ConfigTab {
 	/**
@@ -43,7 +48,7 @@ class ConfigTabClothes extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		$Clothes   = Clothes::getOrderedClothes();
+		$Clothes   = ClothesFacotry::OrderedClothes();
 		$Clothes[] = array('new' => true, 'name' => '', 'short' => '', 'order' => '', 'id' => -1);
 
 		foreach ($Clothes as $i => $Data) {
@@ -70,7 +75,7 @@ class ConfigTabClothes extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Clothes   = Clothes::getOrderedClothes();
+		$Clothes   = ClothesFactory::OrderedClothes();
 		$Clothes[] = array('id' => -1);
 		
 

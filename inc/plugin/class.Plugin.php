@@ -1,10 +1,12 @@
 <?php
 /**
- * This file contains the abstract class to handle every plugin.
+ * This file contains class::Plugin
+ * @package Runalyze\Plugin
  */
 /**
- * Class: Plugin
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * Abstract class for Plugins
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugin
  */
 abstract class Plugin {
 	/**

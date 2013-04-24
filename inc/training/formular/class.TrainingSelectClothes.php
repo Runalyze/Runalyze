@@ -18,7 +18,7 @@ class TrainingSelectClothes extends FormularCheckboxes {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
-		foreach (Clothes::getOrderedClothes() as $data)
+		foreach (ClothesFactory::OrderedClothes() as $data)
 			$this->addCheckbox($data['id'], $data['short']);
 
 		$this->setParser( FormularValueParser::$PARSER_ARRAY_CHECKBOXES );

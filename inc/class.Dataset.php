@@ -1,26 +1,25 @@
 <?php
 /**
- * Class: Dataset
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::Dataset
+ * @package Runalyze\DataBrowser\Dataset
+ */
+/**
+ * Load dataset row for a given training or a group of trainings
+ * @author Hannes Christiansen
+ * @package Runalyze\DataBrowser\Dataset
  */
 class Dataset {
 	/**
-	 * Internal ID in database
-	 * @var int
+	 * Training object
+	 * @var \TrainingObject
 	 */
-	private $trainingId = 0;
+	protected $TrainingObject = null;
 
 	/**
 	 * Counter for displayed columns
 	 * @var int
 	 */
-	public $column_count = 0;
-
-	/**
-	 * Internal Training-object
-	 * @var Training
-	 */
-	private $Training = null;
+	private $cols = 0;
 
 	/**
 	 * Data array from database
@@ -32,13 +31,13 @@ class Dataset {
 	 * Boolean flag: compare km of datasets (preferred for group of trainings)
 	 * @var boolean
 	 */
-	private $compare_km = false;
+	private $compareKM = false;
 
 	/**
 	 * Kilometer for last set
 	 * @var double
 	 */
-	private $km_of_last_set = -1;
+	private $kmOfLastSet = -1;
 
 	/**
 	 * Constructor
@@ -51,17 +50,25 @@ class Dataset {
 		}
 
 		$this->data = $dat;
-		$this->column_count = count($dat);
+		$this->cols = count($dat);
 
 		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
-			$this->column_count++;
+			$this->cols++;
+	}
+
+	/**
+	 * Number of columns
+	 * @return int
+	 */
+	public function cols() {
+		return $this->cols;
 	}
 
 	/**
 	 * Activate kilometer comparison 
 	 */
 	public function activateKilometerComparison() {
-		$this->compare_km = true;
+		$this->compareKM = true;
 	}
 
 	/**
@@ -69,7 +76,7 @@ class Dataset {
 	 * @param double $km 
 	 */
 	public function setKilometerToCompareTo($km) {
-		$this->km_of_last_set = $km;
+		$this->kmOfLastSet = $km;
 	}
 
 	/**
@@ -77,7 +84,7 @@ class Dataset {
 	 */
 	public function loadCompleteDataset() {
 		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC');
-		$this->column_count = count($this->data);
+		$this->cols = count($this->data);
 	}
 
 	/**
@@ -86,8 +93,10 @@ class Dataset {
 	 * @param array $data [optional]
 	 */
 	public function setTrainingId($id, $data = array()) {
-		$this->trainingId = $id;
-		$this->Training = new Training($id, $data);
+		if (empty($data))
+			$data = $id;
+
+		$this->TrainingObject = new TrainingObject($data);
 	}
 
 	/**
@@ -150,22 +159,14 @@ class Dataset {
 	 * @return boolean 
 	 */
 	public function setGroupOfTrainings($SummaryData) {
-		$this->km_of_last_set = 0;
+		$this->kmOfLastSet = 0;
 
-		$this->setTrainingId( Training::$CONSTRUCTOR_ID );
+		$this->setTrainingId( DataObject::$DEFAULT_ID );
 
 		if ($SummaryData === false || empty($SummaryData))
 			return false;
 
-		$this->Training->set('is_track', 0);
-		$this->Training->set('use_vdot', 1);
-		$this->Training->set('vdot', 0);
-		$this->Training->set('pulse_avg', 0);
-		$this->Training->set('elevation_corrected', 1);
-
-		foreach ($SummaryData as $var => $value)
-			if (!is_null($value))
-				$this->Training->set($var, $value);
+		$this->TrainingObject->setFromArray($SummaryData);
 
 		return true;
 	}
@@ -213,17 +214,14 @@ class Dataset {
 	 * @return bool
 	 */
 	private function isSummaryMode() {
-		return ($this->trainingId == -1);
+		return $this->TrainingObject->isDefaultId();
 	}
 
 	/**
 	 * Display short link for e.g. 'Gymnastik'
 	 */
 	public function displayShortLink() {
-		$icon = Icon::getSportIcon($this->Training->get('sportid'), '',
-			$this->Training->Sport()->name().': '.Time::toString( $this->Training->get('s') ));
-
-		echo $this->Training->trainingLink($icon);
+		echo $this->TrainingObject->Linker()->linkWithSportIcon();
 	}
 
 	/**
@@ -237,7 +235,7 @@ class Dataset {
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
 		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS && !FrontendShared::$IS_SHOWN)
-			$addLink = TrainingCreatorWindow::getLinkForDate($timestamp);
+			$addLink = ImporterWindow::linkForDate($timestamp);
 
 		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';
@@ -260,15 +258,10 @@ class Dataset {
 	 * @param array $dataset
 	 */
 	private function displayDataset($set) {
-		if ($this->isSummaryMode() && $set['summary'] == 0) {
+		if ($this->isSummaryMode() && $set['summary'] == 0)
 			echo HTML::emptyTD();
-			return;
-		}
-
-		$class = $set['class'] != '' ? ' class="'.$set['class'].'"' : '';
-		$style = $set['style'] != '' ? ' style="'.$set['style'].'"' : '';
-
-		echo '<td'.$class.$style.'>'.$this->getDataset($set['name']).'</td>'.NL;
+		else
+			echo HTML::td($this->getDataset($set['name']), $set['class'], $set['style']);
 	}
 
 	/**
@@ -277,21 +270,21 @@ class Dataset {
 	public function displayEditLink() {
 		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
 			if ($this->isSummaryMode() || FrontendShared::$IS_SHOWN)
-				echo HTML::emptyTD ();
+				echo HTML::emptyTD();
 			else
-				echo '<td>'.TrainingDisplay::getSmallEditLinkFor($this->Training->get('id')).'</td>'.NL;
+				echo HTML::td($this->TrainingObject->Linker()->smallEditLink()).NL;
 	}
 
 	/**
 	 * Display public icon
 	 */
 	public function displayPublicIcon() {
-		if (!is_object($this->Training))
-			echo HTML::emptyTD ();
-		elseif (!$this->Training->isPublic())
-			echo '<td>'.Icon::$ADD_SMALL.'</td>'.NL;
+		if (!is_object($this->TrainingObject))
+			echo HTML::emptyTD();
+		elseif (!$this->TrainingObject->isPublic())
+			echo HTML::td(Icon::$ADD_SMALL);
 		else
-			echo '<td class="link">'.Icon::$ADD_SMALL_GREEN.'</td>'.NL;
+			echo HTML::td(Icon::$ADD_SMALL_GREEN, 'link');
 	}
 
 	/**
@@ -302,262 +295,114 @@ class Dataset {
 	public function getDataset($name) {
 		switch($name) {
 			case 'sportid':
-				return $this->datasetSport();
+				return $this->TrainingObject->Sport()->Icon();
+
 			case 'typeid':
-				return $this->datasetType();
+				if ($this->TrainingObject->Type()->isUnknown())
+					return '';
+
+				return $this->TrainingObject->Type()->formattedAbbr();
+
 			case 'time':
-				return $this->datasetDate();
+				return $this->TrainingObject->DataView()->getDaytimeString();
+
 			case 'distance':
-				return $this->datasetDistance();
+				return $this->TrainingObject->DataView()->getDistanceString().$this->getDistanceComparison();
+
 			case 's':
-				return $this->datasetTime();
+				return $this->TrainingObject->DataView()->getTimeString();
+
 			case 'pace':
-				return $this->datasetPace();
+				return $this->TrainingObject->DataView()->getSpeedString();
+
 			case 'elevation':
-				return $this->datasetElevation();
+				return $this->TrainingObject->DataView()->getElevationWithTooltip();
+
 			case 'kcal':
-				return $this->datasetCalories();
+				return $this->TrainingObject->DataView()->getCalories();
+
 			case 'pulse_avg':
-				return $this->datasetPulse();
+				return $this->TrainingObject->DataView()->getPulseAvg();
+
 			case 'pulse_max':
-				return $this->datasetPulseMax();
+				return $this->TrainingObject->DataView()->getPulseMax();
+
 			case 'trimp':
-				return $this->datasetTRIMP();
+				return $this->TrainingObject->DataView()->getTrimpString();
+
 			case 'temperature':
-				return $this->datasetTemperature();
+				if (!$this->TrainingObject->Weather()->hasTemperature())
+					return '';
+
+				return $this->TrainingObject->Weather()->temperatureString();
+
 			case 'weatherid':
-				return $this->datasetWeather();
+				if ($this->TrainingObject->Weather()->isUnknown())
+					return '';
+
+				return $this->TrainingObject->Weather()->icon();
+
 			case 'route':
-				return $this->datasetPath();
+				return $this->cut( $this->TrainingObject->getRoute() );
+
 			case 'clothes':
-				return $this->datasetClothes();
+				return $this->cut( $this->TrainingObject->Clothes()->asString() );
+
 			case 'splits':
-				return $this->datasetSplits();
+				return $this->TrainingObject->Splits()->asIconWithTooltip();
+
 			case 'comment':
-				return $this->datasetDescription();
+				return $this->cut( $this->TrainingObject->getComment() );
+
 			case 'partner':
-				return $this->datasetPartner();
+				return $this->cut( $this->TrainingObject->getPartner() );
+
 			case 'abc':
-				return $this->datasetABC();
+				return $this->TrainingObject->DataView()->getABCicon();
+
 			case 'shoeid':
-				return $this->datasetShoe();
+				return $this->TrainingObject->Shoe()->getName();
+
 			case 'vdot':
-				return $this->datasetVDOT();
+				return $this->TrainingObject->DataView()->getVDOTicon();
+
 		}
 
 		return '&nbsp;';
 	}
 
 	/**
-	 * Dataset for: `sportid`
+	 * Cut string to 20 characters
+	 * @param string $string
 	 * @return string
 	 */
-	private function datasetSport() {
-		return $this->Training->Sport()->Icon();
-	}
-
-	/**
-	 * Dataset for: `typeid`
-	 * @return string
-	 */
-	private function datasetType() {
-		$Type = '';
-
-		if ($this->Training->hasType())
-			$Type = $this->Training->Type()->formattedAbbr();
-
-		return $Type;
-	}
-
-	/**
-	 * Dataset for: `time`
-	 * @return string
-	 */
-	private function datasetDate() {
-		return $this->Training->getDaytimeString();
+	private function cut($string) {
+		return Helper::Cut($string, 20);
 	}
 
 	/**
 	 * Dataset for: `distance`
 	 * @return string
 	 */
-	private function datasetDistance() {
-		if ($this->compare_km) {
-			$CurrentDistance  = $this->Training->get('distance');
-			$ColorFactor      = 0;
-			$ComparisonString = '-';
-
-			if ($this->km_of_last_set > 0) {
-				$Percent          = round(100*($CurrentDistance - $this->km_of_last_set ) / $this->km_of_last_set, 1);
-				$ColorFactor      = 100*$Percent / 20;
-				$ComparisonString = Math::WithSign($Percent).' %';
-			}
-
-			$this->km_of_last_set = $CurrentDistance;
-
-			return $this->Training->getDistanceString().' <small style="display:inline-block;width:45px;color:#'.Running::Stresscolor($ColorFactor).'">'.$ComparisonString.'</small>';
-		}
-
-		return $this->Training->getDistanceString();
-	}
-
-	/**
-	 * Dataset for: `s`
-	 * @return string
-	 */
-	private function datasetTime() {
-		return $this->Training->getTimeString();
-	}
-
-	/**
-	 * Dataset for: `pace`
-	 * @return string
-	 */
-	private function datasetPace() {
-		return $this->Training->getSpeedString();
-	}
-
-	/**
-	 * Dataset for: `elevation`
-	 * @return string
-	 */
-	private function datasetElevation() {
-		if (!$this->Training->hasElevation())
+	private function getDistanceComparison() {
+		if (!$this->compareKM)
 			return '';
 
-		$displayString = $this->Training->get('elevation').'&nbsp;hm</span>';
-		$tooltipString = '&oslash; Steigung: '.round($this->Training->get('elevation')/$this->Training->get('distance')/10, 2).' &#37;';
+		$Percentage = $this->getDistanceComparisonPercentage();
+		$String     = ($Percentage > 0) ? Math::WithSign($Percentage).' &#37;' : '-';
+		$this->kmOfLastSet = $this->TrainingObject->getDistance();
 
-		if (CONF_TRAINING_DO_ELEVATION && $this->Training->get('elevation_corrected') != 1)
-			$displayString = '~'.$displayString;
-
-		return Ajax::tooltip($displayString, $tooltipString);
+		return ' <small style="display:inline-block;width:45px;color:#'.Running::Stresscolor(100*$Percentage/20).'">'.$String.'</small>';
 	}
 
 	/**
-	 * Dataset for: `kcal`
-	 * @return string
+	 * Get percentage of last distance
+	 * @return int
 	 */
-	private function datasetCalories() {
-		return Helper::Unknown($this->Training->get('kcal')).'&nbsp;kcal';
-	}
+	private function getDistanceComparisonPercentage() {
+		if ($this->kmOfLastSet == 0)
+			return 0;
 
-	/**
-	 * Dataset for: `pulse_avg`
-	 * @return string
-	 */
-	private function datasetPulse() {
-		return Running::PulseString($this->Training->get('pulse_avg'), $this->Training->get('time'));
-	}
-
-	/**
-	 * Dataset for: `pulse_max`
-	 * @return string
-	 */
-	private function datasetPulseMax() {
-		return Running::PulseString($this->Training->get('pulse_max'), $this->Training->get('time'));
-	}
-
-	/**
-	 * Dataset for: `trimp`
-	 * @return string
-	 */
-	private function datasetTRIMP() {
-		return $this->Training->getTrimpString();
-	}
-
-	/**
-	 * Dataset for: `temperature`
-	 * @return string
-	 */
-	private function datasetTemperature() {
-		if (is_null($this->Training->Weather()) || $this->Training->Weather()->isEmpty())
-			return '';
-
-		return $this->Training->Weather()->temperatureString();
-	}
-
-	/**
-	 * Dataset for: `weatherid`
-	 * @return string
-	 */
-	private function datasetWeather() {
-		if (is_null($this->Training->Weather()) || $this->Training->Weather()->isUnknown())
-			return '';
-
-		return $this->Training->Weather()->icon();
-	}
-
-	/**
-	 * Dataset for: `route`
-	 * @return string
-	 */
-	private function datasetPath() {
-		return ($this->Training->hasRoute()) ? Helper::Cut($this->Training->get('route'), 20) : '';
-	}
-
-	/**
-	 * Dataset for: `kleidung`
-	 * @return string
-	 */
-	private function datasetClothes() {
-		return Helper::Cut($this->Training->Clothes()->asString(), 20);
-	}
-
-	/**
-	 * Dataset for: `splits`
-	 * @return string
-	 */
-	private function datasetSplits() {
-		if (is_null($this->Training->Type()) || !$this->Training->Type()->hasSplits() || $this->Training->get('splits') == '')
-			return;
-
-		return Ajax::tooltip(Icon::$CLOCK, $this->Training->Splits()->asReadableString());
-	}
-
-	/**
-	 * Dataset for: `comment`
-	 * @return string
-	 */
-	private function datasetDescription() {
-		return Helper::Cut($this->Training->get('comment'), 20);
-	}
-
-	/**
-	 * Dataset for: `partner`
-	 * @return string
-	 */
-	private function datasetPartner() {
-		return ($this->Training->get('partner') != '') ? 'mit '.Helper::Cut($this->Training->get('partner'), 15) : '';
-	}
-
-	/**
-	 * Dataset for: `abc`
-	 * @return string
-	 */
-	private function datasetABC() {
-		if ($this->Training->get('abc') == 0)
-			return;
-
-		return Ajax::tooltip(Icon::$ABC, 'Lauf-ABC');
-	}
-
-	/**
-	 * Dataset for: `shoeid`
-	 * @return string
-	 */
-	private function datasetShoe() {
-		if (!$this->Training->Sport()->isRunning())
-			return '';
-
-		return Shoe::getNameOf($this->Training->get('shoeid'));
-	}
-
-	/**
-	 * Dataset for: `vdot`
-	 * @return string
-	 */
-	private function datasetVDOT() {
-		return $this->Training->getVDOTicon();
+		return round(100*($this->TrainingObject->getDistance() - $this->kmOfLastSet ) / $this->kmOfLastSet, 1);
 	}
 }

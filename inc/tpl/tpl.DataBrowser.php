@@ -26,7 +26,7 @@
 
 <table id="dataBrowser">
 	<tr class="space">
-		<td colspan="<?php echo ($this->Dataset->column_count + $this->additionalColumns); ?>" />
+		<td colspan="<?php echo ($this->Dataset->cols() + $this->additionalColumns); ?>" />
 	</tr>
 <?php
 foreach ($this->days as $i => $day) {
@@ -74,14 +74,14 @@ foreach ($this->days as $i => $day) {
 
 		echo '</td>
 			<td class="l">'.Dataset::getDateString($day['date']).'</td>
-			<td colspan="'.($this->Dataset->column_count + $this->showPublicLink).'" />
+			<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'" />
 		</tr>';
 	}
 
 	if (date("w", $day['date']) == 0 || $i == ($this->day_count-1))
 		echo NL.'
 	<tr class="space">
-		<td colspan="'.($this->Dataset->column_count + $this->additionalColumns).'" />
+		<td colspan="'.($this->Dataset->cols() + $this->additionalColumns).'" />
 	</tr>'.NL;
 }
 

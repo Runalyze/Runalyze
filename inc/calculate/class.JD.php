@@ -29,7 +29,7 @@ define('BASIC_ENDURANCE', Running::BasicEndurance(true));
 
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class JD {

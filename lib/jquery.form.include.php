@@ -14,6 +14,7 @@ $("input[name=distance], input[name=s]").change(function() {
 });
 
 jUpdateSportValues();
+jUpdatePace();
 
 if ($("input[name=kcal]").val() == 0)
 	jUpdateKcal();

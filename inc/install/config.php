@@ -2,8 +2,8 @@
 /**
  * RUNALYZE
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
- * @copyright http://runalyze.laufhannes.de/
+ * @author Hannes Christiansen
+ * @copyright http://runalyze.de/
  * 
  * In this config-file your personal mysql-connection has to be set.
  */

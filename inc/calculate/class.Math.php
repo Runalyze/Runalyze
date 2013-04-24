@@ -5,7 +5,7 @@
  */
 /**
  * Class for mathematic calculations
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Math {

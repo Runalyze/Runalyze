@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularInputDayAndDaytime
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a double field for day and daytime
- * @author Hannes Christiansen 
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularInputDayAndDaytime extends FormularField {
 	/**
@@ -56,6 +61,9 @@ class FormularInputDayAndDaytime extends FormularField {
 	 */
 	public function validate() {
 		$this->setFields();
+
+		if (!isset($_POST[$this->getFieldDayName()]) || !isset($_POST[$this->getFieldDaytimeName()]))
+			return;
 
 		$this->FieldDay->validate();
 		$this->FieldDaytime->validate();

@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::HtmlTag
+ * @package Runalyze\HTML
+ */
+/**
  * Class for HTML-tags, only used for setting id, classes and so on
- * @author Hannes
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 abstract class HtmlTag {
 	/**

@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularCheckboxes
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for multiple checkboxes
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularCheckboxes extends FormularField {
 	/**

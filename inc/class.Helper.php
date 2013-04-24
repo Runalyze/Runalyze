@@ -1,5 +1,9 @@
 <?php
 /**
+ * This file contains class::Helper
+ * @package Runalyze
+ */
+/**
  * Maximal heart-frequence of the user
  * @var HF_MAX
  */
@@ -27,13 +31,17 @@ require_once FRONTEND_PATH.'calculate/class.JD.php';
 
 /**
  * Class for all helper-functions previously done by functions.php
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze
  */
 class Helper {
 	/**
-	 * This class contains only static methods
+	 * Private constructor
 	 */
 	private function __construct() {}
+	/**
+	 * Private destructor
+	 */
 	private function __destruct() {}
 
 	/**
@@ -48,13 +56,33 @@ class Helper {
 	}
 
 	/**
-	 * Round to the next factor of $roundForInt
+	 * Round to factor of $roundForInt
 	 * @param double $numberToRound
 	 * @param int $roundForInt
 	 * @return int
 	 */
 	public static function roundFor($numberToRound, $roundForInt) {
 		return $roundForInt * round($numberToRound / $roundForInt);
+	}
+
+	/**
+	 * Round to the next lowest factor of $roundForInt
+	 * @param double $numberToRound
+	 * @param int $roundForInt
+	 * @return int
+	 */
+	public static function floorFor($numberToRound, $roundForInt) {
+		return $roundForInt * floor($numberToRound / $roundForInt);
+	}
+
+	/**
+	 * Round to the next highest factor of $roundForInt
+	 * @param double $numberToRound
+	 * @param int $roundForInt
+	 * @return int
+	 */
+	public static function ceilFor($numberToRound, $roundForInt) {
+		return $roundForInt * ceil($numberToRound / $roundForInt);
 	}
 
 	/**

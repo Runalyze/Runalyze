@@ -7,46 +7,22 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Mysql    = Mysql::getInstance();
-$id       = isset($_GET['id']) ? $_GET['id'] : 0;
-
-if (isset($_GET['json'])) {
-	Error::getInstance()->footer_sent = true;
-	move_uploaded_file($_FILES['userfile']['tmp_name'], FRONTEND_PATH.'import/files/tmp.tcx');
-	echo 'success';
-	exit();
-} elseif (isset($_GET['tmp'])) {
-	ImporterTCX::addTCXdataToTraining($id, 'tmp.tcx');
-}
-
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-	$Mysql->delete(PREFIX.'training', (int)$_GET['delete']);
+	Mysql::getInstance()->delete(PREFIX.'training', (int)$_GET['delete']);
 
 	Trimp::calculateMaxValues();
-
-	$shoes = $Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'shoe`');
-	foreach ($shoes as $shoe) {
-		$data = $Mysql->fetchSingle('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$shoe['id'].'" GROUP BY `shoeid`');
-
-		if ($data === false)
-			$data = array('km' => 0, 's' => 0);
-
-		$Mysql->update(PREFIX.'shoe', $shoe['id'], array('km', 'time'), array($data['km'], $data['s']));
-	}
+	ShoeFactory::recalculateAllShoes();
 
 	echo '<p id="submit-info" class="error">Das Training wurde gel&ouml;scht.</p>';
 	echo '<script type="text/javascript">Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
 	exit();
 }
 
-if (isset($_POST['type']) && $_POST['type'] == "training") {
-	$Editor = new TrainingEditor($id, $_POST);
-	$Editor->performUpdate();
+$Training = new TrainingObject(Request::sendId());
+echo $Training->Linker()->editNavigation();
 
-	$Errors = $Editor->getErrorsAsArray();
-	if (!empty($Errors))
-		echo HTML::error(implode('<br />', $Errors));
-}
-
-$Formular = new TrainingEditorFormular($id);
+$Formular = new TrainingFormular($Training, StandardFormular::$SUBMIT_MODE_EDIT);
+$Formular->setId('training');
+$Formular->setHeader( $Training->DataView()->getTitleWithCommentAndDate() );
+$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
 $Formular->display();

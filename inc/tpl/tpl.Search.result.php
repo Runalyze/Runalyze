@@ -4,7 +4,7 @@
 $Dataset = new Dataset();
 $Dataset->loadCompleteDataset();
 
-$max_colspan = 2 + $Dataset->column_count;
+$max_colspan = 2 + $Dataset->cols();
 
 // MYSQL-QUERY
 $where = 'WHERE ';

@@ -1,10 +1,11 @@
 <?php
 /**
+ * This file contains class::FrontendSharedList
  * @package Runalyze\Frontend
  */
 /**
  * Class for customizing frontend for displaying shared activity-lists
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class FrontendSharedList extends FrontendShared {

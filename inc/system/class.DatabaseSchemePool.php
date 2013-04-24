@@ -13,7 +13,7 @@
  * 
  * <code>$DatabaseScheme = DatabaseSchemePool::get($schemeFile);</code>
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects
  */
 class DatabaseSchemePool {

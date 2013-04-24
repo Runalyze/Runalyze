@@ -254,8 +254,6 @@ $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_NOTES', array('defa
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_PUBLIC', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_ELEVATION', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GPS', array('default' => false)));
-// TODO: remove
-$Training->addConfigValue(new ConfigValueBool('TRAINING_PLOTS_BELOW', array('default' => false)));
 $Training->addToCategoryList();
 
 
@@ -303,9 +301,7 @@ $Design->setKeys(array(
 	'DESIGN_BG_FIX_AND_STRETCH',
 	'DESIGN_BG_FILE',
 	'DB_SHOW_DIRECT_EDIT_LINK',
-	'DB_SHOW_CREATELINK_FOR_DAYS',
-	//'PLUGIN_SHOW_CONFIG_LINK',
-	//'PLUGIN_SHOW_MOVE_LINK'
+	'DB_SHOW_CREATELINK_FOR_DAYS'
 ));
 $Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
 	'default'		=> true,
@@ -333,20 +329,6 @@ $Design->addConfigValue( new ConfigValueBool('DB_SHOW_DIRECT_EDIT_LINK', array(
 	'label'			=> 'Training-Bearbeiten-Link im Kalender anzeigen',
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
-// TODO: remove
-$Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_CONFIG_LINK', array(
-	'default'		=> true,
-	'label'			=> 'Plugin: Konfiguration-Link anzeigen',
-	'tooltip'		=> 'Wenn aktiv wird bei jedem Plugin vor dem Namen ein Link zur Plugin-Konfiguration angezeigt',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
-)));
-// TODO: remove
-$Design->addConfigValue( new ConfigValueBool('PLUGIN_SHOW_MOVE_LINK', array(
-	'default'		=> false,
-	'label'			=> 'Plugin: Verschieben-Link anzeigen',
-	'tooltip'		=> 'Mit diesem Link lassen sich die Panel direkt verschieben.',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
-)));
 $Design->addConfigValue( new ConfigValueBool('DESIGN_BG_FIX_AND_STRETCH', array(
 	'default'		=> true,
 	'label'			=> 'Hintergrundbild skalieren',
@@ -359,17 +341,6 @@ $Design->addConfigValue( new ConfigValueSelectFile('DESIGN_BG_FILE', array(
 	'folder'		=> 'img/backgrounds/',
 	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
-// TODO: remove
-$Design->addConfigValue( new ConfigValueSelect('DESIGN_TOOLBAR_POSITION', array(
-	'default'		=> 'top',
-	'label'			=> 'Position der Toolbar',
-	'options'		=> array(
-		'top'			=> 'oben',
-		'bottom'		=> 'unten'
-	)
-)));
-// TODO: remove
-$Design->addConfigValue( new ConfigValueBool('JS_USE_TOOLTIP', array('default' => true)));
 $Design->addToCategoryList();
 
 

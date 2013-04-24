@@ -17,11 +17,11 @@
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
 </head>
 
-<body id="home" class="toolbar-<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="home" class="toolbar-top" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="flotLoader"></div>
 
-<div id="copy" class="<?php echo CONF_DESIGN_TOOLBAR_POSITION; ?>">
+<div id="copy" class="top">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
 	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="Ausloggen"><i class="toolbar-icon-user"></i> Logout</a><?php endif; ?>
 

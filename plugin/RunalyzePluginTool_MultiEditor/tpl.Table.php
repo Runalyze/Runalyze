@@ -1,5 +1,5 @@
 <p class="info<?php if (isset($_GET['ids'])) echo ' hide'; ?>"">
-	<strong><?php echo DataBrowser::getSearchLink('Suchergebnisse'); ?></strong> k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.
+	<strong><?php echo DataBrowserLinker::searchLink('Suchergebnisse'); ?></strong> k&ouml;nnen als Auswahl an den MultiEditor gesendet werden.
 </p>
 
 <p class="info">

@@ -1,7 +1,7 @@
 <div class="toolbar withoutNav open">
 	<div class="toolbar-content toolbar-line">
 		<strong>
-			<?php echo $this->Training->getTitle().': '.$this->Training->getDate(); ?>
+			<?php echo $this->Training->DataView()->getTitleWithDate(); ?>
 		</strong>
 		<span class="right">
 			<?php if ($this->Training->isPublic()): ?>
@@ -16,13 +16,11 @@
 
 
 <div id="trainingTable" class="dataBox left">
-	<?php $this->Training->displayIframeTable(); ?>
-</div>
+	<?php $this->displayTrainingTable(); ?>
 
-
-
-<div id="trainingChartsAndMap">
-	<?php if ($this->Training->hasPositionData()): ?>
-		<?php $this->displayRoute(); ?>
-	<?php endif; ?>
+	<div id="trainingChartsAndMap">
+		<?php if ($this->Training->hasPositionData()): ?>
+			<?php $this->displayRoute(); ?>
+		<?php endif; ?>
+	</div>
 </div>

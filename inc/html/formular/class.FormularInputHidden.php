@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularInputHidden
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a standard input field (hidden)
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularInputHidden extends FormularInput {
 	/**

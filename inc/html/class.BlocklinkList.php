@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::BlocklinkList
+ * @package Runalyze\HTML
+ */
+/**
  * Class for a list with links as block/big button 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 class BlocklinkList {
 	/**

@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigValueArray
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigValueArray
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigValueArray
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigValueArray extends ConfigValue {
 	/**

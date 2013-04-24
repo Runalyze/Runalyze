@@ -1,0 +1,131 @@
+<?php
+/**
+ * This file contains class::ImporterFiletypeAbstract
+ * @package Runalyze\Importer\Filetype
+ */
+/**
+ * Abstract importer for a given filetype
+ *
+ * @author Hannes Christiansen
+ * @package Runalyze\Importer\Filetype
+ */
+abstract class ImporterFiletypeAbstract {
+	/**
+	 * Parser
+	 * @var ParserAbstract
+	 */
+	protected $Parser = null;
+
+	/**
+	 * Errors
+	 * @var array
+	 */
+	protected $Errors = array();
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		
+	}
+
+	/**
+	 * Parse string
+	 * @param string $String string to parse
+	 */
+	final public function parseString($String) {
+		$this->setParserFor($String);
+		$this->runParser();
+	}
+
+	/**
+	 * Load file
+	 * @param string $Filename relative path (from FRONTEND_PATH) to file
+	 */
+	final public function parseFile($Filename) {
+		$this->setParserFor( Filesystem::openFile($Filename) );
+		$this->runParser();
+	}
+
+	/**
+	 * Run parser
+	 */
+	private function runParser() {
+		if (is_null($this->Parser))
+			return;
+
+		$this->Parser->parse();
+
+		if ($this->Parser->failed())
+			$this->Errors = $this->Errors + $this->Parser->getErrors();
+
+		if ($this->numberOfTrainings() == 0)
+			$this->Errors[] = 'Es konnten keine Trainings gefunden werden.';
+	}
+
+	/**
+	 * Analyze string and set correct parser
+	 * @param string $String string
+	 */
+	abstract protected function setParserFor($String);
+
+	/**
+	 * Did the parser fail?
+	 * @return boolean
+	 */
+	final public function failed() {
+		return count($this->getErrors()) > 0;
+	}
+
+	/**
+	 * Get errors
+	 * @return array
+	 */
+	final public function getErrors() {
+		if (is_null($this->Parser))
+			return array('No parser in ImporterFiletype.');
+
+		return $this->Errors + $this->Parser->getErrors();
+	}
+
+	/**
+	 * Get training objects
+	 * @return array array of TrainingObject
+	 */
+	final public function objects() {
+		if (is_null($this->Parser))
+			return array();
+
+		return $this->Parser->objects();
+	}
+
+	/**
+	 * Get training objects
+	 * @param int $index optional index
+	 * @return array array of TrainingObject
+	 */
+	final public function object($index = 0) {
+		if (is_null($this->Parser)) {
+			Error::getInstance()->addError('Parser of Importer is empty. Returned default TrainingObject.');
+			return new TrainingObject( DataObject::$DEFAULT_ID );
+		}
+
+		return $this->Parser->object($index);
+	}
+
+	/**
+	 * Number of trainings
+	 * @return int
+	 */
+	final public function numberOfTrainings() {
+		return count($this->objects());
+	}
+
+	/**
+	 * Has more than one training?
+	 * @return bool
+	 */
+	final public function hasMultipleTrainings() {
+		return $this->numberOfTrainings() > 1;
+	}
+}

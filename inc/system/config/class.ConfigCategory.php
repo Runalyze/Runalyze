@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigCategory
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigCategory
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigCategory
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigCategory {
 	/**

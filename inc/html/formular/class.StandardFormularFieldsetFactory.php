@@ -6,7 +6,7 @@
 /**
  * Factory for fieldsets, using array from DatabaseScheme
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\HTML\Formular
  */
 class StandardFormularFieldsetFactory {

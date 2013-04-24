@@ -1,11 +1,30 @@
 <?php
 /**
- * Class: TrainingPlotCollection
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlotCollection
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * Training plot with collection of pace, heartrate and elevation
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 class TrainingPlotCollection extends TrainingPlot {
+	/**
+	 * Data for pace
+	 * @var array
+	 */
 	protected $DataPace = array();
+
+	/**
+	 * Data for heartrate
+	 * @var array
+	 */
 	protected $DataPulse = array();
+
+	/**
+	 * Data for elevation
+	 * @var array
+	 */
 	protected $DataElevation = array();
 
 	/**

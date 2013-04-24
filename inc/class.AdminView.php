@@ -6,7 +6,7 @@
 /**
  * Class for admin view
  *
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class AdminView {

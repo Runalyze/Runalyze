@@ -1,27 +1,100 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Statistiken".
+ * This file contains the class::RunalyzePluginStat_Statistiken
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
- * Class: RunalyzePluginStat_Statistiken
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * Plugin "Statistiken"
+ * 
+ * General statistics
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Statistiken extends PluginStat {
+	/**
+	 * Sport
+	 * @var array
+	 */
 	private $sport     = array();
+
+	/**
+	 * Colspan
+	 * @var int
+	 */
 	private $colspan   = 0;
+
+	/**
+	 * Number of datasets
+	 * @var int
+	 */
 	private $num       = 0;
+
+	/**
+	 * Index of first dataset
+	 * @var int
+	 */
 	private $num_start = 0;
+
+	/**
+	 * Index of last dataset
+	 * @var int
+	 */
 	private $num_end   = 0;
+
+	/**
+	 * Current line
+	 * @var int
+	 */
 	private $line      = 0;
 
+	/**
+	 * Complete data
+	 * @var array
+	 */
 	private $CompleteData = array();
+
+	/**
+	 * Data for hours
+	 * @var array
+	 */
 	private $StundenData  = array();
+
+	/**
+	 * Data for kilometer
+	 * @var array
+	 */
 	private $KMData       = array();
+
+	/**
+	 * Kilometer data for week
+	 * @var array
+	 */
 	private $KMDataWeek   = array(); // = KMData / 52
+
+	/**
+	 * Kilometer data for month
+	 * @var array
+	 */
 	private $KMDataMonth  = array(); // = KMData / 12
+
+	/**
+	 * Data for pace
+	 * @var array
+	 */
 	private $TempoData    = array();
+
+	/**
+	 * Data for vdot
+	 * @var array
+	 */
 	private $VDOTData     = array();
+
+	/**
+	 * Data for trimp
+	 * @var array
+	 */
 	private $TRIMPData    = array();
 
 	/**
@@ -198,7 +271,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$Dataset->activateKilometerComparison();
 
 		echo '<table class="small notSmaller r fullWidth">';
-		echo '<thead><tr><th colspan="'.($Dataset->column_count+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -223,7 +296,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$end   = Time::Weekend($time);
 			$week  = 'KW '.date('W', $time);
 
-			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowser::getLink($week, $start, $end).'</td>';
+			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowserLinker::link($week, $start, $end).'</td>';
 
 			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
 				if (isset($CompleteData[$w+1]))
@@ -231,7 +304,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 				$Dataset->displayTableColumns();
 			} else
-				echo HTML::emptyTD($Dataset->column_count, '<em>keine Trainings</em>', 'c');
+				echo HTML::emptyTD($Dataset->cols(), '<em>keine Trainings</em>', 'c');
 
 			echo '</tr>';
 		}
@@ -386,7 +459,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initTempoData($dat) {
-		$text = ($dat['s'] == 0) ? '&nbsp;' : Sport::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $this->sportid);
+		$text = ($dat['s'] == 0) ? '&nbsp;' : SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $this->sportid);
 		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 

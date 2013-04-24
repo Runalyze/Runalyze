@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularUnit
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class holds only enum for units
- * @author Hannes Christiansen <mail@laufhannes.de> 
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularUnit {
 	/**

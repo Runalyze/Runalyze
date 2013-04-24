@@ -110,14 +110,6 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Clean the databse for shoes
 	 */
 	private function resetShoes() {
-		$shoes = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'shoe`');
-		foreach ($shoes as $shoe) {
-			$data = Mysql::getInstance()->fetchSingle('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$shoe['id'].'" GROUP BY `shoeid`');
-
-			if ($data === false)
-				$data = array('km' => 0, 's' => 0);
-
-			Mysql::getInstance()->update(PREFIX.'shoe', $shoe['id'], array('km', 'time'), array($data['km'], $data['s']));
-		}
+		ShoeFactory::recalculateAllShoes();
 	}
 }

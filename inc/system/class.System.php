@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class::System
+ * @package Runalyze\System
+ */
+/**
+ * System
+ * @author Hannes Christiansen
+ * @package Runalyze\System
+ */
 class System {
 	/**
 	 * Get code to include all JS-files

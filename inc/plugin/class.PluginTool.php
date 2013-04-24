@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: PluginTool
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::PluginTool
+ * @package Runalyze\Plugin
+ */
+/**
+ * Abstract plugin class for tools
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugin
  */
 abstract class PluginTool extends Plugin {
 	/**

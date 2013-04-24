@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: ConfigTabSports
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ConfigTabSports
+ * @package Runalyze\System\Config
+ */
+/**
+ * ConfigTabSports
+ * @author Hannes Christiansen
+ * @package Runalyze\System\Config
  */
 class ConfigTabSports extends ConfigTab {
 	/**
@@ -49,9 +54,9 @@ class ConfigTabSports extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		$Sports   = Sport::getSports();
+		$Sports   = SportFactory::AllSports();
 		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
-		$SportCount = Sport::getSportsCount();
+		$SportCount = SportFactory::CountArray();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
 
@@ -76,7 +81,7 @@ class ConfigTabSports extends ConfigTab {
 			elseif (!isset($SportCount[$id]) || $SportCount[$id] == 0)
 				$delete = '<input type="checkbox" name="sport[delete]['.$id.']" />';
 			else
-				$delete = DataBrowser::getSearchLink('<small>('.$SportCount[$id].')</small>', 'opt[typeid]=is&val[sportid][0]='.$id);
+				$delete = DataBrowserLinker::searchLink('<small>('.$SportCount[$id].')</small>', 'opt[typeid]=is&val[sportid][0]='.$id);
 
 			$Code .= '
 					<tr class="a'.($i%2+1).(isset($Data['new']) ? ' unimportant' : '').'">
@@ -108,7 +113,7 @@ class ConfigTabSports extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Sports   = Sport::getSports();
+		$Sports   = SportFactory::AllSports();
 		$Sports[] = array('id' => -1);
 
 		foreach ($Sports as $Data) {
@@ -150,7 +155,7 @@ class ConfigTabSports extends ConfigTab {
 				Mysql::getInstance()->insert(PREFIX.'sport', $columns, $values);
 		}
 
-		Sport::reinitSports();
+		SportFactory::reInitAllSports();
 
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}

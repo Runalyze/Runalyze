@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunningAHEADLog version="3.1">
+  <EventCollection>
+    <Event type="10" typeName="Laufen" subtype="6" subtypeName="Wettkampf" channel="0" id="25f019b2152d4cb2a1085babb138202f" time="2008-09-20T15:15:00Z">
+      <Url>http://www.citylauf-telgte.de/</Url>
+      <HeartRate>
+        <AvgHR>193</AvgHR>
+        <MaxHR>210</MaxHR>
+      </HeartRate>
+      <Quality>8</Quality>
+      <Effort>9</Effort>
+      <Distance unit="km">5.00</Distance>
+      <Duration seconds="1157.00">19:17</Duration>
+      <Route id="aaab130cc61240a98139649ab25bc945">Citylauf Telgte</Route>
+      <PlacementInfo>
+        <FieldPlacement>12</FieldPlacement>
+        <GroupPlacement>6</GroupPlacement>
+        <GroupMinAge>20</GroupMinAge>
+        <GroupMaxAge>29</GroupMaxAge>
+      </PlacementInfo>
+      <EnvironmentalConditions>
+        <Conditions>
+          <Sunny />
+        </Conditions>
+        <Temperature unit="C">17</Temperature>
+      </EnvironmentalConditions>
+      <Notes>Super organisiert, gute Strecke ...</Notes>
+    </Event>
+    <Event type="12" typeName="Schwimmen" subtype="2" subtypeName="Breast Stroke" channel="0" id="4ffc72e0d0a143c083aeaf43c4cc2526" time="2008-09-22T19:15:00Z">
+      <Quality>8</Quality>
+      <Effort>5</Effort>
+      <Distance unit="km">1.00</Distance>
+      <Duration seconds="2700.00">45:00</Duration>
+      <Route id="95302c0c6b2c488ab8ea4abecae2d613">Stadtbad Mitte, Münster</Route>
+    </Event>
+    <Event type="10" typeName="Laufen" subtype="3" subtypeName="Intervall" channel="0" id="6fa38b0f997940898d74fa223ac51b4d" time="2008-09-24T18:30:00Z">
+      <HeartRate>
+        <AvgHR>182</AvgHR>
+        <MaxHR>189</MaxHR>
+      </HeartRate>
+      <Quality>7</Quality>
+      <Effort>8</Effort>
+      <Distance unit="km">4.00</Distance>
+      <Duration seconds="1000.00">16:40</Duration>
+      <Route id="ff48d4d8a75b4af08b695b22221da489">Bahn Sentruper Hoehe</Route>
+      <IntervalCollection id="0f240344143e4a87b1b30f427763adcb" name="4 x 1 km, 400 m Trab">
+        <Interval type="0" typeName="Interval">
+          <Distance unit="km">1.00</Distance>
+          <Duration seconds="250.00">4:10</Duration>
+          <HeartRate>
+            <AvgHR>182</AvgHR>
+            <MaxHR>189</MaxHR>
+          </HeartRate>
+        </Interval>
+        <Interval type="1" typeName="Recovery">
+          <Distance unit="m">400.00</Distance>
+          <Duration seconds="180.00">3:00</Duration>
+        </Interval>
+        <Interval type="0" typeName="Interval">
+          <Distance unit="km">1.00</Distance>
+          <Duration seconds="250.00">4:10</Duration>
+          <HeartRate>
+            <AvgHR>182</AvgHR>
+            <MaxHR>189</MaxHR>
+          </HeartRate>
+        </Interval>
+        <Interval type="1" typeName="Recovery">
+          <Distance unit="m">400.00</Distance>
+          <Duration seconds="180.00">3:00</Duration>
+        </Interval>
+        <Interval type="0" typeName="Interval">
+          <Distance unit="km">1.00</Distance>
+          <Duration seconds="250.00">4:10</Duration>
+          <HeartRate>
+            <AvgHR>182</AvgHR>
+            <MaxHR>189</MaxHR>
+          </HeartRate>
+        </Interval>
+        <Interval type="1" typeName="Recovery">
+          <Distance unit="m">400.00</Distance>
+          <Duration seconds="180.00">3:00</Duration>
+        </Interval>
+        <Interval type="0" typeName="Interval">
+          <Distance unit="km">1.00</Distance>
+          <Duration seconds="250.00">4:10</Duration>
+          <HeartRate>
+            <AvgHR>182</AvgHR>
+            <MaxHR>189</MaxHR>
+          </HeartRate>
+        </Interval>
+        <Interval type="1" typeName="Recovery">
+          <Distance unit="km">1.60</Distance>
+          <Duration seconds="480.00">8:00</Duration>
+        </Interval>
+        <Interval type="1" typeName="Recovery">
+          <Distance unit="km">1.60</Distance>
+        </Interval>
+      </IntervalCollection>
+      <EnvironmentalConditions>
+        <Conditions>
+          <Sunny />
+        </Conditions>
+        <Temperature unit="C">15</Temperature>
+      </EnvironmentalConditions>
+    </Event>
+  </EventCollection>
+</RunningAHEADLog>

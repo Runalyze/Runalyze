@@ -1,7 +1,12 @@
 <?php
 /**
- * Class: TrainingPlotPace
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::TrainingPlotPace
+ * @package Runalyze\Draw\Training
+ */
+/**
+ * Training plot for pace
+ * @author Hannes Christiansen
+ * @package Runalyze\Draw\Training
  */
 class TrainingPlotPace extends TrainingPlot {
 	/**
@@ -44,10 +49,10 @@ class TrainingPlotPace extends TrainingPlot {
 
 	/**
 	 * Get data
-	 * @param Training $Training
+	 * @param TrainingObject $Training
 	 * @return array
 	 */
-	static public function getData(Training &$Training) {
+	static public function getData(TrainingObject &$Training) {
 		$Data = $Training->GpsData()->getPlotDataForPace();
 
 		if ($Training->Sport()->usesKmh()) {
@@ -63,10 +68,10 @@ class TrainingPlotPace extends TrainingPlot {
 	 * Set properties
 	 * @param Plot $Plot
 	 * @param int $YAxis
-	 * @param Training $Training
+	 * @param TrainingObject $Training
 	 * @param array $Data 
 	 */
-	static public function setPropertiesTo(Plot &$Plot, $YAxis, Training &$Training, array $Data) {
+	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
 		if ($Training->Sport()->usesKmh())
 			$Plot->addYUnit($YAxis, 'km/h');
 		else

@@ -1,6 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularSelectDb
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a standard select box with options from database
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class FormularSelectDb extends FormularSelectBox {
 	/**

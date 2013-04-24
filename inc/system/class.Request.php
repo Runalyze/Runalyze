@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class::Request
+ * @package Runalyze\System
+ */
+/**
+ * Request
+ * @author Hannes Christiansen
+ * @package Runalyze\System
+ */
 class Request {
 	/**
 	 * Get requested URI

@@ -18,7 +18,7 @@ class TrainingSelectSport extends FormularSelectBox {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
-		foreach (Sport::getSports() as $id => $sport) {
+		foreach (SportFactory::AllSports() as $id => $sport) {
 			$attributes = array();
 			$attributes['data-kcal'] = $sport['kcal'];
 

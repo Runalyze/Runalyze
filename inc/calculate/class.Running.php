@@ -5,7 +5,7 @@
  */
 /**
  * Class: Running
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Running {
@@ -429,6 +429,9 @@ class Running {
 	 * @return double
 	 */
 	static public function getBETargetLongjogKmPerWeek() {
+		if (VDOT_FORM == 0)
+			return 1;
+
 		return log(VDOT_FORM/4) * 12 - self::$BE_MIN_KM_FOR_LONGJOG;
 	}
 

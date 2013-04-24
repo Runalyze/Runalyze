@@ -1,8 +1,13 @@
 <?php
 /**
+ * This file contains class::HTML
+ * @package Runalyze\HTML
+ */
+/**
  * Class: HTML
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML
  */
 class HTML {
 	/**
@@ -52,6 +57,32 @@ class HTML {
 	}
 
 	/**
+	 * Return an empty tr-Tag
+	 * @param int $colspan colspan for empty TDs
+	 * @return string
+	 */
+	public static function emptyTR($colspan = 0) {
+		return '<tr>'.self::emptyTD($colspan).'</tr>'.NL;
+	}
+
+	/**
+	 * Wrap string in td-tag
+	 * @param string $string string for td-tag
+	 * @param string $class optional css class
+	 * @param string $stile optional css inline style
+	 * @return string
+	 */
+	public static function td($string, $class = '', $style = '') {
+		if ($class != '')
+			$class = ' class="'.$class.'"';
+
+		if ($style != '')
+			$style = ' class="'.$style.'"';
+
+		return '<td'.$class.$style.'>'.$string.'</td>';
+	}
+
+	/**
 	 * Get a tr-tag for a bold header-line containing all month-names
 	 * @param int $fixedWidth Fixed width for every month-td in percent [set '0' for no fixed width]
 	 * @param int $emptyTDs Number of empty td before the month-td
@@ -98,11 +129,7 @@ class HTML {
 	 * @param int $colspan
 	 */
 	public static function spaceTR($colspan) {
-		return '
-			<tr class="space">
-				<td colspan="'.$colspan.'">
-				</td>
-			</tr>'.NL;
+		return '<tr class="space"><td colspan="'.$colspan.'"></td></tr>'.NL;
 	}
 
 	/**

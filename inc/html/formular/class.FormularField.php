@@ -1,7 +1,12 @@
 <?php
 /**
+ * This file contains class::FormularField
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for a field as part of a formular
- * @author Hannes Christiansen 
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 abstract class FormularField extends HtmlTag {
 	/**

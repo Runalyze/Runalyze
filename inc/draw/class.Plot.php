@@ -1,10 +1,11 @@
 <?php
 /**
  * This file contains class::Plot
+ * @package Runalyze\Draw
  */
 /**
- * Class: Plot
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * General plotting class
+ * @author Hannes Christiansen
  * @package Runalyze\Draw
  */
 class Plot {

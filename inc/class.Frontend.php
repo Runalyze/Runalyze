@@ -16,7 +16,7 @@
  *  $Frontend = new Frontend();
  * </code>
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class Frontend {
@@ -162,19 +162,6 @@ class Frontend {
 	 * Init classes for Importer/Exporter
 	 */
 	protected function initImporterExporter() {
-		require_once FRONTEND_PATH.'import/class.Importer.php';
-		require_once FRONTEND_PATH.'import/class.ImporterFormular.php';
-
-		Importer::registerImporter('TCX', 'ImporterTCX');
-		Importer::registerImporter('GPX', 'ImporterGPX');
-		Importer::registerImporter('SLF', 'ImporterSLF');
-		Importer::registerImporter('FITLOG', 'ImporterFITLOG');
-		Importer::registerImporter('LOGBOOK', 'ImporterLogbook');
-		Importer::registerImporter('LOGBOOK3', 'ImporterLogbook3');
-		Importer::registerImporter('CSV', 'ImporterCSV');
-		Importer::registerImporter('PWX', 'ImporterPWX');
-		Importer::registerImporter('XML', 'ImporterXML');
-
 		Exporter::registerExporter('TCX', 'ExporterTCX');
 		Exporter::registerExporter('GPX', 'ExporterGPX');
 		Exporter::registerExporter('KML', 'ExporterKML');

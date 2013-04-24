@@ -1,8 +1,13 @@
 <?php
 /**
+ * This file contains class::Formular
+ * @package Runalyze\HTML\Formular
+ */
+/**
  * Class for displaying a formular
  * 
- * @author Hannes Christiansen 
+ * @author Hannes Christiansen
+ * @package Runalyze\HTML\Formular
  */
 class Formular extends HtmlTag {
 	/**
@@ -91,7 +96,7 @@ class Formular extends HtmlTag {
 	 * @param FormularFieldset $Fieldset 
 	 * @param boolean $opened [optional]
 	 */
-	public function addFieldset($Fieldset, $opened = true) {
+	public function addFieldset(FormularFieldset $Fieldset, $opened = true) {
 		$Fieldset->setId($this->Id.'_legend_'.count($this->fieldsets));
 
 		if (!$opened)
@@ -171,18 +176,51 @@ class Formular extends HtmlTag {
 
 		echo '<form '.$this->attributes().'>';
 
+		$this->displayHeader();
+		$this->displayHiddenValues();
+		$this->displayFieldsets();
+		$this->displayFailures();
+		$this->displaySubmitButtons();
+
+		echo '</form>';
+	}
+
+	/**
+	 * Display header
+	 */
+	protected function displayHeader() {
 		if (!empty($this->header))
 			echo '<h1>'.$this->header.'</h1>';
+	}
 
+	/**
+	 * Display hidden Values
+	 */
+	protected function displayHiddenValues() {
 		foreach ($this->hiddenValues as $name => $value)
 			echo '<input type="hidden" name="'.$name.'" value="'.$value.'" />';
+	}
 
+	/**
+	 * Display fieldsets
+	 */
+	protected function displayFieldsets() {
 		foreach ($this->fieldsets as $Fieldset)
 			$Fieldset->display();
+	}
 
+	/**
+	 * Display failures
+	 */
+	protected function displayFailures() {
 		foreach ($this->failures as $message)
 			echo HTML::error($message);
+	}
 
+	/**
+	 * Display submit buttons
+	 */
+	protected function displaySubmitButtons() {
 		if ($this->submitButtonsCentered)
 			echo '<div class="c">';
 
@@ -191,7 +229,5 @@ class Formular extends HtmlTag {
 
 		if ($this->submitButtonsCentered)
 			echo '</div>';
-
-		echo '</form>';
 	}
 }
