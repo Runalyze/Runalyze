@@ -307,7 +307,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getPartnerAsLinks() {
-		if (!$this->hasPartner())
+		if ($this->Object->getPartner() == '')
 			return '';
 
 		$links = array();
