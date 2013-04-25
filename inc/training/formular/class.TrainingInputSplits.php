@@ -46,6 +46,7 @@ class TrainingInputSplits extends FormularField {
 		$Inputs .= '<p id="addSplitsLink"><span class="link" onclick="$e=$(this);$($(\'#defaultInputSplit\').val()).insertBefore($e.parent());">neue Zwischenzeit hinzuf&uuml;gen</span></p>';
 		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">Distanzen auf 100m runden</span></p>';
 		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">als Gesamtdistanz nehmen</span></p>';
+		$Inputs .= '<p><span class="link" onclick="allSplitsActive();">alle Aktiv</span> - <span class="link" onclick="allSplitsRest();">alle Ruhe</span></p>';
 		$Inputs .= '<textarea id="defaultInputSplit" class="hide">'.HTML::textareaTransform($this->getInnerDivForSplit()).'</textarea>';
 
 		return $Inputs;

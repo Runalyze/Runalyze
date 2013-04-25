@@ -1,11 +1,14 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Wettkampf".
+ * This file contains class::RunalyzePluginStat_Wettkampf
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
- * Class: RunalyzePluginStat_Wettkampf
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * Plugin "Wettkampf"
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private $distances = array();
@@ -321,23 +324,23 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 	/**
 	 * Display table-row for a competition
-	 * @param unknown_type $wk
-	 * @param unknown_type $i
-	 * @param bool $all Show all rows
+	 * @param array $data
+	 * @param int $i
+	 * @param bool $all optional Show all rows
 	 */
-	private function displayWKTr($wk, $i, $all = false) {
-		$Training = new Training($wk['id'], $wk);
+	private function displayWKTr(array $data, $i, $all = false) {
+		$Training = new TrainingObject($data);
 		$hide = (!$all && $i >= $this->config['last_wk_num']['var']) ? ' allWKs hide' : '';
 
 		echo('
 			<tr class="a'.($i%2 + 1).$hide.' r">
-				<td>'.$this->getIconForCompetition($wk['id']).'</td>
-				<td class="c small">'.$Training->getDateAsWeeklink().'</a></td>
-				<td class="l"><strong>'.$Training->trainingLinkWithComment().'</strong></td>
-				<td>'.$Training->getDistanceStringWithoutEmptyDecimals().'</td>
-				<td>'.$Training->getTimeString().'</td>
-				<td class="small">'.$Training->getSpeedString().'</td>
-				<td class="small">'.Helper::Unknown($Training->get('pulse_avg')).' / '.Helper::Unknown($Training->get('pulse_max')).' bpm</td>
+				<td>'.$this->getIconForCompetition($data['id']).'</td>
+				<td class="c small">'.$Training->DataView()->getDateAsWeeklink().'</a></td>
+				<td class="l"><strong>'.$Training->Linker()->linkWithComment().'</strong></td>
+				<td>'.$Training->DataView()->getDistanceStringWithoutEmptyDecimals().'</td>
+				<td>'.$Training->DataView()->getTimeString().'</td>
+				<td class="small">'.$Training->DataView()->getSpeedString().'</td>
+				<td class="small">'.Helper::Unknown($Training->getPulseAvg()).' / '.Helper::Unknown($Training->getPulseMax()).' bpm</td>
 				<td class="small">'.$Training->Weather()->asString().'</td>
 			</tr>');	
 	}

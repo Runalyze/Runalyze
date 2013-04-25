@@ -83,7 +83,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: standard file
+	 * Test: indoor file
 	 * Filename: "Indoor-Training.tcx" 
 	 */
 	public function test_indoorTraining() {
@@ -94,6 +94,36 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 122, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 149, $this->object->object()->getPulseMax(), '', 2);
 		$this->assertEquals( 2, $this->object->object()->Sport()->id() );
+	}
+
+	/**
+	 * Test: multisport file
+	 * Filename: "Multisport.tcx" 
+	 */
+	public function test_multisport() {
+		$this->object->parseFile('../tests/testfiles/tcx/Multisport.tcx');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertTrue( $this->object->hasMultipleTrainings() );
+		$this->assertEquals( 3, $this->object->numberOfTrainings() );
+
+		// Activity 1
+		$this->assertEquals( mktime(18, 14, 21, 4, 18, 2013), $this->object->object(0)->getTimestamp() );
+		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(0)->get('sportid') );
+		$this->assertEquals( 494, $this->object->object(0)->getTimeInSeconds(), '', 10 );
+		$this->assertEquals( 2.355, $this->object->object(0)->getDistance(), '', 0.1 );
+
+		// Activity 1
+		$this->assertEquals( mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
+		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
+		$this->assertEquals( 3557, $this->object->object(1)->getTimeInSeconds(), '', 10 );
+		$this->assertEquals( 11.46, $this->object->object(1)->getDistance(), '', 0.1 );
+
+		// Activity 3
+		$this->assertEquals( mktime(19, 35, 46, 4, 18, 2013), $this->object->object(2)->getTimestamp() );
+		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
+		$this->assertEquals( 420, $this->object->object(2)->getTimeInSeconds(), '', 10 );
+		$this->assertEquals( 2.355, $this->object->object(2)->getDistance(), '', 0.1 );
 	}
 
 }

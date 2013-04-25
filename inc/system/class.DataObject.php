@@ -304,7 +304,7 @@ abstract class DataObject {
 	/**
 	 * Set all internal values as post data
 	 */
-	final public function setValuesAsPostData() {
+	public function setValuesAsPostData() {
 		$_POST = array_merge($_POST, $this->data);
 	}
 
