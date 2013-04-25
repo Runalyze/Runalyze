@@ -309,7 +309,8 @@ class GpsData {
 	 * Are information for latitude/longitude available?
 	 */
 	public function hasPositionData() {
-		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1) && max($this->arrayForLatitude) > 0;
+		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1)
+			&& (max($this->arrayForLatitude) > 0 || min($this->arrayForLatitude) < 0);
 	}
 
 	/**
