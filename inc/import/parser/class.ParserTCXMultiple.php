@@ -26,12 +26,14 @@ class ParserTCXMultiple extends ParserAbstractMultipleXML {
 			return;
 
 		if (isset($this->XML->Activities->MultiSportSession->FirstSport))
-			foreach ($this->XML->Activities->MultiSportSession->FirstSport->Activity as $Training)
-				$this->parseSingleTraining($Training);
+			foreach ($this->XML->Activities->MultiSportSession->FirstSport as $Sport)
+				foreach ($Sport->Activity as $Training)
+					$this->parseSingleTraining($Training);
 
 		if (isset($this->XML->Activities->MultiSportSession->NextSport))
-			foreach ($this->XML->Activities->MultiSportSession->NextSport->Activity as $Training)
-				$this->parseSingleTraining($Training);
+			foreach ($this->XML->Activities->MultiSportSession->NextSport as $Sport)
+				foreach ($Sport->Activity as $Training)
+					$this->parseSingleTraining($Training);
 	}
 
 	/**
