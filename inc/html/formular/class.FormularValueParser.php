@@ -253,13 +253,15 @@ class FormularValueParser {
 		$timeParts = self::removeEmptyValues(explode(':', $_POST[$key]));
 		$numParts  = count($timeParts);
 
-		if ($numParts == 2) {
+		if ($numParts == 3) {
+			$_POST[$key] = 60*60*$timeParts[0] + 60*$timeParts[1] + $timeParts[2];
+		} elseif ($numParts == 2) {
 			$_POST[$key] = 60*60*$timeParts[0] + 60*$timeParts[1];
 		} else {
 			$_POST[$key] = 0;
 		}
 
-		if ($numParts == 1 || $numParts > 2 || $_POST[$key] > DAY_IN_S)
+		if ($numParts == 1 || $numParts > 3 || $_POST[$key] > DAY_IN_S)
 			return 'Die Uhrzeit konnte nicht gelesen werden.';
 
 		return true;
