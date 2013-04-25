@@ -165,7 +165,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getDistanceStringWithoutEmptyDecimals() {
-		if ($this->hasDistance())
+		if ($this->Object->hasDistance())
 			return Running::Km($this->Object->getDistance(), (round($this->Object->getDistance()) != $this->Object->getDistance() ? 1 : 0), $this->Object->isTrack());
 
 		return '';
@@ -350,7 +350,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getVDOTicon() {
-		return Icon::getVDOTicon($this->Object->getVdotCorrected(), $this->Object->usedForVdot());
+		return Icon::getVDOTicon($this->Object->getVdotCorrected(), !$this->Object->usedForVdot());
 	}
 
 	/**

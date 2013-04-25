@@ -1,11 +1,14 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Trainingszeiten".
+ * This file contains the class::RunalyzePluginStat_Trainingszeiten
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Trainingszeiten';
 /**
- * Class: RunalyzePluginStat_Trainingszeiten
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * Plugin "Trainingszeiten"
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	protected $dataIsMissing = false;
@@ -84,16 +87,16 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';
 		echo HTML::spaceTR(8);
 
-		foreach ($nights as $i => $night) {
-			$Training = new Training($night['id'], $night);
+		foreach ($nights as $i => $data) {
+			$Training = new TrainingObject($data);
 
 			if ($i%2 == 0)
 				echo('<tr class="a'.(round($i/2)%2+1).'">');
 			echo('
-				<td class="b">'.$Training->getDaytimeString().'</td>
-				<td>'.$Training->trainingLinkWithSportIcon().'</td>
-				<td>'.$Training->getKmOrTime().' '.$Training->Sport()->name().'</td>
-				<td>'.$Training->getDateAsWeeklink().'</td>');
+				<td class="b">'.$Training->DataView()->getDaytimeString().'</td>
+				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
+				<td>'.$Training->DataView()->getKmOrTime().' '.$Training->Sport()->name().'</td>
+				<td>'.$Training->DataView()->getDateAsWeeklink().'</td>');
 			if ($i%2 == 1)
 				echo('</tr>');
 		}

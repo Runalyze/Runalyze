@@ -94,18 +94,18 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		if (empty($this->SumData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
 
-		foreach ($this->SumData as $i => $Strecke) {
-			$Training = new Training($Strecke['id'], $Strecke);
+		foreach ($this->SumData as $i => $Data) {
+			$Training = new TrainingObject($Data);
 
-			if (strlen($Strecke['route']) == 0)
-				$Strecke['route'] = '<em>unbekannte Strecke</em>';
+			if (strlen($Data['route']) == 0)
+				$Data['route'] = '<em>unbekannte Strecke</em>';
 
 			echo('
 			<tr class="a'.($i%2+1).'">
-				<td class="small">'.$Training->getDateWithWeekLink(false).'</td>
-				<td>'.$Training->trainingLinkWithSportIcon().'</td>
-				<td title="'.($Strecke['comment'] != "" ? $Strecke['comment'].': ' : '').$Strecke['route'].'">'.$Strecke['route'].'</td>
-				<td class="r">'.$Strecke['elevation'].'&nbsp;hm</td>
+				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
+				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
+				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
+				<td class="r">'.$Data['elevation'].'&nbsp;hm</td>
 			</tr>
 				'.NL);
 		}
@@ -125,20 +125,20 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		if (empty($this->UpwardData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
 
-		foreach ($this->UpwardData as $i => $Strecke) {
-			$Training = new Training($Strecke['id'], $Strecke);
+		foreach ($this->UpwardData as $i => $Data) {
+			$Training = new TrainingObject($Data);
 
-			if (strlen($Strecke['route']) == 0)
-				$Strecke['route'] = '<em>unbekannte Strecke</em>';
+			if (strlen($Data['route']) == 0)
+				$Data['route'] = '<em>unbekannte Strecke</em>';
 
 			echo('
 			<tr class="a'.($i%2+1).'">
-				<td class="small">'.$Training->getDateWithWeekLink(false).'</td>
-				<td>'.$Training->trainingLinkWithSportIcon().'</td>
-				<td title="'.($Strecke['comment'] != "" ? $Strecke['comment'].': ' : '').$Strecke['route'].'">'.$Strecke['route'].'</td>
+				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
+				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
+				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
 				<td class="r">
-					'.round($Strecke['steigung']/10, 2).'&nbsp;&#37;<br />
-					<small>('.$Strecke['elevation'].'&nbsp;hm/'.$Strecke['distance'].'&nbsp;km</small>
+					'.round($Data['steigung']/10, 2).'&nbsp;&#37;<br />
+					<small>('.$Data['elevation'].'&nbsp;hm/'.$Data['distance'].'&nbsp;km</small>
 				</td>
 			</tr>
 				'.NL);
@@ -176,7 +176,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	private function initSumData() {
 		$this->SumData = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				`time`, `sportid`, `id`, `elevation`, `route`, `comment`
+				`time`, `sportid`, `id`, `elevation`, `route`, `comment`, `s`, `distance`
 			FROM `'.PREFIX.'training`
 			WHERE `elevation` > 0
 			ORDER BY `elevation` DESC
@@ -190,7 +190,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		$this->UpwardData = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`time`, `sportid`, `id`, `elevation`, `route`, `comment`,
-				(`elevation`/`distance`) as `steigung`, `distance`
+				(`elevation`/`distance`) as `steigung`, `distance`, `s`
 			FROM `'.PREFIX.'training`
 			WHERE `elevation` > 0
 			ORDER BY `steigung` DESC

@@ -92,6 +92,15 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
+	 * Set all internal values as post data
+	 */
+	final public function setValuesAsPostData() {
+		$this->setSplitsFromObject();
+
+		parent::setValuesAsPostData();
+	}
+
+	/**
 	 * Tasks to perform before insert
 	 */
 	protected function tasksBeforeInsert() {

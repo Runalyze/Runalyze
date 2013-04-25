@@ -109,6 +109,7 @@ class Icon {
 	/**
 	 * Get icon for VDOT as shape
 	 * @param double $VDOT
+	 * @param bool $gray optional, default false
 	 * @return string
 	 */
 	public static function getVDOTicon($VDOT, $gray = false) {
