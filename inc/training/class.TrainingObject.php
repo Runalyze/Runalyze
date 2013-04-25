@@ -95,9 +95,16 @@ class TrainingObject extends DataObject {
 	 * Set all internal values as post data
 	 */
 	final public function setValuesAsPostData() {
-		$this->setSplitsFromObject();
+		$this->updateAfterParsing();
 
 		parent::setValuesAsPostData();
+	}
+
+	/**
+	 * Update internal array after parsing
+	 */
+	final public function updateAfterParsing() {
+		$this->setSplitsFromObject();
 	}
 
 	/**
