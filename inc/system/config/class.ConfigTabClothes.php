@@ -48,7 +48,7 @@ class ConfigTabClothes extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		$Clothes   = ClothesFacotry::OrderedClothes();
+		$Clothes   = ClothesFactory::OrderedClothes();
 		$Clothes[] = array('new' => true, 'name' => '', 'short' => '', 'order' => '', 'id' => -1);
 
 		foreach ($Clothes as $i => $Data) {
