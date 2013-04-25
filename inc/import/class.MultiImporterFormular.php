@@ -87,6 +87,8 @@ class MultiImporterFormular extends Formular {
 	 * @param int $i
 	 */
 	private function getTableRowFor(TrainingObject &$TrainingObject, $i) {
+		$TrainingObject->updateAfterParsing();
+
 		$Data  = urlencode(serialize($TrainingObject->getArray()));
 
 		$Inputs  = HTML::checkBox('training-import['.$i.']', true);
