@@ -31,6 +31,17 @@ class TrainingLinker {
 	}
 
 	/**
+	 * Get public url
+	 * @return string
+	 */
+	public function publicUrl() {
+		if ($this->Object->isPublic())
+			return System::getFullDomain().SharedLinker::getUrlFor($this->Object->id());
+
+		return '';
+	}
+
+	/**
 	 * Get link
 	 * @param string $name displayed link name
 	 * @return string HTML-link to this training

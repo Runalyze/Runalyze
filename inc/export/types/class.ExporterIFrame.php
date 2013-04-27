@@ -1,23 +1,20 @@
 <?php
 /**
- * Exporter for: HTML-IFrame-snippet
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterIFrame
+ * @package Runalyze\Export\Types
  */
-class ExporterIFrame extends ExporterEmbedded {
+/**
+ * Exporter for: IFrame
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterIFrame extends ExporterAbstract {
 	/**
-	 * Is this exporter without a file?
-	 * @return boolean 
+	 * Display
 	 */
-	public static function isWithoutFile() {
-		return true;
-	}
-
-	/**
-	 * Set file content
-	 */
-	protected function setFileContent() {
-		$Code = $this->getHTMLCode();
-		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $Code);
+	public function display() {
+		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $this->getHTMLCode());
 
 		$CodeField = new FormularTextarea('code', 'Code', $Code);
 		$CodeField->addCSSclass('fullWidth');
@@ -47,7 +44,7 @@ class ExporterIFrame extends ExporterEmbedded {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
-		$Url      = System::getFullDomain().SharedLinker::getUrlFor($this->Training->id());
+		$Url = $this->Training->Linker()->publicUrl();
 
 		return '<iframe style="padding:0;margin:0 auto;display:block;" src="'.$Url.'&amp;mode=iframe" width="500" height="500"></iframe>';
 	}

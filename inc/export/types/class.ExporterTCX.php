@@ -1,9 +1,15 @@
 <?php
 /**
- * Exporter for: TCX 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterTCX
+ * @package Runalyze\Export\Types
  */
-class ExporterTCX extends Exporter {
+/**
+ * Exporter for: TCX
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterTCX extends ExporterAbstractFile {
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement

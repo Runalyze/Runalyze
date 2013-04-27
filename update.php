@@ -1,9 +1,10 @@
 <?php
 /**
- * RUNALYZE
+ * RUNALYZE - Updater
  *
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @copyright http://runalyze.laufhannes.de/
+ * @package Runylze
  *
  * With this file you are able to update RUNALYZE.
  * Don't change anything in this file!
@@ -37,17 +38,6 @@ require_once 'inc/class.InstallerUpdate.php';
 
 $Updater = new InstallerUpdate();
 $Updater->display();
+
+include 'inc/tpl/tpl.installerFooter.php';
 ?>
-
-		<p class="c small" style="border-top:1px solid #ccc; margin-top:20px; padding-top:7px;">
-			<a href="http://www.runalyze.de/" title="Runalyze">www.runalyze.de</a>
-			| <a href="https://www.facebook.com/Runalyze" title="Runalyze bei Facebook">bei Facebook</a>
-			| <a href="http://twitter.com/RunalyzeDE" title="Runalyze bei Twitter">bei Twitter</a>
-			| <a href="http://sourceforge.net/projects/runalyze/" title="Runalyze bei Twitter">bei SourceForge</a>
-		</p>
-
-	</div>
-</div>
-
-</body>
-</html>

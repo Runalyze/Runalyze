@@ -1,9 +1,15 @@
 <?php
 /**
- * Exporter for: KML 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterKML
+ * @package Runalyze\Export\Types
  */
-class ExporterKML extends Exporter {
+/**
+ * Exporter for: KML
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterKML extends ExporterAbstractFile {
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement
@@ -65,7 +71,7 @@ class ExporterKML extends Exporter {
 	 * @return string
 	 */
 	protected function getNameForKml() {
-		return date('Y-m-d', $this->Training->get('time')).': '.$this->Training->getTitle();
+		return date('Y-m-d', $this->Training->get('time')).': '.$this->Training->DataView()->getTitle();
 	}
 
 	/**

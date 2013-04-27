@@ -1,0 +1,86 @@
+<?php
+/**
+ * This file contains class::ExporterAbstractFile
+ * @package Runalyze\Export\Types
+ */
+/**
+ * Create exporter for given type
+ *
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+abstract class ExporterAbstractFile extends ExporterAbstract {
+	/**
+	 * File content to write
+	 * @var string
+	 */
+	protected $FileContent = '';
+
+	/**
+	 * Get extension
+	 * @return string
+	 */
+	abstract protected function getExtension();
+
+	/**
+	 * Export
+	 */
+	abstract protected function setFileContent();
+
+	/**
+	 * Display
+	 */
+	final public function display() {
+		$this->setFileContent();
+		$this->writeFile();
+
+		if (count($this->getAllErrors()) > 0)
+			foreach ($this->getAllErrors() as $Error)
+				echo HTML::error($Error);
+		else
+			echo HTML::info('
+				Das Training wurde erfolgreich exportiert.<br />
+				<br />
+				<a href="inc/export/files/'.$this->getFilename().'"><strong>Herunterladen: '.$this->getFilename().'</strong></a>
+			');
+	}
+
+	/**
+	 * Write file 
+	 */
+	final protected function writeFile() {
+		if (!empty($this->FileContent))
+			Filesystem::writeFile('export/files/'.$this->getFilename(), $this->getFileContent());
+	}
+
+	/**
+	 * Add indents to file content 
+	 */
+	final protected function formatFileContentAsXML() {
+		$XML = new DOMDocument('1.0');
+		$XML->preserveWhiteSpace = false;
+		$XML->loadXML( $this->FileContent );
+		$XML->formatOutput = true;
+
+		$this->FileContent = $XML->saveXML();
+	}
+
+	/**
+	 * Get file content
+	 * @return string
+	 */
+	final public function getFileContent() {
+		return $this->FileContent;
+	}
+
+	/**
+	 * Get filename
+	 * @return string 
+	 */
+	final public function getFilename() {
+		if (is_null($this->Training))
+			return 'undefined.'.$this->getExtension();
+	
+		return date('Y-m-d_H-i', $this->Training->getTimestamp()).'_Training_'.$this->Training->id().'.'.$this->getExtension();
+	}
+}
