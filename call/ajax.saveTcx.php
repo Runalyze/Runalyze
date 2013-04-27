@@ -7,4 +7,4 @@ require_once '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true);
 
-ImporterTCX::saveTCX($_POST['activityId'], $_POST['data']);
+Filesystem::writeFile('import/files/'.$_POST['activityId'].'.tcx', $_POST['data']);
