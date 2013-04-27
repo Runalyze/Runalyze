@@ -95,11 +95,28 @@ class ImporterFactory {
 		if (!is_array($_POST['activityIds']))
 			return;
 
+		$this->readMultipleFilesFromGarminCommunicator();
+		$this->deleteMultipleFilesFromGarminCommunicator();
+	}
+
+	/**
+	 * Read multiple files from garmin communicator
+	 */
+	private function readMultipleFilesFromGarminCommunicator() {
 		$Importer = new ImporterFiletypeTCX();
 		foreach ($_POST['activityIds'] as $ID) {
 			$Importer->parseCompressedFile( ImporterUpload::relativePath($ID.'.tcx') );
+
 			$this->TrainingObjects = array_merge($this->TrainingObjects, $Importer->objects());
 		}
+	}
+
+	/**
+	 * Delete multiple files from garmin communicator
+	 */
+	private function deleteMultipleFilesFromGarminCommunicator() {
+		foreach ($_POST['activityIds'] as $ID)
+			Filesystem::deleteFile( ImporterUpload::relativePath($ID.'.tcx') );
 	}
 
 	/**
