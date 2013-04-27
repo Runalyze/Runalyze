@@ -148,6 +148,6 @@ class ImporterUpload {
 	 * @return string
 	 */
 	static public function relativePath($File) {
-		return '/import'.self::$pathToFiles.$File;
+		return 'import'.self::$pathToFiles.$File;
 	}
 }
