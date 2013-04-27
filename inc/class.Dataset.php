@@ -349,6 +349,9 @@ class Dataset {
 				return $this->cut( $this->TrainingObject->Clothes()->asString() );
 
 			case 'splits':
+				if (!$this->TrainingObject->Type()->hasSplits())
+					return '';
+
 				return $this->TrainingObject->Splits()->asIconWithTooltip();
 
 			case 'comment':
@@ -364,6 +367,9 @@ class Dataset {
 				return $this->TrainingObject->Shoe()->getName();
 
 			case 'vdot':
+				if (!$this->TrainingObject->Sport()->isRunning())
+					return '';
+
 				return $this->TrainingObject->DataView()->getVDOTicon();
 
 		}

@@ -223,6 +223,18 @@ class Splits {
 	}
 
 	/**
+	 * Is at least one lap active?
+	 * @return boolean
+	 */
+	public function hasActiveLaps() {
+		foreach ($this->asArray as $split)
+			if ($split['active'])
+				return true;
+
+		return false;
+	}
+
+	/**
 	 * Get all distances as array
 	 * @param bool $restingLaps optional
 	 * @return array 
