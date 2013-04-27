@@ -1,9 +1,15 @@
 <?php
 /**
- * Exporter for: Facebook
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterFacebook
+ * @package Runalyze\Export\Types
  */
-class ExporterFacebook extends ExporterSocialShare {
+/**
+ * Exporter for: Facebook
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterFacebook extends ExporterAbstractSocialShare {
 	/**
 	 * APP-ID
 	 * @var string 
@@ -11,26 +17,19 @@ class ExporterFacebook extends ExporterSocialShare {
 	public static $APP_ID = '473795412675725';
 
 	/**
-	 * Is this exporter without a file?
-	 * @return boolean 
+	 * Display
 	 */
-	public static function isWithoutFile() {
-		return true;
-	}
-
-	/**
-	 * Set file content
-	 */
-	protected function setFileContent() {
+	public function display() {
 		$Linklist = new BlocklinkList();
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
 		echo HTML::info('
-			<small>
 				Du wirst zur Seite von Facebook weitergeleitet.<br />
 				Dort kannst du selbst bestimmen, welcher Text angezeigt wird.
-			</small>');
+		');
+
+		$this->throwLinkErrorForLocalhost();
 	}
 
 	/**
@@ -38,8 +37,8 @@ class ExporterFacebook extends ExporterSocialShare {
 	 * @return string 
 	 */
 	protected function getLink() {
-		$url   = urlencode($this->getUrl());
-		$title = urlencode($this->Training->getTitle().' am '.$this->Training->getDate(false).' - Trainingsansicht');
+		$url   = urlencode($this->Training->Linker()->publicUrl());
+		$title = urlencode($this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht');
 		$text  = urlencode($this->getText());
 		$image = 'http://runalyze.de/wp-content/uploads/Account.png';
 

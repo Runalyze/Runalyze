@@ -7,6 +7,6 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$View = new ExporterView();
+$View = new ExporterWindow();
 $View->display();
 ?>

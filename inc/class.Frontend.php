@@ -48,10 +48,6 @@ class Frontend {
 	 */
 	public function __construct($hideHeaderAndFooter = false) {
 		$this->initSystem();
-
-		$this->initRequiredFiles();
-		$this->initDebugMode();
-		$this->initSessionAccountHandler();
 		$this->defineConsts();
 		$this->checkConfigFile();
 
@@ -80,6 +76,8 @@ class Frontend {
 		$this->setAutoloader();
 		$this->initErrorHandling();
 		$this->initMySql();
+		$this->initDebugMode();
+		$this->initSessionAccountHandler();
 	}
 
 	/**
@@ -149,33 +147,6 @@ class Frontend {
 
 		if (isset($_POST['user']) && isset($_POST['password']))
 			$Session->tryToLogin($_POST['user'], $_POST['password']);
-	}
-	
-	/**
-	 * Include alle required files
-	 */
-	protected function initRequiredFiles() {
-		$this->initImporterExporter();
-	}
-
-	/**
-	 * Init classes for Importer/Exporter
-	 */
-	protected function initImporterExporter() {
-		Exporter::registerExporter('TCX', 'ExporterTCX');
-		Exporter::registerExporter('GPX', 'ExporterGPX');
-		Exporter::registerExporter('KML', 'ExporterKML');
-		Exporter::registerExporter('FITLOG', 'ExporterFITLOG');
-
-		// TODO: add option
-		if (!System::isAtLocalhost()) {
-			Exporter::registerExporter('Twitter', 'ExporterTwitter');
-			Exporter::registerExporter('Facebook', 'ExporterFacebook');
-			Exporter::registerExporter('Google', 'ExporterGoogle');
-		}
-
-		Exporter::registerExporter('HTML', 'ExporterHTML');
-		Exporter::registerExporter('IFrame', 'ExporterIFrame');
 	}
 
 	/**

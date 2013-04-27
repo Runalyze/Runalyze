@@ -1,9 +1,15 @@
 <?php
 /**
- * Exporter for: FITLOG 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterFITLOG
+ * @package Runalyze\Export\Types
  */
-class ExporterFITLOG extends Exporter {
+/**
+ * Exporter for: FITLOG
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterFITLOG extends ExporterAbstractFile {
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement

@@ -1,9 +1,15 @@
 <?php
 /**
- * Exporter for: GPX
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterGPX
+ * @package Runalyze\Export\Types
  */
-class ExporterGPX extends Exporter {
+/**
+ * Exporter for: GPX
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterGPX extends ExporterAbstractFile {
 	/**
 	 * XML construct
 	 * @var SimpleXMLElement

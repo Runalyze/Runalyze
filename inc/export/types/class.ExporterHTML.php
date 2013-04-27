@@ -1,23 +1,20 @@
 <?php
 /**
- * Exporter for: HTML-snippet
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * This file contains class::ExporterHTML
+ * @package Runalyze\Export\Types
  */
-class ExporterHTML extends ExporterEmbedded {
+/**
+ * Exporter for: HTML
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Export\Types
+ */
+class ExporterHTML extends ExporterAbstract {
 	/**
-	 * Is this exporter without a file?
-	 * @return boolean 
+	 * Display
 	 */
-	public static function isWithoutFile() {
-		return true;
-	}
-
-	/**
-	 * Set file content
-	 */
-	protected function setFileContent() {
-		$Code = $this->getHTMLCode();
-		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $Code);
+	public function display() {
+		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $this->getHTMLCode());
 
 		$CodeField = new FormularTextarea('code', 'Code', $Code);
 		$CodeField->addCSSclass('fullWidth');
@@ -45,14 +42,14 @@ class ExporterHTML extends ExporterEmbedded {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
-		$Url      = System::getFullDomain().SharedLinker::getUrlFor($this->Training->id());
-		$Date     = $this->Training->getDate(false);
-		$Time     = $this->Training->getTimeString();
-		$Title    = $this->Training->hasDistance() ? $this->Training->getDistanceString().' ' : '';
-		$Title   .= $this->Training->getTitle();
-		$Pace     = $this->Training->hasDistance() ? $this->Training->get('pace').'/km' : '';
-		$Elev     = $this->Training->get('elevation') > 0 ? $this->Training->get('elevation').' hm' : '';
-		$Heart    = $this->Training->hasPulse() ? $this->Training->get('pulse_avg').'bpm' : '';
+		$Url      = $this->Training->Linker()->publicUrl();
+		$Date     = $this->Training->DataView()->getDate(false);
+		$Time     = $this->Training->DataView()->getTimeString();
+		$Title    = $this->Training->hasDistance() ? $this->Training->DataView()->getDistanceString().' ' : '';
+		$Title   .= $this->Training->DataView()->getTitle();
+		$Pace     = $this->Training->hasDistance() ? $this->Training->DataView()->getPace().'/km' : '';
+		$Elev     = $this->Training->DataView()->getElevation();
+		$Heart    = $this->Training->getPulseAvg() > 0 ? $this->Training->getPulseAvg().'bpm' : '';
 		$Spans    = '';
 
 		if ($Time != '')
