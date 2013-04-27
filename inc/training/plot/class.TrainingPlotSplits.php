@@ -60,8 +60,9 @@ class TrainingPlotSplits extends TrainingPlot {
 	 */
 	protected function initData() {
 		if (!$this->Training->Splits()->areEmpty()) {
-			$this->Labels = $this->Training->Splits()->distancesAsArray();
-			$this->Data   = $this->Training->Splits()->pacesAsArray();
+			$showInactive = !$this->Training->Splits()->hasActiveLaps();
+			$this->Labels = $this->Training->Splits()->distancesAsArray($showInactive);
+			$this->Data   = $this->Training->Splits()->pacesAsArray($showInactive);
 			$num          = count($this->Data);
 			$unit         = ($num >= 20) ? '' : ' km';
 
