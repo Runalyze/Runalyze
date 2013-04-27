@@ -92,8 +92,14 @@ class ImporterFactory {
 	 * Construct for multiple files from garmin communicator
 	 */
 	private function constructForMultipleFilesFromGarminCommunicator() {
-		// TODO
-		Error::getInstance()->addTodo('ImporterFactory::constructForMultipleFilesFromGarminCommunicator("'.implode('", "', $_POST['activityIds']).'")');
+		if (!is_array($_POST['activityIds']))
+			return;
+
+		$Importer = new ImporterFiletypeTCX();
+		foreach ($_POST['activityIds'] as $ID) {
+			$Importer->parseCompressedFile( ImporterUpload::relativePath($ID.'.tcx') );
+			$this->TrainingObjects = array_merge($this->TrainingObjects, $Importer->objects());
+		}
 	}
 
 	/**
@@ -101,7 +107,7 @@ class ImporterFactory {
 	 */
 	private function constructForSingleFileFromGarminCommunicator() {
 		$Importer = new ImporterFiletypeTCX();
-		$Importer->parseString( self::decodeCompressedData($_POST['data']) );
+		$Importer->parseCompressedString( $_POST['data'] );
 
 		$this->TrainingObjects = $Importer->objects();
 	}
@@ -156,15 +162,5 @@ class ImporterFactory {
 	 */
 	static public function canImportExtension($extension) {
 		return class_exists(self::classFor($extension));
-	}
-
-	/**
-	 * Decode from Garmin-Communicator compressed data (base64, gzip)
-	 * @param string $string
-	 * @return string
-	 */
-	static public function decodeCompressedData($string) {
-		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
-		return gzinflate(substr(base64_decode($string),10,-8));
 	}
 }

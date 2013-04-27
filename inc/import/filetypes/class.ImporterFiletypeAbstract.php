@@ -39,12 +39,28 @@ abstract class ImporterFiletypeAbstract {
 	}
 
 	/**
+	 * Parse compressed data (base64, gzip)
+	 * @param string $String string to parse
+	 */
+	final public function parseCompressedString($String) {
+		$this->setParserFor( self::decodeCompressedData($String) );
+		$this->runParser();
+	}
+
+	/**
 	 * Load file
 	 * @param string $Filename relative path (from FRONTEND_PATH) to file
 	 */
 	final public function parseFile($Filename) {
-		$this->setParserFor( Filesystem::openFile($Filename) );
-		$this->runParser();
+		$this->parseString( Filesystem::openFile($Filename) );
+	}
+
+	/**
+	 * Load compressed file (base64, gzip)
+	 * @param string $Filename relative path (from FRONTEND_PATH) to file
+	 */
+	final public function parseCompressedFile($Filename) {
+		$this->parseCompressedString( Filesystem::openFile($Filename) );
 	}
 
 	/**
@@ -127,5 +143,15 @@ abstract class ImporterFiletypeAbstract {
 	 */
 	final public function hasMultipleTrainings() {
 		return $this->numberOfTrainings() > 1;
+	}
+
+	/**
+	 * Decode from Garmin-Communicator compressed data (base64, gzip)
+	 * @param string $string
+	 * @return string
+	 */
+	static public function decodeCompressedData($string) {
+		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
+		return gzinflate(substr(base64_decode($string),10,-8));
 	}
 }
