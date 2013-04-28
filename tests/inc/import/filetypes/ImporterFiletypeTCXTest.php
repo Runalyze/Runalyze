@@ -61,6 +61,13 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1646, $this->object->object()->getCalories(), '', 10);
 		$this->assertEquals( 145, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 172, $this->object->object()->getPulseMax(), '', 2);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
 
 		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 		// TODO: missing values
@@ -75,7 +82,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( !$this->object->failed() );
 
-		$this->assertEquals( 2164, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 2100, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
 
 		$this->assertEquals( "Forerunner 310XT-000", $this->object->object()->getCreatorDetails() );
@@ -116,7 +123,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		// Activity 1
 		$this->assertEquals( mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
 		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
-		$this->assertEquals( 3557, $this->object->object(1)->getTimeInSeconds(), '', 10 );
+		$this->assertEquals( 3558, $this->object->object(1)->getTimeInSeconds(), '', 30 );
 		$this->assertEquals( 11.46, $this->object->object(1)->getDistance(), '', 0.1 );
 
 		// Activity 3
@@ -124,6 +131,29 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 420, $this->object->object(2)->getTimeInSeconds(), '', 10 );
 		$this->assertEquals( 2.355, $this->object->object(2)->getDistance(), '', 0.1 );
+	}
+
+	/**
+	 * Test: dakota file
+	 * Filename: "Dakota.tcx" 
+	 */
+	public function test_dakota() {
+		$this->object->parseFile('../tests/testfiles/tcx/Dakota.tcx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( 1371, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 2.34, $this->object->object()->getDistance(), '', 0.1);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+
+		$this->assertNotEquals( 1, $this->object->object()->Sport()->id() );
+		// TODO: missing values
 	}
 
 }

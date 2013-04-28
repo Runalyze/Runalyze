@@ -47,6 +47,12 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	private $isWithoutDistance = false;
 
 	/**
+	 * Boolean flag: distances are empty
+	 * @var boolean
+	 */
+	private $distancesAreEmpty = false;
+
+	/**
 	 * Constructor
 	 * 
 	 * This parser reimplements constructor to force $XML-parameter to be given.
@@ -152,11 +158,15 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			if ($this->lastPoint > 0)
 				$this->lastPointWasEmpty = true;
 
-			if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time))
-				$this->lastPointWasEmpty = true;
+			if (count($Track->xpath('./Trackpoint')) > 0) {
+				$this->distancesAreEmpty = (count($Track->xpath('./Trackpoint/DistanceMeters')) == 0);
 
-			foreach ($Track->Trackpoint as $Trackpoint)
-				$this->parseTrackpoint($Trackpoint);
+				if (strtotime((string)$Lap['StartTime']) + 8 < strtotime((string)$Track->Trackpoint[0]->Time))
+					$this->lastPointWasEmpty = true;
+
+				foreach ($Track->Trackpoint as $Trackpoint)
+					$this->parseTrackpoint($Trackpoint);
+			}
 		}
 
 		if (self::$DEBUG_SPLITS)
@@ -168,6 +178,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $TP
 	 */
 	protected function parseTrackpoint(&$TP) {
+		if ($this->distancesAreEmpty)
+			$TP->addChild('DistanceMeters', 1000*$this->distanceToTrackpoint($TP));
+
 		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
 
 		if (empty($TP->DistanceMeters) || $NoMove) {
@@ -216,6 +229,25 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$this->gps['latitude'][]  = 0;
 			$this->gps['longitude'][] = 0;
 		}
+	}
+
+	/**
+	 * Calculate distance to trackpoint
+	 * @param SimpleXMLElement $TP
+	 * @return int
+	 */
+	private function distanceToTrackpoint(SimpleXMLElement &$TP) {
+		if (empty($this->gps['km']))
+			return 0.001;
+
+		if (empty($TP->Position))
+			return end($this->gps['km']);
+
+		return end($this->gps['km']) +
+			GpsData::distance(
+				end($this->gps['latitude']), end($this->gps['longitude']),
+				(double)$TP->Position->LatitudeDegrees, (double)$TP->Position->LongitudeDegrees
+			);
 	}
 
 	/**
