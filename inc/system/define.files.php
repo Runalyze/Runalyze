@@ -11,8 +11,9 @@ $JS_FILES = array(
 	'lib/jquery.tablesorter.pager.js',
 	'lib/bootstrap-tooltip.js',
 
+	'lib/fineuploader-3.5.0.min.js',
+
 	'lib/jquery.datepicker.js',
-	'lib/jquery.fileuploader.js',
 	'lib/jquery.jbar.js',
 	'lib/jquery.backgroundStretch.js',
 
