@@ -71,6 +71,8 @@ class ImporterWindow {
 			$this->importFile($_POST['forceAsFileName']);
 		elseif (isset($_GET['file']))
 			$this->importFile($_GET['file']);
+		elseif (isset($_GET['files']))
+			$this->importFiles($_GET['files']);
 		elseif (isset($_POST['data']))
 			$this->importFromGarminCommunicator();
 		elseif (isset($_POST['multi-importer']))
@@ -87,6 +89,20 @@ class ImporterWindow {
 		$Factory = new ImporterFactory($fileName);
 
 		$this->TrainingObjects = $Factory->trainingObjects();
+	}
+
+	/**
+	 * Import files
+	 * @param string $fileNames
+	 */
+	private function importFiles($fileNames) {
+		$fileNames = explode(';', $fileNames);
+
+		foreach ($fileNames as $fileName) {
+			$Factory = new ImporterFactory($fileName);
+
+			$this->TrainingObjects = array_merge($this->TrainingObjects, $Factory->trainingObjects());
+		}
 	}
 
 	/**

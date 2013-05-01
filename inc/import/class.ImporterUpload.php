@@ -29,7 +29,7 @@ class ImporterUpload {
 	 * Constructor
 	 */
 	public function __construct() {
-		if (isset($_GET['json']))
+		if ($this->thereWasAFile())
 			$this->tryToUploadFile();
 	}
 
@@ -38,7 +38,7 @@ class ImporterUpload {
 	 * @return bool
 	 */
 	public function thereWasAFile() {
-		return isset($_GET['json']);
+		return isset($_GET['json']) && isset($_FILES['qqfile']);
 	}
 
 	/**
@@ -46,7 +46,10 @@ class ImporterUpload {
 	 * @return string
 	 */
 	public function getResponse() {
-		return $this->Response;
+		if ($this->succeeded())
+			return '{"success":true}';
+
+		return '{"error":"'.$this->Response.'"}';
 	}
 
 	/**
@@ -68,7 +71,7 @@ class ImporterUpload {
 	 * Try to upload file
 	 */
 	private function tryToUploadFile() {
-		$extension = Filesystem::extensionOfFile($_FILES['userfile']['name']);
+		$extension = Filesystem::extensionOfFile($_FILES['qqfile']['name']);
 
 		if (!ImporterFactory::canImportExtension($extension))
 			$this->throwUnknownExtension($extension);
@@ -100,14 +103,14 @@ class ImporterUpload {
 	 * @return bool
 	 */
 	private function tryToMoveFile() {
-		return move_uploaded_file($_FILES['userfile']['tmp_name'], self::absolutePath($_FILES['userfile']['name']));
+		return move_uploaded_file($_FILES['qqfile']['tmp_name'], self::absolutePath($_FILES['qqfile']['name']));
 	}
 
 	/**
 	 * Set response for upload failed
 	 */
 	private function throwUploadFailed() {
-		$this->Response = 'Can\'t move uploaded file '.$_FILES['userfile']['name'].'.<br />
+		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br />
 					The following paths need chmod 777 (write permissions):<br />
 						/log/<br />
 						/inc/export/files/<br />
