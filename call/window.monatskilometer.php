@@ -18,7 +18,8 @@ if (!isset($_GET['y']))
 </div>
 
 <?php
-include FRONTEND_PATH.'draw/Plot.MonthKM.php';
+$Plot = new PlotMonthKM();
+$Plot->outputJavaScript();
 ?>
 
 	<br />
@@ -32,5 +33,10 @@ for ($j = START_YEAR; $j <= date("Y"); $j++) {
 	else
 		echo Ajax::window('<a href="call/window.monatskilometer.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');	
 }
+
+if ('' == $_GET['y'])
+	echo '<strong style="margin-right:20px;">Jahresvergleich</strong>';
+else
+	echo Ajax::window('<a href="call/window.monatskilometer.php?y=" style="margin-right:20px;">Jahresvergleich</a>');	
 ?>
 </center>

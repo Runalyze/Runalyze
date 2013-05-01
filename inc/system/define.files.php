@@ -36,6 +36,7 @@ $JS_FILES = array(
 	'lib/flot/jquery.flot.navigate.min.js',
 	'lib/flot/jquery.flot.stack.min.js',
 	'lib/flot/jquery.flot.text.js',
+	'lib/flot/jquery.flot.orderBars.js',
 );
 	
 $CSS_FILES = array(

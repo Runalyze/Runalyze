@@ -21,7 +21,8 @@ if (!isset($_GET['y']))
 </div>
 
 <?php
-include FRONTEND_PATH.'draw/Plot.WeekKM.php';
+$Plot = new PlotWeekKM();
+$Plot->outputJavaScript();
 ?>
 
 	<br />
