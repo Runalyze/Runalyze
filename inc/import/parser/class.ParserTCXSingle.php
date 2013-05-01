@@ -17,6 +17,12 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	static private $DEBUG_SPLITS = false;
 
 	/**
+	 * Ignore "empty" moves until this number of seconds
+	 * @var int number of seconds
+	 */
+	static private $IGNORE_NO_MOVE_UNTIL = 1;
+
+	/**
 	 * Total pause time
 	 * @var int
 	 */
@@ -184,16 +190,24 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
 
 		if (empty($TP->DistanceMeters) || $NoMove) {
-			if (count($TP->children()) == 1 || $NoMove) {
-				$OldPauseInSeconds = $this->PauseInSeconds;
-				$this->PauseInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s']));
+			$Ignored = false;
 
+			if (count($TP->children()) == 1 || $NoMove) {
+				$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
+
+				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL) 
+					$Ignored = true;
+				else
+					$this->PauseInSeconds += $ThisBreakInSeconds;
 				if (self::$DEBUG_SPLITS)
-					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.($this->PauseInSeconds - $OldPauseInSeconds).
-							', empty point: '.($NoMove ? 'no move' : 'empty trackpoint'));
+					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.$ThisBreakInSeconds.', empty point: '.
+							($NoMove ?
+								'no move'.($Ignored ? ' ignored' : '')
+								: 'empty trackpoint'));
 			}
 
-			return;
+			if (!$Ignored)
+				return;
 		}
 
 		if ($this->TrainingObject->getTimestamp() == 0)
