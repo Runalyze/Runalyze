@@ -1,11 +1,13 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginStat "Analyse".
+ * This file contains class::RunalyzePluginStat_Analyse
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
- * Class: RunalyzePluginStat_Analyse
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * "Analyse" plugin
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Analyse extends PluginStat {
 	private $where_time = '';
@@ -14,6 +16,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private $timer_start = 0;
 	private $timer_end = 1;
 
+	/**
+	 * Data
+	 * @var array
+	 */
 	private $AnalysisData = array();
 
 	/**
@@ -71,6 +77,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->displayHeader('Training '.$this->getYearString());
 
 		$this->displayAnalysis();
+
+		echo HTML::info('* Die Werte beziehen sich auf die Durchschnittswerte der Trainings.');
 	}
 
 	/**
@@ -266,7 +274,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
 		}
 
-		return array('name' => 'Tempobereiche', 'array' => $speed_data, 'foreach' => $speed_foreach);
+		return array('name' => 'Tempobereiche*', 'array' => $speed_data, 'foreach' => $speed_foreach);
 	}
 
 	/**
@@ -318,7 +326,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				'id' => $pulse);
 		}
 
-		return array('name' => 'Pulsbereiche', 'array' => $pulse_data, 'foreach' => $pulse_foreach);
+		return array('name' => 'Pulsbereiche*', 'array' => $pulse_data, 'foreach' => $pulse_foreach);
 	}
 
 	/**

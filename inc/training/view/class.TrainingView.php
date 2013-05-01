@@ -59,7 +59,7 @@ class TrainingView {
 	private function initToolbarLinks() {
 		if (!Request::isOnSharedPage()) {
 			$this->ToolbarLinks[] = Ajax::window('<a class="labeledLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' Bearbeiten</a> ','small');
-			$this->ToolbarLinks[] = Ajax::window('<a class="labeledLink" href="'.ExporterView::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small');
+			$this->ToolbarLinks[] = Ajax::window('<a class="labeledLink" href="'.ExporterWindow::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small');
 		}
 
 		if ($this->Training->isPublic())
