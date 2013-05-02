@@ -229,6 +229,14 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string into p-tag with class="file"
+	 * @param string $string
+	 */
+	public static function fileBlock($string) {
+		return '<p class="file">'.$string.'</p>';
+	}
+
+	/**
 	 * Replace ampersands for a textarea
 	 * @param string $text
 	 * @return string

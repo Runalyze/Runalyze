@@ -70,6 +70,8 @@ class ExporterWindow {
 		$ListView->display();
 
 		$this->displayPrivacyInfo();
+		echo HTML::p('');
+		$this->displayExportedFiles();
 	}
 
 	/**
@@ -85,6 +87,64 @@ class ExporterWindow {
 			echo HTML::info('Das Training ist derzeit <strong>&ouml;ffentlich</strong>.<br />
 				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'&public=false">&nbsp;&raquo; jetzt privat machen</a>', 'small'));
 		}
+	}
+
+	/**
+	 * Display exported files
+	 */
+	protected function displayExportedFiles() {
+		$ListOfFiles = $this->getExistingFiles();
+		$Fieldset   = new FormularFieldset('Du hast bisher <strong>'.count($ListOfFiles).'</strong> Trainings exportiert');
+
+		if (strlen(Request::param('delete')) > 0) {
+			$index = (int)Request::param('delete');
+			if (!isset($ListOfFiles[$index-1])) {
+				$Fieldset->addWarning('Don\' do that!');
+			} else {
+				$Fieldset->addInfo('Die Datei wurde gel&ouml;scht.');
+				Filesystem::deleteFile('export/files/'.$ListOfFiles[$index-1]);
+				unset($ListOfFiles[$index-1]);
+			}
+		} else {
+			$Fieldset->setCollapsed();
+		}
+
+		if (empty($ListOfFiles)) {
+			$Fieldset->addFileBlock('<em>Es wurden noch keine Trainings exportiert</em>');
+		} else {
+			foreach ($ListOfFiles as $i => $File) {
+				$String = $File.', '.Filesystem::getFilesize(FRONTEND_PATH.'export/files/'.$File);
+				$Link   = '<a href="inc/export/files/'.$File.'" target="_blank">'.$String.'</a>';
+				$Delete = Ajax::window('<a class="right small" href="'.self::$URL.'?id='.$this->TrainingID.'&delete='.($i+1).'">[l&ouml;schen]</a>', 'small');
+
+				$Fieldset->addFileBlock($Delete.$Link);
+			}
+		}
+
+		$Formular = new Formular();
+		$Formular->setId('export-list');
+		$Formular->addFieldset($Fieldset);
+		$Formular->display();
+	}
+
+	/**
+	 * Get array with all existing 
+	 * @return array 
+	 */
+	protected function getExistingFiles() {
+		$Files = array();
+		if ($handle = opendir(FRONTEND_PATH.'export/files/')) {
+			while (false !== ($file = readdir($handle))) {
+				if (substr($file,0,1) != ".") {
+					if (strpos($file, ExporterAbstractFile::fileNameStart()) === 0)
+						$Files[] = $file;
+				}
+			}
+
+			closedir($handle);
+		}
+
+		return $Files;
 	}
 
 	/**

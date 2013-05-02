@@ -17,6 +17,14 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	protected $FileContent = '';
 
 	/**
+	 * Get file name start
+	 * @return string
+	 */
+	static public function fileNameStart() {
+		return SessionAccountHandler::getId().'-Training_';
+	}
+
+	/**
 	 * Get extension
 	 * @return string
 	 */
@@ -81,6 +89,6 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 		if (is_null($this->Training))
 			return 'undefined.'.$this->getExtension();
 	
-		return date('Y-m-d_H-i', $this->Training->getTimestamp()).'_Training_'.$this->Training->id().'.'.$this->getExtension();
+		return self::fileNameStart().date('Y-m-d_H-i', $this->Training->getTimestamp()).'_'.$this->Training->id().'.'.$this->getExtension();
 	}
 }
