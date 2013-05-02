@@ -60,6 +60,7 @@ $CLASSMAP = array(
 'AjaxTabs' => 'html/class.AjaxTabs.php',
 'BlocklinkList' => 'html/class.BlocklinkList.php',
 'HTML' => 'html/class.HTML.php',
+'HTMLMetaForFacebook' => 'html/class.HTMLMetaForFacebook.php',
 'HtmlTag' => 'html/class.HtmlTag.php',
 'Icon' => 'html/class.Icon.php',
 'Formular' => 'html/formular/class.Formular.php',

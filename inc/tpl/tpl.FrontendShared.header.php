@@ -1,7 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# fitness: http://ogp.me/ns/fitness#">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+
+	<?php $Meta = new HTMLMetaForFacebook(); $Meta->display(); ?>
 
 	<base href="<?php echo System::getFullDomain(); ?>" />
 
