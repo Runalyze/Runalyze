@@ -3,8 +3,8 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 31. Oktober 2012 um 12:01
--- Server Version: 5.1.41
+-- Erstellungszeit: 02. Mai 2013 um 08:33
+-- Server Version: 5.1.44
 -- PHP-Version: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
@@ -207,6 +207,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `pulse_avg` int(3) NOT NULL DEFAULT '0',
   `pulse_max` int(3) NOT NULL DEFAULT '0',
   `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `vdot_by_time` decimal(5,2) NOT NULL DEFAULT '0.00',
   `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `trimp` int(4) NOT NULL DEFAULT '0',
@@ -232,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `creator_details` tinytext NOT NULL,
   `activity_id` varchar(50) NOT NULL DEFAULT '',
   `elevation_corrected` tinyint(1) NOT NULL DEFAULT '0',
-  `gps_cache_object` MEDIUMTEXT NOT NULL,
+  `gps_cache_object` mediumtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
@@ -249,6 +250,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `abbr` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `RPE` smallint(2) NOT NULL DEFAULT '2',
   `splits` tinyint(1) NOT NULL DEFAULT '0',
+  `sportid` int(11) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
