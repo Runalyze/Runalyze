@@ -309,7 +309,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 	/**
 	 * Get array with all existing 
-	 * @return type 
+	 * @return array 
 	 */
 	protected function getExistingFiles() {
 		$Files = array();
