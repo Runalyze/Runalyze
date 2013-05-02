@@ -5,7 +5,7 @@
  */
 /**
  * Class for input fields: sportid
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingSelectSport extends FormularSelectBox {

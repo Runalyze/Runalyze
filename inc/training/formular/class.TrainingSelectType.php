@@ -5,7 +5,7 @@
  */
 /**
  * Class for input field: typeid
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingSelectType extends FormularSelectBox {
@@ -19,9 +19,9 @@ class TrainingSelectType extends FormularSelectBox {
 		parent::__construct($name, $label, $value);
 
 		$this->addLayoutClass( TrainingFormular::$ONLY_TYPES_CLASS );
-		$this->addOption(0, '---- Typ ausw&auml;hlen');
+		$this->addOption(0, '---- Typ ausw&auml;hlen', array('data-sport' => 'all'));
 
-		foreach (TypeFactory::NamesAsArray() as $id => $name)
-			$this->addOption($id, $name);
+		foreach (TypeFactory::AllTypes() as $id => $data)
+			$this->addOption($id, $data['name'], array('data-sport' => $data['sportid']));
 	}
 }
