@@ -265,7 +265,8 @@ $Privacy->setKeys(array(
 	'TRAINING_LIST_PUBLIC',
 	'TRAINING_MAKE_PUBLIC',
 	'TRAINING_LIST_ALL',
-	'TRAINING_LIST_STATISTICS'
+	'TRAINING_LIST_STATISTICS',
+	'TRAINING_MAP_PUBLIC_MODE'
 ));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_MAKE_PUBLIC', array(
 	'default'		=> false,
@@ -287,6 +288,17 @@ $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_STATISTICS', array(
 	'default'		=> false,
 	'label'			=> 'Liste: allgemeine Statistiken',
 	'tooltip'		=> 'Sollen &uuml;ber der Trainingsliste allgemeine Statistiken angezeigt werden?'
+)));
+$Privacy->addConfigValue( new ConfigValueSelect('TRAINING_MAP_PUBLIC_MODE', array(
+	'default'		=> 'always',
+	'label'			=> 'Karte in &ouml;ffentlicher Ansicht',
+	'tooltip'		=> 'Die Karte kann bei &ouml;ffentlichen Trainings versteckt werden.',
+	'options'		=> array(
+		'never'			=> 'nie anzeigen',
+		'race'			=> 'bei Wettk&auml;mpfen',
+		'race-longjog'	=> 'bei Wettk&auml;mpfen und Langen L&auml;ufen',
+		'always'		=> 'immer anzeigen'
+	),
 )));
 $Privacy->addToCategoryList();
 
