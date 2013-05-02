@@ -420,6 +420,7 @@ class AccountHandler {
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen"');
 		ConfigValue::update('MAINSPORT', $data['id'], $accountId);
 		ConfigValue::update('RUNNINGSPORT', $data['id'], $accountId);
+		$Mysql->query('UPDATE `'.PREFIX.'type` SET `sportid`="'.$data['id'].'" WHERE `accountid`="'.$accountId.'"', false);
 
 		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf"');
 		ConfigValue::update('WK_TYPID', $data['id'], $accountId);

@@ -37,7 +37,6 @@ class ConfigTabSports extends ConfigTab {
 			<table class="c" style="width:100%;">
 				<thead>
 					<tr class="b">
-						<th class="small">'.Ajax::tooltip('Aktiv', 'Diese Sportart wird verwendet').'</th>
 						<th class="small">'.Ajax::tooltip('kurz', 'Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt').'</th>
 						<th class="small" colspan="2">Bild</th>
 						<th>'.Ajax::tooltip('Sportart', 'Name der Sportart').'</th>
@@ -55,7 +54,7 @@ class ConfigTabSports extends ConfigTab {
 				<tbody>';
 
 		$Sports   = SportFactory::AllSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'online' => 1, 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
 		$SportCount = SportFactory::CountArray();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
@@ -85,7 +84,6 @@ class ConfigTabSports extends ConfigTab {
 
 			$Code .= '
 					<tr class="a'.($i%2+1).(isset($Data['new']) ? ' unimportant' : '').'">
-						<td><input type="checkbox" name="sport[online]['.$id.']" '.($Data['online'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[short]['.$id.']" '.($Data['short'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td>'.$icon.'</td>
 						<td>'.$iconSelect.'</td>
@@ -123,7 +121,6 @@ class ConfigTabSports extends ConfigTab {
 				'name',
 				'img',
 				'short',
-				'online',
 				'kcal',
 				'HFavg',
 				'RPE',
@@ -137,7 +134,6 @@ class ConfigTabSports extends ConfigTab {
 				$_POST['sport']['name'][$id],
 				$_POST['sport']['img'][$id],
 				isset($_POST['sport']['short'][$id]),
-				isset($_POST['sport']['online'][$id]),
 				$_POST['sport']['kcal'][$id],
 				$_POST['sport']['HFavg'][$id],
 				$_POST['sport']['RPE'][$id],
