@@ -169,7 +169,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `img` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'unknown.gif',
-  `online` tinyint(1) NOT NULL DEFAULT '1',
   `short` tinyint(1) NOT NULL DEFAULT '0',
   `kcal` smallint(4) NOT NULL DEFAULT '0',
   `HFavg` smallint(3) NOT NULL DEFAULT '120',

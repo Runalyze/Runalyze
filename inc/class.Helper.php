@@ -143,7 +143,7 @@ class Helper {
 			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970');
 		}
 
-		if ($data === false)
+		if ($data === false || $data['time'] == null)
 			return time();
 
 		return $data['time'];

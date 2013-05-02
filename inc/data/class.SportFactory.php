@@ -40,7 +40,6 @@ class SportFactory {
 		return array(
 			'name' => '?',
 			'img' => '',
-			'online' => 0,
 			'short' => 0,
 			'kcal' => 0,
 			'HFavg' => 0,

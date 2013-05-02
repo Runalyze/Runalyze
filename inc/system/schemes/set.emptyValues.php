@@ -5,7 +5,8 @@
  * Structure:
  * $EmptyTables['TABLENAME_WITHOUT_PREFIX'] = array('columns' => array(...), 'values' => array( array(...), ... )); 
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\System
  */
 $EmptyTables = array();
 $EmptyTables['clothes'] = array(
@@ -74,25 +75,26 @@ $EmptyTables['plugin'] = array(
 	)
 );
 $EmptyTables['sport'] = array(
-	'columns' => array('name', 'img', 'online', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'kmh', 'types', 'pulse', 'outside'),
+	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'speed', 'types', 'pulse', 'outside'),
 	'values'  => array(
-		array('Laufen', 'laufen.gif', 1, 0, 880, 140, 4, 1, 0, 1, 1, 1),
-		array('Radfahren', 'radfahren.gif', 1, 0, 770, 120, 2, 1, 1, 0, 1, 1),
-		array('Schwimmen', 'schwimmen.gif', 1, 0, 743, 130, 5, 1, 1, 0, 0, 0),
-		array('Gymnastik', 'gymnastik.gif', 1, 1, 280, 100, 1, 0, 0, 0, 0, 0),
-		array('Sonstiges', 'unknown.gif', 1, 0, 500, 120, 3, 0, 0, 0, 0, 0)
+		array('Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 1),
+		array('Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1),
+		array('Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0),
+		array('Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0),
+		array('Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(
-	'columns' => array('name', 'abbr', 'RPE', 'splits'),
+	// Sportid will be updated by AccountHandler::setSpecialConfigValuesFor
+	'columns' => array('name', 'abbr', 'RPE', 'splits', 'sportid'),
 	'values'  => array(
-		array('Dauerlauf', 'DL', 4, 0),
-		array('Fahrtspiel', 'FS', 5, 0),
-		array('Intervalltraining', 'IT', 7, 1),
-		array('Tempodauerlauf', 'TDL', 7, 1),
-		array('Wettkampf', 'WK', 10, 1),
-		array('Regenerationslauf', 'RL', 2, 0),
-		array('Langer Lauf', 'LL', 5, 0),
-		array('Warm-/Auslaufen', 'WA', 1, 0)
+		array('Dauerlauf', 'DL', 4, 0, 0),
+		array('Fahrtspiel', 'FS', 5, 0, 0),
+		array('Intervalltraining', 'IT', 7, 1, 0),
+		array('Tempodauerlauf', 'TDL', 7, 1, 0),
+		array('Wettkampf', 'WK', 10, 1, 0),
+		array('Regenerationslauf', 'RL', 2, 0, 0),
+		array('Langer Lauf', 'LL', 5, 0, 0),
+		array('Warm-/Auslaufen', 'WA', 1, 0, 0)
 	)
 );

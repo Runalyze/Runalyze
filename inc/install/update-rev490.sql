@@ -1,0 +1,1 @@
+ALTER TABLE  `runalyze_sport` DROP  `online`

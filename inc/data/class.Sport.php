@@ -83,14 +83,6 @@ class Sport {
 	}
 	
 	/**
-	* Is this sport active?
-	* @return bool
-	*/
-	public function isActive() {
-		return ($this->data['online'] == 1);
-	}
-	
-	/**
 	* Is this sport set to short-mode?
 	* @return bool
 	*/

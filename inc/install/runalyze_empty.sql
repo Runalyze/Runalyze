@@ -90,12 +90,12 @@ INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `filename`, `name`, `descrip
 -- Daten f&uuml;r Tabelle `runalyze_sport`
 --
 
-INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `online`, `short`, `kcal`, `HFavg`, `RPE`, `distances`, `speed`, `types`, `pulse`, `outside`) VALUES
-(1, 'Laufen', 'laufen.gif', 1, 0, 880, 140, 4, 1, "min/km", 1, 1, 1),
-(2, 'Radfahren', 'radfahren.gif', 1, 0, 770, 120, 2, 1, "km/h", 0, 1, 1),
-(3, 'Schwimmen', 'schwimmen.gif', 1, 0, 743, 130, 5, 1, "min/100m", 0, 0, 0),
-(4, 'Gymnastik', 'gymnastik.gif', 1, 1, 280, 100, 1, 0, "", 0, 0, 0),
-(5, 'Sonstiges', 'unknown.gif', 1, 0, 500, 120, 3, 0, "", 0, 0, 0);
+INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `short`, `kcal`, `HFavg`, `RPE`, `distances`, `speed`, `types`, `pulse`, `outside`) VALUES
+(1, 'Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 1),
+(2, 'Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1),
+(3, 'Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0),
+(4, 'Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0),
+(5, 'Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0);
 
 --
 -- Daten f&uuml;r Tabelle `runalyze_type`
