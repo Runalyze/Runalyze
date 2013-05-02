@@ -37,6 +37,16 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 * @return string 
 	 */
 	protected function getLink() {
+		// TODO
+		// Wenn v1.3 online ist:
+		// check: on user.runalyze.de/user.runalyze.com
+		// access_token, see http://www.espend.de/artikel/facebook-api-oauth-access-token-generieren.html
+		// publish, call https://graph.facebook.com/me/fitness.runs?access_token=XXX&method=POST&course=...
+		// for testing, see https://developers.facebook.com/tools/explorer/473795412675725/?path=me%2Ffitness.runs&method=POST
+		// @see https://developers.facebook.com/docs/reference/opengraph/action-type/fitness.runs
+		// @see https://developers.facebook.com/docs/reference/opengraph/object-type/fitness.course
+
+
 		$url   = urlencode($this->Training->Linker()->publicUrl());
 		$title = urlencode($this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht');
 		$text  = urlencode($this->getText());
@@ -46,5 +56,13 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		//$FbUrl = 'https://facebook.com/sharer.php?s=100&amp;p[url]='.$url.'&amp;p[title]='.$title.'&amp;p[summary]='.$text.'&amp;p[images][0]='.$image;
 
 		return '<a href="'.$FbUrl.'" target="_blank" style="background-image:url(inc/export/icons/facebook.png);"><strong>Teilen!</strong></a>';
+	}
+
+	/**
+	 * Get meta title
+	 * @return string
+	 */
+	public function metaTitle() {
+		return $this->getText();
 	}
 }
