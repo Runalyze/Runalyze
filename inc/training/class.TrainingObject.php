@@ -755,7 +755,30 @@ class TrainingObject extends DataObject {
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.
 	 */
-	public function hasPositionData() { return $this->hasArrayLatitude() && $this->hasArrayLongitude(); }
+	public function hasPositionData() { 
+		if (Request::isOnSharedPage() && $this->hidesMap())
+			return false;
+
+		return $this->hasArrayLatitude() && $this->hasArrayLongitude();
+	}
+
+	/**
+	 * Hides map?
+	 * @return boolean
+	 */
+	public function hidesMap() {
+		switch (CONF_TRAINING_MAP_PUBLIC_MODE) {
+			case 'never':
+				return true;
+			case 'race':
+				return (!$this->Type()->isCompetition());
+			case 'race-longjog':
+				return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
+			case 'always':
+			default:
+				return false;
+		}
+	}
 
 
 	/**

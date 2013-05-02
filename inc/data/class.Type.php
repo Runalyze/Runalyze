@@ -97,4 +97,12 @@ class Type {
 	public function isCompetition() {
 		return ($this->id == CONF_WK_TYPID);
 	}
+
+	/**
+	 * Is this type long jog?
+	 * @return bool
+	 */
+	public function isLongJog() {
+		return ($this->id == CONF_LL_TYPID);
+	}
 }
