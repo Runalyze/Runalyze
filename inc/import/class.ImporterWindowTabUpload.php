@@ -39,14 +39,6 @@ class ImporterWindowTabUpload extends ImporterWindowTab {
 	}
 
 	/**
-	 * Get additional attributes for div
-	 * @return string
-	 */
-	protected function attributesForDiv() {
-		return ' onmouseover="createUploader();"';
-	}
-
-	/**
 	 * Display tab content
 	 */
 	public function displayTab() {
