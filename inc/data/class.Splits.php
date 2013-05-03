@@ -236,6 +236,23 @@ class Splits {
 	}
 
 	/**
+	 * Are there active and inactive laps?
+	 * @return boolean
+	 */
+	public function hasActiveAndInactiveLaps() {
+		$active = null;
+
+		foreach ($this->asArray as $split) {
+			if (is_null($active))
+				$active = $split['active'];
+			elseif ($active != $split['active'])
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get all distances as array
 	 * @param bool $restingLaps optional
 	 * @return array 

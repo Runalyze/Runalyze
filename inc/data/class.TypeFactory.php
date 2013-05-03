@@ -40,7 +40,6 @@ class TypeFactory {
 		return array(
 			'name' => '?',
 			'abbr' => '?',
-			'splits' => 0,
 			'RPE' => 0
 		);
 	}

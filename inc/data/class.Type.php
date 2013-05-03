@@ -59,14 +59,6 @@ class Type {
 	}
 
 	/**
-	 * Get boolean flag whether type alouds splits
-	 * @return bool
-	 */
-	public function hasSplits() {
-		return ($this->data['splits'] == 1);
-	}
-
-	/**
 	 * Get boolean flag: Is the RPE of this type higher than 4?
 	 * @return bool
 	 */

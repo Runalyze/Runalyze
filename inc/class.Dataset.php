@@ -349,10 +349,14 @@ class Dataset {
 				return $this->cut( $this->TrainingObject->Clothes()->asString() );
 
 			case 'splits':
-				if (!$this->TrainingObject->Type()->hasSplits())
-					return '';
+				$isCompetition  = $this->TrainingObject->Type()->isCompetition();
+				$splitsAreDifferent = round($this->TrainingObject->getDistance()) != round($this->TrainingObject->Splits()->totalDistance());
+				$splitsAreDirectlySet = $this->TrainingObject->Splits()->hasActiveAndInactiveLaps();
 
-				return $this->TrainingObject->Splits()->asIconWithTooltip();
+				if ($isCompetition || $splitsAreDifferent || $splitsAreDirectlySet)
+					return $this->TrainingObject->Splits()->asIconWithTooltip();
+
+				return '';
 
 			case 'comment':
 				return $this->cut( $this->TrainingObject->getComment() );

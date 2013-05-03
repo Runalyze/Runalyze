@@ -34,3 +34,6 @@ WHERE TR.sportid IN (SELECT id FROM `runalyze_sport` WHERE `name` != 'Laufen' AN
 
 /* Rev490 */
 ALTER TABLE  `runalyze_sport` DROP  `online`;
+
+/* Rev496 */
+ALTER TABLE  `runalyze_type` DROP  `splits`;
