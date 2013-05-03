@@ -1,7 +1,4 @@
 <?php
-ImporterWindowTabUpload::addInfo('HRM-Import: aus einer hrm- und gpx-Datei kann mit
-	<a href="http://polar2tcx.runalyze.de" title="Polar-Daten in *.tcx-Datei umwandeln">polar2tcx.runalyze.de</a>
-	eine tcx-Datei erstellt werden, die hier importiert werden kann.');
 /**
  * This file contains class::ImporterFiletypeTCX
  * @package Runalyze\Importer\Filetype
