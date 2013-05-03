@@ -29,7 +29,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
 		$this->name = 'Analyse';
-		$this->description = 'Analyse des Trainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.';
+		$this->description = 'Analyse des Lauftrainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.';
 	}
 
 	/**
@@ -74,7 +74,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Training '.$this->getYearString());
+		$this->displayHeader('Lauftraining '.$this->getYearString());
 
 		$this->displayAnalysis();
 
@@ -186,7 +186,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			LEFT JOIN `'.PREFIX.'type` ON ('.PREFIX.'training.typeid='.PREFIX.'type.id)
 			WHERE '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
 				AND '.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
-				AND '.PREFIX.'training.`sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
+				AND '.PREFIX.'training.`sportid`="'.CONF_RUNNINGSPORT.'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
 		
@@ -211,7 +211,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	
 		$type_foreach = array();
 	
-		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` ORDER BY `RPE` ASC');
+		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.CONF_RUNNINGSPORT.'" ORDER BY `RPE` ASC');
 		foreach ($types as $i => $type) {
 			$type_foreach[] = array(
 				'name' => '<span title="'.$type['name'].'">'.$type['abbr'].'</span>',
