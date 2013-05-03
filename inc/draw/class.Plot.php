@@ -64,6 +64,12 @@ class Plot {
 	private $Annotations = array();
 
 	/**
+	 * Allow settings
+	 * @var booleam
+	 */
+	protected $allowSettings = true;
+
+	/**
 	 * Error string
 	 * @var string
 	 */
@@ -222,6 +228,9 @@ class Plot {
 			$padding     = '1px 1px 16px 1px';
 		}
 
+		if ($this->allowSettings)
+			$bindedCode .= 'RunalyzePlot.initSettingsLink("'.$this->cssID.'");';
+
 		$bindedCode .= '$("#'.$this->cssID.'").removeClass("'.Ajax::$IMG_WAIT.'");';
 		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\''.$padding.'\');';
 
@@ -253,6 +262,8 @@ class Plot {
 	 */
 	private function getJSForTitles() {
 		$title  = '<div class="flotTitle">';
+		if ($this->allowSettings)
+			$title .= '<span class="left link flot-settings-link">'.Icon::$CONF.'</span>';
 		if (isset($this->Titles['left']))
 			$title .= '<span class="left">'.$this->Titles['left'].'</span>';
 		if (isset($this->Titles['right']))
@@ -260,6 +271,14 @@ class Plot {
 		if (isset($this->Titles['center']))
 			$title .= $this->Titles['center'];
 		$title .= '</div>';
+
+		if ($this->allowSettings) {
+			$title .= '<div class="toolbar-line flot-settings-line hide">';
+			$title .= '<span class="link labeledLink flot-settings-save" onclick="RunalyzePlot.save(\''.$this->cssID.'\')">'.Icon::$SAVE.' Speichern</span>';
+			$title .= '<span class="link labeledLink flot-settings-fullscreen" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_IN_SMALL.' Vollbild</span>';
+			$title .= '<span class="link labeledLink flot-settings-fullscreen-hide hide" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_OUT_SMALL.' Vollbild verlassen</span>';
+			$title .= '</div>';
+		}
 
 		return '$("#'.$this->cssID.'").append(\''.addslashes($title).'\');'.NL;
 	}
@@ -425,6 +444,14 @@ class Plot {
 			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0.2)';
 		if ($this->usesBars())
 			$this->Options['crosshair']['color'] = 'rgba(170, 0, 0, 0)';
+	}
+
+	/**
+	 * Allow settings
+	 * @param boolean $flag true or false
+	 */
+	public function allowSettings($flag = true) {
+		$this->allowSettings = $flag;
 	}
 
 	/**

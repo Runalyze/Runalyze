@@ -30,9 +30,12 @@ class Icon {
 	static public $DOWNLOAD         = '<i class="icon-download"></i>';
 	static public $DOWN             = '<i class="icon-down"></i>';
 	static public $UP               = '<i class="icon-up"></i>';
-	static public $CONF             = '<i class="icon-conf"></i>';
 	static public $ADD_SMALL        = '<i class="icon-add-small"></i>';
 	static public $ADD_SMALL_GREEN  = '<i class="icon-add-small-green"></i>';
+	static public $CONF             = '<i class="icon-conf"></i>';
+	static public $ZOOM_IN_SMALL    = '<i class="icon-zoom-in-small"></i>';
+	static public $ZOOM_OUT_SMALL   = '<i class="icon-zoom-out-small"></i>';
+	static public $SAVE             = '<i class="icon-save"></i>';
 	// Big, 16x16px
 	static public $ADD              = '<i class="icon-add"></i>';
 	static public $CROSS            = '<i class="icon-cross"></i>';

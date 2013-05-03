@@ -203,6 +203,9 @@ fieldset {
 fieldset.collapsed div, fieldset.collapsed > input {
 	display: none !important; }
 
+fieldset.without-legend {
+	border-top: none; }
+
 fieldset legend {
 	cursor: pointer;
 	color: #8AB858;

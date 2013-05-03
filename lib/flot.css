@@ -7,6 +7,17 @@
 	background: url(../img/dash.png) repeat #60a920;
 }
 
+.flot.fullscreen {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	z-index: 500;
+}
+
+.flot.has-settings-line {
+	margin-bottom: 27px;
+}
+
 .flot .tickLabels, .flot .legend td {
 	color: #FFF;
 	font-size: 9px !important;
@@ -43,12 +54,31 @@
 	font-size: 9px;
 	text-align: center;
 	width: 100%;
-	padding: 1px;
+	padding: 2px 1px 1px;
 	margin: 2px 0 0 -1px;
 }
 
 .flot .flotTitle span {
 	margin: 0 5px;
+}
+
+.flot .flot-settings-link {
+	margin: 0;
+}
+
+.flot .flot-settings-line {
+	width: 100%;
+	padding: 4px 1px 6px !important;
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	border-radius: 0 0 2px 2px;
+	background-color: #eee;
+	margin-left: -2px;
+	position: relative;
+	bottom: -15px;
+	line-height: 14px;
+	height: 14px;
 }
 
 .flot .flotError {
