@@ -54,7 +54,7 @@ echo Ajax::wrapJSforDocumentReady('$("#predefinedSearch").change(function(){
 
 	<strong>Sportart:</strong>
 <?php
-$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` WHERE `online`=1 ORDER BY `id` ASC');
+$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 foreach ($sports as $sport) {
 	$checked = HTML::Checked((!$submit && $sport['id'] == CONF_MAINSPORT) || (isset($_POST['sport'][$sport['id']]) && $_POST['sport'][$sport['id']] != false));
 	echo('

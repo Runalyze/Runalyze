@@ -49,15 +49,17 @@ class ImporterFactory {
 	 * Training objects
 	 * @var array
 	 */
-	protected $TrainingObjects = array();
+	private $TrainingObjects = array();
 
 	/**
 	 * Constructor
-	 * @param string $Filename filename
+	 * @param string|array $Filename filename
 	 */
 	public function __construct($FilenameOrGarminFlag) {
 		if ($FilenameOrGarminFlag == self::$FROM_COMMUNICATOR)
 			$this->constructForGarminCommunicator();
+		else if (is_array($FilenameOrGarminFlag))
+			$this->constructForFilenames($FilenameOrGarminFlag);
 		else
 			$this->constructForFilename($FilenameOrGarminFlag);
 	}
@@ -66,7 +68,17 @@ class ImporterFactory {
 	 * Destructor
 	 */
 	public function __destruct() {
-		if (!empty($this->Filename))
+		$this->deleteCurrentFile();
+	}
+
+	/**
+	 * Delete current file
+	 */
+	protected function deleteCurrentFile() {
+		//if (self::$logFileContents)
+		//	TODO
+
+		if (!empty($this->Filename) && file_exists(FRONTEND_PATH.$this->Filename))
 			unlink(FRONTEND_PATH.$this->Filename);
 	}
 
@@ -76,6 +88,14 @@ class ImporterFactory {
 	 */
 	public function trainingObjects() {
 		return $this->TrainingObjects;
+	}
+
+	/**
+	 * Add objects
+	 * @param array[TrainingObject] $TrainingObjects
+	 */
+	protected function addObjects(array $TrainingObjects) {
+		$this->TrainingObjects = array_merge($this->TrainingObjects, $TrainingObjects);
 	}
 
 	/**
@@ -107,7 +127,7 @@ class ImporterFactory {
 		foreach ($_POST['activityIds'] as $ID) {
 			$Importer->parseCompressedFile( ImporterUpload::relativePath($ID.'.tcx') );
 
-			$this->TrainingObjects = array_merge($this->TrainingObjects, $Importer->objects());
+			$this->addObjects($Importer->objects());
 		}
 	}
 
@@ -126,7 +146,95 @@ class ImporterFactory {
 		$Importer = new ImporterFiletypeTCX();
 		$Importer->parseCompressedString( $_POST['data'] );
 
-		$this->TrainingObjects = $Importer->objects();
+		$this->addObjects($Importer->objects());
+	}
+
+	/**
+	 * Construct for filenames
+	 * @param array $Filenames filenames
+	 */
+	private function constructForFilenames(array $Filenames) {
+		$Files = $this->parseFilenames($Filenames);
+
+		$this->extractAndImportHRMandGPXfrom($Files);
+		$this->importFiles($Files);
+	}
+
+	/**
+	 * Extract hrm+gpx from array and import
+	 * @param array $Files
+	 */
+	private function extractAndImportHRMandGPXfrom(array &$Files) {
+		if (isset($Files['gpx']) && isset($Files['hrm'])) {
+			foreach ($Files['gpx'] as $g => $gpx) {
+				foreach ($Files['hrm'] as $h => $hrm) {
+					if (substr($gpx,0,-4) == substr($hrm,0,-4)) {
+						$this->importHRMandGPX(substr($gpx,0,-4));
+
+						unset($Files['gpx'][$g]);
+						unset($Files['hrm'][$h]);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Import hrm and gpx
+	 * @param string $filename relative path
+	 */
+	private function importHRMandGPX($filename) {
+		$HRMImporter = new ImporterFiletypeHRM();
+		$HRMImporter->parseFile($filename.'.hrm');
+
+		$GPXImporter = new ImporterFiletypeGPX();
+		$GPXImporter->parseFile($filename.'.gpx');
+
+		$Importer = new ImporterHRMandGPX($HRMImporter, $GPXImporter);
+		$this->TrainingObjects[] = $Importer->object();
+
+		unlink(FRONTEND_PATH.$filename.'.hrm');
+		unlink(FRONTEND_PATH.$filename.'.gpx');
+	}
+
+	/**
+	 * Import files
+	 * @param array $Files
+	 */
+	private function importFiles(array &$Files) {
+		foreach ($Files as $extension => $filenames) {
+			foreach ($filenames as $file) {
+				$this->Filename = $file;
+
+				$this->importWithClass( self::classFor($extension) );
+				$this->deleteCurrentFile();
+			}
+		}
+	}
+
+	/**
+	 * Parse filenames and return array
+	 * @param array $Filenames
+	 * @return array key: extensions, value: array with relative filenames
+	 */
+	private function parseFilenames(array $Filenames) {
+		$Files = array();
+
+		foreach ($Filenames as $file) {
+			$filename  = ImporterUpload::relativePath($file);
+			$extension = Filesystem::extensionOfFile($filename);
+
+			if (self::canImportExtension($extension)) {
+				if (!isset($Files[$extension]))
+					$Files[$extension] = array();
+
+				$Files[$extension][] = $filename;
+			} else {
+				$this->throwUnknownExtension($file, $extension);
+			}
+		}
+
+		return $Files;
 	}
 
 	/**
@@ -151,7 +259,7 @@ class ImporterFactory {
 		$Importer = new $Classname();
 		$Importer->parseFile($this->Filename);
 
-		$this->TrainingObjects = $Importer->objects();
+		$this->addObjects($Importer->objects());
 	}
 
 	/**
@@ -160,7 +268,7 @@ class ImporterFactory {
 	 * @param string $extension
 	 */
 	private function throwUnknownExtension($filename, $extension) {
-		Error::getInstance()->addError('Can\'t importer '.$filename.', there is no importer for *.'.$extension);
+		Error::getInstance()->addError('Can\'t import '.$filename.', there is no importer for *.'.$extension);
 	}
 
 	/**

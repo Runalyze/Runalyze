@@ -166,9 +166,10 @@ class Splits {
 	 */
 	private function cleanArray() {
 		foreach ($this->asArray as $key => $split) {
-			if ($split['km'] <= 0 || empty($split['time']))
-				unset($this->asArray[$key]);
-			else
+			//if ($split['km'] <= 0)
+			//if ($split['km'] <= 0 || empty($split['time']))
+			//	unset($this->asArray[$key]);
+			//else
 				$this->asArray[$key]['km'] = $this->formatKM($split['km']);
 		}
 	}
@@ -275,6 +276,57 @@ class Splits {
 				$paces[] = $split['km'] > 0 ? (int)round(Time::toSeconds($split['time'])/$split['km']) : 0;
 
 		return $paces;
+	}
+
+	/**
+	 * Set empty times from array
+	 * @param array $Time
+	 * @param array $Distance
+	 */
+	public function fillTimesFromArray(array $Time, array $Distance) {
+		$this->fillFromArray($Time, $Distance, 'time');
+	}
+
+	/**
+	 * Set empty times from array
+	 * @param array $Time
+	 * @param array $Distance
+	 */
+	public function fillDistancesFromArray(array $Time, array $Distance) {
+		$this->fillFromArray($Time, $Distance, 'km');
+	}
+
+	/**
+	 * Set empty times from array
+	 * @param array $Time
+	 * @param array $Distance
+	 * @param string $mode
+	 */
+	protected function fillFromArray(array $Time, array $Distance, $mode = 'time') {
+		$totalDistance = 0;
+		$totalTime = 0;
+		$size = min(count($Time), count($Distance));
+		$i = 0;
+
+		foreach ($this->asArray as &$split) {
+			if ($mode == 'km') {
+				$s = Time::toSeconds($split['time']);
+				while ($i < $size-1 && $s > $Time[$i] - $totalTime)
+					$i++;
+
+				$split['km'] = $this->formatKM($Distance[$i] - $totalDistance);
+			} else {
+				while ($i < $size-1 && $split['km'] > $Distance[$i] - $totalDistance)
+					$i++;
+
+				$split['time'] = Time::toString($Time[$i] - $totalTime);
+			}
+
+			$totalTime     = $Time[$i];
+			$totalDistance = $Distance[$i];
+		}
+
+		$this->arrayToString();
 	}
 
 	/**

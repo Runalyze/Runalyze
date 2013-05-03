@@ -101,6 +101,7 @@ $CLASSMAP = array(
 'ImporterFiletypeSLF' => 'import/filetypes/class.ImporterFiletypeSLF.php',
 'ImporterFiletypeTCX' => 'import/filetypes/class.ImporterFiletypeTCX.php',
 'ImporterFiletypeXML' => 'import/filetypes/class.ImporterFiletypeXML.php',
+'ImporterHRMandGPX' => 'import/filetypes/class.ImporterHRMandGPX.php',
 'ParserAbstract' => 'import/parser/class.ParserAbstract.php',
 'ParserAbstractMultiple' => 'import/parser/class.ParserAbstractMultiple.php',
 'ParserAbstractMultipleXML' => 'import/parser/class.ParserAbstractMultipleXML.php',

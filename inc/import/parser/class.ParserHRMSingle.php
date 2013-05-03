@@ -23,6 +23,12 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	protected $Header = '';
 
 	/**
+	 * Total splits time
+	 * @var int
+	 */
+	protected $totalSplitsTime = 0;
+
+	/**
 	 * Parse
 	 */
 	public function parse() {
@@ -77,8 +83,11 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	 * Read lap
 	 */
 	private function readLap() {
-		if (strpos($this->Line, ':'))
-			$this->TrainingObject->Splits()->addSplit(0, Time::toSeconds(substr($this->Line, 0, 10)));
+		if (strpos($this->Line, ':')) {
+			$s = round(Time::toSeconds(substr($this->Line, 0, 10)));
+			$this->TrainingObject->Splits()->addSplit(0, $s - $this->totalSplitsTime);
+			$this->totalSplitsTime = $s;
+		}
 	}
 
 	/**

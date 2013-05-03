@@ -96,7 +96,7 @@ class MultiImporterFormular extends Formular {
 
 		$Row  = '<td>'.$Inputs.'</td>';
 		$Row .= '<td>'.$TrainingObject->DataView()->getDate().'</td>';
-		$Row .= '<td>'.Time::toString($TrainingObject->getTimeInSeconds(), true, true).'</td>';
+		$Row .= '<td>'.Time::toString(round($TrainingObject->getTimeInSeconds()), true, true).'</td>';
 		$Row .= '<td>'.$TrainingObject->DataView()->getDistanceStringWithFullDecimals().'</td>';
 		$Row .= '<td>'.$TrainingObject->Sport()->IconWithTooltip().'</td>';
 		$Row .= '<td>'.$TrainingObject->DataView()->getPulseIcon().'</td>';
