@@ -16,9 +16,12 @@
 .icon-download { background-position: -96px 0; }
 .icon-down { background-position: -108px 0; }
 .icon-up { background-position: -120px 0; }
-.icon-conf { background-position: -156px 0; }
 .icon-add-small { background-position: -132px 0; }
 .icon-add-small-green { background-position: -144px 0; }
+.icon-conf { background-position: -156px 0; }
+.icon-zoom-in-small { background-position: -168px 0; }
+.icon-zoom-out-small { background-position: -180px 0; }
+.icon-save { background-position: -192px 0; }
 
 .icon-refresh { width: 16px; height: 16px; background-position: 0 -12px; }
 .icon-calendar { width: 16px; height: 16px; background-position: -16px -12px; }
