@@ -86,15 +86,15 @@ $EmptyTables['sport'] = array(
 );
 $EmptyTables['type'] = array(
 	// Sportid will be updated by AccountHandler::setSpecialConfigValuesFor
-	'columns' => array('name', 'abbr', 'RPE', 'splits', 'sportid'),
+	'columns' => array('name', 'abbr', 'RPE', 'sportid'),
 	'values'  => array(
-		array('Dauerlauf', 'DL', 4, 0, 0),
-		array('Fahrtspiel', 'FS', 5, 0, 0),
-		array('Intervalltraining', 'IT', 7, 1, 0),
-		array('Tempodauerlauf', 'TDL', 7, 1, 0),
-		array('Wettkampf', 'WK', 10, 1, 0),
-		array('Regenerationslauf', 'RL', 2, 0, 0),
-		array('Langer Lauf', 'LL', 5, 0, 0),
-		array('Warm-/Auslaufen', 'WA', 1, 0, 0)
+		array('Dauerlauf', 'DL', 4, 0),
+		array('Fahrtspiel', 'FS', 5, 0),
+		array('Intervalltraining', 'IT', 7, 0),
+		array('Tempodauerlauf', 'TDL', 7, 0),
+		array('Wettkampf', 'WK', 10, 0),
+		array('Regenerationslauf', 'RL', 2, 0),
+		array('Langer Lauf', 'LL', 5, 0),
+		array('Warm-/Auslaufen', 'WA', 1, 0)
 	)
 );

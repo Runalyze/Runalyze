@@ -29,6 +29,27 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @covers Splits::hasActiveAndInactiveLaps
+	 */
+	public function testHasActiveAndInactiveLaps() {
+		$Splits = new Splits();
+
+		$this->assertFalse( $Splits->hasActiveAndInactiveLaps() );
+
+		$Splits->addSplit(1, 300, true);
+
+		$this->assertFalse( $Splits->hasActiveAndInactiveLaps() );
+
+		$Splits->addSplit(1, 300, true);
+
+		$this->assertFalse( $Splits->hasActiveAndInactiveLaps() );
+
+		$Splits->addSplit(1, 300, false);
+
+		$this->assertTrue( $Splits->hasActiveAndInactiveLaps() );
+	}
+
+	/**
 	 * Test adding splits 
 	 * @covers Splits::addSplit
 	 */

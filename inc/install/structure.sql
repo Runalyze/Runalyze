@@ -248,7 +248,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `abbr` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `RPE` smallint(2) NOT NULL DEFAULT '2',
-  `splits` tinyint(1) NOT NULL DEFAULT '0',
   `sportid` int(11) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),

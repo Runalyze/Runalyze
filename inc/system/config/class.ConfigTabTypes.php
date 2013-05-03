@@ -46,14 +46,13 @@ class ConfigTabTypes extends ConfigTab {
 						<th>Trainingstyp</th>
 						<th>Abk&uuml;rzung</th>
 						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
-						<th>'.Ajax::tooltip('Splits', 'Es werden einzelne Kilometerabschnitte aufgezeichnet').'</th>
 						<th>'.Ajax::tooltip('Sport', 'F&uuml;r welche Sportart gilt dieser Typ?').'</th>
 						<th>'.Ajax::tooltip('l&ouml;schen?', 'Ein Trainingstyp kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
 					</tr>
 				</thead>
 				<tbody>';
 
-		$Types   = Mysql::getInstance()->untouchedFetchArray('SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.splits, ty.sportid, ty.accountid, (SELECT COUNT(*) 
+		$Types   = Mysql::getInstance()->untouchedFetchArray('SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.sportid, ty.accountid, (SELECT COUNT(*) 
 					FROM `'.PREFIX.'training` tr
 					WHERE tr.typeid = ty.id AND
 					`accountid`="'.SessionAccountHandler::getId().'"
@@ -62,7 +61,7 @@ class ConfigTabTypes extends ConfigTab {
 					WHERE `accountid`="'.SessionAccountHandler::getId().'"
 					ORDER BY `id` ASC');
 		//TODO Change all locations where Typeid is used 
-		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5, 'splits' => 0);
+		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5);
 
 		foreach ($Types as $i => $Data) {
 			$id     = $Data['id'];
@@ -81,7 +80,6 @@ class ConfigTabTypes extends ConfigTab {
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'" /></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'" /></td>
 					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
-					<td><input type="checkbox" name="type[splits]['.$id.']" '.HTML::Checked($Data['splits'] == 1).'/></td>
 					<td><select name="type[sportid]['.$id.']">';
 			foreach ($Sports as $SData)
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
@@ -118,14 +116,12 @@ class ConfigTabTypes extends ConfigTab {
 				'name',
 				'abbr',
 				'RPE',
-				'splits',
 				'sportid',
 			);
 			$values  = array(
 				$_POST['type']['name'][$id],
 				$_POST['type']['abbr'][$id],
 				$rpe,
-				isset($_POST['type']['splits'][$id]),
 				$_POST['type']['sportid'][$id],
 			);
 
