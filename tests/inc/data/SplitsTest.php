@@ -141,5 +141,31 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( '1.00&nbsp;km&nbsp;in&nbsp;4:20, 1.00&nbsp;km&nbsp;in&nbsp;4:09, 1.00&nbsp;km&nbsp;in&nbsp;6:00&nbsp;(Ruhe)', $Splits->asReadableString(true) );
 	}
 
+	/**
+	 * @covers Splits::fillTimesFromArray
+	 */
+	public function testFillTimesFromArray() {
+		$Splits = new Splits('1|0:00-1|0:00-1|0:00');
+		$Splits->fillTimesFromArray(
+			array(115, 240, 440, 475, 720),
+			array(0.5, 1, 1.9, 2.1, 2.7)
+		);
+
+		$this->assertEquals( '1.00|4:00-1.00|3:55-1.00|4:05', $Splits->asString() );
+	}
+
+	/**
+	 * @covers Splits::fillDistancesFromArray
+	 */
+	public function testFillDistancesFromArray() {
+		$Splits = new Splits('0|4:00-0|3:55-0|4:05');
+		$Splits->fillDistancesFromArray(
+			array(115, 240, 440, 475, 720),
+			array(0.5, 1, 1.9, 2.1, 2.7)
+		);
+
+		$this->assertEquals( '1.00|4:00-1.10|3:55-0.60|4:05', $Splits->asString() );
+	}
+
 }
 ?>

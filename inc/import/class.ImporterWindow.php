@@ -97,12 +97,10 @@ class ImporterWindow {
 	 */
 	private function importFiles($fileNames) {
 		$fileNames = explode(';', $fileNames);
+	
+		$Factory = new ImporterFactory($fileNames);
 
-		foreach ($fileNames as $fileName) {
-			$Factory = new ImporterFactory($fileName);
-
-			$this->TrainingObjects = array_merge($this->TrainingObjects, $Factory->trainingObjects());
-		}
+		$this->TrainingObjects = $Factory->trainingObjects();
 	}
 
 	/**
