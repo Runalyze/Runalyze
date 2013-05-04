@@ -7,8 +7,17 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-//$Formular = new SearchFormular();
-//$Formular->display();
+if (isset($_GET['get']) && $_GET['get'] == 'true')
+	$_POST = array_merge($_POST, $_GET);
+
+if (empty($_POST)) {
+	$Formular = new SearchFormular();
+	$Formular->display();
+}
+
+$Results = new SearchResults();
+$Results->display();
+exit;
 
 $submit = false;
 

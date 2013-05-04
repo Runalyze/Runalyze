@@ -256,6 +256,8 @@ fieldset .with50erLabel .fullSize { width: 75%; }
 fieldset .with50erLabel .inline label { float: none; }
 fieldset .with33erLabel label { width: 14.85%; }
 fieldset .with33erLabel .fullSize { width: 85%; }
+fieldset .w50.with33erLabel label { width: 29.7%; }
+fieldset .w50.with33erLabel .fullSize { width: 65%; }
 fieldset .with33erLabel .inline label { float: none; }
 fieldset textarea.fullSize { height: 72px; }
 

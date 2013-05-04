@@ -27,7 +27,7 @@ class FormularSelectSearchSort extends FormularField {
 
 		$sortByOptions = array(
 			'time'		=> 'Datum',
-			'km'		=> 'Distanz',
+			'distance'	=> 'Distanz',
 			's'			=> 'Dauer',
 			'pace'		=> 'Pace',
 			'elevation'	=> 'H&ouml;henmeter',
@@ -37,7 +37,7 @@ class FormularSelectSearchSort extends FormularField {
 		);
 
 		$code .= HTML::selectBox('search-sort-by', $sortByOptions);
-		$code .= HTML::selectBox('search-sort-order', array('desc' => 'absteigend', 'asc' => 'aufsteigend'));
+		$code .= HTML::selectBox('search-sort-order', array('DESC' => 'absteigend', 'ASC' => 'aufsteigend'));
 
 		$code .= '</div>';
 
