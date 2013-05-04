@@ -23,7 +23,7 @@
 	<?php if ($this->Training->hasPositionData() || !$this->PlotList->isEmpty()): ?>
 	<div id="training-plots-and-map" class="dataBox">
 		<div id="training-plots" class="toolbar-box-content">
-			<div class="toolbar-line">
+			<div class="toolbar-line navigation-line">
 				<?php $this->PlotList->displayLabels(); ?>
 				<?php if ($this->Training->hasPositionData()): ?>
 				<label id="training-view-toggler-map" class="checkable" onclick="$(this).children('i').toggleClass('checked');Runalyze.toggleView('map');"><i class="toggle-icon-map checked"></i> Karte</label>

@@ -14,9 +14,8 @@
 	z-index: 500;
 }
 
-.flot.has-settings-line {
-	margin-bottom: 27px;
-}
+.flot .show-only-fullscreen { display: none; }
+.flot.fullscreen .show-only-fullscreen { display: inline; }
 
 .flot .tickLabels, .flot .legend td {
 	color: #FFF;
@@ -66,7 +65,16 @@
 	margin: 0;
 }
 
+.flot.has-settings-line {
+	margin-bottom: 27px;
+}
+
+.flot.has-settings-line .flot-settings-line {
+	display: block;
+}
+
 .flot .flot-settings-line {
+	display: none;
 	width: 100%;
 	padding: 4px 1px 6px !important;
 	border-color: #ccc;

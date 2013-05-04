@@ -135,6 +135,9 @@ class FormularFieldset extends HtmlTag {
 		if ($this->collapsed)
 			$this->addCSSclass('collapsed');
 
+		if (empty($this->title))
+			$this->addCSSclass('without-legend');
+
 		echo '<fieldset '.$this->attributes().'>';
 
 		$this->displayLegend();
