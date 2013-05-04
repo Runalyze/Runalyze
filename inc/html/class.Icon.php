@@ -36,6 +36,9 @@ class Icon {
 	static public $ZOOM_IN_SMALL    = '<i class="icon-zoom-in-small"></i>';
 	static public $ZOOM_OUT_SMALL   = '<i class="icon-zoom-out-small"></i>';
 	static public $SAVE             = '<i class="icon-save"></i>';
+	static public $CROSS_SMALL      = '<i class="icon-cross-small"></i>';
+	static public $LEFT             = '<i class="icon-left"></i>';
+	static public $RIGHT            = '<i class="icon-right"></i>';
 	// Big, 16x16px
 	static public $ADD              = '<i class="icon-add"></i>';
 	static public $CROSS            = '<i class="icon-cross"></i>';
