@@ -131,17 +131,17 @@ foreach ($inputs as $i => $input) {
 	if ($input['typ'] == 'int' || $input['typ'] == 'time')
 		echo('
 				<option value="gt"'.HTML::Selected($opt == 'gt').'>&gt;</option>
-				<option value="gtis"'.HTML::Selected($opt == 'gtis').'>&gt;=</option>');
+				<option value="gtis"'.HTML::Selected($opt == 'gtis').'>&ge;</option>');
 
 	if ($input['typ'] == 'int' || $input['typ'] == 'time')
 		echo('
-				<option value="ltis"'.HTML::Selected($opt == 'ltis').'>&lt;=</option>
+				<option value="ltis"'.HTML::Selected($opt == 'ltis').'>&le;</option>
 				<option value="lt"'.HTML::Selected($opt == 'lt').'>&lt;</option>');
 
 	if ($input['typ'] == 'text')
 		echo('
-				<option value="isnot"'.HTML::Selected($opt == 'isnot').'>!=</option>
-				<option value="like"'.HTML::Selected($opt == 'like').'>~</option>');
+				<option value="isnot"'.HTML::Selected($opt == 'isnot').'>&ne;</option>
+				<option value="like"'.HTML::Selected($opt == 'like').'>&asymp;</option>');
 
 	echo('
 			</select>

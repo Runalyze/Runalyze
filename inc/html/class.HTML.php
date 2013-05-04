@@ -416,8 +416,12 @@ class HTML {
 	 * @return string
 	 */
 	public static function Selected($value, $value_to_be_checked = NULL) {
-		if ($value_to_be_checked != NULL)
-			$value = ($value == $value_to_be_checked);
+		if ($value_to_be_checked != NULL) {
+			if (is_array($value_to_be_checked))
+				$value = in_array($value, $value_to_be_checked);
+			else
+				$value = ($value == $value_to_be_checked);
+		}
 
 		return ($value === true)
 			? ' selected="selected"'

@@ -58,6 +58,12 @@ class FormularInput extends FormularField {
 	private $labelOnRight = false;
 
 	/**
+	 * Boolean flag: hide label
+	 * @var boolean
+	 */
+	private $hideLabel = false;
+
+	/**
 	 * Set standard size, used when no specific size is set (may be overwritten by css)
 	 * @param string $size 
 	 */
@@ -70,6 +76,13 @@ class FormularInput extends FormularField {
 	 */
 	public function setLabelToRight() {
 		$this->labelOnRight = true;
+	}
+
+	/**
+	 * Hide label
+	 */
+	public function hideLabel() {
+		$this->hideLabel = true;
 	}
 
 	/**
@@ -127,6 +140,9 @@ class FormularInput extends FormularField {
 	protected function getFieldCode() {
 		$label = '<label for="'.$this->name.'">'.$this->label.'</label>';
 		$input = '<input '.$this->attributes().' />';
+
+		if ($this->hideLabel)
+			$label = '';
 
 		if ($this->labelOnRight)
 			return $input.' '.$label;
