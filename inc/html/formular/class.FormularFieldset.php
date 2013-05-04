@@ -11,6 +11,8 @@
 class FormularFieldset extends HtmlTag {
 	static public $LAYOUT_FIELD_W100          = 'w100 block';
 	static public $LAYOUT_FIELD_W100_IN_W50   = 'w100 with50erLabel';
+	static public $LAYOUT_FIELD_W100_IN_W33   = 'w100 with33erLabel';
+	static public $LAYOUT_FIELD_W50_IN_W33    = 'w50 with33erLabel';
 	static public $LAYOUT_FIELD_W50           = 'w50';
 	static public $LAYOUT_FIELD_W50_AS_W100   = 'w50 marginr50';
 	static public $LAYOUT_FIELD_W33           = 'w33';

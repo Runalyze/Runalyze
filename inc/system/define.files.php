@@ -38,6 +38,8 @@ $JS_FILES = array(
 	'lib/flot/jquery.flot.stack.min.js',
 	'lib/flot/jquery.flot.text.js',
 	'lib/flot/jquery.flot.orderBars.js',
+
+	'lib/chosen/chosen.jquery.min.js',
 );
 	
 $CSS_FILES = array(
@@ -49,6 +51,7 @@ $CSS_FILES = array(
 	'lib/jquery.datepicker.css',
 	'lib/jquery.tablesorter.css',
 	'lib/jquery.jbar.css',
+	'lib/chosen/chosen.css',
 );
 
 /**

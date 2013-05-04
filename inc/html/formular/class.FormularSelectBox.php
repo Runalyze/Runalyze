@@ -16,10 +16,23 @@ class FormularSelectBox extends FormularField {
 	private $options = array();
 
 	/**
+	 * Multiple
+	 * @var boolean
+	 */
+	protected $multiple = false;
+
+	/**
 	 * Prepare for beeing displayed 
 	 */
 	protected function prepareForDisplay() {
 		// No attributes needed, HTML-function used
+	}
+
+	/**
+	 * Set multiple
+	 */
+	public function setMultiple() {
+		$this->multiple = true;
 	}
 
 	/**
@@ -50,8 +63,12 @@ class FormularSelectBox extends FormularField {
 	 * @return string
 	 */
 	protected function getFieldCode() {
+		if ($this->multiple)
+			$this->addAttribute('multiple', 'multiple');
+
 		$label  = '<label for="'.$this->name.'">'.$this->label.'</label>';
-		$select = HTML::selectBox($this->name, $this->options, $this->value, $this->name.'" class="'.implode(' ', $this->cssClasses));
+		//$select = HTML::selectBox($this->name, $this->options, $this->value, $this->name.'" class="'.implode(' ', $this->cssClasses));
+		$select = HTML::selectBox($this->name.($this->multiple?'[]':''), $this->options, $this->value, $this->name.'" '.$this->attributes());
 
 		return $label.$select;
 	}

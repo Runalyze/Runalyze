@@ -7,6 +7,9 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
+//$Formular = new SearchFormular();
+//$Formular->display();
+
 $submit = false;
 
 if (isset($_GET['get']) && $_GET['get'] == 'true')
