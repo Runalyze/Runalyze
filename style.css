@@ -815,11 +815,12 @@ code {
 #training-plots-and-map #training-plots { padding: 6px 6px 0; }
 #training-plots-and-map #training-map .toolbar-box-content { padding: 0 6px 6px; }
 #training-plots-and-map #training-map.training-map-before .toolbar-box-content { padding: 0; }
-#training-plots-and-map .plot-container { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #CCC; }
+#training-plots-and-map .plot-container { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #CCC; overflow: hidden; }
 
 #training-plots .toolbar-line { padding: 4px 4px 6px; }
-#training-plots .toolbar-line label { font-size: 12px; line-height: 16px; margin: 0 5px 0 0; padding-right: 12px; border-right: 1px solid #ccc; }
-#training-plots .toolbar-line label:last-of-type { margin: 0; padding: 0; border-right: none; }
+#training-plots .toolbar-line label { margin: 0 8px 0 0; }
+#training-plots .toolbar-line.navigation-line label { padding-right: 12px; line-height: 16px; font-size: 12px; border-right: 1px solid #ccc; }
+#training-plots .toolbar-line.navigation-line label:last-of-type { margin: 0; padding: 0; border-right: none; }
 
 #training-map .toolbar-line { padding: 10px 10px 0; }
 #training-map .toolbar-line select { margin: 0 20px 0 0; }

@@ -213,7 +213,7 @@ class Plot {
 			if (isset($this->Options['zoom']) && $this->Options['zoom']['interactive'])
 				$bindedCode .= $this->getJSForZooming();
 
-			if (isset($this->Options['crosshair']))
+			//if (isset($this->Options['crosshair']))
 				$bindedCode .= $this->getJSForTracking();
 
 			if (isset($this->Options['selection']))
@@ -238,7 +238,7 @@ class Plot {
 			var '.$this->created.'=false,
 				func_'.$this->created.'=function(){
 					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0) {
-						'.$this->created.'=true;'.$bindedCode.'
+						'.$this->created.'=true;'.$bindedCode.'RunalyzePlot.finishInit("'.$this->cssID.'");
 					}
 				};
 			$(document).off("createFlot.'.$this->cssID.'").on("createFlot.'.$this->cssID.'",func_'.$this->created.');
@@ -277,6 +277,13 @@ class Plot {
 			$title .= '<span class="link labeledLink flot-settings-save" onclick="RunalyzePlot.save(\''.$this->cssID.'\')">'.Icon::$SAVE.' Speichern</span>';
 			$title .= '<span class="link labeledLink flot-settings-fullscreen" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_IN_SMALL.' Vollbild</span>';
 			$title .= '<span class="link labeledLink flot-settings-fullscreen-hide hide" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_OUT_SMALL.' Vollbild verlassen</span>';
+
+			$title .= '<span class="right show-only-fullscreen" style="margin-top:3px;">';
+			$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleCrosshairMode(\''.$this->cssID.'\');"><i class="checkbox-icon'.(isset($this->Options['selection'])?' checked':'').'"></i> Crosshair</label>';
+			if (isset($this->Options['selection'])) // Does only work if handler are bound
+				$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleSelectionMode(\''.$this->cssID.'\');"><i class="checkbox-icon'.(isset($this->Options['selection'])?' checked':'').'"></i> Auswahl</label>';
+			$title .= '</span>';
+
 			$title .= '</div>';
 		}
 
@@ -316,19 +323,7 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForPanning() {
-		return '
-			function addArrow(dir, right, top, offset) {
-				$(\'<img class="arrow" src="lib/flot/arrow-\' + dir + \'.gif" style="right:\' + right + \'px;top:\' + top + \'px">\').appendTo("#'.$this->cssID.'").click(function (e) {
-					e.preventDefault();
-					RunalyzePlot.getPlot("'.$this->cssID.'").pan(offset);
-					/*'.$this->plot.'.pan(offset);*/
-				});
-			}
-
-			addArrow(\'left\', 55, 60, { left: -100 });
-			addArrow(\'right\', 25, 60, { left: 100 });
-			addArrow(\'up\', 40, 45, { top: -100 });
-			addArrow(\'down\', 40, 75, { top: 100 });'.NL;
+		return 'RunalyzePlot.togglePanning("'.$this->cssID.'")'.NL;
 	}
 
 	/**
