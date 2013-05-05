@@ -481,15 +481,13 @@ h1 a:hover, h1 a:active {
 #ajax-navigation {
 	display: block;
 	z-index: 11;
-	position: absolute;
-	left: 50%;
-	top: 50px;
-	margin-left: -460px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
 	width: 200px;
-	border-radius: 5px 0 0 5px;
-	-webkit-border-radius: 5px 0 0 5px;
-	-khtml-border-radius: 5px 0 0 5px;
-	-moz-border-radius: 5px 0 0 5px;
+	height: 100%;
+	overflow: scroll;
 	box-shadow: 3px 2px 5px #333;
 	-webkit-box-shadow: 3px 2px 5px #333;
 	-moz-box-shadow: 3px 2px 5px #333; }
@@ -519,7 +517,7 @@ h1 a:hover, h1 a:active {
 
 #ajaxPrev:hover, #ajaxNext:hover { border: none; }
 
-#ajax.smallWin, #ajax.smallWin.tooBig {
+#ajax.smallWin {
 	width: 500px;
 	margin-left: -250px; }
 
@@ -527,14 +525,15 @@ h1 a:hover, h1 a:active {
 	width: 90%;
 	margin-left: -45%; }
 
-#ajax.bigWin.tooBig {
-	left: 12px;
-	width: 1000px;
-	margin-left: 0; }
+@media screen and (max-width: 960px) {
+	#ajax { width: 90%; left: 2%; margin: 0; }
+	#ajax.smallWin { width: 500px; left: 220px; margin: 0; }
+	#ajax.bigWin { width: 960px; left: 0; margin: 0; }
+}
 
-#ajax.tooBig {
-	left: 112px;
-	margin-left: 0; }
+@media screen and (max-width: 600px) {
+	#ajax { width: 600px; left: 0; margin: 0; }
+}
 
 
 /*** BLOCKLIST ***/
