@@ -104,7 +104,7 @@ class SplitsView {
 			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
 			echo '
-			<tr class="a'.($i%2+2).' r '.($Split['active'] ? '' : 'unimportant').'">
+			<tr class="a'.($i%2+2).' r '.($Split['active'] || !$this->Splits->hasActiveLaps() ? '' : 'unimportant').'">
 				<td>'.Running::Km($Split['km'], 2).'</td>
 				<td>'.$Split['time'].'</td>
 				<td>'.SportSpeed::minPerKm($Split['km'], $Time).'/km</td>
