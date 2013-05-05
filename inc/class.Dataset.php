@@ -193,7 +193,7 @@ class Dataset {
 	 * @return string 
 	 */
 	public function getQuerySelectForAllDatasets() {
-		$String = ',`is_track`,`use_vdot`,`is_public`,`elevation_corrected`';
+		$String = ',`is_track`,`use_vdot`,`is_public`,`elevation_corrected`,SUBSTR(`arr_alt`,1,1) as `arr_alt`';
 
 		foreach ($this->data as $set)
 			$String .= ', `'.$set['name'].'`';

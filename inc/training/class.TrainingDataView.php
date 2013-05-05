@@ -281,7 +281,7 @@ class TrainingDataView {
 	 * @return string elevation with unit
 	 */
 	public function getElevation() {
-		$preSign = (CONF_TRAINING_DO_ELEVATION && !$this->Object->elevationWasCorrected()) ? '~' : '';
+		$preSign = (CONF_TRAINING_DO_ELEVATION && $this->Object->hasArrayAltitude() && !$this->Object->elevationWasCorrected()) ? '~' : '';
 
 		return $preSign.$this->Object->getElevation().'&nbsp;hm';
 	}
