@@ -714,6 +714,8 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 
 #dataPanel, #tab_content { overflow: auto; }
 
+#tab_content > ul.jbar { position: absolute; right: 5px; }
+
 #datenPanel { margin-bottom: 15px; }
 
 #schuhe p {
