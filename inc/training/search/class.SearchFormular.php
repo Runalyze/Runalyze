@@ -28,6 +28,7 @@ class SearchFormular extends Formular {
 		$this->initConditions();
 		$this->addFieldSendToMultiEditor();
 		$this->addSubmitBlock();
+		$this->addPager();
 		$this->addFieldset($this->Fieldset);
 
 		$this->setSubmitButtonsCentered();
@@ -68,7 +69,13 @@ class SearchFormular extends Formular {
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33.' c' );
 
 		$this->Fieldset->addField($Field);
-		//$this->Fieldset->addBlock('<div class="c"><input type="submit" name="submit" value="Suchen"></div>');
+	}
+
+	/**
+	 * Add hidden page value
+	 */
+	private function addPager() {
+		$this->addHiddenValue('page', 1);
 	}
 
 	/**
