@@ -41,12 +41,29 @@ class SearchResults {
 	private $totalNumberOfTrainings = 0;
 
 	/**
-	 * Constructor
+	 * Page
+	 * @var int
 	 */
-	public function __construct() {
+	private $page = 0;
+
+	/**
+	 * Search and show trainings=
+	 * @var boolean
+	 */
+	private $withResults = true;
+
+	/**
+	 * Constructor
+	 * @param boolean $withResults
+	 */
+	public function __construct($withResults = true) {
+		$this->withResults = $withResults;
+
 		$this->setAllowedKeys();
 		$this->initDataset();
-		$this->searchTrainings();
+
+		if ($withResults)
+			$this->searchTrainings();
 	}
 
 	/**
@@ -91,6 +108,12 @@ class SearchResults {
 	 * Search trainings
 	 */
 	private function searchTrainings() {
+		$this->totalNumberOfTrainings = Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder());
+		$this->page = (int)Request::param('page');
+
+		if (($this->page-1)*CONF_RESULTS_AT_PAGE > $this->totalNumberOfTrainings)
+			$this->page--;
+
 		$this->Trainings = Mysql::getInstance()->fetchAsArray(
 			'SELECT
 				id,
@@ -99,8 +122,6 @@ class SearchResults {
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
 		);
-
-		$this->totalNumberOfTrainings = Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder());
 	}
 
 	/**
@@ -235,8 +256,7 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getLimit() {
-		// TODO
-		$limit = 0;
+		$limit = ($this->page - 1)*CONF_RESULTS_AT_PAGE;
 
 		return ' LIMIT '.$limit.','.CONF_RESULTS_AT_PAGE;
 	}
@@ -278,9 +298,12 @@ class SearchResults {
 	 * Display results
 	 */
 	private function displayResults() {
+		if (!$this->withResults)
+			return;
+
 		echo '<table class="fullWidth">';
 		echo '<thead><tr class="c"><th colspan="'.$this->colspan.'">';
-		echo 'Insgesamt wurden '.$this->totalNumberOfTrainings.' Trainings gefunden.';
+		$this->displayHeader();
 		echo '</th></tr></thead>';
 		echo '<tbody>';
 
@@ -288,6 +311,19 @@ class SearchResults {
 
 		echo '</tbody>';
 		echo '</table>';
+	}
+
+	/*
+	 * Display header
+	 */
+	private function displayHeader() {
+		if ($this->page != 1)
+			echo '<span class="link" onclick="Runalyze.searchPageBack();">'.Icon::$BACK.'</span>';
+
+		echo ' Insgesamt wurden '.$this->totalNumberOfTrainings.' Trainings gefunden. ';
+
+		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings)
+			echo '<span class="link" onclick="Runalyze.searchPageNext();">'.Icon::$NEXT.'</span>';
 	}
 
 	/**
