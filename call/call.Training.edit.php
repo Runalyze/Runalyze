@@ -14,7 +14,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	ShoeFactory::recalculateAllShoes();
 
 	echo '<p id="submit-info" class="error">Das Training wurde gel&ouml;scht.</p>';
-	echo '<script type="text/javascript">Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
+	echo '<script type="text/javascript">$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
 	exit();
 }
 

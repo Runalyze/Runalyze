@@ -380,7 +380,7 @@ class TrainingDataView {
 	 * @return string Icon for map, if gps track is set
 	 */
 	public function getMapIcon() {
-		if (!$this->Object->hasPositionData())
+		if ($this->Object->hasPositionData())
 			return $this->getCheckedToggleIcon('map', 'Streckenverlauf vorhanden');
 
 		return '';
@@ -393,6 +393,6 @@ class TrainingDataView {
 	 * @return string
 	 */
 	private function getCheckedToggleIcon($key, $tooltip) {
-		return '<icon class="toggle-icon-'.$key.' checked" '.Ajax::tooltip('', $tooltip, false, true).'></i>';
+		return '<i class="toggle-icon-'.$key.' checked" '.Ajax::tooltip('', $tooltip, false, true).'></i>';
 	}
 }

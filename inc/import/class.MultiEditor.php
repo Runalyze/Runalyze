@@ -43,27 +43,37 @@ class MultiEditor {
 	 */
 	protected function displayNavigation() {
 		$Code  = '<div id="ajax-navigation" class="panel">';
-		$Code .= '<table class="fullWidth c"><tbody>';
+		$Code .= '<h1>Multi-Editor</h1>';
+		$Code .= '<table class="multi-edit-table fullWidth"><tbody>';
 
 		foreach (self::$IDs as $i => $ID) {
 			$Training = new TrainingObject($ID);
+			$Daytime = substr($Training->DataView()->getDaytimeString(), 0, -4);
 
-			$Code .= '<tr class="link '.HTML::trClass($i).'" onclick="Runalyze.loadOverlay(\\\''.TrainingLinker::$EDITOR_URL.'?id='.$ID.'\\\')">';
-			$Code .= '<td style="padding-top:7px;">';
+			if (!empty($Daytime))
+				$Daytime = ' - <small>'.$Daytime.'</small>';
+
+			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.HTML::trClass($i).' show-on-hover-parent" onclick="Runalyze.loadOverlay(\\\''.TrainingLinker::$EDITOR_URL.'?id='.$ID.'\\\')">';
+			$Code .= '<td class="multi-edit-sport-icon c">';
+			$Code .= '<span class="link show-on-hover multi-edit-remove-link" onclick="$(this).parent().parent().remove();">'.Icon::$CROSS_SMALL.'</span>';
 			$Code .= $Training->Sport()->IconWithTooltip();
 			$Code .= '</td><td>';
-			$Code .= $Training->DataView()->getDate().'<br />';
+			$Code .= $Training->DataView()->getDate(false).$Daytime.'<br />';
 			$Code .= '<small>'.Time::toString($Training->getTimeInSeconds(), true, true);
 			if ($Training->hasDistance())
-				$Code .= ', '.$Training->DataView()->getDistanceStringWithFullDecimals();
+				$Code .= ' - '.$Training->DataView()->getDistanceStringWithFullDecimals();
 			$Code .= '</small>';
+			$Code .= '</td>';
+			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getPulseIcon().'</td>';
+			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getSplitsIcon().'</td>';
+			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getMapIcon().'</td>';
 			$Code .= '</tr>';
 		}
 
 		$Code .= '</tbody></table>';
 		$Code .= '</div>';
 
-		echo Ajax::wrapJS('$(\'body\').append(\''.$Code.'\')');
+		echo Ajax::wrapJS('$(\'#ajax-navigation\').remove();$(\'body\').append(\''.$Code.'\')');
 	}
 
 	/**
