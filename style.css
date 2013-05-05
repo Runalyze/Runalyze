@@ -485,7 +485,7 @@ h1 a:hover, h1 a:active {
 	left: 0;
 	top: 0;
 	margin: 0;
-	width: 200px;
+	width: 210px;
 	height: 100%;
 	overflow: scroll;
 	box-shadow: 3px 2px 5px #333;
@@ -527,7 +527,7 @@ h1 a:hover, h1 a:active {
 
 @media screen and (max-width: 960px) {
 	#ajax { width: 90%; left: 2%; margin: 0; }
-	#ajax.smallWin { width: 500px; left: 220px; margin: 0; }
+	#ajax.smallWin { width: 500px; left: 230px; margin: 0; }
 	#ajax.bigWin { width: 960px; left: 0; margin: 0; }
 }
 
@@ -728,6 +728,12 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 .multi-import-table th { padding: 2px 10px; }
 .multi-import-table td { padding: 1px 5px; }
 .multi-import-table td input { font-size: 1em; top: 0; }
+
+.multi-edit-table { line-height: 1.5em; }
+.multi-edit-sport-icon { padding-top: 8px; position: relative; }
+.multi-edit-icon { padding: 8px 0 0 0; }
+.multi-edit-icon i { opacity: 0.7; }
+.multi-edit-remove-link { position: absolute; top: 10px; left: -10px; }
 
 .datepicker th, .datepicker td {
 	padding: 0 !important;
