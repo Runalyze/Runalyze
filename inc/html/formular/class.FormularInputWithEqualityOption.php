@@ -24,8 +24,10 @@ class FormularInputWithEqualityOption extends FormularInput {
 			'like'	=> '&asymp;'
 		);
 
+		$selected = isset($_POST['opt']) && isset($_POST['opt'][$this->name]) ? $_POST['opt'][$this->name] : 'eq';
+
 		$label  = '<label>'.$this->label.'</label>';
-		$input  = HTML::selectBox('opt['.$this->name.']', $options);
+		$input  = HTML::selectBox('opt['.$this->name.']', $options, $selected);
 		$input .= '<input '.$this->attributes().' />';
 
 		return $label.' '.$input;
