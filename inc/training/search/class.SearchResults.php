@@ -140,12 +140,13 @@ class SearchResults {
 		if (isset($_POST['clothes']))
 			$this->addClothesCondition($conditions);
 
-		foreach ($this->allowedKeys as $key)
+		foreach ($this->allowedKeys as $key) {
 			if (isset($_POST[$key]))
 				if (is_array($_POST[$key]))
 					$this->addConditionForArray($key, $conditions);
 				elseif (strlen($_POST[$key]) > 0)
 					$this->addConditionFor($key, $conditions);
+		}
 
 		if (empty($conditions))
 			return 'WHERE 1';
@@ -256,6 +257,9 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getLimit() {
+		if ($this->page <= 0)
+			$this->page = 1;
+
 		$limit = ($this->page - 1)*CONF_RESULTS_AT_PAGE;
 
 		return ' LIMIT '.$limit.','.CONF_RESULTS_AT_PAGE;

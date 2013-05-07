@@ -12,6 +12,8 @@ $showResults = !empty($_POST);
 if (isset($_GET['get']) && $_GET['get'] == 'true') {
 	$_POST = array_merge($_POST, $_GET);
 	$showResults = true;
+
+	SearchFormular::transformOldParamsToNewParams();
 }
 
 if (empty($_POST) || Request::param('get') == 'true') {

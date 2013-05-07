@@ -184,4 +184,22 @@ class SearchFormular extends Formular {
 
 		$this->Fieldset->addField($Field);
 	}
+
+	/**
+	 * Transform old params to new params
+	 */
+	static public function transformOldParamsToNewParams() {
+		if (isset($_POST['val']) && is_array($_POST['val']))
+			foreach ($_POST['val'] as $key => $value)
+				$_POST[$key] = $value;
+
+		if (isset($_POST['time-gt']))
+			$_POST['date-from'] = $_POST['time-gt'];
+		if (isset($_POST['time-lt']))
+			$_POST['date-to'] = $_POST['time-lt'];
+		if (isset($_POST['order']))
+			$_POST['search-sort-by'] = $_POST['order'];
+		if (isset($_POST['sort']))
+			$_POST['search-sort-order'] = $_POST['sort'];
+	}
 }
