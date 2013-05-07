@@ -550,12 +550,10 @@ class GpsData {
 	 * @parameter boolean $complete
 	 * @return array
 	 */
-	protected function getElevationUpDownOfStep($complete = false) {
+	public function getElevationUpDownOfStep($complete = false) {
 		if (empty($this->arrayForElevation) || (!$complete && !isset($this->arrayForElevation[$this->arrayIndex])))
 			return array(0, 0);
 
-		// TODO
-		//self::$minElevationDiff = 0;
 		$eachXthStep = 1;
 		$positiveElevation = 0;
 		$negativeElevation = 0;
@@ -564,8 +562,8 @@ class GpsData {
 		foreach ($stepArray as $i => $step) {
 			if ($i >= $eachXthStep && $stepArray[$i] != 0 && $stepArray[$i-$eachXthStep] != 0 && $i%$eachXthStep == 0) {
 				$elevationDifference = $stepArray[$i] - $stepArray[$i-$eachXthStep];
-				$positiveElevation += ($elevationDifference > self::$minElevationDiff) ? $elevationDifference : 0;
-				$negativeElevation -= ($elevationDifference < -1*self::$minElevationDiff) ? $elevationDifference : 0;
+				$positiveElevation += ($elevationDifference >= self::$minElevationDiff) ? $elevationDifference : 0;
+				$negativeElevation -= ($elevationDifference <= -1*self::$minElevationDiff) ? $elevationDifference : 0;
 			}
 		}
 

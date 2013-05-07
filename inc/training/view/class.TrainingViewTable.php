@@ -142,6 +142,7 @@ class TrainingViewTable {
 		$current    = $this->Training->getElevation();
 		$calculated = $this->Training->GpsData()->calculateElevation();
 		$difference = $this->Training->GpsData()->getElevationDifference();
+		$updown     = $this->Training->GpsData()->getElevationUpDownOfStep(true);
 
 		if ($current > 0 || $calculated > 0) {
 			$Text = $current.'&nbsp;m';
@@ -159,8 +160,11 @@ class TrainingViewTable {
 			$this->addOutsideLine('H&ouml;henmeter', $Text);
 		}
 
-		if ($difference > 20)
+		if (abs($difference) > 20)
 			$this->addOutsideLine('H&ouml;henunterschied', Math::WithSign($difference).'m');
+
+		if ($calculated > 0)
+			$this->addOutsideLine(Ajax::tooltip('Auf-/Abstieg', 'Durch die Gl&auml;ttung im Algorithmus m&uuml;ssen diese Werte nicht zu den anderen passen.', 'atRight'), '+'.$updown[0].'/-'.$updown[1].'&nbsp;m');
 
 		if ($current > 0)
 			$this->addOutsideLine('Steigung', number_format($current/10/$this->Training->getDistance(), 2, ',', '.').'&nbsp;&#37;');

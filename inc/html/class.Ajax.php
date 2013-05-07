@@ -141,7 +141,7 @@ class Ajax {
 	 * Get html-code for jquery-tooltip
 	 * @param string $html
 	 * @param string $tooltip
-	 * @param boolean $atLeft [optional]
+	 * @param boolean $atLeft [optional] can be 'atRight'
 	 * @param boolean $onlyAttributes [optional]
 	 * @return string
 	 */
@@ -149,7 +149,7 @@ class Ajax {
 		if ($tooltip == '')
 			return $html;
 
-		$class = $atLeft ? 'class="atLeft" ' : '';
+		$class = $atLeft ? is_string($atLeft) ? 'class="'.$atLeft.'"' : 'class="atLeft" ' : '';
 
 		if ($onlyAttributes)
 			return $class.'rel="tooltip" title="'.$tooltip.'"';
