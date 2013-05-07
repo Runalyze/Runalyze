@@ -181,6 +181,7 @@ $CLASSMAP = array(
 'FormularInputSearchTimeRange' => 'training/search/class.FormularInputSearchTimeRange.php',
 'FormularSelectSearchSort' => 'training/search/class.FormularSelectSearchSort.php',
 'SearchFormular' => 'training/search/class.SearchFormular.php',
+'SearchLink' => 'training/search/class.SearchLink.php',
 'SearchResults' => 'training/search/class.SearchResults.php',
 'RoundsAbstract' => 'training/view/class.RoundsAbstract.php',
 'RoundsComputed' => 'training/view/class.RoundsComputed.php',

@@ -60,7 +60,7 @@ class ConfigTabAccount extends ConfigTab {
 		$DeleteLink  = Ajax::window('<a href="call/window.delete.php"><strong>Account unwiderruflich l&ouml;schen &raquo;</strong></a>');
 		$DeleteLink .= '<br /><small>Nach dem L&ouml;schen erh&auml;lst du eine E-Mail mit dem Link zum L&ouml;schen deines Accounts.
 						Das L&ouml;schen kann danach nicht r&uuml;ckg&auml;ngig gemacht werden.
-						Du solltest daher deine Daten sichern, falls du doch noch einmal zur&uuml;ckkehren m&ouml;chtest.';
+						Du solltest daher deine Daten sichern, falls du doch noch einmal zur&uuml;ckkehren m&ouml;chtest.</small>';
 
 		$Delete = new FormularFieldset('Account l&ouml;schen');
 		$Delete->setCollapsed();
