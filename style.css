@@ -535,6 +535,21 @@ h1 a:hover, h1 a:active {
 	#ajax { width: 600px; left: 0; margin: 0; }
 }
 
+#ajax.fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100% !important;
+	height: 100%;
+	background-color: #F6F6F7;
+	z-index: 500;
+	margin: 0 !important;
+    box-sizing: border-box;
+	border-radius: 0;
+	overflow: scroll;
+}
+#ajax.fullscreen #close { top: 0; right: 0; }
+
 
 /*** BLOCKLIST ***/
 ul.blocklist li {
