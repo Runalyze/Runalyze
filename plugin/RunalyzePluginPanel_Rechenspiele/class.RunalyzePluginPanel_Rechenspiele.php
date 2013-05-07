@@ -246,7 +246,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody>
 				';
 
-		$VDOTs = Mysql::getInstance()->fetchAsArray('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 ORDER BY time ASC');
+		$VDOTs = Mysql::getInstance()->fetchAsArray('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC');
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
 				$Table .= '<tr class="'.HTML::trClass(floor($i/10)).'">'.NL;
