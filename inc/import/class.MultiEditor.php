@@ -78,17 +78,11 @@ class MultiEditor {
 
 	/**
 	 * Display editor
+	 * 
+	 * This function will just load the standard editor in the overlay
 	 */
 	protected function displayEditor() {
-		$_POST = array();
-
-		$Training = new TrainingObject( self::$IDs[0] );
-
-		$Formular = new TrainingFormular($Training, StandardFormular::$SUBMIT_MODE_EDIT);
-		$Formular->setId('training');
-		$Formular->setHeader( $Training->DataView()->getTitleWithCommentAndDate() );
-		$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
-		$Formular->display();
+		echo Ajax::wrapJS('Runalyze.loadOverlay(\''.TrainingLinker::$EDITOR_URL.'?id='.self::$IDs[0].'\');');
 	}
 
 	/**
