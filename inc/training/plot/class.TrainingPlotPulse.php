@@ -103,7 +103,11 @@ class TrainingPlotPulse extends TrainingPlot {
 		if (self::inPercent()) {
 			$Plot->addYUnit($YAxis, '%');
 			$Plot->setYTicks($YAxis, 5, 0);
-			$Plot->setYLimits($YAxis, 50, 100);
+
+			if ($average >= 60)
+				$Plot->setYLimits($YAxis, 50, 100);
+			else
+				$Plot->setYLimits($YAxis, 10*floor(min($Data)/10), 100);
 		} else {
 			$Plot->addYUnit($YAxis, 'bpm');
 			$Plot->setYTicks($YAxis, 10, 0);
