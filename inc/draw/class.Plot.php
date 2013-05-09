@@ -804,6 +804,9 @@ function PLOT__correctValuesMapperForTime($v) {
  * @return mixed
  */
 function PLOT__correctValuesMapperFromPaceToKmh($v) {
+	if ($v == 0)
+		return 0;
+
 	return 3600/$v;
 }
 
