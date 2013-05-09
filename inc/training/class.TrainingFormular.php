@@ -89,8 +89,11 @@ class TrainingFormular extends StandardFormular {
 	protected function initGPSFieldset() {
 		if ($this->dataObject->hasPositionData())
 			$this->initElevationCorrectionFieldset();
-		elseif ($this->dataObject->hasDistance())
-			$this->initAddGPSdataFieldset();
+		// TODO:
+		// - add TCX is disabled
+		// - new method: add/complete with file
+		//elseif ($this->dataObject->hasDistance())
+		//	$this->initAddGPSdataFieldset();
 	}
 
 	/**

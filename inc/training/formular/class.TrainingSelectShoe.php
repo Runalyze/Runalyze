@@ -41,10 +41,12 @@ class TrainingSelectShoe extends FormularSelectBox {
 	public function display() {
 		parent::display();
 
-		if ($this->value > 0 && isset($_POST['s']) && isset($_POST['distance'])) {
+		if (isset($_POST['s']) && isset($_POST['distance'])) {
 			echo HTML::hiddenInput('s_old', $_POST['s']);
 			echo HTML::hiddenInput('dist_old', $_POST['distance']);
-			echo HTML::hiddenInput('shoeid_old', $this->value);
+
+			if ($this->value > 0)
+				echo HTML::hiddenInput('shoeid_old', $this->value);
 		}
 	}
 }
