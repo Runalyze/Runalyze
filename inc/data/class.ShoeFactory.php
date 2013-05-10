@@ -113,7 +113,7 @@ class ShoeFactory {
 	static public function getSearchLink($id) {
 		$shoes = self::AllShoes();
 
-		return DataBrowserLinker::searchLink($shoes[$id]['name'], 'opt[shoeid]=is&val[shoeid][0]='.$id);
+		return SearchLink::to('shoeid', $id, $shoes[$id]['name']);
 	}
 
 	/**

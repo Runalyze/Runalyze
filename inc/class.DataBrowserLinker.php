@@ -11,37 +11,6 @@
  */
 class DataBrowserLinker {
 	/**
-	 * URL for search to be called via jQuery
-	 * @var string
-	 */
-	static public $SEARCH_URL = 'call/window.search.php';
-
-	/**
-	 * Get complete HTML-link for the search
-	 * @param string $name
-	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
-	 * @return string
-	 */
-	static function searchLink($name, $var = '') {
-		// TODO: Just get $name, $column, $option, $value (may be arrays)
-		return Ajax::window('<a href="'.self::searchLinkUrl($var).'">'.$name.'</a>', 'big');
-	}
-
-	/**
-	 * Get complete HTML-link for the search
-	 * @param string $var Searchstring in format opt[typid]=is&val[typid][0]=3
-	 * @return string
-	 */
-	static function searchLinkUrl($var) {
-		if (empty($var))
-			return self::$SEARCH_URL;
-
-		$var = str_replace(' ', '+', $var);
-
-		return self::$SEARCH_URL.'?get=true&'.$var;
-	}
-
-	/**
 	 * Get a ajax-link to a specified DataBrowser
 	 * @param string $name Name to be displayed as link
 	 * @param int $start Timestamp for first date in browser

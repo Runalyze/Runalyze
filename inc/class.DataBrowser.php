@@ -277,7 +277,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getNaviSearchLink() {
-		return Ajax::window('<a href="'.DataBrowserLinker::$SEARCH_URL.'">'.Ajax::tooltip(Icon::$SEARCH, 'Trainings suchen').'</a>', 'big');
+		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'">'.Ajax::tooltip(Icon::$SEARCH, 'Trainings suchen').'</a>', 'big');
 	}
 
 	/**

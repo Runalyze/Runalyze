@@ -71,7 +71,7 @@ class ConfigTabTypes extends ConfigTab {
 			elseif ($Data['tcount'] == 0)
 				$delete = '<input type="checkbox" name="type[delete]['.$id.']" />';
 			else
-				$delete = DataBrowserLinker::searchLink('<small>('.$Data['tcount'].')</small>', 'opt[typeid]=is&val[typeid][0]='.$id);
+				$delete = SearchLink::to('typeid', $id, '<small>('.$Data['tcount'].')</small>');
 
 			$Sports = SportFactory::AllSportsWithTypes();
 	

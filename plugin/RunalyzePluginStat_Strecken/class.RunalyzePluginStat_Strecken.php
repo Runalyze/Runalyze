@@ -99,7 +99,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				<tr class="a'.($i%2+1).'">
 					<td>'.$strecke['num'].'x</td>
 					<td class="l">	
-						'.DataBrowserLinker::searchLink(Helper::Cut($strecke['route'],100), 'opt[route]=is&val[route]='.$strecke['route']).'
+						'.SearchLink::to('route', $strecke['route'], Helper::Cut($strecke['route'],100)).'
 					</td>
 					<td>'.Running::Km($strecke['km']).'</td>
 				</tr>');
@@ -128,7 +128,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			echo('
 				<tr class="a'.($i%2+1).'">
 					<td>'.$num.'x</td>
-					<td>'.DataBrowserLinker::searchLink($ort, 'opt[route]=like&val[route]='.$ort).'</td>
+					<td>'.SearchLink::to('route', $ort, $ort).'</td>
 				</tr>');
 
 			if ($i == 11)
@@ -160,7 +160,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				} else
 					echo(', ');
 
-				echo DataBrowserLinker::searchLink($ort, 'opt[route]=like&val[route]='.$ort);
+				echo SearchLink::to('route', $ort, $ort);
 			}
 			else {
 				echo '</td></tr>';

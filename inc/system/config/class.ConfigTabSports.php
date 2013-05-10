@@ -80,7 +80,7 @@ class ConfigTabSports extends ConfigTab {
 			elseif (!isset($SportCount[$id]) || $SportCount[$id] == 0)
 				$delete = '<input type="checkbox" name="sport[delete]['.$id.']" />';
 			else
-				$delete = DataBrowserLinker::searchLink('<small>('.$SportCount[$id].')</small>', 'opt[typeid]=is&val[sportid][0]='.$id);
+				$delete = SearchLink::to('sportid', $id, '<small>('.$SportCount[$id].')</small>');
 
 			$Code .= '
 					<tr class="a'.($i%2+1).(isset($Data['new']) ? ' unimportant' : '').'">

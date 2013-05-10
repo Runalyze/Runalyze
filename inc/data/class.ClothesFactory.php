@@ -105,6 +105,6 @@ class ClothesFactory {
 	 * @return string
 	 */
 	static public function getSearchLinkForSingleClothes($id) {
-		return DataBrowserLinker::searchLink(self::NameFor($id), 'opt[clothes]=is&val[clothes][0]='.$id);
+		return SearchLink::to('clothes', $id, self::NameFor($id));
 	}
 }
