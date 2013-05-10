@@ -109,6 +109,8 @@ class GpsData {
 	 * Constructor
 	 */
 	public function __construct($TrainingDataAsArray) {
+		$this->addMissingKeysToArray($TrainingDataAsArray);
+
 		$this->arrayForTime      = $this->loadArrayDataFrom($TrainingDataAsArray['arr_time']);
 		$this->arrayForLatitude  = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lat']);
 		$this->arrayForLongitude = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lon']);
@@ -122,6 +124,26 @@ class GpsData {
 			$this->initCache($TrainingDataAsArray['id'], $TrainingDataAsArray['gps_cache_object']);
 		else
 			$this->initCache(0, false);
+	}
+
+	/**
+	 * Add missing keys to array
+	 * @param array $array training data
+	 */
+	private function addMissingKeysToArray(array &$array) {
+		$keys = array(
+			'arr_time',
+			'arr_lat',
+			'arr_lon',
+			'arr_alt',
+			'arr_dist',
+			'arr_heart',
+			'arr_pace'
+		);
+
+		foreach ($keys as $key)
+			if (!isset($array[$key]))
+				$array[$key] = '';
 	}
 
 	/**
