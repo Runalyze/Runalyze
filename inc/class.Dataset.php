@@ -330,6 +330,12 @@ class Dataset {
 			case 'trimp':
 				return $this->TrainingObject->DataView()->getTrimpString();
 
+			case 'cadence':
+				return $this->TrainingObject->DataView()->getCadence();
+
+			case 'power':
+				return $this->TrainingObject->DataView()->getPower();
+
 			case 'temperature':
 				if (!$this->TrainingObject->Weather()->hasTemperature())
 					return '';
