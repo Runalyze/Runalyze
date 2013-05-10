@@ -188,6 +188,8 @@ class ConfigTabDataset extends ConfigTab {
 			'use_vdot'	=> 0,
 			'jd_intensity'	=> 0,	// TODO
 			'trimp'		=> 121,
+			'cadence'	=> 180,
+			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,
 			'route'		=> 'Sportplatz',
@@ -205,6 +207,9 @@ class ConfigTabDataset extends ConfigTab {
 			'arr_dist'	=> '',
 			'arr_heart'	=> '',
 			'arr_pace'	=> '',
+			'arr_cadence'	=> '',
+			'arr_power'	=> '',
+			'arr_temperature'	=> '',
 			'accountid'	=> SessionAccountHandler::getId(),
 			'creator'	=> '',
 			'creator_details'	=> '',

@@ -22,6 +22,12 @@ class FormularUnit {
 	static public $BPM = 'unitBpm';
 
 	/**
+	 * Unit: spm
+	 * @var string
+	 */
+	static public $SPM = 'unitSpm';
+
+	/**
 	 * Unit: kg
 	 * @var string
 	 */
@@ -86,4 +92,10 @@ class FormularUnit {
 	 * @var string
 	 */
 	static public $PACE = 'unitPace';
+
+	/**
+	 * Unit: pace in min/km
+	 * @var string
+	 */
+	static public $POWER = 'unitPower';
 }

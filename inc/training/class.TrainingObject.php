@@ -619,6 +619,30 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set cadence
+	 * @param int $cadence cadence
+	 */
+	public function setCadence($cadence) { return $this->set('cadence', $cadence); }
+	/**
+	 * Get cadence
+	 * @return int cadence value
+	 */
+	public function getCadence() { return $this->get('cadence'); }
+
+
+	/**
+	 * Set power
+	 * @param int $power power
+	 */
+	public function setPower($power) { return $this->set('power', $power); }
+	/**
+	 * Get power
+	 * @return int power value
+	 */
+	public function getPower() { return $this->get('power'); }
+
+
+	/**
 	 * Set weatherid
 	 * @param mixed $id weatherid
 	 */
@@ -852,6 +876,57 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayPace() { return strlen($this->get('arr_pace')) > 0; }
+
+
+	/**
+	 * Set array for cadence
+	 * @param array $array
+	 */
+	public function setArrayCadence($array) { $this->setArrayFor('arr_cadence', $array); }
+	/**
+	 * Get array for cadence
+	 * @return array
+	 */
+	public function getArrayCadence() { return $this->getArrayFor('arr_cadence'); }
+	/**
+	 * Has array for cadence?
+	 * @return bool
+	 */
+	public function hasArrayCadence() { return strlen($this->get('arr_cadence')) > 0; }
+
+
+	/**
+	 * Set array for power
+	 * @param array $array
+	 */
+	public function setArrayPower($array) { $this->setArrayFor('arr_power', $array); }
+	/**
+	 * Get array for power
+	 * @return array
+	 */
+	public function getArrayPower() { return $this->getArrayFor('arr_power'); }
+	/**
+	 * Has array for power?
+	 * @return bool
+	 */
+	public function hasArrayPower() { return strlen($this->get('arr_power')) > 0; }
+
+
+	/**
+	 * Set array for temperature
+	 * @param array $array
+	 */
+	public function setArrayTemperature($array) { $this->setArrayFor('arr_temperature', $array); }
+	/**
+	 * Get array for temperature
+	 * @return array
+	 */
+	public function getArrayTemperature() { return $this->getArrayFor('arr_temperature'); }
+	/**
+	 * Has array for temperature?
+	 * @return bool
+	 */
+	public function hasArrayTemperature() { return strlen($this->get('arr_temperature')) > 0; }
 
 
 	/**
