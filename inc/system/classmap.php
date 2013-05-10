@@ -175,6 +175,7 @@ $CLASSMAP = array(
 'TrainingPlotElevation' => 'training/plot/class.TrainingPlotElevation.php',
 'TrainingPlotPace' => 'training/plot/class.TrainingPlotPace.php',
 'TrainingPlotPacePulse' => 'training/plot/class.TrainingPlotPacePulse.php',
+'TrainingPlotPower' => 'training/plot/class.TrainingPlotPower.php',
 'TrainingPlotPulse' => 'training/plot/class.TrainingPlotPulse.php',
 'TrainingPlotsList' => 'training/plot/class.TrainingPlotsList.php',
 'TrainingPlotSplits' => 'training/plot/class.TrainingPlotSplits.php',
