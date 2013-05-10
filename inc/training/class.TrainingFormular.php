@@ -42,6 +42,12 @@ class TrainingFormular extends StandardFormular {
 	static public $ONLY_DISTANCES_CLASS = "only-distances";
 
 	/**
+	 * CSS class for inputs only for sports with power
+	 * @var string
+	 */
+	static public $ONLY_POWER_CLASS = "only-power";
+
+	/**
 	 * Prepare for display
 	 */
 	protected function prepareForDisplayInSublcass() {

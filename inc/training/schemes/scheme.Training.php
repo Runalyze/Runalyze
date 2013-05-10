@@ -31,7 +31,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> 'Distanz',
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace'), //, 'power', 'cadence'),
+		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power'), //, 'cadence'),
 		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
@@ -303,7 +303,7 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'Power', // Leistung?
 						'unit'		=> FormularUnit::$POWER,
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+						'css'		=> TrainingFormular::$ONLY_POWER_CLASS
 					)
 	),
 	'temperature'		=> array(

@@ -230,7 +230,10 @@ class TrainingDataView {
 	 * @return string cadence with unit
 	 */
 	public function getCadence() {
-		return $this->Object->getCadence().'&nbsp;spm';
+		if ($this->Object->getCadence() > 0)
+			return $this->Object->getCadence().'&nbsp;spm';
+
+		return '';
 	}
 
 	/**
@@ -238,10 +241,10 @@ class TrainingDataView {
 	 * @return string power as tooltip
 	 */
 	public function getPowerWithTooltip() {
-		if ($this->Object->getPower() == 0)
-			return '';
+		if ($this->Object->getPower() > 0)
+			return Ajax::tooltip($this->getPower(), '&oslash; Power: '.$this->getPower());
 
-		return Ajax::tooltip($this->getPower(), '&oslash; Power: '.$this->getPower());
+		return '';
 	}
 
 	/**
@@ -249,7 +252,10 @@ class TrainingDataView {
 	 * @return string power with unit
 	 */
 	public function getPower() {
-		return $this->Object->getPower().'&nbsp;W';
+		if ($this->Object->getPower() > 0)
+			return $this->Object->getPower().'&nbsp;W';
+
+		return '';
 	}
 
 	/**
