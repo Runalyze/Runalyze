@@ -242,6 +242,9 @@ $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_ELEVATION', ar
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_SPLITS', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_PACEPULSE', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_COLLECTION', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_CADENCE', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_POWER', array('default' => true)));
+$Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_PLOT_TEMPERATURE', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_MAP', array('default' => true)));
 
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_SPORT', array('default' => true)));
@@ -435,6 +438,7 @@ $TrainingForm->setKeys(array(
 	'TRAINING_SORT_SPORTS',
 	'COMPUTE_KCAL',
 	'TRAINING_SORT_TYPES',
+	'COMPUTE_POWER',
 	'TRAINING_SORT_SHOES'
 	//'GARMIN_API_KEY'
 ));
@@ -460,6 +464,11 @@ $TrainingForm->addConfigValue( new ConfigValueBool('COMPUTE_KCAL', array(
 	'default'		=> true,
 	'label'			=> 'Kalorien berechnen',
 	'tooltip'		=> 'Die Kalorien werden im Formular bei einer &Auml;nderung der Dauer automatisch angepasst. Dabei wird der f&uuml;r die Sportart hinterlegte Wert verwendet.'
+)));
+$TrainingForm->addConfigValue( new ConfigValueBool('COMPUTE_POWER', array(
+	'default'		=> true,
+	'label'			=> 'Power berechnen',
+	'tooltip'		=> 'Beim Radfahren kann die jeweilige Power anhand einiger physikalischer Gr&ouml;&szlig;en automatisch berechnet werden.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', array(
 	'default'		=> true,

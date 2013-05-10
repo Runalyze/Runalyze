@@ -137,6 +137,9 @@ class TrainingObject extends DataObject {
 			$this->updateShoeForInsert();
 			$this->updateElevation();
 		}
+
+		if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+			$this->calculatePower();
 	}
 
 	/**
@@ -229,6 +232,18 @@ class TrainingObject extends DataObject {
 				$this->calculateElevation();
 			}
 		}
+	}
+
+	/**
+	 * Calculate power
+	 */
+	private function calculatePower() {
+		$GPS = new GpsData($this->getArray());
+		$data = $GPS->calculatePower();
+
+		$this->updateValue('arr_power', implode(self::$ARR_SEP, $data));
+		$this->updateValue('power', $GPS->averagePower());
+		$this->updateValue('gps_cache_object', '');
 	}
 
 	/**

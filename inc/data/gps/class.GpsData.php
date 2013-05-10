@@ -70,6 +70,24 @@ class GpsData {
 	private $arrayForPace = array();
 
 	/**
+	* Array with all information for Cadence
+	* @var array
+	*/
+	private $arrayForCadence = array();
+
+	/**
+	* Array with all information for Power
+	* @var array
+	*/
+	private $arrayForPower = array();
+
+	/**
+	* Array with all information for Temperature
+	* @var array
+	*/
+	private $arrayForTemperature = array();
+
+	/**
 	* Size of all arrays
 	* @var int
 	*/
@@ -111,14 +129,17 @@ class GpsData {
 	public function __construct($TrainingDataAsArray) {
 		$this->addMissingKeysToArray($TrainingDataAsArray);
 
-		$this->arrayForTime      = $this->loadArrayDataFrom($TrainingDataAsArray['arr_time']);
-		$this->arrayForLatitude  = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lat']);
-		$this->arrayForLongitude = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lon']);
-		$this->arrayForElevation = $this->loadArrayDataFrom($TrainingDataAsArray['arr_alt']);
-		$this->arrayForDistance  = $this->loadArrayDataFrom($TrainingDataAsArray['arr_dist']);
-		$this->arrayForHeartrate = $this->loadArrayDataFrom($TrainingDataAsArray['arr_heart']);
-		$this->arrayForPace      = $this->loadArrayDataFrom($TrainingDataAsArray['arr_pace']);
-		$this->arraySizes        = max(count($this->arrayForTime), count($this->arrayForLatitude));
+		$this->arrayForTime        = $this->loadArrayDataFrom($TrainingDataAsArray['arr_time']);
+		$this->arrayForLatitude    = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lat']);
+		$this->arrayForLongitude   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lon']);
+		$this->arrayForElevation   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_alt']);
+		$this->arrayForDistance    = $this->loadArrayDataFrom($TrainingDataAsArray['arr_dist']);
+		$this->arrayForHeartrate   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_heart']);
+		$this->arrayForPace        = $this->loadArrayDataFrom($TrainingDataAsArray['arr_pace']);
+		$this->arrayForCadence     = $this->loadArrayDataFrom($TrainingDataAsArray['arr_cadence']);
+		$this->arrayForPower       = $this->loadArrayDataFrom($TrainingDataAsArray['arr_power']);
+		$this->arrayForTemperature = $this->loadArrayDataFrom($TrainingDataAsArray['arr_temperature']);
+		$this->arraySizes          = max(count($this->arrayForTime), count($this->arrayForLatitude));
 
 		if (isset($TrainingDataAsArray['gps_cache_object']))
 			$this->initCache($TrainingDataAsArray['id'], $TrainingDataAsArray['gps_cache_object']);
@@ -138,7 +159,10 @@ class GpsData {
 			'arr_alt',
 			'arr_dist',
 			'arr_heart',
-			'arr_pace'
+			'arr_pace',
+			'arr_cadence',
+			'arr_power',
+			'arr_temperature'
 		);
 
 		foreach ($keys as $key)
@@ -350,6 +374,27 @@ class GpsData {
 	}
 
 	/**
+	 * Are information for elevation available?
+	 */
+	public function hasCadenceData() {
+		return !empty($this->arrayForCadence) && max($this->arrayForCadence) > 0;
+	}
+
+	/**
+	 * Are information for elevation available?
+	 */
+	public function hasPowerData() {
+		return !empty($this->arrayForPower) && max($this->arrayForPower) > 0;
+	}
+
+	/**
+	 * Are information for elevation available?
+	 */
+	public function hasTemperatureData() {
+		return !empty($this->arrayForTemperature) && max($this->arrayForTemperature) > 0;
+	}
+
+	/**
 	 * Get a value from one of the internal arrays
 	 * @param array $array
 	 * @return int
@@ -461,6 +506,27 @@ class GpsData {
 	}
 
 	/**
+	 * Get average pace since last step
+	 */
+	public function getAverageCadenceOfStep() {
+		return round($this->getAverageOfStep($this->arrayForCadence));
+	}
+
+	/**
+	 * Get average pace since last step
+	 */
+	public function getAveragePowerOfStep() {
+		return round($this->getAverageOfStep($this->arrayForPower));
+	}
+
+	/**
+	 * Get average pace since last step
+	 */
+	public function getAverageTemperatureOfStep() {
+		return round($this->getAverageOfStep($this->arrayForTemperature));
+	}
+
+	/**
 	 * Get average elevation since last step
 	 */
 	public function getAverageElevationOfStep() {
@@ -525,6 +591,27 @@ class GpsData {
 	 */
 	public function getPace() {
 		return $this->get($this->arrayForPace);
+	}
+
+	/**
+	 * Get current cadence
+	 */
+	public function getCadence() {
+		return $this->get($this->arrayForCadence);
+	}
+
+	/**
+	 * Get current power
+	 */
+	public function getPower() {
+		return $this->get($this->arrayForPower);
+	}
+
+	/**
+	 * Get current temperature
+	 */
+	public function getTemperature() {
+		return $this->get($this->arrayForTemperature);
 	}
 
 	/**
@@ -738,6 +825,9 @@ class GpsData {
 
 			$Heartrate = $this->getCurrentPlotDataFor('heartrate');
 			$Data['pace'][$index]                = $this->getCurrentPlotDataFor('pace');
+			$Data['cadence'][$index]             = $this->getCurrentPlotDataFor('cadence');
+			$Data['power'][$index]               = $this->getCurrentPlotDataFor('power');
+			$Data['temperature'][$index]         = $this->getCurrentPlotDataFor('temperature');
 			$Data['elevation'][$index]           = $this->getCurrentPlotDataFor('elevation');
 			$Data['heartrate'][$index]           = $Heartrate;
 			$Data['heartrate100'][$index]        = 100*$Heartrate/HF_MAX;
@@ -829,6 +919,15 @@ class GpsData {
 			case "pace":
 				$value = $this->getAveragePaceOfStep();
 				break;
+			case "cadence":
+				$value = $this->getAverageCadenceOfStep();
+				break;
+			case "power":
+				$value = $this->getAveragePowerOfStep();
+				break;
+			case "temperature":
+				$value = $this->getAverageTemperatureOfStep();
+				break;
 			default:
 				$value = 0;
 		}
@@ -878,6 +977,27 @@ class GpsData {
 	 */
 	public function getPlotDataForPace() {
 		return $this->getPlotDataFor('pace');
+	}
+
+	/**
+	 * Get array as plot-data for cadence
+	 */
+	public function getPlotDataForCadence() {
+		return $this->getPlotDataFor('cadence');
+	}
+
+	/**
+	 * Get array as plot-data for power
+	 */
+	public function getPlotDataForPower() {
+		return $this->getPlotDataFor('power');
+	}
+
+	/**
+	 * Get array as plot-data for temperature
+	 */
+	public function getPlotDataForTemperature() {
+		return $this->getPlotDataFor('temperature');
 	}
 
 	/**
@@ -1061,6 +1181,78 @@ class GpsData {
 			return 0;
 
 		return end($this->arrayForElevation) - $this->arrayForElevation[0];
+	}
+
+	/**
+	 * Calculate average virtual power
+	 * @return array
+	 */
+	public function averagePower() {
+		return array_sum($this->arrayForPower) / $this->arraySizes;
+	}
+
+	/**
+	 * Calculate virtual power
+	 * @see http://www.blog.ultracycle.net/2010/05/cycling-power-calculations
+	 * @return array
+	 */
+	public function calculatePower() {
+		if (!$this->hasDistanceData() || !$this->hasTimeData())
+			return array();
+
+		/* same step size as elevation, since we use that data
+		 * to calculate grade
+		 */
+		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
+		$n              = $everyNthPoint;
+		$power          = array();
+		$distance       = 0;
+		$grade          = 0;
+		$calcGrade      = $this->hasElevationData();
+
+		$PowerFactor = 1.5; /* XXX CONFIG */
+
+		$Wkg  = 75; /* XXX CONFIG */
+		$Crr  = 0.004; /* XXX CONFIG */
+		$g    = 9.8;
+		$Frl  = $Wkg * $g * $Crr;
+
+		$A    = 0.5;
+		$Cw   = 0.5;
+		$Rho  = 1.226; /* XXX CONFIG/COMPUTE? */
+		$Fwpr = 0.5 * $A * $Cw * $Rho;
+
+		$Fslp = $Wkg * $g;
+
+		for ($i = 0; $i < $this->arraySizes-1; $i++) {
+			if ($i%$everyNthPoint == 0) {
+				if ($i+$n > $this->arraySizes-1)
+					$n = $this->arraySizes-$i-1;
+				$distance = ($this->arrayForDistance[$i+$n]-$this->arrayForDistance[$i])*1000;
+				if ($distance == 0 || !$calcGrade)
+					$grade = 0;
+				else
+					$grade = ($this->arrayForElevation[$i+$n]-$this->arrayForElevation[$i])/$distance;
+			}
+
+			$distance = $this->arrayForDistance[$i+1]-$this->arrayForDistance[$i];
+			$time = $this->arrayForTime[$i+1]-$this->arrayForTime[$i];
+			if ($time > 0) {
+				$Vmps = $distance*1000/$time;
+				$Fw   = $Fwpr * $Vmps * $Vmps;
+				$Fsl  = $Fslp * $grade;
+				$power[] = round(max($PowerFactor * ($Frl + $Fw + $Fsl) * $Vmps, 0));
+				//error_log("(".$Frl." + ".$Fw." + ".$Fsl.") * ".$Vmps." = ".$power[$i]);
+			} else {
+				$power[] = 0;
+			}
+		}
+
+		$power[] = $power[$this->arraySizes-2]; /* XXX */
+
+		$this->arrayForPower = $power;
+
+		return $power;
 	}
 
 	/**
