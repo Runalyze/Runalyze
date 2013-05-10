@@ -118,7 +118,7 @@ class TrainingViewTable {
 			$this->addOutsideLine('Wetter', $this->Training->Weather()->fullString());
 
 		if ($this->Training->getRoute() != '')
-			$this->addOutsideLine('Strecke', DataBrowserLinker::searchLink(HTML::encodeTags($this->Training->getRoute()), 'opt[route]=is&val[route]='.$this->Training->getRoute()));
+			$this->addOutsideLine('Strecke', SearchLink::to('route', HTML::encodeTags($this->Training->getRoute()), HTML::encodeTags($this->Training->getRoute())));
 
 		$this->addElevationLines();
 

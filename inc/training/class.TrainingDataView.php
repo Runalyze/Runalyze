@@ -313,7 +313,7 @@ class TrainingDataView {
 		$links = array();
 		$partners = explode(', ', $this->getPartner());
 		foreach ($partners as $partner)
-			$links[] = DataBrowserLinker::searchLink($partner, 'opt[partner]=like&val[partner]='.$partner);
+			$links[] = SearchLink::to('partner', $partner, $partner, 'like');
 
 		return implode(', ', $links);
 	}

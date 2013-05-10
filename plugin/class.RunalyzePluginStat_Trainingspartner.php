@@ -73,8 +73,8 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 					$i++;
 					echo '<tr class="a'.($i%2+1).'"><td class="b">'.$row_num.'x</td><td>';
 				}
-		
-				echo DataBrowserLinker::searchLink($name, 'opt[partner]=like&val[partner]='.$name);
+
+				echo SearchLink::to('partner', $name, $name, 'like');
 			}
 			echo '</td></tr>';
 		}
