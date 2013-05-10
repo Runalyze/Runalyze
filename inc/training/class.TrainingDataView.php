@@ -226,6 +226,33 @@ class TrainingDataView {
 	}
 
 	/**
+	 * Get cadence
+	 * @return string cadence with unit
+	 */
+	public function getCadence() {
+		return $this->Object->getCadence().'&nbsp;spm';
+	}
+
+	/**
+	 * Get power with tooltip
+	 * @return string power as tooltip
+	 */
+	public function getPowerWithTooltip() {
+		if ($this->Object->getPower() == 0)
+			return '';
+
+		return Ajax::tooltip($this->getPower(), '&oslash; Power: '.$this->getPower());
+	}
+
+	/**
+	 * Get power
+	 * @return string power with unit
+	 */
+	public function getPower() {
+		return $this->Object->getPower().'&nbsp;W';
+	}
+
+	/**
 	 * Get calories with unit
 	 * @return string
 	 */

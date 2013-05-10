@@ -48,6 +48,7 @@ class SportFactory {
 			'speed' => SportSpeed::$DEFAULT,
 			'types' => 0,
 			'pulse' => 0,
+			'power'	=> 0,
 			'outside' => 0);
 	}
 

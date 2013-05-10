@@ -103,6 +103,12 @@ class TrainingViewTable {
 		if ($this->Training->getCalories() > 0)
 			$this->addLine('Kalorien', $this->Training->DataView()->getCalories());
 
+		if ($this->Training->getCadence() > 0)
+			$this->addLine('&oslash;&nbsp;Schrittfrequenz', $this->Training->DataView()->getCadence());
+
+		if ($this->Training->getPower() > 0)
+			$this->addLine('&oslash;&nbsp;Power', $this->Training->DataView()->getPower());
+
 		if (CONF_RECHENSPIELE)
 			$this->addLine('Trimp', $this->Training->DataView()->getTrimpString());
 

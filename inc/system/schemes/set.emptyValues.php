@@ -46,7 +46,9 @@ $EmptyTables['dataset'] = array(
 		array('shoeid', 'Schuh', 'Anzeige des benutzten Schuhs.', 1, 1, 0, 0, 1, 'small l', '', 0, 0, 'NO'),
 		array('vdot', 'VDOT', 'Anzeige der aus dem Lauf (mittels der Pulsdaten) berechneten Form.', 1, 0, 1, 1, 2, '', '', 14, 1, 'AVG'),
 		array('partner', 'Trainingspartner', 'Anzeige der Trainingspartner, mit denen man trainiert hat.', 0, 0, 0, 0, 1, 'small', '', 17, 0, 'NO'),
-		array('abc', 'Lauf-ABC', 'Anzeige eines kleinen Syabols, wenn man beim Training das Lauf-ABC absolviert hat.', 0, 0, 0, 1, 1, '', '', 15, 0, 'NO')
+		array('abc', 'Lauf-ABC', 'Anzeige eines kleinen Syabols, wenn man beim Training das Lauf-ABC absolviert hat.', 0, 0, 0, 1, 1, '', '', 15, 0, 'NO'),
+		array('cadence', 'Schrittfrequenz', 'Anzeige der durchschnittlichen Schrittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG'),
+		array('power', 'Power', 'Anzeige der berechneten virtuellen Power.', 1, 1, 0, 0, 1, 'small', '', 20, 1, 'SUM')
 	)
 );
 $EmptyTables['plugin'] = array(
@@ -75,13 +77,13 @@ $EmptyTables['plugin'] = array(
 	)
 );
 $EmptyTables['sport'] = array(
-	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'speed', 'types', 'pulse', 'outside'),
+	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'speed', 'types', 'pulse', 'power', 'outside'),
 	'values'  => array(
-		array('Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 1),
-		array('Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1),
-		array('Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0),
-		array('Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0),
-		array('Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0)
+		array('Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1),
+		array('Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
+		array('Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
+		array('Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
+		array('Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(

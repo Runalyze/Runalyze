@@ -8,9 +8,10 @@ $HIDDEN_KEYS = array(
 	//'created', 'edited',
 	'creator', 'creator_details', 'activity_id',
 	//'elevation_corrected', 'gps_cache_object',
-	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_heart', 'arr_dist', 'arr_pace',
-	//'vdot', 'vdot_by_time', 'trimp',
+	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
+	//'vdot', 'vdot_by_time', 'trimp'
 	// TODO: already prepared attributes
+	'power', 'cadence',
 	'jd_intensity'
 );
 
@@ -30,7 +31,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> 'Distanz',
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace'),
+		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace'), //, 'power', 'cadence'),
 		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
@@ -281,6 +282,30 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
+	'cadence'			=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '3',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Schrittfrequenz', // Trittfrequenz ebenso?
+						'unit'		=> FormularUnit::$SPM,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
+	'power'				=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Power', // Leistung?
+						'unit'		=> FormularUnit::$POWER,
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+					)
+	),
 	'temperature'		=> array(
 					'database'	=> array(
 						'type'		=> 'float',
@@ -448,6 +473,33 @@ $FIELDS = array(
 					)
 	),
 	'arr_pace'			=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_cadence'		=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_power'			=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_temperature'	=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',

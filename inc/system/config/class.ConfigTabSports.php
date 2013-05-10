@@ -47,6 +47,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('Einheit', 'Einheit f&uuml;r die Geschwindigkeit').'</th>
 						<th>'.Ajax::tooltip('Typen', 'Es werden Trainingstypen wie Intervalltraining verwendet').'</th>
 						<th>'.Ajax::tooltip('Puls', 'Der Puls wird dabei aufgezeichnet').'</th>
+						<th>'.Ajax::tooltip('Power', 'Die Power wird dabei aufgezeichnet bzw. berechnet').'</th>
 						<th>'.Ajax::tooltip('Drau&szlig;en', 'Der Sport wird an der freien Luft betrieben (Strecke/Wetter)').'</th>
 						<th>'.Ajax::tooltip('l&ouml;schen?', 'Eine Sportart kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
 					</tr>
@@ -54,7 +55,7 @@ class ConfigTabSports extends ConfigTab {
 				<tbody>';
 
 		$Sports   = SportFactory::AllSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
 		$SportCount = SportFactory::CountArray();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
@@ -95,6 +96,7 @@ class ConfigTabSports extends ConfigTab {
 						<td>'.SportSpeed::getSelectBox($Data['speed'], 'sport[speed]['.$id.']').'</td>
 						<td><input type="checkbox" name="sport[types]['.$id.']" '.($Data['types'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[pulse]['.$id.']" '.($Data['pulse'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td><input type="checkbox" name="sport[power]['.$id.']" '.($Data['power'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']" '.($Data['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td>'.$delete.'</td>
 					</tr>';
@@ -128,6 +130,7 @@ class ConfigTabSports extends ConfigTab {
 				'speed',
 				'types',
 				'pulse',
+				'power',
 				'outside',
 			);
 			$values  = array(
@@ -141,6 +144,7 @@ class ConfigTabSports extends ConfigTab {
 				$_POST['sport']['speed'][$id],
 				isset($_POST['sport']['types'][$id]),
 				isset($_POST['sport']['pulse'][$id]),
+				isset($_POST['sport']['power'][$id]),
 				isset($_POST['sport']['outside'][$id]),
 			);
 			if (isset($_POST['sport']['delete'][$id]))

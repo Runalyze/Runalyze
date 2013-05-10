@@ -54,6 +54,8 @@ INSERT INTO `runalyze_dataset` (`id`, `name`, `label`, `description`, `distance`
 (19, 'vdot', 'VDOT', 'Anzeige der aus dem Lauf (mittels der Pulsdaten) berechneten Form.', 1, 0, 1, 1, 2, '', '', 14, 1, 'AVG'),
 (20, 'partner', 'Trainingspartner', 'Anzeige der Trainingspartner, mit denen man trainiert hat.', 0, 0, 0, 0, 1, 'small', '', 17, 0, 'NO'),
 (21, 'abc', 'Lauf-ABC', 'Anzeige eines kleinen Symbols, wenn man beim Training das Lauf-ABC absolviert hat.', 0, 0, 0, 1, 1, '', '', 15, 0, 'NO');
+(22, 'cadence', 'Schrittfrequenz', 'Anzeige der durchschnittlichen Schrittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG');
+(23, 'power', 'Power', 'Anzeige der berechneten virtuellen Power.', 1, 1, 0, 0, 1, 'small', '', 20, 1, 'SUM');
 
 --
 -- Daten f&uuml;r Tabelle `runalyze_plugin`
@@ -90,12 +92,12 @@ INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `filename`, `name`, `descrip
 -- Daten f&uuml;r Tabelle `runalyze_sport`
 --
 
-INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `short`, `kcal`, `HFavg`, `RPE`, `distances`, `speed`, `types`, `pulse`, `outside`) VALUES
-(1, 'Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 1),
-(2, 'Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1),
-(3, 'Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0),
-(4, 'Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0),
-(5, 'Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0);
+INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `short`, `kcal`, `HFavg`, `RPE`, `distances`, `speed`, `types`, `pulse`, `power`, `outside`) VALUES
+(1, 'Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1),
+(2, 'Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
+(3, 'Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
+(4, 'Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
+(5, 'Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0, 0);
 
 --
 -- Daten f&uuml;r Tabelle `runalyze_type`

@@ -156,6 +156,14 @@ class Sport {
 	}
 
 	/**
+	 * Does this sport use power?
+	 * @return bool
+	 */
+	public function usesPower() {
+		return ($this->data['power'] == 1);
+	}
+
+	/**
 	 * Checks if this sport is set as "Running"
 	 * @return bool
 	 */
