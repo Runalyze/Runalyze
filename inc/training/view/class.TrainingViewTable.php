@@ -147,10 +147,10 @@ class TrainingViewTable {
 		if ($current > 0 || $calculated > 0) {
 			$Text = $current.'&nbsp;m';
 
-			if ($calculated != $current)
+			if ($this->Training->hasArrayAltitude() && $calculated != $current)
 				$Text .= ' <small>('.$calculated.'&nbsp;m berechnet)</small>';
 
-			if (CONF_TRAINING_DO_ELEVATION && !$this->Training->elevationWasCorrected())
+			if ($this->Training->hasArrayAltitude() && CONF_TRAINING_DO_ELEVATION && !$this->Training->elevationWasCorrected())
 				$Text .= '<br />
 					<em id="gps-results" class="block">
 						Die H&ouml;hendaten sind noch nicht korrigiert.

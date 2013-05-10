@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginTool "DatenbankCleanup".
+ * @package Runalyze\Plugins\Tools
  */
 $PLUGINKEY = 'RunalyzePluginTool_DatenbankCleanup';
 /**
  * Class: RunalyzePluginTool_DatenbankCleanup
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Tools
  */
 class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
@@ -15,7 +17,8 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
 		$this->name = 'Datenbank-Cleanup';
-		$this->description = 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.';
+		$this->description = 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.<br />
+			Au&szlig;erdem k&ouml;nnen die H&ouml;henmeter-, TRIMP- und VDOT-Werte neu berechnet werden.';
 	}
 
 	/**
@@ -44,7 +47,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	protected function displayContent() {
 		if (isset($_GET['clean'])) {
 			$this->cleanDatabase();
-			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em>';
+			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em><br /><br />';
 		}
 
 		$Fieldset = new FormularFieldset('Datenbank bereinigen');
@@ -52,11 +55,14 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
 			einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.');
 		$Fieldset->addBlock('&nbsp;');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=true').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=simple').'</strong><br />
 			Hierbei werden die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
 		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
 			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
 			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen', 'clean=elevation').'</strong><br />
+			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.
+			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.');
 
 		$Formular = new Formular();
 		$Formular->setId('datenbank-cleanup');
@@ -71,8 +77,13 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		if ($_GET['clean'] == 'complete')
 			$this->resetTrimpAndVdot();
 
-		$this->resetMaxValues();
-		$this->resetShoes();
+		if ($_GET['clean'] == 'simple' || $_GET['clean'] == 'complete') {
+			$this->resetMaxValues();
+			$this->resetShoes();
+		}
+
+		if ($_GET['clean'] == 'elevation')
+			$this->calculateElevation();
 
 		// TODO: Nicht existente Kleidung aus DB loeschen
 	}
@@ -96,6 +107,20 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 					JD::Training2VDOT($Training['id'], $Training),
 					JD::Competition2VDOT($Training['distance'], $Training['s'])
 				));
+	}
+
+	/**
+	 * Calculate elevation
+	 */
+	private function calculateElevation() {
+		$Mysql     = Mysql::getInstance();
+		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`arr_alt`,`arr_time` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""');
+
+		foreach ($Trainings as $Training) {
+			$GPS = new GpsData($Training);
+
+			$Mysql->update(PREFIX.'training', $Training['id'], 'elevation', $GPS->calculateElevation() );
+		}
 	}
 
 	/**
