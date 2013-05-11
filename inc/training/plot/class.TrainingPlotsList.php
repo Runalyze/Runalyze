@@ -42,8 +42,12 @@ class TrainingPlotsList {
 			$this->Plots[] = new TrainingPlotPulse($Training);
 		if ($Training->hasArrayAltitude() && !$Collection)
 			$this->Plots[] = new TrainingPlotElevation($Training);
+		if ($Training->hasArrayCadence())
+			$this->Plots[] = new TrainingPlotCadence($Training);
 		if ($Training->hasArrayPower())
 			$this->Plots[] = new TrainingPlotPower($Training);
+		if ($Training->hasArrayTemperature())
+			$this->Plots[] = new TrainingPlotTemperature($Training);
 
 		if ($Training->Splits()->areEmpty() && $Training->hasArrayPace())
 			$this->Plots[] = new TrainingPlotSplits($Training);

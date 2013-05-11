@@ -31,7 +31,7 @@ class CadenceRunning extends Cadence {
 	 * Unit as string
 	 * @return string
 	 */
-	protected function unitAsString() {
+	public function unitAsString() {
 		return 'spm';
 	}
 

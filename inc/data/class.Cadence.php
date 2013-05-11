@@ -88,7 +88,7 @@ class Cadence {
 	 * Unit as string
 	 * @return string
 	 */
-	protected function unitAsString() {
+	public function unitAsString() {
 		return 'rpm';
 	}
 

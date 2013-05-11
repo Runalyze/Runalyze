@@ -94,6 +94,15 @@ label:hover .toggle-icon-pacepulse { background-position: -80px -16px; }
 .toggle-icon-collection { background-position: -96px 0; }
 label:hover .toggle-icon-collection { background-position: -96px -16px; }
 .toggle-icon-collection.checked { background-position: -96px -32px; }
+.toggle-icon-cadence { background-position: -112px 0; }
+label:hover .toggle-icon-cadence { background-position: -112px -16px; }
+.toggle-icon-cadence.checked { background-position: -112px -32px; }
+.toggle-icon-power { background-position: -128px 0; }
+label:hover .toggle-icon-power { background-position: -128px -16px; }
+.toggle-icon-power.checked { background-position: -128px -32px; }
+.toggle-icon-temperature { background-position: -144px 0; }
+label:hover .toggle-icon-temperature { background-position: -144px -16px; }
+.toggle-icon-temperature.checked { background-position: -144px -32px; }
 
 
 .checkbox-icon {

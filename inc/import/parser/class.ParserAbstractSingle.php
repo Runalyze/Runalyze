@@ -185,7 +185,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	private function setTemperatureFromArray() {
 		$array = $this->TrainingObject->getArrayTemperature();
 
-		if (!empty($array))
+		if (!empty($array) && (min($array) != max($array)))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
 	}
 
