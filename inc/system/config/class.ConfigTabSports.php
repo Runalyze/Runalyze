@@ -49,7 +49,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('Puls', 'Der Puls wird dabei aufgezeichnet').'</th>
 						<th>'.Ajax::tooltip('Power', 'Die Power wird dabei aufgezeichnet bzw. berechnet').'</th>
 						<th>'.Ajax::tooltip('Drau&szlig;en', 'Der Sport wird an der freien Luft betrieben (Strecke/Wetter)').'</th>
-						<th>'.Ajax::tooltip('l&ouml;schen?', 'Eine Sportart kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
+						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, 'Eine Sportart kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
 					</tr>
 				</thead>
 				<tbody>';

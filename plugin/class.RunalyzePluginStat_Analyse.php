@@ -23,6 +23,24 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private $AnalysisData = array();
 
 	/**
+	 * Empty data array
+	 * @var array
+	 */
+	private $emptyData = array(
+			'all_sum_km'	=> 0,
+			'all_sum_s'		=> 0,
+			'timer_sum_km'	=> array(),
+			'timer_sum_s'	=> array(),
+			'id_sum_km'		=> array(),
+			'id_sum_s'		=> array());
+
+	/**
+	 * Sport
+	 * @var Sport
+	 */
+	private $Sport = null;
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
 	 */
@@ -63,10 +81,25 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->Sport = new Sport($this->sportid);
+
 		$this->initTimer();
 		$this->initData();
 
+		$this->setAnalysisNavigation();
+		$this->setSportsNavigation();
 		$this->setYearsNavigation();
+	}
+
+	private function setAnalysisNavigation() {
+		$SubLinks = array();
+		$SubLinks[] = $this->getInnerLink('in Prozent', $this->sportid, $this->year, '');
+
+		if ($this->Sport->usesDistance())
+			$SubLinks[] = $this->getInnerLink('nach Distanz', $this->sportid, $this->year, 'km');
+		$SubLinks[] = $this->getInnerLink('nach Dauer', $this->sportid, $this->year, 's');
+
+		$this->Links[] = array('tag' => '<a href="#">Auswertung w&auml;hlen</a>', 'subs' => $SubLinks);
 	}
 
 	/**
@@ -74,7 +107,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Lauftraining '.$this->getYearString());
+		$this->displayHeader($this->Sport->name().' '.$this->getYearString());
 
 		$this->displayAnalysis();
 
@@ -98,17 +131,19 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->timer_start = START_YEAR;
 			$this->timer_end = YEAR;
 		}
+
+		$this->colspan = $this->timer_end - $this->timer_start + 3;
 	}
 
 	/**
 	 * Initialize analysis data
 	 */
 	private function initData() {
-		if ($this->config['use_type']['var'])
+		if ($this->config['use_type']['var'] && $this->Sport->hasTypes())
 			$this->AnalysisData[] = $this->getTypeArray();
-		if ($this->config['use_pace']['var'])
+		if ($this->config['use_pace']['var'] && $this->Sport->usesDistance())
 			$this->AnalysisData[] = $this->getPaceArray();
-		if ($this->config['use_pulse']['var'])
+		if ($this->config['use_pulse']['var'] && $this->Sport->usesPulse())
 			$this->AnalysisData[] = $this->getPulseArray();
 	}
 
@@ -116,60 +151,102 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Display the analysis
 	 */
 	private function displayAnalysis() {
+		if (empty($this->AnalysisData))
+			echo HTML::info('F&uuml;r diese Sportart gibt es keine Analysedaten zum Anzeigen.');
+
 		foreach ($this->AnalysisData as $i => $Data) {
+			if (!is_array($Data))
+				continue;
+
 			$this->printTableStart($Data['name']);
 
-			foreach ($Data['foreach'] as $i => $Each) {
-				echo('
-					<tr class="a'.($i%2+1).'">
-						<td class="c b">'.$Each['name'].'</td>');
+			if (empty($Data['foreach'])) {
+				echo '<tr class="a1 c">'.HTML::emptyTD($this->colspan, '<em>Keine Daten vorhanden.</em>').'</tr>';
+			} else {
+				foreach ($Data['foreach'] as $i => $Each) {
+					echo('
+						<tr class="a'.($i%2+1).'">
+							<td class="c b">'.$Each['name'].'</td>');
 
-				for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
-					if (isset($Data['array'][$Each['id']][$t])) {
-						$num     = $Data['array'][$Each['id']][$t]['num'];
-						$dist    = $Data['array'][$Each['id']][$t]['distance'];
-						$percent = round(100 * $dist / $Data['array']['timer_sum'][$t], 1);
+					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
+						if (isset($Data['array'][$Each['id']][$t])) {
+							$num     = $Data['array'][$Each['id']][$t]['num'];
+							$dist    = $Data['array'][$Each['id']][$t]['distance'];
+							$time    = $Data['array'][$Each['id']][$t]['s'];
+							$percent = $Data['array']['timer_sum_s'][$t] > 0 ? round(100 * $time / $Data['array']['timer_sum_s'][$t], 1) : 0;
 
-						echo '<td title="'.$num.'x - '.Running::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
+							$this->displayTDfor($num, $time, $dist, $percent);
+						} else {
+							echo HTML::emptyTD();
+						}
+					}
+
+					if (isset($Data['array']['id_sum_s'][$Each['id']])) {
+						$num     = $Data['array']['id_sum_num'][$Each['id']];
+						$time    = $Data['array']['id_sum_s'][$Each['id']];
+						$dist    = $Data['array']['id_sum_km'][$Each['id']];
+						$percent = $Data['array']['all_sum_s'] > 0 ? round(100 * $time / $Data['array']['all_sum_s'], 1) : 0;
+
+						$this->displayTDfor($num, $time, $dist, $percent);
+						//echo '<td title="'.Time::toString($time, true, true).'">'.number_format($percent, 1).' &#37;</td>';
 					} else {
 						echo HTML::emptyTD();
 					}
+
+					echo('
+						</tr>');
 				}
 
-				if (isset($Data['array']['id_sum'][$Each['id']])) {
-					$dist    = $Data['array']['id_sum'][$Each['id']];
-					$percent = round(100 * $dist / $Data['array']['all_sum'], 1);
+				if ($i == count($Data['foreach']) - 1) {
+					echo('
+						<tr class="space"><td colspan="'.$this->colspan.'" /></tr>
+						<tr class="a'.(($i+1)%2+1).'">
+							<td class="c b">Gesamt</td>');
 
-					echo '<td title="'.Running::Km($dist).'">'.number_format($percent, 1).' &#37;</td>';
-				} else {
-					echo HTML::emptyTD();
-				}
-
-				echo('
-					</tr>');
-			}
-
-			if ($i == 0) {
-				echo('
-					<tr class="space"><td colspan="14" /></tr>
-					<tr class="a'.(($i+1)%2+1).'">
-						<td class="b">Gesamt</td>');
-
-				for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
-					if (isset($Data['array']['timer_sum'][$t])) {
-						echo '<td>'.Running::Km($Data['array']['timer_sum'][$t], 0).'</td>'.NL;
-					} else {
-						echo HTML::emptyTD();
+					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
+						if (isset($Data['array']['timer_sum_km'][$t])) {
+							if ($this->Sport->usesDistance() && $this->dat != 's')
+								echo '<td>'.Running::Km($Data['array']['timer_sum_km'][$t], 0).'</td>'.NL;
+							else
+								echo '<td>'.Time::toString($Data['array']['timer_sum_s'][$t], true, true).'</td>'.NL;
+						} else {
+							echo HTML::emptyTD();
+						}
 					}
-				}
 
-				echo('
-						<td>'.Running::Km($Data['array']['all_sum'], 0).'</td>
-					</tr>').NL;
+					if ($this->Sport->usesDistance() && $this->dat != 's')
+						echo '<td>'.Running::Km($Data['array']['all_sum_km'], 0).'</td></tr>'.NL;
+					else
+						echo '<td>'.Time::toString($Data['array']['all_sum_s'], true, true).'</td></tr>'.NL;
+				}
 			}
 
 			$this->printTableEnd();
 		}
+	}
+
+	/**
+	 * Display td
+	 * @param int $num
+	 * @param int $time
+	 * @param float $dist
+	 * @param float $percent
+	 */
+	private function displayTDfor($num, $time, $dist, $percent) {
+		$tooltip = $num.'-mal';
+		$number  = number_format($percent, 1).' &#37;';
+
+		if ($this->dat == 'km') {
+			$number   = Running::Km($dist, 0);
+			$tooltip .= ', '.Time::toString($time, true, true);
+		} elseif ($this->dat == 's') {
+			$number   = Time::toString($time, true, true);
+		} else {
+			$number   = number_format($percent, 1).' &#37;';
+			$tooltip .= ', '.Time::toString($time, true, true);
+		}
+
+		echo '<td>'.Ajax::tooltip($number, $tooltip).'</td>';
 	}
 
 	/**
@@ -180,42 +257,42 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
+				SUM(`s`) AS `s`,
 				`typeid`,
+				`typeid` as `group`,
 				`RPE`
 			FROM `'.PREFIX.'training`
 			LEFT JOIN `'.PREFIX.'type` ON ('.PREFIX.'training.typeid='.PREFIX.'type.id)
 			WHERE '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
 				AND '.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
-				AND '.PREFIX.'training.`sportid`="'.CONF_RUNNINGSPORT.'" '.$this->where_time.'
+				AND '.PREFIX.'training.`sportid`="'.$this->sportid.'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC');
-		
-		$type_data = array(
-			'all_sum' => 0,
-			'timer_sum' => array(),
-			'id_sum' => array());
-		
-		foreach ($result as $dat) {
-			if (!isset($type_data['timer_sum'][$dat['timer']]))
-				$type_data['timer_sum'][$dat['timer']] = 0;
-			if (!isset($type_data['id_sum'][$dat['typeid']]))
-				$type_data['id_sum'][$dat['typeid']] = 0;
 
+		$type_data = $this->emptyData;
+
+		foreach ($result as $dat) {
+			if (!isset($type_data[$dat['typeid']]))
+				$type_data[$dat['typeid']] = array();
+			
 			$type_data[$dat['typeid']][$dat['timer']] = array(
-				'num' => $dat['num'],
-				'distance' => $dat['distance']);
-			$type_data['all_sum'] += $dat['distance'];
-			$type_data['timer_sum'][$dat['timer']] += $dat['distance'];
-			$type_data['id_sum'][$dat['typeid']] += $dat['distance'];
+				'num'		=> $dat['num'],
+				'distance'	=> $dat['distance'],
+				's'			=> $dat['s']
+			);
+
+			$this->setSumData($type_data, $dat);
 		}
-	
+
 		$type_foreach = array();
-	
-		$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.CONF_RUNNINGSPORT.'" ORDER BY `RPE` ASC');
-		foreach ($types as $i => $type) {
-			$type_foreach[] = array(
-				'name' => '<span title="'.$type['name'].'">'.$type['abbr'].'</span>',
-				'id' => $type['id']);
+
+		if (!empty($result)) {
+			$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `RPE` ASC');
+			foreach ($types as $type) {
+				$type_foreach[] = array(
+					'name' => '<span title="'.$type['name'].'">'.($type['abbr'] != '' ? $type['abbr'] : $type['name']).'</span>',
+					'id' => $type['id']);
+			}
 		}
 
 		return array('name' => 'Trainingstypen', 'array' => $type_data, 'foreach' => $type_foreach);
@@ -232,46 +309,41 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
-				FLOOR( (`s`/`distance`)/'.$speed_step.')*'.$speed_step.' AS `pacegroup`
+				SUM(`s`) AS `s`,
+				FLOOR( (`s`/`distance`)/'.$speed_step.')*'.$speed_step.' AS `group`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.'
-			GROUP BY `pacegroup`, '.$this->group_time.'
-			ORDER BY `pacegroup` DESC, `timer` ASC');
+			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
+			GROUP BY `group`, '.$this->group_time.'
+			ORDER BY `group` DESC, `timer` ASC');
 		
-		$speed_data = array(
-			'all_sum' => 0,
-			'timer_sum' => array(),
-			'id_sum' => array());
+		$speed_data = $this->emptyData;
 		
 		foreach ($result as $dat) {
-			if ($dat['pacegroup'] > $speed_min)
-				$dat['pacegroup'] = $speed_min;
-			else if ($dat['pacegroup'] < $speed_max)
-				$dat['pacegroup'] = $speed_max;
+			if ($this->sportid == CONF_RUNNINGSPORT) {
+				if ($dat['group'] > $speed_min)
+					$dat['group'] = $speed_min;
+				else if ($dat['group'] < $speed_max)
+					$dat['group'] = $speed_max;
+			}
 
-			if (!isset($speed_data[$dat['pacegroup']]))
-				$speed_data[$dat['pacegroup']] = array();
-			if (!isset($speed_data[$dat['pacegroup']][$dat['timer']]))
-				$speed_data[$dat['pacegroup']][$dat['timer']] = array('num' => 0, 'distance' => 0);
-			if (!isset($speed_data['timer_sum'][$dat['timer']]))
-				$speed_data['timer_sum'][$dat['timer']] = 0;
-			if (!isset($speed_data['id_sum'][$dat['pacegroup']]))
-				$speed_data['id_sum'][$dat['pacegroup']] = 0;
-	
-			$speed_data[$dat['pacegroup']][$dat['timer']]['num'] += $dat['num'];
-			$speed_data[$dat['pacegroup']][$dat['timer']]['distance'] += $dat['distance'];
-			$speed_data['all_sum'] += $dat['distance'];
-			$speed_data['timer_sum'][$dat['timer']] += $dat['distance'];
-			$speed_data['id_sum'][$dat['pacegroup']] += $dat['distance'];
+			$this->setGroupData($speed_data, $dat);
+			$this->setSumData($speed_data, $dat);
 		}
 	
 		$speed_foreach = array();
-	
-		for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
-			$name = ($speed == $speed_max)
-				? 'schneller'
-				: '<small>bis</small> '.SportFactory::getSpeedWithAppendix(1, $speed, CONF_RUNNINGSPORT);
-			$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
+
+		if (!empty($result)) {
+			if ($this->sportid != CONF_RUNNINGSPORT) {
+				$speed_min = $result[0]['group'];
+				$speed_max = $result[count($result)-1]['group'];
+			}
+
+			for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
+				$name = ($speed == $speed_max)
+					? 'schneller'
+					: '<small>bis</small> '.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
+				$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
+			}
 		}
 
 		return array('name' => 'Tempobereiche*', 'array' => $speed_data, 'foreach' => $speed_foreach);
@@ -287,46 +359,75 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
-				CEIL( (100 * `pulse_avg` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `pulsegroup`
+				SUM(`s`) AS `s`,
+				CEIL( (100 * `pulse_avg` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `group`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->where_time.' && `pulse_avg`!=0
-			GROUP BY `pulsegroup`, '.$this->group_time.'
-			ORDER BY `pulsegroup`, `timer` ASC');
+			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' && `pulse_avg`!=0
+			GROUP BY `group`, '.$this->group_time.'
+			ORDER BY `group`, `timer` ASC');
 		
-		$pulse_data = array(
-			'all_sum' => 0,
-			'timer_sum' => array(),
-			'id_sum' => array());
+		$pulse_data = $this->emptyData;
 		
 		foreach ($result as $dat) {
-			if ($dat['pulsegroup'] < $pulse_min)
-				$dat['pulsegroup'] = $pulse_min;
+			if ($dat['group'] < $pulse_min)
+				$dat['group'] = $pulse_min;
 
-			if (!isset($pulse_data[$dat['pulsegroup']]))
-				$pulse_data[$dat['pulsegroup']] = array();
-			if (!isset($pulse_data[$dat['pulsegroup']][$dat['timer']]))
-				$pulse_data[$dat['pulsegroup']][$dat['timer']] = array('num' => 0, 'distance' => 0);
-			if (!isset($pulse_data['timer_sum'][$dat['timer']]))
-				$pulse_data['timer_sum'][$dat['timer']] = 0;
-			if (!isset($pulse_data['id_sum'][$dat['pulsegroup']]))
-				$pulse_data['id_sum'][$dat['pulsegroup']] = 0;
-	
-			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['num'] += $dat['num'];
-			@$pulse_data[$dat['pulsegroup']][$dat['timer']]['distance'] += $dat['distance'];
-			$pulse_data['all_sum'] += $dat['distance'];
-			@$pulse_data['timer_sum'][$dat['timer']] += $dat['distance'];
-			@$pulse_data['id_sum'][$dat['pulsegroup']] += $dat['distance'];
+			$this->setGroupData($pulse_data, $dat);
+			$this->setSumData($pulse_data, $dat);
 		}
 	
 		$pulse_foreach = array();
-	
-		for ($pulse = $pulse_min; $pulse <= 100; $pulse += 5) {
-			$pulse_foreach[] = array(
-				'name' => '<small>bis</small> '.$pulse.' &#37;',
-				'id' => $pulse);
+
+		if (!empty($result)) {
+			for ($pulse = $pulse_min; $pulse <= 100; $pulse += 5) {
+				$pulse_foreach[] = array(
+					'name' => '<small>bis</small> '.$pulse.' &#37;',
+					'id' => $pulse);
+			}
 		}
 
 		return array('name' => 'Pulsbereiche*', 'array' => $pulse_data, 'foreach' => $pulse_foreach);
+	}
+
+	/**
+	 * Set group data
+	 * @param array $data
+	 * @param array $result
+	 */
+	private function setGroupData(array &$data, array &$result) {
+		if (!isset($data[$result['group']]))
+			$data[$result['group']] = array();
+		if (!isset($data[$result['group']][$result['timer']]))
+			$data[$result['group']][$result['timer']] = array('num' => 0, 'distance' => 0, 's' => 0);
+
+		$data[$result['group']][$result['timer']]['num']      += $result['num'];
+		$data[$result['group']][$result['timer']]['distance'] += $result['distance'];
+		$data[$result['group']][$result['timer']]['s']        += $result['s'];
+	}
+
+	/**
+	 * Set sum data
+	 * @param array $data
+	 * @param array $result
+	 */
+	private function setSumData(array &$data, array &$result) {
+		if (!isset($data['timer_sum_km'][$result['timer']])) {
+			$data['timer_sum_km'][$result['timer']] = 0;
+			$data['timer_sum_s'][$result['timer']]  = 0;
+		}
+		if (!isset($data['id_sum_km'][$result['group']])) {
+			$data['id_sum_num'][$result['group']] = 0;
+			$data['id_sum_km'][$result['group']]  = 0;
+			$data['id_sum_s'][$result['group']]   = 0;
+		}
+
+		$data['all_sum_km']                     += $result['distance'];
+		$data['all_sum_s']                      += $result['s'];
+		$data['timer_sum_km'][$result['timer']] += $result['distance'];
+		$data['timer_sum_s'][$result['timer']]  += $result['s'];
+		$data['id_sum_num'][$result['group']]   += $result['num'];
+		$data['id_sum_km'][$result['group']]    += $result['distance'];
+		$data['id_sum_s'][$result['group']]     += $result['s'];
 	}
 
 	/**
@@ -343,7 +444,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 		echo('
 			</tr>
-			<tr class="space"><td colspan="14" /></tr>');
+			<tr class="space"><td colspan="'.$this->colspan.'" /></tr>');
 	}
 
 	/**
@@ -365,4 +466,3 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		echo('</table>'.HTML::clearBreak());
 	}
 }
-?>
