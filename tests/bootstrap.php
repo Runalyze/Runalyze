@@ -38,6 +38,21 @@ if (!defined('CONF_WK_TYPID'))
 if (!defined('CONF_VDOT_DAYS'))
 	define('CONF_VDOT_DAYS', 30);
 
+if (!defined('CONF_CTL_DAYS'))
+	define('CONF_CTL_DAYS', 42);
+
+if (!defined('CONF_ATL_DAYS'))
+	define('CONF_ATL_DAYS', 7);
+
+if (!defined('CONF_MAX_ATL'))
+	define('CONF_MAX_ATL', 0);
+
+if (!defined('CONF_MAX_CTL'))
+	define('CONF_MAX_CTL', 0);
+
+if (!defined('CONF_MAX_TRIMP'))
+	define('CONF_MAX_TRIMP', 0);
+
 if (!defined('CONF_TRAINING_MAKE_PUBLIC'))
 	define('CONF_TRAINING_MAKE_PUBLIC', 0);
 

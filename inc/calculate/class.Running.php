@@ -186,7 +186,7 @@ class Running {
 		if ($hf_max == 0)
 			$hf_max = HF_MAX;
 		
-		return round(100*$pulse / $hf_max).'&nbsp;&#37';
+		return round(100*$pulse / $hf_max).'&nbsp;&#37;';
 	}
 
 	/**
@@ -197,7 +197,7 @@ class Running {
 	 * @return string
 	 */
 	public static function PulseStringInPercentReserve($pulse, $hf_max = 0, $hf_rest = 0) {
-		return self::PulseInPercentReserve($pulse, $hf_max, $hf_rest).'&nbsp;&#37';
+		return self::PulseInPercentReserve($pulse, $hf_max, $hf_rest).'&nbsp;&#37;';
 	}
 
 	/**

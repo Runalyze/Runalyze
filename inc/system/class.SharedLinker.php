@@ -60,7 +60,7 @@ class SharedLinker {
 		if (!CONF_TRAINING_LIST_PUBLIC)
 			return '';
 
-		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" title="&Ouml;ffentliche Trainingsliste" target="_blank">'.Icon::$ATTACH.'</a>';
+		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank">'.Ajax::tooltip(Icon::$ATTACH, '&Ouml;ffentliche Trainingsliste').'</a>';
 	}
 
 	/**
@@ -84,6 +84,9 @@ class SharedLinker {
 				$Data = Mysql::getInstance()->untouchedFetch('SELECT `accountid` FROM `'.PREFIX.'training` WHERE id="'.self::getTrainingId().'" LIMIT 1');
 				self::$USER_ID = $Data['accountid'];
 			}
+
+			if ($Data === false)
+				self::$USER_ID = -1;
 		}
 
 		return self::$USER_ID;
