@@ -14,7 +14,7 @@ class TrainingPlotPower extends TrainingPlot {
 	 * @return string
 	 */
 	public function isVisible() {
-		return TRAINING_SHOW_PLOT_POWER;
+		return CONF_TRAINING_SHOW_PLOT_POWER;
 	}
 
 	/**

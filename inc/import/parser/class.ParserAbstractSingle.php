@@ -28,9 +28,9 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'km'            => array(),
 			'heartrate'     => array(),
 			'pace'          => array(),
-			'spm'			=> array(),
 			'rpm'			=> array(),
-			'temp'			=> array()
+			'temp'			=> array(),
+			'power'			=> array()
 		);
 
 	/**
@@ -107,11 +107,9 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayAltitude( $this->gps['altitude'] );
 		$this->TrainingObject->setArrayHeartrate( $this->gps['heartrate'] );
 		$this->TrainingObject->setArrayPace( $this->gps['pace'] );
-
-		// TODO
-		//$this->TrainingObject->setArrayCadence( $this->gps['rpm'] );
-		//$this->TrainingObject->setArrayRunningCadence( $this->gps['spm'] );
-		//$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
+		$this->TrainingObject->setArrayCadence( $this->gps['rpm'] );
+		$this->TrainingObject->setArrayPower( $this->gps['power'] );
+		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 
 		$this->setValuesFromArraysIfEmpty();
 	}
@@ -136,6 +134,10 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 		if ($this->TrainingObject->getPulseAvg() == 0 && $this->TrainingObject->getPulseMax() == 0)
 			$this->setAvgAndMaxHeartrateFromArray();
+
+		$this->setAvgCadenceFromArray();
+		$this->setAvgPowerFromArray();
+		$this->setTemperatureFromArray();
 	}
 
 	/**
@@ -149,6 +151,42 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$this->TrainingObject->setPulseAvg( round(array_sum($array)/count($array)) );
 			$this->TrainingObject->setPulseMax( max($array) );
 		}
+	}
+
+	/**
+	 * Set average cadence from array
+	 */
+	private function setAvgCadenceFromArray() {
+		$array = $this->TrainingObject->getArrayCadence();
+
+		if (!empty($array) && max($array) > 30) {
+			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
+		}
+	}
+
+	/**
+	 * Set average power from array
+	 */
+	private function setAvgPowerFromArray() {
+		$array = $this->TrainingObject->getArrayPower();
+
+		if (!empty($array) && max($array) > 30) {
+			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setPower( round(array_sum($array)/count($array)) );
+		}
+	}
+
+	/**
+	 * Set average temperature from array
+	 */
+	private function setTemperatureFromArray() {
+		$array = $this->TrainingObject->getArrayTemperature();
+
+		if (!empty($array))
+			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
 	}
 
 	/**

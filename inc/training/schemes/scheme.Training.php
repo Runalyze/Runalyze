@@ -289,8 +289,8 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Schrittfrequenz', // Trittfrequenz ebenso?
-						'unit'		=> FormularUnit::$SPM,
+						'label'		=> 'Trittfrequenz',
+						'unit'		=> FormularUnit::$RPM,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),

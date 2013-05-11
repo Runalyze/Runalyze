@@ -41,7 +41,7 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 
 	public function testVerySimple() {
 		$XML = simplexml_load_string_utf8('
-			<Activity Sport="Running" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+			<Activity Sport="Running" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
 				<Id>2011-07-10T09:47:00Z</Id>
 					<Lap StartTime="2011-07-10T09:47:00Z">
 						<TotalTimeSeconds>60</TotalTimeSeconds>
@@ -56,6 +56,12 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 								<HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
 									<Value>0</Value>
 								</HeartRateBpm>
+								<Cadence>0</Cadence>
+								<Extensions>
+									<ns3:TPX>
+										<ns3:Watts>0</ns3:Watts>
+									</ns3:TPX>
+								</Extensions>
 							</Trackpoint>
 							<Trackpoint>
 								<Time>2011-07-10T09:47:30Z</Time>
@@ -64,6 +70,12 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 								<HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
 									<Value>140</Value>
 								</HeartRateBpm>
+								<Cadence>80</Cadence>
+								<Extensions>
+									<ns3:TPX>
+										<ns3:Watts>200</ns3:Watts>
+									</ns3:TPX>
+								</Extensions>
 							</Trackpoint>
 							<Trackpoint>
 								<Time>2011-07-10T09:48:00Z</Time>
@@ -72,6 +84,14 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 								<HeartRateBpm xsi:type="HeartRateInBeatsPerMinute_t">
 									<Value>150</Value>
 								</HeartRateBpm>
+								<Extensions>
+									<ns3:TPX>
+										<ns3:Watts>240</ns3:Watts>
+									</ns3:TPX>
+									<TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2" CadenceSensor="Footpod">
+										<RunCadence>100</RunCadence>
+									</TPX>
+								</Extensions>
 							</Trackpoint>
 						</Track>
 					  </Lap>
@@ -88,11 +108,15 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Parser->object()->getArrayDistance(), array(0.1, 0.2) );
 		$this->assertEquals( $Parser->object()->getArrayHeartrate(), array(140, 150) );
 		$this->assertEquals( $Parser->object()->getArrayTime(), array(30, 60) );
+		$this->assertEquals( $Parser->object()->getArrayCadence(), array(80, 100) );
+		$this->assertEquals( $Parser->object()->getArrayPower(), array(200, 240) );
 		$this->assertEquals( $Parser->object()->getCalories(), 16 );
 		$this->assertEquals( $Parser->object()->getDistance(), 0.2 );
 		$this->assertEquals( $Parser->object()->getPulseAvg(), 145 );
 		$this->assertEquals( $Parser->object()->getPulseMax(), 150 );
 		$this->assertEquals( $Parser->object()->getTimeInSeconds(), 60 );
+		$this->assertEquals( $Parser->object()->getCadence(), 90 );
+		$this->assertEquals( $Parser->object()->getPower(), 220 );
 		$this->assertEquals( $Parser->object()->hasArrayLatitude(), false );
 		$this->assertEquals( $Parser->object()->hasArrayLongitude(), false );
 	}

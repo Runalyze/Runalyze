@@ -188,7 +188,7 @@ class ConfigTabDataset extends ConfigTab {
 			'use_vdot'	=> 0,
 			'jd_intensity'	=> 0,	// TODO
 			'trimp'		=> 121,
-			'cadence'	=> 180,
+			'cadence'	=> 90,
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,

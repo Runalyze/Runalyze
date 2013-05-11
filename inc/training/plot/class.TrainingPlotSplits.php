@@ -59,7 +59,7 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		if (!$this->Training->Splits()->areEmpty()) {
+		if (!$this->Training->Splits()->areEmpty() && $this->Training->Splits()->totalDistance() > 0) {
 			$showInactive = !$this->Training->Splits()->hasActiveLaps();
 			$this->Labels = $this->Training->Splits()->distancesAsArray($showInactive);
 			$this->Data   = $this->Training->Splits()->pacesAsArray($showInactive);
