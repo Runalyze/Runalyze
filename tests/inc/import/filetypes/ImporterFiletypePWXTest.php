@@ -100,4 +100,18 @@ class ImporterFiletypePWXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 174, $this->object->object()->getPulseMax(), '', 2);
 	}
 
+	/**
+	 * Test: standard file
+	 * Filename: "with-dist-and-hr.pwx" 
+	 */
+	public function test_withPower() {
+		$this->object->parseFile('../tests/testfiles/pwx/with-power.pwx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertTrue( $this->object->object()->hasArrayPower() );
+		$this->assertTrue( $this->object->object()->getPower() > 0 );
+	}
+
 }

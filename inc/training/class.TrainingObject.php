@@ -65,6 +65,12 @@ class TrainingObject extends DataObject {
 	private $Splits = null;
 
 	/**
+	 * Cadence
+	 * @var \Cadence
+	 */
+	private $Cadence = null;
+
+	/**
 	 * Fill default object with standard settings and weather forecast if needed
 	 */
 	protected function fillDefaultObject() {
@@ -131,11 +137,11 @@ class TrainingObject extends DataObject {
 	 */
 	protected function tasksAfterInsert() {
 		$this->updateTrimp();
+		$this->updateElevation();
 
 		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
 			$this->updateVdot();
 			$this->updateShoeForInsert();
-			$this->updateElevation();
 		}
 
 		if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
@@ -252,8 +258,12 @@ class TrainingObject extends DataObject {
 	public function tryToCorrectElevation() {
 		$this->doElevationCorrection();
 
-		if ($this->elevationWasCorrected())
+		if ($this->elevationWasCorrected()) {
 			$this->calculateElevation();
+
+			if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+				$this->calculatePower();
+		}
 	}
 
 	/**
@@ -411,6 +421,21 @@ class TrainingObject extends DataObject {
 			$this->Splits = new Splits($this->get('splits'));
 
 		return $this->Splits;
+	}
+
+	/**
+	 * Cadence object
+	 * @return \Cadence
+	 */
+	public function Cadence() {
+		if (is_null($this->Cadence)) {
+			if ($this->Sport->isRunning())
+				$this->Cadence = new CadenceRunning($this->get('cadence'));
+			else
+				$this->Cadence = new Cadence($this->get('cadence'));
+		}
+
+		return $this->Cadence;
 	}
 
 
@@ -635,12 +660,12 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Set cadence
-	 * @param int $cadence cadence
+	 * @param int $cadence cadence in rpm
 	 */
 	public function setCadence($cadence) { return $this->set('cadence', $cadence); }
 	/**
 	 * Get cadence
-	 * @return int cadence value
+	 * @return int cadence in rpm
 	 */
 	public function getCadence() { return $this->get('cadence'); }
 
@@ -895,14 +920,19 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Set array for cadence
-	 * @param array $array
+	 * @param array $array cadence values in rpm
 	 */
 	public function setArrayCadence($array) { $this->setArrayFor('arr_cadence', $array); }
 	/**
 	 * Get array for cadence
-	 * @return array
+	 * @return array cadence values in rpm
 	 */
 	public function getArrayCadence() { return $this->getArrayFor('arr_cadence'); }
+	/**
+	 * Get manipulated array for cadence
+	 * @return array cadence values manipulated for e.g. spm
+	 */
+	public function getArrayCadenceManipulated() { return $this->Cadence()->manipulateArray( $this->getArrayFor('arr_cadence') ); }
 	/**
 	 * Has array for cadence?
 	 * @return bool

@@ -118,8 +118,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if (!isset($this->XML->Lap)) {
 			$this->addError('Die Trainingsdatei enth&auml;lt keine Runden.');
 		} else {
-			foreach ($this->XML->Lap as $Lap)
+			foreach ($this->XML->Lap as $i => $Lap) {
+				if ($i == 0) {
+					if (isset($Lap['StartTime']) && strtotime((string)$Lap['StartTime']) < $this->TrainingObject->getTimestamp())
+						$this->TrainingObject->setTimestamp( strtotime((string)$Lap['StartTime']) );
+				}
+
 				$this->parseLap($Lap);
+			}
 		}
 	}
 
@@ -243,6 +249,37 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$this->gps['latitude'][]  = 0;
 			$this->gps['longitude'][] = 0;
 		}
+
+		$this->parseExtensionValues($TP);
+	}
+
+	/**
+	 * Parse extension values
+	 * @param SimpleXMLElement $Point
+	 * @return int
+	 */
+	private function parseExtensionValues(SimpleXMLElement &$Point) {
+		$power = 0;
+		$rpm   = 0;
+
+		if (!empty($Point->Cadence))
+			$rpm = (int)$Point->Cadence;
+
+		if (isset($Point->Extensions)) {
+			if (count($Point->Extensions->children('ns3',true)) > 0) {
+				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
+					$TPX = $Point->Extensions->children('ns3',true)->TPX;
+					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
+						$power = (int)$TPX->children('ns3',true)->Watts;
+				}
+			}
+
+			if (isset($Point->Extensions->TPX) && isset($Point->Extensions->TPX->RunCadence))
+				$rpm = (int)$Point->Extensions->TPX->RunCadence;
+		}
+
+		$this->gps['power'][] = $power;
+		$this->gps['rpm'][]   = $rpm;
 	}
 
 	/**

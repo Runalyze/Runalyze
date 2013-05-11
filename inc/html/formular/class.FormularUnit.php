@@ -28,6 +28,12 @@ class FormularUnit {
 	static public $SPM = 'unitSpm';
 
 	/**
+	 * Unit: rpm
+	 * @var string
+	 */
+	static public $RPM = 'unitRpm';
+
+	/**
 	 * Unit: kg
 	 * @var string
 	 */

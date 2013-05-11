@@ -231,7 +231,7 @@ class TrainingDataView {
 	 */
 	public function getCadence() {
 		if ($this->Object->getCadence() > 0)
-			return $this->Object->getCadence().'&nbsp;spm';
+			return $this->Object->Cadence()->asStringWithTooltip();
 
 		return '';
 	}

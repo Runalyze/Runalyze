@@ -47,7 +47,7 @@ $EmptyTables['dataset'] = array(
 		array('vdot', 'VDOT', 'Anzeige der aus dem Lauf (mittels der Pulsdaten) berechneten Form.', 1, 0, 1, 1, 2, '', '', 14, 1, 'AVG'),
 		array('partner', 'Trainingspartner', 'Anzeige der Trainingspartner, mit denen man trainiert hat.', 0, 0, 0, 0, 1, 'small', '', 17, 0, 'NO'),
 		array('abc', 'Lauf-ABC', 'Anzeige eines kleinen Syabols, wenn man beim Training das Lauf-ABC absolviert hat.', 0, 0, 0, 1, 1, '', '', 15, 0, 'NO'),
-		array('cadence', 'Schrittfrequenz', 'Anzeige der durchschnittlichen Schrittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG'),
+		array('cadence', 'Trittfrequenz', 'Anzeige der durchschnittlichen Schritt- oder Trittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG'),
 		array('power', 'Power', 'Anzeige der berechneten virtuellen Power.', 1, 1, 0, 0, 1, 'small', '', 20, 1, 'SUM')
 	)
 );

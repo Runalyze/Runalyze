@@ -104,7 +104,7 @@ class TrainingViewTable {
 			$this->addLine('Kalorien', $this->Training->DataView()->getCalories());
 
 		if ($this->Training->getCadence() > 0)
-			$this->addLine('&oslash;&nbsp;Schrittfrequenz', $this->Training->DataView()->getCadence());
+			$this->addLine('&oslash;&nbsp;'.$this->Training->Cadence()->label(), $this->Training->DataView()->getCadence());
 
 		if ($this->Training->getPower() > 0)
 			$this->addLine('&oslash;&nbsp;Power', $this->Training->DataView()->getPower());

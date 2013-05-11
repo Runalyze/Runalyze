@@ -54,7 +54,7 @@ INSERT INTO `runalyze_dataset` (`id`, `name`, `label`, `description`, `distance`
 (19, 'vdot', 'VDOT', 'Anzeige der aus dem Lauf (mittels der Pulsdaten) berechneten Form.', 1, 0, 1, 1, 2, '', '', 14, 1, 'AVG'),
 (20, 'partner', 'Trainingspartner', 'Anzeige der Trainingspartner, mit denen man trainiert hat.', 0, 0, 0, 0, 1, 'small', '', 17, 0, 'NO'),
 (21, 'abc', 'Lauf-ABC', 'Anzeige eines kleinen Symbols, wenn man beim Training das Lauf-ABC absolviert hat.', 0, 0, 0, 1, 1, '', '', 15, 0, 'NO');
-(22, 'cadence', 'Schrittfrequenz', 'Anzeige der durchschnittlichen Schrittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG');
+(22, 'cadence', 'Trittfrequenz', 'Anzeige der durchschnittlichen Schritt- oder Trittfrequenz.', 1, 0, 0, 0, 1, 'small', '', 19, 1, 'AVG');
 (23, 'power', 'Power', 'Anzeige der berechneten virtuellen Power.', 1, 1, 0, 0, 1, 'small', '', 20, 1, 'SUM');
 
 --

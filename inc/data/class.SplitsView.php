@@ -47,7 +47,8 @@ class SplitsView {
 	 * Init
 	 */
 	private function init() {
-		$this->achievedPace = $this->Splits->totalTime() / $this->Splits->totalDistance();
+		if ($this->Splits->totalDistance() > 0)
+			$this->achievedPace = $this->Splits->totalTime() / $this->Splits->totalDistance();
 	}
 
 	/**
@@ -98,7 +99,7 @@ class SplitsView {
 	private function displaySplits() {
 		foreach ($this->Splits->asArray() as $i => $Split) {
 			$Time = Time::toSeconds($Split['time']);
-			$Pace = $Time / $Split['km'];
+			$Pace = $Split['km'] > 0 ? $Time / $Split['km'] : 0;
 			$PaceDiff = ($this->demandedPace != 0) ? ($this->demandedPace - $Pace) : ($this->achievedPace - $Pace);
 			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
 			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);

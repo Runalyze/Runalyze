@@ -82,7 +82,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 				<time>2013-02-04T20:38:10Z</time>
 				<extensions>
 					<gpxdata:hr>125</gpxdata:hr>
-					<gpxdata:temp>27</gpxdata:temp>
+					<gpxdata:temp>28</gpxdata:temp>
 					<gpxdata:cadence>90</gpxdata:cadence>
 				</extensions>
 			</trkpt>
@@ -103,10 +103,14 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( 20, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 90, $this->object->object()->getCadence() );
+		$this->assertEquals( 27, $this->object->object()->Weather()->temperature() );
 
 		$this->assertEquals( array(10, 20), $this->object->object()->getArrayTime() );
 		$this->assertEquals( array(275,280), $this->object->object()->getArrayAltitude() );
 		$this->assertEquals( array(125,120), $this->object->object()->getArrayHeartrate() );
+		$this->assertEquals( array(90, 90), $this->object->object()->getArrayCadence() );
+		$this->assertEquals( array(28, 26), $this->object->object()->getArrayTemperature() );
 	}
 
 }
