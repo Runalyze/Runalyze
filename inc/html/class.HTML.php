@@ -69,7 +69,7 @@ class HTML {
 	 * Wrap string in td-tag
 	 * @param string $string string for td-tag
 	 * @param string $class optional css class
-	 * @param string $stile optional css inline style
+	 * @param string $style optional css inline style
 	 * @return string
 	 */
 	public static function td($string, $class = '', $style = '') {
@@ -77,7 +77,7 @@ class HTML {
 			$class = ' class="'.$class.'"';
 
 		if ($style != '')
-			$style = ' class="'.$style.'"';
+			$style = ' style="'.$style.'"';
 
 		return '<td'.$class.$style.'>'.$string.'</td>';
 	}

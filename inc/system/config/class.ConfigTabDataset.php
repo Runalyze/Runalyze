@@ -149,9 +149,9 @@ class ConfigTabDataset extends ConfigTab {
 			$values  = array(
 				$modus,
 				(isset($_POST[$id.'_summary']) && $_POST[$id.'_summary'] == 'on' ? 1 : 0),
-				isset($_POST[$id.'_position']) ? $_POST[$id.'_position'] : '',
-				isset($_POST[$id.'_style']) ? $_POST[$id.'_style'] : '',
-				isset($_POST[$id.'_class']) ? $_POST[$id.'_class'] : ''
+				isset($_POST[$id.'_position']) ? (int)$_POST[$id.'_position'] : '',
+				isset($_POST[$id.'_style']) ? htmlentities($_POST[$id.'_style']) : '',
+				isset($_POST[$id.'_class']) ? htmlentities($_POST[$id.'_class']) : ''
 			);
 
 			Mysql::getInstance()->update(PREFIX.'dataset', $id, $columns, $values);
