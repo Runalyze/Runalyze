@@ -36,6 +36,13 @@ class FrontendSharedStatistics {
 	public function display() {
 		$this->StatisticTabs = new AjaxTabs('public-tabs');
 		$this->addAllStatisticTabs();
+		$this->configureStatisticTabs();
+	}
+
+	/**
+	 * Configure statistic tabs
+	 */
+	protected function configureStatisticTabs() {
 		$this->StatisticTabs->setHeader('Trainingsdaten von '.$this->FrontendSharedList->getUsername());
 		$this->StatisticTabs->setFirstTabActive();
 		$this->StatisticTabs->display();
