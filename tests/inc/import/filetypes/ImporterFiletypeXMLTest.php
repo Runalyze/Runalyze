@@ -142,4 +142,31 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	/**
+	 * Test: Suunto file
+	 * Filename: "Suunto-Ambit-reduced.xml" 
+	 */
+	public function test_SuuntoFile() {
+		$this->object->parseFile('../tests/testfiles/xml/Suunto-Ambit-reduced.xml');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+
+		$this->assertEquals( mktime(15, 28, 0, 4, 28, 2013), $this->object->object()->getTimestamp() );
+		$this->assertEquals( 0.264, $this->object->object()->getDistance() );
+		$this->assertEquals( 107, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 133, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 143, $this->object->object()->getPulseMax() );
+		$this->assertEquals( 26, $this->object->object()->get('temperature') );
+
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+	}
+
 }
