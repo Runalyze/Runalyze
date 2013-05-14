@@ -47,7 +47,10 @@ class TrainingPlotCadence extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
-		return $Training->GpsData()->getPlotDataForCadence();
+		$array = $Training->GpsData()->getPlotDataForCadence();
+		$Training->Cadence()->manipulateArray($array);
+
+		return $array;
 	}
 
 	/**
