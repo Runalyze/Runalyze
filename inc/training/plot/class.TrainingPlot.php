@@ -184,4 +184,27 @@ abstract class TrainingPlot {
 	final protected function getCSSid() {
 		return $this->key.'_'.$this->Training->id();
 	}
+
+	/**
+	 * Array average ignoring low values
+	 * @param array $array
+	 * @return int
+	 */
+	static public function averageWithoutLowValues(array $array) {
+		$array = array_filter($array, 'TrainingPlot__ArrayFilterForLowEntries');
+
+		if (empty($array))
+			return 0;
+
+		return round(array_sum($array) / count($array));
+	}
+}
+
+/**
+ * Filter-function: Remove all entries lower than 30 from array
+ * @param mixed $value
+ * @return boolean 
+ */
+function TrainingPlot__ArrayFilterForLowEntries($value) {
+	return ($value > 30);
 }

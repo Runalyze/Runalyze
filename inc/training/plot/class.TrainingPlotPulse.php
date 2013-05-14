@@ -98,7 +98,7 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @param array $Data 
 	 */
 	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
-		$average = round(array_sum($Data)/count($Data));
+		$average = TrainingPlot::averageWithoutLowValues($Data);
 
 		if (self::inPercent()) {
 			$Plot->addYUnit($YAxis, '%');

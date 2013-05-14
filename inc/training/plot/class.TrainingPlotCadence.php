@@ -66,7 +66,7 @@ class TrainingPlotCadence extends TrainingPlot {
 	 * @param array $Data 
 	 */
 	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
-		$average = round(array_sum($Data)/count($Data));
+		$average = TrainingPlot::averageWithoutLowValues($Data);
 
 		$Plot->addYUnit($YAxis, $Training->Cadence()->unitAsString());
 		$Plot->setYTicks($YAxis, 10, 0);
