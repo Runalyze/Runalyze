@@ -156,10 +156,7 @@ class Plot {
 	 * @param int $height
 	 */
 	static public function getDivFor($id, $width, $height) {
-		return '
-			<div style="position:relative;width:'.($width+2).'px;height:'.($height+2).'px;margin:2px auto;">
-				'.self::getInnerDivFor($id, $width, $height).'
-			</div>';
+		return '<div style="position:relative;width:'.($width+2).'px;height:'.($height+2).'px;margin:2px auto;">'.self::getInnerDivFor($id, $width, $height).'</div>';
 	}
 
 	/**
@@ -179,6 +176,13 @@ class Plot {
 	 */
 	public function getDiv() {
 		return self::getDivFor($this->cssID, $this->width, $this->height);
+	}
+
+	/**
+	 * Output div
+	 */
+	public function outputDiv() {
+		echo $this->getDiv();
 	}
 
 	/**
