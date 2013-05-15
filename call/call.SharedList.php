@@ -4,10 +4,12 @@
  * Call:   call.SharedList.php?user=
  */
 if ($_GET['view'] == 'monthkm') {
-	include 'window.monatskilometerShared.php';
+	$_GET['type'] = 'month';
+	include 'window.plotSumData.shared.php';
 	exit;
 } elseif ($_GET['view'] == 'weekkm') {
-	include 'window.wochenkilometerShared.php';
+	$_GET['type'] = 'week';
+	include 'window.plotSumData.shared.php';
 	exit;
 }
 
