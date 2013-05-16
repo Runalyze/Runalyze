@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginStat "Hoehenmeter".
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
  * Class: RunalyzePluginStat_Hoehenmeter
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	private $ElevationData = array();

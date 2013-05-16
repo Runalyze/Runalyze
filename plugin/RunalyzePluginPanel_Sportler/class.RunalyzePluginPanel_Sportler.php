@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginPanel "Sportler".
+ * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Sportler';
 /**
  * Class: RunalyzePluginPanel_Sportler
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Sportler extends PluginPanel {
 	/**

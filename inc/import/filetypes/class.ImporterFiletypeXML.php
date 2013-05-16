@@ -1,14 +1,14 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeXML
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 ImporterWindowTabUpload::addInfo('XML-Dateien werden von Polar, Suunto und RunningAHEAD unterst&uuml;tzt.');
 /**
  * Importer: *.xml
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeXML extends ImporterFiletypeAbstract {
 	/**

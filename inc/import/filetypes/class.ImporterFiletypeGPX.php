@@ -1,13 +1,13 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeGPX
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 /**
  * Importer: *.gpx
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeGPX extends ImporterFiletypeAbstract {
 	/**

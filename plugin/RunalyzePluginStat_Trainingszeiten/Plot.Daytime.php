@@ -2,6 +2,7 @@
 /**
  * Draw total time of training for each hour of a day for the user
  * Include:   inc/draw/Plot.Daytime.php
+ * @package Runalyze\Plugins\Stats
  */
 
 $titleCenter = 'Trainingszeit nach Uhrzeit [in h]';

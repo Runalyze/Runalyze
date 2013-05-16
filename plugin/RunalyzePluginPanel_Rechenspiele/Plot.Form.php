@@ -2,6 +2,7 @@
 /**
  * Draw analyse of training: ATL/CTL/VDOT
  * Call:   include Plot.form.php
+ * @package Runalyze\Plugins\Panels
  */
 $MaxATLPoints  = 750;
 $DataFailed    = false;

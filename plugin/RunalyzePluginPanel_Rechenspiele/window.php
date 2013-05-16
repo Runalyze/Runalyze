@@ -1,4 +1,8 @@
 <?php
+/**
+ * Window: explanations for calculations
+ * @package Runalyze\Plugins\Panels
+ */
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();

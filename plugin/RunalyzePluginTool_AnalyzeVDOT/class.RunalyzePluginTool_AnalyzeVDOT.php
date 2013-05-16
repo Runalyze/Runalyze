@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginTool "AnalyzeVDOT".
+ * @package Runalyze\Plugins\Tools
  */
 $PLUGINKEY = 'RunalyzePluginTool_AnalyzeVDOT';
 /**
  * Class: RunalyzePluginTool_AnalyzeVDOT
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Tools
  */
 class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	/**

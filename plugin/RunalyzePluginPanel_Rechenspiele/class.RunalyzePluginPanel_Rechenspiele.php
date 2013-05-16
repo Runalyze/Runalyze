@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginPanel "Rechenspiele".
+ * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains class::ImporterFiletypePWX
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 /**
  * Importer: *.pwx
@@ -12,7 +12,7 @@
  * @see http://support.trainingpeaks.com/api/easy-file-upload.aspx
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypePWX extends ImporterFiletypeAbstract {
 	/**

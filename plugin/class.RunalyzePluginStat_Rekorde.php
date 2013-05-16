@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginStat "Rekorde".
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Rekorde';
 /**
  * Class: RunalyzePluginStat_Rekorde
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Rekorde extends PluginStat {
 	private $rekorde = array();

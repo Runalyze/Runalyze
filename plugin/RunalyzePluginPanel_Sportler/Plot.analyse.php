@@ -2,6 +2,7 @@
 /**
  * Draw weight and rest-heartrate for the user
  * Call:   include 'Plot.gewicht.php'
+ * @package Runalyze\Plugins\Panels
  */
 
 // TODO: Config: num=20

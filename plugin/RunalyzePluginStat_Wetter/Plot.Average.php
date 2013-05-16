@@ -2,6 +2,7 @@
 /**
  * Draw weather-plot
  * Call:   include 'Plot.Average.php'
+ * @package Runalyze\Plugins\Stats
  */
 
 $Months       = array();

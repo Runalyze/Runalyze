@@ -2,6 +2,7 @@
 /**
  * Draw weather-plot
  * Call:   include 'Plot.Year.php'
+ * @package Runalyze\Plugins\Stats
  */
 
 $Year         = (int)$_GET['y'];

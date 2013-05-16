@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginTool "Cacheclean".
+ * @package Runalyze\Plugins\Tools
  */
 $PLUGINKEY = 'RunalyzePluginTool_Cacheclean';
 /**
  * Class: RunalyzePluginTool_Cacheclean
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Tools
  */
 class RunalyzePluginTool_Cacheclean extends PluginTool {
 	/**

@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeHRM
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 ImporterWindowTabUpload::addInfo('Gleichnamige hrm- und gpx-Dateien werden automatisch zusammengef&uuml;hrt.');
 /**
@@ -10,7 +10,7 @@ ImporterWindowTabUpload::addInfo('Gleichnamige hrm- und gpx-Dateien werden autom
  * Files of *.hrm are from Polar
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeHRM extends ImporterFiletypeAbstract {
 	/**

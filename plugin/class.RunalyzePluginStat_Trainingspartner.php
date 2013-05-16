@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginStat "Trainingspartner".
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Trainingspartner';
 /**
  * Class: RunalyzePluginStat_Trainingspartner
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	/**
