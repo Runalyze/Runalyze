@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginTool "DbBackup".
+ * @package Runalyze\Plugins\Tools
  */
 $PLUGINKEY = 'RunalyzePluginTool_DbBackup';
 /**
  * Class: RunalyzePluginTool_DbBackup
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Tools
  */
 class RunalyzePluginTool_DbBackup extends PluginTool {
 	/**

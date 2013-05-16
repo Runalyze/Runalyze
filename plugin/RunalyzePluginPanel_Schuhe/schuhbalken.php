@@ -1,4 +1,8 @@
 <?php
+/**
+ * Create image for shoes
+ * @package Runalyze\Plugins\Panels
+ */
 header ("Content-type: image/png");
 
 $width = round((int)$_GET['km']/4);

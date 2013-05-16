@@ -2,6 +2,7 @@
 /**
  * Draw total time of training for each day of a week for the user
  * Include:   inc/draw/Plot.Weekday.php
+ * @package Runalyze\Plugins\Stats
  */
 
 $titleCenter = 'Trainingszeit pro Wochentag [in h]';

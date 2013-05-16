@@ -1,4 +1,8 @@
 <?php
+/**
+ * Window for routenet
+ * @package Runalyze\Plugins\Stats
+ */
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();

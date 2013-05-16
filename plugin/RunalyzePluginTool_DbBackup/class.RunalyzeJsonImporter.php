@@ -1,5 +1,14 @@
 <?php
+/**
+ * This file contains class::RunalyzeJsonImporter
+ * @package Runalyze\Plugins\Tools
+ */
 if (!function_exists('gzdecode')) {
+	/**
+	 * gzdecode for PHP <= 5.2
+	 * @param string $data
+	 * @return string
+	 */
 	function gzdecode($data) {
 		return gzinflate(substr($data,10,-8)); 
 	}
@@ -7,7 +16,8 @@ if (!function_exists('gzdecode')) {
 
 /**
  * Class: RunalyzeJsonImporter
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Tools
  */
 class RunalyzeJsonImporter {
 	/**

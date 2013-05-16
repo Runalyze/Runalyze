@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginStat "Wetter".
+ * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 /**
  * Class: RunalyzePluginStat_Wetter
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Wetter extends PluginStat {
 	private $i      = 0;

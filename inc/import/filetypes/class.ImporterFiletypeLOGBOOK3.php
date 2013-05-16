@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeLOGBOOK3
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 /**
  * Importer: *.logbook3
@@ -9,7 +9,7 @@
  * Files of *.logbook3 have to be from SportTracks
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeLOGBOOK3 extends ImporterFiletypeAbstract {
 	/**

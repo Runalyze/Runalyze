@@ -1,4 +1,8 @@
 <?php
+/**
+ * Window: formular for shoes
+ * @package Runalyze\Plugins\Panels
+ */
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();

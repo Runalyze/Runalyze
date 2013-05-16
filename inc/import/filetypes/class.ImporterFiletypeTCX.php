@@ -1,7 +1,7 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeTCX
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 /**
  * Importer: *.tcx
@@ -10,7 +10,7 @@
  * This importer only runs the tcx parser
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 class ImporterFiletypeTCX extends ImporterFiletypeAbstract {
 	/**

@@ -1,13 +1,13 @@
 <?php
 /**
  * This file contains class::ImporterFiletypeAbstract
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 /**
  * Abstract importer for a given filetype
  *
  * @author Hannes Christiansen
- * @package Runalyze\Importer\Filetype
+ * @package Runalyze\Import\Filetype
  */
 abstract class ImporterFiletypeAbstract {
 	/**

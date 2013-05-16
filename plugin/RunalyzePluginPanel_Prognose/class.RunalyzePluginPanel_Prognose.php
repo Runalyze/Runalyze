@@ -1,11 +1,13 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginPanel "Prognose".
+ * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
  * Class: RunalyzePluginPanel_Prognose
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
+ * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected $CPP_K = 0;

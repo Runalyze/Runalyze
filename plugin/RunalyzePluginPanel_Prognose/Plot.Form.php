@@ -2,6 +2,7 @@
 /**
  * Draw prognosis as function of time
  * Call:   include Plot.form.php
+ * @package Runalyze\Plugins\Panels
  */
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf'))
 	$WKplugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
