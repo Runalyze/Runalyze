@@ -83,7 +83,7 @@ class DataBrowserShared extends DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.self::getUrlForMonthKm().'">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatskilometer anzeigen').'</a>');
+		return Ajax::window('<a href="'.self::getUrlForMonthKm().'">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatstraining vergleichen').'</a>');
 	}
 
 	/**
@@ -91,6 +91,6 @@ class DataBrowserShared extends DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.self::getUrlForWeekKm().'">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochenkilometer anzeigen').'</a>');
+		return Ajax::window('<a href="'.self::getUrlForWeekKm().'">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochentraining vergleichen').'</a>');
 	}
 }
