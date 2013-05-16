@@ -253,7 +253,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatskilometer anzeigen').'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatstraining vergleichen').'</a>');
 	}
 
 	/**
@@ -261,7 +261,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochenkilometer anzeigen').'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochentraining vergleichen').'</a>');
 	}
 
 	/**
