@@ -76,7 +76,7 @@ abstract class DataObject {
 	final public function __construct($idOrArrayOrKey) {
 		$this->initDatabaseScheme();
 
-		if ($idOrArrayOrKey == self::$DEFAULT_ID || is_null($idOrArrayOrKey) || $idOrArrayOrKey == 0) {
+		if ($idOrArrayOrKey == self::$DEFAULT_ID || is_null($idOrArrayOrKey) || $idOrArrayOrKey === 0) {
 			$this->constructAsDefaultObject();
 			return;
 		}
