@@ -118,12 +118,6 @@ abstract class Plugin {
 	protected $config;
 
 	/**
-	 * Filename
-	 * @var string
-	 */
-	protected $filename;
-
-	/**
 	 * Name of this plugin
 	 * @var string
 	 */
@@ -316,7 +310,6 @@ abstract class Plugin {
 		$columns = array(
 			'key',
 			'type',
-			'filename',
 			'name',
 			'description',
 			'order',
@@ -324,7 +317,6 @@ abstract class Plugin {
 		$values  = array(
 			$this->key,
 			self::getTypeString($this->type),
-			'class.'.$this->key.'.php',
 			$this->name,
 			$this->description,
 			'99',
@@ -351,7 +343,6 @@ abstract class Plugin {
 		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];
 		$this->order       = $dat['order'];
-		$this->filename    = $dat['filename'];
 		$this->name        = $dat['name'];
 		$this->description = $dat['description'];
 		$this->sportid     = CONF_MAINSPORT;
@@ -468,7 +459,6 @@ abstract class Plugin {
 			case 'active': return $this->active;
 			case 'order': return $this->order;
 			case 'config': return $this->config;
-			case 'filename': return $this->filename;
 			case 'name': return $this->name;
 			case 'description': return $this->description;
 			case 'sportid': return $this->sportid;
