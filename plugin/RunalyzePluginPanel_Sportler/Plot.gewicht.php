@@ -5,9 +5,16 @@
  * @package Runalyze\Plugins\Panels
  */
 
-// TODO: Config: num=20
-$data_num = 20;
-$Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT '.$data_num);
+$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
+$Plugin_conf = $Plugin->get('config');
+$Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
+
+if ($Plugin_conf['plot_timerange']['var'] > 0)
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin_conf['plot_timerange']['var']).' ORDER BY `time` DESC';
+else
+	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
+
+$Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd);
 $Weights  = array();
 $HRrests  = array();
 
@@ -20,10 +27,6 @@ if (!empty($Data)) {
 		$HRrests[$D['time'].'000'] = (int)$D['pulse_rest'];
 	}
 }
-
-$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->get('config');
-$Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
 
 $Labels = array_keys($Weights);
 foreach ($Labels as $i => &$value)

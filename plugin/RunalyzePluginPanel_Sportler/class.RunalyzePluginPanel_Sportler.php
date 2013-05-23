@@ -36,10 +36,12 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['use_weight']    = array('type' => 'bool', 'var' => true, 'description' => 'Gewicht protokollieren');
-		$config['use_body_fat']  = array('type' => 'bool', 'var' => true, 'description' => 'Fettanteil protokollieren');
-		$config['use_pulse']     = array('type' => 'bool', 'var' => true, 'description' => 'Ruhepuls protokollieren');
-		$config['wunschgewicht'] = array('type' => 'int', 'var' => 0, 'description' => 'Wunschgewicht');
+		$config['use_weight']     = array('type' => 'bool', 'var' => true, 'description' => 'Gewicht protokollieren');
+		$config['use_body_fat']   = array('type' => 'bool', 'var' => true, 'description' => 'Fettanteil protokollieren');
+		$config['use_pulse']      = array('type' => 'bool', 'var' => true, 'description' => 'Ruhepuls protokollieren');
+		$config['wunschgewicht']  = array('type' => 'int', 'var' => 0, 'description' => 'Wunschgewicht');
+		$config['plot_points']    = array('type' => 'int', 'var' => 20, 'description' => 'Diagramm: Datenpunkte');
+		$config['plot_timerange'] = array('type' => 'int', 'var' => 0, 'description' => Ajax::tooltip('<small>oder</small> fester Zeitraum in Tagen', 'Gib einen Wert gr&ouml;&szlig;er 0 ein, um einen fixen Zeitraum anzuzeigen.'));
 
 		return $config;
 	}
