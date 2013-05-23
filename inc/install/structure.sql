@@ -128,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `type` enum('panel','stat','draw','tool') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `filename` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `description` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `config` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
