@@ -5,13 +5,18 @@
  * @package Runalyze\Plugins\Panels
  */
 
-// TODO: Config: num=20
-$data_num = 20;
-$Data     = Mysql::getInstance()->fetchAsArray('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT '.$data_num);
+$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
+$Plugin_conf = $Plugin->get('config');
 
-$Adiposes   = array();
-$Water      = array();
-$Muscles    = array();
+if ($Plugin_conf['plot_timerange']['var'] > 0)
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin_conf['plot_timerange']['var']).' ORDER BY `time` DESC';
+else
+	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
+
+$Data     = Mysql::getInstance()->fetchAsArray('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd);
+$Adiposes = array();
+$Water    = array();
+$Muscles  = array();
 
 if (count($Data) == 1)
 	$Data[1] = $Data[0];
