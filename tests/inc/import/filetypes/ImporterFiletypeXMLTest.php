@@ -152,9 +152,10 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
-		$this->assertEquals( mktime(15, 28, 0, 4, 28, 2013), $this->object->object()->getTimestamp() );
+		$this->assertEquals( mktime(15, 27, 0, 4, 28, 2013), $this->object->object()->getTimestamp() );
 		$this->assertEquals( 0.264, $this->object->object()->getDistance() );
 		$this->assertEquals( 107, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 151, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 133, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 143, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 26, $this->object->object()->get('temperature') );

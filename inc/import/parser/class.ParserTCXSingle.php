@@ -127,6 +127,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 				$this->parseLap($Lap);
 			}
 		}
+
+		if (!empty($this->gps['time_in_s']))
+			$this->TrainingObject->setElapsedTime( end($this->gps['time_in_s']) + $this->PauseInSeconds );
 	}
 
 	/**

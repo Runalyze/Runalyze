@@ -14,6 +14,10 @@
 			</gpxx:TrackExtension>
 		</extensions>
 		<trkseg>
+			<trkpt>
+				<ele>270.27</ele>
+				<time>2013-02-04T20:38:00Z</time>
+			</trkpt>
 			<trkpt lat="50.7748849411" lon="6.1124603078">
 				<ele>270.27</ele>
 				<time>2013-02-04T20:38:11Z</time>

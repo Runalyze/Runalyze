@@ -90,15 +90,33 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse samples
 	 */
 	protected function parseSamples() {
-		if (!empty($this->XML->Samples))
+		if (!empty($this->XML->Samples)) {
 			foreach ($this->XML->Samples->Sample as $Sample)
 				$this->parseSample($Sample);
-		elseif (!empty($this->XML->samples))
+
+			$this->readElapsedTimeFrom($this->XML->Samples->Sample[count($this->XML->Samples->Sample)-1]);
+		} elseif (!empty($this->XML->samples)) {
 			foreach ($this->XML->samples->sample as $Sample)
 				$this->parseSample($Sample);
 
+			$this->readElapsedTimeFrom($this->XML->samples->sample[count($this->XML->samples->sample)-1]);
+		}
+
 		if (min($this->gps['altitude']) > 0)
 			$this->TrainingObject->set('elevation_corrected', 1);
+	}
+
+	/**
+	 * Read elapsed time from last sample
+	 * @param SimpleXMLElement $Sample
+	 */
+	private function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
+		if (!empty($Sample->UTC)) {
+			$FinishTimestamp = (int)strtotime((string)$Sample->UTC);
+
+			if ($FinishTimestamp > $this->TrainingObject->getTimestamp())
+				$this->TrainingObject->setElapsedTime( $FinishTimestamp - $this->TrainingObject->getTimestamp() );
+		}
 	}
 
 	/**

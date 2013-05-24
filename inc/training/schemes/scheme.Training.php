@@ -10,8 +10,8 @@ $HIDDEN_KEYS = array(
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
 	//'vdot', 'vdot_by_time', 'trimp'
+	'elapsed_time', 'power', 'cadence',
 	// TODO: already prepared attributes
-	'power', 'cadence',
 	'jd_intensity'
 );
 
@@ -164,12 +164,23 @@ $FIELDS = array(
 	's'					=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
-						'precision'	=> '7,2',
+						'precision'	=> '8,2',
 						'default'	=> '0.00'
 					),
 					'formular'	=> array(
 						'label'		=> 'Dauer',
 						'required'	=> true,
+						'parser'	=> FormularValueParser::$PARSER_TIME
+					)
+	),
+	'elapsed_time'		=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '6',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Gesamtdauer',
 						'parser'	=> FormularValueParser::$PARSER_TIME
 					)
 	),

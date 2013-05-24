@@ -11,6 +11,12 @@
  */
 class ParserSLFSingle extends ParserAbstractSingleXML {
 	/**
+	 * Total pause in seconds
+	 * @var int
+	 */
+	protected $PauseInSeconds = 0;
+
+	/**
 	 * Parse
 	 */
 	protected function parseXML() {
@@ -58,6 +64,9 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 			foreach ($this->XML->LogEntries->LogEntry as $Log)
 				$this->parseLogEntry($Log);
 		}
+
+		if ($this->PauseInSeconds > 0 && !empty($this->gps['time_in_s']))
+			$this->TrainingObject->setElapsedTime( $this->PauseInSeconds + end($this->gps['time_in_s']) );
 	}
 
 	/**
@@ -65,8 +74,12 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Log 
 	 */
 	protected function parseLogEntry($Log) {
-		if ((int)$Log->Time == 0 || (string)$Log->IsPause != 'false')
+		if ((int)$Log->Time == 0 || (string)$Log->IsPause != 'false') {
+			if ((int)$Log->PauseTime > 0)
+				$this->PauseInSeconds += (int)$Log->PauseTime;
+
 			return;
+		}
 
 		$this->gps['time_in_s'][] = (int)$Log->TimeAbsolute;
 		$this->gps['km'][]        = round((int)$Log->DistanceAbsolute)/1000;

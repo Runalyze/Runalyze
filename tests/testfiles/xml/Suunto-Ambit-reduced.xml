@@ -44,7 +44,7 @@
 	<BatteryChargeAtStart>0.63</BatteryChargeAtStart>
 	<BatteryCharge>0.59</BatteryCharge>
 	<DistanceBeforeCalibrationChange>5353</DistanceBeforeCalibrationChange>
-	<DateTime>2013-04-28T13:28:00Z</DateTime>
+	<DateTime>2013-04-28T13:27:00Z</DateTime>
 	<Rules>
 		<Rule>
 			<GlobalID>148</GlobalID>

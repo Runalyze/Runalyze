@@ -550,6 +550,23 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set elapsed time
+	 * @param int $timeInSeconds duration
+	 */
+	public function setElapsedTime($timeInSeconds) { $this->set('elapsed_time', $timeInSeconds); }
+	/**
+	 * Get elapsed time
+	 * @return int duration in seconds
+	 */
+	public function getElapsedTime() { return $this->get('elapsed_time'); }
+	/**
+	 * Has elapsed time?
+	 * @return bool True if training has an elapsed time different from active time
+	 */
+	public function hasElapsedTime() { return $this->getElapsedTime() > 0 && $this->getElapsedTime() != $this->getTimeInSeconds(); }
+
+
+	/**
 	 * Get pace
 	 * @return string
 	 */

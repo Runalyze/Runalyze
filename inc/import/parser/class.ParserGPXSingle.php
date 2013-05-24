@@ -66,6 +66,9 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 			foreach ($TrackSegment->trkpt as $Point)
 				$this->parseTrackpoint($Point);
 		}
+
+		if ($this->lastTimestamp > 0 && $this->lastTimestamp > $this->TrainingObject->getTimestamp())
+			$this->TrainingObject->setElapsedTime( $this->lastTimestamp - $this->TrainingObject->getTimestamp() );
 	}
 
 	/**

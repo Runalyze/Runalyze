@@ -3294,6 +3294,19 @@
       <Speed>4.622222222222223</Speed>
     </LogEntry>
     <LogEntry>
+      <IsPause>true</IsPause>
+      <PauseTime>100</PauseTime>
+      <IsWaypoint>false</IsWaypoint>
+      <Title><![CDATA[]]></Title>
+      <Description><![CDATA[]]></Description>
+      <Distance>0</Distance>
+      <DistanceAbsolute>5235.950009999999</DistanceAbsolute>
+      <Time>0</Time>
+      <TimeAbsolute>1245</TimeAbsolute>
+      <Heartrate>172</Heartrate>
+      <Speed>4.594444444444445</Speed>
+    </LogEntry>
+    <LogEntry>
       <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
