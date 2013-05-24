@@ -56,7 +56,8 @@ class ImporterFiletypeSLFTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
-		$this->assertEquals( 1257, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 1257, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 1357, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 5.282, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 306, $this->object->object()->getCalories(), '', 10);
 		$this->assertEquals( 163, $this->object->object()->getPulseAvg(), '', 2);

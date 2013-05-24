@@ -57,6 +57,9 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->failed() );
 
 		$this->assertEquals( 6523, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 7200 - 8*60 - 21, $this->object->object()->getElapsedTime() );
+		$this->assertTrue( $this->object->object()->hasElapsedTime() );
+
 		$this->assertEquals( 22.224, $this->object->object()->getDistance(), '', 0.1);
 		$this->assertEquals( 1646, $this->object->object()->getCalories(), '', 10);
 		$this->assertEquals( 145, $this->object->object()->getPulseAvg(), '', 2);
@@ -83,6 +86,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( !$this->object->failed() );
 
 		$this->assertEquals( 2100, $this->object->object()->getTimeInSeconds(), '', 30);
+		$this->assertEquals( 2100, $this->object->object()->getElapsedTime(), '', 30);
 		$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
 
 		$this->assertEquals( "Forerunner 310XT-000", $this->object->object()->getCreatorDetails() );
@@ -98,6 +102,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse( $this->object->failed() );
 		$this->assertEquals( 7204, $this->object->object()->getTimeInSeconds(), '', 70);
+		$this->assertEquals( 7204, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 122, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 149, $this->object->object()->getPulseMax(), '', 2);
 		$this->assertEquals( 2, $this->object->object()->Sport()->id() );

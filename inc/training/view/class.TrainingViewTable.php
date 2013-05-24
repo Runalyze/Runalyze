@@ -91,6 +91,9 @@ class TrainingViewTable {
 
 			$this->addLine('Zeit', $this->Training->DataView()->getTimeString());
 
+		if ($this->Training->hasElapsedTime())
+			$this->addLine('Gesamtdauer', $this->Training->DataView()->getElapsedTimeString());
+
 		if ($this->Training->hasDistance())
 			$this->addLine('Tempo', $this->Training->DataView()->getSpeedString());
 

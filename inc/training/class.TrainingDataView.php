@@ -150,6 +150,14 @@ class TrainingDataView {
 	}
 
 	/**
+	 * Get elapsed time as string
+	 * @return string
+	 */
+	public function getElapsedTimeString() {
+		return Time::toString($this->Object->getElapsedTime());
+	}
+
+	/**
 	 * Get distance as string
 	 * @return string
 	 */
