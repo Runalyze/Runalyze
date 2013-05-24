@@ -123,7 +123,8 @@ class HTMLMetaForFacebook {
 	 * Display course
 	 */
 	public function displayCourse() {
-		$this->Training = new TrainingObject( Request::sendId() );
+		$TrainingData   = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.mysql_real_escape_string(Request::sendId()).'" LIMIT 1');
+		$this->Training = new TrainingObject( $TrainingData );
 
 		if ($this->Training->isDefaultId() || !$this->Training->isPublic())
 			die('Don\'t do that!');
