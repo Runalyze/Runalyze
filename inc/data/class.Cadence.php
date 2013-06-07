@@ -32,7 +32,7 @@ class Cadence {
 	 * @param int $value
 	 */
 	public function __construct($value) {
-		$this->value = $this->factor*$value;
+		$this->value = round($this->factor*$value);
 	}
 
 	/**
