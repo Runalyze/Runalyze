@@ -505,6 +505,10 @@ h1 a:hover, h1 a:active {
 	-moz-border-radius: 5px;
 }
 
+form#training {
+	min-height: 350px;
+}
+
 #close, #ajaxPrev, #ajaxNext {
 	z-index: 12;
 	position: absolute;
@@ -515,8 +519,8 @@ h1 a:hover, h1 a:active {
 }
 
 #close { top: -20px; right: -20px; background: url(img/roundNav.png) no-repeat 0 0 transparent; }
-#ajaxPrev { top: 50%; left: -25px; background: url(img/roundNav.png) no-repeat 0 -36px transparent; }
-#ajaxNext { top: 50%; right: -25px; background: url(img/roundNav.png) no-repeat 0 -72px transparent; }
+#ajaxPrev { top: 150px; left: -25px; background: url(img/roundNav.png) no-repeat 0 -36px transparent; }
+#ajaxNext { top: 150px; right: -25px; background: url(img/roundNav.png) no-repeat 0 -72px transparent; }
 
 #ajaxPrev:hover, #ajaxNext:hover { border: none; }
 

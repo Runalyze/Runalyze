@@ -186,16 +186,15 @@ class DataBrowser {
 	 * Display links to navigate in calendar
 	 */
 	protected function displayNavigationLinks() {
-		echo $this->getPrevLink().NL;
 		echo $this->getCalenderLink().NL;
+		echo $this->getPrevLink().NL;
+		echo $this->getNextLink().NL;
 
 		$timeForLinks = ($this->timestamp_start < time() && time() < $this->timestamp_end) ? time() : $this->timestamp_start;
 
 		echo DataBrowserLinker::monthLink(Time::Month(date("m", $timeForLinks)), $timeForLinks).', ';
 		echo DataBrowserLinker::yearLink(date("Y", $timeForLinks), $timeForLinks).', ';
 		echo DataBrowserLinker::weekLink(date("W", $timeForLinks).'. Woche ', $timeForLinks);
-
-		echo $this->getNextLink().NL;	
 	}
 
 	/**
