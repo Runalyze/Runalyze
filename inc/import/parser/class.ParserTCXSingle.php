@@ -196,15 +196,16 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if ($this->distancesAreEmpty)
 			$TP->addChild('DistanceMeters', 1000*$this->distanceToTrackpoint($TP));
 
-		$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
+		$ThisBreakInMeter   = (float)$TP->DistanceMeters - $this->lastDistance;
+		$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
+		$NoMove  = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
+		$TooSlow = !$this->lastPointWasEmpty && $ThisBreakInMeter > 0 && ($ThisBreakInSeconds/$ThisBreakInMeter > 6);
 
-		if (empty($TP->DistanceMeters) || $NoMove) {
+		if (empty($TP->DistanceMeters) || $NoMove || $TooSlow) {
 			$Ignored = false;
 
-			if (count($TP->children()) == 1 || $NoMove) {
-				$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
-
-				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL) 
+			if (count($TP->children()) == 1 || $NoMove || $TooSlow) {
+				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL)
 					$Ignored = true;
 				else
 					$this->PauseInSeconds += $ThisBreakInSeconds;
