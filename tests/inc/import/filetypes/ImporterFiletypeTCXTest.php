@@ -125,7 +125,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 494, $this->object->object(0)->getTimeInSeconds(), '', 10 );
 		$this->assertEquals( 2.355, $this->object->object(0)->getDistance(), '', 0.1 );
 
-		// Activity 1
+		// Activity 2
 		$this->assertEquals( mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
 		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 3558, $this->object->object(1)->getTimeInSeconds(), '', 30 );
