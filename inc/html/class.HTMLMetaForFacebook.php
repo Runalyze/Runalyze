@@ -100,11 +100,11 @@ class HTMLMetaForFacebook {
 		$this->add('fitness:duration:value', $this->Training->getTimeInSeconds());
 		$this->add('fitness:duration:units', 's');
 
-		if ($this->Training->getDistance() > 0) {
+		if ($this->Training->getDistance() > 0 && $this->Training->getTimeInSeconds() > 0) {
 			$this->add('fitness:pace:value', $this->Training->getTimeInSeconds()/$this->Training->getDistance()/1000);
 			$this->add('fitness:pace:units', 's/m');
-			$this->add('fitness:speed:value', $this->Training->getTimeInSeconds()/$this->Training->getDistance()/1000);
-			$this->add('fitness:speed:units', 's/m');
+			$this->add('fitness:speed:value', 1000/($this->Training->getTimeInSeconds()/$this->Training->getDistance()));
+			$this->add('fitness:speed:units', 'm/s');
 		}
 	}
 
@@ -152,7 +152,7 @@ class HTMLMetaForFacebook {
 <meta property="fitness:metrics:distance:units" content="km" />
 <meta property="fitness:metrics:pace:value" content="'.($this->Training->GpsData()->getPace()/1000).'" />
 <meta property="fitness:metrics:pace:units" content="s/m" />
-<meta property="fitness:metrics:speed:value" content="'.($this->Training->GpsData()->getPace()/1000).'" />
-<meta property="fitness:metrics:speed:units" content="s/m" />';
+<meta property="fitness:metrics:speed:value" content="'.($this->Training->GpsData()->getPace() > 0 ? 1000/$this->Training->GpsData()->getPace() : 0).'" />
+<meta property="fitness:metrics:speed:units" content="m/s" />';
 	}
 }
