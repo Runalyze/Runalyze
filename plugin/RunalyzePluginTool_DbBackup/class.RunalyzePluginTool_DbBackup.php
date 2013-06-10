@@ -64,9 +64,13 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$this->fileNameStart = SessionAccountHandler::getId().'-runalyze-backup';
 
 		if (isset($_GET['json'])) {
-			move_uploaded_file($_FILES['userfile']['tmp_name'], realpath(dirname(__FILE__)).'/import/'.$_FILES['userfile']['name']);
-			Error::getInstance()->footer_sent = true;
-			echo 'success';
+			if (move_uploaded_file($_FILES['qqfile']['tmp_name'], realpath(dirname(__FILE__)).'/import/'.$_FILES['qqfile']['name'])) {
+				Error::getInstance()->footer_sent = true;
+				echo '{"success":true}';
+			} else {
+				echo '{"error":"Moving file did not work. Set chmod 777 for '.realpath(dirname(__FILE__)).'/import/"}';
+			}
+
 			exit;
 		}
 	}
@@ -245,20 +249,30 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function displayImportUploader() {
 		$JScode = '
-			$("#file-upload").removeClass("hide");
-			new AjaxUpload(\'#file-upload\', {
-				allowedExtensions: [\'json\'],
-				action: \''.$_SERVER['SCRIPT_NAME'].'?hideHtmlHeader=true&id='.$this->id.'&json=true\',
-				onSubmit : function(file, extension){ $("#upload-container").addClass(\'loading\'); },
-				onComplete : function(file, response){
-					if (response.substring(0,7) == \'success\')
-						$("#ajax").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id.'&file=\'+encodeURIComponent(file));
-					else
-						$("#ajax").append(\'<p class="error">An unknown error occured.</p>\');
-				}		
+			new qq.FineUploaderBasic({
+				button: $("#file-upload")[0],
+				request: {
+					endpoint: \''.$_SERVER['SCRIPT_NAME'].'?hideHtmlHeader=true&id='.$this->id.'&json=true\'
+				},
+				callbacks: {
+					onError: function(id, name, errorReason, xhr) {
+						$("#ajax").append(\'<p class="error appended-by-uploader">\'+errorReason+\'</p>\');
+					},
+					onComplete: function(id, fileName, responseJSON) {
+						$(".appended-by-uploader").remove();
+						$("#ajax").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id.'&file=\'+encodeURIComponent(fileName));
+
+						if (!responseJSON.success) {
+							if (responseJSON.error == "")
+								responseJSON.error = \'An unknown error occured.\';
+							$("#ajax").append(\'<p class="error appended-by-uploader">\'+fileName+\': \'+responseJSON.error+\'</p>\');
+							$("#upload-container").removeClass("loading");
+						}
+					}
+				}
 			});';
 
-		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button small hide" id="file-upload">Datei hochladen</div></div>';
+		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">Datei hochladen</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
 		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json');
 		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br />
