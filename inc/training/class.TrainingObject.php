@@ -120,6 +120,7 @@ class TrainingObject extends DataObject {
 		$this->set('created', time());
 		$this->setPaceFromData();
 		$this->calculateCaloriesIfEmpty();
+		$this->removeWeatherIfInside();
 	}
 
 	/**
@@ -181,6 +182,16 @@ class TrainingObject extends DataObject {
 	private function calculateCaloriesIfEmpty() {
 		if ($this->getCalories() == 0)
 			$this->setCalories( round(SportFactory::kcalPerHourFor($this->get('sportid'))*$this->getTimeInSeconds()/3600) );
+	}
+
+	/**
+	 * Remove weather before insert if
+	 */
+	private function removeWeatherIfInside() {
+		if (!$this->Sport()->isOutside()) {
+			$this->setTemperature(null);
+			$this->setWeatherid(Weather::$UNKNOWN_ID);
+		}
 	}
 
 	/**

@@ -337,13 +337,13 @@ class Dataset {
 				return $this->TrainingObject->DataView()->getPower();
 
 			case 'temperature':
-				if (!$this->TrainingObject->Weather()->hasTemperature())
+				if (!$this->TrainingObject->Weather()->hasTemperature() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
 				return $this->TrainingObject->Weather()->temperatureString();
 
 			case 'weatherid':
-				if ($this->TrainingObject->Weather()->isUnknown())
+				if ($this->TrainingObject->Weather()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
 				return $this->TrainingObject->Weather()->icon();
