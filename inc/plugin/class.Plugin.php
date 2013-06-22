@@ -82,6 +82,12 @@ abstract class Plugin {
 	public static $INSTALLER_ID = -1;
 
 	/**
+	 * Array with all plugin keys
+	 * @var array
+	 */
+	private static $ALL_KEYS = array();
+
+	/**
 	 * Internal ID from database
 	 * @var int
 	 */
@@ -650,9 +656,12 @@ abstract class Plugin {
 	 * @return array
 	 */
 	static public function getKeysAsArray($type = -1, $active = -1) {
-		if ($type == -1)
-			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin`');
-		elseif ($active == -1)
+		if ($type == -1) {
+			if (empty(self::$ALL_KEYS))
+				self::$ALL_KEYS = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin`');
+
+			$array = self::$ALL_KEYS;
+		} elseif ($active == -1)
 			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC');
 		else
 			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC');

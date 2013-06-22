@@ -48,12 +48,7 @@ abstract class PluginPanel extends Plugin {
 	 * @param int $id
 	 */
 	public function __construct($id) {
-		if ($id == parent::$INSTALLER_ID) {
-			$this->id = $id;
-			return;
-		}
-
-		if (!is_numeric($id) || $id <= 0) {
+		if (!is_numeric($id) || ($id <= 0 && $id != parent::$INSTALLER_ID)) {
 			Error::getInstance()->addError('PluginPanel::__construct(): An object of class::Plugin must have an ID: <$id='.$id.'>');
 			return false;
 		}
