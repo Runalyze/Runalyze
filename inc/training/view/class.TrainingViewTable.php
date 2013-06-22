@@ -123,13 +123,15 @@ class TrainingViewTable {
 	 * Init outside lines
 	 */
 	private function initOutsideLines() {
-		if (!$this->Training->Weather()->isEmpty())
-			$this->addOutsideLine('Wetter', $this->Training->Weather()->fullString());
+		if ($this->Training->Sport()->isOutside()) {
+			if (!$this->Training->Weather()->isEmpty())
+				$this->addOutsideLine('Wetter', $this->Training->Weather()->fullString());
 
-		if ($this->Training->getRoute() != '')
-			$this->addOutsideLine('Strecke', SearchLink::to('route', HTML::encodeTags($this->Training->getRoute()), HTML::encodeTags($this->Training->getRoute())));
+			if ($this->Training->getRoute() != '')
+				$this->addOutsideLine('Strecke', SearchLink::to('route', HTML::encodeTags($this->Training->getRoute()), HTML::encodeTags($this->Training->getRoute())));
 
-		$this->addElevationLines();
+			$this->addElevationLines();
+		}
 
 		if (!$this->Training->Shoe()->isDefaultId())
 			$this->addOutsideLine('Schuh', Request::isOnSharedPage() ? $this->Training->Shoe()->getName() : $this->Training->Shoe()->getSearchLink());
