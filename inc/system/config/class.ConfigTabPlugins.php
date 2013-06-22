@@ -156,7 +156,7 @@ class ConfigTabPlugins extends ConfigTab {
 
 		$Code .= '
 				</tbody>
-			</tabel>';
+			</table>';
 
 		return $Code;
 	}
