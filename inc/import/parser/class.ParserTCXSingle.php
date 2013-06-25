@@ -14,7 +14,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Debug splits
 	 * @var boolean
 	 */
-	static private $DEBUG_SPLITS = false;
+	static private $DEBUG_SPLITS = true;
 
 	/**
 	 * Ignore "empty" moves until this number of seconds
@@ -213,7 +213,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.$ThisBreakInSeconds.', empty point: '.
 							($NoMove ?
 								'no move'.($Ignored ? ' ignored' : '')
-								: 'empty trackpoint'));
+								: 'empty trackpoint').($TooSlow ? ' (too slow, '.$ThisBreakInMeter.'m in '.$ThisBreakInSeconds.'s)' : ''));
 			}
 
 			if (!$Ignored)
