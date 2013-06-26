@@ -14,7 +14,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Debug splits
 	 * @var boolean
 	 */
-	static private $DEBUG_SPLITS = true;
+	static private $DEBUG_SPLITS = false;
 
 	/**
 	 * Ignore "empty" moves until this number of seconds

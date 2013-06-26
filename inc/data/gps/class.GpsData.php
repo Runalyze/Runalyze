@@ -1188,6 +1188,9 @@ class GpsData {
 	 * @return array
 	 */
 	public function averagePower() {
+		if ($this->arraySizes == 0)
+			return 0;
+
 		return array_sum($this->arrayForPower) / $this->arraySizes;
 	}
 
