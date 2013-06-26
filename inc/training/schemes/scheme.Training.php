@@ -10,7 +10,7 @@ $HIDDEN_KEYS = array(
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
 	//'vdot', 'vdot_by_time', 'trimp'
-	'elapsed_time', 'power', 'cadence',
+	'elapsed_time', // 'power', 'cadence',
 	// TODO: already prepared attributes
 	'jd_intensity'
 );
@@ -31,7 +31,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'distance',
 		'legend'	=> 'Distanz',
-		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power'), //, 'cadence'),
+		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
 		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),

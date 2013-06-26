@@ -313,6 +313,9 @@ class Dataset {
 				return $this->TrainingObject->DataView()->getTimeString();
 
 			case 'pace':
+				if ($this->TrainingObject->getDistance() == 0)
+					return '';
+
 				return $this->TrainingObject->DataView()->getSpeedString();
 
 			case 'elevation':
