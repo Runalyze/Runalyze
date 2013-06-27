@@ -17,6 +17,12 @@ class Ajax {
 	public static $IMG_WAIT = 'waitImg';
 
 	/**
+	 * ID for plugin to reload, can be empty to reload all plugins
+	 * @var int
+	 */
+	public static $RELOAD_PLUGIN_ID = '';
+
+	/**
 	 * Enum: Reload flag - no reload
 	 * @var int
 	 */
@@ -91,6 +97,14 @@ class Ajax {
 	}
 
 	/**
+	 * Set ID of plugin to reload
+	 * @param int $ID
+	 */
+	static public function setPluginIDtoReload($ID) {
+		self::$RELOAD_PLUGIN_ID = $ID;
+	}
+
+	/**
 	 * Get reload command
 	 * @return string 
 	 */
@@ -101,7 +115,7 @@ class Ajax {
 			case self::$RELOAD_ALL:
 				return self::wrapJS('Runalyze.reloadContent();');
 			case self::$RELOAD_PLUGINS:
-				return self::wrapJS('Runalyze.reloadAllPlugins();');
+				return self::wrapJS('Runalyze.reloadAllPlugins('.self::$RELOAD_PLUGIN_ID.');');
 			case self::$RELOAD_DATABROWSER_AND_TRAINING:
 				return self::wrapJS('Runalyze.reloadDataBrowserAndTraining();');
 			case self::$RELOAD_TRAINING:

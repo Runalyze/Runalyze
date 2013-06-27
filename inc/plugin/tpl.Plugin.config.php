@@ -5,6 +5,7 @@ $Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternal
 echo Ajax::toolbarNavigation($Links, 'right');
 
 if (!empty($_POST)) {
+	Ajax::setPluginIDtoReload($this->id);
 	Ajax::setReloadFlag( Ajax::$RELOAD_PLUGINS );
 	echo Ajax::getReloadCommand();
 }
