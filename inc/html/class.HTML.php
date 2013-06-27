@@ -205,6 +205,14 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string into centered paragraph-tag
+	 * @param string $string
+	 */
+	public static function pCentered($string) {
+		return '<p class="text c">'.$string.'</p>';
+	}
+
+	/**
 	 * Wrap a string into p-tag with class="info"
 	 * @param string $string
 	 */
