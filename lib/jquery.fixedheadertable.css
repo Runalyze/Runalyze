@@ -1,0 +1,73 @@
+/*!
+* jquery.fixedHeaderTable. The jQuery fixedHeaderTable plugin
+*
+* Copyright (c) 2011 Mark Malek
+* http://fixedheadertable.com
+*
+* Licensed under MIT
+* http://www.opensource.org/licenses/mit-license.php
+* 
+* http://docs.jquery.com/Plugins/Authoring
+* jQuery authoring guidelines
+*
+* Launch  : October 2009
+* Version : 1.3
+* Released: May 9th, 2011
+*
+* 
+* all CSS sizing (width,height) is done in pixels (px)
+*/
+.fht-table,
+.fht-table thead,
+.fht-table tfoot,
+.fht-table tbody,
+.fht-table tr,
+.fht-table th,
+.fht-table td {
+    margin: 0;
+	padding: 0;
+	/*font-size: 100%;
+	font: inherit;
+	vertical-align: top;*/
+}
+
+.fht-table th,
+.fht-table td {
+	padding: 2px 0;
+}
+
+.fht-table {
+    /*border-collapse: collapse;
+    border-spacing: 0;*/
+}
+
+.fht-table-wrapper,
+.fht-table-wrapper .fht-thead,
+.fht-table-wrapper .fht-tfoot,
+.fht-table-wrapper .fht-fixed-column .fht-tbody,
+.fht-table-wrapper .fht-fixed-body .fht-tbody,
+.fht-table-wrapper .fht-tbody {
+	overflow: hidden;
+	position: relative;
+}
+
+.fht-table-wrapper .fht-fixed-body .fht-tbody,
+.fht-table-wrapper .fht-tbody {
+    overflow: auto;
+}
+
+.fht-table-wrapper .fht-table .fht-cell {
+	overflow: hidden;
+	height: 1px;
+}
+	
+.fht-table-wrapper .fht-fixed-column,
+.fht-table-wrapper .fht-fixed-body {
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+.fht-table-wrapper .fht-fixed-column {
+	z-index: 1;
+}

@@ -9,6 +9,7 @@ $JS_FILES = array(
 	'lib/jquery.metadata.js',
 	'lib/jquery.tablesorter.js',
 	'lib/jquery.tablesorter.pager.js',
+	'lib/jquery.fixedheadertable.min.js',
 	'lib/bootstrap-tooltip.js',
 
 	'lib/fineuploader-3.5.0.min.js',
@@ -50,6 +51,7 @@ $CSS_FILES = array(
 	'lib/bootstrap-tooltip.css',
 	'lib/jquery.datepicker.css',
 	'lib/jquery.tablesorter.css',
+	'lib/jquery.fixedheadertable.css',
 	'lib/jquery.jbar.css',
 	'lib/chosen/chosen.css',
 );

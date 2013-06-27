@@ -150,7 +150,7 @@ class JD {
 		$VDOT_low = 150;
 		while (true) {
 			//$s++;
-			$s += $km;
+			$s += $km/2;
 
 			$VDOT_high = $VDOT_low;
 			$VDOT_low  = self::Competition2VDOT($km, $s);
