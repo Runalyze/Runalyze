@@ -34,6 +34,12 @@ class SplitsView {
 	protected $achievedPace = 0;
 
 	/**
+	 * Achieved pace (active rounds)
+	 * @var int
+	 */
+	protected $achievedPaceActive = 0;
+
+	/**
 	 * Constructor
 	 * @param Splits $Splits
 	 */
@@ -49,6 +55,9 @@ class SplitsView {
 	private function init() {
 		if ($this->Splits->totalDistance() > 0)
 			$this->achievedPace = $this->Splits->totalTime() / $this->Splits->totalDistance();
+
+		if ($this->Splits->hasActiveAndInactiveLaps())
+			$this->achievedPaceActive = array_sum($this->Splits->timesAsArray(false)) / array_sum($this->Splits->distancesAsArray(false));
 	}
 
 	/**
@@ -123,7 +132,7 @@ class SplitsView {
 		if ($this->demandedPace == 0)
 			return;
 
-		$AvgDiff = $this->demandedPace - $this->achievedPace;
+		$AvgDiff = $this->achievedPaceActive > 0 ? ($this->demandedPace - $this->achievedPaceActive) : ($this->demandedPace - $this->achievedPace);
 		$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
 		$AvgDiffString = ($AvgDiff >= 0) ? '+'.Time::toString($AvgDiff, false, 2) : '-'.Time::toString(-$AvgDiff, false, 2);
 
@@ -139,6 +148,15 @@ class SplitsView {
 	 * Display average
 	 */
 	private function displayAverage() {
+		if ($this->achievedPaceActive > 0) {
+			echo '
+				<tr class="r">
+					<td colspan="2">Schnitt (Aktiv): </td>
+					<td>'.Time::toString($this->achievedPaceActive).'/km</td>
+					<td></td>
+				</tr>'.NL;
+		}
+
 		echo '
 			<tr class="r">
 				<td colspan="2">Schnitt: </td>
