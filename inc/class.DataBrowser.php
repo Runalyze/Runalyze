@@ -135,6 +135,7 @@ class DataBrowser {
 			SELECT
 				id,
 				time,
+				`s` as `s_sum_with_distance`,
 				DATE(FROM_UNIXTIME(time)) as `date`
 				'.$this->Dataset->getQuerySelectForAllDatasets().'
 			FROM `'.PREFIX.'training`
