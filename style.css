@@ -731,6 +731,20 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 
 
 /*** SNIPPETS ***/
+* html .clearfix {
+  height: 1%;
+}
+* + html .clearfix {
+  display: inline-block;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+
 #dataBrowser { width: 100%; }
 
 #dataPanel, #tab_content { overflow: auto; }

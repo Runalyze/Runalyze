@@ -26,18 +26,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function displayLongDescription() {
 		echo HTML::p('Bei Runalyze werden viele Tabellen und daraus abgeleitete Formeln von &quot;Jack Daniels - Die Laufformel&quot; verwendet.
 				Unter anderem wird aus dem Verh&auml;ltnis von Herzfrequenz und Tempo auf die aktuelle Form geschlossen.');
-		echo HTML::p('Die Form wird als <strong>VDOT</strong> angegeben, einer rechnerischen Gr&ouml;&szlig;e f&uuml;r die maximale Sauerstoffaufnahme.
-				Mittels dieser k&ouml;nnen ein Trainingstempo und eine m&ouml;gliche Wettkampfzeit berechnet werden.');
-		echo HTML::p('Da die Prognosen f&uuml;r lange Distanzen eher zu gut sind, wird ein eigener Algorithmus zur
-				Bestimmung der <strong>Grundlagenausdauer</strong> verwendet.
-				Dieser Wert ist sehr experimentell und mit Vorsicht zu genie&szlig;en.');
-		echo HTML::p('Fundierter sind die Grundlagen f&uuml;r ATL/CTL/TSB.
-				Aus Dauer und Puls wird eine Trainingsbelastung bestimmt, auch <em>Training Load</em> genannt.');
-		echo HTML::p('Die <strong>M&uuml;digkeit</strong> (<em>Actual Training Load</em>) steht dabei f&uuml;r die Belastung der letzten Woche,
-				der <strong>Fitnessgrad</strong> (<em>Chronic Training Load</em>) f&uuml;r die langfristige Belastung.
-				Zur Vergleichbarkeit wird jeweils der Prozentwert von der bisher maximalen Trainingsbelastung angegeben.');
-		echo HTML::p('Das Verh&auml;ltnis der beiden ist die <strong>Training Stress Balance</strong>.
-				Ein positiver Wert steht hierbei f&uuml;r Erholung, ein negativer f&uuml;r intensives Training.');
 	}
 
 	/**
@@ -46,7 +34,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => '<span rel="tooltip" class="atLeft" title="Empfehlung anzeigen">Trainingstempo</span>');
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Trainingstempo', 'Empfohlene Trainingspaces anzeigen', true));
+		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('ATL/CTL/TSB anzeigen', 'Statistische Werte M&uuml;digkeit, Fitnessgrad und Stress Balance anzeigen', true));
+		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('VDOT anzeigen', 'Aktuellen berechneten VDOT anzeigen', true));
+		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('GA anzeigen', 'Prozentwert f&uuml;r die Grundlagenausdauer anzeigen', true));
 
 		return $config;
 	}
@@ -70,42 +61,91 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function displayContent() {
 		if ($this->config['show_trainingpaces']['var']) {
-			$Paces = $this->getArrayForPaces();
-
-			$vVDOT = JD::VDOT2v(VDOT_FORM);
-		
 			echo '<small class="right r '.(VDOT_FORM==0?'unimportant':'').'">';
-
-			foreach ($Paces as $Pace)
-				echo ('
-					'.$Pace['short'].': <em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'</em> - <em>'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'</em>/km<br />');
-
+			$this->showPaces();
 			echo '</small>';
+
+			echo '<div class="left" style="width:60%;">';
+			$this->showValues();
+			echo '</div>';
+
+			echo HTML::clearBreak();
+
+			if (HTML::isInternetExplorer())
+				echo '&nbsp;';
+		} else {
+			$this->showValues();
 		}
-
-		$TSBtooltip = 'Positiver Wert: Du bist erholt.<br />
-					Negativer Wert: Du trainierst hart.<br />
-					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br />
-					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>';
-
-		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
-
-		echo '
-			<div class="left" style="width:60%;">
-				<p><span class="right">'.$TrimpValues['ATL'].' &#37;</span> <strong>M&uuml;digkeit</strong> <small>(ATL)</small></p>
-				<p><span class="right">'.$TrimpValues['CTL'].' &#37;</span> <strong>Fitnessgrad</strong> <small>(CTL)</small></p>
-				<p><span class="right">'.$TrimpValues['TSB'].'</span> '.Ajax::tooltip('<strong>Stress Balance</strong> <small>(TSB)</small>', $TSBtooltip).'</p>
-				<p><span class="right">'.round(VDOT_FORM,2).'</span> <strong>VDOT</strong></p>
-				<p><span class="right">'.Running::BasicEndurance().'</span> <strong>Grundlagenausdauer</strong></p>
-			</div>';
-
-		echo HTML::clearBreak();
-
-		if (HTML::isInternetExplorer())
-			echo '&nbsp;';
 
 		if (Time::diffInDays(START_TIME) < 70)
 			echo HTML::info('F&uuml;r sinnvolle Werte sind zu wenig Daten da.');
+	}
+
+	/**
+	 * Show values
+	 */
+	protected function showValues() {
+		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
+
+		$Values = array(
+			array(
+				'show'	=> $this->config['show_trimpvalues']['var'],
+				'value'	=> $TrimpValues['ATL'].' &#37;',
+				'title'	=> 'M&uuml;digkeit',
+				'small'	=> '(ATL)',
+				'tooltip'	=> 'Actual Training Load<br /><small>Durchschnittliche Trainingsbelastung der letzten Woche verglichen mit dem bisherigen Maximalwert.</small>'
+			),
+			array(
+				'show'	=> $this->config['show_trimpvalues']['var'],
+				'value'	=> $TrimpValues['CTL'].' &#37;',
+				'title'	=> 'Fitnessgrad',
+				'small'	=> '(CTL)',
+				'tooltip'	=> 'Chronical Training Load<br /><small>Durchschnittliche Trainingsbelastung des letzten Monats verglichen mit dem bisherigen Maximalwert.</small>'
+			),
+			array(
+				'show'	=> $this->config['show_trimpvalues']['var'],
+				'value'	=> $TrimpValues['TSB'],
+				'title'	=> 'Stress Balance',
+				'small'	=> '(TSB)',
+				'tooltip'	=> 'Training Stress Balance (= CTL - ATL)<br />Positiver Wert: Du bist erholt.<br />
+					Negativer Wert: Du trainierst hart.<br />
+					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br />
+					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>'
+			),
+			array(
+				'show'	=> $this->config['show_vdot']['var'],
+				'value'	=> round(VDOT_FORM,2),
+				'title'	=> 'VDOT',
+				'small'	=> '',
+				'tooltip'	=> 'Aktueller durchschnittlicher VDOT-Wert'
+			),
+			array(
+				'show'	=> $this->config['show_basicendurance']['var'],
+				'value'	=> Running::BasicEndurance(),
+				'title'	=> 'Grundlagenausdauer',
+				'small'	=> '',
+				'tooltip'	=> '<em>Experimenteller Wert!</em><br />100 &#37; entspricht dem Optimum an Wochenkilometern und Langen L&auml;ufen f&uuml;r einen perfekten Marathon bei deinem derzeitigen VDOT.'
+			)
+		);
+
+		foreach ($Values as $Value) {
+			if ($Value['show']) {
+				$Label = '<strong>'.$Value['title'].'</strong> <small>'.$Value['small'].'</small>';
+				$Text = $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
+				echo '<p><span class="right">'.$Value['value'].'</span> '.$Text.'</p>';
+			}
+		}
+	}
+
+	/**
+	 * Show paces
+	 */
+	protected function showPaces() {
+		$Paces = $this->getArrayForPaces();
+		$vVDOT = JD::VDOT2v(VDOT_FORM);
+
+		foreach ($Paces as $Pace)
+			echo ($Pace['short'].': <em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'</em> - <em>'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'</em>/km<br />');
 	}
 
 	/**
