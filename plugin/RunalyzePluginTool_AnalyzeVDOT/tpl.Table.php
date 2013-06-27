@@ -64,5 +64,8 @@
 	<strong>VDOT/Zeit (Form):</strong> aus der damaligen Trainingsform bzw. Prognose<br />
 	Das h&auml;ttest du Runalyze zufolge laufen k&ouml;nnen.
 </p>
+<p class="info">
+	<strong>Korrekturfaktor:</strong> Verh&auml;ltnis von VDOT zu VDOT (aus Puls)
+</p>
 
 <?php echo Ajax::wrapJSforDocumentReady('$("#ajax").addClass("bigWin");'); ?>
