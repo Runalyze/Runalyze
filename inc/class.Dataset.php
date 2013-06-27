@@ -83,7 +83,7 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC');
+		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC GROUP BY `name`');
 		$this->cols = count($this->data);
 	}
 
@@ -111,6 +111,7 @@ class Dataset {
 			SELECT
 				sportid,
 				time,
+				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
 				SUM(1) as `num`
 				'.$this->getQuerySelectForSet().'
 			FROM `'.PREFIX.'training`
@@ -139,6 +140,7 @@ class Dataset {
 			SELECT
 				`sportid`,
 				`time`,
+				SUM(IF(`distance`>0,`time`,0)) as `s_sum_with_distance`,
 				SUM(1) as `num`,
 				FLOOR(('.$timeend.'-`time`)/('.$timerange.')) as `timerange`
 				'.$this->getQuerySelectForSet().'
@@ -316,7 +318,8 @@ class Dataset {
 				if ($this->TrainingObject->getDistance() == 0)
 					return '';
 
-				return $this->TrainingObject->DataView()->getSpeedString();
+				return $this->TrainingObject->DataView()->getSpeedStringForTime( $this->TrainingObject->getTimeInSecondsSumWithDistance() );
+				//return $this->TrainingObject->DataView()->getSpeedString();
 
 			case 'elevation':
 				return $this->TrainingObject->DataView()->getElevationWithTooltip();

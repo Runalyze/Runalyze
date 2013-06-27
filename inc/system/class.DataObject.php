@@ -255,6 +255,17 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Force to set a given value
+	 * 
+	 * WARNING: Only use this method if you know what you are doing!
+	 * @param string $propertyName
+	 * @param mixed $value
+	 */
+	final public function forceToSet($propertyName, $value) {
+		$this->data[$propertyName] = $value;
+	}
+
+	/**
 	 * Set array for key
 	 * @param string $key
 	 * @param array $array

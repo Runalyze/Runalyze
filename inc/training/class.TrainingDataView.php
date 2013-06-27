@@ -208,6 +208,15 @@ class TrainingDataView {
 	public function getSpeedString() {
 		return SportFactory::getSpeedWithAppendixAndTooltip($this->Object->getDistance(), $this->Object->getTimeInSeconds(), $this->Object->Sport()->id());
 	}
+
+	/**
+	 * Get a string for the speed depending on sportid
+	 * @param int $timeInSeconds
+	 * @return string
+	 */
+	public function getSpeedStringForTime($timeInSeconds) {
+		return SportFactory::getSpeedWithAppendixAndTooltip($this->Object->getDistance(), $timeInSeconds, $this->Object->Sport()->id());
+	}
 	
 	/**
 	* Get pace as string without unit
