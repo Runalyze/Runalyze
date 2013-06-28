@@ -266,6 +266,15 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Has property?
+	 * @param string $propertyName
+	 * @return boolean
+	 */
+	final protected function hasProperty($propertyName) {
+		return array_key_exists($propertyName, $this->data);
+	}
+
+	/**
 	 * Set array for key
 	 * @param string $key
 	 * @param array $array

@@ -563,7 +563,12 @@ class TrainingObject extends DataObject {
 	 * Get time sum with distance
 	 * @return int duration in seconds
 	 */
-	public function getTimeInSecondsSumWithDistance() { return $this->get('s_sum_with_distance'); }
+	public function getTimeInSecondsSumWithDistance() {
+		if ($this->hasProperty('s_sum_with_distance'))
+			return $this->get('s_sum_with_distance');
+
+		return $this->getTimeInSeconds();	
+	}
 
 
 	/**
