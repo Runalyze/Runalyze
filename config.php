@@ -2,8 +2,8 @@
 /**
  * RUNALYZE
  * 
- * @author Hannes Christiansen <mail@laufhannes.de>
- * @copyright http://runalyze.laufhannes.de/
+ * @author Hannes Christiansen
+ * @copyright http://runalyze.de/
  * 
  * In this config-file your personal mysql-connection has to be set.
  */
@@ -38,4 +38,23 @@ define('RUNALYZE_DEBUG', true);
  * @var bool USER_MUST_LOGIN It set to true, users have to login
  */
 define('USER_MUST_LOGIN', true);
+
+/**
+ * Working on your site? Disable login with this variable.
+ * @var bool USER_CANT_LOGIN Set to disable login
+ */
+define('USER_CANT_LOGIN', false);
+
+/**
+ * Allow registration for new users
+ * @var bool USER_CAN_REGISTER Set to false to close registration
+ */
+define('USER_CAN_REGISTER', true);
+
+/**
+ * Garmin API key is needed for using Garmin Communicator
+ * @var bool GARMIN_API_KEY Garmin API key
+ * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
+ */
+define('GARMIN_API_KEY', '');
 ?>

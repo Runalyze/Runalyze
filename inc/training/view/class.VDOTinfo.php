@@ -112,7 +112,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput">'.$this->Training->getVdotCorrected().'</span>
+				<span class="asInput highlight">'.$this->Training->getVdotCorrected().'</span>
 			</div>
 			<div class="w50">
 				<label>unkorrigiert</label>
