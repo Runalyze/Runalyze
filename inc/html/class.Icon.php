@@ -39,6 +39,7 @@ class Icon {
 	static public $CROSS_SMALL      = '<i class="icon-cross-small"></i>';
 	static public $LEFT             = '<i class="icon-left"></i>';
 	static public $RIGHT            = '<i class="icon-right"></i>';
+	static public $INFO_SMALL       = '<i class="icon-info-small"></i>';
 	// Big, 16x16px
 	static public $ADD              = '<i class="icon-add"></i>';
 	static public $CROSS            = '<i class="icon-cross"></i>';

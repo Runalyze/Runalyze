@@ -199,6 +199,7 @@ $CLASSMAP = array(
 'TrainingViewIFrame' => 'training/view/class.TrainingViewIFrame.php',
 'TrainingViewIFrameTable' => 'training/view/class.TrainingViewIFrameTable.php',
 'TrainingViewTable' => 'training/view/class.TrainingViewTable.php',
+'VDOTinfo' => 'training/view/class.VDOTinfo.php',
 'ZonesAbstract' => 'training/view/class.ZonesAbstract.php',
 'ZonesHeartrate' => 'training/view/class.ZonesHeartrate.php',
 'ZonesPace' => 'training/view/class.ZonesPace.php',
