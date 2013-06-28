@@ -116,8 +116,8 @@ class TrainingViewTable {
 			$this->addLine('Trimp', $this->Training->DataView()->getTrimpString());
 
 		if (CONF_RECHENSPIELE && $this->Training->Sport()->isRunning() && $this->Training->getVdotCorrected() > 0) {
-			$VDOTinfoLink = Ajax::window('<a class="unimportant" href="call/call.Training.vdotInfo.php?id='.$this->Training->id().'">'.Icon::$INFO_SMALL.'</a>', 'small');
-			$this->addLine('Vdot', $this->Training->DataView()->getVDOTAndIcon().' '.$VDOTinfoLink);
+			$VDOTinfoLink = Ajax::window('<a class="right unimportant" href="call/call.Training.vdotInfo.php?id='.$this->Training->id().'">'.Icon::$INFO_SMALL.'</a>', 'small');
+			$this->addLine('Vdot', $VDOTinfoLink.' '.$this->Training->DataView()->getVDOTAndIcon());
 		}
 	}
 

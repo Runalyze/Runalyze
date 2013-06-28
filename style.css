@@ -714,6 +714,7 @@ p.file { background: url(img/file.png) no-repeat 3px center #F5F5F5; color: #000
 
 .unimportant { opacity: 0.5; filter: alpha(opacity=50); }
 .unimportant:hover { opacity: 1; filter: alpha(opacity=100); }
+.highlight { background-color: #FF3; }
 
 td img { vertical-align: middle; }
 .a1 td, td.a1, .a2 td, td.a2, .a3 td, td.a3 { border-top: 1px solid #CCC; }
