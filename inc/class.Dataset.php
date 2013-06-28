@@ -140,7 +140,7 @@ class Dataset {
 			SELECT
 				`sportid`,
 				`time`,
-				SUM(IF(`distance`>0,`time`,0)) as `s_sum_with_distance`,
+				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
 				SUM(1) as `num`,
 				FLOOR(('.$timeend.'-`time`)/('.$timerange.')) as `timerange`
 				'.$this->getQuerySelectForSet().'
