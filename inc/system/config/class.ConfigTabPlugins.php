@@ -145,7 +145,10 @@ class ConfigTabPlugins extends ConfigTab {
 		foreach ($Plugins as $i => $Data) {
 			$Plugin = Plugin::getInstanceFor($Data['key']);
 
-			$Code .= '
+			if ($Plugin === false)
+				$Code .= '<tr class="a'.($i%2+1).'"><td colspan="4"><em>Das Plugin '.$Data['key'].' konnte nicht gefunden werden.</em></td></tr>';
+			else
+				$Code .= '
 				<tr class="a'.($i%2+1).'">
 					<td>'.$Plugin->getInstallLink().'</td>
 					<td class="b">'.$Plugin->getInstallLink($Plugin->get('name')).'</td>
