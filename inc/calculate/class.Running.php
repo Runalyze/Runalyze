@@ -190,6 +190,21 @@ class Running {
 	}
 
 	/**
+	 * Get string for pulse [%HRmax]
+	 * @param int $pulse
+	 * @param int $hf_max [optional]
+	 * @return string
+	 */
+	public static function PulseStringInPercentHRmax($pulse, $hf_max = 0, $hf_rest = 0) {
+		if ($hf_max == 0)
+			$hf_max = HF_MAX;
+		if ($hf_rest == 0)
+			$hf_rest = HF_REST;
+		
+		return round(100*($pulse - $hf_rest) / ($hf_max - $hf_rest)).'&nbsp;&#37;';
+	}
+
+	/**
 	 * Get string for pulse [%HFres]
 	 * @param int $pulse
 	 * @param int $hf_max [optional]

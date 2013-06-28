@@ -605,6 +605,30 @@ class TrainingObject extends DataObject {
 	 * @return int
 	 */
 	public function getElevation() { return $this->get('elevation'); }
+	/**
+	 * Get elevation up
+	 * @return int
+	 */
+	public function getElevationUp() {
+		if ($this->getElevation() == 0)
+			return '';
+
+		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
+
+		return $updown[0];
+	}
+	/**
+	 * Get elevation down
+	 * @return int
+	 */
+	public function getElevationDown() {
+		if ($this->getElevation() == 0)
+			return '';
+
+		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
+
+		return $updown[1];
+	}
 
 
 	/**

@@ -157,6 +157,11 @@ input, select, textarea, code {
 input, textarea, code {
 	padding: 2px; }
 
+.asInput {
+	display: inline-block;
+	font-size: 0.9em;
+	padding: 3px; }
+
 select {
 	padding: 1px; }
 
@@ -239,6 +244,11 @@ fieldset .w25, fieldset .w33, fieldset .w50 {
 fieldset .w100 {
 	clear: left;
 }
+
+fieldset .double-height-right {
+	float: right;
+	padding: 11px 0;
+	min-height: 19px; }
 
 fieldset textarea,
 fieldset input { padding: 2px; margin: 0; }
@@ -700,6 +710,7 @@ p.file { background: url(img/file.png) no-repeat 3px center #F5F5F5; color: #000
 .w33 { width: 33%; }
 .w25 { width: 25%; }
 .marginr50 { margin-right: 50%; }
+.mono { font-family: monospace; }
 
 .unimportant { opacity: 0.5; filter: alpha(opacity=50); }
 .unimportant:hover { opacity: 1; filter: alpha(opacity=100); }

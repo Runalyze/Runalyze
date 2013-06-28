@@ -292,6 +292,30 @@ class TrainingDataView {
 	}
 
 	/**
+	 * Get average heartrate in bpm
+	 * @return string
+	 */
+	public function getPulseAvgInBpm() {
+		return Running::PulseStringInBpm($this->Object->getPulseAvg());
+	}
+
+	/**
+	 * Get average heartrate in percent
+	 * @return string
+	 */
+	public function getPulseAvgInPercent() {
+		return Running::PulseStringInPercent($this->Object->getPulseAvg());
+	}
+
+	/**
+	 * Get average heartrate in percent of HRmax
+	 * @return string
+	 */
+	public function getPulseAvgInPercentHRmax() {
+		return Running::PulseStringInPercentHRmax($this->Object->getPulseAvg());
+	}
+
+	/**
 	 * Get average heartrate in bpm and percent
 	 * @return string
 	 */
@@ -305,6 +329,30 @@ class TrainingDataView {
 	 */
 	public function getPulseMax() {
 		return Running::PulseString($this->Object->getPulseMax(), $this->Object->getTimestamp());
+	}
+
+	/**
+	 * Get maximal heartrate in bpm
+	 * @return string
+	 */
+	public function getPulseMaxInBpm() {
+		return Running::PulseStringInBpm($this->Object->getPulseMax());
+	}
+
+	/**
+	 * Get maximal heartrate in percent
+	 * @return string
+	 */
+	public function getPulseMaxInPercent() {
+		return Running::PulseStringInPercent($this->Object->getPulseMax());
+	}
+
+	/**
+	 * Get maximal heartrate in percent of HRmax
+	 * @return string
+	 */
+	public function getPulseMaxInPercentHRmax() {
+		return Running::PulseStringInPercentHRmax($this->Object->getPulseMax());
 	}
 
 	/**
@@ -324,6 +372,19 @@ class TrainingDataView {
 			return '';
 
 		return Ajax::tooltip($this->getElevation(), '&oslash; Steigung: '.$this->getGradientInPercent());
+	}
+
+	/**
+	 * Get elevation up and down
+	 * @return string elevation with up and down
+	 */
+	public function getElevationUpAndDown() {
+		if ($this->Object->getElevation() == 0)
+			return '';
+
+		$updown = $this->Object->GpsData()->getElevationUpDownOfStep(true);
+
+		return '+'.$updown[0].'/-'.$updown[1].'&nbsp;m';
 	}
 
 	/**
