@@ -54,7 +54,7 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 		);
 		$config['vdot_range']     = array(
 			'type' => 'array',
-			'var' => array(60, 180),
+			'var' => array(30, 80),
 			'description' => Ajax::tooltip('VDOT von ... bis ...', 'zwei Werte, kommagetrennt')
 		);
 		$config['pace_range']     = array(
