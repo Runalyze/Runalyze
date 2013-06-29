@@ -122,6 +122,7 @@ class TrainingObject extends DataObject {
 		$this->setPaceFromData();
 		$this->calculateCaloriesIfEmpty();
 		$this->removeWeatherIfInside();
+		$this->forceToRemove('s_sum_with_distance');
 	}
 
 	/**

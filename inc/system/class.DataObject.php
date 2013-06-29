@@ -266,6 +266,17 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Force to remove a given property
+	 * 
+	 * WARNING: Only use this method if you know what you are doing!
+	 * @param string $propertyName
+	 */
+	final public function forceToRemove($propertyName) {
+		if (isset($this->data[$propertyName]))
+			unset($this->data[$propertyName]);
+	}
+
+	/**
 	 * Has property?
 	 * @param string $propertyName
 	 * @return boolean

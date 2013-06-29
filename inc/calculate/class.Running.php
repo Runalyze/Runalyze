@@ -173,7 +173,7 @@ class Running {
 	 * @return string
 	 */
 	public static function PulseStringInBpm($pulse) {
-		return round($pulse).'bpm';
+		return round($pulse).'&nbsp;bpm';
 	}
 
 	/**
