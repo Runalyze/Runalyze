@@ -170,7 +170,8 @@ class TrainingViewTable {
 						<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->Training->id().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
 					</em>';
 
-			$this->addOutsideLine('H&ouml;henmeter', $Text);
+			$infoLink = Ajax::window('<a class="right unimportant" href="call/call.Training.elevationInfo.php?id='.$this->Training->id().'">'.Icon::$INFO_SMALL.'</a>', 'small');
+			$this->addOutsideLine('H&ouml;henmeter', $infoLink.' '.$Text);
 		}
 
 		if (abs($difference) > 20)
@@ -180,7 +181,7 @@ class TrainingViewTable {
 			$this->addOutsideLine(Ajax::tooltip('Auf-/Abstieg', 'Durch die Gl&auml;ttung im Algorithmus m&uuml;ssen diese Werte nicht zu den anderen passen.', 'atRight'), '+'.$updown[0].'/-'.$updown[1].'&nbsp;m');
 
 		if ($current > 0)
-			$this->addOutsideLine('Steigung', number_format($current/10/$this->Training->getDistance(), 2, ',', '.').'&nbsp;&#37;');
+			$this->addOutsideLine('&oslash;&nbsp;Steigung', number_format($current/10/$this->Training->getDistance(), 2, ',', '.').'&nbsp;&#37;');
 	}
 
 	/**

@@ -191,6 +191,7 @@ $CLASSMAP = array(
 'SearchFormular' => 'training/search/class.SearchFormular.php',
 'SearchLink' => 'training/search/class.SearchLink.php',
 'SearchResults' => 'training/search/class.SearchResults.php',
+'ElevationInfo' => 'training/view/class.ElevationInfo.php',
 'RoundsAbstract' => 'training/view/class.RoundsAbstract.php',
 'RoundsComputed' => 'training/view/class.RoundsComputed.php',
 'RoundsSplits' => 'training/view/class.RoundsSplits.php',
