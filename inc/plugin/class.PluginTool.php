@@ -49,8 +49,14 @@ abstract class PluginTool extends Plugin {
 	public function display() {
 		$this->prepareForDisplay();
 
+		if (Request::param('wrap') != "")
+			echo '<div id="pluginTool">';
+
 		$this->displayHeader();
 		$this->displayContent();
+
+		if (Request::param('wrap') != "")
+			echo '</div>';
 	}
 
 	/**
@@ -152,12 +158,14 @@ abstract class PluginTool extends Plugin {
 
 	/**
 	 * Get link to this tool as overlay
+	 * @param string $name
+	 * @param boolean $wrapAsContainer optional
 	 */
-	public function getWindowLink($name = '') {
+	public function getWindowLink($name = '', $wrapAsContainer = false) {
 		if ($name == '')
 			$name = $this->name;
 
-		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.'" title="'.$this->name.'">'.$name.'</a>', 'big');
+		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.($wrapAsContainer ? '&wrap=true' : '').'" title="'.$this->name.'">'.$name.'</a>', 'big');
 	}
 
 	/**

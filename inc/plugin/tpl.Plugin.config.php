@@ -62,6 +62,6 @@ if (!empty($_POST)) {
 
 <?php if ($this->type == Plugin::$TOOL): ?>
 	<ul class="blocklist">
-		<li><?php echo $this->getWindowLink('&raquo; zum Tool'); ?></li>
+		<li><?php echo $this->getWindowLink('&raquo; zum Tool', true); ?></li>
 	</ul>
 <?php endif; ?>
