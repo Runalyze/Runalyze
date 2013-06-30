@@ -247,9 +247,12 @@ class TrainingObject extends DataObject {
 		if ($this->hasArrayAltitude()) {
 			if (CONF_TRAINING_DO_ELEVATION) {
 				$this->doElevationCorrection();
-				$this->calculateElevation();
-			} elseif ($this->get('elevation') == 0) {
-				$this->calculateElevation();
+			}
+
+			$this->calculateElevation();
+
+			if ($this->get('elevation') == 0) {
+				$this->updateValue('elevation', $this->get('elevation_calculated'));
 			}
 		}
 	}

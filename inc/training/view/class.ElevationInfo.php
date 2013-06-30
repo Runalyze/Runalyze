@@ -103,7 +103,7 @@ class ElevationInfo {
 		$Fieldset = new FormularFieldset('Allgemeine Daten');
 		$Fieldset->setHtmlCode('
 			<div class="w50">
-				<label>manueller Wert</label>
+				<label>'.Ajax::tooltip('manueller Wert', 'Wenn beim Erstellen keine H&ouml;henmeter angegeben wurden, wurde der berechnete Wert &uuml;bernommen.').'</label>
 				<span class="asInput">'.$this->manualElevation.'&nbsp;m</span>
 			</div>
 			<div class="w50">
@@ -134,7 +134,33 @@ class ElevationInfo {
 	 * Display elevation correction
 	 */
 	protected function displayDifferentAlgorithms() {
-		$Calculator    = new ElevationCalculator($this->Training->getArrayAltitude());
+		$Code = '';
+
+		if ($this->Training->hasArrayAltitudeOriginal()) {
+			$Code .= '<strong class="small">Anhand der Originaldaten:</strong>';
+			$Code .= $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitudeOriginal());
+			$Code .= '<br />';
+		}
+
+		if ($this->Training->hasArrayAltitude()) {
+			$Code .= '<strong class="small">Anhand der korrigierten Daten:</strong>';
+			$Code .= $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitude());
+		}
+
+		$Code .= '<p class="small info">Den zu verwendenden Algorithmus und Schwellenwert kannst du in der Konfiguration selbst festlegen.</p>';
+
+		$Fieldset = new FormularFieldset('Verschiedene Algorithmen zur H&ouml;hengl&auml;ttung');
+		$Fieldset->setHtmlCode($Code);
+		$Fieldset->display();
+	}
+
+	/**
+	 * Get different algorithms for
+	 * @param array $array
+	 * @return string
+	 */
+	protected function getDifferentAlgorithmsFor($array) {
+		$Calculator    = new ElevationCalculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
 			array(ElevationCalculator::$ALGORITHM_NONE, false),
@@ -175,11 +201,7 @@ class ElevationInfo {
 		$Code .= '</tbody>';
 		$Code .= '</table>';
 
-		$Code .= '<p class="small info">Den zu verwendenden Algorithmus und Schwellenwert kannst du in der Konfiguration selbst festlegen.</p>';
-
-		$Fieldset = new FormularFieldset('Verschiedene Algorithmen zur H&ouml;hengl&auml;ttung');
-		$Fieldset->setHtmlCode($Code);
-		$Fieldset->display();
+		return $Code;;
 	}
 
 	/**

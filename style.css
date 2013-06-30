@@ -228,7 +228,7 @@ fieldset label {
 	margin: 0 !important;
 	padding: 3px 0; }
 
-fieldset label.checkable {
+fieldset .toolbar-line label {
 	float: none;
 	width: auto;
 	font-weight: normal; }

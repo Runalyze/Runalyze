@@ -379,7 +379,7 @@ class TrainingDataView {
 	 * @return string elevation with up and down
 	 */
 	public function getElevationUpAndDown() {
-		if ($this->Object->getElevation() == 0)
+		if (!$this->Object->hasArrayAltitude())
 			return '';
 
 		$updown = $this->Object->GpsData()->getElevationUpDownOfStep(true);
