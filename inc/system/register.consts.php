@@ -61,16 +61,18 @@ $General->addToCategoryList();
 $Training = new ConfigCategory('training', 'Trainingsansicht');
 $Training->setKeys(array(
 	'TRAINING_DECIMALS',
-	'ELEVATION_MIN_DIFF',
+	'ELEVATION_METHOD',
 	'TRAINING_PLOT_PRECISION',
-	'GMAP_PATH_BREAK',
+	'ELEVATION_MIN_DIFF',
 	'TRAINING_PLOT_MODE',
-	'GMAP_PATH_PRECISION',
+	'GMAP_PATH_BREAK',
 	'TRAINING_MAPTYPE',
-	'PACE_Y_LIMIT_MIN',
+	'GMAP_PATH_PRECISION',
 	'TRAINING_MAP_COLOR',
 	'PACE_Y_LIMIT_MAX',
 	'TRAINING_MAP_BEFORE_PLOTS',
+	'PACE_Y_LIMIT_MIN',
+	'',
 	'PACE_Y_AXIS_REVERSE',
 	'',
 	'PACE_HIDE_OUTLIERS'
@@ -218,11 +220,21 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
+$Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
+	'default'		=> 'treshold',
+	'label'			=> 'H&ouml;henmetergl&auml;ttung',
+	'tooltip'		=> 'F&uuml;r Profis und H&ouml;henmeterfanatiker: Mit welchem Algorithmus sollen die H&ouml;henmeter vor der Berechnung gegl&auml;ttet werden?',
+	'options'		=> array(
+		'none'				=> 'keine',
+		'treshold'			=> 'Schwellenwert-Methode',
+		'douglas-peucker'	=> 'Douglas-Peucker-Algorithmus',
+		//'reumann-witkamm'	=> 'Reumann-Witkamm-Algorithmus'
+	),
+)));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
-	'label'			=> 'H&ouml;henmeterberechnung: minimale Differenz',
-	'tooltip'		=> 'Ab welchem H&ouml;henunterschied zwischen zwei Datenpunkten soll dieser f&uuml;r die H&ouml;henmeter herangezogen werden?
-						<br />(2 oder 3 liefert unserer Ansicht nach realistische Werte)',
+	'label'			=> 'H&ouml;henmeter: Schwellenwert',
+	'tooltip'		=> 'Schwellenwert zur H&ouml;henmeterberechnung. Wird bei der Schwellenwert-Methode und beim Douglas-Peucker-Algorithmus verwendet.',
 	'unit'			=> FormularUnit::$M,
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));

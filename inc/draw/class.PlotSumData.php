@@ -268,6 +268,25 @@ abstract class PlotSumData extends Plot {
 
 		if (empty($this->RawData))
 			$this->setYLimits(1, 0, 10);
+		else
+			$this->setYLimitsFromData();
+	}
+
+	/**
+	 * Set Y limits from data
+	 */
+	private function setYLimitsFromData() {
+		$values = array();
+
+		foreach ($this->Data as $data) {
+			foreach ($data['data'] as $i => $val)
+				if (!isset($values[$i]))
+					$values[$i] = $val;
+				else
+					$values[$i] += $val;
+		}
+
+		$this->setYLimits(1, 0, Helper::ceilFor(max($values), 10));
 	}
 
 	/**

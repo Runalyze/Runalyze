@@ -23,6 +23,24 @@ class TrainingLinker {
 	static public $EDITOR_URL = 'call/call.Training.edit.php';
 
 	/**
+	 * URL to elevation info window
+	 * @var string
+	 */
+	static public $ELEVATION_CORRECTION_URL = 'call/call.Training.elevationCorrection.php';
+
+	/**
+	 * URL to elevation info window
+	 * @var string
+	 */
+	static public $ELEVATION_INFO_URL = 'call/call.Training.elevationInfo.php';
+
+	/**
+	 * URL to vdot info window
+	 * @var string
+	 */
+	static public $VDOT_INFO_URL = 'call/call.Training.vdotInfo.php';
+
+	/**
 	 * Constructor
 	 * @param \TrainingObject $TrainingObject
 	 */
@@ -84,6 +102,32 @@ class TrainingLinker {
 	public function editNavigation() {
 		return self::editPrevLink($this->Object->id(), $this->Object->getTimestamp()).
 				self::editNextLink($this->Object->id(), $this->Object->getTimestamp());
+	}
+
+	/**
+	 * URL to elevation correction
+	 * @return string
+	 */
+	public function urlToElevationCorrection() {
+		return self::$ELEVATION_CORRECTION_URL.'?id='.$this->Object->id();
+	}
+
+	/**
+	 * URL to elevation info
+	 * @param string $data
+	 * @return string
+	 */
+	public function urlToElevationInfo($data = '') {
+		return self::$ELEVATION_INFO_URL.'?id='.$this->Object->id().'&'.$data;
+	}
+
+	/**
+	 * URL to vdot info
+	 * @param string $data
+	 * @return string
+	 */
+	public function urlToVDOTinfo($data = '') {
+		return self::$VDOT_INFO_URL.'?id='.$this->Object->id().'&'.$data;
 	}
 
 	/**

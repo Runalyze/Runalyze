@@ -116,7 +116,7 @@ class TrainingViewTable {
 			$this->addLine('Trimp', $this->Training->DataView()->getTrimpString());
 
 		if (CONF_RECHENSPIELE && $this->Training->Sport()->isRunning() && $this->Training->getVdotCorrected() > 0) {
-			$VDOTinfoLink = Ajax::window('<a class="right unimportant" href="call/call.Training.vdotInfo.php?id='.$this->Training->id().'">'.Icon::$INFO_SMALL.'</a>', 'small');
+			$VDOTinfoLink = Ajax::window('<a class="right unimportant" href="'.$this->Training->Linker()->urlToVDOTinfo().'">'.Icon::$INFO_SMALL.'</a>', 'small');
 			$this->addLine('Vdot', $VDOTinfoLink.' '.$this->Training->DataView()->getVDOTAndIcon());
 		}
 	}
@@ -167,10 +167,10 @@ class TrainingViewTable {
 				$Text .= '<br />
 					<em id="gps-results" class="block">
 						Die H&ouml;hendaten sind noch nicht korrigiert.
-						<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->Training->id().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
+						<a class="ajax" target="gps-results" href="'.$this->Training->Linker()->urlToElevationCorrection().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
 					</em>';
 
-			$infoLink = Ajax::window('<a class="right unimportant" href="call/call.Training.elevationInfo.php?id='.$this->Training->id().'">'.Icon::$INFO_SMALL.'</a>', 'small');
+			$infoLink = Ajax::window('<a class="right unimportant" href="'.$this->Training->Linker()->urlToElevationInfo().'">'.Icon::$INFO_SMALL.'</a>', 'small');
 			$this->addOutsideLine('H&ouml;henmeter', $infoLink.' '.$Text);
 		}
 

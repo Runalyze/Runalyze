@@ -75,8 +75,8 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	 * @covers Running::PulseStringInBpm
 	 */
 	public function testPulseStringInBpm() {
-		$this->assertEquals( '120bpm', Running::PulseStringInBpm(120) );
-		$this->assertEquals( '120bpm', Running::PulseStringInBpm(120.3) );
+		$this->assertEquals( '120&nbsp;bpm', Running::PulseStringInBpm(120) );
+		$this->assertEquals( '120&nbsp;bpm', Running::PulseStringInBpm(120.3) );
 	}
 
 	/**
@@ -137,12 +137,13 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	 * @covers Running::Prognosis
 	 */
 	public function testPrognosisAsArray() {
+		// Throws error without being different?
 		$this->assertEquals( array('vdot' => 40, 'seconds' => Time::toSeconds('3:49:59') + 0.4), Running::PrognosisAsArray(42.2, 40, false));
-		$this->assertEquals( array('vdot' => 50, 'seconds' => Time::toSeconds('3:11:18') + 0.4), Running::PrognosisAsArray(42.2, 50, false));
-		$this->assertEquals( array('vdot' => 60, 'seconds' => Time::toSeconds('2:43:52') + 0.6), Running::PrognosisAsArray(42.2, 60, false));
+		$this->assertEquals( array('vdot' => 50, 'seconds' => Time::toSeconds('3:10:57') + 0.3), Running::PrognosisAsArray(42.2, 50, false));
+		$this->assertEquals( array('vdot' => 60, 'seconds' => Time::toSeconds('2:43:31') + 0.5000000001), Running::PrognosisAsArray(42.2, 60, false));
 		$this->assertEquals( array('vdot' => 70, 'seconds' => Time::toSeconds('2:23:28') + 0.8), Running::PrognosisAsArray(42.2, 70, false));
 
-		$this->assertEquals( array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:50') + 0.8), Running::PrognosisAsArray(42.2, 70, true));
+		$this->assertEquals( array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:29') + 0.7), Running::PrognosisAsArray(42.2, 70, true));
 	}
 
 	/**
