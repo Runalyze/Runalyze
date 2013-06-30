@@ -181,11 +181,16 @@ class Dataset {
 		$String = '';
 
 		foreach ($this->data as $set)
-			if ($set['summary'] == 1)
-				if ($set['summary_mode'] != 'AVG')
-					$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
-				else
-					$String .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
+			if ($set['summary'] == 1) {
+				if ($set['name'] == 'vdot') {
+					$String .= ', SUM(IF(`use_vdot`=1,`vdot`*`s`,0))/SUM(IF(`use_vdot`=1,`s`,0)) as `vdot`';
+				} else {
+					if ($set['summary_mode'] != 'AVG')
+						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
+					else
+						$String .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
+				}
+			}
 
 		return $String;
 	}
