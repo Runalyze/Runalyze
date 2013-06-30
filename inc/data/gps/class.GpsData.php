@@ -726,20 +726,12 @@ class GpsData {
 		if (empty($elevationArray) || (!$complete && !isset($elevationArray[$this->arrayIndex])))
 			return array(0, 0);
 
-		$eachXthStep = 1;
-		$positiveElevation = 0;
-		$negativeElevation = 0;
 		$stepArray = $complete ? $elevationArray : array_slice($elevationArray, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
 
-		foreach ($stepArray as $i => $step) {
-			if ($i >= $eachXthStep && $stepArray[$i] != 0 && $stepArray[$i-$eachXthStep] != 0 && $i%$eachXthStep == 0) {
-				$elevationDifference = $stepArray[$i] - $stepArray[$i-$eachXthStep];
-				$positiveElevation += ($elevationDifference >= self::$minElevationDiff) ? $elevationDifference : 0;
-				$negativeElevation -= ($elevationDifference <= -1*self::$minElevationDiff) ? $elevationDifference : 0;
-			}
-		}
+		$Calculator = new ElevationCalculator($stepArray);
+		$Calculator->calculateElevation();
 
-		return array($positiveElevation, $negativeElevation);
+		return array($Calculator->getElevationUp(), $Calculator->getElevationDown());
 	}
 
 	/**

@@ -68,6 +68,7 @@ class ElevationInfo {
 		$this->displayHeader();
 		$this->displayStandardValues();
 		$this->displayDifferentAlgorithms();
+		$this->displayDifferentAlgorithmsWithOriginalData();
 		$this->displayPlot();
 		$this->displayElevationCorrection();
 		$this->displayInformation();
@@ -131,26 +132,31 @@ class ElevationInfo {
 	}
 
 	/**
-	 * Display elevation correction
+	 * Display different algorithms
 	 */
 	protected function displayDifferentAlgorithms() {
-		$Code = '';
+		if (!$this->Training->hasArrayAltitude())
+			return;
 
-		if ($this->Training->hasArrayAltitudeOriginal()) {
-			$Code .= '<strong class="small">Anhand der Originaldaten:</strong>';
-			$Code .= $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitudeOriginal());
-			$Code .= '<br />';
-		}
-
-		if ($this->Training->hasArrayAltitude()) {
-			$Code .= '<strong class="small">Anhand der korrigierten Daten:</strong>';
-			$Code .= $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitude());
-		}
-
+		$Code  = $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitude());
 		$Code .= '<p class="small info">Den zu verwendenden Algorithmus und Schwellenwert kannst du in der Konfiguration selbst festlegen.</p>';
 
-		$Fieldset = new FormularFieldset('Verschiedene Algorithmen zur H&ouml;hengl&auml;ttung');
+		$Fieldset = new FormularFieldset('H&ouml;henmeter bei verschiedenen Algorithmen/Schwellenwerten');
 		$Fieldset->setHtmlCode($Code);
+		$Fieldset->display();
+	}
+
+	/**
+	 * Display different algorithms with original data
+	 */
+	protected function displayDifferentAlgorithmsWithOriginalData() {
+		if (!$this->Training->hasArrayAltitudeOriginal())
+			return;
+
+		$Fieldset = new FormularFieldset('H&ouml;henmeter bei verschiedenen Algorithmen/Schwellenwerten (Originaldaten)');
+		$Fieldset->setId('table-with-original-data');
+		$Fieldset->setCollapsed();
+		$Fieldset->setHtmlCode( $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitudeOriginal()) );
 		$Fieldset->display();
 	}
 
@@ -169,10 +175,9 @@ class ElevationInfo {
 			//array(ElevationCalculator::$ALGORITHM_REUMANN_WITKAMM, false)
 		);
 
-		$Code  = '<table class="small fullWidth">';
+		$Code  = '<table class="small w100">';
 		$Code .= '<thead>';
-		$Code .= '<tr><td></td><td class="c" colspan="'.count($TresholdRange).'">Schwellenwert</td></tr>';
-		$Code .= '<tr><th></th>';
+		$Code .= '<tr><th class="r">Schwellenwert:</th>';
 		foreach ($TresholdRange as $t)
 			$Code .= '<th>'.$t.'</th>';
 		$Code .= '</tr>';
@@ -251,7 +256,7 @@ class ElevationInfo {
 			Fehlerhafte GPS-Daten k&ouml;nnen zwar durch SRTM-Daten korrigiert werden,
 			aber auch diese liegen nur in einem Raster von 90x90m vor und sind teilweise stark verrauscht.
 			Um dieses Rauschen zu entfernen, kann ein Gl&auml;ttungsalgorithmus verwendet werden.
-			Da der verwendete Algorithmus (und seine Einstellungen) von Programm zu Programm unterscheiden,
+			Da der verwendete Algorithmus (und seine Einstellungen) von Programm zu Programm unterscheider,
 			kommt man niemals bei jeder Software (wie Garmin Connect, SportTracks, etc.) auf die gleichen Werte.
 		');
 
