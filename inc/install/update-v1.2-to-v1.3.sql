@@ -58,3 +58,7 @@ ALTER TABLE  `runalyze_plugin` DROP  `filename`;
 /* Rev540 */
 ALTER TABLE  `runalyze_training` CHANGE  `s`  `s` DECIMAL( 8, 2 ) NOT NULL DEFAULT  '0.00';
 ALTER TABLE  `runalyze_training` ADD  `elapsed_time` INT( 6 ) NOT NULL DEFAULT '0' AFTER  `s`;
+
+/* Rev567 */
+ALTER TABLE  `runalyze_training` ADD  `elevation_calculated` INT( 5 ) NOT NULL AFTER  `elevation`;
+ALTER TABLE  `runalyze_training` ADD  `arr_alt_original` LONGTEXT NULL DEFAULT NULL AFTER  `arr_alt`;

@@ -65,6 +65,12 @@ if (!defined('CONF_TRAINING_LOAD_WEATHER'))
 if (!defined('CONF_TRAINING_DECIMALS'))
 	define('CONF_TRAINING_DECIMALS', 2);
 
+if (!defined('CONF_ELEVATION_MIN_DIFF'))
+	define('CONF_ELEVATION_MIN_DIFF', 3);
+
+if (!defined('ELEVATION_METHOD'))
+	define('ELEVATION_METHOD', 'treshold');
+
 if (!defined('CONF_TRAINING_SORT_SPORTS'))
 	define('CONF_TRAINING_SORT_SPORTS', 'id-asc');
 if (!defined('CONF_TRAINING_SORT_SHOES'))

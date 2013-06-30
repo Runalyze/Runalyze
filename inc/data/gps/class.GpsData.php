@@ -28,6 +28,12 @@ class GpsData {
 	public static $NUM_STEPS_FOR_ZONES = 200;
 
 	/**
+	 * Boolean flag: Use original elevation?
+	 * @var boolean
+	 */
+	private static $USES_ORIGINAL_ELEVATION = false;
+
+	/**
 	 * Array with all information for time
 	 * @var array
 	 */
@@ -50,6 +56,12 @@ class GpsData {
 	* @var array
 	*/
 	private $arrayForElevation = array();
+
+	/**
+	* Array with all information for original elevation
+	* @var array
+	*/
+	private $arrayForElevationOriginal = array();
 
 	/**
 	* Array with all information for distance
@@ -124,22 +136,37 @@ class GpsData {
 	protected $Cache = null;
 
 	/**
+	 * Set flag to use original elevation
+	 */
+	static public function useOriginalElevation() {
+		self::$USES_ORIGINAL_ELEVATION = true;
+	}
+
+	/**
+	 * Set flag to use corrected elevation
+	 */
+	static public function useCorrectedElevation() {
+		self::$USES_ORIGINAL_ELEVATION = false;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct($TrainingDataAsArray) {
 		$this->addMissingKeysToArray($TrainingDataAsArray);
 
-		$this->arrayForTime        = $this->loadArrayDataFrom($TrainingDataAsArray['arr_time']);
-		$this->arrayForLatitude    = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lat']);
-		$this->arrayForLongitude   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lon']);
-		$this->arrayForElevation   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_alt']);
-		$this->arrayForDistance    = $this->loadArrayDataFrom($TrainingDataAsArray['arr_dist']);
-		$this->arrayForHeartrate   = $this->loadArrayDataFrom($TrainingDataAsArray['arr_heart']);
-		$this->arrayForPace        = $this->loadArrayDataFrom($TrainingDataAsArray['arr_pace']);
-		$this->arrayForCadence     = $this->loadArrayDataFrom($TrainingDataAsArray['arr_cadence']);
-		$this->arrayForPower       = $this->loadArrayDataFrom($TrainingDataAsArray['arr_power']);
-		$this->arrayForTemperature = $this->loadArrayDataFrom($TrainingDataAsArray['arr_temperature']);
-		$this->arraySizes          = max(count($this->arrayForTime), count($this->arrayForLatitude));
+		$this->arrayForTime              = $this->loadArrayDataFrom($TrainingDataAsArray['arr_time']);
+		$this->arrayForLatitude          = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lat']);
+		$this->arrayForLongitude         = $this->loadArrayDataFrom($TrainingDataAsArray['arr_lon']);
+		$this->arrayForElevation         = $this->loadArrayDataFrom($TrainingDataAsArray['arr_alt']);
+		$this->arrayForElevationOriginal = $this->loadArrayDataFrom($TrainingDataAsArray['arr_alt_original']);
+		$this->arrayForDistance          = $this->loadArrayDataFrom($TrainingDataAsArray['arr_dist']);
+		$this->arrayForHeartrate         = $this->loadArrayDataFrom($TrainingDataAsArray['arr_heart']);
+		$this->arrayForPace              = $this->loadArrayDataFrom($TrainingDataAsArray['arr_pace']);
+		$this->arrayForCadence           = $this->loadArrayDataFrom($TrainingDataAsArray['arr_cadence']);
+		$this->arrayForPower             = $this->loadArrayDataFrom($TrainingDataAsArray['arr_power']);
+		$this->arrayForTemperature       = $this->loadArrayDataFrom($TrainingDataAsArray['arr_temperature']);
+		$this->arraySizes                = max(count($this->arrayForTime), count($this->arrayForLatitude));
 
 		if (isset($TrainingDataAsArray['gps_cache_object']))
 			$this->initCache($TrainingDataAsArray['id'], $TrainingDataAsArray['gps_cache_object']);
@@ -157,6 +184,7 @@ class GpsData {
 			'arr_lat',
 			'arr_lon',
 			'arr_alt',
+			'arr_alt_original',
 			'arr_dist',
 			'arr_heart',
 			'arr_pace',
@@ -341,7 +369,17 @@ class GpsData {
 	 * Are information for elevation available?
 	 */
 	public function hasElevationData() {
+		if (self::$USES_ORIGINAL_ELEVATION)
+			return $this->hasElevationDataOriginal();
+
 		return !empty($this->arrayForElevation) && max($this->arrayForElevation) > 0;
+	}
+
+	/**
+	 * Are information for original elevation available?
+	 */
+	public function hasElevationDataOriginal() {
+		return !empty($this->arrayForElevationOriginal) && max($this->arrayForElevationOriginal) > 0;
 	}
 
 	/**
@@ -481,6 +519,9 @@ class GpsData {
 	 * Get elevation since last step
 	 */
 	public function getElevationOfStep() {
+		if (self::$USES_ORIGINAL_ELEVATION)
+			return $this->getOfStep($this->arrayForElevationOriginal);
+
 		return $this->getOfStep($this->arrayForElevation);
 	}
 
@@ -569,6 +610,9 @@ class GpsData {
 	 * Get current elevation
 	 */
 	public function getElevation() {
+		if (self::$USES_ORIGINAL_ELEVATION)
+			return $this->get($this->arrayForElevationOriginal);
+
 		return $this->get($this->arrayForElevation);
 	}
 
@@ -618,6 +662,9 @@ class GpsData {
 	 * Get maximum of elevation
 	 */
 	public function getMaximumOfElevation() {
+		if (self::$USES_ORIGINAL_ELEVATION && !empty($this->arrayForElevationOriginal))
+			return max($this->arrayForElevationOriginal);
+
 		if (!empty($this->arrayForElevation))
 			return max($this->arrayForElevation);
 
@@ -628,6 +675,9 @@ class GpsData {
 	 * Get minimum of elevation
 	 */
 	public function getMinimumOfElevation() {
+		if (self::$USES_ORIGINAL_ELEVATION && !empty($this->arrayForElevationOriginal))
+			return min($this->arrayForElevationOriginal);
+
 		if (!empty($this->arrayForElevation))
 			return min($this->arrayForElevation);
 
@@ -655,18 +705,31 @@ class GpsData {
 	}
 
 	/**
+	 * Get currently used elevation array
+	 * @return array
+	 */
+	private function getCurrentlyUsedElevationArray() {
+		if (self::$USES_ORIGINAL_ELEVATION)
+			return $this->arrayForElevationOriginal;
+
+		return $this->arrayForElevation;
+	}
+
+	/**
 	 * Get array with up/down of current step
 	 * @parameter boolean $complete
 	 * @return array
 	 */
 	public function getElevationUpDownOfStep($complete = false) {
-		if (empty($this->arrayForElevation) || (!$complete && !isset($this->arrayForElevation[$this->arrayIndex])))
+		$elevationArray = $this->getCurrentlyUsedElevationArray();
+
+		if (empty($elevationArray) || (!$complete && !isset($elevationArray[$this->arrayIndex])))
 			return array(0, 0);
 
 		$eachXthStep = 1;
 		$positiveElevation = 0;
 		$negativeElevation = 0;
-		$stepArray = $complete ? $this->arrayForElevation : array_slice($this->arrayForElevation, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
+		$stepArray = $complete ? $elevationArray : array_slice($elevationArray, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
 
 		foreach ($stepArray as $i => $step) {
 			if ($i >= $eachXthStep && $stepArray[$i] != 0 && $stepArray[$i-$eachXthStep] != 0 && $i%$eachXthStep == 0) {
@@ -791,7 +854,10 @@ class GpsData {
 	 */
 	protected function getPlotDataFor($key) {
 		if (!$this->Cache->isEmpty()) {
-			return $this->Cache->get('plot_'.$key);
+			$result = $this->Cache->get('plot_'.$key);
+
+			if (!is_null($result))
+				return $result;
 		}
 
 		$Data = array();
@@ -1166,8 +1232,9 @@ class GpsData {
 		if (!$this->hasElevationData())
 			return 0;
 
-		$minimumElevation = (min($this->arrayForElevation) > 0) ? max($this->arrayForElevation) - min($this->arrayForElevation) : 0;
-		$elevationArray   = $this->getElevationUpDownOfStep(true);
+		$elevationArrayToUse = $this->getCurrentlyUsedElevationArray();
+		$minimumElevation    = (min($elevationArrayToUse) > 0) ? max($elevationArrayToUse) - min($elevationArrayToUse) : 0;
+		$elevationArray      = $this->getElevationUpDownOfStep(true);
 
 		return max($minimumElevation, $elevationArray[0], $elevationArray[1]);
 	}
@@ -1180,7 +1247,9 @@ class GpsData {
 		if (!$this->hasElevationData())
 			return 0;
 
-		return end($this->arrayForElevation) - $this->arrayForElevation[0];
+		$elevationArrayToUse = $this->getCurrentlyUsedElevationArray();
+
+		return end($elevationArrayToUse) - $elevationArrayToUse[0];
 	}
 
 	/**

@@ -121,8 +121,8 @@ class Plot {
 		$this->Options['legend']['margin'] = 2;
 		$this->Options['legend']['noColumns'] = 0;
 
-		$this->Options['yaxis']['color'] = "#FFF";
-		$this->Options['xaxis']['color'] = "#FFF";
+		$this->Options['yaxis']['color'] = 'rgba(255,255,255,0.2)'; // "#FFF";
+		$this->Options['xaxis']['color'] = 'rgba(255,255,255,0.2)'; // "#FFF";
 		$this->Options['xaxis']['monthNames'] = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
 
 		$this->Options['grid']['backgroundColor'] = "rgba(255,255,255,0.3)";
@@ -130,7 +130,11 @@ class Plot {
 		$this->Options['grid']['labelMargin'] = 2;
 		$this->Options['grid']['axisMargin'] = 2;
 
-		$this->Options['grid']['canvasText'] = array('show' => false, 'font' => 'Verdana 8px');
+		$this->Options['canvas'] = true;
+		$this->Options['font'] = 'Verdana 8px';
+		$this->Optoins['yaxis']['font'] = 'Verdana 8px';
+		$this->Optoins['xaxis']['font'] = 'Verdana 8px';
+		//$this->Options['grid']['canvasText'] = array('show' => false, 'font' => 'Verdana 8px');
 
 		$this->setMarginForGrid(5);
 	}
@@ -446,6 +450,13 @@ class Plot {
 	}
 
 	/**
+	 * Enable hiding graphs
+	 */
+	public function enableHiddengraphs() {
+		$this->Options['legend']['hideable'] = true;
+	}
+
+	/**
 	 * Allow settings
 	 * @param boolean $flag true or false
 	 */
@@ -508,8 +519,16 @@ class Plot {
 	public function showBars($withPadding = false) {
 		$this->Options['series']['bars']['show'] = true;
 
-		if ($withPadding)
-			$this->Options['xaxis']['autoscaleMargin'] = 0.02;
+		if ($withPadding) {
+			$maxLength = 0;
+			foreach ($this->Data as $data)
+				if (count($data['data']) > $maxLength)
+					$maxLength = count($data['data']);
+
+			$this->Options['xaxis']['min'] = -1;
+			$this->Options['xaxis']['max'] = $maxLength;
+			//$this->Options['xaxis']['autoscaleMargin'] = 0.02;
+		}
 	}
 
 	/**

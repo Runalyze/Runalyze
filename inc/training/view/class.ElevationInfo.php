@@ -46,6 +46,17 @@ class ElevationInfo {
 	 */
 	public function __construct(TrainingObject &$Training) {
 		$this->Training = $Training;
+
+		$this->handleRequest();
+	}
+
+	/**
+	 * Handle request
+	 */
+	protected function handleRequest() {
+		if (Request::param('use-calculated-value') == 'true') {
+			$this->Training->setCalculatedValueAsElevation();
+		}
 	}
 
 	/**
@@ -56,6 +67,10 @@ class ElevationInfo {
 
 		$this->displayHeader();
 		$this->displayStandardValues();
+		$this->displayDifferentAlgorithms();
+		$this->displayPlot();
+		$this->displayElevationCorrection();
+		$this->displayInformation();
 	}
 
 	/**
@@ -80,6 +95,11 @@ class ElevationInfo {
 	 * Display standard values
 	 */
 	protected function displayStandardValues() {
+		if ($this->manualElevation != $this->calculatedElevation)
+			$useCalculatedValueLink = Ajax::window('<a class="small asInput" href="'.$this->Training->Linker()->urlToElevationInfo('use-calculated-value=true').'">&raquo; &uuml;bernehmen</a>', 'small');
+		else
+			$useCalculatedValueLink = '';
+
 		$Fieldset = new FormularFieldset('Allgemeine Daten');
 		$Fieldset->setHtmlCode('
 			<div class="w50">
@@ -92,13 +112,127 @@ class ElevationInfo {
 			</div>
 			<div class="w50">
 				<label>berechneter Wert</label>
-				<span class="asInput">'.$this->calculatedElevation.'&nbsp;m</span>
+				<span class="asInput">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
 			</div>
 			<div class="w50">
 				<label>h&ouml;chster Punkt</label>
 				<span class="asInput">'.$this->highestPoint.'&nbsp;m</span>
 			</div>
+			<div class="w50">
+				<label>&oslash; Steigung</label>
+				<span class="asInput">'.$this->Training->DataView()->getGradientInPercent().'</span>
+			</div>
+			<div class="w50">
+				<label>Auf-/Abstieg</label>
+				<span class="asInput">'.$this->Training->DataView()->getElevationUpAndDown().'</span>
+			</div>
 		');
+		$Fieldset->display();
+	}
+
+	/**
+	 * Display elevation correction
+	 */
+	protected function displayDifferentAlgorithms() {
+		$Calculator    = new ElevationCalculator($this->Training->getArrayAltitude());
+		$TresholdRange = range(1, 10);
+		$Algorithms    = array(
+			array(ElevationCalculator::$ALGORITHM_NONE, false),
+			array(ElevationCalculator::$ALGORITHM_TRESHOLD, true),
+			array(ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER, true),
+			//array(ElevationCalculator::$ALGORITHM_REUMANN_WITKAMM, false)
+		);
+
+		$Code  = '<table class="small fullWidth">';
+		$Code .= '<thead>';
+		$Code .= '<tr><td></td><td class="c" colspan="'.count($TresholdRange).'">Schwellenwert</td></tr>';
+		$Code .= '<tr><th></th>';
+		foreach ($TresholdRange as $t)
+			$Code .= '<th>'.$t.'</th>';
+		$Code .= '</tr>';
+		$Code .= '</thead>';
+		$Code .= '<tbody>';
+
+		foreach ($Algorithms as $i => $Algorithm) {
+			$Calculator->setAlgorithm($Algorithm[0]);
+			$Code .= '<tr class="'.HTML::trClass($i).'"><td class="b">'.ElevationCalculator::nameOfCurrentAlgorithm().'</td>';
+
+			if ($Algorithm[1]) {
+				foreach ($TresholdRange as $t) {
+					$highlight = CONF_ELEVATION_MIN_DIFF == $t && CONF_ELEVATION_METHOD == $Algorithm[0] ? ' highlight' : '';
+					$Calculator->setTreshold($t);
+					$Calculator->calculateElevation();
+					$Code .= '<td class="r'.$highlight.'">'.$Calculator->getElevation().'&nbsp;m</td>';
+				}
+			} else {
+				$Calculator->calculateElevation();
+				$Code .= '<td class="c'.(CONF_ELEVATION_METHOD == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->getElevation().'&nbsp;m</td>';
+			}
+
+			$Code .= '</tr>';
+		}
+
+		$Code .= '</tbody>';
+		$Code .= '</table>';
+
+		$Code .= '<p class="small info">Den zu verwendenden Algorithmus und Schwellenwert kannst du in der Konfiguration selbst festlegen.</p>';
+
+		$Fieldset = new FormularFieldset('Verschiedene Algorithmen zur H&ouml;hengl&auml;ttung');
+		$Fieldset->setHtmlCode($Code);
+		$Fieldset->display();
+	}
+
+	/**
+	 * Display elevation correction
+	 */
+	protected function displayElevationCorrection() {
+		$Fieldset = new FormularFieldset('H&ouml;henkorrektur');
+
+		if ($this->Training->elevationWasCorrected()) {
+			$Fieldset->addSmallInfo('Die H&ouml;hendaten wurden bereits korrigiert.');
+		} else {
+			$Fieldset->setHtmlCode(
+				'<p class="warning small block" id="gps-results">
+					Die H&ouml;hendaten wurden noch nicht korrigiert.<br />
+					<br />
+					<a class="ajax" target="gps-results" href="'.$this->Training->Linker()->urlToElevationCorrection().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
+				</p>'
+			);
+		}
+
+		$Fieldset->display();
+	}
+
+	/**
+	 * Display plot
+	 */
+	protected function displayPlot() {
+		$Plot = new TrainingPlotElevationCompareAlgorithms($this->Training);
+
+		echo '<fieldset>';
+		echo '<legend>Algorithmen im Diagramm</legend>';
+		echo '<div id="plot-'.$Plot->getKey().'" class="plot-container">';
+		$Plot->displayAsSinglePlot();
+		echo '</div>';
+		echo '</fieldset>';
+	}
+
+	/**
+	 * Display elevation correction
+	 */
+	protected function displayInformation() {
+		$Fieldset = new FormularFieldset('Hinweis zu H&ouml;henmetern');
+		$Fieldset->setId('general-information');
+		$Fieldset->setCollapsed();
+		$Fieldset->addSmallInfo('
+			Die Berechnung von H&ouml;henmetern erweist sich immer als schwierig, weil es kein &quot;richtig&quot; gibt.
+			Fehlerhafte GPS-Daten k&ouml;nnen zwar durch SRTM-Daten korrigiert werden,
+			aber auch diese liegen nur in einem Raster von 90x90m vor und sind teilweise stark verrauscht.
+			Um dieses Rauschen zu entfernen, kann ein Gl&auml;ttungsalgorithmus verwendet werden.
+			Da der verwendete Algorithmus (und seine Einstellungen) von Programm zu Programm unterscheiden,
+			kommt man niemals bei jeder Software (wie Garmin Connect, SportTracks, etc.) auf die gleichen Werte.
+		');
+
 		$Fieldset->display();
 	}
 }

@@ -119,6 +119,7 @@ class TrainingObject extends DataObject {
 	 */
 	protected function tasksBeforeInsert() {
 		$this->set('created', time());
+		$this->set('arr_alt_original', $this->get('arr_alt'));
 		$this->setPaceFromData();
 		$this->calculateCaloriesIfEmpty();
 		$this->removeWeatherIfInside();
@@ -297,6 +298,14 @@ class TrainingObject extends DataObject {
 	 * Calculate elevation
 	 */
 	private function calculateElevation() {
+		$GPS = new GpsData($this->getArray());
+		$this->updateValue('elevation_calculated', $GPS->calculateElevation());
+	}
+
+	/**
+	 * Set calculated value as elevation
+	 */
+	public function setCalculatedValueAsElevation() {
 		$GPS = new GpsData($this->getArray());
 		$this->updateValue('elevation', $GPS->calculateElevation());
 	}
@@ -633,6 +642,18 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set calculated elevation
+	 * @param int $elevation elevation
+	 */
+	public function setElevationCalculated($elevation) { $this->set('elevation_calculated', $elevation); }
+	/**
+	 * Get calculated elevation
+	 * @return int
+	 */
+	public function getElevationCalculated() { return $this->get('elevation_calculated'); }
+
+
+	/**
 	 * Set calories
 	 * @param int $kcal kcal
 	 */
@@ -924,6 +945,18 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayAltitude() { return strlen($this->get('arr_alt')) > 0; }
+
+
+	/**
+	 * Get array for original altitude
+	 * @return array
+	 */
+	public function getArrayAltitudeOriginal() { return $this->getArrayFor('arr_alt_original'); }
+	/**
+	 * Has array for original altitude?
+	 * @return bool
+	 */
+	public function hasArrayAltitudeOriginal() { return strlen($this->get('arr_alt_original')) > 0; }
 
 
 	/**

@@ -17,8 +17,10 @@
 .flot .show-only-fullscreen { display: none; }
 .flot.fullscreen .show-only-fullscreen { display: inline; }
 
-.flot .tickLabels, .flot .legend td {
+.flot .tickLabels, .flot .legend td, .flot-tick-label {
 	color: #FFF;
+	line-height: 1;
+	font-size: 9px;
 	font-size: 9px !important;
 }
 
@@ -37,7 +39,7 @@
 	visibility: hidden;
 }
 
-.flotHide .legend, .flotHide .tickLabels {
+.flotHide .legend, .flotHide .tickLabels, .flotHide .flot-tick-label {
 	display: none;
 }
 
@@ -83,8 +85,9 @@
 	border-radius: 0 0 2px 2px;
 	background-color: #eee;
 	margin-left: -2px;
+	margin-top: 17px;
 	position: relative;
-	bottom: -15px;
+	bottom: -100%;
 	line-height: 14px;
 	height: 14px;
 }
