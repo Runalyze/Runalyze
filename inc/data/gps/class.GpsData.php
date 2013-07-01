@@ -1218,17 +1218,24 @@ class GpsData {
 
 	/**
 	 * Calculate complete elevation
-	 * @return int
+	 * 
+	 * Can return array($elevation, $up, $down)
+	 * @param boolean $returnArray
+	 * @return int|array
 	 */
-	public function calculateElevation() {
+	public function calculateElevation($returnArray = false) {
 		if (!$this->hasElevationData())
-			return 0;
+			return ($returnArray ? array(0, 0, 0) : 0);
 
 		$elevationArrayToUse = $this->getCurrentlyUsedElevationArray();
 		$minimumElevation    = (min($elevationArrayToUse) > 0) ? max($elevationArrayToUse) - min($elevationArrayToUse) : 0;
 		$elevationArray      = $this->getElevationUpDownOfStep(true);
+		$value = max($minimumElevation, $elevationArray[0], $elevationArray[1]);
 
-		return max($minimumElevation, $elevationArray[0], $elevationArray[1]);
+		if ($returnArray)
+			return array($value, $elevationArray[0], $elevationArray[1]);
+
+		return $value;
 	}
 
 	/**

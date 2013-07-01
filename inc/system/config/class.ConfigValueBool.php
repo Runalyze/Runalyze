@@ -39,6 +39,9 @@ class ConfigValueBool extends ConfigValue {
 		$Field = new FormularCheckbox($this->getKey(), $this->getLabel(), $this->getValue());
 		$Field->addHiddenSentValue();
 
+		if (!empty($this->Options['layout']))
+			$Field->setLayout($this->Options['layout']);
+
 		return $Field;
 	}
 }

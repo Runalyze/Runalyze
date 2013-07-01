@@ -453,7 +453,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getVDOTAndIcon() {
-		return round($this->Object->getVdotCorrected(), 2).'&nbsp;'.$this->getVDOTicon();
+		return round($this->Object->getCurrentlyUsedVdot(), 2).'&nbsp;'.$this->getVDOTicon();
 	}
 
 	/**
@@ -461,7 +461,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getVDOTicon() {
-		return Icon::getVDOTicon($this->Object->getVdotCorrected(), !$this->Object->usedForVdot());
+		return Icon::getVDOTicon($this->Object->getCurrentlyUsedVdot(), !$this->Object->usedForVdot());
 	}
 
 	/**

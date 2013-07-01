@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `pulse_max` int(3) NOT NULL DEFAULT '0',
   `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
   `vdot_by_time` decimal(5,2) NOT NULL DEFAULT '0.00',
+  `vdot_with_elevation` decimal(5,2) NOT NULL DEFAULT '0.00',
   `use_vdot` tinyint(1) NOT NULL DEFAULT '1',
   `jd_intensity` smallint(4) NOT NULL DEFAULT '0',
   `trimp` int(4) NOT NULL DEFAULT '0',

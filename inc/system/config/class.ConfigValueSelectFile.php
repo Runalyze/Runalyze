@@ -52,6 +52,9 @@ class ConfigValueSelectFile extends ConfigValue {
 			}
 		}
 
+		if (!empty($this->Options['layout']))
+			$Field->setLayout($this->Options['layout']);
+
 		return $Field;
 	}
 }

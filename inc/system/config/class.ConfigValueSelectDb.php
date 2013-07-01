@@ -66,6 +66,9 @@ class ConfigValueSelectDb extends ConfigValue {
 		foreach ($Values as $Value)
 			$Field->addOption($Value['id'], $Value[$Column]);
 
+		if (!empty($this->Options['layout']))
+			$Field->setLayout($this->Options['layout']);
+
 		return $Field;
 	}
 }

@@ -230,13 +230,16 @@ $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
 		'douglas-peucker'	=> 'Douglas-Peucker-Algorithmus',
 		//'reumann-witkamm'	=> 'Reumann-Witkamm-Algorithmus'
 	),
+	//'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
 	'label'			=> 'H&ouml;henmeter: Schwellenwert',
 	'tooltip'		=> 'Schwellenwert zur H&ouml;henmeterberechnung. Wird bei der Schwellenwert-Methode und beim Douglas-Peucker-Algorithmus verwendet.',
 	'unit'			=> FormularUnit::$M,
-	'onchange'		=> Ajax::$RELOAD_TRAINING
+	//'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
 	'default'		=> false,
@@ -382,7 +385,11 @@ $Calculations->setKeys(array(
 	'CTL_DAYS',
 	'VDOT_MANUAL_CORRECTOR',
 	'VDOT_DAYS',
-	'VDOT_MANUAL_VALUE'
+	'VDOT_MANUAL_VALUE',
+	'',
+	'JD_USE_VDOT_CORRECTION_FOR_ELEVATION',
+	'VDOT_CORRECTION_POSITIVE_ELEVATION',
+	'VDOT_CORRECTION_NEGATIVE_ELEVATION'
 ));
 $Calculations->addConfigValue( new ConfigValueBool('RECHENSPIELE', array(
 	'default'		=> true,
@@ -426,6 +433,32 @@ $Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_VALUE', array(
 	'tooltip'		=> 'Wenn du keine Pulsmessung verwendest oder der berechnete VDOT-Wert weit daneben liegt,
 						kannst du f&uuml;r die Prognosen hier einen fixen Wert eingeben.',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$Calculations->addConfigValue( new ConfigValueBool('JD_USE_VDOT_CORRECTION_FOR_ELEVATION', array(
+	'default'		=> false,
+	'label'			=> 'VDOT: Distanz-Korrektur verwenden',
+	'tooltip'		=> 'Zur VDOT-Berechnung die Distanz nach Greif an die H&ouml;henmeter anpassen.',
+	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
+	//'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
+)));
+$Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_POSITIVE_ELEVATION', array(
+	'default'		=> '2',
+	'label'			=> 'VDOT: Distanz-Korrektur pro pos. H&ouml;henmeter',
+	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
+	'unit'			=> FormularUnit::$M,
+	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
+	//'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
+)));
+$Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_NEGATIVE_ELEVATION', array(
+	'default'		=> '-1',
+	'label'			=> 'VDOT: Distanz-Korrektur pro neg. H&ouml;henmeter',
+	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
+	'unit'			=> FormularUnit::$M,
+	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
+	//'onchange'		=> Ajax::$RELOAD_TRAINING,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 // Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
 $Calculations->addConfigValue(new ConfigValueInt('MAX_ATL', array('default' => 0)));

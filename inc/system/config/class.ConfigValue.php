@@ -42,7 +42,8 @@ abstract class ConfigValue {
 		'onchange'		=> '', // Ajax::$RELOAD_...-flag
 		'onchange_eval'	=> '', // onchange: evaluate code
 		'unit'			=> '',
-		'size'			=> ''
+		'size'			=> '',
+		'layout'		=> ''
 		);
 
 	/**
@@ -237,10 +238,11 @@ abstract class ConfigValue {
 	 * @return FormularInput 
 	 */
 	public function getField() {
-		if (!empty($this->Options['unit']) || !empty($this->Options['size'])) {
+		if (!empty($this->Options['unit']) || !empty($this->Options['size']) || !empty($this->Options['layout'])) {
 			$Field = new FormularInput($this->getKey(), $this->getLabel(), $this->getValue());
 			$Field->setUnit($this->Options['unit']);
 			$Field->setSize($this->Options['size']);
+			$Field->setLayout($this->Options['layout']);
 
 			return $Field;
 		}

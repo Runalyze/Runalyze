@@ -62,3 +62,6 @@ ALTER TABLE  `runalyze_training` ADD  `elapsed_time` INT( 6 ) NOT NULL DEFAULT '
 /* Rev567 */
 ALTER TABLE  `runalyze_training` ADD  `elevation_calculated` INT( 5 ) NOT NULL AFTER  `elevation`;
 ALTER TABLE  `runalyze_training` ADD  `arr_alt_original` LONGTEXT NULL DEFAULT NULL AFTER  `arr_alt`;
+
+/* Rev572 */
+ALTER TABLE  `runalyze_training` ADD  `vdot_with_elevation` DECIMAL( 5, 2 ) NOT NULL DEFAULT  '0.00' AFTER  `vdot_by_time`;
