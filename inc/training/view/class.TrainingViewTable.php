@@ -153,9 +153,14 @@ class TrainingViewTable {
 	 */
 	private function addElevationLines() {
 		$current    = $this->Training->getElevation();
-		$calculated = $this->Training->GpsData()->calculateElevation();
+		$calculated = $this->Training->getElevationCalculated(); //$this->Training->GpsData()->calculateElevation();
 		$difference = $this->Training->GpsData()->getElevationDifference();
 		$updown     = $this->Training->GpsData()->getElevationUpDownOfStep(true);
+
+		if ($calculated == 0) {
+			$this->Training->calculateElevation();
+			$calculated = $this->Training->getElevationCalculated().' (new!)';
+		}
 
 		if ($current > 0 || $calculated > 0) {
 			$Text = $current.'&nbsp;m';

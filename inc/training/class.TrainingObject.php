@@ -300,7 +300,7 @@ class TrainingObject extends DataObject {
 	/**
 	 * Calculate elevation
 	 */
-	private function calculateElevation() {
+	public function calculateElevation() {
 		$GPS = new GpsData($this->getArray());
 		$this->updateValue('elevation_calculated', $GPS->calculateElevation());
 	}

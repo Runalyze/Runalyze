@@ -112,7 +112,7 @@ class ElevationInfo {
 				<span class="asInput">'.$this->lowestPoint.'&nbsp;m</span>
 			</div>
 			<div class="w50">
-				<label>berechneter Wert</label>
+				<label>'.Ajax::tooltip('berechneter Wert', 'Dieser Wert wurde mit den aktuellen Einstellungen berechnet. In der Trainingsansicht kann ein fr&uuml;herer berechneter Wert angegeben sein.').'</label>
 				<span class="asInput">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
 			</div>
 			<div class="w50">
