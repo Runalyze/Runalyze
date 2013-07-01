@@ -112,7 +112,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput highlight">'.$this->Training->getVdotCorrected().'</span>
+				<span class="asInput '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
 			</div>
 			<div class="w50">
 				<label>unkorrigiert</label>
@@ -126,27 +126,36 @@ class VDOTinfo {
 	 * Display with corrector
 	 */
 	protected function displayWithElevation() {
-		$additionalDistance = 2*$this->Training->getElevationUp() - $this->Training->getElevationDown();
-		$newVDOT = VDOT_CORRECTOR * JD::Training2VDOT(0, array(
-			'sportid'	=> CONF_RUNNINGSPORT,
-			'distance'	=> $this->Training->getDistance() + $additionalDistance/1000,
-			's'			=> $this->Training->getTimeInSeconds(),
-			'pulse_avg'	=> $this->Training->getPulseAvg()
-		));
+		$up   = $this->Training->hasArrayAltitude() ? $this->Training->getElevationUp() : $this->Training->getElevation();
+		$down = $this->Training->hasArrayAltitude() ? $this->Training->getElevationDown() : $this->Training->getElevation();
+
+		$additionalDistance = (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down;
+		$newVDOT =  JD::Training2VDOTwithElevation(0, array(
+				'sportid'	=> CONF_RUNNINGSPORT,
+				'distance'	=> $this->Training->getDistance(),
+				's'			=> $this->Training->getTimeInSeconds(),
+				'pulse_avg'	=> $this->Training->getPulseAvg()
+			),
+			$up,
+			$down
+		);
+
+		if (CONF_JD_USE_VDOT_CORRECTOR)
+			$newVDOT = VDOT_CORRECTOR * $newVDOT;
 
 		$Fieldset = new FormularFieldset('Korrektur: mit Beachtung der H&ouml;henmeter');
 		$Fieldset->setHtmlCode('
-			<p class="warning small">
-				Diese Korrektur wird noch nicht verwendet.
+			<p class="warning small '.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'hide' : '').'">
+				Diese Korrektur wird derzeit nicht verwendet.
 			</p>
 
 			<div class="w50">
 				<label>Auf-/Abstieg</label>
-				<span class="asInput">'.$this->Training->DataView()->getElevationUpAndDown().'</span>
+				<span class="asInput">+'.$up.'/-'.$down.'&nbsp;m</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput">'.round($newVDOT, 2).'</span>
+				<span class="asInput '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
 			</div>
 			<div class="w50">
 				<label>Distanzeinfluss</label>

@@ -212,9 +212,19 @@ class TrainingObject extends DataObject {
 	private function updateVdot() {
 		$this->updateValue('vdot_by_time', JD::Competition2VDOT($this->get('distance'), $this->get('s')));
 		$this->updateValue('vdot', JD::Training2VDOT($this->id(), $this->getArray()));
+		$this->updateVdotWithElevation();
 
 		if ($this->Type()->isCompetition())
 			JD::recalculateVDOTcorrector();
+	}
+
+	/**
+	 * Update vdot with elevation
+	 * @param int $up [optional]
+	 * @param int $down [optional]
+	 */
+	private function updateVdotWithElevation($up = false, $down = false) {
+		$this->updateValue('vdot_with_elevation', JD::Training2VDOTwithElevation($this->id(), $this->getArray(), $up, $down));
 	}
 
 	/**
@@ -310,7 +320,10 @@ class TrainingObject extends DataObject {
 	 */
 	public function setCalculatedValueAsElevation() {
 		$GPS = new GpsData($this->getArray());
-		$this->updateValue('elevation', $GPS->calculateElevation());
+		$array = $GPS->calculateElevation(true);
+
+		$this->updateValue('elevation', $array[0]);
+		$this->updateVdotWithElevation($array[1], $array[2]);
 	}
 
 
@@ -711,9 +724,7 @@ class TrainingObject extends DataObject {
 	 * the user defined/calculated correction factor.
 	 * @return double corrected vdot
 	 */
-	public function getVdotCorrected() { return round(JD::correctVDOT($this->getVdotUncorrected()), 2);}
-
-
+	public function getVdotCorrected() { return round(JD::correctVDOT($this->getVdotUncorrected()), 2); }
 	/**
 	 * Get VDOT by time
 	 * 
@@ -721,6 +732,21 @@ class TrainingObject extends DataObject {
 	 * @return double vdot by time
 	 */
 	public function getVdotByTime() { return $this->get('vdot_by_time'); }
+	/**
+	 * Get VDOT with elevation
+	 * @return double vdot with elevation influence
+	 */
+	public function getVdotWithElevation() { return $this->get('vdot_with_elevation'); }
+	/**
+	 * Get VDOT with elevation corrected
+	 * @return double vdot with elevation influence
+	 */
+	public function getVdotWithElevationCorrected() { return round(JD::correctVDOT($this->getVdotWithElevation()), 2); }
+	/**
+	 * Get VDOT with elevation
+	 * @return double vdot with elevation influence
+	 */
+	public function getCurrentlyUsedVdot() { return (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
 
 
 	/**

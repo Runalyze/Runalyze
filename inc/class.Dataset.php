@@ -179,11 +179,12 @@ class Dataset {
 	 */
 	private function getQuerySelectForSet() {
 		$String = '';
+		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
 		foreach ($this->data as $set)
 			if ($set['summary'] == 1) {
 				if ($set['name'] == 'vdot') {
-					$String .= ', SUM(IF(`use_vdot`=1,`vdot`*`s`,0))/SUM(IF(`use_vdot`=1,`s`,0)) as `vdot`';
+					$String .= ', SUM(IF(`use_vdot`=1,'.$Sum.',0))/SUM(IF(`use_vdot`=1,`s`,0)) as `vdot`';
 				} else {
 					if ($set['summary_mode'] != 'AVG')
 						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
@@ -200,7 +201,7 @@ class Dataset {
 	 * @return string 
 	 */
 	public function getQuerySelectForAllDatasets() {
-		$String = ',`is_track`,`use_vdot`,`is_public`,`elevation_corrected`,SUBSTR(`arr_alt`,1,1) as `arr_alt`';
+		$String = ',`is_track`,`use_vdot`,`vdot_with_elevation`,`is_public`,`elevation_corrected`,SUBSTR(`arr_alt`,1,1) as `arr_alt`';
 
 		foreach ($this->data as $set)
 			$String .= ', `'.$set['name'].'`';

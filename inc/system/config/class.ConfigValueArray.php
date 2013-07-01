@@ -53,6 +53,11 @@ class ConfigValueArray extends ConfigValue {
 	 * @return FormularInput 
 	 */
 	public function getField() {
-		return new FormularInput($this->getKey(), $this->getLabel(), $this->getValueAsString());
+		$Field = new FormularInput($this->getKey(), $this->getLabel(), $this->getValueAsString());
+
+		if (!empty($this->Options['layout']))
+			$Field->setLayout($this->Options['layout']);
+
+		return $Field;
 	}
 }

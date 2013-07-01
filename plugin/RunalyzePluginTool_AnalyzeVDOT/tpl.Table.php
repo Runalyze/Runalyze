@@ -68,4 +68,10 @@
 	<strong>Korrekturfaktor:</strong> Verh&auml;ltnis von VDOT zu VDOT (aus Puls)
 </p>
 
+<?php if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION): ?>
+<p class="warning">
+	Die Distanz-Korrektur f&uuml;r H&ouml;henmeter wird hier nicht verwendet.
+</p>
+<?php endif; ?>
+
 <?php echo Ajax::wrapJSforDocumentReady('$("#ajax").addClass("bigWin");'); ?>

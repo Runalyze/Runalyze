@@ -9,7 +9,7 @@ $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
-	//'vdot', 'vdot_by_time', 'trimp'
+	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation'
 	'elapsed_time', 'elevation_calculated', // 'power', 'cadence',
 	// TODO: already prepared attributes
 	'jd_intensity'
@@ -262,6 +262,16 @@ $FIELDS = array(
 					)
 	),
 	'vdot_by_time'		=> array(
+					'database'	=> array(
+						'type'		=> 'decimal',
+						'precision'	=> '5,2',
+						'default'	=> '0.00'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'vdot_with_elevation'=> array(
 					'database'	=> array(
 						'type'		=> 'decimal',
 						'precision'	=> '5,2',

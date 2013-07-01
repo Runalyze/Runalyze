@@ -22,6 +22,12 @@ class ConfigTabs {
 	static public $TABS_ID = 'config-tabs';
 
 	/**
+	 * Messages to show after submit
+	 * @var array
+	 */
+	static private $Messages = array();
+
+	/**
 	 * Internal array with all tabs
 	 * @var array
 	 */
@@ -32,6 +38,14 @@ class ConfigTabs {
 	 * @var string
 	 */
 	protected $defaultKey = '';
+
+	/**
+	 * Add message after submit
+	 * @param string $HTMLcode HTML::info() or HTML::text() or HTML::warning() or HTML::error()
+	 */
+	static public function addMessage($HTMLcode) {
+		self::$Messages[] = $HTMLcode;
+	}
 
 	/**
 	 * Add a tab and set it as the default one
@@ -75,7 +89,12 @@ class ConfigTabs {
 		if (Request::param('form') == 'true') {
 			$this->Tabs[$this->getCurrentKey()]->parsePostData();
 
-			echo '<div id="submit-info"><em>Die Einstellungen wurden gespeichert.</em><br />&nbsp;</div>'.NL;
+			$SubmitInfo = '<em>Die Einstellungen wurden gespeichert.</em><br />&nbsp;';
+
+			if (!empty(self::$Messages))
+				$SubmitInfo .= implode(NL, self::$Messages).'<br />&nbsp;';
+
+			echo '<div id="submit-info">'.$SubmitInfo.'</div>'.NL;
 			echo Ajax::getReloadCommand().NL;
 		}
 

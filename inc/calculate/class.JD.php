@@ -117,7 +117,9 @@ class JD {
 	}
 
 	/**
-	 * Calculates VDOT for a training (without correction!)
+	 * Calculates VDOT for a training
+	 * 
+	 * without correction!
 	 * @uses HF_MAX
 	 * @param int $training_id
 	 * @param array $training [optional]
@@ -127,10 +129,74 @@ class JD {
 		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']))
 			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
 
-		if ($training['pulse_avg'] != 0 && $training['sportid'] == CONF_RUNNINGSPORT) {
-			$VDOT = self::Competition2VDOT($training['distance'],  $training['s']);
+		return self::values2VDOT($training['distance'], $training['s'], $training['pulse_avg'], $training['sportid']);
+	}
+
+	/**
+	 * Calculates VDOT for a training
+	 * 
+	 * without correction, with elevation!
+	 * @uses HF_MAX
+	 * @param int $training_id
+	 * @param array $training [optional]
+	 * @param int $up [optional]
+	 * @param int $down [optional]
+	 * @return double
+	 */
+	public static function Training2VDOTwithElevation($training_id, $training = array(), $up = false, $down = false) {
+		$elevationFromDatabaseNeeded = ($up === false && $down === false) && (!isset($training['elevation']) || !isset($training['arr_alt']));
+		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']) || $elevationFromDatabaseNeeded)
+			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg`, `elevation`, `arr_alt`, `arr_time` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
+
+		if ($up === false && $down === false) {
+			if (isset($training['arr_alt']) && !empty($training['arr_alt'])) {
+				$GPS    = new GpsData($training);
+				$elevationArray = $GPS->calculateElevation(true);
+				$up   = $elevationArray[1];
+				$down = $elevationArray[2];
+			} elseif (isset($training['elevation'])) {
+				$up   = $training['elevation'];
+				$down = $training['elevation'];
+			} else {
+				$up   = 0;
+				$down = 0;
+			}
+		}
+		$training['distance'] = self::transformDistanceFromElevation($training['distance'], $up, $down);
+
+		return self::values2VDOT($training['distance'], $training['s'], $training['pulse_avg'], $training['sportid']);
+	}
+
+	/**
+	 * Transform distance from elevatoin
+	 * 
+	 * @uses CONF_VDOT_CORRECTION_POSITIVE_ELEVATION
+	 * @uses CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION
+	 * @param double $distance
+	 * @param int $up
+	 * @param int $down
+	 * @return double
+	 */
+	public static function transformDistanceFromElevation($distance, $up, $down) {
+		return $distance + (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up/1000 + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down/1000;
+	}
+
+	/**
+	 * Calculate vdot for given values
+	 * @param type $distance
+	 * @param type $s
+	 * @param type $pulse_avg
+	 * @param int $sportid [optional]
+	 * @return int
+	 */
+	private static function values2VDOT($distance, $s, $pulse_avg, $sportid = false) {
+		if ($sportid === false)
+			$sportid = CONF_RUNNINGSPORT;
+
+		if ($pulse_avg != 0 && $sportid == CONF_RUNNINGSPORT) {
+			$VDOT = self::Competition2VDOT($distance, $s);
 			if ($VDOT !== false)
-				return round( $VDOT / (self::pHF2pVDOT($training['pulse_avg']/HF_MAX) ), 2);
+				return round( $VDOT / (self::pHF2pVDOT($pulse_avg/HF_MAX) ), 2);
 		}
 
 		return 0;
@@ -188,10 +254,12 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
+		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+
 		$Data = Mysql::getInstance()->fetchSingle('
 			SELECT
 				SUM(`s`) as `ssum`,
-				SUM(`vdot`*`s`) as `value`
+				SUM('.$Sum.') as `value`
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`="'.CONF_RUNNINGSPORT.'"

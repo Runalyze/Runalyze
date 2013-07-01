@@ -62,6 +62,9 @@ class ConfigValueSelect extends ConfigValue {
 		$Field = new FormularSelectBox($this->getKey(), $this->getLabel(), $this->getValue());
 		$Field->setOptions( $this->Options['options'] );
 
+		if (!empty($this->Options['layout']))
+			$Field->setLayout($this->Options['layout']);
+
 		return $Field;
 	}
 }

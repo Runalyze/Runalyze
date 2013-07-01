@@ -50,6 +50,8 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em><br /><br />';
 		}
 
+		$AndApplyElevationToVDOT = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? ' und VDOT anpassen' : '';
+
 		$Fieldset = new FormularFieldset('Datenbank bereinigen');
 		$Fieldset->addBlock('Mit diesem Tool l&auml;sst sich die Datenbank bereinigen.
 			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
@@ -60,14 +62,19 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
 			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
 			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen', 'clean=elevation').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br />
 			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.<br />
 			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.<br />
 			<br />
 			<small>&Auml;ndert nur den berechneten Wert, der nur in der genauen Trainingsansicht auftaucht.</small>');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT.' (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br />
 			Die Anzeige bezieht sich auf die manuell eingegebenen H&ouml;henmeter, welche nur einen berechneten Wert enthalten, wenn das Feld im Formular leer gelassen wurde.
 			Mit dieser Methode k&ouml;nnen diese Werte &uuml;berschrieben werden.');
+
+		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
+			$Fieldset->addWarning('Da die VDOT-Anpassung an H&ouml;henmeter aktiviert ist, m&uuml;ssen zum Neuberechnen der VDOT-Werte
+				auch die H&ouml;henmeter neuberechnet werden. Die vollst&auml;ndige Bereinigung passt den VDOT daher nicht korrekt an.');
+		}
 
 		$Formular = new Formular();
 		$Formular->setId('datenbank-cleanup');
@@ -119,17 +126,41 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function calculateElevation() {
 		$Mysql     = Mysql::getInstance();
-		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`arr_alt`,`arr_time` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""');
+		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`arr_alt`,`arr_time`,`distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""');
 
 		foreach ($Trainings as $Training) {
 			$GPS    = new GpsData($Training);
-			$value  = $GPS->calculateElevation();
+			$elevationArray = $GPS->calculateElevation(true);
+			$keys   = array('elevation_calculated');
+			$values = array($elevationArray[0]);
+
+			if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
+				$keys[] = 'vdot_with_elevation';
+				$values[] = JD::Training2VDOTwithElevation($Training['id'], $Training, $elevationArray[1], $elevationArray[2]);
+			}
 
 			if (Request::param('overwrite') == 'true') {
-				$Mysql->update(PREFIX.'training', $Training['id'], array('elevation', 'elevation_calculated'), array($value, $value) );
-			} else {
-				$Mysql->update(PREFIX.'training', $Training['id'], array('elevation'), array($value) );
+				$keys[]   = 'elevation';
+				$values[] = $elevationArray[0];
 			}
+
+			$Mysql->update(PREFIX.'training', $Training['id'], $keys, $values );
+		}
+
+		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
+			$this->recalculateVDOTwithElevationWithoutGPSarray();
+	}
+
+	/**
+	 * Recalculate VDOT with elevation for trainings without gps array
+	 */
+	private function recalculateVDOTwithElevationWithoutGPSarray() {
+		$Mysql     = Mysql::getInstance();
+		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0');
+
+		foreach ($Trainings as $Training) {
+			$newVdot = JD::Training2VDOTwithElevation($Training['id'], $Training, $Training['elevation'], $Training['elevation']);
+			$Mysql->update(PREFIX.'training', $Training['id'], 'vdot_with_elevation', $newVdot);
 		}
 	}
 
