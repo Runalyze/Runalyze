@@ -60,9 +60,10 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	protected function initData() {
 		$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitude());
 
-		//$this->Data = parent::getData($this->Training);
-		$this->Data = $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0);
-		$this->Plot->Data[] = array('label' => 'korrigiert', 'color' => 'rgba(227,217,187,0.5)', 'data' => $this->Data);
+		if ($this->Training->elevationWasCorrected() || !$this->Training->GpsData()->hasElevationDataOriginal()) {
+			$this->Data = $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0);
+			$this->Plot->Data[] = array('label' => 'korrigiert', 'color' => 'rgba(227,217,187,0.5)', 'data' => $this->Data);
+		}
 
 		if ($this->Training->GpsData()->hasElevationDataOriginal()) {
 			$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitudeOriginal());
@@ -72,6 +73,11 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 				'color'	=> '#CCC',
 				'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0)
 			);
+
+			if (count($this->Plot->Data) == 1) {
+				$this->Plot->Data[0]['color'] = 'rgba(227,217,187,0.5)';
+				$this->Data = $this->Plot->Data[0]['data'];
+			}
 
 			$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitude());
 		}

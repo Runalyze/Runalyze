@@ -61,8 +61,13 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
 			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
 		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen', 'clean=elevation').'</strong><br />
-			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.
-			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.');
+			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.<br />
+			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.<br />
+			<br />
+			<small>&Auml;ndert nur den berechneten Wert, der nur in der genauen Trainingsansicht auftaucht.</small>');
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br />
+			Die Anzeige bezieht sich auf die manuell eingegebenen H&ouml;henmeter, welche nur einen berechneten Wert enthalten, wenn das Feld im Formular leer gelassen wurde.
+			Mit dieser Methode k&ouml;nnen diese Werte &uuml;berschrieben werden.');
 
 		$Formular = new Formular();
 		$Formular->setId('datenbank-cleanup');
@@ -117,9 +122,14 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`arr_alt`,`arr_time` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""');
 
 		foreach ($Trainings as $Training) {
-			$GPS = new GpsData($Training);
+			$GPS    = new GpsData($Training);
+			$value  = $GPS->calculateElevation();
 
-			$Mysql->update(PREFIX.'training', $Training['id'], 'elevation', $GPS->calculateElevation() );
+			if (Request::param('overwrite') == 'true') {
+				$Mysql->update(PREFIX.'training', $Training['id'], array('elevation', 'elevation_calculated'), array($value, $value) );
+			} else {
+				$Mysql->update(PREFIX.'training', $Training['id'], array('elevation'), array($value) );
+			}
 		}
 	}
 
