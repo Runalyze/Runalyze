@@ -16,7 +16,7 @@
 	<?php echo System::getCodeForAllJSFiles(); ?>
 
 	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot/excanvas.min.js"></script><![endif]-->
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot-0.8.1/excanvas.min.js"></script><![endif]-->
 </head>
 
 <body id="shared" class="toolbar-top" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
