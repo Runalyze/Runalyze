@@ -77,9 +77,6 @@ class TrainingObject extends DataObject {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
 		$this->set('is_public', CONF_TRAINING_MAKE_PUBLIC ? '1' : '0');
 		$this->forceToSet('s_sum_with_distance', 0);
-
-		//if (CONF_TRAINING_LOAD_WEATHER)
-		//	$this->setWeatherForecast();
 	}
 
 	/**

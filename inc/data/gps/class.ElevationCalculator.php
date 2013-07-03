@@ -76,22 +76,6 @@ class ElevationCalculator {
 	protected $UpDownPoints = array();
 
 	/**
-	 * Set treshold
-	 * @param int $treshold
-	 */
-	static public function setTreshold($treshold) {
-		self::$TRESHOLD = $treshold;
-	}
-
-	/**
-	 * Set algorithm
-	 * @param enum $algorithm
-	 */
-	static public function setAlgorithm($algorithm) {
-		self::$ALGORITHM = $algorithm;
-	}
-
-	/**
 	 * Get name of current algorithm
 	 * @return string
 	 */
@@ -115,6 +99,22 @@ class ElevationCalculator {
 	 */
 	public function __construct($ElevationPoints) {
 		$this->ElevationPoints = $ElevationPoints;
+	}
+
+	/**
+	 * Set treshold
+	 * @param int $treshold
+	 */
+	public function setTreshold($treshold) {
+		self::$TRESHOLD = $treshold;
+	}
+
+	/**
+	 * Set algorithm
+	 * @param enum $algorithm
+	 */
+	public function setAlgorithm($algorithm) {
+		self::$ALGORITHM = $algorithm;
 	}
 
 	/**

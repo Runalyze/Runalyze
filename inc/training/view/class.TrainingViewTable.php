@@ -153,13 +153,13 @@ class TrainingViewTable {
 	 */
 	private function addElevationLines() {
 		$current    = $this->Training->getElevation();
-		$calculated = $this->Training->getElevationCalculated(); //$this->Training->GpsData()->calculateElevation();
+		$calculated = $this->Training->getElevationCalculated();
 		$difference = $this->Training->GpsData()->getElevationDifference();
 		$updown     = $this->Training->GpsData()->getElevationUpDownOfStep(true);
 
 		if ($calculated == 0) {
 			$this->Training->calculateElevation();
-			$calculated = $this->Training->getElevationCalculated().' (new!)';
+			$calculated = $this->Training->getElevationCalculated();
 		}
 
 		if ($current > 0 || $calculated > 0) {
