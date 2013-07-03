@@ -101,7 +101,7 @@ class JD {
 	 * @return float       Speed [m/min
 	 */
 	public static function Pace2v($pace_in_s) {
-		return $pace_in_s/1000/60;
+		return 60*1000/$pace_in_s;
 	}
 
 	/**

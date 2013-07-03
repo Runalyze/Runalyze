@@ -1,5 +1,8 @@
 <?php
 
+if (!defined('CONF_JD_USE_VDOT_CORRECTOR'))
+	define('CONF_JD_USE_VDOT_CORRECTOR', true);
+
 require_once dirname(__FILE__) . '/../../../inc/calculate/class.JD.php';
 
 /**
@@ -28,79 +31,84 @@ class JDTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers JD::VDOT2v
-	 * @todo Implement testVDOT2v().
 	 */
 	public function testVDOT2v() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// m/min
+		$this->assertEquals( 300.75, JD::VDOT2v(60) );
 	}
 
 	/**
 	 * @covers JD::pVDOT2pHF
-	 * @todo Implement testPVDOT2pHF().
 	 */
 	public function testPVDOT2pHF() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$this->assertEquals( 0.66, JD::pVDOT2pHF(0.6), '', 0.03);
+		$this->assertEquals( 0.755, JD::pVDOT2pHF(0.7), '', 0.03);
+		$this->assertEquals( 0.85, JD::pVDOT2pHF(0.8), '', 0.03);
+		$this->assertEquals( 0.93, JD::pVDOT2pHF(0.9), '', 0.03);
+		$this->assertEquals( 1, JD::pVDOT2pHF(1) );
 	}
 
 	/**
 	 * @covers JD::pHF2pVDOT
-	 * @todo Implement testPHF2pVDOT().
 	 */
 	public function testPHF2pVDOT() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$this->assertEquals( 0.64, JD::pHF2pVDOT(0.7), '', 0.03);
+		$this->assertEquals( 0.75, JD::pHF2pVDOT(0.8), '', 0.03);
+		$this->assertEquals( 0.86, JD::pHF2pVDOT(0.9), '', 0.03);
+		$this->assertEquals( 1, JD::pHF2pVDOT(1) );
 	}
 
 	/**
 	 * @covers JD::v2Pace
-	 * @todo Implement testV2Pace().
 	 */
 	public function testV2Pace() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$this->assertEquals( "3:20", JD::v2Pace(300.75) );
 	}
 
 	/**
 	 * @covers JD::Pace2v
-	 * @todo Implement testPace2v().
 	 */
 	public function testPace2v() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$this->assertEquals( 300, JD::Pace2v(200) );
 	}
 
 	/**
 	 * @covers JD::correctVDOT
-	 * @todo Implement testCorrectVDOT().
 	 */
 	public function testCorrectVDOT() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// bootstrap.php will set corrector to 1
+		$this->assertEquals( 50, JD::correctVDOT(50) );
 	}
 
 	/**
 	 * @covers JD::Training2VDOT
-	 * @todo Implement testTraining2VDOT().
 	 */
 	public function testTraining2VDOT() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// pulse_avg = 200 is HR_MAX
+		$this->assertEquals( 40.01, JD::Training2VDOT(0, array(
+			'sportid'	=> CONF_RUNNINGSPORT,
+			'distance'	=> 10,
+			's'			=> 50*60,
+			'pulse_avg'	=> 200
+		)));
+		$this->assertEquals( 51.94, JD::Training2VDOT(0, array(
+			'sportid'	=> CONF_RUNNINGSPORT,
+			'distance'	=> 10,
+			's'			=> 40*60,
+			'pulse_avg'	=> 200
+		)));
+		$this->assertEquals( 60.73, JD::Training2VDOT(0, array(
+			'sportid'	=> CONF_RUNNINGSPORT,
+			'distance'	=> 10,
+			's'			=> 35*60,
+			'pulse_avg'	=> 200
+		)));
+		$this->assertEquals( 72.8, JD::Training2VDOT(0, array(
+			'sportid'	=> CONF_RUNNINGSPORT,
+			'distance'	=> 10,
+			's'			=> 30*60,
+			'pulse_avg'	=> 200
+		)));
 	}
 
 	/**
@@ -108,32 +116,34 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	 * @todo Implement testCompetitionPrognosis().
 	 */
 	public function testCompetitionPrognosis() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// VDOT: 32
+		$this->assertEquals( 60*60 + 26 + 4, JD::CompetitionPrognosis(32, 10) );
+		$this->assertEquals( 133*60 + 49 + 9.4475, JD::CompetitionPrognosis(32, 21.0975) );
+		$this->assertEquals( 274*60 + 59 + 19.9425, JD::CompetitionPrognosis(32, 42.195) );
+		// VDOT: 48
+		$this->assertEquals( 42*60 + 50 + 0, JD::CompetitionPrognosis(48, 10) );
+		$this->assertEquals( 94*60 + 53 + 3.625, JD::CompetitionPrognosis(48, 21.0975) );
+		$this->assertEquals( 197*60 + 27 + 9.395, JD::CompetitionPrognosis(48, 42.195) );
+		// VDOT: 60
+		$this->assertEquals( 35*60 + 22 + 3, JD::CompetitionPrognosis(60, 10) );
+		$this->assertEquals( 78*60 + 9 + 5.49375, JD::CompetitionPrognosis(60, 21.0975) );
+		$this->assertEquals( 163*60 + 25 + 4.9375, JD::CompetitionPrognosis(60, 42.195) );
 	}
 
 	/**
 	 * @covers JD::calculateVDOTform
-	 * @todo Implement testCalculateVDOTform().
 	 */
 	public function testCalculateVDOTform() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// TODO
+		$this->assertEquals( 0, JD::calculateVDOTform() );
 	}
 
 	/**
-	 * @covers JD::calculateVDOTcorrector
-	 * @todo Implement testCalculateVDOTcorrector().
+	 * @covers JD::getVDOTcorrector
 	 */
 	public function testCalculateVDOTcorrector() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// TODO
+		$this->assertEquals( 1, JD::getVDOTcorrector() );
 	}
 
 }
