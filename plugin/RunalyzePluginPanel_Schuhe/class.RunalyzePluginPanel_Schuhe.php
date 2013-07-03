@@ -181,7 +181,10 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		');
 
 		foreach ($AllShoes as $Shoe)
-			$this->schuhe[] = array_merge($Shoe, $ShoeStatistics[$Shoe['id']]);
+			if (isset($ShoeStatistics[$Shoe['id']]))
+				$this->schuhe[] = array_merge($Shoe, $ShoeStatistics[$Shoe['id']]);
+			else
+				$this->schuhe[] = array_merge($Shoe, array('num' => 0, 'pace' => 0, 'dist' => 0));
 	}
 
 	/**

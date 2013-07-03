@@ -79,9 +79,10 @@ INSERT INTO `runalyze_plugin` (`id`, `key`, `type`, `name`, `description`, `conf
 (15, 'RunalyzePluginStat_Laufabc', 'stat', 'Lauf-ABC', 'Wie oft hast du Lauf-ABC absolviert?', '', 1, 11),
 (16, 'RunalyzePluginTool_Cacheclean', 'tool', 'Cacheclean', 'L&ouml;scht den Cache der Diagramme. Sollte genutzt werden, falls Probleme mit Diagrammen auftauchen.', '', 1, 99),
 (17, 'RunalyzePluginTool_DatenbankCleanup', 'tool', 'Datenbank-Cleanup', 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.', '', 1, 99),
-(18, 'RunalyzePluginTool_MultiEditor', 'tool', 'Multi-Editor', 'Bearbeitung von mehreren Trainings gleichzeitig.', 'sportid|bool=true|Sportart bearbeiten\ns|bool=true|Dauer bearbeiten\ndistance|bool=true|Distanz bearbeiten\nis_track|bool=false|Bahn bearbeiten\npulse|bool=true|Puls &oslash;/max bearbeiten\nkcal|bool=true|Kalorien bearbeiten\nabc|bool=false|Lauf-ABC bearbeiten\ncomment|bool=true|Bemerkung bearbeiten\nroute|bool=true|Strecke bearbeiten\nelevation|bool=false|hm bearbeiten\npartner|bool=false|Trainingspartner bearbeiten\ntemperature|bool=false|Temperatur bearbeiten\nweather|bool=false|Wetter bearbeiten\nclothes|bool=false|Kleidung bearbeiten\nsplits|bool=false|Zwischenzeiten bearbeiten\n', 1, 99),
+(18, 'RunalyzePluginTool_MultiEditor', 'tool', 'Multi-Editor', 'Bearbeitung von mehreren Trainings gleichzeitig.', '', 1, 99),
 (19, 'RunalyzePluginTool_AnalyzeVDOT', 'tool', 'VDOT analysieren', 'Den VDOT im Zusammenhang mit Wettkampfergebnissen analysieren', '', 1, 99),
-(20, 'RunalyzePluginTool_DbBackup', 'tool', 'Datenbank-Import/Export', 'Dieses Plugin sichert die komplette Datenbank und kann ein vorhandenes Backup importieren.', '', 1, 99);
+(20, 'RunalyzePluginTool_DbBackup', 'tool', 'Datenbank-Import/Export', 'Dieses Plugin sichert die komplette Datenbank und kann ein vorhandenes Backup importieren.', '', 1, 99),
+(21, 'RunalyzePluginTool_JDTables', 'tool', 'Tabellen von Jack Daniels', 'Verschiedene Tabellen für Puls, Tempo und VDOT von Jack Daniels', '', 1, 99);
 
 --
 -- Daten f&uuml;r Tabelle `runalyze_shoe`

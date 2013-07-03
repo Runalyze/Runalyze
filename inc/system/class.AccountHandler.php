@@ -173,7 +173,9 @@ class AccountHandler {
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
-			self::setAndSendActivationKeyFor($newAccountId, $errors);
+
+			if ($activationHash != '')
+				self::setAndSendActivationKeyFor($newAccountId, $errors);
 		}
 
 		self::$IS_ON_REGISTER_PROCESS = false;

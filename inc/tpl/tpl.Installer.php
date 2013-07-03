@@ -179,7 +179,7 @@ foreach ($Steps as $i => $Name) {
 		<label>
 			<strong>Garmin API-Key*</strong>
 			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>" />
-			<?php if ($_SERVER['SERVER_NAME'] != 'localhost'): ?>
+			<?php if ($_SERVER['SERVER_NAME'] == 'localhost'): ?>
 				<small>(f&uuml;r <em>localhost</em> nicht notwendig)</small>
 			<?php else: ?>
 				<small>

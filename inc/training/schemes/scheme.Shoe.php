@@ -59,7 +59,8 @@ $FIELDS['km'] = array(
 $FIELDS['time'] = array(
 	'database'	=> array(
 		'type'		=> 'int',
-		'precision'	=> '11'
+		'precision'	=> '11',
+		'default'	=> '0'
 	)
 );
 $FIELDS['inuse'] = array(
