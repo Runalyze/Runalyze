@@ -183,7 +183,14 @@ abstract class PlotSumData extends Plot {
 	 * Add current level
 	 */
 	private function addCurrentLevel() {
-		$possibleKM = Running::possibleKmInOneWeek();
+		$timer = $this->timer();
+
+		if (stripos($timer, 'MONTH') !== false)
+			$possibleKM = Running::possibleKmInOneMonth();
+		elseif (stripos($timer, 'WEEK') !== false)
+			$possibleKM = Running::possibleKmInOneWeek();
+		else
+			return;
 
 		if ($possibleKM > 0 && $this->Sport->id() == CONF_RUNNINGSPORT) {
 			$this->addThreshold('y', $possibleKM);

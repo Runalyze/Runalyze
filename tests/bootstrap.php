@@ -23,6 +23,9 @@ if (!defined('PREFIX'))
 if (!defined('CONF_VDOT_CORRECTOR'))
 	define('CONF_VDOT_CORRECTOR', 1);
 
+if (!defined('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION'))
+	define('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION', false);
+
 if (!defined('RUNALYZE_TEST'))
 	define('RUNALYZE_TEST', true);
 
