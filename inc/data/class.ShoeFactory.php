@@ -55,14 +55,16 @@ class ShoeFactory {
 
 	/**
 	 * Get array with all shoe-data
-	 * @param bool $inUse [optional] default: true
+	 * @param bool $onlyInUse [optional] default: true
 	 * @return array
 	 */
-	static public function FullArray($inUse = true) {
+	static public function FullArray($onlyInUse = true) {
 		$shoes = self::AllShoes();
-		foreach ($shoes as $id => $shoe)
-			if ($inUse && $shoe['inuse'] != 1)
-				unset($shoes[$id]);
+
+		if ($onlyInUse)
+			foreach ($shoes as $id => $shoe)
+				if ($shoe['inuse'] != 1)
+					unset($shoes[$id]);
 
 		return $shoes;
 	}
