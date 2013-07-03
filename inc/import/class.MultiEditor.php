@@ -32,6 +32,7 @@ class MultiEditor {
 	public function display() {
 		if (empty(self::$IDs)) {
 			echo HTML::error('Dem Multi-Editor wurden keine Trainings-IDs &uuml;bergeben.');
+			echo HTML::info('Falls du noch keine Trainings eingetragen hast, kannst du hier auch nichts bearbeiten.');
 		} else {
 			$this->displayEditor();
 			$this->displayNavigation();

@@ -105,6 +105,8 @@
 						else
 							echo HTML::error($Error);
 					}
+				elseif (System::isAtLocalhost())
+					echo HTML::info('Du kannst dich jetzt einloggen. Viel Spa&szlig; mit Runalyze!');
 				else
 					echo HTML::info('Danke f&uuml;r deine Anmeldung! Du solltest in den n&auml;chsten Minuten eine E-Mail erhalten, in der du den Account best&auml;tigen kannst.');
 			}
