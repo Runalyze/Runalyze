@@ -157,18 +157,31 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * Initialize internal data
 	 */
 	private function initTableData() {
-		$this->schuhe = Mysql::getInstance()->fetchAsArray('
+		$this->schuhe   = array();
+		$ShoeStatistics = array();
+		$AllShoeStatistics = Mysql::getInstance()->fetchAsArray('
 			SELECT
-				COUNT('.PREFIX.'training.id) as num,
+				shoeid,
+				COUNT(*) as num,
 				MIN(pace) as pace,
-				MAX(distance) as dist,
-				'.PREFIX.'shoe.*
+				MAX(distance) as dist
+			FROM '.PREFIX.'training
+			WHERE shoeid != 0
+			GROUP BY shoeid
+		');
+
+		foreach ($AllShoeStatistics as $Statistic)
+			$ShoeStatistics[$Statistic['shoeid']] = $Statistic;
+
+		$AllShoes = Mysql::getInstance()->fetchAsArray('
+			SELECT
+				*
 			FROM '.PREFIX.'shoe
-				LEFT JOIN '.PREFIX.'training ON '.PREFIX.'shoe.id='.PREFIX.'training.shoeid
-			WHERE
-				'.PREFIX.'shoe.accountid="'.SessionAccountHandler::getId().'"
-			GROUP BY id
-			ORDER BY inuse DESC, km DESC');
+			ORDER BY inuse DESC, km DESC
+		');
+
+		foreach ($AllShoes as $Shoe)
+			$this->schuhe[] = array_merge($Shoe, $ShoeStatistics[$Shoe['id']]);
 	}
 
 	/**
