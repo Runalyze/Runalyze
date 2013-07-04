@@ -24,6 +24,12 @@ class TrainingFormular extends StandardFormular {
 	static public $ONLY_RUNNING_CLASS = "only-running";
 
 	/**
+	 * CSS class for inputs only for not running
+	 * @var string
+	 */
+	static public $ONLY_NOT_RUNNING_CLASS = "only-not-running";
+
+	/**
 	 * CSS class for inputs only for sports outside
 	 * @var string
 	 */

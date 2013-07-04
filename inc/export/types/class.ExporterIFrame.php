@@ -44,6 +44,7 @@ class ExporterIFrame extends ExporterAbstract {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
+		$this->Training->set('is_public', 1);
 		$Url = $this->Training->Linker()->publicUrl();
 
 		return '<iframe style="padding:0;margin:0 auto;display:block;" src="'.$Url.'&amp;mode=iframe" width="500" height="500"></iframe>';
