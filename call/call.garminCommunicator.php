@@ -94,18 +94,20 @@ $Frontend = new Frontend(true);
 				postActivityHandler: function(activityXml, display) {
 					$("readSelectedButton").value = "Importieren";
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
-	
+
+					uploadedActivities.push(currentName);
+					currentActivity = currentActivity + 1;
+
 					if (display.numQueuedActivities > 1)
-						window.parent.Runalyze.saveTcx(activityXml, currentName);
+						window.parent.Runalyze.saveTcx(activityXml, currentName, currentActivity, display.numQueuedActivities, uploadedActivities);
 					else
 						window.parent.Runalyze.loadXML(activityXml);
 	
-					uploadedActivities.push(currentName);
-					currentActivity = currentActivity + 1;
 				},
 				afterFinishUploads: function(display) {
-					if (uploadedActivities.length > 1)
-						window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
+					// Done from Runalyze.saveTcx() with callback
+					//if (uploadedActivities.length > 1)
+					//	window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
 					$("readSelectedButton").value = "Importieren";
