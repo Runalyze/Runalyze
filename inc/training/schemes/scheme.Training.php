@@ -320,8 +320,9 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Trittfrequenz',
+						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">Trittfrequenz</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">Schrittfrequenz</span>',
 						'unit'		=> FormularUnit::$RPM,
+						'tooltip'	=> 'Einheit ist auch beim Laufen hier <em>rpm</em>, also die Schritte mit z.B. dem linken Fuß pro Minute.',
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
