@@ -103,9 +103,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->Id) );
-		$this->TrainingObject->setSportid( $this->findSportId() );
 		$this->TrainingObject->setActivityId( (string)$this->XML->Id );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
+		$this->findSportId();
 
 		if (!empty($this->XML->Training))
 			$this->TrainingObject->setComment( (string)$this->XML->Training->Plan->Name );
@@ -160,6 +160,11 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 		if ((int)$Lap->DistanceMeters == 0 && (int)$Lap->TotalTimeSeconds > 10)
 			$this->isWithoutDistance = true;
+		elseif (isset($Lap->Track[0]) && count($Lap->Track[0]->Trackpoint) > 5
+				&& (double)$Lap->Track[0]->Trackpoint[0]->DistanceMeters == (double)$Lap->Track[0]->Trackpoint[count($Lap->Track[0]->Trackpoint)-1])
+			$this->isWithoutDistance = true;
+		else
+			$this->isWithoutDistance = false;
 	}
 
 	/**
@@ -201,7 +206,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		$NoMove  = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
 		$TooSlow = !$this->lastPointWasEmpty && $ThisBreakInMeter > 0 && ($ThisBreakInSeconds/$ThisBreakInMeter > 6);
 
-		if (empty($TP->DistanceMeters) || $NoMove || $TooSlow) {
+		if ((empty($TP->DistanceMeters) && !$this->isWithoutDistance ) || $NoMove || $TooSlow) {
 			$Ignored = false;
 
 			if (count($TP->children()) == 1 || $NoMove || $TooSlow) {
@@ -310,30 +315,10 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @return int 
 	 */
 	protected function findSportId() {
-		if (!is_null($this->XML) && isset($this->XML->attributes()->Sport)) {
-			$Name = $this->XML->attributes()->Sport;
-			$Id   = SportFactory::idByName($Name);
-
-			if ($Id > 0)
-				return $Id;
-			else {
-				if ($Name == 'Running')
-					$Name = 'Laufen';
-				if ($Name == 'Biking')
-					$Name = 'Radfahren';
-				if ($Name == 'Swimming')
-					$Name = 'Schwimmen';
-				if ($Name == 'Other')
-					$Name = 'Sonstiges';
-
-				$Id = SportFactory::idByName($Name);
-
-				if ($Id > 0)
-					return $Id;
-			}
-		}
-
-		return CONF_RUNNINGSPORT;
+		if (!is_null($this->XML) && isset($this->XML->attributes()->Sport))
+			$this->guessSportID((string)$this->XML->attributes()->Sport);
+		else
+			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
 	}
 
 	/**

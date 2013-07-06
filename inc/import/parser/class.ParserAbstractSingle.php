@@ -68,20 +68,25 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * @param string $String
 	 */
 	protected function guessSportID($String) {
-		switch ($String) {
-			case 'Run':
-			case 'Running':
+		switch (mb_strtolower($String)) {
+			case 'run':
+			case 'running':
 				$String = 'Laufen';
 				break;
-			case 'Cycle':
-			case 'Bike':
-			case 'Mountain Bike':
-			case 'Cycling':
+			case 'cycle':
+			case 'bike':
+			case 'biking':
+			case 'mountain bike':
+			case 'cycling':
+			case 'ergometer':
 				$String = 'Radfahren';
 				break;
-			case 'Swim':
-			case 'Swimming':
+			case 'swim':
+			case 'swimming':
 				$String = 'Schwimmen';
+				break;
+			case 'other':
+				$String = 'Sonstiges';
 				break;
 		}
 
