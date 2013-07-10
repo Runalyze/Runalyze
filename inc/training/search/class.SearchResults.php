@@ -209,7 +209,7 @@ class SearchResults {
 		if (FormularValueParser::validatePost('date-from', FormularValueParser::$PARSER_DATE)
 				&& FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE)
 				&& $_POST['date-to'] > 0)
-			$conditions[] = '`time` BETWEEN '.$_POST['date-from'].' AND '.$_POST['date-to'];
+			$conditions[] = '`time` BETWEEN '.$_POST['date-from'].' AND '.($_POST['date-to']+DAY_IN_S);
 	}
 
 	/**
