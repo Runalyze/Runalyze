@@ -190,7 +190,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		}
 
 		if (self::$DEBUG_SPLITS)
-			Error::getInstance()->addDebug( Time::toString( end($this->gps['time_in_s']) ) );
+			Error::getInstance()->addDebug( 'computed: '. Time::toString( end($this->gps['time_in_s']) ).', '.Running::Km(end($this->gps['km'])) );
 	}
 
 	/**
@@ -200,6 +200,8 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	protected function parseTrackpoint(&$TP) {
 		if ($this->distancesAreEmpty)
 			$TP->addChild('DistanceMeters', 1000*$this->distanceToTrackpoint($TP));
+		//else if ((float)$TP->DistanceMeters < $this->gps['km'])
+		//	$TP->DistanceMeters = 1000*$this->distanceToTrackpoint($TP);
 
 		$ThisBreakInMeter   = (float)$TP->DistanceMeters - $this->lastDistance;
 		$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
