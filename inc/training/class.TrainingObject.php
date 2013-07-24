@@ -96,7 +96,7 @@ class TrainingObject extends DataObject {
 	 * @return boolean
 	 */
 	private function trainingIsTooOldToFetchWeatherData() {
-		return $this->getTimeInSeconds() != 0 && Time::diffInDays($this->getTimeInSeconds()) > 2;
+		return Time::diffInDays($this->getTimestamp()) > 2;
 	}
 
 	/**
