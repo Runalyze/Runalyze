@@ -104,12 +104,12 @@ INSERT INTO `runalyze_sport` (`id`, `name`, `img`, `short`, `kcal`, `HFavg`, `RP
 -- Daten f&uuml;r Tabelle `runalyze_type`
 --
 
-INSERT INTO `runalyze_type` (`id`, `name`, `abbr`, `RPE`) VALUES
-(1, 'Dauerlauf', 'DL', 4),
-(2, 'Fahrtspiel', 'FS', 5),
-(3, 'Intervalltraining', 'IT', 7),
-(4, 'Tempodauerlauf', 'TDL', 7),
-(5, 'Wettkampf', 'WK', 10),
-(6, 'Regenerationslauf', 'RL', 2),
-(7, 'Langer Lauf', 'LL', 5),
-(8, 'Warm-/Auslaufen', 'WA', 1);
+INSERT INTO `runalyze_type` (`id`, `name`, `abbr`, `RPE`, `sportid`) VALUES
+(1, 'Dauerlauf', 'DL', 4, 1),
+(2, 'Fahrtspiel', 'FS', 5, 1),
+(3, 'Intervalltraining', 'IT', 7, 1),
+(4, 'Tempodauerlauf', 'TDL', 7, 1),
+(5, 'Wettkampf', 'WK', 10, 1),
+(6, 'Regenerationslauf', 'RL', 2, 1),
+(7, 'Langer Lauf', 'LL', 5, 1),
+(8, 'Warm-/Auslaufen', 'WA', 1, 1);
