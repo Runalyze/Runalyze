@@ -3,14 +3,16 @@
  * File for displaying a training.
  * Call:   call.SharedList.php?user=
  */
-if ($_GET['view'] == 'monthkm') {
-	$_GET['type'] = 'month';
-	include 'window.plotSumData.shared.php';
-	exit;
-} elseif ($_GET['view'] == 'weekkm') {
-	$_GET['type'] = 'week';
-	include 'window.plotSumData.shared.php';
-	exit;
+if (isset($_GET['view'])) {
+	if ($_GET['view'] == 'monthkm') {
+		$_GET['type'] = 'month';
+		include 'window.plotSumData.shared.php';
+		exit;
+	} elseif ($_GET['view'] == 'weekkm') {
+		$_GET['type'] = 'week';
+		include 'window.plotSumData.shared.php';
+		exit;
+	}
 }
 
 require '../inc/class.Frontend.php';
