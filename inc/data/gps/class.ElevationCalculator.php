@@ -201,7 +201,7 @@ class ElevationCalculator {
 	 * Run algorithm: Treshold
 	 */
 	protected function runAlgorithmTreshold() {
-		$i = 1;
+		$i = 0;
 		$this->ElevationPointsWeeded = array($this->ElevationPoints[0]);
 		$this->IndicesOfElevationPointsWeeded = array(0);
 
