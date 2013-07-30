@@ -110,6 +110,9 @@ class ExporterTCX extends ExporterAbstractFile {
 		$GPS = $this->Training->GpsData();
 		$GPS->startLoop();
 
+		$hasElevation = $this->Training->hasArrayAltitude();
+		$hasHeartrate = $this->Training->hasArrayHeartrate();
+
 		while ($GPS->nextStep()) {
 			$Trackpoint = $this->Activity->Lap[(int)$GPS->currentKilometer()]->Track->addChild('Trackpoint');
 			$Trackpoint->addChild('Time', $this->timeToString($Starttime + $GPS->getTime()));
@@ -118,11 +121,14 @@ class ExporterTCX extends ExporterAbstractFile {
 			$Position->addChild('LatitudeDegrees', $GPS->getLatitude());
 			$Position->addChild('LongitudeDegrees', $GPS->getLongitude());
 
-			$Trackpoint->addChild('AltitudeMeters', $GPS->getElevation());
+			if ($hasElevation)
+				$Trackpoint->addChild('AltitudeMeters', $GPS->getElevation());
 			$Trackpoint->addChild('DistanceMeters', 1000*$GPS->getDistance());
 
-			$Heartrate = $Trackpoint->addChild('HeartRateBpm');
-			$Heartrate->addChild('Value', $GPS->getHeartrate());
+			if ($hasHeartrate) {
+				$Heartrate = $Trackpoint->addChild('HeartRateBpm');
+				$Heartrate->addChild('Value', $GPS->getHeartrate());
+			}
 		}
 	}
 
