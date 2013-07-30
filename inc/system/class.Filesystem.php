@@ -70,6 +70,7 @@ class Filesystem {
 	 * @return string
 	 */
 	private static function getFileContentsWithCurl($url) {
+		$url = str_replace (' ', '%20', $url);
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_URL, $url);
@@ -80,8 +81,12 @@ class Filesystem {
 
 		$response = curl_exec($curl);
 
-		if (!$response)
-			Error::getInstance()->addError('CUrl-Error: '.curl_error($curl));
+		if (!$response) {
+			if (curl_errno($curl) == 0)
+				Error::getInstance()->addError('CUrl response was empty (url: '.$url.')');
+			else
+				Error::getInstance()->addError('CUrl-Error: '.curl_errno($curl).' '.curl_error($curl).' (url: '.$url.')');
+		}
 
 		curl_close($curl);
 
