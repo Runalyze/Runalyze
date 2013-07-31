@@ -16,7 +16,7 @@
 <body id="installer" class="toolbar-top">
 
 <div id="copy" class="top">
-	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined(RUNALYZE_VERSION)) echo 'v'.RUNALYZE_VERSION; ?></a>
+	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined('RUNALYZE_VERSION')) echo 'v'.RUNALYZE_VERSION; ?></a>
 	<a class="tab right" href="login.php" title="Please login"><i class="toolbar-icon-user"></i> Please login</a>
 </div>
 
