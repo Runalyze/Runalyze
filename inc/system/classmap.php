@@ -137,6 +137,7 @@ $CLASSMAP = array(
 'PluginTool' => 'plugin/class.PluginTool.php',
 'AccountHandler' => 'system/class.AccountHandler.php',
 'Autoloader' => 'system/class.Autoloader.php',
+'BigFileWriterGZip' => 'system/class.BigFileWriterGZip.php',
 'DatabaseScheme' => 'system/class.DatabaseScheme.php',
 'DatabaseSchemePool' => 'system/class.DatabaseSchemePool.php',
 'DataObject' => 'system/class.DataObject.php',
