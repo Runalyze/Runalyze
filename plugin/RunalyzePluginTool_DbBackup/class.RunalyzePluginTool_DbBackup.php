@@ -109,9 +109,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		if (isset($_POST['backup'])) {
 			if ($_POST['export-type'] == 'json')
-				$this->createBackup( self::$TYPE_JSON );
+				$this->createBackupJSON();
 			else
-				$this->createBackup( self::$TYPE_SQL );
+				$this->createBackupSQL();
 		}
 	}
 
@@ -120,14 +120,14 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function displayExport() {
 		$Select = new FormularSelectBox('export-type', 'Dateiformat');
-		$Select->addOption('json', 'Portables Backup (*.json)');
+		$Select->addOption('json', 'Portables Backup (*.json.gz)');
 		$Select->addOption('sql', 'Datenbank Backup (*.sql.gz)');
 
 		$Fieldset = new FormularFieldset('Daten exportieren');
 		$Fieldset->addField($Select);
 		$Fieldset->addField(new FormularSubmit('Datei erstellen', ''));
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
-		$Fieldset->addInfo('<strong>JSON-Format (*.json)</strong><br />
+		$Fieldset->addInfo('<strong>JSON-Format (*.json.gz)</strong><br />
 			<small>
 				Portables Backup deiner Einstellungen und Daten -
 				Die Datei kann &uuml;ber dieses Plugin in eine bestehende Installation importiert werden.
@@ -274,9 +274,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">Datei hochladen</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
-		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json');
+		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json.gz');
 		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br />
-			F&uuml;r einen Import von v1.1 in v1.2 muss v1.1 zun&auml;chst aktualisiert werden.');
+			F&uuml;r einen Import von v1.1 in v1.2 muss v1.1 zun&auml;chst aktualisiert werden, f&uuml;r sp&auml;tere Versionen analog.');
 
 		$Fieldset = new FormularFieldset('Daten importieren');
 		$Fieldset->setCollapsed();
@@ -342,65 +342,108 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		return $Files;
 	}
+	/**
+	 * Create backup: JSON
+	 */
+	protected function createBackupJSON() {
+		$Writer     = new BigFileWriterGZip($this->getFileName(self::$TYPE_JSON));
+		$Mysql      = Mysql::getInstance();
+		$AllTables  = $Mysql->untouchedFetchArray('SHOW TABLES');
+
+		$Writer->addToFile('{');
+
+		foreach ($AllTables as $t => $Tables) {
+			if ($t > 0)
+				$Writer->addToFile(',');
+
+			foreach ($Tables as $TableName) {
+
+				$Query = 'SELECT * FROM `'.$TableName.'`';
+				$Writer->addToFile('"'.$TableName.'":{');
+
+				if ($TableName == PREFIX.'account') {
+					if (USER_MUST_LOGIN)
+						$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
+					else
+						$Query .= ' WHERE id="0"';
+				}
+				
+
+				$ArrayOfRows = $Mysql->fetchAsArray($Query);
+
+				foreach ($ArrayOfRows as $r => $Row) {
+					if ($r > 0)
+						$Writer->addToFile(',');
+
+					if (PREFIX != 'runalyze_')
+						$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
+
+					// Don't save the cache!
+					if ($TableName == 'runalyze_training')
+						$Row['gps_cache_object'] = '';
+
+					$Writer->addToFile('"'.$Row['id'].'":'.json_encode($Row));
+				}
+
+				$Writer->addToFile('}');
+			}
+		}
+
+		$Writer->addToFile('}');
+		$Writer->finish();
+	}
 
 	/**
-	 * Create backup
-	 * @param enum $Type
+	 * Create backup: SQL
 	 */
-	protected function createBackup($Type) {
-		$ExportData   = array();
-		$ExportString = '';
-		$Mysql        = Mysql::getInstance();
-		$AllTables    = $Mysql->untouchedFetchArray('SHOW TABLES');
+	protected function createBackupSQL() {
+		$Writer    = new BigFileWriterGZip($this->getFileName(self::$TYPE_SQL));
+		$Mysql     = Mysql::getInstance();
+		$AllTables = $Mysql->untouchedFetchArray('SHOW TABLES');
 
 		foreach ($AllTables as $Tables) {
 			foreach ($Tables as $TableName) {
 				$CreateResult = $Mysql->untouchedFetchArray('SHOW CREATE TABLE '.$TableName);
 				$Query        = 'SELECT * FROM `'.$TableName.'`';
-				$ExportData[$TableName] = array();
 
-				if ($TableName == PREFIX.'account' && USER_MUST_LOGIN)
-					$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
-
-				if ($Type == self::$TYPE_SQL) {
-					$ArrayOfRows   = $Mysql->fetchAsNumericArray($Query);
-					$ExportString .= 'DROP TABLE IF EXISTS '.$TableName.';'.NL.NL;
-					$ExportString .= $CreateResult[0]['Create Table'].';'.NL.NL;
-
-					foreach ($ArrayOfRows as $Row) {
-						$Values        = implode(',', array_map('DB_BACKUP_mapperForValues', $Row));
-						$ExportString .= 'INSERT INTO '.$TableName.' VALUES('.$Values.');'.NL;
-					}
-
-					$ExportString .= NL.NL.NL;
-				} elseif ($Type == self::$TYPE_JSON) {
-					$ArrayOfRows = $Mysql->fetchAsArray($Query);
-
-					foreach ($ArrayOfRows as $Row) {
-						if (PREFIX != 'runalyze_')
-							$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
-
-						// Don't save the cache!
-						if ($TableName == 'runalyze_training')
-							$Row['gps_cache_object'] = '';
-
-						$ExportData[$TableName][$Row['id']] = $Row;
-					}
+				if ($TableName == PREFIX.'account') {
+					if (USER_MUST_LOGIN)
+						$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
+					else
+						$Query .= ' WHERE id="0"';
 				}
+
+				$ArrayOfRows = $Mysql->fetchAsNumericArray($Query);
+				$Writer->addToFile('DROP TABLE IF EXISTS '.$TableName.';'.NL.NL);
+				$Writer->addToFile($CreateResult[0]['Create Table'].';'.NL.NL);
+
+				foreach ($ArrayOfRows as $Row) {
+					$Values = implode(',', array_map('DB_BACKUP_mapperForValues', $Row));
+					$Writer->addToFile('INSERT INTO '.$TableName.' VALUES('.$Values.');'.NL);
+				}
+
+				$Writer->addToFile(NL.NL.NL);
 			}
 		}
 
+		$Writer->finish();
+
+		Error::getInstance()->addDebug('Memory usage: '.memory_get_peak_usage().' (SQL)');
+	}
+
+	/**
+	 * Get filename
+	 * @param enum $Type
+	 * @return string
+	 */
+	protected function getFileName($Type) {
 		if ($Type == self::$TYPE_SQL) {
-			$ExportString = gzencode($ExportString);
 			$FileType = '.sql.gz';
-		} elseif ($Type == self::$TYPE_JSON) {
-			$ExportString = gzencode(json_encode($ExportData));
+		} else if ($Type == self::$TYPE_JSON) {
 			$FileType = '.json.gz';
 		}
 
-		$FileName = $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.substr(uniqid(rand()),-4).$FileType;
-
-		Filesystem::writeFile($FileName, $ExportString);
+		return $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.substr(uniqid(rand()),-4).$FileType;
 	}
 }
 
