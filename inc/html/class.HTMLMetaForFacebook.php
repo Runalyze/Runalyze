@@ -69,7 +69,7 @@ class HTMLMetaForFacebook {
 		if (!is_null($this->Training) && $this->Training->isDefaultId())
 			$this->Training = null;
 
-		if (!$this->Training->isPublic())
+		if (!is_null($this->Training) && !$this->Training->isPublic())
 			$this->Training = null;
 	}
 

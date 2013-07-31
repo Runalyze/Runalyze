@@ -254,8 +254,14 @@ abstract class ConfigValue {
 	 * Define const
 	 */
 	private function defineConst() {
-		if (!AccountHandler::$IS_ON_REGISTER_PROCESS && !defined('CONF_'.$this->getKey()))
-			define('CONF_'.$this->getKey(), $this->getValue());
+		if (!AccountHandler::$IS_ON_REGISTER_PROCESS && !defined('CONF_'.$this->getKey())) {
+			$value = $this->getValue();
+
+			if (!is_scalar($value))
+				$value = false;
+
+			define('CONF_'.$this->getKey(), $value);
+		}
 	}
 
 	/**

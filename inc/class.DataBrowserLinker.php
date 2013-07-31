@@ -79,6 +79,11 @@ class DataBrowserLinker {
 	 * @return array Returns an array {'start', 'end'}
 	 */
 	static function nextTimestamps($start, $end, $getPrev = false) {
+		if (!is_numeric($start))
+			$start = time();
+		if (!is_numeric($end))
+			$end = time();
+
 		$date = array();
 		$factor = $getPrev ? -1 : 1;
 		$diff_in_days = round(($end - $start) / 86400);

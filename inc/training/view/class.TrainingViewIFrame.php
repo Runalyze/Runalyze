@@ -14,7 +14,7 @@ class TrainingViewIFrame extends TrainingView {
 	 * Display
 	 */
 	public function display() {
-		include FRONTEND_PATH.'training/tpl/tpl.TrainingIFrame.php';
+		include FRONTEND_PATH.'training/tpl/tpl.TrainingIframe.php';
 	}
 
 	/**

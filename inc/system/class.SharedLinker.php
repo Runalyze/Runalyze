@@ -83,6 +83,8 @@ class SharedLinker {
 			} elseif (strlen(Request::param('url')) > 0) {
 				$Data = Mysql::getInstance()->untouchedFetch('SELECT `accountid` FROM `'.PREFIX.'training` WHERE id="'.self::getTrainingId().'" LIMIT 1');
 				self::$USER_ID = $Data['accountid'];
+			} else {
+				$Data = false;
 			}
 
 			if ($Data === false)

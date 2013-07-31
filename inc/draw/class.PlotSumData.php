@@ -317,7 +317,7 @@ abstract class PlotSumData extends Plot {
 				$Sports[$dat['sportid']]['data'][$dat['timer']-$this->timerStart] = $dat['sum'];
 
 		foreach ($Sports as $Sport)
-			$this->Data[] = array('label' => $Sport['name'], 'data' => $Sport['data']);
+			$this->Data[] = array('label' => isset($Sport['name']) ? $Sport['name'] : '?', 'data' => $Sport['data']);
 	}
 
 	/**
