@@ -119,6 +119,7 @@ class TrainingObject extends DataObject {
 	 * Update internal array after parsing
 	 */
 	final public function updateAfterParsing() {
+		$this->removeSingleSplits();
 		$this->setSplitsFromObject();
 	}
 
@@ -829,6 +830,11 @@ class TrainingObject extends DataObject {
 	 */
 	public function setRoute($route) { $this->set('route', $route); }
 
+
+	/**
+	 * Remove single splits
+	 */
+	public function removeSingleSplits() { $this->Splits()->removeSingleSplits(); }
 
 	/**
 	 * Set splits from splits object

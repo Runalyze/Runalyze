@@ -115,6 +115,16 @@ class Splits {
 	}
 
 	/**
+	 * Remove single splits
+	 */
+	public function removeSingleSplits() {
+		if (count($this->asArray) == 1) {
+			$this->asArray = array();
+			$this->asString = '';
+		}
+	}
+
+	/**
 	 * Get splits as readable string
 	 * @param bool $restingLaps optional
 	 * @return string 
