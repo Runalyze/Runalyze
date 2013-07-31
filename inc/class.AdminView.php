@@ -229,14 +229,14 @@ class AdminView {
 						<th>User</th>
 						<th>Name</th>
 						<th>E-Mail</th>
-						<th class="{sorter: \'x\'}">Anz.</th>
-						<th class="{sorter: \'distance\'}">km</th>
 						<th class="{sorter: \'germandate\'}">seit</th>
 						<th class="{sorter: \'germandate\'}">zuletzt</th>
 						<!--<th class="{sorter: false}">Funktionen</th>-->
 					</tr>
 				</thead>
 				<tbody>';
+						//<th class="{sorter: \'x\'}">Anz.</th>
+						//<th class="{sorter: \'distance\'}">km</th>
 
 			foreach ($this->UserList as $i => $User) {
 				$Code .= '
@@ -245,12 +245,12 @@ class AdminView {
 						<td>'.$User['username'].'</td>
 						<td>'.$User['name'].'</td>
 						<td class="small">'.$User['mail'].'</td>
-						<td class="small r">'.$User['num'].'x</td>
-						<td class="small r">'.Running::Km($User['km']).'</td>
 						<td class="small c">'.date("d.m.Y", $User['registerdate']).'</td>
 						<td class="small c">'.date("d.m.Y", $User['lastaction']).'</td>
 						<!--<td>User aktivieren Neues Passwort zusenden</td>-->
 					</tr>';
+					//<td class="small r">'.$User['num'].'x</td>
+					//<td class="small r">'.Running::Km($User['km']).'</td>
 			}
 
 			$Code .= '
@@ -369,6 +369,11 @@ class AdminView {
 	 */
 	private function getUserList() {
 		return Mysql::getInstance()->untouchedFetchArray('
+			SELECT '.PREFIX.'account.*
+			FROM '.PREFIX.'account
+			ORDER BY id ASC');
+		/*
+		return Mysql::getInstance()->untouchedFetchArray('
 			SELECT '.PREFIX.'account.*,
 				(
 					SELECT SUM('.PREFIX.'training.distance)
@@ -381,7 +386,7 @@ class AdminView {
 					WHERE '.PREFIX.'training.accountid = '.PREFIX.'account.id
 				)	AS num
 			FROM '.PREFIX.'account
-			ORDER BY id ASC');
+			ORDER BY id ASC');*/
 	}
 
 	/**
