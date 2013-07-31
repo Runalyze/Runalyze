@@ -30,6 +30,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['all_sports'] = array('type' => 'bool', 'var' => false, 'description' => 'Alle Sportarten ber&uuml;cksichtigen');
 
 		return $config;
 	}
@@ -166,7 +167,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0
+			WHERE `elevation` > 0 '.$this->andSportWhere().'
 			GROUP BY `year`, `month`');
 
 		foreach ($result as $dat) {
@@ -185,7 +186,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			SELECT
 				`time`, `sportid`, `id`, `elevation`, `route`, `comment`, `s`, `distance`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0
+			WHERE `elevation` > 0 '.$this->andSportWhere().'
 			ORDER BY `elevation` DESC
 			LIMIT 10');
 	}
@@ -199,8 +200,19 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				`time`, `sportid`, `id`, `elevation`, `route`, `comment`,
 				(`elevation`/`distance`) as `steigung`, `distance`, `s`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0
+			WHERE `elevation` > 0 '.$this->andSportWhere().'
 			ORDER BY `steigung` DESC
 			LIMIT 10');
+	}
+
+	/**
+	 * Get where query for sport
+	 * @return string
+	 */
+	private function andSportWhere() {
+		if (!$this->config['all_sports']['var'])
+			return 'AND `sportid`="'.CONF_RUNNINGSPORT.'"';
+
+		return '';
 	}
 }
