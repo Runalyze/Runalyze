@@ -73,6 +73,7 @@ class SearchResults {
 		$this->allowedKeys = array(
 			'distance',
 			'route',
+			'elevation',
 			's',
 			'comment',
 			'temperature',
