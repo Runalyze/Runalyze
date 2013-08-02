@@ -86,6 +86,9 @@ class HTMLMetaForFacebook {
 	 * Set properties
 	 */
 	private function setProperties() {
+		if (is_null($this->Training))
+			return;
+
 		$Exporter = new ExporterFacebook($this->Training);
 
 		$this->add('fb:app_id', ExporterFacebook::$APP_ID);
