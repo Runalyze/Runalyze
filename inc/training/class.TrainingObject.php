@@ -297,6 +297,10 @@ class TrainingObject extends DataObject {
 		if ($this->elevationWasCorrected()) {
 			$this->calculateElevation();
 
+			if ($this->get('elevation') == 0) {
+				$this->updateValue('elevation', $this->get('elevation_calculated'));
+			}
+
 			if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
 				$this->calculatePower();
 		}
