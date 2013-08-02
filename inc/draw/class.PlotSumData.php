@@ -118,7 +118,7 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function link($text, $year, $sportid, $group, $current = false) {
 		if (FrontendShared::$IS_SHOWN)
-			return Ajax::window('<a href="'.self::$URL_SHARED.'?user='.Request::param('user').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'"'.($current ? ' class="current"' : '').'>'.$text.'</a>');
+			return Ajax::window('<a href="'.DataBrowserShared::getBaseUrl().'?view='.(Request::param('type')=='week'?'weekkm':'monthkm').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'"'.($current ? ' class="current"' : '').'>'.$text.'</a>');
 		else
 			return Ajax::window('<a href="'.self::$URL.'?type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'"'.($current ? ' class="current"' : '').'>'.$text.'</a>');
 	}
