@@ -127,7 +127,7 @@ class StandardFormular extends Formular {
 	 */
 	protected function initHiddenKeys() {
 		foreach ($this->databaseScheme()->hiddenKeys() as $HiddenKey)
-			if ($HiddenKey != 'id' || $this->submitMode != self::$SUBMIT_MODE_CREATE)
+			if ($this->submitMode == self::$SUBMIT_MODE_CREATE || $HiddenKey == 'id')
 				$this->addHiddenValue($HiddenKey, $_POST[$HiddenKey]);
 	}
 
