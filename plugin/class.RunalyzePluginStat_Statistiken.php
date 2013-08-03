@@ -439,8 +439,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$MonthFactor = 12;
 
 		if ($dat['i'] == date("Y")) {
-			$WeekFactor  = (date('n') == 12 && date('W') < 10) ? 52 : date("W");
-			$MonthFactor = date("n");
+			$WeekFactor  = (date('z')+1) / 7;
+			$MonthFactor = (date('z')+1) / 30.4;
 		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
 			$WeekFactor  = 53 - date("W", START_TIME);
 			$MonthFactor = 13 - date("n", START_TIME);
