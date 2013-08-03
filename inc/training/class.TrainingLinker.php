@@ -60,6 +60,14 @@ class TrainingLinker {
 	}
 
 	/**
+	 * Get edit url
+	 * @return string
+	 */
+	public function editUrl() {
+		return self::$EDITOR_URL.'?id='.$this->Object->id();
+	}
+
+	/**
 	 * Get link
 	 * @param string $name displayed link name
 	 * @return string HTML-link to this training
