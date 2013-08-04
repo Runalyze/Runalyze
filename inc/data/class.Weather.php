@@ -61,6 +61,9 @@ class Weather {
 	 * @param mixed $temperature
 	 */
 	public function __construct($weather_id, $temperature = null) {
+		if (!is_null($temperature))
+			$temperature = round($temperature);
+
 		$this->id = $weather_id;
 		$this->temperature = $temperature;
 
