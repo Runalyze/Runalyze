@@ -243,7 +243,10 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `elevation_corrected` tinyint(1) NOT NULL DEFAULT '0',
   `gps_cache_object` mediumtext NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `accountid` (`accountid`)
+  KEY `accountid` (`accountid`),
+  KEY `time` (`time`),
+  KEY `sportid` (`sportid`),
+  KEY `typeid` (`typeid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------
@@ -280,5 +283,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `accountid` (`accountid`)
+  KEY `accountid` (`accountid`),
+  KEY `time` (`time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

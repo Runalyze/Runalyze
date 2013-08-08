@@ -170,7 +170,7 @@ class TrainingLinker {
 	 * @return string
 	 */
 	static public function editPrevLink($id, $timestamp) {
-		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (id!='.$id.' AND time<"'.$timestamp.'") OR (id<'.$id.' AND time="'.$timestamp.'") ORDER BY time DESC');
+		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.') ORDER BY time DESC');
 
 		if (isset($PrevTraining['id']))
 			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajaxPrev');
@@ -185,7 +185,7 @@ class TrainingLinker {
 	 * @return string
 	 */
 	static public function editNextLink($id, $timestamp) {
-		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (id!='.$id.' AND time>"'.$timestamp.'") OR (id>'.$id.' AND time="'.$timestamp.'") ORDER BY time ASC');
+		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.') ORDER BY time ASC');
 
 		if (isset($NextTraining['id']))
 			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajaxNext');
