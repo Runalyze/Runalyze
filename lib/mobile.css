@@ -1,10 +1,10 @@
 @media (max-width: 1024px) {
 	body#home, body#shared {
-		min-width: 344px;
+		min-width: 320px;
 	}
 
 	#container {
-		min-width: 344px;
+		min-width: 320px;
 		padding-right: 0;
 	}
 
@@ -174,8 +174,16 @@
 		min-width: 0;
 	}
 
-	.flot, .flot canvas {
+	.flot, .flot canvas, .flotChangeable {
 		width: 100% !important;
 		max-width: 100% !important;
+	}
+}
+
+@media (max-width: 340px) {
+	#panels {
+		position: static;
+		width: 320px;
+		margin: 0 auto;
 	}
 }
