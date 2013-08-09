@@ -178,6 +178,47 @@
 		width: 100% !important;
 		max-width: 100% !important;
 	}
+
+	#installer #copy {
+		display: none;
+	}
+
+	.installer-window-container {
+		padding: 0;
+	}
+
+	#installer .w50 {
+		width: 100%;
+	}
+
+	#installer fieldset label {
+		float: none;
+		width: 100%;
+	}
+
+	#installer fieldset input {
+		float: none;
+		width: 90%;
+		margin-bottom: 1em;
+	}
+
+	#loginPanel {
+		position: static;
+		border-top: 1px solid #DDD;
+		border-left: none;
+		width: 100%;
+		top: 0;
+		left: 0;
+		margin: 2em 0;
+	}
+
+	#loginPanel a {
+		border-bottom: 1px solid #DDD !important;
+	}
+
+	.login-window-stats,
+	.installer-footer-links,
+	.installer-footer-text { display: none; }
 }
 
 @media (max-width: 340px) {

@@ -1,4 +1,4 @@
-		<div class="small" style="border-top:1px solid #ccc; margin:20px 5px 2px; padding-top:7px;">
+		<div class="small installer-footer-text">
 			<div class="textBadge textBadge-charts">
 				<p>
 					<strong>Statistiken</strong>

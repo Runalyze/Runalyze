@@ -174,7 +174,7 @@ $haben  = ($NumUser['num'] == 1) ? 'hat' : 'haben';
 ?>
 
 <p class="text"></p>
-<p class="text small c">
+<p class="text small c login-window-stats">
 	Bisher <?php echo $sind; ?> <strong><?php echo $NumUser['num']; ?></strong> L&auml;ufer bei uns angemeldet
 	und <?php echo $haben; ?> <strong><?php echo Running::Km($NumKm['num']); ?></strong> eingetragen.
 	<br />

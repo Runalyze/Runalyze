@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# fitness: http://ogp.me/ns/fitness#">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<meta name="viewport" content="width=320, initial-scale=1" />
 
 	<?php $Meta = new HTMLMetaForFacebook(); $Meta->display(); ?>
 

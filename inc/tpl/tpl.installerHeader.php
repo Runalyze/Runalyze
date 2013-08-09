@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<meta name="viewport" content="width=320, initial-scale=1" />
 
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
@@ -26,4 +27,4 @@
 <div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' bigWin'; ?>" style="display:block;">
 	<h1><?php echo $title; ?></h1>
 
-	<div style="padding:0 70px;">
+	<div class="installer-window-container">
