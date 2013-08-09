@@ -30,7 +30,7 @@ class TrainingPlotsList {
 		if ($PacePulse && (!$Training->hasArrayPace() || !$Training->hasArrayHeartrate()))
 			$PacePulse  = false;
 
-		if (!$Training->Splits()->areEmpty())
+		if (!$Training->Splits()->areEmpty()  && $Training->Splits()->totalDistance() > 0)
 			$this->Plots[] = new TrainingPlotSplits($Training);
 		if ($Collection)
 			$this->Plots[] = new TrainingPlotCollection($Training);
