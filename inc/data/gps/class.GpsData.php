@@ -889,14 +889,19 @@ class GpsData {
 	 * @return type 
 	 */
 	protected function getPlotDataForAllPlots() {
+		$index = 0;
 		$Data = array();
 		$this->startLoop();
 		$this->setStepSizeForPlotData();
 		while ($this->nextStepForPlotData()) {
-			if ($this->plotUsesTimeOnXAxis())
-				$index = (string)($this->getTime()).'000';
-			else
-				$index = (string)($this->getDistance());
+			if (!$this->hasDistanceData() && !$this->hasTimeData()) {
+				$index++;
+			} else {
+				if ($this->plotUsesTimeOnXAxis())
+					$index = (string)($this->getTime()).'000';
+				else
+					$index = (string)($this->getDistance());
+			}
 
 			$Heartrate = $this->getCurrentPlotDataFor('heartrate');
 			$Data['pace'][$index]                = $this->getCurrentPlotDataFor('pace');
