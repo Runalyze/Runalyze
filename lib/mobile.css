@@ -1,0 +1,181 @@
+@media (max-width: 1024px) {
+	body#home, body#shared {
+		min-width: 344px;
+	}
+
+	#container {
+		min-width: 344px;
+		padding-right: 0;
+	}
+
+	#panels {
+		position: static;
+		max-width: 344px;
+		margin: 0 auto;
+	}
+
+	#daten h1 {
+		text-align: center;
+	}
+
+	#daten h1 span.right {
+		float: none;
+		display: block;
+	}
+
+	#calendar {
+		width: auto;
+	}
+
+	#widgetCalendar {
+		overflow: scroll;
+		width: auto;
+	}
+
+	#dataPanel, #tab_content {
+		overflow: hidden;
+	}
+
+	#data-browser-container,
+	#tab_content .stat-content-container {
+		overflow: scroll;
+	}
+
+	table, tr, td {
+		white-space: nowrap;
+	}
+
+	#tab_content {
+		clear: both;
+	}
+
+	#tab_content > ul.jbar {
+		position: static;
+		float: none;
+		margin: 0 auto 5px;
+	}
+
+	#tab_content > ul.jbar li {
+		float: none;
+	}
+
+	#tab_content > ul.jbar .right {
+		float: none;
+	}
+
+	#ajax {
+		overflow: scroll;
+	}
+
+	#close {
+		top: 0;
+		right: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	body.toolbar-top {
+		padding-top: 77px;
+	}
+
+	#statisticTabs {
+		height: auto;
+		border-top: 1px solid #000;
+		border-bottom: none;
+		background: url(../img/bg.png);
+		overflow: hidden;
+	}
+
+	#statisticTabs:after {
+		content: ".";
+		height: 0;
+		display: block;
+		clear: both;
+		width: 95%;
+		overflow: hidden;
+	}
+
+	#statisticTabs li {
+		top: 0;
+		float: left;
+		width: 33%;
+		z-index: 10;
+		background: transparent;
+		opacity: 1 !important;
+		filter: alpha(opacity=100);
+		border-bottom: 1px solid #000;
+		border-top: none;
+	}
+
+	#statisticTabs li.active,
+	#statisticTabs li:hover {
+		border-bottom: 1px solid #000;
+		border-top: none;
+	}
+
+	#statisticTabs li.active a,
+	#statisticTabs li:hover a {
+		padding-left: 15px;
+	}
+
+	#ajax, #ajax.smallWin, #ajax.bigWin {
+		position: fixed;
+		left: 0;
+		overflow: scroll;
+		border-radius: 0;
+		margin: -77px 0 0 0 !important;
+		width: 100%;
+		height: 100%;
+		width: calc(100% - 20px);
+		height: calc(100% - 20px);
+	}
+
+	#ajax ul.jbar {
+		position: static;
+		float: none;
+		margin: 0 auto 5px;
+	}
+
+	#ajax ul.jbar li {
+		float: none;
+	}
+
+	#ajax ul.jbar .right {
+		float: none;
+	}
+
+	#ajax fieldset .w25,
+	#ajax fieldset .w33,
+	#ajax fieldset .w50,
+	#ajax fieldset .w100 {
+		clear: both;
+		float: none;
+		width: 100%;
+	}
+
+	#ajax iframe {
+		max-width: 100%;
+	}
+
+	.toolbar-content span.right {
+		float: none;
+		display: block;
+		margin: 3px 0;
+	}
+
+	.dataBox {
+		float: none !important;
+		margin: 5px 0;
+		width: 100% !important;
+		width: calc(100% - 8px) !important;
+	}
+
+	.map {
+		min-width: 0;
+	}
+
+	.flot, .flot canvas {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+}

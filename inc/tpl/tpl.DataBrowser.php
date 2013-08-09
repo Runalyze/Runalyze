@@ -24,10 +24,11 @@
 	</div>
 </div>
 
-<table id="dataBrowser">
-	<tr class="space">
-		<td colspan="<?php echo ($this->Dataset->cols() + $this->additionalColumns); ?>" />
-	</tr>
+<div id="data-browser-container">
+	<table id="dataBrowser">
+		<tr class="space">
+			<td colspan="<?php echo ($this->Dataset->cols() + $this->additionalColumns); ?>" />
+		</tr>
 <?php
 foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
@@ -64,8 +65,8 @@ foreach ($this->days as $i => $day) {
 		}
 	} else {
 		echo '
-		<tr class="a'.($i%2+1).' r">
-			<td class="l" style="width:24px;">';
+			<tr class="a'.($i%2+1).' r">
+				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
 			$this->Dataset->setTrainingId($short['id'], $short);
@@ -73,16 +74,16 @@ foreach ($this->days as $i => $day) {
 		}
 
 		echo '</td>
-			<td class="l">'.Dataset::getDateString($day['date']).'</td>
-			<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'" />
-		</tr>';
+				<td class="l">'.Dataset::getDateString($day['date']).'</td>
+				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'" />
+			</tr>';
 	}
 
 	if (date("w", $day['date']) == 0 || $i == ($this->day_count-1))
 		echo NL.'
-	<tr class="space">
-		<td colspan="'.($this->Dataset->cols() + $this->additionalColumns).'" />
-	</tr>'.NL;
+		<tr class="space">
+			<td colspan="'.($this->Dataset->cols() + $this->additionalColumns).'" />
+		</tr>'.NL;
 }
 
 // Z U S A M M E N F A S S U N G
@@ -92,19 +93,20 @@ $sports = $this->Mysql->fetchAsArray('SELECT `id`, `time`, `sportid`, SUM(1) as 
 foreach ($sports as $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);
 	echo '
-<tr class="a'.(($i++)%2+1).' r">
-	<td colspan="'.$this->additionalColumns.'">
-		<small>'.$sportdata['num'].'x</small>
-		'.$Sport->name().'
-	</td>';
+		<tr class="a'.(($i++)%2+1).' r">
+			<td colspan="'.$this->additionalColumns.'">
+				<small>'.$sportdata['num'].'x</small>
+				'.$Sport->name().'
+			</td>';
 
 	$this->Dataset->loadGroupOfTrainings($sportdata['sportid'], $this->timestamp_start, $this->timestamp_end);
 	$this->Dataset->displayTableColumns();
 
 	echo '
-</tr>'.NL;
+		</tr>'.NL;
 }
 echo '</tfoot>';
 ?>
 
-</table>
+	</table>
+</div>
