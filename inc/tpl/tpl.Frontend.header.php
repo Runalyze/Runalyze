@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<meta name="viewport" content="width=320, initial-scale=1" />
 
 	<base href="<?php echo System::getFullDomain(); ?>" />
 
