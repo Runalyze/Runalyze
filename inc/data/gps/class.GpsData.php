@@ -250,6 +250,19 @@ class GpsData {
 	public function startLoop() {
 		$this->arrayIndex = 0;
 		$this->stepSize   = 1;
+
+		if (empty($this->arrayForTime) && empty($this->arrayForDistance))
+			$this->arraySizes = max(
+				count($this->arrayForLatitude),
+				count($this->arrayForLongitude),
+				count($this->arrayForElevation),
+				count($this->arrayForElevationOriginal),
+				count($this->arrayForHeartrate),
+				count($this->arrayForPace),
+				count($this->arrayForCadence),
+				count($this->arrayForPower),
+				count($this->arrayForTemperature)
+			);
 	}
 
 	/**
@@ -856,12 +869,16 @@ class GpsData {
 		$this->startLoop();
 		$this->setStepSizeForPlotData();
 		while ($this->nextStepForPlotData()) {
-			if ($this->plotUsesTimeOnXAxis())
-				$index = (string)($this->getTime()).'000';
-			else
-				$index = (string)($this->getDistance());
+			if (!$this->hasDistanceData() && !$this->hasTimeData()) {
+				$Data[] = $this->getCurrentPlotDataFor($key);
+			} else {
+				if ($this->plotUsesTimeOnXAxis())
+					$index = (string)($this->getTime()).'000';
+				else
+					$index = (string)($this->getDistance());
 
-			$Data[$index] = $this->getCurrentPlotDataFor($key);
+				$Data[$index] = $this->getCurrentPlotDataFor($key);
+			}
 		}
 
 		return $Data;

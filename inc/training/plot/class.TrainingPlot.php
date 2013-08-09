@@ -138,7 +138,9 @@ abstract class TrainingPlot {
 	private function initPlot() {
 		$this->Plot = new Plot($this->getCSSid(), $this->width, $this->height);
 
-		if ($this->useStandardXaxis) {
+		if (!$this->Training->hasArrayDistance() && !$this->Training->hasArrayTime()) {
+			$this->Plot->hideXLabels();
+		} elseif ($this->useStandardXaxis) {
 			if ($this->Training->GpsData()->plotUsesTimeOnXAxis()) {
 				$this->Plot->setXAxisAsTime();
 				$this->Plot->setXAxisTimeFormat("%h:%M:%S");
@@ -161,6 +163,9 @@ abstract class TrainingPlot {
 	 * Therefore they have to be set after all other initializations.
 	 */
 	private function setDependingProperties() {
+		if (!$this->Training->hasArrayDistance() && !$this->Training->hasArrayTime())
+			return;
+
 		if ($this->tracking)
 			$this->Plot->enableTracking();
 		if ($this->selecting)
