@@ -763,6 +763,10 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
   visibility: hidden;
 }
 
+.installer-window-container { padding: 0 70px; }
+.installer-footer-text { border-top:1px solid #ccc; margin:20px 5px 2px; padding-top:7px; }
+.installer-footer-links { border-top:1px solid #ccc; margin-top:20px; padding-top:7px; }
+
 #dataBrowser { width: 100%; }
 
 #dataPanel, #tab_content { overflow: auto; }
