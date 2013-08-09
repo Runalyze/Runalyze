@@ -34,6 +34,12 @@ abstract class PluginStat extends Plugin {
 	protected $Links = array();
 
 	/**
+	 * Boolean flag: header was shown
+	 * @var boolean
+	 */
+	private $headerWasShown = false;
+
+	/**
 	 * Method for initializing default config-vars (implemented in each plugin)
 	 */
 	protected function getDefaultConfigVars() { return array(); }
@@ -95,6 +101,9 @@ abstract class PluginStat extends Plugin {
 		$this->displayNavigation();
 
 		$this->displayContent();
+
+		if ($this->headerWasShown)
+			echo '</div>';
 	}
 
 	/**
@@ -111,6 +120,9 @@ abstract class PluginStat extends Plugin {
 				'.$this->getConfigLink().'
 				</span>
 			</h1>'.NL;
+
+		$this->headerWasShown = true;
+		echo '<div class="stat-content-container">';
 	}
 
 	/**

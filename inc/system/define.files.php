@@ -63,6 +63,7 @@ $JS_FILES = array(
 $CSS_FILES = array(
 	'style.css',
 	'lib/sprites.css',
+	'lib/mobile.css',
 	'lib/flot.css',
 	'lib/qtip.css',
 	'lib/bootstrap-tooltip.css',
