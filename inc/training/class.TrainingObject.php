@@ -480,7 +480,7 @@ class TrainingObject extends DataObject {
 	 */
 	public function Cadence() {
 		if (is_null($this->Cadence)) {
-			if ($this->Sport->isRunning())
+			if ($this->Sport()->isRunning())
 				$this->Cadence = new CadenceRunning($this->get('cadence'));
 			else
 				$this->Cadence = new Cadence($this->get('cadence'));
