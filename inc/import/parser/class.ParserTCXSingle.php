@@ -161,7 +161,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if ((int)$Lap->DistanceMeters == 0 && (int)$Lap->TotalTimeSeconds > 10)
 			$this->isWithoutDistance = true;
 		elseif (isset($Lap->Track[0]) && count($Lap->Track[0]->Trackpoint) > 5
-				&& (double)$Lap->Track[0]->Trackpoint[0]->DistanceMeters == (double)$Lap->Track[0]->Trackpoint[count($Lap->Track[0]->Trackpoint)-1])
+				&& (double)$Lap->Track[0]->Trackpoint[0]->DistanceMeters == (double)$Lap->Track[0]->Trackpoint[count($Lap->Track[0]->Trackpoint)-2]->DistanceMeters)
 			$this->isWithoutDistance = true;
 		else
 			$this->isWithoutDistance = false;
