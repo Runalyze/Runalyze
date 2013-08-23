@@ -72,12 +72,16 @@ class SessionAccountHandler {
 		session_start();
 
 		if (!$this->tryToUseSession()) {
-			if ($this->tryToLoginFromPost())
+			if ($this->tryToLoginFromPost()) {
 				header('Location: index.php');
-			elseif ($this->tryToLoginFromCookie())
+				exit;
+			} elseif ($this->tryToLoginFromCookie()) {
 				header('Location: index.php');
-			elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage() && !$this->isOnAdminPage())
+				exit;
+			} elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage() && !$this->isOnAdminPage()) {
 				header('Location: login.php');
+				exit;
+			}
 		}
 	}
 
