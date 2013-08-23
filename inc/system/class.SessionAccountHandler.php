@@ -73,13 +73,13 @@ class SessionAccountHandler {
 
 		if (!$this->tryToUseSession()) {
 			if ($this->tryToLoginFromPost()) {
-				header('Location: index.php');
+				header('Location: '.System::getFullDomain().'index.php');
 				exit;
 			} elseif ($this->tryToLoginFromCookie()) {
-				header('Location: index.php');
+				header('Location: '.System::getFullDomain().'index.php');
 				exit;
 			} elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage() && !$this->isOnAdminPage()) {
-				header('Location: login.php');
+				header('Location: '.System::getFullDomain().'login.php');
 				exit;
 			}
 		}
