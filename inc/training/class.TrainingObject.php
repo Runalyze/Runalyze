@@ -263,7 +263,7 @@ class TrainingObject extends DataObject {
 	 * Do elevation correction
 	 */
 	private function updateElevation() {
-		if ($this->hasArrayAltitude()) {
+		if ($this->hasArrayLatitude() && $this->hasArrayLongitude()) {
 			if (CONF_TRAINING_DO_ELEVATION) {
 				$this->doElevationCorrection();
 			}
