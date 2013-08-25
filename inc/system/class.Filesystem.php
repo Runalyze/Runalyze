@@ -188,4 +188,18 @@ class Filesystem {
 
 		return number_format($FZ/pow(1024, $setup), ($setup >= 1) ? 2 : 0 ).' '.$FS[$setup];
 	}
+
+	/**
+	 * Check write permissions
+	 * 
+	 * Will show an error if folder is not writable
+	 * 
+	 * @param string $folder path relative to runalyze/
+	 */
+	static public function checkWritePermissions($folder) {
+		$realfolder = FRONTEND_PATH.'../'.$folder;
+
+		if (!is_writable($realfolder))
+			echo HTML::error('Das Verzeichnis <strong>'.$folder.'</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+	}
 }

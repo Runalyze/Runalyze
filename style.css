@@ -851,13 +851,14 @@ td.errortype { padding: 4px 2px 5px 22px !important; }
 .textBadge strong { display: block; margin-bottom: 5px; text-transform: uppercase; font-weight: normal; }
 .textBadge p { margin: 0 10px 0 45px; color: #666; }
 
-code {
+code, textarea.code {
 	width: 98%;
 	margin: 0 auto;
 	height: 100px;
 	overflow: scroll;
 	display: block;
-	white-space: nowrap; }
+	white-space: nowrap;
+	font-family: monospace; }
 
 #form_suche input, #form_suche select, #form_suche textarea {
 	padding: 0;

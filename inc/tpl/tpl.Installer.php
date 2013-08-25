@@ -219,17 +219,17 @@ foreach ($Steps as $i => $Name) {
 	<p class="error">
 		Bitte speichere folgenden Code als <strong>/runalyze/config.php</strong>:
 	</p>
-	<code><?php echo nl2br(htmlspecialchars($this->writeConfigFileString)); ?></code>
+	<textarea class="code"><?php echo htmlspecialchars($this->writeConfigFileString); ?></textarea>
 	<?php endif; ?>
 	<?php endif; ?>
 
 	<p class="text">
-		<?php if ($this->readyForNextStep): ?>
+		<?php if ($this->readyForNextStep || $this->cantWriteConfig): ?>
 			<input type="hidden" name="write_config" value="true" />
 		<?php endif; ?>
 		<input type="hidden" name="step" value="2" />
 
-		<input type="submit" value="<?php echo $this->readyForNextStep ? 'Konfigurationsdatei schreiben' : 'Verbindungsdaten pr&uuml;fen'; ?>" />
+		<input type="submit" value="<?php echo $this->cantWriteConfig ? 'Gespeichert! Weiter ...' : ( $this->readyForNextStep ? 'Konfigurationsdatei schreiben' : 'Verbindungsdaten pr&uuml;fen' ); ?>" />
 	</p>
 </form>
 
@@ -245,9 +245,9 @@ foreach ($Steps as $i => $Name) {
 		Im folgenden Schritt wird die <strong>Datenbank</strong> bef&uuml;llt.
 	</p>
 
-	<code><?php echo $this->getSqlContentForFrontend('inc/install/structure.sql'); ?></code>
+	<textarea class="code"><?php echo $this->getSqlContentForFrontend('inc/install/structure.sql'); ?></textarea>
 
-	<code><?php echo $this->getSqlContentForFrontend('inc/install/runalyze_empty.sql'); ?></code>
+	<textarea class="code"><?php echo $this->getSqlContentForFrontend('inc/install/runalyze_empty.sql'); ?></textarea>
 
 	<?php if ($this->cantSetupDatabase): ?>
 	<p class="error">
@@ -284,15 +284,6 @@ foreach ($Steps as $i => $Name) {
 		Trainings k&ouml;nnen sowohl hochgeladen als auch manuell eingegeben werden.
 	</p>
 
-	<?php if (!System::isAtLocalhost()): ?>
-	<p class="warning">
-		F&uuml;r die Nutzung des <em>GarminCommunicators</em> (f&uuml;r alle Forerunner) ist bei der
-		Online-Nutzung von Runalyze ein API-Key notwendig. Diesen kannst du bei
-		<a href="http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/" title="Garmin API-Key">Garmin</a>
-		f&uuml;r die Domain <em>http://<?php echo $_SERVER['HTTP_HOST']; ?></em> erstellen und in der Konfiguration eintragen.
-	</p>
-	<?php endif; ?>
-
 	<p class="text">
 		Viel Spa&szlig; mit Runalyze!
 	</p>
@@ -302,14 +293,20 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 <?php
-$perms = substr(sprintf('%o', fileperms(PATH.'/import/files/')), -4);
-if ($perms != "0777")
-	if (chmod(PATH.'/import/files/', 0777))
-		echo '<p class="info">Die Dateirechte f&uuml;r <em>/inc/import/files/</em> wurden auf <em>chmod 777</em> gestellt.</p>';
-	else
-		echo '<p class="error">Bitte setze die Dateirechte f&uuml;r <em>/inc/import/files/</em> auf <em>chmod 777</em>.</p>';
-else
-	echo '<p class="okay">Der Upload-Ordner hat folgende Dateirechte: '.substr(sprintf('%o', fileperms(PATH.'/import/files/')), -4).'</p>';
+$CHMOD_FOLDERS = array();
+include PATH.'system/define.chmod.php';
+
+foreach ($CHMOD_FOLDERS as $folder)
+	@chmod(PATH.'../'.$folder, 0777);
+
+clearstatcache();
+
+foreach ($CHMOD_FOLDERS as $folder) {
+	$realfolder = PATH.'../'.$folder;
+
+	if (!is_writable($realfolder))
+		echo '<p class="error">Das Verzeichnis <strong>'.$folder.'</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em></p>';
+}
 ?>
 
 <?php endif; ?>

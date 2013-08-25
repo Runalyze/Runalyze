@@ -90,6 +90,7 @@ class AdminView {
 		$this->displaySettings();
 		$this->displayUserList();
 		$this->displayServerData();
+		$this->displayPermissions();
 		$this->displayFiles();
 	}
 
@@ -121,6 +122,16 @@ class AdminView {
 		$Formular = new Formular();
 		$Formular->setId('admin-window-server');
 		$Formular->addFieldset( $this->getServerDataFieldset() );
+		$Formular->display();
+	}
+
+	/**
+	 * Display files
+	 */
+	private function displayPermissions() {
+		$Formular = new Formular();
+		$Formular->setId('admin-permissions');
+		$Formular->addFieldset( $this->getPermissionsFieldset() );
 		$Formular->display();
 	}
 
@@ -279,6 +290,35 @@ class AdminView {
 		$Fieldset->addSmallInfo('Memory-Limit: '.ini_get('memory_limit'));
 		$Fieldset->addSmallInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
 		$Fieldset->setCollapsed();
+
+		return $Fieldset;
+	}
+
+	/**
+	 * Get fieldset for permissions
+	 * @return \FormularFieldset
+	 */
+	private function getPermissionsFieldset() {
+		$CHMOD_FOLDERS = array();
+		$failures = 0;
+
+		include FRONTEND_PATH.'system/define.chmod.php';
+
+		$Fieldset = new FormularFieldset('Berechtigungen');
+
+		foreach ($CHMOD_FOLDERS as $folder) {
+			$realfolder = FRONTEND_PATH.'../'.$folder;
+
+			if (!is_writable($realfolder)) {
+				$Fieldset->addError('Das Verzeichnis <strong>'.$folder.'</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+				$failures++;
+			} else {
+				$Fieldset->addOkay('Das Verzeichnis <strong>'.$folder.'</strong> ist beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+			}
+		}
+
+		if ($failures == 0)
+			$Fieldset->setCollapsed();
 
 		return $Fieldset;
 	}

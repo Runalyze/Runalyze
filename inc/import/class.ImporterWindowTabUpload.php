@@ -45,6 +45,8 @@ class ImporterWindowTabUpload extends ImporterWindowTab {
 		$this->readPossibleFiletypes();
 
 		include 'tpl/tpl.Importer.upload.php';
+
+		$this->checkPermissions();
 	}
 
 	/**

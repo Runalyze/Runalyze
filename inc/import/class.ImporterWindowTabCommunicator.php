@@ -31,5 +31,7 @@ class ImporterWindowTabCommunicator extends ImporterWindowTab {
 	 */
 	public function displayTab() {
 		include 'tpl/tpl.Importer.garminCommunicator.php';
+
+		$this->checkPermissions();
 	}
 }
