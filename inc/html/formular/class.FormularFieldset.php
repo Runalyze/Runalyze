@@ -217,6 +217,14 @@ class FormularFieldset extends HtmlTag {
 	}
 
 	/**
+	 * Add okay to fieldset
+	 * @param string $message 
+	 */
+	final public function addOkay($message) {
+		$this->addMessage($message, 'okay');
+	}
+
+	/**
 	 * Add warning to fieldset
 	 * @param string $message 
 	 */

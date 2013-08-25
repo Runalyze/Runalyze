@@ -72,6 +72,8 @@ class ExporterWindow {
 		$this->displayPrivacyInfo();
 		echo HTML::p('');
 		$this->displayExportedFiles();
+
+		Filesystem::checkWritePermissions('inc/export/files/');
 	}
 
 	/**

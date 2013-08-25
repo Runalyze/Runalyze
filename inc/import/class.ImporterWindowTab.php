@@ -64,4 +64,11 @@ abstract class ImporterWindowTab {
 	protected function attributesForDiv() {
 		return '';
 	}
+
+	/**
+	 * Check permissions
+	 */
+	final protected function checkPermissions() {
+		Filesystem::checkWritePermissions('inc/import/files/');
+	}
 }

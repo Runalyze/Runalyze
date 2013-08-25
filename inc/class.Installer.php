@@ -154,6 +154,8 @@ class Installer {
 			$this->currentStep = $_POST['step'];
 		else
 			$this->currentStep = self::$START;
+
+		$this->currentStep = self::$READY;
 	}
 
 	/**
@@ -260,14 +262,14 @@ class Installer {
 		$config['login']     = isset($_POST['login']) ? 'true' : 'false';
 		$config['garminkey'] = $_POST['garminkey'];
 
-		$file_string = file_get_contents(PATH.'install/config.php');
+		$file_string = @file_get_contents(PATH.'install/config.php');
 
 		if ($file_string === false)
 			return;
 
 		$file_string = preg_replace('/{config::([^}]*)}/ie', 'isset($config["$1"])?$config["$1"]:"$0"', $file_string);
 
-		file_put_contents(PATH.'../config.php', $file_string);
+		@file_put_contents(PATH.'../config.php', $file_string);
 
 		$this->writeConfigFileString = $file_string;
 	}
@@ -278,7 +280,7 @@ class Installer {
 	 * @return string
 	 */
 	protected function getSqlContentForFrontend($filename) {
-		return implode('<br />', $this->getSqlFileAsArray($filename));
+		return implode("\n", $this->getSqlFileAsArray($filename));
 	}
 
 	/**
@@ -329,7 +331,7 @@ class Installer {
 	 */
 	static public function getSqlFileAsArray($filename) {
 		$MRK = array('delimiter', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
-		$SQL = file($filename);
+		$SQL = @file($filename);
 		$query  = '';
 		$array = array();
 
