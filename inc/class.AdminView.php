@@ -289,6 +289,7 @@ class AdminView {
 		$Fieldset->addSmallInfo('Zeit-Limit: '.ini_get('max_execution_time'));
 		$Fieldset->addSmallInfo('Memory-Limit: '.ini_get('memory_limit'));
 		$Fieldset->addSmallInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
+		$Fieldset->addSmallInfo('Post-Limit: '.ini_get('post_max_size'));
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;

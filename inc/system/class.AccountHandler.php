@@ -124,7 +124,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	static public function getAutologinHash() {
-		return md5(trim(SessionAccountHandler::getMail()).self::getChangePasswordHash());
+		return md5(trim(SessionAccountHandler::getMail()).self::$SALT.self::getChangePasswordHash());
 	}
 
 	/**

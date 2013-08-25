@@ -258,7 +258,7 @@ class SessionAccountHandler {
 
 		if (isset($_POST['autologin'])) {
 			$autologinHash = AccountHandler::getAutologinHash();
-			setcookie('autologin', $autologinHash, time()+30*DAY_IN_S);
+			setcookie('autologin', $autologinHash, time()+30*86400);
 		}
 
 		return $autologinHash;
@@ -285,6 +285,9 @@ class SessionAccountHandler {
 		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'autologin_hash', '');
 		session_destroy();
 		unset($_SESSION);
+
+		setcookie('autologin', false);
+		setcookie('test', false);
 	}
 
 	/**
