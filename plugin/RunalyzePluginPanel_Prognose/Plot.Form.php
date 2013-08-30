@@ -16,7 +16,7 @@ if (START_TIME != time()) {
 		SELECT
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			MONTH(FROM_UNIXTIME(`time`)) as `m`,
-			SUM(`vdot`*`s`)/SUM(`s`) as `vdot`
+			SUM('.JD::mysqlVDOTsum().')/SUM('.JD::mysqlVDOTsumTime().') as `vdot`
 		FROM `'.PREFIX.'training`
 		WHERE
 			`vdot`>0

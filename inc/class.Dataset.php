@@ -185,6 +185,8 @@ class Dataset {
 			if ($set['summary'] == 1) {
 				if ($set['name'] == 'vdot') {
 					$String .= ', SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `vdot`';
+				} elseif ($set['name'] == 'pulse_avg') {
+					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
 				} else {
 					if ($set['summary_mode'] != 'AVG')
 						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
