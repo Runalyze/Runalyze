@@ -407,7 +407,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			SELECT
 				SUM(`s`) as `s`,
 				SUM(`distance`) as `distance`,
-				AVG(NULLIF(`vdot`*`use_vdot`,0)) as `vdot`,
+				SUM('.JD::mysqlVDOTsum().')/SUM('.JD::mysqlVDOTsumTime().') as `vdot`,
 				SUM(`trimp`) as `trimp`,
 				'.($this->year!=-1?'MONTH':'YEAR').'(FROM_UNIXTIME(`time`)) as `i`
 			FROM

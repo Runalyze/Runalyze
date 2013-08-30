@@ -39,6 +39,28 @@ class JD {
 	private function __construct() {}
 
 	/**
+	 * Get sum selector for VDOT for mysql
+	 * 
+	 * Depends on configuration: `vdot`*`s`*`use_vdot` or `vdot_with_elevation`*`s`*`use_vdot`
+	 * 
+	 * @return string
+	 */
+	public static function mysqlVDOTsum() {
+		return CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
+	}
+
+	/**
+	 * Get sum selector for time for mysql
+	 * 
+	 * `s`*`use_vdot`
+	 * 
+	 * @return string
+	 */
+	public static function mysqlVDOTsumTime() {
+		return '`s`*`use_vdot`*(`'.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : 'vdot').'` > 0)';
+	}
+
+	/**
 	 * Calculates VDOT from an official run
 	 * @param $km          Distance [km]
 	 * @param $time_in_s   Time [s]
