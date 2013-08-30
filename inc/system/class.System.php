@@ -10,12 +10,19 @@
  */
 class System {
 	/**
-	 * Get code to include all JS-files
+	 * Get code to include all local JS-files
 	 * @return string 
 	 */
-	static public function getCodeForAllJSFiles() {
-		return '<script type="text/javascript" src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>
-	<script type="text/javascript" src="lib/min/?g=js"></script>';
+	static public function getCodeForLocalJSFiles() {
+		return '<script type="text/javascript" src="lib/min/?g=js"></script>';
+	}
+
+	/**
+	 * Get code to include all external JS-files
+	 * @return string 
+	 */
+	static public function getCodeForExternalJSFiles() {
+		return '<script type="text/javascript" src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>';
 	}
 
 	/**

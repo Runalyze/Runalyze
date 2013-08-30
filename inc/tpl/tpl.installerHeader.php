@@ -10,7 +10,8 @@
 
 	<title><?php echo $title; ?></title>
 
-	<?php echo System::getCodeForAllJSFiles(); ?>
+	<?php echo System::getCodeForExternalJSFiles(); ?>
+	<?php echo System::getCodeForLocalJSFiles(); ?>
 
 </head>
 

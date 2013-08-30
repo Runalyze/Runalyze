@@ -17,6 +17,9 @@ date_default_timezone_set('Europe/Berlin');
 if (!defined('NL'))
 	define('NL', "\n");
 
+if (!defined('NBSP'))
+	define('NBSP', '&nbsp;');
+
 if (!defined('PREFIX'))
 	define('PREFIX', 'runalyze_');
 

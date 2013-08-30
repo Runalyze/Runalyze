@@ -41,6 +41,12 @@ define('CUT_LENGTH', 29);
 define('NL', "\n");
 
 /**
+ * No break space
+ * @var string
+ */
+define('NBSP', '&nbsp;');
+
+/**
  * HTML-tag: break
  * @var string
  */

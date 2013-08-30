@@ -59,7 +59,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Prognose-Rechner', true, true).'>'.Icon::$CALCULATOR.'</a>');
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::$INFO.'</a>');
 
-		return implode(' ', $Links);
+		return implode(NBSP, $Links);
 	}
 
 	/**
