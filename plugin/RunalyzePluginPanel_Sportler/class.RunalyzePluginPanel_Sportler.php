@@ -55,7 +55,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
 
-		return implode(' ', $Links);
+		return implode(NBSP, $Links);
 	}
 
 	/**

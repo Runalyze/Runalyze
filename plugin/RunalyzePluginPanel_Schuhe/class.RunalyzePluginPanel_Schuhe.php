@@ -55,7 +55,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
 
-		return implode(' ', $Links);
+		return implode(NBSP, $Links);
 	}
 
 	/**

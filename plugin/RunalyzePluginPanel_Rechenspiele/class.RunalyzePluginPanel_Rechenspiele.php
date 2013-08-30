@@ -52,7 +52,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Berechnungen der Werte', true, true).'>'.Icon::$CALCULATOR.'</a>');
 		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Rechenspielen', true, true).'>'.Icon::$INFO.'</a>');
 
-		return implode(' ', $Links);
+		return implode(NBSP, $Links);
 	}
 
 	/**

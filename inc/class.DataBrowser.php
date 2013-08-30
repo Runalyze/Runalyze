@@ -187,9 +187,9 @@ class DataBrowser {
 	 * Display links to navigate in calendar
 	 */
 	protected function displayNavigationLinks() {
-		echo $this->getCalenderLink().NL;
-		echo $this->getPrevLink().NL;
-		echo $this->getNextLink().NL;
+		echo $this->getCalenderLink().NBSP;
+		echo $this->getPrevLink().NBSP;
+		echo $this->getNextLink().NBSP;
 
 		$timeForLinks = ($this->timestamp_start < time() && time() < $this->timestamp_end) ? time() : $this->timestamp_start;
 
