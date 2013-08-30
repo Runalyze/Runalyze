@@ -57,7 +57,7 @@ class JD {
 	 * @return string
 	 */
 	public static function mysqlVDOTsumTime() {
-		return '`s`*`use_vdot`*(`'.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : 'vdot').'` > 0)';
+		return '`s`*`use_vdot`*('.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : '`vdot`').' > 0)';
 	}
 
 	/**

@@ -55,9 +55,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	foreach ($Data as $dat)
 		$Trimps_raw[$dat['index']] = $dat['trimp'];
 
-	
-	$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
-
 	$Data = Mysql::getInstance()->fetchAsArray('
 		SELECT
 			YEAR(FROM_UNIXTIME(`time`))*366+DAYOFYEAR(FROM_UNIXTIME(`time`))-'.$StartYear.'*366+'.$AddDays.' as `index`,
