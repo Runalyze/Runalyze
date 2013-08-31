@@ -14,7 +14,8 @@
 
 	<title><?php echo $this->getPageTitle(); ?> - Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
 
-	<?php echo System::getCodeForAllJSFiles(); ?>
+	<?php echo System::getCodeForExternalJSFiles(); ?>
+	<?php echo System::getCodeForLocalJSFiles(); ?>
 
 	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
 	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot-0.8.1/excanvas.min.js"></script><![endif]-->
