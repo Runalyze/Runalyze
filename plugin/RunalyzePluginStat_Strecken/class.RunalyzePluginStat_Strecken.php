@@ -130,7 +130,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			echo('
 				<tr class="a'.($i%2+1).'">
 					<td>'.$num.'x</td>
-					<td>'.SearchLink::to('route', $ort, $ort).'</td>
+					<td>'.SearchLink::to('route', $ort, $ort, 'like').'</td>
 				</tr>');
 
 			if ($i == 11)
@@ -162,7 +162,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				} else
 					echo(', ');
 
-				echo SearchLink::to('route', $ort, $ort);
+				echo SearchLink::to('route', $ort, $ort, 'like');
 			}
 			else {
 				echo '</td></tr>';
@@ -191,6 +191,8 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		foreach ($strecken as $strecke) {
 			$streckenorte = explode(" - ", $strecke['route']);
 			foreach ($streckenorte as $streckenort) {
+				$streckenort = trim($streckenort);
+
 				if (!isset($this->orte[$streckenort]))
 					$this->orte[$streckenort] = 1;
 				else
