@@ -105,6 +105,9 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * Set GPS data
 	 */
 	protected function setGPSarrays() {
+		if (empty($this->gps['pace']) && !empty($this->gps['time_in_s']) && !empty($this->gps['km']))
+			$this->setPaceFromDistanceAndTime();
+
 		$this->TrainingObject->setArrayTime( $this->gps['time_in_s'] );
 		$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 		$this->TrainingObject->setArrayLatitude( $this->gps['latitude'] );
@@ -117,6 +120,18 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 
 		$this->setValuesFromArraysIfEmpty();
+	}
+
+	/**
+	 * Set pace from distance and time
+	 */
+	private function setPaceFromDistanceAndTime() {
+		foreach (array_keys($this->gps['km']) as $i) {
+			if ($i == 0 || $this->gps['km'][$i] == $this->gps['km'][$i-1])
+				$this->gps['pace'][] = 0;
+			else
+				$this->gps['pace'][] = round( ($this->gps['time_in_s'][$i] - $this->gps['time_in_s'][$i-1]) / ($this->gps['km'][$i] - $this->gps['km'][$i-1]) );
+		}
 	}
 
 	/**
