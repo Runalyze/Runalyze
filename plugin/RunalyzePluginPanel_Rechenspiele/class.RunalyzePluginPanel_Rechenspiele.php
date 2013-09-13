@@ -121,7 +121,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_basicendurance']['var'],
-				'value'	=> Running::BasicEndurance(),
+				'value'	=> Running::getConstBasicEndurance().' &#37;',
 				'title'	=> 'Grundlagenausdauer',
 				'small'	=> '',
 				'tooltip'	=> '<em>Experimenteller Wert!</em><br />100 &#37; entspricht dem Optimum an Wochenkilometern und Langen L&auml;ufen f&uuml;r einen perfekten Marathon bei deinem derzeitigen VDOT.'

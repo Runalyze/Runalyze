@@ -17,7 +17,7 @@ $FieldsFat   = array('fat' => ' &#37;', 'water' => ' &#37;', 'muscles' => ' &#37
 $Data        = array_reverse(UserData::getFullArray());
 
 if (Request::param('reload') == 'true') {
-	Ajax::setReloadFlag( Ajax::$RELOAD_PLUGINS );
+	Ajax::setReloadFlag( Ajax::$RELOAD_ALL );
 	echo Ajax::getReloadCommand();
 }
 ?>

@@ -97,6 +97,11 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		if ($_GET['clean'] == 'elevation')
 			$this->calculateElevation();
 
+		JD::recalculateVDOTform();
+		Running::recalculateBasicEndurance();
+		Helper::recalculateStartTime();
+		Helper::recalculateHFmaxAndHFrest();
+
 		// TODO: Nicht existente Kleidung aus DB loeschen
 	}
 

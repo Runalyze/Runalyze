@@ -155,7 +155,12 @@ class TrainingObject extends DataObject {
 		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
 			$this->updateVdot();
 			$this->updateShoeForInsert();
+
+			JD::recalculateVDOTform();
+			Running::recalculateBasicEndurance();
 		}
+
+		Helper::recalculateStartTime();
 
 		if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
 			$this->calculatePower();
@@ -178,7 +183,12 @@ class TrainingObject extends DataObject {
 		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
 			$this->updateVdot();
 			$this->updateShoeForUpdate();
+
+			JD::recalculateVDOTform();
+			Running::recalculateBasicEndurance();
 		}
+
+		Helper::recalculateStartTime();
 	}
 
 	/**

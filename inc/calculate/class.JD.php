@@ -25,7 +25,7 @@ define('VDOT_FORM', JD::getConstVDOTform());
  * Basic endurance as percentage
  * @const BASIC_ENDURANCE
  */
-define('BASIC_ENDURANCE', Running::BasicEndurance(true));
+define('BASIC_ENDURANCE', Running::getConstBasicEndurance());
 
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
@@ -264,11 +264,35 @@ class JD {
 				return $ManualValue;
 		}
 
-		return self::calculateVDOTform();
+		if (!defined('CONF_VDOT_FORM')) {
+			Error::getInstance()->addError('Constant CONF_VDOT_FORM has to be set!');
+			define('CONF_VDOT_FORM', 0);
+		}
+
+		if (defined('VDOT_FORM'))
+			return VDOT_FORM;
+
+		if (CONF_VDOT_FORM == 0)
+			return self::recalculateVDOTform();
+
+		return CONF_VDOT_FORM;
 	}
 
 	/**
-	 * Calculates an (corrected) actual VDOT value based on the trainings in the last VDOT_DAYS days
+	 * Recalculate actual VDOT
+	 */
+	public static function recalculateVDOTform() {
+		$VDOT_FORM = self::calculateVDOTform();
+
+		ConfigValue::update('VDOT_FORM', $VDOT_FORM);
+
+		return $VDOT_FORM;
+	}
+
+	/**
+	 * Calculate actual VDOT
+	 * 
+	 * Gives an (corrected) actual VDOT value based on the trainings in the last VDOT_DAYS days
 	 * @param int $time optional
 	 * @return float   VDOT
 	 */
