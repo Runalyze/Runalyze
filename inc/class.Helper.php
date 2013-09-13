@@ -132,65 +132,150 @@ class Helper {
 	}
 
 	/**
+	 * Get const for START_TIME
+	 * @return int
+	 */
+	public static function getStartTime() {
+		if (!defined('CONF_START_TIME')) {
+			Error::getInstance()->addError('Constant CONF_START_TIME has to be set!');
+			define('CONF_START_TIME', 0);
+		}
+
+		if (defined('START_TIME'))
+			return START_TIME;
+
+		if (CONF_START_TIME == 0)
+			return self::recalculateStartTime();
+
+		return CONF_START_TIME;
+	}
+
+	/**
+	 * Recalculate START_TIME
+	 */
+	public static function recalculateStartTime() {
+		$START_TIME = self::calculateStartTime();
+
+		ConfigValue::update('START_TIME', $START_TIME);
+
+		if ($START_TIME == 0)
+			return time();
+
+		return $START_TIME;
+	}
+
+	/**
 	 * Get timestamp of first training
 	 * @return int   Timestamp
 	 */
-	public static function getStartTime() {
+	private static function calculateStartTime() {
 		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`');
 
 		if (isset($data['time']) && $data['time'] == 0) {
 			$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0');
-			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970');
+			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970.');
 		}
 
 		if ($data === false || $data['time'] == null)
-			return time();
+			return 0;
 
 		return $data['time'];
+	}
+
+	/**
+	 * Recalculate HF_MAX and HF_REST
+	 */
+	public static function recalculateHFmaxAndHFrest() {
+		self::recalculateHFmax();
+		self::recalculateHFrest();
+	}
+
+	/**
+	 * Get const for HF_MAX
+	 * @return int
+	 */
+	public static function getHFmax() {
+		if (!defined('CONF_HF_MAX')) {
+			Error::getInstance()->addError('Constant CONF_HF_MAX has to be set!');
+			define('CONF_HF_MAX', 200);
+		}
+
+		if (defined('HF_MAX'))
+			return HF_MAX;
+
+		return CONF_HF_MAX;
+	}
+
+	/**
+	 * Recalculate HF_MAX
+	 */
+	public static function recalculateHFmax() {
+		$HF_MAX = self::calculateHFmax();
+
+		ConfigValue::update('HF_MAX', $HF_MAX);
+
+		return $HF_MAX;
 	}
 
 	/**
 	 * Get the HFmax from user-table
 	 * @return int   HFmax
 	 */
-	public static function getHFmax() {
+	private static function calculateHFmax() {
 		// TODO: Move to class::UserData - possible problem in loading order?
-		if (defined('HF_MAX'))
-			return HF_MAX;
-
 		if (SharedLinker::isOnSharedPage()) {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
 		} else {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 		}
 
-		if ($userdata === false || $userdata['pulse_max'] == 0) {
-			//Error::getInstance()->addWarning('HFmax is not set in database, 200 as default.');
+		if ($userdata === false || $userdata['pulse_max'] == 0)
 			return 200;
-		}
 
 		return $userdata['pulse_max'];
+	}
+
+	/**
+	 * Get const for HF_REST
+	 * @return int
+	 */
+	public static function getHFrest() {
+		if (!defined('CONF_HF_REST')) {
+			Error::getInstance()->addError('Constant CONF_HF_REST has to be set!');
+			define('CONF_HF_REST', 200);
+		}
+
+		if (defined('HF_REST'))
+			return HF_REST;
+
+		return CONF_HF_REST;
+	}
+
+	/**
+	 * Recalculate HF_REST
+	 */
+	public static function recalculateHFrest() {
+		$HF_REST = self::calculateHFrest();
+
+		ConfigValue::update('HF_REST', $HF_REST);
+
+		return $HF_REST;
 	}
 
 	/**
 	 * Get the HFrest from user-table
 	 * @return int   HFrest
 	 */
-	public static function getHFrest() {
+	private static function calculateHFrest() {
 		// TODO: Move to class::UserData - possible problem in loading order?
-		if (defined('HF_REST'))
-			return HF_REST;
-
 		if (SharedLinker::isOnSharedPage()) {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
 		} else {
 			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
 		}
 
-		if ($userdata === false) {
-			//Error::getInstance()->addWarning('HFrest is not set in database, 60 as default.');
+		if ($userdata === false)
 			return 60;
-		}
 
 		return $userdata['pulse_rest'];
 	}

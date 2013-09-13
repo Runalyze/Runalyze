@@ -272,7 +272,7 @@ class Running {
 	 * @return double
 	 */
 	static public function VDOTfactorOfBasicEndurance($distance) {
-		$BasicEndurance         = Running::BasicEndurance(true);
+		$BasicEndurance         = self::getConstBasicEndurance();
 		$RequiredBasicEndurance = pow($distance, 1.23);
 		$BasicEnduranceFactor   = 1 - ($RequiredBasicEndurance - $BasicEndurance) / 100;
 
@@ -318,6 +318,44 @@ class Running {
 	}
 
 	/**
+	 * Get const for BASIC_ENDURANCE
+	 * @return int
+	 */
+	public static function getConstBasicEndurance() {
+		if (!defined('CONF_BASIC_ENDURANCE')) {
+			Error::getInstance()->addError('Constant CONF_BASIC_ENDURANCE has to be set!');
+			define('CONF_BASIC_ENDURANCE', 0);
+		}
+
+		if (defined('BASIC_ENDURANCE'))
+			return BASIC_ENDURANCE;
+
+		if (CONF_BASIC_ENDURANCE == 0)
+			return self::recalculateBasicEndurance();
+
+		return CONF_BASIC_ENDURANCE;
+	}
+
+	/**
+	 * Recalculate basic endurance
+	 */
+	public static function recalculateBasicEndurance() {
+		$BASIC_ENDURANCE = self::calculateBasicEndurance();
+
+		ConfigValue::update('BASIC_ENDURANCE', $BASIC_ENDURANCE);
+
+		return $BASIC_ENDURANCE;
+	}
+
+	/**
+	 * Calculate basic endurance
+	 * @return int
+	 */
+	static private function calculateBasicEndurance() {
+		return self::BasicEndurance(true);
+	}
+
+	/**
 	 * Calculating basic endurance
 	 * @uses DAY_IN_S
 	 * @param bool $as_int as normal integer, default: false
@@ -327,11 +365,8 @@ class Running {
 	public static function BasicEndurance($as_int = false, $timestamp = 0, $returnArrayWithResults = false) {
 		// TODO: If you change the algorithm, remember to change info in 'RunalyzePluginPanel_Rechenspiele'
 		// TODO: Unittests
-		if ($timestamp == 0 && !$returnArrayWithResults) {
-			if (defined('BASIC_ENDURANCE'))
-				return ($as_int) ? BASIC_ENDURANCE : BASIC_ENDURANCE.' &#37;';
+		if ($timestamp == 0)
 			$timestamp = time();
-		}
 
 		if (VDOT_FORM == 0)
 			return ($as_int) ? 0 : '0 &#37;';

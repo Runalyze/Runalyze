@@ -32,6 +32,20 @@ class UserData extends DataObject {
 	}
 
 	/**
+	 * Tasks to perform after insert
+	 */
+	protected function tasksAfterInsert() {
+		Helper::recalculateHFmaxAndHFrest();
+	}
+
+	/**
+	 * Tasks to perform after update
+	 */
+	protected function tasksAfterUpdate() {
+		Helper::recalculateHFmaxAndHFrest();
+	}
+
+	/**
 	 * Set current timestamp, needed for creation-formular 
 	 */
 	public function setCurrentTimestamp() {
