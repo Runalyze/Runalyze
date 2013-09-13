@@ -60,14 +60,11 @@ class ConfigTabSports extends ConfigTab {
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
 
-		$IconFileNames = Filesystem::getFileNamesFromPath('../'.Icon::$PATH_TO_SPORT_ICONS);
-		$IconOptions   = array();
-		foreach ($IconFileNames as $FileName)
-			$IconOptions[$FileName] = $FileName;
+		$IconOptions = SportFactory::getIconOptions();
 
 		foreach ($Sports as $i => $Data) {
 			$id         = $Data['id'];
-			$icon       = '<img src="'.Icon::$PATH_TO_SPORT_ICONS.$Data['img'].'" alt="" />';
+			$icon       = Icon::getSportIcon($id, $Data['img']);
 			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img']);
 			if (isset($Data['new'])) {
 				$name = '<input type="text" name="sport[name]['.$id.']" value="" />';
