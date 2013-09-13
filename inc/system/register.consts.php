@@ -230,7 +230,6 @@ $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
 		'douglas-peucker'	=> 'Douglas-Peucker-Algorithmus',
 		//'reumann-witkamm'	=> 'Reumann-Witkamm-Algorithmus'
 	),
-	//'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
@@ -238,7 +237,6 @@ $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'label'			=> 'H&ouml;henmeter: Schwellenwert',
 	'tooltip'		=> 'Schwellenwert zur H&ouml;henmeterberechnung. Wird bei der Schwellenwert-Methode und beim Douglas-Peucker-Algorithmus verwendet.',
 	'unit'			=> FormularUnit::$M,
-	//'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
@@ -439,7 +437,6 @@ $Calculations->addConfigValue( new ConfigValueBool('JD_USE_VDOT_CORRECTION_FOR_E
 	'label'			=> 'VDOT: Distanz-Korrektur verwenden',
 	'tooltip'		=> 'Zur VDOT-Berechnung die Distanz nach Greif an die H&ouml;henmeter anpassen.',
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
-	//'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_POSITIVE_ELEVATION', array(
@@ -448,7 +445,6 @@ $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_POSITIVE_E
 	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
 	'unit'			=> FormularUnit::$M,
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
-	//'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_NEGATIVE_ELEVATION', array(
@@ -457,15 +453,21 @@ $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_NEGATIVE_E
 	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
 	'unit'			=> FormularUnit::$M,
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
-	//'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
-// Be careful: These values shouldn't be taken with CONF_MAX_ATL, use class::Trimp
+// Be careful: These values shouldn't be taken with CONF_MAX_..., use class::Trimp
 $Calculations->addConfigValue(new ConfigValueInt('MAX_ATL', array('default' => 0)));
 $Calculations->addConfigValue(new ConfigValueInt('MAX_CTL', array('default' => 0)));
 $Calculations->addConfigValue(new ConfigValueInt('MAX_TRIMP', array('default' => 0)));
-// Be careful: These values shouldn't be taken with CONF_VDOT_CORRECTOR, use class::JD (will create VDOT_CORRECTOR)
+// Be careful: These values shouldn't be taken with CONF_VDOT_..., use class::JD (will create VDOT_...)
+$Calculations->addConfigValue(new ConfigValueFloat('VDOT_FORM', array('default' => 0)));
 $Calculations->addConfigValue(new ConfigValueFloat('VDOT_CORRECTOR', array('default' => 1)));
+// Be careful: This value shouldn't be taken with CONF_BASIC_..., use class::Running (will create BASIC_ENDURANCE)
+$Calculations->addConfigValue(new ConfigValueInt('BASIC_ENDURANCE', array('default' => 0)));
+// Be careful: This value shouldn't be taken with CONF_..., class::Helper will create own consts
+$Calculations->addConfigValue(new ConfigValueInt('START_TIME', array('default' => 0)));
+$Calculations->addConfigValue(new ConfigValueInt('HF_MAX', array('default' => 200)));
+$Calculations->addConfigValue(new ConfigValueInt('HF_REST', array('default' => 60)));
 $Calculations->addToCategoryList();
 
 
@@ -485,7 +487,6 @@ $TrainingForm->setKeys(array(
 	'TRAINING_SORT_TYPES',
 	'COMPUTE_POWER',
 	'TRAINING_SORT_SHOES'
-	//'GARMIN_API_KEY'
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
 	'default'		=> 'google',
@@ -534,7 +535,7 @@ $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_LOAD_WEATHER', arra
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SPORTS', array(
 	'default'		=> 'id-asc',
 	'label'			=> 'Sortierung: Sportarten',
-	'options'		=> array(
+	'options'		=> array( // see SportFactory::getOrder()
 		'id-asc'		=> 'id (&auml;lteste zuerst)',
 		'id-desc'		=> 'id (neueste zuerst)',
 		'alpha'			=> 'alphabetisch'
@@ -543,7 +544,7 @@ $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SPORTS', arr
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_TYPES', array(
 	'default'		=> 'id-asc',
 	'label'			=> 'Sortierung: Typen',
-	'options'		=> array(
+	'options'		=> array( // see TypeFactory::getOrder()
 		'id-asc'		=> 'id (&auml;lteste zuerst)',
 		'id-desc'		=> 'id (neueste zuerst)',
 		'alpha'			=> 'alphabetisch'
@@ -552,18 +553,11 @@ $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_TYPES', arra
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SHOES', array(
 	'default'		=> 'id-asc',
 	'label'			=> 'Sortierung: Schuhe',
-	'options'		=> array(
+	'options'		=> array( // see ShoeFactory::getOrder()
 		'id-asc'		=> 'id (&auml;lteste zuerst)',
 		'id-desc'		=> 'id (neueste zuerst)',
 		'alpha'			=> 'alphabetisch'
 	)
-)));
-// TODO: remove in Runalyze v1.4
-$TrainingForm->addConfigValue( new ConfigValueString('GARMIN_API_KEY', array(
-	'default'		=> '',
-	'label'			=> 'Garmin API-Key',
-	'tooltip'		=> 'Notwendig f&uuml;r den Garmin-Communicator<br />f&uuml;r '.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'],
-	'size'			=> FormularInput::$SIZE_FULL_INLINE
 )));
 $TrainingForm->addConfigValue(new ConfigValueArray('GARMIN_IGNORE_IDS', array('default' => array())));
 $TrainingForm->addToCategoryList();

@@ -37,9 +37,26 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-		$shoes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe`');
+		$shoes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder());
 		foreach ($shoes as $shoe)
-			self::$AllShoes[$shoe['id']] = $shoe;
+			self::$AllShoes[(string)$shoe['id']] = $shoe;
+	}
+
+	/**
+	 * Get order
+	 * @see CONF_TRAINING_SORT_SHOES
+	 * @return string
+	 */
+	static private function getOrder() {
+		switch (CONF_TRAINING_SORT_SHOES) {
+			case 'alpha':
+				return 'ORDER BY `name` ASC';
+			case 'id-desc':
+				return 'ORDER BY `id` DESC';
+			case 'id-asc':
+			default:
+				return 'ORDER BY `id` ASC';
+		}
 	}
 
 	/**
@@ -81,11 +98,6 @@ class ShoeFactory {
 				$shoes[$id] = $shoe['name'];
 			else
 				unset($shoes[$id]);
-
-		if (CONF_TRAINING_SORT_SHOES == 'alpha')
-			asort($shoes);
-		elseif (CONF_TRAINING_SORT_SHOES == 'id-desc')
-			krsort($shoes);
 
 		return $shoes;
 	}

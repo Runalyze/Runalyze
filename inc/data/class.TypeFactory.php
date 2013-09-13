@@ -57,11 +57,30 @@ class TypeFactory {
 
 	/**
 	 * Init all types
+	 * 
+	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
-		$types = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'type`');
+		$types = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'type` '.self::getOrder());
 		foreach ($types as $data)
-			self::$AllTypes[$data['id']] = $data;
+			self::$AllTypes[(string)$data['id']] = $data;
+	}
+
+	/**
+	 * Get order
+	 * @see CONF_TRAINING_SORT_TYPES
+	 * @return string
+	 */
+	static private function getOrder() {
+		switch (CONF_TRAINING_SORT_TYPES) {
+			case 'alpha':
+				return 'ORDER BY `name` ASC';
+			case 'id-desc':
+				return 'ORDER BY `id` DESC';
+			case 'id-asc':
+			default:
+				return 'ORDER BY `id` ASC';
+		}
 	}
 
 	/**
@@ -78,11 +97,6 @@ class TypeFactory {
 				$types[$id] = $type['abbr'];
 			}
 		}
-
-		if (CONF_TRAINING_SORT_TYPES == 'alpha')
-			asort($types);
-		elseif (CONF_TRAINING_SORT_TYPES == 'id-desc')
-			krsort($types);
 
 		return $types;
 	}
