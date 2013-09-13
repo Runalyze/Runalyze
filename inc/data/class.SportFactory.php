@@ -17,6 +17,31 @@ class SportFactory {
 	static private $AllSports = null;
 
 	/**
+	 * Get icon options
+	 * @return array
+	 */
+	static public function getIconOptions() {
+		$Files = array(
+			'unknown.gif',
+			'radfahren.gif',
+			'schwimmen.gif',
+			'gymnastik.gif',
+			'laufen.gif',
+			'krafttraining.gif',
+			'wandern.gif',
+			'teamsport.gif',
+			'bogenschiessen.gif',
+			'inlineskating.gif'
+		);
+
+		$Options = array();
+		foreach ($Files as $File)
+			$Options[$File] = $File;
+
+		return $Options;
+	}
+
+	/**
 	 * Data for ID
 	 * @param int $id sportid
 	 * @return array
@@ -81,17 +106,25 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
-		if (is_null(self::$AllSports)) {
-			if (CONF_TRAINING_SORT_SPORTS == 'alpha')
-				$order = 'ORDER BY name ASC';
-			elseif (CONF_TRAINING_SORT_SPORTS == 'id-desc')
-				$order = 'ORDER BY id DESC';
-			else
-				$order = 'ORDER BY id ASC';
+		$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder());
+		foreach ($sports as $sport)
+			self::$AllSports[(string)$sport['id']] = $sport;
+	}
 
-			$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` '.$order);
-			foreach ($sports as $sport)
-				self::$AllSports[$sport['id']] = $sport;
+	/**
+	 * Get order
+	 * @see CONF_TRAINING_SORT_SPORTS
+	 * @return string
+	 */
+	static private function getOrder() {
+		switch (CONF_TRAINING_SORT_SPORTS) {
+			case 'alpha':
+				return 'ORDER BY `name` ASC';
+			case 'id-desc':
+				return 'ORDER BY `id` DESC';
+			case 'id-asc':
+			default:
+				return 'ORDER BY `id` ASC';
 		}
 	}
 
