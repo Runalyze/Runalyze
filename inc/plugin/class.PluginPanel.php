@@ -95,6 +95,7 @@ abstract class PluginPanel extends Plugin {
 		$Links[] = $this->getConfigLink();
 		$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
 		$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
+		$Links[] = $this->getReloadLink();
 
 		return implode('', $Links);
 	}
