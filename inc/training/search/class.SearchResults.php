@@ -250,6 +250,9 @@ class SearchResults {
 		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? 'time' : mysql_real_escape_string($_POST['search-sort-by']);
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : mysql_real_escape_string($_POST['search-sort-order']);
 
+		if ($sort == 'vdot' && CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
+			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
+
 		return ' ORDER BY `'.$sort.'` '.$order;
 	}
 
