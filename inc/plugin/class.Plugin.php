@@ -507,6 +507,14 @@ abstract class Plugin {
 	}
 
 	/**
+	 * Get reload-link
+	 * @return string
+	 */
+	final public function getReloadLink() {
+		return '<span class="link show-on-hover" onclick="Runalyze.reloadPlugin(\''.$this->id.'\');">'.Icon::$REFRESH_SMALL.'</span>';
+	}
+
+	/**
 	 * Get link for removing plugin
 	 * @param string $key PLUGINKEY
 	 * @return string

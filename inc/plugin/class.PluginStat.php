@@ -118,6 +118,7 @@ abstract class PluginStat extends Plugin {
 			'.$name.'
 				<span class="show-on-hover">
 				'.$this->getConfigLink().'
+				'.$this->getReloadLink().'
 				</span>
 			</h1>'.NL;
 
