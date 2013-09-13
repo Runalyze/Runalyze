@@ -88,9 +88,10 @@ class Icon {
 		if ($title == '')
 			$title = $data['name'];
 
-		$Image = '<img src="'.self::$PATH_TO_SPORT_ICONS.$data['img'].'" alt="'.$title.'" />';
+		if ($tooltip == '')
+			$tooltip = $title;
 
-		return Ajax::tooltip($Image, $tooltip);
+		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $data['img']).'"></i>', $tooltip);
 	}
 
 	/**

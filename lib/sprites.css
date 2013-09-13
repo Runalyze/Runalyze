@@ -169,3 +169,23 @@ label:hover .toggle-icon-temperature { background-position: -144px -16px; }
 .broken-icon-3 { background-position: -52px 0; }
 .broken-icon-4 { background-position: -78px 0; }
 .broken-icon-5 { background-position: -104px 0; }
+
+
+/* see SportFactory::getIconOptions() */
+[class^="sport-icon-"], [class*=" sport-icon-"] {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	vertical-align: middle;
+	background-image: url(../img/sports.gif);
+}
+.sport-icon-unknown { background-position: 0 0; }
+.sport-icon-radfahren { background-position: -10px 0; }
+.sport-icon-schwimmen { background-position: -20px 0; }
+.sport-icon-gymnastik { background-position: -30px 0; }
+.sport-icon-laufen { background-position: 0 -10px; }
+.sport-icon-krafttraining { background-position: -10px -10px; }
+.sport-icon-wandern { background-position: -20px -10px; }
+.sport-icon-teamsport { background-position: -30px -10px; }
+.sport-icon-bogenschiessen { background-position: 0 -20px; }
+.sport-icon-inlineskating { background-position: -10px -20px; }
