@@ -45,6 +45,10 @@
 		white-space: nowrap;
 	}
 
+	#training-table td {
+		white-space: normal;
+	}
+
 	#tab_content {
 		clear: both;
 	}
