@@ -22,10 +22,36 @@ class ConfigTabSports extends ConfigTab {
 	 */
 	public function setFieldsetsAndFields() {
 		$Sports = new FormularFieldset('Deine Sportarten');
-		$Sports->setHtmlCode($this->getCode());
+		$Sports->setHtmlCode($this->getCode().$this->getInfoFieldsAfterCode());
 		$Sports->addInfo('Fahre mit der Maus &uuml;ber die &Uuml;berschrift, falls dir die Bezeichnungen unklar sind.');
 
 		$this->Formular->addFieldset($Sports);
+	}
+
+	/**
+	 * Get info fields
+	 * @return string
+	 */
+	private function getInfoFieldsAfterCode() {
+		$Code  = HTML::info('Der Modus <em>kurz</em> bewirkt, dass in der Wochen&uuml;bersicht nur ein Symbol und keine Trainingsdaten angezeigt werden.');
+		$Code .= HTML::info('Die Werte f&uuml;r <em>&Oslash; HF</em> und <em>RPE</em> sind f&uuml;r die TRIMP-Berechnung notwendig.');
+		$Code .= HTML::info('Es stehen folgende Icons zur Verf&uuml;gung: '.$this->getSportIconList());
+
+		return $Code;
+	}
+
+	/**
+	 * Get list with sport icons
+	 * @return array
+	 */
+	private function getSportIconList() {
+		$Icons       = array();
+		$IconOptions = SportFactory::getIconOptions();
+
+		foreach ($IconOptions as $gif)
+			$Icons[] = Icon::getSportIconForGif($gif);
+
+		return implode('&nbsp;', $Icons);
 	}
 
 	/**
@@ -41,7 +67,7 @@ class ConfigTabSports extends ConfigTab {
 						<th class="small" colspan="2">Bild</th>
 						<th>'.Ajax::tooltip('Sportart', 'Name der Sportart').'</th>
 						<th>'.Ajax::tooltip('kcal/h', 'Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde').'</th>
-						<th>'.Ajax::tooltip('&Oslash; HF', 'Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)').'</th>
+						<th>'.Ajax::tooltip('&Oslash;&nbsp;HF', 'Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)').'</th>
 						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
 						<th>'.Ajax::tooltip('km', 'Es wird eine Distanz zur&uuml;ckgelegt').'</th>
 						<th>'.Ajax::tooltip('Einheit', 'Einheit f&uuml;r die Geschwindigkeit').'</th>
