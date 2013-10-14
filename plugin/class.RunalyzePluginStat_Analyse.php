@@ -340,8 +340,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 			for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
 				$name = ($speed == $speed_max)
-					? 'schneller'
-					: '<small>bis</small> '.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
+					? '<small>schneller&nbsp;als</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed + $speed_step, $this->sportid)
+					: '<small>bis</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
 				$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
 			}
 		}
