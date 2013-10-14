@@ -95,6 +95,15 @@ class Icon {
 	}
 
 	/**
+	 * Get sport icon
+	 * @param string $gif filename.gif
+	 * @return string
+	 */
+	public static function getSportIconForGif($gif) {
+		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $gif).'"></i>', $gif);
+	}
+
+	/**
 	 * Get url to icon for given sportid
 	 * @param int $id
 	 * @return string 

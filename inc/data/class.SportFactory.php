@@ -31,7 +31,8 @@ class SportFactory {
 			'wandern.gif',
 			'teamsport.gif',
 			'bogenschiessen.gif',
-			'inlineskating.gif'
+			'inlineskating.gif',
+			'taekwondo.gif'
 		);
 
 		$Options = array();
