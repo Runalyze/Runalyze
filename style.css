@@ -276,6 +276,12 @@ fieldset .w50.with33erLabel .fullSize { width: 65%; }
 fieldset .with33erLabel .inline label { float: none; }
 fieldset textarea.fullSize { height: 72px; }
 
+input.pick-a-date {
+	padding: 2px 16px 2px 2px;
+	background-position: right center;
+	background-repeat: no-repeat;
+	background-image: url('img/units/calendar.png'); }
+
 input.withUnit {
 	text-align: right;
 	background-position: right center;
