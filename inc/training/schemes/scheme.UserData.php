@@ -32,6 +32,7 @@ $FIELDS['time'] = array(
 	'formular'	=> array(
 		'label'		=> 'Datum',
 		'required'	=> true,
+		'class'		=> 'FormularInputDate',
 		'parser'	=> FormularValueParser::$PARSER_DATE
 	)
 );

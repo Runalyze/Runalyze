@@ -73,6 +73,7 @@ $CLASSMAP = array(
 'FormularField' => 'html/formular/class.FormularField.php',
 'FormularFieldset' => 'html/formular/class.FormularFieldset.php',
 'FormularInput' => 'html/formular/class.FormularInput.php',
+'FormularInputDate' => 'html/formular/class.FormularInputDate.php',
 'FormularInputDayAndDaytime' => 'html/formular/class.FormularInputDayAndDaytime.php',
 'FormularInputHidden' => 'html/formular/class.FormularInputHidden.php',
 'FormularInputPassword' => 'html/formular/class.FormularInputPassword.php',
