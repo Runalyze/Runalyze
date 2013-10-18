@@ -57,4 +57,10 @@ define('USER_CAN_REGISTER', true);
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
  */
 define('GARMIN_API_KEY', '{config::garminkey}');
+
+/**
+ * Adress for sending mails to users
+ * @var string MAIL_SENDER Adress for sending mails to users
+ */
+define('MAIL_SENDER', 'Runalyze <mail@runalyze.de>');
 ?>
