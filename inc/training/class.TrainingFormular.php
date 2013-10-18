@@ -62,6 +62,11 @@ class TrainingFormular extends StandardFormular {
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
 			$this->initGPSFieldset();
 			$this->initDeleteFieldset();
+
+			if (Request::param('mode') == 'multi') {
+				$this->addHiddenValue('mode', 'multi');
+				$this->submitButtons['submit'] = 'Bearbeiten und weiter';
+			}
 		}
 
 		$this->appendJavaScript();
@@ -76,7 +81,11 @@ class TrainingFormular extends StandardFormular {
 			echo HTML::em('Das Training wurde erfolgreich eingetragen.');
 			echo Ajax::closeOverlay();
 		} else {
-			parent::displayAfterSubmit();
+			if (Request::param('mode') == 'multi') {
+				echo Ajax::wrapJS('Runalyze.goToNextMultiEditor();');
+			} else {
+				parent::displayAfterSubmit();
+			}
 		}
 	}
 

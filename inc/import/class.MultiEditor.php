@@ -78,7 +78,7 @@ class MultiEditor {
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation tr.link").click(function(e){
 	$("#ajax-navigation tr.link.highlight").removeClass("highlight").addClass("edited");
 	$(this).removeClass("edited").addClass("highlight");
-	Runalyze.loadOverlay( "'.TrainingLinker::$EDITOR_URL.'?id=" + $(this).attr("id").substr(11) );
+	Runalyze.loadOverlay( "'.TrainingLinker::$EDITOR_URL.'?mode=multi&id=" + $(this).attr("id").substr(11) );
 });');
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation .multi-edit-remove-link").click(function(e){
 	$(this).parent().parent().remove();
@@ -92,7 +92,7 @@ class MultiEditor {
 	 * This function will just load the standard editor in the overlay
 	 */
 	protected function displayEditor() {
-		echo Ajax::wrapJS('Runalyze.loadOverlay(\''.TrainingLinker::$EDITOR_URL.'?id='.self::$IDs[0].'\');');
+		echo Ajax::wrapJS('Runalyze.loadOverlay(\''.TrainingLinker::$EDITOR_URL.'?mode=multi&id='.self::$IDs[0].'\');');
 	}
 
 	/**
