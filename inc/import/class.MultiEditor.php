@@ -54,9 +54,9 @@ class MultiEditor {
 			if (!empty($Daytime))
 				$Daytime = ' - <small>'.$Daytime.'</small>';
 
-			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.HTML::trClass($i).' show-on-hover-parent" onclick="Runalyze.loadOverlay(\\\''.TrainingLinker::$EDITOR_URL.'?id='.$ID.'\\\')">';
+			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.HTML::trClass($i).($i == 0 ? ' highlight' : '').' show-on-hover-parent">';
 			$Code .= '<td class="multi-edit-sport-icon c">';
-			$Code .= '<span class="link show-on-hover multi-edit-remove-link" onclick="$(this).parent().parent().remove();">'.Icon::$CROSS_SMALL.'</span>';
+			$Code .= '<span class="link show-on-hover multi-edit-remove-link">'.Icon::$CROSS_SMALL.'</span>';
 			$Code .= $Training->Sport()->IconWithTooltip();
 			$Code .= '</td><td>';
 			$Code .= $Training->DataView()->getDate(false).$Daytime.'<br />';
@@ -75,6 +75,15 @@ class MultiEditor {
 		$Code .= '</div>';
 
 		echo Ajax::wrapJS('$(\'#ajax-navigation\').remove();$(\'body\').append(\''.$Code.'\')');
+		echo Ajax::wrapJSasFunction('$("#ajax-navigation tr.link").click(function(e){
+	$("#ajax-navigation tr.link.highlight").removeClass("highlight").addClass("edited");
+	$(this).removeClass("edited").addClass("highlight");
+	Runalyze.loadOverlay( "'.TrainingLinker::$EDITOR_URL.'?id=" + $(this).attr("id").substr(11) );
+});');
+		echo Ajax::wrapJSasFunction('$("#ajax-navigation .multi-edit-remove-link").click(function(e){
+	$(this).parent().parent().remove();
+	e.stopPropagation();
+});');
 	}
 
 	/**
