@@ -159,6 +159,7 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', 'Benutzer k&ouml;nnen sich registrieren') );
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', 'Benutzer m&uuml;ssen sich einloggen') );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip('Garmin API-Key', 'In Online-Version notwendig f&uuml;r Garmin-Communicator<br />siehe http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/')) );
+		$Fieldset->addField( new FormularInput('MAIL_SENDER', 'Absenderadresse f&uuml;r E-Mails') );
 		$Fieldset->addField( new FormularSubmit('Speichern', '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
@@ -440,7 +441,8 @@ class AdminView {
 			'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
 			'USER_MUST_LOGIN',
-			'GARMIN_API_KEY'
+			'GARMIN_API_KEY',
+			'MAIL_SENDER'
 		);
 	}
 
@@ -501,6 +503,14 @@ define(\'USER_CAN_REGISTER\', true);';
  * @see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/
  */
 define(\'GARMIN_API_KEY\', \''.$APIKey.'\');';
+
+			case 'MAIL_SENDER':
+				define('MAIL_SENDER', 'Runalyze <mail@runalyze.de>');
+				return '/**
+ * Adress for sending mails to users
+ * @var string MAIL_SENDER Adress for sending mails to users
+ */
+define(\'MAIL_SENDER\', \'Runalyze <mail@runalyze.de>\');';
 
 			default:
 				return '// Whoo! Runalyze tried to add an nonexisting configuration variable to this file. ($Variable = '.$Variable.')';
