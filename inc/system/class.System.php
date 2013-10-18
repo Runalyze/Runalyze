@@ -50,7 +50,7 @@ class System {
 	 * @return boolean 
 	 */
 	static public function sendMail($to, $subject, $message) {
-		$header = "From: Runalyze <mail@runalyze.de>\nMIME-Version: 1.0\nContent-type: text/html; charset=UTF-8\n";
+		$header = "From: Runalyze <mail@runalyze.de>\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\n";
 
 		return mail($to, $subject, $message, $header);
 	}
