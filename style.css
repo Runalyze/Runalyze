@@ -657,6 +657,13 @@ ul.blocklist a.nopadding {
 	border: 1px solid #ccc;
 	background: #f6f6f6; }
 
+.databox-header {
+	text-align: center; }
+.databox-header a.change {
+	opacity: 0.5; }
+.databox-header a.change.triggered {
+	opacity: 1; }
+
 #shared .dataBox.left {
 	width: 300px; }
 

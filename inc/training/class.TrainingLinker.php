@@ -41,6 +41,12 @@ class TrainingLinker {
 	static public $VDOT_INFO_URL = 'call/call.Training.vdotInfo.php';
 
 	/**
+	 * URL to rounds info window
+	 * @var string
+	 */
+	static public $ROUNDS_INFO_URL = 'call/call.Training.roundsInfo.php';
+
+	/**
 	 * Constructor
 	 * @param \TrainingObject $TrainingObject
 	 */
@@ -136,6 +142,15 @@ class TrainingLinker {
 	 */
 	public function urlToVDOTinfo($data = '') {
 		return self::$VDOT_INFO_URL.'?id='.$this->Object->id().'&'.$data;
+	}
+
+	/**
+	 * URL to rounds info
+	 * @param string $data
+	 * @return string
+	 */
+	public function urlToRoundsInfo($data = '') {
+		return self::$ROUNDS_INFO_URL.'?id='.$this->Object->id().'&'.$data;
 	}
 
 	/**

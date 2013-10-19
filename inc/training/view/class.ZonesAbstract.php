@@ -86,7 +86,7 @@ abstract class ZonesAbstract {
 			return;
 
 		echo '<div class="dataBox training-zones left">';
-		echo '<strong class="small">'.$this->title().':</strong>';
+		echo '<div class="databox-header">'.$this->title().'</div>';
 
 		echo '<table class="small" style="white-space:nowrap;">';
 		echo '<thead><tr>';

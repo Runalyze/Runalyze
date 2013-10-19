@@ -334,6 +334,32 @@ class GpsData {
 	}
 
 	/**
+	 * Go to given distance
+	 * @param double $distance
+	 * @return bool
+	 */
+	public function goToDistance($distance) {
+		$this->arrayLastIndex = $this->arrayIndex;
+
+		if ($this->loopIsAtEnd())
+			return false;
+
+		while (!$this->loopIsAtEnd() && $this->arrayForDistance[$this->arrayIndex] < $distance)
+			$this->arrayIndex++;
+
+		return true;
+	}
+
+	/**
+	 * Go to end
+	 */
+	public function goToEnd() {
+		$this->arrayLastIndex = $this->arrayIndex;
+
+		$this->arrayIndex = $this->arraySizes-1;
+	}
+
+	/**
 	 * Get the current kilometer
 	 * @param double $distance
 	 * @return int
@@ -815,8 +841,10 @@ class GpsData {
 	}
 
 	/**
-	 * Get rounds as sorted array filled with information for time, distance, km, s, heartrate, hm-up, hm-down
-	 * @param double $distance [optional]
+	 * Get rounds as sorted array
+	 * 
+	 * Filled with information for time, distance, km, s, heartrate, hm-up, hm-down
+	 * @param mixed $distance [optional] can be double or array
 	 * @return array
 	 */
 	public function getRoundsAsFilledArray($distance = 1) {
@@ -829,19 +857,37 @@ class GpsData {
 			return array();
 		
 		$this->startLoop();
-		while ($this->nextKilometer($distance)) {
-			$rounds[] = array(
-				'time'      => $this->getTime(),
-				'distance'  => $this->getDistance(),
-				'km'        => $this->getDistanceOfStep(),
-				's'         => $this->getTimeOfStep(),
-				'heartrate' => $this->getAverageHeartrateOfStep(),
-				'hm-up'     => $this->getElevationUpOfStep(),
-				'hm-down'   => $this->getElevationDownOfStep(),
-			);
+
+		if (is_array($distance)) {
+			foreach ($distance as $dist) {
+				$this->goToDistance($dist);
+				$rounds[] = $this->getCurrentRoundAsFilledArray();
+			}
+
+			$this->goToEnd();
+			$rounds[] = $this->getCurrentRoundAsFilledArray();
+		} else {
+			while ($this->nextKilometer($distance))
+				$rounds[] = $this->getCurrentRoundAsFilledArray();
 		}
 
 		return $rounds;
+	}
+
+	/**
+	 * Get current round as filled array
+	 * @return array
+	 */
+	private function getCurrentRoundAsFilledArray() {
+		return array(
+			'time'      => $this->getTime(),
+			'distance'  => $this->getDistance(),
+			'km'        => $this->getDistanceOfStep(),
+			's'         => $this->getTimeOfStep(),
+			'heartrate' => $this->getAverageHeartrateOfStep(),
+			'hm-up'     => $this->getElevationUpOfStep(),
+			'hm-down'   => $this->getElevationDownOfStep(),
+		);
 	}
 
 	/**

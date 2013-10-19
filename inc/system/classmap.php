@@ -201,6 +201,7 @@ $CLASSMAP = array(
 'ElevationInfo' => 'training/view/class.ElevationInfo.php',
 'RoundsAbstract' => 'training/view/class.RoundsAbstract.php',
 'RoundsComputed' => 'training/view/class.RoundsComputed.php',
+'RoundsInfo' => 'training/view/class.RoundsInfo.php',
 'RoundsSplits' => 'training/view/class.RoundsSplits.php',
 'RoundsView' => 'training/view/class.RoundsView.php',
 'TrainingView' => 'training/view/class.TrainingView.php',
