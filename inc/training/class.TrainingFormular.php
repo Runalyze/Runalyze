@@ -80,6 +80,9 @@ class TrainingFormular extends StandardFormular {
 			$this->displayHeader();
 			echo HTML::em('Das Training wurde erfolgreich eingetragen.');
 			echo Ajax::closeOverlay();
+
+			if (CONF_TRAINING_SHOW_AFTER_CREATE)
+				echo Ajax::wrapJS('Runalyze.loadTraining('.$this->dataObject->id().');');
 		} else {
 			if (Request::param('mode') == 'multi') {
 				echo Ajax::wrapJS('Runalyze.goToNextMultiEditor();');
