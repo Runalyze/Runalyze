@@ -477,7 +477,7 @@ $Calculations->addToCategoryList();
 $TrainingForm = new ConfigCategory('trainingform', 'Eingabeformular');
 $TrainingForm->setKeys(array(
 	'TRAINING_CREATE_MODE',
-	'',
+	'TRAINING_SHOW_AFTER_CREATE',
 	'TRAINING_ELEVATION_SERVER',
 	'TRAINING_DO_ELEVATION',
 	'PLZ',
@@ -496,6 +496,11 @@ $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER'
 		'geonames'		=> 'ws.geonames.org'
 	),
 	'tooltip'		=> 'F&uuml;r die H&ouml;henkorrektur k&ouml;nnen verschiedene Server verwendet werden'
+)));
+$TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_SHOW_AFTER_CREATE', array(
+	'default'		=> false,
+	'label'			=> 'Training direkt anzeigen',
+	'tooltip'		=> 'Das Training nach dem Erstellen direkt &ouml;ffnen.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_CREATE_MODE', array(
 	'default'		=> 'garmin',
