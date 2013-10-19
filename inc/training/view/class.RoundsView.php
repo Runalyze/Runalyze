@@ -63,8 +63,7 @@ class RoundsView {
 			return;
 
 		echo '<div id="training-rounds" class="dataBox left">';
-		echo '<strong class="small">Rundenzeiten:&nbsp;</strong>';
-		echo '<small class="right margin-5">'.implode(' | ', $this->links()).'</small>';
+		echo '<div class="databox-header">'.implode(' - ', $this->links()).'</div>';
 
 		$this->displayRounds();
 

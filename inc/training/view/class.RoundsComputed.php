@@ -29,7 +29,7 @@ class RoundsComputed extends RoundsAbstract {
 	 * @return string
 	 */
 	public function title() {
-		return 'berechnete';
+		return 'Kilometerzeiten';
 	}
 
 	/**
@@ -38,6 +38,7 @@ class RoundsComputed extends RoundsAbstract {
 	public function display() {
 		$this->initData();
 		$this->displayData();
+		$this->displayLinkToInfoWindow();
 	}
 
 	/**
@@ -50,6 +51,7 @@ class RoundsComputed extends RoundsAbstract {
 			$this->Data[] = array(
 				'time'      => Time::toString($Round['time']),
 				'distance'  => Running::Km($Round['distance'], 2),
+				'laptime'	=> Time::toString($Round['s']),
 				'pace'      => SportFactory::getSpeedWithAppendixAndTooltip($Round['km'], $Round['s'], $this->Training->Sport()->id()),
 				'heartrate' => Helper::Unknown($Round['heartrate']),
 				'elevation' => Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']));
@@ -86,5 +88,12 @@ class RoundsComputed extends RoundsAbstract {
 
 		echo '</tbody>';
 		echo '</table>';
+	}
+
+	/**
+	 * Display link to info window
+	 */
+	protected function displayLinkToInfoWindow() {
+		echo '<p class="c">'.Ajax::window('<a href="'.$this->Training->Linker()->urlToRoundsInfo().'">&raquo; genaue Auswertung &ouml;ffnen</a>', 'normal').'</p>';
 	}
 }

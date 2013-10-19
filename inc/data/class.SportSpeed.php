@@ -152,6 +152,9 @@ class SportSpeed {
 		if ($Distance == 0 || $Time == 0)
 			return '-:--';
 
+		if ($Time/$Distance < 60)
+			return Time::toString(round($Time/$Distance), false, 2);
+
 		return Time::toString(round($Time/$Distance));
 	}
 

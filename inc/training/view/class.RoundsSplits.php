@@ -23,7 +23,7 @@ class RoundsSplits extends RoundsAbstract {
 	 * @return string
 	 */
 	public function title() {
-		return 'gestoppte';
+		return 'Rundenzeiten';
 	}
 
 	/**

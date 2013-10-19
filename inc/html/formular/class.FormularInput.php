@@ -134,6 +134,14 @@ class FormularInput extends FormularField {
 	}
 
 	/**
+	 * Set placeholder
+	 * @param string $text
+	 */
+	public function setPlaceholder($text) {
+		$this->addAttribute('placeholder', $text);
+	}
+
+	/**
 	 * Display this field
 	 * @return string
 	 */
