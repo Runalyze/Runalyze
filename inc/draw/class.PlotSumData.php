@@ -51,6 +51,12 @@ abstract class PlotSumData extends Plot {
 	protected $timerEnd = 0;
 
 	/**
+	 * Show distance instead of time?
+	 * @var bool
+	 */
+	protected $usesDistance = false;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -158,7 +164,7 @@ abstract class PlotSumData extends Plot {
 		$this->setXLabels($this->getXLabels());
 		$this->addYAxis(1, 'left');
 
-		if ($this->Sport->usesDistance()) {
+		if ($this->usesDistance) {
 			$this->addYUnit(1, 'km');
 			$this->setYTicks(1, 10, 0);
 		} else {
@@ -216,6 +222,20 @@ abstract class PlotSumData extends Plot {
 	private function loadData() {
 		$whereSport = (Request::param('group') == 'sport') ? '' : '`sportid`='.$this->Sport->id().' AND';
 
+		$this->usesDistance = $this->Sport->usesDistance();
+		if (Request::param('group') != 'sport' && $this->usesDistance) {
+			$num = Mysql::getInstance()->num('
+				SELECT 1 FROM `'.PREFIX.'training`
+				WHERE
+					'.$whereSport.'
+					`distance` = 0 AND `s` > 0 AND
+					YEAR(FROM_UNIXTIME(`time`))='.$this->Year.'
+			');
+
+			if ($num > 0)
+				$this->usesDistance = false;
+		}
+
 		$this->RawData = Mysql::getInstance()->fetchAsArray('
 			SELECT
 				`sportid`,
@@ -236,7 +256,7 @@ abstract class PlotSumData extends Plot {
 	 * @return string
 	 */
 	private function dataSum() {
-		if ($this->Sport->usesDistance())
+		if ($this->usesDistance)
 			return 'SUM(`distance`)';
 
 		return 'SUM(`s`)/3600';
