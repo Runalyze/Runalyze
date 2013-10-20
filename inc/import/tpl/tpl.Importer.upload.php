@@ -45,6 +45,9 @@ new qq.FineUploaderBasic({
 		}
 	}
 });
+
+if (!qq.supportedFeatures.ajaxUploading)
+	$("#ajax").append('<p class="error">Dein Browser scheint den Uploader nicht zu unterst&uuml;tzen. Siehe <a href="http://docs.fineuploader.com/browser-support.html" target="_blank">http://docs.fineuploader.com/browser-support.html</a>.</p>');
 </script>
 
 	<p class="text">
