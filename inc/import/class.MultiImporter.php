@@ -59,6 +59,7 @@ class MultiImporter {
 		$Data = unserialize(urldecode($_POST['training-data'][$i]));
 		$Training = new TrainingObject( DataObject::$DEFAULT_ID );
 		$Training->setFromArray($Data);
+		$Training->setWeatherForecast();
 		$Training->insert();
 
 		$this->InsertedIDs[] = $Training->id();

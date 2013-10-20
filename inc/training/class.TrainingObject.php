@@ -83,7 +83,7 @@ class TrainingObject extends DataObject {
 	 * Set weather forecast
 	 */
 	public function setWeatherForecast() {
-		if ($this->trainingIsTooOldToFetchWeatherData())
+		if ($this->trainingIsTooOldToFetchWeatherData() || !CONF_TRAINING_LOAD_WEATHER)
 			return;
 
 		$Weather = new WeatherForecast();

@@ -85,15 +85,15 @@ class TrainingPlotSplits extends TrainingPlot {
 			foreach ($RawData as $key => $val) {
 				$km = $key + 1;
 				if ($num < 20) {
-					$label = ($km%2 == 0 && $km > 0) ? $km : ''; // $km.'&nbsp;km' : '';
+					$label = ($km%2 == 0 && $km > 0) ? $km : '';
 				} elseif ($num < 80) {
-					$label = ($km%5 == 0 && $km > 0) ? $km : ''; //$km.'&nbsp;km' : '';
+					$label = ($km%5 == 0 && $km > 0) ? $km : '';
 				} else {
 					$label = ($km%10 == 0 && $km > 0) ? $km : '';
 				}
 
 				$this->Labels[$key] = array($key, $label);
-				$this->Data[$key]   = $val['s']*1000/$val['km'];
+				$this->Data[$key]   = $val['km'] > 0 ? $val['s']*1000/$val['km'] : 0;
 			}
 		}
 
