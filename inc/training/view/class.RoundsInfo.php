@@ -208,7 +208,7 @@ class RoundsInfo {
 			'diff'		=> 'Diff.',
 			'pace'		=> 'Tempo',
 			'pacediff'	=> 'Diff.',
-			'heartrate'	=> 'bpm',
+			'heartrate'	=> '&oslash; bpm',
 			'elevation'	=> 'hm'
 		);
 
@@ -256,6 +256,7 @@ class RoundsInfo {
 		$Fieldset->addInfo('
 			Die hier angezeigten Zwischenzeiten werden anhand der GPS-Daten berechnet.
 			Die manuell abgestoppten Rundenzeiten haben auf diese Auswertung keinen Einfluss.
+			Da nicht f&uuml;r jeden Meter ein Datenpunkt existiert, k&ouml;nnen die ausgewerteten Kilometer Rundungsfehler enthalten.
 		');
 
 		$Fieldset->display();

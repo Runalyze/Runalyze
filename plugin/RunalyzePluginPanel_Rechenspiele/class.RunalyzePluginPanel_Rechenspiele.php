@@ -34,10 +34,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Trainingstempo', 'Empfohlene Trainingspaces anzeigen', true));
-		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('ATL/CTL/TSB anzeigen', 'Statistische Werte M&uuml;digkeit, Fitnessgrad und Stress Balance anzeigen', true));
-		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('VDOT anzeigen', 'Aktuellen berechneten VDOT anzeigen', true));
-		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('GA anzeigen', 'Prozentwert f&uuml;r die Grundlagenausdauer anzeigen', true));
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Trainingstempo', 'Empfohlene Trainingspaces anzeigen', true));
+		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: ATL/CTL/TSB', 'Statistische Werte M&uuml;digkeit, Fitnessgrad und Stress Balance anzeigen', true));
+		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: VDOT', 'Aktuellen berechneten VDOT anzeigen', true));
+		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Grundlagenausdauer', 'Prozentwert f&uuml;r die Grundlagenausdauer anzeigen', true));
 
 		return $config;
 	}
