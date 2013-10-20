@@ -82,6 +82,14 @@
 		padding-top: 77px;
 	}
 
+	#copy .tab, #copy2 .tab {
+		margin: 0 12px;
+	}
+
+	#copy .logo, #copy2 .logo {
+		margin: 0 25px; 
+	}
+
 	#statisticTabs {
 		height: auto;
 		border-top: 1px solid #000;
@@ -102,8 +110,8 @@
 	#statisticTabs li {
 		top: 0;
 		float: left;
-		width: 33%;
-		z-index: 10;
+			width: 33%;
+		z-index: 8;
 		background: transparent;
 		opacity: 1 !important;
 		filter: alpha(opacity=100);
