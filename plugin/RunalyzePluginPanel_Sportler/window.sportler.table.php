@@ -66,3 +66,7 @@ if (Request::param('reload') == 'true') {
 </table>
 
 <?php Ajax::createTablesorterWithPagerFor('#sportlerTable', true); ?>
+
+<p class="c">
+	<?php echo Ajax::window('<a href="plugin/'.$Plugin->get('key').'/window.sportler.php">'.Icon::$ADD.' Einen neuen Eintrag hinzuf&uuml;gen</a>'); ?>
+</p>
