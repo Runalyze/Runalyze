@@ -174,19 +174,75 @@ class Filesystem {
 	/**
 	 * Get filesize
 	 * @param string $file
-	 * @param mixed $setup
 	 * @return string 
 	 */
-	static public function getFilesize($file, $setup = null) {
-		$FZ = ($file && @is_file($file)) ? filesize($file) : NULL;
+	static public function getFilesize($file) {
+		$size = ($file && @is_file($file)) ? filesize($file) : NULL;
+
+		return self::bytesToString($size);
+	}
+
+	/**
+	 * Get maximum filesize
+	 * @return string
+	 */
+	static public function getMaximumFilesize() {
+		$UploadSize = ini_get('upload_max_filesize');
+		$PostSize = ini_get('max_file_size');
+
+		return max(self::stringToBytes($UploadSize), self::stringToBytes($PostSize));
+	}
+
+	/**
+	 * Get maximum filesize
+	 * @return string
+	 */
+	static public function getMaximumFilesizeAsString() {
+		$Max = self::getMaximumFilesize();
+
+		if ($Max == PHP_INT_MAX)
+			return 'unlimitiert';
+
+		return self::bytesToString($Max);
+	}
+
+	/**
+	 * Bytes to string
+	 * @param int $bytes
+	 * @return string
+	 */
+	static public function bytesToString($bytes) {
+		if ($bytes == 0)
+			return '0 B';
+
 		$FS = array("B","kB","MB","GB","TB","PB","EB","ZB","YB");
 
-		if (!$setup && $setup !== 0)
-			return number_format($FZ/pow(1024, $I=floor(log($FZ, 1024))), ($I >= 1) ? 2 : 0).' '.$FS[$I];
-		elseif ($setup == 'INT')
-			return number_format($FZ);
+		return number_format($bytes / pow(1024, $I=floor(log($bytes, 1024))), ($I >= 1) ? 2 : 0, '.', '').' '.$FS[$I];
+	}
 
-		return number_format($FZ/pow(1024, $setup), ($setup >= 1) ? 2 : 0 ).' '.$FS[$setup];
+	/**
+	 * String to bytes
+	 * @param string $string e.g. "8M"
+	 * @return int
+	 */
+	static public function stringToBytes($string) {
+		$value = trim($string);
+
+		if ($string == '-1')
+			return PHP_INT_MAX;
+
+		if (strlen($value) == 0)
+			return 0;
+
+		$unit  = strtolower($value[strlen($value)-1]);
+
+		switch ($unit) {
+			case 'g': $value *= 1024;
+			case 'm': $value *= 1024;
+			case 'k': $value *= 1024;
+		}
+
+		return $value;
 	}
 
 	/**

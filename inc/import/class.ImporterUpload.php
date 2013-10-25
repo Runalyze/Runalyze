@@ -75,6 +75,8 @@ class ImporterUpload {
 
 		if (!ImporterFactory::canImportExtension($extension))
 			$this->throwUnknownExtension($extension);
+		elseif ($this->uploadErrorIsPresent())
+			$this->throwUploadError();
 		elseif ($this->uploadedFileWasTooBig())
 			$this->throwTooBigFile();
 		elseif ($this->tryToMoveFile())
@@ -89,6 +91,34 @@ class ImporterUpload {
 	 */
 	private function throwUnknownExtension($format) {
 		$this->Response = 'Unknown input format "'.$format.'".';
+	}
+
+	/**
+	 * Check for upload error
+	 * @return boolean
+	 */
+	private function uploadErrorIsPresent() {
+		if (isset($_FILES['qqfile']) && isset($_FILES['qqfile']['error']) && $_FILES['qqfile']['error'] != 0)
+			return true;
+
+		return false;
+	}
+
+	/**
+	 * Set response for upload error
+	 */
+	private function throwUploadError() {
+		switch ($_FILES['qqfile']['error']) {
+			case 1:
+			case 2:
+				$this->Response = 'Die Datei ist zu gro&szlig;.';
+				break;
+			case 3:
+			case 4:
+			default:
+				$this->Response = 'There was a problem with your upload.';
+				break;
+	   }
 	}
 
 	/**
@@ -123,7 +153,7 @@ class ImporterUpload {
 	 * Check whether the uploaded file was too big to handle
 	 */
 	private function uploadedFileWasTooBig() {
-		$Max    = ini_get('post_max_size');
+		$Max    = ini_get('upload_max_filesize');
 		$unit   = substr($Max, -1);
 		$factor = ($unit == 'M' ? 1048576
 				: ($unit == 'K' ? 1024
