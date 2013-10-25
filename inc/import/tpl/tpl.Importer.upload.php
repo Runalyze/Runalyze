@@ -5,7 +5,7 @@
 	</div>
 
 <script>
-var submittedFiles = [], completedFiles = 0;
+var submittedFiles = [], completedFiles = 0, uploadedFiles = 0;
 
 new qq.FineUploaderBasic({
 	button: $("#file-upload")[0],
@@ -17,30 +17,36 @@ new qq.FineUploaderBasic({
 	},
 	callbacks: {
 		onError: function(id, name, errorReason, xhr) {
-			$("#ajax").append('<p class="error appended-by-uploader">'+errorReason+'</p>');
+			$("#ajax").append('<p class="error appended-by-uploader">'+name+': '+errorReason+'</p>');
 		},
 		onSubmit: function(id, fileName) {
 			submittedFiles.push(fileName);
 			$("#upload-container").addClass('loading');
 		},
 		onComplete: function(id, fileName, responseJSON) {
-			completedFiles++;
+			uploadedFiles++;
 
-			if (completedFiles == submittedFiles.length) {
-				$(".appended-by-uploader").remove();
+			if (responseJSON.success) {
+				completedFiles++;
 
-				if (completedFiles == 1)
-					$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(fileName));
-				else
-					$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?files='+encodeURIComponent(submittedFiles.join(';')));
+				if (completedFiles == submittedFiles.length) {
+					$(".appended-by-uploader").remove();
+
+					if (completedFiles == 1)
+						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(fileName));
+					else
+						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?files='+encodeURIComponent(submittedFiles.join(';')));
+				} else {
+					$("#ajax").append('<p class="error appended-by-uploader">Es gab Probleme beim Upload.</p>');
+				}
 			}
 
+			if (uploadedFiles == submittedFiles.length) {
+				$("#upload-container").removeClass('loading');	
 
-			if (!responseJSON.success) {
-				if (responseJSON.error == '')
-					responseJSON.error = 'An unknown error occured.';
-				$("#ajax").append('<p class="error appended-by-uploader">'+fileName+': '+responseJSON.error+'</p>');
-				$("#upload-container").removeClass('loading');
+				submittedFiles = [];
+				completedFiles = 0;
+				uploadedFiles = 0;				
 			}
 		}
 	}
@@ -57,6 +63,12 @@ if (!qq.supportedFeatures.ajaxUploading)
 	<p class="info">
 		Unterst&uuml;tzte Formate: <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
 	</p>
+
+	<?php if (Filesystem::getMaximumFilesize() != INFINITY): ?>
+	<p class="info">
+		Maximale Dateigr&ouml;&szlig;e: <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
+	</p>
+	<?php endif; ?>
 
 <?php foreach ($this->filetypeInfo() as $info): ?>
 	<p class="info">
