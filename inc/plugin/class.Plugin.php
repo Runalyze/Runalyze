@@ -461,6 +461,7 @@ abstract class Plugin {
 	final public function get($property) {
 		switch($property) {
 			case 'id': return $this->id;
+			case 'key': return $this->key;
 			case 'type': return $this->type;
 			case 'active': return $this->active;
 			case 'order': return $this->order;
