@@ -56,9 +56,9 @@ class SportSpeedTest extends PHPUnit_Framework_TestCase {
 	 * @covers SportSpeed::minPer100m
 	 */
 	public function testMinPer100m() {
-		$this->assertEquals( SportSpeed::getSpeed(1, 300, SportSpeed::$MIN_PER_100M), '30,00s');
+		$this->assertEquals( SportSpeed::getSpeed(1, 300, SportSpeed::$MIN_PER_100M), '0:30');
 		$this->assertEquals( SportSpeed::getSpeed(1, 900, SportSpeed::$MIN_PER_100M), '1:30');
-		$this->assertEquals( SportSpeed::getSpeedWithAppendix(1, 300, SportSpeed::$MIN_PER_100M), '30,00s/100m');
+		$this->assertEquals( SportSpeed::getSpeedWithAppendix(1, 300, SportSpeed::$MIN_PER_100M), '0:30/100m');
 		$this->assertEquals( SportSpeed::getSpeedWithAppendix(1, 900, SportSpeed::$MIN_PER_100M), '1:30/100m');
 	}
 

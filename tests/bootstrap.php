@@ -26,6 +26,12 @@ if (!defined('PREFIX'))
 if (!defined('CONF_VDOT_CORRECTOR'))
 	define('CONF_VDOT_CORRECTOR', 1);
 
+if (!defined('CONF_VDOT_FORM'))
+	define('CONF_VDOT_FORM', 60);
+
+if (!defined('CONF_BASIC_ENDURANCE'))
+	define('CONF_BASIC_ENDURANCE', 0);
+
 if (!defined('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION'))
 	define('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION', false);
 
@@ -61,6 +67,15 @@ if (!defined('CONF_MAX_CTL'))
 
 if (!defined('CONF_MAX_TRIMP'))
 	define('CONF_MAX_TRIMP', 0);
+
+if (!defined('CONF_HF_MAX'))
+	define('CONF_HF_MAX', 200);
+
+if (!defined('CONF_HF_REST'))
+	define('CONF_HF_REST', 60);
+
+if (!defined('CONF_START_TIME'))
+	define('CONF_START_TIME', mktime(1,1,1,1,1,2010));
 
 if (!defined('CONF_TRAINING_MAKE_PUBLIC'))
 	define('CONF_TRAINING_MAKE_PUBLIC', 0);

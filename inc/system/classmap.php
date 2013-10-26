@@ -1,11 +1,17 @@
 <?php
 $CLASSMAP = array(
+'BasicEndurance' => 'calculate/class.BasicEndurance.php',
 'JD' => 'calculate/class.JD.php',
 'Math' => 'calculate/class.Math.php',
 'Running' => 'calculate/class.Running.php',
 'Time' => 'calculate/class.Time.php',
 'Trimp' => 'calculate/class.Trimp.php',
 'Validator' => 'calculate/class.Validator.php',
+'RunningPrognosis' => 'calculate/prognosis/class.RunningPrognosis.php',
+'RunningPrognosisBock' => 'calculate/prognosis/class.RunningPrognosisBock.php',
+'RunningPrognosisDaniels' => 'calculate/prognosis/class.RunningPrognosisDaniels.php',
+'RunningPrognosisSteffny' => 'calculate/prognosis/class.RunningPrognosisSteffny.php',
+'RunningPrognosisStrategy' => 'calculate/prognosis/class.RunningPrognosisStrategy.php',
 'AdminView' => 'class.AdminView.php',
 'DataBrowser' => 'class.DataBrowser.php',
 'DataBrowserLinker' => 'class.DataBrowserLinker.php',

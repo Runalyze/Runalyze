@@ -14,6 +14,18 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected $CPP_e = 1;
 
 	/**
+	 * Prognosis
+	 * @var RunningPrognosis
+	 */
+	protected $Prognosis = null;
+
+	/**
+	 * Prognosis strategy
+	 * @var RunningPrognosisStrategy
+	 */
+	protected $PrognosisStrategy = null;
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
@@ -81,60 +93,16 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function prepareForPrognosis() {
 		if ($this->config['cpp']['var']) {
-			$TopResults = Mysql::getInstance()->fetch('
-				SELECT
-					`distance`, `s`, `vdot_by_time`
-				FROM (
-					SELECT
-						`distance`, `s`, `vdot_by_time`
-					FROM `'.PREFIX.'training`
-					WHERE
-						`sportid`='.CONF_RUNNINGSPORT.'
-						AND `distance` >= "'.$this->config['cpp_min_distance']['var'].'"
-					ORDER BY `vdot_by_time` DESC
-					LIMIT 20
-				) as `tmp`
-				GROUP BY `distance`
-				ORDER BY `vdot_by_time` DESC
-				LIMIT 2
-			');
-
-			if (count($TopResults) < 2)
-				return;
-
-			if ($TopResults[0]['distance'] > $TopResults[1]['distance']) {
-				$ResultShort = $TopResults[1];
-				$ResultLong  = $TopResults[0];
-			} else {
-				$ResultShort = $TopResults[0];
-				$ResultLong  = $TopResults[1];
-			}
-
-			// This documented version does not work. Log-version is from source-code.
-			// see http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html
-			// see http://www.robert-bock.de/Sonstiges/cpp2.htm
-			//$this->CPP_e = (($ResultLong['s'] - $ResultShort['s']) / $ResultShort['s']) * $ResultShort['distance'] / ($ResultLong['distance'] - $ResultShort['distance']);
-			$this->CPP_e = log($ResultLong['s'] / $ResultShort['s']) / log($ResultLong['distance'] / $ResultShort['distance']);
-			$this->CPP_K = self::secondsToSerial($ResultLong['s']) / pow($ResultLong['distance'], $this->CPP_e);
+			$this->PrognosisStrategy = new RunningPrognosisBock;
+			$this->PrognosisStrategy->setMinimalDistance( $this->config['cpp_min_distance']['var'] );
+			$this->PrognosisStrategy->setupFromDatabase();
+		} else {
+			$this->PrognosisStrategy = new RunningPrognosisDaniels;
+			$this->PrognosisStrategy->setupFromDatabase();
 		}
-	}
 
-	/**
-	 * Get serial time from seconds
-	 * @param float $s
-	 * @return float 
-	 */
-	static private function secondsToSerial($s) {
-		return $s / 60;
-	}
-
-	/**
-	 * Get time in seconds from serial
-	 * @param float $serial
-	 * @return float
-	 */
-	static private function serialToSeconds($serial) {
-		return $serial * 60;
+		$this->Prognosis = new RunningPrognosis;
+		$this->Prognosis->setStrategy($this->PrognosisStrategy);
 	}
 
 	/**
@@ -142,22 +110,12 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		if ($this->config['cpp']['var']) {
-			$Prognosis['seconds'] = self::serialToSeconds($this->CPP_K * pow($distance, $this->CPP_e));
-			$Prognosis['vdot']    = JD::Competition2VDOT($distance, $Prognosis['seconds']);
-
-			if ($distance > 3)
-				$Prognosis['seconds'] = round($Prognosis['seconds']);
-		} else {
-			$Prognosis = Running::PrognosisAsArray($distance);
-		}
-
+		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
 		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
-		$PrognosisInSeconds    = $Prognosis['seconds'];
 		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
-		$VDOTnew               = round($Prognosis['vdot'], 2);
+		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
 
-		if ($PersonalBestInSeconds > 0 && $PersonalBestInSeconds < $PrognosisInSeconds) {
+		if ($PersonalBestInSeconds > 0 && $PersonalBestInSeconds <= $PrognosisInSeconds) {
 			$oldTag = 'strong';
 			$newTag = 'del';
 		} else {
