@@ -6,16 +6,38 @@
 class RunningTest extends PHPUnit_Framework_TestCase {
 	protected $object;
 
-	protected function setUp() {}
+	protected function setUp() {
+	}
 
-	protected function tearDown() {}
+	protected function tearDown() {
+	}
 
 	/**
+	 * Need to reset internal static value to 'false', otherwise value won't be recalculated
 	 * @covers Running::getAverageMonthPace
 	 */
 	public function testGetAverageMonthPace() {
-		// Not possible without data in database
 		$this->assertEquals( 0, Running::getAverageMonthPace() );
+
+		$class = new ReflectionClass('Running');
+		$property = $class->getProperty('AverageMonthPace');
+		$property->setAccessible(true);
+		$property->setValue(false);
+
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, time(), 360, 1) );
+		$this->assertEquals( 6.0, Running::getAverageMonthPace() );
+
+		$property->setValue(false);
+
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, time(), 300, 1) );
+		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
+
+		$property->setValue(false);
+
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, 0, 300, 1) );
+		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
+
+		mysql_query('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -128,8 +150,8 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 0.93, round(Running::VDOTfactorOfBasicEndurance(10), 2) );
 		$this->assertEquals( 0.83, round(Running::VDOTfactorOfBasicEndurance(21.1), 2) );
 		$this->assertEquals( 0.6, round(Running::VDOTfactorOfBasicEndurance(42.2), 2) );
-		$this->assertEquals( 0.01, round(Running::VDOTfactorOfBasicEndurance(50), 2) );
-		$this->assertEquals( 0.01, round(Running::VDOTfactorOfBasicEndurance(100), 2) );
+		$this->assertEquals( 0.6, round(Running::VDOTfactorOfBasicEndurance(50), 2) );
+		$this->assertEquals( 0.6, round(Running::VDOTfactorOfBasicEndurance(100), 2) );
 	}
 
 	/**
@@ -156,15 +178,6 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 				Running::PrognosisAsArray(42.2, 70, true)
 		));
 		//$this->assertEquals( array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:29') + 0.7), Running::PrognosisAsArray(42.2, 70, true));
-	}
-
-	/**
-	 * @covers Running::BasicEndurance
-	 * @covers Running::getQueryForBE
-	 */
-	public function testBasicEndurance() {
-		// TODO: needs VDOT_FORM
-		$this->assertEquals( 0, Running::BasicEndurance(true) );
 	}
 
 	/**

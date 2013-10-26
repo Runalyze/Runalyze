@@ -157,7 +157,7 @@ class TrainingObject extends DataObject {
 			$this->updateShoeForInsert();
 
 			JD::recalculateVDOTform();
-			Running::recalculateBasicEndurance();
+			BasicEndurance::recalculateValue();
 		}
 
 		Helper::recalculateStartTime();
@@ -185,7 +185,7 @@ class TrainingObject extends DataObject {
 			$this->updateShoeForUpdate();
 
 			JD::recalculateVDOTform();
-			Running::recalculateBasicEndurance();
+			BasicEndurance::recalculateValue();
 		}
 
 		Helper::recalculateStartTime();

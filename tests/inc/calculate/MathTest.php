@@ -27,7 +27,6 @@ class MathTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers Math::Variance
-	 * @todo Implement testVariance().
 	 */
 	public function testVariance() {
 		// average: 3.5
@@ -38,7 +37,6 @@ class MathTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers Math::WithSign
-	 * @todo Implement testWithSign().
 	 */
 	public function testWithSign() {
 		$this->assertEquals( Math::WithSign(0), 0 );

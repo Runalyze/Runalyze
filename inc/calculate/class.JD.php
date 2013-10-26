@@ -25,7 +25,7 @@ define('VDOT_FORM', JD::getConstVDOTform());
  * Basic endurance as percentage
  * @const BASIC_ENDURANCE
  */
-define('BASIC_ENDURANCE', Running::getConstBasicEndurance());
+define('BASIC_ENDURANCE', BasicEndurance::getConst());
 
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
