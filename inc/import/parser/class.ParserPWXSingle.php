@@ -141,14 +141,20 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 			if ($Id > 0)
 				return $Id;
 			else {
-				if ($Name == 'Run')
-					$Name = 'Laufen';
-				elseif ($Name == 'Bike' || $Name == 'Mountain Bike')
-					$Name = 'Radfahren';
-				elseif ($Name == 'Swim')
-					$Name = 'Schwimmen';
-				else
-					$Name = 'Sonstiges';
+				switch ($Name) {
+					case 'Run':
+						$Name = 'Laufen';
+						break;
+					case 'Bike':
+					case 'Mountain Bike':
+						$Name = 'Radfahren';
+						break;
+					case 'Swim':
+						$Name = 'Schwimmen';
+						break;
+					default:
+						$Name = 'Sonstiges';
+				}
 
 				$Id = SportFactory::idByName($Name);
 

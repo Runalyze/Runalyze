@@ -45,6 +45,7 @@ class SportSpeed {
 	 * Get select box
 	 * @param string $Selected [optional]
 	 * @param string $selectBoxName [optional]
+	 * @codeCoverageIgnore
 	 */
 	static public function getSelectBox($Selected = false, $selectBoxName = 'speed') {
 		if ($Selected == false)
@@ -91,8 +92,9 @@ class SportSpeed {
 				return self::mPerSecond($Distance, $Time);
 			case self::$NO:
 			default:
-				return self::noSpeed($Distance, $Time);
 		}
+
+		return self::noSpeed($Distance, $Time);
 	}
 
 	/**
@@ -112,8 +114,9 @@ class SportSpeed {
 				return "&nbsp;m/s";
 			case self::$NO:
 			default:
-				return "";
 		}
+
+		return "";
 	}
 
 	/**

@@ -22,6 +22,18 @@ class SportSpeedTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {}
 
 	/**
+	 * @covers SportSpeed::getAppendix
+	 */
+	public function testgetAppendix() {
+		$this->assertEquals( '', SportSpeed::getAppendix(SportSpeed::$NO) );
+		$this->assertEquals( '&nbsp;km/h', SportSpeed::getAppendix(SportSpeed::$DEFAULT) );
+		$this->assertEquals( '&nbsp;km/h', SportSpeed::getAppendix(SportSpeed::$KM_PER_H) );
+		$this->assertEquals( '/100m', SportSpeed::getAppendix(SportSpeed::$MIN_PER_100M) );
+		$this->assertEquals( '/km', SportSpeed::getAppendix(SportSpeed::$MIN_PER_KM) );
+		$this->assertEquals( '&nbsp;m/s', SportSpeed::getAppendix(SportSpeed::$M_PER_S) );
+	}
+
+	/**
 	 * @covers SportSpeed::getSpeed
 	 * @covers SportSpeed::getSpeedWithAppendix
 	 */

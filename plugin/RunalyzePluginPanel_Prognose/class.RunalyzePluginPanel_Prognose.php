@@ -10,9 +10,6 @@ $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
  * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Prognose extends PluginPanel {
-	protected $CPP_K = 0;
-	protected $CPP_e = 1;
-
 	/**
 	 * Prognosis
 	 * @var RunningPrognosis

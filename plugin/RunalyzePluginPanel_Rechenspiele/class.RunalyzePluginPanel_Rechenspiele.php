@@ -325,7 +325,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetBasicEndurance() {
-		$BEresults = BasicEndurance::value(false, 0, true);
+		$BasicEndurance = new BasicEndurance();
+		$BasicEndurance->readSettingsFromConfiguration();
+		$BEresults = $BasicEndurance->asArray();
 
 		$GeneralTable = '
 			<table style="width:100%;">
@@ -334,22 +336,22 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td><strong>Aktueller VDOT</strong> <small>(nach Puls)</small></td>
 						<td class="r">'.round(VDOT_FORM, 2).'</td>
 						<td>&nbsp;</td>
-						<td><strong>Vorgabe Wochen-KM</strong> <small>('.round(BasicEndurance::getDaysForWeekKm() / 7).' Wochen)</small></td>
-						<td class="r">'.Running::Km(BasicEndurance::getTargetWeekKm()).'</td>
+						<td><strong>Vorgabe Wochen-KM</strong> <small>('.round($BasicEndurance->getDaysForWeekKm() / 7).' Wochen)</small></td>
+						<td class="r">'.Running::Km($BasicEndurance->getTargetWeekKm()).'</td>
 						<td class="small">erreicht zu '.round(100*$BEresults['weekkm-percentage']).'&#37;</td>
-						<td class="small">('.Running::Km($BEresults['weekkm-result'], 0).')</td>
-						<td class="small">x'.BasicEndurance::$PERCENTAGE_WEEK_KM.'</td>
+						<td class="small">(&oslash; '.Running::Km(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), 0).')</td>
+						<td class="small">x'.$BasicEndurance->getPercentageForWeekKilometer().'</td>
 						<td rowspan="2" class="b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
 					</tr>
 					<tr class="'.HTML::trClass(1).'">
 						<td><strong>Marathonzeit</strong> <small>(optimal)</small></td>
 						<td class="r">'.Time::toString(Running::Prognosis(42.195, VDOT_FORM, false)).'</td>
 						<td>&nbsp;</td>
-						<td><strong>Vorgabe Langer Lauf</strong> <small>('.round(BasicEndurance::$DAYS_FOR_LONGJOGS / 7).' Wochen)</small></td>
-						<td class="r">'.Running::Km(BasicEndurance::getRealTargetLongjogKmPerWeek()).'</td>
+						<td><strong>Vorgabe Langer Lauf</strong> <small>('.round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7).' Wochen)</small></td>
+						<td class="r">'.Running::Km($BasicEndurance->getRealTargetLongjogKmPerWeek()).'</td>
 						<td class="small">erreicht zu '.round(100*$BEresults['longjog-percentage']).'&#37;</td>
 						<td class="small">('.round($BEresults['longjog-result'], 1).' points)</td>
-						<td class="small">x'.BasicEndurance::$PERCENTAGE_LONGJOGS.'</td>
+						<td class="small">x'.$BasicEndurance->getPercentageForLongjogs().'</td>
 					</tr>
 				</tbody>
 			</table>';
@@ -367,7 +369,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			';
 
 		$IgnoredLongjogs = 0;
-		$Longjogs        = Mysql::getInstance()->fetchAsArray(BasicEndurance::getQuery(0, true));
+		$Longjogs        = Mysql::getInstance()->fetchAsArray($BasicEndurance->getQuery(0, true));
 
 		foreach ($Longjogs as $i => $Longjog) {
 			if ($Longjog['points'] >= 0.2)
@@ -390,7 +392,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				</tbody>
 			</table>';
 		$LongjogTable .= '<p class="small">* '.$IgnoredLongjogs.' &quot;lange&quot; L&auml;ufe wurden hier nicht aufgef&uuml;hrt, da sie weniger als 0.2 Punkte eingebracht haben.</p>';
-		$LongjogTable .= '<p class="small">* Generell werden alle L&auml;ufe ab '.Running::Km(BasicEndurance::$MIN_KM_FOR_LONGJOG).' betrachtet.</p>';
+		$LongjogTable .= '<p class="small">* Generell werden alle L&auml;ufe ab '.Running::Km($BasicEndurance->getMinimalDistanceForLongjogs()).' betrachtet.</p>';
 
 		$Fieldset = new FormularFieldset('Grundlagenausdauer');
 		$Fieldset->addBlock('Die Grundlagenausdauer berechnet sich aus Wochenkilometern und langen L&auml;ufen.<br />

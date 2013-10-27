@@ -24,11 +24,6 @@ class DatabaseSchemePool {
 	static protected $Objects = array();
 
 	/**
-	 * Constructor is private 
-	 */
-	private function __construct() {}
-
-	/**
 	 * Get instance of a DatabaseScheme
 	 * @param string $schemeFile
 	 * @return DatabaseScheme 

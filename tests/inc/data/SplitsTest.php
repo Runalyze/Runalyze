@@ -64,6 +64,26 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @covers Splits::removeSingleSplits
+	 */
+	public function testRemoveSingleSplits() {
+		$Splits = new Splits();
+		$Splits->addSplit(1, 300);
+
+		$this->assertTrue( !$Splits->areEmpty() );
+
+		$Splits->removeSingleSplits();
+
+		$this->assertTrue( $Splits->areEmpty() );
+
+		$Splits->addSplit(1, 300);
+		$Splits->addSplit(1, 300);
+		$Splits->removeSingleSplits();
+
+		$this->assertTrue( !$Splits->areEmpty() );
+	}
+
+	/**
 	 * Test creationg from post without flag 
 	 */
 	public function testNoCreateFromPostWithoutFlag() {
@@ -186,6 +206,29 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals( '1.00|4:00-1.10|3:55-0.60|4:05', $Splits->asString() );
+	}
+
+	public function testHasActiveLaps() {
+		$Splits = new Splits();
+		$Splits->addSplit(1, 300, false);
+
+		$this->assertFalse( $Splits->hasActiveLaps() );
+		$this->assertFalse( $Splits->hasActiveAndInactiveLaps() );
+
+		$Splits->addSplit(1, 300);
+
+		$this->assertTrue( $Splits->hasActiveLaps() );
+		$this->assertTrue( $Splits->hasActiveAndInactiveLaps() );
+	}
+
+	public function testAsIcon() {
+		$Splits = new Splits();
+
+		$this->assertEquals( '', $Splits->asIconWithTooltip() );
+
+		$Splits->addSplit(1, 300);
+
+		$this->assertNotEquals( '', $Splits->asIconWithTooltip() );
 	}
 
 }
