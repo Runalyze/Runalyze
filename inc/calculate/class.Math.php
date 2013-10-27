@@ -4,16 +4,14 @@
  * @package Runalyze\Calculations
  */
 /**
- * Class for mathematic calculations
+ * Mathematic calculations
+ * 
+ * Some additional mathematic calculations
+ * 
  * @author Hannes Christiansen
  * @package Runalyze\Calculations
  */
 class Math {
-	/**
-	 * Constructor is private
-	 */
-	private function __construct() {}
-
 	/**
 	 * Calculate the variance of an array
 	 * @param array $array Array with numeric values

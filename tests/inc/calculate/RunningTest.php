@@ -90,6 +90,9 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	public function testPulseString() {
 		$this->assertEquals( '', Running::PulseString(0) );
 
+		// Used: define('CONF_PULS_MODE', 'hfmax');
+		$this->assertEquals( '57&nbsp;&#37;', strip_tags(Running::PulseString(114)) );
+
 		// TODO: other return values ... with Ajax::tooltip ...
 	}
 
@@ -106,6 +109,14 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testPulseStringInPercent() {
 		$this->assertEquals( '60&nbsp;&#37;', Running::PulseStringInPercent(120, 200) );
+	}
+
+	/**
+	 * @covers Running::PulseStringInPercentHRmax
+	 */
+	public function testPulseStringInPercentHRmax() {
+		$this->assertEquals( '50&nbsp;&#37;', Running::PulseStringInPercentHRmax(130) );
+		$this->assertEquals( '25&nbsp;&#37;', Running::PulseStringInPercentHRmax(80, 200, 40) );
 	}
 
 	/**
@@ -159,25 +170,15 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	 * @covers Running::Prognosis
 	 */
 	public function testPrognosisAsArray() {
-		$this->assertEmpty(array_diff(
-				array('vdot' => 40, 'seconds' => Time::toSeconds('3:49:59') + 0.4),
-				Running::PrognosisAsArray(42.2, 40, false)
-		));
-		$this->assertEmpty(array_diff(
-				array('vdot' => 50, 'seconds' => Time::toSeconds('3:10:57') + 0.3),
-				Running::PrognosisAsArray(42.2, 50, false)
-		));
-		// Throws error without being different?
-		//$this->assertEquals( array('vdot' => 40, 'seconds' => Time::toSeconds('3:49:59') + 0.4), Running::PrognosisAsArray(42.2, 40, false));
-		//$this->assertEquals( array('vdot' => 50, 'seconds' => Time::toSeconds('3:10:57') + 0.3), Running::PrognosisAsArray(42.2, 50, false));
-		$this->assertEquals( array('vdot' => 60, 'seconds' => Time::toSeconds('2:43:31') + 0.5000000001), Running::PrognosisAsArray(42.2, 60, false));
-		$this->assertEquals( array('vdot' => 70, 'seconds' => Time::toSeconds('2:23:28') + 0.8), Running::PrognosisAsArray(42.2, 70, false));
+		$this->assertEquals( 3*60*60 + 49*60 + 59, Running::Prognosis(42.2, 40, false), '', 1 );
+		$this->assertEquals( 3*60*60 + 10*60 + 57, Running::Prognosis(42.2, 50, false), '', 1 );
+		$this->assertEquals( 2*60*60 + 43*60 + 31, Running::Prognosis(42.2, 60, false), '', 1 );
+		$this->assertEquals( 2*60*60 + 23*60 + 28, Running::Prognosis(42.2, 70, false), '', 1 );
 
 		$this->assertEmpty(array_diff(
 				array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:29') + 0.7),
 				Running::PrognosisAsArray(42.2, 70, true)
 		));
-		//$this->assertEquals( array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:29') + 0.7), Running::PrognosisAsArray(42.2, 70, true));
 	}
 
 	/**

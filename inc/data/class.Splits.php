@@ -361,7 +361,8 @@ class Splits {
 
 	/**
 	 * Get fieldset
-	 * @return FormularFieldset 
+	 * @return FormularFieldset
+	 * @codeCoverageIgnore
 	 */
 	public function getFieldset() {
 		$Fieldset = new FormularFieldset('Zwischenzeiten');

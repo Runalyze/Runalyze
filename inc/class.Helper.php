@@ -36,15 +36,6 @@ require_once FRONTEND_PATH.'calculate/class.JD.php';
  */
 class Helper {
 	/**
-	 * Private constructor
-	 */
-	private function __construct() {}
-	/**
-	 * Private destructor
-	 */
-	private function __destruct() {}
-
-	/**
 	 * Trim all values of an array
 	 * @param array $array
 	 * @return array 

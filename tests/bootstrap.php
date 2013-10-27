@@ -74,6 +74,9 @@ if (!defined('CONF_HF_MAX'))
 if (!defined('CONF_HF_REST'))
 	define('CONF_HF_REST', 60);
 
+if (!defined('CONF_PULS_MODE'))
+	define('CONF_PULS_MODE', 'hfmax');
+
 if (!defined('CONF_START_TIME'))
 	define('CONF_START_TIME', mktime(1,1,1,1,1,2010));
 
@@ -103,6 +106,9 @@ $_SERVER['REQUEST_URI'] = '/runalyze/index.php';
 $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
 Mysql::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
+
+// Clean database
+mysql_query('TRUNCATE TABLE `runalyze_training`');
 
 // Load helper class
 Helper::Unknown('');

@@ -31,7 +31,7 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetConst() {
 		// TODO: needs VDOT_FORM
-		$this->assertEquals( 0, BasicEndurance::getConst(true) );
+		// $this->assertEquals( 0, BasicEndurance::getConst(true) );
 	}
 
 	/**
@@ -45,70 +45,102 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
-	/**
-	 * @covers BasicEndurance::value
-	 * @todo   Implement testValue().
-	 */
-	public function testValue() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+	public function testSetterAndGetter() {
+		$this->object->setVDOT(50);
+		$this->object->setDaysToRecognizeForLongjogs(30);
+		$this->object->setDaysToRecognizeForWeekKilometer(60);
+		$this->object->setMinimalDaysToRecognizeForWeekKilometer(30);
+		$this->object->setMinimalDistanceForLongjogs(10);
+
+		$this->assertEquals( 50, $this->object->getUsedVDOT() );
+		$this->assertEquals( 30, $this->object->getDaysToRecognizeForLongjogs() );
+		$this->assertEquals( 60, $this->object->getDaysToRecognizeForWeekKilometer() );
+		$this->assertEquals( 30, $this->object->getMinimalDaysToRecognizeForWeekKilometer() );
+		$this->assertEquals( 10, $this->object->getMinimalDistanceForLongjogs() );
 	}
 
-	/**
-	 * @covers BasicEndurance::getQuery
-	 * @todo   Implement testGetQuery().
-	 */
-	public function testGetQuery() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+	public function testSetterAndGetterForPercentages() {
+		$this->object->setPercentageForLongjogs(0.4);
+		$this->assertEquals( 0.4, $this->object->getPercentageForLongjogs() );
+		$this->assertEquals( 0.6, $this->object->getPercentageForWeekKilometer() );
+
+		$this->object->setPercentageForWeekKilometer(0.1);
+		$this->assertEquals( 0.9, $this->object->getPercentageForLongjogs() );
+		$this->assertEquals( 0.1, $this->object->getPercentageForWeekKilometer() );
+
+		$this->object->setPercentageForLongjogs(15);
+		$this->assertEquals( 1, $this->object->getPercentageForLongjogs() );
+		$this->assertEquals( 0, $this->object->getPercentageForWeekKilometer() );
+
+		$this->object->setPercentageForLongjogs(-15);
+		$this->assertEquals( 1, $this->object->getPercentageForLongjogs() );
+		$this->assertEquals( 0, $this->object->getPercentageForWeekKilometer() );
 	}
 
-	/**
-	 * @covers BasicEndurance::getDaysForWeekKm
-	 * @todo   Implement testGetDaysForWeekKm().
-	 */
-	public function testGetDaysForWeekKm() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+	public function testTargets() {
+		$this->object->setMinimalDistanceForLongjogs(10);
+		$this->object->setVDOT(20);
+		$this->assertEquals( 30, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 19, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(30);
+		$this->assertEquals( 47.5, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 24, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(40);
+		$this->assertEquals( 66, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 27.5, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(50);
+		$this->assertEquals( 85, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 30, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(60);
+		$this->assertEquals( 104, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 32.5, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(70);
+		$this->assertEquals( 124, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 34.5, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
+
+		$this->object->setVDOT(80);
+		$this->assertEquals( 145, $this->object->getTargetWeekKm(), '', 1 );
+		$this->assertEquals( 36, $this->object->getRealTargetLongjogKmPerWeek(), '', 1 );
 	}
 
-	/**
-	 * @covers BasicEndurance::getTargetWeekKm
-	 * @todo   Implement testGetTargetWeekKm().
-	 */
-	public function testGetTargetWeekKm() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
-	}
+	public function testForVDOT20() {
+		$this->object->setVDOT(20);
+		$this->object->setDaysToRecognizeForLongjogs(7);
+		$this->object->setDaysToRecognizeForWeekKilometer(7);
+		$this->object->setMinimalDaysToRecognizeForWeekKilometer(7);
+		$this->object->setMinimalDistanceForLongjogs(10);
+		$this->object->setPercentageForLongjogs(0.33);
+		$this->object->setPercentageForWeekKilometer(0.67);
 
-	/**
-	 * @covers BasicEndurance::getTargetLongjogKmPerWeek
-	 * @todo   Implement testGetTargetLongjogKmPerWeek().
-	 */
-	public function testGetTargetLongjogKmPerWeek() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
-	}
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 'distance'), array(CONF_RUNNINGSPORT, time() - 1*DAY_IN_S, 15) );
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 'distance'), array(CONF_RUNNINGSPORT, time() - 3*DAY_IN_S, 15) );
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'time', 'distance'), array(CONF_RUNNINGSPORT, time() - 8*DAY_IN_S, 42) );
 
-	/**
-	 * @covers BasicEndurance::getRealTargetLongjogKmPerWeek
-	 * @todo   Implement testGetRealTargetLongjogKmPerWeek().
-	 */
-	public function testGetRealTargetLongjogKmPerWeek() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		$Results = $this->object->asArray();
+		$this->assertEquals( 30, $Results['weekkm-result'] );
+		$this->assertEquals( 0.82, $Results['longjog-result'], '', 0.01 );
+		$this->assertEquals( 1.00, $Results['weekkm-percentage'], '', 0.01 );
+		$this->assertEquals( 0.82, $Results['longjog-percentage'], '', 0.01 );
+		$this->assertEquals( 94, $Results['percentage'], '', 0.01 );
+		$this->assertEquals( 94, $this->object->value() );
+		$this->assertEquals( '94 &#37;', $this->object->valueInPercent() );
+
+		$this->object->setPercentageForLongjogs(1);
+		$this->assertEquals( 82, $this->object->value() );
+
+		$this->object->setDaysToRecognizeForLongjogs(14);
+		$this->assertEquals( 555, $this->object->value() );
+
+		$this->object->setDaysToRecognizeForWeekKilometer(70);
+		$this->object->setPercentageForLongjogs(0.01);
+		$this->assertEquals( 29, $this->object->value() );
+
+		mysql_query('TRUNCATE TABLE `runalyze_training`');
 	}
 
 }
