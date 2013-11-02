@@ -95,6 +95,10 @@ class JD {
 	 * @return float   HFmax [%]
 	 */
 	public static function pVDOT2pHF($pVDOT) {
+		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+			return 0.68725*log($pVDOT)+1.00466;
+
+		// Old version
 		return ($pVDOT+0.2812)/1.2812;
 	}
 
@@ -104,6 +108,10 @@ class JD {
 	 * @return float   VDOT [%]
 	 */
 	public static function pHF2pVDOT($pHF) {
+		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+			return exp( ($pHF - 1.00466) / 0.68725 );
+
+		// Old version
 		return 1.2812*$pHF-0.2812;
 	}
 
