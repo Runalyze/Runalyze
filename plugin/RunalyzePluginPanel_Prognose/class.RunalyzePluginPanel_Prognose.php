@@ -36,13 +36,21 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Bei Runalyze werden viele Tabellen und daraus abgeleitete Formeln von &quot;Jack Daniels - Die Laufformel&quot; verwendet.
-					Unter anderem wird aus dem Verh&auml;ltnis von Herzfrequenz und Tempo auf die aktuelle Form geschlossen.');
-		echo HTML::p('Mittels dieser kann f&uuml;r alle gew&uuml;nschten Distanzen eine Prognose berechnet werden.
-					Sinnvolle Werte erh&auml;lt man vor allem f&uuml;r die Distanzen zwischen 3 und 42 km.');
-		echo HTML::p('Alternativ kann die Prognose nach einem Modell von Robert Bock erstellt werden.<br />
-					Weiteres dazu:
-					<a href="http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html" title="Wettkampf Prognose Robert Bock">http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html</a>.');
+		echo HTML::p('Was wirst du beim n&auml;chsten Wettkampf laufen k&ouml;nnen?
+					Runalyze unterst&uuml;tzt verschiedene Prognose-Modelle.
+					Sinnvolle Prognosen k&ouml;nnen vor allem f&uuml;r die Distanzen zwischen 3.000m und 42 km erstellt werden.');
+		echo HTML::fileBlock('<strong>Jack Daniels (VDOT)</strong><br />
+					Aus deinen Trainingsleistungen wird dein aktueller VDOT-Wert approximiert.
+					Tabellen aus &bdquo;<em>Die Laufformel</em>&rdquo; von Jack Daniels liefern daf&uuml;r entsprechende Prognosen.');
+		echo HTML::fileBlock('<strong>Robert Bock (CPP, &bdquo;Competitive Performance Predictor&rdquo;)</strong><br />
+					Robert Bock hat ein Modell zur Prognose anhand eines Erm&uuml;dungskoeffizientens aufgestellt.
+					Dieser wird aus deinen beiden besten Ergebnissen (bei Distanzen ab 3.000m) berechnet.<br />
+					<small>siehe <a href="http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html" title="Wettkampf Prognose Robert Bock">http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html</a></small>');
+		echo HTML::fileBlock('<strong>Herbert Steffny (&bdquo;simple Methode&rdquo;)</strong><br />
+					Im Buch &bdquo;<em>Das gro&szlig;e Laufbuch</em>&rdquo; von Herbert Steffny tauchen simple Faktoren auf,
+					um die Leistungen auf verschiedene Distanzen umzurechnen. Daf&uuml;r wird dein bisher bestes Ergebnis ber&uuml;cksichtigt.');
+		echo HTML::info('Nur die Prognose nach Jack Daniels ber&uuml;cksichtigt deine aktuelle Form.
+					Die anderen Prognosen basieren nur auf deinen Wettkampfergebnissen.');
 	}
 
 	/**
@@ -51,9 +59,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['distances']        = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => Ajax::tooltip('Distanzen f&uuml;r die Prognose', 'kommagetrennt'));
-		$config['cpp']              = array('type' => 'bool', 'var' => false, 'description' => Ajax::tooltip('Prognose nach CPP', 'Anstelle der VDOT-basierten Prognose kann das CPP-Modell von Robert Bock verwendet werden.'));
-		$config['cpp_min_distance'] = array('type' => 'int', 'var' => 3, 'description' => Ajax::tooltip('minimale Distanz f&uuml;r CPP', 'CPP berechnet einen Erm&uuml;dungsfaktor aus deinen zwei besten L&auml;ufen. Resultate auf sehr kurzen Distanzen k&ouml;nnen die Prognose daher stark ver&auml;ndern.'));
+		$config['distances']     = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => Ajax::tooltip('Distanzen f&uuml;r die Prognose', 'kommagetrennt'));
+		$config['model-jd']      = array('type' => 'bool', 'var' => true, 'description' => 'Prognose-Modell: Jack Daniels');
+		$config['model-cpp']     = array('type' => 'bool', 'var' => false, 'description' => 'Prognose-Modell: CPP');
+		$config['model-steffny'] = array('type' => 'bool', 'var' => false, 'description' => 'Prognose-Modell: Herbert Steffny');
 
 		return $config;
 	}
@@ -89,14 +98,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * Prepare calculations 
 	 */
 	protected function prepareForPrognosis() {
-		if ($this->config['cpp']['var']) {
+		if ($this->config['model-cpp']['var'])
 			$this->PrognosisStrategy = new RunningPrognosisBock;
-			$this->PrognosisStrategy->setMinimalDistance( $this->config['cpp_min_distance']['var'] );
-			$this->PrognosisStrategy->setupFromDatabase();
-		} else {
+		elseif ($this->config['model-steffny']['var'])
+			$this->PrognosisStrategy = new RunningPrognosisSteffny;
+		else
 			$this->PrognosisStrategy = new RunningPrognosisDaniels;
-			$this->PrognosisStrategy->setupFromDatabase();
-		}
+
+		$this->PrognosisStrategy->setupFromDatabase();
 
 		$this->Prognosis = new RunningPrognosis;
 		$this->Prognosis->setStrategy($this->PrognosisStrategy);
@@ -145,8 +154,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
-	 * Get array with distances for prognosis
-	 * @return array
+	 * Get string with distances for prognosis
+	 * @return string
 	 */
 	public function getDistances() {
 		return $this->config['distances']['var'];

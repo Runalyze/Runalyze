@@ -37,23 +37,7 @@ class RunningPrognosisBock extends RunningPrognosisStrategy {
 	 * Running setup from database
 	 */
 	public function setupFromDatabase() {
-		$TopResults = Mysql::getInstance()->fetch('
-			SELECT
-				`distance`, `s`, `vdot_by_time`
-			FROM (
-				SELECT
-					`distance`, `s`, `vdot_by_time`
-				FROM `'.PREFIX.'training`
-				WHERE
-					`sportid`='.CONF_RUNNINGSPORT.'
-					AND `distance` >= "'.$this->MINIMAL_DISTANCE.'"
-				ORDER BY `vdot_by_time` DESC
-				LIMIT 20
-			) as `tmp`
-			GROUP BY `distance`
-			ORDER BY `vdot_by_time` DESC
-			LIMIT 2
-		');
+		$TopResults = $this->getTopResults(2, $this->MINIMAL_DISTANCE);
 
 		if (count($TopResults) < 2)
 			return;
@@ -83,9 +67,12 @@ class RunningPrognosisBock extends RunningPrognosisStrategy {
 	 * @param float $time_long time in seconds for longer result
 	 */
 	public function setFromResults($distance_short, $time_short, $distance_long, $time_long) {
+		if ($distance_short > $distance_long)
+			list($distance_short, $time_short, $distance_long, $time_long) = array($distance_long, $time_long, $distance_short, $time_short);
+
 		//$this->CONST_e = (($time_long - $time_short) / $time_short) * $distance_short / ($distance_long - $distance_short);
 		$this->CONST_e = log($time_long / $time_short) / log($distance_long / $distance_short);
-		$this->CONST_K = self::secondsToSerial($time_long) / pow($distance_long, $this->CONST_e);
+		$this->CONST_K = $time_long / pow($distance_long, $this->CONST_e);
 	}
 
 	/**
@@ -106,26 +93,8 @@ class RunningPrognosisBock extends RunningPrognosisStrategy {
 	 * @return float prognosis in seconds
 	 */
 	public function inSeconds($distance) {
-		$seconds = self::serialToSeconds($this->CONST_K * pow($distance, $this->CONST_e));
+		$seconds = $this->CONST_K * pow($distance, $this->CONST_e);
 
 		return ($distance > 3) ? round($seconds) : $seconds;
-	}
-
-	/**
-	 * Get serial time from seconds
-	 * @param float $s
-	 * @return float 
-	 */
-	static private function secondsToSerial($s) {
-		return $s / 60;
-	}
-
-	/**
-	 * Get time in seconds from serial
-	 * @param float $serial
-	 * @return float
-	 */
-	static private function serialToSeconds($serial) {
-		return $serial * 60;
 	}
 }

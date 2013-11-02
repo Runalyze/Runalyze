@@ -18,4 +18,34 @@ abstract class RunningPrognosisStrategy {
 	 * Prognosis in seconds
 	 */
 	abstract public function inSeconds($distance);
+
+	/**
+	 * Get top results (according to vdot_by_time
+	 * @param int $numberOfResults number of results to return
+	 * @param float $minimalDistanceRequired in km
+	 * @return array
+	 */
+	public function getTopResults($numberOfResults = 1, $minimalDistanceRequired = 3) {
+		$Query = '
+			SELECT
+				`distance`, `s`, `vdot_by_time`
+			FROM (
+				SELECT
+					`distance`, `s`, `vdot_by_time`
+				FROM `'.PREFIX.'training`
+				WHERE
+					`sportid`='.CONF_RUNNINGSPORT.'
+					AND `distance` >= "'.$minimalDistanceRequired.'"
+				ORDER BY `vdot_by_time` DESC
+				LIMIT 20
+			) as `tmp`
+			GROUP BY `distance`
+			ORDER BY `vdot_by_time` DESC
+		';
+
+		if ($numberOfResults <= 1)
+			return Mysql::getInstance()->fetchSingle($Query);
+
+		return Mysql::getInstance()->fetch($Query.' LIMIT '.$numberOfResults);
+	}
 }
