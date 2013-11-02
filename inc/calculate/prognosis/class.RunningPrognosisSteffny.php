@@ -27,7 +27,10 @@ class RunningPrognosisSteffny extends RunningPrognosisStrategy {
 	 * Running setup from database
 	 */
 	public function setupFromDatabase() {
-		// TODO
+		$TopResult = $this->getTopResults(1);
+
+		if (!empty($TopResult))
+			$this->setReferenceResult($TopResult['distance'], $TopResult['s']);
 	}
 
 	/**
