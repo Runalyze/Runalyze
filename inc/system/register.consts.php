@@ -378,13 +378,13 @@ $Design->addToCategoryList();
 $Calculations = new ConfigCategory('calculations', 'Rechenspiele');
 $Calculations->setKeys(array(
 	'RECHENSPIELE',
-	'ATL_DAYS',
+	'VDOT_HF_METHOD',
 	'JD_USE_VDOT_CORRECTOR',
-	'CTL_DAYS',
+	'ATL_DAYS',
 	'VDOT_MANUAL_CORRECTOR',
-	'VDOT_DAYS',
+	'CTL_DAYS',
 	'VDOT_MANUAL_VALUE',
-	'',
+	'VDOT_DAYS',
 	'JD_USE_VDOT_CORRECTION_FOR_ELEVATION',
 	'VDOT_CORRECTION_POSITIVE_ELEVATION',
 	'VDOT_CORRECTION_NEGATIVE_ELEVATION'
@@ -394,6 +394,18 @@ $Calculations->addConfigValue( new ConfigValueBool('RECHENSPIELE', array(
 	'label'			=> 'Rechenspiele aktivieren',
 	'tooltip'		=> 'Berechnung von VDOT, TRIMP, ...',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
+)));
+$Calculations->addConfigValue( new ConfigValueSelect('VDOT_HF_METHOD', array(
+	'default'		=> 'logarithmic',
+	'label'			=> 'VDOT-Puls-Methode',
+	'options'		=> array(
+		'logarithmic'	=> 'logarithmisch (neue Methode ab v1.5)',
+		'linear'		=> 'linear (alte Methode bis v1.4)'
+	),
+	'tooltip'		=> 'Methode zur Berechnung eines prozentualen VDOT-Werts aus einem Pulswert.
+		Alte Methoden sind nur aus Kompatibilit&auml;tsgr&uuml;nden aufgelistet.
+		Es wird sehr empfohlen, die neuste Methode zu verwenden.',
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueBool('JD_USE_VDOT_CORRECTOR', array(
 	'default'		=> true,

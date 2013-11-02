@@ -98,7 +98,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			$this->calculateElevation();
 
 		JD::recalculateVDOTform();
-		Running::recalculateBasicEndurance();
+		BasicEndurance::recalculateValue();
 		Helper::recalculateStartTime();
 		Helper::recalculateHFmaxAndHFrest();
 
