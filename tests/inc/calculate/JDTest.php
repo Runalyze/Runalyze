@@ -45,7 +45,7 @@ class JDTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 0.755, JD::pVDOT2pHF(0.7), '', 0.03);
 		$this->assertEquals( 0.85, JD::pVDOT2pHF(0.8), '', 0.03);
 		$this->assertEquals( 0.93, JD::pVDOT2pHF(0.9), '', 0.03);
-		$this->assertEquals( 1, JD::pVDOT2pHF(1) );
+		$this->assertEquals( 1, JD::pVDOT2pHF(1), '', 0.03 );
 	}
 
 	/**
@@ -55,7 +55,7 @@ class JDTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 0.64, JD::pHF2pVDOT(0.7), '', 0.03);
 		$this->assertEquals( 0.75, JD::pHF2pVDOT(0.8), '', 0.03);
 		$this->assertEquals( 0.86, JD::pHF2pVDOT(0.9), '', 0.03);
-		$this->assertEquals( 1, JD::pHF2pVDOT(1) );
+		$this->assertEquals( 1, JD::pHF2pVDOT(1), '', 0.03 );
 	}
 
 	/**
@@ -85,30 +85,30 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testTraining2VDOT() {
 		// pulse_avg = 200 is HR_MAX
-		$this->assertEquals( 40.01, JD::Training2VDOT(0, array(
+		$this->assertEquals( 40.2, JD::Training2VDOT(0, array(
 			'sportid'	=> CONF_RUNNINGSPORT,
 			'distance'	=> 10,
 			's'			=> 50*60,
 			'pulse_avg'	=> 200
-		)));
-		$this->assertEquals( 51.94, JD::Training2VDOT(0, array(
+		)), '', 0.1);
+		$this->assertEquals( 52.3, JD::Training2VDOT(0, array(
 			'sportid'	=> CONF_RUNNINGSPORT,
 			'distance'	=> 10,
 			's'			=> 40*60,
 			'pulse_avg'	=> 200
-		)));
-		$this->assertEquals( 60.73, JD::Training2VDOT(0, array(
+		)), '', 0.1);
+		$this->assertEquals( 61.1, JD::Training2VDOT(0, array(
 			'sportid'	=> CONF_RUNNINGSPORT,
 			'distance'	=> 10,
 			's'			=> 35*60,
 			'pulse_avg'	=> 200
-		)));
-		$this->assertEquals( 72.8, JD::Training2VDOT(0, array(
+		)), '', 0.1);
+		$this->assertEquals( 73.3, JD::Training2VDOT(0, array(
 			'sportid'	=> CONF_RUNNINGSPORT,
 			'distance'	=> 10,
 			's'			=> 30*60,
 			'pulse_avg'	=> 200
-		)));
+		)), '', 0.1);
 	}
 
 	/**

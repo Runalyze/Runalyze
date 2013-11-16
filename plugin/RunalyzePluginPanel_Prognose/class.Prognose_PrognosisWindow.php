@@ -108,6 +108,7 @@ class Prognose_PrognosisWindow {
 		$this->setupJackDanielsStrategy();
 		$this->setupBockStrategy();
 		$this->setupSteffnyStrategy();
+		$this->setupCameronStrategy();
 	}
 
 	/**
@@ -155,6 +156,16 @@ class Prognose_PrognosisWindow {
 		$Strategy->setReferenceResult($_POST['best-result-km'], Time::toSeconds($_POST['best-result-time']));
 
 		$this->PrognosisStrategies['herbert-steffny'] = $Strategy;
+	}
+
+	/**
+	 * Setup prognosis strategy: David Cameron
+	 */
+	protected function setupCameronStrategy() {
+		$Strategy = new RunningPrognosisCameron;
+		$Strategy->setReferenceResult($_POST['best-result-km'], Time::toSeconds($_POST['best-result-time']));
+
+		$this->PrognosisStrategies['david-cameron'] = $Strategy;
 	}
 
 	/**
@@ -234,6 +245,12 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function finishResultTable() {
 		$this->ResultTable .= '</tbody></table>';
+
+		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof RunningPrognosisBock) {
+			$K = $this->PrognosisStrategies['robert-bock']->getK();
+			$e = $this->PrognosisStrategies['robert-bock']->getE();
+			$this->ResultTable .= HTML::info('Aus den Ergebnissen wurden die Konstanten K = '.$K.' und e = '.$e.' berechnet.').'<br />';
+		}
 	}
 
 	/**
@@ -257,6 +274,7 @@ class Prognose_PrognosisWindow {
 		$FieldModel->addOption('jack-daniels', 'Jack Daniels (VDOT)');
 		$FieldModel->addOption('robert-bock', 'Robert Bock (CPP)');
 		$FieldModel->addOption('herbert-steffny', 'Herbert Steffny (simpel)');
+		$FieldModel->addOption('david-cameron', 'David Cameron');
 		$FieldModel->addAttribute('onchange', '$(\'#prognosis-calculator .only-\'+$(this).val()).closest(\'div\').show();$(\'#prognosis-calculator .hide-on-model-change:not(.only-\'+$(this).val()+\')\').closest(\'div\').hide();');
 		$FieldModel->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 
@@ -305,6 +323,7 @@ class Prognose_PrognosisWindow {
 		$BestResult->addCSSclass('hide-on-model-change');
 		$BestResult->addCSSclass('only-robert-bock');
 		$BestResult->addCSSclass('only-herbert-steffny');
+		$BestResult->addCSSclass('only-david-cameron');
 		$BestResult->setUnit( FormularUnit::$KM );
 
 		$BestResultTime = new FormularInput('best-result-time', 'in');
@@ -312,6 +331,7 @@ class Prognose_PrognosisWindow {
 		$BestResultTime->addCSSclass('hide-on-model-change');
 		$BestResultTime->addCSSclass('only-robert-bock');
 		$BestResultTime->addCSSclass('only-herbert-steffny');
+		$BestResultTime->addCSSclass('only-david-cameron');
 
 		$SecondBestResult = new FormularInput('second-best-result-km', 'Zweitbestes Ergebnis');
 		$SecondBestResult->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );

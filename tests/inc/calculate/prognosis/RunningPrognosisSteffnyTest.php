@@ -28,13 +28,18 @@ class RunningPrognosisSteffnyTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @covers RunningPrognosisSteffny::setupFromDatabase
-	 * @todo   Implement testSetupFromDatabase().
 	 */
 	public function testSetupFromDatabase() {
-		// TODO
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 60, 16*60 +  6, 5) );
+		Mysql::getInstance()->insert('runalyze_training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 45, 90*60 +  0, 21.1) );
+
+		$this->object->setupFromDatabase();
+
+		$this->assertEquals(   9*60 + 20, $this->object->inSeconds(3), '' , 1);
+		$this->assertEquals(  16*60 +  6, $this->object->inSeconds(5), '', 1 );
+		$this->assertEquals(  33*60 + 12, $this->object->inSeconds(10), '', 1 );
+
+		mysql_query('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**

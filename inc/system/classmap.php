@@ -9,6 +9,7 @@ $CLASSMAP = array(
 'Validator' => 'calculate/class.Validator.php',
 'RunningPrognosis' => 'calculate/prognosis/class.RunningPrognosis.php',
 'RunningPrognosisBock' => 'calculate/prognosis/class.RunningPrognosisBock.php',
+'RunningPrognosisCameron' => 'calculate/prognosis/class.RunningPrognosisCameron.php',
 'RunningPrognosisDaniels' => 'calculate/prognosis/class.RunningPrognosisDaniels.php',
 'RunningPrognosisSteffny' => 'calculate/prognosis/class.RunningPrognosisSteffny.php',
 'RunningPrognosisStrategy' => 'calculate/prognosis/class.RunningPrognosisStrategy.php',

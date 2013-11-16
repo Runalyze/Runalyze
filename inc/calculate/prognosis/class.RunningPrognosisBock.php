@@ -97,4 +97,20 @@ class RunningPrognosisBock extends RunningPrognosisStrategy {
 
 		return ($distance > 3) ? round($seconds) : $seconds;
 	}
+
+	/**
+	 * Get K
+	 * @return float
+	 */
+	public function getK() {
+		return $this->CONST_K;
+	}
+
+	/**
+	 * Get e
+	 * @return float
+	 */
+	public function getE() {
+		return $this->CONST_e;
+	}
 }
