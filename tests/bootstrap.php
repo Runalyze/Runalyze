@@ -29,6 +29,9 @@ if (!defined('CONF_VDOT_CORRECTOR'))
 if (!defined('CONF_VDOT_FORM'))
 	define('CONF_VDOT_FORM', 60);
 
+if (!defined('CONF_VDOT_HF_METHOD'))
+	define('CONF_VDOT_HF_METHOD', 'logarithmic');
+
 if (!defined('CONF_BASIC_ENDURANCE'))
 	define('CONF_BASIC_ENDURANCE', 0);
 

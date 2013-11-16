@@ -31,20 +31,21 @@ class RunningPrognosisTest extends PHPUnit_Framework_TestCase {
 	 * @covers RunningPrognosis::inSeconds
 	 */
 	public function testAllStrategies() {
-		$Bock = new RunningPrognosisBock;
+		$Bock    = new RunningPrognosisBock;
+		$Steffny = new RunningPrognosisSteffny;
+		$Cameron = new RunningPrognosisCameron;
 
 		$Daniels = new RunningPrognosisDaniels;
 		$Daniels->setVDOT(50);
 		$Daniels->adjustVDOT();
 		$Daniels->setBasicEnduranceForAdjustment(50);
 
-		$Steffny = new RunningPrognosisSteffny;
-
 		$Distances  = array(5, 10, 21.1, 42.2);
 		$Strategies = array(
 			$Bock,
-			$Daniels,
-			$Steffny
+			$Steffny,
+			$Cameron,
+			$Daniels
 		);
 
 		foreach ($Strategies as $Strategy) {
