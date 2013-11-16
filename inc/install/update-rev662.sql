@@ -1,0 +1,1 @@
+ALTER TABLE  `runalyze_training` CHANGE  `kcal`  `kcal` INT( 5 ) NOT NULL DEFAULT  '0';
