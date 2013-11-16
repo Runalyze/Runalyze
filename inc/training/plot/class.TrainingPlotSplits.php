@@ -59,23 +59,25 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		if (!$this->Training->Splits()->areEmpty() && $this->Training->Splits()->totalDistance() > 0) {
+		if ($this->splitsAreNotComplete()) {
 			$showInactive = !$this->Training->Splits()->hasActiveLaps();
 			$this->Labels = $this->Training->Splits()->distancesAsArray($showInactive);
 			$this->Data   = $this->Training->Splits()->pacesAsArray($showInactive);
 			$num          = count($this->Data);
-			$unit         = ($num >= 20) ? '' : ' km';
 
 			$this->demandedPace = Running::DescriptionToDemandedPace($this->Training->getComment());
 			$this->achievedPace = array_sum($this->Data) / $num;
 
 			foreach ($this->Data as $key => $val) {
 				if ($num > 35)
-					$this->Labels[$key] = round($this->Labels[$key], 1);
-				elseif ($num > 25)
-					$this->Labels[$key] = number_format($this->Labels[$key], 1, ',', '.');
+					$this->Labels[$key] = array($key, round($this->Labels[$key], 1));
+				elseif ($num >= 20)
+					$this->Labels[$key] = array($key, number_format($this->Labels[$key], 1, '.', ''));
+				elseif ($num > 10)
+					$this->Labels[$key] = array($key, $this->Labels[$key].'k');
+				else
+					$this->Labels[$key] = array($key, $this->Labels[$key].' km');
 
-				$this->Labels[$key] = array($key, $this->Labels[$key].$unit);
 				$this->Data[$key]   = $val*1000;
 			}
 		} else {
@@ -85,11 +87,13 @@ class TrainingPlotSplits extends TrainingPlot {
 			foreach ($RawData as $key => $val) {
 				$km = $key + 1;
 				if ($num < 20) {
-					$label = ($km%2 == 0 && $km > 0) ? $km : '';
-				} elseif ($num < 80) {
-					$label = ($km%5 == 0 && $km > 0) ? $km : '';
+					$label = ($km%2 == 0 && $km > 0) ? $km.' km' : '';
+				} elseif ($num < 50) {
+					$label = ($km%5 == 0 && $km > 0) ? $km.' km' : '';
+				} elseif ($num < 100) {
+					$label = ($km%10 == 0 && $km > 0) ? $km.' km' : '';
 				} else {
-					$label = ($km%10 == 0 && $km > 0) ? $km : '';
+					$label = ($km%50 == 0 && $km > 0) ? $km.' km' : '';
 				}
 
 				$this->Labels[$key] = array($key, $label);
@@ -122,5 +126,24 @@ class TrainingPlotSplits extends TrainingPlot {
 			$this->Plot->addThreshold("y", $this->achievedPace*1000, 'rgb(0,180,0)');
 			$this->Plot->addAnnotation(0, $this->achievedPace*1000, '&oslash; '.Time::toString(round($this->achievedPace)), -20, -7);
 		}
+	}
+
+	/**
+	 * Splits are not complete
+	 * 
+	 * "Complete" means: all laps active and complete distance
+	 * @return boolean
+	 */
+	protected function splitsAreNotComplete() {
+		if ($this->Training->Splits()->areEmpty() || $this->Training->Splits()->totalDistance() <= 0)
+			return false;
+
+		if ($this->Training->Splits()->hasActiveAndInactiveLaps())
+			return true;
+
+		if (!Validator::isClose($this->Training->Splits()->totalDistance(), $this->Training->getDistance(), 2))
+			return true;
+
+		return false;
 	}
 }
