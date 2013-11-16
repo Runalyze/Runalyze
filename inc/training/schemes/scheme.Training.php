@@ -221,7 +221,7 @@ $FIELDS = array(
 	'kcal'				=> array(
 					'database'	=> array(
 						'type'		=> 'int',
-						'precision'	=> '4',
+						'precision'	=> '5',
 						'default'	=> '0'
 					),
 					'formular'	=> array(

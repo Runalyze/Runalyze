@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `pace` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '?:??',
   `elevation` int(5) NOT NULL DEFAULT '0',
   `elevation_calculated` int(5) NOT NULL DEFAULT '0',
-  `kcal` int(4) NOT NULL DEFAULT '0',
+  `kcal` int(5) NOT NULL DEFAULT '0',
   `pulse_avg` int(3) NOT NULL DEFAULT '0',
   `pulse_max` int(3) NOT NULL DEFAULT '0',
   `vdot` decimal(5,2) NOT NULL DEFAULT '0.00',
