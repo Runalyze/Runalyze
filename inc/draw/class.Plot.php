@@ -695,7 +695,7 @@ class Plot {
 	 * @param string $unit
 	 */
 	public function addYUnit($i, $unit) {
-		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return v + \' '.$unit.'\'; }';
+		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return Math.round(v) + \' '.$unit.'\'; }';
 	}
 
 	/**
@@ -703,7 +703,7 @@ class Plot {
 	 * @param string $unit
 	 */
 	public function setXUnit($unit) {
-		$this->Options['xaxis']['tickFormatter'] = 'function (v) { return v + \' '.$unit.'\'; }';
+		$this->Options['xaxis']['tickFormatter'] = 'function (v) { return Math.round(v) + \' '.$unit.'\'; }';
 	}
 
 	/**
