@@ -78,6 +78,19 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( "mit Michael Kuthe", $this->object->object(1)->getComment() );
 		$this->assertEquals( "Horneburg-Helmste-Harsefeld-Bliedersdorf", $this->object->object(1)->getRoute() );
 		$this->assertEquals( "Erster Lauf mit der Forerunner 305  ;o)", $this->object->object(1)->getNotes() );
+		$this->assertEquals( true, $this->object->object(1)->Splits()->areEmpty() );
+
+		// Activity 2
+		$this->assertEquals( mktime(20, 22, 49, 3, 31, 2009), $this->object->object(2)->getTimestamp() );
+		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
+		$this->assertEquals( 2310, $this->object->object(2)->getTimeInSeconds() );
+		$this->assertEquals( 6.904, $this->object->object(2)->getDistance() );
+		$this->assertEquals( "Horneburg Winterrunde", $this->object->object(2)->getRoute() );
+		$this->assertEquals( false, $this->object->object(2)->Splits()->areEmpty() );
+		$this->assertEquals(
+				'1.00|5:37-1.00|5:38-1.00|5:43-1.00|5:38-1.00|5:37-1.00|5:19-0.90|4:56',
+				$this->object->object(2)->Splits()->asString()
+		);
 
 		// Nothing interesting in the other activities.
 	}
