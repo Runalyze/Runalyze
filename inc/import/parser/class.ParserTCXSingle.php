@@ -277,16 +277,20 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$rpm = (int)$Point->Cadence;
 
 		if (isset($Point->Extensions)) {
+			if (isset($Point->Extensions->TPX) && isset($Point->Extensions->TPX->RunCadence))
+				$rpm = (int)$Point->Extensions->TPX->RunCadence;
+
+			if (isset($Point->Extensions->TPX) && isset($Point->Extensions->TPX->Watts))
+				$power = (int)$Point->Extensions->TPX->Watts;
+
 			if (count($Point->Extensions->children('ns3',true)) > 0) {
 				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
 					$TPX = $Point->Extensions->children('ns3',true)->TPX;
+
 					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
 						$power = (int)$TPX->children('ns3',true)->Watts;
 				}
 			}
-
-			if (isset($Point->Extensions->TPX) && isset($Point->Extensions->TPX->RunCadence))
-				$rpm = (int)$Point->Extensions->TPX->RunCadence;
 		}
 
 		$this->gps['power'][] = $power;

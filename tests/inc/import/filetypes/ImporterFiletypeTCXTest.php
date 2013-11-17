@@ -157,9 +157,27 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
+		$this->assertFalse( $this->object->object()->hasArrayPower() );
 
 		$this->assertNotEquals( 1, $this->object->object()->Sport()->id() );
 		// TODO: missing values
+	}
+
+	/**
+	 * Test: watt extension without namespace (minimized example)
+	 * Filename: watt-extension-without-namespace.tcx
+	 */
+	public function test_wattExtensionWithoutNamespace() {
+		$this->object->parseFile('../tests/testfiles/tcx/watt-extension-without-namespace.tcx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertTrue( $this->object->object()->hasArrayPower() );
+		$this->assertEquals(
+				array(0, 10, 20, 30, 41, 41, 41, 117, 155, 192, 182, 188, 186, 182, 178, 181, 180, 179, 178, 179, 180, 182, 181, 180, 180, 178),
+				$this->object->object()->getArrayPower()
+		);
 	}
 
 }
