@@ -117,17 +117,17 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCompetitionPrognosis() {
 		// VDOT: 32
-		$this->assertEquals( 60*60 + 26 + 4, JD::CompetitionPrognosis(32, 10) );
-		$this->assertEquals( 133*60 + 49 + 9.4475, JD::CompetitionPrognosis(32, 21.0975) );
-		$this->assertEquals( 274*60 + 59 + 19.9425, JD::CompetitionPrognosis(32, 42.195) );
+		$this->assertEquals( 60*60 + 26, JD::CompetitionPrognosis(32, 10), '', 5 );
+		$this->assertEquals( 133*60 + 49, JD::CompetitionPrognosis(32, 21.0975), '', 10 );
+		$this->assertEquals( 274*60 + 59, JD::CompetitionPrognosis(32, 42.195), '', 20 );
 		// VDOT: 48
-		$this->assertEquals( 42*60 + 50 + 0, JD::CompetitionPrognosis(48, 10) );
-		$this->assertEquals( 94*60 + 53 + 3.625, JD::CompetitionPrognosis(48, 21.0975) );
-		$this->assertEquals( 197*60 + 27 + 9.395, JD::CompetitionPrognosis(48, 42.195) );
+		$this->assertEquals( 42*60 + 50, JD::CompetitionPrognosis(48, 10), '', 5 );
+		$this->assertEquals( 94*60 + 53, JD::CompetitionPrognosis(48, 21.0975), '', 10 );
+		$this->assertEquals( 197*60 + 27, JD::CompetitionPrognosis(48, 42.195), '', 20 );
 		// VDOT: 60
-		$this->assertEquals( 35*60 + 22 + 3, JD::CompetitionPrognosis(60, 10) );
-		$this->assertEquals( 78*60 + 9 + 5.49375, JD::CompetitionPrognosis(60, 21.0975) );
-		$this->assertEquals( 163*60 + 25 + 4.9375, JD::CompetitionPrognosis(60, 42.195) );
+		$this->assertEquals( 35*60 + 22, JD::CompetitionPrognosis(60, 10), '', 5 );
+		$this->assertEquals( 78*60 + 9, JD::CompetitionPrognosis(60, 21.0975), '', 10 );
+		$this->assertEquals( 163*60 + 25, JD::CompetitionPrognosis(60, 42.195), '', 20 );
 	}
 
 	/**
@@ -144,6 +144,15 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	public function testCalculateVDOTcorrector() {
 		// TODO
 		$this->assertEquals( 1, JD::getVDOTcorrector() );
+	}
+
+	/**
+	 * @covers JD::VDOTcorrectorFor
+	 */
+	public function testVDOTcorrectorFor() {
+		$this->assertEquals( 1, JD::VDOTcorrectorFor(0, array('vdot' => 60, 'vdot_by_time' => 60)) );
+		$this->assertEquals( 6/7, JD::VDOTcorrectorFor(0, array('vdot' => 70, 'vdot_by_time' => 60)) );
+		$this->assertEquals( 6/8.5, JD::VDOTcorrectorFor(0, array('vdot' => 85, 'vdot_by_time' => 60)) );
 	}
 
 }

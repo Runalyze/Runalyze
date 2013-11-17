@@ -329,6 +329,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$BasicEndurance->readSettingsFromConfiguration();
 		$BEresults = $BasicEndurance->asArray();
 
+		$Strategy  = new RunningPrognosisDaniels;
+		$Strategy->setupFromDatabase();
+		$Strategy->adjustVDOT(false);
+		$Prognosis = new RunningPrognosis;
+		$Prognosis->setStrategy($Strategy);
+
 		$GeneralTable = '
 			<table style="width:100%;">
 				<tbody>
@@ -345,7 +351,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 					<tr class="'.HTML::trClass(1).'">
 						<td><strong>Marathonzeit</strong> <small>(optimal)</small></td>
-						<td class="r">'.Time::toString(Running::Prognosis(42.195, VDOT_FORM, false)).'</td>
+						<td class="r">'.Time::toString($Prognosis->inSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
 						<td><strong>Vorgabe Langer Lauf</strong> <small>('.round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7).' Wochen)</small></td>
 						<td class="r">'.Running::Km($BasicEndurance->getRealTargetLongjogKmPerWeek()).'</td>

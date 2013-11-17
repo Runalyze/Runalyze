@@ -48,6 +48,6 @@ foreach ($distances as $km) {
 	Zur Erstellung der Prognose wird jeweils der durchschnittliche VDOT-Wert pro Monat betrachtet.
 </p>
 
-<p class="warning">
-	Derzeit wird immer der aktuelle Grundlagenausdauer-Faktor verwendet.
+<p class="info">
+	F&uuml;r diese Prognosen wird <strong>kein</strong> Grundlagenausdauer-Faktor verwendet.
 </p>
