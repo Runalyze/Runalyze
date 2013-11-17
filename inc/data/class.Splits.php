@@ -108,7 +108,7 @@ class Splits {
 
 		$this->asArray[] = array(
 			'km' => $this->formatKM($km),
-			'time' => Time::toString($timeInSeconds),
+			'time' => Time::toString($timeInSeconds, false, 2),
 			'active' => $active
 		);
 		$this->arrayToString();
@@ -183,7 +183,10 @@ class Splits {
 			//if ($split['km'] <= 0 || empty($split['time']))
 			//	unset($this->asArray[$key]);
 			//else
-				$this->asArray[$key]['km'] = $this->formatKM($split['km']);
+			$this->asArray[$key]['km'] = $this->formatKM($split['km']);
+
+			if (substr($split['time'], -1) == 's')
+				$this->asArray[$key]['time'] = Time::toString(Time::toSeconds($split['time']), false, 2);
 		}
 	}
 
@@ -349,7 +352,7 @@ class Splits {
 				while ($i < $size-1 && $split['km'] > $Distance[$i] - $totalDistance)
 					$i++;
 
-				$split['time'] = Time::toString($Time[$i] - $totalTime);
+				$split['time'] = Time::toString($Time[$i] - $totalTime, false, 2);
 			}
 
 			$totalTime     = $Time[$i];

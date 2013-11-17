@@ -183,6 +183,19 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @covers Splits::asString
+	 */
+	public function testRemoveSecondsFormat() {
+		$Splits = new Splits('1|4:20-0.2|35,00s');
+
+		$this->assertEquals( '1.00|4:20-0.20|0:35', $Splits->asString() );
+		$this->assertEquals( array(
+				array('km' => 1, 'time' => '4:20', 'active' => true),
+				array('km' => 0.2, 'time' => '0:35', 'active' => true)
+			), $Splits->asArray() );
+	}
+
+	/**
 	 * @covers Splits::fillTimesFromArray
 	 */
 	public function testFillTimesFromArray() {
