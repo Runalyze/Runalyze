@@ -73,5 +73,36 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 
 		if (!empty($this->XML['totalAscend']))
 			$this->TrainingObject->setElevation( (int)$this->XML['totalAscend'] );
+
+		$this->parseSplits();
+	}
+
+	/**
+	 * Parse splits
+	 */
+	protected function parseSplits() {
+		$Times = array();
+		$Dists = array();
+		$totalDist = 0;
+
+		if (isset($this->XML->Laps) && !empty($this->XML->Laps)) {
+			foreach ($this->XML->Laps->Lap as $Lap) {
+				$Times[] = (int)$Lap['totalTime'];
+			}
+		}
+
+		if (isset($this->XML->DistanceMarkers) && !empty($this->XML->DistanceMarkers)) {
+			foreach ($this->XML->DistanceMarkers->DistanceMarker as $Marker) {
+				$Dists[] = (int)$Marker['distance']/1000 - $totalDist;
+				$totalDist += end($Dists);
+			}
+
+			$Dists[] = $this->TrainingObject->getDistance() - $totalDist;
+		}
+
+		if (count($Times) > 0 && count($Times) == count($Dists)) {
+			for ($i = 0; $i < count($Times); $i++)
+				$this->TrainingObject->Splits()->addSplit($Dists[$i], $Times[$i]);
+		}
 	}
 }
