@@ -70,9 +70,9 @@ class BasicEndurance {
 	 * Read settings from configuration
 	 */
 	public function readSettingsFromConfiguration() {
-		// TODO: Implement these values as configuration settings
-		$this->VDOT = VDOT_FORM;
+		$this->VDOT = JD::getConstVDOTform();
 
+		// TODO: Implement these values as configuration settings
 		$this->MIN_KM_FOR_LONGJOG   = 13;
 		$this->DAYS_FOR_WEEK_KM     = 182;
 		$this->DAYS_FOR_WEEK_KM_MIN = 70;

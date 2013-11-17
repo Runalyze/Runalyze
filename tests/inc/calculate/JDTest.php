@@ -139,11 +139,11 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers JD::getVDOTcorrector
+	 * @covers JD::correctionFactor
 	 */
-	public function testCalculateVDOTcorrector() {
+	public function testCorrectionFactor() {
 		// TODO
-		$this->assertEquals( 1, JD::getVDOTcorrector() );
+		$this->assertEquals( 1, JD::correctionFactor() );
 	}
 
 	/**

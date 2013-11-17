@@ -4,28 +4,10 @@
  * @package Runalyze\Calculations
  */
 /**
- * Number of days to be used for calculating VDOT-form
- * @var int
- */
-define('VDOT_DAYS', CONF_VDOT_DAYS);
-
-/**
- * VDOT-corrector is used to correct the raw VDOT-value to user-specific values
- * @var double
- */
-define('VDOT_CORRECTOR', JD::getVDOTcorrector());
-
-/**
  * The actual (corrected) VDOT-value based on last trainings
  * @var double
  */
 define('VDOT_FORM', JD::getConstVDOTform());
-
-/**
- * Basic endurance as percentage
- * @const BASIC_ENDURANCE
- */
-define('BASIC_ENDURANCE', BasicEndurance::getConst());
 
 /**
  * Class for calculating based on "Jack Daniels' Running Formula"
@@ -34,9 +16,12 @@ define('BASIC_ENDURANCE', BasicEndurance::getConst());
  */
 class JD {
 	/**
-	 * This class contains only static methods
+	 * Value for basic endurance
+	 * 
+	 * This value refers to the constant configuration value.
+	 * @var int
 	 */
-	private function __construct() {}
+	private static $CONST_CORRECTOR = false;
 
 	/**
 	 * Get sum selector for VDOT for mysql
@@ -141,7 +126,7 @@ class JD {
 	 */
 	public static function correctVDOT($VDOT) {
 		if (CONF_JD_USE_VDOT_CORRECTOR)
-			return VDOT_CORRECTOR*$VDOT;
+			return self::correctionFactor()*$VDOT;
 
 		return $VDOT;
 	}
@@ -327,7 +312,7 @@ class JD {
 				&& `pulse_avg`!=0
 				&& `use_vdot`=1
 				&& `time`<"'.$time.'"
-				&& `time`>"'.($time - VDOT_DAYS*DAY_IN_S).'"
+				&& `time`>"'.($time - CONF_VDOT_DAYS*DAY_IN_S).'"
 			GROUP BY `sportid`');
 
 		if ($Data !== false)
@@ -337,29 +322,29 @@ class JD {
 	}
 
 	/**
-	 * Get VDOT corrector 
+	 * Get const for VDOT_CORRECTOR
+	 * @return int
 	 */
-	public static function getVDOTcorrector() {
+	public static function correctionFactor() {
 		if (defined('CONF_VDOT_MANUAL_CORRECTOR')) {
 			$ManualCorrector = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_CORRECTOR);
 			if ($ManualCorrector > 0)
 				return $ManualCorrector;
 		}
 
-		if (!defined('CONF_VDOT_CORRECTOR')) {
-			Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
-			define('CONF_VDOT_CORRECTOR', 1);
+		if (self::$CONST_CORRECTOR === false) {
+			if (!defined('CONF_VDOT_CORRECTOR')) {
+				Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
+				define('CONF_VDOT_CORRECTOR', 1);
+			}
+
+			if (CONF_VDOT_CORRECTOR != 1 && CONF_VDOT_CORRECTOR != 0)
+				self::$CONST_CORRECTOR = CONF_VDOT_CORRECTOR;
+			else
+				self::recalculateVDOTcorrector();
 		}
 
-		if (defined('VDOT_CORRECTOR'))
-			return VDOT_CORRECTOR;
-
-		if (CONF_VDOT_CORRECTOR >= 1 || CONF_VDOT_CORRECTOR == 0) {
-			if (0 < Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1'))
-				return self::recalculateVDOTcorrector();
-		}
-
-		return CONF_VDOT_CORRECTOR;
+		return self::$CONST_CORRECTOR;
 	}
 
 	/**
@@ -371,6 +356,11 @@ class JD {
 	 * @return float   VDOTcorrectionfactor
 	 */
 	public static function recalculateVDOTcorrector() {
+		if (0 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1')) {
+			self::$CONST_CORRECTOR = 1;
+			return 1;
+		}
+
 		// Find best VDOT-value from personal best in competition
 		$VDOT_CORRECTOR = 1;
 
@@ -403,6 +393,7 @@ class JD {
 		}
 
 		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
+		self::$CONST_CORRECTOR = $VDOT_CORRECTOR;
 
 		return $VDOT_CORRECTOR;
 	}
