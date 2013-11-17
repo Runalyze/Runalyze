@@ -57,7 +57,7 @@
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels) laufen k&ouml;nnen.
 </p>
 <p class="info">
-	<strong>VDOT/Zeit (Korrektur):</strong> nach individueller VDOT-Korrektur (Faktor <?php echo VDOT_CORRECTOR; ?>)<br />
+	<strong>VDOT/Zeit (Korrektur):</strong> nach individueller VDOT-Korrektur (Faktor <?php echo JD::correctionFactor(); ?>)<br />
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels, an dich angepasst) laufen k&ouml;nnen.
 </p>
 <p class="info">

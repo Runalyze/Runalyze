@@ -108,7 +108,7 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>Korrekturfaktor</label>
-				<span class="asInput">'.VDOT_CORRECTOR.'</span>
+				<span class="asInput">'.JD::correctionFactor().'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
@@ -141,7 +141,7 @@ class VDOTinfo {
 		);
 
 		if (CONF_JD_USE_VDOT_CORRECTOR)
-			$newVDOT = VDOT_CORRECTOR * $newVDOT;
+			$newVDOT = JD::correctionFactor() * $newVDOT;
 
 		$Fieldset = new FormularFieldset('Korrektur: mit Beachtung der H&ouml;henmeter');
 		$Fieldset->setHtmlCode('
