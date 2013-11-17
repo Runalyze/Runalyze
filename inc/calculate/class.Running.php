@@ -241,37 +241,4 @@ class Running {
 
 		return $PrognosisDaniels->getAdjustmentFactor($distance);
 	}
-
-	/**
-	 * Get prognosis (vdot/seconds) as array
-	 * @param double $distance
-	 * @param double $VDOT [optional]
-	 * @param boolean $useEnduranceFactor
-	 * @return array
-	 */
-	static public function PrognosisAsArray($distance, $VDOT = 0, $useEnduranceFactor = true) {
-		return self::Prognosis($distance, $VDOT, $useEnduranceFactor, true);
-	}
-
-	/**
-	 * Get prognosis in seconds
-	 * @param double $distance
-	 * @param double $VDOT [optional]
-	 * @param boolean $useEnduranceFactor [optional]
-	 * @param boolean $asArray [optional]
-	 * @return mixed
-	 */
-	static public function Prognosis($distance, $VDOT = 0, $useEnduranceFactor = true, $asArray = false) {
-		$VDOT  = ($VDOT == 0) ? VDOT_FORM : $VDOT;
-
-		if ($useEnduranceFactor)
-			$VDOT *= self::VDOTfactorOfBasicEndurance($distance);
-
-		$PrognosisInSeconds = JD::CompetitionPrognosis($VDOT, $distance);
-
-		if ($asArray)
-			return array('vdot' => $VDOT, 'seconds' => $PrognosisInSeconds);
-
-		return $PrognosisInSeconds;
-	}
 }

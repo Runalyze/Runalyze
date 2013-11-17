@@ -242,23 +242,30 @@ class JD {
 		if ($VDOTtoReach == 0)
 			return 0;
 
-		$s        = round(2*60*$km);
-		$VDOT_low = 150;
+		$iterations = 0;
+		$precision  = 0.01;
+		$lowerBound = round(2*60*$km);
+		$upperBound = round(10*60*$km);
+
 		while (true) {
-			//$s++;
-			$s += $km/2;
+			$middle = ($lowerBound + $upperBound) / 2;
+			$VDOT   = self::Competition2VDOT($km, $middle);
 
-			$VDOT_high = $VDOT_low;
-			$VDOT_low  = self::Competition2VDOT($km, $s);
-
-			if ($VDOT_high > $VDOTtoReach && $VDOTtoReach > $VDOT_low)
+			if (abs($VDOT - $VDOTtoReach) < $precision) {
 				break;
+			} elseif ($VDOT < $VDOTtoReach) {
+				$upperBound = $middle;
+			} else {
+				$lowerBound = $middle;
+			}
 
-			if ($s >= 60 * 60 * $km / 4)
+			$iterations++;
+
+			if ($iterations > 100)
 				break;
 		}
 
-		return $s;
+		return $middle;
 	}
 
 	/**
@@ -358,7 +365,7 @@ class JD {
 	/**
 	 * Calculates a factor for correcting the user-specific VDOT-value
 	 * This function should be only called if a new competition has been submitted (or changed)
-	 * @uses Helper::Bestzeit
+	 * @uses Running::PersonalBest
 	 * @uses HF_MAX
 	 * @uses CONF_WK_TYPID
 	 * @return float   VDOTcorrectionfactor
@@ -371,8 +378,12 @@ class JD {
 		$VDOT_top_dist = 0;
 		$distances = array(5, 10, 21.1, 42.2);
 		foreach ($distances as $dist) {
+			// TODO: Das sollte doch auch mit einer Query zu lösen sein
+			// TODO: aus Running::PersonalBest
+			//       $pb = Mysql::getInstance()->fetchSingle('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC');
 			$dist_PB = Running::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
+				// TODO: Ist gerade 'vdot_by_time'
 				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
 				if ($dist_VDOT > $VDOT_top && Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1') > 0) {
 					$VDOT_top = $dist_VDOT;
@@ -403,19 +414,14 @@ class JD {
 	 * @return float 
 	 */
 	public static function VDOTcorrectorFor($ID, $Training = array()) {
-		if (empty($Training))
+		if (!isset($Training['vdot']) || !isset($Training['vdot_by_time']))
 			$Training = Mysql::getInstance()->fetchSingle('
 				SELECT
-					`pulse_avg`,
-					`s`,
-					`distance`,
-					`vdot`
+					`vdot`,
+					`vdot_by_time`
 				FROM `'.PREFIX.'training`
 				WHERE `id`='.$ID);
 
-		$VDOTtimeDistance = JD::Competition2VDOT($Training['distance'], $Training['s']);
-		$VDOTpulsePace    = $Training['vdot'];
-
-		return $VDOTtimeDistance/$VDOTpulsePace;
+		return $Training['vdot_by_time'] / $Training['vdot'];
 	}
 }

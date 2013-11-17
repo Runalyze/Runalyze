@@ -166,22 +166,6 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers Running::PrognosisAsArray
-	 * @covers Running::Prognosis
-	 */
-	public function testPrognosisAsArray() {
-		$this->assertEquals( 3*60*60 + 49*60 + 59, Running::Prognosis(42.2, 40, false), '', 1 );
-		$this->assertEquals( 3*60*60 + 10*60 + 57, Running::Prognosis(42.2, 50, false), '', 1 );
-		$this->assertEquals( 2*60*60 + 43*60 + 31, Running::Prognosis(42.2, 60, false), '', 1 );
-		$this->assertEquals( 2*60*60 + 23*60 + 28, Running::Prognosis(42.2, 70, false), '', 1 );
-
-		$this->assertEmpty(array_diff(
-				array('vdot' => 42.055757205707, 'seconds' => Time::toSeconds('3:40:29') + 0.7),
-				Running::PrognosisAsArray(42.2, 70, true)
-		));
-	}
-
-	/**
 	 * @covers Running::getBEDaysForWeekKm
 	 * @todo   Implement testGetBEDaysForWeekKm().
 	 */

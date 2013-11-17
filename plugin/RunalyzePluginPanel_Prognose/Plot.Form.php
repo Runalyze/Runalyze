@@ -7,9 +7,18 @@
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf'))
 	$WKplugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 
+if (!isset($distance))
+	$distance = 10;
+
 $DataFailed = false;
 $Prognosis  = array();
 $Results    = array();
+
+$Strategy = new RunningPrognosisDaniels;
+$Strategy->adjustVDOT(false);
+
+$PrognosisObj = new RunningPrognosis;
+$PrognosisObj->setStrategy($Strategy);
 
 if (START_TIME != time()) {
 	$Data = Mysql::getInstance()->fetchAsArray('
@@ -23,9 +32,11 @@ if (START_TIME != time()) {
 		GROUP BY `y`, `m`
 		ORDER BY `y` ASC, `m` ASC');
 	foreach ($Data as $dat) {
-		// TODO: uses always currect 'GA'
-		$index             = mktime(1,0,0,$dat['m'],15,$dat['y']);
-		$Prognosis[$index.'000'] = Running::Prognosis($distance, JD::correctVDOT($dat['vdot']))*1000;
+		// TODO: use correct GA
+		$Strategy->setVDOT( JD::correctVDOT($dat['vdot']) );
+
+		$index = mktime(1,0,0,$dat['m'],15,$dat['y']);
+		$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance)*1000;
 	}
 
 	$ResultsData = Mysql::getInstance()->fetchAsArray('
