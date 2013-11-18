@@ -9,7 +9,7 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 $distance    = !is_numeric($_GET['km']) ? 10 : $_GET['km'];
 $Dates       = array();
 $Results     = array();
-$titleCenter = 'Bestzeiten &#252;ber '.Running::Km($distance, 1, ($distance <= 3));
+$titleCenter = 'Wettkampfergebnisse &#252;ber '.Running::Km($distance, 1, ($distance <= 3));
 $timeFormat  = '%M:%S';
 
 $titleCenter = str_replace('&nbsp;', ' ', $titleCenter);
@@ -32,13 +32,18 @@ $Plot->Data[] = array('label' => $titleCenter, 'data' => $Results);
 
 $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();
-$Plot->setYAxisTimeFormat($timeFormat);
 
 if (count($Results) == 1)
 	$Plot->setXAxisTimeFormat('%d.%m.%y');
 
+$Plot->addYAxis(1, 'left');
+$Plot->setYAxisAsTime(1);
+$Plot->setYAxisTimeFormat($timeFormat, 1);
+
 $Plot->lineWithPoints();
 $Plot->enableTracking();
+$Plot->hideLegend();
+$Plot->setTitle($titleCenter);
 
 $Plot->outputJavaScript();
 ?>
