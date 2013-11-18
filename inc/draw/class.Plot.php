@@ -245,7 +245,7 @@ class Plot {
 		return Ajax::wrapJS('
 			var '.$this->created.'=false,
 				func_'.$this->created.'=function(){
-					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0) {
+					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0 && $("#'.$this->cssID.'").is(":visible") && !$("#'.$this->cssID.'").hasClass("flotHide")) {
 						'.$this->created.'=true;'.$bindedCode.'RunalyzePlot.finishInit("'.$this->cssID.'");
 					}
 				};
