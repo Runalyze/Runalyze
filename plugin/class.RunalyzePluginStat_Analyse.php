@@ -379,7 +379,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$pulse_foreach = array();
 
 		if (!empty($result)) {
-			for ($pulse = $pulse_min; $pulse <= 100; $pulse += 5) {
+			for ($pulse = $pulse_min; $pulse <= 100; $pulse += $pulse_step) {
 				$pulse_foreach[] = array(
 					'name' => '<small>bis</small> '.$pulse.' &#37;',
 					'id' => $pulse);
