@@ -31,7 +31,7 @@ if (!empty($_POST)) {
 		<legend>Konfiguration</legend>
 		<?php if (count($this->config) == 0): ?>
 			<p class="info">
-				Es sind <em>keine</em> Optionen vorhanden
+				Es sind keine Einstellungen m&ouml;glich.
 			</p>
 		<?php else: ?>
 
