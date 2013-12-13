@@ -389,7 +389,7 @@ class AccountHandler {
 		Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Account löschen';
-		$message  = "Schade, dass du deinen Account ".$account['username']." l&ouml;schen möchtest, ".$account['name']."!<br /><br />\r\n\r\n";
+		$message  = "Schade, dass du deinen Account ".$account['username']." l&ouml;schen m&ouml;chtest, ".$account['name']."!<br /><br />\r\n\r\n";
 		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br />\r\n";
 		$message .= $deletionLink;
 		$message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br />\r\n";

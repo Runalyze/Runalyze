@@ -48,10 +48,10 @@ $Plot->Options['xaxis']['labelWidth'] = 50;
 $Plot->Options['xaxis']['tickLength'] = 3;
 
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, 'kg');
+$Plot->addYUnit(1, 'kg', 1);
 $Plot->setYTicks(1, 2, 0);
 $Plot->addYAxis(2, 'right', false);
-$Plot->addYUnit(2, 'bpm');
+$Plot->addYUnit(2, 'bpm', 0);
 $Plot->setYTicks(2, 1, 0);
 
 if ($Wunschgewicht > 1) {

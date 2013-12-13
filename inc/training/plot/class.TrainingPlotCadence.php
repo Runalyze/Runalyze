@@ -71,7 +71,7 @@ class TrainingPlotCadence extends TrainingPlot {
 	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
 		$average = TrainingPlot::averageWithoutLowValues($Data);
 
-		$Plot->addYUnit($YAxis, $Training->Cadence()->unitAsString());
+		$Plot->addYUnit($YAxis, $Training->Cadence()->unitAsString(), 0);
 		$Plot->setYTicks($YAxis, 10, 0);
 		//$Plot->setYLimits($YAxis, 0, Helper::ceilFor(max($Data), 100));
 

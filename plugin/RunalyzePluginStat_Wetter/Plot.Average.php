@@ -29,7 +29,7 @@ for ($y = START_YEAR, $n = date('Y'); $y <= $n; $y++) {
 $Plot->setMarginForGrid(5);
 $Plot->setXLabels($Months);
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '°C');
+$Plot->addYUnit(1, '°C', 1);
 $Plot->setYTicks(1, 5, 0);
 
 $Plot->addThreshold('y', 0);

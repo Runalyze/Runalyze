@@ -69,7 +69,7 @@ class TrainingPlotElevation extends TrainingPlot {
 		}
 
 		$Plot->addYAxis($YAxis, 'left');
-		$Plot->addYUnit($YAxis, 'm');
+		$Plot->addYUnit($YAxis, 'm', 0);
 		$Plot->setYLimits($YAxis, $minLimit, $maxLimit, true);
 
 		$Plot->setLinesFilled(array($YAxis - 1));
