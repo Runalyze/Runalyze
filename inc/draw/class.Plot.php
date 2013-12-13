@@ -694,16 +694,16 @@ class Plot {
 	 * @param int $i
 	 * @param string $unit
 	 */
-	public function addYUnit($i, $unit) {
-		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return Math.round(v) + \' '.$unit.'\'; }';
+	public function addYUnit($i, $unit, $roundTo = 2) {
+		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return Math.round(v * Math.pow(10,'.$roundTo.')) / Math.pow(10,'.$roundTo.') + \' '.$unit.'\'; }';
 	}
 
 	/**
 	 * Add unit to x axis
 	 * @param string $unit
 	 */
-	public function setXUnit($unit) {
-		$this->Options['xaxis']['tickFormatter'] = 'function (v) { return Math.round(v) + \' '.$unit.'\'; }';
+	public function setXUnit($unit, $roundTo = 2) {
+		$this->Options['xaxis']['tickFormatter'] = 'function (v) { return Math.round(v * Math.pow(10,'.$roundTo.')) / Math.pow(10,'.$roundTo.') + \' '.$unit.'\'; }';
 	}
 
 	/**

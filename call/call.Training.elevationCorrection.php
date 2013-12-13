@@ -17,5 +17,5 @@ if ($Training->elevationWasCorrected()) {
 	echo Ajax::getReloadCommand();
 	echo Ajax::wrapJS('if($("#ajax").is(":visible"))Runalyze.loadOverlay(\''.$Training->Linker()->editUrl().'\')');
 } else {
-	echo 'Es ist ein Problem aufgetreten.';
+	echo 'Es konnten keine H&ouml;hendaten empfangen werden.';
 }

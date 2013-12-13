@@ -55,7 +55,7 @@ class TrainingPlotPower extends TrainingPlot {
 	 * @return boolean
 	 */
 	static public function inPercent() {
-		return false; // TODO?
+		return false;
 	}
 
 	/**
@@ -76,16 +76,9 @@ class TrainingPlotPower extends TrainingPlot {
 	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
 		$average = TrainingPlot::averageWithoutLowValues($Data);
 
-		/*if (self::inPercent()) {
-			$Plot->addYUnit($YAxis, '%');
-			$Plot->setYTicks($YAxis, 5, 0);
-			$Plot->setYLimits($YAxis, 50, 100);
-		} else {*/
-			$Plot->addYUnit($YAxis, 'W');
-			$Plot->setYTicks($YAxis, 10, 0);
-			$Plot->setYLimits($YAxis, 0, Helper::ceilFor(max($Data), 100));
-			//$Plot->setYLimits($YAxis, 0, 500); /* XXX */
-		//}
+		$Plot->addYUnit($YAxis, 'W', 0);
+		$Plot->setYTicks($YAxis, 10, 0);
+		$Plot->setYLimits($YAxis, 0, Helper::ceilFor(max($Data), 100));
 
 		if ($YAxis == 1) {
 			$Plot->addThreshold('y'.$YAxis, $average, 'rgba(0,0,0,0.5)');

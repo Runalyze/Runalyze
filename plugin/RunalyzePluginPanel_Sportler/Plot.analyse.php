@@ -51,10 +51,10 @@ $Plot->Options['xaxis']['tickLength'] = 3;
 $Plot->Options['yaxis']['autoscaleMargin'] = 0.1;
 
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '%');
+$Plot->addYUnit(1, '%', 0);
 $Plot->setYTicks(1, 1, 0);
 $Plot->addYAxis(2, 'right');
-$Plot->addYUnit(2, '%');
+$Plot->addYUnit(2, '%', 0);
 $Plot->setYTicks(1, 1, 0);
 
 if(empty($Data)) 
