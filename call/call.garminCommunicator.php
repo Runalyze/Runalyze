@@ -124,7 +124,7 @@ $Frontend = new Frontend(true);
 					});
 				}
 <?php
-if (strlen(CONF_GARMIN_API_KEY) > 10)
+if (strlen(GARMIN_API_KEY) > 10)
 	echo ',pathKeyPairsArray: ["'.Request::getProtocol().'://'.$_SERVER['HTTP_HOST'].'","'.GARMIN_API_KEY.'"]';
 ?>
 			});
