@@ -154,8 +154,6 @@ class Installer {
 			$this->currentStep = $_POST['step'];
 		else
 			$this->currentStep = self::$START;
-
-		$this->currentStep = self::$READY;
 	}
 
 	/**
