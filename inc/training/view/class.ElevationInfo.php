@@ -256,7 +256,7 @@ class ElevationInfo {
 			Fehlerhafte GPS-Daten k&ouml;nnen zwar durch SRTM-Daten korrigiert werden,
 			aber auch diese liegen nur in einem Raster von 90x90m vor und sind teilweise stark verrauscht.
 			Um dieses Rauschen zu entfernen, kann ein Gl&auml;ttungsalgorithmus verwendet werden.
-			Da der verwendete Algorithmus (und seine Einstellungen) von Programm zu Programm unterscheider,
+			Da sich der verwendete Algorithmus (und seine Einstellungen) von Programm zu Programm unterscheidet,
 			kommt man niemals bei jeder Software (wie Garmin Connect, SportTracks, etc.) auf die gleichen Werte.
 		');
 
