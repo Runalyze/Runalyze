@@ -305,12 +305,14 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$speed_min = $this->config['lowest_pacegroup']['var'];
 		$speed_max = $this->config['highest_pacegroup']['var'];
 		$speed_step = $this->config['pacegroup_step']['var'];
+		$ceil_corr  = $speed_min % $speed_step;
+
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
-				FLOOR( (`s`/`distance`)/'.$speed_step.')*'.$speed_step.' AS `group`
+				FLOOR( (`s`/`distance` - '.$ceil_corr.')/'.$speed_step.')*'.$speed_step.' + '.$ceil_corr.' AS `group`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
 			GROUP BY `group`, '.$this->group_time.'
@@ -338,11 +340,11 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				$speed_max = $result[count($result)-1]['group'];
 			}
 
-			for ($speed = $speed_min; $speed >= $speed_max; $speed -= $speed_step) {
-				$name = ($speed == $speed_max)
+			for ($speed = $speed_min; $speed > ($speed_max - $speed_step); $speed -= $speed_step) {
+				$name = ($speed <= $speed_max)
 					? '<small>schneller&nbsp;als</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed + $speed_step, $this->sportid)
 					: '<small>bis</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
-				$speed_foreach[] = array( 'name' => $name, 'id' => $speed);
+				$speed_foreach[] = array( 'name' => $name, 'id' => max($speed, $speed_max));
 			}
 		}
 
@@ -353,19 +355,21 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Get array for "Pulsbereiche"
 	 */
 	private function getPulseArray() {
-		$pulse_min = $this->config['lowest_pulsegroup']['var'];
-		$pulse_step = $this->config['pulsegroup_step']['var'];
+		$pulse_min  = max((int)$this->config['lowest_pulsegroup']['var'], 0);
+		$pulse_step = max((int)$this->config['pulsegroup_step']['var'], 1);
+		$ceil_corr  = $pulse_min % $pulse_step;
+
 		$result = Mysql::getInstance()->fetchAsArray('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
-				CEIL( (100 * `pulse_avg` / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' AS `group`
+				CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->group_time.'
 			ORDER BY `group`, `timer` ASC');
-		
+
 		$pulse_data = $this->emptyData;
 		
 		foreach ($result as $dat) {
@@ -379,9 +383,9 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$pulse_foreach = array();
 
 		if (!empty($result)) {
-			for ($pulse = $pulse_min; $pulse <= 100; $pulse += $pulse_step) {
+			for ($pulse = $pulse_min; $pulse < (100 + $pulse_step); $pulse += $pulse_step) {
 				$pulse_foreach[] = array(
-					'name' => '<small>bis</small> '.$pulse.' &#37;',
+					'name' => '<small>bis</small> '.min($pulse, 100).' &#37;',
 					'id' => $pulse);
 			}
 		}
