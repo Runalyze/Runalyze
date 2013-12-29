@@ -103,11 +103,14 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	 * Parse timesteps
 	 */
 	protected function parseTimesteps() {
+		$DSTcorrector = date('I') - date('I', $this->TrainingObject->getTimestamp());
+
 		foreach ($this->XML->xpath('//when') as $step) {
 			$time = strtotime((string)$step);
 
 			if ($this->hasMorePauses()) {
-				if (strftime('%T', $time) == $this->ResumeTimes[$this->PauseIndex]) {
+				$currentTime = strftime('%T', $time + $DSTcorrector * 3600);
+				if ($currentTime == $this->ResumeTimes[$this->PauseIndex]) {
 					$this->PauseInSeconds += $this->PauseTimes[$this->PauseIndex];
 					$this->PauseIndex++;
 				}
