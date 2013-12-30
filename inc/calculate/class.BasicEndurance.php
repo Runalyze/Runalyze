@@ -324,7 +324,7 @@ class BasicEndurance {
 	 * @return double
 	 */
 	public function getTargetWeekKm() {
-		return pow($this->VDOT, 1.135);
+		return pow(max($this->VDOT, 10), 1.135);
 	}
 
 	/**
