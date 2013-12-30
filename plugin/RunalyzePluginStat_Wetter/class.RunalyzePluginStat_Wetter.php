@@ -75,16 +75,14 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		if (!$this->config['for_weather']['var'] && !$this->config['for_clothes']['var']) {
-			echo ('<em>In der Konfiguration sind sowohl die Wetter- als auch die Kleidungs-Statistiken ausgeschaltet. So macht das keinen Sinn ;)</em>');
-			return;
-		}
-
 		$this->displayHeader($this->getHeader());
 		
 		$this->displayExtremeTrainings();
 		$this->displayMonthTable();
 		$this->displayClothesTable();
+
+		if (!$this->config['for_weather']['var'] && !$this->config['for_clothes']['var'])
+			echo HTML::warning('In der Konfiguration sind sowohl die Wetter- als auch die Kleidungs-Statistiken ausgeschaltet.');
 	}
 
 	/**
@@ -255,6 +253,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display table for clothes
 	 */
 	private function displayClothesTable() {
+		if (!$this->config['for_clothes']['var'])
+			return;
+
 		echo '<table class="small fullWidth">
 			<thead><tr class="c">
 				<th />
@@ -346,14 +347,10 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Get header depending on config
 	 */
 	private function getHeader() {
-		if ($this->config['for_weather']['var'])
-			$header = 'Wetter';
-		if ($this->config['for_clothes']['var']) {
-			if ($header != '')
-				$header .= ' und Kleidung';
-			else
-				$header = 'Kleidung';
-		}
+		$header = 'Wetter';
+
+		if ($this->config['for_clothes']['var'])
+			$header = ($this->config['for_weather']['var']) ? 'Wetter und Kleidung' : 'Kleidung';
 
 		return $header.': '.$this->jahr;
 	}
