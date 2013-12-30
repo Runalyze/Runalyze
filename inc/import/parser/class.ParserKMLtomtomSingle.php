@@ -63,7 +63,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-		$this->addError('Given XML object does not contain any track. <gx:Track>-tag could not be located.');
+		$this->addError('Given XML object does not contain any track. &lt;gx:Track&gt;-tag could not be located.');
 	}
 
 	/**

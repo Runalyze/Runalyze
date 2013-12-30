@@ -95,7 +95,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Add error: no garmin file
 	 */
 	protected function throwNoGarminError() {
-		$this->addError('Given XML object is not from Garmin. <Id>-tag could not be located.');
+		$this->addError('Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located.');
 	}
 
 	/**

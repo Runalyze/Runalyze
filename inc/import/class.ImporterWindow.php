@@ -38,6 +38,12 @@ class ImporterWindow {
 	protected $TrainingObjects = array();
 
 	/**
+	 * Errors
+	 * @var array
+	 */
+	protected $Errors = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -89,6 +95,8 @@ class ImporterWindow {
 		$Factory = new ImporterFactory($fileName);
 
 		$this->TrainingObjects = $Factory->trainingObjects();
+
+		$this->Errors = array_merge($this->Errors, $Factory->getErrors());
 	}
 
 	/**
@@ -101,6 +109,8 @@ class ImporterWindow {
 		$Factory = new ImporterFactory($fileNames);
 
 		$this->TrainingObjects = $Factory->trainingObjects();
+
+		$this->Errors = array_merge($this->Errors, $Factory->getErrors());
 	}
 
 	/**
@@ -110,6 +120,8 @@ class ImporterWindow {
 		$Factory = new ImporterFactory( ImporterFactory::$FROM_COMMUNICATOR );
 
 		$this->TrainingObjects = $Factory->trainingObjects();
+
+		$this->Errors = array_merge($this->Errors, $Factory->getErrors());
 	}
 
 	/**
@@ -139,6 +151,7 @@ class ImporterWindow {
 
 		$this->displayNavigation();
 		$this->displayTabs();
+		$this->displayErrors();
 	}
 
 	/**
@@ -175,6 +188,14 @@ class ImporterWindow {
 	private function displayTabs() {
 		foreach ($this->Tabs as $Tab)
 			$Tab->display();
+	}
+
+	/**
+	 * Display errors
+	 */
+	private function displayErrors() {
+		foreach ($this->Errors as $Error)
+			echo HTML::error($Error);
 	}
 
 	/**

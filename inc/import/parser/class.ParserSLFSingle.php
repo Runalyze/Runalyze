@@ -42,7 +42,7 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoSLFError() {
-		$this->addError('Given XML object is not from Sigma. <LogEntries>-tag could not be located.');
+		$this->addError('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.');
 	}
 
 	/**

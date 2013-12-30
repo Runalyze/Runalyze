@@ -33,7 +33,7 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoLOGBOOKError() {
-		$this->addError('Given XML object is not from SportTracks. <Activity>-tag has no attribute \'startTime\'.');
+		$this->addError('Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no attribute \'startTime\'.');
 	}
 
 	/**

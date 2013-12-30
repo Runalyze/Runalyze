@@ -52,6 +52,12 @@ class ImporterFactory {
 	private $TrainingObjects = array();
 
 	/**
+	 * Errors
+	 * @var array
+	 */
+	private $Errors = array();
+
+	/**
 	 * Constructor
 	 * @param string|array $Filename filename
 	 */
@@ -72,6 +78,14 @@ class ImporterFactory {
 	}
 
 	/**
+	 * Get errors
+	 * @return array
+	 */
+	public function getErrors() {
+		return $this->Errors;
+	}
+
+	/**
 	 * Delete current file
 	 */
 	protected function deleteCurrentFile() {
@@ -88,6 +102,14 @@ class ImporterFactory {
 	 */
 	public function trainingObjects() {
 		return $this->TrainingObjects;
+	}
+
+	/**
+	 * Add errors
+	 * @param array $Errors
+	 */
+	protected function addErrors(array $Errors) {
+		$this->Errors = array_merge($this->Errors, $Errors);
 	}
 
 	/**
@@ -129,6 +151,8 @@ class ImporterFactory {
 
 			$this->addObjects($Importer->objects());
 		}
+
+		$this->addErrors($Importer->getErrors());
 	}
 
 	/**
@@ -147,6 +171,7 @@ class ImporterFactory {
 		$Importer->parseCompressedString( $_POST['data'] );
 
 		$this->addObjects($Importer->objects());
+		$this->addErrors($Importer->getErrors());
 	}
 
 	/**
@@ -192,6 +217,8 @@ class ImporterFactory {
 
 		$Importer = new ImporterHRMandGPX($HRMImporter, $GPXImporter);
 		$this->TrainingObjects[] = $Importer->object();
+
+		$this->addErrors($Importer->getErrors());
 
 		unlink(FRONTEND_PATH.$filename.'.hrm');
 		unlink(FRONTEND_PATH.$filename.'.gpx');
@@ -260,6 +287,7 @@ class ImporterFactory {
 		$Importer->parseFile($this->Filename);
 
 		$this->addObjects($Importer->objects());
+		$this->addErrors($Importer->getErrors());
 	}
 
 	/**
