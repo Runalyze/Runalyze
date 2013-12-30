@@ -47,6 +47,29 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test: incorrect xml-file 
+	 */
+	public function test_noTrack() {
+		$this->object->parseString('<?xml version="1.0"?>
+<FitnessWorkbook xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.zonefivesoftware.com/xmlschemas/FitnessLogbook/v2">
+  <AthleteLog>
+    <Athlete Name="Michael Pohl"/>
+    <Activity StartTime="2013-12-10T00:00:00+01:00">
+      <Duration TotalSeconds="2420"/>
+      <Distance TotalMeters="10000"/>
+      <Calories TotalCal="565"/>
+      <Category Name="Laufen"/>
+      <Location Name=""/>
+    </Activity>
+  </AthleteLog>
+</FitnessWorkbook>');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertNotEmpty( $this->object->objects() );
+		$this->assertEmpty( $this->object->getErrors() );
+	}
+
+	/**
 	 * Test: standard file
 	 * Filename: "20110411_Laufeinheit_division_by_zero.fitlog" 
 	 */

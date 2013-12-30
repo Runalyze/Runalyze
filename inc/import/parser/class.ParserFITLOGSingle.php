@@ -29,14 +29,14 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectFITLOG() {
-		return !empty($this->XML->Track);
+		return property_exists($this->XML, 'Duration');
 	}
 
 	/**
 	 * Add error: incorrect file
 	 */
 	protected function throwNoFITLOGError() {
-		$this->addError('Given XML object is not from SportTracks. <Track>-tag could not be located.');
+		$this->addError('Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be located.');
 	}
 
 	/**
@@ -72,12 +72,9 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 * Parse all log entries
 	 */
 	protected function parseTrack() {
-		if (!isset($this->XML->Track->pt)) {
-			$this->addError('Die Trainingsdatei enth&auml;lt keine Trackpoints.');
-		} else {
+		if (isset($this->XML->Track->pt))
 			foreach ($this->XML->Track->pt as $Point)
 				$this->parseTrackpoint($Point);
-		}
 	}
 
 	/**
