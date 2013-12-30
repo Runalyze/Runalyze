@@ -151,6 +151,8 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo '</table>';
 
 		Ajax::createTablesorterFor("#listOfAllShoes", true);
+
+		echo '<p class="c">'.Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' Einen neuen Schuh hinzuf&uuml;gen</a>').'</p>';
 	}
 
 	/**

@@ -20,7 +20,8 @@ class BigFileWriterGZip {
 	 * @param string $fileName relative to FRONTEND_PATH
 	 */
 	public function __construct($fileName) {
-		$this->resource = gzopen(FRONTEND_PATH.$fileName, "wb");
+		if (!is_writable(FRONTEND_PATH.$fileName))
+			$this->resource = gzopen(FRONTEND_PATH.$fileName, "wb");
 
 		if (!$this->resource) {
 			$this->resource = null;
@@ -40,7 +41,8 @@ class BigFileWriterGZip {
 	 * @param string $string
 	 */
 	public function addToFile($string) {
-		gzwrite($this->resource, $string);
+		if ($this->isOpen())
+			gzwrite($this->resource, $string);
 	}
 
 	/**
@@ -48,7 +50,7 @@ class BigFileWriterGZip {
 	 * @return boolean
 	 */
 	protected function isOpen() {
-		return is_null($this->resource);
+		return !is_null($this->resource);
 	}
 
 	/**

@@ -163,6 +163,9 @@ class AdminView {
 		$Fieldset->addField( new FormularSubmit('Speichern', '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
+		if (!is_writable(FRONTEND_PATH.'../config.php'))
+			$Fieldset->addError('Die Konfigurationsdatei <strong>config.php</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em><br />Änderungen können nicht gespeichert werden.');
+
 		return $Fieldset;
 	}
 
@@ -195,6 +198,9 @@ class AdminView {
 	 * Update config file from post data
 	 */
 	private function updateConfigFileFromPost() {
+		if (!is_writable(FRONTEND_PATH.'../config.php'))
+			return;
+
 		$Variables     = self::getArrayOfConfigVariables();
 		$NewFile       = '';
 		$FileHandleOld = fopen( FRONTEND_PATH.'../config.php', 'r' );
@@ -307,6 +313,7 @@ class AdminView {
 		include FRONTEND_PATH.'system/define.chmod.php';
 
 		$Fieldset = new FormularFieldset('Berechtigungen');
+		$Fieldset->addBlock('F&uuml;r die folgenden Ordner werden Schreibrechte ben&ouml;tigt. Wenn der falsche Owner eingetragen ist, stimmt die folgende Angabe aber eventuell nicht.');
 
 		foreach ($CHMOD_FOLDERS as $folder) {
 			$realfolder = FRONTEND_PATH.'../'.$folder;
