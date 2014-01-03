@@ -46,9 +46,10 @@ class ImporterHRMandGPX {
 	 * Add GPX to object
 	 */
 	protected function addGPXtoObject() {
-		foreach ($this->GPXImporter->object()->getArray() as $key => $value)
-			if ($this->TrainingObject->get($key) == '' || $this->TrainingObject->get($key) == 0)
-				$this->TrainingObject->set($key, $value);
+		if (!$this->GPXImporter->failed())
+			foreach ($this->GPXImporter->object()->getArray() as $key => $value)
+				if ($this->TrainingObject->get($key) == '' || $this->TrainingObject->get($key) == 0)
+					$this->TrainingObject->set($key, $value);
 
 		if (!$this->TrainingObject->Splits()->areEmpty())
 			$this->fillSplitsFromGPX();
