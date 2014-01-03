@@ -263,7 +263,7 @@ class Ajax {
 	 * @return string
 	 */
 	static function link($name, $target, $href, $data = '', $title = '') {
-		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'" title="'.$title.'">'.$name.'</a>';
+		return '<a class="ajax" href="'.$href.'" target="'.$target.'" rel="'.$data.'"'.(!empty($title) ? ' title="'.$title.'"' : '').'>'.$name.'</a>';
 	}
 
 	/**
