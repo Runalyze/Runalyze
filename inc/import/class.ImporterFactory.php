@@ -218,7 +218,8 @@ class ImporterFactory {
 		$Importer = new ImporterHRMandGPX($HRMImporter, $GPXImporter);
 		$this->TrainingObjects[] = $Importer->object();
 
-		$this->addErrors($Importer->getErrors());
+		$this->addErrors($HRMImporter->getErrors());
+		$this->addErrors($GPXImporter->getErrors());
 
 		unlink(FRONTEND_PATH.$filename.'.hrm');
 		unlink(FRONTEND_PATH.$filename.'.gpx');

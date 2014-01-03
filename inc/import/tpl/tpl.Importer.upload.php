@@ -36,9 +36,9 @@ new qq.FineUploaderBasic({
 						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?file='+encodeURIComponent(fileName));
 					else
 						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?files='+encodeURIComponent(submittedFiles.join(';')));
-				} else {
-					$("#ajax").append('<p class="error appended-by-uploader">Es gab Probleme beim Upload.</p>');
 				}
+			} else {
+				$("#ajax").append('<p class="error appended-by-uploader">Es gab Probleme beim Upload.</p>');
 			}
 
 			if (uploadedFiles == submittedFiles.length) {
