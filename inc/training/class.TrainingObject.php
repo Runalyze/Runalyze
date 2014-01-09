@@ -467,8 +467,10 @@ class TrainingObject extends DataObject {
 	 * @return \Weather
 	 */
 	public function Weather() {
-		if (is_null($this->Weather))
-			$this->Weather = new Weather($this->get('weatherid'), $this->get('temperature'));
+		if (is_null($this->Weather)) {
+			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
+			$this->Weather = new Weather($this->get('weatherid'), $temp);
+		}
 
 		return $this->Weather;
 	}
