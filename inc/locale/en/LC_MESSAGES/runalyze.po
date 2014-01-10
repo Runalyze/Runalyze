@@ -1,0 +1,186 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Runalyze\n"
+"POT-Creation-Date: 2014-01-10 22:16+0100\n"
+"PO-Revision-Date: 2014-01-10 22:18+0100\n"
+"Last-Translator: Michael Pohl <mpo@runalyze.de>\n"
+"Language-Team: Runalyze Team <michael@mipapo.de>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.7\n"
+"X-Poedit-KeywordsList: __;_e;_n;_ne\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: ../../..\n"
+
+#: ../../../tpl/tpl.Frontend.header.php:28
+#: ../../../tpl/tpl.Frontend.header.php:31
+msgid "Logout"
+msgstr ""
+
+#: ../../../tpl/tpl.Frontend.header.php:32
+msgid "Tools"
+msgstr ""
+
+#: ../../../tpl/tpl.Frontend.header.php:33
+msgid "Help"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooter.php:3
+msgid "on Facebook"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooter.php:4
+msgid "on Twitter"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooter.php:5
+msgid "on Google+"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooter.php:6
+msgid "on Sourceforge"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:4
+msgid "Statistics"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:5
+msgid ""
+"Runalyze analyses your complete training, calculates your fit, allege "
+"prognoses and visualzes your training in a chart - as detailed as none other "
+"sport diary"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:10
+msgid "Configuration"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:11
+msgid ""
+"Runalyze is completely configurable. You can decide by yourself, which "
+"information of your training you want to record and which statistics to be "
+"shown on which place."
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:16
+msgid "By runners for runners"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:17
+msgid ""
+"Runalyze is created by runners for runners. Whenever you have comments, "
+"problems or wishes: Please contact the Runalyze team. It's near and dear to "
+"us"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:21
+msgid "rundiary"
+msgstr ""
+
+#: ../../../tpl/tpl.installerFooterText.php:21
+msgid "more about Runalyze"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:11
+msgid "Der Benutzername ist nicht bekannt."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:14
+msgid "Das Passwort war nicht richtig."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:17
+msgid ""
+"Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-"
+"Posteingang nach."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:23 ../../../tpl/tpl.loginWindow.php:41
+#: ../../../tpl/tpl.loginWindow.php:45 ../../../tpl/tpl.loginWindow.php:152
+msgid "Login"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:25 ../../../tpl/tpl.loginWindow.php:71
+#: ../../../tpl/tpl.loginWindow.php:129
+msgid "Username"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:29 ../../../tpl/tpl.loginWindow.php:86
+msgid "Password"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:33
+msgid "Remember me"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:46
+msgid "Runalyze is under maintanence at the moment. No login possible."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:54 ../../../tpl/tpl.loginWindow.php:118
+#: ../../../tpl/tpl.loginWindow.php:153
+msgid "Register"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:57
+msgid "At the moment registration is disabled."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:76
+msgid "Name"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:81
+msgid "Email"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:91
+msgid "Retype password"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:109
+msgid "You can now login. Enjoy Runalyze!"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:111
+msgid ""
+"Thank you for your registration. You should receive a mail within the next "
+"minutes, where you have to activat your account."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:127
+msgid "Forgot password"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:139
+msgid ""
+"Ein Link zum &Auml;ndern deines Passworts wird an deine eingetragene E-Mail-"
+"Adresse gesendet."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:145
+msgid "Send link"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:154
+msgid "Forgot password?"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:175
+#, php-format
+msgid "Until now is <strong>%d</strong> athlete registered and"
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:176
+#, php-format
+msgid "has logged <strong>%d</strong> km."
+msgstr ""
+
+#: ../../../tpl/tpl.loginWindow.php:178
+#, php-format
+msgid "<strong>%d</strong> athlete is online now."
+msgstr ""

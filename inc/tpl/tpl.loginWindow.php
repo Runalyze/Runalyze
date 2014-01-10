@@ -8,29 +8,29 @@
 			$FailedPassword = '';
 			if (SessionAccountHandler::$ErrorType != SessionAccountHandler::$ERROR_TYPE_NO) {
 				if (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME) {
-					$ErrorString    = 'Der Benutzername ist nicht bekannt.';
+					$ErrorString    = __('Der Benutzername ist nicht bekannt.');
 					$FailedUsername = ' validationFailed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD) {
-					$ErrorString    = 'Das Passwort war nicht richtig.';
+					$ErrorString    = __('Das Passwort war nicht richtig.');
 					$FailedPassword = ' validationFailed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
-					$ErrorString    = 'Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.';
+					$ErrorString    = __('Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.');
 			}
 			?>
 
 			<?php if (!USER_CANT_LOGIN): ?>
 			<fieldset>
-				<legend>Login</legend>
+				<legend><?php _e('Login'); ?></legend>
 				<div class="w100">
-					<label for="username">Benutzername</label>
+					<label for="username"><?php _e('Username'); ?></label>
 					<input id="username" name="username" class="middleSize withUnit unitUser <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 				<div class="w100 clear">
-					<label for="password">Passwort</label>
+					<label for="password"><?php _e('Password'); ?></label>
 					<input id="password" name="password" class="middleSize withUnit unitPass <?php echo $FailedPassword; ?>" type="password" />
 				</div>
 				<div class="w100 clear">
-					<label for="autologin" class="small">Eingeloggt bleiben</label>
+					<label for="autologin" class="small"><?php _e('Remember me'); ?></label>
 					<input id="autologin" name="autologin" type="checkbox" />
 				</div>
 			</fieldset>
@@ -38,12 +38,12 @@
 			<?php if (!empty($ErrorString)) echo HTML::error($ErrorString); ?>
 
 			<div class="c">
-				<input type="submit" value="Einloggen" name="submit" />
+				<input type="submit" value="<?php _e('Login'); ?>" name="submit" />
 			</div>
 			<?php else: ?>
 			<fieldset>
-				<legend>Login</legend>
-				<p class="error">Runalyze befindet sich derzeit im Wartungsmodus. Ein Login ist nicht m&ouml;glich.</p>
+				<legend><?php _e('Login'); ?></legend>
+				<p class="error"><?php _e('Runalyze is under maintanence at the moment. No login possible.'); ?></p>
 			<?php endif; ?>
 		</form>
 	</div>
@@ -51,10 +51,10 @@
 	<div id="registerFormular" style="display:none;">
 		<form action="login.php" method="post">
 			<fieldset>
-				<legend onclick="show('log');">Registrieren</legend>
+				<legend onclick="show('log');"><?php _e('Register'); ?></legend>
 			<?php
 			if (!USER_CAN_REGISTER) {
-				echo HTML::error('Registrierungen sind derzeit deaktiviert.');
+				echo HTML::error(_e('At the moment registration is disabled.'));
 			} else {
 				if (isset($_POST['new_username'])) {
 					$Errors = AccountHandler::tryToRegisterNewUser();
@@ -68,27 +68,27 @@
 
 				FormularInput::setStandardSize(FormularInput::$SIZE_MIDDLE);
 
-				$Field = new FormularInput('new_username', 'Benutzername');
+				$Field = new FormularInput('new_username', __('Username'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$USER );
 				$Field->display();
 
-				$Field = new FormularInput('name', 'Name');
+				$Field = new FormularInput('name', __('Name'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$USER );
 				$Field->display();
 
-				$Field = new FormularInput('email', 'E-Mail');
+				$Field = new FormularInput('email', __('Email'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$MAIL );
 				$Field->display();
 
-				$Field = new FormularInputPassword('password', 'Passwort');
+				$Field = new FormularInputPassword('password', __('Password'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
 
-				$Field = new FormularInputPassword('password_again', 'Passwort erneut');
+				$Field = new FormularInputPassword('password_again', __('Retype password'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
@@ -106,16 +106,16 @@
 							echo HTML::error($Error);
 					}
 				elseif (System::isAtLocalhost())
-					echo HTML::info('Du kannst dich jetzt einloggen. Viel Spa&szlig; mit Runalyze!');
+					echo HTML::info(_e('You can now login. Enjoy Runalyze!'));
 				else
-					echo HTML::info('Danke f&uuml;r deine Anmeldung! Du solltest in den n&auml;chsten Minuten eine E-Mail erhalten, in der du den Account best&auml;tigen kannst.');
+					echo HTML::info(_e('Thank you for your registration. You should receive a mail within the next minutes, where you have to activat your account.'));
 			}
 			?>
 			</fieldset>
 
 			<?php if (USER_CAN_REGISTER): ?>
 			<div class="c">
-				<input type="submit" value="Registrieren" name="submit" />
+				<input type="submit" value="<?php _e('Register'); ?>" name="submit" />
 			</div>
 			<?php endif; ?>
 		</form>
@@ -124,9 +124,9 @@
 	<div id="forgotPassword" style="display:none;">
 		<form action="login.php" method="post">
 			<fieldset>
-				<legend onclick="show('log');">Passwort vergessen</legend>
+				<legend onclick="show('log');"><?php _e('Forgot password'); ?></legend>
 				<div class="w100">
-					<label for="send_username">Benutzername</label>
+					<label for="send_username"><?php _e('Username'); ?></label>
 					<input id="send_username" name="send_username" class="middleSize withUnit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 
@@ -136,22 +136,22 @@
 				</p>
 			<?php else: ?>
 				<p class="info small">
-					Ein Link zum &Auml;ndern deines Passworts wird an deine eingetragene E-Mail-Adresse gesendet.
+					<?php _e('Ein Link zum &Auml;ndern deines Passworts wird an deine eingetragene E-Mail-Adresse gesendet.'); ?>
 				</p>
 			<?php endif; ?>
 			</fieldset>
 
 			<div class="c">
-				<input type="submit" value="Link zusenden" name="submit" />
+				<input type="submit" value="<?php _e('Send link'); ?>" name="submit" />
 			</div>
 		</form>
 	</div>
 </div>
 
 <div id="loginPanel">
-	<a id="loginLink" href="#" onclick="show('log')">Login</a>
-	<a id="registerLink" href="#" onclick="show('reg')">Registrieren</a>
-	<a id="passLink" href="#" onclick="show('pwf');">Passwort vergessen?</a>
+	<a id="loginLink" href="#" onclick="show('log')"><?php _e('Login'); ?></a>
+	<a id="registerLink" href="#" onclick="show('reg')"><?php _e('Register'); ?></a>
+	<a id="passLink" href="#" onclick="show('pwf');"><?php _e('Forgot password?'); ?></a>
 </div>
 
 <script type="text/javascript">
@@ -168,17 +168,14 @@ $NumUserOn = SessionAccountHandler::getNumberOfUserOnline();
 $NumUser   = Mysql::getInstance()->untouchedFetch('SELECT COUNT(*) as num FROM '.PREFIX.'account');
 $NumKm     = Mysql::getInstance()->untouchedFetch('SELECT SUM(distance) as num FROM '.PREFIX.'training');
 
-$sindOn = ($NumUserOn == 1) ? 'ist' : 'sind';
-$sind   = ($NumUser['num'] == 1) ? 'ist' : 'sind';
-$haben  = ($NumUser['num'] == 1) ? 'hat' : 'haben';
 ?>
 
 <p class="text"></p>
 <p class="text small c login-window-stats">
-	Bisher <?php echo $sind; ?> <strong><?php echo $NumUser['num']; ?></strong> L&auml;ufer bei uns angemeldet
-	und <?php echo $haben; ?> <strong><?php echo Running::Km($NumKm['num']); ?></strong> eingetragen.
+	<?php printf(_n('Until now is <strong>%d</strong> athlete registered and','Until now are <strong>%d</strong> athletes registered and', $NumUser['num']), $NumUser['num']); ?>
+	<?php printf(_n('has logged <strong>%d</strong> km.','have logged <strong>%d</strong> km.', $NumUser['num']), Running::Km($NumKm['num'])); ?>
 	<br />
-	Davon <?php echo $sindOn; ?> derzeit <strong><?php echo $NumUserOn; ?></strong> L&auml;ufer online.
+	<?php printf(_n('<strong>%d</strong> athlete is online now.','<strong>%d</strong> athletes are online now.', $NumUserOn), $NumUserOn); ?><br>
 </p>
 
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>
