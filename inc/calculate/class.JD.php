@@ -300,22 +300,17 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
-		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
-
 		$Data = Mysql::getInstance()->fetchSingle('
 			SELECT
-				SUM(`s`) as `ssum`,
-				SUM('.$Sum.') as `value`
+				SUM('.self::mysqlVDOTsumTime().') as `ssum`,
+				SUM('.self::mysqlVDOTsum().') as `value`
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`="'.CONF_RUNNINGSPORT.'"
-				&& `pulse_avg`!=0
-				&& `use_vdot`=1
-				&& `time`<"'.$time.'"
-				&& `time`>"'.($time - CONF_VDOT_DAYS*DAY_IN_S).'"
+				&& DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_VDOT_DAYS-1).' AND 0
 			GROUP BY `sportid`');
 
-		if ($Data !== false)
+		if ($Data !== false && $Data['ssum'] > 0)
 			return round(self::correctVDOT($Data['value']/$Data['ssum']), 5);
 
 		return 0;
