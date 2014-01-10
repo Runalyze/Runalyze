@@ -208,7 +208,7 @@ class Trimp {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_ATL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_ATL_DAYS-1).' AND 0');
 		$ATL = round($dat['sum']/CONF_ATL_DAYS);
 
 		if ($ATL > self::maxATL())
@@ -227,7 +227,7 @@ class Trimp {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($time-CONF_CTL_DAYS*DAY_IN_S).' AND "'.$time.'"');
+		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_CTL_DAYS-1).' AND 0');
 		$CTL = round($dat['sum']/CONF_CTL_DAYS);
 
 		if ($CTL > self::maxCTL())
