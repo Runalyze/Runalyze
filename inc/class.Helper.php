@@ -316,3 +316,35 @@ function trimValuesForArray(&$value) {
 function rstrstr($haystack, $needle) {
 	return substr($haystack, 0,strpos($haystack, $needle));
 }
+
+/*
+ * Returns the translation for a textstring
+ * @param string $text
+ */
+function __($text) {
+    return gettext($text);
+}
+
+/*
+ * Echo the translation for a textstring
+ * @param string $text
+ */
+function _e($text) {
+    echo gettext($text);
+}
+
+/*
+ * Return singular/plural translation for a textstring
+ * @param string $text
+ */
+function _n($msg1, $msg2, $n) {
+    return ngettext($msg1, $msg2, $n);
+}
+
+/*
+ * Echo singular/plural translation for a textstring
+ * @param string $text
+ */
+function _ne($msg1, $msg2, $n) {
+    echo ngettext($msg1, $msg2, $n);
+}

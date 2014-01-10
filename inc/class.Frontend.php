@@ -72,9 +72,9 @@ class Frontend {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		date_default_timezone_set('Europe/Berlin');
-
+                $this->initLanguage();
 		$this->setAutoloader();
-		$this->initErrorHandling();
+                $this->initErrorHandling();
 		$this->initMySql();
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
@@ -87,7 +87,23 @@ class Frontend {
 		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
 		new Autoloader();
 	}
-
+        
+        /**
+         * Setup Language
+         */
+        private function initLanguage() {
+            if(!empty($_GET['lang']))
+                $language = $_GET['lang'];
+            else
+                $language = 'en';
+            $locale_dir = './inc/locale';
+            putenv("LANG=$language"); 
+            setlocale(LC_ALL, $language);
+            $domain = 'runalyze';
+            bindtextdomain('runalyze', $locale_dir); 
+            textdomain('runalyze');
+            
+        }
 	/**
 	 * Init constants
 	 */
