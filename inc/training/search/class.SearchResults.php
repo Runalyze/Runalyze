@@ -299,7 +299,7 @@ class SearchResults {
 		else
 			echo HTML::error('Der Multi-Editor konnte nicht gefunden werden.');
 
-		echo Ajax::wrapJS('$("#search").remove();$("#ajax").removeClass("bigWin");');
+		echo Ajax::wrapJS('$("#search").remove();$("#ajax").removeClass("big-window");');
 	}
 
 	/**

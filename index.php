@@ -17,8 +17,8 @@ $Frontend = new Frontend();
 
 <div id="container">
 	<div id="main">
-		<div id="dataPanel" class="panel">
-			<div id="daten">
+		<div id="data-browser" class="panel">
+			<div id="data-browser-inner">
 				<?php
 				$DataBrowser = new DataBrowser();
 				$DataBrowser->display();
@@ -27,7 +27,7 @@ $Frontend = new Frontend();
 		</div>
 
 
-		<ul id="statisticTabs">
+		<ul id="statistics-nav">
 			<?php
 			$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
 			foreach ($Stats as $i => $key) {
@@ -40,8 +40,8 @@ $Frontend = new Frontend();
 				echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
 			?>
 		</ul>
-		<div id="statistiken" class="panel">
-			<div id="tab_content">
+		<div id="statistics" class="panel">
+			<div id="statistics-inner">
 				<?php
 				if (empty($Stats))
 					echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');

@@ -1,4 +1,4 @@
-<div class="w50" id="loginWindow">
+<div class="w50" id="login-window">
 	<div id="login">
 		<form action="login.php" method="post">
 
@@ -9,10 +9,10 @@
 			if (SessionAccountHandler::$ErrorType != SessionAccountHandler::$ERROR_TYPE_NO) {
 				if (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME) {
 					$ErrorString    = __('Der Benutzername ist nicht bekannt.');
-					$FailedUsername = ' validationFailed';
+					$FailedUsername = ' validation-failed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD) {
 					$ErrorString    = __('Das Passwort war nicht richtig.');
-					$FailedPassword = ' validationFailed';
+					$FailedPassword = ' validation-failed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
 					$ErrorString    = __('Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.');
 			}
@@ -23,11 +23,11 @@
 				<legend><?php _e('Login'); ?></legend>
 				<div class="w100">
 					<label for="username"><?php _e('Username'); ?></label>
-					<input id="username" name="username" class="middleSize withUnit unitUser <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="username" name="username" class="middle-size with-unit unitUser <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 				<div class="w100 clear">
 					<label for="password"><?php _e('Password'); ?></label>
-					<input id="password" name="password" class="middleSize withUnit unitPass <?php echo $FailedPassword; ?>" type="password" />
+					<input id="password" name="password" class="middle-size with-unit unitPass <?php echo $FailedPassword; ?>" type="password" />
 				</div>
 				<div class="w100 clear">
 					<label for="autologin" class="small"><?php _e('Remember me'); ?></label>
@@ -127,7 +127,7 @@
 				<legend onclick="show('log');"><?php _e('Forgot password'); ?></legend>
 				<div class="w100">
 					<label for="send_username"><?php _e('Username'); ?></label>
-					<input id="send_username" name="send_username" class="middleSize withUnit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="send_username" name="send_username" class="middle-size with-unit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 
 			<?php if (isset($_POST['send_username'])): ?>
@@ -148,10 +148,10 @@
 	</div>
 </div>
 
-<div id="loginPanel">
-	<a id="loginLink" href="#" onclick="show('log')"><?php _e('Login'); ?></a>
-	<a id="registerLink" href="#" onclick="show('reg')"><?php _e('Register'); ?></a>
-	<a id="passLink" href="#" onclick="show('pwf');"><?php _e('Forgot password?'); ?></a>
+<div id="login-panel">
+	<a id="login-link" href="#" onclick="show('log')"><?php _e('Login'); ?></a>
+	<a id="register-link" href="#" onclick="show('reg')"><?php _e('Register'); ?></a>
+	<a id="password-link" href="#" onclick="show('pwf');"><?php _e('Forgot password?'); ?></a>
 </div>
 
 <script type="text/javascript">

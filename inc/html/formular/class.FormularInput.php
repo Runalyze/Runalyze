@@ -13,7 +13,7 @@ class FormularInput extends FormularField {
 	 * Size: full inline
 	 * @var string 
 	 */
-	static public $SIZE_FULL_INLINE = 'fullSize';
+	static public $SIZE_FULL_INLINE = 'full-size';
 
 	/**
 	 * Size: full
@@ -25,19 +25,19 @@ class FormularInput extends FormularField {
 	 * Size: middle
 	 * @var string 
 	 */
-	static public $SIZE_MIDDLE = 'middleSize';
+	static public $SIZE_MIDDLE = 'middle-size';
 
 	/**
 	 * Size: small
 	 * @var string 
 	 */
-	static public $SIZE_SMALL = 'smallSize';
+	static public $SIZE_SMALL = 'small-size';
 
 	/**
 	 * Standard size for fields
 	 * @var string 
 	 */
-	static private $standardSize = 'smallSize';
+	static private $standardSize = 'small-size';
 
 	/**
 	 * Size
@@ -125,7 +125,7 @@ class FormularInput extends FormularField {
 	 */
 	protected function addUnitAndSize() {
 		if (!empty($this->unit))
-			$this->addCSSclass('withUnit '.$this->unit);
+			$this->addCSSclass('with-unit '.$this->unit);
 
 		if (!empty($this->size))
 			$this->addCSSclass($this->size);

@@ -262,7 +262,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($this->config['compare_weeks']['var'])
 			$Dataset->activateKilometerComparison();
 
-		echo '<table class="small notSmaller r fullwidth zebra-style">';
+		echo '<table class="small not-smaller r fullwidth zebra-style">';
 		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
 

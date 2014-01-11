@@ -56,7 +56,7 @@ define('BR', '<br />');
  * Tag-ID for the whole databrowser
  * @const DATA_BROWSER_ID
  */
-define('DATA_BROWSER_ID', 'daten');
+define('DATA_BROWSER_ID', 'data-browser-inner');
 
 /**
  * Tag-ID for the public databrowser

@@ -172,7 +172,7 @@ class Plot {
 	 * @param string $class
 	 */
 	static public function getInnerDivFor($id, $width, $height, $hidden = false, $class = '') {
-		return '<div class="flot waitImg '.$class.($hidden ? ' flotHide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
+		return '<div class="flot '.Ajax::$IMG_WAIT.' '.$class.($hidden ? ' flot-hide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
 	}
 
 	/**
@@ -245,7 +245,7 @@ class Plot {
 		return Ajax::wrapJS('
 			var '.$this->created.'=false,
 				func_'.$this->created.'=function(){
-					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0 && $("#'.$this->cssID.'").is(":visible") && !$("#'.$this->cssID.'").hasClass("flotHide")) {
+					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0 && $("#'.$this->cssID.'").is(":visible") && !$("#'.$this->cssID.'").hasClass("flot-hide")) {
 						'.$this->created.'=true;'.$bindedCode.'RunalyzePlot.finishInit("'.$this->cssID.'");
 					}
 				};
@@ -269,7 +269,7 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForTitles() {
-		$title  = '<div class="flotTitle">';
+		$title  = '<div class="flot-title">';
 		if ($this->allowSettings)
 			$title .= '<span class="left link flot-settings-link">'.Icon::$CONF.'</span>';
 		if (isset($this->Titles['left']))
@@ -303,7 +303,7 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForError() {
-		return'$("#'.$this->cssID.'").append(\'<div class="flotError"><span>'.$this->ErrorString.'</span></div>\');'.NL;
+		return'$("#'.$this->cssID.'").append(\'<div class="flot-error"><span>'.$this->ErrorString.'</span></div>\');'.NL;
 	}
 
 	/**

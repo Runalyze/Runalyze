@@ -1,4 +1,4 @@
-ul.blocklist {
+.blocklist {
 	li {
 		list-style-type: none;
 	}
@@ -14,7 +14,7 @@ ul.blocklist {
 		text-align: center;
 		border: 1px solid #ccc;
 		background-color: #F6F6F7;
-		background-position: 3px center;
+		background-position: 9px center;
 		background-repeat: no-repeat;
 
 		&:hover {
@@ -26,8 +26,9 @@ ul.blocklist {
 			padding: 5px;
 		}
 	}
+}
 
-	&.smallImage a {
-		background-position: 9px center;
-	}
+.blocklist-inline li {
+	float: left;
+	margin: 5px;
 }

@@ -30,15 +30,7 @@ select {
 	padding: 1px;
 }
 
-#form_suche input, #form_suche select, #form_suche textarea {
-	padding: 0;
-	border-top: none !important;
-	border-left: none !important;
-	border-right: none !important;
-	border-bottom: 1px solid #D2D2D3 !important;
-}
-
-.asInput {
+.as-input {
 	display: inline-block;
 	font-size: @formular-input-font-size;
 	padding: (@formular-input-padding + 1px);
@@ -70,10 +62,6 @@ input[type=submit], .button {
 	color: #FFF !important;
 	cursor: pointer;
 	padding: 5px 12px !important;
-}
-
-input[type=submit]:hover, .button:hover, .button.hover {
-	//box-shadow: 0 0 6px #8AB856;
 }
 
 .button {
@@ -151,23 +139,23 @@ fieldset {
 
 	textarea, input { padding: 2px; margin: 0; }
 	select { padding: 1px; margin: 0; }
-	input.withUnit { padding: 2px 30px 2px 0; }
-	input.withUnitLeft { padding: 2px 0 2px 30px; }
-	.smallSize { width: 60px; }
-	.smallSize.withUnit { width: 34px; }
-	.middleSize { width: 120px; }
-	.middleSize.withUnit { width: 94px; }
-	.fullSize { width: 53%; }
+	input.with-unit { padding: 2px 30px 2px 0; }
+	input.with-unit-left { padding: 2px 0 2px 30px; }
+	.small-size { width: 60px; }
+	.small-size.with-unit { width: 34px; }
+	.middle-size { width: 120px; }
+	.middle-size.with-unit { width: 94px; }
+	.full-size { width: 53%; }
 	.fullwidth { width: 95%; }
 	.with50erLabel label { width: 22.5%; }
-	.with50erLabel .fullSize { width: 75%; }
+	.with50erLabel .full-size { width: 75%; }
 	.with50erLabel .inline label { float: none; }
 	.with33erLabel label { width: 14.85%; }
-	.with33erLabel .fullSize { width: 85%; }
+	.with33erLabel .full-size { width: 85%; }
 	.w50.with33erLabel label { width: 29.7%; }
-	.w50.with33erLabel .fullSize { width: 65%; }
+	.w50.with33erLabel .full-size { width: 65%; }
 	.with33erLabel .inline label { float: none; }
-	textarea.fullSize { height: 72px; }
+	textarea.full-size { height: 72px; }
 }
 
 input {
@@ -178,13 +166,13 @@ input {
 		background-image: url('../../img/units/calendar.png');
 	}
 
-	&.withUnit {
+	&.with-unit {
 		text-align: right;
 		background-position: right center;
 		background-repeat: no-repeat;
 	}
 
-	&.withUnitLeft {
+	&.with-unit-left {
 		background-position: left center;
 		background-repeat: no-repeat;
 	}
@@ -207,7 +195,7 @@ input {
 	&.unitPower { background-image: url('../../img/units/power.png'); }
 }
 
-:invalid, fieldset .validationFailed {
+:invalid, fieldset .validation-failed {
 	background-color: @formular-invalid-background;
 	border-color: @formular-invalid-border;
 }

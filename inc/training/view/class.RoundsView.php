@@ -62,7 +62,7 @@ class RoundsView {
 		if (empty($this->RoundsObjects))
 			return;
 
-		echo '<div id="training-rounds" class="dataBox left">';
+		echo '<div id="training-rounds" class="databox left">';
 		echo '<div class="databox-header">'.implode(' - ', $this->links()).'</div>';
 
 		$this->displayRounds();

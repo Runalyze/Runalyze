@@ -137,14 +137,14 @@ class TrainingViewIFrameTable {
 			echo '<tr>';
 
 			if (isset($this->LeftInfos[$i])) {
-				echo '<td class="inlineHead">'.$this->LeftInfos[$i][0].'</td>';
+				echo '<td class="inline-head">'.$this->LeftInfos[$i][0].'</td>';
 				echo '<td>'.$this->LeftInfos[$i][1].'</td>';
 			} else {
 				echo '<td colspan="2">&nbsp;</td>';
 			}
 
 			if (isset($this->RightInfos[$i])) {
-				echo '<td class="inlineHead">'.$this->RightInfos[$i][0].'</td>';
+				echo '<td class="inline-head">'.$this->RightInfos[$i][0].'</td>';
 				echo '<td>'.$this->RightInfos[$i][1].'</td>';
 			} else {
 				echo '<td colspan="2">&nbsp;</td>';
@@ -155,7 +155,7 @@ class TrainingViewIFrameTable {
 
 		foreach ($this->FullInfos as $INFO) {
 			echo '<tr>';
-			echo '<td class="inlineHead">'.$INFO[0].'</td>';
+			echo '<td class="inline-head">'.$INFO[0].'</td>';
 			echo '<td colspan="3">'.$INFO[1].'</td>';
 			echo '</tr>';
 		}

@@ -10,7 +10,7 @@ body > .datepicker {
 	width: auto !important;
 }
 
-#calendar {
+#data-browser-calendar {
 	position:relative;
 	display: none;
 	width: 525px;
@@ -23,13 +23,13 @@ body > .datepicker {
 	border-top-color: #EEE;
 	border-bottom-color: #BBB;
 }
-#calendar:hover {
+#data-browser-calendar:hover {
 	box-shadow: 0;
 }
-#calendarSubmit {
+#calendar-submit {
 	margin-top: 5px;
 }
-#widgetCalendar {
+#widget-calendar {
 	position:relative;
 	width: 520px;
 	height: 130px;

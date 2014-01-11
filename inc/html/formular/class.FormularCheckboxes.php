@@ -60,7 +60,7 @@ class FormularCheckboxes extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label      = '<label>'.$this->label.'</label>';
-		$checkboxes = '<div class="fullSize left">'.$this->getCheckboxes().'</div>';
+		$checkboxes = '<div class="full-size left">'.$this->getCheckboxes().'</div>';
 
 		return $label.$checkboxes;
 	}

@@ -104,15 +104,11 @@ abstract class PluginPanel extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo('<span class="right '.($this->textAsRightSymbol?'smallHeadNavi':'').'">'.$this->getRightSymbol().'</span>
+		echo '<span class="right '.($this->textAsRightSymbol ? 'small-head-navi' : '').'">'.$this->getRightSymbol().'</span>
 			<h1 class="show-on-hover-parent">
-				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">
-					'.$this->name.'
-				</span>
-				<span class="show-on-hover">
-				'.$this->getConfigLinks().'
-				</span>
-			</h1>'.NL);
+				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">'.$this->name.'</span>
+				<span class="show-on-hover">'.$this->getConfigLinks().'</span>
+			</h1>';
 	}
 
 	/**

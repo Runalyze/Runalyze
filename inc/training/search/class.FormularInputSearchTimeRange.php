@@ -23,7 +23,7 @@ class FormularInputSearchTimeRange extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$code  = '<label>'.$this->label.'</label>';
-		$code .= '<div class="fullSize left">';
+		$code .= '<div class="full-size left">';
 
 		$From = new FormularInput('date-from', '');
 		$From->addCSSclass('pick-a-date');

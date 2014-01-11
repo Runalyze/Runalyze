@@ -448,7 +448,7 @@ class HTML {
 		if (!empty($addClass))
 			$addClass = ' '.$addClass;
 
-		return '<div class="waitImg'.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
+		return '<div class="'.Ajax::$IMG_WAIT.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
 	}
 
 	/**

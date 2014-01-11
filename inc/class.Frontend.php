@@ -232,7 +232,7 @@ class Frontend {
 	 * @param int $height
 	 */
 	public function testPlot($includePath, $name, $width, $height) {
-		echo '<div id="container"><div id="main"><div id="dataPanel" class="panel c">';
+		echo '<div id="container"><div id="main"><div id="data-browser" class="panel c">';
 
 		echo Plot::getDivFor($name, $width, $height);
 		include FRONTEND_PATH.$includePath;

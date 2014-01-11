@@ -1,4 +1,4 @@
-<div class="w50" id="loginWindow">
+<div class="w50" id="login-window">
 <?php
 FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 

@@ -44,7 +44,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			$html .= Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
 		}
 	
-		return '<span class="smallHeadNavi">'.$html.'</span>';
+		return $html;
 	}
 
 	/**

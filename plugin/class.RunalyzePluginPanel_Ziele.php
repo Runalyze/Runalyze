@@ -60,7 +60,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
             if ( ! $this->config['ziel_show_'.$i]['var'] ) { continue; }
 			array_push($buttons, Ajax::change($timeset['name'], 'bunny', '#bunny_'.$i));
 		}
-		return '<span class="smallHeadNavi">'.implode(' | ',$buttons).'</span>';
+
+		return '<span class="small-head-navi">'.implode(' | ',$buttons).'</span>';
 	}
 
 	/**

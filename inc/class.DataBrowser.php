@@ -13,7 +13,7 @@ class DataBrowser {
 	 * CSS-ID for calendar-widget
 	 * @var string
 	 */
-	static public $CALENDAR_ID = 'calendar';
+	static public $CALENDAR_ID = 'data-browser-calendar';
 
 	/**
 	 * CSS-ID for refresh button
@@ -245,7 +245,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getCalenderLink() {
-		return '<span id="calendarLink" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
+		return '<span id="calendar-link" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**

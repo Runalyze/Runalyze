@@ -13,7 +13,7 @@ abstract class FormularField extends HtmlTag {
 	 * CSS-class if validation failed
 	 * @var string 
 	 */
-	static public $CSS_VALIDATION_FAILED = 'validationFailed';
+	static public $CSS_VALIDATION_FAILED = 'validation-failed';
 
 	/**
 	 * Array with all failed keys

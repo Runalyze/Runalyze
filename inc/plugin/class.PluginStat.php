@@ -123,7 +123,7 @@ abstract class PluginStat extends Plugin {
 			</h1>'.NL;
 
 		$this->headerWasShown = true;
-		echo '<div class="stat-content-container">';
+		echo '<div class="statistics-container">';
 	}
 
 	/**
@@ -200,8 +200,9 @@ abstract class PluginStat extends Plugin {
 	 */
 	public function getLink() {
 		if ($this->isVariousStat())
-			return '<a rel="statistiken" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="Kleinere Statistiken">Sonstiges</a>';
-		return '<a rel="statistiken" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
+			return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="Kleinere Statistiken">Sonstiges</a>';
+
+		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
 	}
 
 	/**
@@ -218,7 +219,7 @@ abstract class PluginStat extends Plugin {
 		if ($year == 0)
 			$year = $this->year;
 
-		return Ajax::link($name, 'tab_content', self::$DISPLAY_URL.'?id='.$this->id.'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
+		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$this->id.'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
 	}
 
 	/**
@@ -232,7 +233,7 @@ abstract class PluginStat extends Plugin {
 			$name = $dat['name'];
 		}
 
-		return Ajax::link($name, 'tab_content', self::$DISPLAY_URL.'?id='.$id);
+		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$id);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-<div class="toolbar withoutNav open">
+<div class="toolbar without-nav open">
 	<div class="toolbar-content toolbar-line">
 		<strong>
 			<?php echo $this->Training->DataView()->getTitleWithDate(); ?>
@@ -15,10 +15,10 @@
 
 
 
-<div id="trainingTable" class="dataBox left">
+<div id="training-table" class="databox left">
 	<?php $this->displayTrainingTable(); ?>
 
-	<div id="trainingChartsAndMap">
+	<div id="training-charts-and-map">
 		<?php if ($this->Training->hasPositionData()): ?>
 			<?php $this->displayRoute(); ?>
 		<?php endif; ?>

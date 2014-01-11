@@ -125,7 +125,7 @@ class TrainingInputSplits extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label  = '<label>'.$this->label.'</label>';
-		$inputs = '<div id="formularSplitsContainer" class="fullSize left">'.$this->getInputs().'</div>';
+		$inputs = '<div id="formularSplitsContainer" class="full-size left">'.$this->getInputs().'</div>';
 
 		return $label.$inputs;
 	}
