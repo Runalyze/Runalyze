@@ -207,7 +207,7 @@ class Prognose_PrognosisWindow {
 	 * Start result table
 	 */
 	protected function startResultTable() {
-		$this->ResultTable = '<table style="width:100%;"><thead><tr>
+		$this->ResultTable = '<table class="fullwidth zebra-style"><thead><tr>
 					<th>Distanz</th>
 					<th>Prognose</th>
 					<th class="small">Pace</th>
@@ -226,7 +226,7 @@ class Prognose_PrognosisWindow {
 	protected function fillResultTableWithResults() {
 		foreach ($this->Prognoses as $i => $Prognosis) {
 			$this->ResultTable .= '
-				<tr class="'.HTML::trClass($i).' r">
+				<tr class="r">
 					<td class="c">'.$Prognosis['distance'].'</td>
 					<td class="b">'.$Prognosis['prognosis'].'</td>
 					<td class="small">'.$Prognosis['prognosis-pace'].'</td>

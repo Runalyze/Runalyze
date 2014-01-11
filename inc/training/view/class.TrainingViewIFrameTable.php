@@ -129,7 +129,7 @@ class TrainingViewIFrameTable {
 	 * Display
 	 */
 	public function display() {
-		echo '<table class="small fullWidth">';
+		echo '<table class="small fullwidth">';
 
 		$num = max(array(count($this->LeftInfos), count($this->RightInfos)));
 

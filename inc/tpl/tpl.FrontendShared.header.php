@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# fitness: http://ogp.me/ns/fitness#">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<meta name="viewport" content="width=320, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<?php $Meta = new HTMLMetaForFacebook(); $Meta->display(); ?>
 
@@ -16,16 +16,13 @@
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
-
-	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot-0.8.1/excanvas.min.js"></script><![endif]-->
 </head>
 
-<body id="shared" class="toolbar-top" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="shared" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="flotLoader"></div>
 
-<div id="copy" class="top">
+<div id="headline">
 	<span class="tab">
 		&Ouml;ffentliche Trainingsansicht
 		<?php if (strlen($User['username']) > 1): ?>

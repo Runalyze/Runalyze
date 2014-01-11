@@ -45,7 +45,7 @@ class MultiEditor {
 	protected function displayNavigation() {
 		$Code  = '<div id="ajax-navigation" class="panel">';
 		$Code .= '<h1>Multi-Editor</h1>';
-		$Code .= '<table class="multi-edit-table fullWidth"><tbody>';
+		$Code .= '<table class="multi-edit-table fullwidth zebra-style"><tbody>';
 
 		foreach (self::$IDs as $i => $ID) {
 			$Training = new TrainingObject($ID);
@@ -54,7 +54,7 @@ class MultiEditor {
 			if (!empty($Daytime))
 				$Daytime = ' - <small>'.$Daytime.'</small>';
 
-			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.HTML::trClass($i).($i == 0 ? ' highlight' : '').' show-on-hover-parent">';
+			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.($i == 0 ? ' highlight' : '').' show-on-hover-parent">';
 			$Code .= '<td class="multi-edit-sport-icon c">';
 			$Code .= '<span class="link show-on-hover multi-edit-remove-link">'.Icon::$CROSS_SMALL.'</span>';
 			$Code .= $Training->Sport()->IconWithTooltip();

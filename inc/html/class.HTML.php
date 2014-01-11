@@ -458,6 +458,9 @@ class HTML {
 	 * @return string eg. 'a1'/'a2'
 	 */
 	public static function trClass($i, $style = 'a') {
+		// TODO: remove
+		Error::getInstance()->addDebug('HTML::trClass() is deprecated.');
+
 		return $style.($i%2 == 0 ? '1' : '2');
 	}
 
@@ -468,6 +471,9 @@ class HTML {
 	 * @return string eg. 'a2'/'a3'
 	 */
 	public static function trClass2($i, $style = 'a') {
+		// TODO: remove
+		Error::getInstance()->addDebug('HTML::trClass2() is deprecated.');
+
 		return $style.($i%2 == 0 ? '2' : '3');
 	}
 

@@ -107,7 +107,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		tr.shoe { height:2px; }
 		tr.shoe td { padding: 0; }
 		</style>
-		<table id="listOfAllShoes" class="fullWidth">
+		<table id="list-of-all-shoes" class="fullwidth zebra-style">
 			<thead>
 				<tr>
 					<th class="{sorter: \'x\'} small">x-mal</th>
@@ -130,7 +130,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				$in_use = $Shoe->isInUse() ? '' : ' unimportant';
 
 				echo('
-				<tr class="'.HTML::trClass($i).$in_use.' r">
+				<tr class="'.$in_use.' r">
 					<td class="small">'.$schuh['num'].'x</td>
 					<td>'.$this->editLinkFor($schuh['id']).'</td>
 					<td class="b l">'.ShoeFactory::getSearchLink($schuh['id']).'</td>
@@ -144,13 +144,13 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				</tr>');
 			}
 		} else {
-			echo('<tr class="a1"><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
+			echo('<tr><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
 		}
 
 		echo '</tbody>';
 		echo '</table>';
 
-		Ajax::createTablesorterFor("#listOfAllShoes", true);
+		Ajax::createTablesorterFor("#list-of-all-shoes", true);
 
 		echo '<p class="c">'.Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' Einen neuen Schuh hinzuf&uuml;gen</a>').'</p>';
 	}

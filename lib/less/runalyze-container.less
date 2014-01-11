@@ -1,0 +1,159 @@
+@panel-margin:					5px 5px 10px 5px;
+@panel-padding:					5px;
+@panel-border:					#000;
+@panel-background:				rgba(255,255,255,.9);//url(../../img/bg.png);
+@loading-min-height:			50px;
+@loading-background-image:		url(../../img/wait.gif);
+@loading-background-color:		@panel-background;
+@databox-border:				#ccc;
+@databox-background:			#f6f6f6;
+@databox-margin:				5px;
+@databox-padding:				3px;
+@error-toolbar-width:			800px;
+@error-toolbar-background:		#efefef;
+@error-toolbar-border:			#ccc;
+
+
+.panel {
+	position: relative;
+	margin: @panel-margin;
+	padding: @panel-padding;
+	background: @panel-background;
+	border: 1px solid @panel-border;
+}
+
+.smallHeadNavi {
+	font-size: .9em;
+	padding-top: 4px;
+}
+
+.loading {
+	min-height: @loading-min-height;
+	color: transparent;
+	background: @loading-background-image center center no-repeat transparent;
+
+	&.panel {
+		background: @loading-background-image center center no-repeat @loading-background-color;
+	}
+
+	* {
+		opacity: 0;
+		transition: opacity 0.4s linear;
+	}
+}
+
+.waitImg {
+	background: url(../../img/wait-black.gif) center center no-repeat #000 !important;
+}
+
+#dataBrowser {
+	width: 100%;
+}
+
+#dataPanel, #tab_content .stat-content-container {
+	overflow: auto;
+}
+
+#tab_content {
+	> ul.jbar {
+		position: absolute;
+		right: 5px;
+	}
+
+	table {
+		margin: 5px 0 10px;
+	}
+}
+
+#datenPanel {
+	margin-bottom: 15px;
+}
+
+#statistiken {
+	margin-top: 0;
+	border-top: none;
+}
+
+#statisticTabs {
+	margin: 0 5px;
+	padding: 0;
+	height: 26px;
+	list-style: none;
+	border-bottom: 1px solid @panel-border;
+
+	li {
+		opacity: .8;
+		float: left;
+		position: relative;
+		top: 1px;
+		height: 25px;
+		line-height: 25px;
+		margin-right: -1px;
+		border: 1px solid @panel-border;
+		background: @panel-background;
+		overflow: hidden;
+
+		a {
+			display: block;
+			padding: 0 10px;
+		}
+
+		&.active, &:hover {
+			opacity: 1;
+			border-color: @panel-border;
+			border-bottom: none;
+
+			a:link, a:visited {
+				color: #000;
+			}
+		}
+	}
+}
+
+.dataBox {
+	float: left;
+	margin: @databox-margin;
+	padding: @databox-padding;
+	border: 1px solid @databox-border;
+	background: @databox-background;
+
+	tr, td {
+		padding: 3px;
+	}
+}
+
+.inlineHead, .dataBox td.inlineHead {
+	font-weight: bold;
+	padding-right: 10px;
+}
+
+.databox-header {
+	text-align: center;
+
+	a.change {
+		opacity: .5;
+
+		&.triggered {
+			opacity: 1;
+		}
+	}
+}
+
+#errorToolbar {
+	z-index: 15;
+	position: fixed;
+	bottom: 0;
+	left: 50%;
+	width: @error-toolbar-width;
+	margin-left: -(@error-toolbar-width/2);
+	background-color: @error-toolbar-background;
+	max-height: (@error-toolbar-width/2);
+
+	tr {
+		border-bottom: 1px solid @error-toolbar-border;
+	}
+}
+
+.datepicker th, .datepicker td {
+	padding: 0 !important;
+}

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<meta name="viewport" content="width=320, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<?php echo System::getCodeForAllCSSFiles(); ?>
 
@@ -15,9 +15,9 @@
 
 </head>
 
-<body id="installer" class="toolbar-top">
+<body id="installer">
 
-<div id="copy" class="top">
+<div id="headline">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined('RUNALYZE_VERSION')) echo 'v'.RUNALYZE_VERSION; ?></a>
 	<a class="tab right" href="login.php" title="Please login"><i class="toolbar-icon-user"></i> Please login</a>
 </div>

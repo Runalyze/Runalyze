@@ -1,0 +1,213 @@
+@formular-input-font-size:			.9em;
+@formular-input-background:			rgba(255,255,255,.7);
+@formular-input-background-focus:	#ebfdd7;
+@formular-input-border-color:		#b8b8b8;
+@formular-input-border-radius:		3px;
+@formular-input-margin:				4px 2px;
+@formular-input-padding:			2px;
+@formular-legend-color:				#8ab858;
+@formular-legend-border:			#ddd;
+@formular-invalid-background:		#fdebd7;
+@formular-invalid-border:			#c00;
+
+
+
+
+
+input, select, textarea, code {
+	font-size: @formular-input-font-size;
+	margin: @formular-input-margin;
+	background-color: @formular-input-background;
+	border: 1px solid @formular-input-border-color;
+	border-radius: @formular-input-border-radius;
+}
+
+input, textarea, code {
+	padding: @formular-input-padding;
+}
+
+select {
+	padding: 1px;
+}
+
+#form_suche input, #form_suche select, #form_suche textarea {
+	padding: 0;
+	border-top: none !important;
+	border-left: none !important;
+	border-right: none !important;
+	border-bottom: 1px solid #D2D2D3 !important;
+}
+
+.asInput {
+	display: inline-block;
+	font-size: @formular-input-font-size;
+	padding: (@formular-input-padding + 1px);
+}
+
+table input, table select, table textarea {
+	margin: 0 2px;
+}
+
+input:focus, select:focus, textarea:focus {
+	background-color: @formular-input-background-focus;
+}
+
+input[type=checkbox] {
+	position: relative;
+	top: 2px;
+	border: none;
+}
+
+label.checkable,
+input[type=checkbox] {
+	cursor: pointer;
+}
+
+input[type=submit], .button {
+	background-color: #555;
+	border: 0;
+	border-radius: 0;
+	color: #FFF !important;
+	cursor: pointer;
+	padding: 5px 12px !important;
+}
+
+input[type=submit]:hover, .button:hover, .button.hover {
+	//box-shadow: 0 0 6px #8AB856;
+}
+
+.button {
+	display: block;
+	text-align: center;
+	width: 127px;
+	margin: 0 auto;
+}
+
+fieldset {
+	border-top: 1px solid @formular-legend-border;
+	padding-top: 6px;
+	padding-bottom: 10px;
+	clear: both;
+
+	&.collapsed div, &.collapsed > input {
+		display: none !important;
+	}
+
+	&.without-legend {
+		border-top: none;
+	}
+
+	legend {
+		cursor: pointer;
+		color: @formular-legend-color;
+		padding-left: 18px;
+		padding-right: 3px;
+		background: url("../../img/palOpen.gif") left center no-repeat transparent;
+	}
+
+	&.collapsed legend {
+		background: url("../../img/palCollapsed.gif") left center no-repeat transparent;
+	}
+
+	label {
+		font-weight: bold;
+		width: 45%;
+		float: left;
+		margin: 0 !important;
+		padding: 3px 0;
+	}
+
+	.toolbar-line label {
+		float: none;
+		width: auto;
+		font-weight: normal;
+	}
+
+	.inline label {
+		float: none;
+		width: auto;
+		padding: 3px;
+	}
+
+	.w25, .w33, .w50, .w100 {
+		padding: 2px 0;
+		min-height: 19px;
+	}
+
+	.w25, .w33, .w50 {
+		float: left;
+		display: block;
+	}
+
+	.w100 {
+		clear: left;
+	}
+
+	.double-height-right {
+		float: right;
+		padding: 11px 0;
+		min-height: 19px;
+	}
+
+	textarea, input { padding: 2px; margin: 0; }
+	select { padding: 1px; margin: 0; }
+	input.withUnit { padding: 2px 30px 2px 0; }
+	input.withUnitLeft { padding: 2px 0 2px 30px; }
+	.smallSize { width: 60px; }
+	.smallSize.withUnit { width: 34px; }
+	.middleSize { width: 120px; }
+	.middleSize.withUnit { width: 94px; }
+	.fullSize { width: 53%; }
+	.fullwidth { width: 95%; }
+	.with50erLabel label { width: 22.5%; }
+	.with50erLabel .fullSize { width: 75%; }
+	.with50erLabel .inline label { float: none; }
+	.with33erLabel label { width: 14.85%; }
+	.with33erLabel .fullSize { width: 85%; }
+	.w50.with33erLabel label { width: 29.7%; }
+	.w50.with33erLabel .fullSize { width: 65%; }
+	.with33erLabel .inline label { float: none; }
+	textarea.fullSize { height: 72px; }
+}
+
+input {
+	&.pick-a-date {
+		padding: 2px 16px 2px 2px;
+		background-position: right center;
+		background-repeat: no-repeat;
+		background-image: url('../../img/units/calendar.png');
+	}
+
+	&.withUnit {
+		text-align: right;
+		background-position: right center;
+		background-repeat: no-repeat;
+	}
+
+	&.withUnitLeft {
+		background-position: left center;
+		background-repeat: no-repeat;
+	}
+
+	&.unitPercent { background-image: url('../../img/units/percent.png'); }
+	&.unitBpm { background-image: url('../../img/units/bpm.png'); }
+	&.unitSpm { background-image: url('../../img/units/spm.png'); }
+	&.unitRpm { background-image: url('../../img/units/rpm.png'); }
+	&.unitKg { background-image: url('../../img/units/kg.png'); }
+	&.unitKm { background-image: url('../../img/units/km.png'); }
+	&.unitM { background-image: url('../../img/units/m.png'); }
+	&.unitUser { background-image: url('../../img/units/user.png'); }
+	&.unitPass { background-image: url('../../img/units/pass.png'); }
+	&.unitMail { background-image: url('../../img/units/mail.png'); }
+	&.unitCelsius { background-image: url('../../img/units/celsius.png'); }
+	&.unitElevation { background-image: url('../../img/units/hm.png'); }
+	&.unitKcal { background-image: url('../../img/units/kcal.png'); }
+	&.unitKmh { background-image: url('../../img/units/kmh.png'); }
+	&.unitPace { background-image: url('../../img/units/pace.png'); }
+	&.unitPower { background-image: url('../../img/units/power.png'); }
+}
+
+:invalid, fieldset .validationFailed {
+	background-color: @formular-invalid-background;
+	border-color: @formular-invalid-border;
+}

@@ -1,6 +1,23 @@
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="min/?g=css">
 		<style type="text/css">
+body {
+	background: #f1f1f1 !important;
+}
+.showcase {
+	float: left;
+	width: 33%;
+}
+.showcase-inner {
+	padding: 5px;
+	margin: 5px;
+	border: 1px solid #eee;
+	background: #fff;
+}
+.showcase pre {
+	margin-bottom: 5px;
+}
 .colored-blue { background: #3498db; }
 .pie-area {
 	position: relative;
@@ -15,7 +32,7 @@
 	font-weight: 100;
 	font-size: 10px;
 	text-transform: uppercase;
-	color: #ccc;
+	color: #999;
 	font-family: Arial;
 }
 .pie-value {
@@ -24,7 +41,7 @@
 	letter-spacing: 1px;
 	font-weight: 100;
 	font-size: 10px;
-	color: #ccc;
+	color: #999;
 	font-family: Arial;
 }
 .pie-container {
@@ -108,18 +125,61 @@
 	</head>
 <body>
 
-	<div class="pie-area">
-		<span class="pie-heading">Ausdauer</span>
-		<div class="pie-container">
-			<div class="pie-half">
-				<div class="pie-part-1 colored-blue" style="-webkit-transform: rotate(-10deg) translate3d(0,0,0);transform: rotate(-10deg);"></div>
-				<div class="pie-part-2" style="-webkit-transform: rotate(-50deg) translate3d(0,0,0);transform: rotate(-50deg);"></div>
-				<span class="pie-content"></span>
-				<div class="pie-hide-left"></div>
-				<div class="pie-hide-right"></div>
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
+			<pre>&lt;table class=&quot;zebra-style&quot;&gt;...&lt;/table&gt;</pre>
+
+			<table class="zebra-style" style="float:left;width:40%;margin:5%;">
+				<thead>
+					<tr>
+						<th colspan="2">Standard</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>1.</td><td>odd</td></tr>
+					<tr><td>2.</td><td>even</td></tr>
+					<tr><td>3.</td><td>odd</td></tr>
+					<tr><td>4.</td><td>even</td></tr>
+					<tr><td>5.</td><td>odd</td></tr>
+					<tr><td>6.</td><td>even</td></tr>
+				</tbody>
+			</table>
+			<table class="zebra-style zebra-blue" style="float:left;width:40%;margin:5%;">
+				<thead>
+					<tr>
+						<th colspan="2">zebra-blue</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>1.</td><td>odd</td></tr>
+					<tr><td>2.</td><td>even</td></tr>
+					<tr><td>3.</td><td>odd</td></tr>
+					<tr><td>4.</td><td>even</td></tr>
+					<tr><td>5.</td><td>odd</td></tr>
+					<tr><td>6.</td><td>even</td></tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner">
+			<pre>&lt;div class=&quot;pie-area&quot&gt;...&lt;/div&gt;</pre>
+
+			<div class="pie-area" style="margin:0 auto;">
+				<span class="pie-heading">Ausdauer</span>
+				<div class="pie-container">
+					<div class="pie-half">
+						<div class="pie-part-1 colored-blue" style="-webkit-transform: rotate(-10deg) translate3d(0,0,0);transform: rotate(-10deg);"></div>
+						<div class="pie-part-2" style="-webkit-transform: rotate(-50deg) translate3d(0,0,0);transform: rotate(-50deg);"></div>
+						<span class="pie-content"></span>
+						<div class="pie-hide-left"></div>
+						<div class="pie-hide-right"></div>
+					</div>
+				</div>
+				<span class="pie-value">40&#37;</span>
 			</div>
 		</div>
-		<span class="pie-value">40&#37;</span>
 	</div>
 
 </body>

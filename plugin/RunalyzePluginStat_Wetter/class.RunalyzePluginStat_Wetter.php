@@ -89,22 +89,20 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display month-table
 	 */
 	private function displayMonthTable() {
-		echo '<table class="small fullWidth r">';
-		echo HTML::monthTR(8, 1);
+		echo '<table class="small fullwidth zebra-style r">';
+		echo '<thead>'.HTML::monthTR(8, 1).'</thead>';
+		echo '<tbody>';
 
 		if ($this->config['for_weather']['var']) {
-			echo HTML::spaceTR(13);
 			$this->displayMonthTableTemp();
 			$this->displayMonthTableWeather();
 		}
 
 		if ($this->config['for_clothes']['var']) {
-			echo HTML::spaceTR(13);
 			$this->displayMonthTableClothes();
 		}
 
-		echo HTML::spaceTR(13);
-		echo '<tr>'.HTML::emptyTD(13).'</tr>';
+		echo '</tbody>';
 		echo '</table>';
 	}
 
@@ -112,7 +110,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for temperature
 	*/
 	private function displayMonthTableTemp() {
-		echo '<tr class="a2"><td class="c">&#176;C</td>';
+		echo '<tr class="top-spacer"><td class="c">&#176;C</td>';
 
 		$i = 1;
 		$temps = Mysql::getInstance()->fetchAsArray('SELECT
@@ -149,9 +147,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	*/
 	private function displayMonthTableWeather() {
 		$wetter_all = Weather::getArrayWithoutUnknown();
-		foreach ($wetter_all as $w => $wetter) {
+		foreach ($wetter_all as $wetter) {
 			$Weather = new Weather($wetter['id']);
-			echo '<tr class="a'.($w%2+1).'"><td class="c">'.$Weather->icon().'</td>';
+			echo '<tr><td class="c">'.$Weather->icon().'</td>';
 		
 			$i = 1;
 			$data = Mysql::getInstance()->fetchAsArray('SELECT
@@ -209,7 +207,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
-				echo '<tr class="a'.($k%2+1).' r"><td>'.$kleidung['name'].'</td>';
+				echo '<tr class="'.($k == 0 ? 'top-spacer ' : '').'r"><td>'.$kleidung['name'].'</td>';
 			
 				$i = 1;
 				$data = Mysql::getInstance()->fetchAsArray('SELECT
@@ -256,7 +254,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		if (!$this->config['for_clothes']['var'])
 			return;
 
-		echo '<table class="small fullWidth">
+		echo '<table class="small fullwidth zebra-style">
 			<thead><tr class="c">
 				<th />
 				<th>Temperaturen</th>
@@ -268,13 +266,13 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				<th>Temperaturen</th>
 				<th>&Oslash;</th>
 			</tr></thead>';
-		echo '<tr class="a1 r">';
+		echo '<tr class="r">';
 
 		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $i => $kleidung) {
 				if ($i%3 == 0)
-					echo '</tr><tr class="a'.($i%2+1).' r">';
+					echo '</tr><tr class="r">';
 				else
 					echo '<td>&nbsp;&nbsp;</td>';
 
@@ -298,11 +296,10 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			}
 		}
 
-		for (; $i%3 != 1; $i++)
+		for (; $i%3 != 2; $i++)
 			echo HTML::emptyTD(3);
 
 		echo '</tr>';
-		echo HTML::spaceTR(11);
 		echo '</table>';
 	}
 

@@ -243,8 +243,7 @@ class TrainingViewTable {
 		}
 
 		echo '<tbody id="training-table-extra">';
-		echo '<tr><td colspan="2">&nbsp;</td></tr>';
-		echo '<tr class="space"><td colspan="2"></td></tr>';
+		echo '<tr class="bottom-spacer"><td colspan="2">&nbsp;</td></tr>';
 		echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
 		foreach ($this->ExtraLines as $Line)

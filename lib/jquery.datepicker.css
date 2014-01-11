@@ -2,12 +2,7 @@ body > .datepicker {
 	z-index: 100;
 	padding: 5px;
 	font-size: 0.9em;
-	background: url(../img/bg.png);
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	background-color: #fff;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 	border: 1px solid #DDD;
 	border-top-color: #EEE;
@@ -22,23 +17,14 @@ body > .datepicker {
 	margin: 0 auto;
 	padding: 5px;
 	font-size: 0.9em;
-	background-color: rgba(255,255,255,0.7);
-	/*border: 1px solid #B8B8B8;
-	border-radius: 3px 3px 3px 3px;*/
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-	box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	background-color: #fff;
+	box-shadow: 0;
 	border: 1px solid #DDD;
 	border-top-color: #EEE;
 	border-bottom-color: #BBB;
 }
 #calendar:hover {
-	-webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-	-moz-box-shadow: 0 1px 5px rgba(0,0,0,0.3);
-	box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+	box-shadow: 0;
 }
 #calendarSubmit {
 	margin-top: 5px;
@@ -53,8 +39,6 @@ body > .datepicker {
 div.datepicker {
 	position: absolute;
 	overflow: hidden;
-	/*font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;*/
 	width: 196px;
 	height: 147px;
 	position: absolute;

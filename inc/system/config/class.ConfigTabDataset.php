@@ -35,7 +35,7 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	private function getCode() {
 		$Code = '
-			<table class="c fullWidth" id="conf-tab-dataset">
+			<table class="c fullwidth zebra-style" id="conf-tab-dataset">
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
@@ -78,7 +78,7 @@ class ConfigTabDataset extends ConfigTab {
 			$Example = $DatasetObject->getDataset($Data['name']);
 
 			$Code .= '
-				<tr class="a'.($i%2+1).' r" id="'.$Data['id'].'_tr">
+				<tr class="r" id="'.$Data['id'].'_tr">
 					<td class="l b">'.Ajax::tooltip($Data['label'], $Data['description']).'</td>
 					<td class="c">
 						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'" />

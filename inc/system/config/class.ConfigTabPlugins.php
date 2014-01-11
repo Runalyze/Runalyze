@@ -67,7 +67,7 @@ class ConfigTabPlugins extends ConfigTab {
 			return HTML::info('Es sind keine Plugins vorhanden.');
 
 		$Code = '
-			<table>
+			<table class="zebra-style fullwidth">
 				<thead>
 					<tr class="top b">
 						<th colspan="3">'.Plugin::getReadableTypeString($PluginType).'</th>
@@ -77,19 +77,19 @@ class ConfigTabPlugins extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		foreach ($Plugins as $i => $Data) {
+		foreach ($Plugins as $Data) {
 			$Plugin = Plugin::getInstanceFor($Data['key']);
 
 			if ($Plugin === false)
 				$Code .= '
-					<tr class="a'.($i%2+1).' unimportant">
+					<tr class="unimportant">
 						<td>'.Plugin::getRemoveLink($Data['key']).'</td>
 						<td class="b">'.$Data['key'].'</td>
 						<td class="small" colspan="3">Das Plugin konnte nicht gefunden werden.</td>
 					</tr>';
 			else
 				$Code .= '
-					<tr class="a'.($i%2+1).($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
+					<tr class="a'.($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
 						<td>'.$Plugin->getConfigLink().'</td>
 						<td class="b">'.$Plugin->get('name').'</td>
 						<td class="small">'.$Plugin->get('description').'</td>
@@ -133,7 +133,7 @@ class ConfigTabPlugins extends ConfigTab {
 			return HTML::info('Es sind keine Plugins zum Installieren vorhanden.');
 
 		$Code = '
-			<table>
+			<table class="fullwidth zebra-style">
 				<thead>
 					<tr class="b">
 						<th colspan="3">Plugin</th>
@@ -146,10 +146,10 @@ class ConfigTabPlugins extends ConfigTab {
 			$Plugin = Plugin::getInstanceFor($Data['key']);
 
 			if ($Plugin === false)
-				$Code .= '<tr class="a'.($i%2+1).'"><td colspan="4"><em>Das Plugin '.$Data['key'].' konnte nicht gefunden werden.</em></td></tr>';
+				$Code .= '<tr><td colspan="4"><em>Das Plugin '.$Data['key'].' konnte nicht gefunden werden.</em></td></tr>';
 			else
 				$Code .= '
-				<tr class="a'.($i%2+1).'">
+				<tr>
 					<td>'.$Plugin->getInstallLink().'</td>
 					<td class="b">'.$Plugin->getInstallLink($Plugin->get('name')).'</td>
 					<td class="small">'.$Plugin->get('description').'</td>

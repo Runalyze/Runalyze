@@ -65,7 +65,7 @@ class RoundsComputed extends RoundsAbstract {
 		$showCellForHeartrate = $this->Training->GpsData()->hasHeartrateData();
 		$showCellForElevation = $this->Training->GpsData()->hasElevationData();
 
-		echo '<table class="small">';
+		echo '<table class="fullwidth zebra-style zebra-blue small">';
 		echo '<thead><tr>';
 		echo '<th>Zeit</th>';
 		echo '<th>Distanz</th>';
@@ -77,7 +77,7 @@ class RoundsComputed extends RoundsAbstract {
 		echo '<tbody>';
 
 		foreach ($this->Data as $i => $Info) {
-			echo '<tr class="r '.HTML::trClass2($i).'">';
+			echo '<tr class="r">';
 			echo '<td>'.$Info['time'].'</td>';
 			echo '<td>'.$Info['distance'].'</td>';
 			echo '<td>'.$Info['pace'].'</td>';

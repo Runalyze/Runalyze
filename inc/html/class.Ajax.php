@@ -182,15 +182,17 @@ class Ajax {
 			return '';
 		}
 
-		$code  = '<ul class="jbar '.$AdditionalClasses.'">';
+		$code  = '<ul class="toolbar-menu '.$AdditionalClasses.'">';
 
 		foreach ($Links as $Link) {
 			if (is_array($Link) && isset($Link['tag'])) {
-				$code .= '<li>';
+				$hasSubcontainer = isset($Link['subs']) && is_array($Link['subs']);
+
+				$code .= '<li'.($hasSubcontainer ? ' class="with-submenu"' : '').'>';
 				$code .= $Link['tag'];
 
-				if (isset($Link['subs']) && is_array($Link['subs'])) {
-					$code .= '<ul>';
+				if ($hasSubcontainer) {
+					$code .= '<ul class="submenu">';
 
 					foreach ($Link['subs'] as $Sublink)
 						$code .= '<li>'.$Sublink.'</li>';

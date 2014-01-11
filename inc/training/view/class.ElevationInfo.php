@@ -175,7 +175,7 @@ class ElevationInfo {
 			//array(ElevationCalculator::$ALGORITHM_REUMANN_WITKAMM, false)
 		);
 
-		$Code  = '<table class="small w100">';
+		$Code  = '<table class="fullwidth zebra-style small">';
 		$Code .= '<thead>';
 		$Code .= '<tr><th class="r">Schwellenwert:</th>';
 		foreach ($TresholdRange as $t)
@@ -184,9 +184,9 @@ class ElevationInfo {
 		$Code .= '</thead>';
 		$Code .= '<tbody>';
 
-		foreach ($Algorithms as $i => $Algorithm) {
+		foreach ($Algorithms as $Algorithm) {
 			$Calculator->setAlgorithm($Algorithm[0]);
-			$Code .= '<tr class="'.HTML::trClass($i).'"><td class="b">'.ElevationCalculator::nameOfCurrentAlgorithm().'</td>';
+			$Code .= '<tr><td class="b">'.ElevationCalculator::nameOfCurrentAlgorithm().'</td>';
 
 			if ($Algorithm[1]) {
 				foreach ($TresholdRange as $t) {

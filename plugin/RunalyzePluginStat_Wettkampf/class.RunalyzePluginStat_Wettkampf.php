@@ -42,7 +42,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['last_wk_num']    = array('type' => 'int', 'var' => 10, 'description' => 'Anzahl letzter Wettk&auml;mpfe');
 		$config['main_distance']  = array('type' => 'int', 'var' => 10, 'description' => '<span class="atLeft" rel="tooltip" title="wird als Diagramm dargestellt">Hauptdistanz</span>');
 		$config['pb_distances']   = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<span class="atLeft" rel="tooltip" title="Bestzeiten werden verglichen, kommagetrennt">Distanzen f&uuml;r Jahresvergleich</span>');
 		$config['fun_ids']        = array('type' => 'array', 'var' => array(), 'description' => '<span class="atLeft" rel="tooltip" title="Interne IDs, nicht per Hand editieren!">Spa&szlig;-Wettk&auml;mpfe</span>');
@@ -107,7 +106,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayOwnNavigation() {
 		$Links   = array();
 		$Links[] = array('tag' => Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten', 'triggered'));
-		$Links[] = array('tag' => Ajax::change('Wettkampfliste', 'tab_content', '#wk-tablelist'));
+		$Links[] = array('tag' => Ajax::change('Alle Wettk&auml;mpfe', 'tab_content', '#wk-tablelist'));
 
 		echo Ajax::toolbarNavigation($Links, 'right');
 	}
@@ -137,19 +136,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			ORDER BY `time` DESC');
 		$num = count($wks);
 		if ($num > 0) {
-			foreach($wks as $i => $wk) {
-				$this->displayWkTr($wk, $i);
+			foreach($wks as $wk) {
+				$this->displayWkTr($wk);
 			}
 		} else {
-			$this->displayEmptyTr(1, 'Keine Wettk&auml;mpfe gefunden.');
+			$this->displayEmptyTr('Keine Wettk&auml;mpfe gefunden.');
 		}
 		
 		$this->displayTableEnd('wk-table');
-
-		if ($num >= $this->config['last_wk_num']['var'])
-			echo '<small class="right link" onclick="$(\'#wk-table tr.allWKs\').toggleClass(\'hide\');$(\'table\').trigger(\'update\'); ">alle Wettk&auml;mpfe anzeigen</small>';
-
-		echo HTML::clearBreak();
 	}
 
 	/**
@@ -199,7 +193,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 
 		if (empty($this->distances))
-			$this->displayEmptyTr(1, '<em>Es konnten auf den eingetragenen Distanzen keine Bestzeiten gefunden werden.</em>');
+			$this->displayEmptyTr('<em>Es konnten auf den eingetragenen Distanzen keine Bestzeiten gefunden werden.</em>');
 	}
 
 	/**
@@ -261,21 +255,21 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				}
 		}
 
-		echo '<table style="width:100%;">';
+		echo '<table class="fullwidth zebra-style">';
 		echo '<thead>';
 		echo '<tr>';
 		echo '<th></th>';
 
-		foreach ($year as $y => $y_dat)
+		foreach (array_keys($year) as $y)
 			if ($y != 'sum')
-				echo('
-					<th>'.$y.'</th>');
+				echo '<th>'.$y.'</th>';
 
 		echo '</tr>';
 		echo '</thead>';
+		echo '<tbody>';
 
 		foreach ($kms as $i => $km) {
-			echo '<tr class="a'.($i%2+1).' r"><td class="b">'.Running::Km($km, 1, $km <= 3).'</td>';
+			echo '<tr class="r"><td class="b">'.Running::Km($km, 1, $km <= 3).'</td>';
 		
 			foreach ($year as $key => $y)
 				if ($key != 'sum')
@@ -284,17 +278,15 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			echo '</tr>';
 		}
 
-		echo HTML::spaceTR(count($year));
-
-		echo '<tr class="a'.(($i+1)%2+1).' r">';
+		echo '<tr class="top-spacer no-zebra r">';
 		echo '<td class="b">Gesamt</td>';
 
 		foreach ($year as $i => $y)
 			if ($i != 'sum')
-				echo('
-					<td>'.$y['sum'].'x</td>');
+				echo '<td>'.$y['sum'].'x</td>';
 
 		echo '</tr>';
+		echo '</tbody>';
 		echo '</table>';
 	}
 
@@ -304,7 +296,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayTableStart($id) {
 		echo('
-			<table cellspacing="0" width="100%" id="'.$id.'">
+			<table class="fullwidth zebra-style" id="'.$id.'">
 				<thead>
 					<tr class="c">
 						<th class="{sorter: false}">&nbsp;</th>
@@ -323,15 +315,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	/**
 	 * Display table-row for a competition
 	 * @param array $data
-	 * @param int $i
-	 * @param bool $all optional Show all rows
 	 */
-	private function displayWKTr(array $data, $i, $all = false) {
+	private function displayWKTr(array $data) {
 		$Training = new TrainingObject($data);
-		$hide = (!$all && $i >= $this->config['last_wk_num']['var']) ? ' allWKs hide' : '';
 
 		echo('
-			<tr class="a'.($i%2 + 1).$hide.' r">
+			<tr class="r">
 				<td>'.$this->getIconForCompetition($data['id']).'</td>
 				<td class="c small">'.$Training->DataView()->getDateAsWeeklink().'</a></td>
 				<td class="l"><strong>'.$Training->Linker()->linkWithComment().'</strong></td>
@@ -345,14 +334,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 	/**
 	 * Display an empty table-row
-	 * @param int $i
 	 * @param string $text [optional]
 	 */
-	private function displayEmptyTr($i, $text = '') {
-		echo('
-			<tr class="a'.($i%2 + 1).'">
+	private function displayEmptyTr($text = '') {
+		echo '<tr class="a">
 				<td colspan="8">'.$text.'</td>
-			</tr>');
+			</tr>';
 	}
 
 	/**

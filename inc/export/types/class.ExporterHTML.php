@@ -17,7 +17,7 @@ class ExporterHTML extends ExporterAbstract {
 		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $this->getHTMLCode());
 
 		$CodeField = new FormularTextarea('code', 'Code', $Code);
-		$CodeField->addCSSclass('fullWidth');
+		$CodeField->addCSSclass('fullwidth');
 		$CodeField->addAttribute('rows', 8);
 
 		$FieldsetCode = new FormularFieldset('HTML-Code');

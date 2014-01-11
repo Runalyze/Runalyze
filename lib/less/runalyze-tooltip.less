@@ -1,0 +1,93 @@
+@tooltip-opacity:		0.8;
+@tooltip-arrow-size:	5px;
+@tooltip-margin:		2px;
+@tooltip-padding:		3px 8px;
+@tooltip-max-width:		400px;
+@tooltip-font-size:		11px;
+@tooltip-color:			#fff;
+@tooltip-background:	#000;
+@tooltip-border-radius:	0;
+
+
+
+
+
+.fade {
+	opacity: 0;
+	transition: opacity 0.3s linear;
+}
+
+.fade.in {
+	opacity: 1;
+}
+
+.tooltip {
+	position: absolute;
+	z-index: 1020;
+	display: block;
+	padding: @tooltip-arrow-size;
+	font-size: @tooltip-font-size;
+	opacity: 0;
+	visibility: visible;
+}
+
+.tooltip.in {
+	opacity: @tooltip-opacity;
+}
+
+.tooltip-inner {
+	max-width: @tooltip-max-width;
+	padding: @tooltip-padding;
+	color: @tooltip-color;
+	text-align: center;
+	text-decoration: none;
+	background-color: @tooltip-background;
+	border-radius: @tooltip-border-radius;
+}
+
+.tooltip-arrow {
+	position: absolute;
+	width: 0;
+	height: 0;
+}
+
+.tooltip.top { margin-top: -@tooltip-margin; }
+.tooltip.right { margin-left: @tooltip-margin; }
+.tooltip.bottom { margin-top: @tooltip-margin; }
+.tooltip.left { margin-left: -@tooltip-margin; }
+
+.tooltip.top .tooltip-arrow {
+	bottom: 0;
+	left: 50%;
+	margin-left: -@tooltip-arrow-size;
+	border-top: @tooltip-arrow-size solid @tooltip-background;
+	border-right: @tooltip-arrow-size solid transparent;
+	border-left: @tooltip-arrow-size solid transparent;
+}
+
+.tooltip.left .tooltip-arrow {
+	top: 50%;
+	right: 0;
+	margin-top: -@tooltip-arrow-size;
+	border-top: @tooltip-arrow-size solid transparent;
+	border-bottom: @tooltip-arrow-size solid transparent;
+	border-left: @tooltip-arrow-size solid @tooltip-background;
+}
+
+.tooltip.bottom .tooltip-arrow {
+	top: 0;
+	left: 50%;
+	margin-left: -@tooltip-arrow-size;
+	border-right: @tooltip-arrow-size solid transparent;
+	border-bottom: @tooltip-arrow-size solid @tooltip-background;
+	border-left: @tooltip-arrow-size solid transparent;
+}
+
+.tooltip.right .tooltip-arrow {
+	top: 50%;
+	left: 0;
+	margin-top: -@tooltip-arrow-size;
+	border-top: @tooltip-arrow-size solid transparent;
+	border-right: @tooltip-arrow-size solid @tooltip-background;
+	border-bottom: @tooltip-arrow-size solid transparent;
+}

@@ -161,11 +161,11 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->printTableStart($Data['name']);
 
 			if (empty($Data['foreach'])) {
-				echo '<tr class="a1 c">'.HTML::emptyTD($this->colspan, '<em>Keine Daten vorhanden.</em>').'</tr>';
+				echo '<tr class="c">'.HTML::emptyTD($this->colspan, '<em>Keine Daten vorhanden.</em>').'</tr>';
 			} else {
 				foreach ($Data['foreach'] as $i => $Each) {
 					echo('
-						<tr class="a'.($i%2+1).'">
+						<tr>
 							<td class="c b">'.$Each['name'].'</td>');
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
@@ -199,8 +199,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 				if ($i == count($Data['foreach']) - 1) {
 					echo('
-						<tr class="space"><td colspan="'.$this->colspan.'" /></tr>
-						<tr class="a'.(($i+1)%2+1).'">
+						<tr class="top-spacer no-zebra">
 							<td class="c b">Gesamt</td>');
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
@@ -439,16 +438,15 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @param string $name
 	 */
 	private function printTableStart($name) {
-		echo('
-		<table class="small r" style="width:100%;">
-			<tr class="c b">
-				<td>'.$name.'</td>');
+		echo '
+		<table class="fullwidth zebra-style small r">
+			<thead>
+				<tr class="c b">
+					<th>'.$name.'</th>';
 
 		$this->printTableHeader();
 
-		echo('
-			</tr>
-			<tr class="space"><td colspan="'.$this->colspan.'" /></tr>');
+		echo '</tr></thead><tbody>';
 	}
 
 	/**
@@ -457,16 +455,16 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private function printTableHeader() {
 		for ($i = $this->timer_start; $i <= $this->timer_end; $i++)
 			echo ($this->year != -1)
-				? '<td width="7%">'.Time::Month($i, true).'</td>'.NL
-				: '<td>'.$i.'</td>'.NL;
+				? '<th width="7%">'.Time::Month($i, true).'</th>'.NL
+				: '<th>'.$i.'</th>'.NL;
 
-		echo ('<td>Gesamt</td>'.NL);
+		echo '<th>Gesamt</th>'.NL;
 	}
 
 	/**
 	 * Print the ending of a table for one analysis
 	 */
 	private function printTableEnd() {
-		echo('</table>'.HTML::clearBreak());
+		echo '</tbody></table>'.HTML::clearBreak();
 	}
 }

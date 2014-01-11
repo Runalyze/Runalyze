@@ -23,7 +23,7 @@ if (Request::param('reload') == 'true') {
 ?>
 <h1>K&ouml;rper-Daten</h1>
 
-<table id="sportlerTable">
+<table id="sportlerTable" class="zebra-style">
 	<thead>
 		<tr>
 			<th class="{sorter: false}">&nbsp;</th>
@@ -44,14 +44,14 @@ if (Request::param('reload') == 'true') {
 		</tr>
 	</thead>
 <?php $colspan = 2 + count($Fields); ?>
-	<tbody>
+	<tbody class="c">
 	<?php if (empty($Data)): ?>
 		<tr>
 			<td colspan="<?php echo $colspan; ?>"><em>Keine Daten vorhanden.</em></td>
 		</tr>
 	<?php else: ?>
 	<?php foreach ($Data as $i => $Info): ?>
-		<tr class="<?php HTML::trClass($i); ?> c">
+		<tr>
 			<td><?php echo RunalyzePluginPanel_Sportler::getDeleteLinkFor($Info['id']); ?></td>
 			<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
 		<?php foreach ($Fields as $Key => $Unit): ?>

@@ -44,12 +44,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $num_end   = 0;
 
 	/**
-	 * Current line
-	 * @var int
-	 */
-	private $line      = 0;
-
-	/**
 	 * Complete data
 	 * @var array
 	 */
@@ -199,7 +193,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Display table with data for each month 
 	 */
 	private function displayYearTable() {
-		echo '<table class="small r fullWidth">';
+		echo '<table class="small r fullwidth zebra-style">';
 
 		echo '<thead class="r">';
 		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th') : HTML::monthTR(8, 1, 'th');
@@ -233,16 +227,14 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $data Array containing all $data[] = array('i' => i, 'text' => '...')
 	 */
 	private function displayLine($title, $data) {
-		$this->line++;
-
-		echo '<tr class="a'.($this->line%2+1).'">';
+		echo '<tr>';
 		echo '<td class="b">'.$title.'</td>';
 
 		if (empty($data)) {
 			echo HTML::emptyTD($this->colspan);
 		} else {
 			$td_i = 0;
-			foreach ($data as $i => $dat) {
+			foreach ($data as $dat) {
 				for (; ($this->num_start + $td_i) < $dat['i']; $td_i++)
 					echo HTML::emptyTD();
 				$td_i++;
@@ -270,7 +262,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($this->config['compare_weeks']['var'])
 			$Dataset->activateKilometerComparison();
 
-		echo '<table class="small notSmaller r fullWidth">';
+		echo '<table class="small notSmaller r fullwidth zebra-style">';
 		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
 
@@ -296,7 +288,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$end   = Time::Weekend($time);
 			$week  = 'KW '.date('W', $time);
 
-			echo '<tr class="a'.(($w%2)+1).'"><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowserLinker::link($week, $start, $end).'</td>';
+			echo '<tr><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowserLinker::link($week, $start, $end).'</td>';
 
 			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
 				if (isset($CompleteData[$w+1]))

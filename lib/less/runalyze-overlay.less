@@ -1,0 +1,127 @@
+@overlay-background:				rgba(0,0,0,.6);
+@overlay-fullscreen-background:		#f6f6f7;
+@overlay-z-index:					10;
+@overlay-padding:					10px;
+@overlay-margin-top:				25px;
+@overlay-width:						800px;
+@overlay-width-small:				500px;
+@overlay-width-big:					90%;
+
+
+
+
+#overlay {
+	display: none;
+	z-index: @overlay-z-index;
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: @overlay-background;
+}
+
+#ajax {
+	display: none;
+	z-index: (@overlay-z-index + 1);
+	position: absolute;
+	left: 50%;
+	width: @overlay-width;
+	margin: @overlay-margin-top 0 @overlay-margin-top -((@overlay-width/2) + @overlay-padding);
+	padding: @overlay-padding;
+	border-radius: 0;
+	box-shadow: none;
+
+	&.smallWin {
+		width: @overlay-width-small;
+		margin-left: -(@overlay-width-small/2);
+	}
+
+	&.bigWin {
+		width: @overlay-width-big;
+		margin-left: -(@overlay-width-big/2);
+	}
+
+	&.fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100% !important;
+		height: 100%;
+		background-color: @overlay-fullscreen-background;
+		z-index: 500;
+		margin: 0 !important;
+		box-sizing: border-box;
+		border-radius: 0;
+		border: 0;
+		overflow: scroll;
+
+		#close { top: 0; right: 0; }
+	}
+}
+
+#ajax-navigation {
+	display: block;
+	z-index: 11;
+	position: fixed;
+	left: 0;
+	top: 0;
+	margin: 0;
+	width: 210px;
+	height: 100%;
+	overflow: scroll;
+}
+
+#falseAjax {
+	width: @overlay-width;
+	margin: @overlay-margin-top auto;
+	padding: @overlay-padding;
+}
+
+form#training {
+	min-height: 350px;
+}
+
+#close, #ajaxPrev, #ajaxNext {
+	z-index: 12;
+	position: absolute;
+	width: 36px;
+	height: 36px;
+	cursor: pointer;
+	text-indent: -9999px;
+}
+
+#close { top: -20px; right: -20px; background: url(../../img/roundNav.png) no-repeat 0 0 transparent; }
+#ajaxPrev { top: 150px; left: -25px; background: url(../../img/roundNav.png) no-repeat 0 -36px transparent; }
+#ajaxNext { top: 150px; right: -25px; background: url(../../img/roundNav.png) no-repeat 0 -72px transparent; }
+
+#ajaxPrev:hover, #ajaxNext:hover { border: none; }
+
+
+@media screen and (max-width: 960px) {
+	#ajax {
+		width: 90%;
+		left: 2%;
+		margin: 0;
+
+		&.smallWin {
+			width: 500px;
+			left: 230px;
+			margin: 0;
+		}
+
+		&.bigWin {
+			width: 960px;
+			left: 0;
+			margin: 0;
+		}
+	}
+}
+
+@media screen and (max-width: 600px) {
+	#ajax {
+		width: 600px;
+		left: 0;
+		margin: 0;
+	}
+}

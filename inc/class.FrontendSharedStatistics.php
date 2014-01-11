@@ -74,7 +74,7 @@ class FrontendSharedStatistics {
 		');
 
 		$Content = '
-			<table class="small fullWidth">
+			<table class="small fullwidth">
 				<tbody>
 					<tr>
 						<td class="b">Gesamte Trainingsdistanz:</td>
@@ -118,7 +118,7 @@ class FrontendSharedStatistics {
 		}
 
 		if ($Content != '') {
-			$Content = '<table class="small r fullWidth">'.NL.$Content.NL.'</table>'.NL;
+			$Content = '<table class="small r fullwidth">'.NL.$Content.NL.'</table>'.NL;
 			$this->StatisticTabs->addTab('Jahresvergleich (Laufen)', 'statistics-years', $Content);
 		}
 	}

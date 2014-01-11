@@ -83,9 +83,9 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			return;
 		}
 		
-		echo '<table style="width:98%;" style="margin:0 5px 25px 5px;" class="small">';
-		echo '<tr class="b c"><td colspan="8">N&auml;chtliches Training</td></tr>';
-		echo HTML::spaceTR(8);
+		echo '<table class="fullwidth zebra-style small">';
+		echo '<thead><tr class="b c"><th colspan="8">N&auml;chtliches Training</th></tr></thead>';
+		echo '<tbody>';
 
 		foreach ($nights as $i => $data) {
 			$Training = new TrainingObject($data);
@@ -101,7 +101,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 				echo('</tr>');
 		}
 
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	/**

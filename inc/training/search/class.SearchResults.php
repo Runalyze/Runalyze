@@ -309,7 +309,7 @@ class SearchResults {
 		if (!$this->withResults)
 			return;
 
-		echo '<table class="fullWidth">';
+		echo '<table class="fullwidth zebra-style">';
 		echo '<thead><tr class="c"><th colspan="'.$this->colspan.'">';
 		$this->displayHeader();
 		echo '</th></tr></thead>';
@@ -338,11 +338,11 @@ class SearchResults {
 	 * Display all training rows
 	 */
 	private function displayTrainingRows() {	
-		foreach ($this->Trainings as $i => $training) {
+		foreach ($this->Trainings as $training) {
 			$date = date("d.m.Y", $training['time']);
 			$link = Ajax::trainingLink($training['id'], $date, true);
 
-			echo '<tr class="a'.($i%2+1).' r">';
+			echo '<tr class="r">';
 			echo '<td class="l"><small>'.$link.'</small></td>';
 
 			$this->Dataset->setTrainingId($training['id'], $training);

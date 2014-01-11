@@ -37,7 +37,7 @@ class ConfigTabClothes extends ConfigTab {
 	 */
 	private function getCode() {
 		$Code = '
-			<table class="c">
+			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -56,7 +56,7 @@ class ConfigTabClothes extends ConfigTab {
 			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="clothes[delete]['.$id.']" />';
 
 			$Code .= '
-					<tr class="a'.($i%2+1).($delete == '' ? ' unimportant' : '').'">
+					<tr class="'.($delete == '' ? ' unimportant' : '').'">
 						<td><input type="text" size="30" name="clothes[name]['.$id.']" value="'.$Data['name'].'" /></td>
 						<td><input type="text" size="15" name="clothes[short]['.$id.']" value="'.$Data['short'].'" /></td>
 						<td><input type="text" size="4" name="clothes[order]['.$id.']" value="'.$Data['order'].'" /></td>

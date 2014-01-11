@@ -1,6 +1,6 @@
 	<h1>Garmin Communicator</h1>
 
-	<div class="c fullWidth" style="position:relative;">
+	<div class="c fullwidth" style="position:relative;">
 		<small style="position:absolute;right:8px;top:2px;">
 			<span class="link" title="Bei Problemen: Neuladen" onclick="$('#GCapi').attr('src', 'call/call.garminCommunicator.php')"><?php echo Icon::$REFRESH; ?></span>
 		</small>

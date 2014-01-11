@@ -61,15 +61,15 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayElevationData() {
-		echo '<table class="small fullWidth r">';
-		echo HTML::monthTr(8, 1);
-		echo HTML::spaceTR(13);
+		echo '<table class="small fullwidth zebra-style r">';
+		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
+		echo '<tbody>';
 
 		if (empty($this->ElevationData))
-			echo '<tr><td colspan="12"><em>Keine Strecken gefunden.</em></td></tr>';
+			echo '<tr><th colspan="12"><em>Keine Strecken gefunden.</em></th></tr>';
 		foreach ($this->ElevationData as $y => $Data) {
 			echo('
-				<tr class="a'.($y%2+1).'">
+				<tr>
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
@@ -87,29 +87,28 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '</tr>'.NL;
 		}
 
-		echo HTML::spaceTR(13);
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	/**
 	 * Display the table for routes with highest elevation
 	 */
 	private function displaySumData() {
-		echo '<table style="width:48%;" style="margin:0 5px;" class="left small">';
-		echo '<tr class="b c"><td colspan="3">Meisten H&ouml;henmeter</td></tr>';
-		echo HTML::spaceTR(4);
+		echo '<table style="width:48%;" style="margin:0 5px;" class="left small zebra-style">';
+		echo '<thead><tr class="b c"><th colspan="4">Meisten H&ouml;henmeter</th></tr></thead>';
+		echo '<tbody>';
 
 		if (empty($this->SumData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
 
-		foreach ($this->SumData as $i => $Data) {
+		foreach ($this->SumData as $Data) {
 			$Training = new TrainingObject($Data);
 
 			if (strlen($Data['route']) == 0)
 				$Data['route'] = '<em>unbekannte Strecke</em>';
 
 			echo('
-			<tr class="a'.($i%2+1).'">
+			<tr>
 				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
 				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
 				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
@@ -118,17 +117,16 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				'.NL);
 		}
 
-		echo HTML::spaceTR(4);
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	/**
 	 * Display the table for routes with procentual highest elevation
 	 */
 	private function displayUpwardData() {
-		echo '<table style="width:48%;" style="margin:0 5px;" class="right small">';
-		echo '<tr class="b c"><td colspan="3">Steilsten Strecken</td></tr>';
-		echo HTML::spaceTR(4);
+		echo '<table style="width:48%;" style="margin:0 5px;" class="right small zebra-style">';
+		echo '<thead><tr class="b c"><th colspan="4">Steilsten Strecken</th></tr></thead>';
+		echo '<tbody>';
 
 		if (empty($this->UpwardData))
 			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
@@ -140,7 +138,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				$Data['route'] = '<em>unbekannte Strecke</em>';
 
 			echo('
-			<tr class="a'.($i%2+1).'">
+			<tr>
 				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
 				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
 				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
@@ -152,8 +150,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				'.NL);
 		}
 
-		echo HTML::spaceTR(4);
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	/**
