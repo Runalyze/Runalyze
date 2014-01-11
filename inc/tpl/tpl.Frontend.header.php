@@ -18,7 +18,7 @@
 
 <body id="home" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
-<div id="flotLoader"></div>
+<div id="flot-loader"></div>
 
 <div id="headline">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>

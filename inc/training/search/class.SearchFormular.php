@@ -110,7 +110,7 @@ class SearchFormular extends Formular {
 	private function addFieldSport() {
 		$Field = new FormularSelectDb('sportid', 'Sportart');
 		$Field->loadOptionsFrom('sport', 'name');
-		$Field->addCSSclass('chzn-select fullSize');
+		$Field->addCSSclass('chzn-select full-size');
 		$Field->setMultiple();
 		$Field->addAttribute('data-placeholder', 'W&auml;hle die Sportarten');
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
@@ -158,7 +158,7 @@ class SearchFormular extends Formular {
 			$Field = new FormularSelectDb($name, $label);
 			$Field->loadOptionsFrom($table, $key);
 		}
-		$Field->addCSSclass('chzn-select fullSize');
+		$Field->addCSSclass('chzn-select full-size');
 		$Field->setMultiple();
 		$Field->addAttribute('data-placeholder', $placeholder);
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_IN_W33 );

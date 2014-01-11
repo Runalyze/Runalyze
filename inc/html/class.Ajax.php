@@ -14,7 +14,7 @@ class Ajax {
 	 * CSS-class for waiter-image
 	 * @var string
 	 */
-	public static $IMG_WAIT = 'waitImg';
+	public static $IMG_WAIT = 'wait-img';
 
 	/**
 	 * ID for plugin to reload, can be empty to reload all plugins

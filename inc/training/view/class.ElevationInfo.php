@@ -97,7 +97,7 @@ class ElevationInfo {
 	 */
 	protected function displayStandardValues() {
 		if ($this->manualElevation != $this->calculatedElevation)
-			$useCalculatedValueLink = Ajax::window('<a class="small asInput" href="'.$this->Training->Linker()->urlToElevationInfo('use-calculated-value=true').'">&raquo; &uuml;bernehmen</a>', 'small');
+			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$this->Training->Linker()->urlToElevationInfo('use-calculated-value=true').'">&raquo; &uuml;bernehmen</a>', 'small');
 		else
 			$useCalculatedValueLink = '';
 
@@ -105,27 +105,27 @@ class ElevationInfo {
 		$Fieldset->setHtmlCode('
 			<div class="w50">
 				<label>'.Ajax::tooltip('manueller Wert', 'Wenn beim Erstellen keine H&ouml;henmeter angegeben wurden, wurde der berechnete Wert &uuml;bernommen.').'</label>
-				<span class="asInput">'.$this->manualElevation.'&nbsp;m</span>
+				<span class="as-input">'.$this->manualElevation.'&nbsp;m</span>
 			</div>
 			<div class="w50">
 				<label>niedrigster Punkt</label>
-				<span class="asInput">'.$this->lowestPoint.'&nbsp;m</span>
+				<span class="as-input">'.$this->lowestPoint.'&nbsp;m</span>
 			</div>
 			<div class="w50">
 				<label>'.Ajax::tooltip('berechneter Wert', 'Dieser Wert wurde mit den aktuellen Einstellungen berechnet. In der Trainingsansicht kann ein fr&uuml;herer berechneter Wert angegeben sein.').'</label>
-				<span class="asInput">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
+				<span class="as-input">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
 			</div>
 			<div class="w50">
 				<label>h&ouml;chster Punkt</label>
-				<span class="asInput">'.$this->highestPoint.'&nbsp;m</span>
+				<span class="as-input">'.$this->highestPoint.'&nbsp;m</span>
 			</div>
 			<div class="w50">
 				<label>&oslash; Steigung</label>
-				<span class="asInput">'.$this->Training->DataView()->getGradientInPercent().'</span>
+				<span class="as-input">'.$this->Training->DataView()->getGradientInPercent().'</span>
 			</div>
 			<div class="w50">
 				<label>Auf-/Abstieg</label>
-				<span class="asInput">'.$this->Training->DataView()->getElevationUpAndDown().'</span>
+				<span class="as-input">'.$this->Training->DataView()->getElevationUpAndDown().'</span>
 			</div>
 		');
 		$Fieldset->display();

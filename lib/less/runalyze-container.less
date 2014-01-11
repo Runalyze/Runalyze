@@ -22,8 +22,8 @@
 	border: 1px solid @panel-border;
 }
 
-.smallHeadNavi {
-	font-size: .9em;
+.small-head-navi {
+	font-size: .8em;
 	padding-top: 4px;
 }
 
@@ -42,19 +42,19 @@
 	}
 }
 
-.waitImg {
+.wait-img {
 	background: url(../../img/wait-black.gif) center center no-repeat #000 !important;
 }
 
-#dataBrowser {
+#data-browser-container table {
 	width: 100%;
 }
 
-#dataPanel, #tab_content .stat-content-container {
+#data-browser, statistics-containerr {
 	overflow: auto;
 }
 
-#tab_content {
+#statistics-inner {
 	> ul.jbar {
 		position: absolute;
 		right: 5px;
@@ -65,16 +65,12 @@
 	}
 }
 
-#datenPanel {
-	margin-bottom: 15px;
-}
-
-#statistiken {
+#statistics {
 	margin-top: 0;
 	border-top: none;
 }
 
-#statisticTabs {
+#statistics-nav {
 	margin: 0 5px;
 	padding: 0;
 	height: 26px;
@@ -110,7 +106,7 @@
 	}
 }
 
-.dataBox {
+.databox {
 	float: left;
 	margin: @databox-margin;
 	padding: @databox-padding;
@@ -122,7 +118,7 @@
 	}
 }
 
-.inlineHead, .dataBox td.inlineHead {
+.inline-head {
 	font-weight: bold;
 	padding-right: 10px;
 }
@@ -139,7 +135,7 @@
 	}
 }
 
-#errorToolbar {
+#error-toolbar {
 	z-index: 15;
 	position: fixed;
 	bottom: 0;

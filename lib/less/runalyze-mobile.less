@@ -14,30 +14,30 @@
 		margin: 0 auto;
 	}
 
-	#daten h1 {
+	#data-browser-inner h1 {
 		text-align: center;
+
+		span.right {
+			float: none;
+			display: block;
+		}
 	}
 
-	#daten h1 span.right {
-		float: none;
-		display: block;
-	}
-
-	#calendar {
+	#data-browser-calendar {
 		width: auto;
 	}
 
-	#widgetCalendar {
+	#widget-calendar {
 		overflow: scroll;
 		width: auto;
 	}
 
-	#dataPanel, #tab_content {
+	#data-browser, #statistics-inner {
 		overflow: hidden;
 	}
 
 	#data-browser-container,
-	#tab_content .stat-content-container {
+	#statistics-container {
 		overflow: scroll;
 	}
 
@@ -49,22 +49,18 @@
 		white-space: normal;
 	}
 
-	#tab_content {
+	#statistics-inner {
 		clear: both;
-	}
 
-	#tab_content > ul.jbar {
-		position: static;
-		float: none;
-		margin: 0 auto 5px;
-	}
+		> ul.jbar {
+			position: static;
+			float: none;
+			margin: 0 auto 5px;
 
-	#tab_content > ul.jbar li {
-		float: none;
-	}
-
-	#tab_content > ul.jbar .right {
-		float: none;
+			li, .right {
+				float: none;
+			}
+		}
 	}
 
 	#ajax {
@@ -87,47 +83,45 @@
 		.logo { margin: 0 25px; }
 	}
 
-	#statisticTabs {
+	#statistics-nav {
 		height: auto;
 		border-top: 1px solid #000;
 		border-bottom: none;
 		background: url(../img/bg.png);
 		overflow: hidden;
-	}
 
-	#statisticTabs:after {
-		content: ".";
-		height: 0;
-		display: block;
-		clear: both;
-		width: 95%;
-		overflow: hidden;
-	}
+		&:after {
+			content: ".";
+			height: 0;
+			display: block;
+			clear: both;
+			width: 95%;
+			overflow: hidden;
+		}
 
-	#statisticTabs li {
-		top: 0;
-		float: left;
+		li {
+			top: 0;
+			float: left;
 			width: 33%;
-		z-index: 8;
-		background: transparent;
-		opacity: 1 !important;
-		filter: alpha(opacity=100);
-		border-bottom: 1px solid #000;
-		border-top: none;
+			z-index: 8;
+			background: transparent;
+			opacity: 1 !important;
+			filter: alpha(opacity=100);
+			border-bottom: 1px solid #000;
+			border-top: none;
+
+			&.active, &:hover {
+				border-bottom: 1px solid #000;
+				border-top: none;
+
+				a {
+					padding-left: 15px;
+				}
+			}
+		}
 	}
 
-	#statisticTabs li.active,
-	#statisticTabs li:hover {
-		border-bottom: 1px solid #000;
-		border-top: none;
-	}
-
-	#statisticTabs li.active a,
-	#statisticTabs li:hover a {
-		padding-left: 15px;
-	}
-
-	#ajax, #ajax.smallWin, #ajax.bigWin {
+	#ajax, #ajax.small-window, #ajax.big-window {
 		position: fixed;
 		left: 0;
 		overflow: scroll;
@@ -172,7 +166,7 @@
 		margin: 3px 0;
 	}
 
-	.dataBox {
+	.databox {
 		float: none !important;
 		margin: 5px 0;
 		width: 100% !important;
@@ -183,7 +177,7 @@
 		min-width: 0;
 	}
 
-	.flot, .flot canvas, .flotChangeable {
+	.flot, .flot canvas, .flot-changeable {
 		width: 100% !important;
 		max-width: 100% !important;
 	}
@@ -211,7 +205,7 @@
 		margin-bottom: 1em;
 	}
 
-	#loginPanel {
+	#login-panel {
 		position: static;
 		border-top: 1px solid #DDD;
 		border-left: none;
@@ -221,7 +215,7 @@
 		margin: 2em 0;
 	}
 
-	#loginPanel a {
+	#login-panel a {
 		border-bottom: 1px solid #DDD !important;
 	}
 

@@ -20,7 +20,7 @@
 
 <body id="shared" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
-<div id="flotLoader"></div>
+<div id="flot-loader"></div>
 
 <div id="headline">
 	<span class="tab">

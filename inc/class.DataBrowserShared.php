@@ -37,7 +37,6 @@ class DataBrowserShared extends DataBrowser {
 	 */
 	protected function getCalenderLink() {
 		return '';
-		//return '<span id="calendarLink" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**

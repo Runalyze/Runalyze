@@ -78,7 +78,7 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		$MultiEditor = new MultiEditor($this->IDs);
 		$MultiEditor->display();
 
-		echo Ajax::wrapJS('$("#ajax").addClass("smallWin");');
+		echo Ajax::wrapJS('$("#ajax").addClass("small-window");');
 	}
 
 	/**

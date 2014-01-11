@@ -105,8 +105,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayOwnNavigation() {
 		$Links   = array();
-		$Links[] = array('tag' => Ajax::change('Bestzeiten', 'tab_content', '#bestzeiten', 'triggered'));
-		$Links[] = array('tag' => Ajax::change('Alle Wettk&auml;mpfe', 'tab_content', '#wk-tablelist'));
+		$Links[] = array('tag' => Ajax::change('Bestzeiten', 'statistics-inner', '#bestzeiten', 'triggered'));
+		$Links[] = array('tag' => Ajax::change('Alle Wettk&auml;mpfe', 'statistics-inner', '#wk-tablelist'));
 
 		echo Ajax::toolbarNavigation($Links, 'right');
 	}
@@ -207,14 +207,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 		$Links = array(array('tag' => '<a href="#">Distanz w&auml;hlen</a>', 'subs' => $SubLinks));
 
-		echo '<div class="dataBox" style="float:none;width:590px;margin:0 auto;">';
+		echo '<div class="databox" style="float:none;width:590px;margin:0 auto;">';
 		echo Ajax::toolbarNavigation($Links, 'right');
 
 		$display_km = $this->distances[0];
 		if (in_array($this->config['main_distance']['var'], $this->distances))
 			$display_km = $this->config['main_distance']['var'];
 
-		echo '<div id="bestzeitenFlots" class="flotChangeable" style="position:relative;width:482px;height:192px;">';
+		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:482px;height:192px;">';
 		foreach ($this->distances as $km) {
 			echo Plot::getInnerDivFor('bestzeit'.($km*1000), 480, 190, $km != $display_km);
 			$_GET['km'] = $km;

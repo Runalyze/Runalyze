@@ -23,7 +23,7 @@ class FormularSelectSearchSort extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$code  = '<label>'.$this->label.'</label>';
-		$code .= '<div class="fullSize left">';
+		$code .= '<div class="full-size left">';
 
 		$sortByOptions = array(
 			'time'		=> 'Datum',

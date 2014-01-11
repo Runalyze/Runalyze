@@ -19,7 +19,7 @@ table {
 	margin: @table-margin;
 }
 
-table, tr, td {
+tr, td {
 	padding: @table-padding;
 	vertical-align: top;
 }
@@ -45,9 +45,13 @@ td img {
 	vertical-align: middle;
 }
 
-// TODO: Use .top-spacer/.bottom-spacer instead
-.space td { height: 1px; background: #666; padding: 0; }
+tr.top-spacer, td.top-spacer {
+	border-top: 1px solid @table-head-border;
+}
 
+tr.bottom-spacer, td.bottom-spacer {
+	border-bottom: 1px solid @table-head-border;
+}
 
 .zebra-style {
 	tbody.top-and-bottom-border {
@@ -63,14 +67,6 @@ td img {
 	tbody tr {
 		background-color: @table-background;
 		border-top: 1px solid @table-border;
-
-		&.top-spacer, td.top-spacer {
-			border-top: 1px solid @table-head-border;
-		}
-
-		&.bottom-spacer, td.bottom-spacer {
-			border-bottom: 1px solid @table-head-border;
-		}
 
 		&:hover {
 			background-color: @table-background-hover !important;

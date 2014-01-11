@@ -1,4 +1,4 @@
-<div class="w50" id="loginWindow">
+<div class="w50" id="login-window">
 		<fieldset>
 			<legend>Account aktivieren</legend>
 		<?php if (AccountHandler::tryToActivateAccount()): ?>

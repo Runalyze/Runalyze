@@ -74,4 +74,4 @@
 </p>
 <?php endif; ?>
 
-<?php echo Ajax::wrapJSforDocumentReady('$("#ajax").addClass("bigWin");'); ?>
+<?php echo Ajax::wrapJSforDocumentReady('$("#ajax").addClass("big-window");'); ?>

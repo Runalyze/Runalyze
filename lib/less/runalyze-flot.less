@@ -42,7 +42,7 @@
 
 
 
-#flotLoader {
+#flot-loader {
     visibility: hidden;
     position: absolute;
     top: 0;
@@ -51,14 +51,14 @@
     height: 150px;
 }
 
-.flotChangeable .flot {
+.flot-changeable .flot {
 	position: absolute !important;
 }
 
-.flotHide {
+.flot-hide {
 	visibility: hidden;
 
-	.legend, .tickLabels, .flot-tick-label {
+	.legend, .tickLabel, .flot-tick-label {
 		display: none;
 	}
 }
@@ -86,7 +86,7 @@
 		}
 	}
 
-	.tickLabels, .legend td, .flot-tick-label {
+	.tickLabel, .legend td, .flot-tick-label {
 		color: @flot-label-color;
 		line-height: 1;
 		font-size: @flot-label-font-size !important;
@@ -103,7 +103,7 @@
 		padding: @flot-legend-padding;
 	}
 
-	.flotTitle {
+	.flot-title {
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -134,7 +134,7 @@
 		display: block;
 	}
 
-	.flotError {
+	.flot-error {
 		position: absolute;
 		top: 50%;
 		left: 0;
@@ -161,7 +161,7 @@
 		color: @flot-annotation-color;
 	}
 
-	.hoverTip {
+	.map-tooltip {
 		z-index: 50;
 		display: none;
 		position: fixed;
@@ -173,7 +173,7 @@
 		border: 1px solid @flot-tooltip-border;
 	}
 
-	.hoverTip em {
+	.map-tooltip em {
 		font-weight: bold;
 	}
 

@@ -85,7 +85,7 @@ abstract class ZonesAbstract {
 		if (empty($this->Data))
 			return;
 
-		echo '<div class="dataBox training-zones left">';
+		echo '<div class="databox training-zones left">';
 		echo '<div class="databox-header">'.$this->title().'</div>';
 
 		echo '<table class="zebra-style zebra-blue small" style="white-space:nowrap;">';

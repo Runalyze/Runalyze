@@ -1,5 +1,5 @@
 <h1>
-	<span class="right linksWithMargin">
+	<span class="right links-with-margin">
 <?php $this->displayIconLinks(); ?>
 	</span>
 
@@ -8,24 +8,24 @@
 
 <div id="<?php echo DataBrowser::$CALENDAR_ID; ?>">
 
-	<div id="widgetCalendar">
+	<div id="widget-calendar">
 	</div>
 
-	<span id="calendarResult" class="hide">W&auml;hle ein Datum aus ...</span>
-	<input id="calendarStart" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
-	<input id="calendarEnd" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
+	<span id="calendar-result" class="hide">W&auml;hle ein Datum aus ...</span>
+	<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
+	<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
 
 	<div class="c">
 		Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
 	</div>
 
 	<div class="c">
-		<span class="button" id="calendarSubmit">Auswahl anzeigen</span>
+		<span class="button" id="calendar-submit">Auswahl anzeigen</span>
 	</div>
 </div>
 
 <div id="data-browser-container">
-	<table id="dataBrowser" class="zebra-style">
+	<table class="zebra-style">
 		<tbody class="top-and-bottom-border">
 <?php
 foreach ($this->days as $i => $day) {

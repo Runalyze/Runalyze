@@ -228,7 +228,7 @@ class TrainingViewTable {
 		echo '<tbody>';
 
 		foreach ($this->Lines as $Line)
-			echo '<tr><td class="inlineHead">'.$Line[0].'</td><td>'.$Line[1].'</td></tr>';
+			echo '<tr><td class="inline-head">'.$Line[0].'</td><td>'.$Line[1].'</td></tr>';
 
 		echo '</tbody>';
 	}
@@ -247,7 +247,7 @@ class TrainingViewTable {
 		echo '<tr><td colspan="2">&nbsp;</td></tr>';
 
 		foreach ($this->ExtraLines as $Line)
-			echo '<tr><td class="inlineHead">'.$Line[0].'</td><td>'.$Line[1].'</td></tr>';
+			echo '<tr><td class="inline-head">'.$Line[0].'</td><td>'.$Line[1].'</td></tr>';
 
 		echo '</tbody>';
 	}

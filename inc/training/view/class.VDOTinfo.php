@@ -54,15 +54,15 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>Distanz</label>
-				<span class="asInput">'.$this->Training->DataView()->getDistanceString().'</span>
+				<span class="as-input">'.$this->Training->DataView()->getDistanceString().'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput">'.$this->Training->getVdotByTime().'</span>
+				<span class="as-input">'.$this->Training->getVdotByTime().'</span>
 			</div>
 			<div class="w50">
 				<label>Dauer</label>
-				<span class="asInput">'.$this->Training->DataView()->getTimeString().'</span>
+				<span class="as-input">'.$this->Training->DataView()->getTimeString().'</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -81,15 +81,15 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>Puls</label>
-				<span class="asInput">'.$this->Training->DataView()->getPulseAvgInPercent().'HFmax</span>
+				<span class="as-input">'.$this->Training->DataView()->getPulseAvgInPercent().'HFmax</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput">'.$this->Training->getVdotUncorrected().'</span>
+				<span class="as-input">'.$this->Training->getVdotUncorrected().'</span>
 			</div>
 			<div class="w50">
 				<label>entspricht</label>
-				<span class="asInput">'.round(100*JD::pHF2pVDOT($this->Training->getPulseAvg()/HF_MAX)).' &#37;VDOT</span>
+				<span class="as-input">'.round(100*JD::pHF2pVDOT($this->Training->getPulseAvg()/HF_MAX)).' &#37;VDOT</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -108,15 +108,15 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>Korrekturfaktor</label>
-				<span class="asInput">'.JD::correctionFactor().'</span>
+				<span class="as-input">'.JD::correctionFactor().'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
+				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
 			</div>
 			<div class="w50">
 				<label>unkorrigiert</label>
-				<span class="asInput">'.$this->Training->getVdotUncorrected().'</span>
+				<span class="as-input">'.$this->Training->getVdotUncorrected().'</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -151,15 +151,15 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>Auf-/Abstieg</label>
-				<span class="asInput">+'.$up.'/-'.$down.'&nbsp;m</span>
+				<span class="as-input">+'.$up.'/-'.$down.'&nbsp;m</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; VDOT</label>
-				<span class="asInput '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
+				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
 			</div>
 			<div class="w50">
 				<label>Distanzeinfluss</label>
-				<span class="asInput">'.Math::WithSign($additionalDistance).'m = '.Running::Km($this->Training->getDistance() + $additionalDistance/1000, 3).'</span>
+				<span class="as-input">'.Math::WithSign($additionalDistance).'m = '.Running::Km($this->Training->getDistance() + $additionalDistance/1000, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

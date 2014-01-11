@@ -1,6 +1,6 @@
 <?php $this->displayTitle(); ?>
 
-<div class="toolbar toHeader withoutNav open">
+<div class="toolbar to-header without-nav open">
 	<div class="toolbar-content toolbar-line">
 		<span class="right" style="margin-top:3px;">
 			<?php foreach ($this->CheckableLabels as $Label): ?>
@@ -21,7 +21,7 @@
 
 <div id="training-display">
 	<?php if ($this->Training->hasPositionData() || !$this->PlotList->isEmpty()): ?>
-	<div id="training-plots-and-map" class="dataBox">
+	<div id="training-plots-and-map" class="databox">
 		<div id="training-plots" class="toolbar-box-content">
 			<div class="toolbar-line navigation-line">
 				<?php $this->PlotList->displayLabels(); ?>
@@ -52,7 +52,7 @@
 	<?php endif; ?>
 
 
-	<div id="training-table" class="dataBox left">
+	<div id="training-table" class="databox left">
 		<?php $this->displayTrainingTable(); ?>
 	</div>
 

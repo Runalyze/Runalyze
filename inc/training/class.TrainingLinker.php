@@ -188,7 +188,7 @@ class TrainingLinker {
 		$PrevTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.') ORDER BY time DESC');
 
 		if (isset($PrevTraining['id']))
-			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajaxPrev');
+			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajax-prev');
 
 		return '';
 	}
@@ -203,7 +203,7 @@ class TrainingLinker {
 		$NextTraining = Mysql::getInstance()->fetchSingle('SELECT id FROM '.PREFIX.'training WHERE (time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.') ORDER BY time ASC');
 
 		if (isset($NextTraining['id']))
-			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajaxNext');
+			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajax-next');
 
 		return '';
 	}

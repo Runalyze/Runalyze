@@ -32,12 +32,12 @@
 	border-radius: 0;
 	box-shadow: none;
 
-	&.smallWin {
+	&.small-window {
 		width: @overlay-width-small;
 		margin-left: -(@overlay-width-small/2);
 	}
 
-	&.bigWin {
+	&.big-window {
 		width: @overlay-width-big;
 		margin-left: -(@overlay-width-big/2);
 	}
@@ -72,17 +72,11 @@
 	overflow: scroll;
 }
 
-#falseAjax {
-	width: @overlay-width;
-	margin: @overlay-margin-top auto;
-	padding: @overlay-padding;
-}
-
 form#training {
 	min-height: 350px;
 }
 
-#close, #ajaxPrev, #ajaxNext {
+#close, #ajax-prev, #ajax-next {
 	z-index: 12;
 	position: absolute;
 	width: 36px;
@@ -92,10 +86,10 @@ form#training {
 }
 
 #close { top: -20px; right: -20px; background: url(../../img/roundNav.png) no-repeat 0 0 transparent; }
-#ajaxPrev { top: 150px; left: -25px; background: url(../../img/roundNav.png) no-repeat 0 -36px transparent; }
-#ajaxNext { top: 150px; right: -25px; background: url(../../img/roundNav.png) no-repeat 0 -72px transparent; }
+#ajax-prev { top: 150px; left: -25px; background: url(../../img/roundNav.png) no-repeat 0 -36px transparent; }
+#ajax-next { top: 150px; right: -25px; background: url(../../img/roundNav.png) no-repeat 0 -72px transparent; }
 
-#ajaxPrev:hover, #ajaxNext:hover { border: none; }
+#ajax-prev:hover, #ajax-next:hover { border: none; }
 
 
 @media screen and (max-width: 960px) {
@@ -104,13 +98,13 @@ form#training {
 		left: 2%;
 		margin: 0;
 
-		&.smallWin {
+		&.small-window {
 			width: 500px;
 			left: 230px;
 			margin: 0;
 		}
 
-		&.bigWin {
+		&.big-window {
 			width: 960px;
 			left: 0;
 			margin: 0;

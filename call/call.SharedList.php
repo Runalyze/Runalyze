@@ -28,7 +28,7 @@ if (!Request::isAjax()) {
 		echo '</div>';
 	}
 
-	echo '<div id="dataPanel" class="panel" style="width:960px;margin:5px auto;">';
+	echo '<div id="data-browser" class="panel" style="width:960px;margin:5px auto;">';
 	echo '<div id="'.DATA_BROWSER_SHARED_ID.'">';
 }
 
@@ -38,7 +38,7 @@ if (!Request::isAjax()) {
 	echo '</div>';
 	echo '</div>';
 
-	echo '<div id="tab_content" class="panel" style="width:960px;margin:5px auto;">
+	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
 		<p class="info">
 			Klicke ein Training an, um weitere Details anzuzeigen.<br />
 			Trainings, die f&uuml;r die Detailansicht freigegeben sind, sind durch ein '.Icon::$ADD_SMALL_GREEN.' markiert.

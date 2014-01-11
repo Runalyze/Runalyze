@@ -1,4 +1,4 @@
-<div class="w50" id="loginWindow">
+<div class="w50" id="login-window">
 		<fieldset>
 			<legend>Account l&ouml;schen</legend>
 	<?php if (!isset($_GET['want'])): ?>   
