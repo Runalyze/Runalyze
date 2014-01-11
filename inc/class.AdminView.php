@@ -240,7 +240,7 @@ class AdminView {
 			$Fieldset->addWarning('Es ist noch niemand registriert.');
 		} else {
 			$Code = '
-			<table class="small fullWidth" id="userTable">
+			<table class="small fullwidth zebra-style" id="userTable">
 				<thead>
 					<tr>
 						<th>ID</th>
@@ -256,9 +256,9 @@ class AdminView {
 						//<th class="{sorter: \'x\'}">Anz.</th>
 						//<th class="{sorter: \'distance\'}">km</th>
 
-			foreach ($this->UserList as $i => $User) {
+			foreach ($this->UserList as $User) {
 				$Code .= '
-					<tr class="'.HTML::trClass($i).'">
+					<tr>
 						<td class="small r">'.$User['id'].'</td>
 						<td>'.$User['username'].'</td>
 						<td>'.$User['name'].'</td>

@@ -60,15 +60,15 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayData() {
-		echo '<table class="fullWidth small r">';
-		echo HTML::monthTr(8, 1);
-		echo HTML::spaceTR(13);
-		
+		echo '<table class="fullwidth zebra-style small r">';
+		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
+		echo '<tbody>';
+
 		if (empty($this->ABCData))
 			echo '<tr><td colspan="13" class="c"><em>Keine Daten gefunden.</em></td></tr>';
 		foreach ($this->ABCData as $y => $Data) {
 			echo('
-				<tr class="a'.($y%2+1).'">
+				<tr>
 					<td class="b l">'.$y.'</td>'.NL);
 
 			for ($m = 1; $m <= 12; $m++) {
@@ -81,8 +81,7 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 			echo '</tr>'.NL;
 		}
 
-		echo HTML::spaceTR(13);
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 
 	/**

@@ -92,21 +92,23 @@ class SplitsView {
 	 * Display table header
 	 */
 	private function displayTableHeader() {
-		echo '<table class="small" cellspacing="0">
+		echo '<table class="small zebra-style zebra-blue">
+		<thead>
 			<tr class="c b">
-				<td>Distanz</td>
-				<td>Zeit</td>
-				<td>Pace</td>
-				<td>Diff.</td>
+				<th>Distanz</th>
+				<th>Zeit</th>
+				<th>Pace</th>
+				<th>Diff.</th>
 			</tr>
-			<tr class="space"><td colspan="4" /></tr>';
+		</thead>
+		<tbody class="top-and-bottom-border">';
 	}
 
 	/**
 	 * Display splits
 	 */
 	private function displaySplits() {
-		foreach ($this->Splits->asArray() as $i => $Split) {
+		foreach ($this->Splits->asArray() as $Split) {
 			$Time = Time::toSeconds($Split['time']);
 			$Pace = $Split['km'] > 0 ? $Time / $Split['km'] : 0;
 			$PaceDiff = ($this->demandedPace != 0) ? ($this->demandedPace - $Pace) : ($this->achievedPace - $Pace);
@@ -114,7 +116,7 @@ class SplitsView {
 			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
 			echo '
-			<tr class="a'.($i%2+2).' r '.($Split['active'] || !$this->Splits->hasActiveLaps() ? '' : 'unimportant').'">
+			<tr class="r '.($Split['active'] || !$this->Splits->hasActiveLaps() ? '' : 'unimportant').'">
 				<td>'.Running::Km($Split['km'], 2).'</td>
 				<td>'.$Split['time'].'</td>
 				<td>'.SportSpeed::minPerKm($Split['km'], $Time).'/km</td>
@@ -122,7 +124,7 @@ class SplitsView {
 			</tr>'.NL;
 		}
 
-		echo HTML::spaceTR(4);
+		echo '</tbody><tbody>';
 	}
 
 	/**
@@ -150,7 +152,7 @@ class SplitsView {
 	private function displayAverage() {
 		if ($this->achievedPaceActive > 0) {
 			echo '
-				<tr class="r">
+				<tr class="r no-zebra">
 					<td colspan="2">Schnitt (Aktiv): </td>
 					<td>'.Time::toString($this->achievedPaceActive).'/km</td>
 					<td></td>
@@ -158,7 +160,7 @@ class SplitsView {
 		}
 
 		echo '
-			<tr class="r">
+			<tr class="r no-zebra">
 				<td colspan="2">Schnitt: </td>
 				<td>'.Time::toString($this->achievedPace).'/km</td>
 				<td></td>
@@ -172,9 +174,8 @@ class SplitsView {
 		if (empty($this->Halfs))
 			return;
 
-		echo HTML::emptyTR(4);
-		echo '<tr class="b"><td colspan="4">1./2. Rennh&auml;lfte</td></tr>';
-		echo HTML::spaceTR(4);
+		echo '<tr class="no-zebra"><td colspan="4">&nbsp;</td></tr>';
+		echo '<tr class="b bottom-spacer no-zebra"><td colspan="4">1./2. Rennh&auml;lfte</td></tr>';
 
 		$totalTime = 0;
 		$totalDist = 0;
@@ -193,21 +194,20 @@ class SplitsView {
 			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
 			echo '
-			<tr class="a'.($i%2+2).' r">
+			<tr class="r">
 				<td>'.Running::Km($this->Halfs[$i]['km'], 2).'</td>
 				<td>'.Time::toString($this->Halfs[$i]['s']).'</td>
 				<td>'.SportSpeed::minPerKm($this->Halfs[$i]['km'], $this->Halfs[$i]['s']).'/km</td>
 				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
 			</tr>'.NL;
 		}
-
-		echo HTML::spaceTR(4);
 	}
 
 	/**
 	 * Display table footer
 	 */
 	private function displayTableFooter() {
+		echo '</tbody>';
 		echo '</table>';
 	}
 }

@@ -40,7 +40,7 @@ class ConfigTabTypes extends ConfigTab {
 	 */
 	private function getCode() {
 		$Code = '
-			<table class="c">
+			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
 						<th>Trainingstyp</th>
@@ -76,7 +76,7 @@ class ConfigTabTypes extends ConfigTab {
 			$Sports = SportFactory::AllSportsWithTypes();
 	
 			$Code .= '
-				<tr class="a'.($i%2+1).($id == -1 ? ' unimportant' : '').'">
+				<tr class="'.($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'" /></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'" /></td>
 					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
@@ -103,7 +103,7 @@ class ConfigTabTypes extends ConfigTab {
 		$Types = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'type`');
 		$Types[] = array('id' => -1);
 
-		foreach ($Types as $i => $Type) {
+		foreach ($Types as $Type) {
 			$id  = $Type['id'];
 			$rpe = (int)$_POST['type']['RPE'][$id];
 

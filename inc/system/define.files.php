@@ -9,14 +9,11 @@ $JS_FILES = array(
 	'lib/jquery.metadata.js',
 	'lib/jquery.tablesorter.js',
 	'lib/jquery.tablesorter.pager.js',
-	'lib/jquery.fixedheadertable.min.js',
 	'lib/bootstrap-tooltip.js',
 
 	'lib/fineuploader-3.5.0.min.js',
 
 	'lib/jquery.datepicker.js',
-	'lib/jquery.jbar.js',
-	'lib/jquery.backgroundStretch.js',
 
 	'lib/jquery.gmap3.min.js',
 
@@ -31,7 +28,7 @@ $JS_FILES = array(
 	'lib/flot-0.8.1/base64.js',
 
 	'lib/flot-0.8.1/jquery.plot.js',
-	'lib/flot-0.8.1/jquery.qtip.min.js',
+	//'lib/flot-0.8.1/jquery.qtip.min.js',
 	'lib/flot-0.8.1/jquery.flot.min.js',
 	'lib/flot-0.8.1/jquery.flot.resize.min.js',
 	'lib/flot-0.8.1/jquery.flot.selection.min.js',
@@ -45,33 +42,14 @@ $JS_FILES = array(
 	'lib/flot-0.8.1/jquery.flot.canvas.js',
 	'lib/flot-0.8.1/jquery.flot.time.min.js',
 
-	//'lib/flot/jquery.plot.js',
-	//'lib/flot/jquery.qtip.min.js',
-	//'lib/flot/jquery.flot.min.js',
-	//'lib/flot/jquery.flot.resize.min.js',
-	//'lib/flot/jquery.flot.selection.min.js',
-	//'lib/flot/jquery.flot.crosshair.min.js',
-	//'lib/flot/jquery.flot.navigate.min.js',
-	//'lib/flot/jquery.flot.stack.min.js',
-	//'lib/flot/jquery.flot.text.js',
-	//'lib/flot/jquery.flot.orderBars.js',
-	//'lib/flot/jquery.flot.hiddengraphs.js',
-
 	'lib/chosen/chosen.jquery.min.js',
 );
 	
 $CSS_FILES = array(
-	'style.css',
-	'lib/sprites.css',
-	'lib/mobile.css',
-	'lib/flot.css',
-	'lib/qtip.css',
-	'lib/bootstrap-tooltip.css',
 	'lib/jquery.datepicker.css',
-	'lib/jquery.tablesorter.css',
-	'lib/jquery.fixedheadertable.css',
-	'lib/jquery.jbar.css',
 	'lib/chosen/chosen.css',
+
+	'lib/less/runalyze-style.css',
 );
 
 /**

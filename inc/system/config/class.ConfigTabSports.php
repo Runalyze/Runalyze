@@ -60,7 +60,7 @@ class ConfigTabSports extends ConfigTab {
 	 */
 	private function getCode() {
 		$Code = '
-			<table class="c" style="width:100%;">
+			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
 						<th class="small">'.Ajax::tooltip('kurz', 'Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt').'</th>
@@ -107,7 +107,7 @@ class ConfigTabSports extends ConfigTab {
 				$delete = SearchLink::to('sportid', $id, '<small>('.$SportCount[$id].')</small>');
 
 			$Code .= '
-					<tr class="a'.($i%2+1).(isset($Data['new']) ? ' unimportant' : '').'">
+					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
 						<td><input type="checkbox" name="sport[short]['.$id.']" '.($Data['short'] == 1 ? 'checked="checked" ' : '').'/></td>
 						<td>'.$icon.'</td>
 						<td>'.$iconSelect.'</td>

@@ -1,0 +1,33 @@
+ul.blocklist {
+	li {
+		list-style-type: none;
+	}
+
+	a {
+		display: block;
+		width: 70px;
+		line-height: 20px;
+		margin: 5px auto;
+		padding: 5px 30px;
+		border-radius: 5px 5px 5px 5px;
+		box-shadow: 1px 1px 7px #E0E0E0;
+		text-align: center;
+		border: 1px solid #ccc;
+		background-color: #F6F6F7;
+		background-position: 3px center;
+		background-repeat: no-repeat;
+
+		&:hover {
+			box-shadow: 1px 1px 7px #CCC;
+		}
+
+		&.nopadding {
+			width: 120px;
+			padding: 5px;
+		}
+	}
+
+	&.smallImage a {
+		background-position: 9px center;
+	}
+}

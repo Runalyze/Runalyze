@@ -25,10 +25,8 @@
 </div>
 
 <div id="data-browser-container">
-	<table id="dataBrowser">
-		<tr class="space">
-			<td colspan="<?php echo ($this->Dataset->cols() + $this->additionalColumns); ?>" />
-		</tr>
+	<table id="dataBrowser" class="zebra-style">
+		<tbody class="top-and-bottom-border">
 <?php
 foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
@@ -37,9 +35,9 @@ foreach ($this->days as $i => $day) {
 			$wk_class = isset($Training['typeid']) && $Training['typeid'] == CONF_WK_TYPID ? ' wk' : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public'])
-				echo '<tr class="a'.($i%2+1).' r training'.$wk_class.'">';
+				echo '<tr class="r training'.$wk_class.'">';
 			else
-				echo '<tr class="a'.($i%2+1).' r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
+				echo '<tr class="r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
 
 			if ($t != 0)
 				echo '<td colspan="2" />';
@@ -65,7 +63,7 @@ foreach ($this->days as $i => $day) {
 		}
 	} else {
 		echo '
-			<tr class="a'.($i%2+1).' r">
+			<tr class="r">
 				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
@@ -78,22 +76,18 @@ foreach ($this->days as $i => $day) {
 				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'" />
 			</tr>';
 	}
-
-	if (date("w", $day['date']) == 0 || $i == ($this->day_count-1))
-		echo NL.'
-		<tr class="space">
-			<td colspan="'.($this->Dataset->cols() + $this->additionalColumns).'" />
-		</tr>'.NL;
 }
 
+echo '</tbody>';
+echo '<tbody>';
+
 // Z U S A M M E N F A S S U N G
-echo '<tfoot>';
 $WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 $sports = $this->Mysql->fetchAsArray('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`');
-foreach ($sports as $sportdata) {
+foreach ($sports as $i => $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);
 	echo '
-		<tr class="a'.(($i++)%2+1).' r">
+		<tr class="r no-zebra">
 			<td colspan="'.$this->additionalColumns.'">
 				<small>'.$sportdata['num'].'x</small>
 				'.$Sport->name().'
@@ -105,8 +99,7 @@ foreach ($sports as $sportdata) {
 	echo '
 		</tr>'.NL;
 }
-echo '</tfoot>';
 ?>
-
+		</tbody>
 	</table>
 </div>

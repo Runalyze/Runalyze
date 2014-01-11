@@ -1,0 +1,106 @@
+@installer-font-size:			12px;
+
+#installer {
+	font-size: @installer-font-size;
+
+	#headline {
+		z-index: 12;
+	}
+
+	label strong {
+		display: block;
+		float: left;
+		width: 120px;
+		margin: 4px 2px;
+		padding: 2px;
+	}
+}
+
+#loginWindow {
+	margin: 0 auto;
+
+	p {
+		margin: 1em 0;
+	}
+
+	input.withUnit {
+		padding-left: 2px;
+		text-align: left;
+	}
+}
+
+#loginPanel {
+	position: absolute;
+	top: 40px;
+	right: 20px;
+	width: 170px;
+	border-left: 1px solid #DDD;
+	font-size: .9em;
+
+	a {
+		display: block;
+		line-height: 24px;
+		margin-left: 4px;
+		padding: 2px 2px 2px 36px;
+		border-bottom: none !important;
+		background-position: 3px center;
+		background-repeat: no-repeat;
+
+		&:hover {
+			background-color: rgba(255,255,255,.5);
+		}
+	}
+}
+
+#loginLink { background-image: url(../../img/registerLogin.png); }
+#registerLink { background-image: url(../../img/register.png); }
+#passLink { background-image: url(../../img/registerPass.png); }
+
+.installer-window-container {
+	padding: 0 70px;
+}
+
+.installer-footer-text {
+	border-top: 1px solid #ccc;
+	margin: 20px 5px 2px;
+	padding-top: 7px;
+}
+
+.installer-footer-links {
+	border-top: 1px solid #ccc;
+	margin-top: 20px;
+	padding-top: 7px;
+}
+
+.textBadge {
+	width: 33%;
+	float: left;
+	background-position: 10px 5px;
+	background-repeat: no-repeat;
+
+	strong {
+		display: block;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+		font-weight: normal;
+	}
+
+	p {
+		margin: 0 10px 0 45px;
+		color: #666;
+	}
+}
+
+.textBadge-charts { background-image: url(../../img/badge-charts.png); }
+.textBadge-tools { background-image: url(../../img/badge-tools.png); }
+.textBadge-heart { background-image: url(../../img/badge-heart.png); }
+
+code, textarea.code {
+	width: 98%;
+	margin: 0 auto;
+	height: 100px;
+	overflow: scroll;
+	display: block;
+	white-space: nowrap;
+	font-family: monospace;
+}

@@ -1,0 +1,115 @@
+@training-databox-width:				260px;
+@training-plot-spacer-color:			#ccc;
+@training-map-fullscreen-background:	#f6f6f7;
+@map-height:							300px;
+@map-tooltip-background:				rgba(255,255,255,.8);
+@map-tooltip-border:					#ccc;
+@map-tooltip-margin:					2px 0 0 2px;
+@map-tooltip-padding:					1px;
+@map-tooltip-font-size:					9px;
+@map-tooltip-color:						#545454;
+
+
+
+#training-display {
+	.dataBox.left {
+		width: @training-databox-width;
+
+		table {
+			width: 100%;
+		}
+	}
+}
+
+#training-plots-and-map {
+	float: right;
+	border-width: 1px;
+
+	.toolbar-nav {
+		display: none;
+	}
+
+	.dataBox {
+		float: none;
+	}
+
+	.plot-container {
+		margin-bottom: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid @training-plot-spacer-color;
+		overflow: hidden;
+	}
+}
+
+#training-plots {
+	padding: 6px 6px 0;
+
+	.toolbar-line {
+		padding: 4px 4px 6px;
+
+		label {
+			margin: 0 8px 0 0;
+		}
+
+		&.navigation.line label {
+			padding-right: 12px;
+			line-height: 16px;
+			font-size: 12px;
+			border-right: 1px solid @training-plot-spacer-color;
+
+			&:last-of-type {
+				margin: 0;
+				padding: 0;
+				border-right: none;
+			}
+		}
+	}
+}
+
+#training-map {
+	.toolbar-box-content {
+		padding: 0 6px 6px;
+	}
+
+	&.training-map-before .toolbar-box-content {
+		padding: 0;
+	}
+
+	.toolbar-line {
+		padding: 10px 10px 0;
+
+		select {
+			margin: 0 20px 0 0;
+		}
+	}
+
+	&.fullscreen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: @training-map-fullscreen-background;
+		z-index: 500;
+
+		&.toolbar-box-content {
+			padding: 6px 6px 6px;
+		}
+	}
+}
+
+.map {
+	min-width: 400px;
+	width: 100%;
+	height: @map-height;
+
+	.hoverTip {
+		position: absolute;
+		background-color: @map-tooltip-background;
+		margin: @map-tooltip-margin;
+		padding: @map-tooltip-padding;
+		font-size: @map-tooltip-font-size;
+		color: @map-tooltip-color;
+		border: 1px solid @map-tooltip-border;
+	}
+}

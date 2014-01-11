@@ -80,32 +80,33 @@ abstract class PluginTool extends Plugin {
 	 * Display surrounding div and default content for all tools
 	 */
 	public static function displayToolsContent() {
-		echo '<div id="'.self::$TOOLS_DIV_ID.'">'.NL;
-		echo '<h1>Tools</h1>'.NL;
-		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br /><br />'.NL;
-		echo 'Folgende Tools sind installiert:'.NL;
-		echo '<table>'.NL;
-		echo HTML::spaceTR(3);
+		echo '<div id="'.self::$TOOLS_DIV_ID.'">';
+		echo '<h1>Tools</h1>';
+		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br /><br />';
+
+		echo '<table class="fullwidth zebra-style">';
+		echo '<thead><tr><th colspan="3">Installierte Tools:</th></tr></thead>';
+		echo '<tbody class="top-and-bottom-border">';
 
 		$tools = self::getKeysAsArray(self::$TOOL, self::$ACTIVE);
 		
 		if (empty($tools))
 			echo '<tr><td colspan="3"><em>Keine Plugins vorhanden.</em></td></tr>';
 		
-		foreach ($tools as $i => $key) {
+		foreach ($tools as $key) {
 			$Plugin = Plugin::getInstanceFor($key);
 
 			echo('
-				<tr class="a'.($i%2+1).'">
+				<tr>
 					<td>'.$Plugin->getConfigLink().'</td>
 					<td class="b">'.self::getLinkFor($Plugin->get('id'), $Plugin->get('name')).'</td>
 					<td class="small">'.$Plugin->get('description').'</td>
 				</tr>');
 		}
 				
-		echo HTML::spaceTR(3);
-		echo '</table>'.NL;
-		echo '</div>'.NL;
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
 	}
 
 	/**
@@ -118,10 +119,7 @@ abstract class PluginTool extends Plugin {
 				'.$this->getConfigLink().'
 				</span>
 			</h1>
-
-			'.$this->description.'<br />
-			<br />
-			'.NL;
+			'.$this->description.'<br /><br />';
 	}
 
 	/**

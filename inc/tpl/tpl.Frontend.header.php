@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-	<meta name="viewport" content="width=320, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<base href="<?php echo System::getFullDomain(); ?>" />
 
@@ -14,21 +14,18 @@
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
-
-	<!--[if IE]><style type="text/css">table { border-collapse: collapse; }</style><![endif]-->
-	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="lib/flot-0.8.1/excanvas.min.js"></script><![endif]-->
 </head>
 
-<body id="home" class="toolbar-top" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="home" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
 
 <div id="flotLoader"></div>
 
-<div id="copy" class="top">
+<div id="headline">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
 	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="<?php __('Logout'); ?>"><i class="toolbar-icon-user"></i>&nbsp;<?php _e('Logout'); ?></a><?php endif; ?>
 
 	<span class="left b">
-		<?php echo Ajax::window('<a class="tab" href="'.ConfigTabs::$CONFIG_URL.'"><i class="toolbar-icon-config"></i>'.NBSP.__('Logout').'</a>'); ?>
+		<?php echo Ajax::window('<a class="tab" href="'.ConfigTabs::$CONFIG_URL.'"><i class="toolbar-icon-config"></i>'.NBSP.__('Konfiguration').'</a>'); ?>
 		<?php echo Ajax::window('<a class="tab" href="'.PluginTool::$DISPLAY_URL.'"><i class="toolbar-icon-tools"></i>'.NBSP.__('Tools').'</a>'); ?>
 		<?php echo Ajax::window('<a class="tab" href="'.Frontend::$HELP_URL.'"><i class="toolbar-icon-help"></i>'.NBSP.__('Help').'</a>'); ?>
 	</span>

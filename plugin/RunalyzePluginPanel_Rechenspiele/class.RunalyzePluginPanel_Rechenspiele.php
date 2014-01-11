@@ -213,7 +213,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$maxCTL      = Trimp::maxCTL();
 
 		$Table = '
-			<table style="width:100%;">
+			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th></th>
@@ -226,7 +226,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="'.HTML::trClass(0).'">
+					<tr>
 						<td class="b">ATL</td>
 						<td>Actual Training Load</td>
 						<td class="c">'.$TrimpValues['ATL'].' &#37;</td>
@@ -235,7 +235,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="c">'.$maxATL.'</td>
 						<td class="small">Belastung &uuml;ber einen kurzen Zeitraum.</td>
 					</tr>
-					<tr class="'.HTML::trClass(1).'">
+					<tr>
 						<td class="b">CTL</td>
 						<td>Chronical Training Load</td>
 						<td class="c">'.$TrimpValues['CTL'].' &#37;</td>
@@ -244,7 +244,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="c">'.$maxCTL.'</td>
 						<td class="small">Belastung &uuml;ber einen l&auml;ngeren Zeitraum.</td>
 					</tr>
-					<tr class="'.HTML::trClass(2).'">
+					<tr>
 						<td class="b">TSB</td>
 						<td>Training Stress Balance</td>
 						<td class="c">'.$TrimpValues['TSB'].'</td>
@@ -279,19 +279,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	public function getFieldsetVDOT() {
 		$Table = '
-			<table style="width:100%;">
+			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th colspan="10">VDOT-Werte der letzten '.CONF_VDOT_DAYS.' Tage</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="top-and-bottom-border">
 				';
 
 		$VDOTs = Mysql::getInstance()->fetchAsArray('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC');
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
-				$Table .= '<tr class="'.HTML::trClass(floor($i/10)).'">'.NL;
+				$Table .= '<tr>'.NL;
 
 			$Link   = Ajax::trainingLink($Data['id'], round(JD::correctVDOT($Data['vdot']), 2));
 			$Title  = Running::Km($Data['distance']).' am '.date('d.m.Y', $Data['time']);
@@ -311,7 +311,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Fieldset = new FormularFieldset('VDOT');
 		$Fieldset->addBlock('Die VDOT-Form berechnet sich aus dem Mittelwert der VDOT-Werte deiner
-							Trainingseinheiten der letzten '.CONF_VDOT_DAYS.' Tage.');
+							Trainingseinheiten der letzten '.CONF_VDOT_DAYS.' Tage. Die Werte werden nach der jeweiligen Dauer gewichtet.');
 		$Fieldset->addBlock('Dein aktuelle VDOT-Form: <strong>'.VDOT_FORM.'</strong><br />&nbsp;');
 		$Fieldset->addBlock($Table);
 		$Fieldset->addInfo('Bei Jack Daniels wird der VDOT als fester Wert angesehen und nicht aus Trainingsleistungen berechnet.<br />
@@ -336,9 +336,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Prognosis->setStrategy($Strategy);
 
 		$GeneralTable = '
-			<table style="width:100%;">
-				<tbody>
-					<tr class="'.HTML::trClass(0).'">
+			<table class="fullwidth zebra-style">
+				<tbody class="top-and-bottom-border">
+					<tr>
 						<td><strong>Aktueller VDOT</strong> <small>(nach Puls)</small></td>
 						<td class="r">'.round(VDOT_FORM, 2).'</td>
 						<td>&nbsp;</td>
@@ -347,9 +347,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="small">erreicht zu '.round(100*$BEresults['weekkm-percentage']).'&#37;</td>
 						<td class="small">(&oslash; '.Running::Km(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), 0).')</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForWeekKilometer().'</td>
-						<td rowspan="2" class="b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
+						<td rowspan="2" class="bottom-spacer b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
 					</tr>
-					<tr class="'.HTML::trClass(1).'">
+					<tr>
 						<td><strong>Marathonzeit</strong> <small>(optimal)</small></td>
 						<td class="r">'.Time::toString($Prognosis->inSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
@@ -363,7 +363,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			</table>';
 
 		$LongjogTable = '
-			<table style="width:100%;" class="c">
+			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr>
 						<th>Datum*</th>
@@ -377,10 +377,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$IgnoredLongjogs = 0;
 		$Longjogs        = Mysql::getInstance()->fetchAsArray($BasicEndurance->getQuery(0, true));
 
-		foreach ($Longjogs as $i => $Longjog) {
+		foreach ($Longjogs as $Longjog) {
 			if ($Longjog['points'] >= 0.2)
 				$LongjogTable .= '
-						<tr class="'.HTML::trClass($i).'">
+						<tr>
 							<td>'.Ajax::trainingLink($Longjog['id'], date('d.m.Y', $Longjog['time'])).'</td>
 							<td>'.Running::Km($Longjog['distance']).'</td>
 							<td>'.round($Longjog['points'], 1).' points</td>
@@ -390,7 +390,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		}
 
 		$LongjogTable .= '
-					<tr class="'.HTML::trClass(count($Longjogs)).'">
+					<tr class="top-spacer no-zebra">
 						<td></td>
 						<td></td>
 						<td class="b">= '.round($BEresults['longjog-result'], 1).' points</td>
@@ -423,7 +423,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	public function getFieldsetPaces() {
 		$Table = '
-			<table style="width:100%;">
+			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th></th>
@@ -436,9 +436,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			';
 
 		$vVDOT = JD::VDOT2v(VDOT_FORM);
-		foreach ($this->getArrayForPaces() as $i => $Pace) {
+		foreach ($this->getArrayForPaces() as $Pace) {
 			$Table .= '
-					<tr class="'.HTML::trClass($i).'">
+					<tr>
 						<td class="b">'.$Pace['short'].'</td>
 						<td>'.$Pace['name'].'</td>
 						<td class="small"><em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'&nbsp;-&nbsp;'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'/km</em></td>

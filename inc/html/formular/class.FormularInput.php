@@ -19,7 +19,7 @@ class FormularInput extends FormularField {
 	 * Size: full
 	 * @var string 
 	 */
-	static public $SIZE_FULL = 'fullWidth';
+	static public $SIZE_FULL = 'fullwidth';
 
 	/**
 	 * Size: middle

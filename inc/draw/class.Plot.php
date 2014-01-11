@@ -346,15 +346,7 @@ class Plot {
 		else
 			$Type = '';
 
-		return '
-			$("#'.$this->cssID.'").qtip({
-				prerender: true,
-				content: \'Loading...\',
-				position: { viewport: $(window), target: \'mouse\', adjust: { x: 7 } },
-				show: false,
-				style: { classes: \'ui-tooltip-shadow ui-tooltip-tipsy\', tip: false }
-			});
-			bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
+		return 'bindFlotForQTip'.$Type.'($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'") );'.NL;
 	}
 
 	/**
@@ -362,8 +354,7 @@ class Plot {
 	 * @return string
 	 */
 	private function getJSForSelection() {
-		return '
-			bindFlotForSelection($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'"), '.($this->Options['selection']['rangeCalculation']?'true':'false').' );'.NL;
+		return 'bindFlotForSelection($("#'.$this->cssID.'"), RunalyzePlot.getPlot("'.$this->cssID.'"), '.($this->Options['selection']['rangeCalculation']?'true':'false').' );'.NL;
 	}
 
 	/**

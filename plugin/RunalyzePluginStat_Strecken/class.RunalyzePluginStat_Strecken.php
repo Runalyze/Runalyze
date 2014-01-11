@@ -81,7 +81,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display routes
 	 */
 	private function displayRoutes() {
-		echo '<table style="width:70%;" class="left small margin-5">';
+		echo '<table style="width:70%;" class="left zebra-style small margin-5">';
 		echo '<thead><tr><th colspan="3">H&auml;ufigsten Strecken</th></tr></thead>';
 		echo '<tbody class="r">';
 
@@ -115,7 +115,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display most visited cities
 	 */
 	private function displayCities() {
-		echo '<table style="width:25%;" class="right small margin-5">';
+		echo '<table style="width:25%;" class="right zebra-style small margin-5">';
 		echo '<thead><tr><th colspan="2">H&auml;ufigsten Orte</th></tr></thead>';
 		echo '<tbody>';
 		
@@ -145,7 +145,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display less visited cities
 	 */
 	private function displayLonelyCities() {
-		echo '<table class="margin-5 fullWidth small">';
+		echo '<table class="margin-5 fullwidth zebra-style small">';
 		echo '<thead><tr><th colspan="2">Seltensten Orte</th></tr></thead>';
 		echo '<tbody>';
 

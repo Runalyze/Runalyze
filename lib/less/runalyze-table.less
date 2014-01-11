@@ -1,0 +1,131 @@
+@table-margin:						5px auto 10px;
+@table-padding:						2px 3px;
+@table-head-border:					#666;
+@table-border:						#ccc;
+@table-color-hover:					#000;
+@table-background:					rgba(240,240,245,.4);
+@table-background-odd:				rgba(250,250,255,.4);
+@table-background-odd-blue:			rgba(230,230,255,.7);
+@table-background-hover:			rgba(255,255,255,.5);
+@table-background-highlight:		#ff6;
+@table-background-highlight-hover:	#ff0;
+@table-sortable-border:				@table-border;
+@table-sortable-background:			#efefef;
+@table-sortable-padding-right:		14px;
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	margin: @table-margin;
+}
+
+table, tr, td {
+	padding: @table-padding;
+	vertical-align: top;
+}
+
+thead th, tbody.asThead th, thead tr {
+	padding: @table-padding;
+	vertical-align: middle;
+	border-color: @table-head-border;
+	border-style: none none solid none;
+	border-width: 0 0 1px 0;
+	text-align: center;
+}
+
+thead.r th {
+	text-align: right;
+}
+
+tbody.asThead th {
+	text-align: inherit;
+}
+
+td img {
+	vertical-align: middle;
+}
+
+// TODO: Use .top-spacer/.bottom-spacer instead
+.space td { height: 1px; background: #666; padding: 0; }
+
+
+.zebra-style {
+	tbody.top-and-bottom-border {
+		tr:first-child {
+			border-top: 1px solid @table-head-border;
+		}
+
+		tr:last-child {
+			border-bottom: 1px solid @table-head-border;
+		}
+	}
+
+	tbody tr {
+		background-color: @table-background;
+		border-top: 1px solid @table-border;
+
+		&.top-spacer, td.top-spacer {
+			border-top: 1px solid @table-head-border;
+		}
+
+		&.bottom-spacer, td.bottom-spacer {
+			border-bottom: 1px solid @table-head-border;
+		}
+
+		&:hover {
+			background-color: @table-background-hover !important;
+			color: @table-color-hover;
+		}
+
+		&.highlight {
+			background: @table-background-highlight !important;
+
+			&:hover {
+				background: @table-background-highlight-hover !important;
+			}
+		}
+
+		&.no-zebra, td.no-zebra {
+			background: transparent !important;
+		}
+	}
+
+	tbody tr:nth-child(2n+1) {
+		background-color: @table-background-odd;
+	}
+}
+
+.zebra-blue tbody tr:nth-child(2n+1) {
+	background-color: @table-background-odd-blue;
+}
+
+.sortable {
+	thead th {
+		border: 1px solid @table-sortable-border;
+		background-color: @table-sortable-background;
+
+		&.header {
+			padding-right: @table-sortable-padding-right;
+			background-image: url(../../img/tablesorter/bg.gif);
+			background-repeat: no-repeat;
+			background-position: center right;
+			cursor: pointer;
+		}
+
+		&.header:hover,
+		&.headerSortDown:hover,
+		&.headerSortDown {
+			background-image: url(../../img/tablesorter/desc.gif);
+		}
+
+		&.headerSortUp:hover,
+		&.headerSortUp {
+			background-image: url(../../img/tablesorter/asc.gif);
+		}
+
+		&.headerSortDown,
+		&.headerSortUp {
+			font-style: italic;
+		}
+	}
+}

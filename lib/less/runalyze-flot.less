@@ -1,0 +1,208 @@
+@flot-border-color:				#000;
+@flot-background-color:			#60a920;
+@flot-background-image:			url(../../img/dash.png);
+@flot-width:					480px;
+@flot-height:					190px;
+
+@flot-label-color:				#fff;
+@flot-label-font-size:			9px;
+
+@flot-legend-color:				#545454;
+@flot-legend-padding:			1px 2px;
+
+@flot-title-height:				12px;
+@flot-title-font-size:			9px;
+@flot-title-background:			rgba(0,0,0,.8);
+@flot-title-color:				#999;
+@flot-title-padding:			2px 1px 1px;
+@flot-title-margin:				2px 0 0 -1px;
+
+@flot-error-color:				#545454;
+@flot-error-background:			rgba(255,255,255,0.4);
+@flot-error-font-size:			9px;
+@flot-error-border:				#ccc;
+@flot-error-padding:			5px;
+
+@flot-annotation-color:			#545454;
+@flot-annotation-background:	rgba(255,255,255,0.6);
+@flot-annotation-font-size:		9px;
+@flot-annotation-padding:		1px;
+@flot-annotation-margin:		2px 0 0 2px;
+
+@flot-tooltip-background:		rgba(255,255,255,0.8);
+@flot-tooltip-font-size:		.9em;
+@flot-tooltip-padding:			2px;
+@flot-tooltip-border:			#ccc;
+
+@flot-settings-padding:			4px 1px 6px;
+@flot-settings-border:			#ccc;
+@flot-settings-height:			14px;
+@flot-settings-border-radius:	2px;
+@flot-settings-background:		#eee;
+
+
+
+#flotLoader {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    width: 500px;
+    height: 150px;
+}
+
+.flotChangeable .flot {
+	position: absolute !important;
+}
+
+.flotHide {
+	visibility: hidden;
+
+	.legend, .tickLabels, .flot-tick-label {
+		display: none;
+	}
+}
+
+.flot {
+	position: relative !important;
+	margin: 0 auto;
+	border: 1px solid @flot-border-color;
+	width: @flot-width;
+	height: @flot-height;
+	background: @flot-background-image repeat @flot-background-color;
+
+	.show-only-fullscreen {
+		display: none;
+	}
+
+	&.fullscreen {
+		position: fixed !important;
+		top: 0;
+		left: 0;
+		z-index: 500;
+
+		.show-only-fullscreen {
+			display: inline;
+		}
+	}
+
+	.tickLabels, .legend td, .flot-tick-label {
+		color: @flot-label-color;
+		line-height: 1;
+		font-size: @flot-label-font-size !important;
+	}
+
+	.legend table {
+		padding: 0;
+		margin: 0 !important;
+	}
+
+	.legend td {
+		color: @flot-legend-color;
+		vertical-align: middle;
+		padding: @flot-legend-padding;
+	}
+
+	.flotTitle {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background: @flot-title-background;
+		color: @flot-title-color;
+		height: @flot-title-height;
+		line-height: @flot-title-height;
+		font-size: @flot-title-font-size;
+		text-align: center;
+		width: 100%;
+		padding: @flot-title-padding;
+		margin: @flot-title-margin;
+
+		span {
+			margin: 0 5px;
+		}
+	}
+
+	.flot-settings-link {
+		margin: 0;
+	}
+
+	&.has-settings-line {
+		margin-bottom: 27px;
+	}
+
+	&.has-settings-line .flot-settings-line {
+		display: block;
+	}
+
+	.flotError {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 100%;
+		text-align: center;
+
+		span {
+			border: 1px solid @flot-error-border;
+			background-color: @flot-error-background;
+			margin: 0 auto;
+			padding: @flot-error-padding;
+			font-weight: bold;
+			font-size: @flot-error-font-size;
+			color: @flot-error-color;
+		}
+	}
+
+	.annotation {
+		position: absolute;
+		background-color: @flot-annotation-background;
+		padding: @flot-annotation-padding;
+		margin: @flot-annotation-margin;
+		font-size: @flot-annotation-font-size;
+		color: @flot-annotation-color;
+	}
+
+	.hoverTip {
+		z-index: 50;
+		display: none;
+		position: fixed;
+		text-align: left;
+		overflow: visible;
+		padding: @flot-tooltip-padding;
+		font-size: @flot-tooltip-font-size;
+		background-color: @flot-tooltip-background;
+		border: 1px solid @flot-tooltip-border;
+	}
+
+	.hoverTip em {
+		font-weight: bold;
+	}
+
+	.arrow {
+		position: absolute;
+		cursor: pointer;
+	}
+
+	div.arrow {
+		font-size: smaller;
+		color: #999;
+		background-color: #eee;
+		padding: 2px;
+	}
+}
+
+.flot-settings-line {
+	display: none;
+	width: 100%;
+	padding: @flot-settings-padding !important;
+	border-color: @flot-settings-border;
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	border-radius: 0 0 @flot-settings-border-radius @flot-settings-border-radius;
+	background-color: @flot-settings-background;
+	margin-left: -2px;
+	margin-top: 17px;
+	position: relative;
+	bottom: -100%;
+	line-height: @flot-settings-height;
+	height: @flot-settings-height;
+}

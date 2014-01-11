@@ -1,6 +1,6 @@
-<table style="width:100%" id="vdotAnalysisTable">
+<table id="vdotAnalysisTable" class="fullwidth zebra-style small">
 	<thead>
-		<tr class="small">
+		<tr>
 			<th class="{sorter:'germandate'}">Datum</th>
 			<th>Lauf</th>
 			<th class="{sorter:'distance'}">km</th>
@@ -17,9 +17,9 @@
 			<th>Korrektur<br />Faktor</th>
 		</tr>
 	</thead>
-	<tbody>
-<?php foreach ($this->Trainings as $i => $Training): ?>
-	<tr class="small r <?php echo HTML::trClass($i); ?>">
+	<tbody class="r">
+<?php foreach ($this->Trainings as $Training): ?>
+	<tr>
 		<td class="c"><?php echo date("d.m.Y", $Training['time']); ?></td>
 		<td class="b l"><?php echo $Training['comment']; ?></td>
 		<td><?php echo Running::Km($Training['distance']); ?></td>

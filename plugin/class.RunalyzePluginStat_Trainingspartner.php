@@ -50,13 +50,13 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	protected function displayContent() {
 		$this->displayHeader('Trainingspartner');
 
-		echo '<table class="fullWidth margin-5 small">';
+		echo '<table class="fullwidth zebra-style margin-5 small">';
 		echo '<thead><tr><th colspan="2">Alle Trainingspartner</th></tr></thead>';
 		echo '<tbody>';
 
 		if (empty($this->Partner))
 			echo('
-				<tr class="a1">
+				<tr>
 					<td class="b">0x</td>
 					<td><em>Du hast bisher nur alleine trainiert.</em></td>
 				</tr>');
@@ -73,7 +73,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		
 					$row_num = $name_num;
 					$i++;
-					echo '<tr class="a'.($i%2+1).'"><td class="b">'.$row_num.'x</td><td>';
+					echo '<tr><td class="b">'.$row_num.'x</td><td>';
 				}
 
 				echo SearchLink::to('partner', $name, $name, 'like');

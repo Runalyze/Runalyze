@@ -88,7 +88,7 @@ abstract class ZonesAbstract {
 		echo '<div class="dataBox training-zones left">';
 		echo '<div class="databox-header">'.$this->title().'</div>';
 
-		echo '<table class="small" style="white-space:nowrap;">';
+		echo '<table class="zebra-style zebra-blue small" style="white-space:nowrap;">';
 		echo '<thead><tr>';
 		echo '<th>Zone</th>';
 		echo '<th>Anteil</th>';
@@ -109,10 +109,10 @@ abstract class ZonesAbstract {
 	* Display data
 	*/
 	private function displayData() {
-		foreach ($this->Data as $i => $Info) {
+		foreach ($this->Data as $Info) {
 			$opacity = 0.5 + $Info['percentage']/200;
 
-			echo '<tr class="r '.HTML::trClass2($i).'" style="opacity:'.$opacity.';">';
+			echo '<tr class="r" style="opacity:'.$opacity.';">';
 			echo '<td>'.$Info['zone'].'</td>';
 			echo '<td>'.$Info['percentage'].'&nbsp;&#37;</td>';
 			echo '<td>'.$Info['time'].'</td>';

@@ -172,10 +172,10 @@ $NumKm     = Mysql::getInstance()->untouchedFetch('SELECT SUM(distance) as num F
 
 <p class="text"></p>
 <p class="text small c login-window-stats">
-	<?php printf(_n('Until now is <strong>%d</strong> athlete registered and','Until now are <strong>%d</strong> athletes registered and', $NumUser['num']), $NumUser['num']); ?>
-	<?php printf(_n('has logged <strong>%d</strong> km.','have logged <strong>%d</strong> km.', $NumUser['num']), Running::Km($NumKm['num'])); ?>
+	<?php printf(_n('Until now <strong>%d</strong> athlete is registered and','Until now <strong>%d</strong> athletes are registered and', $NumUser['num']), $NumUser['num']); ?>
+	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser['num']), Running::Km($NumKm['num'])); ?>
 	<br />
-	<?php printf(_n('<strong>%d</strong> athlete is online now.','<strong>%d</strong> athletes are online now.', $NumUserOn), $NumUserOn); ?><br>
+	<?php printf(_n('<strong>%d</strong> athlete is online.','<strong>%d</strong> athletes are online.', $NumUserOn), $NumUserOn); ?><br>
 </p>
 
 <?php if (isset($_POST['new_username'])) echo Ajax::wrapJSforDocumentReady("show('reg');") ?>

@@ -212,7 +212,7 @@ class RoundsInfo {
 			'elevation'	=> 'hm'
 		);
 
-		$Code  = '<table class="w100">';
+		$Code  = '<table class="fullwidth zebra-style zebra-blue">';
 		$Code .= '<thead><tr>';
 
 		foreach ($Cells as $Cell)
@@ -220,10 +220,10 @@ class RoundsInfo {
 
 		$Code .= '</tr>';
 		$Code .= '</thead>';
-		$Code .= '<tbody>';
+		$Code .= '<tbody class="top-and-bottom-border">';
 
-		foreach ($this->Data as $i => $Round) {
-			$Code .= '<tr class="c '.HTML::trClass2($i).'">';
+		foreach ($this->Data as $Round) {
+			$Code .= '<tr class="c">';
 
 			foreach (array_keys($Cells) as $Cell)
 				$Code .= '<td>'.$Round[$Cell].'</td>';
@@ -232,15 +232,14 @@ class RoundsInfo {
 		}
 
 		$Code .= '</tbody>';
-		$Code .= '<tfoot>';
-		$Code .= HTML::spaceTR( count($Cells) );
-		$Code .= '<tr><td colspan="2" class="r">Schnitt:</td>';
+		$Code .= '<tbody>';
+		$Code .= '<tr class="no-zebra"><td colspan="2" class="r">Schnitt:</td>';
 		$Code .= '<td class="c">'.(count($this->ManualDistances) > 0 ? '' : Time::toString( $this->RoundDistance * Time::toSeconds($this->Training->getPace()) )).'</td>';
 		$Code .= '<td></td>';
 		$Code .= '<td class="c">'.$this->Training->DataView()->getSpeedString().'</td>';
 		$Code .= '<td colspan="3"></td>';
 		$Code .= '</tr>';
-		$Code .= '</tfoot>';
+		$Code .= '</tbody>';
 		$Code .= '</table>';
 
 		return $Code;
