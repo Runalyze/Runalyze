@@ -38,14 +38,12 @@ class SearchFormular extends Formular {
 	 * Set default values
 	 */
 	protected function setDefaultValues() {
-		if (!empty($_POST))
-			return;
-
-		$_POST = array(
-			'sportid'	=> array_keys(SportFactory::AllSports()),
-			'date-from'	=> date('d.m.Y', START_TIME),
-			'date-to'	=> date('d.m.Y')
-		);
+		if (!isset($_POST['sportid']))
+			$_POST['sportid'] = array_keys(SportFactory::AllSports());
+		if (!isset($_POST['date-from']))
+			$_POST['date-from'] = date('d.m.Y', START_TIME);
+		if (!isset($_POST['date-to']))
+			$_POST['date-to'] = date('d.m.Y');
 	}
 
 	/**

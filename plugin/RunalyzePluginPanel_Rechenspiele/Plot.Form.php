@@ -4,7 +4,7 @@
  * Call:   include Plot.form.php
  * @package Runalyze\Plugins\Panels
  */
-$DebugAllValues = true;
+$DebugAllValues = false;
 $MaxATLPoints   = 750;
 $DataFailed     = false;
 $ATLs           = array();
