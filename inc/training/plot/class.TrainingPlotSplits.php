@@ -108,14 +108,16 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		$min = Helper::floorFor(min($this->Data), 30000);
-		$max = Helper::ceilFor(max($this->Data), 30000);
+		if (!empty($this->Data)) {
+			$min = Helper::floorFor(min($this->Data), 30000);
+			$max = Helper::ceilFor(max($this->Data), 30000);
+			$this->Plot->setYLimits(1, $min, $max, false);
+		}
 
 		$this->Plot->setYAxisTimeFormat('%M:%S');
 		$this->Plot->setXLabels($this->Labels);
 		$this->Plot->showBars(true);
 
-		$this->Plot->setYLimits(1, $min, $max, false);
 		$this->Plot->setYTicks(1, null);
 
 		if ($this->demandedPace > 0) {
