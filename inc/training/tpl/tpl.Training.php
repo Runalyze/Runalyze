@@ -19,7 +19,7 @@
 	</div>
 </div>
 
-<div id="training-display">
+<div id="training-display" class="clearfix">
 	<?php if ($this->Training->hasPositionData() || !$this->PlotList->isEmpty()): ?>
 	<div id="training-plots-and-map" class="databox">
 		<div id="training-plots" class="toolbar-box-content">
