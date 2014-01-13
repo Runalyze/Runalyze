@@ -434,8 +434,12 @@ class TrainingObject extends DataObject {
 	 * @return \Type
 	 */
 	public function Type() {
-		if (is_null($this->Type))
-			$this->Type = new Type($this->get('typeid'));
+		if (is_null($this->Type)) {
+			if (!$this->hasProperty('typeid'))
+				$this->Type = new Type(0);
+			else
+				$this->Type = new Type($this->get('typeid'));
+		}
 
 		return $this->Type;
 	}
@@ -468,8 +472,9 @@ class TrainingObject extends DataObject {
 	 */
 	public function Weather() {
 		if (is_null($this->Weather)) {
+			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : 0;
 			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
-			$this->Weather = new Weather($this->get('weatherid'), $temp);
+			$this->Weather = new Weather($id, $temp);
 		}
 
 		return $this->Weather;

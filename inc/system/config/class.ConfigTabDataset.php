@@ -184,6 +184,7 @@ class ConfigTabDataset extends ConfigTab {
 			'kcal'		=> 691,
 			'pulse_avg'	=> 186,
 			'pulse_max'	=> 193,
+			'vdot_with_elevation'	=> VDOT_FORM + 1,
 			'vdot'		=> VDOT_FORM + 1,
 			'use_vdot'	=> 0,
 			'jd_intensity'	=> 0,	// TODO
