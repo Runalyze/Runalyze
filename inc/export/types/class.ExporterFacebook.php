@@ -20,6 +20,11 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 * Display
 	 */
 	public function display() {
+		if (!$this->Training->isPublic()) {
+			echo HTML::error('Dieses Training ist privat. Es k&ouml;nnen nur &ouml;ffentliche Trainings auf Facebook geteilt werden.');
+			return;
+		}
+
 		$Linklist = new BlocklinkList();
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
@@ -45,7 +50,6 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		// for testing, see https://developers.facebook.com/tools/explorer/473795412675725/?path=me%2Ffitness.runs&method=POST
 		// @see https://developers.facebook.com/docs/reference/opengraph/action-type/fitness.runs
 		// @see https://developers.facebook.com/docs/reference/opengraph/object-type/fitness.course
-
 
 		$url   = urlencode($this->Training->Linker()->publicUrl());
 		$title = urlencode($this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht');
