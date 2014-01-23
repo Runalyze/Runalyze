@@ -138,7 +138,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<td>'.(($schuh['num'] != 0) ? Running::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
 					<td>'.(($schuh['num'] != 0) ? SportSpeed::minPerKm($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
 					<td class="small">'.Running::Km($schuh['dist']).'</td>
-					<td class="small">'.$schuh['pace'].'/km'.'</td>
+					<td class="small">'.  SportSpeed::minPerKm(1, $schuh['pace_in_s']).'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>
 					<td>'.$Shoe->getKmString().' '.$Shoe->getKmIcon().'</td>
 				</tr>');
@@ -165,7 +165,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			SELECT
 				shoeid,
 				COUNT(*) as num,
-				MIN(pace) as pace,
+				MIN(s/distance) as pace_in_s,
 				MAX(distance) as dist
 			FROM '.PREFIX.'training
 			WHERE shoeid != 0
@@ -186,7 +186,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			if (isset($ShoeStatistics[$Shoe['id']]))
 				$this->schuhe[] = array_merge($Shoe, $ShoeStatistics[$Shoe['id']]);
 			else
-				$this->schuhe[] = array_merge($Shoe, array('num' => 0, 'pace' => 0, 'dist' => 0));
+				$this->schuhe[] = array_merge($Shoe, array('num' => 0, 'pace_in_s' => 0, 'dist' => 0));
 	}
 
 	/**
