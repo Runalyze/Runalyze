@@ -72,9 +72,10 @@ class Frontend {
 		define('RUNALYZE', true);
 		define('FRONTEND_PATH', dirname(__FILE__).'/');
 		date_default_timezone_set('Europe/Berlin');
-                $this->initLanguage();
+
+		$this->initLanguage();
 		$this->setAutoloader();
-                $this->initErrorHandling();
+		$this->initErrorHandling();
 		$this->initMySql();
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
@@ -87,23 +88,21 @@ class Frontend {
 		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
 		new Autoloader();
 	}
-        
-        /**
-         * Setup Language
-         */
-        private function initLanguage() {
-            if(!empty($_GET['lang']))
-                $language = $_GET['lang'];
-            else
-                $language = 'en';
-            $locale_dir = './inc/locale';
-            putenv("LANG=$language"); 
-            setlocale(LC_ALL, $language);
-            $domain = 'runalyze';
-            bindtextdomain('runalyze', $locale_dir); 
-            textdomain('runalyze');
-            
-        }
+
+	/**
+	 * Setup Language
+	 */
+	private function initLanguage() {
+		$domain = 'runalyze';
+		$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en';
+		$locale_dir = './inc/locale';
+
+		putenv("LANG=$language"); 
+		setlocale(LC_ALL, $language);
+		bindtextdomain($domain, $locale_dir); 
+		textdomain($domain);
+	}
+
 	/**
 	 * Init constants
 	 */
@@ -232,12 +231,12 @@ class Frontend {
 	 * @param int $height
 	 */
 	public function testPlot($includePath, $name, $width, $height) {
-		echo '<div id="container"><div id="main"><div id="data-browser" class="panel c">';
+		echo '<div id="container"><div id="main"><div id="data-browser" class="panel c"><div class="panel-content">';
 
 		echo Plot::getDivFor($name, $width, $height);
 		include FRONTEND_PATH.$includePath;
 
-		echo '</div></div></div>';
+		echo '</div></div></div></div>';
 
 		exit();
 	}

@@ -287,9 +287,9 @@ class Plot {
 			$title .= '<span class="link labeledLink flot-settings-fullscreen-hide hide" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_OUT_SMALL.' Vollbild verlassen</span>';
 
 			$title .= '<span class="right show-only-fullscreen" style="margin-top:3px;">';
-			$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleCrosshairMode(\''.$this->cssID.'\');"><i class="checkbox-icon'.(isset($this->Options['crosshair'])?' checked':'').'"></i> Crosshair</label>';
+			$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleCrosshairMode(\''.$this->cssID.'\');"><i class="fa fa-fw checkbox-icon'.(isset($this->Options['crosshair'])?' checked':'').'"></i> Crosshair</label>';
 			if (isset($this->Options['selection'])) // Does only work if handler are bound
-				$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleSelectionMode(\''.$this->cssID.'\');"><i class="checkbox-icon'.(isset($this->Options['selection'])?' checked':'').'"></i> Auswahl</label>';
+				$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleSelectionMode(\''.$this->cssID.'\');"><i class="fa fa-fw checkbox-icon'.(isset($this->Options['selection'])?' checked':'').'"></i> Auswahl</label>';
 			$title .= '</span>';
 
 			$title .= '</div>';

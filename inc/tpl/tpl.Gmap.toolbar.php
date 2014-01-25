@@ -18,7 +18,7 @@
 				<option value="OSM">OpenStreetMap&nbsp;</option>
 			</select>
 
-			<label class="checkable" onclick="$(this).children('i').toggleClass('checked');RunalyzeGMap.changeMarkerVisibility();"><i id="trainingMapMarkerVisibile" class="checkbox-icon <?php if (CONF_TRAINING_MAP_MARKER) echo 'checked'; ?>"></i> Marker anzeigen</label>
+			<label class="checkable" onclick="$(this).children('i').toggleClass('checked');RunalyzeGMap.changeMarkerVisibility();"><i id="trainingMapMarkerVisibile" class="fa fa-fw checkbox-icon <?php if (CONF_TRAINING_MAP_MARKER) echo 'checked'; ?>"></i> Marker anzeigen</label>
 
 			<?php echo Ajax::wrapJSforDocumentReady('$("#trainingMapTypeSelect").val("'.CONF_TRAINING_MAPTYPE.'");'); ?>
 

@@ -52,7 +52,6 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Lauf-ABC');
 		$this->displayData();
 	}
 

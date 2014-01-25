@@ -52,12 +52,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * @return array
 	 */
 	protected function getToolbarNavigationLinks() {
-		$Links = array();
+		$LinkList = array();
 
 		if ($this->config['for_weather']['var'])
-			$Links[] = array('tag' => Ajax::window('<a class="right" href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>'));
+			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>').'</li>';
 
-		return $Links;
+		return $LinkList;
 	}
 
 	/**
@@ -68,6 +68,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		$this->setYearsNavigation();
 		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
+
+		$this->setHeader($this->getHeader());
 	}
 
 	/**
@@ -75,8 +77,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader($this->getHeader());
-		
 		$this->displayExtremeTrainings();
 		$this->displayMonthTable();
 		$this->displayClothesTable();

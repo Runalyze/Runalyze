@@ -49,7 +49,6 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('H&ouml;henmeter');
 		$this->displayElevationData();
 		$this->displaySumData();
 		$this->displayUpwardData();

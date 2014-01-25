@@ -38,11 +38,9 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$html = '';
-		foreach ($this->getTimeset() as $i => $timeset) {
-			if ($i != 0)
-				$html .= ' | ';
+
+		foreach ($this->getTimeset() as $i => $timeset)
 			$html .= Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
-		}
 	
 		return $html;
 	}
@@ -94,8 +92,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	private function getTimeset() {
 		$timeset = array();
-		$timeset[] = array('name' => 'Diesen Monat', 'start' => mktime(0,0,0,date("m"),1,date("Y")));
-		$timeset[] = array('name' => 'Dieses Jahr', 'start' => mktime(0,0,0,1,1,date("Y")));
+		$timeset[] = array('name' => 'Monat', 'start' => mktime(0,0,0,date("m"),1,date("Y")));
+		$timeset[] = array('name' => 'Jahr', 'start' => mktime(0,0,0,1,1,date("Y")));
 		$timeset[] = array('name' => 'Gesamt', 'start' => START_TIME);
 	
 		return $timeset;

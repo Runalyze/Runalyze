@@ -107,13 +107,13 @@ class TrainingView {
 	 * Display title
 	 */
 	protected function displayTitle() {
-		$Title  = '<small class="right">'.$this->Training->DataView()->getFullDateWithWeekLink().'</small>';
-		$Title .= $this->Training->DataView()->getTitleWithComment();
-		if (!Request::isOnSharedPage())
-			$Title .= '&nbsp;<span class="link show-on-hover" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span>';
-		$Title .= HTML::clearBreak();
+		echo '<div class="icons-right panel-text-nav">';
+		echo '<small>'.$this->Training->DataView()->getFullDateWithWeekLink().'</small>';
+		echo '</div>';
+		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';
 
-		echo '<h1 class="show-on-hover-parent">'.$Title.'</h1>';
+		if (!Request::isOnSharedPage())
+			echo '<div class="hover-icons"><span class="link" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span></div>';
 	}
 
 	/**

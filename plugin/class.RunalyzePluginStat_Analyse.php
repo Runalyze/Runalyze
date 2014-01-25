@@ -89,17 +89,21 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->setAnalysisNavigation();
 		$this->setSportsNavigation();
 		$this->setYearsNavigation();
+
+		$this->setHeader($this->Sport->name().' '.$this->getYearString());
 	}
 
 	private function setAnalysisNavigation() {
-		$SubLinks = array();
-		$SubLinks[] = $this->getInnerLink('in Prozent', $this->sportid, $this->year, '');
+		$LinkList  = '<li class="with-submenu"><span class="link">Auswertung w&auml;hlen</span><ul class="submenu">';
+		$LinkList .= '<li>'.$this->getInnerLink('in Prozent', $this->sportid, $this->year, '').'</li>';
 
 		if ($this->Sport->usesDistance())
-			$SubLinks[] = $this->getInnerLink('nach Distanz', $this->sportid, $this->year, 'km');
-		$SubLinks[] = $this->getInnerLink('nach Dauer', $this->sportid, $this->year, 's');
+			$LinkList .= '<li>'.$this->getInnerLink('nach Distanz', $this->sportid, $this->year, 'km').'</li>';
 
-		$this->Links[] = array('tag' => '<a href="#">Auswertung w&auml;hlen</a>', 'subs' => $SubLinks);
+		$LinkList .= '<li>'.$this->getInnerLink('nach Dauer', $this->sportid, $this->year, 's').'</li>';
+		$LinkList .= '</ul></li>';
+
+		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
 	/**
@@ -107,8 +111,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader($this->Sport->name().' '.$this->getYearString());
-
 		$this->displayAnalysis();
 
 		echo HTML::info('* Die Werte beziehen sich auf die Durchschnittswerte der Trainings.');

@@ -9,20 +9,27 @@
 @list-margin:					5px 10px 15px 10px;
 @list-padding:					0 0 0 20px;
 @p-margin:						2px 5px;
+@p-message-okay-icon:			"\f058";
 @p-message-okay-color:			#8ab856;
 @p-message-okay-background:		#f5faf0;
+@p-message-info-icon:			"\f05a";
 @p-message-info-color:			#5c9ac9;
 @p-message-info-background:		#eff5fa;
+@p-message-warning-icon:		"\f071";
 @p-message-warning-color:		#d49822;
 @p-message-warning-background:	#ffffdd;
+@p-message-error-icon:			"\f056";
 @p-message-error-color:			#cc5555;
 @p-message-error-background:	#faeeee;
+@p-message-file-icon:			"\f016";
 @p-message-file-color:			#000;
 @p-message-file-background:		#f5f5f5;
 @content-wk-color:				#fdd;
 @content-error-color:			#f00;
 @content-minus-color:			#ca3030;
 @content-plus-color:			#30aa30;
+@icon-color-grey:				#999;
+@icon-color-green:				#8ab856;
 
 
 
@@ -37,7 +44,7 @@ a:hover, a:active, .link:hover {
 }
 
 .links-with-margin a {
-	margin-left: 15px;
+	margin-left: 10px;
 }
 
 h1 {
@@ -87,37 +94,47 @@ p {
 }
 
 td.errortype, p.okay, p.info, p.warning, p.error, p.file {
+	position: relative;
 	padding: 4px 2px 5px 22px !important;
-	background-position: 3px center;
-	background-repeat: no-repeat;
+
+	&:before {
+		position: absolute;
+		left: 0;
+		top: 5px;
+		width: 22px;
+		text-align: center;
+		display: block;
+		font-family: FontAwesome;
+		-webkit-font-smoothing: antialiased;
+	}
 }
 
 p.okay {
-	background-image: url(../../img/ok.gif);
+	&:before { content: @p-message-okay-icon; }
 	background-color: @p-message-okay-background;
 	color: @p-message-okay-color;
 }
 
 p.info, tr.TODO td.errortype, tr.NOTICE td.errortype, tr.DEBUG td.errortype {
-	background-image: url(../../img/info.gif);
+	&:before { content: @p-message-info-icon; }
 	background-color: @p-message-info-background;
 	color: @p-message-info-color;
 }
 
 p.warning, tr.WARNING td.errortype {
-	background-image: url(../../img/warning.png);
+	&:before { content: @p-message-warning-icon; }
 	background-color: @p-message-warning-background;
 	color: @p-message-warning-color;
 }
 
 p.error, tr.ERROR td.errortype {
-	background-image: url(../../img/error.gif);
+	&:before { content: @p-message-error-icon; }
 	background-color: @p-message-error-background;
 	color: @p-message-error-color;
 }
 
 p.file {
-	background-image: url(../../img/file.png);
+	&:before { content: @p-message-file-icon; }
 	background-color: @p-message-file-background;
 	color: @p-message-file-color;
 }
@@ -191,3 +208,6 @@ tr.ERROR td {
 .multi-edit-icon i { opacity: 0.7; }
 .multi-edit-remove-link { position: absolute; top: 10px; left: -10px; }
 .multi-edit-table tr.edited { opacity: 0.5; }
+
+.fa-grey { color: @icon-color-grey; }
+.fa-green { color: @icon-color-green; }

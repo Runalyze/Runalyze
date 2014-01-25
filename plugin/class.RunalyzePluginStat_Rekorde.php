@@ -47,7 +47,6 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Rekorde');
 		$this->displayRekorde();
 		$this->displayMostKilometer();
 	}

@@ -19,48 +19,46 @@ class Icon {
 	 * All avaiable icons are set as class members
 	 */
 	// Small, 12x12px
-	static public $EDIT             = '<i class="icon-edit"></i>';
-	static public $BACK             = '<i class="icon-back"></i>';
-	static public $NEXT             = '<i class="icon-next"></i>';
-	static public $ABC              = '<i class="icon-abc"></i>';
-	static public $ATTACH           = '<i class="icon-attach"></i>';
-	static public $CLOCK            = '<i class="icon-clock"></i>';
-	static public $CLOCK_ORANGE     = '<i class="icon-clock-orange"></i>';
-	static public $CLOCK_GREY       = '<i class="icon-clock-grey"></i>';
-	static public $DOWNLOAD         = '<i class="icon-download"></i>';
-	static public $DOWN             = '<i class="icon-down"></i>';
-	static public $UP               = '<i class="icon-up"></i>';
-	static public $ADD_SMALL        = '<i class="icon-add-small"></i>';
-	static public $ADD_SMALL_GREEN  = '<i class="icon-add-small-green"></i>';
-	static public $CONF             = '<i class="icon-conf"></i>';
-	static public $ZOOM_IN_SMALL    = '<i class="icon-zoom-in-small"></i>';
-	static public $ZOOM_OUT_SMALL   = '<i class="icon-zoom-out-small"></i>';
-	static public $SAVE             = '<i class="icon-save"></i>';
-	static public $CROSS_SMALL      = '<i class="icon-cross-small"></i>';
-	static public $LEFT             = '<i class="icon-left"></i>';
-	static public $RIGHT            = '<i class="icon-right"></i>';
-	static public $INFO_SMALL       = '<i class="icon-info-small"></i>';
-	static public $REFRESH_SMALL       = '<i class="icon-refresh-small"></i>';
+	static public $EDIT             = '<i class="fa fa-fw fa-pencil"></i>';
+	static public $BACK             = '<i class="fa fa-fw fa-chevron-left"></i>';
+	static public $NEXT             = '<i class="fa fa-fw fa-chevron-right"></i>';
+	static public $ABC              = '<small>ABC</small>';
+	static public $ATTACH           = '<i class="fa fa-fw fa-chain"></i>';
+	static public $CLOCK            = '<i class="fa fa-fw fa-clock-o"></i>';
+	static public $CLOCK_ORANGE     = '<i class="fa fa-fw fa-clock-o"></i>';
+	static public $CLOCK_GREY       = '<i class="fa fa-fw fa-clock-o unimportant"></i>';
+	static public $DOWNLOAD         = '<i class="fa fa-fw fa-external-link"></i>';
+	static public $DOWN             = '<i class="fa fa-fw fa-arrow-down"></i>';
+	static public $UP               = '<i class="fa fa-fw fa-arrow-up"></i>';
+	static public $ADD_SMALL        = '<i class="fa fa-fw fa-plus fa-grey"></i>';
+	static public $ADD_SMALL_GREEN  = '<i class="fa fa-fw fa-plus fa-green"></i>';
+	static public $CONF             = '<i class="fa fa-fw fa-cog"></i>';
+	static public $ZOOM_IN_SMALL    = '<i class="fa fa-fw fa-search-plus"></i>';
+	static public $ZOOM_OUT_SMALL   = '<i class="fa fa-fw fa-search-minus"></i>';
+	static public $SAVE             = '<i class="fa fa-fw fa-save"></i>';
+	static public $CROSS_SMALL      = '<i class="fa fa-fw fa-times"></i>';
+	static public $INFO_SMALL       = '<i class="fa fa-fw fa-info"></i>';
+	static public $REFRESH_SMALL    = '<i class="fa fa-fw fa-refresh"></i>';
 	// Big, 16x16px
-	static public $ADD              = '<i class="icon-add"></i>';
-	static public $CROSS            = '<i class="icon-cross"></i>';
-	static public $SEARCH           = '<i class="icon-search"></i>';
-	static public $REFRESH          = '<i class="icon-refresh"></i>';
-	static public $CALENDAR         = '<i class="icon-calendar"></i>';
-	static public $BARS_BIG         = '<i class="icon-bars-big"></i>';
-	static public $BARS_SMALL       = '<i class="icon-bars-small"></i>';
-	static public $FATIGUE          = '<i class="icon-fatigue"></i>';
-	static public $TABLE            = '<i class="icon-table"></i>';
-	static public $DELETE           = '<i class="icon-delete"></i>';
-	static public $PLUS             = '<i class="icon-plus"></i>';
-	static public $ZOOM_IN          = '<i class="icon-zoom-in"></i>';
-	static public $ZOOM_OUT         = '<i class="icon-zoom-out"></i>';
-	static public $ZOOM_FIT         = '<i class="icon-zoom-fit"></i>';
-	static public $CALCULATOR       = '<i class="icon-calculator"></i>';
+	static public $ADD              = '<i class="fa fa-fw fa-plus"></i>';
+	static public $CROSS            = '<i class="fa fa-fw fa-times"></i>';
+	static public $SEARCH           = '<i class="fa fa-fw fa-search"></i>';
+	static public $REFRESH          = '<i class="fa fa-fw fa-refresh"></i>';
+	static public $CALENDAR         = '<i class="fa fa-fw fa-calendar"></i>';
+	static public $BARS_BIG         = '<i class="fa fa-fw fa-bar-chart-o"></i>';
+	static public $BARS_SMALL       = '<i class="fa fa-fw fa-bar-chart-o"></i>';
+	static public $FATIGUE          = '<i class="fa fa-fw fa-signal"></i>';
+	static public $TABLE            = '<i class="fa fa-fw fa-table"></i>';
+	static public $DELETE           = '<i class="fa fa-fw fa-times"></i>';
+	static public $PLUS             = '<i class="fa fa-fw fa-plus"></i>';
+	static public $ZOOM_IN          = '<i class="fa fa-fw fa-search-plus"></i>';
+	static public $ZOOM_OUT         = '<i class="fa fa-fw fa-search-minus"></i>';
+	static public $ZOOM_FIT         = '<i class="fa fa-fw fa-search"></i>';
+	static public $CALCULATOR       = '<i class="fa fa-fw fa-magic"></i>';
 	// Own pictures
-	static public $INFO             = '<i class="icon-info"></i>';
-	static public $WARNING          = '<i class="icon-warning"></i>';
-	static public $ERROR            = '<i class="icon-error"></i>';
+	static public $INFO             = '<i class="fa fa-fw fa-info-circle"></i>';
+	static public $WARNING          = '<i class="fa fa-fw fa-warning"></i>';
+	static public $ERROR            = '<i class="fa fa-fw fa-minus-circle"></i>';
 
 	// Shoes
 	static public $BROKEN_1			= '<i class="broken-icon-1"></i>';

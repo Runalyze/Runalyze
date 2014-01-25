@@ -312,8 +312,12 @@ class Error {
 			include 'tpl/tpl.Frontend.header.php';
 
 		echo '<div class="panel">';
+		echo '<div class="panel-heading">';
 		echo '<h1>Fataler Fehler</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
 		echo HTML::error($message);
+		echo '</div>';
 		echo '</div>';
 		
 		if (!$this->footer_sent)

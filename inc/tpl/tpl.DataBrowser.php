@@ -1,32 +1,32 @@
-<h1>
-	<span class="right links-with-margin">
-<?php $this->displayIconLinks(); ?>
-	</span>
-
-<?php $this->displayNavigationLinks(); ?>
-</h1>
-
-<div id="<?php echo DataBrowser::$CALENDAR_ID; ?>">
-
-	<div id="widget-calendar">
+<div class="panel-heading">
+	<div class="icons-right links-with-margin">
+		<?php $this->displayIconLinks(); ?>
 	</div>
-
-	<span id="calendar-result" class="hide">W&auml;hle ein Datum aus ...</span>
-	<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
-	<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
-
-	<div class="c">
-		Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
-	</div>
-
-	<div class="c">
-		<span class="button" id="calendar-submit">Auswahl anzeigen</span>
-	</div>
+	<div class="icons-left"><?php $this->displayNavigationLinks(); ?></div>
+	<h1><?php $this->displayTitle(); ?></h1>
 </div>
+<div class="panel-content">
+	<div id="<?php echo DataBrowser::$CALENDAR_ID; ?>">
 
-<div id="data-browser-container">
-	<table class="zebra-style">
-		<tbody class="top-and-bottom-border">
+		<div id="widget-calendar">
+		</div>
+
+		<span id="calendar-result" class="hide">W&auml;hle ein Datum aus ...</span>
+		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
+		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
+
+		<div class="c">
+			Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
+		</div>
+
+		<div class="c">
+			<span class="button" id="calendar-submit">Auswahl anzeigen</span>
+		</div>
+	</div>
+
+	<div id="data-browser-container">
+		<table class="zebra-style">
+			<tbody class="top-and-bottom-border">
 <?php
 foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
@@ -100,6 +100,7 @@ foreach ($sports as $i => $sportdata) {
 		</tr>'.NL;
 }
 ?>
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+	</div>
 </div>

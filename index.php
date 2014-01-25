@@ -26,21 +26,20 @@ $Frontend = new Frontend();
 			</div>
 		</div>
 
-
-		<ul id="statistics-nav">
-			<?php
-			$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
-			foreach ($Stats as $i => $key) {
-				$Plugin = Plugin::getInstanceFor($key);
-				if ($Plugin !== false)
-					echo '<li'.($i == 0 ? ' class="active"' : '').'>'.$Plugin->getLink().'</li>'.NL;
-			}
-
-			if (PluginStat::hasVariousStats())
-				echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
-			?>
-		</ul>
 		<div id="statistics" class="panel">
+			<ul id="statistics-nav">
+				<?php
+				$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
+				foreach ($Stats as $i => $key) {
+					$Plugin = Plugin::getInstanceFor($key);
+					if ($Plugin !== false)
+						echo '<li'.($i == 0 ? ' class="active"' : '').'>'.$Plugin->getLink().'</li>';
+				}
+
+				if (PluginStat::hasVariousStats())
+					echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
+				?>
+			</ul>
 			<div id="statistics-inner">
 				<?php
 				if (empty($Stats))

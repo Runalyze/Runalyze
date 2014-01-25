@@ -38,7 +38,6 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Trainingszeiten');
 		$this->displayTable();
 
 		if (!$this->dataIsMissing)

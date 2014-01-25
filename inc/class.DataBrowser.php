@@ -187,10 +187,15 @@ class DataBrowser {
 	 * Display links to navigate in calendar
 	 */
 	protected function displayNavigationLinks() {
-		echo $this->getCalenderLink().NBSP;
-		echo $this->getPrevLink().NBSP;
-		echo $this->getNextLink().NBSP;
+		echo $this->getCalenderLink();
+		echo $this->getPrevLink();
+		echo $this->getNextLink();
+	}
 
+	/**
+	 * Display title
+	 */
+	protected function displayTitle() {
 		$timeForLinks = ($this->timestamp_start < time() && time() < $this->timestamp_end) ? time() : $this->timestamp_start;
 
 		echo DataBrowserLinker::monthLink(Time::Month(date("m", $timeForLinks)), $timeForLinks).', ';
