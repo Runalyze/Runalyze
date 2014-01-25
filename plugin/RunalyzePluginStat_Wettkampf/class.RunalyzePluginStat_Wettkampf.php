@@ -50,14 +50,29 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
+	 * Set own navigation
+	 */
+	protected function setOwnNavigation() {
+		$LinkList  = '';
+		$LinkList .= '<li>'.Ajax::change('Bestzeiten', 'statistics-inner', '#bestzeiten', 'triggered').'</li>';
+		$LinkList .= '<li>'.Ajax::change('Alle Wettk&auml;mpfe', 'statistics-inner', '#wk-tablelist').'</li>';
+
+		$this->setToolbarNavigationLinks(array($LinkList));
+	}
+
+	/**
+	 * Init data 
+	 */
+	protected function prepareForDisplay() {
+		$this->setOwnNavigation();
+	}
+
+	/**
 	 * Display the content
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
 		$this->handleGetData();
-
-		$this->displayHeader($this->name);
-		$this->displayOwnNavigation();
 		$this->displayDivs();
 	}
 
@@ -98,17 +113,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$this->displayAllCompetitions();
 			$this->displayWeatherStatistics();
 		echo '</div>'.NL;
-	}
-
-	/**
-	 * Display navigation for all container
-	 */
-	private function displayOwnNavigation() {
-		$Links   = array();
-		$Links[] = array('tag' => Ajax::change('Bestzeiten', 'statistics-inner', '#bestzeiten', 'triggered'));
-		$Links[] = array('tag' => Ajax::change('Alle Wettk&auml;mpfe', 'statistics-inner', '#wk-tablelist'));
-
-		echo Ajax::toolbarNavigation($Links, 'right');
 	}
 
 	/**

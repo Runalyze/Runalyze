@@ -502,7 +502,7 @@ abstract class Plugin {
 	 */
 	final public function getConfigLink($name = '', $add_param = '') {
 		if ($name == '')
-			$name = Ajax::tooltip(Icon::$CONF, 'Konfiguration &ouml;ffnen');
+			$name = Icon::$CONF;
 
 		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
 	}
@@ -512,7 +512,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	final public function getReloadLink() {
-		return '<span class="link show-on-hover" onclick="Runalyze.reloadPlugin(\''.$this->id.'\');">'.Icon::$REFRESH_SMALL.'</span>';
+		return '<span class="link" onclick="Runalyze.reloadPlugin(\''.$this->id.'\');">'.Icon::$REFRESH_SMALL.'</span>';
 	}
 
 	/**

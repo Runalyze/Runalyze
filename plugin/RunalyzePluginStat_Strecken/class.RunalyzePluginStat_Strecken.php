@@ -63,8 +63,6 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader('Strecken');
-
 		echo '<p class="c b">'.Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="toggle-icon-map checked"></i> Streckennetz &ouml;ffnen</a>', 'big').'</p>';
 		echo HTML::clearBreak();
 
@@ -201,4 +199,3 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		}
 	}
 }
-?>

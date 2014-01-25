@@ -23,9 +23,9 @@ $Frontend = new FrontendSharedList();
 
 if (!Request::isAjax()) {
 	if ($Frontend->userAllowsStatistics()) {
-		echo '<div class="panel" style="width:960px;margin:5px auto;">';
+		echo '<div class="panel" style="width:960px;margin:5px auto;"><div class="panel-content">';
 		$Frontend->displayGeneralStatistics();
-		echo '</div>';
+		echo '</div></div>';
 	}
 
 	echo '<div id="data-browser" class="panel" style="width:960px;margin:5px auto;">';
@@ -39,10 +39,12 @@ if (!Request::isAjax()) {
 	echo '</div>';
 
 	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
+	<div class="panel-content">
 		<p class="info">
 			Klicke ein Training an, um weitere Details anzuzeigen.<br />
 			Trainings, die f&uuml;r die Detailansicht freigegeben sind, sind durch ein '.Icon::$ADD_SMALL_GREEN.' markiert.
 		</p>
+	</div>
 </div>';
 }
 ?>

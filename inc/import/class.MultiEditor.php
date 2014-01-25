@@ -44,7 +44,10 @@ class MultiEditor {
 	 */
 	protected function displayNavigation() {
 		$Code  = '<div id="ajax-navigation" class="panel">';
+		$Code .= '<div class="panel-heading">';
 		$Code .= '<h1>Multi-Editor</h1>';
+		$Code .= '</div>';
+		$Code .= '<div class="panel-content">';
 		$Code .= '<table class="multi-edit-table fullwidth zebra-style"><tbody>';
 
 		foreach (self::$IDs as $i => $ID) {
@@ -72,6 +75,7 @@ class MultiEditor {
 		}
 
 		$Code .= '</tbody></table>';
+		$Code .= '</div>';
 		$Code .= '</div>';
 
 		echo Ajax::wrapJS('$(\'#ajax-navigation\').remove();$(\'body\').append(\''.$Code.'\')');

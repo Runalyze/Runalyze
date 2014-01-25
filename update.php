@@ -28,9 +28,9 @@
 
 <div id="overlay" style="display:block;"></div>
 <div id="ajax" class="panel" style="display:block;">
-	<h1>Update von Runalyze</h1>
+	<div class="panel-heading"><h1>Update von Runalyze</h1></div>
 
-	<div style="padding:0 70px;">
+	<div class="panel-content" style="padding:5px 70px;">
 <?php
 require_once 'inc/system/class.Mysql.php';
 require_once 'inc/class.Installer.php';

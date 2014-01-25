@@ -28,16 +28,15 @@ abstract class PluginStat extends Plugin {
 	protected $ShowCompareYearsLink = true;
 
 	/**
-	 * Array of links for toolbar-navigation
+	 * Array of links (each wrapped in a <li>-tag
 	 * @var array
 	 */
-	protected $Links = array();
+	private $LinkList = array();
 
 	/**
-	 * Boolean flag: header was shown
-	 * @var boolean
+	 * Header
 	 */
-	private $headerWasShown = false;
+	private $Header = '';
 
 	/**
 	 * Method for initializing default config-vars (implemented in each plugin)
@@ -89,7 +88,7 @@ abstract class PluginStat extends Plugin {
 	 * @param array $Links
 	 */
 	protected function setToolbarNavigationLinks($Links) {
-		$this->Links = $Links;
+		$this->LinkList = $Links;
 	}
 
 	/**
@@ -98,74 +97,86 @@ abstract class PluginStat extends Plugin {
 	public function display() {
 		$this->prepareForDisplay();
 
-		$this->displayNavigation();
-
+		echo '<div class="panel-heading">';
+		$this->displayHeader($this->Header, $this->getNavigation());
+		echo '</div>';
+		echo '<div class="panel-content statistics-container">';
 		$this->displayContent();
+		echo '</div>';
+	}
 
-		if ($this->headerWasShown)
-			echo '</div>';
+	/**
+	 * Set header
+	 * @param string $Header
+	 */
+	protected function setHeader($Header) {
+		$this->Header = $Header;
 	}
 
 	/**
 	 * Display header
 	 * @param string $name
+	 * @param string $rightMenu
+	 * @param string $leftMenu
 	 */
-	protected function displayHeader($name = '') {
+	private function displayHeader($name = '', $rightMenu = '', $leftMenu = '') {
 		if ($name == '')
 			$name = $this->name;
 
-		echo '<h1 class="show-on-hover-parent">
-			'.$name.'
-				<span class="show-on-hover">
-				'.$this->getConfigLink().'
-				'.$this->getReloadLink().'
-				</span>
-			</h1>'.NL;
+		if (!empty($leftMenu))
+			echo '<div class="icons-left">'.$leftMenu.'</div>';
+		if (!empty($rightMenu))
+			echo '<div class="icons-right panel-text-nav">'.$rightMenu.'</div>';
 
-		$this->headerWasShown = true;
-		echo '<div class="statistics-container">';
+		echo '<h1>'.$name.'</h1>';
+		echo '<div class="hover-icons">'.$this->getConfigLink().$this->getReloadLink().'</div>';
 	}
 
 	/**
-	 * Display navigation
+	 * Get navigation
 	 */
-	private function displayNavigation() {
+	private function getNavigation() {
 		if ($this->ShowSportsNavigation)
-			$this->Links[] = array('tag' => '<a href="#">Sportart w&auml;hlen</a>', 'subs' => $this->getSportLinksAsArray());
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">Sportart w&auml;hlen</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
 		if ($this->ShowYearsNavigation)
-			$this->Links[] = array('tag' => '<a href="#">Jahr w&auml;hlen</a>', 'subs' => $this->getYearLinksAsArray($this->ShowCompareYearsLink));
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">Jahr w&auml;hlen</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
 
 		if ($this->isVariousStat())
-			$this->Links = array_merge($this->Links, $this->getLinksForVariousStatistics());
+			$this->LinkList[] = $this->getLinksForVariousStatisticsAsList();
 
-		if (!empty($this->Links))
-			echo Ajax::toolbarNavigation($this->Links, 'right');
+		if (!empty($this->LinkList))
+			return '<ul>'.implode('', $this->LinkList).'</ul>';
+
+		return '';
 	}
 
 	/**
 	 * Get links to all various statistics
 	 * @return array
 	 */
-	private function getLinksForVariousStatistics() {
-		$Links = array();
+	private function getLinksForVariousStatisticsAsList() {
+		$Code  = '<li class="with-submenu"><span class="link">Statistik w&auml;hlen</span>';
+		$Code .= '<ul class="submenu">';
 
 		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
 		foreach ($others as $other)
-			$Links[] = self::getInnerLinkFor($other['id'], $other['name']);
+			$Code .= '<li>'.self::getInnerLinkFor($other['id'], $other['name']).'</li>';
 
-		return array( array('tag' => '<a href="#">Statistik w&auml;hlen</a>', 'subs' => $Links) );
+		$Code .= '</ul></li>';
+
+		return $Code;
 	}
 
 	/**
 	 * Get links for all sports
 	 * @return array
 	 */
-	private function getSportLinksAsArray() {
+	private function getSportLinksAsList() {
 		$Links = '';
 
 		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 		foreach ($Sports as $Sport)
-			$Links[] = $this->getInnerLink($Sport['name'], $Sport['id'], $this->year);
+			$Links .= '<li>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
 
 		return $Links;
 	}
@@ -174,14 +185,14 @@ abstract class PluginStat extends Plugin {
 	 * Get links for all years
 	 * @param bool $CompareYears If set, adds a link with year=-1
 	 */
-	private function getYearLinksAsArray($CompareYears = true) {
+	private function getYearLinksAsList($CompareYears = true) {
 		$Links = '';
 
 		if ($CompareYears)
-			$Links[] = $this->getInnerLink('Jahresvergleich', $this->sportid, -1);
+			$Links .= '<li>'.$this->getInnerLink('Jahresvergleich', $this->sportid, -1).'</li>';
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--)
-			$Links[] = $this->getInnerLink($x, $this->sportid, $x);
+			$Links .= '<li>'.$this->getInnerLink($x, $this->sportid, $x).'</li>';
 
 		return $Links;
 	}

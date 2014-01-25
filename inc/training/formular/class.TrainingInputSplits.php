@@ -72,10 +72,8 @@ class TrainingInputSplits extends FormularField {
 	 * @return string 
 	 */
 	protected function getSpanForLinks() {
-		$Span  = '<span style="position:relative;top:3px;">';
-		$Span .= '<span class="link" onclick="$(this).parent().parent().remove()">'.Icon::$DELETE.'</span> ';
-		$Span .= '<span class="link" onclick="$e=$(this);$p=$e.parent().parent();$p.clone().insertAfter($p);">'.Icon::$PLUS.'</span>';
-		$Span .= '</span>';
+		$Span  = '<span class="link" onclick="$(this).parent().remove()">'.Icon::$DELETE.'</span> ';
+		$Span .= '<span class="link" onclick="$e=$(this);$p=$e.parent();$p.clone().insertAfter($p);">'.Icon::$PLUS.'</span>';
 
 		return $Span;
 	}

@@ -102,15 +102,14 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	protected function setOwnNavigation() {
-		$SubLinks = array();
+		$LinkList  = '<li class="with-submenu"><span class="link">Alle Trainingswochen</span><ul class="submenu">';
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--)
-			$SubLinks[] = $this->getInnerLink($x, $this->sportid, $x, 'allWeeks');
+			$LinkList .= '<li>'.$this->getInnerLink($x, $this->sportid, $x, 'allWeeks').'</li>';
 
-		$Links   = array();
-		$Links[] = array('tag' => '<a href="#">Alle Trainingswochen</a>', 'subs' => $SubLinks);
+		$LinkList .= '</ul></li>';
 
-		$this->setToolbarNavigationLinks($Links);
+		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
 	/**
@@ -123,6 +122,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->setSportsNavigation();
 		$this->setYearsNavigation();
 		$this->setOwnNavigation();
+
+		$this->setHeader($this->sport['name'].': '.$this->getYearString());
 	}
 
 	/**
@@ -153,8 +154,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayHeader($this->sport['name'].': '.$this->getYearString());
-
 		if ($this->wantToShowAllWeeks()) {
 			$this->displayWeekTable(true);
 		} else {

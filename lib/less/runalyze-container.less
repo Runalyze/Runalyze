@@ -1,14 +1,26 @@
 @panel-margin:					5px 5px 10px 5px;
 @panel-padding:					5px;
 @panel-border:					#000;
-@panel-background:				rgba(255,255,255,.9);//url(../../img/bg.png);
+@panel-background:				rgba(255,255,255,.95);//url(../../img/bg.png);
+@panel-heading-border:			#ccc;
+@panel-heading-color:			#800;
+@panel-heading-font-size:		11px;
+@panel-heading-line-height:		18px;
+@panel-nav-active-color:		#000;
+@panel-nav-active-border:		#000;
+@panel-icons-margin:			5px;
+@panel-hover-icons-color:		#666;
+@panel-hover-icons-color-hover:	#000;
+
 @loading-min-height:			50px;
 @loading-background-image:		url(../../img/wait.gif);
 @loading-background-color:		@panel-background;
+
 @databox-border:				#ccc;
 @databox-background:			#f6f6f6;
 @databox-margin:				5px;
 @databox-padding:				3px;
+
 @error-toolbar-width:			800px;
 @error-toolbar-background:		#efefef;
 @error-toolbar-border:			#ccc;
@@ -17,14 +29,151 @@
 .panel {
 	position: relative;
 	margin: @panel-margin;
-	padding: @panel-padding;
 	background: @panel-background;
 	border: 1px solid @panel-border;
+}
+
+.panel-heading {
+	padding: @panel-padding;
+	border-bottom: 1px solid @panel-heading-border;
+	line-height: @panel-heading-line-height;
+
+	.fa {
+		line-height: @panel-heading-line-height;
+	}
+
+	h1 {
+		display: inline;
+		padding: 0;
+		margin: 0;
+		font-size: @panel-heading-font-size;
+		text-transform: uppercase;
+		color: @panel-heading-color;
+		border: none;
+	}
+
+	.hover-icons {
+		display: inline;
+		opacity: 0;
+		transition: opacity 0.3s ease-out;
+		color: @panel-hover-icons-color;
+		margin: 0 @panel-icons-margin;
+
+		.fa:hover {
+			color: @panel-hover-icons-color-hover;
+		}
+	}
+
+	&:hover .hover-icons {
+		opacity: 1;
+	}
+}
+
+.icons-left {
+	float: left;
+	margin-right: @panel-icons-margin;
+}
+
+.icons-right {
+	float: right;
+	margin-left: @panel-icons-margin;
+}
+
+.panel-text-nav {
+	a, .link {
+		position: relative;
+		display: inline-block;
+		padding: 0 @panel-padding (@panel-padding + 0px);
+		margin: 0 (@panel-padding/2);
+
+		&.active, &.triggered, &:hover {
+			color: @panel-nav-active-color;
+			border-bottom: 1px solid @panel-nav-active-border;
+		}
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
+
+		li {
+			display: inline-block;
+		}
+
+		.with-submenu {
+			position: relative;
+
+			> a, > .link {
+				&:after {
+					content: ' \f107';
+					font-family: FontAwesome;
+				}
+
+				&:hover {
+					border-bottom: none;
+				}
+			}
+
+			&:hover .submenu {
+				display: block;
+			}
+		}
+
+		.submenu {
+			z-index: 20;
+			display: none;
+			min-width: 100px;
+			position: absolute;
+			min-width: 100%;
+			margin-top: -1px;
+			border: 1px solid @panel-heading-border;
+			border-top-color: @panel-nav-active-border;
+			background-color: #fff;
+
+			li {
+				margin: 0;
+				padding: 0;
+				text-shadow: none;
+				float: none;
+				display: block;
+				overflow: hidden;
+				width: 100%;
+
+				a, span.link {
+					display: block;
+					padding: @panel-padding (1.5*@panel-padding);
+					margin: 0;
+
+					&:hover {
+						background-color: #f7f7f9;
+						border: none;
+					}
+				}
+			}
+		}
+	}
 }
 
 .small-head-navi {
 	font-size: .8em;
 	padding-top: 4px;
+}
+
+.panel-content {
+	padding: @panel-padding;
+
+	&.nopadding {
+		padding: 0;
+	}
+}
+
+.panel-multiple-content {
+	display: none;
+
+	&.active {
+		display: block;
+	}
 }
 
 .loading {
@@ -54,6 +203,35 @@
 	overflow: auto;
 }
 
+#statistics-nav {
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid @panel-heading-border;
+
+	li {
+		display: inline-block;
+		padding: 0;
+		margin: 0;
+
+		a {
+			display: inline-block;
+			line-height: 18px;
+			height: 18px;
+			padding: 5px 10px;
+			border-right: 1px solid @panel-heading-border;
+			text-transform: uppercase;
+
+			color: #666;
+		}
+
+		&.active a, &:hover a {
+			padding-bottom: 4px;
+			border-bottom: 1px solid @panel-border;
+			color: #000;
+		}
+	}
+}
+
 #statistics-inner {
 	> ul.jbar {
 		position: absolute;
@@ -62,47 +240,6 @@
 
 	table {
 		margin: 5px 0 10px;
-	}
-}
-
-#statistics {
-	margin-top: 0;
-	border-top: none;
-}
-
-#statistics-nav {
-	margin: 0 5px;
-	padding: 0;
-	height: 26px;
-	list-style: none;
-	border-bottom: 1px solid @panel-border;
-
-	li {
-		opacity: .8;
-		float: left;
-		position: relative;
-		top: 1px;
-		height: 25px;
-		line-height: 25px;
-		margin-right: -1px;
-		border: 1px solid @panel-border;
-		background: @panel-background;
-		overflow: hidden;
-
-		a {
-			display: block;
-			padding: 0 10px;
-		}
-
-		&.active, &:hover {
-			opacity: 1;
-			border-color: @panel-border;
-			border-bottom: none;
-
-			a:link, a:visited {
-				color: #000;
-			}
-		}
 	}
 }
 

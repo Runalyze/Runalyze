@@ -78,7 +78,7 @@ abstract class PluginPanel extends Plugin {
 
 		$this->displayHeader();
 
-		echo NL.'<div class="content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
+		echo NL.'<div class="panel-content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
 		$this->displayContent();
 		echo '</div>';
 
@@ -104,11 +104,12 @@ abstract class PluginPanel extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo '<span class="right '.($this->textAsRightSymbol ? 'small-head-navi' : '').'">'.$this->getRightSymbol().'</span>
-			<h1 class="show-on-hover-parent">
-				<span class="link clap" rel="'.$this->id.'" title="'.$this->description.'">'.$this->name.'</span>
-				<span class="show-on-hover">'.$this->getConfigLinks().'</span>
-			</h1>';
+		echo '<div class="panel-heading">';
+		//echo '<div class="icons-left"></div>';
+		echo '<div class="icons-right'.($this->textAsRightSymbol ? ' panel-text-nav' : '').'">'.$this->getRightSymbol().'</div>';
+		echo '<h1 class="link clap" rel="'.$this->id.'">'.$this->name.'</h1>';
+		echo '<div class="hover-icons">'.$this->getConfigLinks().'</div>';
+		echo '</div>';
 	}
 
 	/**
