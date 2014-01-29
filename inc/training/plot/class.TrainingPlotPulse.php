@@ -104,7 +104,7 @@ class TrainingPlotPulse extends TrainingPlot {
 			$Plot->addYUnit($YAxis, '%', 1);
 			$Plot->setYTicks($YAxis, 5, 0);
 
-			if ($average >= 60)
+			if ($average >= 60 || empty($Data))
 				$Plot->setYLimits($YAxis, 50, 100);
 			else
 				$Plot->setYLimits($YAxis, 10*floor(min($Data)/10), 100);
