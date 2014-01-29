@@ -105,6 +105,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * Set GPS data
 	 */
 	protected function setGPSarrays() {
+		$this->removeSingleEntriesFromGPSarrays();
+
 		if (empty($this->gps['pace']) && !empty($this->gps['time_in_s']) && !empty($this->gps['km']))
 			$this->setPaceFromDistanceAndTime();
 
@@ -120,6 +122,16 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 
 		$this->setValuesFromArraysIfEmpty();
+	}
+
+	/**
+	 * Clear gps arrays with only one entry
+	 */
+	private function removeSingleEntriesFromGPSarrays() {
+		foreach ($this->gps as $key => $values) {
+			if (count($values) == 1)
+				$this->gps[$key] = array();
+		}
 	}
 
 	/**

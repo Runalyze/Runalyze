@@ -59,7 +59,7 @@ class TrainingPlotSplits extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
-		if ($this->splitsAreNotComplete()) {
+		if ($this->splitsAreNotComplete() || !$this->Training->hasArrayDistance() || !$this->Training->hasArrayTime()) {
 			$showInactive = !$this->Training->Splits()->hasActiveLaps();
 			$this->Labels = $this->Training->Splits()->distancesAsArray($showInactive);
 			$this->Data   = $this->Training->Splits()->pacesAsArray($showInactive);
@@ -119,6 +119,7 @@ class TrainingPlotSplits extends TrainingPlot {
 		$this->Plot->showBars(true);
 
 		$this->Plot->setYTicks(1, null);
+		$this->Plot->Options['xaxis']['show'] = true; // force to show xaxis-labels, even if no time or distance array is given
 
 		if ($this->demandedPace > 0) {
 			$this->Plot->addThreshold("y", $this->demandedPace*1000, 'rgb(180,0,0)');
