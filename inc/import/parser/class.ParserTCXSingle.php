@@ -304,7 +304,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 */
 	private function distanceToTrackpoint(SimpleXMLElement &$TP) {
 		if (empty($this->gps['km']))
-			return 0.001;
+			return empty($TP->Position) ? 0 : 0.001;
 
 		if (empty($TP->Position))
 			return end($this->gps['km']);
