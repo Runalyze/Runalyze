@@ -122,8 +122,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 
 		$this->setValuesFromArraysIfEmpty();
-		var_dump($this->gps);
-		die();
 	}
 
 	/**
