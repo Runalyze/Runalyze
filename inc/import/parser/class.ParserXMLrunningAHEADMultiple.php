@@ -51,14 +51,12 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 			self::$NewEquipment[(string)$Equipment->attributes()->id] = Mysql::getInstance()->insert(PREFIX.'shoe',
 				array(
 					'name',
-					'brand',
 					'since',
 					'additionalKm',
 					'inuse'
 				),
 				array(
 					(string)$Equipment->Name,
-					(isset($Equipment->Name['make']) && (string)$Equipment->Name['make'] != 'Unknown') ? (string)$Equipment->Name['make'] : '',
 					(isset($Equipment->PurchaseInfo) && isset($Equipment->PurchaseInfo['date'])) ? (string)$Equipment->PurchaseInfo['date'] : '',
 					(isset($Equipment->Distance) && isset($Equipment->Distance['initialDistance'])) ? $this->distanceFromUnit($Equipment->Distance['initialDistance'], $Equipment->Distance['unit']) : 0,
 					(isset($Equipment->Name['retired']) && (string)$Equipment->Name['retired'] == 'true') ? 0 : 1
