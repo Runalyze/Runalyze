@@ -54,7 +54,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 			$this->TrainingObject->setShoeid( ParserXMLrunningAHEADMultiple::newEquipmentId((string)$this->XML->Equipment['id']) );
 
 		if (isset($this->XML->Route))
-			$this->TrainingObject->setRoute( utf8_decode((string)$this->XML->Route) );
+			$this->TrainingObject->setRoute( (string)$this->XML->Route );
 	}
 
 	/**
@@ -63,7 +63,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 	protected function parseSplits() {
 		if (isset($this->XML->IntervalCollection)) {
 			if ((string)$this->XML->IntervalCollection['name'] != 'GPS Interval')
-				$this->TrainingObject->setComment( utf8_decode((string)$this->XML->IntervalCollection['name']) );
+				$this->TrainingObject->setComment( (string)$this->XML->IntervalCollection['name'] );
 
 			foreach ($this->XML->IntervalCollection->Interval as $Interval) {
 				if ((double)$Interval->Duration['seconds'] > 0)
@@ -98,7 +98,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 		}
 
 		if (isset($this->XML->Notes))
-			$this->TrainingObject->setNotes( utf8_decode((string)$this->XML->Notes) );
+			$this->TrainingObject->setNotes( (string)$this->XML->Notes );
 	}
 
 	/**
