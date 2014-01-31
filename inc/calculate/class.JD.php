@@ -163,6 +163,9 @@ class JD {
 		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']) || $elevationFromDatabaseNeeded)
 			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg`, `elevation`, `arr_alt`, `arr_time` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
 
+		if (!$training)
+			return 0;
+
 		if ($up === false && $down === false) {
 			if (isset($training['arr_alt']) && !empty($training['arr_alt'])) {
 				$GPS    = new GpsData($training);

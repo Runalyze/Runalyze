@@ -68,9 +68,15 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * Parse all events
 	 */
 	protected function parseEvents() {
-		if (isset($this->XML->EventCollection->Event))
-			foreach ($this->XML->EventCollection->Event as $Event)
-				$this->parseSingleEvent($Event);
+		if (isset($this->XML->EventCollection->Event)) {
+			foreach ($this->XML->EventCollection->Event as $Event) {
+				// TODO: Import "empty" events as notes, as soon as we have "notes" as single data
+				// At the moment, the multiple importer can't handle "empty" trainings
+				// Therefore, check if the event has a duration
+				if (isset($Event->Duration) && (double)$Event->Duration['seconds'] > 1)
+					$this->parseSingleEvent($Event);
+			}
+		}
 	}
 
 	/**
