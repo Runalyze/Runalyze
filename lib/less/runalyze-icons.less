@@ -1,0 +1,17 @@
+@icon-vdot-color-up:			#009500;
+@icon-vdot-color-up-half:		desaturate(@icon-vdot-color-up, 50%);
+@icon-vdot-color-half:			desaturate(@icon-vdot-color-up, 100%);
+@icon-vdot-color-down:			#ba0000;
+@icon-vdot-color-down-half:		desaturate(@icon-vdot-color-down, 50%);
+
+.vdot-icon {
+	&.fa-arrow-up { color: @icon-vdot-color-up; }
+	&.fa-arrow-up.fa-rotate-45 { color: @icon-vdot-color-up-half; }
+	&.fa-arrow-right { color: @icon-vdot-color-half; }
+	&.fa-arrow-down { color: @icon-vdot-color-down; }
+	&.fa-arrow-right.fa-rotate-45 { color: @icon-vdot-color-down-half; }
+}
+
+.vdot-ignore {
+	opacity: .25;
+}

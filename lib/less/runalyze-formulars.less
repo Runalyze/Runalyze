@@ -88,13 +88,25 @@ fieldset {
 	legend {
 		cursor: pointer;
 		color: @formular-legend-color;
-		padding-left: 18px;
 		padding-right: 3px;
-		background: url("../../img/palOpen.gif") left center no-repeat transparent;
+		margin-left: 6px;
+
+		&:before {
+			display: inline-block;
+			font-family: FontAwesome;
+			-webkit-font-smoothing: antialiased;
+			line-height: 1;
+			content: "\f0da";
+			width: 12px;
+			text-align: center;
+			color: @font-color;
+		}
 	}
 
 	&.collapsed legend {
-		background: url("../../img/palCollapsed.gif") left center no-repeat transparent;
+		&:before {
+			content: "\f0d7";
+		}
 	}
 
 	label {
