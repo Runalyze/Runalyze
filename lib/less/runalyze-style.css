@@ -35,7 +35,7 @@ body#home {
 }
 #container {
   min-width: 654px;
-  padding-right: 370px;
+  padding-right: 344px;
   position: relative;
 }
 #panels {
@@ -275,12 +275,21 @@ fieldset.without-legend {
 fieldset legend {
   cursor: pointer;
   color: #8ab858;
-  padding-left: 18px;
   padding-right: 3px;
-  background: url("../../img/palOpen.gif") left center no-repeat transparent;
+  margin-left: 6px;
 }
-fieldset.collapsed legend {
-  background: url("../../img/palCollapsed.gif") left center no-repeat transparent;
+fieldset legend:before {
+  display: inline-block;
+  font-family: FontAwesome;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+  content: "\f0da";
+  width: 12px;
+  text-align: center;
+  color: #333333;
+}
+fieldset.collapsed legend:before {
+  content: "\f0d7";
 }
 fieldset label {
   font-weight: bold;
@@ -868,9 +877,6 @@ tr.ERROR td {
 .panel-heading {
   padding: 5px;
   border-bottom: 1px solid #cccccc;
-  line-height: 18px;
-}
-.panel-heading .fa {
   line-height: 18px;
 }
 .panel-heading h1 {
@@ -1462,6 +1468,24 @@ td.bottom-spacer {
     margin: 0 auto;
   }
 }
+.vdot-icon.fa-arrow-up {
+  color: #009500;
+}
+.vdot-icon.fa-arrow-up.fa-rotate-45 {
+  color: #257025;
+}
+.vdot-icon.fa-arrow-right {
+  color: #4b4b4b;
+}
+.vdot-icon.fa-arrow-down {
+  color: #ba0000;
+}
+.vdot-icon.fa-arrow-right.fa-rotate-45 {
+  color: #8b2f2f;
+}
+.vdot-ignore {
+  opacity: .25;
+}
 [class^="icon-"],
 [class*=" icon-"] {
   display: inline-block;
@@ -1608,43 +1632,6 @@ label:hover .toggle-icon-temperature {
 label:active .checkbox-icon {
   position: relative;
   top: 1px;
-}
-.vdot-icon {
-  display: inline-block;
-  width: 9px;
-  height: 12px;
-  vertical-align: text-top;
-  background-image: url(../../img/vdot.png);
-}
-.vdot-icon.vdot-up-2 {
-  background-position: 0 0;
-}
-.vdot-icon.vdot-up {
-  background-position: 0 -12px;
-}
-.vdot-icon.vdot-normal {
-  background-position: 0 -24px;
-}
-.vdot-icon.vdot-down {
-  background-position: 0 -36px;
-}
-.vdot-icon.vdot-down-2 {
-  background-position: 0 -48px;
-}
-.vdot-icon.vdot-gray-up-2 {
-  background-position: -9px 0;
-}
-.vdot-icon.vdot-gray-up {
-  background-position: -9px -12px;
-}
-.vdot-icon.vdot-gray-normal {
-  background-position: -9px -24px;
-}
-.vdot-icon.vdot-gray-down {
-  background-position: -9px -36px;
-}
-.vdot-icon.vdot-gray-down-2 {
-  background-position: -9px -48px;
 }
 .weather-icon {
   display: inline-block;
@@ -3502,4 +3489,11 @@ ul.toolbar-menu ul.submenu li span.link:hover {
 }
 .fa-plus-square-o:before {
   content: "\f196";
+}
+.fa-rotate-45 {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
 }

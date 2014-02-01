@@ -132,22 +132,22 @@ class Icon {
 		if ($VDOT == 0)
 			return '';
 
-		$class = 'vdot-';
+		$class = ' vdot-icon small';
 
 		if ($gray)
-			$class .= 'gray-';
+			$class .= ' vdot-ignore';
 
 		if ( $VDOT > (VDOT_FORM+3) )
-			$class .= 'up-2';
+			$class .= ' fa-arrow-up';
 		elseif ( $VDOT > (VDOT_FORM+1) )
-			$class .= 'up';
+			$class .= ' fa-arrow-up fa-rotate-45';
 		elseif ( $VDOT < (VDOT_FORM-3) )
-			$class .= 'down-2';
+			$class .= ' fa-arrow-down';
 		elseif ( $VDOT < (VDOT_FORM-1) )
-			$class .= 'down';
+			$class .= ' fa-arrow-right fa-rotate-45';
 		else
-			$class .= 'normal';
+			$class .= ' fa-arrow-right';
 
-		return Ajax::tooltip('<i class="vdot-icon '.$class.'"></i>', 'VDOT: '.$VDOT);
+		return Ajax::tooltip('<i class="fa fa-fw'.$class.'"></i>', 'VDOT: '.$VDOT);
 	}
 }
