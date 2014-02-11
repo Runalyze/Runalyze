@@ -12,12 +12,27 @@ $xAxis       = array();
 for ($w = 1; $w <= 7; $w++)
 	$xAxis[] = array($w-1, Time::Weekday($w, true));
 
-$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+if ($this->sportid > 0) {
+	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid);
+} else {
+	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+}
+
 foreach ($Sports as $sport) {
 	$id = $sport['name'];
 	$yAxis[$id] = array(0, 0, 0, 0, 0, 0, 0);
 
-	$data = Mysql::getInstance()->fetchAsArray('SELECT SUM(`s`) as `value`, (DAYOFWEEK(FROM_UNIXTIME(`time`))-1) as `day` FROM `'.PREFIX.'training` WHERE `sportid`="'.$sport['id'].'" GROUP BY `day` ORDER BY ((`day`+6)%7) ASC');
+	$data = Mysql::getInstance()->fetchAsArray('
+		SELECT
+			SUM(`s`) as `value`,
+			(DAYOFWEEK(FROM_UNIXTIME(`time`))-1) as `day`
+		FROM `'.PREFIX.'training`
+		WHERE
+			`sportid`="'.$sport['id'].'"
+			'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
+		GROUP BY `day`
+		ORDER BY ((`day`+6)%7) ASC
+	');
 
 	foreach ($data as $dat)
 		$yAxis[$id][($dat['day']+6)%7] = $dat['value']/3600;

@@ -16,6 +16,12 @@ abstract class PluginStat extends Plugin {
 	protected $ShowSportsNavigation = false;
 
 	/**
+	 * Boolean flag: show link for all sports
+	 * @var bool
+	 */
+	protected $ShowAllSportsLink = false;
+
+	/**
 	 * Boolean flag: show years-navigation
 	 * @var bool
 	 */
@@ -68,9 +74,11 @@ abstract class PluginStat extends Plugin {
 	/**
 	 * Set flag for sports-navigation
 	 * @param bool $flag
+	 * @param bool $flag
 	 */
-	protected function setSportsNavigation($flag = true) {
+	protected function setSportsNavigation($flag = true, $allFlag = false) {
 		$this->ShowSportsNavigation = $flag;
+		$this->ShowAllSportsLink = $allFlag;
 	}
 
 	/**
@@ -153,6 +161,9 @@ abstract class PluginStat extends Plugin {
 	 */
 	private function getSportLinksAsList() {
 		$Links = '';
+
+		if ($this->ShowAllSportsLink)
+			$Links .= '<li>'.$this->getInnerLink('Alle', -1, $this->year).'</li>';
 
 		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 		foreach ($Sports as $Sport)

@@ -9,12 +9,30 @@ $titleCenter = 'Trainingszeit nach Uhrzeit [in h]';
 $xAxis       = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 $yAxis       = array();
 
-$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+if ($this->sportid > 0) {
+	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid);
+} else {
+	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+}
+
 foreach ($Sports as $sport) {
 	$id = $sport['name'];
 	$yAxis[$id] = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
-	$data = Mysql::getInstance()->fetchAsArray('SELECT SUM(1) as `num`, SUM(`s`) as `value`, HOUR(FROM_UNIXTIME(`time`)) as `h` FROM `'.PREFIX.'training` WHERE `sportid`="'.$sport['id'].'" AND (HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0) GROUP BY `h` ORDER BY `h` ASC');
+	$data = Mysql::getInstance()->fetchAsArray('
+		SELECT
+			SUM(1) as `num`,
+			SUM(`s`) as `value`,
+			HOUR(FROM_UNIXTIME(`time`)) as `h`
+		FROM `'.PREFIX.'training`
+		WHERE
+			`sportid`="'.$sport['id'].'" AND
+			(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
+			'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
+		GROUP BY `h`
+		ORDER BY `h` ASC
+	');
+
 	foreach ($data as $dat)
 		$yAxis[$id][$dat['h']] = $dat['value']/3600;
 }
