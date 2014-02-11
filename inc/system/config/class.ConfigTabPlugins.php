@@ -112,7 +112,6 @@ class ConfigTabPlugins extends ConfigTab {
 				break;
 			case 'stat':
 				$Code .= HTML::info('* Versteckte Plugins werden unter &quot;Sonstiges&quot; gruppiert.');
-				$Code .= HTML::info('Es sollten nicht mehr als acht Plugins sichtbar sein, da es dann zu Design-Problemen kommen kann.');
 				break;
 			case 'tool':
 			default:
