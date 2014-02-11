@@ -206,9 +206,6 @@ class GpsData {
 	private function loadArrayDataFrom($string) {
 		$array = explode(DataObject::$ARR_SEP, $string);
 
-		if (count($array) == 1)
-			return array();
-
 		return $array;
 	}
 
@@ -1134,7 +1131,26 @@ class GpsData {
 		if (!$this->hasPositionData())
 			return;
 
-		switch (CONF_TRAINING_ELEVATION_SERVER) {
+		try {
+			$ElevationCorrector = new ElevationCorrector();
+			$ElevationCorrector->correctElevation($this->arrayForLatitude, $this->arrayForLongitude);
+
+			$elevationArray = $ElevationCorrector->getCorrectedElevation();
+
+			if (!empty($elevationArray)) {
+				$this->arrayForElevation = $elevationArray;
+				$this->correctInvalidElevationValues();
+
+				return $this->arrayForElevation;
+			}
+		} catch (Exception $Exception) {
+			// TODO: Make this exception somehow visible
+			Error::getInstance()->addError($Exception->getMessage());
+		}
+
+		return false;
+
+		/*switch (CONF_TRAINING_ELEVATION_SERVER) {
 			case 'google':
 				$returnedArray = $this->getElevationCorrectionFromGoogle();
 				break;
@@ -1150,7 +1166,7 @@ class GpsData {
 
 		$this->correctInvalidElevationValues();
 
-		return $this->arrayForElevation;
+		return $this->arrayForElevation;*/
 	}
 
 	/**
@@ -1189,7 +1205,7 @@ class GpsData {
 	 * Get elevation correction from GoogleMapsAPI
 	 * @return array
 	 */
-	public function getElevationCorrectionFromGoogle() {
+	/*public function getElevationCorrectionFromGoogle() {
 		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
 		$numForEachCall = 20;
 		$altitude       = array();
@@ -1215,13 +1231,13 @@ class GpsData {
 		}
 
 		return $altitude;
-	}
+	}*/
 
 	/**
 	 * Get elevation correction from Geonames
 	 * @return array
 	 */
-	public function getElevationCorrectionFromGeonames() {
+	/*public function getElevationCorrectionFromGeonames() {
 		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
 		$numForEachCall = 20;
 		$altitude = array();
@@ -1238,7 +1254,7 @@ class GpsData {
 				$html = false;
 
 				while ($html === false) {
-					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs).'&username=runalyze');
 					if (substr($html,0,1) == '<')
 						$html = false;
 					else {
@@ -1255,14 +1271,14 @@ class GpsData {
 		}
 
 		return $altitude;
-	}
+	}*/
 
 	/**
 	 * Get answer from GoogleMapsAPI for elevation as array
 	 * @param array $CoordinatesAsStringArray
 	 * @return mixed Array for success, otherwise false
 	 */
-	private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
+	/*private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
 		$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
 		$String = Filesystem::getExternUrlContent($url);
 
@@ -1282,7 +1298,7 @@ class GpsData {
 		}
 
 		return $Xml;
-	}
+	}*/
 
 	/**
 	 * Calculate complete elevation
