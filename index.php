@@ -36,8 +36,21 @@ $Frontend = new Frontend();
 						echo '<li'.($i == 0 ? ' class="active"' : '').'>'.$Plugin->getLink().'</li>';
 				}
 
-				if (PluginStat::hasVariousStats())
-					echo '<li>'.PluginStat::getLinkForVariousStats().'</li>';
+				if (PluginStat::hasVariousStats()) {
+					echo '<li class="with-submenu">';
+					echo '<a href="#">Sonstige</a>';
+					echo '<ul class="submenu">';
+
+					$VariousStats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE_VARIOUS);
+					foreach ($VariousStats as $key) {
+						$Plugin = Plugin::getInstanceFor($key);
+						if ($Plugin !== false)
+							echo '<li>'.$Plugin->getLink().'</li>';
+					}
+
+					echo '</ul>';
+					echo '</li>';
+				}
 				?>
 			</ul>
 			<div id="statistics-inner">

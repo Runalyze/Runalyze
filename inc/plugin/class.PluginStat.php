@@ -141,30 +141,10 @@ abstract class PluginStat extends Plugin {
 		if ($this->ShowYearsNavigation)
 			$this->LinkList[] = '<li class="with-submenu"><span class="link">Jahr w&auml;hlen</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
 
-		if ($this->isVariousStat())
-			$this->LinkList[] = $this->getLinksForVariousStatisticsAsList();
-
 		if (!empty($this->LinkList))
 			return '<ul>'.implode('', $this->LinkList).'</ul>';
 
 		return '';
-	}
-
-	/**
-	 * Get links to all various statistics
-	 * @return array
-	 */
-	private function getLinksForVariousStatisticsAsList() {
-		$Code  = '<li class="with-submenu"><span class="link">Statistik w&auml;hlen</span>';
-		$Code .= '<ul class="submenu">';
-
-		$others = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="stat" AND `active`=2 ORDER BY `order` ASC');
-		foreach ($others as $other)
-			$Code .= '<li>'.self::getInnerLinkFor($other['id'], $other['name']).'</li>';
-
-		$Code .= '</ul></li>';
-
-		return $Code;
 	}
 
 	/**
@@ -210,9 +190,6 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	public function getLink() {
-		if ($this->isVariousStat())
-			return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="Kleinere Statistiken">Sonstiges</a>';
-
 		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
 	}
 
