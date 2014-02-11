@@ -18,6 +18,9 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
+		if (!isset($_GET['sport']))
+			$this->sportid = -1;
+
 		$this->type = Plugin::$STAT;
 		$this->name = 'Trainingszeiten';
 		$this->description = 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.';
@@ -31,6 +34,34 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		$config = array();
 
 		return $config;
+	}
+
+	/**
+	 * Prepare
+	 */
+	protected function prepareForDisplay() {
+		$this->setYearsNavigation(true, true);
+		$this->setSportsNavigation(true, true);
+
+		$this->setIndividualHeader();
+	}
+
+	/**
+	 * Set individual header
+	 */
+	protected function setIndividualHeader() {
+		$HeaderParts = array();
+
+		if ($this->sportid > 0) {
+			$Sport = new Sport($this->sportid);
+			$HeaderParts[] = $Sport->name();
+		}
+
+		if ($this->year > 0)
+			$HeaderParts[] = $this->year;
+
+		if (!empty($HeaderParts))
+			$this->setHeader($this->name.': '.implode(', ', $HeaderParts));
 	}
 
 	/**
@@ -50,10 +81,14 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * Display the images
 	 */
 	private function displayTable() {
-		$sports_not_short = '';
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=0');
-		foreach ($sports as $sport)
-			$sports_not_short .= $sport['id'].',';
+		if ($this->sportid > 0) {
+			$sports_not_short = $this->sportid.',';
+		} else {
+			$sports_not_short = '';
+			$sports = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=0');
+			foreach ($sports as $sport)
+				$sports_not_short .= $sport['id'].',';
+		}
 	
 		$nights = Mysql::getInstance()->fetchAsArray('SELECT * FROM (
 			SELECT
@@ -69,6 +104,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			WHERE
 				`sportid` IN('.substr($sports_not_short,0,-1).') AND
 				(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
+				'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
 			ORDER BY
 				ABS(6-(`H`+4)%24-`MIN`/60) ASC,
 				`MIN` DESC LIMIT 20
