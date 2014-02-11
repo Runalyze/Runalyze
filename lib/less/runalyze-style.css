@@ -283,13 +283,13 @@ fieldset legend:before {
   font-family: FontAwesome;
   -webkit-font-smoothing: antialiased;
   line-height: 1;
-  content: "\f0da";
+  content: "\f0d7";
   width: 12px;
   text-align: center;
   color: #333333;
 }
 fieldset.collapsed legend:before {
-  content: "\f0d7";
+  content: "\f0da";
 }
 fieldset label {
   font-weight: bold;
@@ -1036,11 +1036,41 @@ statistics-containerr {
   text-transform: uppercase;
   color: #666;
 }
-#statistics-nav li.active a,
-#statistics-nav li:hover a {
+#statistics-nav li.active > a,
+#statistics-nav li:hover > a {
   padding-bottom: 4px;
   border-bottom: 1px solid #000000;
   color: #000;
+}
+#statistics-nav li.with-submenu > a:after {
+  content: ' \f107';
+  font-family: FontAwesome;
+}
+#statistics-nav li.with-submenu:hover .submenu {
+  display: block;
+}
+#statistics-nav ul.submenu {
+  z-index: 20;
+  display: none;
+  position: absolute;
+  margin: 0 0 0 -1px;
+  padding: 0;
+  border: 1px solid #cccccc;
+  list-style-type: none;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+#statistics-nav ul.submenu li {
+  overflow: hidden;
+  display: block;
+}
+#statistics-nav ul.submenu li a {
+  display: block;
+  overflow: hidden;
+  white-spacer: nowrap;
+  text-overflow: ellipsis;
+  zoom: 1;
+  height: auto;
+  border-right: none;
 }
 #statistics-inner > ul.jbar {
   position: absolute;
