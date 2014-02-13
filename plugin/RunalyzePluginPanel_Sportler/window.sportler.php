@@ -28,8 +28,12 @@ $Formular = new StandardFormular($UserData, $Mode);
 if ($Formular->submitSucceeded())
 	header('Location: window.sportler.table.php?reload=true');
 
+echo '<div class="panel-heading">';
+echo '<h1>'.$Header.'</h1>';
+echo '</div>';
+echo '<div class="panel-content">';
 $Formular->addCSSclass('no-automatic-reload');
 $Formular->setId('sportler');
-$Formular->setHeader($Header);
 $Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
 $Formular->display();
+echo '</div>';

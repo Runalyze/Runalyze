@@ -25,6 +25,8 @@
 @error-toolbar-background:		#efefef;
 @error-toolbar-border:			#ccc;
 
+@nav-submenu-hover:				#f7f7f9;
+
 
 .panel {
 	position: relative;
@@ -37,6 +39,11 @@
 	padding: @panel-padding;
 	border-bottom: 1px solid @panel-heading-border;
 	line-height: @panel-heading-line-height;
+
+	&.panel-sub-heading {
+		margin-top: 2*@panel-padding;
+		border-top: 1px solid @panel-heading-border;
+	}
 
 	//.fa {
 	//	line-height: @panel-heading-line-height;
@@ -80,16 +87,35 @@
 }
 
 .panel-text-nav {
+	&.panel-nav-floated {
+		float: right;
+		top: 0;
+		right: 0;
+		margin-left: @panel-icons-margin;
+	}
+
+	&.panel-text-nav-only-text {
+		padding: @panel-padding 2*@panel-padding @panel-padding;
+		line-height: @heading-line-height;
+
+		a, .link {
+			display: inline;
+			padding: 0;
+			line-height: inherit;
+			border: none;
+		}
+	}
+
+	position: relative;
+	top: -@panel-padding;
+	right: -@panel-padding;
+
 	a, .link {
 		position: relative;
 		display: inline-block;
-		padding: 0 @panel-padding (@panel-padding + 0px);
-		margin: 0 (@panel-padding/2);
-
-		&.active, &.triggered, &:hover {
-			color: @panel-nav-active-color;
-			border-bottom: 1px solid @panel-nav-active-border;
-		}
+		padding: @panel-padding 2*@panel-padding @panel-padding;
+		line-height: @heading-line-height;
+		border-left: 1px solid @panel-heading-border;
 	}
 
 	ul {
@@ -98,21 +124,28 @@
 		list-style-type: none;
 
 		li {
+			position: relative;
 			display: inline-block;
+			border-bottom: 1px solid @panel-heading-border;
+
+			&.active, &.triggered, &:hover {
+				color: @panel-nav-active-color;
+				border-bottom-color: @panel-nav-active-border;
+			}
 		}
 
 		.with-submenu {
-			position: relative;
-
 			> a, > .link {
+				line-height: (@heading-line-height - 1px);
+
 				&:after {
 					content: ' \f107';
 					font-family: FontAwesome;
 				}
+			}
 
-				&:hover {
-					border-bottom: none;
-				}
+			&:hover {
+				border-bottom: none;
 			}
 
 			&:hover .submenu {
@@ -126,10 +159,9 @@
 			min-width: 100px;
 			position: absolute;
 			min-width: 100%;
-			margin-top: -1px;
 			border: 1px solid @panel-heading-border;
-			border-top-color: @panel-nav-active-border;
-			background-color: #fff;
+			border-bottom: none;
+			background-color: @panel-background;
 
 			li {
 				margin: 0;
@@ -144,9 +176,10 @@
 					display: block;
 					padding: @panel-padding (1.5*@panel-padding);
 					margin: 0;
+					border-left: none;
 
 					&:hover {
-						background-color: #f7f7f9;
+						background-color: @nav-submenu-hover;
 						border: none;
 					}
 				}
@@ -211,8 +244,7 @@
 	li {
 		display: inline-block;
 		padding: 0;
-		margin: 0 0 -1px 0;
-		border-bottom: 1px solid @panel-heading-border; // To fix borders if there is more than one line
+		margin: 0;
 
 		a {
 			display: inline-block;
@@ -226,8 +258,6 @@
 		}
 
 		&.active > a, &:hover > a {
-			padding-bottom: 4px;
-			border-bottom: 1px solid @panel-border;
 			color: #000;
 		}
 
@@ -237,9 +267,24 @@
 				font-family: FontAwesome;
 			}
 
-			&:hover .submenu {
-				display: block;
+			&:hover {
+				> a {
+					border-bottom-color: transparent;
+				}
+
+				.submenu {
+					display: block;
+				}
 			}
+		}
+	}
+
+	> li {
+		margin-bottom: -1px;
+		border-bottom: 1px solid @panel-heading-border;
+
+		&.active, &:hover {
+			border-bottom-color: @panel-border;
 		}
 	}
 
@@ -250,21 +295,31 @@
 		margin: 0 0 0 -1px;
 		padding: 0;
 		border: 1px solid @panel-heading-border;
+		border-bottom: none;
 		list-style-type: none;
 		background-color: @panel-background;
 
 		li {
 			overflow: hidden;
 			display: block;
+			border-bottom: 1px solid @panel-heading-border;
+
+			&.active, &:hover {
+				border-bottom-color: @panel-border;
+			}
 
 			a {
 				display: block;
 				overflow: hidden;
-				white-spacer: nowrap;
+				white-space: nowrap;
 				text-overflow: ellipsis;
 				zoom: 1;
 				height: auto;
 				border-right: none;
+
+				&:hover {
+					background-color: @nav-submenu-hover;
+				}
 			}
 		}
 	}

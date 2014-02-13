@@ -62,7 +62,6 @@ class ImporterWindowTabFormular extends ImporterWindowTab {
 
 		$Formular = new TrainingFormular($SingleObject, StandardFormular::$SUBMIT_MODE_CREATE);
 		$Formular->setId('training');
-		$Formular->setHeader('Training hinzuf&uuml;gen');
 		$Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$Formular->display();
 	}

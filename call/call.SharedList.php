@@ -23,9 +23,9 @@ $Frontend = new FrontendSharedList();
 
 if (!Request::isAjax()) {
 	if ($Frontend->userAllowsStatistics()) {
-		echo '<div class="panel" style="width:960px;margin:5px auto;"><div class="panel-content">';
+		echo '<div class="panel" style="width:960px;margin:5px auto;">';
 		$Frontend->displayGeneralStatistics();
-		echo '</div></div>';
+		echo '</div>';
 	}
 
 	echo '<div id="data-browser" class="panel" style="width:960px;margin:5px auto;">';

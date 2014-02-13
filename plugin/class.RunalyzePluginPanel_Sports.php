@@ -37,12 +37,12 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$html = '';
+		$html = '<ul>';
 
 		foreach ($this->getTimeset() as $i => $timeset)
-			$html .= Ajax::change($timeset['name'], 'sports', '#sports_'.$i);
+			$html .= '<li>'.Ajax::change($timeset['name'], 'sports', '#sports_'.$i).'</li>';
 	
-		return $html;
+		return $html.'</ul>';
 	}
 
 	/**

@@ -174,6 +174,7 @@ class Formular extends HtmlTag {
 	public function display() {
 		$this->prepareForDisplay();
 
+		echo '<div class="panel-content">';
 		echo '<form '.$this->attributes().'>';
 
 		$this->displayHeader();
@@ -183,6 +184,7 @@ class Formular extends HtmlTag {
 		$this->displaySubmitButtons();
 
 		echo '</form>';
+		echo '</div>';
 	}
 
 	/**

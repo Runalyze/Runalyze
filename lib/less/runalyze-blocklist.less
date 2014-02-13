@@ -1,3 +1,12 @@
+@blocklist-width:				70px;
+@blocklist-height:				20px;
+@blocklist-margin:				5px;
+@blocklist-padding-top-bottom:	5px;
+@blocklist-padding-left-right:	30px;
+@blocklist-border-color:		#ccc;
+@blocklist-bg-color:			#fafafb;
+@blocklist-bg-color-hover:		#fefeff;
+
 .blocklist {
 	li {
 		list-style-type: none;
@@ -5,30 +14,40 @@
 
 	a {
 		display: block;
-		width: 70px;
-		line-height: 20px;
-		margin: 5px auto;
-		padding: 5px 30px;
-		border-radius: 5px 5px 5px 5px;
-		box-shadow: 1px 1px 7px #E0E0E0;
+		position: relative;
+		width: @blocklist-width;
+		line-height: @blocklist-height;
+		margin: @blocklist-margin auto;
+		padding: @blocklist-padding-top-bottom @blocklist-padding-left-right;
 		text-align: center;
-		border: 1px solid #ccc;
-		background-color: #F6F6F7;
+		border: 1px solid @blocklist-border-color;
+		background-color: @blocklist-bg-color;
 		background-position: 9px center;
 		background-repeat: no-repeat;
 
 		&:hover {
-			box-shadow: 1px 1px 7px #CCC;
+			background-color: @blocklist-bg-color-hover;
 		}
 
 		&.nopadding {
 			width: 120px;
 			padding: 5px;
 		}
+
+		.fa {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: @blocklist-padding-left-right;
+			height: (@blocklist-height + @blocklist-padding-top-bottom);
+			line-height: (@blocklist-height + 2*@blocklist-padding-top-bottom);
+			font-size: (@blocklist-height + 2*@blocklist-padding-top-bottom)/2;
+			text-align: center;
+		}
 	}
 }
 
 .blocklist-inline li {
 	float: left;
-	margin: 5px;
+	margin: @blocklist-margin;
 }

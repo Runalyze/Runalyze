@@ -7,8 +7,11 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 ?>
-<h1>Wie sich die Werte der Rechenspiele berechnen</h1>
+<div class="panel-heading">
+	<h1>Wie sich die Werte der Rechenspiele berechnen</h1>
+</div>
 
+<div class="panel-content">
 <?php
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Rechenspiele');
 
@@ -24,3 +27,4 @@ $Formular->allowOnlyOneOpenedFieldset();
 //$Formular->addSubmitButton('Berechnungen starten');
 $Formular->display();
 ?>
+</div>

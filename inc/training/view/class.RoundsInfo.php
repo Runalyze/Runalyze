@@ -122,10 +122,15 @@ class RoundsInfo {
 	 * Display
 	 */
 	public function display() {
+		echo '<div class="panel-heading">';
 		$this->displayHeader();
+		echo '</div>';
+
+		echo '<div class="panel-content">';
 		$this->displayFormular();
 		$this->displayRounds();
 		$this->displayInformation();
+		echo '</div>';
 	}
 
 	/**

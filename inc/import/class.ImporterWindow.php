@@ -179,7 +179,9 @@ class ImporterWindow {
 		foreach ($this->Tabs as $Tab)
 			$Links[] = array('tag' => $Tab->link());
 
-		echo Ajax::toolbarNavigation($Links, 'right');
+		echo '<div class="panel-nav-floated panel-text-nav">';
+		echo Ajax::toolbarNavigation($Links);
+		echo '</div>';
 	}
 
 	/**
@@ -194,8 +196,14 @@ class ImporterWindow {
 	 * Display errors
 	 */
 	private function displayErrors() {
-		foreach ($this->Errors as $Error)
-			echo HTML::error($Error);
+		if (!empty($this->Errors))  {
+			echo '<div class="panel-content">';
+
+			foreach ($this->Errors as $Error)
+				echo HTML::error($Error);
+
+			echo '</div>';
+		}
 	}
 
 	/**

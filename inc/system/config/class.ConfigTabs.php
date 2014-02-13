@@ -73,7 +73,7 @@ class ConfigTabs {
 		foreach ($this->Tabs as $Tab)
 			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
 
-		echo Ajax::toolbarNavigation($Links, 'right');
+		echo Ajax::toolbarNavigation($Links);
 	}
 
 	/**
@@ -81,7 +81,9 @@ class ConfigTabs {
 	 */
 	public function display() {
 		if ($this->hasToShowDiv()) {
+			echo '<div class="panel-nav-floated panel-text-nav">';
 			$this->displayNavigation();
+			echo '</div>';
 
 			echo '<div id="'.self::$TABS_ID.'">';
 		}

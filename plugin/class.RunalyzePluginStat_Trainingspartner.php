@@ -48,7 +48,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		echo '<table class="fullwidth zebra-style margin-5 small">';
+		echo '<table class="fullwidth zebra-style">';
 		echo '<thead><tr><th colspan="2">Alle Trainingspartner</th></tr></thead>';
 		echo '<tbody>';
 

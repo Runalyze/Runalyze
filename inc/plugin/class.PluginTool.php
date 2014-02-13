@@ -52,8 +52,13 @@ abstract class PluginTool extends Plugin {
 		if (Request::param('wrap') != "")
 			echo '<div id="pluginTool">';
 
+		echo '<div class="panel-heading">';
 		$this->displayHeader();
+		echo '</div>';
+		echo '<div class="panel-content">';
+		echo '<p class="text">'.$this->description.'</p>';
 		$this->displayContent();
+		echo '</div>';
 
 		if (Request::param('wrap') != "")
 			echo '</div>';
@@ -71,9 +76,11 @@ abstract class PluginTool extends Plugin {
 			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
 
 		$Links = array();
-		$Links[] = array('tag' => '<a href="#">Plugin w&auml;hlen</a>', 'subs' => $Sublinks);
+		$Links[] = array('tag' => '<a href="#">Tool w&auml;hlen</a>', 'subs' => $Sublinks);
 
-		echo Ajax::toolbarNavigation($Links, 'right');
+		echo '<div class="panel-nav-floated panel-text-nav">';
+		echo Ajax::toolbarNavigation($Links);
+		echo '</div>';
 	}
 
 	/**
@@ -81,10 +88,13 @@ abstract class PluginTool extends Plugin {
 	 */
 	public static function displayToolsContent() {
 		echo '<div id="'.self::$TOOLS_DIV_ID.'">';
+		echo '<div class="panel-heading">';
 		echo '<h1>Tools</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
 		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br /><br />';
 
-		echo '<table class="fullwidth zebra-style">';
+		echo '<table class="fullwidth zebra-style more-padding">';
 		echo '<thead><tr><th colspan="3">Installierte Tools:</th></tr></thead>';
 		echo '<tbody class="top-and-bottom-border">';
 
@@ -100,12 +110,13 @@ abstract class PluginTool extends Plugin {
 				<tr>
 					<td>'.$Plugin->getConfigLink().'</td>
 					<td class="b">'.self::getLinkFor($Plugin->get('id'), $Plugin->get('name')).'</td>
-					<td class="small">'.$Plugin->get('description').'</td>
+					<td>'.$Plugin->get('description').'</td>
 				</tr>');
 		}
 				
 		echo '</tbody>';
 		echo '</table>';
+		echo '</div>';
 		echo '</div>';
 	}
 
@@ -113,13 +124,8 @@ abstract class PluginTool extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo '<h1 class="show-on-hover-parent">
-			'.$this->name.'
-				<span class="show-on-hover">
-				'.$this->getConfigLink().'
-				</span>
-			</h1>
-			'.$this->description.'<br /><br />';
+		echo '<h1>'.$this->name.'</h1>';
+		echo '<div class="hover-icons">'.$this->getConfigLink().'</div>';
 	}
 
 	/**

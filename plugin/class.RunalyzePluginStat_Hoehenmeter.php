@@ -60,7 +60,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Display the table with summed data for every month 
 	 */
 	private function displayElevationData() {
-		echo '<table class="small fullwidth zebra-style r">';
+		echo '<table class="fullwidth zebra-style r">';
 		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
 		echo '<tbody>';
 
@@ -93,7 +93,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Display the table for routes with highest elevation
 	 */
 	private function displaySumData() {
-		echo '<table style="width:48%;" style="margin:0 5px;" class="left small zebra-style">';
+		echo '<table style="width:48%;" style="margin:0 5px;" class="left zebra-style">';
 		echo '<thead><tr class="b c"><th colspan="4">Meisten H&ouml;henmeter</th></tr></thead>';
 		echo '<tbody>';
 
@@ -123,7 +123,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Display the table for routes with procentual highest elevation
 	 */
 	private function displayUpwardData() {
-		echo '<table style="width:48%;" style="margin:0 5px;" class="right small zebra-style">';
+		echo '<table style="width:48%;" style="margin:0 5px;" class="right zebra-style">';
 		echo '<thead><tr class="b c"><th colspan="4">Steilsten Strecken</th></tr></thead>';
 		echo '<tbody>';
 

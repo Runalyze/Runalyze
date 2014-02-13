@@ -28,11 +28,16 @@ class VDOTinfo {
 	 * Display
 	 */
 	public function display() {
+		echo '<div class="panel-heading">';
 		$this->displayHeader();
+		echo '</div>';
+
+		echo '<div class="panel-content">';
 		$this->displayAsCompetition();
 		$this->displayWithHeartrate();
 		$this->displayWithCorrector();
 		$this->displayWithElevation();
+		echo '</div>';
 	}
 
 	/**

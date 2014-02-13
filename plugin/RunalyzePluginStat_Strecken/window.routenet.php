@@ -9,8 +9,12 @@ $Frontend = new Frontend();
 
 require 'class.RunalyzePluginStat_Strecken.php';
 ?>
-<h1>Streckennetz</h1>
 
+<div class="panel-heading">
+	<h1>Streckennetz</h1>
+</div>
+
+<div class="panel-content">
 <?php
 $EmptyMap = new Gmap('all', new GpsData(array(
 	'arr_time'	=> '',
@@ -48,7 +52,8 @@ foreach ($AllTrainings as $Training) {
 echo Ajax::wrapJSforDocumentReady('RunalyzeGMap.setOverlayMapToFullscreen();');
 ?>
 
-<p class="info small">
+<p class="info">
 	Das Streckennetz beinhaltet die <?php echo RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET; ?> neuesten Strecken.
 	Mehr Strecken sind zur Zeit aus Performance-Gr&uuml;nden nicht m&ouml;glich.
 </p>
+</div>

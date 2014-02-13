@@ -55,6 +55,10 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$Link = Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="fa fa-map-marker"></i> Streckennetz &ouml;ffnen</a>', 'big');
+
+		$this->setToolbarNavigationLinks(array($Link));
+
 		$this->initCities();
 	}
 
@@ -63,9 +67,6 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		echo '<p class="c b">'.Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="toggle-icon-map checked"></i> Streckennetz &ouml;ffnen</a>', 'big').'</p>';
-		echo HTML::clearBreak();
-
 		$this->displayRoutes();
 		$this->displayCities();
 
@@ -79,7 +80,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display routes
 	 */
 	private function displayRoutes() {
-		echo '<table style="width:70%;" class="left zebra-style small margin-5">';
+		echo '<table style="width:70%;" class="left zebra-style">';
 		echo '<thead><tr><th colspan="3">H&auml;ufigsten Strecken</th></tr></thead>';
 		echo '<tbody class="r">';
 
@@ -113,7 +114,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display most visited cities
 	 */
 	private function displayCities() {
-		echo '<table style="width:25%;" class="right zebra-style small margin-5">';
+		echo '<table style="width:25%;" class="right zebra-style">';
 		echo '<thead><tr><th colspan="2">H&auml;ufigsten Orte</th></tr></thead>';
 		echo '<tbody>';
 		
@@ -143,7 +144,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Display less visited cities
 	 */
 	private function displayLonelyCities() {
-		echo '<table class="margin-5 fullwidth zebra-style small">';
+		echo '<table class="margin-5 fullwidth zebra-style">';
 		echo '<thead><tr><th colspan="2">Seltensten Orte</th></tr></thead>';
 		echo '<tbody>';
 
@@ -156,7 +157,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 					if ($num != 1)
 						echo '</td></tr>';
 					$num_x = $num;
-					echo '<tr class="a'.($num_x%2+1).'"><td class="b">'.$num.'x</td><td>';
+					echo '<tr><td class="b">'.$num.'x</td><td>';
 				} else
 					echo(', ');
 
@@ -169,7 +170,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		}
 
 		echo('
-			<tr class="a'.(($num_x+1)%2+1).'">
+			<tr class="no-zebra">
 				<td colspan="2" class="c">
 					Insgesamt wurden <strong>'.count($this->orte).' verschiedene Orte</strong> sportlich besucht.
 				</td>
@@ -177,7 +178,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		</tbody>
 		</table>
 
-		<p class="small c"><em>Alles was bei der eingetragenen Strecke mit &quot; - &quot; getrennt wird, wird als eigener Ort betrachtet.</em></p>');
+		<p class="c"><em>Alles was bei der eingetragenen Strecke mit &quot; - &quot; getrennt wird, wird als eigener Ort betrachtet.</em></p>');
 	}
 
 	/**

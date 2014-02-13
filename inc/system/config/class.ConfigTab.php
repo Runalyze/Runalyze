@@ -69,11 +69,22 @@ abstract class ConfigTab {
 	 * Display formular 
 	 */
 	final public function display() {
+		echo '<div class="panel-heading">';
+		echo '<h1>'.$this->title.'</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
+		$this->displayFormular();
+		echo '</div>';
+	}
+
+	/**
+	 * Display formular
+	 */
+	private function displayFormular() {
 		$this->Formular = new Formular($this->getUrl().'&form=true');
 
 		$this->setFieldsetsAndFields();
 
-		$this->Formular->setHeader($this->title);
 		$this->Formular->setId($this->key);
 		$this->Formular->addCSSclass('ajax');
 		$this->Formular->addCSSclass('no-automatic-reload');
