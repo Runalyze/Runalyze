@@ -25,7 +25,7 @@ $Frontend = new Frontend(true);
 			window.parent.Runalyze.changeConfig('GARMIN_IGNORE_IDS',id,true);
 		}
 
-		var currentActivity = 0, uploadedActivities = [], display;
+		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
 				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br />Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
@@ -89,6 +89,16 @@ $Frontend = new Frontend(true);
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
 						statusCell.innerHTML = 'neu<br /><small onclick="ignoreID(\''+activityId+'\', this)">[ignorieren]</small>';
+
+						// Rearrange: Put to the top
+						if (index != newIndex) {
+							var rows = $("activityTable").getElementsByTagName('tr');
+							var firstOldRow = rows[newIndex];
+							var removedRow = rows[index].parentNode.removeChild(rows[index]);
+							rows[0].parentNode.insertBefore(removedRow, firstOldRow);
+						}
+
+						newIndex = newIndex + 1;
 					}
 				},
 				postActivityHandler: function(activityXml, display) {
@@ -111,12 +121,14 @@ $Frontend = new Frontend(true);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
 					$("readSelectedButton").value = "Importieren";
-					$("selectAllButton").setStyle({display:'inline'});
+
+					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;">alle</a>';
 
 					var checkboxes = $$("input[type=checkbox]");
 					var cbControl = $("selectAllButton");
 
-					cbControl.observe("click", function(){
+					cbControl.observe("click", function(e){
+						e.preventDefault();
 						cbControl.toggleClassName('checked');
 						checkboxes.each(function(box){
 							box.checked = cbControl.hasClassName('checked');
@@ -133,8 +145,6 @@ if (strlen(GARMIN_API_KEY) > 10)
 </head>
 
 <body onload="load()" style="background:none;">
-
-	<span href="#" id="selectAllButton" style="position:absolute;top:1px;left:8px;display:none;cursor:pointer;font-size:.8em;color:#666;">alle w&auml;hlen</span>
 
 	<div id="garminDisplay"></div>
 

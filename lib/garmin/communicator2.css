@@ -8,7 +8,7 @@ body { padding: 0; margin: 0; }
 	width: 480px;
 	margin: 0 auto;
 	padding: 3px;
-	border: 1px solid #D2D2D3;
+	border: 1px solid #ccc;
 	background: url(bg.jpg) no-repeat scroll center center;
 }
 
@@ -19,9 +19,6 @@ body { padding: 0; margin: 0; }
 	padding: 1px;
     border: 1px solid #000;
     background-color: #CCCAC1;
-	-webkit-box-shadow: 0 0 5px #777;
-	-moz-box-shadow: 0 0 5px #777;
-	box-shadow: 0 0 5px #777;
 	overflow: hidden;
 }
 
@@ -31,9 +28,6 @@ body { padding: 0; margin: 0; }
 	left: 1px;
     z-index: 5;
 	height: 20px;
-	-moz-box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
-	-webkit-box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
-	box-shadow: 0 10px 0 rgba(255, 255, 255, .05) inset;
 	background: #800;
 }
 
@@ -62,7 +56,6 @@ body { padding: 0; margin: 0; }
     padding: 2px;
 	margin: 4px 2px;
 	border: 1px solid #B8B8B8;
-	border-radius: 3px 3px 3px 3px;
 	background-color: #EBFDD7;
 }
 
@@ -100,29 +93,50 @@ body { padding: 0; margin: 0; }
     overflow: auto;
     position: relative;
 }
-#activityDirectoryData tr {
-	width: 340px;
-}
 
 #activityTableHeader {
     color: #000;
-    width: 425px;
+    width: 430px;
     margin: 0 auto;
-}
-#activityTableHeader td {
-	padding: 2px 10px;
-	font-weight: bold;
+	border-bottom: 1px solid #000;
 }
 
 #activityTable {
-	border-top: 1px solid #000;
     color: #000000;
     font-weight: normal;
     font-size: 10px;
 }
 
+#activityTableHeader a {
+	color: inherit;
+	font-weight: normal;
+}
+
+#activityTableHeader td {
+	padding: 1px 5px;
+	font-weight: bold;
+	text-align: center;
+}
 #activityTable td {
 	padding: 1px 5px;
+	text-align: center;
+}
+
+#activityTableHeader tr > td,
+#activityTable tr > td {
+	width: 35px !important;
+}
+#activityTableHeader tr > td + td,
+#activityTable tr > td + td {
+	width: 165px !important;
+}
+#activityTableHeader tr > td + td + td,
+#activityTable tr > td + td + td {
+	width: 90px !important;
+}
+#activityTableHeader tr > td + td + td + td,
+#activityTable tr > td + td + td + td {
+	width: 100px !important;
 }
 
 .activityStatusCell {
@@ -139,12 +153,12 @@ body { padding: 0; margin: 0; }
 	font-weight: normal;
 }
 
-#activityDirectoryData td {
-	background: rgba(255,255,255,.6);
+#activityDirectoryData tr:nth-child(2n) {
+	background: rgba(255,255,255,.6) !important;
 }
 
-#activityDirectoryData .odd td {
-	background: rgba(255,255,255,.8);
+#activityDirectoryData tr:nth-child(2n+1) {
+	background: rgba(255,255,255,.8) !important;
 }
 
 .pluginElement {
@@ -168,15 +182,7 @@ body { padding: 0; margin: 0; }
 	margin: 10px auto 0 auto;
 	padding: 5px 12px;
 	color: #FFF;
-	text-shadow: 1px 1px 0 #666;
 	background-color: #555;
-	border: 1px solid #B8B8B8;
-	border-radius: 3px 3px 3px 3px;
-	box-shadow: 0 1px 3px #BBBBBB;
+	border: none;
 	cursor: pointer;
-}
-
-#readDataButton:hover, #readSelectedButton:hover,
-#readDataButton:active, #readSelectedButton:active {
-	box-shadow: 0 0 6px #8AB856;
 }
