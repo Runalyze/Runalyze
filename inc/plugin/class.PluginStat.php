@@ -122,6 +122,24 @@ abstract class PluginStat extends Plugin {
 	}
 
 	/**
+	 * Add sport and year (if set) to header
+	 */
+	protected function setHeaderWithSportAndYear() {
+		$HeaderParts = array();
+
+		if ($this->sportid > 0) {
+			$Sport = new Sport($this->sportid);
+			$HeaderParts[] = $Sport->name();
+		}
+
+		if ($this->year > 0)
+			$HeaderParts[] = $this->year;
+
+		if (!empty($HeaderParts))
+			$this->setHeader($this->name.': '.implode(', ', $HeaderParts));
+	}
+
+	/**
 	 * Display header
 	 * @param string $name
 	 * @param string $rightMenu

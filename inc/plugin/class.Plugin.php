@@ -351,8 +351,8 @@ abstract class Plugin {
 		$this->order       = $dat['order'];
 		$this->name        = $dat['name'];
 		$this->description = $dat['description'];
-		$this->sportid     = CONF_MAINSPORT;
-		$this->year        = date('Y');
+		$this->sportid     = $this->defaultSport();
+		$this->year        = $this->defaultYear();
 		$this->dat         = '';
 
 		if (isset($_GET['sport']))
@@ -366,6 +366,30 @@ abstract class Plugin {
 
 		$this->initConfigVars($dat['config']);
 		$this->checkConfigVarsForChanges();
+	}
+
+	/**
+	 * Default sport
+	 * 
+	 * May be overwritten in subclass.
+	 * Default setting: CONF_MAINSPORT
+	 * 
+	 * @return int sportid, can be -1 for all sports
+	 */
+	protected function defaultSport() {
+		return CONF_MAINSPORT;
+	}
+
+	/**
+	 * Default year
+	 * 
+	 * May be overwritten in subclass.
+	 * Default setting: current year
+	 * 
+	 * @return int year, can be -1 for no year/comparison of all years
+	 */
+	protected function defaultYear() {
+		return date('Y');
 	}
 
 	/**

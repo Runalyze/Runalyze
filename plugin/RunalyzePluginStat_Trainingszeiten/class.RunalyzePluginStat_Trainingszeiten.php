@@ -18,9 +18,6 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		if (!isset($_GET['sport']))
-			$this->sportid = -1;
-
 		$this->type = Plugin::$STAT;
 		$this->name = 'Trainingszeiten';
 		$this->description = 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.';
@@ -43,25 +40,15 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		$this->setYearsNavigation(true, true);
 		$this->setSportsNavigation(true, true);
 
-		$this->setIndividualHeader();
+		$this->setHeaderWithSportAndYear();
 	}
 
 	/**
-	 * Set individual header
+	 * Default sport
+	 * @return int
 	 */
-	protected function setIndividualHeader() {
-		$HeaderParts = array();
-
-		if ($this->sportid > 0) {
-			$Sport = new Sport($this->sportid);
-			$HeaderParts[] = $Sport->name();
-		}
-
-		if ($this->year > 0)
-			$HeaderParts[] = $this->year;
-
-		if (!empty($HeaderParts))
-			$this->setHeader($this->name.': '.implode(', ', $HeaderParts));
+	protected function defaultSport() {
+		return -1;
 	}
 
 	/**
