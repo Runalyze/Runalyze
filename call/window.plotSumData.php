@@ -7,6 +7,8 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
+echo '<div class="panel-content">';
+
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
 
@@ -22,3 +24,5 @@ if ($_GET['type'] == 'week') {
 } else {
 	echo HTML::error('Wochen- oder Monatsdaten? Es ist kein korrekter <em>type</em> f&uuml;r dieses Diagramm angegeben.');
 }
+
+echo '</div>';

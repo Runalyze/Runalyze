@@ -29,12 +29,6 @@ class AjaxTabs {
 	protected $containerExists = false;
 
 	/**
-	 * Toolbar position (or css class)
-	 * @var string
-	 */
-	protected $toolbarPosition = 'right';
-
-	/**
 	 * Header for div
 	 * @var string
 	 */
@@ -86,14 +80,6 @@ class AjaxTabs {
 	}
 
 	/**
-	 * Set toolbar position (or css class)
-	 * @param string $position
-	 */
-	public function setToolbarPosition($position) {
-		$this->toolbarPosition = $position;
-	}
-
-	/**
 	 * Set header as h1 in div-container
 	 * @param string $String
 	 */
@@ -118,16 +104,28 @@ class AjaxTabs {
 	 * Display content
 	 */
 	protected function displayContent() {
+		echo '<div class="panel-heading">';
 		$this->displayNavigation();
 		$this->displayHeader();
+		echo '</div>';
+		echo '<div class="panel-content">';
 		$this->displayTabs();
+		echo '</div>';
+	}
+
+	/**
+	 * Is a header set?
+	 * @return bool
+	 */
+	protected function hasHeader() {
+		return $this->header != '';
 	}
 
 	/**
 	 * Display header
 	 */
 	protected function displayHeader() {
-		if ($this->header != '')
+		if ($this->hasHeader())
 			echo '<h1>'.$this->header.'</h1>';
 	}
 
@@ -140,7 +138,9 @@ class AjaxTabs {
 		foreach ($this->Tabs as $id => $Tab)
 			$Links[] = array('tag' => Ajax::change($Tab['title'], $this->containerID, '#'.$id, ($Tab['active'] ? 'triggered' : '')));
 
-		echo Ajax::toolbarNavigation($Links, $this->toolbarPosition);
+		echo '<div class="icons-right panel-text-nav">';
+		echo Ajax::toolbarNavigation($Links);
+		echo '</div>';
 	}
 
 	/**

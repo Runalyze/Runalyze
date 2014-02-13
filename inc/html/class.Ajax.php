@@ -178,11 +178,11 @@ class Ajax {
 	 */
 	static function toolbarNavigation($Links, $AdditionalClasses = '') {
 		if (empty($Links)) {
-			Error::getInstance()->addError('Links for toolbar navigation are empty.');
+			Error::getInstance()->addDebug('Links for toolbar navigation are empty.');
 			return '';
 		}
 
-		$code  = '<ul class="toolbar-menu '.$AdditionalClasses.'">';
+		$code = '<ul class="'.$AdditionalClasses.'">';
 
 		foreach ($Links as $Link) {
 			if (is_array($Link) && isset($Link['tag'])) {
@@ -202,7 +202,7 @@ class Ajax {
 
 				$code .= '</li>';
 			} else {
-				Error::getInstance()->addWarning('No tag set for link in toolbar navigation.');
+				Error::getInstance()->addDebug('No tag set for link in toolbar navigation.');
 			}
 		}
 

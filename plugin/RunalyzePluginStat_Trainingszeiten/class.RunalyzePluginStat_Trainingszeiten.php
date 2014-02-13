@@ -69,12 +69,12 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayTable();
-
 		if (!$this->dataIsMissing)
 			$this->displayImages();
 		else
 			echo HTML::em('Es sind leider noch keine Trainingsdaten vorhanden.');
+
+		$this->displayTable();
 	}
 
 	/**
@@ -118,7 +118,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			return;
 		}
 		
-		echo '<table class="fullwidth zebra-style small">';
+		echo '<table class="fullwidth zebra-style">';
 		echo '<thead><tr class="b c"><th colspan="8">N&auml;chtliches Training</th></tr></thead>';
 		echo '<tbody>';
 

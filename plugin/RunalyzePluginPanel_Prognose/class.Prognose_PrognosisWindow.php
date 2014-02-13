@@ -375,8 +375,12 @@ class Prognose_PrognosisWindow {
 	 * Display
 	 */
 	public function display() {
+		echo '<div class="panel-heading">';
 		$this->displayHeading();
+		echo '</div>';
+		echo '<div class="panel-content">';
 		$this->displayFormular();
+		echo '</div>';
 	}
 
 	/**

@@ -1,5 +1,6 @@
 @table-margin:						5px auto 10px;
 @table-padding:						2px 3px;
+@table-padding-more:				5px 3px;
 @table-head-border:					#666;
 @table-border:						#ccc;
 @table-color-hover:					#000;
@@ -33,6 +34,12 @@ thead th, tbody.asThead th, thead tr {
 	text-align: center;
 }
 
+.more-padding {
+	thead th, tbody.asThead th, td {
+		padding: @table-padding-more;
+	}
+}
+
 thead.r th {
 	text-align: right;
 }
@@ -64,6 +71,10 @@ tr.bottom-spacer, td.bottom-spacer {
 		}
 	}
 
+	tbody.asThead tr {
+		border-top: none;
+	}
+
 	tbody tr {
 		background-color: @table-background;
 		border-top: 1px solid @table-border;
@@ -83,6 +94,10 @@ tr.bottom-spacer, td.bottom-spacer {
 
 		&.no-zebra, td.no-zebra {
 			background: transparent !important;
+		}
+
+		&.no-border {
+			border-top: none;
 		}
 	}
 

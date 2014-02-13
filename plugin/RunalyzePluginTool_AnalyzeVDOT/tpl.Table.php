@@ -1,4 +1,4 @@
-<table id="vdotAnalysisTable" class="fullwidth zebra-style small">
+<table id="vdotAnalysisTable" class="fullwidth zebra-style">
 	<thead>
 		<tr>
 			<th class="{sorter:'germandate'}">Datum</th>
@@ -7,20 +7,20 @@
 			<th>Zeit</th>
 			<th>VDOT</th>
 			<th>Puls</th>
-			<th>VDOT<br />(aus&nbsp;Puls)</th>
-			<th>Zeit<br />(aus&nbsp;Puls)</th>
-			<th>VDOT<br />(korrigiert)</th>
-			<th>Zeit<br />(korrigiert)</th>
-			<th>VDOT<br />(Form)</th>
-			<th>Zeit<br />(Form)</th>
-			<th>Abweichung<br />(Form)</th>
+			<th>VDOT<br /><small>(aus&nbsp;Puls)</small></th>
+			<th>Zeit<br /><small>(aus&nbsp;Puls)</small></th>
+			<th>VDOT<br /><small>(korrigiert)</small></th>
+			<th>Zeit<br /><small>(korrigiert)</small></th>
+			<th>VDOT<br /><small>(Form)</small></th>
+			<th>Zeit<br /><small>(Form)</small></th>
+			<th>Abweichung<br /><small>(Form)</small></th>
 			<th>Korrektur<br />Faktor</th>
 		</tr>
 	</thead>
 	<tbody class="r">
 <?php foreach ($this->Trainings as $Training): ?>
 	<tr>
-		<td class="c"><?php echo date("d.m.Y", $Training['time']); ?></td>
+		<td class="small c"><?php echo date("d.m.Y", $Training['time']); ?></td>
 		<td class="b l"><?php echo $Training['comment']; ?></td>
 		<td><?php echo Running::Km($Training['distance']); ?></td>
 		<td class="b"><?php echo Time::toString(round($Training['s']), false, true); ?></td>

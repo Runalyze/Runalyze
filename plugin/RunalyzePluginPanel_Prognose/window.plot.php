@@ -7,8 +7,11 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 ?>
-<h1>Prognose-Rechner: Form-Verlauf</h1>
+<div class="panel-heading">
+	<h1>Prognose-Rechner: Form-Verlauf</h1>
+</div>
 
+<div class="panel-content">
 <?php
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Prognose');
 
@@ -51,3 +54,4 @@ foreach ($distances as $km) {
 <p class="info">
 	F&uuml;r diese Prognosen wird <strong>kein</strong> Grundlagenausdauer-Faktor verwendet.
 </p>
+</div>

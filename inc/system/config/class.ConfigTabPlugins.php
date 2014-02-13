@@ -67,7 +67,7 @@ class ConfigTabPlugins extends ConfigTab {
 			return HTML::info('Es sind keine Plugins vorhanden.');
 
 		$Code = '
-			<table class="zebra-style fullwidth">
+			<table class="zebra-style fullwidth more-padding">
 				<thead>
 					<tr class="top b">
 						<th colspan="3">'.Plugin::getReadableTypeString($PluginType).'</th>
@@ -85,14 +85,14 @@ class ConfigTabPlugins extends ConfigTab {
 					<tr class="unimportant">
 						<td>'.Plugin::getRemoveLink($Data['key']).'</td>
 						<td class="b">'.$Data['key'].'</td>
-						<td class="small" colspan="3">Das Plugin konnte nicht gefunden werden.</td>
+						<td colspan="3">Das Plugin konnte nicht gefunden werden.</td>
 					</tr>';
 			else
 				$Code .= '
 					<tr class="a'.($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
 						<td>'.$Plugin->getConfigLink().'</td>
 						<td class="b">'.$Plugin->get('name').'</td>
-						<td class="small">'.$Plugin->get('description').'</td>
+						<td>'.$Plugin->get('description').'</td>
 						<td><select name="plugin_modus_'.$Plugin->get('id').'">
 								<option value="'.Plugin::$ACTIVE.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE).'>aktiviert</option>
 								<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>versteckt*</option>
@@ -132,7 +132,7 @@ class ConfigTabPlugins extends ConfigTab {
 			return HTML::info('Es sind keine Plugins zum Installieren vorhanden.');
 
 		$Code = '
-			<table class="fullwidth zebra-style">
+			<table class="fullwidth zebra-style more-padding">
 				<thead>
 					<tr class="b">
 						<th colspan="3">Plugin</th>
@@ -151,7 +151,7 @@ class ConfigTabPlugins extends ConfigTab {
 				<tr>
 					<td>'.$Plugin->getInstallLink().'</td>
 					<td class="b">'.$Plugin->getInstallLink($Plugin->get('name')).'</td>
-					<td class="small">'.$Plugin->get('description').'</td>
+					<td>'.$Plugin->get('description').'</td>
 					<td colspan="2">'.Plugin::getReadableTypeString($Plugin->get('type')).'</td>
 				</tr>';
 		}

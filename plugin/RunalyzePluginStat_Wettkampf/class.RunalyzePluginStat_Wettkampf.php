@@ -211,8 +211,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 		$Links = array(array('tag' => '<a href="#">Distanz w&auml;hlen</a>', 'subs' => $SubLinks));
 
-		echo '<div class="databox" style="float:none;width:590px;margin:0 auto;">';
-		echo Ajax::toolbarNavigation($Links, 'right');
+		echo '<div class="databox" style="float:none;padding:0;width:490px;margin:20px auto;">';
+		echo '<div class="panel-heading">';
+		echo '<div class="icons-right panel-text-nav">';
+		echo Ajax::toolbarNavigation($Links);
+		echo '</div>';
+		echo '<h1>Bestzeitverlauf</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
 
 		$display_km = $this->distances[0];
 		if (in_array($this->config['main_distance']['var'], $this->distances))
@@ -226,6 +232,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 		echo '</div>';
 
+		echo '</div>';
 		echo '</div>';
 	}
 

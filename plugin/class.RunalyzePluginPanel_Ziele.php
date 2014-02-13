@@ -1,12 +1,14 @@
 <?php
 /**
  * This file contains the class of the RunalyzePluginPanel "Ziele".
+ * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 /**
  * Class: RunalyzePluginPanel_Ziele
  * @author Ulrich Kiermayr <ulrich@kiermayr.at>
  * License: GPL 
+ * @package Runalyze\Plugins\Panels
  */
 class RunalyzePluginPanel_Ziele extends PluginPanel {
 	/**
@@ -26,8 +28,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
      */
 
     protected function displayLongDescription() {
-        echo HTML::p('Mit diesem Plugin k&auml;nnen Prognosen f&uuml; die Laufleistung in km in den ausgew&auml;hlten Zeitr&auml;men berechnet und angezeigt werden.');
-        echo HTML::p('Wenn ein Ziel definiert ist (Wert &gt; 0) wird ausserdem angezeigt, wieviel noch f&uuml;r die Erreichung des Ziels notwendig ist.');
+        echo HTML::p('Mit diesem Plugin k&auml;nnen Prognosen f&uuml;r die Laufleistung in km in den ausgew&auml;hlten Zeitr&auml;men berechnet und angezeigt werden.');
+        echo HTML::p('Wenn ein Ziel definiert ist (Wert &gt; 0) wird au&szlig;erdem angezeigt, wieviel noch f&uuml;r die Erreichung des Ziels notwendig ist.');
         echo HTML::p('Ein virtuelles Pace Bunny l&auml;uft gleichm&auml;ssig mit dem selben Ziel - der Vorsprung oder R&uuml;ckstand zum Pace Bunny wird ebenfalls angezeigt.');
         echo HTML::p('Hinweis: Saison bezieht sich auf die aktuelle Saison im <a href="http://www.kmspiel.de">kmspiel</a>.');
     }
@@ -55,13 +57,16 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-        $buttons = array();
+		$Code = '<ul>';
+
 		foreach ($this->getTimeset() as $i => $timeset) {
-            if ( ! $this->config['ziel_show_'.$i]['var'] ) { continue; }
-			array_push($buttons, Ajax::change($timeset['name'], 'bunny', '#bunny_'.$i));
+            if ( !$this->config['ziel_show_'.$i]['var'] )
+				continue;
+
+			$Code .= '<li>'.Ajax::change($timeset['name'], 'bunny', '#bunny_'.$i).'</li>';
 		}
 
-		return '<span class="small-head-navi">'.implode(' | ',$buttons).'</span>';
+		return $Code.'</ul>';
 	}
 
 	/**

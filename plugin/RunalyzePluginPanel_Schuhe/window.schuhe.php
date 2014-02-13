@@ -43,7 +43,11 @@ if (Request::sendId() > 0) {
 	$Formular->addFieldset($DeleteFieldset);
 }
 
+echo '<div class="panel-heading">';
+echo '<h1>'.$Header.'</h1>';
+echo '</div>';
+echo '<div class="panel-content">';
 $Formular->setId('shoe');
-$Formular->setHeader($Header);
 $Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W33 );
 $Formular->display();
+echo '</div>';

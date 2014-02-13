@@ -43,12 +43,16 @@ class ExporterWindow {
 	 * Display
 	 */
 	public function display() {
+		echo '<div class="panel-heading">';
 		echo HTML::h1('Training exportieren');
+		echo '</div>';
 
+		echo '<div class="panel-content">';
 		if ($this->exporterIsChosen())
 			$this->displayChosenExporter();
 		else
 			$this->displayExporterList();
+		echo '</div>';
 	}
 
 	/**

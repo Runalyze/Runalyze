@@ -1,5 +1,3 @@
-	<h1>Eine Trainings-Datei hochladen</h1>
-
 	<div id="upload-container">
 		<div class="c button" id="file-upload">Datei hochladen</div>
 	</div>

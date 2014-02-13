@@ -111,14 +111,14 @@ class FrontendSharedStatistics {
 
 		if (Plugin::isInstalled('RunalyzePluginStat_Wettkampf')) {
 			if ($Content != '')
-				$Content .= '<tbod><tr><td colspan="'.(date("Y") - START_YEAR + 2).'">&nbsp;</td></tr></tbody>';
+				$Content .= '<tbody><tr class="no-zebra no-border"><td colspan="'.(date("Y") - START_YEAR + 2).'">&nbsp;</td></tr></tbody>';
 
 			$Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 			$Content .= $this->extractTbody($Plugin->getYearComparisonTable());
 		}
 
 		if ($Content != '') {
-			$Content = '<table class="small r fullwidth">'.NL.$Content.NL.'</table>'.NL;
+			$Content = '<table class="small r fullwidth zebra-style">'.NL.$Content.NL.'</table>'.NL;
 			$this->StatisticTabs->addTab('Jahresvergleich (Laufen)', 'statistics-years', $Content);
 		}
 	}

@@ -1149,24 +1149,6 @@ class GpsData {
 		}
 
 		return false;
-
-		/*switch (CONF_TRAINING_ELEVATION_SERVER) {
-			case 'google':
-				$returnedArray = $this->getElevationCorrectionFromGoogle();
-				break;
-			case 'geonames':
-			default:
-				$returnedArray = $this->getElevationCorrectionFromGeonames();
-		}
-
-		if (is_array($returnedArray) && !empty($returnedArray))
-			$this->arrayForElevation = $returnedArray;
-		else
-			return false;
-
-		$this->correctInvalidElevationValues();
-
-		return $this->arrayForElevation;*/
 	}
 
 	/**
@@ -1200,105 +1182,6 @@ class GpsData {
 			}
 		}
 	}
-
-	/**
-	 * Get elevation correction from GoogleMapsAPI
-	 * @return array
-	 */
-	/*public function getElevationCorrectionFromGoogle() {
-		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
-		$numForEachCall = 20;
-		$altitude       = array();
-		$string         = array();
-
-		for ($i = 0; $i < $this->arraySizes; $i++) {
-			if ($i%$everyNthPoint == 0)
-				$string[] = $this->arrayForLatitude[$i].','.$this->arrayForLongitude[$i];
-
-			if (($i+1)%($numForEachCall*$everyNthPoint) == 0 || $i == $this->arraySizes-1) {
-				$Xml = $this->getElevationFromGoogleAsSimpleXml($string);
-
-				if ($Xml === false)
-					return false;
-
-				foreach ($Xml->xpath('result') as $Point) {
-					for ($p = 0; $p < $everyNthPoint; $p++)
-						$altitude[] = round((double)$Point->elevation);
-				}
-
-				$string = array();
-			}
-		}
-
-		return $altitude;
-	}*/
-
-	/**
-	 * Get elevation correction from Geonames
-	 * @return array
-	 */
-	/*public function getElevationCorrectionFromGeonames() {
-		$everyNthPoint  = self::$everyNthElevationPoint * ceil($this->arraySizes/1000);
-		$numForEachCall = 20;
-		$altitude = array();
-		$lats     = array();
-		$longs    = array();
-
-		for ($i = 0; $i < $this->arraySizes; $i++) {
-			if ($i%$everyNthPoint == 0) {
-				$lats[]   = $this->arrayForLatitude[$i];
-				$longs[]  = $this->arrayForLongitude[$i];
-			}
-
-			if (($i+1)%($numForEachCall*$everyNthPoint) == 0 || $i == $this->arraySizes-1) {
-				$html = false;
-
-				while ($html === false) {
-					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs).'&username=runalyze');
-					if (substr($html,0,1) == '<')
-						$html = false;
-					else {
-						$data = explode("\r\n", $html);
-						$lats = array();
-						$longs = array();
-					}
-				}
-
-				for ($d = 0; $d < count($data)-1; $d++)
-					for ($j = 0; $j < $everyNthPoint; $j++)
-						$altitude[] = trim($data[$d]);
-			}
-		}
-
-		return $altitude;
-	}*/
-
-	/**
-	 * Get answer from GoogleMapsAPI for elevation as array
-	 * @param array $CoordinatesAsStringArray
-	 * @return mixed Array for success, otherwise false
-	 */
-	/*private function getElevationFromGoogleAsSimpleXml($CoordinatesAsStringArray) {
-		$url    = 'http://maps.googleapis.com/maps/api/elevation/xml?locations='.implode('|', $CoordinatesAsStringArray).'&sensor=false';
-		$String = Filesystem::getExternUrlContent($url);
-
-		if (strlen($String) == 0) {
-			Error::getInstance()->addError('Es konnten keine H&ouml;hendaten von Google empfangen werden.');
-			return false;
-		}
-
-		$Xml = simplexml_load_string_utf8($String);
-
-		if (!$Xml || !isset($Xml->status) || (string)$Xml->status != 'OK') {
-			if (isset($Xml->status))
-				Error::getInstance()->addError('Google-Service f&uuml;r H&ouml;hendaten liefert: '.((string)$Xml->status));
-			else
-				Filesystem::throwErrorForBadXml($String);
-			return false;
-		}
-
-		return $Xml;
-	}*/
 
 	/**
 	 * Calculate complete elevation

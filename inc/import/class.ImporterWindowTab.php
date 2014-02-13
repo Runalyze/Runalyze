@@ -48,7 +48,12 @@ abstract class ImporterWindowTab {
 	 */
 	final public function display() {
 		echo '<div class="change" id="'.$this->cssID().'"'.(!$this->visible ? ' style="display:none;"' : '').$this->attributesForDiv().'>';
+		echo '<div class="panel-heading">';
+		echo '<h1>'.$this->title().'</h1>';
+		echo '</div>';
+		echo '<div class="panel-content">';
 		$this->displayTab();
+		echo '</div>';
 		echo '</div>';
 	}
 

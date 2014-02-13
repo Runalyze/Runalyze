@@ -8,6 +8,7 @@
 @link-hover:					#000;
 @list-margin:					5px 10px 15px 10px;
 @list-padding:					0 0 0 20px;
+@p-text-link-color:				@red-light;
 @p-margin:						2px 5px;
 @p-message-okay-icon:			"\f058";
 @p-message-okay-color:			#8ab856;
@@ -23,13 +24,11 @@
 @p-message-error-background:	#faeeee;
 @p-message-file-icon:			"\f016";
 @p-message-file-color:			#000;
-@p-message-file-background:		#f5f5f5;
+@p-message-file-background:		#f1f1f1;
 @content-wk-color:				#fdd;
 @content-error-color:			#f00;
 @content-minus-color:			#ca3030;
 @content-plus-color:			#30aa30;
-@icon-color-grey:				#999;
-@icon-color-green:				#8ab856;
 
 
 
@@ -41,6 +40,17 @@ a:link, a:visited {
 a:hover, a:active, .link:hover {
 	color: @link-hover;
 	transition: color 0.3s ease-out;
+}
+
+p.text a, p.text a,
+a.external, a.external {
+	&:link, &:visited {
+		color: @p-text-link-color;
+	}
+
+	&:hover, &:active {
+		color: @link-hover;
+	}
 }
 
 .links-with-margin a {
@@ -208,6 +218,3 @@ tr.ERROR td {
 .multi-edit-icon i { opacity: 0.7; }
 .multi-edit-remove-link { position: absolute; top: 10px; left: -10px; }
 .multi-edit-table tr.edited { opacity: 0.5; }
-
-.fa-grey { color: @icon-color-grey; }
-.fa-green { color: @icon-color-green; }
