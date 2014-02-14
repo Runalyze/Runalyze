@@ -109,6 +109,7 @@ $_SERVER['REQUEST_URI'] = '/runalyze/index.php';
 $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
 Mysql::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
+DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
 
 // Clean database
 mysql_query('TRUNCATE TABLE `runalyze_training`');
