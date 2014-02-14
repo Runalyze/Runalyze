@@ -45,10 +45,6 @@
 		border-top: 1px solid @panel-heading-border;
 	}
 
-	//.fa {
-	//	line-height: @panel-heading-line-height;
-	//}
-
 	h1 {
 		display: inline;
 		padding: 0;
@@ -81,20 +77,26 @@
 	margin-right: @panel-icons-margin;
 }
 
-.icons-right {
-	float: right;
-	margin-left: @panel-icons-margin;
+#panels .panel-menu {
+	a, .link {
+		.fa { // Don't know why ...
+			//line-height: 1;
+		}
+	}
 }
 
-.panel-text-nav {
-	&.panel-nav-floated {
+.panel-menu {
+	float: right;
+	margin-left: @panel-icons-margin;
+
+	&.panel-menu-floated {
 		float: right;
 		top: 0;
 		right: 0;
 		margin-left: @panel-icons-margin;
 	}
 
-	&.panel-text-nav-only-text {
+	&.panel-menu-text {
 		padding: @panel-padding 2*@panel-padding @panel-padding;
 		line-height: @heading-line-height;
 
@@ -116,6 +118,10 @@
 		padding: @panel-padding 2*@panel-padding @panel-padding;
 		line-height: @heading-line-height;
 		border-left: 1px solid @panel-heading-border;
+
+		.fa {
+			//line-height: @heading-line-height;
+		}
 	}
 
 	ul {
@@ -131,6 +137,7 @@
 			&.active, &.triggered, &:hover {
 				color: @panel-nav-active-color;
 				border-bottom-color: @panel-nav-active-border;
+				background-color: @nav-submenu-hover;
 			}
 		}
 
@@ -144,10 +151,6 @@
 				}
 			}
 
-			&:hover {
-				border-bottom: none;
-			}
-
 			&:hover .submenu {
 				display: block;
 			}
@@ -159,8 +162,8 @@
 			min-width: 100px;
 			position: absolute;
 			min-width: 100%;
-			border: 1px solid @panel-heading-border;
-			border-bottom: none;
+			border-top: 1px solid @panel-heading-border;
+			border-right: 1px solid @panel-heading-border;
 			background-color: @panel-background;
 
 			li {
@@ -176,12 +179,6 @@
 					display: block;
 					padding: @panel-padding (1.5*@panel-padding);
 					margin: 0;
-					border-left: none;
-
-					&:hover {
-						background-color: @nav-submenu-hover;
-						border: none;
-					}
 				}
 			}
 		}
@@ -255,6 +252,10 @@
 			text-transform: uppercase;
 
 			color: #666;
+		}
+
+		&.active, &:hover {
+			background-color: @nav-submenu-hover;
 		}
 
 		&.active > a, &:hover > a {

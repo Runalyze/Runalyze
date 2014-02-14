@@ -57,9 +57,20 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	protected function prepareForDisplay() {
 		$Link = Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="fa fa-map-marker"></i> Streckennetz &ouml;ffnen</a>', 'big');
 
-		$this->setToolbarNavigationLinks(array($Link));
+		$this->setToolbarNavigationLinks(array('<li>'.$Link.'</li>'));
+		$this->setYearsNavigation(true, true);
+
+		$this->setHeaderWithSportAndYear();
 
 		$this->initCities();
+	}
+
+	/**
+	 * Title for all years
+	 * @return string
+	 */
+	protected function titleForAllYears() {
+		return 'Alle Jahre';
 	}
 
 	/**
@@ -84,13 +95,16 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '<thead><tr><th colspan="3">H&auml;ufigsten Strecken</th></tr></thead>';
 		echo '<tbody class="r">';
 
-		$strecken = Mysql::getInstance()->fetchAsArray('
-			SELECT `route`, SUM(`distance`) as `km`, SUM(1) as `num`
+		$strecken = DB::getInstance()->query('
+			SELECT
+				`route`,
+				SUM(`distance`) as `km`,
+				SUM(1) as `num`
 			FROM `'.PREFIX.'training`
-			WHERE `route`!=""
+			WHERE `route`!="" '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `route`
 			ORDER BY `num` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 
 		if (empty($strecken))
 			echo HTML::emptyTD(3, HTML::em('Keine Strecken vorhanden.'));
@@ -172,7 +186,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo('
 			<tr class="no-zebra">
 				<td colspan="2" class="c">
-					Insgesamt wurden <strong>'.count($this->orte).' verschiedene Orte</strong> sportlich besucht.
+					Insgesamt warst du in <strong>'.count($this->orte).' verschiedenen Orten</strong> unterwegs.
 				</td>
 			</tr>
 		</tbody>
@@ -186,7 +200,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	private function initCities() {
 		$this->orte = array();
-		$strecken = Mysql::getInstance()->fetchAsArray('SELECT `route`, `distance` FROM `'.PREFIX.'training` WHERE `route`!=""');
+		$strecken = DB::getInstance()->query('SELECT `route`, `distance` FROM `'.PREFIX.'training` WHERE `route`!="" '.$this->getSportAndYearDependenceForQuery())->fetchAll();
 		foreach ($strecken as $strecke) {
 			$streckenorte = explode(" - ", $strecke['route']);
 			foreach ($streckenorte as $streckenort) {

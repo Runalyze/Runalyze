@@ -24,7 +24,6 @@ $Formular->addFieldset( $Plugin->getFieldsetVDOT(), false );
 $Formular->addFieldset( $Plugin->getFieldsetBasicEndurance() );
 $Formular->addFieldset( $Plugin->getFieldsetPaces(), false );
 $Formular->allowOnlyOneOpenedFieldset();
-//$Formular->addSubmitButton('Berechnungen starten');
 $Formular->display();
 ?>
 </div>

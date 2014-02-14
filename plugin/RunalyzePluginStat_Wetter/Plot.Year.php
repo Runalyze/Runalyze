@@ -8,7 +8,24 @@
 $Year         = (int)$_GET['y'];
 $Temperatures = array();
 
-$Data = Mysql::getInstance()->fetchAsArray('SELECT time*1000 as time, DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`, AVG(`temperature`) as `temp` FROM `'.PREFIX.'training` WHERE !ISNULL(`temperature`) AND YEAR(FROM_UNIXTIME(`time`))='.$Year.' GROUP BY `d` ORDER BY `d` ASC');
+$Query = '
+	SELECT
+		time*1000 as time,
+		DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
+		AVG(`temperature`) as `temp`
+	FROM `'.PREFIX.'training`
+	WHERE
+		!ISNULL(`temperature`) AND
+		YEAR(FROM_UNIXTIME(`time`))=:year
+	GROUP BY `d`
+	ORDER BY `d` ASC';
+
+$Request = DB::getInstance()->prepare($Query);
+$Request->bindParam('year', $Year);
+$Request->execute();
+
+$Data = $Request->fetchAll();
+
 foreach ($Data as $dat)
 	$Temperatures[$dat['time']] = (int)$dat['temp'];
 
@@ -30,4 +47,3 @@ if(empty($Data))
 	$Plot->raiseError('Es sind keine Daten vorhanden.');
 
 $Plot->outputJavaScript();
-?>

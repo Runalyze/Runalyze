@@ -3,7 +3,7 @@ $Links = array();
 $Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
 
 echo '<div class="panel-heading">';
-echo '<div class="icons-right panel-text-nav">';
+echo '<div class="panel-menu">';
 echo Ajax::toolbarNavigation($Links);
 echo '</div>';
 echo '<h1>Plugin-Einstellungen: '.$name.'</h1>';

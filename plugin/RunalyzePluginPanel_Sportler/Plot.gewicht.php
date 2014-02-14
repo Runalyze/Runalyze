@@ -14,7 +14,7 @@ if ($Plugin_conf['plot_timerange']['var'] > 0)
 else
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
 
-$Data     = Mysql::getInstance()->fetchAsArray('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd);
+$Data     = DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll();
 $Weights  = array();
 $HRrests  = array();
 
@@ -67,4 +67,3 @@ elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
 }
 
 $Plot->outputJavaScript( true );
-?>

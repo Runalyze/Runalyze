@@ -107,7 +107,7 @@ class TrainingView {
 	 * Display title
 	 */
 	protected function displayTitle() {
-		echo '<div class="icons-right panel-text-nav panel-text-nav-only-text">';
+		echo '<div class="panel-menu panel-menu-text">';
 		echo '<small>'.$this->Training->DataView()->getFullDateWithWeekLink().'</small>';
 		echo '</div>';
 		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';

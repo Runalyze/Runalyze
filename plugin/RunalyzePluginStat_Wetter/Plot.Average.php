@@ -15,7 +15,18 @@ for ($m = 1; $m <= 12; $m++) {
 		$Temperatures[$y] = array(null,null,null,null,null,null,null,null,null,null,null,null);
 }
 
-$Data = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, MONTH(FROM_UNIXTIME(`time`)) as `m`, AVG(`temperature`) as `temp` FROM `'.PREFIX.'training` WHERE !ISNULL(`temperature`) GROUP BY `y`, `m` ORDER BY `y` ASC, `m` ASC');
+$Query = '
+	SELECT
+		YEAR(FROM_UNIXTIME(`time`)) as `y`,
+		MONTH(FROM_UNIXTIME(`time`)) as `m`,
+		AVG(`temperature`) as `temp`
+	FROM `'.PREFIX.'training`
+	WHERE
+		!ISNULL(`temperature`)
+	GROUP BY `y`, `m`
+	ORDER BY `y` ASC, `m` ASC';
+
+$Data = DB::getInstance()->query($Query)->fetchAll();
 foreach ($Data as $dat)
 	$Temperatures[$dat['y']][$dat['m'] - 1] = $dat['temp'];
 
@@ -38,4 +49,3 @@ $Plot->lineWithPoints();
 
 
 $Plot->outputJavaScript();
-?>

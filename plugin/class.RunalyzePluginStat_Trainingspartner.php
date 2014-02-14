@@ -17,6 +17,18 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	protected $Partner = array();
 
 	/**
+	 * Number of trainings without partner
+	 * @var int
+	 */
+	protected $TrainingsWithPartner = 0;
+
+	/**
+	 * Number of trainings total
+	 * @var int
+	 */
+	protected $TrainingsTotal = 0;
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginStat::initPlugin()
 	 */
@@ -40,7 +52,28 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->setSportsNavigation(true, true);
+		$this->setYearsNavigation(true, true);
+
+		$this->setHeaderWithSportAndYear();
+
 		$this->initTrainingspartner();
+	}
+
+	/**
+	 * Default sport
+	 * @return int
+	 */
+	protected function defaultSport() {
+		return -1;
+	}
+
+	/**
+	 * Title for all years
+	 * @return string
+	 */
+	protected function titleForAllYears() {
+		return 'Gesamt';
 	}
 
 	/**
@@ -81,13 +114,24 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 
 		echo '</tobdy>';
 		echo '</table>';
+
+		echo '<p class="text">';
+		echo 'Insgesamt hast du <strong>'.$this->TrainingsTotal.'x</strong> trainiert und davon <strong>'.$this->TrainingsWithPartner.'x</strong> mit Trainingspartner, ';
+		echo 'das sind <strong>'.round(100*$this->TrainingsWithPartner/$this->TrainingsTotal).'</strong> &#37;.';
+		echo '</p>';
 	}
 
 	/**
 	 * Init all trainingspartner
 	 */
 	protected function initTrainingspartner() {
-		$trainings = Mysql::getInstance()->fetchAsArray('SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner` != ""');
+		$Query = 'SELECT `partner` FROM `'.PREFIX.'training` WHERE `partner`!=""';
+		$Query .= $this->getSportAndYearDependenceForQuery();
+
+		$trainings = DB::getInstance()->query($Query)->fetchAll();
+
+		$this->TrainingsWithPartner = count($trainings);
+		$this->TrainingsTotal = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE 1'.$this->getSportAndYearDependenceForQuery())->fetchColumn();
 
 		if (empty($trainings))
 			return;
@@ -105,4 +149,3 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		array_multisort($this->Partner, SORT_DESC);
 	}
 }
-?>

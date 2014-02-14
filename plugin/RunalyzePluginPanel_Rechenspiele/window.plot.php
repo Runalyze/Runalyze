@@ -9,33 +9,28 @@ $Frontend = new Frontend();
 
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
+else
+	$_GET['y'] = (int)$_GET['y'];
+
+$link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=all';
+$Submenu = '<li'.('all' == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">Gesamt</a>').'</li>';
+for ($j = date('Y'); $j >= START_YEAR; $j--)  {
+	$link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y='.$j;
+	$Submenu .= '<li'.($j == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.$j.'</a>').'</li>';
+}
 ?>
 <div class="panel-heading">
+	<div class="panel-menu">
+		<ul>
+			<li class="with-submenu"><span class="link">Jahr w&auml;hlen</span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
+		</ul>
+	</div>
 	<h1>Formkurve</h1>
 </div>
 
 <div class="panel-content">
-<?php
-echo Plot::getDivFor('form'.$_GET['y'], 800, 450);
-
-include FRONTEND_PATH.'../plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php';
-?>
-	<br />
-	<br />
-
-<center>
-<?php
-for ($j = START_YEAR; $j <= date("Y"); $j++) {
-	if ($j == $_GET['y'])
-		echo '<strong style="margin-right:20px;">'.$j.'</strong>';
-	else
-		echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
-}
-
-if ($_GET['y'] == 'all')
-	echo '<strong style="margin-right:20px;">Gesamt</strong>';
-else
-	echo Ajax::window('<a href="plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=all" style="margin-right:20px;">Gesamt</a>');
-?>
-</center>
+	<?php
+	echo Plot::getDivFor('form'.$_GET['y'], 800, 450);
+	include FRONTEND_PATH.'../plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php';
+	?>
 </div>

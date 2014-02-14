@@ -73,14 +73,6 @@ class Shoe extends DataObject {
 	}
 
 	/**
-	 * Get icon for usage
-	 * @return string
-	 */
-	public function getKmIcon() {
-		return self::getIcon($this->getKm());
-	}
-
-	/**
 	* Get km from trainings in database
 	* @return float
 	*/
@@ -102,23 +94,5 @@ class Shoe extends DataObject {
 	*/
 	public function isInUse() {
 		return $this->get('inuse') == 1;
-	}
-
-	/**
-	 * Get an icon for the abrasion of the shoe
-	 * @param double $distance
-	 * @return string
-	 */
-	static public function getIcon($distance) {
-		if ($distance > 900)
-			return Icon::$BROKEN_5;
-		elseif ($distance > 700)
-			return Icon::$BROKEN_4;
-		elseif ($distance > 500)
-			return Icon::$BROKEN_3;
-		elseif ($distance > 200)
-			return Icon::$BROKEN_2;
-		else
-			return Icon::$BROKEN_1;
 	}
 }

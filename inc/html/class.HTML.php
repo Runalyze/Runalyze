@@ -237,6 +237,14 @@ class HTML {
 	}
 
 	/**
+	 * Wrap a string into p-tag with class="okay"
+	 * @param string $string
+	 */
+	public static function okay($string) {
+		return '<p class="okay">'.$string.'</p>';
+	}
+
+	/**
 	 * Wrap a string into p-tag with class="file"
 	 * @param string $string
 	 */

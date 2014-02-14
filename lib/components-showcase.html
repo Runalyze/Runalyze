@@ -265,8 +265,8 @@ pre {
 
 			<div class="panel">
 				<div class="panel-heading">
-					<div class="icons-left"></div>
-					<div class="icons-right"><a href="#"><i class="fa fa-fw fa-info"></i></a>&nbsp;</div>
+					<div class="icons-left"></div> <!-- Don't know why this icon needs a nbsp for correct line-height. -->
+					<div class="panel-menu"><ul><li><a href="#">&nbsp;<i class="fa fa-fw fa-info"></i>&nbsp;</a></li></ul></div>
 					<h1>Heading</h1>
 					<div class="hover-icons"><a href="#"><i class="fa fa-fw fa-cogs"></i></a>&nbsp;</div>
 				</div>
@@ -280,10 +280,10 @@ pre {
 
 			<div class="panel">
 				<div class="panel-heading">
-					<div class="icons-right panel-text-nav">
+					<div class="panel-menu">
 						<ul>
-							<li><a href="#" class="active">Tab 1</a></li>
-							<li class="with-submenu">
+							<li><a href="#" class="active">Tab 1</a></li><!--
+							--><li class="with-submenu">
 								<span class="link">Tab 2</span>
 								<ul class="submenu">
 									<li><a href="#">Sub 1</a></li>
@@ -292,8 +292,8 @@ pre {
 									<li><a href="#">Sub 4</a></li>
 									<li><span class="link">Sub 5</span></li>
 								</ul>
-							</li>
-							<li><a href="#">Tab 3</a></li>
+							</li><!--
+							--><li><a href="#">Tab 3</a></li>
 						</ul>
 					</div>
 					<h1>Heading</h1>

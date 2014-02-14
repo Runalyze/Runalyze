@@ -16,12 +16,6 @@ abstract class PluginPanel extends Plugin {
 	public $SurroundingDivIsVisible = true;
 
 	/**
-	 * Use only text as right symbol
-	 * @var bool
-	 */
-	protected $textAsRightSymbol = false;
-
-	/**
 	 * Boolean flag: Don't reload if config has changed
 	 * @var boolean
 	 */
@@ -106,7 +100,7 @@ abstract class PluginPanel extends Plugin {
 	private function displayHeader() {
 		echo '<div class="panel-heading">';
 		//echo '<div class="icons-left"></div>';
-		echo '<div class="icons-right'.($this->textAsRightSymbol ? ' panel-text-nav' : '').'">'.$this->getRightSymbol().'</div>';
+		echo '<div class="panel-menu">'.$this->getRightSymbol().'</div>';
 		echo '<h1 class="link clap" rel="'.$this->id.'">'.$this->name.'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLinks().'</div>';
 		echo '</div>';

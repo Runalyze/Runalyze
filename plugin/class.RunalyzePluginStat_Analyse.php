@@ -111,6 +111,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
+		$this->displayStyle();
 		$this->displayAnalysis();
 
 		echo HTML::info('* Die Werte beziehen sich auf die Durchschnittswerte der Trainings.');
@@ -150,6 +151,16 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	/**
+	 * Display style
+	 */
+	private function displayStyle() {
+		echo '<style type="text/css">';
+		echo '.analysis-table td { position: relative; }';
+		echo '.analysis-table td .analysis-bar { position: absolute; right: 3px; bottom: 2px; display: block; height: 2px; max-with: 100%; background-color: #800; }';
+		echo '</style>';
+	}
+
+	/**
 	 * Display the analysis
 	 */
 	private function displayAnalysis() {
@@ -166,9 +177,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				echo '<tr class="c">'.HTML::emptyTD($this->colspan, '<em>Keine Daten vorhanden.</em>').'</tr>';
 			} else {
 				foreach ($Data['foreach'] as $i => $Each) {
-					echo('
-						<tr>
-							<td class="c b">'.$Each['name'].'</td>');
+					echo '<tr><td class="c b">'.$Each['name'].'</td>';
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array'][$Each['id']][$t])) {
@@ -190,19 +199,15 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 						$percent = $Data['array']['all_sum_s'] > 0 ? round(100 * $time / $Data['array']['all_sum_s'], 1) : 0;
 
 						$this->displayTDfor($num, $time, $dist, $percent);
-						//echo '<td title="'.Time::toString($time, true, true).'">'.number_format($percent, 1).' &#37;</td>';
 					} else {
 						echo HTML::emptyTD();
 					}
 
-					echo('
-						</tr>');
+					echo '</tr>';
 				}
 
 				if ($i == count($Data['foreach']) - 1) {
-					echo('
-						<tr class="top-spacer no-zebra">
-							<td class="c b">Gesamt</td>');
+					echo '<tr class="top-spacer no-zebra"><td class="c b">Gesamt</td>';
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
@@ -247,14 +252,25 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$tooltip .= ', '.Time::toString($time, true, true);
 		}
 
-		echo '<td>'.Ajax::tooltip($number, $tooltip).'</td>';
+		echo '<td>'.Ajax::tooltip($number, $tooltip).$this->getBarFor($percent).'</td>';
+	}
+
+	/**
+	 * Get bar
+	 * @param float $percentage
+	 * @return string
+	 */
+	private function getBarFor($percentage) {
+		$width = min(95, round($percentage));
+		$opacity = round($percentage/100, 2);
+		return '<div class="analysis-bar" style="width:'.$width.'%;opacity:'.$opacity.';"></div>';
 	}
 
 	/**
 	 * Get array for "Trainingstyp"
 	 */
 	private function getTypeArray() {
-		$result = Mysql::getInstance()->fetchAsArray('
+		$result = DB::getInstance()->query('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
@@ -263,12 +279,16 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				`typeid` as `group`,
 				`RPE`
 			FROM `'.PREFIX.'training`
-			LEFT JOIN `'.PREFIX.'type` ON ('.PREFIX.'training.typeid='.PREFIX.'type.id)
+			LEFT OUTER JOIN `'.PREFIX.'type` ON (
+				'.PREFIX.'training.typeid='.PREFIX.'type.id AND
+				'.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
+			)
 			WHERE '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
-				AND '.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
+				
 				AND '.PREFIX.'training.`sportid`="'.$this->sportid.'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
-			ORDER BY `RPE`, `timer` ASC');
+			ORDER BY `RPE`, `timer` ASC
+		')->fetchAll();
 
 		$type_data = $this->emptyData;
 
@@ -288,11 +308,19 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$type_foreach = array();
 
 		if (!empty($result)) {
-			$types = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `RPE` ASC');
+			if (isset($type_data['id_sum_num'][0])) {
+				$type_foreach[] = array(
+					'name' => '<span style="font-weight:normal;">ohne</span>',
+					'id' => 0
+				);
+			}
+
+			$types = DB::getInstance()->query('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `RPE` ASC')->fetchAll();
 			foreach ($types as $type) {
 				$type_foreach[] = array(
 					'name' => '<span title="'.$type['name'].'">'.($type['abbr'] != '' ? $type['abbr'] : $type['name']).'</span>',
-					'id' => $type['id']);
+					'id' => $type['id']
+				);
 			}
 		}
 
@@ -308,7 +336,24 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$speed_step = $this->config['pacegroup_step']['var'];
 		$ceil_corr  = $speed_min % $speed_step;
 
-		$result = Mysql::getInstance()->fetchAsArray('
+		if ($this->sportid != CONF_RUNNINGSPORT) {
+			$MinMax = DB::getInstance()->query('
+				SELECT
+					MIN(`s`/`distance`) as `min`,
+					MAX(`s`/`distance`) as `max`
+				FROM `'.PREFIX.'training`
+				WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
+			')->fetch();
+
+			if (!empty($MinMax)) {
+				$speed_min  = round((float)$MinMax['max']);
+				$speed_max  = round((float)$MinMax['min']);
+				$speed_step = ($speed_min == $speed_max) ? 1 : round(($speed_min - $speed_max)/10);
+				$ceil_corr  = ($speed_min == $speed_max) ? 1 : $speed_min % $speed_step;
+			}
+		}
+
+		$result = DB::getInstance()->query('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
@@ -317,8 +362,9 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
 			GROUP BY `group`, '.$this->group_time.'
-			ORDER BY `group` DESC, `timer` ASC');
-		
+			ORDER BY `group` DESC, `timer` ASC
+		')->fetchAll();
+
 		$speed_data = $this->emptyData;
 		
 		foreach ($result as $dat) {
@@ -336,11 +382,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$speed_foreach = array();
 
 		if (!empty($result)) {
-			if ($this->sportid != CONF_RUNNINGSPORT) {
-				$speed_min = $result[0]['group'];
-				$speed_max = $result[count($result)-1]['group'];
-			}
-
 			for ($speed = $speed_min; $speed > ($speed_max - $speed_step); $speed -= $speed_step) {
 				$name = ($speed <= $speed_max)
 					? '<small>schneller&nbsp;als</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed + $speed_step, $this->sportid)
@@ -360,7 +401,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$pulse_step = max((int)$this->config['pulsegroup_step']['var'], 1);
 		$ceil_corr  = $pulse_min % $pulse_step;
 
-		$result = Mysql::getInstance()->fetchAsArray('
+		$result = DB::getInstance()->query('
 			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
@@ -369,7 +410,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->group_time.'
-			ORDER BY `group`, `timer` ASC');
+			ORDER BY `group`, `timer` ASC
+		')->fetchAll();
 
 		$pulse_data = $this->emptyData;
 		
@@ -387,7 +429,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			for ($pulse = $pulse_min; $pulse < (100 + $pulse_step); $pulse += $pulse_step) {
 				$pulse_foreach[] = array(
 					'name' => '<small>bis</small> '.min($pulse, 100).' &#37;',
-					'id' => $pulse);
+					'id' => $pulse
+				);
 			}
 		}
 
@@ -440,11 +483,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @param string $name
 	 */
 	private function printTableStart($name) {
-		echo '
-		<table class="fullwidth zebra-style small r">
-			<thead>
-				<tr class="c b">
-					<th>'.$name.'</th>';
+		echo '<table class="fullwidth zebra-style analysis-table small r"><thead><tr class="c b"><th>'.$name.'</th>';
 
 		$this->printTableHeader();
 
@@ -457,10 +496,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private function printTableHeader() {
 		for ($i = $this->timer_start; $i <= $this->timer_end; $i++)
 			echo ($this->year != -1)
-				? '<th width="7%">'.Time::Month($i, true).'</th>'.NL
-				: '<th>'.$i.'</th>'.NL;
+				? '<th width="7%">'.Time::Month($i, true).'</th>'
+				: '<th>'.$i.'</th>';
 
-		echo '<th>Gesamt</th>'.NL;
+		echo '<th>Gesamt</th>';
 	}
 
 	/**

@@ -30,7 +30,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['all_sports'] = array('type' => 'bool', 'var' => false, 'description' => 'Alle Sportarten ber&uuml;cksichtigen');
+		//$config['all_sports'] = array('type' => 'bool', 'var' => false, 'description' => 'Alle Sportarten ber&uuml;cksichtigen');
 
 		return $config;
 	}
@@ -39,9 +39,30 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->setSportsNavigation(true, true);
+		$this->setYearsNavigation(true, true);
+
+		$this->setHeaderWithSportAndYear();
+
 		$this->initElevationData();
 		$this->initSumData();
 		$this->initUpwardData();
+	}
+
+	/**
+	 * Default year
+	 * @return int
+	 */
+	protected function defaultYear() {
+		return -1;
+	}
+
+	/**
+	 * Title for all years
+	 * @return string
+	 */
+	protected function titleForAllYears() {
+		return 'Alle Jahre';
 	}
 
 	/**
@@ -49,7 +70,9 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * @see PluginStat::displayContent()
 	 */
 	protected function displayContent() {
-		$this->displayElevationData();
+		if ($this->year == -1)
+			$this->displayElevationData();
+
 		$this->displaySumData();
 		$this->displayUpwardData();
 
@@ -65,7 +88,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		echo '<tbody>';
 
 		if (empty($this->ElevationData))
-			echo '<tr><th colspan="12"><em>Keine Strecken gefunden.</em></th></tr>';
+			echo '<tr><td colspan="13" class="l"><em>Keine Strecken gefunden.</em></td></tr>';
 		foreach ($this->ElevationData as $y => $Data) {
 			echo('
 				<tr>
@@ -156,15 +179,15 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Initialize $this->ElevationData
 	 */
 	private function initElevationData() {
-		$result = Mysql::getInstance()->fetchAsArray('
+		$result = DB::getInstance()->query('
 			SELECT
 				SUM(`elevation`) as `elevation`,
 				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->andSportWhere().'
-			GROUP BY `year`, `month`');
+			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY `year`, `month`')->fetchAll();
 
 		foreach ($result as $dat) {
 			$this->ElevationData[$dat['year']][$dat['month']] = array(
@@ -178,37 +201,37 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Initialize $this->SumData
 	 */
 	private function initSumData() {
-		$this->SumData = Mysql::getInstance()->fetchAsArray('
+		$this->SumData = DB::getInstance()->query('
 			SELECT
 				`time`, `sportid`, `id`, `elevation`, `route`, `comment`, `s`, `distance`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->andSportWhere().'
+			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			ORDER BY `elevation` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 	}
 
 	/**
 	 * Initialize $this->UpwardData
 	 */
 	private function initUpwardData() {
-		$this->UpwardData = Mysql::getInstance()->fetchAsArray('
+		$this->UpwardData = DB::getInstance()->query('
 			SELECT
 				`time`, `sportid`, `id`, `elevation`, `route`, `comment`,
 				(`elevation`/`distance`) as `steigung`, `distance`, `s`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->andSportWhere().'
+			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			ORDER BY `steigung` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 	}
 
 	/**
 	 * Get where query for sport
 	 * @return string
 	 */
-	private function andSportWhere() {
+	/*private function andSportWhere() {
 		if (!$this->config['all_sports']['var'])
 			return 'AND `sportid`="'.CONF_RUNNINGSPORT.'"';
 
 		return '';
-	}
+	}*/
 }

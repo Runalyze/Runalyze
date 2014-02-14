@@ -127,16 +127,32 @@ abstract class PluginStat extends Plugin {
 	protected function setHeaderWithSportAndYear() {
 		$HeaderParts = array();
 
-		if ($this->sportid > 0) {
+		if ($this->sportid > 0 && $this->ShowSportsNavigation) {
 			$Sport = new Sport($this->sportid);
 			$HeaderParts[] = $Sport->name();
 		}
 
-		if ($this->year > 0)
+		if ($this->year > 0 && $this->ShowYearsNavigation)
 			$HeaderParts[] = $this->year;
 
 		if (!empty($HeaderParts))
 			$this->setHeader($this->name.': '.implode(', ', $HeaderParts));
+	}
+
+	/**
+	 * Get query for sport and year
+	 * @return string
+	 */
+	protected function getSportAndYearDependenceForQuery() {
+		$Query = '';
+
+		if ($this->sportid > 0)
+			$Query .= ' AND `sportid`='.(int)$this->sportid;
+
+		if ($this->year > 0)
+			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year;
+
+		return $Query;
 	}
 
 	/**
@@ -152,7 +168,7 @@ abstract class PluginStat extends Plugin {
 		if (!empty($leftMenu))
 			echo '<div class="icons-left">'.$leftMenu.'</div>';
 		if (!empty($rightMenu))
-			echo '<div class="icons-right panel-text-nav">'.$rightMenu.'</div>';
+			echo '<div class="panel-menu">'.$rightMenu.'</div>';
 
 		echo '<h1>'.$name.'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLink().$this->getReloadLink().'</div>';
@@ -181,11 +197,11 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		if ($this->ShowAllSportsLink)
-			$Links .= '<li>'.$this->getInnerLink('Alle', -1, $this->year).'</li>';
+			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink('Alle', -1, $this->year).'</li>';
 
 		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
 		foreach ($Sports as $Sport)
-			$Links .= '<li>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
+			$Links .= '<li'.($Sport['id']==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
 
 		return $Links;
 	}
@@ -198,20 +214,20 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		if ($CompareYears)
-			$Links .= '<li>'.$this->getInnerLink('Jahresvergleich', $this->sportid, -1).'</li>';
+			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1).'</li>';
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--)
-			$Links .= '<li>'.$this->getInnerLink($x, $this->sportid, $x).'</li>';
+			$Links .= '<li'.($x==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($x, $this->sportid, $x).'</li>';
 
 		return $Links;
 	}
 		
 	/**
-	 * Get the year as string or 'Jahresvergleich' for year=-1
+	 * Get the year as string
 	 * @return string
 	 */
 	protected function getYearString() {
-		return ($this->year != -1 ? $this->year : 'Jahresvergleich');
+		return ($this->year != -1 ? $this->year : $this->titleForAllYears());
 	}
 
 	/**

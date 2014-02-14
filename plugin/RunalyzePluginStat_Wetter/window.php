@@ -9,6 +9,8 @@ $Frontend = new Frontend();
 
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
+else
+	$_GET['y'] = (int)$_GET['y'];
 ?>
 
 <div class="panel-heading">

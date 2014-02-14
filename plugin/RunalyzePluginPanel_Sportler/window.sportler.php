@@ -8,7 +8,7 @@ require '../../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (Request::param('delete') == 'true') {
-	Mysql::getInstance()->delete(PREFIX.'user', (int)Request::sendId());
+	DB::getInstance()->deleteByID('user', (int)Request::sendId());
 	header('Location: window.sportler.table.php?reload=true');
 }
 
@@ -29,6 +29,7 @@ if ($Formular->submitSucceeded())
 	header('Location: window.sportler.table.php?reload=true');
 
 echo '<div class="panel-heading">';
+echo '<div class="panel-menu"><ul><li>'.Plugin::getInstanceFor('RunalyzePluginPanel_Sportler')->tableLink().'</li></ul></div>';
 echo '<h1>'.$Header.'</h1>';
 echo '</div>';
 echo '<div class="panel-content">';

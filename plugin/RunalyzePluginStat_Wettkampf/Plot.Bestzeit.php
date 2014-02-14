@@ -6,7 +6,7 @@
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 
-$distance    = !is_numeric($_GET['km']) ? 10 : $_GET['km'];
+$distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
 $titleCenter = 'Wettkampfergebnisse &#252;ber '.Running::Km($distance, 1, ($distance <= 3));
@@ -14,7 +14,7 @@ $timeFormat  = '%M:%S';
 
 $titleCenter = str_replace('&nbsp;', ' ', $titleCenter);
 
-$competitions = Mysql::getInstance()->fetchAsArray('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$distance.'" ORDER BY `time` ASC');
+$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		if (!$Plugin->isFunCompetition($competition['id'])) {
@@ -46,4 +46,3 @@ $Plot->hideLegend();
 $Plot->setTitle($titleCenter);
 
 $Plot->outputJavaScript();
-?>

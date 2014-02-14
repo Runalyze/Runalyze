@@ -47,12 +47,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Form anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Berechnungen der Werte', true, true).'>'.Icon::$CALCULATOR.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Rechenspielen', true, true).'>'.Icon::$INFO.'</a>');
+		$Links = '';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Form anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Berechnungen der Werte', true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Rechenspielen', true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
-		return implode(NBSP, $Links);
+		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**
@@ -288,7 +288,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody class="top-and-bottom-border">
 				';
 
-		$VDOTs = Mysql::getInstance()->fetchAsArray('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC');
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
 				$Table .= '<tr>'.NL;
@@ -375,7 +375,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			';
 
 		$IgnoredLongjogs = 0;
-		$Longjogs        = Mysql::getInstance()->fetchAsArray($BasicEndurance->getQuery(0, true));
+		$Longjogs        = DB::getInstance()->query($BasicEndurance->getQuery(0, true))->fetchAll();
 
 		foreach ($Longjogs as $Longjog) {
 			if ($Longjog['points'] >= 0.2)
@@ -457,4 +457,3 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		return $Fieldset;
 	}
 }
-?>

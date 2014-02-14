@@ -38,7 +38,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		if (isset($_GET['delete']))
 			System::clearCache();
 
-		$numData = Mysql::getInstance()->fetchSingle('SELECT COUNT(*) as num FROM '.PREFIX.'training WHERE gps_cache_object!="" LIMIT 1');
+		$numData = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'training WHERE gps_cache_object!="" LIMIT 1')->fetch();
 		$num     = $numData['num'];
 
 		$Fieldset = new FormularFieldset('Cache l&ouml;schen');

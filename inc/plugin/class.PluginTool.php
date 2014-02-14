@@ -78,7 +78,7 @@ abstract class PluginTool extends Plugin {
 		$Links = array();
 		$Links[] = array('tag' => '<a href="#">Tool w&auml;hlen</a>', 'subs' => $Sublinks);
 
-		echo '<div class="panel-nav-floated panel-text-nav">';
+		echo '<div class="panel-menu panel-menu-floated">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
 	}

@@ -1,5 +1,5 @@
 <div class="panel-heading">
-	<div class="icons-right links-with-margin">
+	<div class="panel-menu">
 		<?php $this->displayIconLinks(); ?>
 	</div>
 	<div class="icons-left"><?php $this->displayNavigationLinks(); ?></div>

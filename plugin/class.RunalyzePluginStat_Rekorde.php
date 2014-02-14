@@ -39,7 +39,27 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		$this->setYearsNavigation(true, true);
+
+		$this->setHeaderWithSportAndYear();
+
 		$this->initData();
+	}
+
+	/**
+	 * Title for all years
+	 * @return string
+	 */
+	protected function titleForAllYears() {
+		return 'Alle Jahre';
+	}
+
+	/**
+	 * Default sport
+	 * @return int
+	 */
+	protected function defaultSport() {
+		return -1;
 	}
 
 	/**
@@ -60,9 +80,13 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			echo '<thead><tr><th colspan="11" class="l">'.$rekord['name'].'</th></tr></thead>';
 
 			$output = false;
-			eval('$sports = Mysql::getInstance()->fetchAsArray(\''.$rekord['sportquery'].'\');');
-			foreach ($sports as $i => $sport) {
-				eval('$data = Mysql::getInstance()->fetchAsArray(\''.$rekord['datquery'].'\');');
+			$sports = DB::getInstance()->query($rekord['sportquery'])->fetchAll();
+			$Request = DB::getInstance()->prepare($rekord['datquery']);
+
+			foreach ($sports as $sport) {
+				$Request->bindValue('sportid', $sport['id']);
+				$Request->execute();
+				$data = $Request->fetchAll();
 
 				if (!empty($data)) {
 					$output = true;
@@ -72,14 +96,14 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	
 					$j = 0;
 					foreach ($data as $j => $dat) {
-						if ($rekord['eval'] == 0)
+						if ($rekord['speed'])
 							$code = SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $sport['id']);
-						elseif ($rekord['eval'] == 1)
+						else
 							$code = ($dat['distance'] != 0 ? Running::Km($dat['distance']) : Time::toString($dat['s']));
 	
-						echo('<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
+						echo '<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
 								'.Ajax::trainingLink($dat['id'], $code).'
-							</span></td>');
+							</span></td>';
 					}
 	
 					for (; $j < 9; $j++)
@@ -105,7 +129,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		echo '<thead><tr><th colspan="11" class="l">Trainingsreichsten Laufphasen</th></tr></thead>';
 		echo '<tbody>';
 
-		if (empty($this->years)) {
+		if (empty($this->weeks)) {
 			echo '<tr><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
 			echo HTML::spaceTR(11);
 			echo '</tbody>';
@@ -114,14 +138,16 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		}
 
 		// Years
-		echo '<tr class="r"><td class="c b">Jahre</td>';
-		foreach ($this->years as $i => $year) {
-			$link = DataBrowserLinker::link(Running::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
-			echo '<td class="small"><span title="'.$year['year'].'">'.$link.'</span></td>';
+		if ($this->year == -1) {
+			echo '<tr class="r"><td class="c b">Jahre</td>';
+			foreach ($this->years as $i => $year) {
+				$link = DataBrowserLinker::link(Running::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
+				echo '<td class="small"><span title="'.$year['year'].'">'.$link.'</span></td>';
+			}
+			for (; $i < 9; $i++)
+				echo HTML::emptyTD();
+			echo '</tr>';
 		}
-		for (; $i < 9; $i++)
-			echo HTML::emptyTD();
-		echo '</tr>';
 
 		// Months
 		echo '<tr class="r"><td class="c b">Monate</td>';
@@ -152,16 +178,18 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 */
 	private function initData() {
 		$this->rekorde = array();
-		$this->rekorde[] = array('name' => 'Schnellsten Trainings',
-			'sportquery' => 'SELECT * FROM `'.PREFIX.'sport` WHERE `distances`=1 ORDER BY `id` ASC',
-			'datquery' => 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
-			'eval' => '0');
-		$this->rekorde[] = array('name' => 'L&auml;ngsten Trainings',
-			'sportquery' => 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery' => 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=\'.$sport[\'id\'].\' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
-			'eval' => '1');
+		$this->rekorde[] = array(
+			'name'			=> 'Schnellsten Trainings',
+			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` WHERE `distances`=1 ORDER BY `id` ASC',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
+			'speed'			=> true);
+		$this->rekorde[] = array(
+			'name'			=> 'L&auml;ngsten Trainings',
+			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
+			'speed'			=> false);
 
-		$this->years = Mysql::getInstance()->fetchAsArray('
+		$this->years = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				SUM(`distance`) as `km`,
@@ -170,9 +198,9 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			WHERE `sportid`='.CONF_RUNNINGSPORT.'
 			GROUP BY `year`
 			ORDER BY `km` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 		
-		$this->months = Mysql::getInstance()->fetchAsArray('
+		$this->months = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				SUM(`distance`) as `km`,
@@ -180,12 +208,12 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 
-		$this->weeks = Mysql::getInstance()->fetchAsArray('
+		$this->weeks = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				SUM(`distance`) as `km`,
@@ -194,9 +222,9 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.'
+			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC
-			LIMIT 10');
+			LIMIT 10')->fetchAll();
 	}
 }

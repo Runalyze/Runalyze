@@ -97,10 +97,11 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
+			$this->showListOfTables();
 		if (array_key_exists(Request::param('table'), $this->Tables))
 			$this->showTable(Request::param('table'));
-		else
-			$this->showListOfTables();
+		//else
+		//	$this->showListOfTables();
 	}
 
 	/**
@@ -110,9 +111,7 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	private function showTable($tableKey) {
 		eval($this->Tables[$tableKey]['init']);
 
-		echo HTML::pCentered($this->getLink('&laquo; zur&uuml;ck zur &Uuml;bersicht'));
-		echo HTML::p('<strong>'.$this->Tables[$tableKey]['title'].'</strong>');
-		echo HTML::info($this->Tables[$tableKey]['hint']);
+		echo HTML::p('');
 
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/'.$this->Tables[$tableKey]['tpl'];
 	}
@@ -125,7 +124,10 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 			$Title = '<strong class="block">'.$data['title'].'</strong>';
 			$Info = '<small class="block">'.$data['hint'].'</small>';
 
-			echo HTML::fileBlock( $this->getActionLink($Title.' '.$Info, 'table='.$key) );
+			if ($key == Request::param('table'))
+				echo '<p class="okay">'.$this->getActionLink($Title.' '.$Info, 'table='.$key).'</p>';
+			else
+				echo HTML::fileBlock( $this->getActionLink($Title.' '.$Info, 'table='.$key) );
 		}
 	}
 

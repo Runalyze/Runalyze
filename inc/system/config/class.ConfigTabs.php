@@ -80,24 +80,24 @@ class ConfigTabs {
 	 * Display tabs 
 	 */
 	public function display() {
+		if (Request::param('form') == 'true') {
+			$this->Tabs[$this->getCurrentKey()]->parsePostData();
+
+			$SubmitInfo = '<p class="okay"><em>Die Einstellungen wurden gespeichert.</em></p>';
+
+			if (!empty(self::$Messages))
+				$SubmitInfo .= implode(NL, self::$Messages);
+
+			echo '<div class="panel-heading" id="submit-info">'.$SubmitInfo.'</div>'.NL;
+			echo Ajax::getReloadCommand().NL;
+		}
+
 		if ($this->hasToShowDiv()) {
-			echo '<div class="panel-nav-floated panel-text-nav">';
+			echo '<div class="panel-menu panel-menu-floated">';
 			$this->displayNavigation();
 			echo '</div>';
 
 			echo '<div id="'.self::$TABS_ID.'">';
-		}
-
-		if (Request::param('form') == 'true') {
-			$this->Tabs[$this->getCurrentKey()]->parsePostData();
-
-			$SubmitInfo = '<em>Die Einstellungen wurden gespeichert.</em><br />&nbsp;';
-
-			if (!empty(self::$Messages))
-				$SubmitInfo .= implode(NL, self::$Messages).'<br />&nbsp;';
-
-			echo '<div id="submit-info">'.$SubmitInfo.'</div>'.NL;
-			echo Ajax::getReloadCommand().NL;
 		}
 
 		$this->displayCurrentTab();

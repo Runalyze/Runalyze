@@ -60,7 +60,7 @@ class SharedLinker {
 		if (!CONF_TRAINING_LIST_PUBLIC)
 			return '';
 
-		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank">'.Ajax::tooltip(Icon::$ATTACH, '&Ouml;ffentliche Trainingsliste').'</a>';
+		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', '&Ouml;ffentliche Trainingsliste', false, true).'>'.Icon::$ATTACH.'</a>';
 	}
 
 	/**
