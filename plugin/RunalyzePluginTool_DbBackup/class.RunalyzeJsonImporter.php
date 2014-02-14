@@ -69,10 +69,10 @@ class RunalyzeJsonImporter {
 	protected $Data = array();
 
 	/**
-	 * Mysql object
-	 * @var Mysql
+	 * DB object
+	 * @var PDOforRunalyze
 	 */
-	protected $Mysql = null;
+	protected $DB = null;
 
 	/**
 	 * Array with all IDs to replace
@@ -93,7 +93,7 @@ class RunalyzeJsonImporter {
 	 */
 	public function __construct($filename) {
 		$this->filename = $filename;
-		$this->Mysql    = Mysql::getInstance();
+		$this->DB       = DB::getInstance();
 
 		$this->initOptions();
 		$this->readFile();
@@ -184,13 +184,13 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		if ($this->deleteOldTrainings)
-			$this->Mysql->query('DELETE FROM `'.PREFIX.'training`');
+			$this->DB->query('DELETE FROM `'.PREFIX.'training`');
 
 		if ($this->deleteOldUserData)
-			$this->Mysql->query('DELETE FROM `'.PREFIX.'user`');
+			$this->DB->query('DELETE FROM `'.PREFIX.'user`');
 
 		if ($this->deleteOldShoes)
-			$this->Mysql->query('DELETE FROM `'.PREFIX.'shoe`');
+			$this->DB->query('DELETE FROM `'.PREFIX.'shoe`');
 	}
 
 	/**
@@ -198,12 +198,12 @@ class RunalyzeJsonImporter {
 	 */
 	private function importGeneralTables() {
 		if ($this->overwriteConfig) {
-			$this->Mysql->query('DELETE FROM `'.PREFIX.'conf`');
+			$this->DB->query('DELETE FROM `'.PREFIX.'conf`');
 			$this->importCompleteTable(PREFIX.'conf');
 		}
 
 		if ($this->overwriteDataset) {
-			$this->Mysql->query('DELETE FROM `'.PREFIX.'dataset`');
+			$this->DB->query('DELETE FROM `'.PREFIX.'dataset`');
 			$this->importCompleteTable(PREFIX.'dataset');
 		}
 
@@ -251,7 +251,7 @@ class RunalyzeJsonImporter {
 		foreach ($this->Data[$tablename] as $row) {
 			if ($replaceIDs) {
 				$row['name']  = isset($row['name']) ? mysql_real_escape_string($row['name']) : '';
-				$ExistingData = $this->Mysql->fetchSingle('SELECT id FROM `'.$tablename.'` WHERE `name`="'.$row['name'].'"');
+				$ExistingData = $this->DB->query('SELECT id FROM `'.$tablename.'` WHERE `name`="'.$row['name'].'" LIMIT 1')->fetch();
 			} else {
 				$ExistingData = false;
 			}
@@ -268,7 +268,7 @@ class RunalyzeJsonImporter {
 					}
 				}
 
-				$newID = $this->Mysql->insert($tablename, $columns, $values);
+				$newID = $this->DB->insert($tablename, $columns, $values);
 			}
 
 			if ($replaceIDs)
@@ -304,7 +304,7 @@ class RunalyzeJsonImporter {
 			}
 		}
 
-		$this->Mysql->insert(PREFIX.'training', $columns, $values);
+		$this->DB->insert('training', $columns, $values);
 	}
 
 	/**
@@ -351,7 +351,7 @@ class RunalyzeJsonImporter {
 				$Options['table'] = PREFIX.$Options['table'];
 
 				if (isset($this->ReplaceIDs[$Options['table']])) {
-					$InsertedData = $this->Mysql->fetchSingle('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'"');
+					$InsertedData = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetch();
 					if (isset($InsertedData['value']) && isset($this->ReplaceIDs[$Options['table']][$InsertedData['value']]))
 						ConfigValue::update($key, $this->ReplaceIDs[$Options['table']][$InsertedData['value']]);
 				}
@@ -360,9 +360,14 @@ class RunalyzeJsonImporter {
 
 		if ($this->overwritePluginConf) {
 			foreach ($this->Data[PREFIX.'plugin'] as $Plugin) {
-				$this->Mysql->updateWhere(PREFIX.'plugin', '`key`="'.$Plugin['key'].'"',
-						array('config', 'internal_data'),
-						array($Plugin['config'], $Plugin['internal_data']));
+				$this->DB->query('
+					UPDATE `'.PREFIX.'plugin`
+					SET
+						`config`="'.mysql_real_escape_string($Plugin['config']).'",
+						`internal_data`="'.mysql_real_escape_string($Plugin['internal_data']).'"
+					WHERE
+						`key`="'.mysql_real_escape_string($Plugin['key']).'"
+				');
 			}
 		}
 	}

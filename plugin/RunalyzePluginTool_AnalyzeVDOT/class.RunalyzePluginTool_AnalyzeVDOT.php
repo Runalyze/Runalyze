@@ -60,7 +60,7 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 * Init internal array with all trainings
 	 */
 	private function initTrainings() {
-		$this->Trainings = Mysql::getInstance()->fetchAsArray('
+		$this->Trainings = DB::getInstance()->query('
 			SELECT
 				id,
 				time,
@@ -74,7 +74,6 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 				vdot
 			FROM `'.PREFIX.'training`
 			WHERE `pulse_avg`!=0 && `typeid`='.CONF_WK_TYPID.'
-			ORDER BY `time` DESC');
+			ORDER BY `time` DESC')->fetchAll();
 	}
 }
-?>

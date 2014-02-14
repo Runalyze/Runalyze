@@ -112,8 +112,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private function displayMonthTableTemp() {
 		echo '<tr class="top-spacer"><td class="c">&#176;C</td>';
 
-		$i = 1;
-		$temps = Mysql::getInstance()->fetchAsArray('SELECT
+		$temps = DB::getInstance()->query('
+			SELECT
 				AVG(`temperature`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
@@ -122,7 +122,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
-			LIMIT 12');
+			LIMIT 12')->fetchAll();
+
+		$i = 1;
 
 		if (!empty($temps)) {
 			foreach ($temps as $temp) {
@@ -152,7 +154,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			echo '<tr><td class="c">'.$Weather->icon().'</td>';
 		
 			$i = 1;
-			$data = Mysql::getInstance()->fetchAsArray('SELECT
+			$data = DB::getInstance()->query('SELECT
 					SUM(1) as `num`,
 					MONTH(FROM_UNIXTIME(`time`)) as `m`
 				FROM `'.PREFIX.'training` WHERE
@@ -161,7 +163,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 				GROUP BY MONTH(FROM_UNIXTIME(`time`))
 				ORDER BY `m` ASC
-				LIMIT 12');
+				LIMIT 12')->fetchAll();
 
 			if (!empty($data)) {
 				foreach ($data as $dat) {
@@ -188,7 +190,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for clothes
 	*/
 	private function displayMonthTableClothes() {
-		$nums = Mysql::getInstance()->fetchAsArray('SELECT
+		$nums = DB::getInstance()->query('SELECT
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
@@ -197,20 +199,20 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
-			LIMIT 12');
+			LIMIT 12')->fetchAll();
 		
 		if (!empty($nums)) {
 			foreach ($nums as $dat)
 				$num[$dat['m']] = $dat['num'];
 		}
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
+		$kleidungen = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
 				echo '<tr class="'.($k == 0 ? 'top-spacer ' : '').'r"><td>'.$kleidung['name'].'</td>';
 			
 				$i = 1;
-				$data = Mysql::getInstance()->fetchAsArray('SELECT
+				$data = DB::getInstance()->query('SELECT
 						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `clothes`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
 					FROM `'.PREFIX.'training` WHERE
@@ -219,7 +221,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					GROUP BY MONTH(FROM_UNIXTIME(`time`))
 					HAVING `num`!=0
 					ORDER BY `m` ASC
-					LIMIT 12');
+					LIMIT 12')->fetchAll();
 
 				if (!empty($data)) {
 					foreach ($data as $dat) {
@@ -268,7 +270,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			</tr></thead>';
 		echo '<tr class="r">';
 
-		$kleidungen = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
+		$kleidungen = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $i => $kleidung) {
 				if ($i%3 == 0)
@@ -276,18 +278,20 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				else
 					echo '<td>&nbsp;&nbsp;</td>';
 
-				$dat = Mysql::getInstance()->fetch('SELECT
+				$dat = DB::getInstance()->query('SELECT
 						AVG(`temperature`) as `avg`,
 						MAX(`temperature`) as `max`,
 						MIN(`temperature`) as `min`
-					FROM `'.PREFIX.'training` WHERE `sportid`="'.CONF_MAINSPORT.'" AND
-					`temperature` IS NOT NULL AND
-					FIND_IN_SET('.$kleidung['id'].',`clothes`) != 0
-					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''));
+					FROM `'.PREFIX.'training`
+					WHERE
+						`sportid`="'.CONF_MAINSPORT.'" AND
+						`temperature` IS NOT NULL AND
+						FIND_IN_SET('.$kleidung['id'].',`clothes`) != 0
+					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''))->fetch();
 
 				echo '<td class="l">'.$kleidung['name'].'</td>';
 
-				if ($dat['min'] != '') {
+				if (isset($dat['min'])) {
 					echo '<td>'.($dat['min']).'&deg;C bis '.($dat['max']).'&deg;C</td>';
 					echo '<td>'.round($dat['avg']).'&deg;C</td>';
 				} else {
@@ -307,8 +311,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-		$hot  = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` DESC LIMIT 5');
-		$cold = Mysql::getInstance()->fetchAsArray('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 5');
+		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
+		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
 			$hot[$i] = $h['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));

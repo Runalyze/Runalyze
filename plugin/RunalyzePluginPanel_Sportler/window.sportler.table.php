@@ -10,7 +10,6 @@ $Frontend = new Frontend();
 $Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 
-$colspan     = 3;
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');
 $FieldsFat   = array('fat' => ' &#37;', 'water' => ' &#37;', 'muscles' => ' &#37;');
@@ -22,6 +21,7 @@ if (Request::param('reload') == 'true') {
 }
 ?>
 <div class="panel-heading">
+	<div class="panel-menu"><ul><li><?php echo $Plugin->addLink(); ?></li></ul></div>
 	<h1>K&ouml;rper-Daten</h1>
 </div>
 <div class="panel-content">
@@ -52,7 +52,7 @@ if (Request::param('reload') == 'true') {
 				<td colspan="<?php echo $colspan; ?>"><em>Keine Daten vorhanden.</em></td>
 			</tr>
 		<?php else: ?>
-		<?php foreach ($Data as $i => $Info): ?>
+		<?php foreach ($Data as $Info): ?>
 			<tr>
 				<td><?php echo RunalyzePluginPanel_Sportler::getDeleteLinkFor($Info['id']); ?></td>
 				<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
@@ -68,8 +68,4 @@ if (Request::param('reload') == 'true') {
 	</table>
 
 	<?php Ajax::createTablesorterWithPagerFor('#sportlerTable', true); ?>
-
-	<p class="c">
-		<?php echo Ajax::window('<a href="plugin/'.$Plugin->get('key').'/window.sportler.php">'.Icon::$ADD.' Einen neuen Eintrag hinzuf&uuml;gen</a>'); ?>
-	</p>
 </div>

@@ -51,11 +51,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
+		$Links = '';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
-		return implode(NBSP, $Links);
+		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**
@@ -95,6 +95,22 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
 		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
+	}
+
+	/**
+	 * Table link
+	 * @return string
+	 */
+	public function tableLink() {
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.table.php">'.Icon::$TABLE.' Alle Daten anzeigen</a>');
+	}
+
+	/**
+	 * Add link
+	 * @return string
+	 */
+	public function addLink() {
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.php">'.Icon::$ADD.' Einen neuen Eintrag hinzuf&uuml;gen</a>');
 	}
 
 	/**

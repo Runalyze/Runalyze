@@ -51,11 +51,11 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>');
+		$Links = '';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
-		return implode(NBSP, $Links);
+		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**
@@ -63,10 +63,11 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		echo('<div id="schuhe">');
+		echo $this->getStyle();
+		echo '<div id="schuhe">';
 
 		$inuse = true;
-		$schuhe = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC');
+		$schuhe = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC')->fetchAll();
 		foreach ($schuhe as $schuh) {
 			$Shoe = new Shoe($schuh);
 
@@ -75,11 +76,12 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				$inuse = false;
 			}
 
-			echo('
-			<p style="background-image:url(plugin/'.$this->key.'/schuhbalken.php?km='.round($Shoe->getKm()).');">
+			echo '
+			<p style="position:relative;">
 				<span class="right">'.$Shoe->getKmString().'</span>
 				<strong>'.ShoeFactory::getSearchLink($schuh['id']).'</strong>
-			</p>'.NL);	
+				'.$this->getShoeUsageImage($Shoe->getKm()).'
+			</p>';
 		}
 
 		if (empty($schuhe))
@@ -96,6 +98,23 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	}
 
 	/**
+	 * Get style
+	 * @return string
+	 */
+	protected function getStyle() {
+		return '<style type="text/css">.shoe-usage { position: absolute; bottom: 0; left: 0; background-image:url(plugin/'.$this->key.'/schuhbalken.png); background-position:left center; height: 2px; max-width: 100%; }</style>';
+	}
+
+	/**
+	 * Get shoe usage image
+	 * @param float $km
+	 * @return string
+	 */
+	protected function getShoeUsageImage($km) {
+		return '<span class="shoe-usage" style="width:'.round(min(330,$km/4)).'px;"></span>';
+	}
+
+	/**
 	 * Display table
 	 */
 	public function displayTable() {
@@ -103,10 +122,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			$this->initTableData();
 
 		echo '
-		<style type="text/css">
-		tr.shoe { height:2px; }
-		tr.shoe td { padding: 0; }
-		</style>
 		<table id="list-of-all-shoes" class="fullwidth zebra-style">
 			<thead>
 				<tr>
@@ -125,12 +140,12 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			<tbody>';
 
 		if (!empty($this->schuhe)) {
-			foreach ($this->schuhe as $i => $schuh) {
+			foreach ($this->schuhe as $schuh) {
 				$Shoe   = new Shoe($schuh);
 				$in_use = $Shoe->isInUse() ? '' : ' unimportant';
 
 				echo('
-				<tr class="'.$in_use.' r">
+				<tr class="'.$in_use.' r" style="position: relative">
 					<td class="small">'.$schuh['num'].'x</td>
 					<td>'.$this->editLinkFor($schuh['id']).'</td>
 					<td class="b l">'.ShoeFactory::getSearchLink($schuh['id']).'</td>
@@ -140,7 +155,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<td class="small">'.Running::Km($schuh['dist']).'</td>
 					<td class="small">'.  SportSpeed::minPerKm(1, $schuh['pace_in_s']).'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>
-					<td>'.$Shoe->getKmString().' '.$Shoe->getKmIcon().'</td>
+					<td>'.$Shoe->getKmString().'</td>
 				</tr>');
 			}
 		} else {
@@ -151,8 +166,22 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo '</table>';
 
 		Ajax::createTablesorterFor("#list-of-all-shoes", true);
+	}
 
-		echo '<p class="c">'.Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' Einen neuen Schuh hinzuf&uuml;gen</a>').'</p>';
+	/**
+	 * Table link
+	 * @return string
+	 */
+	public function tableLink() {
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.table.php">'.Icon::$TABLE.' Alle Laufschuhe anzeigen</a>');
+	}
+
+	/**
+	 * Add link
+	 * @return string
+	 */
+	public function addLink() {
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' Einen neuen Schuh hinzuf&uuml;gen</a>');
 	}
 
 	/**
@@ -161,7 +190,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	private function initTableData() {
 		$this->schuhe   = array();
 		$ShoeStatistics = array();
-		$AllShoeStatistics = Mysql::getInstance()->fetchAsArray('
+		$AllShoeStatistics = DB::getInstance()->query('
 			SELECT
 				shoeid,
 				COUNT(*) as num,
@@ -170,17 +199,17 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 			FROM '.PREFIX.'training
 			WHERE shoeid != 0
 			GROUP BY shoeid
-		');
+		')->fetchAll();
 
 		foreach ($AllShoeStatistics as $Statistic)
 			$ShoeStatistics[$Statistic['shoeid']] = $Statistic;
 
-		$AllShoes = Mysql::getInstance()->fetchAsArray('
+		$AllShoes = DB::getInstance()->query('
 			SELECT
 				*
 			FROM '.PREFIX.'shoe
 			ORDER BY inuse DESC, km DESC
-		');
+		')->fetchAll();
 
 		foreach ($AllShoes as $Shoe)
 			if (isset($ShoeStatistics[$Shoe['id']]))

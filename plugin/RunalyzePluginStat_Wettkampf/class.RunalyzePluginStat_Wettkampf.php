@@ -121,7 +121,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayAllCompetitions() {
 		$this->displayTableStart('wk-table');
 
-		$wks = Mysql::getInstance()->fetchAsArray('
+		$wks = DB::getInstance()->query('
 			SELECT
 				id,
 				time,
@@ -137,7 +137,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				temperature
 			FROM `'.PREFIX.'training`
 			WHERE `typeid`='.CONF_WK_TYPID.'
-			ORDER BY `time` DESC');
+			ORDER BY `time` DESC')->fetchAll();
 		$num = count($wks);
 		if ($num > 0) {
 			foreach($wks as $wk) {
@@ -169,12 +169,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayPersonalBestsTRs() {
 		$this->distances = array();
-		$dists = Mysql::getInstance()->fetchAsArray('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' GROUP BY `distance`');
-		foreach ($dists as $i => $dist) {
-			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->config['pb_distances']['var'])) {
-				$this->distances[] = $dist['distance'];
-		
-				$wk = Mysql::getInstance()->fetchSingle('
+		$dists = DB::getInstance()->query('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' GROUP BY `distance`')->fetchAll();
+
+		$SingleRequest = DB::getInstance()->prepare('
 					SELECT
 						id,
 						time,
@@ -190,8 +187,16 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						temperature
 					FROM `'.PREFIX.'training`
 					WHERE `typeid`='.CONF_WK_TYPID.'
-						AND `distance`='.$dist['distance'].'
+						AND `distance`=:distance
 					ORDER BY `s` ASC');
+
+		foreach ($dists as $i => $dist) {
+			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->config['pb_distances']['var'])) {
+				$this->distances[] = $dist['distance'];
+
+				$SingleRequest->bindValue('distance', $dist['distance']);
+				$SingleRequest->execute();
+				$wk = $SingleRequest->fetch();
 				$this->displayWKTr($wk, $i, true);
 			}
 		}
@@ -213,7 +218,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		echo '<div class="databox" style="float:none;padding:0;width:490px;margin:20px auto;">';
 		echo '<div class="panel-heading">';
-		echo '<div class="icons-right panel-text-nav">';
+		echo '<div class="panel-menu">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
 		echo '<h1>Bestzeitverlauf</h1>';
@@ -246,7 +251,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
-		$wks = Mysql::getInstance()->fetchAsArray('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `y` ASC');
+		$wks = DB::getInstance()->query('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `y` ASC')->fetchAll();
 
 		if (empty($wks))
 			return;
@@ -369,7 +374,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayWeatherStatistics() {
 		$Strings = array();
-		$Weather = Mysql::getInstance()->fetchAsArray('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC');
+		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
 		foreach ($Weather as $W)
 			$Strings[] = $W['num'].'x '.Icon::getWeatherIcon($W['weatherid']);
 

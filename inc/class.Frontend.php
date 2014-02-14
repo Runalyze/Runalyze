@@ -79,6 +79,7 @@ class Frontend {
 		$this->initMySql();
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
+		$this->forwardAccountIDtoDatabaseWrapper();
 	}
 
 	/**
@@ -142,6 +143,7 @@ class Frontend {
 
 		$this->adminPassAsMD5 = md5($password);
 
+		DB::connect($host, $username, $password, $database);
 		Mysql::connect($host, $username, $password, $database);
 		unset($host, $username, $password, $database);
 	}
@@ -162,6 +164,18 @@ class Frontend {
 
 		if (isset($_POST['user']) && isset($_POST['password']))
 			$Session->tryToLogin($_POST['user'], $_POST['password']);
+	}
+
+	/**
+	 * Forward accountid to database wraper
+	 */
+	protected function forwardAccountIDtoDatabaseWrapper() {
+		if (SharedLinker::isOnSharedPage()) {
+			$ID = SharedLinker::getUserId();
+		} else
+			$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
+
+		DB::getInstance()->setAccountID($ID);
 	}
 
 	/**

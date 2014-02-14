@@ -87,14 +87,14 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * Initialize $this->ABCData
 	 */
 	private function initData() {
-		$result = Mysql::getInstance()->fetchAsArray('
+		$result = DB::getInstance()->query('
 			SELECT
 				SUM(`abc`) as `abc`,
 				SUM(1) as `num`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			GROUP BY `year`, `month`');
+			GROUP BY `year` DESC, `month` ASC')->fetchAll();
 		
 		foreach ($result as $dat) {
 			if ($dat['abc'] > 0)

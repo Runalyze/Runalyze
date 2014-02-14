@@ -21,7 +21,7 @@ $PrognosisObj = new RunningPrognosis;
 $PrognosisObj->setStrategy($Strategy);
 
 if (START_TIME != time()) {
-	$Data = Mysql::getInstance()->fetchAsArray('
+	$Data = DB::getInstance()->query('
 		SELECT
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
 			MONTH(FROM_UNIXTIME(`time`)) as `m`,
@@ -30,7 +30,8 @@ if (START_TIME != time()) {
 		WHERE
 			`vdot`>0
 		GROUP BY `y`, `m`
-		ORDER BY `y` ASC, `m` ASC');
+		ORDER BY `y` ASC, `m` ASC')->fetchAll();
+
 	foreach ($Data as $dat) {
 		// TODO: use correct GA
 		$Strategy->setVDOT( JD::correctVDOT($dat['vdot']) );
@@ -39,7 +40,7 @@ if (START_TIME != time()) {
 		$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance)*1000;
 	}
 
-	$ResultsData = Mysql::getInstance()->fetchAsArray('
+	$ResultsData = DB::getInstance()->query('
 		SELECT
 			`time`,
 			`id`,
@@ -49,7 +50,7 @@ if (START_TIME != time()) {
 			`typeid`="'.CONF_WK_TYPID.'"
 			AND `distance`="'.$distance.'"
 		ORDER BY
-			`time` ASC');
+			`time` ASC')->fetchAll();
 
 	foreach ($ResultsData as $dat) {
 		if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
@@ -82,4 +83,3 @@ if ($DataFailed || empty($Data))
 	$Plot->raiseError('Es sind leider keine Daten vorhanden');
 
 $Plot->outputJavaScript();
-?>

@@ -17,19 +17,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Sport
 	 * @var array
 	 */
-	private $sport     = array();
+	private $sport  = array();
 
 	/**
 	 * Colspan
 	 * @var int
 	 */
-	private $colspan   = 0;
+	private $colspan = 0;
 
 	/**
 	 * Number of datasets
 	 * @var int
 	 */
-	private $num       = 0;
+	private $num = 0;
 
 	/**
 	 * Index of first dataset
@@ -41,7 +41,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Index of last dataset
 	 * @var int
 	 */
-	private $num_end   = 0;
+	private $num_end = 0;
 
 	/**
 	 * Complete data
@@ -53,43 +53,43 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Data for hours
 	 * @var array
 	 */
-	private $StundenData  = array();
+	private $StundenData = array();
 
 	/**
 	 * Data for kilometer
 	 * @var array
 	 */
-	private $KMData       = array();
+	private $KMData = array();
 
 	/**
 	 * Kilometer data for week
 	 * @var array
 	 */
-	private $KMDataWeek   = array(); // = KMData / 52
+	private $KMDataWeek = array(); // = KMData / 52
 
 	/**
 	 * Kilometer data for month
 	 * @var array
 	 */
-	private $KMDataMonth  = array(); // = KMData / 12
+	private $KMDataMonth = array(); // = KMData / 12
 
 	/**
 	 * Data for pace
 	 * @var array
 	 */
-	private $TempoData    = array();
+	private $TempoData = array();
 
 	/**
 	 * Data for vdot
 	 * @var array
 	 */
-	private $VDOTData     = array();
+	private $VDOTData = array();
 
 	/**
 	 * Data for trimp
 	 * @var array
 	 */
-	private $TRIMPData    = array();
+	private $TRIMPData = array();
 
 	/**
 	 * Initialize this plugin
@@ -308,8 +308,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Display days of streakrunning 
 	 */
 	private function displayStreak() {
-		$Mysql    = Mysql::getInstance();
-		$Result   = $Mysql->query('SELECT time,DATE(FROM_UNIXTIME(time)) as day FROM '.PREFIX.'training WHERE `sportid`='.CONF_RUNNINGSPORT.' GROUP BY DATE(FROM_UNIXTIME(time)) ORDER BY day DESC');
+		$Query = '
+			SELECT
+				`time`,
+				DATE(FROM_UNIXTIME(`time`)) as `day`
+			FROM `'.PREFIX.'training`
+			WHERE `sportid`='.CONF_RUNNINGSPORT.'
+			GROUP BY DATE(FROM_UNIXTIME(`time`))
+			ORDER BY `day` DESC';
+
+		$Request = DB::getInstance()->prepare($Query);
+		$Request->bindValue('sportid', CONF_RUNNINGSPORT);
+		$Request->execute();
+
 		$IsStreak = true;
 		$FirstDay = true;
 		$NumDays  = 0;
@@ -318,7 +329,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$Text     = '';
 
 		while ($IsStreak) {
-			$Day = mysql_fetch_assoc($Result);
+			$Day = $Request->fetch();
 
 			if ($FirstDay) {
 				if ($Day['day'] != $LastDay) {
@@ -347,7 +358,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		if ($NumDays == 0) {
 			$Text .= 'Du hast derzeit keinen Streak.';
-			$LastTraining = $Mysql->fetchSingle('SELECT time FROM '.PREFIX.'training WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY time DESC');
+			$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY `time` DESC')->fetch();
 
 			if (isset($LastTraining['time']))
 				$Text .= ' Dein letzter Lauf war am '.date('d.m.Y', $LastTraining['time']);
@@ -363,7 +374,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->sport = Mysql::getInstance()->fetch(PREFIX.'sport', $this->sportid);
+		$this->sport = DB::getInstance()->fetchByID('sport', $this->sportid);
 
 		if ($this->year != -1) {
 			$this->num = 12;
@@ -394,22 +405,34 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	private function initCompleteData() {
+		$Timer = $this->year != -1 ? 'MONTH' : 'YEAR';
+
 		$Query = '
 			SELECT
 				SUM(`s`) as `s`,
 				SUM(`distance`) as `distance`,
 				SUM('.JD::mysqlVDOTsum().')/SUM('.JD::mysqlVDOTsumTime().') as `vdot`,
 				SUM(`trimp`) as `trimp`,
-				'.($this->year!=-1?'MONTH':'YEAR').'(FROM_UNIXTIME(`time`)) as `i`
+				'.$Timer.'(FROM_UNIXTIME(`time`)) as `i`
 			FROM
 				`'.PREFIX.'training`
 			WHERE
-				`sportid`='.$this->sportid;
-		$Query .= ($this->year != -1)
-			? ' && YEAR(FROM_UNIXTIME(`time`))='.$this->year.' GROUP BY MONTH(FROM_UNIXTIME(`time`)) ORDER BY `i` LIMIT 12'
-			: ' GROUP BY YEAR(FROM_UNIXTIME(`time`)) ORDER BY `i`';
+				`sportid`=:sportid ';
 
-		$this->CompleteData = Mysql::getInstance()->fetchAsArray($Query);
+		if ($this->year != -1)
+			$Query .= '&& YEAR(FROM_UNIXTIME(`time`))=:year ';
+
+		$Query .= 'GROUP BY '.$Timer.'(FROM_UNIXTIME(`time`)) ORDER BY `i`';
+
+		$Request = DB::getInstance()->prepare($Query);
+		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
+
+		if ($this->year != -1)
+			$Request->bindParam('year', $this->year, PDO::PARAM_INT);
+
+		$Request->execute();
+
+		$this->CompleteData = $Request->fetchAll();
 	}
 
 	/**

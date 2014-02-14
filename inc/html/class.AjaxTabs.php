@@ -138,7 +138,7 @@ class AjaxTabs {
 		foreach ($this->Tabs as $id => $Tab)
 			$Links[] = array('tag' => Ajax::change($Tab['title'], $this->containerID, '#'.$id, ($Tab['active'] ? 'triggered' : '')));
 
-		echo '<div class="icons-right panel-text-nav">';
+		echo '<div class="panel-menu">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
 	}

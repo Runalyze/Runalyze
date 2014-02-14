@@ -346,9 +346,12 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Create backup: JSON
 	 */
 	protected function createBackupJSON() {
-		$Writer     = new BigFileWriterGZip($this->getFileName(self::$TYPE_JSON));
-		$Mysql      = Mysql::getInstance();
-		$AllTables  = $Mysql->untouchedFetchArray('SHOW TABLES');
+		$Writer = new BigFileWriterGZip($this->getFileName(self::$TYPE_JSON));
+		$DB     = DB::getInstance();
+
+		$DB->stopAddingAccountID();
+		$AllTables = $DB->query('SHOW TABLES')->fetchAll();
+		$DB->startAddingAccountID();
 
 		$Writer->addToFile('{');
 
@@ -369,7 +372,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				}
 				
 
-				$ArrayOfRows = $Mysql->fetchAsArray($Query);
+				$ArrayOfRows = $DB->query($Query)->fetchAll();
 
 				foreach ($ArrayOfRows as $r => $Row) {
 					if ($r > 0)
@@ -397,13 +400,20 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Create backup: SQL
 	 */
 	protected function createBackupSQL() {
-		$Writer    = new BigFileWriterGZip($this->getFileName(self::$TYPE_SQL));
-		$Mysql     = Mysql::getInstance();
-		$AllTables = $Mysql->untouchedFetchArray('SHOW TABLES');
+		$Writer = new BigFileWriterGZip($this->getFileName(self::$TYPE_SQL));
+		$DB     = DB::getInstance();
+
+		$DB->stopAddingAccountID();
+		$AllTables = $DB->query('SHOW TABLES')->fetchAll();
+		$DB->startAddingAccountID();
 
 		foreach ($AllTables as $Tables) {
 			foreach ($Tables as $TableName) {
-				$CreateResult = $Mysql->untouchedFetchArray('SHOW CREATE TABLE '.$TableName);
+				$DB->stopAddingAccountID();
+				$CreateResult = $DB->query('SHOW CREATE TABLE '.$TableName)->fetchAll();
+				$ColumnInfo   = $DB->query('SHOW COLUMNS FROM '.$TableName)->fetchAll();
+				$DB->startAddingAccountID();
+
 				$Query        = 'SELECT * FROM `'.$TableName.'`';
 
 				if ($TableName == PREFIX.'account') {
@@ -413,11 +423,16 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 						$Query .= ' WHERE id="0"';
 				}
 
-				$ArrayOfRows = $Mysql->fetchAsNumericArray($Query);
+				$ArrayOfRows = $DB->query($Query)->fetchAll(PDO::FETCH_NUM);
 				$Writer->addToFile('DROP TABLE IF EXISTS '.$TableName.';'.NL.NL);
 				$Writer->addToFile($CreateResult[0]['Create Table'].';'.NL.NL);
 
 				foreach ($ArrayOfRows as $Row) {
+					foreach ($Row as $i => $Value) {
+						if (empty($Value) && !is_numeric($Value) && $ColumnInfo[$i]['Null'] == 'YES')
+							$Row[$i] = null;
+					}
+
 					$Values = implode(',', array_map('DB_BACKUP_mapperForValues', $Row));
 					$Writer->addToFile('INSERT INTO '.$TableName.' VALUES('.$Values.');'.NL);
 				}
@@ -453,6 +468,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
  * @return string
  */
 function DB_BACKUP_mapperForValues($v) {
+	if (is_null($v))
+		return 'NULL';
+
 	return '"'.str_replace("\n", "\\n", addslashes($v)).'"';
 }
-?>

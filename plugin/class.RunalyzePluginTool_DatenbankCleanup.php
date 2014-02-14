@@ -11,6 +11,12 @@ $PLUGINKEY = 'RunalyzePluginTool_DatenbankCleanup';
  */
 class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
+	 * Success messages
+	 * @var array
+	 */
+	protected $SuccessMessages = array();
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
@@ -47,7 +53,9 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	protected function displayContent() {
 		if (isset($_GET['clean'])) {
 			$this->cleanDatabase();
-			echo '<em>Die Datenbank wurde erfolgreich bereinigt.</em><br /><br />';
+
+			foreach ($this->SuccessMessages as $Message)
+				echo HTML::okay($Message);
 		}
 
 		$AndApplyElevationToVDOT = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? ' und VDOT anpassen' : '';
@@ -86,6 +94,8 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Clean the databse
 	 */
 	private function cleanDatabase() {
+		$this->SuccessMessages[] = 'Die Datenbank wurde erfolgreich bereinigt.';
+
 		if ($_GET['clean'] == 'complete')
 			$this->resetTrimpAndVdot();
 
@@ -109,11 +119,11 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Reset all TRIMP- and VDOT-values in database
 	 */
 	private function resetTrimpAndVdot() {
-		$Mysql     = Mysql::getInstance();
-		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg` FROM `'.PREFIX.'training`');
+		$DB        = DB::getInstance();
+		$Trainings = $DB->query('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg` FROM `'.PREFIX.'training`')->fetchAll();
 
-		foreach ($Trainings as $Training)
-			$Mysql->update(PREFIX.'training', $Training['id'],
+		foreach ($Trainings as $Training) {
+			$DB->update('training', $Training['id'],
 				array(
 					'trimp',
 					'vdot',
@@ -123,15 +133,19 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 					Trimp::forTraining($Training),
 					JD::Training2VDOT($Training['id'], $Training),
 					JD::Competition2VDOT($Training['distance'], $Training['s'])
-				));
+				)
+			);
+		}
+
+		$this->SuccessMessages[] = 'Die Trimp- und VDOT-Werte wurden f&uuml;r <strong>'.count($Trainings).'</strong> Trainings neu berechnet.';
 	}
 
 	/**
 	 * Calculate elevation
 	 */
 	private function calculateElevation() {
-		$Mysql     = Mysql::getInstance();
-		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`arr_alt`,`arr_time`,`distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""');
+		$DB        = DB::getInstance();
+		$Trainings = $DB->query('SELECT `id`,`arr_alt`,`arr_time`,`distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
 
 		foreach ($Trainings as $Training) {
 			$GPS    = new GpsData($Training);
@@ -149,8 +163,10 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 				$values[] = $elevationArray[0];
 			}
 
-			$Mysql->update(PREFIX.'training', $Training['id'], $keys, $values );
+			$DB->update('training', $Training['id'], $keys, $values);
 		}
+
+		$this->SuccessMessages[] = 'Die H&ouml;henmeter-Werte wurden f&uuml;r <strong>'.count($Trainings).'</strong> Trainings neu berechnet.';
 
 		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
 			$this->recalculateVDOTwithElevationWithoutGPSarray();
@@ -160,12 +176,12 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Recalculate VDOT with elevation for trainings without gps array
 	 */
 	private function recalculateVDOTwithElevationWithoutGPSarray() {
-		$Mysql     = Mysql::getInstance();
-		$Trainings = $Mysql->fetchAsArray('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0');
+		$DB        = DB::getInstance();
+		$Trainings = $DB->query('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0')->fetchAll();
 
 		foreach ($Trainings as $Training) {
 			$newVdot = JD::Training2VDOTwithElevation($Training['id'], $Training, $Training['elevation'], $Training['elevation']);
-			$Mysql->update(PREFIX.'training', $Training['id'], 'vdot_with_elevation', $newVdot);
+			$DB->update('training', $Training['id'], 'vdot_with_elevation', $newVdot);
 		}
 	}
 
@@ -173,8 +189,34 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Clean the databse for max_atl, max_ctl, max_trimp
 	 */
 	private function resetMaxValues() {
+		$OldMaxValues = $this->getMaxValues();
+
 		Trimp::calculateMaxValues();
 		JD::recalculateVDOTcorrector();
+
+		$NewMaxValues = $this->getMaxValues();
+
+		if ($OldMaxValues == $NewMaxValues) {
+			$this->SuccessMessages[] = 'An den Maximalwerten (ATL/CTL/TRIMP) und am VDOT-Korrekturfaktor hat sich nichts ge&auml;ndert.';
+		} else {
+			foreach (array_keys($OldMaxValues) as $Key) {
+				if ($OldMaxValues[$Key] != $NewMaxValues[$Key])
+					$this->SuccessMessages[] = 'Neuer '.$Key.': <strong>'.$NewMaxValues[$Key].'</strong>, alter Wert war '.$OldMaxValues[$Key];
+			}
+		}
+	}
+
+	/**
+	 * Get max values
+	 * @return array
+	 */
+	private function getMaxValues() {
+		return array(
+			'maxATL'			=> (int)Trimp::maxATL(),
+			'maxCTL'			=> (int)Trimp::maxCTL(),
+			'maxTRIMP'			=> (int)Trimp::maxTRIMP(),
+			'VDOT-Korrektor'	=> round(JD::correctionFactor(), 4)
+		);
 	}
 
 	/**
@@ -182,5 +224,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function resetShoes() {
 		ShoeFactory::recalculateAllShoes();
+
+		$this->SuccessMessages[] = 'Die Statistiken aller <strong>'.count(ShoeFactory::NamesAsArray()).'</strong> Schuhe wurden neu berechnet.';
 	}
 }

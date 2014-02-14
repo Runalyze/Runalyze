@@ -935,82 +935,78 @@ tr.ERROR td {
   float: left;
   margin-right: 5px;
 }
-.icons-right {
+.panel-menu {
   float: right;
   margin-left: 5px;
-}
-.panel-text-nav {
   position: relative;
   top: -5px;
   right: -5px;
 }
-.panel-text-nav.panel-nav-floated {
+.panel-menu.panel-menu-floated {
   float: right;
   top: 0;
   right: 0;
   margin-left: 5px;
 }
-.panel-text-nav.panel-text-nav-only-text {
+.panel-menu.panel-menu-text {
   padding: 5px 10px 5px;
   line-height: 18px;
 }
-.panel-text-nav.panel-text-nav-only-text a,
-.panel-text-nav.panel-text-nav-only-text .link {
+.panel-menu.panel-menu-text a,
+.panel-menu.panel-menu-text .link {
   display: inline;
   padding: 0;
   line-height: inherit;
   border: none;
 }
-.panel-text-nav a,
-.panel-text-nav .link {
+.panel-menu a,
+.panel-menu .link {
   position: relative;
   display: inline-block;
   padding: 5px 10px 5px;
   line-height: 18px;
   border-left: 1px solid #cccccc;
 }
-.panel-text-nav ul {
+.panel-menu ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-.panel-text-nav ul li {
+.panel-menu ul li {
   position: relative;
   display: inline-block;
   border-bottom: 1px solid #cccccc;
 }
-.panel-text-nav ul li.active,
-.panel-text-nav ul li.triggered,
-.panel-text-nav ul li:hover {
+.panel-menu ul li.active,
+.panel-menu ul li.triggered,
+.panel-menu ul li:hover {
   color: #000000;
   border-bottom-color: #000000;
+  background-color: #f7f7f9;
 }
-.panel-text-nav ul .with-submenu > a,
-.panel-text-nav ul .with-submenu > .link {
+.panel-menu ul .with-submenu > a,
+.panel-menu ul .with-submenu > .link {
   line-height: 17px;
 }
-.panel-text-nav ul .with-submenu > a:after,
-.panel-text-nav ul .with-submenu > .link:after {
+.panel-menu ul .with-submenu > a:after,
+.panel-menu ul .with-submenu > .link:after {
   content: ' \f107';
   font-family: FontAwesome;
 }
-.panel-text-nav ul .with-submenu:hover {
-  border-bottom: none;
-}
-.panel-text-nav ul .with-submenu:hover .submenu {
+.panel-menu ul .with-submenu:hover .submenu {
   display: block;
 }
-.panel-text-nav ul .submenu {
+.panel-menu ul .submenu {
   z-index: 20;
   display: none;
   min-width: 100px;
   position: absolute;
   min-width: 100%;
-  border: 1px solid #cccccc;
-  border-bottom: none;
+  border-top: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
   background-color: rgba(255, 255, 255, 0.95);
 }
-.panel-text-nav ul .submenu li {
+.panel-menu ul .submenu li {
   margin: 0;
   padding: 0;
   text-shadow: none;
@@ -1019,17 +1015,11 @@ tr.ERROR td {
   overflow: hidden;
   width: 100%;
 }
-.panel-text-nav ul .submenu li a,
-.panel-text-nav ul .submenu li span.link {
+.panel-menu ul .submenu li a,
+.panel-menu ul .submenu li span.link {
   display: block;
   padding: 5px 7.5px;
   margin: 0;
-  border-left: none;
-}
-.panel-text-nav ul .submenu li a:hover,
-.panel-text-nav ul .submenu li span.link:hover {
-  background-color: #f7f7f9;
-  border: none;
 }
 .small-head-navi {
   font-size: .8em;
@@ -1087,6 +1077,10 @@ statistics-containerr {
   border-right: 1px solid #cccccc;
   text-transform: uppercase;
   color: #666;
+}
+#statistics-nav li.active,
+#statistics-nav li:hover {
+  background-color: #f7f7f9;
 }
 #statistics-nav li.active > a,
 #statistics-nav li:hover > a {
@@ -1777,29 +1771,6 @@ label:active .checkbox-icon {
 }
 .weather-icon.weather-7 {
   background-position: 0 -72px;
-}
-[class^="broken-icon-"],
-[class*=" broken-icon-"] {
-  display: inline-block;
-  width: 26px;
-  height: 16px;
-  vertical-align: middle;
-  background-image: url(../../img/sprite-broken.png);
-}
-.broken-icon-1 {
-  background-position: 0 0;
-}
-.broken-icon-2 {
-  background-position: -26px 0;
-}
-.broken-icon-3 {
-  background-position: -52px 0;
-}
-.broken-icon-4 {
-  background-position: -78px 0;
-}
-.broken-icon-5 {
-  background-position: -104px 0;
 }
 /* see SportFactory::getIconOptions() */
 [class^="sport-icon-"],

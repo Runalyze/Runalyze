@@ -172,12 +172,15 @@ class Prognose_PrognosisWindow {
 	 * Init calculations
 	 */
 	protected function runCalculations() {
+		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
 		foreach ($this->Distances as $km) {
 			$PB         = Running::PersonalBest($km, true);
 			$Prognosis  = $this->PrognosisObject->inSeconds( $km );
 
-			if ($PB > 0)
-				$PBdate = Mysql::getInstance()->fetchSingle('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$km.'" ORDER BY `s` ASC');
+			if ($PB > 0) {
+				$DateQuery->execute(array('distance' => $km));
+				$PBdate = $DateQuery->fetch();
+			}
 
 			$this->Prognoses[] = array(
 				'distance'	=> Running::Km($km, 1, $km <= 3),
@@ -224,7 +227,7 @@ class Prognose_PrognosisWindow {
 	 * Fill result table with results
 	 */
 	protected function fillResultTableWithResults() {
-		foreach ($this->Prognoses as $i => $Prognosis) {
+		foreach ($this->Prognoses as $Prognosis) {
 			$this->ResultTable .= '
 				<tr class="r">
 					<td class="c">'.$Prognosis['distance'].'</td>

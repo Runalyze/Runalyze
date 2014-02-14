@@ -13,16 +13,17 @@ for ($w = 1; $w <= 7; $w++)
 	$xAxis[] = array($w-1, Time::Weekday($w, true));
 
 if ($this->sportid > 0) {
-	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid);
+	$Sports = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid)->fetchAll();
 } else {
-	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+	$Sports = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
 }
 
+// TODO: Should be possible with one query?
 foreach ($Sports as $sport) {
 	$id = $sport['name'];
 	$yAxis[$id] = array(0, 0, 0, 0, 0, 0, 0);
 
-	$data = Mysql::getInstance()->fetchAsArray('
+	$data = DB::getInstance()->query('
 		SELECT
 			SUM(`s`) as `value`,
 			(DAYOFWEEK(FROM_UNIXTIME(`time`))-1) as `day`
@@ -32,7 +33,7 @@ foreach ($Sports as $sport) {
 			'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
 		GROUP BY `day`
 		ORDER BY ((`day`+6)%7) ASC
-	');
+	')->fetchAll();
 
 	foreach ($data as $dat)
 		$yAxis[$id][($dat['day']+6)%7] = $dat['value']/3600;
@@ -63,4 +64,3 @@ if($error === true)
 	$Plot->raiseError('Keine Trainingsdaten vorhanden.');
 
 $Plot->outputJavaScript();
-?>

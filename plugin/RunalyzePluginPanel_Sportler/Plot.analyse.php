@@ -13,7 +13,7 @@ if ($Plugin_conf['plot_timerange']['var'] > 0)
 else
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
 
-$Data     = Mysql::getInstance()->fetchAsArray('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd);
+$Data     = DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll();
 $Adiposes = array();
 $Water    = array();
 $Muscles  = array();
@@ -65,4 +65,3 @@ elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes)
 }
 
 $Plot->outputJavaScript( true );
-?>

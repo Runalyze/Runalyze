@@ -60,13 +60,6 @@ class Icon {
 	static public $WARNING          = '<i class="fa fa-fw fa-warning"></i>';
 	static public $ERROR            = '<i class="fa fa-fw fa-minus-circle"></i>';
 
-	// Shoes
-	static public $BROKEN_1			= '<i class="broken-icon-1"></i>';
-	static public $BROKEN_2			= '<i class="broken-icon-2"></i>';
-	static public $BROKEN_3			= '<i class="broken-icon-3"></i>';
-	static public $BROKEN_4			= '<i class="broken-icon-4"></i>';
-	static public $BROKEN_5			= '<i class="broken-icon-5"></i>';
-
 	/**
 	 * This class contains only static methods
 	 */

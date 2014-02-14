@@ -77,12 +77,12 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @see PluginPanel::getRightSymbol()
 	 */
 	protected function getRightSymbol() {
-		$Links = array();
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Prognose-Verlauf anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Prognose-Rechner', true, true).'>'.Icon::$CALCULATOR.'</a>');
-		$Links[] = Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::$INFO.'</a>');
+		$Links = '';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Prognose-Verlauf anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Prognose-Rechner', true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
-		return implode(NBSP, $Links);
+		return '<ul>'.$Links.'</ul>';
 	}
 
 	/**
@@ -157,7 +157,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return bool
 	 */
 	protected function thereAreNotEnoughCompetitions() {
-		return 1 >= Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID);
+		return 1 >= DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID)->fetchColumn();
 	}
 
 	/**
@@ -168,4 +168,3 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		return $this->config['distances']['var'];
 	}
 }
-?>

@@ -18,8 +18,6 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		$this->type = Plugin::$PANEL;
 		$this->name = 'Sportarten';
 		$this->description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
-
-		$this->textAsRightSymbol = true;
 	}
 
 	/**
@@ -50,51 +48,69 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		$Mysql = Mysql::getInstance();
-	
-		echo('<div id="sports">');
+		$Query = '
+			SELECT
+				`sportid`,
+				COUNT(`id`) as `count`,
+				SUM(`distance`) as `distance`,
+				SUM(`s`) as `time_in_s`,
+				SUM(`distance` > 0) as `count_distance`
+			FROM `'.PREFIX.'training`
+			WHERE
+				`time` >=:start
+			GROUP BY `sportid`
+			ORDER BY `distance` DESC, `time_in_s` DESC';
+		$Request = DB::getInstance()->prepare($Query);
+
+		echo '<div id="sports">';
 	
 		foreach ($this->getTimeset() as $i => $timeset) {
-			echo('<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>');
-	
-			$data = $Mysql->fetchAsArray('SELECT `sportid`, COUNT(`id`) as `anzahl`, SUM(`distance`) as `distanz_sum`, SUM(`s`) as `dauer_sum`  FROM `'.PREFIX.'training` WHERE `time` >= '.$timeset['start'].' GROUP BY `sportid` ORDER BY `distanz_sum` DESC, `dauer_sum` DESC');
-			foreach ($data as $dat) {
-				$Sport = new Sport($dat['sportid']);
-				$leistung = $Sport->usesDistance()
-					? Helper::Unknown(Running::Km($dat['distanz_sum']), '0,0 km')
-					: Time::toString($dat['dauer_sum']); 		
-			
-				echo('
-		<p>
-			<span class="right">
-				<small><small>('.Helper::Unknown($dat['anzahl'], '0').'-mal)</small></small>
-				'.$leistung.'
-			</span>
+			echo '<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>';
 
-			'.$Sport->Icon().'
-			<strong>'.$Sport->name().'</strong>
-		</p>'.NL);	
+			$Request->bindValue('start', $timeset['start'], PDO::PARAM_INT);
+			$Request->execute();
+			$data = $Request->fetchAll();
+
+			foreach ($data as $dat) {
+				// TODO: Define the decision (distance or time) somehow in the configuration
+				$Sport = new Sport($dat['sportid']);
+				$result = $dat['count_distance'] >= $dat['count']/2
+					? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
+					: Time::toString($dat['time_in_s']); 		
+			
+				echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
+				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
 			}
 
 			if (empty($data))
-				echo('<p><em>Noch keine Daten vorhanden.</em></p>');
+				echo '<p><em>Noch keine Daten vorhanden.</em></p>';
 	
-			echo('<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>');
+			echo '<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>';
 			echo HTML::clearBreak();
-			echo('</div>');
+			echo '</div>';
 		}
 	
-		echo('</div>');
+		echo '</div>';
 	}
 
 	/**
 	 * Get the timeset as array for this panel
 	 */
 	private function getTimeset() {
-		$timeset = array();
-		$timeset[] = array('name' => 'Monat', 'start' => mktime(0,0,0,date("m"),1,date("Y")));
-		$timeset[] = array('name' => 'Jahr', 'start' => mktime(0,0,0,1,1,date("Y")));
-		$timeset[] = array('name' => 'Gesamt', 'start' => START_TIME);
+		$timeset = array(
+			array(
+				'name'	=> 'Monat',
+				'start'	=> mktime(0,0,0,date("m"),1,date("Y"))
+			),
+			array(
+				'name'	=> 'Jahr',
+				'start'	=> mktime(0,0,0,1,1,date("Y"))
+			),
+			array(
+				'name'	=> 'Gesamt',
+				'start'	=> START_TIME
+			)
+		);
 	
 		return $timeset;
 	}

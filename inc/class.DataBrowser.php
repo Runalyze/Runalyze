@@ -207,12 +207,14 @@ class DataBrowser {
 	 * Display specific icon-links
 	 */
 	protected function displayIconLinks() {
-		echo $this->getSharedListLink();
-		echo $this->getRefreshLink();
-		echo $this->getMonthKmLink();
-		echo $this->getWeekKmLink();
-		echo $this->getNaviSearchLink();
-		echo $this->getAddLink();
+		echo '<ul>';
+		echo '<li>'.$this->getSharedListLink().'</li>';
+		echo '<li>'.$this->getRefreshLink().'</li>';
+		echo '<li>'.$this->getMonthKmLink().'</li>';
+		echo '<li>'.$this->getWeekKmLink().'</li>';
+		echo '<li>'.$this->getNaviSearchLink().'</li>';
+		echo '<li>'.$this->getAddLink().'</li>';
+		echo '</ul>';
 	}
 
 	/**
@@ -240,9 +242,9 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getRefreshLink() {
-		$Link = DataBrowserLinker::link(Ajax::tooltip(Icon::$REFRESH, 'Aktuelles Datenblatt neuladen'), $this->timestamp_start, $this->timestamp_end);
+		$Link = DataBrowserLinker::link(Icon::$REFRESH, $this->timestamp_start, $this->timestamp_end);
 
-		return str_replace('<a ', '<a id="'.self::$REFRESH_BUTTON_ID.'" ', $Link);
+		return str_replace('<a ', '<a id="'.self::$REFRESH_BUTTON_ID.'" '.Ajax::tooltip('', 'Aktuelles Datenblatt neuladen', false, true), $Link);
 	}
 
 	/**
@@ -258,7 +260,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month">'.Ajax::tooltip(Icon::$BARS_BIG, 'Monatstraining vergleichen').'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', 'Monatstraining vergleichen', false, true).'>'.Icon::$BARS_BIG.'</a>');
 	}
 
 	/**
@@ -266,7 +268,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week">'.Ajax::tooltip(Icon::$BARS_SMALL, 'Wochentraining vergleichen').'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', 'Wochentraining vergleichen', false, true).'>'.Icon::$BARS_SMALL.'</a>');
 	}
 
 	/**
@@ -282,7 +284,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getNaviSearchLink() {
-		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'">'.Ajax::tooltip(Icon::$SEARCH, 'Trainings suchen').'</a>', 'big');
+		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'" '.Ajax::tooltip('', 'Trainings suchen', false, true).'>'.Icon::$SEARCH.'</a>', 'big');
 	}
 
 	/**

@@ -179,7 +179,7 @@ class ImporterWindow {
 		foreach ($this->Tabs as $Tab)
 			$Links[] = array('tag' => $Tab->link());
 
-		echo '<div class="panel-nav-floated panel-text-nav">';
+		echo '<div class="panel-menu panel-menu-floated">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
 	}
@@ -210,7 +210,7 @@ class ImporterWindow {
 	 * Get link for create window
 	 */
 	static public function link() {
-		return Ajax::window('<a href="'.self::$URL.'">'.Ajax::tooltip(Icon::$ADD, 'Training hinzuf&uuml;gen').'</a>', 'small');
+		return Ajax::window('<a href="'.self::$URL.'" '.Ajax::tooltip('', 'Training hinzuf&uuml;gen', false, true).'>'.Icon::$ADD.'</a>', 'small');
 	}
 
 	/**

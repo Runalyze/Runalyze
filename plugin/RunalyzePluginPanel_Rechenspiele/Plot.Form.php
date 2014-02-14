@@ -37,7 +37,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
 	// - VDOT: AVG(`vdot`) for CONF_VDOT_DAYS
 
-	$Data = Mysql::getInstance()->fetchAsArray('
+	$Data = DB::getInstance()->query('
 		SELECT
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			SUM(`trimp`) as `trimp`,
@@ -46,7 +46,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		FROM `'.PREFIX.'training`
 		WHERE
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
-		GROUP BY `index`');
+		GROUP BY `index`')->fetchAll();
 
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
@@ -129,4 +129,3 @@ if ($DataFailed)
 	$Plot->raiseError('Für dieses Jahr kann ich dir keine Daten zeigen.');
 
 $Plot->outputJavaScript();
-?>

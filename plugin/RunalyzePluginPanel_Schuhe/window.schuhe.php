@@ -8,13 +8,13 @@ require '../../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (Request::param('delete') == 'true') {
-	Mysql::getInstance()->delete(PREFIX.'shoe', (int)Request::sendId());
-	Mysql::getInstance()->updateWhere(PREFIX.'training', 'shoeid ='.(int)Request::sendId(), shoeid, 0);
+	DB::getInstance()->deleteByID('shoe', (int)Request::sendId());
+	DB::getInstance()->query('UPDATE `'.PREFIX.'training` SET `shoeid`=0 WHERE `shoeid`='.(int)Request::sendId());
 	header('Location: window.schuhe.table.php?reload=true');
 }
 
 if (Request::sendId() === false) {
-	$Header   = 'Laufschuh eintragen';
+	$Header   = 'Neuen Laufschuh hinzuf&uuml;gen';
 	$Mode     = StandardFormular::$SUBMIT_MODE_CREATE;
 	$Shoe     = new Shoe( DataObject::$DEFAULT_ID );
 } else {
@@ -44,6 +44,7 @@ if (Request::sendId() > 0) {
 }
 
 echo '<div class="panel-heading">';
+echo '<div class="panel-menu"><ul><li>'.Plugin::getInstanceFor('RunalyzePluginPanel_Schuhe')->tableLink().'</li></ul></div>';
 echo '<h1>'.$Header.'</h1>';
 echo '</div>';
 echo '<div class="panel-content">';

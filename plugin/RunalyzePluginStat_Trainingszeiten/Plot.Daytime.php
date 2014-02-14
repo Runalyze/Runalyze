@@ -10,16 +10,16 @@ $xAxis       = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,
 $yAxis       = array();
 
 if ($this->sportid > 0) {
-	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid);
+	$Sports = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'sport` WHERE `id`='.(int)$this->sportid)->fetchAll();
 } else {
-	$Sports = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+	$Sports = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
 }
 
 foreach ($Sports as $sport) {
 	$id = $sport['name'];
 	$yAxis[$id] = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
-	$data = Mysql::getInstance()->fetchAsArray('
+	$data = DB::getInstance()->query('
 		SELECT
 			SUM(1) as `num`,
 			SUM(`s`) as `value`,
@@ -31,7 +31,7 @@ foreach ($Sports as $sport) {
 			'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
 		GROUP BY `h`
 		ORDER BY `h` ASC
-	');
+	')->fetchAll();
 
 	foreach ($data as $dat)
 		$yAxis[$id][$dat['h']] = $dat['value']/3600;
@@ -52,15 +52,13 @@ $Plot->showBars();
 $Plot->stacked();
 
 $error = true;
-foreach($yAxis as $t) 
-	foreach($t as $e) 
-		if($e != "0") 
+foreach ($yAxis as $t) 
+	foreach ($t as $e) 
+		if ($e != "0") 
 			$error = false;
 
-if($error === true) 
+if ($error === true) 
 	$Plot->raiseError('Keine Trainingsdaten vorhanden.');
-	
-	
-	
+
+
 $Plot->outputJavaScript();
-?>

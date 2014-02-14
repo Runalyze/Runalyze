@@ -393,6 +393,14 @@ abstract class Plugin {
 	}
 
 	/**
+	 * Title for all years
+	 * @return string
+	 */
+	protected function titleForAllYears() {
+		return 'Jahresvergleich';
+	}
+
+	/**
 	 * Initialize all config vars from database
 	 * Each line should be in following format: var_name|type=something|description
 	 * @param string $configSetup as $dat['config'] from database
