@@ -121,6 +121,8 @@ class PDOforRunalyze extends PDO {
 
 	/**
 	 * Escapes and inserts the given $values to the $columns in $table
+	 * 
+	 * This methods always adds the accountid (unless something is inserted to the account table)
 	 * @param $table   string without PREFIX
 	 * @param $columns array
 	 * @param $values  array
@@ -132,7 +134,7 @@ class PDOforRunalyze extends PDO {
 		// TODO: TEST IT!
 		if ($table != 'account' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
-			$values[]  = SessionAccountHandler::getId();
+			$values[]  = $this->accountID;
 		}
 
 		foreach ($columns as $k => $v)
