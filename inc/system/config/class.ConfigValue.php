@@ -84,7 +84,7 @@ abstract class ConfigValue {
 		if ($ID == 0 && SharedLinker::isOnSharedPage())
 			$ID = SharedLinker::getUserId();
 
-		$data = Mysql::getInstance()->fetchAsArray('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.$ID.'"');
+		$data = DB::getInstance()->query('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.(int)$ID.'"')->fetchAll();
 		foreach ($data as $confArray)
 			self::$DatabaseValues[$confArray['key']] = $confArray['value'];
 	}
@@ -99,9 +99,9 @@ abstract class ConfigValue {
 		if (SharedLinker::isOnSharedPage())
 			return;
 
-		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.$accountID : '';
+		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.(int)$accountID : '';
 
-		Mysql::getInstance()->updateWhere(PREFIX.'conf', '`key`="'.$KEY.'"'.$whereAdd, 'value', $value);
+		DB::getInstance()->updateWhere('conf', '`key`="'.mysql_real_escape_string($KEY).'"'.$whereAdd, 'value', $value);
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class ConfigValue {
 			$this->setValueFromString($NewValue);
 
 			if ($this->Value != $OldValue) {
-				Mysql::getInstance()->updateWhere(PREFIX.'conf', '`key`="'.$this->Key.'"', 'value', $this->getValueAsString());
+				DB::getInstance()->updateWhere('conf', '`key`="'.mysql_real_escape_string($this->Key).'"', 'value', $this->getValueAsString());
 				$this->doOnchangeJobs();
 			}
 		}
@@ -178,7 +178,7 @@ abstract class ConfigValue {
 			$values[]  = AccountHandler::$NEW_REGISTERED_ID;
 		}
 
-		Mysql::getInstance()->insert(PREFIX.'conf', $columns, $values);
+		DB::getInstance()->insert('conf', $columns, $values);
 	}
 
 	/**

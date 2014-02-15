@@ -31,11 +31,11 @@ class Math {
 	/**
 	 * Get a value with leading sign
 	 * 
-	 * Examples:
+	 * Examples:<br>
 	 * <code>
-	 *  Math::WithSign(5); // result: "+5"
-	 *  Math::WithSign(0); // result: "0"
-	 *  Math::WithSign(-3); // result: "-3"
+	 *  Math::WithSign(5); // result: "+5"<br>
+	 *  Math::WithSign(0); // result: "0"<br>
+	 *  Math::WithSign(-3); // result: "-3"<br>
 	 * </code>
 	 * 
 	 * @param mixed $value

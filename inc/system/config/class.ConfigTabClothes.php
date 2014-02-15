@@ -93,11 +93,11 @@ class ConfigTabClothes extends ConfigTab {
 			);
 
 			if (isset($_POST['clothes']['delete'][$id]))
-				Mysql::getInstance()->delete(PREFIX.'clothes', (int)$Data['id']);
+				DB::getInstance()->deleteByID('clothes', (int)$Data['id']);
 			elseif ($Data['id'] != -1)
-				Mysql::getInstance()->update(PREFIX.'clothes', $Data['id'], $columns, $values);
+				DB::getInstance()->update('clothes', $Data['id'], $columns, $values);
 			elseif (strlen($_POST['clothes']['name'][$id]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'clothes', $columns, $values);
+				DB::getInstance()->insert('clothes', $columns, $values);
 		}
 	}
 }

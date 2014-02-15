@@ -251,7 +251,7 @@ class TrainingObject extends DataObject {
 	 */
 	private function updateShoeForInsert() {
 		if ($this->get('shoeid') > 0)
-			Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$this->get('distance').', `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
+			DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$this->get('distance').', `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
 	}
 
 	/**
@@ -263,9 +263,9 @@ class TrainingObject extends DataObject {
 				&& isset($_POST['dist_old'])) {
 
 			if (isset($_POST['shoeid_old']))
-				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
+				DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
 			if ($this->get('shoeid') > 0)
-				Mysql::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->get('distance').'", `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
+				DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->get('distance').'", `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
 		}
 	}
 
@@ -1183,6 +1183,6 @@ class TrainingObject extends DataObject {
 	 * @return boolean 
 	 */
 	static public function idIsCompetition($id) {
-		return (Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `id`='.$id.' AND `typeid`="'.CONF_WK_TYPID.'" LIMIT 1') > 0);
+		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.CONF_WK_TYPID.'" LIMIT 1')->fetchColumn() > 0);
 	}
 }

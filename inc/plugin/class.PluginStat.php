@@ -199,7 +199,7 @@ abstract class PluginStat extends Plugin {
 		if ($this->ShowAllSportsLink)
 			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink('Alle', -1, $this->year).'</li>';
 
-		$Sports = Mysql::getInstance()->fetchAsArray('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC');
+		$Sports = DB::getInstance()->query('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
 		foreach ($Sports as $Sport)
 			$Links .= '<li'.($Sport['id']==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
 
@@ -262,7 +262,7 @@ abstract class PluginStat extends Plugin {
 	 */
 	static public function getInnerLinkFor($id, $name = '') {
 		if ($name == '') {
-			$dat = Mysql::getInstance()->fetchSingle('SELECT `name` FROM `'.PREFIX.'plugin` WHERE `id`='.$id);
+			$dat = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'plugin` WHERE `id`='.(int)$id.' LIMIT 1')->fetch();
 			$name = $dat['name'];
 		}
 

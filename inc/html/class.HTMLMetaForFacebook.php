@@ -51,7 +51,7 @@ class HTMLMetaForFacebook {
 	 * Set training
 	 */
 	private function setTraining() {
-		$data = Mysql::getInstance()->fetch(PREFIX.'training', SharedLinker::getTrainingId());
+		$data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
 
 		if ($data)
 			$this->Training = new TrainingObject( $data );
@@ -129,7 +129,10 @@ class HTMLMetaForFacebook {
 	 * Display course
 	 */
 	public function displayCourse() {
-		$TrainingData   = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.mysql_real_escape_string(Request::sendId()).'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$TrainingData   = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.mysql_real_escape_string(Request::sendId()).'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
+
 		$this->Training = new TrainingObject( $TrainingData );
 
 		if ($this->Training->isDefaultId() || !$this->Training->isPublic())

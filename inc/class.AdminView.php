@@ -417,25 +417,15 @@ class AdminView {
 	 * @return array
 	 */
 	private function getUserList() {
-		return Mysql::getInstance()->untouchedFetchArray('
+		DB::getInstance()->stopAddingAccountID();
+		$List = DB::getInstance()->query('
 			SELECT '.PREFIX.'account.*
 			FROM '.PREFIX.'account
-			ORDER BY id ASC');
-		/*
-		return Mysql::getInstance()->untouchedFetchArray('
-			SELECT '.PREFIX.'account.*,
-				(
-					SELECT SUM('.PREFIX.'training.distance)
-					FROM '.PREFIX.'training
-					WHERE '.PREFIX.'training.accountid = '.PREFIX.'account.id
-				)	AS km,
-				(
-					SELECT COUNT(*)
-					FROM '.PREFIX.'training
-					WHERE '.PREFIX.'training.accountid = '.PREFIX.'account.id
-				)	AS num
-			FROM '.PREFIX.'account
-			ORDER BY id ASC');*/
+			ORDER BY id ASC
+		')->fetchAll();
+		DB::getInstance()->startAddingAccountID();
+
+		return $List;
 	}
 
 	/**
@@ -500,7 +490,7 @@ define(\'USER_CANT_LOGIN\', false);';
 define(\'USER_CAN_REGISTER\', true);';
 
 			case 'GARMIN_API_KEY':
-				$APIKeyResults = Mysql::getInstance()->fetchSingle('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY"');
+				$APIKeyResults = DB::getInstance()->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="GARMIN_API_KEY" LIMIT 1')->fetch();
 				$APIKey        = isset($APIKeyResults['value']) ? $APIKeyResults['value'] : '';
 
 				define('GARMIN_API_KEY', $APIKey);

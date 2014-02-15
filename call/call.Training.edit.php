@@ -8,7 +8,7 @@ require '../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-	Mysql::getInstance()->delete(PREFIX.'training', (int)$_GET['delete']);
+	DB::getInstance()->deleteByID('training', (int)$_GET['delete']);
 
 	Trimp::calculateMaxValues();
 	ShoeFactory::recalculateAllShoes();
@@ -31,7 +31,6 @@ echo '<div class="panel-content">';
 
 $Formular = new TrainingFormular($Training, StandardFormular::$SUBMIT_MODE_EDIT);
 $Formular->setId('training');
-//$Formular->setHeader( $Training->DataView()->getTitleWithCommentAndDate() );
 $Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
 $Formular->display();
 

@@ -56,7 +56,7 @@ class GpsDataCache {
 	 * Save cache object to database 
 	 */
 	public function saveInDatabase() {
-		Mysql::getInstance()->update(PREFIX.'training', $this->TrainingID, 'gps_cache_object', $this->getDbString());
+		DB::getInstance()->update('training', $this->TrainingID, 'gps_cache_object', $this->getDbString());
 
 		$this->isEmpty = empty($this->Array);
 	}
@@ -65,7 +65,7 @@ class GpsDataCache {
 	 * Read from database 
 	 */
 	protected function readFromDb() {
-		$Data = Mysql::getInstance()->fetchSingle('SELECT `gps_cache_object` FROM '.PREFIX.'training WHERE `id`='.$this->TrainingID);
+		$Data = DB::getInstance()->query('SELECT `gps_cache_object` FROM '.PREFIX.'training WHERE `id`='.(int)$this->TrainingID.' LIMIT 1')->fetch();
 
 		$this->readFromDbString($Data['gps_cache_object']);
 	}

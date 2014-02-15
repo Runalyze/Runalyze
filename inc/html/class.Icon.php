@@ -72,7 +72,7 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getSportIcon($id, $title = '', $tooltip = '') {
-		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
+		$data = DB::getInstance()->fetchByID('sport', $id);
 		if ($data === false)
 			return '';
 
@@ -100,7 +100,7 @@ class Icon {
 	 * @return string 
 	 */
 	public static function getSportIconUrl($id) {
-		$data = Mysql::getInstance()->fetch(PREFIX.'sport', $id);
+		$data = DB::getInstance()->fetchByID('sport', $id);
 
 		return self::$PATH_TO_SPORT_ICONS.$data['img'];
 	}

@@ -44,8 +44,8 @@ abstract class RunningPrognosisStrategy {
 		';
 
 		if ($numberOfResults <= 1)
-			return Mysql::getInstance()->fetchSingle($Query);
+			return DB::getInstance()->query($Query)->fetch();
 
-		return Mysql::getInstance()->fetch($Query.' LIMIT '.$numberOfResults);
+		return DB::getInstance()->query($Query.' LIMIT '.$numberOfResults)->fetchAll();
 	}
 }

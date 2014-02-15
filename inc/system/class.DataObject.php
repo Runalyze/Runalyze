@@ -93,7 +93,7 @@ abstract class DataObject {
 		if (is_array($idOrArrayOrKey) && isset($idOrArrayOrKey['id']))
 			$this->data = $idOrArrayOrKey;
 		elseif (is_numeric($idOrArrayOrKey))
-			$this->data = Mysql::getInstance()->fetch($this->tableName(), $idOrArrayOrKey);
+			$this->data = DB::getInstance()->fetchByID($this->tableName(), $idOrArrayOrKey);
 		elseif ($idOrArrayOrKey === self::$LAST_OBJECT)
 			$this->loadLastObject();
 	}
@@ -103,9 +103,9 @@ abstract class DataObject {
 	 */
 	private function loadLastObject() {
 		if ($this->DatabaseScheme->hasTimestamp())
-			$this->data = Mysql::getInstance()->fetchSingle('SELECT * FROM '.$this->tableName().' ORDER BY time DESC');
+			$this->data = DB::getInstance()->query('SELECT * FROM '.$this->tableName().' ORDER BY time DESC LIMIT 1')->fetch();
 		else
-			$this->data = Mysql::getInstance()->fetch($this->tableName(), 'LAST');
+			$this->data = DB::getInstance()->query('SELECT * FROM '.$this->tableName().' ORDER BY id DESC LIMIMT 1')->fetch();
 
 		if (empty($this->data))
 			$this->constructAsDefaultObject();
@@ -189,7 +189,7 @@ abstract class DataObject {
 	final protected function updateValue($column, $value) {
 		$this->set($column, $value);
 
-		Mysql::getInstance()->update($this->tableName(), $this->id(), $column, $value);
+		DB::getInstance()->update($this->tableName(), $this->id(), $column, $value);
 	}
 
 	/**
@@ -375,7 +375,7 @@ abstract class DataObject {
 		$dataCopy = $this->data;
 		unset($dataCopy['id']);
 
-		$this->id = Mysql::getInstance()->insert($this->tableName(), array_keys($dataCopy), array_values($dataCopy));
+		$this->id = DB::getInstance()->insert($this->tableName(), array_keys($dataCopy), array_values($dataCopy));
 
 		if (self::$DEBUG_QUERIES)
 			Error::getInstance()->addDebug('Inserted to '.$this->tableName().': '.print_r($dataCopy, true));
@@ -397,7 +397,7 @@ abstract class DataObject {
 		$columns = array_keys($this->data);
 		$values  = array_values($this->data);
 
-		Mysql::getInstance()->update($this->tableName(), $this->id, $columns, $values);
+		DB::getInstance()->update($this->tableName(), $this->id, $columns, $values);
 
 		if (self::$DEBUG_QUERIES)
 			Error::getInstance()->addDebug('Updated #'.$this->id.' '.$this->tableName().': '.print_r($this->data, true));

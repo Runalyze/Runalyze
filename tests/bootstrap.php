@@ -108,7 +108,6 @@ if (!defined('CONF_TRAINING_SORT_TYPES'))
 $_SERVER['REQUEST_URI'] = '/runalyze/index.php';
 $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
-Mysql::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
 DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
 
 // Clean database

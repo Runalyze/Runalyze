@@ -17,8 +17,12 @@ foreach ($Array as $String) {
 		$IDs[] = substr($String,12);
 }
 
+$IgnoreIDs = unserialize(CONF_GARMIN_IGNORE_IDS);
+$Request = DB::getInstance()->prepare('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `activity_id`=:id LIMIT 1');
+
 foreach ($IDs as $ID) {
-	$found = in_array($ID, unserialize(CONF_GARMIN_IGNORE_IDS)) || Mysql::getInstance()->num('SELECT 1 FROM '.PREFIX.'training WHERE activity_id="'.$ID.'" LIMIT 1') > 0;
+	$Request->execute(array('id' => $ID));
+	$found = in_array($ID, $IgnoreIDs) || $Request->fetchColumn() > 0;
 	$Matches[$ID] = array('match' => $found);
 }
 

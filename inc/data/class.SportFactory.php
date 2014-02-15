@@ -107,7 +107,7 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
-		$sports = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder());
+		$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
 		foreach ($sports as $sport)
 			self::$AllSports[(string)$sport['id']] = $sport;
 	}
@@ -157,7 +157,7 @@ class SportFactory {
 	 * @return int sportid, -1 if not found
 	 */
 	static public function idByName($name) {
-		$Sport = Mysql::getInstance()->fetchSingle('SELECT id FROM `'.PREFIX.'sport` WHERE `name`="'.$name.'"');
+		$Sport = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'sport` WHERE `name`="'.mysql_real_escape_string($name).'" LIMIT 1')->fetchAll();
 
 		if (isset($Sport['id']))
 			return $Sport['id'];
@@ -183,7 +183,7 @@ class SportFactory {
 	 * @return array ids as keys, counts as values
 	 */
 	static public function CountArray() {
-		$Sports = Mysql::getInstance()->fetchAsArray('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` GROUP BY sportid');
+		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` GROUP BY sportid')->fetchAll();
 		$Counts = array();
 
 		foreach ($Sports as $Sport)

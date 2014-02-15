@@ -36,7 +36,7 @@ class ExporterWindow {
 	 */
 	private function handleRequest() {
 		if (strlen(Request::param('public')) > 0)
-			Mysql::getInstance()->update(PREFIX.'training', $this->TrainingID, 'is_public', Request::param('public') == 'true' ? 1 : 0);
+			DB::getInstance()->update('training', $this->TrainingID, 'is_public', Request::param('public') == 'true' ? 1 : 0);
 	}
 
 	/**

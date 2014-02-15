@@ -32,7 +32,8 @@
 
 	<div class="panel-content" style="padding:5px 70px;">
 <?php
-require_once 'inc/system/class.Mysql.php';
+require_once 'inc/system/class.PDOforRunalyze.php'; // TODO: Check if database class is really needed
+require_once 'inc/system/class.DB.php'; // TODO: Check if database class is really needed
 require_once 'inc/class.Installer.php';
 require_once 'inc/class.InstallerUpdate.php';
 

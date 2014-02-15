@@ -114,6 +114,6 @@ class System {
 	 * Clear training cache 
 	 */
 	static public function clearTrainingCache() {
-		Mysql::getInstance()->query('UPDATE '.PREFIX.'training SET gps_cache_object=""');
+		DB::getInstance()->exec('UPDATE '.PREFIX.'training SET gps_cache_object=""');
 	}
 }

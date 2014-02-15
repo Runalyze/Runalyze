@@ -81,7 +81,10 @@ class SharedLinker {
 				$Data = AccountHandler::getDataFor(Request::param('user'));
 				self::$USER_ID = $Data['id'];
 			} elseif (strlen(Request::param('url')) > 0) {
-				$Data = Mysql::getInstance()->untouchedFetch('SELECT `accountid` FROM `'.PREFIX.'training` WHERE id="'.self::getTrainingId().'" LIMIT 1');
+				DB::getInstance()->stopAddingAccountID();
+				$Data = DB::getInstance()->query('SELECT `accountid` FROM `'.PREFIX.'training` WHERE id="'.self::getTrainingId().'" LIMIT 1')->fetch();
+				DB::getInstance()->startAddingAccountID();
+
 				self::$USER_ID = $Data['accountid'];
 			} else {
 				$Data = false;

@@ -183,7 +183,7 @@ class Gmap {
 		if (!$this->GpsData->hasPositionData() || !$this->GpsData->hasDistanceData())
 			return '';
 
-		$SportDat = Mysql::getInstance()->fetchSingle('SELECT `sportid` FROM '.PREFIX.'training WHERE `id`='.$this->TrainingId);
+		$SportDat = DB::getInstance()->query('SELECT `sportid` FROM '.PREFIX.'training WHERE `id`='.(int)$this->TrainingId.' LIMIT 1')->fetch();
 		$SportId  = $SportDat['sportid'];
 		$Code     = '';
 		$Marker   = array();

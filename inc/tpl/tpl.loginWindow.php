@@ -164,10 +164,11 @@ function show(what) {
 </script>
 
 <?php
+DB::getInstance()->stopAddingAccountID();
 $NumUserOn = SessionAccountHandler::getNumberOfUserOnline();
-$NumUser   = Mysql::getInstance()->untouchedFetch('SELECT COUNT(*) as num FROM '.PREFIX.'account');
-$NumKm     = Mysql::getInstance()->untouchedFetch('SELECT SUM(distance) as num FROM '.PREFIX.'training');
-
+$NumUser   = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
+$NumKm     = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
+DB::getInstance()->startAddingAccountID();
 ?>
 
 <p class="text"></p>

@@ -52,10 +52,10 @@ class DataBrowser {
 	protected $sports_short;
 
 	/**
-	 * Internal MySql-object
-	 * @var Mysql
+	 * Internal DB object
+	 * @var DB
 	 */
-	protected $Mysql;
+	protected $DB;
 
 	/**
 	 * Internal Error-object
@@ -91,10 +91,10 @@ class DataBrowser {
 	}
 
 	/**
-	 * Init pointer to Mysql/Error-object
+	 * Init pointer to DB/Error-object
 	 */
 	protected function initInternalObjects() {
-		$this->Mysql = Mysql::getInstance();
+		$this->DB    = DB::getInstance();
 		$this->Error = Error::getInstance();
 		$this->Dataset = new Dataset();
 	}
@@ -131,7 +131,7 @@ class DataBrowser {
 
 		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
 
-		$AllTrainings = $this->Mysql->fetchAsArray('
+		$AllTrainings = $this->DB->query('
 			SELECT
 				id,
 				time,
@@ -141,7 +141,8 @@ class DataBrowser {
 			FROM `'.PREFIX.'training`
 			WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).'
 				'.$WhereNotPrivate.'
-			ORDER BY `time` ASC');
+			ORDER BY `time` ASC
+		')->fetchAll();
 
 		foreach ($AllTrainings as $Training) {
 			$w = Time::diffInDays($Training['time'], $this->timestamp_start);
@@ -171,7 +172,8 @@ class DataBrowser {
 	 */
 	protected function initShortSports() {
 		$this->sports_short = array();
-		$sports = $this->Mysql->fetchAsArray('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1');
+		$sports = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1')->fetchAll();
+
 		foreach ($sports as $sport)
 			$this->sports_short[] = $sport['id'];
 	}

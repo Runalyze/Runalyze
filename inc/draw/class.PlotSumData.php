@@ -224,19 +224,19 @@ abstract class PlotSumData extends Plot {
 
 		$this->usesDistance = $this->Sport->usesDistance();
 		if (Request::param('group') != 'sport' && $this->usesDistance) {
-			$num = Mysql::getInstance()->num('
-				SELECT 1 FROM `'.PREFIX.'training`
+			$num = DB::getInstance()->query('
+				SELECT COUNT(*) FROM `'.PREFIX.'training`
 				WHERE
 					'.$whereSport.'
 					`distance` = 0 AND `s` > 0 AND
-					YEAR(FROM_UNIXTIME(`time`))='.$this->Year.'
-			');
+					YEAR(FROM_UNIXTIME(`time`))='.(int)$this->Year.'
+			')->fetchColumn();
 
 			if ($num > 0)
 				$this->usesDistance = false;
 		}
 
-		$this->RawData = Mysql::getInstance()->fetchAsArray('
+		$this->RawData = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				`typeid`,
@@ -246,9 +246,9 @@ abstract class PlotSumData extends Plot {
 			FROM `'.PREFIX.'training`
 			WHERE
 				'.$whereSport.'
-				YEAR(FROM_UNIXTIME(`time`))='.$this->Year.'
+				YEAR(FROM_UNIXTIME(`time`))='.(int)$this->Year.'
 			GROUP BY '.$this->groupBy().', '.$this->timer()
-		);
+		)->fetchAll();
 	}
 
 	/**
@@ -322,12 +322,12 @@ abstract class PlotSumData extends Plot {
 	private function setDataForSports() {
 		$emptyData  = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
 		$Sports     = array();
-		$SportsData = Mysql::getInstance()->fetchAsArray('
+		$SportsData = DB::getInstance()->query('
 			SELECT
 				id, name
 			FROM
 				`'.PREFIX.'sport`
-		');
+		')->fetchAll();
 
 		foreach ($SportsData as $Sport)
 			$Sports[$Sport['id']] = array('name' => $Sport['name'], 'data' => $emptyData);
@@ -346,14 +346,14 @@ abstract class PlotSumData extends Plot {
 	private function setDataForTypes() {
 		$emptyData = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
 		$Types     = array(array('name' => 'ohne', 'data' => $emptyData));
-		$TypesData = Mysql::getInstance()->fetchAsArray('
+		$TypesData = DB::getInstance()->query('
 			SELECT
 				id, name
 			FROM
 				`'.PREFIX.'type`
 			WHERE
 				`sportid`="'.$this->Sport->id().'"
-		');
+		')->fetchAll();
 
 		foreach ($TypesData as $Type)
 			$Types[$Type['id']] = array('name' => $Type['name'], 'data' => $emptyData);
