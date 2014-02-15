@@ -144,7 +144,7 @@ class Trimp {
 			if (!isset($trainingData['id']))
 				return 0;
 
-			$trainingData = Mysql::getInstance()->fetchSingle('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.$trainingData['id'].'"');
+			$trainingData = DB::getInstance()->query('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.(int)$trainingData['id'].'" LIMIT 1')->fetch();
 		}
 
 		$Training = new TrainingObject($trainingData);
@@ -208,7 +208,7 @@ class Trimp {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_ATL_DAYS-1).' AND 0');
+		$dat = DB::getInstance()->query('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_ATL_DAYS-1).' AND 0 LIMIT 1')->fetch();
 		$ATL = round($dat['sum']/CONF_ATL_DAYS);
 
 		if ($ATL > self::maxATL())
@@ -227,7 +227,7 @@ class Trimp {
 		if ($time == 0)
 			$time = time();
 
-		$dat = Mysql::getInstance()->fetch('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_CTL_DAYS-1).' AND 0');
+		$dat = DB::getInstance()->query('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_CTL_DAYS-1).' AND 0 LIMIT 1')->fetch();
 		$CTL = round($dat['sum']/CONF_CTL_DAYS);
 
 		if ($CTL > self::maxCTL())
@@ -272,14 +272,15 @@ class Trimp {
 		$start_i = 365*START_YEAR;
 		$end_i   = 365*(date("Y") + 1) - $start_i;
 		$Trimp   = array_fill(0, $end_i, 0);
-		$Data    = Mysql::getInstance()->fetchAsArray('
+		$Data    = DB::getInstance()->query('
 			SELECT
 				YEAR(FROM_UNIXTIME(`time`)) as `y`,
 				DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
 				SUM(`trimp`) as `trimp`
 			FROM `'.PREFIX.'training`
 			GROUP BY `y`, `d`
-			ORDER BY `y` ASC, `d` ASC');
+			ORDER BY `y` ASC, `d` ASC
+		')->fetchAll();
 		
 		if (empty($Data)) {
 			self::setMaxATL(1);

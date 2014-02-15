@@ -61,7 +61,7 @@ class ConfigValueSelectDb extends ConfigValue {
 
 		$Table  = $this->Options['table'];
 		$Column = $this->Options['column'];
-		$Values = Mysql::getInstance()->fetchAsArray('SELECT id,`'.$Column.'` FROM '.PREFIX.$Table.' ORDER BY `'.$Column.'` ASC');
+		$Values = DB::getInstance()->query('SELECT id,`'.mysql_real_escape_string($Column).'` FROM '.PREFIX.$Table.' ORDER BY `'.mysql_real_escape_string($Column).'` ASC')->fetchAll();
 
 		foreach ($Values as $Value)
 			$Field->addOption($Value['id'], $Value[$Column]);

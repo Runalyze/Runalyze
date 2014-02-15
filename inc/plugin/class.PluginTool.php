@@ -71,7 +71,7 @@ abstract class PluginTool extends Plugin {
 		$Sublinks = array();
 		$Sublinks[] = Ajax::link('--- Alle Tools', self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
 
-		$tools = Mysql::getInstance()->fetchAsArray('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC');
+		$tools = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC')->fetchAll();
 		foreach ($tools as $tool)
 			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
 

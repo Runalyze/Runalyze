@@ -37,7 +37,7 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-		$shoes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder());
+		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
 		foreach ($shoes as $shoe)
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
 	}
@@ -155,12 +155,12 @@ class ShoeFactory {
 		$shoes = self::AllShoes();
 
 		foreach (array_keys($shoes) as $id) {
-			$data = Mysql::getInstance()->fetchSingle('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$id.'" GROUP BY `shoeid`');
+			$data = DB::getInstance()->query('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$id.'" GROUP BY `shoeid`')->fetch();
 
 			if ($data === false)
 				$data = array('km' => 0, 's' => 0);
 
-			Mysql::getInstance()->update(PREFIX.'shoe', $id, array('km', 'time'), array($data['km'], $data['s']));
+			DB::getInstance()->update('shoe', $id, array('km', 'time'), array($data['km'], $data['s']));
 		}
 
 		self::initAllShoes();

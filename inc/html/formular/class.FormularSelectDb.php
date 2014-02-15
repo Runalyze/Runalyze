@@ -15,7 +15,7 @@ class FormularSelectDb extends FormularSelectBox {
 	 * @param string $Label
 	 */
 	public function loadOptionsFrom($Table, $Label) {
-		$Options = Mysql::getInstance()->fetchAsArray('SELECT `id`, `'.$Label.'` as `value` FROM `'.PREFIX.$Table.'` ORDER BY `id` ASC');
+		$Options = DB::getInstance()->query('SELECT `id`, `'.$Label.'` as `value` FROM `'.PREFIX.$Table.'` ORDER BY `id` ASC')->fetchAll();
 
 		foreach ($Options as $Option)
 			$this->addOption($Option['id'], $Option['value']);

@@ -220,7 +220,7 @@ abstract class Plugin {
 			Error::getInstance()->addError('The plugin-file must contain class::'.$PLUGINKEY.'.');
 			return false;
 		} else {
-			$dat = Mysql::getInstance()->fetchSingle('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="'.$PLUGINKEY.'"');
+			$dat = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($PLUGINKEY).'" LIMIT 1')->fetch();
 			if ($dat === false)
 				$id = self::$INSTALLER_ID;
 			else
@@ -300,7 +300,7 @@ abstract class Plugin {
 	 * @param string $key 
 	 */
 	static public function uninstallPlugin($key) {
-		Mysql::getInstance()->query('DELETE FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($key).'" LIMIT 1');
+		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($key).'" LIMIT 1');
 	}
 
 	/**
@@ -328,7 +328,7 @@ abstract class Plugin {
 			'99',
 			);
 
-		$this->id = Mysql::getInstance()->insert(PREFIX.'plugin', $columns, $values);
+		$this->id = DB::getInstance()->insert('plugin', $columns, $values);
 		$this->config = $this->getDefaultConfigVars();
 
 		$this->setActive(1);
@@ -344,7 +344,7 @@ abstract class Plugin {
 		if ($this->id == self::$INSTALLER_ID)
 			return;
 
-		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $this->id);
+		$dat = DB::getInstance()->fetchByID('plugin', $this->id);
 
 		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];
@@ -646,7 +646,7 @@ abstract class Plugin {
 			$string .= $name.'|'.$dat['type'].'='.$var.'|'.trim($dat['description']).NL;
 		}
 
-		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'config', $string);
+		DB::getInstance()->update('plugin', $this->id, 'config', $string);
 	}
 
 	/**
@@ -654,7 +654,7 @@ abstract class Plugin {
 	 * @param int $active
 	 */
 	final public function setActive($active = 1) {
-		Mysql::getInstance()->update(PREFIX.'plugin', $this->id, 'active', $active);
+		DB::getInstance()->update('plugin', $this->id, 'active', $active);
 		$this->active = $active;
 	}
 
@@ -699,13 +699,13 @@ abstract class Plugin {
 	static public function getKeysAsArray($type = -1, $active = -1) {
 		if ($type == -1) {
 			if (empty(self::$ALL_KEYS))
-				self::$ALL_KEYS = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin`');
+				self::$ALL_KEYS = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin`')->fetchAll();
 
 			$array = self::$ALL_KEYS;
 		} elseif ($active == -1)
-			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC');
+			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC')->fetchAll();
 		else
-			$array = Mysql::getInstance()->fetchAsArray('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC');
+			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC')->fetchAll();
 
 		$return = array();
 		foreach ($array as $v)
@@ -729,7 +729,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	static public function getKeyForId($id) {
-		$dat = Mysql::getInstance()->fetch(PREFIX.'plugin', $id);
+		$dat = DB::getInstance()->fetchByID('plugin', $id);
 
 		if ($dat === false) {
 			Error::getInstance()->addError('Plugin::getKeyForId(): No Plugin with id \''.$id.'\' found.');

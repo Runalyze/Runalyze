@@ -77,6 +77,6 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	public function parsePostData() {
 		if ($_POST['name'] != SessionAccountHandler::getName())
-			Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
 	}
 }

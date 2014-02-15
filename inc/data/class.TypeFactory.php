@@ -61,7 +61,7 @@ class TypeFactory {
 	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
-		$types = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'type` '.self::getOrder());
+		$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
 		foreach ($types as $data)
 			self::$AllTypes[(string)$data['id']] = $data;
 	}

@@ -122,7 +122,7 @@ class UserData extends DataObject {
 	 */
 	static public function getFullArray() {
 		if (is_null(self::$fullArray))
-			self::$fullArray = Mysql::getInstance()->fetchAsArray('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC');
+			self::$fullArray = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
 
 		return self::$fullArray;
 	}

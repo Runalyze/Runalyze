@@ -61,7 +61,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 * @return string 
 	 */
 	private function getCodeFor($PluginType) {
-		$Plugins = Mysql::getInstance()->fetchAsArray('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.Plugin::getTypeString($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC');
+		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.Plugin::getTypeString($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
 
 		if (empty($Plugins))
 			return HTML::info('Es sind keine Plugins vorhanden.');
@@ -167,11 +167,11 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Plugins = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'plugin`');
+		$Plugins = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin`')->fetchAll();
 		foreach ($Plugins as $Plugin) {
 			$id = $Plugin['id'];
 			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id]))
-				Mysql::getInstance()->update(PREFIX.'plugin', $id,
+				DB::getInstance()->update('plugin', $id,
 					array('active', 'order'),
 					array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
 		}

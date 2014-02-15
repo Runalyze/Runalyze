@@ -142,7 +142,7 @@ class JD {
 	 */
 	public static function Training2VDOT($training_id, $training = array()) {
 		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']))
-			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
+			$training = DB::getInstance()->query('SELECT `sportid`, `distance`, `s`, `pulse_avg` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
 
 		return self::values2VDOT($training['distance'], $training['s'], $training['pulse_avg'], $training['sportid']);
 	}
@@ -161,7 +161,7 @@ class JD {
 	public static function Training2VDOTwithElevation($training_id, $training = array(), $up = false, $down = false) {
 		$elevationFromDatabaseNeeded = ($up === false && $down === false) && (!isset($training['elevation']) || !isset($training['arr_alt']));
 		if (!isset($training['sportid']) || !isset($training['distance']) || !isset($training['s']) || !isset($training['pulse_avg']) || $elevationFromDatabaseNeeded)
-			$training = Mysql::getInstance()->fetchSingle('SELECT `sportid`, `distance`, `s`, `pulse_avg`, `elevation`, `arr_alt`, `arr_time` FROM `'.PREFIX.'training` WHERE `id`='.$training_id);
+			$training = DB::getInstance()->query('SELECT `sportid`, `distance`, `s`, `pulse_avg`, `elevation`, `arr_alt`, `arr_time` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
 
 		if (!$training)
 			return 0;
@@ -303,7 +303,7 @@ class JD {
 		if ($time == 0)
 			$time = time();
 
-		$Data = Mysql::getInstance()->fetchSingle('
+		$Data = DB::getInstance()->query('
 			SELECT
 				SUM('.self::mysqlVDOTsumTime().') as `ssum`,
 				SUM('.self::mysqlVDOTsum().') as `value`
@@ -311,7 +311,9 @@ class JD {
 			WHERE
 				`sportid`="'.CONF_RUNNINGSPORT.'"
 				&& DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_VDOT_DAYS-1).' AND 0
-			GROUP BY `sportid`');
+			GROUP BY `sportid`
+			LIMIT 1
+		')->fetch();
 
 		if ($Data !== false && $Data['ssum'] > 0)
 			return round(self::correctVDOT($Data['value']/$Data['ssum']), 5);
@@ -354,7 +356,7 @@ class JD {
 	 * @return float   VDOTcorrectionfactor
 	 */
 	public static function recalculateVDOTcorrector() {
-		if (0 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1')) {
+		if (0 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1')->fetchColumn()) {
 			self::$CONST_CORRECTOR = 1;
 			return 1;
 		}
@@ -368,12 +370,12 @@ class JD {
 		foreach ($distances as $dist) {
 			// TODO: Das sollte doch auch mit einer Query zu lösen sein
 			// TODO: aus Running::PersonalBest
-			//       $pb = Mysql::getInstance()->fetchSingle('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC');
+			//       $pb = DB::getInstance()->query('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC LIMIT 1')->fetch();
 			$dist_PB = Running::PersonalBest($dist, true);
 			if ($dist_PB != 0) {
 				// TODO: Ist gerade 'vdot_by_time'
 				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
-				if ($dist_VDOT > $VDOT_top && Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1') > 0) {
+				if ($dist_VDOT > $VDOT_top && DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1')->fetchColumn() > 0) {
 					$VDOT_top = $dist_VDOT;
 					$VDOT_top_dist = $dist;
 				}
@@ -381,7 +383,7 @@ class JD {
 		}
 
 		// Calculate VDOT-value for personal best from heartfrequence
-		$VDOT_top_dat = Mysql::getInstance()->fetchSingle('SELECT `pulse_avg`, `s` FROM `'.PREFIX.'training` WHERE `distance`="'.$VDOT_top_dist.'" AND `pulse_avg`!=0 AND `typeid`="'.CONF_WK_TYPID.'" ORDER BY `s` ASC');
+		$VDOT_top_dat = DB::getInstance()->query('SELECT `pulse_avg`, `s` FROM `'.PREFIX.'training` WHERE `distance`="'.$VDOT_top_dist.'" AND `pulse_avg`!=0 AND `typeid`="'.CONF_WK_TYPID.'" ORDER BY `s` ASC LIMIT 1')->fetch();
 		if ($VDOT_top_dat !== false) {
 			$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['s'])
 				/ self::pHF2pVDOT($VDOT_top_dat['pulse_avg'] / HF_MAX);
@@ -404,12 +406,14 @@ class JD {
 	 */
 	public static function VDOTcorrectorFor($ID, $Training = array()) {
 		if (!isset($Training['vdot']) || !isset($Training['vdot_by_time']))
-			$Training = Mysql::getInstance()->fetchSingle('
+			$Training = DB::getInstance()->query('
 				SELECT
 					`vdot`,
 					`vdot_by_time`
 				FROM `'.PREFIX.'training`
-				WHERE `id`='.$ID);
+				WHERE `id`='.(int)$ID.'
+				LIMIT 1
+			')->fetch();
 
 		return $Training['vdot_by_time'] / $Training['vdot'];
 	}

@@ -109,20 +109,20 @@ class SearchResults {
 	 * Search trainings
 	 */
 	private function searchTrainings() {
-		$this->totalNumberOfTrainings = Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder());
+		$this->totalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
 		$this->page = (int)Request::param('page');
 
 		if (($this->page-1)*CONF_RESULTS_AT_PAGE > $this->totalNumberOfTrainings)
 			$this->page--;
 
-		$this->Trainings = Mysql::getInstance()->fetchAsArray(
+		$this->Trainings = DB::getInstance()->query(
 			'SELECT
 				id,
 				time
 				'.$this->Dataset->getQuerySelectForAllDatasets().'
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
-		);
+		)->fetchAll();
 	}
 
 	/**

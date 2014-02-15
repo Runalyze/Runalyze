@@ -160,10 +160,10 @@ class Helper {
 	 * @return int   Timestamp
 	 */
 	private static function calculateStartTime() {
-		$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`');
+		$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`')->fetch();
 
 		if (isset($data['time']) && $data['time'] == 0) {
-			$data = Mysql::getInstance()->fetch('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0');
+			$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0')->fetch();
 			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970.');
 		}
 
@@ -215,9 +215,9 @@ class Helper {
 	private static function calculateHFmax() {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (SharedLinker::isOnSharedPage()) {
-			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
+			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC LIMIT 1')->fetch();
 		} else {
-			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT 1')->fetch();
 		}
 
 		if ($userdata === false || $userdata['pulse_max'] == 0)
@@ -260,9 +260,9 @@ class Helper {
 	private static function calculateHFrest() {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (SharedLinker::isOnSharedPage()) {
-			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC');
+			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" ORDER BY `time` DESC LIMIT 1')->fetch();
 		} else {
-			$userdata = Mysql::getInstance()->fetchSingle('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC');
+			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` ORDER BY `time` DESC LIMIT 1')->fetch();
 		}
 
 		if ($userdata === false)

@@ -31,7 +31,7 @@ class ClothesFactory {
 	 * Init all clothes
 	 */
 	static private function initAllClothes() {
-		$clothes = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes`');
+		$clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
 		foreach ($clothes as $data)
 			self::$AllClothes[$data['id']] = $data;
 	}
@@ -41,7 +41,7 @@ class ClothesFactory {
 	 * @return array
 	 */
 	static public function OrderedClothes() {
-		return Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC');
+		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
 	}
 
 	/**

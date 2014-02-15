@@ -69,7 +69,7 @@ class FrontendShared extends Frontend {
 	 * Init training 
 	 */
 	private function initTraining() {
-		$data = Mysql::getInstance()->fetch(PREFIX.'training', SharedLinker::getTrainingId());
+		$data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
 
 		if ($data)
 			$this->Training = new TrainingObject( $data );

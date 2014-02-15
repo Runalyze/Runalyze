@@ -43,8 +43,9 @@ class Dataset {
 	 * Constructor
 	 */
 	public function __construct() {
-		$dat = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 GROUP BY `name` ORDER BY `position` ASC');
-		if ($dat === false) {
+		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+
+		if ($dat === false || empty($dat)) {
 			Error::getInstance()->addError('No dataset in database is active.');
 			return false;
 		}
@@ -83,7 +84,7 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = Mysql::getInstance()->fetch('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 GROUP BY `name` ORDER BY `position` ASC');
+		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
 		$this->cols = count($this->data);
 	}
 
@@ -107,7 +108,7 @@ class Dataset {
 	 * @return boolean Are any trainings loaded?
 	 */
 	public function loadGroupOfTrainings($sportid, $timestart, $timeend) {
-		$SummaryData = Mysql::getInstance()->fetchSingle('
+		$SummaryData = DB::getInstance()->query('
 			SELECT
 				sportid,
 				time,
@@ -119,7 +120,9 @@ class Dataset {
 				`sportid`='.$sportid.'
 				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 				'.$this->getQueryWhereNotPrivate().'
-			GROUP BY `sportid`');
+			GROUP BY `sportid`
+			LIMIT 1
+		')->fetch();
 
 		return $this->setGroupOfTrainings($SummaryData);
 	}
@@ -136,7 +139,7 @@ class Dataset {
 		if ($timeend == 0)
 			$timeend = time();
 
-		$SummaryData = Mysql::getInstance()->fetchAsArray('
+		$SummaryData = DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				`time`,
@@ -150,7 +153,8 @@ class Dataset {
 				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 				'.$this->getQueryWhereNotPrivate().'
 			GROUP BY `timerange`, `sportid`
-			ORDER BY `timerange` ASC');
+			ORDER BY `timerange` ASC
+		')->fetchAll();
 
 		return $SummaryData;
 	}

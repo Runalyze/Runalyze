@@ -156,6 +156,7 @@ class ConfigTabSports extends ConfigTab {
 				'power',
 				'outside',
 			);
+
 			$values  = array(
 				$_POST['sport']['name'][$id],
 				$_POST['sport']['img'][$id],
@@ -170,12 +171,13 @@ class ConfigTabSports extends ConfigTab {
 				isset($_POST['sport']['power'][$id]),
 				isset($_POST['sport']['outside'][$id]),
 			);
+
 			if (isset($_POST['sport']['delete'][$id]))
-				Mysql::getInstance()->delete(PREFIX.'sport', (int)$id);	
+				DB::getInstance()->deleteByID('sport', (int)$id);	
 			elseif ($Data['id'] != -1)
-				Mysql::getInstance()->update(PREFIX.'sport', $id, $columns, $values);
+				DB::getInstance()->update('sport', $id, $columns, $values);
 			elseif (strlen($_POST['sport']['name'][$id]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'sport', $columns, $values);
+				Db::getInstance()->insert('sport', $columns, $values);
 		}
 
 		SportFactory::reInitAllSports();

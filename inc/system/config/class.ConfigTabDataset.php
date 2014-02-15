@@ -52,8 +52,8 @@ class ConfigTabDataset extends ConfigTab {
 		$DatasetObject = new Dataset();
 		$DatasetObject->setTrainingId(DataObject::$DEFAULT_ID, $this->getExampleTraining());
 
-		$Dataset = Mysql::getInstance()->fetchAsArray('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC');
-		foreach ($Dataset as $i => $Data) {
+		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC')->fetchAll();
+		foreach ($Dataset as $Data) {
 			$disabled    = ($Data['modus'] == 3) ? ' disabled="disabled"' : '';
 			$checked_2   = ($Data['modus'] >= 2) ? ' checked="checked"' : '';
 			$checked     = ($Data['summary'] == 1) ? ' checked="checked"' : '';
@@ -131,7 +131,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$dataset = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'dataset`');
+		$dataset = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'dataset`')->fetchAll();
 
 		foreach ($dataset as $set) {
 			$id = $set['id'];
@@ -154,7 +154,7 @@ class ConfigTabDataset extends ConfigTab {
 				isset($_POST[$id.'_class']) ? htmlentities($_POST[$id.'_class']) : ''
 			);
 
-			Mysql::getInstance()->update(PREFIX.'dataset', $id, $columns, $values);
+			DB::getInstance()->update('dataset', $id, $columns, $values);
 		}
 
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
@@ -227,7 +227,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * @return int 
 	 */
 	protected function getRandIdFor($table) {
-		$Result = Mysql::getInstance()->fetchSingle('SELECT id FROM `'.PREFIX.$table.'` WHERE `accountid`='.SessionAccountHandler::getId());
+		$Result = DB::getInstance()->query('SELECT id FROM `'.PREFIX.$table.'` WHERE `accountid`='.(int)SessionAccountHandler::getId().' LIMIT 1')->fetch();
 
 		if (isset($Result['id']))
 			return $Result['id'];

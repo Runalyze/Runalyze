@@ -76,7 +76,7 @@ class Frontend {
 		$this->initLanguage();
 		$this->setAutoloader();
 		$this->initErrorHandling();
-		$this->initMySql();
+		$this->initDatabase();
 		$this->initDebugMode();
 		$this->initSessionAccountHandler();
 		$this->forwardAccountIDtoDatabaseWrapper();
@@ -136,15 +136,14 @@ class Frontend {
 	}
 
 	/**
-	 * Include class::Mysql and connect to database
+	 * Connect to database
 	 */
-	private function initMySql() {
+	private function initDatabase() {
 		require_once FRONTEND_PATH.'../config.php';
 
 		$this->adminPassAsMD5 = md5($password);
 
 		DB::connect($host, $username, $password, $database);
-		Mysql::connect($host, $username, $password, $database);
 		unset($host, $username, $password, $database);
 	}
 
@@ -228,7 +227,7 @@ class Frontend {
 	 * Display panels
 	 */
 	public function displayPanels() {
-		$panels = Mysql::getInstance()->fetchAsArray('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC');
+		$panels = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC')->fetchAll();
 		foreach ($panels as $panel) {
 			$Panel = Plugin::getInstanceFor($panel['key']);
 			$Panel->display();

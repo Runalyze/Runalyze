@@ -246,7 +246,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		else
 			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
 
-		$Result = Mysql::getInstance()->fetchSingle($SearchQuery);
+		$Result = DB::getInstance()->query($SearchQuery)->fetch();
 
 		if ($Result === false)
 			return ($table == 'sport') ? CONF_MAINSPORT : 0;

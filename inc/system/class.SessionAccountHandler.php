@@ -123,7 +123,9 @@ class SessionAccountHandler {
 	 */
 	private function tryToUseSession() {
 		if (isset($_SESSION['accountid'])) {
-			$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.mysql_real_escape_string($_SESSION['accountid']).' LIMIT 1');
+			DB::getInstance()->stopAddingAccountID();
+			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.mysql_real_escape_string($_SESSION['accountid']).' LIMIT 1')->fetch();
+			DB::getInstance()->startAddingAccountID();
 
 			if ($Account['session_id'] == session_id()) {
 				$this->setAccount($Account);
@@ -141,7 +143,7 @@ class SessionAccountHandler {
 	 * Update last action to current account 
 	 */
 	private function updateLastAction() {
-		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'lastaction', time());
+		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
 	}
 
 	/**
@@ -166,7 +168,10 @@ class SessionAccountHandler {
 		if (isset($_POST['chpw_hash']))
 			AccountHandler::tryToSetNewPassword();
 
-		$Account = Mysql::getInstance()->fetchAsCorrectType( Mysql::getInstance()->untouchedQuery('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1') );
+		DB::getInstance()->stopAddingAccountID();
+		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
+
 		if ($Account) {
 			if (strlen($Account['activation_hash']) > 0) {
 				$this->throwErrorForActivationNeeded();
@@ -195,8 +200,10 @@ class SessionAccountHandler {
 	 */
 	private function tryToLoginFromCookie() {
 		if (isset($_COOKIE['autologin'])) {
-			$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`="'.mysql_real_escape_string($_COOKIE['autologin']).'" LIMIT 1');
-	
+			DB::getInstance()->stopAddingAccountID();
+			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`="'.mysql_real_escape_string($_COOKIE['autologin']).'" LIMIT 1')->fetch();
+			DB::getInstance()->startAddingAccountID();
+
 			if ($Account) {
 				$this->setAccount($Account);
 				$this->setSession();
@@ -246,7 +253,7 @@ class SessionAccountHandler {
 	private function setSessionToDatabase() {
 		$columns = array('session_id', 'lastlogin', 'autologin_hash');
 		$values  = array(session_id(), time(), $this->getAutologinHash());
-		Mysql::getInstance()->update(PREFIX.'account', self::getId(), $columns, $values);
+		DB::getInstance()->update('account', self::getId(), $columns, $values);
 	}
 
 	/**
@@ -269,7 +276,9 @@ class SessionAccountHandler {
 	 * @return int
 	 */
 	static public function getNumberOfUserOnline() {
-		$result = Mysql::getInstance()->untouchedFetch('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60));
+		DB::getInstance()->stopAddingAccountID();
+		$result = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60))->fetch();
+		DB::getInstance()->startAddingAccountID();
 
 		if ($result !== false && isset($result['num']))
 			return $result['num'];
@@ -281,8 +290,8 @@ class SessionAccountHandler {
 	 * Logout 
 	 */
 	static public function logout() {
-		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'session_id', null);
-		Mysql::getInstance()->update(PREFIX.'account', self::getId(), 'autologin_hash', '');
+		DB::getInstance()->update('account', self::getId(), 'session_id', null);
+		DB::getInstance()->update('account', self::getId(), 'autologin_hash', '');
 		session_destroy();
 		unset($_SESSION);
 

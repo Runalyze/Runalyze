@@ -63,7 +63,7 @@ class FrontendSharedStatistics {
 	protected function addTabForGeneralStatistics() {
 		$User = $this->FrontendSharedList->getUser();
 
-		$Stats = Mysql::getInstance()->fetchSingle('
+		$Stats = DB::getInstance()->query('
 			SELECT
 				SUM(1) as num,
 				SUM(distance) as dist_sum,
@@ -71,7 +71,8 @@ class FrontendSharedStatistics {
 			FROM `'.PREFIX.'training`
 			WHERE `accountid`="'.$User['id'].'"
 			GROUP BY `accountid`
-		');
+			LIMIT 1
+		')->fetch();
 
 		$Content = '
 			<table class="small fullwidth">

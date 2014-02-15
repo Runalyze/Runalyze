@@ -52,14 +52,18 @@ class ConfigTabTypes extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		$Types   = Mysql::getInstance()->untouchedFetchArray('SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.sportid, ty.accountid, (SELECT COUNT(*) 
-					FROM `'.PREFIX.'training` tr
-					WHERE tr.typeid = ty.id AND
+		$Types   = DB::getInstance()->query('
+			SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.sportid, ty.accountid, (
+				SELECT COUNT(*) 
+				FROM `'.PREFIX.'training` tr
+				WHERE tr.typeid = ty.id AND
 					`accountid`="'.SessionAccountHandler::getId().'"
-					) AS tcount
-					FROM `'.PREFIX.'type` ty
-					WHERE `accountid`="'.SessionAccountHandler::getId().'"
-					ORDER BY `id` ASC');
+			) AS tcount
+			FROM `'.PREFIX.'type` ty
+			WHERE `accountid`="'.SessionAccountHandler::getId().'"
+			ORDER BY `id` ASC
+		')->fetchAll();
+
 		//TODO Change all locations where Typeid is used 
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5);
 
@@ -100,7 +104,7 @@ class ConfigTabTypes extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Types = Mysql::getInstance()->fetchAsArray('SELECT `id` FROM `'.PREFIX.'type`');
+		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type`')->fetchAll();
 		$Types[] = array('id' => -1);
 
 		foreach ($Types as $Type) {
@@ -126,11 +130,11 @@ class ConfigTabTypes extends ConfigTab {
 			);
 
 			if (isset($_POST['type']['delete'][$id]))
-				Mysql::getInstance()->delete(PREFIX.'type', (int)$id);
+				DB::getInstance()->deleteByID('type', (int)$id);
 			elseif ($id != -1)
-				Mysql::getInstance()->update(PREFIX.'type', $id, $columns, $values);
+				DB::getInstance()->update('type', $id, $columns, $values);
 			elseif (strlen($_POST['type']['name'][$id]) > 2)
-				Mysql::getInstance()->insert(PREFIX.'type', $columns, $values);
+				DB::getInstance()->insert('type', $columns, $values);
 		}
 
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);

@@ -47,7 +47,9 @@ class AccountHandler {
 	 * @param mixed $value 
 	 */
 	static private function updateAccount($username, $column, $value) {
-		Mysql::getInstance()->updateWhere(PREFIX.'account', '`username`="'.$username.'" LIMIT 1', $column, $value, false);
+		DB::getInstance()->stopAddingAccountID();
+		DB::getInstance()->updateWhere('account', '`username`="'.mysql_real_escape_string($username).'" LIMIT 1', $column, $value);
+		DB::getInstance()->startAddingAccountID();
 	}
 
 	/**
@@ -56,7 +58,11 @@ class AccountHandler {
 	 * @return mixed
 	 */
 	static public function getDataFor($username) {
-		return Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
+
+		return $Data;
 	}
 
 	/**
@@ -65,7 +71,11 @@ class AccountHandler {
 	 * @return mixed
 	 */
 	static public function getDataForId($id) {
-		return Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.$id.'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
+
+		return $Data;
 	}
 
 	/**
@@ -74,7 +84,9 @@ class AccountHandler {
 	 * @return boolean|string 
 	 */
 	static public function getMailFor($username) {
-		$result = Mysql::getInstance()->untouchedFetch('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`="'.$username.'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$result = DB::getInstance()->query('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
 
 		if (is_array($result) && isset($result['mail']))
 			return $result['mail'];
@@ -88,7 +100,7 @@ class AccountHandler {
 	 * @return boolean
 	 */
 	static public function usernameExists($username) {
-		return (1 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1'));
+		return (1 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetchColumn());
 	}
 
 	/**
@@ -97,7 +109,7 @@ class AccountHandler {
 	 * @return boolean
 	 */
 	static public function mailExists($mail) {
-		return (1 == Mysql::getInstance()->num('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`="'.mysql_real_escape_string($mail).'" LIMIT 1'));
+		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`="'.mysql_real_escape_string($mail).'" LIMIT 1')->fetchColumn());
 	}
 
 	/**
@@ -161,7 +173,7 @@ class AccountHandler {
 		$errors = array();
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
-		$newAccountId   = Mysql::getInstance()->insert(PREFIX.'account',
+		$newAccountId   = DB::getInstance()->insert('account',
 				array('username', 'name', 'mail', 'password', 'registerdate', 'activation_hash'),
 				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password']), time(), $activationHash));
 
@@ -266,11 +278,14 @@ class AccountHandler {
 	 * @return boolean|string
 	 */
 	static public function getUsernameForChangePasswordHash() {
-		$data = Mysql::getInstance()->untouchedFetch('
+		DB::getInstance()->stopAddingAccountID();
+		$data = DB::getInstance()->query('
 			SELECT username FROM '.PREFIX.'account
 			WHERE changepw_hash="'.mysql_real_escape_string($_GET['chpw']).'"
 				AND changepw_timelimit>'.time().'
-			LIMIT 1');
+			LIMIT 1'
+		)->fetch();
+		DB::getInstance()->startAddingAccountID();
 
 		if ($data)
 			return $data['username'];
@@ -306,9 +321,12 @@ class AccountHandler {
 	 * @return boolean 
 	 */
 	static public function tryToActivateAccount() {
-		$Account = Mysql::getInstance()->untouchedFetch('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.mysql_real_escape_string($_GET['activate']).'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.mysql_real_escape_string($_GET['activate']).'" LIMIT 1')->fetch();
+		DB::getInstance()->startAddingAccountID();
+
 		if ($Account) {
-			Mysql::getInstance()->update(PREFIX.'account', $Account['id'], 'activation_hash', '');
+			DB::getInstance()->update('account', $Account['id'], 'activation_hash', '');
 
 			return true;
 		}
@@ -320,10 +338,15 @@ class AccountHandler {
 	 * @return boolean 
 	 */
 	static public function tryToDeleteAccount() {
-		$Account = Mysql::getInstance()->untouchedQuery('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
+		DB::getInstance()->stopAddingAccountID();
+		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
+		DB::getInstance()->startAddingAccountID();
+
 		if ($Account) {
 			return true;
 		}
+
+		return false;
 	}
 
 	/**
@@ -332,7 +355,7 @@ class AccountHandler {
 	 * @param int $accountID 
 	 */
 	static private function importEmptyValuesFor($accountID) {
-		$Mysql       = Mysql::getInstance();
+		$DB          = DB::getInstance();
 		$EmptyTables = array();
 
 		include FRONTEND_PATH.'system/schemes/set.emptyValues.php';
@@ -343,7 +366,7 @@ class AccountHandler {
 
 			foreach ($data['values'] as $values) {
 				$values[] = $accountID;
-				$Mysql->insert(PREFIX.$table, $columns, $values);
+				$DB->insert($table, $columns, $values);
 			}
 		}
 	}
@@ -354,7 +377,7 @@ class AccountHandler {
 	 * @param array $errors
 	 */
 	static private function setAndSendActivationKeyFor($accountId, &$errors) {
-		$account        = Mysql::getInstance()->fetch(PREFIX.'account', $accountId);
+		$account        = DB::getInstance()->fetchByID('account', $accountId);
 		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
 
@@ -382,11 +405,11 @@ class AccountHandler {
 	 * @param array $errors
 	 */
 	static public function setAndSendDeletionKeyFor(&$errors) {
-		$account      = Mysql::getInstance()->fetch(PREFIX.'account', SessionAccountHandler::getId());
+		$account      = DB::getInstance()->fetchByID('account', SessionAccountHandler::getId());
 		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
 
-		Mysql::getInstance()->update(PREFIX.'account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
+		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Account löschen';
 		$message  = "Schade, dass du deinen Account ".$account['username']." l&ouml;schen m&ouml;chtest, ".$account['name']."!<br /><br />\r\n\r\n";
@@ -417,20 +440,20 @@ class AccountHandler {
 		// Register all consts for new user, uses self::$NEW_REGISTERED_ID
 		include FRONTEND_PATH.'system/register.consts.php';
 
-		$Mysql = Mysql::getInstance();
+		$DB = DB::getInstance();
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen"');
+		$data = $DB->query('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen" LIMIT 1')->fetch();
 		ConfigValue::update('MAINSPORT', $data['id'], $accountId);
 		ConfigValue::update('RUNNINGSPORT', $data['id'], $accountId);
-		$Mysql->query('UPDATE `'.PREFIX.'type` SET `sportid`="'.$data['id'].'" WHERE `accountid`="'.$accountId.'"', false);
+		$DB->exec('UPDATE `'.PREFIX.'type` SET `sportid`="'.$data['id'].'" WHERE `accountid`="'.$accountId.'" LIMIT 1', false);
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf"');
+		$data = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf" LIMIT 1')->fetch();
 		ConfigValue::update('WK_TYPID', $data['id'], $accountId);
 
-		$data = $Mysql->fetchSingle('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf"');
+		$data = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf" LIMIT 1')->fetch();
 		ConfigValue::update('LL_TYPID', $data['id'], $accountId);
 
-		$data = $Mysql->fetchSingle('SELECT value FROM '.PREFIX.'conf WHERE `key`="GARMIN_API_KEY" ORDER BY LENGTH(value) DESC');
+		$data = $DB->query('SELECT value FROM '.PREFIX.'conf WHERE `key`="GARMIN_API_KEY" ORDER BY LENGTH(value) DESC LIMIT 1')->fetch();
 		ConfigValue::update('GARMIN_API_KEY', $data['value'], $accountId);
 	}
 }
