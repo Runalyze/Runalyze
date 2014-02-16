@@ -78,7 +78,7 @@ class TrainingFormular extends StandardFormular {
 	protected function displayAfterSubmit() {
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE) {
 			$this->displayHeader();
-			echo HTML::em('Das Training wurde erfolgreich eingetragen.');
+			echo HTML::okay('Das Training wurde erfolgreich eingetragen.');
 			echo Ajax::closeOverlay();
 
 			if (CONF_TRAINING_SHOW_AFTER_CREATE)

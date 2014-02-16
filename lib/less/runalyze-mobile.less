@@ -83,68 +83,14 @@
 		.logo { margin: 0 25px; }
 	}
 
-	#statistics-nav {
-		height: auto;
-		border-top: 1px solid #000;
-		border-bottom: none;
-		background: url(../img/bg.png);
-		overflow: hidden;
-
-		&:after {
-			content: ".";
-			height: 0;
-			display: block;
-			clear: both;
-			width: 95%;
-			overflow: hidden;
-		}
-
-		li {
-			top: 0;
-			float: left;
-			width: 33%;
-			z-index: 8;
-			background: transparent;
-			opacity: 1 !important;
-			filter: alpha(opacity=100);
-			border-bottom: 1px solid #000;
-			border-top: none;
-
-			&.active, &:hover {
-				border-bottom: 1px solid #000;
-				border-top: none;
-
-				a {
-					padding-left: 15px;
-				}
-			}
-		}
-	}
-
 	#ajax, #ajax.small-window, #ajax.big-window {
 		position: fixed;
 		left: 0;
-		overflow: scroll;
-		border-radius: 0;
-		margin: -77px 0 0 0 !important;
+		top: 0;
+		margin: 0 !important;
 		width: 100%;
 		height: 100%;
-		width: calc(100% - 20px);
-		height: calc(100% - 20px);
-	}
-
-	#ajax ul.jbar {
-		position: static;
-		float: none;
-		margin: 0 auto 5px;
-	}
-
-	#ajax ul.jbar li {
-		float: none;
-	}
-
-	#ajax ul.jbar .right {
-		float: none;
+		overflow: scroll;
 	}
 
 	#ajax fieldset .w25,

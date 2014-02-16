@@ -19,7 +19,7 @@
 
 <div id="headline">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined('RUNALYZE_VERSION')) echo 'v'.RUNALYZE_VERSION; ?></a>
-	<a class="tab right" href="login.php" title="Please login"><i class="toolbar-icon-user"></i> Please login</a>
+	<a class="tab right" href="login.php" title="Please login"><i class="fa fa-fw fa-sign-in"></i> Please login</a>
 </div>
 
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>
