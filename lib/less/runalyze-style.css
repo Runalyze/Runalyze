@@ -1136,10 +1136,6 @@ statistics-containerr {
 #statistics-nav ul.submenu li a:hover {
   background-color: #f7f7f9;
 }
-#statistics-inner > ul.jbar {
-  position: absolute;
-  right: 5px;
-}
 #statistics-inner table {
   margin: 5px 0 10px;
 }
@@ -1440,64 +1436,16 @@ td.bottom-spacer {
   #headline .logo {
     margin: 0 25px;
   }
-  #statistics-nav {
-    height: auto;
-    border-top: 1px solid #000;
-    border-bottom: none;
-    background: url(../img/bg.png);
-    overflow: hidden;
-  }
-  #statistics-nav:after {
-    content: ".";
-    height: 0;
-    display: block;
-    clear: both;
-    width: 95%;
-    overflow: hidden;
-  }
-  #statistics-nav li {
-    top: 0;
-    float: left;
-    width: 33%;
-    z-index: 8;
-    background: transparent;
-    opacity: 1 !important;
-    filter: alpha(opacity=100);
-    border-bottom: 1px solid #000;
-    border-top: none;
-  }
-  #statistics-nav li.active,
-  #statistics-nav li:hover {
-    border-bottom: 1px solid #000;
-    border-top: none;
-  }
-  #statistics-nav li.active a,
-  #statistics-nav li:hover a {
-    padding-left: 15px;
-  }
   #ajax,
   #ajax.small-window,
   #ajax.big-window {
     position: fixed;
     left: 0;
-    overflow: scroll;
-    border-radius: 0;
-    margin: -77px 0 0 0 !important;
+    top: 0;
+    margin: 0 !important;
     width: 100%;
     height: 100%;
-    width: calc(80%);
-    height: calc(80%);
-  }
-  #ajax ul.jbar {
-    position: static;
-    float: none;
-    margin: 0 auto 5px;
-  }
-  #ajax ul.jbar li {
-    float: none;
-  }
-  #ajax ul.jbar .right {
-    float: none;
+    overflow: scroll;
   }
   #ajax fieldset .w25,
   #ajax fieldset .w33,
@@ -1596,38 +1544,6 @@ td.bottom-spacer {
 }
 .vdot-ignore {
   opacity: .25;
-}
-[class^="icon-"],
-[class*=" icon-"] {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  vertical-align: text-bottom;
-  background-image: url(../../img/sprite-icons.png);
-}
-.icon-abc {
-  background-position: -24px 0;
-}
-[class^="toolbar-icon-"],
-[class*=" toolbar-icon-"] {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  vertical-align: middle;
-  background-image: url(../../img/sprite-toolbar.png);
-  opacity: .75;
-}
-.toolbar-icon-tools {
-  background-position: 0 0;
-}
-.toolbar-icon-help {
-  background-position: -16px 0;
-}
-.toolbar-icon-config {
-  background-position: -32px 0;
-}
-.toolbar-icon-user {
-  background-position: -48px 0;
 }
 [class^="toggle-icon-"],
 [class*=" toggle-icon-"] {

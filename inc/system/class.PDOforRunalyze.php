@@ -74,6 +74,8 @@ class PDOforRunalyze extends PDO {
 	 * @return array
 	 */
 	public function fetchByID($table, $ID) {
+		$table = str_replace(PREFIX, '', $table);
+
 		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
 	}
 
@@ -84,6 +86,8 @@ class PDOforRunalyze extends PDO {
 	 * @return array
 	 */
 	public function deleteByID($table, $ID) {
+		$table = str_replace(PREFIX, '', $table);
+
 		return $this->query('DELETE FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1');
 	}
 
