@@ -247,8 +247,8 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getOrder() {
-		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? '`time`' : DB::getInstance()->escape($_POST['search-sort-by']);
-		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : DB::getInstance()->escape($_POST['search-sort-order']);
+		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? '`time`' : DB::getInstance()->escape($_POST['search-sort-by'], false);
+		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : DB::getInstance()->escape($_POST['search-sort-order'], false);
 
 		if ($sort == 'vdot' && CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
 			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
