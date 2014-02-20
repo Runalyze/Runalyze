@@ -130,7 +130,7 @@ class HTMLMetaForFacebook {
 	 */
 	public function displayCourse() {
 		DB::getInstance()->stopAddingAccountID();
-		$TrainingData   = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`="'.mysql_real_escape_string(Request::sendId()).'" LIMIT 1')->fetch();
+		$TrainingData   = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`='.(int)Request::sendId().' LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();
 
 		$this->Training = new TrainingObject( $TrainingData );

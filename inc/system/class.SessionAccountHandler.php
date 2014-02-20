@@ -124,7 +124,7 @@ class SessionAccountHandler {
 	private function tryToUseSession() {
 		if (isset($_SESSION['accountid'])) {
 			DB::getInstance()->stopAddingAccountID();
-			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.mysql_real_escape_string($_SESSION['accountid']).' LIMIT 1')->fetch();
+			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.(int)$_SESSION['accountid'].' LIMIT 1')->fetch();
 			DB::getInstance()->startAddingAccountID();
 
 			if ($Account['session_id'] == session_id()) {
@@ -201,7 +201,7 @@ class SessionAccountHandler {
 	private function tryToLoginFromCookie() {
 		if (isset($_COOKIE['autologin'])) {
 			DB::getInstance()->stopAddingAccountID();
-			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`="'.mysql_real_escape_string($_COOKIE['autologin']).'" LIMIT 1')->fetch();
+			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `autologin_hash`='.DB::getInstance()->escape($_COOKIE['autologin']).' LIMIT 1')->fetch();
 			DB::getInstance()->startAddingAccountID();
 
 			if ($Account) {

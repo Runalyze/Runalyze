@@ -250,8 +250,8 @@ class RunalyzeJsonImporter {
 
 		foreach ($this->Data[$tablename] as $row) {
 			if ($replaceIDs) {
-				$row['name']  = isset($row['name']) ? mysql_real_escape_string($row['name']) : '';
-				$ExistingData = $this->DB->query('SELECT id FROM `'.$tablename.'` WHERE `name`="'.$row['name'].'" LIMIT 1')->fetch();
+				$row['name']  = isset($row['name']) ? DB::getInstance()->escape($row['name']) : '""';
+				$ExistingData = $this->DB->query('SELECT id FROM `'.$tablename.'` WHERE `name`='.$row['name'].' LIMIT 1')->fetch();
 			} else {
 				$ExistingData = false;
 			}
@@ -363,10 +363,10 @@ class RunalyzeJsonImporter {
 				$this->DB->query('
 					UPDATE `'.PREFIX.'plugin`
 					SET
-						`config`="'.mysql_real_escape_string($Plugin['config']).'",
-						`internal_data`="'.mysql_real_escape_string($Plugin['internal_data']).'"
+						`config`='.DB::getInstance()->escape($Plugin['config']).',
+						`internal_data`='.DB::getInstance()->escape($Plugin['internal_data']).'
 					WHERE
-						`key`="'.mysql_real_escape_string($Plugin['key']).'"
+						`key`='.DB::getInstance()->escape($Plugin['key']).'
 				');
 			}
 		}

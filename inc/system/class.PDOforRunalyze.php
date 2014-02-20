@@ -50,7 +50,7 @@ class PDOforRunalyze extends PDO {
 	 * Add accountid to statement
 	 * @param string $statement
 	 */
-	protected function addAccountIDtoStatement($statement) {
+	protected function addAccountIDtoStatement(&$statement) {
 		if (strpos($statement, 'SET NAMES') !== false || !is_numeric($this->accountID))
 			return;
 
@@ -166,7 +166,7 @@ class PDOforRunalyze extends PDO {
 	 * @param $forceAsString bool
 	 * @return mixed        safe value(s)
 	 */
-	public static function escape($values, $quotes = true, $forceAsString = false) {
+	public function escape($values, $quotes = true, $forceAsString = false) {
 		if (is_array($values)) {
 			foreach ($values as $key => $value)
 				$values[$key] = self::escape($value, $quotes);
@@ -177,9 +177,10 @@ class PDOforRunalyze extends PDO {
 		} else if ($values === null || $values == 'NULL') {
 			$values = 'NULL';
 		} else if (!is_numeric($values) || $forceAsString) {
-			$values = mysql_real_escape_string($values);
-        	if ($quotes)
-            	$values = '"'.$values.'"';
+			$values = $this->quote($values);
+
+			if ($quotes == false && substr($values, 0, 1) == "'" && substr($values, -1) == "'" && strlen($values) > 2)
+				$values = substr($values, 1, -1);
 		}
 
 		return $values;
@@ -211,7 +212,7 @@ class PDOforRunalyze extends PDO {
 	 */
 	public function prepare($statement, $driver_options = array()) {
 		if ($this->addsAccountID)
-			$this->addAccountIDtoStatement(&$statement);
+			$this->addAccountIDtoStatement($statement);
 
 		return parent::prepare($statement, $driver_options);
 	}
@@ -226,7 +227,7 @@ class PDOforRunalyze extends PDO {
 	 */
 	public function exec($statement) {
 		if ($this->addsAccountID)
-			$this->addAccountIDtoStatement(&$statement);
+			$this->addAccountIDtoStatement($statement);
 
 		return parent::exec($statement);
 	}
@@ -240,7 +241,7 @@ class PDOforRunalyze extends PDO {
 	 */
 	public function query($statement) {
 		if ($this->addsAccountID)
-			$this->addAccountIDtoStatement(&$statement);
+			$this->addAccountIDtoStatement($statement);
 
 		return parent::query($statement);
 	}

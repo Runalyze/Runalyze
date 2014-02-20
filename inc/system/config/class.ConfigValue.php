@@ -101,7 +101,7 @@ abstract class ConfigValue {
 
 		$whereAdd = ($accountID !== false) ? ' AND `accountid`='.(int)$accountID : '';
 
-		DB::getInstance()->updateWhere('conf', '`key`="'.mysql_real_escape_string($KEY).'"'.$whereAdd, 'value', $value);
+		DB::getInstance()->updateWhere('conf', '`key`='.DB::getInstance()->escape($KEY).$whereAdd, 'value', $value);
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class ConfigValue {
 			$this->setValueFromString($NewValue);
 
 			if ($this->Value != $OldValue) {
-				DB::getInstance()->updateWhere('conf', '`key`="'.mysql_real_escape_string($this->Key).'"', 'value', $this->getValueAsString());
+				DB::getInstance()->updateWhere('conf', '`key`='.DB::getInstance()->escape($this->Key), 'value', $this->getValueAsString());
 				$this->doOnchangeJobs();
 			}
 		}

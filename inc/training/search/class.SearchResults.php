@@ -178,9 +178,9 @@ class SearchResults {
 		$sign = (isset($_POST['opt'][$key])) ? $this->signFor($_POST['opt'][$key]) : '=';
 
 		if ($sign == ' LIKE ')
-			$conditions[] = '`'.$key.'` '.$sign.' "%'.mysql_real_escape_string($_POST[$key]).'%"';
+			$conditions[] = '`'.$key.'` '.$sign.' "%'.DB::getInstance()->escape($_POST[$key], false).'%"';
 		else
-			$conditions[] = '`'.$key.'` '.$sign.' "'.mysql_real_escape_string($_POST[$key]).'"';
+			$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($_POST[$key]);
 	}
 
 	/**
@@ -210,7 +210,7 @@ class SearchResults {
 		if (FormularValueParser::validatePost('date-from', FormularValueParser::$PARSER_DATE)
 				&& FormularValueParser::validatePost('date-to', FormularValueParser::$PARSER_DATE)
 				&& $_POST['date-to'] > 0)
-			$conditions[] = '`time` BETWEEN '.$_POST['date-from'].' AND '.($_POST['date-to']+DAY_IN_S);
+			$conditions[] = '`time` BETWEEN '.(int)$_POST['date-from'].' AND '.((int)$_POST['date-to']+DAY_IN_S);
 	}
 
 	/**
@@ -247,13 +247,13 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getOrder() {
-		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? 'time' : mysql_real_escape_string($_POST['search-sort-by']);
-		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : mysql_real_escape_string($_POST['search-sort-order']);
+		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? '`time`' : DB::getInstance()->escape($_POST['search-sort-by']);
+		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : DB::getInstance()->escape($_POST['search-sort-order']);
 
 		if ($sort == 'vdot' && CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
 			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
 
-		return ' ORDER BY `'.$sort.'` '.$order;
+		return ' ORDER BY '.$sort.' '.$order;
 	}
 
 	/**
