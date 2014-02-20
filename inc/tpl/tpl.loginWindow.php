@@ -173,8 +173,8 @@ DB::getInstance()->startAddingAccountID();
 
 <p class="text"></p>
 <p class="text small c login-window-stats">
-	<?php printf(_n('Until now <strong>%d</strong> athlete is registered and','Until now <strong>%d</strong> athletes are registered and', $NumUser['num']), $NumUser['num']); ?>
-	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser['num']), Running::Km($NumKm['num'])); ?>
+	<?php printf(_n('Until now <strong>%d</strong> athlete is registered and','Until now <strong>%d</strong> athletes are registered and', $NumUser), $NumUser); ?>
+	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser), Running::Km($NumKm)); ?>
 	<br />
 	<?php printf(_n('<strong>%d</strong> athlete is online.','<strong>%d</strong> athletes are online.', $NumUserOn), $NumUserOn); ?><br>
 </p>
