@@ -157,7 +157,7 @@ class SportFactory {
 	 * @return int sportid, -1 if not found
 	 */
 	static public function idByName($name) {
-		$Sport = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'sport` WHERE `name`="'.mysql_real_escape_string($name).'" LIMIT 1')->fetchAll();
+		$Sport = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'sport` WHERE `name`='.DB::getInstance()->escape($name).' LIMIT 1')->fetchAll();
 
 		if (isset($Sport['id']))
 			return $Sport['id'];

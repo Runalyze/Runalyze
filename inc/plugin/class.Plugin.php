@@ -220,7 +220,7 @@ abstract class Plugin {
 			Error::getInstance()->addError('The plugin-file must contain class::'.$PLUGINKEY.'.');
 			return false;
 		} else {
-			$dat = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($PLUGINKEY).'" LIMIT 1')->fetch();
+			$dat = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($PLUGINKEY).' LIMIT 1')->fetch();
 			if ($dat === false)
 				$id = self::$INSTALLER_ID;
 			else
@@ -300,7 +300,7 @@ abstract class Plugin {
 	 * @param string $key 
 	 */
 	static public function uninstallPlugin($key) {
-		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`="'.mysql_real_escape_string($key).'" LIMIT 1');
+		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
 	}
 
 	/**

@@ -59,7 +59,7 @@ class AccountHandler {
 	 */
 	static public function getDataFor($username) {
 		DB::getInstance()->stopAddingAccountID();
-		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetch();
+		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();
 
 		return $Data;
@@ -85,7 +85,7 @@ class AccountHandler {
 	 */
 	static public function getMailFor($username) {
 		DB::getInstance()->stopAddingAccountID();
-		$result = DB::getInstance()->query('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetch();
+		$result = DB::getInstance()->query('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();
 
 		if (is_array($result) && isset($result['mail']))
@@ -100,7 +100,7 @@ class AccountHandler {
 	 * @return boolean
 	 */
 	static public function usernameExists($username) {
-		return (1 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `username`="'.mysql_real_escape_string($username).'" LIMIT 1')->fetchColumn());
+		return (1 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetchColumn());
 	}
 
 	/**
@@ -109,7 +109,7 @@ class AccountHandler {
 	 * @return boolean
 	 */
 	static public function mailExists($mail) {
-		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`="'.mysql_real_escape_string($mail).'" LIMIT 1')->fetchColumn());
+		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
 	}
 
 	/**
@@ -281,7 +281,7 @@ class AccountHandler {
 		DB::getInstance()->stopAddingAccountID();
 		$data = DB::getInstance()->query('
 			SELECT username FROM '.PREFIX.'account
-			WHERE changepw_hash="'.mysql_real_escape_string($_GET['chpw']).'"
+			WHERE changepw_hash='.DB::getInstance()->escape($_GET['chpw']).'
 				AND changepw_timelimit>'.time().'
 			LIMIT 1'
 		)->fetch();
@@ -322,7 +322,7 @@ class AccountHandler {
 	 */
 	static public function tryToActivateAccount() {
 		DB::getInstance()->stopAddingAccountID();
-		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`="'.mysql_real_escape_string($_GET['activate']).'" LIMIT 1')->fetch();
+		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($_GET['activate']).' LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();
 
 		if ($Account) {
@@ -339,7 +339,7 @@ class AccountHandler {
 	 */
 	static public function tryToDeleteAccount() {
 		DB::getInstance()->stopAddingAccountID();
-		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`="'.mysql_real_escape_string($_GET['delete']).'" LIMIT 1');
+		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($_GET['delete']).' LIMIT 1');
 		DB::getInstance()->startAddingAccountID();
 
 		if ($Account) {
