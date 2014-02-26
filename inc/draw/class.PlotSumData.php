@@ -74,43 +74,112 @@ abstract class PlotSumData extends Plot {
 	 * Display
 	 */
 	final public function display() {
-		$this->outputDiv();
-		$this->outputJavaScript();
-		$this->showNavigation();
+		$this->displayHeader();
+		$this->displayContent();
 	}
 
 	/**
-	 * Show navigation
+	 * Display header
 	 */
-	private function showNavigation() {
-		echo '<br />';
-		echo '<p class="window-plot-navigation c">';
+	private function displayHeader() {
+		echo '<div class="panel-heading">';
+		echo '<div class="panel-menu">';
+		echo $this->getNavigationMenu();
+		echo '</div>';
+		echo HTML::h1( $this->getTitle() );
+		echo '</div>';
+	}
 
-		for ($year = START_YEAR; $year <= date("Y"); $year++)
-			echo $this->link($year, $year, Request::param('sportid'), Request::param('group'), $year == $this->Year);
+	/**
+	 * Display content
+	 */
+	private function displayContent() {
+		echo '<div class="panel-content">';
+		$this->outputDiv();
+		$this->outputJavaScript();
+		echo '</div>';
+	}
 
-		echo '</p>';
+	/**
+	 * Get navigation
+	 */
+	private function getNavigationMenu() {
+		$Menus = array(
+			array(
+				'title' => 'Auswertung w&auml;hlen',
+				'links'	=> $this->getMenuLinksForGrouping()
+			),
+			array(
+				'title' => 'Sportart w&auml;hlen',
+				'links'	=> $this->getMenuLinksForSports()
+			),
+			array(
+				'title' => 'Jahr w&auml;hlen',
+				'links'	=> $this->getMenuLinksForYears()
+			)
+		);
 
-		echo '<p class="window-plot-navigation c small">';
+		if (Request::param('group') == 'sport')
+			unset($Menus[0]);
 
-		echo $this->link('Alle Sportarten', $this->Year, 0, 'sport', Request::param('group') == 'sport');
+		$Code  = '<ul>';
+
+		foreach ($Menus as $Menu) {
+			$Code .= '<li class="with-submenu"><span class="link">'.$Menu['title'].'</span><ul class="submenu">';
+			$Code .= implode('', $Menu['links']);
+			$Code .= '</ul></li>';
+		}
+
+		$Code .= '</ul>';
+
+		return $Code;
+	}
+
+	/**
+	 * Get menu links for grouping
+	 * @return array
+	 */
+	private function getMenuLinksForGrouping() {
+		$Links = array();
+
+		if ($this->Sport->isRunning())
+			$Links[] = $this->link('Training &amp; Wettkampf', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+		else
+			$Links[] = $this->link('Gesamt', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+
+		$Links[] = $this->link('Nach Trainingstyp', $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
+
+		return $Links;
+	}
+
+	/**
+	 * Get menu links for sports
+	 * @return array
+	 */
+	private function getMenuLinksForSports() {
+		$Links = array(
+			$this->link('Alle Sportarten', $this->Year, 0, 'sport', Request::param('group') == 'sport')
+		);
 
 		$SportGroup = Request::param('group') == 'sport' ? 'types' : Request::param('group');
 		$Sports     = SportFactory::NamesAsArray();
 		foreach ($Sports as $id => $name)
-			echo $this->link($name, $this->Year, $id, $SportGroup, $this->Sport->id() == $id);
+			$Links[] = $this->link($name, $this->Year, $id, $SportGroup, $this->Sport->id() == $id);
 
-		if (Request::param('group') != 'sport') {
-			echo $this->link('|', $this->Year, Request::param('sportid'), Request::param('group'), false);
-			echo $this->link('Nach Trainingstyp', $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
+		return $Links;
+	}
 
-			if ($this->Sport->isRunning())
-				echo $this->link('Training &amp; Wettkampf', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
-			else
-				echo $this->link('Gesamt', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
-		}
+	/**
+	 * Get menu links for years
+	 * @return array
+	 */
+	private function getMenuLinksForYears() {
+		$Links = array();
 
-		echo '</p>';
+		for ($Y = date('Y'); $Y >= START_YEAR; $Y--)
+			$Links[] = $this->link($Y, $Y, Request::param('sportid'), Request::param('group'), $Y == $this->Year);
+
+		return $Links;
 	}
 
 	/**
@@ -124,9 +193,9 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function link($text, $year, $sportid, $group, $current = false) {
 		if (FrontendShared::$IS_SHOWN)
-			return Ajax::window('<a href="'.DataBrowserShared::getBaseUrl().'?view='.(Request::param('type')=='week'?'weekkm':'monthkm').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'"'.($current ? ' class="current"' : '').'>'.$text.'</a>');
+			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.DataBrowserShared::getBaseUrl().'?view='.(Request::param('type')=='week'?'weekkm':'monthkm').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'">'.$text.'</a></li>');
 		else
-			return Ajax::window('<a href="'.self::$URL.'?type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'"'.($current ? ' class="current"' : '').'>'.$text.'</a>');
+			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.self::$URL.'?type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'">'.$text.'</a></li>');
 	}
 
 	/**
@@ -183,6 +252,9 @@ abstract class PlotSumData extends Plot {
 
 		$this->stacked();
 		$this->addCurrentLevel();
+
+		// TODO: Hiding graphs does not work for stacked barcharts
+		//$this->enableHiddengraphs();
 	}
 
 	/**
@@ -212,7 +284,7 @@ abstract class PlotSumData extends Plot {
 			$this->loadData();
 			$this->setData();
 		} else {
-			$this->raiseError('F&uuml;r dieses Jahr liegen keine Daten vor.');
+			$this->raiseError('F&uuml;r diesen Zeitraum liegen keine Daten vor.');
 		}
 	}
 
