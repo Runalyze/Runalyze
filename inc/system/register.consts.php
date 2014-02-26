@@ -411,31 +411,36 @@ $Calculations->addConfigValue( new ConfigValueBool('JD_USE_VDOT_CORRECTOR', arra
 	'default'		=> true,
 	'label'			=> 'VDOT-Korrektur',
 	'tooltip'		=> 'VDOT-Werte anhand des &quot;besten&quot; Wettkampfes anpassen (empfohlen)',
-	'onchange'		=> Ajax::$RELOAD_ALL
+	'onchange'		=> Ajax::$RELOAD_ALL,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueInt('ATL_DAYS', array(
 	'default'		=> 7,
 	'label'			=> 'Tage f&uuml;r ATL',
 	'tooltip'		=> 'Anzahl an Tagen, die zur Berechnung der ActualTrainingLoad genutzt werden',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
+	'onchange'		=> Ajax::$RELOAD_PLUGINS,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle ATL-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueInt('CTL_DAYS', array(
 	'default'		=> 42,
 	'label'			=> 'Tage f&uuml;r CTL',
 	'tooltip'		=> 'Anzahl an Tagen, die zur Berechnung der ChronicalTrainingLoad genutzt werden',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
+	'onchange'		=> Ajax::$RELOAD_PLUGINS,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle CTL-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueInt('VDOT_DAYS', array(
 	'default'		=> 30,
 	'label'			=> 'Tage f&uuml;r VDOT',
 	'tooltip'		=> 'Anzahl an Tagen, die zur Berechnung der VDOT-Form genutzt werden',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
+	'onchange'		=> Ajax::$RELOAD_PLUGINS,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_CORRECTOR', array(
 	'default'		=> '',
 	'label'			=> 'manuelle VDOT-Korrektur',
 	'tooltip'		=> 'Falls die automatische VDOT-Korrektur nicht passt, kannst du einen manuellen Faktor hier eingeben.',
-	'onchange'		=> Ajax::$RELOAD_PLUGINS
+	'onchange'		=> Ajax::$RELOAD_PLUGINS,
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_VALUE', array(
 	'default'		=> '',
