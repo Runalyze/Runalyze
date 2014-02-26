@@ -68,15 +68,22 @@ class MultiImporterFormular extends Formular {
 		$String = '';
 
 		$String .= HTML::info('Es wurden '.count($this->TrainingObjects).' Trainings gefunden.');
-		$String .= '<table class="fullwidth multi-import-table zebra-style c">';
-		$String .= '<thead><tr><th>Importieren?</th><th>Datum</th><th>Dauer</th><th>Distanz</th><th colspan="4"></th></tr></thead>';
+		$String .= '<table class="fullwidth multi-import-table zebra-style c" id="multi-import-table">';
+		$String .= '<thead><tr><th>Eintragen</th><th>Datum</th><th>Dauer</th><th>Distanz</th><th colspan="4"></th></tr></thead>';
 		$String .= '<tbody>';
 
 		foreach ($this->TrainingObjects as $i => $TrainingObject)
-			$String .= '<tr onclick="$(this).find(\'input:checkbox\').attr(\'checked\', !$(this).find(\'input:checkbox\').attr(\'checked\'));">'.$this->getTableRowFor($TrainingObject, $i).'</tr>';
+			$String .= '<tr>'.$this->getTableRowFor($TrainingObject, $i).'</tr>';
 
 		$String .= '</tbody>';
 		$String .= '</table>';
+
+		$String .= Ajax::wrapJSforDocumentReady('
+			$("#multi-import-table td").click(function(e){
+				if ($(e.target).closest(\'input[type="checkbox"]\').length == 0)
+					$(this).parent().find(\'input:checkbox\').attr(\'checked\', !$(this).parent().find(\'input:checkbox\').attr(\'checked\'));
+			});
+		');
 
 		return $String;
 	}
