@@ -30,9 +30,14 @@
 		<td><?php echo $Training['vdot']; ?></td>
 		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($Training['vdot'], $Training['distance'])), false, true); ?></td>
 
+		<?php if (CONF_JD_USE_VDOT_CORRECTOR): ?>
 		<?php $c_vdot = round(JD::correctVDOT($Training['vdot']),2); ?>
 		<td><?php echo $c_vdot; ?></td>
 		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($c_vdot, $Training['distance'])), false, true); ?></td>
+		<?php else: ?>
+		<td>-</td>
+		<td class="b">-</td>
+		<?php endif; ?>
 
 		<?php $shape     = round(JD::calculateVDOTform($Training['time']),2); ?>
 		<?php $prognosis = JD::CompetitionPrognosis($shape, $Training['distance']); ?>
@@ -56,10 +61,17 @@
 	<strong>VDOT/Zeit (normal):</strong> nach Standard-Formeln von Jack Daniels<br />
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels) laufen k&ouml;nnen.
 </p>
+<?php if (CONF_JD_USE_VDOT_CORRECTOR): ?>
 <p class="info">
 	<strong>VDOT/Zeit (Korrektur):</strong> nach individueller VDOT-Korrektur (Faktor <?php echo JD::correctionFactor(); ?>)<br />
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels, an dich angepasst) laufen k&ouml;nnen.
 </p>
+<?php else: ?>
+<p class="warning">
+	<strong>VDOT/Zeit (Korrektur):</strong>
+	Die Korrektur ist in der Konfiguration abgeschaltet.
+</p>
+<?php endif; ?>
 <p class="info">
 	<strong>VDOT/Zeit (Form):</strong> aus der damaligen Trainingsform bzw. Prognose<br />
 	Das h&auml;ttest du Runalyze zufolge laufen k&ouml;nnen.

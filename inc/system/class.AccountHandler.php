@@ -48,7 +48,7 @@ class AccountHandler {
 	 */
 	static private function updateAccount($username, $column, $value) {
 		DB::getInstance()->stopAddingAccountID();
-		DB::getInstance()->updateWhere('account', '`username`="'.mysql_real_escape_string($username).'" LIMIT 1', $column, $value);
+		DB::getInstance()->updateWhere('account', '`username`='.DB::getInstance()->escape($username).' LIMIT 1', $column, $value);
 		DB::getInstance()->startAddingAccountID();
 	}
 
