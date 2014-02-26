@@ -11,37 +11,31 @@ if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
 else
 	$_GET['y'] = (int)$_GET['y'];
-?>
 
+$Submenu = '';
+for ($j = date('Y'); $j >= START_YEAR; $j--)  {
+	$link = 'plugin/RunalyzePluginStat_Wetter/window.php?y='.$j;
+	$Submenu .= '<li'.($j == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.$j.'</a>').'</li>';
+}
+?>
 <div class="panel-heading">
+	<div class="panel-menu">
+		<ul>
+			<li class="with-submenu"><span class="link">Jahr w&auml;hlen</span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
+		</ul>
+	</div>
 	<h1>Wetter</h1>
 </div>
 
-<div class="panel-content" style="text-align:center;">
-<?php
-echo Plot::getDivFor('average', 780, 240);
-
-include FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wetter/Plot.Average.php';
-?>
-
-	<p>&nbsp;</p>
-
-<?php
-echo Plot::getDivFor('year'.$_GET['y'], 780, 240);
-
-include FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wetter/Plot.Year.php';
-?>
-
-	<p>&nbsp;</p>
-
-	<p>
-<?php
-for ($j = START_YEAR; $j <= date("Y"); $j++) {
-	if ($j == $_GET['y'])
-		echo '<strong style="margin-right:20px;">'.$j.'</strong>';
-	else
-		echo Ajax::window('<a href="plugin/RunalyzePluginStat_Wetter/window.php?y='.$j.'" style="margin-right:20px;">'.$j.'</a>');
-}
-?>
-	</p>
+<div class="panel-content">
+	<?php
+	echo Plot::getDivFor('average', 780, 240);
+	include FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wetter/Plot.Average.php';
+	?>
+</div>
+<div class="panel-content">
+	<?php
+	echo Plot::getDivFor('year'.$_GET['y'], 780, 240);
+	include FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wetter/Plot.Year.php';
+	?>
 </div>
