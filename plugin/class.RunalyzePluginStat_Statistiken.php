@@ -97,12 +97,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Statistiken';
-		$this->description = 'Allgemeine Statistiken: Monatszusammenfassung in der Jahres&uuml;bersicht f&uuml;r alle Sportarten.';
+		$this->name = __('Statistics');
+		$this->description = __('General Statistics : Monthsummary in the year overwie for every sport');
+                Language::addTextDomain('PluginStats', 'dir');
 	}
 
 	protected function setOwnNavigation() {
-		$LinkList  = '<li class="with-submenu"><span class="link">Alle Trainingswochen</span><ul class="submenu">';
+		$LinkList  = '<li class="with-submenu"><span class="link">'.__('All training weeks').'</span><ul class="submenu">';
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--)
 			$LinkList .= '<li>'.$this->getInnerLink($x, $this->sportid, $x, 'allWeeks').'</li>';
@@ -143,7 +144,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function getDefaultConfigVars() {
 		$config = array();
 		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
-		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => 'Streak anzeigen');
+		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => __('show streak'));
 		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => 'Mindestzahl f&uuml;r Streak zum Anzeigen (0 f&uuml;r immer)');
 
 		return $config;

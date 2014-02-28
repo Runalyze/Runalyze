@@ -163,6 +163,7 @@ $CLASSMAP = array(
 'DB' => 'system/class.DB.php',
 'Error' => 'system/class.Error.php',
 'Filesystem' => 'system/class.Filesystem.php',
+'Language' => 'system/class.Language.php',
 'PDOforRunalyze' => 'system/class.PDOforRunalyze.php',
 'Request' => 'system/class.Request.php',
 'SessionAccountHandler' => 'system/class.SessionAccountHandler.php',

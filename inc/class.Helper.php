@@ -322,7 +322,7 @@ function rstrstr($haystack, $needle) {
  * @param string $text
  */
 function __($text) {
-    return gettext($text);
+    return Language::__($text);
 }
 
 /*
@@ -330,7 +330,7 @@ function __($text) {
  * @param string $text
  */
 function _e($text) {
-    echo gettext($text);
+    echo Language::_e($text);
 }
 
 /*
@@ -338,7 +338,7 @@ function _e($text) {
  * @param string $text
  */
 function _n($msg1, $msg2, $n) {
-    return ngettext($msg1, $msg2, $n);
+    return Language::_n($msg1, $msg2, $n);
 }
 
 /*
@@ -346,5 +346,5 @@ function _n($msg1, $msg2, $n) {
  * @param string $text
  */
 function _ne($msg1, $msg2, $n) {
-    echo ngettext($msg1, $msg2, $n);
+    echo Language::_ne($msg1, $msg2, $n);
 }
