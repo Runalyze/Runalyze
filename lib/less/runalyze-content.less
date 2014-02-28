@@ -79,13 +79,24 @@ ul {
 	padding: @list-padding;
 }
 
-.show-on-hover {
-	opacity: 0;
-	transition: opacity 0.3s ease-out;
-}
+.show-on-hover-parent {
+	.show-on-hover {
+		opacity: 0;
+		transition: opacity 0.3s ease-out;
+	}
+	.hide-on-hover {
+		opacity: 1;
+		transition: opacity 0.3s ease-out;
+	}
 
-.show-on-hover-parent:hover .show-on-hover {
-	opacity: 1;
+	&:hover {
+		.show-on-hover {
+			opacity: 1;
+		}
+		.hide-on-hover {
+			opacity: 0;
+		}
+	}
 }
 
 p {

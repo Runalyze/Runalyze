@@ -38,6 +38,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: ATL/CTL/TSB', 'Statistische Werte M&uuml;digkeit, Fitnessgrad und Stress Balance anzeigen', true));
 		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: VDOT', 'Aktuellen berechneten VDOT anzeigen', true));
 		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Grundlagenausdauer', 'Prozentwert f&uuml;r die Grundlagenausdauer anzeigen', true));
+		$config['show_jd_intensity']   = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Trainingspunkte', 'Trainingspunkte/-intensit&auml;t nach Jack Daniels', true));
 
 		return $config;
 	}
@@ -74,6 +75,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function showValues() {
 		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
+
+		$JDPointsLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S))->fetchColumn();
+		$JDPointsThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()))->fetchColumn();
 
 		$Values = array(
 			array(
@@ -118,6 +122,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					Negativer Wert: Du trainierst hart.<br />
 					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br />
 					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>'
+			),
+			array(
+				'show'	=> $this->config['show_jd_intensity']['var'],
+				'bar'	=> '<div class="progress-bar colored-grey" style="width:'.min($JDPointsLastWeek/2, 100).'%;"></div><div class="progress-bar colored-red" style="width:'.min($JDPointsThisWeek/2, 100).'%;"></div>',
+				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br />Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
+				'value'	=> $JDPointsThisWeek,
+				'title'	=> 'Trainingspunkte',
+				'small'	=> '',
+				'tooltip'	=> 'Trainingsintensit&auml;t nach Jack Daniels<br />
+					Jack Daniels sch&auml;tzt dabei folgende Wochen:<br />
+					50 Punkte: neue L&auml;ufer<br />
+					100 Punkte: erfahrene L&auml;ufer<br />
+					200 Punkte: Elitel&auml;ufer'
 			)
 		);
 
@@ -128,6 +145,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				$Text = $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
 
 				$Progress = '<div class="progress-bar-container progress-bar-container-inline"><div class="progress-bar-inner">'.$Value['bar'].'</div></div>';
+
+				if (isset($Value['bar-tooltip']))
+					$Progress = Ajax::tooltip ($Progress, $Value['bar-tooltip']);
+
 				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r">'.$Value['value'].'</td></tr>';
 			}
 		}
