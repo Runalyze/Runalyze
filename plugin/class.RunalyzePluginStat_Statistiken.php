@@ -98,7 +98,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
 		$this->name = __('Statistics');
-		$this->description = __('General Statistics : Monthsummary in the year overwie for every sport');
+		$this->description = __('General Statistics : Monthsummary in the year overview for every sport');
                 Language::addTextDomain('PluginStats', 'dir');
 	}
 
@@ -200,15 +200,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		echo '</thead>';
 		echo '<tbody>';
 
-		$this->displayLine('Stunden', $this->StundenData);
+		$this->displayLine(__('hours'), $this->StundenData);
 
 		if ($this->sport['distances'] != 0) {
-			$this->displayLine('KM', $this->KMData);
+			$this->displayLine(__('KM'), $this->KMData);
 			if ($this->year == -1) {
 				$this->displayLine('&oslash;&nbsp;Wochen-KM', $this->KMDataWeek);
 				$this->displayLine('&oslash;&nbsp;Monats-KM', $this->KMDataMonth);
 			}
-			$this->displayLine('&oslash;&nbsp;Tempo', $this->TempoData);
+			$this->displayLine('&oslash;&nbsp;'.__('pace'), $this->TempoData);
 		}
 
 		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
@@ -263,7 +263,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$Dataset->activateKilometerComparison();
 
 		echo '<table class="small not-smaller r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?'Alle':'Letzten 10').' Trainingswochen</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):'Letzten 10').' Trainingswochen</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -296,7 +296,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 				$Dataset->displayTableColumns();
 			} else
-				echo HTML::emptyTD($Dataset->cols(), '<em>keine Trainings</em>', 'c');
+				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('no workouts').'</em>', 'c');
 
 			echo '</tr>';
 		}
