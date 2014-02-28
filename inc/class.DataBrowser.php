@@ -202,7 +202,7 @@ class DataBrowser {
 
 		echo DataBrowserLinker::monthLink(Time::Month(date("m", $timeForLinks)), $timeForLinks).', ';
 		echo DataBrowserLinker::yearLink(date("Y", $timeForLinks), $timeForLinks).', ';
-		echo DataBrowserLinker::weekLink(date("W", $timeForLinks).'. Woche ', $timeForLinks);
+		echo DataBrowserLinker::weekLink(date("W", $timeForLinks).'. '.__('week') , $timeForLinks);
 	}
 
 	/**
@@ -226,7 +226,7 @@ class DataBrowser {
 	protected function getPrevLink() {
 		$timestamp_array = DataBrowserLinker::prevTimestamps($this->timestamp_start, $this->timestamp_end);
 
-		return DataBrowserLinker::link(Icon::$BACK, $timestamp_array['start'], $timestamp_array['end'], 'zur&uuml;ck');
+		return DataBrowserLinker::link(Icon::$BACK, $timestamp_array['start'], $timestamp_array['end'], __('back'));
 	}
 
 	/**
@@ -236,7 +236,7 @@ class DataBrowser {
 	protected function getNextLink() {
 		$timestamp_array = DataBrowserLinker::nextTimestamps($this->timestamp_start, $this->timestamp_end);
 
-		return DataBrowserLinker::link(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], 'vorw&auml;rts');
+		return DataBrowserLinker::link(Icon::$NEXT, $timestamp_array['start'], $timestamp_array['end'], __('next'));
 	}
 
 	/**
@@ -246,7 +246,7 @@ class DataBrowser {
 	protected function getRefreshLink() {
 		$Link = DataBrowserLinker::link(Icon::$REFRESH, $this->timestamp_start, $this->timestamp_end);
 
-		return str_replace('<a ', '<a id="'.self::$REFRESH_BUTTON_ID.'" '.Ajax::tooltip('', 'Aktuelles Datenblatt neuladen', false, true), $Link);
+		return str_replace('<a ', '<a id="'.self::$REFRESH_BUTTON_ID.'" '.Ajax::tooltip('', __('Reload current datasheet'), false, true), $Link);
 	}
 
 	/**
@@ -254,7 +254,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getCalenderLink() {
-		return '<span id="calendar-link" class="link" title="Kalender-Auswahl">'.Icon::$CALENDAR.'</span>';
+		return '<span id="calendar-link" class="link" title="'.__('calendar selection').'">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**
@@ -262,7 +262,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', 'Monatstraining vergleichen', false, true).'>'.Icon::$BARS_BIG.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', __('Monatstraining vergleichen'), false, true).'>'.Icon::$BARS_BIG.'</a>');
 	}
 
 	/**
@@ -270,7 +270,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', 'Wochentraining vergleichen', false, true).'>'.Icon::$BARS_SMALL.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', __('Wochentraining vergleichen'), false, true).'>'.Icon::$BARS_SMALL.'</a>');
 	}
 
 	/**
@@ -286,7 +286,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getNaviSearchLink() {
-		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'" '.Ajax::tooltip('', 'Trainings suchen', false, true).'>'.Icon::$SEARCH.'</a>', 'big');
+		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'" '.Ajax::tooltip('', __('Search a workout'), false, true).'>'.Icon::$SEARCH.'</a>', 'big');
 	}
 
 	/**

@@ -151,7 +151,7 @@ class FrontendSharedList extends FrontendShared {
 	 */
 	protected function getPageTitle() {
 		if (!$this->userExists() || !$this->userAllowsList())
-			return 'Problem';
+			return __('Problem');
 
 		return 'Trainingsansicht von '.$this->User['username'];
 	}
@@ -160,7 +160,7 @@ class FrontendSharedList extends FrontendShared {
 	 * Throw error: This training is private 
 	 */
 	protected function throwErrorForPrivateList() {
-		echo HTML::h1('Fehler');
+		echo HTML::h1(__('Error'));
 		echo HTML::error('
 			<strong>Diese Trainingsliste ist privat.</strong><br />
 			<br />

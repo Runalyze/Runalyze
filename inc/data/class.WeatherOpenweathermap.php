@@ -103,9 +103,9 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	private function translateCodeToInternalName($code) {
 		switch($code) {
 			case 800:
-				return 'sonnig';
+				return 'sunny';
 			case 801:
-				return 'heiter';
+				return 'fair';
 			case 200:
 			case 210:
 			case 211:
@@ -122,10 +122,10 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 			case 721:
 			case 731:
 			case 741:
-				return 'wechselhaft';
+				return 'changeable';
 			case 803:
 			case 804:
-				return 'bew&ouml;lkt';
+				return 'cloudy';
 			case 500:
 			case 501:
 			case 502:
@@ -144,15 +144,15 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 			case 321:
 			case 201:
 			case 202:
-				return 'regnerisch';
+				return 'rainy';
 			case 600:
 			case 601:
 			case 602:
 			case 611:
 			case 621:
-				return 'Schnee';
+				return 'snow';
 			default:
-				return 'unbekannt';
+				return 'unknown';
 		}
 	}
 }

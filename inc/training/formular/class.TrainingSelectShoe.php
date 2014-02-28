@@ -19,7 +19,7 @@ class TrainingSelectShoe extends FormularSelectBox {
 		parent::__construct($name, $label, $value);
 
 		$this->addLayoutClass( TrainingFormular::$ONLY_RUNNING_CLASS );
-		$this->addOption(0, '---- Laufschuh ausw&auml;hlen');
+		$this->addOption(0, '---- '.__('select shoe'));
 
 		foreach (ShoeFactory::NamesAsArray( !$this->showAll() ) as $id => $name)
 			$this->addOption($id, $name);

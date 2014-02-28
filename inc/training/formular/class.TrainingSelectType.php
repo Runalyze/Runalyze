@@ -19,7 +19,7 @@ class TrainingSelectType extends FormularSelectBox {
 		parent::__construct($name, $label, $value);
 
 		$this->addLayoutClass( TrainingFormular::$ONLY_TYPES_CLASS );
-		$this->addOption(0, '---- Typ ausw&auml;hlen', array('data-sport' => 'all'));
+		$this->addOption(0, '---- '.__('select type'), array('data-sport' => 'all'));
 
 		foreach (TypeFactory::AllTypes() as $id => $data)
 			$this->addOption($id, $data['name'], array('data-sport' => $data['sportid']));

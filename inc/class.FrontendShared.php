@@ -108,7 +108,7 @@ class FrontendShared extends Frontend {
 	 */
 	protected function getPageTitle() {
 		if (is_null($this->Training) || $this->Training->isDefaultId() || !$this->Training->isPublic())
-			return 'Problem';
+			return __('Problem');
 
 		return $this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht';
 	}
@@ -117,7 +117,7 @@ class FrontendShared extends Frontend {
 	 * Throw error: invalid request 
 	 */
 	protected function throwErrorForInvalidRequest() {
-		echo HTML::h1('Fehler');
+		echo HTML::h1(__('Error'));
 		echo HTML::error('
 			<strong>Invalid request.</strong><br />
 			<br />
@@ -130,7 +130,7 @@ class FrontendShared extends Frontend {
 	 * Throw error: This training is private 
 	 */
 	protected function throwErrorForPrivateTraining() {
-		echo HTML::h1('Fehler');
+		echo HTML::h1(__('Error'));
 		echo HTML::error('
 			<strong>Dieses Training ist privat.</strong><br />
 			<br />
