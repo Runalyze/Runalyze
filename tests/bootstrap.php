@@ -6,6 +6,9 @@
  */
 //ini_set('include_path', ini_get('include_path').PATH_SEPARATOR.dirname(__FILE__).'/../../../php/PEAR');
 
+if (!defined('RUNALYZE_TEST'))
+	define('RUNALYZE_TEST', true);
+
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
@@ -37,9 +40,6 @@ if (!defined('CONF_BASIC_ENDURANCE'))
 
 if (!defined('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION'))
 	define('CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION', false);
-
-if (!defined('RUNALYZE_TEST'))
-	define('RUNALYZE_TEST', true);
 
 if (!defined('DAY_IN_S'))
 	define('DAY_IN_S', 86400);

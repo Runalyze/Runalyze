@@ -152,9 +152,11 @@ class Error {
 		if ($this->debug_displayed || !$this->hasErrors())
 			return;
 
-		if (!$this->log)
-			echo $this->sendErrorsToJSLog();
-		if ($this->log || self::$FORCE_LOG_FILE)
+		if (defined('RUNALYZE_TEST'))
+			$this->displayErrorsForUnitTest();
+		elseif (!$this->log)
+			$this->sendErrorsToJSLog();
+		elseif ($this->log || self::$FORCE_LOG_FILE)
 			Filesystem::writeFile('../'.$this->log_file, $this->getErrorTable());
 
 		$this->debug_displayed = true;
@@ -173,6 +175,17 @@ class Error {
 	 */
 	private function sendErrorsToJSLog() {
 		echo Ajax::wrapJSforDocumentReady('RunalyzeLog.addArray('.json_encode($this->errors).')');
+	}
+
+	/**
+	 * Display error messages for unit test
+	 */
+	private function displayErrorsForUnitTest() {
+		echo NL.NL.'===== '.count($this->errors).' ERROR MESSAGES: ====='.NL;
+
+		foreach ($this->errors as $error) {
+			echo '=== '.$error['type'].': '.$error['message'].NL;
+		}
 	}
 
 	/**
@@ -206,7 +219,7 @@ class Error {
 			$message .= ')';
 		}
 
-		if ($this->numErrors >= self::$MAX_NUM_OF_ERRORS) {
+		if ($this->numErrors >= self::$MAX_NUM_OF_ERRORS && !defined('RUNALYZE_TEST')) {
 			$this->errors[] = array('type' => 'ERROR', 'message' => 'FATAL ERROR: TOO MANY ERRORS.');
 			$this->display();
 			exit();
@@ -289,9 +302,12 @@ class Error {
 						$trace .= '<small>::'.$part['line'].'</small><br />';
 				}
 				$trace .= '<strong>'.$class.$func.'</strong>';
-				$trace .= '<small>('.$args.')</small><br /><br />';
+				$trace .= '<small>('.$args.')</small><br /><br />'.NL;
 			}
 		}
+
+		if (defined('RUNALYZE_TEST'))
+			return $message.NL.strip_tags( str_replace('<br />', ' ', $trace) );
 
 		if (class_exists('Ajax'))
 			$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
