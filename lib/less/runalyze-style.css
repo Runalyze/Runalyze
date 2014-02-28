@@ -1,4 +1,25 @@
 /* splits, pace, pulse, elevation, map */
+.colored-light {
+  background: #eee;
+}
+.colored-grey {
+  background: #ccc;
+}
+.colored-blue {
+  background: #3498db;
+}
+.colored-yellow {
+  background: #ffc930;
+}
+.colored-orange {
+  background: #ff6530;
+}
+.colored-red {
+  background: #c1321d;
+}
+.colored-green {
+  background: #1dc132;
+}
 .color-twitter {
   color: #4099ff;
 }
@@ -1031,6 +1052,9 @@ tr.ERROR td {
 .panel-content.nopadding {
   padding: 0;
 }
+.panel-content.panel-sub-content {
+  border-top: 1px solid #cccccc;
+}
 .panel-multiple-content {
   display: none;
 }
@@ -1520,6 +1544,55 @@ td.bottom-spacer {
     width: 320px;
     margin: 0 auto;
   }
+}
+.progress-bar-container {
+  width: 200px;
+  margin: 10px auto;
+  overflow: hidden;
+}
+.progress-bar-container.progress-bar-container-inline {
+  margin: 0;
+  width: 100%;
+}
+.progress-bar-infos {
+  /* Clearfix */
+
+  padding-bottom: 5px;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+.progress-bar-value {
+  font-size: 14px;
+  color: #666;
+}
+.progress-bar-goal {
+  float: right;
+  color: #ccc;
+  font-size: 10px;
+  line-height: 14px;
+}
+.progress-bar-inner {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  box-shadow: inset 0 0 1px #ccc;
+}
+.progress-bar {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.progress-bar.balance-positive {
+  left: 50%;
+  border-left: 1px solid #000;
+  max-width: 50%;
+}
+.progress-bar.balance-negative {
+  left: auto;
+  right: 50%;
+  border-right: 1px solid #000;
+  max-width: 50%;
 }
 .fa-grey {
   color: #999999;
