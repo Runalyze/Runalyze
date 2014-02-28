@@ -662,12 +662,19 @@ ul {
   margin: 5px 10px 15px 10px;
   padding: 0 0 0 20px;
 }
-.show-on-hover {
+.show-on-hover-parent .show-on-hover {
   opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+.show-on-hover-parent .hide-on-hover {
+  opacity: 1;
   transition: opacity 0.3s ease-out;
 }
 .show-on-hover-parent:hover .show-on-hover {
   opacity: 1;
+}
+.show-on-hover-parent:hover .hide-on-hover {
+  opacity: 0;
 }
 p {
   display: block;
