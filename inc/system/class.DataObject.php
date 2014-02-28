@@ -103,9 +103,9 @@ abstract class DataObject {
 	 */
 	private function loadLastObject() {
 		if ($this->DatabaseScheme->hasTimestamp())
-			$this->data = DB::getInstance()->query('SELECT * FROM '.$this->tableName().' ORDER BY time DESC LIMIT 1')->fetch();
+			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` ORDER BY `time` DESC LIMIT 1')->fetch();
 		else
-			$this->data = DB::getInstance()->query('SELECT * FROM '.$this->tableName().' ORDER BY id DESC LIMIMT 1')->fetch();
+			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` ORDER BY `id` DESC LIMIT 1')->fetch();
 
 		if (empty($this->data))
 			$this->constructAsDefaultObject();

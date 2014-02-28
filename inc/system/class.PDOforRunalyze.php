@@ -56,13 +56,13 @@ class PDOforRunalyze extends PDO {
 
 		if (strpos($statement, PREFIX.'account') === false && strpos($statement, '`accountid`') === false && strpos($statement, 'accountid=') === false) {
 			if (strpos($statement, 'WHERE') >= 7) {
-				$statement = str_replace('WHERE', 'WHERE `accountid`="'.$this->accountID.'" AND ', $statement);
+				$statement = str_replace('WHERE', 'WHERE `accountid`='.(int)$this->accountID.' AND ', $statement);
 			} elseif (strpos($statement, 'GROUP BY') >= 7) {
-				$statement = str_replace('GROUP BY', 'WHERE `accountid`="'.$this->accountID.'" GROUP BY ', $statement);
+				$statement = str_replace('GROUP BY', 'WHERE `accountid`='.(int)$this->accountID.' GROUP BY ', $statement);
 			} elseif (strpos($statement, 'ORDER BY') >= 7) {
-				$statement = str_replace('ORDER BY', 'WHERE `accountid`="'.$this->accountID.'" ORDER BY ', $statement);
+				$statement = str_replace('ORDER BY', 'WHERE `accountid`='.(int)$this->accountID.' ORDER BY ', $statement);
 			} else {
-				$statement = $statement.' WHERE `accountid`="'.$this->accountID.'"';
+				$statement = $statement.' WHERE `accountid`='.(int)$this->accountID;
 			}
 		}
 	}

@@ -24,7 +24,7 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * This method is called after a test is executed.
 	 */
 	protected function tearDown() {
-		
+		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -33,9 +33,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * @covers PDOforRunalyze::setAccountID
 	 */
 	public function testStartAddingAccountID() {
-		mysql_query('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(100, 1)');
-		mysql_query('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(200, 1)');
-		mysql_query('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(66, 3)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(100, 1)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(200, 1)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`s`, `accountid`) VALUES(66, 3)');
 
 		$this->object->setAccountID(1);
 		$this->object->startAddingAccountID();
@@ -53,7 +53,7 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 366, $this->object->query('SELECT SUM(`s`) FROM `runalyze_training`')->fetchColumn() );
 		$this->assertEquals( 3, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -63,9 +63,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	public function testFetchByID() {
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		mysql_query('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(1, 100)');
-		mysql_query('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(2, 200)');
-		mysql_query('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(3, 300)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(1, 100)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(2, 200)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(3, 300)');
 
 		$Training1 = $this->object->fetchByID('training', 1);
 		$this->assertEquals( 100, $Training1['s'] );
@@ -88,7 +88,7 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -117,7 +117,7 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3, $this->object->exec('DELETE FROM `runalyze_training`') );
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -156,18 +156,18 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 		$RequestDistance->execute();
 		$this->assertEquals( 11.23, $RequestDistance->fetchColumn() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
 	 * @covers PDOforRunalyze::escape
 	 */
 	public function testEscape() {
-		$this->assertEquals( 'NULL', PDOforRunalyze::escape(null) );
-		$this->assertEquals( 1, PDOforRunalyze::escape(true) );
-		$this->assertEquals( 0, PDOforRunalyze::escape(false) );
+		$this->assertEquals( 'NULL', $this->object->escape(null) );
+		$this->assertEquals( 1, $this->object->escape(true) );
+		$this->assertEquals( 0, $this->object->escape(false) );
 
-		$this->assertEquals( array(0.123, '"5\" OR 1=1"'), PDOforRunalyze::escape(array(0.123, '5" OR 1=1')));
+		$this->assertEquals( array(0.123, '\'5\\" OR 1=1\''), $this->object->escape(array(0.123, '5" OR 1=1')));
 	}
 
 }
