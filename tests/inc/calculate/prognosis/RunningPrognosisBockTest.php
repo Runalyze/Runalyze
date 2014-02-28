@@ -44,7 +44,7 @@ class RunningPrognosisBockTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(  76*60 + 14, $this->object->inSeconds(21.1), '', 1 );
 		$this->assertEquals( 159*60 +  7, $this->object->inSeconds(42.2), '', 1 );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**

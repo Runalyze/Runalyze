@@ -112,8 +112,64 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @covers JD::Training2points
+	 * @covers JD::values2points
+	 */
+	public function testTraining2points() {
+		// Expected values for 'key' %HRmax and 60 minutes
+		$ExpectedValues = array(
+			65	=> 6.0,
+			66	=> 6.6,
+			67	=> 7.3,
+			68	=> 8.1,
+			69	=> 9.0,
+			70	=> 10.0,
+			71	=> 11.0,
+			72	=> 12.0,
+			73	=> 13.0,
+			74	=> 14.0,
+			75	=> 15.0,
+			76	=> 17.0,
+			77	=> 18.0,
+			78	=> 19.0,
+			79	=> 20.0,
+			80	=> 21.0,
+			81	=> 22.0,
+			82	=> 23.5,
+			83	=> 25.0,
+			84	=> 26.5,
+			85	=> 28.0,
+			86	=> 29.5,
+			87	=> 31.0,
+			88	=> 33.0,
+			89	=> 35.0,
+			90	=> 37.0,
+			91	=> 39.0,
+			92	=> 41.0,
+			93	=> 43.4,
+			94	=> 45.8,
+			95	=> 48.0,
+			96	=> 50.4,
+			97	=> 53.0,
+			98	=> 55.0,
+			99	=> 57.7,
+			100	=> 60.0
+		);
+
+		foreach ($ExpectedValues as $HR => $ExpectedValue) {
+			$RealValue = JD::Training2points(0, array(
+				's'			=> 60*60,
+				'pulse_avg'	=> $HR*2, // to get %HFmax for HFmax = 200
+				'arr_heart'	=> ''
+			));
+			//echo $HR.'%HFmax: '.$ExpectedValue.' = '.$RealValue.NL;
+
+			$this->assertEquals( $ExpectedValue, $RealValue, 'JD::Training2points for '.$HR.'%HFmax differs too much: '.$RealValue.' instead of '.$ExpectedValue, $ExpectedValue*0.2 );
+		}
+	}
+
+	/**
 	 * @covers JD::CompetitionPrognosis
-	 * @todo Implement testCompetitionPrognosis().
 	 */
 	public function testCompetitionPrognosis() {
 		// VDOT: 32

@@ -114,6 +114,9 @@ class TrainingViewTable {
 
 		if (CONF_RECHENSPIELE)
 			$this->addLine('Trimp', $this->Training->DataView()->getTrimpString());
+ 
+		if (CONF_RECHENSPIELE && $this->Training->getJDintensity() > 0)
+			$this->addLine('Points', $this->Training->DataView()->getJDintensity());
 
 		if (CONF_RECHENSPIELE && $this->Training->Sport()->isRunning() && $this->Training->getVdotCorrected() > 0) {
 			$VDOTinfoLink = Request::isOnSharedPage() ? '' : Ajax::window('<a class="right unimportant" href="'.$this->Training->Linker()->urlToVDOTinfo().'">'.Icon::$INFO_SMALL.'</a>', 'small');

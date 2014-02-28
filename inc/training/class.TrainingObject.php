@@ -231,6 +231,7 @@ class TrainingObject extends DataObject {
 	private function updateVdot() {
 		$this->updateValue('vdot_by_time', JD::Competition2VDOT($this->get('distance'), $this->get('s')));
 		$this->updateValue('vdot', JD::Training2VDOT($this->id(), $this->getArray()));
+		$this->updateValue('jd_intensity', JD::Training2points($this->id(), $this->getArray()));
 		$this->updateVdotWithElevation();
 
 		if ($this->Type()->isCompetition())

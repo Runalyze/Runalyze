@@ -140,7 +140,7 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 		$this->object->setPercentageForLongjogs(0.01);
 		$this->assertEquals( 29, $this->object->value() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 }

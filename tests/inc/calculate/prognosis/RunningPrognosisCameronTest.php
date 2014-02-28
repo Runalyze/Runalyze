@@ -41,7 +41,7 @@ class RunningPrognosisCameronTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1*60*60 + 15*60 + 56, $this->object->inSeconds(21.1), '', 1 );
 		$this->assertEquals( 2*60*60 + 41*60 + 22, $this->object->inSeconds(42.2), '', 1 );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**

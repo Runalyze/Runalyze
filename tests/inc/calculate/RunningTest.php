@@ -37,7 +37,7 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, 0, 300, 1) );
 		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
 
-		mysql_query('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**

@@ -241,6 +241,14 @@ class TrainingDataView {
 	public function getTrimpString() {
 		return Trimp::coloredString($this->Object->getTrimp());
 	}
+ 
+ 	/**
+	 * Get string for displaying JD points
+	 * @return string
+	 */
+	public function getJDintensity() {
+		return $this->Object->getJDintensity();
+	}
 
 	/**
 	 * Get cadence
