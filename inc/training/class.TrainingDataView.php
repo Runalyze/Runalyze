@@ -126,6 +126,14 @@ class TrainingDataView {
 	}
 
 	/**
+	 * Get date link for menu
+	 * @return string
+	 */
+	public function getDateLinkForMenu() {
+		return Ajax::tooltip($this->getDateAsWeeklink(), '<em>Trainingswoche anzeigen</em><br />'.$this->getWeekday().' '.$this->getDate());
+	}
+
+	/**
 	 * Get weekday
 	 * @return string
 	 */

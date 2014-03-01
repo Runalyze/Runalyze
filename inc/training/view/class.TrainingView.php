@@ -57,13 +57,15 @@ class TrainingView {
 	 * Init toolbar links
 	 */
 	private function initToolbarLinks() {
-		if (!Request::isOnSharedPage()) {
-			$this->ToolbarLinks[] = Ajax::window('<a class="labeledLink" href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' Bearbeiten</a> ','small');
-			$this->ToolbarLinks[] = Ajax::window('<a class="labeledLink" href="'.ExporterWindow::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small');
-		}
-
 		if ($this->Training->isPublic())
 			$this->ToolbarLinks[] = SharedLinker::getToolbarLinkTo($this->Training->id());
+
+		if (!Request::isOnSharedPage()) {
+			$this->ToolbarLinks[] = Ajax::window('<a href="'.ExporterWindow::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' Exportieren</a> ','small');
+			$this->ToolbarLinks[] = Ajax::window('<a href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' Bearbeiten</a> ','small');
+		}
+
+		$this->ToolbarLinks[] = $this->Training->DataView()->getDateLinkForMenu();
 	}
 
 	/**
@@ -101,19 +103,6 @@ class TrainingView {
 	 */
 	public function display() {
 		include FRONTEND_PATH.'training/tpl/tpl.Training.php';
-	}
-
-	/**
-	 * Display title
-	 */
-	protected function displayTitle() {
-		echo '<div class="panel-menu panel-menu-text">';
-		echo '<small>'.$this->Training->DataView()->getFullDateWithWeekLink().'</small>';
-		echo '</div>';
-		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';
-
-		if (!Request::isOnSharedPage())
-			echo '<div class="hover-icons"><span class="link" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span></div>';
 	}
 
 	/**

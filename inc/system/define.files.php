@@ -46,7 +46,6 @@ $JS_FILES = array(
 );
 	
 $CSS_FILES = array(
-	'lib/jquery.datepicker.css',
 	'lib/chosen/chosen.css',
 
 	'lib/less/runalyze-style.css',

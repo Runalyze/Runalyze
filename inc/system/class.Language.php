@@ -1,85 +1,109 @@
 <?php
+/**
+ * This file contains class::Language
+ * @package Runalyze\System
+ */
+/**
+ * Language class
+ * @author Michael Pohl
+ * @package Runalyze\System
+ */
 class Language {
-    
-    static private $localedir = './inc/locale';
-    
-    public function __construct() {
-        putenv("LANG=$language"); 
-        setlocale(LC_ALL, $language);
-        $domain = 'runalyze';
-        bindtextdomain('runalyze', $this->localdir); 
-        textdomain('runalyze');
-    }
-    /**
-     * 
-     * @return string
-     */
-    public function availableLanguages() {
-        $languages=array();
-        $languages['de']='German';
-        return $languages;
-    }
-    
-    /**
-     * 
-     * @param type $domainname
-     * @param type $dir
-     */
-    public function addTextDomain($domainname, $dir) {
-        bindtextdomain($domainname, $dir);
-    }
-    
-    /**
-     * Set Language for user
-     * @return boolean
-     */
-    public function setLanguage() {
-        return true;        
-    }
-    
-    /**
-     * Get all available languages
-     * @return array
-     */
-    public function getLanguages() {
-        
-    }
-    /*
-    * Returns the translation for a textstring
-    * @param string $text
-    */
-   public function __($text) {
-       return gettext($text);
-   }
+	/**
+	 * Locale dir
+	 * @var string
+	 */
+	static private $localedir = './inc/locale';
 
-   /*
-    * Echo the translation for a textstring
-    * @param string $text
-    */
-   public function _e($text) {
-       return gettext($text);
-   }
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		putenv("LANG=$language"); 
+		setlocale(LC_ALL, $language);
+		$domain = 'runalyze';
+		bindtextdomain('runalyze', $this->localdir); 
+		textdomain('runalyze');
+	}
 
-   /*
-    * Return singular/plural translation for a textstring
-    * @param string $text
-    */
-   public function _n($msg1, $msg2, $n) {
-       return ngettext($msg1, $msg2, $n);
-   }
+	/**
+	 * Available languages
+	 * @return string
+	 */
+	public function availableLanguages() {
+		$languages = array(
+			'de'	=> 'German'
+		);
 
-   /*
-    * Echo singular/plural translation for a textstring
-    * @param string $text
-    */
-   public function _ne($msg1, $msg2, $n) {
-       return ngettext($msg1, $msg2, $n);
-   }
-    /**
-     * get browser language
-     * @return type 
-     */
-    private function getBrowserLanguage() {
-        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-    }
+		return $languages;
+	}
+
+	/**
+	 * Add text domain
+	 * @param string $domainname
+	 * @param string $dir
+	 */
+	static public function addTextDomain($domainname, $dir) {
+		bindtextdomain($domainname, $dir);
+	}
+
+	/**
+	 * Set Language for user
+	 * @return boolean
+	 */
+	public function setLanguage() {
+		// TODO
+
+		return true;        
+	}
+
+	/**
+	 * Get all available languages
+	 * @return array
+	 */
+	public function getLanguages() {
+		// TODO
+
+		return array();
+	}
+
+	/**
+	 * Returns the translation for a textstring
+	 * @param string $text
+	 */
+	static public function __($text) {
+	   return gettext($text);
+	}
+
+	/**
+	 * Echo the translation for a textstring
+	 * @param string $text
+	 */
+	static public function _e($text) {
+	   return gettext($text);
+	}
+
+	/**
+	 * Return singular/plural translation for a textstring
+	 * @param string $text
+	 */
+	static public function _n($msg1, $msg2, $n) {
+	   return ngettext($msg1, $msg2, $n);
+	}
+
+	/**
+	 * Echo singular/plural translation for a textstring
+	 * @param string $text
+	 */
+	static public function _ne($msg1, $msg2, $n) {
+	   return ngettext($msg1, $msg2, $n);
+	}
+
+	/**
+	 * get browser language
+	 * @return type 
+	 */
+	private function getBrowserLanguage() {
+		return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+	}
 }
