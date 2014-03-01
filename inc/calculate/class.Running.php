@@ -73,12 +73,31 @@ class Running {
 			return '';
 
 		if ($track)
-			return number_format($km*1000, 0, ',', '.').'m';
+			return self::KmFormatTrack($km).'m';
 
+		return self::KmFormat($km, $decimals).'&nbsp;km';
+	}
+
+	/**
+	 * Format distance
+	 * @param double $km
+	 * @param int $decimals [optional]
+	 * @return string
+	 */
+	public static function KmFormat($km, $decimals = -1) {
 		if ($decimals == -1)
 			$decimals = CONF_TRAINING_DECIMALS;
 
-		return number_format($km, $decimals, ',', '.').'&nbsp;km';
+		return number_format($km, $decimals, ',', '.');
+	}
+
+	/**
+	 * Format distance for track
+	 * @param double $km
+	 * @return string
+	 */
+	public static function KmFormatTrack($km) {
+		return number_format($km*1000, 0, ',', '.');
 	}
 
 	/**

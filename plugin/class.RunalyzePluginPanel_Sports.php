@@ -18,6 +18,9 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		$this->type = Plugin::$PANEL;
 		$this->name = 'Sportarten';
 		$this->description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
+
+		if (!$this->config['show_as_table']['var'])
+			$this->removePanelContentPadding = true;
 	}
 
 	/**
@@ -26,6 +29,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['show_as_table'] = array('type' => 'bool', 'var' => false, 'description' => 'Alte Tabellenansicht');
 
 		return $config;
 	}
@@ -74,19 +78,39 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			foreach ($data as $dat) {
 				// TODO: Define the decision (distance or time) somehow in the configuration
 				$Sport = new Sport($dat['sportid']);
-				$result = $dat['count_distance'] >= $dat['count']/2
-					? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
-					: Time::toString($dat['time_in_s']); 		
-			
-				echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
-				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
+
+				if ($this->config['show_as_table']['var']) {
+					$result = $dat['count_distance'] >= $dat['count']/2
+						? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
+						: Time::toString($dat['time_in_s']);
+
+					echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
+					echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
+				} else {
+					$Value = new BoxedValue();
+					$Value->setIcon($Sport->Icon());
+					$Value->setInfo($Sport->name());
+					$Value->defineAsFloatingBlock('w50');
+
+					if ($dat['count_distance'] >= $dat['count']/2) {
+						$Value->setValue( Running::KmFormat($dat['distance']) );
+						$Value->setUnit('km');
+					} else {
+						$Value->setValue(Time::toString($dat['time_in_s'], false, true));
+					}
+
+					$Value->display();
+				}
 			}
 
 			if (empty($data))
 				echo '<p><em>Noch keine Daten vorhanden.</em></p>';
 	
-			echo '<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>';
-			echo HTML::clearBreak();
+			if ($this->config['show_as_table']['var']) {
+				echo '<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>';
+				echo HTML::clearBreak();
+			}
+
 			echo '</div>';
 		}
 	

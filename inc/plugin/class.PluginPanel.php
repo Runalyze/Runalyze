@@ -28,6 +28,12 @@ abstract class PluginPanel extends Plugin {
 	protected $dontReloadForTraining = false;
 
 	/**
+	 * Boolean flag: Remove padding from panel-content
+	 * @var boolean
+	 */
+	protected $removePanelContentPadding = false;
+
+	/**
 	 * Method for initializing default config-vars (should be implemented in each plugin)
 	 */
 	protected function getDefaultConfigVars() { return array(); }
@@ -72,7 +78,7 @@ abstract class PluginPanel extends Plugin {
 
 		$this->displayHeader();
 
-		echo NL.'<div class="panel-content"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
+		echo NL.'<div class="panel-content'.($this->removePanelContentPadding ? ' nopadding' : '').'"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
 		$this->displayContent();
 		echo '</div>';
 

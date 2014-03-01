@@ -117,38 +117,13 @@ pre {
 
 	<div class="showcase">
 		<div class="showcase-inner clearfix">
-			<pre>&lt;table class=&quot;zebra-style&quot;&gt;...&lt;/table&gt;</pre>
+			<pre>&lt;p class=&quot;error/info/...&quot&gt;...&lt;/p&gt;</pre>
 
-			<table class="zebra-style" style="float:left;width:40%;margin:5%;">
-				<thead>
-					<tr>
-						<th colspan="2">Standard</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr><td>1.</td><td>odd</td></tr>
-					<tr><td>2.</td><td>even</td></tr>
-					<tr><td>3.</td><td>odd</td></tr>
-					<tr><td>4.</td><td>even</td></tr>
-					<tr><td>5.</td><td>odd</td></tr>
-					<tr><td>6.</td><td>even</td></tr>
-				</tbody>
-			</table>
-			<table class="zebra-style zebra-blue" style="float:left;width:40%;margin:5%;">
-				<thead>
-					<tr>
-						<th colspan="2">zebra-blue</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr><td>1.</td><td>odd</td></tr>
-					<tr><td>2.</td><td>even</td></tr>
-					<tr><td>3.</td><td>odd</td></tr>
-					<tr><td>4.</td><td>even</td></tr>
-					<tr><td>5.</td><td>odd</td></tr>
-					<tr><td>6.</td><td>even</td></tr>
-				</tbody>
-			</table>
+			<p class="error">&quot;error&quot;: Fehlermeldung ...</p>
+			<p class="warning">&quot;warning&quot;: Warnung ...</p>
+			<p class="okay">&quot;okay&quot;: Alles okay ...</p>
+			<p class="info">&quot;info&quot;: Information ...</p>
+			<p class="file">&quot;file&quot;: Download ...</p>
 		</div>
 	</div>
 
@@ -228,13 +203,6 @@ pre {
 
 	<div class="showcase">
 		<div class="showcase-inner clearfix">
-			<pre>&lt;div class=&quot;databox&quot&gt;...&lt;/div&gt;</pre>
-
-			<div class="databox">
-				Ich bin eine Databox ...
-			</div>
-		</div>
-		<div class="showcase-inner clearfix">
 			<pre>&lt;div class=&quot;panel&quot&gt;...&lt;/div&gt;</pre>
 
 			<div class="panel">
@@ -249,6 +217,7 @@ pre {
 				</div>
 			</div>
 		</div>
+
 		<div class="showcase-inner clearfix">
 			<pre>&lt;div class=&quot;panel&quot&gt;...&lt;/div&gt;</pre>
 
@@ -283,6 +252,64 @@ pre {
 
 	<div class="showcase">
 		<div class="showcase-inner clearfix">
+			<pre>&lt;div class=&quot;boxed-value&quot&gt;...&lt;/div&gt;</pre>
+
+			<div class="panel">
+				<div class="panel-heading">
+					<h1>Training</h1>
+				</div>
+				<div class="boxed-values clearfix">
+					<div class="boxed-value-container">
+						<div class="boxed-value">
+							14,3
+							<span class="boxed-value-unit">km</span>
+						</div>
+						<div class="boxed-value-info">
+							Distanz
+						</div>
+					</div>
+					<div class="boxed-value-container">
+						<div class="boxed-value">
+							1:02:13
+						</div>
+						<div class="boxed-value-info">
+							Dauer
+						</div>
+					</div>
+					<div class="boxed-value-container">
+						<div class="boxed-value">
+							4:17
+							<span class="boxed-value-unit">/km</span>
+						</div>
+						<div class="boxed-value-info">
+							Pace
+						</div>
+					</div>
+					<div class="boxed-value-container">
+						<div class="boxed-value">
+							147
+							<span class="boxed-value-unit">bpm</span>
+						</div>
+						<div class="boxed-value-info">
+							Puls
+						</div>
+					</div>
+					<div class="boxed-value-container with-icon">
+						<i class="fa fa-fw vdot-icon small fa-arrow-up fa-rotate-45"></i>
+						<div class="boxed-value">
+							62,5
+						</div>
+						<div class="boxed-value-info">
+							VDOT
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
 			<pre>&lt;ul class=&quot;blocklist blocklist-inline&quot&gt;...&lt;/ul&gt;</pre>
 
 			<ul class="blocklist blocklist-inline">
@@ -296,17 +323,13 @@ pre {
 
 	<div class="showcase">
 		<div class="showcase-inner clearfix">
-			<pre>&lt;p class=&quot;error/info/...&quot&gt;...&lt;/p&gt;</pre>
+			<pre>&lt;div class=&quot;databox&quot&gt;...&lt;/div&gt;</pre>
 
-			<p class="error">&quot;error&quot;: Fehlermeldung ...</p>
-			<p class="warning">&quot;warning&quot;: Warnung ...</p>
-			<p class="okay">&quot;okay&quot;: Alles okay ...</p>
-			<p class="info">&quot;info&quot;: Information ...</p>
-			<p class="file">&quot;file&quot;: Download ...</p>
+			<div class="databox">
+				Ich bin eine Databox ...
+			</div>
 		</div>
-	</div>
 
-	<div class="showcase">
 		<div class="showcase-inner clearfix">
 			<pre>&lt;div class=&quot;show-on-hover-parent&quot;&gt;...&lt;/div&gt;</pre>
 
@@ -314,12 +337,50 @@ pre {
 				<div class="show-on-hover"><pre>&lt;div class=&quot;show-on-hover&quot;&gt;...&lt;/div&gt;</pre></div>
 			</div>
 		</div>
+
 		<div class="showcase-inner clearfix">
 			<pre>&lt;span class=&quot;plus/minus/error&quot;&gt;...&lt;/span&gt;</pre>
 
 			<span class="plus">plus: + 3:35</span><br />
 			<span class="minus">minus: - 1:27</span><br />
 			<span class="error">error: NaN</span>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
+			<pre>&lt;table class=&quot;zebra-style&quot;&gt;...&lt;/table&gt;</pre>
+
+			<table class="zebra-style" style="float:left;width:40%;margin:5%;">
+				<thead>
+					<tr>
+						<th colspan="2">Standard</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>1.</td><td>odd</td></tr>
+					<tr><td>2.</td><td>even</td></tr>
+					<tr><td>3.</td><td>odd</td></tr>
+					<tr><td>4.</td><td>even</td></tr>
+					<tr><td>5.</td><td>odd</td></tr>
+					<tr><td>6.</td><td>even</td></tr>
+				</tbody>
+			</table>
+			<table class="zebra-style zebra-blue" style="float:left;width:40%;margin:5%;">
+				<thead>
+					<tr>
+						<th colspan="2">zebra-blue</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>1.</td><td>odd</td></tr>
+					<tr><td>2.</td><td>even</td></tr>
+					<tr><td>3.</td><td>odd</td></tr>
+					<tr><td>4.</td><td>even</td></tr>
+					<tr><td>5.</td><td>odd</td></tr>
+					<tr><td>6.</td><td>even</td></tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 

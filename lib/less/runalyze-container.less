@@ -45,6 +45,11 @@
 		border-top: 1px solid @panel-heading-border;
 	}
 
+	&.panel-inner-heading {
+		border-top: 1px solid #eee;
+		border-bottom: none;
+	}
+
 	h1 {
 		display: inline;
 		padding: 0;
@@ -52,6 +57,15 @@
 		font-size: @panel-heading-font-size;
 		text-transform: uppercase;
 		color: @panel-heading-color;
+		border: none;
+	}
+
+	h2 {
+		padding: 0;
+		margin: 0;
+		font-size: @panel-heading-font-size;
+		font-weight: normal;
+		text-transform: uppercase;
 		border: none;
 	}
 
@@ -88,6 +102,7 @@
 .panel-menu {
 	float: right;
 	margin-left: @panel-icons-margin;
+	height: @panel-heading-line-height;
 
 	&.panel-menu-floated {
 		float: right;

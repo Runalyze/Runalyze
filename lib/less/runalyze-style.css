@@ -937,6 +937,10 @@ tr.ERROR td {
   margin-top: 10px;
   border-top: 1px solid #cccccc;
 }
+.panel-heading.panel-inner-heading {
+  border-top: 1px solid #eee;
+  border-bottom: none;
+}
 .panel-heading h1 {
   display: inline;
   padding: 0;
@@ -944,6 +948,14 @@ tr.ERROR td {
   font-size: 11px;
   text-transform: uppercase;
   color: #880000;
+  border: none;
+}
+.panel-heading h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 11px;
+  font-weight: normal;
+  text-transform: uppercase;
   border: none;
 }
 .panel-heading .hover-icons {
@@ -966,6 +978,7 @@ tr.ERROR td {
 .panel-menu {
   float: right;
   margin-left: 5px;
+  height: 18px;
   position: relative;
   top: -5px;
   right: -5px;
@@ -1601,6 +1614,68 @@ td.bottom-spacer {
   border-right: 1px solid #000;
   max-width: 50%;
 }
+.boxed-values {
+  font-size: 0;
+  margin-bottom: -1px;
+}
+.boxed-value-outer {
+  display: inline-block;
+}
+.boxed-value-outer.w25 {
+  width: 25%;
+}
+.boxed-value-outer.w33 {
+  width: 33.3%;
+}
+.boxed-value-outer.w50 {
+  width: 50%;
+}
+.boxed-value-outer .boxed-value-container {
+  display: block;
+  width: auto;
+}
+.boxed-value-container {
+  position: relative;
+  display: inline-block;
+  min-width: 56px;
+  border-right: 1px solid #eeeeee;
+  border-bottom: 1px solid #eeeeee;
+  padding: 5px 10px;
+  font-size: 11px;
+  text-align: right;
+}
+.boxed-value-container.with-icon {
+  padding: 5px 10px 5px 26px;
+  min-width: 40px;
+}
+.boxed-value-container.with-icon i {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  margin-top: -7px;
+  font-size: 14px;
+  line-height: 14px;
+}
+.boxed-value-container.with-icon i.fa {
+  height: 14px;
+  width: 14px;
+}
+.boxed-value {
+  display: block;
+  line-height: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  height: 16px;
+}
+.boxed-value .boxed-value-unit {
+  display: inline;
+  font-weight: normal;
+  font-size: 11px;
+}
+.boxed-value-info {
+  display: block;
+  text-align: right;
+}
 .fa-grey {
   color: #999999;
 }
@@ -2157,6 +2232,126 @@ label:active .checkbox-icon {
   bottom: -100%;
   line-height: 14px;
   height: 14px;
+}
+body > .datepicker {
+  z-index: 100;
+  padding: 5px;
+  font-size: 0.9em;
+  background-color: #fff;
+  border: 1px solid #cccccc;
+  width: auto !important;
+}
+#data-browser-calendar {
+  position: relative;
+  display: none;
+  width: 525px;
+  margin: 0 auto 20px;
+  padding: 5px;
+  font-size: 0.9em;
+  background-color: #fff;
+  border: 1px solid #cccccc;
+}
+#calendar-submit {
+  margin-top: 5px;
+}
+#widget-calendar {
+  position: relative;
+  width: 520px;
+  height: 130px;
+  margin: 5px auto;
+  overflow: hidden;
+}
+div.datepicker {
+  position: absolute;
+  overflow: hidden;
+  width: 196px;
+  height: 147px;
+  position: absolute;
+  cursor: default;
+  top: 0;
+  left: 0;
+  display: none;
+}
+div.datepicker table {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.datepickerHidden {
+  display: none;
+}
+.datepicker table {
+  border-collapse: collapse;
+}
+div.datepicker table td {
+  text-align: right;
+  padding: 0;
+  margin: 0;
+}
+.datepicker th {
+  text-align: center;
+  color: #999;
+  font-weight: normal;
+}
+.datepicker tbody a {
+  display: block;
+}
+.datepickerDays a {
+  width: 18px;
+  line-height: 15px;
+  height: 15px;
+  padding-right: 2px;
+}
+.datepickerYears a,
+.datepickerMonths a {
+  width: 42px;
+  line-height: 32px;
+  height: 32px;
+  text-align: center;
+}
+.datepickerNotInMonth a {
+  color: #999;
+}
+.datepickerSelected {
+  background: #ffff66;
+}
+.datepickerSelected.datepickerNotInMonth {
+  background: #ffff99;
+  font-style: italic;
+}
+.datepickerSpace div {
+  width: 20px;
+}
+.datepickerGoNext a,
+.datepickerGoPrev a,
+.datepickerMonth a {
+  text-align: center;
+}
+.datepickerGoNext a {
+  float: right;
+  width: 20px;
+}
+.datepickerGoPrev a {
+  float: left;
+  width: 20px;
+}
+table.datepickerViewDays tbody.datepickerMonths,
+table.datepickerViewDays tbody.datepickerYears,
+table.datepickerViewMonths tbody.datepickerDays,
+table.datepickerViewMonths tbody.datepickerYears,
+table.datepickerViewMonths tr.datepickerDoW,
+table.datepickerViewYears tbody.datepickerDays,
+table.datepickerViewYears tbody.datepickerMonths,
+table.datepickerViewYears tr.datepickerDoW {
+  display: none;
+}
+td.datepickerDisabled a,
+td.datepickerDisabled.datepickerNotInMonth a,
+td.datepickerDisabled a:hover {
+  color: #333;
+}
+.datepicker a:hover {
+  background-color: #ffff66 !important;
+  color: #000 !important;
 }
 /*!
  *  Font Awesome 4.0.3 by @davegandy - http://fontawesome.io - @fontawesome

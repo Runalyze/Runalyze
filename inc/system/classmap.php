@@ -78,6 +78,7 @@ $CLASSMAP = array(
 'Ajax' => 'html/class.Ajax.php',
 'AjaxTabs' => 'html/class.AjaxTabs.php',
 'BlocklinkList' => 'html/class.BlocklinkList.php',
+'BoxedValue' => 'html/class.BoxedValue.php',
 'HTML' => 'html/class.HTML.php',
 'HTMLMetaForFacebook' => 'html/class.HTMLMetaForFacebook.php',
 'HtmlTag' => 'html/class.HtmlTag.php',
