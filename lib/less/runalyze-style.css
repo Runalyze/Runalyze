@@ -2085,6 +2085,24 @@ label:active .checkbox-icon {
   float: left;
   margin: 5px;
 }
+.flot-menu {
+  float: right;
+  line-height: 14px;
+}
+.flot-menu.flot-menu-inline {
+  float: none;
+  text-align: right;
+  padding: 5px;
+}
+.flot-menu .link {
+  display: inline-block;
+  border-left: 2px solid #666;
+  padding-left: 5px;
+  margin-left: 10px;
+}
+.flot-menu .link.unimportant {
+  border-color: #ccc;
+}
 #flot-loader {
   visibility: hidden;
   position: absolute;

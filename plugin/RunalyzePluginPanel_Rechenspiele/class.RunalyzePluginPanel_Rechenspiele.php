@@ -74,10 +74,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * Show values
 	 */
 	protected function showValues() {
+		$ATLmax      = Trimp::maxATL();
+		$CTLmax      = Trimp::maxCTL();
+		$ATLabsolute = Trimp::ATL();
+		$CTLabsolute = Trimp::CTL();
 		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
 
-		$JDPointsLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S))->fetchColumn();
-		$JDPointsThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()))->fetchColumn();
+		$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
+		$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
+		$JDPointsLastWeek = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
+		$JDPointsThisWeek = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
 
 		$Values = array(
 			array(
@@ -99,6 +105,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.$TrimpValues['ATL'].'%;"></div>',
+				'bar-tooltip'	=> 'Aktueller Wert: '.$ATLabsolute.'<br />Maximaler Wert: '.$ATLmax.'<br />in Prozent = '.$TrimpValues['ATL'].'%',
 				'value'	=> $TrimpValues['ATL'].'&nbsp;&#37;',
 				'title'	=> 'M&uuml;digkeit',
 				'small'	=> '(ATL)',
@@ -107,6 +114,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.$TrimpValues['CTL'].'%;"></div>',
+				'bar-tooltip'	=> 'Aktueller Wert: '.$CTLabsolute.'<br />Maximaler Wert: '.$CTLmax.'<br />in Prozent = '.$TrimpValues['CTL'].'%',
 				'value'	=> $TrimpValues['CTL'].'&nbsp;&#37;',
 				'title'	=> 'Fitnessgrad',
 				'small'	=> '(CTL)',
@@ -115,6 +123,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bar'	=> '<div class="progress-bar '.($TrimpValues['TSB'] > 0 ? 'balance-positive colored-green' : 'balance-negative colored-red').'" style="width:'.min(abs($TrimpValues['TSB']), 50).'%;"></div>',
+				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
 				'value'	=> Math::WithSign($TrimpValues['TSB']),
 				'title'	=> 'Stress&nbsp;Balance',
 				'small'	=> '(TSB)',
@@ -144,10 +153,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				$Label = '<strong>'.$Value['title'].'</strong>&nbsp;<small>'.$Value['small'].'</small>';
 				$Text = $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
 
-				$Progress = '<div class="progress-bar-container progress-bar-container-inline"><div class="progress-bar-inner">'.$Value['bar'].'</div></div>';
-
-				if (isset($Value['bar-tooltip']))
-					$Progress = Ajax::tooltip ($Progress, $Value['bar-tooltip']);
+				$Tooltip  = isset($Value['bar-tooltip']) ? Ajax::tooltip('', $Value['bar-tooltip'], false, true) : '';
+				$Progress = '<div class="progress-bar-container progress-bar-container-inline"'.$Tooltip.'><div class="progress-bar-inner">'.$Value['bar'].'</div></div>';
 
 				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r">'.$Value['value'].'</td></tr>';
 			}
