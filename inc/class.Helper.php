@@ -321,30 +321,30 @@ function rstrstr($haystack, $needle) {
  * Returns the translation for a textstring
  * @param string $text
  */
-function __($text) {
-    return Language::__($text);
+function __($text, $domain='runalyze') {
+    return Language::__($text, $domain);
 }
 
 /*
  * Echo the translation for a textstring
  * @param string $text
  */
-function _e($text) {
-    echo Language::_e($text);
+function _e($text, $domain='runalyze') {
+    echo Language::_e($text, $domain);
 }
 
 /*
  * Return singular/plural translation for a textstring
  * @param string $text
  */
-function _n($msg1, $msg2, $n) {
-    return Language::_n($msg1, $msg2, $n);
+function _n($msg1, $msg2, $n, $domain='runalyze') {
+    return Language::_n($msg1, $msg2, $n, $domain);
 }
 
 /*
  * Echo singular/plural translation for a textstring
  * @param string $text
  */
-function _ne($msg1, $msg2, $n) {
-    echo Language::_ne($msg1, $msg2, $n);
+function _ne($msg1, $msg2, $n, $domain='runalyze') {
+    echo Language::_ne($msg1, $msg2, $n, $domain);
 }
