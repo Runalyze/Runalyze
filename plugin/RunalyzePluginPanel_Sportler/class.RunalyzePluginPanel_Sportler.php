@@ -19,6 +19,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$this->name = 'Sportler';
 		$this->description = 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).';
 		$this->dontReloadForTraining = true;
+
+		if (!$this->config['use_old_design']['var'])
+			$this->removePanelContentPadding = true;
 	}
 
 	/**
@@ -36,6 +39,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+		$config['use_old_design'] = array('type' => 'bool', 'var' => false, 'description' => 'Altes Design verwenden');
 		$config['use_weight']     = array('type' => 'bool', 'var' => true, 'description' => 'Gewicht protokollieren');
 		$config['use_body_fat']   = array('type' => 'bool', 'var' => true, 'description' => 'Fettanteil protokollieren');
 		$config['use_pulse']      = array('type' => 'bool', 'var' => true, 'description' => 'Ruhepuls protokollieren');
@@ -63,6 +67,92 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
+		if ($this->config['use_old_design']['var'])
+			$this->displayContentInOldDesign();
+		else
+			$this->displayContentInNewDesign();
+
+		if (!$this->config['use_weight']['var'] && !$this->config['use_pulse']['var'] && !$this->config['use_body_fat']['var'])
+			echo HTML::warning('Du musst in der Konfiguration festlegen, welche Werte du protokollieren m&ouml;chtest.');
+	}
+
+	/**
+	 * Display the content (new design)
+	 */
+	protected function displayContentInNewDesign() {
+		$Code = '';
+		$UserData = new UserData( DataObject::$LAST_OBJECT );
+
+		$FirstValues = array();
+		$SecondValues = array();
+
+		if ($this->config['use_weight']['var'])
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight()), 'kg', 'Gewicht');
+
+		if ($this->config['use_pulse']['var']) {
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest()), 'bpm', 'Ruhepuls');
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax()), 'bpm', 'Maximalpuls');
+		}
+
+		$NumberOfFirstValues = count($FirstValues);
+		foreach ($FirstValues as &$Value) {
+			$Value->defineAsFloatingBlock( ($NumberOfFirstValues == 2) ? "w50" : "w33");
+			$Code .= $Value->getCode();
+		}
+
+		if (!empty($Code))
+			$Code .= '<br />';
+
+		if ($this->config['use_body_fat']['var']) {
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat()), '&#37;', 'Fett');
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater()), '&#37;', 'Wasser');
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles()), '&#37;', 'Muskeln');
+		}
+
+		foreach ($SecondValues as &$Value) {
+			$Value->defineAsFloatingBlock( "w33");
+			$Code .= $Value->getCode();
+		}
+
+		if (!empty($Code))
+			echo BoxedValue::wrapValues($Code);
+
+		$this->displayPlots();
+	}
+
+	/**
+	 * Display plots
+	 */
+	protected function displayPlots() {
+		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
+
+		if (!$AnalyseIsHidden && !$this->config['use_body_fat']['var'])
+			return;
+
+		echo '<div class="panel-content">';
+
+		if ($AnalyseIsHidden && $this->config['use_body_fat']['var']) {
+			echo '<div class="flot-menu flot-menu-inline">';
+			echo Ajax::flotChange('Gewicht anzeigen', 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
+			echo Ajax::flotChange('K&ouml;rperdaten anzeigen', 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
+			echo '</div>';
+		}
+
+		echo '<div id="sportler_flots" class="flot-changeable" style="position:relative;width:322px;height:150px;margin:2px auto;">
+				<div class="flot '.Ajax::$IMG_WAIT.(!$AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_weights" style="width:320px;height:148px;position:absolute;"></div>
+				<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:148px;position:absolute;"></div>
+			</div>';
+
+		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
+
+		echo '</div>';
+	}
+
+	/**
+	 * Display the content (old design)
+	 */
+	protected function displayContentInOldDesign() {
 		$Weight   = '';
 		$Pulse    = '';
 		$Analyse  = '';
@@ -80,6 +170,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 
 		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
+
+		if (!$AnalyseIsHidden && !$this->config['use_body_fat']['var'])
+			return;
 
 		echo('
 			<div id="sportler-content">

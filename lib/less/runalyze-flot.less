@@ -43,6 +43,28 @@
 
 
 
+.flot-menu {
+	float: right;
+	line-height: @flot-settings-height;
+
+	&.flot-menu-inline {
+		float: none;
+		text-align: right;
+		padding: 5px;
+	}
+
+	.link {
+		display: inline-block;
+		border-left: 2px solid #666;
+		padding-left: 5px;
+		margin-left: 10px;
+
+		&.unimportant {
+			border-color: #ccc;
+		}
+	}
+}
+
 #flot-loader {
     visibility: hidden;
     position: absolute;
