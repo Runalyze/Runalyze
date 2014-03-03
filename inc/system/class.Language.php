@@ -70,32 +70,36 @@ class Language {
 	/**
 	 * Returns the translation for a textstring
 	 * @param string $text
+         * @param string domain
 	 */
-	static public function __($text) {
+	static public function __($text, $domain) {
 	   return gettext($text);
 	}
 
 	/**
 	 * Echo the translation for a textstring
 	 * @param string $text
+         * @param string domain
 	 */
-	static public function _e($text) {
+	static public function _e($text, $domain) {
 	   return gettext($text);
 	}
 
 	/**
 	 * Return singular/plural translation for a textstring
 	 * @param string $text
+         * @param string domain
 	 */
-	static public function _n($msg1, $msg2, $n) {
+	static public function _n($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
 	}
 
 	/**
 	 * Echo singular/plural translation for a textstring
 	 * @param string $text
+         * @param string domain
 	 */
-	static public function _ne($msg1, $msg2, $n) {
+	static public function _ne($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
 	}
 
