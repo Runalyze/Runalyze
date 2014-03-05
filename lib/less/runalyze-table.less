@@ -117,21 +117,35 @@ tr.bottom-spacer, td.bottom-spacer {
 
 		&.header {
 			padding-right: @table-sortable-padding-right;
-			background-image: url(../../img/tablesorter/bg.gif);
-			background-repeat: no-repeat;
-			background-position: center right;
 			cursor: pointer;
+			position: relative;
+
+			&:after {
+				position: absolute;
+				right: 0;
+				display: inline-block;
+				width: @table-sortable-padding-right;
+				text-align: center;
+				font-family: FontAwesome;
+				font-style: normal;
+				-webkit-font-smoothing: antialiased;
+				content: "\f0dc";
+			}
 		}
 
 		&.header:hover,
 		&.headerSortDown:hover,
 		&.headerSortDown {
-			background-image: url(../../img/tablesorter/desc.gif);
+			&:after {
+				content: "\f0de";
+			}
 		}
 
 		&.headerSortUp:hover,
 		&.headerSortUp {
-			background-image: url(../../img/tablesorter/asc.gif);
+			&:after {
+				content: "\f0dd";
+			}
 		}
 
 		&.headerSortDown,
