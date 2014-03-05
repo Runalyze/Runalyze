@@ -1308,19 +1308,28 @@ td.bottom-spacer {
 }
 .sortable thead th.header {
   padding-right: 14px;
-  background-image: url(../../img/tablesorter/bg.gif);
-  background-repeat: no-repeat;
-  background-position: center right;
   cursor: pointer;
+  position: relative;
 }
-.sortable thead th.header:hover,
-.sortable thead th.headerSortDown:hover,
-.sortable thead th.headerSortDown {
-  background-image: url(../../img/tablesorter/desc.gif);
+.sortable thead th.header:after {
+  position: absolute;
+  right: 0;
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+  font-family: FontAwesome;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  content: "\f0dc";
 }
-.sortable thead th.headerSortUp:hover,
-.sortable thead th.headerSortUp {
-  background-image: url(../../img/tablesorter/asc.gif);
+.sortable thead th.header:hover:after,
+.sortable thead th.headerSortDown:hover:after,
+.sortable thead th.headerSortDown:after {
+  content: "\f0de";
+}
+.sortable thead th.headerSortUp:hover:after,
+.sortable thead th.headerSortUp:after {
+  content: "\f0dd";
 }
 .sortable thead th.headerSortDown,
 .sortable thead th.headerSortUp {
