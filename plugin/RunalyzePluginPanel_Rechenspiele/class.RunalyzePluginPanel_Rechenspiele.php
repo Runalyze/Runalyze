@@ -79,16 +79,21 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ATLabsolute = Trimp::ATL();
 		$CTLabsolute = Trimp::CTL();
 		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
+		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
 		$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
 		$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
 		$JDPointsLastWeek = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
 		$JDPointsThisWeek = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
+		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(
 			array(
 				'show'	=> $this->config['show_vdot']['var'],
-				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.max(0, min(2*round(VDOT_FORM - 30), 100)).'%;"></div>',
+				'bars'	=> array(
+					new ProgressBarSingle(2*round(VDOT_FORM - 30), ProgressBarSingle::$COLOR_BLUE)
+				),
+				'bar-tooltip'	=> '',
 				'value'	=> number_format(VDOT_FORM,2),
 				'title'	=> 'VDOT',
 				'small'	=> '',
@@ -96,7 +101,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_basicendurance']['var'],
-				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.BasicEndurance::getConst().'%;"></div>',
+				'bars'	=> array(
+					new ProgressBarSingle(BasicEndurance::getConst(), ProgressBarSingle::$COLOR_BLUE)
+				),
+				'bar-tooltip'	=> '',
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;',
 				'title'	=> 'Grundlagenausdauer',
 				'small'	=> '',
@@ -104,7 +112,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
-				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.$TrimpValues['ATL'].'%;"></div>',
+				'bars'	=> array(
+					new ProgressBarSingle($TrimpValues['ATL'], ProgressBarSingle::$COLOR_BLUE)
+				),
 				'bar-tooltip'	=> 'Aktueller Wert: '.$ATLabsolute.'<br />Maximaler Wert: '.$ATLmax.'<br />in Prozent = '.$TrimpValues['ATL'].'%',
 				'value'	=> $TrimpValues['ATL'].'&nbsp;&#37;',
 				'title'	=> 'M&uuml;digkeit',
@@ -113,7 +123,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
-				'bar'	=> '<div class="progress-bar colored-blue" style="width:'.$TrimpValues['CTL'].'%;"></div>',
+				'bars'	=> array(
+					new ProgressBarSingle($TrimpValues['CTL'], ProgressBarSingle::$COLOR_BLUE)
+				),
 				'bar-tooltip'	=> 'Aktueller Wert: '.$CTLabsolute.'<br />Maximaler Wert: '.$CTLmax.'<br />in Prozent = '.$TrimpValues['CTL'].'%',
 				'value'	=> $TrimpValues['CTL'].'&nbsp;&#37;',
 				'title'	=> 'Fitnessgrad',
@@ -122,7 +134,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
-				'bar'	=> '<div class="progress-bar '.($TrimpValues['TSB'] > 0 ? 'balance-positive colored-green' : 'balance-negative colored-red').'" style="width:'.min(abs($TrimpValues['TSB']), 50).'%;"></div>',
+				'bars'	=> array(
+					new ProgressBarSingle($TrimpValues['TSB'], ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
+				),
 				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
 				'value'	=> Math::WithSign($TrimpValues['TSB']),
 				'title'	=> 'Stress&nbsp;Balance',
@@ -134,8 +148,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			),
 			array(
 				'show'	=> $this->config['show_jd_intensity']['var'],
-				'bar'	=> '<div class="progress-bar colored-grey" style="width:'.min($JDPointsLastWeek/2, 100).'%;"></div><div class="progress-bar colored-red" style="width:'.min($JDPointsThisWeek/2, 100).'%;"></div>',
-				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br />Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
+				'bars'	=> array(
+					new ProgressBarSingle($JDPointsPrognosis/2, ProgressBarSingle::$COLOR_LIGHT),
+					new ProgressBarSingle($JDPointsThisWeek/2, ProgressBarSingle::$COLOR_RED)
+				),
+				'bar-goal'	=> $JDPointsLastWeek/2,
+				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br />Prognose: ca. '.$JDPointsPrognosis.' Trainingspunkte<br />Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
 				'value'	=> $JDPointsThisWeek,
 				'title'	=> 'Trainingspunkte',
 				'small'	=> '',
@@ -153,8 +171,17 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				$Label = '<strong>'.$Value['title'].'</strong>&nbsp;<small>'.$Value['small'].'</small>';
 				$Text = $Value['tooltip'] != '' ? Ajax::tooltip($Label, $Value['tooltip']) : $Label;
 
-				$Tooltip  = isset($Value['bar-tooltip']) ? Ajax::tooltip('', $Value['bar-tooltip'], false, true) : '';
-				$Progress = '<div class="progress-bar-container progress-bar-container-inline"'.$Tooltip.'><div class="progress-bar-inner">'.$Value['bar'].'</div></div>';
+				$ProgressBar = new ProgressBar();
+				$ProgressBar->setInline();
+				$ProgressBar->setTooltip($Value['bar-tooltip']);
+
+				foreach ($Value['bars'] as &$Bar)
+					$ProgressBar->addBar($Bar);
+
+				if (isset($Value['bar-goal']))
+					$ProgressBar->setGoalLine($Value['bar-goal']);
+
+				$Progress = $ProgressBar->getCode();
 
 				echo '<tr><td>'.$Text.'</td><td style="width:99%;vertical-align:middle;">'.$Progress.'</td><td class="r">'.$Value['value'].'</td></tr>';
 			}
