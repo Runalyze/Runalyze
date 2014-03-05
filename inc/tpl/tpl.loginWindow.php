@@ -149,9 +149,9 @@
 </div>
 
 <div id="login-panel">
-	<a id="login-link" href="#" onclick="show('log')"><?php _e('Login'); ?></a>
-	<a id="register-link" href="#" onclick="show('reg')"><?php _e('Register'); ?></a>
-	<a id="password-link" href="#" onclick="show('pwf');"><?php _e('Forgot password?'); ?></a>
+	<a id="login-link" href="#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> <?php _e('Login'); ?></a>
+	<a id="register-link" href="#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Register'); ?></a>
+	<a id="password-link" href="#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot password?'); ?></a>
 </div>
 
 <script type="text/javascript">
