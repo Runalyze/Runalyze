@@ -165,6 +165,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			)
 		);
 
+		$this->showTableForValues($Values);
+	}
+
+	/**
+	 * Show table for values
+	 * @param array $Values
+	 */
+	protected function showTableForValues(&$Values) {
 		echo '<table class="fullwidth nomargin">';
 		foreach ($Values as $Value) {
 			if ($Value['show']) {

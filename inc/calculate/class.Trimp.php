@@ -120,7 +120,7 @@ class Trimp {
 	 * @return string 
 	 */
 	static public function coloredString($trimp) {
-		return '<span style="color:#'.Running::Stresscolor($trimp).';">'.$trimp.'</span>';
+		return Running::StresscoloredString($trimp);
 	}
 
 	/**
