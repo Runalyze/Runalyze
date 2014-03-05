@@ -73,6 +73,8 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 			$this->TrainingObject->setPulseMax((int)$this->XML->result->{'heart-rate'}->maximum);
 		}
 
+		// TODO: SPEED, ALTITUDE, DISTANCE (as samples)
+
 		if (isset($this->XML->result->samples) && (string)$this->XML->result->samples->sample->type == 'HEARTRATE')
 			$this->TrainingObject->setArrayHeartrate( explode(',', (string)$this->XML->result->samples->sample->values) );
 	}
