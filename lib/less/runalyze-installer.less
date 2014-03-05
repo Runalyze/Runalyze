@@ -41,7 +41,7 @@
 		display: block;
 		line-height: 24px;
 		margin-left: 4px;
-		padding: 2px 2px 2px 36px;
+		padding: 2px;
 		border-bottom: none !important;
 		background-position: 3px center;
 		background-repeat: no-repeat;
@@ -52,10 +52,6 @@
 	}
 }
 
-#login-link { background-image: url(../../img/registerLogin.png); }
-#register-link { background-image: url(../../img/register.png); }
-#password-link { background-image: url(../../img/registerPass.png); }
-
 .installer-window-container {
 	padding: 0 70px;
 }
@@ -63,37 +59,41 @@
 .installer-footer-text {
 	border-top: 1px solid #ccc;
 	margin: 20px 5px 2px;
-	padding-top: 7px;
+	padding-top: 10px;
 }
 
 .installer-footer-links {
 	border-top: 1px solid #ccc;
 	margin-top: 20px;
-	padding-top: 7px;
+	padding-top: 10px;
 }
 
 .text-badge {
 	width: 33%;
 	float: left;
-	background-position: 10px 5px;
-	background-repeat: no-repeat;
+	position: relative;
 
 	strong {
 		display: block;
 		margin-bottom: 5px;
 		text-transform: uppercase;
-		font-weight: normal;
+		font-weight: bold;
+		color: #000;
 	}
 
 	p {
 		margin: 0 10px 0 45px;
 		color: #666;
 	}
-}
 
-.text-badge-charts { background-image: url(../../img/badge-charts.png); }
-.text-badge-tools { background-image: url(../../img/badge-tools.png); }
-.text-badge-heart { background-image: url(../../img/badge-heart.png); }
+	i {
+		position: absolute;
+		width: 45px;
+		top: 10px;
+		text-align: center;
+		color: @red;
+	}
+}
 
 code, textarea.code {
 	width: 98%;
