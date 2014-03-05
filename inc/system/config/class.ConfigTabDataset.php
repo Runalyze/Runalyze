@@ -187,7 +187,7 @@ class ConfigTabDataset extends ConfigTab {
 			'vdot_with_elevation'	=> VDOT_FORM + 1,
 			'vdot'		=> VDOT_FORM + 1,
 			'use_vdot'	=> 0,
-			'jd_intensity'	=> 0,	// TODO
+			'jd_intensity'	=> 27,
 			'trimp'		=> 121,
 			'cadence'	=> 90,
 			'power'		=> 520,

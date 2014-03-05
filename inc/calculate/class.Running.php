@@ -234,6 +234,19 @@ class Running {
 	}
 
 	/**
+	 * Get colored string for a given value
+	 * @param int $colorValue value to "color", between 0 and 100
+	 * @param int $stringValue [optional] value to display, can be empty to use $colorValue
+	 * @return string 
+	 */
+	static public function StresscoloredString($colorValue, $stringValue = false) {
+		if ($stringValue === false)
+			$stringValue = $colorValue;
+
+		return '<span style="color:#'.self::Stresscolor($colorValue).';">'.$stringValue.'</span>';
+	}
+
+	/**
 	 * Get the demanded pace if set in description (e.g. "... in 3:05 ...")
 	 * @param string $description
 	 * @return int

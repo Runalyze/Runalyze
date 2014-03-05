@@ -400,6 +400,12 @@ class Dataset {
 
 				return $this->TrainingObject->DataView()->getVDOTicon();
 
+			case 'jd_intensity':
+				if (!$this->TrainingObject->Sport()->isRunning())
+					return '';
+
+				return $this->TrainingObject->DataView()->getJDintensityWithStresscolor();
+
 		}
 
 		return '&nbsp;';

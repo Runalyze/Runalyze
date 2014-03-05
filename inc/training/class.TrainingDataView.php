@@ -257,6 +257,16 @@ class TrainingDataView {
 	public function getJDintensity() {
 		return $this->Object->getJDintensity();
 	}
+ 
+ 	/**
+	 * Get string for displaying JD points with stresscolor
+	 * @return string
+	 */
+	public function getJDintensityWithStresscolor() {
+		$Intensity = $this->Object->getJDintensity();
+
+		return Running::StresscoloredString($Intensity/2, $Intensity);
+	}
 
 	/**
 	 * Get cadence
