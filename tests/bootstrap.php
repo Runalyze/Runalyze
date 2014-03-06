@@ -50,6 +50,9 @@ if (!defined('CONF_MAINSPORT'))
 if (!defined('CONF_RUNNINGSPORT'))
 	define('CONF_RUNNINGSPORT', 1);
 
+if (!defined('CONF_GENDER'))
+	define('CONF_GENDER', 'm');
+
 if (!defined('CONF_WK_TYPID'))
 	define('CONF_WK_TYPID', 5);
 
