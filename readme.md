@@ -30,7 +30,17 @@ Details: <http://runalyze.de/installation/>
 ## Credits
 * Icons
 	* Font Awesome by Dave Gandy - <http://fontawesome.io>
+* Garmin Communicator
+    * API by Garmin Ltd. - <http://developer.garmin.com/web-device/garmin-communicator-plugin/>
 * Elevation data from Shuttle Radar Topography Mission
 	* SRTM tiles grabbed via Derek Watkins - <http://dwtkns.com/srtm/>
 	* SRTM files by International  Centre for Tropical  Agriculture (CIAT) - <http://srtm.csi.cgiar.org>
 	* SRTMGeoTIFFReader by Bob Osola - <http://www.osola.org.uk/elevations/index.htm>
+* jQuery-Plugins
+    * Bootstrap Tooltip by Twitter, Inc. - <http://twitter.github.com/bootstrap/javascript.html#tooltips>
+    * Flot by IOLA and Ole Laursen - <http://www.flotcharts.org/>
+    * GMAP3 - <http://gmap3.net/>
+    * FineUploader by Widen Enterprises, Inc. - <https://github.com/Widen/fine-uploader>
+    * Tablesorter by Christian Bach <http://tablesorter.com/docs/>
+    * Datepicker by Stefan Petre - <http://www.eyecon.ro/>
+    * Chosen by Patrick Filler for Harvest - <http://getharvest.com>

@@ -28,7 +28,7 @@ class FormularInputWithEqualityOption extends FormularInput {
 
 		$label  = '<label>'.$this->label.'</label>';
 		$input  = HTML::selectBox('opt['.$this->name.']', $options, $selected);
-		$input .= '<input '.$this->attributes().' />';
+		$input .= $this->wrapInputTagForUnit('<input '.$this->attributes().' />');
 
 		return $label.' '.$input;
 	}

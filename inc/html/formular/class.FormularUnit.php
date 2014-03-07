@@ -13,95 +13,95 @@ class FormularUnit {
 	 * Unit: percent
 	 * @var string
 	 */
-	static public $PERCENT = 'unitPercent';
+	static public $PERCENT = '&#37;';
 
 	/**
 	 * Unit: bpm
 	 * @var string
 	 */
-	static public $BPM = 'unitBpm';
+	static public $BPM = 'bpm';
 
 	/**
 	 * Unit: spm
 	 * @var string
 	 */
-	static public $SPM = 'unitSpm';
+	static public $SPM = 'spm';
 
 	/**
 	 * Unit: rpm
 	 * @var string
 	 */
-	static public $RPM = 'unitRpm';
+	static public $RPM = 'rpm';
 
 	/**
 	 * Unit: kg
 	 * @var string
 	 */
-	static public $KG = 'unitKg';
+	static public $KG = 'kg';
 
 	/**
 	 * Unit: km
 	 * @var string
 	 */
-	static public $KM = 'unitKm';
+	static public $KM = 'km';
 
 	/**
 	 * Unit: m
 	 * @var string
 	 */
-	static public $M = 'unitM';
+	static public $M = 'm';
 
 	/**
 	 * Unit: user
 	 * @var string
 	 */
-	static public $USER = 'unitUser';
+	static public $USER = '&nbsp;<i class="fa fa-fw fa-user"></i>'; // Icon::$USER
 
 	/**
 	 * Unit: password
 	 * @var string
 	 */
-	static public $PASS = 'unitPass';
+	static public $PASS = '&nbsp;<i class="fa fa-fw fa-lock"></i>'; // Icon::$PASSWORD
 
 	/**
 	 * Unit: mail-adress
 	 * @var string
 	 */
-	static public $MAIL = 'unitMail';
+	static public $MAIL = '&nbsp;<i class="fa fa-fw fa-envelope"></i>'; // Icon::$MAIL
 
 	/**
 	 * Unit: temperature in degree celsius
 	 * @var string
 	 */
-	static public $CELSIUS = 'unitCelsius';
+	static public $CELSIUS = '&deg;C';
 
 	/**
 	 * Unit: elevation
 	 * @var string
 	 */
-	static public $ELEVATION = 'unitElevation';
+	static public $ELEVATION = 'hm';
 
 	/**
 	 * Unit: kcal
 	 * @var string
 	 */
-	static public $KCAL = 'unitKcal';
+	static public $KCAL = 'kcal';
 
 	/**
 	 * Unit: pace in km/h
 	 * @var string
 	 */
-	static public $KMH = 'unitKmh';
+	static public $KMH = 'km/h';
 
 	/**
 	 * Unit: pace in min/km
 	 * @var string
 	 */
-	static public $PACE = 'unitPace';
+	static public $PACE = '/km';
 
 	/**
-	 * Unit: pace in min/km
+	 * Unit: power
 	 * @var string
 	 */
-	static public $POWER = 'unitPower';
+	static public $POWER = 'W';
 }

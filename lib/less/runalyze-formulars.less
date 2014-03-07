@@ -151,12 +151,8 @@ fieldset {
 
 	textarea, input { padding: 2px; margin: 0; }
 	select { padding: 1px; margin: 0; }
-	input.with-unit { padding: 2px 30px 2px 0; }
-	input.with-unit-left { padding: 2px 0 2px 30px; }
 	.small-size { width: 60px; }
-	.small-size.with-unit { width: 34px; }
 	.middle-size { width: 120px; }
-	.middle-size.with-unit { width: 94px; }
 	.full-size { width: 53%; }
 	.fullwidth { width: 95%; }
 	.with50erLabel label { width: 22.5%; }
@@ -170,41 +166,27 @@ fieldset {
 	textarea.full-size { height: 72px; }
 }
 
-input {
-	&.pick-a-date {
-		padding: 2px 16px 2px 2px;
-		background-position: right center;
-		background-repeat: no-repeat;
-		background-image: url('../../img/units/calendar.png');
-	}
+.input-with-unit {
+	position: relative;
 
-	&.with-unit {
-		text-align: right;
-		background-position: right center;
-		background-repeat: no-repeat;
-	}
+	input { padding: 2px 30px 2px 0; text-align: right; }
+	.small-size { width: 34px; }
+	.middle-size { width: 94px; }
+	.small-size.pick-a-date { width: 60px; }
 
-	&.with-unit-left {
-		background-position: left center;
-		background-repeat: no-repeat;
+	.input-unit {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 30px;
+		display: block;
+		text-align: center;
+		float: none;
+		font-weight: normal;
+		font-size: 0.9em;
+		color: #ccc;
+		padding: 0;
 	}
-
-	&.unitPercent { background-image: url('../../img/units/percent.png'); }
-	&.unitBpm { background-image: url('../../img/units/bpm.png'); }
-	&.unitSpm { background-image: url('../../img/units/spm.png'); }
-	&.unitRpm { background-image: url('../../img/units/rpm.png'); }
-	&.unitKg { background-image: url('../../img/units/kg.png'); }
-	&.unitKm { background-image: url('../../img/units/km.png'); }
-	&.unitM { background-image: url('../../img/units/m.png'); }
-	&.unitUser { background-image: url('../../img/units/user.png'); }
-	&.unitPass { background-image: url('../../img/units/pass.png'); }
-	&.unitMail { background-image: url('../../img/units/mail.png'); }
-	&.unitCelsius { background-image: url('../../img/units/celsius.png'); }
-	&.unitElevation { background-image: url('../../img/units/hm.png'); }
-	&.unitKcal { background-image: url('../../img/units/kcal.png'); }
-	&.unitKmh { background-image: url('../../img/units/kmh.png'); }
-	&.unitPace { background-image: url('../../img/units/pace.png'); }
-	&.unitPower { background-image: url('../../img/units/power.png'); }
 }
 
 :invalid, fieldset .validation-failed {

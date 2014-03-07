@@ -60,6 +60,10 @@ class Icon {
 	static public $WARNING          = '<i class="fa fa-fw fa-warning"></i>';
 	static public $ERROR            = '<i class="fa fa-fw fa-minus-circle"></i>';
 
+	static public $USER             = '<i class="fa fa-fw fa-user"></i>';
+	static public $PASSWORD         = '<i class="fa fa-fw fa-lock"></i>';
+	static public $MAIL             = '<i class="fa fa-fw fa-envelope"></i>';
+
 	/**
 	 * This class contains only static methods
 	 */
