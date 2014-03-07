@@ -13,17 +13,22 @@ class Language {
 	 * Locale dir
 	 * @var string
 	 */
-	static private $localedir = './inc/locale';
+	static private $LOCALE_DIR = './inc/locale';
 
 	/**
 	 * Constructor
+	 * @param string $language [optional]
+	 * @param string $domain [optional]
 	 */
-	public function __construct() {
+	public function __construct($language = '', $domain = 'runalyze') {
+		if (empty($language))
+			$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en';
+
 		putenv("LANG=$language"); 
 		setlocale(LC_ALL, $language);
-		$domain = 'runalyze';
-		bindtextdomain('runalyze', $this->localdir); 
-		textdomain('runalyze');
+
+		self::addTextDomain($domain, self::$LOCALE_DIR); 
+		textdomain($domain);
 	}
 
 	/**
@@ -36,15 +41,6 @@ class Language {
 		);
 
 		return $languages;
-	}
-
-	/**
-	 * Add text domain
-	 * @param string $domainname
-	 * @param string $dir
-	 */
-	static public function addTextDomain($domainname, $dir) {
-		bindtextdomain($domainname, $dir);
 	}
 
 	/**
@@ -68,9 +64,18 @@ class Language {
 	}
 
 	/**
+	 * Add text domain
+	 * @param string $domainname
+	 * @param string $dir
+	 */
+	static public function addTextDomain($domainname, $dir) {
+		bindtextdomain($domainname, $dir);
+	}
+
+	/**
 	 * Returns the translation for a textstring
 	 * @param string $text
-         * @param string domain
+	 * @param string domain
 	 */
 	static public function __($text, $domain) {
 	   return gettext($text);
@@ -79,7 +84,7 @@ class Language {
 	/**
 	 * Echo the translation for a textstring
 	 * @param string $text
-         * @param string domain
+	 * @param string domain
 	 */
 	static public function _e($text, $domain) {
 	   return gettext($text);
@@ -88,7 +93,7 @@ class Language {
 	/**
 	 * Return singular/plural translation for a textstring
 	 * @param string $text
-         * @param string domain
+	 * @param string domain
 	 */
 	static public function _n($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
@@ -97,7 +102,7 @@ class Language {
 	/**
 	 * Echo singular/plural translation for a textstring
 	 * @param string $text
-         * @param string domain
+	 * @param string domain
 	 */
 	static public function _ne($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
@@ -110,4 +115,40 @@ class Language {
 	private function getBrowserLanguage() {
 		return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 	}
+}
+
+/**
+ * Returns the translation for a textstring
+ * @param string $text
+ * @param string $domain [optional]
+ */
+function __($text, $domain = 'runalyze') {
+    return Language::__($text, $domain);
+}
+
+/**
+ * Echo the translation for a textstring
+ * @param string $text
+ * @param string $domain [optional]
+ */
+function _e($text, $domain = 'runalyze') {
+    echo Language::_e($text, $domain);
+}
+
+/**
+ * Return singular/plural translation for a textstring
+ * @param string $text
+ * @param string $domain [optional]
+ */
+function _n($msg1, $msg2, $n, $domain = 'runalyze') {
+    return Language::_n($msg1, $msg2, $n, $domain);
+}
+
+/**
+ * Echo singular/plural translation for a textstring
+ * @param string $text
+ * @param string $domain [optional]
+ */
+function _ne($msg1, $msg2, $n, $domain = 'runalyze') {
+    echo Language::_ne($msg1, $msg2, $n, $domain);
 }

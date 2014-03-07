@@ -110,6 +110,14 @@ class Installer {
 	 */
 	public function __construct() {
 		$this->definePath();
+		$this->initLanguage();
+		$this->loadConsts();
+	}
+
+	/**
+	 * Display
+	 */
+	public function display() {
 		$this->findoutCurrentStep();
 		$this->loadConfig();
 		$this->executeCurrentStep();
@@ -121,6 +129,21 @@ class Installer {
 	*/
 	public function definePath() {
 		define('PATH', dirname(__FILE__).'/');
+	}
+
+	/**
+	 * Setup Language
+	 */
+	protected function initLanguage() {
+		require_once PATH.'system/class.Language.php';
+		new Language();
+	}
+
+	/**
+	 * Load consts
+	 */
+	protected function loadConsts() {
+		require_once PATH.'system/define.consts.php';
 	}
 
 	/**

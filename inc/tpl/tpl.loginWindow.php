@@ -8,13 +8,13 @@
 			$FailedPassword = '';
 			if (SessionAccountHandler::$ErrorType != SessionAccountHandler::$ERROR_TYPE_NO) {
 				if (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_USERNAME) {
-					$ErrorString    = __('Der Benutzername ist nicht bekannt.');
+					$ErrorString    = __('The username is not known.');
 					$FailedUsername = ' validation-failed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_WRONG_PASSWORD) {
-					$ErrorString    = __('Das Passwort war nicht richtig.');
+					$ErrorString    = __('The password was incorrect.');
 					$FailedPassword = ' validation-failed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
-					$ErrorString    = __('Der Account wurde noch nicht best&auml;tigt.<br />Schau in deinem E-Mail-Posteingang nach.');
+					$ErrorString    = __('The account hasn\'t been activated.<br>Have a look at your email inbox.');
 			}
 			?>
 
@@ -23,11 +23,11 @@
 				<legend><?php _e('Login'); ?></legend>
 				<div class="w100">
 					<label for="username"><?php _e('Username'); ?></label>
-					<input id="username" name="username" class="middle-size with-unit unitUser <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="username" name="username" class="middle-size <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 				<div class="w100 clear">
 					<label for="password"><?php _e('Password'); ?></label>
-					<input id="password" name="password" class="middle-size with-unit unitPass <?php echo $FailedPassword; ?>" type="password" />
+					<input id="password" name="password" class="middle-size <?php echo $FailedPassword; ?>" type="password" />
 				</div>
 				<div class="w100 clear">
 					<label for="autologin" class="small"><?php _e('Remember me'); ?></label>
@@ -51,10 +51,10 @@
 	<div id="registerFormular" style="display:none;">
 		<form action="login.php" method="post">
 			<fieldset>
-				<legend onclick="show('log');"><?php _e('Register'); ?></legend>
+				<legend onclick="show('log');"><?php _e('Create a new account'); ?></legend>
 			<?php
 			if (!USER_CAN_REGISTER) {
-				echo HTML::error(_e('At the moment registration is disabled.'));
+				echo HTML::error(_e('Registrations are currently disabled.'));
 			} else {
 				if (isset($_POST['new_username'])) {
 					$Errors = AccountHandler::tryToRegisterNewUser();
@@ -88,7 +88,7 @@
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
 
-				$Field = new FormularInputPassword('password_again', __('Retype password'));
+				$Field = new FormularInputPassword('password_again', __('Password again'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
 				$Field->display();
@@ -106,9 +106,9 @@
 							echo HTML::error($Error);
 					}
 				elseif (System::isAtLocalhost())
-					echo HTML::info(_e('You can now login. Enjoy Runalyze!'));
+					echo HTML::info(_e('You can login now. Enjoy Runalyze!'));
 				else
-					echo HTML::info(_e('Thank you for your registration. You should receive a mail within the next minutes, where you have to activat your account.'));
+					echo HTML::info(_e('Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.'));
 			}
 			?>
 			</fieldset>
@@ -124,10 +124,10 @@
 	<div id="forgotPassword" style="display:none;">
 		<form action="login.php" method="post">
 			<fieldset>
-				<legend onclick="show('log');"><?php _e('Forgot password'); ?></legend>
+				<legend onclick="show('log');"><?php _e('Forgot your password?'); ?></legend>
 				<div class="w100">
 					<label for="send_username"><?php _e('Username'); ?></label>
-					<input id="send_username" name="send_username" class="middle-size with-unit unitUser" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="send_username" name="send_username" class="middle-size" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
 				</div>
 
 			<?php if (isset($_POST['send_username'])): ?>
@@ -136,7 +136,7 @@
 				</p>
 			<?php else: ?>
 				<p class="info small">
-					<?php _e('Ein Link zum &Auml;ndern deines Passworts wird an deine eingetragene E-Mail-Adresse gesendet.'); ?>
+					<?php _e('A link for changing your password will be sent via email.'); ?>
 				</p>
 			<?php endif; ?>
 			</fieldset>
@@ -150,8 +150,8 @@
 
 <div id="login-panel">
 	<a id="login-link" href="#" onclick="show('log')"><i class="fa fa-fw fa-lg fa-sign-in"></i> <?php _e('Login'); ?></a>
-	<a id="register-link" href="#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Register'); ?></a>
-	<a id="password-link" href="#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot password?'); ?></a>
+	<a id="register-link" href="#" onclick="show('reg')"><i class="fa fa-fw fa-lg fa-user"></i> <?php _e('Create a new account'); ?></a>
+	<a id="password-link" href="#" onclick="show('pwf');"><i class="fa fa-fw fa-lg fa-lock"></i> <?php _e('Forgot your password?'); ?></a>
 </div>
 
 <script type="text/javascript">

@@ -23,7 +23,7 @@ foreach ($Steps as $i => $Name) {
 		Der Assistent kann daher Runalyze nicht erneut installieren.<br />
 		<br />
 		Wenn Probleme mit der aktuellen Installation auftreten und etwas funktioniert, sollte zun&auml;chst die Datenbank gesichert werden, um die Daten nicht zu verlieren.
-		Bei unbekannten Fehlern sollten diese im <a href="http://sourceforge.net/apps/trac/runalyze/newticket" title="Runalyze: Ticket-System">Ticket-System</a> gemeldet werden.
+		Bei unbekannten Fehlern sollten diese im <a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze: Ticket-System">Ticket-System</a> gemeldet werden.
 		Die Entwickler stehen auch gerne pers&ouml;nlich bereit, um Probleme zu beheben. 
 	</p>
 
@@ -336,3 +336,7 @@ $URLs = array(
 	</p>
 
 	<script type="text/javascript">$(document).ready(function(){ $("#JQueryError").remove(); });</script>
+
+	<p class="text">
+		&nbsp;
+	</p>
