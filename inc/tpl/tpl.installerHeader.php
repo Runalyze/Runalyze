@@ -10,7 +10,7 @@
 
 	<title><?php echo $title; ?></title>
 
-	<?php echo System::getCodeForExternalJSFiles(); ?>
+	<?php /*echo System::getCodeForExternalJSFiles();*/ ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 
 </head>

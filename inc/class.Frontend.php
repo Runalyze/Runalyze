@@ -94,14 +94,8 @@ class Frontend {
 	 * Setup Language
 	 */
 	private function initLanguage() {
-		$domain = 'runalyze';
-		$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en';
-		$locale_dir = './inc/locale';
-
-		putenv("LANG=$language"); 
-		setlocale(LC_ALL, $language);
-		bindtextdomain($domain, $locale_dir); 
-		textdomain($domain);
+		require_once FRONTEND_PATH.'/system/class.Language.php';
+		new Language();
 	}
 
 	/**

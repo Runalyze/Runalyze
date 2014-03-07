@@ -27,6 +27,9 @@ class InstallerUpdate extends Installer {
 	public function __construct() {
 		$this->definePath();
 		$this->loadConfig();
+		$this->initLanguage();
+		$this->loadConsts();
+
 		$this->initPossibleUpdates();
 		$this->importUpdateFile();
 	}
