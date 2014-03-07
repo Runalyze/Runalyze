@@ -1,4 +1,5 @@
 <div class="panel-heading">
+	<?php if (!Request::isOnSharedPage()): ?>
 	<div class="panel-menu">
 		<ul>
 			<?php foreach ($this->ToolbarLinks as $Link): ?>
@@ -6,6 +7,7 @@
 			<?php endforeach; ?>
 		</ul>
 	</div>
+	<?php endif; ?>
 
 	<h1><?php echo $this->Training->DataView()->getTitleWithComment(); ?></h1>
 
