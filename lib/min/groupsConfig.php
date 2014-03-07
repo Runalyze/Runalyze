@@ -12,13 +12,11 @@
  **/
  
  $JS_FILES = array();
- $CSS_FILES = array();
  
  if (file_exists('../../inc/system/define.files.php')) {
 	include '../../inc/system/define.files.php';
  }
  
 return array(
-    'js' => $JS_FILES,
-    'css' => $CSS_FILES,
+    'js' => $JS_FILES
 );

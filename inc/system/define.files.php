@@ -44,25 +44,6 @@ $JS_FILES = array(
 
 	'lib/chosen/chosen.jquery.min.js',
 );
-	
-$CSS_FILES = array(
-	'lib/chosen/chosen.css',
-
-	'lib/less/runalyze-style.css',
-);
-
-/**
- * Add plugin-files 
- */
-$Files = glob('../../plugin/*/*.js');
-if (is_array($Files))
-	foreach ($Files as $file)
-		$JS_FILES[] = substr($file,6);
-
-$Files = glob('../../plugin/*/*.css');
-if (is_array($Files))
-	foreach ($Files as $file)
-		$CSS_FILES[] = substr($file,6);
 
 /**
  * Define correct filepaths 
@@ -79,4 +60,3 @@ function Runalyze__FileTransformerForMinify($file) {
 }
 
 $JS_FILES  = array_map('Runalyze__FileTransformerForMinify', $JS_FILES);
-$CSS_FILES = array_map('Runalyze__FileTransformerForMinify', $CSS_FILES);

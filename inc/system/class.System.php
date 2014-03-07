@@ -30,7 +30,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" type="text/css" href="lib/min/?g=css" />';
+		return '<link rel="stylesheet" type="text/css" href="lib/less/runalyze-style.css" />';
 	}
 
 	/**

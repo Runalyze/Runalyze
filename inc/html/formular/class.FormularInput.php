@@ -124,8 +124,8 @@ class FormularInput extends FormularField {
 	 * Add unit and size as css-classes 
 	 */
 	protected function addUnitAndSize() {
-		if (!empty($this->unit))
-			$this->addCSSclass('with-unit '.$this->unit);
+		//if (!empty($this->unit))
+		//	$this->addCSSclass('with-unit '.$this->unit);
 
 		if (!empty($this->size))
 			$this->addCSSclass($this->size);
@@ -147,7 +147,7 @@ class FormularInput extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label = '<label for="'.$this->name.'">'.$this->label.'</label>';
-		$input = '<input '.$this->attributes().' />';
+		$input = $this->wrapInputTagForUnit('<input '.$this->attributes().' />');
 
 		if ($this->hideLabel)
 			$label = '';
@@ -156,5 +156,17 @@ class FormularInput extends FormularField {
 			return $input.' '.$label;
 
 		return $label.' '.$input;
+	}
+
+	/**
+	 * Wrap input for unit
+	 * @param string $inputTag
+	 * @return string
+	 */
+	final protected function wrapInputTagForUnit($inputTag) {
+		if (empty($this->unit))
+			return $inputTag;
+
+		return '<span class="input-with-unit">'.$inputTag.'<label for="'.$this->name.'" class="input-unit">'.$this->unit.'</label></span>';
 	}
 }
