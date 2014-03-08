@@ -2,9 +2,7 @@
 	<?php if (!Request::isOnSharedPage()): ?>
 	<div class="panel-menu">
 		<ul>
-			<?php foreach ($this->ToolbarLinks as $Link): ?>
-			<li><?php echo $Link ?></li>
-			<?php endforeach; ?>
+			<?php foreach ($this->ToolbarLinks as $Link): ?><li><?php echo $Link ?></li><?php endforeach; ?>
 		</ul>
 	</div>
 	<?php endif; ?>

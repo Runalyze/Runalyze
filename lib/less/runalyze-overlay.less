@@ -76,20 +76,35 @@ form#training {
 	min-height: 350px;
 }
 
+.black-rounded-icon {
+	position: absolute;
+	display: block;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	border-radius: 13px;
+	border: 2px solid #fff;
+	color: #fff !important;
+	background: #000;
+	text-align: center;
+	font-size: 13px;
+	box-shadow: 1px 1px 2px #000;
+}
+
 #close, #ajax-prev, #ajax-next {
 	z-index: 12;
 	position: absolute;
-	width: 36px;
-	height: 36px;
 	cursor: pointer;
-	text-indent: -9999px;
 }
 
-#close { top: -20px; right: -20px; background: url(../../img/roundNav.png) no-repeat 0 0 transparent; }
-#ajax-prev { top: 150px; left: -25px; background: url(../../img/roundNav.png) no-repeat 0 -36px transparent; }
-#ajax-next { top: 150px; right: -25px; background: url(../../img/roundNav.png) no-repeat 0 -72px transparent; }
+#close { top: -20px; right: -20px; }
+#ajax-prev { top: 150px; left: -25px; }
+#ajax-next { top: 150px; right: -25px; }
 
-#ajax-prev:hover, #ajax-next:hover { border: none; }
+#close.black-rounded-icon,
+#ajax-next.black-rounded-icon {
+	box-shadow: -1px 1px 2px #000;
+}
 
 
 @media screen and (max-width: 960px) {
