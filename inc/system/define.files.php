@@ -17,6 +17,8 @@ $JS_FILES = array(
 
 	'lib/jquery.gmap3.min.js',
 
+	'lib/jquery.chosen.min.js',
+
 	'lib/runalyze.lib.log.js',
 	'lib/runalyze.lib.plot.js',
 	'lib/runalyze.lib.gmap.js',
@@ -41,8 +43,6 @@ $JS_FILES = array(
 	'lib/flot-0.8.1/jquery.flot.hiddengraphs.js',
 	'lib/flot-0.8.1/jquery.flot.canvas.js',
 	'lib/flot-0.8.1/jquery.flot.time.min.js',
-
-	'lib/chosen/chosen.jquery.min.js',
 );
 
 /**

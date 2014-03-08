@@ -158,14 +158,18 @@ class TrainingLinker {
 	 * @param int $id id of training
 	 * @param string $text [optional] by default: Icon::$EDIT
 	 * @param string $linkId [optional]
+	 * @param string $linkClass [optional]
 	 * @return string link to editor window
 	 */
-	static public function editLink($id, $text = '', $linkId = '') {
+	static public function editLink($id, $text = '', $linkId = '', $linkClass = '') {
 		if ($text == '')
 			$text = Icon::$EDIT;
 
 		if ($linkId != '')
 			$linkId = ' id="'.$linkId.'"';
+
+		if ($linkClass != '')
+			$linkId .= ' class="'.$linkClass.'"';
 
 		return Ajax::window('<a'.$linkId.' href="'.self::$EDITOR_URL.'?id='.$id.'">'.$text.'</a>', 'small');
 	}
@@ -188,7 +192,7 @@ class TrainingLinker {
 		$PrevTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE (time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.') ORDER BY time DESC LIMIT 1')->fetch();
 
 		if (isset($PrevTraining['id']))
-			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajax-prev');
+			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
 
 		return '';
 	}
@@ -203,7 +207,7 @@ class TrainingLinker {
 		$NextTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE (time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.') ORDER BY time ASC LIMIT 1')->fetch();
 
 		if (isset($NextTraining['id']))
-			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajax-next');
+			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajax-next', 'black-rounded-icon');
 
 		return '';
 	}
