@@ -2,16 +2,16 @@
 require_once '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true);
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+?><!DOCTYPE html>
+<html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta charset="UTF-8">
 	<title>Garmin Display - Upload Selected Fitness Activities</title>
 
-	<link rel="stylesheet" type="text/css" href="../lib/garmin/communicator2.css" />
-	<script type="text/javascript" src="../lib/garmin/prototype/prototype.js"></script>
-	<script type="text/javascript" src="../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
-	<script type="text/javascript">
+	<link rel="stylesheet" href="../lib/garmin/communicator2.css">
+	<script src="../lib/garmin/prototype/prototype.js"></script>
+	<script src="../lib/garmin/garmin/device/GarminDeviceDisplay.js"></script>
+	<script>
 		function ignoreID(id,e) {
 			var p = e.parentNode;
 			p.innerHTML = 'ignoriert';
@@ -28,7 +28,7 @@ $Frontend = new Frontend(true);
 		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
-				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br />Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
+				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br>Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
 				showReadDataElement: true,
 				showProgressBar: true,
 				showFindDevicesElement: true,
@@ -40,10 +40,10 @@ $Frontend = new Frontend(true);
 				autoHideUnusedElements: true,
 				showReadDataTypesSelect: false,
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
-				deviceSelectLabel: "Ausw&auml;hlen:<br />",
+				deviceSelectLabel: "Ausw&auml;hlen:<br>",
 				readDataButtonText: "Verbinden",
 				showCancelReadDataButton: false,
-				lookingForDevices: 'Suche nach Ger&auml;ten<br /><br /><img src="../img/wait.gif" />',
+				lookingForDevices: 'Suche nach Ger&auml;ten<br><br><img src="../img/wait.gif">',
 				uploadsFinished: "&Uuml;bertragung vollst&auml;ndig",
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
@@ -88,7 +88,7 @@ $Frontend = new Frontend(true);
 						entry.isNew = true;
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
-						statusCell.innerHTML = 'neu<br /><small onclick="ignoreID(\''+activityId+'\', this)">[ignorieren]</small>';
+						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[ignorieren]</small>';
 
 						// Rearrange: Put to the top
 						if (index != newIndex) {

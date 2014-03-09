@@ -23,7 +23,7 @@ class ConfigTabClothes extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Clothes = new FormularFieldset('Deine Kleidung');
 		$Clothes->setHtmlCode($this->getCode());
-		$Clothes->addInfo('Die Kleidung kann wenn gew&uuml;nscht f&uuml;r weitere Statistiken bei jedem Training protokolliert werden.<br />
+		$Clothes->addInfo('Die Kleidung kann wenn gew&uuml;nscht f&uuml;r weitere Statistiken bei jedem Training protokolliert werden.<br>
 						Alle Kleidungsst&uuml;cke werden nach Kategorie geordnet mit der Abk&uuml;rzung im Formular angezeigt.');
 		$Clothes->addInfo('Die Kategorie sollte eine Zahl sein und dient der Ordnung der Kleidungsst&uuml;cke.');
 		$Clothes->addInfo('F&uuml;lle einfach die leere letzte Zeile aus, um ein neues Kleidungsst&uuml;ck hinzuzuf&uuml;gen.');
@@ -53,13 +53,13 @@ class ConfigTabClothes extends ConfigTab {
 
 		foreach ($Clothes as $i => $Data) {
 			$id     = $Data['id'];
-			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="clothes[delete]['.$id.']" />';
+			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="clothes[delete]['.$id.']">';
 
 			$Code .= '
 					<tr class="'.($delete == '' ? ' unimportant' : '').'">
-						<td><input type="text" size="30" name="clothes[name]['.$id.']" value="'.$Data['name'].'" /></td>
-						<td><input type="text" size="15" name="clothes[short]['.$id.']" value="'.$Data['short'].'" /></td>
-						<td><input type="text" size="4" name="clothes[order]['.$id.']" value="'.$Data['order'].'" /></td>
+						<td><input type="text" size="30" name="clothes[name]['.$id.']" value="'.$Data['name'].'"></td>
+						<td><input type="text" size="15" name="clothes[short]['.$id.']" value="'.$Data['short'].'"></td>
+						<td><input type="text" size="4" name="clothes[order]['.$id.']" value="'.$Data['order'].'"></td>
 						<td>'.$delete.'</td>
 					</tr>';
 		}

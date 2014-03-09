@@ -22,6 +22,6 @@
 
 			<?php echo Ajax::wrapJSforDocumentReady('$("#trainingMapTypeSelect").val("'.CONF_TRAINING_MAPTYPE.'");'); ?>
 
-			<br class="clear" />
+			<br class="clear">
 		</div>
 	</div>

@@ -84,7 +84,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$VDOT_plot = (isset($VDOTs[$index])) ? round($VDOTs[$index],5) : 0;
 
 			$checkFailes = $CTLs[$index] != $CTL || $ATLs[$index] != $ATL || $VDOT_plot != $VDOT;
-			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - berechnet: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br />';
+			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - berechnet: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br>';
 
 			if ($checkFailes)
 				echo HTML::error($textMessage);

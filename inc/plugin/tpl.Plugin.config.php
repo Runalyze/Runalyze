@@ -48,8 +48,8 @@ if (!empty($_POST)) {
 			<?php endforeach; ?>
 
 			<p class="text">
-				<input type="hidden" name="edit" value="true" />
-				<input type="submit" value="Bearbeiten" />
+				<input type="hidden" name="edit" value="true">
+				<input type="submit" value="Bearbeiten">
 			</p>
 	<?php endif; ?>
 		</fieldset>

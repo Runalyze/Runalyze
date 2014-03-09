@@ -252,7 +252,7 @@ class Prognose_PrognosisWindow {
 		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof RunningPrognosisBock) {
 			$K = $this->PrognosisStrategies['robert-bock']->getK();
 			$e = $this->PrognosisStrategies['robert-bock']->getE();
-			$this->ResultTable .= HTML::info('Aus den Ergebnissen wurden die Konstanten K = '.$K.' und e = '.$e.' berechnet.').'<br />';
+			$this->ResultTable .= HTML::info('Aus den Ergebnissen wurden die Konstanten K = '.$K.' und e = '.$e.' berechnet.').'<br>';
 		}
 	}
 

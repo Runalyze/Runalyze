@@ -93,34 +93,34 @@ class ConfigTabSports extends ConfigTab {
 			$icon       = Icon::getSportIcon($id, $Data['img']);
 			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img']);
 			if (isset($Data['new'])) {
-				$name = '<input type="text" name="sport[name]['.$id.']" value="" />';
+				$name = '<input type="text" name="sport[name]['.$id.']" value="">';
 			} else {
-				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'" />'.$Data['name'];
+				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'];
 			}
 			
 			
 			if ($id == -1)
 				$delete = '';
 			elseif (!isset($SportCount[$id]) || $SportCount[$id] == 0)
-				$delete = '<input type="checkbox" name="sport[delete]['.$id.']" />';
+				$delete = '<input type="checkbox" name="sport[delete]['.$id.']">';
 			else
 				$delete = SearchLink::to('sportid', $id, '<small>('.$SportCount[$id].')</small>');
 
 			$Code .= '
 					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
-						<td><input type="checkbox" name="sport[short]['.$id.']" '.($Data['short'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td><input type="checkbox" name="sport[short]['.$id.']"'.($Data['short'] == 1 ? ' checked' : '').'></td>
 						<td>'.$icon.'</td>
 						<td>'.$iconSelect.'</td>
 						<td>'.$name.'</td>
-						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'" /></td>
-						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'" /></td>
-						<td><input type="text" size="1" name="sport[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
-						<td><input type="checkbox" name="sport[distances]['.$id.']" '.($Data['distances'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'"></td>
+						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'"></td>
+						<td><input type="text" size="1" name="sport[RPE]['.$id.']" value="'.$Data['RPE'].'"></td>
+						<td><input type="checkbox" name="sport[distances]['.$id.']"'.($Data['distances'] == 1 ? ' checked' : '').'></td>
 						<td>'.SportSpeed::getSelectBox($Data['speed'], 'sport[speed]['.$id.']').'</td>
-						<td><input type="checkbox" name="sport[types]['.$id.']" '.($Data['types'] == 1 ? 'checked="checked" ' : '').'/></td>
-						<td><input type="checkbox" name="sport[pulse]['.$id.']" '.($Data['pulse'] == 1 ? 'checked="checked" ' : '').'/></td>
-						<td><input type="checkbox" name="sport[power]['.$id.']" '.($Data['power'] == 1 ? 'checked="checked" ' : '').'/></td>
-						<td><input type="checkbox" name="sport[outside]['.$id.']" '.($Data['outside'] == 1 ? 'checked="checked" ' : '').'/></td>
+						<td><input type="checkbox" name="sport[types]['.$id.']"'.($Data['types'] == 1 ? ' checked' : '').'></td>
+						<td><input type="checkbox" name="sport[pulse]['.$id.']"'.($Data['pulse'] == 1 ? ' checked' : '').'></td>
+						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>
+						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
 						<td>'.$delete.'</td>
 					</tr>';
 		}

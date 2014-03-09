@@ -93,7 +93,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 	'label'			=> 'Strecke unterbrechen',
 	'tooltip'		=> 'Wenn Teile der Strecke anders zur&uuml;ckgelegt wurden (Auto/Bahn/...),
 						sollten diese in der Karte nicht eingezeichnet werden.
-						Die Erkennung einer solchen Unterbrechung ist aber nicht immer eindeutig.<br />
+						Die Erkennung einer solchen Unterbrechung ist aber nicht immer eindeutig.<br>
 						15s bedeutet: Distanz, die man bei dem Durchschnittstempo in 15s geschafft h&auml;tte.',
 	'options'		=> array( // see Gmap::getCodeForPolylines
 		'no'			=> 'nie',
@@ -111,7 +111,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 	'default'		=> '5',
 	'label'			=> 'Streckengenauigkeit',
-	'tooltip'		=> 'Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?<br />
+	'tooltip'		=> 'Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?<br>
 						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
 	'options'		=> array( // see GpsData::getCodeForPolylines
 		'1'				=> 'jeder Datenpunkt',
@@ -126,7 +126,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
 	'default'		=> '200points',
 	'label'			=> 'Diagrammgenauigkeit',
-	'tooltip'		=> 'Wie viele Datenpunkte sollen in den Diagrammen enthalten sein?<br />
+	'tooltip'		=> 'Wie viele Datenpunkte sollen in den Diagrammen enthalten sein?<br>
 						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
 	'options'		=> array( // see GpsData::nextStepForPlotData, GpsData::setStepSizeForPlotData
 		'50m'			=> 'alle 50m ein Datenpunkt',
@@ -546,7 +546,7 @@ $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', arra
 $TrainingForm->addConfigValue( new ConfigValueString('PLZ', array(
 	'default'		=> '',
 	'label'			=> 'Ort',
-	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br /><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
+	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
 	'size'			=> FormularInput::$SIZE_MIDDLE
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_LOAD_WEATHER', array(

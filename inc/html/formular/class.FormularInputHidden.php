@@ -24,6 +24,6 @@ class FormularInputHidden extends FormularInput {
 	 * @return string
 	 */
 	protected function getFieldCode() {
-		return '<input '.$this->attributes().' />';
+		return '<input '.$this->attributes().'>';
 	}
 }

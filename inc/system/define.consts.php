@@ -50,7 +50,7 @@ define('NBSP', '&nbsp;');
  * HTML-tag: break
  * @var string
  */
-define('BR', '<br />');
+define('BR', '<br>');
 
 /**
  * Tag-ID for the whole databrowser

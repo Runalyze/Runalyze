@@ -92,7 +92,7 @@ abstract class PluginTool extends Plugin {
 		echo '<h1>Tools</h1>';
 		echo '</div>';
 		echo '<div class="panel-content">';
-		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br /><br />';
+		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br><br>';
 
 		echo '<table class="fullwidth zebra-style more-padding">';
 		echo '<thead><tr><th colspan="3">Installierte Tools:</th></tr></thead>';

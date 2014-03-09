@@ -14,7 +14,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForLocalJSFiles() {
-		return '<script type="text/javascript" src="lib/min/?g=js"></script>';
+		return '<script src="lib/min/?g=js"></script>';
 	}
 
 	/**
@@ -22,7 +22,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForExternalJSFiles() {
-		return '<script type="text/javascript" src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>';
+		return '<script src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>';
 	}
 
 	/**
@@ -30,7 +30,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForAllCSSFiles() {
-		return '<link rel="stylesheet" type="text/css" href="lib/less/runalyze-style.css" />';
+		return '<link rel="stylesheet" href="lib/less/runalyze-style.css">';
 	}
 
 	/**

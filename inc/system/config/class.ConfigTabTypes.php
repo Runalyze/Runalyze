@@ -24,11 +24,11 @@ class ConfigTabTypes extends ConfigTab {
 		$Types = new FormularFieldset('Deine Trainingstypen');
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo('Mit Trainingstypen k&ouml;nnen die Trainings bequem in Kategorien sortiert werden,
-						das dient vor allem der Trainingsanalyse.<br />
+						das dient vor allem der Trainingsanalyse.<br>
 						Bestehende Trainingstypen k&ouml;nnen aber nur gel&ouml;scht werden, wenn keine Referenzen bestehen.
 						Daher sind die Trainingstypen mit ihren Trainings verlinkt.');
 		$Types->addInfo('Trainingstypen mit einem RPE-Wert gr&ouml;&szlig;er gleich 5 werden in der &Uuml;bersicht hervorgehoben.');
-		$Types->addInfo('Trainingstypen tauchen nur bei der zugeh&ouml;rigen Sportart auf.<br />
+		$Types->addInfo('Trainingstypen tauchen nur bei der zugeh&ouml;rigen Sportart auf.<br>
 						Sie k&ouml;nnen nur einer Sportart zugeordnet werden, wenn die Sportart Trainingstypen erlaubt.');
 
 		$this->Formular->addFieldset($Types);
@@ -73,7 +73,7 @@ class ConfigTabTypes extends ConfigTab {
 			if ($id == -1)
 				$delete = '';
 			elseif ($Data['tcount'] == 0)
-				$delete = '<input type="checkbox" name="type[delete]['.$id.']" />';
+				$delete = '<input type="checkbox" name="type[delete]['.$id.']">';
 			else
 				$delete = SearchLink::to('typeid', $id, '<small>('.$Data['tcount'].')</small>');
 
@@ -81,9 +81,9 @@ class ConfigTabTypes extends ConfigTab {
 	
 			$Code .= '
 				<tr class="'.($id == -1 ? ' unimportant' : '').'">
-					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'" /></td>
-					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'" /></td>
-					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'" /></td>
+					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
+					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'"></td>
+					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'"></td>
 					<td><select name="type[sportid]['.$id.']">';
 			foreach ($Sports as $SData)
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';

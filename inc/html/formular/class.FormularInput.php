@@ -147,7 +147,7 @@ class FormularInput extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label = '<label for="'.$this->name.'">'.$this->label.'</label>';
-		$input = $this->wrapInputTagForUnit('<input '.$this->attributes().' />');
+		$input = $this->wrapInputTagForUnit('<input '.$this->attributes().'>');
 
 		if ($this->hideLabel)
 			$label = '';

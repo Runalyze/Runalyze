@@ -9,7 +9,7 @@
 			<?php endif; ?>
 		</span>
 
-		<br class="clear" />
+		<br class="clear">
 	</div>
 </div>
 

@@ -42,7 +42,7 @@ class ConfigTabDataset extends ConfigTab {
 						<th>'.Ajax::tooltip('Anzeige', 'Die Information wird in der Tabelle direkt angezeigt').'</th>
 						<th colspan="2">'.Ajax::tooltip('Auswertung', 'Die Daten werden in der Auswertung der Sportart angezeigt').'</th>
 						<th>'.Ajax::tooltip('Reihenfolge', 'Gibt die Reihenfolge der Anzeige vor').'</th>
-						<th>'.Ajax::tooltip('CSS-Class', '\'c\': zentriert<br />\'l\': linksb&uuml;ndig<br />\'small\': klein<br />\'b\': fett<br />').'</th>
+						<th>'.Ajax::tooltip('CSS-Class', '\'c\': zentriert<br>\'l\': linksb&uuml;ndig<br>\'small\': klein<br>\'b\': fett').'</th>
 						<th>'.Ajax::tooltip('CSS-Style', 'beliebige CSS-Anweisung').'</th>
 						<th>Beispiel</th>
 					</tr>
@@ -54,15 +54,15 @@ class ConfigTabDataset extends ConfigTab {
 
 		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC')->fetchAll();
 		foreach ($Dataset as $Data) {
-			$disabled    = ($Data['modus'] == 3) ? ' disabled="disabled"' : '';
-			$checked_2   = ($Data['modus'] >= 2) ? ' checked="checked"' : '';
-			$checked     = ($Data['summary'] == 1) ? ' checked="checked"' : '';
+			$disabled    = ($Data['modus'] == 3) ? ' disabled' : '';
+			$checked_2   = ($Data['modus'] >= 2) ? ' checked' : '';
+			$checked     = ($Data['summary'] == 1) ? ' checked' : '';
 			$SummarySign = '';
 
 			switch ($Data['summary_mode']) {
 				case 'YES':
 				case 'NO':
-					$checked .= ' disabled="disabled"';
+					$checked .= ' disabled';
 					break;
 				case 'AVG':
 					$SummarySign = '&Oslash;';
@@ -81,20 +81,20 @@ class ConfigTabDataset extends ConfigTab {
 				<tr class="r" id="'.$Data['id'].'_tr">
 					<td class="l b">'.Ajax::tooltip($Data['label'], $Data['description']).'</td>
 					<td class="c">
-						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'" />
-						<input type="checkbox" name="'.$Data['id'].'_modus"'.$checked_2.$disabled.' />
+						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'">
+						<input type="checkbox" name="'.$Data['id'].'_modus"'.$checked_2.$disabled.'>
 					</td>
-					<td class="c"><input type="checkbox" name="'.$Data['id'].'_summary"'.$checked.' /></td>
+					<td class="c"><input type="checkbox" name="'.$Data['id'].'_summary"'.$checked.'></td>
 					<td class="c small">'.$SummarySign.'</td>
 					<td class="c">
-						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.$Data['position'].'" size="2" />
+						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.$Data['position'].'" size="2">
 						'.($Data['position'] > 0 ? '
 						<span class="link" onclick="datasetMove('.$Data['id'].', \'up\')">'.Icon::$UP.'</span>
 						<span class="link" onclick="datasetMove('.$Data['id'].', \'down\')">'.Icon::$DOWN.'</span>
 							' : '').'
 					</td>
-					<td class="c"><input type="text" name="'.$Data['id'].'_class" value="'.$Data['class'].'" size="7" /></td>
-					<td class="c"><input type="text" name="'.$Data['id'].'_style" value="'.$Data['style'].'" size="15" /></td>
+					<td class="c"><input type="text" name="'.$Data['id'].'_class" value="'.$Data['class'].'" size="7"></td>
+					<td class="c"><input type="text" name="'.$Data['id'].'_style" value="'.$Data['style'].'" size="15"></td>
 					<td class="'.$Data['class'].'" style="'.$Data['style'].'">'.$Example.'</td>
 				</tr>';
 		}

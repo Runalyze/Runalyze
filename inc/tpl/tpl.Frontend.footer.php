@@ -1,4 +1,4 @@
-<br class="clear" />
+<br class="clear">
 
 <?php Ajax::initJSlibrary(); ?>
 

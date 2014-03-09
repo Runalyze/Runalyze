@@ -42,7 +42,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		$num     = $numData['num'];
 
 		$Fieldset = new FormularFieldset('Cache l&ouml;schen');
-		$Fieldset->addInfo(self::getActionLink('<strong>Cache l&ouml;schen</strong>', 'delete=true').'<br />
+		$Fieldset->addInfo(self::getActionLink('<strong>Cache l&ouml;schen</strong>', 'delete=true').'<br>
 			Zur schnellen Trainingsanzeige werden die berechneten GPS-Daten (Runden, Zonen, Diagramme und Streckenverlauf)
 			im Cache gespeichert. Falls Probleme dabei auftauchen, kann &uuml;ber dieses Plugin der Cache geleert werden.');
 		$Fieldset->addFileBlock('Insgesamt sind '.$num.' Trainings im Cache.');

@@ -132,7 +132,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					echo HTML::emptyTD();
 				$i++;
 		
-				echo '<td>'.round($temp['temp']).' &deg;C</td>'.NL;
+				echo '<td>'.round($temp['temp']).' &deg;C</td>';
 			}
 
 			for (; $i <= 12; $i++)
@@ -172,7 +172,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					$i++;
 			
 					echo ($dat['num'] != 0)
-						? ('<td>'.$dat['num'].'x</td>'.NL)
+						? '<td>'.$dat['num'].'x</td>'
 						: HTML::emptyTD();
 				}
 			
@@ -230,10 +230,10 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 						$i++;
 
 						if ($dat['num'] != 0)
-							echo('
+							echo '
 								<td class="r"><span title="'.$dat['num'].'x">
 										'.round($dat['num']*100/$num[$dat['m']]).' &#37;
-								</span></td>'.NL);
+								</span></td>';
 						else
 							echo HTML::emptyTD();
 					}
@@ -241,10 +241,10 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					for (; $i <= 12; $i++)
 						echo HTML::emptyTD();
 				} else {
-					echo('		<td colspan="12" />'.NL);
+					echo '<td colspan="12"></td>';
 				}
 
-				echo('</tr>');
+				echo '</tr>';
 			}
 		}
 	}
@@ -258,13 +258,13 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		echo '<table class="small fullwidth zebra-style">
 			<thead><tr class="c">
-				<th />
+				<th></th>
 				<th>Temperaturen</th>
 				<th>&Oslash;</th>
-				<th colspan="2" />
+				<th colspan="2"></th>
 				<th>Temperaturen</th>
 				<th>&Oslash;</th>
-				<th colspan="2" />
+				<th colspan="2"></th>
 				<th>Temperaturen</th>
 				<th>&Oslash;</th>
 			</tr></thead>';
@@ -321,9 +321,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		echo '<small>';
 		echo '<strong>W&auml;rmsten L&auml;ufe:</strong> '.NL;
-		echo implode(', '.NL, $hot).'<br />'.NL;
+		echo implode(', '.NL, $hot).'<br>'.NL;
 		echo '<strong>K&auml;ltesten L&auml;ufe:</strong> '.NL;
-		echo implode(', '.NL, $cold).'<br />'.NL;
+		echo implode(', '.NL, $cold).'<br>'.NL;
 		echo '</small>';
 	}
 

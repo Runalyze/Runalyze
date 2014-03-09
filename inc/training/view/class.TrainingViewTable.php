@@ -172,7 +172,7 @@ class TrainingViewTable {
 				$Text .= ' <small>('.$calculated.'&nbsp;m berechnet)</small>';
 
 			if ($this->Training->hasArrayAltitude() && CONF_TRAINING_DO_ELEVATION && !$this->Training->elevationWasCorrected())
-				$Text .= Request::isOnSharedPage() ? '<em>Die H&ouml;hendaten sind nicht korrigiert.</em>' : '<br />
+				$Text .= Request::isOnSharedPage() ? '<em>Die H&ouml;hendaten sind nicht korrigiert.</em>' : '<br>
 					<em id="gps-results" class="block">
 						Die H&ouml;hendaten sind noch nicht korrigiert.
 						<a class="ajax" target="gps-results" href="'.$this->Training->Linker()->urlToElevationCorrection().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>

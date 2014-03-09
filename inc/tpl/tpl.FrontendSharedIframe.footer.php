@@ -1,9 +1,3 @@
-<!--
-<div id="copy2" class="bottom">
-	<a class="tab singleTab b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
-</div>
--->
-
 <?php
 echo Ajax::wrapJS('
 function resizeMap() {

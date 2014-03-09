@@ -131,10 +131,10 @@ class TrainingFormular extends StandardFormular {
 		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_ELEVATION');
 
 		$Fieldset->addInfo('
-			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'" title="H&ouml;hendaten korrigieren"><strong>H&ouml;hendaten korrigieren</strong></a><br />
-			<br />
+			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'" title="H&ouml;hendaten korrigieren"><strong>H&ouml;hendaten korrigieren</strong></a><br>
+			<br>
 			<small id="gps-results" class="block">
-				Die H&ouml;hendaten k&ouml;nnen korrigiert werden, da diese beim GPS meist sehr ungenau sind.<br />
+				Die H&ouml;hendaten k&ouml;nnen korrigiert werden, da diese beim GPS meist sehr ungenau sind.<br>
 				Vorsicht: Die Abfrage kann lange dauern, bitte nicht abbrechen, bevor das Laden beendet ist.
 			</small>');
 
@@ -149,8 +149,8 @@ class TrainingFormular extends StandardFormular {
 		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_GPS');
 		$Fieldset->addInfo('
 		<span onmouseover="javascript:createUploader()">
-			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br />
-			<br />
+			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br>
+			<br>
 			<span class="c button" id="file-upload-tcx">Datei hochladen</span>
 			<script>
 			function createUploader() {

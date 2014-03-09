@@ -19,7 +19,7 @@ class ExporterTwitter extends ExporterAbstractSocialShare {
 		$Linklist->display();
 
 		echo HTML::info('
-			Du wirst zur Seite von Twitter weitergeleitet.<br />
+			Du wirst zur Seite von Twitter weitergeleitet.<br>
 			Dort kannst du selbst bestimmen, welcher Text angezeigt wird.
 		');
 	}

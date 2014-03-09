@@ -41,7 +41,7 @@ if (!Request::isAjax()) {
 	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
 	<div class="panel-content">
 		<p class="info">
-			Klicke ein Training an, um weitere Details anzuzeigen.<br />
+			Klicke ein Training an, um weitere Details anzuzeigen.<br>
 			Trainings, die f&uuml;r die Detailansicht freigegeben sind, sind durch ein '.Icon::$ADD_SMALL_GREEN.' markiert.
 		</p>
 	</div>

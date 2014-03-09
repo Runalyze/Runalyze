@@ -65,7 +65,7 @@ class FormularCheckbox extends FormularField {
 	 */
 	protected function getFieldCode() {
 		$label = '<label class="checkable" for="'.$this->name.'">'.$this->label.'</label>';
-		$input = '<input '.$this->attributes().' />';
+		$input = '<input '.$this->attributes().'>';
 
 		if ($this->addHiddenSent)
 			$input .= HTML::hiddenInput($this->name.'_sent', 'true');

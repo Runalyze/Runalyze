@@ -98,7 +98,7 @@ class ConfigTabPlugins extends ConfigTab {
 								<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>versteckt*</option>
 								<option value="'.Plugin::$ACTIVE_NOT.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_NOT).'>nicht aktiviert</option>
 							</select></td>
-						<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'" /></td>
+						<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'"></td>
 					</tr>';
 		}
 

@@ -53,7 +53,7 @@ class HTML {
 		$colspan = ($colspan > 0) ? ' colspan="'.$colspan.'"' : '';
 		$class   = ($class != '') ? ' class="'.$class.'"' : '';
 
-		return '<td'.$colspan.$class.'>'.$string.'</td>'.NL;
+		return '<td'.$colspan.$class.'>'.$string.'</td>';
 	}
 
 	/**
@@ -62,7 +62,7 @@ class HTML {
 	 * @return string
 	 */
 	public static function emptyTR($colspan = 0) {
-		return '<tr>'.self::emptyTD($colspan).'</tr>'.NL;
+		return '<tr>'.self::emptyTD($colspan).'</tr>';
 	}
 
 	/**
@@ -90,15 +90,15 @@ class HTML {
 	 */
 	public static function monthTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
-		$html = '<tr class="b">'.NL;
+		$html = '<tr class="b">';
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<'.$tag.' />'.NL;
+			$html .= '<'.$tag.' />';
 
 		for ($m = 1; $m <= 12; $m++)
-			$html .= '<'.$tag.$width.'>'.Time::Month($m, true).'</'.$tag.'>'.NL;
+			$html .= '<'.$tag.$width.'>'.Time::Month($m, true).'</'.$tag.'>';
 
-		$html .= '</tr>'.NL;
+		$html .= '</tr>';
 
 		return $html;
 	}
@@ -111,15 +111,15 @@ class HTML {
 	 */
 	public static function yearTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
-		$html = '<tr class="b">'.NL;
+		$html = '<tr class="b">';
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<'.$tag.' />'.NL;
+			$html .= '<'.$tag.' />';
 
 		for ($y = START_YEAR; $y <= date("Y"); $y++)
-			$html .= '<'.$tag.$width.'>'.$y.'</'.$tag.'>'.NL;
+			$html .= '<'.$tag.$width.'>'.$y.'</'.$tag.'>';
 
-		$html .= '</tr>'.NL;
+		$html .= '</tr>';
 
 		return $html;
 	}
@@ -129,7 +129,7 @@ class HTML {
 	 * @param int $colspan
 	 */
 	public static function spaceTR($colspan) {
-		return '<tr class="space"><td colspan="'.$colspan.'"></td></tr>'.NL;
+		return '<tr class="space"><td colspan="'.$colspan.'"></td></tr>';
 	}
 
 	/**
@@ -137,7 +137,7 @@ class HTML {
 	 * @return string
 	 */
 	public static function br() {
-		return '<br />';
+		return '<br>';
 	}
 
 	/**
@@ -154,7 +154,7 @@ class HTML {
 	 * @return string
 	 */
 	public static function clearBreak() {
-		return '<br class="clear" />';
+		return '<br class="clear">';
 	}
 
 	/**
@@ -302,7 +302,7 @@ class HTML {
 
 		$name = self::transformNameForMultiIndex($name);
 
-		return '<textarea name="'.$name.'" cols="'.$cols.'" rows="'.$rows.'">'.$value.'</textarea>'.NL;
+		return '<textarea name="'.$name.'" cols="'.$cols.'" rows="'.$rows.'">'.$value.'</textarea>';
 		
 	}
 
@@ -319,7 +319,7 @@ class HTML {
 
 		$name = self::transformNameForMultiIndex($name);
 
-		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'" />';
+		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'">';
 	}
 
 	/**
@@ -335,7 +335,7 @@ class HTML {
 
 		$name = self::transformNameForMultiIndex($name);
 
-		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'" disabled="disabled" />';
+		return '<input type="text" name="'.$name.'" size="'.$size.'" value="'.$value.'" disabled>';
 	}
 
 	/**
@@ -350,7 +350,7 @@ class HTML {
 
 		$name = self::transformNameForMultiIndex($name);
 
-		return '<input type="hidden" name="'.$name.'" value="'.$value.'" />';
+		return '<input type="hidden" name="'.$name.'" value="'.$value.'">';
 	}
 
 	/**
@@ -367,11 +367,11 @@ class HTML {
 		$key = self::transformNameForMultiIndex($name);
 		$hiddenSent = self::hiddenInput($name.'_sent','true');
 
-		return (!$noHiddenSent ? $hiddenSent : '').'<input type="checkbox" name="'.$key.'"'.self::Checked($checked).' />';
+		return (!$noHiddenSent ? $hiddenSent : '').'<input type="checkbox" name="'.$key.'"'.self::Checked($checked).'>';
 	}
 
 	/**
-	 * Get ' checked="checked"' if boolean value is true
+	 * Get ' checked' if boolean value is true
 	 * @param bool $value
 	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
@@ -383,7 +383,7 @@ class HTML {
 			$value = false;
 
 		return ($value === true)
-			? ' checked="checked"'
+			? ' checked'
 			: '';
 	}
 
@@ -401,7 +401,7 @@ class HTML {
 
 		$name = self::transformNameForMultiIndex($name);
 
-		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').'>'.NL;
+		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').'>';
 
 		foreach ($options as $value => $text) {
 			$additionalAttributes = array();
@@ -419,14 +419,14 @@ class HTML {
 				}
 			}
 
-			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).implode($additionalAttributes, ' ').'>'.$displayedText.'</option>'.NL;
+			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).implode($additionalAttributes, ' ').'>'.$displayedText.'</option>';
 		}
 
-		return $html.'</select>'.NL;
+		return $html.'</select>';
 	}
 
 	/**
-	 * Get ' selected="selected"' if boolean value is true
+	 * Get ' selected' if boolean value is true
 	 * @param bool $value
 	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
@@ -440,7 +440,7 @@ class HTML {
 		}
 
 		return ($value === true)
-			? ' selected="selected"'
+			? ' selected'
 			: '';
 	}
 
@@ -456,33 +456,7 @@ class HTML {
 		if (!empty($addClass))
 			$addClass = ' '.$addClass;
 
-		return '<div class="'.Ajax::$IMG_WAIT.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>'.NL;
-	}
-
-	/**
-	 * Get class for table-row depending on index
-	 * @param int $i
-	 * @param string $style style-class for this row, look at CSS-file for more information
-	 * @return string eg. 'a1'/'a2'
-	 */
-	public static function trClass($i, $style = 'a') {
-		// TODO: remove
-		Error::getInstance()->addDebug('HTML::trClass() is deprecated.');
-
-		return $style.($i%2 == 0 ? '1' : '2');
-	}
-
-	/**
-	 * Get class for table-row depending on index
-	 * @param int $i
-	 * @param string $style style-class for this row, look at CSS-file for more information
-	 * @return string eg. 'a2'/'a3'
-	 */
-	public static function trClass2($i, $style = 'a') {
-		// TODO: remove
-		Error::getInstance()->addDebug('HTML::trClass2() is deprecated.');
-
-		return $style.($i%2 == 0 ? '2' : '3');
+		return '<div class="'.Ajax::$IMG_WAIT.$addClass.'" style="width:'.$width.'px;height:'.$height.'px;">'.$img.'</div>';
 	}
 
 	/**
@@ -496,4 +470,3 @@ class HTML {
 		return (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false);
 	}
 }
-?>
