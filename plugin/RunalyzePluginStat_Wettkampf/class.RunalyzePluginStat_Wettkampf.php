@@ -381,7 +381,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		if (!empty($Strings)) {
 			echo '<strong>Wetterstatistiken:</strong> ';
 			echo implode(', ', $Strings);
-			echo '<br /><br />';
+			echo '<br><br>';
 		}
 	}
 

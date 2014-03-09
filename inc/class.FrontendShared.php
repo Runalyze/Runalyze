@@ -119,8 +119,8 @@ class FrontendShared extends Frontend {
 	protected function throwErrorForInvalidRequest() {
 		echo HTML::h1(__('Error'));
 		echo HTML::error('
-			<strong>Invalid request.</strong><br />
-			<br />
+			<strong>Invalid request.</strong><br>
+			<br>
 			Wir wissen mit deiner Anfrage nichts anzufangen ;-)');
 
 		$this->displayLinkToRunalyze();
@@ -132,8 +132,8 @@ class FrontendShared extends Frontend {
 	protected function throwErrorForPrivateTraining() {
 		echo HTML::h1(__('Error'));
 		echo HTML::error('
-			<strong>Dieses Training ist privat.</strong><br />
-			<br />
+			<strong>Dieses Training ist privat.</strong><br>
+			<br>
 			Jeder Benutzer von Runalyze kann selbst bestimmen,
 			welche Trainings er anderen zeigt und welche nicht.');
 

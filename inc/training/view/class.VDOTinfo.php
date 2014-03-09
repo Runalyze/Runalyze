@@ -80,7 +80,7 @@ class VDOTinfo {
 		$Fieldset = new FormularFieldset('Korrektur: mit Herzfrequenz');
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				Jack Daniels hat eine Tabelle f&uuml;r den Zusammenhang von &#37;HFmax und &#37;VDOT.<br />
+				Jack Daniels hat eine Tabelle f&uuml;r den Zusammenhang von &#37;HFmax und &#37;VDOT.<br>
 				Aufgrund der vielen Einflussfaktoren auf den Puls sind diese Werte nicht immer richtig.
 			</p>
 

@@ -39,19 +39,19 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		echo HTML::p('Was wirst du beim n&auml;chsten Wettkampf laufen k&ouml;nnen?
 					Runalyze unterst&uuml;tzt verschiedene Prognose-Modelle.
 					Sinnvolle Prognosen k&ouml;nnen vor allem f&uuml;r die Distanzen zwischen 3.000m und 42 km erstellt werden.');
-		echo HTML::fileBlock('<strong>Jack Daniels (VDOT)</strong><br />
+		echo HTML::fileBlock('<strong>Jack Daniels (VDOT)</strong><br>
 					Aus deinen Trainingsleistungen wird dein aktueller VDOT-Wert approximiert.
 					Tabellen aus &bdquo;<em>Die Laufformel</em>&rdquo; von Jack Daniels liefern daf&uuml;r Prognosen.');
-		echo HTML::fileBlock('<strong>Robert Bock (CPP, &bdquo;Competitive Performance Predictor&rdquo;)</strong><br />
+		echo HTML::fileBlock('<strong>Robert Bock (CPP, &bdquo;Competitive Performance Predictor&rdquo;)</strong><br>
 					Robert Bock hat ein Modell zur Prognose anhand eines Erm&uuml;dungskoeffizientens aufgestellt.
-					Dieser wird aus deinen beiden besten Ergebnissen berechnet.<br />
+					Dieser wird aus deinen beiden besten Ergebnissen berechnet.<br>
 					<small>siehe <a href="http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html" title="Wettkampf Prognose Robert Bock">http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html</a></small>');
-		echo HTML::fileBlock('<strong>Herbert Steffny (&bdquo;simple Methode&rdquo;)</strong><br />
+		echo HTML::fileBlock('<strong>Herbert Steffny (&bdquo;simple Methode&rdquo;)</strong><br>
 					Im Buch &bdquo;<em>Das gro&szlig;e Laufbuch</em>&rdquo; von Herbert Steffny tauchen simple Faktoren zur Umrechnung auf.
 					Daf&uuml;r wird dein bisher bestes Ergebnis ber&uuml;cksichtigt.');
-		echo HTML::fileBlock('<strong>David Cameron</strong><br />
+		echo HTML::fileBlock('<strong>David Cameron</strong><br>
 					Das Modell von David Cameron basiert auf einem fixen Erm&uuml;dungskoeffizienten
-					und etwas anderen Formeln als CPP.<br />
+					und etwas anderen Formeln als CPP.<br>
 					<small>siehe <a href="http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time" title="Prognosis David Cameron">http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time</a></small>');
 		echo HTML::info('Nur die Prognose nach Jack Daniels ber&uuml;cksichtigt deine aktuelle Form.
 					Die anderen Prognosen basieren nur auf deinen Wettkampfergebnissen.');

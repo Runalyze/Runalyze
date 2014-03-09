@@ -86,10 +86,10 @@ class ConfigTabs {
 			$SubmitInfo = '<p class="okay"><em>Die Einstellungen wurden gespeichert.</em></p>';
 
 			if (!empty(self::$Messages))
-				$SubmitInfo .= implode(NL, self::$Messages);
+				$SubmitInfo .= implode('', self::$Messages);
 
-			echo '<div class="panel-heading" id="submit-info">'.$SubmitInfo.'</div>'.NL;
-			echo Ajax::getReloadCommand().NL;
+			echo '<div class="panel-heading" id="submit-info">'.$SubmitInfo.'</div>';
+			echo Ajax::getReloadCommand();
 		}
 
 		if ($this->hasToShowDiv()) {

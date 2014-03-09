@@ -65,13 +65,13 @@ class ExporterHTML extends ExporterAbstract {
 
 		return '<div class="runalyze-emb">
 	<a href="http://www.runalyze.de/" class="runalyze-emb-runalyze">runalyze.de</a>
-	<strong>'.$Title.'</strong> <small>am '.$Date.'</small><br />
+	<strong>'.$Title.'</strong> <small>am '.$Date.'</small><br>
 	<div class="runalyze-emb-infos">
 		'.$Spans.'
 	</div>
 	'.$UrlLink.'
 	<div class="runalyze-clear"></div>
 </div>
-<script type="text/javascript" src="'.(Request::isHttps() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
+<script src="'.(Request::isHttps() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
 	}
 }

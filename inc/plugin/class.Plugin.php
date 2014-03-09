@@ -615,13 +615,13 @@ abstract class Plugin {
 
 		switch ($config_var['type']) {
 			case 'bool':
-				return '<input id="conf_'.$name.'" class="" type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked="checked"' : '').' />';
+				return '<input id="conf_'.$name.'" class="" type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked' : '').'>';
 			case 'array':
-				return '<input id="conf_'.$name.'" class="full-size" type="text" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="conf_'.$name.'" class="full-size" type="text" name="'.$name.'" value="'.$value.'">';
 			case 'int':
-				return '<input id="conf_'.$name.'" class="small-size" type="text" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="conf_'.$name.'" class="small-size" type="text" name="'.$name.'" value="'.$value.'">';
 			default:
-				return '<input id="conf_'.$name.'" class="middle-size" type="text" name="'.$name.'" value="'.$value.'" />';
+				return '<input id="conf_'.$name.'" class="middle-size" type="text" name="'.$name.'" value="'.$value.'">';
 		}
 	}
 

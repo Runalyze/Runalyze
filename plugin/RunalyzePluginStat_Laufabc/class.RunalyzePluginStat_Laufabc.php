@@ -66,18 +66,18 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		if (empty($this->ABCData))
 			echo '<tr><td colspan="13" class="c"><em>Keine Daten gefunden.</em></td></tr>';
 		foreach ($this->ABCData as $y => $Data) {
-			echo('
+			echo '
 				<tr>
-					<td class="b l">'.$y.'</td>'.NL);
+					<td class="b l">'.$y.'</td>';
 
 			for ($m = 1; $m <= 12; $m++) {
 				if (isset($Data[$m]) && $Data[$m]['num'] > 0)
-					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>'.NL;
+					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>';
 				else
 					echo HTML::emptyTD();
 			}
 
-			echo '</tr>'.NL;
+			echo '</tr>';
 		}
 
 		echo '</tbody></table>';

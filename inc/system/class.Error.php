@@ -299,20 +299,20 @@ class Error {
 				if (isset($part['file'])) {
 					$trace .= $part['file'];
 					if (isset($part['line']))
-						$trace .= '<small>::'.$part['line'].'</small><br />';
+						$trace .= '<small>::'.$part['line'].'</small><br>';
 				}
 				$trace .= '<strong>'.$class.$func.'</strong>';
-				$trace .= '<small>('.$args.')</small><br /><br />'.NL;
+				$trace .= '<small>('.$args.')</small><br><br>'.NL;
 			}
 		}
 
 		if (defined('RUNALYZE_TEST'))
-			return $message.NL.strip_tags( str_replace('<br />', ' ', $trace) );
+			return $message.NL.strip_tags( str_replace('<br>', ' ', $trace) );
 
 		if (class_exists('Ajax'))
 			$message = Ajax::toggle('<a class="error" href="#errorInfo">&raquo;</a>', $id).' '.$message;
 
-		$message .= '<div id="'.$id.'" class="hide"><br />'.$trace.'</div>';
+		$message .= '<div id="'.$id.'" class="hide"><br>'.$trace.'</div>';
 
 		return $message;
 	}

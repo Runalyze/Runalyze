@@ -119,10 +119,10 @@ class HTMLMetaForFacebook {
 	 */
 	public function display() {
 		foreach ($this->Properties as $name => $content)
-			echo '<meta property="'.$name.'" content="'.$content.'" />'.NL;
+			echo '<meta property="'.$name.'" content="'.$content.'">'.NL;
 
 		if (!empty($this->Properties) && $this->Training->hasPositionData())
-			echo '<link rel="opengraph" href="'.System::getFullDomain().'call/call.MetaCourse.php?id='.$this->Training->id().'" />';
+			echo '<link rel="opengraph" href="'.System::getFullDomain().'call/call.MetaCourse.php?id='.$this->Training->id().'">';
 	}
 
 	/**
@@ -138,8 +138,8 @@ class HTMLMetaForFacebook {
 		if ($this->Training->isDefaultId() || !$this->Training->isPublic())
 			die('Don\'t do that!');
 
-		echo '<meta property="og:type" content="metadata" />';
-		echo '<link rel="origin" href="'.$this->Training->Linker()->publicUrl().'" />';
+		echo '<meta property="og:type" content="metadata">';
+		echo '<link rel="origin" href="'.$this->Training->Linker()->publicUrl().'">';
 
 		$this->Training->GpsData()->startLoop();
 		$this->Training->GpsData()->setStepSize(self::$STEP_SIZE);
@@ -153,15 +153,15 @@ class HTMLMetaForFacebook {
 	 */
 	protected function displayActivityDataPoint() {
 		echo '
-<meta property="fitness:metrics:location:latitude"  content="'.$this->Training->GpsData()->getLatitude().'" />
-<meta property="fitness:metrics:location:longitude" content="'.$this->Training->GpsData()->getLongitude().'" />
-<meta property="fitness:metrics:location:altitude"  content="'.$this->Training->GpsData()->getElevation().'" />
-<meta property="fitness:metrics:timestamp" content="'.date('Y-m-d\TH:i', ($this->Training->getTimestamp() + $this->Training->GpsData()->getTime())).'" />
-<meta property="fitness:metrics:distance:value" content="'.$this->Training->GpsData()->getDistance().'" />
-<meta property="fitness:metrics:distance:units" content="km" />
-<meta property="fitness:metrics:pace:value" content="'.($this->Training->GpsData()->getPace()/1000).'" />
-<meta property="fitness:metrics:pace:units" content="s/m" />
-<meta property="fitness:metrics:speed:value" content="'.($this->Training->GpsData()->getPace() > 0 ? 1000/$this->Training->GpsData()->getPace() : 0).'" />
-<meta property="fitness:metrics:speed:units" content="m/s" />';
+<meta property="fitness:metrics:location:latitude"  content="'.$this->Training->GpsData()->getLatitude().'">
+<meta property="fitness:metrics:location:longitude" content="'.$this->Training->GpsData()->getLongitude().'">
+<meta property="fitness:metrics:location:altitude"  content="'.$this->Training->GpsData()->getElevation().'">
+<meta property="fitness:metrics:timestamp" content="'.date('Y-m-d\TH:i', ($this->Training->getTimestamp() + $this->Training->GpsData()->getTime())).'">
+<meta property="fitness:metrics:distance:value" content="'.$this->Training->GpsData()->getDistance().'">
+<meta property="fitness:metrics:distance:units" content="km">
+<meta property="fitness:metrics:pace:value" content="'.($this->Training->GpsData()->getPace()/1000).'">
+<meta property="fitness:metrics:pace:units" content="s/m">
+<meta property="fitness:metrics:speed:value" content="'.($this->Training->GpsData()->getPace() > 0 ? 1000/$this->Training->GpsData()->getPace() : 0).'">
+<meta property="fitness:metrics:speed:units" content="m/s">';
 	}
 }

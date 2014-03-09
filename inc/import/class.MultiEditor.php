@@ -62,7 +62,7 @@ class MultiEditor {
 			$Code .= '<span class="link show-on-hover multi-edit-remove-link">'.Icon::$CROSS_SMALL.'</span>';
 			$Code .= $Training->Sport()->IconWithTooltip();
 			$Code .= '</td><td>';
-			$Code .= $Training->DataView()->getDate(false).$Daytime.'<br />';
+			$Code .= $Training->DataView()->getDate(false).$Daytime.'<br>';
 			$Code .= '<small>'.Time::toString($Training->getTimeInSeconds(), true, true);
 			if ($Training->hasDistance())
 				$Code .= ' - '.$Training->DataView()->getDistanceStringWithFullDecimals();

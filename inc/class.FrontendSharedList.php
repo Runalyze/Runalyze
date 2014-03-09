@@ -162,8 +162,8 @@ class FrontendSharedList extends FrontendShared {
 	protected function throwErrorForPrivateList() {
 		echo HTML::h1(__('Error'));
 		echo HTML::error('
-			<strong>Diese Trainingsliste ist privat.</strong><br />
-			<br />
+			<strong>Diese Trainingsliste ist privat.</strong><br>
+			<br>
 			Jeder Benutzer von Runalyze kann selbst bestimmen,
 			ob er seine Trainings ver&ouml;ffentlicht oder nicht.');
 

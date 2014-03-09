@@ -30,7 +30,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		$Linklist->display();
 
 		echo HTML::info('
-				Du wirst zur Seite von Facebook weitergeleitet.<br />
+				Du wirst zur Seite von Facebook weitergeleitet.<br>
 				Dort kannst du selbst bestimmen, welcher Text angezeigt wird.
 		');
 

@@ -200,7 +200,7 @@ class Formular extends HtmlTag {
 	 */
 	protected function displayHiddenValues() {
 		foreach ($this->hiddenValues as $name => $value)
-			echo '<input type="hidden" name="'.$name.'" value="'.$value.'" />';
+			echo '<input type="hidden" name="'.$name.'" value="'.$value.'">';
 	}
 
 	/**
@@ -227,7 +227,7 @@ class Formular extends HtmlTag {
 			echo '<div class="c">';
 
 		foreach ($this->submitButtons as $name => $value)
-			echo '<input type="submit" name="'.$name.'" value="'.$value.'" />';
+			echo '<input type="submit" name="'.$name.'" value="'.$value.'">';
 
 		if ($this->submitButtonsCentered)
 			echo '</div>';

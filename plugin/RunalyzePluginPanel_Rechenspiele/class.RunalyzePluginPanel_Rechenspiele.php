@@ -108,29 +108,29 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;',
 				'title'	=> 'Grundlagenausdauer',
 				'small'	=> '',
-				'tooltip'	=> '<em>Experimenteller Wert!</em><br />100 &#37; entspricht dem Optimum an Wochenkilometern und Langen L&auml;ufen f&uuml;r einen perfekten Marathon bei deinem derzeitigen VDOT.'
+				'tooltip'	=> '<em>Experimenteller Wert!</em><br>100 &#37; entspricht dem Optimum an Wochenkilometern und Langen L&auml;ufen f&uuml;r einen perfekten Marathon bei deinem derzeitigen VDOT.'
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['ATL'], ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> 'Aktueller Wert: '.$ATLabsolute.'<br />Maximaler Wert: '.$ATLmax.'<br />in Prozent = '.$TrimpValues['ATL'].'%',
+				'bar-tooltip'	=> 'Aktueller Wert: '.$ATLabsolute.'<br>Maximaler Wert: '.$ATLmax.'<br>in Prozent = '.$TrimpValues['ATL'].'%',
 				'value'	=> $TrimpValues['ATL'].'&nbsp;&#37;',
 				'title'	=> 'M&uuml;digkeit',
 				'small'	=> '(ATL)',
-				'tooltip'	=> 'Actual Training Load<br /><small>Durchschnittliche Trainingsbelastung der letzten Woche verglichen mit dem bisherigen Maximalwert.</small>'
+				'tooltip'	=> 'Actual Training Load<br><small>Durchschnittliche Trainingsbelastung der letzten Woche verglichen mit dem bisherigen Maximalwert.</small>'
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['CTL'], ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> 'Aktueller Wert: '.$CTLabsolute.'<br />Maximaler Wert: '.$CTLmax.'<br />in Prozent = '.$TrimpValues['CTL'].'%',
+				'bar-tooltip'	=> 'Aktueller Wert: '.$CTLabsolute.'<br>Maximaler Wert: '.$CTLmax.'<br>in Prozent = '.$TrimpValues['CTL'].'%',
 				'value'	=> $TrimpValues['CTL'].'&nbsp;&#37;',
 				'title'	=> 'Fitnessgrad',
 				'small'	=> '(CTL)',
-				'tooltip'	=> 'Chronical Training Load<br /><small>Durchschnittliche Trainingsbelastung des letzten Monats verglichen mit dem bisherigen Maximalwert.</small>'
+				'tooltip'	=> 'Chronical Training Load<br><small>Durchschnittliche Trainingsbelastung des letzten Monats verglichen mit dem bisherigen Maximalwert.</small>'
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
@@ -141,9 +141,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'value'	=> Math::WithSign($TrimpValues['TSB']),
 				'title'	=> 'Stress&nbsp;Balance',
 				'small'	=> '(TSB)',
-				'tooltip'	=> 'Training Stress Balance (= CTL - ATL)<br />Positiver Wert: Du bist erholt.<br />
-					Negativer Wert: Du trainierst hart.<br />
-					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br />
+				'tooltip'	=> 'Training Stress Balance (= CTL - ATL)<br>Positiver Wert: Du bist erholt.<br>
+					Negativer Wert: Du trainierst hart.<br>
+					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br>
 					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>'
 			),
 			array(
@@ -153,14 +153,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle($JDPointsThisWeek/2, ProgressBarSingle::$COLOR_RED)
 				),
 				'bar-goal'	=> $JDPointsLastWeek/2,
-				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br />Prognose: ca. '.$JDPointsPrognosis.' Trainingspunkte<br />Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
+				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br>Prognose: ca. '.$JDPointsPrognosis.' Trainingspunkte<br>Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
 				'value'	=> $JDPointsThisWeek,
 				'title'	=> 'Trainingspunkte',
 				'small'	=> '',
-				'tooltip'	=> 'Trainingsintensit&auml;t nach Jack Daniels<br />
-					Jack Daniels sch&auml;tzt dabei folgende Wochen:<br />
-					50 Punkte: neue L&auml;ufer<br />
-					100 Punkte: erfahrene L&auml;ufer<br />
+				'tooltip'	=> 'Trainingsintensit&auml;t nach Jack Daniels<br>
+					Jack Daniels sch&auml;tzt dabei folgende Wochen:<br>
+					50 Punkte: neue L&auml;ufer<br>
+					100 Punkte: erfahrene L&auml;ufer<br>
 					200 Punkte: Elitel&auml;ufer'
 			)
 		);
@@ -323,9 +323,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="c">'.$TrimpValues['TSB'].'</td>
 						<td colspan="3" class="c">'.$CTL.' - '.$ATL.' = '.$TrimpValues['TSB'].'</td>
 						<td class="small">
-							Aktuelle Belastung<br />
+							Aktuelle Belastung<br>
 							positiv = Erholung,
-							negativ = Anstrengung<br />
+							negativ = Anstrengung<br>
 						</td>
 					</tr>
 				</tbody>
@@ -385,9 +385,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Fieldset = new FormularFieldset('VDOT');
 		$Fieldset->addBlock('Die VDOT-Form berechnet sich aus dem Mittelwert der VDOT-Werte deiner
 							Trainingseinheiten der letzten '.CONF_VDOT_DAYS.' Tage. Die Werte werden nach der jeweiligen Dauer gewichtet.');
-		$Fieldset->addBlock('Dein aktuelle VDOT-Form: <strong>'.VDOT_FORM.'</strong><br />&nbsp;');
+		$Fieldset->addBlock('Dein aktuelle VDOT-Form: <strong>'.VDOT_FORM.'</strong><br>&nbsp;');
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo('Bei Jack Daniels wird der VDOT als fester Wert angesehen und nicht aus Trainingsleistungen berechnet.<br />
+		$Fieldset->addInfo('Bei Jack Daniels wird der VDOT als fester Wert angesehen und nicht aus Trainingsleistungen berechnet.<br>
 							Die hier verwendeten Berechnung anhand der Pulsdaten wurden lediglich aus seinen Puls-Tabellen abgeleitet.');
 
 		return $Fieldset;
@@ -474,15 +474,15 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$LongjogTable .= '<p class="small">* Generell werden alle L&auml;ufe ab '.Running::Km($BasicEndurance->getMinimalDistanceForLongjogs()).' betrachtet.</p>';
 
 		$Fieldset = new FormularFieldset('Grundlagenausdauer');
-		$Fieldset->addBlock('Die Grundlagenausdauer berechnet sich aus Wochenkilometern und langen L&auml;ufen.<br />
+		$Fieldset->addBlock('Die Grundlagenausdauer berechnet sich aus Wochenkilometern und langen L&auml;ufen.<br>
 							Die Vorgaben daf&uuml;r richten sich nach deinem VDOT-Wert und der (daraus) angestrebten Marathon-Zeit.');
 		$Fieldset->addBlock($GeneralTable);
 		$Fieldset->addBlock('Die Punkte f&uuml;r die Langen L&auml;ufe werden in zeitlicher Abh&auml;ngigkeit
-							und quadratisch gr&ouml;&szlig;er werdend vergeben.<br />
+							und quadratisch gr&ouml;&szlig;er werdend vergeben.<br>
 							Ein Langer Lauf gestern bringt mehr als ein Langer Lauf vor einigen Wochen
 							und ein 30 km-Lauf bringt mehr als zwei 20 km-L&auml;ufe.');
 		$Fieldset->addBlock($LongjogTable);
-		$Fieldset->addInfo('Die Grundlagenausdauer stammt <strong>nicht</strong> von Jack Daniels.<br />
+		$Fieldset->addInfo('Die Grundlagenausdauer stammt <strong>nicht</strong> von Jack Daniels.<br>
 							Um die Prognosen auf langen Distanzen bei fehlender Ausdauer anzupassen,
 							haben wir diesen Algorithmus entworfen. Er ist allerdings durchaus
 							diskussionsw&uuml;rdig.');

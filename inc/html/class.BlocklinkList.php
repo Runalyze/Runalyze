@@ -71,7 +71,7 @@ class BlocklinkList {
 	 * @return string
 	 */
 	private function getStandardLinkFor($href, $title, $description = '', $size = '') {
-		return Ajax::window('<a href="'.$href.'" title="'.$title.'"><strong>'.$title.'</strong><br /><small>'.$description.'</small></a>', $size);
+		return Ajax::window('<a href="'.$href.'" title="'.$title.'"><strong>'.$title.'</strong><br><small>'.$description.'</small></a>', $size);
 	}
 
 	/**

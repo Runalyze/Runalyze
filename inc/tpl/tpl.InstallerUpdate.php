@@ -10,7 +10,7 @@
 	</p>
 
 	<p class="text">
-		Zur Sicherheit solltest du ein <strong>Datenbank-Backup</strong> anlegen.<br />
+		Zur Sicherheit solltest du ein <strong>Datenbank-Backup</strong> anlegen.<br>
 		<strong>Bitte geh sicher</strong>, welche Version du bisher hattest!
 		Wenn du ein falches Update ausw&auml;hlst, kann das die Datenbank unwiderruflich ver&auml;ndern, sodass eine Neuinstallation notwendig w&auml;re.
 	</p>
@@ -25,7 +25,7 @@
 
 	<?php if (!empty($this->Errors) && (count($this->Errors) > 1 || strlen(trim($this->Errors[0])) > 3)): ?>
 	<p class="error">
-		<?php echo implode('<br />', $this->Errors); ?>
+		<?php echo implode('<br>', $this->Errors); ?>
 	</p>
 	<?php elseif (isset($_POST['importFile'])): ?>
 	<p class="info">
@@ -34,7 +34,7 @@
 	<?php endif; ?>
 
 	<p class="text">
-		<input type="submit" value="Update" />
+		<input type="submit" value="Update">
 	</p>
 
 	<p class="text">

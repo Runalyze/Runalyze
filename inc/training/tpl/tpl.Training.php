@@ -104,5 +104,5 @@ BoxedValue::wrapValues($ValuesString);
 		<?php $this->displayTrainingData(); ?>
 	</div>
 
-	<br class="clear" />
+	<br class="clear">
 </div>

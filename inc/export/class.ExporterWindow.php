@@ -87,10 +87,10 @@ class ExporterWindow {
 		$Training = new TrainingObject($this->TrainingID);
 
 		if (!$Training->isPublic()) {
-			echo HTML::info('Das Training ist derzeit <strong>privat</strong>.<br />
+			echo HTML::info('Das Training ist derzeit <strong>privat</strong>.<br>
 				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'&public=true">&nbsp;&raquo; jetzt &ouml;ffentlich machen</a>', 'small'));
 		} else {
-			echo HTML::info('Das Training ist derzeit <strong>&ouml;ffentlich</strong>.<br />
+			echo HTML::info('Das Training ist derzeit <strong>&ouml;ffentlich</strong>.<br>
 				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'&public=false">&nbsp;&raquo; jetzt privat machen</a>', 'small'));
 		}
 	}

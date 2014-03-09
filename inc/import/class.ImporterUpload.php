@@ -140,12 +140,13 @@ class ImporterUpload {
 	 * Set response for upload failed
 	 */
 	private function throwUploadFailed() {
-		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br />
-					The following paths need chmod 777 (write permissions):<br />
-						/log/<br />
-						/inc/export/files/<br />
-						/inc/import/files/<br />
-						/plugin/RunalyzePluginTool_DbBackup/backup/<br />
+		// TODO: Use folder from /system/define.chmod.php
+		$this->Response = 'Can\'t move uploaded file '.$_FILES['qqfile']['name'].'.<br>
+					The following paths need chmod 777 (write permissions):<br>
+						/log/<br>
+						/inc/export/files/<br>
+						/inc/import/files/<br>
+						/plugin/RunalyzePluginTool_DbBackup/backup/<br>
 						/plugin/RunalyzePluginTool_DbBackup/import/';
 	}
 

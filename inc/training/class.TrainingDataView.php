@@ -130,7 +130,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getDateLinkForMenu() {
-		return Ajax::tooltip($this->getDateAsWeeklink(), '<em>Trainingswoche anzeigen</em><br />'.$this->getWeekday().' '.$this->getDate());
+		return Ajax::tooltip($this->getDateAsWeeklink(), '<em>Trainingswoche anzeigen</em><br>'.$this->getWeekday().' '.$this->getDate());
 	}
 
 	/**

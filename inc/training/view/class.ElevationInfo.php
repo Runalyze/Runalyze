@@ -225,8 +225,8 @@ class ElevationInfo {
 		} else {
 			$Fieldset->setHtmlCode(
 				'<p class="warning small block" id="gps-results">
-					Die H&ouml;hendaten wurden noch nicht korrigiert.<br />
-					<br />
+					Die H&ouml;hendaten wurden noch nicht korrigiert.<br>
+					<br>
 					<a class="ajax" target="gps-results" href="'.$this->Training->Linker()->urlToElevationCorrection().'" title="H&ouml;hendaten korrigieren"><strong>&raquo; jetzt korrigieren</strong></a>
 				</p>'
 			);

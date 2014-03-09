@@ -127,19 +127,19 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Fieldset->addField($Select);
 		$Fieldset->addField(new FormularSubmit('Datei erstellen', ''));
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
-		$Fieldset->addInfo('<strong>JSON-Format (*.json.gz)</strong><br />
+		$Fieldset->addInfo('<strong>JSON-Format (*.json.gz)</strong><br>
 			<small>
 				Portables Backup deiner Einstellungen und Daten -
 				Die Datei kann &uuml;ber dieses Plugin in eine bestehende Installation importiert werden.
-				Dabei werden alle Einstellungen und Daten deines Accounts &uuml;berschrieben.<br />
+				Dabei werden alle Einstellungen und Daten deines Accounts &uuml;berschrieben.<br>
 				Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installation (z.B. lokal)
 				in eine andere (z.B. Online-Version) zu verschieben.
 			</small>');
-		$Fieldset->addInfo('<strong>SQL-Format (*.sql.gz)</strong><br />
+		$Fieldset->addInfo('<strong>SQL-Format (*.sql.gz)</strong><br>
 			<small>
 				Backup der gesamten Datenbank -
 				Die Datei kann manuell &uuml;ber einen PhpMyAdmin eingelesen werden.
-				Dabei werden alle Daten &uuml;berschrieben.<br />
+				Dabei werden alle Daten &uuml;berschrieben.<br>
 				Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder die Daten
 				in eine Neuinstallation einzuf&uuml;gen.
 			</small>');
@@ -275,7 +275,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">Datei hochladen</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
 		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json.gz');
-		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br />
+		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br>
 			F&uuml;r einen Import von v1.1 in v1.2 muss v1.1 zun&auml;chst aktualisiert werden, f&uuml;r sp&auml;tere Versionen analog.');
 
 		$Fieldset = new FormularFieldset('Daten importieren');

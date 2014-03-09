@@ -335,7 +335,7 @@ class Ajax {
 	 * @return string
 	 */
 	public static function wrapJS($code) {
-		return '<script type="text/javascript">'.$code.'</script>';
+		return '<script>'.$code.'</script>';
 	}
 
 	/**
@@ -438,13 +438,13 @@ class Ajax {
 	<form>
 		<a href="#main" class="first">|&laquo; Start</a>
 		<a href="#main" class="prev">&laquo; zur&uuml;ck</a>
-		<input type="text" class="pagedisplay" />
+		<input type="text" class="pagedisplay">
 		<a href="#main" class="next">weiter &raquo;</a>
 		<a href="#main" class="last">Ende &raquo;|</a>
 
 		<select class="pagesize">
 			<option value="10">10 pro Seite&nbsp;</option>
-			<option selected="selected" value="20">20 pro Seite&nbsp;</option>
+			<option value="20" selected>20 pro Seite&nbsp;</option>
 			<option value="30">30 pro Seite&nbsp;</option>
 			<option value="40">40 pro Seite&nbsp;</option>
 			<option value="50">50 pro Seite&nbsp;</option>
@@ -453,4 +453,3 @@ class Ajax {
 </div>';
 	}
 }
-?>

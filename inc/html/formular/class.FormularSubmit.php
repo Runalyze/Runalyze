@@ -22,6 +22,6 @@ class FormularSubmit extends FormularField {
 	 * @return string
 	 */
 	protected function getFieldCode() {
-		return '<input '.$this->attributes().' />';
+		return '<input '.$this->attributes().'>';
 	}
 }

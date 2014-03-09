@@ -3,18 +3,18 @@
 			<legend>Account l&ouml;schen</legend>
 	<?php if (!isset($_GET['want'])): ?>   
 			<p class="warning">
-				M&ouml;chtest du deinen Account wirklich l&ouml;schen?<br />
-				<br />
+				M&ouml;chtest du deinen Account wirklich l&ouml;schen?<br>
+				<br>
 				<a href="login.php?delete=<?php echo $_GET['delete']; ?>&want=true"><strong>Account endg&uuml;ltig l&ouml;schen &raquo;</strong></a>
 	<?php else: ?>      
 		<?php if (AccountHandler::tryToDeleteAccount()): ?>
 			<p class="info">
-				Dein Account wurde erfolgreich gel&ouml;scht.<br />
+				Dein Account wurde erfolgreich gel&ouml;scht.<br>
 				Du kannst Runalyze nun nicht mehr nutzen.
 			</p>
 		<?php else: ?>
 			<p class="error">
-				Der Account konnte nicht gel&ouml;scht werden.<br />
+				Der Account konnte nicht gel&ouml;scht werden.<br>
 				Vermutlich war der Link ung&uuml;ltig.
 			</p>
 		<?php endif; ?>

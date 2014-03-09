@@ -165,7 +165,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
 				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
 				<td class="r">
-					'.round($Data['steigung']/10, 2).'&nbsp;&#37;<br />
+					'.round($Data['steigung']/10, 2).'&nbsp;&#37;<br>
 					<small>('.$Data['elevation'].'&nbsp;hm/'.$Data['distance'].'&nbsp;km</small>
 				</td>
 			</tr>

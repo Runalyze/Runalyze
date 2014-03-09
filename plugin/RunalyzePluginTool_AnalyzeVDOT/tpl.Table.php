@@ -7,14 +7,14 @@
 			<th>Zeit</th>
 			<th>VDOT</th>
 			<th>Puls</th>
-			<th>VDOT<br /><small>(aus&nbsp;Puls)</small></th>
-			<th>Zeit<br /><small>(aus&nbsp;Puls)</small></th>
-			<th>VDOT<br /><small>(korrigiert)</small></th>
-			<th>Zeit<br /><small>(korrigiert)</small></th>
-			<th>VDOT<br /><small>(Form)</small></th>
-			<th>Zeit<br /><small>(Form)</small></th>
-			<th>Abweichung<br /><small>(Form)</small></th>
-			<th>Korrektur<br />Faktor</th>
+			<th>VDOT<br><small>(aus&nbsp;Puls)</small></th>
+			<th>Zeit<br><small>(aus&nbsp;Puls)</small></th>
+			<th>VDOT<br><small>(korrigiert)</small></th>
+			<th>Zeit<br><small>(korrigiert)</small></th>
+			<th>VDOT<br><small>(Form)</small></th>
+			<th>Zeit<br><small>(Form)</small></th>
+			<th>Abweichung<br><small>(Form)</small></th>
+			<th>Korrektur<br>Faktor</th>
 		</tr>
 	</thead>
 	<tbody class="r">
@@ -58,12 +58,12 @@
 <?php if (!empty($this->Trainings)) Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable', true); ?>
 
 <p class="info">
-	<strong>VDOT/Zeit (normal):</strong> nach Standard-Formeln von Jack Daniels<br />
+	<strong>VDOT/Zeit (normal):</strong> nach Standard-Formeln von Jack Daniels<br>
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels) laufen k&ouml;nnen.
 </p>
 <?php if (CONF_JD_USE_VDOT_CORRECTOR): ?>
 <p class="info">
-	<strong>VDOT/Zeit (Korrektur):</strong> nach individueller VDOT-Korrektur (Faktor <?php echo JD::correctionFactor(); ?>)<br />
+	<strong>VDOT/Zeit (Korrektur):</strong> nach individueller VDOT-Korrektur (Faktor <?php echo JD::correctionFactor(); ?>)<br>
 	Die Zeit h&auml;ttest du bei maximalem Wettkampf-Puls (laut Jack Daniels, an dich angepasst) laufen k&ouml;nnen.
 </p>
 <?php else: ?>
@@ -73,7 +73,7 @@
 </p>
 <?php endif; ?>
 <p class="info">
-	<strong>VDOT/Zeit (Form):</strong> aus der damaligen Trainingsform bzw. Prognose<br />
+	<strong>VDOT/Zeit (Form):</strong> aus der damaligen Trainingsform bzw. Prognose<br>
 	Das h&auml;ttest du Runalyze zufolge laufen k&ouml;nnen.
 </p>
 <p class="info">

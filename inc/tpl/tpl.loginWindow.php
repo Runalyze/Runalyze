@@ -23,22 +23,22 @@
 				<legend><?php _e('Login'); ?></legend>
 				<div class="w100">
 					<label for="username"><?php _e('Username'); ?></label>
-					<input id="username" name="username" class="middle-size <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="username" name="username" class="middle-size <?php echo $FailedUsername; ?>" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>">
 				</div>
 				<div class="w100 clear">
 					<label for="password"><?php _e('Password'); ?></label>
-					<input id="password" name="password" class="middle-size <?php echo $FailedPassword; ?>" type="password" />
+					<input id="password" name="password" class="middle-size <?php echo $FailedPassword; ?>" type="password">
 				</div>
 				<div class="w100 clear">
 					<label for="autologin" class="small"><?php _e('Remember me'); ?></label>
-					<input id="autologin" name="autologin" type="checkbox" />
+					<input id="autologin" name="autologin" type="checkbox">
 				</div>
 			</fieldset>
 
 			<?php if (!empty($ErrorString)) echo HTML::error($ErrorString); ?>
 
 			<div class="c">
-				<input type="submit" value="<?php _e('Login'); ?>" name="submit" />
+				<input type="submit" value="<?php _e('Login'); ?>" name="submit">
 			</div>
 			<?php else: ?>
 			<fieldset>
@@ -115,7 +115,7 @@
 
 			<?php if (USER_CAN_REGISTER): ?>
 			<div class="c">
-				<input type="submit" value="<?php _e('Register'); ?>" name="submit" />
+				<input type="submit" value="<?php _e('Register'); ?>" name="submit">
 			</div>
 			<?php endif; ?>
 		</form>
@@ -127,7 +127,7 @@
 				<legend onclick="show('log');"><?php _e('Forgot your password?'); ?></legend>
 				<div class="w100">
 					<label for="send_username"><?php _e('Username'); ?></label>
-					<input id="send_username" name="send_username" class="middle-size" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>" />
+					<input id="send_username" name="send_username" class="middle-size" type="text" value="<?php if (isset($_POST['username'])) echo str_replace('"','',$_POST['username']); ?>">
 				</div>
 
 			<?php if (isset($_POST['send_username'])): ?>
@@ -142,7 +142,7 @@
 			</fieldset>
 
 			<div class="c">
-				<input type="submit" value="<?php _e('Send link'); ?>" name="submit" />
+				<input type="submit" value="<?php _e('Send link'); ?>" name="submit">
 			</div>
 		</form>
 	</div>
@@ -175,7 +175,7 @@ DB::getInstance()->startAddingAccountID();
 <p class="text small c login-window-stats">
 	<?php printf(_n('Until now <strong>%d</strong> athlete is registered and','Until now <strong>%d</strong> athletes are registered and', $NumUser), $NumUser); ?>
 	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser), Running::Km($NumKm)); ?>
-	<br />
+	<br>
 	<?php printf(_n('<strong>%d</strong> athlete is online.','<strong>%d</strong> athletes are online.', $NumUserOn), $NumUserOn); ?><br>
 </p>
 

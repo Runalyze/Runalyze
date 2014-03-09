@@ -23,7 +23,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
 		$this->name = 'Datenbank-Cleanup';
-		$this->description = 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.<br />
+		$this->description = 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.<br>
 			Au&szlig;erdem k&ouml;nnen die H&ouml;henmeter-, TRIMP- und VDOT-Werte neu berechnet werden.';
 	}
 
@@ -65,17 +65,17 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
 			einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.');
 		$Fieldset->addBlock('&nbsp;');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=simple').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=simple').'</strong><br>
 			Hierbei werden die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br>
 			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
 			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br />
-			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.<br />
-			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.<br />
-			<br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>
+			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.<br>
+			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.<br>
+			<br>
 			<small>&Auml;ndert nur den berechneten Wert, der nur in der genauen Trainingsansicht auftaucht.</small>');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT.' (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br />
+		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT.' (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br>
 			Die Anzeige bezieht sich auf die manuell eingegebenen H&ouml;henmeter, welche nur einen berechneten Wert enthalten, wenn das Feld im Formular leer gelassen wurde.
 			Mit dieser Methode k&ouml;nnen diese Werte &uuml;berschrieben werden.');
 

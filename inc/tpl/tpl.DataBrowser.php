@@ -12,8 +12,8 @@
 		</div>
 
 		<span id="calendar-result" class="hide">W&auml;hle ein Datum aus ...</span>
-		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000" />
-		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000" />
+		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000">
+		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000">
 
 		<div class="c">
 			Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
@@ -40,7 +40,7 @@ foreach ($this->days as $i => $day) {
 				echo '<tr class="r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
 
 			if ($t != 0)
-				echo '<td colspan="2" />';
+				echo '<td colspan="2"></td>';
 			else {
 				echo '<td class="l" style="width:24px;">';
 
@@ -73,7 +73,7 @@ foreach ($this->days as $i => $day) {
 
 		echo '</td>
 				<td class="l">'.Dataset::getDateString($day['date']).'</td>
-				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'" />
+				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'"></td>
 			</tr>';
 	}
 }
@@ -86,8 +86,7 @@ $WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND
 $sports = DB::getInstance()->query('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`')->fetchAll();
 foreach ($sports as $i => $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);
-	echo '
-		<tr class="r no-zebra">
+	echo '<tr class="r no-zebra">
 			<td colspan="'.$this->additionalColumns.'">
 				<small>'.$sportdata['num'].'x</small>
 				'.$Sport->name().'
@@ -97,7 +96,7 @@ foreach ($sports as $i => $sportdata) {
 	$this->Dataset->displayTableColumns();
 
 	echo '
-		</tr>'.NL;
+		</tr>';
 }
 ?>
 			</tbody>

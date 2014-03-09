@@ -47,8 +47,8 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 				echo HTML::error($Error);
 		else
 			echo HTML::info('
-				Das Training wurde erfolgreich exportiert.<br />
-				<br />
+				Das Training wurde erfolgreich exportiert.<br>
+				<br>
 				<a href="inc/export/files/'.$this->getFilename().'"><strong>Herunterladen: '.$this->getFilename().'</strong></a>
 			');
 	}

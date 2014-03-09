@@ -158,13 +158,13 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', 'Wartungsmodus') );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', 'Benutzer k&ouml;nnen sich registrieren') );
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', 'Benutzer m&uuml;ssen sich einloggen') );
-		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip('Garmin API-Key', 'In Online-Version notwendig f&uuml;r Garmin-Communicator<br />siehe http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/')) );
+		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip('Garmin API-Key', 'In Online-Version notwendig f&uuml;r Garmin-Communicator<br>siehe http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/')) );
 		$Fieldset->addField( new FormularInput('MAIL_SENDER', 'Absenderadresse f&uuml;r E-Mails') );
 		$Fieldset->addField( new FormularSubmit('Speichern', '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
 		if (!is_writable(FRONTEND_PATH.'../config.php'))
-			$Fieldset->addError('Die Konfigurationsdatei <strong>config.php</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em><br />Änderungen können nicht gespeichert werden.');
+			$Fieldset->addError('Die Konfigurationsdatei <strong>config.php</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em><br>Änderungen können nicht gespeichert werden.');
 
 		return $Fieldset;
 	}
@@ -343,7 +343,7 @@ class AdminView {
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
-		$Fieldset->addBlock( '<input type="submit" value="Verzeichnisse s&auml;ubern" />' );
+		$Fieldset->addBlock( '<input type="submit" value="Verzeichnisse s&auml;ubern">' );
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;
@@ -355,16 +355,16 @@ class AdminView {
 	 * @return string
 	 */
 	private function getBlockForFiles($pathToFiles) {
-		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'" /> leeren</label>';
+		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'"> leeren</label>';
 		$Text .= '<small>';
-		$Text .= '<strong>'.$pathToFiles.'</strong><br />';
+		$Text .= '<strong>'.$pathToFiles.'</strong><br>';
 		$Files = Filesystem::getFileNamesFromPath($pathToFiles);
 
 		if (empty($Files)) {
 			$Text .= '<em>Keine Dateien gefunden</em>';
 		} else {
 			foreach ($Files as $File) {
-				$Text .= '<em>'.$File.'</em>, '.Filesystem::getFilesize(FRONTEND_PATH.$pathToFiles.$File).'<br />';
+				$Text .= '<em>'.$File.'</em>, '.Filesystem::getFilesize(FRONTEND_PATH.$pathToFiles.$File).'<br>';
 			}
 		}
 

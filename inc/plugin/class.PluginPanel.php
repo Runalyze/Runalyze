@@ -73,17 +73,17 @@ abstract class PluginPanel extends Plugin {
 			if ($this->dontReloadForTraining)
 				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_TRAINING_FLAG;
 
-			echo NL.'<div class="panel'.$classes.'" id="panel-'.$this->id.'">'.NL;
+			echo '<div class="panel'.$classes.'" id="panel-'.$this->id.'">';
 		}
 
 		$this->displayHeader();
 
-		echo NL.'<div class="panel-content'.($this->removePanelContentPadding ? ' nopadding' : '').'"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>'.NL;
+		echo '<div class="panel-content'.($this->removePanelContentPadding ? ' nopadding' : '').'"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>';
 		$this->displayContent();
 		echo '</div>';
 
 		if ($this->SurroundingDivIsVisible)
-			echo NL.'</div>'.NL;
+			echo '</div>';
 	}
 
 	/**

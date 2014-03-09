@@ -20,8 +20,8 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		Der Assistent kann daher Runalyze nicht erneut installieren.<br />
-		<br />
+		Der Assistent kann daher Runalyze nicht erneut installieren.<br>
+		<br>
 		Wenn Probleme mit der aktuellen Installation auftreten und etwas funktioniert, sollte zun&auml;chst die Datenbank gesichert werden, um die Daten nicht zu verlieren.
 		Bei unbekannten Fehlern sollten diese im <a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze: Ticket-System">Ticket-System</a> gemeldet werden.
 		Die Entwickler stehen auch gerne pers&ouml;nlich bereit, um Probleme zu beheben. 
@@ -73,9 +73,9 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">&nbsp;</p>
 
 	<p class="text">
-			<input type="hidden" name="step" value="2" />
+			<input type="hidden" name="step" value="2">
 
-			<input type="submit" value="Installation starten" />
+			<input type="submit" value="Installation starten">
 	</p>
 </form>
 
@@ -114,20 +114,20 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Host-Server</strong>
-			<input type="text" name="host" value="<?php echo (isset($_POST['host']) ? $_POST['host'] : 'localhost'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
-		</label><br />
+			<input type="text" name="host" value="<?php echo (isset($_POST['host']) ? $_POST['host'] : 'localhost'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label><br>
 		<label>
 			<strong>Datenbank</strong>
-			<input type="text" name="database" value="<?php echo (isset($_POST['database']) ? $_POST['database'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
-		</label><br />
+			<input type="text" name="database" value="<?php echo (isset($_POST['database']) ? $_POST['database'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label><br>
 		<label>
 			<strong>Benutzer</strong>
-			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
-		</label><br />
+			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label><br>
 		<label>
 			<strong>Passwort</strong>
-			<input type="password" name="password" value="<?php echo (isset($_POST['password']) ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
-		</label><br />
+			<input type="password" name="password" value="<?php echo (isset($_POST['password']) ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
+		</label><br>
 	</p>
 
 	<p class="text">
@@ -147,7 +147,7 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Pr&auml;fix</strong>
-			<input type="text" name="prefix" value="<?php echo (isset($_POST['prefix']) ? $_POST['prefix'] : 'runalyze_'); ?>" <?php if ($this->readyForNextStep) echo 'readonly="readonly"'; ?> />
+			<input type="text" name="prefix" value="<?php echo (isset($_POST['prefix']) ? $_POST['prefix'] : 'runalyze_'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
 		</label>
 	</p>
 
@@ -161,14 +161,14 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Debug-Modus</strong>
-			<input type="checkbox" name="debug" <?php if (isset($_POST['debug']) && $_POST['debug']) echo 'checked="checked"' ?> />
+			<input type="checkbox" name="debug" <?php if (isset($_POST['debug']) && $_POST['debug']) echo 'checked' ?>>
 		</label>
 	</p>
 
 	<p class="text">
 		<label>
 			<strong>Anmeldungen</strong>
-			<input type="checkbox" name="login" <?php if (isset($_POST['login']) && $_POST['login']) echo 'checked="checked"' ?> />
+			<input type="checkbox" name="login" <?php if (isset($_POST['login']) && $_POST['login']) echo 'checked' ?>>
 			<small>
 				Benutzer m&uuml;ssen sich registrieren und einloggen
 			</small>
@@ -178,7 +178,7 @@ foreach ($Steps as $i => $Name) {
 	<p class="text">
 		<label>
 			<strong>Garmin API-Key*</strong>
-			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>" />
+			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>">
 			<?php if ($_SERVER['SERVER_NAME'] == 'localhost'): ?>
 				<small>(f&uuml;r <em>localhost</em> nicht notwendig)</small>
 			<?php else: ?>
@@ -199,21 +199,21 @@ foreach ($Steps as $i => $Name) {
 
 	<?php if ($this->cantWriteConfig): ?>
 	<p class="error">
-		Die Konfigurations-Datei kann nicht geschrieben werden.<br />
+		Die Konfigurations-Datei kann nicht geschrieben werden.<br>
 	</p>
 
 	<?php if (empty($this->writeConfigFileString)): ?>
 	<p class="error">
 		Bitte kopiere <strong>/runalyze/inc/install/config.php</strong> in das Hauptverzeichnis <strong>/runalyze/</strong> und trage die Verbindungsdaten von Hand ein.
-		Dabei musst du folgende &Auml;nderungen vornehmen:<br />
-		<em>'{config::host}'</em> &raquo; <em>'<?php echo $_POST['host']; ?>'</em><br />
-		<em>'{config::database}'</em> &raquo; <em>'<?php echo $_POST['database']; ?>'</em><br />
-		<em>'{config::username}'</em> &raquo; <em>'<?php echo $_POST['username']; ?>'</em><br />
-		<em>'{config::password}'</em> &raquo; <em>'<?php echo $_POST['password']; ?>'</em><br />
-		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br />
-		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br />
-		<em>{config::login}</em> &raquo; <em><?php echo isset($_POST['login']) ? 'true' : 'false'; ?><br />
-		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br />
+		Dabei musst du folgende &Auml;nderungen vornehmen:<br>
+		<em>'{config::host}'</em> &raquo; <em>'<?php echo $_POST['host']; ?>'</em><br>
+		<em>'{config::database}'</em> &raquo; <em>'<?php echo $_POST['database']; ?>'</em><br>
+		<em>'{config::username}'</em> &raquo; <em>'<?php echo $_POST['username']; ?>'</em><br>
+		<em>'{config::password}'</em> &raquo; <em>'<?php echo $_POST['password']; ?>'</em><br>
+		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br>
+		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br>
+		<em>{config::login}</em> &raquo; <em><?php echo isset($_POST['login']) ? 'true' : 'false'; ?><br>
+		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br>
 	</p>
 	<?php else: ?>
 	<p class="error">
@@ -225,11 +225,11 @@ foreach ($Steps as $i => $Name) {
 
 	<p class="text">
 		<?php if ($this->readyForNextStep || $this->cantWriteConfig): ?>
-			<input type="hidden" name="write_config" value="true" />
+			<input type="hidden" name="write_config" value="true">
 		<?php endif; ?>
-		<input type="hidden" name="step" value="2" />
+		<input type="hidden" name="step" value="2">
 
-		<input type="submit" value="<?php echo $this->cantWriteConfig ? 'Gespeichert! Weiter ...' : ( $this->readyForNextStep ? 'Konfigurationsdatei schreiben' : 'Verbindungsdaten pr&uuml;fen' ); ?>" />
+		<input type="submit" value="<?php echo $this->cantWriteConfig ? 'Gespeichert! Weiter ...' : ( $this->readyForNextStep ? 'Konfigurationsdatei schreiben' : 'Verbindungsdaten pr&uuml;fen' ); ?>">
 	</p>
 </form>
 
@@ -251,16 +251,16 @@ foreach ($Steps as $i => $Name) {
 
 	<?php if ($this->cantSetupDatabase): ?>
 	<p class="error">
-		Die Datenbank kann nicht bef&uuml;llt werden.<br />
-		Bitte importiere die beiden obigen Daten nacheinander in die Datenbank.<br />
-		<br />
+		Die Datenbank kann nicht bef&uuml;llt werden.<br>
+		Bitte importiere die beiden obigen Daten nacheinander in die Datenbank.<br>
+		<br>
 		Danach kannst du hier fortfahren.
 	<?php endif; ?>
 
 	<p class="text">
-		<input type="hidden" name="step" value="3" />
+		<input type="hidden" name="step" value="3">
 
-		<input type="submit" value="Tabellen erstellen" />
+		<input type="submit" value="Tabellen erstellen">
 	</p>
 </form>
 
@@ -324,18 +324,18 @@ $URLs = array(
 );
 ?>
 	<p class="error" id="JQueryError">
-		Die JavaScript-Dateien (und CSS-Dateien) wurden nicht erfolgreich eingebunden.<br />
-		Die Folgenden URLs m&uuml;ssen den entsprechenden Code liefern:<br />
-		<br />
+		Die JavaScript-Dateien (und CSS-Dateien) wurden nicht erfolgreich eingebunden.<br>
+		Die Folgenden URLs m&uuml;ssen den entsprechenden Code liefern:<br>
+		<br>
 		<?php
 		foreach ($URLs as $URL)
-			echo '<em><a href="'.$URL.'">'.$URL.'</a></em><br />';
+			echo '<em><a href="'.$URL.'">'.$URL.'</a></em><br>';
 		?>
-		<br />
+		<br>
 		Schaue am besten einmal in unsere <a href="http://runalyze.de/faq/">FAQ</a> und berichte uns ggf. von deinen Problemen.
 	</p>
 
-	<script type="text/javascript">$(document).ready(function(){ $("#JQueryError").remove(); });</script>
+	<script>$(document).ready(function(){ $("#JQueryError").remove(); });</script>
 
 	<p class="text">
 		&nbsp;

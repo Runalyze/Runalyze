@@ -141,7 +141,7 @@ class Gmap {
 			if (($withoutHover && !$both) || $AvgPace == 0)
 				$PointData = '';
 			else
-				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br />'.Time::toString($this->GpsData->getTime(), false, 2));
+				$PointData = addslashes(Running::Km($this->GpsData->getDistance(),2).'<br>'.Time::toString($this->GpsData->getTime(), false, 2));
 
 			// TODO: Try to find such pauses in a different way - this is not the fastest one
 			if (CONF_GMAP_PATH_BREAK != 'no') {
@@ -194,7 +194,7 @@ class Gmap {
 			$Marker[] = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"Start",options:{icon:"'.$this->getIconForMarker().'"}}';
 
 		while ($this->GpsData->nextKilometer()) {
-			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br />'.strip_tags(SportFactory::getSpeedWithAppendix($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
+			$MarkerData = addslashes(Running::Km($this->GpsData->getDistance()).'<br>'.strip_tags(SportFactory::getSpeedWithAppendix($this->GpsData->getDistanceOfStep(), $this->GpsData->getTimeOfStep(), $SportId)));
 			$Marker[]   = '{lat:'.$this->GpsData->getLatitude().',lng:'.$this->GpsData->getLongitude().',data:"'.$MarkerData.'",options:{icon:"'.$this->getIconForMarker().'"}}';
 		}
 
