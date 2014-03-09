@@ -322,7 +322,7 @@ class AccountHandler {
 	 */
 	static public function tryToActivateAccount() {
 		DB::getInstance()->stopAddingAccountID();
-		$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($_GET['activate']).' LIMIT 1')->fetch();
+		$Account = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($_GET['activate']).' LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();
 
 		if ($Account) {
@@ -333,7 +333,8 @@ class AccountHandler {
 
 		return false;
 	}
-        /**
+
+	/**
 	 * Try to delete the account
 	 * @return boolean 
 	 */
@@ -452,8 +453,5 @@ class AccountHandler {
 
 		$data = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf" LIMIT 1')->fetch();
 		ConfigValue::update('LL_TYPID', $data['id'], $accountId);
-
-		$data = $DB->query('SELECT value FROM '.PREFIX.'conf WHERE `key`="GARMIN_API_KEY" ORDER BY LENGTH(value) DESC LIMIT 1')->fetch();
-		ConfigValue::update('GARMIN_API_KEY', $data['value'], $accountId);
 	}
 }
