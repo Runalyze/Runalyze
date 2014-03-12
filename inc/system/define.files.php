@@ -4,7 +4,7 @@
  * This file will be loaded by Minify to compress all files.
  */
 $JS_FILES = array(
-	'lib/jquery-1.7.1.min.js',
+	'lib/jquery-2.1.0.min.js',
 	'lib/jquery.form.js',
 	'lib/jquery.metadata.js',
 	'lib/jquery.tablesorter.js',
