@@ -36,7 +36,7 @@ Details: <http://runalyze.de/installation/>
 	* SRTM tiles grabbed via Derek Watkins - <http://dwtkns.com/srtm/>
 	* SRTM files by International  Centre for Tropical  Agriculture (CIAT) - <http://srtm.csi.cgiar.org>
 	* SRTMGeoTIFFReader by Bob Osola - <http://www.osola.org.uk/elevations/index.htm>
-* jQuery-Plugins
+* jQuery by jQuery Foundation, Inc. - <http://jquery.org/>
     * Bootstrap Tooltip by Twitter, Inc. - <http://twitter.github.com/bootstrap/javascript.html#tooltips>
     * Flot by IOLA and Ole Laursen - <http://www.flotcharts.org/>
     * GMAP3 - <http://gmap3.net/>

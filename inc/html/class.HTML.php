@@ -408,18 +408,15 @@ class HTML {
 			$displayedText = $text;
 
 			if (is_array($text)) {
-				if (isset($text['text']))
-					$displayedText = $text['text'];
-				else
-					$displayedText = '?';
+				$displayedText = (isset($text['text'])) ? $text['text'] : '?';
 
 				foreach ($text as $attr => $attrVal) {
 					if ($attr != 'text')
-						$additionalAttributes[] = $attr.'="'.$attrVal.'"';
+						$additionalAttributes[] = ' '.$attr.'="'.$attrVal.'"';
 				}
 			}
 
-			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).implode($additionalAttributes, ' ').'>'.$displayedText.'</option>';
+			$html .= '<option value="'.$value.'"'.self::Selected($value, $selected).implode($additionalAttributes, '').'>'.$displayedText.'</option>';
 		}
 
 		return $html.'</select>';
