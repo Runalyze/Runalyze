@@ -135,7 +135,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bars'	=> array(
-					new ProgressBarSingle($TrimpValues['TSB'], ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
+					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
 				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
 				'value'	=> Math::WithSign($TrimpValues['TSB']),
