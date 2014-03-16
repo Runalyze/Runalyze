@@ -159,6 +159,7 @@ class JDTest extends PHPUnit_Framework_TestCase {
 		foreach ($ExpectedValues as $HR => $ExpectedValue) {
 			$RealValue = JD::Training2points(0, array(
 				's'			=> 60*60,
+				'distance'	=> 0, // not used if pulse given
 				'pulse_avg'	=> $HR*2, // to get %HFmax for HFmax = 200
 				'arr_heart'	=> ''
 			));

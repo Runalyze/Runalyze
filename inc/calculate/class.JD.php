@@ -75,6 +75,15 @@ class JD {
 	}
 
 	/**
+	 * Calculates percentage of VDOT for given speed in m/min
+	 * @param float $v Speed [m/min]
+	 * @return float   VDOT
+	 */
+	public static function v2VDOT($v) {
+		return 29 + ($v - 173.154)/4.116;
+	}
+
+	/**
 	 * Calculates heart-frequence for a given percentage of VDOT
 	 * @param $pVDOT   VDOT [%]
 	 * @return float   HFmax [%]
@@ -259,48 +268,66 @@ class JD {
  	/**
 	 * Calculates points for a training
 	 * @param int $training_id
-	 * @param array $training [optional] Needs values for 's', 'pulse_avg', 'arr_heart'
+	 * @param array $training [optional] Needs values for 's', 'distance', 'pulse_avg', 'arr_heart'
 	 * @return double
 	 */
 	public static function Training2points($training_id, $training = array()) {
 		if (!isset($training['sportid']))
 			$training['sportid'] = false;
 
-		if (!isset($training['s']) || !isset($training['pulse_avg']))
-			$training = DB::getInstance()->query('SELECT `sportid`, `s`, `pulse_avg`, `arr_heart` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
+		if (!isset($training['s']) || !isset($training['pulse_avg']) || !isset($training['distance']))
+			$training = DB::getInstance()->query('SELECT `sportid`, `s`, `distance`, `pulse_avg`, `arr_heart` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
 
 		$GPS    = new GpsData($training);
 		$pulseArray = $GPS->getPulseZonesAsFilledArrays();
 
-		return self::values2points($training['s'], $training['pulse_avg'], $training['sportid'], $pulseArray);
+		return self::values2points($training['s'], $training['distance'], $training['pulse_avg'], $training['sportid'], $pulseArray);
 	}
  
  	/**
 	 * Approximate points for given values
 	 * cf. Table 2.2. in [JD]
 	 * @uses HF_MAX
-	 * @param type $s
-	 * @param type $pulse_avg
+	 * @param int $s
+	 * @param float $distance
+	 * @param int $pulse_avg
 	 * @param int $sportid [optional]
 	 * @return int
 	 */
-	private static function values2points($s, $pulse_avg, $sportid = false, $pulseArray = array()) {
+	private static function values2points($s, $distance, $pulse_avg, $sportid = false, $pulseArray = array()) {
 		if ($sportid === false || $sportid == CONF_RUNNINGSPORT) {
 			if ($pulseArray) {
 				$points = 0;
 				foreach ($pulseArray as $hf => $Info)
 					if ($Info['time'] > 0)
-						$points +=  (4.742894532 * pow($hf/10, 2) - 5.298465448 * $hf/10 + 1.550709462) * $Info['time'] / 60;
+						$points += self::valuesSingle2points($hf/10, $Info['time']);
 
 				return $points;
 			}
 
-			if ($pulse_avg != 0) {
-				return (4.742894532 * pow($pulse_avg/HF_MAX, 2) - 5.298465448 * $pulse_avg/HF_MAX + 1.550709462) * $s / 60;
+			if ($pulse_avg == 0) {
+				$VDOTbyPace = self::v2VDOT( self::Pace2v($s/$distance) );
+				$pulse_avg = self::pVDOT2pHF( $VDOTbyPace / self::getConstVDOTform() );
+			} else {
+				$pulse_avg = $pulse_avg / HF_MAX;
 			}
+
+			return self::valuesSingle2points($pulse_avg, $s);
 		}
 
 		return 0;
+	}
+
+	/**
+	 * Trainingpoints for single values
+	 * @param float $heartrateInPercent
+	 * @param int $timeInSeconds
+	 * @return float
+	 */
+	private static function valuesSingle2points($heartrateInPercent, $timeInSeconds) {
+		$heartrateInPercent = max($heartrateInPercent, 0.5);
+
+		return (4.742894532 * pow($heartrateInPercent, 2) - 5.298465448 * $heartrateInPercent + 1.550709462) * $timeInSeconds / 60;
 	}
 
 	/**
