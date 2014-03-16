@@ -52,7 +52,7 @@ class WeatherOpenweathermapTest extends PHPUnit_Framework_TestCase {
 				}]
 			}');
 
-		$this->assertEquals($this->object->getConditionAsString(), 'regnerisch');
+		$this->assertEquals($this->object->getConditionAsString(), 'rainy');
 		$this->assertEquals($this->object->getTemperature(), 4);
 	}
 }
