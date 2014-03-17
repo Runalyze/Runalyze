@@ -26,6 +26,18 @@
 
 <div id="overlay" style="display:block;"></div>
 <div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' big-window'; ?>" style="display:block;">
-	<div class="panel-heading"><h1><?php echo $title; ?></h1></div>
+	<div class="panel-heading">
+		<div class="panel-menu">
+			<ul>
+			<?php
+				foreach (Language::availableLanguages() as $key => $lang) {
+					$liClass = isset($_GET['lang']) && $_GET['lang'] == $key ? ' class="triggered"' : '';
+					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang.'</a></li>';
+				}
+			?>
+			</ul>
+		</div>
+		<h1><?php echo $title; ?></h1>
+	</div>
 	<div class="panel-content">
 		<div class="installer-window-container">

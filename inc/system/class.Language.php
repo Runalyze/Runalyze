@@ -35,9 +35,10 @@ class Language {
 	 * Available languages
 	 * @return string
 	 */
-	public function availableLanguages() {
+	static public function availableLanguages() {
 		$languages = array(
-			'de'	=> 'German'
+			'de'	=> 'German',
+			'en'	=> 'English'
 		);
 
 		return $languages;
