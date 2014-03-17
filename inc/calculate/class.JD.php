@@ -268,7 +268,7 @@ class JD {
  	/**
 	 * Calculates points for a training
 	 * @param int $training_id
-	 * @param array $training [optional] Needs values for 's', 'distance', 'pulse_avg', 'arr_heart'
+	 * @param array $training [optional] Needs values for 's', 'distance', 'pulse_avg', 'arr_heart', 'arr_time'
 	 * @return double
 	 */
 	public static function Training2points($training_id, $training = array()) {
@@ -276,7 +276,7 @@ class JD {
 			$training['sportid'] = false;
 
 		if (!isset($training['s']) || !isset($training['pulse_avg']) || !isset($training['distance']))
-			$training = DB::getInstance()->query('SELECT `sportid`, `s`, `distance`, `pulse_avg`, `arr_heart` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
+			$training = DB::getInstance()->query('SELECT `sportid`, `s`, `distance`, `pulse_avg`, `arr_heart`,`arr_time` FROM `'.PREFIX.'training` WHERE `id`='.(int)$training_id.' LIMIT 1')->fetch();
 
 		$GPS    = new GpsData($training);
 		$pulseArray = $GPS->getPulseZonesAsFilledArrays();
