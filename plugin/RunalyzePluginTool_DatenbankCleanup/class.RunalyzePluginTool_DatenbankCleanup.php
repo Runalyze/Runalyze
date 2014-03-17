@@ -120,7 +120,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function resetTrimpAndVdot() {
 		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg` FROM `'.PREFIX.'training`')->fetchAll();
+		$Trainings = $DB->query('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg`,`arr_heart`,`arr_time` FROM `'.PREFIX.'training`')->fetchAll();
 
 		foreach ($Trainings as $Training) {
 			$DB->update('training', $Training['id'],
