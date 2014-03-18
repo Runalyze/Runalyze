@@ -214,7 +214,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getSpeedString() {
-		return SportFactory::getSpeedWithAppendixAndTooltip($this->Object->getDistance(), $this->Object->getTimeInSeconds(), $this->Object->Sport()->id());
+		return $this->getSpeedStringForTime( $this->Object->getTimeInSeconds() );
 	}
 
 	/**
