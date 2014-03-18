@@ -86,6 +86,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $VDOTData = array();
 
 	/**
+	 * Data for JD intensity
+	 * @var array
+	 */
+	private $JDIntensityData = array();
+
+	/**
 	 * Data for trimp
 	 * @var array
 	 */
@@ -98,8 +104,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
 		$this->name = __('Statistics');
-		$this->description = __('General Statistics : Monthsummary in the year overview for every sport');
-                Language::addTextDomain('PluginStats', 'dir');
+		$this->description = __('General Statistics: Monthly and weekly summaries for all types of sport');
+
+		Language::addTextDomain('PluginStats', 'dir');
 	}
 
 	protected function setOwnNavigation() {
@@ -131,10 +138,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Diese Statistiken bieten eine Auswertung f&uuml;r jeden Monat oder jedes Jahr.
-					Dabei werden die wichtigen Gr&ouml;&szlig;en Dauer, Distanz, Tempo, VDOT und Trimp verglichen.');
-		echo HTML::p('Au&szlig;erdem wird die Zusammenfassung der letzten 10 Trainingswochen so angezeigt,
-					wie sie im Daten-Fenster f&uuml;r die aktuelle Woche zu finden ist.');
+		echo HTML::p(
+			__('This plugin shows summaries for every week, month or year to compare your overall training
+				in terms of time, distance, pace, VDOT and TRIMP.')
+		);
 	}
 
 	/**
@@ -144,7 +151,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function getDefaultConfigVars() {
 		$config = array();
 		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
-		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => __('show streak'));
+		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => __('Show streak'));
 		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => 'Mindestzahl f&uuml;r Streak zum Anzeigen (0 f&uuml;r immer)');
 
 		return $config;
@@ -193,29 +200,32 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Display table with data for each month 
 	 */
 	private function displayYearTable() {
-		echo '<table class="small r fullwidth zebra-style">';
+		echo '<table class="r fullwidth zebra-style">';
 
 		echo '<thead class="r">';
 		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th') : HTML::monthTR(8, 1, 'th');
 		echo '</thead>';
 		echo '<tbody>';
 
-		$this->displayLine(__('hours'), $this->StundenData);
+		$this->displayLine(__('Time'), $this->StundenData);
 
 		if ($this->sport['distances'] != 0) {
-			$this->displayLine(__('KM'), $this->KMData);
+			$this->displayLine(__('Distance'), $this->KMData);
 			if ($this->year == -1) {
-				$this->displayLine('&oslash;&nbsp;Wochen-KM', $this->KMDataWeek);
-				$this->displayLine('&oslash;&nbsp;Monats-KM', $this->KMDataMonth);
+				$this->displayLine('&oslash;'.NBSP.__('km/Week'), $this->KMDataWeek, 'small');
+				$this->displayLine('&oslash;'.NBSP.__('km/Month'), $this->KMDataMonth, 'small');
 			}
-			$this->displayLine('&oslash;&nbsp;'.__('pace'), $this->TempoData);
+			$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
 		}
 
 		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
-			$this->displayLine('VDOT', $this->VDOTData);
+			$this->displayLine(__('VDOT'), $this->VDOTData, 'small');
+
+		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
+			$this->displayLine(__('JDpoints'), $this->JDIntensityData, 'small');
 
 		if (CONF_RECHENSPIELE)
-			$this->displayLine('TRIMP', $this->TRIMPData);
+			$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
 
 		echo '</tbody>';
 		echo '</table>';
@@ -225,8 +235,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Display one statistic line
 	 * @param string $title
 	 * @param array $data Array containing all $data[] = array('i' => i, 'text' => '...')
+	 * @param string $class [optional] additional class for table cells
 	 */
-	private function displayLine($title, $data) {
+	private function displayLine($title, $data, $class = '') {
 		echo '<tr>';
 		echo '<td class="b">'.$title.'</td>';
 
@@ -239,7 +250,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 					echo HTML::emptyTD();
 				$td_i++;
 
-				echo '<td>'.$dat['text'].'</td>'.NL;
+				echo '<td'.(!empty($class) ? ' class="'.$class.'"' : '').'>'.$dat['text'].'</td>'.NL;
 			}
 
 			for (; $td_i < $this->num; $td_i++)
@@ -262,8 +273,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($this->config['compare_weeks']['var'])
 			$Dataset->activateKilometerComparison();
 
-		echo '<table class="small not-smaller r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):'Letzten 10').' Trainingswochen</th></tr></thead>';
+		echo '<table class="r fullwidth zebra-style">';
+		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):__('Last').' 10').' '.('training weeks').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -286,9 +297,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$time  = $starttime - $w*7*DAY_IN_S;
 			$start = Time::Weekstart($time);
 			$end   = Time::Weekend($time);
-			$week  = 'KW '.date('W', $time);
+			$week  = Icon::$CALENDAR.' '.__('Week').' '.date('W', $time);
 
-			echo '<tr><td class="b l" title="'.date("d.m.Y", $start).' bis '.date("d.m.Y", $end).'">'.DataBrowserLinker::link($week, $start, $end).'</td>';
+			echo '<tr><td class="b l"">'.DataBrowserLinker::link($week, $start, $end).'</td>';
 
 			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
 				if (isset($CompleteData[$w+1]))
@@ -296,7 +307,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 				$Dataset->displayTableColumns();
 			} else
-				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('no workouts').'</em>', 'c');
+				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('No workouts').'</em>', 'c small');
 
 			echo '</tr>';
 		}
@@ -335,7 +346,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			if ($FirstDay) {
 				if ($Day['day'] != $LastDay) {
 					if (Time::diffOfDates($Day['day'], $LastDay) == 1) {
-						$Text = 'Wenn du heute noch l&auml;ufst: ';
+						$Text = __('If you run today: ');
 						$NumDays++;
 					} else
 						$IsStreak = false;
@@ -358,13 +369,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 
 		if ($NumDays == 0) {
-			$Text .= 'Du hast derzeit keinen Streak.';
+			$Text .= __('You don\'t have a streak currently. Go out and start one!');
 			$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY `time` DESC')->fetch();
 
 			if (isset($LastTraining['time']))
-				$Text .= ' Dein letzter Lauf war am '.date('d.m.Y', $LastTraining['time']);
+				$Text .= sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));
 		} else {
-			$Text .= $NumDays.' Tag'.($NumDays == 1 ? '' : 'e').' laufen seit dem '.date('d.m.Y', $LastTime);
+			$Text .= sprintf( _n('%d day running since %s', '%d days running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
 		}
 
 		if ($NumDays >= $this->config['show_streak_days']['var'])
@@ -401,19 +412,25 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$this->initKMData($Data);
 			$this->initTempoData($Data);
 			$this->initVDOTData($Data);
+			$this->initJDIntensityData($Data);
 			$this->initTRIMPData($Data);
 		}
 	}
 
+	/**
+	 * Init complete data
+	 */
 	private function initCompleteData() {
 		$Timer = $this->year != -1 ? 'MONTH' : 'YEAR';
 
 		$Query = '
 			SELECT
 				SUM(`s`) as `s`,
+				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
 				SUM(`distance`) as `distance`,
 				SUM('.JD::mysqlVDOTsum().')/SUM('.JD::mysqlVDOTsumTime().') as `vdot`,
 				SUM(`trimp`) as `trimp`,
+				SUM(`jd_intensity`) as `jd_intensity`,
 				'.$Timer.'(FROM_UNIXTIME(`time`)) as `i`
 			FROM
 				`'.PREFIX.'training`
@@ -441,7 +458,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initStundenData($dat) {
-		$text = ($dat['s'] == 0) ? '&nbsp;' : Time::toString($dat['s'], false);
+		$text = ($dat['s'] == 0) ? NBSP : Time::toString($dat['s'], false);
+
 		$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
@@ -461,9 +479,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$MonthFactor = 13 - date("n", START_TIME);
 		}
 
-		$text        = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance'], 0);
-		$textWeek    = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$WeekFactor, 0);
-		$textMonth   = ($dat['distance'] == 0) ? '&nbsp;' : Running::Km($dat['distance']/$MonthFactor, 0);
+		$text        = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance'], 0);
+		$textWeek    = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance']/$WeekFactor, 0);
+		$textMonth   = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance']/$MonthFactor, 0);
 		$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
 		$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
 		$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
@@ -474,7 +492,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initTempoData($dat) {
-		$text = ($dat['s'] == 0) ? '&nbsp;' : SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $this->sportid);
+		$text = ($dat['s_sum_with_distance'] == 0) ? NBSP : SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s_sum_with_distance'], $this->sportid);
+
 		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
@@ -484,9 +503,20 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initVDOTData($dat) {
 		$VDOT = isset($dat['vdot']) ? JD::correctVDOT($dat['vdot']) : 0;
-		$text = ($VDOT == 0) ? '&nbsp;' : number_format($VDOT, 1);
+		$text = ($VDOT == 0) ? NBSP : number_format($VDOT, 1);
 
 		$this->VDOTData[] = array('i' => $dat['i'], 'text' => $text);
+	}
+
+	/**
+	 * Initialize line-data-array for 'JD-points'
+	 * @param array $dat
+	 */
+	private function initJDIntensityData($dat) {
+		$avg  = ($this->year != -1) ? 8 : 100;
+		$text = ($dat['jd_intensity'] == 0) ? NBSP : Running::StresscoloredString($dat['jd_intensity']/$avg, $dat['jd_intensity']);
+
+		$this->JDIntensityData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 
 	/**
@@ -494,10 +524,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initTRIMPData($dat) {
-		$avg_num = ($this->year != -1) ? 15 : 180;
-		$text = ($dat['trimp'] == 0)
-			? '&nbsp;'
-			: '<span style="color:#'.Running::Stresscolor($dat['trimp']/$avg_num).'">'.$dat['trimp'].'</span>';
+		$avg  = ($this->year != -1) ? 15 : 180;
+		$text = ($dat['trimp'] == 0) ? NBSP : Running::StresscoloredString($dat['trimp']/$avg, $dat['trimp']);
+
 		$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
 	}
 }

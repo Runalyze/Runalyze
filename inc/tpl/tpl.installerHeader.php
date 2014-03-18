@@ -10,7 +10,6 @@
 
 	<title><?php echo $title; ?></title>
 
-	<?php /*echo System::getCodeForExternalJSFiles();*/ ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 
 </head>
@@ -18,8 +17,8 @@
 <body id="installer">
 
 <div id="headline">
-	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze <?php if (defined('RUNALYZE_VERSION')) echo 'v'.RUNALYZE_VERSION; ?></a>
-	<a class="tab right" href="login.php" title="Please login"><i class="fa fa-fw fa-sign-in"></i> Please login</a>
+	<a class="tab logo" href="http://www.runalyze.de/" target="_blank">Runalyze <?php if (defined('RUNALYZE_VERSION')) echo 'v'.RUNALYZE_VERSION; ?></a>
+	<a class="tab right" href="login.php"><i class="fa fa-fw fa-sign-in"></i> <?php _e('Please login'); ?></a>
 </div>
 
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>
