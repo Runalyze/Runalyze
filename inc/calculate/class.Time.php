@@ -36,11 +36,12 @@ class Time {
 	/**
 	 * Display the time as a formatted string
 	 * @param int $time_in_s
-	 * @param bool $show_days	Show days (default) or count hours > 24, default: true
-	 * @param bool $show_zeros	Show e.g. '0:00:00' for 0, default: false, can be '2' for 0:00
+	 * @param bool $show_days	[optional] Show days (default) or count hours > 24, default: true
+	 * @param bool $show_zeros	[optional] Show e.g. '0:00:00' for 0, default: false, can be '2' for 0:00
+	 * @param bool $show_seconds [optional] Show e.g. '32,00s' instead of 0:32 for any time less than one minute
 	 * @return string
 	 */
-	public static function toString($time_in_s, $show_days = true, $show_zeros = false) {
+	public static function toString($time_in_s, $show_days = true, $show_zeros = false, $show_seconds = true) {
 		if ($time_in_s < 0)
 			return '&nbsp;';
 
@@ -57,7 +58,7 @@ class Time {
 		if ($show_zeros == 2)
 			return (floor($time_in_s/60)%60).':'.Helper::TwoNumbers($time_in_s%60);
 
-		if ($time_in_s < 60)
+		if ($show_seconds && $time_in_s < 60)
 			return number_format($time_in_s, 2, ',', '.').'s';
 
 		if ($time_in_s >= 86400 && $show_days)

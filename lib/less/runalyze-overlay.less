@@ -1,6 +1,6 @@
 @overlay-background:				rgba(0,0,0,.6);
 @overlay-fullscreen-background:		#f6f6f7;
-@overlay-z-index:					10;
+@overlay-z-index:					1700;
 @overlay-padding:					0;
 @overlay-margin-top:				25px;
 @overlay-width:						820px;
@@ -49,7 +49,7 @@
 		width: 100% !important;
 		height: 100%;
 		background-color: @overlay-fullscreen-background;
-		z-index: 500;
+		z-index: (@overlay-z-index + 10);
 		margin: 0 !important;
 		box-sizing: border-box;
 		border-radius: 0;
@@ -62,7 +62,7 @@
 
 #ajax-navigation {
 	display: block;
-	z-index: 11;
+	z-index: (@overlay-z-index + 1);
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -92,7 +92,7 @@ form#training {
 }
 
 #close, #ajax-prev, #ajax-next {
-	z-index: 12;
+	z-index: (@overlay-z-index + 12);
 	position: absolute;
 	cursor: pointer;
 }

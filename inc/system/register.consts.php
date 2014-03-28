@@ -66,7 +66,7 @@ $Training->setKeys(array(
 	'ELEVATION_MIN_DIFF',
 	'TRAINING_PLOT_MODE',
 	'GMAP_PATH_BREAK',
-	'TRAINING_MAPTYPE',
+	'',//'TRAINING_MAPTYPE',
 	'GMAP_PATH_PRECISION',
 	'TRAINING_MAP_COLOR',
 	'PACE_Y_LIMIT_MAX',
@@ -95,7 +95,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 						sollten diese in der Karte nicht eingezeichnet werden.
 						Die Erkennung einer solchen Unterbrechung ist aber nicht immer eindeutig.<br>
 						15s bedeutet: Distanz, die man bei dem Durchschnittstempo in 15s geschafft h&auml;tte.',
-	'options'		=> array( // see Gmap::getCodeForPolylines
+	'options'		=> array( // see LeafletTrainingRoute::findLimitForPauses
 		'no'			=> 'nie',
 		'15'			=> 'bei zu gro&szlig;em Abstand (15s)',
 		'30'			=> 'bei zu gro&szlig;em Abstand (30s)',
@@ -113,7 +113,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 	'label'			=> 'Streckengenauigkeit',
 	'tooltip'		=> 'Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?<br>
 						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
-	'options'		=> array( // see GpsData::getCodeForPolylines
+	'options'		=> array( // see LeafletTrainingRoute::prepareLoop
 		'1'				=> 'jeder Datenpunkt',
 		'2'				=> 'jeder 2. Datenpunkt',
 		'5'				=> 'jeder 5. Datenpunkt (empfohlen)',
@@ -208,16 +208,9 @@ $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 	'tooltip'		=> 'als #RGB-Code',
 	'type'			=> 'color'
 )));
-$Training->addConfigValue( new ConfigValueSelect('TRAINING_MAPTYPE', array(
-	'default'		=> 'G_HYBRID_MAP',
+$Training->addConfigValue( new ConfigValueString('TRAINING_MAPTYPE', array(
+	'default'		=> 'OpenStreetMap',
 	'label'			=> 'Karte: Typ',
-	'options'		=> array(
-		'G_NORMAL_MAP'		=> 'Normal',
-		'G_HYBRID_MAP'		=> 'Hybrid',
-		'G_SATELLITE_MAP'	=> 'Satellit',
-		'G_PHYSICAL_MAP'	=> 'Physikalisch',
-		'OSM'				=> 'OpenStreetMap'
-	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
