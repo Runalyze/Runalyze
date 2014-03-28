@@ -14,6 +14,11 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForLocalJSFiles() {
+		//if (self::isAtLocalhost())
+		//	return '<script src="build/scripts.js"></script>';
+		//else
+		//	return '<script src="build/scripts.min.js"></script>';
+
 		return '<script src="lib/min/?g=js"></script>';
 	}
 
@@ -22,7 +27,7 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForExternalJSFiles() {
-		return '<script src="'.Request::getProtocol().'://maps.google.com/maps/api/js?sensor=false"></script>';
+		return '';
 	}
 
 	/**

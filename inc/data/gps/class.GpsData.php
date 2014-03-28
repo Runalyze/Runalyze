@@ -226,9 +226,6 @@ class GpsData {
 			foreach ($PlotData as $key => $value)
 				$this->Cache->set('plot_'.$key, $value);
 
-			$GMap = new Gmap($TrainingID, $this);
-			$GMap->setCacheTo($this->Cache);
-
 			$this->Cache->saveInDatabase();
 		}
 	}
@@ -431,6 +428,19 @@ class GpsData {
 	public function hasPositionData() {
 		return !empty($this->arrayForLatitude) && (count($this->arrayForLongitude) > 1)
 			&& (max($this->arrayForLatitude) > 0 || min($this->arrayForLatitude) < 0);
+	}
+
+	/**
+	 * Get bounds
+	 * @return array lat.min/lat.max/lng.min/lng.max
+	 */
+	public function getBounds() {
+		return array(
+			'lat.min' => min($this->arrayForLatitude),
+			'lat.max' => max($this->arrayForLatitude),
+			'lng.min' => min($this->arrayForLongitude),
+			'lng.max' => max($this->arrayForLongitude)
+		);
 	}
 
 	/**

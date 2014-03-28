@@ -109,8 +109,9 @@ class TrainingView {
 	 * Display route on GoogleMaps
 	 */
 	public function displayRoute() {
-		$Map = new Gmap($this->Training->id(), $this->Training->GpsData());
-		$Map->displayMap();
+		$Map = new LeafletMap('map');
+		$Map->addRoute( new LeafletTrainingRoute('route-'.$this->Training->id(), $this->Training->GpsData()) );
+		$Map->display();
 	}
 
 	/**

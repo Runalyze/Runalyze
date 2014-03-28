@@ -39,7 +39,7 @@ Details: <http://runalyze.de/installation/>
 * jQuery by jQuery Foundation, Inc. - <http://jquery.org/>
     * Bootstrap Tooltip by Twitter, Inc. - <http://twitter.github.com/bootstrap/javascript.html#tooltips>
     * Flot by IOLA and Ole Laursen - <http://www.flotcharts.org/>
-    * GMAP3 - <http://gmap3.net/>
+    * Leaflet by Vladimir Agafonkin - <http://leafletjs.com/>
     * FineUploader by Widen Enterprises, Inc. - <https://github.com/Widen/fine-uploader>
     * Tablesorter by Christian Bach <http://tablesorter.com/docs/>
     * Datepicker by Stefan Petre - <http://www.eyecon.ro/>

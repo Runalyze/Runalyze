@@ -23,6 +23,16 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 	protected function tearDown() {}
 
 	/**
+	 * @covers Time::toString
+	 */
+	public function testToString() {
+		$this->assertEquals( '&nbsp;', Time::toString(-1) );
+		$this->assertEquals( '11,00s', Time::toString(11) );
+		$this->assertEquals( '11,23s', Time::toString(11.23) );
+		$this->assertEquals( '0:11', Time::toString(11, false, false, false) );
+	}
+
+	/**
 	 * @covers Time::diffInDays
 	 */
 	public function testDiffInDays() {

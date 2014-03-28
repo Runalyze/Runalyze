@@ -15,13 +15,10 @@ $JS_FILES = array(
 
 	'lib/jquery.datepicker.js',
 
-	'lib/jquery.gmap3.min.js',
-
 	'lib/jquery.chosen.min.js',
 
 	'lib/runalyze.lib.log.js',
 	'lib/runalyze.lib.plot.js',
-	'lib/runalyze.lib.gmap.js',
 	'lib/runalyze.lib.tablesorter.js',
 	'lib/runalyze.lib.js',
 
@@ -43,6 +40,11 @@ $JS_FILES = array(
 	'lib/flot-0.8.1/jquery.flot.hiddengraphs.js',
 	'lib/flot-0.8.1/jquery.flot.canvas.js',
 	'lib/flot-0.8.1/jquery.flot.time.min.js',
+
+	'lib/leaflet/leaflet.js',
+	'lib/leaflet/runalyze.leaflet.js',
+	'lib/leaflet/runalyze.leaflet.layers.js',
+	'lib/leaflet/runalyze.leaflet.routes.js',
 );
 
 /**
@@ -59,4 +61,5 @@ function Runalyze__FileTransformerForMinify($file) {
 	return $root.$file;
 }
 
-$JS_FILES  = array_map('Runalyze__FileTransformerForMinify', $JS_FILES);
+if (!isset($IGNORE_ROOT))
+	$JS_FILES  = array_map('Runalyze__FileTransformerForMinify', $JS_FILES);
