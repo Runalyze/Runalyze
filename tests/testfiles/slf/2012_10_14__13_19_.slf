@@ -57,7 +57,6 @@
   </LogValues>
   <LogEntries>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -70,7 +69,6 @@
       <Speed>0</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -83,7 +81,6 @@
       <Speed>0</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -96,7 +93,6 @@
       <Speed>2.055555555555556</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -109,7 +105,6 @@
       <Speed>2.375</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -122,7 +117,6 @@
       <Speed>2.6055555555555556</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -135,7 +129,6 @@
       <Speed>2.672222222222222</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -148,7 +141,6 @@
       <Speed>2.6888888888888887</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -161,7 +153,6 @@
       <Speed>2.7166666666666663</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -174,7 +165,6 @@
       <Speed>2.7</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -187,7 +177,6 @@
       <Speed>2.7166666666666663</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -200,7 +189,6 @@
       <Speed>2.7083333333333335</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -213,7 +201,6 @@
       <Speed>2.7416666666666663</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -226,7 +213,6 @@
       <Speed>2.736111111111111</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -239,7 +225,6 @@
       <Speed>2.6638888888888888</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -252,7 +237,6 @@
       <Speed>2.566666666666667</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -265,7 +249,6 @@
       <Speed>2.477777777777778</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -278,7 +261,6 @@
       <Speed>2.4055555555555554</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -291,7 +273,6 @@
       <Speed>2.4194444444444447</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -304,7 +285,6 @@
       <Speed>2.433333333333333</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -317,7 +297,6 @@
       <Speed>2.4388888888888887</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -330,7 +309,6 @@
       <Speed>2.4444444444444446</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -343,7 +321,6 @@
       <Speed>2.4722222222222223</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -356,7 +333,6 @@
       <Speed>2.538888888888889</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -369,7 +345,6 @@
       <Speed>2.5611111111111113</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
@@ -382,7 +357,6 @@
       <Speed>2.5361111111111114</Speed>
     </LogEntry>
     <LogEntry>
-      <IsPause>false</IsPause>
       <PauseTime>0</PauseTime>
       <IsWaypoint>false</IsWaypoint>
       <Title><![CDATA[]]></Title>
