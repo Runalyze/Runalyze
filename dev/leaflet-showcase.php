@@ -1,10 +1,10 @@
 <?php
-require '../../inc/class.Frontend.php';
+require '../inc/class.Frontend.php';
 $Frontend = new Frontend(true);
 ?><html>
 	<head>
-		<link rel="stylesheet" href="../less/runalyze-style.css">
-		<script src="../min/?g=js"></script>
+		<link rel="stylesheet" href="../lib/less/runalyze-style.css">
+		<script src="../lib/min/?g=js"></script>
 	</head>
 <body>
 	<div class="panel">
