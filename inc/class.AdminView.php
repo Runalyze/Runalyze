@@ -297,6 +297,12 @@ class AdminView {
 		$Fieldset->addSmallInfo('Memory-Limit: '.ini_get('memory_limit'));
 		$Fieldset->addSmallInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
 		$Fieldset->addSmallInfo('Post-Limit: '.ini_get('post_max_size'));
+
+		if (Shell::isPerlAvailable())
+			$Fieldset->addSmallInfo('Perl-Skripte k&ouml;nnen ausgef&uuml;hrt werden.');
+		else
+			$Fieldset->addWarning('Perl-Skripte k&ouml;nnen nicht ausgef&uuml;hrt werden.');
+
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;

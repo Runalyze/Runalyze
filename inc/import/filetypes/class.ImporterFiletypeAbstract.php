@@ -51,7 +51,7 @@ abstract class ImporterFiletypeAbstract {
 	 * Load file
 	 * @param string $Filename relative path (from FRONTEND_PATH) to file
 	 */
-	final public function parseFile($Filename) {
+	public function parseFile($Filename) {
 		$this->parseString( Filesystem::openFile($Filename) );
 	}
 
