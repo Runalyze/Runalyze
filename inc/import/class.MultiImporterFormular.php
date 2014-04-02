@@ -31,7 +31,6 @@ class MultiImporterFormular extends Formular {
 	 * Init
 	 */
 	protected function init() {
-		$this->setHeader('Mehrere Trainings importieren');
 		$this->setId('multi-importer');
 		$this->addCSSclass('ajax');
 		$this->addHiddenValue('multi-importer', 'true');

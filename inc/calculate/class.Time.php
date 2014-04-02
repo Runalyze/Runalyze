@@ -120,9 +120,10 @@ class Time {
 	 * @return int
 	 */
 	static public function diffOfDates($date1, $date2) {
-		//if (function_exists('date_diff'))
-		//	return (int)date_diff(date_create($date1), date_create($date2))->format('%d');
+		if (function_exists('date_diff')) // needs PHP >5.3.0
+			return (int)date_diff(date_create($date1), date_create($date2))->format('%a');
 
+		// TODO: Problem because of summer/winter-time
 		return floor(abs(strtotime($date1) - strtotime($date2)) / (3600 * 24));
 	}
 

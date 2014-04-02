@@ -54,6 +54,8 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 2, Time::diffOfDates('2006-09-05', '2006-09-07') );
 		$this->assertEquals( 10, Time::diffOfDates('2006-08-28', '2006-09-07') );
 		$this->assertEquals( 31, Time::diffOfDates('2006-08-07', '2006-09-07') );
+
+		$this->assertEquals( 2, Time::diffOfDates('2014-03-30', '2014-04-01') );
 	}
 
 	/**

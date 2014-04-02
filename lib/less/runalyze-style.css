@@ -1860,7 +1860,7 @@ label:active .checkbox-icon {
 }
 .tooltip {
   position: absolute;
-  z-index: 1020;
+  z-index: 2020;
   display: block;
   padding: 5px;
   font-size: 11px;
@@ -2576,7 +2576,7 @@ td.datepickerDisabled a:hover {
 .leaflet-top,
 .leaflet-bottom {
   position: absolute;
-  z-index: 1000;
+  z-index: 400;
   pointer-events: none;
 }
 .leaflet-top {

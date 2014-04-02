@@ -36,7 +36,7 @@ class ParserHRMSingle extends ParserAbstractSingle {
 		$this->Line = strtok($this->FileContent, $separator);
 
 		while ($this->Line !== false) {
-			if (substr($this->Line, 0, 1) == '[')
+			if ($this->Line[0] == '[')
 				$this->Header = substr($this->Line, 1, -1);
 			else
 				$this->parseLine();

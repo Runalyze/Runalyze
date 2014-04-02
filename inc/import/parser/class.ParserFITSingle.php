@@ -162,13 +162,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readSession() {
 		if (isset($this->Values['total_timer_time']))
-			$this->TrainingObject->setTimeInSeconds( $this->Values['total_timer_time'][0] / 1e3 );
+			$this->TrainingObject->setTimeInSeconds( round($this->Values['total_timer_time'][0] / 1e3) );
 
 		if (isset($this->Values['total_elapsed_time']))
-			$this->TrainingObject->setElapsedTime( $this->Values['total_elapsed_time'][0] / 1e3 );
+			$this->TrainingObject->setElapsedTime( round($this->Values['total_elapsed_time'][0] / 1e3) );
 
 		if (isset($this->Values['total_distance']))
-			$this->TrainingObject->setDistance( $this->Values['total_distance'][0] / 1e5 );
+			$this->TrainingObject->setDistance( round($this->Values['total_distance'][0] / 1e5, 3) );
 	}
 
 	/**
@@ -210,9 +210,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->gps['km'][]        = isset($this->Values['distance']) ? round($this->Values['distance'][0] / 1e5, 3) : 0;
 		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? $this->Values['heart_rate'][0] : 0;
+		$this->gps['rpm'][]       = isset($this->Values['cadence']) ? $this->Values['cadence'][0] : 0;
 
-		$this->gps['time_in_s'][]  = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
-		$this->gps['pace'][]       = $this->getCurrentPace();
+		$this->gps['time_in_s'][] = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+		$this->gps['pace'][]      = $this->getCurrentPace();
 	}
 
 	/**
