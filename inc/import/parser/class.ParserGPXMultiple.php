@@ -34,6 +34,10 @@ class ParserGPXMultiple extends ParserAbstractMultipleXML {
 	 */
 	protected function parseSingleTrack(SimpleXMLElement &$Track) {
 		$Parser = new ParserGPXSingle('', $Track);
+
+		if (isset($this->XML->extensions))
+			$Parser->setExtensionXML($this->XML->extensions);
+
 		$Parser->parse();
 
 		if ($Parser->failed())
