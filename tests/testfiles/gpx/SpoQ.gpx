@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="a-rival SpoQ PC Software" xmlns:st="urn:uuid:D0EB2ED5-49B6-44e3-B13C-CF15BE7DD7DD" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd" >
+<extensions>
+<st:activity id="1" created="2013-9-29,11:36:22,15,(Lap Count 10)" startTime="2013-09-29T09:36:22Z" hasStartTime="true" distanceEntered="9.130" timeEntered="00:52:26" calories="1020">
+ <st:heartRateTrack>
+  <st:heartRate time="2013-09-29T09:36:22Z" bpm="103" />
+  <st:heartRate time="2013-09-29T09:36:28Z" bpm="105" />
+  <st:heartRate time="2013-09-29T09:36:30Z" bpm="107" />
+  <st:heartRate time="2013-09-29T09:36:32Z" bpm="109" />
+  <st:heartRate time="2013-09-29T09:36:34Z" bpm="109" />
+  <st:heartRate time="2013-09-29T09:36:36Z" bpm="111" />
+  <st:heartRate time="2013-09-29T09:36:39Z" bpm="113" />
+  <st:heartRate time="2013-09-29T09:36:41Z" bpm="119" />
+  <st:heartRate time="2013-09-29T09:36:43Z" bpm="122" />
+  <st:heartRate time="2013-09-29T09:36:45Z" bpm="132" />
+ </st:heartRateTrack>
+</st:activity>
+</extensions>
+<trk>
+<Name>2013-9-29,11:36:22,15,(Lap Count 10)</Name>
+<number>1</number>
+<trkseg>
+ <trkpt lat="51.410655" lon="7.399935" ><ele>207</ele><speed>1.17</speed><time>2013-09-29T09:36:22Z</time>
+ </trkpt>
+ <trkpt lat="51.410643" lon="7.399917" ><ele>207</ele><speed>1.03</speed><time>2013-09-29T09:36:28Z</time>
+ </trkpt>
+ <trkpt lat="51.410637" lon="7.399847" ><ele>207</ele><speed>2.65</speed><time>2013-09-29T09:36:30Z</time>
+ </trkpt>
+ <trkpt lat="51.410625" lon="7.399727" ><ele>207</ele><speed>6.66</speed><time>2013-09-29T09:36:32Z</time>
+ </trkpt>
+ <trkpt lat="51.410615" lon="7.399613" ><ele>206</ele><speed>10.56</speed><time>2013-09-29T09:36:34Z</time>
+ </trkpt>
+ <trkpt lat="51.410603" lon="7.399508" ><ele>206</ele><speed>12.88</speed><time>2013-09-29T09:36:36Z</time>
+ </trkpt>
+ <trkpt lat="51.410567" lon="7.399358" ><ele>205</ele><speed>13.44</speed><time>2013-09-29T09:36:39Z</time>
+ </trkpt>
+ <trkpt lat="51.410543" lon="7.399235" ><ele>205</ele><speed>14.18</speed><time>2013-09-29T09:36:41Z</time>
+ </trkpt>
+ <trkpt lat="51.410517" lon="7.399103" ><ele>204</ele><speed>15.06</speed><time>2013-09-29T09:36:43Z</time>
+ </trkpt>
+ <trkpt lat="51.41048" lon="7.398983" ><ele>204</ele><speed>15.29</speed><time>2013-09-29T09:36:45Z</time>
+ </trkpt>
+</trkseg>
+</trk>
+</gpx>

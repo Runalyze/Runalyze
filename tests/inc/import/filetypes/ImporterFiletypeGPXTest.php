@@ -114,4 +114,19 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( array(28, 26), $this->object->object()->getArrayTemperature() );
 	}
 
+	/**
+	 * Test: SpoQ file
+	 * Filename: "SpoQ.gpx" 
+	 */
+	public function test_SpoQ() {
+		$this->object->parseFile('../tests/testfiles/gpx/SpoQ.gpx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( 114, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 132, $this->object->object()->getPulseMax() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+	}
+
 }

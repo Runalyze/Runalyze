@@ -19,6 +19,20 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	protected $lastTimestamp = 0;
 
 	/**
+	 * Additional extensions
+	 * @var SimpleXMLElement
+	 */
+	protected $ExtensionXML = null;
+
+	/**
+	 * Set extension XML
+	 * @param SimpleXMLElement $XML
+	 */
+	public function setExtensionXML(SimpleXMLElement $XML) {
+		$this->ExtensionXML = $XML;
+	}
+
+	/**
 	 * Parse
 	 */
 	protected function parseXML() {
@@ -66,6 +80,8 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 			foreach ($TrackSegment->trkpt as $Point)
 				$this->parseTrackpoint($Point);
 		}
+
+		$this->parseSpoQExtension();
 
 		if ($this->lastTimestamp > 0 && $this->lastTimestamp > $this->TrainingObject->getTimestamp())
 			$this->TrainingObject->setElapsedTime( $this->lastTimestamp - $this->TrainingObject->getTimestamp() );
@@ -155,5 +171,36 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$this->gps['heartrate'][] = $bpm;
 		$this->gps['rpm'][]       = $rpm;
 		$this->gps['temp'][]      = $temp;
+	}
+
+	/**
+	 * Parse extension format from SpoQ
+	 */
+	protected function parseSpoQExtension() {
+		if (!is_null($this->ExtensionXML) && count($this->ExtensionXML->children('st',true)) > 0) {
+			$Activity = $this->ExtensionXML->children('st',true)->activity;
+
+			if (isset($Activity) && count($Activity->children('st',true)) > 0) {
+				$Track = $Activity->children('st',true)->heartRateTrack;
+
+				if (isset($Track)) {
+					$this->gps['heartrate'] = array();
+					$Start = $this->TrainingObject->getTimestamp();
+					reset($this->gps['time_in_s']);
+
+					foreach ($Track->children('st',true)->heartRate as $HR) {
+						$attr = $HR->attributes();
+
+						$time_in_s = strtotime((string)$attr->time) - $Start;
+						if ($time_in_s > 0) {
+							while (current($this->gps['time_in_s']) != $time_in_s && current($this->gps['time_in_s']) !== false)
+								next($this->gps['time_in_s']);
+
+							$this->gps['heartrate'][] = (int)$attr->bpm;
+						}
+					}
+				}
+			}
+		}
 	}
 }
