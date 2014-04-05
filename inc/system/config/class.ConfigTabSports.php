@@ -14,14 +14,14 @@ class ConfigTabSports extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_sports';
-		$this->title = 'Sportarten';
+		$this->title = __('Sport Types');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Sports = new FormularFieldset('Deine Sportarten');
+		$Sports = new FormularFieldset(__('Your Sport Types'));
 		$Sports->setHtmlCode($this->getCode().$this->getInfoFieldsAfterCode());
 		$Sports->addInfo('Fahre mit der Maus &uuml;ber die &Uuml;berschrift, falls dir die Bezeichnungen unklar sind.');
 
@@ -33,9 +33,9 @@ class ConfigTabSports extends ConfigTab {
 	 * @return string
 	 */
 	private function getInfoFieldsAfterCode() {
-		$Code  = HTML::info('Der Modus <em>kurz</em> bewirkt, dass in der Wochen&uuml;bersicht nur ein Symbol und keine Trainingsdaten angezeigt werden.');
+		$Code  = HTML::info(__('The mode <em>short</em> has the effect that in the week view is only shown a symbol and no workout data for a workout.'));
 		$Code .= HTML::info('Die Werte f&uuml;r <em>&Oslash; HF</em> und <em>RPE</em> sind f&uuml;r die TRIMP-Berechnung notwendig.');
-		$Code .= HTML::info('Es stehen folgende Icons zur Verf&uuml;gung: '.$this->getSportIconList());
+		$Code .= HTML::info(__('The following icons are available:') .$this->getSportIconList());
 
 		return $Code;
 	}

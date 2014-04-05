@@ -3,7 +3,7 @@
  * All registrations of CONST variables have to be done here
  * otherwise the Autoloader will not work correct
  */
-$General = new ConfigCategory('general', 'Allgemein');
+$General = new ConfigCategory('general', __('General'));
 $General->setKeys(array(
 	'GENDER',
 	'PULS_MODE',
@@ -14,40 +14,40 @@ $General->setKeys(array(
 ));
 $General->addConfigValue( new ConfigValueSelect('GENDER', array(
 	'default'		=> 'm',
-	'label'			=> 'Geschlecht',
-	'options'		=> array('m' => 'm&auml;nnlich', 'f' => 'weiblich'),
+	'label'			=> 'Gender',
+	'options'		=> array('m' => __('male'), 'f' => __('female')),
 	'onchange'		=> Ajax::$RELOAD_ALL
 )));
 $General->addConfigValue( new ConfigValueSelect('PULS_MODE', array(
 	'default'		=> 'hfmax',
-	'label'			=> 'Pulsanzeige',
-	'options'		=> array('bpm' => 'absoluter Wert', 'hfmax' => '&#37; HFmax', 'hfres' => '&#37; HFreserve'),
+	'label'			=> __('Pulse notice'),
+	'options'		=> array('bpm' => __('absolute value'), 'hfmax' => '&#37; HFmax', 'hfres' => '&#37; HFreserve'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $General->addConfigValue( new ConfigValueSelectDb('MAINSPORT', array(
 	'default'		=> 1,
-	'label'			=> 'Hauptsportart',
+	'label'			=> __('Main Sport type'),
 	'table'			=> 'sport',
 	'column'		=> 'name',
 	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
 $General->addConfigValue( new ConfigValueSelectDb('RUNNINGSPORT', array(
 	'default'		=> 1,
-	'label'			=> 'Laufsportart',
+	'label'			=> __('Running Sporttype'),
 	'table'			=> 'sport',
 	'column'		=> 'name',
 	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
 $General->addConfigValue( new ConfigValueSelectDb('WK_TYPID', array(
 	'default'		=> 5,
-	'label'			=> 'Trainingstyp: Wettkampf',
+	'label'			=> __('Workout Type: competition'),
 	'table'			=> 'type',
 	'column'		=> 'name',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
 )));
 $General->addConfigValue( new ConfigValueSelectDb('LL_TYPID', array(
 	'default'		=> 7,
-	'label'			=> 'Trainingstyp: Langer Lauf',
+	'label'			=> __('Workout Type: Long run'),
 	'table'			=> 'type',
 	'column'		=> 'name',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
@@ -58,7 +58,7 @@ $General->addToCategoryList();
 
 
 
-$Training = new ConfigCategory('training', 'Trainingsansicht');
+$Training = new ConfigCategory('training', __('Workout view'));
 $Training->setKeys(array(
 	'TRAINING_DECIMALS',
 	'ELEVATION_METHOD',
@@ -79,162 +79,162 @@ $Training->setKeys(array(
 ));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 	'default'		=> 'all',
-	'label'			=> 'Diagrammkombination',
+	'label'			=> __('Graph combination'),
 	'tooltip'		=> 'Normalerweise werden alle Diagramme einzeln angezeigt. Sie k&ouml;nnen aber auch kombiniert werden.',
 	'options'		=> array(
-		'all'			=> 'alle einzeln',
-		'pacepulse'		=> 'Pace/Herzfrequenz',
-		'collection'	=> 'Pace/Herzfrequenz/H&ouml;he'
+		'all'			=> __('all separated'),
+		'pacepulse'		=> __('Pace/Heart rate'),
+		'collection'	=> __('Pace/Heart rate/altitude')
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 	'default'		=> '15',
-	'label'			=> 'Strecke unterbrechen',
+	'label'			=> __('Interrupt Route'),
 	'tooltip'		=> 'Wenn Teile der Strecke anders zur&uuml;ckgelegt wurden (Auto/Bahn/...),
 						sollten diese in der Karte nicht eingezeichnet werden.
 						Die Erkennung einer solchen Unterbrechung ist aber nicht immer eindeutig.<br>
 						15s bedeutet: Distanz, die man bei dem Durchschnittstempo in 15s geschafft h&auml;tte.',
 	'options'		=> array( // see LeafletTrainingRoute::findLimitForPauses
-		'no'			=> 'nie',
-		'15'			=> 'bei zu gro&szlig;em Abstand (15s)',
-		'30'			=> 'bei zu gro&szlig;em Abstand (30s)',
-		'60'			=> 'bei zu gro&szlig;em Abstand (60s)',
-		'120'			=> 'bei zu gro&szlig;em Abstand (120s)',
-		'240'			=> 'bei zu gro&szlig;em Abstand (240s)',
-		'300'			=> 'bei zu gro&szlig;em Abstand (300s)',
-		'600'			=> 'bei zu gro&szlig;em Abstand (600s)',
+		'no'			=> __('never'),
+		'15'			=> __('at too big distance (15s)'),
+		'30'			=> __('at too big distance (30s)'),
+		'60'			=> __('at too big distance (60s)'),
+		'120'			=> __('at too big distance (120s)'),
+		'240'			=> __('at too big distance (240s)'),
+		'300'			=> __('at too big distance (300s)'),
+		'600'			=> __('at too big distance (600s)'),
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
 $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 	'default'		=> '5',
-	'label'			=> 'Streckengenauigkeit',
+	'label'			=> __('Path Precision'),
 	'tooltip'		=> 'Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?<br>
 						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
 	'options'		=> array( // see LeafletTrainingRoute::prepareLoop
-		'1'				=> 'jeder Datenpunkt',
-		'2'				=> 'jeder 2. Datenpunkt',
-		'5'				=> 'jeder 5. Datenpunkt (empfohlen)',
-		'10'			=> 'jeder 10. Datenpunkt',
-		'20'			=> 'jeder 20. Datenpunkte'
+		'1'				=> __('every data point'),
+		'2'				=> __('every second data point'),
+		'5'				=> __('every fifth data point (recommended)'),
+		'10'			=> __('every tenth data point'),
+		'20'			=> __('every twentieth data point')
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
 	'default'		=> '200points',
-	'label'			=> 'Diagrammgenauigkeit',
+	'label'			=> __('Graph precision'),
 	'tooltip'		=> 'Wie viele Datenpunkte sollen in den Diagrammen enthalten sein?<br>
 						<em>Eine h&ouml;here Genauigkeit bedeutet auch immer l&auml;ngere Ladezeiten!</em>',
 	'options'		=> array( // see GpsData::nextStepForPlotData, GpsData::setStepSizeForPlotData
-		'50m'			=> 'alle 50m ein Datenpunkt',
-		'100m'			=> 'alle 100m ein Datenpunkt',
-		'200m'			=> 'alle 200m ein Datenpunkt',
-		'500m'			=> 'alle 500m ein Datenpunkt',
-		'100points'		=> 'max. 100 Datenpunkte',
-		'200points'		=> 'max. 200 Datenpunkte (empfohlen)',
-		'300points'		=> 'max. 300 Datenpunkte',
-		'400points'		=> 'max. 400 Datenpunkte',
-		'500points'		=> 'max. 500 Datenpunkte',
-		'750points'		=> 'max. 750 Datenpunkte',
-		'1000points'	=> 'max. 1000 Datenpunkte'
+		'50m'			=> __('all 50m a data point'),
+		'100m'			=> __('all 100m a data point'),
+		'200m'			=> __('all 200m a data point'),
+		'500m'			=> __('all 500m a data point'),
+		'100points'		=> __('max. 100 data points'),
+		'200points'		=> __('max. 200 data points (recommended)'),
+		'300points'		=> __('max. 300 data points'),
+		'400points'		=> __('max. 400 data points'),
+		'500points'		=> __('max. 500 data points'),
+		'750points'		=> __('max. 750 data points'),
+		'1000points'	=> __('max. 1000 data points')
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 	'default'		=> '0',
-	'label'			=> 'Pace: Y-Achsen-Minimum',
+	'label'			=> __('Pace: Y-Axis-Minimum'),
 	'tooltip'		=> 'Alternativ zum allgemeinen Ignorieren von Ausrei&szlig;ern kann hier eine maximale Grenze festgelegt werden.',
 	'options'		=> array(
-		0				=> 'automatisch',
-		60				=> '1:00/km',
-		120				=> '2:00/km',
-		180				=> '3:00/km',
-		240				=> '4:00/km',
-		300				=> '5:00/km',
-		360				=> '6:00/km',
-		420				=> '7:00/km',
-		480				=> '8:00/km',
-		540				=> '9:00/km',
-		600				=> '10:00/km'
+		0				=> __('automatic'),
+		60				=> __('1:00/km'),
+		120				=> __('2:00/km'),
+		180				=> __('3:00/km'),
+		240				=> __('4:00/km'),
+		300				=> __('5:00/km'),
+		360				=> __('6:00/km'),
+		420				=> __('7:00/km'),
+		480				=> __('8:00/km'),
+		540				=> __('9:00/km'),
+		600				=> __('10:00/km')
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 	'default'		=> '0',
-	'label'			=> 'Pace: Y-Achsen-Maximum',
+	'label'			=> __('Pace: Y-Axis-maximum'),
 	'tooltip'		=> 'Alternativ zum allgemeinen Ignorieren von Ausrei&szlig;ern kann hier eine maximale Grenze festgelegt werden.',
 	'options'		=> array(
-		0				=> 'automatisch',
-		240				=> '4:00/km',
-		300				=> '5:00/km',
-		360				=> '6:00/km',
-		420				=> '7:00/km',
-		480				=> '8:00/km',
-		540				=> '9:00/km',
-		600				=> '10:00/km',
-		660				=> '11:00/km',
-		720				=> '12:00/km',
-		780				=> '13:00/km',
-		840				=> '14:00/km',
-		900				=> '15:00/km'
+		0				=> __('automatic'),
+		240				=> __('4:00/km'),
+		300				=> __('5:00/km'),
+		360				=> __('6:00/km'),
+		420				=> __('7:00/km'),
+		480				=> __('8:00/km'),
+		540				=> __('9:00/km'),
+		600				=> __('10:00/km'),
+		660				=> __('11:00/km'),
+		720				=> __('12:00/km'),
+		780				=> __('13:00/km'),
+		840				=> __('14:00/km'),
+		900				=> __('15:00/km')
 	),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
 	'default'		=> false,
-	'label'			=> 'Pace: Y-Achse umkehren',
+	'label'			=> __('Pace: Reverse y-axis'),
 	'tooltip'		=> 'Standardm&auml;&szlig;ig wird ein h&ouml;heres Tempo im Diagramm weiter unten angezeigt als ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden.',
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_HIDE_OUTLIERS', array(
 	'default'		=> false,
-	'label'			=> 'Pace: Ausrei&szlig;er egal',
+	'label'			=> __('Pace: Outliers indifferent'),
 	'tooltip'		=> 'Wenn aktiviert, werden im Pace-Diagramm Ausrei&szlig;er nicht ber&uuml;cksichtigt.',
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
 	'default'		=> '1',
-	'label'			=> 'Anzahl Nachkommastellen',
+	'label'			=> __('Number of decimal places'),
 	'options'		=> array('0', '1', '2'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER_AND_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 	'default'		=> '#FF5500',
-	'label'			=> 'Karte: Linienfarbe',
-	'tooltip'		=> 'als #RGB-Code',
+	'label'			=> __('Map: Linecolor'),
+	'tooltip'		=> __('as #RGB-Code'),
 	'type'			=> 'color'
 )));
 $Training->addConfigValue( new ConfigValueString('TRAINING_MAPTYPE', array(
 	'default'		=> 'OpenStreetMap',
-	'label'			=> 'Karte: Typ',
+	'label'			=> __('Map: Type'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
 	'default'		=> 'treshold',
-	'label'			=> 'H&ouml;henmetergl&auml;ttung',
-	'tooltip'		=> 'F&uuml;r Profis und H&ouml;henmeterfanatiker: Mit welchem Algorithmus sollen die H&ouml;henmeter vor der Berechnung gegl&auml;ttet werden?',
+	'label'			=> __('altitude equalisation'),
+	'tooltip'		=> 'F&uuml;r Profis und altitudenmeterfanatiker: Mit welchem Algorithmus sollen die altitudenmeter vor der Berechnung gegl&auml;ttet werden?',
 	'options'		=> array(
-		'none'				=> 'keine',
+		'none'				=> __('none'),
 		'treshold'			=> 'Schwellenwert-Methode',
 		'douglas-peucker'	=> 'Douglas-Peucker-Algorithmus',
 		//'reumann-witkamm'	=> 'Reumann-Witkamm-Algorithmus'
 	),
-	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle altitudenmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
-	'label'			=> 'H&ouml;henmeter: Schwellenwert',
-	'tooltip'		=> 'Schwellenwert zur H&ouml;henmeterberechnung. Wird bei der Schwellenwert-Methode und beim Douglas-Peucker-Algorithmus verwendet.',
+	'label'			=> __('Elevation: threshold'),
+	'tooltip'		=> 'Schwellenwert zur altitudenmeterberechnung. Wird bei der Schwellenwert-Methode und beim Douglas-Peucker-Algorithmus verwendet.',
 	'unit'			=> FormularUnit::$M,
-	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle H&ouml;henmeter neuberechnet werden."));'
+	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle altitudenmeter neuberechnet werden."));'
 )));
 $Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
 	'default'		=> false,
-	'label'			=> 'Karte: vor Diagrammen',
+	'label'			=> __('Map: Before graphs'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
@@ -269,7 +269,7 @@ $Training->addToCategoryList();
 
 
 
-$Privacy = new ConfigCategory('privacy', 'Privatsph&auml;re');
+$Privacy = new ConfigCategory('privacy', __('Privacy'));
 $Privacy->setKeys(array(
 	'TRAINING_LIST_PUBLIC',
 	'TRAINING_MAKE_PUBLIC',
@@ -279,34 +279,34 @@ $Privacy->setKeys(array(
 ));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_MAKE_PUBLIC', array(
 	'default'		=> false,
-	'label'			=> 'Trainings ver&ouml;ffentlichen',
+	'label'			=> __('Publish workouts'),
 	'tooltip'		=> '&Ouml;ffentliche Trainings k&ouml;nnen von jedem betrachtet werden. Diese Standardeinstellung kann f&uuml;r jedes einzelne Training ver&auml;ndert werden.'
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_PUBLIC', array(
 	'default'		=> false,
-	'label'			=> 'Trainingsliste &ouml;ffentlich',
+	'label'			=> __('Public workoutlist'),
 	'tooltip'		=> 'Andere Nutzer k&ouml;nnen bei dieser Einstellung eine Liste mit all deinen (&ouml;ffentlichen) Trainings sehen.',
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_ALL', array(
 	'default'		=> false,
-	'label'			=> 'Liste: private Trainings',
+	'label'			=> __('List: Private workouts'),
 	'tooltip'		=> 'Bei dieser Einstellung werden in der &ouml;ffentlichen Liste auch private Trainings (ohne Link) angezeigt.'
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_STATISTICS', array(
 	'default'		=> false,
-	'label'			=> 'Liste: allgemeine Statistiken',
+	'label'			=> __('List: General Statistics'),
 	'tooltip'		=> 'Sollen &uuml;ber der Trainingsliste allgemeine Statistiken angezeigt werden?'
 )));
 $Privacy->addConfigValue( new ConfigValueSelect('TRAINING_MAP_PUBLIC_MODE', array(
 	'default'		=> 'always',
-	'label'			=> 'Karte in &ouml;ffentlicher Ansicht',
-	'tooltip'		=> 'Die Karte kann bei &ouml;ffentlichen Trainings versteckt werden.',
+	'label'			=> __('Map in public view'),
+	'tooltip'		=> __('This map can be hidden in public workouts.'),
 	'options'		=> array(
-		'never'			=> 'nie anzeigen',
-		'race'			=> 'bei Wettk&auml;mpfen',
-		'race-longjog'	=> 'bei Wettk&auml;mpfen und Langen L&auml;ufen',
-		'always'		=> 'immer anzeigen'
+		'never'			=> __('never'),
+		'race'			=> __('by competition'),
+		'race-longjog'	=> __('by competition and long runs'),
+		'always'		=> __('show always')
 	),
 )));
 $Privacy->addToCategoryList();
@@ -315,7 +315,7 @@ $Privacy->addToCategoryList();
 
 
 
-$Design = new ConfigCategory('design', 'Design');
+$Design = new ConfigCategory('design', __('Design'));
 $Design->setKeys(array(
 	'DB_HIGHLIGHT_TODAY',
 	'DB_DISPLAY_MODE',
@@ -326,39 +326,39 @@ $Design->setKeys(array(
 ));
 $Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
 	'default'		=> true,
-	'label'			=> 'Heute hervorheben',
-	'tooltip'		=> 'im Kalender',
+	'label'			=> __('Highlight today'),
+	'tooltip'		=> __('in the calendar'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Design->addConfigValue( new ConfigValueSelect('DB_DISPLAY_MODE', array(
 	'default'		=> 'week',
-	'label'			=> 'Kalender-Modus',
+	'label'			=> __('Calendar mode'),
 	'options'		=> array(
-		'week'			=> 'Wochenansicht',
-		'month'			=> 'Monatsansicht'
+		'week'			=> __('Week view'),
+		'month'			=> __('Month view')
 	),
 	'tooltip'		=> 'Standardansicht f&uuml;r den Kalender',
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Design->addConfigValue( new ConfigValueBool('DB_SHOW_CREATELINK_FOR_DAYS', array(
 	'default'		=> true,
-	'label'			=> 'Training-Hinzuf&uuml;gen-Link f&uuml;r jeden Tag anzeigen',
+	'label'			=> __('Show Workout-Add button for every day'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Design->addConfigValue( new ConfigValueBool('DB_SHOW_DIRECT_EDIT_LINK', array(
 	'default'		=> true,
-	'label'			=> 'Training-Bearbeiten-Link im Kalender anzeigen',
+	'label'			=> __('Show Workout-Edit button in the calendar'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Design->addConfigValue( new ConfigValueBool('DESIGN_BG_FIX_AND_STRETCH', array(
 	'default'		=> true,
-	'label'			=> 'Hintergrundbild skalieren',
+	'label'			=> __('Scale background image'),
 	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
 $Design->addConfigValue( new ConfigValueSelectFile('DESIGN_BG_FILE', array(
 	'default'		=> 'img/backgrounds/Default.jpg',
-	'label'			=> 'Hintergrundbild',
-	'tooltip'		=> 'Eigene Bilder in /img/backgrounds/',
+	'label'			=> __('Background image'),
+	'tooltip'		=> __('Own images in /img/backgrounds/'),
 	'folder'		=> 'img/backgrounds/',
 	'onchange'		=> Ajax::$RELOAD_PAGE
 )));
@@ -368,7 +368,7 @@ $Design->addToCategoryList();
 
 
 
-$Calculations = new ConfigCategory('calculations', 'Rechenspiele');
+$Calculations = new ConfigCategory('calculations', __('Calculations'));
 $Calculations->setKeys(array(
 	'RECHENSPIELE',
 	'VDOT_HF_METHOD',
@@ -423,14 +423,14 @@ $Calculations->addConfigValue( new ConfigValueInt('CTL_DAYS', array(
 )));
 $Calculations->addConfigValue( new ConfigValueInt('VDOT_DAYS', array(
 	'default'		=> 30,
-	'label'			=> 'Tage f&uuml;r VDOT',
+	'label'			=> __('Days for VDOT'),
 	'tooltip'		=> 'Anzahl an Tagen, die zur Berechnung der VDOT-Form genutzt werden',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_CORRECTOR', array(
 	'default'		=> '',
-	'label'			=> 'manuelle VDOT-Korrektur',
+	'label'			=> __('Manual VDOT-correction'),
 	'tooltip'		=> 'Falls die automatische VDOT-Korrektur nicht passt, kannst du einen manuellen Faktor hier eingeben.',
 	'onchange'		=> Ajax::$RELOAD_PLUGINS,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
@@ -445,22 +445,22 @@ $Calculations->addConfigValue( new ConfigValueString('VDOT_MANUAL_VALUE', array(
 $Calculations->addConfigValue( new ConfigValueBool('JD_USE_VDOT_CORRECTION_FOR_ELEVATION', array(
 	'default'		=> false,
 	'label'			=> 'VDOT: Distanz-Korrektur verwenden',
-	'tooltip'		=> 'Zur VDOT-Berechnung die Distanz nach Greif an die H&ouml;henmeter anpassen.',
+	'tooltip'		=> 'Zur VDOT-Berechnung die Distanz nach Greif an die altitudenmeter anpassen.',
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_POSITIVE_ELEVATION', array(
 	'default'		=> '2',
-	'label'			=> 'VDOT: Distanz-Korrektur pro pos. H&ouml;henmeter',
-	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
+	'label'			=> 'VDOT: Distanz-Korrektur pro pos. altitudenmeter',
+	'tooltip'		=> 'Um bei der VDOT-Berechnung altitudenmeter zu beachten, kann die Distanz den altitudenmetern entsprechend angepasst werden.',
 	'unit'			=> FormularUnit::$M,
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
 )));
 $Calculations->addConfigValue( new ConfigValueString('VDOT_CORRECTION_NEGATIVE_ELEVATION', array(
 	'default'		=> '-1',
-	'label'			=> 'VDOT: Distanz-Korrektur pro neg. H&ouml;henmeter',
-	'tooltip'		=> 'Um bei der VDOT-Berechnung H&ouml;henmeter zu beachten, kann die Distanz den H&ouml;henmetern entsprechend angepasst werden.',
+	'label'			=> 'VDOT: Distanz-Korrektur pro neg. altitudenmeter',
+	'tooltip'		=> 'Um bei der VDOT-Berechnung altitudenmeter zu beachten, kann die Distanz den altitudenmetern entsprechend angepasst werden.',
 	'unit'			=> FormularUnit::$M,
 	'layout'		=> FormularFieldset::$LAYOUT_FIELD_W100,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("&Uuml;ber das Tool <em>Datenbank-Cleanup</em> k&ouml;nnen jetzt alle VDOT-Werte neuberechnet werden."));'
@@ -484,7 +484,7 @@ $Calculations->addToCategoryList();
 
 
 
-$TrainingForm = new ConfigCategory('trainingform', 'Eingabeformular');
+$TrainingForm = new ConfigCategory('trainingform', __('Input form'));
 $TrainingForm->setKeys(array(
 	'TRAINING_CREATE_MODE',
 	'TRAINING_SHOW_AFTER_CREATE',
@@ -500,78 +500,78 @@ $TrainingForm->setKeys(array(
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
 	'default'		=> 'google',
-	'label'			=> 'H&ouml;henkorrektur &uuml;ber',
+	'label'			=> 'altitudenkorrektur &uuml;ber',
 	'options'		=> array(
 		'google'		=> 'maps.googleapis.com',
 		'geonames'		=> 'ws.geonames.org'
 	),
-	'tooltip'		=> 'F&uuml;r die H&ouml;henkorrektur k&ouml;nnen verschiedene Server verwendet werden'
+	'tooltip'		=> 'F&uuml;r die altitudenkorrektur k&ouml;nnen verschiedene Server verwendet werden'
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_SHOW_AFTER_CREATE', array(
 	'default'		=> false,
-	'label'			=> 'Training direkt anzeigen',
+	'label'			=> __('Show workout directly'),
 	'tooltip'		=> 'Das Training nach dem Erstellen direkt &ouml;ffnen.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_CREATE_MODE', array(
 	'default'		=> 'garmin',
-	'label'			=> 'Standard-Eingabemodus',
+	'label'			=> __('Standard-Entry-Mode'),
 	'options'		=> array(
-		'upload'		=> 'Datei hochladen',
-		'garmin'		=> 'Garmin-Communicator',
+		'upload'		=> __('Upload file'),
+		'garmin'		=> __('Garmin-Communicator'),
 		'form'			=> 'Standard-Formular'
 	)
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('COMPUTE_KCAL', array(
 	'default'		=> true,
-	'label'			=> 'Kalorien berechnen',
+	'label'			=> __('Calculate calories'),
 	'tooltip'		=> 'Die Kalorien werden im Formular bei einer &Auml;nderung der Dauer automatisch angepasst. Dabei wird der f&uuml;r die Sportart hinterlegte Wert verwendet.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('COMPUTE_POWER', array(
 	'default'		=> true,
-	'label'			=> 'Power berechnen',
+	'label'			=> __('Calculate power'),
 	'tooltip'		=> 'Beim Radfahren kann die jeweilige Power anhand einiger physikalischer Gr&ouml;&szlig;en automatisch berechnet werden.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_DO_ELEVATION', array(
 	'default'		=> true,
-	'label'			=> 'H&ouml;henkorrektur verwenden',
-	'tooltip'		=> 'Die H&ouml;hendaten k&ouml;nnen &uuml;ber externe APIs korrigiert werden. Das ist meist deutlich besser als GPS-Messungen'
+	'label'			=> 'altitudenkorrektur verwenden',
+	'tooltip'		=> 'Die altitudendaten k&ouml;nnen &uuml;ber externe APIs korrigiert werden. Das ist meist deutlich besser als GPS-Messungen'
 )));
 $TrainingForm->addConfigValue( new ConfigValueString('PLZ', array(
 	'default'		=> '',
-	'label'			=> 'Ort',
+	'label'			=> __('Place'),
 	'tooltip'		=> 'zum Laden von Wetterdaten von openweathermap.org<br><em>Ortsname, L&auml;nderk&uuml;rzel</em>',
 	'size'			=> FormularInput::$SIZE_MIDDLE
 )));
 $TrainingForm->addConfigValue( new ConfigValueBool('TRAINING_LOAD_WEATHER', array(
 	'default'		=> true,
-	'label'			=> 'Wetter laden',
+	'label'			=> __('Load weather'),
 	'tooltip'		=> 'Das aktuelle Wetter kann beim Eintragen eines neuen Trainings geladen und als Voreingabe eingef&uuml;gt werden.'
 )));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SPORTS', array(
 	'default'		=> 'id-asc',
-	'label'			=> 'Sortierung: Sportarten',
+	'label'			=> __('Sort: Sport Types'),
 	'options'		=> array( // see SportFactory::getOrder()
-		'id-asc'		=> 'id (&auml;lteste zuerst)',
-		'id-desc'		=> 'id (neueste zuerst)',
-		'alpha'			=> 'alphabetisch'
+		'id-asc'		=> __('id (oldest first)'),
+		'id-desc'		=> __('id (newest first)'),
+		'alpha'			=> __('alphabetical')
 	)
 )));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_TYPES', array(
 	'default'		=> 'id-asc',
-	'label'			=> 'Sortierung: Typen',
+	'label'			=> __('Sort: Types'),
 	'options'		=> array( // see TypeFactory::getOrder()
-		'id-asc'		=> 'id (&auml;lteste zuerst)',
-		'id-desc'		=> 'id (neueste zuerst)',
-		'alpha'			=> 'alphabetisch'
+		'id-asc'		=> __('id (oldest first)'),
+		'id-desc'		=> __('id (newest first)'),
+		'alpha'			=> __('alphabetical')
 	)
 )));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_SORT_SHOES', array(
 	'default'		=> 'id-asc',
-	'label'			=> 'Sortierung: Schuhe',
+	'label'			=> __('Sort: Shoes'),
 	'options'		=> array( // see ShoeFactory::getOrder()
-		'id-asc'		=> 'id (&auml;lteste zuerst)',
-		'id-desc'		=> 'id (neueste zuerst)',
-		'alpha'			=> 'alphabetisch'
+		'id-asc'		=> __('id (oldest first)'),
+		'id-desc'		=> __('id (newest first)'),
+		'alpha'			=> __('alphabetical')
 	)
 )));
 $TrainingForm->addConfigValue(new ConfigValueArray('GARMIN_IGNORE_IDS', array('default' => array())));
@@ -581,12 +581,12 @@ $TrainingForm->addToCategoryList();
 
 
 
-$SearchWindow = new ConfigCategory('searchwindow', 'Suchfenster');
+$SearchWindow = new ConfigCategory('searchwindow', __('Search window'));
 $SearchWindow->setKeys(array(
 	'RESULTS_AT_PAGE'
 ));
 $SearchWindow->addConfigValue( new ConfigValueInt('RESULTS_AT_PAGE', array(
 	'default'		=> 15,
-	'label'			=> 'Suchergebnisse pro Seite'
+	'label'			=> __('Results per page')
 )));
 $SearchWindow->addToCategoryList();
