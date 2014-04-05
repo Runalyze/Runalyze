@@ -14,19 +14,19 @@ class ConfigTabClothes extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_clothes';
-		$this->title = 'Kleidung';
+		$this->title = __('Clothes');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Clothes = new FormularFieldset('Deine Kleidung');
+		$Clothes = new FormularFieldset(__('Your clothes'));
 		$Clothes->setHtmlCode($this->getCode());
-		$Clothes->addInfo('Die Kleidung kann wenn gew&uuml;nscht f&uuml;r weitere Statistiken bei jedem Training protokolliert werden.<br>
-						Alle Kleidungsst&uuml;cke werden nach Kategorie geordnet mit der Abk&uuml;rzung im Formular angezeigt.');
-		$Clothes->addInfo('Die Kategorie sollte eine Zahl sein und dient der Ordnung der Kleidungsst&uuml;cke.');
-		$Clothes->addInfo('F&uuml;lle einfach die leere letzte Zeile aus, um ein neues Kleidungsst&uuml;ck hinzuzuf&uuml;gen.');
+		$Clothes->addInfo(__('The clothes can be recorded for additional statistics for each workout<br>
+						All clothes are shown in the formular ordered by categories with their abbreviation.'));
+		$Clothes->addInfo(__('The category should be a number and is used to order the clothes'));
+		$Clothes->addInfo(__('Just fill up the last empty row to add a new cloth'));
 
 		$this->Formular->addFieldset($Clothes);
 	}
@@ -40,10 +40,10 @@ class ConfigTabClothes extends ConfigTab {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr>
-						<th>Name</th>
-						<th>Abk&uuml;rzung</th>
-						<th>Kategorie</th>
-						<th>l&ouml;schen?</th>
+						<th>'.__('Name').'</th>
+						<th>'.__('Abbreviation').'</th>
+						<th>'.__('Category').'</th>
+						<th>'.__('Delete?').'</th>
 					</tr>
 				</thead>
 				<tbody>';
