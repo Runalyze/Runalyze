@@ -14,17 +14,16 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_dataset';
-		$this->title = 'Dataset';
+		$this->title = __('Dataset');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Dataset = new FormularFieldset('Dein Dataset');
+		$Dataset = new FormularFieldset(__('Your Dataset'));
 		$Dataset->setHtmlCode($this->getCode());
-		$Dataset->addInfo('Bei Runalyze kannst du selbst bestimmen, welche Daten du f&uuml;r Trainings
-						speichern und anzeigen lassen m&ouml;chtest.');
+		$Dataset->addInfo(__('You can determine which data you want to save and which data is displayed in your workouts'));
 
 		$this->Formular->addFieldset($Dataset);
 	}
@@ -39,11 +38,11 @@ class ConfigTabDataset extends ConfigTab {
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
-						<th>'.Ajax::tooltip('Anzeige', 'Die Information wird in der Tabelle direkt angezeigt').'</th>
-						<th colspan="2">'.Ajax::tooltip('Auswertung', 'Die Daten werden in der Auswertung der Sportart angezeigt').'</th>
-						<th>'.Ajax::tooltip('Reihenfolge', 'Gibt die Reihenfolge der Anzeige vor').'</th>
-						<th>'.Ajax::tooltip('CSS-Class', '\'c\': zentriert<br>\'l\': linksb&uuml;ndig<br>\'small\': klein<br>\'b\': fett').'</th>
-						<th>'.Ajax::tooltip('CSS-Style', 'beliebige CSS-Anweisung').'</th>
+						<th>'.Ajax::tooltip(__('Display'), __('The information will be shown directly in the table')).'</th>
+						<th colspan="2">'.Ajax::tooltip(__('Analysis'), __('The data will be shown in the evaluation of the sport type')).'</th>
+						<th>'.Ajax::tooltip(__('Order'), __('indicates the order of appearance')).'</th>
+						<th>'.Ajax::tooltip(__('CSS-Class'), __('\'c\': centered<br>\'l\': left-aligned<br>\'small\': small<br>\'b\': bold')).'</th>
+						<th>'.Ajax::tooltip(__('CSS-Style'), __('any CSS-Code')).'</th>
 						<th>Beispiel</th>
 					</tr>
 				</thead>
@@ -193,14 +192,14 @@ class ConfigTabDataset extends ConfigTab {
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,
-			'route'		=> 'Sportplatz',
+			'route'		=> __('sports field'),
 			'clothes'	=> $ClothesID,
 			'splits'	=> '5|26:51-5|24:36',
-			'comment'	=> 'Testtraining',
+			'comment'	=> __('Test workout'),
 			'partner'	=> 'Achim',
 			'abc'		=> 1,
 			'shoeid'	=> $ShoeID,
-			'notes'		=> 'Das war ein tolles Training.',
+			'notes'		=> __('That was a fantastic workout.'),
 			'arr_time'	=> '',
 			'arr_lat'	=> '',
 			'arr_lon'	=> '',

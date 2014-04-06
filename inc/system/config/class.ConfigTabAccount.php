@@ -14,7 +14,7 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_account';
-		$this->title = 'Account';
+		$this->title = __('Account');
 	}
 
 	/**
@@ -25,44 +25,44 @@ class ConfigTabAccount extends ConfigTab {
 
 		FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 
-		$UsernameField = new FormularInput('name', 'Username', $Data['username']);
+		$UsernameField = new FormularInput('name', __('Username'), $Data['username']);
 		$UsernameField->setDisabled();
 
-		$MailField = new FormularInput('name', 'E-Mail-Adresse', $Data['mail']);
+		$MailField = new FormularInput('name', __('E-Mail address'), $Data['mail']);
 		$MailField->setDisabled();
 
-		$NameField = new FormularInput('name', 'Name', $Data['name']);
+		$NameField = new FormularInput('name', __('Name'), $Data['name']);
 
-		$SinceField = new FormularInput('name', 'Registriert seit', date('d.m.Y H:i', $Data['registerdate']));
+		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
 
-		$LastLoginField = new FormularInput('name', 'Letzte Anmeldung', date('d.m.Y H:i', $Data['lastlogin']));
+		$LastLoginField = new FormularInput('name', __('Last Logon'), date('d.m.Y H:i', $Data['lastlogin']));
 		$LastLoginField->setDisabled();
 
-		$Account = new FormularFieldset('Dein Account');
+		$Account = new FormularFieldset(__('Your account'));
 		$Account->addField($UsernameField);
 		$Account->addField($MailField);
 		$Account->addField($NameField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
 
-		$Backup = new FormularFieldset('Daten sichern');
+		$Backup = new FormularFieldset(__('Back uo your data'));
 		$Backup->setCollapsed();
 
 		if (Plugin::isInstalled('RunalyzePluginTool_DbBackup')) {
 			$Plugin = Plugin::getInstanceFor('RunalyzePluginTool_DbBackup');
-			$Backup->addInfo('Bitte nutze das Plugin <strong>'.$Plugin->getWindowLink().'</strong>');
+			$Backup->addInfo(__('Please use the plugin').' <strong>'.$Plugin->getWindowLink().'</strong>');
 		} else {
-			$Backup->addInfo('Das Sichern aller Daten ist bisher nicht manuell m&ouml;glich.<br>
-							In wichtigen Einzelf&auml;llen kannst du uns eine E-Mail an mail@runalyze.de schicken und wir k&uuml;mmern uns darum.');
+			$Backup->addInfo(__('The back up of all your data is not manually possible yet.<br>
+							In important individual cases write us an e-mail to mail@runalyze.de schicken and and we will take care of it right away!'));
 		}
 
-		$DeleteLink  = Ajax::window('<a href="call/window.delete.php"><strong>Account unwiderruflich l&ouml;schen &raquo;</strong></a>');
-		$DeleteLink .= '<br><small>Nach dem L&ouml;schen erh&auml;lst du eine E-Mail mit dem Link zum L&ouml;schen deines Accounts.
-						Das L&ouml;schen kann danach nicht r&uuml;ckg&auml;ngig gemacht werden.
-						Du solltest daher deine Daten sichern, falls du doch noch einmal zur&uuml;ckkehren m&ouml;chtest.</small>';
+		$DeleteLink  = Ajax::window('<a href="call/window.delete.php"><strong>'.__('Delete account permanently').'&raquo;</strong></a>');
+		$DeleteLink .= '<br><small>'.__('After your wish for deletion you\'ll receive a mail with a link to delete your account.
+						The deletion cannot be reversed.
+						You should therefore backup your data, so that you can return if you want.').'</small>';
 
-		$Delete = new FormularFieldset('Account l&ouml;schen');
+		$Delete = new FormularFieldset(__('Delete your account'));
 		$Delete->setCollapsed();
 		$Delete->addWarning($DeleteLink);
 
