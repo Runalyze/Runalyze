@@ -83,7 +83,7 @@ class ConfigTabs {
 		if (Request::param('form') == 'true') {
 			$this->Tabs[$this->getCurrentKey()]->parsePostData();
 
-			$SubmitInfo = '<p class="okay"><em>Die Einstellungen wurden gespeichert.</em></p>';
+			$SubmitInfo = '<p class="okay"><em>'.__('The settings have been saved').'</em></p>';
 
 			if (!empty(self::$Messages))
 				$SubmitInfo .= implode('', self::$Messages);

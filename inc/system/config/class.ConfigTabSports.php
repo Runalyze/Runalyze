@@ -23,7 +23,7 @@ class ConfigTabSports extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Sports = new FormularFieldset(__('Your Sport Types'));
 		$Sports->setHtmlCode($this->getCode().$this->getInfoFieldsAfterCode());
-		$Sports->addInfo('Fahre mit der Maus &uuml;ber die &Uuml;berschrift, falls dir die Bezeichnungen unklar sind.');
+		$Sports->addInfo(__('Hover over the headings if the abbreviations are unclear.'));
 
 		$this->Formular->addFieldset($Sports);
 	}
@@ -34,7 +34,7 @@ class ConfigTabSports extends ConfigTab {
 	 */
 	private function getInfoFieldsAfterCode() {
 		$Code  = HTML::info(__('The mode <em>short</em> has the effect that in the week view is only shown a symbol and no workout data for a workout.'));
-		$Code .= HTML::info('Die Werte f&uuml;r <em>&Oslash; HF</em> und <em>RPE</em> sind f&uuml;r die TRIMP-Berechnung notwendig.');
+		$Code .= HTML::info(__('The values for  <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the TRIMP-calculation.'));
 		$Code .= HTML::info(__('The following icons are available:') .$this->getSportIconList());
 
 		return $Code;
@@ -63,19 +63,19 @@ class ConfigTabSports extends ConfigTab {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
-						<th class="small">'.Ajax::tooltip('kurz', 'Es wird nur ein Symbol vor dem jeweiligen Tag angezeigt').'</th>
-						<th class="small" colspan="2">Bild</th>
-						<th>'.Ajax::tooltip('Sportart', 'Name der Sportart').'</th>
-						<th>'.Ajax::tooltip('kcal/h', 'Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde').'</th>
-						<th>'.Ajax::tooltip('&Oslash;&nbsp;HF', 'Die durchschnittliche Herzfrequenz (wird z.B. f&uuml;r TRIMP verwendet)').'</th>
-						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
-						<th>'.Ajax::tooltip('km', 'Es wird eine Distanz zur&uuml;ckgelegt').'</th>
-						<th>'.Ajax::tooltip('Einheit', 'Einheit f&uuml;r die Geschwindigkeit').'</th>
-						<th>'.Ajax::tooltip('Typen', 'Es werden Trainingstypen wie Intervalltraining verwendet').'</th>
-						<th>'.Ajax::tooltip('Puls', 'Der Puls wird dabei aufgezeichnet').'</th>
-						<th>'.Ajax::tooltip('Power', 'Die Power wird dabei aufgezeichnet bzw. berechnet').'</th>
-						<th>'.Ajax::tooltip('Drau&szlig;en', 'Der Sport wird an der freien Luft betrieben (Strecke/Wetter)').'</th>
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, 'Eine Sportart kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
+						<th class="small">'.Ajax::tooltip(__('short'), __('There will be only shown a symbol before the given day.')).'</th>
+						<th class="small" colspan="2">'.__('Image').'</th>
+						<th>'.Ajax::tooltip(__('Sport type'), __('Name of the sport type')).'</th>
+						<th>'.Ajax::tooltip(__('kcal/h'), __('Average energy turnover in  in kilocalories per hour')).'</th>
+						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HF'), __('The average heart rate (for example use for TRIMP calculation)')).'</th>
+						<th>'.Ajax::tooltip(__('RPE'), __('Rating of Perceived Exertion (based on Borg) = average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
+						<th>'.Ajax::tooltip(__('km'), __('Has a distance')).'</th>
+						<th>'.Ajax::tooltip(__('Unit'), __('Unit for the speed')).'</th>
+						<th>'.Ajax::tooltip(__('Types'), __('The sport type has different training types')).'</th>
+						<th>'.Ajax::tooltip(__('Pulse'), __('The heart rate is recorded.')).'</th>
+						<th>'.Ajax::tooltip(__('Power'), __('The power is recorded or calculated.')).'</th>
+						<th>'.Ajax::tooltip(__('Outside'), __('The sport type is done in the open air (Route/Weather)')).'</th>
+						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport type can only be deleted no references exists.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
