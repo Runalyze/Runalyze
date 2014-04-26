@@ -108,7 +108,7 @@ class LeafletMap {
 	 * @return string
 	 */
 	public function getJS() {
-		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.CONF_TRAINING_MAPTYPE.'");';
+		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.CONF_TRAINING_LEAFLET_LAYER.'");';
 		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\');';
 
 		foreach ($this->Routes as $Route)

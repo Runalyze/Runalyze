@@ -66,7 +66,7 @@ $Training->setKeys(array(
 	'ELEVATION_MIN_DIFF',
 	'TRAINING_PLOT_MODE',
 	'GMAP_PATH_BREAK',
-	'',//'TRAINING_MAPTYPE',
+	'',
 	'GMAP_PATH_PRECISION',
 	'TRAINING_MAP_COLOR',
 	'PACE_Y_LIMIT_MAX',
@@ -208,11 +208,6 @@ $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 	'tooltip'		=> __('as #RGB-Code'),
 	'type'			=> 'color'
 )));
-$Training->addConfigValue( new ConfigValueString('TRAINING_MAPTYPE', array(
-	'default'		=> 'OpenStreetMap',
-	'label'			=> __('Map: Type'),
-	'onchange'		=> Ajax::$RELOAD_TRAINING
-)));
 $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
 	'default'		=> 'treshold',
 	'label'			=> __('altitude equalisation'),
@@ -237,6 +232,7 @@ $Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', arra
 	'label'			=> __('Map: Before graphs'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
+$Training->addConfigValue(new ConfigValueString('TRAINING_LEAFLET_LAYER', array('default' => 'OpenStreetMap')));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_DETAILS', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ZONES', array('default' => true)));
