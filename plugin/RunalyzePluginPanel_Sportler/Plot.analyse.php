@@ -47,7 +47,7 @@ $Plot->setXLabels($Labels);
 $Plot->setXAxisTimeFormat('%m/%y');
 $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
-$Plot->Options['xaxis']['tickLength'] = 3;
+//$Plot->Options['xaxis']['tickLength'] = 3;
 $Plot->Options['yaxis']['autoscaleMargin'] = 0.1;
 
 $Plot->addYAxis(1, 'left');

@@ -1,20 +1,20 @@
-@flot-border-color:				#000;
-@flot-background-color:			#60a920;
-@flot-background-image:			url(../../img/dash.png);
+@flot-border-color:				transparent; //#000;
+@flot-background-color:			#f6f6f6; //transparent; //#fff; //#60a920;
+@flot-background-image:			none; //url(../../img/dash.png);
 @flot-width:					480px;
 @flot-height:					190px;
 
-@flot-label-color:				#fff;
-@flot-label-font-size:			9px;
+@flot-label-color:				@font-color; //#fff;
+@flot-label-font-size:			10px;
 
-@flot-legend-color:				#545454;
-@flot-legend-padding:			1px 2px;
+@flot-legend-color:				@font-color;
+@flot-legend-padding:			0px 2px;
 
 @flot-title-height:				12px;
-@flot-title-font-size:			9px;
-@flot-title-background:			rgba(0,0,0,.8);
-@flot-title-color:				#999;
-@flot-title-color-hover:		#fff;
+@flot-title-font-size:			10px;
+@flot-title-background:			transparent; //rgba(0,0,0,.8);
+@flot-title-color:				#000; //#999;
+@flot-title-color-hover:		#000; //#fff;
 @flot-title-padding:			2px 1px 1px;
 @flot-title-margin:				2px 0 0 -1px;
 
@@ -24,22 +24,23 @@
 @flot-error-border:				#ccc;
 @flot-error-padding:			5px;
 
-@flot-annotation-color:			#545454;
-@flot-annotation-background:	rgba(255,255,255,0.6);
-@flot-annotation-font-size:		9px;
-@flot-annotation-padding:		1px;
+@flot-annotation-color:			#fff; //#545454;
+@flot-annotation-background:	#000; //rgba(255,255,255,0.6);
+@flot-annotation-font-size:		10px;
+@flot-annotation-padding:		1px 3px; //1px;
 @flot-annotation-margin:		2px 0 0 2px;
 
-@flot-tooltip-background:		rgba(255,255,255,0.8);
-@flot-tooltip-font-size:		.9em;
-@flot-tooltip-padding:			2px;
-@flot-tooltip-border:			#ccc;
+@flot-tooltip-color:			#fff;
+@flot-tooltip-background:		#000; //rgba(255,255,255,0.8);
+@flot-tooltip-font-size:		10px; //.9em;
+@flot-tooltip-padding:			3px 8px; //2px;
+@flot-tooltip-border:			transparent; //#ccc;
 
 @flot-settings-padding:			4px 1px 6px;
-@flot-settings-border:			#ccc;
+@flot-settings-border:			transparent; //#ccc;
 @flot-settings-height:			14px;
 @flot-settings-border-radius:	2px;
-@flot-settings-background:		#eee;
+@flot-settings-background:		transparent; //#eee;
 
 
 
@@ -102,7 +103,7 @@
 		position: fixed !important;
 		top: 0;
 		left: 0;
-		z-index: 500;
+		z-index: @z-index-fullscreen;
 
 		.show-only-fullscreen {
 			display: inline;
@@ -120,13 +121,24 @@
 		margin: 0 !important;
 	}
 
-	.legend td {
-		color: @flot-legend-color;
-		vertical-align: middle;
-		padding: @flot-legend-padding;
+	.legend {
+		td {
+			color: @flot-legend-color;
+			vertical-align: middle;
+			padding: @flot-legend-padding;
+
+			&.legendLabel {
+				padding-right: 10px;
+			}
+
+			&.legendColorBox {
+				//
+			}
+		}
 	}
 
 	.flot-title {
+		display: none;
 		position: absolute;
 		bottom: 0;
 		left: 0;
@@ -189,7 +201,7 @@
 	}
 
 	.map-tooltip {
-		z-index: 50;
+		z-index: @z-index-map-tooltip;
 		display: none;
 		position: fixed;
 		text-align: left;
@@ -197,7 +209,8 @@
 		padding: @flot-tooltip-padding;
 		font-size: @flot-tooltip-font-size;
 		background-color: @flot-tooltip-background;
-		border: 1px solid @flot-tooltip-border;
+		color: @flot-tooltip-color;
+		//border: 1px solid @flot-tooltip-border;
 	}
 
 	.map-tooltip em {

@@ -128,24 +128,19 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
 		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
 
-		if ($PersonalBestInSeconds > 0 && $PersonalBestInSeconds <= $PrognosisInSeconds) {
-			$oldTag = 'strong';
-			$newTag = 'del';
-		} else {
-			$oldTag = 'del';
-			$newTag = 'strong';
-		}
-
 		$oldTimeString  = Time::toString($PersonalBestInSeconds);
 		$newTimeString  = Time::toString($PrognosisInSeconds);
 		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
 		$distanceString = Running::Km($distance, 0, ($distance <= 3));
 
+		if (true || $PersonalBestInSeconds > $PrognosisInSeconds)
+			$newTimeString = '<strong>'.$newTimeString.'</strong>';
+
 		echo '
 			<p>
 				<span class="right">
-					<small>von</small> '.Ajax::tooltip('<'.$oldTag.'>'.$oldTimeString.'</'.$oldTag.'>', 'VDOT: '.$VDOTold).'
-					<small>auf</small> '.Ajax::tooltip('<'.$newTag.'>'.$newTimeString.'</'.$newTag.'>', 'VDOT: '.$VDOTnew).'
+					<small>von</small> '.Ajax::tooltip($oldTimeString, 'VDOT: '.$VDOTold).'
+					<small>auf</small> '.Ajax::tooltip($newTimeString, 'VDOT: '.$VDOTnew).'
 					<small>('.$paceString.'/km)</small>
 				</span>
 				<strong>'.$distanceString.'</strong>

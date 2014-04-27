@@ -1,6 +1,5 @@
 @overlay-background:				rgba(0,0,0,.6);
 @overlay-fullscreen-background:		#f6f6f7;
-@overlay-z-index:					1700;
 @overlay-padding:					0;
 @overlay-margin-top:				25px;
 @overlay-width:						820px;
@@ -12,7 +11,7 @@
 
 #overlay {
 	display: none;
-	z-index: @overlay-z-index;
+	z-index: @z-index-overlay;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -23,7 +22,7 @@
 
 #ajax {
 	display: none;
-	z-index: (@overlay-z-index + 1);
+	z-index: (@z-index-overlay + 1);
 	position: absolute;
 	left: 50%;
 	width: @overlay-width;
@@ -49,7 +48,7 @@
 		width: 100% !important;
 		height: 100%;
 		background-color: @overlay-fullscreen-background;
-		z-index: (@overlay-z-index + 10);
+		z-index: (@z-index-overlay + 10);
 		margin: 0 !important;
 		box-sizing: border-box;
 		border-radius: 0;
@@ -62,7 +61,7 @@
 
 #ajax-navigation {
 	display: block;
-	z-index: (@overlay-z-index + 1);
+	z-index: (@z-index-overlay + 1);
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -92,7 +91,7 @@ form#training {
 }
 
 #close, #ajax-prev, #ajax-next {
-	z-index: (@overlay-z-index + 12);
+	z-index: (@z-index-overlay + 12);
 	position: absolute;
 	cursor: pointer;
 }
