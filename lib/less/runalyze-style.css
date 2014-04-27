@@ -81,7 +81,7 @@ body#home {
   font-size: 12px;
 }
 #installer #headline {
-  z-index: 12;
+  z-index: 1000;
 }
 #installer label strong {
   display: block;
@@ -196,7 +196,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1500;
+  z-index: 1000;
   width: 100%;
   line-height: 24px;
   overflow: hidden;
@@ -435,7 +435,7 @@ fieldset .validation-failed {
 }
 #overlay {
   display: none;
-  z-index: 1700;
+  z-index: 2000;
   position: fixed;
   left: 0;
   top: 0;
@@ -445,7 +445,7 @@ fieldset .validation-failed {
 }
 #ajax {
   display: none;
-  z-index: 1701;
+  z-index: 2001;
   position: absolute;
   left: 50%;
   width: 820px;
@@ -469,7 +469,7 @@ fieldset .validation-failed {
   width: 100% !important;
   height: 100%;
   background-color: #f6f6f7;
-  z-index: 1710;
+  z-index: 2010;
   margin: 0 !important;
   box-sizing: border-box;
   border-radius: 0;
@@ -482,7 +482,7 @@ fieldset .validation-failed {
 }
 #ajax-navigation {
   display: block;
-  z-index: 1701;
+  z-index: 2001;
   position: fixed;
   left: 0;
   top: 0;
@@ -511,7 +511,7 @@ form#training {
 #close,
 #ajax-prev,
 #ajax-next {
-  z-index: 1712;
+  z-index: 2012;
   position: absolute;
   cursor: pointer;
 }
@@ -989,7 +989,7 @@ tr.ERROR td {
   display: block;
 }
 .panel-menu ul .submenu {
-  z-index: 20;
+  z-index: 100;
   display: none;
   min-width: 100px;
   position: absolute;
@@ -1100,7 +1100,7 @@ statistics-containerr {
   border-bottom-color: #000000;
 }
 #statistics-nav ul.submenu {
-  z-index: 20;
+  z-index: 100;
   display: none;
   position: absolute;
   margin: 0 0 0 -1px;
@@ -1159,7 +1159,7 @@ statistics-containerr {
   opacity: 1;
 }
 #error-toolbar {
-  z-index: 2000;
+  z-index: 2500;
   position: fixed;
   bottom: 0;
   left: 50%;
@@ -1347,7 +1347,7 @@ td.bottom-spacer {
   width: 100%;
   height: 100%;
   background-color: #f6f6f7;
-  z-index: 500;
+  z-index: 3000;
 }
 #training-map.fullscreen.toolbar-box-content {
   padding: 6px 6px 6px;
@@ -1860,7 +1860,7 @@ label:active .checkbox-icon {
 }
 .tooltip {
   position: absolute;
-  z-index: 2020;
+  z-index: 1010;
   display: block;
   padding: 5px;
   font-size: 11px;
@@ -2091,10 +2091,10 @@ label:active .checkbox-icon {
 .flot {
   position: relative !important;
   margin: 0 auto;
-  border: 1px solid #000000;
+  border: 1px solid transparent;
   width: 480px;
   height: 190px;
-  background: url(../../img/dash.png) repeat #60a920;
+  background: none repeat #f6f6f6;
 }
 .flot .show-only-fullscreen {
   display: none;
@@ -2103,7 +2103,7 @@ label:active .checkbox-icon {
   position: fixed !important;
   top: 0;
   left: 0;
-  z-index: 500;
+  z-index: 3000;
 }
 .flot.fullscreen .show-only-fullscreen {
   display: inline;
@@ -2111,28 +2111,32 @@ label:active .checkbox-icon {
 .flot .tickLabel,
 .flot .legend td,
 .flot .flot-tick-label {
-  color: #ffffff;
+  color: #333333;
   line-height: 1;
-  font-size: 9px !important;
+  font-size: 10px !important;
 }
 .flot .legend table {
   padding: 0;
   margin: 0 !important;
 }
 .flot .legend td {
-  color: #545454;
+  color: #333333;
   vertical-align: middle;
-  padding: 1px 2px;
+  padding: 0px 2px;
+}
+.flot .legend td.legendLabel {
+  padding-right: 10px;
 }
 .flot .flot-title {
+  display: none;
   position: absolute;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.8);
-  color: #999999;
+  background: transparent;
+  color: #000000;
   height: 12px;
   line-height: 12px;
-  font-size: 9px;
+  font-size: 10px;
   text-align: center;
   width: 100%;
   padding: 2px 1px 1px;
@@ -2142,7 +2146,7 @@ label:active .checkbox-icon {
   margin: 0 5px;
 }
 .flot .flot-title .link:hover {
-  color: #ffffff;
+  color: #000000;
 }
 .flot .flot-settings-link {
   margin: 0;
@@ -2171,22 +2175,22 @@ label:active .checkbox-icon {
 }
 .flot .annotation {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 1px;
+  background-color: #000000;
+  padding: 1px 3px;
   margin: 2px 0 0 2px;
-  font-size: 9px;
-  color: #545454;
+  font-size: 10px;
+  color: #ffffff;
 }
 .flot .map-tooltip {
-  z-index: 50;
+  z-index: 1010;
   display: none;
   position: fixed;
   text-align: left;
   overflow: visible;
-  padding: 2px;
-  font-size: 0.9em;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid #cccccc;
+  padding: 3px 8px;
+  font-size: 10px;
+  background-color: #000000;
+  color: #ffffff;
 }
 .flot .map-tooltip em {
   font-weight: bold;
@@ -2205,11 +2209,11 @@ label:active .checkbox-icon {
   display: none;
   width: 100%;
   padding: 4px 1px 6px !important;
-  border-color: #cccccc;
+  border-color: transparent;
   border-style: solid;
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 2px 2px;
-  background-color: #eeeeee;
+  background-color: transparent;
   margin-left: -2px;
   margin-top: 17px;
   position: relative;
@@ -2352,7 +2356,7 @@ td.datepickerDisabled a:hover {
   position: absolute;
   top: 100%;
   left: -9999px;
-  z-index: 1010;
+  z-index: 100;
   width: 100%;
   box-sizing: border-box;
 }
@@ -2570,13 +2574,13 @@ td.datepickerDisabled a:hover {
 /* control positioning */
 .leaflet-control {
   position: relative;
-  z-index: 7;
+  z-index: 100;
   pointer-events: auto;
 }
 .leaflet-top,
 .leaflet-bottom {
   position: absolute;
-  z-index: 400;
+  z-index: 101;
   pointer-events: none;
 }
 .leaflet-top {
@@ -2945,7 +2949,7 @@ td.datepickerDisabled a:hover {
   left: 0;
   width: 100% !important;
   height: 100% !important;
-  z-index: 500;
+  z-index: 3000;
 }
 .leaflet-control-zoom-full i {
   width: 20px;

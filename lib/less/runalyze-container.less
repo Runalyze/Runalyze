@@ -172,7 +172,7 @@
 		}
 
 		.submenu {
-			z-index: 20;
+			z-index: @z-index-menu;
 			display: none;
 			min-width: 100px;
 			position: absolute;
@@ -309,7 +309,7 @@
 	}
 
 	ul.submenu {
-		z-index: 20;
+		z-index: @z-index-menu;
 		display: none;
 		position: absolute;
 		margin: 0 0 0 -1px;
@@ -381,7 +381,7 @@
 }
 
 #error-toolbar {
-	z-index: 2000;
+	z-index: @z-index-error-toolbar;
 	position: fixed;
 	bottom: 0;
 	left: 50%;

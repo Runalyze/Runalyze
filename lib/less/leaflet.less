@@ -83,13 +83,13 @@
 
 .leaflet-control {
 	position: relative;
-	z-index: 7;
+	z-index: @z-index-map-options;
 	pointer-events: auto;
 	}
 .leaflet-top,
 .leaflet-bottom {
 	position: absolute;
-	z-index: 400;
+	z-index: @z-index-map-options + 1;
 	pointer-events: none;
 	}
 .leaflet-top {
@@ -499,7 +499,7 @@
 	left: 0;
 	width: 100% !important;
 	height: 100% !important;
-	z-index: 500;
+	z-index: @z-index-fullscreen;
 }
 .leaflet-control-zoom-full i {
 	width: 20px;

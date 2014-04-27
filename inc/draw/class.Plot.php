@@ -116,25 +116,30 @@ class Plot {
 		$this->Options['series']['bars']['align'] = "center";
 		$this->Options['series']['bars']['fill'] = 0.9;
 
-		$this->Options['legend']['backgroundColor'] = "#FFF";
-		$this->Options['legend']['backgroundOpacity'] = 0.4;
-		$this->Options['legend']['margin'] = 2;
+		$this->Options['legend']['backgroundColor'] = "#000";
+		$this->Options['legend']['backgroundOpacity'] = 0;
+		$this->Options['legend']['margin'] = array(0,-18);
 		$this->Options['legend']['noColumns'] = 0;
 
-		$this->Options['yaxis']['color'] = 'rgba(255,255,255,0.2)'; // "#FFF";
-		$this->Options['xaxis']['color'] = 'rgba(255,255,255,0.2)'; // "#FFF";
+		$this->Options['yaxis']['color'] = 'rgba(0,0,0,0.1)'; //'rgba(255,255,255,0.2)'; // "#FFF";
+		$this->Options['xaxis']['color'] = 'rgba(0,0,0,0.1)'; //'rgba(255,255,255,0.2)'; // "#FFF";
+		//$this->Options['yaxis']['tickLength'] = 'full';
+		//$this->Options['xaxis']['tickLength'] = 'full';
 		$this->Options['xaxis']['monthNames'] = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
 
-		$this->Options['grid']['backgroundColor'] = "rgba(255,255,255,0.3)";
+		$this->Options['grid']['color'] = '#000'; //'rgba(0,0,0,0.1)';
+		$this->Options['grid']['backgroundColor'] = 'rgba(255,255,255,0.5)';
+		$this->Options['grid']['borderColor'] = array('top' => 'transparent', 'right' => '#999', 'bottom' => '#999', 'left' => '#999');
 		$this->Options['grid']['borderWidth'] = 1;
-		$this->Options['grid']['labelMargin'] = 2;
+		$this->Options['grid']['labelMargin'] = 5;
 		$this->Options['grid']['axisMargin'] = 2;
+		$this->Options['grid']['margin'] = array('top' => 20, 'right' => 0, 'bottom' => 0, 'left' => 0);
 
 		$this->Options['canvas'] = true;
-		$this->Options['font'] = 'Verdana 8px';
-		$this->Optoins['yaxis']['font'] = 'Verdana 8px';
-		$this->Optoins['xaxis']['font'] = 'Verdana 8px';
-		//$this->Options['grid']['canvasText'] = array('show' => false, 'font' => 'Verdana 8px');
+		$this->Options['font'] = 'Verdana 9px';
+		$this->Optoins['yaxis']['font'] = 'Verdana 9px';
+		$this->Optoins['xaxis']['font'] = 'Verdana 9px';
+		//$this->Options['grid']['canvasText'] = array('show' => false, 'font' => 'Verdana 9px');
 
 		$this->setMarginForGrid(5);
 	}

@@ -122,5 +122,6 @@ class TrainingPlotPulse extends TrainingPlot {
 		$Plot->addMarkingArea('y'.$YAxis, 10*ceil(self::HFmax()/10)*1,   10*ceil(self::HFmax()/10)*0.9, 'rgba(255,100,100,0.3)');
 		$Plot->addMarkingArea('y'.$YAxis, 10*ceil(self::HFmax()/10)*0.9, 10*ceil(self::HFmax()/10)*0.8, 'rgba(255,100,100,0.2)');
 		$Plot->addMarkingArea('y'.$YAxis, 10*ceil(self::HFmax()/10)*0.8, 10*ceil(self::HFmax()/10)*0.7, 'rgba(255,100,100,0.1)');
+		$Plot->addMarkingArea('y'.$YAxis, 10*ceil(self::HFmax()/10)*0.7, 10*ceil(self::HFmax()/10)*0.6, 'rgba(255,100,100,0.05)');
 	}
 }

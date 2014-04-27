@@ -108,7 +108,7 @@ class Splits {
 
 		$this->asArray[] = array(
 			'km' => $this->formatKM($km),
-			'time' => Time::toString($timeInSeconds, false, 2),
+			'time' => Time::toString($timeInSeconds, false, false, false),
 			'active' => $active
 		);
 		$this->arrayToString();
