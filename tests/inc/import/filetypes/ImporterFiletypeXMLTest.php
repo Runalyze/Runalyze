@@ -133,7 +133,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1000, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( "Bahn Sentruper Hoehe", $this->object->object(2)->getRoute() );
 		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getComment() );
-		$this->assertFalse( $this->object->object(2)->Weather()->isUnknown() );
+		//$this->assertFalse( $this->object->object(2)->Weather()->isUnknown() );
 		$this->assertEquals( 15, $this->object->object(2)->get('temperature') );
 
 		$this->assertEquals(
@@ -168,6 +168,48 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
+	}
+
+	/**
+	 * Test: Suunto file
+	 * Filename: "Suunto-Ambit-with-laps-reduced.xml" 
+	 */
+	public function test_SuuntoFile_withLaps() {
+		$this->object->parseFile('../tests/testfiles/xml/Suunto-Ambit-with-laps-reduced.xml');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+
+		$this->assertEquals( mktime(16, 17, 22, 4, 26, 2014), $this->object->object()->getTimestamp() );
+		$this->assertEquals( 0.085, $this->object->object()->getDistance() );
+		$this->assertEquals( 1551, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 648, $this->object->object()->getElapsedTime() );
+		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 123, $this->object->object()->getPulseMax() );
+		$this->assertEquals( 25, $this->object->object()->get('temperature') );
+
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+
+		// New: Cadence && Laps
+		$this->assertTrue( $this->object->object()->hasArrayCadence() );
+		$this->assertEquals( 173, $this->object->object()->getCadence() );
+		$this->assertEquals(
+			array(162, 174, 176, 176, 176, 174, 176),
+			$this->object->object()->getArrayCadence()
+		);
+
+		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+		$this->assertEquals(
+			"1.00|5:33-1.00|5:16",
+			$this->object->object(2)->Splits()->asString()
+		);
 	}
 
 }

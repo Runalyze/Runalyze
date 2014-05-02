@@ -124,6 +124,17 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Sample
 	 */
 	protected function parseSample(SimpleXMLElement &$Sample) {
+		if (!empty($Sample->Events) && !empty($Sample->Events->Lap)) {
+			if (!empty($Sample->Events->Lap->Distance) && !empty($Sample->Events->Lap->Duration)) {
+				$this->TrainingObject->Splits()->addSplit(
+					round((int)$Sample->Events->Lap->Distance)/1000,
+					(int)$Sample->Events->Lap->Duration
+				);
+			}
+
+			return;
+		}
+
 		if (!empty($Sample->Latitude) && !empty($Sample->Longitude)) {
 			$this->Latitude  = round((float)$Sample->Latitude * 180 / pi(), 7);
 			$this->Longitude = round((float)$Sample->Longitude * 180 / pi(), 7);
@@ -161,7 +172,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 									? round(60*(float)$Sample->HR)
 									: (count($this->gps['heartrate']) > 0 ? end($this->gps['heartrate']) : 0);
 		$this->gps['rpm'][]       = !empty($Sample->Cadence)
-									? (int)$Sample->Cadence
+									? (float)$Sample->Cadence * 120
 									: (count($this->gps['rpm']) > 0 ? end($this->gps['rpm']) : 0);
 		//$this->gps['power'][] = 0;
 	}
