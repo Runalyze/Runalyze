@@ -19,21 +19,27 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Wettk&auml;mpfe';
-		$this->description = 'Bestzeiten und alles weitere zu den bisher gelaufenen Wettk&auml;mpfen.';
+		$this->name = __('Races');
+		$this->description = __('Personal bests and everything else related to your races.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Abgesehen von der normalen Auflistung aller bisherigen Wettk&auml;mpfe und der
-					&Uuml;bersicht der dabei erzielten Bestzeiten liefert dir diesen Plugin ein einzigartiges Diagramm.
-					Wenn du &uuml;ber eine Distanz bereits mehrere Wettk&auml;mpfe bestritten hast,
-					kannst du dir die Entwicklung deiner Wettkampfzeit im Diagramm anschauen.');
-		echo HTML::p('Falls du mal einen Wettkampf nicht ganz ernst genommen hast,
-					kannst du ihn durch einen Klick auf die kleine Uhr daneben als <em>Spa&szlig;-Wettkampf</em> markieren.
-					Dadurch taucht er im entsprechenden Diagramm nicht mehr auf.');
+		echo HTML::p(
+			__('This plugin lists all your races. It shows you a summary of all your races and'.
+				'your personal bests (over all distances with at least two results).') );
+		echo HTML::p(
+			__('In addition, it plots the trend of your results over a specific distance.'.
+				'If you run a race just for fun, you can mark it as a \'fun race\' to ignore it in the plot.') );
+
+		echo HTML::info(
+			__('You can define the training type for races in your configuration.') );
+
+		echo HTML::warning(
+			__('Make sure that your activities hold the correct distance.'.
+				'Only races with exactly 10.00 km will be considered as race over 10 kilometers.') );
 	}
 
 	/**
@@ -42,9 +48,21 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['main_distance']  = array('type' => 'int', 'var' => 10, 'description' => '<span class="atLeft" rel="tooltip" title="wird als Diagramm dargestellt">Hauptdistanz</span>');
-		$config['pb_distances']   = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => '<span class="atLeft" rel="tooltip" title="Bestzeiten werden verglichen, kommagetrennt">Distanzen f&uuml;r Jahresvergleich</span>');
-		$config['fun_ids']        = array('type' => 'array', 'var' => array(), 'description' => '<span class="atLeft" rel="tooltip" title="Interne IDs, nicht per Hand editieren!">Spa&szlig;-Wettk&auml;mpfe</span>');
+		$config['main_distance'] = array(
+			'type' => 'int',
+			'var' => 10,
+			'description' => '<span class="atLeft" rel="tooltip" title="'.__('initial distance for the plot').'">'.__('Main distance').'</span>'
+		);
+		$config['pb_distances'] = array(
+			'type' => 'array',
+			'var' => array(1, 3, 5, 10, 21.1, 42.2),
+			'description' => '<span class="atLeft" rel="tooltip" title="'.__('comma seperated').'">'.__('Distances for yearly comparison').'</span>'
+		);
+		$config['fun_ids'] = array(
+			'type' => 'array',
+			'var' => array(),
+			'description' => '<span class="atLeft" rel="tooltip" title="'.__('Don\'t edit! Only for internal use.').'">'.__('Fun races').'</span>'
+		);
 
 		return $config;
 	}
@@ -54,8 +72,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function setOwnNavigation() {
 		$LinkList  = '';
-		$LinkList .= '<li>'.Ajax::change('Bestzeiten', 'statistics-inner', '#bestzeiten', 'triggered').'</li>';
-		$LinkList .= '<li>'.Ajax::change('Alle Wettk&auml;mpfe', 'statistics-inner', '#wk-tablelist').'</li>';
+		$LinkList .= '<li>'.Ajax::change(__('Personal Bests'), 'statistics-inner', '#bestzeiten', 'triggered').'</li>';
+		$LinkList .= '<li>'.Ajax::change(__('All Races'), 'statistics-inner', '#wk-tablelist').'</li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}
@@ -144,7 +162,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				$this->displayWkTr($wk);
 			}
 		} else {
-			$this->displayEmptyTr('Keine Wettk&auml;mpfe gefunden.');
+			$this->displayEmptyTr( __('There are no races.') );
 		}
 		
 		$this->displayTableEnd('wk-table');
@@ -202,7 +220,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 
 		if (empty($this->distances))
-			$this->displayEmptyTr('<em>Es konnten auf den eingetragenen Distanzen keine Bestzeiten gefunden werden.</em>');
+			$this->displayEmptyTr('<em>'.__('There are no races for the given distances.').'</em>');
 	}
 
 	/**
@@ -214,14 +232,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$name       = Running::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
-		$Links = array(array('tag' => '<a href="#">Distanz w&auml;hlen</a>', 'subs' => $SubLinks));
+		$Links = array(array('tag' => '<a href="#">'.__('Choose distance').'</a>', 'subs' => $SubLinks));
 
 		echo '<div class="databox" style="float:none;padding:0;width:490px;margin:20px auto;">';
 		echo '<div class="panel-heading">';
 		echo '<div class="panel-menu">';
 		echo Ajax::toolbarNavigation($Links);
 		echo '</div>';
-		echo '<h1>Bestzeitverlauf</h1>';
+		echo '<h1>'.__('Results trend').'</h1>';
 		echo '</div>';
 		echo '<div class="panel-content">';
 
@@ -295,7 +313,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		}
 
 		echo '<tr class="top-spacer no-zebra r">';
-		echo '<td class="b">Gesamt</td>';
+		echo '<td class="b">'.__('In total').'</td>';
 
 		foreach ($year as $i => $y)
 			if ($i != 'sum')
@@ -316,13 +334,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<thead>
 					<tr class="c">
 						<th class="{sorter: false}">&nbsp;</th>
-						<th class="{sorter: \'germandate\'}">Datum</th>
-						<th>Lauf</th>
-						<th class="{sorter: \'distance\'}">Distanz</th>
-						<th class="{sorter: \'resulttime\'}">Zeit</th>
-						<th>Pace</th>
-						<th>Puls</th>
-						<th class="{sorter: \'temperature\'}">Wetter</th>
+						<th class="{sorter: \'germandate\'}">'.__('Date').'</th>
+						<th>'.__('Name').'</th>
+						<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
+						<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
+						<th>'.__('Pace').'</th>
+						<th>'.__('Heart rate').'</th>
+						<th class="{sorter: \'temperature\'}">'.__('Weather').'</th>
 					</tr>
 				</thead>
 				<tbody>');
@@ -379,7 +397,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$Strings[] = $W['num'].'x '.Icon::getWeatherIcon($W['weatherid']);
 
 		if (!empty($Strings)) {
-			echo '<strong>Wetterstatistiken:</strong> ';
+			echo '<strong>'.__('Weather statistics').':</strong> ';
 			echo implode(', ', $Strings);
 			echo '<br><br>';
 		}
@@ -393,10 +411,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function getIconForCompetition($id) {
 		if ($this->isFunCompetition($id)) {
 			$tag = 'nofun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, "Spa&szlig;-Wettkampf | Klicken, um als normalen Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, __('Fun race | Click to mark this activity as a \'normal race\'.'));
 		} else {
 			$tag = 'fun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, "Wettkampf | Klicken, um als Spa&szlig;-Wettkampf zu markieren");
+			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, __('Race | Click to mark this activity as a \'fun race\'.'));
 		}
 
 		return $this->getInnerLink($icon, 0, 0, $tag.'-'.$id);

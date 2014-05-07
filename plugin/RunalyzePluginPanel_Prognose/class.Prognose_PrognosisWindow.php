@@ -100,10 +100,14 @@ class Prognose_PrognosisWindow {
 			$_POST['second-best-result-time'] = !empty($TopResults) ? Time::toString($TopResults[1]['s'], false, true) : '1:00:00';
 		}
 
-		$this->InfoLines['jack-daniels'] = 'Dein aktueller VDOT-Wert: '.JD::getConstVDOTform().'. Dein aktueller GA-Wert: '.BasicEndurance::getConst().'.';
+		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.JD::getConstVDOTform().'. ';
+		$this->InfoLines['jack-daniels'] .= __('Your current Basic Endurance:').' '.BasicEndurance::getConst().'.';
 
-		$ResultLine = empty($TopResults) ? 'keine' : Running::km($TopResults[0]['distance']).' in '.Time::toString($TopResults[0]['s']).' und '.Running::km($TopResults[1]['distance']).' in '.Time::toString($TopResults[1]['s']);
-		$this->InfoLines['robert-bock'] = 'Deine beiden &bdquo;<em>besten</em>&rdquo; Bestzeiten: '.$ResultLine;
+		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s and %s in %s'),
+				Running::km($TopResults[0]['distance']), Time::toString($TopResults[0]['s']),
+				Running::km($TopResults[1]['distance']), Time::toString($TopResults[1]['s'])
+		);
+		$this->InfoLines['robert-bock'] = __('Your two best results:').' '.$ResultLine;
 
 		$this->setupJackDanielsStrategy();
 		$this->setupBockStrategy();
@@ -211,15 +215,15 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function startResultTable() {
 		$this->ResultTable = '<table class="fullwidth zebra-style"><thead><tr>
-					<th>Distanz</th>
-					<th>Prognose</th>
-					<th class="small">Pace</th>
-					<th class="small">VDOT</th>
-					<th>Differenz</th>
-					<th>Bestzeit</th>
-					<th class="small">Pace</th>
-					<th class="small">VDOT</th>
-					<th class="small">Datum</th>
+					<th>'.__('Distance').'</th>
+					<th>'.__('Prognosis').'</th>
+					<th class="small">'.__('Pace').'</th>
+					<th class="small">'.__('VDOT').'</th>
+					<th>'.__('Difference').'</th>
+					<th>'.__('Personal best').'</th>
+					<th class="small">'.__('Pace').'</th>
+					<th class="small">'.__('VDOT').'</th>
+					<th class="small">'.__('Date').'</th>
 				</tr></thead><tbody>';
 	}
 
@@ -252,7 +256,7 @@ class Prognose_PrognosisWindow {
 		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof RunningPrognosisBock) {
 			$K = $this->PrognosisStrategies['robert-bock']->getK();
 			$e = $this->PrognosisStrategies['robert-bock']->getE();
-			$this->ResultTable .= HTML::info('Aus den Ergebnissen wurden die Konstanten K = '.$K.' und e = '.$e.' berechnet.').'<br>';
+			$this->ResultTable .= HTML::info( sprintf( __('The results give the constants K = %f and e = %f.'), $K, $e) ).'<br>';
 		}
 	}
 
@@ -268,20 +272,20 @@ class Prognose_PrognosisWindow {
 	 * Init fieldset for input data
 	 */
 	protected function initFieldsetForInputData() {
-		$this->FieldsetInput = new FormularFieldset('Eingabe');
+		$this->FieldsetInput = new FormularFieldset( __('Input') );
 
 		foreach ($this->InfoLines as $InfoMessage)
 			$this->FieldsetInput->addInfo($InfoMessage);
 
-		$FieldModel = new FormularSelectBox('model', 'Prognose-Modell');
+		$FieldModel = new FormularSelectBox('model', __('Model'));
 		$FieldModel->addOption('jack-daniels', 'Jack Daniels (VDOT)');
 		$FieldModel->addOption('robert-bock', 'Robert Bock (CPP)');
-		$FieldModel->addOption('herbert-steffny', 'Herbert Steffny (simpel)');
+		$FieldModel->addOption('herbert-steffny', 'Herbert Steffny');
 		$FieldModel->addOption('david-cameron', 'David Cameron');
 		$FieldModel->addAttribute('onchange', '$(\'#prognosis-calculator .only-\'+$(this).val()).closest(\'div\').show();$(\'#prognosis-calculator .hide-on-model-change:not(.only-\'+$(this).val()+\')\').closest(\'div\').hide();');
 		$FieldModel->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 
-		$FieldDistances = new FormularInput('distances', Ajax::tooltip('Distanzen', 'Kommagetrennte Liste mit allen Distanzen, f&uuml;r die eine Prognose erstellt werden soll.'));
+		$FieldDistances = new FormularInput('distances', __('Distances'));
 		$FieldDistances->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 		$FieldDistances->setSize( FormularInput::$SIZE_FULL_INLINE );
 
@@ -296,17 +300,17 @@ class Prognose_PrognosisWindow {
 	 * Add fields for jack daniels
 	 */
 	protected function addFieldsForJackDaniels() {
-		$FieldVdot = new FormularInput('vdot', Ajax::tooltip('Neuer VDOT', 'Statt deinem eigentlichen VDOT-Wert wird dieser zur Berechnung herangezogen.'));
+		$FieldVdot = new FormularInput('vdot', __('New VDOT'));
 		$FieldVdot->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 		$FieldVdot->addCSSclass('hide-on-model-change');
 		$FieldVdot->addCSSclass('only-jack-daniels');
 
-		$FieldEndurance = new FormularCheckbox('endurance', Ajax::tooltip('Grundlagenausdauer-Faktor', 'Mit dieser Einstellung wird auch deine berechnete Grundlagenausdauer in die Berechnungen einflie&szlig;en.'));
+		$FieldEndurance = new FormularCheckbox('endurance', __('Use Basic Endurance'));
 		$FieldEndurance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEndurance->addCSSclass('hide-on-model-change');
 		$FieldEndurance->addCSSclass('only-jack-daniels');
 
-		$FieldEnduranceValue = new FormularInput('endurance-value', Ajax::tooltip('Grundlagenausdauer-Wert', 'Statt deinem eigentlichen GA-Wert wird dieser zur Berechnung herangezogen. Auch Eingaben &ge; 100 &#37; sind m&ouml;glich.'));
+		$FieldEnduranceValue = new FormularInput('endurance-value', __('Basic Endurance'));
 		$FieldEnduranceValue->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$FieldEnduranceValue->addCSSclass('hide-on-model-change');
 		$FieldEnduranceValue->addCSSclass('only-jack-daniels');
@@ -321,7 +325,7 @@ class Prognose_PrognosisWindow {
 	 * Add fields for robert bock and herbert steffny
 	 */
 	protected function addFieldsForBockAndSteffny() {
-		$BestResult = new FormularInput('best-result-km', 'Bestes Ergebnis');
+		$BestResult = new FormularInput('best-result-km', __('Best result'));
 		$BestResult->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$BestResult->addCSSclass('hide-on-model-change');
 		$BestResult->addCSSclass('only-robert-bock');
@@ -329,20 +333,20 @@ class Prognose_PrognosisWindow {
 		$BestResult->addCSSclass('only-david-cameron');
 		$BestResult->setUnit( FormularUnit::$KM );
 
-		$BestResultTime = new FormularInput('best-result-time', 'in');
+		$BestResultTime = new FormularInput('best-result-time', __('in'));
 		$BestResultTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$BestResultTime->addCSSclass('hide-on-model-change');
 		$BestResultTime->addCSSclass('only-robert-bock');
 		$BestResultTime->addCSSclass('only-herbert-steffny');
 		$BestResultTime->addCSSclass('only-david-cameron');
 
-		$SecondBestResult = new FormularInput('second-best-result-km', 'Zweitbestes Ergebnis');
+		$SecondBestResult = new FormularInput('second-best-result-km', __('Second best result'));
 		$SecondBestResult->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$SecondBestResult->addCSSclass('hide-on-model-change');
 		$SecondBestResult->addCSSclass('only-robert-bock');
 		$SecondBestResult->setUnit( FormularUnit::$KM );
 
-		$SecondBestResultTime = new FormularInput('second-best-result-time', 'in');
+		$SecondBestResultTime = new FormularInput('second-best-result-time', __('in'));
 		$SecondBestResultTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$SecondBestResultTime->addCSSclass('hide-on-model-change');
 		$SecondBestResultTime->addCSSclass('only-robert-bock');
@@ -357,7 +361,7 @@ class Prognose_PrognosisWindow {
 	 * Init fieldset for results
 	 */
 	protected function initFieldsetForResults() {
-		$this->FieldsetResult = new FormularFieldset('Prognose');
+		$this->FieldsetResult = new FormularFieldset( __('Prognosis'));
 		$this->FieldsetResult->addBlock( $this->ResultTable );
 	}
 
@@ -371,7 +375,7 @@ class Prognose_PrognosisWindow {
 		$this->Formular->addCSSclass('no-automatic-reload');
 		$this->Formular->addFieldset( $this->FieldsetInput );
 		$this->Formular->addFieldset( $this->FieldsetResult );
-		$this->Formular->addSubmitButton('Prognose anzeigen');
+		$this->Formular->addSubmitButton( __('Show prognosis'));
 	}
 
 	/**
@@ -390,7 +394,7 @@ class Prognose_PrognosisWindow {
 	 * Display heading
 	 */
 	protected function displayHeading() {
-		echo HTML::h1('Prognose-Rechner');
+		echo HTML::h1( __('Prognosis calculator') );
 	}
 
 	/**

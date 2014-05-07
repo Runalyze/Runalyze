@@ -26,10 +26,10 @@ foreach ($distances as $km) {
 <div class="panel-heading">
 	<div class="panel-menu">
 		<ul>
-			<li class="with-submenu"><span class="link">Distanz w&auml;hlen</span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
+			<li class="with-submenu"><span class="link"><?php _e('Choose distance'); ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
 		</ul>
 	</div>
-	<h1>Prognose-Rechner: Form-Verlauf</h1>
+	<h1><?php _e('Prognosis calculator: shape trend'); ?></h1>
 </div>
 
 <div class="panel-content">
@@ -39,10 +39,10 @@ foreach ($distances as $km) {
 	?>
 
 	<p class="info">
-		Zur Erstellung der Prognose wird jeweils der durchschnittliche VDOT-Wert pro Monat betrachtet.
+		<?php _e('The average VDOT value per month is used.'); ?>
 	</p>
 
 	<p class="info">
-		F&uuml;r diese Prognosen wird <strong>kein</strong> Grundlagenausdauer-Faktor verwendet.
+		<?php _e('The basic endurance adjustment is <strong>not</strong> used for these calculations.'); ?>
 	</p>
 </div>

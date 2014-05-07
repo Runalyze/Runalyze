@@ -58,8 +58,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
-		$this->name = 'Datenbank-Import/Export';
-		$this->description = 'Dieses Plugin sichert die komplette Datenbank und kann ein vorhandenes Backup importieren.';
+		$this->name = __('Database import/export');
+		$this->description = __('This plugin allows you to import and export your complete data from the database.');
 
 		$this->fileNameStart = SessionAccountHandler::getId().'-runalyze-backup';
 
@@ -119,29 +119,25 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display export form 
 	 */
 	protected function displayExport() {
-		$Select = new FormularSelectBox('export-type', 'Dateiformat');
-		$Select->addOption('json', 'Portables Backup (*.json.gz)');
-		$Select->addOption('sql', 'Datenbank Backup (*.sql.gz)');
+		$Select = new FormularSelectBox('export-type', __('File format'));
+		$Select->addOption('json', __('Portable backup').' (*.json.gz)');
+		$Select->addOption('sql', __('Database backup').' (*.sql.gz)');
 
-		$Fieldset = new FormularFieldset('Daten exportieren');
+		$Fieldset = new FormularFieldset( __('Export your data') );
 		$Fieldset->addField($Select);
-		$Fieldset->addField(new FormularSubmit('Datei erstellen', ''));
+		$Fieldset->addField(new FormularSubmit(__('Create file'), ''));
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
-		$Fieldset->addInfo('<strong>JSON-Format (*.json.gz)</strong><br>
-			<small>
-				Portables Backup deiner Einstellungen und Daten -
-				Die Datei kann &uuml;ber dieses Plugin in eine bestehende Installation importiert werden.
-				Dabei werden alle Einstellungen und Daten deines Accounts &uuml;berschrieben.<br>
-				Dieser Export/Import ist sinnvoll, um deine Daten von einer Runalyze-Installation (z.B. lokal)
-				in eine andere (z.B. Online-Version) zu verschieben.
+		$Fieldset->addInfo('<strong>'.__('JSON-format').' (*.json.gz)</strong><br>
+			<small>'.
+				__('Portable backup of your configuration and data -'.
+					'This file can be imported into any other installation, using this plugin.<br />'.
+					'This way you can transfer your data from to local to an online installation and back.').'
 			</small>');
-		$Fieldset->addInfo('<strong>SQL-Format (*.sql.gz)</strong><br>
-			<small>
-				Backup der gesamten Datenbank -
-				Die Datei kann manuell &uuml;ber einen PhpMyAdmin eingelesen werden.
-				Dabei werden alle Daten &uuml;berschrieben.<br>
-				Dieser Export/Import ist sinnvoll, um eine Sicherheitskopie zu erstellen oder die Daten
-				in eine Neuinstallation einzuf&uuml;gen.
+		$Fieldset->addInfo('<strong>'.__('SQL-format').' (*.sql.gz)</strong><br>
+			<small>'.
+				__('Backup of the complete database -'.
+					'This file can be imported manually with e.g. PHPMyAdmin into any database.<br />'.
+					'This is recommended to create a backup copy or to import your data into a new installation.').'
 			</small>');
 
 		if ($this->importIsOnProgress)
@@ -173,7 +169,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display import form 
 	 */
 	protected function displayImportForm() {
-		$Fieldset = new FormularFieldset('Daten importieren');
+		$Fieldset = new FormularFieldset( __('Import file') );
 
 		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
 		$Formular->setId('import-json-form');
@@ -182,7 +178,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Formular->addHiddenValue('file', $_GET['file']);
 
 		if (substr($_GET['file'], -8) != '.json.gz') {
-			$Fieldset->addError('Es k&ouml;nnen nur *.json.gz-Dateien importiert werden.');
+			$Fieldset->addError( __('You can only import *.json.gz-files.'));
 
 			Filesystem::deleteFile('../plugin/'.$this->key.'/import/'.$_GET['file']);
 		} else {
@@ -190,22 +186,22 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			$Errors   = $Importer->getErrors();
 
 			if (empty($Errors)) {
-				$Fieldset->addField( new FormularCheckbox('overwrite_config', 'Konfigurationsvariablen &uuml;berschreiben', true) );
-				$Fieldset->addField( new FormularCheckbox('overwrite_dataset', 'Dataset-Konfiguration &uuml;berschreiben', true) );
-				$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', 'Plugin-Konfigurationen &uuml;berschreiben', true) );
-				$Fieldset->addField( new FormularCheckbox('delete_trainings', 'Alle alten Trainings l&ouml;schen', false) );
-				$Fieldset->addField( new FormularCheckbox('delete_user_data', 'Alle alten K&ouml;rperdaten l&ouml;schen', false) );
-				$Fieldset->addField( new FormularCheckbox('delete_shoes', 'Alle alten Schuhe l&ouml;schen', false) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_config', __('Overwrite general configuration'), true) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_dataset', __('Overwrite dataset configuration'), true) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', __('Overwrite plugin configuration'), true) );
+				$Fieldset->addField( new FormularCheckbox('delete_trainings', __('Delete all old activities'), false) );
+				$Fieldset->addField( new FormularCheckbox('delete_user_data', __('Delete all old body values'), false) );
+				$Fieldset->addField( new FormularCheckbox('delete_shoes', __('Delete all old shoes'), false) );
 
-				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfTrainings().' Trainings</strong> gefunden.');
-				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfShoes().' Schuhe</strong> gefunden.');
-				$Fieldset->addFileBlock('In der Datei wurden <strong>'.$Importer->getNumberOfUserData().' K&ouml;rperdaten</strong> gefunden.');
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> activities in this file.'), $Importer->getNumberOfTrainings()) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> shoes in this file.'), $Importer->getNumberOfShoes()) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> body values in this file.'), $Importer->getNumberOfUserData()) );
 
 				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
-				$Formular->addSubmitButton('Importieren');
+				$Formular->addSubmitButton( __('Import') );
 			} else {
-				$Fieldset->addError('Die Backup-Datei scheint fehlerhaft zu sein.');
+				$Fieldset->addError( __('The file seems to be corrupted.') );
 
 				foreach ($Errors as $Error)
 					$Fieldset->addError($Error);
@@ -224,15 +220,15 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Importer->importData();
 
 		$Errors   = $Importer->getErrors();
-		$Fieldset = new FormularFieldset('Daten importieren');
+		$Fieldset = new FormularFieldset( __('Import data') );
 
 		if (empty($Errors)) {
-			$Fieldset->addInfo('Alle Daten wurden importiert.');
+			$Fieldset->addInfo( __('All data have been imported.') );
 
 			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
 			$Fieldset->addBlock(Ajax::getReloadCommand());
 		} else {
-			$Fieldset->addError('Der Import hat nicht geklappt.');
+			$Fieldset->addError( __('There was a problem with the import.') );
 
 			foreach ($Errors as $Error)
 				$Fieldset->addError($Error);
@@ -272,13 +268,13 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				}
 			});';
 
-		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">Datei hochladen</div></div>';
+		$Text = '<div id="upload-container" style="margin-bottom:5px;"><div class="c button" id="file-upload">'.__('Upload file').'</div></div>';
 		$Text .= Ajax::wrapJSasFunction($JScode);
-		$Text .= HTML::info('Unterst&uuml;tzte Formate: *.json.gz');
-		$Text .= HTML::warning('Die exportierten Daten m&uuml;ssen aus der gleichen Runalye-Version stammen!<br>
-			F&uuml;r einen Import von v1.1 in v1.2 muss v1.1 zun&auml;chst aktualisiert werden, f&uuml;r sp&auml;tere Versionen analog.');
+		$Text .= HTML::info( __('Allowed file extension: *.json.gz') );
+		$Text .= HTML::warning( __('The file has to be created with the same version of Runalyze!<br>'.
+									'You won\'t be able to import a file from an older version.') );
 
-		$Fieldset = new FormularFieldset('Daten importieren');
+		$Fieldset = new FormularFieldset( __('Import data') );
 		$Fieldset->setCollapsed();
 		$Fieldset->addBlock($Text);
 
@@ -294,10 +290,10 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayList() {
 		$ListOfFiles = $this->getExistingFiles();
 
-		$Fieldset = new FormularFieldset('Exportierte Daten');
+		$Fieldset = new FormularFieldset( __('Export data') );
 
 		if (empty($ListOfFiles)) {
-			$Fieldset->addFileBlock('<em>Es wurden noch keine Daten exportiert</em>');
+			$Fieldset->addFileBlock('<em>You did not export anything.</em>');
 		} else {
 			foreach ($ListOfFiles as $File) {
 				$String = '';
@@ -443,7 +439,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 		$Writer->finish();
 
-		Error::getInstance()->addDebug('Memory usage: '.memory_get_peak_usage().' (SQL)');
+		//Error::getInstance()->addDebug('Memory usage: '.memory_get_peak_usage().' (SQL)');
 	}
 
 	/**

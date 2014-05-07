@@ -179,9 +179,9 @@ abstract class PluginStat extends Plugin {
 	 */
 	private function getNavigation() {
 		if ($this->ShowSportsNavigation)
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">Sportart w&auml;hlen</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose sport').'</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
 		if ($this->ShowYearsNavigation)
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">Jahr w&auml;hlen</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
 
 		if (!empty($this->LinkList))
 			return '<ul>'.implode('', $this->LinkList).'</ul>';
@@ -197,7 +197,7 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		if ($this->ShowAllSportsLink)
-			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink('Alle', -1, $this->year).'</li>';
+			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink(__('All'), -1, $this->year).'</li>';
 
 		$Sports = DB::getInstance()->query('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
 		foreach ($Sports as $Sport)

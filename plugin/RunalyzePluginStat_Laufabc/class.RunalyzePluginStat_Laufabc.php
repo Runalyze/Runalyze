@@ -18,16 +18,15 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Lauf-ABC';
-		$this->description = 'Wie oft hast du Lauf-ABC absolviert?';
+		$this->name = __('Running Drills');
+		$this->description = __('How often did you do your running drills?');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('F&uuml;r jedes Training kann angegeben werden, ob dabei etwas Lauf-ABC gemacht wurde.
-					Wie oft das der Fall war, kann mit diesem Plugin ausgewertet werden.');
+		echo HTML::p( __('How often did you do your running drills?') );
 	}
 
 	/**
@@ -64,7 +63,7 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		echo '<tbody>';
 
 		if (empty($this->ABCData))
-			echo '<tr><td colspan="13" class="c"><em>Keine Daten gefunden.</em></td></tr>';
+			echo '<tr><td colspan="13" class="c"><em>'.__('No activities with running drills found.').'</em></td></tr>';
 		foreach ($this->ABCData as $y => $Data) {
 			echo '
 				<tr>

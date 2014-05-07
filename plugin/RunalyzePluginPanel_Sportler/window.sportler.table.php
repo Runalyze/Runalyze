@@ -22,7 +22,7 @@ if (Request::param('reload') == 'true') {
 ?>
 <div class="panel-heading">
 	<div class="panel-menu"><ul><li><?php echo $Plugin->addLink(); ?></li></ul></div>
-	<h1>K&ouml;rper-Daten</h1>
+	<h1><?php _e('Body values'); ?></h1>
 </div>
 <div class="panel-content">
 	<table id="sportlerTable" class="zebra-style">
@@ -30,18 +30,18 @@ if (Request::param('reload') == 'true') {
 			<tr>
 				<th class="{sorter: false}">&nbsp;</th>
 				<th class="{sorter: false}">&nbsp;</th>
-				<th class="{sorter:'germandate'}">Datum</th>
-				<th>Gewicht</th>
+				<th class="{sorter:'germandate'}"><?php _e('Date'); ?></th>
+				<th><?php _e('Weight'); ?></th>
 			<?php if ($Plugin_conf['use_pulse']['var']): ?>
 			<?php $Fields = array_merge($Fields, $FieldsPulse); ?>
-				<th>Ruhepuls</th>
-				<th>Maximalpuls</th>
+				<th><?php _e('Resting HR'); ?></th>
+				<th><?php _e('Maximal HR'); ?></th>
 			<?php endif; ?>
 			<?php if ($Plugin_conf['use_body_fat']['var']): ?>
 			<?php $Fields = array_merge($Fields, $FieldsFat); ?>
-				<th>&#37; Fett</th>
-				<th>&#37; Wasser</th>
-				<th>&#37; Muskeln</th>
+				<th>&#37; <?php _e('Fat'); ?></th>
+				<th>&#37; <?php _e('Water'); ?></th>
+				<th>&#37; <?php _e('Muscles'); ?></th>
 			<?php endif; ?>
 			</tr>
 		</thead>
@@ -49,7 +49,7 @@ if (Request::param('reload') == 'true') {
 		<tbody class="c">
 		<?php if (empty($Data)): ?>
 			<tr>
-				<td colspan="<?php echo $colspan; ?>"><em>Keine Daten vorhanden.</em></td>
+				<td colspan="<?php echo $colspan; ?>"><em><?php _e('No data available.'); ?></em></td>
 			</tr>
 		<?php else: ?>
 		<?php foreach ($Data as $Info): ?>

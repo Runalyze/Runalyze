@@ -46,17 +46,15 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Analyse';
-		$this->description = 'Analyse des Lauftrainings zum Tempo, der Distanz und den verschiedenen Trainingstypen.';
+		$this->name = __('Analyze');
+		$this->description = __('Analyze your training (only running) by means of pace, heart rate and different types.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Runalyze soll die perfekte Hilfe sein, um das eigene Training professionell auszuwerten.');
-		echo HTML::p('Dieses Plugin hilft dabei, die eigenen Trainingseinheiten zu analysieren.
-					Es gibt an, wie oft in welchem Trainingsbereich trainiert wurde.');
+		echo HTML::p( __('This plugin analyzes your training (only running) by means of pace, heart rate and different types.') );
 	}
 
 	/**
@@ -65,14 +63,14 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['use_type']  = array('type' => 'bool', 'var' => true, 'description' => 'Trainingstypen analysieren');
-		$config['use_pace']  = array('type' => 'bool', 'var' => true, 'description' => 'Tempobereiche analysieren');
-		$config['use_pulse'] = array('type' => 'bool', 'var' => true, 'description' => 'Pulsbereiche analysieren');
-		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<span class="atLeft" rel="tooltip" title="in %HFmax">Niedrigster Pulsbereich</span>');
-		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<span class="atLeft" rel="tooltip" title="in %HFmax">Pulsbereich: Schrittweite</span>');
-		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">Niedrigster Tempobereich</span>');
-		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">H&ouml;chster Tempobereich</span>');
-		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<span class="atLeft" rel="tooltip" title="in s/km">Tempobereich: Schrittweite</span>');
+		$config['use_type']  = array('type' => 'bool', 'var' => true, 'description' => __('Analyze types') );
+		$config['use_pace']  = array('type' => 'bool', 'var' => true, 'description' => __('Analyze pace zones') );
+		$config['use_pulse'] = array('type' => 'bool', 'var' => true, 'description' => __('Analyze heart rate zones') );
+		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<span class="atLeft" rel="tooltip" title="[%HFmax]">'.__('Lowest heart rate zone').'</span>');
+		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<span class="atLeft" rel="tooltip" title="[%HFmax]">'.__('Heart rate zone: Increment').'</span>');
+		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Lowest pace zone').'</span>');
+		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Highest pace zone').'</span>');
+		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Pace zone: Increment').'</span>');
 
 		return $config;
 	}
@@ -94,13 +92,13 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	private function setAnalysisNavigation() {
-		$LinkList  = '<li class="with-submenu"><span class="link">Auswertung w&auml;hlen</span><ul class="submenu">';
-		$LinkList .= '<li>'.$this->getInnerLink('in Prozent', $this->sportid, $this->year, '').'</li>';
+		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose evaluation').'</span><ul class="submenu">';
+		$LinkList .= '<li>'.$this->getInnerLink( __('in percent'), $this->sportid, $this->year, '').'</li>';
 
 		if ($this->Sport->usesDistance())
-			$LinkList .= '<li>'.$this->getInnerLink('nach Distanz', $this->sportid, $this->year, 'km').'</li>';
+			$LinkList .= '<li>'.$this->getInnerLink( __('by distance'), $this->sportid, $this->year, 'km').'</li>';
 
-		$LinkList .= '<li>'.$this->getInnerLink('nach Dauer', $this->sportid, $this->year, 's').'</li>';
+		$LinkList .= '<li>'.$this->getInnerLink( __('by time'), $this->sportid, $this->year, 's').'</li>';
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
@@ -114,7 +112,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->displayStyle();
 		$this->displayAnalysis();
 
-		echo HTML::info('* Die Werte beziehen sich auf die Durchschnittswerte der Trainings.');
+		echo HTML::info('* '.__('The values consider only the average heart rate of your activities.'));
 	}
 
 	/**
@@ -165,7 +163,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function displayAnalysis() {
 		if (empty($this->AnalysisData))
-			echo HTML::info('F&uuml;r diese Sportart gibt es keine Analysedaten zum Anzeigen.');
+			echo HTML::info( __('There is no data for this sport.') );
 
 		foreach ($this->AnalysisData as $i => $Data) {
 			if (!is_array($Data))
@@ -174,7 +172,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->printTableStart($Data['name']);
 
 			if (empty($Data['foreach'])) {
-				echo '<tr class="c">'.HTML::emptyTD($this->colspan, '<em>Keine Daten vorhanden.</em>').'</tr>';
+				echo '<tr class="c">'.HTML::emptyTD($this->colspan, '<em>'.__('No data available.').'</em>').'</tr>';
 			} else {
 				foreach ($Data['foreach'] as $i => $Each) {
 					echo '<tr><td class="c b">'.$Each['name'].'</td>';
@@ -207,7 +205,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				}
 
 				if ($i == count($Data['foreach']) - 1) {
-					echo '<tr class="top-spacer no-zebra"><td class="c b">Gesamt</td>';
+					echo '<tr class="top-spacer no-zebra"><td class="c b">'.__('Total').'</td>';
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
@@ -239,7 +237,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @param float $percent
 	 */
 	private function displayTDfor($num, $time, $dist, $percent) {
-		$tooltip = $num.'-mal';
+		$tooltip = $num.'x';
 		$number  = number_format($percent, 1).' &#37;';
 
 		if ($this->dat == 'km') {
@@ -310,7 +308,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		if (!empty($result)) {
 			if (isset($type_data['id_sum_num'][0])) {
 				$type_foreach[] = array(
-					'name' => '<span style="font-weight:normal;">ohne</span>',
+					'name' => '<span style="font-weight:normal;">'.__('without').'</span>',
 					'id' => 0
 				);
 			}
@@ -324,7 +322,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			}
 		}
 
-		return array('name' => 'Trainingstypen', 'array' => $type_data, 'foreach' => $type_foreach);
+		return array('name' => __('Training Types'), 'array' => $type_data, 'foreach' => $type_foreach);
 	}
 
 	/**
@@ -384,13 +382,13 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		if (!empty($result)) {
 			for ($speed = $speed_min; $speed > ($speed_max - $speed_step); $speed -= $speed_step) {
 				$name = ($speed <= $speed_max)
-					? '<small>schneller&nbsp;als</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed + $speed_step, $this->sportid)
-					: '<small>bis</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
+					? '<small>'.__('faster then').'</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed + $speed_step, $this->sportid)
+					: '<small>'.__('up to').'</small>&nbsp;'.SportFactory::getSpeedWithAppendix(1, $speed, $this->sportid);
 				$speed_foreach[] = array( 'name' => $name, 'id' => max($speed, $speed_max));
 			}
 		}
 
-		return array('name' => 'Tempobereiche*', 'array' => $speed_data, 'foreach' => $speed_foreach);
+		return array('name' => __('Pace Zones').'*', 'array' => $speed_data, 'foreach' => $speed_foreach);
 	}
 
 	/**
@@ -428,13 +426,13 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		if (!empty($result)) {
 			for ($pulse = $pulse_min; $pulse < (100 + $pulse_step); $pulse += $pulse_step) {
 				$pulse_foreach[] = array(
-					'name' => '<small>bis</small> '.min($pulse, 100).' &#37;',
+					'name' => '<small>'.__('up to').'</small> '.min($pulse, 100).' &#37;',
 					'id' => $pulse
 				);
 			}
 		}
 
-		return array('name' => 'Pulsbereiche*', 'array' => $pulse_data, 'foreach' => $pulse_foreach);
+		return array('name' => __('Heart Rate Zones').'*', 'array' => $pulse_data, 'foreach' => $pulse_foreach);
 	}
 
 	/**

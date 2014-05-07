@@ -16,8 +16,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Sportler';
-		$this->description = 'Anzeige der Sportlerdaten wie Gewicht und aktueller Ruhepuls (auch als Diagramm).';
+		$this->name = __('Body values');
+		$this->description = __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.');
 		$this->dontReloadForTraining = true;
 
 		if (!$this->config['use_old_design']['var'])
@@ -28,9 +28,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Das Gewicht ist oft eine Motivation f&uuml;r einen L&auml;ufer.
-					Mit diesem Plugin ist das aktuelle Gewicht immer im Blick.
-					Au&szlig;erdem k&ouml;nnen auch Ruhepuls, K&ouml;rperfett-, Wasser- und Muskelanteil protokolliert werden.');
+		echo HTML::p( __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.') );
 	}
 
 	/**
@@ -39,13 +37,13 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['use_old_design'] = array('type' => 'bool', 'var' => false, 'description' => 'Altes Design verwenden');
-		$config['use_weight']     = array('type' => 'bool', 'var' => true, 'description' => 'Gewicht protokollieren');
-		$config['use_body_fat']   = array('type' => 'bool', 'var' => true, 'description' => 'Fettanteil protokollieren');
-		$config['use_pulse']      = array('type' => 'bool', 'var' => true, 'description' => 'Ruhepuls protokollieren');
-		$config['wunschgewicht']  = array('type' => 'int', 'var' => 0, 'description' => 'Wunschgewicht');
-		$config['plot_points']    = array('type' => 'int', 'var' => 20, 'description' => 'Diagramm: Datenpunkte');
-		$config['plot_timerange'] = array('type' => 'int', 'var' => 0, 'description' => Ajax::tooltip('<small>oder</small> fester Zeitraum in Tagen', 'Gib einen Wert gr&ouml;&szlig;er 0 ein, um einen fixen Zeitraum anzuzeigen.'));
+		$config['use_old_design'] = array('type' => 'bool', 'var' => false, 'description' => __('Use old design') );
+		$config['use_weight']     = array('type' => 'bool', 'var' => true, 'description' => __('Record body weight') );
+		$config['use_body_fat']   = array('type' => 'bool', 'var' => true, 'description' => __('Record body fat') );
+		$config['use_pulse']      = array('type' => 'bool', 'var' => true, 'description' => __('Record resting heart rate') );
+		$config['wunschgewicht']  = array('type' => 'int', 'var' => 0, 'description' => __('Desired body weight') );
+		$config['plot_points']    = array('type' => 'int', 'var' => 20, 'description' => __('Plot: number of points') );
+		$config['plot_timerange'] = array('type' => 'int', 'var' => 0, 'description' => Ajax::tooltip( __('<small>or</small> fixed number of days'), __('Enter a value &ge; 0 to show a fixed time range.') ) );
 
 		return $config;
 	}
@@ -56,8 +54,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', 'Daten hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', 'Daten in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', __('Add data'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', __('Show table'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -73,7 +71,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$this->displayContentInNewDesign();
 
 		if (!$this->config['use_weight']['var'] && !$this->config['use_pulse']['var'] && !$this->config['use_body_fat']['var'])
-			echo HTML::warning('Du musst in der Konfiguration festlegen, welche Werte du protokollieren m&ouml;chtest.');
+			echo HTML::warning( __('You have to specify which values to record. (see configuration)') );
 	}
 
 	/**
@@ -87,11 +85,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$SecondValues = array();
 
 		if ($this->config['use_weight']['var'])
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight()), 'kg', 'Gewicht');
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight()), 'kg', __('Weight'));
 
 		if ($this->config['use_pulse']['var']) {
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest()), 'bpm', 'Ruhepuls');
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax()), 'bpm', 'Maximalpuls');
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest()), 'bpm', __('Resting HR'));
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax()), 'bpm', __('Maximal HR'));
 		}
 
 		$NumberOfFirstValues = count($FirstValues);
@@ -104,9 +102,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= '<br>';
 
 		if ($this->config['use_body_fat']['var']) {
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat()), '&#37;', 'Fett');
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater()), '&#37;', 'Wasser');
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles()), '&#37;', 'Muskeln');
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat()), '&#37;', __('Fat'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater()), '&#37;', __('Water'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles()), '&#37;', __('Muscles'));
 		}
 
 		foreach ($SecondValues as &$Value) {
@@ -133,8 +131,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		if ($AnalyseIsHidden && $this->config['use_body_fat']['var']) {
 			echo '<div class="flot-menu flot-menu-inline">';
-			echo Ajax::flotChange('Gewicht anzeigen', 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
-			echo Ajax::flotChange('K&ouml;rperdaten anzeigen', 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
+			echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
+			echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
 			echo '</div>';
 		}
 
@@ -159,7 +157,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
 		if ($this->config['use_weight']['var'])
-			$Weight = 'Gewicht: <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br>';
+			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br>';
 
 		if ($this->config['use_pulse']['var'])
 			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
@@ -167,7 +165,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Pulse = Helper::Unknown($UserData->getPulseMax()).' bpm';
 
 		if ($this->config['use_body_fat']['var'])
-			$Analyse = 'Fett: '.Helper::Unknown($UserData->getBodyFat()).' &#37;, Wasser: '.Helper::Unknown($UserData->getWater()).' &#37;, Muskeln: '.Helper::Unknown($UserData->getMuscles()).' &#37;';
+			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat()).' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater()).' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 
 		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
 
@@ -195,7 +193,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @return string
 	 */
 	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.table.php">'.Icon::$TABLE.' Alle Daten anzeigen</a>');
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.table.php">'.Icon::$TABLE.' '.__('Show table').'</a>');
 	}
 
 	/**
@@ -203,7 +201,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @return string
 	 */
 	public function addLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.php">'.Icon::$ADD.' Einen neuen Eintrag hinzuf&uuml;gen</a>');
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.php">'.Icon::$ADD.' '.__('Add a new entry').'</a>');
 	}
 
 	/**

@@ -38,7 +38,7 @@ $Frontend = new Frontend();
 
 				if (PluginStat::hasVariousStats()) {
 					echo '<li class="with-submenu">';
-					echo '<a href="#">Sonstige</a>';
+					echo '<a href="#">'.__('Other').'</a>';
 					echo '<ul class="submenu">';
 
 					$VariousStats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE_VARIOUS);
@@ -56,7 +56,7 @@ $Frontend = new Frontend();
 			<div id="statistics-inner">
 				<?php
 				if (empty($Stats))
-					echo('<em>Es sind keine Statistiken vorhanden. Du musst sie in der Konfiguration aktivieren.</em>');
+					echo __('<em>There are no statistics available. Active a plugin in your configuration.</em>');
 				else
 					Plugin::getInstanceFor($Stats[0])->display();
 				?>

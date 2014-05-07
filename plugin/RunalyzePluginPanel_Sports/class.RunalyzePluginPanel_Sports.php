@@ -16,8 +16,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Sportarten';
-		$this->description = '&Uuml;bersicht der Leistungen aller Sportarten f&uuml;r den aktuellen Monat, das Jahr oder seit Anfang der Aufzeichnung.';
+		$this->name = __('Sports');
+		$this->description = __('Summary of your activities for each sport.');
 
 		if (!$this->config['show_as_table']['var'])
 			$this->removePanelContentPadding = true;
@@ -29,7 +29,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_as_table'] = array('type' => 'bool', 'var' => false, 'description' => 'Alte Tabellenansicht');
+		$config['show_as_table'] = array('type' => 'bool', 'var' => false, 'description' => __('Old table view'));
 
 		return $config;
 	}
@@ -71,6 +71,9 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		foreach ($this->getTimeset() as $i => $timeset) {
 			echo '<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>';
 
+			if (!$this->config['show_as_table']['var'])
+				echo '<div class="'.BoxedValue::$SURROUNDING_DIV.' at-bottom">';
+
 			$Request->bindValue('start', $timeset['start'], PDO::PARAM_INT);
 			$Request->execute();
 			$data = $Request->fetchAll();
@@ -104,11 +107,13 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			}
 
 			if (empty($data))
-				echo '<p><em>Noch keine Daten vorhanden.</em></p>';
+				echo '<p><em>'.__('No data available.').'</em></p>';
 	
 			if ($this->config['show_as_table']['var']) {
-				echo '<small class="right">seit '.date("d.m.Y", $timeset['start']).'</small>';
+				echo '<small class="right">'.__('since').' '.date("d.m.Y", $timeset['start']).'</small>';
 				echo HTML::clearBreak();
+			} else {
+				echo '</div>';
 			}
 
 			echo '</div>';

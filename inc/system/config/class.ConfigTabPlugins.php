@@ -14,7 +14,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_plugins';
-		$this->title = _('Plugins');
+		$this->title = __('Plugins');
 	}
 
 	/**
@@ -29,22 +29,22 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Panels = new FormularFieldset(__('Panels'));
-		$Panels->addInfo(__('Extended view and summary in the right column'));
+		$Panels = new FormularFieldset( __('Panels') );
+		$Panels->addInfo( __('Panels are small statistics shown always on the right side.') );
 		$Panels->setHtmlCode($this->getCodeFor( Plugin::$PANEL ));
 		$Panels->setCollapsed();
 
-		$Stats = new FormularFieldset(__('Statistics'));
-		$Stats->addInfo(__('Big statistic below the calendar'));
+		$Stats = new FormularFieldset( __('Statistics') );
+		$Stats->addInfo( __('Normal statistics are shown below the activitiy log.') );
 		$Stats->setHtmlCode($this->getCodeFor( Plugin::$STAT ));
 
-		$Tools = new FormularFieldset(__('Tools'));
-		$Tools->addInfo(__('Extra selectable tools usually for the analysis or processing of the complete database'));
+		$Tools = new FormularFieldset(__('Tools') );
+		$Tools->addInfo( __('Complex tools for analyzing or processing the complete database will open in an overlay.') );
 		$Tools->setHtmlCode($this->getCodeFor( Plugin::$TOOL ));
 		$Tools->setCollapsed();
 
-		$Install = new FormularFieldset(__('Install a new plugin'));
-		$Install->addInfo(__('New plugins can be convenient installed here.'));
+		$Install = new FormularFieldset( __('Install a new plugin') );
+		$Install->addInfo( __('New plugins can be installed here.') );
 		$Install->setHtmlCode($this->getCodeForInstall());
 		$Install->setCollapsed();
 
@@ -64,15 +64,15 @@ class ConfigTabPlugins extends ConfigTab {
 		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.Plugin::getTypeString($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
 
 		if (empty($Plugins))
-			return HTML::info(__('There are no plugins available.'));
+			return HTML::info(__('No plugins available.'));
 
 		$Code = '
 			<table class="zebra-style fullwidth more-padding">
 				<thead>
 					<tr class="top b">
 						<th colspan="3">'.Plugin::getReadableTypeString($PluginType).'</th>
-						<th>'.__('mode').'</th>
-						<th>Pos.</th>
+						<th>'.__('Mode').'</th>
+						<th>'.__('Order').'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -85,7 +85,7 @@ class ConfigTabPlugins extends ConfigTab {
 					<tr class="unimportant">
 						<td>'.Plugin::getRemoveLink($Data['key']).'</td>
 						<td class="b">'.$Data['key'].'</td>
-						<td colspan="3">'.__('The plugin could not be found').'</td>
+						<td colspan="3">'.__('The plugin cannot be found.').'</td>
 					</tr>';
 			else
 				$Code .= '
@@ -108,10 +108,10 @@ class ConfigTabPlugins extends ConfigTab {
 
 		switch($PluginType) {
 			case 'panel':
-				$Code .= HTML::info(__('* Hidden plugins are folded.'));
+				$Code .= HTML::info(__('* Hidden plugins do only show the heading.'));
 				break;
 			case 'stat':
-				$Code .= HTML::info(__('* Hidden plugins are grouped &quot;Others&quot;.'));
+				$Code .= HTML::info(__('* Hidden plugins are grouped as \'Other\'.'));
 				break;
 			case 'tool':
 			default:
@@ -129,7 +129,7 @@ class ConfigTabPlugins extends ConfigTab {
 		$Plugins = Plugin::getPluginsToInstallAsArray();
 
 		if (empty($Plugins))
-			return HTML::info(__('There are no plugins to install.'));
+			return HTML::fileBlock( __('There are no new plugins to install.') );
 
 		$Code = '
 			<table class="fullwidth zebra-style more-padding">
@@ -141,11 +141,11 @@ class ConfigTabPlugins extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		foreach ($Plugins as $i => $Data) {
+		foreach ($Plugins as $Data) {
 			$Plugin = Plugin::getInstanceFor($Data['key']);
 
 			if ($Plugin === false)
-				$Code .= '<tr><td colspan="4"><em>'.__('The Plugin ').$Data['key'].__(' could not be found').'</em></td></tr>';
+				$Code .= '<tr><td colspan="4"><em>'.sprintf( __('The Plugin %s cannot be found.'), $Data['key']).'</em></td></tr>';
 			else
 				$Code .= '
 				<tr>

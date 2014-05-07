@@ -20,7 +20,6 @@
 </table>
 
 <p class="info">
-	Diese Tabelle richtet sich nach von Jack Daniels angegebenen Prozentwerten (vom VDOT) f&uuml;r die verschiedenen Tempobereiche.
-	F&uuml;r seine eigene Tabelle hat er jedoch scheinbar andere Werte zugrunde gelegt.
-	Besonders f&uuml;r niedrige VDOT-Werte gibt es hier einige Abweichungen.
+	<?php _e('This table is computed by some formulas, derived from the tables in Jack Daniels\' Running formula.'); ?>
+	<?php _e('These values do not fit the original table one hundred percent, especially for low VDOT values.'); ?>
 </p>

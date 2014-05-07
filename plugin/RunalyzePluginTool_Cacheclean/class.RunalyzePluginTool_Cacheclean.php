@@ -16,8 +16,8 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
-		$this->name = 'Cacheclean';
-		$this->description = 'L&ouml;scht den Trainings-Cache.';
+		$this->name = __('Cacheclean');
+		$this->description = __('Empty the cache for activities.');
 	}
 
 	/**
@@ -41,11 +41,12 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		$numData = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'training WHERE gps_cache_object!="" LIMIT 1')->fetch();
 		$num     = $numData['num'];
 
-		$Fieldset = new FormularFieldset('Cache l&ouml;schen');
-		$Fieldset->addInfo(self::getActionLink('<strong>Cache l&ouml;schen</strong>', 'delete=true').'<br>
-			Zur schnellen Trainingsanzeige werden die berechneten GPS-Daten (Runden, Zonen, Diagramme und Streckenverlauf)
-			im Cache gespeichert. Falls Probleme dabei auftauchen, kann &uuml;ber dieses Plugin der Cache geleert werden.');
-		$Fieldset->addFileBlock('Insgesamt sind '.$num.' Trainings im Cache.');
+		$Fieldset = new FormularFieldset( __('Empty the cache') );
+		$Fieldset->addInfo(
+				self::getActionLink('<strong>'.__('Empty the cache').'</strong>', 'delete=true').'<br>'.
+				__('Due to performance reasons, some data (laps, zones, plots, map, ...) are cached.'.
+					'If you have problems with your activity view, try to empty the cache.') );
+		$Fieldset->addFileBlock( sprintf( __('The cache holds %s activities.'), $num ) );
 
 		$Formular = new Formular();
 		$Formular->setId('cacheclean-form');
@@ -53,4 +54,3 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		$Formular->display();
 	}
 }
-?>

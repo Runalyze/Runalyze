@@ -14,16 +14,16 @@ class ConfigTabSports extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_sports';
-		$this->title = __('Sport Types');
+		$this->title = __('Sports');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Sports = new FormularFieldset(__('Your Sport Types'));
+		$Sports = new FormularFieldset(__('Your Sports'));
 		$Sports->setHtmlCode($this->getCode().$this->getInfoFieldsAfterCode());
-		$Sports->addInfo(__('Hover over the headings if the abbreviations are unclear.'));
+		$Sports->addInfo( __('Hover the headings if the abbreviations are unclear.') );
 
 		$this->Formular->addFieldset($Sports);
 	}
@@ -33,9 +33,10 @@ class ConfigTabSports extends ConfigTab {
 	 * @return string
 	 */
 	private function getInfoFieldsAfterCode() {
-		$Code  = HTML::info(__('The mode <em>short</em> has the effect that in the week view is only shown a symbol and no workout data for a workout.'));
-		$Code .= HTML::info(__('The values for  <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the TRIMP-calculation.'));
-		$Code .= HTML::info(__('The following icons are available:') .$this->getSportIconList());
+		$Code  = HTML::info( __('The mode <strong>short</strong> means: the activity log contains only a symbol and no other values for activities of this sport.<br>'.
+								'This is useful if you\'re mainly interested in the fact of doing the sport, not in the details, e.g. for stretching.') );
+		$Code .= HTML::info( __('The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the calculation of TRIMP.') );
+		$Code .= HTML::info( __('The following icons are available: ').$this->getSportIconList() );
 
 		return $Code;
 	}
@@ -63,19 +64,19 @@ class ConfigTabSports extends ConfigTab {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
-						<th class="small">'.Ajax::tooltip(__('short'), __('There will be only shown a symbol before the given day.')).'</th>
-						<th class="small" colspan="2">'.__('Image').'</th>
-						<th>'.Ajax::tooltip(__('Sport type'), __('Name of the sport type')).'</th>
-						<th>'.Ajax::tooltip(__('kcal/h'), __('Average energy turnover in  in kilocalories per hour')).'</th>
-						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HF'), __('The average heart rate (for example use for TRIMP calculation)')).'</th>
-						<th>'.Ajax::tooltip(__('RPE'), __('Rating of Perceived Exertion (based on Borg) = average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
+						<th class="small">'.Ajax::tooltip(__('short'), __('Show only a symbol.')).'</th>
+						<th class="small" colspan="2">'.__('Icon').'</th>
+						<th>'.Ajax::tooltip(__('Name'), __('Name of the sport')).'</th>
+						<th>'.Ajax::tooltip(__('kcal/h'), __('Average energy turnover in in kilocalories per hour')).'</th>
+						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
+						<th>'.Ajax::tooltip(__('RPE'), __('Rating of Perceived Exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
 						<th>'.Ajax::tooltip(__('km'), __('Has a distance')).'</th>
 						<th>'.Ajax::tooltip(__('Unit'), __('Unit for the speed')).'</th>
-						<th>'.Ajax::tooltip(__('Types'), __('The sport type has different training types')).'</th>
-						<th>'.Ajax::tooltip(__('Pulse'), __('The heart rate is recorded.')).'</th>
-						<th>'.Ajax::tooltip(__('Power'), __('The power is recorded or calculated.')).'</th>
-						<th>'.Ajax::tooltip(__('Outside'), __('The sport type is done in the open air (Route/Weather)')).'</th>
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport type can only be deleted no references exists.')).'</th>
+						<th>'.Ajax::tooltip(__('Types'), __('The sport uses different training types')).'</th>
+						<th>'.Ajax::tooltip(__('HR'), __('Heart rate is recorded.')).'</th>
+						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>
+						<th>'.Ajax::tooltip(__('Outside'), __('Sport is done outdoor: activate route, weather, ...')).'</th>
+						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport can only be deleted if no references exists.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';

@@ -11,16 +11,16 @@
 		<div id="widget-calendar">
 		</div>
 
-		<span id="calendar-result" class="hide">W&auml;hle ein Datum aus ...</span>
+		<span id="calendar-result" class="hide"><?php _e('Choose a date ...'); ?></span>
 		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000">
 		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000">
 
 		<div class="c">
-			Mit zwei Klicks auf die Tage kann eine beliebige Zeitspanne ausgew&auml;hlt werden.
+			<?php _e('You can select any time range with clicking on the start and end date.'); ?>
 		</div>
 
 		<div class="c">
-			<span class="button" id="calendar-submit">Auswahl anzeigen</span>
+			<span class="button" id="calendar-submit"><?php _e('Show selection'); ?></span>
 		</div>
 	</div>
 

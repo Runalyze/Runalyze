@@ -5,7 +5,7 @@
  * @package Runalyze\Plugins\Stats
  */
 
-$titleCenter = 'Trainingszeit nach Uhrzeit [in h]';
+$titleCenter = __('Training [in h] by day time');
 $xAxis       = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23);
 $yAxis       = array();
 
@@ -58,7 +58,7 @@ foreach ($yAxis as $t)
 			$error = false;
 
 if ($error === true) 
-	$Plot->raiseError('Keine Trainingsdaten vorhanden.');
+	$Plot->raiseError( __('No data available.') );
 
 
 $Plot->outputJavaScript();

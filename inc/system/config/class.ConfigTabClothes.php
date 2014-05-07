@@ -14,19 +14,19 @@ class ConfigTabClothes extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_clothes';
-		$this->title = __('Clothes');
+		$this->title = __('Equipment');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Clothes = new FormularFieldset(__('Your clothes'));
+		$Clothes = new FormularFieldset(__('Your Equipment'));
 		$Clothes->setHtmlCode($this->getCode());
-		$Clothes->addInfo(__('The clothes can be recorded for additional statistics for each workout<br>
-						All clothes are shown in the formular ordered by categories with their abbreviation.'));
-		$Clothes->addInfo(__('The category should be a number and is used to order the clothes'));
-		$Clothes->addInfo(__('Just fill up the last empty row to add a new cloth'));
+		$Clothes->addInfo( __('Equipment can be recorded for additional statistics.<br>'.
+							'Category and abbreviation are used to order and display them in the form for editing an activity.') );
+		$Clothes->addInfo( __('The category should be a number.') );
+		$Clothes->addInfo( __('Just fill up the last row to add a new equipment.') );
 
 		$this->Formular->addFieldset($Clothes);
 	}
@@ -51,7 +51,7 @@ class ConfigTabClothes extends ConfigTab {
 		$Clothes   = ClothesFactory::OrderedClothes();
 		$Clothes[] = array('new' => true, 'name' => '', 'short' => '', 'order' => '', 'id' => -1);
 
-		foreach ($Clothes as $i => $Data) {
+		foreach ($Clothes as $Data) {
 			$id     = $Data['id'];
 			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="clothes[delete]['.$id.']">';
 

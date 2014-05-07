@@ -28,33 +28,31 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Prognose';
-		$this->description = 'Anzeige der aktuellen Wettkampfprognose.';
+		$this->name = __('Prognosis');
+		$this->description = __('Predict your race performance on various distances.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Was wirst du beim n&auml;chsten Wettkampf laufen k&ouml;nnen?
-					Runalyze unterst&uuml;tzt verschiedene Prognose-Modelle.
-					Sinnvolle Prognosen k&ouml;nnen vor allem f&uuml;r die Distanzen zwischen 3.000m und 42 km erstellt werden.');
-		echo HTML::fileBlock('<strong>Jack Daniels (VDOT)</strong><br>
-					Aus deinen Trainingsleistungen wird dein aktueller VDOT-Wert approximiert.
-					Tabellen aus &bdquo;<em>Die Laufformel</em>&rdquo; von Jack Daniels liefern daf&uuml;r Prognosen.');
-		echo HTML::fileBlock('<strong>Robert Bock (CPP, &bdquo;Competitive Performance Predictor&rdquo;)</strong><br>
-					Robert Bock hat ein Modell zur Prognose anhand eines Erm&uuml;dungskoeffizientens aufgestellt.
-					Dieser wird aus deinen beiden besten Ergebnissen berechnet.<br>
-					<small>siehe <a href="http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html" title="Wettkampf Prognose Robert Bock">http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html</a></small>');
-		echo HTML::fileBlock('<strong>Herbert Steffny (&bdquo;simple Methode&rdquo;)</strong><br>
-					Im Buch &bdquo;<em>Das gro&szlig;e Laufbuch</em>&rdquo; von Herbert Steffny tauchen simple Faktoren zur Umrechnung auf.
-					Daf&uuml;r wird dein bisher bestes Ergebnis ber&uuml;cksichtigt.');
-		echo HTML::fileBlock('<strong>David Cameron</strong><br>
-					Das Modell von David Cameron basiert auf einem fixen Erm&uuml;dungskoeffizienten
-					und etwas anderen Formeln als CPP.<br>
-					<small>siehe <a href="http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time" title="Prognosis David Cameron">http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time</a></small>');
-		echo HTML::info('Nur die Prognose nach Jack Daniels ber&uuml;cksichtigt deine aktuelle Form.
-					Die anderen Prognosen basieren nur auf deinen Wettkampfergebnissen.');
+		echo HTML::p( __('There are different models that can be used to predict your race performances:') );
+		echo HTML::fileBlock( '<strong>Jack Daniels (VDOT, \'Running formula\')</strong><br>'.
+					__('Your current VDOT is estimated based on the ratio of heart rate and pace. '.
+						'This value is equivalent to specific performances.') );
+		echo HTML::fileBlock('<strong>Robert Bock (CPP, \'Competitive Performance Predictor\')</strong><br>'.
+					__('Robert Bock uses an individual coefficient for your fatigue over time/distance. '.
+						'This model uses your two best results.').'<br>'.
+						'<small>see <a href="http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html">http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html</a></small>');
+		echo HTML::fileBlock('<strong>Herbert Steffny (\'Das gro&szlig;e Laufbuch\')</strong><br>'.
+					__('Herbert Steffny uses fixed factors to transform performances from one distance to another. '.
+						'This model uses your best result.') );
+		echo HTML::fileBlock('<strong>David Cameron</strong><br>'.
+					__('David Cameron uses a fixed coefficient for the fatigue over time/distance and slightly different formulas than Robert Bock. '.
+						'This model uses your best result.').'<br>'.
+						'<small>see <a href="http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time">http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time</a></small>');
+		echo HTML::info( __('The VDOT model is the only one which considers your current shape. '.
+							'The other models are based on your previous race results.') );
 	}
 
 	/**
@@ -63,11 +61,11 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['distances']     = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => Ajax::tooltip('Distanzen f&uuml;r die Prognose', 'kommagetrennt'));
-		$config['model-jd']      = array('type' => 'bool', 'var' => true, 'description' => 'Prognose-Modell: Jack Daniels');
-		$config['model-cpp']     = array('type' => 'bool', 'var' => false, 'description' => 'Prognose-Modell: Robert Bock');
-		$config['model-steffny'] = array('type' => 'bool', 'var' => false, 'description' => 'Prognose-Modell: Herbert Steffny');
-		$config['model-cameron'] = array('type' => 'bool', 'var' => false, 'description' => 'Prognose-Modell: David Cameron');
+		$config['distances']     = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => Ajax::tooltip(__('Distances to predict'), __('comma seperated')) );
+		$config['model-jd']      = array('type' => 'bool', 'var' => true, 'description' => __('Model: Jack Daniels') );
+		$config['model-cpp']     = array('type' => 'bool', 'var' => false, 'description' => __('Model: Robert Bock') );
+		$config['model-steffny'] = array('type' => 'bool', 'var' => false, 'description' => __('Model: Herbert Steffny') );
+		$config['model-cameron'] = array('type' => 'bool', 'var' => false, 'description' => __('Model: David Cameron') );
 
 		return $config;
 	}
@@ -78,9 +76,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Prognose-Verlauf anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Prognose-Rechner', true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Prognosen', true, true).'>'.Icon::$INFO.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', __('Show prognosis trend'), true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', __('Prognosis calculator'), true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -96,7 +93,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$this->showPrognosis($km);
 
 		if ($this->thereAreNotEnoughCompetitions())
-			echo HTML::info('F&uuml;r gute Prognosen sind zu wenig Wettk&auml;mpfe da.');
+			echo HTML::info( __('There are not enough results for good predictions.') );
 	}
 
 	/**
@@ -139,12 +136,13 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		echo '
 			<p>
 				<span class="right">
-					<small>von</small> '.Ajax::tooltip($oldTimeString, 'VDOT: '.$VDOTold).'
-					<small>auf</small> '.Ajax::tooltip($newTimeString, 'VDOT: '.$VDOTnew).'
+					'.sprintf( __('<small>from</small> %s <small>to</small> %s'),
+							Ajax::tooltip($oldTimeString, 'VDOT: '.$VDOTold),
+							Ajax::tooltip($newTimeString, 'VDOT: '.$VDOTnew)).'
 					<small>('.$paceString.'/km)</small>
 				</span>
 				<strong>'.$distanceString.'</strong>
-			</p>'.NL;
+			</p>';
 	}
 
 	/**

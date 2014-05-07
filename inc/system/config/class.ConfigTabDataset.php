@@ -23,7 +23,8 @@ class ConfigTabDataset extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Dataset = new FormularFieldset(__('Your Dataset'));
 		$Dataset->setHtmlCode($this->getCode());
-		$Dataset->addInfo(__('You can determine which data you want to save and which data is displayed in your workouts'));
+		$Dataset->addInfo( __('You can specify which values to show up in the overview of your activities.').'<br>'.
+							__('This does not influence the detailed activity view, the form or any plugin.') );
 
 		$this->Formular->addFieldset($Dataset);
 	}
@@ -38,12 +39,12 @@ class ConfigTabDataset extends ConfigTab {
 				<thead>
 					<tr>
 						<th>&nbsp;</th>
-						<th>'.Ajax::tooltip(__('Display'), __('The information will be shown directly in the table')).'</th>
-						<th colspan="2">'.Ajax::tooltip(__('Analysis'), __('The data will be shown in the evaluation of the sport type')).'</th>
-						<th>'.Ajax::tooltip(__('Order'), __('indicates the order of appearance')).'</th>
+						<th>'.Ajax::tooltip(__('Display'), __('The information will be shown directly in the row.')).'</th>
+						<th colspan="2">'.Ajax::tooltip(__('Summary'), __('The value will be summarized for the sport.')).'</th>
+						<th>'.Ajax::tooltip(__('Order'), __('Indicates the order of appearance.')).'</th>
 						<th>'.Ajax::tooltip(__('CSS-Class'), __('\'c\': centered<br>\'l\': left-aligned<br>\'small\': small<br>\'b\': bold')).'</th>
 						<th>'.Ajax::tooltip(__('CSS-Style'), __('any CSS-Code')).'</th>
-						<th>Beispiel</th>
+						<th>'.__('Example').'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -192,14 +193,14 @@ class ConfigTabDataset extends ConfigTab {
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,
-			'route'		=> __('sports field'),
+			'route'		=> str_replace(' ', '&nbsp;', __('Olympia Stadium')),
 			'clothes'	=> $ClothesID,
 			'splits'	=> '5|26:51-5|24:36',
-			'comment'	=> __('Test workout'),
-			'partner'	=> 'Achim',
+			'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),
+			'partner'	=> 'Peter',
 			'abc'		=> 1,
 			'shoeid'	=> $ShoeID,
-			'notes'		=> __('That was a fantastic workout.'),
+			'notes'		=> str_replace(' ', '&nbsp;', __('Great run!')),
 			'arr_time'	=> '',
 			'arr_lat'	=> '',
 			'arr_lon'	=> '',

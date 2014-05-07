@@ -34,8 +34,8 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
-		$this->name = 'Tabellen von Jack Daniels';
-		$this->description = 'Verschiedene Tabellen für Puls, Tempo und VDOT von Jack Daniels';
+		$this->name = __('Tables by Jack Daniels');
+		$this->description = __('Tables for heart rate, paces and VDOT values by Jack Daniels');
 
 		$this->setTables();
 	}
@@ -50,17 +50,17 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 		$config['pace_distances'] = array(
 			'type' => 'array',
 			'var' => array(0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50),
-			'description' => Ajax::tooltip('Angezeigte Distanzen', 'kommagetrennt')
+			'description' => Ajax::tooltip(__('Distances'), __('comma seperated'))
 		);
 		$config['vdot_range']     = array(
 			'type' => 'array',
 			'var' => array(30, 80),
-			'description' => Ajax::tooltip('VDOT von ... bis ...', 'zwei Werte, kommagetrennt')
+			'description' => Ajax::tooltip(__('VDOT from ... to ...'), __('two values, comma seperated'))
 		);
 		$config['pace_range']     = array(
 			'type' => 'array',
 			'var' => array(60, 180),
-			'description' => Ajax::tooltip('Tempotabelle: 400m von ...s bis ...s', 'zwei Werte, kommagetrennt')
+			'description' => Ajax::tooltip(__('Pace table: 400m from  ...s to ...s'), __('two values, comma seperated'))
 		);
 
 		return $config;
@@ -72,20 +72,20 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	private function setTables() {
 		$this->Tables = array(
 			'prognosis'	=> array(
-				'title'	=> 'VDOT-Werte mit Wettkampfzeiten',
-				'hint'	=> 'Prognosen f&uuml;r alle VDOT-Werte und unterschiedliche Distanzen.',
+				'title'	=> __('VDOT values with equivalent race results'),
+				'hint'	=> __('Predict results on different distances for a given VDOT.'),
 				'init'	=> '$this->initVDOTRange();',
 				'tpl'	=> 'tpl.PrognosisTable.php'
 			),
 			'vdot-paces'	=> array(
-				'title'	=> 'VDOT-Werte mit Trainingstempo',
-				'hint'	=> 'Trainingstempo f&uuml;r alle VDOT-Werte in min/km.',
+				'title'	=> __('VDOT values with equivalent paces'),
+				'hint'	=> __('Find your training paces in min/km for given VDOT values.'),
 				'init'	=> '$this->initVDOTRange();$this->initPaces();',
 				'tpl'	=> 'tpl.VDOTPaceTable.php'
 			),
 			'pace'	=> array(
-				'title'	=> 'Allgemeine Tempotabelle',
-				'hint'	=> 'Diese Tabelle zeigt Zeiten f&uuml;r unterschiedliche Distanzen, wenn sie mit derselben Geschwindigkeit gelaufen werden.',
+				'title'	=> __('General pace table'),
+				'hint'	=> __('This table shows times for different distances if you run them with the same pace.'),
 				'init'	=> '$this->initPaceRange();',
 				'tpl'	=> 'tpl.PaceTable.php'
 			)
@@ -97,11 +97,10 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-			$this->showListOfTables();
+		$this->showListOfTables();
+
 		if (array_key_exists(Request::param('table'), $this->Tables))
 			$this->showTable(Request::param('table'));
-		//else
-		//	$this->showListOfTables();
 	}
 
 	/**

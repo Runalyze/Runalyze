@@ -77,6 +77,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0)
 			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $Durations_sum);
 
+		// Only for debuggin purposes
 		if ($DebugAllValues) {
 			$CTL = Trimp::CTLinPercent($index/1000);
 			$ATL = Trimp::ATLinPercent($index/1000);
@@ -84,7 +85,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$VDOT_plot = (isset($VDOTs[$index])) ? round($VDOTs[$index],5) : 0;
 
 			$checkFailes = $CTLs[$index] != $CTL || $ATLs[$index] != $ATL || $VDOT_plot != $VDOT;
-			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - berechnet: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br>';
+			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - calculated: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br>';
 
 			if ($checkFailes)
 				echo HTML::error($textMessage);
@@ -98,10 +99,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 $Plot = new Plot("form".$_GET['y'], 800, 450);
 
-$Plot->Data[] = array('label' => 'Form (CTL)', 'color' => '#008800', 'data' => $CTLs);
+$Plot->Data[] = array('label' => __('Shape (CTL)'), 'color' => '#008800', 'data' => $CTLs);
 if (count($ATLs) < $MaxATLPoints)
-	$Plot->Data[] = array('label' => 'M&uuml;digkeit (ATL)', 'color' => '#880000', 'data' => $ATLs);
-$Plot->Data[] = array('label' => 'VDOT', 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
+	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#880000', 'data' => $ATLs);
+$Plot->Data[] = array('label' => __('VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 
 $Plot->enableTracking();
 $Plot->enableSelection('x', '', false);
@@ -121,11 +122,11 @@ $Plot->addYAxis(2, 'right');
 $Plot->setYTicks(2, 1, 1);
 
 if ($All)
-	$Plot->setTitle('Formkurve Gesamt');
+	$Plot->setTitle( __('Shape for all years') );
 else
-	$Plot->setTitle('Formkurve '.$Year);
+	$Plot->setTitle( __('Shape').' '.$Year);
 
 if ($DataFailed)
-	$Plot->raiseError('Für dieses Jahr kann ich dir keine Daten zeigen.');
+	$Plot->raiseError( __('No data available.') );
 
 $Plot->outputJavaScript();

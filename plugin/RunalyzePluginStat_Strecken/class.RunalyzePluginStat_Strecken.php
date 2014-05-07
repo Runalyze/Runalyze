@@ -28,17 +28,18 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Strecken';
-		$this->description = 'Auflistung der h&auml;ufigsten und seltensten Strecken/Orte.';
+		$this->name = __('Routes');
+		$this->description = __('Some statistics for your most frequent routes.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Wenn f&uuml;r ein Training eine Strecke angegeben wird, wird davon ausgegangen,
-					dass einzelne Orte durch einen Bindestricht voneinander getrennt werden.
-					Dadurch kann dieses Plugin auswerten, welche Orte man wie oft besucht hat.');
+		echo HTML::p(
+			__('The input field \'route\' expects different places separted by a \'-\', e.g. \'City A - City B\''.
+				'This way the plugin will be able to count how often you visit each city or place.')
+		);
 	}
 
 	/**
@@ -55,7 +56,8 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
-		$Link = Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="fa fa-map-marker"></i> Streckennetz &ouml;ffnen</a>', 'big');
+		$text = __('Open route network');
+		$Link = Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
 
 		$this->setToolbarNavigationLinks(array('<li>'.$Link.'</li>'));
 		$this->setYearsNavigation(true, true);
@@ -70,7 +72,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Alle Jahre';
+		return __('All years');
 	}
 
 	/**
@@ -92,7 +94,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	private function displayRoutes() {
 		echo '<table style="width:70%;" class="left zebra-style">';
-		echo '<thead><tr><th colspan="3">H&auml;ufigsten Strecken</th></tr></thead>';
+		echo '<thead><tr><th colspan="3">'.__('Most frequent routes').'</th></tr></thead>';
 		echo '<tbody class="r">';
 
 		$strecken = DB::getInstance()->query('
@@ -107,7 +109,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			LIMIT 10')->fetchAll();
 
 		if (empty($strecken))
-			echo HTML::emptyTD(3, HTML::em('Keine Strecken vorhanden.'));
+			echo HTML::emptyTD(3, HTML::em( __('There are no routes.') ));
 
 		foreach ($strecken as $i => $strecke) {
 			echo('
@@ -129,14 +131,14 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	private function displayCities() {
 		echo '<table style="width:25%;" class="right zebra-style">';
-		echo '<thead><tr><th colspan="2">H&auml;ufigsten Orte</th></tr></thead>';
+		echo '<thead><tr><th colspan="2">'.__('Most frequent places').'</th></tr></thead>';
 		echo '<tbody>';
 		
 		$i = 1;
 		array_multisort($this->orte, SORT_DESC);
 
 		if (empty($this->orte))
-			echo HTML::emptyTD(2, HTML::em('Keine Strecken vorhanden.'));
+			echo HTML::emptyTD(2, HTML::em( __('There are no routes.') ));
 
 		foreach ($this->orte as $ort => $num) {
 			$i++;
@@ -159,7 +161,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	private function displayLonelyCities() {
 		echo '<table class="margin-5 fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="2">Seltensten Orte</th></tr></thead>';
+		echo '<thead><tr><th colspan="2">'.__('Rare places').'</th></tr></thead>';
 		echo '<tbody>';
 
 		$num_x = 0;
@@ -173,7 +175,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 					$num_x = $num;
 					echo '<tr><td class="b">'.$num.'x</td><td>';
 				} else
-					echo(', ');
+					echo ', ';
 
 				echo SearchLink::to('route', $ort, $ort, 'like');
 			}
@@ -183,16 +185,16 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			}
 		}
 
-		echo('
+		echo '
 			<tr class="no-zebra">
 				<td colspan="2" class="c">
-					Insgesamt warst du in <strong>'.count($this->orte).' verschiedenen Orten</strong> unterwegs.
+					'.sprintf( __('You\'ve visited in total %s different places.'), count($this->orte) ).'
 				</td>
 			</tr>
 		</tbody>
 		</table>
 
-		<p class="c"><em>Alles was bei der eingetragenen Strecke mit &quot; - &quot; getrennt wird, wird als eigener Ort betrachtet.</em></p>');
+		<p class="c"><em>'.__('Everything seperated by a \' - \' is considered as an individual place.').'</em></p>';
 	}
 
 	/**

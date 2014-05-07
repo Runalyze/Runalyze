@@ -35,9 +35,9 @@ foreach ($Labels as $i => &$value)
 
 $Plot = new Plot("sportler_weights", 320, 148);
 if ($Plugin_conf['use_weight']['var'])
-	$Plot->Data[] = array('label' => 'Gewicht', 'color' => '#008', 'data' => $Weights);
+	$Plot->Data[] = array('label' => __('Weight'), 'color' => '#008', 'data' => $Weights);
 if ($Plugin_conf['use_pulse']['var'])
-	$Plot->Data[] = array('label' => 'Ruhepuls', 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
+	$Plot->Data[] = array('label' => __('Resting HR'), 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 
 $Plot->setMarginForGrid(5);
 
@@ -60,7 +60,7 @@ if ($Wunschgewicht > 1) {
 }
 
 if (empty($Data)) 
-	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+	$Plot->raiseError( __('No data available.') );
 elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();

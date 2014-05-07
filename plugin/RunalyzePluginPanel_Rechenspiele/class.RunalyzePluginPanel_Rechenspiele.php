@@ -16,16 +16,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Rechenspiele';
-		$this->description = 'Anzeige von Rechenspielen zur M&uuml;digkeit, Grundlagenausdauer und Trainingsform. Zus&auml;tzlich werden auch empfohlene Trainingsgeschwindigkeiten angezeigt.';
+		$this->name = __('Calculations');
+		$this->description = __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Bei Runalyze werden viele Tabellen und daraus abgeleitete Formeln von &quot;Jack Daniels - Die Laufformel&quot; verwendet.
-				Unter anderem wird aus dem Verh&auml;ltnis von Herzfrequenz und Tempo auf die aktuelle Form geschlossen.');
+		echo HTML::p( __('Runalyze uses a lot of tables and derived formulas from Jack Daniels\' Running formula. '.
+						'That way Runalyze is able to predict your current VDOT value.') );
 	}
 
 	/**
@@ -34,11 +34,11 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => false, 'description' => Ajax::tooltip('Anzeige: Trainingstempo', 'Empfohlene Trainingspaces anzeigen', true));
-		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: ATL/CTL/TSB', 'Statistische Werte M&uuml;digkeit, Fitnessgrad und Stress Balance anzeigen', true));
-		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: VDOT', 'Aktuellen berechneten VDOT anzeigen', true));
-		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Grundlagenausdauer', 'Prozentwert f&uuml;r die Grundlagenausdauer anzeigen', true));
-		$config['show_jd_intensity']   = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip('Anzeige: Trainingspunkte', 'Trainingspunkte/-intensit&auml;t nach Jack Daniels', true));
+		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => false, 'description' => Ajax::tooltip( __('Show: Paces'), __('Paces based on your curent VDOT'), true));
+		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: ATL/CTL/TSB'), __('Show actual/chronical training load and stress balance (based on TRIMP)'), true));
+		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: VDOT'), __('Predict current VDOT value'), true));
+		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: Basic endurance'), __('Guess current basic endurance'), true));
+		$config['show_jd_intensity']   = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: Training points'), __('Training intensity by Jack Daniels'), true));
 
 		return $config;
 	}
@@ -49,9 +49,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', 'Form anzeigen', true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', 'Berechnungen der Werte', true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.html" '.Ajax::tooltip('', 'Erl&auml;uterungen zu den Rechenspielen', true, true).'>'.Icon::$INFO.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -67,7 +67,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$this->showPaces();
 
 		if (Time::diffInDays(START_TIME) < 70)
-			echo HTML::info('F&uuml;r sinnvolle Werte sind zu wenig Daten da.');
+			echo HTML::info( __('There are not enough activities for good calculations.') );
 	}
 
 	/**
@@ -95,9 +95,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> '',
 				'value'	=> number_format(VDOT_FORM,2),
-				'title'	=> 'VDOT',
+				'title'	=> __('VDOT'),
 				'small'	=> '',
-				'tooltip'	=> 'Aktueller durchschnittlicher VDOT-Wert'
+				'tooltip'	=> __('Current average VDOT')
 			),
 			array(
 				'show'	=> $this->config['show_basicendurance']['var'],
@@ -106,31 +106,31 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> '',
 				'value'	=> BasicEndurance::getConst().'&nbsp;&#37;',
-				'title'	=> 'Grundlagenausdauer',
+				'title'	=> __('Basic&nbsp;endurance'),
 				'small'	=> '',
-				'tooltip'	=> '<em>Experimenteller Wert!</em><br>100 &#37; entspricht dem Optimum an Wochenkilometern und Langen L&auml;ufen f&uuml;r einen perfekten Marathon bei deinem derzeitigen VDOT.'
+				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['ATL'], ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> 'Aktueller Wert: '.$ATLabsolute.'<br>Maximaler Wert: '.$ATLmax.'<br>in Prozent = '.$TrimpValues['ATL'].'%',
+				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $ATLabsolute, $ATLmax, $TrimpValues['ATL']),
 				'value'	=> $TrimpValues['ATL'].'&nbsp;&#37;',
-				'title'	=> 'M&uuml;digkeit',
+				'title'	=> __('Fatigue'),
 				'small'	=> '(ATL)',
-				'tooltip'	=> 'Actual Training Load<br><small>Durchschnittliche Trainingsbelastung der letzten Woche verglichen mit dem bisherigen Maximalwert.</small>'
+				'tooltip'	=> __('Actual Training Load<br><small>Average training impulse of the last weeks in relation to your maximal value.</small>')
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['CTL'], ProgressBarSingle::$COLOR_BLUE)
 				),
-				'bar-tooltip'	=> 'Aktueller Wert: '.$CTLabsolute.'<br>Maximaler Wert: '.$CTLmax.'<br>in Prozent = '.$TrimpValues['CTL'].'%',
+				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $CTLabsolute, $CTLmax, $TrimpValues['CTL']),
 				'value'	=> $TrimpValues['CTL'].'&nbsp;&#37;',
-				'title'	=> 'Fitnessgrad',
+				'title'	=> __('Fitness&nbsp;level'),
 				'small'	=> '(CTL)',
-				'tooltip'	=> 'Chronical Training Load<br><small>Durchschnittliche Trainingsbelastung des letzten Monats verglichen mit dem bisherigen Maximalwert.</small>'
+				'tooltip'	=> __('Chronical Training Load<br><small>Average training impulse of the last months in relation to your maximal value.</small>')
 			),
 			array(
 				'show'	=> $this->config['show_trimpvalues']['var'],
@@ -139,12 +139,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				),
 				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
 				'value'	=> Math::WithSign($TrimpValues['TSB']),
-				'title'	=> 'Stress&nbsp;Balance',
+				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
-				'tooltip'	=> 'Training Stress Balance (= CTL - ATL)<br>Positiver Wert: Du bist erholt.<br>
-					Negativer Wert: Du trainierst hart.<br>
-					<small>Ein Wert von +10 oder h&ouml;her ist f&uuml;r einen Wettkampf zu empfehlen.<br>
-					Bei Werten unter -10 solltest du sicher sein, dass dein K&ouml;rper das vertr&auml;gt.</small>'
+				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
+					'&lt; 0: You\'re training hard.<br>'.
+					'<small>A value of &ge; 10 is desirable for a race.<br>'.
+					'A value of &le; -10 can be a hint to start regeneration.</small>')
 			),
 			array(
 				'show'	=> $this->config['show_jd_intensity']['var'],
@@ -153,15 +153,15 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle($JDPointsThisWeek/2, ProgressBarSingle::$COLOR_RED)
 				),
 				'bar-goal'	=> $JDPointsLastWeek/2,
-				'bar-tooltip'	=> 'Diese Woche: '.$JDPointsThisWeek.' Trainingspunkte<br>Prognose: ca. '.$JDPointsPrognosis.' Trainingspunkte<br>Letzte Woche: '.$JDPointsLastWeek.' Trainingspunkte',
+				'bar-tooltip'	=> sprintf( __('This week: %s training points<br>Prognosis: ca. %s training points<br>Last week: %s training points'), $JDPointsThisWeek, $JDPointsPrognosis, $JDPointsLastWeek ),
 				'value'	=> $JDPointsThisWeek,
-				'title'	=> 'Trainingspunkte',
+				'title'	=> __('Training&nbsp;points'),
 				'small'	=> '',
-				'tooltip'	=> 'Trainingsintensit&auml;t nach Jack Daniels<br>
-					Jack Daniels sch&auml;tzt dabei folgende Wochen:<br>
-					50 Punkte: neue L&auml;ufer<br>
-					100 Punkte: erfahrene L&auml;ufer<br>
-					200 Punkte: Elitel&auml;ufer'
+				'tooltip'	=> __('Training intensity by Jack Daniels.<br>'.
+					'Jack Daniels considers the following levels:<br>'.
+					'50 points: Beginner<br>'.
+					'100 points: Advanced Runner<br>'.
+					'200 points: Pro Runner')
 			)
 		);
 
@@ -210,7 +210,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$vVDOT = JD::VDOT2v(VDOT_FORM);
 
 		foreach ($Paces as $Pace) {
-			$DisplayedString = '<strong>'.$Pace['name'].'</strong> <small>('.$Pace['short'].')</small>';
+			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
 
 			echo '<tr>';
 			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
@@ -227,45 +227,33 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getArrayForPaces() {
 		$Paces = array(
-			array(
-				'short'			=> 'RL',
-				'name'			=> 'Regenerationslauf',
-				'description'	=> 'Dieses Tempo kommt bei Jack Daniels eigentlich gar nicht vor.',
+			array( /// Easy pace (by Jack Daniels)
+				'short'			=> __('Easy'),
+				'description'	=> __('Easy pace running refers to warm-ups, cool-downs and recovery runs.'),
 				'limit-low'		=> 59,
-				'limit-high'	=> 64
-			),
-			array(
-				'short'			=> 'DL',
-				'name'			=> 'Dauerlauf',
-				'description'	=> 'Zum Training der Grundlagenausdauer. Hier kommt es nicht auf Sekunden an.',
-				'limit-low'		=> 65,
 				'limit-high'	=> 74
 			),
-			array(
-				'short'			=> 'LL',
-				'name'			=> 'Langer Lauf',
-				'description'	=> 'Der LL wird bei Jack Daniels im gleichen Tempo wie ein normaler DL gelaufen.',
-				'limit-low'		=> 65,
-				'limit-high'	=> 74
+			array( /// Marathon pace (by Jack Daniels)
+				'short'			=> __('Marathon'),
+				'description'	=> __('Steady run or long repeats (e.g. 2 x 4 miles at marathon pace)'),
+				'limit-low'		=> 75,
+				'limit-high'	=> 84
 			),
-			array(
-				'short'			=> 'TDL',
-				'name'			=> 'Tempodauerlauf',
-				'description'	=> 'Schwellentempo an der anaeroben Schwelle, um diese anzuheben.',
+			array( /// Threshold pace (by Jack Daniels)
+				'short'			=> __('Treshold'),
+				'description'	=> __('Steady, prolonged or tempo runs or intermittent runs, also called cruise intervals.'),
 				'limit-low'		=> 83,
 				'limit-high'	=> 88
 			),
-			array(
-				'short'			=> 'IT',
-				'name'			=> 'Intervalltraining',
-				'description'	=> 'Zum Training der maximalen Sauerstoffaufnahme.',
+			array( /// Interval pace (by Jack Daniels)
+				'short'			=> __('Interval'),
+				'description'	=> __('Intervals: It takes about two minutes for you to gear up to functioning at VO2max so the ideal duration of an interval is 3-5 minutes each.'),
 				'limit-low'		=> 95,
 				'limit-high'	=> 100
 			),
-			array(
-				'short'			=> 'WHL',
-				'name'			=> 'Wiederholungsl&auml;ufe',
-				'description'	=> 'W&auml;hrend beim IT die Pausen k&uuml;rzer als die schnellen Abschnitte sind, erfolgt beim WHL in der Pause eine vollst&auml;dige Erholung.',
+			array( /// Repetition pace (by Jack Daniels)
+				'short'			=> __('Repetition'),
+				'description'	=> __('Repetitions are fast, but not necessarily "hard," because work bouts are relatively short and are followed by relatively long recovery bouts.'),
 				'limit-low'		=> 105,
 				'limit-high'	=> 110
 			),
@@ -290,58 +278,51 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<thead>
 					<tr>
 						<th></th>
-						<th>Name</th>
-						<th>in &#37;</th>
-						<th>Zeitraum</th>
-						<th>&oslash; Wert/Tag</th>
-						<th>max. Wert</th>
-						<th class="small">Beschreibung</th>
+						<th>'.__('Name').'</th>
+						<th>'.__('in &#37;').'</th>
+						<th>'.__('Time range').'</th>
+						<th>'.__('&oslash; value/day').'</th>
+						<th>'.__('max. value').'</th>
+						<th class="small">'.__('Description').'</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td class="b">ATL</td>
-						<td>Actual Training Load</td>
+						<td>'.__('Actual Training Load').'</td>
 						<td class="c">'.$TrimpValues['ATL'].' &#37;</td>
-						<td class="c small">'.CONF_ATL_DAYS.' Tage</td>
+						<td class="c small">'.sprintf( __('%s days'), CONF_ATL_DAYS).'</td>
 						<td class="c">'.$ATL.'</td>
 						<td class="c">'.$maxATL.'</td>
-						<td class="small">Belastung &uuml;ber einen kurzen Zeitraum.</td>
+						<td class="small">'.__('Training impulse over a short period').'</td>
 					</tr>
 					<tr>
 						<td class="b">CTL</td>
-						<td>Chronical Training Load</td>
+						<td>'.__('Chronical Training Load').'</td>
 						<td class="c">'.$TrimpValues['CTL'].' &#37;</td>
-						<td class="c small">'.CONF_CTL_DAYS.' Tage</td>
+						<td class="c small">'.sprintf( __('%s days'), CONF_CTL_DAYS).'</td>
 						<td class="c">'.$CTL.'</td>
 						<td class="c">'.$maxCTL.'</td>
-						<td class="small">Belastung &uuml;ber einen l&auml;ngeren Zeitraum.</td>
+						<td class="small">'.__('Training impulse over a long period').'</td>
 					</tr>
 					<tr>
 						<td class="b">TSB</td>
-						<td>Training Stress Balance</td>
+						<td>'.__('Training Stress Balance').'</td>
 						<td class="c">'.$TrimpValues['TSB'].'</td>
 						<td colspan="3" class="c">'.$CTL.' - '.$ATL.' = '.$TrimpValues['TSB'].'</td>
-						<td class="small">
-							Aktuelle Belastung<br>
-							positiv = Erholung,
-							negativ = Anstrengung<br>
+						<td class="small">'.__('Current impulse<br>positive: recovery<br>negative: hard training').'
 						</td>
 					</tr>
 				</tbody>
 			</table>';
 
 		$Fieldset = new FormularFieldset('ATL/CTL/TSB');
-		$Fieldset->addBlock('ATL/CTL basieren auf dem TRIMP-Konzept, das jedem Training einen Belastungswert zuteilt.
-							ATL und CTL sind Mittelwerte von TRIMP.
-							Da die Werte selbst wenig Aussagekraft haben,
-							werden sie bei Runalyze in Prozent vom bisherigen Maximum angegeben.');
-		$Fieldset->addBlock('100&#37; entspricht also der maximalen sportlichen Belastung,
-							die du im angegebenen Zeitraum dir bisher je zugemutet hast (soweit hier eingetragen).
-							Ob du noch mehr Training verkraftest oder diese Belastung bereits zu viel ist,
-							kann Runalyze dir nicht sagen.');
+		$Fieldset->addBlock( __('ATL/CTL are based on the TRIMP-concept, which adresses an impulse value to every activity. '.
+								'ATL and CTL are averaged values over a given time range. '.
+								'Runalyze displays the relation to your present maximum, '.
+								'since the values themselves do not tell much.') );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo('siehe <a href="http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/Das-TRIMP-Konzept/1730751739988967389/head/page1" title="Das TRIMP-Konzept">Das TRIMP-Konzept</a> auf netzathleten.de');
+		$Fieldset->addInfo( __('see <a href="http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/Das-TRIMP-Konzept/1730751739988967389/head/page1" title="Das TRIMP-Konzept">The TRIMP-concept</a> (german, netzathleten.de)') );
 
 		return $Fieldset;
 	}
@@ -355,7 +336,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
-						<th colspan="10">VDOT-Werte der letzten '.CONF_VDOT_DAYS.' Tage</th>
+						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), CONF_VDOT_DAYS ).'</th>
 					</tr>
 				</thead>
 				<tbody class="top-and-bottom-border">
@@ -382,13 +363,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			</table>
 			';
 
-		$Fieldset = new FormularFieldset('VDOT');
-		$Fieldset->addBlock('Die VDOT-Form berechnet sich aus dem Mittelwert der VDOT-Werte deiner
-							Trainingseinheiten der letzten '.CONF_VDOT_DAYS.' Tage. Die Werte werden nach der jeweiligen Dauer gewichtet.');
-		$Fieldset->addBlock('Dein aktuelle VDOT-Form: <strong>'.VDOT_FORM.'</strong><br>&nbsp;');
+		$Fieldset = new FormularFieldset( __('VDOT') );
+		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), CONF_VDOT_DAYS ) );
+		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), VDOT_FORM ) );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo('Bei Jack Daniels wird der VDOT als fester Wert angesehen und nicht aus Trainingsleistungen berechnet.<br>
-							Die hier verwendeten Berechnung anhand der Pulsdaten wurden lediglich aus seinen Puls-Tabellen abgeleitet.');
+		$Fieldset->addInfo( __('Jack Daniels uses VDOT as a fixed value and not based on the training progress.<br>'.
+								'We do instead predict the VDOT from all activities based on the heart rate. '.
+								'These formulas are derived from Jack Daniels\' tables as well.') );
 
 		return $Fieldset;
 	}
@@ -412,23 +393,23 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style">
 				<tbody class="top-and-bottom-border">
 					<tr>
-						<td><strong>Aktueller VDOT</strong> <small>(nach Puls)</small></td>
+						<td>'.__('<strong>Current VDOT</strong> <small>(based on heart rate)</small>').'</td>
 						<td class="r">'.round(VDOT_FORM, 2).'</td>
 						<td>&nbsp;</td>
-						<td><strong>Vorgabe Wochen-KM</strong> <small>('.round($BasicEndurance->getDaysForWeekKm() / 7).' Wochen)</small></td>
+						<td>'.sprintf( __('<strong>Target kilometer per week</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysForWeekKm() / 7)).'</td>
 						<td class="r">'.Running::Km($BasicEndurance->getTargetWeekKm()).'</td>
-						<td class="small">erreicht zu '.round(100*$BEresults['weekkm-percentage']).'&#37;</td>
+						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['weekkm-percentage']) ).'</td>
 						<td class="small">(&oslash; '.Running::Km(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), 0).')</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForWeekKilometer().'</td>
 						<td rowspan="2" class="bottom-spacer b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
 					</tr>
 					<tr>
-						<td><strong>Marathonzeit</strong> <small>(optimal)</small></td>
+						<td>'.__('<strong>Marathon time</strong> <small>(optimal)</small>').'</td>
 						<td class="r">'.Time::toString($Prognosis->inSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
-						<td><strong>Vorgabe Langer Lauf</strong> <small>('.round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7).' Wochen)</small></td>
+						<td>'.sprintf( __('<strong>Target long run</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7)).'</td>
 						<td class="r">'.Running::Km($BasicEndurance->getRealTargetLongjogKmPerWeek()).'</td>
-						<td class="small">erreicht zu '.round(100*$BEresults['longjog-percentage']).'&#37;</td>
+						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['longjog-percentage']) ).'</td>
 						<td class="small">('.round($BEresults['longjog-result'], 1).' points)</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForLongjogs().'</td>
 					</tr>
@@ -439,9 +420,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr>
-						<th>Datum*</th>
-						<th>Distanz</th>
-						<th>Punkte</th>
+						<th>'.__('Date').'*</th>
+						<th>'.__('Distance').'</th>
+						<th>'.__('Points').'</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -470,22 +451,21 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 				</tbody>
 			</table>';
-		$LongjogTable .= '<p class="small">* '.$IgnoredLongjogs.' &quot;lange&quot; L&auml;ufe wurden hier nicht aufgef&uuml;hrt, da sie weniger als 0.2 Punkte eingebracht haben.</p>';
-		$LongjogTable .= '<p class="small">* Generell werden alle L&auml;ufe ab '.Running::Km($BasicEndurance->getMinimalDistanceForLongjogs()).' betrachtet.</p>';
+		$LongjogTable .= '<p class="small">'.sprintf( __('* %s &quot;long&quot; jogs do not show up, '.
+														'because they have less than 0.2 points.'), $IgnoredLongjogs).'</p>';
+		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are be considered.'),
+														Running::Km($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 
-		$Fieldset = new FormularFieldset('Grundlagenausdauer');
-		$Fieldset->addBlock('Die Grundlagenausdauer berechnet sich aus Wochenkilometern und langen L&auml;ufen.<br>
-							Die Vorgaben daf&uuml;r richten sich nach deinem VDOT-Wert und der (daraus) angestrebten Marathon-Zeit.');
+		$Fieldset = new FormularFieldset( __('Basic endurance') );
+		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
+								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
 		$Fieldset->addBlock($GeneralTable);
-		$Fieldset->addBlock('Die Punkte f&uuml;r die Langen L&auml;ufe werden in zeitlicher Abh&auml;ngigkeit
-							und quadratisch gr&ouml;&szlig;er werdend vergeben.<br>
-							Ein Langer Lauf gestern bringt mehr als ein Langer Lauf vor einigen Wochen
-							und ein 30 km-Lauf bringt mehr als zwei 20 km-L&auml;ufe.');
+		$Fieldset->addBlock( __('The points for your long jogs are weighted by time and quadratic in distance. '.
+								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
+								'and a 30k-jog gives more points than two 20k-jogs.').'<br>&nbsp;' );
 		$Fieldset->addBlock($LongjogTable);
-		$Fieldset->addInfo('Die Grundlagenausdauer stammt <strong>nicht</strong> von Jack Daniels.<br>
-							Um die Prognosen auf langen Distanzen bei fehlender Ausdauer anzupassen,
-							haben wir diesen Algorithmus entworfen. Er ist allerdings durchaus
-							diskussionsw&uuml;rdig.');
+		$Fieldset->addBlock( __('The basic endurance is <strong>not</strong> from Jack Daniels.<br>'.
+								'It\'s our own attempt to adjust the prognosis for long distances based on your current endurance.') );
 
 		return $Fieldset;
 	}
@@ -499,10 +479,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
-						<th></th>
-						<th>Name</th>
-						<th class="small">Pace</th>
-						<th class="small">Beschreibung</th>
+						<th>'.__('Name').'</th>
+						<th class="small">'.__('Pace').'</th>
+						<th class="small">'.__('Description').'</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -513,7 +492,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$Table .= '
 					<tr>
 						<td class="b">'.$Pace['short'].'</td>
-						<td>'.$Pace['name'].'</td>
 						<td class="small"><em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'&nbsp;-&nbsp;'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'/km</em></td>
 						<td class="small">'.$Pace['description'].'</td>
 					</tr>';
@@ -523,9 +501,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				</tbody>
 			</table>';
 
-		$Fieldset = new FormularFieldset('Trainingstempo');
+		$Fieldset = new FormularFieldset( __('Training paces') );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo('Diese Vorgaben richten sich nach den Trainingstempos von Jack Daniels (E/T/I/R-pace).');
+		$Fieldset->addInfo( __('These paces are based on Jack Daniels\' recommendation.') );
 
 		return $Fieldset;
 	}
