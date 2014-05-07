@@ -22,18 +22,17 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
-		$this->name = 'VDOT analysieren';
-		$this->description = 'Den VDOT im Zusammenhang mit Wettkampfergebnissen analysieren';
+		$this->name = __('Analyze your VDOT');
+		$this->description = __('Analyze the VDOT prediction on your race results.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Die Trainingsauswertung anhand des berechneten VDOT-Werts birgt einige Gefahren,
-					wenn man sich blind auf ihn verl&auml;sst. Dazu gibt es zu viele Nebeneffekte.');
-		echo HTML::p('Um zu sehen, bei welchen Wettk&auml;mpfen die Prognose mit dem Ergebnis zusammen passt
-					und bei welchen nicht, kannst du dieses Tool verwenden.');
+		echo HTML::p( __('Predicting your VDOT based on your training values is risky.'.
+						'This plugin lists your races and compares your results with the predicted values.'.
+						'This way you can get an impression of how well the prediction works for you.') );
 	}
 
 	/**

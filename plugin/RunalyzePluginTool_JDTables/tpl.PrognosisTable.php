@@ -33,10 +33,10 @@ $Prognosis->setStrategy($Strategy);
 </table>
 
 <p class="info">
-	Diese Tabelle richtet sich nach den aus &quot;Die Laufformel&quot; abgeleiteten Gleichungen.
-	Sie stimmt daher nicht hundertprozentig mit der originalen Tabelle von Jack Daniels &uuml;berein.
+	<?php _e('This table is computed by some formulas, derived from the tables in Jack Daniels\' Running formula.'); ?>
+	<?php _e('These values do not fit the original table one hundred percent.'); ?>
 </p>
 
 <p class="info">
-	In dieser Tabelle wird kein Korrekturfaktor f&uuml;r die Grundlagenausdauer verwendet.
+	<?php _e('This table does <strong>not</strong> use a correction based on your current basic endurance.'); ?>
 </p>

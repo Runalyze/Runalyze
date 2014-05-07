@@ -28,7 +28,7 @@ class ConfigTabAccount extends ConfigTab {
 		$UsernameField = new FormularInput('name', __('Username'), $Data['username']);
 		$UsernameField->setDisabled();
 
-		$MailField = new FormularInput('name', __('E-Mail address'), $Data['mail']);
+		$MailField = new FormularInput('name', __('Email address'), $Data['mail']);
 		$MailField->setDisabled();
 
 		$NameField = new FormularInput('name', __('Name'), $Data['name']);
@@ -36,31 +36,32 @@ class ConfigTabAccount extends ConfigTab {
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
 
-		$LastLoginField = new FormularInput('name', __('Last Logon'), date('d.m.Y H:i', $Data['lastlogin']));
+		$LastLoginField = new FormularInput('name', __('Last Login'), date('d.m.Y H:i', $Data['lastlogin']));
 		$LastLoginField->setDisabled();
 
-		$Account = new FormularFieldset(__('Your account'));
+		$Account = new FormularFieldset( __('Your account') );
 		$Account->addField($UsernameField);
 		$Account->addField($MailField);
 		$Account->addField($NameField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
 
-		$Backup = new FormularFieldset(__('Back uo your data'));
+		$Backup = new FormularFieldset( __('Backup your data') );
 		$Backup->setCollapsed();
 
 		if (Plugin::isInstalled('RunalyzePluginTool_DbBackup')) {
 			$Plugin = Plugin::getInstanceFor('RunalyzePluginTool_DbBackup');
-			$Backup->addInfo(__('Please use the plugin').' <strong>'.$Plugin->getWindowLink().'</strong>');
+			$Backup->addInfo( __('Please use the plugin').' \'<strong>'.$Plugin->getWindowLink().'</strong>\'.' );
 		} else {
-			$Backup->addInfo(__('The back up of all your data is not manually possible yet.<br>
-							In important individual cases write us an e-mail to mail@runalyze.de schicken and and we will take care of it right away!'));
+			$Backup->addInfo( __('The back up of all your data is not manually possible yet.<br>'.
+								'In important individual cases write us an e-mail to mail@runalyze.de and and we will take care of it right away!') );
 		}
 
-		$DeleteLink  = Ajax::window('<a href="call/window.delete.php"><strong>'.__('Delete account permanently').'&raquo;</strong></a>');
-		$DeleteLink .= '<br><small>'.__('After your wish for deletion you\'ll receive a mail with a link to delete your account.
-						The deletion cannot be reversed.
-						You should therefore backup your data, so that you can return if you want.').'</small>';
+		$DeleteLink = Ajax::window('<a href="call/window.delete.php"><strong>'.__('Delete your account').' &raquo;</strong></a>').
+						'<br><br>'.
+						__('You\'ll receive an email with a link to confirm the deletion.<br>'.
+						'The deletion is permanently and can\'t be reversed. '.
+						'Therefore, you should backup your data.');
 
 		$Delete = new FormularFieldset(__('Delete your account'));
 		$Delete->setCollapsed();

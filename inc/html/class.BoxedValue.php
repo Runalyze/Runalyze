@@ -90,10 +90,16 @@ class BoxedValue {
 
 	/**
 	 * Class: as floating block
-	 * e.g. "w25", "w33", "w50"
+	 * e.g. "w10", "w25", "w33", "w50"
 	 * @var string
 	 */
 	protected $AsFloatingBlockClass = '';
+
+	/**
+	 * Fixed width
+	 * @var string
+	 */
+	protected $AsFloatingBlockWidth = '';
 
 	/**
 	 * Constructor
@@ -154,11 +160,23 @@ class BoxedValue {
 
 	/**
 	 * Define as floating block
+	 * 
+	 * Multiple classes can be set, e.g. "w100 flexible-height".
+	 * 
 	 * @param string $widthClass e.g. "w25", "w33", "w50"
 	 */
 	public function defineAsFloatingBlock($widthClass) {
 		$this->AsFloatingBlock = true;
 		$this->AsFloatingBlockClass = $widthClass;
+	}
+
+	/**
+	 * Define as floating block
+	 * @param int $numberOfBlocks
+	 */
+	public function defineAsFloatingBlockWithFixedWidth($numberOfBlocks) {
+		$this->AsFloatingBlock = true;
+		$this->AsFloatingBlockWidth = round(100/$numberOfBlocks, 2).'%';
 	}
 
 	/**
@@ -175,8 +193,12 @@ class BoxedValue {
 	public function getCode() {
 		$Code = '';
 
-		if ($this->AsFloatingBlock)
-			$Code .= '<div class="'.self::$CONTAINER_FLOATING_OUTER_DIV.' '.$this->AsFloatingBlockClass.'">';
+		if ($this->AsFloatingBlock) {
+			if ($this->AsFloatingBlockWidth)
+				$Code .= '<div class="'.self::$CONTAINER_FLOATING_OUTER_DIV.'" style="width:'.$this->AsFloatingBlockWidth.';">';
+			else
+				$Code .= '<div class="'.self::$CONTAINER_FLOATING_OUTER_DIV.' '.$this->AsFloatingBlockClass.'">';
+		}
 
 		$Code .= '<div class="'.$this->getDivClass().'">';
 		$Code .= $this->getDivForIcon();

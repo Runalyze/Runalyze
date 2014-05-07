@@ -21,18 +21,17 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Wetter';
-		$this->description = 'Wetterverh&auml;ltnisse, Temperaturen und die getragenen Kleidungsst&uuml;cke.';
+		$this->name = __('Weather');
+		$this->description = __('Statistics about weather conditions, temperatures and clothing.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Es gibt kein schlechtes Wetter, es gibt nur schlechte Kleidung.');
-		echo HTML::p('Ob du ein Warmduscher oder ein harter L&auml;ufer bist, kannst du dir in diesen Statistiken anschauen.
-					Wie warm war es, wie oft hat es geregnet und welche Kleidung hast du getragen?
-					Das Plugin verr&auml;t es dir, wenn du die Daten brav erfasst hast.');
+		echo HTML::p( __('There is no bad weather, there is only bad clothing.') );
+		echo HTML::p( __('Are you a wimp or a tough runner?'.
+						'Have a look at these statistics about the weather conditions and your clothing while training.') );
 	}
 
 	/**
@@ -41,8 +40,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['for_weather']  = array('type' => 'bool', 'var' => true, 'description' => 'Wetter-Statistiken anzeigen');
-		$config['for_clothes']  = array('type' => 'bool', 'var' => true, 'description' => 'Kleidung-Statistiken anzeigen');
+		$config['for_weather']  = array('type' => 'bool', 'var' => true, 'description' => __('Show statistics about weather conditions'));
+		$config['for_clothes']  = array('type' => 'bool', 'var' => true, 'description' => __('Show statistics about your clothing'));
 
 		return $config;
 	}
@@ -55,7 +54,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$LinkList = array();
 
 		if ($this->config['for_weather']['var'])
-			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, 'Wetter-Diagramme anzeigen').'</a>').'</li>';
+			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, __('Show temperature plots')).'</a>').'</li>';
 
 		return $LinkList;
 	}
@@ -82,14 +81,14 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$this->displayClothesTable();
 
 		if (!$this->config['for_weather']['var'] && !$this->config['for_clothes']['var'])
-			echo HTML::warning('In der Konfiguration sind sowohl die Wetter- als auch die Kleidungs-Statistiken ausgeschaltet.');
+			echo HTML::warning( __('You have to activate some statistics in the plugin configuration.') );
 	}
 
 	/**
 	 * Display month-table
 	 */
 	private function displayMonthTable() {
-		echo '<table class="small fullwidth zebra-style r">';
+		echo '<table class="fullwidth zebra-style r">';
 		echo '<thead>'.HTML::monthTR(8, 1).'</thead>';
 		echo '<tbody>';
 
@@ -110,7 +109,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for temperature
 	*/
 	private function displayMonthTableTemp() {
-		echo '<tr class="top-spacer"><td class="c">&#176;C</td>';
+		echo '<tr class="top-spacer"><td>&#176;C</td>';
 
 		$temps = DB::getInstance()->query('
 			SELECT
@@ -151,7 +150,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$wetter_all = Weather::getArrayWithoutUnknown();
 		foreach ($wetter_all as $wetter) {
 			$Weather = new Weather($wetter['id']);
-			echo '<tr><td class="c">'.$Weather->icon().'</td>';
+			echo '<tr><td>'.$Weather->icon().'</td>';
 		
 			$i = 1;
 			$data = DB::getInstance()->query('SELECT
@@ -209,7 +208,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$kleidungen = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
 		if (!empty($kleidungen)) {
 			foreach ($kleidungen as $k => $kleidung) {
-				echo '<tr class="'.($k == 0 ? 'top-spacer ' : '').'r"><td>'.$kleidung['name'].'</td>';
+				echo '<tr class="'.($k == 0 ? 'top-spacer' : '').'"><td>'.$kleidung['name'].'</td>';
 			
 				$i = 1;
 				$data = DB::getInstance()->query('SELECT
@@ -256,16 +255,16 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		if (!$this->config['for_clothes']['var'])
 			return;
 
-		echo '<table class="small fullwidth zebra-style">
-			<thead><tr class="c">
+		echo '<table class="fullwidth zebra-style">
+			<thead><tr>
 				<th></th>
-				<th>Temperaturen</th>
+				<th>'.__('Temperatures').'</th>
 				<th>&Oslash;</th>
 				<th colspan="2"></th>
-				<th>Temperaturen</th>
+				<th>'.__('Temperatures').'</th>
 				<th>&Oslash;</th>
 				<th colspan="2"></th>
-				<th>Temperaturen</th>
+				<th>'.__('Temperatures').'</th>
 				<th>&Oslash;</th>
 			</tr></thead>';
 		echo '<tr class="r">';
@@ -292,7 +291,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				echo '<td class="l">'.$kleidung['name'].'</td>';
 
 				if (isset($dat['min'])) {
-					echo '<td>'.($dat['min']).'&deg;C bis '.($dat['max']).'&deg;C</td>';
+					echo '<td>'.($dat['min']).'&deg;C '.__('to').' '.($dat['max']).'&deg;C</td>';
 					echo '<td>'.round($dat['avg']).'&deg;C</td>';
 				} else {
 					echo '<td colspan="2" class="c"><em>-</em></td>';
@@ -315,16 +314,16 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
-			$hot[$i] = $h['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
+			$hot[$i] = $h['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
 		foreach ($cold as $i => $c)
-			$cold[$i] = $c['temperature'].'&nbsp;&#176;C am '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
+			$cold[$i] = $c['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($c['id'], date('d.m.Y', $c['time']));
 
-		echo '<small>';
-		echo '<strong>W&auml;rmsten L&auml;ufe:</strong> '.NL;
+		echo '<p>';
+		echo '<strong>'.__('Hottest activities').':</strong> '.NL;
 		echo implode(', '.NL, $hot).'<br>'.NL;
-		echo '<strong>K&auml;ltesten L&auml;ufe:</strong> '.NL;
+		echo '<strong>'.__('Coldest activities').':</strong> '.NL;
 		echo implode(', '.NL, $cold).'<br>'.NL;
-		echo '</small>';
+		echo '</p>';
 	}
 
 	/**
@@ -351,7 +350,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$header = 'Wetter';
 
 		if ($this->config['for_clothes']['var'])
-			$header = ($this->config['for_weather']['var']) ? 'Wetter und Kleidung' : 'Kleidung';
+			$header = ($this->config['for_weather']['var']) ? __('Weather and Clothing') : __('Clothing');
 
 		return $header.': '.$this->jahr;
 	}

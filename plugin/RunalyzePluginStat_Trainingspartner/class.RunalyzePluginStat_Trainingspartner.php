@@ -34,8 +34,8 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Trainingspartner';
-		$this->description = 'Wie oft hast du mit wem gemeinsam trainiert?';
+		$this->name = __('Training partner');
+		$this->description = __('How often did you train with whom?');
 	}
 
 	/**
@@ -82,14 +82,14 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 */
 	protected function displayContent() {
 		echo '<table class="fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="2">Alle Trainingspartner</th></tr></thead>';
+		echo '<thead><tr><th colspan="2">'.__('All training partner').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (empty($this->Partner))
 			echo('
 				<tr>
 					<td class="b">0x</td>
-					<td><em>Du hast bisher nur alleine trainiert.</em></td>
+					<td><em>'.__('You\'ve only trained on your own.').'</em></td>
 				</tr>');
 		else {
 			$row_num = INFINITY;
@@ -116,8 +116,8 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		echo '</table>';
 
 		echo '<p class="text">';
-		echo 'Insgesamt hast du <strong>'.$this->TrainingsTotal.'x</strong> trainiert und davon <strong>'.$this->TrainingsWithPartner.'x</strong> mit Trainingspartner, ';
-		echo 'das sind <strong>'.round(100*$this->TrainingsWithPartner/$this->TrainingsTotal).'</strong> &#37;.';
+		echo sprintf( __('You\'ve trained <strong>%sx</strong> in total and out of that <strong>%sx</strong> with a training partner, '), $this->TrainingsTotal, $this->TrainingsWithPartner );
+		echo sprintf( __('that are <strong>%s</strong> &#37;.'), round(100*$this->TrainingsWithPartner/$this->TrainingsTotal) );
 		echo '</p>';
 	}
 

@@ -14,22 +14,19 @@ class ConfigTabTypes extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_types';
-		$this->title = 'Trainingstypen';
+		$this->title = __('Activity Types');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Types = new FormularFieldset('Deine Trainingstypen');
+		$Types = new FormularFieldset( __('Activity Types') );
 		$Types->setHtmlCode($this->getCode());
-		$Types->addInfo('Mit Trainingstypen k&ouml;nnen die Trainings bequem in Kategorien sortiert werden,
-						das dient vor allem der Trainingsanalyse.<br>
-						Bestehende Trainingstypen k&ouml;nnen aber nur gel&ouml;scht werden, wenn keine Referenzen bestehen.
-						Daher sind die Trainingstypen mit ihren Trainings verlinkt.');
-		$Types->addInfo('Trainingstypen mit einem RPE-Wert gr&ouml;&szlig;er gleich 5 werden in der &Uuml;bersicht hervorgehoben.');
-		$Types->addInfo('Trainingstypen tauchen nur bei der zugeh&ouml;rigen Sportart auf.<br>
-						Sie k&ouml;nnen nur einer Sportart zugeordnet werden, wenn die Sportart Trainingstypen erlaubt.');
+		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
+							'An activity type can only belong to one sport.') );
+		$Types->addInfo( __('Types with a RPE-value &ge; 5 will be emphasized in the activity log.') );
+		$Types->addInfo( __('One type (for running) has to be set as the \'Race\'-type in your configuration, to find your personal bests.') );
 
 		$this->Formular->addFieldset($Types);
 	}
@@ -43,11 +40,11 @@ class ConfigTabTypes extends ConfigTab {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
-						<th>Trainingstyp</th>
-						<th>Abk&uuml;rzung</th>
-						<th>'.Ajax::tooltip('RPE', 'Rating of Perceived Exertion (nach Borg) = durchschnittliche Anstrengung auf einer Skala von 1 (leicht) bis 10 (extrem hart)').'</th>
-						<th>'.Ajax::tooltip('Sport', 'F&uuml;r welche Sportart gilt dieser Typ?').'</th>
-						<th>'.Ajax::tooltip('l&ouml;schen?', 'Ein Trainingstyp kann nur gel&ouml;scht werden, wenn keine Referenzen bestehen').'</th>
+						<th>'.__('Name').'</th>
+						<th>'.__('Abbreviation').'</th>
+						<th>'.Ajax::tooltip(__('RPE'), __('Rating of Perceived Exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
+						<th>'.Ajax::tooltip( __('Sport'), __('A type can only belong to one sport.')).'</th>
+						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A type can only be deleted if no references exists.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -67,7 +64,7 @@ class ConfigTabTypes extends ConfigTab {
 		//TODO Change all locations where Typeid is used 
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5);
 
-		foreach ($Types as $i => $Data) {
+		foreach ($Types as $Data) {
 			$id     = $Data['id'];
 
 			if ($id == -1)

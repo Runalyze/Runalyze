@@ -11,7 +11,7 @@ require 'class.RunalyzePluginStat_Strecken.php';
 ?>
 
 <div class="panel-heading">
-	<h1>Streckennetz</h1>
+	<h1><?php _e('Route network'); ?></h1>
 </div>
 
 <div class="panel-content">
@@ -65,7 +65,7 @@ $Map->display();
 ?>
 
 <p class="info">
-	Das Streckennetz beinhaltet die <?php echo RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET; ?> neuesten Strecken.
-	Mehr Strecken sind zur Zeit aus Performance-Gr&uuml;nden nicht m&ouml;glich.
+	<?php echo sprintf( __('The network contains your last %s routes.'), RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET ); ?>
+	<?php _e('More routes are due to performance reasons not possible at the moment.'); ?>
 </p>
 </div>

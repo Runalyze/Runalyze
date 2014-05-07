@@ -201,8 +201,12 @@ class FormularFieldset extends HtmlTag {
 	private function displayMessages() {
 		echo '<div class="fieldset-messages">';
 
-		foreach ($this->messages as $message)
-			echo '<p class="'.$message['type'].'">'.$message['message'].'</p>';
+		foreach ($this->messages as $message) {
+			if ($message['type'] == 'block')
+				echo '<div>'.$message['message'].'</div>';
+			else
+				echo '<p class="'.$message['type'].'">'.$message['message'].'</p>';
+		}	
 
 		echo '</div>';
 	}

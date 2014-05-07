@@ -266,7 +266,7 @@ abstract class Plugin {
 		if ($name == '')
 			$name = Icon::$ADD;
 
-		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.Ajax::tooltip($name, 'Plugin installieren').'</a>');
+		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.Ajax::tooltip($name, __('Install plugin') ).'</a>');
 	}
 
 	/**
@@ -397,7 +397,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Jahresvergleich';
+		return __('Year on year');
 	}
 
 	/**
@@ -553,7 +553,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	static public function getRemoveLink($key) {
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.Ajax::tooltip(Icon::$CROSS, 'Plugin entfernen').'</a>','small');
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.Ajax::tooltip(Icon::$CROSS, __('Remove plugin') ).'</a>','small');
 	}
 
 	/**
@@ -594,8 +594,8 @@ abstract class Plugin {
 		$this->handleGetPostRequest();
 
 		$activationLink = ($this->active == 0)
-			? $this->getConfigLink('Plugin aktivieren', '&active='.Plugin::$ACTIVE)
-			: $this->getConfigLink('Plugin deaktivieren', '&active='.Plugin::$ACTIVE_NOT);
+			? $this->getConfigLink( __('Activate plugin'), '&active='.Plugin::$ACTIVE)
+			: $this->getConfigLink( __('Deactivate plugin'), '&active='.Plugin::$ACTIVE_NOT);
 
 		$name = ($this instanceof PluginTool)
 			? $this->getWindowLink()
@@ -682,11 +682,11 @@ abstract class Plugin {
 	static public function getReadableTypeString($type) {
 		switch ($type) {
 			case self::$STAT:
-				return 'Statistik';
+				return __('Statistic');
 			case self::$PANEL:
-				return 'Panel';
+				return __('Panel');
 			case self::$TOOL:
-				return 'Tool';
+				return __('Tool');
 		}
 	}
 

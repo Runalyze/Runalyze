@@ -69,14 +69,14 @@ abstract class PluginTool extends Plugin {
 	 */
 	public static function displayToolsHeader() {
 		$Sublinks = array();
-		$Sublinks[] = Ajax::link('--- Alle Tools', self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
+		$Sublinks[] = Ajax::link('--- '.__('All tools'), self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
 
 		$tools = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC')->fetchAll();
 		foreach ($tools as $tool)
 			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
 
 		$Links = array();
-		$Links[] = array('tag' => '<a href="#">Tool w&auml;hlen</a>', 'subs' => $Sublinks);
+		$Links[] = array('tag' => '<a href="#">'.__('Choose tool').'</a>', 'subs' => $Sublinks);
 
 		echo '<div class="panel-menu panel-menu-floated">';
 		echo Ajax::toolbarNavigation($Links);
@@ -89,19 +89,19 @@ abstract class PluginTool extends Plugin {
 	public static function displayToolsContent() {
 		echo '<div id="'.self::$TOOLS_DIV_ID.'">';
 		echo '<div class="panel-heading">';
-		echo '<h1>Tools</h1>';
+		echo '<h1>'.__('Tools').'</h1>';
 		echo '</div>';
 		echo '<div class="panel-content">';
-		echo 'Mit Tools kannst du komplizierte &Auml;nderungen in der Datenbank vornehmen oder Daten extrahieren.<br><br>';
+		echo __('Complex tools can analyze or process the complete database and will open in an overlay.').'<br><br>';
 
 		echo '<table class="fullwidth zebra-style more-padding">';
-		echo '<thead><tr><th colspan="3">Installierte Tools:</th></tr></thead>';
+		echo '<thead><tr><th colspan="3">'.__('Installed tools').':</th></tr></thead>';
 		echo '<tbody class="top-and-bottom-border">';
 
 		$tools = self::getKeysAsArray(self::$TOOL, self::$ACTIVE);
 		
 		if (empty($tools))
-			echo '<tr><td colspan="3"><em>Keine Plugins vorhanden.</em></td></tr>';
+			echo '<tr><td colspan="3"><em>'.__('No tools installed.').'.</em></td></tr>';
 		
 		foreach ($tools as $key) {
 			$Plugin = Plugin::getInstanceFor($key);

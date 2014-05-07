@@ -30,7 +30,7 @@ foreach ($Data as $dat)
 	$Temperatures[$dat['time']] = (int)$dat['temp'];
 
 $Plot = new Plot("year".$Year, 780, 240);
-$Plot->Data[] = array('label' => 'Temperaturen '.$Year, 'data' => $Temperatures);
+$Plot->Data[] = array('label' => __('Temperatures').' '.$Year, 'data' => $Temperatures);
 
 $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();
@@ -44,6 +44,6 @@ $Plot->addMarkingArea('y', -99, 0);
 $Plot->showPoints(2);
 
 if(empty($Data))
-	$Plot->raiseError('Es sind keine Daten vorhanden.');
+	$Plot->raiseError( __('No data available.') );
 
 $Plot->outputJavaScript();

@@ -9,10 +9,9 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
-$titleCenter = 'Wettkampfergebnisse &#252;ber '.Running::Km($distance, 1, ($distance <= 3));
+$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $timeFormat  = '%M:%S';
-
-$titleCenter = str_replace('&nbsp;', ' ', $titleCenter);
 
 $competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
 if (!empty($competitions)) {
@@ -28,7 +27,7 @@ if (!empty($competitions)) {
 }
 
 $Plot = new Plot("bestzeit".$distance*1000, 480, 190);
-$Plot->Data[] = array('label' => $titleCenter, 'data' => $Results);
+$Plot->Data[] = array('label' => $label, 'data' => $Results);
 
 $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();

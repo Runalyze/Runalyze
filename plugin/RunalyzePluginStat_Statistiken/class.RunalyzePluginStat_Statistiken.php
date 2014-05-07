@@ -104,9 +104,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
 		$this->name = __('Statistics');
-		$this->description = __('General Statistics: Monthly and weekly summaries for all types of sport');
+		$this->description = __('Monthly and weekly summaries for all sports');
 
-		Language::addTextDomain('PluginStats', 'dir');
+		// Core plugins use standard textdomain
+		//Language::addTextDomain('PluginStats', 'dir');
 	}
 
 	protected function setOwnNavigation() {
@@ -139,8 +140,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p(
-			__('This plugin shows summaries for every week, month or year to compare your overall training
-				in terms of time, distance, pace, VDOT and TRIMP.')
+			__('This plugin shows summaries for all weeks, months or years to compare your overall training'.
+				'in terms of time, distance, pace, VDOT and TRIMP.')
 		);
 	}
 
@@ -150,9 +151,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => 'Wochenkilometer vergleichen');
+		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => __('Compare kilometers per week'));
 		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => __('Show streak'));
-		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => 'Mindestzahl f&uuml;r Streak zum Anzeigen (0 f&uuml;r immer)');
+		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => __('Minimum number of days to show a streak (0 for always)'));
 
 		return $config;
 	}
@@ -274,7 +275,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$Dataset->activateKilometerComparison();
 
 		echo '<table class="r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):__('Last').' 10').' '.('training weeks').'</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):__('Last').' 10').' '.__('training weeks').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -307,7 +308,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 				$Dataset->displayTableColumns();
 			} else
-				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('No workouts').'</em>', 'c small');
+				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('No activities').'</em>', 'c small');
 
 			echo '</tr>';
 		}
@@ -369,13 +370,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		}
 
 		if ($NumDays == 0) {
-			$Text .= __('You don\'t have a streak currently. Go out and start one!');
+			$Text .= __('You don\'t have a streak. Go out and start one!');
 			$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY `time` DESC')->fetch();
 
 			if (isset($LastTraining['time']))
 				$Text .= sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));
 		} else {
-			$Text .= sprintf( _n('%d day running since %s', '%d days running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
+			$Text .= sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
 		}
 
 		if ($NumDays >= $this->config['show_streak_days']['var'])

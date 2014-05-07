@@ -22,18 +22,17 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$TOOL;
-		$this->name = 'Datenbank-Cleanup';
-		$this->description = 'Reinigt die Datenbank. Dies ist unter Umst&auml;nden nach dem L&ouml;schen von Trainings notwendig.<br>
-			Au&szlig;erdem k&ouml;nnen die H&ouml;henmeter-, TRIMP- und VDOT-Werte neu berechnet werden.';
+		$this->name = __('Database cleanup');
+		$this->description = __('Recalculation of some statistics may be needed after deleting some activities.'.
+								'In addition, values for elevation, TRIMP and VDOT can be recalculated.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Um die Statistiken zu beschleunigen, werden einige Maximalwerte und Summen einzeln abgespeichert,
-					anstatt sie immer neu zu berechnen. Das L&ouml;schen von Trainings kann dabei zu Problemen f&uuml;hren.');
-		echo HTML::p('Wenn irgendwo bei den Statistiken Unstimmigkeiten auftreten, kann dieses Tool eventuell helfen.');
+		echo HTML::p( __('Due to performance reasons, some statistics are saved in the database.'.
+						'Under some circumstances, you have to recalculate these values after deleting an activity by hand.') );
 	}
 
 	/**
@@ -58,30 +57,38 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 				echo HTML::okay($Message);
 		}
 
-		$AndApplyElevationToVDOT = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? ' und VDOT anpassen' : '';
+		$AndApplyElevationToVDOT = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? __(' and adjust VDOT') : '';
 
-		$Fieldset = new FormularFieldset('Datenbank bereinigen');
-		$Fieldset->addBlock('Mit diesem Tool l&auml;sst sich die Datenbank bereinigen.
-			Dieser Vorgang betrifft lediglich die summierten Daten der Schuhe und
-			einige zwischengespeicherte Werte wie die maximalen Werte f&uuml;r ATL/CTL/TRIMP.');
+		$Fieldset = new FormularFieldset( __('Cleanup database') );
+
+		$Fieldset->addBlock(
+				__('This tool allows you to cleanup your database.'.
+					'This process does only touch some cumulative statistics for your shoes and some cached values.') );
 		$Fieldset->addBlock('&nbsp;');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('Einfache Bereinigung', 'clean=simple').'</strong><br>
-			Hierbei werden die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('Vollst&auml;ndige Bereinigung', 'clean=complete').'</strong><br>
-			Hierbei werden zun&auml;chst f&uuml;r alle Trainings die TRIMP- und VDOT-Werte neu berechnet und
-			anschlie&szlig;end die Statistiken der Schuhe und die maximalen Werte f&uuml;r ATL/CTL/TRIMP neu berechnet.');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>
-			F&uuml;r alle Trainings mit GPS-Daten werden die H&ouml;henmeter neu berechnet.<br>
-			Dies ist notwendig, wenn die Konfigurationseinstellungen bez&uuml;glich der Berechnung ge&auml;ndert wurden.<br>
-			<br>
-			<small>&Auml;ndert nur den berechneten Wert, der nur in der genauen Trainingsansicht auftaucht.</small>');
-		$Fieldset->addInfo('<strong>'.self::getActionLink('H&ouml;henmeter neu berechnen'.$AndApplyElevationToVDOT.' (manuelle Eingabe &uuml;berschreiben)', 'clean=elevation&overwrite=true').'</strong><br>
-			Die Anzeige bezieht sich auf die manuell eingegebenen H&ouml;henmeter, welche nur einen berechneten Wert enthalten, wenn das Feld im Formular leer gelassen wurde.
-			Mit dieser Methode k&ouml;nnen diese Werte &uuml;berschrieben werden.');
+
+		$Fieldset->addInfo(
+				'<strong>'.self::getActionLink( __('Simple cleanup'), 'clean=simple').'</strong><br>'.
+				__('Recalculation of cumulative statistics for shoes and maximal values for ATL/CTL/TRIMP.') );
+		$Fieldset->addInfo(
+				'<strong>'.self::getActionLink( __('Complete cleanup'), 'clean=complete').'</strong><br>'.
+				__('Recalculation of TRIMP and VDOT for every activity. Afterwards, the simple cleanup will be done.') );
+		$Fieldset->addInfo(
+				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>'.
+				__('Recalculation of elevation for every activity with gps data.<br>'.
+					'This has to be done after changing your configuration concerning the calculation of elevation.<br>'.
+					'<br>'.
+					'<small>This does not change your manual value for the elevation. The calculated value is only shown in the detailed view.</small>') );
+		$Fieldset->addInfo(
+				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT.' '.__('(overwrite manual value)'), 'clean=elevation&overwrite=true').'</strong><br>'.
+				__('Recalculation of elevation for every activity with gps data.<br>'.
+					'This has to be done after changing your configuration concerning the calculation of elevation.<br>'.
+					'<br>'.
+					'<small>This <strong>does</strong> change your manual value for the elevation.</small>') );
 
 		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
-			$Fieldset->addWarning('Da die VDOT-Anpassung an H&ouml;henmeter aktiviert ist, m&uuml;ssen zum Neuberechnen der VDOT-Werte
-				auch die H&ouml;henmeter neuberechnet werden. Die vollst&auml;ndige Bereinigung passt den VDOT daher nicht korrekt an.');
+			$Fieldset->addWarning(
+				__('The VDOT-adjustment for elevation data is activated (see configuration).'.
+					'The complete cleanup will not work as expected, recalculate the elevation first.') );
 		}
 
 		$Formular = new Formular();
@@ -94,7 +101,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Clean the databse
 	 */
 	private function cleanDatabase() {
-		$this->SuccessMessages[] = 'Die Datenbank wurde erfolgreich bereinigt.';
+		$this->SuccessMessages[] = __('The database has been purged.');
 
 		if ($_GET['clean'] == 'complete')
 			$this->resetTrimpAndVdot();
@@ -139,7 +146,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			);
 		}
 
-		$this->SuccessMessages[] = 'Die Trimp- und VDOT-Werte wurden f&uuml;r <strong>'.count($Trainings).'</strong> Trainings neu berechnet.';
+		$this->SuccessMessages[] = sprintf( __('TRIMP and VDOT values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
 	}
 
 	/**
@@ -168,7 +175,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			$DB->update('training', $Training['id'], $keys, $values);
 		}
 
-		$this->SuccessMessages[] = 'Die H&ouml;henmeter-Werte wurden f&uuml;r <strong>'.count($Trainings).'</strong> Trainings neu berechnet.';
+		$this->SuccessMessages[] = sprintf( __('Elevation values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
 
 		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
 			$this->recalculateVDOTwithElevationWithoutGPSarray();
@@ -199,11 +206,11 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$NewMaxValues = $this->getMaxValues();
 
 		if ($OldMaxValues == $NewMaxValues) {
-			$this->SuccessMessages[] = 'An den Maximalwerten (ATL/CTL/TRIMP) und am VDOT-Korrekturfaktor hat sich nichts ge&auml;ndert.';
+			$this->SuccessMessages[] = __('The maximal values for ATL/CTL/TRIMP and VDOT correction factor did not change.');
 		} else {
 			foreach (array_keys($OldMaxValues) as $Key) {
 				if ($OldMaxValues[$Key] != $NewMaxValues[$Key])
-					$this->SuccessMessages[] = 'Neuer '.$Key.': <strong>'.$NewMaxValues[$Key].'</strong>, alter Wert war '.$OldMaxValues[$Key];
+					$this->SuccessMessages[] = __('New').' '.$Key.': <strong>'.$NewMaxValues[$Key].'</strong>, '.__('old value was').' '.$OldMaxValues[$Key];
 			}
 		}
 	}
@@ -214,10 +221,10 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function getMaxValues() {
 		return array(
-			'maxATL'			=> (int)Trimp::maxATL(),
-			'maxCTL'			=> (int)Trimp::maxCTL(),
-			'maxTRIMP'			=> (int)Trimp::maxTRIMP(),
-			'VDOT-Korrektor'	=> round(JD::correctionFactor(), 4)
+			__('maxATL')			=> (int)Trimp::maxATL(),
+			__('maxCTL')			=> (int)Trimp::maxCTL(),
+			__('maxTRIMP')			=> (int)Trimp::maxTRIMP(),
+			__('VDOT corrector')	=> round(JD::correctionFactor(), 4)
 		);
 	}
 
@@ -227,6 +234,6 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	private function resetShoes() {
 		ShoeFactory::recalculateAllShoes();
 
-		$this->SuccessMessages[] = 'Die Statistiken aller <strong>'.count(ShoeFactory::NamesAsArray()).'</strong> Schuhe wurden neu berechnet.';
+		$this->SuccessMessages[] = sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), count(ShoeFactory::NamesAsArray()) );
 	}
 }

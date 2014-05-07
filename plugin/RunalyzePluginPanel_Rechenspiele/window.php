@@ -8,7 +8,7 @@ require '../../inc/class.Frontend.php';
 $Frontend = new Frontend();
 ?>
 <div class="panel-heading">
-	<h1>Wie sich die Werte der Rechenspiele berechnen</h1>
+	<h1><?php _e('Explanation: How are these experimental values calculated?'); ?></h1>
 </div>
 
 <div class="panel-content">

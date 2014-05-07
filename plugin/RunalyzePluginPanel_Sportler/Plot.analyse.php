@@ -36,9 +36,9 @@ foreach ($Labels as $i => &$value)
 
 $Plot = new Plot("sportler_analyse", 320, 148);
 
-$Plot->Data[] = array('label' => 'Fett (links)&nbsp;&nbsp;&nbsp;&nbsp;', 'color' => '#800', 'data' => $Adiposes);
-$Plot->Data[] = array('label' => 'Wasser', 'color' => '#008', 'data' => $Water, 'yaxis' => 2);
-$Plot->Data[] = array('label' => 'Muskeln', 'color' => '#080', 'data' => $Muscles, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('Fat').'&nbsp;&nbsp;&nbsp;&nbsp;', 'color' => '#800', 'data' => $Adiposes);
+$Plot->Data[] = array('label' => __('Water'), 'color' => '#008', 'data' => $Water, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('Muscles'), 'color' => '#080', 'data' => $Muscles, 'yaxis' => 2);
 
 $Plot->setMarginForGrid(5);
 
@@ -58,7 +58,7 @@ $Plot->addYUnit(2, '%', 0);
 $Plot->setYTicks(1, 1, 0);
 
 if(empty($Data)) 
-	$Plot->raiseError('Es wurden keine Daten über den Sportler hinterlegt');
+	$Plot->raiseError( __('No data available.') );
 elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();

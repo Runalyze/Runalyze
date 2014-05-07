@@ -1,12 +1,12 @@
 <?php
 $Links = array();
-$Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'" title="Konfiguration: alle Plugins">zur &Uuml;bersicht</a>'));
+$Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'">'.__('back to overview').'</a>'));
 
 echo '<div class="panel-heading">';
 echo '<div class="panel-menu">';
 echo Ajax::toolbarNavigation($Links);
 echo '</div>';
-echo '<h1>Plugin-Einstellungen: '.$name.'</h1>';
+echo '<h1>'.__('Plugin configuration').': '.$name.'</h1>';
 echo '</div>';
 
 if (!empty($_POST)) {
@@ -18,23 +18,23 @@ if (!empty($_POST)) {
 <div class="panel-content">
 	<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax no-automatic-reload" id="pluginconfig" method="post">
 		<fieldset>
-			<legend>Beschreibung</legend>
+			<legend><?php _e('Description'); ?></legend>
 			<div class="w100">
 				<?php echo $this->displayLongDescription(); ?>
 			</div>
 
 			<?php if ($this->active == self::$ACTIVE_NOT): ?>
 			<p class="warning">
-				Das Plugin ist derzeit deaktiviert.
+				<?php _e('The plugin is deactivated.'); ?>
 			</p>
 			<?php endif; ?>
 		</fieldset>
 
 		<fieldset>
-			<legend>Konfiguration</legend>
+			<legend><?php _e('Configuration'); ?></legend>
 			<?php if (count($this->config) == 0): ?>
 				<p class="info">
-					Es sind keine Einstellungen m&ouml;glich.
+					<?php _e('There are no settings.'); ?>
 				</p>
 			<?php else: ?>
 
@@ -47,15 +47,19 @@ if (!empty($_POST)) {
 				</div>
 			<?php endforeach; ?>
 
+			<p clas="test">
+				&nbsp;
+			</p>
+
 			<p class="text">
 				<input type="hidden" name="edit" value="true">
-				<input type="submit" value="Bearbeiten">
+				<input type="submit" value="<?php _e('Edit'); ?>">
 			</p>
 	<?php endif; ?>
 		</fieldset>
 
 		<fieldset>
-			<legend>Aktivierung</legend>
+			<legend><?php _e('Activation'); ?></legend>
 			<p class="warning">
 				<?php echo $activationLink; ?>
 			</p>
@@ -65,7 +69,7 @@ if (!empty($_POST)) {
 
 	<?php if ($this->type == Plugin::$TOOL): ?>
 		<ul class="blocklist">
-			<li><?php echo $this->getWindowLink('&raquo; zum Tool', true); ?></li>
+			<li><?php echo $this->getWindowLink('&raquo; '.__('open tool'), true); ?></li>
 		</ul>
 	<?php endif; ?>
 </div>

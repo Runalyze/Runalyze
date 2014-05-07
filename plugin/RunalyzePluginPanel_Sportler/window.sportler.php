@@ -13,12 +13,12 @@ if (Request::param('delete') == 'true') {
 }
 
 if (Request::sendId() === false) {
-	$Header   = 'K&ouml;rper-Daten eintragen';
+	$Header   = __('Add body values');
 	$Mode     = StandardFormular::$SUBMIT_MODE_CREATE;
 	$UserData = new UserData( DataObject::$LAST_OBJECT );
 	$UserData->setCurrentTimestamp();
 } else {
-	$Header   = 'K&ouml;rper-Daten bearbeiten';
+	$Header   =  __('Edit body values');
 	$Mode     = StandardFormular::$SUBMIT_MODE_EDIT;
 	$UserData = new UserData( Request::sendId() );
 }

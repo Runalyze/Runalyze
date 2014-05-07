@@ -167,7 +167,7 @@ class RunalyzeJsonImporter {
 
 		foreach ($DesiredTables as $Table)
 			if (!array_key_exists($Table, $this->Data))
-				$this->Errors[] = 'Die erforderliche Tabelle "'.$Table.'" ist nicht vorhanden.';
+				$this->Errors[] = __('The table "'.$Table.'" does not exist.');
 
 		// "<" and ">" are transformed directly while inserting
 	}

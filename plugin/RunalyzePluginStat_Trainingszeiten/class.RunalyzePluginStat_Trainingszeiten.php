@@ -19,8 +19,8 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Trainingszeiten';
-		$this->description = 'Auflistung n&auml;chtlicher Trainings und Diagramme &uuml;ber die Trainingszeiten.';
+		$this->name = __('Training times');
+		$this->description = __('Plot all your training times by daytime/weekday and list your nightly activities.');
 	}
 
 	/**
@@ -29,7 +29,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
-		$config['show_extreme_times']  = array('type' => 'bool', 'var' => true, 'description' => 'Extreme Trainingszeiten anzeigen');
+		$config['show_extreme_times']  = array('type' => 'bool', 'var' => true, 'description' => __('Show nightly activities'));
 
 		return $config;
 	}
@@ -57,7 +57,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Gesamt';
+		return __('Total');
 	}
 
 	/**
@@ -68,7 +68,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		if (!$this->dataIsMissing)
 			$this->displayImages();
 		else
-			echo HTML::em('Es sind leider noch keine Trainingsdaten vorhanden.');
+			echo HTML::em( __('No data available.') );
 
 		if ($this->config['show_extreme_times']['var'])
 			$this->displayTable();
@@ -116,7 +116,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		}
 		
 		echo '<table class="fullwidth zebra-style">';
-		echo '<thead><tr class="b c"><th colspan="8">Extreme Trainingszeiten</th></tr></thead>';
+		echo '<thead><tr class="b c"><th colspan="8">'.__('Nightly activities').'</th></tr></thead>';
 		echo '<tbody>';
 
 		foreach ($nights as $i => $data) {
@@ -135,9 +135,10 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 
 		echo '</tbody></table>';
 
+		// TODO: Find a better description.
 		echo '<p class="text">';
-		echo 'Als <em>extremste</em> Trainingszeit wird 2 Uhr nachts betrachtet. ';
-		echo 'Hier werden die 20 Trainings angezeigt, die am dichtesten zu dieser Uhrzeit gestartet wurden.';
+		echo __('2 a.m. is considered as <em>most extreme</em> time for a training. ');
+		echo __('The 20 trainings being nearest to that time are listed.');
 		echo '</p>';
 	}
 

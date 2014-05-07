@@ -62,8 +62,8 @@ if (START_TIME != time()) {
 
 $Plot = new Plot("formverlauf_".str_replace('.', '_', $distance), 800, 450);
 
-$Plot->Data[] = array('label' => 'Prognose', 'color' => '#880000', 'data' => $Prognosis, 'lines' => array('show' => true), 'points' => array('show' => false));
-$Plot->Data[] = array('label' => 'Ergebnis', 'color' => '#000000', 'data' => $Results, 'lines' => array('show' => false), 'points' => array('show' => true));
+$Plot->Data[] = array('label' => __('Prognosis'), 'color' => '#880000', 'data' => $Prognosis, 'lines' => array('show' => true), 'points' => array('show' => false));
+$Plot->Data[] = array('label' => __('Result'), 'color' => '#000000', 'data' => $Results, 'lines' => array('show' => false), 'points' => array('show' => true));
 
 $Plot->enableTracking();
 $Plot->setZeroPointsToNull();
@@ -77,9 +77,9 @@ if (!empty($Prognosis) && max($Prognosis) > 1000*3600)
 else
 	$Plot->setYAxisTimeFormat('%M:%S');
 
-$Plot->setTitle('Prognose-Verlauf '.Running::Km($distance));
+$Plot->setTitle( __('Prognosis trend').' '.Running::Km($distance));
 
 if ($DataFailed || empty($Data))
-	$Plot->raiseError('Es sind leider keine Daten vorhanden');
+	$Plot->raiseError( __('No data available.') );
 
 $Plot->outputJavaScript();

@@ -23,17 +23,15 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Schuhe';
-		$this->description = 'Anzeige der gelaufenen Kilometer aller Schuhe.';
+		$this->name = __('Shoes');
+		$this->description = __('Display statistics for your shoes.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p('Mit diesem Plugin k&ouml;nnen die eigenen Laufschuhen mit all ihren Kilometern protkolliert werden.');
-		echo HTML::p('Im Panel werden alle aktuellen Laufschuhe mit ihrem derzeitigen Kilometerstand dargestellt.
-					Au&szlig;erdem kann aber auch ein Extrafenster mit einer ausf&uuml;hrlichen Tabelle ge&ouml;ffnen werden.');
+		echo HTML::p( __('Display statistics for your shoes.') );
 	}
 
 	/**
@@ -52,8 +50,8 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', 'Laufschuh hinzuf&uuml;gen', true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', 'Schuhe in Tabelle anzeigen', true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', __('Add new shoe'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', __('Show all shoes'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -85,14 +83,14 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		}
 
 		if (empty($schuhe))
-			echo HTML::em('Du hast noch keine Schuhe eingetragen.');
+			echo HTML::em( __('You don\'t have any shoes') );
 
 		if (!$inuse)
 			echo '</div>';
 		echo '</div>';
 
 		if (!$inuse)
-			echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">Alte Schuhe anzeigen</a>', 'hiddenschuhe');
+			echo Ajax::toggle('<a class="right" href="#schuhe" name="schuhe">'.__('Show unused shoes').'</a>', 'hiddenschuhe');
 
 		echo HTML::clearBreak();
 	}
@@ -125,16 +123,16 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		<table id="list-of-all-shoes" class="fullwidth zebra-style">
 			<thead>
 				<tr>
-					<th class="{sorter: \'x\'} small">x-mal</th>
+					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
 					<th class="{sorter: false}"></th>
-					<th>Name</th>
-					<th class="{sorter: \'germandate\'} small">seit</th>
+					<th>'.__('Name').'</th>
+					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
 					<th class="{sorter: \'distance\'}">&Oslash; km</th>
-					<th>&Oslash; Pace</th>
-					<th class="{sorter: \'distance\'} small"><small>max.</small> km</th>
-					<th class="small"><small>min.</small> Pace</th>
-					<th class="{sorter: \'resulttime\'}">Dauer</th>
-					<th class="{sorter: \'distance\'}">Distanz</th>
+					<th>&Oslash; '.__('Pace').'</th>
+					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> km</th>
+					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
+					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
+					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -159,7 +157,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				</tr>');
 			}
 		} else {
-			echo('<tr><td colspan="9">Keine Schuhe vorhanden.</td></tr>');
+			echo('<tr><td colspan="9">'.__('You don\'t have any shoes').'</td></tr>');
 		}
 
 		echo '</tbody>';
@@ -173,7 +171,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.table.php">'.Icon::$TABLE.' Alle Laufschuhe anzeigen</a>');
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.table.php">'.Icon::$TABLE.' '.__('Show all shoes').'</a>');
 	}
 
 	/**
@@ -181,7 +179,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	public function addLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' Einen neuen Schuh hinzuf&uuml;gen</a>');
+		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' '.__('Add a new shoe').'</a>');
 	}
 
 	/**
@@ -224,6 +222,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	private function editLinkFor($id) {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, 'Bearbeiten').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, __('Edit')).'</a>');
 	}
 }

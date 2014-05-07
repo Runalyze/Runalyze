@@ -14,11 +14,11 @@ if (Request::param('delete') == 'true') {
 }
 
 if (Request::sendId() === false) {
-	$Header   = 'Neuen Laufschuh hinzuf&uuml;gen';
+	$Header   = __('Add new shoe');
 	$Mode     = StandardFormular::$SUBMIT_MODE_CREATE;
 	$Shoe     = new Shoe( DataObject::$DEFAULT_ID );
 } else {
-	$Header   = 'Laufschuh bearbeiten';
+	$Header   = __('Edit shoe');
 	$Mode     = StandardFormular::$SUBMIT_MODE_EDIT;
 	$Shoe     = new Shoe( Request::sendId() );
 }
@@ -30,14 +30,14 @@ if ($Formular->submitSucceeded())
 
 
 if (Request::sendId() > 0) {
-	$DeleteText = '<strong>Schuh wieder l&ouml;schen &raquo;</strong>';
+	$DeleteText = '<strong>'.__('Delete shoe').' &raquo;</strong>';
 	$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete=true&id='.$Shoe->id();
 	$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
 	if ($Shoe->getKm() != $Shoe->getAdditionalKm())
-		$DeleteLink = 'Der Schuh ist noch mit einigen Trainings verkn&uuml;pft und kann daher nicht gel&ouml;scht werden.';
+		$DeleteLink = __('The shoe can\'t be deleted as long it is used for some activity.');
 
-	$DeleteFieldset = new FormularFieldset('Schuh l&ouml;schen');
+	$DeleteFieldset = new FormularFieldset( __('Delete shoe') );
 	$DeleteFieldset->addWarning($DeleteLink);
 
 	$Formular->addFieldset($DeleteFieldset);

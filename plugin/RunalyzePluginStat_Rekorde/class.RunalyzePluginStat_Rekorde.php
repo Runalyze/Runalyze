@@ -21,8 +21,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'Rekorde';
-		$this->description = 'Am schnellsten, am l&auml;ngsten, am weitesten: Die Rekorde aus dem Training.';
+		$this->name = __('Records');
+		$this->description = __('Faster, longer, better: Your records from your activities.');
 	}
 
 	/**
@@ -51,7 +51,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Alle Jahre';
+		return __('All years');
 	}
 
 	/**
@@ -114,7 +114,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			}
 
 			if (!$output)
-				echo '<tr><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
+				echo '<tr><td colspan="11"><em>'.__('No data available').'</em></td></tr>';
 
 			echo '</tbody>';
 			echo '</table>';
@@ -126,11 +126,11 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 */
 	private function displayMostKilometer() {
 		echo '<table class="fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="11" class="l">Trainingsreichsten Laufphasen</th></tr></thead>';
+		echo '<thead><tr><th colspan="11" class="l">'.__('Most kilometers').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (empty($this->weeks)) {
-			echo '<tr><td colspan="11"><em>Es sind bisher keine Trainingsdaten vorhanden.</em></td></tr>';
+			echo '<tr><td colspan="11"><em>'.__('No data available').'</em></td></tr>';
 			echo HTML::spaceTR(11);
 			echo '</tbody>';
 			echo '</table>';
@@ -139,7 +139,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 
 		// Years
 		if ($this->year == -1) {
-			echo '<tr class="r"><td class="c b">Jahre</td>';
+			echo '<tr class="r"><td class="c b">'.__('per year').'</td>';
 			foreach ($this->years as $i => $year) {
 				$link = DataBrowserLinker::link(Running::Km($year['km']), mktime(0,0,0,1,1,$year['year']), mktime(23,59,50,12,31,$year['year']));
 				echo '<td class="small"><span title="'.$year['year'].'">'.$link.'</span></td>';
@@ -150,7 +150,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		}
 
 		// Months
-		echo '<tr class="r"><td class="c b">Monate</td>';
+		echo '<tr class="r"><td class="c b">'.__('per month').'</td>';
 		foreach ($this->months as $i => $month) {
 			$link = DataBrowserLinker::link(Running::Km($month['km']), mktime(0,0,0,$month['month'],1,$month['year']), mktime(23,59,50,$month['month']+1,0,$month['year']));
 			echo '<td class="small"><span title="'.Time::Month($month['month']).' '.$month['year'].'">'.$link.'</span></td>';
@@ -160,10 +160,10 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		echo '</tr>';
 
 		// Weeks
-		echo '<tr class="r"><td class="c b">Wochen</td>';
+		echo '<tr class="r"><td class="c b">'.__('per week').'</td>';
 		foreach ($this->weeks as $i => $week) {
 			$link = DataBrowserLinker::link(Running::Km($week['km']), Time::Weekstart($week['time']), Time::Weekend($week['time']));
-			echo '<td class="small"><span title="KW '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
+			echo '<td class="small"><span title="'.__('Week').' '.$week['week'].' '.$week['year'].'">'.$link.'</span></td>';
 		}
 		for (; $i < 9; $i++)
 			echo HTML::emptyTD();
@@ -179,12 +179,12 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	private function initData() {
 		$this->rekorde = array();
 		$this->rekorde[] = array(
-			'name'			=> 'Schnellsten Trainings',
+			'name'			=> __('Fastest activities'),
 			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` WHERE `distances`=1 ORDER BY `id` ASC',
 			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
 			'speed'			=> true);
 		$this->rekorde[] = array(
-			'name'			=> 'L&auml;ngsten Trainings',
+			'name'			=> __('Longest activities'),
 			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
 			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'speed'			=> false);

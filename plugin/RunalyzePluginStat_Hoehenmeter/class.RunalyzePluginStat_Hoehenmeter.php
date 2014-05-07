@@ -20,8 +20,8 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$STAT;
-		$this->name = 'H&ouml;henmeter';
-		$this->description = 'Die steilsten und bergigsten L&auml;ufe sowie der &Uuml;berblick &uuml;ber die absolvierten H&ouml;henmeter aller Monate.';
+		$this->name = __('Elevation');
+		$this->description = __('Your steepest activities and an overview of your cumulated elevation.');
 	}
 
 	/**
@@ -62,7 +62,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Alle Jahre';
+		return __('All years');
 	}
 
 	/**
@@ -88,7 +88,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		echo '<tbody>';
 
 		if (empty($this->ElevationData))
-			echo '<tr><td colspan="13" class="l"><em>Keine Strecken gefunden.</em></td></tr>';
+			echo '<tr><td colspan="13" class="l"><em>'.__('No routes found.').'</em></td></tr>';
 		foreach ($this->ElevationData as $y => $Data) {
 			echo('
 				<tr>
@@ -100,7 +100,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 					$Link->fromTo(mktime(0,0,0,$m,1,$y), mktime(0,0,0,$m+1,0,$y));
 					$Link->sortBy('elevation');
 
-					echo '<td>'.$Link->link($Data[$m]['elevation'].'&nbsp;hm').'</td>';
+					echo '<td>'.$Link->link($Data[$m]['elevation'].'&nbsp;m').'</td>';
 				} else {
 					echo HTML::emptyTD();
 				}
@@ -117,24 +117,24 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	private function displaySumData() {
 		echo '<table style="width:48%;" style="margin:0 5px;" class="left zebra-style">';
-		echo '<thead><tr class="b c"><th colspan="4">Meisten H&ouml;henmeter</th></tr></thead>';
+		echo '<thead><tr class="b c"><th colspan="4">'.__('Most elevation').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (empty($this->SumData))
-			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
+			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
 		foreach ($this->SumData as $Data) {
 			$Training = new TrainingObject($Data);
 
 			if (strlen($Data['route']) == 0)
-				$Data['route'] = '<em>unbekannte Strecke</em>';
+				$Data['route'] = '<em>'.__('unknown route').'</em>';
 
 			echo('
 			<tr>
 				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
 				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
 				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
-				<td class="r">'.$Data['elevation'].'&nbsp;hm</td>
+				<td class="r">'.$Data['elevation'].'&nbsp;m</td>
 			</tr>
 				'.NL);
 		}
@@ -147,17 +147,17 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	private function displayUpwardData() {
 		echo '<table style="width:48%;" style="margin:0 5px;" class="right zebra-style">';
-		echo '<thead><tr class="b c"><th colspan="4">Steilsten Strecken</th></tr></thead>';
+		echo '<thead><tr class="b c"><th colspan="4">'.__('Steepest routes').'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (empty($this->UpwardData))
-			echo '<tr><td colspan="4"><em>Keine Strecken gefunden.</em></td></tr>';
+			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
-		foreach ($this->UpwardData as $i => $Data) {
+		foreach ($this->UpwardData as $Data) {
 			$Training = new TrainingObject($Data);
 
 			if (strlen($Data['route']) == 0)
-				$Data['route'] = '<em>unbekannte Strecke</em>';
+				$Data['route'] = '<em>'.__('unknown route').'</em>';
 
 			echo('
 			<tr>
@@ -166,7 +166,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
 				<td class="r">
 					'.round($Data['steigung']/10, 2).'&nbsp;&#37;<br>
-					<small>('.$Data['elevation'].'&nbsp;hm/'.$Data['distance'].'&nbsp;km</small>
+					<small>('.$Data['elevation'].'&nbsp;m/'.$Data['distance'].'&nbsp;km</small>
 				</td>
 			</tr>
 				'.NL);
