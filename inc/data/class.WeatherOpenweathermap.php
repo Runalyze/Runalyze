@@ -67,7 +67,7 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	public function setFromJSON($JSON) {
 		if ($JSON) {
 			$this->Result = json_decode($JSON, true);
-			$this->Result = $this->Result['list'][0];
+			$this->Result = (isset($this->Result['list'])) ? $this->Result['list'][0] : array();
 		}
 	}
 
