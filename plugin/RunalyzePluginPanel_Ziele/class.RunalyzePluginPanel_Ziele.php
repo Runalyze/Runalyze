@@ -12,26 +12,36 @@ $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
  */
 class RunalyzePluginPanel_Ziele extends PluginPanel {
 	/**
+	 * Was there a run today?
+	 * @var bool
+	 */
+	private $wasRunningToday = false;
+
+	/**
+	 * All lines
+	 * @var array
+	 */
+	private $Lines = array();
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
 		$this->type = Plugin::$PANEL;
-		$this->name = 'Ziele';
-		$this->description = 'Progonosen und Ziele f&uuml;r die Laufleistung in km in den ausgew&auml;hlten Zeitr&auml;men.';
+		$this->name = __('Goals');
+		$this->description = __('Set your own goals for different time ranges and compare your current performance with them.');
 	}
 
     /**
      * Display long description 
      */
-
     protected function displayLongDescription() {
-        echo HTML::p('Mit diesem Plugin k&auml;nnen Prognosen f&uuml;r die Laufleistung in km in den ausgew&auml;hlten Zeitr&auml;men berechnet und angezeigt werden.');
-        echo HTML::p('Wenn ein Ziel definiert ist (Wert &gt; 0) wird au&szlig;erdem angezeigt, wieviel noch f&uuml;r die Erreichung des Ziels notwendig ist.');
-        echo HTML::p('Ein virtuelles Pace Bunny l&auml;uft gleichm&auml;ssig mit dem selben Ziel - der Vorsprung oder R&uuml;ckstand zum Pace Bunny wird ebenfalls angezeigt.');
-        echo HTML::p('Hinweis: Saison bezieht sich auf die aktuelle Saison im <a href="http://www.kmspiel.de">kmspiel</a>.');
+		echo HTML::p( __('This plugin tracks your distances for chosen time ranges.') );
+		echo HTML::p( __('You can set a goal (value &gt; 0) for every time range. If it is set, you will see how much you have to run to reach it.') );
+		echo HTML::p( __('A virtual Pace Bunny <em>reaches</em> the goal with a steady performance - you can see how far you are ahead or behind.') );
+		echo HTML::p( __('Note: &quot;Saison&quot; refers to the current saison in the german &quot;kmspiel&quot;.') );
     }
-
 
 	/**
 	 * Set default config-variables
@@ -39,13 +49,27 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	 */
 	protected function getDefaultConfigVars() {
 		$config = array();
+
         foreach ($this->getTimeset() as $i => $timeset) {
-            $config['ziel_show_'.$i] = array('type' => 'bool', 'var' => true, 
-                'description' => Ajax::tooltip($timeset['name'].' einblenden', 
-                    $timeset['name'].' in der Liste der Ziele einblenden und die Prognose f&uuml;r diesen Zeitraum berechnen<br>'. ( isset($timeset['note'])  ? $timeset['note'] : '' ) ));
-            $config['ziel_'.$i] = array('type' => 'int', 'var' => 0, 
-                'description' => Ajax::tooltip('Ziel: '.$timeset['name'], 
-                    'Das Ziel f&uuml;r den Zeitraum '.$timeset['start']->format("d.m.Y").' bis '.$timeset['end']->format("d.m.Y").'<br>0 um kein Ziel f&uuml; diesen Zeitraum zu definieren und das Pace Bunny auszublenden<br>'. ( isset($timeset['note'])  ? $timeset['note'] : '' )  ));
+			$ShowHint = sprintf( __('Show a prognosis for the current %s'), $timeset['name'] );
+			$GoalHint = sprintf( __('Current time range: %s to %s'), $timeset['start']->format("d.m.Y"), $timeset['end']->format("d.m.Y") );
+	
+			if (isset($timeset['note'])) {
+				$ShowHint .= '<br>'.$timeset['note'];
+				$GoalHint .= '<br>'.$timeset['note'];
+			}
+
+            $config['ziel_show_'.$i] = array(
+				'type' => 'bool',
+				'var' => true, 
+				'description' => Ajax::tooltip( sprintf(__('%s: show'), $timeset['name'] ), $ShowHint)
+			);
+
+			$config['ziel_'.$i] = array(
+				'type' => 'int',
+				'var' => 0, 
+				'description' => Ajax::tooltip( sprintf(__('%s: goal'), $timeset['name'] ), $GoalHint)
+			);
         }
 		return $config;
 	}
@@ -72,53 +96,211 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		$DB = DB::getInstance();
-	
 		echo '<div id="bunny">';
 
-		$check_today = $DB->query('
-			SELECT
-				`sportid`,
-				COUNT(`id`) as `anzahl`
-			FROM `'.PREFIX.'training`
-			WHERE
-				DATE(FROM_UNIXTIME(`time`))=DATE(NOW()) AND
-				`sportid`='.CONF_RUNNINGSPORT.'
-			GROUP BY `sportid`
-		')->fetch();
+		$this->wasRunningToday = $this->wasRunningToday();
 
-		$today = isset($check_today[0]) ? 1 : 0;
-		$first = true;
+		$isFirst = true;
 		foreach ($this->getTimeset() as $i => $timeset) {
 			if (!$this->config['ziel_show_'.$i]['var'])
 				continue;
 
-			echo '<div id="bunny_'.$i.'" class="change"'.($first == true ? '' : ' style="display:none;"').'>';
-			$first = false;
-/* Ziele
- *
- * Aktuell: (x-mal) km
- * Prognose: (y-mal) km
- * 
- * Ziel: km
- * Fehlende km
- * Notwendige leistung/Tag
- *
- * Ziele: km
- * Unterschied: 
- *
- */
-			// Some Numbers we need
-			$start = $timeset['start'];
-			$now   = new DateTime(date('Y-m-d'));
-			$end   = $timeset['end'];
-			$days  = $today + (int)date_diff($start, $now)->format('%a');
-			$dauer = 1 + (int)date_diff($start, $end)->format('%a');
-			$rest  = $dauer - $days;
-			//
-			$ziel = $this->config['ziel_'.$i]['var'];
+			echo '<div id="bunny_'.$i.'" class="change"'.($isFirst ? '' : ' style="display:none;"').'>';
+			$this->showTimeset($timeset, $this->config['ziel_'.$i]['var']);
+			echo HTML::clearBreak();
+			echo '</div>';
 
-			$data = $DB->query('
+			$isFirst = false;
+		}
+
+		echo '</div>';
+	}
+
+	/**
+	 * Show timeset
+	 * @param array $Timeset
+	 * @param int $goal
+	 */
+	private function showTimeset(&$Timeset, $goal) {
+		$this->clearLines();
+
+		// Some Numbers we need
+		$start = $Timeset['start'];
+		$now   = new DateTime(date('Y-m-d'));
+		$end   = $Timeset['end'];
+		$days  = $this->wasRunningToday + (int)date_diff($start, $now)->format('%a');
+		$dauer = 1 + (int)date_diff($start, $end)->format('%a');
+		$rest  = $dauer - $days;
+
+		$dat = $this->fetchDataSince($start->getTimestamp());
+
+		$this->addHeadline( __('Current'), $dat['distanz_sum'], $dat['anzahl'], true);
+		$this->addLine( __('&oslash; Day'), $days > 0 ? $dat['distanz_sum']/$days : 0 );
+
+		if ($days > 7)
+			$this->addLine( __('&oslash; Week'), $days > 0 ? 7*$dat['distanz_sum']/$days : 0, $dat['anzahl']/$days*7 );
+
+		$this->addHeadline( __('Prognosis'), $dat['distanz_sum']/$days*$dauer, $dat['anzahl']/$days*$dauer);
+
+		if ($goal > 0) {
+			$this->addHeadline( __('Goal'), $goal);
+
+			if ($dat['distanz_sum'] < $goal) {
+				$togo = $goal - $dat['distanz_sum'];
+
+				$this->addLine( sprintf( __('%d days left'), $rest), $togo);
+				$this->addLine( __('&oslash; Day'), $togo/$rest);
+
+				if ($rest > 7)
+					$this->addLine( __('&oslash; Week'), 7*$togo/$rest);
+			} else {
+				$this->addLine( __('Goal reached.') );
+			}
+
+			$this->addHeadline( __('Pace Bunny'), $goal/$dauer * $days );
+			$this->addLine( __('&oslash; Day'), $goal/$dauer );
+
+			$diff = $goal/$dauer * $days - $dat['distanz_sum'];
+
+			if ($diff > 0)
+				$this->addLine( __('Behind'), abs($diff) );
+			else
+				$this->addLine( __('Ahead'), abs($diff) );
+
+			$this->addHeadline( __('Head 2 Head') );
+			$this->addBar( __('Me'), $dat['distanz_sum'], $goal, $diff > 0 ? '#f99' : '#9f9');
+			$this->addBar( __('Pace&nbsp;Bunny'), $goal/$dauer*$days, $goal, '#ccf');
+		}
+
+		foreach ($this->Lines as $Line)
+			$this->showLineOrBar($Line);
+
+		echo '<small class="right">'.sprintf( __('%s to %s (%d days)'), $start->format("d.m.Y"), $end->format("d.m.Y"), $dauer).'</small>';
+	}
+
+	/**
+	 * Clear lines
+	 */
+	private function clearLines() {
+		$this->Lines = array();
+	}
+
+	/**
+	 * Add headline
+	 * @param string $Name
+	 * @param double $Distance
+	 * @param int $Num
+	 * @param bool $NoTopBorder
+	 */
+	private function addHeadline($name, $distance = 0, $num = 0, $noTopBorder = false) {
+		$this->Lines[] = array(
+			'name' => $name,
+			'lvl' => 1,
+			'sep' => !$noTopBorder,
+			'km' => $distance,
+			'anz' => $num
+		);
+	}
+
+	/**
+	 * Add line
+	 * @param string $Name
+	 * @param double $Distance
+	 * @param int $Num
+	 */
+	private function addLine($name, $distance = 0, $num = 0) {
+		$this->Lines[] = array(
+			'name' => $name,
+			'lvl' => 2,
+			'km' => $distance,
+			'anz' => $num
+		);
+	}
+
+	/**
+	 * Add bar
+	 * @param string $name
+	 * @param double $val
+	 * @param double $max
+	 * @param string $color
+	 */
+	private function addBar($name, $val, $max, $color) {
+		$this->Lines[] = array(
+			'name' => $name,
+			'type' => 'bar',
+			'val' => $val,
+			'max' => $max,
+			'color' => $color
+		);
+	}
+
+	/**
+	 * Show line or bar
+	 * @param array $Array
+	 */
+	private function showLineOrBar(&$Array) {
+		if (isset($Array['type']) && $Array['type'] == 'bar')
+			$this->showBar($Array);
+		else
+			$this->showLine($Array);
+	}
+
+	/**
+	 * Show bar
+	 * @param array $Bar
+	 */
+	private function showBar(&$Bar) {
+		$percentage = min(100, 100*$Bar['val']/$Bar['max']);
+
+		echo '<div style="padding-left:5px; padding-right:7px; padding-bottom:2px">'.
+				'<div style="border: 1px solid black; padding: 1px; background-color: none; width: 100%;">'.
+				'<span class="right">'.round($percentage,1).'%&nbsp;</span>'.
+				'<div id="progress_bar" style="background-color:'.$Bar['color'].'; width:'.round($percentage).'%;">&nbsp;'.$Bar['name'].'</div>'.
+				'</div>'.
+			'</div>';
+	}
+
+	/**
+	 * Show line
+	 * @param array $Line
+	 */
+	private function showLine(&$Line) {
+		$span_format        = isset($Line['lvl']) ? $this->getLevelStyle($Line['lvl']) : 0;
+		$p_format           = isset($Line['sep']) && $Line['sep'] ? ' style="border-top:1px solid #ccc;"' : '';
+
+		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>('.Helper::Unknown(round($Line['anz'],1), '0').'x)</small></small>' : '';
+		$Distance           = isset($Line['km']) && $Line['km'] > 0 ? '<span '.($Line['lvl'] == 1 ? $span_format : '').'>'.Helper::Unknown(Running::Km(round($Line['km'],1)), '0,0 km').'</span>' : '';
+
+		echo '<p'.$p_format.'>'.
+			'<span class="right">'.
+			$NumberOfActivities.' '.$Distance.
+			'</span>'.
+			'<span'.$span_format.'>'.$Line['name'].'</span>'.
+			'</p>';
+	}
+
+	/**
+	 * Get style for level
+	 * @param int $level
+	 * @return string
+	 */
+	private function getLevelStyle($level) {
+		if ($level == 1)
+			return ' style="font-weight:bold;"';
+
+		if ($level == 2)
+			return ' style="padding-left: 10px;"';
+
+		return '';
+	}
+
+	/**
+	 * Fetch data
+	 * @param int $timestamp
+	 * @return array
+	 */
+	private function fetchDataSince($timestamp) {
+		$Data = DB::getInstance()->query('
 				SELECT
 					`sportid`,
 					COUNT(`id`) as `anzahl`,
@@ -126,103 +308,32 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 					SUM(`s`) as `dauer_sum`
 				FROM `'.PREFIX.'training`
 				WHERE
-					`time` >= '.$start->getTimestamp().' AND
+					`time` >= '.$timestamp.' AND
 					`sportid`='.CONF_RUNNINGSPORT.'
 				GROUP BY `sportid`
 				ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
-			')->fetchAll();
+			')->fetch();
 
-			if (empty($data)) {
-				$dat = array('anzahl' => 0, 'distanz_sum' => 0, 'dauer_sum' => 0);
-			} else 
-				$dat = $data[0];
+		if (!is_array($Data))
+			return array('anzahl' => 0, 'distanz_sum' => 0, 'dauer_sum' => 0);
 
-//            foreach ($data as $dat) {
-				// Do the Calculations for Pace Bunny at al.
-				$ziele = array();
-				$ziele['leistung'] = array( 'name' => 'Aktuell', 'lvl' => 1, 'km' => $dat['distanz_sum'], 'anz' => $dat['anzahl']);
-				$ziele['leistung_tag'] = array('name' => '&oslash; Tag', 'lvl' => 2, 'km' => ( $days > 0 ? $ziele['leistung']['km'] / $days : 0 ) );
+		return $Data;
+	}
 
-				if ( $days > 7 ) {
-					$ziele['leistung_woche'] = array('name' => '&oslash; Woche', 'lvl' => 2, 'km' => $ziele['leistung_tag']['km'] * 7, 'anz' => $dat['anzahl'] / $days * 7);
-				}
-
-				if (empty($data)) 
-					$ziele['prognose'] = array('name' => 'Prognose', 'lvl' => 1, 'sep' => 1, 'km' => 0, 'anz' => 0 );
-				else 
-					$ziele['prognose'] = array('name' => 'Prognose', 'lvl' => 1, 'sep' => 1, 'km' => $ziele['leistung']['km'] / $days *  $dauer, 'anz' => $ziele['leistung']['anz'] / $days * $dauer );
-
-				if ( $ziel > 0 ) {
-					$ziele['ziel'] = array('name' => 'Ziel', 'lvl' => 1, 'sep' => 1, 'km' => $ziel);
-					if ( $ziele['leistung']['km'] < $ziel ) {
-						$ziele['ziel_togo'] = array('name' => 'noch '. $rest . ' Tage', 'lvl' => 2, 'km' => $ziel - $ziele['leistung']['km'] );
-						$ziele['ziel_togo_days'] = array('name' => '&oslash; Tag', 'lvl' => 2, 'km' => $ziele['ziel_togo']['km'] / $rest );
-						if ( $rest > 7 ) {
-							$ziele['ziel_togo_weeks'] = array('name' => '&oslash; Woche', 'lvl' => 2, 'km' => $ziele['ziel_togo_days']['km'] * 7 );
-						}
-					} else {
-						$ziele['ziel']['name'] = 'Ziel erreicht';
-					}
-
-					$ziele['bunny'] = array('name' => 'Pace Bunny', 'lvl' => 1, 'sep' => 1, 'km' => $ziel / $dauer * $days);
-					$ziele['bunny_day'] = array('name' => '&oslash; Tag', 'lvl' => 2, 'km' => $ziel / $dauer);
-					$ziele['bunny_diff'] = array( 'lvl' => 2, 'km' => abs( $ziele['bunny']['km'] - $ziele['leistung']['km'] ) );
-
-					if ( $ziele['bunny']['km'] > $ziele['leistung']['km'] ) {
-						$ziele['bunny_diff']['name'] = 'R&uuml;ckstand';
-					} else {
-						$ziele['bunny_diff']['name'] = 'Vorsprung';
-					}
-
-					$ziele['progress'] = array( 'lvl' => 1, 'sep' => 1, 'name' => 'Head 2 Head' );
-					$ziele['pb-me'] = array( 'type' => 'bar', 'name' => 'Ich', 'color' => ( $ziele['leistung']['km'] < $ziele['bunny']['km'] ? '#f99' : '#9f9'), 'val' => $ziele['leistung']['km'], 'max' => $ziel );
-					$ziele['pb-bunny'] = array( 'type' => 'bar', 'name' => 'Pace&nbsp;Bunny', 'color' => '#ccf', 'val' => $ziele['bunny']['km'], 'max' => $ziel );
-				}
-
-				foreach ( $ziele as $z ) {
-					switch ( isset( $z['lvl'] ) ? $z['lvl'] : 0 ) {
-						case 1: 
-							$format = 'style="font-weight:bold;"';
-							break;
-						case 2: 
-							$format = 'style="padding-left: 10px;"';
-							break;
-						default:
-							$format = '';
-					}
-
-					switch ( isset( $z['type'] ) ? $z['type'] : 'line' ) {
-						case 'bar':
-							$rel = ( $z['max'] > $z['val'] ? $z['val']/$z['max'] * 100 : 100 );
-							echo('<div style="padding-left:5px; padding-right:7px; padding-bottom:2px">');
-								echo('<div style="border: 1px solid black; padding: 1px; background-color: none; width: 100%;">');
-								echo('<span class="right">'.round($rel,1).'%&nbsp;</span>');
-									echo('<div id="progress_bar" style="background-color:'. $z['color'].'; width: '.round($rel,0).'%; '.$format.'">&nbsp;'.$z['name'].'</div>');
-								echo('</div>');
-							echo('</div>'.NL);
-							break;
-						default:
-							echo('<p' . ( isset($z['sep']) ? ' style="border-top:1px solid #ccc;"' : '' ). '>');
-							echo('<span class="right">');
-							if ( isset($z['anz'] ) ) {
-								echo('<small><small>('.Helper::Unknown(round($z['anz'],1), '0').'-mal) </small></small>');
-							}
-							if ( isset($z['km'] ) ) {
-								echo('<span '.( $z['lvl'] == 1 ? $format : '').'>'.Helper::Unknown(Running::Km(round($z['km'],1)), '0,0 km').'</span>');
-							}
-							echo('</span>');
-							echo('<span '.$format.'>'.$z['name'].'</span>');
-							echo('</p>'.NL);
-					}
-//                }  
-			}
-
-			echo '<small class="right">'.$start->format("d.m.Y").' bis '.$end->format("d.m.Y").' ('.$dauer.' Tage)</small>';
-			echo HTML::clearBreak();
-			echo '</div>';
-		}
-
-		echo('</div>');
+	/**
+	 * Was there a run today?
+	 * @return bool
+	 */
+	private function wasRunningToday() {
+		return 0 < DB::getInstance()->query('
+			SELECT
+				`sportid`
+			FROM `'.PREFIX.'training`
+			WHERE
+				DATE(FROM_UNIXTIME(`time`))=DATE(NOW()) AND
+				`sportid`='.CONF_RUNNINGSPORT.'
+			LIMIT 1
+		')->rowCount();
 	}
 
 	/**
@@ -248,11 +359,11 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		}
 
 		// Zeitraeume fuer die Prognosen.
-		$timeset['woche']    = array('name' => 'Woche', 'start' => new DateTime(date('o-\\WW')), 'end' => new Datetime(date('o-\\WW')." + 6 days"));
-		$timeset['mon']    = array('name' => 'Monat', 'start' => new DateTime(date("Y-m-01")), 'end' => new Datetime(date('Y-m-t')));
-		$timeset['hj']     = array('name' => 'Halbjahr', 'start' => new DateTime(date('m') < 7 ? date("Y-01-01") : date("Y-07-01")), 'end' => new Datetime(date('m') < 7 ? date("Y-06-30") : date('Y-12-31')));
-		$timeset['saison'] = array('name' => 'Saison', 'start' => $kmstart, 'end' => $kmend, 'note' => 'Hinweis: Saison ist die aktuelle Saison im kmspiel');
-		$timeset['jahr']   = array('name' => 'Jahr', 'start' => new DateTime(date("Y-01-01")), 'end' => new Datetime(date('Y-12-31')));
+		$timeset['woche']  = array('name' => __('Week'), 'start' => new DateTime(date('o-\\WW')), 'end' => new Datetime(date('o-\\WW')." + 6 days"));
+		$timeset['mon']    = array('name' => __('Month'), 'start' => new DateTime(date("Y-m-01")), 'end' => new Datetime(date('Y-m-t')));
+		$timeset['hj']     = array('name' => __('Half-Year'), 'start' => new DateTime(date('m') < 7 ? date("Y-01-01") : date("Y-07-01")), 'end' => new Datetime(date('m') < 7 ? date("Y-06-30") : date('Y-12-31')));
+		$timeset['saison'] = array('name' => __('Saison'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Saison means the current saison in the german &quot;kmspiel&quot;'));
+		$timeset['jahr']   = array('name' => __('Year'), 'start' => new DateTime(date("Y-01-01")), 'end' => new Datetime(date('Y-12-31')));
 
 		return $timeset;
 	}
