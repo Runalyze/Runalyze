@@ -162,6 +162,9 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getElapsedTimeString() {
+		if ($this->Object->getElapsedTime() < $this->Object->getTimeInSeconds())
+			return '-:--:--';
+
 		return Time::toString($this->Object->getElapsedTime());
 	}
 

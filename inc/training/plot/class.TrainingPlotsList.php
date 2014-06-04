@@ -31,7 +31,7 @@ class TrainingPlotsList {
 			$PacePulse  = false;
 
 		if (!$Training->Splits()->areEmpty()  && $Training->Splits()->totalDistance() > 0)
-			$this->Plots[] = new TrainingPlotSplits($Training);
+			$this->Plots[] = new TrainingPlotLapsManual($Training);
 		if ($Collection)
 			$this->Plots[] = new TrainingPlotCollection($Training);
 		if ($PacePulse)
@@ -50,7 +50,7 @@ class TrainingPlotsList {
 			$this->Plots[] = new TrainingPlotTemperature($Training);
 
 		if ($Training->Splits()->areEmpty() && $Training->hasArrayPace())
-			$this->Plots[] = new TrainingPlotSplits($Training);
+			$this->Plots[] = new TrainingPlotLapsComputed($Training);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class TrainingPlotsList {
 		foreach ($this->Plots as $Plot) {
 			echo '<div id="plot-'.$Plot->getKey().'" class="plot-container">';
 			$Plot->display();
-			echo '</div>'.NL;
+			echo '</div>';
 		}
 	}
 

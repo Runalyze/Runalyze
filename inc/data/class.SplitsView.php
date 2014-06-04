@@ -40,6 +40,12 @@ class SplitsView {
 	protected $achievedPaceActive = 0;
 
 	/**
+	 * Code
+	 * @var string
+	 */
+	protected $Code = '';
+
+	/**
 	 * Constructor
 	 * @param Splits $Splits
 	 */
@@ -54,10 +60,10 @@ class SplitsView {
 	 */
 	private function init() {
 		if ($this->Splits->totalDistance() > 0)
-			$this->achievedPace = $this->Splits->totalTime() / $this->Splits->totalDistance();
+			$this->achievedPace = round($this->Splits->totalTime() / $this->Splits->totalDistance());
 
 		if ($this->Splits->hasActiveAndInactiveLaps())
-			$this->achievedPaceActive = array_sum($this->Splits->timesAsArray(false)) / array_sum($this->Splits->distancesAsArray(false));
+			$this->achievedPaceActive = round( array_sum($this->Splits->timesAsArray(false)) / array_sum($this->Splits->distancesAsArray(false)) );
 	}
 
 	/**
@@ -65,7 +71,7 @@ class SplitsView {
 	 * @param int $demandedPace
 	 */
 	public function setDemandedPace($demandedPace) {
-		$this->demandedPace = $demandedPace;
+		$this->demandedPace = round($demandedPace);
 	}
 
 	/**
@@ -80,102 +86,150 @@ class SplitsView {
 	 * Display
 	 */
 	public function display() {
-		$this->displayTableHeader();
-		$this->displaySplits();
-		$this->displayInstruction();
-		$this->displayAverage();
-		$this->displayHalfsOfCompetition();
-		$this->displayTableFooter();
+		$this->setCode();
+
+		echo $this->Code;
 	}
 
 	/**
-	 * Display table header
+	 * Get code
+	 * @return string
 	 */
-	private function displayTableHeader() {
-		echo '<table class="small zebra-style zebra-blue">
-		<thead>
-			<tr class="c b">
-				<th>Distanz</th>
-				<th>Zeit</th>
-				<th>Pace</th>
-				<th>Diff.</th>
-			</tr>
-		</thead>
-		<tbody class="top-and-bottom-border">';
+	public function getCode() {
+		$this->setCode();
+
+		return $this->Code;
 	}
 
 	/**
-	 * Display splits
+	 * Display
 	 */
-	private function displaySplits() {
+	public function setCode() {
+		$this->Code = '';
+
+		$this->setTableHeader();
+		$this->setSplits();
+		$this->setInstruction();
+		$this->setAverage();
+		$this->setHalfsOfCompetitionToCode();
+		$this->setTableFooter();
+	}
+
+	/**
+	 * Set table header
+	 */
+	private function setTableHeader() {
+		$this->Code .= '<table class="fullwidth zebra-style"><tbody>';
+
+		$this->Code .= '<thead>';
+		$this->Code .= '<tr class="r">';
+		$this->Code .= '<th></th>';
+		$this->Code .= '<th>'.__('Distance').'</th>';
+		$this->Code .= '<th>'.__('Time').'</th>';
+		$this->Code .= '<th>'.__('Pace').'</th>';
+		$this->Code .= '<th>'.__('diff').'</th>';
+		$this->Code .= '</tr>';
+		$this->Code .= '</thead>';
+	}
+
+	/**
+	 * Set splits
+	 */
+	private function setSplits() {
+		$i = 0;
+		$num_active = count( $this->Splits->distancesAsArray(false) );
+		$seperated = false;
+
 		foreach ($this->Splits->asArray() as $Split) {
 			$Time = Time::toSeconds($Split['time']);
 			$Pace = $Split['km'] > 0 ? $Time / $Split['km'] : 0;
-			$PaceDiff = ($this->demandedPace != 0) ? ($this->demandedPace - $Pace) : ($this->achievedPace - $Pace);
-			$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
-			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
-			echo '
-			<tr class="r '.($Split['active'] || !$this->Splits->hasActiveLaps() ? '' : 'unimportant').'">
-				<td>'.Running::Km($Split['km'], 2).'</td>
-				<td>'.$Split['time'].'</td>
-				<td>'.SportSpeed::minPerKm($Split['km'], $Time).'/km</td>
-				<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>
-			</tr>'.NL;
+			if ($this->Splits->hasActiveAndInactiveLaps() && !$Split['active']) {
+				if (!$seperated && ($i > 0) && ($i < $num_active)) {
+					$this->Code .= '<tr class="space-line"><td colspan="5"></td></tr>';
+					$this->Code .= '<tr class="space-line zebra-corrector"><td colspan="5"></td></tr>';
+					$seperated = true;
+				}
+
+				continue;
+			} else {
+				$seperated = false;
+			}
+
+			$this->Code .= '<tr class="r">';
+			$this->Code .= '<td class="c">'.(++$i).'.</td>';
+			$this->Code .= '<td>'.Running::KmFormat($Split['km'], 2).' <small>km</small></td>';
+			$this->Code .= '<td>'.$Split['time'].'</td>';
+			$this->Code .= '<td>'.SportSpeed::minPerKm($Split['km'], $Time).'<small>/km</small></td>';
+			$this->Code .= $this->tdForPaceDifference($Pace);
+			$this->Code .= '</tr>';
 		}
 
-		echo '</tbody><tbody>';
+		$this->Code .= '</tbody><tbody class="top-spacer">';
 	}
 
 	/**
-	 * Display instruction
+	 * Get td for pace difference
+	 * @param int $Pace
+	 * @param bool $compareOnlyToDemanded [optional] default false
+	 * @return string
 	 */
-	private function displayInstruction() {
+	private function tdForPaceDifference($Pace, $compareOnlyToDemanded = false) {
+		if (($compareOnlyToDemanded && ($this->demandedPace == 0)) || ($this->achievedPaceActive == 0) && ($this->achievedPace == 0))
+			return '<td></td>';
+
+		$PaceDiff = ($this->demandedPace != 0) ? ($this->demandedPace - $Pace) : ($this->achievedPaceActive > 0 ? ($this->achievedPaceActive - $Pace) : ($this->achievedPace - $Pace));
+		$PaceClass = ($PaceDiff >= 0) ? 'plus' : 'minus';
+		$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
+
+		return '<td class="'.$PaceClass.'">'.$PaceDiffString.'/km</td>';
+	}
+
+	/**
+	 * Set instruction
+	 */
+	private function setInstruction() {
 		if ($this->demandedPace == 0)
 			return;
 
-		$AvgDiff = $this->achievedPaceActive > 0 ? ($this->demandedPace - $this->achievedPaceActive) : ($this->demandedPace - $this->achievedPace);
-		$AvgClass = ($AvgDiff >= 0) ? 'plus' : 'minus';
-		$AvgDiffString = ($AvgDiff >= 0) ? '+'.Time::toString($AvgDiff, false, 2) : '-'.Time::toString(-$AvgDiff, false, 2);
-
-		echo '
-			<tr class="r">
-				<td colspan="2">Vorgabe: </td>
+		$this->Code .= '
+			<tr class="small r no-zebra">
+				<td colspan="3">'.__('Goal').': </td>
 				<td>'.Time::toString($this->demandedPace).'/km</td>
-				<td class="'.$AvgClass.'">'.$AvgDiffString.'/km</td>
+				<td></td>
 			</tr>'.NL;
 	}
 
 	/**
-	 * Display average
+	 * Set average
 	 */
-	private function displayAverage() {
+	private function setAverage() {
 		if ($this->achievedPaceActive > 0) {
-			echo '
-				<tr class="r no-zebra">
-					<td colspan="2">Schnitt (Aktiv): </td>
+			$this->Code .= '
+				<tr class="small r no-zebra">
+					<td colspan="3">'.__('Average (active)').': </td>
 					<td>'.Time::toString($this->achievedPaceActive).'/km</td>
-					<td></td>
+					'.$this->tdForPaceDifference($this->achievedPaceActive, true).'
 				</tr>'.NL;
 		}
 
-		echo '
-			<tr class="r no-zebra">
-				<td colspan="2">Schnitt: </td>
+		$this->Code .= '
+			<tr class="small r no-zebra">
+				<td colspan="3">'.__('Average (total)').': </td>
 				<td>'.Time::toString($this->achievedPace).'/km</td>
 				<td></td>
 			</tr>'.NL;
 	}
 
 	/**
-	 * Display halfs of competition
+	 * Set halfs of competition
 	 */
-	private function displayHalfsOfCompetition() {
+	private function setHalfsOfCompetitionToCode() {
 		if (empty($this->Halfs))
 			return;
 
-		echo '<tr class="no-zebra"><td colspan="4">&nbsp;</td></tr>';
-		echo '<tr class="b bottom-spacer no-zebra"><td colspan="4">1./2. Rennh&auml;lfte</td></tr>';
+		$this->Code .= '<tr class="no-zebra"><td colspan="5">&nbsp;</td></tr>';
+		$this->Code .= '<tr class="b bottom-spacer no-zebra"><td colspan="5">'.__('1st/2nd Half').'</td></tr>';
 
 		$totalTime = 0;
 		$totalDist = 0;
@@ -193,8 +247,9 @@ class SplitsView {
 			$PaceClass      = ($PaceDiff >= 0) ? 'plus' : 'minus';
 			$PaceDiffString = ($PaceDiff >= 0) ? '+'.Time::toString($PaceDiff, false, 2) : '-'.Time::toString(-$PaceDiff, false, 2);
 
-			echo '
+			$this->Code .= '
 			<tr class="r">
+				<td></td>
 				<td>'.Running::Km($this->Halfs[$i]['km'], 2).'</td>
 				<td>'.Time::toString($this->Halfs[$i]['s']).'</td>
 				<td>'.SportSpeed::minPerKm($this->Halfs[$i]['km'], $this->Halfs[$i]['s']).'/km</td>
@@ -204,10 +259,10 @@ class SplitsView {
 	}
 
 	/**
-	 * Display table footer
+	 * set table footer
 	 */
-	private function displayTableFooter() {
-		echo '</tbody>';
-		echo '</table>';
+	private function setTableFooter() {
+		$this->Code .= '</tbody>';
+		$this->Code .= '</table>';
 	}
 }

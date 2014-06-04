@@ -42,17 +42,21 @@ class WeatherOpenweathermapTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testLoadForecast() {
 		$this->object->setFromJSON('
-			{"message":"","cod":"200","type":"base-country","calctime":"","units":"metric","count":1,
-				"list":[{
-					"id":2894003,"coord":{"lat":49.450001,"lon":7.75},"name":"Kaiserslautern",
-					"main":{"temp":4.21,"pressure":998,"humidity":86,"temp_min":2.78,"temp_max":5},
-					"dt":1363532773,"date":"2013-03-17 15:06:13","wind":{"speed":3.1,"deg":180},"clouds":{"all":90},
-					"weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],
-					"sys":{"country":"DE","population":98732},"url":"http:\/\/openweathermap.org\/city\/2894003"
-				}]
+			{
+				"coord":{"lon":7.75,"lat":49.45},
+				"sys":{"message":0.0221,"country":"DE","sunrise":1401334144,"sunset":1401391431},
+				"weather":[{"id":803,"main":"Clouds","description":"broken clouds","icon":"04d"}],
+				"base":"cmc stations",
+				"main":{"temp":17.17,"pressure":1013,"temp_min":16.11,"temp_max":18.2,"humidity":59},
+				"wind":{"speed":1.76,"deg":313.5},
+				"clouds":{"all":76},
+				"dt":1401371226,
+				"id":2894003,
+				"name":"Kaiserslautern",
+				"cod":200
 			}');
 
-		$this->assertEquals($this->object->getConditionAsString(), 'rainy');
-		$this->assertEquals($this->object->getTemperature(), 4);
+		$this->assertEquals($this->object->getConditionAsString(), 'cloudy');
+		$this->assertEquals($this->object->getTemperature(), 17.0);
 	}
 }

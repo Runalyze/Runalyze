@@ -117,4 +117,34 @@ DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 
 // Load helper class
 Helper::Unknown('');
-?>
+
+// Language functions
+if (!function_exists('__')) {
+	function __($text, $domain = 'runalyze') {
+		return $text;
+	}
+}
+
+if (!function_exists('_e')) {
+	function _e($text, $domain = 'runalyze') {
+		echo $text;
+	}
+}
+
+if (!function_exists('_n')) {
+	function _n($msg1, $msg2, $n, $domain = 'runalyze') {
+		if ($n == 1)
+			return $msg1;
+
+		return $msg2;
+	}
+}
+
+if (!function_exists('_ne')) {
+	function _ne($msg1, $msg2, $n, $domain = 'runalyze') {
+		if ($n == 1)
+			echo $msg1;
+
+		echo $msg2;
+	}
+}

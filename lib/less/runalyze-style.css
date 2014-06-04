@@ -1045,7 +1045,7 @@ tr.ERROR td {
   transition: opacity 0.4s linear;
 }
 .wait-img {
-  background: url(../../img/wait-black.gif) center center no-repeat #000000 !important;
+  background: url(../../img/wait.gif) center center no-repeat !important;
 }
 #data-browser-container table {
   width: 100%;
@@ -1209,13 +1209,32 @@ tbody.asThead th {
 td img {
   vertical-align: middle;
 }
+tbody.top-spacer tr:first-child,
+tbody.top-spacer tr:first-child td,
 tr.top-spacer,
-td.top-spacer {
+td.top-spacer,
+.zebra-style tbody .top-spacer {
   border-top: 1px solid #666666;
 }
 tr.bottom-spacer,
+tr.bottom-spacer td,
 td.bottom-spacer {
   border-bottom: 1px solid #666666;
+}
+tr.space-line,
+tr.space-line td {
+  height: 1px;
+  line-height: 1px;
+  font-size: 0;
+  padding: 0;
+  background: #cccccc;
+  border: none !important;
+}
+tr.space-line.zebra-corrector,
+tr.space-line.zebra-corrector td {
+  height: 0;
+  line-height: 0;
+  background: inherit;
 }
 .zebra-style tbody.top-and-bottom-border tr:first-child {
   border-top: 1px solid #666666;
@@ -1353,7 +1372,7 @@ td.bottom-spacer {
   padding: 6px 6px 6px;
 }
 .map {
-  min-width: 400px;
+  min-width: 300px;
   width: 100%;
   height: 300px;
 }
@@ -1584,8 +1603,26 @@ td.bottom-spacer {
   font-size: 0;
   margin-bottom: -1px;
 }
+.boxed-values:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.boxed-values.at-bottom {
+  margin-bottom: 0;
+}
 .boxed-value-outer {
+  float: left;
   display: inline-block;
+  min-width: 77px;
+}
+.boxed-value-outer.w10 {
+  width: 10%;
+}
+.boxed-value-outer.w20 {
+  width: 20%;
 }
 .boxed-value-outer.w25 {
   width: 25%;
@@ -1597,10 +1634,12 @@ td.bottom-spacer {
   width: 50%;
 }
 .boxed-value-outer .boxed-value-container {
+  float: none;
   display: block;
   width: auto;
 }
 .boxed-value-container {
+  float: left;
   position: relative;
   display: inline-block;
   min-width: 56px;
@@ -1632,6 +1671,7 @@ td.bottom-spacer {
   font-size: 14px;
   font-weight: bold;
   height: 16px;
+  white-space: nowrap;
 }
 .boxed-value .boxed-value-unit {
   display: inline;
@@ -1641,6 +1681,12 @@ td.bottom-spacer {
 .boxed-value-info {
   display: block;
   text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.flexible-height .boxed-value {
+  white-space: normal;
+  height: auto;
 }
 .fa-grey {
   color: #999999;
@@ -1860,7 +1906,7 @@ label:active .checkbox-icon {
 }
 .tooltip {
   position: absolute;
-  z-index: 1010;
+  z-index: 3010;
   display: block;
   padding: 5px;
   font-size: 11px;
@@ -2182,7 +2228,7 @@ label:active .checkbox-icon {
   color: #ffffff;
 }
 .flot .map-tooltip {
-  z-index: 1010;
+  z-index: 3010;
   display: none;
   position: fixed;
   text-align: left;
