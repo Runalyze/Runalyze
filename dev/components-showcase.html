@@ -111,19 +111,71 @@ pre {
 	margin: 10px 0 0;
 	font-size: 16px;
 }
+
+.bar-chart {
+
+}
+
+.bar-chart-horizontal {
+	
+}
+
+.bar-chart-row {
+	position: relative;
+	height: 20px;
+	padding-left: 100px;
+}
+
+.bar-chart-label {
+	float: left;
+	margin-left: -100px;
+	width: 94px;
+	height: 20px;
+	line-height: 20px;
+	text-align: right;
+	border-right: 1px solid #000;
+	padding-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.bar-chart-value {
+	position: relative;
+	top: 5px;
+	height: 10px;
+	background: #b80000;
+}
 		</style>
 	</head>
 <body>
 
 	<div class="showcase">
-		<div class="showcase-inner clearfix">
-			<pre>&lt;p class=&quot;error/info/...&quot&gt;...&lt;/p&gt;</pre>
+		<div class="showcase-inner">
+			<pre>&lt;div class=&quot;bar-chart bar-chart-horizontal&quot&gt;...&lt;/div&gt;</pre>
 
-			<p class="error">&quot;error&quot;: Fehlermeldung ...</p>
-			<p class="warning">&quot;warning&quot;: Warnung ...</p>
-			<p class="okay">&quot;okay&quot;: Alles okay ...</p>
-			<p class="info">&quot;info&quot;: Information ...</p>
-			<p class="file">&quot;file&quot;: Download ...</p>
+			<div class="bar-chart bar-chart-horizontal">
+				<div class="bar-chart-row">
+					<div class="bar-chart-label">bis 100 &#37;</div>
+					<div class="bar-chart-value" style="width:7%;"></div>
+				</div>
+				<div class="bar-chart-row">
+					<div class="bar-chart-label">bis 90 &#37;</div>
+					<div class="bar-chart-value" style="width:17%;"></div>
+				</div>
+				<div class="bar-chart-row">
+					<div class="bar-chart-label">bis 80 &#37;</div>
+					<div class="bar-chart-value" style="width:42%;"></div>
+				</div>
+				<div class="bar-chart-row">
+					<div class="bar-chart-label">bis 70 &#37;</div>
+					<div class="bar-chart-value" style="width:30%;"></div>
+				</div>
+				<div class="bar-chart-row">
+					<div class="bar-chart-label">bis 60 &#37;</div>
+					<div class="bar-chart-value" style="width:4%;"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -210,6 +262,99 @@ pre {
 
 	<div class="showcase">
 		<div class="showcase-inner clearfix">
+			<pre>&lt;p class=&quot;error/info/...&quot&gt;...&lt;/p&gt;</pre>
+
+			<p class="error">&quot;error&quot;: Fehlermeldung ...</p>
+			<p class="warning">&quot;warning&quot;: Warnung ...</p>
+			<p class="okay">&quot;okay&quot;: Alles okay ...</p>
+			<p class="info">&quot;info&quot;: Information ...</p>
+			<p class="file">&quot;file&quot;: Download ...</p>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
+			<pre>&lt;div class=&quot;boxed-value&quot&gt;...&lt;/div&gt;</pre>
+
+			<div class="panel">
+				<div class="panel-heading">
+					<h1>Training</h1>
+				</div>
+				<div class="boxed-values at-bottom">
+					<div class="boxed-value-outer w20">
+						<div class="boxed-value-container">
+							<div class="boxed-value">
+								14,3
+								<span class="boxed-value-unit">km</span>
+							</div>
+							<div class="boxed-value-info">
+								Distanz
+							</div>
+						</div>
+					</div>
+					<div class="boxed-value-outer w20">
+						<div class="boxed-value-container">
+							<div class="boxed-value">
+								1:02:13
+							</div>
+							<div class="boxed-value-info">
+								Dauer
+							</div>
+						</div>
+					</div>
+					<div class="boxed-value-outer w20">
+						<div class="boxed-value-container">
+							<div class="boxed-value">
+								4:17
+								<span class="boxed-value-unit">/km</span>
+							</div>
+							<div class="boxed-value-info">
+								Pace
+							</div>
+						</div>
+					</div>
+					<div class="boxed-value-outer w20">
+						<div class="boxed-value-container">
+							<div class="boxed-value">
+								147
+								<span class="boxed-value-unit">bpm</span>
+							</div>
+							<div class="boxed-value-info">
+								Puls
+							</div>
+						</div>
+					</div>
+					<div class="boxed-value-outer w20">
+						<div class="boxed-value-container with-icon">
+							<i class="fa fa-fw vdot-icon small fa-arrow-up fa-rotate-45"></i>
+							<div class="boxed-value">
+								62,5
+							</div>
+							<div class="boxed-value-info">
+								VDOT
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
+			<pre>&lt;ul class=&quot;blocklist blocklist-inline&quot&gt;...&lt;/ul&gt;</pre>
+
+			<ul class="blocklist blocklist-inline">
+				<li><a href="#"><i class="fa fa-info"></i> Ein Link</a></li>
+				<li><a href="#"><i class="fa fa-android"></i> Anderer Link</a></li>
+				<li><a href="#"><i class="fa fa-heart"></i> Noch ein Link</a></li>
+				<li><a href="#"><i class="fa fa-power-off"></i> ... und noch einer</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="showcase">
+		<div class="showcase-inner clearfix">
 			<pre>&lt;div class=&quot;panel&quot&gt;...&lt;/div&gt;</pre>
 
 			<div class="panel">
@@ -254,77 +399,6 @@ pre {
 					<div class="panel-multiple-content">... und noch mehr verschiedene Inhalte</div>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="showcase">
-		<div class="showcase-inner clearfix">
-			<pre>&lt;div class=&quot;boxed-value&quot&gt;...&lt;/div&gt;</pre>
-
-			<div class="panel">
-				<div class="panel-heading">
-					<h1>Training</h1>
-				</div>
-				<div class="boxed-values clearfix">
-					<div class="boxed-value-container">
-						<div class="boxed-value">
-							14,3
-							<span class="boxed-value-unit">km</span>
-						</div>
-						<div class="boxed-value-info">
-							Distanz
-						</div>
-					</div>
-					<div class="boxed-value-container">
-						<div class="boxed-value">
-							1:02:13
-						</div>
-						<div class="boxed-value-info">
-							Dauer
-						</div>
-					</div>
-					<div class="boxed-value-container">
-						<div class="boxed-value">
-							4:17
-							<span class="boxed-value-unit">/km</span>
-						</div>
-						<div class="boxed-value-info">
-							Pace
-						</div>
-					</div>
-					<div class="boxed-value-container">
-						<div class="boxed-value">
-							147
-							<span class="boxed-value-unit">bpm</span>
-						</div>
-						<div class="boxed-value-info">
-							Puls
-						</div>
-					</div>
-					<div class="boxed-value-container with-icon">
-						<i class="fa fa-fw vdot-icon small fa-arrow-up fa-rotate-45"></i>
-						<div class="boxed-value">
-							62,5
-						</div>
-						<div class="boxed-value-info">
-							VDOT
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="showcase">
-		<div class="showcase-inner clearfix">
-			<pre>&lt;ul class=&quot;blocklist blocklist-inline&quot&gt;...&lt;/ul&gt;</pre>
-
-			<ul class="blocklist blocklist-inline">
-				<li><a href="#"><i class="fa fa-info"></i> Ein Link</a></li>
-				<li><a href="#"><i class="fa fa-android"></i> Anderer Link</a></li>
-				<li><a href="#"><i class="fa fa-heart"></i> Noch ein Link</a></li>
-				<li><a href="#"><i class="fa fa-power-off"></i> ... und noch einer</a></li>
-			</ul>
 		</div>
 	</div>
 

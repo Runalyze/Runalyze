@@ -138,7 +138,7 @@ class Running {
 		}
 
 		$bpm = self::PulseStringInBpm($pulse);
-		$hf  = self::PulseStringInPercent($pulse, $hf_max);
+		$hf  = self::PulseStringInPercentHRmax($pulse, $hf_max);
 		$hfr = self::PulseStringInPercentReserve($pulse, $hf_max, $hf_rest);
 
 		if (CONF_PULS_MODE == 'hfmax')
@@ -160,31 +160,30 @@ class Running {
 	}
 
 	/**
+	 * Get string for pulse in percent
+	 * 
+	 * HRmax or HRreserve is determined by configuration.
+	 * 
+	 * @param int $pulse
+	 * @param int $hf_max [optional]
+	 * @param int $hf_rest [optional]
+	 * @return string
+	 */
+	public static function PulseStringInPercent($pulse, $hf_max = 0, $hf_rest = 0) {
+		return self::PulseInPercent($pulse, $hf_max, $hf_rest).'&nbsp;&#37;';
+	}
+
+	/**
 	 * Get string for pulse [%HFmax]
 	 * @param int $pulse
 	 * @param int $hf_max [optional]
 	 * @return string
 	 */
-	public static function PulseStringInPercent($pulse, $hf_max = 0) {
+	public static function PulseStringInPercentHRmax($pulse, $hf_max = 0) {
 		if ($hf_max == 0)
 			$hf_max = HF_MAX;
-		
-		return round(100*$pulse / $hf_max).'&nbsp;&#37;';
-	}
 
-	/**
-	 * Get string for pulse [%HRmax]
-	 * @param int $pulse
-	 * @param int $hf_max [optional]
-	 * @return string
-	 */
-	public static function PulseStringInPercentHRmax($pulse, $hf_max = 0, $hf_rest = 0) {
-		if ($hf_max == 0)
-			$hf_max = HF_MAX;
-		if ($hf_rest == 0)
-			$hf_rest = HF_REST;
-		
-		return round(100*($pulse - $hf_rest) / ($hf_max - $hf_rest)).'&nbsp;&#37;';
+		return self::PulseInPercentHRmax($pulse, $hf_max).'&nbsp;&#37;';
 	}
 
 	/**
@@ -199,11 +198,38 @@ class Running {
 	}
 
 	/**
+	 * Get pulse in percent
+	 * @param int $pulse
+	 * @param int $hf_max [optional]
+	 * @param int $hf_rest [optional]
+	 * @return int
+	 */
+	public static function PulseInPercent($pulse, $hf_max = 0, $hf_rest = 0) {
+		if (CONF_PULS_MODE == 'hfres')
+			return self::PulseInPercentReserve($pulse, $hf_max, $hf_rest);
+
+		return self::PulseInPercentHRmax($pulse, $hf_max);
+	}
+
+	/**
+	 * Get pulse in percent of HRmax
+	 * @param int $pulse
+	 * @param int $hf_max [optional]
+	 * @return int
+	 */
+	public static function PulseInPercentHRmax($pulse, $hf_max = 0) {
+		if ($hf_max == 0)
+			$hf_max = HF_MAX;
+		
+		return round(100*$pulse / $hf_max);
+	}
+
+	/**
 	 * Get pulse in percent of reserve
 	 * @param int $pulse
 	 * @param int $hf_max [optional]
 	 * @param int $hf_rest [optional]
-	 * @return string
+	 * @return int
 	 */
 	public static function PulseInPercentReserve($pulse, $hf_max = 0, $hf_rest = 0) {
 		if ($hf_max == 0)

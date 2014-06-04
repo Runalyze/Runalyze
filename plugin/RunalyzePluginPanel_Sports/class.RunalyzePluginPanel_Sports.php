@@ -71,55 +71,76 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 		foreach ($this->getTimeset() as $i => $timeset) {
 			echo '<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>';
 
-			if (!$this->config['show_as_table']['var'])
-				echo '<div class="'.BoxedValue::$SURROUNDING_DIV.' at-bottom">';
-
 			$Request->bindValue('start', $timeset['start'], PDO::PARAM_INT);
 			$Request->execute();
 			$data = $Request->fetchAll();
 
-			foreach ($data as $dat) {
-				// TODO: Define the decision (distance or time) somehow in the configuration
-				$Sport = new Sport($dat['sportid']);
-
-				if ($this->config['show_as_table']['var']) {
-					$result = $dat['count_distance'] >= $dat['count']/2
-						? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
-						: Time::toString($dat['time_in_s']);
-
-					echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
-					echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
-				} else {
-					$Value = new BoxedValue();
-					$Value->setIcon($Sport->Icon());
-					$Value->setInfo($Sport->name());
-					$Value->defineAsFloatingBlock('w50');
-
-					if ($dat['count_distance'] >= $dat['count']/2) {
-						$Value->setValue( Running::KmFormat($dat['distance']) );
-						$Value->setUnit('km');
-					} else {
-						$Value->setValue(Time::toString($dat['time_in_s'], false, true));
-					}
-
-					$Value->display();
-				}
-			}
-
-			if (empty($data))
-				echo '<p><em>'.__('No data available.').'</em></p>';
-	
 			if ($this->config['show_as_table']['var']) {
-				echo '<small class="right">'.__('since').' '.date("d.m.Y", $timeset['start']).'</small>';
-				echo HTML::clearBreak();
+				$this->showDataInTableView($data, $timeset);
 			} else {
-				echo '</div>';
+				if (empty($data)) {
+					echo '<div class="panel-content"><p><em>'.__('No data available since').' '.date("d.m.Y", $timeset['start']).'.</em></p></div>';
+				} else {
+					echo '<div class="'.BoxedValue::$SURROUNDING_DIV.' at-bottom">';
+					$this->showDataAsBoxedValues($data);
+					echo '</div>';
+				}
 			}
 
 			echo '</div>';
 		}
 	
 		echo '</div>';
+	}
+
+	/**
+	 * Show boxed values
+	 * @param array $data
+	 */
+	private function showDataAsBoxedValues($data) {
+		foreach ($data as $dat) {
+			// TODO: Define the decision (distance or time) somehow in the configuration
+			$Sport = new Sport($dat['sportid']);
+
+			$Value = new BoxedValue();
+			$Value->setIcon($Sport->Icon());
+			$Value->setInfo($Sport->name());
+			$Value->defineAsFloatingBlock('w50');
+
+			if ($dat['count_distance'] >= $dat['count']/2) {
+				$Value->setValue( Running::KmFormat($dat['distance']) );
+				$Value->setUnit('km');
+			} else {
+				$Value->setValue(Time::toString($dat['time_in_s'], false, true));
+			}
+
+			$Value->display();
+		}
+	}
+
+	/**
+	 * Show data in table view
+	 * @param array $data
+	 * @param array $timeset
+	 */
+	private function showDataInTableView($data, $timeset) {
+		if (empty($data)) {
+			echo '<p><em>'.__('No data available.').'</em></p>';
+		} else {
+			foreach ($data as $dat) {
+				$Sport = new Sport($dat['sportid']);
+
+				$result = $dat['count_distance'] >= $dat['count']/2
+					? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
+					: Time::toString($dat['time_in_s']);
+
+				echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
+				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
+			}
+		}
+
+		echo '<small class="right">'.__('since').' '.date("d.m.Y", $timeset['start']).'</small>';
+		echo HTML::clearBreak();
 	}
 
 	/**

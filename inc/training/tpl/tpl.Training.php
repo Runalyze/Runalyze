@@ -14,43 +14,133 @@
 	<?php endif; ?>
 </div>
 
-<!--
+<style>
+.training-row:after {
+	content: '.';
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+#training-overview:after {
+	content: '';
+}
+
+.training-row {
+	position: relative;
+	margin-left: 300px;
+	border-left: 1px solid #eee;
+}
+
+.training-row.fullwidth {
+	margin-left: 0;
+	border-left: 0;
+}
+
+.training-row-info {
+	float: left;
+	width: 300px;
+	margin-left: -301px;
+	max-height: 200px;
+	overflow-y: scroll;
+}
+
+.training-row-info-shadow {
+	position: absolute;
+	left: -301px;
+	bottom: 0;
+	height: 25px;
+	width: 300px;
+	box-shadow: inset 0 -20px 15px -10px #fff;
+}
+
+.training-row-info .boxed-value-outer.w100 .boxed-value-container,
+.training-row-info .boxed-value-outer.w25:nth-child(4n) .boxed-value-container,
+.training-row-info .boxed-value-outer.w33:nth-child(3n) .boxed-value-container,
+.training-row-info .boxed-value-outer.w50:nth-child(2n) .boxed-value-container {
+	border-right: 0;
+}
+
+.training-row-info .boxed-values {
+	margin-bottom: 0;
+}
+
+#statistics-inner .training-row-info table.fullwidth {
+	margin: 0;
+}
+
+.training-row-info table.fullwidth.zebra-style tbody tr:first-child {
+	border-top: 0;
+}
+
+.training-row-info .zebra-style tbody tr {
+	border-color: #eee;
+}
+
+.training-row-plot .flot {
+	background: transparent;
+}
+
+.training-row-plot p {
+	clear: none;
+}
+
+.panel-heading.panel-inner-heading {
+	background: #f6f6f6;
+	border-bottom: 1px solid #eee;
+}
+
+.panel-heading h2 {
+	font-weight: bold;
+	text-transform: none;
+	letter-spacing: 1px;
+}
+
+.panel-heading .change-menu {
+	float: right;
+}
+
+.panel-heading .change-menu a {
+	display: inline-block;
+	padding-left: 5px;
+	margin-left: 10px;
+	border-left: 2px solid #ccc;
+	line-height: 1.2em;
+	color: #666;
+}
+
+.panel-heading .change-menu a:hover {
+	color: #000;
+}
+
+.panel-heading .change-menu a.triggered {
+	border-color: #666;
+	color: #333;
+}
+</style>
+
 <?php
-$Values = array(
-	new BoxedValue($this->Training->getDistance(), 'km', 'Distanz'),
-	new BoxedValue($this->Training->DataView()->getTimeString(), '', 'Dauer'),
-	new BoxedValue($this->Training->DataView()->getElapsedTimeString(), '', 'Gesamtdauer'),
-	new BoxedValue($this->Training->getPace(), '/km', 'Pace'),
-	new BoxedValue($this->Training->getPulseAvg(), 'bpm', '&oslash; Puls'),
-	new BoxedValue($this->Training->getPulseMax(), 'bpm', 'max. Puls'),
-	new BoxedValue($this->Training->getCalories(), 'kcal', 'Kalorien'),
-	new BoxedValue($this->Training->getCurrentlyUsedVdot(), '', 'VDOT', $this->Training->DataView()->getVDOTicon()),
-	new BoxedValue($this->Training->getJDintensity(), '', 'TP'),
-	new BoxedValue($this->Training->getTrimp(), '', 'TRIMP'),
-	new BoxedValue($this->Training->getElevation(), 'm', 'H&ouml;henmeter')
-);
+$Sections = array();
+$Sections[] = new SectionOverview($this->Training);
+$Sections[] = new SectionLaps($this->Training);
+$Sections[] = new SectionHeartrate($this->Training);
+$Sections[] = new SectionPace($this->Training);
+$Sections[] = new SectionRoute($this->Training);
+$Sections[] = new SectionMiscellaneous($this->Training);
 
-$ValuesString = '';
-foreach ($Values as &$Value)
-	$ValuesString .= $Value->getCode();
+foreach ($Sections as &$Section)
+	$Section->display();
 
-BoxedValue::wrapValues($ValuesString);
+
+echo Ajax::wrapJSforDocumentReady( 'RunalyzePlot.resizeTrainingCharts();' );
+
+/*
 ?>
 
-<div class="panel-heading panel-inner-heading">
-	<h2>Zwischenzeiten</h2>
+<div class="panel-heading panel-sub-heading">
+	<h1>Altes Design</h1>
 </div>
-<div class="panel-content">
-	<?php
-		$Rounds = new RoundsSplits($this->Training);
-		$Rounds->display();
-	?>
-</div>
-
-<div class="panel-heading panel-inner-heading">
-	<h2>Weitere Infos</h2>
-</div>
--->
 
 <div class="panel-content r" style="clear:both;">
 	<?php foreach ($this->CheckableLabels as $Label): ?>
@@ -87,12 +177,13 @@ BoxedValue::wrapValues($ValuesString);
 
 				<?php $this->PlotList->displayAllPlots(); ?>
 			</div>
-
+<!--
 			<?php if ($this->Training->hasPositionData() && !CONF_TRAINING_MAP_BEFORE_PLOTS): ?>
 			<div id="training-map">
 				<?php $this->displayRoute(); ?>
 			</div>
 			<?php endif; ?>
+-->
 		</div>
 		<?php endif; ?>
 
@@ -106,3 +197,4 @@ BoxedValue::wrapValues($ValuesString);
 
 	<br class="clear">
 </div>
+ */

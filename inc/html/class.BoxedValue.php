@@ -253,7 +253,7 @@ class BoxedValue {
 			return '';
 
 		$Code = ' <div class="'.self::$VALUE_UNIT_DIV.'">';
-		$Code .= $this->Unit;
+		$Code .= str_replace(' ', '&nbsp;', $this->Unit);
 		$Code .= '</div>';
 
 		return $Code;
@@ -268,7 +268,7 @@ class BoxedValue {
 			return '';
 
 		$Code = '<div class="'.self::$VALUE_INFO_DIV.'">';
-		$Code .= $this->Info;
+		$Code .= str_replace(' ', '&nbsp;', $this->Info);
 		$Code .= '</div>';
 
 		return $Code;
@@ -279,6 +279,15 @@ class BoxedValue {
 	 * @param string $ValuesString
 	 */
 	static public function wrapValues($ValuesString) {
-		echo '<div class="'.self::$SURROUNDING_DIV.'">'.$ValuesString.'</div>';
+		echo self::getWrappedValues($ValuesString);
+	}
+
+	/**
+	 * Get wrapped values
+	 * @param string $ValuesString
+	 * @return string
+	 */
+	static public function getWrappedValues($ValuesString) {
+		return '<div class="'.self::$SURROUNDING_DIV.'">'.$ValuesString.'</div>';
 	}
 }

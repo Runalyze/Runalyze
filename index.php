@@ -38,7 +38,7 @@ $Frontend = new Frontend();
 
 				if (PluginStat::hasVariousStats()) {
 					echo '<li class="with-submenu">';
-					echo '<a href="#">'.__('Other').'</a>';
+					echo '<a href="#">'.__('Miscellaneous').'</a>';
 					echo '<ul class="submenu">';
 
 					$VariousStats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE_VARIOUS);

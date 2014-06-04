@@ -143,6 +143,6 @@ class FrontendSharedStatistics {
 	protected function addTabForOtherStatistics() {
 		$Content = 'Test';
 
-		$this->StatisticTabs->addTab('Sonstiges', 'statistics-other', $Content);
+		$this->StatisticTabs->addTab( __('Miscellaneous'), 'statistics-other', $Content);
 	}
 }

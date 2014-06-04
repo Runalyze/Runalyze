@@ -12,26 +12,42 @@
 @boxed-value-icon-position-left:	5px;
 
 .boxed-values {
-	// Remember to set class 'clearfix' to every <div class="boxed-values">
 	font-size: 0;
 	margin-bottom: -1px;
-	//text-align: center;
+
+	&:after {
+		content: '.';
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	&.at-bottom {
+		margin-bottom: 0;
+	}
 }
 
 .boxed-value-outer {
+	float: left;
 	display: inline-block;
+	min-width: (@boxed-value-min-width + 21px);
 
+	&.w10 { width: 10%; }
+	&.w20 { width: 20%; }
 	&.w25 { width: 25%; }
 	&.w33 { width: 33.3%; }
 	&.w50 { width: 50%; }
 
 	.boxed-value-container {
+		float: none;
 		display: block;
 		width: auto;
 	}
 }
 
 .boxed-value-container {
+	float: left;
 	position: relative;
 	display: inline-block;
 	min-width: @boxed-value-min-width;
@@ -71,6 +87,7 @@
 	font-size: @boxed-value-font-size;
 	font-weight: @boxed-value-font-weight;
 	height: @boxed-value-line-height;
+	white-space: nowrap;
 
 	.boxed-value-unit {
 		display: inline;
@@ -83,4 +100,11 @@
 .boxed-value-info {
 	display: block;
 	text-align: right;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.flexible-height .boxed-value {
+	white-space: normal;
+	height: auto;
 }

@@ -52,12 +52,30 @@ td img {
 	vertical-align: middle;
 }
 
-tr.top-spacer, td.top-spacer {
+tbody.top-spacer tr:first-child,
+tbody.top-spacer tr:first-child td,
+tr.top-spacer, td.top-spacer,
+.zebra-style tbody .top-spacer {
 	border-top: 1px solid @table-head-border;
 }
 
-tr.bottom-spacer, td.bottom-spacer {
+tr.bottom-spacer, tr.bottom-spacer td, td.bottom-spacer {
 	border-bottom: 1px solid @table-head-border;
+}
+
+tr.space-line, tr.space-line td {
+	height: 1px;
+	line-height: 1px;
+	font-size: 0;
+	padding: 0;
+	background: @table-border;
+	border: none !important;
+}
+
+tr.space-line.zebra-corrector, tr.space-line.zebra-corrector td {
+	height: 0;
+	line-height: 0;
+	background: inherit;
 }
 
 .zebra-style {

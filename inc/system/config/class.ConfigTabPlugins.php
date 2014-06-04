@@ -111,7 +111,7 @@ class ConfigTabPlugins extends ConfigTab {
 				$Code .= HTML::info(__('* Hidden plugins do only show the heading.'));
 				break;
 			case 'stat':
-				$Code .= HTML::info(__('* Hidden plugins are grouped as \'Other\'.'));
+				$Code .= HTML::info(__('* Hidden plugins are grouped as \'Miscellaneous\'.'));
 				break;
 			case 'tool':
 			default:

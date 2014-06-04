@@ -108,15 +108,23 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	 * @covers Running::PulseStringInPercent
 	 */
 	public function testPulseStringInPercent() {
-		$this->assertEquals( '60&nbsp;&#37;', Running::PulseStringInPercent(120, 200) );
+		// Can't be tested due to CONF_PULS_MODE
+		//$this->assertEquals( '25&nbsp;&#37;', Running::PulseStringInPercent(80, 200, 40) );
 	}
 
 	/**
 	 * @covers Running::PulseStringInPercentHRmax
 	 */
 	public function testPulseStringInPercentHRmax() {
-		$this->assertEquals( '50&nbsp;&#37;', Running::PulseStringInPercentHRmax(130) );
-		$this->assertEquals( '25&nbsp;&#37;', Running::PulseStringInPercentHRmax(80, 200, 40) );
+		$this->assertEquals( '65&nbsp;&#37;', Running::PulseStringInPercentHRmax(130) );
+		$this->assertEquals( '50&nbsp;&#37;', Running::PulseStringInPercentHRmax(80, 160) );
+	}
+
+	/**
+	 * @covers Running::PulseInPercentHRmax
+	 */
+	public function testPulseInPercentHRmax() {
+		$this->assertEquals( 60, Running::PulseInPercentHRmax(96, 160) );
 	}
 
 	/**
