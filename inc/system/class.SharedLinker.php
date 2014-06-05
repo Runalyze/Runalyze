@@ -40,7 +40,7 @@ class SharedLinker {
 	 * @return string
 	 */
 	static public function getToolbarLinkTo($trainingID) {
-		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank" title="Permalink zum Training">'.Icon::$ATTACH.' &ouml;ffentlicher Link</a>';
+		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.Icon::$ATTACH.' '.__('public link').'</a>';
 	}
 
 	/**
@@ -49,7 +49,7 @@ class SharedLinker {
 	 * @return string
 	 */
 	static public function getStandardLinkTo($trainingID) {
-		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank" title="Permalink zum Training">'.Icon::$ATTACH.'</a>';
+		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.Icon::$ATTACH.'</a>';
 	}
 
 	/**
@@ -60,7 +60,7 @@ class SharedLinker {
 		if (!CONF_TRAINING_LIST_PUBLIC)
 			return '';
 
-		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', '&Ouml;ffentliche Trainingsliste', false, true).'>'.Icon::$ATTACH.'</a>';
+		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.Icon::$ATTACH.'</a>';
 	}
 
 	/**

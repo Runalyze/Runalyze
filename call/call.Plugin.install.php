@@ -11,7 +11,7 @@ if (Plugin::installPlugin($_GET['key'])) {
 	$Plugin = Plugin::getInstanceFor($_GET['key']);
 	$Plugin->displayConfigWindow();
 } else {
-	echo '<h1>Installation von '.$_GET['key'].'</h1>';
-	echo 'Bei der Installation ist ein Problem aufgetaucht: Das Plugin konnte nicht installiert werden.';
+	echo '<h1>'.__('Install').' '.$_GET['key'].'</h1>';
+	echo __('There was a problem, the plugin could not be installed.');
 }
 ?>

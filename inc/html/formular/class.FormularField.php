@@ -207,7 +207,7 @@ abstract class FormularField extends HtmlTag {
 
 		if ($validation !== true) {
 			self::setKeyAsFailed($this->name);
-			self::addValidationFailure(is_string($validation) ? $validation : 'Die Eingabe wird nicht akzeptiert. ('.$this->name.')');
+			self::addValidationFailure(is_string($validation) ? $validation : __('Your input is not allowed.').' ('.$this->name.')');
 		}
 	}
 

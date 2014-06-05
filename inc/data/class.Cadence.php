@@ -81,7 +81,7 @@ class Cadence {
 	 * @return string
 	 */
 	public function label() {
-		return 'Trittfrequenz';
+		return __('Cadence');
 	}
 
 	/**
@@ -97,7 +97,7 @@ class Cadence {
 	 * @return string
 	 */
 	protected function unitExplanation() {
-		return 'rotations per minute = Umdrehungen pro Minute';
+		return __('rpm = rotations per minute');
 	}
 
 	/**

@@ -16,7 +16,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	BasicEndurance::recalculateValue();
 	Helper::recalculateStartTime();
 
-	echo '<div class="panel-content"><p id="submit-info" class="error">Das Training wurde gel&ouml;scht.</p></div>';
+	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The training has been removed').'</p></div>';
 	echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
 	exit();
 }

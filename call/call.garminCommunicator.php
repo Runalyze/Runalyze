@@ -6,7 +6,7 @@ $Frontend = new Frontend(true);
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Garmin Display - Upload Selected Fitness Activities</title>
+	<title>Garmin Communicator</title>
 
 	<link rel="stylesheet" href="../lib/garmin/communicator2.css">
 	<script src="../lib/garmin/prototype/prototype.js"></script>
@@ -28,7 +28,7 @@ $Frontend = new Frontend(true);
 		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
 		function load() {
 		    display = new Garmin.DeviceDisplay("garminDisplay", {
-				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br>Der Garmin-API-Key ist entweder nicht in der Konfiguration eingetragen oder falsch.",
+				pluginNotUnlocked: "<em>The plug-in was not unlocked successfully.</em><br>The administrator has to set the correct API-key.",
 				showReadDataElement: true,
 				showProgressBar: true,
 				showFindDevicesElement: true,
@@ -40,32 +40,32 @@ $Frontend = new Frontend(true);
 				autoHideUnusedElements: true,
 				showReadDataTypesSelect: false,
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
-				deviceSelectLabel: "Ausw&auml;hlen:<br>",
-				readDataButtonText: "Verbinden",
+				deviceSelectLabel: "<?php _e('Choose'); ?>:<br>",
+				readDataButtonText: "<?php _e('Connect'); ?>",
 				showCancelReadDataButton: false,
-				lookingForDevices: 'Suche nach Ger&auml;ten<br><br><img src="../img/wait.gif">',
-				uploadsFinished: "&Uuml;bertragung vollst&auml;ndig",
+				lookingForDevices: '<?php _e('Searching devices'); ?><br><br><img src="../img/wait.gif">',
+				uploadsFinished: "<?php _e('Transfer complete'); ?>",
 				uploadSelectedActivities: true,
 				uploadCompressedData: true,
 				uploadMaximum: 40, 
-				browseComputerButtonText: "Computer durchsuchen",
-				cancelUploadButtonText: "Abbrechen",
-				changeDeviceButtonText: "Abbrechen",
-				connectedDevicesLabel: "Verbundene Ger&auml;te: ",
-				deviceBrowserLabel: "Ger&auml;te durchsuchen: ",
-				deviceSelectLabel: "Ger&auml;te: ",
-				findDevicesButtonText: "Ger&auml;te suchen",
-				loadingContentText: "Daten werden von #{deviceName} gelesen, bitte warten...",
-				readSelectedButtonText: "Bitte warten ...", // "Importieren"
-				dataFound: "#{tracks} Trainings gefunden",
-				noDeviceDetectedStatusText: "Keine Ger&auml;te gefunden",
-				singleDeviceDetectedStatusText: "Gefunden: ",
-				foundDevice: "Gefunden: #{deviceName}",
-				foundDevices: "#{deviceCount} Ger&auml;te gefunden",
+				browseComputerButtonText: "<?php _e('Browse computer'); ?>",
+				cancelUploadButtonText: "<?php _e('Cancel'); ?>",
+				changeDeviceButtonText: "<?php _e('Cancel'); ?>",
+				connectedDevicesLabel: "<?php _e('Connected devices'); ?>: ",
+				deviceBrowserLabel: "<?php _e('Browse device'); ?>: ",
+				deviceSelectLabel: "<?php _e('Devices'); ?>: ",
+				findDevicesButtonText: "<?php _e('Search for decives'); ?>",
+				loadingContentText: "<?php _e('Retrieving data from #{deviceName}, please wait ...'); ?>",
+				readSelectedButtonText: "<?php _e('Please wait ...'); ?>", // "Importieren"
+				dataFound: "<?php _e('Found #{tracks} activites'); ?>",
+				noDeviceDetectedStatusText: "<?php _e('No devices found'); ?>",
+				singleDeviceDetectedStatusText: "<?php _e('Found'); ?>: ",
+				foundDevice: "<?php _e('Found'); ?>: #{deviceName}",
+				foundDevices: "<?php _e('#{deviceCount} devices found'); ?>",
 				showReadDataElementOnDeviceFound: true,
-				getActivityDirectoryHeaderIdLabel: function () { return 'Datum'; },
-				activityDirectoryHeaderDuration: 'Dauer',
-				activityDirectoryHeaderStatus: 'Status',
+				getActivityDirectoryHeaderIdLabel: function () { return '<?php _e('Date'); ?>'; },
+				activityDirectoryHeaderDuration: '<?php _e('Duration'); ?>',
+				activityDirectoryHeaderStatus: '<?php _e('Status'); ?>',
 				statusCellProcessingImg: 'upload',
 				detectNewActivities: true,
 				syncDataUrl: '<?php echo System::getFullDomain(); ?>call/ajax.activityMatcher.php',
@@ -83,12 +83,12 @@ $Frontend = new Frontend(true);
 						entry.isNew = false;
 						checkbox.checked = false;
 						statusCell.className = statusCell.className + ' upload-exists';
-						statusCell.innerHTML = 'vorhanden';
+						statusCell.innerHTML = '<?php _e('present'); ?>';
 					} else {
 						entry.isNew = true;
 						checkbox.checked = true;
 						statusCell.className = statusCell.className + ' upload-new';
-						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[ignorieren]</small>';
+						statusCell.innerHTML = 'neu<br><small onclick="ignoreID(\''+activityId+'\', this)">[<?php _e('ignore'); ?>]</small>';
 
 						// Rearrange: Put to the top
 						if (index != newIndex) {
@@ -102,7 +102,7 @@ $Frontend = new Frontend(true);
 					}
 				},
 				postActivityHandler: function(activityXml, display) {
-					$("readSelectedButton").value = "Importieren";
+					$("readSelectedButton").value = "<?php _e('Import'); ?>";
 					var currentName = display.activities[currentActivity].attributes.activityName.replace(/:/gi, "-");
 
 					uploadedActivities.push(currentName);
@@ -120,9 +120,9 @@ $Frontend = new Frontend(true);
 					//	window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
-					$("readSelectedButton").value = "Importieren";
+					$("readSelectedButton").value = "<?php _e('Import'); ?>";
 
-					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;">alle</a>';
+					$("selectAllHeader").innerHTML = '<a href="#" id="selectAllButton" style="cursor:pointer;"><?php _e('all'); ?></a>';
 
 					var checkboxes = $$("input[type=checkbox]");
 					var cbControl = $("selectAllButton");

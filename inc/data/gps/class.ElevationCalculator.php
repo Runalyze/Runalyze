@@ -82,14 +82,14 @@ class ElevationCalculator {
 	static public function nameOfCurrentAlgorithm() {
 		switch (self::$ALGORITHM) {
 			case self::$ALGORITHM_REUMANN_WITKAMM:
-				return 'Reumann-Witkamm-Algorithmus';
+				return __('Reumann-Witkamm-algorithm');
 			case self::$ALGORITHM_DOUGLAS_PEUCKER:
-				return 'Douglas-Peucker-Algorithmus';
+				return __('Douglas-Peucker-algorithm');
 			case self::$ALGORITHM_TRESHOLD:
-				return 'Schwellenwert-Methode';
+				return __('Treshold method');
 			case self::$ALGORITHM_NONE:
 			default:
-				return 'keine Gl&auml;ttung';
+				return __('no smoothing');
 		}
 	}
 

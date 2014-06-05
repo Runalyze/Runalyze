@@ -140,7 +140,7 @@ class TrainingObject extends DataObject {
 	 */
 	protected function insertToDatabase() {
 		if ($this->getTimeInSeconds() == 0)
-			Error::getInstance()->addError('Das Training wurde nicht eingef&uuml;gt, da keine Dauer angegeben war.');
+			Error::getInstance()->addError( __('The training has not been created. A time has to be set.') );
 		else
 			parent::insertToDatabase();
 	}

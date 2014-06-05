@@ -16,6 +16,5 @@ if (isset($_GET['key'])) {
 	$Plugin->displayConfigWindow();
 } else {
 	Error::getInstance()->addError('ID must be set as GET-variable', __FILE__, __LINE__);
-	echo('<em>Hier ist etwas schiefgelaufen ...</em>');
+	echo '<em>'.__('Something went wrong ...').'</em>';
 }
-?>

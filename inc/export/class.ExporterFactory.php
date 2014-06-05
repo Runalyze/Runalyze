@@ -32,7 +32,7 @@ class ExporterFactory {
 	 */
 	public function display() {
 		if (is_null($this->Exporter))
-			echo HTML::error('Der gew&auml;hlte Exporter konnte nicht gefunden werden.');
+			echo HTML::error( __('The chosen exporter could not be located.') );
 		else
 			$this->Exporter->display();
 	}

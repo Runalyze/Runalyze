@@ -1,5 +1,5 @@
 <p class="error">
-	Du bist nicht mehr eingeloggt.<br>
+	<?php _e('You are not logged in anymore.'); ?><br>
 	<br>
-	<a href="login.php" title="Runalyze: Login"><strong>&raquo; zum Login</strong></a>
+	<a href="login.php" title="Runalyze: Login"><strong>&raquo; <?php _e('Login'); ?></strong></a>
 </p>

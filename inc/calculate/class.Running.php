@@ -113,7 +113,7 @@ class Running {
 			return ($pb != '') ? $pb['s'] : 0;
 		if ($pb != '')
 			return Time::toString($pb['s']);
-		return '<em>keine</em>';
+		return '<em>'.__('none').'</em>';
 	}
 
 	/**

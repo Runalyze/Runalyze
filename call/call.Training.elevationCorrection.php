@@ -11,11 +11,11 @@ $Training = new TrainingObject( Request::sendId() );
 $Training->tryToCorrectElevation();
 
 if ($Training->elevationWasCorrected()) {
-	echo 'Die H&ouml;hendaten wurden korrigiert.';
+	echo __('Elevation data have been corrected.');
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
 	echo Ajax::wrapJS('if($("#ajax").is(":visible"))Runalyze.loadOverlay(\''.$Training->Linker()->editUrl().'\')');
 } else {
-	echo 'Es konnten keine H&ouml;hendaten empfangen werden.';
+	echo __('Elevation data could not be retrieved.');
 }

@@ -1,10 +1,8 @@
-@flot-border-color:				transparent; //#000;
-@flot-background-color:			#f6f6f6; //transparent; //#fff; //#60a920;
-@flot-background-image:			none; //url(../../img/dash.png);
+@flot-background-color:			#f6f6f6;
 @flot-width:					480px;
 @flot-height:					190px;
 
-@flot-label-color:				@font-color; //#fff;
+@flot-label-color:				@font-color;
 @flot-label-font-size:			10px;
 
 @flot-legend-color:				@font-color;
@@ -12,9 +10,9 @@
 
 @flot-title-height:				12px;
 @flot-title-font-size:			10px;
-@flot-title-background:			transparent; //rgba(0,0,0,.8);
-@flot-title-color:				#000; //#999;
-@flot-title-color-hover:		#000; //#fff;
+@flot-title-background:			transparent;
+@flot-title-color:				#000;
+@flot-title-color-hover:		#000;
 @flot-title-padding:			2px 1px 1px;
 @flot-title-margin:				2px 0 0 -1px;
 
@@ -24,23 +22,22 @@
 @flot-error-border:				#ccc;
 @flot-error-padding:			5px;
 
-@flot-annotation-color:			#fff; //#545454;
-@flot-annotation-background:	#000; //rgba(255,255,255,0.6);
+@flot-annotation-color:			#fff;
+@flot-annotation-background:	#000;
 @flot-annotation-font-size:		10px;
-@flot-annotation-padding:		1px 3px; //1px;
+@flot-annotation-padding:		1px 3px;
 @flot-annotation-margin:		2px 0 0 2px;
 
 @flot-tooltip-color:			#fff;
-@flot-tooltip-background:		#000; //rgba(255,255,255,0.8);
-@flot-tooltip-font-size:		10px; //.9em;
-@flot-tooltip-padding:			3px 8px; //2px;
-@flot-tooltip-border:			transparent; //#ccc;
+@flot-tooltip-background:		#000;
+@flot-tooltip-font-size:		10px;
+@flot-tooltip-padding:			3px 8px;
 
 @flot-settings-padding:			4px 1px 6px;
-@flot-settings-border:			transparent; //#ccc;
+@flot-settings-border:			transparent;
 @flot-settings-height:			14px;
 @flot-settings-border-radius:	2px;
-@flot-settings-background:		transparent; //#eee;
+@flot-settings-background:		transparent;
 
 
 
@@ -90,10 +87,9 @@
 .flot {
 	position: relative !important;
 	margin: 0 auto;
-	border: 1px solid @flot-border-color;
 	width: @flot-width;
 	height: @flot-height;
-	background: @flot-background-image repeat @flot-background-color;
+	background: @flot-background-color;
 
 	.show-only-fullscreen {
 		display: none;
@@ -210,7 +206,6 @@
 		font-size: @flot-tooltip-font-size;
 		background-color: @flot-tooltip-background;
 		color: @flot-tooltip-color;
-		//border: 1px solid @flot-tooltip-border;
 	}
 
 	.map-tooltip em {

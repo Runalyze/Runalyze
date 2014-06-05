@@ -141,7 +141,7 @@ class ShoeFactory {
 		$shoes = self::NamesAsArray($inUse);
 
 		if (empty($shoes))
-			$shoes[0] = 'Keine Schuhe vorhanden';
+			$shoes[0] = __('No shoes available');
 		elseif ($showUnknown)
 			$shoes = array(0 => '?') + $shoes;
 

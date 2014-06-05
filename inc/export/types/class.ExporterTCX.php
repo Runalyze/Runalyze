@@ -35,7 +35,7 @@ class ExporterTCX extends ExporterAbstractFile {
 	 */
 	protected function setFileContent() {
 		if (!$this->Training->GpsData()->hasPositionData()) {
-			$this->addError('Das Training enth&auml;lt keine GPS-Daten und kann daher nicht als *.tcx-Datei gespeichert werden.');
+			$this->addError( __('The training does not contain gps-data and cannot be saved as tcx-file.') );
 
 			return;
 		}

@@ -21,9 +21,11 @@
 
 <div id="headline">
 	<span class="tab singleTab">
-		&Ouml;ffentliche Trainingsansicht
-		<?php if (strlen($User['username']) > 1): ?>
-			von <strong><?php echo $User['username']; ?></strong>
-		<?php endif; ?>
+		<?php
+		if (strlen($User['username']) > 1)
+			printf( __('Public training view of <strong>%s</strong>'), $User['username']);
+		else
+			_e('Public training view');
+		?>
 	</span>
 </div>
