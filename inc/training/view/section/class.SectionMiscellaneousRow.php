@@ -9,47 +9,38 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
+class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	/**
-	 * Boxed values
-	 * @var BoxedValue[]
+	 * Right content: notes
+	 * @var string
 	 */
-	protected $BoxedValues = array();
+	protected $NotesContent = '';
 
 	/**
 	 * Set content
 	 */
 	protected function setContent() {
-		$this->setContentLeft();
-		$this->setContentRight();
-	}
+		$this->withShadow = true;
 
-	/**
-	 * Set content left
-	 */
-	protected function setContentLeft() {
 		$this->setBoxedValues();
-		$this->setBoxedValuesToLeftContent();
 	}
 
 	/**
 	 * Set content right
 	 */
-	protected function setContentRight() {
-		$this->ContentRight  = '<div class="panel-content">';
-		$this->fillRightContent();
-		$this->ContentRight .= '</div>';
-	}
+	protected function setRightContent() {
+		$this->fillNotesContent();
 
-	/**
-	 * Set boxed values to content
-	 */
-	protected function setBoxedValuesToLeftContent() {
-		$ValuesString = '';
-		foreach ($this->BoxedValues as &$Value)
-			$ValuesString .= $Value->getCode();
+		$this->addRightContent('notes', __('Additional notes'), $this->NotesContent);
 
-		$this->ContentLeft = BoxedValue::getWrappedValues($ValuesString);
+		if ($this->Training->hasArrayCadence())
+			$this->addRightContent('cadence', __('Cadence plot'), new TrainingPlotCadence($this->Training));
+
+		if ($this->Training->hasArrayPower())
+			$this->addRightContent('power', __('Power plot'), new TrainingPlotPower($this->Training));
+
+		if ($this->Training->hasArrayTemperature())
+			$this->addRightContent('temperature', __('Temperature plot'), new TrainingPlotTemperature($this->Training));
 	}
 
 	/**
@@ -57,6 +48,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
 	 */
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
+		$this->addCadenceAndPower();
 		$this->addWeather();
 		$this->addEquipment();
 		$this->addTrainingPartner();
@@ -78,6 +70,22 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
 		} else {
 			$Date->defineAsFloatingBlock('w100');
 			$this->BoxedValues[] = $Date;
+		}
+	}
+
+	/**
+	 * Add cadence and power
+	 */
+	protected function addCadenceAndPower() {
+		if ($this->Training->getCadence() > 0 || $this->Training->getPower() > 0) {
+			$Cadence = new BoxedValue(Helper::Unknown($this->Training->Cadence()->value(), '-'), $this->Training->Cadence()->unitAsString(), $this->Training->Cadence()->label());
+			$Cadence->defineAsFloatingBlock('w50');
+
+			$Power = new BoxedValue(Helper::Unknown($this->Training->getPower(), '-'), 'W', __('Power'));
+			$Power->defineAsFloatingBlock('w50');
+
+			$this->BoxedValues[] = $Cadence;
+			$this->BoxedValues[] = $Power;
 		}
 	}
 
@@ -129,11 +137,15 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
 	}
 
 	/**
-	 * Fill right content
+	 * Fill notes content
 	 */
-	protected function fillRightContent() {
+	protected function fillNotesContent() {
+		$this->NotesContent = '<div class="panel-content">';
+
 		$this->addNotes();
 		$this->addCreationAndModificationTime();
+
+		$this->NotesContent .= '</div>';
 	}
 
 	/**
@@ -142,7 +154,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
 	protected function addNotes() {
 		if (strlen($this->Training->getNotes()) > 0) {
 			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Training->getNotes();
-			$this->ContentRight .= HTML::fileBlock($Notes);
+			$this->NotesContent .= HTML::fileBlock($Notes);
 		}
 	}
 
@@ -165,7 +177,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowOnlyText {
 				$ModificationTime = '';
 			}
 
-			$this->ContentRight .= HTML::fileBlock($CreationTime.$ModificationTime);
+			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}
 	}
 }

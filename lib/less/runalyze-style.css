@@ -1367,6 +1367,7 @@ tr.space-line.zebra-corrector td {
   border-color: #eee;
 }
 .training-row-info-shadow {
+  z-index: 1;
   position: absolute;
   left: -301px;
   bottom: 0;
