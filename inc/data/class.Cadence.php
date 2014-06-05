@@ -36,6 +36,14 @@ class Cadence {
 	}
 
 	/**
+	 * Value
+	 * @return int
+	 */
+	final public function value() {
+		return $this->value;
+	}
+
+	/**
 	 * As string
 	 * @return string
 	 */

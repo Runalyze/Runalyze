@@ -9,14 +9,14 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionMiscellaneous extends TrainingViewSection {
+class SectionMiscellaneous extends TrainingViewSectionTabbedPlot {
 	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
 		$this->Header = __('Miscellaneous');
 
-		$this->appendRow( new SectionMiscellaneousRow($this->Training) );
+		$this->appendRowTabbedPlot( new SectionMiscellaneousRow($this->Training) );
 	}
 
 	/**
@@ -25,5 +25,13 @@ class SectionMiscellaneous extends TrainingViewSection {
 	 */
 	protected function hasRequiredData() {
 		return true;
+	}
+
+	/**
+	 * CSS-ID
+	 * @return string
+	 */
+	protected function cssId() {
+		return 'misc';
 	}
 }
