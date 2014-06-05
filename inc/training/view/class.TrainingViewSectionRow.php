@@ -73,7 +73,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Display info
 	 */
-	private function displayInfo() {
+	protected function displayInfo() {
 		echo '<div class="training-row-info">';
 
 		if (!empty($this->BoxedValues))
@@ -91,7 +91,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Display boxed values
 	 */
-	private function displayBoxedValues() {
+	protected function displayBoxedValues() {
 		$Code = '';
 
 		foreach ($this->BoxedValues as &$Value)
@@ -103,7 +103,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Display plot
 	 */
-	private function displayPlot() {
+	protected function displayPlot() {
 		echo '<div class="training-row-plot">';
 
 		if (!is_null($this->Plot)) {

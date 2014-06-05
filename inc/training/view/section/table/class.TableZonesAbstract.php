@@ -80,10 +80,10 @@ abstract class TableZonesAbstract {
 		if (empty($this->Data))
 			return;
 
-		$Code = '<table class="fullwidth zebra-style" style="white-space:nowrap;">';
+		$Code = '<table class="fullwidth bar-chart-table">';
 		$Code .= '<thead><tr>';
 		$Code .= '<th>'.__('Zone').'</th>';
-		$Code .= '<th>'.__('Percentage').'</th>';
+		$Code .= '<th></th>';
 		$Code .= '<th>'.__('Time').'</th>';
 		$Code .= '<th>'.__('Distance').'</th>';
 		if ($this->showAverage()) $Code .= '<th>'.$this->titleForAverage().'</th>';
@@ -105,11 +105,9 @@ abstract class TableZonesAbstract {
 		$Code = '';
 
 		foreach ($this->Data as $Info) {
-			$opacity = 0.5 + $Info['percentage']/200;
-
-			$Code .= '<tr class="r" style="opacity:'.$opacity.';">';
-			$Code .= '<td>'.$Info['zone'].'</td>';
-			$Code .= '<td>'.$Info['percentage'].'&nbsp;&#37;</td>';
+			$Code .= '<tr>';
+			$Code .= '<td class="bar-chart-label">'.$Info['zone'].'</td>';
+			$Code .= '<td class="bar-chart-value-cell"><span class="bar-chart-value" style="width:'.$Info['percentage'].'%;"></span> <span class="bar-chart-text">'.$Info['percentage'].' &#37;</span></td>';
 			$Code .= '<td>'.$Info['time'].'</td>';
 			$Code .= '<td>'.$Info['distance'].'</td>';
 			if ($this->showAverage()) $Code .= '<td>'.$Info['average'].'</td>';

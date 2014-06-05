@@ -1,0 +1,68 @@
+@bar-chart-row-height:		20px;
+@bar-chart-lable-width:		100px;
+
+.bar-chart {
+
+}
+
+.bar-chart-horizontal {
+	
+}
+
+.bar-chart-table {
+	font-size: @font-size;
+	width: 100%;
+}
+
+.bar-chart-table {
+	text-align: right;
+}
+
+.bar-chart-row {
+	position: relative;
+	height: @bar-chart-row-height;
+	padding-left: @bar-chart-lable-width;
+}
+
+.bar-chart-table .bar-chart-label,
+.bar-chart .bar-chart-label {
+	width: (@bar-chart-lable-width - 6px);
+	height: @bar-chart-row-height;
+	line-height: @bar-chart-row-height;
+	text-align: right;
+	border-right: 1px solid #000;
+	padding-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.bar-chart .bar-chart-label {
+	float: left;
+	margin-left: (-1*@bar-chart-lable-width);
+}
+
+.bar-chart-value {
+	display: inline-block;
+	position: relative;
+	top: (@bar-chart-row-height / 4);
+	height: (@bar-chart-row-height / 2);
+	background: @red-dark;
+}
+
+.bar-chart-value-cell {
+	width: 100%;
+	text-align: left;
+	padding-left: 0;
+	padding-right: 40px;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.bar-chart-value-cell .bar-chart-value {
+	top: 1px;
+}
+
+.bar-chart-value-cell .bar-chart-text {
+	line-height: @bar-chart-row-height;
+}
