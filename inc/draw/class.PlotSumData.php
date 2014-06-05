@@ -106,15 +106,15 @@ abstract class PlotSumData extends Plot {
 	private function getNavigationMenu() {
 		$Menus = array(
 			array(
-				'title' => 'Auswertung w&auml;hlen',
+				'title' => __('Choose analysis'),
 				'links'	=> $this->getMenuLinksForGrouping()
 			),
 			array(
-				'title' => 'Sportart w&auml;hlen',
+				'title' => __('Choose sport'),
 				'links'	=> $this->getMenuLinksForSports()
 			),
 			array(
-				'title' => 'Jahr w&auml;hlen',
+				'title' => __('Choose year'),
 				'links'	=> $this->getMenuLinksForYears()
 			)
 		);
@@ -143,11 +143,11 @@ abstract class PlotSumData extends Plot {
 		$Links = array();
 
 		if ($this->Sport->isRunning())
-			$Links[] = $this->link('Training &amp; Wettkampf', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+			$Links[] = $this->link( __('Training &amp; Competition'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 		else
-			$Links[] = $this->link('Gesamt', $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+			$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 
-		$Links[] = $this->link('Nach Trainingstyp', $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
+		$Links[] = $this->link( __('By type'), $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
 
 		return $Links;
 	}
@@ -158,7 +158,7 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function getMenuLinksForSports() {
 		$Links = array(
-			$this->link('Alle Sportarten', $this->Year, 0, 'sport', Request::param('group') == 'sport')
+			$this->link( __('All sports'), $this->Year, 0, 'sport', Request::param('group') == 'sport')
 		);
 
 		$SportGroup = Request::param('group') == 'sport' ? 'types' : Request::param('group');
@@ -272,7 +272,7 @@ abstract class PlotSumData extends Plot {
 
 		if ($possibleKM > 0 && $this->Sport->id() == CONF_RUNNINGSPORT) {
 			$this->addThreshold('y', $possibleKM);
-			$this->addAnnotation(0, $possibleKM, 'aktuelles Leistungslevel');
+			$this->addAnnotation(0, $possibleKM, __('Current level'));
 		}
 	}
 
@@ -284,7 +284,7 @@ abstract class PlotSumData extends Plot {
 			$this->loadData();
 			$this->setData();
 		} else {
-			$this->raiseError('F&uuml;r diesen Zeitraum liegen keine Daten vor.');
+			$this->raiseError( __('There are no data for this timerange.') );
 		}
 	}
 
@@ -457,10 +457,10 @@ abstract class PlotSumData extends Plot {
 		// TODO: currently, only ONE competition type is allowed (and used for running)
 		// if ($this->Sport->hasTypes())
 		if ($this->Sport->isRunning())
-			$this->Data[] = array('label' => 'Wettkampf', 'data' => $KilometersCompetition);
+			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
 		else
 			$this->hideLegend();
 
-		$this->Data[] = array('label' => 'Training', 'data' => $Kilometers, 'color' => '#E68617');
+		$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
 	}
 }

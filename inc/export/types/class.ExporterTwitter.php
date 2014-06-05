@@ -18,10 +18,7 @@ class ExporterTwitter extends ExporterAbstractSocialShare {
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
-		echo HTML::info('
-			Du wirst zur Seite von Twitter weitergeleitet.<br>
-			Dort kannst du selbst bestimmen, welcher Text angezeigt wird.
-		');
+		echo HTML::info( __('You will be forwared to Google+, where you can define which text shall be displayed.') );
 	}
 
 	/**
@@ -31,6 +28,6 @@ class ExporterTwitter extends ExporterAbstractSocialShare {
 	protected function getLink() {
 		$URL = 'https://twitter.com/share?url='.$this->Training->Linker()->publicUrl().'&text='.$this->getText().'&via=RunalyzeDE';
 
-		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/twitter.png);"><strong>Twittern!</strong></a>';
+		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/twitter.png);"><strong>'.__('Tweet!').'</strong></a>';
 	}
 }

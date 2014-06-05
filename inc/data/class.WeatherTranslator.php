@@ -19,17 +19,17 @@ class WeatherTranslator {
 			case 'Mostly Sunny':
 			case 'Sunny':
 			case 'Clear':
-				return Weather::conditionToId('sonnig');
+				return Weather::conditionToId('sunny');
 
 			case 'Partly Sunny':
 			case 'Partly Cloudy':
-				return Weather::conditionToId('heiter');
+				return Weather::conditionToId('fair');
 
 			case 'Overcast':
 			case 'Mostly Cloudy':
 			case 'Cloudy':
 			case 'Fog':
-				return Weather::conditionToId('bew&ouml;lkt');
+				return Weather::conditionToId('cloudy');
 
 			case 'Mist':
 			case 'Storm':
@@ -38,7 +38,7 @@ class WeatherTranslator {
 			case 'Scattered thunderstorms':
 			case 'Windy':
 			case 'Drizzle':
-				return Weather::conditionToId('wechselhaft');
+				return Weather::conditionToId('changeable');
 
 			case 'Rain':
 			case 'Light rain':
@@ -48,7 +48,7 @@ class WeatherTranslator {
 			case 'Chance of tstorm':
 			case 'Thunderstorm':
 			case 'Sleet':
-				return Weather::conditionToId('regnerisch');
+				return Weather::conditionToId('rainy');
 
 			case 'Haze':
 			case 'Flurries':
@@ -57,10 +57,10 @@ class WeatherTranslator {
 			case 'Light snow':
 			case 'Chance of snow':
 			case 'Scattered snow showers':
-				return Weather::conditionToId('Schnee');
+				return Weather::conditionToId('snow');
 
 			default:
-				return Weather::conditionToId('unbekannt');
+				return Weather::conditionToId('unknown');
 		}
 	}
 }

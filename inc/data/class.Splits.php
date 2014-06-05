@@ -134,7 +134,7 @@ class Splits {
 
 		foreach ($this->asArray as $split)
 			if ($restingLaps || $split['active'])
-				$strings[] = $split['km'].'&nbsp;km&nbsp;in&nbsp;'.$split['time'].(!$split['active'] ? '&nbsp;(Ruhe)' : '');
+				$strings[] = $split['km'].'&nbsp;km&nbsp;'.__('in').'&nbsp;'.$split['time'].(!$split['active'] ? '&nbsp;('.__('Resting').')' : '');
 
 		return implode(', ', $strings);
 	}
@@ -368,7 +368,7 @@ class Splits {
 	 * @codeCoverageIgnore
 	 */
 	public function getFieldset() {
-		$Fieldset = new FormularFieldset('Zwischenzeiten');
+		$Fieldset = new FormularFieldset( __('Laps') );
 		$Fieldset->addField( new TrainingInputSplits() );
 		$Fieldset->addCSSclass( TrainingFormular::$ONLY_DISTANCES_CLASS );
 

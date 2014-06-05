@@ -39,14 +39,14 @@ class ExporterListView {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo HTML::p('W&auml;hle ein Format aus:');
+		echo HTML::p( __('Choose a format:') );
 	}
 
 	/**
 	 * Throw error: empty list
 	 */
 	private function throwErrorForEmptyList() {
-		echo HTML::info('Es konnten keine Exporter gefunden werden.');
+		echo HTML::info( __('No exporter could be located.') );
 	}
 
 	/**

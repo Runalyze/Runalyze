@@ -17,16 +17,10 @@ class TrainingView {
 	protected $Training = null;
 
 	/**
-	 * Plot list
-	 * @var TrainingPlotsList
+	 * Sections
+	 * @var TrainingViewSection[]
 	 */
-	protected $PlotList = null;
-
-	/**
-	 * Checkable labels
-	 * @var array
-	 */
-	protected $CheckableLabels = array();
+	protected $Sections = array();
 
 	/**
 	 * Toolbar links
@@ -41,17 +35,9 @@ class TrainingView {
 	public function __construct(TrainingObject &$Training) {
 		$this->Training = $Training;
 
-		//$this->initPlotList();
 		$this->initToolbarLinks();
-		//$this->initCheckableLabels();
+		$this->initSections();
 	}
-
-//	/**
-//	 * Init plot list
-//	 */
-//	private function initPlotList() {
-//		$this->PlotList = new TrainingPlotsList($this->Training);
-//	}
 
 	/**
 	 * Init toolbar links
@@ -68,90 +54,76 @@ class TrainingView {
 		$this->ToolbarLinks[] = $this->Training->DataView()->getDateLinkForMenu();
 	}
 
-//	/**
-//	 * Init checkable labels
-//	 */
-//	private function initCheckableLabels() {
-//		$this->CheckableLabels[] = array(
-//			'key'		=> 'details',
-//			'label'		=> 'Details',
-//			'show'		=> true,
-//			'visible'	=> CONF_TRAINING_SHOW_DETAILS
-//		);
-//		$this->CheckableLabels[] = array(
-//			'key'		=> 'zones',
-//			'label'		=> 'Zonen',
-//			'show'		=> ($this->Training->hasArrayPace()),
-//			'visible'	=> CONF_TRAINING_SHOW_ZONES
-//		);
-//		$this->CheckableLabels[] = array(
-//			'key'		=> 'rounds',
-//			'label'		=> 'Rundenzeiten',
-//			'show'		=> ($this->Training->hasArrayPace()),
-//			'visible'	=> CONF_TRAINING_SHOW_ROUNDS
-//		);
-//		$this->CheckableLabels[] = array(
-//			'key'		=> 'graphics',
-//			'label'		=> 'Karte &amp; Diagramme',
-//			'show'		=> (!$this->PlotList->isEmpty() || $this->Training->hasPositionData()),
-//			'visible'	=> CONF_TRAINING_SHOW_GRAPHICS
-//		);
-//	}
+	/**
+	 * Init sections
+	 */
+	protected function initSections() {
+		$this->Sections[] = new SectionOverview($this->Training);
+		$this->Sections[] = new SectionLaps($this->Training);
+		$this->Sections[] = new SectionHeartrate($this->Training);
+		$this->Sections[] = new SectionPace($this->Training);
+		$this->Sections[] = new SectionRoute($this->Training);
+		$this->Sections[] = new SectionMiscellaneous($this->Training);
+	}
 
 	/**
 	 * Display
 	 */
 	public function display() {
-		include FRONTEND_PATH.'training/tpl/tpl.Training.php';
+		$this->displayHeader();
+		$this->displaySections();
 	}
 
-//	/**
-//	 * Display route on GoogleMaps
-//	 */
-//	public function displayRoute() {
-//		$Map = new LeafletMap('map');
-//		$Map->addRoute( new LeafletTrainingRoute('route-'.$this->Training->id(), $this->Training->GpsData()) );
-//		$Map->display();
-//	}
-//
-//	/**
-//	 * Display training table
-//	 */
-//	public function displayTrainingTable() {
-//		$ViewTable = new TrainingViewTable($this->Training);
-//		$ViewTable->display();
-//	}
-//
-//	/**
-//	 * Display training data
-//	 */
-//	public function displayTrainingData() {
-//		$this->displayRounds();
-//		$this->displayPaceZones();
-//		$this->displayPulseZones();
-//	}
-//
-//	/**
-//	 * Display pace-zones
-//	 */
-//	public function displayPaceZones() {
-//		$Zones = new ZonesPace($this->Training);
-//		$Zones->display();
-//	}
-//
-//	/**
-//	 * Display pace-zones
-//	 */
-//	public function displayPulseZones() {
-//		$Zones = new ZonesHeartrate($this->Training);
-//		$Zones->display();
-//	}
-//
-//	/**
-//	 * Display surrounding container for rounds-data
-//	 */
-//	protected function displayRounds() {
-//		$RoundsView = new RoundsView($this->Training);
-//		$RoundsView->display();
-//	}
+	/**
+	 * Display header
+	 */
+	protected function displayHeader() {
+		echo '<div class="panel-heading">';
+
+		if (!Request::isOnSharedPage())
+			$this->displayHeaderMenu();
+
+		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';
+
+		if (!Request::isOnSharedPage())
+			$this->displayReloadLink();
+
+		echo '</div>';
+	}
+
+	/**
+	 * Display header menu
+	 */
+	protected function displayHeaderMenu() {
+		echo '<div class="panel-menu"><ul>';
+
+		foreach ($this->ToolbarLinks as $Link)
+			echo '<li>'.$Link.'</li>';
+
+		echo '</ul></div>';
+	}
+
+	/**
+	 * Display reload link
+	 */
+	protected function displayReloadLink() {
+		echo '<div class="hover-icons"><span class="link" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span></div>';
+	}
+
+	/**
+	 * Display sections
+	 */
+	protected function displaySections() {
+		foreach ($this->Sections as &$Section)
+			$Section->display();
+
+		$this->initPlots();
+	}
+
+	/**
+	 * Init plots
+	 */
+	protected function initPlots() {
+		echo Ajax::wrapJSforDocumentReady( 'RunalyzePlot.resizeTrainingCharts();' );
+	}
 }

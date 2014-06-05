@@ -11,17 +11,10 @@
  */
 class TrainingViewIFrame extends TrainingView {
 	/**
-	 * Display
+	 * Init sections
 	 */
-	public function display() {
-		include FRONTEND_PATH.'training/tpl/tpl.TrainingIframe.php';
-	}
-
-	/**
-	 * Display training table
-	 */
-	public function displayTrainingTable() {
-		$ViewTable = new TrainingViewIFrameTable($this->Training);
-		$ViewTable->display();
+	protected function initSections() {
+		$this->Sections[] = new SectionOverview($this->Training);
+		$this->Sections[] = new SectionRouteOnlyMap($this->Training);
 	}
 }

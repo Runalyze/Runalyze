@@ -180,7 +180,7 @@ class Weather {
 	 * @return string
 	 */
 	public function fullString() {
-		return $this->icon().' '.$this->name().' bei '.$this->temperatureString();
+		return $this->icon().' '.$this->name().' '.__('at').' '.$this->temperatureString();
 	}
 
 	/**

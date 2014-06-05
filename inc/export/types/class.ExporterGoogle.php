@@ -15,7 +15,7 @@ class ExporterGoogle extends ExporterAbstractSocialShare {
 	 */
 	public function display() {
 		if (!$this->Training->isPublic()) {
-			echo HTML::error('Dieses Training ist privat. Es k&ouml;nnen nur &ouml;ffentliche Trainings auf Google+ geteilt werden.');
+			echo HTML::error( __('This training is private and can\'t be shared.') );
 			return;
 		}
 
@@ -23,10 +23,7 @@ class ExporterGoogle extends ExporterAbstractSocialShare {
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
-		echo HTML::info('
-			Du wirst zur Seite von Google weitergeleitet.<br>
-			Dort kannst du selbst bestimmen, welcher Text angezeigt wird.
-		');
+		echo HTML::info( __('You will be forwared to Google+, where you can define which text shall be displayed.') );
 
 		$this->throwLinkErrorForLocalhost();
 	}

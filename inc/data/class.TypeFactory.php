@@ -112,7 +112,7 @@ class TypeFactory {
 		$types = self::NamesAsArray($abbr);
 
 		if (empty($types)) 
-			$types[0] = 'Keine Typen vorhanden';
+			$types[0] = __('No types available');
 		elseif ($showUnknown)
 			$types = array(0 => '?') + $types;
 

@@ -24,7 +24,7 @@ if ($_GET['type'] == 'week') {
 	$Plot = new PlotMonthSumData();
 	$Plot->display();
 } else {
-	echo HTML::error('Wochen- oder Monatsdaten? Es ist kein korrekter <em>type</em> f&uuml;r dieses Diagramm angegeben.');
+	echo HTML::error( __('There was a problem.') );
 }
 
 echo '</div>';

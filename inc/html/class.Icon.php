@@ -27,6 +27,8 @@ class Icon {
 	static public $CLOCK            = '<i class="fa fa-fw fa-clock-o"></i>';
 	static public $CLOCK_ORANGE     = '<i class="fa fa-fw fa-clock-o"></i>';
 	static public $CLOCK_GREY       = '<i class="fa fa-fw fa-clock-o unimportant"></i>';
+	static public $HEART            = '<i class="fa fa-fw fa-heart"></i>';
+	static public $MAP              = '<i class="fa fa-fw fa-location-arrow"></i>';
 	static public $DOWNLOAD         = '<i class="fa fa-fw fa-external-link"></i>';
 	static public $DOWN             = '<i class="fa fa-fw fa-arrow-down"></i>';
 	static public $UP               = '<i class="fa fa-fw fa-arrow-up"></i>';

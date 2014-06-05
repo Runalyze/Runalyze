@@ -1,4 +1,4 @@
-/* splits, pace, pulse, elevation, map */
+/* see SportFactory::getIconOptions() */
 .colored-light {
   background: #eee;
 }
@@ -1784,110 +1784,6 @@ tr.space-line.zebra-corrector td {
 .vdot-ignore {
   opacity: .25;
 }
-[class^="toggle-icon-"],
-[class*=" toggle-icon-"] {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  vertical-align: text-top;
-  background-image: url(../../img/sprite-toggle.png);
-  background-position: 0 0;
-}
-label:active [class^="toggle-icon-"] {
-  position: relative;
-  top: 1px;
-}
-/* splits, pace, pulse, elevation, map */
-.toggle-icon-splits {
-  background-position: 0 0;
-}
-label:hover .toggle-icon-splits {
-  background-position: 0 -16px;
-}
-.toggle-icon-splits.checked {
-  background-position: 0 -32px;
-}
-.toggle-icon-pace {
-  background-position: -16px 0;
-}
-label:hover .toggle-icon-pace {
-  background-position: -16px -16px;
-}
-.toggle-icon-pace.checked {
-  background-position: -16px -32px;
-}
-.toggle-icon-pulse {
-  background-position: -32px 0;
-}
-label:hover .toggle-icon-pulse {
-  background-position: -32px -16px;
-}
-.toggle-icon-pulse.checked {
-  background-position: -32px -32px;
-}
-.toggle-icon-elevation {
-  background-position: -48px 0;
-}
-label:hover .toggle-icon-elevation {
-  background-position: -48px -16px;
-}
-.toggle-icon-elevation.checked {
-  background-position: -48px -32px;
-}
-.toggle-icon-map {
-  background-position: -64px 0;
-}
-label:hover .toggle-icon-map {
-  background-position: -64px -16px;
-}
-.toggle-icon-map.checked {
-  background-position: -64px -32px;
-}
-.toggle-icon-pacepulse {
-  background-position: -80px 0;
-}
-label:hover .toggle-icon-pacepulse {
-  background-position: -80px -16px;
-}
-.toggle-icon-pacepulse.checked {
-  background-position: -80px -32px;
-}
-.toggle-icon-collection {
-  background-position: -96px 0;
-}
-label:hover .toggle-icon-collection {
-  background-position: -96px -16px;
-}
-.toggle-icon-collection.checked {
-  background-position: -96px -32px;
-}
-.toggle-icon-cadence {
-  background-position: -112px 0;
-}
-label:hover .toggle-icon-cadence {
-  background-position: -112px -16px;
-}
-.toggle-icon-cadence.checked {
-  background-position: -112px -32px;
-}
-.toggle-icon-power {
-  background-position: -128px 0;
-}
-label:hover .toggle-icon-power {
-  background-position: -128px -16px;
-}
-.toggle-icon-power.checked {
-  background-position: -128px -32px;
-}
-.toggle-icon-temperature {
-  background-position: -144px 0;
-}
-label:hover .toggle-icon-temperature {
-  background-position: -144px -16px;
-}
-.toggle-icon-temperature.checked {
-  background-position: -144px -32px;
-}
 .checkbox-icon:before {
   content: "\f096";
 }
@@ -2209,10 +2105,9 @@ label:active .checkbox-icon {
 .flot {
   position: relative !important;
   margin: 0 auto;
-  border: 1px solid transparent;
   width: 480px;
   height: 190px;
-  background: none repeat #f6f6f6;
+  background: #f6f6f6;
 }
 .flot .show-only-fullscreen {
   display: none;

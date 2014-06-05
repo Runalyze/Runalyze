@@ -90,7 +90,7 @@ class TrainingLinker {
 		if ($this->Object->hasComment())
 			return $this->link($this->Object->getComment());
 
-		return $this->link('<em>unbekannt</em>');
+		return $this->link('<em>'.__('unknown').'</em>');
 	}
 
 	/**

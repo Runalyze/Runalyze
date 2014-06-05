@@ -18,7 +18,7 @@ if (isset($_GET['get']) && $_GET['get'] == 'true') {
 
 if (empty($_POST) || Request::param('get') == 'true') {
 	echo '<div class="panel-heading">';
-	echo '<h1>Trainings suchen</h1>';
+	echo '<h1>'.__('Search trainings').'</h1>';
 	echo '</div>';
 
 	$Formular = new SearchFormular();

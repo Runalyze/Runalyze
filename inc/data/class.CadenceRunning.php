@@ -24,7 +24,7 @@ class CadenceRunning extends Cadence {
 	 * @return string
 	 */
 	public function label() {
-		return 'Schrittfrequenz';
+		return __('Cadence');
 	}
 
 	/**
@@ -40,7 +40,7 @@ class CadenceRunning extends Cadence {
 	 * @return string
 	 */
 	protected function unitExplanation() {
-		return 'steps per minute = Schritte pro Minute';
+		return __('spm = steps per minute');
 	}
 
 	/**

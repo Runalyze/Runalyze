@@ -22,11 +22,11 @@ abstract class ExporterAbstractSocialShare extends ExporterAbstract {
 	 * Get text for sharing 
 	 */
 	final protected function getText() {
-		$Text  = 'Ich habe Sport gemacht: ';
+		$Text  = __('I did sport: ');
 
 		if ($this->Training->hasDistance()) {
 			$Text .= $this->Training->DataView()->getDistanceString().' ';
-			$Text .= $this->Training->DataView()->getTitle().' in ';
+			$Text .= $this->Training->DataView()->getTitle().__(' in ');
 			$Text .= $this->Training->DataView()->getTimeString().' ';
 			$Text .= '('.$this->Training->DataView()->getSpeedString().')';
 		} else {
@@ -46,10 +46,9 @@ abstract class ExporterAbstractSocialShare extends ExporterAbstract {
 	 */
 	final protected function throwLinkErrorForLocalhost() {
 		if (System::isAtLocalhost())
-			echo HTML::error('
-				Runalyze l&auml;uft auf einem lokalen Server.
-				Eine Verlinkung in sozialen Netzwerken macht eigentlich keinen Sinn.
-				Niemand wird den Link aufrufen k&ouml;nnen.
-			');
+			echo HTML::error(
+					__('Runalyze is running on a local server.').' '.
+					__('Linking your training in a social network does not make sense - nobody will be able to see your training.')
+			);
 	}
 }

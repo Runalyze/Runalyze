@@ -24,10 +24,12 @@
 
 <div id="headline">
 	<span class="tab">
-		&Ouml;ffentliche Trainingsansicht
-		<?php if (strlen($User['username']) > 1): ?>
-			von <strong><?php echo $User['username']; ?></strong>
-		<?php endif; ?>
+		<?php
+		if (strlen($User['username']) > 1)
+			printf( __('Public training view of <strong>%s</strong>'), $User['username']);
+		else
+			_e('Public training view');
+		?>
 	</span>
 
 	<a class="tab right b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>

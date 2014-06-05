@@ -35,7 +35,7 @@ class ExporterGPX extends ExporterAbstractFile {
 	 */
 	protected function setFileContent() {
 		if (!$this->Training->GpsData()->hasPositionData()) {
-			$this->addError('Das Training enth&auml;lt keine GPS-Daten und kann daher nicht als *.gpx-Datei gespeichert werden.');
+			$this->addError( __('The training does not contain gps-data and cannot be saved as gpx-file.') );
 
 			return;
 		}

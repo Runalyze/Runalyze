@@ -142,7 +142,7 @@ class FormularValueParser {
 	 */
 	static protected function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
-			return 'Das Feld darf nicht leer sein.';
+			return __('The field must not be empty.');
 
 		return true;
 	}
@@ -166,12 +166,12 @@ class FormularValueParser {
 	 */
 	static protected function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
-			return 'Es muss eine Zahl angegeben sein.';
+			return __('You have to enter a number.');
 
 		$_POST[$key] = (int)$_POST[$key];
 
 		if (!self::precisionIsOkay($_POST[$key], $options))
-			return 'Der eingegebene Wert ist zu gro&szlig;.';
+			return __('The value is too large.');
 
 		return true;
 	}
@@ -191,7 +191,7 @@ class FormularValueParser {
 		$_POST[$key] = (float)$_POST[$key];
 
 		if (!self::precisionIsOkay($_POST[$key], $options))
-			return 'Der eingegebene Wert ist zu gro&szlig;.';
+			return __('The value is too large.');
 
 		return true;
 	}
@@ -229,7 +229,7 @@ class FormularValueParser {
 			$_POST[$key] = mktime(0, 0, 0, $dateParts[1], $dateParts[0], date('Y'));
 		} else {
 			//$_POST[$key] = time();
-			return 'Das Datum konnte nicht gelesen werden.';
+			return __('The date could not be parsed.');
 		}
 
 		return true;
@@ -262,7 +262,7 @@ class FormularValueParser {
 		}
 
 		if ($numParts == 1 || $numParts > 3 || $_POST[$key] > DAY_IN_S)
-			return 'Die Uhrzeit konnte nicht gelesen werden.';
+			return __('The time could not be read.');
 
 		return true;
 	}
@@ -294,7 +294,7 @@ class FormularValueParser {
 			$_POST[$key] += $ms[1]/100;
 
 		if ($_POST[$key] == 0 && (isset($options['required']) || isset($options['notempty'])))
-			return 'Es muss eine Zeit angegeben sein.';
+			return __('You have to enter a time.');
 
 		return true;
 	}

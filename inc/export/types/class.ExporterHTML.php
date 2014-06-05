@@ -16,19 +16,19 @@ class ExporterHTML extends ExporterAbstract {
 	public function display() {
 		$Code = str_replace(array("\r", "\n", "\t"), array("", "", ""), $this->getHTMLCode());
 
-		$CodeField = new FormularTextarea('code', 'Code', $Code);
+		$CodeField = new FormularTextarea('code', __('Code'), $Code);
 		$CodeField->addCSSclass('fullwidth');
 		$CodeField->addAttribute('rows', 8);
 
-		$FieldsetCode = new FormularFieldset('HTML-Code');
+		$FieldsetCode = new FormularFieldset( __('HTML-Code') );
 		$FieldsetCode->addField( $CodeField );
-		$FieldsetCode->addInfo('F&uuml;ge diesen HTML-Code in deinem Blog ein.');
+		$FieldsetCode->addInfo( __('Add this code to your blog/website.') );
 
-		$FieldsetPreview = new FormularFieldset('Vorschau');
+		$FieldsetPreview = new FormularFieldset( __('Preview') );
 		$FieldsetPreview->addBlock($Code);
 
 		if (!$this->Training->isPublic())
-			$FieldsetPreview->addWarning('Da das Training privat ist, enth&auml;lt die HTML-Ansicht keinen Link zum Training.');
+			$FieldsetPreview->addWarning( __('Your training is private: There is no link included.') );
 
 		$Formular = new Formular();
 		$Formular->addFieldset($FieldsetCode);
@@ -65,13 +65,13 @@ class ExporterHTML extends ExporterAbstract {
 
 		return '<div class="runalyze-emb">
 	<a href="http://www.runalyze.de/" class="runalyze-emb-runalyze">runalyze.de</a>
-	<strong>'.$Title.'</strong> <small>am '.$Date.'</small><br>
+	<strong>'.$Title.'</strong> <small>'.$Date.'</small><br>
 	<div class="runalyze-emb-infos">
 		'.$Spans.'
 	</div>
 	'.$UrlLink.'
 	<div class="runalyze-clear"></div>
 </div>
-<script src="'.(Request::isHttps() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
+<script src="'.(!System::isAtLocalhost() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
 	}
 }

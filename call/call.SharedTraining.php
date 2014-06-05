@@ -9,7 +9,7 @@ require '../inc/class.FrontendShared.php';
 $Frontend = new FrontendShared();
 
 if (FrontendShared::$IS_IFRAME)
-	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0;padding:1%;">';
+	echo '<div id="statistics-inner" class="panel" style="width:97%;margin:0 auto;">';
 elseif (!Request::isAjax())
 	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">';
 else

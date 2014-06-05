@@ -22,7 +22,7 @@
 
 <div id="headline">
 	<a class="tab logo" href="http://www.runalyze.de/" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
-	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="<?php __('Logout'); ?>"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a><?php endif; ?>
+	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="<?php _e('Logout'); ?>"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a><?php endif; ?>
 
 	<span class="left b">
 		<?php echo Ajax::window('<a class="tab" href="'.ConfigTabs::$CONFIG_URL.'"><i class="fa fa-fw fa-lg fa-cog"></i>'.NBSP.__('Configuration').'</a>'); ?>

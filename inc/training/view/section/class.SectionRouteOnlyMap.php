@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::SectionRoute
+ * This file contains class::SectionRouteOnlyMap
  * @package Runalyze\DataObjects\Training\View\Section
  */
 /**
@@ -9,14 +9,13 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionRoute extends TrainingViewSection {
+class SectionRouteOnlyMap extends SectionRoute {
 	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
-		$this->Header = __('Course and elevation data');
+		$this->Header = __('Course');
 
-		$this->appendRow( new SectionRouteRowElevation($this->Training) );
 		$this->appendRow( new SectionRouteRowMap($this->Training) );
 	}
 
@@ -25,6 +24,6 @@ class SectionRoute extends TrainingViewSection {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return $this->Training->hasArrayAltitude() || $this->Training->hasPositionData() || strlen($this->Training->getRoute()) > 0;
+		return $this->Training->hasPositionData();
 	}
 }

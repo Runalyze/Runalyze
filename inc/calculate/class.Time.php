@@ -10,30 +10,6 @@
  */
 class Time {
 	/**
-	 * Strings for months
-	 * @var array
-	 */
-	static private $MONTHS   = array('Januar', 'Februar', 'M&auml;rz', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember');
-
-	/**
-	 * Short strings for months
-	 * @var array
-	 */
-	static private $MONTHS_S = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
-
-	/**
-	 * Strings for weekdays
-	 * @var array
-	 */
-	static private $WEEKDAYS   = array('Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag');
-
-	/**
-	 * Short strings for weekdays
-	 * @var array
-	 */
-	static private $WEEKDAYS_S = array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
-
-	/**
 	 * Display the time as a formatted string
 	 * @param int $time_in_s
 	 * @param bool $show_days	[optional] Show days (default) or count hours > 24, default: true
@@ -172,10 +148,16 @@ class Time {
 	 * @param bool $short   short version, default: false
 	 */
 	static public function Weekday($w, $short = false) {
-		if ($short)
-			return self::$WEEKDAYS_S[$w%7];
-
-		return self::$WEEKDAYS[$w%7];
+		switch ($w%7) {
+			case 0: return $short ? __('Sun') : __('Sunday');
+			case 1: return $short ? __('Mon') : __('Monday');
+			case 2: return $short ? __('Tue') : __('Tuesday');
+			case 3: return $short ? __('Wed') : __('Wednesday');
+			case 4: return $short ? __('Thu') : __('Thursday');
+			case 5: return $short ? __('Fri') : __('Friday');
+			case 6:
+			default: return $short ? __('Sat') : __('Saturday');
+		}
 	}
 
 	/**
@@ -184,10 +166,21 @@ class Time {
 	 * @param bool $short   short version, default: false
 	 */
 	static public function Month($m, $short = false) {
-		if ($short)
-			return self::$MONTHS_S[$m-1];
-
-		return self::$MONTHS[$m-1];
+		switch ($m) {
+			case 1: return $short ? __('Jan') : __('January');
+			case 2: return $short ? __('Feb') : __('February');
+			case 3: return $short ? __('Mar') : __('March');
+			case 4: return $short ? __('Apr') : __('April');
+			case 5: return $short ? __('May') : __('May');
+			case 6: return $short ? __('Jun') : __('June');
+			case 7: return $short ? __('Jul') : __('July');
+			case 8: return $short ? __('Aug') : __('August');
+			case 9: return $short ? __('Sep') : __('September');
+			case 10: return $short ? __('Oct') : __('October');
+			case 11: return $short ? __('Nov') : __('November');
+			case 12:
+			default: return $short ? __('Dec') : __('December');
+		}
 	}
 
 	/**

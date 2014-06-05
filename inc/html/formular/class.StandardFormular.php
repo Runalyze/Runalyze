@@ -12,12 +12,6 @@
  */
 class StandardFormular extends Formular {
 	/**
-	 * Array with submit strings for modes from enum
-	 * @var array 
-	 */
-	static public $SUBMIT_STRINGS = array('Bearbeiten', 'Eintragen');
-
-	/**
 	 * Enum: Submit mode - editing
 	 * @var int 
 	 */
@@ -148,7 +142,15 @@ class StandardFormular extends Formular {
 	 * Additional preparation 
 	 */
 	protected function prepareForDisplayInSublcass() {
-		$this->addSubmitButton( self::$SUBMIT_STRINGS[$this->submitMode] );
+		$String = __('Submit');
+
+		if ($this->submitMode == self::$SUBMIT_MODE_CREATE)
+			$String = __('Create');
+
+		if ($this->submitMode == self::$SUBMIT_MODE_EDIT)
+			$String = __('Edit');
+
+		$this->addSubmitButton( $String );
 	}
 
 	/**

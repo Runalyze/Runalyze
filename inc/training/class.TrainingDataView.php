@@ -499,7 +499,7 @@ class TrainingDataView {
 	 */
 	public function getPulseIcon() {
 		if ($this->Object->getPulseAvg() > 0)
-			return $this->getCheckedToggleIcon('pulse', 'Pulsdaten vorhanden');
+			return Ajax::tooltip(Icon::$HEART, __('Heartrate data available'));
 
 		return '';
 	}
@@ -510,7 +510,7 @@ class TrainingDataView {
 	 */
 	public function getSplitsIcon() {
 		if (!$this->Object->Splits()->areEmpty())
-			return $this->getCheckedToggleIcon('splits', 'Zwischenzeiten vorhanden');
+			return Ajax::tooltip(Icon::$CLOCK, __('Laps available'));
 
 		return '';
 	}
@@ -521,18 +521,8 @@ class TrainingDataView {
 	 */
 	public function getMapIcon() {
 		if ($this->Object->hasPositionData())
-			return $this->getCheckedToggleIcon('map', 'Streckenverlauf vorhanden');
+			return Ajax::tooltip(Icon::$MAP, __('GPS course available'));
 
 		return '';
-	}
-
-	/**
-	 * Get checked toggle icon
-	 * @param string $key
-	 * @param string $tooltip
-	 * @return string
-	 */
-	private function getCheckedToggleIcon($key, $tooltip) {
-		return '<i class="toggle-icon-'.$key.' checked" '.Ajax::tooltip('', $tooltip, false, true).'></i>';
 	}
 }
