@@ -111,41 +111,6 @@ pre {
 	margin: 10px 0 0;
 	font-size: 16px;
 }
-
-.bar-chart {
-
-}
-
-.bar-chart-horizontal {
-	
-}
-
-.bar-chart-row {
-	position: relative;
-	height: 20px;
-	padding-left: 100px;
-}
-
-.bar-chart-label {
-	float: left;
-	margin-left: -100px;
-	width: 94px;
-	height: 20px;
-	line-height: 20px;
-	text-align: right;
-	border-right: 1px solid #000;
-	padding-right: 5px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-.bar-chart-value {
-	position: relative;
-	top: 5px;
-	height: 10px;
-	background: #b80000;
-}
 		</style>
 	</head>
 <body>
@@ -161,7 +126,7 @@ pre {
 				</div>
 				<div class="bar-chart-row">
 					<div class="bar-chart-label">bis 90 &#37;</div>
-					<div class="bar-chart-value" style="width:17%;"></div>
+					<div class="bar-chart-value" style="width:21%;"></div>
 				</div>
 				<div class="bar-chart-row">
 					<div class="bar-chart-label">bis 80 &#37;</div>
@@ -171,11 +136,48 @@ pre {
 					<div class="bar-chart-label">bis 70 &#37;</div>
 					<div class="bar-chart-value" style="width:30%;"></div>
 				</div>
-				<div class="bar-chart-row">
-					<div class="bar-chart-label">bis 60 &#37;</div>
-					<div class="bar-chart-value" style="width:4%;"></div>
-				</div>
 			</div>
+		</div>
+
+		<div class="showcase-inner">
+			<pre>&lt;table class=&quot;bar-chart bar-chart-horizontal&quot&gt;...&lt;/table&gt;</pre>
+
+			<table class="bar-chart-table">
+				<thead>
+					<tr>
+						<th>Zone</th>
+						<th></th>
+						<th>Zeit</th>
+						<th>Distanz</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="bar-chart-label">bis 100 &#37;</td>
+						<td class="bar-chart-value-cell"><span class="bar-chart-value" style="width:7%;"></span> <span class="bar-chart-text">7 &#37;</span></td>
+						<td>0:28</td>
+						<td>0,14 km</td>
+					</tr>
+					<tr>
+						<td class="bar-chart-label">bis 90 &#37;</td>
+						<td class="bar-chart-value-cell"><span class="bar-chart-value" style="width:14%;"></span> <span class="bar-chart-text">14 &#37;</span></td>
+						<td>1:12</td>
+						<td>0,31 km</td>
+					</tr>
+					<tr>
+						<td class="bar-chart-label">bis 80 &#37;</td>
+						<td class="bar-chart-value-cell"><span class="bar-chart-value" style="width:59%;"></span> <span class="bar-chart-text">59 &#37;</span></td>
+						<td>6:43</td>
+						<td>1,54 km</td>
+					</tr>
+					<tr>
+						<td class="bar-chart-label">bis 70 &#37;</td>
+						<td class="bar-chart-value-cell"><span class="bar-chart-value" style="width:20%;"></span> <span class="bar-chart-text">20 &#37;</span></td>
+						<td>2:58</td>
+						<td>0,47 km</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 

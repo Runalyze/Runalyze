@@ -890,6 +890,7 @@ tr.ERROR td {
 }
 .panel-heading.panel-inner-heading {
   border-top: 1px solid #eee;
+  background: #f6f6f6;
   border-bottom: none;
 }
 .panel-heading h1 {
@@ -905,8 +906,9 @@ tr.ERROR td {
   padding: 0;
   margin: 0;
   font-size: 11px;
-  font-weight: normal;
-  text-transform: uppercase;
+  font-weight: bold;
+  text-transform: none;
+  letter-spacing: 1px;
   border: none;
 }
 .panel-heading .hover-icons {
@@ -921,6 +923,24 @@ tr.ERROR td {
 }
 .panel-heading:hover .hover-icons {
   opacity: 1;
+}
+.panel-heading .change-menu {
+  float: right;
+}
+.panel-heading .change-menu a {
+  display: inline-block;
+  padding-left: 5px;
+  margin-left: 10px;
+  border-left: 2px solid #cccccc;
+  line-height: 1.2em;
+  color: #666;
+}
+.panel-heading .change-menu a:hover {
+  color: #000;
+}
+.panel-heading .change-menu a.triggered {
+  border-color: #666;
+  color: #333;
 }
 .icons-left {
   float: left;
@@ -1305,71 +1325,74 @@ tr.space-line.zebra-corrector td {
 .sortable thead th.headerSortUp {
   font-style: italic;
 }
-#training-display .databox.left {
-  width: 260px;
+#training-overview:after {
+  content: '';
 }
-#training-display .databox.left table {
-  width: 100%;
+.training-row {
+  position: relative;
+  margin-left: 300px;
+  border-left: 1px solid #eee;
 }
-#training-plots-and-map {
-  float: right;
-  border-width: 1px;
+.training-row.fullwidth {
+  margin-left: 0;
+  border-left: 0;
 }
-#training-plots-and-map .toolbar-nav {
-  display: none;
+.training-row:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
 }
-#training-plots-and-map .databox {
-  float: none;
+.training-row-info {
+  float: left;
+  width: 300px;
+  margin-left: -301px;
+  max-height: 200px;
+  overflow-y: scroll;
 }
-#training-plots-and-map .plot-container {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #cccccc;
-  overflow: hidden;
+.training-row-info .boxed-values {
+  margin-bottom: 0;
 }
-#training-plots {
-  padding: 6px 6px 0;
+.training-row-info .boxed-value-outer.w100 .boxed-value-container,
+.training-row-info .boxed-value-outer.w25:nth-child(4n) .boxed-value-container,
+.training-row-info .boxed-value-outer.w33:nth-child(3n) .boxed-value-container,
+.training-row-info .boxed-value-outer.w50:nth-child(2n) .boxed-value-container {
+  border-right: 0;
 }
-#training-plots .toolbar-line {
-  padding: 4px 4px 6px;
+.training-row-info table.fullwidth.zebra-style tbody tr:first-child {
+  border-top: 0;
 }
-#training-plots .toolbar-line label {
-  margin: 0 8px 0 0;
+.training-row-info .zebra-style tbody tr {
+  border-color: #eee;
 }
-#training-plots .toolbar-line.navigation-line label {
-  padding-right: 12px;
-  line-height: 16px;
-  font-size: 12px;
-  border-right: 1px solid #cccccc;
+.training-row-info-shadow {
+  position: absolute;
+  left: -301px;
+  bottom: 0;
+  height: 25px;
+  width: 300px;
+  box-shadow: inset 0 -20px 15px -10px #ffffff;
 }
-#training-plots .toolbar-line.navigation-line label:last-of-type {
+.training-row-plot .flot {
+  background: transparent;
+}
+.training-row-plot p {
+  clear: none;
+}
+#statistics-inner .training-row-info table.fullwidth {
   margin: 0;
-  padding: 0;
-  border-right: none;
 }
-#training-map .toolbar-box-content {
-  padding: 0 6px 6px;
+#statistics .training-row-plot table {
+  margin-top: 0;
 }
-#training-map.training-map-before .toolbar-box-content {
-  padding: 0;
+.training-row-plot .bar-chart-table tr td:first-child,
+.training-row-plot .bar-chart-table tr th:first-child {
+  padding-left: 10px;
 }
-#training-map .toolbar-line {
-  padding: 10px 10px 0;
-}
-#training-map .toolbar-line select {
-  margin: 0 20px 0 0;
-}
-#training-map.fullscreen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #f6f6f7;
-  z-index: 3000;
-}
-#training-map.fullscreen.toolbar-box-content {
-  padding: 6px 6px 6px;
+.training-row-plot .bar-chart-table tr td:last-child,
+.training-row-plot .bar-chart-table tr th:last-child {
+  padding-right: 10px;
 }
 .map {
   min-width: 300px;
@@ -1687,6 +1710,55 @@ tr.space-line.zebra-corrector td {
 .flexible-height .boxed-value {
   white-space: normal;
   height: auto;
+}
+.bar-chart-table {
+  font-size: 11px;
+  width: 100%;
+}
+.bar-chart-table {
+  text-align: right;
+}
+.bar-chart-row {
+  position: relative;
+  height: 20px;
+  padding-left: 100px;
+}
+.bar-chart-table .bar-chart-label,
+.bar-chart .bar-chart-label {
+  width: 94px;
+  height: 20px;
+  line-height: 20px;
+  text-align: right;
+  border-right: 1px solid #000;
+  padding-right: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bar-chart .bar-chart-label {
+  float: left;
+  margin-left: -100px;
+}
+.bar-chart-value {
+  display: inline-block;
+  position: relative;
+  top: 5px;
+  height: 10px;
+  background: #b80000;
+}
+.bar-chart-value-cell {
+  width: 100%;
+  text-align: left;
+  padding-left: 0;
+  padding-right: 40px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.bar-chart-value-cell .bar-chart-value {
+  top: 1px;
+}
+.bar-chart-value-cell .bar-chart-text {
+  line-height: 20px;
 }
 .fa-grey {
   color: #999999;

@@ -9,12 +9,20 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionPaceRow extends TrainingViewSectionRow {
+class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	/**
 	 * Set plot
 	 */
-	protected function setPlot() {
-		$this->Plot = new TrainingPlotPace($this->Training);
+	protected function setRightContent() {
+		$this->addRightContent('plot', __('Pace plot'), new TrainingPlotPace($this->Training));
+
+		if ($this->Training->hasArrayPace()) {
+			$Table = new TableZonesPace($this->Training);
+			$Code = $Table->getCode();
+			$Code .= HTML::info( __('You\'ll be soon able to configure your own zones.') );
+
+			$this->addRightContent('zones', __('Pace zones'), $Code);
+		}
 	}
 
 	/**
@@ -28,15 +36,6 @@ class SectionPaceRow extends TrainingViewSectionRow {
 			$Value->defineAsFloatingBlock('w50');
 
 		$this->addInfoLink();
-
-		// TODO: Remove this and use tabbed view as soon as zones have a plot
-		$this->withShadow = true;
-		if ($this->Training->hasArrayPace()) {
-			$this->Code .= '<p>&nbsp;</p>';
-
-			$Table = new TableZonesPace($this->Training);
-			$this->Code .= $Table->getCode();
-		}
 	}
 
 	/**

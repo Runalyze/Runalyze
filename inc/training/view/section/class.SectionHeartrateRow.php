@@ -9,12 +9,20 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionHeartrateRow extends TrainingViewSectionRow {
+class SectionHeartrateRow extends TrainingViewSectionRowTabbedPlot {
 	/**
 	 * Set plot
 	 */
-	protected function setPlot() {
-		$this->Plot = new TrainingPlotPulse($this->Training);
+	protected function setRightContent() {
+		$this->addRightContent('plot', __('Heartrate plot'), new TrainingPlotPulse($this->Training));
+
+		if ($this->Training->hasArrayHeartrate()) {
+			$Table = new TableZonesHeartrate($this->Training);
+			$Code = $Table->getCode();
+			$Code .= HTML::info( __('You\'ll be soon able to configure your own zones.') );
+
+			$this->addRightContent('zones', __('Heartrate zones'), $Code);
+		}
 	}
 
 	/**
@@ -27,15 +35,6 @@ class SectionHeartrateRow extends TrainingViewSectionRow {
 
 		foreach ($this->BoxedValues as &$Value)
 			$Value->defineAsFloatingBlock('w50');
-
-		// TODO: Remove this and use tabbed view as soon as zones have a plot
-		$this->withShadow = true;
-		if ($this->Training->hasArrayHeartrate()) {
-			$this->Code .= '<p>&nbsp;</p>';
-
-			$Table = new TableZonesHeartrate($this->Training);
-			$this->Code .= $Table->getCode();
-		}
 	}
 
 	/**

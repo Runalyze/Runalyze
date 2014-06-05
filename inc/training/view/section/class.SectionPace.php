@@ -9,18 +9,14 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionPace extends TrainingViewSectionTabbed {
+class SectionPace extends TrainingViewSectionTabbedPlot {
 	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
 		$this->Header = __('Pace data');
 
-		$this->appendRowTabbed( new SectionPaceRow($this->Training), __('Data with plot') );
-
-		// TODO: Use tabbed view as soon as a plot for zones is available
-		//if ($this->Training->hasArrayHeartrate())
-		//	$this->appendRowTabbed( new SectionPaceRowZones($this->Training), __('Pace zones') );
+		$this->appendRowTabbedPlot( new SectionPaceRow($this->Training) );
 	}
 
 	/**
