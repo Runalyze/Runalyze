@@ -13,7 +13,7 @@ if ($Plugin_conf['plot_timerange']['var'] > 0)
 else
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
 
-$Data     = DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll();
+$Data     = array_reverse( DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
 $Adiposes = array();
 $Water    = array();
 $Muscles  = array();
@@ -34,9 +34,9 @@ foreach ($Labels as $i => &$value)
 	if ($i != 0 && $i != count($Labels)-1)
 		$value = '';
 
-$Plot = new Plot("sportler_analyse", 320, 148);
+$Plot = new Plot("sportler_analyse", 320, 150);
 
-$Plot->Data[] = array('label' => __('Fat').'&nbsp;&nbsp;&nbsp;&nbsp;', 'color' => '#800', 'data' => $Adiposes);
+$Plot->Data[] = array('label' => __('Fat').'', 'color' => '#800', 'data' => $Adiposes);
 $Plot->Data[] = array('label' => __('Water'), 'color' => '#008', 'data' => $Water, 'yaxis' => 2);
 $Plot->Data[] = array('label' => __('Muscles'), 'color' => '#080', 'data' => $Muscles, 'yaxis' => 2);
 

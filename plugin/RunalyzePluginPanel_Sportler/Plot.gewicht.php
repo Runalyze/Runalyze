@@ -14,7 +14,7 @@ if ($Plugin_conf['plot_timerange']['var'] > 0)
 else
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
 
-$Data     = DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll();
+$Data     = array_reverse( DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
 $Weights  = array();
 $HRrests  = array();
 
@@ -33,7 +33,7 @@ foreach ($Labels as $i => &$value)
 	if ($i != 0 && $i != count($Labels)-1)
 		$value = '';
 
-$Plot = new Plot("sportler_weights", 320, 148);
+$Plot = new Plot("sportler_weights", 320, 150);
 if ($Plugin_conf['use_weight']['var'])
 	$Plot->Data[] = array('label' => __('Weight'), 'color' => '#008', 'data' => $Weights);
 if ($Plugin_conf['use_pulse']['var'])

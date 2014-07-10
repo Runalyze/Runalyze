@@ -1202,13 +1202,13 @@ table {
 }
 tr,
 td {
-  padding: 2px 3px;
+  padding: 3px 3px;
   vertical-align: top;
 }
 thead th,
 tbody.asThead th,
 thead tr {
-  padding: 2px 3px;
+  padding: 3px 3px;
   vertical-align: middle;
   border-color: #666666;
   border-style: none none solid none;
@@ -1247,7 +1247,7 @@ tr.space-line td {
   line-height: 1px;
   font-size: 0;
   padding: 0;
-  background: #cccccc;
+  background: #eeeeee;
   border: none !important;
 }
 tr.space-line.zebra-corrector,
@@ -1267,7 +1267,7 @@ tr.space-line.zebra-corrector td {
 }
 .zebra-style tbody tr {
   background-color: rgba(240, 240, 245, 0.4);
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid #eeeeee;
 }
 .zebra-style tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5) !important;
@@ -1293,7 +1293,7 @@ tr.space-line.zebra-corrector td {
   background-color: rgba(230, 230, 255, 0.7);
 }
 .sortable thead th {
-  border: 1px solid #cccccc;
+  border: 1px solid #e1e1e1;
   background-color: #efefef;
 }
 .sortable thead th.header {
@@ -1371,7 +1371,7 @@ tr.space-line.zebra-corrector td {
   position: absolute;
   left: -301px;
   bottom: 0;
-  height: 25px;
+  height: 20px;
   width: 300px;
   box-shadow: inset 0 -20px 15px -10px #ffffff;
 }
@@ -1399,15 +1399,6 @@ tr.space-line.zebra-corrector td {
   min-width: 300px;
   width: 100%;
   height: 300px;
-}
-.map .map-tooltip {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.8);
-  margin: 2px 0 0 2px;
-  padding: 1px;
-  font-size: 9px;
-  color: #545454;
-  border: 1px solid #cccccc;
 }
 @media (max-width: 1024px) {
   body#home,
@@ -2105,22 +2096,17 @@ label:active .checkbox-icon {
 }
 .flot {
   position: relative !important;
-  margin: 0 auto;
+  margin: 0 auto 10px;
   width: 480px;
   height: 190px;
-  background: #f6f6f6;
-}
-.flot .show-only-fullscreen {
-  display: none;
+  background: transparent;
 }
 .flot.fullscreen {
   position: fixed !important;
   top: 0;
   left: 0;
   z-index: 3000;
-}
-.flot.fullscreen .show-only-fullscreen {
-  display: inline;
+  background: transparent;
 }
 .flot .tickLabel,
 .flot .legend td,
@@ -2141,36 +2127,6 @@ label:active .checkbox-icon {
 .flot .legend td.legendLabel {
   padding-right: 10px;
 }
-.flot .flot-title {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background: transparent;
-  color: #000000;
-  height: 12px;
-  line-height: 12px;
-  font-size: 10px;
-  text-align: center;
-  width: 100%;
-  padding: 2px 1px 1px;
-  margin: 2px 0 0 -1px;
-}
-.flot .flot-title span {
-  margin: 0 5px;
-}
-.flot .flot-title .link:hover {
-  color: #000000;
-}
-.flot .flot-settings-link {
-  margin: 0;
-}
-.flot.has-settings-line {
-  margin-bottom: 27px;
-}
-.flot.has-settings-line .flot-settings-line {
-  display: block;
-}
 .flot .flot-error {
   position: absolute;
   top: 50%;
@@ -2179,7 +2135,7 @@ label:active .checkbox-icon {
   text-align: center;
 }
 .flot .flot-error span {
-  border: 1px solid #cccccc;
+  border: 1px solid #eeeeee;
   background-color: rgba(255, 255, 255, 0.4);
   margin: 0 auto;
   padding: 5px;
@@ -2195,45 +2151,57 @@ label:active .checkbox-icon {
   font-size: 10px;
   color: #ffffff;
 }
-.flot .map-tooltip {
-  z-index: 3010;
+.flot .tooltip {
   display: none;
   position: fixed;
-  text-align: left;
-  overflow: visible;
-  padding: 3px 8px;
   font-size: 10px;
-  background-color: #000000;
-  color: #ffffff;
+  text-align: left;
 }
-.flot .map-tooltip em {
+.flot .tooltip.in {
+  display: block;
+  opacity: 1;
+}
+.flot .tooltip span {
   font-weight: bold;
 }
-.flot .arrow {
+.flot:hover .flot-options {
+  display: block;
+}
+.flot-options {
   position: absolute;
-  cursor: pointer;
-}
-.flot div.arrow {
-  font-size: smaller;
-  color: #999;
-  background-color: #eee;
-  padding: 2px;
-}
-.flot-settings-line {
+  z-index: 100;
   display: none;
-  width: 100%;
-  padding: 4px 1px 6px !important;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 0 1px 1px 1px;
-  border-radius: 0 0 2px 2px;
-  background-color: transparent;
-  margin-left: -2px;
-  margin-top: 17px;
-  position: relative;
-  bottom: -100%;
-  line-height: 14px;
-  height: 14px;
+  top: 2px;
+  right: 2px;
+  background: #fff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+  border-radius: 4px;
+  height: 20px;
+  line-height: 20px;
+}
+.flot-option {
+  cursor: pointer;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  border-left: 1px solid #ccc;
+}
+.flot-option.option-toggled {
+  color: #ccc;
+}
+.flot-option:hover {
+  background-color: #f4f4f4;
+}
+.flot-option:first-child {
+  border-radius: 4px 0 0 4px;
+}
+.flot-option:last-child {
+  border-radius: 0 4px 4px 0;
+}
+.fullscreen .flot-option.fa-expand::before {
+  content: '\f066';
 }
 body > .datepicker {
   z-index: 100;

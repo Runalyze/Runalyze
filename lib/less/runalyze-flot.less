@@ -1,4 +1,4 @@
-@flot-background-color:			#f6f6f6;
+@flot-background-color:			transparent;
 @flot-width:					480px;
 @flot-height:					190px;
 
@@ -8,18 +8,10 @@
 @flot-legend-color:				@font-color;
 @flot-legend-padding:			0px 2px;
 
-@flot-title-height:				12px;
-@flot-title-font-size:			10px;
-@flot-title-background:			transparent;
-@flot-title-color:				#000;
-@flot-title-color-hover:		#000;
-@flot-title-padding:			2px 1px 1px;
-@flot-title-margin:				2px 0 0 -1px;
-
 @flot-error-color:				#545454;
 @flot-error-background:			rgba(255,255,255,0.4);
 @flot-error-font-size:			9px;
-@flot-error-border:				#ccc;
+@flot-error-border:				#eee;
 @flot-error-padding:			5px;
 
 @flot-annotation-color:			#fff;
@@ -28,22 +20,13 @@
 @flot-annotation-padding:		1px 3px;
 @flot-annotation-margin:		2px 0 0 2px;
 
-@flot-tooltip-color:			#fff;
-@flot-tooltip-background:		#000;
 @flot-tooltip-font-size:		10px;
-@flot-tooltip-padding:			3px 8px;
-
-@flot-settings-padding:			4px 1px 6px;
-@flot-settings-border:			transparent;
-@flot-settings-height:			14px;
-@flot-settings-border-radius:	2px;
-@flot-settings-background:		transparent;
 
 
 
 .flot-menu {
 	float: right;
-	line-height: @flot-settings-height;
+	line-height: 14px;
 
 	&.flot-menu-inline {
 		float: none;
@@ -86,24 +69,17 @@
 
 .flot {
 	position: relative !important;
-	margin: 0 auto;
+	margin: 0 auto 10px;
 	width: @flot-width;
 	height: @flot-height;
 	background: @flot-background-color;
-
-	.show-only-fullscreen {
-		display: none;
-	}
 
 	&.fullscreen {
 		position: fixed !important;
 		top: 0;
 		left: 0;
 		z-index: @z-index-fullscreen;
-
-		.show-only-fullscreen {
-			display: inline;
-		}
+		background: @flot-background-color;
 	}
 
 	.tickLabel, .legend td, .flot-tick-label {
@@ -133,42 +109,6 @@
 		}
 	}
 
-	.flot-title {
-		display: none;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		background: @flot-title-background;
-		color: @flot-title-color;
-		height: @flot-title-height;
-		line-height: @flot-title-height;
-		font-size: @flot-title-font-size;
-		text-align: center;
-		width: 100%;
-		padding: @flot-title-padding;
-		margin: @flot-title-margin;
-
-		span {
-			margin: 0 5px;
-		}
-
-		.link:hover {
-			color: @flot-title-color-hover;
-		}
-	}
-
-	.flot-settings-link {
-		margin: 0;
-	}
-
-	&.has-settings-line {
-		margin-bottom: 27px;
-	}
-
-	&.has-settings-line .flot-settings-line {
-		display: block;
-	}
-
 	.flot-error {
 		position: absolute;
 		top: 50%;
@@ -196,48 +136,66 @@
 		color: @flot-annotation-color;
 	}
 
-	.map-tooltip {
-		z-index: @z-index-map-tooltip;
+	.tooltip {
 		display: none;
 		position: fixed;
-		text-align: left;
-		overflow: visible;
-		padding: @flot-tooltip-padding;
 		font-size: @flot-tooltip-font-size;
-		background-color: @flot-tooltip-background;
-		color: @flot-tooltip-color;
+		text-align: left;
+
+		&.in {
+			display: block;
+			opacity: 1;
+		}
 	}
 
-	.map-tooltip em {
+	.tooltip span {
 		font-weight: bold;
-	}
-
-	.arrow {
-		position: absolute;
-		cursor: pointer;
-	}
-
-	div.arrow {
-		font-size: smaller;
-		color: #999;
-		background-color: #eee;
-		padding: 2px;
 	}
 }
 
-.flot-settings-line {
+.flot:hover .flot-options {
+	display: block;
+}
+
+.flot-options {
+	position: absolute;
+	z-index: @z-index-map-options;
 	display: none;
-	width: 100%;
-	padding: @flot-settings-padding !important;
-	border-color: @flot-settings-border;
-	border-style: solid;
-	border-width: 0 1px 1px 1px;
-	border-radius: 0 0 @flot-settings-border-radius @flot-settings-border-radius;
-	background-color: @flot-settings-background;
-	margin-left: -2px;
-	margin-top: 17px;
-	position: relative;
-	bottom: -100%;
-	line-height: @flot-settings-height;
-	height: @flot-settings-height;
+	top: 2px;
+	right: 2px;
+	background: #fff;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+	border-radius: 4px;
+	height: 20px;
+	line-height: 20px;
+}
+
+.flot-option {
+	cursor: pointer;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	border-left: 1px solid #ccc;
+
+	&.option-toggled {
+		color: #ccc;
+	}
+
+	&:hover {
+		background-color: #f4f4f4;
+	}
+
+	&:first-child {
+		border-radius: 4px 0 0 4px;
+	}
+
+	&:last-child {
+		border-radius: 0 4px 4px 0;
+	}
+}
+
+.fullscreen .flot-option.fa-expand::before {
+	content: '\f066';
 }
