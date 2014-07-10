@@ -2,12 +2,6 @@
 @training-plot-spacer-color:			#ccc;
 @training-map-fullscreen-background:	#f6f6f7;
 @map-height:							300px;
-@map-tooltip-background:				rgba(255,255,255,.8);
-@map-tooltip-border:					#ccc;
-@map-tooltip-margin:					2px 0 0 2px;
-@map-tooltip-padding:					1px;
-@map-tooltip-font-size:					9px;
-@map-tooltip-color:						#545454;
 
 #training-overview {
 	&:after {
@@ -66,7 +60,7 @@
 	position: absolute;
 	left: -301px;
 	bottom: 0;
-	height: 25px;
+	height: 20px;
 	width: 300px;
 	box-shadow: inset 0 -20px 15px -10px #fff;
 }
@@ -103,14 +97,4 @@
 	min-width: 300px;
 	width: 100%;
 	height: @map-height;
-
-	.map-tooltip {
-		position: absolute;
-		background-color: @map-tooltip-background;
-		margin: @map-tooltip-margin;
-		padding: @map-tooltip-padding;
-		font-size: @map-tooltip-font-size;
-		color: @map-tooltip-color;
-		border: 1px solid @map-tooltip-border;
-	}
 }

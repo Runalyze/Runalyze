@@ -118,14 +118,14 @@ class Plot {
 
 		$this->Options['legend']['backgroundColor'] = "#000";
 		$this->Options['legend']['backgroundOpacity'] = 0;
-		$this->Options['legend']['margin'] = array(0,-18);
-		$this->Options['legend']['noColumns'] = 0;
+		$this->Options['legend']['margin'] = array(0,-25);
+		$this->Options['legend']['noColumns'] = 99;
 
 		$this->Options['yaxis']['color'] = 'rgba(0,0,0,0.1)'; //'rgba(255,255,255,0.2)'; // "#FFF";
 		$this->Options['xaxis']['color'] = 'rgba(0,0,0,0.1)'; //'rgba(255,255,255,0.2)'; // "#FFF";
 		//$this->Options['yaxis']['tickLength'] = 'full';
 		//$this->Options['xaxis']['tickLength'] = 'full';
-		$this->Options['xaxis']['monthNames'] = array('Jan', 'Feb', 'Mrz', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez');
+		$this->Options['xaxis']['monthNames'] = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
 
 		$this->Options['grid']['color'] = '#000'; //'rgba(0,0,0,0.1)';
 		$this->Options['grid']['backgroundColor'] = 'rgba(255,255,255,0.5)';
@@ -133,7 +133,7 @@ class Plot {
 		$this->Options['grid']['borderWidth'] = 1;
 		$this->Options['grid']['labelMargin'] = 5;
 		$this->Options['grid']['axisMargin'] = 2;
-		$this->Options['grid']['margin'] = array('top' => 20, 'right' => 0, 'bottom' => 0, 'left' => 0);
+		$this->Options['grid']['margin'] = array('top' => 30, 'right' => 0, 'bottom' => 0, 'left' => 0);
 
 		$this->Options['canvas'] = true;
 		$this->Options['font'] = 'Verdana 9px';
@@ -165,7 +165,7 @@ class Plot {
 	 * @param int $height
 	 */
 	static public function getDivFor($id, $width, $height) {
-		return '<div style="position:relative;width:'.($width+2).'px;height:'.($height+2).'px;margin:2px auto;">'.self::getInnerDivFor($id, $width, $height).'</div>';
+		return '<div style="position:relative;width:'.$width.'px;height:'.$height.'px;margin:0 auto;">'.self::getInnerDivFor($id, $width, $height).'</div>';
 	}
 
 	/**
@@ -211,47 +211,30 @@ class Plot {
 	 */
 	private function getJavaScript() {
 		$this->convertData();
-		$bindedCode  = '$("#'.$this->cssID.'").width('.$this->width.'-2);'.NL;
-		$bindedCode .= '$("#'.$this->cssID.'").height('.$this->height.'-2-'.(empty($this->Titles)?0:15).');'.NL;
-		$padding     = '1px';
+		$bindedCode  = '$("#'.$this->cssID.'").width('.$this->width.');';
+		$bindedCode .= '$("#'.$this->cssID.'").height('.$this->height.');';
 
 		if (strlen($this->ErrorString) > 0) {
 			$bindedCode .= $this->getJSForError();
 		} else {
 			$bindedCode .= $this->getMainJS();
 
-			if (isset($this->Options['pan']) && $this->Options['pan']['interactive'])
-				$bindedCode .= $this->getJSForPanning();
+			//$bindedCode .= $this->getJSForTracking();
 
-			if (isset($this->Options['zoom']) && $this->Options['zoom']['interactive'])
-				$bindedCode .= $this->getJSForZooming();
-
-			//if (isset($this->Options['crosshair']))
-				$bindedCode .= $this->getJSForTracking();
-
-			if (isset($this->Options['selection']))
-				$bindedCode .= $this->getJSForSelection();
+			//if (isset($this->Options['selection']))
+			//	$bindedCode .= $this->getJSForSelection();
 
 			if (!empty($this->Annotations))
-				$bindedCode .= $this->getJSForAnnotations();
+				$bindedCode .= 'RunalyzePlot.finishAnnotations("'.$this->cssID.'");';//$this->getJSForAnnotations();
 		}
-
-		if (!empty($this->Titles)) {
-			$bindedCode .= $this->getJSForTitles();
-			$padding     = '1px 1px 16px 1px';
-		}
-
-		if ($this->allowSettings)
-			$bindedCode .= 'RunalyzePlot.initSettingsLink("'.$this->cssID.'");';
 
 		$bindedCode .= '$("#'.$this->cssID.'").removeClass("'.Ajax::$IMG_WAIT.'");';
-		$bindedCode .= '$("#'.$this->cssID.'").css(\'padding\',\''.$padding.'\');';
 
 		return Ajax::wrapJS('
 			var '.$this->created.'=false,
 				func_'.$this->created.'=function(){
 					if(!'.$this->created.' && $("#'.$this->cssID.'").width() > 0 && $("#'.$this->cssID.'").is(":visible") && !$("#'.$this->cssID.'").hasClass("flot-hide")) {
-						'.$this->created.'=true;'.$bindedCode.'RunalyzePlot.finishInit("'.$this->cssID.'");
+						'.$this->created.'=true;'.$bindedCode.'
 					}
 				};
 			$(document).off("createFlot.'.$this->cssID.'").on("createFlot.'.$this->cssID.'",func_'.$this->created.');
@@ -266,41 +249,9 @@ class Plot {
 		return 'RunalyzePlot.addPlot(
 					"'.$this->cssID.'",
 					'.json_encode($this->Data).',
-					'.Ajax::json_encode_jsfunc($this->Options).');'.NL;
-	}
-
-	/**
-	 * Get code for displaying titles
-	 * @return string
-	 */
-	private function getJSForTitles() {
-		$title  = '<div class="flot-title">';
-		if ($this->allowSettings)
-			$title .= '<span class="left link flot-settings-link">'.Icon::$CONF.'</span>';
-		if (isset($this->Titles['left']))
-			$title .= '<span class="left">'.$this->Titles['left'].'</span>';
-		if (isset($this->Titles['right']))
-			$title .= '<span class="right">'.$this->Titles['right'].'</span>';
-		if (isset($this->Titles['center']))
-			$title .= $this->Titles['center'];
-		$title .= '</div>';
-
-		if ($this->allowSettings) {
-			$title .= '<div class="toolbar-line flot-settings-line hide">';
-			$title .= '<span class="link labeledLink flot-settings-save" onclick="RunalyzePlot.save(\''.$this->cssID.'\')">'.Icon::$SAVE.' Speichern</span>';
-			$title .= '<span class="link labeledLink flot-settings-fullscreen" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_IN_SMALL.' Vollbild</span>';
-			$title .= '<span class="link labeledLink flot-settings-fullscreen-hide hide" onclick="RunalyzePlot.toggleFullscreen(\''.$this->cssID.'\')">'.Icon::$ZOOM_OUT_SMALL.' Vollbild verlassen</span>';
-
-			$title .= '<span class="right show-only-fullscreen" style="margin-top:3px;">';
-			$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleCrosshairMode(\''.$this->cssID.'\');"><i class="fa fa-fw checkbox-icon'.(isset($this->Options['crosshair'])?' checked':'').'"></i> Crosshair</label>';
-			if (isset($this->Options['selection'])) // Does only work if handler are bound
-				$title .= '<label class="checkable" onclick="$(this).children(\'i\').toggleClass(\'checked\');RunalyzePlot.toggleSelectionMode(\''.$this->cssID.'\');"><i class="fa fa-fw checkbox-icon'.(isset($this->Options['selection'])?' checked':'').'"></i> Auswahl</label>';
-			$title .= '</span>';
-
-			$title .= '</div>';
-		}
-
-		return '$("#'.$this->cssID.'").append(\''.addslashes($title).'\');'.NL;
+					'.Ajax::json_encode_jsfunc($this->Options).',
+					{},
+					'.json_encode($this->Annotations).');'.NL;
 	}
 	
 	/**
@@ -321,22 +272,6 @@ class Plot {
 			$code .= 'RunalyzePlot.addAnnotationTo("'.$this->cssID.'", '.$Array['x'].', '.$Array['y'].', "'.$Array['text'].'", '.$Array['toX'].', '.$Array['toY'].');';
 
 		return $code;
-	}
-
-	/**
-	 * Get code for enable zooming
-	 * @return string
-	 */
-	private function getJSForZooming() {
-		return 'RunalyzePlot.enableZoomingFor("'.$this->cssID.'");';
-	}
-
-	/**
-	 * Get code for enable panning
-	 * @return string
-	 */
-	private function getJSForPanning() {
-		return 'RunalyzePlot.togglePanning("'.$this->cssID.'")'.NL;
 	}
 
 	/**
@@ -384,7 +319,8 @@ class Plot {
 	 * @param string $position
 	 */
 	public function setTitle($title, $position = 'center') {
-		$this->Titles[$position] = $title;
+		// TODO: remove
+		// Titles are not supported anymore
 	}
 
 	/**
@@ -457,7 +393,8 @@ class Plot {
 	 * @param boolean $flag true or false
 	 */
 	public function allowSettings($flag = true) {
-		$this->allowSettings = $flag;
+		// TODO: remove
+		// Settings are now supported in another way
 	}
 
 	/**
@@ -574,7 +511,9 @@ class Plot {
 	 * Hide the legend
 	 */
 	public function hideLegend() {
-		$this->Options['legend']['show'] = false;
+		// TODO: remove
+		// Hide legend in another way
+		//$this->Options['legend']['show'] = false;
 	}
 
 	/**
