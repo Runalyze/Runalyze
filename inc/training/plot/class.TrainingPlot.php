@@ -34,30 +34,6 @@ abstract class TrainingPlot {
 	protected $height = 190;
 
 	/**
-	 * Is tracking-mode enabled?
-	 * @var boolean
-	 */
-	protected $tracking = true;
-
-	/**
-	 * Is selection-mode enabled?
-	 * @var boolean
-	 */
-	protected $selecting = true;
-
-	/**
-	 * Is zooming-mode enabled?
-	 * @var boolean
-	 */
-	protected $zooming = false;
-
-	/**
-	 * Show legend?
-	 * @var boolean
-	 */
-	protected $showLegend = false;
-
-	/**
 	 * Use standard x-axis?
 	 * @var boolean
 	 */
@@ -115,7 +91,6 @@ abstract class TrainingPlot {
 
 		if (!empty($this->Data)) {
 			$this->setProperties();
-			$this->setDependingProperties();
 		} else {
 			$this->Plot->raiseError( __('No plot available.') );
 		}
@@ -154,29 +129,8 @@ abstract class TrainingPlot {
 				$this->Plot->setXUnit('km');
 		}
 
-		if (!$this->showLegend)
-			$this->Plot->hideLegend();
-
 		$this->Plot->setTitle($this->title, 'right');
 		$this->Plot->setTitle($this->Training->DataView()->getTitleForPlot(), 'left');
-	}
-
-	/**
-	 * Set depending properties
-	 * 
-	 * Some properties need to know about the data.
-	 * Therefore they have to be set after all other initializations.
-	 */
-	private function setDependingProperties() {
-		if (!$this->Training->hasArrayDistance() && !$this->Training->hasArrayTime())
-			return;
-
-		if ($this->tracking)
-			$this->Plot->enableTracking();
-		if ($this->selecting)
-			$this->Plot->enableSelection();
-		if ($this->zooming)
-			$this->Plot->enableZooming();
 	}
 
 	/**

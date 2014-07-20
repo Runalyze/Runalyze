@@ -10,12 +10,6 @@
  */
 class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	/**
-	 * Show legend?
-	 * @var boolean
-	 */
-	protected $showLegend = true;
-
-	/**
 	 * Is selection-mode enabled?
 	 * @var boolean
 	 */
@@ -47,7 +41,6 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	 * Display without class 'training-chart'
 	 */
 	public function displayAsSinglePlot() {
-		$this->Plot->enableHiddengraphs();
 		$this->Plot->clearAnnotations();
 
 		echo Plot::getInnerDivFor($this->getCSSid(), $this->width, $this->height, false, '');

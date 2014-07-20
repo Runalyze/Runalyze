@@ -229,7 +229,6 @@ abstract class PlotSumData extends Plot {
 	 * Set axis
 	 */
 	private function setAxis() {
-		$this->setMarginForGrid(5);
 		$this->setXLabels($this->getXLabels());
 		$this->addYAxis(1, 'left');
 
@@ -247,14 +246,10 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function setOptions() {
 		$this->showBars(true);
-		$this->enableTracking();
 		$this->setTitle($this->getTitle());
 
 		$this->stacked();
 		$this->addCurrentLevel();
-
-		// TODO: Hiding graphs does not work for stacked barcharts
-		//$this->enableHiddengraphs();
 	}
 
 	/**
@@ -458,8 +453,6 @@ abstract class PlotSumData extends Plot {
 		// if ($this->Sport->hasTypes())
 		if ($this->Sport->isRunning())
 			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
-		else
-			$this->hideLegend();
 
 		$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
 	}

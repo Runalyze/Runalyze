@@ -28,7 +28,7 @@ $Query = '
 
 $Data = DB::getInstance()->query($Query)->fetchAll();
 foreach ($Data as $dat)
-	$Temperatures[$dat['y']][$dat['m'] - 1] = $dat['temp'];
+	$Temperatures[$dat['y']][$dat['m'] - 1] = (int)$dat['temp'];
 
 $Plot = new Plot("average", 780, 240);
 

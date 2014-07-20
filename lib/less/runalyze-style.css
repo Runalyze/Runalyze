@@ -2105,8 +2105,9 @@ label:active .checkbox-icon {
   position: fixed !important;
   top: 0;
   left: 0;
+  margin: 0;
   z-index: 3000;
-  background: transparent;
+  background: #f6f6f7;
 }
 .flot .tickLabel,
 .flot .legend td,
@@ -2116,6 +2117,7 @@ label:active .checkbox-icon {
   font-size: 10px !important;
 }
 .flot .legend table {
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 0;
   margin: 0 !important;
 }
@@ -2125,7 +2127,7 @@ label:active .checkbox-icon {
   padding: 0px 2px;
 }
 .flot .legend td.legendLabel {
-  padding-right: 10px;
+  padding-right: 5px;
 }
 .flot .flot-error {
   position: absolute;

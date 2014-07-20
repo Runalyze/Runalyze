@@ -40,8 +40,6 @@ $Plot->setYAxisAsTime(1);
 $Plot->setYAxisTimeFormat($timeFormat, 1);
 
 $Plot->lineWithPoints();
-$Plot->enableTracking();
-$Plot->hideLegend();
 $Plot->setTitle($titleCenter);
 
 $Plot->outputJavaScript();

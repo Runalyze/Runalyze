@@ -104,9 +104,6 @@ if (count($ATLs) < $MaxATLPoints)
 	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#880000', 'data' => $ATLs);
 $Plot->Data[] = array('label' => __('VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 
-$Plot->enableTracking();
-$Plot->enableSelection('x', '', false);
-
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
 $Plot->setXAxisAsTime();
