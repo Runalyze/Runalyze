@@ -39,16 +39,20 @@ foreach ($Sports as $sport) {
 
 $Plot = new Plot("daytime", 350, 190);
 
-foreach ($yAxis as $key => $data)
+$max = 0;
+foreach ($yAxis as $key => $data) {
 	$Plot->Data[] = array('label' => $key, 'data' => $data);
+	$max += max($data);
+}
 
 $Plot->setLegendAsTable();
 $Plot->setMarginForGrid(5);
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, 'h');
 $Plot->setYTicks(1, 1, 0);
+$Plot->setYLimits(1, 0, $max);
 
-$Plot->showBars();
+$Plot->showBars(true);
 $Plot->stacked();
 
 $error = true;

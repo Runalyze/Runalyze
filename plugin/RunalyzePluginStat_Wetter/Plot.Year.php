@@ -36,7 +36,7 @@ $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();
 $Plot->setXAxisLimitedTo($Year);
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '°C', 1);
+$Plot->addYUnit(1, '°C', 0);
 $Plot->setYTicks(1, 5, 0);
 
 $Plot->addThreshold('y', 0);
