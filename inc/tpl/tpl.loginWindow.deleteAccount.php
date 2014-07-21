@@ -1,27 +1,27 @@
 <div class="w50" id="login-window">
 		<fieldset>
-			<legend>Account l&ouml;schen</legend>
+			<legend><?php _e('Delete account'); ?></legend>
 	<?php if (!isset($_GET['want'])): ?>   
 			<p class="warning">
-				M&ouml;chtest du deinen Account wirklich l&ouml;schen?<br>
+				<?php _e('Do you really want to delete your account?'); ?><br>
 				<br>
-				<a href="login.php?delete=<?php echo $_GET['delete']; ?>&want=true"><strong>Account endg&uuml;ltig l&ouml;schen &raquo;</strong></a>
+				<a href="login.php?delete=<?php echo $_GET['delete']; ?>&want=true"><strong><?php _e('Delete account'); ?> &raquo;</strong></a>
 	<?php else: ?>      
 		<?php if (AccountHandler::tryToDeleteAccount()): ?>
 			<p class="info">
-				Dein Account wurde erfolgreich gel&ouml;scht.<br>
-				Du kannst Runalyze nun nicht mehr nutzen.
+				<?php _e('Your account has been deleted.'); ?><br>
+				<?php _e('You cannot use Runalyze anymore.'); ?>
 			</p>
 		<?php else: ?>
 			<p class="error">
-				Der Account konnte nicht gel&ouml;scht werden.<br>
-				Vermutlich war der Link ung&uuml;ltig.
+				<?php _e('The deletion did not work.'); ?><br>
+				<?php _e('Probably the link was wrong.'); ?>
 			</p>
 		<?php endif; ?>
 	<?php endif; ?>  
                 </fieldset>
 
 		<p class="text">
-			<a class="button" href="index.php" title="zu Runalyze">zur Startseite</a>
+			<a class="button" href="index.php" title="Runalyze">&raquo; <?php _e('Main page'); ?></a>
 		</p>
 </div>

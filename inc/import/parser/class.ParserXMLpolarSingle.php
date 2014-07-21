@@ -35,7 +35,7 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-		$this->addError('Given XML object does not contain any results. &lt;result&gt;-tag could not be located.');
+		$this->addError( __('Given XML object does not contain any results. &lt;result&gt;-tag could not be located.') );
 	}
 
 	/**

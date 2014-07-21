@@ -76,7 +76,7 @@ abstract class ImporterFiletypeAbstract {
 			$this->Errors = array_merge($this->Errors, $this->Parser->getErrors());
 
 		if ($this->numberOfTrainings() == 0)
-			$this->Errors[] = 'Es konnten keine Trainings gefunden werden.';
+			$this->Errors[] = __('No activities could be found.');
 	}
 
 	/**
@@ -99,7 +99,7 @@ abstract class ImporterFiletypeAbstract {
 	 */
 	final public function getErrors() {
 		if (is_null($this->Parser))
-			return array('There is no parser in ImporterFiletype. Maybe this filetype is not supported.');
+			return array( __('There is no parser in ImporterFiletype. Maybe this filetype is not supported.') );
 
 		return array_merge($this->Errors, $this->Parser->getErrors());
 	}

@@ -54,7 +54,7 @@
 				<legend onclick="show('log');"><?php _e('Create a new account'); ?></legend>
 			<?php
 			if (!USER_CAN_REGISTER) {
-				echo HTML::error(_e('Registrations are currently disabled.'));
+				echo HTML::error( _e('Registrations are currently disabled.') );
 			} else {
 				if (isset($_POST['new_username'])) {
 					$Errors = AccountHandler::tryToRegisterNewUser();
@@ -106,9 +106,9 @@
 							echo HTML::error($Error);
 					}
 				elseif (System::isAtLocalhost())
-					echo HTML::info(_e('You can login now. Enjoy Runalyze!'));
+					echo HTML::info( _e('You can login now. Enjoy Runalyze!') );
 				else
-					echo HTML::info(_e('Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.'));
+					echo HTML::info( _e('Thanks for your registration. You should receive an email within the next minutes with further instructions for activating your account.') );
 			}
 			?>
 			</fieldset>

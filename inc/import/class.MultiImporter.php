@@ -73,7 +73,7 @@ class MultiImporter {
 			$MultiEditor = new MultiEditor($this->InsertedIDs);
 			$MultiEditor->display();
 		} else {
-			echo HTML::em('Die Trainings wurden erfolgreich eingetragen.');
+			echo HTML::em( __('The activities have been successfully imported.') );
 			echo Ajax::closeOverlay();
 		}
 	}

@@ -16,8 +16,8 @@ if (!empty($Errors)) {
 		echo HTML::error($Error);
 } else {
 	echo HTML::info(
-			__('<em>A confirmation mail has been sent.</em><br>'.
-				'How sad, that you decided to delete your account.<br>'.
-				'Your account will be deleted as soon as you click the confirmation link in your mail.')
+			__('<em>A confirmation has been sent via mail.</em><br>'.
+				'How sad, that you\'ve decided to delete your account.<br>'.
+				'Your account will be deleted as soon as you click on the confirmation link in your mail.')
 	);
 }

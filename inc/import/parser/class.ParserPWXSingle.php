@@ -48,7 +48,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoPWXError() {
-		$this->addError('Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag could not be located.');
+		$this->addError( __('Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag could not be located.') );
 	}
 
 	/**

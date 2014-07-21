@@ -1,5 +1,5 @@
 	<div id="upload-container">
-		<div class="c button" id="file-upload">Datei hochladen</div>
+		<div class="c button" id="file-upload"><?php _e('Upload file'); ?></div>
 	</div>
 
 <script>
@@ -36,7 +36,7 @@ new qq.FineUploaderBasic({
 						$("#ajax").loadDiv('<?php echo $_SERVER['SCRIPT_NAME']; ?>?files='+encodeURIComponent(submittedFiles.join(';')));
 				}
 			} else {
-				$("#ajax").append('<p class="error appended-by-uploader">Es gab Probleme beim Upload.</p>');
+				$("#ajax").append('<p class="error appended-by-uploader"><?php _e('There were problems while uploading.'); ?></p>');
 			}
 
 			if (uploadedFiles == submittedFiles.length) {
@@ -51,7 +51,7 @@ new qq.FineUploaderBasic({
 });
 
 if (!qq.supportedFeatures.ajaxUploading)
-	$("#ajax").append('<p class="error">Dein Browser scheint den Uploader nicht zu unterst&uuml;tzen. Siehe <a href="http://docs.fineuploader.com/browser-support.html" target="_blank">http://docs.fineuploader.com/browser-support.html</a>.</p>');
+	$("#ajax").append('<p class="error"><?php _e('Your browser does not seem to support this uploader, see'); ?> <a href="http://docs.fineuploader.com/browser-support.html" target="_blank">http://docs.fineuploader.com/browser-support.html</a>.</p>');
 </script>
 
 	<p class="text">
@@ -59,12 +59,12 @@ if (!qq.supportedFeatures.ajaxUploading)
 	</p>
 
 	<p class="info">
-		Unterst&uuml;tzte Formate: <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
+		<?php _e('Allowed file extensions:'); ?> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
 	</p>
 
 	<?php if (Filesystem::getMaximumFilesize() != INFINITY): ?>
 	<p class="info">
-		Maximale Dateigr&ouml;&szlig;e: <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
+		<?php _e('Allowed file size:'); ?> <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
 	</p>
 	<?php endif; ?>
 

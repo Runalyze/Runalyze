@@ -1,13 +1,13 @@
 	<div class="c fullwidth" style="position:relative;">
 		<small style="position:absolute;right:4px;top:2px;">
-			<span class="link" title="Bei Problemen: Neuladen" onclick="$('#GCapi').attr('src', 'call/call.garminCommunicator.php')"><?php echo Icon::$REFRESH; ?></span>
+			<span class="link" onclick="$('#GCapi').attr('src', 'call/call.garminCommunicator.php')"><?php echo Icon::$REFRESH; ?></span>
 		</small>
 
 <?php
 if (!$this->visible):
 ?>
 		<div id="iframe-spacer" style="width:490px;height:310px;">
-			<em>Der Communicator wird gleich geladen.</em>
+			<em><?php _e('Move your mouse here to start loading the communicator.'); ?></em>
 		</div>
 <?php
 	echo Ajax::wrapJSasFunction('$("#iframe-spacer").hover(function(){

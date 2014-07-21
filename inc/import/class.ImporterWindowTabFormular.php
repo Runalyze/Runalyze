@@ -37,7 +37,7 @@ class ImporterWindowTabFormular extends ImporterWindowTab {
 	 * @return string
 	 */
 	public function title() {
-		return 'Formular';
+		return __('Form');
 	}
 
 	/**

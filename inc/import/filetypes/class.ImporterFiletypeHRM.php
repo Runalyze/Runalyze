@@ -3,7 +3,7 @@
  * This file contains class::ImporterFiletypeHRM
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo('Gleichnamige hrm- und gpx-Dateien werden automatisch zusammengef&uuml;hrt.');
+ImporterWindowTabUpload::addInfo( __('hrm- and gpx-files with the same name will be automatically combined.') );
 /**
  * Importer: *.hrm
  * 

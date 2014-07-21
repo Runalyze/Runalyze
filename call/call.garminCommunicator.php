@@ -57,7 +57,7 @@ $Frontend = new Frontend(true);
 				findDevicesButtonText: "<?php _e('Search for decives'); ?>",
 				loadingContentText: "<?php _e('Retrieving data from #{deviceName}, please wait ...'); ?>",
 				readSelectedButtonText: "<?php _e('Please wait ...'); ?>", // "Importieren"
-				dataFound: "<?php _e('Found #{tracks} activites'); ?>",
+				dataFound: "<?php _e('Found #{tracks} activities'); ?>",
 				noDeviceDetectedStatusText: "<?php _e('No devices found'); ?>",
 				singleDeviceDetectedStatusText: "<?php _e('Found'); ?>: ",
 				foundDevice: "<?php _e('Found'); ?>: #{deviceName}",

@@ -42,7 +42,7 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoSLFError() {
-		$this->addError('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.');
+		$this->addError( __('Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be located.') );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseLogEntries() {
 		if (empty($this->XML->LogEntries->LogEntry)) {
-			$this->addError('Die Trainingsdatei enth&auml;lt keine Daten.');
+			$this->addError( __('This file does not contain any data.') );
 		} else {
 			foreach ($this->XML->LogEntries->LogEntry as $Log)
 				$this->parseLogEntry($Log);

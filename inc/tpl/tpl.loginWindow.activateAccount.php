@@ -1,20 +1,20 @@
 <div class="w50" id="login-window">
 		<fieldset>
-			<legend>Account aktivieren</legend>
+			<legend><?php _e('Activate account'); ?></legend>
 		<?php if (AccountHandler::tryToActivateAccount()): ?>
 			<p class="info">
-				Dein Account wurde erfolgreich aktiviert.<br>
-				Du kannst Runalyze nun nutzen.
+				<?php _e('Your account has been activated.'); ?><br>
+				<?php _e('You can now use Runalyze.'); ?>
 			</p>
 		<?php else: ?>
 			<p class="error">
-				Die Aktivierung hat nicht geklappt.<br>
-				Vermutlich war der Link ung&uuml;ltig.
+				<?php _e('The activation did not work.'); ?><br>
+				<?php _e('Probably the link was wrong.'); ?>
 			</p>
 		<?php endif; ?>
 		</fieldset>
 
 		<p class="text">
-			<a class="button" href="login.php" title="zu Runalyze">zum Login</a>
+			<a class="button" href="login.php" title="Runalyze">&raquo; <?php _e('Login'); ?></a>
 		</p>
 </div>
