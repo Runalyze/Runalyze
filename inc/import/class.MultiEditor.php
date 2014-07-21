@@ -31,8 +31,7 @@ class MultiEditor {
 	 */
 	public function display() {
 		if (empty(self::$IDs)) {
-			echo HTML::error('Dem Multi-Editor wurden keine Trainings-IDs &uuml;bergeben.');
-			echo HTML::info('Falls du noch keine Trainings eingetragen hast, kannst du hier auch nichts bearbeiten.');
+			echo HTML::error( __('No activities for editing were set.') );
 		} else {
 			$this->displayEditor();
 			$this->displayNavigation();
@@ -45,7 +44,7 @@ class MultiEditor {
 	protected function displayNavigation() {
 		$Code  = '<div id="ajax-navigation" class="panel">';
 		$Code .= '<div class="panel-heading">';
-		$Code .= '<h1>Multi-Editor</h1>';
+		$Code .= '<h1>'.__('Multi editor').'</h1>';
 		$Code .= '</div>';
 		$Code .= '<div class="panel-content">';
 		$Code .= '<table class="multi-edit-table fullwidth zebra-style"><tbody>';

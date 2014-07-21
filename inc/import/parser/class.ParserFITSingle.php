@@ -146,7 +146,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readFileId() {
 		if (isset($this->Values['type']) && $this->Values['type'][1] != 'activity')
-			$this->addError('FIT file is not specified as activity.');
+			$this->addError( __('FIT file is not specified as activity.') );
 
 		if (isset($this->Values['garmin_product']))
 			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);

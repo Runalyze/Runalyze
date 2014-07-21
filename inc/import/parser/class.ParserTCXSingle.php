@@ -95,7 +95,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Add error: no garmin file
 	 */
 	protected function throwNoGarminError() {
-		$this->addError('Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located.');
+		$this->addError( __('Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located.') );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseLaps() {
 		if (!isset($this->XML->Lap)) {
-			$this->addError('Die Trainingsdatei enth&auml;lt keine Runden.');
+			$this->addError( __('This file does not contain any laps.') );
 		} else {
 			foreach ($this->XML->Lap as $i => $Lap) {
 				if ($i == 0) {

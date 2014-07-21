@@ -35,7 +35,7 @@ class ImporterWindowTabUpload extends ImporterWindowTab {
 	 * @return string
 	 */
 	public function title() {
-		return __('upload');
+		return __('Upload');
 	}
 
 	/**

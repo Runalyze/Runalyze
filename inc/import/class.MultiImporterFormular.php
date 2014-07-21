@@ -50,12 +50,12 @@ class MultiImporterFormular extends Formular {
 	 * Init for given objects
 	 */
 	protected function initForObjects() {
-		$Fieldset = new FormularFieldset('Trainings ausw&auml;hlen');
+		$Fieldset = new FormularFieldset( __('Choose activities') );
 		$Fieldset->addBlock( $this->getFieldsetBlock() );
 		$Fieldset->setHtmlCode( $this->getConfigCode() );
 
 		$this->addFieldset($Fieldset);
-		$this->addSubmitButton('Auswahl importieren');
+		$this->addSubmitButton( __('Import selected activities') );
 		$this->addHiddenValue('number-of-trainings', count($this->TrainingObjects));
 	}
 
@@ -66,9 +66,9 @@ class MultiImporterFormular extends Formular {
 	private function getFieldsetBlock() {
 		$String = '';
 
-		$String .= HTML::info('Es wurden '.count($this->TrainingObjects).' Trainings gefunden.');
+		$String .= HTML::info( sprintf( __('Found %s activities.'), count($this->TrainingObjects)) );
 		$String .= '<table class="fullwidth multi-import-table zebra-style c" id="multi-import-table">';
-		$String .= '<thead><tr><th>Eintragen</th><th>Datum</th><th>Dauer</th><th>Distanz</th><th colspan="4"></th></tr></thead>';
+		$String .= '<thead><tr><th>'.__('Import').'</th><th>'.__('Date').'</th><th>'.__('Duration').'</th><th>'.__('Distance').'</th><th colspan="4"></th></tr></thead>';
 		$String .= '<tbody>';
 
 		foreach ($this->TrainingObjects as $i => $TrainingObject)
@@ -117,7 +117,7 @@ class MultiImporterFormular extends Formular {
 	 * @return string
 	 */
 	private function getConfigCode() {
-		$Input = new FormularCheckbox('multi-edit', 'Trainings anschlie&szlig;end bearbeiten', true);
+		$Input = new FormularCheckbox('multi-edit', __('Show multi editor afterwards'), true);
 		$Input->setLayout( FormularFieldset::$LAYOUT_FIELD_W100 );
 
 		return $Input->getCode();

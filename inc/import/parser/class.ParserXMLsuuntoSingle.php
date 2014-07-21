@@ -61,7 +61,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-		$this->addError('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.');
+		$this->addError( __('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.') );
 	}
 
 	/**

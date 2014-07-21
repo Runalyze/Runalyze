@@ -36,7 +36,7 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoFITLOGError() {
-		$this->addError('Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be located.');
+		$this->addError( __('Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be located.') );
 	}
 
 	/**

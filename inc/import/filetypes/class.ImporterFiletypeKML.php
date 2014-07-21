@@ -3,7 +3,7 @@
  * This file contains class::ImporterFiletypeKML
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo('KML-Dateien werden von TomTom unterst&uuml;tzt.');
+ImporterWindowTabUpload::addInfo( __('kml-files from TomTom are supported.') );
 /**
  * Importer: *.xml
  *
@@ -41,6 +41,6 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 	 * Throw error for unknown format
 	 */
 	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = 'Das XML-Format wird nicht unterst&uuml;tzt. Es k&ouml;nnen nur KML-Dateien von '.self::$ALLOWED_PRODUCER.' importiert werden.';
+		$this->Errors[] = __('This file is not supported. Supported producers of kml-files: '.self::$ALLOWED_PRODUCER.'.');
 	}
 }

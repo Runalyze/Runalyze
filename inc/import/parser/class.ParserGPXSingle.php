@@ -57,7 +57,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoGPXError() {
-		$this->addError('Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be located.');
+		$this->addError( __('Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be located.') );
 	}
 
 	/**

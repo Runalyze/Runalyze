@@ -23,7 +23,7 @@ class ImporterWindowTabCommunicator extends ImporterWindowTab {
 	 * @return string
 	 */
 	public function title() {
-		return 'Garmin Communicator';
+		return __('Garmin Communicator');
 	}
 
 	/**

@@ -213,6 +213,29 @@ class Plot {
 	}
 
 	/**
+	* Set line width for series
+	* @param int $series
+	* @param int $width
+	*/
+	public function setLineWidth($series, $width) {
+		$this->Data[$series]['lines']['lineWidth'] = $width;
+	}
+
+	/**
+	* Show specific series as bars
+	* @param int $series
+	*/
+	public function showAsBars($series, $barWidth = 0, $lineWidth = 0) {
+		$this->Data[$series]['bars']['show'] = true;
+
+		if ($barWidth > 0)
+			$this->Data[$series]['bars']['barWidth'] = $barWidth;
+
+		if ($lineWidth > 0)
+			$this->Data[$series]['bars']['lineWidth'] = $lineWidth;
+	}
+
+	/**
 	 * Use chart for bar-plot
 	 * @param bool $withPadding Only useful if ticks are set
 	 */

@@ -3,7 +3,7 @@
  * This file contains class::ImporterFiletypeXML
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo('XML-Dateien werden von Polar, Suunto und RunningAHEAD unterst&uuml;tzt.');
+ImporterWindowTabUpload::addInfo( __('xml-files from Polar, Suunto and RunningAHEAD are supported.') );
 /**
  * Importer: *.xml
  *
@@ -63,6 +63,6 @@ class ImporterFiletypeXML extends ImporterFiletypeAbstract {
 	 * Throw error for unknown format
 	 */
 	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = 'Das XML-Format wird nicht unterst&uuml;tzt. Es k&ouml;nnen nur XML-Dateien von '.self::$ALLOWED_PRODUCER.' importiert werden.';
+		$this->Errors[] = __('This file is not supported. Supported producers of kml-files: '.self::$ALLOWED_PRODUCER.'.');
 	}
 }
