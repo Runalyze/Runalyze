@@ -11,6 +11,22 @@
  */
 abstract class ExporterAbstract {
 	/**
+	 * Type
+	 * @return enum
+	 */
+	static public function Type() {
+		return ExporterType::Code;
+	}
+
+	/**
+	 * Icon class
+	 * @return string
+	 */
+	static public function IconClass() {
+		return 'fa-file-code-o';
+	}
+
+	/**
 	 * Training
 	 * @var TrainingObject
 	 */

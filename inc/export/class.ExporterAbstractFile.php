@@ -11,6 +11,22 @@
  */
 abstract class ExporterAbstractFile extends ExporterAbstract {
 	/**
+	 * Type
+	 * @return enum
+	 */
+	static public function Type() {
+		return ExporterType::File;
+	}
+
+	/**
+	 * Icon class
+	 * @return string
+	 */
+	static public function IconClass() {
+		return 'fa-file-text-o';
+	}
+
+	/**
 	 * File content to write
 	 * @var string
 	 */

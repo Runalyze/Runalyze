@@ -67,6 +67,7 @@ $CLASSMAP = array(
 'ExporterAbstractSocialShare' => 'export/class.ExporterAbstractSocialShare.php',
 'ExporterFactory' => 'export/class.ExporterFactory.php',
 'ExporterListView' => 'export/class.ExporterListView.php',
+'ExporterType' => 'export/class.ExporterType.php',
 'ExporterWindow' => 'export/class.ExporterWindow.php',
 'ExporterFacebook' => 'export/types/class.ExporterFacebook.php',
 'ExporterFITLOG' => 'export/types/class.ExporterFITLOG.php',
