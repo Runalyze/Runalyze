@@ -75,6 +75,16 @@ class BlocklinkList {
 	}
 
 	/**
+	 * Add a new link to this list
+	 * @param string $href
+	 * @param string $title
+	 * @param string $iconClass
+	 */
+	public function addLinkWithIcon($href, $title, $iconClass) {
+		$this->links[] = Ajax::window('<a href="'.$href.'" title="'.$title.'"><i class="fa '.$iconClass.'"></i> <strong>'.$title.'</strong></a>');
+	}
+
+	/**
 	 * Get code for list
 	 * @return string 
 	 */

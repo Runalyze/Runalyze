@@ -11,6 +11,14 @@
  */
 class ExporterGoogle extends ExporterAbstractSocialShare {
 	/**
+	 * Icon class
+	 * @return string
+	 */
+	static public function IconClass() {
+		return 'fa-google-plus color-google-plus';
+	}
+
+	/**
 	 * Display
 	 */
 	public function display() {

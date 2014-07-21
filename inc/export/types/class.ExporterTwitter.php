@@ -11,6 +11,14 @@
  */
 class ExporterTwitter extends ExporterAbstractSocialShare {
 	/**
+	 * Icon class
+	 * @return string
+	 */
+	static public function IconClass() {
+		return 'fa-twitter color-twitter';
+	}
+
+	/**
 	 * Display
 	 */
 	public function display() {
@@ -18,7 +26,7 @@ class ExporterTwitter extends ExporterAbstractSocialShare {
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
-		echo HTML::info( __('You will be forwared to Google+, where you can define which text shall be displayed.') );
+		echo HTML::info( __('You will be forwared to Twitter, where you can define which text shall be displayed.') );
 	}
 
 	/**

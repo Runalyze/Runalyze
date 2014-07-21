@@ -11,6 +11,14 @@
  */
 abstract class ExporterAbstractSocialShare extends ExporterAbstract {
 	/**
+	 * Type
+	 * @return enum
+	 */
+	static public function Type() {
+		return ExporterType::Social;
+	}
+
+	/**
 	 * Get extension
 	 * @return string 
 	 */
