@@ -56,12 +56,11 @@ class Filesystem {
 	public static function getExternUrlContent($url) {
 		if (self::isCurlInstalled())
 			return self::getFileContentsWithCurl($url);
+
 		if (self::canOpenExternUrl())
 			return file_get_contents($url);
 
-		Error::getInstance()->addError('Der Server erlaubt keine externen Seitenzugriffe. (allow_url_fopen=0)');
-
-		return '';
+		throw new RuntimeException('The server does not allow opening external pages. (allow_url_fopen=0)');
 	}
 
 	/**
@@ -256,6 +255,6 @@ class Filesystem {
 		$realfolder = FRONTEND_PATH.'../'.$folder;
 
 		if (!is_writable($realfolder))
-			echo HTML::error('Das Verzeichnis <strong>'.$folder.'</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+			echo HTML::error( sprintf( __('The directory <strong>%s</strong> is not writable. <em>(chmod = %s)</em>'), $folder, substr(decoct(fileperms($realfolder)),1)) );
 	}
 }

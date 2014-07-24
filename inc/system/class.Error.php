@@ -329,7 +329,7 @@ class Error {
 
 		echo '<div class="panel">';
 		echo '<div class="panel-heading">';
-		echo '<h1>Fataler Fehler</h1>';
+		echo '<h1>'.__('Fatal error').'</h1>';
 		echo '</div>';
 		echo '<div class="panel-content">';
 		echo HTML::error($message);

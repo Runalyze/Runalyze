@@ -38,33 +38,51 @@ class InstallerUpdate extends Installer {
 	 * Init all possible updates
 	 */
 	protected function initPossibleUpdates() {
-		$this->PossibleUpdates[] = array(
-			'file' => '',
-			'text' => '----- bitte w&auml;hlen');
 		// v1.5 (von 2013/??)
 		$this->PossibleUpdates[] = array(
-			'file' => 'update-v1.4-to-v1.5.sql',
-			'text' => 'Update zu: v1.5 - vorherige Version v1.3/v1.4 (von 2013/07-08)');
+			'file'	=> 'update-v1.4-to-v1.5.sql',
+			'from'	=> 'v1.3/v1.4',
+			'to'	=> 'v1.5',
+			'date'	=> '2013/07-08'
+		);
 		// v1.4 (von 2013/08) - keine Änderungen in der DB
 		// v1.3 (von 2013/07)
 		$this->PossibleUpdates[] = array(
-			'file' => 'update-v1.2-to-v1.3.sql',
-			'text' => 'Update zu: v1.3 - vorherige Version v1.2 (von 2012/11)');
+			'file'	=> 'update-v1.2-to-v1.3.sql',
+			'from'	=> 'v1.2',
+			'to'	=> 'v1.3',
+			'date'	=> '2012/11'
+		);
 		$this->PossibleUpdates[] = array(
-			'file' => 'update-v1.1-to-v1.2.sql',
-			'text' => 'Update zu: v1.2 - vorherige Version v1.1 (von 2012/07)');
+			'file'	=> 'update-v1.1-to-v1.2.sql',
+			'from'	=> 'v1.1',
+			'to'	=> 'v1.2',
+			'date'	=> '2012/07'
+		);
 		$this->PossibleUpdates[] = array(
 			'file' => 'update-v1.0-to-v1.1.sql',
-			'text' => 'Update zu: v1.1 - vorherige Version v1.0 (von 2012/01)');
+			'from'	=> 'v1.0',
+			'to'	=> 'v1.1',
+			'date'	=> '2012/01'
+		);
 		$this->PossibleUpdates[] = array(
 			'file' => 'update-v0.6-to-v1.0alpha.sql',
-			'text' => 'Update zu: v1.0 - vorherige Version v0.6 (von 2011/08)');
+			'from'	=> 'v0.6',
+			'to'	=> 'v1.0',
+			'date'	=> '2011/08'
+		);
 		$this->PossibleUpdates[] = array(
 			'file' => 'update-v0.5-to-v1.0alpha.sql',
-			'text' => 'Update zu: v1.0 - vorherige Version v0.5 (von 2011/07)');
+			'from'	=> 'v0.5',
+			'to'	=> 'v1.0',
+			'date'	=> '2011/07'
+		);
 		$this->PossibleUpdates[] = array(
 			'file' => 'update-v0.5-to-v0.6.sql',
-			'text' => 'Update zu: v0.6 - vorherige Version v0.5 (von 2011/07)');
+			'from'	=> 'v0.5',
+			'to'	=> 'v0.6',
+			'date'	=> '2011/07'
+		);
 	}
 
 	/**

@@ -1,51 +1,61 @@
+<?php
+require_once '../class.Frontend.php';
+
+$Frontend = new Frontend();
+?>
 <div class="panel-heading">
 	<h1>Runalyze</h1>
 </div>
 <div class="panel-content">
 	<p class="text">
-		Runalyze ist ein vollst&auml;ndig konfigurierbares Lauftagebuch als Webanwendung - so ausf&uuml;hrlich und detailverliebt wie kein anderes.
-		Runalyze wird entwickelt von <a href="http://www.laufhannes.de/" title="Laufblog: Laufhannes">Hannes Christiansen</a>
-		und <a href="http://mipapo.de/" title="Mipapo: Michael Pohl">Michael Pohl</a>.
+		<?php _e('Runalyze is completly configurable and as detailed as no other tool for analyzing your activities.'); ?>
 	</p>
 
 	<p class="text">
-		Eine &Uuml;bersicht der Features von Runalyze findest du auf <a href="http://runalyze.de/" title="Runalyze">runalyze.de</a>.
-		&Uuml;ber aktuelle &Auml;nderungen und n&uuml;tzliche Tricks informieren wir dich in unserem <a href="http://runalyze.de/blog/" title="Runalyze Blog">Blog</a>.
+		<?php printf( __('Please look at our official website %s to get an overview of ower features.'), '<a href="http://runalyze.de/">runalyze.de</a>'); ?><br>
+		<?php printf( __('If you want to be informed about all changes and some hints, visit our blog at %s.'), '<a href="http://runalyze.de/blog/">runalyze.de/blog/</a>'); ?>
 	</p>
-</div>
 
-
-<div class="panel-heading panel-sub-heading">
-	<h1>Konfiguration</h1>
-</div>
-<div class="panel-content">
 	<p class="text">
-		Alleinstellungsmerkaml von Runalyze sind die vielen M&ouml;glichkeiten, das Lauftagebuch an deine pers&ouml;nlichen Bed&uuml;rfnisse anzupassen.
-		In der <strong>Konfiguration</strong> findest du alle Einstellungen. Dort kannst du eigene Sportarten oder Trainingstypen definieren,
-		bestimmen welche Trainingsdaten in der &Uuml;bersicht angezeigt werden sollen, Parameter f&uuml;r die Rechenspiele festlegen und vieles mehr.
+		<?php _e('Runalyze is an open-source project. We are working on it as much as we can in our free time.'); ?><br>
+		<?php _e('Official developers:'); ?>
+		<a href="http://www.laufhannes.de/" title="Laufblog: Laufhannes">Hannes Christiansen</a>,
+		<a href="http://mipapo.de/" title="Mipapo: Michael Pohl">Michael Pohl</a>
 	</p>
 </div>
 
 
 <div class="panel-heading panel-sub-heading">
-	<h1>Support</h1>
+	<h1><?php _e('Configuration'); ?></h1>
 </div>
 <div class="panel-content">
 	<p class="text">
-		Wir freuen uns &uuml;ber alle W&uuml;nsche und Fehlermeldungen von Dir.
-		Wir wollen Runalyze f&uuml;r Dich immer besser machen. Dazu m&uuml;ssen wir aber wissen, was Du m&ouml;chtest.
+		<?php _e('The main advantage of Runalyze is the ability to adapt everything to our personal needs and wishes.'); ?>
+		<?php _e('Have a look at the configuration window to see what we\'re talking about.'); ?>
+		<?php _e('You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.'); ?>
+	</p>
+</div>
+
+
+<div class="panel-heading panel-sub-heading">
+	<h1><?php _e('Support'); ?></h1>
+</div>
+<div class="panel-content">
+	<p class="text">
+		<?php _e('Please let us know if you have wishes or observe some bugs.'); ?>
+		<?php _e('We give our best to make Runalyze as pleasant for you as possible. - Therefore we have to know what you want.'); ?>
 	</p>
 
 	<p class="text">
-		Du erreichst uns nat&uuml;rlich auch per E-Mail: <a href="mailto:support@runalyze.de" title="Runalyze Support">support@runalyze.de</a>.
+		<?php _e('You can contact us via mail:'); ?> <a href="mailto:support@runalyze.de" title="Support">support@runalyze.de</a>.
 	</p>
 
 	<ul class="blocklist blocklist-inline clearfix">
-		<li><a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze Lauftagebuch" style=""><i class="fa fa-bug color-trac"></i> <strong>Trac</strong></a></li>
-		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze Lauftagebuch"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
-		<li><a href="http://facebook.com/Runalyze" title="Runalyze Lauftagebuch"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
-		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze Lauftagebuch"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>
-		<li><a href="http://runalyze.de/faq/" title="Runalyze Lauftagebuch"><i class="fa fa-question"></i> <strong>FAQ</strong></a></li>
+		<li><a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze"><i class="fa fa-bug color-trac"></i> <strong>Trac</strong></a></li>
+		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
+		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
+		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>
+		<li><a href="http://runalyze.de/faq/" title="Runalyze"><i class="fa fa-question"></i> <strong>FAQ</strong></a></li>
 	</ul>
 </div>
 
@@ -56,13 +66,13 @@
 <div class="panel-content">
 	<ul>
 		<li>
-			<strong>Version 2.x</strong>, seit 2014
+			<strong>Version 2.x</strong>, 2014
 			<ul>
 				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v2-0/" title="Runalyze v2.0">v2.0</a></strong>, XX.XX.2014: ...</li>
 			</ul>
 		</li>
 		<li>
-			<strong>Version 1.x</strong>, 2012 - 2013
+			<strong>Version 1.x</strong>, 2012 - 2013, <em>(only in german)</em>
 			<ul>
 				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-5/" title="Runalyze v1.5">v1.5</a></strong>, 01.01.2014: Bugfixes, genauere VDOT-Formel</li>
 				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/" title="Runalyze v1.4">v1.4</a></strong>, 23.08.2013: Bugfix für Sicherheitsrisiko</li>
@@ -88,16 +98,10 @@
 			</ul>
 		</li>
 		<li>
-			<strong>Garmin Communicator</strong>
-			<ul>
-				<li>API by Garmin Ltd. - <a class="external" href="http://developer.garmin.com/web-device/garmin-communicator-plugin/">http://developer.garmin.com/web-device/garmin-communicator-plugin/</a></li>
-			</ul>
-		</li>
-		<li>
 			<strong>Elevation data from Shuttle Radar Topography Mission</strong>
 			<ul>
 				<li>SRTM tiles grabbed via Derek Watkins - <a class="external" href="http://dwtkns.com/srtm/">http://dwtkns.com/srtm/</a></li>
-				<li>SRTM files by International  Centre for Tropical  Agriculture (CIAT) - <a class="external" href="http://srtm.csi.cgiar.org">http://srtm.csi.cgiar.org</a></li>
+				<li>SRTM files by International Centre for Tropical  Agriculture (CIAT) - <a class="external" href="http://srtm.csi.cgiar.org">http://srtm.csi.cgiar.org</a></li>
 				<li>SRTMGeoTIFFReader by Bob Osola - <a class="external" href="http://www.osola.org.uk/elevations/index.htm">http://www.osola.org.uk/elevations/index.htm</a></li>
 			</ul>
 		</li>
@@ -111,6 +115,13 @@
 				<li>Tablesorter by Christian Bach - <a class="external" href="http://tablesorter.com/docs/">http://tablesorter.com/docs/</a></li>
 				<li>Datepicker by Stefan Petre - <a class="external" href="http://www.eyecon.ro/">http://www.eyecon.ro/</a></li>
 				<li>Chosen by Patrick Filler for Harvest - <a class="external" href="http://getharvest.com">http://getharvest.com</a></li>
+			</ul>
+		</li>
+		<li>
+			<strong>Miscellaneaous</strong>
+			<ul>
+				<li>Garmin Communicator by Garmin Ltd. - <a class="external" href="http://developer.garmin.com/web-device/garmin-communicator-plugin/">http://developer.garmin.com/web-device/garmin-communicator-plugin/</a></li>
+				<li>Weather data from OpenWeatherMap - <a class="external" href="http://openweathermap.org/">http://openweathermap.org</a></li>
 			</ul>
 		</li>
 	</ul>

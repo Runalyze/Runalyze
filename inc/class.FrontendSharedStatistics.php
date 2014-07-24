@@ -43,7 +43,7 @@ class FrontendSharedStatistics {
 	 * Configure statistic tabs
 	 */
 	protected function configureStatisticTabs() {
-		$this->StatisticTabs->setHeader('Trainingsdaten von '.$this->FrontendSharedList->getUsername());
+		$this->StatisticTabs->setHeader( sprintf( __('Training data of %s'), $this->FrontendSharedList->getUsername() ) );
 		$this->StatisticTabs->setFirstTabActive();
 		$this->StatisticTabs->display();
 	}
@@ -78,25 +78,25 @@ class FrontendSharedStatistics {
 			<table class="fullwidth">
 				<tbody>
 					<tr>
-						<td class="b">Gesamte Trainingsdistanz:</td>
+						<td class="b">'.__('Total distance:').'</td>
 						<td>'.Running::Km($Stats['dist_sum']).'</td>
-						<td class="b">Anzahl Trainings</td>
+						<td class="b">'.__('Number of activities:').'</td>
 						<td>'.$Stats['num'].'x</td>
-						<td class="b">Angemeldet seit:</td>
+						<td class="b">'.__('Registered since:').'</td>
 						<td>'.date('d.m.Y', $User['registerdate']).'</td>
 					</tr>
 					<tr>
-						<td class="b">Gesamte Trainingsdauer:</td>
+						<td class="b">'.__('Total duration:').'</td>
 						<td>'.Time::toString($Stats['time_sum']).'</td>
-						<td class="b">Erstes Training</td>
+						<td class="b">'.__('First activity:').'</td>
 						<td>'.date('d.m.Y', START_TIME).'</td>
-						<td class="b">Letzter Login:</td>
+						<td class="b">'.__('Last login:').'</td>
 						<td>'.date('d.m.Y', $User['lastaction']).'</td>
 					</tr>
 				</tbody>
 			</table>';
 
-		$this->StatisticTabs->addTab('Allgemeines', 'statistics-general', $Content);
+		$this->StatisticTabs->addTab(__('General statistics'), 'statistics-general', $Content);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class FrontendSharedStatistics {
 
 		if ($Content != '') {
 			$Content = '<table class="not-smaller r fullwidth zebra-style">'.NL.$Content.NL.'</table>'.NL;
-			$this->StatisticTabs->addTab('Jahresvergleich (Laufen)', 'statistics-years', $Content);
+			$this->StatisticTabs->addTab( __('Year on year').' ('.__('Running').')', 'statistics-years', $Content);
 		}
 	}
 

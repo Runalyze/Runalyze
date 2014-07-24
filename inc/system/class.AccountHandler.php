@@ -147,15 +147,19 @@ class AccountHandler {
 		$errors = array();
 
 		if (strlen($_POST['new_username']) < self::$USER_MIN_LENGTH)
-			$errors[] = array('new_username' => 'Der Benutzername muss mindestens '.self::$USER_MIN_LENGTH.' Zeichen lang sein.');
+			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::$USER_MIN_LENGTH));
+
 		if (self::usernameExists($_POST['new_username']))
-			$errors[] = array('new_username' => 'Der Benutzername ist bereits vergeben.');
+			$errors[] = array('new_username' => __('This username is already used.'));
+
 		if (self::mailExists($_POST['email']))
-			$errors[] = array('email' => 'Die E-Mail-Adresse wird bereits verwendet.');
+			$errors[] = array('email' => __('This email is already used.'));
+
 		if ($_POST['password'] != $_POST['password_again'])
-				$errors[] = array('password_again' => 'Die Passw&ouml;rter waren unterschiedlich.');
+				$errors[] = array('password_again' => __('The passwords have to be the same.'));
+
 		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-				$errors[] = array('password' => 'Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.');
+			$errors[] = array('password' => sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH));
 
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();
@@ -181,7 +185,7 @@ class AccountHandler {
 		self::$NEW_REGISTERED_ID = $newAccountId;
 
 		if ($newAccountId === false)
-			$errors[] = 'Beim Registrieren ist etwas schiefgelaufen. Bitte benachrichtige den Administrator.';
+			$errors[] = __('There went something wrong. Please contact the administrator.');
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
@@ -208,18 +212,18 @@ class AccountHandler {
 			$pwHash = self::getChangePasswordHash();
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
-			$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Zugangsdaten';
-			$message  = "Passwort vergessen, ".$account['name']."?<br><br>\r\n\r\n";
-			$message .= "Unter folgendem Link kannst du innerhalb der n&auml;chsten 24 Stunden dein Passwort &auml;ndern:<br>\r\n";
+			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+			$message  = __('Forgot you password').' '.$account['name']."?<br><br>\r\n\r\n";
+			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= self::getChangePasswordLink($pwHash);
 
 			if (System::sendMail($account['mail'], $subject, $message))
-				return 'Der Passwort-Link wurde dir zugesandt und ist 24h g&uuml;ltig.';
+				return __('The link has been sent and will be valid for 24 hours.');
 			else {
-				$string = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
+				$string = __('Sending the link did not work. Please contact the administrator.');
 
 				if (System::isAtLocalhost()) {
-					$string .= '<br>Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+					$string .= '<br>'.__('Your local server has no smtp-server. You have to contact the administrator.');
 					Error::getInstance()->addDebug('Link for changing password: '.self::getChangePasswordLink($pwHash));
 				}
 		
@@ -227,7 +231,7 @@ class AccountHandler {
 			}
 		}
 
-		return 'Der Benutzername ist uns nicht bekannt.';
+		return __('The username is not known.');
 	}
 
 	/**
@@ -303,9 +307,9 @@ class AccountHandler {
 
 		if ($_POST['chpw_username'] == self::getUsernameForChangePasswordHash()) {
 			if ($_POST['new_pw'] != $_POST['new_pw_again'])
-				return array('Die Passw&ouml;rter waren unterschiedlich.');
+				return array( __('The passwords have to be the same.') );
 			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
-				return array('Das Passwort muss mindestens '.self::$PASS_MIN_LENGTH.' Zeichen lang sein.');
+				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
 			else {
 				self::updateAccount($_POST['chpw_username'],
 					array('password', 'changepw_hash', 'changepw_timelimit'),
@@ -313,7 +317,7 @@ class AccountHandler {
 				header('Location: login.php');
 			}
 		} else
-			return array('Da ist etwas schiefgelaufen.');
+			return array( __('Something went wrong.') );
 	}
 
 	/**
@@ -382,19 +386,19 @@ class AccountHandler {
 		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Registrierung';
-		$message  = "Danke f&uuml;r deine Anmeldung, ".$account['name']."!<br><br>\r\n\r\n";
-		$message .= "Unter folgendem Link kannst du deinen Account (Benutzername: ".$account['username'].") best&auml;tigen:<br>\r\n";
+		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
+		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
 		$message .= $activationLink;
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
-			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
+			$errors[] = __('Sending the link did not work. Please contact the administrator.');
 
 			if (System::isAtLocalhost()) {
 				if ($activationHash == '') {
-					$errors[] = 'Da kein SMTP-Server vorhanden ist, wurde der Account direkt aktiviert.';
+					$errors[] = __('Your local server has no smtp-server. Your account has been directly activated.');
 				} else {
-					$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+					$errors[] = __('Your local server has no smtp-server. You have to contact the administrator.');
 					Error::getInstance()->addDebug('Link for activating account: '.$activationLink);
 				}
 			}
@@ -412,17 +416,16 @@ class AccountHandler {
 
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION.': Account löschen';
-		$message  = "Schade, dass du deinen Account ".$account['username']." l&ouml;schen m&ouml;chtest, ".$account['name']."!<br><br>\r\n\r\n";
-		$message .= "Unter folgendem Link kannst du deine Accountl&ouml;schung best&auml;tigen:<br>\r\n";
+		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$message  = __('You want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
+		$message .= __('Finish your deletion by accessing the following link: ')."<br>\r\n";
 		$message .= $deletionLink;
-		$message .= "\n Falls du dein Account nicht l&ouml;schen m&ouml;test, ignoriere diese Mail!<br>\r\n";
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
-			$errors[] = 'Das Versenden der E-Mail hat nicht geklappt. Bitte kontaktiere den Administrator.';
+			$errors[] = __('Sending the link did not work. Please contact the administrator.');
 
 			if (System::isAtLocalhost()) {
-				$errors[] = 'Dein lokaler Webserver hat vermutlich keinen SMTP-Server. Du musst per Hand in der Datenbank die &Auml;nderungen vornehmen oder dich an den Administrator wenden.';
+					$errors[] = __('Your local server has no smtp-server. You have to contact the administrator.');
 				Error::getInstance()->addDebug('Link for deleting account: '.$deletionLink);
 			}
 		}
