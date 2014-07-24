@@ -254,7 +254,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getCalenderLink() {
-		return '<span id="calendar-link" class="link" title="'.__('calendar selection').'">'.Icon::$CALENDAR.'</span>';
+		return '<span id="calendar-link" class="link" title="'.__('Calendar').'">'.Icon::$CALENDAR.'</span>';
 	}
 
 	/**
@@ -262,7 +262,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', __('Monatstraining vergleichen'), false, true).'>'.Icon::$BARS_BIG.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', __('Training per month'), false, true).'>'.Icon::$BARS_BIG.'</a>');
 	}
 
 	/**
@@ -270,7 +270,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', __('Wochentraining vergleichen'), false, true).'>'.Icon::$BARS_SMALL.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', __('Training per week'), false, true).'>'.Icon::$BARS_SMALL.'</a>');
 	}
 
 	/**

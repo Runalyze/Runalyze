@@ -153,7 +153,7 @@ class FrontendSharedList extends FrontendShared {
 		if (!$this->userExists() || !$this->userAllowsList())
 			return __('Problem');
 
-		return 'Trainingsansicht von '.$this->User['username'];
+		return sprintf( __('Training view of %s'), $this->User['username'] );
 	}
 
 	/**
@@ -161,11 +161,10 @@ class FrontendSharedList extends FrontendShared {
 	 */
 	protected function throwErrorForPrivateList() {
 		echo HTML::h1(__('Error'));
-		echo HTML::error('
-			<strong>Diese Trainingsliste ist privat.</strong><br>
-			<br>
-			Jeder Benutzer von Runalyze kann selbst bestimmen,
-			ob er seine Trainings ver&ouml;ffentlicht oder nicht.');
+		echo HTML::error(
+				sprintf('<strong>%s</strong>', __('This list is private')).'<br><br>'.
+				__('The user does not share his activity list.')
+		);
 
 		$this->displayLinkToRunalyze();
 	}

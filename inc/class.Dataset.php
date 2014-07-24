@@ -296,7 +296,7 @@ class Dataset {
 		if (!is_object($this->TrainingObject))
 			echo HTML::emptyTD();
 		elseif (!$this->TrainingObject->isPublic())
-			echo HTML::td(Icon::$ADD_SMALL);
+			echo HTML::emptyTD();
 		else
 			echo HTML::td(Icon::$ADD_SMALL_GREEN, 'link');
 	}
@@ -331,7 +331,6 @@ class Dataset {
 					return '';
 
 				return $this->TrainingObject->DataView()->getSpeedStringForTime( $this->TrainingObject->getTimeInSecondsSumWithDistance() );
-				//return $this->TrainingObject->DataView()->getSpeedString();
 
 			case 'elevation':
 				return $this->TrainingObject->DataView()->getElevationWithTooltip();

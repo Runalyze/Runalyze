@@ -9,8 +9,6 @@ require '../inc/class.FrontendSharedList.php';
 
 $Frontend = new FrontendSharedList();
 
-echo '<div class="panel-content">';
-
 if (!isset($_GET['y']))
 	$_GET['y'] = date("Y");
 
@@ -26,5 +24,3 @@ if ($_GET['type'] == 'week') {
 } else {
 	echo HTML::error( __('There was a problem.') );
 }
-
-echo '</div>';

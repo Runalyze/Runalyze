@@ -40,7 +40,7 @@ class SharedLinker {
 	 * @return string
 	 */
 	static public function getToolbarLinkTo($trainingID) {
-		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.Icon::$ATTACH.' '.__('public link').'</a>';
+		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.Icon::$ATTACH.' '.__('Public link').'</a>';
 	}
 
 	/**

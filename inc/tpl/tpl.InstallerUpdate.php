@@ -1,25 +1,23 @@
 <form action="update.php" method="post">
 	<p class="text">
-		<strong>Runalyze updaten:</strong>
+		<strong><?php _e('Update Runalyze'); ?></strong>
 	</p>
 
 	<p class="text">
-		Zusammen mit dieser Datei solltest du bereits im Besitz der neuen Runalyze-Version sein.
-		Damit du deine bisherigen Daten weiter nutzen kannst, ist ein Update der Datenbank notwendig.
-		Dazu kannst du im Folgenden das gew&uuml;nschte Update ausw&auml;hlen. 
+		<?php _e('After downloading the newest version of Runalyze you have to update your database.'); ?>
+		<?php _e('Choose therefore the update in the following list. Afterwards you can use Runalyze as before.'); ?>
 	</p>
 
 	<p class="text">
-		Zur Sicherheit solltest du ein <strong>Datenbank-Backup</strong> anlegen.<br>
-		<strong>Bitte geh sicher</strong>, welche Version du bisher hattest!
-		Wenn du ein falches Update ausw&auml;hlst, kann das die Datenbank unwiderruflich ver&auml;ndern, sodass eine Neuinstallation notwendig w&auml;re.
+		<?php _e('To be safe we recommend you to make a complete backup of your database.'); ?>
 	</p>
 
 	<p class="text">
 		<select name="importFile">
-		<?php foreach ($this->PossibleUpdates as $Update): ?>
-			<option value="<?php echo $Update['file']; ?>"><?php echo $Update['text']; ?></option>
-		<?php endforeach; ?>
+			<option value=""><?php _e('----- please choose'); ?></option>
+			<?php foreach ($this->PossibleUpdates as $Update): ?>
+			<option value="<?php echo $Update['file']; ?>"><?php echo sprintf( __('Update to %s (from %s, %s)'), $Update['to'], $Update['from'], $Update['date']); ?></option>
+			<?php endforeach; ?>
 		</select>
 	</p>
 
@@ -29,15 +27,15 @@
 	</p>
 	<?php elseif (isset($_POST['importFile'])): ?>
 	<p class="info">
-		Runalyze wurde erfolgreich auf die gew&uuml;nschte Version aktualisiert.
+		<?php _e('The update was successfull.'); ?>
 	</p>
 	<?php endif; ?>
 
 	<p class="text">
-		<input type="submit" value="Update">
+		<input type="submit" value="<?php _e('Update'); ?>">
 	</p>
 
 	<p class="text">
-		<a class="button" href="index.php" title="zu Runalyze">Runalyze starten</a>
+		<a class="button" href="index.php" title="Runalyze"><?php _e('Start Runalyze'); ?></a>
 	</p>
 </form>

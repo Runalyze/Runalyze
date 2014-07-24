@@ -153,18 +153,18 @@ class AdminView {
 	private function getSettingsFieldset() {
 		FormularInput::setStandardSize( FormularInput::$SIZE_MIDDLE );
 
-		$Fieldset = new FormularFieldset('Einstellungen');
-		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', 'Debug-Modus') );
-		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', 'Wartungsmodus') );
-		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', 'Benutzer k&ouml;nnen sich registrieren') );
-		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', 'Benutzer m&uuml;ssen sich einloggen') );
-		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip('Garmin API-Key', 'In Online-Version notwendig f&uuml;r Garmin-Communicator<br>siehe http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/')) );
-		$Fieldset->addField( new FormularInput('MAIL_SENDER', 'Absenderadresse f&uuml;r E-Mails') );
-		$Fieldset->addField( new FormularSubmit('Speichern', '') );
+		$Fieldset = new FormularFieldset( __('Settings') );
+		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', __('Debug mode')) );
+		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
+		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
+		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', __('Users have to login')) );
+		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version for the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
+		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
+		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
 		if (!is_writable(FRONTEND_PATH.'../config.php'))
-			$Fieldset->addError('Die Konfigurationsdatei <strong>config.php</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em><br>Änderungen können nicht gespeichert werden.');
+			$Fieldset->addError( __('<strong>config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em><br>'.__('Changes can\'t be saved.') );
 
 		return $Fieldset;
 	}
@@ -233,28 +233,28 @@ class AdminView {
 	 * @return \FormularFieldset
 	 */
 	private function getUserListFieldset() {
-		$Fieldset = new FormularFieldset('Benutzerliste');
+		$Fieldset = new FormularFieldset( __('User list') );
 		$Fieldset->setCollapsed();
 
 		if (empty($this->UserList)) {
-			$Fieldset->addWarning('Es ist noch niemand registriert.');
+			$Fieldset->addWarning( __('There are no registered users.') );
 		} else {
 			$Code = '
 			<table class="small fullwidth zebra-style" id="userTable">
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>User</th>
-						<th>Name</th>
-						<th>E-Mail</th>
-						<th class="{sorter: \'germandate\'}">seit</th>
-						<th class="{sorter: \'germandate\'}">zuletzt</th>
-						<!--<th class="{sorter: false}">Funktionen</th>-->
+						<th>'.__('User').'</th>
+						<th>'.__('Name').'</th>
+						<th>'.__('Email').'</th>
+						<th class="{sorter: \'germandate\'}">'.__('since').'</th>
+						<th class="{sorter: \'germandate\'}">'.__('last').'</th>
+						<!--<th class="{sorter: false}">'.__('Functions').'</th>-->
 					</tr>
 				</thead>
 				<tbody>';
-						//<th class="{sorter: \'x\'}">Anz.</th>
-						//<th class="{sorter: \'distance\'}">km</th>
+						//<th class="{sorter: \'x\'}">'.__('times').'</th>
+						//<th class="{sorter: \'distance\'}">'.__('km').'</th>
 
 			foreach ($this->UserList as $User) {
 				$Code .= '
@@ -265,7 +265,7 @@ class AdminView {
 						<td class="small">'.$User['mail'].'</td>
 						<td class="small c">'.date("d.m.Y", $User['registerdate']).'</td>
 						<td class="small c">'.date("d.m.Y", $User['lastaction']).'</td>
-						<!--<td>User aktivieren Neues Passwort zusenden</td>-->
+						<!--<td>'.__('Activate user').' - '.__('Set new password').'</td>-->
 					</tr>';
 					//<td class="small r">'.$User['num'].'x</td>
 					//<td class="small r">'.Running::Km($User['km']).'</td>
@@ -290,18 +290,18 @@ class AdminView {
 	 * @return \FormularFieldset
 	 */
 	private function getServerDataFieldset() {
-		$Fieldset = new FormularFieldset('Serverdaten');
-		$Fieldset->addSmallInfo('Derzeit l&auml;uft PHP '.PHP_VERSION);
-		$Fieldset->addSmallInfo('Es l&auml;uft MySQL '.@mysql_get_server_info());
-		$Fieldset->addSmallInfo('Zeit-Limit: '.ini_get('max_execution_time'));
-		$Fieldset->addSmallInfo('Memory-Limit: '.ini_get('memory_limit'));
-		$Fieldset->addSmallInfo('Upload-Limit: '.ini_get('upload_max_filesize'));
-		$Fieldset->addSmallInfo('Post-Limit: '.ini_get('post_max_size'));
+		$Fieldset = new FormularFieldset( __('Server information') );
+		$Fieldset->addSmallInfo( __('PHP version:').' '.PHP_VERSION);
+		$Fieldset->addSmallInfo( __('MySQL version:').' '.@mysql_get_server_info());
+		$Fieldset->addSmallInfo( __('Time limit:').' '.ini_get('max_execution_time'));
+		$Fieldset->addSmallInfo( __('Memory limit:').' '.ini_get('memory_limit'));
+		$Fieldset->addSmallInfo( __('Upload limit:').' '.ini_get('upload_max_filesize'));
+		$Fieldset->addSmallInfo( __('Post limit:').' '.ini_get('post_max_size'));
 
 		if (Shell::isPerlAvailable())
-			$Fieldset->addSmallInfo('Perl-Skripte k&ouml;nnen ausgef&uuml;hrt werden.');
+			$Fieldset->addSmallInfo( __('Perl scripts can used.') );
 		else
-			$Fieldset->addWarning('Perl-Skripte k&ouml;nnen nicht ausgef&uuml;hrt werden.');
+			$Fieldset->addWarning( __('Perl scripts can\'t be used.') );
 
 		$Fieldset->setCollapsed();
 
@@ -318,17 +318,18 @@ class AdminView {
 
 		include FRONTEND_PATH.'system/define.chmod.php';
 
-		$Fieldset = new FormularFieldset('Berechtigungen');
-		$Fieldset->addBlock('F&uuml;r die folgenden Ordner werden Schreibrechte ben&ouml;tigt. Wenn der falsche Owner eingetragen ist, stimmt die folgende Angabe aber eventuell nicht.');
+		$Fieldset = new FormularFieldset( __('Permissions') );
+		$Fieldset->addBlock( __('The following directions do need write permissions. (And the right owner has to be set!)') );
 
 		foreach ($CHMOD_FOLDERS as $folder) {
 			$realfolder = FRONTEND_PATH.'../'.$folder;
+			$chmod = substr(decoct(fileperms($realfolder)),1);
 
 			if (!is_writable($realfolder)) {
-				$Fieldset->addError('Das Verzeichnis <strong>'.$folder.'</strong> ist nicht beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+				$Fieldset->addError( sprintf(__('The direction <strong>%s</strong> is not writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
 				$failures++;
 			} else {
-				$Fieldset->addOkay('Das Verzeichnis <strong>'.$folder.'</strong> ist beschreibbar. <em>(chmod = '.substr(decoct(fileperms($realfolder)),1).')</em>');
+				$Fieldset->addOkay( sprintf(__('The direction <strong>%s</strong> is writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
 			}
 		}
 
@@ -343,13 +344,13 @@ class AdminView {
 	 * @return \FormularFieldset
 	 */
 	private function getFilesFieldset() {
-		$Fieldset = new FormularFieldset('Nicht mehr ben&ouml;tigte Dateien');
+		$Fieldset = new FormularFieldset( __('Unused files') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('/import/files/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('/export/files/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
-		$Fieldset->addBlock( '<input type="submit" value="Verzeichnisse s&auml;ubern">' );
+		$Fieldset->addBlock( '<input type="submit" value="'.__('Clean directions').'">' );
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;
@@ -361,13 +362,13 @@ class AdminView {
 	 * @return string
 	 */
 	private function getBlockForFiles($pathToFiles) {
-		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'"> leeren</label>';
+		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'"> '.__('clean').'</label>';
 		$Text .= '<small>';
 		$Text .= '<strong>'.$pathToFiles.'</strong><br>';
 		$Files = Filesystem::getFileNamesFromPath($pathToFiles);
 
 		if (empty($Files)) {
-			$Text .= '<em>Keine Dateien gefunden</em>';
+			$Text .= '<em>'.__('No files found').'</em>';
 		} else {
 			foreach ($Files as $File) {
 				$Text .= '<em>'.$File.'</em>, '.Filesystem::getFilesize(FRONTEND_PATH.$pathToFiles.$File).'<br>';
