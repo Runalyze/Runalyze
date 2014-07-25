@@ -18,53 +18,53 @@ $HIDDEN_KEYS = array(
 $FIELDSETS = array(
 	array(
 		'id'		=> 'sports',
-		'legend'	=> 'Sportart',
+		'legend'	=> __('Sport'),
 		'fields'	=> array('sportid', 'typeid'),
 		'conf'		=> 'FORMULAR_SHOW_SPORT'
 	),
 	array(
 		'id'		=> 'general',
-		'legend'	=> 'Allgemeines',
+		'legend'	=> __('General Information'),
 		'fields'	=> array('time', 's', 'kcal', 'pulse_avg', 'pulse_max'),
 		'conf'		=> 'FORMULAR_SHOW_GENERAL'
 	),
 	array(
 		'id'		=> 'distance',
-		'legend'	=> 'Distanz',
+		'legend'	=> __('Distance'),
 		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
 		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
 	array(
 		'id'		=> 'splits',
-		'legend'	=> 'Zwischenzeiten',
+		'legend'	=> __('Laps'),
 		'fields'	=> array('splits'),
 		'conf'		=> 'FORMULAR_SHOW_SPLITS',
 		'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 	),
 	array(
 		'id'		=> 'other',
-		'legend'	=> 'Sonstiges',
+		'legend'	=> __('Miscellaneous'),
 		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
 		'conf'		=> 'FORMULAR_SHOW_OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
 	array(
 		'id'		=> 'notes',
-		'legend'	=> 'Notizen',
+		'legend'	=> __('Notes'),
 		'fields'	=> array('notes'),
 		'conf'		=> 'FORMULAR_SHOW_NOTES',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
 	array(
 		'id'		=> 'weather',
-		'legend'	=> 'Wetter',
+		'legend'	=> __('Weather conditions'),
 		'fields'	=> array('weatherid', 'temperature', 'clothes'),
 		'conf'		=> 'FORMULAR_SHOW_WEATHER'
 	),
 	array(
 		'id'		=> 'privacy',
-		'legend'	=> 'Privatsph&auml;re',
+		'legend'	=> __('Privacy'),
 		'fields'	=> array('is_public'),
 		'conf'		=> 'FORMULAR_SHOW_PUBLIC'
 	)
@@ -80,7 +80,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Sportart',
+						'label'		=> __('Sport'),
 						'class'		=> 'TrainingSelectSport',
 						'required'	=> true
 					)
@@ -92,7 +92,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Trainingstyp',
+						'label'		=> __('Activity type'),
 						'class'		=> 'TrainingSelectType',
 						'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 					)
@@ -105,7 +105,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'required'	=> true,
-						'label'		=> 'Datum',
+						'label'		=> __('Date'),
 						'class'		=> 'FormularInputDayAndDaytime'
 					)
 	),
@@ -134,7 +134,7 @@ $FIELDS = array(
 						'default'	=> '1'
 					),
 					'formular'	=> array(
-						'label'		=> '&Ouml;ffentlich',
+						'label'		=> __('Public'),
 						'class'		=> 'FormularCheckbox'
 					)
 	),
@@ -145,7 +145,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Bahn',
+						'label'		=> __('Track'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
@@ -157,7 +157,7 @@ $FIELDS = array(
 						'default'	=> '0.00'
 					),
 					'formular'	=> array(
-						'label'		=> 'Distanz',
+						'label'		=> __('Distance'),
 						'unit'		=> FormularUnit::$KM
 					)
 	),
@@ -168,7 +168,7 @@ $FIELDS = array(
 						'default'	=> '0.00'
 					),
 					'formular'	=> array(
-						'label'		=> 'Dauer',
+						'label'		=> __('Duration'),
 						'required'	=> true,
 						'parser'	=> FormularValueParser::$PARSER_TIME
 					)
@@ -180,7 +180,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Gesamtdauer',
+						'label'		=> __('Elapsed time'),
 						'parser'	=> FormularValueParser::$PARSER_TIME
 					)
 	),
@@ -192,7 +192,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						//'class'	=> 'TrainingInputPace' // TODO: pace + speed
-						'label'		=> 'Pace',
+						'label'		=> __('Pace'),
 						'unit'		=> FormularUnit::$PACE
 					)
 	),
@@ -203,7 +203,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'H&ouml;henmeter',
+						'label'		=> __('Elevation'),
 						'unit'		=> FormularUnit::$ELEVATION,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
@@ -225,7 +225,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Kalorien',
+						'label'		=> __('Calories'),
 						'unit'		=> FormularUnit::$KCAL
 					)
 	),
@@ -236,7 +236,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> '&oslash; Puls',
+						'label'		=> __('avg. HR'),
 						'unit'		=> FormularUnit::$BPM
 					)
 	),
@@ -247,7 +247,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'max. Puls',
+						'label'		=> __('max. HR'),
 						'unit'		=> FormularUnit::$BPM
 					)
 	),
@@ -288,7 +288,7 @@ $FIELDS = array(
 						'default'	=> '1'
 					),
 					'formular'	=> array(
-						'label'		=> 'VDOT f&uuml;r Form',
+						'label'		=> __('VDOT for shape'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
@@ -320,9 +320,9 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">Trittfrequenz</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">Schrittfrequenz</span>',
+						'label'		=> '<span class="'.TrainingFormular::$ONLY_NOT_RUNNING_CLASS.'">'.__('Cadence').'</span><span class="'.TrainingFormular::$ONLY_RUNNING_CLASS.'">'.__('Cadence (Running)').'</span>',
 						'unit'		=> FormularUnit::$RPM,
-						'tooltip'	=> 'Einheit ist auch beim Laufen hier <em>rpm</em>, also die Schritte mit z.B. dem linken Fuß pro Minute.',
+						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,'),
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
@@ -333,7 +333,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Power', // Leistung?
+						'label'		=> __('Power'), // Leistung?
 						'unit'		=> FormularUnit::$POWER,
 						'css'		=> TrainingFormular::$ONLY_POWER_CLASS
 					)
@@ -344,7 +344,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> 'Temperatur',
+						'label'		=> __('Temperature'),
 						'unit'		=> FormularUnit::$CELSIUS,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
@@ -356,7 +356,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Wetter',
+						'label'		=> __('Weather'),
 						'class'		=> 'TrainingSelectWeather',
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
@@ -367,7 +367,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> 'Strecke',
+						'label'		=> __('Route'),
 						'size'		=> FormularInput::$SIZE_FULL_INLINE,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
@@ -379,7 +379,7 @@ $FIELDS = array(
 						'default'	=> ''
 					),
 					'formular'	=> array(
-						'label'		=> 'Kleidung',
+						'label'		=> __('Clothing'),
 						'class'		=> 'TrainingSelectClothes',
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS,
 						'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
@@ -392,7 +392,7 @@ $FIELDS = array(
 						'default'	=> ''
 					),
 					'formular'	=> array(
-						'label'		=> 'Zwischenzeiten',
+						'label'		=> __('Laps'),
 						'class'		=> 'TrainingInputSplits'
 					)
 	),
@@ -402,7 +402,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> 'Bemerkung',
+						'label'		=> __('Comment'),
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),
@@ -412,7 +412,7 @@ $FIELDS = array(
 						'null'		=> true
 					),
 					'formular'	=> array(
-						'label'		=> 'Trainingspartner',
+						'label'		=> __('Partner'),
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)
 	),
@@ -423,7 +423,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Lauf-ABC',
+						'label'		=> __('Running drills'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)),
@@ -434,7 +434,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Laufschuh',
+						'label'		=> __('Shoe'),
 						'class'		=> 'TrainingSelectShoe',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)
@@ -445,7 +445,7 @@ $FIELDS = array(
 						'default'	=> ''
 					),
 					'formular'	=> array(
-						'label'		=> 'Notizen',
+						'label'		=> __('Notes'),
 						'class'		=> 'FormularTextarea',
 						'size'		=> FormularInput::$SIZE_FULL_INLINE
 					)

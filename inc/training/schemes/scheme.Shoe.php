@@ -6,12 +6,12 @@ $HIDDEN_KEYS = array();
 $FIELDSETS = array(
 	array(
 		'id'		=> 'general',
-		'legend'	=> 'Laufschuh',
+		'legend'	=> __('Shoe'),
 		'fields'	=> array('name', 'since')
 	),
 	array(
 		'id'		=> 'analyse',
-		'legend'	=> 'Zus&auml;tzliches',
+		'legend'	=> __('Miscellaneous'),
 		'fields'	=> array('additionalKm', 'inuse')
 	)
 );
@@ -25,7 +25,7 @@ $FIELDS['name'] = array(
 		'precision'	=> '100',
 	),
 	'formular'	=> array(
-		'label'		=> 'Name',
+		'label'		=> __('Name'),
 		'required'	=> true,
 		'notempty'	=> true,
 		'size'		=> FormularInput::$SIZE_MIDDLE
@@ -37,7 +37,7 @@ $FIELDS['since'] = array(
 		'precision'	=> '10',
 	),
 	'formular'	=> array(
-		'label'		=> 'Kaufdatum'
+		'label'		=> __('Purchase date')
 	)
 );
 $FIELDS['additionalKm'] = array(
@@ -46,7 +46,7 @@ $FIELDS['additionalKm'] = array(
 		'precision'	=> '6,2',
 	),
 	'formular'	=> array(
-		'label'		=> 'bish. Leistung',
+		'label'		=> __('prev. distance'),
 		'unit'		=> FormularUnit::$KM
 	)
 );
@@ -70,7 +70,7 @@ $FIELDS['inuse'] = array(
 		'default'	=> '1'
 		),
 	'formular'	=> array(
-		'label'		=> 'In Gebrauch',
+		'label'		=> __('In use'),
 		'class'		=> 'FormularCheckbox',
 		'parser'	=> FormularValueParser::$PARSER_BOOL
 	)

@@ -44,29 +44,29 @@ class VDOTinfo {
 	 * Display header
 	 */
 	protected function displayHeader() {
-		echo HTML::h1('VDOT-Berechnung zum '.$this->Training->DataView()->getTitleWithCommentAndDate());
+		echo HTML::h1( sprintf( __('VDOT calculation for: %s'), $this->Training->DataView()->getTitleWithCommentAndDate() ) );
 	}
 
 	/**
 	 * Display as competition
 	 */
 	protected function displayAsCompetition() {
-		$Fieldset = new FormularFieldset('Standardberechnung: als Wettkampf');
+		$Fieldset = new FormularFieldset( __('Standard calculation: As competition'));
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				Die eigentlichen Formeln dienen dazu, einer Wettkampfzeit einen VDOT-Wert zuzuordnen.
+				'.__('All traditional formulas are used to calculate a VDOT value for a given competition.').'
 			</p>
 
 			<div class="w50">
-				<label>Distanz</label>
+				<label>'.__('Distance').'</label>
 				<span class="as-input">'.$this->Training->DataView()->getDistanceString().'</span>
 			</div>
 			<div class="w50 double-height-right">
-				<label>&rArr; VDOT</label>
+				<label>&rArr; '.__('VDOT').'</label>
 				<span class="as-input">'.$this->Training->getVdotByTime().'</span>
 			</div>
 			<div class="w50">
-				<label>Dauer</label>
+				<label>'.__('Duration').'</label>
 				<span class="as-input">'.$this->Training->DataView()->getTimeString().'</span>
 			</div>
 		');
@@ -77,23 +77,23 @@ class VDOTinfo {
 	 * Display with heartrate
 	 */
 	protected function displayWithHeartrate() {
-		$Fieldset = new FormularFieldset('Korrektur: mit Herzfrequenz');
+		$Fieldset = new FormularFieldset( __('Correction: based on heartrate') );
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				Jack Daniels hat eine Tabelle f&uuml;r den Zusammenhang von &#37;HFmax und &#37;VDOT.<br>
-				Aufgrund der vielen Einflussfaktoren auf den Puls sind diese Werte nicht immer richtig.
+				'.__('Jack Daniels has tables to compare &#37;HRmax and &#37;VDOT.').'<br>
+				'.__('Because of a lot of influencing factors these computations are not always accurate.').'
 			</p>
 
 			<div class="w50">
-				<label>Puls</label>
+				<label>'.__('Heartrate').'</label>
 				<span class="as-input">'.$this->Training->DataView()->getPulseAvgInPercent().'HFmax</span>
 			</div>
 			<div class="w50 double-height-right">
-				<label>&rArr; VDOT</label>
+				<label>&rArr; '.__('VDOT').'</label>
 				<span class="as-input">'.$this->Training->getVdotUncorrected().'</span>
 			</div>
 			<div class="w50">
-				<label>entspricht</label>
+				<label>'.__('equals').'</label>
 				<span class="as-input">'.round(100*JD::pHF2pVDOT($this->Training->getPulseAvg()/HF_MAX)).' &#37;VDOT</span>
 			</div>
 		');
@@ -104,23 +104,23 @@ class VDOTinfo {
 	 * Display with corrector
 	 */
 	protected function displayWithCorrector() {
-		$Fieldset = new FormularFieldset('Korrektur: mit Korrekturfaktor');
+		$Fieldset = new FormularFieldset( __('Correction: based on correction factor') );
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				100&#37;VDOT entsprechen laut Jack Daniels 100&#37;HFmax, aber wer schafft 11 Minuten bei Maximalpuls?
-				Der Korrekturfaktor wird aus dem Puls des <em>besten</em> Wettkampfs berechnet.
+				'.__('To consider some individual factors, we use a correction factor.').'
+				'.__('This factor is based on your <em>best</em> competition.').'
 			</p>
 
 			<div class="w50">
-				<label>Korrekturfaktor</label>
+				<label>'.__('Correction factor').'</label>
 				<span class="as-input">'.JD::correctionFactor().'</span>
 			</div>
 			<div class="w50 double-height-right">
-				<label>&rArr; VDOT</label>
+				<label>&rArr; '.__('VDOT').'</label>
 				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
 			</div>
 			<div class="w50">
-				<label>unkorrigiert</label>
+				<label>'.__('uncorrected').'</label>
 				<span class="as-input">'.$this->Training->getVdotUncorrected().'</span>
 			</div>
 		');
@@ -148,22 +148,22 @@ class VDOTinfo {
 		if (CONF_JD_USE_VDOT_CORRECTOR)
 			$newVDOT = JD::correctionFactor() * $newVDOT;
 
-		$Fieldset = new FormularFieldset('Korrektur: mit Beachtung der H&ouml;henmeter');
+		$Fieldset = new FormularFieldset( __('Correction: considering elevation') );
 		$Fieldset->setHtmlCode('
 			<p class="warning small '.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'hide' : '').'">
-				Diese Korrektur wird derzeit nicht verwendet.
+				'.__('This correction method is currently unused.').'
 			</p>
 
 			<div class="w50">
-				<label>Auf-/Abstieg</label>
+				<label>'.__('Up/Down').'</label>
 				<span class="as-input">+'.$up.'/-'.$down.'&nbsp;m</span>
 			</div>
 			<div class="w50 double-height-right">
-				<label>&rArr; VDOT</label>
+				<label>&rArr; '.__('VDOT').'</label>
 				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
 			</div>
 			<div class="w50">
-				<label>Distanzeinfluss</label>
+				<label>'.__('Influence').'</label>
 				<span class="as-input">'.Math::WithSign($additionalDistance).'m = '.Running::Km($this->Training->getDistance() + $additionalDistance/1000, 3).'</span>
 			</div>
 		');

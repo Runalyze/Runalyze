@@ -6,17 +6,17 @@ $HIDDEN_KEYS = array();
 $FIELDSETS = array(
 	array(
 		'id'		=> 'general',
-		'legend'	=> 'Allgemein',
+		'legend'	=> __('General Information'),
 		'fields'	=> array('time', 'weight')
 	),
 	array(
 		'id'		=> 'analyse',
-		'legend'	=> 'Analysewerte',
+		'legend'	=> __('Analysis'),
 		'fields'	=> array('fat', 'water', 'muscles')
 	),
 	array(
 		'id'		=> 'pulse',
-		'legend'	=> 'Puls',
+		'legend'	=> __('Heartrate'),
 		'fields'	=> array('pulse_rest', 'pulse_max')
 	)
 );
@@ -30,7 +30,7 @@ $FIELDS['time'] = array(
 		'precision'	=> '11',
 		),
 	'formular'	=> array(
-		'label'		=> 'Datum',
+		'label'		=> __('Date'),
 		'required'	=> true,
 		'class'		=> 'FormularInputDate',
 		'parser'	=> FormularValueParser::$PARSER_DATE
@@ -42,7 +42,7 @@ $FIELDS['weight'] = array(
 		'precision'	=> '4,1',
 		),
 	'formular'	=> array(
-		'label'		=> 'Gewicht',
+		'label'		=> __('Weight'),
 		'unit'		=> FormularUnit::$KG
 	)
 );
@@ -52,7 +52,7 @@ $FIELDS['pulse_rest'] = array(
 		'precision'	=> '3',
 		),
 	'formular'	=> array(
-		'label'		=> 'Ruhepuls',
+		'label'		=> __('Resting HR'),
 		'unit'		=> FormularUnit::$BPM
 	)
 );
@@ -62,7 +62,7 @@ $FIELDS['pulse_max'] = array(
 		'precision'	=> '3',
 		),
 	'formular'	=> array(
-		'label'		=> 'Maximalpuls',
+		'label'		=> __('Maximal HR'),
 		'unit'		=> FormularUnit::$BPM
 	)
 );
@@ -72,7 +72,7 @@ $FIELDS['fat'] = array(
 		'precision'	=> '3,1',
 		),
 	'formular'	=> array(
-		'label'		=> 'Fettanteil',
+		'label'		=> __('Body fat'),
 		'unit'		=> FormularUnit::$PERCENT
 	)
 );
@@ -82,7 +82,7 @@ $FIELDS['water'] = array(
 		'precision'	=> '3,1',
 		),
 	'formular'	=> array(
-		'label'		=> 'Wasseranteil',
+		'label'		=> __('Body water'),
 		'unit'		=> FormularUnit::$PERCENT
 	)
 );
@@ -92,7 +92,7 @@ $FIELDS['muscles'] = array(
 		'precision'	=> '3,1',
 		),
 	'formular'	=> array(
-		'label'		=> 'Muskelanteil',
+		'label'		=> __('Body muscle'),
 		'unit'		=> FormularUnit::$PERCENT
 	)
 );

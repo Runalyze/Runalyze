@@ -130,7 +130,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getDateLinkForMenu() {
-		return Ajax::tooltip($this->getDateAsWeeklink(), '<em>Trainingswoche anzeigen</em><br>'.$this->getWeekday().' '.$this->getDate());
+		return Ajax::tooltip($this->getDateAsWeeklink(), '<em>'.__('Show week').'</em><br>'.$this->getWeekday().' '.$this->getDate());
 	}
 
 	/**
@@ -288,7 +288,7 @@ class TrainingDataView {
 	 */
 	public function getPowerWithTooltip() {
 		if ($this->Object->getPower() > 0)
-			return Ajax::tooltip($this->getPower(), '&oslash; Power: '.$this->getPower());
+			return Ajax::tooltip($this->getPower(), '&oslash; '.__('Power').': '.$this->getPower());
 
 		return '';
 	}
@@ -400,7 +400,7 @@ class TrainingDataView {
 		if ($this->Object->getElevation() == 0)
 			return '';
 
-		return Ajax::tooltip($this->getElevation(), '&oslash; Steigung: '.$this->getGradientInPercent());
+		return Ajax::tooltip($this->getElevation(), '&oslash; '.__('Gradient').': '.$this->getGradientInPercent());
 	}
 
 	/**
@@ -472,7 +472,7 @@ class TrainingDataView {
 	 */
 	public function getABCicon() {
 		if ($this->Object->wasWithABC())
-			return Ajax::tooltip(Icon::$ABC, 'Lauf-ABC');
+			return Ajax::tooltip(Icon::$ABC, __('Running drills'));
 
 		return '';
 	}

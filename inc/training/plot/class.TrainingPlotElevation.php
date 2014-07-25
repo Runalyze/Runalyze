@@ -22,7 +22,7 @@ class TrainingPlotElevation extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'elevation';
-		$this->title = 'H&ouml;henprofil';
+		$this->title = __('Elevation profile');
 	}
 
 	/**
@@ -30,7 +30,7 @@ class TrainingPlotElevation extends TrainingPlot {
 	 */
 	protected function initData() {
 		$this->Data = self::getData($this->Training);
-		$this->Plot->Data[] = array('label' => 'H&ouml;he', 'color' => 'rgba(227,217,187,1)', 'data' => $this->Data);
+		$this->Plot->Data[] = array('label' => __('Elevation'), 'color' => 'rgba(227,217,187,1)', 'data' => $this->Data);
 	}
 
 	/**

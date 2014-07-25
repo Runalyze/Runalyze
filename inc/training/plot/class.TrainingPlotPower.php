@@ -22,7 +22,7 @@ class TrainingPlotPower extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'power';
-		$this->title = 'Power';
+		$this->title = __('Power');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class TrainingPlotPower extends TrainingPlot {
 	protected function initData() {
 		$this->Data = self::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => 'Power', 'color' => 'rgb(0,136,0)', 'data' => $this->Data);
+		$this->Plot->Data[] = array('label' => __('Power'), 'color' => 'rgb(0,136,0)', 'data' => $this->Data);
 	}
 
 	/**

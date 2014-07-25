@@ -34,7 +34,7 @@ class TrainingPlotPacePulse extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'pacepulse';
-		$this->title = 'Pace/Herzfrequenz';
+		$this->title = __('Pace/Heartrate');
 	}
 
 	/**
@@ -44,8 +44,8 @@ class TrainingPlotPacePulse extends TrainingPlot {
 		$this->DataPace  = TrainingPlotPace::getData($this->Training);
 		$this->DataPulse = TrainingPlotPulse::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace);
-		$this->Plot->Data[] = array('label' => 'Herzfrequenz', 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
+		$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace);
+		$this->Plot->Data[] = array('label' => __('Heartrate'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
 	}
 
 	/**
