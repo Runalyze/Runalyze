@@ -65,7 +65,7 @@ class TrainingFormular extends StandardFormular {
 
 			if (Request::param('mode') == 'multi') {
 				$this->addHiddenValue('mode', 'multi');
-				$this->submitButtons['submit'] = 'Bearbeiten und weiter';
+				$this->submitButtons['submit'] = __('Edit and continue');
 			}
 		}
 
@@ -78,7 +78,7 @@ class TrainingFormular extends StandardFormular {
 	protected function displayAfterSubmit() {
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE) {
 			$this->displayHeader();
-			echo HTML::okay('Das Training wurde erfolgreich eingetragen.');
+			echo HTML::okay( __('The activity has been successfully created.') );
 			echo Ajax::closeOverlay();
 
 			if (CONF_TRAINING_SHOW_AFTER_CREATE)
@@ -96,11 +96,11 @@ class TrainingFormular extends StandardFormular {
 	 * Display fieldset: Delete training 
 	 */
 	protected function initDeleteFieldset() {
-		$DeleteText = '<strong>Training unwiderruflich l&ouml;schen &raquo;</strong>';
+		$DeleteText = '<strong>'.__('Permanently delete this activity').' &raquo;</strong>';
 		$DeleteUrl  = $_SERVER['SCRIPT_NAME'].'?delete='.$this->dataObject->id();
 		$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
-		$Fieldset = new FormularFieldset('Training l&ouml;schen');
+		$Fieldset = new FormularFieldset( __('Delete activity') );
 		$Fieldset->addWarning($DeleteLink);
 		$Fieldset->setCollapsed();
 
@@ -127,15 +127,14 @@ class TrainingFormular extends StandardFormular {
 		if ($this->dataObject->get('elevation_corrected') == 1)
 			return;
 
-		$Fieldset = new FormularFieldset('H&ouml;henkorrektur anwenden');
+		$Fieldset = new FormularFieldset( __('Use elevation correction') );
 		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_ELEVATION');
 
 		$Fieldset->addInfo('
-			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'" title="H&ouml;hendaten korrigieren"><strong>H&ouml;hendaten korrigieren</strong></a><br>
+			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'"><strong>'.__('Correct elevation data').'</strong></a><br>
 			<br>
 			<small id="gps-results" class="block">
-				Die H&ouml;hendaten k&ouml;nnen korrigiert werden, da diese beim GPS meist sehr ungenau sind.<br>
-				Vorsicht: Die Abfrage kann lange dauern, bitte nicht abbrechen, bevor das Laden beendet ist.
+				'.__('Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.').'
 			</small>');
 
 		$this->addFieldset($Fieldset);
@@ -145,7 +144,7 @@ class TrainingFormular extends StandardFormular {
 	 * Init fieldset for adding GPS data 
 	 */
 	protected function initAddGPSdataFieldset() {
-		$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
+		/*$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
 		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_GPS');
 		$Fieldset->addInfo('
 		<span onmouseover="javascript:createUploader()">
@@ -165,7 +164,7 @@ class TrainingFormular extends StandardFormular {
 			</script>
 		</span>');
 
-		$this->addFieldset($Fieldset);
+		$this->addFieldset($Fieldset);*/
 	}
 
 	/**

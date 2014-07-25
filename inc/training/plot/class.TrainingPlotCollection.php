@@ -40,7 +40,7 @@ class TrainingPlotCollection extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'collection';
-		$this->title = 'Pace/Herzfrequenz/H&ouml;he';
+		$this->title = __('Pace/Heartrate/Elevation');
 	}
 
 	/**
@@ -51,9 +51,9 @@ class TrainingPlotCollection extends TrainingPlot {
 		$this->DataPulse     = TrainingPlotPulse::getData($this->Training);
 		$this->DataElevation = TrainingPlotElevation::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => 'H&ouml;he', 'color' => 'rgba(227,217,187,1)', 'data' => $this->DataElevation);
-		$this->Plot->Data[] = array('label' => 'Herzfrequenz', 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
-		$this->Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace, 'yaxis' => 3);
+		$this->Plot->Data[] = array('label' => __('Elevation'), 'color' => 'rgba(227,217,187,1)', 'data' => $this->DataElevation);
+		$this->Plot->Data[] = array('label' => __('HR'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
+		$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace, 'yaxis' => 3);
 	}
 
 	/**

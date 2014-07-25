@@ -28,7 +28,7 @@ class TrainingPlotPace extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'pace';
-		$this->title = 'Pace';
+		$this->title = __('Pace');
 	}
 
 	/**
@@ -37,7 +37,7 @@ class TrainingPlotPace extends TrainingPlot {
 	protected function initData() {
 		$this->Data = self::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => 'Pace', 'color' => 'rgb(0,0,136)', 'data' => $this->Data);
+		$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->Data);
 	}
 
 	/**

@@ -22,7 +22,7 @@ class TrainingPlotTemperature extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'temperature';
-		$this->title = 'Temperatur';
+		$this->title = __('Temperature');
 	}
 
 	/**

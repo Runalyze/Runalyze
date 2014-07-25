@@ -297,7 +297,7 @@ class SearchResults {
 		if ($MultiEditor)
 			$MultiEditor->display();
 		else
-			echo HTML::error('Der Multi-Editor konnte nicht gefunden werden.');
+			echo HTML::error( __('The multi editor could not be located.') );
 
 		echo Ajax::wrapJS('$("#search").remove();$("#ajax").removeClass("big-window");');
 	}
@@ -328,7 +328,7 @@ class SearchResults {
 		if ($this->page != 1)
 			echo '<span class="link" onclick="Runalyze.searchPageBack();">'.Icon::$BACK.'</span>';
 
-		echo ' Insgesamt wurden '.$this->totalNumberOfTrainings.' Trainings gefunden. ';
+		echo ' '.sprintf( __('In total: found %s activities.'), $this->totalNumberOfTrainings).' ';
 
 		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings)
 			echo '<span class="link" onclick="Runalyze.searchPageNext();">'.Icon::$NEXT.'</span>';

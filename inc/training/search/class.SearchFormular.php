@@ -50,7 +50,7 @@ class SearchFormular extends Formular {
 	 * Init general fieldsets
 	 */
 	protected function initGeneralFieldset() {
-		$this->Fieldset = new FormularFieldset('Trainings suchen');
+		$this->Fieldset = new FormularFieldset( __('Search activities') );
 
 		$this->addFieldSport();
 		$this->addFieldTimeRange();
@@ -63,7 +63,7 @@ class SearchFormular extends Formular {
 	 * Add block with submit button
 	 */
 	protected function addSubmitBlock() {
-		$Field = new FormularSubmit('Suchen', 'submit');
+		$Field = new FormularSubmit(__('Search'), 'submit');
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33.' c' );
 
 		$this->Fieldset->addField($Field);
@@ -80,7 +80,7 @@ class SearchFormular extends Formular {
 	 * Add field: time range
 	 */
 	private function addFieldTimeRange() {
-		$Field = new FormularInputSearchTimeRange('search_time_range', 'Zeitraum');
+		$Field = new FormularInputSearchTimeRange('search_time_range', __('Time range'));
 		$this->Fieldset->addField( $Field );
 	}
 
@@ -88,7 +88,7 @@ class SearchFormular extends Formular {
 	 * Add field: sort
 	 */
 	private function addFieldSort() {
-		$Field = new FormularSelectSearchSort('search_sort', 'Sortierung');
+		$Field = new FormularSelectSearchSort('search_sort', __('Sorting'));
 		$this->Fieldset->addField( $Field );
 	}
 
@@ -96,7 +96,7 @@ class SearchFormular extends Formular {
 	 * Add field: send to multi editor
 	 */
 	private function addFieldSendToMultiEditor() {
-		$Field = new FormularCheckbox('send-to-multi-editor', 'An Multi-Editor senden');
+		$Field = new FormularCheckbox('send-to-multi-editor', __('Send to multi editor'));
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33 );
 
 		$this->Fieldset->addField( $Field );
@@ -106,11 +106,11 @@ class SearchFormular extends Formular {
 	 * Add field: sport
 	 */
 	private function addFieldSport() {
-		$Field = new FormularSelectDb('sportid', 'Sportart');
+		$Field = new FormularSelectDb('sportid', __('Sport'));
 		$Field->loadOptionsFrom('sport', 'name');
 		$Field->addCSSclass('chzn-select full-size');
 		$Field->setMultiple();
-		$Field->addAttribute('data-placeholder', 'W&auml;hle die Sportarten');
+		$Field->addAttribute('data-placeholder', __('Choose sport(s)'));
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
 
 		$this->Fieldset->addField( $Field );
@@ -120,20 +120,20 @@ class SearchFormular extends Formular {
 	 * Init conditions fieldset
 	 */
 	protected function initConditions() {
-		$this->addConditionFieldWithChosen('typeid', 'type', 'name', 'Trainingstyp', 'W&auml;hle die Trainingstypen');
-		$this->addConditionFieldWithChosen('shoeid', 'shoe', 'name', 'Schuhe', 'W&auml;hle die Schuhe');
-		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', 'Wetter', 'W&auml;hle das Wetter');
-		$this->addConditionFieldWithChosen('clothes', 'clothes', 'name', 'Kleidung', 'W&auml;hle die Kleidungsst&uuml;cke');
+		$this->addConditionFieldWithChosen('typeid', 'type', 'name', __('Type'), __('Choose activity type(s)'));
+		$this->addConditionFieldWithChosen('shoeid', 'shoe', 'name', __('Shoe'), __('Choose shoe(s)'));
+		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
+		$this->addConditionFieldWithChosen('clothes', 'clothes', 'name', __('Clothing'), __('Choose clothing'));
 
-		$this->addConditionField('distance', 'Distanz', FormularInput::$SIZE_SMALL, FormularUnit::$KM);
-		$this->addConditionField('route', 'Strecke', FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('elevation', 'H&ouml;henmeter', FormularInput::$SIZE_SMALL, FormularUnit::$M);
-		$this->addConditionField('s', 'Dauer', FormularInput::$SIZE_SMALL);
-		$this->addConditionField('comment', 'Bemerkung', FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('temperature', 'Temperatur', FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
-		$this->addConditionField('pulse_avg', 'Puls', FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
-		$this->addConditionField('partner', 'Trainingspartner', FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('kcal', 'Kalorien', FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
+		$this->addConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
+		$this->addConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
+		$this->addConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
+		$this->addConditionField('s', __('Duration'), FormularInput::$SIZE_SMALL);
+		$this->addConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
+		$this->addConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
+		$this->addConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+		$this->addConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
+		$this->addConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
 	}
 
 	/**

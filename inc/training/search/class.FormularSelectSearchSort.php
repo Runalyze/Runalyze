@@ -26,18 +26,18 @@ class FormularSelectSearchSort extends FormularField {
 		$code .= '<div class="full-size left">';
 
 		$sortByOptions = array(
-			'time'		=> 'Datum',
-			'distance'	=> 'Distanz',
-			's'			=> 'Dauer',
-			'pace'		=> 'Pace',
-			'elevation'	=> 'H&ouml;henmeter',
-			'pulse_avg'	=> 'Puls',
-			'temperature'	=> 'Temperatur',
-			'vdot'		=> 'VDOT'
+			'time'		=> __('Date'),
+			'distance'	=> __('Distance'),
+			's'			=> __('Duration'),
+			'pace'		=> __('Pace'),
+			'elevation'	=> __('Elevation'),
+			'pulse_avg'	=> __('Heartrate'),
+			'temperature'	=> __('Temperature'),
+			'vdot'		=> __('VDOT')
 		);
 
 		$code .= HTML::selectBox('search-sort-by', $sortByOptions);
-		$code .= HTML::selectBox('search-sort-order', array('DESC' => 'absteigend', 'ASC' => 'aufsteigend'));
+		$code .= HTML::selectBox('search-sort-order', array('DESC' => __('descending'), 'ASC' => __('ascending')));
 
 		$code .= '</div>';
 

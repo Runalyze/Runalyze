@@ -31,7 +31,7 @@ class FormularInputSearchTimeRange extends FormularField {
 		$To = new FormularInputDate('date-to', '');
 		$To->hideLabel();
 
-		$code .= $From->getCode().' bis '.$To->getCode();
+		$code .= $From->getCode().' '.__('to').' '.$To->getCode();
 		$code .= '</div>';
 
 		return $code;

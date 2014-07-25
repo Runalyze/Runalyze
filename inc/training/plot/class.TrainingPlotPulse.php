@@ -22,7 +22,7 @@ class TrainingPlotPulse extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'pulse';
-		$this->title = 'Herzfrequenz';
+		$this->title = __('Heartrate');
 	}
 
 	/**
@@ -31,7 +31,7 @@ class TrainingPlotPulse extends TrainingPlot {
 	protected function initData() {
 		$this->Data = self::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => 'Herzfrequenz', 'color' => 'rgb(136,0,0)', 'data' => $this->Data);
+		$this->Plot->Data[] = array('label' => __('Heartrate'), 'color' => 'rgb(136,0,0)', 'data' => $this->Data);
 	}
 
 	/**

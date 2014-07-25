@@ -34,7 +34,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'elevation_algorithms';
-		$this->title = 'H&ouml;hendaten-Algorithmen';
+		$this->title = __('Elevation algorithms');
 	}
 
 	/**
@@ -55,14 +55,14 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 
 		if ($this->Training->elevationWasCorrected() || !$this->Training->GpsData()->hasElevationDataOriginal()) {
 			$this->Data = $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0);
-			$this->Plot->Data[] = array('label' => 'korrigiert', 'color' => 'rgba(227,217,187,0.5)', 'data' => $this->Data);
+			$this->Plot->Data[] = array('label' => __('corrected'), 'color' => 'rgba(227,217,187,0.5)', 'data' => $this->Data);
 		}
 
 		if ($this->Training->GpsData()->hasElevationDataOriginal()) {
 			$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitudeOriginal());
 
 			$this->Plot->Data[] = array(
-				'label'	=> 'Originaldaten',
+				'label'	=> __('Original data'),
 				'color'	=> '#CCC',
 				'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0)
 			);
@@ -76,13 +76,13 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		}
 
 		$this->Plot->Data[] = array(
-			'label'	=> 'Schwellenwert',
+			'label'	=> __('Treshold'),
 			'color'	=> '#008',
 			'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_TRESHOLD, CONF_ELEVATION_MIN_DIFF)
 		);
 
 		$this->Plot->Data[] = array(
-			'label'	=> 'Douglas-Peucker',
+			'label'	=> __('Douglas-Peucker'),
 			'color'	=> '#800',
 			'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER, CONF_ELEVATION_MIN_DIFF)
 		);

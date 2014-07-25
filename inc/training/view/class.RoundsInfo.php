@@ -137,7 +137,7 @@ class RoundsInfo {
 	 * Display header
 	 */
 	protected function displayHeader() {
-		echo HTML::h1('Zwischenzeiten vom '.$this->Training->DataView()->getTitleWithCommentAndDate());
+		echo HTML::h1( sprintf( __('Splits from: %s'), $this->Training->DataView()->getTitleWithCommentAndDate() ) );
 	}
 
 	/**
@@ -150,7 +150,7 @@ class RoundsInfo {
 		$Formular->addCSSclass('no-automatic-reload');
 		$Formular->addFieldset( $this->getConfigurationFieldset() );
 		$Formular->addHiddenValue('id', $this->Training->id());
-		$Formular->addSubmitButton('Zwischenzeiten anzeigen');
+		$Formular->addSubmitButton( __('Show splits') );
 		$Formular->display();
 
 		echo '<p>&nbsp;</p>';
@@ -163,23 +163,23 @@ class RoundsInfo {
 	protected function getConfigurationFieldset() {
 		$_POST['distance'] = $this->RoundDistance;
 
-		$Fieldset = new FormularFieldset('Einstellungen f&uuml;r die Zwischenzeiten');
+		$Fieldset = new FormularFieldset( __('Calculate splits') );
 
-		$Distance = new FormularInput('distance', Ajax::tooltip('Zwischenzeit alle ...', 'Rundendistanz, nach der eine Zwischenzeit angezeigt werden soll.'));
+		$Distance = new FormularInput('distance', Ajax::tooltip(__('Lap every ...'), __('Distance, after which a new lap should start') ) );
 		$Distance->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$Distance->setUnit( FormularUnit::$KM );
 
-		$DemandedTime = new FormularInput('demanded-time', 'Rundenzeit-Vorgabe');
+		$DemandedTime = new FormularInput('demanded-time', __('Lap time goal'));
 		$DemandedTime->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$DemandedTime->setPlaceholder('h:mm:ss');
 		$DemandedTime->addCSSclass('c');
 
-		$ManualDistances = new FormularInput('manual-distances', Ajax::tooltip('<small>oder:</small> Manuelle Abschnitte', 'Kommagetrennte Liste mit allen Distanzen, f&uuml;r die eine Zwischenzeit erstellt werden soll.'));
+		$ManualDistances = new FormularInput('manual-distances', Ajax::tooltip('<small>'.__('or').':</small> '.__('Manual laps'), __('List with all distances, comma seperated') ));
 		$ManualDistances->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$ManualDistances->setSize( FormularInput::$SIZE_FULL_INLINE );
 		$ManualDistances->setPlaceholder('z.B.: 5, 10, 20, 21.1, 25, 30, 35, 40');
 
-		$DemandedPace = new FormularInput('demanded-pace', '<small>oder:</small> Pace-Vorgabe');
+		$DemandedPace = new FormularInput('demanded-pace', '<small>'.__('or').':</small> '.__('Pace goal') );
 		$DemandedPace->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$DemandedPace->setUnit( FormularUnit::$PACE );
 
@@ -195,7 +195,7 @@ class RoundsInfo {
 	 * Display rounds
 	 */
 	protected function displayRounds() {
-		$Fieldset = new FormularFieldset('Zwischenzeiten');
+		$Fieldset = new FormularFieldset( __('Laps') );
 		$Fieldset->setId('rounds');
 		$Fieldset->setHtmlCode( $this->getRoundsTable() );
 		$Fieldset->display();
@@ -207,14 +207,14 @@ class RoundsInfo {
 	 */
 	protected function getRoundsTable() {
 		$Cells = array(
-			'time'		=> 'Zeit',
-			'distance'	=> 'Distanz',
-			'laptime'	=> 'Dauer',
-			'diff'		=> 'Diff.',
-			'pace'		=> 'Tempo',
-			'pacediff'	=> 'Diff.',
-			'heartrate'	=> '&oslash; bpm',
-			'elevation'	=> 'hm'
+			'time'		=> __('Time'),
+			'distance'	=> __('Distance'),
+			'laptime'	=> __('Duration'),
+			'diff'		=> __('Diff.'),
+			'pace'		=> __('Pace'),
+			'pacediff'	=> __('Diff'),
+			'heartrate'	=> __('&oslash; bpm'),
+			'elevation'	=> __('elev')
 		);
 
 		$Code  = '<table class="fullwidth zebra-style zebra-blue">';
@@ -238,7 +238,7 @@ class RoundsInfo {
 
 		$Code .= '</tbody>';
 		$Code .= '<tbody>';
-		$Code .= '<tr class="no-zebra"><td colspan="2" class="r">Schnitt:</td>';
+		$Code .= '<tr class="no-zebra"><td colspan="2" class="r">'.__('Average').':</td>';
 		$Code .= '<td class="c">'.(count($this->ManualDistances) > 0 ? '' : Time::toString( $this->RoundDistance * Time::toSeconds($this->Training->getPace()) )).'</td>';
 		$Code .= '<td></td>';
 		$Code .= '<td class="c">'.$this->Training->DataView()->getSpeedString().'</td>';
@@ -254,14 +254,14 @@ class RoundsInfo {
 	 * Display elevation correction
 	 */
 	protected function displayInformation() {
-		$Fieldset = new FormularFieldset('Hinweis zu den Zwischenzeiten');
+		$Fieldset = new FormularFieldset( __('Note') );
 		$Fieldset->setId('general-information');
 		$Fieldset->setCollapsed();
-		$Fieldset->addInfo('
-			Die hier angezeigten Zwischenzeiten werden anhand der GPS-Daten berechnet.
-			Die manuell abgestoppten Rundenzeiten haben auf diese Auswertung keinen Einfluss.
-			Da nicht f&uuml;r jeden Meter ein Datenpunkt existiert, k&ouml;nnen die ausgewerteten Kilometer Rundungsfehler enthalten.
-		');
+		$Fieldset->addInfo(
+			__('These laps are computed based on your gps data.').
+			__('Laps stopped by hand are ignored in this evaluation.').
+			__('Since there is not a data point for every single meter there may be some differences for the distances.')
+		);
 
 		$Fieldset->display();
 	}

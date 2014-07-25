@@ -4,7 +4,6 @@
  */
 /**
  * Class for input fields: splits 
- * @author Hannes Christiansen <mail@laufhannes.de>
  * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingInputSplits extends FormularField {
@@ -22,7 +21,7 @@ class TrainingInputSplits extends FormularField {
 	 */
 	public function __construct($name = '', $label = '', $value = '') {
 		if ($label == '')
-			parent::__construct('splits', 'Zwischenzeiten', $name);
+			parent::__construct('splits', __('Laps'), $name);
 		else
 			parent::__construct($name, $label, $value);
 
@@ -43,10 +42,10 @@ class TrainingInputSplits extends FormularField {
 		foreach ($Splits->asArray() as $split)
 			$Inputs .= $this->getInnerDivForSplit($split);
 
-		$Inputs .= '<p id="addSplitsLink"><span class="link" onclick="$e=$(this);$($(\'#defaultInputSplit\').val()).insertBefore($e.parent());">neue Zwischenzeit hinzuf&uuml;gen</span></p>';
-		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">Distanzen auf 100m runden</span></p>';
-		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">als Gesamtdistanz nehmen</span></p>';
-		$Inputs .= '<p><span class="link" onclick="allSplitsActive();">alle Aktiv</span> - <span class="link" onclick="allSplitsRest();">alle Ruhe</span></p>';
+		$Inputs .= '<p id="addSplitsLink"><span class="link" onclick="$e=$(this);$($(\'#defaultInputSplit\').val()).insertBefore($e.parent());">'.__('add new lap').'</span></p>';
+		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">'.__('round for 100m').'</span></p>';
+		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">'.__('apply as total distance').'</span></p>';
+		$Inputs .= '<p><span class="link" onclick="allSplitsActive();">'.__('all active').'</span> - <span class="link" onclick="allSplitsRest();">'.__('all resting').'</span></p>';
 		$Inputs .= '<textarea id="defaultInputSplit" class="hide">'.HTML::textareaTransform($this->getInnerDivForSplit()).'</textarea>';
 
 		return $Inputs;
@@ -59,7 +58,7 @@ class TrainingInputSplits extends FormularField {
 	 */
 	protected function getInnerDivForSplit($split = array('km' => '1.00', 'time' => '6:00', 'active' => true)) {
 		$Code  = $this->getDistanceInputCode($split['km']);
-		$Code .= '&nbsp;in&nbsp;';
+		$Code .= '&nbsp;'.__('in').'&nbsp;';
 		$Code .= $this->getTimeInputCode($split['time']);
 		$Code .= $this->getActiveInputCode($split['active']);
 		$Code .= $this->getSpanForLinks();
@@ -111,7 +110,7 @@ class TrainingInputSplits extends FormularField {
 	 */
 	protected function getActiveInputCode($active) {
 		$FieldActive = new FormularSelectBox('splits[active][]', '', (int)$active);
-		$FieldActive->setOptions(array('Ruhe', 'Aktiv'));
+		$FieldActive->setOptions(array(__('Resting'), __('Active')));
 		$FieldActive->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
 
 		return $FieldActive->getCode();
