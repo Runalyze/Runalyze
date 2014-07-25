@@ -91,7 +91,7 @@ class SearchResults {
 		$this->allowedKeys[] = 'trimp';
 		$this->allowedKeys[] = 'vdot';
 		$this->allowedKeys[] = 'pulse_max';
-		$this->allowedKeys[] = 'vdot';
+		$this->allowedKeys[] = 'jd_points';
 		$this->allowedKeys[] = 'notes';
 	}
 
@@ -328,7 +328,7 @@ class SearchResults {
 		if ($this->page != 1)
 			echo '<span class="link" onclick="Runalyze.searchPageBack();">'.Icon::$BACK.'</span>';
 
-		echo ' '.sprintf( __('In total: found %s activities.'), $this->totalNumberOfTrainings).' ';
+		echo ' '.sprintf( __('Found %s activities'), $this->totalNumberOfTrainings).' ';
 
 		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings)
 			echo '<span class="link" onclick="Runalyze.searchPageNext();">'.Icon::$NEXT.'</span>';
