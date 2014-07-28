@@ -15,7 +15,6 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Body values');
 		$this->description = __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.');
 		$this->dontReloadForTraining = true;

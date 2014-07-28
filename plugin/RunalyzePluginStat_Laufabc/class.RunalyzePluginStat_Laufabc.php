@@ -17,7 +17,6 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Running Drills');
 		$this->description = __('How often did you do your running drills?');
 	}

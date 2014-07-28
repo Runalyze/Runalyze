@@ -33,7 +33,6 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Training partner');
 		$this->description = __('How often did you train with whom?');
 	}

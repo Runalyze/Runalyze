@@ -15,7 +15,6 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Sports');
 		$this->description = __('Summary of your activities for each sport.');
 

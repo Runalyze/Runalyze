@@ -15,7 +15,6 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Cacheclean');
 		$this->description = __('Empty the cache for activities.');
 	}

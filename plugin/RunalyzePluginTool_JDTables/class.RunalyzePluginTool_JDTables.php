@@ -33,7 +33,6 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Tables by Jack Daniels');
 		$this->description = __('Tables for heart rate, paces and VDOT values by Jack Daniels');
 

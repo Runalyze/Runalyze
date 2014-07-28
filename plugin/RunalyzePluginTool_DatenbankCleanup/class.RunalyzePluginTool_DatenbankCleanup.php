@@ -21,7 +21,6 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Database cleanup');
 		$this->description = __('Recalculation of some statistics may be needed after deleting some activities.'.
 								'In addition, values for elevation, TRIMP and VDOT can be recalculated.');

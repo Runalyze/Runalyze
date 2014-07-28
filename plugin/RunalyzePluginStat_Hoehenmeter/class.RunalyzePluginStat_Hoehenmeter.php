@@ -19,7 +19,6 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Elevation');
 		$this->description = __('Your steepest activities and an overview of your cumulated elevation.');
 	}

@@ -20,7 +20,6 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Records');
 		$this->description = __('Faster, longer, better: Your records from your activities.');
 	}

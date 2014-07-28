@@ -67,7 +67,7 @@ if (!empty($_POST)) {
 
 	</form>
 
-	<?php if ($this->type == Plugin::$TOOL): ?>
+	<?php if ($this->type == PluginType::Tool): ?>
 		<ul class="blocklist">
 			<li><?php echo $this->getWindowLink('&raquo; '.__('open tool'), true); ?></li>
 		</ul>

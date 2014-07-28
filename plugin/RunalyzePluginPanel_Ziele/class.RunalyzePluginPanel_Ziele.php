@@ -28,7 +28,6 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Goals');
 		$this->description = __('Set your own goals for different time ranges and compare your current performance with them.');
 	}

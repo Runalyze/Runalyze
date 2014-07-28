@@ -22,7 +22,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Shoes');
 		$this->description = __('Display statistics for your shoes.');
 	}

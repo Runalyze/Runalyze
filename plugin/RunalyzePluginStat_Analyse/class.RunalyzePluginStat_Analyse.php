@@ -45,7 +45,6 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Analyze');
 		$this->description = __('Analyze your training (only running) by means of pace, heart rate and different types.');
 	}

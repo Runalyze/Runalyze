@@ -29,7 +29,7 @@ $Frontend = new Frontend();
 		<div id="statistics" class="panel">
 			<ul id="statistics-nav">
 				<?php
-				$Stats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE);
+				$Stats = Plugin::getKeysAsArray(PluginType::Stat, Plugin::$ACTIVE);
 				foreach ($Stats as $i => $key) {
 					$Plugin = Plugin::getInstanceFor($key);
 					if ($Plugin !== false)
@@ -41,7 +41,7 @@ $Frontend = new Frontend();
 					echo '<a href="#">'.__('Miscellaneous').'</a>';
 					echo '<ul class="submenu">';
 
-					$VariousStats = Plugin::getKeysAsArray(Plugin::$STAT, Plugin::$ACTIVE_VARIOUS);
+					$VariousStats = Plugin::getKeysAsArray(PluginType::Stat, Plugin::$ACTIVE_VARIOUS);
 					foreach ($VariousStats as $key) {
 						$Plugin = Plugin::getInstanceFor($key);
 						if ($Plugin !== false)

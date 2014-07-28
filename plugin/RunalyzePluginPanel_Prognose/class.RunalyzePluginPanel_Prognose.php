@@ -27,7 +27,6 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Prognosis');
 		$this->description = __('Predict your race performance on various distances.');
 	}

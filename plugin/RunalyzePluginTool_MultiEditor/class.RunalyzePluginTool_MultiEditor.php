@@ -28,7 +28,6 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Multi editor');
 		$this->description = __('Edit a couple of activities. This plugin is needed to upload more than one activity at once.');
 	}
