@@ -15,7 +15,6 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$PANEL;
 		$this->name = __('Calculations');
 		$this->description = __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
 	}

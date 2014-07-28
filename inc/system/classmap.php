@@ -162,6 +162,7 @@ $CLASSMAP = array(
 'PluginPanel' => 'plugin/class.PluginPanel.php',
 'PluginStat' => 'plugin/class.PluginStat.php',
 'PluginTool' => 'plugin/class.PluginTool.php',
+'PluginType' => 'plugin/class.PluginType.php',
 'AccountHandler' => 'system/class.AccountHandler.php',
 'Autoloader' => 'system/class.Autoloader.php',
 'BigFileWriterGZip' => 'system/class.BigFileWriterGZip.php',

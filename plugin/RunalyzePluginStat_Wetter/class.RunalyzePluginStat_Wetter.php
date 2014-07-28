@@ -20,7 +20,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Weather');
 		$this->description = __('Statistics about weather conditions, temperatures and clothing.');
 	}

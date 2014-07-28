@@ -18,7 +18,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Races');
 		$this->description = __('Personal bests and everything else related to your races.');
 	}

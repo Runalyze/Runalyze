@@ -102,7 +102,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Statistics');
 		$this->description = __('Monthly and weekly summaries for all sports');
 

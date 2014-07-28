@@ -18,7 +18,6 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Training times');
 		$this->description = __('Plot all your training times by daytime/weekday and list your nightly activities.');
 	}

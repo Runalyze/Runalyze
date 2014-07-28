@@ -27,7 +27,6 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @see PluginStat::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$STAT;
 		$this->name = __('Routes');
 		$this->description = __('Some statistics for your most frequent routes.');
 	}

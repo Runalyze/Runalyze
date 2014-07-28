@@ -37,7 +37,7 @@ abstract class PluginTool extends Plugin {
 		}
 
 		$this->id = $id;
-		$this->type = parent::$TOOL;
+		$this->type = PluginType::Tool;
 
 		$this->initVars();
 		$this->initPlugin();
@@ -71,7 +71,7 @@ abstract class PluginTool extends Plugin {
 		$Sublinks = array();
 		$Sublinks[] = Ajax::link('--- '.__('All tools'), self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
 
-		$tools = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString(self::$TOOL).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC')->fetchAll();
+		$tools = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string(PluginType::Tool).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC')->fetchAll();
 		foreach ($tools as $tool)
 			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
 
@@ -98,7 +98,7 @@ abstract class PluginTool extends Plugin {
 		echo '<thead><tr><th colspan="3">'.__('Installed tools').':</th></tr></thead>';
 		echo '<tbody class="top-and-bottom-border">';
 
-		$tools = self::getKeysAsArray(self::$TOOL, self::$ACTIVE);
+		$tools = self::getKeysAsArray(PluginType::Tool, self::$ACTIVE);
 		
 		if (empty($tools))
 			echo '<tr><td colspan="3"><em>'.__('No tools installed.').'.</em></td></tr>';

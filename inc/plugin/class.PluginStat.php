@@ -65,7 +65,7 @@ abstract class PluginStat extends Plugin {
 		}
 
 		$this->id = $id;
-		$this->type = parent::$STAT;
+		$this->type = PluginType::Stat;
 
 		$this->initVars();
 		$this->initPlugin();
@@ -282,7 +282,7 @@ abstract class PluginStat extends Plugin {
 	 * @return bool
 	 */
 	static public function hasVariousStats() {
-		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
+		$array = Plugin::getKeysAsArray(PluginType::Stat, self::$ACTIVE_VARIOUS);
 
 		return (!empty($array));
 	}
@@ -292,7 +292,7 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	static public function getLinkForVariousStats() {
-		$array = Plugin::getKeysAsArray(self::$STAT, self::$ACTIVE_VARIOUS);
+		$array = Plugin::getKeysAsArray(PluginType::Stat, self::$ACTIVE_VARIOUS);
 
 		return Plugin::getInstanceFor($array[0])->getLink();
 	}

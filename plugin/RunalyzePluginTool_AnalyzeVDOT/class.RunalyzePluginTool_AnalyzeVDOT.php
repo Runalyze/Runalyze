@@ -21,7 +21,6 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Analyze your VDOT');
 		$this->description = __('Analyze the VDOT prediction on your race results.');
 	}

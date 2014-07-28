@@ -61,7 +61,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 * @return string 
 	 */
 	private function getCodeFor($PluginType) {
-		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.Plugin::getTypeString($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
+		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
 
 		if (empty($Plugins))
 			return HTML::info(__('No plugins available.'));
@@ -70,7 +70,7 @@ class ConfigTabPlugins extends ConfigTab {
 			<table class="zebra-style fullwidth more-padding">
 				<thead>
 					<tr class="top b">
-						<th colspan="3">'.Plugin::getReadableTypeString($PluginType).'</th>
+						<th colspan="3">'.PluginType::readableString($PluginType).'</th>
 						<th>'.__('Mode').'</th>
 						<th>'.__('Order').'</th>
 					</tr>
@@ -152,7 +152,7 @@ class ConfigTabPlugins extends ConfigTab {
 					<td>'.$Plugin->getInstallLink().'</td>
 					<td class="b">'.$Plugin->getInstallLink($Plugin->get('name')).'</td>
 					<td>'.$Plugin->get('description').'</td>
-					<td colspan="2">'.Plugin::getReadableTypeString($Plugin->get('type')).'</td>
+					<td colspan="2">'.PluginType::readableString($Plugin->get('type')).'</td>
 				</tr>';
 		}
 

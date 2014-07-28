@@ -10,24 +10,6 @@
  */
 abstract class Plugin {
 	/**
-	 * Enum for plugin-type: Statistic
-	 * @var int
-	 */
-	public static $STAT = 0;
-	
-	/**
-	* Enum for plugin-type: Panel
-	* @var int
-	*/
-	public static $PANEL = 1;
-	
-	/**
-	* Enum for plugin-type: Tool
-	* @var int
-	*/
-	public static $TOOL = 2;
-
-	/**
 	* Enum for active-flag: hidden
 	* @var int
 	*/
@@ -322,7 +304,7 @@ abstract class Plugin {
 			);
 		$values  = array(
 			$this->key,
-			self::getTypeString($this->type),
+			PluginType::string($this->type),
 			$this->name,
 			$this->description,
 			'99',
@@ -659,38 +641,6 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Get string for internal type-enum
-	 * @param enum $type
-	 * @return string
-	 */
-	static public function getTypeString($type) {
-		switch ($type) {
-			case self::$STAT:
-				return 'stat';
-			case self::$PANEL:
-				return 'panel';
-			case self::$TOOL:
-				return 'tool';
-		}
-	}
-
-	/**
-	 * Get readable string for internal type-enum
-	 * @param enum $type
-	 * @return string
-	 */
-	static public function getReadableTypeString($type) {
-		switch ($type) {
-			case self::$STAT:
-				return __('Statistic');
-			case self::$PANEL:
-				return __('Panel');
-			case self::$TOOL:
-				return __('Tool');
-		}
-	}
-
-	/**
 	 * Get all keys for a given plugintype as array
 	 * @param enum $type [optional]
 	 * @param enum $active [optional]
@@ -703,9 +653,9 @@ abstract class Plugin {
 
 			$array = self::$ALL_KEYS;
 		} elseif ($active == -1)
-			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" ORDER BY `order` ASC')->fetchAll();
+			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($type).'" ORDER BY `order` ASC')->fetchAll();
 		else
-			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.self::getTypeString($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC')->fetchAll();
+			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC')->fetchAll();
 
 		$return = array();
 		foreach ($array as $v)

@@ -392,6 +392,14 @@ class GpsData {
 	}
 
 	/**
+	 * Get total time
+	 * @return int
+	 */
+	public function getTotalTime() {
+		return end($this->arrayForTime);
+	}
+
+	/**
 	 * Are information for pace available?
 	 */
 	public function hasPaceData() {
@@ -625,8 +633,8 @@ class GpsData {
 	 * @return int 
 	 */
 	public function getAveragePace() {
-		if ($this->hasPaceData())
-			return round(array_sum($this->arrayForPace)/count($this->arrayForPace));
+		if ($this->getTotalDistance() > 0)
+			return round($this->getTotalTime()/$this->getTotalDistance());
 
 		return 0;
 	}

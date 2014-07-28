@@ -54,7 +54,7 @@ abstract class PluginPanel extends Plugin {
 		}
 
 		$this->id = $id;
-		$this->type = parent::$PANEL;
+		$this->type = PluginType::Panel;
 
 		$this->initVars();
 		$this->initPlugin();

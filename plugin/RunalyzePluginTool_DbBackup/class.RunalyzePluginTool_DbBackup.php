@@ -57,7 +57,6 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->type = Plugin::$TOOL;
 		$this->name = __('Database import/export');
 		$this->description = __('This plugin allows you to import and export your complete data from the database.');
 
