@@ -64,30 +64,38 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
-	 * Try to set sportid from string
+	 * Try to set sportid from creator or string
 	 * @param string $String
+	 * @param string $Creator optional
 	 */
-	protected function guessSportID($String) {
+	protected function guessSportID($String, $Creator = '') {
 		// TODO: internationalization?
-		switch (mb_strtolower($String)) {
-			case 'run':
-			case 'running':
-				$String = 'Laufen';
-				break;
-			case 'cycle':
-			case 'bike':
-			case 'biking':
-			case 'mountain bike':
-			case 'cycling':
-			case 'ergometer':
-				$String = 'Radfahren';
-				break;
-			case 'swim':
-			case 'swimming':
+		switch (mb_strtolower($Creator)) {
+			case 'garmin swim':
 				$String = 'Schwimmen';
 				break;
-			case 'other':
-				$String = 'Sonstiges';
+			default:
+				switch (mb_strtolower($String)) {
+					case 'run':
+					case 'running':
+						$String = 'Laufen';
+						break;
+					case 'cycle':
+					case 'bike':
+					case 'biking':
+					case 'mountain bike':
+					case 'cycling':
+					case 'ergometer':
+						$String = 'Radfahren';
+						break;
+					case 'swim':
+					case 'swimming':
+						$String = 'Schwimmen';
+						break;
+					case 'other':
+						$String = 'Sonstiges';
+						break;
+				}
 				break;
 		}
 
