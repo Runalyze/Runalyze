@@ -992,6 +992,7 @@ class GpsData {
 				return $this->nextKilometer(0.2);
 			case '500m':
 				return $this->nextKilometer(0.5);
+			case '50points':
 			case '100points':
 			case '200points':
 			case '300points':
@@ -1009,6 +1010,9 @@ class GpsData {
 	 */
 	protected function setStepSizeForPlotData() {
 		switch (CONF_TRAINING_PLOT_PRECISION) {
+			case '50points':
+				$Points = 50;
+				break;
 			case '100points':
 				$Points = 100;
 				break;

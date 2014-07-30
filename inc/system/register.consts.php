@@ -14,7 +14,7 @@ $General->setKeys(array(
 ));
 $General->addConfigValue( new ConfigValueSelect('GENDER', array(
 	'default'		=> 'm',
-	'label'			=> 'Gender',
+	'label'			=> __('Gender'),
 	'options'		=> array('m' => __('male'), 'f' => __('female')),
 	'onchange'		=> Ajax::$RELOAD_ALL
 )));
@@ -60,8 +60,8 @@ $General->addToCategoryList();
 
 $Training = new ConfigCategory('training', __('Activity view'));
 $Training->setKeys(array(
+	'TRAINING_PLOT_SMOOTH',
 	'TRAINING_DECIMALS',
-	'',
 	'TRAINING_PLOT_PRECISION',
 	'GMAP_PATH_PRECISION',
 	'ELEVATION_METHOD',
@@ -89,9 +89,9 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 	'default'		=> '15',
 	'label'			=> __('Map: unterrupt route'),
-	'tooltip'		=> 'The gps path can be interrupted in case of <em>jumps</em> (e.g. by car/train/...).
-						Finding these jumps is not easy. You can define up to what distance (in seconds by average pace)
-						between two data points the path should be continued.',
+	'tooltip'		=> __('The gps path can be interrupted in case of <em>jumps</em> (e.g. by car/train/...).'.
+						'Finding these jumps is not easy. You can define up to what distance (in seconds by average pace)'.
+						'between two data points the path should be continued.'),
 	'options'		=> array( // see LeafletTrainingRoute::findLimitForPauses
 		'no'			=> __('never'),
 		'15'			=> __('at too big distance (15s)'),
@@ -108,7 +108,7 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_BREAK', array(
 $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 	'default'		=> '5',
 	'label'			=> __('Map: precision'),
-	'tooltip'		=> 'How many data points shoud be displayed?',
+	'tooltip'		=> __('How many data points shoud be displayed?'),
 	'options'		=> array( // see LeafletTrainingRoute::prepareLoop
 		'1'				=> __('every data point'),
 		'2'				=> __('every second data point'),
@@ -119,15 +119,21 @@ $Training->addConfigValue( new ConfigValueSelect('GMAP_PATH_PRECISION', array(
 	'onchange'		=> Ajax::$RELOAD_TRAINING,
 	'onchange_eval'	=> 'System::clearTrainingCache();'
 )));
+$Training->addConfigValue( new ConfigValueBool('TRAINING_PLOT_SMOOTH', array(
+	'default'		=> false,
+	'label'			=> __('Plot: smooth curves'),
+	'onchange'		=> Ajax::$RELOAD_TRAINING
+)));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', array(
 	'default'		=> '200points',
 	'label'			=> __('Plots: precision'),
-	'tooltip'		=> 'How many data points should be plotted?',
+	'tooltip'		=> __('How many data points should be plotted?'),
 	'options'		=> array( // see GpsData::nextStepForPlotData, GpsData::setStepSizeForPlotData
 		'50m'			=> __('every 50m a data point'),
 		'100m'			=> __('every 100m a data point'),
 		'200m'			=> __('every 200m a data point'),
 		'500m'			=> __('every 500m a data point'),
+		'50points'		=> __('max. 50 data points'),
 		'100points'		=> __('max. 100 data points'),
 		'200points'		=> __('max. 200 data points (recommended)'),
 		'300points'		=> __('max. 300 data points'),
@@ -142,7 +148,7 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', arra
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 	'default'		=> '0',
 	'label'			=> __('Pace: y-axis-minimum'),
-	'tooltip'		=> 'Data points below this limit will be ignored.',
+	'tooltip'		=> __('Data points below this limit will be ignored.'),
 	'options'		=> array(
 		0				=> __('automatic'),
 		60				=> __('1:00/km'),
@@ -161,7 +167,7 @@ $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 	'default'		=> '0',
 	'label'			=> __('Pace: y-axis-maximum'),
-	'tooltip'		=> 'Data points above this limit will be ignored.',
+	'tooltip'		=> __('Data points above this limit will be ignored.'),
 	'options'		=> array(
 		0				=> __('automatic'),
 		240				=> __('4:00/km'),
@@ -182,13 +188,13 @@ $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 $Training->addConfigValue( new ConfigValueBool('PACE_Y_AXIS_REVERSE', array(
 	'default'		=> false,
 	'label'			=> __('Pace: Reverse y-axis'),
-	'tooltip'		=> 'Reverse the y-axis such that a faster pace is at the top.',
+	'tooltip'		=> __('Reverse the y-axis such that a faster pace is at the top.'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueBool('PACE_HIDE_OUTLIERS', array(
 	'default'		=> false,
 	'label'			=> __('Pace: Ignore outliers'),
-	'tooltip'		=> 'Try to ignore outliers in the pace plot.',
+	'tooltip'		=> __('Try to ignore outliers in the pace plot.'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
 )));
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_DECIMALS', array(
@@ -206,19 +212,19 @@ $Training->addConfigValue( new ConfigValueString('TRAINING_MAP_COLOR', array(
 $Training->addConfigValue( new ConfigValueSelect('ELEVATION_METHOD', array(
 	'default'		=> 'treshold',
 	'label'			=> __('Elevation: smoothing'),
-	'tooltip'		=> 'Choose the algorithm to smooth the elevation data',
+	'tooltip'		=> __('Choose the algorithm to smooth the elevation data'),
 	'options'		=> array(
 		'none'				=> __('none'),
-		'treshold'			=> 'Schwellenwert-Methode',
-		'douglas-peucker'	=> 'Douglas-Peucker-Algorithmus',
-		//'reumann-witkamm'	=> 'Reumann-Witkamm-Algorithmus'
+		'treshold'			=> __('Treshold method'),
+		'douglas-peucker'	=> __('Douglas-Peucker-Algorithm'),
+		//'reumann-witkamm'	=> __('Reumann-Witkamm-Algorithm')
 	),
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("The tool <em>Datenbank-Cleanup</em> can be used to recalculate elevation values."));'
 )));
 $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'default'		=> 3,
 	'label'			=> __('Elevation: threshold'),
-	'tooltip'		=> 'Treshold for the weeding algorithm',
+	'tooltip'		=> __('Treshold for the weeding algorithm'),
 	'unit'			=> FormularUnit::$M,
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("The tool <em>Datenbank-Cleanup</em> can be used to recalculate elevation values."));'
 )));
@@ -272,23 +278,23 @@ $Privacy->setKeys(array(
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_MAKE_PUBLIC', array(
 	'default'		=> false,
 	'label'			=> __('Publish activities'),
-	'tooltip'		=> 'Automatically mark every activity after its creation as public.'
+	'tooltip'		=> __('Automatically mark every activity after its creation as public.')
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_PUBLIC', array(
 	'default'		=> false,
 	'label'			=> __('Public list: active'),
-	'tooltip'		=> 'If activated: Everyone can see a list of all your (public) activities.',
+	'tooltip'		=> __('If activated: Everyone can see a list of all your (public) activities.'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_ALL', array(
 	'default'		=> false,
 	'label'			=> __('Public list: private workouts'),
-	'tooltip'		=> 'If activated: Display a summary for each private activity in the public activity list.'
+	'tooltip'		=> __('If activated: Display a summary for each private activity in the public activity list.')
 )));
 $Privacy->addConfigValue( new ConfigValueBool('TRAINING_LIST_STATISTICS', array(
 	'default'		=> false,
 	'label'			=> __('Public list: general statistics'),
-	'tooltip'		=> 'Show some general statistics above the activity list'
+	'tooltip'		=> __('Show some general statistics above the activity list')
 )));
 $Privacy->addConfigValue( new ConfigValueSelect('TRAINING_MAP_PUBLIC_MODE', array(
 	'default'		=> 'always',
@@ -496,7 +502,7 @@ $TrainingForm->setKeys(array(
 ));
 $TrainingForm->addConfigValue( new ConfigValueSelect('TRAINING_ELEVATION_SERVER', array(
 	'default'		=> 'geonames',
-	'label'			=> 'Elevation correction via',
+	'label'			=> __('Elevation correction via'),
 	'options'		=> array(
 		'google'		=> 'maps.googleapis.com',
 		'geonames'		=> 'ws.geonames.org'
