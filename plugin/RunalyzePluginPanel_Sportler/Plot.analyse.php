@@ -49,6 +49,7 @@ $Plot->setXAxisMaxToToday();
 $Plot->Options['xaxis']['labelWidth'] = 50;
 //$Plot->Options['xaxis']['tickLength'] = 3;
 $Plot->Options['yaxis']['autoscaleMargin'] = 0.1;
+$Plot->Options['series']['curvedLines']['fit'] = true;
 
 $Plot->addYAxis(1, 'left');
 $Plot->addYUnit(1, '%', 0);

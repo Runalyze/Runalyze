@@ -39,6 +39,7 @@ $JS_FILES = array(
 	'lib/flot-0.8.1/jquery.flot.hiddengraphs.js',
 	'lib/flot-0.8.1/jquery.flot.canvas.js',
 	'lib/flot-0.8.1/jquery.flot.time.min.js',
+	'lib/flot-0.8.1/jquery.flot.curvedLines.js',
 
 	'lib/leaflet/leaflet.js',
 	'lib/leaflet/runalyze.leaflet.js',
