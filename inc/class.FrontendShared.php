@@ -42,10 +42,11 @@ class FrontendShared extends Frontend {
 		$User   = AccountHandler::getDataForId($UserId);
 
 		if (!Request::isAjax()) {
-			if (self::$IS_IFRAME)
+			if (self::$IS_IFRAME) {
 				include 'tpl/tpl.FrontendSharedIframe.header.php';
-			else
+			} else {
 				include 'tpl/tpl.FrontendShared.header.php';
+			}
 		}
 
 		Error::getInstance()->header_sent = true;
@@ -56,8 +57,9 @@ class FrontendShared extends Frontend {
 	 */
 	public function displayFooter() {
 		if (!Request::isAjax()) {
-			if (self::$IS_IFRAME)
+			if (self::$IS_IFRAME) {
 				include 'tpl/tpl.FrontendSharedIframe.footer.php';
+			}
 
 			include 'tpl/tpl.Frontend.footer.php';
 		}
@@ -71,20 +73,22 @@ class FrontendShared extends Frontend {
 	private function initTraining() {
 		$data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
 
-		if ($data)
-			$this->Training = new TrainingObject( $data );
+		if ($data) {
+			$this->Training = new TrainingObject($data);
+		}
 	}
 
 	/**
 	 * Display shared view 
 	 */
 	public function displaySharedView() {
-		if (is_null($this->Training) || $this->Training->isDefaultId())
+		if (is_null($this->Training) || $this->Training->isDefaultId()) {
 			$this->throwErrorForInvalidRequest();
-		elseif (!$this->Training->isPublic())
+		} elseif (!$this->Training->isPublic()) {
 			$this->throwErrorForPrivateTraining();
-		else
+		} else {
 			$this->displayRequestedTraining();
+		}
 	}
 
 	/**
@@ -107,10 +111,11 @@ class FrontendShared extends Frontend {
 	 * @return string
 	 */
 	protected function getPageTitle() {
-		if (is_null($this->Training) || $this->Training->isDefaultId() || !$this->Training->isPublic())
+		if (is_null($this->Training) || $this->Training->isDefaultId() || !$this->Training->isPublic()) {
 			return __('Problem');
+		}
 
-		return $this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht';
+		return $this->Training->DataView()->getTitle().', '.$this->Training->DataView()->getDate(false);
 	}
 
 	/**

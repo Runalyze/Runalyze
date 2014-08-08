@@ -43,8 +43,9 @@ class TrainingView {
 	 * Init toolbar links
 	 */
 	private function initToolbarLinks() {
-		if ($this->Training->isPublic())
+		if ($this->Training->isPublic()) {
 			$this->ToolbarLinks[] = SharedLinker::getToolbarLinkTo($this->Training->id());
+		}
 
 		if (!Request::isOnSharedPage()) {
 			$this->ToolbarLinks[] = Ajax::window('<a href="'.ExporterWindow::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' '.__('Export').'</a> ','small');
@@ -80,13 +81,17 @@ class TrainingView {
 	protected function displayHeader() {
 		echo '<div class="panel-heading">';
 
-		if (!Request::isOnSharedPage())
+		if (!Request::isOnSharedPage()) {
 			$this->displayHeaderMenu();
+		} else {
+			$this->displaySharedMenu();
+		}
 
 		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';
 
-		if (!Request::isOnSharedPage())
+		if (!Request::isOnSharedPage()) {
 			$this->displayReloadLink();
+		}
 
 		echo '</div>';
 	}
@@ -97,10 +102,24 @@ class TrainingView {
 	protected function displayHeaderMenu() {
 		echo '<div class="panel-menu"><ul>';
 
-		foreach ($this->ToolbarLinks as $Link)
-			echo '<li>'.$Link.'</li>';
+		foreach ($this->ToolbarLinks as $Link) {
+			echo '<li>' . $Link . '</li>';
+		}
 
 		echo '</ul></div>';
+	}
+
+	/**
+	 * Display shared menu
+	 */
+	protected function displaySharedMenu() {
+		$User = AccountHandler::getDataForId($this->Training->get('accountid'));
+
+		$this->ToolbarLinks = array();
+		$this->ToolbarLinks[] = SharedLinker::getStandardLinkTo( $this->Training->id(), Icon::$ATTACH );
+		$this->ToolbarLinks[] = '<a href="shared/'.$User['username'].'/" target="_blank">'.Icon::$TABLE.'</a>';
+
+		$this->displayHeaderMenu();
 	}
 
 	/**

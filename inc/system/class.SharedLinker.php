@@ -46,21 +46,32 @@ class SharedLinker {
 	/**
 	 * Get link to a given training
 	 * @param int $trainingID
+	 * @param string $text [optional]
 	 * @return string
 	 */
-	static public function getStandardLinkTo($trainingID) {
-		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.Icon::$ATTACH.'</a>';
+	static public function getStandardLinkTo($trainingID, $text = null) {
+		if (is_null($text)) {
+			$text = Icon::$ATTACH;
+		}
+
+		return '<a href="'.self::getUrlFor($trainingID).'" target="_blank">'.$text.'</a>';
 	}
 
 	/**
 	 * Get link to shared list for current user
+	 * @param string $text [optional]
 	 * @return string 
 	 */
-	static public function getListLinkForCurrentUser() {
-		if (!CONF_TRAINING_LIST_PUBLIC)
+	static public function getListLinkForCurrentUser($text = null) {
+		if (!CONF_TRAINING_LIST_PUBLIC) {
 			return '';
+		}
 
-		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.Icon::$ATTACH.'</a>';
+		if (is_null($text)) {
+			$text = Icon::$ATTACH;
+		}
+
+		return '<a href="shared/'.SessionAccountHandler::getUsername().'/" target="_blank" '.Ajax::tooltip('', __('Public list'), false, true).'>'.$text.'</a>';
 	}
 
 	/**

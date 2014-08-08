@@ -64,12 +64,6 @@ abstract class Plugin {
 	public static $INSTALLER_ID = -1;
 
 	/**
-	 * Array with all plugin keys
-	 * @var array
-	 */
-	private static $ALL_KEYS = array();
-
-	/**
 	 * Internal ID from database
 	 * @var int
 	 */
@@ -184,106 +178,17 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Get an instance for a given pluginkey (starting with 'RunalyzePlugin');
-	 * @param string $PLUGINKEY
-	 * @return Plugin
-	 */
-//	static public function getInstanceFor($PLUGINKEY) {
-//		$pluginFile = self::getFileForKey($PLUGINKEY);
-//
-//		if ($pluginFile === false) {
-//			Error::getInstance()->addError('Can\'t find plugin-file or -directory in system: '.$PLUGINKEY);
-//			return false;
-//		}
-//
-//		include_once $pluginFile;
-//
-//		if (!class_exists($PLUGINKEY)) {
-//			Error::getInstance()->addError('The plugin-file must contain class::'.$PLUGINKEY.'.');
-//			return false;
-//		} else {
-//			$dat = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($PLUGINKEY).' LIMIT 1')->fetch();
-//			if ($dat === false)
-//				$id = self::$INSTALLER_ID;
-//			else
-//				$id = $dat['id'];
-//
-//			$Plugin =  new $PLUGINKEY($id);
-//			$Plugin->key = $PLUGINKEY;
-//
-//			return $Plugin;
-//		}
-//	}
-
-	/**
-	 * Get array with all avaiable plugins for installation
-	 * @return array
-	 */
-//	static public function getPluginsToInstallAsArray() {
-//		$plugins   = array();
-//		$dir = opendir(FRONTEND_PATH.'../plugin/');
-//		while ($file = readdir($dir)) {
-//			if (substr($file, 0, 6) == 'class.')
-//				$key = substr($file, 6, -4);
-//			elseif (strpos($file, '.') === false && is_dir(FRONTEND_PATH.'../plugin/'.$file))
-//				$key = $file;
-//			else
-//				continue;
-//
-//			if (!self::isInstalled($key))
-//				$plugins[] = array('key' => $key);
-//		}
-//
-//		closedir($dir);
-//
-//		return $plugins;
-//	}
-
-	/**
 	 * Get link to the window for installing this plugin
 	 * @param string $name
 	 * @return string
 	 */
 	final public function getInstallLink($name = '') {
-		if ($name == '')
+		if ($name == '') {
 			$name = Icon::$ADD;
+		}
 
 		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.Ajax::tooltip($name, __('Install plugin') ).'</a>');
 	}
-
-	/**
-	 * Install a new plugin
-	 * @param string $key
-	 */
-//	static public function installPlugin($key) {
-//		$file = self::getFileForKey($key);
-//
-//		if ($file === false) {
-//			Error::getInstance()->addError('Pluginfile for \''.$key.'\' can\'t be found. Installing impossible.');
-//			return false;
-//		}
-//
-//		include_once $file;
-//
-//		if (!isset($PLUGINKEY)) {
-//			Error::getInstance()->addError('$PLUGINKEY must be set in the pluginfile \''.$file.'\'.');
-//			return false;
-//		} elseif (substr($PLUGINKEY, 0, 14) != 'RunalyzePlugin') {
-//			Error::getInstance()->addError('$PLUGINKEY must start with \'RunalyzePlugin\', but it is\''.$PLUGINKEY.'\'.');
-//			return false;
-//		}
-//
-//		$Plugin = self::getInstanceFor($PLUGINKEY);
-//		return $Plugin->install();
-//	}
-
-	/**
-	 * Uninstall plugin
-	 * @param string $key 
-	 */
-//	static public function uninstallPlugin($key) {
-//		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
-//	}
 
 	/**
 	 * Install this plugin
@@ -295,25 +200,23 @@ abstract class Plugin {
 			return false;
 		}
 
-		$columns = array(
+		$this->id = DB::getInstance()->insert('plugin', array(
 			'key',
 			'type',
 			'name',
 			'description',
+			'active',
 			'order',
-			);
-		$values  = array(
+		), array(
 			$this->key,
 			PluginType::string($this->type),
 			$this->name,
 			$this->description,
+			'1',
 			'99',
-			);
+		));
 
-		$this->id = DB::getInstance()->insert('plugin', $columns, $values);
 		$this->config = $this->getDefaultConfigVars();
-
-		$this->setActive(1);
 		$this->updateConfigVarToDatabase();
 
 		return true;
@@ -323,8 +226,9 @@ abstract class Plugin {
 	 * Initialize all variables
 	 */
 	final protected function initVars() {
-		if ($this->id == self::$INSTALLER_ID)
+		if ($this->id == self::$INSTALLER_ID) {
 			return;
+		}
 
 		$dat = DB::getInstance()->fetchByID('plugin', $this->id);
 
@@ -432,8 +336,9 @@ abstract class Plugin {
 		$this->checkConfigVarsForMissingValues($somethingChanged);
 		$this->checkConfigVarsForAdditionalValue($somethingChanged);
 
-		if ($somethingChanged)
-			$this->updateConfigVarToDatabase ();
+		if ($somethingChanged) {
+			$this->updateConfigVarToDatabase();
+		}
 	}
 
 	/**
@@ -443,7 +348,7 @@ abstract class Plugin {
 	private function checkConfigVarsForMissingValues(&$somethingChanged) {
 		$defaultSetup = $this->getDefaultConfigVars();
 
-		foreach ($defaultSetup as $key => $keyArray)
+		foreach ($defaultSetup as $key => $keyArray) {
 			if (!isset($this->config[$key])) {
 				$somethingChanged   = true;
 				$this->config[$key] = $keyArray;
@@ -451,6 +356,7 @@ abstract class Plugin {
 				$somethingChanged   = true;
 				$this->config[$key]['description'] = $keyArray['description'];
 			}
+		}
 	}
 
 	/**
@@ -460,11 +366,12 @@ abstract class Plugin {
 	private function checkConfigVarsForAdditionalValue(&$somethingChanged) {
 		$defaultSetup = $this->getDefaultConfigVars();
 
-		foreach (array_keys($this->config) as $key)
+		foreach (array_keys($this->config) as $key) {
 			if (!isset($defaultSetup[$key])) {
 				$somethingChanged   = true;
 				unset($this->config[$key]);
 			}
+		}	
 	}
 
 	/**
@@ -515,8 +422,9 @@ abstract class Plugin {
 	 * @return string
 	 */
 	final public function getConfigLink($name = '', $add_param = '') {
-		if ($name == '')
+		if ($name == '') {
 			$name = Icon::$CONF;
+		}
 
 		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
 	}
@@ -542,8 +450,9 @@ abstract class Plugin {
 	 * Handle Get/Post-data and update database
 	 */
 	private function handleGetPostRequest() {
-		if (isset($_GET['active']))
-			$this->setActive((int)$_GET['active']);
+		if (isset($_GET['active'])) {
+			$this->setActive((int) $_GET['active']);
+		}
 
 		if (isset($_POST['edit']) && $_POST['edit'] == 'true') {
 			foreach($this->config as $name => $dat) {
@@ -639,68 +548,4 @@ abstract class Plugin {
 		DB::getInstance()->update('plugin', $this->id, 'active', $active);
 		$this->active = $active;
 	}
-
-	/**
-	 * Get all keys for a given plugintype as array
-	 * @param enum $type [optional]
-	 * @param enum $active [optional]
-	 * @return array
-	 */
-//	static public function getKeysAsArray($type = -1, $active = -1) {
-//		if ($type == -1) {
-//			if (empty(self::$ALL_KEYS))
-//				self::$ALL_KEYS = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin`')->fetchAll();
-//
-//			$array = self::$ALL_KEYS;
-//		} elseif ($active == -1)
-//			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($type).'" ORDER BY `order` ASC')->fetchAll();
-//		else
-//			$array = DB::getInstance()->query('SELECT `key` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($type).'" AND `active`="'.$active.'" ORDER BY `order` ASC')->fetchAll();
-//
-//		$return = array();
-//		foreach ($array as $v)
-//			$return[] = $v['key'];
-//
-//		return $return;
-//	}
-
-	/**
-	 * Is the plugin already installed?
-	 * @param string $key
-	 * @return bool
-	 */
-//	static public function isInstalled($key) {
-//		return in_array($key, self::getKeysAsArray(-1));
-//	}
-
-	/**
-	 * Get the PLUGINKEY for a given ID from database
-	 * @param int $id
-	 * @return string
-	 */
-//	static public function getKeyForId($id) {
-//		$dat = DB::getInstance()->fetchByID('plugin', $id);
-//
-//		if ($dat === false) {
-//			Error::getInstance()->addError('Plugin::getKeyForId(): No Plugin with id \''.$id.'\' found.');
-//			return '';
-//		}
-//
-//		return $dat['key'];
-//	}
-
-	/**
-	 * Get the filename for a given PLUGINKEY, searches for folder first
-	 * @param string $PLUGINKEY
-	 * @return string
-	 */
-//	static public function getFileForKey($PLUGINKEY) {
-//		if (file_exists(FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php'))
-//			return FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php';
-//
-//		if (file_exists(FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php'))
-//			return FRONTEND_PATH.'../plugin/class.'.$PLUGINKEY.'.php';
-//
-//		return false;
-//	}
 }
