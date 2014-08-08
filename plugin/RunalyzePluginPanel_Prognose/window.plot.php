@@ -7,7 +7,8 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Plugin    = Plugin::getInstanceFor('RunalyzePluginPanel_Prognose');
+$Factory = new PluginFactory();
+$Plugin = $Factory->newInstance('RunalyzePluginPanel_Prognose');
 $distances = $Plugin->getDistances();
 
 if (!isset($_GET['distance'])) {

@@ -7,8 +7,8 @@ require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-if (!isset($_GET['list']))
+if (!isset($_GET['list'])) {
 	PluginTool::displayToolsHeader();
+}
 
 PluginTool::displayToolsContent();
-?>

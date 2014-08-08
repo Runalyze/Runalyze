@@ -7,7 +7,8 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
+$Factory = new PluginFactory();
+$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 $Plugin_conf = $Plugin->get('config');
 
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');

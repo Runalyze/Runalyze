@@ -7,7 +7,9 @@ require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Schuhe');
+$Factory = new PluginFactory();
+$Plugin = $Factory->newInstance('RunalyzePluginPanel_Schuhe');
+
 echo '<div class="panel-heading">';
 echo '<div class="panel-menu"><ul><li>'.$Plugin->addLink().'</li></ul></div>';
 echo '<h1>'.__('Your Shoes').'</h1>';

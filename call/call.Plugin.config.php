@@ -6,15 +6,15 @@
 require_once '../inc/class.Frontend.php';
 
 $Frontend = new Frontend(true);
+$Factory = new PluginFactory();
 
 if (isset($_GET['key'])) {
-	Plugin::uninstallPlugin($_GET['key']);
+	$Factory->uninstallPlugin( filter_input(INPUT_GET, 'key') );
+
 	echo Ajax::wrapJSforDocumentReady('Runalyze.loadOverlay("call/window.config.php");');
 } elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
-	$key = Plugin::getKeyForId($_GET['id']);
-	$Plugin = Plugin::getInstanceFor($key);
+	$Plugin = $Factory->newInstanceFor( $_GET['id'] );
 	$Plugin->displayConfigWindow();
 } else {
-	Error::getInstance()->addError('ID must be set as GET-variable', __FILE__, __LINE__);
 	echo '<em>'.__('Something went wrong ...').'</em>';
 }

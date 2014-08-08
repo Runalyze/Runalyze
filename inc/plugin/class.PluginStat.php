@@ -282,7 +282,8 @@ abstract class PluginStat extends Plugin {
 	 * @return bool
 	 */
 	static public function hasVariousStats() {
-		$array = Plugin::getKeysAsArray(PluginType::Stat, self::$ACTIVE_VARIOUS);
+		$Factory = new PluginFactory();
+		$array = $Factory->variousPlugins();
 
 		return (!empty($array));
 	}
@@ -292,8 +293,9 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	static public function getLinkForVariousStats() {
-		$array = Plugin::getKeysAsArray(PluginType::Stat, self::$ACTIVE_VARIOUS);
+		$Factory = new PluginFactory();
+		$array = $Factory->variousPlugins();
 
-		return Plugin::getInstanceFor($array[0])->getLink();
+		return $Factory->newInstance($array[0])->getLink();
 	}
 }

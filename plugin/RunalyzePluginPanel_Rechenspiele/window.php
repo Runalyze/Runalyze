@@ -13,7 +13,8 @@ $Frontend = new Frontend();
 
 <div class="panel-content">
 <?php
-$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Rechenspiele');
+$Factory = new PluginFactory();
+$Plugin = $Factory->newInstance('RunalyzePluginPanel_Rechenspiele');
 
 $Formular = new Formular();
 $Formular->setId('rechenspiele-calculator');

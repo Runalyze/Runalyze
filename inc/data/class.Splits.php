@@ -53,6 +53,8 @@ class Splits {
 			$this->cleanArray();
 			$this->arrayToString();
 		}
+
+		$this->removeSingleSplits();
 	}
 
 	/**

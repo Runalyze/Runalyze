@@ -6,15 +6,16 @@
 require '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
+$Factory = new PluginFactory();
 
-$Key = Plugin::getKeyForId($_GET['id']);
-$Plugin = Plugin::getInstanceFor($Key);
+$Plugin = $Factory->newInstanceFor( filter_input(INPUT_GET, 'id') );
 
-if ($Plugin === false)
+if ($Plugin === false) {
 	echo HTML::error( __('The plugin could not be located.') );
+}
 
-if ($Plugin instanceof PluginPanel)
+if ($Plugin instanceof PluginPanel) {
 	$Plugin->setSurroundingDivVisible(false);
+}
 
 $Plugin->display();
-?>

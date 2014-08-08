@@ -1,4 +1,4 @@
-<?php
+	<?php
 /**
  * This file contains class::PluginTool
  * @package Runalyze\Plugin
@@ -98,20 +98,22 @@ abstract class PluginTool extends Plugin {
 		echo '<thead><tr><th colspan="3">'.__('Installed tools').':</th></tr></thead>';
 		echo '<tbody class="top-and-bottom-border">';
 
-		$tools = self::getKeysAsArray(PluginType::Tool, self::$ACTIVE);
+		$Factory = new PluginFactory();
+		$tools = $Factory->activePlugins( PluginType::Tool );
 		
-		if (empty($tools))
+		if (empty($tools)) {
 			echo '<tr><td colspan="3"><em>'.__('No tools installed.').'.</em></td></tr>';
-		
-		foreach ($tools as $key) {
-			$Plugin = Plugin::getInstanceFor($key);
+		}
 
-			echo('
-				<tr>
+		foreach ($tools as $key) {
+			$Factory = new PluginFactory();
+			$Plugin = $Factory->newInstance($key);
+
+			echo '<tr>
 					<td>'.$Plugin->getConfigLink().'</td>
 					<td class="b">'.self::getLinkFor($Plugin->get('id'), $Plugin->get('name')).'</td>
 					<td>'.$Plugin->get('description').'</td>
-				</tr>');
+				</tr>';
 		}
 				
 		echo '</tbody>';

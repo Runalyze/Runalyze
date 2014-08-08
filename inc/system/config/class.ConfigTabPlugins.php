@@ -31,16 +31,16 @@ class ConfigTabPlugins extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Panels = new FormularFieldset( __('Panels') );
 		$Panels->addInfo( __('Panels are small statistics shown always on the right side.') );
-		$Panels->setHtmlCode($this->getCodeFor( Plugin::$PANEL ));
+		$Panels->setHtmlCode($this->getCodeFor( PluginType::Panel ));
 		$Panels->setCollapsed();
 
 		$Stats = new FormularFieldset( __('Statistics') );
 		$Stats->addInfo( __('Normal statistics are shown below the activitiy log.') );
-		$Stats->setHtmlCode($this->getCodeFor( Plugin::$STAT ));
+		$Stats->setHtmlCode($this->getCodeFor( PluginType::Stat ));
 
 		$Tools = new FormularFieldset(__('Tools') );
 		$Tools->addInfo( __('Complex tools for analyzing or processing the complete database will open in an overlay.') );
-		$Tools->setHtmlCode($this->getCodeFor( Plugin::$TOOL ));
+		$Tools->setHtmlCode($this->getCodeFor( PluginType::Tool ));
 		$Tools->setCollapsed();
 
 		$Install = new FormularFieldset( __('Install a new plugin') );
@@ -77,8 +77,10 @@ class ConfigTabPlugins extends ConfigTab {
 				</thead>
 				<tbody>';
 
+		$Factory = new PluginFactory();
+
 		foreach ($Plugins as $Data) {
-			$Plugin = Plugin::getInstanceFor($Data['key']);
+			$Plugin = $Factory->newInstance($Data['key']);
 
 			if ($Plugin === false)
 				$Code .= '
@@ -126,10 +128,12 @@ class ConfigTabPlugins extends ConfigTab {
 	 * @return string 
 	 */
 	private function getCodeForInstall() {
-		$Plugins = Plugin::getPluginsToInstallAsArray();
+		$Factory = new PluginFactory();
+		$Plugins = $Factory->notInstalledPlugins();
 
-		if (empty($Plugins))
+		if (empty($Plugins)) {
 			return HTML::fileBlock( __('There are no new plugins to install.') );
+		}
 
 		$Code = '
 			<table class="fullwidth zebra-style more-padding">
@@ -142,11 +146,11 @@ class ConfigTabPlugins extends ConfigTab {
 				<tbody>';
 
 		foreach ($Plugins as $Data) {
-			$Plugin = Plugin::getInstanceFor($Data['key']);
+			$Plugin = $Factory->newInstance($Data['key']);
 
-			if ($Plugin === false)
+			if ($Plugin === false) {
 				$Code .= '<tr><td colspan="4"><em>'.sprintf( __('The Plugin %s cannot be found.'), $Data['key']).'</em></td></tr>';
-			else
+			} else {
 				$Code .= '
 				<tr>
 					<td>'.$Plugin->getInstallLink().'</td>
@@ -154,6 +158,7 @@ class ConfigTabPlugins extends ConfigTab {
 					<td>'.$Plugin->get('description').'</td>
 					<td colspan="2">'.PluginType::readableString($Plugin->get('type')).'</td>
 				</tr>';
+			}
 		}
 
 		$Code .= '

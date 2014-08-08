@@ -21,7 +21,9 @@ class UserData extends DataObject {
 	protected function initDatabaseScheme() {
 		$this->DatabaseScheme = DatabaseSchemePool::get('training/schemes/scheme.UserData.php');
 
-		$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Sportler');
+		$Factory = new PluginFactory();
+
+		$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 		$PluginConfiguration = $Plugin->get('config');
 
 		if (!$PluginConfiguration['use_body_fat']['var'])

@@ -104,17 +104,19 @@ class FrontendSharedStatistics {
 	 */
 	protected function addTabForComparisonOfYears() {
 		$Content = '';
+		$Factory = new PluginFactory();
 
-		if (Plugin::isInstalled('RunalyzePluginStat_Statistiken')) {
-			$Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Statistiken');
+		if ($Factory->isInstalled('RunalyzePluginStat_Statistiken')) {
+			$Plugin = $Factory->newInstance('RunalyzePluginStat_Statistiken');
 			$Content .= $this->extractTbody($Plugin->getYearComparisonTable());
 		}
 
-		if (Plugin::isInstalled('RunalyzePluginStat_Wettkampf')) {
-			if ($Content != '')
+		if ($Factory->isInstalled('RunalyzePluginStat_Wettkampf')) {
+			if ($Content != '') {
 				$Content .= '<tbody><tr class="no-zebra no-border"><td colspan="'.(date("Y") - START_YEAR + 2).'">&nbsp;</td></tr></tbody>';
+			}
 
-			$Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
+			$Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 			$Content .= $this->extractTbody($Plugin->getYearComparisonTable());
 		}
 

@@ -29,11 +29,14 @@ $Frontend = new Frontend();
 		<div id="statistics" class="panel">
 			<ul id="statistics-nav">
 				<?php
-				$Stats = Plugin::getKeysAsArray(PluginType::Stat, Plugin::$ACTIVE);
+				$Factory = new PluginFactory();
+				$Stats = $Factory->activePlugins( PluginType::Stat );
 				foreach ($Stats as $i => $key) {
-					$Plugin = Plugin::getInstanceFor($key);
-					if ($Plugin !== false)
+					$Plugin = $Factory->newInstance($key);
+
+					if ($Plugin !== false) {
 						echo '<li'.($i == 0 ? ' class="active"' : '').'>'.$Plugin->getLink().'</li>';
+					}
 				}
 
 				if (PluginStat::hasVariousStats()) {
@@ -41,11 +44,13 @@ $Frontend = new Frontend();
 					echo '<a href="#">'.__('Miscellaneous').'</a>';
 					echo '<ul class="submenu">';
 
-					$VariousStats = Plugin::getKeysAsArray(PluginType::Stat, Plugin::$ACTIVE_VARIOUS);
+					$VariousStats = $Factory->variousPlugins();
 					foreach ($VariousStats as $key) {
-						$Plugin = Plugin::getInstanceFor($key);
-						if ($Plugin !== false)
+						$Plugin = $Factory->newInstance($key);
+
+						if ($Plugin !== false) {
 							echo '<li>'.$Plugin->getLink().'</li>';
+						}
 					}
 
 					echo '</ul>';
@@ -55,10 +60,11 @@ $Frontend = new Frontend();
 			</ul>
 			<div id="statistics-inner">
 				<?php
-				if (empty($Stats))
+				if (empty($Stats)) {
 					echo __('<em>There are no statistics available. Active a plugin in your configuration.</em>');
-				else
-					Plugin::getInstanceFor($Stats[0])->display();
+				} else {
+					$Factory->newInstance($Stats[0])->display();
+				}
 				?>
 			</div>
 		</div>
