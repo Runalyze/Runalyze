@@ -4,11 +4,14 @@
  * Call:   include Plot.form.php
  * @package Runalyze\Plugins\Panels
  */
-if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf'))
-	$WKplugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
+if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
+	$Factory = new PluginFactory();
+	$WKplugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
+}
 
-if (!isset($distance))
+if (!isset($distance)) {
 	$distance = 10;
+}
 
 $DataFailed = false;
 $Prognosis  = array();

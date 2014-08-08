@@ -8,9 +8,10 @@ require_once '../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (is_numeric($_GET['id'])) {
-	$key   = Plugin::getKeyForId($_GET['id']);
-	$Panel = Plugin::getInstanceFor($key);
-	if ($Panel->get('type') == Plugin::$PANEL)
+	$Factory = new PluginFactory();
+	$Panel = $Factory->newInstanceFor( $_GET['id'] );
+
+	if ($Panel->get('type') == PluginType::Panel) {
 		$Panel->clap();
+	}
 }
-?>

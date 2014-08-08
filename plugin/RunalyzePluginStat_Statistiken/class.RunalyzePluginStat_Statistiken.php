@@ -299,7 +299,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$end   = Time::Weekend($time);
 			$week  = Icon::$CALENDAR.' '.__('Week').' '.date('W', $time);
 
-			echo '<tr><td class="b l"">'.DataBrowserLinker::link($week, $start, $end).'</td>';
+			//echo '<tr><td class="b l"">'.DataBrowserLinker::link($week, $start, $end).'</td>';
+			echo '<tr><td class="l"><span class="b">'.DataBrowserLinker::link($week, $start, $end, '').'</span>&nbsp;&nbsp;&nbsp;<span class="small">'.date('d.m',$start)." - ".date('d.m',$end).'</span></td>';
 
 			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
 				if (isset($CompleteData[$w+1]))

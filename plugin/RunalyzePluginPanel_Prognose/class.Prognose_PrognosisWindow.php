@@ -85,7 +85,8 @@ class Prognose_PrognosisWindow {
 		$TopResults = $Strategy->getTopResults(2);
 
 		if (empty($_POST)) {
-			$Plugin = Plugin::getInstanceFor('RunalyzePluginPanel_Prognose');
+			$Factory = new PluginFactory();
+			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Prognose');
 
 			$_POST['model'] = 'jack-daniels';
 			$_POST['distances'] = implode(', ', $Plugin->getDistances());

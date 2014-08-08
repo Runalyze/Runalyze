@@ -159,6 +159,7 @@ $CLASSMAP = array(
 'ParserXMLsuuntoMultiple' => 'import/parser/class.ParserXMLsuuntoMultiple.php',
 'ParserXMLsuuntoSingle' => 'import/parser/class.ParserXMLsuuntoSingle.php',
 'Plugin' => 'plugin/class.Plugin.php',
+'PluginFactory' => 'plugin/class.PluginFactory.php',
 'PluginPanel' => 'plugin/class.PluginPanel.php',
 'PluginStat' => 'plugin/class.PluginStat.php',
 'PluginTool' => 'plugin/class.PluginTool.php',

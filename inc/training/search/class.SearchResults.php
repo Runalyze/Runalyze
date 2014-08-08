@@ -287,17 +287,20 @@ class SearchResults {
 	 */
 	private function sendResultsToMultiEditor() {
 		$IDs = array();
-		foreach ($this->Trainings as $data)
+		foreach ($this->Trainings as $data) {
 			$IDs[] = $data['id'];
+		}
 
 		$_POST['ids'] = implode(',', $IDs);
 
-		$MultiEditor = Plugin::getInstanceFor('RunalyzePluginTool_MultiEditor');
+		$Factory = new PluginFactory();
+		$MultiEditor = $Factory->newInstance('RunalyzePluginTool_MultiEditor');
 
-		if ($MultiEditor)
+		if ($MultiEditor) {
 			$MultiEditor->display();
-		else
+		} else {
 			echo HTML::error( __('The multi editor could not be located.') );
+		}
 
 		echo Ajax::wrapJS('$("#search").remove();$("#ajax").removeClass("big-window");');
 	}

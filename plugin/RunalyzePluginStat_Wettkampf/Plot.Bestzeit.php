@@ -4,7 +4,8 @@
  * Call:   include Plot.Bestzeit.php
  */
 
-$Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
+$Factory = new PluginFactory();
+$Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();

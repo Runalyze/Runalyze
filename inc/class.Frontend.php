@@ -208,11 +208,13 @@ class Frontend {
 	 * Display the HTML-Footer
 	 */
 	public function displayFooter() {
-		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors())
+		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
 			Error::getInstance()->display();
+		}
 
-		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader']))
+		if (!Request::isAjax() && !isset($_GET['hideHtmlHeader'])) {
 			include 'tpl/tpl.Frontend.footer.php';
+		}
 
 		Error::getInstance()->footer_sent = true;
 	}
@@ -221,9 +223,11 @@ class Frontend {
 	 * Display panels
 	 */
 	public function displayPanels() {
-		$panels = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin` WHERE `type`="panel" AND `active`>0 ORDER BY `order` ASC')->fetchAll();
-		foreach ($panels as $panel) {
-			$Panel = Plugin::getInstanceFor($panel['key']);
+		$Factory = new PluginFactory();
+		$Panels = $Factory->enabledPanels();
+
+		foreach ($Panels as $key) {
+			$Panel = $Factory->newInstance($key);
 			$Panel->display();
 		}
 	}

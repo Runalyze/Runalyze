@@ -49,8 +49,10 @@ class ConfigTabAccount extends ConfigTab {
 		$Backup = new FormularFieldset( __('Backup your data') );
 		$Backup->setCollapsed();
 
-		if (Plugin::isInstalled('RunalyzePluginTool_DbBackup')) {
-			$Plugin = Plugin::getInstanceFor('RunalyzePluginTool_DbBackup');
+		$Factory = new PluginFactory();
+
+		if ($Factory->isInstalled('RunalyzePluginTool_DbBackup')) {
+			$Plugin = $Factory->newInstance('RunalyzePluginTool_DbBackup');
 			$Backup->addInfo( __('Please use the plugin').' \'<strong>'.$Plugin->getWindowLink().'</strong>\'.' );
 		} else {
 			$Backup->addInfo( __('The back up of all your data is not manually possible yet.<br>'.

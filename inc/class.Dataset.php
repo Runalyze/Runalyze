@@ -428,10 +428,10 @@ class Dataset {
 			return '';
 
 		$Percentage = $this->getDistanceComparisonPercentage();
-		$String     = ($Percentage > 0) ? Math::WithSign($Percentage).' &#37;' : '-';
+		$String     = ($Percentage > 0) ? Math::WithSign($Percentage).'&nbsp;&#37;' : '-';
 		$this->kmOfLastSet = $this->TrainingObject->getDistance();
 
-		return ' <small style="display:inline-block;width:45px;color:#'.Running::Stresscolor(100*$Percentage/20).'">'.$String.'</small>';
+		return ' <small style="display:inline-block;width:55px;color:#'.Running::Stresscolor(100*$Percentage/20).'">'.$String.'</small>';
 	}
 
 	/**
