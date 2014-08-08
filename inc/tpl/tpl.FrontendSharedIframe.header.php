@@ -15,7 +15,7 @@
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 
-<body id="shared-iframe" style="background-image:url(<?php echo CONF_DESIGN_BG_FILE; ?>);">
+<body id="shared-iframe">
 
 <div id="flot-loader"></div>
 

@@ -176,12 +176,13 @@ textarea.code {
   width: 100%;
 }
 #shared-iframe {
-  min-width: 400px;
+  min-width: 240px;
   max-width: 600px;
-  padding-top: 18px;
+  background: #fff;
+  padding-top: 0;
 }
 #shared-iframe #headline {
-  line-height: 12px;
+  display: none;
 }
 #shared-iframe #training-table,
 #shared-iframe #training-charts-and-map {

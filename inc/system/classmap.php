@@ -97,6 +97,7 @@ $CLASSMAP = array(
 'FormularInputDate' => 'html/formular/class.FormularInputDate.php',
 'FormularInputDayAndDaytime' => 'html/formular/class.FormularInputDayAndDaytime.php',
 'FormularInputHidden' => 'html/formular/class.FormularInputHidden.php',
+'FormularInputNumber' => 'html/formular/class.FormularInputNumber.php',
 'FormularInputPassword' => 'html/formular/class.FormularInputPassword.php',
 'FormularInputWithEqualityOption' => 'html/formular/class.FormularInputWithEqualityOption.php',
 'FormularSelectBox' => 'html/formular/class.FormularSelectBox.php',
