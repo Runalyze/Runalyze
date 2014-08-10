@@ -29,22 +29,19 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	protected $TrainingsTotal = 0;
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Training partner');
-		$this->description = __('How often did you train with whom?');
+	final public function name() {
+		return __('Training partner');
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Description
+	 * @return string
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+	final public function description() {
+		return __('How often did you train with whom?');
 	}
 
 	/**

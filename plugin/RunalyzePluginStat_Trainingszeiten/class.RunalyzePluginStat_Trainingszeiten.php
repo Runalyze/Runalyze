@@ -14,12 +14,19 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	protected $dataIsMissing = false;
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Training times');
-		$this->description = __('Plot all your training times by daytime/weekday and list your nightly activities.');
+	final public function name() {
+		return __('Training times');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Plot all your training times by daytime/weekday and list your nightly activities.');
 	}
 
 	/**
@@ -155,7 +162,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo HTML::clearBreak();
 		echo '</div>';
 
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.Daytime.php';
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.Weekday.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.Daytime.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.Weekday.php';
 	}
 }

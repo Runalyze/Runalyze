@@ -11,22 +11,19 @@ $PLUGINKEY = 'RunalyzePluginTool_Cacheclean';
  */
 class RunalyzePluginTool_Cacheclean extends PluginTool {
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Cacheclean');
-		$this->description = __('Empty the cache for activities.');
+	final public function name() {
+		return __('Cacheclean');
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Description
+	 * @return string
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+	final public function description() {
+		return __('Empty the cache for activities.');
 	}
 
 	/**
@@ -43,7 +40,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 		$Fieldset = new FormularFieldset( __('Empty the cache') );
 		$Fieldset->addInfo(
 				self::getActionLink('<strong>'.__('Empty the cache').'</strong>', 'delete=true').'<br>'.
-				__('Due to performance reasons, some data (laps, zones, plots, map, ...) are cached.'.
+				__('Due to performance reasons, some data (laps, zones, plots, map, ...) are cached. '.
 					'If you have problems with your activity view, try to empty the cache.') );
 		$Fieldset->addFileBlock( sprintf( __('The cache holds %s activities.'), $num ) );
 

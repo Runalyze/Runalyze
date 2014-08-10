@@ -16,22 +16,19 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	private $years  = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Records');
-		$this->description = __('Faster, longer, better: Your records from your activities.');
+	final public function name() {
+		return __('Records');
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Description
+	 * @return string
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+	final public function description() {
+		return __('Faster, longer, better: Your records from your activities.');
 	}
 
 	/**

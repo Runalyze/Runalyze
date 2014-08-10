@@ -43,10 +43,7 @@ class PluginFactory {
 			throw new RuntimeException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
 
-		$Plugin = new $Pluginkey($data['id']);
-		$Plugin->key = $Pluginkey;
-
-		return $Plugin;
+		return (new $Pluginkey($data['id']));
 	}
 
 	/**
@@ -56,6 +53,21 @@ class PluginFactory {
 	 */
 	public function newInstanceFor($id) {
 		return $this->newInstance( self::keyFor((int)$id) );
+	}
+
+	/**
+	 * New instance for key
+	 * @param string $Pluginkey
+	 * @return Plugin
+	 */
+	public function newInstallerInstance($Pluginkey) {
+		$file = self::fileFor($Pluginkey);
+
+		require_once $file;
+
+		$Plugin = new $Pluginkey( PluginInstaller::ID );
+
+		return $Plugin;
 	}
 
 	/**
@@ -89,7 +101,7 @@ class PluginFactory {
 	 * @return array array with plugin keys
 	 */
 	public function activePlugins($type = false) {
-		return $this->getPlugins($type, Plugin::$ACTIVE);
+		return $this->getPlugins($type, Plugin::ACTIVE);
 	}
 
 	/**
@@ -98,7 +110,7 @@ class PluginFactory {
 	 * @return array array with plugin keys
 	 */
 	public function inactivePlugins($type = false) {
-		return $this->getPlugins($type, Plugin::$ACTIVE_NOT);
+		return $this->getPlugins($type, Plugin::ACTIVE_NOT);
 	}
 
 	/**
@@ -106,7 +118,7 @@ class PluginFactory {
 	 * @return array array with plugin keys
 	 */
 	public function variousPlugins() {
-		return $this->getPlugins(PluginType::Stat, Plugin::$ACTIVE_VARIOUS);
+		return $this->getPlugins(PluginType::Stat, Plugin::ACTIVE_VARIOUS);
 	}
 
 	/**
@@ -119,7 +131,7 @@ class PluginFactory {
 		$plugins = $this->pluginList();
 
 		foreach ($plugins as $plugin) {
-			if ($plugin['type'] == PluginType::string(PluginType::Panel) && ($plugin['active'] == Plugin::$ACTIVE || $plugin['active'] == Plugin::$ACTIVE_VARIOUS)) {
+			if ($plugin['type'] == PluginType::string(PluginType::Panel) && $plugin['active'] != Plugin::ACTIVE_NOT) {
 				$keys[] = $plugin['key'];
 			}
 		}

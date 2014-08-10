@@ -1,0 +1,1 @@
+ALTER TABLE `runalyze_plugin` DROP `name`, DROP `description`;

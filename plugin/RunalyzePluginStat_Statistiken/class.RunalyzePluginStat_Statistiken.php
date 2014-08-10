@@ -98,15 +98,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $TRIMPData = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Statistics');
-		$this->description = __('Monthly and weekly summaries for all sports');
+	final public function name() {
+		return __('Statistics');
+	}
 
-		// Core plugins use standard textdomain
-		//Language::addTextDomain('PluginStats', 'dir');
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Monthly and weekly summaries for all sports');
 	}
 
 	protected function setOwnNavigation() {

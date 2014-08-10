@@ -23,12 +23,19 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	private $orte = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Routes');
-		$this->description = __('Some statistics for your most frequent routes.');
+	final public function name() {
+		return __('Routes');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Some statistics for your most frequent routes.');
 	}
 
 	/**
@@ -39,16 +46,6 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			__('The input field \'route\' expects different places separted by a \'-\', e.g. \'City A - City B\''.
 				'This way the plugin will be able to count how often you visit each city or place.')
 		);
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
 	}
 
 	/**

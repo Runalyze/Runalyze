@@ -11,7 +11,7 @@ if (is_numeric($_GET['id'])) {
 	$Factory = new PluginFactory();
 	$Panel = $Factory->newInstanceFor( $_GET['id'] );
 
-	if ($Panel->get('type') == PluginType::Panel) {
+	if ($Panel->type() == PluginType::Panel) {
 		$Panel->clap();
 	}
 }

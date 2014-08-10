@@ -34,31 +34,17 @@ abstract class PluginPanel extends Plugin {
 	protected $removePanelContentPadding = false;
 
 	/**
-	 * Method for initializing default config-vars (should be implemented in each plugin)
+	 * Type
+	 * @return int
 	 */
-	protected function getDefaultConfigVars() { return array(); }
+	final public function type() {
+		return PluginType::Panel;
+	}
 
 	/**
 	 * Method for getting the right symbol(s) (implemented in each plugin)
 	 */
 	protected function getRightSymbol() { return ''; }
-
-	/**
-	 * Constructor (needs ID)
-	 * @param int $id
-	 */
-	public function __construct($id) {
-		if (!is_numeric($id) || ($id <= 0 && $id != parent::$INSTALLER_ID)) {
-			Error::getInstance()->addError('PluginPanel::__construct(): An object of class::Plugin must have an ID: <$id='.$id.'>');
-			return false;
-		}
-
-		$this->id = $id;
-		$this->type = PluginType::Panel;
-
-		$this->initVars();
-		$this->initPlugin();
-	}
 
 	/**
 	 * Includes the plugin-file for displaying the statistics
@@ -68,22 +54,26 @@ abstract class PluginPanel extends Plugin {
 
 		if ($this->SurroundingDivIsVisible) {
 			$classes = '';
-			if ($this->dontReloadForConfig)
+			if ($this->dontReloadForConfig) {
 				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_CONFIG_FLAG;
-			if ($this->dontReloadForTraining)
-				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_TRAINING_FLAG;
+			}
 
-			echo '<div class="panel'.$classes.'" id="panel-'.$this->id.'">';
+			if ($this->dontReloadForTraining) {
+				$classes .= ' '.Plugin::$DONT_RELOAD_FOR_TRAINING_FLAG;
+			}
+
+			echo '<div class="panel'.$classes.'" id="panel-'.$this->id().'">';
 		}
 
 		$this->displayHeader();
 
-		echo '<div class="panel-content'.($this->removePanelContentPadding ? ' nopadding' : '').'"'.(($this->active == parent::$ACTIVE_VARIOUS) ? ' style="display:none;"' : '' ).'>';
+		echo '<div class="panel-content'.($this->removePanelContentPadding ? ' nopadding' : '').'"'.($this->isHidden() ? ' style="display:none;"' : '' ).'>';
 		$this->displayContent();
 		echo '</div>';
 
-		if ($this->SurroundingDivIsVisible)
+		if ($this->SurroundingDivIsVisible) {
 			echo '</div>';
+		}
 	}
 
 	/**
@@ -93,8 +83,8 @@ abstract class PluginPanel extends Plugin {
 		$Links = array();
 
 		$Links[] = $this->getConfigLink();
-		$Links[] = '<span class="link up" rel="'.$this->id.'">'.Icon::$UP.'</span>';
-		$Links[] = '<span class="link down" rel="'.$this->id.'">'.Icon::$DOWN.'</span>';
+		$Links[] = '<span class="link up" rel="'.$this->id().'">'.Icon::$UP.'</span>';
+		$Links[] = '<span class="link down" rel="'.$this->id().'">'.Icon::$DOWN.'</span>';
 		$Links[] = $this->getReloadLink();
 
 		return implode('', $Links);
@@ -107,7 +97,7 @@ abstract class PluginPanel extends Plugin {
 		echo '<div class="panel-heading">';
 		//echo '<div class="icons-left"></div>';
 		echo '<div class="panel-menu">'.$this->getRightSymbol().'</div>';
-		echo '<h1 class="link clap" rel="'.$this->id.'">'.$this->name.'</h1>';
+		echo '<h1 class="link clap" rel="'.$this->id().'">'.$this->name().'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLinks().'</div>';
 		echo '</div>';
 	}
@@ -124,12 +114,9 @@ abstract class PluginPanel extends Plugin {
 	 * Function to (un)clap the plugin
 	 */
 	public function clap() {
-		if ($this->active == parent::$ACTIVE_NOT) {
-			Error::getInstance()->addError('PluginPanel::clap(): Can\'t clap the panel (ID='.$this->id.') because it\'s not active.');
-			return;
+		if (!$this->isInActive()) {
+			DB::getInstance()->update('plugin', $this->id(), 'active', ($this->isActive() ? Plugin::ACTIVE_VARIOUS : Plugin::ACTIVE));
 		}
-
-		DB::getInstance()->update('plugin', $this->id, 'active', (($this->active == parent::$ACTIVE) ? parent::$ACTIVE_VARIOUS : parent::$ACTIVE));
 	}
 
 	/**
@@ -138,11 +125,11 @@ abstract class PluginPanel extends Plugin {
 	 */
 	public function move($mode) {
 		if ($mode == 'up') {
-			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.$this->order.' WHERE `type`="panel" AND `order`='.($this->order-1).' LIMIT 1');
-			DB::getInstance()->update('plugin', $this->id, 'order', ($this->order-1));
+			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.$this->order().' WHERE `type`="panel" AND `order`='.($this->order()-1).' LIMIT 1');
+			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()-1));
 		} elseif ($mode == 'down') {
-			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.($this->order).' WHERE `type`="panel" AND `order`='.($this->order+1).' LIMIT 1');
-			DB::getInstance()->update('plugin', $this->id, 'order', ($this->order+1));
+			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.($this->order()).' WHERE `type`="panel" AND `order`='.($this->order()+1).' LIMIT 1');
+			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()+1));
 		}
 	}
 

@@ -22,25 +22,11 @@ abstract class PluginTool extends Plugin {
 	public static $TOOLS_DIV_ID = 'pluginTool';
 
 	/**
-	 * Method for initializing default config-vars (should be implemented in each plugin)
+	 * Type
+	 * @return int
 	 */
-	protected function getDefaultConfigVars() { return array(); }
-
-	/**
-	 * Constructor (needs ID)
-	 * @param int $id
-	 */
-	public function __construct($id) {
-		if (!is_numeric($id) || ($id <= 0 && $id != parent::$INSTALLER_ID)) {
-			Error::getInstance()->addError('PluginTool::__construct(): An object of class::Plugin must have an ID: <$id='.$id.'>');
-			return false;
-		}
-
-		$this->id = $id;
-		$this->type = PluginType::Tool;
-
-		$this->initVars();
-		$this->initPlugin();
+	final public function type() {
+		return PluginType::Tool;
 	}
 
 	/**
@@ -49,19 +35,21 @@ abstract class PluginTool extends Plugin {
 	public function display() {
 		$this->prepareForDisplay();
 
-		if (Request::param('wrap') != "")
+		if (Request::param('wrap') != "") {
 			echo '<div id="pluginTool">';
+		}
 
 		echo '<div class="panel-heading">';
 		$this->displayHeader();
 		echo '</div>';
 		echo '<div class="panel-content">';
-		echo '<p class="text">'.$this->description.'</p>';
+		$this->displayLongDescription();
 		$this->displayContent();
 		echo '</div>';
 
-		if (Request::param('wrap') != "")
+		if (Request::param('wrap') != "") {
 			echo '</div>';
+		}
 	}
 
 	/**
@@ -71,9 +59,12 @@ abstract class PluginTool extends Plugin {
 		$Sublinks = array();
 		$Sublinks[] = Ajax::link('--- '.__('All tools'), self::$TOOLS_DIV_ID, self::$DISPLAY_URL.'?list=true');
 
-		$tools = DB::getInstance()->query('SELECT `id`, `name` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string(PluginType::Tool).'" AND `active`='.self::$ACTIVE.' ORDER BY `order` ASC')->fetchAll();
-		foreach ($tools as $tool)
-			$Sublinks[] = self::getLinkFor($tool['id'], $tool['name']);
+		$Factory = new PluginFactory();
+
+		$tools = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string(PluginType::Tool).'" AND `active`='.Plugin::ACTIVE.' ORDER BY `order` ASC')->fetchAll();
+		foreach ($tools as $tool) {
+			$Sublinks[] = $Factory->newInstanceFor($tool['id'])->getLink();
+		}
 
 		$Links = array();
 		$Links[] = array('tag' => '<a href="#">'.__('Choose tool').'</a>', 'subs' => $Sublinks);
@@ -111,8 +102,8 @@ abstract class PluginTool extends Plugin {
 
 			echo '<tr>
 					<td>'.$Plugin->getConfigLink().'</td>
-					<td class="b">'.self::getLinkFor($Plugin->get('id'), $Plugin->get('name')).'</td>
-					<td>'.$Plugin->get('description').'</td>
+					<td class="b">'.self::getLinkFor($Plugin->id(), $Plugin->name()).'</td>
+					<td>'.$Plugin->description().'</td>
 				</tr>';
 		}
 				
@@ -126,7 +117,7 @@ abstract class PluginTool extends Plugin {
 	 * Display header
 	 */
 	private function displayHeader() {
-		echo '<h1>'.$this->name.'</h1>';
+		echo '<h1>'.$this->name().'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLink().'</div>';
 	}
 
@@ -147,10 +138,11 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	public function getLink($name = '', $data = '') {
-		if ($name == '')
-			$name = $this->name;
+		if ($name == '') {
+			$name = $this->name();
+		}
 
-		return self::getLinkFor($this->id, $name, $data);
+		return self::getLinkFor($this->id(), $name, $data);
 	}
 
 	/**
@@ -159,7 +151,7 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	public function getActionLink($name, $getParameter = '') {
-		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$this->id.'&'.$getParameter);
+		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$this->id().'&'.$getParameter);
 	}
 
 	/**
@@ -168,10 +160,11 @@ abstract class PluginTool extends Plugin {
 	 * @param boolean $wrapAsContainer optional
 	 */
 	public function getWindowLink($name = '', $wrapAsContainer = false) {
-		if ($name == '')
-			$name = $this->name;
+		if ($name == '') {
+			$name = $this->name();
+		}
 
-		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id.($wrapAsContainer ? '&wrap=true' : '').'" title="'.$this->name.'">'.$name.'</a>', 'big');
+		return Ajax::window('<a href="'.parent::$DISPLAY_URL.'?id='.$this->id().($wrapAsContainer ? '&wrap=true' : '').'">'.$name.'</a>', 'big');
 	}
 
 	/**

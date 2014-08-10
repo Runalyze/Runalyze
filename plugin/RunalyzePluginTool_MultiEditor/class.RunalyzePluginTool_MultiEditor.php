@@ -12,24 +12,31 @@ $PLUGINKEY = 'RunalyzePluginTool_MultiEditor';
  */
 class RunalyzePluginTool_MultiEditor extends PluginTool {
 	/**
+	 * Number of trainings to display
+	 * @var int
+	 */
+	const NUMBER_OF_TRAININGS_TO_DISPLAY = 20;
+
+	/**
 	 * Internal array with all IDs of trainings to be edited
 	 * @var array
 	 */
 	private $IDs = array();
 
 	/**
-	 * Number of trainings to display
-	 * @var int
+	 * Name
+	 * @return string
 	 */
-	static private $NUMBER_OF_TRAININGS_TO_DISPLAY = 20;
+	final public function name() {
+		return __('Multi editor');
+	}
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Description
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Multi editor');
-		$this->description = __('Edit a couple of activities. This plugin is needed to upload more than one activity at once.');
+	final public function description() {
+		return __('Edit a couple of activities. This plugin is needed to upload more than one activity at once.');
 	}
 
 	/**
@@ -41,28 +48,9 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
-	}
-
-	/**
-	 * Init data 
-	 */
-	protected function prepareForDisplay() {
-		
-	}
-
-	/**
 	 * Includes the plugin-file for displaying the tool
 	 */
 	public function display() {
-		$this->prepareForDisplay();
-
 		$this->displayContent();
 	}
 
@@ -88,9 +76,11 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		if (strlen(Request::param('ids')) > 0) {
 			$this->IDs = explode(',', Request::param('ids'));
 		} else {
-			$Result = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'training` ORDER BY `id` DESC LIMIT '.self::$NUMBER_OF_TRAININGS_TO_DISPLAY)->fetchAll();
-			foreach ($Result as $Data)
+			$Result = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'training` ORDER BY `id` DESC LIMIT '.self::NUMBER_OF_TRAININGS_TO_DISPLAY)->fetchAll();
+
+			foreach ($Result as $Data) {
 				$this->IDs[] = $Data['id'];
+			}
 		}
 	}
 }

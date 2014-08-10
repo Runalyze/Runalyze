@@ -17,12 +17,19 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	private $Trainings = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Analyze your VDOT');
-		$this->description = __('Analyze the VDOT prediction on your race results.');
+	final public function name() {
+		return __('Analyze your VDOT');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Analyze the VDOT prediction on your race results.');
 	}
 
 	/**
@@ -35,23 +42,13 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
-	}
-
-	/**
 	 * Display the content
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
 		$this->initTrainings();
 
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/tpl.Table.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/tpl.Table.php';
 	}
 
 	/**

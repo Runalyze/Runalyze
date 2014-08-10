@@ -45,36 +45,17 @@ abstract class PluginStat extends Plugin {
 	private $Header = '';
 
 	/**
-	 * Method for initializing default config-vars (implemented in each plugin)
+	 * Type
+	 * @return int
 	 */
-	protected function getDefaultConfigVars() { return array(); }
-
-	/**
-	 * Constructor (needs ID)
-	 * @param int $id
-	 */
-	public function __construct($id) {
-		if ($id == parent::$INSTALLER_ID) {
-			$this->id = $id;
-			return;
-		}
-
-		if (!is_numeric($id) || $id <= 0) {
-			Error::getInstance()->addError('An object of class::Plugin must have an ID: <$id='.$id.'>');
-			return false;
-		}
-
-		$this->id = $id;
-		$this->type = PluginType::Stat;
-
-		$this->initVars();
-		$this->initPlugin();
+	final public function type() {
+		return PluginType::Stat;
 	}
 
 	/**
 	 * Set flag for sports-navigation
 	 * @param bool $flag
-	 * @param bool $flag
+	 * @param bool $allFlag
 	 */
 	protected function setSportsNavigation($flag = true, $allFlag = false) {
 		$this->ShowSportsNavigation = $flag;
@@ -132,11 +113,13 @@ abstract class PluginStat extends Plugin {
 			$HeaderParts[] = $Sport->name();
 		}
 
-		if ($this->year > 0 && $this->ShowYearsNavigation)
+		if ($this->year > 0 && $this->ShowYearsNavigation) {
 			$HeaderParts[] = $this->year;
+		}
 
-		if (!empty($HeaderParts))
-			$this->setHeader($this->name.': '.implode(', ', $HeaderParts));
+		if (!empty($HeaderParts)) {
+			$this->setHeader($this->name().': '.implode(', ', $HeaderParts));
+		}
 	}
 
 	/**
@@ -146,11 +129,13 @@ abstract class PluginStat extends Plugin {
 	protected function getSportAndYearDependenceForQuery() {
 		$Query = '';
 
-		if ($this->sportid > 0)
-			$Query .= ' AND `sportid`='.(int)$this->sportid;
+		if ($this->sportid > 0) {
+			$Query .= ' AND `sportid`='.(int) $this->sportid;
+		}
 
-		if ($this->year > 0)
+		if ($this->year > 0) {
 			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year;
+		}
 
 		return $Query;
 	}
@@ -162,13 +147,17 @@ abstract class PluginStat extends Plugin {
 	 * @param string $leftMenu
 	 */
 	private function displayHeader($name = '', $rightMenu = '', $leftMenu = '') {
-		if ($name == '')
-			$name = $this->name;
+		if ($name == '') {
+			$name = $this->name();
+		}
 
-		if (!empty($leftMenu))
+		if (!empty($leftMenu)) {
 			echo '<div class="icons-left">'.$leftMenu.'</div>';
-		if (!empty($rightMenu))
+		}
+
+		if (!empty($rightMenu)) {
 			echo '<div class="panel-menu">'.$rightMenu.'</div>';
+		}
 
 		echo '<h1>'.$name.'</h1>';
 		echo '<div class="hover-icons">'.$this->getConfigLink().$this->getReloadLink().'</div>';
@@ -178,13 +167,17 @@ abstract class PluginStat extends Plugin {
 	 * Get navigation
 	 */
 	private function getNavigation() {
-		if ($this->ShowSportsNavigation)
+		if ($this->ShowSportsNavigation) {
 			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose sport').'</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
-		if ($this->ShowYearsNavigation)
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
+		}
 
-		if (!empty($this->LinkList))
+		if ($this->ShowYearsNavigation) {
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
+		}
+
+		if (!empty($this->LinkList)) {
 			return '<ul>'.implode('', $this->LinkList).'</ul>';
+		}
 
 		return '';
 	}
@@ -196,12 +189,14 @@ abstract class PluginStat extends Plugin {
 	private function getSportLinksAsList() {
 		$Links = '';
 
-		if ($this->ShowAllSportsLink)
+		if ($this->ShowAllSportsLink) {
 			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink(__('All'), -1, $this->year).'</li>';
+		}
 
 		$Sports = DB::getInstance()->query('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
-		foreach ($Sports as $Sport)
+		foreach ($Sports as $Sport) {
 			$Links .= '<li'.($Sport['id']==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
+		}
 
 		return $Links;
 	}
@@ -213,11 +208,13 @@ abstract class PluginStat extends Plugin {
 	private function getYearLinksAsList($CompareYears = true) {
 		$Links = '';
 
-		if ($CompareYears)
+		if ($CompareYears) { 
 			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1).'</li>';
+		}
 
-		for ($x = date("Y"); $x >= START_YEAR; $x--)
+		for ($x = date("Y"); $x >= START_YEAR; $x--) {
 			$Links .= '<li'.($x==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($x, $this->sportid, $x).'</li>';
+		}
 
 		return $Links;
 	}
@@ -235,7 +232,7 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	public function getLink() {
-		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id.'" alt="'.$this->description.'">'.$this->name.'</a>';
+		return '<a rel="statistics" href="'.self::$DISPLAY_URL.'?id='.$this->id().'">'.$this->name().'</a>';
 	}
 
 	/**
@@ -247,34 +244,15 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	protected function getInnerLink($name, $sport = 0, $year = 0, $dat = '') {
-		if ($sport == 0)
+		if ($sport == 0) {
 			$sport = $this->sportid;
-		if ($year == 0)
-			$year = $this->year;
-
-		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$this->id.'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
-	}
-
-	/**
-	 * Returns the html-link for inner-html-navigation for a plugin
-	 * @param int $id
-	 * @param string $name [optional]
-	 */
-	static public function getInnerLinkFor($id, $name = '') {
-		if ($name == '') {
-			$dat = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'plugin` WHERE `id`='.(int)$id.' LIMIT 1')->fetch();
-			$name = $dat['name'];
 		}
 
-		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$id);
-	}
+		if ($year == 0) {
+			$year = $this->year;
+		}
 
-	/**
-	 * Is this a various statistic?
-	 * @return bool
-	 */
-	public function isVariousStat() {
-		return ($this->active == self::$ACTIVE_VARIOUS);
+		return Ajax::link($name, 'statistics-inner', self::$DISPLAY_URL.'?id='.$this->id().'&sport='.$sport.'&jahr='.$year.'&dat='.$dat);
 	}
 
 	/**

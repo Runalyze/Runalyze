@@ -53,13 +53,26 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected $importIsOnProgress = false;
 
 	/**
+	 * Name
+	 * @return string
+	 */
+	final public function name() {
+		return __('Database import/export');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('This plugin allows you to import and export your complete data from the database.');
+	}
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->name = __('Database import/export');
-		$this->description = __('This plugin allows you to import and export your complete data from the database.');
-
 		$this->fileNameStart = SessionAccountHandler::getId().'-runalyze-backup';
 
 		if (isset($_GET['json'])) {
@@ -72,16 +85,6 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 			exit;
 		}
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
 	}
 
 	/**
@@ -100,7 +103,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function handleRequest() {
 		if (isset($_GET['file']) || isset($_POST['file'])) {
-			require_once FRONTEND_PATH.'../plugin/'.$this->key.'/class.RunalyzeJsonImporter.php';
+			require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporter.php';
 
 			$this->importIsOnProgress = true;
 			// Rest will be done in $this->displayImport();
@@ -215,7 +218,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display form: import finished 
 	 */
 	protected function displayImportFinish() {
-		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/import/'.$_POST['file']);
+		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key().'/import/'.$_POST['file']);
 		$Importer->importData();
 
 		$Errors   = $Importer->getErrors();
@@ -247,7 +250,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			new qq.FineUploaderBasic({
 				button: $("#file-upload")[0],
 				request: {
-					endpoint: \''.$_SERVER['SCRIPT_NAME'].'?hideHtmlHeader=true&id='.$this->id.'&json=true\'
+					endpoint: \''.$_SERVER['SCRIPT_NAME'].'?hideHtmlHeader=true&id='.$this->id().'&json=true\'
 				},
 				callbacks: {
 					onError: function(id, name, errorReason, xhr) {
@@ -255,7 +258,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 					},
 					onComplete: function(id, fileName, responseJSON) {
 						$(".appended-by-uploader").remove();
-						$("#ajax").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id.'&file=\'+encodeURIComponent(fileName));
+						$("#ajax").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id().'&file=\'+encodeURIComponent(fileName));
 
 						if (!responseJSON.success) {
 							if (responseJSON.error == "")

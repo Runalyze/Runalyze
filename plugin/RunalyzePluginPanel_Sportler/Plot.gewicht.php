@@ -7,7 +7,7 @@
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->get('config');
+$Plugin_conf = $Plugin->getConfig();
 $Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
 
 if ($Plugin_conf['plot_timerange']['var'] > 0)

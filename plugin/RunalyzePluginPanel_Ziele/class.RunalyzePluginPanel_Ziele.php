@@ -24,12 +24,19 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	private $Lines = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Goals');
-		$this->description = __('Set your own goals for different time ranges and compare your current performance with them.');
+	final public function name() {
+		return __('Goals');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Set your own goals for different time ranges and compare your current performance with them.');
 	}
 
     /**

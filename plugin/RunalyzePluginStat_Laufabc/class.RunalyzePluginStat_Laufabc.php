@@ -13,29 +13,19 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 	private $ABCData = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Running Drills');
-		$this->description = __('How often did you do your running drills?');
+	final public function name() {
+		return __('Running Drills');
 	}
 
 	/**
-	 * Display long description 
+	 * Description
+	 * @return string
 	 */
-	protected function displayLongDescription() {
-		echo HTML::p( __('How often did you do your running drills?') );
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+	final public function description() {
+		return __('How often did you do your running drills?');
 	}
 
 	/**

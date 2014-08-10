@@ -15,12 +15,19 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	private $UpwardData    = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Elevation');
-		$this->description = __('Your steepest activities and an overview of your cumulated elevation.');
+	final public function name() {
+		return __('Elevation');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Your steepest activities and an overview of your cumulated elevation.');
 	}
 
 	/**

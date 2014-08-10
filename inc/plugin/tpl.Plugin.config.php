@@ -1,4 +1,12 @@
 <?php
+$activationLink = $this->isInActive()
+	? $this->getConfigLink( __('Activate plugin'), '&active='.Plugin::ACTIVE)
+	: $this->getConfigLink( __('Deactivate plugin'), '&active='.Plugin::ACTIVE_NOT);
+
+$name = ($this instanceof PluginTool)
+	? $this->getWindowLink()
+	: $this->name();
+
 $Links = array();
 $Links[] = array('tag' => Ajax::window('<a href="'.ConfigTabPlugins::getExternalUrl().'">'.__('back to overview').'</a>'));
 
@@ -10,20 +18,20 @@ echo '<h1>'.__('Plugin configuration').': '.$name.'</h1>';
 echo '</div>';
 
 if (!empty($_POST)) {
-	Ajax::setPluginIDtoReload($this->id);
+	Ajax::setPluginIDtoReload( $this->id() );
 	Ajax::setReloadFlag( Ajax::$RELOAD_PLUGINS );
 	echo Ajax::getReloadCommand();
 }
 ?>
 <div class="panel-content">
-	<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id; ?>" class="ajax no-automatic-reload" id="pluginconfig" method="post">
+	<form action="<?php echo self::$CONFIG_URL.'?id='.$this->id(); ?>" class="ajax no-automatic-reload" id="pluginconfig" method="post">
 		<fieldset>
 			<legend><?php _e('Description'); ?></legend>
 			<div class="w100">
-				<?php echo $this->displayLongDescription(); ?>
+				<?php $this->displayLongDescription(); ?>
 			</div>
 
-			<?php if ($this->active == self::$ACTIVE_NOT): ?>
+			<?php if ($this->isInActive()): ?>
 			<p class="warning">
 				<?php _e('The plugin is deactivated.'); ?>
 			</p>
@@ -67,9 +75,9 @@ if (!empty($_POST)) {
 
 	</form>
 
-	<?php if ($this->type == PluginType::Tool): ?>
+	<?php if ($this->type() == PluginType::Tool && $this->isActive()): ?>
 		<ul class="blocklist">
-			<li><?php echo $this->getWindowLink('&raquo; '.__('open tool'), true); ?></li>
+			<li><?php echo $this->getWindowLink(Icon::$CALCULATOR.' '.__('Open tool'), true); ?></li>
 		</ul>
 	<?php endif; ?>
 </div>

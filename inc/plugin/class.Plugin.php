@@ -10,22 +10,22 @@
  */
 abstract class Plugin {
 	/**
-	* Enum for active-flag: hidden
-	* @var int
-	*/
-	public static $ACTIVE_NOT = 0;
+	 * Enum: inactive
+	 * @var int
+	 */
+	const ACTIVE_NOT = 0;
 
 	/**
-	* Enum for active-flag: active
-	* @var int
-	*/
-	public static $ACTIVE = 1;
+	 * Enum: active
+	 * @var int
+	 */
+	const ACTIVE = 1;
 
 	/**
-	* Enum for active-flag: various/clapped
-	* @var int
-	*/
-	public static $ACTIVE_VARIOUS = 2;
+	 * Enum: various/hidden
+	 * @var int
+	 */
+	const ACTIVE_VARIOUS = 2;
 
 	/**
 	 * Url for displaying the install-window
@@ -58,58 +58,34 @@ abstract class Plugin {
 	public static $DONT_RELOAD_FOR_TRAINING_FLAG = 'dont-reload-for-training';
 
 	/**
-	 * Id for not installed plugin
-	 * @var int
-	 */
-	public static $INSTALLER_ID = -1;
-
-	/**
 	 * Internal ID from database
 	 * @var int
 	 */
-	protected $id;
+	private $id;
 
 	/**
-	 * Pluginkey (classname)
+	 * Pluginkey
 	 * @var string
 	 */
-	public $key;
-
-	/**
-	 * Internal plugin-type-id
-	 * @var int
-	 */
-	protected $type;
+	private $key;
 
 	/**
 	 * Integer flag: Is this statistic acitve?
 	 * @var int
 	 */
-	protected $active;
+	private $active;
 
 	/**
 	 * Integer position of plugins
 	 * @var int
 	 */
-	protected $order;
+	private $order;
 
 	/**
 	 * Array with all config vars
 	 * @var array
 	 */
 	protected $config;
-
-	/**
-	 * Name of this plugin
-	 * @var string
-	 */
-	protected $name;
-
-	/**
-	 * Description
-	 * @var string
-	 */
-	protected $description;
 
 	/**
 	 * Internal sport-ID from database
@@ -130,14 +106,108 @@ abstract class Plugin {
 	protected $dat;
 
 	/**
+	 * Constructor (needs ID)
+	 * @param int $id
+	 */
+	public function __construct($id) {
+		$this->id = $id;
+		$this->key = get_class($this);
+
+		if ($id == PluginInstaller::ID) {
+			return;
+		}
+
+		if (!is_numeric($id) || $id <= 0) {
+			throw new RuntimeException('Invalid id "'.$id.'" given to create a plugin.');
+		}
+
+		$this->initVars();
+		$this->initPlugin();
+	}
+
+	/**
+	 * Plugin key
+	 * @return string
+	 */
+	final public function key() {
+		return $this->key;
+	}
+
+	/**
+	 * ID
+	 * @return int
+	 */
+	final public function id() {
+		return $this->id;
+	}
+
+	/**
+	 * Name
+	 * @return string
+	 */
+	abstract public function name();
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	abstract public function description();
+
+	/**
+	 * Type
+	 * @return int
+	 */
+	abstract public function type();
+
+	/**
+	 * Type as string
+	 * @return string
+	 */
+	final public function typeString() {
+		return PluginType::string( $this->type() );
+	}
+
+	/**
+	 * Is active?
+	 * @return bool
+	 */
+	final public function isActive() {
+		return ($this->active == self::ACTIVE);
+	}
+
+	/**
+	 * Is inactive?
+	 * @return bool
+	 */
+	final public function isInActive() {
+		return ($this->active == self::ACTIVE_NOT);
+	}
+
+	/**
+	 * Is hidden/various?
+	 * @return bool
+	 */
+	final public function isHidden() {
+		return ($this->active == self::ACTIVE_VARIOUS);
+	}
+
+	/**
+	 * Order
+	 * @return int
+	 */
+	final public function order() {
+		return $this->order;
+	}
+
+	/**
 	 * Method for initializing everything (implemented in each plugin)
 	 */
-	abstract protected function initPlugin();
+	protected function initPlugin() {}
 
 	/**
 	 * Method for initializing default config-vars (implemented in each plugin)
 	 */
-	abstract protected function getDefaultConfigVars();
+	protected function getDefaultConfigVars() { return array(); }
 
 	/**
 	 * Includes the plugin-file for displaying the plugin (implemented in subclass)
@@ -174,20 +244,7 @@ abstract class Plugin {
 	 * Display description, can be overwritten for displaying a longer description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p($this->description);
-	}
-
-	/**
-	 * Get link to the window for installing this plugin
-	 * @param string $name
-	 * @return string
-	 */
-	final public function getInstallLink($name = '') {
-		if ($name == '') {
-			$name = Icon::$ADD;
-		}
-
-		return Ajax::window('<a href="'.self::$INSTALL_URL.'?key='.$this->key.'">'.Ajax::tooltip($name, __('Install plugin') ).'</a>');
+		echo HTML::p($this->description());
 	}
 
 	/**
@@ -195,7 +252,7 @@ abstract class Plugin {
 	 * @return bool
 	 */
 	final public function install() {
-		if ($this->id != self::$INSTALLER_ID) {
+		if ($this->id() != PluginInstaller::ID) {
 			Error::getInstance()->addError('Plugin can not be installed, id is set wrong.');
 			return false;
 		}
@@ -203,15 +260,11 @@ abstract class Plugin {
 		$this->id = DB::getInstance()->insert('plugin', array(
 			'key',
 			'type',
-			'name',
-			'description',
 			'active',
 			'order',
 		), array(
-			$this->key,
-			PluginType::string($this->type),
-			$this->name,
-			$this->description,
+			$this->key(),
+			$this->typeString(),
 			'1',
 			'99',
 		));
@@ -226,17 +279,15 @@ abstract class Plugin {
 	 * Initialize all variables
 	 */
 	final protected function initVars() {
-		if ($this->id == self::$INSTALLER_ID) {
+		if ($this->id() == PluginInstaller::ID) {
 			return;
 		}
 
-		$dat = DB::getInstance()->fetchByID('plugin', $this->id);
+		$dat = DB::getInstance()->fetchByID('plugin', $this->id());
 
 		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];
 		$this->order       = $dat['order'];
-		$this->name        = $dat['name'];
-		$this->description = $dat['description'];
 		$this->sportid     = $this->defaultSport();
 		$this->year        = $this->defaultYear();
 		$this->dat         = '';
@@ -375,44 +426,11 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Function to get a property from object
-	 * @param $property
-	 * @return mixed      objects property or false if property doesn't exist
+	 * Get config
+	 * @return array
 	 */
-	final public function get($property) {
-		switch($property) {
-			case 'id': return $this->id;
-			case 'key': return $this->key;
-			case 'type': return $this->type;
-			case 'active': return $this->active;
-			case 'order': return $this->order;
-			case 'config': return $this->config;
-			case 'name': return $this->name;
-			case 'description': return $this->description;
-			case 'sportid': return $this->sportid;
-			case 'year': return $this->year;
-			case 'dat': return $this->dat;
-			default: Error::getInstance()->addWarning('Asked for non-existant property "'.$property.'" in class::Stat::get()');
-				return false;
-		}
-	}
-
-	/**
-	 * Function to set a property of this object
-	 * @param $property
-	 * @param $value
-	 * @return bool       false if property doesn't exist
-	 */
-	final public function set($property, $value) {
-		switch($property) {
-			case 'name': $this->name = $value;
-			case 'description': $this->description = $value;
-			case 'sportid': $this->sportid = $value;
-			case 'year': $this->year = $value;
-			case 'dat': $this->dat = $value;
-			default: Error::getInstance()->addWarning('Tried to set non-existant or locked property "'.$property.'" in class::Stat::set()');
-				return false;
-		}
+	final public function getConfig() {
+		return $this->config;
 	}
 
 	/**
@@ -426,7 +444,7 @@ abstract class Plugin {
 			$name = Icon::$CONF;
 		}
 
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id.$add_param.'">'.$name.'</a>','small');
+		return Ajax::window('<a href="'.self::$CONFIG_URL.'?id='.$this->id().$add_param.'">'.$name.'</a>','small');
 	}
 
 	/**
@@ -434,16 +452,7 @@ abstract class Plugin {
 	 * @return string
 	 */
 	final public function getReloadLink() {
-		return '<span class="link" onclick="Runalyze.reloadPlugin(\''.$this->id.'\');">'.Icon::$REFRESH_SMALL.'</span>';
-	}
-
-	/**
-	 * Get link for removing plugin
-	 * @param string $key PLUGINKEY
-	 * @return string
-	 */
-	static public function getRemoveLink($key) {
-		return Ajax::window('<a href="'.self::$CONFIG_URL.'?key='.$key.'">'.Ajax::tooltip(Icon::$CROSS, __('Remove plugin') ).'</a>','small');
+		return '<span class="link" onclick="Runalyze.reloadPlugin(\''.$this->id().'\');">'.Icon::$REFRESH_SMALL.'</span>';
 	}
 
 	/**
@@ -483,14 +492,6 @@ abstract class Plugin {
 	 */
 	final public function displayConfigWindow() {
 		$this->handleGetPostRequest();
-
-		$activationLink = ($this->active == 0)
-			? $this->getConfigLink( __('Activate plugin'), '&active='.Plugin::$ACTIVE)
-			: $this->getConfigLink( __('Deactivate plugin'), '&active='.Plugin::$ACTIVE_NOT);
-
-		$name = ($this instanceof PluginTool)
-			? $this->getWindowLink()
-			: $this->name;
 
 		include FRONTEND_PATH.'plugin/tpl.Plugin.config.php';
 	}
@@ -537,7 +538,7 @@ abstract class Plugin {
 			$string .= $name.'|'.$dat['type'].'='.$var.'|'.trim($dat['description']).NL;
 		}
 
-		DB::getInstance()->update('plugin', $this->id, 'config', $string);
+		DB::getInstance()->update('plugin', $this->id(), 'config', $string);
 	}
 
 	/**
@@ -545,7 +546,7 @@ abstract class Plugin {
 	 * @param int $active
 	 */
 	final public function setActive($active = 1) {
-		DB::getInstance()->update('plugin', $this->id, 'active', $active);
+		DB::getInstance()->update('plugin', $this->id(), 'active', $active);
 		$this->active = $active;
 	}
 }

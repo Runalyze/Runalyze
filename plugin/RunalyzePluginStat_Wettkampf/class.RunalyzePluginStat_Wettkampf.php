@@ -14,12 +14,19 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private $distances = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Races');
-		$this->description = __('Personal bests and everything else related to your races.');
+	final public function name() {
+		return __('Races');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Personal bests and everything else related to your races.');
 	}
 
 	/**
