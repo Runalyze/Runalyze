@@ -176,8 +176,6 @@ abstract class PluginTool extends Plugin {
 	 * @return string
 	 */
 	protected function getInnerLink($name, $sport = 0, $year = 0, $dat = '') {
-		Error::getInstance()->addWarning('PluginTool::getInnerLink(): For a tool there is no inner link.');
-
-		return '';
+		throw new BadMethodCallException('PluginTool does not support getInnerLink().');
 	}
 }

@@ -13,18 +13,18 @@ class PluginFactory {
 	 * Array with all keys
 	 * @var array
 	 */
-	private $Plugins = array();
+	static private $Plugins = array();
 
 	/**
 	 * Plugins as array
 	 * @return array
 	 */
 	protected function pluginList() {
-		if (empty($this->Plugins)) {
+		if (empty(self::$Plugins)) {
 			$this->readInstalledPlugins();
 		}
 
-		return $this->Plugins;
+		return self::$Plugins;
 	}
 
 	/**
@@ -33,10 +33,6 @@ class PluginFactory {
 	 * @return Plugin
 	 */
 	public function newInstance($Pluginkey) {
-		$file = self::fileFor($Pluginkey);
-
-		require_once $file;
-
 		$data = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($Pluginkey).' LIMIT 1')->fetch();
 
 		if ($data === false) {
@@ -61,10 +57,6 @@ class PluginFactory {
 	 * @return Plugin
 	 */
 	public function newInstallerInstance($Pluginkey) {
-		$file = self::fileFor($Pluginkey);
-
-		require_once $file;
-
 		$Plugin = new $Pluginkey( PluginInstaller::ID );
 
 		return $Plugin;
@@ -74,7 +66,7 @@ class PluginFactory {
 	 * Read all installed plugins
 	 */
 	protected function readInstalledPlugins() {
-		$this->Plugins = DB::getInstance()->query('SELECT `key`, `type`, `active` FROM `'.PREFIX.'plugin` ORDER BY `order` ASC')->fetchAll();
+		self::$Plugins = DB::getInstance()->query('SELECT `key`, `type`, `active` FROM `'.PREFIX.'plugin` ORDER BY `order` ASC')->fetchAll();
 	}
 
 	/**
@@ -182,10 +174,6 @@ class PluginFactory {
 	 * @param string $Pluginkey
 	 */
 	public function installPlugin($Pluginkey) {
-		$file = self::fileFor($Pluginkey);
-
-		require_once $file;
-
 		$Plugin = new $Pluginkey( Plugin::$INSTALLER_ID );
 		$Plugin->key = $Pluginkey;
 
@@ -213,18 +201,5 @@ class PluginFactory {
 		}
 
 		return $data['key'];
-	}
-
-	/**
-	 * Get the filename for a given PLUGINKEY
-	 * @param string $PLUGINKEY
-	 * @return string
-	 */
-	static public function fileFor($PLUGINKEY) {
-		if (file_exists(FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php')) {
-			return FRONTEND_PATH.'../plugin/'.$PLUGINKEY.'/class.'.$PLUGINKEY.'.php';
-		} else {
-			throw new RuntimeException('Plugin file not found for key "'.$PLUGINKEY.'".');
-		}
 	}
 }

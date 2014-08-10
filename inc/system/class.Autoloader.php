@@ -20,13 +20,20 @@ class Autoloader {
 	 */
 	public function __construct() {
 		include FRONTEND_PATH.'system/classmap.php';
-		$this->map = $CLASSMAP;
+		include FRONTEND_PATH.'plugin/pluginmap.php';
+
+		$this->map = array_merge($CLASSMAP, $PLUGINMAP);
 
 		spl_autoload_register( array($this, 'classmapLoader') );
 	}
 
+	/**
+	 * Try to load class
+	 * @param string $class
+	 */
 	protected function classmapLoader($class) {
-		if (isset($this->map[$class]))
+		if (isset($this->map[$class])) {
 			require_once FRONTEND_PATH.$this->map[$class];
+		}
 	}
 }

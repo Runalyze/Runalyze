@@ -1,25 +1,25 @@
 <?php
 /**
- * CLI-Script to generate classmap
+ * CLI-Script to generate pluginmap
  */
 /**
- * Output php file containing classmap as <?php $CLASSMAP = array(...); ?>
+ * Output php file containing pluginmap as <?php $PLUGINMAP = array(...); ?>
  * @var string
  */
-$OUTPUT_FILE = dirname(__FILE__).'/classmap.php';
+$OUTPUT_FILE = dirname(__FILE__).'/pluginmap.php';
 
 /**
  * Root directory
  * @var string
  */
-$ROOT_DIR = dirname(__FILE__).'/../';
+$ROOT_DIR = dirname(__FILE__).'/../../plugin/';
 
 /**
- * Generate classmap
+ * Generate pluginmap
  */
 $counter  = 0;
-$classmap = "<?php\n\$CLASSMAP = array(\n"; scanDirectory($ROOT_DIR, $classmap, $counter); $classmap .= ");";
-writeFile($OUTPUT_FILE, $classmap);
+$pluginmap = "<?php\n\$PLUGINMAP = array(\n"; scanDirectory($ROOT_DIR, $pluginmap, $counter); $pluginmap .= ");";
+writeFile($OUTPUT_FILE, $pluginmap);
 
 echo $counter.' classes found and written to '.$OUTPUT_FILE."\n";
 
@@ -40,22 +40,23 @@ function writeFile($fileName, $fileContent) {
 /**
  * Scan directory
  * @param string $dir
- * @param string $classmap
+ * @param string $pluginmap
+ * @param int $counter
  */
-function scanDirectory($dir, &$classmap, &$counter) {
+function scanDirectory($dir, &$pluginmap, &$counter) {
 	global $ROOT_DIR;
 
 	$handle = opendir($dir);
 	while ($file = readdir($handle)) {
 		if ($file != '.' && $file != '..') {
 			if (is_dir($dir.$file)) {
-				scanDirectory($dir.$file.'/', $classmap, $counter);
+				scanDirectory($dir.$file.'/', $pluginmap, $counter);
 			} else {
 				if (substr($file, 0, 6) == 'class.' && substr($file, -4) == '.php') {
 					$counter++;
 					$classname = substr( substr($file, 6), 0, -4 );
-					$filename  = substr( $dir.$file, strlen($ROOT_DIR) );
-					$classmap .= "'$classname' => '$filename',\n";
+					$filename  = "../plugin/".substr( $dir.$file, strlen($ROOT_DIR) );
+					$pluginmap .= "'$classname' => '$filename',\n";
 				}
 			}
 		}
