@@ -11,13 +11,26 @@ $PLUGINKEY = 'RunalyzePluginPanel_Sports';
  */
 class RunalyzePluginPanel_Sports extends PluginPanel {
 	/**
+	 * Name
+	 * @return string
+	 */
+	final public function name() {
+		return __('Sports');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Summary of your activities for each sport.');
+	}
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->name = __('Sports');
-		$this->description = __('Summary of your activities for each sport.');
-
 		if (!$this->config['show_as_table']['var'])
 			$this->removePanelContentPadding = true;
 	}

@@ -9,7 +9,7 @@ $Frontend = new Frontend();
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->get('config');
+$Plugin_conf = $Plugin->getConfig();
 
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');

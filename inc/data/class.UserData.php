@@ -24,7 +24,7 @@ class UserData extends DataObject {
 		$Factory = new PluginFactory();
 
 		$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-		$PluginConfiguration = $Plugin->get('config');
+		$PluginConfiguration = $Plugin->getConfig();
 
 		if (!$PluginConfiguration['use_body_fat']['var'])
 			$this->DatabaseScheme->hideFieldset('analyse');

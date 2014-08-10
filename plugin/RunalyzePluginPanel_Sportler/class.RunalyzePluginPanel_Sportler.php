@@ -11,12 +11,26 @@ $PLUGINKEY = 'RunalyzePluginPanel_Sportler';
  */
 class RunalyzePluginPanel_Sportler extends PluginPanel {
 	/**
+	 * Name
+	 * @return string
+	 */
+	final public function name() {
+		return __('Body values');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.');
+	}
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->name = __('Body values');
-		$this->description = __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.');
 		$this->dontReloadForTraining = true;
 
 		if (!$this->config['use_old_design']['var'])
@@ -53,8 +67,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.php" '.Ajax::tooltip('', __('Add data'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.sportler.table.php" '.Ajax::tooltip('', __('Show table'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.php" '.Ajax::tooltip('', __('Add data'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.table.php" '.Ajax::tooltip('', __('Show table'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -140,8 +154,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 				<div class="flot '.Ajax::$IMG_WAIT.($AnalyseIsHidden ? ' flot-hide' : '').'" id="sportler_analyse" style="width:320px;height:150px;position:absolute;"></div>
 			</div>';
 
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.analyse.php';
 
 		echo '</div>';
 	}
@@ -183,8 +197,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 				</div>
 			</div>');
 
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.gewicht.php';
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/Plot.analyse.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.gewicht.php';
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/Plot.analyse.php';
 	}
 
 	/**
@@ -192,7 +206,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @return string
 	 */
 	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.table.php">'.Icon::$TABLE.' '.__('Show table').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.table.php">'.Icon::$TABLE.' '.__('Show table').'</a>');
 	}
 
 	/**
@@ -200,7 +214,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @return string
 	 */
 	public function addLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.sportler.php">'.Icon::$ADD.' '.__('Add a new entry').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.sportler.php">'.Icon::$ADD.' '.__('Add a new entry').'</a>');
 	}
 
 	/**

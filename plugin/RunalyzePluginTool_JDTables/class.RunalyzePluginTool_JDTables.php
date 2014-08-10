@@ -29,13 +29,26 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	private $Paces = array();
 
 	/**
+	 * Name
+	 * @return string
+	 */
+	final public function name() {
+		return __('Tables by Jack Daniels');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Tables for heart rate, paces and VDOT values by Jack Daniels.');
+	}
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		$this->name = __('Tables by Jack Daniels');
-		$this->description = __('Tables for heart rate, paces and VDOT values by Jack Daniels');
-
 		$this->setTables();
 	}
 
@@ -98,8 +111,9 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	protected function displayContent() {
 		$this->showListOfTables();
 
-		if (array_key_exists(Request::param('table'), $this->Tables))
+		if (array_key_exists(Request::param('table'), $this->Tables)) {
 			$this->showTable(Request::param('table'));
+		}
 	}
 
 	/**
@@ -111,7 +125,7 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 
 		echo HTML::p('');
 
-		include FRONTEND_PATH.'../plugin/'.$this->key.'/'.$this->Tables[$tableKey]['tpl'];
+		include FRONTEND_PATH.'../plugin/'.$this->key().'/'.$this->Tables[$tableKey]['tpl'];
 	}
 
 	/**

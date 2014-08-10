@@ -17,31 +17,28 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	protected $SuccessMessages = array();
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Database cleanup');
-		$this->description = __('Recalculation of some statistics may be needed after deleting some activities.'.
-								'In addition, values for elevation, TRIMP and VDOT can be recalculated.');
+	final public function name() {
+		return __('Database cleanup');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Recalculation of some statistics may be needed after deleting some activities. '.
+				'In addition, values for elevation, TRIMP and VDOT can be recalculated.');
 	}
 
 	/**
 	 * Display long description 
 	 */
 	protected function displayLongDescription() {
-		echo HTML::p( __('Due to performance reasons, some statistics are saved in the database.'.
-						'Under some circumstances, you have to recalculate these values after deleting an activity by hand.') );
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+		echo HTML::p( __('Due to performance reasons, some statistics are saved in the database. '.
+						'Under some circumstances you have to recalculate these values after deleting an activity by hand.') );
 	}
 
 	/**
@@ -61,7 +58,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$Fieldset = new FormularFieldset( __('Cleanup database') );
 
 		$Fieldset->addBlock(
-				__('This tool allows you to cleanup your database.'.
+				__('This tool allows you to cleanup your database. '.
 					'This process does only touch some cumulative statistics for your shoes and some cached values.') );
 		$Fieldset->addBlock('&nbsp;');
 
@@ -86,7 +83,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 
 		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
 			$Fieldset->addWarning(
-				__('The VDOT-adjustment for elevation data is activated (see configuration).'.
+				__('The VDOT-adjustment for elevation data is activated (see configuration). '.
 					'The complete cleanup will not work as expected, recalculate the elevation first.') );
 		}
 

@@ -11,12 +11,19 @@ $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Calculations');
-		$this->description = __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
+	final public function name() {
+		return __('Calculations');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Calculate experimental values as shape and fatigue based on TRIMP, basic endurance and your VDOT shape.');
 	}
 
 	/**
@@ -48,9 +55,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}

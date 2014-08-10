@@ -16,12 +16,19 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private $jende  = 0;
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Weather');
-		$this->description = __('Statistics about weather conditions, temperatures and clothing.');
+	final public function name() {
+		return __('Weather');
+	}
+
+	/**
+	 * Description
+	 * @return string
+	 */
+	final public function description() {
+		return __('Statistics about weather conditions, temperatures and clothing.');
 	}
 
 	/**
@@ -53,7 +60,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$LinkList = array();
 
 		if ($this->config['for_weather']['var'])
-			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, __('Show temperature plots')).'</a>').'</li>';
+			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, __('Show temperature plots')).'</a>').'</li>';
 
 		return $LinkList;
 	}

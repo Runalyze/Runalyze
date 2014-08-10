@@ -18,29 +18,19 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	private $schuhe = null;
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginPanel::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Shoes');
-		$this->description = __('Display statistics for your shoes.');
+	final public function name() {
+		return __('Shoes');
 	}
 
 	/**
-	 * Display long description 
+	 * Description
+	 * @return string
 	 */
-	protected function displayLongDescription() {
-		echo HTML::p( __('Display statistics for your shoes.') );
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-
-		return $config;
+	final public function description() {
+		return __('Display statistics for your shoes.');
 	}
 
 	/**
@@ -49,8 +39,8 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php" '.Ajax::tooltip('', __('Add new shoe'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.table.php" '.Ajax::tooltip('', __('Show all shoes'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.php" '.Ajax::tooltip('', __('Add new shoe'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.table.php" '.Ajax::tooltip('', __('Show all shoes'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
 	}
@@ -99,7 +89,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	protected function getStyle() {
-		return '<style type="text/css">.shoe-usage { position: absolute; bottom: 0; left: 0; background-image:url(plugin/'.$this->key.'/schuhbalken.png); background-position:left center; height: 2px; max-width: 100%; }</style>';
+		return '<style type="text/css">.shoe-usage { position: absolute; bottom: 0; left: 0; background-image:url(plugin/'.$this->key().'/schuhbalken.png); background-position:left center; height: 2px; max-width: 100%; }</style>';
 	}
 
 	/**
@@ -170,7 +160,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	public function tableLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.table.php">'.Icon::$TABLE.' '.__('Show all shoes').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.table.php">'.Icon::$TABLE.' '.__('Show all shoes').'</a>');
 	}
 
 	/**
@@ -178,7 +168,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	public function addLink() {
-		return Ajax::window('<a href="plugin/'.$this->get('key').'/window.schuhe.php">'.Icon::$ADD.' '.__('Add a new shoe').'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.php">'.Icon::$ADD.' '.__('Add a new shoe').'</a>');
 	}
 
 	/**
@@ -221,6 +211,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	private function editLinkFor($id) {
-		return Ajax::window('<a href="plugin/'.$this->key.'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, __('Edit')).'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, __('Edit')).'</a>');
 	}
 }

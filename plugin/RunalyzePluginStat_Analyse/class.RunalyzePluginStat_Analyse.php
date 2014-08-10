@@ -41,19 +41,19 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private $Sport = null;
 
 	/**
-	 * Initialize this plugin
-	 * @see PluginStat::initPlugin()
+	 * Name
+	 * @return string
 	 */
-	protected function initPlugin() {
-		$this->name = __('Analyze');
-		$this->description = __('Analyze your training (only running) by means of pace, heart rate and different types.');
+	final public function name() {
+		return __('Analyze');
 	}
 
 	/**
-	 * Display long description 
+	 * Description
+	 * @return string
 	 */
-	protected function displayLongDescription() {
-		echo HTML::p( __('This plugin analyzes your training (only running) by means of pace, heart rate and different types.') );
+	final public function description() {
+		return __('Analyze your training (only running) by means of pace, heart rate and different types.');
 	}
 
 	/**

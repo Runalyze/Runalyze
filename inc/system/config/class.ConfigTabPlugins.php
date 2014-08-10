@@ -63,8 +63,9 @@ class ConfigTabPlugins extends ConfigTab {
 	private function getCodeFor($PluginType) {
 		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
 
-		if (empty($Plugins))
+		if (empty($Plugins)) {
 			return HTML::info(__('No plugins available.'));
+		}
 
 		$Code = '
 			<table class="zebra-style fullwidth more-padding">
@@ -73,6 +74,7 @@ class ConfigTabPlugins extends ConfigTab {
 						<th colspan="3">'.PluginType::readableString($PluginType).'</th>
 						<th>'.__('Mode').'</th>
 						<th>'.__('Order').'</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -82,26 +84,28 @@ class ConfigTabPlugins extends ConfigTab {
 		foreach ($Plugins as $Data) {
 			$Plugin = $Factory->newInstance($Data['key']);
 
-			if ($Plugin === false)
+			if ($Plugin === false) {
 				$Code .= '
 					<tr class="unimportant">
-						<td>'.Plugin::getRemoveLink($Data['key']).'</td>
-						<td class="b">'.$Data['key'].'</td>
-						<td colspan="3">'.__('The plugin cannot be found.').'</td>
+						<td>'.PluginInstaller::uninstallLink($Plugin->key()).'</td>
+						<td class="b">'.$Plugin->key().'</td>
+						<td colspan="4">'.__('The plugin cannot be found.').'</td>
 					</tr>';
-			else
+			} else {
 				$Code .= '
-					<tr class="a'.($Plugin->get('active') == Plugin::$ACTIVE_NOT ? ' unimportant' : '').'">
+					<tr class="a'.($Plugin->isInActive() ? ' unimportant' : '').'">
 						<td>'.$Plugin->getConfigLink().'</td>
-						<td class="b">'.$Plugin->get('name').'</td>
-						<td>'.$Plugin->get('description').'</td>
-						<td><select name="plugin_modus_'.$Plugin->get('id').'">
-								<option value="'.Plugin::$ACTIVE.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE).'>'.__('enabled').'</option>
-								<option value="'.Plugin::$ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_VARIOUS).'>'.__('hidden*').'</option>
-								<option value="'.Plugin::$ACTIVE_NOT.'"'.HTML::Selected($Plugin->get('active') == Plugin::$ACTIVE_NOT).'>'.__('not enabled').'</option>
+						<td class="b">'.$Plugin->name().'</td>
+						<td>'.$Plugin->description().'</td>
+						<td><select name="plugin_modus_'.$Plugin->id().'">
+								<option value="'.Plugin::ACTIVE.'"'.HTML::Selected($Plugin->isActive()).'>'.__('enabled').'</option>
+								<option value="'.Plugin::ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->isHidden()).'>'.__('hidden*').'</option>
+								<option value="'.Plugin::ACTIVE_NOT.'"'.HTML::Selected($Plugin->isInActive()).'>'.__('not enabled').'</option>
 							</select></td>
-						<td><input type="text" name="plugin_order_'.$Plugin->get('id').'" size="3" value="'.$Plugin->get('order').'"></td>
+						<td><input type="text" name="plugin_order_'.$Plugin->id().'" size="3" value="'.$Plugin->order().'"></td>
+						<td>'.PluginInstaller::uninstallLink($Plugin->key()).'</td>
 					</tr>';
+			}
 		}
 
 		$Code .= '
@@ -146,19 +150,15 @@ class ConfigTabPlugins extends ConfigTab {
 				<tbody>';
 
 		foreach ($Plugins as $Data) {
-			$Plugin = $Factory->newInstance($Data['key']);
+			$Plugin = $Factory->newInstallerInstance($Data['key']);
 
-			if ($Plugin === false) {
-				$Code .= '<tr><td colspan="4"><em>'.sprintf( __('The Plugin %s cannot be found.'), $Data['key']).'</em></td></tr>';
-			} else {
-				$Code .= '
+			$Code .= '
 				<tr>
-					<td>'.$Plugin->getInstallLink().'</td>
-					<td class="b">'.$Plugin->getInstallLink($Plugin->get('name')).'</td>
-					<td>'.$Plugin->get('description').'</td>
-					<td colspan="2">'.PluginType::readableString($Plugin->get('type')).'</td>
+					<td>'.Icon::$ADD.'</td>
+					<td class="b">'.PluginInstaller::link($Plugin->key(), $Plugin->name()).'</td>
+					<td>'.$Plugin->description().'</td>
+					<td colspan="2">'.PluginType::readableString($Plugin->type()).'</td>
 				</tr>';
-			}
 		}
 
 		$Code .= '
@@ -175,10 +175,21 @@ class ConfigTabPlugins extends ConfigTab {
 		$Plugins = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin`')->fetchAll();
 		foreach ($Plugins as $Plugin) {
 			$id = $Plugin['id'];
-			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id]))
+
+			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id])) {
+				
+
 				DB::getInstance()->update('plugin', $id,
-					array('active', 'order'),
-					array($_POST['plugin_modus_'.$id], $_POST['plugin_order_'.$id]));
+					array(
+						'active',
+						'order'
+					),
+					array(
+						(int)$_POST['plugin_modus_'.$id],
+						(int)$_POST['plugin_order_'.$id]
+					)
+				);
+			}
 		}
 
 		// TODO: 

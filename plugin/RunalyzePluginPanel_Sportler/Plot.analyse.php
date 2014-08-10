@@ -7,7 +7,7 @@
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->get('config');
+$Plugin_conf = $Plugin->getConfig();
 
 if ($Plugin_conf['plot_timerange']['var'] > 0)
 	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin_conf['plot_timerange']['var']).' ORDER BY `time` DESC';
