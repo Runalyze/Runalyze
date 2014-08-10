@@ -138,9 +138,7 @@ abstract class PluginPanel extends Plugin {
 	 * @return string
 	 */
 	public function getLink() {
-		Error::getInstance()->addWarning('PluginPanel::getLink(): For a panel there is no link.');
-
-		return '';
+		throw new BadMethodCallException('PluginPanel does not support getLink().');
 	}
 
 	/**
@@ -152,8 +150,6 @@ abstract class PluginPanel extends Plugin {
 	 * @return string
 	 */
 	protected function getInnerLink($name, $sport = 0, $year = 0, $dat = '') {
-		Error::getInstance()->addWarning('PluginPanel::getInnerLink(): For a panel there is no inner link.');
-
-		return '';
+		throw new BadMethodCallException('PluginPanel does not support getInnerLink().');
 	}
 }
