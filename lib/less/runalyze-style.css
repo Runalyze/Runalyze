@@ -449,7 +449,7 @@ body.overlay #ajax-outer {
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
 }
 #ajax-outer {
   display: none;
@@ -651,7 +651,7 @@ p {
   margin: 2px 5px;
 }
 p.text {
-  margin: 0 0 12px;
+  margin: 2px 5px 12px;
 }
 p.text-headline {
   margin: 0 0 8px;
@@ -1892,7 +1892,7 @@ label:active .checkbox-icon {
   visibility: visible;
 }
 .tooltip.in {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .tooltip-inner {
   max-width: 400px;
