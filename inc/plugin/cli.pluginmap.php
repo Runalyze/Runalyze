@@ -18,7 +18,7 @@ $ROOT_DIR = dirname(__FILE__).'/../../plugin/';
  * Generate pluginmap
  */
 $counter  = 0;
-$pluginmap = "<?php\n\$PLUGINMAP = array(\n"; scanDirectory($ROOT_DIR, $pluginmap, $counter); $pluginmap .= ");";
+$pluginmap = "<?php\n\$PLUGINMAP = array(\n"; scanDirectoryForPlugins($ROOT_DIR, $ROOT_DIR, $pluginmap, $counter); $pluginmap .= ");";
 writeFile($OUTPUT_FILE, $pluginmap);
 
 echo $counter.' classes found and written to '.$OUTPUT_FILE."\n";
@@ -43,14 +43,12 @@ function writeFile($fileName, $fileContent) {
  * @param string $pluginmap
  * @param int $counter
  */
-function scanDirectory($dir, &$pluginmap, &$counter) {
-	global $ROOT_DIR;
-
+function scanDirectoryForPlugins($ROOT_DIR, $dir, &$pluginmap, &$counter) {
 	$handle = opendir($dir);
 	while ($file = readdir($handle)) {
 		if ($file != '.' && $file != '..') {
 			if (is_dir($dir.$file)) {
-				scanDirectory($dir.$file.'/', $pluginmap, $counter);
+				scanDirectoryForPlugins($ROOT_DIR, $dir.$file.'/', $pluginmap, $counter);
 			} else {
 				if (substr($file, 0, 6) == 'class.' && substr($file, -4) == '.php') {
 					$counter++;
