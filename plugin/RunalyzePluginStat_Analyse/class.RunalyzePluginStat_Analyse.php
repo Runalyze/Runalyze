@@ -57,21 +57,20 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['use_type']  = array('type' => 'bool', 'var' => true, 'description' => __('Analyze types') );
-		$config['use_pace']  = array('type' => 'bool', 'var' => true, 'description' => __('Analyze pace zones') );
-		$config['use_pulse'] = array('type' => 'bool', 'var' => true, 'description' => __('Analyze heart rate zones') );
-		$config['lowest_pulsegroup'] = array('type' => 'int', 'var' => 65, 'description' => '<span class="atLeft" rel="tooltip" title="[%HFmax]">'.__('Lowest heart rate zone').'</span>');
-		$config['pulsegroup_step']   = array('type' => 'int', 'var' => 5, 'description' => '<span class="atLeft" rel="tooltip" title="[%HFmax]">'.__('Heart rate zone: Increment').'</span>');
-		$config['lowest_pacegroup']  = array('type' => 'int', 'var' => 450, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Lowest pace zone').'</span>');
-		$config['highest_pacegroup'] = array('type' => 'int', 'var' => 240, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Highest pace zone').'</span>');
-		$config['pacegroup_step']    = array('type' => 'int', 'var' => 15, 'description' => '<span class="atLeft" rel="tooltip" title="[s/km]">'.__('Pace zone: Increment').'</span>');
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('use_type', __('Analyze types'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('use_pace', __('Analyze pace zones'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('use_pulse', __('Analyze heart rate zones'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueInt('lowest_pulsegroup', __('Lowest heart rate zone'), __('[%HFmax]'), 65) );
+		$Configuration->addValue( new PluginConfigurationValueInt('pulsegroup_step', __('Heart rate zone: Increment'), __('[%HFmax]'), 5) );
+		$Configuration->addValue( new PluginConfigurationValueInt('lowest_pacegroup', __('Lowest pace zone'), __('[s/km]'), 450) );
+		$Configuration->addValue( new PluginConfigurationValueInt('highest_pacegroup', __('Highest pace zone'), __('[s/km]'), 240) );
+		$Configuration->addValue( new PluginConfigurationValueInt('pacegroup_step', __('Pace zone: Increment'), __('[s/km]'), 15) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -139,12 +138,17 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Initialize analysis data
 	 */
 	private function initData() {
-		if ($this->config['use_type']['var'] && $this->Sport->hasTypes())
+		if ($this->Configuration()->value('use_type') && $this->Sport->hasTypes()) {
 			$this->AnalysisData[] = $this->getTypeArray();
-		if ($this->config['use_pace']['var'] && $this->Sport->usesDistance())
+		}
+
+		if ($this->Configuration()->value('use_pace') && $this->Sport->usesDistance()) {
 			$this->AnalysisData[] = $this->getPaceArray();
-		if ($this->config['use_pulse']['var'] && $this->Sport->usesPulse())
+		}
+
+		if ($this->Configuration()->value('use_pulse') && $this->Sport->usesPulse()) {
 			$this->AnalysisData[] = $this->getPulseArray();
+		}
 	}
 
 	/**
@@ -161,8 +165,9 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Display the analysis
 	 */
 	private function displayAnalysis() {
-		if (empty($this->AnalysisData))
+		if (empty($this->AnalysisData)) {
 			echo HTML::info( __('There is no data for this sport.') );
+		}
 
 		foreach ($this->AnalysisData as $i => $Data) {
 			if (!is_array($Data))
@@ -328,9 +333,9 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Get array for "Tempobereiche"
 	 */
 	private function getPaceArray() {
-		$speed_min = $this->config['lowest_pacegroup']['var'];
-		$speed_max = $this->config['highest_pacegroup']['var'];
-		$speed_step = $this->config['pacegroup_step']['var'];
+		$speed_min = $this->Configuration()->value('lowest_pacegroup');
+		$speed_max = $this->Configuration()->value('highest_pacegroup');
+		$speed_step = $this->Configuration()->value('pacegroup_step');
 		$ceil_corr  = $speed_min % $speed_step;
 
 		if ($this->sportid != CONF_RUNNINGSPORT) {
@@ -394,8 +399,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Get array for "Pulsbereiche"
 	 */
 	private function getPulseArray() {
-		$pulse_min  = max((int)$this->config['lowest_pulsegroup']['var'], 0);
-		$pulse_step = max((int)$this->config['pulsegroup_step']['var'], 1);
+		$pulse_min  = max((int)$this->Configuration()->value('lowest_pulsegroup'), 0);
+		$pulse_step = max((int)$this->Configuration()->value('pulsegroup_step'), 1);
 		$ceil_corr  = $pulse_min % $pulse_step;
 
 		$result = DB::getInstance()->query('

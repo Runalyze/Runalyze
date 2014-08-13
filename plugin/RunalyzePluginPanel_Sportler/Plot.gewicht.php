@@ -7,13 +7,12 @@
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->getConfig();
-$Wunschgewicht = $Plugin_conf['wunschgewicht']['var'];
+$Wunschgewicht = $Plugin->Configuration()->value('wunschgewicht');
 
-if ($Plugin_conf['plot_timerange']['var'] > 0)
-	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin_conf['plot_timerange']['var']).' ORDER BY `time` DESC';
+if ($Plugin->Configuration()->value('plot_timerange') > 0)
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' ORDER BY `time` DESC';
 else
-	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
+	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
 
 $Data     = array_reverse( DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
 $Weights  = array();
@@ -35,9 +34,9 @@ foreach ($Labels as $i => &$value)
 		$value = '';
 
 $Plot = new Plot("sportler_weights", 320, 150);
-if ($Plugin_conf['use_weight']['var'])
+if ($Plugin->Configuration()->value('use_weight'))
 	$Plot->Data[] = array('label' => __('Weight'), 'color' => '#008', 'data' => $Weights);
-if ($Plugin_conf['use_pulse']['var'])
+if ($Plugin->Configuration()->value('use_pulse'))
 	$Plot->Data[] = array('label' => __('Resting HR'), 'color' => '#800', 'data' => $HRrests, 'yaxis' => 2);
 
 $Plot->setMarginForGrid(5);
@@ -61,9 +60,9 @@ if ($Wunschgewicht > 1) {
 	$Plot->addMarkingArea('y1', $Wunschgewicht, 0);
 }
 
-if (empty($Data)) 
+if (empty($Data)) {
 	$Plot->raiseError( __('No data available.') );
-elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
+} elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();
 }

@@ -7,20 +7,21 @@
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->getConfig();
 
-if ($Plugin_conf['plot_timerange']['var'] > 0)
-	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin_conf['plot_timerange']['var']).' ORDER BY `time` DESC';
-else
-	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin_conf['plot_points']['var']);
+if ($Plugin->Configuration()->value('plot_timerange') > 0) {
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' ORDER BY `time` DESC';
+} else {
+	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
+}
 
 $Data     = array_reverse( DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
 $Adiposes = array();
 $Water    = array();
 $Muscles  = array();
 
-if (count($Data) == 1)
+if (count($Data) == 1) {
 	$Data[1] = $Data[0];
+}
 
 if (!empty($Data)) {
 	foreach ($Data as $D) {
@@ -31,9 +32,11 @@ if (!empty($Data)) {
 } 
 
 $Labels = array_keys($Water);
-foreach ($Labels as $i => &$value)
-	if ($i != 0 && $i != count($Labels)-1)
+foreach ($Labels as $i => &$value) {
+	if ($i != 0 && $i != count($Labels)-1) {
 		$value = '';
+	}
+}
 
 $Plot = new Plot("sportler_analyse", 320, 150);
 
@@ -59,9 +62,9 @@ $Plot->addYAxis(2, 'right');
 $Plot->addYUnit(2, '%', 0);
 $Plot->setYTicks(1, 1, 0);
 
-if(empty($Data)) 
+if (empty($Data)) {
 	$Plot->raiseError( __('No data available.') );
-elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
+} elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();
 }

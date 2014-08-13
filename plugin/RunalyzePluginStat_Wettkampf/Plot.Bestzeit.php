@@ -40,6 +40,7 @@ $Plot->addYAxis(1, 'left');
 $Plot->setYAxisAsTime(1);
 $Plot->setYAxisTimeFormat($timeFormat, 1);
 
+$Plot->smoothing(false);
 $Plot->lineWithPoints();
 $Plot->setTitle($titleCenter);
 

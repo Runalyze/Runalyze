@@ -31,17 +31,6 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		//$config['all_sports'] = array('type' => 'bool', 'var' => false, 'description' => 'Alle Sportarten ber&uuml;cksichtigen');
-
-		return $config;
-	}
-
-	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {

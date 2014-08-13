@@ -53,29 +53,15 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueArray('pace_distances', __('Distances'), '', array(0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50)) );
+		$Configuration->addValue( new PluginConfigurationValueArray('vdot_range', __('VDOT from ... to ...'), __('two values, comma seperated'), array(30, 80)) );
+		$Configuration->addValue( new PluginConfigurationValueArray('pace_range', __('Pace table: 400m from  ...s to ...s'), __('two values, comma seperated'), array(60, 180)) );
 
-		$config['pace_distances'] = array(
-			'type' => 'array',
-			'var' => array(0.2, 0.4, 1, 3, 5, 10, 21.1, 42.2, 50),
-			'description' => Ajax::tooltip(__('Distances'), __('comma seperated'))
-		);
-		$config['vdot_range']     = array(
-			'type' => 'array',
-			'var' => array(30, 80),
-			'description' => Ajax::tooltip(__('VDOT from ... to ...'), __('two values, comma seperated'))
-		);
-		$config['pace_range']     = array(
-			'type' => 'array',
-			'var' => array(60, 180),
-			'description' => Ajax::tooltip(__('Pace table: 400m from  ...s to ...s'), __('two values, comma seperated'))
-		);
-
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -164,9 +150,9 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 		$min = 30;
 		$max = 80;
 
-		if (count($this->config['vdot_range']['var']) == 2) {
-			$min = min($this->config['vdot_range']['var']);
-			$max = max($this->config['vdot_range']['var']);
+		if (count($this->Configuration()->value('vdot_range')) == 2) {
+			$min = min($this->Configuration()->value('vdot_range'));
+			$max = max($this->Configuration()->value('vdot_range'));
 		}
 
 		$this->Range = range($min, $max);
@@ -179,9 +165,9 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 		$min = 60;
 		$max = 180;
 
-		if (count($this->config['pace_range']['var']) == 2) {
-			$min = min($this->config['pace_range']['var']);
-			$max = max($this->config['pace_range']['var']);
+		if (count($this->Configuration()->value('pace_range')) == 2) {
+			$min = min($this->Configuration()->value('pace_range'));
+			$max = max($this->Configuration()->value('pace_range'));
 		}
 
 		$this->Range = range($min, $max);

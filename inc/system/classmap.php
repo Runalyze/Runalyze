@@ -166,6 +166,14 @@ $CLASSMAP = array(
 'PluginStat' => 'plugin/class.PluginStat.php',
 'PluginTool' => 'plugin/class.PluginTool.php',
 'PluginType' => 'plugin/class.PluginType.php',
+'PluginConfiguration' => 'plugin/config/class.PluginConfiguration.php',
+'PluginConfigurationValue' => 'plugin/config/class.PluginConfigurationValue.php',
+'PluginConfigurationValueArray' => 'plugin/config/class.PluginConfigurationValueArray.php',
+'PluginConfigurationValueBool' => 'plugin/config/class.PluginConfigurationValueBool.php',
+'PluginConfigurationValueHiddenArray' => 'plugin/config/class.PluginConfigurationValueHiddenArray.php',
+'PluginConfigurationValueInt' => 'plugin/config/class.PluginConfigurationValueInt.php',
+'PluginConfigurationValueSelect' => 'plugin/config/class.PluginConfigurationValueSelect.php',
+'PluginConfigurationWindow' => 'plugin/config/class.PluginConfigurationWindow.php',
 'AccountHandler' => 'system/class.AccountHandler.php',
 'Autoloader' => 'system/class.Autoloader.php',
 'BigFileWriterGZip' => 'system/class.BigFileWriterGZip.php',
@@ -266,4 +274,3 @@ $CLASSMAP = array(
 'TableZonesHeartrate' => 'training/view/section/table/class.TableZonesHeartrate.php',
 'TableZonesPace' => 'training/view/section/table/class.TableZonesPace.php',
 );
-?>

@@ -33,8 +33,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	protected function initPlugin() {
 		$this->dontReloadForTraining = true;
 
-		if (!$this->config['use_old_design']['var'])
+		if (!$this->Configuration()->value('use_old_design')) {
 			$this->removePanelContentPadding = true;
+		}
 	}
 
 	/**
@@ -45,20 +46,19 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['use_old_design'] = array('type' => 'bool', 'var' => false, 'description' => __('Use old design') );
-		$config['use_weight']     = array('type' => 'bool', 'var' => true, 'description' => __('Record body weight') );
-		$config['use_body_fat']   = array('type' => 'bool', 'var' => true, 'description' => __('Record body fat') );
-		$config['use_pulse']      = array('type' => 'bool', 'var' => true, 'description' => __('Record resting heart rate') );
-		$config['wunschgewicht']  = array('type' => 'int', 'var' => 0, 'description' => __('Desired body weight') );
-		$config['plot_points']    = array('type' => 'int', 'var' => 20, 'description' => __('Plot: number of points') );
-		$config['plot_timerange'] = array('type' => 'int', 'var' => 0, 'description' => Ajax::tooltip( __('<small>or</small> fixed number of days'), __('Enter a value &ge; 0 to show a fixed time range.') ) );
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('use_old_design', __('Use old design'), '', false) );
+		$Configuration->addValue( new PluginConfigurationValueBool('use_weight', __('Record body weight'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('use_body_fat', __('Record body fat'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('use_pulse', __('Record resting heart rate'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueInt('wunschgewicht', __('Desired body weight'), '', 0) );
+		$Configuration->addValue( new PluginConfigurationValueInt('plot_points', __('Plot: number of points'), '', 20) );
+		$Configuration->addValue( new PluginConfigurationValueInt('plot_timerange', __('<small>or</small> fixed number of days'), __('Enter a value &ge; 0 to show a fixed time range.'), 0) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -78,13 +78,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		if ($this->config['use_old_design']['var'])
+		if ($this->Configuration()->value('use_old_design')) {
 			$this->displayContentInOldDesign();
-		else
+		} else {
 			$this->displayContentInNewDesign();
+		}
 
-		if (!$this->config['use_weight']['var'] && !$this->config['use_pulse']['var'] && !$this->config['use_body_fat']['var'])
+		if (!$this->Configuration()->value('use_weight') && !$this->Configuration()->value('use_pulse') && !$this->Configuration()->value('use_body_fat')) {
 			echo HTML::warning( __('You have to specify which values to record. (see configuration)') );
+		}
 	}
 
 	/**
@@ -97,10 +99,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$FirstValues = array();
 		$SecondValues = array();
 
-		if ($this->config['use_weight']['var'])
+		if ($this->Configuration()->value('use_weight')) {
 			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight()), 'kg', __('Weight'));
+		}
 
-		if ($this->config['use_pulse']['var']) {
+		if ($this->Configuration()->value('use_pulse')) {
 			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest()), 'bpm', __('Resting HR'));
 			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax()), 'bpm', __('Maximal HR'));
 		}
@@ -111,10 +114,11 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= $Value->getCode();
 		}
 
-		if (!empty($Code))
+		if (!empty($Code)) {
 			$Code .= '<br>';
+		}
 
-		if ($this->config['use_body_fat']['var']) {
+		if ($this->Configuration()->value('use_body_fat')) {
 			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat()), '&#37;', __('Fat'));
 			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater()), '&#37;', __('Water'));
 			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles()), '&#37;', __('Muscles'));
@@ -125,8 +129,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 			$Code .= $Value->getCode();
 		}
 
-		if (!empty($Code))
+		if (!empty($Code)) {
 			echo BoxedValue::wrapValues($Code);
+		}
 
 		$this->displayPlots();
 	}
@@ -135,14 +140,15 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * Display plots
 	 */
 	protected function displayPlots() {
-		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
+		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
 
-		if (!$AnalyseIsHidden && !$this->config['use_body_fat']['var'])
+		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) {
 			return;
+		}
 
 		echo '<div class="panel-content">';
 
-		if ($AnalyseIsHidden && $this->config['use_body_fat']['var']) {
+		if ($AnalyseIsHidden && $this->Configuration()->value('use_body_fat')) {
 			echo '<div class="flot-menu flot-menu-inline">';
 			echo Ajax::flotChange(__('Weight'), 'sportler_flots', 'sportler_weights', $AnalyseIsHidden);
 			echo Ajax::flotChange(__('Other values'), 'sportler_flots', 'sportler_analyse', !$AnalyseIsHidden);
@@ -169,20 +175,20 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$Analyse  = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
-		if ($this->config['use_weight']['var'])
+		if ($this->Configuration()->value('use_weight'))
 			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br>';
 
-		if ($this->config['use_pulse']['var'])
+		if ($this->Configuration()->value('use_pulse'))
 			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
 		else
 			$Pulse = Helper::Unknown($UserData->getPulseMax()).' bpm';
 
-		if ($this->config['use_body_fat']['var'])
+		if ($this->Configuration()->value('use_body_fat'))
 			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat()).' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater()).' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles()).' &#37;';
 
-		$AnalyseIsHidden = $this->config['use_weight']['var'] || $this->config['use_pulse']['var'];
+		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
 
-		if (!$AnalyseIsHidden && !$this->config['use_body_fat']['var'])
+		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat'))
 			return;
 
 		echo('

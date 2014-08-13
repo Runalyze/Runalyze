@@ -10,7 +10,7 @@ $Prognosis->setStrategy($Strategy);
 	<thead>
 		<tr>
 			<th>VDOT</th>
-		<?php foreach ($this->config['pace_distances']['var'] as $km): ?>
+		<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
 		<?php if ($km >= 1): ?>
 			<th><?php echo Running::Km($km, 1, ($km <= 3)); ?></th>
 		<?php endif; ?>
@@ -22,7 +22,7 @@ $Prognosis->setStrategy($Strategy);
 		<?php $Strategy->setVDOT($vdot); ?>
 		<tr<?php if (round(VDOT_FORM) == $vdot) echo ' class="highlight"'; ?>>
 			<td class="b"><?php echo $vdot; ?></td>
-		<?php foreach ($this->config['pace_distances']['var'] as $km): ?>
+		<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
 		<?php if ($km >= 1): ?>
 			<td><?php echo Time::toString(round($Prognosis->inSeconds($km))); ?></td>
 		<?php endif; ?>

@@ -35,18 +35,37 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['show_trainingpaces']  = array('type' => 'bool', 'var' => false, 'description' => Ajax::tooltip( __('Show: Paces'), __('Paces based on your curent VDOT'), true));
-		$config['show_trimpvalues']    = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: ATL/CTL/TSB'), __('Show actual/chronical training load and stress balance (based on TRIMP)'), true));
-		$config['show_vdot']           = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: VDOT'), __('Predict current VDOT value'), true));
-		$config['show_basicendurance'] = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: Basic endurance'), __('Guess current basic endurance'), true));
-		$config['show_jd_intensity']   = array('type' => 'bool', 'var' => true, 'description' => Ajax::tooltip( __('Show: Training points'), __('Training intensity by Jack Daniels'), true));
+	protected function initConfiguration() {
+		$ShowPaces = new PluginConfigurationValueBool('show_trainingpaces', __('Show: Paces'));
+		$ShowPaces->setTooltip( __('Paces based on your curent VDOT') );
+		$ShowPaces->setDefaultValue(false);
 
-		return $config;
+		$ShowTrimp = new PluginConfigurationValueBool('show_trimpvalues', __('Show: ATL/CTL/TSB'));
+		$ShowTrimp->setTooltip( __('Show actual/chronical training load and stress balance (based on TRIMP)') );
+		$ShowTrimp->setDefaultValue(false);
+
+		$ShowVDOT = new PluginConfigurationValueBool('show_vdot', __('Show: VDOT'));
+		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
+		$ShowVDOT->setDefaultValue(false);
+
+		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Basic endurance'));
+		$ShowBE->setTooltip( __('Guess current basic endurance') );
+		$ShowBE->setDefaultValue(false);
+
+		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
+		$ShowJD->setTooltip( __('Training intensity by Jack Daniels') );
+		$ShowJD->setDefaultValue(false);
+
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue($ShowPaces);
+		$Configuration->addValue($ShowTrimp);
+		$Configuration->addValue($ShowVDOT);
+		$Configuration->addValue($ShowBE);
+		$Configuration->addValue($ShowJD);
+
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -69,11 +88,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function displayContent() {
 		$this->showValues();
 
-		if ($this->config['show_trainingpaces']['var'])
+		if ($this->Configuration()->value('show_trainingpaces')) {
 			$this->showPaces();
+		}	
 
-		if (Time::diffInDays(START_TIME) < 70)
+		if (Time::diffInDays(START_TIME) < 70) {
 			echo HTML::info( __('There are not enough activities for good calculations.') );
+		}
 	}
 
 	/**
@@ -95,7 +116,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Values = array(
 			array(
-				'show'	=> $this->config['show_vdot']['var'],
+				'show'	=> $this->Configuration()->value('show_vdot'),
 				'bars'	=> array(
 					new ProgressBarSingle(2*round(VDOT_FORM - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
@@ -106,7 +127,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'tooltip'	=> __('Current average VDOT')
 			),
 			array(
-				'show'	=> $this->config['show_basicendurance']['var'],
+				'show'	=> $this->Configuration()->value('show_basicendurance'),
 				'bars'	=> array(
 					new ProgressBarSingle(BasicEndurance::getConst(), ProgressBarSingle::$COLOR_BLUE)
 				),
@@ -117,7 +138,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'tooltip'	=> __('<em>Experimental value!</em><br>100 &#37; means: you had enough long runs and kilometers per week to run a good marathon, based on your current VDOT.')
 			),
 			array(
-				'show'	=> $this->config['show_trimpvalues']['var'],
+				'show'	=> $this->Configuration()->value('show_trimpvalues'),
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['ATL'], ProgressBarSingle::$COLOR_BLUE)
 				),
@@ -128,7 +149,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'tooltip'	=> __('Actual Training Load<br><small>Average training impulse of the last weeks in relation to your maximal value.</small>')
 			),
 			array(
-				'show'	=> $this->config['show_trimpvalues']['var'],
+				'show'	=> $this->Configuration()->value('show_trimpvalues'),
 				'bars'	=> array(
 					new ProgressBarSingle($TrimpValues['CTL'], ProgressBarSingle::$COLOR_BLUE)
 				),
@@ -139,7 +160,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'tooltip'	=> __('Chronical Training Load<br><small>Average training impulse of the last months in relation to your maximal value.</small>')
 			),
 			array(
-				'show'	=> $this->config['show_trimpvalues']['var'],
+				'show'	=> $this->Configuration()->value('show_trimpvalues'),
 				'bars'	=> array(
 					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
@@ -153,7 +174,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					'A value of &le; -10 can be a hint to start regeneration.</small>')
 			),
 			array(
-				'show'	=> $this->config['show_jd_intensity']['var'],
+				'show'	=> $this->Configuration()->value('show_jd_intensity'),
 				'bars'	=> array(
 					new ProgressBarSingle($JDPointsPrognosis/2, ProgressBarSingle::$COLOR_LIGHT),
 					new ProgressBarSingle($JDPointsThisWeek/2, ProgressBarSingle::$COLOR_RED)

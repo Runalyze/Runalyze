@@ -62,18 +62,26 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['distances']     = array('type' => 'array', 'var' => array(1, 3, 5, 10, 21.1, 42.2), 'description' => Ajax::tooltip(__('Distances to predict'), __('comma seperated')) );
-		$config['model-jd']      = array('type' => 'bool', 'var' => true, 'description' => __('Model: Jack Daniels') );
-		$config['model-cpp']     = array('type' => 'bool', 'var' => false, 'description' => __('Model: Robert Bock') );
-		$config['model-steffny'] = array('type' => 'bool', 'var' => false, 'description' => __('Model: Herbert Steffny') );
-		$config['model-cameron'] = array('type' => 'bool', 'var' => false, 'description' => __('Model: David Cameron') );
+	protected function initConfiguration() {
+		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict'));
+		$Distances->setDefaultValue( array(1, 3, 5, 10, 21.1, 42.2) );
 
-		return $config;
+		$Model = new PluginConfigurationValueSelect('model', __('Prediction model'));
+		$Model->setOptions( array(
+			'jd'		=> 'Jack Daniels',
+			'cpp'		=> 'Robert Bock (CPP)',
+			'steffny'	=> 'Herbert Steffny',
+			'cameron'	=> 'David Cameron'
+		) );
+		$Model->setDefaultValue('jd');
+
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue($Distances);
+		$Configuration->addValue($Model);
+
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -95,25 +103,37 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected function displayContent() {
 		$this->prepareForPrognosis();
 
-		foreach ($this->config['distances']['var'] as $km)
+		foreach ($this->getDistances() as $km) {
 			$this->showPrognosis($km);
+		}
 
-		if ($this->thereAreNotEnoughCompetitions())
+		if ($this->thereAreNotEnoughCompetitions()) {
 			echo HTML::info( __('There are not enough results for good predictions.') );
+		}
 	}
 
 	/**
 	 * Prepare calculations 
 	 */
 	protected function prepareForPrognosis() {
-		if ($this->config['model-cpp']['var'])
-			$this->PrognosisStrategy = new RunningPrognosisBock;
-		elseif ($this->config['model-steffny']['var'])
-			$this->PrognosisStrategy = new RunningPrognosisSteffny;
-		elseif ($this->config['model-cameron']['var'])
-			$this->PrognosisStrategy = new RunningPrognosisCameron;
-		else
-			$this->PrognosisStrategy = new RunningPrognosisDaniels;
+		switch ($this->Configuration()->value('model')) {
+			case 'cpp':
+				$this->PrognosisStrategy = new RunningPrognosisBock;
+				break;
+
+			case 'steffny':
+				$this->PrognosisStrategy = new RunningPrognosisSteffny;
+				break;
+
+			case 'cameron':
+				$this->PrognosisStrategy = new RunningPrognosisCameron;
+				break;
+
+			case 'jd':
+			default:
+				$this->PrognosisStrategy = new RunningPrognosisDaniels;
+				break;
+		}
 
 		$this->PrognosisStrategy->setupFromDatabase();
 
@@ -132,12 +152,9 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
 
 		$oldTimeString  = Time::toString($PersonalBestInSeconds);
-		$newTimeString  = Time::toString($PrognosisInSeconds);
+		$newTimeString  = '<strong>'.Time::toString($PrognosisInSeconds).'</strong>';
 		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
 		$distanceString = Running::Km($distance, 0, ($distance <= 3));
-
-		if (true || $PersonalBestInSeconds > $PrognosisInSeconds)
-			$newTimeString = '<strong>'.$newTimeString.'</strong>';
 
 		echo '
 			<p>
@@ -164,6 +181,6 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return string
 	 */
 	public function getDistances() {
-		return $this->config['distances']['var'];
+		return $this->Configuration()->value('distances');
 	}
 }
