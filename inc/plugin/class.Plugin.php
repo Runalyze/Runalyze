@@ -82,12 +82,6 @@ abstract class Plugin {
 	private $order;
 
 	/**
-	 * Array with all config vars
-	 * @var array
-	 */
-	protected $config;
-
-	/**
 	 * Internal sport-ID from database
 	 * @var int
 	 */
@@ -106,6 +100,12 @@ abstract class Plugin {
 	protected $dat;
 
 	/**
+	 * Configuration
+	 * @var PluginConfiguration
+	 */
+	private $Configuration;
+
+	/**
 	 * Constructor (needs ID)
 	 * @param int $id
 	 */
@@ -121,8 +121,43 @@ abstract class Plugin {
 			throw new RuntimeException('Invalid id "'.$id.'" given to create a plugin.');
 		}
 
+		$this->initConfiguration();
 		$this->initVars();
 		$this->initPlugin();
+	}
+
+	/**
+	 * Init configuration
+	 * 
+	 * May be used in subclass to set own configuration.
+	 * Make sure to add all values to the configuration object
+	 * before using <code>$this->setConfiguration($Configuration);</code>.
+	 */
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id);
+
+		$this->setConfiguration($Configuration);
+	}
+
+	/**
+	 * Set configuration
+	 * @param PluginConfiguration $Configuration
+	 */
+	protected function setConfiguration(PluginConfiguration &$Configuration) {
+		$this->Configuration = $Configuration;
+	}
+
+	/**
+	 * Configuration
+	 * 
+	 * This method call will force the configuration object to catch its values
+	 * from the database if not already done.
+	 * @return PluginConfiguration
+	 */
+	final public function &Configuration() {
+		$this->Configuration->catchValuesFromDatabaseIfNotDoneYet();
+
+		return $this->Configuration;
 	}
 
 	/**
@@ -205,11 +240,6 @@ abstract class Plugin {
 	protected function initPlugin() {}
 
 	/**
-	 * Method for initializing default config-vars (implemented in each plugin)
-	 */
-	protected function getDefaultConfigVars() { return array(); }
-
-	/**
 	 * Includes the plugin-file for displaying the plugin (implemented in subclass)
 	 */
 	abstract public function display();
@@ -269,9 +299,6 @@ abstract class Plugin {
 			'99',
 		));
 
-		$this->config = $this->getDefaultConfigVars();
-		$this->updateConfigVarToDatabase();
-
 		return true;
 	}
 
@@ -300,9 +327,6 @@ abstract class Plugin {
 				$this->year = $_GET['jahr'];
 		if (isset($_GET['dat']))
 			$this->dat = $_GET['dat'];
-
-		$this->initConfigVars($dat['config']);
-		$this->checkConfigVarsForChanges();
 	}
 
 	/**
@@ -335,94 +359,6 @@ abstract class Plugin {
 	 */
 	protected function titleForAllYears() {
 		return __('Year on year');
-	}
-
-	/**
-	 * Initialize all config vars from database
-	 * Each line should be in following format: var_name|type=something|description
-	 * @param string $configSetup as $dat['config'] from database
-	 */
-	private function initConfigVars($configSetup) {
-		$this->config     = array();
-		$configSetup      = explode("\n", $configSetup);
-
-		foreach ($configSetup as $configLine) {
-			$configParts = explode('|', $configLine);
-
-			if (count($configParts) != 3)
-				break;
-
-			$valueParts = explode('=', $configParts[1]);
-			if (count($valueParts) == 2) {
-				$value = $valueParts[1];
-				switch ($valueParts[0]) {
-					case 'array':
-						$type  = 'array';
-						$value = explode(',', $value);
-						break;
-					case 'bool':
-						$value = ($value == 'true');
-					case 'int':
-					case 'float':
-						$type  = $valueParts[0];
-						break;
-					default:
-						$type  = 'string';
-				}
-			} else {
-				$value = $valueParts[0];
-				$type  = 'string';
-			}
-
-			$this->config[$configParts[0]] = array(
-				'type'			=> $type,
-				'var'			=> $value,
-				'description'	=> trim($configParts[2]));
-		}
-	}
-
-	private function checkConfigVarsForChanges() {
-		$somethingChanged = false;
-
-		$this->checkConfigVarsForMissingValues($somethingChanged);
-		$this->checkConfigVarsForAdditionalValue($somethingChanged);
-
-		if ($somethingChanged) {
-			$this->updateConfigVarToDatabase();
-		}
-	}
-
-	/**
-	 * Check config vars: Are any values from default config vars missing?
-	 * @param boolean $somethingChanged 
-	 */
-	private function checkConfigVarsForMissingValues(&$somethingChanged) {
-		$defaultSetup = $this->getDefaultConfigVars();
-
-		foreach ($defaultSetup as $key => $keyArray) {
-			if (!isset($this->config[$key])) {
-				$somethingChanged   = true;
-				$this->config[$key] = $keyArray;
-			} elseif ($this->config[$key]['description'] != $keyArray['description']) {
-				$somethingChanged   = true;
-				$this->config[$key]['description'] = $keyArray['description'];
-			}
-		}
-	}
-
-	/**
-	 * Check config vars: Are any values not in default config vars?
-	 * @param boolean $somethingChanged 
-	 */
-	private function checkConfigVarsForAdditionalValue(&$somethingChanged) {
-		$defaultSetup = $this->getDefaultConfigVars();
-
-		foreach (array_keys($this->config) as $key) {
-			if (!isset($defaultSetup[$key])) {
-				$somethingChanged   = true;
-				unset($this->config[$key]);
-			}
-		}	
 	}
 
 	/**
@@ -461,29 +397,9 @@ abstract class Plugin {
 	private function handleGetPostRequest() {
 		if (isset($_GET['active'])) {
 			$this->setActive((int) $_GET['active']);
-		}
 
-		if (isset($_POST['edit']) && $_POST['edit'] == 'true') {
-			foreach($this->config as $name => $dat) {
-				switch ($dat['type']) {
-					case 'array':
-						$array = explode(',', $_POST[$name]);
-						foreach ($array as $i => $var)
-							$array[$i] = trim($var);
-						$this->config[$name]['var'] = $array;
-						break;
-					case 'bool':
-						$this->config[$name]['var'] = isset($_POST[$name]) && ($_POST[$name] == 'on');
-						break;
-					case 'int':
-						$this->config[$name]['var'] = Helper::CommaToPoint(trim($_POST[$name]));
-						break;
-					default:
-						$this->config[$name]['var'] = trim($_POST[$name]);
-				}
-
-				$this->updateConfigVarToDatabase();
-			}
+			Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
+			echo Ajax::getReloadCommand();
 		}
 	}
 
@@ -493,52 +409,8 @@ abstract class Plugin {
 	final public function displayConfigWindow() {
 		$this->handleGetPostRequest();
 
-		include FRONTEND_PATH.'plugin/tpl.Plugin.config.php';
-	}
-
-	/**
-	 * Get input-field for configuration formular
-	 * @param string $name
-	 * @param array $config_var
-	 * @return string 
-	 */
-	final protected function getInputFor($name, $config_var) {
-		$value = (is_array($config_var['var'])) ? implode(', ', $config_var['var']) : $config_var['var'];
-
-		switch ($config_var['type']) {
-			case 'bool':
-				return '<input id="conf_'.$name.'" class="" type="checkbox" name="'.$name.'"'.($config_var['var'] == 'true' ? ' checked' : '').'>';
-			case 'array':
-				return '<input id="conf_'.$name.'" class="full-size" type="text" name="'.$name.'" value="'.$value.'">';
-			case 'int':
-				return '<input id="conf_'.$name.'" class="small-size" type="text" name="'.$name.'" value="'.$value.'">';
-			default:
-				return '<input id="conf_'.$name.'" class="middle-size" type="text" name="'.$name.'" value="'.$value.'">';
-		}
-	}
-
-	/**
-	 * Update current values from $this->config to database
-	 */
-	final protected function updateConfigVarToDatabase() {
-		$string = '';
-		foreach($this->config as $name => $dat) {
-			switch ($dat['type']) {
-				case 'array':
-					$var = implode(', ', Helper::arrayTrim($dat['var']));
-					break;
-				case 'bool':
-					$var = $dat['var'] ? 'true' : 'false';
-					break;
-				case 'int':
-				default:
-					$var = $dat['var'];
-			}
-
-			$string .= $name.'|'.$dat['type'].'='.$var.'|'.trim($dat['description']).NL;
-		}
-
-		DB::getInstance()->update('plugin', $this->id(), 'config', $string);
+		$Window = new PluginConfigurationWindow($this);
+		$Window->display();
 	}
 
 	/**

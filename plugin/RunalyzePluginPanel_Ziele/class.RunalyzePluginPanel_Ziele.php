@@ -50,11 +50,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
     }
 
 	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
 
         foreach ($this->getTimeset() as $i => $timeset) {
 			$ShowHint = sprintf( __('Show a prognosis for the current %s'), $timeset['name'] );
@@ -65,19 +64,14 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 				$GoalHint .= '<br>'.$timeset['note'];
 			}
 
-            $config['ziel_show_'.$i] = array(
-				'type' => 'bool',
-				'var' => true, 
-				'description' => Ajax::tooltip( sprintf(__('%s: show'), $timeset['name'] ), $ShowHint)
-			);
+			$ShowGoal = new PluginConfigurationValueBool('ziel_show_'.$i, sprintf(__('%s: show'), $timeset['name']), $ShowHint, true);
+			$Goal = new PluginConfigurationValueInt('ziel_'.$i, sprintf(__('%s: goal'), $timeset['name']), $GoalHint, 0);
 
-			$config['ziel_'.$i] = array(
-				'type' => 'int',
-				'var' => 0, 
-				'description' => Ajax::tooltip( sprintf(__('%s: goal'), $timeset['name'] ), $GoalHint)
-			);
+			$Configuration->addValue($ShowGoal);
+			$Configuration->addValue($Goal);
         }
-		return $config;
+
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -88,7 +82,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		$Code = '<ul>';
 
 		foreach ($this->getTimeset() as $i => $timeset) {
-            if ( !$this->config['ziel_show_'.$i]['var'] )
+			if ( !$this->Configuration()->value('ziel_show_'.$i) )
 				continue;
 
 			$Code .= '<li>'.Ajax::change($timeset['name'], 'bunny', '#bunny_'.$i).'</li>';
@@ -108,11 +102,11 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 
 		$isFirst = true;
 		foreach ($this->getTimeset() as $i => $timeset) {
-			if (!$this->config['ziel_show_'.$i]['var'])
+			if (!$this->Configuration()->value('ziel_show_'.$i))
 				continue;
 
 			echo '<div id="bunny_'.$i.'" class="change"'.($isFirst ? '' : ' style="display:none;"').'>';
-			$this->showTimeset($timeset, $this->config['ziel_'.$i]['var']);
+			$this->showTimeset($timeset, $this->Configuration()->value('ziel_'.$i));
 			echo HTML::clearBreak();
 			echo '</div>';
 

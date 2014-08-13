@@ -41,15 +41,14 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['for_weather']  = array('type' => 'bool', 'var' => true, 'description' => __('Show statistics about weather conditions'));
-		$config['for_clothes']  = array('type' => 'bool', 'var' => true, 'description' => __('Show statistics about your clothing'));
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('for_weather', __('Show statistics about weather conditions'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('for_clothes', __('Show statistics about your clothing'), '', true) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -59,7 +58,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	protected function getToolbarNavigationLinks() {
 		$LinkList = array();
 
-		if ($this->config['for_weather']['var'])
+		if ($this->Configuration()->value('for_weather'))
 			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, __('Show temperature plots')).'</a>').'</li>';
 
 		return $LinkList;
@@ -86,7 +85,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$this->displayMonthTable();
 		$this->displayClothesTable();
 
-		if (!$this->config['for_weather']['var'] && !$this->config['for_clothes']['var'])
+		if (!$this->Configuration()->value('for_weather') && !$this->Configuration()->value('for_clothes'))
 			echo HTML::warning( __('You have to activate some statistics in the plugin configuration.') );
 	}
 
@@ -98,12 +97,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		echo '<thead>'.HTML::monthTR(8, 1).'</thead>';
 		echo '<tbody>';
 
-		if ($this->config['for_weather']['var']) {
+		if ($this->Configuration()->value('for_weather')) {
 			$this->displayMonthTableTemp();
 			$this->displayMonthTableWeather();
 		}
 
-		if ($this->config['for_clothes']['var']) {
+		if ($this->Configuration()->value('for_clothes')) {
 			$this->displayMonthTableClothes();
 		}
 
@@ -258,7 +257,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display table for clothes
 	 */
 	private function displayClothesTable() {
-		if (!$this->config['for_clothes']['var'])
+		if (!$this->Configuration()->value('for_clothes'))
 			return;
 
 		echo '<table class="fullwidth zebra-style">
@@ -355,8 +354,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private function getHeader() {
 		$header = 'Wetter';
 
-		if ($this->config['for_clothes']['var'])
-			$header = ($this->config['for_weather']['var']) ? __('Weather and Clothing') : __('Clothing');
+		if ($this->Configuration()->value('for_clothes'))
+			$header = ($this->Configuration()->value('for_weather')) ? __('Weather and Clothing') : __('Clothing');
 
 		return $header.': '.$this->jahr;
 	}

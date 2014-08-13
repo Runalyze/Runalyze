@@ -30,14 +30,13 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['show_extreme_times']  = array('type' => 'bool', 'var' => true, 'description' => __('Show nightly activities'));
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('show_extreme_times', __('Show nightly activities'), '', true) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -76,7 +75,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		else
 			echo HTML::em( __('No data available.') );
 
-		if ($this->config['show_extreme_times']['var'])
+		if ($this->Configuration()->value('show_extreme_times'))
 			$this->displayTable();
 	}
 

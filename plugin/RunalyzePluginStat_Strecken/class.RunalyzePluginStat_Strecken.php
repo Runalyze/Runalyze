@@ -53,7 +53,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$text = __('Open route network');
-		$Link = Ajax::window('<a class="" href="plugin/'.$this->key.'/window.routenet.php"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
+		$Link = Ajax::window('<a class="" href="plugin/'.$this->key().'/window.routenet.php"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
 
 		$this->setToolbarNavigationLinks(array('<li>'.$Link.'</li>'));
 		$this->setYearsNavigation(true, true);

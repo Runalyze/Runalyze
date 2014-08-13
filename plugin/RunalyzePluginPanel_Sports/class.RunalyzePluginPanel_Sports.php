@@ -27,23 +27,26 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	}
 
 	/**
+	 * Init configuration
+	 */
+	protected function initConfiguration() {
+		$OldTableView = new PluginConfigurationValueBool('show_as_table', __('Old table view'));
+		$OldTableView->setDefaultValue(false);
+
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue($OldTableView);
+
+		$this->setConfiguration($Configuration);
+	}
+
+	/**
 	 * Initialize this plugin
 	 * @see PluginPanel::initPlugin()
 	 */
 	protected function initPlugin() {
-		if (!$this->config['show_as_table']['var'])
+		if (!$this->Configuration()->value('show_as_table')) {
 			$this->removePanelContentPadding = true;
-	}
-
-	/**
-	 * Set default config-variables
-	 * @see PluginPanel::getDefaultConfigVars()
-	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['show_as_table'] = array('type' => 'bool', 'var' => false, 'description' => __('Old table view'));
-
-		return $config;
+		}
 	}
 
 	/**
@@ -53,9 +56,10 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	protected function getRightSymbol() {
 		$html = '<ul>';
 
-		foreach ($this->getTimeset() as $i => $timeset)
+		foreach ($this->getTimeset() as $i => $timeset) {
 			$html .= '<li>'.Ajax::change($timeset['name'], 'sports', '#sports_'.$i).'</li>';
-	
+		}
+
 		return $html.'</ul>';
 	}
 
@@ -87,7 +91,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			$Request->execute();
 			$data = $Request->fetchAll();
 
-			if ($this->config['show_as_table']['var']) {
+			if ($this->Configuration()->value('show_as_table')) {
 				$this->showDataInTableView($data, $timeset);
 			} else {
 				if (empty($data)) {

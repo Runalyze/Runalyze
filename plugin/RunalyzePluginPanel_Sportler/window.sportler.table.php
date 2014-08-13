@@ -9,7 +9,6 @@ $Frontend = new Frontend();
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-$Plugin_conf = $Plugin->getConfig();
 
 $Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');
@@ -33,12 +32,12 @@ if (Request::param('reload') == 'true') {
 				<th class="{sorter: false}">&nbsp;</th>
 				<th class="{sorter:'germandate'}"><?php _e('Date'); ?></th>
 				<th><?php _e('Weight'); ?></th>
-			<?php if ($Plugin_conf['use_pulse']['var']): ?>
+			<?php if ($Plugin->Configuration()->value('use_pulse')): ?>
 			<?php $Fields = array_merge($Fields, $FieldsPulse); ?>
 				<th><?php _e('Resting HR'); ?></th>
 				<th><?php _e('Maximal HR'); ?></th>
 			<?php endif; ?>
-			<?php if ($Plugin_conf['use_body_fat']['var']): ?>
+			<?php if ($Plugin->Configuration()->value('use_body_fat')): ?>
 			<?php $Fields = array_merge($Fields, $FieldsFat); ?>
 				<th>&#37; <?php _e('Fat'); ?></th>
 				<th>&#37; <?php _e('Water'); ?></th>

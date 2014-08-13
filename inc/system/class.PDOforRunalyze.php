@@ -51,10 +51,16 @@ class PDOforRunalyze extends PDO {
 	 * @param string $statement
 	 */
 	protected function addAccountIDtoStatement(&$statement) {
-		if (strpos($statement, 'SET NAMES') !== false || !is_numeric($this->accountID))
+		if (strpos($statement, 'SET NAMES') !== false || !is_numeric($this->accountID)) {
 			return;
+		}
 
-		if (strpos($statement, PREFIX.'account') === false && strpos($statement, '`accountid`') === false && strpos($statement, 'accountid=') === false) {
+		if (
+				strpos($statement, PREFIX.'account') === false
+				&& strpos($statement, PREFIX.'plugin_conf') === false
+				&& strpos($statement, '`accountid`') === false
+				&& strpos($statement, 'accountid=') === false
+			) {
 			if (strpos($statement, 'WHERE') >= 7) {
 				$statement = str_replace('WHERE', 'WHERE `accountid`='.(int)$this->accountID.' AND ', $statement);
 			} elseif (strpos($statement, 'GROUP BY') >= 7) {
@@ -114,8 +120,9 @@ class PDOforRunalyze extends PDO {
 
 		if (is_array($column) && count($column) == count($value)) {
 			$set = '';
-			foreach ($column as $i => $col)
-				$set .= '`'.$col.'`='.self::escape($value[$i], true, ($col=='clothes')).', ';
+			foreach ($column as $i => $col) {
+				$set .= '`' . $col . '`=' . self::escape($value[$i], true, ($col == 'clothes')) . ', ';
+			}
 		} else {
 			$set = '`'.$column.'`='.self::escape($value, true, ($column=='clothes')).', ';
 		}
@@ -136,13 +143,14 @@ class PDOforRunalyze extends PDO {
 		$table = str_replace(PREFIX, '', $table);
 
 		// TODO: TEST IT!
-		if ($table != 'account' && !in_array('accountid', $columns)) {
+		if ($table != 'account' && $table != 'plugin_conf' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
 			$values[]  = $this->accountID;
 		}
 
-		foreach ($columns as $k => $v)
-			$columns[$k] = '`'.$v.'`';
+		foreach ($columns as $k => $v) {
+			$columns[$k] = '`' . $v . '`';
+		}
 
 		$columns = implode(', ', $columns);
 		$values  = implode(', ', self::escape($values));
@@ -168,8 +176,9 @@ class PDOforRunalyze extends PDO {
 	 */
 	public function escape($values, $quotes = true, $forceAsString = false) {
 		if (is_array($values)) {
-			foreach ($values as $key => $value)
+			foreach ($values as $key => $value) {
 				$values[$key] = self::escape($value, $quotes);
+			}
 		} else if (is_bool($values)) {
 			$values = $values ? 1 : 0;
 		} else if (is_numeric($values) && !$forceAsString) {
@@ -179,8 +188,9 @@ class PDOforRunalyze extends PDO {
 		} else if (!is_numeric($values) || $forceAsString) {
 			$values = $this->quote($values);
 
-			if ($quotes == false && substr($values, 0, 1) == "'" && substr($values, -1) == "'" && strlen($values) > 2)
+			if ($quotes == false && substr($values, 0, 1) == "'" && substr($values, -1) == "'" && strlen($values) > 2) {
 				$values = substr($values, 1, -1);
+			}
 		}
 
 		return $values;
@@ -211,8 +221,9 @@ class PDOforRunalyze extends PDO {
 	 * so <b>PDO::prepare</b> does not check the statement.
 	 */
 	public function prepare($statement, $driver_options = array()) {
-		if ($this->addsAccountID)
+		if ($this->addsAccountID) {
 			$this->addAccountIDtoStatement($statement);
+		}
 
 		return parent::prepare($statement, $driver_options);
 	}
@@ -226,8 +237,9 @@ class PDOforRunalyze extends PDO {
 	 * <b>PDO::exec</b> returns 0.
 	 */
 	public function exec($statement) {
-		if ($this->addsAccountID)
+		if ($this->addsAccountID) {
 			$this->addAccountIDtoStatement($statement);
+		}
 
 		return parent::exec($statement);
 	}
@@ -240,8 +252,9 @@ class PDOforRunalyze extends PDO {
 	 * on failure.
 	 */
 	public function query($statement) {
-		if ($this->addsAccountID)
+		if ($this->addsAccountID) {
 			$this->addAccountIDtoStatement($statement);
+		}
 
 		return parent::query($statement);
 	}

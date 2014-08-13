@@ -42,6 +42,7 @@ $Plot->setYTicks(1, 5, 0);
 $Plot->addThreshold('y', 0);
 $Plot->addMarkingArea('y', -99, 0);
 $Plot->showPoints(2);
+$Plot->smoothing(false);
 
 if(empty($Data))
 	$Plot->raiseError( __('No data available.') );

@@ -192,8 +192,6 @@ class ConfigTabPlugins extends ConfigTab {
 			}
 		}
 
-		// TODO: 
-		// Wenn ein Plugin ganz versteckt wurde, muss eigentlich die ganze Seite neugeladen werden.
 		Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
 	}
 }

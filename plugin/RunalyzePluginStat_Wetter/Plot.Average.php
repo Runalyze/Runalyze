@@ -46,6 +46,7 @@ $Plot->setYTicks(1, 5, 0);
 $Plot->addThreshold('y', 0);
 $Plot->addMarkingArea('y', -99, 0);
 $Plot->lineWithPoints();
+$Plot->smoothing(false);
 
 
 $Plot->outputJavaScript();

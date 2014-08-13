@@ -127,15 +127,28 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
 CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `type` enum('panel','stat','draw','tool') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `config` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `internal_data` text NOT NULL,
+  `type` enum('panel','stat','tool') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(6) NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_plugin_conf`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pluginid` int(10) unsigned NOT NULL,
+  `config` varchar(100) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY (`pluginid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

@@ -322,6 +322,14 @@ class Plot {
 	}
 
 	/**
+	 * Set smoothing
+	 * @var bool $flag
+	 */
+	public function smoothing($flag = true) {
+		$this->Options['series']['curvedLines']['apply'] = $flag;
+	}
+
+	/**
 	 * Hide labels on xaxis
 	 */
 	public function hideXLabels() {

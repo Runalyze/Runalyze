@@ -49,28 +49,15 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['main_distance'] = array(
-			'type' => 'int',
-			'var' => 10,
-			'description' => '<span class="atLeft" rel="tooltip" title="'.__('initial distance for the plot').'">'.__('Main distance').'</span>'
-		);
-		$config['pb_distances'] = array(
-			'type' => 'array',
-			'var' => array(1, 3, 5, 10, 21.1, 42.2),
-			'description' => '<span class="atLeft" rel="tooltip" title="'.__('comma seperated').'">'.__('Distances for yearly comparison').'</span>'
-		);
-		$config['fun_ids'] = array(
-			'type' => 'array',
-			'var' => array(),
-			'description' => '<span class="atLeft" rel="tooltip" title="'.__('Don\'t edit! Only for internal use.').'">'.__('Fun races').'</span>'
-		);
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueInt('main_distance', __('Main distance'), '', 10) );
+		$Configuration->addValue( new PluginConfigurationValueArray('pb_distances', __('Distances for yearly comparison'), '', array(1, 3, 5, 10, 21.1, 42.2)) );
+		$Configuration->addValue( new PluginConfigurationValueHiddenArray('fun_ids', '', '', array()) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -215,7 +202,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 					ORDER BY `s` ASC');
 
 		foreach ($dists as $i => $dist) {
-			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->config['pb_distances']['var'])) {
+			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->Configuration()->value('pb_distances'))) {
 				$this->distances[] = $dist['distance'];
 
 				$SingleRequest->bindValue('distance', $dist['distance']);
@@ -250,8 +237,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<div class="panel-content">';
 
 		$display_km = $this->distances[0];
-		if (in_array($this->config['main_distance']['var'], $this->distances))
-			$display_km = $this->config['main_distance']['var'];
+		if (in_array($this->Configuration()->value('main_distance'), $this->distances))
+			$display_km = $this->Configuration()->value('main_distance');
 
 		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:482px;height:192px;">';
 		foreach ($this->distances as $km) {
@@ -271,7 +258,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayPersonalBestYears() {
 		$year = array();
 		$dists = array();
-		$kms = (is_array($this->config['pb_distances']['var'])) ? $this->config['pb_distances']['var'] : array(3, 5, 10, 21.1, 42.2);
+		$kms = (is_array($this->Configuration()->value('pb_distances'))) ? $this->Configuration()->value('pb_distances') : array(3, 5, 10, 21.1, 42.2);
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
@@ -435,14 +422,17 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 			$tag   = $parts[0];
 			$id    = $parts[1];
 
+			$FunIDs = $this->Configuration()->value('fun_ids');
+
 			if ($tag == 'fun' && is_numeric($id)) {
-				$this->config['fun_ids']['var'][] = $id;
+				$FunIDs[] = $id;
 			} elseif ($tag == 'nofun' && is_numeric($id)) {
-				if (($index = array_search($id, $this->config['fun_ids']['var'])) !== FALSE)
-					unset($this->config['fun_ids']['var'][$index]);
+				if (($index = array_search($id, $FunIDs)) !== FALSE)
+					unset($FunIDs[$index]);
 			}
 
-			$this->updateConfigVarToDatabase();
+			$this->Configuration()->object('fun_ids')->setValue($FunIDs);
+			$this->Configuration()->update('fun_ids');
 		}
 	}
 
@@ -452,6 +442,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @return bool
 	 */
 	public function isFunCompetition($id) {
-		return (in_array($id, $this->config['fun_ids']['var']));
+		return (in_array($id, $this->Configuration()->value('fun_ids')));
 	}
 }

@@ -149,16 +149,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Set default config-variables
-	 * @see PluginStat::getDefaultConfigVars()
+	 * Init configuration
 	 */
-	protected function getDefaultConfigVars() {
-		$config = array();
-		$config['compare_weeks']    = array('type' => 'bool', 'var' => true, 'description' => __('Compare kilometers per week'));
-		$config['show_streak']      = array('type' => 'bool', 'var' => true, 'description' => __('Show streak'));
-		$config['show_streak_days'] = array('type' => 'int', 'var' => 10, 'description' => __('Minimum number of days to show a streak (0 for always)'));
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('compare_weeks', __('Compare kilometers per week'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueBool('show_streak', __('Show streak'), '', true) );
+		$Configuration->addValue( new PluginConfigurationValueInt('show_streak_days', __('Minimum number of days to show a streak (0 for always)'), '', 10) );
 
-		return $config;
+		$this->setConfiguration($Configuration);
 	}
 
 	/**
@@ -171,7 +170,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		} else {
 			$this->displayYearTable();
 
-			if ($this->config['show_streak']['var'])
+			if ($this->Configuration()->value('show_streak'))
 				$this->displayStreak();
 
 			$this->displayWeekTable();
@@ -274,7 +273,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$Dataset = new Dataset();
 
-		if ($this->config['compare_weeks']['var'])
+		if ($this->Configuration()->value('compare_weeks'))
 			$Dataset->activateKilometerComparison();
 
 		echo '<table class="r fullwidth zebra-style">';
@@ -383,7 +382,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$Text .= sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
 		}
 
-		if ($NumDays >= $this->config['show_streak_days']['var'])
+		if ($NumDays >= $this->Configuration()->value('show_streak_days'))
 			echo '<p class="text c"><em>'.$Text.'</em></p>';
 	}
 
