@@ -29,3 +29,8 @@ UPDATE `runalyze_plugin_conf` SET `value`=(`value`="true") WHERE `value` IN("tru
 ALTER TABLE `runalyze_plugin` DROP `config`, DROP `internal_data`;
 
 ALTER TABLE  `runalyze_plugin` CHANGE  `type`  `type` ENUM(  'panel',  'stat',  'tool' ) NOT NULL;
+
+/* Rev 799 */
+ALTER TABLE  `runalyze_conf` CHANGE  `value`  `value` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
+
+ALTER TABLE  `runalyze_training` CHANGE  `temperature`  `temperature` TINYINT NULL DEFAULT NULL;
