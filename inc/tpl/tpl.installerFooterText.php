@@ -3,7 +3,7 @@
 				<i class="fa fa-fw fa-2x fa-bar-chart-o"></i>
 				<p>
 					<strong><?php _e('Statistics'); ?></strong>
-					<?php _e('Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualyzes your training in plots - as detailed as none other sport diary.')?>
+					<?php _e('Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualyzes your training in plots - more detailed than any other sports diary.')?>
 				</p>
 			</div>
 			<div class="text-badge">

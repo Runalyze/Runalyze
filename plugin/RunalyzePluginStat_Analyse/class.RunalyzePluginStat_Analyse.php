@@ -45,7 +45,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * @return string
 	 */
 	final public function name() {
-		return __('Analyze');
+		return __('Analysis');
 	}
 
 	/**
