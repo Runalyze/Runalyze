@@ -44,9 +44,8 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Constructor
 	 */
 	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+		parent::__construct($Training);
 
-		$this->setContent();
 		$this->setPlot();
 	}
 
@@ -61,8 +60,9 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	final public function display() {
 		echo '<div class="training-row">';
 
-		if ($this->withShadow)
+		if ($this->withShadow) {
 			echo '<div class="training-row-info-shadow"></div>';
+		}
 
 		$this->displayInfo();
 		$this->displayPlot();
@@ -76,14 +76,17 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	protected function displayInfo() {
 		echo '<div class="training-row-info">';
 
-		if (!empty($this->BoxedValues))
+		if (!empty($this->BoxedValues)) {
 			$this->displayBoxedValues();
+		}
 
-		if (!empty($this->Code))
-			echo '<div>'.$this->Code.'</div>';
+		if (!empty($this->Code)) {
+			echo '<div>' . $this->Code . '</div>';
+		}
 
-		if (!empty($this->Content))
+		if (!empty($this->Content)) {
 			echo '<div class="panel-content">'.$this->Content.'</div>';
+		}
 
 		echo '</div>';
 	}
@@ -94,8 +97,9 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	protected function displayBoxedValues() {
 		$Code = '';
 
-		foreach ($this->BoxedValues as &$Value)
+		foreach ($this->BoxedValues as &$Value) {
 			$Code .= $Value->getCode();
+		}
 
 		BoxedValue::wrapValues($Code);
 	}
