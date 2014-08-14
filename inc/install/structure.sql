@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `value` text CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
@@ -226,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',
   `power` int(4) NOT NULL DEFAULT '0',
-  `temperature` float DEFAULT NULL,
+  `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
   `clothes` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
