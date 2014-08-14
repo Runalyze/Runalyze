@@ -32,10 +32,13 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 		$this->addAveragePace();
 		$this->addCalculations();
 
-		foreach ($this->BoxedValues as &$Value)
+		foreach ($this->BoxedValues as &$Value) {
 			$Value->defineAsFloatingBlock('w50');
+		}
 
-		$this->addInfoLink();
+		if ($this->Training->getCurrentlyUsedVdot() > 0) {
+			$this->addInfoLink();
+		}
 	}
 
 	/**
@@ -53,8 +56,8 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addCalculations() {
 		if ($this->Training->getVdotCorrected() > 0 || $this->Training->getJDintensity() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Training->getCurrentlyUsedVdot(), '', __('VDOT'), $this->Training->DataView()->getVDOTicon());
-			$this->BoxedValues[] = new BoxedValue($this->Training->getJDintensity(), '', __('Training points'));
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Training->getCurrentlyUsedVdot(), '-'), '', __('VDOT'), $this->Training->DataView()->getVDOTicon());
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Training->getJDintensity(), '-'), '', __('Training points'));
 		}
 	}
 

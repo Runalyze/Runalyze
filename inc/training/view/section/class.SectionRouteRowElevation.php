@@ -23,12 +23,15 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	protected function setContent() {
 		$this->addElevation();
 
-		foreach ($this->BoxedValues as &$Value)
+		foreach ($this->BoxedValues as &$Value) {
 			$Value->defineAsFloatingBlock('w50');
+		}
 
 		$this->addCourse();
 
-		$this->addInfoLink();
+		if ($this->Training->hasArrayAltitude()) {
+			$this->addInfoLink();
+		}
 	}
 
 	/**

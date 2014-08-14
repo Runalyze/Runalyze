@@ -150,7 +150,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 					? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
 					: Time::toString($dat['time_in_s']);
 
-				echo '<p><span class="right"><small><small>('.Helper::Unknown($dat['count'], '0').'-mal)</small></small> '.$result.'</span> ';
+				echo '<p><span class="right"><small><small>('.sprintf( __('%u-times'), Helper::Unknown($dat['count'], '0')).')</small></small> '.$result.'</span> ';
 				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
 			}
 		}
@@ -165,15 +165,15 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	private function getTimeset() {
 		$timeset = array(
 			array(
-				'name'	=> 'Monat',
+				'name'	=> __('Month'),
 				'start'	=> mktime(0,0,0,date("m"),1,date("Y"))
 			),
 			array(
-				'name'	=> 'Jahr',
+				'name'	=> __('Year'),
 				'start'	=> mktime(0,0,0,1,1,date("Y"))
 			),
 			array(
-				'name'	=> 'Gesamt',
+				'name'	=> __('Total'),
 				'start'	=> START_TIME
 			)
 		);
