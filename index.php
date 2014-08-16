@@ -60,10 +60,17 @@ $Frontend = new Frontend();
 			</ul>
 			<div id="statistics-inner">
 				<?php
-				if (empty($Stats)) {
-					echo __('<em>There are no statistics available. Active a plugin in your configuration.</em>');
+				if (isset($_GET['id'])) {
+					$View = new TrainingView(new TrainingObject(Request::sendId()));
+					$View->display();
+				} elseif (isset($_GET['pluginid'])) {
+					$Factory->newInstanceFor((int)$_GET['pluginid'])->display();
 				} else {
-					$Factory->newInstance($Stats[0])->display();
+					if (empty($Stats)) {
+						echo __('<em>There are no statistics available. Active a plugin in your configuration.</em>');
+					} else {
+						$Factory->newInstance($Stats[0])->display();
+					}
 				}
 				?>
 			</div>
