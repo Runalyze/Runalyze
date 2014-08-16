@@ -29,7 +29,12 @@ class ConfigValueArray extends ConfigValue {
 	 * @return string
 	 */
 	static public function arrayToString($array) {
-		return implode(', ', $array);
+		$string = implode(',', $array);
+
+		if (strlen($string) > ConfigValue::MAX_LENGTH)
+			$string = substr($string, -ConfigValue::MAX_LENGTH);
+
+		return $string;
 	}
 
 	/**

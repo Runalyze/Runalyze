@@ -10,6 +10,11 @@
  */
 abstract class ConfigValue {
 	/**
+	 * Max length
+	 */
+	const MAX_LENGTH = 255;
+
+	/**
 	 * Internal array holding all information and values from database
 	 * @var array
 	 */
