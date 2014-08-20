@@ -228,8 +228,9 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * Clean the databse for shoes
 	 */
 	private function resetShoes() {
+		$num = ShoeFactory::numberOfShoes();
 		ShoeFactory::recalculateAllShoes();
 
-		$this->SuccessMessages[] = sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), count(ShoeFactory::NamesAsArray()) );
+		$this->SuccessMessages[] = sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), $num );
 	}
 }

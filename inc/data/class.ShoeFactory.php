@@ -17,11 +17,19 @@ class ShoeFactory {
 	static private $AllShoes = null;
 
 	/**
+	 * Number of shoes
+	 * @return int
+	 */
+	static public function numberOfShoes() {
+		return count(self::AllShoes());
+	}
+
+	/**
 	 * Are any shoes in database?
 	 * @return bool
 	 */
 	static public function hasShoes() {
-		return count(self::AllShoes()) > 0;
+		return self::numberOfShoes() > 0;
 	}
 
 	/**
@@ -40,6 +48,13 @@ class ShoeFactory {
 		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
 		foreach ($shoes as $shoe)
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
+	}
+
+	/**
+	 * Clear internal array
+	 */
+	static private function clearAllShoes() {
+		self::$AllShoes = null;
 	}
 
 	/**
@@ -150,19 +165,25 @@ class ShoeFactory {
 
 	/**
 	 * Recalculate all shoes
+	 * 
+	 * Be sure that a complete recalculation is really needed.
+	 * This task may take very long.
 	 */
 	static public function recalculateAllShoes() {
-		$shoes = self::AllShoes();
+		DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=0, `time`=0');
 
-		foreach (array_keys($shoes) as $id) {
-			$data = DB::getInstance()->query('SELECT SUM(`distance`) as `km`, SUM(`s`) as `s` FROM `'.PREFIX.'training` WHERE `shoeid`="'.$id.'" GROUP BY `shoeid`')->fetch();
+		$Statement = DB::getInstance()->query(
+			'SELECT `id`, SUM(`distance`) as `km`, SUM(`s`) as `s` '.
+			'FROM `'.PREFIX.'training` '.
+			'GROUP BY `shoeid`'
+		);
 
-			if ($data === false)
-				$data = array('km' => 0, 's' => 0);
-
-			DB::getInstance()->update('shoe', $id, array('km', 'time'), array($data['km'], $data['s']));
+		while ($ShoeData = $Statement->fetch()) {
+			if ($ShoeData['id'] > 0 && $ShoeData['s'] > 0) {
+				DB::getInstance()->update('shoe', $ShoeData['id'], array('km', 'time'), array($ShoeData['km'], $ShoeData['s']));
+			}
 		}
 
-		self::initAllShoes();
+		self::clearAllShoes();
 	}
 }

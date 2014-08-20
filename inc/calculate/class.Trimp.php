@@ -205,11 +205,21 @@ class Trimp {
 	 * @param int $time [optional] timestamp
 	 */
 	static public function ATL($time = 0) {
-		if ($time == 0)
+		if ($time == 0) {
 			$time = time();
+		}
 
-		$dat = DB::getInstance()->query('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_ATL_DAYS-1).' AND 0 LIMIT 1')->fetch();
-		$ATL = round($dat['sum']/CONF_ATL_DAYS);
+		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
+
+		$Data = DB::getInstance()->query('
+			SELECT
+				SUM(`trimp`) as `sum`
+			FROM `'.PREFIX.'training`
+			WHERE `time` BETWEEN '.($time - CONF_ATL_DAYS*DAY_IN_S).' AND '.$time.'
+			LIMIT 1
+		')->fetch();
+
+		$ATL = round($Data['sum']/CONF_ATL_DAYS);
 
 		if ($ATL > self::maxATL())
 			self::setMaxATL($ATL);
@@ -224,11 +234,21 @@ class Trimp {
 	 * @param int $time [optional] timestamp
 	 */
 	static public function CTL($time = 0) {
-		if ($time == 0)
+		if ($time == 0) {
 			$time = time();
+		}
 
-		$dat = DB::getInstance()->query('SELECT SUM(`trimp`) as `sum` FROM `'.PREFIX.'training` WHERE DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_CTL_DAYS-1).' AND 0 LIMIT 1')->fetch();
-		$CTL = round($dat['sum']/CONF_CTL_DAYS);
+		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
+
+		$Data = DB::getInstance()->query('
+			SELECT
+				SUM(`trimp`) as `sum`
+			FROM `'.PREFIX.'training`
+			WHERE `time` BETWEEN '.($time - CONF_CTL_DAYS*DAY_IN_S).' AND '.$time.'
+			LIMIT 1
+		')->fetch();
+
+		$CTL = round($Data['sum']/CONF_CTL_DAYS);
 
 		if ($CTL > self::maxCTL())
 			self::setMaxCTL($CTL);
@@ -272,6 +292,9 @@ class Trimp {
 		$start_i = 365*START_YEAR;
 		$end_i   = 365*(date("Y") + 1) - $start_i;
 		$Trimp   = array_fill(0, $end_i, 0);
+		$maxATL  = 1;
+		$maxCTL  = 1;
+
 		$Data    = DB::getInstance()->query('
 			SELECT
 				YEAR(FROM_UNIXTIME(`time`)) as `y`,
@@ -281,17 +304,6 @@ class Trimp {
 			GROUP BY `y`, `d`
 			ORDER BY `y` ASC, `d` ASC
 		')->fetchAll();
-		
-		if (empty($Data)) {
-			self::setMaxATL(1);
-			self::setMaxCTL(1);
-			self::setMaxTRIMP(1);
-
-			return;
-		}
-		
-		$maxATL  = 1;
-		$maxCTL  = 1;
 		
 		foreach ($Data as $dat) {
 			$atl           = 0;
