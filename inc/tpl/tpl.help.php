@@ -51,7 +51,7 @@ $Frontend = new Frontend();
 	</p>
 
 	<ul class="blocklist blocklist-inline clearfix">
-		<li><a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze"><i class="fa fa-bug color-trac"></i> <strong>Trac</strong></a></li>
+		<li><a href="https://github.com/Runalyze/Runalyze" title="GitHub: Runalyze"><i class="fa fa-github-alt"></i> <strong>GitHub</strong></a></li>
 		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
 		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
 		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>

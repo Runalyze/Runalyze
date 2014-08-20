@@ -1,0 +1,18 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.buildpath
+.project
+.settings/
+.build/
+.idea/
+nbproject/
+
+#Runalyze
+build/yuicompressor-*
+img/backgrounds/My-*
+log/
+*.xcf
+config.php

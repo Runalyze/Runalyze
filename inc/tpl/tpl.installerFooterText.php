@@ -26,7 +26,7 @@
 			</p>
 
 			<p class="c">
-				<a href="http://trac.runalyze.de/cgi-bin/trac.fcgi/newticket" title="Runalyze Ticket-System"><i class="fa fa-fw fa-2x fa-bug"></i></a>
+				<a href="https://github.com/Runalyze/Runalyze" title="GitHub: Runalyze"><i class="fa fa-fw fa-2x fa-github-alt"></i></a>
 				<a href="http://twitter.com/RunalyzeDE" title="Twitter: Runalyze"><i class="fa fa-fw fa-2x fa-twitter"></i></a>
 				<a href="http://www.facebook.com/Runalyze" title="Facebook: Runalyze"><i class="fa fa-fw fa-2x fa-facebook"></i></a>
 				<a href="https://plus.google.com/communities/116260192529858591171" title="Google+: Runalyze"><i class="fa fa-fw fa-2x fa-google-plus"></i></a>
