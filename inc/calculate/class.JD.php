@@ -374,9 +374,11 @@ class JD {
 	 * @return float   VDOT
 	 */
 	public static function calculateVDOTform($time = 0) {
-		if ($time == 0)
+		if ($time == 0) {
 			$time = time();
+		}
 
+		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
 		$Data = DB::getInstance()->query('
 			SELECT
 				SUM('.self::mysqlVDOTsumTime().') as `ssum`,
@@ -384,13 +386,14 @@ class JD {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`="'.CONF_RUNNINGSPORT.'"
-				&& DATEDIFF(FROM_UNIXTIME(`time`), "'.date('Y-m-d', $time).'") BETWEEN -'.(CONF_VDOT_DAYS-1).' AND 0
+				&& `time` BETWEEN '.($time - CONF_VDOT_DAYS*DAY_IN_S).' AND '.$time.'
 			GROUP BY `sportid`
 			LIMIT 1
 		')->fetch();
 
-		if ($Data !== false && $Data['ssum'] > 0)
+		if ($Data !== false && $Data['ssum'] > 0) {
 			return round(self::correctVDOT($Data['value']/$Data['ssum']), 5);
+		}
 
 		return 0;
 	}
@@ -422,49 +425,33 @@ class JD {
 	}
 
 	/**
-	 * Calculates a factor for correcting the user-specific VDOT-value
-	 * This function should be only called if a new competition has been submitted (or changed)
-	 * @uses Running::PersonalBest
-	 * @uses HF_MAX
-	 * @uses CONF_WK_TYPID
-	 * @return float   VDOTcorrectionfactor
+	 * Recalculate VDOT corrector
+	 * 
+	 * The correction factor is the ratio of the VDOT values by time and by heartrate
+	 * for the "best" competition. Since there may be some big deviations, the maximal ratio
+	 * of the three best competitions is taken as factor.
+	 * 
+	 * This function should be only called if a new competition has been submitted (or changed).
+	 * 
+	 * @return float new correction factor
 	 */
 	public static function recalculateVDOTcorrector() {
-		if (0 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 LIMIT 1')->fetchColumn()) {
-			self::$CONST_CORRECTOR = 1;
-			return 1;
-		}
+		$Statement = DB::getInstance()->prepare('
+			SELECT MAX(`factor`)
+			FROM (
+				SELECT `vdot_by_time`/`vdot` AS `factor` 
+				FROM `'.PREFIX.'training` 
+				WHERE `typeid` = :typeid
+				AND `pulse_avg` > 0
+				ORDER BY  `vdot_by_time` DESC 
+				LIMIT 3
+			) AS T
+			LIMIT 1
+		');
+		$Statement->execute(array(':typeid' => CONF_WK_TYPID));
+		$Result = $Statement->fetch();
 
-		// Find best VDOT-value from personal best in competition
-		$VDOT_CORRECTOR = 1;
-
-		$VDOT_top = 0;
-		$VDOT_top_dist = 0;
-		$distances = array(5, 10, 21.1, 42.2);
-		foreach ($distances as $dist) {
-			// TODO: Das sollte doch auch mit einer Query zu lösen sein
-			// TODO: aus Running::PersonalBest
-			//       $pb = DB::getInstance()->query('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC LIMIT 1')->fetch();
-			$dist_PB = Running::PersonalBest($dist, true);
-			if ($dist_PB != 0) {
-				// TODO: Ist gerade 'vdot_by_time'
-				$dist_VDOT = self::Competition2VDOT($dist, $dist_PB);
-				if ($dist_VDOT > $VDOT_top && DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `pulse_avg`!=0 AND `distance`="'.$dist.'" LIMIT 1')->fetchColumn() > 0) {
-					$VDOT_top = $dist_VDOT;
-					$VDOT_top_dist = $dist;
-				}
-			}
-		}
-
-		// Calculate VDOT-value for personal best from heartfrequence
-		$VDOT_top_dat = DB::getInstance()->query('SELECT `pulse_avg`, `s` FROM `'.PREFIX.'training` WHERE `distance`="'.$VDOT_top_dist.'" AND `pulse_avg`!=0 AND `typeid`="'.CONF_WK_TYPID.'" ORDER BY `s` ASC LIMIT 1')->fetch();
-		if ($VDOT_top_dat !== false) {
-			$VDOT_max = self::Competition2VDOT($VDOT_top_dist, $VDOT_top_dat['s'])
-				/ self::pHF2pVDOT($VDOT_top_dat['pulse_avg'] / HF_MAX);
-
-			if ($VDOT_top != 0 && $VDOT_max != 0)
-				$VDOT_CORRECTOR = $VDOT_top / $VDOT_max;
-		}
+		$VDOT_CORRECTOR = (isset($Result['factor'])) ? $Result['factor'] : 1;
 
 		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
 		self::$CONST_CORRECTOR = $VDOT_CORRECTOR;

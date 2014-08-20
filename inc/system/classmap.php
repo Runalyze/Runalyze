@@ -176,6 +176,7 @@ $CLASSMAP = array(
 'PluginConfigurationWindow' => 'plugin/config/class.PluginConfigurationWindow.php',
 'AccountHandler' => 'system/class.AccountHandler.php',
 'Autoloader' => 'system/class.Autoloader.php',
+'Benchmark' => 'system/class.Benchmark.php',
 'BigFileWriterGZip' => 'system/class.BigFileWriterGZip.php',
 'DatabaseScheme' => 'system/class.DatabaseScheme.php',
 'DatabaseSchemePool' => 'system/class.DatabaseSchemePool.php',
