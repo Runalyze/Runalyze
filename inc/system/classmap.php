@@ -213,6 +213,7 @@ $CLASSMAP = array(
 'Shell' => 'system/shell/class.Shell.php',
 'ShellCommand' => 'system/shell/class.ShellCommand.php',
 'TrainingDataView' => 'training/class.TrainingDataView.php',
+'TrainingDeleter' => 'training/class.TrainingDeleter.php',
 'TrainingFormular' => 'training/class.TrainingFormular.php',
 'TrainingLinker' => 'training/class.TrainingLinker.php',
 'TrainingObject' => 'training/class.TrainingObject.php',

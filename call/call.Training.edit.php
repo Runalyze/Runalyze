@@ -8,13 +8,8 @@ require '../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-	DB::getInstance()->deleteByID('training', (int)$_GET['delete']);
-
-	Trimp::calculateMaxValues();
-	ShoeFactory::recalculateAllShoes();
-	JD::recalculateVDOTform();
-	BasicEndurance::recalculateValue();
-	Helper::recalculateStartTime();
+	$Deleter = new TrainingDeleter((int)$_GET['delete']);
+	$Deleter->delete();
 
 	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The training has been removed').'</p></div>';
 	echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.setTabUrlToFirstStatistic().reloadContent();</script>';
