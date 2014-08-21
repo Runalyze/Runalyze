@@ -81,7 +81,7 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 	public function testPersonalBest() {
 		// Not possible without data in database
 		$this->assertEquals( 0, Running::PersonalBest(5, true) );
-		$this->assertEquals( '<em>keine</em>', Running::PersonalBest(5) );
+		$this->assertEquals( '<em>none</em>', Running::PersonalBest(5) );
 	}
 
 	/**

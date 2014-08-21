@@ -179,7 +179,7 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		$Splits = new Splits('1|4:20-1|4:09-R1|6:00');
 
 		$this->assertEquals( '1.00&nbsp;km&nbsp;in&nbsp;4:20, 1.00&nbsp;km&nbsp;in&nbsp;4:09', $Splits->asReadableString() );
-		$this->assertEquals( '1.00&nbsp;km&nbsp;in&nbsp;4:20, 1.00&nbsp;km&nbsp;in&nbsp;4:09, 1.00&nbsp;km&nbsp;in&nbsp;6:00&nbsp;(Ruhe)', $Splits->asReadableString(true) );
+		$this->assertEquals( '1.00&nbsp;km&nbsp;in&nbsp;4:20, 1.00&nbsp;km&nbsp;in&nbsp;4:09, 1.00&nbsp;km&nbsp;in&nbsp;6:00&nbsp;(Resting)', $Splits->asReadableString(true) );
 	}
 
 	/**
