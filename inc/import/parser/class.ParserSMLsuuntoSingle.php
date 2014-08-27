@@ -54,24 +54,24 @@ class ParserSMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectXML() {
-		return !empty($this->DeviceLog->Header) && (!empty($this->DeviceLog->Samples) || !empty($this->DeviceLog->samples));
+		return !empty($this->XML->DeviceLog->Header) && (!empty($this->XML->DeviceLog->Samples) || !empty($this->XML->DeviceLog->samples));
 	}
 
 	/**
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-            	$this->addError( __('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;Header&gt;-tag could not be located.') );
+            	$this->addError(__('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;Header&gt;-tag could not be located.'));
 	}
 
 	/**
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->DeviceLog->Header->DateTime) );
+		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->DeviceLog->Header->DateTime) );
 
-		if (!empty($this->DeviceLog->Header->Activity))
-			$this->guessSportID( (string)$this->DeviceLog->Header->Activity );
+		if (!empty($this->XML->DeviceLog->Header->Activity))
+			$this->guessSportID( (string)$this->XML->DeviceLog->Header->Activity );
 		else
 			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
 	}
@@ -80,8 +80,8 @@ class ParserSMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse optional values
 	 */
 	protected function parseOptionalValues() {
-		if (!empty($this->DeviceLog->Header->Duration))
-			$this->TrainingObject->setTimeInSeconds((int)$this->DeviceLog->Header->Duration);
+		if (!empty($this->XML->DeviceLog->Header->Duration))
+			$this->TrainingObject->setTimeInSeconds((int)$this->XML->DeviceLog->Header->Duration);
 
 		$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
@@ -90,16 +90,16 @@ class ParserSMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse samples
 	 */
 	protected function parseSamples() {
-		if (!empty($this->DeviceLog->Samples)) {
-			foreach ($this->DeviceLog->Samples->Sample as $Sample)
+		if (!empty($this->XML->DeviceLog->Samples)) {
+			foreach ($this->XML->DeviceLog->Samples->Sample as $Sample)
 				$this->parseSample($Sample);
 
-			$this->readElapsedTimeFrom($this->DeviceLog->Samples->Sample[count($this->DeviceLog->Samples->Sample)-1]);
-		} elseif (!empty($this->DeviceLog->samples)) {
-			foreach ($this->DeviceLog->samples->sample as $Sample)
+			$this->readElapsedTimeFrom($this->XML->DeviceLog->Samples->Sample[count($this->XML->DeviceLog->Samples->Sample)-1]);
+		} elseif (!empty($this->XML->DeviceLog->samples)) {
+			foreach ($this->XML->DeviceLog->samples->sample as $Sample)
 				$this->parseSample($Sample);
 
-			$this->readElapsedTimeFrom($this->DeviceLog->samples->sample[count($this->DeviceLog->samples->sample)-1]);
+			$this->readElapsedTimeFrom($this->XML->DeviceLog->samples->sample[count($this->XML->DeviceLog->samples->sample)-1]);
 		}
 
 		if (min($this->gps['altitude']) > 0)
