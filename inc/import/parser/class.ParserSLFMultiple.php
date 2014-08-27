@@ -4,9 +4,9 @@
  * @package Runalyze\Import\Parser
  */
 /**
- * Parser for SML with multiple trainings
+ * Parser for SLF with multiple trainings
  *
- * @author Michael Pohl
+ * @author Hannes Christiansen
  * @package Runalyze\Import\Parser
  */
 class ParserSLFMultiple extends ParserAbstractMultipleXML {

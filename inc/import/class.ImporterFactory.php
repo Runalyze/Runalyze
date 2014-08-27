@@ -31,7 +31,7 @@ class ImporterFactory {
 	 * Boolean flag: log all filecontents?
 	 * @var bool
 	 */
-	static private $logFileContents = true;
+	static private $logFileContents = false;
 
 	/**
 	 * Import from garmin communicator
