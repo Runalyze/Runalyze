@@ -38,7 +38,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Is paused?
 	 * @var boolean
 	 */
-	protected $isPaused = true;
+	protected $isPaused = false;
 
 	/**
 	 * Timestamp of last stop
@@ -169,6 +169,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['total_distance']))
 			$this->TrainingObject->setDistance( round($this->Values['total_distance'][0] / 1e5, 3) );
+
+		if (isset($this->Values['total_calories']))
+			$this->TrainingObject->setCalories( $this->Values['total_calories'][0] );
 	}
 
 	/**
@@ -211,6 +214,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['km'][]        = isset($this->Values['distance']) ? round($this->Values['distance'][0] / 1e5, 3) : 0;
 		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? $this->Values['heart_rate'][0] : 0;
 		$this->gps['rpm'][]       = isset($this->Values['cadence']) ? $this->Values['cadence'][0] : 0;
+
+		$this->gps['temp'][]      = isset($this->Values['temperature']) ? $this->Values['temperature'][0] : 0;
 
 		$this->gps['time_in_s'][] = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$this->gps['pace'][]      = $this->getCurrentPace();
