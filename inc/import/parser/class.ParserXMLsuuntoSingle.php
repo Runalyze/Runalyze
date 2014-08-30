@@ -110,7 +110,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Read elapsed time from last sample
 	 * @param SimpleXMLElement $Sample
 	 */
-	private function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
+	protected function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
 		if (!empty($Sample->UTC)) {
 			$FinishTimestamp = (int)strtotime((string)$Sample->UTC);
 
