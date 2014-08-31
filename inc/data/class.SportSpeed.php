@@ -183,4 +183,40 @@ class SportSpeed {
 
 		return number_format($Distance*1000/$Time, 1, ',', '.');
 	}
+
+	/**
+	 * Difference for speeds
+	 * @param enum $Unit
+	 * @param mixed $FirstValue
+	 * @param mixed $SecondValue
+	 * @return string
+	 */
+	static public function difference($Unit, $FirstValue, $SecondValue) {
+		switch ($Unit) {
+			case self::$MIN_PER_KM:
+			case self::$MIN_PER_100M:
+				$FirstInSeconds = Time::toSeconds($FirstValue);
+				$SecondInSeconds = Time::toSeconds($SecondValue);
+				$String = Time::toString( abs($FirstInSeconds - $SecondInSeconds), false, false, false );
+				$Class = $SecondInSeconds < $FirstInSeconds ? 'plus' : 'minus';
+				break;
+
+			case self::$KM_PER_H:
+			case self::$M_PER_S:
+				$FirstValue = Helper::CommaToPoint($FirstValue);
+				$SecondValue = Helper::CommaToPoint($SecondValue);
+				$String = number_format(abs($FirstValue - $SecondValue), 1, ',', '.');;
+				$Class = $SecondValue > $FirstValue ? 'plus' : 'minus';
+				break;
+
+			case self::$NO:
+			default:
+				$Class = '';
+				$String = '';
+		}
+
+		$Sign = ($Class == 'plus') ? '+' : '-';
+
+		return '<span class="'.$Class.'">'.$Sign.$String.self::getAppendix($Unit).'</span>';
+	}
 }
