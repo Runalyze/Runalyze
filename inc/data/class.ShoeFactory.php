@@ -173,14 +173,14 @@ class ShoeFactory {
 		DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=0, `time`=0');
 
 		$Statement = DB::getInstance()->query(
-			'SELECT `id`, SUM(`distance`) as `km`, SUM(`s`) as `s` '.
+			'SELECT `shoeid`, SUM(`distance`) as `km`, SUM(`s`) as `s` '.
 			'FROM `'.PREFIX.'training` '.
 			'GROUP BY `shoeid`'
 		);
 
 		while ($ShoeData = $Statement->fetch()) {
-			if ($ShoeData['id'] > 0 && $ShoeData['s'] > 0) {
-				DB::getInstance()->update('shoe', $ShoeData['id'], array('km', 'time'), array($ShoeData['km'], $ShoeData['s']));
+			if ($ShoeData['shoeid'] > 0 && $ShoeData['s'] > 0) {
+				DB::getInstance()->update('shoe', $ShoeData['shoeid'], array('km', 'time'), array($ShoeData['km'], $ShoeData['s']));
 			}
 		}
 
