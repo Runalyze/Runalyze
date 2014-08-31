@@ -346,8 +346,9 @@ class FormularValueParser {
 	 * @return boolean
 	 */
 	static protected function validateSplits($key, $options) {
-		if (!isset($_POST[$key]))
-			return true;
+		if (!isset($_POST[$key])) {
+			$_POST[$key] = array();
+		}
 
 		$Splits = new Splits($_POST[$key]);
 		$_POST[$key] = $Splits->asString();
