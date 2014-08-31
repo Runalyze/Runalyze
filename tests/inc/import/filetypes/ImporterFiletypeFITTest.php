@@ -100,4 +100,22 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		}
 	}
+
+	/**
+	 * Test: fenix file
+	 * Filename: "Fenix-2.fit" 
+	 */
+	public function test_FenixFileNegativeTime() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Fenix-2-negative-times.fit');
+
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals( "28.08.2014 09:32:59", date('d.m.Y H:i:s', $this->object->object()->getTimestamp()) );
+			$this->assertEquals( 2*3600 + 35*60 + 21, $this->object->object()->getTimeInSeconds() );
+
+			$this->assertTrue( $this->object->object()->hasArrayTime() );
+			$this->assertTrue( min($this->object->object()->getArrayTime()) >= 0 );
+		}
+	}
 }

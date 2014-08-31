@@ -12,6 +12,7 @@ nbproject/
 
 #Runalyze
 build/yuicompressor-*
+inc/data/gps/srtm/*.tif
 img/backgrounds/My-*
 log/
 *.xcf

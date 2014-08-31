@@ -71,6 +71,7 @@ class LeafletTrainingRoute extends LeafletRoute {
 	protected function createRoute() {
 		$this->prepareLoop();
 		$this->findLimitForPauses();
+		$this->fillCurrentSegment();
 
 		while ($this->GPS->nextStep()) {
 			$this->checkForPause();

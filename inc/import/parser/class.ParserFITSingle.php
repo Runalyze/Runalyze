@@ -206,6 +206,14 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (!isset($this->Values['timestamp']))
 			return;
 
+		if (empty($this->gps['time_in_s'])) {
+			$startTime = strtotime((string)$this->Values['timestamp'][1]);
+
+			if ($startTime < $this->TrainingObject->getTimestamp()) {
+				$this->TrainingObject->setTimestamp($startTime);
+			}
+		}
+
 		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
 		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -3) : 0;
 

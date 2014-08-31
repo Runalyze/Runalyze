@@ -148,7 +148,7 @@ $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_PRECISION', arra
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 	'default'		=> '0',
 	'label'			=> __('Pace: y-axis-minimum'),
-	'tooltip'		=> __('Data points below this limit will be ignored.'),
+	'tooltip'		=> __('Data points below this limit will be ignored. (only for running)'),
 	'options'		=> array(
 		0				=> __('automatic'),
 		60				=> __('1:00/km'),
@@ -167,7 +167,7 @@ $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MIN', array(
 $Training->addConfigValue( new ConfigValueSelect('PACE_Y_LIMIT_MAX', array(
 	'default'		=> '0',
 	'label'			=> __('Pace: y-axis-maximum'),
-	'tooltip'		=> __('Data points above this limit will be ignored.'),
+	'tooltip'		=> __('Data points above this limit will be ignored. (only for running)'),
 	'options'		=> array(
 		0				=> __('automatic'),
 		240				=> __('4:00/km'),

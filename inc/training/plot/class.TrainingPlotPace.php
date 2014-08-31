@@ -101,7 +101,7 @@ class TrainingPlotPace extends TrainingPlot {
 				$max = 10*1000*ceil($max/10/1000);
 			}
 
-			if (CONF_PACE_Y_LIMIT_MIN != 0 || CONF_PACE_Y_LIMIT_MAX != 0) {
+			if ((CONF_PACE_Y_LIMIT_MIN != 0 || CONF_PACE_Y_LIMIT_MAX != 0) && $Training->Sport()->isRunning()) {
 				$setLimits = true;
 				$autoscale = false;
 

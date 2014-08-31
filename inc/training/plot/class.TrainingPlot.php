@@ -89,7 +89,7 @@ abstract class TrainingPlot {
 		$this->initPlot();
 		$this->initData();
 
-		if (!empty($this->Data)) {
+		if (count($this->Data) > 2) {
 			$this->setProperties();
 		} else {
 			$this->Plot->raiseError( __('No plot available.') );
