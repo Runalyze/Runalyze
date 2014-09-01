@@ -49,6 +49,9 @@ class Icon {
 	static public $CALENDAR         = '<i class="fa fa-fw fa-calendar"></i>';
 	static public $BARS_BIG         = '<i class="fa fa-fw fa-bar-chart-o"></i>';
 	static public $BARS_SMALL       = '<i class="fa fa-fw fa-bar-chart-o"></i>';
+	static public $LINE_CHART       = '<i class="fa fa-fw fa-line-chart"></i>';
+	static public $AREA_CHART       = '<i class="fa fa-fw fa-area-chart"></i>';
+	static public $PIE_CHART        = '<i class="fa fa-fw fa-pie-chart"></i>';
 	static public $FATIGUE          = '<i class="fa fa-fw fa-signal"></i>';
 	static public $TABLE            = '<i class="fa fa-fw fa-table"></i>';
 	static public $DELETE           = '<i class="fa fa-fw fa-times"></i>';
@@ -56,7 +59,8 @@ class Icon {
 	static public $ZOOM_IN          = '<i class="fa fa-fw fa-search-plus"></i>';
 	static public $ZOOM_OUT         = '<i class="fa fa-fw fa-search-minus"></i>';
 	static public $ZOOM_FIT         = '<i class="fa fa-fw fa-search"></i>';
-	static public $CALCULATOR       = '<i class="fa fa-fw fa-magic"></i>';
+	static public $MAGIC            = '<i class="fa fa-fw fa-magic"></i>';
+	static public $CALCULATOR       = '<i class="fa fa-fw fa-calculator"></i>';
 	// Own pictures
 	static public $INFO             = '<i class="fa fa-fw fa-info-circle"></i>';
 	static public $WARNING          = '<i class="fa fa-fw fa-warning"></i>';

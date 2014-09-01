@@ -74,8 +74,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$FATIGUE.'</a>').'</li>';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$CALCULATOR.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';

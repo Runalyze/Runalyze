@@ -59,7 +59,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$LinkList = array();
 
 		if ($this->Configuration()->value('for_weather'))
-			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$FATIGUE, __('Show temperature plots')).'</a>').'</li>';
+			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$LINE_CHART, __('Show temperature plots')).'</a>').'</li>';
 
 		return $LinkList;
 	}
