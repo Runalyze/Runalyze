@@ -67,6 +67,7 @@ if (empty($Data)) {
 } elseif (min(min($Adiposes), min($Water), min($Muscles)) == 0 || count($Adiposes) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();
+	$Plot->Options['series']['curvedLines']['apply'] = false;
 }
 
 $Plot->outputJavaScript( true );

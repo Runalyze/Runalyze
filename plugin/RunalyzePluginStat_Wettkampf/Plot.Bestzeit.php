@@ -11,6 +11,7 @@ $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
 $label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $timeFormat  = '%M:%S';
 
@@ -29,6 +30,8 @@ if (!empty($competitions)) {
 
 $Plot = new Plot("bestzeit".$distance*1000, 480, 190);
 $Plot->Data[] = array('label' => $label, 'data' => $Results);
+//$Plot->Data[] = array('label' => $trend, 'data' => $Results, 'color' => '#C61D17', 'lines' => array('show' => true), 'curvedLines' => array('apply' => true, 'fit' => true));
+//$Plot->Data[] = array('label' => $label, 'data' => $Results, 'color' => '#C61D17', 'points' => array('show' => true), 'curvedLines' => array('apply' => false));
 
 $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();

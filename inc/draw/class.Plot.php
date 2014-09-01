@@ -324,9 +324,13 @@ class Plot {
 	/**
 	 * Set smoothing
 	 * @var bool $flag
+	 * @var bool $fit [optional]
 	 */
-	public function smoothing($flag = true) {
+	public function smoothing($flag = true, $fit = null) {
 		$this->Options['series']['curvedLines']['apply'] = $flag;
+
+		if (!is_null($fit))
+			$this->Options['series']['curvedLines']['fit'] = $fit;
 	}
 
 	/**

@@ -65,6 +65,7 @@ if (empty($Data)) {
 } elseif (min(min($Weights), min($HRrests)) == 0 || count($Weights) <= 1) {
 	$Plot->setZeroPointsToNull();
 	$Plot->lineWithPoints();
+	$Plot->Options['series']['curvedLines']['apply'] = false;
 }
 
 $Plot->outputJavaScript( true );
