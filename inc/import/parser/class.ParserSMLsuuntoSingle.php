@@ -45,6 +45,9 @@ class ParserSMLsuuntoSingle extends ParserXMLsuuntoSingle {
 		if (!empty($this->XML->DeviceLog->Header->Duration))
 			$this->TrainingObject->setTimeInSeconds((int)$this->XML->DeviceLog->Header->Duration);
 
+		if (!empty($this->XML->DeviceLog->Header->Distance))
+			$this->TrainingObject->setDistance( round((int)$this->XML->DeviceLog->Header->Distance)/1000 );
+
 		$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
 
@@ -64,7 +67,8 @@ class ParserSMLsuuntoSingle extends ParserXMLsuuntoSingle {
 			$this->readElapsedTimeFrom($this->XML->DeviceLog->samples->sample[count($this->XML->DeviceLog->samples->sample)-1]);
 		}
 
-		if (min($this->gps['altitude']) > 0)
+		if (!empty($this->gps['altitude']) && min($this->gps['altitude']) > 0) {
 			$this->TrainingObject->set('elevation_corrected', 1);
+		}	
 	}
 }
