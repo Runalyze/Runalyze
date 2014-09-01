@@ -51,14 +51,12 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 			self::$NewEquipment[(string)$Equipment->attributes()->id] = Mysql::getInstance()->insert(PREFIX.'shoe',
 				array(
 					'name',
-					'brand',
 					'since',
 					'additionalKm',
 					'inuse'
 				),
 				array(
 					(string)$Equipment->Name,
-					(isset($Equipment->Name['make']) && (string)$Equipment->Name['make'] != 'Unknown') ? (string)$Equipment->Name['make'] : '',
 					(isset($Equipment->PurchaseInfo) && isset($Equipment->PurchaseInfo['date'])) ? (string)$Equipment->PurchaseInfo['date'] : '',
 					(isset($Equipment->Distance) && isset($Equipment->Distance['initialDistance'])) ? $this->distanceFromUnit($Equipment->Distance['initialDistance'], $Equipment->Distance['unit']) : 0,
 					(isset($Equipment->Name['retired']) && (string)$Equipment->Name['retired'] == 'true') ? 0 : 1
@@ -70,9 +68,15 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * Parse all events
 	 */
 	protected function parseEvents() {
-		if (isset($this->XML->EventCollection->Event))
-			foreach ($this->XML->EventCollection->Event as $Event)
-				$this->parseSingleEvent($Event);
+		if (isset($this->XML->EventCollection->Event)) {
+			foreach ($this->XML->EventCollection->Event as $Event) {
+				// TODO: Import "empty" events as notes, as soon as we have "notes" as single data
+				// At the moment, the multiple importer can't handle "empty" trainings
+				// Therefore, check if the event has a duration
+				if (isset($Event->Duration) && (double)$Event->Duration['seconds'] > 1)
+					$this->parseSingleEvent($Event);
+			}
+		}
 	}
 
 	/**

@@ -18,7 +18,7 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	 * URL for catching forecast
 	 * @var string
 	 */
-	static private $URL = 'http://api.openweathermap.org/data/2.1/find/name';
+	static private $URL = 'http://api.openweathermap.org/data/2.5/weather';
 
 	/**
 	 * Result from json
@@ -67,7 +67,6 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	public function setFromJSON($JSON) {
 		if ($JSON) {
 			$this->Result = json_decode($JSON, true);
-			$this->Result = $this->Result['list'][0];
 		}
 	}
 

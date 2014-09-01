@@ -1,16 +1,16 @@
 <?php
 /**
- * This file contains class::ParserXMLsuuntoSingle
+ * This file contains class::ParserSMLsuuntoSingle
  * @package Runalyze\Import\Parser
  */
 /**
- * Parser for XML files from Suunto
+ * Parser for SML files from Suunto
  *
- * @author Hannes Christiansen
+ * @author Michael Pohl & Hannes Christiansen 
  * @see http://www.mathworks.com/matlabcentral/fileexchange/37787-suunto-ambit-data-decoder/content/AmbitDecoderVersion2.m
  * @package Runalyze\Import\Parser
  */
-class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
+class ParserSMLsuuntoSingle extends ParserAbstractSingleXML {
 	/**
 	 * Latitude
 	 * @var float
@@ -54,24 +54,24 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectXML() {
-		return !empty($this->XML->header) && (!empty($this->XML->Samples) || !empty($this->XML->samples));
+		return !empty($this->XML->DeviceLog->Header) && (!empty($this->XML->DeviceLog->Samples) || !empty($this->XML->DeviceLog->samples));
 	}
 
 	/**
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-		$this->addError('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.');
+            	$this->addError('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;Header&gt;-tag could not be located.');
 	}
 
 	/**
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->header->DateTime) );
+		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->DeviceLog->Header->DateTime) );
 
-		if (!empty($this->XML->header->Activity))
-			$this->guessSportID( (string)$this->XML->header->Activity );
+		if (!empty($this->XML->DeviceLog->Header->Activity))
+			$this->guessSportID( (string)$this->XML->DeviceLog->Header->Activity );
 		else
 			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
 	}
@@ -80,8 +80,8 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse optional values
 	 */
 	protected function parseOptionalValues() {
-		if (!empty($this->XML->header->Duration))
-			$this->TrainingObject->setTimeInSeconds((int)$this->XML->header->Duration);
+		if (!empty($this->XML->DeviceLog->Header->Duration))
+			$this->TrainingObject->setTimeInSeconds((int)$this->XML->DeviceLog->Header->Duration);
 
 		$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
@@ -90,16 +90,16 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Parse samples
 	 */
 	protected function parseSamples() {
-		if (!empty($this->XML->Samples)) {
-			foreach ($this->XML->Samples->Sample as $Sample)
+		if (!empty($this->XML->DeviceLog->Samples)) {
+			foreach ($this->XML->DeviceLog->Samples->Sample as $Sample)
 				$this->parseSample($Sample);
 
-			$this->readElapsedTimeFrom($this->XML->Samples->Sample[count($this->XML->Samples->Sample)-1]);
-		} elseif (!empty($this->XML->samples)) {
-			foreach ($this->XML->samples->sample as $Sample)
+			$this->readElapsedTimeFrom($this->XML->DeviceLog->Samples->Sample[count($this->XML->DeviceLog->Samples->Sample)-1]);
+		} elseif (!empty($this->XML->DeviceLog->samples)) {
+			foreach ($this->XML->DeviceLog->samples->sample as $Sample)
 				$this->parseSample($Sample);
 
-			$this->readElapsedTimeFrom($this->XML->samples->sample[count($this->XML->samples->sample)-1]);
+			$this->readElapsedTimeFrom($this->XML->DeviceLog->samples->sample[count($this->XML->DeviceLog->samples->sample)-1]);
 		}
 
 		if (min($this->gps['altitude']) > 0)

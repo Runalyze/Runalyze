@@ -98,11 +98,10 @@ class RoundsInfo {
 			$TimeDifferenceSign       = $TimeDifferenceInSeconds >= 0 ? '+' : '-';
 			$TimeDifferenceString     = '<span class="'.$TimeDifferenceClass.'">'.$TimeDifferenceSign.Time::toString(abs($TimeDifferenceInSeconds), false, 2).'</span>';
 
-			$PaceDifferenceInSeconds  = $this->DemandedPace - $Round['s']/$Round['km'];
-			$PaceDifferenceClass      = $PaceDifferenceInSeconds >= 0 ? 'plus' : 'minus';
-			$PaceDifferenceSign       = $PaceDifferenceInSeconds >= 0 ? '+' : '-';
-			$PaceDifferenceString     = SportFactory::getSpeedWithAppendixAndTooltip(1, abs($PaceDifferenceInSeconds), $this->Training->Sport()->id());
-			$PaceDifferenceFullString = '<span class="'.$PaceDifferenceClass.'">'.$PaceDifferenceSign.$PaceDifferenceString.'</span>';
+			$SpeedUnit                = SportFactory::getSpeedUnitFor($this->Training->Sport()->id());
+			$DemandedPace             = SportSpeed::getSpeed(1, $this->DemandedPace, $SpeedUnit);
+			$AchievedPace             = SportSpeed::getSpeed($Round['km'], $Round['s'], $SpeedUnit);
+			$PaceDifferenceFullString = SportSpeed::difference($SpeedUnit, $DemandedPace, $AchievedPace);
 
 			$this->Data[] = array(
 				'time'      => Time::toString($Round['time']),

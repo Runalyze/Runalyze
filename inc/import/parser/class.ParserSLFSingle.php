@@ -74,7 +74,7 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Log 
 	 */
 	protected function parseLogEntry($Log) {
-		if ((int)$Log->Time == 0 || (string)$Log->IsPause != 'false') {
+		if ((int)$Log->Time == 0 || (string)$Log->IsPause == 'true') {
 			if ((int)$Log->PauseTime > 0)
 				$this->PauseInSeconds += (int)$Log->PauseTime;
 

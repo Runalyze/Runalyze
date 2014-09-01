@@ -4,24 +4,28 @@
  * Call:   include Plot.form.php
  * @package Runalyze\Plugins\Panels
  */
-$MaxATLPoints  = 750;
-$DataFailed    = false;
-$ATLs          = array();
-$CTLs          = array();
-$VDOTs         = array();
-$Trimps_raw    = array();
-$VDOTs_raw     = array();
-$Durations_raw = array();
+$DebugAllValues = false;
+$MaxATLPoints   = 750;
+$DataFailed     = false;
+$ATLs           = array();
+$CTLs           = array();
+$VDOTs          = array();
+$Trimps_raw     = array();
+$VDOTs_raw      = array();
+$Durations_raw  = array();
 
 $All   = ($_GET['y'] == 'all');
 $Year  = $All ? date('Y') : (int)$_GET['y'];
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
-	$MaxDays    = !$All ? 366   : (date('Y') - START_YEAR + 1)*366;
-	$StartYear  = !$All ? $Year : START_YEAR;
-	$EndYear    = !$All ? $Year : date('Y');
-	$AddDays    = max(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
-	$MinAddDays = min(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
+	$StartYear    = !$All ? $Year : START_YEAR;
+	$EndYear      = !$All ? $Year : date('Y');
+	$MaxDays      = ($EndYear - $StartYear + 1)*366;
+	$AddDays      = max(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
+	$StartTime    = !$All ? mktime(1,0,0,1,1,$StartYear) : START_TIME;
+	$StartDay     = date('Y-m-d', $StartTime);
+	$EndTime      = !$All && $Year < date('Y') ? mktime(1,0,0,12,31,$Year) : time();
+	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 
 	$EmptyArray    = array_fill(0, $MaxDays + $AddDays, 0);
 	$Trimps_raw    = $EmptyArray;
@@ -35,71 +39,58 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	$Data = Mysql::getInstance()->fetchAsArray('
 		SELECT
-			YEAR(FROM_UNIXTIME(`time`))*366+DAYOFYEAR(FROM_UNIXTIME(`time`))-'.$StartYear.'*366+'.$AddDays.' as `index`,
-			YEAR(FROM_UNIXTIME(`time`)) as `y`,
-			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-			SUM(`trimp`) as `trimp`
-		FROM `'.PREFIX.'training`
-		WHERE
-			(
-				(
-					YEAR(FROM_UNIXTIME(`time`))>='.$StartYear.' AND
-					YEAR(FROM_UNIXTIME(`time`))<='.$EndYear.'
-				) OR (
-					YEAR(FROM_UNIXTIME(`time`))='.($StartYear-1).' AND
-					DAYOFYEAR(FROM_UNIXTIME(`time`)) >= '.(366-$AddDays).'
-				)
-			)
-		GROUP BY `y`, `d`');
-
-	foreach ($Data as $dat)
-		$Trimps_raw[$dat['index']] = $dat['trimp'];
-
-	$Data = Mysql::getInstance()->fetchAsArray('
-		SELECT
-			YEAR(FROM_UNIXTIME(`time`))*366+DAYOFYEAR(FROM_UNIXTIME(`time`))-'.$StartYear.'*366+'.$AddDays.' as `index`,
-			YEAR(FROM_UNIXTIME(`time`)) as `y`,
-			DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-			SUM('.JD::mysqlVDOTsum().') as `vdot`,
+			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
+			SUM(`trimp`) as `trimp`,
+			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
 			SUM('.JD::mysqlVDOTsumTime().') as `s`
 		FROM `'.PREFIX.'training`
 		WHERE
-			`vdot`>0 AND (
-				(
-					YEAR(FROM_UNIXTIME(`time`))>='.$StartYear.' AND
-					YEAR(FROM_UNIXTIME(`time`))<='.$EndYear.'
-				) OR (
-					YEAR(FROM_UNIXTIME(`time`))='.($StartYear-1).' AND
-					DAYOFYEAR(FROM_UNIXTIME(`time`)) >= '.(366-$AddDays).'
-				)
-			)
-		GROUP BY `y`, `d`');
-	foreach ($Data as $dat) {
-		$index = $dat['index'];
+			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
+		GROUP BY `index`');
 
-		$VDOTs_raw[$index]     = $dat['vdot']; // Remember: These values are already multiplied with `s`
-		$Durations_raw[$index] = (double)$dat['s'];
+	foreach ($Data as $dat) {
+		$index = $dat['index'] + $AddDays;
+
+		$Trimps_raw[$index] = $dat['trimp'];
+
+		if ($dat['vdot'] != 0) {
+			$VDOTs_raw[$index]     = $dat['vdot']; // Remember: These values are already multiplied with `s`
+			$Durations_raw[$index] = (double)$dat['s'];
+		}
 	}
 
-	// Don't ask why +2 is needed
-	// - and don't ask, why ATL/CTL need +1 in array_slice
-	// But this way panel and plot have the same last values
-	$HighestIndex  = $index + 2;
+	$StartDayInYear = $All ? Time::diffInDays($StartTime, mktime(1,0,0,1,1,$StartYear)) + 1 : 0;
+	$LowestIndex = $AddDays + 1;
+	$HighestIndex = $AddDays + 1 + $NumberOfDays;
 
-	for ($d = $AddDays; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays);
+	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_ATL_DAYS + 1, CONF_ATL_DAYS)) / CONF_ATL_DAYS / Trimp::maxATL();
-		$CTLs[$index]    = 100 * array_sum(array_slice($Trimps_raw, $d - CONF_CTL_DAYS + 1, CONF_CTL_DAYS)) / CONF_CTL_DAYS / Trimp::maxCTL();
+		$ATLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS) / Trimp::maxATL());
+		$CTLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS) / Trimp::maxCTL());
 
-		$Durations_slice = array_slice($Durations_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
 		$VDOT_slice      = array_slice($VDOTs_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
-
+		$Durations_slice = array_slice($Durations_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
 		$VDOT_sum        = array_sum($VDOT_slice);
 		$Durations_sum   = array_sum($Durations_slice);
 
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0)
 			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $Durations_sum);
+
+		if ($DebugAllValues) {
+			$CTL = Trimp::CTLinPercent($index/1000);
+			$ATL = Trimp::ATLinPercent($index/1000);
+			$VDOT = JD::calculateVDOTform($index/1000);
+			$VDOT_plot = (isset($VDOTs[$index])) ? round($VDOTs[$index],5) : 0;
+
+			$checkFailes = $CTLs[$index] != $CTL || $ATLs[$index] != $ATL || $VDOT_plot != $VDOT;
+			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - berechnet: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br />';
+
+			if ($checkFailes)
+				echo HTML::error($textMessage);
+			else
+				echo HTML::info($textMessage);
+		}
 	}
 } else {
 	$DataFailed = true;

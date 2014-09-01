@@ -95,8 +95,10 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 			return;
 
 		foreach ($trainings as $training) {
-			$trainingspartner = explode(', ', $training['partner']);
+			$trainingspartner = explode(',', $training['partner']);
 			foreach ($trainingspartner as $name) {
+				$name = trim($name);
+
 				if (!isset($this->Partner[$name]))
 					$this->Partner[$name] = 1;
 				else

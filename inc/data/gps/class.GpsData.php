@@ -1238,7 +1238,7 @@ class GpsData {
 				$html = false;
 
 				while ($html === false) {
-					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs));
+					$html = Filesystem::getExternUrlContent('http://ws.geonames.org/srtm3?lats='.implode(',', $lats).'&lngs='.implode(',', $longs).'&username=runalyze');
 					if (substr($html,0,1) == '<')
 						$html = false;
 					else {
