@@ -181,6 +181,7 @@ $CLASSMAP = array(
 'Autoloader' => 'system/class.Autoloader.php',
 'Benchmark' => 'system/class.Benchmark.php',
 'BigFileWriterGZip' => 'system/class.BigFileWriterGZip.php',
+'Cache' => 'system/class.Cache.php',
 'DatabaseScheme' => 'system/class.DatabaseScheme.php',
 'DatabaseSchemePool' => 'system/class.DatabaseSchemePool.php',
 'DataObject' => 'system/class.DataObject.php',

@@ -8,6 +8,7 @@
  * @author Hannes Christiansen
  * @package Runalyze\Plugin
  */
+
 class PluginFactory {
 	/**
 	 * Array with all keys
@@ -33,13 +34,26 @@ class PluginFactory {
 	 * @return Plugin
 	 */
 	public function newInstance($Pluginkey) {
-		$data = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($Pluginkey).' LIMIT 1')->fetch();
-
+            require_once FRONTEND_PATH.'..\lib\phpfastcache\phpfastcache.php';
+            phpFastCache::setup("storage","auto");
+            
+            $pluginkeys = __c()->get("pluginkeys_".SessionAccountHandler::getId());
+            
+            if($pluginkeys == NULL) {
+		$data = DB::getInstance()->query('SELECT `key`, `id` FROM `'.PREFIX.'plugin`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+                $datamap = array_map('reset',$data);
+                __c()->set("pluginkeys_".SessionAccountHandler::getId(),$datamap, '5000');
+                return (new $Pluginkey($datamap[$Pluginkey]['id']));
+            } else {
+                 return (new $Pluginkey($pluginkeys[$Pluginkey]['id']));
+            }
+            //TODO RuntimeException
+            /*
 		if ($data === false) {
 			throw new RuntimeException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
+              */
 
-		return (new $Pluginkey($data['id']));
 	}
 
 	/**
