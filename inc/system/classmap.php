@@ -42,6 +42,7 @@ $CLASSMAP = array(
 'Weather' => 'data/class.Weather.php',
 'WeatherForecast' => 'data/class.WeatherForecast.php',
 'WeatherForecastStrategy' => 'data/class.WeatherForecastStrategy.php',
+'WeatherLocation' => 'data/class.WeatherLocation.php',
 'WeatherOpenweathermap' => 'data/class.WeatherOpenweathermap.php',
 'WeatherTranslator' => 'data/class.WeatherTranslator.php',
 'ElevationCalculator' => 'data/gps/class.ElevationCalculator.php',

@@ -225,6 +225,17 @@ abstract class DataObject {
 	}
 
 	/**
+	 * Get first point of array
+	 * @param string $key
+	 * @return mixed
+	 */
+	final protected function getFirstArrayPoint($key) {
+		$array = $this->getArrayFor($key);
+
+		return reset($array);
+	}
+
+	/**
 	 * Get last point of array
 	 * @param string $key
 	 * @return mixed

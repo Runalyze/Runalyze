@@ -17,13 +17,21 @@ class WeatherForecast extends Weather {
 	protected $Strategy = null;
 
 	/**
-	 * Constructor
-	 * @param \WeatherForecastStrategy $Strategy optional
+	 * Location
+	 * @var \WeatherLocation 
 	 */
-	public function __construct(WeatherForecastStrategy $Strategy = null) {
+	protected $Location = null;
+
+	/**
+	 * Constructor
+	 * @param \WeatherForecastStrategy $Strategy
+	 * @param \WeatherLocation $Location
+	 */
+	public function __construct(WeatherForecastStrategy $Strategy, WeatherLocation $Location) {
 		$this->id          = parent::$UNKNOWN_ID;
 		$this->temperature = null;
-		$this->Strategy    = (is_null($Strategy)) ? new WeatherOpenweathermap() : $Strategy;
+		$this->Strategy    = $Strategy;
+		$this->Location    = $Location;
 
 		$this->loadForecast();
 	}
@@ -32,7 +40,7 @@ class WeatherForecast extends Weather {
 	 * Load current conditions from API and set as internal data
 	 */
 	private function loadForecast() {
-		$this->Strategy->loadForecast();
+		$this->Strategy->loadForecast($this->Location);
 
 		$this->id          = self::conditionToId($this->Strategy->getConditionAsString());
 		$this->temperature = $this->Strategy->getTemperature();

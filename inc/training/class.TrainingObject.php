@@ -86,7 +86,17 @@ class TrainingObject extends DataObject {
 		if ($this->trainingIsTooOldToFetchWeatherData() || !CONF_TRAINING_LOAD_WEATHER)
 			return;
 
-		$Weather = new WeatherForecast();
+		$WeatherStrategy = new WeatherOpenweathermap();
+		$WeatherLocation = new WeatherLocation();
+		$WeatherLocation->setTimestamp( $this->getTimestamp() );
+		$WeatherLocation->setLocationName(CONF_PLZ);
+
+		if ($this->hasPositionData()) {
+			$WeatherLocation->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
+		}
+
+		$Weather = new WeatherForecast($WeatherStrategy, $WeatherLocation);
+
 		$this->set('weatherid', $Weather->id());
 		$this->set('temperature', $Weather->temperature());
 	}
@@ -96,7 +106,7 @@ class TrainingObject extends DataObject {
 	 * @return boolean
 	 */
 	private function trainingIsTooOldToFetchWeatherData() {
-		return Time::diffInDays($this->getTimestamp()) > 2;
+		return Time::diffInDays($this->getTimestamp()) > 30;
 	}
 
 	/**

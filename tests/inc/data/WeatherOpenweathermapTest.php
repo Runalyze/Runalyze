@@ -16,9 +16,6 @@ class WeatherOpenweathermapTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function setUp() {
 		$this->object = new WeatherOpenweathermap;
-
-		if (!defined('CONF_PLZ'))
-			define('CONF_PLZ', 'Kaiserslautern, de');
 	}
 
 	/**
@@ -35,7 +32,6 @@ class WeatherOpenweathermapTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers WeatherOpenweathermap::loadForecast
 	 * @covers WeatherOpenweathermap::setFromJSON
 	 * @covers WeatherOpenweathermap::getConditionAsString
 	 * @covers WeatherOpenweathermap::getTemperature

@@ -12,8 +12,9 @@
 interface WeatherForecastStrategy {
 	/**
 	 * Load conditions
+	 * @param WeatherLocation $Location
 	 */
-	public function loadForecast();
+	public function loadForecast(WeatherLocation $Location);
 
 	/**
 	 * Get weather string

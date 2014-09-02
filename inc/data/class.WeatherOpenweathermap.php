@@ -18,7 +18,13 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	 * URL for catching forecast
 	 * @var string
 	 */
-	static private $URL = 'http://api.openweathermap.org/data/2.5/weather';
+	const URL = 'http://api.openweathermap.org/data/2.5/weather';
+
+	/**
+	 * URL for catching forecast
+	 * @var string
+	 */
+	const URL_HISTORY = 'http://api.openweathermap.org/data/2.5/history';
 
 	/**
 	 * Result from json
@@ -27,50 +33,34 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	protected $Result = array();
 
 	/**
-	 * Is a location set?
-	 * @todo Don't hardcode CONF_PLZ!
-	 * @return bool
+	 * Load conditions for location
+	 * @param WeatherLocation $Location
 	 */
-	protected function hasLocation() {
-		return (strlen(CONF_PLZ) > 0);
-	}
+	public function loadForecast(WeatherLocation $Location) {
+		$this->Result = array();
 
-	/**
-	 * Get location
-	 * @todo Don't hardcode CONF_PLZ!
-	 * @return string
-	 */
-	protected function getLocation() {
-		return CONF_PLZ;
-	}
+		if ($Location->isOld() && $Location->hasLocationName()) {
+			$this->setFromURL( self::URL_HISTORY.'/city?q='.$Location->name().'&start='.$Location->time().'&cnt=1' );
+		}
 
-	/**
-	 * Load conditions
-	 */
-	public function loadForecast() {
-		if ($this->hasLocation()) {
-			$this->tryToCatchJSON();
+		if (empty($this->Result)) {
+			if ($Location->hasPosition()) {
+				$this->setFromURL( self::URL.'?lat='.$Location->lat().'&lon='.$Location->lon() );
+			} elseif ($Location->hasLocationName()) {
+				$this->setFromURL( self::URL.'?q='.$Location->name() );
+			}
 		}
 	}
 
 	/**
-	 * Try to load result
+	 * Set from url
+	 * @param string $url
 	 */
-	protected function tryToCatchJSON() {
-		$this->setFromJSON( Filesystem::getExternUrlContent($this->url()) );
-	}
-
-	/**
-	 * URL
-	 * @return string
-	 */
-	private function url() {
-		$url = self::$URL.'?q='.$this->getLocation().'&units=metric';
-
+	public function setFromURL($url) {
 		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
 			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
 
-		return $url;
+		$this->setFromJSON( Filesystem::getExternUrlContent($url) );
 	}
 
 	/**
@@ -80,6 +70,10 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	public function setFromJSON($JSON) {
 		if ($JSON) {
 			$this->Result = json_decode($JSON, true);
+
+			if (isset($this->Result['list']) && !empty($this->Result['list'])) {
+				$this->Result = $this->Result['list'][0];
+			}
 		}
 	}
 
@@ -100,7 +94,7 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	 */
 	public function getTemperature() {
 		if (isset($this->Result['main']) && isset($this->Result['main']['temp']))
-			return round($this->Result['main']['temp']);
+			return round($this->Result['main']['temp'] - 273.15);
 
 		return null;
 	}
