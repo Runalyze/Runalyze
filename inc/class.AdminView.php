@@ -491,7 +491,8 @@ class AdminView {
 			'USER_CAN_REGISTER',
 			'USER_MUST_LOGIN',
 			'GARMIN_API_KEY',
-			'MAIL_SENDER'
+			'MAIL_SENDER',
+			'OPENWEATHERMAP_API_KEY'
 		);
 	}
 
@@ -560,6 +561,15 @@ define(\'GARMIN_API_KEY\', \''.$APIKey.'\');';
  * @var string MAIL_SENDER Adress for sending mails to users
  */
 define(\'MAIL_SENDER\', \'Runalyze <mail@runalyze.de>\');';
+
+			case 'OPENWEATHERMAP_API_KEY':
+				define('OPENWEATHERMAP_API_KEY', '');
+				return '/**
+ * OpenWeatherMap: API key
+ * @var string OPENWEATHERMAP_API_KEY api key
+ * @see http://openweathermap.org/appid
+ */
+define(\'OPENWEATHERMAP_API_KEY\', \'\');';
 
 			default:
 				return '// Whoo! Runalyze tried to add an nonexisting configuration variable to this file. ($Variable = '.$Variable.')';

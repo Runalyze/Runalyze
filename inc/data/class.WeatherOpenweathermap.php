@@ -57,7 +57,20 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	 * Try to load result
 	 */
 	protected function tryToCatchJSON() {
-		$this->setFromJSON( Filesystem::getExternUrlContent(self::$URL.'?q='.$this->getLocation().'&units=metric') );
+		$this->setFromJSON( Filesystem::getExternUrlContent($this->url()) );
+	}
+
+	/**
+	 * URL
+	 * @return string
+	 */
+	private function url() {
+		$url = self::$URL.'?q='.$this->getLocation().'&units=metric';
+
+		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
+			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
+
+		return $url;
 	}
 
 	/**
