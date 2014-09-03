@@ -292,23 +292,6 @@ foreach ($CHMOD_FOLDERS as $folder) {
 		</p>
 	</noscript>
 
-<?php
-$URLs = array(
-	System::getFullDomain().'lib/min/?g=js',
-	System::getFullDomain().'lib/min/?g=css'
-);
-?>
-	<p class="error" id="JQueryError">
-		<?php _e('Loading CSS- and JS-files did not work. Please check why the following URLs do not work:'); ?><br>
-		<br>
-		<?php
-		foreach ($URLs as $URL)
-			echo '<em><a href="'.$URL.'">'.$URL.'</a></em><br>';
-		?>
-	</p>
-
-	<script>$(document).ready(function(){ $("#JQueryError").remove(); });</script>
-
 	<p class="text">
 		&nbsp;
 	</p>

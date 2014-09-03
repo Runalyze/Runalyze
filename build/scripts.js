@@ -1781,10 +1781,6 @@ var Runalyze = (function($, parent){
 	// Private
 
 	var options = {
-		sharedView:					false,
-		fadeSpeed:					200,
-		urlForStat:					'call/call.Plugin.display.php?id=',
-		urlForTraining:				'call/call.Training.display.php',
 		dontReloadForConfigFlag:	'dont-reload-for-config',
 		dontReloadForTrainingFlag:	'dont-reload-for-training'
 	};
@@ -1839,14 +1835,12 @@ var Runalyze = (function($, parent){
 
 	function runInitHooks() {
 		for (key in initHooks) {
-			console.log('init: '+key);
 			initHooks[key]();
 		}
 	}
 
 	function runLoadHooks() {
 		for (key in loadHooks) {
-			console.log('load: '+key);
 			loadHooks[key]();
 		}
 	}
@@ -1892,7 +1886,6 @@ var Runalyze = (function($, parent){
 	};
 
 	self.reinit = function() {
-		console.log('reinit');
 		runLoadHooks();
 	};
 
@@ -2068,95 +2061,95 @@ var RunalyzePlot = (function($, parent){
 
 	// Private
 
-	var _plots = {},
-		_created = {},
-		_plotSizes = {},
-		_trainingCharts = {
-			options: {
-				takeMaxWidth:			true,
-				minWidthForContainer:	450,
-				maxWidthForSmallSize:	550,
-				fixedWidth:				false,
-				defaultWidth:			478,
-				width:					478
+	var plots = {};
+	var created = {};
+	var plotSizes = {};
+	var trainingCharts = {
+		options: {
+			takeMaxWidth:			true,
+			minWidthForContainer:	450,
+			maxWidthForSmallSize:	550,
+			fixedWidth:				false,
+			defaultWidth:			478,
+			width:					478
+		}
+	};
+	var initHooks = {};
+	var options = {
+		defaultPlotOptions: {
+			showLegend:			true,
+			enableCrosshair:	true,
+			enableSelection:	true,
+			enablePanning:		false
+		},
+		waitClass:				'wait-img'
+	};
+	var defaultOptions = {
+		colors:					['#C61D17', '#E68617', '#8A1196', '#E6BE17', '#38219F'],
+		legend: {
+			backgroundColor:	'#000',
+			backgroundOpacity:	0,
+			margin:				[0, -25],
+			noColumns:			99
+		},
+		series: {
+			stack:				null,
+			points: {
+				radius:			1,
+				lineWidth:		3
+			},
+			lines: {
+				lineWidth:		1,
+				steps:			false
+			},
+			bars: {
+				lineWidth:		1,
+				barWidth:		0.6,
+				align:			'center',
+				fill:			0.9
+			},
+			curvedLines: {
+				active:			true,
+				apply:			false,
+				fit:			false,
+				curvePointFactor:	5
 			}
 		},
-		_initHooks = {},
-		_options = {
-			defaultPlotOptions: {
-				showLegend:			true,
-				enableCrosshair:	true,
-				enableSelection:	true,
-				enablePanning:		false
-			},
-			waitClass:				'wait-img'
+		yaxis: {
+			color:				'rgba(0,0,0,0.1)'
 		},
-		_defaultOptions = {
-			colors:					['#C61D17', '#E68617', '#8A1196', '#E6BE17', '#38219F'],
-			legend: {
-				backgroundColor:	'#000',
-				backgroundOpacity:	0,
-				margin:				[0, -25],
-				noColumns:			99
+		xaxis: {
+			color:				'rgba(0,0,0,0.1)',
+			monthNames:			['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		},
+		grid: {
+			color:				'#000',
+			backgroundColor:	'rgba(255,255,255,0.5)',
+			borderColor: {
+				top:			'transparent',
+				right:			'#999',
+				bottom:			'#999',
+				left:			'#999'
 			},
-			series: {
-				stack:				null,
-				points: {
-					radius:			1,
-					lineWidth:		3
-				},
-				lines: {
-					lineWidth:		1,
-					steps:			false
-				},
-				bars: {
-					lineWidth:		1,
-					barWidth:		0.6,
-					align:			'center',
-					fill:			0.9
-				},
-				curvedLines: {
-					active:			true,
-					apply:			false,
-					fit:			false,
-					curvePointFactor:	5
-				}
-			},
-			yaxis: {
-				color:				'rgba(0,0,0,0.1)'
-			},
-			xaxis: {
-				color:				'rgba(0,0,0,0.1)',
-				monthNames:			['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			},
-			grid: {
-				color:				'#000',
-				backgroundColor:	'rgba(255,255,255,0.5)',
-				borderColor: {
-					top:			'transparent',
-					right:			'#999',
-					bottom:			'#999',
-					left:			'#999'
-				},
-				minBorderMargin:	5,
-				borderWidth:		1,
-				labelMargin:		5,
-				axisMargin:			2,
-				margin: {
-					top:			30,
-					right:			0,
-					bottom:			0,
-					left:			0
-				}
-			},
-			canvas:					true,
-			font:					'Verdana 9px'
-		};
+			minBorderMargin:	5,
+			borderWidth:		1,
+			labelMargin:		5,
+			axisMargin:			2,
+			margin: {
+				top:			30,
+				right:			0,
+				bottom:			0,
+				left:			0
+			}
+		},
+		canvas:					true,
+		font:					'Verdana 9px'
+	};
 
 
 	// Private Methods
 
-	function _overwriteOptions(options) {
+	function overwriteOptions(options) {
 		options.legend.show = true;
 		options.legend.position = "nw";
 		options.legend.hideable = true;
@@ -2179,7 +2172,7 @@ var RunalyzePlot = (function($, parent){
 		}
 
 		options.hooks = {
-			draw: [_drawHook]
+			draw: [drawHook]
 		};
 
 		//options.zoom = { interactive: true };
@@ -2188,13 +2181,13 @@ var RunalyzePlot = (function($, parent){
 		return options;
 	}
 
-	function _drawHook(plot, canvascontext) {
+	function drawHook(plot, canvascontext) {
 		var key = plot.getPlaceholder().attr('id');
 
-		if (typeof _plots[key] !== "undefined") {
-			_repositionAnnotations(key);
+		if (typeof plots[key] !== "undefined") {
+			repositionAnnotations(key);
 
-			if (!_plots[key].showLegend)
+			if (!plots[key].showLegend)
 				$("#"+key+" .legend").hide();
 		} else {
 			var $legend = $("#"+key+" .legend");
@@ -2204,31 +2197,31 @@ var RunalyzePlot = (function($, parent){
 		}
 	}
 
-	function _resizeEachTrainingChart() {
+	function resizeEachTrainingChart() {
 		$("#statistics-inner .training-chart").each(function(){
-			if ($(this).width() != _trainingCharts.options.width) {
-				$(this).width(_trainingCharts.options.width);
-				_resize($(this).attr('id'));
+			if ($(this).width() != trainingCharts.options.width) {
+				$(this).width(trainingCharts.options.width);
+				resize($(this).attr('id'));
 			}
 		});
 	}
 
-	function _redraw(key) {
-		_plots[key].setupGrid();
-		_plots[key].draw();
+	function redraw(key) {
+		plots[key].setupGrid();
+		plots[key].draw();
 	}
 
-	function _resize(key) {
-		if (key in _plots && $("#"+key).is(":visible")) {
-			_plots[key].resize();
-			_plots[key].setupGrid();
-			_plots[key].draw();
-			_plotSizes[key] = $("#"+key).width();
+	function resize(key) {
+		if (key in plots && $("#"+key).is(":visible")) {
+			plots[key].resize();
+			plots[key].setupGrid();
+			plots[key].draw();
+			plotSizes[key] = $("#"+key).width();
 		}
 	}
 
-	function _finishAnnotations(key) {
-		if (_plots.hasOwnProperty(key)) {
+	function finishAnnotations(key) {
+		if (plots.hasOwnProperty(key)) {
 			var ann = self.getPlot(key).annotations;
 			for (i in ann) {
 				if (ann[i].x != null && ann[i].y != null) {
@@ -2236,13 +2229,13 @@ var RunalyzePlot = (function($, parent){
 
 					$('#'+ key).append('<div id="'+ann[i].id+'" class="annotation">'+ann[i].text+'</div>');
 
-					_positionAnnotation(key, ann[i]);
+					positionAnnotation(key, ann[i]);
 				}
 			}
 		}
 	}
 
-	function _positionAnnotation(key, ann) {
+	function positionAnnotation(key, ann) {
 		var $e = $('#'+ ann.id),
 			o = self.getPlot(key).pointOffset({'x':ann.x, 'y':ann.y});
 
@@ -2252,38 +2245,38 @@ var RunalyzePlot = (function($, parent){
 			$e.hide();
 	}
 
-	function _repositionAllAnnotations() {
-		for (key in _plots)
-			_repositionAnnotations(key);
+	function repositionAllAnnotations() {
+		for (key in plots)
+			repositionAnnotations(key);
 	}
 
-	function _repositionAnnotations(key) {
-		for (i in _plots[key].annotations)
-			_positionAnnotation(key, _plots[key].annotations[i]);
+	function repositionAnnotations(key) {
+		for (i in plots[key].annotations)
+			positionAnnotation(key, plots[key].annotations[i]);
 	}
 
 
 	// Public Methods
 
 	self.setOptions = function(opt) {
-		_options = $.extend({}, _options, opt);
+		options = $.extend({}, options, opt);
 
 		return self;
 	};
 
 	self.resize = function(key) {
-		_resize(key);
+		resize(key);
 	};
 
 	self.resizeAll = function() {
-		for (key in _plots)
-			_resize(key);
+		for (key in plots)
+			resize(key);
 
 		return self;
 	};
 
 	self.clear = function() {
-		for (key in _plots)
+		for (key in plots)
 			self.remove(key);
 
 		return self;
@@ -2293,76 +2286,76 @@ var RunalyzePlot = (function($, parent){
 		if ($(".training-row-plot:first").length == 0)
 			return;
 
-		_trainingCharts.options.width = $(".training-row-plot:first").width() - 24;
-		_resizeEachTrainingChart();
+		trainingCharts.options.width = $(".training-row-plot:first").width() - 24;
+		resizeEachTrainingChart();
 	};
 
 	self.addInitHook = function(key, hook) {
-		_initHooks[key] = hook;
+		initHooks[key] = hook;
 	};
 
 	// General methods for Plots
 
 	self.preparePlot = function(cssId, width, height, code) {
-		delete _created.cssId;
+		delete created.cssId;
 
 		$(document).off('createFlot.'+cssId).on('createFlot.'+cssId, function(){
 			var $e = $('#'+cssId);
 
-			if (!_created.hasOwnProperty(cssId) && $e.width() > 0 && $e.is(':visible') && !$e.hasClass('flot-hide')) {
-				_created.cssId = true;
+			if (!created.hasOwnProperty(cssId) && $e.width() > 0 && $e.is(':visible') && !$e.hasClass('flot-hide')) {
+				created.cssId = true;
 
 				$e.width(width).height(height);
 
 				code();
 
-				_finishAnnotations(cssId);
-				$e.removeClass( _options.waitClass );
+				finishAnnotations(cssId);
+				$e.removeClass( options.waitClass );
 
 				$(document).off('createFlot.'+cssId);
 			}
 		});
 	};
 
-	self.addPlot = function(cssId, data, options, plotOptions, annotations) {
+	self.addPlot = function(cssId, data, opt, plotOptions, annotations) {
 		var $e = $("#"+cssId);
 
-		if (cssId in _plots && $e.length == 0)
+		if (cssId in plots && $e.length == 0)
 			self.remove(cssId);
 
 		if ($e.hasClass('training-chart'))
-			$e.width(_trainingCharts.options.width);
+			$e.width(trainingCharts.options.width);
 
-		options = $.extend(true, {}, _defaultOptions, options);
-		options = _overwriteOptions(options);
+		opt = $.extend(true, {}, defaultOptions, opt);
+		opt = overwriteOptions(opt);
 
-		_plotSizes[cssId] = $e.width();
-		_plots[cssId] = $.plot(	$e, data, options );
-		_plots[cssId].options = $.extend(true, {}, _options.defaultPlotOptions, plotOptions);
-		_plots[cssId].showLegend = ($e.find('.legendLabel').length > 1);
+		plotSizes[cssId] = $e.width();
+		plots[cssId] = $.plot(	$e, data, opt );
+		plots[cssId].options = $.extend(true, {}, options.defaultPlotOptions, plotOptions);
+		plots[cssId].showLegend = ($e.find('.legendLabel').length > 1);
 
 		if (typeof annotations != "undefined")
-			_plots[cssId].annotations = annotations;
+			plots[cssId].annotations = annotations;
 		else
-			_plots[cssId].annotations = [];
+			plots[cssId].annotations = [];
 
 		//$e.children('.flot-overlay').dblclick(function(){ self.Saver.save(cssId); });
 
-		for (key in _initHooks)
-			_initHooks[key](cssId);
+		for (key in initHooks)
+			initHooks[key](cssId);
 
 		return self;
 	};
 
 	self.getPlot = function(key) {
-		return _plots[key];
+		return plots[key];
 	};
 
 	self.remove = function(key) {
-		if (key in _plots) {
-			_plots[key].shutdown();
+		if (key in plots) {
+			plots[key].shutdown();
 
-			delete _plots[key];
+			delete plots[key];
 		}
 
 		return self;
@@ -2372,7 +2365,7 @@ var RunalyzePlot = (function($, parent){
 
 	self.toggleLegend = function(key) {
 		$("#"+key+" .legend").toggle();
-		_plots[key].showLegend = !_plots[key].showLegend;
+		plots[key].showLegend = !plots[key].showLegend;
 	};
 
 	self.toggleSelection = function(key) {
@@ -2416,7 +2409,7 @@ var RunalyzePlot = (function($, parent){
 			});
 		}
 
-		_resize(key);
+		resize(key);
 	};
 
 	self.setFullscreenSize = function() {
@@ -2428,9 +2421,9 @@ var RunalyzePlot = (function($, parent){
 				height: $(window).height() - ($e.outerHeight(true) - $e.height())
 			});
 
-			_resize( $e.attr('id') );
+			resize( $e.attr('id') );
 		}
-	}
+	};
 
 	return self;
 })(jQuery, undefined);/*
@@ -2447,7 +2440,7 @@ RunalyzePlot.Options = (function($, parent){
 
 	// Private
 
-	var _options = {
+	var options = {
 		cssClass:		'flot-options',
 		cssClassOption:	'flot-option'
 	};
@@ -2455,26 +2448,26 @@ RunalyzePlot.Options = (function($, parent){
 
 	// Private Methods
 
-	function _container(key) {
-		return $("#"+ key + " ."+ _options.cssClass);
+	function container(key) {
+		return $("#"+ key + " ."+ options.cssClass);
 	}
 
-	function _addOptionsPanel(key) {
-		$("#"+key).append('<div class="'+ _options.cssClass +'"/>');
+	function addOptionsPanel(key) {
+		$("#"+key).append('<div class="'+ options.cssClass +'"/>');
 
-		_addFullscreenLink(key);
-		_addSaveLink(key);
-		_addLegendLink(key);
-		_addAnnotationsLink(key);
-		_addCrosshairLink(key);
-		_addSelectionLink(key);
-		//_addPanningLink(key);
-		//_addZoomingLinks(key);
+		addFullscreenLink(key);
+		addSaveLink(key);
+		addLegendLink(key);
+		addAnnotationsLink(key);
+		addCrosshairLink(key);
+		addSelectionLink(key);
+		//addPanningLink(key);
+		//addZoomingLinks(key);
 	}
 
-	function _addLink(key, cssClass, tooltip, callback, afterCallback) { // rel="tooltip"
-		var $elem = $('<div class="'+ _options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"/></div>')
-			.appendTo( _container(key) )
+	function addLink(key, cssClass, tooltip, callback, afterCallback) { // rel="tooltip"
+		var $elem = $('<div class="'+ options.cssClassOption +'"><i class="'+ cssClass +'" title="'+ tooltip +'"/></div>')
+			.appendTo( container(key) )
 			.click(function(){
 				callback(this);
 			});
@@ -2483,20 +2476,20 @@ RunalyzePlot.Options = (function($, parent){
 			afterCallback($elem, key);
 	}
 
-	function _addFullscreenLink(key) {
-		_addLink(key, 'fa fa-fw fa-expand', 'Fullscreen mode', function(){
+	function addFullscreenLink(key) {
+		addLink(key, 'fa fa-fw fa-expand', 'Fullscreen mode', function(){
 			parent.toggleFullscreen(key);
 		});
 	}
 
-	function _addSaveLink(key) {
-		_addLink(key, 'fa fa-fw fa-floppy-o', 'Save plot', function(){
+	function addSaveLink(key) {
+		addLink(key, 'fa fa-fw fa-floppy-o', 'Save plot', function(){
 			parent.Saver.save(key);
 		});
 	}
 
-	function _addLegendLink(key) {
-		_addLink(key, 'fa fa-fw fa-list-ul', 'Toggle legend', function(elem){
+	function addLegendLink(key) {
+		addLink(key, 'fa fa-fw fa-list-ul', 'Toggle legend', function(elem){
 			parent.toggleLegend(key);
 			$(elem).toggleClass('option-toggled');
 		}, function($elem){
@@ -2508,8 +2501,8 @@ RunalyzePlot.Options = (function($, parent){
 		});
 	}
 
-	function _addAnnotationsLink(key) {
-		_addLink(key, 'fa fa-fw fa-tag', 'Toggle annotations', function(elem){
+	function addAnnotationsLink(key) {
+		addLink(key, 'fa fa-fw fa-tag', 'Toggle annotations', function(elem){
 			$(elem).toggleClass('option-toggled');
 			$("#"+key+" .annotation").toggle();
 		}, function($elem){
@@ -2518,8 +2511,8 @@ RunalyzePlot.Options = (function($, parent){
 		});
 	}
 
-	function _addCrosshairLink(key) {
-		_addLink(key, 'fa fa-fw fa-crosshairs', 'Toggle crosshair', function(elem){
+	function addCrosshairLink(key) {
+		addLink(key, 'fa fa-fw fa-crosshairs', 'Toggle crosshair', function(elem){
 			$(elem).toggleClass('option-toggled');
 			parent.toggleCrosshair(key);
 		}, function($elem){
@@ -2530,8 +2523,8 @@ RunalyzePlot.Options = (function($, parent){
 		});
 	}
 
-	function _addSelectionLink(key) {
-		_addLink(key, 'fa fa-fw fa-crop', 'Toggle selection', function(elem){
+	function addSelectionLink(key) {
+		addLink(key, 'fa fa-fw fa-crop', 'Toggle selection', function(elem){
 			$(elem).toggleClass('option-toggled');
 			parent.toggleSelection(key);
 		}, function($elem){
@@ -2542,8 +2535,8 @@ RunalyzePlot.Options = (function($, parent){
 		});
 	}
 
-	function _addPanningLink(key) {
-		_addLink(key, 'fa fa-fw fa-arrows', 'Toggle panning', function(elem){
+	function addPanningLink(key) {
+		addLink(key, 'fa fa-fw fa-arrows', 'Toggle panning', function(elem){
 			$("#"+key+" .zooming-link").parent().toggle();
 			$(elem).toggleClass('option-toggled');
 			parent.togglePanning(key);
@@ -2553,15 +2546,15 @@ RunalyzePlot.Options = (function($, parent){
 		});
 	}
 
-	function _addZoomingLinks(key) {
-		_addLink(key, 'fa fa-fw fa-search-plus zooming-link', 'Zoom in', function(elem){
+	function addZoomingLinks(key) {
+		addLink(key, 'fa fa-fw fa-search-plus zooming-link', 'Zoom in', function(elem){
 			parent.getPlot(key).zoom();
 		}, function($elem){
 			if (!parent.getPlot(key).options.enablePanning)
 				$elem.hide();
 		});
 
-		_addLink(key, 'fa fa-fw fa-search-minus zooming-link', 'Zoom out', function(elem){
+		addLink(key, 'fa fa-fw fa-search-minus zooming-link', 'Zoom out', function(elem){
 			parent.getPlot(key).zoomOut();
 		}, function($elem){
 			if (!parent.getPlot(key).options.enablePanning)
@@ -2573,10 +2566,10 @@ RunalyzePlot.Options = (function($, parent){
 	// Public Methods
 
 	self.init = function(key) {
-		_addOptionsPanel(key);
+		addOptionsPanel(key);
 
 		return self;
-	}
+	};
 
 	parent.addInitHook('init-options', self.init);
 
@@ -2595,8 +2588,8 @@ RunalyzePlot.Saver = (function($, parent){
 
 	// Private
 
-	var _isReady = false,
-		_options = {
+	var isReady = false,
+		options = {
 			bgColor:				"#ffffff",
 			annotationBgColor:		'#000000',
 			annotationTextColor:	'#ffffff',
@@ -2608,19 +2601,19 @@ RunalyzePlot.Saver = (function($, parent){
 
 	// Private Methods
 
-	function _init() {
-		if (!_isReady) {
+	function init() {
+		if (!isReady) {
 			$('body').append(
-				'<form style="display:none;" action="'+ _options.callback +'" method="post" target="save-png-frame" id="save-png-form">'
-					+'<input type="hidden" name="filename" value="'+ _options.filename +'">'
+				'<form style="display:none;" action="'+ options.callback +'" method="post" target="save-png-frame" id="save-png-form">'
+					+'<input type="hidden" name="filename" value="'+ options.filename +'">'
 					+'<input type="hidden" name="image" id="save-png-input" value="">'
 				+'</form><iframe style="display:none;" name="save-png-frame" src="" width="1" height="1"></iframe>');
 
-			_isReady = true;
+			isReady = true;
 		}
 	}
 
-	function _redraw(obj, flag) {
+	function redraw(obj, flag) {
 		obj.getOptions().grid.canvasText.show = flag;
 
 		obj.setupGrid();
@@ -2635,10 +2628,10 @@ RunalyzePlot.Saver = (function($, parent){
 			plot = $("#"+key+" canvas.flot-base")[0],
 			canvas = document.createElement('canvas');
 
-		_init();
+		init();
 
 		if (plot.getContext) {
-			_redraw(obj, true);
+			redraw(obj, true);
 
 			var img = canvas.getContext('2d'),
 				h = plot.height,
@@ -2649,7 +2642,7 @@ RunalyzePlot.Saver = (function($, parent){
 			img.height = h;
 			img.width = w;
 
-			img.fillStyle = _options.bgColor;
+			img.fillStyle = options.bgColor;
 			img.fillRect(0, 0, w, h);
 			img.drawImage(plot, 0, 0);
 
@@ -2659,10 +2652,10 @@ RunalyzePlot.Saver = (function($, parent){
 					ah  = $(this).height(),
 					text = $(this).text();
 
-				img.fillStyle = _options.annotationBgColor;
+				img.fillStyle = options.annotationBgColor;
 				img.fillRect(pos.left + 2, pos.top + 2, aw, ah);
 
-				img.fillStyle = _options.annotationTextColor;
+				img.fillStyle = options.annotationTextColor;
 				img.textAlign = "left";
 				img.fillText(text, pos.left + 2, pos.top + ah - 1);
 			});
@@ -2670,11 +2663,11 @@ RunalyzePlot.Saver = (function($, parent){
 			$("#save-png-input").val( canvas.toDataURL("image/png") );
 			$("#save-png-form").submit();
 
-			_redraw(obj, false);
+			redraw(obj, false);
 		} else {
-			window.alert( _options.errorMessage );
+			window.alert( options.errorMessage );
 		}
-	}
+	};
 
 	return self;
 })(jQuery, RunalyzePlot);/*
@@ -2702,10 +2695,6 @@ RunalyzePlot.Events = (function($, parent){
 
 	function tooltip(key) {
 		return $('#'+ key +' .'+ options.tooltipClass);
-	}
-
-	function tooltipInner(key) {
-		return $('#'+ key +' .'+ options.tooltipInnerClass);
 	}
 
 	function addTooltip(key) {
@@ -2915,7 +2904,7 @@ RunalyzePlot.Events = (function($, parent){
 		bindSelection(key);
 
 		return self;
-	}
+	};
 
 	parent.addInitHook('init-events', self.init);
 
@@ -3107,9 +3096,10 @@ Runalyze.Log = (function($, Parent){
 	// Private
 
 	var id = 'error-toolbar';
+	var iterator = 0;
+
 	var $table = null;
 	var $container = null;
-	var iterator = 0;
 
 
 	// Private Methods
@@ -3256,7 +3246,7 @@ Runalyze.Overlay = (function($, Parent){
 
 	var options = {
 		selectorContainer:	'#ajax',
-		selectorSingle:		'#overlay',
+		selectorBackground:	'#overlay',
 		selectorAll:		'#overlay, #ajax, #ajax-navigation',
 		selectorOuter:		'#ajax-outer',
 		classBig:			'big-window',
@@ -3266,7 +3256,7 @@ Runalyze.Overlay = (function($, Parent){
 	};
 
 	var $container;
-	var $overlay;
+	var $background;
 	var $allElements;
 	var $outer;
 
@@ -3275,7 +3265,7 @@ Runalyze.Overlay = (function($, Parent){
 
 	function initObjects() {
 		$container = $( options.selectorContainer );
-		$overlay = $( options.selectorSingle );
+		$background = $( options.selectorBackground );
 		$allElements = $( options.selectorAll );
 		$outer = $( options.selectorOuter );
 	}
@@ -3294,10 +3284,8 @@ Runalyze.Overlay = (function($, Parent){
 
 		addBodyClass();
 
+		$("#ajax").css('margin-top', '50px');
 		$("#ajax, #overlay").show().fadeTo( Parent.Options.fadeSpeed(), 1);
-
-		// Is that needed?
-		//_initForOverlay();
 	}
 
 	function addObjects() {
@@ -3310,7 +3298,7 @@ Runalyze.Overlay = (function($, Parent){
 	self.init = function() {
 		if (!Parent.hasContainer()) {
 			wrapEverything();
-		} else {
+		} else if (!Parent.isReady()) {
 			addObjects();
 		}
 
@@ -3337,40 +3325,32 @@ Runalyze.Overlay = (function($, Parent){
 		return $container;
 	};
 
-	self.object = function() {
-		return $overlay;
-	};
-
 	self.load = function(url, settings, data) {
 		addBodyClass();
 
+		if (!$background.is(':visible')) {
+			$container.removeClass( options.classSmall ).removeClass( options.classBig );
+		}
+
 		if (settings && settings.size) {
 			if (settings.size == 'small') {
+				$container.removeClass( options.classBig );
 				$container.addClass( options.classSmall );
 			} else if (settings.size == 'big') {
+				$container.removeClass( options.classSmall );
 				$container.addClass( options.classBig );
 			}
 		}
 
-		$overlay.show().fadeTo( Parent.Options.fadeSpeed(), 1 );
+		$background.show().fadeTo( Parent.Options.fadeSpeed(), 1 );
 		$container.addClass( Parent.Options.loadingClass() ).show().fadeTo( Parent.Options.fadeSpeed(), 1 );
 
 		$container.loadDiv(url, data, settings);
-		/*$container.load(url, function(res, status, xhr){
-			if (status == 'error') {
-				$container.html('<p class="error">There was an error: '+ xhr.status +' '+ xhr.statusText +'</p>');
-			} else {
-				//_initForOvleray();
-			}
-
-			addCloseButton();
-			$container.removeClass( Parent.Options.loadingClass() );
-		});*/
 	};
 
 	self.addCloseButton = function() {
 		if ($('#close').length == 0) {
-			$overlay.prepend('<div id="close" class="black-rounded-icon" onclick="Runalyze.closeOverlay()"><i class="fa fa-fw fa-times"></i></div>');
+			$container.prepend('<div id="close" class="black-rounded-icon" onclick="Runalyze.Overlay.close()"><i class="fa fa-fw fa-times"></i></div>');
 		}
 	};
 
@@ -3385,11 +3365,11 @@ Runalyze.Overlay = (function($, Parent){
 	};
 
 	self.toggleFullscreen = function() {
-		$overlay.toggleClass( options.classFullscreen );
+		$container.toggleClass( options.classFullscreen );
 	};
 
 	self.removeClasses = function() {
-		$overlay.removeClass( options.classBig ).removeClass( options.classSmall ).removeClass( options.classFullscreen );
+		$container.removeClass( options.classBig ).removeClass( options.classSmall ).removeClass( options.classFullscreen );
 	};
 
 	Parent.addInitHook('init-overlay', self.init);
@@ -3660,10 +3640,6 @@ Runalyze.Training = (function($, Parent){
 
 	// Private Methods
 
-	function url(id) {
-		return options.url + id.toString();
-	}
-
 
 	// Public Methods
 
@@ -3676,7 +3652,7 @@ Runalyze.Training = (function($, Parent){
 	};
 
 	self.load = function(id, sharedUrl) {
-		Parent.Statistics.loadUrl( sharedUrl || url(id) );
+		Parent.Statistics.load( sharedUrl || self.url(id) );
 
 		self.removeHighlighting();
 		self.addHighlighting(id);
@@ -3689,6 +3665,10 @@ Runalyze.Training = (function($, Parent){
 
 	self.isUrl = function(urlToCheck) {
 		return (urlToCheck.lastIndexOf( options.url, 0 ) === 0);
+	};
+
+	self.url = function(id) {
+		return options.url + id.toString();
 	};
 
 	self.removeHighlighting = function() {
@@ -3708,11 +3688,11 @@ Runalyze.Training = (function($, Parent){
 	};
 
 	self.loadSavedTcxs = function(activityIds) {
-		Parent.Overlay().container().loadDiv($("form#training").attr("action"), {'activityIds': activityIds, 'data': 'FINISHED'});
+		Parent.Overlay.container().loadDiv($("form#training").attr("action"), {'activityIds': activityIds, 'data': 'FINISHED'});
 	};
 
 	self.loadXML = function(xml) {
-		Parent.Overlay().container().loadDiv($("form#training").attr("action"), {'data': xml});
+		Parent.Overlay.container().loadDiv($("form#training").attr("action"), {'data': xml});
 	};
 
 	Parent.addLoadHook('init-training-links', self.initLinks);
@@ -3799,10 +3779,10 @@ Runalyze.Feature = (function($, Parent){
 				$newDiv = $("#"+ $(this).attr("href").split('#').pop());
 
 			$target.addClass('loading');
-			$oldDiv.fadeOut(Runalyze.options.fadeSpeed, function(){
-				$newDiv.fadeTo(Runalyze.options.fadeSpeed, 1, function(){
-					$target.hide().removeClass('loading').fadeIn();
-					$(document).trigger("createFlot");
+			$oldDiv.fadeOut( Parent.Options.fadeSpeed(), function(){
+				$newDiv.fadeTo( Parent.Options.fadeSpeed(), 1, function(){
+					$target.hide().removeClass( Parent.Options.loadingClass() ).fadeIn();
+					Parent.createFlot();
 					RunalyzePlot.resizeAll();
 				});
 			});
