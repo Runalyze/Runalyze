@@ -74,6 +74,7 @@ class Frontend {
 		date_default_timezone_set('Europe/Berlin');
 
 		$this->initLanguage();
+                $this->initCache();
 		$this->setAutoloader();
 		$this->initErrorHandling();
 		$this->initDatabase();
@@ -96,6 +97,15 @@ class Frontend {
 	private function initLanguage() {
 		require_once FRONTEND_PATH.'/system/class.Language.php';
 		new Language();
+	}
+        
+        /**
+	 * Setup Language
+	 */
+	private function initCache() {
+                require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
+		require_once FRONTEND_PATH.'/system/class.Cache.php';
+		new Cache();
 	}
 
 	/**
@@ -176,7 +186,7 @@ class Frontend {
 	 */
 	protected function initDebugMode() {
 		if (!defined('RUNALYZE_DEBUG'))
-			define('RUNALYZE_DEBUG', false);
+			define('RUNALYZE_DEBUG', true);
 
 		if (RUNALYZE_DEBUG)
 			error_reporting(E_ALL);

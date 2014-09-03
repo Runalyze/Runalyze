@@ -1,5 +1,4 @@
 <?php
-include_once FRONTEND_PATH.'/lib/phpfastcache/phpfastcache.php';
 /**
  * Class: Cache - Wrapcacher for PHPFastCache
  * @author Michael Pohl
@@ -18,27 +17,37 @@ class Cache {
 	 */
 	public $footer_sent = false;
         
-        private $cache;
+        public static $cache;
 
 	/**
 	 * Prohibit creating an object from outside
 	 */
-	private function __construct() {
-            phpFastCache::setup("storage","auto");
+	public function __construct() {
+            phpFastCache::setup("storage", "files");
+            self::$cache = new phpFastCache();
         }
 
 	/**
 	 * Get Cache
 	 */
-	static public function get() {
-            
+	static public function set($keyword, $data, $time, $nousercache = 0) {
+            if($nousercache == 0) { 
+                $key = $keyword.SessionAccountHandler::getId();
+                self::$cache->set($key, $data, $time);
+            } else {
+                self::$cache->set($keyword,$data, $time);
+            }
         }
         
         /**
          * Set Cache
          */
-        static public function set() {
-            
+        static public function get($keyword, $nousercache = 0) {
+           if($nousercache == 0) { 
+                return self::$cache->get($keyword.SessionAccountHandler::getId());
+            } else {
+                return self::$cache->get($keyword);
+            }            
         }
 
 

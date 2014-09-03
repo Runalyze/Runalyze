@@ -178,17 +178,19 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function runCalculations() {
             //SELECT MIN(s), `distance` FROM `runalyze_training` WHERE `typeid`="21" AND distance in ('3', '5', '10') GROUP BY distance;
-		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
+	//	$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
                 $pbs = Running::PersonalBests($this->Distances, true);
+                
                 foreach ($this->Distances as $km) {
-			$PB         = $pbs[$km];
+			$PB         = $pbs[$km]['s'];
 			$Prognosis  = $this->PrognosisObject->inSeconds( $km );
-                            
-			if ($PB > 0) {
+                        $PBdate = $pbs[$km]->time;   
+
+			/*if ($PB > 0) {
                                 
 				$DateQuery->execute(array('distance' => $km));
 				$PBdate = $DateQuery->fetch();
-			}
+			}*/
 
 			$this->Prognoses[] = array(
 				'distance'	=> Running::Km($km, 1, $km <= 3),

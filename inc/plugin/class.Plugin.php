@@ -309,16 +309,14 @@ abstract class Plugin {
 		if ($this->id() == PluginInstaller::ID) {
 			return;
 		}
-                /////
-                require_once FRONTEND_PATH.'..\lib\phpfastcache\phpfastcache.php';
-                phpFastCache::setup("storage","auto");
 
-                $plugindata = __c()->get("plugindata_".SessionAccountHandler::getId());
+
+                $plugindata = Cache::get("plugindata");
 
                 if($plugindata == NULL) {
                     $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
                     $datamap = array_map('reset',$data);
-                    __c()->set("plugindata_".SessionAccountHandler::getId(),$datamap, '20');
+                    Cache::set("plugindata",$datamap, '20');
                     $dat = $datamap[$this->id()];
                 } else {
                     $dat = $plugindata[$this->id()];
