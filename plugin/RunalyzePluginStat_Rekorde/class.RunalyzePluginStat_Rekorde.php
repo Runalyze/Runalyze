@@ -74,6 +74,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		foreach ($this->rekorde as $rekord) {
 			echo '<table class="fullwidth zebra-style">';
 			echo '<thead><tr><th colspan="11" class="l">'.$rekord['name'].'</th></tr></thead>';
+			echo '<tbody>';
 
 			$output = false;
 			$sports = DB::getInstance()->query($rekord['sportquery'])->fetchAll();
@@ -86,7 +87,6 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 
 				if (!empty($data)) {
 					$output = true;
-					echo '<tbody>';
 					echo '<tr class="r">';
 					echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
 	

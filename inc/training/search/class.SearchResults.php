@@ -328,13 +328,35 @@ class SearchResults {
 	 * Display header
 	 */
 	private function displayHeader() {
-		if ($this->page != 1)
-			echo '<span class="link" onclick="Runalyze.searchPageBack();">'.Icon::$BACK.'</span>';
+		if ($this->page != 1) {
+			echo '<span id="search-back" class="link">'.Icon::$BACK.'</span>';
+		}
 
 		echo ' '.sprintf( __('Found %s activities'), $this->totalNumberOfTrainings).' ';
 
-		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings)
-			echo '<span class="link" onclick="Runalyze.searchPageNext();">'.Icon::$NEXT.'</span>';
+		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings) {
+			echo '<span id="search-next" class="link">'.Icon::$NEXT.'</span>';
+		}
+
+		$this->connectPagination();
+	}
+
+	/**
+	 * Connect pagination links
+	 */
+	private function connectPagination() {
+		echo Ajax::wrapJSforDocumentReady(
+			'$("#search-back").click(function(){'.
+				'var $i = $("#search input[name=\'page\']");'.
+				'$i.val( parseInt($i.val()) - 1 );'.
+				'$("#search").submit();'.
+			'});'.
+			'$("#search-next").click(function(){'.
+				'var $i = $("#search input[name=\'page\']");'.
+				'$i.val( parseInt($i.val()) + 1 );'.
+				'$("#search").submit();'.
+			'});'
+		);
 	}
 
 	/**

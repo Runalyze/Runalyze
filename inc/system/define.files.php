@@ -17,13 +17,20 @@ $JS_FILES = array(
 
 	'lib/jquery.chosen.min.js',
 
-	'lib/runalyze.lib.log.js',
+	'lib/runalyze.lib.js',
 	'lib/runalyze.lib.plot.js',
 	'lib/runalyze.lib.plot.options.js',
 	'lib/runalyze.lib.plot.saver.js',
 	'lib/runalyze.lib.plot.events.js',
 	'lib/runalyze.lib.tablesorter.js',
-	'lib/runalyze.lib.js',
+	'lib/runalyze.lib.log.js',
+	'lib/runalyze.lib.options.js',
+	'lib/runalyze.lib.overlay.js',
+	'lib/runalyze.lib.panels.js',
+	'lib/runalyze.lib.databrowser.js',
+	'lib/runalyze.lib.statistics.js',
+	'lib/runalyze.lib.training.js',
+	'lib/runalyze.lib.feature.js',
 
 	'lib/flot-0.8.1/base64.js',
 

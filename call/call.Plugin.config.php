@@ -11,7 +11,7 @@ $Factory = new PluginFactory();
 if (isset($_GET['key'])) {
 	$Factory->uninstallPlugin( filter_input(INPUT_GET, 'key') );
 
-	echo Ajax::wrapJSforDocumentReady('Runalyze.loadOverlay("call/window.config.php");');
+	echo Ajax::wrapJSforDocumentReady('Runalyze.Overlay.load("call/window.config.php");');
 } elseif (isset($_GET['id']) && is_numeric($_GET['id'])) {
 	$Plugin = $Factory->newInstanceFor( $_GET['id'] );
 	$Plugin->displayConfigWindow();

@@ -75,7 +75,6 @@ class Ajax {
 	 */
 	static public function initJSlibrary() {
 		$Options = array();
-		$Options['useTooltip'] = true;
 		$Options['sharedView'] = Request::isOnSharedPage();
 
 		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');
@@ -136,19 +135,19 @@ class Ajax {
 	 * @return string
 	 */
 	static function trainingLink($id, $name, $closeOverlay = false, $classes = '', $htmlID = '') {
-		return '<a '.(!empty($htmlID) ? 'id="'.$htmlID.'" ' : '').'class="training '.$classes.'" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.closeOverlay()"' : '').'>'.$name.'</a>';
+		return '<a '.(!empty($htmlID) ? 'id="'.$htmlID.'" ' : '').'class="training '.$classes.'" href="call/call.Training.display.php?id='.$id.'" rel="'.$id.'"'.($closeOverlay ? ' onclick="Runalyze.Overlay.close()"' : '').'>'.$name.'</a>';
 	}
 
 	/**
 	 * Get onclick-string for loading training
-	 * @param int $training_id ID of the training
+	 * @param int $id ID of the training
 	 * @return string
 	 */
 	static function trainingLinkAsOnclick($id) {
 		if (FrontendShared::$IS_SHOWN)
-			return 'onclick="Runalyze.loadTraining('.$id.', \''.SharedLinker::getUrlFor($id).'\')"';
+			return 'onclick="Runalyze.Training.load('.$id.', \''.SharedLinker::getUrlFor($id).'\')"';
 
-		return 'onclick="Runalyze.loadTraining('.$id.')"';
+		return 'onclick="Runalyze.Training.load('.$id.')"';
 	}
 
 	/**
@@ -385,7 +384,7 @@ class Ajax {
 	 * @return string
 	 */
 	public static function closeOverlay() {
-		return self::wrapJS('Runalyze.closeOverlay();');
+		return self::wrapJS('Runalyze.Overlay.close();');
 	}
 
 	/**

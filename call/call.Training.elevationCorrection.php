@@ -15,7 +15,7 @@ if ($Training->elevationWasCorrected()) {
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
-	echo Ajax::wrapJS('if($("#ajax").is(":visible"))Runalyze.loadOverlay(\''.$Training->Linker()->editUrl().'\')');
+	echo Ajax::wrapJS('if($("#ajax").is(":visible"))Runalyze.Overlay.load(\''.$Training->Linker()->editUrl().'\')');
 } else {
 	echo __('Elevation data could not be retrieved.');
 }

@@ -1390,6 +1390,9 @@ tr.space-line.zebra-corrector td {
   width: 300px;
   box-shadow: inset 0 -20px 15px -10px #ffffff;
 }
+.training-row-plot {
+  overflow: hidden;
+}
 .training-row-plot .flot {
   background: transparent;
 }
@@ -2221,7 +2224,7 @@ label:active .checkbox-icon {
   content: '\f066';
 }
 body > .datepicker {
-  z-index: 100;
+  z-index: 3005;
   padding: 5px;
   font-size: 0.9em;
   background-color: #fff;

@@ -126,7 +126,7 @@ class TrainingView {
 	 * Display reload link
 	 */
 	protected function displayReloadLink() {
-		echo '<div class="hover-icons"><span class="link" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span></div>';
+		echo '<div class="hover-icons"><span class="link" onclick="Runalyze.Statistics.reload();">'.Icon::$REFRESH_SMALL.'</span></div>';
 	}
 
 	/**
