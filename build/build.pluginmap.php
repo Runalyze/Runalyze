@@ -2,33 +2,36 @@
 /**
  * CLI-Script to generate pluginmap
  */
+if (!defined('RUNALYZE_BUILD'))
+	die('You\'re not allowed to do that.');
+
 /**
  * Output php file containing pluginmap as <?php $PLUGINMAP = array(...); ?>
  * @var string
  */
-$OUTPUT_FILE = dirname(__FILE__).'/pluginmap.php';
+$OUTPUT_FILE = dirname(__FILE__).'/../inc/plugin/pluginmap.php';
 
 /**
  * Root directory
  * @var string
  */
-$ROOT_DIR = dirname(__FILE__).'/../../plugin/';
+$ROOT_DIR = dirname(__FILE__).'/../plugin/';
 
 /**
  * Generate pluginmap
  */
 $counter  = 0;
 $pluginmap = "<?php\n\$PLUGINMAP = array(\n"; scanDirectoryForPlugins($ROOT_DIR, $ROOT_DIR, $pluginmap, $counter); $pluginmap .= ");";
-writeFile($OUTPUT_FILE, $pluginmap);
+writeFileForPluginMap($OUTPUT_FILE, $pluginmap);
 
-echo $counter.' classes found and written to '.$OUTPUT_FILE."\n";
+echo $counter.' plugins found and written to '.substr($OUTPUT_FILE, strlen($ROOT_DIR)-8)."\n";
 
 /**
  * Write a file
  * @param string $fileName relative to FRONTEND_PATH
  * @param string $fileContent 
  */
-function writeFile($fileName, $fileContent) {
+function writeFileForPluginMap($fileName, $fileContent) {
 	$file = fopen($fileName, "w");
 
 	if ($file !== false) {

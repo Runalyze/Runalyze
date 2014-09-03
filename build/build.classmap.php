@@ -2,33 +2,36 @@
 /**
  * CLI-Script to generate classmap
  */
+if (!defined('RUNALYZE_BUILD'))
+	die('You\'re not allowed to do that.');
+
 /**
  * Output php file containing classmap as <?php $CLASSMAP = array(...); ?>
  * @var string
  */
-$OUTPUT_FILE = dirname(__FILE__).'/classmap.php';
+$OUTPUT_FILE = dirname(__FILE__).'/../inc/system/classmap.php';
 
 /**
  * Root directory
  * @var string
  */
-$ROOT_DIR = dirname(__FILE__).'/../';
+$ROOT_DIR = dirname(__FILE__).'/../inc/';
 
 /**
  * Generate classmap
  */
 $counter  = 0;
 $classmap = "<?php\n\$CLASSMAP = array(\n"; scanDirectory($ROOT_DIR, $classmap, $counter); $classmap .= ");";
-writeFile($OUTPUT_FILE, $classmap);
+writeFileForClassmap($OUTPUT_FILE, $classmap);
 
-echo $counter.' classes found and written to '.$OUTPUT_FILE."\n";
+echo $counter.' classes found and written to '.substr($OUTPUT_FILE, strlen($ROOT_DIR)-5)."\n";
 
 /**
  * Write a file
  * @param string $fileName relative to FRONTEND_PATH
  * @param string $fileContent 
  */
-function writeFile($fileName, $fileContent) {
+function writeFileForClassmap($fileName, $fileContent) {
 	$file = fopen($fileName, "w");
 
 	if ($file !== false) {
