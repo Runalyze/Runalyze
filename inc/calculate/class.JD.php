@@ -437,7 +437,7 @@ class JD {
 	 */
 	public static function recalculateVDOTcorrector() {
 		$Statement = DB::getInstance()->prepare('
-			SELECT MAX(`factor`)
+			SELECT MAX(`factor`) as `factor`
 			FROM (
 				SELECT `vdot_by_time`/`vdot` AS `factor` 
 				FROM `'.PREFIX.'training` 
