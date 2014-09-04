@@ -129,9 +129,10 @@ class Running {
             //TODO TimeToString Option
                 $distances = "'".implode("','", $dist)."'";
                 $pb = DB::getInstance()->query('SELECT `distance`,MIN(s) AS s,`time` FROM `runalyze_training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND distance in ('.$distances.') GROUP BY distance')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
-                Cache::set('pb', $pb, '1');
+                Cache::set('pb', $pb, '10');
             }
-                return array_map('reset',$pb);
+                //return array_map('reset',$pb);
+                return $pb;
 	}      
 
 	/**

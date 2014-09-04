@@ -1,21 +1,16 @@
 <?php
 /**
- * Class: Cache - Wrapcacher for PHPFastCache
+ * Class: Cache - Wrapper for PHPFastCache
  * @author Michael Pohl
  * @package Runalyze\System
  */
 class Cache {
-	/**
-	 * Force log file to be written
-	 * @var boolean
-	 */
-	private static $FORCE_LOG_FILE = false;
 
 	/**
-	 * Boolean flag: Has the footer been sent?
+	 * Boolean flag: Cache enabled?
 	 * @var bool
 	 */
-	public $footer_sent = false;
+	public $footer_sent = true;
         
         public static $cache;
 
@@ -44,9 +39,9 @@ class Cache {
          */
         static public function get($keyword, $nousercache = 0) {
            if($nousercache == 0) { 
-                return self::$cache->get($keyword.SessionAccountHandler::getId());
-            } else {
-                return self::$cache->get($keyword);
+               return self::$cache->get($keyword.SessionAccountHandler::getId());
+               } else {
+               return self::$cache->get($keyword);
             }            
         }
 

@@ -52,6 +52,16 @@ class AccountHandler {
 		DB::getInstance()->startAddingAccountID();
 	}
 
+        /**
+         * Cache Account Data from user
+         */
+        static private function cacheAccountData() {
+            $accountdata = Cache::get('account');
+            if($accountdata == NULL) {
+                $accountdata =  DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account`')->fetch();
+                Cache::set('account', $accountdata, '3600');
+            }
+        }
 	/**
 	 * Get account-data from database
 	 * @param string $username
@@ -71,6 +81,7 @@ class AccountHandler {
 	 * @return mixed
 	 */
 	static public function getDataForId($id) {
+                
 		DB::getInstance()->stopAddingAccountID();
 		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
 		DB::getInstance()->startAddingAccountID();

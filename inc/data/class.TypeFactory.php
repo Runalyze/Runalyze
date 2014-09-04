@@ -61,7 +61,11 @@ class TypeFactory {
 	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
-		$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
+                $types = Cache::get('types');
+                if($types == NULL) {
+                    $types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
+                    Cache::set('types', $types, '3600');
+                }
 		foreach ($types as $data)
 			self::$AllTypes[(string)$data['id']] = $data;
 	}
@@ -72,6 +76,7 @@ class TypeFactory {
 	 * @return string
 	 */
 	static private function getOrder() {
+            //TODO Order cache array!!
 		switch (CONF_TRAINING_SORT_TYPES) {
 			case 'alpha':
 				return 'ORDER BY `name` ASC';

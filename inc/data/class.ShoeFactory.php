@@ -45,7 +45,11 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
+                $shoes = Cache::get('shoes');
+                if($shoes == NULL) {
+                    $shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
+                    Cache::set('shoes', $shoes, '3600');
+                }
 		foreach ($shoes as $shoe)
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
 	}
@@ -63,6 +67,7 @@ class ShoeFactory {
 	 * @return string
 	 */
 	static private function getOrder() {
+            //TODO Sort function for cached data
 		switch (CONF_TRAINING_SORT_SHOES) {
 			case 'alpha':
 				return 'ORDER BY `name` ASC';

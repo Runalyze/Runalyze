@@ -277,11 +277,17 @@ class SessionAccountHandler {
 	 */
 	static public function getNumberOfUserOnline() {
 		DB::getInstance()->stopAddingAccountID();
-		$result = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60))->fetch();
-		DB::getInstance()->startAddingAccountID();
-
-		if ($result !== false && isset($result['num']))
-			return $result['num'];
+                $UserOnline = Cache::get('Useronline', 1);
+                if($UserOnline == NULL) {
+                    $result = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60))->fetch();
+                    DB::getInstance()->startAddingAccountID();
+                    if ($result !== false && isset($result['num'])) {
+                            Cache::set('Useronline', $result['num'], '60', 1);
+                            return $result['num'];
+                    }
+                } else {
+                    return $UserOnline;
+                }
 
 		return 0;
 	}
