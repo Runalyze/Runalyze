@@ -8,7 +8,6 @@
  * @author Hannes Christiansen
  * @package Runalyze\Plugin
  */
-
 class PluginFactory {
 	/**
 	 * Array with all keys
@@ -34,25 +33,17 @@ class PluginFactory {
 	 * @return Plugin
 	 */
 	public function newInstance($Pluginkey) {
-
-            
-            $pluginkeys = Cache::get("pluginkeys");
-            
-            if($pluginkeys == NULL) {
-		$data = DB::getInstance()->query('SELECT `key`, `id` FROM `'.PREFIX.'plugin`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
-                $datamap = array_map('reset',$data);
-                Cache::set("pluginkeys",$datamap, '5000');
-                return (new $Pluginkey($datamap[$Pluginkey]['id']));
-            } else {
-                 return (new $Pluginkey($pluginkeys[$Pluginkey]['id']));
+            $data = Cache::get('pluginkey');
+            if($data == NULL) {
+		$data = DB::getInstance()->query('SELECT `key`, `id`,`type`, `active` FROM `'.PREFIX.'plugin`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+                $data = array_map('reset',$data);
+                Cache::set('pluginkey', $data, '3600');
             }
-            //TODO RuntimeException
-            /*
-		if ($data === false) {
+		if ($data[$Pluginkey] === false) {
 			throw new RuntimeException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
-              */
-
+                //print_r($data);
+		return (new $Pluginkey($data[$Pluginkey]['id']));
 	}
 
 	/**
