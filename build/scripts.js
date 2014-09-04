@@ -6027,7 +6027,9 @@ var RunalyzeLeaflet = (function($){
 
 			layer: "OpenStreetMap"
 		},
-		_mapOptions = {},
+		_mapOptions = {
+			scrollWheelZoom: false
+		},
 		_controls = {
 			layers: null, // Will be set later
 			scale: L.control.scale({
