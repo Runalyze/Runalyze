@@ -40,7 +40,7 @@
 				<MaxTime>103.942</MaxTime>
 				<MinTime>1823.962</MinTime>
 			</Temperature>
-			<Distance>12058</Distance>
+			<Distance>100</Distance>
 			<LogItemCount>5188</LogItemCount>
 			<Energy>3144286.8</Energy>
 			<TimeToFirstFix>297</TimeToFirstFix>

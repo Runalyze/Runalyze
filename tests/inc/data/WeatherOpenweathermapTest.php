@@ -43,7 +43,7 @@ class WeatherOpenweathermapTest extends PHPUnit_Framework_TestCase {
 				"sys":{"message":0.0221,"country":"DE","sunrise":1401334144,"sunset":1401391431},
 				"weather":[{"id":803,"main":"Clouds","description":"broken clouds","icon":"04d"}],
 				"base":"cmc stations",
-				"main":{"temp":17.17,"pressure":1013,"temp_min":16.11,"temp_max":18.2,"humidity":59},
+				"main":{"temp":290,"pressure":1013,"temp_min":16.11,"temp_max":18.2,"humidity":59},
 				"wind":{"speed":1.76,"deg":313.5},
 				"clouds":{"all":76},
 				"dt":1401371226,
