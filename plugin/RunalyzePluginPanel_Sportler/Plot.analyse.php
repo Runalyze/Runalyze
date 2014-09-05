@@ -7,14 +7,26 @@
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
-
+/*
 if ($Plugin->Configuration()->value('plot_timerange') > 0) {
 	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' ORDER BY `time` DESC';
 } else {
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
+}*/
+
+$Data        = array_reverse(UserData::getFullArray());
+
+if ($Plugin->Configuration()->value('plot_timerange') > 0) {
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' ORDER BY `time` DESC';
+} else {
+    usort($Data, "cmp_by_optionNumber");
+	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
 }
 
-$Data     = array_reverse( DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
+function cmp_by_optionNumber($a, $b) {
+  return $a["time"] - $b["time"];
+}
+
 $Adiposes = array();
 $Water    = array();
 $Muscles  = array();

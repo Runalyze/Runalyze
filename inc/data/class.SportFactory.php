@@ -48,11 +48,10 @@ class SportFactory {
 	 * @return array
 	 */
 	static public function DataFor($id) {
-		$Sports = self::AllSports();
-
-		if (isset($Sports[$id]))
-			return $Sports[$id];
-
+                self::initAllSports();
+                if(isset(self::$AllSports[$id]))
+                    return self::$AllSports[$id];
+                
 		return self::defaultArray();
 	}
 
@@ -117,7 +116,7 @@ class SportFactory {
          */
         static private function cacheAllSports() {
             $sports = Cache::get('sport');
-                if($sports == NULL) {
+                if(is_null($sports)) {
                     $sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
                     Cache::set('sport', $sports, '3600');
                 }
@@ -149,6 +148,7 @@ class SportFactory {
 	static public function reInitAllSports() {
 		self::$AllSports = null;
 		self::initAllSports();
+                Cache::delete('sport');
 	}
 
 	/**

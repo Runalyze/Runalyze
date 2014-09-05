@@ -123,9 +123,13 @@ class SessionAccountHandler {
 	 */
 	private function tryToUseSession() {
 		if (isset($_SESSION['accountid'])) {
-			DB::getInstance()->stopAddingAccountID();
-			$Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.(int)$_SESSION['accountid'].' LIMIT 1')->fetch();
-			DB::getInstance()->startAddingAccountID();
+                        $Account = Cache::get('account'.$_SESSION['accountid'],1);
+                        if(is_null($Account)) {
+                            DB::getInstance()->stopAddingAccountID();
+                            $Account = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`='.(int)$_SESSION['accountid'].' LIMIT 1')->fetch();
+                            DB::getInstance()->startAddingAccountID();
+                            Cache::set('account'.$_SESSION['accountid'],$Account, '1800',1);
+                        }
 
 			if ($Account['session_id'] == session_id()) {
 				$this->setAccount($Account);

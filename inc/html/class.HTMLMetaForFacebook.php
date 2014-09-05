@@ -51,7 +51,11 @@ class HTMLMetaForFacebook {
 	 * Set training
 	 */
 	private function setTraining() {
-		$data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
+                $data = Cache::get('training'.SharedLinker::getTrainingId(),1);
+                if(is_null($data)) {
+                    $data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
+                    Cache::set('training'.SharedLinker::getTrainingId(), $data, '3600', 1);
+                }
 
 		if ($data)
 			$this->Training = new TrainingObject( $data );

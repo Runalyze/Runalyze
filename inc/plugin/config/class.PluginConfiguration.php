@@ -51,7 +51,7 @@ class PluginConfiguration {
 	 */
 	final public function catchValuesFromDatabase() {
             $ResultFromDB = Cache::get('PluginConfig');
-            if($ResultFromDB == NULL) {
+            if(is_null($ResultFromDB)) {
                 $ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
                 Cache::set('PluginConfig', $ResultFromDB, '60');
             } 

@@ -42,7 +42,7 @@ class ClothesFactory {
          */
         static private function cacheAllClothes() {
             $clothes = Cache::get('clothes');
-                if($clothes == NULL) {
+                if(is_null($clothes)) {
                     $clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
                     Cache::set('clothes', $clothes, '3600');
                 }

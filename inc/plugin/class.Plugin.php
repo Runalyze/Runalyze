@@ -301,7 +301,18 @@ abstract class Plugin {
 
 		return true;
 	}
-
+        /**
+         * Cache all from Table plugin for a user
+         */
+        static private function cachePluginData() {
+            $data = Cache::get('plugins');
+            if(is_null($data)) {
+                $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
+                Cache::set('plugins', $data, '3600');
+            }
+            return $data;
+        }
+        
 	/**
 	 * Initialize all variables
 	 */
@@ -310,19 +321,12 @@ abstract class Plugin {
 			return;
 		}
 
-
-                $plugindata = Cache::get("plugindata");
-
-                if($plugindata == NULL) {
-                    $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
-                    $datamap = array_map('reset',$data);
-                    Cache::set("plugindata",$datamap, '20');
-                    $dat = $datamap[$this->id()];
-                } else {
-                    $dat = $plugindata[$this->id()];
+                
+                $plugindata = self::cachePluginData();
+                foreach($plugindata as $plugin) {
+                    if($plugin['id'] == $this->id())
+                        $dat = $plugin;
                 }
-                /////
-		//$dat = DB::getInstance()->fetchByID('plugin', $this->id());
 
 		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];

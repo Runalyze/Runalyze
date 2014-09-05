@@ -390,7 +390,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		$this->sport = DB::getInstance()->fetchByID('sport', $this->sportid);
+                $this->sport = SportFactory::DataFor($this->sportid);
 
 		if ($this->year != -1) {
 			$this->num = 12;

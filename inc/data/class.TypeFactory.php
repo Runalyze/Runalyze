@@ -62,7 +62,7 @@ class TypeFactory {
 	 */
 	static private function initAllTypes() {
                 $types = Cache::get('types');
-                if($types == NULL) {
+                if(is_null($types)) {
                     $types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
                     Cache::set('types', $types, '3600');
                 }

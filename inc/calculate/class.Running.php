@@ -124,14 +124,13 @@ class Running {
 	 * @return array
 	 */
 	public static function PersonalBests($dist, $return_time = false) {
-            $pb = Cache::get('pb');
-            if($pb == NULL) {
+            $pb = Cache::get('personalbest');
+            if(is_null($pb)) {
             //TODO TimeToString Option
                 $distances = "'".implode("','", $dist)."'";
                 $pb = DB::getInstance()->query('SELECT `distance`,MIN(s) AS s,`time` FROM `runalyze_training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND distance in ('.$distances.') GROUP BY distance')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
-                Cache::set('pb', $pb, '10');
+                Cache::set('personalbest', $pb, '3600');
             }
-                //return array_map('reset',$pb);
                 return $pb;
 	}      
 

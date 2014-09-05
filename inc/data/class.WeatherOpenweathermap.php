@@ -58,7 +58,7 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	 */
 	protected function tryToCatchJSON() {
                 $json = Cache::get('Openweather'.$this->getLocation());
-                if($json == NULL) {
+                if(is_null($json)) {
                     $json = Filesystem::getExternUrlContent(self::$URL.'?q='.$this->getLocation().'&units=metric');
                     Cache::set('Openweather'.$this->getLocation(), $json, '3600', 1);
                 }

@@ -210,15 +210,17 @@ class Trimp {
 		}
 
 		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
-
-		$Data = DB::getInstance()->query('
-			SELECT
-				SUM(`trimp`) as `sum`
-			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_ATL_DAYS*DAY_IN_S).' AND '.$time.'
-			LIMIT 1
-		')->fetch();
-
+                $Data = Cache::get('TrimpATL'.$time);
+                if(is_null($Data)) {
+                    $Data = DB::getInstance()->query('
+                            SELECT
+                                    SUM(`trimp`) as `sum`
+                            FROM `'.PREFIX.'training`
+                            WHERE `time` BETWEEN '.($time - CONF_ATL_DAYS*DAY_IN_S).' AND '.$time.'
+                            LIMIT 1
+                    ')->fetch();
+                    $Data = Cache::get('TrimpATL'.$time, $Data, '3600');
+                }
 		$ATL = round($Data['sum']/CONF_ATL_DAYS);
 
 		if ($ATL > self::maxATL())
@@ -239,14 +241,17 @@ class Trimp {
 		}
 
 		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
-
-		$Data = DB::getInstance()->query('
-			SELECT
-				SUM(`trimp`) as `sum`
-			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_CTL_DAYS*DAY_IN_S).' AND '.$time.'
-			LIMIT 1
-		')->fetch();
+                $Data = Cache::get('TrimpCTL'.$time);
+                if(is_null($Data)) {
+                    $Data = DB::getInstance()->query('
+                            SELECT
+                                    SUM(`trimp`) as `sum`
+                            FROM `'.PREFIX.'training`
+                            WHERE `time` BETWEEN '.($time - CONF_CTL_DAYS*DAY_IN_S).' AND '.$time.'
+                            LIMIT 1
+                    ')->fetch();
+                    $Data = Cache::get('TrimpCTL'.$time, $Data, '3600');
+                }
 
 		$CTL = round($Data['sum']/CONF_CTL_DAYS);
 
@@ -294,16 +299,20 @@ class Trimp {
 		$Trimp   = array_fill(0, $end_i, 0);
 		$maxATL  = 1;
 		$maxCTL  = 1;
-
-		$Data    = DB::getInstance()->query('
-			SELECT
-				YEAR(FROM_UNIXTIME(`time`)) as `y`,
-				DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
-				SUM(`trimp`) as `trimp`
-			FROM `'.PREFIX.'training`
-			GROUP BY `y`, `d`
-			ORDER BY `y` ASC, `d` ASC
-		')->fetchAll();
+                
+                $Data = Cache::get('TrimpMaxValues');
+                if(is_null($Data)) {
+                    $Data    = DB::getInstance()->query('
+                            SELECT
+                                    YEAR(FROM_UNIXTIME(`time`)) as `y`,
+                                    DAYOFYEAR(FROM_UNIXTIME(`time`)) as `d`,
+                                    SUM(`trimp`) as `trimp`
+                            FROM `'.PREFIX.'training`
+                            GROUP BY `y`, `d`
+                            ORDER BY `y` ASC, `d` ASC
+                    ')->fetchAll();
+                    $Cache::set('TrimpMaxValues', $Data, '3600');
+                }
 		
 		foreach ($Data as $dat) {
 			$atl           = 0;

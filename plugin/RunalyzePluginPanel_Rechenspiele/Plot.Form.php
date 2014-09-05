@@ -36,18 +36,20 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
 	// - VDOT: AVG(`vdot`) for CONF_VDOT_DAYS
-
-	$Data = DB::getInstance()->query('
-		SELECT
-			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
-			SUM(`trimp`) as `trimp`,
-			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
-			SUM('.JD::mysqlVDOTsumTime().') as `s`
-		FROM `'.PREFIX.'training`
-		WHERE
-			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
-		GROUP BY `index`')->fetchAll();
-
+        $Data = Cache::get('calculationsPlotData');
+        if(is_null($Data)) {
+            $Data = DB::getInstance()->query('
+                    SELECT
+                            DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
+                            SUM(`trimp`) as `trimp`,
+                            SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
+                            SUM('.JD::mysqlVDOTsumTime().') as `s`
+                    FROM `'.PREFIX.'training`
+                    WHERE
+                            DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
+                    GROUP BY `index`')->fetchAll();
+                    Cache::set('calculationsPlotData', $Data, '300');
+        }
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
 

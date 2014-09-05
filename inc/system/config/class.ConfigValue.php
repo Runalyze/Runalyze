@@ -86,10 +86,17 @@ abstract class ConfigValue {
 		else
 			$ID = SessionAccountHandler::getId();
 
-		if ($ID == 0 && SharedLinker::isOnSharedPage())
+		if ($ID == 0 && SharedLinker::isOnSharedPage()) {
 			$ID = SharedLinker::getUserId();
+                }
+                
 
-		$data = DB::getInstance()->query('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.(int)$ID.'"')->fetchAll();
+                $data = Cache::get('AccountConf'.$ID,1);
+                if(is_null($data)) {
+                    $data = DB::getInstance()->query('SELECT `key`,`value` FROM '.PREFIX.'conf WHERE accountid="'.(int)$ID.'"')->fetchAll();
+                        Cache::set('AccountConf'.$ID, $data, '3600',1);
+                }
+
 		foreach ($data as $confArray)
 			self::$DatabaseValues[$confArray['key']] = $confArray['value'];
 	}

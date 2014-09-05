@@ -44,6 +44,33 @@ class Cache {
                return self::$cache->get($keyword);
             }            
         }
-
-
+        
+        /**
+         * Delete from cache
+         */
+        static public function delete($keyword, $nousercache = 0) {
+            if($nousercache == 0) { 
+               return self::$cache->delete($keyword.SessionAccountHandler::getId());
+               } else {
+               return self::$cache->delete($keyword);
+            }  
+        }
+        
+        /**
+         * Clean up all cache
+         */
+        static public function clean() {
+            self::$cache->clean();
+        }
+        
+        /**
+         * is existing?
+         */
+        static public function is($keyword, $nousercache = 0) {
+            if($nousercache == 0) { 
+               return self::$cache->isExisting($keyword.SessionAccountHandler::getId());
+               } else {
+               return self::$cache->isExisting($keyword);
+            }  
+        }
 }

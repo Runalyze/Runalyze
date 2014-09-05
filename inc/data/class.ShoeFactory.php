@@ -46,7 +46,7 @@ class ShoeFactory {
 	static private function initAllShoes() {
 		self::$AllShoes = array();
                 $shoes = Cache::get('shoes');
-                if($shoes == NULL) {
+                if(is_null($shoes)) {
                     $shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
                     Cache::set('shoes', $shoes, '3600');
                 }
