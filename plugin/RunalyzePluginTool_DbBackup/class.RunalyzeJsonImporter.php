@@ -346,6 +346,9 @@ class RunalyzeJsonImporter {
 	 */
 	private function correctConfigSettings() {
 		if ($this->overwriteConfig) {
+			// TODO
+			// Configuration::loadAll();
+			// ConfigurationValueSelectDB::getAllValues();
 			$ConfigValues = ConfigValueSelectDb::getAllValues();
 			foreach ($ConfigValues as $key => $Options) {
 				$Options['table'] = PREFIX.$Options['table'];
