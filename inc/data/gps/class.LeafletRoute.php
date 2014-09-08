@@ -48,6 +48,14 @@ class LeafletRoute {
 	}
 
 	/**
+	 * ID
+	 * @return int
+	 */
+	final public function id() {
+		return $this->id;
+	}
+
+	/**
 	 * Get JS
 	 * @return string
 	 */

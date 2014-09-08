@@ -122,6 +122,7 @@ class LeafletTrainingRoute extends LeafletRoute {
 			return;
 
 		$Infos = array();
+		$Infos['km'] = (float)$this->GPS->getDistance();
 		$Infos[__('Distance')] = Running::Km($this->GPS->getDistance(), 2);
 
 		if ($this->GPS->hasTimeData())

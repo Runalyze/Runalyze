@@ -2707,6 +2707,7 @@ RunalyzePlot.Events = (function($, parent){
 
 	function bindTooltip(key) {
 		$('#'+key).bind('plothover', onHoverTooltip(key));
+		$('#'+key).bind('mouseleave', unsetMapMarker);
 	}
 
 	function bindSelection(key) {
@@ -2784,7 +2785,7 @@ RunalyzePlot.Events = (function($, parent){
 					if (axes.xaxis.options.mode == "time" && axisRange/1000 > 86400*2) {
 						x = (new Date(coords.x)).toLocaleDateString();
 					} else {
-						x = axes.xaxis.tickFormatter(Math.round(coords.x*100)/100, axes.xaxis)
+						x = axes.xaxis.tickFormatter(Math.round(coords.x*100)/100, axes.xaxis);
 					}
 
 					content = content + line(
@@ -2822,8 +2823,20 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
+			if ($("#"+key).is(".training-chart"))
+				moveMapMarker(coords.x);
+
 			show(key, pos, content, posClass);
 		};
+	}
+
+	function moveMapMarker(pos) {
+		if (RunalyzeLeaflet)
+			RunalyzeLeaflet.Routes.movePosMarker(pos);
+	}
+
+	function unsetMapMarker() {
+		RunalyzeLeaflet.Routes.unsetPosMarker();
 	}
 
 	function onSelectionTooltip(key) {
@@ -6016,62 +6029,62 @@ var RunalyzeLeaflet = (function($){
 
 	// Private
 
-	var _id = '',
-		_ready = false,
-		_object = null,
-		_options = {
-			visible: {
-				layers: true,
-				scale: true
-			},
+	var id = '';
+	var ready = false;
+	var object = null;
+	var options = {
+		visible: {
+			layers: true,
+			scale: true
+		},
 
-			layer: "OpenStreetMap"
-		},
-		_mapOptions = {
-			scrollWheelZoom: false
-		},
-		_controls = {
-			layers: null, // Will be set later
-			scale: L.control.scale({
-				imperial: false
-			})
-		};
+		layer: "OpenStreetMap"
+	};
+	var mapOptions = {
+		scrollWheelZoom: false
+	};
+	var controls = {
+		layers: null, // Will be set later
+		scale: L.control.scale({
+			imperial: false
+		})
+	};
 
 
 	// Private Methods
 
-	function _initLayers() {
+	function initLayers() {
 		self.Layers = self.getNewLayers();
-		_controls.layers = L.control.layers( self.Layers );
+		controls.layers = L.control.layers( self.Layers );
 	}
 
-	function _setMapOptions(opt) {
-		_mapOptions = $.extend({}, _mapOptions, opt);
+	function setMapOptions(opt) {
+		mapOptions = $.extend({}, mapOptions, opt);
 	}
 
-	function _initControls() {
-		if (_options.visible.layers && _controls.layers) {
-			_controls.layers.addTo( self.map() );
+	function initControls() {
+		if (options.visible.layers && controls.layers) {
+			controls.layers.addTo( self.map() );
 		}
 
-		if (_options.visible.scale && _controls.scale)
-			_controls.scale.addTo( self.map() );
+		if (options.visible.scale && controls.scale)
+			controls.scale.addTo( self.map() );
 
 		$('<a class="leaflet-control-zoom-full" href="javascript:RunalyzeLeaflet.toggleFullscreen();" title="Fullscreen"><i class="fa fa-expand"></i></a>').insertAfter('.leaflet-control-zoom-in');
 
-		_object.on('baselayerchange', function(e){
+		object.on('baselayerchange', function(e){
 			self.setDefaultLayer(e.name);
 
-			if (_ready)
+			if (ready)
 				Runalyze.changeConfig('TRAINING_LEAFLET_LAYER', e.name);
 		});
 	}
 
-	function _initTooltip() {
-		_object.on('mouseover', function(){
-			$('<div id="polyline-info" class="tooltip right" style="display:none;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>').appendTo($('#'+_id));
+	function initTooltip() {
+		object.on('mouseover', function(){
+			$('<div id="polyline-info" class="tooltip right" style="display:none;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>').appendTo($('#'+id));
 		});
-		_object.on('mouseout', function(){
+		object.on('mouseout', function(){
 			$('#polyline-info').remove();
 		});
 	}
@@ -6079,58 +6092,58 @@ var RunalyzeLeaflet = (function($){
 
 	// Public Methods
 
-	self.init = function(id, mapOptions) {
-		if (_object !== null) {
+	self.init = function(newID, mapOptions) {
+		if (object !== null) {
 			self.Routes.removeAllRoutes();
-			_object.remove();
+			object.remove();
 		}
 
-		_ready = false;
-		_initLayers();
-		_setMapOptions(mapOptions);
-		_id = id;
-		_object = L.map(_id, _mapOptions).addLayer( self.Layers[_options.layer] );
+		ready = false;
+		initLayers();
+		setMapOptions(mapOptions);
+		id = newID;
+		object = L.map(id, mapOptions).addLayer( self.Layers[options.layer] );
 
-		_initControls();
-		_initTooltip();
-		_ready = true;
+		initControls();
+		initTooltip();
+		ready = true;
 
 		return self;
 	};
 
 	self.map = function() {
-		return _object;
+		return object;
 	};
 
 	self.id = function() {
-		return _id;
+		return id;
 	};
 
 	self.setDefaultLayer = function(layer) {
-		_options.layer = layer;
+		options.layer = layer;
 
 		return self;
 	};
 
 	self.toggleFullscreen = function() {
-		if ($('#'+_id).hasClass('fullscreen'))
+		if ($('#'+id).hasClass('fullscreen'))
 			self.exitFullscreen();
 		else
 			self.enterFullscreen();
 	};
 
 	self.enterFullscreen = function() {
-		$('#'+_id).addClass('fullscreen');
+		$('#'+id).addClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").removeClass('fa-expand').addClass('fa-compress');
 
-		_object._onResize();
+		object.onResize();
 	};
 
 	self.exitFullscreen = function() {
-		$('#'+_id).removeClass('fullscreen');
+		$('#'+id).removeClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").addClass('fa-expand').removeClass('fa-compress');
 
-		_object._onResize();
+		object.onResize();
 	};
 
 	return self;
@@ -6232,121 +6245,129 @@ RunalyzeLeaflet.getNewLayers = function(){
  * 
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
  */
-RunalyzeLeaflet.Routes = (function($, parent){
+RunalyzeLeaflet.Routes = (function($, parent, Math){
 
 	// Public
 
-	var self = {};
+	var self = {
+		posmarker: 0,
+		routeid: 0
+	};
 
 
 	// Private
 
-	var _epsilon = 0.0003,
-		_mouseover = false,
-		_mousemovebounded = false,
-		_minZoomForMarker = 13,
-		_tooltip = '#polyline-info .tooltip-inner',
-		_objects = {},
-		_options = {
-			defaults: {
-				color: '#ff8000',
-				weight: 3,
-				opacity: 1
-			},
+	var positionMarker;
+	var epsilon = 0.0003;
+	var epsilonKM = 0.1;
+	var mouseover = false;
+	var mousemovebounded = false;
+	var minZoomForMarker = 13;
+	var tooltip = '#polyline-info .tooltip-inner';
 
-			hover: {
-				weight: 8,
-				opacity: 0.7
-			}
-		};
+	var objects = {};
+
+	var options = {
+		defaults: {
+			color: '#ff8000',
+			weight: 3,
+			opacity: 1
+		},
+
+		hover: {
+			weight: 8,
+			opacity: 0.7
+		}
+	};
 
 
 	// Private Methods
 
-	function _pushMarker(id, marker) {
-		_objects[id].marker.push(marker);
+	function pushMarker(id, marker) {
+		objects[id].marker.push(marker);
 
 		marker.on('mouseover', function(e){
-			$(_tooltip).html( e.target.options.tooltip ).parent().show();
-			_positionTooltip(e);
-			$(_tooltip).parent().addClass('in');
+			$(tooltip).html( e.target.options.tooltip ).parent().show();
+			positionTooltip(e);
+			$(tooltip).parent().addClass('in');
 		}).on('mouseout', function(e){
-			$(_tooltip).parent().removeClass('in').hide();
+			$(tooltip).parent().removeClass('in').hide();
 		});
 	}
 
-	function _decideMarkerVisibility() {
-		for (var id in _objects) {
-			if (parent.map().getZoom() >= _minZoomForMarker)
-				parent.map().addLayer( _objects[id].markergroup );
+	function decideMarkerVisibility() {
+		for (var id in objects) {
+			if (parent.map().getZoom() >= minZoomForMarker)
+				parent.map().addLayer( objects[id].markergroup );
 			else
-				parent.map().removeLayer( _objects[id].markergroup );
+				parent.map().removeLayer( objects[id].markergroup );
 		}
 	}
 
-	function _bindRouteForHover(id) {
-		_objects[id].polyline.on('mouseover', _onOver, {id: id});
-		_objects[id].polyline.on('mouseout', _onOut, {id: id});
+	function bindRouteForHover(id) {
+		objects[id].polyline.on('mouseover', onOver, {id: id});
+		objects[id].polyline.on('mouseout', onOut, {id: id});
 	}
 
-	function _bindMouseMove() {
-		if (!_mousemovebounded)
-			parent.map().on('mousemove', _onMove);
+	function bindMouseMove() {
+		if (!mousemovebounded)
+			parent.map().on('mousemove', onMove);
 
-		_mousemovebounded = true;
+		mousemovebounded = true;
 	}
 
-	function _onMove(e) {
-		if (_mouseover !== false) {
-			_setTooltipText( _getSegmentsInfoAt(e.latlng) );
-			_positionTooltip(e);
+	function onMove(e) {
+		if (mouseover !== false) {
+			setTooltipText( getSegmentsInfoAt(e.latlng) );
+			positionTooltip(e);
 		}
 	}
 
-	function _onOver(e) {
-		if (_objects[this.id].segmentsInfo.length) {
-			$(_tooltip).parent().show();
+	function onOver(e) {
+		if (objects[this.id].segmentsInfo.length) {
+			$(tooltip).parent().show();
 
-			_mouseover = this.id;
-			_setTooltipText( _getSegmentsInfoAt(e.latlng) );
-			_positionTooltip(e);
+			mouseover = this.id;
+			setTooltipText( getSegmentsInfoAt(e.latlng) );
+			positionTooltip(e);
+			//setPositionMarker( e.latlng );
 
-			$(_tooltip).parent().addClass('in');
+			$(tooltip).parent().addClass('in');
 		}
 
-		_objects[this.id].polyline.setStyle({
-			weight: _options.hover.weight,
-			opacity: _options.hover.opacity
+		objects[this.id].polyline.setStyle({
+			weight: options.hover.weight,
+			opacity: options.hover.opacity
 		});
 	}
 
-	function _onOut(e) {
-		_mouseover = false;
+	function onOut(e) {
+		mouseover = false;
 
-		$(_tooltip).parent().removeClass('in').hide();
+		$(tooltip).parent().removeClass('in').hide();
 
-		_objects[this.id].polyline.setStyle({
-			weight: _objects[this.id].options.weight,
-			opacity: _objects[this.id].options.opacity
+		objects[this.id].polyline.setStyle({
+			weight: objects[this.id].options.weight,
+			opacity: objects[this.id].options.opacity
 		});
 	}
 
-	function _getSegmentsInfoAt(latlng) {
-		var id = _mouseover, i = 0;
+	function getSegmentsInfoAt(latlng) {
+		var id = mouseover, i = 0;
 
-		for (var s = 0, numSegments = _objects[id].segments.length; s < numSegments; s++) {
-			for (var p = 0, numPoints = _objects[id].segments[s].length; p < numPoints; p++) {
-				var point = _objects[id].segments[s][p];
-				if (Math.abs(point[0] - latlng.lat) < _epsilon && Math.abs(point[1] - latlng.lng) < _epsilon) 
-					return _objects[id].segmentsInfo[s][p];
+		for (var s = 0, numSegments = objects[id].segments.length; s < numSegments; s++) {
+			for (var p = 0, numPoints = objects[id].segments[s].length; p < numPoints; p++) {
+				var point = objects[id].segments[s][p];
+				if (Math.abs(point[0] - latlng.lat) < epsilon && Math.abs(point[1] - latlng.lng) < epsilon) 
+					return objects[id].segmentsInfo[s][p];
 			}
 		}
 
 		return {};
 	}
 
-	function _positionTooltip(e) {
-		var $e = $(_tooltip).parent(), height = $e.outerHeight(),
+	function positionTooltip(e) {
+		var $e = $(tooltip).parent(), height = $e.outerHeight(),
 			layerX = e.originalEvent.clientX - $('#'+parent.id()).offset().left + window.pageXOffset,
 			layerY = e.originalEvent.clientY - $('#'+parent.id()).offset().top + window.pageYOffset;
 
@@ -6356,14 +6377,24 @@ RunalyzeLeaflet.Routes = (function($, parent){
 		});
 	}
 
-	function _setTooltipText(info) {
+	function setTooltipText(info) {
 		var text = '';
 
 		for (var label in info)
 			text = text + '<strong>' + label + ':</strong> ' + info[label] + '<br>';
 
 		if (text != '')
-			$(_tooltip).html( text.substr(0, text.length - 4) );
+			$(tooltip).html( text.substr(0, text.length - 4) );
+	}
+
+	function setPositionMarker(pos) {
+		if (!positionMarker) {
+			positionMarker = L.marker(pos, {
+				icon: self.posIcon()
+			}).addTo(parent.map());
+		} else {
+			positionMarker.setLatLng(pos);
+		}
 	}
 
 
@@ -6378,79 +6409,79 @@ RunalyzeLeaflet.Routes = (function($, parent){
 		object.visible = object.visible !== false;
 		object.hoverable = object.hoverable !== false;
 		object.autofit = object.autofit !== false;
-		object.options = $.extend( _options.defaults, object.options );
+		object.options = $.extend( options.defaults, object.options );
 		object.polyline = L.multiPolyline( object.segments, object.options );
 
-		_objects[id] = object;
+		objects[id] = object;
 
 		for (var i in object.markertopush)
-			_pushMarker(id, object.markertopush[i]);
+			pushMarker(id, object.markertopush[i]);
 
 		if (object.visible) {
 			if (object.hoverable)
-				_bindRouteForHover(id);
+				bindRouteForHover(id);
 
-			_objects[id].markergroup = L.layerGroup( _objects[id].marker );
+			objects[id].markergroup = L.layerGroup( objects[id].marker );
 
 			self.showRoute(id);
 		}
 
 		if (!this.mousemovebounded)
-			_bindMouseMove();
+			bindMouseMove();
 
-		parent.map().on('zoomend', _decideMarkerVisibility);
+		parent.map().on('zoomend', decideMarkerVisibility);
 	};
 
 	self.fitTo = function(id) {
-		parent.map().fitBounds( _objects[id].polyline.getBounds(), { animate: false } );
+		parent.map().fitBounds( objects[id].polyline.getBounds(), { animate: false } );
 
-		_decideMarkerVisibility();
+		decideMarkerVisibility();
 	};
 
 	self.showRoute = function(id) {
-		parent.map().addLayer( _objects[id].polyline );
+		parent.map().addLayer( objects[id].polyline );
 
-		if (parent.map().getZoom() >= _minZoomForMarker)
-			parent.map().addLayer( _objects[id].markergroup );
+		if (parent.map().getZoom() >= minZoomForMarker)
+			parent.map().addLayer( objects[id].markergroup );
 
-		if (_objects[id].autofit)
+		if (objects[id].autofit)
 			self.fitTo(id);
 
-		_objects[id].visible = true;
+		objects[id].visible = true;
 	};
 
 	self.hideRoute = function(id) {
-		parent.map().removeLayer( _objects[id].polyline );
-		parent.map().removeLayer( _objects[id].markergroup );
-		_objects[id].visible = false;
+		parent.map().removeLayer( objects[id].polyline );
+		parent.map().removeLayer( objects[id].markergroup );
+		objects[id].visible = false;
 	};
 
 	self.toggleRoute = function(id) {
-		if (_objects[id].visible)
+		if (objects[id].visible)
 			self.hideRoute(id);
 		else
 			self.showRoute(id);
 	};
 
 	self.showAllRoutes = function() {
-		for (var id in _objects)
+		for (var id in objects)
 			self.showRoute(id);
 	};
 
 	self.hideAllRoutes = function() {
-		for (var id in _objects)
+		for (var id in objects)
 			self.hideRoute(id);
 	};
 
 	self.toggleAllRoutes = function() {
-		for (var id in _objects)
+		for (var id in objects)
 			self.toggleRoute(id);
 	};
 
 	self.removeAllRoutes = function() {
 		self.hideAllRoutes();
 
-		_objects = {};
+		objects = {};
 	};
 
 	self.segmentFromStrings = function(lats, lngs, sep) {
@@ -6478,5 +6509,51 @@ RunalyzeLeaflet.Routes = (function($, parent){
 		return L.divIcon({className: 'polyline-marker polyline-marker-end', iconSize: [6, 6], iconAnchor: [6, 6]});
 	};
 
+    self.posIcon = function() {
+        return L.divIcon({className: 'polyline-marker polyline-marker-pos', iconSize: [6, 6], iconAnchor: [6, 6]});
+    };
+
+	self.movePosMarker = function(km) {
+		var upper;
+		var index;
+		var lower;
+		var pos = [0,0];
+		var counter = 0;
+		var id = self.routeid;
+
+		for (var s = 0; s < objects[id].segmentsInfo.length; ++s) {
+			var segmentLength = objects[id].segmentsInfo[s].length;
+
+			if (objects[id].segmentsInfo[s][0]['km'] < km && km < objects[id].segmentsInfo[s][segmentLength-1]['km']) {
+				counter = 0;
+				lower = 0;
+				index = 0;
+				upper = segmentLength;
+
+				while (counter < 20 && Math.abs(objects[id].segmentsInfo[s][index]['km'] - km) > epsilonKM) {
+					counter++;
+
+					index = Math.floor( (upper+lower)/2 );
+
+					if (objects[id].segmentsInfo[s][index]['km'] > km) {
+						upper = index;
+					} else {
+						lower = index;
+					}
+				}
+
+				if (Math.abs(objects[id].segmentsInfo[s][index]['km'] - km) <= epsilonKM) {
+					pos = objects[id].segments[s][index];
+				}
+			}
+		}
+
+		setPositionMarker(pos);
+	};
+
+	self.unsetPosMarker = function() {
+		setPositionMarker([0,0]);
+	};
+
 	return self;
-}(jQuery, RunalyzeLeaflet));
+}(jQuery, RunalyzeLeaflet, Math));
