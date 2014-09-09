@@ -50,7 +50,7 @@ class ParserSLFSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->GeneralInformation->StartDate) );
-		$this->TrainingObject->setSportid( CONF_MAINSPORT );
+		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 	}
 

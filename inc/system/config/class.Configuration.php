@@ -26,7 +26,7 @@ class Configuration {
 	 * User ID
 	 * @return int
 	 */
-	private function userID() {
+	static private function userID() {
 		if (defined('RUNALYZE_TEST'))
 			return null;
 
@@ -46,12 +46,12 @@ class Configuration {
 	/**
 	 * Get category
 	 * @param string $categoryName
-	 * @return ConfigurationCategory
+	 * @return ConfigurationGeneral
 	 */
 	static private function get($categoryName) {
-		if (!isset(self::$Categories)) {
+		if (!isset(self::$Categories[$categoryName])) {
 			$Category = new $categoryName();
-			$Category->setUserID($this->userID());
+			$Category->setUserID(self::userID());
 
 			self::$Categories[$categoryName] = $Category;
 		}

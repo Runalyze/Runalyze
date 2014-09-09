@@ -33,6 +33,8 @@ class ConfigurationValueSelectDBTest extends PHPUnit_Framework_TestCase {
 	 * @todo   Implement testAllValues().
 	 */
 	public function testAllValues() {
+		ConfigurationValueSelectDB::resetValues();
+
 		$this->object->set(1);
 		$this->assertEquals( 1, $this->object->value() );
 		$this->assertEquals( array('key' => array('value' => 1, 'table' => 'table')), ConfigurationValueSelectDB::allValues() );

@@ -94,7 +94,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorA() {
-		return UserData::isMale() ? self::$FACTOR_MALE_A : self::$FACTOR_FEMALE_A;
+		return Configuration::General()->gender()->isMale() ? self::$FACTOR_MALE_A : self::$FACTOR_FEMALE_A;
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorB() {
-		return UserData::isMale() ? self::$FACTOR_MALE_B : self::$FACTOR_FEMALE_B;
+		return Configuration::General()->gender()->isMale() ? self::$FACTOR_MALE_B : self::$FACTOR_FEMALE_B;
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Trimp {
 	 * @return float in minutes
 	 */
 	static public function minutesForTrimp($trimpToReach) {
-		$Sport = new Sport(CONF_MAINSPORT);
+		$Sport = new Sport(Configuration::General()->mainSport());
 
 		return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
 	}

@@ -15,7 +15,7 @@ $trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Running:
 $titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $timeFormat  = '%M:%S';
 
-$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
+$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		if (!$Plugin->isFunCompetition($competition['id'])) {

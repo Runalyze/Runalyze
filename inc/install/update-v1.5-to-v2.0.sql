@@ -34,3 +34,7 @@ ALTER TABLE  `runalyze_plugin` CHANGE  `type`  `type` ENUM(  'panel',  'stat',  
 ALTER TABLE  `runalyze_conf` CHANGE  `value`  `value` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
 
 ALTER TABLE  `runalyze_training` CHANGE  `temperature`  `temperature` TINYINT NULL DEFAULT NULL;
+
+/* Rev ? - Refactor configuration */
+ALTER TABLE  `runalyze_conf` ADD  `category` VARCHAR( 32 ) NOT NULL AFTER  `id`;
+UPDATE `runalyze_conf` SET `category`="general" WHERE `key`="GENDER" OR `key`="PULS_MODE" OR `key`="MAINSPORT" OR `key`="RUNNINGSPORT" OR `key`="WK_TYPID" OR `key`="LL_TYPID";

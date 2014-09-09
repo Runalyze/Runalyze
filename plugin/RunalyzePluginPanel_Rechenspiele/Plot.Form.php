@@ -41,7 +41,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		SELECT
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			SUM(`trimp`) as `trimp`,
-			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
+			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
 			SUM('.JD::mysqlVDOTsumTime().') as `s`
 		FROM `'.PREFIX.'training`
 		WHERE

@@ -170,8 +170,8 @@ class ConfigTabDataset extends ConfigTab {
 
 		$Data = array(
 			'id'		=> DataObject::$DEFAULT_ID,
-			'sportid'	=> CONF_RUNNINGSPORT,
-			'typeid'	=> CONF_WK_TYPID,
+			'sportid'	=> Configuration::General()->runningSport(),
+			'typeid'	=> Configuration::General()->competitionType(),
 			'time'		=> time(),
 			'created'	=> time(),
 			'edited'	=> time(),

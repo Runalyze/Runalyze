@@ -1,10 +1,12 @@
 <?php
 class ConfigurationGeneral_MockTester extends ConfigurationCategory {
 	protected function key() { return 'mock-tester'; }
+	public function title() { return 'mock-tester'; }
 	protected function createValues() {
 		$this->createValue(new ConfigurationValueInt('TEST', array(
 			'default'		=> 42
 		)));
+		$this->createValue(new ConfigurationValueInt('SECOND', array()));
 	}
 	public function test() {
 		return $this->get('TEST');
@@ -39,6 +41,10 @@ class ConfigurationCategoryTest extends PHPUnit_Framework_TestCase {
 
 	public function testAccess() {
 		$this->assertEquals( 42, $this->object->test() );
+	}
+
+	public function testKeys() {
+		$this->assertEquals( array('TEST', 'SECOND'), $this->object->keys() );
 	}
 
 	/**

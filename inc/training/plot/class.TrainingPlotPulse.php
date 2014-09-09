@@ -47,15 +47,13 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
-		switch (CONF_PULS_MODE) {
-			case 'hfmax':
-				return $Training->GpsData()->getPlotDataForHeartrateInPercent();
-			case 'hfres':
-				return $Training->GpsData()->getPlotDataForHeartrateInPercentReserve();
-			case 'bpm':
-			default:
-				return $Training->GpsData()->getPlotDataForHeartrate();
-		}
+		if (Configuration::General()->heartRateUnit()->isHRmax())
+			return $Training->GpsData()->getPlotDataForHeartrateInPercent();
+
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
+			return $Training->GpsData()->getPlotDataForHeartrateInPercentReserve();
+
+		return $Training->GpsData()->getPlotDataForHeartrate();
 	}
 
 	/**
@@ -63,7 +61,7 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @return boolean
 	 */
 	static public function inPercent() {
-		return (CONF_PULS_MODE == 'hfmax' || CONF_PULS_MODE == 'hfres');
+		return (!Configuration::General()->heartRateUnit()->isBPM());
 	}
 
 	/**
@@ -79,15 +77,13 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @return string
 	 */
 	static public function getUnitAsString() {
-		switch (CONF_PULS_MODE) {
-			case 'hfmax':
-				return '&#37; HFmax';
-			case 'hfres':
-				return '&#37; HFreserve';
-			case 'bpm':
-			default:
-				return 'bpm';
-		}
+		if (Configuration::General()->heartRateUnit()->isHRmax())
+			return '&#37; HFmax';
+
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
+			return '&#37; HFreserve';
+
+		return 'bpm';
 	}
 
 	/**

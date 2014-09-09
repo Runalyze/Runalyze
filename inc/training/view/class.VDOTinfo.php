@@ -136,7 +136,7 @@ class VDOTinfo {
 
 		$additionalDistance = (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down;
 		$newVDOT =  JD::Training2VDOTwithElevation(0, array(
-				'sportid'	=> CONF_RUNNINGSPORT,
+				'sportid'	=> Configuration::General()->runningSport(),
 				'distance'	=> $this->Training->getDistance(),
 				's'			=> $this->Training->getTimeInSeconds(),
 				'pulse_avg'	=> $this->Training->getPulseAvg()

@@ -1104,7 +1104,7 @@ class GpsData {
 	 * Get array as plot-data for heartrate in percent
 	 */
 	public function getPlotDataForHeartrateInPercent() {
-		if (CONF_PULS_MODE == 'hfres')
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
 			return $this->getPlotDataForHeartrateInPercentReserve();
 
 		return $this->getPlotDataForHeartrate(true);

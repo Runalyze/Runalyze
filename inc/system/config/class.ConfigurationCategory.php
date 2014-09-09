@@ -23,6 +23,12 @@ abstract class ConfigurationCategory {
 	private $UserID = null;
 
 	/**
+	 * Fieldset
+	 * @var FormularFieldset
+	 */
+	protected $Fieldset = null;
+
+	/**
 	 * Constructor
 	 * 
 	 * To load values from database, make sure to call
@@ -65,10 +71,46 @@ abstract class ConfigurationCategory {
 	}
 
 	/**
+	 * Keys
+	 * @return array
+	 */
+	final public function keys() {
+		return array_keys($this->Values);
+	}
+
+	/**
 	 * Internal key
 	 * @return string
 	 */
 	abstract protected function key();
+
+	/**
+	 * Title
+	 * @return string
+	 */
+	abstract public function title();
+
+	/**
+	 * Fieldset
+	 * @return FormularFieldset
+	 */
+	final public function Fieldset() {
+		if (is_null($this->Fieldset)) {
+			$this->Fieldset = new FormularFieldset( $this->title() );
+			$this->fillFieldset();
+		}
+
+		return $this->Fieldset;
+	}
+
+	/**
+	 * Fill fieldset
+	 */
+	protected function fillFieldset() {
+		foreach ($this->Values as $Value) {
+			$this->Fieldset->addField( $Value->getField() );
+		}
+	}
 
 	/**
 	 * Create values
@@ -90,8 +132,18 @@ abstract class ConfigurationCategory {
 	 * @throws InvalidArgumentException
 	 */
 	final protected function get($key) {
+		return $this->object($key)->value();
+	}
+
+	/**
+	 * Get value object
+	 * @param string $key
+	 * @return ConfigurationValue
+	 * @throws InvalidArgumentException
+	 */
+	final protected function object($key) {
 		if (isset($this->Values[$key])) {
-			return $this->Values[$key]->value();
+			return $this->Values[$key];
 		} else {
 			throw new InvalidArgumentException('Asked for unknown value key "'.$key.'" in configuration category.');
 		}

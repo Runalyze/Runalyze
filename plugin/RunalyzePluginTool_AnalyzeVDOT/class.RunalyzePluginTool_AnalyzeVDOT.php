@@ -68,7 +68,7 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 				pulse_max,
 				vdot
 			FROM `'.PREFIX.'training`
-			WHERE `pulse_avg`!=0 && `typeid`='.CONF_WK_TYPID.'
+			WHERE `pulse_avg`!=0 && `typeid`='.Configuration::General()->competitionType().'
 			ORDER BY `time` DESC')->fetchAll();
 	}
 }

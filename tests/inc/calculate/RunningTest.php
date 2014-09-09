@@ -24,17 +24,17 @@ class RunningTest extends PHPUnit_Framework_TestCase {
 		$property->setAccessible(true);
 		$property->setValue(false);
 
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, time(), 360, 1) );
+		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), time(), 360, 1) );
 		$this->assertEquals( 6.0, Running::getAverageMonthPace() );
 
 		$property->setValue(false);
 
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, time(), 300, 1) );
+		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), time(), 300, 1) );
 		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
 
 		$property->setValue(false);
 
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(CONF_RUNNINGSPORT, 0, 300, 1) );
+		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), 0, 300, 1) );
 		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
 
 		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');

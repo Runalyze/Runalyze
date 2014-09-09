@@ -27,7 +27,7 @@ class ConfigurationValueSelect extends ConfigurationValue {
 	 * @return FormularInput 
 	 */
 	public function getField() {
-		$Field = new FormularSelectBox($this->getKey(), $this->getLabel(), $this->getValue());
+		$Field = new FormularSelectBox($this->key(), $this->label(), $this->valueAsString());
 		$Field->setOptions( $this->Options['options'] );
 
 		if (!empty($this->Options['layout']))

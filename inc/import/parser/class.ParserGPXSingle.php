@@ -65,7 +65,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->trkseg->trkpt[0]->time) );
-		$this->TrainingObject->setSportid( CONF_MAINSPORT );
+		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->desc))
 			$this->TrainingObject->setComment(strip_tags((string)$this->XML->desc));

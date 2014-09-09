@@ -162,7 +162,7 @@ class TrainingObject extends DataObject {
 		$this->updateTrimp();
 		$this->updateElevation();
 
-		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
+		if ($this->get('sportid') == Configuration::General()->runningSport()) {
 			$this->updateVdot();
 			$this->updateShoeForInsert();
 
@@ -190,7 +190,7 @@ class TrainingObject extends DataObject {
 	protected function tasksAfterUpdate() {
 		$this->updateTrimp();
 
-		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
+		if ($this->get('sportid') == Configuration::General()->runningSport()) {
 			$this->updateVdot();
 			$this->updateShoeForUpdate();
 
@@ -1194,6 +1194,6 @@ class TrainingObject extends DataObject {
 	 * @return boolean 
 	 */
 	static public function idIsCompetition($id) {
-		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.CONF_WK_TYPID.'" LIMIT 1')->fetchColumn() > 0);
+		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.Configuration::General()->competitionType().'" LIMIT 1')->fetchColumn() > 0);
 	}
 }

@@ -163,7 +163,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 			}
 		}
 
-		return CONF_RUNNINGSPORT;
+		return Configuration::General()->runningSport();
 	}
 
 	/**

@@ -147,7 +147,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				weatherid,
 				temperature
 			FROM `'.PREFIX.'training`
-			WHERE `typeid`='.CONF_WK_TYPID.'
+			WHERE `typeid`='.Configuration::General()->competitionType().'
 			ORDER BY `time` DESC')->fetchAll();
 		$num = count($wks);
 		if ($num > 0) {
@@ -180,7 +180,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayPersonalBestsTRs() {
 		$this->distances = array();
-		$dists = DB::getInstance()->query('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' GROUP BY `distance`')->fetchAll();
+		$dists = DB::getInstance()->query('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' GROUP BY `distance`')->fetchAll();
 
 		$SingleRequest = DB::getInstance()->prepare('
 					SELECT
@@ -197,7 +197,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 						weatherid,
 						temperature
 					FROM `'.PREFIX.'training`
-					WHERE `typeid`='.CONF_WK_TYPID.'
+					WHERE `typeid`='.Configuration::General()->competitionType().'
 						AND `distance`=:distance
 					ORDER BY `s` ASC');
 
@@ -262,7 +262,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
 		
-		$wks = DB::getInstance()->query('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' ORDER BY `y` ASC')->fetchAll();
+		$wks = DB::getInstance()->query('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' ORDER BY `y` ASC')->fetchAll();
 
 		if (empty($wks))
 			return;
@@ -385,7 +385,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayWeatherStatistics() {
 		$Strings = array();
-		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID.' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
+		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
 		foreach ($Weather as $W)
 			$Strings[] = $W['num'].'x '.Icon::getWeatherIcon($W['weatherid']);
 

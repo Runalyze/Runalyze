@@ -30,8 +30,8 @@ class RunningPrognosisSteffnyTest extends PHPUnit_Framework_TestCase {
 	 * @covers RunningPrognosisSteffny::setupFromDatabase
 	 */
 	public function testSetupFromDatabase() {
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 60, 16*60 +  6, 5) );
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 45, 90*60 +  0, 21.1) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 60, 16*60 +  6, 5) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 45, 90*60 +  0, 21.1) );
 
 		$this->object->setupFromDatabase();
 

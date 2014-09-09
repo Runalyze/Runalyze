@@ -218,9 +218,9 @@ class JD {
 	 */
 	private static function values2VDOT($distance, $s, $pulse_avg, $sportid = false) {
 		if ($sportid === false)
-			$sportid = CONF_RUNNINGSPORT;
+			$sportid = Configuration::General()->runningSport();
 
-		if ($pulse_avg != 0 && $sportid == CONF_RUNNINGSPORT) {
+		if ($pulse_avg != 0 && $sportid == Configuration::General()->runningSport()) {
 			$VDOT = self::Competition2VDOT($distance, $s);
 			if ($VDOT !== false)
 				return round( $VDOT / (self::pHF2pVDOT($pulse_avg/HF_MAX) ), 2);
@@ -295,7 +295,7 @@ class JD {
 	 * @return int
 	 */
 	private static function values2points($s, $distance, $pulse_avg, $sportid = false, $pulseArray = array()) {
-		if ($sportid === false || $sportid == CONF_RUNNINGSPORT) {
+		if ($sportid === false || $sportid == Configuration::General()->runningSport()) {
 			if ($pulseArray) {
 				$points = 0;
 				foreach ($pulseArray as $hf => $Info)
@@ -385,7 +385,7 @@ class JD {
 				SUM('.self::mysqlVDOTsum().') as `value`
 			FROM `'.PREFIX.'training`
 			WHERE
-				`sportid`="'.CONF_RUNNINGSPORT.'"
+				`sportid`="'.Configuration::General()->runningSport().'"
 				&& `time` BETWEEN '.($time - CONF_VDOT_DAYS*DAY_IN_S).' AND '.$time.'
 			GROUP BY `sportid`
 			LIMIT 1
@@ -448,7 +448,7 @@ class JD {
 			) AS T
 			LIMIT 1
 		');
-		$Statement->execute(array(':typeid' => CONF_WK_TYPID));
+		$Statement->execute(array(':typeid' => Configuration::General()->competitionType()));
 		$Result = $Statement->fetch();
 
 		$VDOT_CORRECTOR = (isset($Result['factor'])) ? $Result['factor'] : 1;

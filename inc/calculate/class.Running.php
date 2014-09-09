@@ -21,7 +21,7 @@ class Running {
 	 */
 	static public function getAverageMonthPace() {
 		if (self::$AverageMonthPace === false) {
-			$AverageMonthPace       = DB::getInstance()->query('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.CONF_RUNNINGSPORT.' LIMIT 1')->fetch();
+			$AverageMonthPace       = DB::getInstance()->query('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.Configuration::General()->runningSport().' LIMIT 1')->fetch();
 			self::$AverageMonthPace = $AverageMonthPace['avg'];
 		}
 
@@ -108,7 +108,7 @@ class Running {
 	 * @return mixed
 	 */
 	public static function PersonalBest($dist, $return_time = false) {
-		$pb = DB::getInstance()->query('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`="'.$dist.'" ORDER BY `s` ASC LIMIT 1')->fetch();
+		$pb = DB::getInstance()->query('SELECT `s`, `distance` FROM `'.PREFIX.'training` WHERE `typeid`="'.Configuration::General()->competitionType().'" AND `distance`="'.$dist.'" ORDER BY `s` ASC LIMIT 1')->fetch();
 		if ($return_time)
 			return ($pb != '') ? $pb['s'] : 0;
 		if ($pb != '')
@@ -141,10 +141,10 @@ class Running {
 		$hf  = self::PulseStringInPercentHRmax($pulse, $hf_max);
 		$hfr = self::PulseStringInPercentReserve($pulse, $hf_max, $hf_rest);
 
-		if (CONF_PULS_MODE == 'hfmax')
+		if (Configuration::General()->heartRateUnit()->isHRmax())
 			return Ajax::tooltip($hf, $bpm);
 
-		if (CONF_PULS_MODE == 'hfres')
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
 			return Ajax::tooltip($hfr, $bpm);
 			
 		return Ajax::tooltip($bpm, $hf);
