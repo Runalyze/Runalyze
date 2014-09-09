@@ -3123,6 +3123,9 @@ Runalyze.Log = (function($, Parent){
 	// Public Methods
 
 	self.init = function() {
+		if ($container)
+			return;
+
 		$("body").append('<div id="' + id + '" class="toolbar at-top"></div>');
 
 		$container = $('#' + id);
@@ -3177,7 +3180,7 @@ Runalyze.Log = (function($, Parent){
 			'<td class="small">' + (new Date()).toTimeString().split(' ')[0] + '</td><td>' + iconFor(iterator) +
 			'</td></tr>');
 
-		Parent.initToggle();
+		Parent.Feature.initToggle();
 
 		checkVisibility();
 
@@ -3903,6 +3906,10 @@ Runalyze.Feature = (function($, Parent){
 		initChangeDiv();
 		initCalendarLink();
 		initFormulars();
+	};
+
+	self.initToggle = function() {
+		initToggle();
 	};
 
 	Parent.addLoadHook('init-feature', self.init);
