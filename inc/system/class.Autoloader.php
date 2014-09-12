@@ -33,6 +33,7 @@ class Autoloader {
 	 */
 	protected function classmapLoader($class) {
 		if (isset($this->map[$class])) {
+//error_log($this->map[$class]);
 			require_once FRONTEND_PATH.$this->map[$class];
 		}
 	}
