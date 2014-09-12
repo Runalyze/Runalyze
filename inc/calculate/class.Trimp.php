@@ -147,12 +147,22 @@ class Trimp {
 			$trainingData = DB::getInstance()->query('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.(int)$trainingData['id'].'" LIMIT 1')->fetch();
 		}
 
-		$Training = new TrainingObject($trainingData);
+		$Training = new TrainingObject($trainingData['id']);
+		if ($Training->GpsData()->getTotalTime() == 0) $Training = new TrainingObject($trainingData);
 		$avgHF    = $Training->avgHF();
 		$s        = $Training->getTimeInSeconds();
 		$RPE      = $Training->RPE();
 
-		$Trimp = round($s/60 * self::TrimpFactor($avgHF) * $RPE / 10);
+		$HRzonearr=$Training->GpsData()->getPulseZonesBy5();
+		if (count($HRzonearr)>0){
+			$Trimp = 0;
+			foreach ($HRzonearr as $zone=>$data){
+				$zone=$zone/100-.025;
+				$Trimp += round($data['time']/60 * $zone * self::factorA() * exp(self::factorB() * $zone));
+			}
+		} else
+			$Trimp = round($s/60 * self::TrimpFactor($avgHF));
+
 
 		if ($Trimp > self::$MAX_TRIMP)
 			self::setMaxTRIMP($Trimp);

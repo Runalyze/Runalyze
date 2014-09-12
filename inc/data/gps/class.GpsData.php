@@ -820,6 +820,32 @@ class GpsData {
 		return $Zones;
 	}
 
+	public function getPulseZonesBy5() {
+		if (!$this->hasHeartrateData())
+			return array();
+
+		$Zones = array();
+		$this->startLoop();
+		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
+
+		while ($this->nextStep()) {
+			$zone = 5*ceil(100 * ($this->getAverageHeartrateOfStep() + 1 - Helper::getHFrest()) / (Helper::getHFmax() - Helper::getHFrest()+1)/ 5);
+			if($zone<5) $zone=5;
+
+			if (!isset($Zones[$zone]))
+				$Zones[$zone] = array('time' => 0, 'distance' => 0, 'pace-sum' => 0, 'num' => 0);
+
+			$Zones[$zone]['time']     += $this->getTimeOfStep();
+			$Zones[$zone]['distance'] += $this->getDistanceOfStep();
+			$Zones[$zone]['pace-sum'] += $this->getAveragePaceOfStep();
+			$Zones[$zone]['num']++;
+		}
+
+		ksort($Zones);
+
+		return $Zones;
+	}
+
 	/**
 	 * Get pace zones as sorted array filled with information for time, distance, hf-sum, num
 	 * @return array
