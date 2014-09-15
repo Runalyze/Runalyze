@@ -27,6 +27,7 @@ $CLASSMAP = array(
 'InstallerUpdate' => 'class.InstallerUpdate.php',
 'Configuration' => 'core/class.Configuration.php',
 'Parameter' => 'core/class.Parameter.php',
+'ConfigurationActivityForm' => 'core/configuration/category/class.ConfigurationActivityForm.php',
 'ConfigurationActivityView' => 'core/configuration/category/class.ConfigurationActivityView.php',
 'ConfigurationGeneral' => 'core/configuration/category/class.ConfigurationGeneral.php',
 'ConfigurationPrivacy' => 'core/configuration/category/class.ConfigurationPrivacy.php',

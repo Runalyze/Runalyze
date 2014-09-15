@@ -20,53 +20,53 @@ $FIELDSETS = array(
 		'id'		=> 'sports',
 		'legend'	=> __('Sport'),
 		'fields'	=> array('sportid', 'typeid'),
-		'conf'		=> 'FORMULAR_SHOW_SPORT'
+		'conf'		=> 'SPORT'
 	),
 	array(
 		'id'		=> 'general',
 		'legend'	=> __('General Information'),
 		'fields'	=> array('time', 's', 'kcal', 'pulse_avg', 'pulse_max'),
-		'conf'		=> 'FORMULAR_SHOW_GENERAL'
+		'conf'		=> 'GENERAL'
 	),
 	array(
 		'id'		=> 'distance',
 		'legend'	=> __('Distance'),
 		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
-		'conf'		=> 'FORMULAR_SHOW_DISTANCE',
+		'conf'		=> 'DISTANCE',
 		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
 	array(
 		'id'		=> 'splits',
 		'legend'	=> __('Laps'),
 		'fields'	=> array('splits'),
-		'conf'		=> 'FORMULAR_SHOW_SPLITS',
+		'conf'		=> 'SPLITS',
 		'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 	),
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
 		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
-		'conf'		=> 'FORMULAR_SHOW_OTHER',
+		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
 	array(
 		'id'		=> 'notes',
 		'legend'	=> __('Notes'),
 		'fields'	=> array('notes'),
-		'conf'		=> 'FORMULAR_SHOW_NOTES',
+		'conf'		=> 'NOTES',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
 		'fields'	=> array('weatherid', 'temperature', 'clothes'),
-		'conf'		=> 'FORMULAR_SHOW_WEATHER'
+		'conf'		=> 'WEATHER'
 	),
 	array(
 		'id'		=> 'privacy',
 		'legend'	=> __('Privacy'),
 		'fields'	=> array('is_public'),
-		'conf'		=> 'FORMULAR_SHOW_PUBLIC'
+		'conf'		=> 'PUBLIC'
 	)
 );
 

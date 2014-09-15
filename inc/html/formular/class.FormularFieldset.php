@@ -92,9 +92,9 @@ class FormularFieldset extends HtmlTag {
 	 * @param string $confValue
 	 */
 	final public function setConfValueToSaveStatus($confValue) {
-		$this->confValueToSaveStatus = $confValue;
+		$this->confValueToSaveStatus = 'FORMULAR_SHOW_'.$confValue;
 
-		if (!constant("CONF_".$confValue))
+		if (!Configuration::ActivityForm()->show($confValue))
 			$this->setCollapsed();
 	}
 

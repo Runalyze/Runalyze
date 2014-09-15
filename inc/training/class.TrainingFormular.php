@@ -128,7 +128,7 @@ class TrainingFormular extends StandardFormular {
 			return;
 
 		$Fieldset = new FormularFieldset( __('Use elevation correction') );
-		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_ELEVATION');
+		$Fieldset->setConfValueToSaveStatus('ELEVATION');
 
 		$Fieldset->addInfo('
 			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'"><strong>'.__('Correct elevation data').'</strong></a><br>
@@ -145,7 +145,7 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function initAddGPSdataFieldset() {
 		/*$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
-		$Fieldset->setConfValueToSaveStatus('FORMULAR_SHOW_GPS');
+		$Fieldset->setConfValueToSaveStatus('GPS');
 		$Fieldset->addInfo('
 		<span onmouseover="javascript:createUploader()">
 			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br>

@@ -76,6 +76,14 @@ class Configuration {
 	}
 
 	/**
+	 * Activity form
+	 * @return ConfigurationActivityForm
+	 */
+	static public function ActivityForm() {
+		return self::get('ConfigurationActivityForm');
+	}
+
+	/**
 	 * Privacy
 	 * @return ConfigurationPrivacy
 	 */
