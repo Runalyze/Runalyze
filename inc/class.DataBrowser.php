@@ -129,7 +129,7 @@ class DataBrowser {
 		$this->initShortSports();
 		$this->initEmptyDays();
 
-		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
+		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
 
 		$AllTrainings = $this->DB->query('
 			SELECT

@@ -74,4 +74,12 @@ class Configuration {
 	static public function ActivityView() {
 		return self::get('ConfigurationActivityView');
 	}
+
+	/**
+	 * Privacy
+	 * @return ConfigurationPrivacy
+	 */
+	static public function Privacy() {
+		return self::get('ConfigurationPrivacy');
+	}
 }

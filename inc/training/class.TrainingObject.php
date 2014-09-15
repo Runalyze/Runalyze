@@ -75,7 +75,7 @@ class TrainingObject extends DataObject {
 	 */
 	protected function fillDefaultObject() {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
-		$this->set('is_public', CONF_TRAINING_MAKE_PUBLIC ? '1' : '0');
+		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->forceToSet('s_sum_with_distance', 0);
 	}
 
@@ -991,17 +991,17 @@ class TrainingObject extends DataObject {
 	 * @return boolean
 	 */
 	public function hidesMap() {
-		switch (CONF_TRAINING_MAP_PUBLIC_MODE) {
-			case 'never':
-				return true;
-			case 'race':
-				return (!$this->Type()->isCompetition());
-			case 'race-longjog':
-				return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
-			case 'always':
-			default:
-				return false;
+		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
+
+		if ($RoutePrivacy->showRace()) {
+			return (!$this->Type()->isCompetition());
+		} elseif ($RoutePrivacy->showRaceAndLongrun()) {
+			return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
+		} elseif ($RoutePrivacy->showAlways()) {
+			return false;
 		}
+
+		return true;
 	}
 
 

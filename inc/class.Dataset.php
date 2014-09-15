@@ -220,7 +220,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function getQueryWhereNotPrivate() {
-		return (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
+		return (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
 	}
 
 	/**
