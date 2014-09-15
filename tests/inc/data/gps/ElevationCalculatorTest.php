@@ -34,8 +34,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	 * @covers ElevationCalculator::calculateElevation
 	 */
 	public function testValuesSimple() {
-		$C = new ElevationCalculator(array(0, 10, 17, 14, 20, 3, 11, 0));
-		$C->setAlgorithm(ElevationCalculator::$ALGORITHM_NONE);
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::NONE);
+		$C = new ElevationCalculator(array(0, 10, 17, 14, 20, 3, 11, 0), $Method, 0);
 		$C->calculateElevation();
 
 		$this->assertEquals( 31, $C->getElevation() );
@@ -44,8 +45,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testValuesOnlyUp() {
-		$C = new ElevationCalculator(array(0, 10, 17, 20, 35));
-		$C->setAlgorithm(ElevationCalculator::$ALGORITHM_NONE);
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::NONE);
+		$C = new ElevationCalculator(array(0, 10, 17, 20, 35), $Method, 0);
 		$C->calculateElevation();
 
 		$this->assertEquals( 35, $C->getElevation() );
@@ -54,8 +56,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testValuesOnlyDown() {
-		$C = new ElevationCalculator(array(0, -10, -17, -20, -35));
-		$C->setAlgorithm(ElevationCalculator::$ALGORITHM_NONE);
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::NONE);
+		$C = new ElevationCalculator(array(0, -10, -17, -20, -35), $Method, 0);
 		$C->calculateElevation();
 
 		$this->assertEquals( 35, $C->getElevation() );
@@ -68,9 +71,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	 * @covers ElevationCalculator::runAlgorithmTreshold
 	 */
 	public function testAlgorithmTreshold() {
-		$C = new ElevationCalculator(array(0, 2, 4, 6, 5, 7, 4, 8, 10, 0));
-		$C->setTreshold(0);
-		$C->setAlgorithm( ElevationCalculator::$ALGORITHM_TRESHOLD );
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::TRESHOLD);
+		$C = new ElevationCalculator(array(0, 2, 4, 6, 5, 7, 4, 8, 10, 0), $Method, 0);
 		$C->calculateElevation();
 
 		$this->assertEquals( 14, $C->getElevation() );
@@ -99,9 +102,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	 * @covers ElevationCalculator::runAlgorithmDouglasPeucker
 	 */
 	public function testAlgorithmDouglasPeucker() {
-		$C = new ElevationCalculator(array(0, 2, 4, 6, 5, 7, 4, 8, 10, 0));
-		$C->setTreshold(0);
-		$C->setAlgorithm( ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER );
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::DOUGLAS_PEUCKER);
+		$C = new ElevationCalculator(array(0, 2, 4, 6, 5, 7, 4, 8, 10, 0), $Method, 0);
 		$C->calculateElevation();
 
 		$this->assertEquals( 14, $C->getElevation() );
@@ -130,9 +133,9 @@ class ElevationCalculatorTest extends PHPUnit_Framework_TestCase {
 	 * @covers ElevationCalculator::runAlgorithmDouglasPeucker
 	 */
 	public function testAlgorithmDouglasPeuckerComplicatedIndices() {
-		$C = new ElevationCalculator(array(0, 2, 4, 6, 15, 27, 25, 18, 13, 58, 95, 94, 91, 100, 105, 127, 15, 125, 67, 65, 0));
-		$C->setTreshold(10);
-		$C->setAlgorithm( ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER );
+		$Method = new ElevationMethod();
+		$Method->set(ElevationMethod::DOUGLAS_PEUCKER);
+		$C = new ElevationCalculator(array(0, 2, 4, 6, 15, 27, 25, 18, 13, 58, 95, 94, 91, 100, 105, 127, 15, 125, 67, 65, 0), $Method, 10);
 		$C->calculateElevation();
 
 		$this->assertEquals( array(0, 6, 27, 13, 95, 91, 127, 15, 125, 67, 65, 0), $C->getElevationPointsWeeded());

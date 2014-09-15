@@ -28,7 +28,7 @@ class Gender extends ConfigurationValueSelect {
 	const FEMALE = 'f';
 
 	/**
-	 * Construct gender
+	 * Construct
 	 * @param string $Key
 	 */
 	public function __construct($Key) {

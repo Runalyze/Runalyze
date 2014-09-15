@@ -38,3 +38,4 @@ ALTER TABLE  `runalyze_training` CHANGE  `temperature`  `temperature` TINYINT NU
 /* Rev ? - Refactor configuration */
 ALTER TABLE  `runalyze_conf` ADD  `category` VARCHAR( 32 ) NOT NULL AFTER  `id`;
 UPDATE `runalyze_conf` SET `category`="general" WHERE `key`="GENDER" OR `key`="PULS_MODE" OR `key`="MAINSPORT" OR `key`="RUNNINGSPORT" OR `key`="WK_TYPID" OR `key`="LL_TYPID";
+UPDATE `runalyze_conf` SET `category`="activity-view" WHERE `key`="TRAINING_PLOT_SMOOTH" OR `key`="TRAINING_DECIMALS" OR `key`="TRAINING_PLOT_PRECISION" OR `key`="GMAP_PATH_PRECISION" OR `key`="ELEVATION_METHOD" OR `key`="GMAP_PATH_BREAK" OR `key`="ELEVATION_MIN_DIFF" OR `key`="TRAINING_MAP_COLOR" OR `key`="PACE_Y_LIMIT_MAX" OR `key`="PACE_Y_AXIS_REVERSE" OR `key`="PACE_Y_LIMIT_MIN" OR `key`="PACE_HIDE_OUTLIERS" OR `key`="TRAINING_PLOT_MODE" OR `key`="TRAINING_MAP_BEFORE_PLOTS" OR `key`="TRAINING_LEAFLET_LAYER";

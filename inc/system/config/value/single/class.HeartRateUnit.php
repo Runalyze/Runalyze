@@ -28,7 +28,7 @@ class HeartRateUnit extends ConfigurationValueSelect {
 	const HRRESERVE = 'hfres';
 
 	/**
-	 * Construct gender
+	 * Construct
 	 * @param string $Key
 	 */
 	public function __construct($Key) {

@@ -23,7 +23,8 @@ class ConfigTabGeneral extends ConfigTab {
 	 */
 	private function getAllCategories() {
 		return array(
-			Configuration::General()
+			Configuration::General(),
+			Configuration::ActivityView()
 		);
 	}
 

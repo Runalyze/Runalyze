@@ -121,6 +121,8 @@ abstract class ConfigurationValue {
 	 */
 	public function setFromPost() {
 		if (isset($_POST[$this->Key])) {
+			$this->HasChanged = false;
+
 			$this->setFromString($_POST[$this->Key]);
 		}
 	}

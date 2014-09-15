@@ -31,6 +31,8 @@ class ConfigurationValueBool extends ConfigurationValue {
 	 */
 	public function setFromPost() {
 		if (isset($_POST[$this->key().'_sent'])) {
+			$this->HasChanged = false;
+
 			$this->set( isset($_POST[$this->key()]));
 		}
 	}
@@ -40,7 +42,7 @@ class ConfigurationValueBool extends ConfigurationValue {
 	 * @return FormularInput 
 	 */
 	public function getField() {
-		$Field = new FormularCheckbox($this->getKey(), $this->getLabel(), $this->getValue());
+		$Field = new FormularCheckbox($this->key(), $this->label(), $this->value());
 		$Field->addHiddenSentValue();
 
 		if (!empty($this->Options['layout']))

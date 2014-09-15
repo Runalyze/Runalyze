@@ -174,7 +174,7 @@ class TrainingDataView {
 	 */
 	public function getDistanceString() {
 		if ($this->Object->hasDistance())
-			return Running::Km($this->Object->getDistance(), CONF_TRAINING_DECIMALS, $this->Object->isTrack());
+			return Running::Km($this->Object->getDistance(), Configuration::ActivityView()->decimals(), $this->Object->isTrack());
 
 		return '';
 	}

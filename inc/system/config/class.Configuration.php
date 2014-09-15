@@ -61,7 +61,7 @@ class Configuration {
 
 	/**
 	 * General
-	 * @return ConfigurationCategory
+	 * @return ConfigurationGeneral
 	 */
 	static public function General() {
 		return self::get('ConfigurationGeneral');
@@ -69,7 +69,7 @@ class Configuration {
 
 	/**
 	 * Activity view
-	 * @return ConfigurationCategory
+	 * @return ConfigurationActivityView
 	 */
 	static public function ActivityView() {
 		return self::get('ConfigurationActivityView');

@@ -86,7 +86,7 @@ class Running {
 	 */
 	public static function KmFormat($km, $decimals = -1) {
 		if ($decimals == -1)
-			$decimals = CONF_TRAINING_DECIMALS;
+			$decimals = Configuration::ActivityView()->decimals();
 
 		return number_format($km, $decimals, ',', '.');
 	}

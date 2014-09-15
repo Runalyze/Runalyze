@@ -82,7 +82,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 
 	/**
 	 * Main sport
-	 * @return mixed
+	 * @return int
 	 */
 	public function mainSport() {
 		return $this->get('MAINSPORT');
@@ -103,7 +103,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 
 	/**
 	 * Running sport
-	 * @return mixed
+	 * @return int
 	 */
 	public function runningSport() {
 		return $this->get('RUNNINGSPORT');
@@ -124,7 +124,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 
 	/**
 	 * Competition type
-	 * @return mixed
+	 * @return int
 	 */
 	public function competitionType() {
 		return $this->get('WK_TYPID');
@@ -145,7 +145,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 
 	/**
 	 * Long run type
-	 * @return mixed
+	 * @return int
 	 */
 	public function longRunType() {
 		return $this->get('LL_TYPID');
