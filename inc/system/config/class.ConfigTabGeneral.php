@@ -33,12 +33,12 @@ class ConfigTabGeneral extends ConfigTab {
 	 */
 	public function setFieldsetsAndFields() {
 		$IsFirst    = true;
-		//$Categories = ConfigCategory::getAllCategories();
-		$Categories = $this->getAllCategories();
+		$Categories = ConfigCategory::getAllCategories();
+		//$Categories = $this->getAllCategories();
 
 		foreach ($Categories as $Category) {
-			$Fieldset = $Category->Fieldset();
-			//$Fieldset = $Category->getFieldset();
+			//$Fieldset = $Category->Fieldset();
+			$Fieldset = $Category->getFieldset();
 
 			if ($IsFirst)
 				$IsFirst = false;
@@ -56,15 +56,15 @@ class ConfigTabGeneral extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Categories = $this->getAllCategories();
+		/*$Categories = $this->getAllCategories();
 
 		foreach ($Categories as $Category) {
 			$Category->updateFromPost();
-		}
+		}*/
 
-		//$Categories = ConfigCategory::getAllCategories();
+		$Categories = ConfigCategory::getAllCategories();
 
-		//foreach ($Categories as $Category)
-		//	$Category->parseAllValues();
+		foreach ($Categories as $Category)
+			$Category->parseAllValues();
 	}
 }
