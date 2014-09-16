@@ -84,6 +84,14 @@ class Configuration {
 	}
 
 	/**
+	 * Data browser
+	 * @return ConfigurationDataBrowser
+	 */
+	static public function DataBrowser() {
+		return self::get('ConfigurationDataBrowser');
+	}
+
+	/**
 	 * Privacy
 	 * @return ConfigurationPrivacy
 	 */

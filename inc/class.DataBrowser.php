@@ -104,15 +104,14 @@ class DataBrowser {
 	 */
 	protected function initTimestamps() {
 		if (!isset($_GET['start']) || !isset($_GET['end'])) {
-			switch (CONF_DB_DISPLAY_MODE) {
-				case 'month':
-					$this->timestamp_start = mktime(0, 0, 0, date("m"), 1, date("Y"));
-					$this->timestamp_end   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
-					break;
-				case 'week':
-				default:
-					$this->timestamp_start = Time::Weekstart(time());
-					$this->timestamp_end   = Time::Weekend(time());
+			$Mode = Configuration::DataBrowser()->mode();
+
+			if ($Mode->showMonth()) {
+				$this->timestamp_start = mktime(0, 0, 0, date("m"), 1, date("Y"));
+				$this->timestamp_end   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
+			} else {
+				$this->timestamp_start = Time::Weekstart(time());
+				$this->timestamp_end   = Time::Weekend(time());
 			}
 		} else {
 			$this->timestamp_start = $_GET['start'];
