@@ -38,7 +38,7 @@ class RoundsView {
 	private function init() {
 		if (!$this->Training->Splits()->areEmpty())
 			$this->RoundsObjects[] = new RoundsSplits($this->Training);
-		if ($this->Training->hasArrayPace())
+		if ($this->Training->hasArrayDistance() && $this->Training->hasArrayTime())
 			$this->RoundsObjects[] = new RoundsComputed($this->Training);
 	}
 

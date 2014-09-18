@@ -112,8 +112,13 @@ abstract class TrainingPlot {
 		$this->setKeyAndTitle();
 		$this->initPlot();
 		$this->initData();
-		$this->setProperties();
-		$this->setDependingProperties();
+
+		if (empty($this->Data)) {
+			$this->Plot->raiseError('No data.');
+		} else {
+			$this->setProperties();
+			$this->setDependingProperties();
+		}
 	}
 
 	/**
