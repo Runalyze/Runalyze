@@ -166,7 +166,7 @@ class GpsData {
 		$this->arrayForCadence           = $this->loadArrayDataFrom($TrainingDataAsArray['arr_cadence']);
 		$this->arrayForPower             = $this->loadArrayDataFrom($TrainingDataAsArray['arr_power']);
 		$this->arrayForTemperature       = $this->loadArrayDataFrom($TrainingDataAsArray['arr_temperature']);
-		$this->arraySizes                = max(count($this->arrayForTime), count($this->arrayForLatitude));
+		$this->arraySizes                = max(count($this->arrayForTime), count($this->arrayForLatitude), count($this->arrayForDistance));
 
 		if (isset($TrainingDataAsArray['gps_cache_object']))
 			$this->initCache($TrainingDataAsArray['id'], $TrainingDataAsArray['gps_cache_object']);

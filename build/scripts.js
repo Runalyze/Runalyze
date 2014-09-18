@@ -2831,12 +2831,15 @@ RunalyzePlot.Events = (function($, parent){
 	}
 
 	function moveMapMarker(pos) {
-		if (RunalyzeLeaflet)
+		console.log(RunalyzeLeaflet);
+		console.log(RunalyzeLeaflet.Routes);
+		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes)
 			RunalyzeLeaflet.Routes.movePosMarker(pos);
 	}
 
 	function unsetMapMarker() {
-		RunalyzeLeaflet.Routes.unsetPosMarker();
+		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes)
+			RunalyzeLeaflet.Routes.unsetPosMarker();
 	}
 
 	function onSelectionTooltip(key) {
@@ -3190,7 +3193,7 @@ Runalyze.Log = (function($, Parent){
 			'<td class="small">' + (new Date()).toTimeString().split(' ')[0] + '</td><td>' + iconFor(iterator) +
 			'</td></tr>');
 
-		Parent.initToggle();
+		Parent.Feature.initToggle();
 
 		checkVisibility();
 
@@ -3916,6 +3919,10 @@ Runalyze.Feature = (function($, Parent){
 		initChangeDiv();
 		initCalendarLink();
 		initFormulars();
+	};
+
+	self.initToggle = function() {
+		initToggle();
 	};
 
 	Parent.addLoadHook('init-feature', self.init);
@@ -6388,12 +6395,14 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 	}
 
 	function setPositionMarker(pos) {
-		if (!positionMarker) {
-			positionMarker = L.marker(pos, {
-				icon: self.posIcon()
-			}).addTo(parent.map());
-		} else {
-			positionMarker.setLatLng(pos);
+		if (parent.map()) {
+			if (!positionMarker) {
+				positionMarker = L.marker(pos, {
+					icon: self.posIcon()
+				}).addTo(parent.map());
+			} else {
+				positionMarker.setLatLng(pos);
+			}
 		}
 	}
 
@@ -6520,6 +6529,9 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 		var pos = [0,0];
 		var counter = 0;
 		var id = self.routeid;
+
+		if (typeof id === "undefined" || typeof objects[id] === "undefined")
+			return;
 
 		for (var s = 0; s < objects[id].segmentsInfo.length; ++s) {
 			var segmentLength = objects[id].segmentsInfo[s].length;

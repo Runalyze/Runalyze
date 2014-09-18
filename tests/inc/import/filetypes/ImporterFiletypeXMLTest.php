@@ -65,6 +65,32 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
+ 
+ 	/**
+	 * Test: Polar file
+	 * Filename: "Polar-with-arrays.xml" 
+	 */
+	public function test_PolarFileWithArrays() {
+		$this->object->parseFile('../tests/testfiles/xml/Polar-with-arrays.xml');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+
+		$this->assertEquals( mktime(9, 58, 10, 9, 7, 2014), $this->object->object()->getTimestamp() );
+		$this->assertEquals( 20.05, $this->object->object()->getDistance() );
+		$this->assertEquals( 2015, $this->object->object()->getCalories() );
+		$this->assertEquals( 2*3600 + 9*60 + 0.1, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 157, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 173, $this->object->object()->getPulseMax() );
+
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+
+		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
+		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint() );
+	}
 
 	/**
 	 * Test: Polar file with multiple trainings
