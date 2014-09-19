@@ -16,14 +16,6 @@ class TrainingPlotPace extends TrainingPlot {
 	static private $CUT_OUTLIER_PERCENTAGE = 10;
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_PACE;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {

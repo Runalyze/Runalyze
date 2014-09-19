@@ -48,9 +48,20 @@ UPDATE `runalyze_conf` SET `category`="design" WHERE `key`="DESIGN_BG_FILE";
 UPDATE `runalyze_conf` SET `category`="vdot" WHERE `key`="VDOT_HF_METHOD" OR `key`="VDOT_DAYS" OR `key`="JD_USE_VDOT_CORRECTOR" OR `key`="VDOT_MANUAL_CORRECTOR" OR `key`="VDOT_MANUAL_VALUE" OR `key`="JD_USE_VDOT_CORRECTION_FOR_ELEVATION" OR `key`="VDOT_CORRECTION_POSITIVE_ELEVATION" OR `key`="VDOT_CORRECTION_NEGATIVE_ELEVATION";
 UPDATE `runalyze_conf` SET `category`="trimp" WHERE `key`="ATL_DAYS" OR `key`="CTL_DAYS";
 UPDATE `runalyze_conf` SET `category`="misc" WHERE `key`="RESULTS_AT_PAGE";
+UPDATE `runalyze_conf` SET `category`="activity-form" WHERE `key`="TRAINING_CREATE_MODE" OR `key`="TRAINING_SHOW_AFTER_CREATE" OR `key`="TRAINING_DO_ELEVATION" OR `key`="TRAINING_ELEVATION_SERVER" OR `key`="TRAINING_LOAD_WEATHER" OR `key`="PLZ" OR `key`="COMPUTE_KCAL" OR `key`="COMPUTE_POWER" OR `key`="TRAINING_SORT_SPORTS" OR `key`="TRAINING_SORT_TYPES" OR `key`="TRAINING_SORT_SHOES" OR `key`="GARMIN_IGNORE_IDS";
 /*  - rename some values */
 
 /*  - remove unused values */
 DELETE FROM `runalyze_conf` WHERE `key`="DB_HIGHLIGHT_TODAY";
 DELETE FROM `runalyze_conf` WHERE `key`="DESIGN_BG_FIX_AND_STRETCH";
 DELETE FROM `runalyze_conf` WHERE `key`="RECHENSPIELE";
+DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_MAP_MARKER" OR `key`="TRAINING_SHOW_DETAILS" OR `key`="TRAINING_SHOW_ZONES" OR `key`="TRAINING_SHOW_ROUNDS" OR `key`="TRAINING_SHOW_GRAPHICS" OR `key`="TRAINING_SHOW_PLOT_PACE" OR `key`="TRAINING_SHOW_PLOT_PULSE" OR `key`="TRAINING_SHOW_PLOT_ELEVATION" OR `key`="TRAINING_SHOW_PLOT_SPLITS" OR `key`="TRAINING_SHOW_PLOT_PACEPULSE" OR `key`="TRAINING_SHOW_PLOT_COLLECTION" OR `key`="TRAINING_SHOW_PLOT_CADENCE" OR `key`="TRAINING_SHOW_PLOT_POWER" OR `key`="TRAINING_SHOW_PLOT_TEMPERATURE" OR `key`="TRAINING_SHOW_MAP";
+DELETE FROM `runalyze_conf` WHERE `key`="GARMIN_API_KEY";
+DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_MAP_BEFORE_PLOTS";
+DELETE FROM `runalyze_conf` WHERE `key`="USE_WETTER";
+DELETE FROM `runalyze_conf` WHERE `key`="USE_PULS";
+DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_MAPTYPE";
+
+/*  - update some values */
+UPDATE `runalyze_conf` SET `value`="google" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";
+UPDATE `runalyze_conf` SET `value`="geonames" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";

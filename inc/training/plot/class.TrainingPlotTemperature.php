@@ -10,14 +10,6 @@
  */
 class TrainingPlotTemperature extends TrainingPlot {
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_TEMPERATURE;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {

@@ -229,13 +229,13 @@ $Training->addConfigValue( new ConfigValueInt('ELEVATION_MIN_DIFF', array(
 	'onchange_eval'	=> 'ConfigTabs::addMessage(HTML::warning("The tool <em>Datenbank-Cleanup</em> can be used to recalculate elevation values."));'
 )));
 // TODO: remove
-$Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
+/*$Training->addConfigValue( new ConfigValueBool('TRAINING_MAP_BEFORE_PLOTS', array(
 	'default'		=> false,
 	'label'			=> __('Map: before plots'),
 	'onchange'		=> Ajax::$RELOAD_TRAINING
-)));
+)));*/
 $Training->addConfigValue(new ConfigValueString('TRAINING_LEAFLET_LAYER', array('default' => 'OpenStreetMap')));
-$Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
+/*$Training->addConfigValue(new ConfigValueBool('TRAINING_MAP_MARKER', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_DETAILS', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ZONES', array('default' => true)));
 $Training->addConfigValue(new ConfigValueBool('TRAINING_SHOW_ROUNDS', array('default' => true)));
@@ -260,7 +260,7 @@ $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_OTHER', array('defa
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_NOTES', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_PUBLIC', array('default' => false)));
 $Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_ELEVATION', array('default' => false)));
-$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GPS', array('default' => false)));
+$Training->addConfigValue(new ConfigValueBool('FORMULAR_SHOW_GPS', array('default' => false)));*/
 $Training->addToCategoryList();
 
 
@@ -319,17 +319,17 @@ $Design->setKeys(array(
 	//'DB_HIGHLIGHT_TODAY',
 	'DESIGN_BG_FILE',
 	'DB_SHOW_DIRECT_EDIT_LINK',
-	'DESIGN_BG_FIX_AND_STRETCH',
+	//'DESIGN_BG_FIX_AND_STRETCH',
 	'DB_SHOW_CREATELINK_FOR_DAYS',
 	''
 ));
 // TODO: remove
-$Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
+/*$Design->addConfigValue( new ConfigValueBool('DB_HIGHLIGHT_TODAY', array(
 	'default'		=> true,
 	'label'			=> __('Calendar: highlight today'),
 	'tooltip'		=> __('in the calendar'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
-)));
+)));*/
 $Design->addConfigValue( new ConfigValueSelect('DB_DISPLAY_MODE', array(
 	'default'		=> 'week',
 	'label'			=> __('Calendar: mode'),
@@ -352,11 +352,11 @@ $Design->addConfigValue( new ConfigValueBool('DB_SHOW_DIRECT_EDIT_LINK', array(
 	'tooltip'		=> __('Add an edit-link for every activity.'),
 	'onchange'		=> Ajax::$RELOAD_DATABROWSER
 )));
-$Design->addConfigValue( new ConfigValueBool('DESIGN_BG_FIX_AND_STRETCH', array(
+/*$Design->addConfigValue( new ConfigValueBool('DESIGN_BG_FIX_AND_STRETCH', array(
 	'default'		=> true,
 	'label'			=> __('Background image: scale'),
 	'onchange'		=> Ajax::$RELOAD_PAGE
-)));
+)));*/
 $Design->addConfigValue( new ConfigValueSelectFile('DESIGN_BG_FILE', array(
 	'default'		=> 'img/backgrounds/Default.jpg',
 	'label'			=> __('Background image: file'),
@@ -371,7 +371,7 @@ $Design->addToCategoryList();
 
 $Calculations = new ConfigCategory('calculations', __('Experimental calculations'));
 $Calculations->setKeys(array(
-	'RECHENSPIELE',
+	'',//'RECHENSPIELE',
 	'ATL_DAYS',
 	'VDOT_HF_METHOD',
 	'CTL_DAYS',
@@ -386,12 +386,12 @@ $Calculations->setKeys(array(
 	'VDOT_CORRECTION_POSITIVE_ELEVATION',
 	'VDOT_CORRECTION_NEGATIVE_ELEVATION'
 ));
-$Calculations->addConfigValue( new ConfigValueBool('RECHENSPIELE', array(
+/*$Calculations->addConfigValue( new ConfigValueBool('RECHENSPIELE', array(
 	'default'		=> true,
 	'label'			=> __('Use exp. calculations'),
 	'tooltip'		=> __('Use TRIMP, ATL, CTL, TSB, VDOT, ...'),
 	'onchange'		=> Ajax::$RELOAD_PLUGINS
-)));
+)));*/
 $Calculations->addConfigValue( new ConfigValueSelect('VDOT_HF_METHOD', array(
 	'default'		=> 'logarithmic',
 	'label'			=> __('VDOT: formula'),

@@ -115,9 +115,6 @@ $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
 DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 
-// Load helper class
-Helper::Unknown('');
-
 // Language functions
 if (!function_exists('__')) {
 	function __($text, $domain = 'runalyze') {
@@ -148,3 +145,6 @@ if (!function_exists('_ne')) {
 		echo $msg2;
 	}
 }
+
+// Load helper class
+Helper::Unknown('');

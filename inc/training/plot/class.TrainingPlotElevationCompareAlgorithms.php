@@ -22,14 +22,6 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	protected $Calculator = null;
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return true;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {

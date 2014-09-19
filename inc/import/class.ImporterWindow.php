@@ -61,9 +61,9 @@ class ImporterWindow {
 
 		if (isset($_GET['date']))
 			$this->Tabs['formular']->setVisible();
-		elseif (empty($this->TrainingObjects) && CONF_TRAINING_CREATE_MODE == 'upload')
+		elseif (empty($this->TrainingObjects) && Configuration::ActivityForm()->creationMode()->usesUpload())
 			$this->Tabs['upload']->setVisible();
-		elseif (empty($this->TrainingObjects) && CONF_TRAINING_CREATE_MODE == 'garmin')
+		elseif (empty($this->TrainingObjects) && Configuration::ActivityForm()->creationMode()->usesGarminCommunicator())
 			$this->Tabs['garmin']->setVisible();
 		else
 			$this->Tabs['formular']->setVisible();

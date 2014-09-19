@@ -83,13 +83,13 @@ class TrainingObject extends DataObject {
 	 * Set weather forecast
 	 */
 	public function setWeatherForecast() {
-		if ($this->trainingIsTooOldToFetchWeatherData() || !CONF_TRAINING_LOAD_WEATHER)
+		if ($this->trainingIsTooOldToFetchWeatherData() || !Configuration::ActivityForm()->loadWeather())
 			return;
 
 		$WeatherStrategy = new WeatherOpenweathermap();
 		$WeatherLocation = new WeatherLocation();
 		$WeatherLocation->setTimestamp( $this->getTimestamp() );
-		$WeatherLocation->setLocationName(CONF_PLZ);
+		$WeatherLocation->setLocationName( Configuration::ActivityForm()->weatherLocation() );
 
 		if ($this->hasPositionData()) {
 			$WeatherLocation->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
@@ -172,7 +172,7 @@ class TrainingObject extends DataObject {
 
 		Helper::recalculateStartTime();
 
-		if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+		if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 			$this->calculatePower();
 	}
 
@@ -285,7 +285,7 @@ class TrainingObject extends DataObject {
 	 */
 	private function updateElevation() {
 		if ($this->hasArrayLatitude() && $this->hasArrayLongitude()) {
-			if (CONF_TRAINING_DO_ELEVATION) {
+			if (Configuration::ActivityForm()->correctElevation()) {
 				$this->doElevationCorrection();
 			}
 
@@ -322,7 +322,7 @@ class TrainingObject extends DataObject {
 				$this->updateValue('elevation', $this->get('elevation_calculated'));
 			}
 
-			if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+			if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 				$this->calculatePower();
 		}
 	}
