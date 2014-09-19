@@ -445,16 +445,19 @@ class AccountHandler {
 		include FRONTEND_PATH.'system/register.consts.php';
 
 		$DB = DB::getInstance();
+		$whereAdd = 'AND `accountid`='.(int)$accountId;
 
 		$data = $DB->query('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen" LIMIT 1')->fetch();
-		ConfigValue::update('MAINSPORT', $data['id'], $accountId);
-		ConfigValue::update('RUNNINGSPORT', $data['id'], $accountId);
+
+		$DB->updateWhere('conf', '`key`="MAINSPORT" '.$whereAdd, 'value', $data['id']);
+		$DB->updateWhere('conf', '`key`="RUNNINGSPORT" '.$whereAdd, 'value', $data['id']);
+
 		$DB->exec('UPDATE `'.PREFIX.'type` SET `sportid`="'.$data['id'].'" WHERE `accountid`="'.$accountId.'" LIMIT 1', false);
 
 		$data = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf" LIMIT 1')->fetch();
-		ConfigValue::update('WK_TYPID', $data['id'], $accountId);
+		$DB->updateWhere('conf', '`key`="WK_TYPID" '.$whereAdd, 'value', $data['id']);
 
 		$data = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf" LIMIT 1')->fetch();
-		ConfigValue::update('LL_TYPID', $data['id'], $accountId);
+		$DB->updateWhere('conf', '`key`="LL_TYPID" '.$whereAdd, 'value', $data['id']);
 	}
 }

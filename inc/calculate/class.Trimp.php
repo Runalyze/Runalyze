@@ -13,43 +13,43 @@ class Trimp {
 	 * Factor A for male
 	 * @var double
 	 */
-	static private $FACTOR_MALE_A = 0.64;
+	const FACTOR_MALE_A = 0.64;
 
 	/**
 	 * Factor B for male
 	 * @var double
 	 */
-	static private $FACTOR_MALE_B = 1.92;
+	const FACTOR_MALE_B = 1.92;
 
 	/**
 	 * Factor A for female
 	 * @var double
 	 */
-	static private $FACTOR_FEMALE_A = 0.86;
+	const FACTOR_FEMALE_A = 0.86;
 
 	/**
 	 * Factor B for female
 	 * @var double
 	 */
-	static private $FACTOR_FEMALE_B = 1.67;
+	const FACTOR_FEMALE_B = 1.67;
 
 	/**
 	 * Maximum value for ATL
 	 * @var int
 	 */
-	static private $MAX_ATL = CONF_MAX_ATL;
+	static private $MAX_ATL = -1;
 
 	/**
 	 * Maximum value for CTL
 	 * @var int
 	 */
-	static private $MAX_CTL = CONF_MAX_CTL;
+	static private $MAX_CTL = -1;
 
 	/**
 	 * Maximum value for TRIMP
 	 * @var int
 	 */
-	static private $MAX_TRIMP = CONF_MAX_TRIMP;
+	static private $MAX_TRIMP = -1;
 
 	/**
 	 * Constructor is private
@@ -61,6 +61,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxATL() {
+		if (self::$MAX_ATL == -1)
+			self::$MAX_ATL = Configuration::Data()->maxATL();
+
 		if (self::$MAX_ATL == 0)
 			self::calculateMaxValues();
 
@@ -72,6 +75,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxCTL() {
+		if (self::$MAX_CTL == -1)
+			self::$MAX_CTL = Configuration::Data()->maxCTL();
+
 		if (self::$MAX_CTL == 0)
 			self::calculateMaxValues();
 
@@ -83,6 +89,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxTRIMP() {
+		if (self::$MAX_TRIMP == -1)
+			self::$MAX_TRIMP = Configuration::Data()->maxTrimp();
+
 		if (self::$MAX_TRIMP == 0)
 			self::calculateMaxValues();
 
@@ -94,7 +103,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorA() {
-		return Configuration::General()->gender()->isMale() ? self::$FACTOR_MALE_A : self::$FACTOR_FEMALE_A;
+		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_A : self::FACTOR_FEMALE_A;
 	}
 
 	/**
@@ -102,7 +111,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorB() {
-		return Configuration::General()->gender()->isMale() ? self::$FACTOR_MALE_B : self::$FACTOR_FEMALE_B;
+		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_B : self::FACTOR_FEMALE_B;
 	}
 
 	/**
@@ -154,7 +163,7 @@ class Trimp {
 
 		$Trimp = round($s/60 * self::TrimpFactor($avgHF) * $RPE / 10);
 
-		if ($Trimp > self::$MAX_TRIMP)
+		if ($Trimp > self::maxTRIMP())
 			self::setMaxTRIMP($Trimp);
 
 		return $Trimp;
@@ -331,7 +340,7 @@ class Trimp {
 	 * @param int $maxATL 
 	 */
 	private static function setMaxATL($maxATL) {
-		ConfigValue::update('MAX_ATL', $maxATL);
+		Configuration::Data()->updateMaxATL($maATL);
 
 		self::$MAX_ATL = $maxATL;
 	}
@@ -341,7 +350,7 @@ class Trimp {
 	 * @param int $maxCTL 
 	 */
 	private static function setMaxCTL($maxCTL) {
-		ConfigValue::update('MAX_CTL', $maxCTL);
+		Configuration::Data()->updateMaxCTL($maxCTL);
 
 		self::$MAX_CTL = $maxCTL;
 	}
@@ -354,7 +363,7 @@ class Trimp {
 		if (is_nan($maxTRIMP))
 			return;
 
-		ConfigValue::update('MAX_TRIMP', $maxTRIMP);
+		Configuration::Data()->updateMaxTrimp($maxTRIMP);
 
 		self::$MAX_TRIMP = $maxTRIMP;
 	}

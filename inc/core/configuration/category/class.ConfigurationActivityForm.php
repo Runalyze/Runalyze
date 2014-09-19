@@ -71,13 +71,13 @@ class ConfigurationActivityForm extends ConfigurationCategory {
 		$this->createHandle('TRAINING_DO_ELEVATION', new ParameterBool(true));
 		$this->createHandle('TRAINING_ELEVATION_SERVER', new ElevationServer());
 		$this->createHandle('TRAINING_LOAD_WEATHER', new ParameterBool(true));
-		$this->createHandle('PLZ', new ParameterString());
+		$this->createHandle('PLZ', new ParameterString(''));
 		$this->createHandle('COMPUTE_KCAL', new ParameterBool(true));
 		$this->createHandle('COMPUTE_POWER', new ParameterBool(true));
 		$this->createHandle('TRAINING_SORT_SPORTS', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_TYPES', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_SHOES', new DatabaseOrder());
-		$this->createHandle('GARMIN_IGNORE_IDS', new ParameterArray());
+		$this->createHandle('GARMIN_IGNORE_IDS', new ParameterArray(array()));
 	}
 
 	/**

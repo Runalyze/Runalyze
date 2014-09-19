@@ -49,6 +49,8 @@ UPDATE `runalyze_conf` SET `category`="vdot" WHERE `key`="VDOT_HF_METHOD" OR `ke
 UPDATE `runalyze_conf` SET `category`="trimp" WHERE `key`="ATL_DAYS" OR `key`="CTL_DAYS";
 UPDATE `runalyze_conf` SET `category`="misc" WHERE `key`="RESULTS_AT_PAGE";
 UPDATE `runalyze_conf` SET `category`="activity-form" WHERE `key`="TRAINING_CREATE_MODE" OR `key`="TRAINING_SHOW_AFTER_CREATE" OR `key`="TRAINING_DO_ELEVATION" OR `key`="TRAINING_ELEVATION_SERVER" OR `key`="TRAINING_LOAD_WEATHER" OR `key`="PLZ" OR `key`="COMPUTE_KCAL" OR `key`="COMPUTE_POWER" OR `key`="TRAINING_SORT_SPORTS" OR `key`="TRAINING_SORT_TYPES" OR `key`="TRAINING_SORT_SHOES" OR `key`="GARMIN_IGNORE_IDS";
+UPDATE `runalyze_conf` SET `category`="data" WHERE `key`="START_TIME" OR `key`="HF_MAX" OR `key`="HF_REST" OR `key`="VDOT_FORM" OR `key`="VDOT_CORRECTOR" OR `key`="BASIC_ENDURANCE" OR `key`="MAX_ATL" OR `key`="MAX_CTL" OR `key`="MAX_TRIMP";
+
 /*  - rename some values */
 
 /*  - remove unused values */

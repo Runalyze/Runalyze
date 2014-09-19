@@ -337,18 +337,13 @@ class JD {
 			return Configuration::Vdot()->manualValue();
 		}
 
-		if (!defined('CONF_VDOT_FORM')) {
-			Error::getInstance()->addError('Constant CONF_VDOT_FORM has to be set!');
-			define('CONF_VDOT_FORM', 0);
-		}
-
 		if (defined('VDOT_FORM'))
 			return VDOT_FORM;
 
-		if (CONF_VDOT_FORM == 0)
+		if (Configuration::Data()->vdotShape() == 0)
 			return self::recalculateVDOTform();
 
-		return CONF_VDOT_FORM;
+		return Configuration::Data()->vdotShape();
 	}
 
 	/**
@@ -357,7 +352,7 @@ class JD {
 	public static function recalculateVDOTform() {
 		$VDOT_FORM = self::calculateVDOTform();
 
-		ConfigValue::update('VDOT_FORM', $VDOT_FORM);
+		Configuration::Data()->updateVdotShape($VDOT_FORM);
 
 		return $VDOT_FORM;
 	}
@@ -404,13 +399,10 @@ class JD {
 		}
 
 		if (self::$CONST_CORRECTOR === false) {
-			if (!defined('CONF_VDOT_CORRECTOR')) {
-				Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
-				define('CONF_VDOT_CORRECTOR', 1);
-			}
+			$factor = Configuration::Data()->vdotCorrector();
 
-			if (CONF_VDOT_CORRECTOR != 1 && CONF_VDOT_CORRECTOR != 0)
-				self::$CONST_CORRECTOR = CONF_VDOT_CORRECTOR;
+			if ($factor != 1 && $factor != 0)
+				self::$CONST_CORRECTOR = $factor;
 			else
 				self::recalculateVDOTcorrector();
 		}
@@ -447,7 +439,7 @@ class JD {
 
 		$VDOT_CORRECTOR = (isset($Result['factor'])) ? $Result['factor'] : 1;
 
-		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
+		Configuration::Data()->updateVdotCorrector($VDOT_CORRECTOR);
 		self::$CONST_CORRECTOR = $VDOT_CORRECTOR;
 
 		return $VDOT_CORRECTOR;

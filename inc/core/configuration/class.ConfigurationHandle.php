@@ -22,6 +22,20 @@ class ConfigurationHandle {
 	protected $Parameter;
 
 	/**
+	 * Array with all values
+	 * @var array
+	 */
+	static private $TableHandles = array();
+
+	/**
+	 * All table handles
+	 * @return array array('key' => 'table')
+	 */
+	static public function tableHandles() {
+		return self::$TableHandles;
+	}
+
+	/**
 	 * Construct
 	 * @param string $Key
 	 * @param Parameter $Parameter
@@ -29,6 +43,10 @@ class ConfigurationHandle {
 	public function __construct($Key, Parameter $Parameter) {
 		$this->Key = $Key;
 		$this->Parameter = $Parameter;
+
+		if ($Parameter instanceof ParameterSelectRow) {
+			self::$TableHandles[$Key] = $Parameter->table();
+		}
 	}
 
 	/**

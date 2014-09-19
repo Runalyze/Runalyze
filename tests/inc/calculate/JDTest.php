@@ -1,8 +1,5 @@
 <?php
 
-if (!defined('CONF_JD_USE_VDOT_CORRECTOR'))
-	define('CONF_JD_USE_VDOT_CORRECTOR', true);
-
 require_once dirname(__FILE__) . '/../../../inc/calculate/class.JD.php';
 
 /**

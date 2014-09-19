@@ -14,7 +14,9 @@ if ($_GET['key'] === 'GARMIN_IGNORE_IDS') {
 	$Value   = unserialize(constant('CONF_'.$_GET['key']));
 	$Value[] = $_GET['value'];
 
-	ConfigValue::update($_GET['key'], ConfigValueArray::arrayToString($Value));
+	// TODO
+	//ConfigValue::update($_GET['key'], ConfigValueArray::arrayToString($Value));
 } else {
-	ConfigValue::update($_GET['key'], $_GET['value']);
+	// TODO
+	//ConfigValue::update($_GET['key'], $_GET['value']);
 }

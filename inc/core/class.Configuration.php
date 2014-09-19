@@ -19,7 +19,16 @@ class Configuration {
 	 * Load all categories
 	 */
 	static public function loadAll() {
-		// TODO
+		self::ActivityForm();
+		self::ActivityView();
+		self::Data();
+		self::DataBrowser();
+		self::Design();
+		self::General();
+		self::Misc();
+		self::Privacy();
+		self::Trimp();
+		self::Vdot();
 	}
 
 	/**
@@ -105,6 +114,14 @@ class Configuration {
 	 */
 	static public function Design() {
 		return self::get('ConfigurationDesign');
+	}
+
+	/**
+	 * Data
+	 * @return ConfigurationData
+	 */
+	static public function Data() {
+		return self::get('ConfigurationData');
 	}
 
 	/**
