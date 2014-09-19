@@ -44,8 +44,9 @@ UPDATE `runalyze_conf` SET `category`="activity-view" WHERE `key`="TRAINING_PLOT
 UPDATE `runalyze_conf` SET `category`="privacy" WHERE `key`="TRAINING_MAKE_PUBLIC" OR `key`="TRAINING_LIST_PUBLIC" OR `key`="TRAINING_LIST_ALL" OR `key`="TRAINING_LIST_STATISTICS" OR `key`="TRAINING_MAP_PUBLIC_MODE";
 UPDATE `runalyze_conf` SET `category`="activity-form" WHERE `key`="FORMULAR_SHOW_SPORT" OR `key`="FORMULAR_SHOW_GENERAL" OR `key`="FORMULAR_SHOW_DISTANCE" OR `key`="FORMULAR_SHOW_SPLITS" OR `key`="FORMULAR_SHOW_WEATHER" OR `key`="FORMULAR_SHOW_OTHER" OR `key`="FORMULAR_SHOW_NOTES" OR `key`="FORMULAR_SHOW_PUBLIC" OR `key`="FORMULAR_SHOW_ELEVATION" OR `key`="FORMULAR_SHOW_GPS";
 UPDATE `runalyze_conf` SET `category`="data-browser" WHERE `key`="DB_DISPLAY_MODE" OR `key`="DB_SHOW_DIRECT_EDIT_LINK" OR `key`="DB_SHOW_CREATELINK_FOR_DAYS";
-
+UPDATE `runalyze_conf` SET `category`="design" WHERE `key`="DESIGN_BG_FILE";
 /*  - rename some values */
 
 /*  - remove unused values */
 DELETE FROM `runalyze_conf` WHERE `key`="DB_HIGHLIGHT_TODAY";
+DELETE FROM `runalyze_conf` WHERE `key`="DESIGN_BG_FIX_AND_STRETCH";

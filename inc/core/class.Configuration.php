@@ -98,4 +98,12 @@ class Configuration {
 	static public function Privacy() {
 		return self::get('ConfigurationPrivacy');
 	}
+
+	/**
+	 * Design
+	 * @return ConfigurationDesign
+	 */
+	static public function Design() {
+		return self::get('ConfigurationDesign');
+	}
 }

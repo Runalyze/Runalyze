@@ -30,6 +30,7 @@ $CLASSMAP = array(
 'ConfigurationActivityForm' => 'core/configuration/category/class.ConfigurationActivityForm.php',
 'ConfigurationActivityView' => 'core/configuration/category/class.ConfigurationActivityView.php',
 'ConfigurationDataBrowser' => 'core/configuration/category/class.ConfigurationDataBrowser.php',
+'ConfigurationDesign' => 'core/configuration/category/class.ConfigurationDesign.php',
 'ConfigurationGeneral' => 'core/configuration/category/class.ConfigurationGeneral.php',
 'ConfigurationPrivacy' => 'core/configuration/category/class.ConfigurationPrivacy.php',
 'ConfigurationCategory' => 'core/configuration/class.ConfigurationCategory.php',
