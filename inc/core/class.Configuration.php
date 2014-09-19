@@ -122,4 +122,12 @@ class Configuration {
 	static public function Trimp() {
 		return self::get('ConfigurationTrimp');
 	}
+
+	/**
+	 * Miscellaneous
+	 * @return ConfigurationMisc
+	 */
+	static public function Misc() {
+		return self::get('ConfigurationMisc');
+	}
 }

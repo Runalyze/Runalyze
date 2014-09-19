@@ -47,6 +47,7 @@ UPDATE `runalyze_conf` SET `category`="data-browser" WHERE `key`="DB_DISPLAY_MOD
 UPDATE `runalyze_conf` SET `category`="design" WHERE `key`="DESIGN_BG_FILE";
 UPDATE `runalyze_conf` SET `category`="vdot" WHERE `key`="VDOT_HF_METHOD" OR `key`="VDOT_DAYS" OR `key`="JD_USE_VDOT_CORRECTOR" OR `key`="VDOT_MANUAL_CORRECTOR" OR `key`="VDOT_MANUAL_VALUE" OR `key`="JD_USE_VDOT_CORRECTION_FOR_ELEVATION" OR `key`="VDOT_CORRECTION_POSITIVE_ELEVATION" OR `key`="VDOT_CORRECTION_NEGATIVE_ELEVATION";
 UPDATE `runalyze_conf` SET `category`="trimp" WHERE `key`="ATL_DAYS" OR `key`="CTL_DAYS";
+UPDATE `runalyze_conf` SET `category`="misc" WHERE `key`="RESULTS_AT_PAGE";
 /*  - rename some values */
 
 /*  - remove unused values */

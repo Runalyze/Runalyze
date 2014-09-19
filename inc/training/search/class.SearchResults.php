@@ -53,11 +53,18 @@ class SearchResults {
 	private $withResults = true;
 
 	/**
+	 * Results per page
+	 * @var int
+	 */
+	private $resultsPerPage;
+
+	/**
 	 * Constructor
 	 * @param boolean $withResults
 	 */
 	public function __construct($withResults = true) {
 		$this->withResults = $withResults;
+		$this->resultsPerPage = Configuration::Misc()->searchResultsPerPage();
 
 		$this->setAllowedKeys();
 		$this->initDataset();
@@ -112,7 +119,7 @@ class SearchResults {
 		$this->totalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
 		$this->page = (int)Request::param('page');
 
-		if (($this->page-1)*CONF_RESULTS_AT_PAGE > $this->totalNumberOfTrainings)
+		if (($this->page-1)*$this->resultsPerPage > $this->totalNumberOfTrainings)
 			$this->page--;
 
 		$this->Trainings = DB::getInstance()->query(
@@ -264,9 +271,9 @@ class SearchResults {
 		if ($this->page <= 0)
 			$this->page = 1;
 
-		$limit = ($this->page - 1)*CONF_RESULTS_AT_PAGE;
+		$limit = ($this->page - 1)*$this->resultsPerPage;
 
-		return ' LIMIT '.$limit.','.CONF_RESULTS_AT_PAGE;
+		return ' LIMIT '.$limit.','.$this->resultsPerPage;
 	}
 
 	/**
@@ -334,7 +341,7 @@ class SearchResults {
 
 		echo ' '.sprintf( __('Found %s activities'), $this->totalNumberOfTrainings).' ';
 
-		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings) {
+		if ($this->page*$this->resultsPerPage < $this->totalNumberOfTrainings) {
 			echo '<span id="search-next" class="link">'.Icon::$NEXT.'</span>';
 		}
 
