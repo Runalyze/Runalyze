@@ -113,7 +113,7 @@ abstract class TrainingPlot {
 		$this->initPlot();
 		$this->initData();
 
-		if (empty($this->Data)) {
+		if (empty($this->Data) && empty($this->Plot->Data)) {
 			$this->Plot->raiseError('No data.');
 		} else {
 			$this->setProperties();
