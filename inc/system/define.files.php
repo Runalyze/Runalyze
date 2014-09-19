@@ -25,6 +25,7 @@ $JS_FILES = array(
 	'lib/runalyze.lib.tablesorter.js',
 	'lib/runalyze.lib.log.js',
 	'lib/runalyze.lib.options.js',
+	'lib/runalyze.lib.config.js',
 	'lib/runalyze.lib.overlay.js',
 	'lib/runalyze.lib.panels.js',
 	'lib/runalyze.lib.databrowser.js',

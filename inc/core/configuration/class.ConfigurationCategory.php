@@ -134,6 +134,20 @@ abstract class ConfigurationCategory {
 	}
 
 	/**
+	 * Get handle object
+	 * @param string $key
+	 * @return ConfigurationHandle
+	 * @throws InvalidArgumentException
+	 */
+	final protected function handle($key) {
+		if (isset($this->Handles[$key])) {
+			return $this->Handles[$key];
+		} else {
+			throw new InvalidArgumentException('Asked for unknown value key "'.$key.'" in configuration category.');
+		}
+	}
+
+	/**
 	 * Update value
 	 * @param ConfigurationHandle $Handle
 	 */

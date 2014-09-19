@@ -205,7 +205,7 @@ class Running {
 	 * @return int
 	 */
 	public static function PulseInPercent($pulse, $hf_max = 0, $hf_rest = 0) {
-		if (Configuration::ActivityView()->heartRateUnit()->isHRreserve())
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
 			return self::PulseInPercentReserve($pulse, $hf_max, $hf_rest);
 
 		return self::PulseInPercentHRmax($pulse, $hf_max);

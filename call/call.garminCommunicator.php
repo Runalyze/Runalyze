@@ -22,7 +22,7 @@ $Frontend = new Frontend(true);
 			$$("input[value="+id+"]").each(function(box){
 				box.checked = false;
 			});
-			window.parent.Runalyze.changeConfig('GARMIN_IGNORE_IDS',id,true);
+			window.parent.Runalyze.Config.ignoreActivityID(id);
 		}
 
 		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;

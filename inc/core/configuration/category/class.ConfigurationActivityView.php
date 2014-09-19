@@ -78,6 +78,15 @@ class ConfigurationActivityView extends ConfigurationCategory {
 	}
 
 	/**
+	 * Update layer
+	 * @param string $layer
+	 */
+	public function updateLayer($layer) {
+		$this->object('TRAINING_LEAFLET_LAYER')->set($layer);
+		$this->updateValue( $this->handle('TRAINING_LEAFLET_LAYER') );
+	}
+
+	/**
 	 * Create: Plot options
 	 * - TRAINING_PLOT_SMOOTH
 	 * - TRAINING_PLOT_MODE

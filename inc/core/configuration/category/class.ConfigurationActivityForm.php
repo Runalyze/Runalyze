@@ -58,8 +58,8 @@ class ConfigurationActivityForm extends ConfigurationCategory {
 	 * @param bool $flag
 	 */
 	public function update($Key, $flag) {
-		$this->object('FORMULAR_SHOW_'.$Key)->set($flag);
-		$this->updateValue( $this->object('FORMULAR_SHOW_'.$Key) );
+		$this->object('FORMULAR_SHOW_'.$Key)->setFromString($flag);
+		$this->updateValue( $this->handle('FORMULAR_SHOW_'.$Key) );
 	}
 
 	/**
@@ -182,6 +182,6 @@ class ConfigurationActivityForm extends ConfigurationCategory {
 	 */
 	public function ignoreActivityID($ID) {
 		$this->object('GARMIN_IGNORE_IDS')->append($ID);
-		$this->updateValue( $this->object('GARMIN_IGNORE_IDS') );
+		$this->updateValue( $this->handle('GARMIN_IGNORE_IDS') );
 	}
 }
