@@ -363,13 +363,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
-						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), CONF_VDOT_DAYS ).'</th>
+						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), Configuration::Vdot()->days() ).'</th>
 					</tr>
 				</thead>
 				<tbody class="top-and-bottom-border">
 				';
 
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - CONF_VDOT_DAYS*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
 				$Table .= '<tr>'.NL;
@@ -391,7 +391,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			';
 
 		$Fieldset = new FormularFieldset( __('VDOT') );
-		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), CONF_VDOT_DAYS ) );
+		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
 		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), VDOT_FORM ) );
 		$Fieldset->addBlock($Table);
 		$Fieldset->addInfo( __('Jack Daniels uses VDOT as a fixed value and not based on the training progress.<br>'.

@@ -787,7 +787,7 @@ class TrainingObject extends DataObject {
 	 * Get VDOT with elevation
 	 * @return double vdot with elevation influence
 	 */
-	public function getCurrentlyUsedVdot() { return (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
+	public function getCurrentlyUsedVdot() { return (Configuration::Vdot()->useElevationCorrection() && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
 
 
 	/**

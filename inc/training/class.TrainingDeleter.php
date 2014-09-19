@@ -66,7 +66,7 @@ class TrainingDeleter {
 	 * Recalculate VDOT shape
 	 */
 	protected function recalculateVDOTshape() {
-		if ($this->TrainingObject->Sport()->isRunning() && $this->TrainingObject->getTimestamp() >= (time() - CONF_VDOT_DAYS * DAY_IN_S) ) {
+		if ($this->TrainingObject->Sport()->isRunning() && $this->TrainingObject->getTimestamp() >= (time() - Configuration::Vdot()->days() * DAY_IN_S) ) {
 			JD::recalculateVDOTform();
 		}
 	}

@@ -183,7 +183,7 @@ class Dataset {
 	 */
 	private function getQuerySelectForSet() {
 		$String = '';
-		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
 		foreach ($this->data as $set)
 			if ($set['summary'] == 1) {

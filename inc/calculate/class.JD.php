@@ -31,7 +31,7 @@ class JD {
 	 * @return string
 	 */
 	public static function mysqlVDOTsum() {
-		return CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
+		return Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class JD {
 	 * @return string
 	 */
 	public static function mysqlVDOTsumTime() {
-		return '`s`*`use_vdot`*('.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : '`vdot`').' > 0)';
+		return '`s`*`use_vdot`*('.(Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : '`vdot`').' > 0)';
 	}
 
 	/**
@@ -89,7 +89,7 @@ class JD {
 	 * @return float   HFmax [%]
 	 */
 	public static function pVDOT2pHF($pVDOT) {
-		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+		if (Configuration::Vdot()->method()->usesLogarithmic())
 			return 0.68725*log($pVDOT)+1.00466;
 
 		// Old version
@@ -102,7 +102,7 @@ class JD {
 	 * @return float   VDOT [%]
 	 */
 	public static function pHF2pVDOT($pHF) {
-		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+		if (Configuration::Vdot()->method()->usesLogarithmic())
 			return exp( ($pHF - 1.00466) / 0.68725 );
 
 		// Old version
@@ -134,7 +134,7 @@ class JD {
 	 * @return double
 	 */
 	public static function correctVDOT($VDOT) {
-		if (CONF_JD_USE_VDOT_CORRECTOR)
+		if (Configuration::Vdot()->useCorrectionFactor())
 			return self::correctionFactor()*$VDOT;
 
 		return $VDOT;
@@ -197,15 +197,13 @@ class JD {
 	/**
 	 * Transform distance from elevatoin
 	 * 
-	 * @uses CONF_VDOT_CORRECTION_POSITIVE_ELEVATION
-	 * @uses CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION
 	 * @param double $distance
 	 * @param int $up
 	 * @param int $down
 	 * @return double
 	 */
 	public static function transformDistanceFromElevation($distance, $up, $down) {
-		return $distance + (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up/1000 + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down/1000;
+		return $distance + Configuration::Vdot()->correctionForPositiveElevation()*$up/1000 + Configuration::Vdot()->correctionForNegativeElevation()*$down/1000;
 	}
 
 	/**
@@ -335,10 +333,8 @@ class JD {
 	 * @return float
 	 */
 	public static function getConstVDOTform() {
-		if (defined('CONF_VDOT_MANUAL_VALUE')) {
-			$ManualValue = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_VALUE);
-			if ($ManualValue > 0)
-				return $ManualValue;
+		if (Configuration::Vdot()->useManualValue()) {
+			return Configuration::Vdot()->manualValue();
 		}
 
 		if (!defined('CONF_VDOT_FORM')) {
@@ -386,7 +382,7 @@ class JD {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`="'.Configuration::General()->runningSport().'"
-				&& `time` BETWEEN '.($time - CONF_VDOT_DAYS*DAY_IN_S).' AND '.$time.'
+				&& `time` BETWEEN '.($time - Configuration::Vdot()->days()*DAY_IN_S).' AND '.$time.'
 			GROUP BY `sportid`
 			LIMIT 1
 		')->fetch();
@@ -403,10 +399,8 @@ class JD {
 	 * @return int
 	 */
 	public static function correctionFactor() {
-		if (defined('CONF_VDOT_MANUAL_CORRECTOR')) {
-			$ManualCorrector = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_CORRECTOR);
-			if ($ManualCorrector > 0)
-				return $ManualCorrector;
+		if (Configuration::Vdot()->useManualFactor()) {
+			return Configuration::Vdot()->manualFactor();
 		}
 
 		if (self::$CONST_CORRECTOR === false) {

@@ -53,7 +53,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 				echo HTML::okay($Message);
 		}
 
-		$AndApplyElevationToVDOT = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? __(' and adjust VDOT') : '';
+		$AndApplyElevationToVDOT = Configuration::Vdot()->useElevationCorrection() ? __(' and adjust VDOT') : '';
 
 		$Fieldset = new FormularFieldset( __('Cleanup database') );
 
@@ -81,7 +81,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 					'<br>'.
 					'<small>This <strong>does</strong> change your manual value for the elevation.</small>') );
 
-		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
+		if (Configuration::Vdot()->useElevationCorrection()) {
 			$Fieldset->addWarning(
 				__('The VDOT-adjustment for elevation data is activated (see configuration). '.
 					'The complete cleanup will not work as expected, recalculate the elevation first.') );
@@ -158,7 +158,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			$keys   = array('elevation_calculated');
 			$values = array($elevationArray[0]);
 
-			if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
+			if (Configuration::Vdot()->useElevationCorrection()) {
 				$keys[] = 'vdot_with_elevation';
 				$values[] = JD::Training2VDOTwithElevation($Training['id'], $Training, $elevationArray[1], $elevationArray[2]);
 			}
@@ -173,7 +173,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 
 		$this->SuccessMessages[] = sprintf( __('Elevation values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
 
-		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
+		if (Configuration::Vdot()->useElevationCorrection())
 			$this->recalculateVDOTwithElevationWithoutGPSarray();
 	}
 

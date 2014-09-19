@@ -106,4 +106,12 @@ class Configuration {
 	static public function Design() {
 		return self::get('ConfigurationDesign');
 	}
+
+	/**
+	 * VDOT
+	 * @return ConfigurationVdot
+	 */
+	static public function Vdot() {
+		return self::get('ConfigurationVdot');
+	}
 }

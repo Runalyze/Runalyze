@@ -137,7 +137,7 @@ abstract class ConfigurationCategory {
 	 * Update value
 	 * @param ConfigurationHandle $Handle
 	 */
-	final public function updateValue(ConfigurationHandle $Handle) {
+	final protected function updateValue(ConfigurationHandle $Handle) {
 		if ($this->hasUserID() && !SharedLinker::isOnSharedPage()) {
 			$where = '`accountid`='.$this->userID();
 			$where .= ' AND `key`='.DB::getInstance()->escape($Handle->key());

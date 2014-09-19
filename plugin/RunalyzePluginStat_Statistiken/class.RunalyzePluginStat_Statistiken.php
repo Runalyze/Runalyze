@@ -221,13 +221,16 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
 		}
 
-		if ($this->sportid == Configuration::General()->runningSport() && CONF_RECHENSPIELE)
+		// TODO
+		//  - CONF_RECHENSPIELE is not used anymore.
+		//  - if we want to keep this configurable: create plugin-configuration
+		if ($this->sportid == Configuration::General()->runningSport())
 			$this->displayLine(__('VDOT'), $this->VDOTData, 'small');
 
-		if ($this->sportid == Configuration::General()->runningSport() && CONF_RECHENSPIELE)
+		if ($this->sportid == Configuration::General()->runningSport())
 			$this->displayLine(__('JDpoints'), $this->JDIntensityData, 'small');
 
-		if (CONF_RECHENSPIELE)
+		if (true)
 			$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
 
 		echo '</tbody>';
