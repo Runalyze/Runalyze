@@ -114,4 +114,12 @@ class Configuration {
 	static public function Vdot() {
 		return self::get('ConfigurationVdot');
 	}
+
+	/**
+	 * Trimp
+	 * @return ConfigurationTrimp
+	 */
+	static public function Trimp() {
+		return self::get('ConfigurationTrimp');
+	}
 }

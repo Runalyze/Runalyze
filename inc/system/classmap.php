@@ -33,6 +33,7 @@ $CLASSMAP = array(
 'ConfigurationDesign' => 'core/configuration/category/class.ConfigurationDesign.php',
 'ConfigurationGeneral' => 'core/configuration/category/class.ConfigurationGeneral.php',
 'ConfigurationPrivacy' => 'core/configuration/category/class.ConfigurationPrivacy.php',
+'ConfigurationTrimp' => 'core/configuration/category/class.ConfigurationTrimp.php',
 'ConfigurationVdot' => 'core/configuration/category/class.ConfigurationVdot.php',
 'ConfigurationCategory' => 'core/configuration/class.ConfigurationCategory.php',
 'ConfigurationForm' => 'core/configuration/class.ConfigurationForm.php',

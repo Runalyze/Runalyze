@@ -318,7 +318,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="b">ATL</td>
 						<td>'.__('Actual Training Load').'</td>
 						<td class="c">'.$TrimpValues['ATL'].' &#37;</td>
-						<td class="c small">'.sprintf( __('%s days'), CONF_ATL_DAYS).'</td>
+						<td class="c small">'.sprintf( __('%s days'), Configuration::Trimp()->daysForATL()).'</td>
 						<td class="c">'.$ATL.'</td>
 						<td class="c">'.$maxATL.'</td>
 						<td class="small">'.__('Training impulse over a short period').'</td>
@@ -327,7 +327,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<td class="b">CTL</td>
 						<td>'.__('Chronical Training Load').'</td>
 						<td class="c">'.$TrimpValues['CTL'].' &#37;</td>
-						<td class="c small">'.sprintf( __('%s days'), CONF_CTL_DAYS).'</td>
+						<td class="c small">'.sprintf( __('%s days'), Configuration::Trimp()->daysForCTL()).'</td>
 						<td class="c">'.$CTL.'</td>
 						<td class="c">'.$maxCTL.'</td>
 						<td class="small">'.__('Training impulse over a long period').'</td>

@@ -200,8 +200,6 @@ class Trimp {
 
 	/**
 	 * Calculating ActualTrainingLoad (at a given timestamp)
-	 * @uses CONF_ATL_DAYS
-	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
 	static public function ATL($time = 0) {
@@ -215,11 +213,11 @@ class Trimp {
 			SELECT
 				SUM(`trimp`) as `sum`
 			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_ATL_DAYS*DAY_IN_S).' AND '.$time.'
+			WHERE `time` BETWEEN '.($time - Configuration::Trimp()->daysForATL()*DAY_IN_S).' AND '.$time.'
 			LIMIT 1
 		')->fetch();
 
-		$ATL = round($Data['sum']/CONF_ATL_DAYS);
+		$ATL = round($Data['sum']/Configuration::Trimp()->daysForATL());
 
 		if ($ATL > self::maxATL())
 			self::setMaxATL($ATL);
@@ -229,8 +227,6 @@ class Trimp {
 
 	/**
 	 * Calculating ChronicTrainingLoad (at a given timestamp)
-	 * @uses CONF_CTL_DAYS
-	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
 	static public function CTL($time = 0) {
@@ -244,11 +240,11 @@ class Trimp {
 			SELECT
 				SUM(`trimp`) as `sum`
 			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_CTL_DAYS*DAY_IN_S).' AND '.$time.'
+			WHERE `time` BETWEEN '.($time - Configuration::Trimp()->daysForCTL()*DAY_IN_S).' AND '.$time.'
 			LIMIT 1
 		')->fetch();
 
-		$CTL = round($Data['sum']/CONF_CTL_DAYS);
+		$CTL = round($Data['sum']/Configuration::Trimp()->daysForCTL());
 
 		if ($CTL > self::maxCTL())
 			self::setMaxCTL($CTL);
@@ -285,7 +281,7 @@ class Trimp {
 	/**
 	 * Calculate max values for atl/ctl/trimp again
 	 * Calculations are implemented again because normal ones are too slow
-	 * ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
+	 * ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
 	 * Attention: Values must not be zero!
 	 */
 	public static function calculateMaxValues() {
@@ -304,6 +300,9 @@ class Trimp {
 			GROUP BY `y`, `d`
 			ORDER BY `y` ASC, `d` ASC
 		')->fetchAll();
+
+		$ATLdays = Configuration::Trimp()->daysForATL();
+		$CTLdays = Configuration::Trimp()->daysForCTL();
 		
 		foreach ($Data as $dat) {
 			$atl           = 0;
@@ -311,10 +310,10 @@ class Trimp {
 			$index         = $dat['y']*365 + $dat['d'] - $start_i;
 			$Trimp[$index] = $dat['trimp'];
 
-			if ($index >= CONF_ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, 1 + $index - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
-			if ($index >= CONF_CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, 1 + $index - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
+			if ($index >= $ATLdays)
+				$atl   = array_sum(array_slice($Trimp, 1 + $index - $ATLdays, $ATLdays)) / $ATLdays;
+			if ($index >= $CTLdays)
+				$ctl   = array_sum(array_slice($Trimp, 1 + $index - $CTLdays, $CTLdays)) / $CTLdays;
 
 			if ($atl > $maxATL)
 				$maxATL = $atl;
