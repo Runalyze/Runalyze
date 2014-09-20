@@ -17,13 +17,13 @@ class PDOforRunalyze extends PDO {
 	 * @var bool
 	 */
 	protected $addsAccountID = true;
-
+      
 	/**
 	 * Accountid
 	 * @var mixed
 	 */
 	protected $accountID = false;
-        public $counter = 0;
+
 	/**
 	 * Start adding accountid
 	 */
@@ -252,13 +252,10 @@ class PDOforRunalyze extends PDO {
 	 * on failure.
 	 */
 	public function query($statement) {
-            $this->counter++;
-                //echo "(".$this->counter.")".$statement."<br>"; 
 		if ($this->addsAccountID) {
 			$this->addAccountIDtoStatement($statement);
 		}
-                //echo "<pre>";
-        //debug_print_backtrace();echo "</pre>";
+
 		return parent::query($statement);
 	}
 }
