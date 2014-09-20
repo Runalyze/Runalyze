@@ -160,6 +160,7 @@ class PDOforRunalyze extends PDO {
 			$this->startAddingAccountID();
 			return false;
 		}
+		$this->startAddingAccountID();
 
 		return $this->lastInsertId();
 	}

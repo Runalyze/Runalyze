@@ -52,29 +52,29 @@ $EmptyTables['dataset'] = array(
 	)
 );
 $EmptyTables['plugin'] = array(
-	'columns' => array('key', 'type', 'config', 'active', 'order'),
+	'columns' => array('key', 'type', 'active', 'order'),
 	'values'  => array(
-		array('RunalyzePluginPanel_Sports', 'panel', '', 1, 1),
-		array('RunalyzePluginPanel_Rechenspiele', 'panel', 'show_trainingpaces|bool=true|Empfohlene Trainingstempi anzeigen\n', 1, 2),
-		array('RunalyzePluginPanel_Prognose', 'panel', 'distances|array=1, 3, 5, 10, 21.1, 42.2|Distanzen f&uuml;r die Prognose (kommagetrennt)', 2, 3),
-		array('RunalyzePluginPanel_Schuhe', 'panel', '', 2, 4),
-		array('RunalyzePluginPanel_Sportler', 'panel', 'use_weight|bool=true|Gewicht protokollieren\nuse_body_fat|bool=true|Fettanteil protokollieren\nuse_pulse|bool=true|Ruhepuls protokollieren\nwunschgewicht|int=66.0|Wunschgewicht\n', 1, 5),
-		array('RunalyzePluginStat_Analyse', 'stat', 'use_type|bool=true|Trainingstypen analysieren\r\nuse_pace|bool=true|Tempobereiche analysieren\r\nuse_pulse|bool=true|Pulsbereiche analysieren\r\nlowest_pulsegroup|int=65|Niedrigster Pulsbereich (%HFmax)\r\npulsegroup_step|int=5|Pulsbereich: Schrittweite\r\nlowest_pacegroup|int=360|Niedrigster Tempobereich (s/km)\r\nhighest_pacegroup|int=210|H&ouml;chster Tempobereich (s/km)\r\npacegroup_step|int=15|Tempobereich: Schrittweite', 1, 2),
-		array('RunalyzePluginStat_Statistiken', 'stat', '', 1, 1),
-		array('RunalyzePluginStat_Wettkampf', 'stat', 'last_wk_num|int=10|Anzahl f&uuml;r letzte Wettk&auml;mpfe\nmain_distance|int=10|Hauptdistanz (wird als Diagramm dargestellt)\npb_distances|array=1,     3,     5,     10,     21.1,     42.2|Distanzen f&uuml;r Bestzeit-Vergleich (kommagetrennt)\nfun_ids|array=1453,     1248,  1078, 1252|IDs der Spa&szlig;-Wettk&auml;mpfe (nicht per Hand editieren!)\n', 1, 3),
-		array('RunalyzePluginStat_Wetter', 'stat', 'for_weather|bool=true|Wetter-Statistiken anzeigen\r\nfor_clothes|bool=true|Kleidung-Statistiken anezigen', 1, 5),
-		array('RunalyzePluginStat_Rekorde', 'stat', '', 2, 6),
-		array('RunalyzePluginStat_Strecken', 'stat', '', 2, 7),
-		array('RunalyzePluginStat_Trainingszeiten', 'stat', '', 2, 8),
-		array('RunalyzePluginStat_Trainingspartner', 'stat', '', 2, 9),
-		array('RunalyzePluginStat_Hoehenmeter', 'stat', '', 2, 10),
-		array('RunalyzePluginStat_Laufabc', 'stat', '', 1, 11),
-		array('RunalyzePluginTool_Cacheclean', 'tool', '', 1, 99),
-		array('RunalyzePluginTool_DatenbankCleanup', 'tool', '', 1, 99),
-		array('RunalyzePluginTool_MultiEditor', 'tool', '', 1, 99),
-		array('RunalyzePluginTool_AnalyzeVDOT', 'tool', '', 1, 99),
-		array('RunalyzePluginTool_DbBackup', 'tool', '', 1, 99),
-		array('RunalyzePluginTool_JDTables', 'tool', '', 1, 99)
+		array('RunalyzePluginPanel_Sports', 'panel', 1, 1),
+		array('RunalyzePluginPanel_Rechenspiele', 'panel', 1, 2),
+		array('RunalyzePluginPanel_Prognose', 'panel', 2, 3),
+		array('RunalyzePluginPanel_Schuhe', 'panel', 2, 4),
+		array('RunalyzePluginPanel_Sportler', 'panel', 1, 5),
+		array('RunalyzePluginStat_Analyse', 'stat', 1, 2),
+		array('RunalyzePluginStat_Statistiken', 'stat',1, 1),
+		array('RunalyzePluginStat_Wettkampf', 'stat', 1, 3),
+		array('RunalyzePluginStat_Wetter', 'stat', 1, 5),
+		array('RunalyzePluginStat_Rekorde', 'stat', 2, 6),
+		array('RunalyzePluginStat_Strecken', 'stat', 2, 7),
+		array('RunalyzePluginStat_Trainingszeiten', 'stat', 2, 8),
+		array('RunalyzePluginStat_Trainingspartner', 'stat', 2, 9),
+		array('RunalyzePluginStat_Hoehenmeter', 'stat', 2, 10),
+		array('RunalyzePluginStat_Laufabc', 'stat', 1, 11),
+		array('RunalyzePluginTool_Cacheclean', 'tool', 1, 99),
+		array('RunalyzePluginTool_DatenbankCleanup', 'tool', 1, 99),
+		array('RunalyzePluginTool_MultiEditor', 'tool', 1, 99),
+		array('RunalyzePluginTool_AnalyzeVDOT', 'tool', 1, 99),
+		array('RunalyzePluginTool_DbBackup', 'tool', 1, 99),
+		array('RunalyzePluginTool_JDTables', 'tool', 1, 99)
 	)
 );
 $EmptyTables['sport'] = array(
