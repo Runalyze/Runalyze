@@ -210,7 +210,7 @@ class Trimp {
 		}
 
 		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
-                $Data = Cache::get('Trimp'.$time);
+                $Data = Cache::get('TrimpATL'.$time);
                 if(is_null($Data)) {
                     $Data = DB::getInstance()->query('
                             SELECT
@@ -220,7 +220,7 @@ class Trimp {
                             LIMIT 1
                     ')->fetch();
                 }
-                $Data = Cache::set('Trimp'.$time, $Data, '600');
+                $Data = Cache::set('TrimpATL'.$time, $Data, '600');
 		$ATL = round($Data['sum']/CONF_ATL_DAYS);
 
 		if ($ATL > self::maxATL())
@@ -241,7 +241,7 @@ class Trimp {
 		}
 
 		$time = mktime(23, 59, 59, date('m', $time), date('d', $time), date('Y', $time));
-                $Data = Cache::get('Trimp'.$time);
+                $Data = Cache::get('TrimpCTL'.$time);
                 if(is_null($Data)) {
                     $Data = DB::getInstance()->query('
                             SELECT
@@ -251,7 +251,7 @@ class Trimp {
                             LIMIT 1
                     ')->fetch();
                 }
-                $Data = Cache::set('Trimp'.$time, $Data, '600');
+                $Data = Cache::set('TrimpCTL'.$time, $Data, '600');
 
 		$CTL = round($Data['sum']/CONF_CTL_DAYS);
 
