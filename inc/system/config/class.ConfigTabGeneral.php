@@ -21,10 +21,17 @@ class ConfigTabGeneral extends ConfigTab {
 	 * All categories
 	 * @return ConfigurationCategory[]
 	 */
-	private function getAllCategories() {
+	private function allCategories() {
 		return array(
 			Configuration::General(),
-			Configuration::ActivityView()
+			Configuration::Privacy(),
+			Configuration::ActivityView(),
+			Configuration::ActivityForm(),
+			Configuration::Design(),
+			Configuration::DataBrowser(),
+			Configuration::Vdot(),
+			Configuration::Trimp(),
+			Configuration::Misc()
 		);
 	}
 
@@ -33,20 +40,22 @@ class ConfigTabGeneral extends ConfigTab {
 	 */
 	public function setFieldsetsAndFields() {
 		$IsFirst    = true;
-		$Categories = ConfigCategory::getAllCategories();
-		//$Categories = $this->getAllCategories();
+		//$Categories = ConfigCategory::getAllCategories();
+		$Categories = $this->allCategories();
 
 		foreach ($Categories as $Category) {
-			//$Fieldset = $Category->Fieldset();
-			$Fieldset = $Category->getFieldset();
+			$Fieldset = $Category->Fieldset();
+			//$Fieldset = $Category->getFieldset();
 
-			if ($IsFirst)
-				$IsFirst = false;
-			else
-				$Fieldset->setCollapsed();
+			if (!is_null($Fieldset)) {
+				if ($IsFirst)
+					$IsFirst = false;
+				else
+					$Fieldset->setCollapsed();
 
-			$this->Formular->addFieldset($Fieldset);
-			$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
+				$this->Formular->addFieldset($Fieldset);
+				$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
+			}
 		}
 
 		$this->Formular->allowOnlyOneOpenedFieldset();
@@ -56,15 +65,15 @@ class ConfigTabGeneral extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		/*$Categories = $this->getAllCategories();
+		/**/$Categories = $this->allCategories();
 
 		foreach ($Categories as $Category) {
 			$Category->updateFromPost();
-		}*/
+		}/**/
 
-		$Categories = ConfigCategory::getAllCategories();
+		/*$Categories = ConfigCategory::getAllCategories();
 
 		foreach ($Categories as $Category)
-			$Category->parseAllValues();
+			$Category->parseAllValues();*/
 	}
 }

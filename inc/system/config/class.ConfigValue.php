@@ -119,7 +119,7 @@ abstract class ConfigValue {
 		$this->Options = array_merge($this->Options, $Options);
 
 		$this->setValueAndCheckDatabase();
-		$this->parsePostData();
+		//$this->parsePostData();
 		$this->defineConst();
 		$this->subclassSetup();
 	}

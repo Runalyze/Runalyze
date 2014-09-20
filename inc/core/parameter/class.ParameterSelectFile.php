@@ -50,4 +50,30 @@ class ParameterSelectFile extends ParameterSelect {
 
 		return true;
 	}
+
+	/**
+	 * Options
+	 * @return array
+	 */
+	public function options() {
+		$Options = array();
+		$Folder = $this->Options['folder'];
+
+		if (!is_array($Folder)) {
+			$Folder = array($Folder);
+		}
+
+		foreach ($Folder as $Fold) {
+			$handle = opendir(FRONTEND_PATH.'../'.$Fold);
+			if ($handle) {
+				while (false !== ($file = readdir($handle))) {
+					if ($this->valueIsAllowed($file)) {
+						$Options[$Fold.$file] = $file;
+					}
+				}
+			}
+		}
+
+		return $Options;
+	}
 }

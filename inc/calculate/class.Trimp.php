@@ -340,7 +340,7 @@ class Trimp {
 	 * @param int $maxATL 
 	 */
 	private static function setMaxATL($maxATL) {
-		Configuration::Data()->updateMaxATL($maATL);
+		Configuration::Data()->updateMaxATL($maxATL);
 
 		self::$MAX_ATL = $maxATL;
 	}

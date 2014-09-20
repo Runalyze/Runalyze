@@ -40,4 +40,35 @@ class ConfigurationTrimp extends ConfigurationCategory {
 	public function daysForCTL() {
 		return $this->get('CTL_DAYS');
 	}
+
+	/**
+	 * Register onchange events
+	 */
+	protected function registerOnchangeEvents() {
+		$this->handle('ATL_DAYS')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('ATL_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+
+		$this->handle('CTL_DAYS')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('CTL_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('TRIMP') );
+
+		$Fieldset->addHandle( $this->handle('ATL_DAYS'), array(
+			'label'		=> __('Days for ATL'),
+			'tooltip'	=> __('Number of days to recognize for ATL')
+		));
+
+		$Fieldset->addHandle( $this->handle('CTL_DAYS'), array(
+			'label'		=> __('Days for CTL'),
+			'tooltip'	=> __('Number of days to recognize for CTL')
+		));
+
+		return $Fieldset;
+	}
 }

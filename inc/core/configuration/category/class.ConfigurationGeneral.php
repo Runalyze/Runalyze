@@ -130,4 +130,50 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	public function longRunType() {
 		return $this->get('LL_TYPID');
 	}
+
+	/**
+	 * Register onchange events
+	 */
+	protected function registerOnchangeEvents() {
+		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('PULS_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
+		$this->handle('RUNNINGSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
+		$this->handle('WK_TYPID')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('LL_TYPID')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('General settings') );
+
+		$Fieldset->addHandle( $this->handle('GENDER'), array(
+			'label'		=> __('Gender')
+		));
+
+		$Fieldset->addHandle( $this->handle('PULS_MODE'), array(
+			'label'		=> __('Heart rate unit')
+		));
+
+		$Fieldset->addHandle( $this->handle('MAINSPORT'), array(
+			'label'		=> __('Main sport')
+		));
+
+		$Fieldset->addHandle( $this->handle('RUNNINGSPORT'), array(
+			'label'		=> __('Running sport')
+		));
+
+		$Fieldset->addHandle( $this->handle('WK_TYPID'), array(
+			'label'		=> __('Activity type: competition')
+		));
+
+		$Fieldset->addHandle( $this->handle('LL_TYPID'), array(
+			'label'		=> __('Activity type: long run')
+		));
+
+		return $Fieldset;
+	}
 }

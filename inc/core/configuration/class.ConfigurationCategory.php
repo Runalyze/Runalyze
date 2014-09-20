@@ -34,6 +34,7 @@ abstract class ConfigurationCategory {
 	 */
 	public function __construct() {
 		$this->createHandles();
+		$this->registerOnchangeEvents();
 	}
 
 	/**
@@ -83,12 +84,15 @@ abstract class ConfigurationCategory {
 	abstract protected function createHandles();
 
 	/**
-	 * Create form
-	 * @return ConfigurationForm
+	 * Register onchange events
 	 */
-	public function createForm() {
-		// TODO
+	protected function registerOnchangeEvents() {}
 
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
 		return null;
 	}
 
@@ -148,6 +152,15 @@ abstract class ConfigurationCategory {
 	}
 
 	/**
+	 * Update all values from post
+	 */
+	final public function updateFromPost() {
+		foreach ($this->Handles as $Handle) {
+			$this->updateValueFromPost($Handle);
+		}
+	}
+
+	/**
 	 * Update value
 	 * @param ConfigurationHandle $Handle
 	 */
@@ -157,6 +170,29 @@ abstract class ConfigurationCategory {
 			$where .= ' AND `key`='.DB::getInstance()->escape($Handle->key());
 
 			DB::getInstance()->updateWhere('conf', $where, 'value', $Handle->object()->valueAsString());
+		}
+	}
+
+	/**
+	 * Update value from post
+	 * @param ConfigurationHandle $Handle
+	 */
+	private function updateValueFromPost(ConfigurationHandle $Handle) {
+		$key = $Handle->key();
+
+		if (isset($_POST[$key]) || isset($_POST[$key.'_sent'])) {
+			$value = $Handle->value();
+
+			if ($Handle->object() instanceof ParameterBool) {
+				$Handle->object()->set( isset($_POST[$key]) );
+			} else {
+				$Handle->object()->setFromString($_POST[$key]);
+			}
+
+			if ($value != $Handle->value()) {
+				$this->updateValue($Handle);
+				$Handle->processOnchangeEvents();
+			}
 		}
 	}
 

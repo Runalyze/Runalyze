@@ -3501,14 +3501,12 @@ Runalyze.DataBrowser = (function($, Parent){
 	};
 
 	var $container;
-	var $reloadLink;
 
 
 	// Private Methods
 
 	function initObjects() {
 		$container = $( options.selectorContainer );
-		$reloadLink = $( options.selectorReload );
 	}
 
 
@@ -3519,7 +3517,7 @@ Runalyze.DataBrowser = (function($, Parent){
 	};
 
 	self.reload = function() {
-		$reloadLink.trigger('click');
+		$( options.selectorReload ).trigger('click');
 	};
 
 	Parent.addInitHook('init-databrowser', self.init);

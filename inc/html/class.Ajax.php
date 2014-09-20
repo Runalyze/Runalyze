@@ -118,9 +118,9 @@ class Ajax {
 			case self::$RELOAD_DATABROWSER_AND_TRAINING:
 				return self::wrapJS('Runalyze.reloadDataBrowserAndTraining();');
 			case self::$RELOAD_TRAINING:
-				return self::wrapJS('Runalyze.reloadTraining();');
+				return self::wrapJS('Runalyze.Training.reload();');
 			case self::$RELOAD_DATABROWSER:
-				return self::wrapJS('Runalyze.reloadDataBrowser();');
+				return self::wrapJS('Runalyze.DataBrowser.reload();');
 			case self::$RELOAD_NONE:
 			default:
 				return '';

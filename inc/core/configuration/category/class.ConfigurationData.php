@@ -50,7 +50,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateStartTime($starttime) {
 		$this->object('START_TIME')->set($starttime);
-		$this->updateValue( $this->object('START_TIME') );
+		$this->updateValue( $this->handle('START_TIME') );
 	}
 
 	/**
@@ -67,7 +67,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateHRmax($heartrate) {
 		$this->object('HF_MAX')->set($heartrate);
-		$this->updateValue( $this->object('HF_MAX') );
+		$this->updateValue( $this->handle('HF_MAX') );
 	}
 
 	/**
@@ -84,7 +84,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateHRrest($heartrate) {
 		$this->object('HF_REST')->set($heartrate);
-		$this->updateValue( $this->object('HF_REST') );
+		$this->updateValue( $this->handle('HF_REST') );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateVdotShape($shape) {
 		$this->object('VDOT_FORM')->set($shape);
-		$this->updateValue( $this->object('VDOT_FORM') );
+		$this->updateValue( $this->handle('VDOT_FORM') );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateVdotCorrector($factor) {
 		$this->object('VDOT_CORRECTOR')->set($factor);
-		$this->updateValue( $this->object('VDOT_CORRECTOR') );
+		$this->updateValue( $this->handle('VDOT_CORRECTOR') );
 	}
 
 	/**
@@ -135,7 +135,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateBasicEndurance($basicEndurance) {
 		$this->object('BASIC_ENDURANCE')->set($basicEndurance);
-		$this->updateValue( $this->object('BASIC_ENDURANCE') );
+		$this->updateValue( $this->handle('BASIC_ENDURANCE') );
 	}
 
 	/**
@@ -152,7 +152,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateMaxATL($atl) {
 		$this->object('MAX_ATL')->set($atl);
-		$this->updateValue( $this->object('MAX_ATL') );
+		$this->updateValue( $this->handle('MAX_ATL') );
 	}
 
 	/**
@@ -169,7 +169,7 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateMaxCTL($ctl) {
 		$this->object('MAX_CTL')->set($ctl);
-		$this->updateValue( $this->object('MAX_CTL') );
+		$this->updateValue( $this->handle('MAX_CTL') );
 	}
 
 	/**
@@ -186,6 +186,6 @@ class ConfigurationData extends ConfigurationCategory {
 	 */
 	public function updateMaxTrimp($trimp) {
 		$this->object('MAX_TRIMP')->set($trimp);
-		$this->updateValue( $this->object('MAX_TRIMP') );
+		$this->updateValue( $this->handle('MAX_TRIMP') );
 	}
 }

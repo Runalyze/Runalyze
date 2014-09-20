@@ -75,7 +75,6 @@ $Training->setKeys(array(
 	//'TRAINING_PLOT_MODE', // Not supported anymore
 	//'TRAINING_MAP_BEFORE_PLOTS', // Not supported anymore
 ));
-// TODO: remove
 $Training->addConfigValue( new ConfigValueSelect('TRAINING_PLOT_MODE', array(
 	'default'		=> 'all',
 	'label'			=> __('Plots: combination'),

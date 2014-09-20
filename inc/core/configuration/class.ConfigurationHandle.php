@@ -22,6 +22,18 @@ class ConfigurationHandle {
 	protected $Parameter;
 
 	/**
+	 * Onchange callback
+	 * @var callback
+	 */
+	protected $OnchangeCallback = '';
+
+	/**
+	 * Onchange reload flag
+	 * @var enum
+	 */
+	protected $OnchangeReloadFlag = '';
+
+	/**
 	 * Array with all values
 	 * @var array
 	 */
@@ -71,5 +83,34 @@ class ConfigurationHandle {
 	 */
 	final public function value() {
 		return $this->Parameter->value();
+	}
+
+	/**
+	 * Register onchange event
+	 * @param cakkback $callback
+	 */
+	final public function registerOnchangeEvent($callback) {
+		$this->OnchangeCallback = $callback;
+	}
+
+	/**
+	 * Register onchange flag
+	 * @param enum $flag
+	 */
+	final public function registerOnchangeFlag($flag) {
+		$this->OnchangeReloadFlag = $flag;
+	}
+
+	/**
+	 * Process onchange events
+	 */
+	final public function processOnchangeEvents() {
+		if (!empty($this->OnchangeCallback)) {
+			call_user_func($this->OnchangeCallback);
+		}
+
+		if (!empty($this->OnchangeReloadFlag)) {
+			Ajax::setReloadFlag($this->OnchangeReloadFlag);
+		}
 	}
 }

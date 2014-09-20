@@ -31,4 +31,18 @@ class ConfigurationMisc extends ConfigurationCategory {
 	public function searchResultsPerPage() {
 		return $this->get('RESULTS_AT_PAGE');
 	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('Miscellaneous') );
+		$Fieldset->addHandle( $this->handle('RESULTS_AT_PAGE'), array(
+			'label'		=> __('Search: results per page'),
+			'tooltip'	=> __('Number of results displayed on each page.')
+		));
+
+		return $Fieldset;
+	}
 }

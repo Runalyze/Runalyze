@@ -184,4 +184,87 @@ class ConfigurationActivityForm extends ConfigurationCategory {
 		$this->object('GARMIN_IGNORE_IDS')->append($ID);
 		$this->updateValue( $this->handle('GARMIN_IGNORE_IDS') );
 	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('Activiy form') );
+
+		$Fieldset->addHandle( $this->handle('TRAINING_CREATE_MODE'), array(
+			'label'		=> __('Default window')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_SHOW_AFTER_CREATE'), array(
+			'label'		=> __('Show activity after creation')
+		));
+
+		$Fieldset->addHandle( $this->handle('COMPUTE_KCAL'), array(
+			'label'		=> __('Calculate calories'),
+			'tooltip'	=> __('Recalculate calories after changing duration by hand')
+		));
+
+		$Fieldset->addHandle( $this->handle('COMPUTE_POWER'), array(
+			'label'		=> __('Calculate power'),
+			'tooltip'	=> __('Calculate power by speed and grade for cycling')
+		));
+
+		$this->addHandlesForWeatherTo($Fieldset);
+		$this->addHandlesForElevationTo($Fieldset);
+		$this->addHandlesForSortingTo($Fieldset);
+
+		return $Fieldset;
+	}
+
+	/**
+	 * Add handles for weather to fieldset
+	 * @param FormularFieldset $Fieldset
+	 */
+	private function addHandlesForWeatherTo(FormularFieldset &$Fieldset) {
+		$Fieldset->addHandle( $this->handle('TRAINING_LOAD_WEATHER'), array(
+			'label'		=> __('Automatically load weather conditions'),
+			'tooltip'	=> __('via openweathermap.org')
+		));
+
+		$Fieldset->addHandle( $this->handle('PLZ'), array(
+			'label'		=> __('for weather: Location'),
+			'tooltip'	=> __('For loading weather data from openweathermap.org<br>e.g. <em>Berlin, de</em>'),
+			'size'		=> FormularInput::$SIZE_MIDDLE
+		));
+	}
+
+	/**
+	 * Add handles for elevation to fieldset
+	 * @param FormularFieldset $Fieldset
+	 */
+	private function addHandlesForElevationTo(FormularFieldset &$Fieldset) {
+		$Fieldset->addHandle( $this->handle('TRAINING_DO_ELEVATION'), array(
+			'label'		=> __('Automatically correct elevation data'),
+			'tooltip'	=> __('Instead of using gps-elevation a correction via external services is possible.')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_ELEVATION_SERVER'), array(
+			'label'		=> __('for elevation correction: server'),
+			'tooltip'	=> __('By default, local srtm-files are used. If they are not available, an external server is used.')
+		));
+	}
+
+	/**
+	 * Add handles for sorting to fieldset
+	 * @param FormularFieldset $Fieldset
+	 */
+	private function addHandlesForSortingTo(FormularFieldset &$Fieldset) {
+		$Fieldset->addHandle( $this->handle('TRAINING_SORT_SPORTS'), array(
+			'label'		=> __('Sort: sport types')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_SORT_TYPES'), array(
+			'label'		=> __('Sort: activity types')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_SORT_SHOES'), array(
+			'label'		=> __('Sort: shoes')
+		));
+	}
 }

@@ -34,4 +34,33 @@ class ConfigurationDesign extends ConfigurationCategory {
 	public function backgroundImage() {
 		return $this->get('DESIGN_BG_FILE');
 	}
+
+	/**
+	 * Register onchange events
+	 */
+	protected function registerOnchangeEvents() {
+		$this->handle('DESIGN_BG_FILE')->registerOnchangeEvent('ConfigurationDesign::setBackgroundImageToBody');
+	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('Design') );
+		$Fieldset->addHandle( $this->handle('DESIGN_BG_FILE'), array(
+			'label'		=> __('Background image')
+		));
+
+		return $Fieldset;
+	}
+
+	/**
+	 * Set background image to body
+	 */
+	static public function setBackgroundImageToBody() {
+		$url = Configuration::Design()->backgroundImage();
+
+		echo Ajax::wrapJSasFunction('$("body").css("background-image","url(\''.$url.'\')");');
+	}
 }

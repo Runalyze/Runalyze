@@ -111,4 +111,78 @@ class ConfigurationVdot extends ConfigurationCategory {
 	public function correctionForNegativeElevation() {
 		return $this->get('VDOT_CORRECTION_NEGATIVE_ELEVATION');
 	}
+
+	/**
+	 * Register onchange events
+	 */
+	protected function registerOnchangeEvents() {
+		$this->handle('VDOT_HF_METHOD')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+
+		$this->handle('JD_USE_VDOT_CORRECTOR')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('JD_USE_VDOT_CORRECTOR')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+
+		$this->handle('VDOT_DAYS')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+
+		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+
+		$this->handle('VDOT_MANUAL_VALUE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+
+		$this->handle('JD_USE_VDOT_CORRECTION_FOR_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_CORRECTION_POSITIVE_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_CORRECTION_NEGATIVE_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+	}
+
+	/**
+	 * Fieldset
+	 * @return ConfigurationFieldset
+	 */
+	public function Fieldset() {
+		$Fieldset = new ConfigurationFieldset( __('VDOT') );
+
+		$Fieldset->addHandle( $this->handle('VDOT_HF_METHOD'), array(
+			'label'		=> __('Estimation formula'),
+			'tooltip'	=> __('Formula to estimate the vdot value. The old method is only listed for compatibility reasons.')
+		));
+
+		$Fieldset->addHandle( $this->handle('VDOT_DAYS'), array(
+			'label'		=> __('Days for VDOT shape'),
+			'tooltip'	=> __('Number of days to recognize for VDOT')
+		));
+
+		$Fieldset->addHandle( $this->handle('JD_USE_VDOT_CORRECTOR'), array(
+			'label'		=> __('Use correction factor'),
+			'tooltip'	=> __('Use a correction factor based on your best competition. (recommended)')
+		));
+
+		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_CORRECTOR'), array(
+			'label'		=> __('Manual correction factor'),
+			'tooltip'	=> __('Manual correction factor (e.g. 0.9), if the automatic factor does not fit. Can be left empty.')
+		));
+
+		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_VALUE'), array(
+			'label'		=> __('Use fixed VDOT value'),
+			'tooltip'	=> __('Fixed vdot value (e.g. 55), if the estimation does not fit. Can be left empty.')
+		));
+
+		$Fieldset->addHandle( $this->handle('JD_USE_VDOT_CORRECTION_FOR_ELEVATION'), array(
+			'label'		=> __('Adapt for elevation'),
+			'tooltip'	=> __('The distance can be corrected by a formula from Peter Greif to adapt for elevation.')
+		));
+
+		$Fieldset->addHandle( $this->handle('VDOT_CORRECTION_POSITIVE_ELEVATION'), array(
+			'label'		=> __('Correction per positive elevation'),
+			'tooltip'	=> __('Add for each meter upwards X meter to the distance. (Only for the vdot calculation)'),
+			'unit'		=> FormularUnit::$M
+		));
+
+		$Fieldset->addHandle( $this->handle('VDOT_CORRECTION_NEGATIVE_ELEVATION'), array(
+			'label'		=> __('Correction per negative elevation'),
+			'tooltip'	=> __('Add for each meter downwards X meter to the distance. (Only for the vdot calculation)'),
+			'unit'		=> FormularUnit::$M
+		));
+
+		return $Fieldset;
+	}
 }
