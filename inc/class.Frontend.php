@@ -186,7 +186,7 @@ class Frontend {
 	 */
 	protected function initDebugMode() {
 		if (!defined('RUNALYZE_DEBUG'))
-			define('RUNALYZE_DEBUG', true);
+			define('RUNALYZE_DEBUG', false;
 
 		if (RUNALYZE_DEBUG)
 			error_reporting(E_ALL);
