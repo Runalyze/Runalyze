@@ -8,7 +8,6 @@
  * 
  * This weather forecast strategy uses the api of openweathermap.org
  * To use this api, a location has to be set.
- * CONF_PLZ is currently used as harcoded location.
  *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather

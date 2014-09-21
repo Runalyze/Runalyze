@@ -88,27 +88,27 @@ class LeafletTrainingRoute extends LeafletRoute {
 	 */
 	protected function prepareLoop() {
 		$this->GPS->startLoop();
-		$this->GPS->setStepSize((int)CONF_GMAP_PATH_PRECISION);
+		$this->GPS->setStepSize( (int)Configuration::ActivityView()->routePrecision()->value() );
 	}
 
 	/**
 	 * Find limit for pauses
 	 */
 	protected function findLimitForPauses() {
-		$SecondsForDist = (CONF_GMAP_PATH_BREAK != 'no') ? (int)CONF_GMAP_PATH_BREAK : 15;
+		$SecondsForDist = (int)Configuration::ActivityView()->routeBreak()->value();
 		$AvgPace        = $this->GPS->getAveragePace();
 
 		if ($AvgPace > 0 && ($SecondsForDist/$AvgPace) > $this->PauseLimit)
 			$this->PauseLimit = $SecondsForDist / $AvgPace;
 
-		$this->PauseLimit *= (int)CONF_GMAP_PATH_PRECISION;
+		$this->PauseLimit *= (int)Configuration::ActivityView()->routePrecision()->value();
 	}
 
 	/**
 	 * Check for pause
 	 */
 	protected function checkForPause() {
-		if (CONF_GMAP_PATH_BREAK != 'no' && $this->GPS->getCalculatedDistanceOfStep() > $this->PauseLimit)
+		if (!Configuration::ActivityView()->routeBreak()->never() && $this->GPS->getCalculatedDistanceOfStep() > $this->PauseLimit)
 			$this->addCurrentSegment();
 	}
 

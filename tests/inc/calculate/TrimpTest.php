@@ -48,7 +48,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 120,
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> 0
 		)));
 
@@ -56,7 +56,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 			'id'		=> 1,
 			's'			=> 2*60*60,
 			'pulse_avg'	=> 120,
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> 0
 		)));
 
@@ -64,7 +64,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 160,
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> 0
 		)));
 
@@ -72,7 +72,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 			'id'		=> 1,
 			's'			=> 2*60*60,
 			'pulse_avg'	=> 160,
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> 0
 		)));
 
@@ -80,7 +80,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 200,
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'typeid'	=> 0
 		)));
 	}
@@ -89,7 +89,7 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 	 * @covers Trimp::forTrainingID
 	 */
 	public function testForTrainingID() {
-		DB::getInstance()->insert('training', array('sportid', 's', 'pulse_avg'), array(CONF_RUNNINGSPORT, 60*60, 120) );
+		DB::getInstance()->insert('training', array('sportid', 's', 'pulse_avg'), array(Configuration::General()->runningSport(), 60*60, 120) );
 		$this->assertEquals( 15, Trimp::forTrainingID(1) );
 
 		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');

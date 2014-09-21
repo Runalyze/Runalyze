@@ -80,7 +80,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( !$Parser->failed() );
 		$this->assertEquals( 1, $Parser->numberOfTrainings() );
 		$this->assertEquals( $Object->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
-		$this->assertEquals( $Object->Sport()->id(), CONF_RUNNINGSPORT );
+		$this->assertEquals( $Object->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object->avgHF(), 145 );
 		$this->assertEquals( $Object->Splits()->asString(), '0.20|1:00' );
 		$this->assertEquals( $Object->getArrayAltitude(), array(200, 200) );
@@ -183,7 +183,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 2, $Parser->numberOfTrainings() );
 
 		$this->assertEquals( $Object->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
-		$this->assertEquals( $Object->Sport()->id(), CONF_RUNNINGSPORT );
+		$this->assertEquals( $Object->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object->avgHF(), 145 );
 		$this->assertEquals( $Object->Splits()->asString(), '0.20|1:00' );
 		$this->assertEquals( $Object->getArrayAltitude(), array(200, 200) );
@@ -199,7 +199,7 @@ class ParserTCXMultipleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Object->hasArrayLongitude(), false );
 
 		$this->assertEquals( $Object2->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
-		$this->assertEquals( $Object2->Sport()->id(), CONF_RUNNINGSPORT );
+		$this->assertEquals( $Object2->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Object2->avgHF(), 115 );
 		$this->assertEquals( $Object2->Splits()->asString(), '0.50|1:00' );
 		$this->assertEquals( $Object2->getArrayAltitude(), array(100, 100) );

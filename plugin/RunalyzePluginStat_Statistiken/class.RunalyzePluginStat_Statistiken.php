@@ -221,13 +221,16 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
 		}
 
-		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
+		// TODO
+		//  - CONF_RECHENSPIELE is not used anymore.
+		//  - if we want to keep this configurable: create plugin-configuration
+		if ($this->sportid == Configuration::General()->runningSport())
 			$this->displayLine(__('VDOT'), $this->VDOTData, 'small');
 
-		if ($this->sportid == CONF_RUNNINGSPORT && CONF_RECHENSPIELE)
+		if ($this->sportid == Configuration::General()->runningSport())
 			$this->displayLine(__('JDpoints'), $this->JDIntensityData, 'small');
 
-		if (CONF_RECHENSPIELE)
+		if (true)
 			$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
 
 		echo '</tbody>';
@@ -329,12 +332,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				`time`,
 				DATE(FROM_UNIXTIME(`time`)) as `day`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.'
+			WHERE `sportid`='.Configuration::General()->runningSport().'
 			GROUP BY DATE(FROM_UNIXTIME(`time`))
 			ORDER BY `day` DESC';
 
 		$Request = DB::getInstance()->prepare($Query);
-		$Request->bindValue('sportid', CONF_RUNNINGSPORT);
+		$Request->bindValue('sportid', Configuration::General()->runningSport());
 		$Request->execute();
 
 		$IsStreak = true;
@@ -374,7 +377,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		if ($NumDays == 0) {
 			$Text .= __('You don\'t have a streak. Go out and start one!');
-			$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.CONF_RUNNINGSPORT.' ORDER BY `time` DESC')->fetch();
+			$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.Configuration::General()->runningSport().' ORDER BY `time` DESC')->fetch();
 
 			if (isset($LastTraining['time']))
 				$Text .= sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));

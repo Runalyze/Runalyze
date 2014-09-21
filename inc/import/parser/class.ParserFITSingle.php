@@ -154,7 +154,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (isset($this->Values['time_created']))
 			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['time_created'][1]) );
 
-		$this->TrainingObject->setSportid( CONF_MAINSPORT );
+		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 	}
 
 	/**

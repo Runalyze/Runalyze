@@ -127,20 +127,4 @@ class UserData extends DataObject {
 
 		return self::$fullArray;
 	}
-
-	/**
-	 * Is the user male?
-	 * @return boolean
-	 */
-	static public function isMale() {
-		return (CONF_GENDER == 'm');
-	}
-
-	/**
-	 * Is the user female?
-	 * @return boolean
-	 */
-	static public function isFemale() {
-		return (CONF_GENDER == 'f');
-	}
 }

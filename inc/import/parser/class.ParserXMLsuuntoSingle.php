@@ -73,7 +73,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		if (!empty($this->XML->header->Activity))
 			$this->guessSportID( (string)$this->XML->header->Activity );
 		else
-			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
+			$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}
 
 	/**

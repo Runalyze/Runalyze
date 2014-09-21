@@ -7,11 +7,18 @@ require_once '../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
 
-if (isset($_GET['add'])) {
-	$Value   = unserialize(constant('CONF_'.$_GET['key']));
-	$Value[] = $_GET['value'];
+switch ($_GET['key']) {
+	case 'garmin-ignore':
+		Configuration::ActivityForm()->ignoreActivityID($_GET['value']);
+		break;
 
-	ConfigValue::update($_GET['key'], ConfigValueArray::arrayToString($Value));
-} else {
-	ConfigValue::update($_GET['key'], $_GET['value']);
+	case 'leaflet-layer':
+		Configuration::ActivityView()->updateLayer($_GET['value']);
+		break;
+
+	default:
+		if (substr($_GET['key'], 0, 5) == 'show-') {
+			$key = substr($_GET['key'], 5);
+			Configuration::ActivityForm()->update($key, $_GET['value']);
+		}
 }

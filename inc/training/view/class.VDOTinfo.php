@@ -117,7 +117,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
-				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
+				<span class="as-input '.(!Configuration::Vdot()->useElevationCorrection() ? 'highlight' : '').'">'.$this->Training->getVdotCorrected().'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('uncorrected').'</label>
@@ -134,9 +134,9 @@ class VDOTinfo {
 		$up   = $this->Training->hasArrayAltitude() ? $this->Training->getElevationUp() : $this->Training->getElevation();
 		$down = $this->Training->hasArrayAltitude() ? $this->Training->getElevationDown() : $this->Training->getElevation();
 
-		$additionalDistance = (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down;
+		$additionalDistance = (int)Configuration::Vdot()->correctionForPositiveElevation()*$up + (int)Configuration::Vdot()->correctionForNegativeElevation()*$down;
 		$newVDOT =  JD::Training2VDOTwithElevation(0, array(
-				'sportid'	=> CONF_RUNNINGSPORT,
+				'sportid'	=> Configuration::General()->runningSport(),
 				'distance'	=> $this->Training->getDistance(),
 				's'			=> $this->Training->getTimeInSeconds(),
 				'pulse_avg'	=> $this->Training->getPulseAvg()
@@ -145,12 +145,12 @@ class VDOTinfo {
 			$down
 		);
 
-		if (CONF_JD_USE_VDOT_CORRECTOR)
+		if (Configuration::Vdot()->useCorrectionFactor())
 			$newVDOT = JD::correctionFactor() * $newVDOT;
 
 		$Fieldset = new FormularFieldset( __('Correction: considering elevation') );
 		$Fieldset->setHtmlCode('
-			<p class="warning small '.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'hide' : '').'">
+			<p class="warning small '.(Configuration::Vdot()->useElevationCorrection() ? 'hide' : '').'">
 				'.__('This correction method is currently unused.').'
 			</p>
 
@@ -160,7 +160,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
-				<span class="as-input '.(!CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
+				<span class="as-input '.(!Configuration::Vdot()->useElevationCorrection() ? '' : 'highlight').'">'.round($newVDOT, 2).'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>

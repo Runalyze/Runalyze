@@ -1288,10 +1288,12 @@ tr.space-line.zebra-corrector td {
   background-color: rgba(255, 255, 255, 0.5) !important;
   color: #000000;
 }
-.zebra-style tbody tr.highlight {
+.zebra-style tbody tr.highlight,
+.zebra-style tbody tr td.highlight {
   background: #ffff66 !important;
 }
-.zebra-style tbody tr.highlight:hover {
+.zebra-style tbody tr.highlight:hover,
+.zebra-style tbody tr td.highlight:hover {
   background: #ffff00 !important;
 }
 .zebra-style tbody tr.no-zebra,

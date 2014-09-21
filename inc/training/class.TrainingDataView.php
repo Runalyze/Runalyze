@@ -174,7 +174,7 @@ class TrainingDataView {
 	 */
 	public function getDistanceString() {
 		if ($this->Object->hasDistance())
-			return Running::Km($this->Object->getDistance(), CONF_TRAINING_DECIMALS, $this->Object->isTrack());
+			return Running::Km($this->Object->getDistance(), Configuration::ActivityView()->decimals(), $this->Object->isTrack());
 
 		return '';
 	}
@@ -421,7 +421,7 @@ class TrainingDataView {
 	 * @return string elevation with unit
 	 */
 	public function getElevation() {
-		$preSign = (CONF_TRAINING_DO_ELEVATION && $this->Object->hasArrayAltitude() && !$this->Object->elevationWasCorrected()) ? '~' : '';
+		$preSign = (Configuration::ActivityForm()->correctElevation() && $this->Object->hasArrayAltitude() && !$this->Object->elevationWasCorrected()) ? '~' : '';
 
 		return $preSign.$this->Object->getElevation().'&nbsp;hm';
 	}

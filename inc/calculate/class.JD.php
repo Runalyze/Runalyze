@@ -31,7 +31,7 @@ class JD {
 	 * @return string
 	 */
 	public static function mysqlVDOTsum() {
-		return CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
+		return Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`*`use_vdot`' : '`vdot`*`s`*`use_vdot`';
 	}
 
 	/**
@@ -42,7 +42,7 @@ class JD {
 	 * @return string
 	 */
 	public static function mysqlVDOTsumTime() {
-		return '`s`*`use_vdot`*('.(CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : '`vdot`').' > 0)';
+		return '`s`*`use_vdot`*('.(Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)' : '`vdot`').' > 0)';
 	}
 
 	/**
@@ -89,7 +89,7 @@ class JD {
 	 * @return float   HFmax [%]
 	 */
 	public static function pVDOT2pHF($pVDOT) {
-		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+		if (Configuration::Vdot()->method()->usesLogarithmic())
 			return 0.68725*log($pVDOT)+1.00466;
 
 		// Old version
@@ -102,7 +102,7 @@ class JD {
 	 * @return float   VDOT [%]
 	 */
 	public static function pHF2pVDOT($pHF) {
-		if (CONF_VDOT_HF_METHOD == 'logarithmic')
+		if (Configuration::Vdot()->method()->usesLogarithmic())
 			return exp( ($pHF - 1.00466) / 0.68725 );
 
 		// Old version
@@ -134,7 +134,7 @@ class JD {
 	 * @return double
 	 */
 	public static function correctVDOT($VDOT) {
-		if (CONF_JD_USE_VDOT_CORRECTOR)
+		if (Configuration::Vdot()->useCorrectionFactor())
 			return self::correctionFactor()*$VDOT;
 
 		return $VDOT;
@@ -197,15 +197,13 @@ class JD {
 	/**
 	 * Transform distance from elevatoin
 	 * 
-	 * @uses CONF_VDOT_CORRECTION_POSITIVE_ELEVATION
-	 * @uses CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION
 	 * @param double $distance
 	 * @param int $up
 	 * @param int $down
 	 * @return double
 	 */
 	public static function transformDistanceFromElevation($distance, $up, $down) {
-		return $distance + (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up/1000 + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down/1000;
+		return $distance + Configuration::Vdot()->correctionForPositiveElevation()*$up/1000 + Configuration::Vdot()->correctionForNegativeElevation()*$down/1000;
 	}
 
 	/**
@@ -218,9 +216,9 @@ class JD {
 	 */
 	private static function values2VDOT($distance, $s, $pulse_avg, $sportid = false) {
 		if ($sportid === false)
-			$sportid = CONF_RUNNINGSPORT;
+			$sportid = Configuration::General()->runningSport();
 
-		if ($pulse_avg != 0 && $sportid == CONF_RUNNINGSPORT) {
+		if ($pulse_avg != 0 && $sportid == Configuration::General()->runningSport()) {
 			$VDOT = self::Competition2VDOT($distance, $s);
 			if ($VDOT !== false)
 				return round( $VDOT / (self::pHF2pVDOT($pulse_avg/HF_MAX) ), 2);
@@ -295,7 +293,7 @@ class JD {
 	 * @return int
 	 */
 	private static function values2points($s, $distance, $pulse_avg, $sportid = false, $pulseArray = array()) {
-		if ($sportid === false || $sportid == CONF_RUNNINGSPORT) {
+		if ($sportid === false || $sportid == Configuration::General()->runningSport()) {
 			if ($pulseArray) {
 				$points = 0;
 				foreach ($pulseArray as $hf => $Info)
@@ -335,24 +333,17 @@ class JD {
 	 * @return float
 	 */
 	public static function getConstVDOTform() {
-		if (defined('CONF_VDOT_MANUAL_VALUE')) {
-			$ManualValue = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_VALUE);
-			if ($ManualValue > 0)
-				return $ManualValue;
-		}
-
-		if (!defined('CONF_VDOT_FORM')) {
-			Error::getInstance()->addError('Constant CONF_VDOT_FORM has to be set!');
-			define('CONF_VDOT_FORM', 0);
+		if (Configuration::Vdot()->useManualValue()) {
+			return Configuration::Vdot()->manualValue();
 		}
 
 		if (defined('VDOT_FORM'))
 			return VDOT_FORM;
 
-		if (CONF_VDOT_FORM == 0)
+		if (Configuration::Data()->vdotShape() == 0)
 			return self::recalculateVDOTform();
 
-		return CONF_VDOT_FORM;
+		return Configuration::Data()->vdotShape();
 	}
 
 	/**
@@ -361,7 +352,7 @@ class JD {
 	public static function recalculateVDOTform() {
 		$VDOT_FORM = self::calculateVDOTform();
 
-		ConfigValue::update('VDOT_FORM', $VDOT_FORM);
+		Configuration::Data()->updateVdotShape($VDOT_FORM);
 
 		return $VDOT_FORM;
 	}
@@ -385,8 +376,8 @@ class JD {
 				SUM('.self::mysqlVDOTsum().') as `value`
 			FROM `'.PREFIX.'training`
 			WHERE
-				`sportid`="'.CONF_RUNNINGSPORT.'"
-				&& `time` BETWEEN '.($time - CONF_VDOT_DAYS*DAY_IN_S).' AND '.$time.'
+				`sportid`="'.Configuration::General()->runningSport().'"
+				&& `time` BETWEEN '.($time - Configuration::Vdot()->days()*DAY_IN_S).' AND '.$time.'
 			GROUP BY `sportid`
 			LIMIT 1
 		')->fetch();
@@ -403,20 +394,15 @@ class JD {
 	 * @return int
 	 */
 	public static function correctionFactor() {
-		if (defined('CONF_VDOT_MANUAL_CORRECTOR')) {
-			$ManualCorrector = (float)Helper::CommaToPoint(CONF_VDOT_MANUAL_CORRECTOR);
-			if ($ManualCorrector > 0)
-				return $ManualCorrector;
+		if (Configuration::Vdot()->useManualFactor()) {
+			return Configuration::Vdot()->manualFactor();
 		}
 
 		if (self::$CONST_CORRECTOR === false) {
-			if (!defined('CONF_VDOT_CORRECTOR')) {
-				Error::getInstance()->addError('Constant CONF_VDOT_CORRECTOR has to be set!');
-				define('CONF_VDOT_CORRECTOR', 1);
-			}
+			$factor = Configuration::Data()->vdotCorrector();
 
-			if (CONF_VDOT_CORRECTOR != 1 && CONF_VDOT_CORRECTOR != 0)
-				self::$CONST_CORRECTOR = CONF_VDOT_CORRECTOR;
+			if ($factor != 1 && $factor != 0)
+				self::$CONST_CORRECTOR = $factor;
 			else
 				self::recalculateVDOTcorrector();
 		}
@@ -448,12 +434,12 @@ class JD {
 			) AS T
 			LIMIT 1
 		');
-		$Statement->execute(array(':typeid' => CONF_WK_TYPID));
+		$Statement->execute(array(':typeid' => Configuration::General()->competitionType()));
 		$Result = $Statement->fetch();
 
 		$VDOT_CORRECTOR = (isset($Result['factor'])) ? $Result['factor'] : 1;
 
-		ConfigValue::update('VDOT_CORRECTOR', $VDOT_CORRECTOR);
+		Configuration::Data()->updateVdotCorrector($VDOT_CORRECTOR);
 		self::$CONST_CORRECTOR = $VDOT_CORRECTOR;
 
 		return $VDOT_CORRECTOR;

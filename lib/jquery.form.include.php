@@ -1,6 +1,6 @@
 $("#sportid").change(function(){
 	jUpdateSportValues();
-<?php if (CONF_COMPUTE_KCAL): ?>
+<?php if (Configuration::ActivityForm()->computeCalories()): ?>
 	jUpdateKcal();
 <?php endif; ?>
 });
@@ -8,7 +8,7 @@ $("#sportid").change(function(){
 $("input[name=distance], input[name=s]").change(function() {
 	jUpdatePace();
 	jUpdateKmh();
-<?php if (CONF_COMPUTE_KCAL): ?>
+<?php if (Configuration::ActivityForm()->computeCalories()): ?>
 	jUpdateKcal();
 <?php endif; ?>
 });

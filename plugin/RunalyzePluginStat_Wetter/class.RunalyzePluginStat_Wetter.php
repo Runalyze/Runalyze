@@ -121,7 +121,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				AVG(`temperature`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.CONF_MAINSPORT.'" AND
+				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -162,7 +162,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 					SUM(1) as `num`,
 					MONTH(FROM_UNIXTIME(`time`)) as `m`
 				FROM `'.PREFIX.'training` WHERE
-					`sportid`="'.CONF_MAINSPORT.'" AND
+					`sportid`="'.Configuration::General()->mainSport().'" AND
 					`weatherid`='.$wetter['id'].'
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 				GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -198,7 +198,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.CONF_MAINSPORT.'" AND
+				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`clothes`!=""
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -220,7 +220,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `clothes`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
 					FROM `'.PREFIX.'training` WHERE
-						`sportid`="'.CONF_MAINSPORT.'"
+						`sportid`="'.Configuration::General()->mainSport().'"
 						'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 					GROUP BY MONTH(FROM_UNIXTIME(`time`))
 					HAVING `num`!=0
@@ -288,7 +288,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 						MIN(`temperature`) as `min`
 					FROM `'.PREFIX.'training`
 					WHERE
-						`sportid`="'.CONF_MAINSPORT.'" AND
+						`sportid`="'.Configuration::General()->mainSport().'" AND
 						`temperature` IS NOT NULL AND
 						FIND_IN_SET('.$kleidung['id'].',`clothes`) != 0
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''))->fetch();

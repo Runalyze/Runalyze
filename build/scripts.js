@@ -1905,17 +1905,6 @@ var Runalyze = (function($, parent){
 		$(document).trigger("createFlot");
 	};
 
-	self.changeConfig = function(key, value, add) {
-		if (!self.Options.isSharedView()) {
-			var url = 'call/ajax.change.Config.php?key='+key+'&value='+value;
-
-			if (typeof add !== "undefined")
-				url = url+'&add';
-
-			$.ajax(url);
-		}
-	};
-
 	self.flotChange = function(div, flot) {
 		$(".flotChanger-"+div).addClass("unimportant");
 		$(".flotChanger-id-"+flot).removeClass("unimportant");
@@ -1938,7 +1927,7 @@ var Runalyze = (function($, parent){
 			$c.toggleClass("collapsed");
 
 		if (e.length > 0)
-			self.changeConfig(e, !$c.hasClass("collapsed"));
+			self.Config.setActivityFormLegend(e, !$c.hasClass("collapsed"));
 
 		return false;
 	};
@@ -3139,6 +3128,9 @@ Runalyze.Log = (function($, Parent){
 	// Public Methods
 
 	self.init = function() {
+		if ($container)
+			return;
+
 		$("body").append('<div id="' + id + '" class="toolbar at-top"></div>');
 
 		$container = $('#' + id);
@@ -3243,6 +3235,45 @@ Runalyze.Options = (function($, parent){
 
 	self.loadingClass = function() {
 		return options.loadingClass;
+	};
+
+	return self;
+})(jQuery, Runalyze);/*
+ * Lib for configurations in Runalyze
+ * 
+ * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
+ */
+Runalyze.Config = (function($, Parent){
+
+	// Public
+
+	var self = {};
+
+
+	// Private
+
+
+	// Private Methods
+
+	function update(key, value) {
+		if (!Parent.Options.isSharedView()) {
+			$.ajax('call/ajax.change.Config.php?key='+key+'&value='+value);
+		}
+	}
+
+
+	// Public Methods
+
+	self.ignoreActivityID = function(id) {
+		update('garmin-ignore', id);
+	};
+
+	self.setLeafletLayer = function(layer) {
+		update('leaflet-layer', layer);
+	};
+
+	self.setActivityFormLegend = function(name, flag) {
+		update('show-'+name, flag);
 	};
 
 	return self;
@@ -3486,14 +3517,12 @@ Runalyze.DataBrowser = (function($, Parent){
 	};
 
 	var $container;
-	var $reloadLink;
 
 
 	// Private Methods
 
 	function initObjects() {
 		$container = $( options.selectorContainer );
-		$reloadLink = $( options.selectorReload );
 	}
 
 
@@ -3504,7 +3533,7 @@ Runalyze.DataBrowser = (function($, Parent){
 	};
 
 	self.reload = function() {
-		$reloadLink.trigger('click');
+		$( options.selectorReload ).trigger('click');
 	};
 
 	Parent.addInitHook('init-databrowser', self.init);
@@ -6083,7 +6112,7 @@ var RunalyzeLeaflet = (function($){
 			self.setDefaultLayer(e.name);
 
 			if (ready)
-				Runalyze.changeConfig('TRAINING_LEAFLET_LAYER', e.name);
+				Runalyze.Config.setLeafletLayer(e.name);
 		});
 	}
 

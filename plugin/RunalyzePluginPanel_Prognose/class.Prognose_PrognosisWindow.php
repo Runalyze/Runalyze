@@ -177,7 +177,7 @@ class Prognose_PrognosisWindow {
 	 * Init calculations
 	 */
 	protected function runCalculations() {
-		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
+		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.Configuration::General()->competitionType().'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
 		foreach ($this->Distances as $km) {
 			$PB         = Running::PersonalBest($km, true);
 			$Prognosis  = $this->PrognosisObject->inSeconds( $km );

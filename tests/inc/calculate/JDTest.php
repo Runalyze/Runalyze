@@ -1,8 +1,5 @@
 <?php
 
-if (!defined('CONF_JD_USE_VDOT_CORRECTOR'))
-	define('CONF_JD_USE_VDOT_CORRECTOR', true);
-
 require_once dirname(__FILE__) . '/../../../inc/calculate/class.JD.php';
 
 /**
@@ -86,25 +83,25 @@ class JDTest extends PHPUnit_Framework_TestCase {
 	public function testTraining2VDOT() {
 		// pulse_avg = 200 is HR_MAX
 		$this->assertEquals( 40.2, JD::Training2VDOT(0, array(
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'distance'	=> 10,
 			's'			=> 50*60,
 			'pulse_avg'	=> 200
 		)), '', 0.1);
 		$this->assertEquals( 52.3, JD::Training2VDOT(0, array(
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'distance'	=> 10,
 			's'			=> 40*60,
 			'pulse_avg'	=> 200
 		)), '', 0.1);
 		$this->assertEquals( 61.1, JD::Training2VDOT(0, array(
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'distance'	=> 10,
 			's'			=> 35*60,
 			'pulse_avg'	=> 200
 		)), '', 0.1);
 		$this->assertEquals( 73.3, JD::Training2VDOT(0, array(
-			'sportid'	=> CONF_RUNNINGSPORT,
+			'sportid'	=> Configuration::General()->runningSport(),
 			'distance'	=> 10,
 			's'			=> 30*60,
 			'pulse_avg'	=> 200

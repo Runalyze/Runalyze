@@ -30,7 +30,7 @@
 		<td><?php echo $Training['vdot']; ?></td>
 		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($Training['vdot'], $Training['distance'])), false, true); ?></td>
 
-		<?php if (CONF_JD_USE_VDOT_CORRECTOR): ?>
+		<?php if (Configuration::Vdot()->useCorrectionFactor()): ?>
 		<?php $c_vdot = round(JD::correctVDOT($Training['vdot']),2); ?>
 		<td><?php echo $c_vdot; ?></td>
 		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($c_vdot, $Training['distance'])), false, true); ?></td>
@@ -62,7 +62,7 @@
 	<?php _e('The time is what you could have reached at your maximal possible heart rate over this distance.'); ?>
 </p>
 
-<?php if (CONF_JD_USE_VDOT_CORRECTOR): ?>
+<?php if (Configuration::Vdot()->useCorrectionFactor()): ?>
 <p class="info">
 	<?php printf( __('<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %f)<br>'), JD::correctionFactor() ); ?>
 	<?php _e('The time is what you could have reached at your maximal possible heart rate over this distance.'); ?>
@@ -82,7 +82,7 @@
 	<?php _e('<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)'); ?>
 </p>
 
-<?php if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION): ?>
+<?php if (Configuration::Vdot()->useElevationCorrection()): ?>
 <p class="warning">
 	<?php _e('The distance correction for elevation is not used in this table.'); ?>
 </p>

@@ -13,43 +13,43 @@ class Trimp {
 	 * Factor A for male
 	 * @var double
 	 */
-	static private $FACTOR_MALE_A = 0.64;
+	const FACTOR_MALE_A = 0.64;
 
 	/**
 	 * Factor B for male
 	 * @var double
 	 */
-	static private $FACTOR_MALE_B = 1.92;
+	const FACTOR_MALE_B = 1.92;
 
 	/**
 	 * Factor A for female
 	 * @var double
 	 */
-	static private $FACTOR_FEMALE_A = 0.86;
+	const FACTOR_FEMALE_A = 0.86;
 
 	/**
 	 * Factor B for female
 	 * @var double
 	 */
-	static private $FACTOR_FEMALE_B = 1.67;
+	const FACTOR_FEMALE_B = 1.67;
 
 	/**
 	 * Maximum value for ATL
 	 * @var int
 	 */
-	static private $MAX_ATL = CONF_MAX_ATL;
+	static private $MAX_ATL = -1;
 
 	/**
 	 * Maximum value for CTL
 	 * @var int
 	 */
-	static private $MAX_CTL = CONF_MAX_CTL;
+	static private $MAX_CTL = -1;
 
 	/**
 	 * Maximum value for TRIMP
 	 * @var int
 	 */
-	static private $MAX_TRIMP = CONF_MAX_TRIMP;
+	static private $MAX_TRIMP = -1;
 
 	/**
 	 * Constructor is private
@@ -61,6 +61,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxATL() {
+		if (self::$MAX_ATL == -1)
+			self::$MAX_ATL = Configuration::Data()->maxATL();
+
 		if (self::$MAX_ATL == 0)
 			self::calculateMaxValues();
 
@@ -72,6 +75,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxCTL() {
+		if (self::$MAX_CTL == -1)
+			self::$MAX_CTL = Configuration::Data()->maxCTL();
+
 		if (self::$MAX_CTL == 0)
 			self::calculateMaxValues();
 
@@ -83,6 +89,9 @@ class Trimp {
 	 * @return int
 	 */
 	static public function maxTRIMP() {
+		if (self::$MAX_TRIMP == -1)
+			self::$MAX_TRIMP = Configuration::Data()->maxTrimp();
+
 		if (self::$MAX_TRIMP == 0)
 			self::calculateMaxValues();
 
@@ -94,7 +103,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorA() {
-		return UserData::isMale() ? self::$FACTOR_MALE_A : self::$FACTOR_FEMALE_A;
+		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_A : self::FACTOR_FEMALE_A;
 	}
 
 	/**
@@ -102,7 +111,7 @@ class Trimp {
 	 * @return int
 	 */
 	static private function factorB() {
-		return UserData::isMale() ? self::$FACTOR_MALE_B : self::$FACTOR_FEMALE_B;
+		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_B : self::FACTOR_FEMALE_B;
 	}
 
 	/**
@@ -129,7 +138,7 @@ class Trimp {
 	 * @return float in minutes
 	 */
 	static public function minutesForTrimp($trimpToReach) {
-		$Sport = new Sport(CONF_MAINSPORT);
+		$Sport = new Sport(Configuration::General()->mainSport());
 
 		return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
 	}
@@ -154,7 +163,7 @@ class Trimp {
 
 		$Trimp = round($s/60 * self::TrimpFactor($avgHF) * $RPE / 10);
 
-		if ($Trimp > self::$MAX_TRIMP)
+		if ($Trimp > self::maxTRIMP())
 			self::setMaxTRIMP($Trimp);
 
 		return $Trimp;
@@ -200,8 +209,6 @@ class Trimp {
 
 	/**
 	 * Calculating ActualTrainingLoad (at a given timestamp)
-	 * @uses CONF_ATL_DAYS
-	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
 	static public function ATL($time = 0) {
@@ -215,11 +222,11 @@ class Trimp {
 			SELECT
 				SUM(`trimp`) as `sum`
 			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_ATL_DAYS*DAY_IN_S).' AND '.$time.'
+			WHERE `time` BETWEEN '.($time - Configuration::Trimp()->daysForATL()*DAY_IN_S).' AND '.$time.'
 			LIMIT 1
 		')->fetch();
 
-		$ATL = round($Data['sum']/CONF_ATL_DAYS);
+		$ATL = round($Data['sum']/Configuration::Trimp()->daysForATL());
 
 		if ($ATL > self::maxATL())
 			self::setMaxATL($ATL);
@@ -229,8 +236,6 @@ class Trimp {
 
 	/**
 	 * Calculating ChronicTrainingLoad (at a given timestamp)
-	 * @uses CONF_CTL_DAYS
-	 * @uses DAY_IN_S
 	 * @param int $time [optional] timestamp
 	 */
 	static public function CTL($time = 0) {
@@ -244,11 +249,11 @@ class Trimp {
 			SELECT
 				SUM(`trimp`) as `sum`
 			FROM `'.PREFIX.'training`
-			WHERE `time` BETWEEN '.($time - CONF_CTL_DAYS*DAY_IN_S).' AND '.$time.'
+			WHERE `time` BETWEEN '.($time - Configuration::Trimp()->daysForCTL()*DAY_IN_S).' AND '.$time.'
 			LIMIT 1
 		')->fetch();
 
-		$CTL = round($Data['sum']/CONF_CTL_DAYS);
+		$CTL = round($Data['sum']/Configuration::Trimp()->daysForCTL());
 
 		if ($CTL > self::maxCTL())
 			self::setMaxCTL($CTL);
@@ -285,7 +290,7 @@ class Trimp {
 	/**
 	 * Calculate max values for atl/ctl/trimp again
 	 * Calculations are implemented again because normal ones are too slow
-	 * ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
+	 * ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
 	 * Attention: Values must not be zero!
 	 */
 	public static function calculateMaxValues() {
@@ -304,6 +309,9 @@ class Trimp {
 			GROUP BY `y`, `d`
 			ORDER BY `y` ASC, `d` ASC
 		')->fetchAll();
+
+		$ATLdays = Configuration::Trimp()->daysForATL();
+		$CTLdays = Configuration::Trimp()->daysForCTL();
 		
 		foreach ($Data as $dat) {
 			$atl           = 0;
@@ -311,10 +319,10 @@ class Trimp {
 			$index         = $dat['y']*365 + $dat['d'] - $start_i;
 			$Trimp[$index] = $dat['trimp'];
 
-			if ($index >= CONF_ATL_DAYS)
-				$atl   = array_sum(array_slice($Trimp, 1 + $index - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS;
-			if ($index >= CONF_CTL_DAYS)
-				$ctl   = array_sum(array_slice($Trimp, 1 + $index - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS;
+			if ($index >= $ATLdays)
+				$atl   = array_sum(array_slice($Trimp, 1 + $index - $ATLdays, $ATLdays)) / $ATLdays;
+			if ($index >= $CTLdays)
+				$ctl   = array_sum(array_slice($Trimp, 1 + $index - $CTLdays, $CTLdays)) / $CTLdays;
 
 			if ($atl > $maxATL)
 				$maxATL = $atl;
@@ -332,7 +340,7 @@ class Trimp {
 	 * @param int $maxATL 
 	 */
 	private static function setMaxATL($maxATL) {
-		ConfigValue::update('MAX_ATL', $maxATL);
+		Configuration::Data()->updateMaxATL($maxATL);
 
 		self::$MAX_ATL = $maxATL;
 	}
@@ -342,7 +350,7 @@ class Trimp {
 	 * @param int $maxCTL 
 	 */
 	private static function setMaxCTL($maxCTL) {
-		ConfigValue::update('MAX_CTL', $maxCTL);
+		Configuration::Data()->updateMaxCTL($maxCTL);
 
 		self::$MAX_CTL = $maxCTL;
 	}
@@ -355,7 +363,7 @@ class Trimp {
 		if (is_nan($maxTRIMP))
 			return;
 
-		ConfigValue::update('MAX_TRIMP', $maxTRIMP);
+		Configuration::Data()->updateMaxTrimp($maxTRIMP);
 
 		self::$MAX_TRIMP = $maxTRIMP;
 	}

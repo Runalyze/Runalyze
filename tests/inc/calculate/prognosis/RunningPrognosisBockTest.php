@@ -31,9 +31,9 @@ class RunningPrognosisBockTest extends PHPUnit_Framework_TestCase {
 	 * @covers RunningPrognosisBock::setMinimalDistance
 	 */
 	public function testSetupFromDatabase() {
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 90, 7*60 + 30, 3) );
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 60, 16*60 + 32, 5) );
-		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(CONF_RUNNINGSPORT, 70, 76*60 + 14, 21.1) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 90, 7*60 + 30, 3) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 60, 16*60 + 32, 5) );
+		DB::getInstance()->insert('training', array('sportid', 'vdot_by_time', 's', 'distance'), array(Configuration::General()->runningSport(), 70, 76*60 + 14, 21.1) );
 
 		$this->object->setMinimalDistance(4);
 		$this->object->setupFromDatabase();

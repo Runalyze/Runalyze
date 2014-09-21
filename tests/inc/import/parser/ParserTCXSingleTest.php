@@ -101,7 +101,7 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( !$Parser->failed() );
 		$this->assertEquals( $Parser->object()->getTimestamp(), mktime(11, 47, 0, 7, 10, 2011) );
-		$this->assertEquals( $Parser->object()->Sport()->id(), CONF_RUNNINGSPORT );
+		$this->assertEquals( $Parser->object()->Sport()->id(), Configuration::General()->runningSport() );
 		$this->assertEquals( $Parser->object()->avgHF(), 145 );
 		$this->assertEquals( $Parser->object()->Splits()->asString(), '0.20|1:00' );
 		$this->assertEquals( $Parser->object()->getArrayAltitude(), array(200, 200) );

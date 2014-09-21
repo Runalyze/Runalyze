@@ -346,14 +346,18 @@ class RunalyzeJsonImporter {
 	 */
 	private function correctConfigSettings() {
 		if ($this->overwriteConfig) {
-			$ConfigValues = ConfigValueSelectDb::getAllValues();
-			foreach ($ConfigValues as $key => $Options) {
-				$Options['table'] = PREFIX.$Options['table'];
+			$ConfigValues = ConfigurationHandle::tableHandles();
 
-				if (isset($this->ReplaceIDs[$Options['table']])) {
+			foreach ($ConfigValues as $key => $table) {
+				$table = PREFIX.$table;
+
+				if (isset($this->ReplaceIDs[$table])) {
 					$InsertedData = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetch();
-					if (isset($InsertedData['value']) && isset($this->ReplaceIDs[$Options['table']][$InsertedData['value']]))
-						ConfigValue::update($key, $this->ReplaceIDs[$Options['table']][$InsertedData['value']]);
+
+					if (isset($InsertedData['value']) && isset($this->ReplaceIDs[$table][$InsertedData['value']])) {
+						$value = $this->ReplaceIDs[$table][$InsertedData['value']];
+						$this->DB->updateWhere('conf', '`key`='.DB::getInstance()->escape($key), 'value', $value);
+					}
 				}
 			}
 		}
@@ -363,10 +367,10 @@ class RunalyzeJsonImporter {
 				$this->DB->query('
 					UPDATE `'.PREFIX.'plugin`
 					SET
-						`config`='.DB::getInstance()->escape($Plugin['config']).',
-						`internal_data`='.DB::getInstance()->escape($Plugin['internal_data']).'
+						`config`='.$this->DB->escape($Plugin['config']).',
+						`internal_data`='.$this->DB->escape($Plugin['internal_data']).'
 					WHERE
-						`key`='.DB::getInstance()->escape($Plugin['key']).'
+						`key`='.$this->DB->escape($Plugin['key']).'
 				');
 			}
 		}

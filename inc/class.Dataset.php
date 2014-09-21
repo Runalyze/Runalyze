@@ -53,7 +53,7 @@ class Dataset {
 		$this->data = $dat;
 		$this->cols = count($dat);
 
-		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+		if (Configuration::DataBrowser()->showEditLink())
 			$this->cols++;
 	}
 
@@ -183,7 +183,7 @@ class Dataset {
 	 */
 	private function getQuerySelectForSet() {
 		$String = '';
-		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
 		foreach ($this->data as $set)
 			if ($set['summary'] == 1) {
@@ -220,7 +220,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function getQueryWhereNotPrivate() {
-		return (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
+		return (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
 	}
 
 	/**
@@ -248,10 +248,10 @@ class Dataset {
 		$addLink = '';
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
-		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS && !FrontendShared::$IS_SHOWN)
+		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN)
 			$addLink = ImporterWindow::linkForDate($timestamp);
 
-		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
+		if (Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';
 
 		return $date.' '.$addLink.' '.$weekDay;
@@ -282,7 +282,7 @@ class Dataset {
 	 * Display edit link if used in DataBrowser 
 	 */
 	public function displayEditLink() {
-		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+		if (Configuration::DataBrowser()->showEditLink())
 			if ($this->isSummaryMode() || FrontendShared::$IS_SHOWN)
 				echo HTML::emptyTD();
 			else

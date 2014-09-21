@@ -283,7 +283,7 @@ class BasicEndurance {
 						0
 					) as `points`
 				FROM '.PREFIX.'training
-				WHERE `time` BETWEEN '.$StartTimeForLongjogs.' AND '.$timestamp.' AND `sportid`='.CONF_RUNNINGSPORT.' AND distance>'.$this->MIN_KM_FOR_LONGJOG;
+				WHERE `time` BETWEEN '.$StartTimeForLongjogs.' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().' AND distance>'.$this->MIN_KM_FOR_LONGJOG;
 		}
 
 		return '
@@ -302,7 +302,7 @@ class BasicEndurance {
 					)
 				) as `sum`
 			FROM '.PREFIX.'training
-			WHERE `time` BETWEEN '.min($StartTimeForLongjogs,$StartTimeForWeekKm).' AND '.$timestamp.' AND `sportid`='.CONF_RUNNINGSPORT.'
+			WHERE `time` BETWEEN '.min($StartTimeForLongjogs,$StartTimeForWeekKm).' AND '.$timestamp.' AND `sportid`='.Configuration::General()->runningSport().'
 			GROUP BY accountid
 			LIMIT 1';
 	}
@@ -358,13 +358,8 @@ class BasicEndurance {
 	 */
 	public static function getConst() {
 		if (self::$CONST_VALUE === false) {
-			if (!defined('CONF_BASIC_ENDURANCE')) {
-				Error::getInstance()->addError('Constant CONF_BASIC_ENDURANCE has to be set!');
-				define('CONF_BASIC_ENDURANCE', 0);
-			}
-
-			if (CONF_BASIC_ENDURANCE != 0)
-				self::$CONST_VALUE = CONF_BASIC_ENDURANCE;
+			if (Configuration::Data()->basicEndurance() != 0)
+				self::$CONST_VALUE = Configuration::Data()->basicEndurance();
 			else
 				self::recalculateValue();
 		}
@@ -380,7 +375,7 @@ class BasicEndurance {
 		$Object->readSettingsFromConfiguration();
 		$BASIC_ENDURANCE = $Object->value();
 
-		ConfigValue::update('BASIC_ENDURANCE', $BASIC_ENDURANCE);
+		Configuration::Data()->updateBasicEndurance($BASIC_ENDURANCE);
 
 		self::$CONST_VALUE = $BASIC_ENDURANCE;
 	}

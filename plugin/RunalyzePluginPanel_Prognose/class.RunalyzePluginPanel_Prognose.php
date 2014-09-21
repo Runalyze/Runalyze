@@ -173,7 +173,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return bool
 	 */
 	protected function thereAreNotEnoughCompetitions() {
-		return 1 >= DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`='.CONF_WK_TYPID)->fetchColumn();
+		return 1 >= DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType())->fetchColumn();
 	}
 
 	/**

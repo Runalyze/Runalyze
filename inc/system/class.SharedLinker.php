@@ -63,7 +63,7 @@ class SharedLinker {
 	 * @return string 
 	 */
 	static public function getListLinkForCurrentUser($text = null) {
-		if (!CONF_TRAINING_LIST_PUBLIC) {
+		if (!Configuration::Privacy()->listIsPublic()) {
 			return '';
 		}
 

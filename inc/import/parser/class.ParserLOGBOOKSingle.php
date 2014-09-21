@@ -45,7 +45,7 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 		if (!empty($this->XML['categoryName']))
 			$this->guessSportID( (string)$this->XML['categoryName'] );
 		else
-			$this->TrainingObject->setSportid( CONF_MAINSPORT );
+			$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML['totalTime']))
 			$this->TrainingObject->setTimeInSeconds( (int)$this->XML['totalTime'] );

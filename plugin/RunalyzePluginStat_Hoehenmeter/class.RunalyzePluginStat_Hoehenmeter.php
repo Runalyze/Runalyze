@@ -225,7 +225,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	/*private function andSportWhere() {
 		if (!$this->config['all_sports']['var'])
-			return 'AND `sportid`="'.CONF_RUNNINGSPORT.'"';
+			return 'AND `sportid`="'.Configuration::General()->runningSport().'"';
 
 		return '';
 	}*/

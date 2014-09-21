@@ -121,19 +121,19 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		// Activity 1
 		$this->assertEquals( mktime(18, 14, 21, 4, 18, 2013), $this->object->object(0)->getTimestamp() );
-		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(0)->get('sportid') );
+		$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
 		$this->assertEquals( 494, $this->object->object(0)->getTimeInSeconds(), '', 20 );
 		$this->assertEquals( 2.355, $this->object->object(0)->getDistance(), '', 0.1 );
 
 		// Activity 2
 		$this->assertEquals( mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
+		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 3571, $this->object->object(1)->getTimeInSeconds(), '', 30 );
 		$this->assertEquals( 11.46, $this->object->object(1)->getDistance(), '', 0.1 );
 
 		// Activity 3
 		$this->assertEquals( mktime(19, 35, 46, 4, 18, 2013), $this->object->object(2)->getTimestamp() );
-		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
+		$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 420, $this->object->object(2)->getTimeInSeconds(), '', 10 );
 		$this->assertEquals( 2.355, $this->object->object(2)->getDistance(), '', 0.1 );
 	}

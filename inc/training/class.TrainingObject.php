@@ -75,7 +75,7 @@ class TrainingObject extends DataObject {
 	 */
 	protected function fillDefaultObject() {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
-		$this->set('is_public', CONF_TRAINING_MAKE_PUBLIC ? '1' : '0');
+		$this->set('is_public', Configuration::Privacy()->publishActivity() ? '1' : '0');
 		$this->forceToSet('s_sum_with_distance', 0);
 	}
 
@@ -83,13 +83,13 @@ class TrainingObject extends DataObject {
 	 * Set weather forecast
 	 */
 	public function setWeatherForecast() {
-		if ($this->trainingIsTooOldToFetchWeatherData() || !CONF_TRAINING_LOAD_WEATHER)
+		if ($this->trainingIsTooOldToFetchWeatherData() || !Configuration::ActivityForm()->loadWeather())
 			return;
 
 		$WeatherStrategy = new WeatherOpenweathermap();
 		$WeatherLocation = new WeatherLocation();
 		$WeatherLocation->setTimestamp( $this->getTimestamp() );
-		$WeatherLocation->setLocationName(CONF_PLZ);
+		$WeatherLocation->setLocationName( Configuration::ActivityForm()->weatherLocation() );
 
 		if ($this->hasPositionData()) {
 			$WeatherLocation->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
@@ -162,7 +162,7 @@ class TrainingObject extends DataObject {
 		$this->updateTrimp();
 		$this->updateElevation();
 
-		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
+		if ($this->get('sportid') == Configuration::General()->runningSport()) {
 			$this->updateVdot();
 			$this->updateShoeForInsert();
 
@@ -172,7 +172,7 @@ class TrainingObject extends DataObject {
 
 		Helper::recalculateStartTime();
 
-		if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+		if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 			$this->calculatePower();
 	}
 
@@ -190,7 +190,7 @@ class TrainingObject extends DataObject {
 	protected function tasksAfterUpdate() {
 		$this->updateTrimp();
 
-		if ($this->get('sportid') == CONF_RUNNINGSPORT) {
+		if ($this->get('sportid') == Configuration::General()->runningSport()) {
 			$this->updateVdot();
 			$this->updateShoeForUpdate();
 
@@ -285,7 +285,7 @@ class TrainingObject extends DataObject {
 	 */
 	private function updateElevation() {
 		if ($this->hasArrayLatitude() && $this->hasArrayLongitude()) {
-			if (CONF_TRAINING_DO_ELEVATION) {
+			if (Configuration::ActivityForm()->correctElevation()) {
 				$this->doElevationCorrection();
 			}
 
@@ -322,7 +322,7 @@ class TrainingObject extends DataObject {
 				$this->updateValue('elevation', $this->get('elevation_calculated'));
 			}
 
-			if ($this->Sport()->usesPower() && CONF_COMPUTE_POWER)
+			if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 				$this->calculatePower();
 		}
 	}
@@ -787,7 +787,7 @@ class TrainingObject extends DataObject {
 	 * Get VDOT with elevation
 	 * @return double vdot with elevation influence
 	 */
-	public function getCurrentlyUsedVdot() { return (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
+	public function getCurrentlyUsedVdot() { return (Configuration::Vdot()->useElevationCorrection() && $this->getVdotWithElevation() > 0 ? $this->getVdotWithElevationCorrected() : $this->getVdotCorrected()); }
 
 
 	/**
@@ -991,17 +991,17 @@ class TrainingObject extends DataObject {
 	 * @return boolean
 	 */
 	public function hidesMap() {
-		switch (CONF_TRAINING_MAP_PUBLIC_MODE) {
-			case 'never':
-				return true;
-			case 'race':
-				return (!$this->Type()->isCompetition());
-			case 'race-longjog':
-				return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
-			case 'always':
-			default:
-				return false;
+		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
+
+		if ($RoutePrivacy->showRace()) {
+			return (!$this->Type()->isCompetition());
+		} elseif ($RoutePrivacy->showRaceAndLongrun()) {
+			return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
+		} elseif ($RoutePrivacy->showAlways()) {
+			return false;
 		}
+
+		return true;
 	}
 
 
@@ -1194,6 +1194,6 @@ class TrainingObject extends DataObject {
 	 * @return boolean 
 	 */
 	static public function idIsCompetition($id) {
-		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.CONF_WK_TYPID.'" LIMIT 1')->fetchColumn() > 0);
+		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.Configuration::General()->competitionType().'" LIMIT 1')->fetchColumn() > 0);
 	}
 }

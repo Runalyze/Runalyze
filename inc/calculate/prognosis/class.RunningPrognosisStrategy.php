@@ -34,7 +34,7 @@ abstract class RunningPrognosisStrategy {
 					`distance`, `s`, `vdot_by_time`
 				FROM `'.PREFIX.'training`
 				WHERE
-					`sportid`='.CONF_RUNNINGSPORT.'
+					`sportid`='.Configuration::General()->runningSport().'
 					AND `distance` >= "'.$minimalDistanceRequired.'"
 				ORDER BY `vdot_by_time` DESC
 				LIMIT 20

@@ -134,8 +134,8 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3, $this->object->numberOfTrainings() );
 
 		// Event 1
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(0)->get('sportid') );
-		$this->assertEquals( CONF_WK_TYPID, $this->object->object(0)->get('typeid') );
+		$this->assertEquals( 1, $this->object->object(0)->get('sportid') );
+		$this->assertEquals( Configuration::General()->competitionType(), $this->object->object(0)->get('typeid') );
 		$this->assertEquals( 193, $this->object->object(0)->getPulseAvg() );
 		$this->assertEquals( 210, $this->object->object(0)->getPulseMax() );
 		$this->assertEquals( 5.0, $this->object->object(0)->getDistance() );
@@ -145,14 +145,14 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( "Super organisiert, gute Strecke ...", $this->object->object(0)->getNotes() );
 
 		// Event 2
-		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
-		$this->assertNotEquals( CONF_WK_TYPID, $this->object->object(1)->get('typeid') );
+		$this->assertNotEquals( 1, $this->object->object(1)->get('sportid') );
+		$this->assertNotEquals( Configuration::General()->competitionType(), $this->object->object(1)->get('typeid') );
 		$this->assertEquals( 1.0, $this->object->object(1)->getDistance() );
 		$this->assertEquals( 2700, $this->object->object(1)->getTimeInSeconds() );
 
 		// Event 3
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
-		$this->assertNotEquals( CONF_WK_TYPID, $this->object->object(2)->get('typeid') );
+		$this->assertEquals( 1, $this->object->object(2)->get('sportid') );
+		$this->assertNotEquals( Configuration::General()->competitionType(), $this->object->object(2)->get('typeid') );
 		$this->assertEquals( 182, $this->object->object(2)->getPulseAvg() );
 		$this->assertEquals( 189, $this->object->object(2)->getPulseMax() );
 		$this->assertEquals( 4.0, $this->object->object(2)->getDistance() );
