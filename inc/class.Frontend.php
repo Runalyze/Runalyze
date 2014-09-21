@@ -103,7 +103,8 @@ class Frontend {
 	 */
 	private function defineConsts() {
 		require_once FRONTEND_PATH.'system/define.consts.php';
-		//require_once FRONTEND_PATH.'system/register.consts.php';
+
+		Configuration::loadAll();
 
 		require_once FRONTEND_PATH.'class.Helper.php';
 	}

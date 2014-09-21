@@ -40,11 +40,12 @@ abstract class ConfigurationCategory {
 	/**
 	 * Set user ID
 	 * @param int $id
+	 * @param array $data values from database
 	 */
-	final public function setUserID($id) {
+	final public function setUserID($id, $data = null) {
 		if ($id !== $this->UserID) {
 			$this->UserID = $id;
-			$this->loadValues();
+			$this->loadValues($data);
 		}
 	}
 
@@ -198,16 +199,19 @@ abstract class ConfigurationCategory {
 
 	/**
 	 * Load values
+	 * @param array $data values from database
 	 */
-	private function loadValues() {
+	private function loadValues($data = null) {
 		$KeysInDatabase = array();
-		$Values = $this->fetchValues();
+		$Values = is_null($data) ? $this->fetchValues() : $data;
 
 		foreach ($Values as $Value) {
-			$KeysInDatabase[] = $Value['key'];
+			if (!isset($Value['category']) || $Value['category'] == $this->key()) {
+				$KeysInDatabase[] = $Value['key'];
 
-			if (isset($this->Handles[$Value['key']])) {
-				$this->Handles[$Value['key']]->object()->setFromString($Value['value']);
+				if (isset($this->Handles[$Value['key']])) {
+					$this->Handles[$Value['key']]->object()->setFromString($Value['value']);
+				}
 			}
 		}
 
@@ -236,11 +240,11 @@ abstract class ConfigurationCategory {
 		$MissingKeys = array_diff($WantedKeys, $KeysInDatabase);
 
 		foreach ($UnusedKeys as $Key) {
-			$this->deleteKeyFromDatabase($Key);
+			//$this->deleteKeyFromDatabase($Key);
 		}
 
 		foreach ($MissingKeys as $Key) {
-			$this->insertKeyToDatabase($Key);
+			//$this->insertKeyToDatabase($Key);
 		}
 	}
 

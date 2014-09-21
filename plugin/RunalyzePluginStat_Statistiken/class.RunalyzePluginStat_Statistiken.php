@@ -336,9 +336,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			GROUP BY DATE(FROM_UNIXTIME(`time`))
 			ORDER BY `day` DESC';
 
-		$Request = DB::getInstance()->prepare($Query);
-		$Request->bindValue('sportid', Configuration::General()->runningSport());
-		$Request->execute();
+		$Request = DB::getInstance()->query($Query);
 
 		$IsStreak = true;
 		$FirstDay = true;
@@ -376,13 +374,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		if ($NumDays >= $this->Configuration()->value('show_streak_days')) {
 			if ($NumDays == 0) {
-				$Text = __('You don\'t have a streak. Go out and start one!');
+				$Text .= __('You don\'t have a streak. Go out and start one!');
 				$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.Configuration::General()->runningSport().' ORDER BY `time` DESC LIMIT 1')->fetch();
 
 				if (isset($LastTraining['time']))
 					$Text .= ' '.sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));
 			} else {
-				$Text = sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
+				$Text .= sprintf( _n('%d day of running since %s', '%d days of running since %s', $NumDays), $NumDays, date('d.m.Y', $LastTime) );
 			}
 
 			echo '<p class="text c"><em>'.$Text.'</em></p>';

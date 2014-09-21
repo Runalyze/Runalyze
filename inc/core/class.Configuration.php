@@ -16,9 +16,17 @@ class Configuration {
 	static private $Categories = array();
 
 	/**
+	 * Values from database
+	 * @var array
+	 */
+	static private $ValuesFromDB = null;
+
+	/**
 	 * Load all categories
 	 */
 	static public function loadAll() {
+		self::fetchAllValues();
+
 		self::ActivityForm();
 		self::ActivityView();
 		self::Data();
@@ -29,6 +37,14 @@ class Configuration {
 		self::Privacy();
 		self::Trimp();
 		self::Vdot();
+	}
+
+	/**
+	 * Fetch values
+	 * @return array
+	 */
+	static private function fetchAllValues() {
+		self::$ValuesFromDB = DB::getInstance()->query('SELECT `key`,`value`,`category` FROM '.PREFIX.'conf WHERE `accountid`="'.self::userID().'"')->fetchAll();
 	}
 
 	/**
@@ -60,7 +76,7 @@ class Configuration {
 	static private function get($categoryName) {
 		if (!isset(self::$Categories[$categoryName])) {
 			$Category = new $categoryName();
-			$Category->setUserID(self::userID());
+			$Category->setUserID(self::userID(), self::$ValuesFromDB);
 
 			self::$Categories[$categoryName] = $Category;
 		}
