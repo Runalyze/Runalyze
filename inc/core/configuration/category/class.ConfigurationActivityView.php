@@ -175,7 +175,7 @@ class ConfigurationActivityView extends ConfigurationCategory {
 	 * Create: Plot options
 	 * - TRAINING_DECIMALS
 	 * - ELEVATION_METHOD
-	 * - ELEVATION_MIN_DIFF
+	 * - ELEVATION_TRESHOLD
 	 */
 	protected function createOtherOptions() {
 		$this->createHandle('TRAINING_DECIMALS', new ParameterSelect('1', array(
@@ -184,7 +184,7 @@ class ConfigurationActivityView extends ConfigurationCategory {
 
 		$this->createHandle('ELEVATION_METHOD', new ElevationMethod());
 
-		$this->createHandle('ELEVATION_MIN_DIFF', new ParameterInt(3));
+		$this->createHandle('ELEVATION_TRESHOLD', new ParameterInt(3));
 	}
 
 	/**
@@ -208,7 +208,7 @@ class ConfigurationActivityView extends ConfigurationCategory {
 	 * @return int
 	 */
 	public function elevationMinDiff() {
-		return $this->get('ELEVATION_MIN_DIFF');
+		return $this->get('ELEVATION_TRESHOLD');
 	}
 
 	/**
@@ -233,7 +233,7 @@ class ConfigurationActivityView extends ConfigurationCategory {
 		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('ConfigurationMessages::useCleanup()');
-		$this->handle('ELEVATION_MIN_DIFF')->registerOnchangeEvent('ConfigurationMessages::useCleanup()');
+		$this->handle('ELEVATION_TRESHOLD')->registerOnchangeEvent('ConfigurationMessages::useCleanup()');
 	}
 
 	/**
@@ -321,7 +321,7 @@ class ConfigurationActivityView extends ConfigurationCategory {
 			'tooltip'	=> __('Choose the algorithm to smooth the elevation data')
 		));
 
-		$Fieldset->addHandle( $this->handle('ELEVATION_MIN_DIFF'), array(
+		$Fieldset->addHandle( $this->handle('ELEVATION_TRESHOLD'), array(
 			'label'		=> __('Elevation: threshold'),
 			'tooltip'	=> __('Treshold for the smoothing algorithm')
 		));

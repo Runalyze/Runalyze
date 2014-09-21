@@ -1,8 +1,10 @@
 /* Rev 736 */
 INSERT INTO `runalyze_dataset` (`name`, `label`, `description`, `distance`, `outside`, `pulse`, `type`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'jd_intensity', 'JD-Intensit&auml;t', 'Anzeige der Trainingspunkte nacht Jack Daniels', 1, 0, 1, 1, 1, '', '', 22, 1, 'SUM', `id` FROM `runalyze_account`;
 
+
 /* Rev 794 */
 ALTER TABLE `runalyze_plugin` DROP `name`, DROP `description`;
+
 
 /* Rev 798 */
 CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
@@ -13,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
   PRIMARY KEY (`id`),
   KEY (`pluginid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
 
 INSERT INTO `runalyze_plugin_conf` (`pluginid`, `config`, `value`) SELECT PluginList.id, SUBSTRING_INDEX(PluginList.config, "|", 1) as config_key, SUBSTRING_INDEX(SUBSTRING_INDEX(PluginList.config, "|", 2), "=", -1) as config_value FROM (SELECT `id`, SUBSTRING_INDEX(SUBSTRING_INDEX(`config`, "\n", 1), "\n", -1) as `config` FROM runalyze_plugin) AS PluginList WHERE PluginList.config != "";
 INSERT INTO `runalyze_plugin_conf` (`pluginid`, `config`, `value`) SELECT PluginList.id, SUBSTRING_INDEX(PluginList.config, "|", 1) as config_key, SUBSTRING_INDEX(SUBSTRING_INDEX(PluginList.config, "|", 2), "=", -1) as config_value FROM (SELECT `id`, SUBSTRING_INDEX(SUBSTRING_INDEX(`config`, "\n", 2), "\n", -1) as `config` FROM runalyze_plugin) AS PluginList WHERE PluginList.config != "";
@@ -30,10 +31,12 @@ ALTER TABLE `runalyze_plugin` DROP `config`, DROP `internal_data`;
 
 ALTER TABLE  `runalyze_plugin` CHANGE  `type`  `type` ENUM(  'panel',  'stat',  'tool' ) NOT NULL;
 
+
 /* Rev 799 */
 ALTER TABLE  `runalyze_conf` CHANGE  `value`  `value` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
 
 ALTER TABLE  `runalyze_training` CHANGE  `temperature`  `temperature` TINYINT NULL DEFAULT NULL;
+
 
 /* Rev ? - Refactor configuration */
 /*  - add new column */
@@ -52,6 +55,13 @@ UPDATE `runalyze_conf` SET `category`="activity-form" WHERE `key`="TRAINING_CREA
 UPDATE `runalyze_conf` SET `category`="data" WHERE `key`="START_TIME" OR `key`="HF_MAX" OR `key`="HF_REST" OR `key`="VDOT_FORM" OR `key`="VDOT_CORRECTOR" OR `key`="BASIC_ENDURANCE" OR `key`="MAX_ATL" OR `key`="MAX_CTL" OR `key`="MAX_TRIMP";
 
 /*  - rename some values */
+UPDATE `runalyze_conf` SET `key`="HEART_RATE_UNIT" WHERE `key`="PULS_MODE";
+UPDATE `runalyze_conf` SET `key`="TYPE_ID_RACE" WHERE `key`="WK_TYPID";
+UPDATE `runalyze_conf` SET `key`="TYPE_ID_LONGRUN" WHERE `key`="LL_TYPID";
+UPDATE `runalyze_conf` SET `key`="VDOT_USE_CORRECTION" WHERE `key`="JD_USE_VDOT_CORRECTOR";
+UPDATE `runalyze_conf` SET `key`="VDOT_USE_CORRECTION_FOR_ELEVATION" WHERE `key`="JD_USE_VDOT_CORRECTION_FOR_ELEVATION";
+UPDATE `runalyze_conf` SET `key`="SEARCH_RESULTS_PER_PAGE" WHERE `key`="RESULTS_AT_PAGE";
+UPDATE `runalyze_conf` SET `key`="ELEVATION_TRESHOLD" WHERE `key`="ELEVATION_MIN_DIFF";
 
 /*  - remove unused values */
 DELETE FROM `runalyze_conf` WHERE `key`="DB_HIGHLIGHT_TODAY";

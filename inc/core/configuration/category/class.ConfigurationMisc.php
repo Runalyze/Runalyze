@@ -21,7 +21,7 @@ class ConfigurationMisc extends ConfigurationCategory {
 	 * Create handles
 	 */
 	protected function createHandles() {
-		$this->createHandle('RESULTS_AT_PAGE', new ParameterInt(15));
+		$this->createHandle('SEARCH_RESULTS_PER_PAGE', new ParameterInt(15));
 	}
 
 	/**
@@ -29,7 +29,7 @@ class ConfigurationMisc extends ConfigurationCategory {
 	 * @return int
 	 */
 	public function searchResultsPerPage() {
-		return $this->get('RESULTS_AT_PAGE');
+		return $this->get('SEARCH_RESULTS_PER_PAGE');
 	}
 
 	/**
@@ -38,7 +38,7 @@ class ConfigurationMisc extends ConfigurationCategory {
 	 */
 	public function Fieldset() {
 		$Fieldset = new ConfigurationFieldset( __('Miscellaneous') );
-		$Fieldset->addHandle( $this->handle('RESULTS_AT_PAGE'), array(
+		$Fieldset->addHandle( $this->handle('SEARCH_RESULTS_PER_PAGE'), array(
 			'label'		=> __('Search: results per page'),
 			'tooltip'	=> __('Number of results displayed on each page.')
 		));

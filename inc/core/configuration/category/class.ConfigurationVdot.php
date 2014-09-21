@@ -23,11 +23,11 @@ class ConfigurationVdot extends ConfigurationCategory {
 	protected function createHandles() {
 		$this->createHandle('VDOT_HF_METHOD', new VdotMethod());
 		$this->createHandle('VDOT_DAYS', new ParameterInt(30));
-		$this->createHandle('JD_USE_VDOT_CORRECTOR', new ParameterBool(true));
+		$this->createHandle('VDOT_USE_CORRECTION', new ParameterBool(true));
 		$this->createHandle('VDOT_MANUAL_CORRECTOR', new ParameterString(''));
 		$this->createHandle('VDOT_MANUAL_VALUE', new ParameterString(''));
 
-		$this->createHandle('JD_USE_VDOT_CORRECTION_FOR_ELEVATION', new ParameterBool(false));
+		$this->createHandle('VDOT_USE_CORRECTION_FOR_ELEVATION', new ParameterBool(false));
 		$this->createHandle('VDOT_CORRECTION_POSITIVE_ELEVATION', new ParameterInt(2));
 		$this->createHandle('VDOT_CORRECTION_NEGATIVE_ELEVATION', new ParameterInt(-1));
 	}
@@ -53,7 +53,7 @@ class ConfigurationVdot extends ConfigurationCategory {
 	 * @return bool
 	 */
 	public function useCorrectionFactor() {
-		return $this->get('JD_USE_VDOT_CORRECTOR');
+		return $this->get('VDOT_USE_CORRECTION');
 	}
 
 	/**
@@ -93,7 +93,7 @@ class ConfigurationVdot extends ConfigurationCategory {
 	 * @return bool
 	 */
 	public function useElevationCorrection()  {
-		return $this->get('JD_USE_VDOT_CORRECTION_FOR_ELEVATION');
+		return $this->get('VDOT_USE_CORRECTION_FOR_ELEVATION');
 	}
 
 	/**
@@ -118,8 +118,8 @@ class ConfigurationVdot extends ConfigurationCategory {
 	protected function registerOnchangeEvents() {
 		$this->handle('VDOT_HF_METHOD')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
 
-		$this->handle('JD_USE_VDOT_CORRECTOR')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
-		$this->handle('JD_USE_VDOT_CORRECTOR')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 
 		$this->handle('VDOT_DAYS')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
 		$this->handle('VDOT_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
@@ -129,7 +129,7 @@ class ConfigurationVdot extends ConfigurationCategory {
 
 		$this->handle('VDOT_MANUAL_VALUE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 
-		$this->handle('JD_USE_VDOT_CORRECTION_FOR_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
+		$this->handle('VDOT_USE_CORRECTION_FOR_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
 		$this->handle('VDOT_CORRECTION_POSITIVE_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
 		$this->handle('VDOT_CORRECTION_NEGATIVE_ELEVATION')->registerOnchangeEvent('ConfigurationMessages::useCleanup');
 	}
@@ -151,7 +151,7 @@ class ConfigurationVdot extends ConfigurationCategory {
 			'tooltip'	=> __('Number of days to recognize for VDOT')
 		));
 
-		$Fieldset->addHandle( $this->handle('JD_USE_VDOT_CORRECTOR'), array(
+		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION'), array(
 			'label'		=> __('Use correction factor'),
 			'tooltip'	=> __('Use a correction factor based on your best competition. (recommended)')
 		));
@@ -166,7 +166,7 @@ class ConfigurationVdot extends ConfigurationCategory {
 			'tooltip'	=> __('Fixed vdot value (e.g. 55), if the estimation does not fit. Can be left empty.')
 		));
 
-		$Fieldset->addHandle( $this->handle('JD_USE_VDOT_CORRECTION_FOR_ELEVATION'), array(
+		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION_FOR_ELEVATION'), array(
 			'label'		=> __('Adapt for elevation'),
 			'tooltip'	=> __('The distance can be corrected by a formula from Peter Greif to adapt for elevation.')
 		));

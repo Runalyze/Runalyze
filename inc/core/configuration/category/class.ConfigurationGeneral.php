@@ -45,10 +45,10 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	}
 
 	/**
-	 * Create: PULS_MODE
+	 * Create: HEART_RATE_UNIT
 	 */
 	protected function createHeartRateUnit() {
-		$this->createHandle('PULS_MODE', new HeartRateUnit());
+		$this->createHandle('HEART_RATE_UNIT', new HeartRateUnit());
 	}
 
 	/**
@@ -56,7 +56,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	 * @return HeartRateUnit
 	 */
 	public function heartRateUnit() {
-		return $this->object('PULS_MODE');
+		return $this->object('HEART_RATE_UNIT');
 	}
 
 	/**
@@ -96,10 +96,10 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	}
 
 	/**
-	 * Create: WK_TYPID
+	 * Create: TYPE_ID_RACE
 	 */
 	protected function createCompetitionType() {
-		$this->createHandle('WK_TYPID', new ParameterSelectRow(5, array(
+		$this->createHandle('TYPE_ID_RACE', new ParameterSelectRow(5, array(
 			'table'			=> 'type',
 			'column'		=> 'name'
 		)));
@@ -110,14 +110,14 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	 * @return int
 	 */
 	public function competitionType() {
-		return $this->get('WK_TYPID');
+		return $this->get('TYPE_ID_RACE');
 	}
 
 	/**
-	 * Create: LL_TYPID
+	 * Create: TYPE_ID_LONGRUN
 	 */
 	protected function createLongRunType() {
-		$this->createHandle('LL_TYPID', new ParameterSelectRow(7, array(
+		$this->createHandle('TYPE_ID_LONGRUN', new ParameterSelectRow(7, array(
 			'table'			=> 'type',
 			'column'		=> 'name'
 		)));
@@ -128,7 +128,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	 * @return int
 	 */
 	public function longRunType() {
-		return $this->get('LL_TYPID');
+		return $this->get('TYPE_ID_LONGRUN');
 	}
 
 	/**
@@ -136,11 +136,11 @@ class ConfigurationGeneral extends ConfigurationCategory {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
-		$this->handle('PULS_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('RUNNINGSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
-		$this->handle('WK_TYPID')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
-		$this->handle('LL_TYPID')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('TYPE_ID_LONGRUN')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
 
 	/**
@@ -154,7 +154,7 @@ class ConfigurationGeneral extends ConfigurationCategory {
 			'label'		=> __('Gender')
 		));
 
-		$Fieldset->addHandle( $this->handle('PULS_MODE'), array(
+		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(
 			'label'		=> __('Heart rate unit')
 		));
 
@@ -166,11 +166,11 @@ class ConfigurationGeneral extends ConfigurationCategory {
 			'label'		=> __('Running sport')
 		));
 
-		$Fieldset->addHandle( $this->handle('WK_TYPID'), array(
+		$Fieldset->addHandle( $this->handle('TYPE_ID_RACE'), array(
 			'label'		=> __('Activity type: competition')
 		));
 
-		$Fieldset->addHandle( $this->handle('LL_TYPID'), array(
+		$Fieldset->addHandle( $this->handle('TYPE_ID_LONGRUN'), array(
 			'label'		=> __('Activity type: long run')
 		));
 
