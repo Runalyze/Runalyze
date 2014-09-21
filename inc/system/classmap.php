@@ -18,6 +18,7 @@ $CLASSMAP = array(
 'DataBrowserLinker' => 'class.DataBrowserLinker.php',
 'DataBrowserShared' => 'class.DataBrowserShared.php',
 'Dataset' => 'class.Dataset.php',
+'DatasetLabels' => 'class.DatasetLabels.php',
 'Frontend' => 'class.Frontend.php',
 'FrontendShared' => 'class.FrontendShared.php',
 'FrontendSharedList' => 'class.FrontendSharedList.php',

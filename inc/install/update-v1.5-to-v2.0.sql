@@ -77,3 +77,7 @@ DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_MAPTYPE";
 /*  - update some values */
 UPDATE `runalyze_conf` SET `value`="google" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";
 UPDATE `runalyze_conf` SET `value`="geonames" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";
+
+
+/* Rev ? - make dataset translatable */
+ALTER TABLE `runalyze_dataset` DROP `label`, DROP `description`, DROP `distance`, DROP `outside`, DROP `pulse`, DROP `type`;

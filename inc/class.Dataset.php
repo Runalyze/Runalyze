@@ -43,7 +43,7 @@ class Dataset {
 	 * Constructor
 	 */
 	public function __construct() {
-		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
 
 		if ($dat === false || empty($dat)) {
 			Error::getInstance()->addError('No dataset in database is active.');
@@ -84,7 +84,7 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC')->fetchAll();
 		$this->cols = count($this->data);
 	}
 
@@ -269,7 +269,7 @@ class Dataset {
 
 	/**
 	 * Display a single dataset
-	 * @param array $dataset
+	 * @param array $set
 	 */
 	private function displayDataset($set) {
 		if ($this->isSummaryMode() && $set['summary'] == 0)
