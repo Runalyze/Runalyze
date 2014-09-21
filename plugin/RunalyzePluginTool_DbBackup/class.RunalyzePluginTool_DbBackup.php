@@ -145,7 +145,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if ($this->importIsOnProgress)
 			$Fieldset->setCollapsed();
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
 		$Formular->setId('database-backup');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -173,7 +173,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayImportForm() {
 		$Fieldset = new FormularFieldset( __('Import file') );
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
 		$Formular->setId('import-json-form');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
