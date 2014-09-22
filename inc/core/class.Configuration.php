@@ -44,7 +44,11 @@ class Configuration {
 	 * @return array
 	 */
 	static private function fetchAllValues() {
-		self::$ValuesFromDB = DB::getInstance()->query('SELECT `key`,`value`,`category` FROM '.PREFIX.'conf WHERE `accountid`="'.self::userID().'"')->fetchAll();
+		if (self::userID() !== null) {
+			self::$ValuesFromDB = DB::getInstance()->query('SELECT `key`,`value`,`category` FROM '.PREFIX.'conf WHERE `accountid`="'.self::userID().'"')->fetchAll();
+		} else {
+			self::$ValuesFromDB = array();
+		}
 	}
 
 	/**
@@ -61,11 +65,7 @@ class Configuration {
 			$ID = SessionAccountHandler::getId();
 		}
 
-		if ($ID == 0 && SharedLinker::isOnSharedPage()) {
-			$ID = SharedLinker::getUserId();
-		}
-
-		return (int)$ID;
+		return $ID;
 	}
 
 	/**

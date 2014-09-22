@@ -130,7 +130,7 @@ class Helper {
 		if (defined('START_TIME'))
 			return START_TIME;
 
-		if (Configuration::Data()->startTime() == 0)
+		if (Configuration::Data()->startTime() == 0 && SessionAccountHandler::isLoggedIn())
 			return self::recalculateStartTime();
 
 		return Configuration::Data()->startTime();

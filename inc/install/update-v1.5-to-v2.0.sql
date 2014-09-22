@@ -77,6 +77,17 @@ DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_MAPTYPE";
 /*  - update some values */
 UPDATE `runalyze_conf` SET `value`="google" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";
 UPDATE `runalyze_conf` SET `value`="geonames" WHERE `key`="TRAINING_ELEVATION_SERVER" AND `value`="google=true|geonames=false";
+UPDATE `runalyze_conf` SET `value`="m" WHERE `key`="GENDER" AND `value`="m=true|f=false";
+UPDATE `runalyze_conf` SET `value`="f" WHERE `key`="GENDER" AND `value`="m=false|f=true";
+UPDATE `runalyze_conf` SET `value`="0" WHERE `key`="TRAINING_DECIMALS" AND `value`="0=true|1=false|2=false";
+UPDATE `runalyze_conf` SET `value`="1" WHERE `key`="TRAINING_DECIMALS" AND `value`="0=false|1=true|2=false";
+UPDATE `runalyze_conf` SET `value`="2" WHERE `key`="TRAINING_DECIMALS" AND `value`="0=false|1=false|2=true";
+UPDATE `runalyze_conf` SET `value`="bpm" WHERE `key`="HEART_RATE_UNIT" AND (`value`="bpm=true|hfmax=false" OR `value`="bpm=true|hfmax=false|hfres=false");
+UPDATE `runalyze_conf` SET `value`="hfmax" WHERE `key`="HEART_RATE_UNIT" AND (`value`="bpm=false|hfmax=true" OR `value`="bpm=false|hfmax=true|hfres=false");
+UPDATE `runalyze_conf` SET `value`="hfres" WHERE `key`="HEART_RATE_UNIT" AND `value`="bpm=false|hfmax=false|hfres=true";
+UPDATE `runalyze_conf` SET `value`="upload" WHERE `key`="TRAINING_CREATE_MODE" AND `value`="upload=true|garmin=false|form=false";
+UPDATE `runalyze_conf` SET `value`="garmin" WHERE `key`="TRAINING_CREATE_MODE" AND `value`="upload=false|garmin=true|form=false";
+UPDATE `runalyze_conf` SET `value`="form" WHERE `key`="TRAINING_CREATE_MODE" AND `value`="upload=false|garmin=false|form=true";
 
 
 /* Rev ? - make dataset translatable */

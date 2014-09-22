@@ -340,7 +340,7 @@ class JD {
 		if (defined('VDOT_FORM'))
 			return VDOT_FORM;
 
-		if (Configuration::Data()->vdotShape() == 0)
+		if (Configuration::Data()->vdotShape() == 0 && SessionAccountHandler::isLoggedIn())
 			return self::recalculateVDOTform();
 
 		return Configuration::Data()->vdotShape();
