@@ -3,76 +3,35 @@
  * This file contains class::RunalyzeJsonImporter
  * @package Runalyze\Plugins\Tools
  */
-if (!function_exists('gzdecode')) {
-	/**
-	 * gzdecode for PHP <= 5.2
-	 * @param string $data
-	 * @return string
-	 */
-	function gzdecode($data) {
-		return gzinflate(substr($data,10,-8)); 
-	}
-}
-
 /**
- * Class: RunalyzeJsonImporter
+ * RunalyzeJsonImporter
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Tools
  */
 class RunalyzeJsonImporter {
 	/**
-	 * Options: overwrite plugin-configuration?
-	 * @var boolean
+	 * Reader
+	 * @var BigFileReaderGZip
 	 */
-	protected $overwritePluginConf = true;
+	protected $Reader;
 
 	/**
-	 * Options: overwrite configuration?
-	 * @var boolean
+	 * Bulk insert
+	 * @var RunalyzeBulkInsert
 	 */
-	protected $overwriteConfig = true;
-
-	/**
-	 * Options: overwrite dataset?
-	 * @var boolean
-	 */
-	protected $overwriteDataset = true;
-
-	/**
-	 * Options: delete old trainings?
-	 * @var boolean
-	 */
-	protected $deleteOldTrainings = false;
-
-	/**
-	 * Options: delete old user data?
-	 * @var boolean
-	 */
-	protected $deleteOldUserData = false;
-
-	/**
-	 * Options: delete old shoes?
-	 * @var boolean
-	 */
-	protected $deleteOldShoes = false;
-
-	/**
-	 * File to import
-	 * @var string
-	 */
-	protected $filename = '';
-
-	/**
-	 * Complete array from JSON
-	 * @var array
-	 */
-	protected $Data = array();
+	protected $BulkInsert;
 
 	/**
 	 * DB object
 	 * @var PDOforRunalyze
 	 */
-	protected $DB = null;
+	protected $DB;
+
+	/**
+	 * Account ID
+	 * @var int
+	 */
+	protected $AccountID;
 
 	/**
 	 * Array with all IDs to replace
@@ -82,229 +41,301 @@ class RunalyzeJsonImporter {
 	protected $ReplaceIDs = array();
 
 	/**
-	 * Internal array with errors
+	 * Existing data
 	 * @var array
 	 */
-	protected $Errors = array();
+	protected $ExistingData = array();
+
+	/**
+	 * Results
+	 * @var RunalyzeJsonImporterResults
+	 */
+	protected $Results;
 
 	/**
 	 * Construct importer
-	 * @param string $filename relative to FRONTEND_PATH
+	 * @param string $fileName relative to FRONTEND_PATH
 	 */
-	public function __construct($filename) {
-		$this->filename = $filename;
-		$this->DB       = DB::getInstance();
-
-		$this->initOptions();
-		$this->readFile();
+	public function __construct($fileName) {
+		$this->Reader = new BigFileReaderGZip($fileName);
+		$this->DB = DB::getInstance();
+		$this->AccountID = USER_MUST_LOGIN ? SessionAccountHandler::getId() : 0;
+		$this->Results = new RunalyzeJsonImporterResults();
 	}
 
 	/**
-	 * Get errors
-	 * @return array
+	 * Results as string
+	 * @return string
 	 */
-	public function getErrors() {
-		return $this->Errors;
+	public function resultsAsString() {
+		return $this->Results->completeString();
 	}
 
 	/**
 	 * Import data 
 	 */
 	public function importData() {
-		if (!empty($this->Errors)) {
-			Filesystem::deleteFile($this->filename);
-			return;
-		}
-
 		$this->deleteOldData();
-		$this->importGeneralTables();
-		$this->importTablesWithConflictingIDs();
-		$this->importTrainings();
-		$this->correctConfigSettings();
-
-		Filesystem::deleteFile($this->filename);
-	}
-
-	/**
-	 * Init all options 
-	 */
-	private function initOptions() {
-		$this->overwriteConfig     = isset($_POST['overwrite_config']);
-		$this->overwriteDataset    = isset($_POST['overwrite_dataset']);
-		$this->overwritePluginConf = isset($_POST['overwrite_plugin_conf']);
-		$this->deleteOldTrainings  = isset($_POST['delete_trainings']);
-		$this->deleteOldUserData   = isset($_POST['delete_user_data']);
-		$this->deleteOldShoes      = isset($_POST['delete_shoes']);
-	}
-
-	/**
-	 * Read file 
-	 */
-	private function readFile() {
-		$DecodedData = gzdecode(Filesystem::openFile($this->filename));
-		$this->Data  = json_decode($DecodedData, true);
-
-		$this->checkData();
-		$this->correctTableNames();
-	}
-
-	/**
-	 * Check data 
-	 */
-	private function checkData() {
-		$DesiredTables = array(
-		//	'runalyze_account',
-			'runalyze_clothes',
-			'runalyze_conf',
-			'runalyze_dataset',
-			'runalyze_plugin',
-		//	'runalyze_shoe',
-			'runalyze_sport',
-			'runalyze_training',
-			'runalyze_type',
-		//	'runalyze_user'
-		);
-
-		foreach ($DesiredTables as $Table)
-			if (!array_key_exists($Table, $this->Data))
-				$this->Errors[] = __('The table "'.$Table.'" does not exist.');
-
-		// "<" and ">" are transformed directly while inserting
-	}
-
-	/**
-	 * Correct table names for a different prefix 
-	 */
-	private function correctTableNames() {
-		// Nothing to do, DbBackup changes tablenames when saving as json
+		$this->readExistingData();
+		$this->readFile();
+		$this->correctConfigReferences();
 	}
 
 	/**
 	 * Delete all old data (if wanted) 
 	 */
 	private function deleteOldData() {
-		if ($this->deleteOldTrainings)
-			$this->DB->query('DELETE FROM `'.PREFIX.'training`');
+		$Requests = array(
+			'delete_trainings'	=> 'training',
+			'delete_user_data'	=> 'user',
+			'delete_shoes'		=> 'shoe'
+		);
 
-		if ($this->deleteOldUserData)
-			$this->DB->query('DELETE FROM `'.PREFIX.'user`');
-
-		if ($this->deleteOldShoes)
-			$this->DB->query('DELETE FROM `'.PREFIX.'shoe`');
+		foreach ($Requests as $key => $table) {
+			if (isset($_POST[$key])) {
+				$this->truncateTable($table);
+			}
+		}
 	}
 
 	/**
-	 * Import general tables and set ReplaceIDs 
+	 * Truncate table
+	 * @param string $table without prefix
 	 */
-	private function importGeneralTables() {
-		if ($this->overwriteConfig) {
-			$this->DB->query('DELETE FROM `'.PREFIX.'conf`');
-			$this->importCompleteTable(PREFIX.'conf');
+	private function truncateTable($table) {
+		$this->Results->addDeletes(PREFIX.$table, $this->DB->query('DELETE FROM `'.PREFIX.$table.'`')->rowCount());
+	}
+
+	/**
+	 * Read existing data
+	 */
+	private function readExistingData() {
+		Configuration::loadAll();
+
+		$Tables = array(
+			'clothes'	=> 'name',
+			'shoe'		=> 'name',
+			'sport'		=> 'name',
+			'type'		=> 'name',
+			'plugin'	=> 'key'
+		);
+
+		foreach ($Tables as $Table => $Column) {
+			$this->ExistingData['runalyze_'.$Table] = array();
+			$Statement = $this->DB->query('SELECT `id`,`'.$Column.'` FROM `'.PREFIX.$Table.'`');
+
+			while ($Row = $Statement->fetch()) {
+				$this->ExistingData['runalyze_'.$Table][$Row[$Column]] = $Row['id'];
+			}
+		}
+	}
+
+	/**
+	 * Read file
+	 */
+	private function readFile() {
+		while (!$this->Reader->eof()) {
+			$Line = $this->Reader->readLine();
+
+			if (substr($Line, 0, 8) == '{"TABLE"') {
+				$TableName = substr($Line, 10, -3);
+				$this->readTable($TableName);
+			}
+		}
+	}
+
+	/**
+	 * Read table
+	 * @param string $TableName
+	 */
+	private function readTable($TableName) {
+		/*$TableSettings = array(
+			'import'	=> array('runalyze_clothes', 'runalyze_shoe', 'runalyze_sport', 'runalyze_type', 'runalyze_user', 'runalyze_training'),
+			'update'	=> array(
+				'runalyze_conf'			=> 'overwrite_config',
+				'runalyze_dataset'		=> 'overwrite_dataset',
+				'runalyze_plugin'		=> 'overwrite_plugin',
+				'runalyze_plugin_conf'	=> 'overwrite_plugin'
+			)
+		);*/
+		$TableSettings = array(
+			'import'	=> array('runalyze_sport', 'runalyze_type'),
+			'update'	=> array(
+				'runalyze_conf'			=> 'overwrite_config'
+			)
+		);
+
+		if (in_array($TableName, $TableSettings['import'])) {
+			$this->importTable($TableName);
+		} elseif (isset($TableSettings['update'][$TableName])) {
+			if (isset($_POST[$TableSettings['update'][$TableName]])) {
+				$this->updateTable($TableName);
+			}
+		}
+	}
+
+	/**
+	 * Update table
+	 * @param string $TableName
+	 */
+	private function updateTable($TableName) {
+		$Line = $this->Reader->readLine();
+
+		if ($Line{0} != '{')
+			return;
+
+		$this->DB->beginTransaction();
+		$Statement = $this->prepareUpdateStatement($TableName);
+
+		while ($Line{0} == '{') {
+			$CompleteRow = json_decode($Line, true);
+			$ID = key($CompleteRow);
+			$Row = current($CompleteRow);
+
+			$this->runPreparedStatement($TableName, $Statement, $ID, $Row);
+
+			$Line = $this->Reader->readLine();
 		}
 
-		if ($this->overwriteDataset) {
-			$this->DB->query('DELETE FROM `'.PREFIX.'dataset`');
-			$this->importCompleteTable(PREFIX.'dataset');
+		$this->DB->commit();
+	}
+
+	/**
+	 * Prepare update statement
+	 * @param string $TableName
+	 * @return PDOStatement
+	 */
+	private function prepareUpdateStatement($TableName) {
+		switch ($TableName) {
+			case 'runalyze_conf':
+				return $this->DB->prepare('UPDATE `'.PREFIX.'conf` SET `value`=? WHERE `accountid`='.$this->AccountID.' AND `key`=?');
+
+			case 'runalyze_dataset':
+				return $this->DB->prepare('
+						UPDATE `'.PREFIX.'dataset`
+						SET
+							`active`=?,
+							`modus`=?,
+							`class`=?,
+							`style`=?,
+							`position`=?,
+							`summary`=?
+						WHERE `accountid`='.$this->AccountID.' AND `name`=?');
+
+			case 'runalyze_plugin':
+				return $this->DB->prepare('UPDATE `'.PREFIX.'plugin` SET `active`=?, `order`=? WHERE `accountid`='.$this->AccountID.' AND `key`=?');
+
+			case 'runalyze_plugin_conf':
+				return $this->DB->prepare('UPDATE `'.PREFIX.'plugin_conf` SET `value`=? WHERE `pluginid`=? AND `config`=?');
+		}
+	}
+
+	/**
+	 * Run prepared statement
+	 * @param string $TableName
+	 * @param PDOStatement $Statement
+	 * @param int $ID
+	 * @param array $Row
+	 */
+	private function runPreparedStatement($TableName, PDOStatement $Statement, $ID, array $Row) {
+		switch ($TableName) {
+			case 'runalyze_conf':
+				$Statement->execute(array($Row['value'], $Row['key']));
+				break;
+
+			case 'runalyze_dataset':
+				$Statement->execute(array(
+					$Row['active'],
+					$Row['modus'],
+					$Row['class'],
+					$Row['style'],
+					$Row['position'],
+					$Row['summary'],
+					$Row['name']
+				));
+				break;
+
+			case 'runalyze_plugin':
+				if (isset($this->ExistingData['runalyze_plugin'][$Row['key']])) {
+					$this->ExistingData['runalyze_plugin'][$ID] = $this->ExistingData['runalyze_plugin'][$Row['key']];
+				}
+
+				$Statement->execute(array($Row['active'], $Row['order'], $Row['key']));
+				break;
+
+			case 'runalyze_plugin_conf':
+				$Statement->execute(array($Row['value'], $this->ExistingData['runalyze_plugin'][$Row['pluginid']], $Row['config']));
+				break;
+
+			default:
+				return;
 		}
 
-		$this->importCompleteTable(PREFIX.'user');
-	}
-
-	/**
-	 * Import tables with conflicting IDs 
-	 */
-	private function importTablesWithConflictingIDs() {
-		$this->importTableAndSetIDs(PREFIX.'clothes');
-		$this->importTableAndSetIDs(PREFIX.'shoe');
-		$this->importTableAndSetIDs(PREFIX.'sport');
-		$this->importTableAndSetIDs(PREFIX.'type');
-	}
-
-	/**
-	 * Import complete table
-	 * @param string $tablename 
-	 */
-	private function importCompleteTable($tablename) {
-		$this->importTable($tablename, false);
-	}
-
-	/**
-	 * Import table (if rows are not existing) and set IDs for replacement
-	 * @param string $tablename 
-	 */
-	private function importTableAndSetIDs($tablename) {
-		$this->importTable($tablename, true);
+		$this->Results->addUpdates($TableName, $Statement->rowCount());
 	}
 
 	/**
 	 * Import table
-	 * @param string $tablename
-	 * @param boolean $replaceIDs
+	 * @param string $TableName
 	 */
-	private function importTable($tablename, $replaceIDs) {
-		if ($replaceIDs)
-			$this->ReplaceIDs[$tablename] = array();
+	private function importTable($TableName) {
+		$Line = $this->Reader->readLine();
 
-		if (!isset($this->Data[$tablename]) || !is_array($this->Data[$tablename]))
+		if ($Line{0} != '{')
 			return;
 
-		foreach ($this->Data[$tablename] as $row) {
-			if ($replaceIDs) {
-				$row['name']  = isset($row['name']) ? DB::getInstance()->escape($row['name']) : '""';
-				$ExistingData = $this->DB->query('SELECT id FROM `'.$tablename.'` WHERE `name`='.$row['name'].' LIMIT 1')->fetch();
-			} else {
-				$ExistingData = false;
-			}
+		$CompleteRow = json_decode($Line, true);
+		$Row = array_shift($CompleteRow);
+		$Columns = array_keys($Row);
 
-			if (isset($ExistingData['id'])) {
-				$newID = $ExistingData['id'];
-			} else {
-				$columns = array();
-				$values  = array();
-				foreach ($row as $column => $value) {
-					if ($column != 'accountid' && $column != 'id') {
-						$columns[] = $column;
-						$values[]  = HTML::codeTransform($value);
-					}
+		$BulkInsert = new RunalyzeBulkInsert($TableName, $Columns, $this->AccountID);
+
+		while ($Line{0} == '{') {
+			$CompleteRow = json_decode($Line, true);
+			$ID = key($CompleteRow);
+			$Row = current($CompleteRow);
+			$Values = array_values($Row);
+
+			if ($Columns[0] == 'name' || $TableName == 'runalyze_plugin') {
+				if (isset($this->ExistingData[$TableName][$Values[0]])) {
+					$this->ReplaceIDs[$TableName][$ID] = $this->ExistingData[$TableName][$Values[0]];
+				} else {
+					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert($Values);
+					$this->Results->addInserts($TableName, 1);
 				}
+			} else {
+				$this->correctValues($TableName, $Row);
 
-				$newID = $this->DB->insert($tablename, $columns, $values);
+				$BulkInsert->insert(array_values($Row));
+				$this->Results->addInserts($TableName, 1);
 			}
 
-			if ($replaceIDs)
-				$this->ReplaceIDs[$tablename][$row['id']] = $newID;
+			$Line = $this->Reader->readLine();
 		}
 	}
 
 	/**
-	 * Import all trainings 
+	 * Correct values
+	 * @param string $TableName
+	 * @param array $Row
 	 */
-	private function importTrainings() {
-		foreach ($this->Data[PREFIX.'training'] as $Training) {
-			$Training['clothes'] = $this->correctClothes($Training['clothes']);
-			$Training['sportid'] = $this->correctID(PREFIX.'sport', $Training['sportid']);
-			$Training['typeid']  = $this->correctID(PREFIX.'type', $Training['typeid']);
-			$Training['shoeid']  = $this->correctID(PREFIX.'shoe', $Training['shoeid']);
-
-			$this->insertTraining($Training);
+	private function correctValues($TableName, array &$Row) {
+		if ($TableName == 'runalyze_training') {
+			$this->correctTraining($Row);
+		} elseif ($TableName == 'runalyze_plugin_conf') {
+			$Row['pluginid'] = $this->correctID('runalyze_plugin', $Row['pluginid']);
 		}
 	}
 
 	/**
-	 * Insert training
-	 * @param array $Training 
+	 * Correct training
+	 * @param array $Training
 	 */
-	private function insertTraining($Training) {
-		$columns = array();
-		$values  = array();
-		foreach ($Training as $column => $value) {
-			if ($column != 'accountid' && $column != 'id') {
-				$columns[] = $column;
-				$values[]  = HTML::codeTransform($value);
-			}
-		}
-
-		$this->DB->insert('training', $columns, $values);
+	private function correctTraining(array &$Training) {
+		$Training['clothes'] = $this->correctClothes($Training['clothes']);
+		$Training['sportid'] = $this->correctID('runalyze_sport', $Training['sportid']);
+		$Training['typeid']  = $this->correctID('runalyze_type', $Training['typeid']);
+		$Training['shoeid']  = $this->correctID('runalyze_shoe', $Training['shoeid']);
 	}
 
 	/**
@@ -326,7 +357,7 @@ class RunalyzeJsonImporter {
 	 * @return string
 	 */
 	private function correctClothes($String) {
-		if (!isset($this->ReplaceIDs[PREFIX.'clothes']) || empty($String))
+		if (!isset($this->ReplaceIDs['runalyze_clothes']) || empty($String))
 			return $String;
 
 		$IDs = explode(',', $String);
@@ -335,80 +366,31 @@ class RunalyzeJsonImporter {
 			return $String;
 
 		foreach ($IDs as $i => $ID)
-			if ((int)$ID > 0 && isset($this->ReplaceIDs[PREFIX.'clothes'][$ID]))
-				$IDs[$i] = $this->ReplaceIDs[PREFIX.'clothes'][$ID];
+			if ((int)$ID > 0 && isset($this->ReplaceIDs['runalyze_clothes'][$ID]))
+				$IDs[$i] = $this->ReplaceIDs['runalyze_clothes'][$ID];
 
 		return implode(',', $IDs);
 	}
 
 	/**
-	 * Correct config settings 
+	 * Correct references in configuration
 	 */
-	private function correctConfigSettings() {
-		if ($this->overwriteConfig) {
+	private function correctConfigReferences() {
+		if (isset($_POST['overwrite_config'])) {
 			$ConfigValues = ConfigurationHandle::tableHandles();
 
 			foreach ($ConfigValues as $key => $table) {
 				$table = PREFIX.$table;
 
 				if (isset($this->ReplaceIDs[$table])) {
-					$InsertedData = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetch();
+					$OldValue = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetchColumn();
+					$NewValue = $this->correctID($table, $OldValue);
 
-					if (isset($InsertedData['value']) && isset($this->ReplaceIDs[$table][$InsertedData['value']])) {
-						$value = $this->ReplaceIDs[$table][$InsertedData['value']];
-						$this->DB->updateWhere('conf', '`key`='.DB::getInstance()->escape($key), 'value', $value);
+					if ($NewValue != 0) {
+						$this->DB->updateWhere('conf', '`key`="'.$key.'"', 'value', $NewValue);
 					}
 				}
 			}
 		}
-
-		if ($this->overwritePluginConf) {
-			foreach ($this->Data[PREFIX.'plugin'] as $Plugin) {
-				$this->DB->query('
-					UPDATE `'.PREFIX.'plugin`
-					SET
-						`config`='.$this->DB->escape($Plugin['config']).',
-						`internal_data`='.$this->DB->escape($Plugin['internal_data']).'
-					WHERE
-						`key`='.$this->DB->escape($Plugin['key']).'
-				');
-			}
-		}
-	}
-
-	/**
-	 * Get number of trainings
-	 * @return int
-	 */
-	public function getNumberOfTrainings() {
-		return $this->getNumberOfDataFor(PREFIX.'training');
-	}
-
-	/**
-	 * Get number of user data
-	 * @return int
-	 */
-	public function getNumberOfUserData() {
-		return $this->getNumberOfDataFor(PREFIX.'user');
-	}
-
-	/**
-	 * Get number of shoes
-	 * @return int
-	 */
-	public function getNumberOfShoes() {
-		return $this->getNumberOfDataFor(PREFIX.'shoe');
-	}
-
-	/**
-	 * Get number of data for a given table
-	 * @param string $tableName
-	 * @return int 
-	 */
-	private function getNumberOfDataFor($tableName) {
-		if (!isset($this->Data[$tableName]))
-			return 0;
-
-		return count($this->Data[$tableName]);
 	}
 }

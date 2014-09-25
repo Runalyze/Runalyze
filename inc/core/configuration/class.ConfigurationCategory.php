@@ -44,7 +44,7 @@ abstract class ConfigurationCategory {
 	 */
 	final public function setUserID($id, $data = null) {
 		if ($id !== $this->UserID) {
-			$this->UserID = $id;
+			$this->UserID = (int)$id;
 			$this->loadValues($data);
 		}
 	}
@@ -54,7 +54,7 @@ abstract class ConfigurationCategory {
 	 * @return bool
 	 */
 	private function hasUserID() {
-		return is_int($this->UserID);
+		return is_numeric($this->UserID);
 	}
 
 	/**
@@ -240,11 +240,11 @@ abstract class ConfigurationCategory {
 		$MissingKeys = array_diff($WantedKeys, $KeysInDatabase);
 
 		foreach ($UnusedKeys as $Key) {
-			//$this->deleteKeyFromDatabase($Key);
+			$this->deleteKeyFromDatabase($Key);
 		}
 
 		foreach ($MissingKeys as $Key) {
-			//$this->insertKeyToDatabase($Key);
+			$this->insertKeyToDatabase($Key);
 		}
 	}
 
