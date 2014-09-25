@@ -1,6 +1,5 @@
 <?php
 $PLUGINMAP = array(
-'Prognose_PrognosisWindow' => '../plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php',
 'RunalyzePluginPanel_Prognose' => '../plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php',
 'RunalyzePluginPanel_Rechenspiele' => '../plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php',
 'RunalyzePluginPanel_Schuhe' => '../plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php',
@@ -20,7 +19,6 @@ $PLUGINMAP = array(
 'RunalyzePluginTool_AnalyzeVDOT' => '../plugin/RunalyzePluginTool_AnalyzeVDOT/class.RunalyzePluginTool_AnalyzeVDOT.php',
 'RunalyzePluginTool_Cacheclean' => '../plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php',
 'RunalyzePluginTool_DatenbankCleanup' => '../plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php',
-'RunalyzeJsonImporter' => '../plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporter.php',
 'RunalyzePluginTool_DbBackup' => '../plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php',
 'RunalyzePluginTool_JDTables' => '../plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php',
 'RunalyzePluginTool_MultiEditor' => '../plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php',

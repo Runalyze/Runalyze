@@ -3913,6 +3913,7 @@ Runalyze.Feature = (function($, Parent){
 			var noreload = $(this).hasClass('no-automatic-reload');
 			var data = $(this).serializeArray();
 			var url = $(this).attr('action');
+			var elem = $("#ajax");
 
 			data.push({
 				name:	'submit',
@@ -3924,14 +3925,18 @@ Runalyze.Feature = (function($, Parent){
 				return false;
 			}
 
-			Parent.Overlay.load( url, {
+			if ($("#ajax #pluginTool").length) {
+				elem = $("#pluginTool");
+			}
+
+			elem.loadDiv( url, data, {
 				success: function() {
 					$("#submit-info").fadeIn().delay(4000).fadeOut();
 
 					if (formID != "search" && formID != "tcxUpload" && !noreload)
 						Parent.reloadContent();
 				}
-			}, data );
+			} );
 
 			return false;
 		});
