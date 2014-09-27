@@ -354,16 +354,16 @@ class Dataset {
 				return $this->TrainingObject->DataView()->getPower();
 
 			case 'temperature':
-				if (!$this->TrainingObject->Weather()->hasTemperature() || !$this->TrainingObject->Sport()->isOutside())
+				if ($this->TrainingObject->Weather()->temperature()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
-				return $this->TrainingObject->Weather()->temperatureString();
+				return $this->TrainingObject->Weather()->temperature()->asString();
 
 			case 'weatherid':
-				if ($this->TrainingObject->Weather()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
+				if ($this->TrainingObject->Weather()->isEmpty() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
-				return $this->TrainingObject->Weather()->icon();
+				return $this->TrainingObject->Weather()->condition()->icon()->code();
 
 			case 'route':
 				return $this->cut( $this->TrainingObject->getRoute() );

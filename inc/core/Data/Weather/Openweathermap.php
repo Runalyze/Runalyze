@@ -3,16 +3,21 @@
  * This file contains class::WeatherOpenweathermap
  * @package Runalyze\Data\Weather
  */
+
+namespace Runalyze\Data\Weather;
+
 /**
  * Forecast-strategy for using openweathermap.org
  * 
  * This weather forecast strategy uses the api of openweathermap.org
  * To use this api, a location has to be set.
+ * 
+ * The strategy uses <code>OPENWEATHERMAP_API_KEY</code> if defined.
  *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
-class WeatherOpenweathermap implements WeatherForecastStrategy {
+class Openweathermap implements ForecastStrategy {
 	/**
 	 * URL for catching forecast
 	 * @var string
@@ -33,9 +38,9 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 
 	/**
 	 * Load conditions for location
-	 * @param WeatherLocation $Location
+	 * @param Location $Location
 	 */
-	public function loadForecast(WeatherLocation $Location) {
+	public function loadForecast(Location $Location) {
 		$this->Result = array();
 
 		if ($Location->isOld() && $Location->hasLocationName()) {
@@ -59,7 +64,7 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
 			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
 
-		$this->setFromJSON( Filesystem::getExternUrlContent($url) );
+		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
 	}
 
 	/**
@@ -77,40 +82,44 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 	}
 
 	/**
-	 * Get weather string
-	 * @return string
+	 * Condition
+	 * @return Runalyze\Data\Weather\Çondition
 	 */
-	public function getConditionAsString() {
-		if (!isset($this->Result['weather']))
-			return '';
+	public function condition() {
+		if (!isset($this->Result['weather'])) {
+			return new Condition(Condition::UNKNOWN);
+		}
 
-		return $this->translateCodeToInternalName($this->Result['weather'][0]['id']);
+		return $this->translateCodeToCondition($this->Result['weather'][0]['id']);
 	}
 
 	/**
-	 * Get temperature
-	 * @return mixed
+	 * Temperature
+	 * @return Runalyze\Data\Weather\Temperature
 	 */
-	public function getTemperature() {
-		if (isset($this->Result['main']) && isset($this->Result['main']['temp']))
-			return round($this->Result['main']['temp'] - 273.15);
+	public function temperature() {
+		if (isset($this->Result['main']) && isset($this->Result['main']['temp'])) {
+			$value = $this->Result['main']['temp'];
+		} else {
+			$value = null;
+		}
 
-		return null;
+		return new Temperature($value, Temperature::KELVIN);
 	}
 
 	/**
-	 * Translate api code to internal name
+	 * Translate api code to condition
 	 * 
 	 * @see http://openweathermap.org/wiki/API/Weather_Condition_Codes
 	 * @param int $code Code from openweathermap.org
-	 * @return string
+	 * @return Runalyze\Data\Weather\Condition
 	 */
-	private function translateCodeToInternalName($code) {
+	private function translateCodeToCondition($code) {
 		switch($code) {
 			case 800:
-				return 'sunny';
+				return new Condition(Condition::SUNNY);
 			case 801:
-				return 'fair';
+				return new Condition(Condition::FAIR);
 			case 200:
 			case 210:
 			case 211:
@@ -127,10 +136,10 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 			case 721:
 			case 731:
 			case 741:
-				return 'changeable';
+				return new Condition(Condition::CHANGEABLE);
 			case 803:
 			case 804:
-				return 'cloudy';
+				return new Condition(Condition::CLOUDY);
 			case 500:
 			case 501:
 			case 502:
@@ -149,15 +158,15 @@ class WeatherOpenweathermap implements WeatherForecastStrategy {
 			case 321:
 			case 201:
 			case 202:
-				return 'rainy';
+				return new Condition(Condition::RAINY);
 			case 600:
 			case 601:
 			case 602:
 			case 611:
 			case 621:
-				return 'snow';
+				return new Condition(Condition::SNOWING);
 			default:
-				return 'unknown';
+				return new Condition(Condition::UNKNOWN);
 		}
 	}
 }

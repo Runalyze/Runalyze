@@ -1,35 +1,38 @@
 <?php
 /**
- * This file contains class::WeatherTranslator
+ * This file contains class::Translator
  * @package Runalyze\Data\Weather
  */
+
+namespace Runalyze\Data\Weather;
+
 /**
  * Weather translator
  *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
-class WeatherTranslator {
+class Translator {
 	/**
 	 * Try to get weather id for string
-	 * @param string $String
+	 * @param string $string
 	 */
-	static public function getIDfor($String) {
-		switch ($String) {
+	static public function IDfor($string) {
+		switch ($string) {
 			case 'Mostly Sunny':
 			case 'Sunny':
 			case 'Clear':
-				return Weather::conditionToId('sunny');
+				return Condition::SUNNY;
 
 			case 'Partly Sunny':
 			case 'Partly Cloudy':
-				return Weather::conditionToId('fair');
+				return Condition::FAIR;
 
 			case 'Overcast':
 			case 'Mostly Cloudy':
 			case 'Cloudy':
 			case 'Fog':
-				return Weather::conditionToId('cloudy');
+				return Condition::CLOUDY;
 
 			case 'Mist':
 			case 'Storm':
@@ -38,7 +41,7 @@ class WeatherTranslator {
 			case 'Scattered thunderstorms':
 			case 'Windy':
 			case 'Drizzle':
-				return Weather::conditionToId('changeable');
+				return Condition::CHANGEABLE;
 
 			case 'Rain':
 			case 'Light rain':
@@ -48,7 +51,7 @@ class WeatherTranslator {
 			case 'Chance of tstorm':
 			case 'Thunderstorm':
 			case 'Sleet':
-				return Weather::conditionToId('rainy');
+				return Condition::RAINY;
 
 			case 'Haze':
 			case 'Flurries':
@@ -57,10 +60,10 @@ class WeatherTranslator {
 			case 'Light snow':
 			case 'Chance of snow':
 			case 'Scattered snow showers':
-				return Weather::conditionToId('snow');
+				return Condition::SNOWING;
 
 			default:
-				return Weather::conditionToId('unknown');
+				return Condition::UNKNOWN;
 		}
 	}
 }

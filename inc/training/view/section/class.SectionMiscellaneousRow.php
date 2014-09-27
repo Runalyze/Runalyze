@@ -94,10 +94,10 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addWeather() {
 		if (!$this->Training->Weather()->isEmpty()) {
-			$Weather = new BoxedValue($this->Training->Weather()->name(), '', __('Weather condition'), $this->Training->Weather()->icon());
+			$Weather = new BoxedValue($this->Training->Weather()->condition()->string(), '', __('Weather condition'), $this->Training->Weather()->condition()->icon()->code());
 			$Weather->defineAsFloatingBlock('w50');
 
-			$Temp = new BoxedValue(Helper::Unknown($this->Training->Weather()->temperature()), '&deg;C', __('Temperature'));
+			$Temp = new BoxedValue(Helper::Unknown($this->Training->Weather()->temperature()->value()), $this->Training->Weather()->temperature()->unit(), __('Temperature'));
 			$Temp->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Weather;

@@ -1,15 +1,18 @@
 <?php
 /**
- * This file contains class::WeatherLocation
+ * This file contains class::Location
  * @package Runalyze\Data\Weather
  */
+
+namespace Runalyze\Data\Weather;
+
 /**
  * Weather location
  *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
-class WeatherLocation {
+class Location {
 	/**
 	 * Latitude
 	 * @var float
@@ -97,8 +100,11 @@ class WeatherLocation {
 	 * @return bool
 	 */
 	public function hasPosition() {
-		return (!is_null($this->Latitude) && !is_null($this->Longitude))
-			&& ($this->Latitude != 0 || $this->Longitude != 0);
+		return (
+			!is_null($this->Latitude) &&
+			!is_null($this->Longitude) &&
+			($this->Latitude != 0 || $this->Longitude != 0)
+		);
 	}
 
 	/**

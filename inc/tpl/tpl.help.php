@@ -94,14 +94,15 @@ $Frontend = new Frontend();
 		<li>
 			<strong>Icons</strong>
 			<ul>
-				<li>Font Awesome by Dave Gandy - <a class="external" href="http://fontawesome.io">http://fontawesome.io</a></li>
+				<li>Font Awesome by Dave Gandy - <a class="external" href="http://fontawesome.io/">http://fontawesome.io/</a></li>
+				<li>Forecast Font by Ali Sisk - <a class="external" href="http://forecastfont.iconvau.lt/">http://forecastfont.iconvau.lt/</a></li>
 			</ul>
 		</li>
 		<li>
 			<strong>Elevation data from Shuttle Radar Topography Mission</strong>
 			<ul>
 				<li>SRTM tiles grabbed via Derek Watkins - <a class="external" href="http://dwtkns.com/srtm/">http://dwtkns.com/srtm/</a></li>
-				<li>SRTM files by International Centre for Tropical  Agriculture (CIAT) - <a class="external" href="http://srtm.csi.cgiar.org">http://srtm.csi.cgiar.org</a></li>
+				<li>SRTM files by International Centre for Tropical  Agriculture (CIAT) - <a class="external" href="http://srtm.csi.cgiar.org/">http://srtm.csi.cgiar.org/</a></li>
 				<li>SRTMGeoTIFFReader by Bob Osola - <a class="external" href="http://www.osola.org.uk/elevations/index.htm">http://www.osola.org.uk/elevations/index.htm</a></li>
 			</ul>
 		</li>

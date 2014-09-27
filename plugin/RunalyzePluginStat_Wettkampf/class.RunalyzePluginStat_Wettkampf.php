@@ -355,7 +355,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td>'.$Training->DataView()->getTimeString().'</td>
 				<td class="small">'.$Training->DataView()->getSpeedString().'</td>
 				<td class="small">'.Helper::Unknown($Training->getPulseAvg()).' / '.Helper::Unknown($Training->getPulseMax()).' bpm</td>
-				<td class="small">'.$Training->Weather()->asString().'</td>
+				<td class="small">'.($Training->Weather()->isEmpty() ? '' : $Training->Weather()->fullString()).'</td>
 			</tr>');	
 	}
 
@@ -384,10 +384,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display statistics for weather
 	 */
 	private function displayWeatherStatistics() {
+		$Condition = new \Runalyze\Data\Weather\Condition(0);
 		$Strings = array();
+
 		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
-		foreach ($Weather as $W)
-			$Strings[] = $W['num'].'x '.Icon::getWeatherIcon($W['weatherid']);
+		foreach ($Weather as $W) {
+			$Condition->set($W['weatherid']);
+			$Strings[] = $W['num'].'x '.$Condition->icon()->code();
+		}
 
 		if (!empty($Strings)) {
 			echo '<strong>'.__('Weather statistics').':</strong> ';

@@ -490,7 +490,16 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getVDOTicon() {
-		return Icon::getVDOTicon($this->Object->getCurrentlyUsedVdot(), !$this->Object->usedForVdot());
+		if ($this->Object->getVdotUncorrected() == 0)
+			return '';
+
+		$Icon = new Runalyze\View\Icon\VdotIcon($this->Object->getCurrentlyUsedVdot());
+
+		if (!$this->Object->usedForVdot()) {
+			$Icon->setTransparent();
+		}
+
+		return $Icon->code();
 	}
 
 	/**

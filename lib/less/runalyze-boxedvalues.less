@@ -65,18 +65,18 @@
 		padding: @boxed-value-padding-with-icon;
 		min-width: @boxed-value-min-width-with-icon;
 
-		i {
+		& > i, & > span > i {
 			position: absolute;
 			left: @boxed-value-icon-position-left;
 			top: 50%;
 			margin-top: (-(@boxed-value-font-size)/2);
 			font-size: @boxed-value-font-size;
 			line-height: @boxed-value-font-size;
+		}
 
-			&.fa {
-				height: @boxed-value-font-size;
-				width: @boxed-value-font-size;
-			}
+		i.fa {
+			height: @boxed-value-font-size;
+			width: @boxed-value-font-size;
 		}
 	}
 }

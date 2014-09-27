@@ -142,6 +142,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1157, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( "Citylauf Telgte", $this->object->object(0)->getRoute() );
 		$this->assertEquals( 17, $this->object->object(0)->get('temperature') );
+		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
 		$this->assertEquals( "Super organisiert, gute Strecke ...", $this->object->object(0)->getNotes() );
 
 		// Event 2
@@ -159,8 +160,8 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 1000, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( "Bahn Sentruper Hoehe", $this->object->object(2)->getRoute() );
 		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getComment() );
-		//$this->assertFalse( $this->object->object(2)->Weather()->isUnknown() );
 		$this->assertEquals( 15, $this->object->object(2)->get('temperature') );
+		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
 
 		$this->assertEquals(
 			"1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R1.60|8:00",

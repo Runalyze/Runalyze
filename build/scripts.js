@@ -2275,7 +2275,7 @@ var RunalyzePlot = (function($, parent){
 		if ($(".training-row-plot:first").length == 0)
 			return;
 
-		trainingCharts.options.width = $(".training-row-plot:first").width() - 24;
+		trainingCharts.options.width = $(".training-row-plot:visible:first").width() - 24;
 		resizeEachTrainingChart();
 	};
 
@@ -2820,8 +2820,6 @@ RunalyzePlot.Events = (function($, parent){
 	}
 
 	function moveMapMarker(pos) {
-		console.log(RunalyzeLeaflet);
-		console.log(RunalyzeLeaflet.Routes);
 		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes)
 			RunalyzeLeaflet.Routes.movePosMarker(pos);
 	}

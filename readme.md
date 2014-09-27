@@ -32,12 +32,13 @@ More details: <http://runalyze.de/installation/> (only in german)
 
 ## Credits
 * Icons
-	* [Font Awesome](http://fontawesome.io) by Dave Gandy
+	* [Font Awesome](http://fontawesome.io/) by Dave Gandy
+	* [Forecast Font](http://forecastfont.iconvau.lt/) by Ali Sisk
 * Garmin Communicator
     * [API](http://developer.garmin.com/web-device/garmin-communicator-plugin/) by Garmin Ltd.
 * Elevation data from Shuttle Radar Topography Mission
 	* [SRTM tiles](http://dwtkns.com/srtm/) grabbed via Derek Watkins
-	* [SRTM files](http://srtm.csi.cgiar.org) by International  Centre for Tropical  Agriculture (CIAT)
+	* [SRTM files](http://srtm.csi.cgiar.org/) by International  Centre for Tropical  Agriculture (CIAT)
 	* [SRTMGeoTIFFReader](http://www.osola.org.uk/elevations/index.htm) by Bob Osola
 * [jQuery](http://jquery.org/) by jQuery Foundation, Inc.
     * [Bootstrap Tooltip](http://twitter.github.com/bootstrap/javascript.html#tooltips) by Twitter, Inc.
@@ -46,4 +47,4 @@ More details: <http://runalyze.de/installation/> (only in german)
     * [FineUploader](https://github.com/Widen/fine-uploader) by Widen Enterprises, Inc.
     * [Tablesorter](http://tablesorter.com/docs/) by Christian Bach
     * [Datepicker](http://www.eyecon.ro/) by Stefan Petre
-    * [Chosen](http://getharvest.com) by Patrick Filler for Harvest
+    * [Chosen](http://getharvest.com/) by Patrick Filler for Harvest

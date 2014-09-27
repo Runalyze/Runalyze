@@ -54,7 +54,7 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Weather
-	 * @var \Weather
+	 * @var \Runalyze\Data\Weather
 	 */
 	private $Weather = null;
 
@@ -71,7 +71,7 @@ class TrainingObject extends DataObject {
 	private $Cadence = null;
 
 	/**
-	 * Fill default object with standard settings and weather forecast if needed
+	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
 		$this->set('time', isset($_GET['date']) ? strtotime($_GET['date']) : mktime(0,0,0));
@@ -86,19 +86,21 @@ class TrainingObject extends DataObject {
 		if ($this->trainingIsTooOldToFetchWeatherData() || !Configuration::ActivityForm()->loadWeather())
 			return;
 
-		$WeatherStrategy = new WeatherOpenweathermap();
-		$WeatherLocation = new WeatherLocation();
-		$WeatherLocation->setTimestamp( $this->getTimestamp() );
-		$WeatherLocation->setLocationName( Configuration::ActivityForm()->weatherLocation() );
+		$Strategy = new \Runalyze\Data\Weather\Openweathermap();
+		$Location = new \Runalyze\Data\Weather\Location();
+		$Location->setTimestamp($this->getTimestamp());
+		$Location->setLocationName(Configuration::ActivityForm()->weatherLocation());
 
 		if ($this->hasPositionData()) {
-			$WeatherLocation->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
+			$Location->setPosition( $this->getFirstArrayPoint('arr_lat'), $this->getFirstArrayPoint('arr_lon') );
 		}
 
-		$Weather = new WeatherForecast($WeatherStrategy, $WeatherLocation);
+		$Forecast = new \Runalyze\Data\Weather\Forecast($Strategy, $Location);
+		$Weather = $Forecast->object();
+		$Weather->temperature()->toCelsius();
 
-		$this->set('weatherid', $Weather->id());
-		$this->set('temperature', $Weather->temperature());
+		$this->set('weatherid', $Weather->condition()->id());
+		$this->set('temperature', $Weather->temperature()->value());
 	}
 
 	/**
@@ -222,7 +224,7 @@ class TrainingObject extends DataObject {
 	private function removeWeatherIfInside() {
 		if (!$this->Sport()->isOutside()) {
 			$this->setTemperature(null);
-			$this->setWeatherid(Weather::$UNKNOWN_ID);
+			$this->setWeatherid(\Runalyze\Data\Weather\Condition::UNKNOWN);
 		}
 	}
 
@@ -479,13 +481,17 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Weather object
-	 * @return \Weather
+	 * @return \Runalyze\Data\Weather
 	 */
 	public function Weather() {
 		if (is_null($this->Weather)) {
-			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : 0;
+			$id   = ($this->hasProperty('weatherid')) ? $this->get('weatherid') : \Runalyze\Data\Weather\Condition::UNKNOWN;
 			$temp = ($this->hasProperty('temperature')) ? $this->get('temperature') : null;
-			$this->Weather = new Weather($id, $temp);
+
+			$this->Weather = new \Runalyze\Data\Weather(
+				new \Runalyze\Data\Weather\Temperature($temp),
+				new \Runalyze\Data\Weather\Condition($id)
+			);
 		}
 
 		return $this->Weather;
