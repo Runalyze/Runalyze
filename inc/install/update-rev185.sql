@@ -1,1 +1,0 @@
-ALTER TABLE `runalyze_shoe` ADD `additionalKm` DECIMAL( 6, 2 ) NOT NULL DEFAULT '0';

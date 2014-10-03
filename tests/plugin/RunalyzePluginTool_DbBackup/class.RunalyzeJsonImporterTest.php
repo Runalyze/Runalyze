@@ -26,6 +26,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->DB = DB::getInstance();
 		$this->truncateTables();
+
+		$_POST = array();
 	}
 
 	/**
@@ -34,6 +36,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected function tearDown() {
 		$this->truncateTables();
+
+		$_POST = array();
 	}
 
 	private function truncateTables() {

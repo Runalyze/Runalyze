@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `category` varchar(32) NOT NULL,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `value` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `accountid` int(11) NOT NULL,

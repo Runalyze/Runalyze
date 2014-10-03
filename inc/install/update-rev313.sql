@@ -1,1 +1,0 @@
-ALTER TABLE  `runalyze_training` ADD  `activity_id` VARCHAR( 50 ) NOT NULL DEFAULT  '' AFTER  `creator_details`;

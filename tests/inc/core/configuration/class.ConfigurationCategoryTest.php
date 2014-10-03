@@ -57,20 +57,4 @@ class ConfigurationCategoryTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( array('TEST', 'SECOND'), $this->object->keys() );
 	}
 
-	/**
-	 * @covers ConfigurationCategory::setUserID
-	 * @todo   Implement testSetUserID().
-	 */
-	public function testSetUserID() {
-		// Not possible
-	}
-
-	/**
-	 * @covers ConfigurationCategory::createForm
-	 * @todo   Implement testCreateForm().
-	 */
-	public function testCreateForm() {
-		//
-	}
-
 }

@@ -35,7 +35,6 @@ $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 
 // Load and clean database
 DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
-DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 
 // Language functions
 if (!function_exists('__')) {

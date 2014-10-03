@@ -1,12 +1,12 @@
-/* Rev 736 */
+/* Rev 736 - 05.03.2014 */
 INSERT INTO `runalyze_dataset` (`name`, `label`, `description`, `distance`, `outside`, `pulse`, `type`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'jd_intensity', 'JD-Intensit&auml;t', 'Anzeige der Trainingspunkte nacht Jack Daniels', 1, 0, 1, 1, 1, '', '', 22, 1, 'SUM', `id` FROM `runalyze_account`;
 
 
-/* Rev 794 */
+/* Rev 794 - 10.08.2014 */
 ALTER TABLE `runalyze_plugin` DROP `name`, DROP `description`;
 
 
-/* Rev 798 */
+/* Rev 798 - 13.08.2014 */
 CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pluginid` int(10) unsigned NOT NULL,
@@ -32,13 +32,13 @@ ALTER TABLE `runalyze_plugin` DROP `config`, DROP `internal_data`;
 ALTER TABLE  `runalyze_plugin` CHANGE  `type`  `type` ENUM(  'panel',  'stat',  'tool' ) NOT NULL;
 
 
-/* Rev 799 */
+/* 14.08.2014 */
 ALTER TABLE  `runalyze_conf` CHANGE  `value`  `value` VARCHAR( 255 ) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL;
 
 ALTER TABLE  `runalyze_training` CHANGE  `temperature`  `temperature` TINYINT NULL DEFAULT NULL;
 
 
-/* Rev ? - Refactor configuration */
+/* 21.09.2014 - Refactor configuration */
 /*  - add new column */
 ALTER TABLE  `runalyze_conf` ADD  `category` VARCHAR( 32 ) NOT NULL AFTER  `id`;
 /*  - set categories */
@@ -90,5 +90,5 @@ UPDATE `runalyze_conf` SET `value`="garmin" WHERE `key`="TRAINING_CREATE_MODE" A
 UPDATE `runalyze_conf` SET `value`="form" WHERE `key`="TRAINING_CREATE_MODE" AND `value`="upload=false|garmin=false|form=true";
 
 
-/* Rev ? - make dataset translatable */
+/* 21.09.2014 - make dataset translatable */
 ALTER TABLE `runalyze_dataset` DROP `label`, DROP `description`, DROP `distance`, DROP `outside`, DROP `pulse`, DROP `type`;

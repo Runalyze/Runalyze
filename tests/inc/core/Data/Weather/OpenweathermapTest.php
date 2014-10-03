@@ -34,9 +34,9 @@ class OpenweathermapTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers WeatherOpenweathermap::setFromJSON
-	 * @covers WeatherOpenweathermap::condition
-	 * @covers WeatherOpenweathermap::temperature
+	 * @covers Runalyze\Data\Weather\Openweathermap::setFromJSON
+	 * @covers Runalyze\Data\Weather\Openweathermap::condition
+	 * @covers Runalyze\Data\Weather\Openweathermap::temperature
 	 */
 	public function testLoadForecast() {
 		$this->object->setFromJSON('
