@@ -72,7 +72,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit" 
 	 */
 	public function test_FenixFile() {
-		if (Shell::isPerlAvailable()) {
+		if (!Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/Fenix-2.fit');
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
@@ -105,8 +105,45 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Test: fenix file
 	 * Filename: "Fenix-2.fit" 
 	 */
-	public function test_FenixFileNegativeTime() {
+	public function test_FenixFileWithPauses() {
 		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Fenix-2-pauses.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals( 46*60 + 50, $this->object->object()->getTimeInSeconds(), '', 5 );
+			$this->assertEquals( 50*60 + 46, $this->object->object()->getElapsedTime() );
+			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+
+			$this->assertEquals( 10.55, $this->object->object()->getDistance(), '', 0.1);
+			$this->assertEquals( 564, $this->object->object()->getCalories(), '', 10);
+			$this->assertEquals( 141, $this->object->object()->getPulseAvg(), '', 2);
+			$this->assertEquals( 152, $this->object->object()->getPulseMax(), '', 2);
+			$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+			$this->assertTrue( $this->object->object()->hasArrayDistance() );
+			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+			$this->assertTrue( $this->object->object()->hasArrayPace() );
+			$this->assertTrue( $this->object->object()->hasArrayTime() );
+			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+
+			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
+
+			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+			$this->assertEquals( "10.55|46:49,20", $this->object->object(2)->Splits()->asString() );
+
+			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
+		}
+	}
+
+	/**
+	 * Test: fenix file
+	 * Filename: "Fenix-2.fit" 
+	 */
+	public function test_FenixFileNegativeTime() {
+		if (!Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/Fenix-2-negative-times.fit');
 
 			$this->assertFalse( $this->object->failed() );

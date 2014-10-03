@@ -47,6 +47,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 	protected $lastStopTimestamp = false;
 
 	/**
+	 * Pauses to apply
+	 * @var array
+	 */
+	protected $pausesToApply = array();
+
+	/**
 	 * Parse
 	 */
 	public function parse() {
@@ -57,6 +63,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Finish parsing
 	 */
 	public function finishParsing() {
+		$this->applyPauses();
 		$this->setGPSarrays();
 	}
 
@@ -187,6 +194,13 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->isPaused = true;
 			$this->lastStopTimestamp = $thisTimestamp;
 		} elseif ($this->Values['event_type'][1] == 'start') {
+			if ($this->isPaused && ($thisTimestamp - $this->TrainingObject->getTimestamp()) < end($this->gps['time_in_s'])) {
+				$this->pausesToApply[] = array(
+					'time' => $thisTimestamp - $this->TrainingObject->getTimestamp(),
+					'duration' => ($thisTimestamp - $this->lastStopTimestamp)
+				);
+			}
+
 			$this->isPaused = false;
 
 			if ($this->lastStopTimestamp === false)
@@ -241,5 +255,46 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['total_calories']))
 			$this->TrainingObject->addCalories($this->Values['total_calories'][0]);
+	}
+
+	/**
+	 * Apply pauses
+	 */
+	protected function applyPauses() {
+		if (!empty($this->pausesToApply)) {
+			$num = count($this->gps['time_in_s']);
+			$keys = array_keys($this->gps);
+			$pauseInSeconds = 0;
+			$pauseIndex = 0;
+			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+			$pauseUntil = 0;
+			$isPause = false;
+
+			for ($i = 0; $i < $num; $i++) {
+				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
+					if ($pauseIndex < count($this->pausesToApply)) {
+						$isPause = true;
+						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
+						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
+						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
+						$pauseIndex++;
+						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
+					}
+				} elseif ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
+					$isPause = false;
+				}
+
+				if ($isPause) {
+					foreach ($keys as $key) {
+						if (isset($this->gps[$key][$i])) {
+							unset($this->gps[$key][$i]);
+						}
+					}
+				} else {
+					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
+				}
+				echo NL;
+			}
+		}
 	}
 }
