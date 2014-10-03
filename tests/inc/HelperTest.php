@@ -92,9 +92,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCut() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -112,9 +109,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetStartTime() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -123,9 +117,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testRecalculateStartTime() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -134,9 +125,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testRecalculateHFmaxAndHFrest() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -145,9 +133,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetHFmax() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -156,9 +141,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testRecalculateHFmax() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -167,9 +149,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testGetHFrest() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**
@@ -178,9 +157,6 @@ class HelperTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testRecalculateHFrest() {
 		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 }

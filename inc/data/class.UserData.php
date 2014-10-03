@@ -23,13 +23,15 @@ class UserData extends DataObject {
 
 		$Factory = new PluginFactory();
 
-		$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
+		if ($Factory->isInstalled('RunalyzePluginPanel_Sportler')) {
+			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 
-		if (!$Plugin->Configuration()->value('use_body_fat'))
-			$this->DatabaseScheme->hideFieldset('analyse');
+			if (!$Plugin->Configuration()->value('use_body_fat'))
+				$this->DatabaseScheme->hideFieldset('analyse');
 
-		if (!$Plugin->Configuration()->value('use_pulse'))
-			$this->DatabaseScheme->hideField('pulse_rest');
+			if (!$Plugin->Configuration()->value('use_pulse'))
+				$this->DatabaseScheme->hideField('pulse_rest');
+		}
 	}
 
 	/**

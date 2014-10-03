@@ -67,15 +67,16 @@ class SportFactory {
 			'name' => '?',
 			'img' => '',
 			'short' => 0,
-			'kcal' => 0,
-			'HFavg' => 0,
-			'RPE' => 0,
+			'kcal' => 600,
+			'HFavg' => 140,
+			'RPE' => 4,
 			'distances' => 0,
 			'speed' => SportSpeed::$DEFAULT,
 			'types' => 0,
 			'pulse' => 0,
 			'power'	=> 0,
-			'outside' => 0);
+			'outside' => 0
+		);
 	}
 
 	/**

@@ -44,43 +44,43 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 	 * @covers Trimp::forTraining
 	 */
 	public function testForTraining() {
-		$this->assertEquals(  15, Trimp::forTraining(array(
+		$this->assertEquals(  18, Trimp::forTraining(array(
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 120,
-			'sportid'	=> Configuration::General()->runningSport(),
+			'sportid'	=> 0,
 			'typeid'	=> 0
 		)));
 
-		$this->assertEquals(  30, Trimp::forTraining(array(
+		$this->assertEquals(  36, Trimp::forTraining(array(
 			'id'		=> 1,
 			's'			=> 2*60*60,
 			'pulse_avg'	=> 120,
-			'sportid'	=> Configuration::General()->runningSport(),
+			'sportid'	=> 0,
 			'typeid'	=> 0
 		)));
 
-		$this->assertEquals(  43, Trimp::forTraining(array(
+		$this->assertEquals(  49, Trimp::forTraining(array(
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 160,
-			'sportid'	=> Configuration::General()->runningSport(),
+			'sportid'	=> 0,
 			'typeid'	=> 0
 		)));
 
-		$this->assertEquals(  86, Trimp::forTraining(array(
+		$this->assertEquals(  97, Trimp::forTraining(array(
 			'id'		=> 1,
 			's'			=> 2*60*60,
 			'pulse_avg'	=> 160,
-			'sportid'	=> Configuration::General()->runningSport(),
+			'sportid'	=> 0,
 			'typeid'	=> 0
 		)));
 
-		$this->assertEquals( 105, Trimp::forTraining(array(
+		$this->assertEquals( 110, Trimp::forTraining(array(
 			'id'		=> 1,
 			's'			=> 60*60,
 			'pulse_avg'	=> 200,
-			'sportid'	=> Configuration::General()->runningSport(),
+			'sportid'	=> 0,
 			'typeid'	=> 0
 		)));
 	}
@@ -89,8 +89,8 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 	 * @covers Trimp::forTrainingID
 	 */
 	public function testForTrainingID() {
-		DB::getInstance()->insert('training', array('sportid', 's', 'pulse_avg'), array(Configuration::General()->runningSport(), 60*60, 120) );
-		$this->assertEquals( 15, Trimp::forTrainingID(1) );
+		DB::getInstance()->insert('training', array('sportid', 's', 'pulse_avg'), array(0, 60*60, 120) );
+		$this->assertEquals( 18, Trimp::forTrainingID(1) );
 
 		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}

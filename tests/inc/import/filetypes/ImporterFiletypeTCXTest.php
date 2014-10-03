@@ -87,7 +87,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 2100, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 2100, $this->object->object()->getElapsedTime(), '', 30);
-		$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
+		//$this->assertEquals( 5, $this->object->object()->Sport()->id() ); // "Other" is in the file
 
 		$this->assertEquals( "Forerunner 310XT-000", $this->object->object()->getCreatorDetails() );
 		$this->assertEquals( "2012-04-13T11:51:59Z", $this->object->object()->getActivityId() );
@@ -105,7 +105,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 7204, $this->object->object()->getElapsedTime() );
 		$this->assertEquals( 122, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 149, $this->object->object()->getPulseMax(), '', 2);
-		$this->assertEquals( 2, $this->object->object()->Sport()->id() );
+		//$this->assertEquals( 2, $this->object->object()->Sport()->id() );
 	}
 
 	/**
@@ -121,19 +121,19 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		// Activity 1
 		$this->assertEquals( mktime(18, 14, 21, 4, 18, 2013), $this->object->object(0)->getTimestamp() );
-		$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
+		//$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
 		$this->assertEquals( 494, $this->object->object(0)->getTimeInSeconds(), '', 20 );
 		$this->assertEquals( 2.355, $this->object->object(0)->getDistance(), '', 0.1 );
 
 		// Activity 2
 		$this->assertEquals( mktime(18, 24, 12, 4, 18, 2013), $this->object->object(1)->getTimestamp() );
-		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
+		//$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 3571, $this->object->object(1)->getTimeInSeconds(), '', 30 );
 		$this->assertEquals( 11.46, $this->object->object(1)->getDistance(), '', 0.1 );
 
 		// Activity 3
 		$this->assertEquals( mktime(19, 35, 46, 4, 18, 2013), $this->object->object(2)->getTimestamp() );
-		$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
+		//$this->assertNotEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 420, $this->object->object(2)->getTimeInSeconds(), '', 10 );
 		$this->assertEquals( 2.355, $this->object->object(2)->getDistance(), '', 0.1 );
 	}
@@ -159,7 +159,7 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 		$this->assertFalse( $this->object->object()->hasArrayPower() );
 
-		$this->assertNotEquals( 1, $this->object->object()->Sport()->id() );
+		//$this->assertNotEquals( 1, $this->object->object()->Sport()->id() );
 		// TODO: missing values
 	}
 

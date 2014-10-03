@@ -149,19 +149,13 @@ class RunalyzeJsonImporter {
 	 * @param string $TableName
 	 */
 	private function readTable($TableName) {
-		/*$TableSettings = array(
+		$TableSettings = array(
 			'import'	=> array('runalyze_clothes', 'runalyze_shoe', 'runalyze_sport', 'runalyze_type', 'runalyze_user', 'runalyze_training'),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
 				'runalyze_dataset'		=> 'overwrite_dataset',
 				'runalyze_plugin'		=> 'overwrite_plugin',
 				'runalyze_plugin_conf'	=> 'overwrite_plugin'
-			)
-		);*/
-		$TableSettings = array(
-			'import'	=> array('runalyze_sport', 'runalyze_type'),
-			'update'	=> array(
-				'runalyze_conf'			=> 'overwrite_config'
 			)
 		);
 
