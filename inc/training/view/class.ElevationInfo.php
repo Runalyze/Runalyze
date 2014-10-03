@@ -193,7 +193,7 @@ class ElevationInfo {
 		foreach ($Algorithms as $Algorithm) {
 			$Method->set($Algorithm[0]);
 			$Calculator->setMethod($Method);
-			$Code .= '<tr><td class="b">'.$Method->asString().'</td>';
+			$Code .= '<tr><td class="b">'.$Method->valueAsLongString().'</td>';
 
 			if ($Algorithm[1]) {
 				foreach ($TresholdRange as $t) {

@@ -431,6 +431,9 @@ class TrainingDataView {
 	 * @return string gradient in percent with percent sign
 	 */
 	public function getGradientInPercent() {
+		if ($this->Object->getDistance() == 0)
+			return '-';
+
 		return round($this->Object->getElevation() / $this->Object->getDistance()/10, 2).' &#37;';
 	}
 

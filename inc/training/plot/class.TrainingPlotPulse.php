@@ -39,13 +39,15 @@ class TrainingPlotPulse extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
-		if (Configuration::General()->heartRateUnit()->isHRmax())
-			return $Training->GpsData()->getPlotDataForHeartrateInPercent();
+		if (Configuration::General()->heartRateUnit()->isHRmax()) {
+			$Data = $Training->GpsData()->getPlotDataForHeartrateInPercent();
+		} elseif (Configuration::General()->heartRateUnit()->isHRreserve()) {
+			$Data = $Training->GpsData()->getPlotDataForHeartrateInPercentReserve();
+		} else {
+			$Data = $Training->GpsData()->getPlotDataForHeartrate();
+		}
 
-		if (Configuration::General()->heartRateUnit()->isHRreserve())
-			return $Training->GpsData()->getPlotDataForHeartrateInPercentReserve();
-
-		return $Training->GpsData()->getPlotDataForHeartrate();
+		return array_filter($Data, 'TrainingPlot__ArrayFilterForLowEntries');
 	}
 
 	/**
