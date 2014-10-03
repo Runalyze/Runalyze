@@ -114,14 +114,19 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 		$Distance = 0;
 		$Calories = 0;
 		foreach ($this->XML->Laps->children() as $Lap) {
-			if (!empty($Lap->Distance['TotalMeters']))
-				$Distance += (int)$Lap->Distance['TotalMeters'];
-			if (!empty($Lap->Distance['TotalMeters']))
+			$LapDist = (!empty($Lap->Distance['TotalMeters'])) ? ((int)$Lap->Distance['TotalMeters'])/1000 : 0;
+			$Distance += $LapDist;
+
+			if (!empty($Lap['DurationSeconds'])) {
+				$this->TrainingObject->Splits()->addSplit($LapDist, (int)$Lap['DurationSeconds']);
+			}
+
+			if (!empty($Lap->Distance['TotalCal']))
 				$Calories += (int)$Lap->Calories['TotalCal'];
 		}
 
 		if ($Distance > 0)
-			$this->TrainingObject->setDistance(round($Distance)/1000);
+			$this->TrainingObject->setDistance($Distance);
 		if ($Calories > 0)
 			$this->TrainingObject->setCalories($Calories);
 	}
