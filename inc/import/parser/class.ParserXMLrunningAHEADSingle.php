@@ -90,7 +90,7 @@ class ParserXMLrunningAHEADSingle extends ParserAbstractSingleXML {
 
 			if (isset($this->XML->EnvironmentalConditions->Conditions)) {
 				foreach ($this->XML->EnvironmentalConditions->Conditions->children() as $Condition) {
-					$ID = WeatherTranslator::getIDfor($Condition->getName());
+					$ID = \Runalyze\Data\Weather\Translator::IDfor($Condition->getName());
 					if ($ID > 0)
 						$this->TrainingObject->setWeatherid($ID);
 				}

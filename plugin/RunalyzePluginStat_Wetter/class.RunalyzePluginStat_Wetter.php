@@ -4,6 +4,9 @@
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
+
+use \Runalyze\Data\Weather;
+
 /**
  * Class: RunalyzePluginStat_Wetter
  * @author Hannes Christiansen
@@ -121,7 +124,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				AVG(`temperature`) as `temp`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.CONF_MAINSPORT.'" AND
+				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -152,22 +155,27 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	* Display month-table for weather
 	*/
 	private function displayMonthTableWeather() {
-		$wetter_all = Weather::getArrayWithoutUnknown();
-		foreach ($wetter_all as $wetter) {
-			$Weather = new Weather($wetter['id']);
-			echo '<tr><td>'.$Weather->icon().'</td>';
-		
+		$Condition = new Weather\Condition(0);
+		$Statement = DB::getInstance()->prepare('
+			SELECT
+				SUM(1) as `num`,
+				MONTH(FROM_UNIXTIME(`time`)) as `m`
+			FROM `'.PREFIX.'training` WHERE
+				`sportid`=? AND
+				`weatherid`=?
+				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+			GROUP BY MONTH(FROM_UNIXTIME(`time`))
+			ORDER BY `m` ASC
+			LIMIT 12
+		');
+
+		foreach (Weather\Condition::completeList() as $id) {
+			$Condition->set($id);
+			$Statement->execute(array(Configuration::General()->mainSport(), $id));
+			$data = $Statement->fetchAll();
 			$i = 1;
-			$data = DB::getInstance()->query('SELECT
-					SUM(1) as `num`,
-					MONTH(FROM_UNIXTIME(`time`)) as `m`
-				FROM `'.PREFIX.'training` WHERE
-					`sportid`="'.CONF_MAINSPORT.'" AND
-					`weatherid`='.$wetter['id'].'
-					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
-				GROUP BY MONTH(FROM_UNIXTIME(`time`))
-				ORDER BY `m` ASC
-				LIMIT 12')->fetchAll();
+
+			echo '<tr><td>'.$Condition->icon()->code().'</td>';
 
 			if (!empty($data)) {
 				foreach ($data as $dat) {
@@ -198,7 +206,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				SUM(1) as `num`,
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.CONF_MAINSPORT.'" AND
+				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`clothes`!=""
 				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
@@ -220,7 +228,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 						SUM(IF(FIND_IN_SET("'.$kleidung['id'].'", `clothes`)!=0,1,0)) as `num`,
 						MONTH(FROM_UNIXTIME(`time`)) as `m`
 					FROM `'.PREFIX.'training` WHERE
-						`sportid`="'.CONF_MAINSPORT.'"
+						`sportid`="'.Configuration::General()->mainSport().'"
 						'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
 					GROUP BY MONTH(FROM_UNIXTIME(`time`))
 					HAVING `num`!=0
@@ -288,7 +296,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 						MIN(`temperature`) as `min`
 					FROM `'.PREFIX.'training`
 					WHERE
-						`sportid`="'.CONF_MAINSPORT.'" AND
+						`sportid`="'.Configuration::General()->mainSport().'" AND
 						`temperature` IS NOT NULL AND
 						FIND_IN_SET('.$kleidung['id'].',`clothes`) != 0
 					'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : ''))->fetch();

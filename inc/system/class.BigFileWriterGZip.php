@@ -24,8 +24,7 @@ class BigFileWriterGZip {
 			$this->resource = gzopen(FRONTEND_PATH.$fileName, "wb");
 
 		if (!$this->resource) {
-			$this->resource = null;
-			Error::getInstance()->addError('The file "'.$fileName.'" couldn\'t be opened for writing.');
+			throw new RuntimeException('The file "'.$fileName.'" couldn\'t be opened for writing.');
 		}
 	}
 

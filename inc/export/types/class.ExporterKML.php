@@ -50,7 +50,7 @@ class ExporterKML extends ExporterAbstractFile {
 	protected function setGeneralInfo() {
 		$this->XML->Folder->name = $this->getNameForKml();
 		$this->XML->Folder->Placemark->name = $this->getNameForKml();
-		$this->XML->Folder->Placemark->Style->geomColor = self::rgbToKmlColor(CONF_TRAINING_MAP_COLOR);
+		$this->XML->Folder->Placemark->Style->geomColor = self::rgbToKmlColor( Configuration::ActivityView()->routeColor() );
 	}
 
 	/**

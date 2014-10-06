@@ -21,7 +21,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$StartYear    = !$All ? $Year : START_YEAR;
 	$EndYear      = !$All ? $Year : date('Y');
 	$MaxDays      = ($EndYear - $StartYear + 1)*366;
-	$AddDays      = max(CONF_ATL_DAYS, CONF_CTL_DAYS, CONF_VDOT_DAYS);
+	$AddDays      = max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
 	$StartTime    = !$All ? mktime(1,0,0,1,1,$StartYear) : START_TIME;
 	$StartDay     = date('Y-m-d', $StartTime);
 	$EndTime      = !$All && $Year < date('Y') ? mktime(1,0,0,12,31,$Year) : time();
@@ -34,14 +34,14 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	// Here ATL/CTL/VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
-	// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
-	// - VDOT: AVG(`vdot`) for CONF_VDOT_DAYS
+	// - ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
+	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
 
 	$Data = DB::getInstance()->query('
 		SELECT
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			SUM(`trimp`) as `trimp`,
-			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
+			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
 			SUM('.JD::mysqlVDOTsumTime().') as `s`
 		FROM `'.PREFIX.'training`
 		WHERE
@@ -63,14 +63,18 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$LowestIndex = $AddDays + 1;
 	$HighestIndex = $AddDays + 1 + $NumberOfDays;
 
+	$VDOTdays = Configuration::Vdot()->days();
+	$ATLdays = Configuration::Trimp()->daysForATL();
+	$CTLdays = Configuration::Trimp()->daysForCTL();
+
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
 		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - CONF_ATL_DAYS, CONF_ATL_DAYS)) / CONF_ATL_DAYS) / Trimp::maxATL());
-		$CTLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - CONF_CTL_DAYS, CONF_CTL_DAYS)) / CONF_CTL_DAYS) / Trimp::maxCTL());
+		$ATLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - $ATLdays, $ATLdays)) / $ATLdays) / Trimp::maxATL());
+		$CTLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - $CTLdays, $CTLdays)) / $CTLdays) / Trimp::maxCTL());
 
-		$VDOT_slice      = array_slice($VDOTs_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
-		$Durations_slice = array_slice($Durations_raw, $d - CONF_VDOT_DAYS, CONF_VDOT_DAYS);
+		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
+		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
 		$VDOT_sum        = array_sum($VDOT_slice);
 		$Durations_sum   = array_sum($Durations_slice);
 

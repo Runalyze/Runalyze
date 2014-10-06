@@ -43,7 +43,7 @@ class Dataset {
 	 * Constructor
 	 */
 	public function __construct() {
-		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
 
 		if ($dat === false || empty($dat)) {
 			Error::getInstance()->addError('No dataset in database is active.');
@@ -53,7 +53,7 @@ class Dataset {
 		$this->data = $dat;
 		$this->cols = count($dat);
 
-		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+		if (Configuration::DataBrowser()->showEditLink())
 			$this->cols++;
 	}
 
@@ -84,7 +84,7 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC')->fetchAll();
 		$this->cols = count($this->data);
 	}
 
@@ -183,7 +183,7 @@ class Dataset {
 	 */
 	private function getQuerySelectForSet() {
 		$String = '';
-		$Sum = CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
+		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
 		foreach ($this->data as $set)
 			if ($set['summary'] == 1) {
@@ -220,7 +220,7 @@ class Dataset {
 	 * @return string
 	 */
 	private function getQueryWhereNotPrivate() {
-		return (FrontendShared::$IS_SHOWN && !CONF_TRAINING_LIST_ALL) ? 'AND is_public=1' : '';
+		return (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
 	}
 
 	/**
@@ -248,10 +248,10 @@ class Dataset {
 		$addLink = '';
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
-		if (CONF_DB_SHOW_CREATELINK_FOR_DAYS && !FrontendShared::$IS_SHOWN)
+		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN)
 			$addLink = ImporterWindow::linkForDate($timestamp);
 
-		if (CONF_DB_HIGHLIGHT_TODAY && Time::isToday($timestamp))
+		if (Time::isToday($timestamp))
 			$weekDay = '<strong>'.$weekDay.'</strong>';
 
 		return $date.' '.$addLink.' '.$weekDay;
@@ -269,7 +269,7 @@ class Dataset {
 
 	/**
 	 * Display a single dataset
-	 * @param array $dataset
+	 * @param array $set
 	 */
 	private function displayDataset($set) {
 		if ($this->isSummaryMode() && $set['summary'] == 0)
@@ -282,7 +282,7 @@ class Dataset {
 	 * Display edit link if used in DataBrowser 
 	 */
 	public function displayEditLink() {
-		if (CONF_DB_SHOW_DIRECT_EDIT_LINK)
+		if (Configuration::DataBrowser()->showEditLink())
 			if ($this->isSummaryMode() || FrontendShared::$IS_SHOWN)
 				echo HTML::emptyTD();
 			else
@@ -354,16 +354,16 @@ class Dataset {
 				return $this->TrainingObject->DataView()->getPower();
 
 			case 'temperature':
-				if (!$this->TrainingObject->Weather()->hasTemperature() || !$this->TrainingObject->Sport()->isOutside())
+				if ($this->TrainingObject->Weather()->temperature()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
-				return $this->TrainingObject->Weather()->temperatureString();
+				return $this->TrainingObject->Weather()->temperature()->asString();
 
 			case 'weatherid':
-				if ($this->TrainingObject->Weather()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
+				if ($this->TrainingObject->Weather()->isEmpty() || !$this->TrainingObject->Sport()->isOutside())
 					return '';
 
-				return $this->TrainingObject->Weather()->icon();
+				return $this->TrainingObject->Weather()->condition()->icon()->code();
 
 			case 'route':
 				return $this->cut( $this->TrainingObject->getRoute() );

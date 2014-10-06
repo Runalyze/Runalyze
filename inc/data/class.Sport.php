@@ -27,7 +27,7 @@ class Sport {
 	 */
 	public function __construct($id = false) {
 		if ($id === false)
-			$id = CONF_MAINSPORT;
+			$id = Configuration::General()->mainSport();
 
 		$this->id   = $id;
 		$this->data = SportFactory::DataFor($id);
@@ -168,6 +168,6 @@ class Sport {
 	 * @return bool
 	 */
 	public function isRunning() {
-		return ($this->id == CONF_RUNNINGSPORT);
+		return ($this->id == Configuration::General()->runningSport());
 	}
 }

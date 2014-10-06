@@ -58,12 +58,6 @@ abstract class TrainingPlot {
 	protected $Data = array();
 
 	/**
-	 * Is this plot visible?
-	 * @return string 
-	 */
-	abstract public function isVisible();
-
-	/**
 	 * Set key and title for this plot
 	 */
 	abstract protected function setKeyAndTitle();

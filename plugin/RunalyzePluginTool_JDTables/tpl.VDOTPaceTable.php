@@ -20,7 +20,7 @@
 </table>
 
 <?php
-echo Ajax::wrapJS('$("#jd-tables-prognosis td.b:contains(\''.round(VDOT_FORM).'\')").parent().addClass("highlight");');
+echo Ajax::wrapJS('$("#jd-tables-prognosis td.b").each(function(){ if ($(this).text() == \''.round(VDOT_FORM).'\') $(this).parent().addClass("highlight"); });');
 ?>
 
 <p class="info">

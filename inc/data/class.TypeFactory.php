@@ -68,19 +68,10 @@ class TypeFactory {
 
 	/**
 	 * Get order
-	 * @see CONF_TRAINING_SORT_TYPES
 	 * @return string
 	 */
 	static private function getOrder() {
-		switch (CONF_TRAINING_SORT_TYPES) {
-			case 'alpha':
-				return 'ORDER BY `name` ASC';
-			case 'id-desc':
-				return 'ORDER BY `id` DESC';
-			case 'id-asc':
-			default:
-				return 'ORDER BY `id` ASC';
-		}
+		return Configuration::ActivityForm()->orderTypes()->asQuery();
 	}
 
 	/**

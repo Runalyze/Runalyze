@@ -49,6 +49,7 @@ class ConfigTabDataset extends ConfigTab {
 				</thead>
 				<tbody>';
 
+		$Labels = new DatasetLabels();
 		$DatasetObject = new Dataset();
 		$DatasetObject->setTrainingId(DataObject::$DEFAULT_ID, $this->getExampleTraining());
 
@@ -79,7 +80,7 @@ class ConfigTabDataset extends ConfigTab {
 
 			$Code .= '
 				<tr class="r" id="'.$Data['id'].'_tr">
-					<td class="l b">'.Ajax::tooltip($Data['label'], $Data['description']).'</td>
+					<td class="l b">'.$Labels->get($Data['name']).'</td>
 					<td class="c">
 						<input type="hidden" name="'.$Data['id'].'_modus_3" value="'.$Data['modus'].'">
 						<input type="checkbox" name="'.$Data['id'].'_modus"'.$checked_2.$disabled.'>
@@ -170,8 +171,8 @@ class ConfigTabDataset extends ConfigTab {
 
 		$Data = array(
 			'id'		=> DataObject::$DEFAULT_ID,
-			'sportid'	=> CONF_RUNNINGSPORT,
-			'typeid'	=> CONF_WK_TYPID,
+			'sportid'	=> Configuration::General()->runningSport(),
+			'typeid'	=> Configuration::General()->competitionType(),
 			'time'		=> time(),
 			'created'	=> time(),
 			'edited'	=> time(),

@@ -87,7 +87,7 @@ class Type {
 	 * @return bool
 	 */
 	public function isCompetition() {
-		return ($this->id == CONF_WK_TYPID);
+		return ($this->id == Configuration::General()->competitionType());
 	}
 
 	/**
@@ -95,6 +95,6 @@ class Type {
 	 * @return bool
 	 */
 	public function isLongJog() {
-		return ($this->id == CONF_LL_TYPID);
+		return ($this->id == Configuration::General()->longRunType());
 	}
 }

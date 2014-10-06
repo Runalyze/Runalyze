@@ -60,7 +60,7 @@ abstract class PlotSumData extends Plot {
 	 * Constructor
 	 */
 	public function __construct() {
-		$sportid = strlen(Request::param('sportid')) > 0 ? Request::param('sportid') : CONF_RUNNINGSPORT;
+		$sportid = strlen(Request::param('sportid')) > 0 ? Request::param('sportid') : Configuration::General()->runningSport();
 
 		$this->Year  = (int)Request::param('y');
 		$this->Sport = new Sport($sportid);
@@ -265,7 +265,7 @@ abstract class PlotSumData extends Plot {
 		else
 			return;
 
-		if ($possibleKM > 0 && $this->Sport->id() == CONF_RUNNINGSPORT) {
+		if ($possibleKM > 0 && $this->Sport->id() == Configuration::General()->runningSport()) {
 			$this->addThreshold('y', $possibleKM);
 			$this->addAnnotation(0, $possibleKM, __('Current level'));
 		}
@@ -307,7 +307,7 @@ abstract class PlotSumData extends Plot {
 			SELECT
 				`sportid`,
 				`typeid`,
-				(`typeid` = '.CONF_WK_TYPID.') as `wk`,
+				(`typeid` = '.Configuration::General()->competitionType().') as `wk`,
 				'.$this->dataSum().' as `sum`,
 				'.$this->timer().' as `timer`
 			FROM `'.PREFIX.'training`
@@ -346,7 +346,7 @@ abstract class PlotSumData extends Plot {
 		if (Request::param('group') == 'types' && $this->Sport->hasTypes())
 			return '`typeid`';
 
-		return '(`typeid` = '.CONF_WK_TYPID.')';
+		return '(`typeid` = '.Configuration::General()->competitionType().')';
 	}
 
 	/**

@@ -54,6 +54,8 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
 		$this->object->exec('TRUNCATE TABLE `runalyze_training`');
+
+		$this->object->setAccountID(false);
 	}
 
 	/**

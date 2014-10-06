@@ -28,14 +28,6 @@ abstract class TrainingPlotLaps extends TrainingPlot {
 	protected $Labels = array();
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	final public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_SPLITS;
-	}
-
-	/**
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {

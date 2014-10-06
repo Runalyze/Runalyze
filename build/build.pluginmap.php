@@ -53,7 +53,7 @@ function scanDirectoryForPlugins($ROOT_DIR, $dir, &$pluginmap, &$counter) {
 			if (is_dir($dir.$file)) {
 				scanDirectoryForPlugins($ROOT_DIR, $dir.$file.'/', $pluginmap, $counter);
 			} else {
-				if (substr($file, 0, 6) == 'class.' && substr($file, -4) == '.php') {
+				if (substr($file, 0, 20) == 'class.RunalyzePlugin' && substr($file, -4) == '.php') {
 					$counter++;
 					$classname = substr( substr($file, 6), 0, -4 );
 					$filename  = "../plugin/".substr( $dir.$file, strlen($ROOT_DIR) );

@@ -1,1 +1,0 @@
-ALTER TABLE  `runalyze_type` DROP  `splits`;

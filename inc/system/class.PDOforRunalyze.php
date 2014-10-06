@@ -51,7 +51,7 @@ class PDOforRunalyze extends PDO {
 	 * @param string $statement
 	 */
 	protected function addAccountIDtoStatement(&$statement) {
-		if (strpos($statement, 'SET NAMES') !== false || !is_numeric($this->accountID)) {
+		if (!is_numeric($this->accountID) || strpos($statement, 'SET NAMES') !== false || strpos($statement, 'TRUNCATE') !== false) {
 			return;
 		}
 
@@ -160,6 +160,7 @@ class PDOforRunalyze extends PDO {
 			$this->startAddingAccountID();
 			return false;
 		}
+		$this->startAddingAccountID();
 
 		return $this->lastInsertId();
 	}

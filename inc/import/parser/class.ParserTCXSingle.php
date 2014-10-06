@@ -324,7 +324,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if (!is_null($this->XML) && isset($this->XML->attributes()->Sport))
 			$this->guessSportID((string)$this->XML->attributes()->Sport, $this->findCreator());
 		else
-			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
+			$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}
 
 	/**

@@ -32,6 +32,10 @@ class Autoloader {
 	 * @param string $class
 	 */
 	protected function classmapLoader($class) {
+		if (substr($class, 0, 9) == 'Runalyze\\') {
+			require_once FRONTEND_PATH.'core/'.str_replace('\\', '/', substr($class, 9)).'.php';
+		}
+
 		if (isset($this->map[$class])) {
 //error_log($this->map[$class]);
 			require_once FRONTEND_PATH.$this->map[$class];

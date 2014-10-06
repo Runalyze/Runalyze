@@ -146,12 +146,7 @@ class SearchFormular extends Formular {
 	 */
 	private function addConditionFieldWithChosen($name, $table, $key, $label, $placeholder) {
 		if ($table == 'weather') {
-			$Options = Weather::getFullArray();
-			foreach ($Options as $id => $data)
-				$Options[$id] = $data['name'];
-
-			$Field = new FormularSelectBox($name, $label);
-			$Field->setOptions( $Options );
+			$Field = new TrainingSelectWeather($name, $label);
 		} else {
 			$Field = new FormularSelectDb($name, $label);
 			$Field->loadOptionsFrom($table, $key);

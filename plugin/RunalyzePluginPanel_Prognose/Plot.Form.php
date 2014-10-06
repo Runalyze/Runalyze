@@ -50,7 +50,7 @@ if (START_TIME != time()) {
 			`s`
 		FROM `'.PREFIX.'training`
 		WHERE
-			`typeid`="'.CONF_WK_TYPID.'"
+			`typeid`="'.Configuration::General()->competitionType().'"
 			AND `distance`="'.$distance.'"
 		ORDER BY
 			`time` ASC')->fetchAll();

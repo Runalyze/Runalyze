@@ -22,7 +22,7 @@ class TrainingSelectSport extends FormularSelectBox {
 			$attributes = array();
 			$attributes['data-kcal'] = $sport['kcal'];
 
-			if ($sport['id'] == CONF_RUNNINGSPORT)
+			if ($sport['id'] == Configuration::General()->runningSport())
 				$attributes['data-running'] = 'true';
 			if ($sport['outside'] == 1)
 				$attributes['data-outside'] = 'true';

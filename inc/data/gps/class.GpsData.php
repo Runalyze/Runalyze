@@ -10,12 +10,6 @@
  */
 class GpsData {
 	/**
-	 * Minimal difference per step to be recognized for elevation data
-	 * @var int
-	 */
-	public static $minElevationDiff = CONF_ELEVATION_MIN_DIFF;
-
-	/**
 	 * Only every n-th point will be taken for the elevation
 	 * @var int
 	 */
@@ -166,7 +160,7 @@ class GpsData {
 		$this->arrayForCadence           = $this->loadArrayDataFrom($TrainingDataAsArray['arr_cadence']);
 		$this->arrayForPower             = $this->loadArrayDataFrom($TrainingDataAsArray['arr_power']);
 		$this->arrayForTemperature       = $this->loadArrayDataFrom($TrainingDataAsArray['arr_temperature']);
-		$this->arraySizes                = max(count($this->arrayForTime), count($this->arrayForLatitude));
+		$this->arraySizes                = max(count($this->arrayForTime), count($this->arrayForLatitude), count($this->arrayForDistance));
 
 		if (isset($TrainingDataAsArray['gps_cache_object']))
 			$this->initCache($TrainingDataAsArray['id'], $TrainingDataAsArray['gps_cache_object']);
@@ -820,6 +814,10 @@ class GpsData {
 		return $Zones;
 	}
 
+	/**
+	 * Get pulse distribution as sorted array
+	 * @return array
+	 */
 	public function getPulseZonesBy5() {
 		if (!$this->hasHeartrateData())
 			return array();
@@ -1009,63 +1007,23 @@ class GpsData {
 	 * @return bool 
 	 */
 	protected function nextStepForPlotData() {
-		switch (CONF_TRAINING_PLOT_PRECISION) {
-			case '50m':
-				return $this->nextKilometer(0.05);
-			case '100m':
-				return $this->nextKilometer(0.1);
-			case '200m':
-				return $this->nextKilometer(0.2);
-			case '500m':
-				return $this->nextKilometer(0.5);
-			case '50points':
-			case '100points':
-			case '200points':
-			case '300points':
-			case '400points':
-			case '500points':
-			case '750points':
-			case '1000points':
-			default:
-				return $this->nextStep();
+		if (Configuration::ActivityView()->plotPrecision()->byDistance()) {
+			return $this->nextKilometer( Configuration::ActivityView()->plotPrecision()->distanceStep()*1000 );
 		}
+
+		return $this->nextStep();
 	}
 
 	/**
 	 * Set step size for plot data
 	 */
 	protected function setStepSizeForPlotData() {
-		switch (CONF_TRAINING_PLOT_PRECISION) {
-			case '50points':
-				$Points = 50;
-				break;
-			case '100points':
-				$Points = 100;
-				break;
-			case '200points':
-				$Points = 200;
-				break;
-			case '300points':
-				$Points = 300;
-				break;
-			case '400points':
-				$Points = 400;
-				break;
-			case '500points':
-				$Points = 500;
-				break;
-			case '750points':
-				$Points = 750;
-				break;
-			case '1000points':
-				$Points = 1000;
-				break;
-			default:
-				return;
-		}
+		if (Configuration::ActivityView()->plotPrecision()->byPoints()) {
+			$Points = Configuration::ActivityView()->plotPrecision()->numberOfPoints();
 
-		if ($this->arraySizes > $Points)
-			$this->setStepSize( round($this->arraySizes / $Points) );
+			if ($this->arraySizes > $Points)
+				$this->setStepSize( round($this->arraySizes / $Points) );
+		}
 	}
 
 	/**
@@ -1130,7 +1088,7 @@ class GpsData {
 	 * Get array as plot-data for heartrate in percent
 	 */
 	public function getPlotDataForHeartrateInPercent() {
-		if (CONF_PULS_MODE == 'hfres')
+		if (Configuration::General()->heartRateUnit()->isHRreserve())
 			return $this->getPlotDataForHeartrateInPercentReserve();
 
 		return $this->getPlotDataForHeartrate(true);

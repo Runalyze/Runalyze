@@ -103,7 +103,8 @@ class Frontend {
 	 */
 	private function defineConsts() {
 		require_once FRONTEND_PATH.'system/define.consts.php';
-		require_once FRONTEND_PATH.'system/register.consts.php';
+
+		Configuration::loadAll();
 
 		require_once FRONTEND_PATH.'class.Helper.php';
 	}
@@ -153,22 +154,14 @@ class Frontend {
 	 * Init SessionAccountHandler
 	 */
 	protected function initSessionAccountHandler() {
-		$Session = new SessionAccountHandler();
-
-		if (isset($_POST['user']) && isset($_POST['password']))
-			$Session->tryToLogin($_POST['user'], $_POST['password']);
+		new SessionAccountHandler();
 	}
 
 	/**
 	 * Forward accountid to database wraper
 	 */
 	protected function forwardAccountIDtoDatabaseWrapper() {
-		if (SharedLinker::isOnSharedPage()) {
-			$ID = SharedLinker::getUserId();
-		} else
-			$ID = SessionAccountHandler::isLoggedIn() ? SessionAccountHandler::getId() : 0;
-
-		DB::getInstance()->setAccountID($ID);
+		DB::getInstance()->setAccountID( SessionAccountHandler::getId() );
 	}
 
 	/**

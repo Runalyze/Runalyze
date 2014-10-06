@@ -73,7 +73,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 
 		if ($this->Training->elevationWasCorrected())
 			$this->Content .= HTML::info( __('Elevation data were corrected.') );
-		elseif ($this->Training->hasArrayAltitude() && CONF_TRAINING_DO_ELEVATION)
+		elseif ($this->Training->hasArrayAltitude() && Configuration::ActivityForm()->correctElevation())
 			$this->Content .= HTML::warning( __('Elevation data are not corrected.') );
 
 		// TODO: Add link to correct them now!

@@ -73,7 +73,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 		$when = $this->XML->xpath('//when');
 
 		$this->TrainingObject->setTimestamp( strtotime((string)$when[0]) );
-		$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
+		$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}
 
 	/**

@@ -28,14 +28,6 @@ class TrainingPlotCollection extends TrainingPlot {
 	protected $DataElevation = array();
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_COLLECTION;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {

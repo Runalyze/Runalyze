@@ -311,6 +311,9 @@ class SessionAccountHandler {
 			if (isset($_SESSION['accountid']))
 				return $_SESSION['accountid'];
 
+			if (USER_MUST_LOGIN)
+				return null;
+
 			return 0;
 		}
 

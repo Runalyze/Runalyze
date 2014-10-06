@@ -127,18 +127,13 @@ class Helper {
 	 * @return int
 	 */
 	public static function getStartTime() {
-		if (!defined('CONF_START_TIME')) {
-			Error::getInstance()->addError('Constant CONF_START_TIME has to be set!');
-			define('CONF_START_TIME', 0);
-		}
-
 		if (defined('START_TIME'))
 			return START_TIME;
 
-		if (CONF_START_TIME == 0)
+		if (Configuration::Data()->startTime() == 0 && SessionAccountHandler::isLoggedIn())
 			return self::recalculateStartTime();
 
-		return CONF_START_TIME;
+		return Configuration::Data()->startTime();
 	}
 
 	/**
@@ -147,7 +142,7 @@ class Helper {
 	public static function recalculateStartTime() {
 		$START_TIME = self::calculateStartTime();
 
-		ConfigValue::update('START_TIME', $START_TIME);
+		Configuration::Data()->updateStartTime($START_TIME);
 
 		if ($START_TIME == 0)
 			return time();
@@ -186,15 +181,10 @@ class Helper {
 	 * @return int
 	 */
 	public static function getHFmax() {
-		if (!defined('CONF_HF_MAX')) {
-			Error::getInstance()->addError('Constant CONF_HF_MAX has to be set!');
-			define('CONF_HF_MAX', 200);
-		}
-
 		if (defined('HF_MAX'))
 			return HF_MAX;
 
-		return CONF_HF_MAX;
+		return Configuration::Data()->HRmax();
 	}
 
 	/**
@@ -203,7 +193,7 @@ class Helper {
 	public static function recalculateHFmax() {
 		$HF_MAX = self::calculateHFmax();
 
-		ConfigValue::update('HF_MAX', $HF_MAX);
+		Configuration::Data()->updateHRmax($HF_MAX);
 
 		return $HF_MAX;
 	}
@@ -231,15 +221,10 @@ class Helper {
 	 * @return int
 	 */
 	public static function getHFrest() {
-		if (!defined('CONF_HF_REST')) {
-			Error::getInstance()->addError('Constant CONF_HF_REST has to be set!');
-			define('CONF_HF_REST', 200);
-		}
-
 		if (defined('HF_REST'))
 			return HF_REST;
 
-		return CONF_HF_REST;
+		return Configuration::Data()->HRrest();
 	}
 
 	/**
@@ -248,7 +233,7 @@ class Helper {
 	public static function recalculateHFrest() {
 		$HF_REST = self::calculateHFrest();
 
-		ConfigValue::update('HF_REST', $HF_REST);
+		Configuration::Data()->updateHRrest($HF_REST);
 
 		return $HF_REST;
 	}

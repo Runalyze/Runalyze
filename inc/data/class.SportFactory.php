@@ -67,15 +67,16 @@ class SportFactory {
 			'name' => '?',
 			'img' => '',
 			'short' => 0,
-			'kcal' => 0,
-			'HFavg' => 0,
-			'RPE' => 0,
+			'kcal' => 600,
+			'HFavg' => 140,
+			'RPE' => 4,
 			'distances' => 0,
 			'speed' => SportSpeed::$DEFAULT,
 			'types' => 0,
 			'pulse' => 0,
 			'power'	=> 0,
-			'outside' => 0);
+			'outside' => 0
+		);
 	}
 
 	/**
@@ -114,19 +115,10 @@ class SportFactory {
 
 	/**
 	 * Get order
-	 * @see CONF_TRAINING_SORT_SPORTS
 	 * @return string
 	 */
 	static private function getOrder() {
-		switch (CONF_TRAINING_SORT_SPORTS) {
-			case 'alpha':
-				return 'ORDER BY `name` ASC';
-			case 'id-desc':
-				return 'ORDER BY `id` DESC';
-			case 'id-asc':
-			default:
-				return 'ORDER BY `id` ASC';
-		}
+		return Configuration::ActivityForm()->orderSports()->asQuery();
 	}
 
 	/**

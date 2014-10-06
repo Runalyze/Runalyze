@@ -3,9 +3,12 @@
  * This file contains class::TrainingSelectWeather
  * @package Runalyze\DataObjects\Training\Formular
  */
+
+use \Runalyze\Data\Weather\Condition;
+
 /**
  * Class for input fields: weather
- * @author Hannes Christiansen <mail@laufhannes.de>
+ * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\Formular
  */
 class TrainingSelectWeather extends FormularSelectBox {
@@ -18,7 +21,12 @@ class TrainingSelectWeather extends FormularSelectBox {
 	public function __construct($name, $label, $value = '') {
 		parent::__construct($name, $label, $value);
 
-		foreach (Weather::getFullArray() as $id => $data)
-			$this->addOption($id, $data['name']);
+		$Condition = new Condition(0);
+
+		foreach (Condition::completeList() as $id) {
+			$Condition->set($id);
+
+			$this->addOption($id, $Condition->string());
+		}
 	}
 }

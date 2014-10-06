@@ -13,49 +13,25 @@ class ElevationCalculator {
 	 * Distance (in x direction) between two points
 	 * @var int
 	 */
-	static public $DISTANCE_BETWEEN_POINTS = 50;
-
-	/**
-	 * Used treshold
-	 * @var int
-	 */
-	static private $TRESHOLD = CONF_ELEVATION_MIN_DIFF;
-
-	/**
-	 * Used algorithm for weeding
-	 * @var enum
-	 */
-	static private $ALGORITHM = CONF_ELEVATION_METHOD;
-
-	/**
-	 * Algorithm: none
-	 * @var enum
-	 */
-	static public $ALGORITHM_NONE = 'none';
-
-	/**
-	 * Algorithm: Treshold
-	 * @var enum
-	 */
-	static public $ALGORITHM_TRESHOLD = 'treshold';
-
-	/**
-	 * Algorithm: Douglas-Peucker
-	 * @var enum
-	 */
-	static public $ALGORITHM_DOUGLAS_PEUCKER = 'douglas-peucker';
-
-	/**
-	 * Algorithm: Reumann-Witkamm
-	 * @var enum
-	 */
-	static public $ALGORITHM_REUMANN_WITKAMM = 'reumann-witkamm';
+	const DISTANCE_BETWEEN_POINTS = 50;
 
 	/**
 	 * Elevation points
 	 * @var array
 	 */
 	protected $ElevationPoints = array();
+
+	/**
+	 * Elevation method
+	 * @var ElevationMethod
+	 */
+	protected $Method;
+
+	/**
+	 * Treshold
+	 * @var int
+	 */
+	protected $Treshold;
 
 	/**
 	 * Elevation points weeded
@@ -76,29 +52,18 @@ class ElevationCalculator {
 	protected $UpDownPoints = array();
 
 	/**
-	 * Get name of current algorithm
-	 * @return string
-	 */
-	static public function nameOfCurrentAlgorithm() {
-		switch (self::$ALGORITHM) {
-			case self::$ALGORITHM_REUMANN_WITKAMM:
-				return __('Reumann-Witkamm-algorithm');
-			case self::$ALGORITHM_DOUGLAS_PEUCKER:
-				return __('Douglas-Peucker-algorithm');
-			case self::$ALGORITHM_TRESHOLD:
-				return __('Treshold method');
-			case self::$ALGORITHM_NONE:
-			default:
-				return __('no smoothing');
-		}
-	}
-
-	/**
 	 * Constructor
+	 * 
+	 * If no options are set, the current configuration settings are used.
+	 * 
 	 * @param array $ElevationPoints
+	 * @param ElevationMethod $Method [optional]
+	 * @param int $Treshold [optional]
 	 */
-	public function __construct($ElevationPoints) {
+	public function __construct($ElevationPoints, ElevationMethod $Method = null, $Treshold = null) {
 		$this->ElevationPoints = $ElevationPoints;
+		$this->Method = !is_null($Method) ? $Method : Configuration::ActivityView()->elevationMethod();
+		$this->Treshold = !is_null($Treshold) ? $Treshold : Configuration::ActivityView()->elevationMinDiff();
 	}
 
 	/**
@@ -106,15 +71,15 @@ class ElevationCalculator {
 	 * @param int $treshold
 	 */
 	public function setTreshold($treshold) {
-		self::$TRESHOLD = $treshold;
+		$this->Treshold = $treshold;
 	}
 
 	/**
-	 * Set algorithm
-	 * @param enum $algorithm
+	 * Set method
+	 * @param ElevationMethod $Method
 	 */
-	public function setAlgorithm($algorithm) {
-		self::$ALGORITHM = $algorithm;
+	public function setMethod(ElevationMethod $Method) {
+		$this->Method = $Method;
 	}
 
 	/**
@@ -180,20 +145,14 @@ class ElevationCalculator {
 		if (count($this->ElevationPoints) == 0)
 			return;
 
-		switch (self::$ALGORITHM) {
-			case self::$ALGORITHM_REUMANN_WITKAMM:
-				$this->runAlgorithmReumannWitkamm();
-				break;
-			case self::$ALGORITHM_DOUGLAS_PEUCKER:
-				$this->runAlgorithmDouglasPeucker();
-				break;
-			case self::$ALGORITHM_TRESHOLD:
-				$this->runAlgorithmTreshold();
-				break;
-			case self::$ALGORITHM_NONE:
-			default:
-				$this->IndicesOfElevationPointsWeeded = range(0, count($this->ElevationPoints) - 1);
-				break;
+		if ($this->Method->usesReumannWitkamm()) {
+			$this->runAlgorithmReumannWitkamm();
+		} elseif ($this->Method->usesDouglasPeucker()) {
+			$this->runAlgorithmDouglasPeucker();
+		} elseif ($this->Method->usesTreshold()) {
+			$this->runAlgorithmTreshold();
+		} else {
+			$this->IndicesOfElevationPointsWeeded = range(0, count($this->ElevationPoints) - 1);
 		}
 	}
 
@@ -208,7 +167,7 @@ class ElevationCalculator {
 		while (isset($this->ElevationPoints[$i+1])) {
 			$isLastStepUp    = $this->ElevationPoints[$i] > end($this->ElevationPointsWeeded) && $this->ElevationPoints[$i+1] <= $this->ElevationPoints[$i];
 			$isLastStepDown  = $this->ElevationPoints[$i] < end($this->ElevationPointsWeeded) && $this->ElevationPoints[$i+1] >= $this->ElevationPoints[$i];
-			$isAboveTreshold = abs(end($this->ElevationPointsWeeded) - $this->ElevationPoints[$i]) > self::$TRESHOLD;
+			$isAboveTreshold = abs(end($this->ElevationPointsWeeded) - $this->ElevationPoints[$i]) > $this->Treshold;
 
 			if (($isLastStepUp || $isLastStepDown) && $isAboveTreshold) {
 				$this->IndicesOfElevationPointsWeeded[] = $i;
@@ -227,7 +186,7 @@ class ElevationCalculator {
 	 */
 	protected function runAlgorithmDouglasPeucker() {
 		$this->IndicesOfElevationPointsWeeded = array(0, count($this->ElevationPoints) - 1);
-		$this->ElevationPointsWeeded = $this->douglasPeuckerAlgorithm($this->ElevationPoints, self::$TRESHOLD);
+		$this->ElevationPointsWeeded = $this->douglasPeuckerAlgorithm($this->ElevationPoints, $this->Treshold);
 
 		sort($this->IndicesOfElevationPointsWeeded);
 	}
@@ -247,9 +206,9 @@ class ElevationCalculator {
 		// Find point with maximum distance
 		for ($i = 1; $i < ($totalPoints - 1); $i++) {
 			$d = self::perpendicularDistance(
-				self::$DISTANCE_BETWEEN_POINTS*$i, $pointList[$i],
-				self::$DISTANCE_BETWEEN_POINTS*0, $pointList[0],
-				self::$DISTANCE_BETWEEN_POINTS*($totalPoints-1), $pointList[$totalPoints-1]
+				self::DISTANCE_BETWEEN_POINTS*$i, $pointList[$i],
+				self::DISTANCE_BETWEEN_POINTS*0, $pointList[0],
+				self::DISTANCE_BETWEEN_POINTS*($totalPoints-1), $pointList[$totalPoints-1]
 			);
 
 			if ($d > $dmax) {
@@ -263,7 +222,7 @@ class ElevationCalculator {
 			$this->IndicesOfElevationPointsWeeded[] = $offset + $index;
 
 			$recResults1 = $this->douglasPeuckerAlgorithm(array_slice($pointList, 0, $index + 1), $epsilon, $offset);
-			$recResults2 = $this->douglasPeuckerAlgorithm(array_slice($pointList, $index, $totalPoints - $index), $epsilon, $offset + $index);;
+			$recResults2 = $this->douglasPeuckerAlgorithm(array_slice($pointList, $index, $totalPoints - $index), $epsilon, $offset + $index);
 
 			return array_merge(array_slice($recResults1, 0, count($recResults1) - 1), array_slice($recResults2, 0, count($recResults2)));
 		}

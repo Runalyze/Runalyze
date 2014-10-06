@@ -48,8 +48,8 @@ class SportSpeedTest extends PHPUnit_Framework_TestCase {
 	 * @covers SportSpeed::noSpeed
 	 */
 	public function testNoSpeed() {
-		$this->assertEquals( SportSpeed::getSpeed(1, 300, SportSpeed::$NO), '1,00&nbsp;km in 5:00');
-		$this->assertEquals( SportSpeed::getSpeedWithAppendix(1, 300, SportSpeed::$NO), '1,00&nbsp;km in 5:00');
+		$this->assertEquals( SportSpeed::getSpeed(1, 300, SportSpeed::$NO), '1,0&nbsp;km in 5:00');
+		$this->assertEquals( SportSpeed::getSpeedWithAppendix(1, 300, SportSpeed::$NO), '1,0&nbsp;km in 5:00');
 	}
 
 	/**
