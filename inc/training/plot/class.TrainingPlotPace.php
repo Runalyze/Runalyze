@@ -45,6 +45,10 @@ class TrainingPlotPace extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
+		if (!$Training->hasArrayPace()) {
+			return array();
+		}
+
 		$Data = $Training->GpsData()->getPlotDataForPace();
 
 		if ($Training->Sport()->usesKmh()) {

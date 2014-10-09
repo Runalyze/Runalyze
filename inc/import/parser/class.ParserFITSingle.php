@@ -293,7 +293,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 				} else {
 					$this->gps['time_in_s'][$i] -= $pauseInSeconds;
 				}
-				echo NL;
 			}
 		}
 	}

@@ -38,6 +38,10 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
+		if (!$Training->hasArrayAltitude() && !$Training->hasArrayAltitudeOriginal()) {
+			return array();
+		}
+
 		return $Training->GpsData()->getPlotDataForElevation();
 	}
 
