@@ -38,7 +38,7 @@ class TrainingPlotLapsManual extends TrainingPlotLaps {
 			return;
 		}
 
-		$showInactive = !$this->Training->Splits()->hasActiveLaps();
+		$showInactive = !$this->Training->Splits()->hasActiveLaps(2);
 		$this->Labels = $this->Training->Splits()->distancesAsArray($showInactive);
 		$this->Data   = $this->Training->Splits()->pacesAsArray($showInactive);
 		$num          = count($this->Data);

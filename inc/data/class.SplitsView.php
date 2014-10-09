@@ -140,11 +140,13 @@ class SplitsView {
 		$num_active = count( $this->Splits->distancesAsArray(false) );
 		$seperated = false;
 
+		$showOnlyActive = $this->Splits->hasActiveAndInactiveLaps() && $num_active > 1;
+
 		foreach ($this->Splits->asArray() as $Split) {
 			$Time = Time::toSeconds($Split['time']);
 			$Pace = $Split['km'] > 0 ? $Time / $Split['km'] : 0;
 
-			if ($this->Splits->hasActiveAndInactiveLaps() && !$Split['active']) {
+			if ($showOnlyActive && !$Split['active']) {
 				if (!$seperated && ($i > 0) && ($i < $num_active)) {
 					$this->Code .= '<tr class="space-line"><td colspan="5"></td></tr>';
 					$this->Code .= '<tr class="space-line zebra-corrector"><td colspan="5"></td></tr>';
