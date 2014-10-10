@@ -63,7 +63,7 @@ class Request {
 	 * @return boolean
 	 */
 	static public function isHttps() {
-		return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off';
+		return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off';
 	}
 
 	/**
