@@ -71,6 +71,8 @@ class TrainingView {
 
 			if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
 				$this->Sections[] = new SectionRoute($this->Training);
+			} else {
+				$this->Sections[] = new SectionRouteOnlyMap($this->Training);
 			}
 		}
 
