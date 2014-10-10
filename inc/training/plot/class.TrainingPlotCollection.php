@@ -43,22 +43,44 @@ class TrainingPlotCollection extends TrainingPlot {
 		$this->DataPulse     = TrainingPlotPulse::getData($this->Training);
 		$this->DataElevation = TrainingPlotElevation::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => __('Elevation'), 'color' => 'rgba(227,217,187,1)', 'data' => $this->DataElevation);
-		$this->Plot->Data[] = array('label' => __('HR'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
-		$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace, 'yaxis' => 3);
+		$i = 1;
+
+		if (!empty($this->DataElevation)) {
+			$this->Plot->Data[] = array('label' => __('Elevation'), 'color' => 'rgba(227,217,187,1)', 'data' => $this->DataElevation, 'yaxis' => $i);
+			$i++;
+		}
+
+		if (!empty($this->DataPulse)) {
+			$this->Plot->Data[] = array('label' => __('HR'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => $i);
+			$i++;
+		}
+
+		if (!empty($this->DataPace)) {
+			$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace, 'yaxis' => $i);
+		}
 	}
 
 	/**
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		$this->Plot->addYAxis(1, 'left');
-		TrainingPlotElevation::setPropertiesTo($this->Plot, 1, $this->Training, $this->DataElevation);
+		$i = 1;
 
-		$this->Plot->addYAxis(2, 'right', false);
-		TrainingPlotPulse::setPropertiesTo($this->Plot, 2, $this->Training, $this->DataPulse);
+		if (!empty($this->DataElevation)) {
+			$this->Plot->addYAxis($i, 'left');
+			TrainingPlotElevation::setPropertiesTo($this->Plot, $i, $this->Training, $this->DataElevation, false);
+			$i++;
+		}
 
-		$this->Plot->addYAxis(3, 'right', true, 0);
-		TrainingPlotPace::setPropertiesTo($this->Plot, 3, $this->Training, $this->DataPace);
+		if (!empty($this->DataPulse)) {
+			$this->Plot->addYAxis($i, 'right', false);
+			TrainingPlotPulse::setPropertiesTo($this->Plot, $i, $this->Training, $this->DataPulse);
+			$i++;
+		}
+
+		if (!empty($this->DataPace)) {
+			$this->Plot->addYAxis($i, 'right', true, 0);
+			TrainingPlotPace::setPropertiesTo($this->Plot, $i, $this->Training, $this->DataPace);
+		}
 	}
 }
