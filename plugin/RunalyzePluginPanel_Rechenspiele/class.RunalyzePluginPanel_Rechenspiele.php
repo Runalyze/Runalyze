@@ -369,7 +369,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody class="top-and-bottom-border">
 				';
 
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,`vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
 				$Table .= '<tr>'.NL;
