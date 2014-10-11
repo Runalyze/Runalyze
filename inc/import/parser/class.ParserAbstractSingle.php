@@ -34,6 +34,24 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		);
 
 	/**
+	 * Previous distance
+	 * 
+	 * For pace calculation.
+	 * 
+	 * @var int
+	 */
+	private $paceDist = 0;
+
+	/**
+	 * Previous time
+	 * 
+	 * For pace calculation.
+	 * 
+	 * @var int
+	 */
+	private $paceTime = 0;
+
+	/**
 	 * Constructor
 	 * @param string $FileContent file content
 	 */
@@ -138,18 +156,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
-	 * Set pace from distance and time
-	 */
-	private function setPaceFromDistanceAndTime() {
-		foreach (array_keys($this->gps['km']) as $i) {
-			if ($i == 0 || $this->gps['km'][$i] == $this->gps['km'][$i-1])
-				$this->gps['pace'][] = 0;
-			else
-				$this->gps['pace'][] = round( ($this->gps['time_in_s'][$i] - $this->gps['time_in_s'][$i-1]) / ($this->gps['km'][$i] - $this->gps['km'][$i-1]) );
-		}
-	}
-
-	/**
 	 * Set values like distance, duration, etc. from gps data if they are empty
 	 */
 	private function setValuesFromArraysIfEmpty() {
@@ -225,13 +231,48 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	}
 
 	/**
+	 * Set pace from distance and time
+	 */
+	private function setPaceFromDistanceAndTime() {
+		$num = count($this->gps['km']);
+		$prevDist = 0;
+		$prevTime = 0;
+
+		for ($i = 0; $i < $num; ++$i) {
+			$currDist = $this->gps['km'][$i];
+			$currTime = $this->gps['time_in_s'][$i];
+
+			if ($currDist > $prevDist) {
+				$pace = ($currTime - $prevTime) / ($currDist - $prevDist);
+	
+				$prevDist = $currDist;
+				$prevTime = $currTime;
+			} else {
+				$pace = 0;
+			}
+
+			$this->gps['pace'][] = round($pace);
+		}
+	}
+
+	/**
 	 * Get current pace
 	 * @return int
 	 */
 	final protected function getCurrentPace() {
-		return ((end($this->gps['km']) - prev($this->gps['km'])) != 0)
-				? round((end($this->gps['time_in_s']) - prev($this->gps['time_in_s'])) / (end($this->gps['km']) - prev($this->gps['km'])))
-				: 0;
+		$currDist = end($this->gps['km']);
+		$currTime = end($this->gps['time_in_s']);
+
+		if ($currDist > $this->paceDist) {
+			$pace = ($currTime - $this->paceTime) / ($currDist - $this->paceDist);
+
+			$this->paceDist = $currDist;
+			$this->paceTime = $currTime;
+
+			return $pace;
+		}
+
+		return 0;
 	}
 
 	/**
