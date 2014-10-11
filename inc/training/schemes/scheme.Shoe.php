@@ -12,7 +12,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'analyse',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('additionalKm', 'inuse')
+		'fields'	=> array('additionalKm', 'inuse', 'weight')
 	)
 );
 
@@ -54,6 +54,16 @@ $FIELDS['km'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
 		'precision'	=> '6,2'
+	)
+);
+$FIELDS['weight'] = array(
+	'database'	=> array(
+		'type'		=> 'decimal',
+		'precision'	=> '6,0',
+	),
+	'formular'	=> array(
+		'label'		=> __('weigth'),
+		'unit'		=> FormularUnit::$G
 	)
 );
 $FIELDS['time'] = array(

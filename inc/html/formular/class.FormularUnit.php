@@ -38,6 +38,12 @@ class FormularUnit {
 	 * @var string
 	 */
 	static public $KG = 'kg';
+	
+	/**
+	 * Unit: weight in gram
+	 * @var string
+	 */
+	static public $G = 'g';
 
 	/**
 	 * Unit: km

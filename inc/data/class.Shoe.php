@@ -95,4 +95,13 @@ class Shoe extends DataObject {
 	public function isInUse() {
 		return $this->get('inuse') == 1;
 	}
+        
+	/**
+	* Get weight
+	* @return float
+	*/
+	public function getWeight() {
+		return $this->get('weight');
+	}
+
 }

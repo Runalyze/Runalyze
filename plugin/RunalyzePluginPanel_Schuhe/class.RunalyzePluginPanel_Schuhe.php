@@ -122,6 +122,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
 					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
+					<th class="{sorter: \'weight\'}">'.__('Weigth').'</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -143,6 +144,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<td class="small">'.  SportSpeed::minPerKm(1, $schuh['pace_in_s']).'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>
 					<td>'.$Shoe->getKmString().'</td>
+					<td>'.($Shoe->getWeight().FormularUnit::$G).'</td>
 				</tr>');
 			}
 		} else {
