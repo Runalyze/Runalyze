@@ -41,6 +41,12 @@ class AccountHandler {
 	static public $NEW_REGISTERED_ID = -1;
 
 	/**
+	 * Salt length in bytes
+	 * @var int
+	 */
+	static public $SALT_LENGTH = 32;
+
+	/**
 	 * Update account-values
 	 * @param string $username
 	 * @param mixed $column
@@ -118,8 +124,8 @@ class AccountHandler {
 	 * @param string $hashFromDb
 	 * @return boolean 
 	 */
-	static public function comparePasswords($realString, $hashFromDb) {
-		return (self::passwordToHash($realString) == $hashFromDb);
+	static public function comparePasswords($realString, $hashFromDb, $saltFromDb) {
+		return (self::passwordToHash($realString, $saltFromDb) == $hashFromDb);
 	}
 
 	/**
@@ -127,8 +133,12 @@ class AccountHandler {
 	 * @param string $realString
 	 * @return string 
 	 */
-	static private function passwordToHash($realString) {
-		return md5(trim($realString).self::$SALT);
+	static private function passwordToHash($realString, $salt) {
+		if (is_null($salt) || strlen($salt) == 0) { 
+			return md5(trim($realString).self::$SALT);
+		} else {
+			return hash("sha256", trim($realString).$salt);
+		}
 	}
 
 	/**
@@ -136,7 +146,7 @@ class AccountHandler {
 	 * @return string
 	 */
 	static public function getAutologinHash() {
-		return md5(trim(SessionAccountHandler::getMail()).self::$SALT.self::getChangePasswordHash());
+		return md5(trim(SessionAccountHandler::getMail()).self::getRandomHash(32));
 	}
 
 	/**
@@ -177,9 +187,10 @@ class AccountHandler {
 		$errors = array();
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
+		$newSalt = self::getNewSalt();
 		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'name', 'mail', 'password', 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password']), time(), $activationHash));
+				array('username', 'name', 'mail', 'password', 'salt' , 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;
@@ -234,7 +245,16 @@ class AccountHandler {
 		return __('The username is not known.');
 	}
 
+
 	/**
+	 * 
+	 *
+	 */
+	static private function getNewSalt() {
+		return self::getRandomHash(32);
+	}
+
+	/** 
 	 * Get hash for changing password
 	 * @return string 
 	 */
@@ -243,11 +263,12 @@ class AccountHandler {
 	}
 
 	/**
-	 * Get hash
+	 * Get hash.
 	 * @return string 
 	 */
-	static private function getRandomHash() {
-		return md5(substr(time()-rand(100, 100000),5,10).substr(time()-rand(100, 100000),-5));
+	static private function getRandomHash($bytes = 16) {
+		return bin2hex(openssl_random_pseudo_bytes($bytes));
+		// return md5(substr(time()-rand(100, 100000),5,10).substr(time()-rand(100, 100000),-5));
 	}
 
 	/**
@@ -311,13 +332,18 @@ class AccountHandler {
 			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
 				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
 			else {
-				self::updateAccount($_POST['chpw_username'],
-					array('password', 'changepw_hash', 'changepw_timelimit'),
-					array(self::passwordToHash($_POST['new_pw']), '', 0));
+				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);				
 				header('Location: login.php');
 			}
 		} else
 			return array( __('Something went wrong.') );
+	}
+
+	static public function setNewPassword($username, $password) {
+		$newSalt = self::getNewSalt();
+		self::updateAccount($username,
+			array('password', 'salt', 'changepw_hash', 'changepw_timelimit'),
+			array(self::passwordToHash($password, $newSalt), $newSalt, '', 0));
 	}
 
 	/**

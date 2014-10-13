@@ -179,9 +179,15 @@ class SessionAccountHandler {
 				return false;
 			}
 
-			if (AccountHandler::comparePasswords($password, $Account['password'])) {
+			if (AccountHandler::comparePasswords($password, $Account['password'], $Account['salt'])) {
+
 				$this->setAccount($Account);
 				$this->setSession();
+
+				// replace old md5 with new sha256 hash
+				if (strlen($Account['salt']) < 1) {
+					AccountHandler::setNewPassword($username, $password);
+				}
 
 				return true;
 			}
