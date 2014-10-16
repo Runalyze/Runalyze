@@ -61,7 +61,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Add error: incorrect file
 	 */
 	protected function throwNoXMLError() {
-		$this->addError('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.');
+		$this->addError( __('Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;header&gt;-tag could not be located.') );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		if (!empty($this->XML->header->Activity))
 			$this->guessSportID( (string)$this->XML->header->Activity );
 		else
-			$this->TrainingObject->setSportid( CONF_RUNNINGSPORT );
+			$this->TrainingObject->setSportid( Configuration::General()->runningSport() );
 	}
 
 	/**
@@ -82,6 +82,12 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	protected function parseOptionalValues() {
 		if (!empty($this->XML->header->Duration))
 			$this->TrainingObject->setTimeInSeconds((int)$this->XML->header->Duration);
+
+		if (!empty($this->XML->header->Distance))
+			$this->TrainingObject->setDistance( round((int)$this->XML->header->Distance)/1000 );
+
+		if (!empty($this->XML->header->Energy))
+			$this->TrainingObject->setCalories( round((int)$this->XML->header->Energy/4184) );
 
 		$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
@@ -110,7 +116,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Read elapsed time from last sample
 	 * @param SimpleXMLElement $Sample
 	 */
-	private function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
+	protected function readElapsedTimeFrom(SimpleXMLElement &$Sample) {
 		if (!empty($Sample->UTC)) {
 			$FinishTimestamp = (int)strtotime((string)$Sample->UTC);
 
@@ -124,15 +130,13 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Sample
 	 */
 	protected function parseSample(SimpleXMLElement &$Sample) {
-		if (!empty($Sample->Events) && !empty($Sample->Events->Lap)) {
-			if (!empty($Sample->Events->Lap->Distance) && !empty($Sample->Events->Lap->Duration)) {
+		if (!empty($Sample->Events)) {
+			if (!empty($Sample->Events->Lap) && !empty($Sample->Events->Lap->Distance) && !empty($Sample->Events->Lap->Duration)) {
 				$this->TrainingObject->Splits()->addSplit(
 					round((int)$Sample->Events->Lap->Distance)/1000,
 					(int)$Sample->Events->Lap->Duration
 				);
 			}
-
-			return;
 		}
 
 		if (!empty($Sample->Latitude) && !empty($Sample->Longitude)) {
@@ -140,15 +144,18 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 			$this->Longitude = round((float)$Sample->Longitude * 180 / pi(), 7);
 		}
 
-		if ($this->Latitude != 0 && $this->Longitude != 0) {
-			if (!empty($Sample->Distance) && !empty($Sample->Time)) {
-				if ((int)$Sample->Time > $this->Time && (int)$Sample->Distance > $this->Distance) {
-					$this->Distance = (int)$Sample->Distance;
-					$this->Time     = (int)$Sample->Time;
-
-					$this->setGPSfromSample($Sample);
-				}
+		if ((string)$Sample->SampleType == 'periodic') {
+			if (
+				(!empty($Sample->Distance) && (int)$Sample->Distance <= $this->Distance)
+				|| (!empty($Sample->Time) && (int)$Sample->Time <= $this->Time)
+			) {
+				return;
 			}
+
+			$this->Distance = (int)$Sample->Distance;
+			$this->Time     = (int)$Sample->Time;
+
+			$this->setGPSfromSample($Sample);
 		}
 	}
 
@@ -159,7 +166,6 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	protected function setGPSfromSample(SimpleXMLElement &$Sample) {
 		$this->gps['time_in_s'][] = $this->Time;
 		$this->gps['km'][]        = round((int)$Sample->Distance)/1000;
-		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['latitude'][]  = $this->Latitude;
 		$this->gps['longitude'][] = $this->Longitude;
 		$this->gps['altitude'][]  = !empty($Sample->Altitude)
