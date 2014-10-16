@@ -48,6 +48,9 @@ class ParserSMLsuuntoSingle extends ParserXMLsuuntoSingle {
 		if (!empty($this->XML->DeviceLog->Header->Distance))
 			$this->TrainingObject->setDistance( round((int)$this->XML->DeviceLog->Header->Distance)/1000 );
 
+		if (!empty($this->XML->DeviceLog->Header->Energy))
+			$this->TrainingObject->setCalories( round((int)$this->XML->DeviceLog->Header->Energy/4184) );
+
 		$this->TrainingObject->setCreatorDetails( 'Suunto' );
 	}
 
