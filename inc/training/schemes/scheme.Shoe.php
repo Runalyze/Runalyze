@@ -58,8 +58,8 @@ $FIELDS['km'] = array(
 );
 $FIELDS['weight'] = array(
 	'database'	=> array(
-		'type'		=> 'decimal',
-		'precision'	=> '6,0',
+		'type'		=> 'smallint',
+		'precision'	=> '3',
 	),
 	'formular'	=> array(
 		'label'		=> __('weigth'),

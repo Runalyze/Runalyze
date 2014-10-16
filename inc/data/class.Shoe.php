@@ -73,6 +73,18 @@ class Shoe extends DataObject {
 	}
 
 	/**
+	 * Get string for weight
+	 * @return string
+	 */
+	public function getWeightString() {
+		if ($this->getWeight() > 0) {
+			return $this->getWeight().FormularUnit::$G;
+		}
+
+		return '';
+	}
+
+	/**
 	* Get km from trainings in database
 	* @return float
 	*/
