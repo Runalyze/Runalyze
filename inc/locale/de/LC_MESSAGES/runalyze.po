@@ -231,7 +231,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.Installer.php:5
 #: ../../Runalyze/inc/tpl/tpl.installerFooterText.php:12
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #: ../../master/Runalyze/call/call.Plugin.install.php:27
 #: ../../Runalyze/call/call.Plugin.install.php:27
@@ -308,7 +308,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:45
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:152
 msgid "Login"
-msgstr ""
+msgstr "Einloggen"
 
 #: ../../master/Runalyze/call/window.delete.php:12
 #: ../../Runalyze/call/window.delete.php:12
@@ -403,7 +403,7 @@ msgstr ""
 #: ../../Runalyze/inc/system/config/class.ConfigTabPlugins.php:41
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:29
 msgid "Tools"
-msgstr ""
+msgstr "Tools"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:202
 #: ../../Runalyze/inc/class.AdminView.php:202
@@ -465,14 +465,14 @@ msgstr ""
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:117
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:331
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:294
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:81
 #: ../../Runalyze/inc/class.AdminView.php:294
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:81
 msgid "Email"
-msgstr ""
+msgstr "E-Mail"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:295
 #: ../../master/Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:118
@@ -2972,7 +2972,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:71
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:129
 msgid "Username"
-msgstr ""
+msgstr "Nutzername"
 
 #: ../../master/Runalyze/inc/system/config/class.ConfigTabAccount.php:31
 #: ../../Runalyze/inc/system/config/class.ConfigTabAccount.php:31
@@ -3193,7 +3193,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.installerFooterText.php:5
 #: ../../Runalyze/plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:105
 msgid "Statistics"
-msgstr ""
+msgstr "Staistik"
 
 #: ../../master/Runalyze/inc/system/config/class.ConfigTabPlugins.php:38
 #: ../../Runalyze/inc/system/config/class.ConfigTabPlugins.php:38
@@ -3498,7 +3498,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:29
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:86
 msgid "Password"
-msgstr ""
+msgstr "Passwort"
 
 #: ../../master/Runalyze/inc/tpl/tpl.DataBrowser.php:14
 #: ../../Runalyze/inc/tpl/tpl.DataBrowser.php:14
@@ -3523,12 +3523,12 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.Frontend.header.php:25
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:25
 msgid "Logout"
-msgstr ""
+msgstr "Ausloggen"
 
 #: ../../master/Runalyze/inc/tpl/tpl.Frontend.header.php:30
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:30
 msgid "Help"
-msgstr ""
+msgstr "Hilfe"
 
 #: ../../master/Runalyze/inc/tpl/tpl.FrontendShared.header.php:29
 #: ../../master/Runalyze/inc/tpl/tpl.FrontendSharedIframe.header.php:26
@@ -3902,7 +3902,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.installerFooter.php:3
 #: ../../Runalyze/inc/tpl/tpl.installerFooter.php:3
 msgid "rundiary"
-msgstr ""
+msgstr "Lauftagebuch"
 
 #: ../../master/Runalyze/inc/tpl/tpl.installerFooterText.php:6
 #: ../../Runalyze/inc/tpl/tpl.installerFooterText.php:6
@@ -4050,7 +4050,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:33
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:33
 msgid "Remember me"
-msgstr ""
+msgstr "Eingeloggt bleiben"
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:46
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:46
@@ -4089,7 +4089,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:118
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:118
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:127
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:154
@@ -4106,7 +4106,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:145
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:145
 msgid "Send link"
-msgstr ""
+msgstr "Link zusenden"
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:176
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:186
