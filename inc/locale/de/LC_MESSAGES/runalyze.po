@@ -1,10 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-10-22 20:05+0100\n"
-"PO-Revision-Date: 2014-10-22 20:16+0200\n"
+"PO-Revision-Date: 2014-10-22 21:23+0200\n"
 "Last-Translator: Michael <michael@mipapo.de>\n"
-"Language-Team: German <http://example.com/projects/runalyze/runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +69,7 @@ msgstr "Computer durchsuchen"
 #: ../../Runalyze/call/call.garminCommunicator.php:52
 #: ../../Runalyze/call/call.garminCommunicator.php:53
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:53
 #: ../../Runalyze/call/call.garminCommunicator.php:54
