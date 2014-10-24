@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-10-22 20:05+0100\n"
-"PO-Revision-Date: 2014-10-23 20:55+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-10-24 15:29+0200\n"
+"Last-Translator: Runalyze Team <mail@runalyze.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -391,7 +391,7 @@ msgstr "Speichern"
 #: ../../master/Runalyze/inc/class.AdminView.php:181
 #: ../../Runalyze/inc/class.AdminView.php:181
 msgid "<strong>config.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>config.php</strong> ist nicht schreibbar"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:181
 #: ../../Runalyze/inc/class.AdminView.php:181
@@ -422,7 +422,7 @@ msgstr "Los"
 #: ../../master/Runalyze/inc/class.AdminView.php:211
 #: ../../Runalyze/inc/class.AdminView.php:211
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>/inc/plugin/pluginmap.php</strong> ist nicht schreibbar"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:211
 #: ../../Runalyze/inc/class.AdminView.php:211
@@ -516,15 +516,13 @@ msgstr "Server Informationen"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:339
 #: ../../Runalyze/inc/class.AdminView.php:339
-#, fuzzy
 msgid "PHP version:"
-msgstr "PHP version:"
+msgstr "PHP Version:"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:340
 #: ../../Runalyze/inc/class.AdminView.php:340
-#, fuzzy
 msgid "MySQL version:"
-msgstr "MySQL version:"
+msgstr "MySQL Version:"
 
 #: ../../master/Runalyze/inc/class.AdminView.php:341
 #: ../../Runalyze/inc/class.AdminView.php:341
@@ -620,7 +618,7 @@ msgstr "weiter"
 #: ../../master/Runalyze/inc/class.DataBrowser.php:248
 #: ../../Runalyze/inc/class.DataBrowser.php:249
 msgid "Reload current datasheet"
-msgstr ""
+msgstr "Aktuelles Datenblatt neuladen"
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:256
 #: ../../Runalyze/inc/class.DataBrowser.php:257
@@ -7772,4 +7770,4 @@ msgstr ""
 
 #: ../../Runalyze/plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:233
 msgid "There was a problem with the import."
-msgstr ""
+msgstr "Es gab ein Problem mit dem Import."
