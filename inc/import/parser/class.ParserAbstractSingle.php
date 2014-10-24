@@ -263,7 +263,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		
 
 		if ($Result === false)
-			return ($table == 'sport') ? CONF_MAINSPORT : 0;
+			return ($table == 'sport') ? Configuration::General()->mainSport() : 0;
 
 		return $Result['id'];
 	}

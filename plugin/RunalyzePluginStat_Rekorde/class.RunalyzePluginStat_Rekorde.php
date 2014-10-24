@@ -74,6 +74,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		foreach ($this->rekorde as $rekord) {
 			echo '<table class="fullwidth zebra-style">';
 			echo '<thead><tr><th colspan="11" class="l">'.$rekord['name'].'</th></tr></thead>';
+			echo '<tbody>';
 
 			$output = false;
 			$sports = DB::getInstance()->query($rekord['sportquery'])->fetchAll();
@@ -86,7 +87,6 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 
 				if (!empty($data)) {
 					$output = true;
-					echo '<tbody>';
 					echo '<tr class="r">';
 					echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
 	
@@ -191,7 +191,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				SUM(`distance`) as `km`,
 				YEAR(FROM_UNIXTIME(`time`)) as `year`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.'
+			WHERE `sportid`='.Configuration::General()->runningSport().'
 			GROUP BY `year`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();
@@ -204,7 +204,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();
@@ -218,7 +218,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.CONF_RUNNINGSPORT.' '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getSportAndYearDependenceForQuery().'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();

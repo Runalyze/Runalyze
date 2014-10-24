@@ -22,7 +22,7 @@ $Frontend = new Frontend(true);
 			$$("input[value="+id+"]").each(function(box){
 				box.checked = false;
 			});
-			window.parent.Runalyze.changeConfig('GARMIN_IGNORE_IDS',id,true);
+			window.parent.Runalyze.Config.ignoreActivityID(id);
 		}
 
 		var currentActivity = 0, uploadedActivities = [], display, newIndex = 0;
@@ -40,7 +40,6 @@ $Frontend = new Frontend(true);
 				autoHideUnusedElements: true,
 				showReadDataTypesSelect: false,
 				readDataTypes: [Garmin.DeviceControl.FILE_TYPES.tcxDir, Garmin.DeviceControl.FILE_TYPES.gpxDir, Garmin.DeviceControl.FILE_TYPES.fitDir],
-				deviceSelectLabel: "<?php _e('Choose'); ?>:<br>",
 				readDataButtonText: "<?php _e('Connect'); ?>",
 				showCancelReadDataButton: false,
 				lookingForDevices: '<?php _e('Searching devices'); ?><br><br><img src="../img/wait.gif">',
@@ -56,7 +55,7 @@ $Frontend = new Frontend(true);
 				deviceSelectLabel: "<?php _e('Devices'); ?>: ",
 				findDevicesButtonText: "<?php _e('Search for decives'); ?>",
 				loadingContentText: "<?php _e('Retrieving data from #{deviceName}, please wait ...'); ?>",
-				readSelectedButtonText: "<?php _e('Please wait ...'); ?>", // "Importieren"
+				readSelectedButtonText: "<?php _e('Please wait ...'); ?>",
 				dataFound: "<?php _e('Found #{tracks} activities'); ?>",
 				noDeviceDetectedStatusText: "<?php _e('No devices found'); ?>",
 				singleDeviceDetectedStatusText: "<?php _e('Found'); ?>: ",
@@ -109,15 +108,14 @@ $Frontend = new Frontend(true);
 					currentActivity = currentActivity + 1;
 
 					if (display.numQueuedActivities > 1)
-						window.parent.Runalyze.saveTcx(activityXml, currentName, currentActivity, display.numQueuedActivities, uploadedActivities);
+						window.parent.Runalyze.Training.saveTcx(activityXml, currentName, currentActivity, display.numQueuedActivities, uploadedActivities);
 					else
-						window.parent.Runalyze.loadXML(activityXml);
-	
+						window.parent.Runalyze.Training.loadXML(activityXml);
 				},
 				afterFinishUploads: function(display) {
-					// Done from Runalyze.saveTcx() with callback
+					// Done from Runalyze.Training.saveTcx() with callback
 					//if (uploadedActivities.length > 1)
-					//	window.parent.Runalyze.loadSavedTcxs(uploadedActivities);
+					//	window.parent.Runalyze.Training.loadSavedTcxs(uploadedActivities);
 				},
 				afterFinishReadFromDevice: function(dataString, dataDoc, extension, activities, display) {
 					$("readSelectedButton").value = "<?php _e('Import'); ?>";

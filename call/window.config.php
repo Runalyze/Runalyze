@@ -17,4 +17,4 @@ $ConfigTabs->addTab(new ConfigTabClothes());
 $ConfigTabs->addTab(new ConfigTabAccount());
 $ConfigTabs->display();
 
-echo Ajax::wrapJSforDocumentReady('Runalyze.ajax.removeClass("small-window");');
+echo Ajax::wrapJSforDocumentReady('Runalyze.Overlay.removeClasses();');

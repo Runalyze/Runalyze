@@ -108,7 +108,7 @@ class LeafletMap {
 	 * @return string
 	 */
 	public function getJS() {
-		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.CONF_TRAINING_LEAFLET_LAYER.'");';
+		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
 		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\');';
 
 		foreach ($this->Routes as $Route)
@@ -116,6 +116,8 @@ class LeafletMap {
 
 		if (!empty($this->Bounds))
 			$Code .= 'RunalyzeLeaflet.map().fitBounds([['.$this->Bounds['lat.min'].','.$this->Bounds['lng.min'].'],['.$this->Bounds['lat.max'].','.$this->Bounds['lng.max'].']]);';
+
+        $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
 
 		return '<script>'.$Code.'</script>';
 	}

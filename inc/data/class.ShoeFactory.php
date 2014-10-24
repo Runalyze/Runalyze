@@ -63,11 +63,9 @@ class ShoeFactory {
 
 	/**
 	 * Get order
-	 * @see CONF_TRAINING_SORT_SHOES
 	 * @return string
 	 */
 	static private function getOrder() {
-            //TODO Sort function for cached data
 		switch (CONF_TRAINING_SORT_SHOES) {
 			case 'alpha':
 				return 'ORDER BY `name` ASC';

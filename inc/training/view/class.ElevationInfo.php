@@ -155,7 +155,7 @@ class ElevationInfo {
 	 * Display different algorithms with original data
 	 */
 	protected function displayDifferentAlgorithmsWithOriginalData() {
-		if (!$this->Training->hasArrayAltitudeOriginal())
+		if (!$this->Training->hasArrayAltitudeOriginal() || !$this->Training->elevationWasCorrected())
 			return;
 
 		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/tresholds (based on original data)') );
@@ -171,13 +171,14 @@ class ElevationInfo {
 	 * @return string
 	 */
 	protected function getDifferentAlgorithmsFor($array) {
+		$Method        = new ElevationMethod();
 		$Calculator    = new ElevationCalculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
-			array(ElevationCalculator::$ALGORITHM_NONE, false),
-			array(ElevationCalculator::$ALGORITHM_TRESHOLD, true),
-			array(ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER, true),
-			//array(ElevationCalculator::$ALGORITHM_REUMANN_WITKAMM, false)
+			array(ElevationMethod::NONE, false),
+			array(ElevationMethod::TRESHOLD, true),
+			array(ElevationMethod::DOUGLAS_PEUCKER, true),
+			//array(ElevationMethod::REUMANN_WITKAMM, false)
 		);
 
 		$Code  = '<table class="fullwidth zebra-style small">';
@@ -190,19 +191,20 @@ class ElevationInfo {
 		$Code .= '<tbody>';
 
 		foreach ($Algorithms as $Algorithm) {
-			$Calculator->setAlgorithm($Algorithm[0]);
-			$Code .= '<tr><td class="b">'.ElevationCalculator::nameOfCurrentAlgorithm().'</td>';
+			$Method->set($Algorithm[0]);
+			$Calculator->setMethod($Method);
+			$Code .= '<tr><td class="b">'.$Method->valueAsLongString().'</td>';
 
 			if ($Algorithm[1]) {
 				foreach ($TresholdRange as $t) {
-					$highlight = CONF_ELEVATION_MIN_DIFF == $t && CONF_ELEVATION_METHOD == $Algorithm[0] ? ' highlight' : '';
+					$highlight = (Configuration::ActivityView()->elevationMinDiff() == $t) && (Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0]) ? ' highlight' : '';
 					$Calculator->setTreshold($t);
 					$Calculator->calculateElevation();
 					$Code .= '<td class="r'.$highlight.'">'.$Calculator->getElevation().'&nbsp;m</td>';
 				}
 			} else {
 				$Calculator->calculateElevation();
-				$Code .= '<td class="c'.(CONF_ELEVATION_METHOD == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->getElevation().'&nbsp;m</td>';
+				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->getElevation().'&nbsp;m</td>';
 			}
 
 			$Code .= '</tr>';
@@ -211,7 +213,7 @@ class ElevationInfo {
 		$Code .= '</tbody>';
 		$Code .= '</table>';
 
-		return $Code;;
+		return $Code;
 	}
 
 	/**

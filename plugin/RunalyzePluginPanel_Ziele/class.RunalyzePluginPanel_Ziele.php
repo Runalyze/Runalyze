@@ -309,7 +309,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 				FROM `'.PREFIX.'training`
 				WHERE
 					`time` >= '.$timestamp.' AND
-					`sportid`='.CONF_RUNNINGSPORT.'
+					`sportid`='.Configuration::General()->runningSport().'
 				GROUP BY `sportid`
 				ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
 			')->fetch();
@@ -331,7 +331,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 			FROM `'.PREFIX.'training`
 			WHERE
 				DATE(FROM_UNIXTIME(`time`))=DATE(NOW()) AND
-				`sportid`='.CONF_RUNNINGSPORT.'
+				`sportid`='.Configuration::General()->runningSport().'
 			LIMIT 1
 		')->rowCount();
 	}

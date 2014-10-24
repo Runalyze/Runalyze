@@ -22,14 +22,6 @@ class TrainingPlotPacePulse extends TrainingPlot {
 	protected $DataPulse = array();
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_PACEPULSE;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {
@@ -41,20 +33,37 @@ class TrainingPlotPacePulse extends TrainingPlot {
 	 * Init data
 	 */
 	protected function initData() {
+		$i = 1;
 		$this->DataPace  = TrainingPlotPace::getData($this->Training);
 		$this->DataPulse = TrainingPlotPulse::getData($this->Training);
 
-		$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace);
-		$this->Plot->Data[] = array('label' => __('Heartrate'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => 2);
+		if (!empty($this->DataPace)) {
+			$this->Plot->Data[] = array('label' => __('Pace'), 'color' => 'rgb(0,0,136)', 'data' => $this->DataPace, 'yaxis' => $i);
+			$i++;
+		}
+
+		if (!empty($this->DataPulse)) {
+			$this->Plot->Data[] = array('label' => __('Heartrate'), 'color' => 'rgb(136,0,0)', 'data' => $this->DataPulse, 'yaxis' => $i);
+		}
 	}
 
 	/**
 	 * Set all properties for this plot 
 	 */
 	protected function setProperties() {
-		TrainingPlotPace::setPropertiesTo($this->Plot, 1, $this->Training, $this->DataPace);
+		$i = 1;
 
-		$this->Plot->addYAxis(2, 'right', false);
-		TrainingPlotPulse::setPropertiesTo($this->Plot, 2, $this->Training, $this->DataPulse);
+		if (!empty($this->DataPace)) {
+			TrainingPlotPace::setPropertiesTo($this->Plot, $i, $this->Training, $this->DataPace);
+			$i++;
+		}
+
+		if (!empty($this->DataPulse)) {
+			if ($i == 2) {
+				$this->Plot->addYAxis($i, 'right', false);
+			}
+
+			TrainingPlotPulse::setPropertiesTo($this->Plot, $i, $this->Training, $this->DataPulse);
+		}
 	}
 }

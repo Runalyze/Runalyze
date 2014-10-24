@@ -82,9 +82,15 @@ class ImporterFiletypeFITLOGTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 1399, $this->object->object()->getTimeInSeconds(), '', 30);
 		$this->assertEquals( 4.09, $this->object->object()->getDistance(), '', 0.1);
-		$this->assertEquals( 406, $this->object->object()->getCalories(), '', 10);
+		$this->assertEquals( 361, $this->object->object()->getCalories(), '', 10);
 		$this->assertEquals( 161, $this->object->object()->getPulseAvg(), '', 2);
 		$this->assertEquals( 176, $this->object->object()->getPulseMax(), '', 2);
+
+		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+		$this->assertEquals(
+			"0.00|0:00-1.00|5:31-1.00|5:40-1.00|5:55-1.00|5:32-0.09|0:39",
+			$this->object->object(2)->Splits()->asString()
+		);
 	}
 
 	/**

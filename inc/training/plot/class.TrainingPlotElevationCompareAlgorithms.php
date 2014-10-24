@@ -22,14 +22,6 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	protected $Calculator = null;
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return true;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {
@@ -54,7 +46,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitude());
 
 		if ($this->Training->elevationWasCorrected() || !$this->Training->GpsData()->hasElevationDataOriginal()) {
-			$this->Data = $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0);
+			$this->Data = $this->constructPlotDataFor(ElevationMethod::NONE, 0);
 			$this->Plot->Data[] = array('label' => __('corrected'), 'color' => 'rgba(227,217,187,0.5)', 'data' => $this->Data);
 		}
 
@@ -64,7 +56,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 			$this->Plot->Data[] = array(
 				'label'	=> __('Original data'),
 				'color'	=> '#CCC',
-				'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_NONE, 0)
+				'data'	=> $this->constructPlotDataFor(ElevationMethod::NONE, 0)
 			);
 
 			if (count($this->Plot->Data) == 1) {
@@ -78,13 +70,15 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		$this->Plot->Data[] = array(
 			'label'	=> __('Treshold'),
 			'color'	=> '#008',
-			'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_TRESHOLD, CONF_ELEVATION_MIN_DIFF)
+			'data'	=> $this->constructPlotDataFor(ElevationMethod::TRESHOLD),
+			'curvedLines' => array('apply' => false)
 		);
 
 		$this->Plot->Data[] = array(
 			'label'	=> __('Douglas-Peucker'),
 			'color'	=> '#800',
-			'data'	=> $this->constructPlotDataFor(ElevationCalculator::$ALGORITHM_DOUGLAS_PEUCKER, CONF_ELEVATION_MIN_DIFF)
+			'data'	=> $this->constructPlotDataFor(ElevationMethod::DOUGLAS_PEUCKER),
+			'curvedLines' => array('apply' => false)
 		);
 	}
 
@@ -94,8 +88,15 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	 * @param int $treshold
 	 * @return array
 	 */
-	protected function constructPlotDataFor($algorithm, $treshold) {
-		$this->Calculator->setAlgorithm($algorithm);
+	protected function constructPlotDataFor($algorithm, $treshold = false) {
+		$Method = new ElevationMethod();
+		$Method->set($algorithm);
+
+		if ($treshold === false) {
+			$treshold = Configuration::ActivityView()->elevationMinDiff();
+		}
+
+		$this->Calculator->setMethod($Method);
 		$this->Calculator->setTreshold($treshold);
 		$this->Calculator->calculateElevation();
 

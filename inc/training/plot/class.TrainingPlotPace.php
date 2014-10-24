@@ -16,14 +16,6 @@ class TrainingPlotPace extends TrainingPlot {
 	static private $CUT_OUTLIER_PERCENTAGE = 10;
 
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_PACE;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {
@@ -53,6 +45,10 @@ class TrainingPlotPace extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
+		if (!$Training->hasArrayPace()) {
+			return array();
+		}
+
 		$Data = $Training->GpsData()->getPlotDataForPace();
 
 		if ($Training->Sport()->usesKmh()) {
@@ -88,7 +84,7 @@ class TrainingPlotPace extends TrainingPlot {
 				$max = 50*60*1000;
 			}
 
-			if (CONF_PACE_HIDE_OUTLIERS && ($max - $min) > 2*60*1000) {
+			if (Configuration::ActivityView()->ignorePaceOutliers() && ($max - $min) > 2*60*1000) {
 				$setLimits = true;
 				$num       = count($Data);
 				$sorted    = $Data;
@@ -101,19 +97,24 @@ class TrainingPlotPace extends TrainingPlot {
 				$max = 10*1000*ceil($max/10/1000);
 			}
 
-			if ((CONF_PACE_Y_LIMIT_MIN != 0 || CONF_PACE_Y_LIMIT_MAX != 0) && $Training->Sport()->isRunning()) {
-				$setLimits = true;
-				$autoscale = false;
+			if ($Training->Sport()->isRunning()) {
+				$LimitMin = Configuration::ActivityView()->paceYaxisMinimum();
+				$LimitMax = Configuration::ActivityView()->paceYaxisMaximum();
 
-				if (CONF_PACE_Y_LIMIT_MIN != 0 && $min < 1000*CONF_PACE_Y_LIMIT_MIN)
-					$min = 1000*CONF_PACE_Y_LIMIT_MIN;
-				else
-					$min = 60*1000*floor($min/60/1000);
+				if (!$LimitMin->automatic() || !$LimitMax->automatic()) {
+					$setLimits = true;
+					$autoscale = false;
 
-				if (CONF_PACE_Y_LIMIT_MAX != 0 && $max > 1000*CONF_PACE_Y_LIMIT_MAX)
-					$max = 1000*CONF_PACE_Y_LIMIT_MAX;
-				else
-					$max = 60*1000*ceil($max/60/1000);
+					if (!$LimitMin->automatic() && $min < 1000*$LimitMin->value())
+						$min = 1000*$LimitMin->value();
+					else
+						$min = 60*1000*floor($min/60/1000);
+
+					if (!$LimitMax->automatic() && $max < 1000*$LimitMax->value())
+						$max = 1000*$LimitMax->value();
+					else
+						$max = 60*1000*floor($max/60/1000);
+				}
 			}
 
 			if ($setLimits) {
@@ -122,7 +123,7 @@ class TrainingPlotPace extends TrainingPlot {
 			}
 		}
 
-		if (CONF_PACE_Y_AXIS_REVERSE)
+		if (Configuration::ActivityView()->reversePaceAxis())
 			$Plot->setYAxisReverse($YAxis);
 	}
 }

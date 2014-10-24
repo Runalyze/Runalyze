@@ -1,0 +1,7 @@
+order deny,allow 
+deny from all 
+allow from 127.0.0.1 localhost ::1
+
+<FilesMatch "\.js$">
+    Allow from all
+</FilesMatch>

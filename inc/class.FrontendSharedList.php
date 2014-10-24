@@ -63,7 +63,7 @@ class FrontendSharedList extends FrontendShared {
 	 * @return boolean 
 	 */
 	public function userAllowsStatistics() {
-		return CONF_TRAINING_LIST_STATISTICS;
+		return Configuration::Privacy()->showStatisticsInList();
 	}
 
 	/**
@@ -71,7 +71,7 @@ class FrontendSharedList extends FrontendShared {
 	 * @return boolean 
 	 */
 	protected function userAllowsList() {
-		return CONF_TRAINING_LIST_PUBLIC;
+		return Configuration::Privacy()->listIsPublic();
 	}
 
 	/**

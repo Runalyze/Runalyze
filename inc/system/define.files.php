@@ -1,7 +1,7 @@
 <?php
 /*
- * All needed JS/CSS-Files have to be in this array.
- * This file will be loaded by Minify to compress all files.
+ * All needed JS-Files have to be in this array.
+ * This file will be used by /build/build-js to build our minified library.
  */
 $JS_FILES = array(
 	'lib/jquery-2.1.0.min.js',
@@ -17,13 +17,21 @@ $JS_FILES = array(
 
 	'lib/jquery.chosen.min.js',
 
-	'lib/runalyze.lib.log.js',
+	'lib/runalyze.lib.js',
 	'lib/runalyze.lib.plot.js',
 	'lib/runalyze.lib.plot.options.js',
 	'lib/runalyze.lib.plot.saver.js',
 	'lib/runalyze.lib.plot.events.js',
 	'lib/runalyze.lib.tablesorter.js',
-	'lib/runalyze.lib.js',
+	'lib/runalyze.lib.log.js',
+	'lib/runalyze.lib.options.js',
+	'lib/runalyze.lib.config.js',
+	'lib/runalyze.lib.overlay.js',
+	'lib/runalyze.lib.panels.js',
+	'lib/runalyze.lib.databrowser.js',
+	'lib/runalyze.lib.statistics.js',
+	'lib/runalyze.lib.training.js',
+	'lib/runalyze.lib.feature.js',
 
 	'lib/flot-0.8.1/base64.js',
 
@@ -46,20 +54,3 @@ $JS_FILES = array(
 	'lib/leaflet/runalyze.leaflet.layers.js',
 	'lib/leaflet/runalyze.leaflet.routes.js',
 );
-
-/**
- * Define correct filepaths 
- */
-$root = substr($_SERVER['SCRIPT_FILENAME'], 0, strripos($_SERVER['SCRIPT_FILENAME'], "/") - 7);
-
-function Runalyze__FileTransformerForMinify($file) {
-	global $root;
-
-	if (substr($file,0,4) == 'http')
-		return $file;
-
-	return $root.$file;
-}
-
-if (!isset($IGNORE_ROOT))
-	$JS_FILES  = array_map('Runalyze__FileTransformerForMinify', $JS_FILES);

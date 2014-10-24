@@ -61,13 +61,24 @@ abstract class TableZonesAbstract {
 	 */
 	private function convertData() {
 		$totalTime = 0;
+		$totalDist = 0;
 
-		foreach ($this->Data as $Info)
-			$totalTime += $Info['time'];
+		foreach ($this->Data as $Info) {
+ 			$totalTime += $Info['time'];
+			$totalDist += $Info['distance'];
+		}
 
 		foreach ($this->Data as $i => $Info) {
-			$this->Data[$i]['percentage'] = round(100 * $Info['time'] / $totalTime, 1);
-			$this->Data[$i]['time']       = Time::toString($Info['time'], false, $Info['time'] < 60 ? 2 : false);
+			if ($totalTime > 0) {
+				$percentage = round(100 * $Info['time'] / $totalTime, 1);
+			} elseif ($totalDist > 0) {
+				$percentage = round(100 * $Info['distance'] / $totalDist, 1);
+			} else {
+				$percentage = '-';
+			}
+
+			$this->Data[$i]['percentage'] = $percentage;
+			$this->Data[$i]['time']       = $totalTime > 0 ? Time::toString($Info['time'], false, $Info['time'] < 60 ? 2 : false) : '-';
 			$this->Data[$i]['distance']   = Running::Km($Info['distance'], 2);
 		}
 	}

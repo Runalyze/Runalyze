@@ -72,11 +72,9 @@ class TypeFactory {
 
 	/**
 	 * Get order
-	 * @see CONF_TRAINING_SORT_TYPES
 	 * @return string
 	 */
 	static private function getOrder() {
-            //TODO Order cache array!!
 		switch (CONF_TRAINING_SORT_TYPES) {
 			case 'alpha':
 				return 'ORDER BY `name` ASC';

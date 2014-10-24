@@ -42,13 +42,14 @@ class PluginFactory {
 	 * New instance for key
 	 * @param string $Pluginkey
 	 * @return Plugin
+	 * @throws InvalidArgumentException
 	 */
 	public function newInstance($Pluginkey) {
             $plugins = $this->cachePluginData();
             foreach($plugins as $plugin)
                 $data[$plugin['key']] = $plugin;
 		if ($data[$Pluginkey] === false) {
-			throw new RuntimeException('Plugin with key "'.$Pluginkey.'" is not installed.');
+			throw new InvalidArgumentException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
 		return (new $Pluginkey($data[$Pluginkey]['id']));
 	}

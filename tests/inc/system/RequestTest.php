@@ -30,6 +30,9 @@ class RequestTest extends PHPUnit_Framework_TestCase {
 	 * @todo Implement testSendId().
 	 */
 	public function testSendId() {
+		$_GET = array();
+		$_POST = array();
+
 		$this->assertEquals( Request::sendId(), false );
 
 		$_GET['id'] = 27;

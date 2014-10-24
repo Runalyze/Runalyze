@@ -20,7 +20,7 @@ $Prognosis->setStrategy($Strategy);
 	<tbody>
 <?php foreach ($this->Range as $vdot): ?>
 		<?php $Strategy->setVDOT($vdot); ?>
-		<tr<?php if (round(VDOT_FORM) == $vdot) echo ' class="highlight"'; ?>>
+		<tr>
 			<td class="b"><?php echo $vdot; ?></td>
 		<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
 		<?php if ($km >= 1): ?>
@@ -31,6 +31,10 @@ $Prognosis->setStrategy($Strategy);
 <?php endforeach; ?>
 	</tbody>
 </table>
+
+<?php
+echo Ajax::wrapJS('$("#jd-tables-prognosis td.b").each(function(){ if ($(this).text() == \''.round(VDOT_FORM).'\') $(this).parent().addClass("highlight"); });');
+?>
 
 <p class="info">
 	<?php _e('This table is computed by some formulas, derived from the tables in Jack Daniels\' Running formula.'); ?>

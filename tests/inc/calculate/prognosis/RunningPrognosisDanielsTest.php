@@ -32,9 +32,6 @@ class RunningPrognosisDanielsTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testSetupFromDatabase() {
 		// TODO: uses VDOT_FORM / BasicEndurance::getConst()
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
 	}
 
 	/**

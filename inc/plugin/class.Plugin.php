@@ -349,12 +349,12 @@ abstract class Plugin {
 	 * Default sport
 	 * 
 	 * May be overwritten in subclass.
-	 * Default setting: CONF_MAINSPORT
+	 * Default setting: Configuration::General()->mainSport()
 	 * 
 	 * @return int sportid, can be -1 for all sports
 	 */
 	protected function defaultSport() {
-		return CONF_MAINSPORT;
+		return Configuration::General()->mainSport();
 	}
 
 	/**

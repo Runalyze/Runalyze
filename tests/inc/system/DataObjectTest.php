@@ -82,10 +82,12 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
 			'test' => 'lol'
 		);
 
+		$_POST = array();
+
 		$object = $this->getMock('DataObject', array('initDatabaseScheme'), array($Data));
 		$object->setValuesAsPostData();
 
-		$this->assertEquals($_POST, $Data);
+		$this->assertEquals($Data, $_POST);
 	}
 
 	/**
@@ -93,10 +95,7 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
 	 * @todo   Implement testInsert().
 	 */
 	public function testInsert() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// TODO
 	}
 
 	/**
@@ -104,10 +103,7 @@ class DataObjectTest extends PHPUnit_Framework_TestCase {
 	 * @todo   Implement testUpdate().
 	 */
 	public function testUpdate() {
-		// Remove the following lines when you implement this test.
-		$this->markTestIncomplete(
-				'This test has not been implemented yet.'
-		);
+		// TODO
 	}
 
 }

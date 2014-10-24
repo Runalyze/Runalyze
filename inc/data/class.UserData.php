@@ -23,13 +23,15 @@ class UserData extends DataObject {
 
 		$Factory = new PluginFactory();
 
-		$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
+		if ($Factory->isInstalled('RunalyzePluginPanel_Sportler')) {
+			$Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 
-		if (!$Plugin->Configuration()->value('use_body_fat'))
-			$this->DatabaseScheme->hideFieldset('analyse');
+			if (!$Plugin->Configuration()->value('use_body_fat'))
+				$this->DatabaseScheme->hideFieldset('analyse');
 
-		if (!$Plugin->Configuration()->value('use_pulse'))
-			$this->DatabaseScheme->hideField('pulse_rest');
+			if (!$Plugin->Configuration()->value('use_pulse'))
+				$this->DatabaseScheme->hideField('pulse_rest');
+		}
 	}
 
 	/**
@@ -130,21 +132,5 @@ class UserData extends DataObject {
                         Cache::set('userdata', $userdata, '600');
                 }
 		return $userdata;
-	}
-
-	/**
-	 * Is the user male?
-	 * @return boolean
-	 */
-	static public function isMale() {
-		return (CONF_GENDER == 'm');
-	}
-
-	/**
-	 * Is the user female?
-	 * @return boolean
-	 */
-	static public function isFemale() {
-		return (CONF_GENDER == 'f');
 	}
 }

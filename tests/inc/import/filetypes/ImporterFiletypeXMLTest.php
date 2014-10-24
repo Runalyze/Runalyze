@@ -65,6 +65,32 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
+ 
+ 	/**
+	 * Test: Polar file
+	 * Filename: "Polar-with-arrays.xml" 
+	 */
+	public function test_PolarFileWithArrays() {
+		$this->object->parseFile('../tests/testfiles/xml/Polar-with-arrays.xml');
+
+		$this->assertFalse( $this->object->failed() );
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+
+		$this->assertEquals( mktime(9, 58, 10, 9, 7, 2014), $this->object->object()->getTimestamp() );
+		$this->assertEquals( 20.05, $this->object->object()->getDistance() );
+		$this->assertEquals( 2015, $this->object->object()->getCalories() );
+		$this->assertEquals( 2*3600 + 9*60 + 0.1, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 157, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 173, $this->object->object()->getPulseMax() );
+
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayPace() );
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+
+		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
+		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint() );
+	}
 
 	/**
 	 * Test: Polar file with multiple trainings
@@ -108,33 +134,28 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 3, $this->object->numberOfTrainings() );
 
 		// Event 1
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(0)->get('sportid') );
-		$this->assertEquals( CONF_WK_TYPID, $this->object->object(0)->get('typeid') );
 		$this->assertEquals( 193, $this->object->object(0)->getPulseAvg() );
 		$this->assertEquals( 210, $this->object->object(0)->getPulseMax() );
 		$this->assertEquals( 5.0, $this->object->object(0)->getDistance() );
 		$this->assertEquals( 1157, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( "Citylauf Telgte", $this->object->object(0)->getRoute() );
 		$this->assertEquals( 17, $this->object->object(0)->get('temperature') );
+		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
 		$this->assertEquals( "Super organisiert, gute Strecke ...", $this->object->object(0)->getNotes() );
 
 		// Event 2
-		$this->assertNotEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
-		$this->assertNotEquals( CONF_WK_TYPID, $this->object->object(1)->get('typeid') );
 		$this->assertEquals( 1.0, $this->object->object(1)->getDistance() );
 		$this->assertEquals( 2700, $this->object->object(1)->getTimeInSeconds() );
 
 		// Event 3
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
-		$this->assertNotEquals( CONF_WK_TYPID, $this->object->object(2)->get('typeid') );
 		$this->assertEquals( 182, $this->object->object(2)->getPulseAvg() );
 		$this->assertEquals( 189, $this->object->object(2)->getPulseMax() );
 		$this->assertEquals( 4.0, $this->object->object(2)->getDistance() );
 		$this->assertEquals( 1000, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( "Bahn Sentruper Hoehe", $this->object->object(2)->getRoute() );
 		$this->assertEquals( "4 x 1 km, 400 m Trab", $this->object->object(2)->getComment() );
-		//$this->assertFalse( $this->object->object(2)->Weather()->isUnknown() );
 		$this->assertEquals( 15, $this->object->object(2)->get('temperature') );
+		$this->assertEquals( \Runalyze\Data\Weather\Condition::SUNNY, $this->object->object(0)->get('weatherid') );
 
 		$this->assertEquals(
 			"1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R0.40|3:00-1.00|4:10-R1.60|8:00",

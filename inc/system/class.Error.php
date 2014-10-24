@@ -174,7 +174,7 @@ class Error {
 	 * Send all errors to JS-Log 
 	 */
 	private function sendErrorsToJSLog() {
-		echo Ajax::wrapJSforDocumentReady('RunalyzeLog.addArray('.json_encode($this->errors).')');
+		echo Ajax::wrapJSforDocumentReady('Runalyze.Log.addArray('.json_encode($this->errors).')');
 	}
 
 	/**

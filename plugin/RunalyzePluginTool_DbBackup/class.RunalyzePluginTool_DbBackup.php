@@ -26,13 +26,13 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Export type: *.json
 	 * @var enum
 	 */
-	static private $TYPE_JSON = 1;
+	const TYPE_JSON = 1;
 
 	/**
 	 * Export type: *.sql.gz
 	 * @var enum
 	 */
-	static private $TYPE_SQL = 2;
+	const TYPE_SQL = 2;
 
 	/**
 	 * ImportData: json 
@@ -103,10 +103,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 */
 	protected function handleRequest() {
 		if (isset($_GET['file']) || isset($_POST['file'])) {
-			require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporter.php';
-
 			$this->importIsOnProgress = true;
-			// Rest will be done in $this->displayImport();
 		}
 
 		if (isset($_POST['backup'])) {
@@ -145,7 +142,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if ($this->importIsOnProgress)
 			$Fieldset->setCollapsed();
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
 		$Formular->setId('database-backup');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -160,9 +157,11 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayImport() {
 		if (isset($_GET['file'])) {
 			$this->displayImportForm();
-		} elseif (isset($_POST['file'])) {
-			$this->displayImportFinish();
 		} else {
+			if (isset($_POST['file'])) {
+				$this->displayImportFinish();
+			}
+
 			$this->displayImportUploader();
 		}
 	}
@@ -173,7 +172,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	protected function displayImportForm() {
 		$Fieldset = new FormularFieldset( __('Import file') );
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id );
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?id='.$this->id() );
 		$Formular->setId('import-json-form');
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
@@ -182,22 +181,23 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		if (substr($_GET['file'], -8) != '.json.gz') {
 			$Fieldset->addError( __('You can only import *.json.gz-files.'));
 
-			Filesystem::deleteFile('../plugin/'.$this->key.'/import/'.$_GET['file']);
+			Filesystem::deleteFile('../plugin/'.$this->key().'/import/'.$_GET['file']);
 		} else {
-			$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key.'/import/'.$_GET['file']);
-			$Errors   = $Importer->getErrors();
+			require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonAnalyzer.php';
 
-			if (empty($Errors)) {
+			$Analyzer = new RunalyzeJsonAnalyzer('../plugin/'.$this->key().'/import/'.$_GET['file']);
+
+			if ($Analyzer->fileIsOkay()) {
 				$Fieldset->addField( new FormularCheckbox('overwrite_config', __('Overwrite general configuration'), true) );
 				$Fieldset->addField( new FormularCheckbox('overwrite_dataset', __('Overwrite dataset configuration'), true) );
-				$Fieldset->addField( new FormularCheckbox('overwrite_plugin_conf', __('Overwrite plugin configuration'), true) );
+				$Fieldset->addField( new FormularCheckbox('overwrite_plugin', __('Overwrite plugins'), true) );
 				$Fieldset->addField( new FormularCheckbox('delete_trainings', __('Delete all old activities'), false) );
 				$Fieldset->addField( new FormularCheckbox('delete_user_data', __('Delete all old body values'), false) );
 				$Fieldset->addField( new FormularCheckbox('delete_shoes', __('Delete all old shoes'), false) );
 
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> activities in this file.'), $Importer->getNumberOfTrainings()) );
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> shoes in this file.'), $Importer->getNumberOfShoes()) );
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> body values in this file.'), $Importer->getNumberOfUserData()) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> activities in this file.'), $Analyzer->count('runalyze_training')) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> shoes in this file.'), $Analyzer->count('runalyze_shoe')) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> body values in this file.'), $Analyzer->count('runalyze_user')) );
 
 				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
@@ -205,7 +205,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			} else {
 				$Fieldset->addError( __('The file seems to be corrupted.') );
 
-				foreach ($Errors as $Error)
+				foreach ($Analyzer->errors() as $Error)
 					$Fieldset->addError($Error);
 			}
 		}
@@ -218,23 +218,23 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display form: import finished 
 	 */
 	protected function displayImportFinish() {
-		$Importer = new RunalyzeJsonImporter('../plugin/'.$this->key().'/import/'.$_POST['file']);
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBulkInsert.php';
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporterResults.php';
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporter.php';
+
+		$fileName = '../plugin/'.$this->key().'/import/'.$_POST['file'];
+		$Importer = new RunalyzeJsonImporter($fileName);
 		$Importer->importData();
 
-		$Errors   = $Importer->getErrors();
+		Filesystem::deleteFile($fileName);
+
+		Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+
 		$Fieldset = new FormularFieldset( __('Import data') );
-
-		if (empty($Errors)) {
-			$Fieldset->addInfo( __('All data have been imported.') );
-
-			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
-			$Fieldset->addBlock(Ajax::getReloadCommand());
-		} else {
-			$Fieldset->addError( __('There was a problem with the import.') );
-
-			foreach ($Errors as $Error)
-				$Fieldset->addError($Error);
-		}
+		$Fieldset->addText( __('All data have been imported.') );
+		$Fieldset->addText( __('It is recommended to use the <em>Database cleanup</em> tool.') );
+		$Fieldset->addInfo( $Importer->resultsAsString() );
+		$Fieldset->addBlock(Ajax::getReloadCommand());
 
 		$Formular = new Formular();
 		$Formular->setId('import-finished');
@@ -254,16 +254,16 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				},
 				callbacks: {
 					onError: function(id, name, errorReason, xhr) {
-						$("#ajax").append(\'<p class="error appended-by-uploader">\'+errorReason+\'</p>\');
+						$("#pluginTool").append(\'<p class="error appended-by-uploader">\'+errorReason+\'</p>\');
 					},
 					onComplete: function(id, fileName, responseJSON) {
 						$(".appended-by-uploader").remove();
-						$("#ajax").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id().'&file=\'+encodeURIComponent(fileName));
+						$("#pluginTool").loadDiv(\''.$_SERVER['SCRIPT_NAME'].'?id='.$this->id().'&file=\'+encodeURIComponent(fileName));
 
 						if (!responseJSON.success) {
 							if (responseJSON.error == "")
 								responseJSON.error = \'An unknown error occured.\';
-							$("#ajax").append(\'<p class="error appended-by-uploader">\'+fileName+\': \'+responseJSON.error+\'</p>\');
+							$("#pluginTool").append(\'<p class="error appended-by-uploader">\'+fileName+\': \'+responseJSON.error+\'</p>\');
 							$("#upload-container").removeClass("loading");
 						}
 					}
@@ -275,6 +275,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 		$Text .= HTML::info( __('Allowed file extension: *.json.gz') );
 		$Text .= HTML::warning( __('The file has to be created with the same version of Runalyze!<br>'.
 									'You won\'t be able to import a file from an older version.') );
+		$Text .= HTML::warning( __('The importer will not change existing data for equipment, sport types or activity types.<br>'.
+									'You have to make these changes by hand or delete the existing data in advance.') );
 
 		$Fieldset = new FormularFieldset( __('Import data') );
 		$Fieldset->setCollapsed();
@@ -344,104 +346,22 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Create backup: JSON
 	 */
 	protected function createBackupJSON() {
-		$Writer = new BigFileWriterGZip($this->getFileName(self::$TYPE_JSON));
-		$DB     = DB::getInstance();
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBackup.php';
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonBackup.php';
 
-		$DB->stopAddingAccountID();
-		$AllTables = $DB->query('SHOW TABLES')->fetchAll();
-		$DB->startAddingAccountID();
-
-		$Writer->addToFile('{');
-
-		foreach ($AllTables as $t => $Tables) {
-			if ($t > 0)
-				$Writer->addToFile(',');
-
-			foreach ($Tables as $TableName) {
-
-				$Query = 'SELECT * FROM `'.$TableName.'`';
-				$Writer->addToFile('"'.$TableName.'":{');
-
-				if ($TableName == PREFIX.'account') {
-					if (USER_MUST_LOGIN)
-						$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
-					else
-						$Query .= ' WHERE id="0"';
-				}
-				
-
-				$ArrayOfRows = $DB->query($Query)->fetchAll();
-
-				foreach ($ArrayOfRows as $r => $Row) {
-					if ($r > 0)
-						$Writer->addToFile(',');
-
-					if (PREFIX != 'runalyze_')
-						$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
-
-					// Don't save the cache!
-					if ($TableName == 'runalyze_training')
-						$Row['gps_cache_object'] = '';
-
-					$Writer->addToFile('"'.$Row['id'].'":'.json_encode($Row));
-				}
-
-				$Writer->addToFile('}');
-			}
-		}
-
-		$Writer->addToFile('}');
-		$Writer->finish();
+		$Backup = new RunalyzeJsonBackup($this->getFileName(self::TYPE_JSON));
+		$Backup->run();
 	}
 
 	/**
 	 * Create backup: SQL
 	 */
 	protected function createBackupSQL() {
-		$Writer = new BigFileWriterGZip($this->getFileName(self::$TYPE_SQL));
-		$DB     = DB::getInstance();
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBackup.php';
+		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeSqlBackup.php';
 
-		$DB->stopAddingAccountID();
-		$AllTables = $DB->query('SHOW TABLES')->fetchAll();
-		$DB->startAddingAccountID();
-
-		foreach ($AllTables as $Tables) {
-			foreach ($Tables as $TableName) {
-				$DB->stopAddingAccountID();
-				$CreateResult = $DB->query('SHOW CREATE TABLE '.$TableName)->fetchAll();
-				$ColumnInfo   = $DB->query('SHOW COLUMNS FROM '.$TableName)->fetchAll();
-				$DB->startAddingAccountID();
-
-				$Query        = 'SELECT * FROM `'.$TableName.'`';
-
-				if ($TableName == PREFIX.'account') {
-					if (USER_MUST_LOGIN)
-						$Query .= ' WHERE id="'.SessionAccountHandler::getId().'"';
-					else
-						$Query .= ' WHERE id="0"';
-				}
-
-				$ArrayOfRows = $DB->query($Query)->fetchAll(PDO::FETCH_NUM);
-				$Writer->addToFile('DROP TABLE IF EXISTS '.$TableName.';'.NL.NL);
-				$Writer->addToFile($CreateResult[0]['Create Table'].';'.NL.NL);
-
-				foreach ($ArrayOfRows as $Row) {
-					foreach ($Row as $i => $Value) {
-						if (empty($Value) && !is_numeric($Value) && $ColumnInfo[$i]['Null'] == 'YES')
-							$Row[$i] = null;
-					}
-
-					$Values = implode(',', array_map('DB_BACKUP_mapperForValues', $Row));
-					$Writer->addToFile('INSERT INTO '.$TableName.' VALUES('.$Values.');'.NL);
-				}
-
-				$Writer->addToFile(NL.NL.NL);
-			}
-		}
-
-		$Writer->finish();
-
-		//Error::getInstance()->addDebug('Memory usage: '.memory_get_peak_usage().' (SQL)');
+		$Backup = new RunalyzeSqlBackup($this->getFileName(self::TYPE_SQL));
+		$Backup->run();
 	}
 
 	/**
@@ -450,24 +370,12 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * @return string
 	 */
 	protected function getFileName($Type) {
-		if ($Type == self::$TYPE_SQL) {
+		if ($Type == self::TYPE_SQL) {
 			$FileType = '.sql.gz';
-		} else if ($Type == self::$TYPE_JSON) {
+		} else if ($Type == self::TYPE_JSON) {
 			$FileType = '.json.gz';
 		}
 
 		return $this->BackupPath.$this->fileNameStart.'-'.date('Ymd-Hi').'-'.substr(uniqid(rand()),-4).$FileType;
 	}
-}
-
-/**
- * Mapper for values of a row
- * @param string $v
- * @return string
- */
-function DB_BACKUP_mapperForValues($v) {
-	if (is_null($v))
-		return 'NULL';
-
-	return '"'.str_replace("\n", "\\n", addslashes($v)).'"';
 }

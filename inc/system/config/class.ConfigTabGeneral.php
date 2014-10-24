@@ -18,22 +18,42 @@ class ConfigTabGeneral extends ConfigTab {
 	}
 
 	/**
+	 * All categories
+	 * @return ConfigurationCategory[]
+	 */
+	private function allCategories() {
+		return array(
+			Configuration::General(),
+			Configuration::Privacy(),
+			Configuration::ActivityView(),
+			Configuration::ActivityForm(),
+			Configuration::Design(),
+			Configuration::DataBrowser(),
+			Configuration::Vdot(),
+			Configuration::Trimp(),
+			Configuration::Misc()
+		);
+	}
+
+	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
 		$IsFirst    = true;
-		$Categories = ConfigCategory::getAllCategories();
+		$Categories = $this->allCategories();
 
 		foreach ($Categories as $Category) {
-			$Fieldset = $Category->getFieldset();
+			$Fieldset = $Category->Fieldset();
 
-			if ($IsFirst)
-				$IsFirst = false;
-			else
-				$Fieldset->setCollapsed();
+			if (!is_null($Fieldset)) {
+				if ($IsFirst)
+					$IsFirst = false;
+				else
+					$Fieldset->setCollapsed();
 
-			$this->Formular->addFieldset($Fieldset);
-			$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W50 );
+				$this->Formular->addFieldset($Fieldset);
+				$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
+			}
 		}
 
 		$this->Formular->allowOnlyOneOpenedFieldset();
@@ -43,9 +63,10 @@ class ConfigTabGeneral extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Categories = ConfigCategory::getAllCategories();
+		$Categories = $this->allCategories();
 
-		foreach ($Categories as $Category)
-			$Category->parseAllValues();
+		foreach ($Categories as $Category) {
+			$Category->updateFromPost();
+		}
 	}
 }

@@ -243,12 +243,20 @@ class Splits {
 
 	/**
 	 * Is at least one lap active?
+	 * @param int $num
 	 * @return boolean
 	 */
-	public function hasActiveLaps() {
-		foreach ($this->asArray as $split)
-			if ($split['active'])
+	public function hasActiveLaps($num = 1) {
+		$count = 0;
+		foreach ($this->asArray as $split) {
+			if ($split['active']) {
+				$count++;
+			}
+
+			if ($count == $num) {
 				return true;
+			}
+		}
 
 		return false;
 	}

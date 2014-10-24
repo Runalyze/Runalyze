@@ -45,21 +45,21 @@ if (START_TIME != time()) {
 		$index = mktime(1,0,0,$dat['m'],15,$dat['y']);
 		$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance)*1000;
 	}
-        
-        $ResultsData = Cache::get('prognosePlotDistanceData'.$distance);
+
+	$ResultsData = Cache::get('prognosePlotDistanceData'.$distance);
         if(is_null($ResultsData)) {
-            $ResultsData = DB::getInstance()->query('
-                    SELECT
-                            `time`,
-                            `id`,
-                            `s`
-                    FROM `'.PREFIX.'training`
-                    WHERE
-                            `typeid`="'.CONF_WK_TYPID.'"
-                            AND `distance`="'.$distance.'"
-                    ORDER BY
-                            `time` ASC')->fetchAll();
-            Cache::set('prognosePlotDistanceData'.$distance, $ResultsData, '600');
+	$ResultsData = DB::getInstance()->query('
+		SELECT
+			`time`,
+			`id`,
+			`s`
+		FROM `'.PREFIX.'training`
+		WHERE
+			`typeid`="'.Configuration::General()->competitionType().'"
+			AND `distance`="'.$distance.'"
+		ORDER BY
+			`time` ASC')->fetchAll();
+	Cache::set('prognosePlotDistanceData'.$distance, $ResultsData, '600');
         }
 	foreach ($ResultsData as $dat) {
 		if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))

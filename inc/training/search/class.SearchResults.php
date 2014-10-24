@@ -53,11 +53,18 @@ class SearchResults {
 	private $withResults = true;
 
 	/**
+	 * Results per page
+	 * @var int
+	 */
+	private $resultsPerPage;
+
+	/**
 	 * Constructor
 	 * @param boolean $withResults
 	 */
 	public function __construct($withResults = true) {
 		$this->withResults = $withResults;
+		$this->resultsPerPage = Configuration::Misc()->searchResultsPerPage();
 
 		$this->setAllowedKeys();
 		$this->initDataset();
@@ -112,7 +119,7 @@ class SearchResults {
 		$this->totalNumberOfTrainings = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` '.$this->getWhere().$this->getOrder().' LIMIT 1')->fetchColumn();
 		$this->page = (int)Request::param('page');
 
-		if (($this->page-1)*CONF_RESULTS_AT_PAGE > $this->totalNumberOfTrainings)
+		if (($this->page-1)*$this->resultsPerPage > $this->totalNumberOfTrainings)
 			$this->page--;
 
 		$this->Trainings = DB::getInstance()->query(
@@ -250,7 +257,7 @@ class SearchResults {
 		$sort  = (!isset($_POST['search-sort-by']) || array_key_exists($_POST['search-sort-by'], $this->allowedKeys)) ? '`time`' : DB::getInstance()->escape($_POST['search-sort-by'], false);
 		$order = (!isset($_POST['search-sort-order'])) ? 'DESC' : DB::getInstance()->escape($_POST['search-sort-order'], false);
 
-		if ($sort == 'vdot' && CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
+		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
 			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
 
 		return ' ORDER BY '.$sort.' '.$order;
@@ -264,9 +271,9 @@ class SearchResults {
 		if ($this->page <= 0)
 			$this->page = 1;
 
-		$limit = ($this->page - 1)*CONF_RESULTS_AT_PAGE;
+		$limit = ($this->page - 1)*$this->resultsPerPage;
 
-		return ' LIMIT '.$limit.','.CONF_RESULTS_AT_PAGE;
+		return ' LIMIT '.$limit.','.$this->resultsPerPage;
 	}
 
 	/**
@@ -328,13 +335,35 @@ class SearchResults {
 	 * Display header
 	 */
 	private function displayHeader() {
-		if ($this->page != 1)
-			echo '<span class="link" onclick="Runalyze.searchPageBack();">'.Icon::$BACK.'</span>';
+		if ($this->page != 1) {
+			echo '<span id="search-back" class="link">'.Icon::$BACK.'</span>';
+		}
 
 		echo ' '.sprintf( __('Found %s activities'), $this->totalNumberOfTrainings).' ';
 
-		if ($this->page*CONF_RESULTS_AT_PAGE < $this->totalNumberOfTrainings)
-			echo '<span class="link" onclick="Runalyze.searchPageNext();">'.Icon::$NEXT.'</span>';
+		if ($this->page*$this->resultsPerPage < $this->totalNumberOfTrainings) {
+			echo '<span id="search-next" class="link">'.Icon::$NEXT.'</span>';
+		}
+
+		$this->connectPagination();
+	}
+
+	/**
+	 * Connect pagination links
+	 */
+	private function connectPagination() {
+		echo Ajax::wrapJSforDocumentReady(
+			'$("#search-back").click(function(){'.
+				'var $i = $("#search input[name=\'page\']");'.
+				'$i.val( parseInt($i.val()) - 1 );'.
+				'$("#search").submit();'.
+			'});'.
+			'$("#search-next").click(function(){'.
+				'var $i = $("#search input[name=\'page\']");'.
+				'$i.val( parseInt($i.val()) + 1 );'.
+				'$("#search").submit();'.
+			'});'
+		);
 	}
 
 	/**

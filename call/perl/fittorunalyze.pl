@@ -124,7 +124,7 @@ sub fetch_from {
 
   $obj->semicircles_to_degree(1);
   $obj->mps_to_kph(1);
-  $obj->use_gmtime(0);
+  $obj->use_gmtime(1);
   $obj->file($fn);
   $obj->data_message_callback_by_name('', \&dump_it);
 

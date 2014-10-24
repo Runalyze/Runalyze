@@ -58,12 +58,6 @@ abstract class TrainingPlot {
 	protected $Data = array();
 
 	/**
-	 * Is this plot visible?
-	 * @return string 
-	 */
-	abstract public function isVisible();
-
-	/**
 	 * Set key and title for this plot
 	 */
 	abstract protected function setKeyAndTitle();
@@ -89,7 +83,7 @@ abstract class TrainingPlot {
 		$this->initPlot();
 		$this->initData();
 
-		if (count($this->Data) >= 2) {
+		if (count($this->Data) >= 2 || !empty($this->Plot->Data)) {
 			$this->setProperties();
 		} else {
 			$this->Plot->raiseError( __('No plot available.') );

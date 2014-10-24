@@ -22,7 +22,7 @@ class TrainingPlotLapsComputed extends TrainingPlotLaps {
 	 */
 	protected function initData() {
 		if (!$this->Training->hasArrayDistance() || !$this->Training->hasArrayTime()) {
-			$this->Plot->raiseError( __('No GPS-data available. Can\\\'t computed laps.') );
+			$this->Plot->raiseError( __('No GPS-data available. Can\\\'t compute laps.') );
 			return;
 		}
 

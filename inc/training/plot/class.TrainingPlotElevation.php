@@ -10,14 +10,6 @@
  */
 class TrainingPlotElevation extends TrainingPlot {
 	/**
-	 * Is this plot visible?
-	 * @return string
-	 */
-	public function isVisible() {
-		return CONF_TRAINING_SHOW_PLOT_ELEVATION;
-	}
-
-	/**
 	 * Set key and title for this plot
 	 */
 	protected function setKeyAndTitle() {
@@ -46,6 +38,10 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * @return array
 	 */
 	static public function getData(TrainingObject &$Training) {
+		if (!$Training->hasArrayAltitude() && !$Training->hasArrayAltitudeOriginal()) {
+			return array();
+		}
+
 		return $Training->GpsData()->getPlotDataForElevation();
 	}
 
@@ -55,8 +51,9 @@ class TrainingPlotElevation extends TrainingPlot {
 	 * @param int $YAxis
 	 * @param TrainingObject $Training
 	 * @param array $Data 
+	 * @param bool $annotations
 	 */
-	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
+	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data, $annotations = true) {
 		$min = min($Data); $minXvalues = array_keys($Data, $min);
 		$max = max($Data); $maxXvalues = array_keys($Data, $max);
 
@@ -74,7 +71,9 @@ class TrainingPlotElevation extends TrainingPlot {
 
 		$Plot->setLinesFilled(array($YAxis - 1));
 
-		$Plot->addAnnotation($minXvalues[0], $min, $min.'m');
-		$Plot->addAnnotation($maxXvalues[0], $max, $max.'m');
+		if ($annotations) {
+			$Plot->addAnnotation($minXvalues[0], $min, $min.'m');
+			$Plot->addAnnotation($maxXvalues[0], $max, $max.'m');
+		}
 	}
 }

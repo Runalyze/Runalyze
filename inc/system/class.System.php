@@ -14,12 +14,10 @@ class System {
 	 * @return string 
 	 */
 	static public function getCodeForLocalJSFiles() {
-		//if (self::isAtLocalhost())
-		//	return '<script src="build/scripts.js"></script>';
-		//else
-		//	return '<script src="build/scripts.min.js"></script>';
+		if (self::isAtLocalhost())
+			return '<script src="build/scripts.js"></script>';
 
-		return '<script src="lib/min/?g=js"></script>';
+		return '<script src="build/scripts.min.js"></script>';
 	}
 
 	/**

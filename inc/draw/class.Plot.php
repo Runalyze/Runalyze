@@ -154,7 +154,7 @@ class Plot {
 			$this->Data[$i]['data'] = $Points;
 		}
 
-		if (CONF_TRAINING_PLOT_SMOOTH && !isset($this->Options['series']['curvedLines']['apply']))
+		if (Configuration::ActivityView()->smoothCurves() && !isset($this->Options['series']['curvedLines']['apply']))
 			$this->Options['series']['curvedLines']['apply'] = true;
 
 		if (empty($this->Data) && strlen($this->ErrorString) == 0)

@@ -61,9 +61,21 @@ class TrainingView {
 	protected function initSections() {
 		$this->Sections[] = new SectionOverview($this->Training);
 		$this->Sections[] = new SectionLaps($this->Training);
-		$this->Sections[] = new SectionHeartrate($this->Training);
-		$this->Sections[] = new SectionPace($this->Training);
-		$this->Sections[] = new SectionRoute($this->Training);
+
+		if (Configuration::ActivityView()->plotMode()->showSeperated()) {
+			$this->Sections[] = new SectionHeartrate($this->Training);
+			$this->Sections[] = new SectionPace($this->Training);
+			$this->Sections[] = new SectionRoute($this->Training);
+		} else {
+			$this->Sections[] = new SectionComposite($this->Training);
+
+			if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
+				$this->Sections[] = new SectionRoute($this->Training);
+			} else {
+				$this->Sections[] = new SectionRouteOnlyMap($this->Training);
+			}
+		}
+
 		$this->Sections[] = new SectionMiscellaneous($this->Training);
 	}
 
@@ -126,7 +138,7 @@ class TrainingView {
 	 * Display reload link
 	 */
 	protected function displayReloadLink() {
-		echo '<div class="hover-icons"><span class="link" onclick="Runalyze.reloadCurrentTab();">'.Icon::$REFRESH_SMALL.'</span></div>';
+		echo '<div class="hover-icons"><span class="link" onclick="Runalyze.Statistics.reload();">'.Icon::$REFRESH_SMALL.'</span></div>';
 	}
 
 	/**

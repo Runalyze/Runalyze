@@ -12,22 +12,25 @@ var Lib = (function($){
 
 	// Private
 
-	var _id = '',
-		_options = {
-		};
+	var id = '';
+
+	var options = {
+		
+	};
 
 
 	// Private Methods
 
-	function _private() {
+	function private() {
+		
 	}
 
 
 	// Public Methods
 
-	self.init = function(id, opt) {
-		_id = id;
-		_options = $.extend({}, _options, opt);
+	self.init = function(newId, opt) {
+		id = newId;
+		options = $.extend({}, options, opt);
 
 		return self;
 	};

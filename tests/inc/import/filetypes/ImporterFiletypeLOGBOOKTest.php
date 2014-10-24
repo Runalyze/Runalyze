@@ -59,7 +59,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 
 		// Activity 1
 		$this->assertEquals( mktime(18, 1, 44, 9, 6, 2008), $this->object->object(0)->getTimestamp() );
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(0)->get('sportid') );
+		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(0)->get('sportid') );
 		$this->assertEquals( 9382, $this->object->object(0)->getTimeInSeconds() );
 		$this->assertEquals( 26.743, $this->object->object(0)->getDistance() );
 		$this->assertEquals( 943, $this->object->object(0)->getCalories() );
@@ -69,7 +69,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 
 		// Activity 2
 		$this->assertEquals( mktime(15, 3, 28, 3, 28, 2009), $this->object->object(1)->getTimestamp() );
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(1)->get('sportid') );
+		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(1)->get('sportid') );
 		$this->assertEquals( 10837, $this->object->object(1)->getTimeInSeconds() );
 		$this->assertEquals( 25.864, $this->object->object(1)->getDistance() );
 		$this->assertEquals( 365, $this->object->object(1)->getElevation() );
@@ -82,7 +82,7 @@ class ImporterFiletypeLOGBOOKTest extends PHPUnit_Framework_TestCase {
 
 		// Activity 2
 		$this->assertEquals( mktime(20, 22, 49, 3, 31, 2009), $this->object->object(2)->getTimestamp() );
-		$this->assertEquals( CONF_RUNNINGSPORT, $this->object->object(2)->get('sportid') );
+		$this->assertEquals( Configuration::General()->runningSport(), $this->object->object(2)->get('sportid') );
 		$this->assertEquals( 2310, $this->object->object(2)->getTimeInSeconds() );
 		$this->assertEquals( 6.904, $this->object->object(2)->getDistance() );
 		$this->assertEquals( "Horneburg Winterrunde", $this->object->object(2)->getRoute() );

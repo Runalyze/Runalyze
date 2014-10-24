@@ -113,43 +113,4 @@ class Icon {
                 $data = SportFactory::DataFor($id);
 		return self::$PATH_TO_SPORT_ICONS.$data['img'];
 	}
-
-	/**
-	 * Get the weather-specific icon
-	 * @param int $id
-	 */
-	public static function getWeatherIcon($id) {
-		$data = Weather::getDataFor($id);
-
-		return '<i class="weather-icon '.$data['img-class'].'"></i>';
-	}
-
-	/**
-	 * Get icon for VDOT as shape
-	 * @param double $VDOT
-	 * @param bool $gray optional, default false
-	 * @return string
-	 */
-	public static function getVDOTicon($VDOT, $gray = false) {
-		if ($VDOT == 0)
-			return '';
-
-		$class = ' vdot-icon small';
-
-		if ($gray)
-			$class .= ' vdot-ignore';
-
-		if ( $VDOT > (VDOT_FORM+3) )
-			$class .= ' fa-arrow-up';
-		elseif ( $VDOT > (VDOT_FORM+1) )
-			$class .= ' fa-arrow-up fa-rotate-45';
-		elseif ( $VDOT < (VDOT_FORM-3) )
-			$class .= ' fa-arrow-down';
-		elseif ( $VDOT < (VDOT_FORM-1) )
-			$class .= ' fa-arrow-right fa-rotate-45';
-		else
-			$class .= ' fa-arrow-right';
-
-		return Ajax::tooltip('<i class="fa fa-fw'.$class.'"></i>', 'VDOT: '.$VDOT);
-	}
 }
