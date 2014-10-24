@@ -115,6 +115,24 @@ class Running {
 			return Time::toString($pb['s']);
 		return '<em>'.__('none').'</em>';
 	}
+        
+        /**
+	 * Find the personal best for given distances
+	 * @uses self::Time
+	 * @param float $dist       Distance [km]
+	 * @param bool $return_time Return as integer, default: false
+	 * @return array
+	 */
+	public static function PersonalBests($dist, $return_time = false) {
+            $pb = Cache::get('personalbest');
+            if(is_null($pb)) {
+            //TODO TimeToString Option
+                $distances = "'".implode("','", $dist)."'";
+                $pb = DB::getInstance()->query('SELECT `distance`,MIN(s) AS s,`time` FROM `runalyze_training` WHERE `typeid`="'.CONF_WK_TYPID.'" AND distance in ('.$distances.') GROUP BY distance')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+                Cache::set('personalbest', $pb, '3600');
+            }
+                return $pb;
+	}      
 
 	/**
 	 * Get a string for displaying any pulse

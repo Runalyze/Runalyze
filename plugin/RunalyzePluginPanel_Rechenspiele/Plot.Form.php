@@ -34,20 +34,22 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 	// Here ATL/CTL/VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
-	// - ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
-	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
-
+	// - ATL/CTL: SUM(`trimp`) for CONF_ATL_DAYS / CONF_CTL_DAYS
+	// - VDOT: AVG(`vdot`) for CONF_VDOT_DAYS
+        $Data = Cache::get('calculationsPlotData');
+        if(is_null($Data)) {
 	$Data = DB::getInstance()->query('
 		SELECT
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 			SUM(`trimp`) as `trimp`,
-			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
+			SUM('.JD::mysqlVDOTsum().'*(`sportid`='.CONF_RUNNINGSPORT.')) as `vdot`,
 			SUM('.JD::mysqlVDOTsumTime().') as `s`
 		FROM `'.PREFIX.'training`
 		WHERE
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
 		GROUP BY `index`')->fetchAll();
-
+                    Cache::set('calculationsPlotData', $Data, '300');
+        }
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
 

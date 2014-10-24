@@ -301,7 +301,18 @@ abstract class Plugin {
 
 		return true;
 	}
-
+        /**
+         * Cache all from Table plugin for a user
+         */
+        static private function cachePluginData() {
+            $data = Cache::get('plugins');
+            if(is_null($data)) {
+                $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
+                Cache::set('plugins', $data, '3600');
+            }
+            return $data;
+        }
+        
 	/**
 	 * Initialize all variables
 	 */
@@ -310,7 +321,12 @@ abstract class Plugin {
 			return;
 		}
 
-		$dat = DB::getInstance()->fetchByID('plugin', $this->id());
+                
+                $plugindata = self::cachePluginData();
+                foreach($plugindata as $plugin) {
+                    if($plugin['id'] == $this->id())
+                        $dat = $plugin;
+                }
 
 		$this->key         = $dat['key'];
 		$this->active      = $dat['active'];

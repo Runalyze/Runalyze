@@ -165,9 +165,19 @@ function show(what) {
 
 <?php
 DB::getInstance()->stopAddingAccountID();
+$NumUser = Cache::get('NumUser', 1);
+if($NumUser == NULL) {
+    $NumUser   = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
+    Cache::set('NumUser', $NumUser, '500', 1);
+}
+$NumKm = Cache::get('NumKm', 1);
+if($NumKm == NULL) {
+    $NumKm     = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
+    Cache::set('NumKm', $NumUser, '500', 1);
+}
+
+
 $NumUserOn = SessionAccountHandler::getNumberOfUserOnline();
-$NumUser   = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
-$NumKm     = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
 DB::getInstance()->startAddingAccountID();
 ?>
 

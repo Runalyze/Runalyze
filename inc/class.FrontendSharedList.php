@@ -142,7 +142,7 @@ class FrontendSharedList extends FrontendShared {
 			return;
 
 		$Statistics = new FrontendSharedStatistics($this);
-		$Statistics->display();
+                $Statistics->display();
 	}
 
 	/**

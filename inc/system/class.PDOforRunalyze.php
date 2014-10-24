@@ -17,7 +17,7 @@ class PDOforRunalyze extends PDO {
 	 * @var bool
 	 */
 	protected $addsAccountID = true;
-
+      
 	/**
 	 * Accountid
 	 * @var mixed

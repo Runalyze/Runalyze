@@ -14,7 +14,8 @@ if ($Plugin->Configuration()->value('plot_timerange') > 0)
 else
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
 
-$Data     = array_reverse( DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
+$Data        = array_reverse(UserData::getFullArray());
+//TODO Caching Sort Function 
 $Weights  = array();
 $HRrests  = array();
 

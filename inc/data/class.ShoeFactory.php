@@ -45,7 +45,11 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
+                $shoes = Cache::get('shoes');
+                if(is_null($shoes)) {
+                    $shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
+                    Cache::set('shoes', $shoes, '3600');
+                }
 		foreach ($shoes as $shoe)
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
 	}
@@ -62,7 +66,15 @@ class ShoeFactory {
 	 * @return string
 	 */
 	static private function getOrder() {
-		return Configuration::ActivityForm()->orderShoes()->asQuery();
+		switch (CONF_TRAINING_SORT_SHOES) {
+			case 'alpha':
+				return 'ORDER BY `name` ASC';
+			case 'id-desc':
+				return 'ORDER BY `id` DESC';
+			case 'id-asc':
+			default:
+				return 'ORDER BY `id` ASC';
+		}
 	}
 
 	/**

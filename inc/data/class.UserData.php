@@ -124,9 +124,13 @@ class UserData extends DataObject {
 	 * @return array
 	 */
 	static public function getFullArray() {
-		if (is_null(self::$fullArray))
-			self::$fullArray = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
-
-		return self::$fullArray;
+                $userdata = Cache::get('userdata');
+                
+		if (is_null(self::$fullArray) && is_null($userdata)) {
+			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
+                        self::$fullArray = $userdata;
+                        Cache::set('userdata', $userdata, '600');
+                }
+		return $userdata;
 	}
 }

@@ -177,15 +177,17 @@ class Prognose_PrognosisWindow {
 	 * Init calculations
 	 */
 	protected function runCalculations() {
-		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.Configuration::General()->competitionType().'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
-		foreach ($this->Distances as $km) {
-			$PB         = Running::PersonalBest($km, true);
+             $pbs = Running::PersonalBests($this->Distances, true);
+                foreach ($this->Distances as $km) {
+                    $skm = number_format($km, 2, '.','');
+                    if(isset($pbs[$skm][0])) {
+                        $PB = $pbs[$skm][0]['s'];
+                        $PBdate = $pbs[$skm][0]['time'];         
+                    } else {
+                        $PB = 0;
+                        $PBdate = 0;
+                    }
 			$Prognosis  = $this->PrognosisObject->inSeconds( $km );
-
-			if ($PB > 0) {
-				$DateQuery->execute(array('distance' => $km));
-				$PBdate = $DateQuery->fetch();
-			}
 
 			$this->Prognoses[] = array(
 				'distance'	=> Running::Km($km, 1, $km <= 3),
@@ -197,7 +199,7 @@ class Prognose_PrognosisWindow {
 				'pb'			=> $PB > 0 ? Time::toString($PB) : '-',
 				'pb-pace'		=> $PB > 0 ? SportSpeed::minPerKm($km, $PB).'/km' : '-',
 				'pb-vdot'		=> $PB > 0 ? round(JD::Competition2VDOT($km, $PB),2) : '-',
-				'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
+				'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate) : '-'
 			);
 		}
 	}

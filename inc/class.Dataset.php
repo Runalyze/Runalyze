@@ -43,13 +43,16 @@ class Dataset {
 	 * Constructor
 	 */
 	public function __construct() {
-		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
-
+                $dat = Cache::get('Dataset');
+                if(is_null($dat)) {
+		$dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 GROUP BY `name` ORDER BY `position` ASC')->fetchAll();
+                    Cache::set('Dataset', $dat, '600');            
+                }
 		if ($dat === false || empty($dat)) {
 			Error::getInstance()->addError('No dataset in database is active.');
 			return false;
 		}
-
+                
 		$this->data = $dat;
 		$this->cols = count($dat);
 

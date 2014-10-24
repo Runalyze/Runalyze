@@ -27,6 +27,17 @@ class PluginFactory {
 		return self::$Plugins;
 	}
 
+        /**
+         * Cache all from Table plugin for a user
+         */
+        static private function cachePluginData() {
+            $data = Cache::get('plugins');
+            if($data == NULL) {
+                $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
+                Cache::set('plugins', $data, '3600');
+            }
+            return $data;
+        }
 	/**
 	 * New instance for key
 	 * @param string $Pluginkey
@@ -34,13 +45,13 @@ class PluginFactory {
 	 * @throws InvalidArgumentException
 	 */
 	public function newInstance($Pluginkey) {
-		$data = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($Pluginkey).' LIMIT 1')->fetch();
-
-		if ($data === false) {
+            $plugins = $this->cachePluginData();
+            foreach($plugins as $plugin)
+                $data[$plugin['key']] = $plugin;
+		if ($data[$Pluginkey] === false) {
 			throw new InvalidArgumentException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
-
-		return (new $Pluginkey($data['id']));
+		return (new $Pluginkey($data[$Pluginkey]['id']));
 	}
 
 	/**
@@ -67,6 +78,12 @@ class PluginFactory {
 	 * Read all installed plugins
 	 */
 	protected function readInstalledPlugins() {
+            $plugins = self::cachePluginData();
+            
+            /*foreach($plugins as $plugin) {
+                
+            }*/
+            //TODO Caching cachePluginData and sort!
 		self::$Plugins = DB::getInstance()->query('SELECT `key`, `type`, `active` FROM `'.PREFIX.'plugin` ORDER BY `order` ASC')->fetchAll();
 	}
 
@@ -187,6 +204,7 @@ class PluginFactory {
 	 */
 	public function uninstallPlugin($key) {
 		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
+                Cache::delete('plugins');
 	}
 
 	/**
@@ -195,8 +213,12 @@ class PluginFactory {
 	 * @return string
 	 */
 	static public function keyFor($id) {
-		$data = DB::getInstance()->fetchByID('plugin', $id);
-
+                $plugins = self::cachePluginData();
+                foreach ($plugins as $plugin) {
+                    if($id == $plugin['id'])
+			$data = $plugin;
+                }
+                
 		if ($data === false) {
 			throw new RuntimeException('No plugin found for id "'.$id.'".');
 		}

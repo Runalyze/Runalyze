@@ -147,7 +147,19 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function showPrognosis($distance) {
 		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
-		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
+
+                $Factory = new PluginFactory();
+                $Plugin = $Factory->newInstance('RunalyzePluginPanel_Prognose');
+                $distances = $Plugin->getDistances();
+                $PersonalBestInSeconds = 0;
+                if(in_array($distance,$distances)) {
+                    $PersonalBests = Running::PersonalBests($distances, true);
+                    foreach($PersonalBests as $key => $pb) {
+                        if($key == number_format($distance,2,'.',''))
+                            $PersonalBestInSeconds = $pb[0]['s'];
+                    }
+                }
+
 		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
 		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
 

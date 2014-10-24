@@ -52,16 +52,32 @@ class AccountHandler {
 		DB::getInstance()->startAddingAccountID();
 	}
 
+        /**
+         * Cache Account Data from user
+         */
+        static private function cacheAccountData($id) {
+            $accountdata = Cache::get('account'.$id,1);
+            if(is_null($accountdata)) {
+                DB::getInstance()->stopAddingAccountID();
+                $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
+                DB::getInstance()->startAddingAccountID();
+                Cache::set('account'.$id, $accountdata, '1800',1);
+            }
+            return $accountdata;
+        }
 	/**
 	 * Get account-data from database
 	 * @param string $username
 	 * @return mixed
 	 */
 	static public function getDataFor($username) {
-		DB::getInstance()->stopAddingAccountID();
-		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
-		DB::getInstance()->startAddingAccountID();
-
+                $Data = Cache::get('account'.$username,1);
+                if(is_null($Data)) {
+                    DB::getInstance()->stopAddingAccountID();
+                    $Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
+                    DB::getInstance()->startAddingAccountID();   
+                    Cache::set('account'.$username, $Data, '3600',1);
+                }
 		return $Data;
 	}
 
@@ -71,10 +87,7 @@ class AccountHandler {
 	 * @return mixed
 	 */
 	static public function getDataForId($id) {
-		DB::getInstance()->stopAddingAccountID();
-		$Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
-		DB::getInstance()->startAddingAccountID();
-
+                $Data = self::cacheAccountData($id);
 		return $Data;
 	}
 
