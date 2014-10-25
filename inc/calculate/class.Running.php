@@ -10,59 +10,6 @@
  */
 class Running {
 	/**
-	 * Average month pace (access only via self::getAverageMonthPace()
-	 * @var double
-	 */
-	private static $AverageMonthPace = false;
-
-	/**
-	 * Get average month pace
-	 * @return double [min/km]
-	 */
-	static public function getAverageMonthPace() {
-		if (self::$AverageMonthPace === false) {
-			$AverageMonthPace       = DB::getInstance()->query('SELECT AVG(`s`/60/`distance`) AS `avg` FROM `'.PREFIX.'training` WHERE `time` > '.(time()-30*DAY_IN_S).' AND `sportid`='.Configuration::General()->runningSport().' LIMIT 1')->fetch();
-			self::$AverageMonthPace = $AverageMonthPace['avg'];
-		}
-
-		return self::$AverageMonthPace;
-	}
-
-	/**
-	 * Get number of "possible" kilometer in a given time range
-	 * @param int $Days
-	 * @param int $roundForInt [optional]
-	 * @return int
-	 */
-	static public function possibleKmInDays($Days, $roundForInt = 1) {
-		$CTL = Trimp::CTL();
-
-		if ($CTL <= 0 || self::getAverageMonthPace() <= 0)
-			return false;
-
-		return Helper::roundFor((Trimp::minutesForTrimp($Days * $CTL) / self::getAverageMonthPace()), $roundForInt);
-	}
-
-	/**
-	 * Get number of "possible" kilometer in a week
-	 * @param int $roundForInt [optional]
-	 * @return int
-	 */
-	static public function possibleKmInOneWeek($roundForInt = 5) {
-		return self::possibleKmInDays(7, $roundForInt);
-	}
-
-	/**
-	 * Get number of "possible" kilometer in a month
-	 * @param int $roundForInt [optional]
-	 * @return int
-	 */
-	static public function possibleKmInOneMonth($roundForInt = 10) {
-		return self::possibleKmInDays(365/12, $roundForInt);
-		
-	}
-
-	/**
 	 * Display a distance as km or m
 	 * @param float $km       Distance [km]
 	 * @param int $decimals   Decimals after the point, default: 1

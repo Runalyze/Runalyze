@@ -53,16 +53,19 @@ class InverseCalculator {
 	 * 
 	 * Calculation is done for HR in [bpm] and time is transformed from [s] to [min].
 	 * 
-	 * @param int $hr [bpm]
+	 * @param int $bpm [bpm]
 	 * @param int $trimp value to reach
 	 */
-	protected function calculate($hr, $trimp) {
+	protected function calculate($bpm, $trimp) {
 		$Factor = new Factor($this->Athlete->gender());
 		$max = $this->Athlete->knowsMaximalHeartRate() ? $this->Athlete->maximalHR() : Calculator::DEFAULT_HR_MAX;
+		$rest = $this->Athlete->knowsRestingHeartRate() ? $this->Athlete->restingHR() : self::DEFAULT_HR_REST;
 
-		$sum = $trimp / ( $hr * exp($Factor->B() * $hr / $max) );
+		$hr = max(0, ($bpm - $rest) / ($max - $rest));
 
-		$this->value = $max / $Factor->A() * $sum * 60;
+		$sum = $trimp / ( $hr * exp($Factor->B() * $hr) );
+
+		$this->value = 1 / $Factor->A() * $sum * 60;
 	}
 
 	/**
