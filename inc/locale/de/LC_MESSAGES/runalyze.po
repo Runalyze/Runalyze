@@ -3,19 +3,17 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-10-22 20:05+0100\n"
-"PO-Revision-Date: 2014-10-25 13:33+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
-"Language-Team: German "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
-"Language: de\n"
+"PO-Revision-Date: 2014-11-05 19:42+0100\n"
+"Last-Translator: Michael Pohl <mpo@runalyze.de>\n"
+"Language-Team:  <mail@runalyze.de>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.9\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
-"X-Poedit-Basepath: ../../\n"
-"X-Poedit-SearchPath-0: ../..\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #: ../../master/Runalyze/index.php:44
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:148
@@ -29,7 +27,7 @@ msgstr ""
 #: ../../Runalyze/inc/training/schemes/scheme.Training.php:47
 #: ../../Runalyze/inc/training/view/section/class.SectionMiscellaneous.php:17
 msgid "Miscellaneous"
-msgstr "diverse"
+msgstr ""
 
 #: ../../master/Runalyze/index.php:70 ../../Runalyze/index.php:70
 msgid ""
@@ -42,12 +40,12 @@ msgstr ""
 #: ../../Runalyze/login.php:25
 #: ../../Runalyze/inc/tpl/tpl.installerHeader.php:21
 msgid "Please login"
-msgstr "Bitte einloggen"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:43
 #: ../../Runalyze/call/call.garminCommunicator.php:44
 msgid "Connect"
-msgstr "Verbinden"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:45
 #: ../../Runalyze/call/call.garminCommunicator.php:46
@@ -57,24 +55,24 @@ msgstr "Suche Geräte"
 #: ../../master/Runalyze/call/call.garminCommunicator.php:46
 #: ../../Runalyze/call/call.garminCommunicator.php:47
 msgid "Transfer complete"
-msgstr "Übertragung vollständig"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:50
 #: ../../Runalyze/call/call.garminCommunicator.php:51
 msgid "Browse computer"
-msgstr "Computer durchsuchen"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:51
 #: ../../master/Runalyze/call/call.garminCommunicator.php:52
 #: ../../Runalyze/call/call.garminCommunicator.php:52
 #: ../../Runalyze/call/call.garminCommunicator.php:53
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:53
 #: ../../Runalyze/call/call.garminCommunicator.php:54
 msgid "Connected devices"
-msgstr "Verbundene Geräte"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:54
 #: ../../Runalyze/call/call.garminCommunicator.php:55
@@ -84,44 +82,44 @@ msgstr "Geräte durchsuchen"
 #: ../../master/Runalyze/call/call.garminCommunicator.php:55
 #: ../../Runalyze/call/call.garminCommunicator.php:56
 msgid "Devices"
-msgstr "Geräte"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:56
 #: ../../Runalyze/call/call.garminCommunicator.php:57
 msgid "Search for decives"
-msgstr "Suche nach Geräten"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:57
 #: ../../Runalyze/call/call.garminCommunicator.php:58
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr "Empfange Daten von #{deviceName}, bitte warten ..."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:58
 #: ../../Runalyze/call/call.garminCommunicator.php:59
 msgid "Please wait ..."
-msgstr "Bitte warten..."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:59
 #: ../../Runalyze/call/call.garminCommunicator.php:60
 msgid "Found #{tracks} activities"
-msgstr "#{tracks} Aktivitäten gefunden"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:60
 #: ../../Runalyze/call/call.garminCommunicator.php:61
 msgid "No devices found"
-msgstr "Keine Geräte gefunden"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:61
 #: ../../master/Runalyze/call/call.garminCommunicator.php:62
 #: ../../Runalyze/call/call.garminCommunicator.php:62
 #: ../../Runalyze/call/call.garminCommunicator.php:63
 msgid "Found"
-msgstr "Gefunden"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:63
 #: ../../Runalyze/call/call.garminCommunicator.php:64
 msgid "#{deviceCount} devices found"
-msgstr "#{deviceCount} Geräte gefunden"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:65
 #: ../../master/Runalyze/inc/html/formular/class.FormularInputDayAndDaytime.php:95
@@ -148,7 +146,7 @@ msgstr "#{deviceCount} Geräte gefunden"
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:330
 #: ../../Runalyze/plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:4
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:66
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:27
@@ -166,12 +164,12 @@ msgstr "Datum"
 #: ../../Runalyze/inc/training/view/class.RoundsInfo.php:211
 #: ../../Runalyze/inc/training/view/class.VDOTinfo.php:69
 msgid "Duration"
-msgstr "Dauer"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:67
 #: ../../Runalyze/call/call.garminCommunicator.php:68
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:85
 #: ../../Runalyze/call/call.garminCommunicator.php:86
@@ -181,7 +179,7 @@ msgstr ""
 #: ../../master/Runalyze/call/call.garminCommunicator.php:90
 #: ../../Runalyze/call/call.garminCommunicator.php:91
 msgid "ignore"
-msgstr "ignorieren"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:104
 #: ../../master/Runalyze/call/call.garminCommunicator.php:121
@@ -192,17 +190,17 @@ msgstr "ignorieren"
 #: ../../Runalyze/inc/import/class.MultiImporterFormular.php:71
 #: ../../Runalyze/plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "Import"
-msgstr "Importieren"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.garminCommunicator.php:123
 #: ../../Runalyze/call/call.garminCommunicator.php:125
 msgid "all"
-msgstr "alle"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.config.php:19
 #: ../../Runalyze/call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
-msgstr "Etwas lief schief ..."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.display.php:14
 #: ../../Runalyze/call/call.Plugin.display.php:14
@@ -212,12 +210,12 @@ msgstr "Das Plugin wurde nicht gefunden."
 #: ../../master/Runalyze/call/call.Plugin.install.php:13
 #: ../../Runalyze/call/call.Plugin.install.php:13
 msgid "Install"
-msgstr "Installieren"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.install.php:19
 #: ../../Runalyze/call/call.Plugin.install.php:19
 msgid "The plugin has been successfully installed."
-msgstr "Das Plugin wurde erfolgreich installiert."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.install.php:23
 #: ../../master/Runalyze/inc/plugin/config/class.PluginConfigurationWindow.php:122
@@ -233,13 +231,12 @@ msgstr "Das Plugin wurde erfolgreich installiert."
 #: ../../Runalyze/inc/tpl/tpl.Installer.php:5
 #: ../../Runalyze/inc/tpl/tpl.installerFooterText.php:12
 msgid "Configuration"
-msgstr "Konfiguration"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.install.php:27
 #: ../../Runalyze/call/call.Plugin.install.php:27
 msgid "There was a problem, the plugin could not be installed."
 msgstr ""
-"Es ist ein Problem aufgetaucht. Das Plugin konnte nicht installiert werden."
 
 #: ../../master/Runalyze/call/call.Plugin.install.php:32
 #: ../../master/Runalyze/call/call.Plugin.uninstall.php:23
@@ -248,22 +245,22 @@ msgstr ""
 #: ../../Runalyze/call/call.Plugin.uninstall.php:23
 #: ../../Runalyze/inc/export/class.ExporterWindow.php:66
 msgid "back to list"
-msgstr "zurück zur Liste"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.uninstall.php:13
 #: ../../Runalyze/call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
-msgstr "Deinstallieren"
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.uninstall.php:16
 #: ../../Runalyze/call/call.Plugin.uninstall.php:16
 msgid "The plugin has been uninstalled."
-msgstr "Das Plugin wurde deinstalliert."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Plugin.uninstall.php:18
 #: ../../Runalyze/call/call.Plugin.uninstall.php:18
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr "Es gab ein Problem. Das Plugin konnte nicht deinstalliert werden."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.SharedList.php:44
 #: ../../Runalyze/call/call.SharedList.php:44
@@ -285,16 +282,16 @@ msgstr ""
 #: ../../Runalyze/call/call.Training.elevationCorrection.php:14
 #: ../../Runalyze/inc/training/view/class.ElevationInfo.php:224
 msgid "Elevation data have been corrected."
-msgstr "Die Höhendaten wurden korrigiert."
+msgstr ""
 
 #: ../../master/Runalyze/call/call.Training.elevationCorrection.php:20
 #: ../../Runalyze/call/call.Training.elevationCorrection.php:20
 msgid "Elevation data could not be retrieved."
-msgstr "Die Höhendaten konnten nicht empfangen werden."
+msgstr ""
 
 #: ../../master/Runalyze/call/login.php:2 ../../Runalyze/call/login.php:2
 msgid "You are not logged in anymore."
-msgstr "Du bist nicht mehr eingeloggt."
+msgstr ""
 
 #: ../../master/Runalyze/call/login.php:4
 #: ../../master/Runalyze/inc/tpl/tpl.adminWindow.login.php:13
@@ -311,12 +308,12 @@ msgstr "Du bist nicht mehr eingeloggt."
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:45
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:152
 msgid "Login"
-msgstr "Einloggen"
+msgstr ""
 
 #: ../../master/Runalyze/call/window.delete.php:12
 #: ../../Runalyze/call/window.delete.php:12
 msgid "Delete your account."
-msgstr "Lösche deinen Account."
+msgstr ""
 
 #: ../../master/Runalyze/call/window.delete.php:19
 #: ../../Runalyze/call/window.delete.php:19
@@ -331,7 +328,7 @@ msgstr ""
 #: ../../Runalyze/call/window.plotSumData.php:23
 #: ../../Runalyze/call/window.plotSumData.shared.php:25
 msgid "There was a problem."
-msgstr "Es gab ein Problem."
+msgstr ""
 
 #: ../../master/Runalyze/call/window.search.php:21
 #: ../../Runalyze/call/window.search.php:21
@@ -341,19 +338,19 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.AdminView.php:170
 #: ../../Runalyze/inc/class.AdminView.php:170
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:171
 #: ../../master/Runalyze/inc/tpl/tpl.Installer.php:157
 #: ../../Runalyze/inc/class.AdminView.php:171
 #: ../../Runalyze/inc/tpl/tpl.Installer.php:157
 msgid "Debug mode"
-msgstr "Debug Modus"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:172
 #: ../../Runalyze/inc/class.AdminView.php:172
 msgid "Maintenance mode"
-msgstr "Wartungsmodus"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:173
 #: ../../Runalyze/inc/class.AdminView.php:173
@@ -367,9 +364,8 @@ msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:175
 #: ../../Runalyze/inc/class.AdminView.php:175
-#, fuzzy
 msgid "Garmin API-key"
-msgstr "Garmin API-key"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:175
 #: ../../Runalyze/inc/class.AdminView.php:175
@@ -381,22 +377,22 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.AdminView.php:176
 #: ../../Runalyze/inc/class.AdminView.php:176
 msgid "Sender e-mail"
-msgstr "Absendermailadresse"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:177
 #: ../../Runalyze/inc/class.AdminView.php:177
 msgid "Save"
-msgstr "Speichern"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:181
 #: ../../Runalyze/inc/class.AdminView.php:181
 msgid "<strong>config.php</strong> is not writable"
-msgstr "<strong>config.php</strong> ist nicht schreibbar"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:181
 #: ../../Runalyze/inc/class.AdminView.php:181
 msgid "Changes can't be saved."
-msgstr "Die Änderungen können nicht gespeichert werden."
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:201
 #: ../../master/Runalyze/inc/plugin/class.PluginTool.php:83
@@ -407,22 +403,22 @@ msgstr "Die Änderungen können nicht gespeichert werden."
 #: ../../Runalyze/inc/system/config/class.ConfigTabPlugins.php:41
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:29
 msgid "Tools"
-msgstr "Tools"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:202
 #: ../../Runalyze/inc/class.AdminView.php:202
 msgid "Look for new plugins"
-msgstr "Suche nach neuen Plugins"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:203
 #: ../../Runalyze/inc/class.AdminView.php:203
 msgid "Go"
-msgstr "Los"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:211
 #: ../../Runalyze/inc/class.AdminView.php:211
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
-msgstr "<strong>/inc/plugin/pluginmap.php</strong> ist nicht schreibbar"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:211
 #: ../../Runalyze/inc/class.AdminView.php:211
@@ -432,19 +428,19 @@ msgstr "Diese Tools werden nicht funktionieren."
 #: ../../master/Runalyze/inc/class.AdminView.php:281
 #: ../../Runalyze/inc/class.AdminView.php:281
 msgid "User list"
-msgstr "Nutzerliste"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:285
 #: ../../Runalyze/inc/class.AdminView.php:285
 msgid "There are no registered users."
-msgstr "Es gibt keine registrierten Nutzer."
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:292
 #: ../../master/Runalyze/inc/tpl/tpl.Installer.php:121
 #: ../../Runalyze/inc/class.AdminView.php:292
 #: ../../Runalyze/inc/tpl/tpl.Installer.php:121
 msgid "User"
-msgstr "Nutzer"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:293
 #: ../../master/Runalyze/inc/system/config/class.ConfigTabAccount.php:34
@@ -469,14 +465,14 @@ msgstr "Nutzer"
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:117
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:331
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:294
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:81
 #: ../../Runalyze/inc/class.AdminView.php:294
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:81
 msgid "Email"
-msgstr "E-Mail"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:295
 #: ../../master/Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:118
@@ -485,7 +481,7 @@ msgstr "E-Mail"
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:118
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:158
 msgid "since"
-msgstr "seit"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:296
 #: ../../Runalyze/inc/class.AdminView.php:296
@@ -495,49 +491,49 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.AdminView.php:297
 #: ../../Runalyze/inc/class.AdminView.php:297
 msgid "Functions"
-msgstr "Funktionen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:313
 #: ../../Runalyze/inc/class.AdminView.php:313
 msgid "Activate user"
-msgstr "Aktiviere den Nutzer"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:313
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.setNewPassword.php:8
 #: ../../Runalyze/inc/class.AdminView.php:313
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.setNewPassword.php:8
 msgid "Set new password"
-msgstr "Setze ein neues Passwort"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:338
 #: ../../Runalyze/inc/class.AdminView.php:338
 msgid "Server information"
-msgstr "Server Informationen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:339
 #: ../../Runalyze/inc/class.AdminView.php:339
 msgid "PHP version:"
-msgstr "PHP Version:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:340
 #: ../../Runalyze/inc/class.AdminView.php:340
 msgid "MySQL version:"
-msgstr "MySQL Version:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:341
 #: ../../Runalyze/inc/class.AdminView.php:341
 msgid "Time limit:"
-msgstr "Zeitlimit:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:342
 #: ../../Runalyze/inc/class.AdminView.php:342
 msgid "Memory limit:"
-msgstr "Speicherlimit:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:343
 #: ../../Runalyze/inc/class.AdminView.php:343
 msgid "Upload limit:"
-msgstr "Upload limit:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:344
 #: ../../Runalyze/inc/class.AdminView.php:344
@@ -557,7 +553,7 @@ msgstr "Perl Skripte können nicht genutzt werden."
 #: ../../master/Runalyze/inc/class.AdminView.php:366
 #: ../../Runalyze/inc/class.AdminView.php:366
 msgid "Permissions"
-msgstr "Rechte"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:367
 #: ../../Runalyze/inc/class.AdminView.php:367
@@ -581,7 +577,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.AdminView.php:392
 #: ../../Runalyze/inc/class.AdminView.php:392
 msgid "Unused files"
-msgstr "Ungenutzte Dateien"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.AdminView.php:398
 #: ../../Runalyze/inc/class.AdminView.php:398
@@ -596,34 +592,34 @@ msgstr "aufräumen"
 #: ../../master/Runalyze/inc/class.AdminView.php:416
 #: ../../Runalyze/inc/class.AdminView.php:416
 msgid "No files found"
-msgstr "Keine Dateien gefunden"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:204
 #: ../../Runalyze/inc/class.DataBrowser.php:205
 msgid "week"
-msgstr "Woche"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:228
 #: ../../Runalyze/inc/class.DataBrowser.php:229
 msgid "back"
-msgstr "zurück"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:238
 #: ../../master/Runalyze/inc/html/class.Ajax.php:437
 #: ../../Runalyze/inc/class.DataBrowser.php:239
 #: ../../Runalyze/inc/html/class.Ajax.php:438
 msgid "next"
-msgstr "weiter"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:248
 #: ../../Runalyze/inc/class.DataBrowser.php:249
 msgid "Reload current datasheet"
-msgstr "Aktuelles Datenblatt neuladen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:256
 #: ../../Runalyze/inc/class.DataBrowser.php:257
 msgid "Calendar"
-msgstr "Kalender"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DataBrowser.php:264
 #: ../../master/Runalyze/inc/class.DataBrowserShared.php:93
@@ -697,7 +693,7 @@ msgstr ""
 #: ../../Runalyze/plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:216
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:332
 msgid "Distance"
-msgstr "Distanz"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:28
 #: ../../master/Runalyze/inc/data/class.SplitsView.php:129
@@ -771,7 +767,7 @@ msgstr ""
 #: ../../Runalyze/inc/training/view/section/class.SectionHeartrateRow.php:65
 #: ../../Runalyze/inc/training/view/section/class.SectionOverviewRow.php:54
 msgid "Calories"
-msgstr "Kalorien"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:31
 msgid "avg. Heart rate"
@@ -793,7 +789,7 @@ msgstr "max. Herzfrequenz"
 #: ../../Runalyze/inc/training/view/section/class.SectionOverviewRow.php:56
 #: ../../Runalyze/plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:231
 msgid "TRIMP"
-msgstr "TRIMP"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:34
 #: ../../master/Runalyze/inc/training/plot/class.TrainingPlotTemperature.php:17
@@ -807,7 +803,7 @@ msgstr "TRIMP"
 #: ../../Runalyze/inc/training/search/class.SearchFormular.php:133
 #: ../../Runalyze/inc/training/view/section/class.SectionMiscellaneousRow.php:100
 msgid "Temperature"
-msgstr "Temperatur"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:35
 #: ../../master/Runalyze/inc/training/schemes/scheme.Training.php:359
@@ -819,7 +815,7 @@ msgstr "Temperatur"
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:23
 #: ../../Runalyze/plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:336
 msgid "Weather"
-msgstr "Wetter"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:36
 #: ../../master/Runalyze/inc/training/schemes/scheme.Training.php:370
@@ -827,14 +823,14 @@ msgstr "Wetter"
 #: ../../Runalyze/inc/training/schemes/scheme.Training.php:370
 #: ../../Runalyze/inc/training/search/class.SearchFormular.php:129
 msgid "Route"
-msgstr "Strecke"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:37
 #: ../../master/Runalyze/inc/training/view/section/class.SectionMiscellaneousRow.php:108
 #: ../../master/Runalyze/plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 #: ../../Runalyze/inc/training/view/section/class.SectionMiscellaneousRow.php:108
 msgid "Clothes"
-msgstr "Klamotten"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:38
 msgid "Splits"
@@ -846,7 +842,7 @@ msgstr ""
 #: ../../Runalyze/inc/training/schemes/scheme.Training.php:405
 #: ../../Runalyze/inc/training/search/class.SearchFormular.php:132
 msgid "Comment"
-msgstr "Kommentar"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:40
 #: ../../master/Runalyze/inc/training/schemes/scheme.Shoe.php:9
@@ -856,7 +852,7 @@ msgstr "Kommentar"
 #: ../../Runalyze/inc/training/schemes/scheme.Training.php:437
 #: ../../Runalyze/inc/training/search/class.SearchFormular.php:124
 msgid "Shoe"
-msgstr "Schuh"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:41
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationVdot.php:142
@@ -898,7 +894,7 @@ msgstr "Schuh"
 #: ../../Runalyze/plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:12
 #: ../../Runalyze/plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 msgid "VDOT"
-msgstr "VDOT"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:42
 #: ../../master/Runalyze/inc/training/view/section/class.SectionMiscellaneousRow.php:132
@@ -906,7 +902,7 @@ msgstr "VDOT"
 #: ../../Runalyze/inc/training/view/section/class.SectionMiscellaneousRow.php:132
 #: ../../Runalyze/plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
-msgstr "Trainingspartner"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.DatasetLabels.php:43
 #: ../../master/Runalyze/inc/training/class.TrainingDataView.php:478
@@ -951,7 +947,7 @@ msgstr ""
 #: ../../Runalyze/inc/class.FrontendShared.php:119
 #: ../../Runalyze/inc/class.FrontendSharedList.php:154
 msgid "Problem"
-msgstr "Problem"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendShared.php:125
 #: ../../master/Runalyze/inc/class.FrontendShared.php:138
@@ -960,7 +956,7 @@ msgstr "Problem"
 #: ../../Runalyze/inc/class.FrontendShared.php:142
 #: ../../Runalyze/inc/class.FrontendSharedList.php:163
 msgid "Error"
-msgstr "Fehler"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendShared.php:127
 #: ../../Runalyze/inc/class.FrontendShared.php:131
@@ -975,7 +971,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.FrontendShared.php:140
 #: ../../Runalyze/inc/class.FrontendShared.php:144
 msgid "Private activity"
-msgstr "Privates Training"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendShared.php:141
 #: ../../Runalyze/inc/class.FrontendShared.php:145
@@ -991,7 +987,7 @@ msgstr "Trainingsansicht von %s"
 #: ../../master/Runalyze/inc/class.FrontendSharedList.php:165
 #: ../../Runalyze/inc/class.FrontendSharedList.php:165
 msgid "This list is private"
-msgstr "Diese Liste ist privat"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendSharedList.php:166
 #: ../../Runalyze/inc/class.FrontendSharedList.php:166
@@ -1027,17 +1023,17 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:91
 #: ../../Runalyze/inc/class.FrontendSharedStatistics.php:91
 msgid "First activity:"
-msgstr "Erste Aktitivät:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:93
 #: ../../Runalyze/inc/class.FrontendSharedStatistics.php:93
 msgid "Last login:"
-msgstr "Letzter Login:"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:99
 #: ../../Runalyze/inc/class.FrontendSharedStatistics.php:99
 msgid "General statistics"
-msgstr "Allgemeine Statistiken"
+msgstr ""
 
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:125
 #: ../../master/Runalyze/inc/plugin/class.Plugin.php:361
@@ -1049,7 +1045,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/class.FrontendSharedStatistics.php:125
 #: ../../Runalyze/inc/class.FrontendSharedStatistics.php:125
 msgid "Running"
-msgstr "Laufen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Running.php:116
 #: ../../master/Runalyze/plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:107
@@ -1062,12 +1058,12 @@ msgstr ""
 #: ../../master/Runalyze/inc/calculate/class.Time.php:152
 #: ../../Runalyze/inc/calculate/class.Time.php:152
 msgid "Sun"
-msgstr "So"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:152
 #: ../../Runalyze/inc/calculate/class.Time.php:152
 msgid "Sunday"
-msgstr "Sonntag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:153
 #: ../../Runalyze/inc/calculate/class.Time.php:153
@@ -1077,57 +1073,57 @@ msgstr ""
 #: ../../master/Runalyze/inc/calculate/class.Time.php:153
 #: ../../Runalyze/inc/calculate/class.Time.php:153
 msgid "Monday"
-msgstr "Montag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:154
 #: ../../Runalyze/inc/calculate/class.Time.php:154
 msgid "Tue"
-msgstr "Di"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:154
 #: ../../Runalyze/inc/calculate/class.Time.php:154
 msgid "Tuesday"
-msgstr "Dienstag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:155
 #: ../../Runalyze/inc/calculate/class.Time.php:155
 msgid "Wed"
-msgstr "Mi"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:155
 #: ../../Runalyze/inc/calculate/class.Time.php:155
 msgid "Wednesday"
-msgstr "Mittwoch"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:156
 #: ../../Runalyze/inc/calculate/class.Time.php:156
 msgid "Thu"
-msgstr "Do"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:156
 #: ../../Runalyze/inc/calculate/class.Time.php:156
 msgid "Thursday"
-msgstr "Donnerstag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:157
 #: ../../Runalyze/inc/calculate/class.Time.php:157
 msgid "Fri"
-msgstr "Fr"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:157
 #: ../../Runalyze/inc/calculate/class.Time.php:157
 msgid "Friday"
-msgstr "Freitag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:159
 #: ../../Runalyze/inc/calculate/class.Time.php:159
 msgid "Sat"
-msgstr "Sa"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:159
 #: ../../Runalyze/inc/calculate/class.Time.php:159
 msgid "Saturday"
-msgstr "Samstag"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:170
 #: ../../Runalyze/inc/calculate/class.Time.php:170
@@ -1137,17 +1133,17 @@ msgstr ""
 #: ../../master/Runalyze/inc/calculate/class.Time.php:170
 #: ../../Runalyze/inc/calculate/class.Time.php:170
 msgid "January"
-msgstr "Januar"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:171
 #: ../../Runalyze/inc/calculate/class.Time.php:171
 msgid "Feb"
-msgstr "Feb"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:171
 #: ../../Runalyze/inc/calculate/class.Time.php:171
 msgid "February"
-msgstr "Februar"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:172
 #: ../../Runalyze/inc/calculate/class.Time.php:172
@@ -1157,93 +1153,92 @@ msgstr ""
 #: ../../master/Runalyze/inc/calculate/class.Time.php:172
 #: ../../Runalyze/inc/calculate/class.Time.php:172
 msgid "March"
-msgstr "März"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:173
 #: ../../Runalyze/inc/calculate/class.Time.php:173
-#, fuzzy
 msgid "Apr"
-msgstr "Apr"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:173
 #: ../../Runalyze/inc/calculate/class.Time.php:173
 msgid "April"
-msgstr "April"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:174
 #: ../../Runalyze/inc/calculate/class.Time.php:174
 msgid "May"
-msgstr "Mai"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:175
 #: ../../Runalyze/inc/calculate/class.Time.php:175
 msgid "Jun"
-msgstr "Jun"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:175
 #: ../../Runalyze/inc/calculate/class.Time.php:175
 msgid "June"
-msgstr "Juni"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:176
 #: ../../Runalyze/inc/calculate/class.Time.php:176
 msgid "Jul"
-msgstr "Jul"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:176
 #: ../../Runalyze/inc/calculate/class.Time.php:176
 msgid "July"
-msgstr "Juli"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:177
 #: ../../Runalyze/inc/calculate/class.Time.php:177
 msgid "Aug"
-msgstr "Aug"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:177
 #: ../../Runalyze/inc/calculate/class.Time.php:177
 msgid "August"
-msgstr "August"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:178
 #: ../../Runalyze/inc/calculate/class.Time.php:178
 msgid "Sep"
-msgstr "Sep"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:178
 #: ../../Runalyze/inc/calculate/class.Time.php:178
 msgid "September"
-msgstr "September"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:179
 #: ../../Runalyze/inc/calculate/class.Time.php:179
 msgid "Oct"
-msgstr "Okt"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:179
 #: ../../Runalyze/inc/calculate/class.Time.php:179
 msgid "October"
-msgstr "Oktober"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:180
 #: ../../Runalyze/inc/calculate/class.Time.php:180
 msgid "Nov"
-msgstr "Nov"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:180
 #: ../../Runalyze/inc/calculate/class.Time.php:180
 msgid "November"
-msgstr "November"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:182
 #: ../../Runalyze/inc/calculate/class.Time.php:182
 msgid "Dec"
-msgstr "Dez"
+msgstr ""
 
 #: ../../master/Runalyze/inc/calculate/class.Time.php:182
 #: ../../Runalyze/inc/calculate/class.Time.php:182
 msgid "December"
-msgstr "Dezember"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/configuration/class.ConfigurationMessages.php:19
 msgid "<em>Database cleanup</em>"
@@ -1482,7 +1477,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationDesign.php:50
 #: ../../Runalyze/inc/system/register.consts.php:316
 msgid "Design"
-msgstr "Design"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationDesign.php:52
 msgid "Background image"
@@ -1490,12 +1485,12 @@ msgstr ""
 
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationGeneral.php:151
 msgid "General settings"
-msgstr "Allgemeine Einstellungen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationGeneral.php:154
 #: ../../Runalyze/inc/system/register.consts.php:17
 msgid "Gender"
-msgstr "Geschlecht"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/configuration/category/class.ConfigurationGeneral.php:158
 #: ../../Runalyze/inc/system/register.consts.php:23
@@ -1700,7 +1695,7 @@ msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:138
 msgid "sunny"
-msgstr "sonnig"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:140
 msgid "fair"
@@ -1708,15 +1703,15 @@ msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:142
 msgid "cloudy"
-msgstr "bewölkt"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:144
 msgid "changeable"
-msgstr "wechselhaft"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:146
 msgid "rainy"
-msgstr "regnerisch"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/Data/Weather/Condition.php:148
 msgid "snowing"
@@ -1726,7 +1721,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/training/class.TrainingLinker.php:93
 #: ../../Runalyze/inc/training/class.TrainingLinker.php:93
 msgid "unknown"
-msgstr "unbekannt"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/parameter/app/class.ActivityCreationMode.php:36
 #: ../../Runalyze/inc/system/register.consts.php:520
@@ -1820,7 +1815,7 @@ msgstr ""
 #: ../../Runalyze/inc/system/register.consts.php:96
 #: ../../Runalyze/inc/system/register.consts.php:304
 msgid "never"
-msgstr "nie"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/parameter/app/class.ActivityRouteBreak.php:25
 #: ../../Runalyze/inc/system/register.consts.php:97
@@ -1895,7 +1890,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/core/parameter/app/class.ActivityRoutePrivacy.php:45
 #: ../../Runalyze/inc/system/register.consts.php:307
 msgid "always"
-msgstr "immer"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/parameter/app/class.DatabaseOrder.php:36
 #: ../../Runalyze/inc/system/register.consts.php:555
@@ -1975,7 +1970,7 @@ msgstr ""
 #: ../../Runalyze/inc/system/register.consts.php:153
 #: ../../Runalyze/inc/system/register.consts.php:172
 msgid "automatic"
-msgstr "automatisch"
+msgstr ""
 
 #: ../../master/Runalyze/inc/core/parameter/app/class.VdotMethod.php:30
 #: ../../Runalyze/inc/system/register.consts.php:399
@@ -2064,7 +2059,7 @@ msgstr ""
 #: ../../Runalyze/plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:13
 #: ../../Runalyze/plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
 msgid "Time"
-msgstr "Zeit"
+msgstr ""
 
 #: ../../master/Runalyze/inc/data/class.SplitsView.php:130
 #: ../../Runalyze/inc/data/class.SplitsView.php:130
@@ -2076,17 +2071,17 @@ msgstr ""
 #: ../../Runalyze/inc/data/class.SplitsView.php:197
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:146
 msgid "Goal"
-msgstr "ZIel"
+msgstr ""
 
 #: ../../master/Runalyze/inc/data/class.SplitsView.php:212
 #: ../../Runalyze/inc/data/class.SplitsView.php:210
 msgid "Average (active)"
-msgstr "Durchschnitt (aktiv)"
+msgstr ""
 
 #: ../../master/Runalyze/inc/data/class.SplitsView.php:220
 #: ../../Runalyze/inc/data/class.SplitsView.php:218
 msgid "Average (total)"
-msgstr "Durchschnitt (total)"
+msgstr ""
 
 #: ../../master/Runalyze/inc/data/class.SplitsView.php:234
 #: ../../Runalyze/inc/data/class.SplitsView.php:232
@@ -2119,7 +2114,7 @@ msgstr ""
 #: ../../Runalyze/inc/html/class.Ajax.php:435
 #: ../../Runalyze/inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 #: ../../master/Runalyze/inc/data/gps/class.LeafletTrainingRoute.php:173
 #: ../../Runalyze/inc/data/gps/class.LeafletTrainingRoute.php:172
@@ -2176,7 +2171,7 @@ msgstr ""
 #: ../../Runalyze/plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:212
 #: ../../Runalyze/plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:65
 msgid "Total"
-msgstr "Gesamt"
+msgstr ""
 
 #: ../../master/Runalyze/inc/draw/class.PlotSumData.php:150
 #: ../../Runalyze/inc/draw/class.PlotSumData.php:150
@@ -2186,7 +2181,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/draw/class.PlotSumData.php:161
 #: ../../Runalyze/inc/draw/class.PlotSumData.php:161
 msgid "All sports"
-msgstr "Alle Sportarten"
+msgstr ""
 
 #: ../../master/Runalyze/inc/draw/class.PlotSumData.php:270
 #: ../../Runalyze/inc/draw/class.PlotSumData.php:270
@@ -2314,7 +2309,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/export/class.ExporterWindow.php:124
 #: ../../Runalyze/inc/export/class.ExporterWindow.php:124
 msgid "delete"
-msgstr "löschen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/export/types/class.ExporterFacebook.php:32
 #: ../../master/Runalyze/inc/export/types/class.ExporterGoogle.php:26
@@ -2373,7 +2368,7 @@ msgstr ""
 #: ../../Runalyze/inc/export/types/class.ExporterHTML.php:27
 #: ../../Runalyze/inc/export/types/class.ExporterIFrame.php:60
 msgid "Preview"
-msgstr "Vorschau"
+msgstr ""
 
 #: ../../master/Runalyze/inc/export/types/class.ExporterHTML.php:31
 #: ../../Runalyze/inc/export/types/class.ExporterHTML.php:31
@@ -2390,12 +2385,12 @@ msgstr ""
 #: ../../master/Runalyze/inc/export/types/class.ExporterIFrame.php:44
 #: ../../Runalyze/inc/export/types/class.ExporterIFrame.php:44
 msgid "Width"
-msgstr "Weite"
+msgstr ""
 
 #: ../../master/Runalyze/inc/export/types/class.ExporterIFrame.php:49
 #: ../../Runalyze/inc/export/types/class.ExporterIFrame.php:49
 msgid "Height"
-msgstr "Höhe"
+msgstr ""
 
 #: ../../master/Runalyze/inc/export/types/class.ExporterIFrame.php:54
 #: ../../Runalyze/inc/export/types/class.ExporterIFrame.php:54
@@ -2422,7 +2417,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/export/types/class.ExporterTwitter.php:39
 #: ../../Runalyze/inc/export/types/class.ExporterTwitter.php:39
 msgid "Tweet!"
-msgstr "Tweeten!"
+msgstr ""
 
 #: ../../master/Runalyze/inc/html/class.Ajax.php:435
 #: ../../Runalyze/inc/html/class.Ajax.php:436
@@ -2432,7 +2427,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/html/class.Ajax.php:438
 #: ../../Runalyze/inc/html/class.Ajax.php:439
 msgid "End"
-msgstr "Ende"
+msgstr ""
 
 #: ../../master/Runalyze/inc/html/class.Ajax.php:441
 #: ../../master/Runalyze/inc/html/class.Ajax.php:442
@@ -2445,7 +2440,7 @@ msgstr "Ende"
 #: ../../Runalyze/inc/html/class.Ajax.php:445
 #: ../../Runalyze/inc/html/class.Ajax.php:446
 msgid "per page"
-msgstr "pro Seite"
+msgstr ""
 
 #: ../../master/Runalyze/inc/html/formular/class.FormularField.php:210
 #: ../../Runalyze/inc/html/formular/class.FormularField.php:210
@@ -2494,12 +2489,12 @@ msgstr ""
 #: ../../master/Runalyze/inc/html/formular/class.StandardFormular.php:145
 #: ../../Runalyze/inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
-msgstr "Abschicken"
+msgstr ""
 
 #: ../../master/Runalyze/inc/html/formular/class.StandardFormular.php:148
 #: ../../Runalyze/inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
-msgstr "Abbrechen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/html/formular/class.StandardFormular.php:151
 #: ../../master/Runalyze/inc/plugin/config/class.PluginConfigurationWindow.php:131
@@ -2510,7 +2505,7 @@ msgstr "Abbrechen"
 #: ../../Runalyze/inc/training/view/class.TrainingView.php:52
 #: ../../Runalyze/plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:214
 msgid "Edit"
-msgstr "Editieren"
+msgstr ""
 
 #: ../../master/Runalyze/inc/import/class.ImporterWindow.php:213
 #: ../../Runalyze/inc/import/class.ImporterWindow.php:213
@@ -2530,7 +2525,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/import/class.ImporterWindowTabUpload.php:38
 #: ../../Runalyze/inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
-msgstr "Hochladen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/import/class.MultiEditor.php:34
 #: ../../Runalyze/inc/import/class.MultiEditor.php:34
@@ -2977,7 +2972,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:71
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:129
 msgid "Username"
-msgstr "Nutzername"
+msgstr ""
 
 #: ../../master/Runalyze/inc/system/config/class.ConfigTabAccount.php:31
 #: ../../Runalyze/inc/system/config/class.ConfigTabAccount.php:31
@@ -3198,7 +3193,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.installerFooterText.php:5
 #: ../../Runalyze/plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:105
 msgid "Statistics"
-msgstr "Staistik"
+msgstr ""
 
 #: ../../master/Runalyze/inc/system/config/class.ConfigTabPlugins.php:38
 #: ../../Runalyze/inc/system/config/class.ConfigTabPlugins.php:38
@@ -3503,7 +3498,7 @@ msgstr ""
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:29
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:86
 msgid "Password"
-msgstr "Passwort"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.DataBrowser.php:14
 #: ../../Runalyze/inc/tpl/tpl.DataBrowser.php:14
@@ -3528,12 +3523,12 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.Frontend.header.php:25
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:25
 msgid "Logout"
-msgstr "Ausloggen"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.Frontend.header.php:30
 #: ../../Runalyze/inc/tpl/tpl.Frontend.header.php:30
 msgid "Help"
-msgstr "Hilfe"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.FrontendShared.header.php:29
 #: ../../master/Runalyze/inc/tpl/tpl.FrontendSharedIframe.header.php:26
@@ -4055,7 +4050,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:33
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:33
 msgid "Remember me"
-msgstr "Eingeloggt bleiben"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:46
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:46
@@ -4094,7 +4089,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:118
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:118
 msgid "Register"
-msgstr "Registrieren"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:127
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:154
@@ -4111,7 +4106,7 @@ msgstr ""
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:145
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:145
 msgid "Send link"
-msgstr "Link zusenden"
+msgstr ""
 
 #: ../../master/Runalyze/inc/tpl/tpl.loginWindow.php:176
 #: ../../Runalyze/inc/tpl/tpl.loginWindow.php:186
