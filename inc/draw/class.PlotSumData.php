@@ -143,7 +143,7 @@ abstract class PlotSumData extends Plot {
 		$Links = array();
 
 		if ($this->Sport->isRunning())
-			$Links[] = $this->link( __('Training &amp; Competition'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
+			$Links[] = $this->link( __('Activity &amp; Competition'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 		else
 			$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 
@@ -454,6 +454,6 @@ abstract class PlotSumData extends Plot {
 		if ($this->Sport->isRunning())
 			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
 
-		$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
+		$this->Data[] = array('label' => __('Activity'), 'data' => $Kilometers, 'color' => '#E68617');
 	}
 }

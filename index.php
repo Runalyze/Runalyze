@@ -67,7 +67,7 @@ $Frontend = new Frontend();
 					$Factory->newInstanceFor((int)$_GET['pluginid'])->display();
 				} else {
 					if (empty($Stats)) {
-						echo __('<em>There are no statistics available. Active a plugin in your configuration.</em>');
+						echo __('<em>There are no statistics available. Activate a plugin in your configuration.</em>');
 					} else {
 						$Factory->newInstance($Stats[0])->display();
 					}

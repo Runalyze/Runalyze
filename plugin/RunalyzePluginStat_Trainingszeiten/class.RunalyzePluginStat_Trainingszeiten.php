@@ -26,7 +26,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Plot all your training times by daytime/weekday and list your nightly activities.');
+		return __('Plot all your activity times by daytime/weekday and list your nightly activities.');
 	}
 
 	/**

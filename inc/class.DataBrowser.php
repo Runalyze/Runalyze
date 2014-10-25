@@ -261,7 +261,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getMonthKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', __('Training per month'), false, true).'>'.Icon::$BARS_BIG.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=month" '.Ajax::tooltip('', __('Activity per month'), false, true).'>'.Icon::$BARS_BIG.'</a>');
 	}
 
 	/**
@@ -269,7 +269,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getWeekKmLink() {
-		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', __('Training per week'), false, true).'>'.Icon::$BARS_SMALL.'</a>');
+		return Ajax::window('<a href="'.PlotSumData::$URL.'?type=week" '.Ajax::tooltip('', __('Activity per week'), false, true).'>'.Icon::$BARS_SMALL.'</a>');
 	}
 
 	/**
@@ -285,7 +285,7 @@ class DataBrowser {
 	 * @return string
 	 */
 	protected function getNaviSearchLink() {
-		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'" '.Ajax::tooltip('', __('Search a workout'), false, true).'>'.Icon::$SEARCH.'</a>', 'big');
+		return Ajax::window('<a href="'.SearchLink::$WINDOW_URL.'" '.Ajax::tooltip('', __('Search for an activity'), false, true).'>'.Icon::$SEARCH.'</a>', 'big');
 	}
 
 	/**

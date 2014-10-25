@@ -172,7 +172,7 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', __('Users have to login')) );
-		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version for the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
+		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
@@ -208,7 +208,7 @@ class AdminView {
 		}
 
 		if (!is_writable(FRONTEND_PATH.'plugin/pluginmap.php')) {
-			$Fieldset->addError( __('<strong>/inc/plugin/pluginmap.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'plugin/pluginmap.php')),1).')</em> '.__('These tools won\'t work.') );
+			$Fieldset->addError( __('<strong>/inc/plugin/pluginmap.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'plugin/pluginmap.php')),1).')</em> '.__('These tools will not work.') );
 		}
 
 		return $Fieldset;
@@ -344,9 +344,9 @@ class AdminView {
 		$Fieldset->addSmallInfo( __('Post limit:').' '.ini_get('post_max_size'));
 
 		if (Shell::isPerlAvailable())
-			$Fieldset->addSmallInfo( __('Perl scripts can used.') );
+			$Fieldset->addSmallInfo( __('Perl scripts can be used.') );
 		else
-			$Fieldset->addWarning( __('Perl scripts can\'t be used.') );
+			$Fieldset->addWarning( __('Perl scripts cannot be used.') );
 
 		$Fieldset->setCollapsed();
 
@@ -364,17 +364,17 @@ class AdminView {
 		include FRONTEND_PATH.'system/define.chmod.php';
 
 		$Fieldset = new FormularFieldset( __('Permissions') );
-		$Fieldset->addBlock( __('The following directions do need write permissions. (And the right owner has to be set!)') );
+		$Fieldset->addBlock( __('The following directories do need write permissions. (And the right owner has to be set!)') );
 
 		foreach ($CHMOD_FOLDERS as $folder) {
 			$realfolder = FRONTEND_PATH.'../'.$folder;
 			$chmod = substr(decoct(fileperms($realfolder)),1);
 
 			if (!is_writable($realfolder)) {
-				$Fieldset->addError( sprintf(__('The direction <strong>%s</strong> is not writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
+				$Fieldset->addError( sprintf(__('The directory <strong>%s</strong> is not writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
 				$failures++;
 			} else {
-				$Fieldset->addOkay( sprintf(__('The direction <strong>%s</strong> is writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
+				$Fieldset->addOkay( sprintf(__('The directory <strong>%s</strong> is writable.'), $folder).' <em>(chmod = '.$chmod.')</em>' );
 			}
 		}
 
@@ -395,7 +395,7 @@ class AdminView {
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../log/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/backup/') );
 		$Fieldset->addFileBlock( $this->getBlockForFiles('../plugin/RunalyzePluginTool_DbBackup/import/') );
-		$Fieldset->addBlock( '<input type="submit" value="'.__('Clean directions').'">' );
+		$Fieldset->addBlock( '<input type="submit" value="'.__('Clear directories').'">' );
 		$Fieldset->setCollapsed();
 
 		return $Fieldset;
@@ -407,7 +407,7 @@ class AdminView {
 	 * @return string
 	 */
 	private function getBlockForFiles($pathToFiles) {
-		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'"> '.__('clean').'</label>';
+		$Text  = '<label class="right"><input type="checkbox" name="clean[]" value="'.$pathToFiles.'"> '.__('clean up').'</label>';
 		$Text .= '<small>';
 		$Text .= '<strong>'.$pathToFiles.'</strong><br>';
 		$Files = Filesystem::getFileNamesFromPath($pathToFiles);

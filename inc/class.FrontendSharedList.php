@@ -153,7 +153,7 @@ class FrontendSharedList extends FrontendShared {
 		if (!$this->userExists() || !$this->userAllowsList())
 			return __('Problem');
 
-		return sprintf( __('Training view of %s'), $this->User['username'] );
+		return sprintf( __('Activity view of %s'), $this->User['username'] );
 	}
 
 	/**

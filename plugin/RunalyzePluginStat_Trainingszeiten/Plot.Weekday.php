@@ -5,7 +5,7 @@
  * @package Runalyze\Plugins\Stats
  */
 
-$titleCenter = __('Training [in h] by weekday');
+$titleCenter = __('Activity [in h] by weekday');
 $yAxis       = array();
 $xAxis       = array();
 

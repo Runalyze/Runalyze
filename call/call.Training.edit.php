@@ -11,7 +11,7 @@ if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
 	$Deleter = new TrainingDeleter((int)$_GET['delete']);
 	$Deleter->delete();
 
-	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The training has been removed').'</p></div>';
+	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';
 	echo '<script>$("#multi-edit-'.((int)$_GET['delete']).'").remove();Runalyze.Statistics.resetUrl();Runalyze.reloadContent();</script>';
 	exit();
 }

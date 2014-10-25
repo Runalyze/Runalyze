@@ -162,11 +162,11 @@ class SportFactory {
 	 * @return int sportid, -1 if not found
 	 */
 	static public function idByName($name) {
-		$Sport = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'sport` WHERE `name`='.DB::getInstance()->escape($name).' LIMIT 1')->fetchAll();
-
-		if (isset($Sport['id']))
-			return $Sport['id'];
-
+                $sports = self::cacheAllSports();
+                foreach ($sports as $sport) {
+                    if($sport['name'] == $name)
+                        return $sport['id'];
+                }
 		return -1;
 	}
 	

@@ -41,7 +41,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				'If you run a race just for fun, you can mark it as a \'fun race\' to ignore it in the plot.') );
 
 		echo HTML::info(
-			__('You can define the training type for races in your configuration.') );
+			__('You can define the activity type for races in your configuration.') );
 
 		echo HTML::warning(
 			__('Make sure that your activities hold the correct distance.'.

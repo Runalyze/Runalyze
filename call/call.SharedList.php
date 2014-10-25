@@ -41,8 +41,8 @@ if (!Request::isAjax()) {
 	echo '<div id="statistics-inner" class="panel" style="width:960px;margin:5px auto;">
 	<div class="panel-content">
 		<p class="info">
-			'.__('Click on a training to see more details.').'<br>
-			'.__('Public trainings are marked: ').' '.Icon::$ADD_SMALL_GREEN.'.
+			'.__('Click on an activity to see more details.').'<br>
+			'.__('Public activities are marked: ').' '.Icon::$ADD_SMALL_GREEN.'.
 		</p>
 	</div>
 </div>';

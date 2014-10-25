@@ -128,7 +128,7 @@ class FrontendShared extends Frontend {
 		echo HTML::h1( __('Error') );
 		echo HTML::error(
 				sprintf('<strong>%s</strong>', __('Invalid request')).'<br><br>'.
-				__('We\'re sorry, your request is not valid.')
+				__('We are sorry, your request is not valid.')
 		);
 
 		$this->displayLinkToRunalyze();

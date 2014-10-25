@@ -11,7 +11,7 @@ $Training = new TrainingObject( Request::sendId() );
 $Training->tryToCorrectElevation();
 
 if ($Training->elevationWasCorrected()) {
-	echo __('Elevation data have been corrected.');
+	echo __('Elevation data has been corrected.');
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();

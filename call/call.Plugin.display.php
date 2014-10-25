@@ -11,7 +11,7 @@ $Factory = new PluginFactory();
 $Plugin = $Factory->newInstanceFor( filter_input(INPUT_GET, 'id') );
 
 if ($Plugin === false) {
-	echo HTML::error( __('The plugin could not be located.') );
+	echo HTML::error( __('The plugin could not be found.') );
 }
 
 if ($Plugin instanceof PluginPanel) {

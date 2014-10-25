@@ -43,7 +43,7 @@ class FrontendSharedStatistics {
 	 * Configure statistic tabs
 	 */
 	protected function configureStatisticTabs() {
-		$this->StatisticTabs->setHeader( sprintf( __('Training data of %s'), $this->FrontendSharedList->getUsername() ) );
+		$this->StatisticTabs->setHeader( sprintf( __('Activity data of %s'), $this->FrontendSharedList->getUsername() ) );
 		$this->StatisticTabs->setFirstTabActive();
 		$this->StatisticTabs->display();
 	}

@@ -190,7 +190,7 @@ class ConfigurationActivityForm extends ConfigurationCategory {
 	 * @return ConfigurationFieldset
 	 */
 	public function Fieldset() {
-		$Fieldset = new ConfigurationFieldset( __('Activiy form') );
+		$Fieldset = new ConfigurationFieldset( __('Activity form') );
 
 		$Fieldset->addHandle( $this->handle('TRAINING_CREATE_MODE'), array(
 			'label'		=> __('Default window')

@@ -16,7 +16,7 @@ class ConfigurationMessages {
 	 */
 	static public function useCleanup() {
 		// TODO: provide a link for the tool
-		$link = __('<em>Database cleanup</em>');
+		$link = '<em>'.__('Database cleanup').'</em>';
 		self::addWarning( sprintf(__('You can now use the %s to recalculate the concerning values.'), $link) );
 	}
 
