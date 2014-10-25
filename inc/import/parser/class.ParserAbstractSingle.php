@@ -250,12 +250,16 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * @return int
 	 */
 	static private function getIDforDatabaseString($table, $string) {
+            $Result = Cache::get($table.$string);
+            if(is_null($Result)) {
 		if ($table == 'type')
 			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" OR abbr="'.$string.'" LIMIT 1';
 		else
 			$SearchQuery = 'SELECT id FROM '.PREFIX.$table.' WHERE name LIKE "%'.$string.'%" LIMIT 1';
 
-		$Result = DB::getInstance()->query($SearchQuery)->fetch();
+                $Result = DB::getInstance()->query($SearchQuery)->fetch();
+                Cache::set($table.$string,$Result,'60');
+            }
 
 		if ($Result === false)
 			return ($table == 'sport') ? Configuration::General()->mainSport() : 0;

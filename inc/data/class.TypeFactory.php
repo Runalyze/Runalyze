@@ -61,7 +61,11 @@ class TypeFactory {
 	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
+                $types = Cache::get('types');
+                if(is_null($types)) {
 		$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
+                    Cache::set('types', $types, '3600');
+                }
 		foreach ($types as $data)
 			self::$AllTypes[(string)$data['id']] = $data;
 	}

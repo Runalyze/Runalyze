@@ -50,8 +50,11 @@ class PluginConfiguration {
 	 * Catch values
 	 */
 	final public function catchValuesFromDatabase() {
-		$ResultFromDB = DB::getInstance()->query('SELECT `config`,`value` FROM `'.PREFIX.'plugin_conf` WHERE `pluginid`='.(int)$this->PluginID)->fetchAll();
-		$ValuesFromDB = array();
+            $ResultFromDB = Cache::get('PluginConfig');
+            if(is_null($ResultFromDB)) {
+                $ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+                Cache::set('PluginConfig', $ResultFromDB, '60');
+            } 		$ValuesFromDB = array();
 
 		foreach ($ResultFromDB as $Result) {
 			$ValuesFromDB[$Result['config']] = $Result['value'];

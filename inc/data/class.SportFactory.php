@@ -108,10 +108,22 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
-		$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
+                $sports = self::cacheAllSports();
 		foreach ($sports as $sport)
 			self::$AllSports[(string)$sport['id']] = $sport;
 	}
+        
+        /**
+         * Cache all sports for user
+         */
+        static private function cacheAllSports() {
+            $sports = Cache::get('sport');
+                if(is_null($sports)) {
+                    $sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
+                    Cache::set('sport', $sports, '3600');
+                }
+            return $sports;
+        }
 
 	/**
 	 * Get order
@@ -129,6 +141,7 @@ class SportFactory {
 	static public function reInitAllSports() {
 		self::$AllSports = null;
 		self::initAllSports();
+                Cache::delete('sport');
 	}
 
 	/**

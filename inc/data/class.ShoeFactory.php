@@ -45,7 +45,11 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
+                $shoes = Cache::get('shoes');
+                if(is_null($shoes)) {
 		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
+                    Cache::set('shoes', $shoes, '3600');
+                }
 		foreach ($shoes as $shoe)
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
 	}

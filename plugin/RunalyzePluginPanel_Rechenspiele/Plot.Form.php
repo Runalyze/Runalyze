@@ -36,7 +36,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
-
+        $Data = Cache::get('calculationsPlotData'.$Year);
+        if(is_null($Data)) {
 	$Data = DB::getInstance()->query('
 		SELECT
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
@@ -47,7 +48,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		WHERE
 			DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
 		GROUP BY `index`')->fetchAll();
-
+                    Cache::set('calculationsPlotData'.$Year, $Data, '300');
+        }
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
 

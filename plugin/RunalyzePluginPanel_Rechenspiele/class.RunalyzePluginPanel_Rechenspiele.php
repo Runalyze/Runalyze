@@ -108,10 +108,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
-		$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
-		$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
-		$JDPointsLastWeek = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
-		$JDPointsThisWeek = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
+                $JDQuery = Cache::get('JDQuery');
+                if(is_null($JDQuery)) {
+                    $JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
+                    $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
+                    $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
+                    $JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
+                    Cache::set('JDQuery', $JDQuery, '600');
+                } 
+                    $JDPointsLastWeek = $JDQuery['LastWeek'];
+                    $JDPointsThisWeek = $JDQuery['ThisWeek'];
 		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(

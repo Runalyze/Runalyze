@@ -31,16 +31,30 @@ class ClothesFactory {
 	 * Init all clothes
 	 */
 	static private function initAllClothes() {
-		$clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
+		$clothes = self::cacheAllClothes();
 		foreach ($clothes as $data)
 			self::$AllClothes[$data['id']] = $data;
 	}
+        
+        /**
+         * Cache Clothes
+         */
+        static private function cacheAllClothes() {
+            $clothes = Cache::get('clothes');
+                if(is_null($clothes)) {
+                    $clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
+                    Cache::set('clothes', $clothes, '3600');
+                }
+            return $clothes;
+        }
 
 	/**
 	 * Get ordered clothes
 	 * @return array
 	 */
 	static public function OrderedClothes() {
+                //$clothes = self::cacheAllClothes();
+                //Todo Sort Clothes
 		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
 	}
 

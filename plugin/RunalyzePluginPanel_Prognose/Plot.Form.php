@@ -24,6 +24,8 @@ $PrognosisObj = new RunningPrognosis;
 $PrognosisObj->setStrategy($Strategy);
 
 if (START_TIME != time()) {
+        $Data = Cache::get('prognosePlotData');
+        if(is_null($Data)) {
 	$Data = DB::getInstance()->query('
 		SELECT
 			YEAR(FROM_UNIXTIME(`time`)) as `y`,
@@ -34,7 +36,8 @@ if (START_TIME != time()) {
 			`vdot`>0
 		GROUP BY `y`, `m`
 		ORDER BY `y` ASC, `m` ASC')->fetchAll();
-
+            Cache::set('prognosePlotData', $Data, '300');
+        }
 	foreach ($Data as $dat) {
 		// TODO: use correct GA
 		$Strategy->setVDOT( JD::correctVDOT($dat['vdot']) );
@@ -42,7 +45,8 @@ if (START_TIME != time()) {
 		$index = mktime(1,0,0,$dat['m'],15,$dat['y']);
 		$Prognosis[$index.'000'] = $PrognosisObj->inSeconds($distance)*1000;
 	}
-
+	$ResultsData = Cache::get('prognosePlotDistanceData'.$distance);
+        if(is_null($ResultsData)) {
 	$ResultsData = DB::getInstance()->query('
 		SELECT
 			`time`,
@@ -54,7 +58,8 @@ if (START_TIME != time()) {
 			AND `distance`="'.$distance.'"
 		ORDER BY
 			`time` ASC')->fetchAll();
-
+	Cache::set('prognosePlotDistanceData'.$distance, $ResultsData, '600');
+        }
 	foreach ($ResultsData as $dat) {
 		if (!isset($WKplugin) || !$WKplugin->isFunCompetition($dat['id']))
 			$Results[$dat['time'].'000'] = $dat['s']*1000;
