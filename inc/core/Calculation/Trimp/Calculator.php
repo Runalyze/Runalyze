@@ -21,7 +21,7 @@ namespace Runalyze\Calculation\Trimp;
  * <code>$Trimp = new Calculator($Athlete, array($avgHR => $totalDuration));</code>
  * 
  * To get consistent results for athletes without a maximal heart rate
- * (they may set it later), a default HRmax of 220 is used for those.
+ * (they may set it later), default values for HRmax and HRrest are used.
  * 
  * @see http://fellrnr.com/wiki/TRIMP
  * 
@@ -33,7 +33,13 @@ class Calculator {
 	 * Default HR max
 	 * @int
 	 */
-	const DEFAULT_HR_MAX = 220;
+	const DEFAULT_HR_MAX = 200;
+
+	/**
+	 * Default HR rest
+	 * @int
+	 */
+	const DEFAULT_HR_REST = 60;
 
 	/**
 	 * Athlete
@@ -78,13 +84,15 @@ class Calculator {
 	protected function calculate() {
 		$Factor = new Factor($this->Athlete->gender());
 		$max = $this->Athlete->knowsMaximalHeartRate() ? $this->Athlete->maximalHR() : self::DEFAULT_HR_MAX;
+		$rest = $this->Athlete->knowsRestingHeartRate() ? $this->Athlete->restingHR() : self::DEFAULT_HR_REST;
 		$sum = 0;
 
-		foreach ($this->Data as $hr => $t) {
-			$sum += $t / 60 * $hr * exp($Factor->B() * $hr / $max);
+		foreach ($this->Data as $bpm => $t) {
+			$hr = max(0, ($bpm - $rest) / ($max - $rest));
+			$sum += $t / 60 * $hr * exp($Factor->B() * $hr);
 		}
 
-		$this->value = $Factor->A() / $max * $sum;
+		$this->value = $Factor->A() * $sum;
 	}
 
 	/**

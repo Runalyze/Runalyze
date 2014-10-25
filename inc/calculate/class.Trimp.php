@@ -102,7 +102,7 @@ class Trimp {
 	 * Get factor A for calculation
 	 * @return int
 	 */
-	static private function factorA() {
+	static public function factorA() {
 		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_A : self::FACTOR_FEMALE_A;
 	}
 
@@ -110,7 +110,7 @@ class Trimp {
 	 * Get factor B for calculation
 	 * @return int
 	 */
-	static private function factorB() {
+	static public function factorB() {
 		return Configuration::General()->gender()->isMale() ? self::FACTOR_MALE_B : self::FACTOR_FEMALE_B;
 	}
 
@@ -153,11 +153,24 @@ class Trimp {
 			if (!isset($trainingData['id']))
 				return 0;
 
-			$trainingData = DB::getInstance()->query('SELECT `id`, `pulse_avg`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.(int)$trainingData['id'].'" LIMIT 1')->fetch();
+			$trainingData = DB::getInstance()->query('SELECT `id`, `pulse_avg`, `arr_heart`, `arr_time`, `s`, `typeid`, `sportid` FROM `'.PREFIX.'training` WHERE `id`="'.(int)$trainingData['id'].'" LIMIT 1')->fetch();
 		}
 
 		$Training = new TrainingObject($trainingData['id']);
-		if ($Training->GpsData()->getTotalTime() == 0) $Training = new TrainingObject($trainingData);
+
+		if ($Training->hasArrayHeartrate()) {
+			$Collector = new \Runalyze\Calculation\Trimp\DataCollector($Training->getArrayHeartrate(), $Training->getArrayTime());
+			$data = $Collector->result();
+		} else {
+			$data = array($Training->getPulseAvg() => $Training->getTimeInSeconds());
+		}
+
+		$Athlete = \Runalyze\Context::Athlete();
+		$Calculator = new \Runalyze\Calculation\Trimp\Calculator($Athlete, $data);
+
+		$Trimp = round($Calculator->value());
+
+		/*if ($Training->GpsData()->getTotalTime() == 0) $Training = new TrainingObject($trainingData);
 		$avgHF    = $Training->avgHF();
 		$s        = $Training->getTimeInSeconds();
 		$RPE      = $Training->RPE();
@@ -170,7 +183,7 @@ class Trimp {
 				$Trimp += round($data['time']/60 * $zone * self::factorA() * exp(self::factorB() * $zone));
 			}
 		} else
-			$Trimp = round($s/60 * self::TrimpFactor($avgHF));
+			$Trimp = round($s/60 * self::TrimpFactor($avgHF));*/
 
 
 		if ($Trimp > self::maxTRIMP())
@@ -193,7 +206,7 @@ class Trimp {
 	 * @param int $avgHF
 	 * @return float 
 	 */
-	static private function TrimpFactor($avgHF) {
+	static public function TrimpFactor($avgHF) {
 		$HFperRest = ($avgHF - HF_REST) / (HF_MAX - HF_REST);
 
 		return $HFperRest * self::factorA() * exp(self::factorB() * $HFperRest);

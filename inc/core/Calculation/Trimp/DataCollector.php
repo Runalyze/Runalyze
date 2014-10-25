@@ -11,6 +11,21 @@ namespace Runalyze\Calculation\Trimp;
  * 
  * This data collector builds the appropriate array for a trimp calculator.
  * 
+ * Example:
+ * <code>
+ * $Collector = new DataCollector($HeartRateArray);
+ * print_r( $Collector->result() );
+ * </code>
+ * will for example result in
+ * <pre>
+ * array(
+ *  [120] => 15,
+ *  [121] => 27,
+ *  [122] => 5,
+ *  ...
+ * )
+ * </pre>
+ * 
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Trimp
  */

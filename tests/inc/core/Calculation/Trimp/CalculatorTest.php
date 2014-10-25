@@ -56,19 +56,40 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( $TrimpFemale->value(), $TrimpNone->value(), 'Trimp dismatch: female and none', 0.01*$TrimpFemale->value() );
 	}
 
+	/**
+	 * For a different HRmax, the results should at least be similar
+	 */
 	public function testHRmaxIndependency() {
 		$adaptedData = array();
 		$dataToAdapt = $this->hrData();
 		foreach ($dataToAdapt as $hr => $t) {
-			$adaptedData[$hr*200/220] = $t;
+			$adaptedData[$hr*180/Calculator::DEFAULT_HR_MAX] = $t;
 		}
 
-		$WithHRmaxDefault = new Calculator(new Athlete(null, 220), $this->hrData());
-		$WithHRmaxAdapted = new Calculator(new Athlete(null, 200), $adaptedData);
+		$WithHRmaxDefault = new Calculator(new Athlete(null, Calculator::DEFAULT_HR_MAX), $this->hrData());
+		$WithHRmaxAdapted = new Calculator(new Athlete(null, 180), $adaptedData);
 		$WithoutHRmax = new Calculator(new Athlete(), $this->hrData());
 
 		$this->assertEquals( $WithHRmaxDefault->value(), $WithoutHRmax->value() );
-		$this->assertEquals( $WithHRmaxDefault->value(), $WithHRmaxAdapted->value(), 'Trimp dismatch for adapted data', 0.01*$WithHRmaxDefault->value() );
+		$this->assertEquals( $WithHRmaxDefault->value(), $WithHRmaxAdapted->value(), 'Trimp dismatch for adapted data', 0.1*$WithHRmaxDefault->value() );
+	}
+
+	/**
+	 * For a different HRrest, the results should at least be similar
+	 */
+	public function testHRrestIndependency() {
+		$adaptedData = array();
+		$dataToAdapt = $this->hrData();
+		foreach ($dataToAdapt as $hr => $t) {
+			$adaptedData[$hr - 0.5*(Calculator::DEFAULT_HR_REST - 40)] = $t;
+		}
+
+		$WithHRrestDefault = new Calculator(new Athlete(null, Calculator::DEFAULT_HR_MAX, Calculator::DEFAULT_HR_REST), $this->hrData());
+		$WithHRrestAdapted = new Calculator(new Athlete(null, Calculator::DEFAULT_HR_MAX, 40), $adaptedData);
+		$WithoutHRrest = new Calculator(new Athlete(), $this->hrData());
+
+		$this->assertEquals( $WithHRrestDefault->value(), $WithoutHRrest->value() );
+		$this->assertEquals( $WithHRrestDefault->value(), $WithHRrestAdapted->value(), 'Trimp dismatch for adapted data', 0.1*$WithHRrestDefault->value() );
 	}
 
 	public function testSmallValues() {
@@ -94,18 +115,35 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @see http://fellrnr.com/wiki/TRIMP#Worked_Example
 	 */
-	public function testReferenceExample() {
+	public function testReferenceExampleWithoutHRrest() {
 		$Male = new \Gender();
 		$Male->set( \Gender::MALE );
 
 		// Fellrnr's example is with HRrest (max = 200, rest = 40, avg = 130)
-		// Since we're using HRmax, we have to adapt the data
 		$Trimp = new Calculator(new Athlete(
 			$Male,
 			160,
 			0
 		), array(
 			90 => 30*60
+		));
+
+		$this->assertEquals( 32, $Trimp->value(), '', 0.01*32 );
+	}
+
+	/**
+	 * @see http://fellrnr.com/wiki/TRIMP#Worked_Example
+	 */
+	public function testReferenceExample() {
+		$Male = new \Gender();
+		$Male->set( \Gender::MALE );
+
+		$Trimp = new Calculator(new Athlete(
+			$Male,
+			200,
+			40
+		), array(
+			130 => 30*60
 		));
 
 		$this->assertEquals( 32, $Trimp->value(), '', 0.01*32 );
