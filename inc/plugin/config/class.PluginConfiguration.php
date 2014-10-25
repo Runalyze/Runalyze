@@ -54,9 +54,10 @@ class PluginConfiguration {
             if(is_null($ResultFromDB)) {
                 $ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
                 Cache::set('PluginConfig', $ResultFromDB, '60');
-            } 		$ValuesFromDB = array();
+            } 		
+            $ValuesFromDB = array();
 
-		foreach ($ResultFromDB as $Result) {
+		foreach ($ResultFromDB[$this->PluginID] as $Result) {
 			$ValuesFromDB[$Result['config']] = $Result['value'];
 		}
 
