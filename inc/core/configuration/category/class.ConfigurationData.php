@@ -3,6 +3,9 @@
  * This file contains class::ConfigurationData
  * @package Runalyze\Configuration\Category
  */
+
+use Runalyze\Calculation\Performance;
+
 /**
  * Configuration category: Data
  * @author Hannes Christiansen
@@ -187,5 +190,21 @@ class ConfigurationData extends ConfigurationCategory {
 	public function updateMaxTrimp($trimp) {
 		$this->object('MAX_TRIMP')->set($trimp);
 		$this->updateValue( $this->handle('MAX_TRIMP') );
+	}
+
+	/**
+	 * Recalculate maximal values for CTL/ATL/Trimp
+	 */
+	public function recalculateMaxValues() {
+		$Query = new Performance\ModelQuery();
+		$Query->execute(DB::getInstance());
+
+		$Calc = new Performance\MaximumCalculator(function(array $array){
+			return new Performance\TSB($array, Configuration::Trimp()->daysForCTL(), Configuration::Trimp()->daysForATL());
+		}, $Query->data());
+
+		$this->updateMaxCTL($Calc->maxFitness());
+		$this->updateMaxATL($Calc->maxFatigue());
+		$this->updateMaxTrimp($Calc->maxTrimp());
 	}
 }

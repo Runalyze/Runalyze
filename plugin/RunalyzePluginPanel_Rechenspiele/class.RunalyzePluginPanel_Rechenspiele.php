@@ -361,11 +361,25 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetTRIMP() {
-		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
-		$ATL         = Trimp::ATL();
-		$CTL         = Trimp::CTL();
-		$maxATL      = Trimp::maxATL();
-		$maxCTL      = Trimp::maxCTL();
+		$ModelQuery = new Performance\ModelQuery();
+		$ModelQuery->execute(DB::getInstance());
+
+		$TSBmodel = new Performance\TSB(
+			$ModelQuery->data(),
+			Configuration::Trimp()->daysForCTL(),
+			Configuration::Trimp()->daysForATL()
+		);
+		$TSBmodel->calculate();
+
+		$maxATL      = Configuration::Data()->maxATL();
+		$maxCTL      = Configuration::Data()->maxCTL();
+		$ATL         = $TSBmodel->fatigueAt(0);
+		$CTL         = $TSBmodel->fitnessAt(0);
+		$TrimpValues = array(
+			'ATL'	=> round(100*$ATL/$maxATL),
+			'CTL'	=> round(100*$CTL/$maxCTL),
+			'TSB'	=> $TSBmodel->performanceAt(0)
+		);
 
 		$Table = '
 			<table class="fullwidth zebra-style">

@@ -85,8 +85,6 @@ class ModelQuery {
 			$index = (int)$Today->diff(new \DateTime($row['date']))->format('%r%a');
 			$this->Data[$index] = $row['trimp'];
 		}
-
-		ksort($this->Data);
 	}
 
 	/**
@@ -110,7 +108,7 @@ class ModelQuery {
 				SUM(`trimp`) as `trimp`
 			FROM `'.PREFIX.'training`
 			WHERE '.$Where.'
-			GROUP BY DATE(FROM_UNIXTIME(`time`))';
+			GROUP BY `date`';
 
 		return $Query;
 	}
