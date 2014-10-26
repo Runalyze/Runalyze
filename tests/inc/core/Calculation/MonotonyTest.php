@@ -34,7 +34,7 @@ class MonotonyTest extends \PHPUnit_Framework_TestCase {
 		$Monotony->calculate();
 
 		$this->assertEquals( 10/2, $Monotony->value() );
-		$this->assertEquals( 20*5, $Monotony->trainingStrain() );
+		$this->assertEquals( 10*5, $Monotony->trainingStrain() );
 	}
 
 	public function testAnotherSimpleExample() {
@@ -42,7 +42,7 @@ class MonotonyTest extends \PHPUnit_Framework_TestCase {
 		$Monotony->calculate();
 
 		$this->assertEquals( 20/8.45, $Monotony->value(), '', 0.01 );
-		$this->assertEquals( 140*20/8.45, $Monotony->trainingStrain(), '', 0.1 );
+		$this->assertEquals( 20*20/8.45, $Monotony->trainingStrain(), '', 0.1 );
 	}
 
 }

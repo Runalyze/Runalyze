@@ -35,9 +35,11 @@ class InverseCalculatorTest extends \PHPUnit_Framework_TestCase {
 			$t = mt_rand(60, 3600);
 
 			$Trimp = new Calculator($Athlete, array($hr => $t));
-			$Inverse = new InverseCalculator($Athlete, $hr, $Trimp->value() );
 
-			$this->assertEquals( $t, $Inverse->value(), sprintf('Inverse check failed for %us at %ubpm.', $t, $hr), 0.01*$t );
+			if ($Trimp->value() > 0) {
+				$Inverse = new InverseCalculator($Athlete, $hr, $Trimp->value() );
+				$this->assertEquals( $t, $Inverse->value(), sprintf('Inverse check failed for %us at %ubpm.', $t, $hr), 0.01*$t );
+			}
 		}
 	}
 

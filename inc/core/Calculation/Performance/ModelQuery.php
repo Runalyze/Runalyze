@@ -82,13 +82,15 @@ class ModelQuery {
 
 		$Statement = $DB->query($this->query());
 		while ($row = $Statement->fetch()) {
-			$index = (int)$Today->diff(new \DateTime($row['date']))->format('%r%a');
+			// Don't rely on MySQLs timezone => calculate diff based on timestamp
+			$index = (int)$Today->diff(new \DateTime('@'.$row['time']))->format('%r%a');
 			$this->Data[$index] = $row['trimp'];
 		}
 	}
 
 	/**
 	 * Get query
+	 * 
 	 * @return string
 	 */
 	private function query() {
@@ -104,6 +106,7 @@ class ModelQuery {
 
 		$Query = '
 			SELECT
+				`time`,
 				DATE(FROM_UNIXTIME(`time`)) as `date`,
 				SUM(`trimp`) as `trimp`
 			FROM `'.PREFIX.'training`
