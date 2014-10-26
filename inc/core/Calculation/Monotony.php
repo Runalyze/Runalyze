@@ -6,19 +6,36 @@
 
 namespace Runalyze\Calculation;
 
+use Runalyze\Calculation\Scale;
+
 /**
  * Monotony
  * 
  * @see http://fellrnr.com/wiki/Training_Monotony
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculation\TrainingLoad
+ * @package Runalyze\Calculation
  */
 class Monotony {
 	/**
 	 * Maximum
 	 */
 	const MAX = 10;
+
+	/**
+	 * Maximum
+	 */
+	const MIN = 0;
+
+	/**
+	 * Warning
+	 */
+	const WARNING = 1.5;
+
+	/**
+	 * Maximum
+	 */
+	const CRITICAL = 2;
 
 	/**
 	 * Trimp data
@@ -33,10 +50,10 @@ class Monotony {
 	protected $Count;
 
 	/**
-	 * Trimp sum
+	 * Trimp average
 	 * @var int
 	 */
-	protected $Sum = 0;
+	protected $Avg = 0;
 
 	/**
 	 * Value
@@ -63,17 +80,16 @@ class Monotony {
 	 * Calculate
 	 */
 	public function calculate() {
-		$this->Sum = array_sum($this->TRIMP);
-		$mean = $this->Sum / $this->Count;
+		$this->Avg = array_sum($this->TRIMP) / $this->Count;
 		$var = 0;
 
 		foreach ($this->TRIMP as $Trimp) {
-			$var += ($Trimp - $mean) * ($Trimp - $mean);
+			$var += ($Trimp - $this->Avg) * ($Trimp - $this->Avg);
 		}
 
 		$var /= $this->Count;
 
-		$this->Value = ($var == 0) ? self::MAX : $mean / sqrt($var);
+		$this->Value = ($var == 0) ? self::MAX : $this->Avg / sqrt($var);
 	}
 
 	/**
@@ -86,14 +102,41 @@ class Monotony {
 			throw new \RuntimeException('Monotony has to be calculated first.');
 		}
 
-		return min($this->Value, self::MAX);
+		return max(self::MIN, min($this->Value, self::MAX));
 	}
 
 	/**
 	 * Training strain
+	 * We use the Trimp-average instead of the sum to keep this value comparable.
 	 * @return float
 	 */
 	public function trainingStrain() {
-		return $this->Sum * $this->value();
+		return $this->Avg * $this->value();
+	}
+
+	/**
+	 * Scale value for percentage
+	 * @return int
+	 */
+	public function valueAsPercentage() {
+		$Scale = new Scale\TwoPartPercental();
+		$Scale->setMinimum(self::MIN);
+		$Scale->setInflectionPoint(self::CRITICAL);
+		$Scale->setMaximum(self::MAX);
+
+		return $Scale->transform($this->value());
+	}
+
+	/**
+	 * Scale value for percentage
+	 * @return int
+	 */
+	public function trainingStrainAsPercentage() {
+		// TODO: Use another maximum?
+		$max = 2 * \Configuration::Data()->maxATL();
+		$Scale = new Scale\Percental();
+		$Scale->setMaximum($max);
+
+		return $Scale->transform($this->trainingStrain());
 	}
 }

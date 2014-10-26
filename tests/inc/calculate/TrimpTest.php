@@ -29,18 +29,6 @@ class TrimpTest extends PHPUnit_Framework_TestCase {
 	public function testCheckForMaxValuesAt() {}
 
 	/**
-	 * @covers Trimp::coloredString
-	 * @todo   Implement testColoredString().
-	 */
-	public function testColoredString() {}
-
-	/**
-	 * @covers Trimp::minutesForTrimp
-	 * @todo   Implement testMinutesForTrimp().
-	 */
-	public function testMinutesForTrimp() {}
-
-	/**
 	 * @covers Trimp::forTraining
 	 */
 	public function testForTraining() {

@@ -15,7 +15,7 @@ namespace Runalyze\Calculation\Performance;
  * @see [2] http://journals.lww.com/acsm-msse/pages/articleviewer.aspx?year=2003&issue=07000&article=00018&type=abstract
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculation\TrainingLoad
+ * @package Runalyze\Calculation\Performance
  */
 class Busso extends Model {
 	/**

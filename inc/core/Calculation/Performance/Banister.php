@@ -21,7 +21,7 @@ namespace Runalyze\Calculation\Performance;
  * @see [4] http://home.trainingpeaks.com/blog/article/the-science-of-the-performance-manager
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculation\TrainingLoad
+ * @package Runalyze\Calculation\Performance
  */
 class Banister extends Model {
 	/**

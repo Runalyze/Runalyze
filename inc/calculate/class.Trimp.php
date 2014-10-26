@@ -124,26 +124,6 @@ class Trimp {
 	}
 
 	/**
-	 * Get colored string for a given trimp value
-	 * @param int $trimp
-	 * @return string 
-	 */
-	static public function coloredString($trimp) {
-		return Running::StresscoloredString($trimp);
-	}
-
-	/**
-	 * Get minutes need to reach a given TRIMP-value
-	 * @param float $trimpToReach
-	 * @return float in minutes
-	 */
-	static public function minutesForTrimp($trimpToReach) {
-		$Sport = new Sport(Configuration::General()->mainSport());
-
-		return $trimpToReach / ( self::TrimpFactor($Sport->avgHF()) * 5.35 / 10);
-	}
-
-	/**
 	 * Get TRIMP for a given training by array
 	 * @param type $trainingData
 	 * @return int 

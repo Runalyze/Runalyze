@@ -12,7 +12,7 @@ namespace Runalyze\Calculation\Performance;
  * @see http://fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Model
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculation\TrainingLoad
+ * @package Runalyze\Calculation\Performance
  */
 class TSB extends Model {
 	/**

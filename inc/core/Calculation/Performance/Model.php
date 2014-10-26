@@ -12,7 +12,7 @@ namespace Runalyze\Calculation\Performance;
  * @see http://fellrnr.com/wiki/Modeling_Human_Performance
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculation\TrainingLoad
+ * @package Runalyze\Calculation\Performance
  */
 abstract class Model {
 	/**
