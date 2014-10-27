@@ -7,11 +7,11 @@ namespace Runalyze\Calculation;
  */
 class MonotonyTest extends \PHPUnit_Framework_TestCase {
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testException() {
-		new Monotony(array());
+	public function testEmptyArray() {
+		$Monotony = new Monotony(array());
+		$Monotony->calculate();
+
+		$this->assertEquals( 0, $Monotony->value() );
 	}
 
 	/**

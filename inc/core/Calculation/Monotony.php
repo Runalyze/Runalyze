@@ -23,7 +23,7 @@ class Monotony {
 	const MAX = 10;
 
 	/**
-	 * Maximum
+	 * Minimum
 	 */
 	const MIN = 0;
 
@@ -68,10 +68,6 @@ class Monotony {
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(array $trimpData, $count = 0) {
-		if (empty($trimpData)) {
-			throw new \InvalidArgumentException('Trimp array must not be empty.');
-		}
-
 		$this->TRIMP = $trimpData;
 		$this->Count = ($count > 0) ? $count : count($trimpData);
 	}
@@ -80,6 +76,11 @@ class Monotony {
 	 * Calculate
 	 */
 	public function calculate() {
+		if (empty($this->TRIMP)) {
+			$this->Value = 0;
+			return;
+		}
+
 		$this->Avg = array_sum($this->TRIMP) / $this->Count;
 		$var = 0;
 
