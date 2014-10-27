@@ -112,19 +112,25 @@ foreach ($Steps as $i => $Name) {
 		<label>
 			<strong><?php _e('Host server'); ?></strong>
 			<input type="text" name="host" value="<?php echo (isset($_POST['host']) ? $_POST['host'] : 'localhost'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
-		</label><br>
+		</label>
+	</p>
+	<p class="text">
 		<label>
 			<strong><?php _e('Database'); ?></strong>
 			<input type="text" name="database" value="<?php echo (isset($_POST['database']) ? $_POST['database'] : 'runalyze'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
-		</label><br>
+		</label>
+	</p>
+	<p class="text">
 		<label>
 			<strong><?php _e('User'); ?></strong>
 			<input type="text" name="username" value="<?php echo (isset($_POST['username']) ? $_POST['username'] : 'root'); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
-		</label><br>
+		</label>
+	</p>
+	<p class="text">
 		<label>
 			<strong><?php _e('Password'); ?></strong>
 			<input type="password" name="password" value="<?php echo (isset($_POST['password']) ? $_POST['password'] : ''); ?>" <?php if ($this->readyForNextStep) echo 'readonly'; ?>>
-		</label><br>
+		</label>
 	</p>
 
 	<p class="text">
