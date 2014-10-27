@@ -92,3 +92,7 @@ UPDATE `runalyze_conf` SET `value`="form" WHERE `key`="TRAINING_CREATE_MODE" AND
 
 /* 21.09.2014 - make dataset translatable */
 ALTER TABLE `runalyze_dataset` DROP `label`, DROP `description`, DROP `distance`, DROP `outside`, DROP `pulse`, DROP `type`;
+
+
+/* 16.10.2014 - add weight for shoes */
+ALTER TABLE `runalyze_shoe` ADD `weight` SMALLINT UNSIGNED NOT NULL AFTER `since`;

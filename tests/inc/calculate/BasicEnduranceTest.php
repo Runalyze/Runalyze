@@ -23,7 +23,7 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 	 * This method is called after a test is executed.
 	 */
 	protected function tearDown() {
-		
+		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 	/**
@@ -136,8 +136,6 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 		$this->object->setDaysToRecognizeForWeekKilometer(70);
 		$this->object->setPercentageForLongjogs(0.01);
 		$this->assertEquals( 29, $this->object->value() );
-
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
 	}
 
 }

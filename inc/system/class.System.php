@@ -69,8 +69,9 @@ class System {
 			set_time_limit(0);
 
 		DB::getInstance()->stopAddingAccountID();
-		DB::getInstance()->exec('SET GLOBAL max_allowed_packet=536870912;');
-		DB::getInstance()->exec('SET GLOBAL key_buffer_size=536870912;');
+		// Error: Access denied; you need the SUPER privilege for this operation
+		//DB::getInstance()->exec('SET GLOBAL max_allowed_packet=536870912;');
+		//DB::getInstance()->exec('SET GLOBAL key_buffer_size=536870912;');
 		DB::getInstance()->startAddingAccountID();
 	}
 

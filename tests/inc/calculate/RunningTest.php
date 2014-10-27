@@ -5,58 +5,6 @@
  */
 class RunningTest extends PHPUnit_Framework_TestCase {
 	/**
-	 * Need to reset internal static value to 'false', otherwise value won't be recalculated
-	 * @covers Running::getAverageMonthPace
-	 */
-	public function testGetAverageMonthPace() {
-		$this->assertEquals( 0, Running::getAverageMonthPace() );
-
-		$class = new ReflectionClass('Running');
-		$property = $class->getProperty('AverageMonthPace');
-		$property->setAccessible(true);
-		$property->setValue(false);
-
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), time(), 360, 1) );
-		$this->assertEquals( 6.0, Running::getAverageMonthPace() );
-
-		$property->setValue(false);
-
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), time(), 300, 1) );
-		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
-
-		$property->setValue(false);
-
-		DB::getInstance()->insert('training', array('sportid', 'time', 's', 'distance'), array(Configuration::General()->runningSport(), 0, 300, 1) );
-		$this->assertEquals( 5.5, Running::getAverageMonthPace() );
-
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
-	}
-
-	/**
-	 * @covers Running::possibleKmInDays
-	 */
-	public function testPossibleKmInDays() {
-		// Not possible without data in database
-		$this->assertFalse( Running::possibleKmInDays(10) );
-	}
-
-	/**
-	 * @covers Running::possibleKmInOneWeek
-	 */
-	public function testPossibleKmInOneWeek() {
-		// Not possible without data in database
-		$this->assertFalse( Running::possibleKmInOneWeek() );
-	}
-
-	/**
-	 * @covers Running::possibleKmInOneMonth
-	 */
-	public function testPossibleKmInOneMonth() {
-		// Not possible without data in database
-		$this->assertFalse( Running::possibleKmInOneMonth() );
-	}
-
-	/**
 	 * @covers Running::Km
 	 */
 	public function testKm() {

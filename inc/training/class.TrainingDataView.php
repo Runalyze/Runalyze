@@ -250,7 +250,7 @@ class TrainingDataView {
 	 * @return string
 	 */
 	public function getTrimpString() {
-		return Trimp::coloredString($this->Object->getTrimp());
+		return Running::StresscoloredString($this->Object->getTrimp());
 	}
  
  	/**

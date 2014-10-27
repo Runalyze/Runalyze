@@ -232,9 +232,30 @@ class TrainingObject extends DataObject {
 	 * Update trimp
 	 */
 	private function updateTrimp() {
-		$this->updateValue('trimp', Trimp::forTraining($this->getArray()));
+		$this->updateValue('trimp', $this->calculateTrimp());
 
-		Trimp::checkForMaxValuesAt($this->getTimestamp());
+		// TODO
+		// - check max. CTL/ATL
+		// - simple recalculation of the values for 'this' timestamp is not enough
+		// - a possible maximum may occur for example one day after this activity
+	}
+
+	/**
+	 * Calculate trimp
+	 * @return int
+	 */
+	public function calculateTrimp() {
+		if ($this->hasArrayHeartrate()) {
+			$Collector = new \Runalyze\Calculation\Trimp\DataCollector($this->getArrayHeartrate(), $this->getArrayTime());
+			$data = $Collector->result();
+		} else {
+			$data = array($this->getPulseAvg() => $this->getTimeInSeconds());
+		}
+
+		$Athlete = \Runalyze\Context::Athlete();
+		$Calculator = new \Runalyze\Calculation\Trimp\Calculator($Athlete, $data);
+
+		return round($Calculator->value());
 	}
 
 	/**

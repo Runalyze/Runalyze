@@ -155,6 +155,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `since` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '01.01.2000',
+  `weight` smallint(5) unsigned NOT NULL,
   `km` decimal(6,2) NOT NULL DEFAULT '0.00',
   `time` int(11) NOT NULL DEFAULT '0',
   `inuse` tinyint(1) NOT NULL DEFAULT '1',

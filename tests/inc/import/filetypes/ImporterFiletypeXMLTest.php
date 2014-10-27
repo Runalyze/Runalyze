@@ -177,9 +177,10 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 0.264, $this->object->object()->getDistance() );
 		$this->assertEquals( 107, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 151, $this->object->object()->getElapsedTime() );
-		$this->assertEquals( 133, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 131, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 143, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 26, $this->object->object()->get('temperature') );
+		$this->assertEquals( 461, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
@@ -189,6 +190,8 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
+
+		$this->assertEquals( 0.264, $this->object->object()->getArrayDistanceLastPoint() );
 	}
 
 	/**
@@ -202,12 +205,13 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals( mktime(16, 17, 22, 4, 26, 2014), $this->object->object()->getTimestamp() );
-		$this->assertEquals( 0.085, $this->object->object()->getDistance() );
+		$this->assertEquals( 5.013, $this->object->object()->getDistance() );
 		$this->assertEquals( 1551, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 648, $this->object->object()->getElapsedTime() );
-		$this->assertEquals( 114, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 112, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 123, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 25, $this->object->object()->get('temperature') );
+		$this->assertEquals( 361, $this->object->object()->getCalories() );
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
@@ -218,18 +222,20 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 
+		$this->assertEquals( 0.085, $this->object->object()->getArrayDistanceLastPoint() );
+
 		// New: Cadence && Laps
 		$this->assertTrue( $this->object->object()->hasArrayCadence() );
-		$this->assertEquals( 88, $this->object->object()->getCadence() );
+		$this->assertEquals( 87, $this->object->object()->getCadence() );
 		$this->assertEquals(
-			array(87, 88, 88, 88, 87, 88),
+			array(81, 87, 88, 88, 88, 87, 88),
 			$this->object->object()->getArrayCadence()
 		);
 
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
 		$this->assertEquals(
 			"1.00|5:33-1.00|5:16",
-			$this->object->object(2)->Splits()->asString()
+			$this->object->object()->Splits()->asString()
 		);
 	}
 

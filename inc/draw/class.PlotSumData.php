@@ -249,26 +249,6 @@ abstract class PlotSumData extends Plot {
 		$this->setTitle($this->getTitle());
 
 		$this->stacked();
-		$this->addCurrentLevel();
-	}
-
-	/**
-	 * Add current level
-	 */
-	private function addCurrentLevel() {
-		$timer = $this->timer();
-
-		if (stripos($timer, 'MONTH') !== false)
-			$possibleKM = Running::possibleKmInOneMonth();
-		elseif (stripos($timer, 'WEEK') !== false)
-			$possibleKM = Running::possibleKmInOneWeek();
-		else
-			return;
-
-		if ($possibleKM > 0 && $this->Sport->id() == Configuration::General()->runningSport()) {
-			$this->addThreshold('y', $possibleKM);
-			$this->addAnnotation(0, $possibleKM, __('Current level'));
-		}
 	}
 
 	/**

@@ -4,6 +4,11 @@
  * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
+
+use Runalyze\Calculation\Performance;
+use Runalyze\Calculation\Trimp;
+use Runalyze\Calculation\Monotony;
+
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
  * @author Hannes Christiansen
@@ -40,27 +45,32 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	protected function initConfiguration() {
 		$ShowPaces = new PluginConfigurationValueBool('show_trainingpaces', __('Show: Paces'));
 		$ShowPaces->setTooltip( __('Paces based on your curent VDOT') );
-		$ShowPaces->setDefaultValue(false);
+		$ShowPaces->setDefaultValue(true);
 
 		$ShowTrimp = new PluginConfigurationValueBool('show_trimpvalues', __('Show: ATL/CTL/TSB'));
 		$ShowTrimp->setTooltip( __('Show actual/chronical training load and stress balance (based on TRIMP)') );
-		$ShowTrimp->setDefaultValue(false);
+		$ShowTrimp->setDefaultValue(true);
+
+		$ShowTrimpExtra = new PluginConfigurationValueBool('show_trimpvalues_extra', __('Show: Monotony/TS'));
+		$ShowTrimpExtra->setTooltip( __('Show monotony and training strain (based on TRIMP)') );
+		$ShowTrimpExtra->setDefaultValue(true);
 
 		$ShowVDOT = new PluginConfigurationValueBool('show_vdot', __('Show: VDOT'));
 		$ShowVDOT->setTooltip( __('Predict current VDOT value') );
-		$ShowVDOT->setDefaultValue(false);
+		$ShowVDOT->setDefaultValue(true);
 
 		$ShowBE = new PluginConfigurationValueBool('show_basicendurance', __('Show: Basic endurance'));
 		$ShowBE->setTooltip( __('Guess current basic endurance') );
-		$ShowBE->setDefaultValue(false);
+		$ShowBE->setDefaultValue(true);
 
 		$ShowJD = new PluginConfigurationValueBool('show_jd_intensity', __('Show: Training points'));
 		$ShowJD->setTooltip( __('Training intensity by Jack Daniels') );
-		$ShowJD->setDefaultValue(false);
+		$ShowJD->setDefaultValue(true);
 
 		$Configuration = new PluginConfiguration($this->id());
 		$Configuration->addValue($ShowPaces);
 		$Configuration->addValue($ShowTrimp);
+		$Configuration->addValue($ShowTrimpExtra);
 		$Configuration->addValue($ShowVDOT);
 		$Configuration->addValue($ShowBE);
 		$Configuration->addValue($ShowJD);
@@ -101,11 +111,32 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * Show values
 	 */
 	protected function showValues() {
-		$ATLmax      = Trimp::maxATL();
-		$CTLmax      = Trimp::maxCTL();
-		$ATLabsolute = Trimp::ATL();
-		$CTLabsolute = Trimp::CTL();
-		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
+		$ModelQuery = new Performance\ModelQuery();
+		$ModelQuery->execute(DB::getInstance());
+
+		$TSBmodel = new Performance\TSB(
+			$ModelQuery->data(),
+			Configuration::Trimp()->daysForCTL(),
+			Configuration::Trimp()->daysForATL()
+		);
+		$TSBmodel->calculate();
+
+		$MonotonyQuery = new Performance\ModelQuery();
+		$MonotonyQuery->setRange(time() - 7*DAY_IN_S, time());
+		$MonotonyQuery->execute(DB::getInstance());
+
+		$Monotony = new Monotony($MonotonyQuery->data(), 7);
+		$Monotony->calculate();
+
+		$ATLmax      = Configuration::Data()->maxATL();
+		$CTLmax      = Configuration::Data()->maxCTL();
+		$ATLabsolute = $TSBmodel->fatigueAt(0);
+		$CTLabsolute = $TSBmodel->fitnessAt(0);
+		$TrimpValues = array(
+			'ATL'	=> round(100*$ATLabsolute/$ATLmax),
+			'CTL'	=> round(100*$CTLabsolute/$CTLmax),
+			'TSB'	=> $TSBmodel->performanceAt(0)
+		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
                 $JDQuery = Cache::get('JDQuery');
@@ -178,6 +209,42 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					'&lt; 0: You\'re training hard.<br>'.
 					'<small>A value of &ge; 10 is desirable for a race.<br>'.
 					'A value of &le; -10 can be a hint to start regeneration.</small>')
+			),
+			array(
+				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
+				'bars'	=> array(
+					new ProgressBarSingle(
+							$Monotony->valueAsPercentage(),
+							(
+								$Monotony->value() > Monotony::CRITICAL ? ProgressBarSingle::$COLOR_RED
+								: $Monotony->value() > Monotony::WARNING ? ProgressBarSingle::$COLOR_ORANGE
+								: ProgressBarSingle::$COLOR_GREEN
+							)
+					)
+				),
+				'bar-tooltip'	=> 'Monotony = avg(Trimp)/stddev(Trimp)',
+				'value'	=> number_format($Monotony->value(), 2),
+				'title'	=> __('Monotony'),
+				'small'	=> '',
+				'tooltip'	=> __('Monotony<br><small>Monotony of your last seven days.<br>Values below 1.5 are preferable.</small>')
+			),
+			array(
+				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
+				'bars'	=> array(
+					new ProgressBarSingle(
+							$Monotony->trainingStrainAsPercentage(),
+							(
+								$Monotony->trainingStrainAsPercentage() >= 75 ? ProgressBarSingle::$COLOR_RED
+								: ($Monotony->trainingStrainAsPercentage() >= 50 ? ProgressBarSingle::$COLOR_ORANGE
+									: ProgressBarSingle::$COLOR_GREEN)
+							)
+					)
+				),
+				'bar-tooltip'	=> 'Training strain = avg(Trimp)*Monotony',
+				'value'	=> round($Monotony->trainingStrain()),
+				'title'	=> __('Training&nbsp;strain'),
+				'small'	=> '',
+				'tooltip'	=> __('Training strain<br><small>of your last seven days</small>')
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_jd_intensity'),
@@ -300,11 +367,25 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetTRIMP() {
-		$TrimpValues = Trimp::arrayForATLandCTLandTSBinPercent();
-		$ATL         = Trimp::ATL();
-		$CTL         = Trimp::CTL();
-		$maxATL      = Trimp::maxATL();
-		$maxCTL      = Trimp::maxCTL();
+		$ModelQuery = new Performance\ModelQuery();
+		$ModelQuery->execute(DB::getInstance());
+
+		$TSBmodel = new Performance\TSB(
+			$ModelQuery->data(),
+			Configuration::Trimp()->daysForCTL(),
+			Configuration::Trimp()->daysForATL()
+		);
+		$TSBmodel->calculate();
+
+		$maxATL      = Configuration::Data()->maxATL();
+		$maxCTL      = Configuration::Data()->maxCTL();
+		$ATL         = $TSBmodel->fatigueAt(0);
+		$CTL         = $TSBmodel->fitnessAt(0);
+		$TrimpValues = array(
+			'ATL'	=> round(100*$ATL/$maxATL),
+			'CTL'	=> round(100*$CTL/$maxCTL),
+			'TSB'	=> $TSBmodel->performanceAt(0)
+		);
 
 		$Table = '
 			<table class="fullwidth zebra-style">

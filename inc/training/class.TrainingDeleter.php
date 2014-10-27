@@ -59,7 +59,7 @@ class TrainingDeleter {
 	 * Recalculate max trimp values
 	 */
 	protected function recalculateMaxTrimpValues() {
-		Trimp::calculateMaxValues();
+		Configuration::Data()->recalculateMaxValues();
 	}
 
 	/**

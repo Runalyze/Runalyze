@@ -126,6 +126,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$Trainings = $DB->query('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg`,`arr_heart`,`arr_time` FROM `'.PREFIX.'training`')->fetchAll();
 
 		foreach ($Trainings as $Training) {
+			$Object = new TrainingObject($Training);
 			$DB->update('training', $Training['id'],
 				array(
 					'trimp',
@@ -134,7 +135,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 					'jd_intensity'
 				),
 				array(
-					Trimp::forTraining($Training),
+					$Object->calculateTrimp(),
 					JD::Training2VDOT($Training['id'], $Training),
 					JD::Competition2VDOT($Training['distance'], $Training['s']),
 					JD::Training2points($Training['id'], $Training)
@@ -196,7 +197,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	private function resetMaxValues() {
 		$OldMaxValues = $this->getMaxValues();
 
-		Trimp::calculateMaxValues();
+		Configuration::Data()->recalculateMaxValues();
 		JD::recalculateVDOTcorrector();
 
 		$NewMaxValues = $this->getMaxValues();
@@ -216,10 +217,12 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 * @return array
 	 */
 	private function getMaxValues() {
+		$Data = Configuration::Data();
+
 		return array(
-			__('maxATL')			=> (int)Trimp::maxATL(),
-			__('maxCTL')			=> (int)Trimp::maxCTL(),
-			__('maxTRIMP')			=> (int)Trimp::maxTRIMP(),
+			__('maxATL')			=> (int)$Data->maxATL(),
+			__('maxCTL')			=> (int)$Data->maxCTL(),
+			__('maxTRIMP')			=> (int)$Data->maxTrimp(),
 			__('VDOT corrector')	=> round(JD::correctionFactor(), 4)
 		);
 	}

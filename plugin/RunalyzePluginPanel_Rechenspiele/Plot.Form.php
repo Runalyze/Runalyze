@@ -4,7 +4,6 @@
  * Call:   include Plot.form.php
  * @package Runalyze\Plugins\Panels
  */
-$DebugAllValues = false;
 $MaxATLPoints   = 750;
 $DataFailed     = false;
 $ATLs           = array();
@@ -32,9 +31,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$VDOTs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
 
-	// Here ATL/CTL/VDOT will be implemented again
+	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
-	// - ATL/CTL: SUM(`trimp`) for Configuration::Trimp()->daysForATL() / Configuration::Trimp()->daysForCTL()
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
         $Data = Cache::get('calculationsPlotData'.$Year);
         if(is_null($Data)) {
@@ -69,11 +67,17 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$ATLdays = Configuration::Trimp()->daysForATL();
 	$CTLdays = Configuration::Trimp()->daysForCTL();
 
+	$maxATL = Configuration::Data()->maxATL();
+	$maxCTL = Configuration::Data()->maxCTL();
+
+	$TSBModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
+	$TSBModel->calculate();
+
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
 		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - $ATLdays, $ATLdays)) / $ATLdays) / Trimp::maxATL());
-		$CTLs[$index]    = round(100 * round(array_sum(array_slice($Trimps_raw, $d - $CTLdays, $CTLdays)) / $CTLdays) / Trimp::maxCTL());
+		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
+		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
 
 		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
 		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
@@ -82,22 +86,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0)
 			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $Durations_sum);
-
-		// Only for debuggin purposes
-		if ($DebugAllValues) {
-			$CTL = Trimp::CTLinPercent($index/1000);
-			$ATL = Trimp::ATLinPercent($index/1000);
-			$VDOT = JD::calculateVDOTform($index/1000);
-			$VDOT_plot = (isset($VDOTs[$index])) ? round($VDOTs[$index],5) : 0;
-
-			$checkFailes = $CTLs[$index] != $CTL || $ATLs[$index] != $ATL || $VDOT_plot != $VDOT;
-			$textMessage = date('d.m.Y H:i', $index/1000).': '.$CTLs[$index].'/'.$ATLs[$index].'/'.$VDOT_plot.' - calculated: '.$CTL.'/'.$ATL.'/'.$VDOT.'<br>';
-
-			if ($checkFailes)
-				echo HTML::error($textMessage);
-			else
-				echo HTML::info($textMessage);
-		}
 	}
 } else {
 	$DataFailed = true;
@@ -105,7 +93,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 $Plot = new Plot("form".$_GET['y'], 800, 450);
 
-$Plot->Data[] = array('label' => __('Shape (CTL)'), 'color' => '#008800', 'data' => $CTLs);
+$Plot->Data[] = array('label' => __('Fitness (CTL)'), 'color' => '#008800', 'data' => $CTLs);
 if (count($ATLs) < $MaxATLPoints)
 	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#880000', 'data' => $ATLs);
 $Plot->Data[] = array('label' => __('VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
