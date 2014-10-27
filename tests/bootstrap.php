@@ -12,8 +12,12 @@ if (!defined('RUNALYZE_TEST'))
 if (!defined('FRONTEND_PATH'))
 	define('FRONTEND_PATH', dirname(__FILE__).'/../inc/');
 
-require_once dirname(__FILE__).'/../inc/system/class.Autoloader.php';
+require_once FRONTEND_PATH.'system/class.Autoloader.php';
 new Autoloader();
+
+require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
+require_once FRONTEND_PATH.'system/class.Cache.php';
+new Cache();
 
 date_default_timezone_set('Europe/Berlin');
 

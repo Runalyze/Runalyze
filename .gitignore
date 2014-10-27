@@ -16,6 +16,7 @@ inc/data/gps/srtm/*.tif
 inc/import/files/*
 inc/export/files/*
 img/backgrounds/My-*
+lib/phpfastcache/cache.storage.*
 log/
 plugin/RunalyzePluginTool_DbBackup/backup/*
 plugin/RunalyzePluginTool_DbBackup/import/*
