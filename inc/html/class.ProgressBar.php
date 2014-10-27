@@ -23,6 +23,12 @@ class ProgressBar {
 	static private $CLASS_INLINE = 'progress-bar-container-inline';
 
 	/**
+	 * HTML class: animated
+	 * @var string
+	 */
+	static private $CLASS_ANIMATED = 'animated';
+
+	/**
 	 * HTML class: container div
 	 * @var string
 	 */
@@ -75,7 +81,7 @@ class ProgressBar {
 	 */
 	public function __construct($Width = 0, $Color = '') {
 		if ($Width > 0)
-			$this->addBar($Width, $Color);
+			$this->addNewBar($Width, $Color);
 	}
 
 	/**
@@ -111,14 +117,18 @@ class ProgressBar {
 	}
 
 	/**
+	 * Set as animated
+	 */
+	public function setAnimated() {
+		$this->addClass( self::$CLASS_ANIMATED );
+	}
+
+	/**
 	 * Add class
 	 * @param string $Class
 	 */
 	public function addClass($Class) {
-		if (empty($this->AdditionalClasses))
-			$this->AdditionalClasses .= ' ';
-
-		$this->AdditionalClasses .= $Class;
+		$this->AdditionalClasses .= ' '.$Class;
 	}
 
 	/**

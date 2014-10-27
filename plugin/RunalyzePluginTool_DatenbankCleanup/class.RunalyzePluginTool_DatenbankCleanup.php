@@ -11,10 +11,10 @@ $PLUGINKEY = 'RunalyzePluginTool_DatenbankCleanup';
  */
 class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
-	 * Success messages
-	 * @var array
+	 * Job
+	 * @var Runalyze\Plugin\Tool\DatabaseCleanup\Job
 	 */
-	protected $SuccessMessages = array();
+	protected $Job = null;
 
 	/**
 	 * Name
@@ -42,198 +42,72 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	}
 
 	/**
+	 * Require files
+	 */
+	protected function requireFiles() {
+		require_once __DIR__.'/Job.php';
+		require_once __DIR__.'/JobGeneral.php';
+		require_once __DIR__.'/JobLoop.php';
+	}
+
+	/**
 	 * Display the content
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
-		if (isset($_GET['clean'])) {
-			$this->cleanDatabase();
+		$this->requireFiles();
 
-			foreach ($this->SuccessMessages as $Message)
-				echo HTML::okay($Message);
-		}
-
-		$AndApplyElevationToVDOT = Configuration::Vdot()->useElevationCorrection() ? __(' and adjust VDOT') : '';
-
-		$Fieldset = new FormularFieldset( __('Cleanup database') );
-
-		$Fieldset->addBlock(
-				__('This tool allows you to cleanup your database. '.
-					'This process does only touch some cumulative statistics for your shoes and some cached values.') );
-		$Fieldset->addBlock('&nbsp;');
-
-		$Fieldset->addInfo(
-				'<strong>'.self::getActionLink( __('Simple cleanup'), 'clean=simple').'</strong><br>'.
-				__('Recalculation of cumulative statistics for shoes and maximal values for ATL/CTL/TRIMP.') );
-		$Fieldset->addInfo(
-				'<strong>'.self::getActionLink( __('Complete cleanup'), 'clean=complete').'</strong><br>'.
-				__('Recalculation of TRIMP and VDOT for every activity. Afterwards, the simple cleanup will be done.') );
-		$Fieldset->addInfo(
-				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>'.
-				__('Recalculation of elevation for every activity with gps data.<br>'.
-					'This has to be done after changing your configuration concerning the calculation of elevation.<br>'.
-					'<br>'.
-					'<small>This does not change your manual value for the elevation. The calculated value is only shown in the detailed view.</small>') );
-		$Fieldset->addInfo(
-				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT.' '.__('(overwrite manual value)'), 'clean=elevation&overwrite=true').'</strong><br>'.
-				__('Recalculation of elevation for every activity with gps data.<br>'.
-					'This has to be done after changing your configuration concerning the calculation of elevation.<br>'.
-					'<br>'.
-					'<small>This <strong>does</strong> change your manual value for the elevation.</small>') );
-
-		if (Configuration::Vdot()->useElevationCorrection()) {
-			$Fieldset->addWarning(
-				__('The VDOT-adjustment for elevation data is activated (see configuration). '.
-					'The complete cleanup will not work as expected, recalculate the elevation first.') );
-		}
-
-		$Formular = new Formular();
-		$Formular->setId('datenbank-cleanup');
-		$Formular->addFieldset($Fieldset);
-		$Formular->display();
-	}
-
-	/**
-	 * Clean the databse
-	 */
-	private function cleanDatabase() {
-		$this->SuccessMessages[] = __('The database has been purged.');
-
-		if ($_GET['clean'] == 'complete')
-			$this->resetTrimpAndVdot();
-
-		if ($_GET['clean'] == 'simple' || $_GET['clean'] == 'complete') {
-			$this->resetMaxValues();
-			$this->resetShoes();
-		}
-
-		if ($_GET['clean'] == 'elevation')
-			$this->calculateElevation();
-
-		JD::recalculateVDOTform();
-		BasicEndurance::recalculateValue();
-		Helper::recalculateStartTime();
-		Helper::recalculateHFmaxAndHFrest();
-
-		// TODO: Nicht existente Kleidung aus DB loeschen
-	}
-
-	/**
-	 * Reset all TRIMP- and VDOT-values in database
-	 */
-	private function resetTrimpAndVdot() {
-		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`sportid`,`typeid`,`distance`,`s`,`pulse_avg`,`arr_heart`,`arr_time` FROM `'.PREFIX.'training`')->fetchAll();
-
-		foreach ($Trainings as $Training) {
-			$Object = new TrainingObject($Training);
-			$DB->update('training', $Training['id'],
-				array(
-					'trimp',
-					'vdot',
-					'vdot_by_time',
-					'jd_intensity'
-				),
-				array(
-					$Object->calculateTrimp(),
-					JD::Training2VDOT($Training['id'], $Training),
-					JD::Competition2VDOT($Training['distance'], $Training['s']),
-					JD::Training2points($Training['id'], $Training)
-				)
-			);
-		}
-
-		$this->SuccessMessages[] = sprintf( __('TRIMP and VDOT values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
-	}
-
-	/**
-	 * Calculate elevation
-	 */
-	private function calculateElevation() {
-		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`arr_alt`,`arr_time`,`distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
-
-		foreach ($Trainings as $Training) {
-			$GPS    = new GpsData($Training);
-			$elevationArray = $GPS->calculateElevation(true);
-			$keys   = array('elevation_calculated');
-			$values = array($elevationArray[0]);
-
-			if (Configuration::Vdot()->useElevationCorrection()) {
-				$keys[] = 'vdot_with_elevation';
-				$values[] = JD::Training2VDOTwithElevation($Training['id'], $Training, $elevationArray[1], $elevationArray[2]);
-			}
-
-			if (Request::param('overwrite') == 'true') {
-				$keys[]   = 'elevation';
-				$values[] = $elevationArray[0];
-			}
-
-			$DB->update('training', $Training['id'], $keys, $values);
-		}
-
-		$this->SuccessMessages[] = sprintf( __('Elevation values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
-
-		if (Configuration::Vdot()->useElevationCorrection())
-			$this->recalculateVDOTwithElevationWithoutGPSarray();
-	}
-
-	/**
-	 * Recalculate VDOT with elevation for trainings without gps array
-	 */
-	private function recalculateVDOTwithElevationWithoutGPSarray() {
-		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0')->fetchAll();
-
-		foreach ($Trainings as $Training) {
-			$newVdot = JD::Training2VDOTwithElevation($Training['id'], $Training, $Training['elevation'], $Training['elevation']);
-			$DB->update('training', $Training['id'], 'vdot_with_elevation', $newVdot);
-		}
-	}
-
-	/**
-	 * Clean the databse for max_atl, max_ctl, max_trimp
-	 */
-	private function resetMaxValues() {
-		$OldMaxValues = $this->getMaxValues();
-
-		Configuration::Data()->recalculateMaxValues();
-		JD::recalculateVDOTcorrector();
-
-		$NewMaxValues = $this->getMaxValues();
-
-		if ($OldMaxValues == $NewMaxValues) {
-			$this->SuccessMessages[] = __('The maximal values for ATL/CTL/TRIMP and VDOT correction factor did not change.');
+		if (isset($_POST['mode'])) {
+			$this->setJob();
+			$this->runJob();
+			$this->displayJob();
 		} else {
-			foreach (array_keys($OldMaxValues) as $Key) {
-				if ($OldMaxValues[$Key] != $NewMaxValues[$Key])
-					$this->SuccessMessages[] = __('New').' '.$Key.': <strong>'.$NewMaxValues[$Key].'</strong>, '.__('old value was').' '.$OldMaxValues[$Key];
-			}
+			$this->displayForm();
 		}
 	}
 
 	/**
-	 * Get max values
-	 * @return array
+	 * Set job
 	 */
-	private function getMaxValues() {
-		$Data = Configuration::Data();
-
-		return array(
-			__('maxATL')			=> (int)$Data->maxATL(),
-			__('maxCTL')			=> (int)$Data->maxCTL(),
-			__('maxTRIMP')			=> (int)$Data->maxTrimp(),
-			__('VDOT corrector')	=> round(JD::correctionFactor(), 4)
-		);
+	private function setJob() {
+		if ($_POST['mode'] == 'general') {
+			$this->Job = new Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral();
+		} elseif ($_POST['mode'] == 'loop') {
+			$this->Job = new Runalyze\Plugin\Tool\DatabaseCleanup\JobLoop();
+		}
 	}
 
 	/**
-	 * Clean the databse for shoes
+	 * Run job
 	 */
-	private function resetShoes() {
-		$num = ShoeFactory::numberOfShoes();
-		ShoeFactory::recalculateAllShoes();
+	private function runJob() {
+		$this->Job->run();
+	}
 
-		$this->SuccessMessages[] = sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), $num );
+	/**
+	 * Display job
+	 */
+	private function displayJob() {
+		include __DIR__.'/tpl.Job.php';
+	}
+
+	/**
+	 * Display form
+	 */
+	private function displayForm() {
+		include __DIR__.'/tpl.ViewForm.php';
+	}
+
+	/**
+	 * Get job
+	 * @return Runalyze\Plugin\Tool\DatabaseCleanup\Job
+	 * @throws RuntimeException
+	 */
+	protected function Job() {
+		if (is_null($this->Job)) {
+			throw new RuntimeException('There is no current job.');
+		}
+
+		return $this->Job;
 	}
 }

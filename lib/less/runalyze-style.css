@@ -723,6 +723,25 @@ p.file {
 p.file:before {
   content: "\f016";
 }
+p.checkbox,
+div.checkbox {
+  position: relative;
+  margin: 2px 5px;
+  padding: 4px 2px 5px 22px;
+  background-color: #f1f1f1;
+  color: #000000;
+}
+p.checkbox > input,
+div.checkbox > input,
+p.checkbox > label input,
+div.checkbox > label input {
+  position: absolute;
+  left: 0;
+  top: 3px;
+  width: 22px;
+  text-align: center;
+  display: block;
+}
 tr.TODO td,
 tr.NOTICE td,
 tr.DEBUG td {
@@ -1633,6 +1652,9 @@ tr.space-line.zebra-corrector td {
   right: 50%;
   border-right: 1px solid #000;
   max-width: 50%;
+}
+.progress-bar-container.animated .progress-bar {
+  transition: width .5s ease;
 }
 .boxed-values {
   font-size: 0;
