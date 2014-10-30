@@ -96,3 +96,7 @@ ALTER TABLE `runalyze_dataset` DROP `label`, DROP `description`, DROP `distance`
 
 /* 16.10.2014 - add weight for shoes */
 ALTER TABLE `runalyze_shoe` ADD `weight` SMALLINT UNSIGNED NOT NULL AFTER `since`;
+
+
+/* 30.10.2014 - add salt to account table */
+ALTER TABLE  `runalyze_account` ADD  `salt` CHAR( 64 ) NOT NULL AFTER  `password`;
