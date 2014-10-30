@@ -6,6 +6,9 @@
 
 namespace Runalyze\Calculation\Trimp;
 
+use Runalyze\Calculation\Distribution\Empirical;
+use Runalyze\Calculation\Distribution\TimeSeries;
+
 /**
  * Data collector
  * 
@@ -76,21 +79,11 @@ class DataCollector {
 	 * Calculate
 	 */
 	protected function calculate() {
-		if (empty($this->Duration)) {
-			$this->Result = array_count_values($this->HeartRate);
-		} else {
-			$lastTime = 0;
-			foreach ($this->HeartRate as $i => $hr) {
-				$delta = $this->Duration[$i] - $lastTime;
-				$lastTime += $delta;
+		$Distribution = empty($this->Duration)
+				? new Empirical($this->HeartRate)
+				: new TimeSeries($this->HeartRate, $this->Duration);
 
-				if (!isset($this->Result[$hr])) {
-					$this->Result[$hr] = $delta;
-				} else {
-					$this->Result[$hr] += $delta;
-				}
-			}
-		}
+		$this->Result = $Distribution->histogram();
 	}
 
 	/**

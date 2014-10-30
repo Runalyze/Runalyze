@@ -49,9 +49,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
 		
 	}
 
-	/**
-	 * @covers Runalyze\Calculation\Performance\Model::setRange
-	 */
 	public function testRange() {
 		$Model = new Model_MockTesterEmpty(array());
 		$Model->setRange(-3, 4);
@@ -68,9 +65,6 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
 		), $Model->getArrays() );
 	}
 
-	/**
-	 * @covers Runalyze\Calculation\Performance\Model::getArrays
-	 */
 	public function testGetArrays() {
 		$this->assertEquals( array(
 			Model::FITNESS => array(-1 => 10, 0 => 15, 1 => 20),
@@ -79,27 +73,18 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
 		), $this->object->getArrays() );
 	}
 
-	/**
-	 * @covers Runalyze\Calculation\Performance\Model::fitnessAt
-	 */
 	public function testFitnessAt() {
 		$this->assertEquals( 10, $this->object->fitnessAt(-1) );
 		$this->assertEquals( 15, $this->object->fitnessAt( 0) );
 		$this->assertEquals( 20, $this->object->fitnessAt(+1) );
 	}
 
-	/**
-	 * @covers Runalyze\Calculation\Performance\Model::fatigueAt
-	 */
 	public function testFatigueAt() {
 		$this->assertEquals( 15, $this->object->fatigueAt(-1) );
 		$this->assertEquals( 20, $this->object->fatigueAt( 0) );
 		$this->assertEquals( 15, $this->object->fatigueAt(+1) );
 	}
 
-	/**
-	 * @covers Runalyze\Calculation\Performance\Model::performanceAt
-	 */
 	public function testPerformanceAt() {
 		$this->assertEquals( -10, $this->object->performanceAt(-1) );
 		$this->assertEquals( -10, $this->object->performanceAt( 0) );
