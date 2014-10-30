@@ -15,7 +15,23 @@ class Shoe extends DataObject {
 	protected function initDatabaseScheme() {
 		$this->DatabaseScheme = DatabaseSchemePool::get('training/schemes/scheme.Shoe.php');
 	}
-	
+
+	/**
+	 * Tasks to perform after insert
+	 */
+	protected function tasksAfterInsert() {
+		// TODO: 'update' cache
+		Cache::delete('shoes');
+	}
+
+	/**
+	 * Tasks to perform after update
+	 */
+	protected function tasksAfterUpdate() {
+		// TODO: 'update' cache
+		Cache::delete('shoes');
+	}
+
 	/**
 	* Get name
 	* @return string
