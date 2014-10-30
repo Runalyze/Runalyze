@@ -187,9 +187,9 @@ class Filesystem {
 	 */
 	static public function getMaximumFilesize() {
 		$UploadSize = ini_get('upload_max_filesize');
-		$PostSize = ini_get('max_file_size');
+		$PostSize = ini_get('post_max_size');
 
-		return max(self::stringToBytes($UploadSize), self::stringToBytes($PostSize));
+		return min(self::stringToBytes($UploadSize), self::stringToBytes($PostSize));
 	}
 
 	/**
