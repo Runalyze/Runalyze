@@ -100,3 +100,62 @@ ALTER TABLE `runalyze_shoe` ADD `weight` SMALLINT UNSIGNED NOT NULL AFTER `since
 
 /* 30.10.2014 - add salt to account table */
 ALTER TABLE  `runalyze_account` ADD  `salt` CHAR( 64 ) NOT NULL AFTER  `password`;
+
+
+/* 02.11.2014 - refactor database for activity data */
+ALTER TABLE `runalyze_training` ADD INDEX `time` (`time`);
+ALTER TABLE `runalyze_training` ADD INDEX `sportid` (`sportid`);
+ALTER TABLE `runalyze_training` ADD INDEX `typeid` (`typeid`);
+
+ALTER TABLE `runalyze_user` ADD INDEX `time` (`time`);
+
+CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
+  `accountid` INT UNSIGNED NOT NULL,
+  `activityid` INT UNSIGNED NOT NULL,
+  `time` LONGTEXT NOT NULL,
+  `distance` LONGTEXT NOT NULL,
+  `pace` LONGTEXT NOT NULL,
+  `heartrate` LONGTEXT NOT NULL,
+  `cadence` LONGTEXT NOT NULL,
+  `power` LONGTEXT NOT NULL,
+  `temperature` LONGTEXT NOT NULL,
+  `groundcontact` LONGTEXT NOT NULL,
+  `vertical_oscillation` LONGTEXT NOT NULL,
+  PRIMARY KEY (`accountid`, `activityid`)
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `runalyze_trackpause` (
+  `accountid` INT UNSIGNED NOT NULL,
+  `activityid` INT UNSIGNED NOT NULL,
+  `time` MEDIUMINT UNSIGNED NOT NULL,
+  `duration` SMALLINT UNSIGNED NOT NULL,
+  `heartrate_start` TINYINT UNSIGNED NOT NULL,
+  `heartrate_end` TINYINT UNSIGNED NOT NULL,
+  PRIMARY KEY (`accountid` ,`activityid`)
+) ENGINE = MYISAM;
+
+CREATE TABLE  `runalyze`.`runalyze_route` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `accountid` INT UNSIGNED NOT NULL,
+  `name` VARCHAR( 255 ) NOT NULL,
+  `cities` VARCHAR( 255 ) NOT NULL,
+  `distance` DECIMAL( 6, 2 ) UNSIGNED NOT NULL,
+  `elevation` SMALLINT UNSIGNED NOT NULL,
+  `elevation_up` SMALLINT UNSIGNED NOT NULL,
+  `elevation_down` SMALLINT UNSIGNED NOT NULL,
+  `lats` LONGTEXT NOT NULL,
+  `lngs` LONGTEXT NOT NULL,
+  `elevations_original` LONGTEXT NOT NULL,
+  `elevations_corrected` LONGTEXT NOT NULL,
+  `elevations_source` VARCHAR( 255 ) NOT NULL,
+  `startpoint_lat` FLOAT( 8, 5 ) NOT NULL,
+  `startpoint_lng` FLOAT( 8, 5 ) NOT NULL,
+  `endpoint_lat` FLOAT( 8, 5 ) NOT NULL,
+  `endpoint_lng` FLOAT( 8, 5 ) NOT NULL,
+  `min_lat` FLOAT( 8, 5 ) NOT NULL,
+  `min_lng` FLOAT( 8, 5 ) NOT NULL,
+  `max_lat` FLOAT( 8, 5 ) NOT NULL,
+  `max_lng` FLOAT( 8, 5 ) NOT NULL,
+  `in_routenet` TINYINT( 1 ) UNSIGNED NOT NULL,
+  INDEX (`accountid`)
+) ENGINE = MYISAM;
