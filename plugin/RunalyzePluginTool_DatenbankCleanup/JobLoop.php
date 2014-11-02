@@ -6,6 +6,8 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
+use Runalyze\Configuration;
+
 /**
  * JobLoop
  * 
@@ -64,7 +66,7 @@ class JobLoop extends Job {
 
 				$Update->bindValue(':elevation_calculated', $elevationArray[0]);
 
-				if (\Configuration::Vdot()->useElevationCorrection()) {
+				if (Configuration::Vdot()->useElevationCorrection()) {
 					$Update->bindValue(':vdot_with_elevation', \JD::Training2VDOTwithElevation($Data['id'], $Data, $elevationArray[1], $elevationArray[2]));
 				}
 
@@ -104,7 +106,7 @@ class JobLoop extends Job {
 		if ($this->isRequested(self::ELEVATION)) {
 			$Set[] = 'elevation_calculated';
 
-			if (\Configuration::Vdot()->useElevationCorrection()) {
+			if (Configuration::Vdot()->useElevationCorrection()) {
 				$Set[] = 'vdot_with_elevation';
 			}
 

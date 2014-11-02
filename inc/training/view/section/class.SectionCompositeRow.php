@@ -3,6 +3,9 @@
  * This file contains class::SectionCompositeRow
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Configuration;
+
 /**
  * Row: Heartrate
  * 

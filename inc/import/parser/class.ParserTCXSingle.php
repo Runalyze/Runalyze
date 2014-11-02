@@ -3,6 +3,9 @@
  * This file contains class::ParserTCXSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for TCX files from Garmin
  *

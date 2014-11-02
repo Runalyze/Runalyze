@@ -3,6 +3,9 @@
  * This file contains the class::JD
  * @package Runalyze\Calculations
  */
+
+use Runalyze\Configuration;
+
 /**
  * The actual (corrected) VDOT-value based on last trainings
  * @var double

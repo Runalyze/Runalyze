@@ -3,6 +3,9 @@
  * This file contains class::VDOTinfo
  * @package Runalyze\DataObjects\Training\View
  */
+
+use Runalyze\Configuration;
+
 /**
  * Display VDOT info for a training
  * 

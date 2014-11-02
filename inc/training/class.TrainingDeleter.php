@@ -3,6 +3,9 @@
  * This file contains class::TrainingObject
  * @package Runalyze\DataObjects\Training
  */
+
+use Runalyze\Configuration;
+
 /**
  * DataObject for trainings
  * 

@@ -3,6 +3,9 @@
  * This file contains class::ParserKMLtomtomSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for KML files from Tom Tom
  *

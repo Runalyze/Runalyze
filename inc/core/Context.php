@@ -6,6 +6,8 @@
 
 namespace Runalyze;
 
+use Runalyze\Configuration;
+
 /**
  * Context
  * 
@@ -32,9 +34,9 @@ class Context {
 	static public function Athlete() {
 		if (!isset(self::$Objects['athlete'])) {
 			self::$Objects['athlete'] = new Athlete(
-				\Configuration::General()->gender(),
-				\Configuration::Data()->HRmax(),
-				\Configuration::Data()->HRrest()
+				Configuration::General()->gender(),
+				Configuration::Data()->HRmax(),
+				Configuration::Data()->HRrest()
 			);
 		}
 

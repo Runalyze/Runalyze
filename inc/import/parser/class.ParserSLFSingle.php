@@ -3,6 +3,9 @@
  * This file contains class::ParserSLFSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for SLF files from Sigma
  *

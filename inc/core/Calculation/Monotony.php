@@ -7,6 +7,7 @@
 namespace Runalyze\Calculation;
 
 use Runalyze\Calculation\Scale;
+use Runalyze\Configuration;
 
 /**
  * Monotony
@@ -134,7 +135,7 @@ class Monotony {
 	 */
 	public function trainingStrainAsPercentage() {
 		// TODO: Use another maximum?
-		$max = 2 * \Configuration::Data()->maxATL();
+		$max = 2 * Configuration::Data()->maxATL();
 		$Scale = new Scale\Percental();
 		$Scale->setMaximum($max);
 

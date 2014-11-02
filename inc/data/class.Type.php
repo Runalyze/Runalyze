@@ -3,6 +3,9 @@
  * This file contains class::Type
  * @package Runalyze\Data\Type
  */
+
+use Runalyze\Configuration;
+
 /**
  * Training types
  * 

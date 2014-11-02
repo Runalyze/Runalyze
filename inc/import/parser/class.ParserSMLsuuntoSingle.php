@@ -3,6 +3,9 @@
  * This file contains class::ParserSMLsuuntoSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for SML files from Suunto
  *

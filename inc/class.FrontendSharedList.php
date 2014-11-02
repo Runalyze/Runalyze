@@ -3,6 +3,9 @@
  * This file contains class::FrontendSharedList
  * @package Runalyze\Frontend
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class for customizing frontend for displaying shared activity-lists
  * @author Hannes Christiansen

@@ -3,6 +3,9 @@
  * This file contains the class of the RunalyzePluginPanel "Prognose".
  * @package Runalyze\Plugins\Panels
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
  * Class: RunalyzePluginPanel_Prognose

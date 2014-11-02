@@ -6,6 +6,8 @@
 
 namespace Runalyze;
 
+use \Runalyze\Parameter\Application\Gender;
+
 /**
  * Athlete
  * 
@@ -15,7 +17,7 @@ namespace Runalyze;
 class Athlete {
 	/**
 	 * Gender
-	 * @var \Gender
+	 * @var \Runalyze\Parameter\Application\Gender
 	 */
 	protected $Gender;
 
@@ -52,13 +54,13 @@ class Athlete {
 	 * @param int $age [optional]
 	 */
 	public function __construct(
-		\Gender $Gender = null,
+		Gender $Gender = null,
 		$maximalHR = null,
 		$restingHR = null,
 		$weight = null,
 		$age = null
 	) {
-		$this->Gender = $Gender ?: new \Gender();
+		$this->Gender = $Gender ?: new Gender();
 		$this->maximalHR = $maximalHR;
 		$this->restingHR = $restingHR;
 		$this->weight = $weight;
@@ -67,7 +69,7 @@ class Athlete {
 
 	/**
 	 * Gender
-	 * @return \Gender
+	 * @return \Runalyze\Parameter\Application\Gender
 	 */
 	public function gender() {
 		return $this->Gender;

@@ -3,6 +3,9 @@
  * This file contains class::SportFactory
  * @package Runalyze\Data\Sport
  */
+
+use Runalyze\Configuration;
+
 /**
  * Factory serving static methods for Sport
  * 

@@ -3,6 +3,9 @@
  * This file contains class::ParserGPXSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for GPX files
  * 

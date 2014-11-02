@@ -3,6 +3,9 @@
  * This file contains the class of the RunalyzePluginPanel "Ziele".
  * @package Runalyze\Plugins\Panels
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 /**
  * Class: RunalyzePluginPanel_Ziele

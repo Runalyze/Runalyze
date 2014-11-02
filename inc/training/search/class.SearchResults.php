@@ -3,6 +3,9 @@
  * This file contains class::SearchResults
  * @package Runalyze\Search
  */
+
+use Runalyze\Configuration;
+
 /**
  * Search results
  *

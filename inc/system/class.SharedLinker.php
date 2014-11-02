@@ -3,6 +3,9 @@
  * This file contains class::SharedLinker
  * @package Runalyze\System
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class for handling links to shared activities
  * @author Hannes Christiansen

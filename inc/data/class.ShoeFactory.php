@@ -3,6 +3,9 @@
  * This file contains class::ShoeFactory
  * @package Runalyze\Data\Shoe
  */
+
+use Runalyze\Configuration;
+
 /**
  * Factory serving static methods for shoes
  *

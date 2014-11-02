@@ -8,6 +8,7 @@ $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 use Runalyze\Calculation\Performance;
 use Runalyze\Calculation\Trimp;
 use Runalyze\Calculation\Monotony;
+use Runalyze\Configuration;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele

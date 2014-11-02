@@ -3,6 +3,10 @@
  * This file contains class::ElevationCalculator
  * @package Runalyze\Data\GPS
  */
+
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\ElevationMethod;
+
 /**
  * Elevation calculator
  * @author Hannes Christiansen
@@ -23,7 +27,7 @@ class ElevationCalculator {
 
 	/**
 	 * Elevation method
-	 * @var ElevationMethod
+	 * @var \Runalyze\Parameter\Application\ElevationMethod
 	 */
 	protected $Method;
 
@@ -57,7 +61,7 @@ class ElevationCalculator {
 	 * If no options are set, the current configuration settings are used.
 	 * 
 	 * @param array $ElevationPoints
-	 * @param ElevationMethod $Method [optional]
+	 * @param \Runalyze\Parameter\Application\ElevationMethod $Method [optional]
 	 * @param int $Treshold [optional]
 	 */
 	public function __construct($ElevationPoints, ElevationMethod $Method = null, $Treshold = null) {
@@ -76,7 +80,7 @@ class ElevationCalculator {
 
 	/**
 	 * Set method
-	 * @param ElevationMethod $Method
+	 * @param \Runalyze\Parameter\Application\ElevationMethod $Method
 	 */
 	public function setMethod(ElevationMethod $Method) {
 		$this->Method = $Method;

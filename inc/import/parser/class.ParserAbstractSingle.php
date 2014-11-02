@@ -3,6 +3,9 @@
  * This file contains class::ParserAbstractSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Abstract parser for one single training
  *

@@ -3,6 +3,9 @@
  * This file contains class::ParserXMLpolarSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for XML files from Polar
  *

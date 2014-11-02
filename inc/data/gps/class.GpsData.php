@@ -3,6 +3,9 @@
  * This file contains class::GpsData
  * @package Runalyze\Data\GPS
  */
+
+use Runalyze\Configuration;
+
 /**
  * GPS data
  * @author Hannes Christiansen

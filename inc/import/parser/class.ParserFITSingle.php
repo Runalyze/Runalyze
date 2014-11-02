@@ -3,6 +3,9 @@
  * This file contains class::ParserFITSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for FIT files from ANT
  *

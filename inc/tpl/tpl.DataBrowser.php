@@ -32,7 +32,7 @@ foreach ($this->days as $i => $day) {
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
 			$id       = $Training['id'];
-			$wk_class = isset($Training['typeid']) && $Training['typeid'] == Configuration::General()->competitionType() ? ' wk' : '';
+			$wk_class = isset($Training['typeid']) && $Training['typeid'] == \Runalyze\Configuration::General()->competitionType() ? ' wk' : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public'])
 				echo '<tr class="r training'.$wk_class.'">';
@@ -82,7 +82,7 @@ echo '</tbody>';
 echo '<tbody>';
 
 // Z U S A M M E N F A S S U N G
-$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
+$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !\Runalyze\Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
 $sports = DB::getInstance()->query('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`')->fetchAll();
 foreach ($sports as $i => $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);

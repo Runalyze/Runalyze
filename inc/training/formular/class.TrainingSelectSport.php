@@ -3,6 +3,9 @@
  * This file contains class::TrainingSelectSport
  * @package Runalyze\DataObjects\Training\Formular
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class for input fields: sportid
  * @author Hannes Christiansen

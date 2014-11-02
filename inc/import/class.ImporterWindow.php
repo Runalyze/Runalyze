@@ -3,6 +3,9 @@
  * This file contains class::ImporterWindow
  * @package Runalyze\Import
  */
+
+use Runalyze\Configuration;
+
 /**
  * Window for importing/creating new trainings.
  * 

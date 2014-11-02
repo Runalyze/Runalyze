@@ -6,6 +6,8 @@
 
 namespace Runalyze\Calculation\Trimp;
 
+use Runalyze\Parameter\Application\Gender;
+
 /**
  * Factor
  * 
@@ -24,7 +26,7 @@ namespace Runalyze\Calculation\Trimp;
 class Factor {
 	/**
 	 * Gender
-	 * @var \Gender
+	 * @var \Runalyze\Parameter\Application\Gender
 	 */
 	protected $Gender;
 
@@ -32,7 +34,7 @@ class Factor {
 	 * Construct
 	 * @param \Gender $Gender
 	 */
-	public function __construct(\Gender $Gender) {
+	public function __construct(Gender $Gender) {
 		$this->Gender = $Gender;
 	}
 

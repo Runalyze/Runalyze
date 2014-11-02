@@ -3,6 +3,9 @@
  * This file contains the class::Frontend to create and print the HTML-Page.
  * @package Runalyze\Frontend
  */
+
+use Runalyze\Configuration;
+
 /**
  * Frontend class for setting up everything
  * 

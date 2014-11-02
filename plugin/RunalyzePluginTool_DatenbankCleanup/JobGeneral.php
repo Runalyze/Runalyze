@@ -6,6 +6,8 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
+use Runalyze\Configuration;
+
 /**
  * JobGeneral
  * 
@@ -102,9 +104,9 @@ class JobGeneral extends Job {
 	 * Recalculate vdot shape
 	 */
 	protected function recalculateVDOTshape() {
-		$oldValue = \Configuration::Data()->vdotShape();
+		$oldValue = Configuration::Data()->vdotShape();
 		\JD::recalculateVDOTform();
-		$newValue = \Configuration::Data()->vdotShape();
+		$newValue = Configuration::Data()->vdotShape();
 
 		$this->addSuccessMessage(__('Vdot shape'), number_format($oldValue, 1), number_format($newValue, 1));
 	}
@@ -113,9 +115,9 @@ class JobGeneral extends Job {
 	 * Recalculate vdot corrector
 	 */
 	protected function recalculateVDOTcorrector() {
-		$oldValue = \Configuration::Data()->vdotCorrector();
+		$oldValue = Configuration::Data()->vdotCorrector();
 		\JD::recalculateVDOTform();
-		$newValue = \Configuration::Data()->vdotCorrector();
+		$newValue = Configuration::Data()->vdotCorrector();
 
 		$this->addSuccessMessage(__('Vdot corrector'), number_format($oldValue, 4), number_format($newValue, 4));
 	}
@@ -124,9 +126,9 @@ class JobGeneral extends Job {
 	 * Recalculate basic endurance
 	 */
 	protected function recalculateBasicEndurance() {
-		$oldValue = \Configuration::Data()->basicEndurance();
+		$oldValue = Configuration::Data()->basicEndurance();
 		\BasicEndurance::recalculateValue();
-		$newValue = \Configuration::Data()->basicEndurance();
+		$newValue = Configuration::Data()->basicEndurance();
 
 		$this->addSuccessMessage(__('Basic endurance'), $oldValue, $newValue);
 	}
@@ -135,7 +137,7 @@ class JobGeneral extends Job {
 	 * Recalculate maximal performance values
 	 */
 	protected function recalculateMaximalPerformanceValues() {
-		$Data = \Configuration::Data();
+		$Data = Configuration::Data();
 
 		$oldCTL = $Data->maxCTL();
 		$oldATL = $Data->maxATL();

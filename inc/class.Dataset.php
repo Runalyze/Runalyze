@@ -3,6 +3,9 @@
  * This file contains class::Dataset
  * @package Runalyze\DataBrowser\Dataset
  */
+
+use Runalyze\Configuration;
+
 /**
  * Load dataset row for a given training or a group of trainings
  * @author Hannes Christiansen

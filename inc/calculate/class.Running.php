@@ -3,6 +3,9 @@
  * This file contains class::Running
  * @package Runalyze\Calculations
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class: Running
  * @author Hannes Christiansen

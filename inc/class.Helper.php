@@ -3,6 +3,9 @@
  * This file contains class::Helper
  * @package Runalyze
  */
+
+use Runalyze\Configuration;
+
 /**
  * Maximal heart-frequence of the user
  * @var HF_MAX

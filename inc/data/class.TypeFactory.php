@@ -3,6 +3,9 @@
  * This file contains class::TypeFactory
  * @package Runalyze\Data\Type
  */
+
+use Runalyze\Configuration;
+
 /**
  * Factory serving static methods for types
  *

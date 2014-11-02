@@ -3,6 +3,9 @@
  * This file contains class::RunningPrognosisStrategy
  * @package Runalyze\Calculations\Prognosis
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class: RunningPrognosisStrategy
  * @author Hannes Christiansen

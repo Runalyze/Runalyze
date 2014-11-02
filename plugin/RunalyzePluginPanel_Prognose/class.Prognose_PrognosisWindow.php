@@ -3,6 +3,9 @@
  * This file contains the class Prognose_PrognosisWindow
  * @package Runalyze\Plugins\Panels
  */
+
+use Runalyze\Configuration;
+
 /**
  * Prognosis calculator window
  * 

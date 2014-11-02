@@ -3,6 +3,9 @@
  * This file contains class::LeafletMap
  * @package Runalyze\Data\GPS
  */
+
+use Runalyze\Configuration;
+
 /**
  * Leaflet-map
  * @author Hannes Christiansen

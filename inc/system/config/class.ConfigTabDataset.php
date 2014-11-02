@@ -3,6 +3,9 @@
  * This file contains class::ConfigTabDataset
  * @package Runalyze\System\Config
  */
+
+use Runalyze\Configuration;
+
 /**
  * ConfigTabDataset
  * @author Hannes Christiansen

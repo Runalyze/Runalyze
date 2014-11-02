@@ -18,7 +18,7 @@
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 
-<body id="shared" style="background-image:url(<?php echo Configuration::Design()->backgroundImage(); ?>);">
+<body id="shared" style="background-image:url(<?php echo \Runalyze\Configuration::Design()->backgroundImage(); ?>);">
 
 <div id="flot-loader"></div>
 

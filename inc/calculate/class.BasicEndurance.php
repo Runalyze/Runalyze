@@ -3,6 +3,9 @@
  * This file contains class::BasicEndurance
  * @package Runalyze\Calculations
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class: BasicEndurance
  * 

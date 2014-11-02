@@ -6,6 +6,7 @@
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 
 use \Runalyze\Data\Weather;
+use Runalyze\Configuration;
 
 /**
  * Class: RunalyzePluginStat_Wetter

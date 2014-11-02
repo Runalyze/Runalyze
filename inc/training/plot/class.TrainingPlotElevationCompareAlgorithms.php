@@ -3,6 +3,9 @@
  * This file contains class::TrainingPlotElevationCompareAlgorithms
  * @package Runalyze\Draw\Training
  */
+
+use Runalyze\Configuration;
+
 /**
  * Training plot for comparing elevation algorithms
  * @author Hannes Christiansen

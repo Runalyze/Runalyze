@@ -3,6 +3,9 @@
  * This file contains class::ParserFITLOGSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for FITLOG files from SportTracks
  *

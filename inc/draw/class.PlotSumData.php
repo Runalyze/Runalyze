@@ -3,6 +3,9 @@
  * This file contains class::PlotSumData
  * @package Runalyze\Plot
  */
+
+use Runalyze\Configuration;
+
 /**
  * Plot sum data
  * @package Runalyze\Plot

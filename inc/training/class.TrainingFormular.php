@@ -3,6 +3,9 @@
  * This file contains class::TrainingFormular
  * @package Runalyze\DataObjects\Training
  */
+
+use Runalyze\Configuration;
+
 /**
  * Formular for trainings
  * 

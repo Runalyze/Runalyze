@@ -3,6 +3,9 @@
  * This file contains class::DataBrowser
  * @package Runalyze\DataBrowser
  */
+
+use Runalyze\Configuration;
+
 /**
  * DataBrowser
  * @author Hannes Christiansen

@@ -1,3 +1,6 @@
+<?php
+use Runalyze\Configuration;
+?>
 <table id="vdotAnalysisTable" class="fullwidth zebra-style">
 	<thead>
 		<tr>

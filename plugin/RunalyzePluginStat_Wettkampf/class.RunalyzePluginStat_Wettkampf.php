@@ -3,6 +3,9 @@
  * This file contains class::RunalyzePluginStat_Wettkampf
  * @package Runalyze\Plugins\Stats
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
  * Plugin "Wettkampf"

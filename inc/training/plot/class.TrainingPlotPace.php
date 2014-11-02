@@ -3,6 +3,9 @@
  * This file contains class::TrainingPlotPace
  * @package Runalyze\Draw\Training
  */
+
+use Runalyze\Configuration;
+
 /**
  * Training plot for pace
  * @author Hannes Christiansen

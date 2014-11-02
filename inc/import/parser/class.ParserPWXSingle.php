@@ -3,6 +3,9 @@
  * This file contains class::ParserPWXSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for PWX files from Peaksware/Trainingpeaks
  *

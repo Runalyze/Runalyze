@@ -3,6 +3,9 @@
  * This file contains class::AccountHandler
  * @package Runalyze\System
  */
+
+use Runalyze\Configuration;
+
 /**
  * AccountHandler
  * 

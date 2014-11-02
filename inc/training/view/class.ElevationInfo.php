@@ -3,6 +3,9 @@
  * This file contains class::ElevationInfo
  * @package Runalyze\DataObjects\Training\View
  */
+
+use Runalyze\Configuration;
+
 /**
  * Display elevation info for a training
  * 

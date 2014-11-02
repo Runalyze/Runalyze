@@ -3,6 +3,9 @@
  * This file contains class::TrainingPlotPulse
  * @package Runalyze\Draw\Training
  */
+
+use Runalyze\Configuration;
+
 /**
  * Training plot for heartrate
  * @author Hannes Christiansen

@@ -17,7 +17,7 @@ foreach ($Array as $String) {
 		$IDs[] = substr($String,12);
 }
 
-$IgnoreIDs = Configuration::ActivityForm()->ignoredActivityIDs();
+$IgnoreIDs = \Runalyze\Configuration::ActivityForm()->ignoredActivityIDs();
 $Request = DB::getInstance()->prepare('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `activity_id`=:id LIMIT 1');
 
 foreach ($IDs as $ID) {

@@ -3,6 +3,9 @@
  * This file contains class::Plugin
  * @package Runalyze\Plugin
  */
+
+use Runalyze\Configuration;
+
 /**
  * Abstract class for Plugins
  * @author Hannes Christiansen

@@ -3,6 +3,9 @@
  * This file contains the class of the RunalyzePluginTool "AnalyzeVDOT".
  * @package Runalyze\Plugins\Tools
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginTool_AnalyzeVDOT';
 /**
  * Class: RunalyzePluginTool_AnalyzeVDOT

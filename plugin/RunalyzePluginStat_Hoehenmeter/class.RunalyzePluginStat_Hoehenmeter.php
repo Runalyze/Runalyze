@@ -3,6 +3,9 @@
  * This file contains the class of the RunalyzePluginStat "Hoehenmeter".
  * @package Runalyze\Plugins\Stats
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
  * Class: RunalyzePluginStat_Hoehenmeter

@@ -3,6 +3,9 @@
  * This file contains class::FormularFieldset
  * @package Runalyze\HTML\Formular
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class for a fieldset as part of a formular
  * @author Hannes Christiansen

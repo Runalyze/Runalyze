@@ -3,6 +3,9 @@
  * This file contains class::ExporterKML
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\Configuration;
+
 /**
  * Exporter for: KML
  * 

@@ -3,6 +3,9 @@
  * This file contains class::Sport
  * @package Runalyze\Data\Sport
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class: Sport
  * @author Hannes Christiansen

@@ -3,6 +3,9 @@
  * This file contains class::Plot
  * @package Runalyze\Draw
  */
+
+use Runalyze\Configuration;
+
 /**
  * General plotting class
  * @author Hannes Christiansen

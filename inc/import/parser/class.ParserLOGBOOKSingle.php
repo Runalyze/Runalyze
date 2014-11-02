@@ -3,6 +3,9 @@
  * This file contains class::ParserLOGBOOKSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Configuration;
+
 /**
  * Parser for LOGBOOK files from SportTracks
  *

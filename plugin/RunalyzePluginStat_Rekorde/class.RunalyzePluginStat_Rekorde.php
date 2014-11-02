@@ -3,6 +3,9 @@
  * This file contains the class of the RunalyzePluginStat "Rekorde".
  * @package Runalyze\Plugins\Stats
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginStat_Rekorde';
 /**
  * Class: RunalyzePluginStat_Rekorde

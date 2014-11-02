@@ -3,6 +3,9 @@
  * This file contains class::ConfigTabGeneral
  * @package Runalyze\System\Config
  */
+
+use Runalyze\Configuration;
+
 /**
  * ConfigTabGeneral
  * @author Hannes Christiansen

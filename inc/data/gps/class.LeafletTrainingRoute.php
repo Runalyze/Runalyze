@@ -3,6 +3,9 @@
  * This file contains class::LeafletRoute
  * @package Runalyze\Data\GPS
  */
+
+use Runalyze\Configuration;
+
 /**
  * Leaflet-route
  * @author Hannes Christiansen

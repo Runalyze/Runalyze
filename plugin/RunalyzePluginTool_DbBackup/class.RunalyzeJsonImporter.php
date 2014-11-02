@@ -3,6 +3,10 @@
  * This file contains class::RunalyzeJsonImporter
  * @package Runalyze\Plugins\Tools
  */
+
+use Runalyze\Configuration;
+use Runalyze\Configuration\Handle;
+
 /**
  * RunalyzeJsonImporter
  * @author Hannes Christiansen
@@ -371,7 +375,7 @@ class RunalyzeJsonImporter {
 	 */
 	private function correctConfigReferences() {
 		if (isset($_POST['overwrite_config'])) {
-			$ConfigValues = ConfigurationHandle::tableHandles();
+			$ConfigValues = Handle::tableHandles();
 
 			foreach ($ConfigValues as $key => $table) {
 				$table = PREFIX.$table;

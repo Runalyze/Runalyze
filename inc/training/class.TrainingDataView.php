@@ -3,6 +3,9 @@
  * This file contains class::TraningDataView
  * @package Runalyze\DataObjects\Training\View
  */
+
+use Runalyze\Configuration;
+
 /**
  * Display training data
  *

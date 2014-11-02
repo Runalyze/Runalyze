@@ -3,6 +3,9 @@
  * This file contains class::RunalyzePluginStat_Analyse
  * @package Runalyze\Plugins\Stats
  */
+
+use Runalyze\Configuration;
+
 $PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
  * "Analyse" plugin
