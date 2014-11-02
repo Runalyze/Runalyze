@@ -91,7 +91,7 @@ abstract class Model {
 				$this->setRange(0, 0);
 			} else {
 				$Keys = array_keys($this->TRIMP);
-				$this->setRange($Keys[0], end($Keys));
+				$this->setRange($Keys[0], max(0,end($Keys)));
 			}
 		}
 

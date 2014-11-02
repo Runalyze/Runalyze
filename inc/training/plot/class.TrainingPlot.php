@@ -83,11 +83,25 @@ abstract class TrainingPlot {
 		$this->initPlot();
 		$this->initData();
 
-		if (count($this->Data) >= 2 || !empty($this->Plot->Data)) {
+		if ($this->dataIsAvailable()) {
 			$this->setProperties();
 		} else {
 			$this->Plot->raiseError( __('No plot available.') );
 		}
+	}
+
+	/**
+	 * Data is available
+	 * @return bool
+	 */
+	private function dataIsAvailable() {
+		foreach ($this->Plot->Data as $key => $Data) {
+			if (!isset($Data['data']) || empty($Data['data'])) {
+				unset($this->Plot->Data[$key]);
+			}
+		}
+
+		return (count($this->Data) >= 2 || !empty($this->Plot->Data));
 	}
 
 	/**
