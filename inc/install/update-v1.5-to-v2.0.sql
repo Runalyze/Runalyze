@@ -109,6 +109,8 @@ ALTER TABLE `runalyze_training` ADD INDEX `typeid` (`typeid`);
 
 ALTER TABLE `runalyze_user` ADD INDEX `time` (`time`);
 
+ALTER TABLE  `runalyze_training` ADD  `routeid` INT UNSIGNED NOT NULL AFTER  `route`;
+
 CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   `accountid` INT UNSIGNED NOT NULL,
   `activityid` INT UNSIGNED NOT NULL,

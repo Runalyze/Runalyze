@@ -296,6 +296,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
+  `routeid` int(10) unsigned NOT NULL,
   `clothes` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `splits` text CHARACTER SET latin1 COLLATE latin1_general_ci,
   `comment` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
