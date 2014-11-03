@@ -47,7 +47,6 @@ if (!$HasTable) {
 	$tables = array(
 		PREFIX.'training' => 0,
 		PREFIX.'trackdata' => 0,
-		PREFIX.'trackpause' => 0,
 		PREFIX.'route' => 0
 	);
 	echo 'Counting rows ...'.NL;

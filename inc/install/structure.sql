@@ -242,23 +242,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `temperature` longtext NOT NULL,
   `groundcontact` longtext NOT NULL,
   `vertical_oscillation` longtext NOT NULL,
-  PRIMARY KEY (`accountid`,`activityid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_trackpause`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_trackpause` (
-  `accountid` int(10) unsigned NOT NULL,
-  `activityid` int(10) unsigned NOT NULL,
-  `time` mediumint(8) unsigned NOT NULL,
-  `duration` smallint(5) unsigned NOT NULL,
-  `heartrate_start` tinyint(3) unsigned NOT NULL,
-  `heartrate_end` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`accountid`,`activityid`)
+  `pauses` text NOT NULL,
+  PRIMARY KEY (`activityid`),
+  KEY `accountid` (`accountid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
