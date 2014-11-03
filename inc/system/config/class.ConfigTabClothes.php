@@ -21,12 +21,12 @@ class ConfigTabClothes extends ConfigTab {
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Clothes = new FormularFieldset(__('Your Equipment'));
+		$Clothes = new FormularFieldset(__('Your equipment'));
 		$Clothes->setHtmlCode($this->getCode());
-		$Clothes->addInfo( __('Equipment can be recorded for additional statistics.<br>'.
+		$Clothes->addInfo( __('Equipment can be entered for additional statistics.<br>'.
 							'Category and abbreviation are used to order and display them in the form for editing an activity.') );
 		$Clothes->addInfo( __('The category should be a number.') );
-		$Clothes->addInfo( __('Just fill up the last row to add a new equipment.') );
+		$Clothes->addInfo( __('Just fill out the last row to add a new equipment.') );
 
 		$this->Formular->addFieldset($Clothes);
 	}

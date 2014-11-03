@@ -4,8 +4,8 @@
 	</p>
 
 	<p class="text">
-		<?php _e('After downloading the newest version of Runalyze you have to update your database.'); ?>
-		<?php _e('Choose therefore the update in the following list. Afterwards you can use Runalyze as before.'); ?>
+		<?php _e('After downloading the latest version of Runalyze please update your database.'); ?>
+		<?php _e('Therefore, choose the update in the following list. Afterwards you can use Runalyze as before.'); ?>
 	</p>
 
 	<p class="text">
@@ -27,7 +27,7 @@
 	</p>
 	<?php elseif (isset($_POST['importFile'])): ?>
 	<p class="info">
-		<?php _e('The update was successfull.'); ?>
+		<?php _e('The update was successful.'); ?>
 	</p>
 	<?php endif; ?>
 

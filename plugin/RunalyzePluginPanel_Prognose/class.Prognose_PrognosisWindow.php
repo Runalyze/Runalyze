@@ -105,7 +105,7 @@ class Prognose_PrognosisWindow {
 		}
 
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.JD::getConstVDOTform().'. ';
-		$this->InfoLines['jack-daniels'] .= __('Your current Basic Endurance:').' '.BasicEndurance::getConst().'.';
+		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().'.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s and %s in %s'),
 				Running::km($TopResults[0]['distance']), Time::toString($TopResults[0]['s']),

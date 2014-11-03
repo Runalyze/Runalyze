@@ -26,7 +26,7 @@ class TrainingPlotLapsManual extends TrainingPlotLaps {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'laps_manual';
-		$this->title = __('Manual Laps');
+		$this->title = __('Manual laps');
 	}
 
 	/**

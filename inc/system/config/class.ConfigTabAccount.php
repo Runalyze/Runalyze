@@ -55,14 +55,14 @@ class ConfigTabAccount extends ConfigTab {
 			$Plugin = $Factory->newInstance('RunalyzePluginTool_DbBackup');
 			$Backup->addInfo( __('Please use the plugin').' \'<strong>'.$Plugin->getWindowLink().'</strong>\'.' );
 		} else {
-			$Backup->addInfo( __('The back up of all your data is not manually possible yet.<br>'.
+			$Backup->addInfo( __('The backup of all your data is not manually possible yet.<br>'.
 								'In important individual cases write us an e-mail to mail@runalyze.de and and we will take care of it right away!') );
 		}
 
 		$DeleteLink = Ajax::window('<a href="call/window.delete.php"><strong>'.__('Delete your account').' &raquo;</strong></a>').
 						'<br><br>'.
 						__('You\'ll receive an email with a link to confirm the deletion.<br>'.
-						'The deletion is permanently and can\'t be reversed. '.
+						'The deletion is permanent and cannot be reversed. '.
 						'Therefore, you should backup your data.');
 
 		$Delete = new FormularFieldset(__('Delete your account'));

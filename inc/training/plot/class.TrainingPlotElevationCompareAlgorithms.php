@@ -71,7 +71,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		}
 
 		$this->Plot->Data[] = array(
-			'label'	=> __('Treshold'),
+			'label'	=> __('Threshold'),
 			'color'	=> '#008',
 			'data'	=> $this->constructPlotDataFor(ElevationMethod::TRESHOLD),
 			'curvedLines' => array('apply' => false)

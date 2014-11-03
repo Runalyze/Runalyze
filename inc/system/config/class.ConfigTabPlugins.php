@@ -30,7 +30,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 */
 	public function setFieldsetsAndFields() {
 		$Panels = new FormularFieldset( __('Panels') );
-		$Panels->addInfo( __('Panels are small statistics shown always on the right side.') );
+		$Panels->addInfo( __('Panels are small statistics always shown on the right side.') );
 		$Panels->setHtmlCode($this->getCodeFor( PluginType::Panel ));
 		$Panels->setCollapsed();
 

@@ -12,7 +12,7 @@ $Dates       = array();
 $Results     = array();
 $label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
-$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $timeFormat  = '%M:%S';
 
 $competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.\Runalyze\Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();

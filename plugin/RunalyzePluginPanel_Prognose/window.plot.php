@@ -30,7 +30,7 @@ foreach ($distances as $km) {
 			<li class="with-submenu"><span class="link"><?php _e('Choose distance'); ?></span><ul class="submenu"><?php echo $Submenu; ?></ul></li>
 		</ul>
 	</div>
-	<h1><?php _e('Prognosis calculator: shape trend'); ?></h1>
+	<h1><?php _e('Prognosis calculator: form trend'); ?></h1>
 </div>
 
 <div class="panel-content">

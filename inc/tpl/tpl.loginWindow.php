@@ -14,7 +14,7 @@
 					$ErrorString    = __('The password was incorrect.');
 					$FailedPassword = ' validation-failed';
 				} elseif (SessionAccountHandler::$ErrorType == SessionAccountHandler::$ERROR_TYPE_ACTIVATION_NEEDED)
-					$ErrorString    = __('The account hasn\'t been activated.<br>Have a look at your email inbox.');
+					$ErrorString    = __('The account has not been activated.<br>Have a look into your email inbox.');
 			}
 			?>
 
@@ -43,7 +43,7 @@
 			<?php else: ?>
 			<fieldset>
 				<legend><?php _e('Login'); ?></legend>
-				<p class="error"><?php _e('Runalyze is under maintanence at the moment. No login possible.'); ?></p>
+				<p class="error"><?php _e('Runalyze is under maintenance at the moment. No login possible.'); ?></p>
 			<?php endif; ?>
 		</form>
 	</div>

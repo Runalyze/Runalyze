@@ -35,7 +35,7 @@ if (Request::sendId() > 0) {
 	$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
 	if ($Shoe->getKm() != $Shoe->getAdditionalKm())
-		$DeleteLink = __('The shoe can\'t be deleted as long it is used for some activity.');
+		$DeleteLink = __('The shoe cannot be deleted as long it is used for some activity.');
 
 	$DeleteFieldset = new FormularFieldset( __('Delete shoe') );
 	$DeleteFieldset->addWarning($DeleteLink);

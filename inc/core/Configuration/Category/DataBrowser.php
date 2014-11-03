@@ -75,17 +75,17 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$Fieldset = new Fieldset( __('Calendar view') );
 
 		$Fieldset->addHandle( $this->handle('DB_DISPLAY_MODE'), array(
-			'label'		=> __('Calender: mode'),
+			'label'		=> __('Calendar: mode'),
 			'tooltip'	=> __('Default mode for the calendar')
 		));
 
 		$Fieldset->addHandle( $this->handle('DB_SHOW_CREATELINK_FOR_DAYS'), array(
-			'label'		=> __('Calender: create button'),
+			'label'		=> __('Calendar: create button'),
 			'tooltip'	=> __('Add a link for every day to create a new activity.')
 		));
 
 		$Fieldset->addHandle( $this->handle('DB_SHOW_DIRECT_EDIT_LINK'), array(
-			'label'		=> __('Calender: edit button'),
+			'label'		=> __('Calendar: edit button'),
 			'tooltip'	=> __('Add an edit-link for every activity.')
 		));
 

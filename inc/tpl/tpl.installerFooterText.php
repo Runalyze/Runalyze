@@ -3,14 +3,14 @@
 				<i class="fa fa-fw fa-2x fa-bar-chart-o"></i>
 				<p>
 					<strong><?php _e('Statistics'); ?></strong>
-					<?php _e('Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualyzes your training in plots - more detailed than any other sports diary.')?>
+					<?php _e('Runalyze analyzes your complete training, calculates your shape, computes prognoses and visualizes your training in plots - more detailed than any other sports diary.')?>
 				</p>
 			</div>
 			<div class="text-badge">
 				<i class="fa fa-fw fa-2x fa-cog"></i>
 				<p>
 					<strong><?php _e('Configuration'); ?></strong>
-					<?php _e('Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics to be shown on which place.'); ?>
+					<?php _e('Runalyze is completely configurable. You can decide by yourself which information of your training you want to record and which statistics are being displayed on which place.'); ?>
 				</p>
 			</div>
 			<div class="text-badge">

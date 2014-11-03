@@ -129,7 +129,7 @@ class RunalyzeJsonImporterResults {
 		return array(
 			PREFIX.'clothes'		=> __('Clothes'),
 			PREFIX.'conf'			=> __('Configuration'),
-			PREFIX.'dataset'		=> __('Dataset'),
+			PREFIX.'dataset'		=> __('dataset'),
 			PREFIX.'plugin'			=> __('Plugin'),
 			PREFIX.'plugin_conf'	=> __('Plugin configuration'),
 			PREFIX.'shoe'			=> __('Shoes'),

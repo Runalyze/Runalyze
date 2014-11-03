@@ -43,7 +43,7 @@ class ElevationMethod extends \Runalyze\Parameter\Select {
 		parent::__construct(self::TRESHOLD, array(
 			'options'		=> array(
 				self::NONE				=> __('no smoothing'),
-				self::TRESHOLD			=> __('Treshold method'),
+				self::TRESHOLD			=> __('Threshold method'),
 				self::DOUGLAS_PEUCKER	=> __('Douglas-Peucker-Algorithm')//,
 				//self::REUMANN_WITKAMM	=> __('Reumann-Witkamm-Algorithm')
 			)

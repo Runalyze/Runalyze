@@ -175,7 +175,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('VDOT_MANUAL_VALUE'), array(
 			'label'		=> __('Use fixed VDOT value'),
-			'tooltip'	=> __('Fixed vdot value (e.g. 55), if the estimation does not fit. Can be left empty.')
+			'tooltip'	=> __('Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left empty.')
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION_FOR_ELEVATION'), array(
@@ -185,13 +185,13 @@ class Vdot extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('VDOT_CORRECTION_POSITIVE_ELEVATION'), array(
 			'label'		=> __('Correction per positive elevation'),
-			'tooltip'	=> __('Add for each meter upwards X meter to the distance. (Only for the vdot calculation)'),
+			'tooltip'	=> __('Add for each meter upwards X meter to the distance. (Only for the VDOT calculation)'),
 			'unit'		=> FormularUnit::$M
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_CORRECTION_NEGATIVE_ELEVATION'), array(
 			'label'		=> __('Correction per negative elevation'),
-			'tooltip'	=> __('Add for each meter downwards X meter to the distance. (Only for the vdot calculation)'),
+			'tooltip'	=> __('Add for each meter downwards X meter to the distance. (Only for the VDOT calculation)'),
 			'unit'		=> FormularUnit::$M
 		));
 

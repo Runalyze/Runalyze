@@ -6,7 +6,7 @@ $HIDDEN_KEYS = array();
 $FIELDSETS = array(
 	array(
 		'id'		=> 'general',
-		'legend'	=> __('General Information'),
+		'legend'	=> __('General information'),
 		'fields'	=> array('time', 'weight')
 	),
 	array(

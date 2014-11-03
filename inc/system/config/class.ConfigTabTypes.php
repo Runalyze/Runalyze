@@ -21,12 +21,12 @@ class ConfigTabTypes extends ConfigTab {
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Types = new FormularFieldset( __('Activity Types') );
+		$Types = new FormularFieldset( __('Activity types') );
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
 							'An activity type can only belong to one sport.') );
 		$Types->addInfo( __('Types with a RPE-value &ge; 5 will be emphasized in the activity log.') );
-		$Types->addInfo( __('One type (for running) has to be set as the \'Race\'-type in your configuration, to find your personal bests.') );
+		$Types->addInfo( __('One type (for running) has to be set as the \'Race\'-type in your configuration to find your personal bests.') );
 
 		$this->Formular->addFieldset($Types);
 	}
@@ -42,9 +42,9 @@ class ConfigTabTypes extends ConfigTab {
 					<tr class="b">
 						<th>'.__('Name').'</th>
 						<th>'.__('Abbreviation').'</th>
-						<th>'.Ajax::tooltip(__('RPE'), __('Rating of Perceived Exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
+						<th>'.Ajax::tooltip(__('RPE'), __('Rating of perceived exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
 						<th>'.Ajax::tooltip( __('Sport'), __('A type can only belong to one sport.')).'</th>
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A type can only be deleted if no references exists.')).'</th>
+						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A type can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';

@@ -20,7 +20,7 @@ class SectionLaps extends TrainingViewSectionTabbed {
 			$this->appendRowTabbed( new SectionLapsRowManual($this->Training), __('Manual Laps') );
 
 		if ($this->Training->hasArrayDistance() && $this->Training->hasArrayTime())
-			$this->appendRowTabbed( new SectionLapsRowComputed($this->Training), __('Computed Laps') );
+			$this->appendRowTabbed( new SectionLapsRowComputed($this->Training), __('Computed laps') );
 	}
 
 	/**

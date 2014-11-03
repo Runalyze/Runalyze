@@ -85,7 +85,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show shape'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.plot.php" '.Ajax::tooltip('', __('Show form'), true, true).'>'.Icon::$LINE_CHART.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php" '.Ajax::tooltip('', __('How are these values calculated?'), true, true).'>'.Icon::$MAGIC.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.info.php" '.Ajax::tooltip('',  __('Explanations: What are VDOT and TRIMP?'), true, true).'>'.Icon::$INFO.'</a>').'</li>';
 
@@ -207,7 +207,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
 				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
-					'&lt; 0: You\'re training hard.<br>'.
+					'&lt; 0: You are training hard.<br>'.
 					'<small>A value of &ge; 10 is desirable for a race.<br>'.
 					'A value of &le; -10 can be a hint to start regeneration.</small>')
 			),
@@ -568,14 +568,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			</table>';
 		$LongjogTable .= '<p class="small">'.sprintf( __('* %s &quot;long&quot; jogs do not show up, '.
 														'because they have less than 0.2 points.'), $IgnoredLongjogs).'</p>';
-		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are be considered.'),
+		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are being considered.'),
 														Running::Km($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 
 		$Fieldset = new FormularFieldset( __('Basic endurance') );
 		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
 								'The target is derived from the possible marathon time based on your current shape.').'<br>&nbsp;' );
 		$Fieldset->addBlock($GeneralTable);
-		$Fieldset->addBlock( __('The points for your long jogs are weighted by time and quadratic in distance. '.
+		$Fieldset->addBlock( __('The points for your long runs are weighted by time and quadratic in distance. '.
 								'That means, a long jog yesterday gives more points than a long jog two weeks ago '.
 								'and a 30k-jog gives more points than two 20k-jogs.').'<br>&nbsp;' );
 		$Fieldset->addBlock($LongjogTable);

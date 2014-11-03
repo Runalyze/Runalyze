@@ -100,7 +100,7 @@ class ExporterWindow {
 	 */
 	protected function displayExportedFiles() {
 		$ListOfFiles = $this->getExistingFiles();
-		$Fieldset   = new FormularFieldset( sprintf( __('Up to now you\'ve exported <strong>%d</strong> trainings.'), count($ListOfFiles)) );
+		$Fieldset   = new FormularFieldset( sprintf( __('Up to now you have exported <strong>%d</strong> trainings.'), count($ListOfFiles)) );
 
 		if (strlen(Request::param('delete')) > 0) {
 			$index = (int)Request::param('delete');

@@ -18,7 +18,7 @@ class Clothes {
 
 	/**
 	 * Constructor
-	 * @param string $id_string comma-seperated string with IDs
+	 * @param string $id_string comma-separated string with IDs
 	 */
 	public function __construct($id_string) {
 		$this->ids = ClothesFactory::idStringToArray($id_string);

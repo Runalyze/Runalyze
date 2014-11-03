@@ -37,7 +37,7 @@ class DatabaseOrder extends \Runalyze\Parameter\Select {
 		parent::__construct(self::ASC, array(
 			'options'		=> array(
 				self::ASC		=> __('id (oldest first)'),
-				self::DESC		=> __('id (newest first)'),
+				self::DESC		=> __('id (latest first)'),
 				self::ALPHA		=> __('alphabetical')
 			)
 		));

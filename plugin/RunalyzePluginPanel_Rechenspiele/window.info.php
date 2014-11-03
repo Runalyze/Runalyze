@@ -64,7 +64,7 @@ new Frontend();
 	<p class="text">
 		<?php _e('Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on the sum of your last TRIMP values in a short period, e.g. for seven days.'); ?>
 		<?php _e('In contrast, your <strong>Chronical Training Load</strong>, CTL, also fitness level, is based on the sum of your last TRIMP values in a long period, e.g. for fourty days.'); ?>
-		<?php _e('The difference of these values is called <strong>Training Stress Balance</strong>, TSB. It describes if you\'re recovering (positive) or training hard (negative).'); ?>
+		<?php _e('The difference of these values is called <strong>Training Stress Balance</strong>, TSB. It describes if you are recovering (positive) or training hard (negative).'); ?>
 	</p>
 
 	<p class="file">

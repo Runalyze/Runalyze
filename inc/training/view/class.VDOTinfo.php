@@ -57,7 +57,7 @@ class VDOTinfo {
 		$Fieldset = new FormularFieldset( __('Standard calculation: As competition'));
 		$Fieldset->setHtmlCode('
 			<p class="info small">
-				'.__('All traditional formulas are used to calculate a VDOT value for a given competition.').'
+				'.__('All traditional formulas are being used to calculate a VDOT value for a given competition.').'
 			</p>
 
 			<div class="w50">
