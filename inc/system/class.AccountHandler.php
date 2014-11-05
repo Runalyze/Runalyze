@@ -181,13 +181,13 @@ class AccountHandler {
 			$errors[] = array('new_username' => __('This username is already being used.'));
 
 		if (self::mailExists($_POST['email']))
-			$errors[] = array('email' => __('This email is already used.'));
+			$errors[] = array('email' => __('This email address is already being used.'));
 
 		if ($_POST['password'] != $_POST['password_again'])
 				$errors[] = array('password_again' => __('The passwords have to be the same.'));
 
 		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-			$errors[] = array('password' => sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH));
+			$errors[] = array('password' => sprintf( __('The password has to contain at least %s characters.'), self::$PASS_MIN_LENGTH));
 
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();
@@ -214,7 +214,7 @@ class AccountHandler {
 		self::$NEW_REGISTERED_ID = $newAccountId;
 
 		if ($newAccountId === false)
-			$errors[] = __('There went something wrong. Please contact the administrator.');
+			$errors[] = __('Something went wrong. Please contact the administrator.');
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
@@ -242,7 +242,7 @@ class AccountHandler {
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
-			$message  = __('Did you forget your password').' '.$account['name']."?<br><br>\r\n\r\n";
+			$message  = __('Did you forgot your password').' '.$account['name']."?<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= self::getChangePasswordLink($pwHash);
 
@@ -461,8 +461,8 @@ class AccountHandler {
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
-		$message  = __('You want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
-		$message .= __('Finish your deletion by accessing the following link: ')."<br>\r\n";
+		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
+		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
 		$message .= $deletionLink;
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {

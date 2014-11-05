@@ -30,7 +30,7 @@ $Frontend = new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('The main advantage of Runalyze is the ability to adapt everything to our personal needs and wishes.'); ?>
+		<?php _e('The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.'); ?>
 		<?php _e('Have a look at the configuration window to see what we\'re talking about.'); ?>
 		<?php _e('You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.'); ?>
 	</p>
@@ -42,8 +42,8 @@ $Frontend = new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('Please let us know if you have wishes or observe some bugs.'); ?>
-		<?php _e('We give our best to make Runalyze as pleasant for you as possible. - Therefore we would be interested in your suggestions for improvement.'); ?>
+		<?php _e('Please let us know if you have wishes or have encountered bugs.'); ?>
+		<?php _e('We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.'); ?>
 	</p>
 
 	<p class="text">

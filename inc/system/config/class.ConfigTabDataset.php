@@ -197,7 +197,7 @@ class ConfigTabDataset extends ConfigTab {
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,
-			'route'		=> str_replace(' ', '&nbsp;', __('Olympia Stadium')),
+			'route'		=> str_replace(' ', '&nbsp;', __('Olympic stadium')),
 			'clothes'	=> $ClothesID,
 			'splits'	=> '5|26:51-5|24:36',
 			'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),

@@ -51,7 +51,7 @@ abstract class PluginType {
 	static public function readableString($Type) {
 		switch ($Type) {
 			case self::Stat:
-				return __('Statistic');
+				return __('Statistics');
 
 			case self::Panel:
 				return __('Panel');

@@ -32,7 +32,7 @@ class PlotMonthSumData extends PlotSumData {
 	 */
 	protected function getTitle() {
 		if ($this->Sport->usesDistance())
-			return __('Monthly kilometer').' '.$this->Year;
+			return __('Monthly kilometers').' '.$this->Year;
 
 		return __('Hours of training').' '.$this->Year;
 	}

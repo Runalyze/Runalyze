@@ -159,8 +159,8 @@ class Vdot extends \Runalyze\Configuration\Category {
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_DAYS'), array(
-			'label'		=> __('Days for VDOT shape'),
-			'tooltip'	=> __('Number of days to recognize for VDOT')
+			'label'		=> __('Time constant length for VDOT'),
+			'tooltip'	=> __('Time constant length for VDOT rolling average')
 		));
 
 		$Fieldset->addHandle( $this->handle('VDOT_USE_CORRECTION'), array(

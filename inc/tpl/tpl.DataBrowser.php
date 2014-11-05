@@ -16,7 +16,7 @@
 		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000">
 
 		<div class="c">
-			<?php _e('You can select any time range with clicking on the start and end date.'); ?>
+			<?php _e('You can select any time range by selecting two dates.'); ?>
 		</div>
 
 		<div class="c">

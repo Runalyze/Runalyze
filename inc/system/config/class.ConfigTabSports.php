@@ -71,7 +71,7 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
 						<th>'.Ajax::tooltip(__('RPE'), __('Rating of perceived exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
 						<th>'.Ajax::tooltip(__('km'), __('Has a distance')).'</th>
-						<th>'.Ajax::tooltip(__('Unit'), __('Unit for the speed')).'</th>
+						<th>'.Ajax::tooltip(__('Unit'), __('Unit for speed')).'</th>
 						<th>'.Ajax::tooltip(__('Types'), __('The sport uses different training types')).'</th>
 						<th>'.Ajax::tooltip(__('HR'), __('Heart rate is recorded.')).'</th>
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>

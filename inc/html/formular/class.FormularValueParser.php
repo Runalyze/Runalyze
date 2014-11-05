@@ -142,7 +142,7 @@ class FormularValueParser {
 	 */
 	static protected function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
-			return __('The field must not be empty.');
+			return __('The field can not be left empty.');
 
 		return true;
 	}
