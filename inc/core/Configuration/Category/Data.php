@@ -202,7 +202,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 */
 	public function recalculateMaxValues() {
 		$Query = new Performance\ModelQuery();
-		$Query->execute(DB::getInstance());
+		$Query->execute(\DB::getInstance());
 
 		$Calc = new Performance\MaximumCalculator(function(array $array){
 			return new Performance\TSB($array, Configuration::Trimp()->daysForCTL(), Configuration::Trimp()->daysForATL());
