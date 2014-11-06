@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-10-22 20:05+0100\n"
-"PO-Revision-Date: 2014-11-05 19:42+0100\n"
-"Last-Translator: Michael Pohl <mpo@runalyze.de>\n"
-"Language-Team:  <mail@runalyze.de>\n"
-"Language: \n"
+"PO-Revision-Date: 2014-10-22 20:05+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,9 +14,9 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: index.php:44
-#: inc/class.FrontendSharedStatistics.php:148
+#: index.php:44 inc/class.FrontendSharedStatistics.php:148
 #: inc/training/schemes/scheme.Shoe.php:14
 #: inc/training/schemes/scheme.Training.php:47
 #: inc/training/view/section/class.SectionMiscellaneous.php:17
@@ -28,8 +28,7 @@ msgid ""
 "</em>"
 msgstr ""
 
-#: login.php:25
-#: inc/tpl/tpl.installerHeader.php:21
+#: login.php:25 inc/tpl/tpl.installerHeader.php:21
 msgid "Please login"
 msgstr ""
 
@@ -49,8 +48,7 @@ msgstr ""
 msgid "Browse computer"
 msgstr ""
 
-#: call/call.garminCommunicator.php:52
-#: call/call.garminCommunicator.php:53
+#: call/call.garminCommunicator.php:52 call/call.garminCommunicator.php:53
 msgid "Cancel"
 msgstr ""
 
@@ -86,8 +84,7 @@ msgstr ""
 msgid "No devices found"
 msgstr ""
 
-#: call/call.garminCommunicator.php:62
-#: call/call.garminCommunicator.php:63
+#: call/call.garminCommunicator.php:62 call/call.garminCommunicator.php:63
 msgid "Found"
 msgstr ""
 
@@ -132,8 +129,7 @@ msgstr ""
 msgid "ignore"
 msgstr ""
 
-#: call/call.garminCommunicator.php:105
-#: call/call.garminCommunicator.php:123
+#: call/call.garminCommunicator.php:105 call/call.garminCommunicator.php:123
 #: inc/import/class.MultiImporterFormular.php:71
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "Import"
@@ -161,10 +157,8 @@ msgstr ""
 
 #: call/call.Plugin.install.php:23
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
-#: inc/tpl/tpl.Frontend.header.php:28
-#: inc/tpl/tpl.help.php:29
-#: inc/tpl/tpl.Installer.php:5
-#: inc/tpl/tpl.installerFooterText.php:12
+#: inc/tpl/tpl.Frontend.header.php:28 inc/tpl/tpl.help.php:29
+#: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.installerFooterText.php:12
 msgid "Configuration"
 msgstr ""
 
@@ -172,8 +166,7 @@ msgstr ""
 msgid "There was a problem, the plugin could not be installed."
 msgstr ""
 
-#: call/call.Plugin.install.php:32
-#: call/call.Plugin.uninstall.php:23
+#: call/call.Plugin.install.php:32 call/call.Plugin.uninstall.php:23
 #: inc/export/class.ExporterWindow.php:66
 msgid "back to list"
 msgstr ""
@@ -214,13 +207,10 @@ msgstr ""
 msgid "You are not logged in anymore."
 msgstr ""
 
-#: call/login.php:4
-#: inc/tpl/tpl.adminWindow.login.php:13
+#: call/login.php:4 inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18
-#: inc/tpl/tpl.loginWindow.php:23
-#: inc/tpl/tpl.loginWindow.php:41
-#: inc/tpl/tpl.loginWindow.php:45
-#: inc/tpl/tpl.loginWindow.php:152
+#: inc/tpl/tpl.loginWindow.php:23 inc/tpl/tpl.loginWindow.php:41
+#: inc/tpl/tpl.loginWindow.php:45 inc/tpl/tpl.loginWindow.php:152
 msgid "Login"
 msgstr ""
 
@@ -235,8 +225,7 @@ msgid ""
 "you click on the confirmation link in your mail."
 msgstr ""
 
-#: call/window.plotSumData.php:23
-#: call/window.plotSumData.shared.php:25
+#: call/window.plotSumData.php:23 call/window.plotSumData.shared.php:25
 msgid "There was a problem."
 msgstr ""
 
@@ -248,8 +237,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: inc/class.AdminView.php:171
-#: inc/tpl/tpl.Installer.php:157
+#: inc/class.AdminView.php:171 inc/tpl/tpl.Installer.php:157
 msgid "Debug mode"
 msgstr ""
 
@@ -291,8 +279,7 @@ msgstr ""
 msgid "Changes can't be saved."
 msgstr ""
 
-#: inc/class.AdminView.php:201
-#: inc/plugin/class.PluginTool.php:83
+#: inc/class.AdminView.php:201 inc/plugin/class.PluginTool.php:83
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/tpl/tpl.Frontend.header.php:29
 msgid "Tools"
@@ -322,18 +309,15 @@ msgstr ""
 msgid "There are no registered users."
 msgstr ""
 
-#: inc/class.AdminView.php:292
-#: inc/tpl/tpl.Installer.php:121
+#: inc/class.AdminView.php:292 inc/tpl/tpl.Installer.php:121
 msgid "User"
 msgstr ""
 
-#: inc/class.AdminView.php:293
-#: inc/system/config/class.ConfigTabAccount.php:34
+#: inc/class.AdminView.php:293 inc/system/config/class.ConfigTabAccount.php:34
 #: inc/system/config/class.ConfigTabClothes.php:43
 #: inc/system/config/class.ConfigTabSports.php:69
 #: inc/system/config/class.ConfigTabTypes.php:43
-#: inc/tpl/tpl.loginWindow.php:76
-#: inc/training/schemes/scheme.Shoe.php:28
+#: inc/tpl/tpl.loginWindow.php:76 inc/training/schemes/scheme.Shoe.php:28
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:317
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:518
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:117
@@ -341,8 +325,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: inc/class.AdminView.php:294
-#: inc/tpl/tpl.loginWindow.php:81
+#: inc/class.AdminView.php:294 inc/tpl/tpl.loginWindow.php:81
 msgid "Email"
 msgstr ""
 
@@ -364,8 +347,7 @@ msgstr ""
 msgid "Activate user"
 msgstr ""
 
-#: inc/class.AdminView.php:313
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:8
+#: inc/class.AdminView.php:313 inc/tpl/tpl.loginWindow.setNewPassword.php:8
 msgid "Set new password"
 msgstr ""
 
@@ -449,8 +431,7 @@ msgstr ""
 msgid "back"
 msgstr ""
 
-#: inc/class.DataBrowser.php:239
-#: inc/html/class.Ajax.php:438
+#: inc/class.DataBrowser.php:239 inc/html/class.Ajax.php:438
 msgid "next"
 msgstr ""
 
@@ -462,13 +443,11 @@ msgstr ""
 msgid "Calendar"
 msgstr ""
 
-#: inc/class.DataBrowser.php:265
-#: inc/class.DataBrowserShared.php:93
+#: inc/class.DataBrowser.php:265 inc/class.DataBrowserShared.php:93
 msgid "Training per month"
 msgstr ""
 
-#: inc/class.DataBrowser.php:273
-#: inc/class.DataBrowserShared.php:101
+#: inc/class.DataBrowser.php:273 inc/class.DataBrowserShared.php:101
 msgid "Training per week"
 msgstr ""
 
@@ -628,8 +607,7 @@ msgstr ""
 msgid "Running drills"
 msgstr ""
 
-#: inc/data/class.Cadence.php:92
-#: inc/data/class.CadenceRunning.php:27
+#: inc/data/class.Cadence.php:92 inc/data/class.CadenceRunning.php:27
 #: inc/training/schemes/scheme.Training.php:323
 msgid "Cadence"
 msgstr ""
@@ -646,13 +624,11 @@ msgstr ""
 msgid "JD intensity"
 msgstr ""
 
-#: inc/class.FrontendShared.php:119
-#: inc/class.FrontendSharedList.php:154
+#: inc/class.FrontendShared.php:119 inc/class.FrontendSharedList.php:154
 msgid "Problem"
 msgstr ""
 
-#: inc/class.FrontendShared.php:129
-#: inc/class.FrontendShared.php:142
+#: inc/class.FrontendShared.php:129 inc/class.FrontendShared.php:142
 #: inc/class.FrontendSharedList.php:163
 msgid "Error"
 msgstr ""
@@ -719,8 +695,7 @@ msgstr ""
 msgid "General statistics"
 msgstr ""
 
-#: inc/class.FrontendSharedStatistics.php:125
-#: inc/plugin/class.Plugin.php:377
+#: inc/class.FrontendSharedStatistics.php:125 inc/plugin/class.Plugin.php:377
 msgid "Year on year"
 msgstr ""
 
@@ -728,8 +703,7 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-#: inc/calculate/class.Running.php:116
-#: inc/system/register.consts.php:217
+#: inc/calculate/class.Running.php:116 inc/system/register.consts.php:217
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:107
 msgid "none"
 msgstr ""
@@ -1333,8 +1307,7 @@ msgstr ""
 msgid "max. 1000 data points"
 msgstr ""
 
-#: inc/system/register.consts.php:96
-#: inc/system/register.consts.php:304
+#: inc/system/register.consts.php:96 inc/system/register.consts.php:304
 msgid "never"
 msgstr ""
 
@@ -1398,20 +1371,17 @@ msgstr ""
 msgid "always"
 msgstr ""
 
-#: inc/system/register.consts.php:555
-#: inc/system/register.consts.php:564
+#: inc/system/register.consts.php:555 inc/system/register.consts.php:564
 #: inc/system/register.consts.php:573
 msgid "id (oldest first)"
 msgstr ""
 
-#: inc/system/register.consts.php:556
-#: inc/system/register.consts.php:565
+#: inc/system/register.consts.php:556 inc/system/register.consts.php:565
 #: inc/system/register.consts.php:574
 msgid "id (newest first)"
 msgstr ""
 
-#: inc/system/register.consts.php:557
-#: inc/system/register.consts.php:566
+#: inc/system/register.consts.php:557 inc/system/register.consts.php:566
 #: inc/system/register.consts.php:575
 msgid "alphabetical"
 msgstr ""
@@ -1458,8 +1428,7 @@ msgstr ""
 msgid "&#37; HRreserve"
 msgstr ""
 
-#: inc/system/register.consts.php:153
-#: inc/system/register.consts.php:172
+#: inc/system/register.consts.php:153 inc/system/register.consts.php:172
 msgid "automatic"
 msgstr ""
 
@@ -1557,8 +1526,7 @@ msgstr ""
 msgid "<strong>Time:</strong> %s"
 msgstr ""
 
-#: inc/data/gps/class.LeafletTrainingRoute.php:165
-#: inc/html/class.Ajax.php:435
+#: inc/data/gps/class.LeafletTrainingRoute.php:165 inc/html/class.Ajax.php:435
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
 msgstr ""
@@ -1581,13 +1549,11 @@ msgstr ""
 msgid "Choose analysis"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:113
-#: inc/plugin/class.PluginStat.php:171
+#: inc/draw/class.PlotSumData.php:113 inc/plugin/class.PluginStat.php:171
 msgid "Choose sport"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:117
-#: inc/plugin/class.PluginStat.php:175
+#: inc/draw/class.PlotSumData.php:117 inc/plugin/class.PluginStat.php:175
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:25
 #: plugin/RunalyzePluginStat_Wetter/window.php:24
 msgid "Choose year"
@@ -1808,10 +1774,8 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443
-#: inc/html/class.Ajax.php:444
-#: inc/html/class.Ajax.php:445
+#: inc/html/class.Ajax.php:442 inc/html/class.Ajax.php:443
+#: inc/html/class.Ajax.php:444 inc/html/class.Ajax.php:445
 #: inc/html/class.Ajax.php:446
 msgid "per page"
 msgstr ""
@@ -2172,8 +2136,7 @@ msgid ""
 "Your local server has no smtp-server. You have to contact the administrator."
 msgstr ""
 
-#: inc/system/class.AccountHandler.php:247
-#: inc/tpl/tpl.loginWindow.php:11
+#: inc/system/class.AccountHandler.php:247 inc/tpl/tpl.loginWindow.php:11
 msgid "The username is not known."
 msgstr ""
 
@@ -2228,8 +2191,7 @@ msgid "Account"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:28
-#: inc/tpl/tpl.loginWindow.php:25
-#: inc/tpl/tpl.loginWindow.php:71
+#: inc/tpl/tpl.loginWindow.php:25 inc/tpl/tpl.loginWindow.php:71
 #: inc/tpl/tpl.loginWindow.php:129
 msgid "Username"
 msgstr ""
@@ -2639,10 +2601,8 @@ msgstr ""
 msgid "Administration"
 msgstr ""
 
-#: inc/tpl/tpl.adminWindow.login.php:7
-#: inc/tpl/tpl.Installer.php:125
-#: inc/tpl/tpl.loginWindow.php:29
-#: inc/tpl/tpl.loginWindow.php:86
+#: inc/tpl/tpl.adminWindow.login.php:7 inc/tpl/tpl.Installer.php:125
+#: inc/tpl/tpl.loginWindow.php:29 inc/tpl/tpl.loginWindow.php:86
 msgid "Password"
 msgstr ""
 
@@ -2745,8 +2705,7 @@ msgstr ""
 msgid "You can contact us via mail:"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:6
-#: inc/tpl/tpl.Installer.php:117
+#: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:117
 msgid "Database"
 msgstr ""
 
@@ -2764,8 +2723,7 @@ msgid ""
 "contact us."
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:33
-#: inc/tpl/tpl.Installer.php:267
+#: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:267
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
 msgstr ""
@@ -3099,8 +3057,7 @@ msgstr ""
 msgid "Runalyze is under maintanence at the moment. No login possible."
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.php:54
-#: inc/tpl/tpl.loginWindow.php:153
+#: inc/tpl/tpl.loginWindow.php:54 inc/tpl/tpl.loginWindow.php:153
 msgid "Create a new account"
 msgstr ""
 
@@ -3126,8 +3083,7 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.php:127
-#: inc/tpl/tpl.loginWindow.php:154
+#: inc/tpl/tpl.loginWindow.php:127 inc/tpl/tpl.loginWindow.php:154
 msgid "Forgot your password?"
 msgstr ""
 
@@ -5884,38 +5840,31 @@ msgstr ""
 msgid "3:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:157
-#: inc/system/register.consts.php:173
+#: inc/system/register.consts.php:157 inc/system/register.consts.php:173
 msgid "4:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:158
-#: inc/system/register.consts.php:174
+#: inc/system/register.consts.php:158 inc/system/register.consts.php:174
 msgid "5:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:159
-#: inc/system/register.consts.php:175
+#: inc/system/register.consts.php:159 inc/system/register.consts.php:175
 msgid "6:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:160
-#: inc/system/register.consts.php:176
+#: inc/system/register.consts.php:160 inc/system/register.consts.php:176
 msgid "7:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:161
-#: inc/system/register.consts.php:177
+#: inc/system/register.consts.php:161 inc/system/register.consts.php:177
 msgid "8:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:162
-#: inc/system/register.consts.php:178
+#: inc/system/register.consts.php:162 inc/system/register.consts.php:178
 msgid "9:00/km"
 msgstr ""
 
-#: inc/system/register.consts.php:163
-#: inc/system/register.consts.php:179
+#: inc/system/register.consts.php:163 inc/system/register.consts.php:179
 msgid "10:00/km"
 msgstr ""
 
