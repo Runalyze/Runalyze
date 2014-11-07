@@ -128,8 +128,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   KEY `accountid` (`accountid`)
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE  `runalyze`.`runalyze_route` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS `runalyze_route` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `accountid` INT UNSIGNED NOT NULL,
   `name` VARCHAR( 255 ) NOT NULL,
   `cities` VARCHAR( 255 ) NOT NULL,
@@ -151,5 +151,6 @@ CREATE TABLE  `runalyze`.`runalyze_route` (
   `max_lat` FLOAT( 8, 5 ) NOT NULL,
   `max_lng` FLOAT( 8, 5 ) NOT NULL,
   `in_routenet` TINYINT( 1 ) UNSIGNED NOT NULL,
-  INDEX (`accountid`)
-) ENGINE = MYISAM;
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
