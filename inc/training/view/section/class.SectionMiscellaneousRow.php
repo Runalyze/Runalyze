@@ -49,6 +49,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
 		$this->addCadenceAndPower();
+		$this->addRunningDynamics();
 		$this->addWeather();
 		$this->addEquipment();
 		$this->addTrainingPartner();
@@ -86,6 +87,22 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			$this->BoxedValues[] = $Cadence;
 			$this->BoxedValues[] = $Power;
+		}
+	}
+
+	/**
+	 * Add running dynamics
+	 */
+	protected function addRunningDynamics() {
+		if ($this->Training->getGroundContactTime() > 0 || $this->Training->getVerticalOscillation() > 0) {
+			$Contact = new BoxedValue(Helper::Unknown($this->Training->getGroundContactTime(), '-'), 'ms', __('Ground contact'));
+			$Contact->defineAsFloatingBlock('w50');
+
+			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Training->getVerticalOscillation()/10,1), '-'), 'cm', __('Vertical oscillation'));
+			$Oscillation->defineAsFloatingBlock('w50');
+
+			$this->BoxedValues[] = $Contact;
+			$this->BoxedValues[] = $Oscillation;
 		}
 	}
 

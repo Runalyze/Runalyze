@@ -244,6 +244,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->gps['time_in_s'][] = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$this->gps['pace'][]      = $this->getCurrentPace();
+
+		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
+		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
 	}
 
 	/**

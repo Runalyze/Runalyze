@@ -189,7 +189,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get time
-	 * @return array
+	 * @return array unit: [s]
 	 */
 	public function time() {
 		return $this->Data[self::TIME];
@@ -197,7 +197,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get distance
-	 * @return array
+	 * @return array unit: [km]
 	 */
 	public function distance() {
 		return $this->Data[self::DISTANCE];
@@ -205,7 +205,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get pace
-	 * @return array
+	 * @return array unit: [s/km]
 	 */
 	public function pace() {
 		return $this->Data[self::PACE];
@@ -213,7 +213,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get heart rate
-	 * @return array
+	 * @return array unit: [bpm]
 	 */
 	public function heartRate() {
 		return $this->Data[self::HEARTRATE];
@@ -221,7 +221,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get cadence
-	 * @return array
+	 * @return array unit: [rpm]
 	 */
 	public function cadence() {
 		return $this->Data[self::CADENCE];
@@ -229,7 +229,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get power
-	 * @return array
+	 * @return array unit: [W]
 	 */
 	public function power() {
 		return $this->Data[self::POWER];
@@ -237,7 +237,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get temperature
-	 * @return array
+	 * @return array unit: [°C]
 	 */
 	public function temperature() {
 		return $this->Data[self::TEMPERATURE];
@@ -245,7 +245,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get ground contact time
-	 * @return array
+	 * @return array unit: [ms]
 	 */
 	public function groundcontact() {
 		return $this->Data[self::GROUNDCONTACT];
@@ -253,7 +253,7 @@ class Object extends Model\Object {
 
 	/**
 	 * Get vertical oscillation
-	 * @return array
+	 * @return array unit: [mm]
 	 */
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];

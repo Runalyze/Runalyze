@@ -110,6 +110,11 @@ ALTER TABLE `runalyze_training` ADD INDEX `typeid` (`typeid`);
 ALTER TABLE `runalyze_user` ADD INDEX `time` (`time`);
 
 ALTER TABLE  `runalyze_training` ADD  `routeid` INT UNSIGNED NOT NULL AFTER  `route`;
+ALTER TABLE  `runalyze_training` ADD  `groundcontact` SMALLINT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `power`;
+ALTER TABLE  `runalyze_training` ADD  `vertical_oscillation` TINYINT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `groundcontact`
+
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'groundcontact', 1, 1, 'small', '', 25, 1, 'AVG', `id` FROM `runalyze_account`;
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'vertical_oscillation', 1, 1, 'small', '', 26, 1, 'AVG', `id` FROM `runalyze_account`;
 
 CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   `accountid` INT UNSIGNED NOT NULL,

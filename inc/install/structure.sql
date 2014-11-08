@@ -279,6 +279,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',
   `power` int(4) NOT NULL DEFAULT '0',
+  `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,

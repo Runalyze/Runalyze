@@ -117,6 +117,7 @@ class System {
 	 */
 	static public function clearCache() {
 		self::clearTrainingCache();
+		Cache::clean();
 	}
 
 	/**

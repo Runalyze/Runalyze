@@ -161,6 +161,7 @@ class ConfigTabDataset extends ConfigTab {
 			DB::getInstance()->update('dataset', $id, $columns, $values);
 		}
 
+		Cache::delete('Dataset');
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}
 
@@ -194,6 +195,8 @@ class ConfigTabDataset extends ConfigTab {
 			'jd_intensity'	=> 27,
 			'trimp'		=> 121,
 			'cadence'	=> 90,
+			'groundcontact'	=> 220,
+			'vertical_oscillation'	=> 76,
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,

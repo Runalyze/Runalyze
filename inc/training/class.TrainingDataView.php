@@ -308,6 +308,28 @@ class TrainingDataView {
 	}
 
 	/**
+	 * Get ground contact
+	 * @return string ground contact time with unit
+	 */
+	public function getGroundContactTime() {
+		if ($this->Object->getGroundContactTime() > 0)
+			return round($this->Object->getGroundContactTime()).'&nbsp;ms';
+
+		return '';
+	}
+
+	/**
+	 * Get vertical oscillation
+	 * @return string vertical oscillation with unit
+	 */
+	public function getVerticalOscillation() {
+		if ($this->Object->getVerticalOscillation() > 0)
+			return round($this->Object->getVerticalOscillation()/10, 1).'&nbsp;cm';
+
+		return '';
+	}
+
+	/**
 	 * Get calories with unit
 	 * @return string
 	 */

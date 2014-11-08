@@ -356,6 +356,12 @@ class Dataset {
 			case 'cadence':
 				return $this->TrainingObject->DataView()->getCadence();
 
+			case 'groundcontact':
+				return $this->TrainingObject->DataView()->getGroundContactTime();
+
+			case 'vertical_oscillation':
+				return $this->TrainingObject->DataView()->getVerticalOscillation();
+
 			case 'power':
 				return $this->TrainingObject->DataView()->getPower();
 

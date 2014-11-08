@@ -74,6 +74,18 @@ class TrainingObject extends DataObject {
 	private $Cadence = null;
 
 	/**
+	 * Ground contact
+	 * @var array
+	 */
+	private $arrGroundContact = array();
+
+	/**
+	 * Vertical oscillation
+	 * @var array
+	 */
+	private $arrVerticalOscillation = array();
+
+	/**
 	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
@@ -148,6 +160,31 @@ class TrainingObject extends DataObject {
 		$this->calculateCaloriesIfEmpty();
 		$this->removeWeatherIfInside();
 		$this->forceToRemove('s_sum_with_distance');
+
+		// TODO: clean solution
+		if ($this->hasPositionData()) {
+			$Route = new Runalyze\Model\Route\Object(array(
+				Runalyze\Model\Route\Object::NAME => $this->get('route'),
+				Runalyze\Model\Route\Object::CITIES => $this->get('route'),
+				Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
+				Runalyze\Model\Route\Object::ELEVATION => $this->get('elevation'),
+				//Runalyze\Model\Route\Object::ELEVATION_UP,
+				//Runalyze\Model\Route\Object::ELEVATION_DOWN,
+				Runalyze\Model\Route\Object::LATITUDES => $this->get('arr_lat'),
+				Runalyze\Model\Route\Object::LONGITUDES => $this->get('arr_lon'),
+				Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
+			));
+			$Inserter = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
+			$Inserter->setAccountID( SessionAccountHandler::getId() );
+			$Inserter->insert();
+
+			$this->forceToSet('routeid', $Inserter->insertedID());
+		}
+
+		$this->arrGroundContact = $this->get('arr_groundcontact');
+		$this->arrVerticalOscillation = $this->get('arr_vertical_oscillation');
+		$this->forceToRemove('arr_groundcontact');
+		$this->forceToRemove('arr_vertical_oscillation');
 	}
 
 	/**
@@ -179,6 +216,26 @@ class TrainingObject extends DataObject {
 
 		if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 			$this->calculatePower();
+
+		// TODO: clean solution
+		if ($this->hasArrayTime() || $this->hasArrayDistance()) {
+			$Trackdata = new Runalyze\Model\Trackdata\Object(array(
+				Runalyze\Model\Trackdata\Object::ACTIVITYID => $this->id(),
+				Runalyze\Model\Trackdata\Object::TIME => $this->get('arr_time'),
+				Runalyze\Model\Trackdata\Object::DISTANCE => $this->get('arr_dist'),
+				Runalyze\Model\Trackdata\Object::PACE => $this->get('arr_pace'),
+				Runalyze\Model\Trackdata\Object::HEARTRATE => $this->get('arr_heart'),
+				Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
+				Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
+				Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
+				Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->arrGroundContact,
+				Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->arrVerticalOscillation,
+				Runalyze\Model\Trackdata\Object::PAUSES => ''
+			));
+			$Inserter = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
+			$Inserter->setAccountID( SessionAccountHandler::getId() );
+			$Inserter->insert();
+		}
 	}
 
 	/**
@@ -868,6 +925,30 @@ class TrainingObject extends DataObject {
 
 
 	/**
+	 * Set ground contact time
+	 * @param int $time ground contact time [ms]
+	 */
+	public function setGroundContactTime($time) { return $this->set('groundcontact', $time); }
+	/**
+	 * Get ground contact time
+	 * @return int ground contact time value [ms]
+	 */
+	public function getGroundContactTime() { return $this->get('groundcontact'); }
+
+
+	/**
+	 * Set vertical oscillation
+	 * @param int $oscillation vertical oscillation [cm]
+	 */
+	public function setVerticalOscillation($oscillation) { return $this->set('vertical_oscillation', $oscillation); }
+	/**
+	 * Get vertical oscillation
+	 * @return int vertical oscillation [cm]
+	 */
+	public function getVerticalOscillation() { return $this->get('vertical_oscillation'); }
+
+
+	/**
 	 * Set weatherid
 	 * @param mixed $id weatherid
 	 */
@@ -1174,6 +1255,40 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayTemperature() { return strlen($this->get('arr_temperature')) > 0; }
+
+
+	/**
+	 * Set array for ground contact
+	 * @param array $data
+	 */
+	public function setArrayGroundContact(array $data) { $this->setArrayFor('arr_groundcontact', $data); }
+	/**
+	 * Get array for ground contact
+	 * @return array
+	 */
+	public function getArrayGroundContact() { return $this->getArrayFor('arr_groundcontact'); }
+	/**
+	 * Has array for ground contact?
+	 * @return bool
+	 */
+	public function hasArrayGroundContact() { return strlen($this->get('arr_groundcontact')) > 0; }
+
+	
+	/**
+	 * Set array for vertical oscillation
+	 * @param array $data
+	 */
+	public function setArrayVerticalOscillation(array $data) { $this->setArrayFor('arr_vertical_oscillation', $data); }
+	/**
+	 * Get array for vertical oscillation
+	 * @return array
+	 */
+	public function getArrayVerticalOscillation() { return $this->getArrayFor('arr_vertical_oscillation'); }
+	/**
+	 * Has array for vertical oscillation?
+	 * @return bool
+	 */
+	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
 
 
 	/**
