@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Data\Elevation;
 
 /**
  * GPS data
@@ -779,10 +780,10 @@ class GpsData {
 
 		$stepArray = $complete ? $elevationArray : array_slice($elevationArray, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex));
 
-		$Calculator = new ElevationCalculator($stepArray);
-		$Calculator->calculateElevation();
+		$Calculator = new Elevation\Calculation\Calculator($stepArray);
+		$Calculator->calculate();
 
-		return array($Calculator->getElevationUp(), $Calculator->getElevationDown());
+		return array($Calculator->elevationUp(), $Calculator->elevationDown());
 	}
 
 	/**
@@ -1141,10 +1142,10 @@ class GpsData {
 			return;
 
 		try {
-			$ElevationCorrector = new ElevationCorrector();
-			$ElevationCorrector->correctElevation($this->arrayForLatitude, $this->arrayForLongitude);
+			$Corrector = new Elevation\Correction\Corrector();
+			$Corrector->correctElevation($this->arrayForLatitude, $this->arrayForLongitude);
 
-			$elevationArray = $ElevationCorrector->getCorrectedElevation();
+			$elevationArray = $Corrector->getCorrectedElevation();
 
 			if (!empty($elevationArray)) {
 				$this->arrayForElevation = $elevationArray;

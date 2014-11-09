@@ -1,14 +1,18 @@
 <?php
 /**
- * This file contains class::ElevationCorrectorGoogleMaps
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::GoogleMaps
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
  * Elevation corrector strategy: http://maps.googleapis.com/
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-class ElevationCorrectorGoogleMaps extends ElevationCorrectorFromExternalAPI {
+class GoogleMaps extends FromExternalAPI {
 	/**
 	 * Points per call
 	 * @var int
@@ -24,16 +28,19 @@ class ElevationCorrectorGoogleMaps extends ElevationCorrectorFromExternalAPI {
 	 */
 	public function canHandleData() {
 		$url = 'http://maps.googleapis.com/maps/api/elevation/json?locations=49.4,7.7&sensor=false';
-		$response = json_decode(Filesystem::getExternUrlContent($url), true);
+		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
-		if (is_null($response))
+		if (is_null($response)) {
 			return false;
+		}
 
-		if (is_array($response) && isset($response['results']))
+		if (is_array($response) && isset($response['results'])) {
 			return true;
+		}
 
-		if (isset($response['status']))
-			Error::getInstance ()->addDebug('GoogleMaps response: '.$response['status']);
+		if (isset($response['status'])) {
+			\Error::getInstance ()->addDebug('GoogleMaps response: '.$response['status']);
+		}
 
 		return false;
 	}
@@ -53,16 +60,18 @@ class ElevationCorrectorGoogleMaps extends ElevationCorrectorFromExternalAPI {
 		}
 
 		$url = 'http://maps.googleapis.com/maps/api/elevation/json?locations='.substr($coordinatesString, 0, -1).'&sensor=false';
-		$response = json_decode(Filesystem::getExternUrlContent($url), true);
+		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
-		if (is_null($response) || !is_array($response) || !isset($response['results']) || !isset($response['results'][0]['elevation']))
-			throw new RuntimeException('GoogleMaps returned malformed code.');
+		if (is_null($response) || !is_array($response) || !isset($response['results']) || !isset($response['results'][0]['elevation'])) {
+			throw new \RuntimeException('GoogleMaps returned malformed code.');
+		}
 
 		$elevationData = array();
 		$responseLength = count($response['results']);
 
-		for ($i = 0; $i < $responseLength; $i++)
+		for ($i = 0; $i < $responseLength; $i++) {
 			$elevationData[] = (int)$response['results'][$i]['elevation'];
+		}
 
 		return $elevationData;
 	}

@@ -1,14 +1,18 @@
 <?php
 /**
- * This file contains class::ElevationCorrectorGeonames
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::Geonames
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
  * Elevation corrector strategy: ws.geonames.org
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-class ElevationCorrectorGeonames extends ElevationCorrectorFromExternalAPI {
+class Geonames extends FromExternalAPI {
 	/**
 	 * Username
 	 * @var string
@@ -28,7 +32,7 @@ class ElevationCorrectorGeonames extends ElevationCorrectorFromExternalAPI {
 	 */
 	public function canHandleData() {
 		$url = 'http://api.geonames.org/gtopo30JSON?lat=47.01&lng=10.2&username='.$this->USERNAME;
-		$response = json_decode(Filesystem::getExternUrlContent($url), true);
+		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response))
 			return false;
@@ -39,20 +43,20 @@ class ElevationCorrectorGeonames extends ElevationCorrectorFromExternalAPI {
 		if (isset($response['status']) && isset($response['status']['value'])) {
 			switch ((int)$response['status']['value']) {
 				case 10:
-					Error::getInstance()->addWarning('Geonames user account is not valid.');
+					\Error::getInstance()->addWarning('Geonames user account is not valid.');
 					break;
 				case 18:
-					Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
+					\Error::getInstance()->addDebug('Geonames-request failed: daily limit of credits exceeded');
 					break;
 				case 19:
-					Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
+					\Error::getInstance()->addDebug('Geonames-request failed: hourly limit of credits exceeded');
 					break;
 				case 20:
-					Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
+					\Error::getInstance()->addDebug('Geonames-request failed: weekly limit of credits exceeded');
 					break;
 				default:
 					if (isset($response['status']['message']))
-						Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
+						\Error::getInstance ()->addDebug('Geonames response: '.$response['status']['message']);
 			}
 		}
 
@@ -64,22 +68,25 @@ class ElevationCorrectorGeonames extends ElevationCorrectorFromExternalAPI {
 	 * @param array $latitudes
 	 * @param array $longitudes
 	 * @return array
+	 * @throws \RuntimeException
 	 */
 	protected function fetchElevationFor(array $latitudes, array $longitudes) {
 		$latitudeString = implode(',', $latitudes);
 		$longitudeString = implode(',', $longitudes);
 
 		$url = 'http://ws.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.$this->USERNAME;
-		$response = json_decode(Filesystem::getExternUrlContent($url), true);
+		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
-		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames']))
-			throw new RuntimeException('Geonames returned malformed code.');
+		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {
+			throw new \RuntimeException('Geonames returned malformed code.');
+		}
 
 		$elevationData = array();
 		$responseLength = count($response['geonames']);
 
-		for ($i = 0; $i < $responseLength; $i++)
+		for ($i = 0; $i < $responseLength; $i++) {
 			$elevationData[] = (int)$response['geonames'][$i]['srtm3'];
+		}
 
 		return $elevationData;
 	}

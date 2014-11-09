@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Parameter\Application\ElevationMethod;
+use Runalyze\Data\Elevation;
 
 /**
  * Display elevation info for a training
@@ -175,13 +177,13 @@ class ElevationInfo {
 	 */
 	protected function getDifferentAlgorithmsFor($array) {
 		$Method        = new ElevationMethod();
-		$Calculator    = new ElevationCalculator($array);
+		$Calculator    = new Elevation\Calculation\Calculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
 			array(ElevationMethod::NONE, false),
-			array(ElevationMethod::TRESHOLD, true),
+			array(ElevationMethod::THRESHOLD, true),
 			array(ElevationMethod::DOUGLAS_PEUCKER, true),
-			//array(ElevationMethod::REUMANN_WITKAMM, false)
+			//array(ElevationMethod::REUMANN_WITKAM, false)
 		);
 
 		$Code  = '<table class="fullwidth zebra-style small">';
@@ -201,13 +203,13 @@ class ElevationInfo {
 			if ($Algorithm[1]) {
 				foreach ($TresholdRange as $t) {
 					$highlight = (Configuration::ActivityView()->elevationMinDiff() == $t) && (Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0]) ? ' highlight' : '';
-					$Calculator->setTreshold($t);
-					$Calculator->calculateElevation();
-					$Code .= '<td class="r'.$highlight.'">'.$Calculator->getElevation().'&nbsp;m</td>';
+					$Calculator->setThreshold($t);
+					$Calculator->calculate();
+					$Code .= '<td class="r'.$highlight.'">'.$Calculator->totalElevation().'&nbsp;m</td>';
 				}
 			} else {
-				$Calculator->calculateElevation();
-				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->getElevation().'&nbsp;m</td>';
+				$Calculator->calculate();
+				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->totalElevation().'&nbsp;m</td>';
 			}
 
 			$Code .= '</tr>';

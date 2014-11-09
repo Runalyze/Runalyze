@@ -1,17 +1,21 @@
 <?php
 /**
- * This file contains class::ElevationCorrector
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::Corrector
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
  * Elevation corrector
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-class ElevationCorrector {
+class Corrector {
 	/**
 	 * Strategy
-	 * @var ElevationCorrectorStrategy
+	 * @var \Runalyze\Data\Elevation\Correction\Strategy
 	 */
 	protected $Strategy = null;
 
@@ -29,12 +33,12 @@ class ElevationCorrector {
 
 	/**
 	 * Correct elevation
-	 * @param array $LatitudePoints
-	 * @param array $LongitudePoints
+	 * @param array $latitude
+	 * @param array $longitude
 	 */
-	public function correctElevation(array $LatitudePoints, array $LongitudePoints) {
-		$this->LatitudePoints = $LatitudePoints;
-		$this->LongitudePoints = $LongitudePoints;
+	public function correctElevation(array $latitude, array $longitude) {
+		$this->LatitudePoints = $latitude;
+		$this->LongitudePoints = $longitude;
 
 		$this->chooseStrategy();
 		$this->applyStrategy();
@@ -45,7 +49,7 @@ class ElevationCorrector {
 	 * @return boolean
 	 */
 	final protected function hasNoValidStrategy() {
-		return !($this->Strategy instanceof ElevationCorrectorStrategy);
+		return !($this->Strategy instanceof Strategy);
 	}
 
 	/**
@@ -54,22 +58,26 @@ class ElevationCorrector {
 	protected function chooseStrategy() {
 		$this->tryToUseGeoTIFF();
 
-		if ($this->hasNoValidStrategy())
+		if ($this->hasNoValidStrategy()) {
 			$this->tryToUseGeonames();
+		}
 
-		if ($this->hasNoValidStrategy())
+		if ($this->hasNoValidStrategy()) {
 			$this->tryToUseDataScienceToolkit();
+		}
 
-		if ($this->hasNoValidStrategy())
+		if ($this->hasNoValidStrategy()) {
 			$this->tryToUseGoogleAPI();
+		}
 	}
 
 	/**
 	 * Apply strategy
+	 * @throws \RuntimeException
 	 */
 	protected function applyStrategy() {
 		if ($this->hasNoValidStrategy()) {
-			throw new RuntimeException('No elevation correction strategy is able to handle the data. Maybe all query limits are reached.');
+			throw new \RuntimeException('No elevation correction strategy is able to handle the data. Maybe all query limits are reached.');
 		} else {
 			$this->Strategy->correctElevation();
 		}
@@ -99,30 +107,33 @@ class ElevationCorrector {
 	 * Try to use GeoTIFF
 	 */
 	protected function tryToUseGeoTIFF() {
-		$this->Strategy = new ElevationCorrectorGeoTIFF($this->LatitudePoints, $this->LongitudePoints);
+		$this->Strategy = new GeoTIFF($this->LatitudePoints, $this->LongitudePoints);
 
-		if (!$this->Strategy->canHandleData())
+		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
+		}
 	}
 
 	/**
 	 * Try to use Geonames
 	 */
 	protected function tryToUseGeonames() {
-		$this->Strategy = new ElevationCorrectorGeonames($this->LatitudePoints, $this->LongitudePoints);
+		$this->Strategy = new Geonames($this->LatitudePoints, $this->LongitudePoints);
 
-		if (!$this->Strategy->canHandleData())
+		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
+		}
 	}
 
 	/**
 	 * Try to use DataScienceToolkit
 	 */
 	protected function tryToUseDataScienceToolkit() {
-		$this->Strategy = new ElevationCorrectorDataScienceToolkit($this->LatitudePoints, $this->LongitudePoints);
+		$this->Strategy = new DataScienceToolkit($this->LatitudePoints, $this->LongitudePoints);
 
-		if (!$this->Strategy->canHandleData())
+		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
+		}
 	}
 
 	/**
@@ -135,9 +146,10 @@ class ElevationCorrector {
 	 * @see https://developers.google.com/maps/terms?hl=de#section_10_12
 	 */
 	protected function tryToUseGoogleAPI() {
-		$this->Strategy = new ElevationCorrectorGoogleMaps($this->LatitudePoints, $this->LongitudePoints);
+		$this->Strategy = new GoogleMaps($this->LatitudePoints, $this->LongitudePoints);
 
-		if (!$this->Strategy->canHandleData())
+		if (!$this->Strategy->canHandleData()) {
 			$this->Strategy = null;
+		}
 	}
 }

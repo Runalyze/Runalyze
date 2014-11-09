@@ -1,17 +1,21 @@
 <?php
 /**
- * This file contains class::ElevationCorrectorGeoTIFF
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::GeoTIFF
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
  * Elevation corrector strategy: GeoTIFF
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-class ElevationCorrectorGeoTIFF extends ElevationCorrectorStrategy {
+class GeoTIFF extends Strategy {
 	/**
 	 * Reader
-	 * @var SRTMGeoTIFFReader
+	 * @var \SRTMGeoTIFFReader
 	 */
 	protected $Reader = null;
 
@@ -44,12 +48,12 @@ class ElevationCorrectorGeoTIFF extends ElevationCorrectorStrategy {
 		);
 
 		try {
-			$this->Reader = new SRTMGeoTIFFReader(FRONTEND_PATH.'data/gps/srtm');
+			$this->Reader = new \SRTMGeoTIFFReader(FRONTEND_PATH.'data/gps/srtm');
 			$this->Reader->getMultipleElevations($testArray);
 
 			return true;
-		} catch (Exception $Exception) {
-			Error::getInstance()->addDebug($Exception->getMessage());
+		} catch (\Exception $Exception) {
+			\Error::getInstance()->addDebug($Exception->getMessage());
 			return false;
 		}
 	}
@@ -60,7 +64,7 @@ class ElevationCorrectorGeoTIFF extends ElevationCorrectorStrategy {
 	 * Note: canHandleData() has to be called before!
 	 */
 	public function correctElevation() {
-		if ($this->Reader instanceof SRTMGeoTIFFReader) {
+		if ($this->Reader instanceof \SRTMGeoTIFFReader) {
 			$arraySize = count($this->LatitudePoints);
 			$locations = array();
 
@@ -71,8 +75,9 @@ class ElevationCorrectorGeoTIFF extends ElevationCorrectorStrategy {
 
 			$this->ElevationPoints = $this->Reader->getMultipleElevations($locations, false, $this->INTERPOLATE);
 
-			if ($this->USE_SMOOTHING)
+			if ($this->USE_SMOOTHING) {
 				$this->smoothElevation();
+			}
 		}
 	}
 
@@ -83,17 +88,19 @@ class ElevationCorrectorGeoTIFF extends ElevationCorrectorStrategy {
 	 * Otherwise, this corrector would result in much higher cumulative elevations.
 	 */
 	protected function smoothElevation() {
-		if (empty($this->ElevationPoints))
+		if (empty($this->ElevationPoints)) {
 			return;
+		}
 
 		$arraySize = count($this->ElevationPoints);
 		$currentValue = $this->ElevationPoints[0];
 
 		for ($i = 0; $i < $arraySize; $i++) {
-			if ($i % $this->POINTS_TO_GROUP == 0)
+			if ($i % $this->POINTS_TO_GROUP == 0) {
 				$currentValue = $this->ElevationPoints[$i];
-			else
+			} else {
 				$this->ElevationPoints[$i] = $currentValue;
+			}
 		}
 	}
 }

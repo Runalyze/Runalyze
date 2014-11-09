@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Parameter\Application\ElevationMethod;
+use Runalyze\Data\Elevation;
 
 /**
  * Training plot for comparing elevation algorithms
@@ -20,7 +22,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 
 	/**
 	 * Elevation calculator
-	 * @var ElevationCalculator
+	 * @var Runalyze\Data\Elevation\Calculation\Calculator
 	 */
 	protected $Calculator = null;
 
@@ -46,7 +48,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 	 * Init data
 	 */
 	protected function initData() {
-		$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitude());
+		$this->Calculator = new Elevation\Calculation\Calculator($this->Training->getArrayAltitude());
 
 		if ($this->Training->elevationWasCorrected() || !$this->Training->GpsData()->hasElevationDataOriginal()) {
 			$this->Data = $this->constructPlotDataFor(ElevationMethod::NONE, 0);
@@ -54,7 +56,7 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		}
 
 		if ($this->Training->GpsData()->hasElevationDataOriginal()) {
-			$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitudeOriginal());
+			$this->Calculator = new Elevation\Calculation\Calculator($this->Training->getArrayAltitudeOriginal());
 
 			$this->Plot->Data[] = array(
 				'label'	=> __('Original data'),
@@ -67,13 +69,13 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 				$this->Data = $this->Plot->Data[0]['data'];
 			}
 
-			$this->Calculator = new ElevationCalculator($this->Training->getArrayAltitude());
+			$this->Calculator = new Elevation\Calculation\Calculator($this->Training->getArrayAltitude());
 		}
 
 		$this->Plot->Data[] = array(
 			'label'	=> __('Treshold'),
 			'color'	=> '#008',
-			'data'	=> $this->constructPlotDataFor(ElevationMethod::TRESHOLD),
+			'data'	=> $this->constructPlotDataFor(ElevationMethod::THRESHOLD),
 			'curvedLines' => array('apply' => false)
 		);
 
@@ -100,12 +102,12 @@ class TrainingPlotElevationCompareAlgorithms extends TrainingPlotElevation {
 		}
 
 		$this->Calculator->setMethod($Method);
-		$this->Calculator->setTreshold($treshold);
-		$this->Calculator->calculateElevation();
+		$this->Calculator->setThreshold($treshold);
+		$this->Calculator->calculate();
 
 		$i = 0;
-		$Points    = $this->Calculator->getElevationPointsWeeded();
-		$Indices   = $this->Calculator->getIndicesOfElevationPointsWeeded();
+		$Points    = $this->Calculator->strategy()->smoothedData();
+		$Indices   = $this->Calculator->strategy()->smoothingIndices();
 		$Distances = $this->Training->getArrayDistance();
 
 		foreach ($Indices as $i => $index) {

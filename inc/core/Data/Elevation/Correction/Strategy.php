@@ -1,14 +1,18 @@
 <?php
 /**
- * This file contains class::ElevationCorrectorStrategy
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::Strategy
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
- * Elevation corrector strategy
+ * Abstract strategy to correct elevation data
+ *
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-abstract class ElevationCorrectorStrategy {
+abstract class Strategy {
 	/**
 	 * Latitude points
 	 * @var array
@@ -30,7 +34,8 @@ abstract class ElevationCorrectorStrategy {
 	/**
 	 * Points to group together
 	 * 
-	 * This is only a bad guess. It would be better to decide this by distance between the points.
+	 * This is only a bad guess.
+	 * It would be better to decide this by distance between the points.
 	 * @var int
 	 */
 	protected $POINTS_TO_GROUP = 5;
@@ -39,13 +44,16 @@ abstract class ElevationCorrectorStrategy {
 	 * Construct
 	 * @param array $LatitudePoints
 	 * @param array $LongitudePoints
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(array $LatitudePoints, array $LongitudePoints) {
-		if (empty($LatitudePoints) || empty($LongitudePoints))
-			throw new InvalidArgumentException('Latitudes/longitudes must not be empty.');
+		if (empty($LatitudePoints) || empty($LongitudePoints)) {
+			throw new \InvalidArgumentException('Latitudes/longitudes must not be empty.');
+		}
 
-		if (count($LatitudePoints) != count($LongitudePoints))
-			throw new InvalidArgumentException('Latitudes and longitudes must be of same size.');
+		if (count($LatitudePoints) != count($LongitudePoints)) {
+			throw new \InvalidArgumentException('Latitudes and longitudes must be of same size.');
+		}
 
 		$this->LatitudePoints = $LatitudePoints;
 		$this->LongitudePoints = $LongitudePoints;

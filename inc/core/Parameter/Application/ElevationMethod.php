@@ -19,10 +19,10 @@ class ElevationMethod extends \Runalyze\Parameter\Select {
 	const NONE = 'none';
 
 	/**
-	 * Treshold
+	 * Threshold
 	 * @var string
 	 */
-	const TRESHOLD = 'treshold';
+	const THRESHOLD = 'treshold';
 
 	/**
 	 * Douglas-Peucker
@@ -31,21 +31,21 @@ class ElevationMethod extends \Runalyze\Parameter\Select {
 	const DOUGLAS_PEUCKER = 'douglas-peucker';
 
 	/**
-	 * Reumann-Witkamm
+	 * Reumann-Witkam
 	 * @var string
 	 */
-	const REUMANN_WITKAMM = 'reumann-witkamm';
+	const REUMANN_WITKAM = 'reumann-witkamm';
 
 	/**
 	 * Construct
 	 */
 	public function __construct() {
-		parent::__construct(self::TRESHOLD, array(
+		parent::__construct(self::THRESHOLD, array(
 			'options'		=> array(
 				self::NONE				=> __('no smoothing'),
-				self::TRESHOLD			=> __('Treshold method'),
+				self::THRESHOLD			=> __('Threshold method'),
 				self::DOUGLAS_PEUCKER	=> __('Douglas-Peucker-Algorithm')//,
-				//self::REUMANN_WITKAMM	=> __('Reumann-Witkamm-Algorithm')
+				//self::REUMANN_WITKAM	=> __('Reumann-Witkam-Algorithm')
 			)
 		));
 	}
@@ -59,11 +59,11 @@ class ElevationMethod extends \Runalyze\Parameter\Select {
 	}
 
 	/**
-	 * Uses: Treshold
+	 * Uses: Threshold
 	 * @return bool
 	 */
-	public function usesTreshold() {
-		return ($this->value() == self::TRESHOLD);
+	public function usesThreshold() {
+		return ($this->value() == self::THRESHOLD);
 	}
 
 	/**
@@ -75,10 +75,10 @@ class ElevationMethod extends \Runalyze\Parameter\Select {
 	}
 
 	/**
-	 * Uses: Reumann-Witkamm
+	 * Uses: Reumann-Witkam
 	 * @return bool
 	 */
-	public function usesReumannWitkamm() {
-		return ($this->value() == self::REUMANN_WITKAMM);
+	public function usesReumannWitkam() {
+		return ($this->value() == self::REUMANN_WITKAM);
 	}
 }

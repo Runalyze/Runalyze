@@ -1,14 +1,18 @@
 <?php
 /**
- * This file contains class::ElevationCorrectorFromExternalAPI
- * @package Runalyze\Data\GPS\Elevation
+ * This file contains class::FromExternalAPI
+ * @package Runalyze\Data\Elevation\Correction
  */
+
+namespace Runalyze\Data\Elevation\Correction;
+
 /**
  * Abstract corrector strategy for external API
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS\Elevation
+ * @package Runalyze\Data\Elevation\Correction
  */
-abstract class ElevationCorrectorFromExternalAPI extends ElevationCorrectorStrategy {
+abstract class FromExternalAPI extends Strategy {
 	/**
 	 * Points per call
 	 * @var int

@@ -23,17 +23,17 @@ class ElevationMethodTest extends \PHPUnit_Framework_TestCase {
 	public function testMethods() {
 		$this->object->set( ElevationMethod::NONE );
 		$this->assertTrue( $this->object->usesNone() );
-		$this->assertFalse( $this->object->usesTreshold() );
+		$this->assertFalse( $this->object->usesThreshold() );
 		$this->assertFalse( $this->object->usesDouglasPeucker() );
 
-		$this->object->set( ElevationMethod::TRESHOLD );
+		$this->object->set( ElevationMethod::THRESHOLD );
 		$this->assertFalse( $this->object->usesNone() );
-		$this->assertTrue( $this->object->usesTreshold() );
+		$this->assertTrue( $this->object->usesThreshold() );
 		$this->assertFalse( $this->object->usesDouglasPeucker() );
 
 		$this->object->set( ElevationMethod::DOUGLAS_PEUCKER );
 		$this->assertFalse( $this->object->usesNone() );
-		$this->assertFalse( $this->object->usesTreshold() );
+		$this->assertFalse( $this->object->usesThreshold() );
 		$this->assertTrue( $this->object->usesDouglasPeucker() );
 	}
 
