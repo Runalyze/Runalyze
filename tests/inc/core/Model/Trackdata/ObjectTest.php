@@ -58,6 +58,9 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($T->hasPauses());
 		$this->assertEquals(1, $T->pauses()->num());
 		$this->assertEquals(20, $T->pauses()->at(0)->hrDiff());
+
+		$this->assertEquals(40, $T->totalTime());
+		$this->assertEquals(0.2, $T->totalDistance());
 	}
 
 	public function testCreatingWithArrays() {
@@ -106,6 +109,41 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 		$T = new Object();
 		$T->set(Object::PAUSES, $P->asString());
+	}
+
+	public function testDirectAccess() {
+		$T = new Object(array(
+			Object::TIME => array(1, 2, 3, 5, 10, 20)
+		));
+
+		$this->assertEquals( 1, $T->at(0, Object::TIME));
+		$this->assertEquals( 2, $T->at(1, Object::TIME));
+		$this->assertEquals( 3, $T->at(2, Object::TIME));
+		$this->assertEquals( 5, $T->at(3, Object::TIME));
+		$this->assertEquals(10, $T->at(4, Object::TIME));
+		$this->assertEquals(20, $T->at(5, Object::TIME));
+	}
+
+	/**
+	 * @expectedException \PHPUnit_Framework_Error
+	 */
+	public function testInvalidAccessIndex() {
+		$T = new Object(array(
+			Object::TIME => array(1)
+		));
+
+		$T->at(2, Object::TIME);
+	}
+
+	/**
+	 * @expectedException \PHPUnit_Framework_Error
+	 */
+	public function testInvalidAccessKey() {
+		$T = new Object(array(
+			Object::TIME => array(1)
+		));
+
+		$T->at(0, Object::DISTANCE);
 	}
 
 }

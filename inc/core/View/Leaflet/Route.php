@@ -1,14 +1,18 @@
 <?php
 /**
- * This file contains class::LeafletRoute
- * @package Runalyze\Data\GPS
+ * This file contains class::Route
+ * @package Runalyze\View\Leaflet
  */
+
+namespace Runalyze\View\Leaflet;
+
 /**
- * Leaflet-route
+ * Leaflet route
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS
+ * @package Runalyze\View\Leaflet
  */
-class LeafletRoute {
+class Route {
 	/**
 	 * ID
 	 * @var string
@@ -59,16 +63,18 @@ class LeafletRoute {
 	 * Get JS
 	 * @return string
 	 */
-	final public function getJS() {
+	final public function js() {
 		$Options = 'segments: '.json_encode($this->Paths);
 
-		if (count($this->Paths) == count($this->Infos))
+		if (count($this->Paths) == count($this->Infos)) {
 			$Options .= ', segmentsInfo: '.json_encode($this->Infos);
+		}
 
 		$Options .= ', markertopush: ['.implode(',', $this->Marker).']';
 
-		foreach ($this->Options as $property => $value)
+		foreach ($this->Options as $property => $value) {
 			$Options .= ', '.$property.': '.json_encode($value);
+		}
 
 		return 'RunalyzeLeaflet.Routes.addRoute(\''.$this->id.'\', {'.$Options.'});';
 	}

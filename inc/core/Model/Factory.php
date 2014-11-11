@@ -57,6 +57,17 @@ class Factory {
 	}
 
 	/**
+	 * Route
+	 * @param int $routeid
+	 * @return \Runalyze\Model\Route\Object
+	 */
+	public function route($routeid) {
+		$Data = $this->arrayByPK('route', $routeid);
+
+		return new Route\Object($Data);
+	}
+
+	/**
 	 * Array by primary key
 	 * @param string $tablename
 	 * @param int $id

@@ -1,17 +1,21 @@
 <?php
 /**
- * This file contains class::LeafletMap
- * @package Runalyze\Data\GPS
+ * This file contains class::Map
+ * @package Runalyze\View\Leaflet
  */
 
+namespace Runalyze\View\Leaflet;
+
+use Runalyze\View;
 use Runalyze\Configuration;
 
 /**
- * Leaflet-map
+ * Leaflet map
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Data\GPS
+ * @package Runalyze\View\Leaflet
  */
-class LeafletMap {
+class Map extends View\Object {
 	/**
 	 * HTML id
 	 * @var string
@@ -32,66 +36,57 @@ class LeafletMap {
 
 	/**
 	 * Routes
-	 * @var LeafletRoute[]
+	 * @var \Runalyze\View\Leaflet\Route[]
 	 */
 	protected $Routes = array();
 
 	/**
-	 * Bounds
+	 * Boundaries
 	 * @var array
 	 */
 	protected $Bounds = array();
 
 	/**
 	 * Construct new map
-	 * @param string $ContainerID
+	 * @param string $containerID
 	 * @param int $height [optional]
 	 * @param int $width [optional]
 	 */
-	public function __construct($ContainerID, $height = 0, $width = 0) {
-		$this->id = $ContainerID;
+	public function __construct($containerID, $height = 0, $width = 0) {
+		$this->id = $containerID;
 		$this->height = $height;
 		$this->width = $width;
 	}
 
 	/**
 	 * Add route
-	 * @param LeafletRoute $Route
+	 * @param \Runalyze\View\Leaflet\Route $route
 	 */
-	public function addRoute(LeafletRoute $Route) {
-		$this->Routes[] = $Route;
+	public function addRoute(Route $route) {
+		$this->Routes[] = $route;
 	}
 
 	/**
 	 * Set bounds
-	 * @param array $Bounds
+	 * @param array $bounds
 	 */
-	public function setBounds(array $Bounds) {
-		$this->Bounds = $Bounds;
-	}
-
-	/**
-	 * Display map with
-	 * 
-	 * Outputs html container and javascript
-	 */
-	public function display() {
-		echo $this->getCode();
+	public function setBounds(array $bounds) {
+		$this->Bounds = $bounds;
 	}
 
 	/**
 	 * Get code
 	 * @return string
 	 */
-	public function getCode() {
-		return $this->getHTML().$this->getJS();
+	public function code() {
+		return $this->html().$this->js();
 	}
 
 	/**
 	 * Get HTML
 	 * @return string
 	 */
-	public function getHTML() {
+	public function html() {
 		$style = '';
 
 		if ($this->height > 0)
@@ -110,15 +105,17 @@ class LeafletMap {
 	 * Get JS
 	 * @return string
 	 */
-	public function getJS() {
+	public function js() {
 		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
 		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\');';
 
-		foreach ($this->Routes as $Route)
-			$Code .= $Route->getJS();
+		foreach ($this->Routes as $Route) {
+			$Code .= $Route->js();
+		}
 
-		if (!empty($this->Bounds))
+		if (!empty($this->Bounds)) {
 			$Code .= 'RunalyzeLeaflet.map().fitBounds([['.$this->Bounds['lat.min'].','.$this->Bounds['lng.min'].'],['.$this->Bounds['lat.max'].','.$this->Bounds['lng.max'].']]);';
+		}
 
         $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
 

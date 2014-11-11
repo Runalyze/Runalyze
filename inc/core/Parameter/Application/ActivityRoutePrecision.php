@@ -17,7 +17,7 @@ class ActivityRoutePrecision extends \Runalyze\Parameter\Select {
 	 */
 	public function __construct() {
 		parent::__construct('5', array(
-			'options'		=> array( // see LeafletTrainingRoute::prepareLoop
+			'options'		=> array( // see Runalyze\View\Leaflet\Activity::prepareLoops
 				'1'				=> __('every data point'),
 				'2'				=> __('every second data point'),
 				'5'				=> __('every fifth data point (recommended)'),

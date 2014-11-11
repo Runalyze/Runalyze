@@ -26,7 +26,7 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 	public function testLocationByTime() {
 		$Location = new Location();
 		$Location->setLocationName('Berlin, de');
-		$Location->setTimestamp( time() - 86500 );
+		$Location->setTimestamp( time() - 7*86500 );
 
 		$Forecast = new Forecast(new Openweathermap, $Location);
 		$object = $Forecast->object();

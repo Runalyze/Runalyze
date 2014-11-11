@@ -14,7 +14,7 @@ use Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
-class Object extends Model\Object {
+class Object extends Model\Object implements Model\Loopable {
 	/**
 	 * Key: activity id
 	 * @var string
@@ -180,6 +180,18 @@ class Object extends Model\Object {
 	}
 
 	/**
+	 * Value at
+	 * 
+	 * Remark: This method may throw index offsets.
+	 * @param int $index
+	 * @param enum $key
+	 * @return mixed
+	 */
+	public function at($index, $key) {
+		return $this->Data[$key][$index];
+	}
+
+	/**
 	 * Get activity id
 	 * @return int
 	 */
@@ -196,11 +208,27 @@ class Object extends Model\Object {
 	}
 
 	/**
+	 * Total time
+	 * @return int
+	 */
+	public function totalTime() {
+		return $this->Data[self::TIME][$this->numberOfPoints-1];
+	}
+
+	/**
 	 * Get distance
 	 * @return array unit: [km]
 	 */
 	public function distance() {
 		return $this->Data[self::DISTANCE];
+	}
+
+	/**
+	 * Total distance
+	 * @return int
+	 */
+	public function totalDistance() {
+		return $this->Data[self::DISTANCE][$this->numberOfPoints-1];
 	}
 
 	/**
