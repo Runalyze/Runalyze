@@ -1,19 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-05 20:52+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2014-11-12 13:48+0200\n"
+"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
+"Language-Team: French "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 1.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: index.php:44 inc/class.FrontendSharedStatistics.php:148
 #: inc/core/Configuration/Category/Misc.php:46
@@ -21,13 +23,15 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:47
 #: inc/training/view/section/class.SectionMiscellaneous.php:17
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Divers"
 
 #: index.php:70
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
+"<em>Il n'y a pas de statistiques disponibles. Veuillez activer un plugin "
+"dans votre configuration.<em>"
 
 #: login.php:25 inc/tpl/tpl.installerHeader.php:21
 msgid "Please login"
@@ -51,7 +55,7 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
