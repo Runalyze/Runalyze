@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-13 08:34+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-11-17 13:42+0200\n"
+"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -317,7 +317,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:292 inc/tpl/tpl.Installer.php:125
 msgid "User"
-msgstr ""
+msgstr "utilisateur"
 
 #: inc/class.AdminView.php:293 inc/system/config/class.ConfigTabAccount.php:34
 #: inc/system/config/class.ConfigTabClothes.php:43
@@ -333,13 +333,13 @@ msgstr ""
 
 #: inc/class.AdminView.php:294 inc/tpl/tpl.loginWindow.php:81
 msgid "Email"
-msgstr ""
+msgstr "email"
 
 #: inc/class.AdminView.php:295
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:118
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:158
 msgid "since"
-msgstr ""
+msgstr "depuis"
 
 #: inc/class.AdminView.php:296
 msgid "last"
@@ -347,11 +347,11 @@ msgstr ""
 
 #: inc/class.AdminView.php:297
 msgid "Functions"
-msgstr ""
+msgstr "fonctions"
 
 #: inc/class.AdminView.php:313
 msgid "Activate user"
-msgstr ""
+msgstr "Activer utilisateur"
 
 #: inc/class.AdminView.php:313 inc/tpl/tpl.loginWindow.setNewPassword.php:8
 msgid "Set new password"
@@ -359,7 +359,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:338
 msgid "Server information"
-msgstr ""
+msgstr "informations serveur"
 
 #: inc/class.AdminView.php:339
 msgid "PHP version:"
