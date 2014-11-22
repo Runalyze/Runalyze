@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-08 14:59+0200\n"
+"PO-Revision-Date: 2014-11-22 15:26+0200\n"
 "Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -63,7 +63,7 @@ msgstr "Verbundene Geräte"
 
 #: call/call.garminCommunicator.php:54
 msgid "Browse devices"
-msgstr ""
+msgstr "Geräte durchsuchen"
 
 #: call/call.garminCommunicator.php:55
 msgid "Devices"
@@ -75,7 +75,7 @@ msgstr "Suche nach Geräten"
 
 #: call/call.garminCommunicator.php:57
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr ""
+msgstr "Daten werden vom #{deviceName} gelesen, bitte warten..."
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
@@ -83,7 +83,7 @@ msgstr "Bite warten..."
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
-msgstr ""
+msgstr "#{tracks} Trainings gefunden"
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
@@ -191,7 +191,7 @@ msgstr "Es gab ein Problem beim Deinstallieren des Plugins."
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Klicke ein Training an, um weitere Details anzuzeigen."
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
@@ -272,6 +272,9 @@ msgid ""
 "Needed for any online-version of the Garmin Communicator<br>see http://"
 "developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/"
 msgstr ""
+"Wird für jede Onlineversion vom Garmin Communicator gebraucht<br>siehe "
+"http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-"
+"site-key/"
 
 #: inc/class.AdminView.php:176
 msgid "Sender e-mail"
@@ -301,11 +304,11 @@ msgstr "Suche nach neuen Plugins"
 
 #: inc/class.AdminView.php:203
 msgid "Go"
-msgstr ""
+msgstr "Suchen"
 
 #: inc/class.AdminView.php:211
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>/inc/plugin/pluginmap.php</strong> ist nicht beschreibbar"
 
 #: inc/class.AdminView.php:211
 msgid "These tools will not work."
@@ -457,11 +460,11 @@ msgstr "Kalender"
 
 #: inc/class.DataBrowser.php:267 inc/class.DataBrowserShared.php:93
 msgid "Activity per month"
-msgstr ""
+msgstr "Monatstraining vergleichen"
 
 #: inc/class.DataBrowser.php:275 inc/class.DataBrowserShared.php:101
 msgid "Activity per week"
-msgstr ""
+msgstr "Wochentraining vergleichen"
 
 #: inc/class.DataBrowser.php:291
 msgid "Search for an activity"
@@ -469,15 +472,15 @@ msgstr "Suche nach Trainingseinheiten"
 
 #: inc/class.DatasetLabels.php:23
 msgid "Sport type"
-msgstr ""
+msgstr "Trainingstypen"
 
 #: inc/class.DatasetLabels.php:24 inc/training/schemes/scheme.Training.php:95
 msgid "Activity type"
-msgstr ""
+msgstr "Trainingstyp"
 
 #: inc/class.DatasetLabels.php:25
 msgid "Daytime"
-msgstr ""
+msgstr "Uhrzeit"
 
 #: inc/class.DatasetLabels.php:26 inc/data/class.SplitsView.php:127
 #: inc/data/gps/class.LeafletTrainingRoute.php:129
@@ -499,7 +502,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:219
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:335
 msgid "Distance"
-msgstr ""
+msgstr "Distanz"
 
 #: inc/class.DatasetLabels.php:28 inc/data/class.SplitsView.php:129
 #: inc/training/plot/class.TrainingPlotCollection.php:59
@@ -520,7 +523,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:224
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:337
 msgid "Pace"
-msgstr ""
+msgstr "Pace"
 
 #: inc/class.DatasetLabels.php:29
 #: inc/training/plot/class.TrainingPlotCollection.php:49
@@ -533,7 +536,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:46
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:25
 msgid "Elevation"
-msgstr ""
+msgstr "Höhenmeter"
 
 #: inc/class.DatasetLabels.php:30 inc/training/schemes/scheme.Training.php:228
 #: inc/training/search/class.SearchFormular.php:136
@@ -545,11 +548,11 @@ msgstr "Kalorien"
 
 #: inc/class.DatasetLabels.php:31
 msgid "avg. heart rate"
-msgstr ""
+msgstr "durchschn. Puls"
 
 #: inc/class.DatasetLabels.php:32
 msgid "max. heart rate"
-msgstr ""
+msgstr "max. Puls"
 
 #: inc/class.DatasetLabels.php:33 inc/core/Configuration/Category/Trimp.php:67
 #: inc/training/search/class.FormularSelectSearchSort.php:38
@@ -634,13 +637,13 @@ msgstr "Trainingspartner"
 #: inc/class.DatasetLabels.php:43 inc/training/class.TrainingDataView.php:481
 #: inc/training/schemes/scheme.Training.php:426
 msgid "Running drills"
-msgstr ""
+msgstr "Lauf-ABC"
 
 #: inc/class.DatasetLabels.php:44 inc/data/class.Cadence.php:92
 #: inc/data/class.CadenceRunning.php:27
 #: inc/training/schemes/scheme.Training.php:323
 msgid "Cadence"
-msgstr ""
+msgstr "Trittfrequenz"
 
 #: inc/class.DatasetLabels.php:45
 #: inc/system/config/class.ConfigTabSports.php:77
@@ -650,11 +653,11 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:336
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Power"
-msgstr ""
+msgstr "Power"
 
 #: inc/class.DatasetLabels.php:46
 msgid "JD intensity"
-msgstr ""
+msgstr "JD Intensität"
 
 #: inc/class.FrontendShared.php:118 inc/class.FrontendSharedList.php:157
 msgid "Problem"
@@ -667,11 +670,11 @@ msgstr "Fehler"
 
 #: inc/class.FrontendShared.php:130
 msgid "Invalid request"
-msgstr ""
+msgstr "Ungültige Anfrage"
 
 #: inc/class.FrontendShared.php:131
 msgid "We are sorry, your request is not valid."
-msgstr ""
+msgstr "Es tut uns leid, aber deine Anfrage ist nicht gültig."
 
 #: inc/class.FrontendShared.php:143
 msgid "Private activity"
@@ -680,6 +683,7 @@ msgstr "Private Aktivität"
 #: inc/class.FrontendShared.php:144
 msgid "This activity is private. The user does not allow you to see it."
 msgstr ""
+"Dieses Training ist privat. Der Nutzer hat dieses Training nicht freigegeben."
 
 #: inc/class.FrontendSharedList.php:159
 #, php-format
@@ -688,16 +692,16 @@ msgstr "Öffentliche Trainingsansicht von %s"
 
 #: inc/class.FrontendSharedList.php:168
 msgid "This list is private"
-msgstr ""
+msgstr "Diese Liste ist privat"
 
 #: inc/class.FrontendSharedList.php:169
 msgid "The user does not share his activity list."
-msgstr ""
+msgstr "Der Nutzer teilt seine Aktivitätsliste nicht mit der Öffentlichkeit."
 
 #: inc/class.FrontendSharedStatistics.php:46
 #, php-format
 msgid "Activity data of %s"
-msgstr ""
+msgstr "Öffentliche Trainingsansicht von %s"
 
 #: inc/class.FrontendSharedStatistics.php:81
 msgid "Total distance:"
@@ -891,7 +895,7 @@ msgstr "Dezember"
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Datenbank-Cleanup"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
@@ -908,7 +912,7 @@ msgstr "Standard-Eingabemodus"
 
 #: inc/core/Configuration/Category/ActivityForm.php:212
 msgid "Show activity after creation"
-msgstr ""
+msgstr "Zeige das Training nach dem Import an"
 
 #: inc/core/Configuration/Category/ActivityForm.php:216
 msgid "Calculate calories"
@@ -917,6 +921,8 @@ msgstr "Kalorien berechnen"
 #: inc/core/Configuration/Category/ActivityForm.php:217
 msgid "Recalculate calories after changing duration by hand"
 msgstr ""
+"Die Kalorien werden im Formular bei einer Änderung der Dauer automatisch "
+"angepasst. Dabei wird der für die Sportart hinterlegte Wert verwendet."
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power"
@@ -925,6 +931,8 @@ msgstr "Power berechnen"
 #: inc/core/Configuration/Category/ActivityForm.php:222
 msgid "Calculate power by speed and grade for cycling"
 msgstr ""
+"Beim Radfahren kann die jeweilige Power anhand einiger physikalischer Größen "
+"automatisch berechnet werden."
 
 #: inc/core/Configuration/Category/ActivityForm.php:238
 msgid "Automatically load weather conditions"
@@ -947,12 +955,16 @@ msgstr ""
 #: inc/core/Configuration/Category/ActivityForm.php:255
 msgid "Automatically correct elevation data"
 msgstr ""
+"Die Höhendaten können über externe APIs korrigiert werden. Das ist meist "
+"deutlich besser als GPS-Messungen"
 
 #: inc/core/Configuration/Category/ActivityForm.php:256
 msgid ""
 "Instead of using gps-elevation a correction via external services is "
 "possible."
 msgstr ""
+"Anstelle die GPS-Höhendaten zu verwenden können die Höhendaten über externe "
+"Schnittstellen korrigiert werden."
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid "for elevation correction: server"
@@ -963,6 +975,8 @@ msgid ""
 "By default, local srtm-files are used. If they are not available, an "
 "external server is used."
 msgstr ""
+"Als Standard werden lokale strtm-Dateien genutzt. Wenn diese nicht verfügbar "
+"sind wird eine externe Schnittstelle verwendet."
 
 #: inc/core/Configuration/Category/ActivityForm.php:271
 msgid "Sort: sport types"
@@ -978,15 +992,15 @@ msgstr "Sortierung: Schuhe"
 
 #: inc/core/Configuration/Category/ActivityView.php:261
 msgid "Activity view"
-msgstr ""
+msgstr "Trainingsansicht"
 
 #: inc/core/Configuration/Category/ActivityView.php:264
 msgid "Number of decimals"
-msgstr ""
+msgstr "Anzahl der Nachkommastellen"
 
 #: inc/core/Configuration/Category/ActivityView.php:280
 msgid "Plots: combination"
-msgstr ""
+msgstr "Diagrammkombination"
 
 #: inc/core/Configuration/Category/ActivityView.php:284
 msgid "Plots: smooth curves"
@@ -994,7 +1008,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:288
 msgid "Pace plot: y-axis minimum"
-msgstr ""
+msgstr "Pace: Y-Achsen-Minimum"
 
 #: inc/core/Configuration/Category/ActivityView.php:289
 msgid "Data points below this limit will be ignored. (only for running)"
@@ -1002,7 +1016,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:293
 msgid "Pace plot: y-axis maximum"
-msgstr ""
+msgstr "Pace: Y-Achsen-Maximum"
 
 #: inc/core/Configuration/Category/ActivityView.php:294
 msgid "Data points above this limit will be ignored. (only for running)"
@@ -1010,23 +1024,25 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:298
 msgid "Pace: Reverse y-axis"
-msgstr ""
+msgstr "Pace: Y-Achse umkehren"
 
 #: inc/core/Configuration/Category/ActivityView.php:299
 msgid "Reverse the y-axis such that a faster pace is at the top."
 msgstr ""
+"Standardmäßig wird ein höheres Tempo im Diagramm weiter unten angezeigt als "
+"ein langsameres Tempo. Das kann mit dieser Einstellung umgekehrt werden."
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Pace: Ignore outliers"
-msgstr ""
+msgstr "Pace: Ausreißer egal"
 
 #: inc/core/Configuration/Category/ActivityView.php:304
 msgid "Try to ignore outliers in the pace plot."
-msgstr ""
+msgstr "Wenn aktiviert, werden im Pace-Diagramm Ausreißer nicht berücksichtigt."
 
 #: inc/core/Configuration/Category/ActivityView.php:314
 msgid "Map: interrupt route"
-msgstr ""
+msgstr "Strecke unterbrechen"
 
 #: inc/core/Configuration/Category/ActivityView.php:315
 msgid ""
@@ -1035,14 +1051,18 @@ msgid ""
 "which distance (in seconds by average pace)between two data points can be "
 "interpolated."
 msgstr ""
+"Wenn Teile der Strecke anders zurückgelegt wurden (Auto/Bahn/...), sollten "
+"diese in der Karte nicht eingezeichnet werden. Die Erkennung einer solchen "
+"<em>Unterbrechung</em> ist aber nicht immer eindeutig.<br ></span>15s "
+"bedeutet: Distanz, die man bei dem Durchschnittstempo in 15s geschafft hätte."
 
 #: inc/core/Configuration/Category/ActivityView.php:321
 msgid "Map: precision"
-msgstr ""
+msgstr "Streckengenauigkeit"
 
 #: inc/core/Configuration/Category/ActivityView.php:322
 msgid "How many data points shoud be displayed?"
-msgstr ""
+msgstr "Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?"
 
 #: inc/core/Configuration/Category/ActivityView.php:326
 msgid "Map: line color"
@@ -1050,7 +1070,7 @@ msgstr "Karte: Linienfarbe"
 
 #: inc/core/Configuration/Category/ActivityView.php:327
 msgid "as hexadecimal rgb (e.g. #ff5500)"
-msgstr ""
+msgstr "als hexadezimal rgb (z.B. #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:337
 msgid "Elevation: smoothing"
@@ -1059,6 +1079,8 @@ msgstr "Höhenmeterglättung:"
 #: inc/core/Configuration/Category/ActivityView.php:338
 msgid "Choose the algorithm to smooth the elevation data"
 msgstr ""
+"Für Profis und Höhenmeterfanatiker: Mit welchem Algorithmus sollen die "
+"Höhenmeter vor der Berechnung geglättet werden?"
 
 #: inc/core/Configuration/Category/ActivityView.php:342
 msgid "Elevation: threshold"
@@ -1067,10 +1089,12 @@ msgstr "Höhenmeter: Schwellenwert"
 #: inc/core/Configuration/Category/ActivityView.php:343
 msgid "Threshold for the smoothing algorithm"
 msgstr ""
+"Schwellenwert zur Höhenmeterberechnung. Wird bei der Schwellenwert-Methode "
+"und beim Douglas-Peucker-Algorithmus verwendet."
 
 #: inc/core/Configuration/Category/DataBrowser.php:75
 msgid "Calendar view"
-msgstr ""
+msgstr "Kalender-Modus"
 
 #: inc/core/Configuration/Category/DataBrowser.php:78
 msgid "Calendar: mode"
@@ -1078,7 +1102,7 @@ msgstr "Kalender-Modus"
 
 #: inc/core/Configuration/Category/DataBrowser.php:79
 msgid "Default mode for the calendar"
-msgstr ""
+msgstr "Standardansicht für den Kalender"
 
 #: inc/core/Configuration/Category/DataBrowser.php:83
 msgid "Calendar: create button"
@@ -1086,7 +1110,7 @@ msgstr "Training-Hinzufügen-Link für jeden Tag anzeigen"
 
 #: inc/core/Configuration/Category/DataBrowser.php:84
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Training-Hinzufügen-Link für jeden Tag anzeigen."
 
 #: inc/core/Configuration/Category/DataBrowser.php:88
 msgid "Calendar: edit button"
