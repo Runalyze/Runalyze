@@ -6,30 +6,20 @@
 
 namespace Runalyze\Model\Trackdata;
 
+use Runalyze\Model\StringArrayObject;
+
 /**
  * Pauses object
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Trackdata
  */
-class Pauses {
+class Pauses extends StringArrayObject {
 	/**
 	 * Single objects
 	 * @var \Runalyze\Model\Trackdata\Pause[]
 	 */
-	protected $Objects = array();
-
-	/**
-	 * Construct
-	 * @param mixed $data string or array
-	 */
-	public function __construct($data = '') {
-		if (is_array($data)) {
-			$this->fromArray($data);
-		} elseif (!empty($data)) {
-			$this->fromString($data);
-		}
-	}
+	protected $Elements = array();
 
 	/**
 	 * From array
@@ -40,7 +30,7 @@ class Pauses {
 			$Pause = new Pause();
 			$Pause->fromArray($array);
 
-			$this->addPause($Pause);
+			$this->add($Pause);
 		}
 	}
 
@@ -51,7 +41,7 @@ class Pauses {
 	public function asArray() {
 		$Data = array();
 
-		foreach ($this->Objects as $Pause) {
+		foreach ($this->Elements as $Pause) {
 			$Data[] = $Pause->asArray();
 		}
 
@@ -59,50 +49,11 @@ class Pauses {
 	}
 
 	/**
-	 * From string
-	 * @param string $string
-	 */
-	public function fromString($string) {
-		$this->fromArray(json_decode($string, true));
-	}
-
-	/**
-	 * As string
-	 * @return string
-	 */
-	public function asString() {
-		return json_encode($this->asArray());
-	}
-
-	/**
-	 * Clear
-	 */
-	public function clear() {
-		$this->Objects = array();
-	}
-
-	/**
-	 * Number of pauses
-	 * @return int
-	 */
-	public function num() {
-		return count($this->Objects);
-	}
-
-	/**
-	 * Are they empty?
-	 * @return bool
-	 */
-	public function areEmpty() {
-		return ($this->num() == 0);
-	}
-
-	/**
 	 * Add pause
 	 * @param \Runalyze\Model\Trackdata\Pause $pause
 	 */
-	public function addPause(Pause $pause) {
-		$this->Objects[] = $pause;
+	public function add(Pause $pause) {
+		parent::add($pause);
 	}
 
 	/**
@@ -112,10 +63,6 @@ class Pauses {
 	 * @throws \InvalidArgumentException
 	 */
 	public function at($index) {
-		if (!isset($this->Objects[$index])) {
-			throw new \InvalidArgumentException('Unknown object index.');
-		}
-
-		return $this->Objects[$index];
+		return parent::at($index);
 	}
 }

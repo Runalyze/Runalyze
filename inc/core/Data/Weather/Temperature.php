@@ -134,8 +134,8 @@ class Temperature {
 	}
 
 	/**
-	 * Unit
-	 * @return string
+	 * Value
+	 * @return null|int
 	 */
 	public function value() {
 		return $this->fromCelsiusTo($this->inCelsius, $this->unit);

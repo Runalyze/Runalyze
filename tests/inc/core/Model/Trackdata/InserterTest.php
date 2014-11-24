@@ -59,7 +59,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Object::DISTANCE => array(0.1, 0.2, 0.3),
 			Object::HEARTRATE => array(100, 120, 130)
 		));
-		$T->pauses()->addPause(new Pause(40, 10));
+		$T->pauses()->add(new Pause(40, 10));
 
 		$I = new Inserter($this->PDO, $T);
 		$I->setAccountID(1);
@@ -74,7 +74,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(100, 120, 130), $N->heartRate());
 		$this->assertEmpty($N->pace());
 
-		$this->assertFalse($N->pauses()->areEmpty());
+		$this->assertFalse($N->pauses()->isEmpty());
 	}
 
 }

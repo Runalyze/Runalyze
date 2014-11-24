@@ -300,6 +300,6 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @return bool
 	 */
 	public function hasPauses() {
-		return !$this->Pauses->areEmpty();
+		return !$this->Pauses->isEmpty();
 	}
 }

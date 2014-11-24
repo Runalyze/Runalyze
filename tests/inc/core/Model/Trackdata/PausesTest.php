@@ -12,24 +12,24 @@ class PausesTest extends \PHPUnit_Framework_TestCase {
 		$P2 = new Pause(120, 10, 120, 100);
 
 		$P = new Pauses();
-		$P->addPause($P1);
-		$P->addPause($P2);
+		$P->add($P1);
+		$P->add($P2);
 
-		$this->assertFalse($P->areEmpty());
+		$this->assertFalse($P->isEmpty());
 		$this->assertEquals( 2, $P->num() );
 		$this->assertEquals( $P1, $P->at(0) );
 		$this->assertEquals( $P2, $P->at(1) );
 
 		$P->clear();
 
-		$this->assertTrue($P->areEmpty());
+		$this->assertTrue($P->isEmpty());
 		$this->assertEquals( 0, $P->num() );
 	}
 
 	public function testArrayTransformation() {
 		$P1 = new Pauses();
-		$P1->addPause(new Pause( 60, 10, 120, 100));
-		$P1->addPause(new Pause(120, 10, 120, 100));
+		$P1->add(new Pause( 60, 10, 120, 100));
+		$P1->add(new Pause(120, 10, 120, 100));
 
 		$P2 = new Pauses();
 		$P2->fromArray($P1->asArray());
@@ -45,8 +45,8 @@ class PausesTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStringTransformation() {
 		$P1 = new Pauses();
-		$P1->addPause(new Pause( 60, 10, 120, 100));
-		$P1->addPause(new Pause(120, 10, 120, 100));
+		$P1->add(new Pause( 60, 10, 120, 100));
+		$P1->add(new Pause(120, 10, 120, 100));
 
 		$P2 = new Pauses();
 		$P2->fromString($P1->asString());

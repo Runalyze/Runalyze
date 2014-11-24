@@ -1,0 +1,216 @@
+<?php
+/**
+ * This file contains class::Object
+ * @package Runalyze\Model\Sport
+ */
+
+namespace Runalyze\Model\Sport;
+
+use Runalyze\Model;
+use Runalyze\View\Icon\SportIcon;
+
+/**
+ * Sport object
+ * 
+ * @author Hannes Christiansen
+ * @package Runalyze\Model\Sport
+ */
+class Object extends Model\ObjectWithID {
+	/**
+	 * Key: name
+	 * @var string
+	 */
+	const NAME = 'name';
+
+	/**
+	 * Key: img
+	 * @var string
+	 */
+	const IMAGE = 'img';
+
+	/**
+	 * Key: short display
+	 * @var string
+	 */
+	const SHORT = 'short';
+
+	/**
+	 * Key: kcal/h
+	 * @var string
+	 */
+	const CALORIES_PER_HOUR = 'kcal';
+
+	/**
+	 * Key: average heart rate
+	 * @var string
+	 */
+	const HR_AVG = 'HFavg';
+
+	/**
+	 * Key: RPE
+	 * @var string
+	 */
+	const RPE = 'rpe';
+
+	/**
+	 * Key: has distances
+	 * @var string
+	 */
+	const HAS_DISTANCES = 'distances';
+
+	/**
+	 * Key: pace unit
+	 * @var string
+	 */
+	const PACE_UNIT = 'speed';
+
+	/**
+	 * Key: has types
+	 * @var string
+	 */
+	const HAS_TYPES = 'types';
+
+	/**
+	 * Key: has heart rate
+	 * @var string
+	 */
+	const HAS_HR = 'pulse';
+
+	/**
+	 * Key: has power
+	 * @var string
+	 */
+	const HAS_POWER = 'power';
+
+	/**
+	 * Key: is outside
+	 * @var string
+	 */
+	const IS_OUTSIDE = 'outside';
+
+	/**
+	 * All properties
+	 * @return array
+	 */
+	static public function allProperties() {
+		return array(
+			self::NAME,
+			self::IMAGE,
+			self::SHORT,
+			self::CALORIES_PER_HOUR,
+			self::HR_AVG,
+			self::RPE,
+			self::HAS_DISTANCES,
+			self::PACE_UNIT,
+			self::HAS_TYPES,
+			self::HAS_HR,
+			self::HAS_POWER,
+			self::IS_OUTSIDE
+		);
+	}
+
+	/**
+	 * Properties
+	 * @return array
+	 */
+	public function properties() {
+		return static::allProperties();
+	}
+
+	/**
+	 * Name
+	 * @return string
+	 */
+	public function name() {
+		return $this->Data[self::NAME];
+	}
+
+	/**
+	 * Icon
+	 * @return \Runalyze\View\Icon\SportIcon
+	 * @codeCoverageIgnore
+	 */
+	public function icon() {
+		return new SportIcon($this->Data[self::IMAGE]);
+	}
+
+	/**
+	 * Uses short display?
+	 * @return boolean
+	 */
+	public function usesShortDisplay() {
+		return ($this->Data[self::SHORT] == 1);
+	}
+
+	/**
+	 * Calories per hour
+	 * @return int
+	 */
+	public function caloriesPerHour() {
+		return $this->Data[self::CALORIES_PER_HOUR];
+	}
+
+	/**
+	 * Average heartrate
+	 * @return int
+	 */
+	public function avgHR() {
+		return $this->Data[self::HR_AVG];
+	}
+
+	/**
+	 * RPE value
+	 * @return int
+	 */
+	public function rpe() {
+		return $this->Data[self::RPE];
+	}
+
+	/**
+	 * Pace unit
+	 * @return enum see \Runalyze\Activity\Pace
+	 */
+	public function paceUnit() {
+		return $this->Data[self::PACE_UNIT];
+	}
+
+	/**
+	 * Has distances?
+	 * @return boolean
+	 */
+	public function hasDistances() {
+		return ($this->Data[self::HAS_DISTANCES] == 1);
+	}
+
+	/**
+	 * Has types?
+	 * @return boolean
+	 */
+	public function hasTypes() {
+		return ($this->Data[self::HAS_TYPES] == 1);
+	}
+
+	/**
+	 * Has heart rate?
+	 * @return boolean
+	 */
+	public function hasHeartRate() {
+		return ($this->Data[self::HAS_HR] == 1);
+	}
+
+	/**
+	 * Has power?
+	 * @return boolean
+	 */
+	public function hasPower() {
+		return ($this->Data[self::HAS_POWER] == 1);
+	}
+
+	/**
+	 * Is this sport outside?
+	 * @return boolean
+	 */
+	public function isOutside() {
+		return ($this->Data[self::IS_OUTSIDE] == 1);
+	}
+}

@@ -9,7 +9,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 	protected function simpleObjectByStrings() {
 		$P = new Pauses();
-		$P->addPause(new Pause(20, 10, 140, 120));
+		$P->add(new Pause(20, 10, 140, 120));
 
 		return new Object(array(
 			Object::ACTIVITYID => 1,
@@ -30,7 +30,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(0, $T->num());
 		$this->assertFalse($T->hasPauses());
-		$this->assertTrue($T->pauses()->areEmpty());
+		$this->assertTrue($T->pauses()->isEmpty());
 	}
 
 	public function testClearing() {
