@@ -51,8 +51,13 @@ class Pauses extends StringArrayObject {
 	/**
 	 * Add pause
 	 * @param \Runalyze\Model\Trackdata\Pause $pause
+	 * @throws \InvalidArgumentException
 	 */
-	public function add(Pause $pause) {
+	public function add($pause) {
+		if (!($pause) instanceof Pause) {
+			throw new \InvalidArgumentException('Element to add has to be of type \'Pause\'.');
+		}
+
 		parent::add($pause);
 	}
 

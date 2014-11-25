@@ -50,7 +50,7 @@ class Object extends Model\ObjectWithID {
 	 * Key: RPE
 	 * @var string
 	 */
-	const RPE = 'rpe';
+	const RPE = 'RPE';
 
 	/**
 	 * Key: has distances

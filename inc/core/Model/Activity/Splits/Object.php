@@ -85,8 +85,13 @@ class Object extends StringArrayObject {
 	/**
 	 * Add split
 	 * @param \Runalyze\Model\Activity\Splits\Split $split
+	 * @throws \InvalidArgumentException
 	 */
-	public function add(Split $split) {
+	public function add($split) {
+		if (!($split) instanceof Split) {
+			throw new \InvalidArgumentException('Element to add has to be of type \'Split\'.');
+		}
+
 		parent::add($split);
 	}
 

@@ -1,30 +1,30 @@
 <?php
 /**
  * This file contains class::Inserter
- * @package Runalyze\Model\Trackdata
+ * @package Runalyze\Model\Sport
  */
 
-namespace Runalyze\Model\Trackdata;
+namespace Runalyze\Model\Sport;
 
 use Runalyze\Model;
 
 /**
- * Insert trackdata to database
+ * Insert sport to database
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Model\Trackdata
+ * @package Runalyze\Model\Sport
  */
 class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Trackdata\Object
+	 * @var \Runalyze\Model\Sport\Object
 	 */
 	protected $Object;
 
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Trackdata\Object $object [optional]
+	 * @param \Runalyze\Model\Sport\Object $object [optional]
 	 */
 	public function __construct(\PDO $connection, Object $object = null) {
 		parent::__construct($connection, $object);
@@ -35,7 +35,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @return string
 	 */
 	protected function table() {
-		return 'trackdata';
+		return 'sport';
 	}
 
 	/**
