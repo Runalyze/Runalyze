@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-17 13:42+0200\n"
+"PO-Revision-Date: 2014-11-25 13:30+0200\n"
 "Last-Translator: Ralf S. <frenchente@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
@@ -87,15 +87,15 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
-msgstr ""
+msgstr "Pas d'appareils trouvés"
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr ""
+msgstr "trouvé"
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
-msgstr ""
+msgstr "#{deviceCount}appareils trouvés"
 
 #: call/call.garminCommunicator.php:65
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:95
@@ -110,7 +110,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:333
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:7
 msgid "Date"
-msgstr ""
+msgstr "date"
 
 #: call/call.garminCommunicator.php:66 inc/class.DatasetLabels.php:27
 #: inc/import/class.MultiImporterFormular.php:71
@@ -120,7 +120,7 @@ msgstr ""
 #: inc/training/view/class.RoundsInfo.php:211
 #: inc/training/view/class.VDOTinfo.php:72
 msgid "Duration"
-msgstr ""
+msgstr "durée"
 
 #: call/call.garminCommunicator.php:67
 msgid "Status"
@@ -138,11 +138,11 @@ msgstr ""
 #: inc/import/class.MultiImporterFormular.php:71
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "Import"
-msgstr ""
+msgstr "importer"
 
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr ""
+msgstr "tous"
 
 #: call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
@@ -179,11 +179,11 @@ msgstr ""
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
-msgstr ""
+msgstr "désinstaller"
 
 #: call/call.Plugin.uninstall.php:16
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "Le plugin a été désinstallé "
 
 #: call/call.Plugin.uninstall.php:18
 msgid "There was a problem, the plugin could not be uninstalled."
@@ -218,7 +218,7 @@ msgstr ""
 #: inc/tpl/tpl.loginWindow.php:23 inc/tpl/tpl.loginWindow.php:41
 #: inc/tpl/tpl.loginWindow.php:45 inc/tpl/tpl.loginWindow.php:152
 msgid "Login"
-msgstr ""
+msgstr "Connexion"
 
 #: call/window.delete.php:12
 msgid "Delete your account."
@@ -241,7 +241,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:170
 msgid "Settings"
-msgstr ""
+msgstr "paramètres"
 
 #: inc/class.AdminView.php:171 inc/tpl/tpl.Installer.php:163
 msgid "Debug mode"
@@ -275,7 +275,7 @@ msgstr ""
 
 #: inc/class.AdminView.php:177
 msgid "Save"
-msgstr ""
+msgstr "sauvgarder"
 
 #: inc/class.AdminView.php:181
 msgid "<strong>config.php</strong> is not writable"
@@ -343,7 +343,7 @@ msgstr "depuis"
 
 #: inc/class.AdminView.php:296
 msgid "last"
-msgstr ""
+msgstr "dernier"
 
 #: inc/class.AdminView.php:297
 msgid "Functions"
