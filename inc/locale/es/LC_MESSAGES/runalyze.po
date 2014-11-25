@@ -1,19 +1,21 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-05 20:52+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2014-11-25 22:06+0200\n"
+"Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
+"Language-Team: Spanish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 1.9\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: index.php:44 inc/class.FrontendSharedStatistics.php:148
 #: inc/core/Configuration/Category/Misc.php:46
@@ -39,39 +41,39 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:45
 msgid "Searching for devices"
-msgstr ""
+msgstr "Buscando dispositivos"
 
 #: call/call.garminCommunicator.php:46
 msgid "Transfer complete"
-msgstr ""
+msgstr "Transferencia completa"
 
 #: call/call.garminCommunicator.php:50
 msgid "Browse computer"
-msgstr ""
+msgstr "Explorar en ordenador"
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
-msgstr ""
+msgstr "Dispositivos conectados"
 
 #: call/call.garminCommunicator.php:54
 msgid "Browse devices"
-msgstr ""
+msgstr "Explorar dispositivos"
 
 #: call/call.garminCommunicator.php:55
 msgid "Devices"
-msgstr ""
+msgstr "Dispositivos"
 
 #: call/call.garminCommunicator.php:56
 msgid "Search for decives"
-msgstr ""
+msgstr "Buscar dispositivos"
 
 #: call/call.garminCommunicator.php:57
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr ""
+msgstr "Recuperando datos de #{deviceName}, por favor espere..."
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
@@ -79,19 +81,19 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
-msgstr ""
+msgstr "Encontradas #{tracks} actividades"
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
-msgstr ""
+msgstr "No se han encontrado dispositivos"
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr ""
+msgstr "Encontrado"
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
-msgstr ""
+msgstr "#{deviceCount} dispositivos encontrados"
 
 #: call/call.garminCommunicator.php:65
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:95
@@ -106,7 +108,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:333
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:7
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #: call/call.garminCommunicator.php:66 inc/class.DatasetLabels.php:27
 #: inc/import/class.MultiImporterFormular.php:71
@@ -116,11 +118,11 @@ msgstr ""
 #: inc/training/view/class.RoundsInfo.php:211
 #: inc/training/view/class.VDOTinfo.php:72
 msgid "Duration"
-msgstr ""
+msgstr "Duración"
 
 #: call/call.garminCommunicator.php:67
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: call/call.garminCommunicator.php:85
 msgid "present"
