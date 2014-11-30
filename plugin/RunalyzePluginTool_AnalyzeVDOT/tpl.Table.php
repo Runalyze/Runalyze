@@ -1,5 +1,6 @@
 <?php
 use Runalyze\Configuration;
+use Runalyze\Plugin\Tool\AnalyzeVDOT\TableRow;
 ?>
 <table id="vdotAnalysisTable" class="fullwidth zebra-style">
 	<thead>
@@ -21,44 +22,62 @@ use Runalyze\Configuration;
 		</tr>
 	</thead>
 	<tbody class="r">
-<?php foreach ($this->Trainings as $Training): ?>
+	<?php while ($data = $this->Query->fetch()): ?>
+	<?php $Row = new TableRow($data); ?>
 	<tr>
-		<td class="small c"><?php echo date("d.m.Y", $Training['time']); ?></td>
-		<td class="b l"><?php echo $Training['comment']; ?></td>
-		<td><?php echo Running::Km($Training['distance']); ?></td>
-		<td class="b"><?php echo Time::toString(round($Training['s']), false, true); ?></td>
-		<td><?php echo round(JD::Competition2VDOT($Training['distance'], $Training['s']), 2); ?></td>
-		<td><?php echo $Training['pulse_avg']; ?></td>
-
-		<td><?php echo $Training['vdot']; ?></td>
-		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($Training['vdot'], $Training['distance'])), false, true); ?></td>
-
-		<?php if (Configuration::Vdot()->useCorrectionFactor()): ?>
-		<?php $c_vdot = round(JD::correctVDOT($Training['vdot']),2); ?>
-		<td><?php echo $c_vdot; ?></td>
-		<td class="b"><?php echo Time::toString(round(JD::CompetitionPrognosis($c_vdot, $Training['distance'])), false, true); ?></td>
-		<?php else: ?>
-		<td>-</td>
-		<td class="b">-</td>
-		<?php endif; ?>
-
-		<?php $shape     = round(JD::calculateVDOTform($Training['time']),2); ?>
-		<?php $prognosis = JD::CompetitionPrognosis($shape, $Training['distance']); ?>
-		<td><?php echo $shape; ?></td>
-		<td class="b"><?php echo Time::toString(round($prognosis, false, true)); ?></td>
-		<td><?php echo HTML::plusMinus(sprintf("%01.2f", 100*($prognosis - $Training['s'])/$Training['s']), 2); ?> &#37;</td>
-		<td><?php echo sprintf("%1.4f", JD::VDOTcorrectorFor($Training['id'], $Training)); ?></td>
+		<td class="small c">
+			<?php echo $Row->date(); ?>
+		</td>
+		<td class="b l">
+			<?php echo $Row->name(); ?>
+		</td>
+		<td>
+			<?php echo $Row->distance(); ?>
+		</td>
+		<td class="b">
+			<?php echo $Row->duration(); ?>
+		</td>
+		<td>
+			<?php echo $Row->vdotByTime(); ?>
+		</td>
+		<td>
+			<?php echo $Row->bpm(); ?>
+		</td>
+		<td>
+			<?php echo $Row->vdotByHR(); ?>
+		</td>
+		<td class="b">
+			<?php echo $Row->prognosisByHR(); ?>
+		</td>
+		<td>
+			<?php echo $Row->vdotByHRafterCorrection(); ?>
+		</td>
+		<td class="b">
+			<?php echo $Row->prognosisByHRafterCorrection(); ?>
+		</td>
+		<td>
+			<?php echo $Row->vdotByShape(); ?>
+		</td>
+		<td class="b">
+			<?php echo $Row->prognosisByShape(); ?>
+		</td>
+		<td>
+			<?php echo $Row->shapeDeviation(); ?>
+		</td>
+		<td>
+			<?php echo $Row->correctionFactor(); ?>
+		</td>
 	</tr>
-<?php endforeach; ?>
-<?php if (empty($this->Trainings)): ?>
+	<?php endwhile; ?>
+	<?php if (!isset($Row)): ?>
 	<tr>
 		<td colspan="12"><em><?php _e('You did not run any races.'); ?></td>
 	</tr>
-<?php endif; ?>
+	<?php endif; ?>
 	</tbody>
 </table>
 
-<?php if (!empty($this->Trainings)) Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable', true); ?>
+<?php if (isset($Row)) Ajax::createTablesorterWithPagerFor('#vdotAnalysisTable', true); ?>
 
 <p class="info">
 	<?php _e('<strong>VDOT/Time:</strong> by standard formulas derived from Jack Daniels\' Running formula<br>'); ?>
@@ -67,7 +86,7 @@ use Runalyze\Configuration;
 
 <?php if (Configuration::Vdot()->useCorrectionFactor()): ?>
 <p class="info">
-	<?php printf( __('<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %f)<br>'), JD::correctionFactor() ); ?>
+	<?php printf( __('<strong>VDOT/Time (corrected):</strong> after individual VDOT correction (factor: %f)<br>'), Configuration::Data()->vdotFactor() ); ?>
 	<?php _e('The time is what you could have reached at your maximal possible heart rate over this distance.'); ?>
 </p>
 <?php else: ?>

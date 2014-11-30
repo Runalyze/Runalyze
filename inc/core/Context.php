@@ -36,7 +36,10 @@ class Context {
 			self::$Objects['athlete'] = new Athlete(
 				Configuration::General()->gender(),
 				Configuration::Data()->HRmax(),
-				Configuration::Data()->HRrest()
+				Configuration::Data()->HRrest(),
+				null,
+				null,
+				Configuration::Data()->vdot()
 			);
 		}
 

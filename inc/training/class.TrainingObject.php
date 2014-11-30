@@ -5,6 +5,9 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD;
+use Runalyze\Calculation\Distribution\TimeSeries;
+use Runalyze\Calculation\Elevation;
 
 /**
  * DataObject for trainings
@@ -208,7 +211,7 @@ class TrainingObject extends DataObject {
 			$this->updateVdot();
 			$this->updateShoeForInsert();
 
-			JD::recalculateVDOTform();
+			Configuration::Data()->recalculateVDOTshape();
 			BasicEndurance::recalculateValue();
 		}
 
@@ -256,7 +259,7 @@ class TrainingObject extends DataObject {
 			$this->updateVdot();
 			$this->updateShoeForUpdate();
 
-			JD::recalculateVDOTform();
+			Configuration::Data()->recalculateVDOTshape();
 			BasicEndurance::recalculateValue();
 		}
 
@@ -308,8 +311,10 @@ class TrainingObject extends DataObject {
 		if ($this->hasArrayHeartrate()) {
 			$Collector = new \Runalyze\Calculation\Trimp\DataCollector($this->getArrayHeartrate(), $this->getArrayTime());
 			$data = $Collector->result();
-		} else {
+		} elseif ($this->getPulseAvg() > 0) {
 			$data = array($this->getPulseAvg() => $this->getTimeInSeconds());
+		} else {
+			$data = array($this->Sport()->avgHF() => $this->getTimeInSeconds());
 		}
 
 		$Athlete = \Runalyze\Context::Athlete();
@@ -322,22 +327,95 @@ class TrainingObject extends DataObject {
 	 * Update vdot
 	 */
 	private function updateVdot() {
-		$this->updateValue('vdot_by_time', JD::Competition2VDOT($this->get('distance'), $this->get('s')));
-		$this->updateValue('vdot', JD::Training2VDOT($this->id(), $this->getArray()));
-		$this->updateValue('jd_intensity', JD::Training2points($this->id(), $this->getArray()));
-		$this->updateVdotWithElevation();
+		$this->updateValue('vdot_by_time', $this->calculateVDOTbyTime());
+		$this->updateValue('vdot', $this->calculateVDOTbyHeartRate());
+		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevation());
+		$this->updateValue('jd_intensity', $this->calculateJDintensity());
 
-		if ($this->Type()->isCompetition())
-			JD::recalculateVDOTcorrector();
+		if ($this->Type()->isCompetition()) {
+			Configuration::Data()->recalculateVDOTcorrector();
+		}
 	}
 
 	/**
-	 * Update vdot with elevation
-	 * @param int $up [optional]
-	 * @param int $down [optional]
+	 * Calculate VDOT by time
+	 * @return float
 	 */
-	private function updateVdotWithElevation($up = false, $down = false) {
-		$this->updateValue('vdot_with_elevation', JD::Training2VDOTwithElevation($this->id(), $this->getArray(), $up, $down));
+	public function calculateVDOTbyTime() {
+		$VDOT = new JD\VDOT;
+		$VDOT->fromPace($this->getDistance(), $this->getTimeInSeconds());
+
+		return $VDOT->uncorrectedValue();
+	}
+
+	/**
+	 * Calculate VDOT by heart rate
+	 * @param float $distance [optional]
+	 * @return float
+	 */
+	public function calculateVDOTbyHeartRate($distance = null) {
+		if (is_null($distance)) {
+			$distance = $this->getDistance();
+		}
+
+		$VDOT = new JD\VDOT;
+		$VDOT->fromPaceAndHR(
+			$distance,
+			$this->getTimeInSeconds(),
+			$this->getPulseAvg()/Configuration::Data()->HRmax()
+		);
+
+		return $VDOT->value();
+	}
+
+	/**
+	 * Calculate VDOT by heart rate with elevation influence
+	 * @return float
+	 */
+	public function calculateVDOTbyHeartRateWithElevation() {
+		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
+
+		return $this->calculateVDOTbyHeartRateWithElevationFor($updown[0], $updown[1]);
+	}
+
+	/**
+	 * Calculate VDOT by heart rate with elevation influence
+	 * @param int $up
+	 * @param int $down
+	 * @return float
+	 */
+	public function calculateVDOTbyHeartRateWithElevationFor($up, $down) {
+		$Modifier = new Elevation\DistanceModifier(
+			$this->getDistance(),
+			$up, 
+			$down,
+			Configuration::Vdot()
+		);
+
+		return $this->calculateVDOTbyHeartRate($Modifier->correctedDistance());
+	}
+
+	/**
+	 * Calculate JD intensity
+	 * @return int
+	 */
+	public function calculateJDintensity() {
+		JD\Intensity::setVDOTshape(Configuration::Data()->vdot());
+		JD\Intensity::setHRmax(Configuration::Data()->HRmax());
+		$Intensity = new JD\Intensity();
+
+		if ($this->hasArrayHeartrate()) {
+			return $Intensity->calculateByHeartrate(
+				new TimeSeries(
+					$this->getArrayHeartrate(),
+					$this->getArrayTime()
+				)
+			);
+		} elseif ($this->getPulseAvg() > 0) {
+			return $Intensity->calculateByHeartrateAverage($this->getPulseAvg(), $this->getTimeInSeconds());
+		} else {
+			return $Intensity->calculateByPace($this->getDistance(), $this->getTimeInSeconds());
+		}
 	}
 
 	/**
@@ -440,7 +518,7 @@ class TrainingObject extends DataObject {
 		$array = $GPS->calculateElevation(true);
 
 		$this->updateValue('elevation', $array[0]);
-		$this->updateVdotWithElevation($array[1], $array[2]);
+		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevationFor($array[1], $array[2]));
 	}
 
 
@@ -852,7 +930,7 @@ class TrainingObject extends DataObject {
 	 * the user defined/calculated correction factor.
 	 * @return double corrected vdot
 	 */
-	public function getVdotCorrected() { return round(JD::correctVDOT($this->getVdotUncorrected()), 2); }
+	public function getVdotCorrected() { return round(Configuration::Data()->vdotFactor()*$this->getVdotUncorrected(), 2); }
 	/**
 	 * Get VDOT by time
 	 * 
@@ -869,7 +947,7 @@ class TrainingObject extends DataObject {
 	 * Get VDOT with elevation corrected
 	 * @return double vdot with elevation influence
 	 */
-	public function getVdotWithElevationCorrected() { return round(JD::correctVDOT($this->getVdotWithElevation()), 2); }
+	public function getVdotWithElevationCorrected() { return round(Configuration::Data()->vdotFactor()*$this->getVdotWithElevation(), 2); }
 	/**
 	 * Get VDOT with elevation
 	 * @return double vdot with elevation influence

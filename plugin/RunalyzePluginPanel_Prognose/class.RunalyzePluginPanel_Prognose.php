@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD\VDOT;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -151,8 +152,6 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected function showPrognosis($distance) {
 		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
 		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
-		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
-		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
 
 		$oldTimeString  = Time::toString($PersonalBestInSeconds);
 		$newTimeString  = '<strong>'.Time::toString($PrognosisInSeconds).'</strong>';
@@ -162,9 +161,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		echo '
 			<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> %s'),
-							Ajax::tooltip($oldTimeString, 'VDOT: '.$VDOTold),
-							Ajax::tooltip($newTimeString, 'VDOT: '.$VDOTnew)).'
+					'.sprintf( __('<small>from</small> %s <small>to</small> %s'), $oldTimeString, $newTimeString ).'
 					<small>('.$paceString.'/km)</small>
 				</span>
 				<strong>'.$distanceString.'</strong>

@@ -16,6 +16,7 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse( $Athlete->knowsRestingHeartRate() );
 		$this->assertFalse( $Athlete->knowsAge() );
 		$this->assertFalse( $Athlete->knowsWeight() );
+		$this->assertFalse( $Athlete->knowsVDOT() );
 	}
 
 	public function testGenderAndHRmax() {
@@ -38,19 +39,21 @@ class AthleteTest extends \PHPUnit_Framework_TestCase {
 		$Gender = new Gender();
 		$Gender->set( Gender::MALE );
 
-		$Athlete = new Athlete($Gender, 210, 45, 70, 25);
+		$Athlete = new Athlete($Gender, 210, 45, 70, 25, 60);
 
 		$this->assertTrue( $Athlete->knowsGender() );
 		$this->assertTrue( $Athlete->knowsMaximalHeartRate() );
 		$this->assertTrue( $Athlete->knowsRestingHeartRate() );
 		$this->assertTrue( $Athlete->knowsAge() );
 		$this->assertTrue( $Athlete->knowsWeight() );
+		$this->assertTrue( $Athlete->knowsVDOT() );
 
 		$this->assertEquals( $Gender, $Athlete->gender() );
 		$this->assertEquals( 210, $Athlete->maximalHR() );
 		$this->assertEquals( 45, $Athlete->restingHR() );
 		$this->assertEquals( 70, $Athlete->weight() );
 		$this->assertEquals( 25, $Athlete->age() );
+		$this->assertEquals( 60, $Athlete->vdot() );
 	}
 
 }

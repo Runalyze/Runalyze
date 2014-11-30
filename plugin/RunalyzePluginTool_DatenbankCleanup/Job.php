@@ -46,7 +46,7 @@ abstract class Job {
 	 * @param string $string
 	 */
 	final protected function addSuccessMessage($what, $oldValue, $newValue) {
-		$this->Messages[] = sprintf( __('%s has been recalculated. New value: <strong>%s</strong> (old value: %s)'), $what, $oldValue, $newValue);
+		$this->Messages[] = sprintf( __('%s has been recalculated. New value: <strong>%s</strong> (old value: %s)'), $what, $newValue, $oldValue);
 	}
 
 	/**

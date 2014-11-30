@@ -38,14 +38,14 @@ if (!($this instanceof RunalyzePluginTool_DatenbankCleanup)) {
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="vdot">
-						<?php _e('Recalculate your VDOT shape'); ?>
+						<input type="checkbox" name="vdot-corrector">
+						<?php _e('Recalculate your VDOT correction factor'); ?>
 					</label>
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="vdot-corrector">
-						<?php _e('Recalculate your VDOT correction factor'); ?>
+						<input type="checkbox" name="vdot">
+						<?php _e('Recalculate your VDOT shape'); ?>
 					</label>
 				</div>
 				<div class="checkbox">

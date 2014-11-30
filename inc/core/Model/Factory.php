@@ -46,14 +46,25 @@ class Factory {
 	}
 
 	/**
+	 * Activity
+	 * @param int $activityid
+	 * @return \Runalyze\Model\Activity\Object
+	 */
+	public function activity($activityid) {
+		return new Activity\Object(
+			$this->arrayByPK('training', $activityid)
+		);
+	}
+
+	/**
 	 * Trackdata
 	 * @param int $activityid
 	 * @return \Runalyze\Model\Trackdata\Object
 	 */
 	public function trackdata($activityid) {
-		$Data = $this->arrayByPK('trackdata', $activityid);
-
-		return new Trackdata\Object($Data);
+		return new Trackdata\Object(
+			$this->arrayByPK('trackdata', $activityid)
+		);
 	}
 
 	/**
@@ -62,9 +73,9 @@ class Factory {
 	 * @return \Runalyze\Model\Route\Object
 	 */
 	public function route($routeid) {
-		$Data = $this->arrayByPK('route', $routeid);
-
-		return new Route\Object($Data);
+		return new Route\Object(
+			$this->arrayByPK('route', $routeid)
+		);
 	}
 
 	/**

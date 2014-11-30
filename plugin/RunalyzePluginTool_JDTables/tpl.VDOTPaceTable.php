@@ -1,26 +1,34 @@
+<?php
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Configuration;
+
+$VDOT = new VDOT;
+?>
+
 <table id="jd-tables-prognosis" class="zebra-style c" style="width: 700px;">
 	<thead>
 		<tr>
 			<th>VDOT</th>
-		<?php foreach (array_keys($this->Paces) as $key): ?>
+			<?php foreach (array_keys($this->Paces) as $key): ?>
 			<th><?php echo $key; ?></th>
-		<?php endforeach; ?>
+			<?php endforeach; ?>
 		</tr>
 	</thead>
 	<tbody>
-<?php foreach ($this->Range as $vdot): ?>
+		<?php foreach ($this->Range as $value): ?>
+		<?php $VDOT->setValue($value); ?>
 		<tr>
-			<td class="b"><?php echo $vdot; ?></td>
-		<?php foreach ($this->Paces as $data): ?>
-			<td><?php echo JD::v2Pace(JD::VDOT2v($vdot)*($data['percent'])/100); ?></td>
-		<?php endforeach; ?>
+			<td class="b"><?php echo $value; ?></td>
+			<?php foreach ($this->Paces as $data): ?>
+			<td><?php echo Time::toString($VDOT->paceAt($data['percent']/100)); ?></td>
+			<?php endforeach; ?>
 		</tr>
-<?php endforeach; ?>
+		<?php endforeach; ?>
 	</tbody>
 </table>
 
 <?php
-echo Ajax::wrapJS('$("#jd-tables-prognosis td.b").each(function(){ if ($(this).text() == \''.round(VDOT_FORM).'\') $(this).parent().addClass("highlight"); });');
+echo Ajax::wrapJS('$("#jd-tables-prognosis td.b").each(function(){ if ($(this).text() == \''.round(Configuration::Data()->vdot()).'\') $(this).parent().addClass("highlight"); });');
 ?>
 
 <p class="info">

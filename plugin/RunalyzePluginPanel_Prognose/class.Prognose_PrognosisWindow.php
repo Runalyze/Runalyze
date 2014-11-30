@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD\VDOT;
 
 /**
  * Prognosis calculator window
@@ -86,6 +87,7 @@ class Prognose_PrognosisWindow {
 	protected function setDefaultValues() {
 		$Strategy = new RunningPrognosisBock;
 		$TopResults = $Strategy->getTopResults(2);
+		$CurrentShape = Configuration::Data()->vdotShape();
 
 		if (empty($_POST)) {
 			$Factory = new PluginFactory();
@@ -94,7 +96,7 @@ class Prognose_PrognosisWindow {
 			$_POST['model'] = 'jack-daniels';
 			$_POST['distances'] = implode(', ', $Plugin->getDistances());
 
-			$_POST['vdot'] = JD::getConstVDOTform();
+			$_POST['vdot'] = $CurrentShape;
 			$_POST['endurance'] = true;
 			$_POST['endurance-value'] = BasicEndurance::getConst();
 
@@ -104,7 +106,7 @@ class Prognose_PrognosisWindow {
 			$_POST['second-best-result-time'] = !empty($TopResults) ? Time::toString($TopResults[1]['s'], false, true) : '1:00:00';
 		}
 
-		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.JD::getConstVDOTform().'. ';
+		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
 		$this->InfoLines['jack-daniels'] .= __('Your current Basic Endurance:').' '.BasicEndurance::getConst().'.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s and %s in %s'),
@@ -190,16 +192,22 @@ class Prognose_PrognosisWindow {
 				$PBdate = $DateQuery->fetch();
 			}
 
+			$VDOTprognosis = new VDOT;
+			$VDOTprognosis->fromPace($km, $Prognosis);
+
+			$VDOTpb = new VDOT;
+			$VDOTpb->fromPace($km, $PB);
+
 			$this->Prognoses[] = array(
 				'distance'	=> Running::Km($km, 1, $km <= 3),
 				'prognosis'		=> Time::toString($Prognosis),
 				'prognosis-pace'=> SportSpeed::minPerKm($km, $Prognosis).'/km',
-				'prognosis-vdot'=> round(JD::Competition2VDOT($km, $Prognosis), 2),
+				'prognosis-vdot'=> $VDOTprognosis->uncorrectedValue(),
 				'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Time::toString(abs(round($PB-$Prognosis)),false,true),
 				'diff-class'	=> $PB > $Prognosis ? 'plus' : 'minus',
 				'pb'			=> $PB > 0 ? Time::toString($PB) : '-',
 				'pb-pace'		=> $PB > 0 ? SportSpeed::minPerKm($km, $PB).'/km' : '-',
-				'pb-vdot'		=> $PB > 0 ? round(JD::Competition2VDOT($km, $PB),2) : '-',
+				'pb-vdot'		=> $PB > 0 ? $VDOTpb->uncorrectedValue() : '-',
 				'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
 			);
 		}

@@ -51,7 +51,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		
+		$this->PDO->exec('DROP TABLE `'.PREFIX.'route`');
 	}
 
 	/**

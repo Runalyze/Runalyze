@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -429,6 +430,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Init complete data
 	 */
 	private function initCompleteData() {
+		$withElevation = Configuration::Vdot()->useElevationCorrection();
 		$Timer = $this->year != -1 ? 'MONTH' : 'YEAR';
 
 		$Query = '
@@ -436,7 +438,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				SUM(`s`) as `s`,
 				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
 				SUM(`distance`) as `distance`,
-				SUM('.JD::mysqlVDOTsum().')/SUM('.JD::mysqlVDOTsumTime().') as `vdot`,
+				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`,
 				SUM(`trimp`) as `trimp`,
 				SUM(`jd_intensity`) as `jd_intensity`,
 				'.$Timer.'(FROM_UNIXTIME(`time`)) as `i`
@@ -510,7 +512,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initVDOTData($dat) {
-		$VDOT = isset($dat['vdot']) ? JD::correctVDOT($dat['vdot']) : 0;
+		$VDOT = isset($dat['vdot']) ? Configuration::Data()->vdotFactor()*($dat['vdot']) : 0;
 		$text = ($VDOT == 0) ? NBSP : number_format($VDOT, 1);
 
 		$this->VDOTData[] = array('i' => $dat['i'], 'text' => $text);

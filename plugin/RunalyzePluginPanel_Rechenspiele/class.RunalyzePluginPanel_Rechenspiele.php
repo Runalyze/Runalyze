@@ -9,6 +9,7 @@ use Runalyze\Calculation\Performance;
 use Runalyze\Calculation\Trimp;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD\VDOT;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -129,6 +130,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Monotony = new Monotony($MonotonyQuery->data(), 7);
 		$Monotony->calculate();
 
+		$VDOT        = Configuration::Data()->vdot();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
@@ -156,10 +158,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->Configuration()->value('show_vdot'),
 				'bars'	=> array(
-					new ProgressBarSingle(2*round(VDOT_FORM - 30), ProgressBarSingle::$COLOR_BLUE)
+					new ProgressBarSingle(2*round($VDOT - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> number_format(VDOT_FORM,2),
+				'value'	=> number_format($VDOT, 2),
 				'title'	=> __('VDOT'),
 				'small'	=> '',
 				'tooltip'	=> __('Current average VDOT')
@@ -308,14 +310,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		echo '<table class="fullwidth nomargin">';
 
 		$Paces = $this->getArrayForPaces();
-		$vVDOT = JD::VDOT2v(VDOT_FORM);
+		$VDOT = new VDOT(Configuration::Data()->vdot());
 
 		foreach ($Paces as $Pace) {
 			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
 
 			echo '<tr>';
 			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
-			echo '<td class="r"><em>'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'</em> - <em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'</em>/km</td>';
+			echo '<td class="r"><em>'.Time::toString($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Time::toString($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
 			echo '</tr>';
 		}
 
@@ -462,7 +464,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			if ($i%10 == 0)
 				$Table .= '<tr>'.NL;
 
-			$Link   = Ajax::trainingLink($Data['id'], round(JD::correctVDOT($Data['vdot']), 2));
+			$Link   = Ajax::trainingLink($Data['id'], round(Configuration::Data()->vdotFactor()*$Data['vdot'], 2));
 			$Title  = Running::Km($Data['distance']).' am '.date('d.m.Y', $Data['time']);
 			$Table .= '<td>'.Ajax::tooltip($Link, $Title).'</td>'.NL;
 
@@ -480,7 +482,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Fieldset = new FormularFieldset( __('VDOT') );
 		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
-		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), VDOT_FORM ) );
+		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vdot() ) );
 		$Fieldset->addBlock($Table);
 		$Fieldset->addInfo( __('Jack Daniels uses VDOT as a fixed value and not based on the training progress.<br>'.
 								'We do instead predict the VDOT from all activities based on the heart rate. '.
@@ -509,7 +511,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody class="top-and-bottom-border">
 					<tr>
 						<td>'.__('<strong>Current VDOT</strong> <small>(based on heart rate)</small>').'</td>
-						<td class="r">'.round(VDOT_FORM, 2).'</td>
+						<td class="r">'.round(Configuration::Data()->vdot(), 2).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target kilometer per week</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysForWeekKm() / 7)).'</td>
 						<td class="r">'.Running::Km($BasicEndurance->getTargetWeekKm()).'</td>
@@ -602,13 +604,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody>
 			';
 
-		$vVDOT = JD::VDOT2v(VDOT_FORM);
+		$VDOT = new VDOT(Configuration::Data()->vdot());
+
 		foreach ($this->getArrayForPaces() as $Pace) {
 			$Table .= '
 					<tr>
 						<td class="b">'.$Pace['short'].'</td>
-						<td class="small"><em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'&nbsp;-&nbsp;'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'/km</em></td>
-						<td class="small">'.$Pace['description'].'</td>
+						<td class=""><em>'.Time::toString($VDOT->paceAt($Pace['limit-low']/100)).'</em>&nbsp;-&nbsp;<em>'.Time::toString($VDOT->paceAt($Pace['limit-high']/100)).'</em>/km</td>
+						<td class="">'.$Pace['description'].'</td>
 					</tr>';
 		}
 

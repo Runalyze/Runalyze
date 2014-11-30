@@ -7,6 +7,7 @@
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD;
 
 /**
  * JobLoop
@@ -52,11 +53,14 @@ class JobLoop extends Job {
 		$i = 0;
 		$Query = $this->getQuery();
 		$Update = $this->prepareUpdate();
+		$calculateElevation =
+			$this->isRequested(self::ELEVATION) ||
+			($this->isRequested(self::VDOT) && Configuration::Vdot()->useElevationCorrection());
 
 		while ($Data = $Query->fetch()) {
 			$Training = new \TrainingObject($Data);
 
-			if ($this->isRequested(self::ELEVATION)) {
+			if ($calculateElevation) {
 				if (!empty($Data['arr_alt'])) {
 					$GPS = new \GpsData($Data);
 					$elevationArray = $GPS->calculateElevation(true);
@@ -64,10 +68,12 @@ class JobLoop extends Job {
 					$elevationArray = array(0,0,0);
 				}
 
-				$Update->bindValue(':elevation_calculated', $elevationArray[0]);
+				if ($this->isRequested(self::ELEVATION)) {
+					$Update->bindValue(':elevation_calculated', $elevationArray[0]);
+				}
 
-				if (Configuration::Vdot()->useElevationCorrection()) {
-					$Update->bindValue(':vdot_with_elevation', \JD::Training2VDOTwithElevation($Data['id'], $Data, $elevationArray[1], $elevationArray[2]));
+				if ($this->isRequested(self::VDOT)) {
+					$Update->bindValue(':vdot_with_elevation', $Training->calculateVDOTbyHeartRateWithElevationFor($elevationArray[1], $elevationArray[2]));
 				}
 
 				if ($this->isRequested(self::ELEVATION_OVERWRITE)) {
@@ -76,12 +82,12 @@ class JobLoop extends Job {
 			}
 
 			if ($this->isRequested(self::VDOT)) {
-				$Update->bindValue(':vdot', \JD::Training2VDOT($Data['id'], $Data));
-				$Update->bindValue(':vdot_by_time', \JD::Competition2VDOT($Data['distance'], $Data['s']));
+				$Update->bindValue(':vdot', $Training->calculateVDOTbyHeartRate());
+				$Update->bindValue(':vdot_by_time', $Training->calculateVDOTbyTime());
 			}
 
 			if ($this->isRequested(self::JD_POINTS)) {
-				$Update->bindValue(':jd_intensity', \JD::Training2points($Data['id'], $Data));
+				$Update->bindValue(':jd_intensity', $Training->calculateJDintensity());
 			}
 
 			if ($this->isRequested(self::TRIMP)) {
@@ -105,14 +111,13 @@ class JobLoop extends Job {
 	
 		if ($this->isRequested(self::ELEVATION)) {
 			$Set[] = 'elevation_calculated';
-
-			if (Configuration::Vdot()->useElevationCorrection()) {
-				$Set[] = 'vdot_with_elevation';
-			}
+			$Set[] = 'vdot_with_elevation';
 
 			if ($this->isRequested(self::ELEVATION_OVERWRITE)) {
 				$Set[] = 'elevation';
 			}
+		} elseif ($this->isRequested(self::VDOT) && Configuration::Vdot()->useElevationCorrection()) {
+			$Set[] = 'vdot_with_elevation';
 		}
 
 		if ($this->isRequested(self::VDOT)) {
@@ -142,6 +147,8 @@ class JobLoop extends Job {
 	 * @return \PDOStatement
 	 */
 	protected function getQuery() {
+		// TODO: Use trackdata as well
+		// TODO: Directly add accountid
 		return \DB::getInstance()->query(
 			'SELECT
 				`id`,

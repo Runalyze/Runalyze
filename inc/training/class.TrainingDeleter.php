@@ -70,7 +70,7 @@ class TrainingDeleter {
 	 */
 	protected function recalculateVDOTshape() {
 		if ($this->TrainingObject->Sport()->isRunning() && $this->TrainingObject->getTimestamp() >= (time() - Configuration::Vdot()->days() * DAY_IN_S) ) {
-			JD::recalculateVDOTform();
+			Configuration::Data()->recalculateVDOTshape();
 		}
 	}
 
