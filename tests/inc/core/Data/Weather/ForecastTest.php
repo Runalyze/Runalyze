@@ -24,9 +24,12 @@ class ForecastTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testLocationByTime() {
+		// Historical data, '< 1 month (list of available cities is limited)'
+		// @see http://bugs.openweathermap.org/projects/api/wiki/Api_2_5_history
+		// @see http://openweathermap.org/price
 		$Location = new Location();
 		$Location->setLocationName('Berlin, de');
-		$Location->setTimestamp( time() - 7*86500 );
+		$Location->setTimestamp( time() - 28*86500 );
 
 		$Forecast = new Forecast(new Openweathermap, $Location);
 		$object = $Forecast->object();
