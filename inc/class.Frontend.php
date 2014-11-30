@@ -77,7 +77,7 @@ class Frontend {
 		date_default_timezone_set('Europe/Berlin');
 
 		$this->initLanguage();
-                $this->initCache();
+		$this->initCache();
 		$this->setAutoloader();
 		$this->initErrorHandling();
 		$this->initDatabase();
@@ -106,7 +106,7 @@ class Frontend {
 	 * Setup Language
 	 */
 	private function initCache() {
-                require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
+		require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 		require_once FRONTEND_PATH.'/system/class.Cache.php';
 		new Cache();
 	}

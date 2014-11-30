@@ -30,8 +30,6 @@ define('START_TIME', Helper::getStartTime());
  */
 define('START_YEAR', date("Y", START_TIME));
 
-require_once FRONTEND_PATH.'calculate/class.JD.php';
-
 /**
  * Class for all helper-functions previously done by functions.php
  * @author Hannes Christiansen
