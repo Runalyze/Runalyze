@@ -5,7 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Configuration\Handle;
 
 /**
  * RunalyzeJsonImporter
@@ -90,14 +89,16 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		$Requests = array(
-			'delete_trainings'	=> 'training',
-			'delete_user_data'	=> 'user',
-			'delete_shoes'		=> 'shoe'
+			'delete_trainings'	=> array('training', 'route', 'trackdata'),
+			'delete_user_data'	=> array('user'),
+			'delete_shoes'		=> array('shoe')
 		);
 
-		foreach ($Requests as $key => $table) {
+		foreach ($Requests as $key => $tables) {
 			if (isset($_POST[$key])) {
-				$this->truncateTable($table);
+				foreach ($tables as $table) {
+					$this->truncateTable($table);
+				}
 			}
 		}
 	}
@@ -154,7 +155,16 @@ class RunalyzeJsonImporter {
 	 */
 	private function readTable($TableName) {
 		$TableSettings = array(
-			'import'	=> array('runalyze_clothes', 'runalyze_shoe', 'runalyze_sport', 'runalyze_type', 'runalyze_user', 'runalyze_training'),
+			'import'	=> array(
+				'runalyze_clothes',
+				'runalyze_shoe',
+				'runalyze_sport',
+				'runalyze_type',
+				'runalyze_user',
+				'runalyze_route',
+				'runalyze_training',
+				'runalyze_trackdata'
+			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
 				'runalyze_dataset'		=> 'overwrite_dataset',
@@ -322,6 +332,8 @@ class RunalyzeJsonImporter {
 			$this->correctTraining($Row);
 		} elseif ($TableName == 'runalyze_plugin_conf') {
 			$Row['pluginid'] = $this->correctID('runalyze_plugin', $Row['pluginid']);
+		} elseif ($TableName == 'runalyze_trackdata') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 		}
 	}
 
@@ -334,6 +346,7 @@ class RunalyzeJsonImporter {
 		$Training['sportid'] = $this->correctID('runalyze_sport', $Training['sportid']);
 		$Training['typeid']  = $this->correctID('runalyze_type', $Training['typeid']);
 		$Training['shoeid']  = $this->correctID('runalyze_shoe', $Training['shoeid']);
+		$Training['routeid'] = $this->correctID('runalyze_route', $Training['routeid']);
 	}
 
 	/**
@@ -375,7 +388,7 @@ class RunalyzeJsonImporter {
 	 */
 	private function correctConfigReferences() {
 		if (isset($_POST['overwrite_config'])) {
-			$ConfigValues = Handle::tableHandles();
+			$ConfigValues = Configuration\Handle::tableHandles();
 
 			foreach ($ConfigValues as $key => $table) {
 				$table = PREFIX.$table;

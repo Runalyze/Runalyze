@@ -136,7 +136,9 @@ class RunalyzeJsonImporterResults {
 			PREFIX.'sport'			=> __('Sport types'),
 			PREFIX.'type'			=> __('Activity types'),
 			PREFIX.'user'			=> __('Body data'),
-			PREFIX.'training'		=> __('Activities')
+			PREFIX.'training'		=> __('Activities'),
+			PREFIX.'trackdata'		=> __('Trackdata'),
+			PREFIX.'route'			=> __('Routes')
 		);
 	}
 }
