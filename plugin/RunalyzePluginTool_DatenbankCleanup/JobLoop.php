@@ -6,8 +6,7 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
-use Runalyze\Configuration;
-use Runalyze\Calculation\JD;
+use DB;
 
 /**
  * JobLoop
@@ -47,43 +46,58 @@ class JobLoop extends Job {
 	const TRIMP = 'activity-trimp';
 
 	/**
+	 * Calculated elevations
+	 * @var array
+	 */
+	protected $ElevationResults = array();
+
+	/**
 	 * Run job
 	 */
 	public function run() {
+		if ($this->isRequested(self::ELEVATION)) {
+			$this->runRouteLoop();
+		}
+
+		if (count($this->updateSet())) {
+			$this->runActivityLoop();
+		}
+	}
+
+	/**
+	 * Run route loop
+	 */
+	protected function runRouteLoop() {
+		require_once __DIR__.'/ElevationsRecalculator.php';
+
+		$Recalculator = new ElevationsRecalculator(DB::getInstance());
+		$Recalculator->run();
+
+		$this->ElevationResults = $Recalculator->results();
+
+		$this->addMessage( sprintf( __('Elevations have been recalculated for %d routes.'), count($this->ElevationResults)) );
+	}
+
+	/**
+	 * Run activity loop
+	 */
+	protected function runActivityLoop() {
 		$i = 0;
 		$Query = $this->getQuery();
 		$Update = $this->prepareUpdate();
-		$calculateElevation =
-			$this->isRequested(self::ELEVATION) ||
-			($this->isRequested(self::VDOT) && Configuration::Vdot()->useElevationCorrection());
 
 		while ($Data = $Query->fetch()) {
 			$Training = new \TrainingObject($Data);
+			$elevations = $this->elevationsFor($Data);
 
-			if ($calculateElevation) {
-				if (!empty($Data['arr_alt'])) {
-					$GPS = new \GpsData($Data);
-					$elevationArray = $GPS->calculateElevation(true);
-				} else {
-					$elevationArray = array(0,0,0);
-				}
-
-				if ($this->isRequested(self::ELEVATION)) {
-					$Update->bindValue(':elevation_calculated', $elevationArray[0]);
-				}
-
-				if ($this->isRequested(self::VDOT)) {
-					$Update->bindValue(':vdot_with_elevation', $Training->calculateVDOTbyHeartRateWithElevationFor($elevationArray[1], $elevationArray[2]));
-				}
-
-				if ($this->isRequested(self::ELEVATION_OVERWRITE)) {
-					$Update->bindValue(':elevation', $elevationArray[0]);
-				}
+			if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
+				$Update->bindValue(':elevation', $elevations[0]);
 			}
 
 			if ($this->isRequested(self::VDOT)) {
 				$Update->bindValue(':vdot', $Training->calculateVDOTbyHeartRate());
 				$Update->bindValue(':vdot_by_time', $Training->calculateVDOTbyTime());
+				$Update->bindValue(':vdot_with_elevation', $Training->calculateVDOTbyHeartRateWithElevationFor($elevations[1], $elevations[2]));
 			}
 
 			if ($this->isRequested(self::JD_POINTS)) {
@@ -103,35 +117,24 @@ class JobLoop extends Job {
 	}
 
 	/**
+	 * Elevations for activity
+	 * @param array $data activity data
+	 * @return array ('total', 'up', 'down', 'calculated')
+	 */
+	protected function elevationsFor(array $data) {
+		if (isset($this->ElevationResults[$data['id']])) {
+			return $this->ElevationResults[$data['id']];
+		}
+
+		return array($data['elevation'], $data['elevation'], $data['elevation']);
+	}
+
+	/**
 	 * Prepare statement
 	 * @return \PDOStatement
 	 */
 	protected function prepareUpdate() {
-		$Set = array();
-	
-		if ($this->isRequested(self::ELEVATION)) {
-			$Set[] = 'elevation_calculated';
-			$Set[] = 'vdot_with_elevation';
-
-			if ($this->isRequested(self::ELEVATION_OVERWRITE)) {
-				$Set[] = 'elevation';
-			}
-		} elseif ($this->isRequested(self::VDOT) && Configuration::Vdot()->useElevationCorrection()) {
-			$Set[] = 'vdot_with_elevation';
-		}
-
-		if ($this->isRequested(self::VDOT)) {
-			$Set[] = 'vdot';
-			$Set[] = 'vdot_by_time';
-		}
-
-		if ($this->isRequested(self::JD_POINTS)) {
-			$Set[] = 'jd_intensity';
-		}
-
-		if ($this->isRequested(self::TRIMP)) {
-			$Set[] = 'trimp';
-		}
+		$Set = $this->updateSet();
 
 		foreach ($Set as $i => $key) {
 			$Set[$i] = '`'.$key.'`=:'.$key;
@@ -143,25 +146,55 @@ class JobLoop extends Job {
 	}
 
 	/**
+	 * Keys to update
+	 * @return array
+	 */
+	protected function updateSet() {
+		$Set = array();
+	
+		if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
+			$Set[] = 'elevation';
+		}
+
+		if ($this->isRequested(self::VDOT)) {
+			$Set[] = 'vdot';
+			$Set[] = 'vdot_by_time';
+			$Set[] = 'vdot_with_elevation';
+		}
+
+		if ($this->isRequested(self::JD_POINTS)) {
+			$Set[] = 'jd_intensity';
+		}
+
+		if ($this->isRequested(self::TRIMP)) {
+			$Set[] = 'trimp';
+		}
+
+		return $Set;
+	}
+
+	/**
 	 * Get query statement
 	 * @return \PDOStatement
 	 */
 	protected function getQuery() {
-		// TODO: Use trackdata as well
 		// TODO: Directly add accountid
+		$accountid = \SessionAccountHandler::getId();
+
 		return \DB::getInstance()->query(
 			'SELECT
-				`id`,
-				`sportid`,
-				`typeid`,
-				`distance`,
-				`s`,
-				`pulse_avg`,
-				`arr_heart`,
-				`arr_time`,
-				`arr_alt`
+				`'.PREFIX.'training`.`id`,
+				`'.PREFIX.'training`.`sportid`,
+				`'.PREFIX.'training`.`typeid`,
+				`'.PREFIX.'training`.`distance`,
+				`'.PREFIX.'training`.`s`,
+				`'.PREFIX.'training`.`pulse_avg`,
+				`'.PREFIX.'training`.`elevation`,
+				`'.PREFIX.'trackdata`.`time` as `arr_time`,
+				`'.PREFIX.'trackdata`.`heartrate` as `arr_heart`
 			FROM `'.PREFIX.'training`
-			WHERE 1'
+			LEFT JOIN `'.PREFIX.'trackdata` ON `'.PREFIX.'trackdata`.`activityid` = `'.PREFIX.'training`.`id`
+			WHERE `'.PREFIX.'training`.`accountid` = '.$accountid
 		);
 	}
 }

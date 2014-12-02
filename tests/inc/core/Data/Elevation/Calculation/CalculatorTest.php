@@ -9,6 +9,15 @@ use Runalyze\Parameter\Application\ElevationMethod;
  */
 class CalculatorTest extends \PHPUnit_Framework_TestCase {
 
+	public function testEmptyArray() {
+		$Calculator = new Calculator(array());
+		$Calculator->calculate();
+
+		$this->assertEquals(0, $Calculator->totalElevation());
+		$this->assertEquals(0, $Calculator->elevationUp());
+		$this->assertEquals(0, $Calculator->elevationDown());
+	}
+
 	public function testValuesSimple() {
 		$Method = new ElevationMethod();
 		$Method->set(ElevationMethod::NONE);

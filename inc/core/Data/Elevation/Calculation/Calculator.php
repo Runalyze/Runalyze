@@ -118,10 +118,13 @@ class Calculator {
 	 */
 	public function calculate() {
 		$this->chooseStrategy();
-		$this->runStrategy();
 
-		$this->Up = array_sum( array_filter($this->UpDownPoints, function($value){ return $value > 0; }) );
-		$this->Down = -1 * array_sum( array_filter($this->UpDownPoints, function($value){ return $value < 0; }) );
+		if (!empty($this->ElevationPoints)) {
+			$this->runStrategy();
+
+			$this->Up = array_sum( array_filter($this->UpDownPoints, function($value){ return $value > 0; }) );
+			$this->Down = -1 * array_sum( array_filter($this->UpDownPoints, function($value){ return $value < 0; }) );
+		}
 	}
 
 	/**
