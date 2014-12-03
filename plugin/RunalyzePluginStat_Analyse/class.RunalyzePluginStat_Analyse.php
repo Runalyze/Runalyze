@@ -288,9 +288,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				'.PREFIX.'training.typeid='.PREFIX.'type.id AND
 				'.PREFIX.'type.accountid="'.SessionAccountHandler::getId().'"
 			)
-			WHERE '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'"
-				
-				AND '.PREFIX.'training.`sportid`="'.$this->sportid.'" '.$this->where_time.'
+			WHERE '.PREFIX.'training.`sportid`="'.$this->sportid.'"
+				AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
 			ORDER BY `RPE`, `timer` ASC
 		')->fetchAll();
@@ -347,7 +346,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					MIN(`s`/`distance`) as `min`,
 					MAX(`s`/`distance`) as `max`
 				FROM `'.PREFIX.'training`
-				WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
+				WHERE `sportid`='.$this->sportid.' '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' AND `distance`>0
 			')->fetch();
 
 			if (!empty($MinMax)) {
@@ -365,7 +364,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				SUM(`s`) AS `s`,
 				FLOOR( (`s`/`distance` - '.$ceil_corr.')/'.$speed_step.')*'.$speed_step.' + '.$ceil_corr.' AS `group`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' AND `distance`>0
+			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' AND `distance`>0
 			GROUP BY `group`, '.$this->group_time.'
 			ORDER BY `group` DESC, `timer` ASC
 		')->fetchAll();
@@ -413,7 +412,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				SUM(`s`) AS `s`,
 				CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.$this->sportid.' '.$this->where_time.' && `pulse_avg`!=0
+			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->group_time.'
 			ORDER BY `group`, `timer` ASC
 		')->fetchAll();

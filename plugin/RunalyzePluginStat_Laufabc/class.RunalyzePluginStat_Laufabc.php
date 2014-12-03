@@ -4,6 +4,9 @@
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Laufabc';
+
+use Runalyze\Configuration;
+
 /**
  * Class: RunalyzePluginStat_Laufabc
  * @author Hannes Christiansen
@@ -51,18 +54,19 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 		echo '<thead>'.HTML::monthTr(8, 1).'</thead>';
 		echo '<tbody>';
 
-		if (empty($this->ABCData))
+		if (empty($this->ABCData)) {
 			echo '<tr><td colspan="13" class="c"><em>'.__('No activities with running drills found.').'</em></td></tr>';
+		}
+
 		foreach ($this->ABCData as $y => $Data) {
-			echo '
-				<tr>
-					<td class="b l">'.$y.'</td>';
+			echo '<tr><td class="b l">'.$y.'</td>';
 
 			for ($m = 1; $m <= 12; $m++) {
-				if (isset($Data[$m]) && $Data[$m]['num'] > 0)
+				if (isset($Data[$m]) && $Data[$m]['num'] > 0) {
 					echo '<td title="'.$Data[$m]['num'].'x">'.round(100*$Data[$m]['abc']/$Data[$m]['num']).' &#37;</td>';
-				else
+				} else {
 					echo HTML::emptyTD();
+				}
 			}
 
 			echo '</tr>';
@@ -82,11 +86,14 @@ class RunalyzePluginStat_Laufabc extends PluginStat {
 				YEAR(FROM_UNIXTIME(`time`)) as `year`,
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
-			GROUP BY `year` DESC, `month` ASC')->fetchAll();
+				WHERE `sportid`='.Configuration::General()->runningSport().' AND `accountid`='.SessionAccountHandler::getId().'
+			GROUP BY `year` DESC, `month` ASC'
+		)->fetchAll();
 		
 		foreach ($result as $dat) {
-			if ($dat['abc'] > 0)
+			if ($dat['abc'] > 0) {
 				$this->ABCData[$dat['year']][$dat['month']] = array('abc' => $dat['abc'], 'num' => $dat['num']);
+			}
 		}
 	}
 }

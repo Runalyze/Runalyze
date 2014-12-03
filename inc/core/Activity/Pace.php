@@ -168,7 +168,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asNone() {
-		return Running::Km($this->Distance).' '.__('in').' '.Time::toString($this->Time);
+		return sprintf( __('%s in %s'), Running::Km($this->Distance), Time::toString($this->Time));
 	}
 
 	/**

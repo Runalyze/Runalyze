@@ -25,48 +25,20 @@ use Runalyze\Plugin\Tool\AnalyzeVDOT\TableRow;
 	<?php while ($data = $this->Query->fetch()): ?>
 	<?php $Row = new TableRow($data); ?>
 	<tr>
-		<td class="small c">
-			<?php echo $Row->date(); ?>
-		</td>
-		<td class="b l">
-			<?php echo $Row->name(); ?>
-		</td>
-		<td>
-			<?php echo $Row->distance(); ?>
-		</td>
-		<td class="b">
-			<?php echo $Row->duration(); ?>
-		</td>
-		<td>
-			<?php echo $Row->vdotByTime(); ?>
-		</td>
-		<td>
-			<?php echo $Row->bpm(); ?>
-		</td>
-		<td>
-			<?php echo $Row->vdotByHR(); ?>
-		</td>
-		<td class="b">
-			<?php echo $Row->prognosisByHR(); ?>
-		</td>
-		<td>
-			<?php echo $Row->vdotByHRafterCorrection(); ?>
-		</td>
-		<td class="b">
-			<?php echo $Row->prognosisByHRafterCorrection(); ?>
-		</td>
-		<td>
-			<?php echo $Row->vdotByShape(); ?>
-		</td>
-		<td class="b">
-			<?php echo $Row->prognosisByShape(); ?>
-		</td>
-		<td>
-			<?php echo $Row->shapeDeviation(); ?>
-		</td>
-		<td>
-			<?php echo $Row->correctionFactor(); ?>
-		</td>
+		<td class="small c"><?php echo $Row->date(); ?></td>
+		<td class="b l"><?php echo $Row->name(); ?></td>
+		<td><?php echo $Row->distance(); ?></td>
+		<td class="b"><?php echo $Row->duration(); ?></td>
+		<td><?php echo $Row->vdotByTime(); ?></td>
+		<td><?php echo $Row->bpm(); ?></td>
+		<td><?php echo $Row->vdotByHR(); ?></td>
+		<td class="b"><?php echo $Row->prognosisByHR(); ?></td>
+		<td><?php echo $Row->vdotByHRafterCorrection(); ?></td>
+		<td class="b"><?php echo $Row->prognosisByHRafterCorrection(); ?></td>
+		<td><?php echo $Row->vdotByShape(); ?></td>
+		<td class="b"><?php echo $Row->prognosisByShape(); ?></td>
+		<td><?php echo $Row->shapeDeviation(); ?></td>
+		<td><?php echo $Row->correctionFactor(); ?></td>
 	</tr>
 	<?php endwhile; ?>
 	<?php if (!isset($Row)): ?>

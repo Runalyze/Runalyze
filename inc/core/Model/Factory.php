@@ -79,6 +79,28 @@ class Factory {
 	}
 
 	/**
+	 * Type
+	 * @param int $typeid
+	 * @return \Runalyze\Model\Type\Object
+	 */
+	public function type($typeid) {
+		return new Type\Object(
+			$this->arrayByPK('type', $typeid)
+		);
+	}
+
+	/**
+	 * Sport
+	 * @param int $sportid
+	 * @return \Runalyze\Model\Sport\Object
+	 */
+	public function sport($sportid) {
+		return new Sport\Object(
+			$this->arrayByPK('sport', $sportid)
+		);
+	}
+
+	/**
 	 * Array by primary key
 	 * @param string $tablename
 	 * @param int $id

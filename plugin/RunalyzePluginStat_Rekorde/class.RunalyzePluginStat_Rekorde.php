@@ -176,6 +176,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * Initialize $this->ABCData
 	 */
 	private function initData() {
+		// TODO: Use sport arrays from SportFactory
 		$this->rekorde = array();
 		$this->rekorde[] = array(
 			'name'			=> __('Fastest activities'),
@@ -188,16 +189,18 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'speed'			=> false);
 
-		$this->years = DB::getInstance()->query('
-			SELECT
-				`sportid`,
-				SUM(`distance`) as `km`,
-				YEAR(FROM_UNIXTIME(`time`)) as `year`
-			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().'
-			GROUP BY `year`
-			ORDER BY `km` DESC
-			LIMIT 10')->fetchAll();
+		if ($this->year == -1) {
+			$this->years = DB::getInstance()->query('
+				SELECT
+					`sportid`,
+					SUM(`distance`) as `km`,
+					YEAR(FROM_UNIXTIME(`time`)) as `year`
+				FROM `'.PREFIX.'training`
+				WHERE `sportid`='.Configuration::General()->runningSport().'
+				GROUP BY `year`
+				ORDER BY `km` DESC
+				LIMIT 10')->fetchAll();
+		}
 		
 		$this->months = DB::getInstance()->query('
 			SELECT

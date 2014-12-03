@@ -336,7 +336,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				`time`,
 				DATE(FROM_UNIXTIME(`time`)) as `day`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().'
+			WHERE `sportid`='.Configuration::General()->runningSport().' AND `accountid`='.SessionAccountHandler::getId().'
 			GROUP BY DATE(FROM_UNIXTIME(`time`))
 			ORDER BY `day` DESC';
 
@@ -445,7 +445,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			FROM
 				`'.PREFIX.'training`
 			WHERE
-				`sportid`=:sportid ';
+				`sportid`=:sportid AND `accountid`='.SessionAccountHandler::getId();
 
 		if ($this->year != -1)
 			$Query .= '&& YEAR(FROM_UNIXTIME(`time`))=:year ';

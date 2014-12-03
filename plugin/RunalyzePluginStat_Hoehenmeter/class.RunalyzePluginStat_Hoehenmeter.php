@@ -4,7 +4,8 @@
  * @package Runalyze\Plugins\Stats
  */
 
-use Runalyze\Configuration;
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Linker;
 
 $PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
@@ -122,19 +123,19 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
 		foreach ($this->SumData as $Data) {
-			$Training = new TrainingObject($Data);
+			$Activity = new Activity\Object($Data);
+			$Linker = new Linker($Activity);
 
-			if (strlen($Data['route']) == 0)
-				$Data['route'] = '<em>'.__('unknown route').'</em>';
+			if ($Data['comment'] == '')
+				$Data['comment'] = '<em>'.__('unlabeled').'</em>';
 
-			echo('
-			<tr>
-				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
-				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
-				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
-				<td class="r">'.$Data['elevation'].'&nbsp;m</td>
-			</tr>
-				'.NL);
+			echo '<tr>
+				<td class="small">'.$Linker->weekLink().'</td>
+				<td>'.$Linker->linkWithSportIcon().'</td>
+				<td>'.$Data['comment'].'</td>
+				<td class="r">'.$Data['elevation'].'&nbsp;m<br>
+					<small>'.round($Data['elevation']/$Data['distance']/10, 2).'&nbsp;&#37;,&nbsp;'.$Data['distance'].'&nbsp;km</small></td>
+			</tr>';
 		}
 
 		echo '</tbody></table>';
@@ -152,22 +153,21 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			echo '<tr><td colspan="4"><em>'.__('No routes found.').'</em></td></tr>';
 
 		foreach ($this->UpwardData as $Data) {
-			$Training = new TrainingObject($Data);
+			$Activity = new Activity\Object($Data);
+			$Linker = new Linker($Activity);
 
-			if (strlen($Data['route']) == 0)
-				$Data['route'] = '<em>'.__('unknown route').'</em>';
+			if ($Data['comment'] == '')
+				$Data['comment'] = '<em>'.__('unlabeled').'</em>';
 
-			echo('
-			<tr>
-				<td class="small">'.$Training->DataView()->getDateAsWeeklink().'</td>
-				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
-				<td title="'.($Data['comment'] != "" ? $Data['comment'].': ' : '').$Data['route'].'">'.$Data['route'].'</td>
+			echo '<tr>
+				<td class="small">'.$Linker->weekLink().'</td>
+				<td>'.$Linker->linkWithSportIcon().'</td>
+				<td>'.$Data['comment'].'</td>
 				<td class="r">
-					'.round($Data['steigung']/10, 2).'&nbsp;&#37;<br>
-					<small>('.$Data['elevation'].'&nbsp;m/'.$Data['distance'].'&nbsp;km</small>
+					'.round($Data['gradient']/10, 2).'&nbsp;&#37;<br>
+					<small>'.$Data['elevation'].'&nbsp;m,&nbsp;'.$Data['distance'].'&nbsp;km</small>
 				</td>
-			</tr>
-				'.NL);
+			</tr>';
 		}
 
 		echo '</tbody></table>';
@@ -185,7 +185,8 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`
 			FROM `'.PREFIX.'training`
 			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
-			GROUP BY `year`, `month`')->fetchAll();
+			GROUP BY `year`, `month`'
+		)->fetchAll();
 
 		foreach ($result as $dat) {
 			$this->ElevationData[$dat['year']][$dat['month']] = array(
@@ -199,37 +200,30 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 * Initialize $this->SumData
 	 */
 	private function initSumData() {
+		// TODO: fetch route name with join
 		$this->SumData = DB::getInstance()->query('
 			SELECT
-				`time`, `sportid`, `id`, `elevation`, `route`, `comment`, `s`, `distance`
+				`time`, `sportid`, `id`, `elevation`, `comment`, `s`, `distance`
 			FROM `'.PREFIX.'training`
 			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			ORDER BY `elevation` DESC
-			LIMIT 10')->fetchAll();
+			LIMIT 10'
+		)->fetchAll();
 	}
 
 	/**
 	 * Initialize $this->UpwardData
 	 */
 	private function initUpwardData() {
+		// TODO: fetch route name with join
 		$this->UpwardData = DB::getInstance()->query('
 			SELECT
-				`time`, `sportid`, `id`, `elevation`, `route`, `comment`,
-				(`elevation`/`distance`) as `steigung`, `distance`, `s`
+				`time`, `sportid`, `id`, `elevation`, `comment`,
+				(`elevation`/`distance`) as `gradient`, `distance`, `s`
 			FROM `'.PREFIX.'training`
 			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
-			ORDER BY `steigung` DESC
-			LIMIT 10')->fetchAll();
+			ORDER BY `gradient` DESC
+			LIMIT 10'
+		)->fetchAll();
 	}
-
-	/**
-	 * Get where query for sport
-	 * @return string
-	 */
-	/*private function andSportWhere() {
-		if (!$this->config['all_sports']['var'])
-			return 'AND `sportid`="'.Configuration::General()->runningSport().'"';
-
-		return '';
-	}*/
 }

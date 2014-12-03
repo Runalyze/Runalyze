@@ -51,8 +51,8 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	protected function displayContent() {
 		$this->initTrainings();
 
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/TableRow.php';
-		include FRONTEND_PATH.'../plugin/'.$this->key().'/tpl.Table.php';
+		require_once __DIR__.'/TableRow.php';
+		include __DIR__.'/tpl.Table.php';
 	}
 
 	/**
@@ -61,19 +61,19 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	private function initTrainings() {
 		$this->Query = DB::getInstance()->query('
 			SELECT
-				id,
-				time,
-				sportid,
-				distance,
-				s,
-				is_track,
-				comment,
-				pulse_avg,
-				pulse_max,
-				vdot,
-				vdot_by_time
+				`id`,
+				`time`,
+				`sportid`,
+				`distance`,
+				`s`,
+				`is_track`,
+				`comment`,
+				`pulse_avg`,
+				`pulse_max`,
+				`vdot`,
+				`vdot_by_time`
 			FROM `'.PREFIX.'training`
-			WHERE `pulse_avg`!=0 && `typeid`='.Configuration::General()->competitionType().'
+			WHERE `pulse_avg`!=0 AND `typeid`='.Configuration::General()->competitionType().'
 			ORDER BY `time` DESC'
 		);
 	}

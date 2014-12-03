@@ -5,6 +5,10 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Activity\Dataview;
+use Runalyze\View\Icon;
 
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
@@ -347,19 +351,20 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @param array $data
 	 */
 	private function displayWKTr(array $data) {
-		$Training = new TrainingObject($data);
+		$Activity = new Activity\Object($data);
+		$Linker = new Linker($Activity);
+		$Dataview = new Dataview($Activity);
 
-		echo('
-			<tr class="r">
+		echo '<tr class="r">
 				<td>'.$this->getIconForCompetition($data['id']).'</td>
-				<td class="c small">'.$Training->DataView()->getDateAsWeeklink().'</a></td>
-				<td class="l"><strong>'.$Training->Linker()->linkWithComment().'</strong></td>
-				<td>'.$Training->DataView()->getDistanceStringWithoutEmptyDecimals().'</td>
-				<td>'.$Training->DataView()->getTimeString().'</td>
-				<td class="small">'.$Training->DataView()->getSpeedString().'</td>
-				<td class="small">'.Helper::Unknown($Training->getPulseAvg()).' / '.Helper::Unknown($Training->getPulseMax()).' bpm</td>
-				<td class="small">'.($Training->Weather()->isEmpty() ? '' : $Training->Weather()->fullString()).'</td>
-			</tr>');	
+				<td class="c small">'.$Linker->weekLink().'</a></td>
+				<td class="l"><strong>'.$Linker->linkWithComment().'</strong></td>
+				<td>'.$Dataview->distanceWithoutEmptyDecimals().'</td>
+				<td>'.$Dataview->duration().'</td>
+				<td class="small">'.$Dataview->pace()->value().'</td>
+				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
+				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString()).'</td>
+			</tr>';
 	}
 
 	/**
@@ -367,9 +372,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * @param string $text [optional]
 	 */
 	private function displayEmptyTr($text = '') {
-		echo '<tr class="a">
-				<td colspan="8">'.$text.'</td>
-			</tr>';
+		echo '<tr class="a"><td colspan="8">'.$text.'</td></tr>';
 	}
 
 	/**
@@ -411,13 +414,15 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function getIconForCompetition($id) {
 		if ($this->isFunCompetition($id)) {
 			$tag = 'nofun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_GREY, __('Fun race | Click to mark this activity as a \'normal race\'.'));
+			$icon = new Icon( Icon::CLOCK_GRAY );
+			$icon->setTooltip( __('Fun race | Click to mark this activity as a \'normal race\'.') );
 		} else {
 			$tag = 'fun';
-			$icon = Ajax::tooltip(Icon::$CLOCK_ORANGE, __('Race | Click to mark this activity as a \'fun race\'.'));
+			$icon = new Icon( Icon::CLOCK );
+			$icon->setTooltip( __('Race | Click to mark this activity as a \'fun race\'.') );
 		}
 
-		return $this->getInnerLink($icon, 0, 0, $tag.'-'.$id);
+		return $this->getInnerLink($icon->code(), 0, 0, $tag.'-'.$id);
 	}
 
 	/**

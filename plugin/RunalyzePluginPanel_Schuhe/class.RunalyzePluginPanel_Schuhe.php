@@ -53,6 +53,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo $this->getStyle();
 		echo '<div id="schuhe">';
 
+		// TODO: Use data from shoe factory
 		$inuse = true;
 		$schuhe = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC')->fetchAll();
 		foreach ($schuhe as $schuh) {
