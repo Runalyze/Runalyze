@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-23 14:50+0200\n"
+"PO-Revision-Date: 2014-12-05 10:23+0200\n"
 "Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -1004,7 +1004,7 @@ msgstr "Diagrammkombination"
 
 #: inc/core/Configuration/Category/ActivityView.php:284
 msgid "Plots: smooth curves"
-msgstr ""
+msgstr "Grafiken: geglättete Kurven"
 
 #: inc/core/Configuration/Category/ActivityView.php:288
 msgid "Pace plot: y-axis minimum"
@@ -1245,6 +1245,8 @@ msgid ""
 "Formula to estimate the vdot value. The old method is only listed for "
 "compatibility reasons."
 msgstr ""
+"Formel zur Bestimmung des VDOT-Werts. Die alte Methode ist nur aus "
+"Kompatibilitätsgründen aufgeführt."
 
 #: inc/core/Configuration/Category/Vdot.php:162
 msgid "Time constant length for VDOT"
@@ -1666,7 +1668,7 @@ msgstr "Trainingsstunden"
 
 #: inc/draw/class.PlotSumData.php:112
 msgid "Choose analysis"
-msgstr ""
+msgstr "Analyse wählen"
 
 #: inc/draw/class.PlotSumData.php:116 inc/plugin/class.PluginStat.php:171
 msgid "Choose sport"
@@ -1747,7 +1749,7 @@ msgstr "Der ausgewählte Exporter wurde nicht gefunden."
 
 #: inc/export/class.ExporterListView.php:40
 msgid "No exporter could be located."
-msgstr ""
+msgstr "Es konnte kein Exporter gefunden werden."
 
 #: inc/export/class.ExporterType.php:36
 msgid "Export as file"
@@ -1913,7 +1915,7 @@ msgstr "pro Seite"
 
 #: inc/html/formular/class.FormularField.php:210
 msgid "Your input is not allowed."
-msgstr ""
+msgstr "Deine Eingabe ist nicht erlaubt."
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:99
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:64
@@ -2004,7 +2006,7 @@ msgstr "%s Trainingseinheiten gefunden."
 
 #: inc/import/class.MultiImporterFormular.php:120
 msgid "Show multi editor afterwards"
-msgstr ""
+msgstr "Zeige nachfolgend den Multieditor"
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:79
 msgid "No activities could be found."
@@ -2108,7 +2110,7 @@ msgstr ""
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Bewege den Mauszeiger hierher, um den Communicator zu starten."
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:273
@@ -2272,6 +2274,8 @@ msgstr ""
 #: inc/system/class.AccountHandler.php:255
 msgid "Your local server has no smtp-server. Please contact the administrator."
 msgstr ""
+"Dein lokaler Server hat keinen smtp-Server. Bitte kontaktiere den "
+"Administrator."
 
 #: inc/system/class.AccountHandler.php:263
 msgid "The username is unknown."
@@ -2280,11 +2284,11 @@ msgstr "Der Nutzername ist uns nicht bekannt."
 #: inc/system/class.AccountHandler.php:351
 #, php-format
 msgid "The password has to contain at least %s signs."
-msgstr ""
+msgstr "Das Passwort muss mindestens %s Zeichen enthalten."
 
 #: inc/system/class.AccountHandler.php:357
 msgid "Something went wrong."
-msgstr ""
+msgstr "Ein Fehler ist aufgetreten."
 
 #: inc/system/class.AccountHandler.php:434
 msgid "Thanks for your registration"
@@ -2294,11 +2298,14 @@ msgstr "Danke für die Registrierung"
 #, php-format
 msgid "You can activate your account (username = %s) with the following link"
 msgstr ""
+"Du kannst deinen Account (username = %s) über den folgenden Link aktivieren"
 
 #: inc/system/class.AccountHandler.php:439
 #: inc/system/class.AccountHandler.php:469
 msgid "Sending the link did not work. Please contact the administrator."
 msgstr ""
+"Das Versenden des Links ist fehlgeschlagen. Bitte kontaktiere den "
+"Administrator."
 
 #: inc/system/class.AccountHandler.php:443
 msgid ""
@@ -3526,12 +3533,12 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:415
 #: inc/training/search/class.SearchFormular.php:135
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: inc/training/schemes/scheme.UserData.php:14
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:51
 msgid "Analysis"
-msgstr ""
+msgstr "Analyse"
 
 #: inc/training/schemes/scheme.UserData.php:45
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:103
@@ -3540,32 +3547,32 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:38
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
 msgid "Weight"
-msgstr ""
+msgstr "Gewicht"
 
 #: inc/training/schemes/scheme.UserData.php:55
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:107
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:40
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:37
 msgid "Resting HR"
-msgstr ""
+msgstr "Ruhepuls"
 
 #: inc/training/schemes/scheme.UserData.php:65
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:108
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:38
 msgid "Maximal HR"
-msgstr ""
+msgstr "Maximalpuls"
 
 #: inc/training/schemes/scheme.UserData.php:75
 msgid "Body fat"
-msgstr ""
+msgstr "Körperfett"
 
 #: inc/training/schemes/scheme.UserData.php:85
 msgid "Body water"
-msgstr ""
+msgstr "Wasser"
 
 #: inc/training/schemes/scheme.UserData.php:95
 msgid "Body muscle"
-msgstr ""
+msgstr "Muskeln"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:308
@@ -3574,7 +3581,7 @@ msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:34
 msgid "avg. Heartrate"
-msgstr ""
+msgstr "durchschn. Puls"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:35
 #: inc/training/view/section/class.SectionCompositeRow.php:129
@@ -3583,7 +3590,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionHeartrateRow.php:56
 #: inc/training/view/section/class.SectionOverviewRow.php:53
 msgid "max. Heartrate"
-msgstr ""
+msgstr "max. Puls"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:234
@@ -3592,11 +3599,11 @@ msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
 msgid "descending"
-msgstr ""
+msgstr "absteigend"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
 msgid "ascending"
-msgstr ""
+msgstr "aufsteigend"
 
 #: inc/training/search/class.SearchFormular.php:53
 msgid "Search activities"
@@ -3604,49 +3611,49 @@ msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:66
 msgid "Search"
-msgstr ""
+msgstr "Suche"
 
 #: inc/training/search/class.SearchFormular.php:83
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:398
 msgid "Time range"
-msgstr ""
+msgstr "Zeitraum"
 
 #: inc/training/search/class.SearchFormular.php:91
 msgid "Sorting"
-msgstr ""
+msgstr "Sortierung"
 
 #: inc/training/search/class.SearchFormular.php:99
 msgid "Send to multi editor"
-msgstr ""
+msgstr "An Multi-Editor senden"
 
 #: inc/training/search/class.SearchFormular.php:113
 msgid "Choose sport(s)"
-msgstr ""
+msgstr "Wähle die Sportart(en)"
 
 #: inc/training/search/class.SearchFormular.php:123
 msgid "Choose activity type(s)"
-msgstr ""
+msgstr "Wähle die Trainingstypen"
 
 #: inc/training/search/class.SearchFormular.php:124
 msgid "Choose shoe(s)"
-msgstr ""
+msgstr "Wähle die Schuhe"
 
 #: inc/training/search/class.SearchFormular.php:125
 msgid "Choose weather conditions"
-msgstr ""
+msgstr "Wähle das Wetter"
 
 #: inc/training/search/class.SearchFormular.php:126
 msgid "Choose clothing"
-msgstr ""
+msgstr "Wähle die Klamotten"
 
 #: inc/training/search/class.SearchResults.php:312
 msgid "The multi editor could not be located."
-msgstr ""
+msgstr "Der Multi-Editor wurde nicht gefunden."
 
 #: inc/training/search/class.SearchResults.php:345
 #, php-format
 msgid "Found %s activities"
-msgstr ""
+msgstr "Es wurden %s Trainings gefunden"
 
 #: inc/training/view/class.ElevationInfo.php:100
 #, php-format
