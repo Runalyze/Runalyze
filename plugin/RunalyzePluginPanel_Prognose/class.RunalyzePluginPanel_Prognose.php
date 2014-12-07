@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Activity\Duration;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -153,8 +154,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
 		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
 
-		$oldTimeString  = Time::toString($PersonalBestInSeconds);
-		$newTimeString  = '<strong>'.Time::toString($PrognosisInSeconds).'</strong>';
+		$oldTimeString  = Duration::format($PersonalBestInSeconds);
+		$newTimeString  = '<strong>'.Duration::format($PrognosisInSeconds).'</strong>';
 		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
 		$distanceString = Running::Km($distance, 0, ($distance <= 3));
 

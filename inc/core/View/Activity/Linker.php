@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity;
 
 use Runalyze\Model\Activity;
+use Runalyze\Activity\Duration;
 
 use DataBrowserLinker;
 use SharedLinker;
@@ -115,8 +116,9 @@ class Linker {
 	 */
 	public function linkWithSportIcon() {
 		$Sport = new Sport($this->Activity->sportid());
+		$Time = new Duration($this->Activity->duration());
 
-		$tooltip = $Sport->name().': '.Time::toString($this->Activity->duration());
+		$tooltip = $Sport->name().': '.$Time->string();
 
 		return $this->link( $Sport->Icon($tooltip) );
 	}

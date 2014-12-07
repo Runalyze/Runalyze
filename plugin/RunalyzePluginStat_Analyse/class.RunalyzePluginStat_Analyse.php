@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
 
 $PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
@@ -217,18 +218,18 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
 							if ($this->Sport->usesDistance() && $this->dat != 's')
-								echo '<td>'.Running::Km($Data['array']['timer_sum_km'][$t], 0).'</td>'.NL;
+								echo '<td>'.Running::Km($Data['array']['timer_sum_km'][$t], 0).'</td>';
 							else
-								echo '<td>'.Time::toString($Data['array']['timer_sum_s'][$t], true, true).'</td>'.NL;
+								echo '<td>'.Duration::format($Data['array']['timer_sum_s'][$t]).'</td>';
 						} else {
 							echo HTML::emptyTD();
 						}
 					}
 
 					if ($this->Sport->usesDistance() && $this->dat != 's')
-						echo '<td>'.Running::Km($Data['array']['all_sum_km'], 0).'</td></tr>'.NL;
+						echo '<td>'.Running::Km($Data['array']['all_sum_km'], 0).'</td></tr>';
 					else
-						echo '<td>'.Time::toString($Data['array']['all_sum_s'], true, true).'</td></tr>'.NL;
+						echo '<td>'.Duration::format($Data['array']['all_sum_s']).'</td></tr>';
 				}
 			}
 

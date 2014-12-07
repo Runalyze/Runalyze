@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
+use Runalyze\Activity\Duration;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -468,7 +469,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initStundenData($dat) {
-		$text = ($dat['s'] == 0) ? NBSP : Time::toString($dat['s'], false);
+		if ($dat['s'] > 0) {
+			$duration = new Duration($dat['s']);
+			$text = $duration->string(Duration::FORMAT_WITH_HOURS);
+		} else {
+			$text = NBSP;
+		}
 
 		$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
 	}

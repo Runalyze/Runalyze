@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Activity\Splits;
 
 use Runalyze\Model\StringObject;
+use Runalyze\Activity\Duration;
 use Time;
 
 /**
@@ -166,6 +167,6 @@ class Split extends StringObject {
 	 * @return string
 	 */
 	private function timeAsString() {
-		return Time::toString($this->Time, false, 2);
+		return Duration::format($this->Time);
 	}
 }

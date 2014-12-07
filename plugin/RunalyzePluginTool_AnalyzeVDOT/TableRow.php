@@ -11,6 +11,7 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\Shape;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
 
 use RunningPrognosisDaniels;
 use Running;
@@ -240,6 +241,8 @@ class TableRow {
 	 * @return string
 	 */
 	protected function formatTime($seconds) {
-		return Time::toString(round($seconds), false, true);
+		$Duration = new Duration($seconds);
+
+		return $Duration->string(Duration::FORMAT_WITH_HOURS);
 	}
 }

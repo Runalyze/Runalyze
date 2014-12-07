@@ -168,7 +168,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asNone() {
-		return sprintf( __('%s in %s'), Running::Km($this->Distance), Time::toString($this->Time));
+		return sprintf( __('%s in %s'), Running::Km($this->Distance), Duration::format($this->Time));
 	}
 
 	/**
@@ -192,11 +192,7 @@ class Pace {
 			return '-:--';
 		}
 
-		if ($this->Time/$this->Distance < 60) { 
-			return Time::toString(round($this->Time/$this->Distance), false, 2);
-		}
-
-		return Time::toString(round($this->Time/$this->Distance));
+		return Duration::format(round($this->Time/$this->Distance));
 	}
 
 	/**
@@ -241,7 +237,7 @@ class Pace {
 			case self::MIN_PER_100M:
 				$firstInSeconds = Time::toSeconds($this->value());
 				$secondInSeconds = Time::toSeconds($other->value());
-				$string = Time::toString( abs($firstInSeconds - $secondInSeconds), false, false, false );
+				$string = Duration::format( abs($firstInSeconds - $secondInSeconds) );
 				return $this->formatComparison($string, $firstInSeconds <= $secondInSeconds, $raw);
 
 			case self::KM_PER_H:

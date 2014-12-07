@@ -10,6 +10,7 @@ use Runalyze\Calculation\Trimp;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Activity\Duration;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -317,7 +318,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 			echo '<tr>';
 			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
-			echo '<td class="r"><em>'.Time::toString($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Time::toString($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
+			echo '<td class="r"><em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
 			echo '</tr>';
 		}
 
@@ -522,7 +523,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					</tr>
 					<tr>
 						<td>'.__('<strong>Marathon time</strong> <small>(optimal)</small>').'</td>
-						<td class="r">'.Time::toString($Prognosis->inSeconds(42.195)).'</td>
+						<td class="r">'.Duration::format($Prognosis->inSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target long run</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7)).'</td>
 						<td class="r">'.Running::Km($BasicEndurance->getRealTargetLongjogKmPerWeek()).'</td>
@@ -610,7 +611,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			$Table .= '
 					<tr>
 						<td class="b">'.$Pace['short'].'</td>
-						<td class=""><em>'.Time::toString($VDOT->paceAt($Pace['limit-low']/100)).'</em>&nbsp;-&nbsp;<em>'.Time::toString($VDOT->paceAt($Pace['limit-high']/100)).'</em>/km</td>
+						<td class=""><em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>&nbsp;-&nbsp;<em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em>/km</td>
 						<td class="">'.$Pace['description'].'</td>
 					</tr>';
 		}

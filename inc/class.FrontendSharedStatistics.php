@@ -3,6 +3,9 @@
  * This file contains class::FrontendSharedStatistics
  * @package Runalyze\Frontend
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Class for general statistics shown in shared list
  *
@@ -87,7 +90,7 @@ class FrontendSharedStatistics {
 					</tr>
 					<tr>
 						<td class="b">'.__('Total duration:').'</td>
-						<td>'.Time::toString($Stats['time_sum']).'</td>
+						<td>'.Duration::format($Stats['time_sum']).'</td>
 						<td class="b">'.__('First activity:').'</td>
 						<td>'.date('d.m.Y', START_TIME).'</td>
 						<td class="b">'.__('Last login:').'</td>

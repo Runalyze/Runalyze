@@ -1,6 +1,7 @@
 <?php
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
 
 $VDOT = new VDOT;
 ?>
@@ -20,7 +21,7 @@ $VDOT = new VDOT;
 		<tr>
 			<td class="b"><?php echo $value; ?></td>
 			<?php foreach ($this->Paces as $data): ?>
-			<td><?php echo Time::toString($VDOT->paceAt($data['percent']/100)); ?></td>
+			<td><?php echo Duration::format($VDOT->paceAt($data['percent']/100)); ?></td>
 			<?php endforeach; ?>
 		</tr>
 		<?php endforeach; ?>

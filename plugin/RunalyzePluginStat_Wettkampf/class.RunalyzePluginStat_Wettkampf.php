@@ -9,6 +9,7 @@ use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Icon;
+use Runalyze\Activity\Duration;
 
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
@@ -307,7 +308,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		
 			foreach ($year as $key => $y)
 				if ($key != 'sum')
-					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Time::toString($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>---</small></em>').'</td>';
+					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Duration::format($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>---</small></em>').'</td>';
 		
 			echo '</tr>';
 		}

@@ -9,8 +9,12 @@ namespace Runalyze\View\Activity;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
+use Runalyze\Activity\Duration;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context;
 
 use SessionAccountHandler;
@@ -38,6 +42,12 @@ class Dataview {
 	protected $Activity;
 
 	/**
+	 * Duration
+	 * @var \Runalyze\Activity\Duration
+	 */
+	protected $Duration = null;
+
+	/**
 	 * HR max
 	 * @var \Runalyze\Activity\HeartRate
 	 */
@@ -54,6 +64,12 @@ class Dataview {
 	 * @var \Runalyze\Activity\Pace
 	 */
 	protected $Pace = null;
+
+	/**
+	 * VDOT
+	 * @var \Runalyze\Calculation\JD\VDOT
+	 */
+	protected $VDOT = null;
 
 	/**
 	 * Construct data view
@@ -145,10 +161,12 @@ class Dataview {
 
 	/**
 	 * Duration
-	 * @return string
+	 * @return \Runalyze\Activity\Duration
 	 */
 	public function duration() {
-		return Time::toString($this->Activity->duration());
+		return $this->object($this->Duration, function($Activity){
+			return new Duration($Activity->duration());
+		});
 	}
 
 	/**
@@ -159,7 +177,7 @@ class Dataview {
 		if ($this->Activity->elapsedTime() < $this->Activity->duration())
 			return '-:--:--';
 
-		return Time::toString($this->Activity->elapsedTime());
+		return Duration::format($this->Activity->elapsedTime());
 	}
 
 	/**
@@ -198,7 +216,7 @@ class Dataview {
 			return $this->distance();
 		}
 
-		return $this->duration();
+		return $this->duration()->string();
 	}
 
 	/**
@@ -337,7 +355,7 @@ class Dataview {
 	 * Get trainingspartner
 	 * @return string
 	 */
-	public function getPartner() {
+	public function partner() {
 		return HTML::encodeTags($this->Activity->partner()->asString());
 	}
 
@@ -345,7 +363,7 @@ class Dataview {
 	 * Get trainingspartner as links
 	 * @return string
 	 */
-	public function getPartnerAsLinks() {
+	public function partnerAsLinks() {
 		$links = array();
 
 		foreach ($this->Activity->partner()->asArray() as $partner) {
@@ -375,27 +393,48 @@ class Dataview {
 	}
 
 	/**
-	 * Get (corrected) vdot and icon
-	 * @return string
+	 * VDOT
+	 * @return \Runalyze\Calculation\JD\VDOT
 	 */
-	public function getVDOTAndIcon() {
-		return round($this->Object->getCurrentlyUsedVdot(), 2).'&nbsp;'.$this->getVDOTicon();
+	public function vdot() {
+		$self = $this;
+
+		return $this->object($this->VDOT, function($Activity) use($self){
+			return new VDOT($self->usedVdot(), new VDOTCorrector);
+		});
 	}
 
 	/**
-	 * Get icon with prognosis as title for VDOT-value
-	 * @return string
+	 * Value of used VDOT (uncorrected)
+	 * @return float
 	 */
-	public function getVDOTicon() {
-		if ($this->Object->getVdotUncorrected() == 0)
-			return '';
-
-		$Icon = new Runalyze\View\Icon\VdotIcon($this->Object->getCurrentlyUsedVdot());
-
-		if (!$this->Object->usedForVdot()) {
-			$Icon->setTransparent();
+	public function usedVdot() {
+		if (Configuration::Vdot()->useElevationCorrection()) {
+			if ($this->Activity->vdotWithElevation() > 0)  {
+				return $this->Activity->vdotWithElevation();
+			}
 		}
 
-		return $Icon->code();
+		return $this->Activity->vdotByHeartRate();
+	}
+
+	/**
+	 * VDOT icon
+	 * @return string
+	 */
+	public function vdotIcon() {
+		$value = $this->usedVdot();
+
+		if ($value > 0) {
+			$Icon = new VdotIcon($value);
+
+			if (!$this->Activity->usesVDOT()) {
+				$Icon->setTransparent();
+			}
+
+			return $Icon->code();
+		}
+
+		return '';
 	}
 }

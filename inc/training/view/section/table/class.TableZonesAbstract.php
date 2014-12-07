@@ -3,6 +3,9 @@
  * This file contains class::TableZonesAbstract
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Display zones
  * 
@@ -78,7 +81,7 @@ abstract class TableZonesAbstract {
 			}
 
 			$this->Data[$i]['percentage'] = $percentage;
-			$this->Data[$i]['time']       = $totalTime > 0 ? Time::toString($Info['time'], false, $Info['time'] < 60 ? 2 : false) : '-';
+			$this->Data[$i]['time']       = $totalTime > 0 ? Duration::format($Info['time']) : '-';
 			$this->Data[$i]['distance']   = Running::Km($Info['distance'], 2);
 		}
 	}

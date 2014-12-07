@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
 
 $PLUGINKEY = 'RunalyzePluginStat_Rekorde';
 /**
@@ -98,7 +99,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 						if ($rekord['speed'])
 							$code = SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s'], $sport['id']);
 						else
-							$code = ($dat['distance'] != 0 ? Running::Km($dat['distance']) : Time::toString($dat['s']));
+							$code = ($dat['distance'] != 0 ? Running::Km($dat['distance']) : Duration::format($dat['s']));
 	
 						echo '<td class="small"><span title="'.date("d.m.Y",$dat['time']).'">
 								'.Ajax::trainingLink($dat['id'], $code).'

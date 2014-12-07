@@ -3,6 +3,9 @@
  * This file contains class::Shoe
  * @package Runalyze\DataObjects\Shoe
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Data object for a shoe
  * @author Hannes Christiansen
@@ -69,7 +72,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getTimeString() {
-		return Time::toString($this->getTime());
+		return Duration::format($this->getTime());
 	}
 
 	/**

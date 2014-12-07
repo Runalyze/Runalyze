@@ -10,7 +10,8 @@ use Runalyze\View\Leaflet\Route as LeafletRoute;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
 use Runalyze\Configuration;
-use Time;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace;
 use Running;
 use SportSpeed;
 
@@ -170,7 +171,7 @@ class Activity extends LeafletRoute {
 			$Infos = array();
 			$Infos['km'] = (float)$this->TrackdataLoop->distance();
 			$Infos[__('Distance')] = Running::Km($Infos['km'], 2);
-			$Infos[__('Time')] = Time::toString($this->TrackdataLoop->time(), false, false, false);
+			$Infos[__('Time')] = Duration::format($this->TrackdataLoop->time());
 
 			$this->Info[] = $Infos;
 		}
@@ -185,8 +186,10 @@ class Activity extends LeafletRoute {
 		}
 
 		if (round($this->TrackdataLoop->distance(), 2) >= $this->Dist) {
-			$Tooltip = sprintf( __('<strong>%s. km</strong> in %s'), $this->Dist, SportSpeed::minPerKm(1, $this->TrackdataLoop->time() - $this->Time) ).'<br>';
-			$Tooltip .= sprintf( __('<strong>Time:</strong> %s'), Time::toString($this->TrackdataLoop->time(), false, false, false) );
+			$Pace = new Pace($this->TrackdataLoop->time() - $this->Time);
+
+			$Tooltip = sprintf( __('<strong>%s. km</strong> in %s'), $this->Dist, $Pace->asMinPerKm() ).'<br>';
+			$Tooltip .= sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 
 			$this->addMarker(
 				$this->RouteLoop->latitude(),
@@ -217,7 +220,7 @@ class Activity extends LeafletRoute {
 
 		if ($this->hasTrackdataLoop()) {
 			$Tooltip = sprintf( __('<strong>Total:</strong> %s'), Running::Km($this->TrackdataLoop->distance(), 2) );
-			$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Time::toString($this->TrackdataLoop->time(), false, false, false) );
+			$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 		} else {
 			$Tooltip = '';
 		}
