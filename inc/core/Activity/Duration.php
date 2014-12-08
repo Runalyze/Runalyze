@@ -24,6 +24,11 @@ class Duration {
 	/**
 	 * @var string
 	 */
+	const FORMAT_COMPETITION = 'auto-competition';
+
+	/**
+	 * @var string
+	 */
 	const FORMAT_WITH_DAYS = 'z\d H:i:s';
 
 	/**
@@ -125,6 +130,10 @@ class Duration {
 			return $this->autoString($decimals);
 		}
 
+		if ($format == self::FORMAT_COMPETITION) {
+			return $this->autoCompetitionString($decimals);
+		}
+
 		return $this->formatString($format, $decimals);
 	}
 
@@ -145,6 +154,19 @@ class Duration {
 		}
 
 		return ltrim($this->formatString('i:s'.$fraction, $decimals), '0');
+	}
+
+	/**
+	 * Format for competition results
+	 * @param int $decimals [optional]
+	 * @return string
+	 */
+	protected function autoCompetitionString($decimals = 2) {
+		if ($this->Time >= 60) {
+			return $this->autoString($decimals);
+		}
+
+		return ltrim($this->formatString('s'.self::$DECIMAL_POINT.'u', $decimals), '0').'s';
 	}
 
 	/**

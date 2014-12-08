@@ -6,6 +6,9 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace;
 
 /**
  * Prognosis calculator window
@@ -101,17 +104,17 @@ class Prognose_PrognosisWindow {
 			$_POST['endurance-value'] = BasicEndurance::getConst();
 
 			$_POST['best-result-km'] = !empty($TopResults) ? $TopResults[0]['distance'] : '5.0';
-			$_POST['best-result-time'] = !empty($TopResults) ? Time::toString($TopResults[0]['s'], false, true) : '0:26:00';
+			$_POST['best-result-time'] = !empty($TopResults) ? Duration::format($TopResults[0]['s']) : '0:26:00';
 			$_POST['second-best-result-km'] = !empty($TopResults) ? $TopResults[1]['distance'] : '10.0';
-			$_POST['second-best-result-time'] = !empty($TopResults) ? Time::toString($TopResults[1]['s'], false, true) : '1:00:00';
+			$_POST['second-best-result-time'] = !empty($TopResults) ? Duration::format($TopResults[1]['s']) : '1:00:00';
 		}
 
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
 		$this->InfoLines['jack-daniels'] .= __('Your current Basic Endurance:').' '.BasicEndurance::getConst().'.';
 
 		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s and %s in %s'),
-				Running::km($TopResults[0]['distance']), Time::toString($TopResults[0]['s']),
-				Running::km($TopResults[1]['distance']), Time::toString($TopResults[1]['s'])
+				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']),
+				Distance::format($TopResults[1]['distance']), Duration::format($TopResults[1]['s'])
 		);
 		$this->InfoLines['robert-bock'] = __('Your two best results:').' '.$ResultLine;
 
@@ -147,12 +150,15 @@ class Prognose_PrognosisWindow {
 	 * Setup prognosis strategy: Robert Bock
 	 */
 	protected function setupBockStrategy() {
+		$BestTime = new Duration($_POST['best-result-time']);
+		$SecondTime = new Duration($_POST['second-best-result-time']);
+
 		$Strategy = new RunningPrognosisBock;
 		$Strategy->setFromResults(
 			$_POST['best-result-km'],
-			Time::toSeconds($_POST['best-result-time']),
+			$BestTime->seconds(),
 			$_POST['second-best-result-km'],
-			Time::toSeconds($_POST['second-best-result-time'])
+			$SecondTime->seconds()
 		);
 
 		$this->PrognosisStrategies['robert-bock'] = $Strategy;
@@ -162,8 +168,9 @@ class Prognose_PrognosisWindow {
 	 * Setup prognosis strategy: Herbert Steffny
 	 */
 	protected function setupSteffnyStrategy() {
+		$Time = new Duration($_POST['best-result-time']);
 		$Strategy = new RunningPrognosisSteffny;
-		$Strategy->setReferenceResult($_POST['best-result-km'], Time::toSeconds($_POST['best-result-time']));
+		$Strategy->setReferenceResult($_POST['best-result-km'], $Time->seconds());
 
 		$this->PrognosisStrategies['herbert-steffny'] = $Strategy;
 	}
@@ -172,8 +179,9 @@ class Prognose_PrognosisWindow {
 	 * Setup prognosis strategy: David Cameron
 	 */
 	protected function setupCameronStrategy() {
+		$Time = new Duration($_POST['best-result-time']);
 		$Strategy = new RunningPrognosisCameron;
-		$Strategy->setReferenceResult($_POST['best-result-km'], Time::toSeconds($_POST['best-result-time']));
+		$Strategy->setReferenceResult($_POST['best-result-km'], $Time->seconds());
 
 		$this->PrognosisStrategies['david-cameron'] = $Strategy;
 	}
@@ -198,15 +206,18 @@ class Prognose_PrognosisWindow {
 			$VDOTpb = new VDOT;
 			$VDOTpb->fromPace($km, $PB);
 
+			$PacePrognosis = new Pace($Prognosis, $km, Pace::MIN_PER_KM);
+			$PacePB = new Pace($PB, $km, Pace::MIN_PER_KM);
+
 			$this->Prognoses[] = array(
-				'distance'	=> Running::Km($km, 1, $km <= 3),
-				'prognosis'		=> Time::toString($Prognosis),
-				'prognosis-pace'=> SportSpeed::minPerKm($km, $Prognosis).'/km',
+				'distance'	=> Distance::format($km, $km <= 3),
+				'prognosis'		=> Duration::format($Prognosis),
+				'prognosis-pace'=> $PacePrognosis->valueWithAppendix(),
 				'prognosis-vdot'=> $VDOTprognosis->uncorrectedValue(),
-				'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Time::toString(abs(round($PB-$Prognosis)),false,true),
+				'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB-$Prognosis))),
 				'diff-class'	=> $PB > $Prognosis ? 'plus' : 'minus',
-				'pb'			=> $PB > 0 ? Time::toString($PB) : '-',
-				'pb-pace'		=> $PB > 0 ? SportSpeed::minPerKm($km, $PB).'/km' : '-',
+				'pb'			=> $PB > 0 ? Duration::format($PB) : '-',
+				'pb-pace'		=> $PB > 0 ? $PacePB->valueWithAppendix() : '-',
 				'pb-vdot'		=> $PB > 0 ? $VDOTpb->uncorrectedValue() : '-',
 				'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
 			);

@@ -10,10 +10,10 @@ use Runalyze\View\Leaflet\Route as LeafletRoute;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Running;
-use SportSpeed;
 
 /**
  * Leaflet route for an activity
@@ -170,7 +170,7 @@ class Activity extends LeafletRoute {
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
 			$Infos = array();
 			$Infos['km'] = (float)$this->TrackdataLoop->distance();
-			$Infos[__('Distance')] = Running::Km($Infos['km'], 2);
+			$Infos[__('Distance')] = Distance::format($Infos['km']);
 			$Infos[__('Time')] = Duration::format($this->TrackdataLoop->time());
 
 			$this->Info[] = $Infos;
@@ -219,7 +219,7 @@ class Activity extends LeafletRoute {
 		);
 
 		if ($this->hasTrackdataLoop()) {
-			$Tooltip = sprintf( __('<strong>Total:</strong> %s'), Running::Km($this->TrackdataLoop->distance(), 2) );
+			$Tooltip = sprintf( __('<strong>Total:</strong> %s'), Distance::format($this->TrackdataLoop->distance()) );
 			$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 		} else {
 			$Tooltip = '';

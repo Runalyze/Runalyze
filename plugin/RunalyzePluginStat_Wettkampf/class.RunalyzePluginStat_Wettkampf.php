@@ -9,7 +9,9 @@ use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Icon;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Data\Weather;
 
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
@@ -140,7 +142,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayAllCompetitions() {
 		$this->displayTableStart('wk-table');
 
-		$wks = DB::getInstance()->query('
+		$query = DB::getInstance()->query('
 			SELECT
 				id,
 				time,
@@ -156,13 +158,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				temperature
 			FROM `'.PREFIX.'training`
 			WHERE `typeid`='.Configuration::General()->competitionType().'
-			ORDER BY `time` DESC')->fetchAll();
-		$num = count($wks);
-		if ($num > 0) {
-			foreach($wks as $wk) {
-				$this->displayWkTr($wk);
-			}
-		} else {
+			ORDER BY `time` DESC');
+
+		while ($data = $query->fetch()) {
+			$this->displayWkTr($data);
+		}
+
+		if ($query->rowCount() == 0) {
 			$this->displayEmptyTr( __('There are no races.') );
 		}
 		
@@ -230,7 +232,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayPersonalBestsImages() {
 		$SubLinks = array();
 		foreach ($this->distances as $km) {
-			$name       = Running::Km($km, (round($km) != $km ? 1 : 0), ($km <= 3));
+			$name       = Distance::format($km, $km <= 3, 1);
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
 		$Links = array(array('tag' => '<a href="#">'.__('Choose distance').'</a>', 'subs' => $SubLinks));
@@ -304,7 +306,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<tbody>';
 
 		foreach ($kms as $i => $km) {
-			echo '<tr class="r"><td class="b">'.Running::Km($km, 1, $km <= 3).'</td>';
+			echo '<tr class="r"><td class="b">'.Distance::format($km, $km <= 3, 1).'</td>';
 		
 			foreach ($year as $key => $y)
 				if ($key != 'sum')
@@ -360,8 +362,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				<td>'.$this->getIconForCompetition($data['id']).'</td>
 				<td class="c small">'.$Linker->weekLink().'</a></td>
 				<td class="l"><strong>'.$Linker->linkWithComment().'</strong></td>
-				<td>'.$Dataview->distanceWithoutEmptyDecimals().'</td>
-				<td>'.$Dataview->duration().'</td>
+				<td>'.$Dataview->distance(1).'</td>
+				<td>'.$Dataview->duration()->string(Duration::FORMAT_COMPETITION).'</td>
 				<td class="small">'.$Dataview->pace()->value().'</td>
 				<td class="small">'.Helper::Unknown($Activity->hrAvg()).' / '.Helper::Unknown($Activity->hrMax()).' bpm</td>
 				<td class="small">'.($Activity->weather()->isEmpty() ? '' : $Activity->weather()->fullString()).'</td>
@@ -391,10 +393,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display statistics for weather
 	 */
 	private function displayWeatherStatistics() {
-		$Condition = new \Runalyze\Data\Weather\Condition(0);
+		$Condition = new Weather\Condition(0);
 		$Strings = array();
 
-		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!="'.Weather::$UNKNOWN_ID.'" GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
+		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!='.Weather\Condition::UNKNOWN.' GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
 		foreach ($Weather as $W) {
 			$Condition->set($W['weatherid']);
 			$Strings[] = $W['num'].'x '.$Condition->icon()->code();

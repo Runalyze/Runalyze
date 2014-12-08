@@ -4,6 +4,7 @@
  * @package Runalyze\DataObjects\Shoe
  */
 
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 
 /**
@@ -88,7 +89,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getKmString() {
-		return Running::Km($this->getKm());
+		return Distance::format($this->getKm());
 	}
 
 	/**

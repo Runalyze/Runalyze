@@ -4,18 +4,21 @@
  * Call:   include Plot.Bestzeit.php
  */
 
+use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
+
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
 
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
-$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
-$trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
-$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Distance::format($distance, $distance <= 3, 1) ) );
+$trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Distance::format($distance, $distance <= 3, 1) ) );
+$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Distance::format($distance, $distance <= 3, 1) ) );
 $timeFormat  = '%M:%S';
 
-$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.\Runalyze\Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
+$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		if (!$Plugin->isFunCompetition($competition['id'])) {

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 /**
@@ -271,8 +272,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		$span_format        = isset($Line['lvl']) ? $this->getLevelStyle($Line['lvl']) : 0;
 		$p_format           = isset($Line['sep']) && $Line['sep'] ? ' style="border-top:1px solid #ccc;"' : '';
 
-		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>('.Helper::Unknown(round($Line['anz'],1), '0').'x)</small></small>' : '';
-		$Distance           = isset($Line['km']) && $Line['km'] > 0 ? '<span '.($Line['lvl'] == 1 ? $span_format : '').'>'.Helper::Unknown(Running::Km(round($Line['km'],1)), '0,0 km').'</span>' : '';
+		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>('.round($Line['anz'], 1).'x)</small></small>' : '';
+		$Distance           = isset($Line['km']) && $Line['km'] > 0 ? '<span '.($Line['lvl'] == 1 ? $span_format : '').'>'.Distance::format($Line['km'], false, 1).'</span>' : '';
 
 		echo '<p'.$p_format.'>'.
 			'<span class="right">'.

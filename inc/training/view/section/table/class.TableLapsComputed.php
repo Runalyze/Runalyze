@@ -3,6 +3,10 @@
  * This file contains class::TableLapsComputed
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+
 /**
  * Table: computed laps
  * 
@@ -32,9 +36,9 @@ class TableLapsComputed extends TableLapsAbstract {
 
 		foreach ($Rounds as $Round) {
 			$this->Data[] = array(
-				'time'      => Time::toString($Round['time']),
-				'distance'  => Running::Km($Round['distance'], 2),
-				'laptime'	=> Time::toString($Round['s']),
+				'time'      => Duration::format($Round['time']),
+				'distance'  => Distance::format($Round['distance']),
+				'laptime'	=> Duration::format($Round['s']),
 				'pace'      => SportFactory::getSpeedWithAppendixAndTooltip($Round['km'], $Round['s'], $this->Training->Sport()->id()),
 				'heartrate' => Helper::Unknown($Round['heartrate']),
 				'elevation' => Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']));

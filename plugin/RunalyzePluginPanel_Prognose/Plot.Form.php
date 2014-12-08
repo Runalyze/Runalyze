@@ -7,6 +7,7 @@
 
 use Runalyze\Calculation\JD;
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 if (is_dir(FRONTEND_PATH.'../plugin/RunalyzePluginStat_Wettkampf')) {
 	$Factory = new PluginFactory();
@@ -96,7 +97,7 @@ if (!empty($Prognosis) && max($Prognosis) > 1000*3600)
 else
 	$Plot->setYAxisTimeFormat('%M:%S');
 
-$Plot->setTitle( __('Prognosis trend').' '.Running::Km($distance));
+$Plot->setTitle( __('Prognosis trend').' '.Distance::format($distance));
 
 if ($DataFailed || empty($Data))
 	$Plot->raiseError( __('No data available.') );

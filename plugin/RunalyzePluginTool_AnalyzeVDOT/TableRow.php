@@ -11,12 +11,11 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\Shape;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 
 use RunningPrognosisDaniels;
-use Running;
 use HTML;
-use Time;
 use DB;
 use SessionAccountHandler;
 
@@ -102,7 +101,7 @@ class TableRow {
 	 * @return string
 	 */
 	public function distance() {
-		return Running::Km($this->Activity->distance());
+		return Distance::format($this->Activity->distance());
 	}
 
 	/**

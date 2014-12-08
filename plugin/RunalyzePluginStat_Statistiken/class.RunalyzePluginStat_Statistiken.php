@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 
@@ -521,9 +522,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$MonthFactor = 13 - date("n", START_TIME);
 		}
 
-		$text        = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance'], 0);
-		$textWeek    = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance']/$WeekFactor, 0);
-		$textMonth   = ($dat['distance'] == 0) ? NBSP : Running::Km($dat['distance']/$MonthFactor, 0);
+		$text        = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance'], false, 0);
+		$textWeek    = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance']/$WeekFactor, false, 0);
+		$textMonth   = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance']/$MonthFactor, false, 0);
 		$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
 		$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
 		$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
@@ -534,7 +535,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $dat
 	 */
 	private function initTempoData($dat) {
-		$text = ($dat['s_sum_with_distance'] == 0) ? NBSP : SportFactory::getSpeedWithAppendixAndTooltip($dat['distance'], $dat['s_sum_with_distance'], $this->sportid);
+		$Pace = new Pace($dat['s_sum_with_distance'], $dat['distance'], SportFactory::getSpeedUnitFor($this->sportid));
+		$text = ($dat['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
 
 		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
 	}

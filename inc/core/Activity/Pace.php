@@ -6,9 +6,6 @@
 
 namespace Runalyze\Activity;
 
-use Time;
-use Running;
-
 /**
  * Different pace types/units
  *
@@ -87,7 +84,7 @@ class Pace {
 
 	/**
 	 * Create pace
-	 * @param time $time [s]
+	 * @param int $time [s]
 	 * @param float $distance [optional] [km]
 	 * @param enum $unit [optional]
 	 */
@@ -95,6 +92,28 @@ class Pace {
 		$this->Time = $time;
 		$this->Distance = $distance;
 		$this->Unit = $unit;
+	}
+
+	/**
+	 * Set time
+	 * @param int $time [s]
+	 * @return \Runalyze\Activity\Pace $this-reference
+	 */
+	public function setTime($time) {
+		$this->Time = $time;
+
+		return $this;
+	}
+
+	/**
+	 * Set distance
+	 * @param float $distance [km]
+	 * @return \Runalyze\Activity\Pace $this-reference
+	 */
+	public function setDistance($distance) {
+		$this->Distance = $distance;
+
+		return $this;
 	}
 
 	/**
@@ -168,7 +187,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asNone() {
-		return sprintf( __('%s in %s'), Running::Km($this->Distance), Duration::format($this->Time));
+		return sprintf( __('%s in %s'), Distance::format($this->Distance), Duration::format($this->Time));
 	}
 
 	/**
@@ -235,10 +254,10 @@ class Pace {
 		switch ($this->Unit) {
 			case self::MIN_PER_KM:
 			case self::MIN_PER_100M:
-				$firstInSeconds = Time::toSeconds($this->value());
-				$secondInSeconds = Time::toSeconds($other->value());
-				$string = Duration::format( abs($firstInSeconds - $secondInSeconds) );
-				return $this->formatComparison($string, $firstInSeconds <= $secondInSeconds, $raw);
+				$first = new Duration($this->value());
+				$second = new Duration($other->value());
+				$string = Duration::format( abs($first->seconds() - $second->seconds()) );
+				return $this->formatComparison($string, $first->seconds() <= $second->seconds(), $raw);
 
 			case self::KM_PER_H:
 			case self::M_PER_S:

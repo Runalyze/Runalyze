@@ -89,8 +89,16 @@ class DurationTest extends \PHPUnit_Framework_TestCase {
 	public function testStrangeResults() {
 		$Time = new Duration();
 
-		$this->assertEquals('1:21', $Time->fromSeconds(162*0.2/0.4)->string('auto', 1));
-		$this->assertEquals('1:26', $Time->fromSeconds(172*0.2/0.4)->string('auto', 1));
+		$this->assertEquals('1:21', $Time->fromSeconds(162*0.2/0.4)->string(Duration::FORMAT_AUTO, 1));
+		$this->assertEquals('1:26', $Time->fromSeconds(172*0.2/0.4)->string(Duration::FORMAT_AUTO, 1));
+	}
+
+	public function testCompetitionResults() {
+		$Time = new Duration();
+
+		$this->assertEquals('8,18s', $Time->fromSeconds(8.18)->string(Duration::FORMAT_COMPETITION, 2));
+		$this->assertEquals('13,00s', $Time->fromSeconds(13.00)->string(Duration::FORMAT_COMPETITION, 2));
+		$this->assertEquals('1:03', $Time->fromSeconds(63.00)->string(Duration::FORMAT_COMPETITION, 2));
 	}
 
 }

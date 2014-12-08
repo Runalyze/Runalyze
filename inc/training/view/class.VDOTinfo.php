@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
 use Runalyze\Calculation\Elevation;
+use Runalyze\Activity\Distance;
 
 /**
  * Display VDOT info for a training
@@ -178,7 +179,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>
-				<span class="as-input">'.Math::WithSign(1000*$Modifier->additionalDistance()).'m = '.Running::Km($Modifier->correctedDistance(), 3).'</span>
+				<span class="as-input">'.Math::WithSign(1000*$Modifier->additionalDistance()).'m = '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

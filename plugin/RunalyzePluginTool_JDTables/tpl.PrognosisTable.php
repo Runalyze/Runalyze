@@ -1,6 +1,7 @@
 <?php
 use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Distance;
 
 $Strategy = new RunningPrognosisDaniels;
 $Strategy->adjustVDOT(false);
@@ -15,7 +16,7 @@ $Prognosis->setStrategy($Strategy);
 			<th>VDOT</th>
 		<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
 		<?php if ($km >= 1): ?>
-			<th><?php echo Running::Km($km, 1, ($km <= 3)); ?></th>
+			<th><?php echo Distance::format($km, $km <= 3, 1); ?></th>
 		<?php endif; ?>
 		<?php endforeach; ?>
 		</tr>

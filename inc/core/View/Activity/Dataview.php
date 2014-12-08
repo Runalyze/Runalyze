@@ -9,6 +9,7 @@ namespace Runalyze\View\Activity;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
@@ -190,7 +191,7 @@ class Dataview {
 		}
 
 		if ($this->Activity->distance() > 0) {
-			return Running::Km($this->Activity->distance(), $decimals, $this->Activity->isTrack());
+			return Distance::format($this->Activity->distance(), $this->Activity->isTrack(), $decimals);
 		}
 
 		return '';

@@ -4,6 +4,7 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 
 /**
@@ -82,7 +83,7 @@ abstract class TableZonesAbstract {
 
 			$this->Data[$i]['percentage'] = $percentage;
 			$this->Data[$i]['time']       = $totalTime > 0 ? Duration::format($Info['time']) : '-';
-			$this->Data[$i]['distance']   = Running::Km($Info['distance'], 2);
+			$this->Data[$i]['distance']   = Distance::format($Info['distance']);
 		}
 	}
 

@@ -1,5 +1,6 @@
 <?php
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Distance;
 
 $Duration = new Duration();
 ?>
@@ -7,7 +8,7 @@ $Duration = new Duration();
 	<thead>
 		<tr>
 			<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
-			<th><?php echo Running::Km($km, 1, ($km <= 3)); ?></th>
+			<th><?php echo Distance::format($km, $km <= 3, 1); ?></th>
 			<?php endforeach; ?>
 		</tr>
 	</thead>

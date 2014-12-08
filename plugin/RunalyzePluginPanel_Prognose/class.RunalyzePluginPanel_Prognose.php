@@ -5,8 +5,9 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -151,21 +152,17 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
-		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
+		$PB = new Duration( Running::PersonalBest($distance, true) );
+		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
+		$Distance = new Distance($distance);
+		$Pace = new Pace($Prognosis->seconds(), $distance, Pace::MIN_PER_KM);
 
-		$oldTimeString  = Duration::format($PersonalBestInSeconds);
-		$newTimeString  = '<strong>'.Duration::format($PrognosisInSeconds).'</strong>';
-		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
-		$distanceString = Running::Km($distance, 0, ($distance <= 3));
-
-		echo '
-			<p>
+		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> %s'), $oldTimeString, $newTimeString ).'
-					<small>('.$paceString.'/km)</small>
+					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PB->string(), $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
+					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
-				<strong>'.$distanceString.'</strong>
+				<strong>'.$Distance->string(Distance::FORMAT_AUTO).'</strong>
 			</p>';
 	}
 

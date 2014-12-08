@@ -4,6 +4,9 @@
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Strecken';
+
+use Runalyze\Activity\Distance;
+
 /**
  * Class: RunalyzePluginStat_Strecken
  * @author Hannes Christiansen
@@ -116,7 +119,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 			echo '<tr>
 					<td>'.$data['num'].'x</td>
 					<td class="l">'.SearchLink::to('route', $data['name'], Helper::Cut($data['name'],100)).'</td>
-					<td>'.Running::Km($data['km']).'</td>
+					<td>'.Distance::format($data['km']).'</td>
 				</tr>';
 
 			$i++;

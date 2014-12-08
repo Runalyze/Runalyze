@@ -3,6 +3,10 @@
  * This file contains class::RoundsInfo
  * @package Runalyze\DataObjects\Training\View
  */
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+
 /**
  * Display rounds info for a training
  * 
@@ -96,7 +100,7 @@ class RoundsInfo {
 			$TimeDifferenceInSeconds  = $this->DemandedTime - $Round['s'];
 			$TimeDifferenceClass      = $TimeDifferenceInSeconds >= 0 ? 'plus' : 'minus';
 			$TimeDifferenceSign       = $TimeDifferenceInSeconds >= 0 ? '+' : '-';
-			$TimeDifferenceString     = '<span class="'.$TimeDifferenceClass.'">'.$TimeDifferenceSign.Time::toString(abs($TimeDifferenceInSeconds), false, 2).'</span>';
+			$TimeDifferenceString     = '<span class="'.$TimeDifferenceClass.'">'.$TimeDifferenceSign.Duration::format(abs($TimeDifferenceInSeconds)).'</span>';
 
 			$SpeedUnit                = SportFactory::getSpeedUnitFor($this->Training->Sport()->id());
 			$DemandedPace             = SportSpeed::getSpeed(1, $this->DemandedPace, $SpeedUnit);
@@ -104,10 +108,10 @@ class RoundsInfo {
 			$PaceDifferenceFullString = SportSpeed::difference($SpeedUnit, $DemandedPace, $AchievedPace);
 
 			$this->Data[] = array(
-				'time'      => Time::toString($Round['time']),
-				'distance'  => Running::Km($Round['distance'], 2),
-				'lapdist'	=> Running::Km($Round['km'], 2),
-				'laptime'	=> Time::toString($Round['s']),
+				'time'      => Duration::format($Round['time']),
+				'distance'  => Distance::format($Round['distance']),
+				'lapdist'	=> Distance::format($Round['km']),
+				'laptime'	=> Duration::format($Round['s']),
 				'diff'		=> empty($this->ManualDistances) && abs($Round['km'] - $this->RoundDistance) < 0.1 ? $TimeDifferenceString : '-',
 				'pace'      => SportFactory::getSpeedWithAppendixAndTooltip($Round['km'], $Round['s'], $this->Training->Sport()->id()),
 				'pacediff'	=> $PaceDifferenceFullString,

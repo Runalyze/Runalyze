@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Distance;
 
 /**
  * Class for general statistics shown in shared list
@@ -82,7 +83,7 @@ class FrontendSharedStatistics {
 				<tbody>
 					<tr>
 						<td class="b">'.__('Total distance:').'</td>
-						<td>'.Running::Km($Stats['dist_sum']).'</td>
+						<td>'.Distance::format($Stats['dist_sum']).'</td>
 						<td class="b">'.__('Number of activities:').'</td>
 						<td>'.$Stats['num'].'x</td>
 						<td class="b">'.__('Registered since:').'</td>
