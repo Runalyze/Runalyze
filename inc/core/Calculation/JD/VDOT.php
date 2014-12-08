@@ -152,7 +152,7 @@ class VDOT {
 	 * @return float
 	 */
 	public function value() {
-		return round($this->exactValue(), self::$Precision);
+		return number_format($this->exactValue(), self::$Precision);
 	}
 
 	/**
@@ -173,7 +173,7 @@ class VDOT {
 	 * @return float
 	 */
 	public function uncorrectedValue() {
-		return round($this->Value, self::$Precision);
+		return number_format($this->Value, self::$Precision);
 	}
 
 	/**

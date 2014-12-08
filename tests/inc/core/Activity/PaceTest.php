@@ -87,4 +87,11 @@ class PaceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('-0:54', $Pace1->compareTo($Pace4, true));
 	}
 
+	public function testMethodChaining() {
+		$Pace = new Pace(0, 1, Pace::MIN_PER_KM);
+
+		$this->assertEquals('3:00', $Pace->setTime(180)->value());
+		$this->assertEquals('6:00', $Pace->setDistance(0.5)->value());
+	}
+
 }

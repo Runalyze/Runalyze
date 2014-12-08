@@ -19,7 +19,7 @@ class Duration {
 	/**
 	 * @var string
 	 */
-	const FROMAT_AUTO = 'auto';
+	const FORMAT_AUTO = 'auto';
 
 	/**
 	 * @var string
@@ -35,7 +35,7 @@ class Duration {
 	 * Decimal point
 	 * @var string
 	 */
-	static public $DECIMAL_POINT = '.';
+	static public $DECIMAL_POINT = ',';
 
 	/**
 	 * Time [s]
@@ -120,8 +120,8 @@ class Duration {
 	 * @param int $decimals [optional] number of decimals, only if 'u' is present in $format
 	 * @return string
 	 */
-	public function string($format = self::FROMAT_AUTO, $decimals = 2) {
-		if ($format == self::FROMAT_AUTO) {
+	public function string($format = self::FORMAT_AUTO, $decimals = 2) {
+		if ($format == self::FORMAT_AUTO) {
 			return $this->autoString($decimals);
 		}
 

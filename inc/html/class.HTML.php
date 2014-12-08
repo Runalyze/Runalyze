@@ -107,9 +107,10 @@ class HTML {
 	 * Get a tr-tag for a bold header-line containing all years
 	 * @param int $fixedWidth Fixed width for every year-td in percent [set '0' for no fixed width]
 	 * @param int $emptyTDs Number of empty td before the year-td
+	 * @param boolean $withTotal add last column for 'total'
 	 * @return string
 	 */
-	public static function yearTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td') {
+	public static function yearTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td', $withTotal = false) {
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">';
 
@@ -118,6 +119,10 @@ class HTML {
 
 		for ($y = START_YEAR; $y <= date("Y"); $y++)
 			$html .= '<'.$tag.$width.'>'.$y.'</'.$tag.'>';
+
+		if ($withTotal) {
+			$html .= '<'.$tag.$width.'>'.__('Total').'</'.$tag.'>';
+		}
 
 		$html .= '</tr>';
 

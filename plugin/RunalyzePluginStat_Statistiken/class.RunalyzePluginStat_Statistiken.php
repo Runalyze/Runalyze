@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -211,7 +212,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		echo '<table class="r fullwidth zebra-style">';
 
 		echo '<thead class="r">';
-		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th') : HTML::monthTR(8, 1, 'th');
+		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th', true) : HTML::monthTR(8, 1, 'th');
 		echo '</thead>';
 		echo '<tbody>';
 
@@ -416,6 +417,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initLineData() {
 		$this->initCompleteData();
+		$this->computeInTotalForCompleteData();
 
 		foreach ($this->CompleteData as $Data) {
 			$this->initStundenData($Data);
@@ -449,9 +451,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				`sportid`=:sportid AND `accountid`='.SessionAccountHandler::getId();
 
 		if ($this->year != -1)
-			$Query .= '&& YEAR(FROM_UNIXTIME(`time`))=:year ';
+			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))=:year';
 
-		$Query .= 'GROUP BY '.$Timer.'(FROM_UNIXTIME(`time`)) ORDER BY `i`';
+		$Query .= ' GROUP BY '.$Timer.'(FROM_UNIXTIME(`time`)) ORDER BY `i`';
 
 		$Request = DB::getInstance()->prepare($Query);
 		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
@@ -462,6 +464,27 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$Request->execute();
 
 		$this->CompleteData = $Request->fetchAll();
+	}
+
+	private function computeInTotalForCompleteData() {
+		if ($this->year == -1) {
+			$Total = array('i' => 'total', 's' => 0, 's_sum_with_distance' => 0, 'distance' => 0, 'vdot' => 0, 'trimp' => 0, 'jd_intensity' => 0);
+
+			foreach ($this->CompleteData as $data) {
+				$Total['s'] += $data['s'];
+				$Total['s_sum_with_distance'] += $data['s_sum_with_distance'];
+				$Total['distance'] += $data['distance'];
+				$Total['vdot'] += $data['s']*$data['vdot'];
+				$Total['trimp'] += $data['trimp'];
+				$Total['jd_intensity'] += $data['jd_intensity'];
+			}
+
+			if ($Total['s'] > 0) {
+				$Total['vdot'] /= $Total['s'];
+			}
+
+			$this->CompleteData[] = $Total;
+		}
 	}
 
 	/**
@@ -490,6 +513,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($dat['i'] == date("Y")) {
 			$WeekFactor  = (date('z')+1) / 7;
 			$MonthFactor = (date('z')+1) / 30.4;
+		} elseif ($dat['i'] == 'total') {
+			$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
+			$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
 		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
 			$WeekFactor  = 53 - date("W", START_TIME);
 			$MonthFactor = 13 - date("n", START_TIME);

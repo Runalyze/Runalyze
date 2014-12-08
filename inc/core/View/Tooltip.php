@@ -62,6 +62,14 @@ class Tooltip {
 	}
 
 	/**
+	 * Set text
+	 * @param string $text
+	 */
+	public function setText($text) {
+		$this->text = $text;
+	}
+
+	/**
 	 * Set position
 	 * @param string $position
 	 */

@@ -55,9 +55,9 @@ class DurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('1d 09:13:41', $Time->fromString('33:13:41,4')->string());
 		$this->assertEquals(   '23:13:41', $Time->fromString('23:13:41,4')->string());
 		$this->assertEquals(    '3:13:41', $Time->fromString(' 3:13:41,4')->string());
-		$this->assertEquals(      '13:41.40', $Time->fromString('13:41,4')->string());
-		$this->assertEquals(       '3:41.40', $Time->fromString(' 3:41,4')->string());
-		$this->assertEquals(       '0:41.40', $Time->fromString('   41,4')->string());
+		$this->assertEquals(      '13:41,40', $Time->fromString('13:41,4')->string());
+		$this->assertEquals(       '3:41,40', $Time->fromString(' 3:41,4')->string());
+		$this->assertEquals(       '0:41,40', $Time->fromString('   41,4')->string());
 		$this->assertEquals(      '13:41', $Time->fromString('13:41')->string());
 		$this->assertEquals(       '3:41', $Time->fromString(' 3:41')->string());
 		$this->assertEquals(       '0:41', $Time->fromString('   41')->string());
