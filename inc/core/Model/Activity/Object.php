@@ -9,7 +9,7 @@ namespace Runalyze\Model\Activity;
 use Runalyze\Model;
 use Runalyze\Model\Activity\Partner;
 use Runalyze\Model\Activity\Splits;
-use Runlazye\Model\Activity\Clothes;
+use Runalyze\Model\Activity\Clothes;
 
 use Runalyze\Data\Weather;
 

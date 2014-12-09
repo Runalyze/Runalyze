@@ -45,14 +45,14 @@ foreach ($this->days as $i => $day) {
 				echo '<td class="l" style="width:24px;">';
 
 				foreach ($day['shorts'] as $short) {
-					$this->Dataset->setTrainingId($short['id'], $short);
+					$this->Dataset->setActivityData($short);
 					$this->Dataset->displayShortLink();
 				}
 
 				echo '</td><td class="l">'.Dataset::getDateString($day['date']).'</td>';
 			}
 
-			$this->Dataset->setTrainingId($id, $Training);
+			$this->Dataset->setActivityData($Training);
 
 			if ($this->showPublicLink)
 				$this->Dataset->displayPublicIcon();
@@ -67,7 +67,7 @@ foreach ($this->days as $i => $day) {
 				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
-			$this->Dataset->setTrainingId($short['id'], $short);
+			$this->Dataset->setActivityData($short);
 			$this->Dataset->displayShortLink();
 		}
 

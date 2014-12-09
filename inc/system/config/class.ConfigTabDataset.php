@@ -54,7 +54,7 @@ class ConfigTabDataset extends ConfigTab {
 
 		$Labels = new DatasetLabels();
 		$DatasetObject = new Dataset();
-		$DatasetObject->setTrainingId(DataObject::$DEFAULT_ID, $this->getExampleTraining());
+		$DatasetObject->setActivityData($this->getExampleTraining());
 
 		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC')->fetchAll();
 		foreach ($Dataset as $Data) {

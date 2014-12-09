@@ -6,6 +6,8 @@
 
 namespace Runalyze\Activity;
 
+use Runalyze\Configuration;
+
 /**
  * HeartRate
  * 
@@ -26,12 +28,59 @@ class HeartRate {
 	protected $Athlete;
 
 	/**
+	 * Preferred heart rate unit
+	 * @var \Runalyze\Parameter\Application\HeartRateUnit
+	 */
+	protected $PreferredUnit;
+
+	/**
 	 * Constructor
 	 * @param int $valueInBPM
 	 */
 	public function __construct($valueInBPM, \Runalyze\Athlete $Athlete = null) {
 		$this->value = $valueInBPM;
 		$this->Athlete = $Athlete;
+		$this->PreferredUnit = Configuration::General()->heartRateUnit();
+	}
+
+	/**
+	 * Heart rate as string
+	 * @return string
+	 */
+	public function string() {
+		if ($this->PreferredUnit->isHRreserve() && $this->canShowInHRrest()) {
+			return $this->asHRrest();
+		} elseif ($this->PreferredUnit->isHRmax() && $this->canShowInHRmax()) {
+			return $this->asHRmax();
+		}
+
+		return $this->asBPM();
+	}
+
+	/**
+	 * As bpm
+	 * @return string
+	 */
+	public function asBPM() {
+		return $this->inBPM().'&nbsp;bpm';
+	}
+
+	/**
+	 * As %HRmax
+	 * Check first 'canShowInHRMax'!
+	 * @return string
+	 */
+	public function asHRmax() {
+		return $this->inHRmax().'&nbsp;&#37;';
+	}
+
+	/**
+	 * As %HRrest
+	 * Check first 'canShowInHRMax'!
+	 * @return string
+	 */
+	public function asHRrest() {
+		return $this->inHRrest().'&nbsp;&#37;';
 	}
 
 	/**

@@ -19,6 +19,7 @@ use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context;
 
 use SessionAccountHandler;
+use ClothesFactory;
 use SportFactory;
 use SearchLink;
 use Running;
@@ -28,6 +29,7 @@ use Ajax;
 use HTML;
 use Cadence;
 use CadenceRunning;
+use Helper;
 
 /**
  * View for data of activities
@@ -71,6 +73,12 @@ class Dataview {
 	 * @var \Runalyze\Calculation\JD\VDOT
 	 */
 	protected $VDOT = null;
+
+	/**
+	 * Cadence
+	 * @var \Cadence
+	 */
+	protected $Cadence = null;
 
 	/**
 	 * Construct data view
@@ -138,7 +146,9 @@ class Dataview {
 		$time = date('H:i', $this->Activity->timestamp());
 
 		if ($time != '00:00') {
-			return sprintf( __('%s Uhr'), $time);
+			return $time;
+			// TODO
+			//return sprintf( __('%s&nbsp;Uhr'), $time);
 		}
 
 		return '';
@@ -235,12 +245,12 @@ class Dataview {
 	 * @return \Cadence
 	 */
 	public function cadence() {
-		$this->object($this->Cadence, function($Activity){
-			if ($this->Activity->sportid() == Configuration::General()->runningSport()) {
+		return $this->object($this->Cadence, function($Activity){
+			if ($Activity->sportid() == Configuration::General()->runningSport()) {
 				return new CadenceRunning($Activity->cadence());
-			} else {
-				return new Cadence($Activity->cadence());
 			}
+
+			return new Cadence($Activity->cadence());
 		});
 	}
 
@@ -315,7 +325,7 @@ class Dataview {
 	 */
 	public function hrMax() {
 		return $this->object($this->HRmax, function($Activity){
-			return new HeartRate($Activity->hrMax, Context::Athlete());
+			return new HeartRate($Activity->hrMax(), Context::Athlete());
 		});
 	}
 
@@ -325,7 +335,7 @@ class Dataview {
 	 */
 	public function hrAvg() {
 		return $this->object($this->HRavg, function($Activity){
-			return new HeartRate($Activity->hrAvg, Context::Athlete());
+			return new HeartRate($Activity->hrAvg(), Context::Athlete());
 		});
 	}
 
@@ -335,7 +345,7 @@ class Dataview {
 	 */
 	public function elevation() {
 		if ($this->Activity->elevation() > 0) {
-			return $this->elevation().'&nbsp;hm';
+			return $this->Activity->elevation().'&nbsp;hm';
 		}
 
 		return '';
@@ -350,6 +360,20 @@ class Dataview {
 			return '-';
 
 		return round($this->Activity->elevation() / $this->Activity->distance()/10, 2).'&nbsp;&#37;';
+	}
+
+	/**
+	 * Clothes
+	 * @return string
+	 */
+	public function clothes() {
+		$clothes = array();
+
+		foreach ($this->Activity->clothes()->asArray() as $id) {
+			$clothes[] = ClothesFactory::NameFor($id);
+		}
+
+		return implode(', ', $clothes);
 	}
 
 	/**
