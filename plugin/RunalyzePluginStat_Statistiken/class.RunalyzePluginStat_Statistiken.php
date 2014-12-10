@@ -315,9 +315,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			//echo '<tr><td class="b l"">'.DataBrowserLinker::link($week, $start, $end).'</td>';
 			echo '<tr><td class="l"><span class="b">'.DataBrowserLinker::link($week, $start, $end, '').'</span>&nbsp;&nbsp;&nbsp;<span class="small">'.date('d.m',$start)." - ".date('d.m',$end).'</span></td>';
 
-			if (isset($CompleteData[$w]) && $Dataset->setGroupOfTrainings($CompleteData[$w])) {
-				if (isset($CompleteData[$w+1]))
+			if (isset($CompleteData[$w]) && !empty($CompleteData[$w])) {
+				$Dataset->setGroupOfTrainings($CompleteData[$w]);
+
+				if (isset($CompleteData[$w+1])) {
 					$Dataset->setKilometerToCompareTo($CompleteData[$w+1]['distance']);
+				}
 
 				$Dataset->displayTableColumns();
 			} else

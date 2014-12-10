@@ -448,7 +448,7 @@ class Dataview {
 	 * @return string
 	 */
 	public function vdotIcon() {
-		$value = $this->usedVdot();
+		$value = $this->usedVdot() * Configuration::Data()->vdotFactor();
 
 		if ($value > 0) {
 			$Icon = new VdotIcon($value);

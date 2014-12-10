@@ -162,7 +162,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PB->string(), $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
 					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
-				<strong>'.$Distance->string(Distance::FORMAT_AUTO).'</strong>
+				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>
 			</p>';
 	}
 
