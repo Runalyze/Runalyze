@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-05 10:23+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 09:45+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -350,7 +350,7 @@ msgstr "seit"
 
 #: inc/class.AdminView.php:296
 msgid "last"
-msgstr ""
+msgstr "letzte"
 
 #: inc/class.AdminView.php:297
 msgid "Functions"
@@ -1325,7 +1325,7 @@ msgstr ""
 
 #: inc/core/Data/Weather.php:64
 msgid "at"
-msgstr ""
+msgstr "bei"
 
 #: inc/core/Data/Weather/Condition.php:138
 msgid "sunny"
@@ -1515,7 +1515,7 @@ msgstr "Monatsansicht"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:45
 msgid "no smoothing"
-msgstr ""
+msgstr "keine Glättung"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:46
 msgid "Threshold method"
@@ -2042,6 +2042,8 @@ msgid ""
 "Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be "
 "located."
 msgstr ""
+"Das XML-Objekt ist nicht von SportTracks. &lt;Duration&gt;-tag wurde nicht "
+"gefunden."
 
 #: inc/import/parser/class.ParserFITSingle.php:159
 msgid "FIT file is not specified as activity."
@@ -2052,30 +2054,40 @@ msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
 msgstr ""
+"Das XML-Objekt enthält keine Strecke. &lt;trkseg&gt;-tag wurde nicht "
+"gefunden."
 
 #: inc/import/parser/class.ParserKMLtomtomSingle.php:69
 msgid ""
 "Given XML object does not contain any track. &lt;gx:Track&gt;-tag could not "
 "be located."
 msgstr ""
+"Das XML-Objekt enthält keine Strecke. &lt;gx:Track&gt;-tag wurde nicht "
+"gefunden."
 
 #: inc/import/parser/class.ParserLOGBOOKSingle.php:39
 msgid ""
 "Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no "
 "attribute 'startTime'."
 msgstr ""
+"Das XML-Objekt ist nicht von SportTracks. &lt;Activity&gt;-tag hat kein "
+"'startTime'-Attribut."
 
 #: inc/import/parser/class.ParserPWXSingle.php:54
 msgid ""
 "Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag "
 "could not be located."
 msgstr ""
+"Das XML-Objekt ist nicht von Peaksware/Trainingpakes. &lt;device&gt;-tag "
+"wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserSLFSingle.php:48
 msgid ""
 "Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be "
 "located."
 msgstr ""
+"Das XML-Objekt ist nicht von Sigma. &lt;LogEntries&gt;-tag wurde nicht "
+"gefunden."
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
 msgid "This file does not contain any data."
@@ -2086,11 +2098,14 @@ msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "Header&gt;-tag could not be located."
 msgstr ""
+"Das XML-Objekt enthält kein Ergebnis. &lt;Samples&gt;-tag oder "
+"&lt;Header&gt;-tag wurden nicht gefunden."
 
 #: inc/import/parser/class.ParserTCXSingle.php:101
 msgid ""
 "Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located."
 msgstr ""
+"Das XML-Objekt ist nicht von Garmin. &lt;Id&gt;-tag wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserTCXSingle.php:122
 msgid "This file does not contain any laps."
@@ -2101,12 +2116,16 @@ msgid ""
 "Given XML object does not contain any results. &lt;result&gt;-tag could not "
 "be located."
 msgstr ""
+"Das XML-Objekt enthält kein Ergebnis. &lt;result&gt;-tag wurde nicht "
+"gefunden."
 
 #: inc/import/parser/class.ParserXMLsuuntoSingle.php:67
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
 msgstr ""
+"Das XML-Objekt enthält kein Ergebnis. &lt;Samples&gt;-tag oder "
+"&lt;header&gt;-tag wurden nicht gefunden."
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
@@ -2312,12 +2331,16 @@ msgid ""
 "Your local server has no smtp-server. Your account has been directly "
 "activated."
 msgstr ""
+"Der lokale Server hat keinen SMTP-Server. Dein Account wurde sofort "
+"aktiviert."
 
 #: inc/system/class.AccountHandler.php:445
 #: inc/system/class.AccountHandler.php:472
 msgid ""
 "Your local server has no smtp-server. You have to contact the administrator."
 msgstr ""
+"Der lokale Server hat keinen SMTP-Server. Bitte den Administrator "
+"kontaktieren."
 
 #: inc/system/class.AccountHandler.php:464
 msgid "Do you really want to delete your account"
@@ -2695,11 +2718,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:76
 msgid "Heart rate is recorded."
-msgstr ""
+msgstr "Der Puls wird aufgezeichnet"
 
 #: inc/system/config/class.ConfigTabSports.php:77
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "Die Power wird aufgezeichnet oder berechnet."
 
 #: inc/system/config/class.ConfigTabSports.php:78
 msgid "Outside"
@@ -2874,15 +2897,15 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Datenbank"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Fertig"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze ist bereits installiert."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
@@ -6014,3 +6037,5 @@ msgid ""
 "At the moment it's not possible to edit multiple activities with only one "
 "form."
 msgstr ""
+"Im Moment ist es nicht möglich mehrere Aktivitäten mit nur einem "
+"Eingabeformular zu bearbeiten."
