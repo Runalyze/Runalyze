@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:54+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"PO-Revision-Date: 2014-12-17 11:13+0200\n"
+"Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3176,7 +3176,7 @@ msgstr "Fertig! Herzlichen Glückwunsch!"
 #: inc/tpl/tpl.Installer.php:269
 msgid "Runalyze has been successfully installed. Have fun while using it!"
 msgstr ""
-"Runalyze wurde erfolgreich installiert. Jetzt viel Spaß bei der Nutzung."
+"Runalyze wurde erfolgreich installiert. Jetzt viel Spaß bei der Nutzung!"
 
 #: inc/tpl/tpl.Installer.php:297
 msgid "Please activate JavaScript, Runalyze will not work without."
@@ -3510,7 +3510,7 @@ msgstr "Höhenprofil"
 
 #: inc/training/plot/class.TrainingPlotElevationCompareAlgorithms.php:32
 msgid "Elevation algorithms"
-msgstr ""
+msgstr "Höhenmeter Algorithmen"
 
 #: inc/training/plot/class.TrainingPlotElevationCompareAlgorithms.php:53
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
@@ -3520,38 +3520,39 @@ msgstr "korrigiert"
 
 #: inc/training/plot/class.TrainingPlotElevationCompareAlgorithms.php:60
 msgid "Original data"
-msgstr ""
+msgstr "Originaldaten"
 
 #: inc/training/plot/class.TrainingPlotElevationCompareAlgorithms.php:74
 #: inc/training/view/class.ElevationInfo.php:189
 msgid "Threshold"
-msgstr ""
+msgstr "Schwellenwert"
 
 #: inc/training/plot/class.TrainingPlotElevationCompareAlgorithms.php:81
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/training/plot/class.TrainingPlotLapsComputed.php:17
 #: inc/training/view/section/class.SectionLaps.php:23
 msgid "Computed laps"
-msgstr ""
+msgstr "Berechnete Runden"
 
 #: inc/training/plot/class.TrainingPlotLapsComputed.php:25
 msgid "No GPS-data available. Cannot compute laps."
 msgstr ""
+"Keine GPS-Daten verfügbar. Die Zwischenzeiten können nicht berechnet werden."
 
 #: inc/training/plot/class.TrainingPlotLapsManual.php:29
 #: inc/training/view/class.RoundsInfo.php:176
 msgid "Manual laps"
-msgstr ""
+msgstr "Manuelle Runden"
 
 #: inc/training/plot/class.TrainingPlotLapsManual.php:37
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Es gibt keine manuellen Runden."
 
 #: inc/training/plot/class.TrainingPlotPacePulse.php:29
 msgid "Pace/Heartrate"
-msgstr ""
+msgstr "Pace/Herzfrequenz"
 
 #: inc/training/plot/class.TrainingPlotPacePulse.php:46
 #: inc/training/plot/class.TrainingPlotPulse.php:20
@@ -3559,51 +3560,51 @@ msgstr ""
 #: inc/training/schemes/scheme.UserData.php:19
 #: inc/training/view/class.VDOTinfo.php:91
 msgid "Heartrate"
-msgstr ""
+msgstr "Herzfrequenz"
 
 #: inc/training/schemes/scheme.Shoe.php:40
 msgid "Purchase date"
-msgstr ""
+msgstr "Kaufdatum"
 
 #: inc/training/schemes/scheme.Shoe.php:49
 msgid "prev. distance"
-msgstr ""
+msgstr "bish. Leistung"
 
 #: inc/training/schemes/scheme.Shoe.php:65
 msgid "weigth"
-msgstr ""
+msgstr "Gewicht"
 
 #: inc/training/schemes/scheme.Shoe.php:83
 msgid "In use"
-msgstr ""
+msgstr "In Gebrauch"
 
 #: inc/training/schemes/scheme.Training.php:27
 #: inc/training/schemes/scheme.UserData.php:9
 msgid "General information"
-msgstr ""
+msgstr "Allgemeine Informationen"
 
 #: inc/training/schemes/scheme.Training.php:54
 #: inc/training/schemes/scheme.Training.php:448
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:156
 msgid "Notes"
-msgstr ""
+msgstr "Notizen"
 
 #: inc/training/schemes/scheme.Training.php:61
 msgid "Weather conditions"
-msgstr ""
+msgstr "Wetterbedingungen"
 
 #: inc/training/schemes/scheme.Training.php:137
 msgid "Public"
-msgstr ""
+msgstr "Öffentlich"
 
 #: inc/training/schemes/scheme.Training.php:148
 msgid "Track"
-msgstr ""
+msgstr "Strecke"
 
 #: inc/training/schemes/scheme.Training.php:183
 #: inc/training/view/section/class.SectionOverviewRow.php:50
 msgid "Elapsed time"
-msgstr ""
+msgstr "Verstrichene Zeit"
 
 #: inc/training/schemes/scheme.Training.php:239
 #: inc/training/search/class.SearchFormular.php:134
@@ -3616,11 +3617,11 @@ msgstr ""
 
 #: inc/training/schemes/scheme.Training.php:291
 msgid "VDOT for form"
-msgstr ""
+msgstr "VDOT für Form"
 
 #: inc/training/schemes/scheme.Training.php:323
 msgid "Cadence (Running)"
-msgstr ""
+msgstr "Schrittfrequenz (Laufen)"
 
 #: inc/training/schemes/scheme.Training.php:325
 msgid ""
@@ -3632,7 +3633,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:126
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:367
 msgid "Clothing"
-msgstr ""
+msgstr "Kleidung"
 
 #: inc/training/schemes/scheme.Training.php:415
 #: inc/training/search/class.SearchFormular.php:135
@@ -3711,7 +3712,7 @@ msgstr "aufsteigend"
 
 #: inc/training/search/class.SearchFormular.php:53
 msgid "Search activities"
-msgstr ""
+msgstr "Trainings suchen"
 
 #: inc/training/search/class.SearchFormular.php:66
 msgid "Search"
@@ -3770,63 +3771,70 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:112
 msgid "General data"
-msgstr ""
+msgstr "Allgemeine Daten"
 
 #: inc/training/view/class.ElevationInfo.php:115
 msgid "manual value"
-msgstr ""
+msgstr "manueller Wert"
 
 #: inc/training/view/class.ElevationInfo.php:115
 msgid "If you did not insert a value by hand, this value has been calculated."
 msgstr ""
+"Wenn beim Erstellen keine Höhenmeter angegeben wurden, wurde der berechnete "
+"Wert übernommen."
 
 #: inc/training/view/class.ElevationInfo.php:119
 msgid "Lowest point"
-msgstr ""
+msgstr "niedrigster Punkt"
 
 #: inc/training/view/class.ElevationInfo.php:123
 msgid "calculated value"
-msgstr ""
+msgstr "berechneter Wert"
 
 #: inc/training/view/class.ElevationInfo.php:123
 msgid ""
 "This value is calculated with your current configuration. The saved value "
 "may be outdated."
 msgstr ""
+"Dieser Wert wurde mit den aktuellen Einstellungen berechnet. In der "
+"Trainingsansicht kann ein früherer berechneter Wert angegeben sein."
 
 #: inc/training/view/class.ElevationInfo.php:127
 msgid "Highest point"
-msgstr ""
+msgstr "höchster Punkt"
 
 #: inc/training/view/class.ElevationInfo.php:135
 #: inc/training/view/class.VDOTinfo.php:161
 msgid "Up/Down"
-msgstr ""
+msgstr "Auf-/Abstieg"
 
 #: inc/training/view/class.ElevationInfo.php:150
 msgid "You can choose the algorithm and threshold in the configuration window."
 msgstr ""
+"Den zu verwendenden Algorithmus und Schwellenwert kannst du in der "
+"Konfiguration selbst festlegen."
 
 #: inc/training/view/class.ElevationInfo.php:152
 msgid "Elevation data for different algorithms/thresholds"
-msgstr ""
+msgstr "Höhenmeter bei verschiedenen Algorithmen/Schwellenwerten"
 
 #: inc/training/view/class.ElevationInfo.php:164
 msgid ""
 "Elevation data for different algorithms/thresholds (based on original data)"
 msgstr ""
+"Höhenmeter bei verschiedenen Algorithmen/Schwellenwerten (Originaldaten)"
 
 #: inc/training/view/class.ElevationInfo.php:226
 msgid "Elevation correction"
-msgstr ""
+msgstr "Höhenkorrektur"
 
 #: inc/training/view/class.ElevationInfo.php:229
 msgid "Elevation data have been corrected."
-msgstr ""
+msgstr "Die Höhendaten wurden bereits korrigiert."
 
 #: inc/training/view/class.ElevationInfo.php:233
 msgid "Elevation data has not been corrected."
-msgstr ""
+msgstr "Die Höhendaten wurden noch nicht korrigiert."
 
 #: inc/training/view/class.ElevationInfo.php:235
 msgid "correct now"
@@ -3834,11 +3842,11 @@ msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:250
 msgid "Compare algorithms"
-msgstr ""
+msgstr "Algorithmen vergleichen"
 
 #: inc/training/view/class.ElevationInfo.php:261
 msgid "Note for elevation data"
-msgstr ""
+msgstr "Hinweis zu Höhenmetern"
 
 #: inc/training/view/class.ElevationInfo.php:265
 msgid ""
@@ -3849,11 +3857,19 @@ msgid ""
 "value (for up-/downwards). We give you therefore the possibility to choose "
 "algorithm and threshold such that the values fit your experience."
 msgstr ""
+"Die Berechnung von Höhenmetern erweist sich immer als schwierig, weil es "
+"kein \"richtig\" gibt. Fehlerhafte GPS-Daten können zwar durch SRTM-Daten "
+"korrigiert werden, aber auch diese liegen nur in einem Raster von 90x90m vor "
+"und sind teilweise stark verrauscht. Um dieses Rauschen zu entfernen, kann "
+"ein Glättungsalgorithmus verwendet werden. Da sich der verwendete "
+"Algorithmus (und seine Einstellungen) von Programm zu Programm "
+"unterscheidet, kommt man niemals bei jeder Software (wie Garmin Connect, "
+"SportTracks, etc.) auf die gleichen Werte."
 
 #: inc/training/view/class.RoundsInfo.php:139
 #, php-format
 msgid "Splits from: %s"
-msgstr ""
+msgstr "Zwischenzeiten von: %s"
 
 #: inc/training/view/class.RoundsInfo.php:152
 msgid "Show splits"
@@ -3869,11 +3885,11 @@ msgstr "Runde jede ..."
 
 #: inc/training/view/class.RoundsInfo.php:167
 msgid "Distance, after which a new lap should start"
-msgstr ""
+msgstr "Rundendistanz, nach der eine Zwischenzeit angezeigt werden soll"
 
 #: inc/training/view/class.RoundsInfo.php:171
 msgid "Lap time goal"
-msgstr ""
+msgstr "Rundenzeit-Vorgabe"
 
 #: inc/training/view/class.RoundsInfo.php:176
 #: inc/training/view/class.RoundsInfo.php:181
@@ -3883,10 +3899,12 @@ msgstr "oder"
 #: inc/training/view/class.RoundsInfo.php:176
 msgid "List with all distances, comma seperated"
 msgstr ""
+"Kommagetrennte Liste mit allen Distanzen, für die eine Zwischenzeit erstellt "
+"werden soll"
 
 #: inc/training/view/class.RoundsInfo.php:181
 msgid "Pace goal"
-msgstr ""
+msgstr "Pace-Vorgabe"
 
 #: inc/training/view/class.RoundsInfo.php:212
 msgid "Diff."
@@ -3894,15 +3912,15 @@ msgstr "Diff."
 
 #: inc/training/view/class.RoundsInfo.php:214
 msgid "Diff"
-msgstr ""
+msgstr "Diff"
 
 #: inc/training/view/class.RoundsInfo.php:215
 msgid "&oslash; bpm"
-msgstr ""
+msgstr "&oslash; bpm"
 
 #: inc/training/view/class.RoundsInfo.php:216
 msgid "elev"
-msgstr ""
+msgstr "hm"
 
 #: inc/training/view/class.RoundsInfo.php:240
 msgid "Average"
@@ -3928,44 +3946,49 @@ msgstr ""
 
 #: inc/training/view/class.TrainingView.php:54
 msgid "Export"
-msgstr ""
+msgstr "Exportieren"
 
 #: inc/training/view/class.VDOTinfo.php:50
 #, php-format
 msgid "VDOT calculation for: %s"
-msgstr ""
+msgstr "VODT Berechnung für: %s"
 
 #: inc/training/view/class.VDOTinfo.php:57
 msgid "Standard calculation: As competition"
-msgstr ""
+msgstr "Standardberechnung: als Wettkampf"
 
 #: inc/training/view/class.VDOTinfo.php:60
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given competition."
 msgstr ""
+"Die eigentlichen Formeln dienen dazu, einer Wettkampfzeit einen VDOT-Wert "
+"zuzuordnen."
 
 #: inc/training/view/class.VDOTinfo.php:83
 msgid "Correction: based on heartrate"
-msgstr ""
+msgstr "Korrektur: mit Herzfrequenz"
 
 #: inc/training/view/class.VDOTinfo.php:86
 msgid "Jack Daniels has tables to compare &#37;HRmax and &#37;VDOT."
 msgstr ""
+"Jack Daniels hat eine Tabelle für den Zusammenhang von %HFmax und %VDOT."
 
 #: inc/training/view/class.VDOTinfo.php:87
 msgid ""
 "Because of a lot of influencing factors these computations are not always "
 "accurate."
 msgstr ""
+"Aufgrund der vielen Einflussfaktoren auf den Puls sind diese Werte nicht "
+"immer richtig."
 
 #: inc/training/view/class.VDOTinfo.php:99
 msgid "equals"
-msgstr ""
+msgstr "entspricht"
 
 #: inc/training/view/class.VDOTinfo.php:110
 msgid "Correction: based on correction factor"
-msgstr ""
+msgstr "Korrektur: mit Korrekturfaktor"
 
 #: inc/training/view/class.VDOTinfo.php:113
 msgid "To consider some individual factors, we use a correction factor."
@@ -3974,10 +3997,12 @@ msgstr ""
 #: inc/training/view/class.VDOTinfo.php:114
 msgid "This factor is based on your <em>best</em> competition."
 msgstr ""
+"Der Korrekturfaktor wird aus dem Puls des <em>besten</em> Wettkampfs "
+"berechnet."
 
 #: inc/training/view/class.VDOTinfo.php:118
 msgid "Correction factor"
-msgstr ""
+msgstr "Korrekturfaktor"
 
 #: inc/training/view/class.VDOTinfo.php:126
 msgid "uncorrected"
@@ -3985,15 +4010,15 @@ msgstr "nicht korrigiert"
 
 #: inc/training/view/class.VDOTinfo.php:154
 msgid "Correction: considering elevation"
-msgstr ""
+msgstr "Korrektur: mit Beachtung der Höhenmeter"
 
 #: inc/training/view/class.VDOTinfo.php:157
 msgid "This correction method is currently unused."
-msgstr ""
+msgstr "Diese Korrektur wird derzeit nicht verwendet."
 
 #: inc/training/view/class.VDOTinfo.php:169
 msgid "Influence"
-msgstr ""
+msgstr "Distanzeinfluss"
 
 #: inc/training/view/section/class.SectionComposite.php:17
 msgid "Composite data"
@@ -4020,7 +4045,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:90
 #: inc/training/view/section/class.SectionPaceRow.php:49
 msgid "&oslash; Pace"
-msgstr ""
+msgstr "&oslash; Pace"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:91
 #: inc/training/view/section/class.SectionPaceRow.php:50
