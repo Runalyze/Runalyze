@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 09:57+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 09:58+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2899,31 +2899,39 @@ msgid ""
 "The main advantage of Runalyze is the ability to adapt everything to your "
 "personal needs and wishes."
 msgstr ""
+"Der Hauptvorteil von Runalyze ist die Möglichkeit alles an seine eigenen "
+"Bedürfnisse und Wünsche anzupassen."
 
 #: inc/tpl/tpl.help.php:34
 msgid ""
 "Have a look at the configuration window to see what we're talking about."
 msgstr ""
+"Wirf einen Blick in das Konfigurationsfenster um zu sehen was wir meinen."
 
 #: inc/tpl/tpl.help.php:35
 msgid ""
 "You can define your own sports or activity types and choose your own way of "
 "presentation and configure some parameters of our experimental calculations."
 msgstr ""
+"Du kannst deine eigenen Sportarten und Trainingstypen anlegen, auswählen "
+"welche Informationen dir wie und wo angezeigt werden und einige Parameter "
+"unserer experimentellen Berechnungen konfigurieren."
 
 #: inc/tpl/tpl.help.php:41
 msgid "Support"
-msgstr ""
+msgstr "Support"
 
 #: inc/tpl/tpl.help.php:45
 msgid "Please let us know if you have wishes or have encountered bugs."
-msgstr ""
+msgstr "Wir freuen uns über alle Wünsche und Fehlermeldungen von Dir."
 
 #: inc/tpl/tpl.help.php:46
 msgid ""
 "We give our best to make Runalyze as good as possible for you. - Therefore "
 "we would be interested in your suggestions for improvement."
 msgstr ""
+"Wir wollen Runalyze für Dich so gut wie möglich machen. Dazu müssen wir aber "
+"wissen, was Du willst. "
 
 #: inc/tpl/tpl.help.php:50
 msgid "You can contact us via email:"
