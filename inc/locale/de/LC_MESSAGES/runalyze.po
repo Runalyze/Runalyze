@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 11:13+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 12:46+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3462,7 +3462,7 @@ msgstr ""
 
 #: inc/training/class.TrainingObject.php:158
 msgid "The training has not been created. A time has to be set."
-msgstr ""
+msgstr "Das Training wurde nicht angelegt. Es muss eine Zeit angegeben werden."
 
 #: inc/training/formular/class.TrainingInputSplits.php:45
 msgid "add new lap"
