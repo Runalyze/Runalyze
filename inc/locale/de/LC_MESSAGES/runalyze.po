@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:48+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:49+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3096,7 +3096,7 @@ msgstr "Garmin API Key"
 
 #: inc/tpl/tpl.Installer.php:183
 msgid "not necessary for localhost"
-msgstr ""
+msgstr "für localhost nicht notwendig"
 
 #: inc/tpl/tpl.Installer.php:186
 msgid "necessary for"
@@ -3111,10 +3111,13 @@ msgid ""
 "A Garmin API key is necessary for using Garmin Communicator (enables direct "
 "imports from any Garmin Forerunner)."
 msgstr ""
+"Ein Garmin API Key ist für die Benutzung des Garmin Communicator-Plugins "
+"notwendig. Dies ermöglicht den direkten Import von einigen Garmin Forerunner-"
+"Modellen."
 
 #: inc/tpl/tpl.Installer.php:201
 msgid "The configuration file cannot be written."
-msgstr ""
+msgstr "Die Konfigurationsdatei kann nicht geschrieben werden."
 
 #: inc/tpl/tpl.Installer.php:206
 #, php-format
@@ -3122,19 +3125,21 @@ msgid ""
 "Please copy <strong>%s</strong> to the directory <strong>%s</strong> and "
 "insert your data."
 msgstr ""
+"Bitte kopiere <strong>%s</strong> in das Verzeichnis <strong>%s</strong> und "
+"trage deine Daten ein."
 
 #: inc/tpl/tpl.Installer.php:207
 msgid "You have to change the following variables:"
-msgstr ""
+msgstr "Die folgenden Variablen müssen angepasst werden:"
 
 #: inc/tpl/tpl.Installer.php:219
 #, php-format
 msgid "Please save the following code as <strong>%s<&strong>:"
-msgstr ""
+msgstr "Bitte speichere den folgenden Code unter <strong>%s<&strong>:"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
-msgstr ""
+msgstr "Gespeichert! Weiter ..."
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Write configuration file"
