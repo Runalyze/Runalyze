@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 10:49+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3139,7 +3139,7 @@ msgstr "Bitte speichere den folgenden Code unter <strong>%s<&strong>:"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
-msgstr "Gespeichert! Weiter ..."
+msgstr "Geschrieben! Weiter ..."
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Write configuration file"
