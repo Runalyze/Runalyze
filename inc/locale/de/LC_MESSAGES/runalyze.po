@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 09:51+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 09:55+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2575,27 +2575,27 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Neues Plugin installieren"
 
 #: inc/system/config/class.ConfigTabPlugins.php:47
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Neue Plugins können hier installiert werden."
 
 #: inc/system/config/class.ConfigTabPlugins.php:67
 msgid "No plugins available."
-msgstr ""
+msgstr "Keine Plugins vorhanden."
 
 #: inc/system/config/class.ConfigTabPlugins.php:75
 msgid "Mode"
-msgstr ""
+msgstr "Modus"
 
 #: inc/system/config/class.ConfigTabPlugins.php:92
 msgid "The plugin cannot be found."
-msgstr ""
+msgstr "Das Plugin konnte nicht gefunden werden."
 
 #: inc/system/config/class.ConfigTabPlugins.php:101
 msgid "enabled"
-msgstr ""
+msgstr "aktiviert"
 
 #: inc/system/config/class.ConfigTabPlugins.php:102
 msgid "hidden*"
@@ -2603,19 +2603,19 @@ msgstr "versteckt*"
 
 #: inc/system/config/class.ConfigTabPlugins.php:103
 msgid "not enabled"
-msgstr ""
+msgstr "deaktiviert"
 
 #: inc/system/config/class.ConfigTabPlugins.php:117
 msgid "* Hidden plugins only show their headings."
-msgstr ""
+msgstr "* Bei versteckten Plugins wird nur die Überschrift angezeigt."
 
 #: inc/system/config/class.ConfigTabPlugins.php:120
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr ""
+msgstr "* Versteckte Plugins werden unter 'Sonstiges' zusammengefasst."
 
 #: inc/system/config/class.ConfigTabPlugins.php:139
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "Es sind keine neuen Plugins zum Installieren vorhanden."
 
 #: inc/system/config/class.ConfigTabPlugins.php:146
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:133
@@ -2634,15 +2634,17 @@ msgstr "Die Einstellungen wurden gespeichert."
 #: inc/system/config/class.ConfigTabSports.php:17
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:18
 msgid "Sports"
-msgstr ""
+msgstr "Sportarten"
 
 #: inc/system/config/class.ConfigTabSports.php:24
 msgid "Your sports"
-msgstr ""
+msgstr "Deine Sportarten"
 
 #: inc/system/config/class.ConfigTabSports.php:26
 msgid "Hover over the headings if the abbreviations are unclear."
 msgstr ""
+"Fahre mit der Maus über die Überschrift, falls dir die Abkürzungen unklar "
+"sind."
 
 #: inc/system/config/class.ConfigTabSports.php:36
 msgid ""
@@ -2651,16 +2653,21 @@ msgid ""
 "if you are mainly interested in the fact of doing the sport, not in the "
 "details, e.g. for stretching."
 msgstr ""
+"Der Modus <strong>kurz</strong> bewirkt, dass in der Wochenübersicht nur ein "
+"Symbol und keine Trainingsdaten angezeigt werden.<br>Dies ist praktisch bei "
+"Sportarten bei denen die Details nicht interessieren (z.B. Gymnastik)"
 
 #: inc/system/config/class.ConfigTabSports.php:38
 msgid ""
 "The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the "
 "calculation of TRIMP."
 msgstr ""
+"Die Werte für <em>&Oslash; HF</em> und <em>RPE</em> sind für die TRIMP-"
+"Berechnung notwendig."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "The following icons are available: "
-msgstr ""
+msgstr "Die folgende Symbole sind verfügbar:…"
 
 #: inc/system/config/class.ConfigTabSports.php:67
 msgid "short"
