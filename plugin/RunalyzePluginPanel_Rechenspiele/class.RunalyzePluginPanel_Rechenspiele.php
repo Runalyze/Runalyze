@@ -341,7 +341,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'limit-high'	=> 84
 			),
 			array( /// Threshold pace (by Jack Daniels)
-				'short'			=> __('Treshold'),
+				'short'			=> __('Threshold'),
 				'description'	=> __('Steady, prolonged or tempo runs or intermittent runs, also called cruise intervals.'),
 				'limit-low'		=> 83,
 				'limit-high'	=> 88
