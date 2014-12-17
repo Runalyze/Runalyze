@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 09:46+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 09:48+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2425,14 +2425,17 @@ msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
 msgstr ""
+"Du erhälst du eine E-Mail mit einem Link zum Löschen deines Accounts.<br>Das "
+"Löschen kann danach nicht rückgängig gemacht werden. Du solltest daher deine "
+"Daten sichern, falls du doch noch einmal zurückkehren möchtest."
 
 #: inc/system/config/class.ConfigTabClothes.php:17
 msgid "Equipment"
-msgstr ""
+msgstr "Ausrüstung"
 
 #: inc/system/config/class.ConfigTabClothes.php:24
 msgid "Your equipment"
-msgstr ""
+msgstr "Deine Ausrüstung"
 
 #: inc/system/config/class.ConfigTabClothes.php:26
 msgid ""
@@ -2440,19 +2443,22 @@ msgid ""
 "abbreviation are used to order and display them in the form for editing an "
 "activity."
 msgstr ""
+"Ausrüstung kann für weitere Statistiken bei jedem Training protokolliert "
+"werden.<br>Alle Kleidungsstücke werden nach Kategorie geordnet mit der "
+"Abkürzung im Formular angezeigt."
 
 #: inc/system/config/class.ConfigTabClothes.php:28
 msgid "The category should be a number."
-msgstr ""
+msgstr "Die Kategorie sollte eine Zahl sein."
 
 #: inc/system/config/class.ConfigTabClothes.php:29
 msgid "Just fill out the last row to add a new equipment."
-msgstr ""
+msgstr "Um neue Ausrüstung hinzuzufügen einfach die letzte Zeile ausfüllen."
 
 #: inc/system/config/class.ConfigTabClothes.php:44
 #: inc/system/config/class.ConfigTabTypes.php:44
 msgid "Abbreviation"
-msgstr ""
+msgstr "Abkürzung"
 
 #: inc/system/config/class.ConfigTabClothes.php:45
 msgid "Category"
@@ -2469,17 +2475,20 @@ msgstr "Dataset"
 
 #: inc/system/config/class.ConfigTabDataset.php:27
 msgid "Your Dataset"
-msgstr ""
+msgstr "Dein Datensatz"
 
 #: inc/system/config/class.ConfigTabDataset.php:29
 msgid ""
 "You can specify which values show up in the overview of your activities."
 msgstr ""
+"Du kannst angeben welche Werte in der Aktivitäts-Übersicht angezeigt werden."
 
 #: inc/system/config/class.ConfigTabDataset.php:30
 msgid ""
 "This does not influence the detailed activity view, the form or any plugin."
 msgstr ""
+"Dies beeinflusst nicht die Dateilanzeige, das Eingabeformular oder irgendein "
+"Plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:45
 msgid "Display"
