@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 09:45+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2364,7 +2364,7 @@ msgstr ""
 
 #: inc/system/class.SharedLinker.php:46
 msgid "Public link"
-msgstr ""
+msgstr "Öffentlicher Link"
 
 #: inc/system/class.SharedLinker.php:77
 msgid "Public list"
