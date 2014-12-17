@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 10:01+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3006,7 +3006,7 @@ msgstr "Ausführungszeit-Begrenzung"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr "Speicher-Begrenzung"
+msgstr "Arbeitsspeicher-Begrenzung"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
