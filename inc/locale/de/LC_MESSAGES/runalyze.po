@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:49+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:52+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3167,23 +3167,25 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:258
 msgid "Setup database"
-msgstr ""
+msgstr "Einrichtung der Datenbank"
 
 #: inc/tpl/tpl.Installer.php:265
 msgid "Ready! Congratulations!"
-msgstr ""
+msgstr "Fertig! Herzlichen Glückwunsch!"
 
 #: inc/tpl/tpl.Installer.php:269
 msgid "Runalyze has been successfully installed. Have fun while using it!"
 msgstr ""
+"Runalyze wurde erfolgreich installiert. Jetzt viel Spaß bei der Nutzung."
 
 #: inc/tpl/tpl.Installer.php:297
 msgid "Please activate JavaScript, Runalyze will not work without."
 msgstr ""
+"Bitte aktivieren Sie Javascript. Runalyze wird sonst nicht funktionieren."
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
-msgstr ""
+msgstr "Lauftagebuch"
 
 #: inc/tpl/tpl.installerFooterText.php:6
 msgid ""
@@ -3234,10 +3236,13 @@ msgid ""
 "Therefore, choose the update in the following list. Afterwards you can use "
 "Runalyze as before."
 msgstr ""
+"Wähle hierfür das Update aus der folgenden Liste. Danach kannst Du Runalyze "
+"wieder normal benutzen."
 
 #: inc/tpl/tpl.InstallerUpdate.php:12
 msgid "To be safe we recommend you to make a complete backup of your database."
 msgstr ""
+"Um sicherzugehen empfehlen wir ein Komplettbackup der Datenbank zu erstellen."
 
 #: inc/tpl/tpl.InstallerUpdate.php:17
 msgid "----- please choose"
@@ -3246,7 +3251,7 @@ msgstr "----- bitte wählen"
 #: inc/tpl/tpl.InstallerUpdate.php:19
 #, php-format
 msgid "Update to %s (from %s, %s)"
-msgstr ""
+msgstr "Update auf %s (von %s, %s)"
 
 #: inc/tpl/tpl.InstallerUpdate.php:30
 msgid "The update was successful."
@@ -3262,41 +3267,41 @@ msgstr "Account aktivieren"
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:6
 msgid "Your account has been activated."
-msgstr ""
+msgstr "Dein Account wurde aktiviert."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:7
 msgid "You can now use Runalyze."
-msgstr ""
+msgstr "Du kannst Runalyze jetzt benutzen."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:11
 msgid "The activation did not work."
-msgstr ""
+msgstr "Die Aktivierung ist fehlgeschlagen."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:12
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:18
 msgid "Probably the link was wrong."
-msgstr ""
+msgstr "Eventuell war der Link fehlerhaft."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:3
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:8
 msgid "Delete account"
-msgstr ""
+msgstr "Account löschen"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:6
 msgid "Do you really want to delete your account?"
-msgstr ""
+msgstr "Möchtest Du wirklich deinen Account löschen?"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:12
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Dein Account wurde gelöscht."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:13
 msgid "You cannot use Runalyze anymore."
-msgstr ""
+msgstr "Du kannst Runalyze jetzt nicht mehr benutzen."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:17
 msgid "The deletion did not work."
-msgstr ""
+msgstr "Das Löschen ist fehlgeschlagen."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:25
 msgid "Main page"
@@ -3314,10 +3319,12 @@ msgstr "Das Passwort war falsch."
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
 msgstr ""
+"Der Account wurde noch nicht aktiviert.<br>Bitte wird einen Blick in deinen "
+"Posteingang."
 
 #: inc/tpl/tpl.loginWindow.php:33
 msgid "Remember me"
-msgstr ""
+msgstr "Eingeloggt bleiben"
 
 #: inc/tpl/tpl.loginWindow.php:46
 msgid "Runalyze is under maintenance at the moment. No login possible."
@@ -3337,25 +3344,29 @@ msgstr "Passwort wiederholen"
 
 #: inc/tpl/tpl.loginWindow.php:109
 msgid "You can login now. Enjoy Runalyze!"
-msgstr ""
+msgstr "Du kannst dich jetzt anmelden. Viel Spaß mit Runalyze!"
 
 #: inc/tpl/tpl.loginWindow.php:111
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
+"Vielen Dank für deine Registrierung. Um deinen Account zu aktivieren haben "
+"wir dir eine Email geschickt, die in Kürze bei dir eintreffen sollte."
 
 #: inc/tpl/tpl.loginWindow.php:118
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
 #: inc/tpl/tpl.loginWindow.php:127 inc/tpl/tpl.loginWindow.php:154
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Passwort vergessen?"
 
 #: inc/tpl/tpl.loginWindow.php:139
 msgid "A link for changing your password will be sent via email."
 msgstr ""
+"Ein Link zur Passwortänderung wird an deine eingetragene E-Mail-Adresse "
+"gesendet. "
 
 #: inc/tpl/tpl.loginWindow.php:145
 msgid "Send link"
