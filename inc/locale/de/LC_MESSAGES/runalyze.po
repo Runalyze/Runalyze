@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 09:58+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:01+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2935,7 +2935,7 @@ msgstr ""
 
 #: inc/tpl/tpl.help.php:50
 msgid "You can contact us via email:"
-msgstr ""
+msgstr "Du kannst uns unter folgender E-Mail-Addresse kontaktieren:"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
@@ -2954,50 +2954,59 @@ msgid ""
 "You cannot reinstall Runalyze. If something does not work, please do not "
 "hesitate to contact us."
 msgstr ""
+"Du kannst Runalyze nicht nochmal installieren. Sollte irgendetwas nicht "
+"funktionieren, dann kontaktiere uns bitte."
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:273
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Runalyze starten"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
 "If you want to reinstall Runalyze please delete you have to delete the "
 "<em>config.php</em>-file in your main directory of this installation."
 msgstr ""
+"Wenn Du Runalyze neu installieren möchtest, dann lösche bitte die Datei "
+"<em>config.php</em> aus dem Hauptverzeichnis dieser Installation."
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "Willkommen!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Lass uns kurz die Voraussetzungen auf deinem Server überprüfen."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
 msgid ""
 "PHP %s is required, but PHP %s is running. Please update your PHP version."
 msgstr ""
+"PHP %s wird benötigt, aber PHP %s ist installiert. Bitte aktualisiere deine "
+"PHP-Version."
 
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
 msgid "Currently PHP %s is running."
-msgstr ""
+msgstr "Aktuell wird PHP %s ausgeführt."
 
 #: inc/tpl/tpl.Installer.php:64
 msgid ""
 "Importing large files (e.g. a SportTracks logbook) may take some time. "
 "Please have a look at your server limitations:"
 msgstr ""
+"Das Importieren großer Dateien (z.B. ein SportTracks logbook) kann einige "
+"Zeit in Anspruch nehmen. Bitte beachte die folgenden Einschränkungen für "
+"diesen Server:"
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Ausführungszeit-Begrenzung"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Speicher-Begrenzung"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
