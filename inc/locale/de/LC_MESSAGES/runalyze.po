@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 10:49+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3143,25 +3143,27 @@ msgstr "Geschrieben! Weiter ..."
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Write configuration file"
-msgstr ""
+msgstr "Konfigurationsdatei speichern"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Check settings"
-msgstr ""
+msgstr "Einstellungen überprüfen"
 
 #: inc/tpl/tpl.Installer.php:239
 msgid "The configuration file has been written."
-msgstr ""
+msgstr "Die Konfigurationsdatei wurde gespeichert."
 
 #: inc/tpl/tpl.Installer.php:243
 msgid "Next step: setup database"
-msgstr ""
+msgstr "Nächster Schritt: Einrichtung der Datenbank"
 
 #: inc/tpl/tpl.Installer.php:252
 msgid ""
 "There are some problems with filling the database. Please insert the above "
 "SQL-statements by hand (e.g. via PhpMyAdmin)."
 msgstr ""
+"Es gab Probleme beim Schreiben der Daten in die Datenbank. Bitte führe die "
+"o.a. SQL-Anweisungen von Hand aus (z.B. per PhpMyAdmin)"
 
 #: inc/tpl/tpl.Installer.php:258
 msgid "Setup database"
