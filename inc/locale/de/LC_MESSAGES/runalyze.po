@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 09:45+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2352,13 +2352,15 @@ msgstr "Schließe den Vorgang durch Anklicken des nachfolgenden Links ab: "
 
 #: inc/system/class.Error.php:332
 msgid "Fatal error"
-msgstr ""
+msgstr "Schwerer Fehler"
 
 #: inc/system/class.Filesystem.php:258
 #, php-format
 msgid ""
 "The directory <strong>%s</strong> is not writable. <em>(chmod = %s)</em>"
 msgstr ""
+"In das Verzeichnis <strong>%s</strong> kann nicht geschrieben werden. <em>("
+"chmod = %s)</em>"
 
 #: inc/system/class.SharedLinker.php:46
 msgid "Public link"
