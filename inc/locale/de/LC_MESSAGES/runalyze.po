@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-17 09:57+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"Last-Translator: Michael <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2836,7 +2836,7 @@ msgstr "Auswahl anzeigen"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
-msgstr ""
+msgstr "Debug Konsole"
 
 #: inc/tpl/tpl.Frontend.header.php:25
 msgid "Logout"
