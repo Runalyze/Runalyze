@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:52+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:54+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3370,22 +3370,22 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:145
 msgid "Send link"
-msgstr ""
+msgstr "Link senden"
 
 #: inc/tpl/tpl.loginWindow.php:186
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
-msgstr ""
+msgstr "Bisher ist <strong>%d</strong> Athlet bei uns registriert und"
 
 #: inc/tpl/tpl.loginWindow.php:187
 #, php-format
 msgid "has logged <strong>%s</strong>."
-msgstr ""
+msgstr "hat <strong>%s</strong> erfasst."
 
 #: inc/tpl/tpl.loginWindow.php:189
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
-msgstr ""
+msgstr "<strong>%d</strong> Athlet ist angemeldet."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
@@ -3430,7 +3430,7 @@ msgstr "GPS Koordinaten verfügbar"
 
 #: inc/training/class.TrainingFormular.php:71
 msgid "Edit and continue"
-msgstr ""
+msgstr "Editieren und weiter"
 
 #: inc/training/class.TrainingFormular.php:84
 msgid "The activity has been successfully created."
@@ -3446,17 +3446,19 @@ msgstr "Training löschen"
 
 #: inc/training/class.TrainingFormular.php:133
 msgid "Use elevation correction"
-msgstr ""
+msgstr "Höhenkorrektur verwenden"
 
 #: inc/training/class.TrainingFormular.php:137
 msgid "Correct elevation data"
-msgstr ""
+msgstr "Höhenmeter neu berechnen"
 
 #: inc/training/class.TrainingFormular.php:140
 msgid ""
 "Elevation data via GPS is very inaccurate. Therefore you can correct it via "
 "some satellite data."
 msgstr ""
+"GPS-Höhendaten sind meist ungenau. Deshalb kannst Du über Satellitendaten "
+"korrigieren lassen."
 
 #: inc/training/class.TrainingObject.php:158
 msgid "The training has not been created. A time has to be set."
