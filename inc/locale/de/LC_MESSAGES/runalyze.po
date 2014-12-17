@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 09:55+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 09:57+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -2671,43 +2671,43 @@ msgstr "Die folgende Symbole sind verfügbar: "
 
 #: inc/system/config/class.ConfigTabSports.php:67
 msgid "short"
-msgstr ""
+msgstr "kurz"
 
 #: inc/system/config/class.ConfigTabSports.php:67
 msgid "Show only a symbol."
-msgstr ""
+msgstr "Nur das Symbol anzeigen."
 
 #: inc/system/config/class.ConfigTabSports.php:68
 msgid "Icon"
-msgstr ""
+msgstr "Symbol"
 
 #: inc/system/config/class.ConfigTabSports.php:69
 msgid "Name of the sport"
-msgstr ""
+msgstr "Name der Sportart"
 
 #: inc/system/config/class.ConfigTabSports.php:70
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/h"
 
 #: inc/system/config/class.ConfigTabSports.php:70
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Durchschnittlicher Energieumsatz in Kilokalorien pro Stunde"
 
 #: inc/system/config/class.ConfigTabSports.php:71
 #: inc/system/config/class.ConfigTabSports.php:76
 #: inc/training/plot/class.TrainingPlotCollection.php:54
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:12
 msgid "HR"
-msgstr ""
+msgstr "HF"
 
 #: inc/system/config/class.ConfigTabSports.php:71
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Die durchschnittliche Herzfrequenz (wird z.B. für TRIMP verwendet)"
 
 #: inc/system/config/class.ConfigTabSports.php:72
 #: inc/system/config/class.ConfigTabTypes.php:45
 msgid "RPE"
-msgstr ""
+msgstr "RPE"
 
 #: inc/system/config/class.ConfigTabSports.php:72
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -2715,31 +2715,33 @@ msgid ""
 "Rating of perceived exertion (based on Borg): average exertion on a scale of "
 "1 (easy) to 10 (extremely hard)"
 msgstr ""
+"Rating of perceived exertion (nach Borg): durchschnittliche Anstrengung auf "
+"einer Skala von 1 (leicht) bis 10 (extrem hart)"
 
 #: inc/system/config/class.ConfigTabSports.php:73
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:73
 msgid "Has a distance"
-msgstr ""
+msgstr "Es wird eine Distanz zurückgelegt"
 
 #: inc/system/config/class.ConfigTabSports.php:74
 msgid "Unit"
-msgstr ""
+msgstr "Einheit"
 
 #: inc/system/config/class.ConfigTabSports.php:74
 msgid "Unit for speed"
-msgstr ""
+msgstr "Einheit für die Geschwindigkeit."
 
 #: inc/system/config/class.ConfigTabSports.php:75
 msgid "Types"
-msgstr ""
+msgstr "Typen"
 
 #: inc/system/config/class.ConfigTabSports.php:75
 msgid "The sport uses different training types"
-msgstr ""
+msgstr "Es werden Trainingstypen wie Intervalltraining verwendet"
 
 #: inc/system/config/class.ConfigTabSports.php:76
 msgid "Heart rate is recorded."
@@ -2751,40 +2753,47 @@ msgstr "Die Power wird aufgezeichnet oder berechnet."
 
 #: inc/system/config/class.ConfigTabSports.php:78
 msgid "Outside"
-msgstr ""
+msgstr "Draußen"
 
 #: inc/system/config/class.ConfigTabSports.php:78
 msgid "Sport is performed outdoor: activate route, weather, ..."
-msgstr ""
+msgstr "Der Sport wird an der freien Luft betrieben: Strecke, Wetter, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:79
 msgid "A sport can only be deleted if no references exist."
-msgstr ""
+msgstr "Eine Sportart kann nur gelöscht werden, wenn keine Referenzen bestehen."
 
 #: inc/system/config/class.ConfigTabTypes.php:17
 msgid "Activity Types"
-msgstr ""
+msgstr "Trainingstypen"
 
 #: inc/system/config/class.ConfigTabTypes.php:24
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:137
 msgid "Activity types"
-msgstr ""
+msgstr "Trainingstypen"
 
 #: inc/system/config/class.ConfigTabTypes.php:26
 msgid ""
 "Activity types are useful to seperate your training into different "
 "categories. An activity type can only belong to one sport."
 msgstr ""
+"Mit Trainingstypen können die Trainings bequem in Kategorien sortiert "
+"werden. Ein Trainingstyp kann nur zu einer Sportart gehören."
 
 #: inc/system/config/class.ConfigTabTypes.php:28
 msgid "Types with a RPE-value &ge; 5 will be emphasized in the activity log."
 msgstr ""
+"Trainingstypen mit einem RPE-Wert &ge; 5 werden in der Aktivitäts-Übersicht "
+"hervorgehoben."
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
 "Finding your personal bests requieres one type (for running) to be set as "
 "the 'Race'-type in your configuration."
 msgstr ""
+"Um die persönliche Bestleistung zu ermitteln ist es notwendig einen "
+"Trainingstyp als Trainingstyp \"Wettkampf\" in der allgemeinen Konfiguration "
+"festzulegen."
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 #: inc/training/schemes/scheme.Training.php:21
