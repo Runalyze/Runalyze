@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:46+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:47+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3039,7 +3039,7 @@ msgstr "Eine Verbindung konnte aufgebaut werden."
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "Aktuell wird MySQL %s ausgeführt."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
@@ -3047,16 +3047,20 @@ msgid ""
 "MySQL %s is required, but MySQL %s is running. Please update your MySQL "
 "version."
 msgstr ""
+"MySQL %s wird benötigt, aber MySQL %s wird ausgeführt. Bitte aktualisiere "
+"deine MySQL-Version."
 
 #: inc/tpl/tpl.Installer.php:113
 msgid "Host server"
-msgstr ""
+msgstr "Datenbankserver-Name"
 
 #: inc/tpl/tpl.Installer.php:137
 msgid ""
 "You can use a specific database prefix if you want to run multiple "
 "installations of Runalyze."
 msgstr ""
+"Du kannst einen spezifischen Tabellen-Präfix verwenden falls Du mehrere "
+"Instanzen von Runalyze auf dieser Datenbank betreiben möchtest."
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
