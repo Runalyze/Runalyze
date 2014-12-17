@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-17 10:47+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2014-12-17 10:48+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -3064,11 +3064,11 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
-msgstr ""
+msgstr "Dieser Präfix ist bereits in Benutzung."
 
 #: inc/tpl/tpl.Installer.php:146
 msgid "This prefix is free."
-msgstr ""
+msgstr "Dieser Präfix ist verfügbar."
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "Prefix"
@@ -3079,6 +3079,8 @@ msgid ""
 "You can activate a debug toolbar to see specific information if problems "
 "occur."
 msgstr ""
+"Du kannst eine Debug-Toolbar aktuvieren um spezifische Informationen bei "
+"Problemen zu erhalten."
 
 #: inc/tpl/tpl.Installer.php:170
 msgid "Registrations"
