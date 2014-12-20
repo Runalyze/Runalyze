@@ -156,6 +156,12 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 					$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
 					if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
 						$bpm = (int)$TPE->children('gpxtpx',true)->hr;
+
+                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->cad))
+						$rpm = (int)$TPE->children('gpxtpx',true)->cad;
+
+                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->atemp))
+						$temp = (int)$TPE->children('gpxtpx',true)->atemp;
 				}
 			}
 
