@@ -161,7 +161,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 						$rpm = (int)$TPE->children('gpxtpx',true)->cad;
 
                     if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->atemp))
-						$temp = (int)$TPE->children('gpxtpx',true)->atemp;
+						$temp = (float)$TPE->children('gpxtpx',true)->atemp;
 				}
 			}
 
