@@ -58,10 +58,10 @@ class TrainingPlotTemperature extends TrainingPlot {
 	 * @param array $Data 
 	 */
 	static public function setPropertiesTo(Plot &$Plot, $YAxis, TrainingObject &$Training, array $Data) {
-		$average = round(array_sum($Data)/count($Data));
+		$average = round(array_sum($Data)/count($Data),1);
 
-		$Plot->addYUnit($YAxis, '°C', 0);
-		$Plot->setYTicks($YAxis, 10, 0);
+		$Plot->addYUnit($YAxis, '°C', 1);
+		$Plot->setYTicks($YAxis, 1, 0);
 
 		if ($YAxis == 1) {
 			$Plot->addThreshold('y'.$YAxis, $average, 'rgba(0,0,0,0.5)');

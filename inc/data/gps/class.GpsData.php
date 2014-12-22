@@ -615,7 +615,7 @@ class GpsData {
 	 * Get average pace since last step
 	 */
 	public function getAverageTemperatureOfStep() {
-		return round($this->getAverageOfStep($this->arrayForTemperature));
+		return round($this->getAverageOfStep($this->arrayForTemperature),1);
 	}
 
 	/**
@@ -952,7 +952,7 @@ class GpsData {
 			if (!is_null($result))
 				return $result;
 		}
-
+ 
 		$Data = array();
 		$this->startLoop();
 		$this->setStepSizeForPlotData();
