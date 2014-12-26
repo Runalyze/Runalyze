@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-25 13:38+0200\n"
-"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
+"PO-Revision-Date: 2014-12-26 19:03+0200\n"
+"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -39,7 +39,7 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:43
 msgid "Connect"
-msgstr ""
+msgstr "connecter"
 
 #: call/call.garminCommunicator.php:45
 msgid "Searching for devices"
