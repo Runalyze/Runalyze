@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-26 19:15+0200\n"
-"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
+"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -166,7 +166,7 @@ msgstr "Le plugin a été installé avec succès."
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.installerFooterText.php:12
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "Configuration"
-msgstr ""
+msgstr "configuration"
 
 #: call/call.Plugin.install.php:27
 msgid "There was a problem, the plugin could not be installed."
