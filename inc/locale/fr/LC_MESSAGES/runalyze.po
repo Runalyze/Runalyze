@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-26 19:15+0200\n"
-"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
+"PO-Revision-Date: 2014-12-28 09:33+0200\n"
+"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -175,7 +175,7 @@ msgstr ""
 #: call/call.Plugin.install.php:32 call/call.Plugin.uninstall.php:23
 #: inc/export/class.ExporterWindow.php:66
 msgid "back to list"
-msgstr ""
+msgstr "retour à la liste"
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
@@ -195,23 +195,23 @@ msgstr ""
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Les activités publiques sont marquées : "
 
 #: call/call.Training.edit.php:14
 msgid "The activity has been removed"
-msgstr ""
+msgstr "L'activité a été supprimé"
 
 #: call/call.Training.elevationCorrection.php:14
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Les données d'altitude ont été corrigées."
 
 #: call/call.Training.elevationCorrection.php:20
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Les données d'altitude n'ont pas pu être récupérés."
 
 #: call/login.php:2
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Vous n'êtes plus connecté(e)."
 
 #: call/login.php:4 inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18
@@ -222,7 +222,7 @@ msgstr "Connexion"
 
 #: call/window.delete.php:12
 msgid "Delete your account."
-msgstr ""
+msgstr "Supprimer votre compte"
 
 #: call/window.delete.php:19
 msgid ""
@@ -230,10 +230,14 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
+"<em> Un mail de confirmation vous a été envoyé. </ em> <br> Nous sommes "
+"triste d'apprendre que vous avez décidé de supprimer votre compte. <br> "
+"Celui-ci sera supprimé dès que vous cliquez sur le lien de confirmation dans "
+"ce mail."
 
 #: call/window.plotSumData.php:23 call/window.plotSumData.shared.php:25
 msgid "There was a problem."
-msgstr ""
+msgstr "Un problème est survenue."
 
 #: call/window.search.php:21
 msgid "Search for activities"
