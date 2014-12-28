@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
 "PO-Revision-Date: 2014-12-28 09:38+0200\n"
-"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
+"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -317,7 +317,7 @@ msgstr "Liste d'utilisateurs"
 
 #: inc/class.AdminView.php:285
 msgid "There are no registered users."
-msgstr ""
+msgstr "Pas d'utilisateurs enregistrés"
 
 #: inc/class.AdminView.php:292 inc/tpl/tpl.Installer.php:125
 msgid "User"
