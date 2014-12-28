@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-12-28 09:34+0200\n"
-"Last-Translator: Ralf S. <frenchente@gmail.com>\n"
+"PO-Revision-Date: 2014-12-28 09:38+0200\n"
+"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
 "Language-Team: French "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/fr/>\n"
 "Language: fr\n"
@@ -257,11 +257,11 @@ msgstr "Travaux d'entretien"
 
 #: inc/class.AdminView.php:173
 msgid "Users can register"
-msgstr ""
+msgstr "Les utilisateurs peuvent s'inscrire"
 
 #: inc/class.AdminView.php:174
 msgid "Users have to login"
-msgstr ""
+msgstr "Les utilisateurs doivent se connecter"
 
 #: inc/class.AdminView.php:175
 msgid "Garmin API-key"
@@ -309,11 +309,11 @@ msgstr ""
 
 #: inc/class.AdminView.php:211
 msgid "These tools will not work."
-msgstr ""
+msgstr "Ces outils ne fonctionneront pas."
 
 #: inc/class.AdminView.php:281
 msgid "User list"
-msgstr ""
+msgstr "Liste d'utilisateurs"
 
 #: inc/class.AdminView.php:285
 msgid "There are no registered users."
