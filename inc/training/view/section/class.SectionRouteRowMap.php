@@ -5,7 +5,6 @@
  */
 
 use Runalyze\View\Leaflet;
-use Runalyze\Model;
 
 /**
  * Row: Map
@@ -20,15 +19,13 @@ class SectionRouteRowMap extends TrainingViewSectionRowFullwidth {
 	protected function setContent() {
 		$this->id = 'training-map';
 
-		if ($this->Training->hasPositionData()) {
-			$Factory = new Model\Factory(SessionAccountHandler::getId());
-
+		if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
 			$Map = new Leaflet\Map('map');
 			$Map->addRoute(
 				new Leaflet\Activity(
-					'route-'.$this->Training->id(),
-					$Factory->route($this->Training->get('routeid')),
-					$Factory->trackdata($this->Training->id())
+					'route-'.$this->Context->activity()->id(),
+					$this->Context->route(),
+					$this->Context->trackdata()
 				)
 			);
 

@@ -92,7 +92,7 @@ class HeartRate {
 	}
 
 	/**
-	 * Value in [bpm]
+	 * Value in [%HRmax]
 	 * @return int
 	 */
 	public function inHRmax() {
@@ -100,11 +100,23 @@ class HeartRate {
 	}
 
 	/**
-	 * Value in [bpm]
+	 * Value in [%HRrest]
 	 * @return int
 	 */
 	public function inHRrest() {
 		return round(100 * ($this->value - $this->Athlete->restingHR()) / ($this->Athlete->maximalHR() - $this->Athlete->restingHR()));
+	}
+
+	/**
+	 * Value in [%] depending on preferred unit
+	 * @return int
+	 */
+	public function inPercent() {
+		if ($this->PreferredUnit->isHRreserve() && $this->canShowInHRrest()) {
+			return $this->inHRrest();
+		}
+
+		return $this->inHRmax();
 	}
 
 	/**

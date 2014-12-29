@@ -133,6 +133,13 @@ class Pace {
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public function isEmpty() {
+		return ($this->Distance <= 0 || $this->Time <= 0);
+	}
+
+	/**
 	 * Value
 	 * As string, without unit
 	 * @return string e.g. '12,5', '4:51'
@@ -195,7 +202,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asKmPerHour() {
-		if ($this->Distance <= 0 || $this->Time <= 0) {
+		if ($this->isEmpty()) {
 			return '0,0';
 		}
 
@@ -207,7 +214,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asMinPerKm() {
-		if ($this->Distance <= 0 || $this->Time <= 0) {
+		if ($this->isEmpty()) {
 			return '-:--';
 		}
 
@@ -231,7 +238,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asMeterPerSecond() {
-		if ($this->Distance == 0 || $this->Time == 0) {
+		if ($this->isEmpty()) {
 			return '0,0';
 		}
 

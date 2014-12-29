@@ -8,7 +8,7 @@ namespace Runalyze\Model\Activity\Splits;
 
 use Runalyze\Model\StringObject;
 use Runalyze\Activity\Duration;
-use Time;
+use Runalyze\Activity\Pace;
 
 /**
  * Single split
@@ -73,8 +73,10 @@ class Split extends StringObject {
 			$string = substr($string, 1);
 		}
 
+		$Duration = new Duration(substr(strrchr($string, self::SEPARATOR), 1));
+
 		$this->Distance = rstrstr($string, self::SEPARATOR);
-		$this->Time = Time::toSeconds(substr(strrchr($string, self::SEPARATOR), 1));
+		$this->Time = $Duration->seconds();
 	}
 
 	/**
@@ -136,6 +138,15 @@ class Split extends StringObject {
 	 */
 	public function time() {
 		return $this->Time;
+	}
+
+	/**
+	 * Pace
+	 * @param enum $unit [optional]
+	 * @return \Runalyze\Activity\Pace
+	 */
+	public function pace($unit = Pace::MIN_PER_KM) {
+		return new Pace($this->Time, $this->Distance, $unit);
 	}
 
 	/**

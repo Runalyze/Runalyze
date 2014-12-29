@@ -358,6 +358,41 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	}
 
 	/**
+	 * Elevations array (corrected or original)
+	 * @return array
+	 */
+	public function elevations() {
+		if ($this->hasCorrectedElevations()) {
+			return $this->elevationsCorrected();
+		} elseif ($this->hasOriginalElevations()) {
+			return $this->elevationsOriginal();
+		}
+
+		return array();
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function hasElevations() {
+		return $this->hasOriginalElevations() || $this->hasCorrectedElevations();
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function hasOriginalElevations() {
+		return isset($this->Data[self::ELEVATIONS_ORIGINAL]) && !empty($this->Data[self::ELEVATIONS_ORIGINAL]);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function hasCorrectedElevations() {
+		return isset($this->Data[self::ELEVATIONS_CORRECTED]) && !empty($this->Data[self::ELEVATIONS_CORRECTED]);
+	}
+
+	/**
 	 * Is in routenet?
 	 * @return boolean
 	 */

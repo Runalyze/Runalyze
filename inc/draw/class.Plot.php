@@ -483,15 +483,14 @@ class Plot {
 			$diff = $max - $min;
 			if ($factor == 'auto') {
 				$factor = pow(10, round(log10($diff))-1);
+
 				if ($factor > 10)
 					$factor = 10;
 			}
 
-			$min = floor($min/$factor-0.02*$diff)*$factor;
+			$minScaled = $min > 0 ? min(0, $min/$factor - 0.02*$diff) : $min/$factor - 0.02*$diff;
+			$min = floor($minScaled)*$factor;
 			$max = ceil($max/$factor+0.02*$diff)*$factor;
-
-			if ($min < 0)
-				$min = 0;
 
 			$this->setYTicks($axis, $factor);
 		}
@@ -566,7 +565,7 @@ class Plot {
  * @return mixed
  */
 function PLOT__correctValuesMapperForTime($v) {
-	return $v*1000;
+	return round($v*1000);
 }
 
 /**
@@ -578,7 +577,7 @@ function PLOT__correctValuesMapperFromPaceToKmh($v) {
 	if ($v == 0)
 		return 0;
 
-	return 3600/$v;
+	return round(3600/$v, 2);
 }
 
 /**

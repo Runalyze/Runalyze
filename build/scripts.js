@@ -2183,7 +2183,7 @@ var RunalyzePlot = (function($, parent){
 	}
 
 	function resizeEachTrainingChart() {
-		$("#statistics-inner .training-row-plot .flot").each(function(){
+		$(".training-row-plot .flot").each(function(){
 			if ($(this).width() != trainingCharts.options.width) {
 				$(this).width(trainingCharts.options.width);
 				resize($(this).attr('id'));
@@ -2308,7 +2308,7 @@ var RunalyzePlot = (function($, parent){
 		if (cssId in plots && $e.length == 0)
 			self.remove(cssId);
 
-		if ($("#statistics-inner .training-row-plot").has($e).length)
+		if ($(".training-row-plot").has($e).length)
 			$e.width(trainingCharts.options.width);
 
 		opt = $.extend(true, {}, defaultOptions, opt);
@@ -2808,7 +2808,7 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
-			if ($("#statistics-inner .training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
+			if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
 				moveMapMarker(coords.x);
 			}
 

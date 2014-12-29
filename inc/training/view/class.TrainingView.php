@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\View\Activity\Context;
+use Runalyze\View\Activity\Linker;
 
 /**
  * Display a training
@@ -32,11 +34,18 @@ class TrainingView {
 	protected $ToolbarLinks = array();
 
 	/**
+	 * @var \Runalyze\View\Activity\Context
+	 */
+	protected $Context;
+
+	/**
 	 * Constructor
 	 * @param TrainingObject $Training Training object
 	 */
 	public function __construct(TrainingObject &$Training) {
 		$this->Training = $Training;
+
+		$this->Context = new Context($Training->id(), SessionAccountHandler::getId());
 
 		$this->initToolbarLinks();
 		$this->initSections();
@@ -46,40 +55,42 @@ class TrainingView {
 	 * Init toolbar links
 	 */
 	private function initToolbarLinks() {
-		if ($this->Training->isPublic()) {
-			$this->ToolbarLinks[] = SharedLinker::getToolbarLinkTo($this->Training->id());
+		$Linker = new Linker($this->Context->activity());
+
+		if ($this->Context->activity()->isPublic()) {
+			$this->ToolbarLinks[] = '<a href="'.$Linker->publicUrl().'" target="_blank">'.Icon::$ATTACH.' '.__('Public link').'</a>';
 		}
 
 		if (!Request::isOnSharedPage()) {
-			$this->ToolbarLinks[] = Ajax::window('<a href="'.ExporterWindow::$URL.'?id='.$this->Training->id().'">'.Icon::$DOWNLOAD.' '.__('Export').'</a> ','small');
-			$this->ToolbarLinks[] = Ajax::window('<a href="call/call.Training.edit.php?id='.$this->Training->id().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small');
+			$this->ToolbarLinks[] = Ajax::window('<a href="'.ExporterWindow::$URL.'?id='.$this->Context->activity()->id().'">'.Icon::$DOWNLOAD.' '.__('Export').'</a> ','small');
+			$this->ToolbarLinks[] = Ajax::window('<a href="'.$Linker->editUrl().'">'.Icon::$EDIT.' '.__('Edit').'</a> ','small');
 		}
 
-		$this->ToolbarLinks[] = $this->Training->DataView()->getDateLinkForMenu();
+		$this->ToolbarLinks[] = Ajax::tooltip($Linker->weekLink(), '<em>'.__('Show week').'</em><br>'.$this->Context->dataview()->weekday().', '.$this->Context->dataview()->dateAndDaytime());
 	}
 
 	/**
 	 * Init sections
 	 */
 	protected function initSections() {
-		$this->Sections[] = new SectionOverview($this->Training);
-		$this->Sections[] = new SectionLaps($this->Training);
+		$this->Sections[] = new SectionOverview($this->Training, $this->Context);
+		$this->Sections[] = new SectionLaps($this->Training, $this->Context);
 
 		if (Configuration::ActivityView()->plotMode()->showSeperated()) {
-			$this->Sections[] = new SectionHeartrate($this->Training);
-			$this->Sections[] = new SectionPace($this->Training);
-			$this->Sections[] = new SectionRoute($this->Training);
+			$this->Sections[] = new SectionHeartrate($this->Training, $this->Context);
+			$this->Sections[] = new SectionPace($this->Training, $this->Context);
+			$this->Sections[] = new SectionRoute($this->Training, $this->Context);
 		} else {
-			$this->Sections[] = new SectionComposite($this->Training);
+			$this->Sections[] = new SectionComposite($this->Training, $this->Context);
 
 			if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
-				$this->Sections[] = new SectionRoute($this->Training);
+				$this->Sections[] = new SectionRoute($this->Training, $this->Context);
 			} else {
-				$this->Sections[] = new SectionRouteOnlyMap($this->Training);
+				$this->Sections[] = new SectionRouteOnlyMap($this->Training, $this->Context);
 			}
 		}
 
-		$this->Sections[] = new SectionMiscellaneous($this->Training);
+		$this->Sections[] = new SectionMiscellaneous($this->Training, $this->Context);
 	}
 
 	/**
@@ -102,7 +113,7 @@ class TrainingView {
 			$this->displaySharedMenu();
 		}
 
-		echo '<h1>'.$this->Training->DataView()->getTitleWithComment().'</h1>';
+		echo '<h1>'.$this->Context->dataview()->titleWithComment().'</h1>';
 
 		if (!Request::isOnSharedPage()) {
 			$this->displayReloadLink();
@@ -118,7 +129,7 @@ class TrainingView {
 		echo '<div class="panel-menu"><ul>';
 
 		foreach ($this->ToolbarLinks as $Link) {
-			echo '<li>' . $Link . '</li>';
+			echo '<li>'.$Link.'</li>';
 		}
 
 		echo '</ul></div>';
@@ -128,10 +139,10 @@ class TrainingView {
 	 * Display shared menu
 	 */
 	protected function displaySharedMenu() {
-		$User = AccountHandler::getDataForId($this->Training->get('accountid'));
+		$User = AccountHandler::getDataForId(SharedLinker::getUserId());
 
 		$this->ToolbarLinks = array();
-		$this->ToolbarLinks[] = SharedLinker::getStandardLinkTo( $this->Training->id(), Icon::$ATTACH );
+		$this->ToolbarLinks[] = SharedLinker::getStandardLinkTo( $this->Context->activity()->id(), Icon::$ATTACH );
 		$this->ToolbarLinks[] = '<a href="shared/'.$User['username'].'/" target="_blank">'.Icon::$TABLE.'</a>';
 
 		$this->displayHeaderMenu();

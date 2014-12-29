@@ -16,7 +16,7 @@ class SectionRouteOnlyMap extends SectionRoute {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Course');
 
-		$this->appendRow( new SectionRouteRowMap($this->Training) );
+		$this->appendRow( new SectionRouteRowMap($this->Training, $this->Context) );
 	}
 
 	/**
@@ -24,6 +24,6 @@ class SectionRouteOnlyMap extends SectionRoute {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return $this->Training->hasPositionData();
+		return $this->Context->hasRoute() && $this->Context->route()->hasPositionData();
 	}
 }

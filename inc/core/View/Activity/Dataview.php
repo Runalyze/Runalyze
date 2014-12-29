@@ -16,7 +16,7 @@ use Runalyze\Activity\Pace;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
-use Runalyze\Context;
+use Runalyze\Context as GeneralContext;
 
 use SessionAccountHandler;
 use ClothesFactory;
@@ -325,7 +325,7 @@ class Dataview {
 	 */
 	public function hrMax() {
 		return $this->object($this->HRmax, function($Activity){
-			return new HeartRate($Activity->hrMax(), Context::Athlete());
+			return new HeartRate($Activity->hrMax(), GeneralContext::Athlete());
 		});
 	}
 
@@ -335,7 +335,7 @@ class Dataview {
 	 */
 	public function hrAvg() {
 		return $this->object($this->HRavg, function($Activity){
-			return new HeartRate($Activity->hrAvg(), Context::Athlete());
+			return new HeartRate($Activity->hrAvg(), GeneralContext::Athlete());
 		});
 	}
 
@@ -374,6 +374,15 @@ class Dataview {
 		}
 
 		return implode(', ', $clothes);
+	}
+
+	/**
+	 * Get clothes as links
+	 * @return string
+	 */
+	public function clothesAsLinks() {
+		// TODO
+		return $this->clothes();
 	}
 
 	/**

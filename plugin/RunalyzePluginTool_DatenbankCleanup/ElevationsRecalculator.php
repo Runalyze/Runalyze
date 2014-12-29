@@ -53,7 +53,7 @@ class ElevationsRecalculator {
 			$Calculator = new Elevation\Calculation\Calculator($Elevation);
 			$Calculator->calculate();
 
-			if ($Calculator->totalElevation() != $Data['elevation']) {
+			if ($Calculator->totalElevation() != $Data['elevation'] || $Calculator->elevationUp() != $Data['elevation_up']) {
 				$Update->bindValue(':id', $Data['id']);
 				$Update->bindValue(':elevation', $Calculator->totalElevation());
 				$Update->bindValue(':elevation_up', $Calculator->elevationUp());
@@ -92,6 +92,7 @@ class ElevationsRecalculator {
 			'SELECT
 				`id`,
 				`elevation`,
+				`elevation_up`,
 				(CASE
 					WHEN  `elevations_corrected` !=  ""
 					THEN  `elevations_corrected` 

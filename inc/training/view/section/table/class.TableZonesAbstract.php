@@ -6,6 +6,7 @@
 
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\View\Activity\Context;
 
 /**
  * Display zones
@@ -15,16 +16,15 @@ use Runalyze\Activity\Duration;
  */
 abstract class TableZonesAbstract {
 	/**
-	 * Minimum distance to be shown as a zone
-	 * @var double
+	 * @var int [s]
 	 */
-	protected static $MINIMUM_DISTANCE_FOR_ZONE = 0.1;
+	const MINIMUM_TIME_IN_ZONE = 10;
 
 	/**
-	 * Training object
-	 * @var TrainingObject
+	 * Context
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
 	 * Data
@@ -34,10 +34,10 @@ abstract class TableZonesAbstract {
 
 	/**
 	 * Constructor
-	 * @param TrainingObject $Training
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 
 		$this->initData();
 		$this->convertData();
@@ -83,7 +83,7 @@ abstract class TableZonesAbstract {
 
 			$this->Data[$i]['percentage'] = $percentage;
 			$this->Data[$i]['time']       = $totalTime > 0 ? Duration::format($Info['time']) : '-';
-			$this->Data[$i]['distance']   = Distance::format($Info['distance']);
+			$this->Data[$i]['distance']   = $totalDist > 0 ? Distance::format($Info['distance']) : '-';
 		}
 	}
 

@@ -115,6 +115,22 @@ class Loop {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function index() {
+		return $this->Index;
+	}
+
+	/**
+	 * Go to index
+	 * @param int $index
+	 */
+	public function goToIndex($index) {
+		$this->LastIndex = $this->Index;
+		$this->Index = $index;
+	}
+
+	/**
 	 * Move pointer to
 	 * @param enum $key
 	 * @param float $target to move
