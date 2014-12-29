@@ -35,6 +35,11 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	 * @param string $key
 	 */
 	protected function initData(Trackdata $trackdata, $key) {
+		if (!$trackdata->has($key)) {
+			$this->Data = array();
+			return;
+		}
+
 		$Collector = new DataCollector($trackdata, $key);
 
 		$this->Data = $Collector->data();

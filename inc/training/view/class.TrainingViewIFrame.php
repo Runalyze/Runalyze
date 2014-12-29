@@ -14,7 +14,7 @@ class TrainingViewIFrame extends TrainingView {
 	 * Init sections
 	 */
 	protected function initSections() {
-		$this->Sections[] = new SectionOverview($this->Training);
-		$this->Sections[] = new SectionRouteOnlyMap($this->Training);
+		$this->Sections[] = new SectionOverview($this->Context);
+		$this->Sections[] = new SectionRouteOnlyMap($this->Context);
 	}
 }

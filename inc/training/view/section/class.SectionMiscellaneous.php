@@ -16,7 +16,7 @@ class SectionMiscellaneous extends TrainingViewSectionTabbedPlot {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Miscellaneous');
 
-		$this->appendRowTabbedPlot( new SectionMiscellaneousRow($this->Training, $this->Context) );
+		$this->appendRowTabbedPlot( new SectionMiscellaneousRow($this->Context) );
 	}
 
 	/**

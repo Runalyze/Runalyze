@@ -16,7 +16,7 @@ class SectionOverview extends TrainingViewSection {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Overview');
 
-		$this->appendRow( new SectionOverviewRow($this->Training, $this->Context) );
+		$this->appendRow( new SectionOverviewRow($this->Context) );
 	}
 
 	/**

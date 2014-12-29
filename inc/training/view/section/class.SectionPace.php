@@ -16,7 +16,7 @@ class SectionPace extends TrainingViewSectionTabbedPlot {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Pace data');
 
-		$this->appendRowTabbedPlot( new SectionPaceRow($this->Training, $this->Context) );
+		$this->appendRowTabbedPlot( new SectionPaceRow($this->Context) );
 	}
 
 	/**

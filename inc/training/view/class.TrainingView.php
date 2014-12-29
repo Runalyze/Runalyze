@@ -73,24 +73,24 @@ class TrainingView {
 	 * Init sections
 	 */
 	protected function initSections() {
-		$this->Sections[] = new SectionOverview($this->Training, $this->Context);
-		$this->Sections[] = new SectionLaps($this->Training, $this->Context);
+		$this->Sections[] = new SectionOverview($this->Context);
+		$this->Sections[] = new SectionLaps($this->Context);
 
 		if (Configuration::ActivityView()->plotMode()->showSeperated()) {
-			$this->Sections[] = new SectionHeartrate($this->Training, $this->Context);
-			$this->Sections[] = new SectionPace($this->Training, $this->Context);
-			$this->Sections[] = new SectionRoute($this->Training, $this->Context);
+			$this->Sections[] = new SectionHeartrate($this->Context);
+			$this->Sections[] = new SectionPace($this->Context);
+			$this->Sections[] = new SectionRoute($this->Context);
 		} else {
-			$this->Sections[] = new SectionComposite($this->Training, $this->Context);
+			$this->Sections[] = new SectionComposite($this->Context);
 
 			if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
-				$this->Sections[] = new SectionRoute($this->Training, $this->Context);
+				$this->Sections[] = new SectionRoute($this->Context);
 			} else {
-				$this->Sections[] = new SectionRouteOnlyMap($this->Training, $this->Context);
+				$this->Sections[] = new SectionRouteOnlyMap($this->Context);
 			}
 		}
 
-		$this->Sections[] = new SectionMiscellaneous($this->Training, $this->Context);
+		$this->Sections[] = new SectionMiscellaneous($this->Context);
 	}
 
 	/**

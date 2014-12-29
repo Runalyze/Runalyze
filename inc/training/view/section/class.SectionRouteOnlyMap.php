@@ -16,7 +16,7 @@ class SectionRouteOnlyMap extends SectionRoute {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Course');
 
-		$this->appendRow( new SectionRouteRowMap($this->Training, $this->Context) );
+		$this->appendRow( new SectionRouteRowMap($this->Context) );
 	}
 
 	/**

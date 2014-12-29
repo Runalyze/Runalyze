@@ -39,7 +39,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 
 	/**
 	 * Get plot
-	 * @return \TrainingPlotCollection|\TrainingPlotPacePulse
+	 * @return \Runalyze\View\Activity\Plot\ActivityPlot
 	 */
 	protected function getPlot() {
 		if (Configuration::ActivityView()->plotMode()->showCollection()) {

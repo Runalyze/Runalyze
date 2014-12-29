@@ -32,12 +32,6 @@ abstract class TrainingViewSection {
 	protected $isFirst = false;
 
 	/**
-	 * Training
-	 * @var TrainingObject
-	 */
-	protected $Training = null;
-
-	/**
 	 * @var \Runalyze\View\Activity\Context
 	 */
 	protected $Context;
@@ -45,8 +39,7 @@ abstract class TrainingViewSection {
 	/**
 	 * Constructor
 	 */
-	public function __construct(TrainingObject &$Training, Context &$Context = null) {
-		$this->Training = $Training;
+	public function __construct(Context &$Context = null) {
 		$this->Context = $Context;
 
 		if ($this->hasRequiredData())

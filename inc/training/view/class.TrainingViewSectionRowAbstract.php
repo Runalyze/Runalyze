@@ -14,12 +14,6 @@ use Runalyze\View\Activity\Context;
  */
 abstract class TrainingViewSectionRowAbstract {
 	/**
-	 * Training
-	 * @var TrainingObject
-	 */
-	protected $Training = null;
-
-	/**
 	 * @var \Runalyze\View\Activity\Context
 	 */
 	protected $Context;
@@ -27,8 +21,7 @@ abstract class TrainingViewSectionRowAbstract {
 	/**
 	 * Constructor
 	 */
-	public function __construct(TrainingObject &$Training, Context &$Context = null) {
-		$this->Training = $Training;
+	public function __construct(Context &$Context = null) {
 		$this->Context = $Context;
 
 		$this->setContent();

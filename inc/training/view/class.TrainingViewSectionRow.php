@@ -15,7 +15,7 @@ use Runalyze\View\Activity\Context;
 abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Plot
-	 * @var TrainingPlot 
+	 * @var \Runalyze\View\Activity\Plot\ActivityPlot
 	 */
 	protected $Plot = null;
 
@@ -46,8 +46,8 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Constructor
 	 */
-	public function __construct(TrainingObject &$Training, Context &$Context = null) {
-		parent::__construct($Training, $Context);
+	public function __construct(Context &$Context = null) {
+		parent::__construct($Context);
 
 		$this->setPlot();
 	}

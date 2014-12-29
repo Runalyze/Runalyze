@@ -16,8 +16,8 @@ class SectionRoute extends TrainingViewSection {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Course and elevation data');
 
-		$this->appendRow( new SectionRouteRowElevation($this->Training, $this->Context) );
-		$this->appendRow( new SectionRouteRowMap($this->Training, $this->Context) );
+		$this->appendRow( new SectionRouteRowElevation($this->Context) );
+		$this->appendRow( new SectionRouteRowMap($this->Context) );
 	}
 
 	/**
@@ -25,6 +25,6 @@ class SectionRoute extends TrainingViewSection {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return $this->Training->hasArrayAltitude() || $this->Context->hasRoute();
+		return $this->Context->activity()->elevation() > 0 || $this->Context->hasRoute();
 	}
 }

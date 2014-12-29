@@ -16,7 +16,7 @@ class SectionHeartrate extends TrainingViewSectionTabbedPlot {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Heartrate data');
 
-		$this->appendRowTabbedPlot( new SectionHeartrateRow($this->Training, $this->Context) );
+		$this->appendRowTabbedPlot( new SectionHeartrateRow($this->Context) );
 	}
 
 	/**

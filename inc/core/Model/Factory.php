@@ -134,7 +134,13 @@ class Factory {
 		$field = $this->primaryKey($tablename);
 		$AndAccountID = $this->hasAccountID() && $this->tableHasAccountid($tablename) ? 'AND `accountid`='.(int)$this->AccountID : '';
 
-		return $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
+		$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
+
+		if (!is_array($result)) {
+			return array();
+		}
+
+		return $result;
 	}
 
 	/**

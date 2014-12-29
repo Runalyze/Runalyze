@@ -20,12 +20,12 @@ abstract class ActivityPlot {
 	/**
 	 * @var int
 	 */
-	const WIDTH = 600;
+	protected $WIDTH = 600;
 
 	/**
 	 * @var int
 	 */
-	const HEIGHT = 190;
+	protected $HEIGHT = 190;
 
 	/**
 	 * Plot
@@ -85,11 +85,11 @@ abstract class ActivityPlot {
 
 	/**
 	 * Add series
-	 * @param \Runalyze\View\Activity\Plot\Series\ActivitySeries $series
+	 * @param \Runalyze\View\Plot\Series $series
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations
 	 */
-	final protected function addSeries(Series\ActivitySeries $series, $yAxis = 1, $addAnnotations = true) {
+	final protected function addSeries(\Runalyze\View\Plot\Series $series, $yAxis = 1, $addAnnotations = true) {
 		$series->addTo($this->Plot, $yAxis, $addAnnotations);
 	}
 
@@ -111,7 +111,7 @@ abstract class ActivityPlot {
 	 * Init Plot 
 	 */
 	private function initPlot() {
-		$this->Plot = new Plot($this->getCSSid(), self::WIDTH, self::HEIGHT);
+		$this->Plot = new Plot($this->getCSSid(), $this->WIDTH, $this->HEIGHT);
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class ActivityPlot {
 	 * Output JS 
 	 */
 	final public function display() {
-		echo Plot::getInnerDivFor($this->getCSSid(), self::WIDTH, self::HEIGHT);
+		echo Plot::getInnerDivFor($this->getCSSid(), $this->WIDTH, $this->HEIGHT);
 		$this->Plot->outputJavaScript();
 	}
 }

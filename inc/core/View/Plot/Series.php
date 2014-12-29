@@ -96,6 +96,10 @@ class Series {
 	 * @param boolean $addAnnotations [optional]
 	 */
 	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+		if (empty($this->Data)) {
+			return;
+		}
+
 		$Plot->Data[] = array('label' => $this->Label, 'color' => $this->Color, 'data' => $this->Data, 'yaxis' => $yAxis);
 
 		if ($this->UnitString != '') {

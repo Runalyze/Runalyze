@@ -246,12 +246,17 @@ class ElevationInfo {
 	 * Display plot
 	 */
 	protected function displayPlot() {
-		$Plot = new TrainingPlotElevationCompareAlgorithms($this->Training);
+		$Context = new Runalyze\View\Activity\Context(
+			$this->Training->id(),
+			SessionAccountHandler::getId()
+		);
+
+		$Plot = new Runalyze\View\Activity\Plot\ElevationAlgorithms($Context);
 
 		echo '<fieldset>';
 		echo '<legend>'.__('Compare algorithms').'</legend>';
 		echo '<div id="plot-'.$Plot->getKey().'" class="plot-container">';
-		$Plot->displayAsSinglePlot();
+		$Plot->display();
 		echo '</div>';
 		echo '</fieldset>';
 	}

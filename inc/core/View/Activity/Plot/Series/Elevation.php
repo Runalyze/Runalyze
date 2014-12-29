@@ -24,18 +24,25 @@ class Elevation extends ActivitySeries {
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
+	 * @var boolean $forceOriginal [optional]
 	 */
-	public function __construct(Activity\Context $context) {
+	public function __construct(Activity\Context $context, $forceOriginal = false) {
 		$this->initOptions();
-		$this->initDataWithRoute($context);
+		$this->initDataWithRoute($context, $forceOriginal);
 	}
 
 	/**
 	 * Init data
 	 * @var \Runalyze\View\Activity\Context $context
+	 * @var boolean $forceOriginal
 	 */
-	protected function initDataWithRoute(Activity\Context $context) {
-		$key = $context->route()->hasCorrectedElevations() ? Route::ELEVATIONS_CORRECTED : Route::ELEVATIONS_ORIGINAL;
+	protected function initDataWithRoute(Activity\Context $context, $forceOriginal) {
+		$key = $context->route()->hasCorrectedElevations() && !$forceOriginal ? Route::ELEVATIONS_CORRECTED : Route::ELEVATIONS_ORIGINAL;
+
+		if (!$context->route()->has($key)) {
+			$this->Data = array();
+			return;
+		}
 
 		$Collector = new DataCollectorWithRoute($context->trackdata(), $key, $context->route());
 
@@ -68,6 +75,10 @@ class Elevation extends ActivitySeries {
 	 * @param boolean $addAnnotations [optional]
 	 */
 	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true) {
+		if (empty($this->Data)) {
+			return;
+		}
+
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		$min = min($this->Data);

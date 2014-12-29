@@ -20,11 +20,11 @@ class SectionLaps extends TrainingViewSectionTabbed {
 		$this->Header = __('Laps');
 
 		if (!$this->Context->activity()->splits()->isEmpty() && $this->Context->activity()->splits()->totalDistance() > 0) {
-			$this->appendRowTabbed( new SectionLapsRowManual($this->Training, $this->Context), __('Manual Laps') );
+			$this->appendRowTabbed( new SectionLapsRowManual($this->Context), __('Manual Laps') );
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Object::TIME)) {
-			$this->appendRowTabbed( new SectionLapsRowComputed($this->Training, $this->Context), __('Computed Laps') );
+			$this->appendRowTabbed( new SectionLapsRowComputed($this->Context), __('Computed Laps') );
 		}
 	}
 

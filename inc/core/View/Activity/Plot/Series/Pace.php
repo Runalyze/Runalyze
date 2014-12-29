@@ -81,6 +81,10 @@ class Pace extends ActivitySeries {
 	 * @param boolean $addAnnotations [optional]
 	 */
 	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true) {
+		if (empty($this->Data)) {
+			return;
+		}
+
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		if (!$this->asKMH) {
