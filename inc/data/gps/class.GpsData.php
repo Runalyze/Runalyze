@@ -526,6 +526,7 @@ class GpsData {
 		if (empty($array) || !isset($array[$this->arrayIndex]))
 			return 0;
 
+		// TODO: array_filter removes all '0' entries - that's not correct for temperature
 		$stepArray = array_slice($array, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex), true);
 		$stepArray = array_filter($stepArray);
 
@@ -544,6 +545,7 @@ class GpsData {
 		if (empty($array) || !isset($array[$this->arrayIndex]))
 			return 0;
 
+		// TODO: array_filter removes all '0' entries - that's not correct for temperature
 		$stepArray = array_slice($array, $this->arrayLastIndex, ($this->arrayIndex - $this->arrayLastIndex), true);
 		$stepArray = array_filter($stepArray);
 
@@ -1050,7 +1052,7 @@ class GpsData {
 				$value = $this->getAverageHeartrateOfStep();
 				break;
 			case "pace":
-				$value = $this->getAveragePaceOfStep();
+				$value = abs($this->getAveragePaceOfStep());
 				break;
 			case "cadence":
 				$value = $this->getAverageCadenceOfStep();
@@ -1064,9 +1066,6 @@ class GpsData {
 			default:
 				$value = 0;
 		}
-
-		if ($value < 0)
-			$value = 0;
 
 		return $value;
 	}

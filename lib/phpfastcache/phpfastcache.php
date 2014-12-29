@@ -520,7 +520,7 @@ class phpFastCache {
     }
 
     public function decode($value) {
-        $x = @unserialize($value);
+        $x = $value == null ? false : @unserialize($value);
         if($x == false) {
             return $value;
         } else {

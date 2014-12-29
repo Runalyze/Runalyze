@@ -2183,7 +2183,7 @@ var RunalyzePlot = (function($, parent){
 	}
 
 	function resizeEachTrainingChart() {
-		$("#statistics-inner .training-chart").each(function(){
+		$("#statistics-inner .training-row-plot .flot").each(function(){
 			if ($(this).width() != trainingCharts.options.width) {
 				$(this).width(trainingCharts.options.width);
 				resize($(this).attr('id'));
@@ -2308,7 +2308,7 @@ var RunalyzePlot = (function($, parent){
 		if (cssId in plots && $e.length == 0)
 			self.remove(cssId);
 
-		if ($e.hasClass('training-chart'))
+		if ($("#statistics-inner .training-row-plot").has($e).length)
 			$e.width(trainingCharts.options.width);
 
 		opt = $.extend(true, {}, defaultOptions, opt);
@@ -2808,8 +2808,9 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
-			if ($("#"+key).is(".training-chart"))
+			if ($("#statistics-inner .training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
 				moveMapMarker(coords.x);
+			}
 
 			show(key, pos, content, posClass);
 		};
@@ -6576,15 +6577,16 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
     };
 
 	self.movePosMarker = function(km) {
+		var id = self.routeid;
+
+		if (typeof id === "undefined" || typeof objects[id] === "undefined")
+			return;
+
 		var upper;
 		var index;
 		var lower;
 		var pos = [0,0];
 		var counter = 0;
-		var id = self.routeid;
-
-		if (typeof id === "undefined" || typeof objects[id] === "undefined")
-			return;
 
 		for (var s = 0; s < objects[id].segmentsInfo.length; ++s) {
 			var segmentLength = objects[id].segmentsInfo[s].length;

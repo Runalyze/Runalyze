@@ -1,7 +1,6 @@
 <?php
 $CLASSMAP = array(
 'BasicEndurance' => 'calculate/class.BasicEndurance.php',
-'JD' => 'calculate/class.JD.php',
 'Math' => 'calculate/class.Math.php',
 'Running' => 'calculate/class.Running.php',
 'Time' => 'calculate/class.Time.php',
