@@ -164,6 +164,10 @@ class Activity extends LeafletRoute {
 	 * Fill current segment
 	 */
 	protected function fillCurrentSegment() {
+		if ($this->RouteLoop->latitude() == 0 && $this->RouteLoop->longitude() == 0) {
+			return;
+		}
+
 		$this->Path[] = array((float)$this->RouteLoop->latitude(), (float)$this->RouteLoop->longitude());
 
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
