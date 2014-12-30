@@ -152,13 +152,17 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add equipment
 	 */
 	protected function addEquipment() {
-		$Shoe = new Shoe($this->Context->activity()->shoeID());
+		$id = $this->Context->activity()->shoeID();
 
-		if (!$Shoe->isDefaultId()) {
-			$RunningShoe = new BoxedValue($Shoe->getSearchLink(), '', __('Running shoe'));
-			$RunningShoe->defineAsFloatingBlock('w100 flexible-height');
+		if ($id) {
+			$Shoe = new Shoe($id);
 
-			$this->BoxedValues[] = $RunningShoe;
+			if (!$Shoe->isDefaultId()) {
+				$RunningShoe = new BoxedValue($Shoe->getSearchLink(), '', __('Running shoe'));
+				$RunningShoe->defineAsFloatingBlock('w100 flexible-height');
+
+				$this->BoxedValues[] = $RunningShoe;
+			}
 		}
 	}
 

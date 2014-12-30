@@ -6197,14 +6197,14 @@ var RunalyzeLeaflet = (function($){
 		$('#'+id).addClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").removeClass('fa-expand').addClass('fa-compress');
 
-		object.onResize();
+		object._onResize();
 	};
 
 	self.exitFullscreen = function() {
 		$('#'+id).removeClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").addClass('fa-expand').removeClass('fa-compress');
 
-		object.onResize();
+		object._onResize();
 	};
 
 	return self;
@@ -6489,8 +6489,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 			self.showRoute(id);
 		}
 
-		if (!this.mousemovebounded)
-			bindMouseMove();
+		bindMouseMove();
 
 		parent.map().on('zoomend', decideMarkerVisibility);
 	};
@@ -6545,6 +6544,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 		self.hideAllRoutes();
 
 		objects = {};
+		mousemovebounded = false;
 	};
 
 	self.segmentFromStrings = function(lats, lngs, sep) {

@@ -488,7 +488,7 @@ class Plot {
 					$factor = 10;
 			}
 
-			$minScaled = $min > 0 ? min(0, $min/$factor - 0.02*$diff) : $min/$factor - 0.02*$diff;
+			$minScaled = $min > 0 ? max(0, $min/$factor - 0.02*$diff) : $min/$factor - 0.02*$diff;
 			$min = floor($minScaled)*$factor;
 			$max = ceil($max/$factor+0.02*$diff)*$factor;
 
