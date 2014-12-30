@@ -199,7 +199,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		} elseif ($this->Values['event_type'][1] == 'start') {
 			if ($this->isPaused && ($thisTimestamp - $this->TrainingObject->getTimestamp()) < end($this->gps['time_in_s'])) {
 				$this->pausesToApply[] = array(
-					'time' => $thisTimestamp - $this->TrainingObject->getTimestamp(),
+					'time' => $this->lastStopTimestamp - $this->TrainingObject->getTimestamp(),
 					'duration' => ($thisTimestamp - $this->lastStopTimestamp)
 				);
 			}

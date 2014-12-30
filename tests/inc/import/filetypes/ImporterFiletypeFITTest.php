@@ -100,7 +100,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayVerticalOscillation() );
 
 			$this->assertEquals( 216, $this->object->object()->getGroundContactTime() );
-			$this->assertEquals( 93, $this->object->object()->getVerticalOscillation() );
+			$this->assertEquals( 92, $this->object->object()->getVerticalOscillation(), '', 1 );
 
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
