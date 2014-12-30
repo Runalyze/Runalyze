@@ -306,7 +306,7 @@ class Dataview {
 	 */
 	public function verticalOscillation() {
 		if ($this->Activity->verticalOscillation() > 0)
-			return round($this->Activity->verticalOscillation()/10, 1).'&nbsp;cm';
+			return number_format($this->Activity->verticalOscillation()/10, 1).'&nbsp;cm';
 
 		return '';
 	}
