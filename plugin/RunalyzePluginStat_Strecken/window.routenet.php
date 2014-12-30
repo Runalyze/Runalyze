@@ -33,7 +33,7 @@ $Routes = DB::getInstance()->query('
 	ORDER BY `id` DESC
 	LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
 
-$Map = new Leaflet\Map('map', 600);
+$Map = new Leaflet\Map('map-routenet', 600);
 
 $minLat = 999;
 $maxLat = -999;
@@ -66,6 +66,6 @@ $Map->display();
 
 <p class="info">
 	<?php echo sprintf( __('The network contains your last %s routes.'), RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET ); ?>
-	<?php _e('More routes are due to performance reasons not possible at the moment.'); ?>
+	<?php _e('More routes are not possible at the moment due to performance issues.'); ?>
 </p>
 </div>

@@ -13,7 +13,6 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
-use Running;
 
 /**
  * Leaflet route for an activity
