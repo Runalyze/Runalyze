@@ -18,4 +18,3 @@ else
 $Frontend->displaySharedView();
 
 echo '</div>';
-?>

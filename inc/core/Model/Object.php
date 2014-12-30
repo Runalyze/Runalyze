@@ -48,7 +48,7 @@ abstract class Object {
 	 */
 	final protected function readData(array $data) {
 		foreach ($this->properties() as $key) {
-			if (isset($data[$key]) && !empty($data[$key])) {
+			if (isset($data[$key]) && $data[$key] != '') {
 				$this->Data[$key] = $this->isArray($key) && !is_array($data[$key]) ? self::explode($data[$key]) : $data[$key];
 			} else {
 				$this->Data[$key] = $this->isArray($key) ? array() : '';

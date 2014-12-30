@@ -47,10 +47,10 @@ class Context {
 	 * @var in $accountID
 	 */
 	public function __construct($activityID, $accountID) {
-		$Factory = new Factory($accountID);
+		$Factory = new Factory((int)$accountID);
 
-		$this->Activity = $Factory->activity($activityID);
-		$this->Trackdata = $Factory->trackdata($activityID);
+		$this->Activity = $Factory->activity((int)$activityID);
+		$this->Trackdata = $Factory->trackdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		$this->Dataview = new Dataview($this->Activity);

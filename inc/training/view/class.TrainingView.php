@@ -16,12 +16,6 @@ use Runalyze\View\Activity\Linker;
  */
 class TrainingView {
 	/**
-	 * Training object
-	 * @var \TrainingObject
-	 */
-	protected $Training = null;
-
-	/**
 	 * Sections
 	 * @var TrainingViewSection[]
 	 */
@@ -39,13 +33,10 @@ class TrainingView {
 	protected $Context;
 
 	/**
-	 * Constructor
-	 * @param TrainingObject $Training Training object
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
-
-		$this->Context = new Context($Training->id(), SessionAccountHandler::getId());
+	public function __construct(Context $context) {
+		$this->Context = $context;
 
 		$this->initToolbarLinks();
 		$this->initSections();

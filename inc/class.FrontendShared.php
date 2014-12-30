@@ -3,6 +3,9 @@
  * This file contains class::FrontendShared
  * @package Runalyze\Frontend
  */
+
+use Runalyze\View\Activity;
+
 /**
  * Class for customizing frontend for displaying shared activities
  * 
@@ -15,6 +18,11 @@ class FrontendShared extends Frontend {
 	 * @var TrainingObject
 	 */
 	protected $Training = null;
+
+	/**
+	 * @var Runalyze\View\Activity\Context 
+	 */
+	protected $ActivityContext = null;
 
 	/**
 	 * Flag: shared view is used
@@ -38,7 +46,7 @@ class FrontendShared extends Frontend {
 		$this->setEncoding();
 		$this->initTraining();
 
-		$UserId = (!is_null($this->Training)) ? $this->Training->get('accountid') : 0;
+		$UserId = (!is_null($this->ActivityContext)) ? SessionAccountHandler::getId() : 0;
 		$User   = AccountHandler::getDataForId($UserId);
 
 		if (!Request::isAjax()) {
@@ -71,13 +79,11 @@ class FrontendShared extends Frontend {
 	 * Init training 
 	 */
 	private function initTraining() {
-                $data = Cache::get('training'.SharedLinker::getTrainingId(),1);
-                if(is_null($data)) {            
-		$data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
-                    Cache::set('training'.SharedLinker::getTrainingId(), $data, '3600', 1);
-                }
-		if ($data) {
-			$this->Training = new TrainingObject($data);
+		// TODO: Cache?
+		$this->ActivityContext = new Activity\Context(SharedLinker::getTrainingId(), SessionAccountHandler::getId());
+
+		if ($this->ActivityContext->activity()->id() <= 0) {
+			$this->ActivityContext = null;
 		}
 	}
 
@@ -85,9 +91,9 @@ class FrontendShared extends Frontend {
 	 * Display shared view 
 	 */
 	public function displaySharedView() {
-		if (is_null($this->Training) || $this->Training->isDefaultId()) {
+		if (is_null($this->ActivityContext)) {
 			$this->throwErrorForInvalidRequest();
-		} elseif (!$this->Training->isPublic()) {
+		} elseif (!$this->ActivityContext->activity()->isPublic()) {
 			$this->throwErrorForPrivateTraining();
 		} else {
 			$this->displayRequestedTraining();
@@ -98,13 +104,13 @@ class FrontendShared extends Frontend {
 	 * Display requested training 
 	 */
 	protected function displayRequestedTraining() {
-		$_GET['id'] = $this->Training->id();
+		$_GET['id'] = $this->ActivityContext->activity()->id();
 
 		if (Request::param('mode') == 'iframe') {
-			$View = new TrainingViewIFrame($this->Training);
+			$View = new TrainingViewIFrame($this->ActivityContext);
 			$View->display();
 		} else {
-			$View = new TrainingView($this->Training);
+			$View = new TrainingView($this->ActivityContext);
 			$View->display();
 		}
 	}
@@ -114,11 +120,11 @@ class FrontendShared extends Frontend {
 	 * @return string
 	 */
 	protected function getPageTitle() {
-		if (is_null($this->Training) || $this->Training->isDefaultId() || !$this->Training->isPublic()) {
+		if (is_null($this->ActivityContext) || !$this->ActivityContext->activity()->isPublic()) {
 			return __('Problem');
 		}
 
-		return $this->Training->DataView()->getTitle().', '.$this->Training->DataView()->getDate(false);
+		return $this->ActivityContext->dataview()->titleWithComment().', '.$this->ActivityContext->dataview()->date();
 	}
 
 	/**
