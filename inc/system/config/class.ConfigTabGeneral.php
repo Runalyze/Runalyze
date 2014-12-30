@@ -17,7 +17,7 @@ class ConfigTabGeneral extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_general';
-		$this->title = __('General Settings');
+		$this->title = __('General settings');
 	}
 
 	/**

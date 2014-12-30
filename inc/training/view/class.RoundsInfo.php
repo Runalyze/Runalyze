@@ -263,7 +263,7 @@ class RoundsInfo {
 		$Fieldset->addInfo(
 			__('These laps are computed based on your gps data.').
 			__('Laps stopped by hand are ignored in this evaluation.').
-			__('Since there is not a data point for every single meter there may be some differences for the distances.')
+			__('Since there is not a data point for every single meter there may be some deviation from the distance.')
 		);
 
 		$Fieldset->display();

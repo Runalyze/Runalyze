@@ -191,7 +191,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '
 			<tr class="no-zebra">
 				<td colspan="2" class="c">
-					'.sprintf( __('You\'ve visited in total %s different places.'), count($this->Cities) ).'
+					'.sprintf( __('You have visited %s different places.'), count($this->Cities) ).'
 				</td>
 			</tr>
 		</tbody>

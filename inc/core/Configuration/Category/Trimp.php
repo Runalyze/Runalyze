@@ -68,12 +68,12 @@ class Trimp extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('ATL_DAYS'), array(
 			'label'		=> __('Days for ATL'),
-			'tooltip'	=> __('Number of days to recognize for ATL')
+			'tooltip'	=> __('Number of days for ATL time constant')
 		));
 
 		$Fieldset->addHandle( $this->handle('CTL_DAYS'), array(
 			'label'		=> __('Days for CTL'),
-			'tooltip'	=> __('Number of days to recognize for CTL')
+			'tooltip'	=> __('Number of days for CTL time constant')
 		));
 
 		return $Fieldset;

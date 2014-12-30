@@ -149,9 +149,9 @@ class ElevationInfo {
 			return;
 
 		$Code  = $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitude());
-		$Code .= '<p class="small info">'.__('You can choose the algorithm and treshold in the configuration window.').'</p>';
+		$Code .= '<p class="small info">'.__('You can choose the algorithm and threshold in the configuration window.').'</p>';
 
-		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/tresholds') );
+		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/thresholds') );
 		$Fieldset->setHtmlCode($Code);
 		$Fieldset->display();
 	}
@@ -163,7 +163,7 @@ class ElevationInfo {
 		if (!$this->Training->hasArrayAltitudeOriginal() || !$this->Training->elevationWasCorrected())
 			return;
 
-		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/tresholds (based on original data)') );
+		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/thresholds (based on original data)') );
 		$Fieldset->setId('table-with-original-data');
 		$Fieldset->setCollapsed();
 		$Fieldset->setHtmlCode( $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitudeOriginal()) );
@@ -188,7 +188,7 @@ class ElevationInfo {
 
 		$Code  = '<table class="fullwidth zebra-style small">';
 		$Code .= '<thead>';
-		$Code .= '<tr><th class="r">'.__('Treshold').':</th>';
+		$Code .= '<tr><th class="r">'.__('Threshold').':</th>';
 		foreach ($TresholdRange as $t)
 			$Code .= '<th>'.$t.'</th>';
 		$Code .= '</tr>';
@@ -272,7 +272,7 @@ class ElevationInfo {
 				__('The calculation of elevation data is very difficult - there is not one single solution. '.
 					'Bad gps data can be corrected via srtm-data but these are only available in a 90x90m grid and not always perfectly accurate. '.
 					'In addition, every platform uses another algorithm to determine the elevation value (for up-/downwards). '.
-					'We give you therefore the possibility to choose algorithm and treshold such that the values fit your experiences.')
+					'We give you therefore the possibility to choose algorithm and threshold such that the values fit your experience.')
 		);
 
 		$Fieldset->display();

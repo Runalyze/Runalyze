@@ -38,7 +38,7 @@ class Temperature extends ActivitySeries {
 		$this->Color = self::COLOR;
 
 		$this->UnitString = '°C';
-		$this->UnitDecimals = 0;
+		$this->UnitDecimals = 1;
 
 		$this->TickSize = 10;
 		$this->TickDecimals = 0;
@@ -46,5 +46,14 @@ class Temperature extends ActivitySeries {
 		$this->ShowAverage = true;
 		$this->ShowMaximum = false;
 		$this->ShowMinimum = false;
+	}
+
+	/**
+	 * Average
+	 * @param int $decimals [optional] 
+	 * @return int
+	 */
+	protected function avg($decimals = 1) {
+		return parent::avg($decimals);
 	}
 }

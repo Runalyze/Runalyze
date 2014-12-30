@@ -26,7 +26,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		<?php _e('You can\'t reinstall Runalyze. If something does not work, don\'t hesitate to contact us.'); ?>
+		<?php _e('You cannot reinstall Runalyze. If something does not work, please do not hesitate to contact us.'); ?>
 	</p>
 
 	<p class="text">
@@ -34,7 +34,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="warning">
-		<?php _e('If you want to make a new installation of Runalyze you have to delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
+		<?php _e('If you want to reinstall Runalyze please delete you have to delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
 	</p>
 
 <?php elseif ($this->currentStep == self::$START): ?>
@@ -85,12 +85,12 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		<?php _e('Runalyze does need an MySQL database.'); ?>
+		<?php _e('Runalyze does need a MySQL database.'); ?>
 	</p>
 
 	<?php if ($this->connectionIsIncorrect): ?>
 		<p class="error">
-			<?php _e('The connection settings are wrong. We\'re not able to connect to the database.'); ?>
+			<?php _e('The connection settings are incorrect. We are not able to connect to the database.'); ?>
 		</p>
 	<?php else: ?>
 		<p class="okay">
@@ -139,7 +139,7 @@ foreach ($Steps as $i => $Name) {
 
 	<?php if ($this->prefixIsAlreadyUsed): ?>
 	<p class="error">
-		<?php _e('This prefix is already used.'); ?>
+		<?php _e('This prefix is already being used.'); ?>
 	</p>
 	<?php elseif (!$this->connectionIsIncorrect): ?>
 	<p class="okay">
@@ -155,7 +155,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<p class="text">
-		<?php _e('You can activite a debug toolbar to see specific information if problems occur.'); ?>
+		<?php _e('You can activate a debug toolbar to see specific information if problems occur.'); ?>
 	</p>
 
 	<p class="text">
@@ -180,10 +180,10 @@ foreach ($Steps as $i => $Name) {
 			<strong><?php _e('Garmin API key'); ?>*</strong>
 			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>">
 			<?php if ($_SERVER['SERVER_NAME'] == 'localhost'): ?>
-				<small>(<?php _e('not neccessary for localhost'); ?></small>
+				<small>(<?php _e('not necessary for localhost'); ?></small>
 			<?php else: ?>
 				<small>
-					(<?php _e('neccessary for'); ?> <em><?php echo ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST']; ?></em>,
+					(<?php _e('necessary for'); ?> <em><?php echo ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST']; ?></em>,
 					<?php _e('see'); ?> <a href="http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/">developer.garmin.com</a>)
 				</small>
 			<?php endif; ?>
@@ -192,13 +192,13 @@ foreach ($Steps as $i => $Name) {
 
 	<p class="text">
 		<small>
-			* <?php _e('A Garmin API key is neccessary for using Garmin Communicator (enables direct imports from any Garmin Forerunner).'); ?>
+			* <?php _e('A Garmin API key is necessary for using Garmin Communicator (enables direct imports from any Garmin Forerunner).'); ?>
 		</small>
 	</p>
 
 	<?php if ($this->cantWriteConfig): ?>
 	<p class="error">
-		<?php _e('The configuration file can\'t be written.'); ?>
+		<?php _e('The configuration file cannot be written.'); ?>
 	</p>
 
 	<?php if (empty($this->writeConfigFileString)): ?>
@@ -294,7 +294,7 @@ foreach ($CHMOD_FOLDERS as $folder) {
 
 	<noscript>
 		<p class="error" id="JSerror">
-			<?php _e('Please activate JavaScript, Runalyze won\'t work without.'); ?>
+			<?php _e('Please activate JavaScript, Runalyze will not work without.'); ?>
 		</p>
 	</noscript>
 

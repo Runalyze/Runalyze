@@ -17,7 +17,7 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_dataset';
-		$this->title = __('Dataset');
+		$this->title = __('dataset');
 	}
 
 	/**
@@ -26,7 +26,7 @@ class ConfigTabDataset extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Dataset = new FormularFieldset(__('Your Dataset'));
 		$Dataset->setHtmlCode($this->getCode());
-		$Dataset->addInfo( __('You can specify which values to show up in the overview of your activities.').'<br>'.
+		$Dataset->addInfo( __('You can specify which values show up in the overview of your activities.').'<br>'.
 							__('This does not influence the detailed activity view, the form or any plugin.') );
 
 		$this->Formular->addFieldset($Dataset);

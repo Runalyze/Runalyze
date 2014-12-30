@@ -30,7 +30,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 */
 	public function setFieldsetsAndFields() {
 		$Panels = new FormularFieldset( __('Panels') );
-		$Panels->addInfo( __('Panels are small statistics shown always on the right side.') );
+		$Panels->addInfo( __('Panels are small statistics always shown on the right side.') );
 		$Panels->setHtmlCode($this->getCodeFor( PluginType::Panel ));
 		$Panels->setCollapsed();
 
@@ -114,7 +114,7 @@ class ConfigTabPlugins extends ConfigTab {
 
 		switch($PluginType) {
 			case 'panel':
-				$Code .= HTML::info(__('* Hidden plugins do only show the heading.'));
+				$Code .= HTML::info(__('* Hidden plugins only show their headings.'));
 				break;
 			case 'stat':
 				$Code .= HTML::info(__('* Hidden plugins are grouped as \'Miscellaneous\'.'));

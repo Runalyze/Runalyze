@@ -55,7 +55,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		echo HTML::warning(
 			__('Make sure that your activities hold the correct distance.'.
-				'Only races with exactly 10.00 km will be considered as race over 10 kilometers.') );
+				'Only races with exactly 10.00 km will be considered as a race over 10 kilometers.') );
 	}
 
 	/**
@@ -75,8 +75,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function setOwnNavigation() {
 		$LinkList  = '';
-		$LinkList .= '<li>'.Ajax::change(__('Personal Bests'), 'statistics-inner', '#bestzeiten', 'triggered').'</li>';
-		$LinkList .= '<li>'.Ajax::change(__('All Races'), 'statistics-inner', '#wk-tablelist').'</li>';
+		$LinkList .= '<li>'.Ajax::change(__('Personal bests'), 'statistics-inner', '#bestzeiten', 'triggered').'</li>';
+		$LinkList .= '<li>'.Ajax::change(__('All races'), 'statistics-inner', '#wk-tablelist').'</li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}

@@ -341,7 +341,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			}
 		}
 
-		return array('name' => __('Training Types'), 'array' => $type_data, 'foreach' => $type_foreach);
+		return array('name' => __('Training types'), 'array' => $type_data, 'foreach' => $type_foreach);
 	}
 
 	/**
@@ -403,7 +403,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 			for ($speed = $speed_min; $speed > ($speed_max - $speed_step); $speed -= $speed_step) {
 				$name = ($speed <= $speed_max)
-					? '<small>'.__('faster then').'</small>&nbsp;'.$Pace->setTime($speed + $speed_step)->valueWithAppendix()
+					? '<small>'.__('faster than').'</small>&nbsp;'.$Pace->setTime($speed + $speed_step)->valueWithAppendix()
 					: '<small>'.__('up to').'</small>&nbsp;'.$Pace->setTime($speed)->valueWithAppendix();
 				$speed_foreach[] = array( 'name' => $name, 'id' => max($speed, $speed_max));
 			}

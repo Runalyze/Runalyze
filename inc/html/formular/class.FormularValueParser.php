@@ -52,7 +52,7 @@ class FormularValueParser {
 	static public $PARSER_BOOL = 'bool';
 
 	/**
-	 * Parser: comma seperated string <=> checkboxes
+	 * Parser: comma separated string <=> checkboxes
 	 * @var string 
 	 */
 	static public $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
@@ -142,7 +142,7 @@ class FormularValueParser {
 	 */
 	static protected function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
-			return __('The field must not be empty.');
+			return __('The field can not be left empty.');
 
 		return true;
 	}
@@ -166,7 +166,7 @@ class FormularValueParser {
 	 */
 	static protected function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
-			return __('You have to enter a number.');
+			return __('Please enter a number.');
 
 		$_POST[$key] = (int)$_POST[$key];
 
@@ -308,7 +308,7 @@ class FormularValueParser {
 	}
 
 	/**
-	 * Validator: checkbox array => comma seperated string
+	 * Validator: checkbox array => comma separated string
 	 * @param string $key
 	 * @param array $options
 	 * @return boolean
@@ -323,7 +323,7 @@ class FormularValueParser {
 	}
 
 	/**
-	 * Parse: comma seperated string => checkbox array
+	 * Parse: comma separated string => checkbox array
 	 * @param string $value
 	 */
 	static protected function parseArrayCheckboxes(&$value) {

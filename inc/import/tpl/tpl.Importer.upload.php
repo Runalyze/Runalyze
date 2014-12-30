@@ -59,12 +59,12 @@ if (!qq.supportedFeatures.ajaxUploading)
 	</p>
 
 	<p class="info">
-		<?php _e('Allowed file extensions:'); ?> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
+		<?php _e('Supported file extensions:'); ?> <?php echo '*.'.implode(', *.', $this->Filetypes); ?>
 	</p>
 
 	<?php if (Filesystem::getMaximumFilesize() != INFINITY): ?>
 	<p class="info">
-		<?php _e('Allowed file size:'); ?> <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
+		<?php _e('Supported file size:'); ?> <?php echo Filesystem::getMaximumFilesizeAsString(); ?>
 	</p>
 	<?php endif; ?>
 

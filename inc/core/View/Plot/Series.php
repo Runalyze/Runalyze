@@ -134,9 +134,10 @@ class Series {
 
 	/**
 	 * Average
+	 * @param int $decimals [optional]
 	 * @return int
 	 */
-	protected function avg() {
-		return round( array_sum($this->Data)/count($this->Data) );
+	protected function avg($decimals = 0) {
+		return round( array_sum($this->Data)/count($this->Data), $decimals );
 	}
 }

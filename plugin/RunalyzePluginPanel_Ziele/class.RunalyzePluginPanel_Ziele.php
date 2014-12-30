@@ -50,7 +50,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		echo HTML::p( __('This plugin tracks your distances for chosen time ranges.') );
 		echo HTML::p( __('You can set a goal (value &gt; 0) for every time range. If it is set, you will see how much you have to run to reach it.') );
 		echo HTML::p( __('A virtual Pace Bunny <em>reaches</em> the goal with a steady performance - you can see how far you are ahead or behind.') );
-		echo HTML::p( __('Note: &quot;Saison&quot; refers to the current saison in the german &quot;kmspiel&quot;.') );
+		echo HTML::p( __('Note: &quot;Saison&quot; refers to the current season in the german &quot;kmspiel&quot;.') );
     }
 
 	/**
@@ -368,7 +368,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		$timeset['woche']  = array('name' => __('Week'), 'start' => new DateTime(date('o-\\WW')), 'end' => new Datetime(date('o-\\WW')." + 6 days"));
 		$timeset['mon']    = array('name' => __('Month'), 'start' => new DateTime(date("Y-m-01")), 'end' => new Datetime(date('Y-m-t')));
 		$timeset['hj']     = array('name' => __('Half-Year'), 'start' => new DateTime(date('m') < 7 ? date("Y-01-01") : date("Y-07-01")), 'end' => new Datetime(date('m') < 7 ? date("Y-06-30") : date('Y-12-31')));
-		$timeset['saison'] = array('name' => __('Saison'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Saison means the current saison in the german &quot;kmspiel&quot;'));
+		$timeset['saison'] = array('name' => __('Saison'), 'start' => $kmstart, 'end' => $kmend, 'note' => __('Note: Saison means the current season in the german &quot;kmspiel&quot;'));
 		$timeset['jahr']   = array('name' => __('Year'), 'start' => new DateTime(date("Y-01-01")), 'end' => new Datetime(date('Y-12-31')));
 
 		return $timeset;

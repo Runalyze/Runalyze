@@ -312,9 +312,9 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	private function addHandlesForMapsTo(Fieldset &$Fieldset) {
 		$Fieldset->addHandle( $this->handle('GMAP_PATH_BREAK'), array(
 			'label'		=> __('Map: interrupt route'),
-			'tooltip'	=> __('The gps path can be interrupted in case of <em>jumps</em> (e.g. by car/train/...).'.
-						'Finding these jumps is not easy. You can define up to what distance (in seconds by average pace)'.
-						'between two data points the path should be continued.')
+			'tooltip'	=> __('The gps path can be interrupted in case of <em>interruptions</em> (e.g. by car/train/...).'.
+						'Finding these interruptions is not easy. You can define up to which distance (in seconds by average pace)'.
+						'between two data points can be interpolated.')
 		));
 
 		$Fieldset->addHandle( $this->handle('GMAP_PATH_PRECISION'), array(
@@ -340,7 +340,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('ELEVATION_TRESHOLD'), array(
 			'label'		=> __('Elevation: threshold'),
-			'tooltip'	=> __('Treshold for the smoothing algorithm')
+			'tooltip'	=> __('Threshold for the smoothing algorithm')
 		));
 	}
 }

@@ -32,7 +32,7 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function getTitle() {
 		if ($this->Sport->usesDistance())
-			return __('Weekly kilometer').' '.$this->Year;
+			return __('Weekly kilometers').' '.$this->Year;
 
 		return __('Hours of training').' '.$this->Year;
 	}

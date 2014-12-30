@@ -29,7 +29,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 */
 	public function display() {
 		if (!$this->Training->isPublic()) {
-			echo HTML::error( __('This training is private and can\'t be shared.') );
+			echo HTML::error( __('This training is private and cannot be shared.') );
 			return;
 		}
 

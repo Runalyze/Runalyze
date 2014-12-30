@@ -23,7 +23,7 @@ $FIELDSETS = array(
 	),
 	array(
 		'id'		=> 'general',
-		'legend'	=> __('General Information'),
+		'legend'	=> __('General information'),
 		'fields'	=> array('time', 's', 'kcal', 'pulse_avg', 'pulse_max'),
 		'conf'		=> 'GENERAL'
 	),
@@ -287,7 +287,7 @@ $FIELDS = array(
 						'default'	=> '1'
 					),
 					'formular'	=> array(
-						'label'		=> __('VDOT for shape'),
+						'label'		=> __('VDOT for form'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)

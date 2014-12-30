@@ -8,12 +8,12 @@ $Frontend = new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('Runalyze is completly configurable and as detailed as no other tool for analyzing your activities.'); ?>
+		<?php _e('Runalyze is completely configurable and more detailed than any other tool for analyzing your activities.'); ?>
 	</p>
 
 	<p class="text">
-		<?php printf( __('Please look at our official website %s to get an overview of ower features.'), '<a href="http://runalyze.de/">runalyze.de</a>'); ?><br>
-		<?php printf( __('If you want to be informed about all changes and some hints, visit our blog at %s.'), '<a href="http://runalyze.de/blog/">runalyze.de/blog/</a>'); ?>
+		<?php printf( __('Please look at our official website %s to get an overview of our features.'), '<a href="http://runalyze.de/">runalyze.de</a>'); ?><br>
+		<?php printf( __('If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.'), '<a href="http://runalyze.de/blog/">runalyze.de/blog/</a>'); ?>
 	</p>
 
 	<p class="text">
@@ -30,7 +30,7 @@ $Frontend = new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('The main advantage of Runalyze is the ability to adapt everything to our personal needs and wishes.'); ?>
+		<?php _e('The main advantage of Runalyze is the ability to adapt everything to your personal needs and wishes.'); ?>
 		<?php _e('Have a look at the configuration window to see what we\'re talking about.'); ?>
 		<?php _e('You can define your own sports or activity types and choose your own way of presentation and configure some parameters of our experimental calculations.'); ?>
 	</p>
@@ -42,12 +42,12 @@ $Frontend = new Frontend();
 </div>
 <div class="panel-content">
 	<p class="text">
-		<?php _e('Please let us know if you have wishes or observe some bugs.'); ?>
-		<?php _e('We give our best to make Runalyze as pleasant for you as possible. - Therefore we have to know what you want.'); ?>
+		<?php _e('Please let us know if you have wishes or have encountered bugs.'); ?>
+		<?php _e('We give our best to make Runalyze as good as possible for you. - Therefore we would be interested in your suggestions for improvement.'); ?>
 	</p>
 
 	<p class="text">
-		<?php _e('You can contact us via mail:'); ?> <a href="mailto:support@runalyze.de" title="Support">support@runalyze.de</a>.
+		<?php _e('You can contact us via email:'); ?> <a href="mailto:support@runalyze.de" title="Support">support@runalyze.de</a>.
 	</p>
 
 	<ul class="blocklist blocklist-inline clearfix">

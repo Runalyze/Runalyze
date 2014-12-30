@@ -178,16 +178,16 @@ class AccountHandler {
 			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::$USER_MIN_LENGTH));
 
 		if (self::usernameExists($_POST['new_username']))
-			$errors[] = array('new_username' => __('This username is already used.'));
+			$errors[] = array('new_username' => __('This username is already being used.'));
 
 		if (self::mailExists($_POST['email']))
-			$errors[] = array('email' => __('This email is already used.'));
+			$errors[] = array('email' => __('This email address is already being used.'));
 
 		if ($_POST['password'] != $_POST['password_again'])
 				$errors[] = array('password_again' => __('The passwords have to be the same.'));
 
 		if (strlen($_POST['password']) < self::$PASS_MIN_LENGTH)
-			$errors[] = array('password' => sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH));
+			$errors[] = array('password' => sprintf( __('The password has to contain at least %s characters.'), self::$PASS_MIN_LENGTH));
 
 		if (empty($errors))
 			$errors = self::createNewUserFromPost();
@@ -214,7 +214,7 @@ class AccountHandler {
 		self::$NEW_REGISTERED_ID = $newAccountId;
 
 		if ($newAccountId === false)
-			$errors[] = __('There went something wrong. Please contact the administrator.');
+			$errors[] = __('Something went wrong. Please contact the administrator.');
 		else {
 			self::importEmptyValuesFor($newAccountId);
 			self::setSpecialConfigValuesFor($newAccountId);
@@ -242,17 +242,17 @@ class AccountHandler {
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
-			$message  = __('Forgot you password').' '.$account['name']."?<br><br>\r\n\r\n";
+			$message  = __('Did you forgot your password').' '.$account['name']."?<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= self::getChangePasswordLink($pwHash);
 
 			if (System::sendMail($account['mail'], $subject, $message))
 				return __('The link has been sent and will be valid for 24 hours.');
 			else {
-				$string = __('Sending the link did not work. Please contact the administrator.');
+				$string = __('Unable to send link. Please contact the administrator.');
 
 				if (System::isAtLocalhost()) {
-					$string .= '<br>'.__('Your local server has no smtp-server. You have to contact the administrator.');
+					$string .= '<br>'.__('Your local server has no smtp-server. Please contact the administrator.');
 					Error::getInstance()->addDebug('Link for changing password: '.self::getChangePasswordLink($pwHash));
 				}
 		
@@ -260,7 +260,7 @@ class AccountHandler {
 			}
 		}
 
-		return __('The username is not known.');
+		return __('The username is unknown.');
 	}
 
 
@@ -461,8 +461,8 @@ class AccountHandler {
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
                 
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
-		$message  = __('You want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
-		$message .= __('Finish your deletion by accessing the following link: ')."<br>\r\n";
+		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
+		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
 		$message .= $deletionLink;
 
 		if (!System::sendMail($account['mail'], $subject, $message)) {
