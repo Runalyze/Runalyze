@@ -136,7 +136,7 @@ class VDOT {
 	 * @param float $hrInPercent in [0.0, 1.0]
 	 */
 	public function fromPaceAndHR($distance, $seconds, $hrInPercent) {
-		if ($hrInPercent <= 0) {
+		if ($hrInPercent <= 0 || $seconds == 0) {
 			$this->Value = 0;
 		} else {
 			$speedReallyAchieved = 60*1000*$distance / $seconds;

@@ -146,9 +146,9 @@ abstract class Object {
 	}
 
 	/**
-	 * Get array for this key
+	 * Get value for this key
 	 * @param string $key
-	 * @return array
+	 * @return mixed
 	 * @throws \InvalidArgumentException
 	 */
 	public function get($key) {

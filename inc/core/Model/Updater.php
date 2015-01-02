@@ -112,7 +112,9 @@ abstract class Updater {
 
 		foreach ($keys as $key) {
 			if (!$this->ignore($key) && $this->hasChanged($key)) {
-				$set[] = '`'.$key.'` = '.$this->PDO->quote($this->value($key));
+				$value = $this->value($key);
+				$quoted = is_null($value) ? 'NULL' : $this->PDO->quote($value);
+				$set[] = '`'.$key.'` = '.$quoted;
 			}
 		}
 

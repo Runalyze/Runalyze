@@ -339,6 +339,19 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
+	 * Get value for this key
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function get($key) {
+		if ($key == self::TEMPERATURE) {
+			return $this->Data[self::TEMPERATURE];
+		}
+
+		return parent::get($key);
+	}
+
+	/**
 	 * Synchronize
 	 */
 	public function synchronize() {
@@ -608,5 +621,15 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function notes() {
 		return $this->Data[self::NOTES];
+	}
+
+	/**
+	 * Unset running values
+	 */
+	public function unsetRunningValues() {
+		$this->set(Object::VDOT_BY_TIME, 0);
+		$this->set(Object::VDOT, 0);
+		$this->set(Object::VDOT_WITH_ELEVATION, 0);
+		$this->set(Object::JD_INTENSITY, 0);
 	}
 }

@@ -66,6 +66,15 @@ class Data extends \Runalyze\Configuration\Category {
 	}
 
 	/**
+	 * Recalculate starttime
+	 */
+	public function recalculateStartTime() {
+		$this->updateStartTime(
+			DB::getInstance()->query('SELECT MIN(`time`) FROM `'.PREFIX.'training`')->fetchColumn()
+		);
+	}
+
+	/**
 	 * Maximal heart rate
 	 * @return int
 	 */

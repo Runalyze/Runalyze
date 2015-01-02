@@ -10,7 +10,7 @@ use Runalyze\View\Activity;
 use Runalyze\View\Plot\Series as PlotSeries;
 use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Configuration;
-use Runalyze\Data\Elevation;
+use Runalyze\Data;
 use Runalyze\Model\Trackdata;
 
 /**
@@ -96,7 +96,7 @@ class ElevationAlgorithms extends ActivityPlot {
 			$treshold = Configuration::ActivityView()->elevationMinDiff();
 		}
 
-		$Calculator = new Elevation\Calculation\Calculator($this->Context->route()->elevations());
+		$Calculator = new Data\Elevation\Calculation\Calculator($this->Context->route()->elevations());
 		$Calculator->setMethod($Method);
 		$Calculator->setThreshold($treshold);
 		$Calculator->calculate();

@@ -112,6 +112,10 @@ class Factory {
 			return $this->fetch($tablename, $id);
 		}
 
+		// TODO: 
+		// provide somehow an internal cache to not read the file every time
+		// this needs static properties: ::$CACHE['accountID']['table']['PK']
+
 		$Data = Cache::get($tablename.$id);
 		if (is_null($Data)) {
 			$Data = $this->fetch($tablename, $id);
@@ -134,6 +138,8 @@ class Factory {
 		$field = $this->primaryKey($tablename);
 		$AndAccountID = $this->hasAccountID() && $this->tableHasAccountid($tablename) ? 'AND `accountid`='.(int)$this->AccountID : '';
 
+		// TODO:
+		// provide a full fetch for tables as sport / type
 		$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
 
 		if (!is_array($result)) {

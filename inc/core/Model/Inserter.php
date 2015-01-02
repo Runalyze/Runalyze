@@ -34,6 +34,11 @@ abstract class Inserter {
 	protected $Prepared = null;
 
 	/**
+	 * @var int
+	 */
+	protected $InsertedID = false;
+
+	/**
 	 * Construct inserter
 	 * @param \PDO $connection
 	 * @param \Runalyze\Model\Object $object [optional]
@@ -102,6 +107,8 @@ abstract class Inserter {
 		} else {
 			$this->runManualInsert();
 		}
+
+		$this->InsertedID = $this->PDO->lastInsertId();
 	}
 
 	/**
@@ -125,7 +132,8 @@ abstract class Inserter {
 		$values = array();
 
 		foreach ($keys as $key) {
-			$values[] = $this->PDO->quote($this->value($key));
+			$value = $this->value($key);
+			$values[] = is_null($value) ? 'NULL' : $this->PDO->quote($value);
 		}
 
 		$this->PDO->exec('
@@ -172,6 +180,6 @@ abstract class Inserter {
 			throw new \RuntimeException('Only objects with id serve an inserted id.');
 		}
 
-		return $this->PDO->lastInsertId();
+		return $this->InsertedID;
 	}
 }
