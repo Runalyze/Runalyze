@@ -43,9 +43,12 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 		$Loop->nextStep();
 		$this->assertEquals(4, $Loop->current('foo'));
 		$this->assertEquals(8, $Loop->current('bar'));
-		$this->assertEquals(2+3+4, $Loop->sum('foo'));
+		$this->assertEquals(array(3,4), $Loop->slice('foo'));
+		$this->assertEquals(array(6,8), $Loop->slice('bar'));
+		$this->assertEquals(3+4, $Loop->sum('foo'));
+		$this->assertEquals(8, $Loop->max('bar'));
 		$this->assertEquals(8-4, $Loop->difference('bar'));
-		$this->assertEquals((4+6+8)/3, $Loop->average('bar'));
+		$this->assertEquals((6+8)/2, $Loop->average('bar'));
 
 		$Loop->nextStep();
 		$this->assertTrue($Loop->isAtEnd());
@@ -53,6 +56,7 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 		$Loop->reset();
 		$this->assertFalse($Loop->isAtEnd());
 		$this->assertEquals(1, $Loop->current('foo'));
+		$this->assertEquals(2, $Loop->current('bar'));
 	}
 
 }

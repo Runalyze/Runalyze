@@ -3081,6 +3081,17 @@ Runalyze.Tablesorter = (function($, Parent){
 		},
 		type: 'numeric'
 	});
+
+	parent.addParser({
+		id: 'order',
+		is: function(s) {
+			return false;
+		},
+		format: function(s) {
+			return s.replace(/[(]/g, '99999').replace(/[.)]/g, '');
+		},
+		type: 'numeric'
+	});
 })(jQuery, jQuery.tablesorter, Runalyze.Tablesorter);/*
  * Lib for logging errors in Runalyze
  * 
@@ -3291,6 +3302,7 @@ Runalyze.Overlay = (function($, Parent){
 		selectorBackground:	'#overlay',
 		selectorAll:		'#overlay, #ajax, #ajax-navigation',
 		selectorOuter:		'#ajax-outer',
+		selectorNavigation:	'#ajax-navigation',
 		classBig:			'big-window',
 		classSmall:			'small-window',
 		classFullscreen:	'fullscreen',
@@ -3402,6 +3414,7 @@ Runalyze.Overlay = (function($, Parent){
 				$allElements.hide();
 				self.removeClasses();
 				removeBodyClass();
+				$(options.selectorNavigation).remove();
 			});
 		}
 	};

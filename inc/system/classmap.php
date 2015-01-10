@@ -207,7 +207,6 @@ $CLASSMAP = array(
 'SearchLink' => 'training/search/class.SearchLink.php',
 'SearchResults' => 'training/search/class.SearchResults.php',
 'ElevationInfo' => 'training/view/class.ElevationInfo.php',
-'RoundsInfo' => 'training/view/class.RoundsInfo.php',
 'TrainingView' => 'training/view/class.TrainingView.php',
 'TrainingViewIFrame' => 'training/view/class.TrainingViewIFrame.php',
 'TrainingViewSection' => 'training/view/class.TrainingViewSection.php',

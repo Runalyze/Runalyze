@@ -8,6 +8,8 @@ use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
 use Runalyze\Calculation\Elevation;
 use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Context;
+use Runalyze\Model;
 
 /**
  * Display VDOT info for a training
@@ -18,16 +20,15 @@ use Runalyze\Activity\Distance;
 class VDOTinfo {
 	/**
 	 * Training object
-	 * @var \TrainingObject
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
-	 * Constructor
-	 * @param TrainingObject $Training Training object
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 	}
 
 	/**
@@ -50,13 +51,15 @@ class VDOTinfo {
 	 * Display header
 	 */
 	protected function displayHeader() {
-		echo HTML::h1( sprintf( __('VDOT calculation for: %s'), $this->Training->DataView()->getTitleWithCommentAndDate() ) );
+		echo HTML::h1( sprintf( __('VDOT calculation for: %s'), $this->Context->dataview()->titleWithComment() ) );
 	}
 
 	/**
 	 * Display as competition
 	 */
 	protected function displayAsCompetition() {
+		$VDOT = new JD\VDOT($this->Context->activity()->vdotByTime());
+
 		$Fieldset = new FormularFieldset( __('Standard calculation: As competition'));
 		$Fieldset->setHtmlCode('
 			<p class="info small">
@@ -65,15 +68,15 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>'.__('Distance').'</label>
-				<span class="as-input">'.$this->Training->DataView()->getDistanceString().'</span>
+				<span class="as-input">'.$this->Context->dataview()->distance().'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
-				<span class="as-input">'.$this->Training->getVdotByTime().'</span>
+				<span class="as-input">'.$VDOT->uncorrectedValue().'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('Duration').'</label>
-				<span class="as-input">'.$this->Training->DataView()->getTimeString().'</span>
+				<span class="as-input">'.$this->Context->dataview()->duration()->string().'</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -83,7 +86,8 @@ class VDOTinfo {
 	 * Display with heartrate
 	 */
 	protected function displayWithHeartrate() {
-		$vVDOTinPercent = JD\VDOT::percentageAt($this->Training->getPulseAvg() / Configuration::Data()->HRmax());
+		$VDOT = new JD\VDOT($this->Context->activity()->vdotByHeartRate(), new JD\VDOTCorrector(Configuration::Data()->vdotFactor()));
+		$vVDOTinPercent = JD\VDOT::percentageAt($this->Context->activity()->hrAvg() / Configuration::Data()->HRmax());
 
 		$Fieldset = new FormularFieldset( __('Correction: based on heartrate') );
 		$Fieldset->setHtmlCode('
@@ -94,11 +98,11 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>'.__('Heartrate').'</label>
-				<span class="as-input">'.$this->Training->DataView()->getPulseAvgInPercent().'HFmax</span>
+				<span class="as-input">'.$this->Context->dataview()->hrAvg()->inHRmax().' &#37;HRmax</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
-				<span class="as-input">'.$this->Training->getVdotUncorrected().'</span>
+				<span class="as-input">'.$VDOT->uncorrectedValue().'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('equals').'</label>
@@ -112,12 +116,7 @@ class VDOTinfo {
 	 * Display with corrector
 	 */
 	protected function displayWithCorrector() {
-		$VDOT = new JD\VDOT(0, new JD\VDOTCorrector(Configuration::Data()->vdotFactor()));
-		$VDOT->fromPaceAndHR(
-			$this->Training->getDistance(),
-			$this->Training->getTimeInSeconds(),
-			$this->Training->getPulseAvg() / Configuration::Data()->HRmax()
-		);
+		$VDOT = new JD\VDOT($this->Context->activity()->vdotByHeartRate(), new JD\VDOTCorrector(Configuration::Data()->vdotFactor()));
 
 		$Fieldset = new FormularFieldset( __('Correction: based on correction factor') );
 		$Fieldset->setHtmlCode('
@@ -146,11 +145,16 @@ class VDOTinfo {
 	 * Display with corrector
 	 */
 	protected function displayWithElevation() {
-		$up   = $this->Training->hasArrayAltitude() ? $this->Training->getElevationUp() : $this->Training->getElevation();
-		$down = $this->Training->hasArrayAltitude() ? $this->Training->getElevationDown() : $this->Training->getElevation();
+		if ($this->Context->hasRoute() && ($this->Context->route()->elevationUp() > 0 || $this->Context->route()->elevationDown())) {
+			$up = $this->Context->route()->elevationUp();
+			$down = $this->Context->route()->elevationDown();
+		} else {
+			$up = $this->Context->activity()->elevation();
+			$down = $up;
+		}
 
 		$Modifier = new Elevation\DistanceModifier(
-			$this->Training->getDistance(),
+			$this->Context->activity()->distance(),
 			$up,
 			$down,
 			Configuration::Vdot()
@@ -159,8 +163,8 @@ class VDOTinfo {
 		$VDOT = new JD\VDOT(0, new JD\VDOTCorrector(Configuration::Data()->vdotFactor()));
 		$VDOT->fromPaceAndHR(
 			$Modifier->correctedDistance(),
-			$this->Training->getTimeInSeconds(),
-			$this->Training->getPulseAvg() / Configuration::Data()->HRmax()
+			$this->Context->activity()->duration(),
+			$this->Context->activity()->hrAvg() / Configuration::Data()->HRmax()
 		);
 
 		$Fieldset = new FormularFieldset( __('Correction: considering elevation') );

@@ -55,4 +55,17 @@ class Loop extends \Runalyze\Model\Loop {
 			$this->Object->at($this->Index, Object::LONGITUDES)
 		);
 	}
+
+	/**
+	 * @return array
+	 */
+	public function sliceElevation() {
+		if ($this->Object->hasCorrectedElevations()) {
+			return $this->slice(Object::ELEVATIONS_CORRECTED);
+		} elseif ($this->Object->hasOriginalElevations()) {
+			return $this->slice(Object::ELEVATIONS_ORIGINAL);
+		}
+
+		return array();
+	}
 }

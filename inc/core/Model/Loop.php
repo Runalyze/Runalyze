@@ -62,6 +62,13 @@ class Loop {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function num() {
+		return $this->TotalSize;
+	}
+
+	/**
 	 * Reset
 	 * 
 	 * Sets the internal pointer to the beginning.
@@ -111,7 +118,7 @@ class Loop {
 	 * @throws \InvalidArgumentException
 	 */
 	protected function move($key, $value) {
-		$this->moveTo($key, $this->current($key) + $value);
+		$this->moveTo($key, $this->Index == 0 ? $value : $this->current($key) + $value);
 	}
 
 	/**
@@ -128,6 +135,13 @@ class Loop {
 	public function goToIndex($index) {
 		$this->LastIndex = $this->Index;
 		$this->Index = $index;
+	}
+
+	/**
+	 * Go to end
+	 */
+	public function goToEnd() {
+		$this->goToIndex($this->TotalSize - 1);
 	}
 
 	/**
@@ -190,12 +204,33 @@ class Loop {
 		$sum = 0;
 
 		if ($this->Object->has($key)) {
-			for ($i = $this->LastIndex; $i <= $this->Index; ++$i) {
+			$start = $this->LastIndex == 0 ? $this->LastIndex : $this->LastIndex + 1;
+			for ($i = $start; $i <= $this->Index; ++$i) {
 				$sum += $this->Object->at($i, $key);
 			}
 		}
 
 		return $sum;
+	}
+
+	/**
+	 * Maximal value for current section
+	 * @param enum $key
+	 * @return float
+	 */
+	public function max($key) {
+		$max = -PHP_INT_MAX;
+
+		if ($this->Object->has($key)) {
+			$start = $this->LastIndex == 0 ? $this->LastIndex : $this->LastIndex + 1;
+			for ($i = $start; $i <= $this->Index; ++$i) {
+				if ($this->Object->at($i, $key) > $max) {
+					$max = $this->Object->at($i, $key);
+				}
+			}
+		}
+
+		return $max;
 	}
 
 	/**
@@ -208,6 +243,19 @@ class Loop {
 			return 0;
 		}
 
-		return $this->sum($key) / ($this->Index - $this->LastIndex + 1);
+		return $this->sum($key) / ($this->Index - $this->LastIndex + (int)($this->LastIndex == 0));
+	}
+
+	/**
+	 * @param enum $key
+	 * @return array
+	 */
+	public function slice($key) {
+		if ($this->Object->has($key)) {
+			$start = $this->LastIndex == 0 ? $this->LastIndex : $this->LastIndex + 1;
+			return array_slice($this->Object->get($key), $start, $this->Index - $start + 1);
+		}
+
+		return array();
 	}
 }

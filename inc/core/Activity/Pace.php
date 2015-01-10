@@ -95,6 +95,16 @@ class Pace {
 	}
 
 	/**
+	 * Read pace from min/km
+	 * @param string $string see Duration::fromString()
+	 */
+	public function fromMinPerKm($string) {
+		$Duration = new Duration($string);
+
+		$this->setTime($Duration->seconds())->setDistance(1);
+	}
+
+	/**
 	 * Set time
 	 * @param int $time [s]
 	 * @return \Runalyze\Activity\Pace $this-reference
@@ -137,6 +147,13 @@ class Pace {
 	 */
 	public function isEmpty() {
 		return ($this->Distance <= 0 || $this->Time <= 0);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function secondsPerKm() {
+		return $this->Time / $this->Distance;
 	}
 
 	/**
@@ -256,6 +273,10 @@ class Pace {
 	public function compareTo(Pace $other, $raw = false) {
 		if ($this->Unit != $other->unit()) {
 			throw new \InvalidArgumentException('Pace objects must have the same unit.');
+		}
+
+		if ($this->secondsPerKm() == 0 || $other->secondsPerKm() == 0) {
+			return '';
 		}
 
 		switch ($this->Unit) {

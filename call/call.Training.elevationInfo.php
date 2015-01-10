@@ -5,7 +5,9 @@
  */
 require '../inc/class.Frontend.php';
 
+use Runalyze\View\Activity\Context;
+
 $Frontend = new Frontend();
 
-$ElevationInfo = new ElevationInfo(new TrainingObject(Request::sendId()));
+$ElevationInfo = new ElevationInfo(new Context(Request::sendId(), SessionAccountHandler::getId()));
 $ElevationInfo->display();

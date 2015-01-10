@@ -182,6 +182,11 @@ class Duration {
 		}
 
 		$time = DateTime::createFromFormat('!U', (int)round($this->Time, $decimals), new DateTimeZone('UTC'));
+
+		if ($time === false) {
+			throw new \InvalidArgumentException('Can\'t format time (t = '.((int)round($this->Time)).').');
+		}
+
 		return $time->format($format);
 	}
 
@@ -232,5 +237,45 @@ class Duration {
 	 */
 	public function isZero() {
 		return ($this->Time == 0);
+	}
+
+	/**
+	 * Compare
+	 * @param \Runalyze\Activity\Duration $other
+	 * @param boolean $invert [optional] by default, larger is 'better'; set to true to invert that
+	 * @param boolean $raw [optional]
+	 * @throws \InvalidArgumentException
+	 * @return string
+	 */
+	public function compareTo(Duration $other, $invert = false, $raw = false) {
+		if ($this->seconds() == 0 || $other->seconds() == 0) {
+			return '';
+		}
+
+		$CompareTime = new Duration(round(abs($this->seconds() - $other->seconds())));
+		$isPositive = !$invert ? $this->seconds() > $other->seconds() : $this->seconds() <= $other->seconds();
+
+		return $this->formatComparison($CompareTime->string(), $isPositive, $raw);
+	}
+
+	/**
+	 * Format comparison
+	 * @param string $string e.g. '0:27'
+	 * @param boolean $isPositive
+	 * @param boolean $raw [optional]
+	 * @return string
+	 */
+	protected function formatComparison($string, $isPositive, $raw = false) {
+		$class = ($isPositive) ? 'plus' : 'minus';
+		$sign = ($isPositive) ? '+' : '-';
+
+		if ($raw) {
+			return $sign.$string;
+		}
+
+		/**
+		 * @codeCoverageIgnore
+		 */
+		return '<span class="'.$class.'">'.$sign.$string.'</span>';
 	}
 }
