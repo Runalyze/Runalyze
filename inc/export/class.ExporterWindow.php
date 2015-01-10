@@ -35,8 +35,10 @@ class ExporterWindow {
 	 * Handle request
 	 */
 	private function handleRequest() {
-		if (strlen(Request::param('public')) > 0)
+		if (strlen(Request::param('public')) > 0) {
 			DB::getInstance()->update('training', $this->TrainingID, 'is_public', Request::param('public') == 'true' ? 1 : 0);
+			// TODO: clear cache
+		}
 	}
 
 	/**
@@ -62,8 +64,8 @@ class ExporterWindow {
 		$Exporter = new ExporterFactory( Request::param('type') );
 		$Exporter->display();
 
-		echo HTML::br();
-		echo Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'">&laquo; '.__('back to list').'</a>', 'small');
+		echo '<p class="text">&nbsp;</p>';
+		echo '<p class="text">'.Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'">&laquo; '.__('back to list').'</a>', 'small').'</p>';
 	}
 
 	/**
@@ -84,9 +86,10 @@ class ExporterWindow {
 	 * Display privacy information
 	 */
 	protected function displayPrivacyInfo() {
-		$Training = new TrainingObject($this->TrainingID);
+		$Factory = Runalyze\Context::Factory();
+		$Activity = $Factory->activity($this->TrainingID);
 
-		if (!$Training->isPublic()) {
+		if (!$Activity->isPublic()) {
 			echo HTML::info( __('The training is currently <strong>private</strong>').'<br>
 				'.Ajax::window('<a href="'.self::$URL.'?id='.$this->TrainingID.'&public=true">&nbsp;&raquo; '.__('make it public').'</a>', 'small'));
 		} else {

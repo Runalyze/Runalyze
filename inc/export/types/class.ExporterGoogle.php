@@ -22,27 +22,20 @@ class ExporterGoogle extends ExporterAbstractSocialShare {
 	 * Display
 	 */
 	public function display() {
-		if (!$this->Training->isPublic()) {
+		if (!$this->Context->activity()->isPublic()) {
 			echo HTML::error( __('This training is private and cannot be shared.') );
 			return;
 		}
 
+		$url = 'https://plus.google.com/share?url='.urlencode($this->getPublicURL()).'&h1=de';
+
 		$Linklist = new BlocklinkList();
+		$Linklist->addCompleteLink($this->externalLink($url, __('Share +1')) );
 		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
 		echo HTML::info( __('You will be forwared to Google+, where you can define which text shall be displayed.') );
 
 		$this->throwLinkErrorForLocalhost();
-	}
-
-	/**
-	 * Get link
-	 * @return string 
-	 */
-	protected function getLink() {
-		$URL = 'https://plus.google.com/share?url='.urlencode($this->Training->Linker()->publicUrl()).'&h1=de';
-
-		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/google.png);"><strong>Share +1</strong></a>';
 	}
 }

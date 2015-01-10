@@ -31,7 +31,7 @@ class ExporterKML extends ExporterAbstractFile {
 	 * Set file content
 	 */
 	protected function setFileContent() {
-		if (!$this->Training->GpsData()->hasPositionData()) {
+		if (!$this->Context->hasRoute() || !$this->Context->route()->hasPositionData()) {
 			$this->addError( __('The training does not contain gps-data and cannot be saved as kml-file.') );
 
 			return;
@@ -62,9 +62,11 @@ class ExporterKML extends ExporterAbstractFile {
 	protected function setTrack() {
 		$Track = '';
 
-		$this->Training->GpsData()->startLoop();
-		while ($this->Training->GpsData()->nextStep())
-			$Track .= $this->Training->GpsData()->getLongitude().','.$this->Training->GpsData()->getLatitude().NL;
+		$Loop = new Runalyze\Model\Route\Loop($this->Context->route());
+
+		while ($Loop->nextStep()) {
+			$Track .= $Loop->longitude().','.$Loop->latitude().NL;
+		}
 
 		$this->XML->Folder->Placemark->LineString->addChild('coordinates', $Track);
 	}
@@ -74,7 +76,7 @@ class ExporterKML extends ExporterAbstractFile {
 	 * @return string
 	 */
 	protected function getNameForKml() {
-		return date('Y-m-d', $this->Training->get('time')).': '.$this->Training->DataView()->getTitle();
+		return $this->Context->dataview()->date('Y-m-d').': '.$this->Context->dataview()->titleWithComment();
 	}
 
 	/**

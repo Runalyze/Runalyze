@@ -3,6 +3,10 @@
  * This file contains class::ExporterGPX
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\Model\Trackdata;
+use Runalyze\Model\Route;
+
 /**
  * Exporter for: GPX
  * 
@@ -34,7 +38,7 @@ class ExporterGPX extends ExporterAbstractFile {
 	 * Set file content
 	 */
 	protected function setFileContent() {
-		if (!$this->Training->GpsData()->hasPositionData()) {
+		if (!$this->Context->hasRoute() || !$this->Context->route()->hasPositionData()) {
 			$this->addError( __('The training does not contain gps-data and cannot be saved as gpx-file.') );
 
 			return;
@@ -63,22 +67,30 @@ class ExporterGPX extends ExporterAbstractFile {
 	 * Add track to xml 
 	 */
 	protected function setTrack() {
-		$Starttime = $this->Training->get('time');
-		$GPS = $this->Training->GpsData();
-		$GPS->startLoop();
+		$Starttime = $this->Context->activity()->timestamp();
 
-		while ($GPS->nextStep()) {
+		$Trackdata = new Trackdata\Loop($this->Context->trackdata());
+		$Route = new Route\Loop($this->Context->route());
+
+		$hasElevation = $this->Context->route()->hasOriginalElevations();
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+
+		while ($Trackdata->nextStep()) {
+			$Route->nextStep();
+
 			$Trackpoint = $this->Track->addChild('trkpt');
-			$Trackpoint->addAttribute('lat', $GPS->getLatitude());
-			$Trackpoint->addAttribute('lon', $GPS->getLongitude());
+			$Trackpoint->addAttribute('lat', $Route->latitude());
+			$Trackpoint->addAttribute('lon', $Route->longitude());
+			$Trackpoint->addChild('time', $this->timeToString($Starttime + $Trackdata->time()));
 
-			$Trackpoint->addChild('ele', $GPS->getElevation());
-			$Trackpoint->addChild('time', $this->timeToString($Starttime + $GPS->getTime()));
+			if ($hasElevation) {
+				$Trackpoint->addChild('ele', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+			}
 
-            if ($GPS->hasHeartrateData()) {
+			if ($hasHeartrate) {
                 $ext = $Trackpoint->addChild('extensions');
                 $tpe = $ext->addChild('gpxtpx:TrackPointExtension','','http://www.garmin.com/xmlschemas/TrackPointExtension/v1');
-                $tpe->addChild('gpxtpx:hr',$GPS->getHeartrate());
+                $tpe->addChild('gpxtpx:hr',  $Trackdata->current(Trackdata\Object::HEARTRATE));
             }
 		}
 	}

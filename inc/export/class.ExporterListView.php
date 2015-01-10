@@ -27,10 +27,11 @@ class ExporterListView {
 	 * Display
 	 */
 	public function display() {
-		if (empty($this->Formats))
+		if (empty($this->Formats)) {
 			$this->throwErrorForEmptyList();
-		else
+		} else {
 			$this->displayList();
+		}
 	}
 
 	/**
@@ -67,9 +68,11 @@ class ExporterListView {
 	private function readPossibleFiletypes() {
 		$dir = opendir(FRONTEND_PATH.'export/types/');
 
-		while ($file = readdir($dir))
-			if (substr($file, 0, 14) == 'class.Exporter')
+		while ($file = readdir($dir)) {
+			if (substr($file, 0, 14) == 'class.Exporter') {
 				$this->Formats[ call_user_func( array(substr($file, 6, -4), 'Type')) ][] = substr($file, 14, -4);
+			}
+		}
 
 		closedir($dir);
 	}

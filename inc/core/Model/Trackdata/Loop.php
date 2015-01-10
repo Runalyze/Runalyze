@@ -37,7 +37,7 @@ class Loop extends \Runalyze\Model\Loop {
 
 	/**
 	 * Current distance
-	 * @return int
+	 * @return float
 	 */
 	public function distance() {
 		return $this->current(Object::DISTANCE);
@@ -50,7 +50,9 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @return boolean
 	 */
 	public function nextKilometer() {
-		return $this->moveDistance(1.0);
+		$this->moveDistance(1.0);
+
+		return $this->isAtEnd();
 	}
 
 	/**

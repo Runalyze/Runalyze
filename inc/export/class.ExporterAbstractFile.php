@@ -102,9 +102,10 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 * @return string 
 	 */
 	final public function getFilename() {
-		if (is_null($this->Training))
+		if (is_null($this->Context)) {
 			return 'undefined.'.$this->getExtension();
+		}
 	
-		return self::fileNameStart().date('Y-m-d_H-i', $this->Training->getTimestamp()).'_'.$this->Training->id().'.'.$this->getExtension();
+		return self::fileNameStart().date('Y-m-d_H-i', $this->Context->activity()->timestamp()).'_'.$this->Context->activity()->id().'.'.$this->getExtension();
 	}
 }
