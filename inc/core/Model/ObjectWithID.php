@@ -46,4 +46,13 @@ abstract class ObjectWithID extends Object {
 	public function id() {
 		return $this->ID;
 	}
+
+	/**
+	 * Set ID
+	 * Use this method only if you know what you're doing!
+	 * @param int $id
+	 */
+	public function setID($id) {
+		$this->ID = $id;
+	}
 }

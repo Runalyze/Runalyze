@@ -14,12 +14,6 @@ use Runalyze\View\Activity;
  */
 class FrontendShared extends Frontend {
 	/**
-	 * Training object
-	 * @var TrainingObject
-	 */
-	protected $Training = null;
-
-	/**
 	 * @var Runalyze\View\Activity\Context 
 	 */
 	protected $ActivityContext = null;

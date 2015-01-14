@@ -109,6 +109,10 @@ abstract class Inserter {
 		}
 
 		$this->InsertedID = $this->PDO->lastInsertId();
+
+		if ($this->Object instanceof ObjectWithID) {
+			$this->Object->setID($this->InsertedID);
+		}
 	}
 
 	/**

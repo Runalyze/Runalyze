@@ -219,7 +219,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * Synchronize start- and endpoint
 	 */
 	protected function synchronizeStartAndEndpoint() {
-		if ($this->numberOfPoints == 0) {
+		if (!$this->hasPositionData()) {
 			$this->Data[self::STARTPOINT_LATITUDE] = '';
 			$this->Data[self::STARTPOINT_LONGITUDE] = '';
 			$this->Data[self::ENDPOINT_LATITUDE] = '';
@@ -236,7 +236,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * Synchronize boundaries
 	 */
 	protected function synchronizeBoundaries() {
-		if ($this->numberOfPoints == 0) {
+		if (!$this->hasPositionData()) {
 			$this->Data[self::MIN_LATITUDE] = '';
 			$this->Data[self::MIN_LONGITUDE] = '';
 			$this->Data[self::MAX_LATITUDE] = '';

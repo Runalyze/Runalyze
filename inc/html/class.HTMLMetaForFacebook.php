@@ -101,16 +101,14 @@ class HTMLMetaForFacebook {
 	 * Set properties
 	 */
 	protected function setProperties() {
-		// TODO
-		//$Exporter = new ExporterFacebook($this->Training);
-		Error::getInstance()->addTodo('HTMLMetaForFacebook: Exporter wants to use TrainingObject');
+		$Exporter = new ExporterFacebook($this->Context);
 
 		$Linker = new Linker($this->Context->activity());
 
 		$this->add('fb:app_id', ExporterFacebook::$APP_ID);
 		$this->add('og:type', 'fitness.course');
 		$this->add('og:url', $Linker->publicUrl());
-		//$this->add('og:title', addslashes($Exporter->metaTitle()));
+		$this->add('og:title', addslashes($Exporter->metaTitle()));
 		$this->add('og:image', self::IMAGE);
 
 		$this->add('fitness:calories', $this->Context->activity()->calories());

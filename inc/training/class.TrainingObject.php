@@ -154,9 +154,96 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
+	 * Update object in database
+	 */
+	public function update() {
+		// TODO
+		$this->tasksBeforeUpdate();
+		$this->updateDatabase();
+		$this->tasksAfterUpdate();
+	}
+
+	/**
+	 * Insert object to database
+	 */
+	public function insert() {
+		$Route = $this->newRouteObject();
+		$Trackdata = $this->newTrackdataObject();
+
+		if ($Route->name() != '' || $Route->hasPositionData() || $Route->hasElevations()) {
+			$InserterRoute = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
+			$InserterRoute->setAccountID( SessionAccountHandler::getId() );
+			$InserterRoute->insert();
+
+			$this->forceToSet('routeid', $InserterRoute->insertedID());
+		}
+
+		$Activity = $this->newActivityObject();
+
+		$InserterActivity = new Runalyze\Model\Activity\Inserter(DB::getInstance(), $Activity);
+		$InserterActivity->setAccountID( SessionAccountHandler::getId() );
+		$InserterActivity->setRoute($Route);
+		$InserterActivity->setTrackdata($Trackdata);
+		$InserterActivity->insert();
+
+		$this->id = $InserterActivity->insertedID();
+
+		if ($this->hasArrayTime() || $this->hasArrayDistance()) {
+			$Trackdata->set(Runalyze\Model\Trackdata\Object::ACTIVITYID, $this->id());
+			$InserterTrack = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
+			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
+			$InserterTrack->insert();
+		}
+	}
+
+	/**
+	 * @return \Runalyze\Model\Activity\Object
+	 */
+	protected function newActivityObject() {
+		return new Runalyze\Model\Activity\Object($this->data);
+	}
+
+	/**
+	 * @return \Runalyze\Model\Route\Object
+	 */
+	protected function newRouteObject() {
+		return new Runalyze\Model\Route\Object(array(
+			Runalyze\Model\Route\Object::NAME => $this->get('route'),
+			Runalyze\Model\Route\Object::CITIES => $this->get('route'),
+			Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
+			Runalyze\Model\Route\Object::ELEVATION => $this->get('elevation'),
+			//Runalyze\Model\Route\Object::ELEVATION_UP,
+			//Runalyze\Model\Route\Object::ELEVATION_DOWN,
+			Runalyze\Model\Route\Object::LATITUDES => $this->get('arr_lat'),
+			Runalyze\Model\Route\Object::LONGITUDES => $this->get('arr_lon'),
+			Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
+		));
+	}
+
+	/**
+	 * @return \Runalyze\Model\Trackdata\Object
+	 */
+	protected function newTrackdataObject() {
+		return new Runalyze\Model\Trackdata\Object(array(
+			Runalyze\Model\Trackdata\Object::TIME => $this->get('arr_time'),
+			Runalyze\Model\Trackdata\Object::DISTANCE => $this->get('arr_dist'),
+			Runalyze\Model\Trackdata\Object::PACE => $this->get('arr_pace'),
+			Runalyze\Model\Trackdata\Object::HEARTRATE => $this->get('arr_heart'),
+			Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
+			Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
+			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
+			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->arrGroundContact,
+			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->arrVerticalOscillation,
+			Runalyze\Model\Trackdata\Object::PAUSES => ''
+		));
+	}
+
+	/**
 	 * Tasks to perform before insert
 	 */
 	protected function tasksBeforeInsert() {
+		throw new RuntimeException('This method is not available anymore.');
+
 		$this->set('created', time());
 		$this->set('arr_alt_original', $this->get('arr_alt'));
 		$this->setPaceFromData();
@@ -166,17 +253,7 @@ class TrainingObject extends DataObject {
 
 		// TODO: clean solution
 		if ($this->hasPositionData()) {
-			$Route = new Runalyze\Model\Route\Object(array(
-				Runalyze\Model\Route\Object::NAME => $this->get('route'),
-				Runalyze\Model\Route\Object::CITIES => $this->get('route'),
-				Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
-				Runalyze\Model\Route\Object::ELEVATION => $this->get('elevation'),
-				//Runalyze\Model\Route\Object::ELEVATION_UP,
-				//Runalyze\Model\Route\Object::ELEVATION_DOWN,
-				Runalyze\Model\Route\Object::LATITUDES => $this->get('arr_lat'),
-				Runalyze\Model\Route\Object::LONGITUDES => $this->get('arr_lon'),
-				Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
-			));
+			$Route = $this->newRouteObject();
 			$Inserter = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
 			$Inserter->setAccountID( SessionAccountHandler::getId() );
 			$Inserter->insert();
@@ -194,6 +271,8 @@ class TrainingObject extends DataObject {
 	 * Insert to database
 	 */
 	protected function insertToDatabase() {
+		throw new RuntimeException('This method is not available anymore.');
+
 		if ($this->getTimeInSeconds() == 0)
 			Error::getInstance()->addError( __('The training has not been created. A time has to be set.') );
 		else
@@ -204,6 +283,8 @@ class TrainingObject extends DataObject {
 	 * Tasks to perform after insert
 	 */
 	protected function tasksAfterInsert() {
+		throw new RuntimeException('This method is not available anymore.');
+
 		$this->updateTrimp();
 		$this->updateElevation();
 
@@ -222,19 +303,7 @@ class TrainingObject extends DataObject {
 
 		// TODO: clean solution
 		if ($this->hasArrayTime() || $this->hasArrayDistance()) {
-			$Trackdata = new Runalyze\Model\Trackdata\Object(array(
-				Runalyze\Model\Trackdata\Object::ACTIVITYID => $this->id(),
-				Runalyze\Model\Trackdata\Object::TIME => $this->get('arr_time'),
-				Runalyze\Model\Trackdata\Object::DISTANCE => $this->get('arr_dist'),
-				Runalyze\Model\Trackdata\Object::PACE => $this->get('arr_pace'),
-				Runalyze\Model\Trackdata\Object::HEARTRATE => $this->get('arr_heart'),
-				Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
-				Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
-				Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
-				Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->arrGroundContact,
-				Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->arrVerticalOscillation,
-				Runalyze\Model\Trackdata\Object::PAUSES => ''
-			));
+			$Trackdata = $this->newTrackdataObject();
 			$Inserter = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
 			$Inserter->setAccountID( SessionAccountHandler::getId() );
 			$Inserter->insert();

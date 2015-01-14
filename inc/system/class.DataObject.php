@@ -44,13 +44,13 @@ abstract class DataObject {
 	 * Internal ID of this dataset in database
 	 * @var int
 	 */
-	private $id;
+	protected $id;
 
 	/**
 	 * Internal array from database
 	 * @var array
 	 */
-	private $data = array();
+	protected $data = array();
 
 	/**
 	 * Cache for exploded arrays from internal data
@@ -73,7 +73,7 @@ abstract class DataObject {
 	 * Constructor
 	 * @param mixed $idOrArrayOrKey id | array from database | 'LAST'
 	 */
-	final public function __construct($idOrArrayOrKey) {
+	public function __construct($idOrArrayOrKey) {
 		$this->initDatabaseScheme();
 
 		if ($idOrArrayOrKey == self::$DEFAULT_ID || is_null($idOrArrayOrKey) || $idOrArrayOrKey === 0 || $idOrArrayOrKey === '0') {
@@ -145,7 +145,7 @@ abstract class DataObject {
 	 * Get id
 	 * @return int 
 	 */
-	final public function id() {
+	public function id() {
 		return $this->id;
 	}
 
@@ -153,7 +153,7 @@ abstract class DataObject {
 	 * Is default id?
 	 * @return bool
 	 */
-	final public function isDefaultId() {
+	public function isDefaultId() {
 		return $this->id == self::$DEFAULT_ID;
 	}
 
@@ -373,7 +373,7 @@ abstract class DataObject {
 	/**
 	 * Insert object to database
 	 */
-	final public function insert() {
+	public function insert() {
 		$this->tasksBeforeInsert();
 		$this->insertToDatabase();
 		$this->tasksAfterInsert();
@@ -395,7 +395,7 @@ abstract class DataObject {
 	/**
 	 * Update object in database
 	 */
-	final public function update() {
+	public function update() {
 		$this->tasksBeforeUpdate();
 		$this->updateDatabase();
 		$this->tasksAfterUpdate();
@@ -404,7 +404,7 @@ abstract class DataObject {
 	/**
 	 * Update database
 	 */
-	private function updateDatabase() {
+	protected function updateDatabase() {
 		$columns = array_keys($this->data);
 		$values  = array_values($this->data);
 

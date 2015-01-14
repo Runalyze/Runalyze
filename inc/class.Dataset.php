@@ -361,7 +361,7 @@ class Dataset {
 			if ($this->isSummary || FrontendShared::$IS_SHOWN) {
 				echo HTML::emptyTD();
 			} else {
-				echo $this->Linker->smallEditLink();
+				echo HTML::td($this->Linker->smallEditLink());
 			}
 		}
 	}

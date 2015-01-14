@@ -49,4 +49,6 @@ class Inserter extends Model\InserterWithAccountID {
 			Object::allProperties()
 		);
 	}
+
+	// TODO: Calculate power?
 }

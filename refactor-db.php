@@ -13,6 +13,11 @@ $password = '';
 define('PREFIX', 'runalyze_');
 define('LIMIT', 100); // Limit number of activities to refactor per request
 
+//@ini_set('memory_limit', '-1');
+//if (!ini_get('safe_mode')) { @set_time_limit(0); }
+
+$starttime = microtime(true);
+
 /**
  * Protect script
  */
@@ -180,10 +185,10 @@ if (!$HasColumn) {
 						':startpoint_lng'		=> reset($route_lng),
 						':endpoint_lat'			=> end($route_lat),
 						':endpoint_lng'			=> end($route_lng),
-						':min_lat'				=> min($route_lat),
-						':max_lat'				=> max($route_lat),
-						':min_lng'				=> min($route_lng),
-						':max_lng'				=> max($route_lng)
+						':min_lat'				=> empty($route_lat) ? 0 : min($route_lat),
+						':max_lat'				=> empty($route_lat) ? 0 : max($route_lat),
+						':min_lng'				=> empty($route_lng) ? 0 : min($route_lng),
+						':max_lng'				=> empty($route_lng) ? 0 : max($route_lng)
 					));
 
 					$NewRouteId = $PDO->lastInsertId();
@@ -215,6 +220,9 @@ if (!$HasColumn) {
 		}
 
 		echo 'done;'.NL;
+		echo NL;
+		echo 'Time: '.(microtime(true) - $starttime).'s'.NL;
+		echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
 		echo NL;
 		echo '... <a href="javascript:location.reload()">reload to continue</a>';
 	}

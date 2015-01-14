@@ -66,6 +66,13 @@ class Preview {
 	/**
 	 * @return string
 	 */
+	public function dateAndTime() {
+		return $this->Dataview->date('d.m.Y H:i');
+	}
+
+	/**
+	 * @return string
+	 */
 	public function dateAndSmallTime() {
 		if ($this->Dataview->daytime() != '') {
 			return $this->Dataview->date('d.m.Y - <\s\m\a\l\l>H:i</\s\m\a\l\l>');
@@ -95,6 +102,24 @@ class Preview {
 		}
 
 		return $Code;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function duration() {
+		return $this->Dataview->duration()->string();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function distance() {
+		if ($this->Activity->distance() > 0) {
+			return $this->Dataview->distance();
+		}
+
+		return '';
 	}
 
 	/**
