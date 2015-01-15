@@ -208,21 +208,43 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
 		if (
-			$this->hasChanged(Object::VDOT) ||
-			$this->hasChanged(Object::VDOT_WITH_ELEVATION) ||
-			($this->hasChanged(Object::TIMESTAMP) &&
-				$this->NewObject->timestamp() > $timestampLimit ||
-				($this->knowsOldObject() && $this->OldObject->timestamp() > $timestampLimit)
+			(
+				$this->hasChanged(Object::USE_VDOT) &&
+				(
+					$this->NewObject->timestamp() >= $timestampLimit ||
+					($this->knowsOldObject() && $this->OldObject->timestamp() > $timestampLimit)
+				)
+			) ||
+			(
+				$this->NewObject->usesVDOT() &&
+				(
+					$this->hasChanged(Object::VDOT) ||
+					$this->hasChanged(Object::VDOT_WITH_ELEVATION) ||
+					(
+						$this->hasChanged(Object::TIMESTAMP) &&
+						$this->knowsOldObject() &&
+						(
+							($this->NewObject->timestamp() >= $timestampLimit && $this->OldObject->timestamp() < $timestampLimit) ||
+							($this->NewObject->timestamp() < $timestampLimit && $this->OldObject->timestamp() >= $timestampLimit)
+						)
+					)
+				)
 			)
 		) {
 			Configuration::Data()->recalculateVDOTshape();
+		}
 
-			if (
+		if (
+			(
+				$this->NewObject->usesVDOT() ||
+				$this->hasChanged(Object::USE_VDOT)
+			) &&
+			(
 				$this->NewObject->typeid() == Configuration::General()->competitionType() ||
 				($this->knowsOldObject() && $this->OldObject->typeid() == Configuration::General()->competitionType())
-			) {
-				Configuration::Data()->recalculateVDOTcorrector();
-			}
+			)
+		) {
+			Configuration::Data()->recalculateVDOTcorrector();
 		}
 	}
 

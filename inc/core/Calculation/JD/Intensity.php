@@ -141,7 +141,7 @@ class Intensity {
 	 * @return float
 	 */
 	protected function guessHR($distance, $seconds) {
-		if (self::$VDOTshape <= 0) {
+		if (self::$VDOTshape <= 0 || $seconds == 0) {
 			return 0.5;
 		}
 

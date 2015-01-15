@@ -41,8 +41,6 @@ class BasicEndurance {
 
 	/**
 	 * Number of days for counting weekkilometer
-	 * 
-	 * @see TrainingDeleter::recalculateBasicEndurance()
 	 * @var int 
 	 */
 	protected $DAYS_FOR_WEEK_KM = 182;

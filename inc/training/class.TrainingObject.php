@@ -5,9 +5,6 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Calculation\JD;
-use Runalyze\Calculation\Distribution\TimeSeries;
-use Runalyze\Calculation\Elevation;
 
 /**
  * DataObject for trainings
@@ -16,18 +13,6 @@ use Runalyze\Calculation\Elevation;
  * @package Runalyze\DataObjects\Training
  */
 class TrainingObject extends DataObject {
-	/**
-	 * Data view
-	 * @var \TrainingDataView
-	 */
-	private $DataView = null;
-
-	/**
-	 * Linker
-	 * @var \TrainingLinker
-	 */
-	private $Linker = null;
-
 	/**
 	 * Sport
 	 * @var \Sport
@@ -39,12 +24,6 @@ class TrainingObject extends DataObject {
 	 * @var \Type
 	 */
 	private $Type = null;
-
-	/**
-	 * Object for given GPS-data
-	 * @var \GpsData
-	 */
-	private $GpsData = null;
 
 	/**
 	 * Shoe
@@ -154,16 +133,6 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * Update object in database
-	 */
-	public function update() {
-		// TODO
-		$this->tasksBeforeUpdate();
-		$this->updateDatabase();
-		$this->tasksAfterUpdate();
-	}
-
-	/**
 	 * Insert object to database
 	 */
 	public function insert() {
@@ -239,311 +208,62 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * Tasks to perform before insert
+	 * Update object in database
 	 */
-	protected function tasksBeforeInsert() {
-		throw new RuntimeException('This method is not available anymore.');
-
-		$this->set('created', time());
-		$this->set('arr_alt_original', $this->get('arr_alt'));
-		$this->setPaceFromData();
-		$this->calculateCaloriesIfEmpty();
-		$this->removeWeatherIfInside();
-		$this->forceToRemove('s_sum_with_distance');
-
-		// TODO: clean solution
-		if ($this->hasPositionData()) {
-			$Route = $this->newRouteObject();
-			$Inserter = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
-			$Inserter->setAccountID( SessionAccountHandler::getId() );
-			$Inserter->insert();
-
-			$this->forceToSet('routeid', $Inserter->insertedID());
-		}
-
-		$this->arrGroundContact = $this->get('arr_groundcontact');
-		$this->arrVerticalOscillation = $this->get('arr_vertical_oscillation');
-		$this->forceToRemove('arr_groundcontact');
-		$this->forceToRemove('arr_vertical_oscillation');
-	}
-
-	/**
-	 * Insert to database
-	 */
-	protected function insertToDatabase() {
-		throw new RuntimeException('This method is not available anymore.');
-
-		if ($this->getTimeInSeconds() == 0)
-			Error::getInstance()->addError( __('The training has not been created. A time has to be set.') );
-		else
-			parent::insertToDatabase();
-	}
-
-	/**
-	 * Tasks to perform after insert
-	 */
-	protected function tasksAfterInsert() {
-		throw new RuntimeException('This method is not available anymore.');
-
-		$this->updateTrimp();
-		$this->updateElevation();
-
-		if ($this->get('sportid') == Configuration::General()->runningSport()) {
-			$this->updateVdot();
-			$this->updateShoeForInsert();
-
-			Configuration::Data()->recalculateVDOTshape();
-			BasicEndurance::recalculateValue();
-		}
-
-		Helper::recalculateStartTime();
-
-		if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
-			$this->calculatePower();
-
-		// TODO: clean solution
-		if ($this->hasArrayTime() || $this->hasArrayDistance()) {
-			$Trackdata = $this->newTrackdataObject();
-			$Inserter = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
-			$Inserter->setAccountID( SessionAccountHandler::getId() );
-			$Inserter->insert();
-		}
-	}
-
-	/**
-	 * Tasks to perform before update
-	 */
-	protected function tasksBeforeUpdate() {
-		$this->set('edited', time());
-		$this->setPaceFromData();
-	}
-
-	/**
-	 * Tasks to perform after update
-	 */
-	protected function tasksAfterUpdate() {
-		$this->updateTrimp();
-
-		if ($this->get('sportid') == Configuration::General()->runningSport()) {
-			$this->updateVdot();
-			$this->updateShoeForUpdate();
-
-			Configuration::Data()->recalculateVDOTshape();
-			BasicEndurance::recalculateValue();
-		}
-
-		Helper::recalculateStartTime();
-	}
-
-	/**
-	 * Set pace from post
-	 */
-	private function setPaceFromData() {
-		$this->set('pace', SportSpeed::minPerKm($this->getDistance(), $this->getTimeInSeconds()));
-	}
-
-	/**
-	 * Calculate calories if empty
-	 */
-	private function calculateCaloriesIfEmpty() {
-		if ($this->getCalories() == 0)
-			$this->setCalories( round(SportFactory::kcalPerHourFor($this->get('sportid'))*$this->getTimeInSeconds()/3600) );
-	}
-
-	/**
-	 * Remove weather before insert if
-	 */
-	private function removeWeatherIfInside() {
-		if (!$this->Sport()->isOutside()) {
-			$this->setTemperature(null);
-			$this->setWeatherid(\Runalyze\Data\Weather\Condition::UNKNOWN);
-		}
-	}
-
-	/**
-	 * Update trimp
-	 */
-	private function updateTrimp() {
-		$this->updateValue('trimp', $this->calculateTrimp());
-
-		// TODO
-		// - check max. CTL/ATL
-		// - simple recalculation of the values for 'this' timestamp is not enough
-		// - a possible maximum may occur for example one day after this activity
-	}
-
-	/**
-	 * Calculate trimp
-	 * @return int
-	 */
-	public function calculateTrimp() {
-		if ($this->hasArrayHeartrate()) {
-			$Collector = new \Runalyze\Calculation\Trimp\DataCollector($this->getArrayHeartrate(), $this->getArrayTime());
-			$data = $Collector->result();
-		} elseif ($this->getPulseAvg() > 0) {
-			$data = array($this->getPulseAvg() => $this->getTimeInSeconds());
-		} else {
-			$data = array($this->Sport()->avgHF() => $this->getTimeInSeconds());
-		}
-
-		$Athlete = \Runalyze\Context::Athlete();
-		$Calculator = new \Runalyze\Calculation\Trimp\Calculator($Athlete, $data);
-
-		return round($Calculator->value());
-	}
-
-	/**
-	 * Update vdot
-	 */
-	private function updateVdot() {
-		$this->updateValue('vdot_by_time', $this->calculateVDOTbyTime());
-		$this->updateValue('vdot', $this->calculateVDOTbyHeartRate());
-		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevation());
-		$this->updateValue('jd_intensity', $this->calculateJDintensity());
-
-		if ($this->Type()->isCompetition()) {
-			Configuration::Data()->recalculateVDOTcorrector();
-		}
-	}
-
-	/**
-	 * Calculate VDOT by time
-	 * @return float
-	 */
-	public function calculateVDOTbyTime() {
-		$VDOT = new JD\VDOT;
-		$VDOT->fromPace($this->getDistance(), $this->getTimeInSeconds());
-
-		return $VDOT->uncorrectedValue();
-	}
-
-	/**
-	 * Calculate VDOT by heart rate
-	 * @param float $distance [optional]
-	 * @return float
-	 */
-	public function calculateVDOTbyHeartRate($distance = null) {
-		if (is_null($distance)) {
-			$distance = $this->getDistance();
-		}
-
-		$VDOT = new JD\VDOT;
-		$VDOT->fromPaceAndHR(
-			$distance,
-			$this->getTimeInSeconds(),
-			$this->getPulseAvg()/Configuration::Data()->HRmax()
+	public function update() {
+		$UpdaterActivity = new \Runalyze\Model\Activity\Updater(DB::getInstance(),
+			$this->newActivityObject(),
+			new \Runalyze\Model\Activity\Object(array(
+				// TODO: old activity is currently unknown
+				Runalyze\Model\Activity\Object::SHOEID => isset($_POST['shoeid_old']) ? $_POST['shoeid_old'] : 0,
+				Runalyze\Model\Activity\Object::TIME_IN_SECONDS => isset($_POST['s_old']) ? $_POST['s_old'] : 0,
+				Runalyze\Model\Activity\Object::DISTANCE => isset($_POST['dist_old']) ? $_POST['dist_old'] : 0
+			))
 		);
+		$UpdaterActivity->setAccountID( SessionAccountHandler::getId() );
+		$UpdaterActivity->update();
 
-		return $VDOT->value();
-	}
+		Cache::delete('training'.$this->id());
 
-	/**
-	 * Calculate VDOT by heart rate with elevation influence
-	 * @return float
-	 */
-	public function calculateVDOTbyHeartRateWithElevation() {
-		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
-
-		return $this->calculateVDOTbyHeartRateWithElevationFor($updown[0], $updown[1]);
-	}
-
-	/**
-	 * Calculate VDOT by heart rate with elevation influence
-	 * @param int $up
-	 * @param int $down
-	 * @return float
-	 */
-	public function calculateVDOTbyHeartRateWithElevationFor($up, $down) {
-		$Modifier = new Elevation\DistanceModifier(
-			$this->getDistance(),
-			$up, 
-			$down,
-			Configuration::Vdot()
+		/*
+		// TODO: ROUTEID?
+		$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance());
+		$UpdaterRoute->setAccountID( SessionAccountHandler::getId() );
+		$UpdaterRoute->update(
+			new Runalyze\Model\Route\Object(array(
+				Runalyze\Model\Route\Object::NAME => $this->get('route'),
+				Runalyze\Model\Route\Object::CITIES => $this->get('route')
+			)),
+			array(
+				// TODO: old route is currently unknown
+				Runalyze\Model\Route\Object::NAME,
+				Runalyze\Model\Route\Object::CITIES
+			)
 		);
-
-		return $this->calculateVDOTbyHeartRate($Modifier->correctedDistance());
-	}
-
-	/**
-	 * Calculate JD intensity
-	 * @return int
-	 */
-	public function calculateJDintensity() {
-		JD\Intensity::setVDOTshape(Configuration::Data()->vdot());
-		JD\Intensity::setHRmax(Configuration::Data()->HRmax());
-		$Intensity = new JD\Intensity();
-
-		if ($this->hasArrayHeartrate()) {
-			return $Intensity->calculateByHeartrate(
-				new TimeSeries(
-					$this->getArrayHeartrate(),
-					$this->getArrayTime()
-				)
-			);
-		} elseif ($this->getPulseAvg() > 0) {
-			return $Intensity->calculateByHeartrateAverage($this->getPulseAvg(), $this->getTimeInSeconds());
-		} else {
-			return $Intensity->calculateByPace($this->getDistance(), $this->getTimeInSeconds());
-		}
-	}
-
-	/**
-	 * Update shoe-data after insert
-	 */
-	private function updateShoeForInsert() {
-		if ($this->get('shoeid') > 0)
-			DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+'.$this->get('distance').', `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
-	}
-
-	/**
-	 * Update shoe values 
-	 */
-	private function updateShoeForUpdate() {
-		if ((isset($_POST['shoeid_old']) || $this->get('shoeid') > 0)
-				&& isset($_POST['s_old'])
-				&& isset($_POST['dist_old'])) {
-
-			if (isset($_POST['shoeid_old']))
-				DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`-"'.$_POST['dist_old'].'", `time`=`time`-'.$_POST['s_old'].' WHERE `id`='.$_POST['shoeid_old'].' LIMIT 1');
-			if ($this->get('shoeid') > 0)
-				DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=`km`+"'.$this->get('distance').'", `time`=`time`+'.$this->get('s').' WHERE `id`='.$this->get('shoeid').' LIMIT 1');
-		}
-	}
-
-	/**
-	 * Do elevation correction
-	 */
-	private function updateElevation() {
-		if ($this->hasArrayLatitude() && $this->hasArrayLongitude()) {
-			if (Configuration::ActivityForm()->correctElevation()) {
-				$this->doElevationCorrection();
-			}
-
-			$this->calculateElevation();
-
-			if ($this->get('elevation') == 0) {
-				$this->updateValue('elevation', $this->get('elevation_calculated'));
-			}
-		}
+		 */
 	}
 
 	/**
 	 * Calculate power
 	 */
 	private function calculatePower() {
-		$GPS = new GpsData($this->getArray());
+		throw new RuntimeException('This method has to be refactored.');
+
+		/*$GPS = new GpsData($this->getArray());
 		$data = $GPS->calculatePower();
 
 		$this->updateValue('arr_power', implode(self::$ARR_SEP, $data));
 		$this->updateValue('power', $GPS->averagePower());
-		$this->updateValue('gps_cache_object', '');
+		$this->updateValue('gps_cache_object', '');*/
 	}
 
 	/**
 	 * Try to correct elevation
 	 */
 	public function tryToCorrectElevation() {
-		$this->doElevationCorrection();
+		throw new RuntimeException('This method has to be refactored.');
+
+		/*$this->doElevationCorrection();
 
 		if ($this->elevationWasCorrected()) {
 			$this->calculateElevation();
@@ -554,40 +274,46 @@ class TrainingObject extends DataObject {
 
 			if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
 				$this->calculatePower();
-		}
+		}*/
 	}
 
 	/**
 	 * Do elevation correction
 	 */
 	private function doElevationCorrection() {
-		$GPS  = new GpsData($this->getArray());
+		throw new RuntimeException('This method has to be refactored.');
+
+		/*$GPS  = new GpsData($this->getArray());
 		$data = $GPS->getElevationCorrection();
 
 		if (is_array($data)) {
 			$this->updateValue('arr_alt', implode(self::$ARR_SEP, $data));
 			$this->updateValue('elevation_corrected', 1);
 			$this->updateValue('gps_cache_object', '');
-		}
+		}*/
 	}
 
 	/**
 	 * Calculate elevation
 	 */
 	public function calculateElevation() {
-		$GPS = new GpsData($this->getArray());
-		$this->updateValue('elevation_calculated', $GPS->calculateElevation());
+		throw new RuntimeException('This method has to be refactored.');
+
+		/*$GPS = new GpsData($this->getArray());
+		$this->updateValue('elevation_calculated', $GPS->calculateElevation());*/
 	}
 
 	/**
 	 * Set calculated value as elevation
 	 */
 	public function setCalculatedValueAsElevation() {
-		$GPS = new GpsData($this->getArray());
+		throw new RuntimeException('This method has to be refactored.');
+
+		/*$GPS = new GpsData($this->getArray());
 		$array = $GPS->calculateElevation(true);
 
 		$this->updateValue('elevation', $array[0]);
-		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevationFor($array[1], $array[2]));
+		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevationFor($array[1], $array[2]));*/
 	}
 
 
@@ -596,17 +322,6 @@ class TrainingObject extends DataObject {
 	 * The following methods serve simple get/set-methods for internal objects
 	 *
 	 *************************************************************************/
-
-	/**
-	 * Get RPE
-	 * @return int 
-	 */
-	public function RPE() {
-		if (!$this->Type()->isUnknown())
-			return $this->Type()->RPE();
-
-		return $this->Sport()->RPE();
-	}
 
 	/**
 	 * Average heartfrequence
@@ -625,39 +340,6 @@ class TrainingObject extends DataObject {
 	 * The following methods serve simple get/set-methods for internal objects
 	 *
 	 *************************************************************************/
-
-	/**
-	 * TrainingDataView object
-	 * @return TrainingDataView
-	 */
-	public function DataView() {
-		if (is_null($this->DataView))
-			$this->DataView = new TrainingDataView($this);
-
-		return $this->DataView;
-	}
-
-	/**
-	 * TrainingLinker object
-	 * @return TrainingLinker
-	 */
-	public function Linker() {
-		if (is_null($this->Linker))
-			$this->Linker = new TrainingLinker($this);
-
-		return $this->Linker;
-	}
-
-	/**
-	 * GpsData object
-	 * @return GpsData
-	 */
-	public function GpsData() {
-		if (is_null($this->GpsData))
-			$this->GpsData = new GpsData($this->getArray());
-
-		return $this->GpsData;
-	}
 
 	/**
 	 * Sport object
@@ -906,30 +588,6 @@ class TrainingObject extends DataObject {
 	 * @return int
 	 */
 	public function getElevation() { return $this->get('elevation'); }
-	/**
-	 * Get elevation up
-	 * @return int
-	 */
-	public function getElevationUp() {
-		if ($this->getElevation() == 0)
-			return '';
-
-		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
-
-		return $updown[0];
-	}
-	/**
-	 * Get elevation down
-	 * @return int
-	 */
-	public function getElevationDown() {
-		if ($this->getElevation() == 0)
-			return '';
-
-		$updown = $this->GpsData()->getElevationUpDownOfStep(true);
-
-		return $updown[1];
-	}
 
 
 	/**

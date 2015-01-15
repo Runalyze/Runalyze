@@ -179,7 +179,11 @@ class Inserter extends Model\InserterWithAccountID {
 	protected function updateVDOTshapeAndCorrector() {
 		$timestampLimit = time() - Configuration::Vdot()->days() * DAY_IN_S;
 
-		if ($this->Object->vdotByHeartRate() > 0 && $this->Object->timestamp() > $timestampLimit) {
+		if (
+			$this->Object->usesVDOT() &&
+			$this->Object->vdotByHeartRate() > 0 &&
+			$this->Object->timestamp() > $timestampLimit
+		) {
 			Configuration::Data()->recalculateVDOTshape();
 
 			if ($this->Object->typeid() == Configuration::General()->competitionType()) {

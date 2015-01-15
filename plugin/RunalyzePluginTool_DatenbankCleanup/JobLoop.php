@@ -6,7 +6,13 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
+use Runalyze\Calculation\Activity\Calculator;
+use Runalyze\Model\Activity;
+use Runalyze\Model\Trackdata;
+use Runalyze\Model\Route;
+
 use DB;
+use SessionAccountHandler;
 
 /**
  * JobLoop
@@ -87,33 +93,58 @@ class JobLoop extends Job {
 		$Update = $this->prepareUpdate();
 
 		while ($Data = $Query->fetch()) {
-			$Training = new \TrainingObject($Data);
-			$elevations = $this->elevationsFor($Data);
+			try {
+				$Calculator = $this->calculatorFor($Data);
 
-			if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
-				$Update->bindValue(':elevation', $elevations[0]);
+				if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
+					$elevations = $this->elevationsFor($Data);
+					$Update->bindValue(':elevation', $elevations[0]);
+				}
+
+				if ($this->isRequested(self::VDOT)) {
+					$Update->bindValue(':vdot', $Calculator->calculateVDOTbyHeartRate());
+					$Update->bindValue(':vdot_by_time', $Calculator->calculateVDOTbyTime());
+					$Update->bindValue(':vdot_with_elevation', $Calculator->calculateVDOTbyHeartRateWithElevation());
+				}
+
+				if ($this->isRequested(self::JD_POINTS)) {
+					$Update->bindValue(':jd_intensity', $Calculator->calculateJDintensity());
+				}
+
+				if ($this->isRequested(self::TRIMP)) {
+					$Update->bindValue(':trimp', $Calculator->calculateTrimp());
+				}
+
+				$Update->bindValue(':id', $Data['id']);
+				$Update->execute();
+				$i++;
+			} catch (\RuntimeException $Exc) {
+				$this->addMessage( sprintf( __('There was a problem with activity %d.<br>Error message: %s'), $Data['id'], $Exc->getMessage()) );
 			}
-
-			if ($this->isRequested(self::VDOT)) {
-				$Update->bindValue(':vdot', $Training->calculateVDOTbyHeartRate());
-				$Update->bindValue(':vdot_by_time', $Training->calculateVDOTbyTime());
-				$Update->bindValue(':vdot_with_elevation', $Training->calculateVDOTbyHeartRateWithElevationFor($elevations[1], $elevations[2]));
-			}
-
-			if ($this->isRequested(self::JD_POINTS)) {
-				$Update->bindValue(':jd_intensity', $Training->calculateJDintensity());
-			}
-
-			if ($this->isRequested(self::TRIMP)) {
-				$Update->bindValue(':trimp', $Training->calculateTrimp());
-			}
-
-			$Update->bindValue(':id', $Data['id']);
-			$Update->execute();
-			$i++;
 		}
 
 		$this->addMessage( sprintf( __('%d activities have been updated.'), $i) );
+	}
+
+	/**
+	 * @param array $data
+	 * @return \Runalyze\Calculation\Activity\Calculator
+	 */
+	protected function calculatorFor(array $data) {
+		$elevations = $this->elevationsFor($data);
+
+		return new Calculator(
+			new Activity\Object($data),
+			new Trackdata\Object(array(
+				Trackdata\Object::TIME => $data['trackdata_time'],
+				Trackdata\Object::HEARTRATE => $data['trackdata_heartrate']
+			)),
+			new Route\Object(array(
+				Route\Object::ELEVATION => $elevations[0],
+				Route\Object::ELEVATION_UP => $elevations[1],
+				Route\Object::ELEVATION_DOWN => $elevations[2]
+			))
+		);
 	}
 
 	/**
@@ -142,7 +173,7 @@ class JobLoop extends Job {
 
 		$Query = 'UPDATE `'.PREFIX.'training` SET '.implode(',', $Set).' WHERE `id`=:id LIMIT 1';
 
-		return \DB::getInstance()->prepare($Query);
+		return DB::getInstance()->prepare($Query);
 	}
 
 	/**
@@ -179,9 +210,9 @@ class JobLoop extends Job {
 	 */
 	protected function getQuery() {
 		// TODO: Directly add accountid
-		$accountid = \SessionAccountHandler::getId();
+		$accountid = SessionAccountHandler::getId();
 
-		return \DB::getInstance()->query(
+		return DB::getInstance()->query(
 			'SELECT
 				`'.PREFIX.'training`.`id`,
 				`'.PREFIX.'training`.`sportid`,
@@ -190,8 +221,8 @@ class JobLoop extends Job {
 				`'.PREFIX.'training`.`s`,
 				`'.PREFIX.'training`.`pulse_avg`,
 				`'.PREFIX.'training`.`elevation`,
-				`'.PREFIX.'trackdata`.`time` as `arr_time`,
-				`'.PREFIX.'trackdata`.`heartrate` as `arr_heart`
+				`'.PREFIX.'trackdata`.`time` as `trackdata_time`,
+				`'.PREFIX.'trackdata`.`heartrate` as `trackdata_heartrate`
 			FROM `'.PREFIX.'training`
 			LEFT JOIN `'.PREFIX.'trackdata` ON `'.PREFIX.'trackdata`.`activityid` = `'.PREFIX.'training`.`id`
 			WHERE `'.PREFIX.'training`.`accountid` = '.$accountid
