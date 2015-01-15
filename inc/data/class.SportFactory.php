@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Pace;
 
 /**
  * Factory serving static methods for Sport
@@ -74,7 +75,7 @@ class SportFactory {
 			'HFavg' => 140,
 			'RPE' => 4,
 			'distances' => 0,
-			'speed' => SportSpeed::$DEFAULT,
+			'speed' => Pace::STANDARD,
 			'types' => 0,
 			'pulse' => 0,
 			'power'	=> 0,
@@ -227,34 +228,6 @@ class SportFactory {
 
 		return $Counts;
 	}
-	
-	/**
-	 * Get select-box for all sport-ids
-	 * @param mixed $selected [optional] Value to be selected
-	 * @return string
-	 */
-	static public function SelectBox($selected = -1) {
-		if ($selected == -1 && isset($_POST['sportid'])) {
-			$selected = $_POST['sportid'];
-		}
-
-		return HTML::selectBox('sportid', self::NamesAsArray(), $selected);
-	}
-
-	/**
-	 * Does this sport-id displays speed in km/h?
-	 * @param int $id
-	 * @return bool
-	 */
-	static public function usesSpeedInKmh($id) {
-		$sports = self::AllSports();
-
-		if (isset($sports[$id])) {
-			return ($sports[$id]['speed'] == SportSpeed::$KM_PER_H);
-		}
-
-		return false;
-	}
 
 	/**
 	 * Get speed unit for given sportid
@@ -264,59 +237,6 @@ class SportFactory {
 	static public function getSpeedUnitFor($ID) {
 		$Sports = self::AllSports();
 
-		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : SportSpeed::$DEFAULT;
-	}
-
-	/**
-	 * Get speed for a given sportid
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @param boolean $withAppendix [optional]
-	 * @param boolean $withTooltip [optional]
-	 * @return string
-	 */
-	static public function getSpeed($Distance, $Time, $ID, $withAppendix = false, $withTooltip = false) {
-		$Unit   = self::getSpeedUnitFor($ID);
-		$Speed  = ($withAppendix) ? SportSpeed::getSpeedWithAppendix($Distance, $Time, $Unit) : SportSpeed::getSpeed($Distance, $Time, $Unit);
-
-		if ($withTooltip && $Unit != SportSpeed::$DEFAULT) {
-			return Ajax::tooltip($Speed, SportSpeed::getSpeedWithAppendix($Distance, $Time, SportSpeed::$DEFAULT));
-		}
-
-		return $Speed;
-	}
-
-	/**
-	 * Get speed for a given sportid with appendix
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithAppendix($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, true);
-	}
-
-	/**
-	 * Get speed for a given sportid with tooltip for default unit
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithTooltip($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, false, true);
-	}
-
-	/**
-	 * Get speed for a given sportid with appendix and tooltip for default unit
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithAppendixAndTooltip($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, true, true);
+		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : Pace::STANDARD;
 	}
 }

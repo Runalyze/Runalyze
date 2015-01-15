@@ -3,6 +3,9 @@
  * This file contains class::ParserHRMSingle
  * @package Runalyze\Import\Parser
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Parser for HRM files from Polar
  *
@@ -72,10 +75,11 @@ class ParserHRMSingle extends ParserAbstractSingle {
 			$date = DateTime::createFromFormat('Ymd H:i', substr($this->Line, 5).' 00:00');
 			$this->TrainingObject->setTimestamp( $date->getTimestamp() );
 		} elseif (substr($this->Line, 0, 9) == 'StartTime') {
-			$time = Time::toSeconds(substr($this->Line, 10));
-			$this->TrainingObject->setTimestamp( $this->TrainingObject->getTimestamp() + $time );
+			$Time = new Duration(substr($this->Line, 10));
+			$this->TrainingObject->setTimestamp( $this->TrainingObject->getTimestamp() + $Time->seconds() );
 		} elseif (substr($this->Line, 0, 6) == 'Length') {
-			$this->TrainingObject->setTimeInSeconds( Time::toSeconds(substr($this->Line, 7)) );
+			$Time = new Duration(substr($this->Line, 7));
+			$this->TrainingObject->setTimeInSeconds( $Time->seconds() );
 		}
 	}
 
@@ -84,9 +88,9 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	 */
 	private function readLap() {
 		if (strpos($this->Line, ':')) {
-			$s = round(Time::toSeconds(substr($this->Line, 0, 10)));
-			$this->TrainingObject->Splits()->addSplit(0, $s - $this->totalSplitsTime);
-			$this->totalSplitsTime = $s;
+			$Time = new Duration(substr($this->Line, 0, 10));
+			$this->TrainingObject->Splits()->addSplit(0, $Time->seconds() - $this->totalSplitsTime);
+			$this->totalSplitsTime = $Time->seconds();
 		}
 	}
 

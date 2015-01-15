@@ -10,9 +10,9 @@ use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Data\Laps\Laps;
+use Runalyze\Data\Laps\Lap;
 
 use Request;
-use HTML;
 
 /**
  * Window for detailed laps info

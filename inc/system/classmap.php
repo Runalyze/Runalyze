@@ -1,10 +1,7 @@
 <?php
 $CLASSMAP = array(
 'BasicEndurance' => 'calculate/class.BasicEndurance.php',
-'Math' => 'calculate/class.Math.php',
-'Running' => 'calculate/class.Running.php',
 'Time' => 'calculate/class.Time.php',
-'Validator' => 'calculate/class.Validator.php',
 'RunningPrognosis' => 'calculate/prognosis/class.RunningPrognosis.php',
 'RunningPrognosisBock' => 'calculate/prognosis/class.RunningPrognosisBock.php',
 'RunningPrognosisCameron' => 'calculate/prognosis/class.RunningPrognosisCameron.php',
@@ -31,10 +28,8 @@ $CLASSMAP = array(
 'Shoe' => 'data/class.Shoe.php',
 'ShoeFactory' => 'data/class.ShoeFactory.php',
 'Splits' => 'data/class.Splits.php',
-'SplitsView' => 'data/class.SplitsView.php',
 'Sport' => 'data/class.Sport.php',
 'SportFactory' => 'data/class.SportFactory.php',
-'SportSpeed' => 'data/class.SportSpeed.php',
 'Type' => 'data/class.Type.php',
 'TypeFactory' => 'data/class.TypeFactory.php',
 'UserData' => 'data/class.UserData.php',

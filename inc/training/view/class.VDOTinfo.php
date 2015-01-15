@@ -183,7 +183,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>
-				<span class="as-input">'.Math::WithSign(1000*$Modifier->additionalDistance()).'m = '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
+				<span class="as-input">'.sprintf("%+d", 1000*$Modifier->additionalDistance()).'m = '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

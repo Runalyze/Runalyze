@@ -9,6 +9,7 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\PersonalBest;
 
 /**
  * Prognosis calculator window
@@ -192,34 +193,31 @@ class Prognose_PrognosisWindow {
 	protected function runCalculations() {
 		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.Configuration::General()->competitionType().'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
 		foreach ($this->Distances as $km) {
-			$PB         = Running::PersonalBest($km, true);
-			$Prognosis  = $this->PrognosisObject->inSeconds( $km );
+			$Prognosis = $this->PrognosisObject->inSeconds( $km );
 
-			if ($PB > 0) {
-				$DateQuery->execute(array('distance' => $km));
-				$PBdate = $DateQuery->fetch();
-			}
+			$PB = new PersonalBest($km, DB::getInstance(), false);
+			$PB->lookupWithDetails();
 
 			$VDOTprognosis = new VDOT;
 			$VDOTprognosis->fromPace($km, $Prognosis);
 
 			$VDOTpb = new VDOT;
-			$VDOTpb->fromPace($km, $PB);
+			$VDOTpb->fromPace($km, $PB->seconds());
 
 			$PacePrognosis = new Pace($Prognosis, $km, Pace::MIN_PER_KM);
-			$PacePB = new Pace($PB, $km, Pace::MIN_PER_KM);
+			$PacePB = new Pace($PB->seconds(), $km, Pace::MIN_PER_KM);
 
 			$this->Prognoses[] = array(
 				'distance'	=> Distance::format($km, $km <= 3),
 				'prognosis'		=> Duration::format($Prognosis),
 				'prognosis-pace'=> $PacePrognosis->valueWithAppendix(),
 				'prognosis-vdot'=> $VDOTprognosis->uncorrectedValue(),
-				'diff'			=> $PB == 0 ? '-' : ($PB>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB-$Prognosis))),
-				'diff-class'	=> $PB > $Prognosis ? 'plus' : 'minus',
-				'pb'			=> $PB > 0 ? Duration::format($PB) : '-',
-				'pb-pace'		=> $PB > 0 ? $PacePB->valueWithAppendix() : '-',
-				'pb-vdot'		=> $PB > 0 ? $VDOTpb->uncorrectedValue() : '-',
-				'pb-date'		=> $PB > 0 ? date('d.m.Y', $PBdate['time']) : '-'
+				'diff'			=> !$PB->exists()? '-' : ($PB->seconds()>$Prognosis?'+ ':'- ').Duration::format(abs(round($PB->seconds()-$Prognosis))),
+				'diff-class'	=> $PB->seconds() > $Prognosis ? 'plus' : 'minus',
+				'pb'			=> $PB->seconds() > 0 ? Duration::format($PB->seconds()) : '-',
+				'pb-pace'		=> $PB->seconds() > 0 ? $PacePB->valueWithAppendix() : '-',
+				'pb-vdot'		=> $PB->seconds() > 0 ? $VDOTpb->uncorrectedValue() : '-',
+				'pb-date'		=> $PB->seconds() > 0 ? date('d.m.Y', $PB->timestamp()) : '-'
 			);
 		}
 	}

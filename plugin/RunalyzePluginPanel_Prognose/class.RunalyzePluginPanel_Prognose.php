@@ -8,6 +8,7 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\PersonalBest;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -152,14 +153,15 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		$PB = new Duration( Running::PersonalBest($distance, true) );
+		$PB = new PersonalBest($distance);
+		$PBTime = new Duration( $PB->seconds() );
 		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
 		$Distance = new Distance($distance);
 		$Pace = new Pace($Prognosis->seconds(), $distance, Pace::MIN_PER_KM);
 
 		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PB->string(), $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
+					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime->string(), $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
 					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
 				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>

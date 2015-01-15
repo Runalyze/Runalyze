@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
 
 /**
  * Parser for XML files from Polar
@@ -59,7 +60,8 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 		}
 
 		if (isset($this->XML->result->duration)) {
-+			$this->TrainingObject->setTimeInSeconds( Time::toSeconds((string)$this->XML->result->duration) );
+			$Time = new Duration((string)$this->XML->result->duration);
+			$this->TrainingObject->setTimeInSeconds( $Time->seconds() );
 		}
 
 		if (isset($this->XML->result->calories)) {
@@ -79,9 +81,9 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 		if (isset($this->XML->result->laps)) {
 			foreach ($this->XML->result->laps->lap as $Lap) {
 				$distance = round(((double)$Lap->distance)/1000, 2);
-				$time = Time::toSeconds((string)$Lap->duration);
+				$Time = new Duration((string)$Lap->duration);
 
-				$this->TrainingObject->Splits()->addSplit($distance, $time);
+				$this->TrainingObject->Splits()->addSplit($distance, $Time->seconds());
 			}
 		}
 	}

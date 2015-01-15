@@ -17,6 +17,7 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context as GeneralContext;
+use Runalyze\View\Stresscolor;
 
 use SessionAccountHandler;
 use ClothesFactory;
@@ -259,7 +260,9 @@ class Dataview {
 	 * @return string
 	 */
 	public function trimp() {
-		return Running::StresscoloredString($this->Activity->trimp());
+		$Stress = new Stresscolor($this->Activity->trimp());
+
+		return $Stress->string();
 	}
  
  	/**
@@ -275,7 +278,10 @@ class Dataview {
 	 * @return string
 	 */
 	public function jdIntensityWithStresscolor() {
-		return Running::StresscoloredString($this->Activity->jdIntensity()/2, $this->Activity->jdIntensity());
+		$Stress = new Stresscolor($this->Activity->jdIntensity());
+		$Stress->scale(0, 50);
+
+		return $Stress->string($this->Activity->jdIntensity());
 	}
 
 	/**

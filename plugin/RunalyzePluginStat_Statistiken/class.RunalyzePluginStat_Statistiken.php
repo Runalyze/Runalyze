@@ -9,6 +9,7 @@ use Runalyze\Calculation\JD;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\View\Stresscolor;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -561,7 +562,14 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initJDIntensityData($dat) {
 		$avg  = ($this->year != -1) ? 8 : 100;
-		$text = ($dat['jd_intensity'] == 0) ? NBSP : Running::StresscoloredString($dat['jd_intensity']/$avg, $dat['jd_intensity']);
+
+		if ($dat['jd_intensity'] == 0) {
+			$text = NBSP;
+		} else {
+			$Stress = new Stresscolor($dat['jd_intensity'] / $avg);
+			$Stress->scale(0, 50);
+			$text = $Stress->string($dat['jd_intensity']);
+		}
 
 		$this->JDIntensityData[] = array('i' => $dat['i'], 'text' => $text);
 	}
@@ -572,7 +580,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initTRIMPData($dat) {
 		$avg  = ($this->year != -1) ? 15 : 180;
-		$text = ($dat['trimp'] == 0) ? NBSP : Running::StresscoloredString($dat['trimp']/$avg, $dat['trimp']);
+
+		if ($dat['trimp'] == 0) {
+			$text = NBSP;
+		} else {
+			$Stress = new Stresscolor($dat['trimp'] / $avg);
+			$text = $Stress->string($dat['trimp']);
+		}
 
 		$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
 	}

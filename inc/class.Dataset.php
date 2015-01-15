@@ -10,6 +10,7 @@ use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Icon;
+use Runalyze\View\Stresscolor;
 
 /**
  * Load dataset row for a given training or a group of trainings
@@ -547,10 +548,13 @@ class Dataset {
 			return '';
 
 		$Percentage = $this->distanceComparisonPercentage();
-		$String     = ($Percentage > 0) ? Math::WithSign($Percentage).'&nbsp;&#37;' : '-';
+		$String     = ($Percentage > 0) ? sprintf("%+d", $Percentage).'&nbsp;&#37;' : '-';
 		$this->kmOfLastSet = $this->Activity->distance();
 
-		return ' <small style="display:inline-block;width:55px;color:#'.Running::Stresscolor(100*$Percentage/20).'">'.$String.'</small>';
+		$Stress = new Stresscolor($Percentage * 100);
+		$Stress->scale(0, 20);
+
+		return ' <small style="display:inline-block;width:55px;color:#'.$Stress->rgb().'">'.$String.'</small>';
 	}
 
 	/**

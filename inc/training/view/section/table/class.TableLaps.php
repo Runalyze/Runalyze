@@ -7,6 +7,7 @@
 use Runalyze\View\Splits;
 use Runalyze\Model\Trackdata;
 use Runalyze\Configuration;
+use Runalyze\Util\StringReader;
 
 /**
  * Table: laps
@@ -19,9 +20,11 @@ class TableLaps extends TableLapsAbstract {
 	 * Set code
 	 */
 	protected function setCode() {
+		$Reader = new StringReader($this->Context->activity()->comment());
+
 		$Splits = $this->Context->activity()->splits();
 		$SplitsView = new Splits\Table($Splits);
-		$SplitsView->setDemandedPace( Running::DescriptionToDemandedPace($this->Context->activity()->comment()) );
+		$SplitsView->setDemandedPace($Reader->findDemandedPace());
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE)
 			&& $this->Context->activity()->typeid() == Configuration::General()->competitionType()

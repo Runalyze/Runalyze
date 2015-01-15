@@ -9,8 +9,7 @@ namespace Runalyze\View\Activity\Plot;
 use Runalyze\Model\Activity\Splits;
 use Runalyze\View\Activity;
 use Runalyze\Activity\Duration;
-
-use Running;
+use Runalyze\Util\StringReader;
 
 /**
  * Plot for: manual laps
@@ -55,7 +54,9 @@ class LapsManual extends Laps {
 
 		$num = count($this->Data);
 
-		$this->demandedPace = Running::DescriptionToDemandedPace($context->activity()->comment());
+		$Reader = new StringReader($context->activity()->comment());
+
+		$this->demandedPace = $Reader->findDemandedPace();
 		$this->achievedPace = array_sum($this->Data) / $num;
 
 		$this->manipulateData($num);

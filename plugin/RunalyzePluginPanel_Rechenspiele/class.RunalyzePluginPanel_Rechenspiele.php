@@ -208,8 +208,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bars'	=> array(
 					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
-				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
-				'value'	=> Math::WithSign($TrimpValues['TSB']),
+				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TrimpValues['TSB']),
+				'value'	=> sprintf("%+d", $TrimpValues['TSB']),
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
 				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
