@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-01-15 17:59+0200\n"
-"Last-Translator: Michael <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-01-15 18:19+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -4247,7 +4247,7 @@ msgstr "Persönliche Bestleistungen"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:263
 #, php-format
 msgid "The results give the constants K = %f and e = %f."
-msgstr ""
+msgstr "Aus den Ergebnissen wurden die Konstanten K = %f und e = %f berechnet."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:279
 msgid "Input"
@@ -6026,7 +6026,7 @@ msgstr "Allgemeine Bereinigung"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:30
 msgid "Refresh internal constants"
-msgstr ""
+msgstr "Interne Konstanten aktualisieren"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:36
 msgid "Recalculate your equipment statistics"
@@ -6034,15 +6034,15 @@ msgstr "Neuberechnung deiner Klamottenstatistiken"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:42
 msgid "Recalculate your VDOT shape"
-msgstr ""
+msgstr "Neuberechnung des VDOT-Wertes"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:48
 msgid "Recalculate your VDOT correction factor"
-msgstr ""
+msgstr "Neuberechnung des VDOT-Korrekturfaktors"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:54
 msgid "Recalculate your basic endurance"
-msgstr ""
+msgstr "Neuberechnung der Grundlagenausdauer"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:60
 msgid "Recalculate maximal TRIMP values"
@@ -6090,7 +6090,7 @@ msgstr "Berechne TRIMP Werte neu"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:117
 msgid "Allow to force recalculations if settings did not change"
-msgstr ""
+msgstr "Erlaube erzwungene Neuberechnung bei ungeänderten Werten"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:123
 msgid "Start cleanup"
@@ -6282,7 +6282,7 @@ msgstr "Tempotabelle: 400m von ...s bis ...s"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:73
 msgid "VDOT values with equivalent race results"
-msgstr "VDOT-Werte mit gleichen Wettkampfzeiten"
+msgstr "VDOT-Werte mit entsprechenden Wettkampfzeiten"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:74
 msgid "Predict results on different distances for a given VDOT."
@@ -6290,7 +6290,7 @@ msgstr "Prognosen für alle VDOT-Werte und unterschiedliche Distanzen."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:79
 msgid "VDOT values with equivalent paces"
-msgstr ""
+msgstr "VDOT-Werte mit entsprechender Pace"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:80
 msgid "Find your training paces in min/km for given VDOT values."
