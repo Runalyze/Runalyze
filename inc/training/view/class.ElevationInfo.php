@@ -246,6 +246,7 @@ class ElevationInfo {
 		} else {
 			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
 
+			// TODO: add link to "reload" if correction has been done via ajax
 			$Fieldset->setHtmlCode(
 				'<p class="warning small block" id="gps-results">
 					'.__('Elevation data has not been corrected.').'<br>

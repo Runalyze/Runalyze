@@ -152,6 +152,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Tasks after insertion
 	 */
 	protected function after() {
+		parent::after();
+
 		$this->updateEquipment();
 		$this->updateStartTime();
 		$this->updateVDOTshapeAndCorrector();

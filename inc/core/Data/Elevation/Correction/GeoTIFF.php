@@ -65,6 +65,7 @@ class GeoTIFF extends Strategy {
 	 */
 	public function correctElevation() {
 		if ($this->Reader instanceof \SRTMGeoTIFFReader) {
+			$this->Reader->maxPoints = PHP_INT_MAX;
 			$arraySize = count($this->LatitudePoints);
 			$locations = array();
 

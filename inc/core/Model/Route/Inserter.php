@@ -7,6 +7,8 @@
 namespace Runalyze\Model\Route;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Route\Calculator;
+use Runalyze\Configuration;
 
 /**
  * Insert route to database
@@ -48,5 +50,20 @@ class Inserter extends Model\InserterWithAccountID {
 			),
 			Object::allProperties()
 		);
+	}
+
+	/**
+	 * Tasks before insertion
+	 */
+	protected function before() {
+		parent::before();
+
+		$Calculator = new Calculator($this->Object);
+
+		if (Configuration::ActivityForm()->correctElevation() && !$this->Object->hasCorrectedElevations()) {
+			$Calculator->tryToCorrectElevation();
+		}
+
+		$Calculator->calculateElevation();
 	}
 }

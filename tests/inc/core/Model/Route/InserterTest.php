@@ -83,4 +83,21 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(47.7, $N->get(Object::MIN_LATITUDE));
 	}
 
+	public function testElevationCalculation() {
+		$R = new Object(array(
+			Object::ELEVATIONS_CORRECTED => array(100, 120, 110)
+		));
+
+		$I = new Inserter($this->PDO, $R);
+		$I->setAccountID(1);
+		$I->insert();
+
+		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
+		$N = new Object($data);
+
+		$this->assertGreaterThan(0, $N->elevation());
+		$this->assertGreaterThan(0, $N->elevationUp());
+		$this->assertGreaterThan(0, $N->elevationDown());
+	}
+
 }

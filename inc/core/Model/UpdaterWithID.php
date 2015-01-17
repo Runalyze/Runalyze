@@ -6,6 +6,8 @@
 
 namespace Runalyze\Model;
 
+use Cache;
+
 /**
  * Update object in database
  * 
@@ -46,5 +48,16 @@ abstract class UpdaterWithID extends Updater {
 		}
 
 		return '`id`='.$this->NewObject->id();
+	}
+
+	/**
+	 * Tasks after insertion
+	 */
+	protected function after() {
+		parent::after();
+
+		if (Cache::is($this->table().$this->NewObject->id())) {
+			Cache::delete($this->table().$this->NewObject->id());
+		}
 	}
 }

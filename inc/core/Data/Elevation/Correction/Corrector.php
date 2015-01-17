@@ -88,7 +88,9 @@ class Corrector {
 	 * @return string
 	 */
 	public function getNameOfUsedStrategy() {
-		return get_class($this->Strategy);
+		$strategyName = get_class($this->Strategy);
+
+		return substr($strategyName, strrpos($strategyName, '\\')+1);
 	}
 
 	/**

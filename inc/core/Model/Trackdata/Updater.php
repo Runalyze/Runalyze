@@ -8,6 +8,8 @@ namespace Runalyze\Model\Trackdata;
 
 use Runalyze\Model;
 
+use Cache;
+
 /**
  * Update trackdata in database
  * 
@@ -63,5 +65,16 @@ class Updater extends Model\UpdaterWithAccountID {
 			),
 			Object::allProperties()
 		);
+	}
+
+	/**
+	 * Tasks after insertion
+	 */
+	protected function after() {
+		parent::after();
+
+		if (Cache::is('trackdata'.$this->NewObject->activityID())) {
+			Cache::delete('trackdata'.$this->NewObject->activityID());
+		}
 	}
 }

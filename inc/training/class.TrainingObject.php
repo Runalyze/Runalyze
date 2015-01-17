@@ -145,6 +145,10 @@ class TrainingObject extends DataObject {
 			$InserterRoute->insert();
 
 			$this->forceToSet('routeid', $InserterRoute->insertedID());
+
+			if ($this->getElevation() == 0) {
+				$this->setElevation($Route->elevation());
+			}
 		}
 
 		$Activity = $this->newActivityObject();
@@ -180,9 +184,6 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Route\Object::NAME => $this->get('route'),
 			Runalyze\Model\Route\Object::CITIES => $this->get('route'),
 			Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
-			Runalyze\Model\Route\Object::ELEVATION => $this->get('elevation'),
-			//Runalyze\Model\Route\Object::ELEVATION_UP,
-			//Runalyze\Model\Route\Object::ELEVATION_DOWN,
 			Runalyze\Model\Route\Object::LATITUDES => $this->get('arr_lat'),
 			Runalyze\Model\Route\Object::LONGITUDES => $this->get('arr_lon'),
 			Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
@@ -223,8 +224,6 @@ class TrainingObject extends DataObject {
 		$UpdaterActivity->setAccountID( SessionAccountHandler::getId() );
 		$UpdaterActivity->update();
 
-		Cache::delete('training'.$this->id());
-
 		/*
 		// TODO: ROUTEID?
 		$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance());
@@ -255,65 +254,6 @@ class TrainingObject extends DataObject {
 		$this->updateValue('arr_power', implode(self::$ARR_SEP, $data));
 		$this->updateValue('power', $GPS->averagePower());
 		$this->updateValue('gps_cache_object', '');*/
-	}
-
-	/**
-	 * Try to correct elevation
-	 */
-	public function tryToCorrectElevation() {
-		throw new RuntimeException('This method has to be refactored.');
-
-		/*$this->doElevationCorrection();
-
-		if ($this->elevationWasCorrected()) {
-			$this->calculateElevation();
-
-			if ($this->get('elevation') == 0) {
-				$this->updateValue('elevation', $this->get('elevation_calculated'));
-			}
-
-			if ($this->Sport()->usesPower() && Configuration::ActivityForm()->computePower())
-				$this->calculatePower();
-		}*/
-	}
-
-	/**
-	 * Do elevation correction
-	 */
-	private function doElevationCorrection() {
-		throw new RuntimeException('This method has to be refactored.');
-
-		/*$GPS  = new GpsData($this->getArray());
-		$data = $GPS->getElevationCorrection();
-
-		if (is_array($data)) {
-			$this->updateValue('arr_alt', implode(self::$ARR_SEP, $data));
-			$this->updateValue('elevation_corrected', 1);
-			$this->updateValue('gps_cache_object', '');
-		}*/
-	}
-
-	/**
-	 * Calculate elevation
-	 */
-	public function calculateElevation() {
-		throw new RuntimeException('This method has to be refactored.');
-
-		/*$GPS = new GpsData($this->getArray());
-		$this->updateValue('elevation_calculated', $GPS->calculateElevation());*/
-	}
-
-	/**
-	 * Set calculated value as elevation
-	 */
-	public function setCalculatedValueAsElevation() {
-		throw new RuntimeException('This method has to be refactored.');
-
-		/*$GPS = new GpsData($this->getArray());
-		$array = $GPS->calculateElevation(true);
-
-		$this->updateValue('elevation', $array[0]);
-		$this->updateValue('vdot_with_elevation', $this->calculateVDOTbyHeartRateWithElevationFor($array[1], $array[2]));*/
 	}
 
 
