@@ -241,12 +241,9 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('PACE_Y_AXIS_REVERSE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('PACE_HIDE_OUTLIERS')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
-		$this->handle('TRAINING_PLOT_PRECISION')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('TRAINING_PLOT_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
-		$this->handle('GMAP_PATH_BREAK')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('GMAP_PATH_BREAK')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
-		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup()');

@@ -44,10 +44,31 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Tasks after insertion
 	 */
 	protected function after() {
+		$this->deleteTrackdata();
+		$this->deleteRoute();
+
 		$this->updateEquipment();
 		$this->updateStartTime();
 		$this->updateVDOTshapeAndCorrector();
 		$this->updateBasicEndurance();
+	}
+
+	/**
+	 * Delete trackdata
+	 */
+	protected function deleteTrackdata() {
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'trackdata` WHERE `activityid`="'.$this->Object->id().'" LIMIT 1');
+	}
+
+	/**
+	 * Delete route
+	 */
+	protected function deleteRoute() {
+		if ($this->Object->get(Model\Activity\Object::ROUTEID) > 0) {
+			// TODO: check if route was uniquely used
+			// For the moment, routes are created uniquely, so that's right.
+			$this->PDO->exec('DELETE FROM `'.PREFIX.'route` WHERE `id`="'.$this->Object->get(Model\Activity\Object::ROUTEID).'" LIMIT 1');
+		}
 	}
 
 	/**

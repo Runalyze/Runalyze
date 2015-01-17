@@ -159,3 +159,5 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+/* 17.01.2015 - old columns of `runalyze_training` are removed by 'refactor-db.php' */

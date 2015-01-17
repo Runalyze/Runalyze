@@ -269,7 +269,7 @@ class Dataset {
 					$String .= ', SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `vdot`';
 				} elseif ($set['name'] == 'pulse_avg') {
 					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
-				} else {
+				} elseif ($set['name'] != 'pace') {
 					if ($set['summary_mode'] != 'AVG') {
 						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
 					} else {
@@ -289,8 +289,11 @@ class Dataset {
 	public function getQuerySelectForAllDatasets() {
 		$String = ',`is_track`,`use_vdot`,`vdot_with_elevation`,`is_public`';
 
-		foreach ($this->data as $set)
-			$String .= ', `'.$set['name'].'`';
+		foreach ($this->data as $set) {
+			if ($set['name'] != 'pace') {
+				$String .= ', `'.$set['name'].'`';
+			}
+		}
 
 		return $String;
 	}

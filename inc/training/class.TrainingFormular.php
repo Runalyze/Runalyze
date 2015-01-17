@@ -63,7 +63,7 @@ class TrainingFormular extends StandardFormular {
 		parent::prepareForDisplayInSublcass();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
-			$this->initGPSFieldset();
+			$this->initElevationCorrectionFieldset();
 			$this->initDeleteFieldset();
 
 			if (Request::param('mode') == 'multi') {
@@ -111,22 +111,12 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
-	 * Add fieldset for adding GPS-data 
-	 */
-	protected function initGPSFieldset() {
-		if ($this->dataObject->hasPositionData())
-			$this->initElevationCorrectionFieldset();
-		// TODO:
-		// - add TCX is disabled
-		// - new method: add/complete with file
-		//elseif ($this->dataObject->hasDistance())
-		//	$this->initAddGPSdataFieldset();
-	}
-
-	/**
 	 * Init fieldset for correct elevation
 	 */
 	protected function initElevationCorrectionFieldset() {
+		// TODO: Elevation correction is currently only available with a route object, not for the activity object
+		return;
+
 		if ($this->dataObject->get('elevation_corrected') == 1)
 			return;
 
@@ -141,33 +131,6 @@ class TrainingFormular extends StandardFormular {
 			</small>');
 
 		$this->addFieldset($Fieldset);
-	}
-
-	/**
-	 * Init fieldset for adding GPS data 
-	 */
-	protected function initAddGPSdataFieldset() {
-		/*$Fieldset = new FormularFieldset('GPS-Daten hinzuf&uuml;gen');
-		$Fieldset->setConfValueToSaveStatus('GPS');
-		$Fieldset->addInfo('
-		<span onmouseover="javascript:createUploader()">
-			<strong>TCX-Datei nachtr&auml;glich hinzuf&uuml;gen</strong><br>
-			<br>
-			<span class="c button" id="file-upload-tcx">Datei hochladen</span>
-			<script>
-			function createUploader() {
-				$("#file-upload-tcx").removeClass("hide");
-				new AjaxUpload("#file-upload-tcx", {
-					action: "'.$_SERVER['SCRIPT_NAME'].'?id='.$this->dataObject->id().'&json=true&hideHtmlHeader=true",
-					onComplete : function(file, response){
-						$("#ajax").loadDiv("'.$_SERVER['SCRIPT_NAME'].'?id='.$this->dataObject->id().'&tmp=true");
-					}		
-				});
-			}
-			</script>
-		</span>');
-
-		$this->addFieldset($Fieldset);*/
 	}
 
 	/**

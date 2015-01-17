@@ -116,14 +116,6 @@ class System {
 	 * Clear complete cache 
 	 */
 	static public function clearCache() {
-		self::clearTrainingCache();
 		Cache::clean();
-	}
-
-	/**
-	 * Clear training cache 
-	 */
-	static public function clearTrainingCache() {
-		DB::getInstance()->exec('UPDATE '.PREFIX.'training SET gps_cache_object=""');
 	}
 }
