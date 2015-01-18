@@ -8,7 +8,7 @@
  * Current version of Runalyze
  * @var string
  */
-define('RUNALYZE_VERSION', '1.5');
+define('RUNALYZE_VERSION', '2.0alpha');
 
 /**
  * Maximum value for integers
@@ -38,7 +38,7 @@ define('CUT_LENGTH', 29);
  * New line for echoing text
  * @var string
  */
-define('NL', "\n");
+define('NL', PHP_EOL);
 
 /**
  * No break space
