@@ -128,10 +128,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$TSBmodel->calculate();
 
 		$MonotonyQuery = new Performance\ModelQuery();
-		$MonotonyQuery->setRange(time() - 7*DAY_IN_S, time());
+		$MonotonyQuery->setRange(time() - Monotony::DAYS*DAY_IN_S, time());
 		$MonotonyQuery->execute(DB::getInstance());
 
-		$Monotony = new Monotony($MonotonyQuery->data(), 7);
+		$Monotony = new Monotony($MonotonyQuery->data());
 		$Monotony->calculate();
 
 		$VDOT        = Configuration::Data()->vdot();
@@ -247,7 +247,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 							)
 					)
 				),
-				'bar-tooltip'	=> 'Training strain = avg(Trimp)*Monotony',
+				'bar-tooltip'	=> 'Training strain = sum(Trimp)*Monotony',
 				'value'	=> round($Monotony->trainingStrain()),
 				'title'	=> __('Training&nbsp;strain'),
 				'small'	=> '',

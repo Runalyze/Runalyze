@@ -21,17 +21,39 @@ class Language {
 	 * @param string $domain [optional]
 	 */
 	public function __construct($language = '', $domain = 'runalyze') {
-		if (empty($language))
-			$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en_US.UTF8';
+		self::$LOCALE_DIR = __DIR__.'/../locale';
+
+		if (empty($language)) {
+			$language = $this->guessLanguage();
+		}
 
 		putenv("LANG=$language");
 		setlocale(LC_ALL, $language);
-		setlocale(LC_NUMERIC, 'en_US');
+		setlocale(LC_NUMERIC, 'C');
 
 		bind_textdomain_codeset($domain, 'UTF-8');
 
 		self::addTextDomain($domain, self::$LOCALE_DIR); 
 		textdomain($domain);
+	}
+
+	/**
+	 * Guess language
+	 * Based on get parameter or language accepted by the browser
+	 * @return string
+	 */
+	protected function guessLanguage() {
+		if (isset($_GET['lang'])) {
+			return $_GET['lang'];
+		}
+
+		$preferredLanguage = $this->getBrowserLanguage();
+
+		if (in_array($preferredLanguage, array_keys(self::availableLanguages()))) {
+			return $preferredLanguage;
+		}
+
+		return 'en';
 	}
 
 	/**
@@ -113,11 +135,15 @@ class Language {
 	}
 
 	/**
-	 * get browser language
-	 * @return type 
+	 * Get browser language
+	 * @return string 
 	 */
 	private function getBrowserLanguage() {
-		return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+			return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+		}
+
+		return '';
 	}
 }
 

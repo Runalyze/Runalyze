@@ -23,18 +23,18 @@ class MonotonyTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSingleValue() {
-		$Monotony = new Monotony(array(100));
+		$Monotony = new Monotony(array(1, 1, 1, 1, 1, 1, 1));
 		$Monotony->calculate();
 
 		$this->assertEquals( Monotony::MAX, $Monotony->value() );
 	}
 
 	public function testSimpleExample() {
-		$Monotony = new Monotony(array(8, 12));
+		$Monotony = new Monotony(array(0, 20, 10, 10, 10, 10, 10));
 		$Monotony->calculate();
 
-		$this->assertEquals( 10/2, $Monotony->value() );
-		$this->assertEquals( 10*5, $Monotony->trainingStrain() );
+		$this->assertEquals( 10/sqrt(200/7), $Monotony->value() );
+		$this->assertEquals( 7*10*10/sqrt(200/7), $Monotony->trainingStrain() );
 	}
 
 	public function testAnotherSimpleExample() {
@@ -42,7 +42,18 @@ class MonotonyTest extends \PHPUnit_Framework_TestCase {
 		$Monotony->calculate();
 
 		$this->assertEquals( 20/8.45, $Monotony->value(), '', 0.01 );
-		$this->assertEquals( 20*20/8.45, $Monotony->trainingStrain(), '', 0.1 );
+		$this->assertEquals( 7*20*20/8.45, $Monotony->trainingStrain(), '', 0.1 );
+	}
+
+	public function testEmptyDays() {
+		$WithZeroes = new Monotony(array(0, 0, 0, 10, 20, 30, 40));
+		$WithZeroes->calculate();
+
+		$WithoutZeroes = new Monotony(array(10, 20, 30, 40));
+		$WithoutZeroes->calculate();
+
+		$this->assertEquals( $WithZeroes->value(), $WithoutZeroes->value() );
+		$this->assertEquals( $WithZeroes->trainingStrain(), $WithoutZeroes->trainingStrain() );
 	}
 
 }
