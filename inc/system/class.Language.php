@@ -22,10 +22,13 @@ class Language {
 	 */
 	public function __construct($language = '', $domain = 'runalyze') {
 		if (empty($language))
-			$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en';
+			$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en_US.UTF8';
 
 		putenv("LANG=$language"); 
 		setlocale(LC_ALL, $language);
+		setlocale(LC_NUMERIC, 'en_US');
+
+		bind_textdomain_codeset($domain, 'UTF-8');
 
 		self::addTextDomain($domain, self::$LOCALE_DIR); 
 		textdomain($domain);

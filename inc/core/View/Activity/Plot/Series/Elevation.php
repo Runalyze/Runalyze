@@ -37,6 +37,11 @@ class Elevation extends ActivitySeries {
 	 * @var boolean $forceOriginal
 	 */
 	protected function initDataWithRoute(Activity\Context $context, $forceOriginal) {
+		if (!$context->hasRoute()) {
+			$this->Data = array();
+			return;
+		}
+
 		$key = $context->route()->hasCorrectedElevations() && !$forceOriginal ? Route::ELEVATIONS_CORRECTED : Route::ELEVATIONS_ORIGINAL;
 
 		if (!$context->route()->has($key)) {

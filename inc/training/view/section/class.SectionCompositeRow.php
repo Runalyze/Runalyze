@@ -162,7 +162,10 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 
 			if ($this->Context->activity()->elevation() > 0) {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-				$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), 'm', __('Elevation up/down'));
+	
+				if ($this->Context->hasRoute()) {
+					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), 'm', __('Elevation up/down'));
+				}
 			}
 		}
 	}
@@ -171,7 +174,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: course
 	 */
 	protected function addCourse() {
-		if (strlen($this->Context->route()->name()) > 0) {
+		if ($this->Context->hasRoute() && strlen($this->Context->route()->name()) > 0) {
 			$PathBox = new BoxedValue($this->Context->route()->name(), '', __('Course'));
 			$PathBox->defineAsFloatingBlock('w100 flexible-height');
 
