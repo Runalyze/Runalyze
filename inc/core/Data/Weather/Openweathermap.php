@@ -75,8 +75,12 @@ class Openweathermap implements ForecastStrategy {
 		if ($JSON) {
 			$this->Result = json_decode($JSON, true);
 
-			if (isset($this->Result['list']) && !empty($this->Result['list'])) {
-				$this->Result = $this->Result['list'][0];
+			if (isset($this->Result['list'])) {
+				if (!empty($this->Result['list'])) {
+					$this->Result = $this->Result['list'][0];
+				} else {
+					$this->Result = array();
+				}
 			}
 		}
 	}

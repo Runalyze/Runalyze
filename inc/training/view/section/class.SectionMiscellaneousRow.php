@@ -3,6 +3,10 @@
  * This file contains class::SectionMiscellaneousRow
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity;
+use Runalyze\Model\Trackdata;
+
 /**
  * Row: Miscellaneous
  * 
@@ -30,17 +34,32 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function setRightContent() {
 		$this->fillNotesContent();
-
 		$this->addRightContent('notes', __('Additional notes'), $this->NotesContent);
 
-		if ($this->Training->hasArrayCadence())
-			$this->addRightContent('cadence', __('Cadence plot'), new TrainingPlotCadence($this->Training));
+		if ($this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
+			$Plot = new Activity\Plot\Cadence($this->Context);
+			$this->addRightContent('cadence', __('Cadence plot'), $Plot);
+		}
 
-		if ($this->Training->hasArrayPower())
-			$this->addRightContent('power', __('Power plot'), new TrainingPlotPower($this->Training));
+		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
+			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
+			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
+		}
 
-		if ($this->Training->hasArrayTemperature())
-			$this->addRightContent('temperature', __('Temperature plot'), new TrainingPlotTemperature($this->Training));
+		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
+			$Plot = new Activity\Plot\GroundContact($this->Context);
+			$this->addRightContent('groundcontact', __('Ground contact plot'), $Plot);
+		}
+
+		if ($this->Context->trackdata()->has(Trackdata\Object::POWER)) {
+			$Plot = new Activity\Plot\Power($this->Context);
+			$this->addRightContent('power', __('Power plot'), $Plot);
+		}
+
+		if ($this->Context->trackdata()->has(Trackdata\Object::TEMPERATURE)) {
+			$Plot = new Activity\Plot\Temperature($this->Context);
+			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
+		}
 	}
 
 	/**
@@ -49,6 +68,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
 		$this->addCadenceAndPower();
+		$this->addRunningDynamics();
 		$this->addWeather();
 		$this->addEquipment();
 		$this->addTrainingPartner();
@@ -58,10 +78,10 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add date and time
 	 */
 	protected function addDateAndTime() {
-		$Date = new BoxedValue($this->Training->DataView()->getDate(false), '', __('Date'));
+		$Date = new BoxedValue($this->Context->dataview()->date(), '', __('Date'));
 
-		if (strlen($this->Training->DataView()->getDaytimeString()) > 0) {
-			$Daytime = new BoxedValue($this->Training->DataView()->getDaytimeString(), '', __('Time of day'));
+		if ($this->Context->dataview()->daytime() != '') {
+			$Daytime = new BoxedValue($this->Context->dataview()->daytime(), '', __('Time of day'));
 			$Daytime->defineAsFloatingBlock('w50');
 			$Date->defineAsFloatingBlock('w50');
 
@@ -77,11 +97,11 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add cadence and power
 	 */
 	protected function addCadenceAndPower() {
-		if ($this->Training->getCadence() > 0 || $this->Training->getPower() > 0) {
-			$Cadence = new BoxedValue(Helper::Unknown($this->Training->Cadence()->value(), '-'), $this->Training->Cadence()->unitAsString(), $this->Training->Cadence()->label());
+		if ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->power() > 0) {
+			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
-			$Power = new BoxedValue(Helper::Unknown($this->Training->getPower(), '-'), 'W', __('Power'));
+			$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
 			$Power->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;
@@ -90,22 +110,38 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	}
 
 	/**
+	 * Add running dynamics
+	 */
+	protected function addRunningDynamics() {
+		if ($this->Context->activity()->groundcontact() > 0 || $this->Context->activity()->verticalOscillation() > 0) {
+			$Contact = new BoxedValue(Helper::Unknown($this->Context->activity()->groundcontact(), '-'), 'ms', __('Ground contact'));
+			$Contact->defineAsFloatingBlock('w50');
+
+			$Oscillation = new BoxedValue(Helper::Unknown(round($this->Context->activity()->verticalOscillation()/10, 1), '-'), 'cm', __('Vertical oscillation'));
+			$Oscillation->defineAsFloatingBlock('w50');
+
+			$this->BoxedValues[] = $Contact;
+			$this->BoxedValues[] = $Oscillation;
+		}
+	}
+
+	/**
 	 * Add weather
 	 */
 	protected function addWeather() {
-		if (!$this->Training->Weather()->isEmpty()) {
-			$Weather = new BoxedValue($this->Training->Weather()->condition()->string(), '', __('Weather condition'), $this->Training->Weather()->condition()->icon()->code());
+		if (!$this->Context->activity()->weather()->isEmpty()) {
+			$Weather = new BoxedValue($this->Context->activity()->weather()->condition()->string(), '', __('Weather condition'), $this->Context->activity()->weather()->condition()->icon()->code());
 			$Weather->defineAsFloatingBlock('w50');
 
-			$Temp = new BoxedValue(Helper::Unknown($this->Training->Weather()->temperature()->value()), $this->Training->Weather()->temperature()->unit(), __('Temperature'));
+			$Temp = new BoxedValue(Helper::Unknown($this->Context->activity()->weather()->temperature()->value()), $this->Context->activity()->weather()->temperature()->unit(), __('Temperature'));
 			$Temp->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Weather;
 			$this->BoxedValues[] = $Temp;
 		}
 
-		if (!$this->Training->Clothes()->areEmpty()) {
-			$Clothes = new BoxedValue($this->Training->Clothes()->asLinks(), '', __('Clothes'));
+		if (!$this->Context->activity()->clothes()->isEmpty()) {
+			$Clothes = new BoxedValue($this->Context->dataview()->clothesAsLinks(), '', __('Clothes'));
 			$Clothes->defineAsFloatingBlock('w100 flexible-height');
 
 			$this->BoxedValues[] = $Clothes;
@@ -116,11 +152,17 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add equipment
 	 */
 	protected function addEquipment() {
-		if (!$this->Training->Shoe()->isDefaultId()) {
-			$RunningShoe = new BoxedValue($this->Training->Shoe()->getSearchLink(), '', __('Running shoe'));
-			$RunningShoe->defineAsFloatingBlock('w100 flexible-height');
+		$id = $this->Context->activity()->shoeID();
 
-			$this->BoxedValues[] = $RunningShoe;
+		if ($id) {
+			$Shoe = new Shoe($id);
+
+			if (!$Shoe->isDefaultId()) {
+				$RunningShoe = new BoxedValue($Shoe->getSearchLink(), '', __('Running shoe'));
+				$RunningShoe->defineAsFloatingBlock('w100 flexible-height');
+
+				$this->BoxedValues[] = $RunningShoe;
+			}
 		}
 	}
 
@@ -128,8 +170,8 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add training partner
 	 */
 	protected function addTrainingPartner() {
-		if (strlen($this->Training->getPartner()) > 0) {
-			$TrainingPartner = new BoxedValue($this->Training->DataView()->getPartnerAsLinks(), '', __('Training partner'));
+		if (!$this->Context->activity()->partner()->isEmpty()) {
+			$TrainingPartner = new BoxedValue($this->Context->dataview()->partnerAsLinks(), '', __('Training partner'));
 			$TrainingPartner->defineAsFloatingBlock('w100 flexible-height');
 
 			$this->BoxedValues[] = $TrainingPartner;
@@ -152,8 +194,8 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add notes
 	 */
 	protected function addNotes() {
-		if (strlen($this->Training->getNotes()) > 0) {
-			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Training->getNotes();
+		if ($this->Context->activity()->notes() != '') {
+			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Context->activity()->notes();
 			$this->NotesContent .= HTML::fileBlock($Notes);
 		}
 	}
@@ -162,20 +204,19 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add created/edited
 	 */
 	protected function addCreationAndModificationTime() {
-		if ($this->Training->getCreatedTimestamp() > 0) {
-			$CreationTime = sprintf( __('You created this training on <strong>%s</strong> at <strong>%s</strong>.'),
-				date('d.m.Y', $this->Training->getCreatedTimestamp()),
-				date('H:i', $this->Training->getCreatedTimestamp())
+		$created = $this->Context->activity()->get(\Runalyze\Model\Activity\Object::TIMESTAMP_CREATED);
+		$edited = $this->Context->activity()->get(\Runalyze\Model\Activity\Object::TIMESTAMP_EDITED);
+
+		if ($created > 0 || $edited > 0) {
+			$CreationTime = ($created == 0) ? '' : sprintf( __('You created this training on <strong>%s</strong> at <strong>%s</strong>.'),
+				date('d.m.Y', $created),
+				date('H:i', $created)
 			);
 
-			if ($this->Training->getEditedTimestamp() > 0) {
-				$ModificationTime = '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
-					date('d.m.Y', $this->Training->getEditedTimestamp()),
-					date('H:i', $this->Training->getEditedTimestamp())
-				);
-			} else {
-				$ModificationTime = '';
-			}
+			$ModificationTime = ($edited == 0) ? '' : '<br>'.sprintf( __('Last modification on <strong>%s</strong> at <strong>%s</strong>.'),
+				date('d.m.Y', $edited),
+				date('H:i', $edited)
+			);
 
 			$this->NotesContent .= HTML::fileBlock($CreationTime.$ModificationTime);
 		}

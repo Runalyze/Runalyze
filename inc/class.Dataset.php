@@ -5,6 +5,12 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Model\Factory;
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Dataview;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Icon;
+use Runalyze\View\Stresscolor;
 
 /**
  * Load dataset row for a given training or a group of trainings
@@ -13,10 +19,40 @@ use Runalyze\Configuration;
  */
 class Dataset {
 	/**
-	 * Training object
-	 * @var \TrainingObject
+	 * Factory
+	 * @var \Runalyze\Model\Factory
 	 */
-	protected $TrainingObject = null;
+	protected $Factory;
+
+	/**
+	 * Activity
+	 * @var \Runalyze\Model\Activity\Object
+	 */
+	protected $Activity = null;
+
+	/**
+	 * Sport
+	 * @var \Runalyze\Model\Sport\Object
+	 */
+	protected $Sport = null;
+
+	/**
+	 * Type
+	 * @var \Runalyze\Model\Type\Object
+	 */
+	protected $Type = null;
+
+	/**
+	 * Dataview
+	 * @var \Runalyze\View\Activity\Dataview
+	 */
+	protected $Dataview = null;
+
+	/**
+	 * Activity linker
+	 * @var \Runalyze\View\Activity\Linker
+	 */
+	protected $Linker = null;
 
 	/**
 	 * Counter for displayed columns
@@ -43,24 +79,50 @@ class Dataset {
 	private $kmOfLastSet = -1;
 
 	/**
+	 * Is in summary mode?
+	 * @var boolean
+	 */
+	protected $isSummary = false;
+
+	/**
 	 * Constructor
 	 */
-	public function __construct() {
-                $dat = Cache::get('Dataset');
-                if(is_null($dat)) {
-                    $dat = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>=2 AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
-                    Cache::set('Dataset', $dat, '600'); 
-                }
-		if ($dat === false || empty($dat)) {
-			Error::getInstance()->addError('No dataset in database is active.');
-			return false;
+	public function __construct($accountID = null) {
+		if (is_null($accountID)) {
+			$accountID = SessionAccountHandler::getId();
 		}
 
-		$this->data = $dat;
-		$this->cols = count($dat);
+		$this->Factory = new Factory($accountID);
 
-		if (Configuration::DataBrowser()->showEditLink())
+		$this->data = $this->datasetArray();
+		$this->cols = count($this->data);
+
+		if (Configuration::DataBrowser()->showEditLink()) {
 			$this->cols++;
+		}
+	}
+
+	/**
+	 * Dataset
+	 * @param boolean $complete [optional] set to true to load hidden fields as well
+	 * @return array
+	 */
+	protected function datasetArray($complete = false) {
+		$key = $complete ? 'Dataset-complete' : 'Dataset';
+		$modus = $complete ? 0 : 2;
+
+		$dataset = Cache::get($key);
+
+		if (is_null($dataset)) {
+			$dataset = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>='.$modus.' AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
+			Cache::set($key, $dataset, '600'); 
+		}
+
+		if (empty($dataset)) {
+			throw new \RuntimeException('No active dataset found.');
+		}
+
+		return $dataset;
 	}
 
 	/**
@@ -90,20 +152,38 @@ class Dataset {
 	 * Load complete dataset where position != 0
 	 */
 	public function loadCompleteDataset() {
-		$this->data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `position`!=0 ORDER BY `position` ASC')->fetchAll();
+		$this->data = $this->datasetArray(true);
 		$this->cols = count($this->data);
 	}
 
 	/**
-	 * Set training
-	 * @param int $id
-	 * @param array $data [optional]
+	 * Set activity
+	 * @param \Runalyze\Model\Activity\Object $object activity object
 	 */
-	public function setTrainingId($id, $data = array()) {
-		if (empty($data))
-			$data = $id;
+	public function setActivity(Activity\Object $object) {
+		$this->Activity = $object;
+		$this->Dataview = new Dataview($object);
+		$this->Linker = new Linker($object);
+		$this->Sport = $this->Activity->sportid() > 0 ? $this->Factory->sport($this->Activity->sportid()) : null;
+		$this->Type = $this->Activity->typeid() > 0 ? $this->Factory->type($this->Activity->typeid()) : null;
+	}
 
-		$this->TrainingObject = new TrainingObject($data);
+	/**
+	 * Set activity data
+	 * @param array $data activity data
+	 */
+	public function setActivityData(array $data) {
+		$this->isSummary = false;
+
+		if (!empty($data)) {
+			$this->setActivity( new Activity\Object($data) );
+		} else {
+			$this->Activity = null;
+			$this->Dataview = null;
+			$this->Linker = null;
+			$this->Sport = null;
+			$this->Type = null;
+		}
 	}
 
 	/**
@@ -114,23 +194,23 @@ class Dataset {
 	 * @return boolean Are any trainings loaded?
 	 */
 	public function loadGroupOfTrainings($sportid, $timestart, $timeend) {
-		$SummaryData = DB::getInstance()->query('
-			SELECT
-				sportid,
-				time,
-				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
-				SUM(1) as `num`
-				'.$this->getQuerySelectForSet().'
-			FROM `'.PREFIX.'training`
-			WHERE
-				`sportid`='.$sportid.'
-				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
-				'.$this->getQueryWhereNotPrivate().'
-			GROUP BY `sportid`
-			LIMIT 1
-		')->fetch();
-
-		return $this->setGroupOfTrainings($SummaryData);
+		return $this->setGroupOfTrainings(
+			DB::getInstance()->query('
+				SELECT
+					`sportid`,
+					`time`,
+					SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
+					SUM(1) as `num`
+					'.$this->getQuerySelectForSet().'
+				FROM `'.PREFIX.'training`
+				WHERE
+					`sportid`='.$sportid.'
+					AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
+					'.$this->getQueryWhereNotPrivate().'
+				GROUP BY `sportid`
+				LIMIT 1
+			')->fetch()
+		);
 	}
 
 	/**
@@ -142,10 +222,11 @@ class Dataset {
 	 * @return array 
 	 */
 	public function getGroupOfTrainingsForTimerange($sportid, $timerange = 604800, $timestart = 0, $timeend = 0) {
-		if ($timeend == 0)
+		if ($timeend == 0) {
 			$timeend = time();
+		}
 
-		$SummaryData = DB::getInstance()->query('
+		return DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				`time`,
@@ -161,26 +242,17 @@ class Dataset {
 			GROUP BY `timerange`, `sportid`
 			ORDER BY `timerange` ASC
 		')->fetchAll();
-
-		return $SummaryData;
 	}
 
 	/**
 	 * Set group of trainings for summary
 	 * @param array $SummaryData
-	 * @return boolean 
 	 */
 	public function setGroupOfTrainings($SummaryData) {
+		$this->setActivityData($SummaryData);
+
 		$this->kmOfLastSet = 0;
-
-		$this->setTrainingId( DataObject::$DEFAULT_ID );
-
-		if ($SummaryData === false || empty($SummaryData))
-			return false;
-
-		$this->TrainingObject->setFromArray($SummaryData);
-
-		return true;
+		$this->isSummary = true;
 	}
 
 	/**
@@ -191,19 +263,21 @@ class Dataset {
 		$String = '';
 		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
-		foreach ($this->data as $set)
+		foreach ($this->data as $set) {
 			if ($set['summary'] == 1) {
 				if ($set['name'] == 'vdot') {
 					$String .= ', SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `vdot`';
 				} elseif ($set['name'] == 'pulse_avg') {
 					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
-				} else {
-					if ($set['summary_mode'] != 'AVG')
+				} elseif ($set['name'] != 'pace') {
+					if ($set['summary_mode'] != 'AVG') {
 						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
-					else
+					} else {
 						$String .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
+					}
 				}
 			}
+		}
 
 		return $String;
 	}
@@ -213,10 +287,13 @@ class Dataset {
 	 * @return string 
 	 */
 	public function getQuerySelectForAllDatasets() {
-		$String = ',`is_track`,`use_vdot`,`vdot_with_elevation`,`is_public`,`elevation_corrected`,SUBSTR(`arr_alt`,1,1) as `arr_alt`';
+		$String = ',`is_track`,`use_vdot`,`vdot_with_elevation`,`is_public`';
 
-		foreach ($this->data as $set)
-			$String .= ', `'.$set['name'].'`';
+		foreach ($this->data as $set) {
+			if ($set['name'] != 'pace') {
+				$String .= ', `'.$set['name'].'`';
+			}
+		}
 
 		return $String;
 	}
@@ -230,18 +307,10 @@ class Dataset {
 	}
 
 	/**
-	 * Is Dataset running in summary-mode?
-	 * @return bool
-	 */
-	private function isSummaryMode() {
-		return $this->TrainingObject->isDefaultId();
-	}
-
-	/**
 	 * Display short link for e.g. 'Gymnastik'
 	 */
 	public function displayShortLink() {
-		echo $this->TrainingObject->Linker()->linkWithSportIcon();
+		echo $this->Linker->linkWithSportIcon();
 	}
 
 	/**
@@ -254,11 +323,13 @@ class Dataset {
 		$addLink = '';
 		$weekDay = Time::Weekday(date('w', $timestamp), true);
 
-		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN)
+		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN) {
 			$addLink = ImporterWindow::linkForDate($timestamp);
+		}
 
-		if (Time::isToday($timestamp))
+		if (Time::isToday($timestamp)) {
 			$weekDay = '<strong>'.$weekDay.'</strong>';
+		}
 
 		return $date.' '.$addLink.' '.$weekDay;
 	}
@@ -269,8 +340,9 @@ class Dataset {
 	public function displayTableColumns() {
 		$this->displayEditLink();
 
-		foreach ($this->data as $set)
+		foreach ($this->data as $set) {
 			$this->displayDataset($set);
+		}
 	}
 
 	/**
@@ -278,33 +350,35 @@ class Dataset {
 	 * @param array $set
 	 */
 	private function displayDataset($set) {
-		if ($this->isSummaryMode() && $set['summary'] == 0)
+		if ($this->isSummary && $set['summary'] == 0) {
 			echo HTML::emptyTD();
-		else
+		} else {
 			echo HTML::td($this->getDataset($set['name']), $set['class'], $set['style']);
+		}
 	}
 
 	/**
 	 * Display edit link if used in DataBrowser 
 	 */
 	public function displayEditLink() {
-		if (Configuration::DataBrowser()->showEditLink())
-			if ($this->isSummaryMode() || FrontendShared::$IS_SHOWN)
+		if (Configuration::DataBrowser()->showEditLink()) {
+			if ($this->isSummary || FrontendShared::$IS_SHOWN) {
 				echo HTML::emptyTD();
-			else
-				echo HTML::td($this->TrainingObject->Linker()->smallEditLink()).NL;
+			} else {
+				echo HTML::td($this->Linker->smallEditLink());
+			}
+		}
 	}
 
 	/**
 	 * Display public icon
 	 */
 	public function displayPublicIcon() {
-		if (!is_object($this->TrainingObject))
+		if (!is_object($this->Activity) || !$this->Activity->isPublic()) {
 			echo HTML::emptyTD();
-		elseif (!$this->TrainingObject->isPublic())
-			echo HTML::emptyTD();
-		else
+		} else {
 			echo HTML::td(Icon::$ADD_SMALL_GREEN, 'link');
+		}
 	}
 
 	/**
@@ -315,105 +389,148 @@ class Dataset {
 	public function getDataset($name) {
 		switch($name) {
 			case 'sportid':
-				return $this->TrainingObject->Sport()->Icon();
+				if (!is_null($this->Sport)) {
+					return $this->Sport->icon()->code();
+				}
+
+				return '';
 
 			case 'typeid':
-				if ($this->TrainingObject->Type()->isUnknown())
-					return '';
+				if (!is_null($this->Type)) {
+					if ($this->Type->rpe() > 4) {
+						return '<strong>'.$this->Type->abbreviation().'</strong>';
+					}
 
-				return $this->TrainingObject->Type()->formattedAbbr();
+					return $this->Type->abbreviation();
+				}
+
+				return '';
 
 			case 'time':
-				return $this->TrainingObject->DataView()->getDaytimeString();
+				return $this->Dataview->daytime();
 
 			case 'distance':
-				return $this->TrainingObject->DataView()->getDistanceString().$this->getDistanceComparison();
+				return $this->Dataview->distance().$this->distanceComparison();
 
 			case 's':
-				return $this->TrainingObject->DataView()->getTimeString();
+				return $this->Dataview->duration()->string();
 
 			case 'pace':
-				if ($this->TrainingObject->getDistance() == 0)
-					return '';
+				if ($this->Activity->distance() > 0) {
+					// TODO: 's_sum_with_distance'
+					//return $this->TrainingObject->DataView()->getSpeedStringForTime( $this->TrainingObject->getTimeInSecondsSumWithDistance() );
+					return $this->Dataview->pace()->valueWithAppendix();
+				}
 
-				return $this->TrainingObject->DataView()->getSpeedStringForTime( $this->TrainingObject->getTimeInSecondsSumWithDistance() );
+				return '';
 
 			case 'elevation':
-				return $this->TrainingObject->DataView()->getElevationWithTooltip();
+				return $this->Dataview->elevation();
 
 			case 'kcal':
-				return $this->TrainingObject->DataView()->getCalories();
+				return $this->Dataview->calories();
 
 			case 'pulse_avg':
-				return $this->TrainingObject->DataView()->getPulseAvg();
+				if ($this->Activity->hrAvg() > 0) {
+					return $this->Dataview->hrAvg()->string();
+				}
+
+				return '';
 
 			case 'pulse_max':
-				return $this->TrainingObject->DataView()->getPulseMax();
+				if ($this->Activity->hrMax() > 0) {
+					return $this->Dataview->hrMax()->string();
+				}
+
+				return '';
 
 			case 'trimp':
-				return $this->TrainingObject->DataView()->getTrimpString();
+				return $this->Dataview->trimp();
 
 			case 'cadence':
-				return $this->TrainingObject->DataView()->getCadence();
+				if ($this->Dataview->cadence()->value() > 0) {
+					return $this->Dataview->cadence()->asString();
+				}
+
+				return '';
+
+			case 'groundcontact':
+				return $this->Dataview->groundcontact();
+
+			case 'vertical_oscillation':
+				return $this->Dataview->verticalOscillation();
 
 			case 'power':
-				return $this->TrainingObject->DataView()->getPower();
+				return $this->Dataview->power();
 
 			case 'temperature':
-				if ($this->TrainingObject->Weather()->temperature()->isUnknown() || !$this->TrainingObject->Sport()->isOutside())
-					return '';
+				if (!$this->Activity->weather()->isEmpty() && (is_null($this->Sport) || $this->Sport->isOutside())) {
+					return $this->Activity->weather()->temperature()->asString();
+				}
 
-				return $this->TrainingObject->Weather()->temperature()->asString();
+				return '';
 
 			case 'weatherid':
-				if ($this->TrainingObject->Weather()->isEmpty() || !$this->TrainingObject->Sport()->isOutside())
-					return '';
+				if (!$this->Activity->weather()->isEmpty() && (is_null($this->Sport) || $this->Sport->isOutside())) {
+					return $this->Activity->weather()->condition()->icon()->code();
+				}
 
-				return $this->TrainingObject->Weather()->condition()->icon()->code();
+				return '';
 
 			case 'route':
-				return $this->cut( $this->TrainingObject->getRoute() );
+				// Does not exist anymore
+				return '';
 
 			case 'clothes':
-				return $this->cut( $this->TrainingObject->Clothes()->asString() );
+				return $this->cut( $this->Dataview->clothes() );
 
 			case 'splits':
-				$isCompetition  = $this->TrainingObject->Type()->isCompetition();
-				$splitsAreDifferent = round($this->TrainingObject->getDistance()) != round($this->TrainingObject->Splits()->totalDistance());
-				$splitsAreDirectlySet = $this->TrainingObject->Splits()->hasActiveAndInactiveLaps();
-
-				if ($isCompetition || $splitsAreDifferent || $splitsAreDirectlySet)
-					return $this->TrainingObject->Splits()->asIconWithTooltip();
+				if (!$this->Activity->splits()->isEmpty()) {
+					if (
+						$this->Activity->splits()->hasActiveAndInactiveLaps() ||
+						round($this->Activity->splits()->totalDistance()) != round($this->Activity->distance()) ||
+						(!is_null($this->Type) && $this->Type->id() == Configuration::General()->competitionType())
+					) {
+						// TODO: Icon with tooltip?
+						$Icon = new Icon( Icon::CLOCK );
+						return $Icon->code();
+					}
+				}
 
 				return '';
 
 			case 'comment':
-				return $this->cut( $this->TrainingObject->getComment() );
+				return $this->cut( $this->Activity->comment() );
 
 			case 'partner':
-				return $this->cut( $this->TrainingObject->getPartner() );
+				return $this->cut( $this->Activity->partner()->asString() );
 
 			case 'abc':
-				return $this->TrainingObject->DataView()->getABCicon();
+				return $this->Dataview->abcIcon();
 
 			case 'shoeid':
-				return $this->TrainingObject->Shoe()->getName();
+				if ($this->Activity->shoeID() > 0) {
+					return ShoeFactory::NameOf($this->Activity->shoeID());
+				}
+
+				return '';
 
 			case 'vdot':
-				if (!$this->TrainingObject->Sport()->isRunning())
-					return '';
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
+					return $this->Dataview->vdotIcon();
+				}
 
-				return $this->TrainingObject->DataView()->getVDOTicon();
+				return '';
 
 			case 'jd_intensity':
-				if (!$this->TrainingObject->Sport()->isRunning())
-					return '';
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
+					return $this->Dataview->jdIntensityWithStresscolor();
+				}
 
-				return $this->TrainingObject->DataView()->getJDintensityWithStresscolor();
-
+				return '';
 		}
 
-		return '&nbsp;';
+		return '';
 	}
 
 	/**
@@ -426,28 +543,32 @@ class Dataset {
 	}
 
 	/**
-	 * Dataset for: `distance`
+	 * Compare distance to last set
 	 * @return string
 	 */
-	private function getDistanceComparison() {
+	private function distanceComparison() {
 		if (!$this->compareKM)
 			return '';
 
-		$Percentage = $this->getDistanceComparisonPercentage();
-		$String     = ($Percentage > 0) ? Math::WithSign($Percentage).'&nbsp;&#37;' : '-';
-		$this->kmOfLastSet = $this->TrainingObject->getDistance();
+		$Percentage = $this->distanceComparisonPercentage();
+		$String     = ($Percentage > 0) ? sprintf("%+d", $Percentage).'&nbsp;&#37;' : '-';
+		$this->kmOfLastSet = $this->Activity->distance();
 
-		return ' <small style="display:inline-block;width:55px;color:#'.Running::Stresscolor(100*$Percentage/20).'">'.$String.'</small>';
+		$Stress = new Stresscolor($Percentage * 100);
+		$Stress->scale(0, 20);
+
+		return ' <small style="display:inline-block;width:55px;color:#'.$Stress->rgb().'">'.$String.'</small>';
 	}
 
 	/**
 	 * Get percentage of last distance
 	 * @return int
 	 */
-	private function getDistanceComparisonPercentage() {
-		if ($this->kmOfLastSet == 0)
+	private function distanceComparisonPercentage() {
+		if ($this->kmOfLastSet == 0) {
 			return 0;
+		}
 
-		return round(100*($this->TrainingObject->getDistance() - $this->kmOfLastSet ) / $this->kmOfLastSet, 1);
+		return round(100*($this->Activity->distance() - $this->kmOfLastSet ) / $this->kmOfLastSet, 1);
 	}
 }

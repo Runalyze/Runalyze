@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Pace;
 
 /**
  * Factory serving static methods for Sport
@@ -74,7 +75,7 @@ class SportFactory {
 			'HFavg' => 140,
 			'RPE' => 4,
 			'distances' => 0,
-			'speed' => SportSpeed::$DEFAULT,
+			'speed' => Pace::STANDARD,
 			'types' => 0,
 			'pulse' => 0,
 			'power'	=> 0,
@@ -87,8 +88,9 @@ class SportFactory {
 	 * @return array
 	 */
 	static public function AllSports() {
-		if (is_null(self::$AllSports))
+		if (is_null(self::$AllSports)) {
 			self::initAllSports();
+		}
 
 		return self::$AllSports;
 	}
@@ -111,9 +113,11 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
-                $sports = self::cacheAllSports();
-		foreach ($sports as $sport)
+		$sports = self::cacheAllSports();
+
+		foreach ($sports as $sport) {
 			self::$AllSports[(string)$sport['id']] = $sport;
+		}
 	}
         
         /**
@@ -121,10 +125,11 @@ class SportFactory {
          */
         static private function cacheAllSports() {
             $sports = Cache::get('sport');
-                if(is_null($sports)) {
-                    $sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
-                    Cache::set('sport', $sports, '3600');
-                }
+			if (is_null($sports)) {
+				$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
+				Cache::set('sport', $sports, '3600');
+			}
+
             return $sports;
         }
 
@@ -142,9 +147,10 @@ class SportFactory {
 	 * Use this method after updating sports table
 	 */
 	static public function reInitAllSports() {
-		self::$AllSports = null;
+		Cache::delete('sport');
+
+		self::$AllSports = array();
 		self::initAllSports();
-                Cache::delete('sport');
 	}
 
 	/**
@@ -153,8 +159,10 @@ class SportFactory {
 	 */
 	static public function NamesAsArray() {
 		$sports = self::AllSports();
-		foreach ($sports as $id => $sport)
+
+		foreach ($sports as $id => $sport) {
 			$sports[$id] = $sport['name'];
+		}
 
 		return $sports;
 	}
@@ -165,11 +173,14 @@ class SportFactory {
 	 * @return int sportid, -1 if not found
 	 */
 	static public function idByName($name) {
-                $sports = self::cacheAllSports();
-                foreach ($sports as $sport) {
-                    if($sport['name'] == $name)
-                        return $sport['id'];
-                }
+		$sports = self::cacheAllSports();
+
+		foreach ($sports as $sport) {
+			if ($sport['name'] == $name) {
+				return $sport['id'];
+			}
+		}
+
 		return -1;
 	}
 	
@@ -180,10 +191,27 @@ class SportFactory {
 	*/
 	static public function kcalPerHourFor($SportID) {
 		$Sports = self::AllSports();
-		if (isset($Sports[$SportID]))
+
+		if (isset($Sports[$SportID])) {
 			return $Sports[$SportID]['kcal'];
+		}
 
 		return 0;
+	}
+
+	/**
+	 * Name of sport
+	 * @param string $sportid
+	 * @return string
+	 */
+	static public function name($sportid) {
+		$Sports = self::AllSports();
+
+		if (isset($Sports[$sportid])) {
+			return $Sports[$sportid]['name'];
+		}
+
+		return __('unknown');
 	}
 
 	/**
@@ -194,36 +222,11 @@ class SportFactory {
 		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` GROUP BY sportid')->fetchAll();
 		$Counts = array();
 
-		foreach ($Sports as $Sport)
+		foreach ($Sports as $Sport) {
 			$Counts[$Sport['sportid']] = $Sport['scount'];
+		}
 
 		return $Counts;
-	}
-	
-	/**
-	 * Get select-box for all sport-ids
-	 * @param mixed $selected [optional] Value to be selected
-	 * @return string
-	 */
-	static public function SelectBox($selected = -1) {
-		if ($selected == -1 && isset($_POST['sportid']))
-			$selected = $_POST['sportid'];
-
-		return HTML::selectBox('sportid', self::NamesAsArray(), $selected);
-	}
-
-	/**
-	 * Does this sport-id displays speed in km/h?
-	 * @param int $id
-	 * @return bool
-	 */
-	static public function usesSpeedInKmh($id) {
-		$sports = self::AllSports();
-
-		if (isset($sports[$id]))
-			return ($sports[$id]['speed'] == SportSpeed::$KM_PER_H);
-
-		return false;
 	}
 
 	/**
@@ -234,58 +237,6 @@ class SportFactory {
 	static public function getSpeedUnitFor($ID) {
 		$Sports = self::AllSports();
 
-		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : SportSpeed::$DEFAULT;
-	}
-
-	/**
-	 * Get speed for a given sportid
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @param boolean $withAppendix [optional]
-	 * @param boolean $withTooltip [optional]
-	 * @return string
-	 */
-	static public function getSpeed($Distance, $Time, $ID, $withAppendix = false, $withTooltip = false) {
-		$Unit   = self::getSpeedUnitFor($ID);
-		$Speed  = ($withAppendix) ? SportSpeed::getSpeedWithAppendix($Distance, $Time, $Unit) : SportSpeed::getSpeed($Distance, $Time, $Unit);
-
-		if ($withTooltip && $Unit != SportSpeed::$DEFAULT)
-			return Ajax::tooltip($Speed, SportSpeed::getSpeedWithAppendix($Distance, $Time, SportSpeed::$DEFAULT));
-
-		return $Speed;
-	}
-
-	/**
-	 * Get speed for a given sportid with appendix
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithAppendix($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, true);
-	}
-
-	/**
-	 * Get speed for a given sportid with tooltip for default unit
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithTooltip($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, false, true);
-	}
-
-	/**
-	 * Get speed for a given sportid with appendix and tooltip for default unit
-	 * @param float $Distance
-	 * @param int $Time
-	 * @param int $ID
-	 * @return string
-	 */
-	static public function getSpeedWithAppendixAndTooltip($Distance, $Time, $ID) {
-		return self::getSpeed($Distance, $Time, $ID, true, true);
+		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : Pace::STANDARD;
 	}
 }

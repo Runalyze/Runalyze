@@ -1,3 +1,6 @@
+<?php
+use Runalyze\Activity\Distance;
+?>
 <div class="w50" id="login-window">
 	<div id="login">
 		<form action="login.php" method="post">
@@ -165,26 +168,27 @@ function show(what) {
 
 <?php
 DB::getInstance()->stopAddingAccountID();
+
 $NumUser = Cache::get('NumUser', 1);
-if($NumUser == NULL) {
-    $NumUser   = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
+if ($NumUser == NULL) {
+    $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
     Cache::set('NumUser', $NumUser, '500', 1);
 }
+
 $NumKm = Cache::get('NumKm', 1);
-if($NumKm == NULL) {
-    $NumKm     = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
+if ($NumKm == NULL) {
+    $NumKm = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
     Cache::set('NumKm', $NumUser, '500', 1);
 }
-
+DB::getInstance()->startAddingAccountID();
 
 $NumUserOn = SessionAccountHandler::getNumberOfUserOnline();
-DB::getInstance()->startAddingAccountID();
 ?>
 
 <p class="text"></p>
 <p class="text small c login-window-stats">
 	<?php printf(_n('Until now <strong>%d</strong> athlete is registered and','Until now <strong>%d</strong> athletes are registered and', $NumUser), $NumUser); ?>
-	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser), Running::Km($NumKm)); ?>
+	<?php printf(_n('has logged <strong>%s</strong>.','have logged <strong>%s</strong>.', $NumUser), Distance::format($NumKm)); ?>
 	<br>
 	<?php printf(_n('<strong>%d</strong> athlete is online.','<strong>%d</strong> athletes are online.', $NumUserOn), $NumUserOn); ?><br>
 </p>

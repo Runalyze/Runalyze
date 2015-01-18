@@ -60,6 +60,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
+			$this->assertFalse( $this->object->object()->hasArrayGroundContact() );
+			$this->assertFalse( $this->object->object()->hasArrayVerticalOscillation() );
 
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
@@ -72,7 +74,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	 * Filename: "Fenix-2.fit" 
 	 */
 	public function test_FenixFile() {
-		if (!Shell::isPerlAvailable()) {
+		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/Fenix-2.fit');
 
 			$this->assertFalse( $this->object->hasMultipleTrainings() );
@@ -84,8 +86,8 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertEquals( 2.94, $this->object->object()->getDistance(), '', 0.1);
 			$this->assertEquals( 159, $this->object->object()->getCalories(), '', 10);
-			$this->assertEquals( 137, $this->object->object()->getPulseAvg(), '', 2);
-			$this->assertEquals( 169, $this->object->object()->getPulseMax(), '', 2);
+			$this->assertEquals( 137, $this->object->object()->getPulseAvg(), '', 5);
+			$this->assertEquals( 169, $this->object->object()->getPulseMax(), '', 5);
 			$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 			$this->assertTrue( $this->object->object()->hasArrayDistance() );
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
@@ -94,6 +96,11 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
+			$this->assertTrue( $this->object->object()->hasArrayGroundContact() );
+			$this->assertTrue( $this->object->object()->hasArrayVerticalOscillation() );
+
+			$this->assertEquals( 216, $this->object->object()->getGroundContactTime() );
+			$this->assertEquals( 92, $this->object->object()->getVerticalOscillation(), '', 1 );
 
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
@@ -132,7 +139,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( "10.55|46:49,20", $this->object->object(2)->Splits()->asString() );
+			$this->assertEquals( "10.55|46:49", $this->object->object(2)->Splits()->asString() );
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 		}

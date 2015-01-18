@@ -76,11 +76,11 @@ class RunalyzePluginTool_MultiEditor extends PluginTool {
 		if (strlen(Request::param('ids')) > 0) {
 			$this->IDs = explode(',', Request::param('ids'));
 		} else {
-			$Result = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'training` ORDER BY `id` DESC LIMIT '.self::NUMBER_OF_TRAININGS_TO_DISPLAY)->fetchAll();
-
-			foreach ($Result as $Data) {
-				$this->IDs[] = $Data['id'];
-			}
+			$this->IDs = DB::getInstance()->query(
+				'SELECT id FROM `'.PREFIX.'training`
+				ORDER BY `id` DESC
+				LIMIT '.self::NUMBER_OF_TRAININGS_TO_DISPLAY
+			)->fetchAll(PDO::FETCH_COLUMN, 0);
 		}
 	}
 }

@@ -1997,6 +1997,8 @@ sub named_type_value {
      31 => +{'name' => 'gps_accuracy', 'unit' => 'm'},
      32 => +{'name' => 'vertical_speed', 'scale' => 1000, 'unit' => 'm/s'},
      33 => +{'name' => 'calories', 'scale' => 1, 'unit' => 'kcal'},
+     39 => +{'name' => 'vertical_oscillation', 'scale' => 10, 'unit' => 'mm'},
+     41 => +{'name' => 'stance_time', 'scale' => 10, 'unit' => 'ms'},
    },
 
    'event' => +{

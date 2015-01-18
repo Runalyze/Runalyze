@@ -3,6 +3,10 @@
  * This file contains class::ExporterFITLOG
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\Model\Trackdata;
+use Runalyze\Model\Route;
+
 /**
  * Exporter for: FITLOG
  * 
@@ -58,39 +62,49 @@ class ExporterFITLOG extends ExporterAbstractFile {
 	 * Set general info 
 	 */
 	protected function setGeneralInfo() {
-		if (strlen(SessionAccountHandler::getName()) > 0)
+		if (strlen(SessionAccountHandler::getName()) > 0) {
 			$this->XML->AthleteLog->Athlete->addAttribute('Name', SessionAccountHandler::getName());
+		}
 
-		$this->Activity->addAttribute('StartTime', $this->timeToString($this->Training->get('time')));
+		$this->Activity->addAttribute('StartTime', $this->timeToString($this->Context->activity()->timestamp()));
 
-		$this->Activity->Duration->addAttribute('TotalSeconds', (int)$this->Training->get('s'));
-		$this->Activity->Distance->addAttribute('TotalMeters', 1000*$this->Training->get('distance'));
-		$this->Activity->Calories->addAttribute('TotalCal', $this->Training->get('kcal'));
-		$this->Activity->Category->addAttribute('Name', $this->Training->Sport()->name());
-		$this->Activity->Location->addAttribute('Name', $this->Training->get('route'));
+		$this->Activity->Duration->addAttribute('TotalSeconds', (int)$this->Context->activity()->duration());
+		$this->Activity->Distance->addAttribute('TotalMeters', 1000*$this->Context->activity()->distance());
+		$this->Activity->Calories->addAttribute('TotalCal', $this->Context->activity()->calories());
 	}
 
 	/**
 	 * Add track to xml 
 	 */
 	protected function setTrack() {
-		if (!$this->Training->hasPositionData())
+		if (!$this->Context->hasTrackdata()) {
 			return;
+		}
 
-		$Starttime = $this->Training->get('time');
-		$GPS = $this->Training->GpsData();
-		$GPS->startLoop();
+		$Starttime = $this->Context->activity()->timestamp();
+		$Trackdata = new Trackdata\Loop($this->Context->trackdata());
+		$Route = ($this->Context->hasRoute() && $this->Context->route()->hasPositionData())
+				? new Route\Loop($this->Context->route()) : null;
+
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
 
 		$Track = $this->Activity->addChild('Track');
 		$Track->addAttribute('StartTime', $this->timeToString($Starttime));
 
-		while ($GPS->nextStep()) {
+		while ($Trackdata->nextStep()) {
 			$Point = $Track->addChild('pt');
-			$Point->addAttribute('tm', $GPS->getTime());
-			$Point->addAttribute('lat', $GPS->getLatitude());
-			$Point->addAttribute('lon', $GPS->getLongitude());
-			$Point->addAttribute('ele', $GPS->getElevation());
-			$Point->addAttribute('hr', $GPS->getHeartrate());
+			$Point->addAttribute('tm', $Trackdata->time());
+
+			if (NULL !== $Route) {
+				$Route->nextStep();
+				$Point->addAttribute('lat', $Route->latitude());
+				$Point->addAttribute('lon', $Route->longitude());
+				$Point->addAttribute('ele', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+			}
+
+			if ($hasHeartrate) {
+				$Point->addAttribute('hr', $Trackdata->current(Trackdata\Object::HEARTRATE));
+			}
 		}
 	}
 

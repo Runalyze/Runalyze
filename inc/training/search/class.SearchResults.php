@@ -380,7 +380,7 @@ class SearchResults {
 			echo '<tr class="r">';
 			echo '<td class="l"><small>'.$link.'</small></td>';
 
-			$this->Dataset->setTrainingId($training['id'], $training);
+			$this->Dataset->setActivityData($training);
 			$this->Dataset->displayTableColumns();
 
 			echo '</tr>';

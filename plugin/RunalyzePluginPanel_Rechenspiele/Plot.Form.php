@@ -6,6 +6,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD;
 
 $MaxATLPoints   = 750;
 $DataFailed     = false;
@@ -38,13 +39,15 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
 	$Data = Cache::get('calculationsPlotData'.$Year.$All);
-	if(is_null($Data)) {
+	if (is_null($Data)) {
+		$withElevation = Configuration::Vdot()->useElevationCorrection();
+
 		$Data = DB::getInstance()->query('
 			SELECT
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 				SUM(`trimp`) as `trimp`,
-				SUM('.JD::mysqlVDOTsum().'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
-				SUM('.JD::mysqlVDOTsumTime().') as `s`
+				SUM('.JD\Shape::mysqlVDOTsum($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
+				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `s`
 			FROM `'.PREFIX.'training`
 			WHERE
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
@@ -89,8 +92,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$VDOT_sum        = array_sum($VDOT_slice);
 		$Durations_sum   = array_sum($Durations_slice);
 
-		if (count($VDOT_slice) != 0 && $Durations_sum != 0)
-			$VDOTs[$index]  = JD::correctVDOT($VDOT_sum / $Durations_sum);
+		if (count($VDOT_slice) != 0 && $Durations_sum != 0) {
+			$VDOTs[$index] = Configuration::Data()->vdotFactor() * ($VDOT_sum / $Durations_sum);
+		}
 	}
 } else {
 	$DataFailed = true;

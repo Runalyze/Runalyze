@@ -2183,7 +2183,7 @@ var RunalyzePlot = (function($, parent){
 	}
 
 	function resizeEachTrainingChart() {
-		$("#statistics-inner .training-chart").each(function(){
+		$(".training-row-plot .flot").each(function(){
 			if ($(this).width() != trainingCharts.options.width) {
 				$(this).width(trainingCharts.options.width);
 				resize($(this).attr('id'));
@@ -2308,7 +2308,7 @@ var RunalyzePlot = (function($, parent){
 		if (cssId in plots && $e.length == 0)
 			self.remove(cssId);
 
-		if ($e.hasClass('training-chart'))
+		if ($(".training-row-plot").has($e).length)
 			$e.width(trainingCharts.options.width);
 
 		opt = $.extend(true, {}, defaultOptions, opt);
@@ -2808,8 +2808,9 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
-			if ($("#"+key).is(".training-chart"))
+			if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
 				moveMapMarker(coords.x);
+			}
 
 			show(key, pos, content, posClass);
 		};
@@ -3080,6 +3081,17 @@ Runalyze.Tablesorter = (function($, Parent){
 		},
 		type: 'numeric'
 	});
+
+	parent.addParser({
+		id: 'order',
+		is: function(s) {
+			return false;
+		},
+		format: function(s) {
+			return s.replace(/[(]/g, '99999').replace(/[.)]/g, '');
+		},
+		type: 'numeric'
+	});
 })(jQuery, jQuery.tablesorter, Runalyze.Tablesorter);/*
  * Lib for logging errors in Runalyze
  * 
@@ -3290,6 +3302,7 @@ Runalyze.Overlay = (function($, Parent){
 		selectorBackground:	'#overlay',
 		selectorAll:		'#overlay, #ajax, #ajax-navigation',
 		selectorOuter:		'#ajax-outer',
+		selectorNavigation:	'#ajax-navigation',
 		classBig:			'big-window',
 		classSmall:			'small-window',
 		classFullscreen:	'fullscreen',
@@ -3401,6 +3414,7 @@ Runalyze.Overlay = (function($, Parent){
 				$allElements.hide();
 				self.removeClasses();
 				removeBodyClass();
+				$(options.selectorNavigation).remove();
 			});
 		}
 	};
@@ -6196,14 +6210,14 @@ var RunalyzeLeaflet = (function($){
 		$('#'+id).addClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").removeClass('fa-expand').addClass('fa-compress');
 
-		object.onResize();
+		object._onResize();
 	};
 
 	self.exitFullscreen = function() {
 		$('#'+id).removeClass('fullscreen');
 		$(".leaflet-control-zoom-full > i").addClass('fa-expand').removeClass('fa-compress');
 
-		object.onResize();
+		object._onResize();
 	};
 
 	return self;
@@ -6488,8 +6502,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 			self.showRoute(id);
 		}
 
-		if (!this.mousemovebounded)
-			bindMouseMove();
+		bindMouseMove();
 
 		parent.map().on('zoomend', decideMarkerVisibility);
 	};
@@ -6544,6 +6557,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 		self.hideAllRoutes();
 
 		objects = {};
+		mousemovebounded = false;
 	};
 
 	self.segmentFromStrings = function(lats, lngs, sep) {
@@ -6576,15 +6590,16 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
     };
 
 	self.movePosMarker = function(km) {
+		var id = self.routeid;
+
+		if (typeof id === "undefined" || typeof objects[id] === "undefined")
+			return;
+
 		var upper;
 		var index;
 		var lower;
 		var pos = [0,0];
 		var counter = 0;
-		var id = self.routeid;
-
-		if (typeof id === "undefined" || typeof objects[id] === "undefined")
-			return;
 
 		for (var s = 0; s < objects[id].segmentsInfo.length; ++s) {
 			var segmentLength = objects[id].segmentsInfo[s].length;

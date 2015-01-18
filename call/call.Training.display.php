@@ -5,7 +5,10 @@
  */
 require '../inc/class.Frontend.php';
 
+use Runalyze\View\Activity\Context;
+
 $Frontend = new Frontend();
 
-$View = new TrainingView(new TrainingObject(Request::sendId()));
+$Context = new Context(Request::sendId(), SessionAccountHandler::getId());
+$View = new TrainingView($Context);
 $View->display();

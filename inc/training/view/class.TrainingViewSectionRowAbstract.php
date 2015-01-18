@@ -3,6 +3,9 @@
  * This file contains class::TrainingViewSectionRowAbstract
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Row of the training view
  * 
@@ -11,16 +14,15 @@
  */
 abstract class TrainingViewSectionRowAbstract {
 	/**
-	 * Training
-	 * @var TrainingObject
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
 	 * Constructor
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context &$Context = null) {
+		$this->Context = $Context;
 
 		$this->setContent();
 	}

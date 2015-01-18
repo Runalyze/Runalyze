@@ -397,6 +397,23 @@ fieldset .with33erLabel .inline label {
 fieldset textarea.full-size {
   height: 72px;
 }
+fieldset .checkbox-first {
+  position: relative;
+}
+fieldset .checkbox-first label {
+  display: block;
+  width: 100%;
+  float: none;
+  line-height: 21px;
+  text-indent: 16px;
+}
+fieldset .checkbox-first input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
 .input-with-unit {
   position: relative;
 }

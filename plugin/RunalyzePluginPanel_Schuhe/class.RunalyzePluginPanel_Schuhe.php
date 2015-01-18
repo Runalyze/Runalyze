@@ -4,6 +4,10 @@
  * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Schuhe';
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Pace;
+
 /**
  * Class: RunalyzePluginPanel_Schuhe
  * 
@@ -53,18 +57,18 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		echo $this->getStyle();
 		echo '<div id="schuhe">';
 
+		// TODO: Use data from shoe factory
 		$inuse = true;
 		$schuhe = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC')->fetchAll();
 		foreach ($schuhe as $schuh) {
 			$Shoe = new Shoe($schuh);
 
 			if ($inuse && $Shoe->isInUse() == 0) {
-				echo '<div id="hiddenschuhe" style="display:none;">'.NL;
+				echo '<div id="hiddenschuhe" style="display:none;">';
 				$inuse = false;
 			}
 
-			echo '
-			<p style="position:relative;">
+			echo '<p style="position:relative;">
 				<span class="right">'.$Shoe->getKmString().'</span>
 				<strong>'.ShoeFactory::getSearchLink($schuh['id']).'</strong>
 				'.$this->getShoeUsageImage($Shoe->getKm()).'
@@ -108,8 +112,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 		if (is_null($this->schuhe))
 			$this->initTableData();
 
-		echo '
-		<table id="list-of-all-shoes" class="fullwidth zebra-style">
+		echo '<table id="list-of-all-shoes" class="fullwidth zebra-style">
 			<thead>
 				<tr>
 					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
@@ -132,23 +135,25 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				$Shoe   = new Shoe($schuh);
 				$in_use = $Shoe->isInUse() ? '' : ' unimportant';
 
-				echo('
-				<tr class="'.$in_use.' r" style="position: relative">
+				$Pace = new Pace($Shoe->getTime(), $Shoe->getKmInDatabase());
+				$MaxPace = new Pace($schuh['pace_in_s'], 1);
+
+				echo '<tr class="'.$in_use.' r" style="position: relative">
 					<td class="small">'.$schuh['num'].'x</td>
 					<td>'.$this->editLinkFor($schuh['id']).'</td>
 					<td class="b l">'.ShoeFactory::getSearchLink($schuh['id']).'</td>
 					<td class="small">'.$Shoe->getSince().'</td>
-					<td>'.(($schuh['num'] != 0) ? Running::Km($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
-					<td>'.(($schuh['num'] != 0) ? SportSpeed::minPerKm($Shoe->getKmInDatabase(), $Shoe->getTime()) : '-').'</td>
-					<td class="small">'.Running::Km($schuh['dist']).'</td>
-					<td class="small">'.  SportSpeed::minPerKm(1, $schuh['pace_in_s']).'/km'.'</td>
+					<td>'.(($schuh['num'] != 0) ? Distance::format($Shoe->getKmInDatabase()/$schuh['num']) : '-').'</td>
+					<td>'.(($schuh['num'] != 0) ? $Pace->asMinPerKm().'/km' : '-').'</td>
+					<td class="small">'.Distance::format($schuh['dist']).'</td>
+					<td class="small">'.$MaxPace->asMinPerKm().'/km'.'</td>
 					<td>'.$Shoe->getTimeString().'</td>
 					<td>'.$Shoe->getKmString().'</td>
 					<td class="small">'.$Shoe->getWeightString().'</td>
-				</tr>');
+				</tr>';
 			}
 		} else {
-			echo('<tr><td colspan="9">'.__('You don\'t have any shoes').'</td></tr>');
+			echo '<tr><td colspan="9">'.__('You don\'t have any shoes').'</td></tr>';
 		}
 
 		echo '</tbody>';
@@ -179,26 +184,24 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	private function initTableData() {
 		$this->schuhe   = array();
 		$ShoeStatistics = array();
-		$AllShoeStatistics = DB::getInstance()->query('
-			SELECT
+		$AllShoeStatistics = DB::getInstance()->query(
+			'SELECT
 				shoeid,
 				COUNT(*) as num,
 				MIN(s/distance) as pace_in_s,
 				MAX(distance) as dist
 			FROM '.PREFIX.'training
 			WHERE shoeid != 0
-			GROUP BY shoeid
-		')->fetchAll();
+			GROUP BY shoeid')->fetchAll();
 
 		foreach ($AllShoeStatistics as $Statistic)
 			$ShoeStatistics[$Statistic['shoeid']] = $Statistic;
 
-		$AllShoes = DB::getInstance()->query('
-			SELECT
+		$AllShoes = DB::getInstance()->query(
+			'SELECT
 				*
 			FROM '.PREFIX.'shoe
-			ORDER BY inuse DESC, km DESC
-		')->fetchAll();
+			ORDER BY inuse DESC, km DESC')->fetchAll();
 
 		foreach ($AllShoes as $Shoe)
 			if (isset($ShoeStatistics[$Shoe['id']]))

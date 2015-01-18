@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 02. Mai 2013 um 08:33
+-- Erstellungszeit: 02. November 2014 um 12:30
 -- Server Version: 5.1.44
 -- PHP-Version: 5.3.1
 
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
 CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `type` enum('panel','stat','tool') CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `type` enum('panel','stat','tool') NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(6) NOT NULL,
   `accountid` int(11) NOT NULL,
@@ -143,8 +143,41 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
   `config` varchar(100) NOT NULL,
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY (`pluginid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `pluginid` (`pluginid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_route`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_route` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `accountid` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `cities` varchar(255) NOT NULL,
+  `distance` decimal(6,2) unsigned NOT NULL,
+  `elevation` smallint(5) unsigned NOT NULL,
+  `elevation_up` smallint(5) unsigned NOT NULL,
+  `elevation_down` smallint(5) unsigned NOT NULL,
+  `lats` longtext NOT NULL,
+  `lngs` longtext NOT NULL,
+  `elevations_original` longtext NOT NULL,
+  `elevations_corrected` longtext NOT NULL,
+  `elevations_source` varchar(255) NOT NULL,
+  `startpoint_lat` float(8,5) NOT NULL,
+  `startpoint_lng` float(8,5) NOT NULL,
+  `endpoint_lat` float(8,5) NOT NULL,
+  `endpoint_lng` float(8,5) NOT NULL,
+  `min_lat` float(8,5) NOT NULL,
+  `min_lng` float(8,5) NOT NULL,
+  `max_lat` float(8,5) NOT NULL,
+  `max_lng` float(8,5) NOT NULL,
+  `in_routenet` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `accountid` (`accountid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -194,6 +227,29 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `runalyze_trackdata`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
+  `accountid` int(10) unsigned NOT NULL,
+  `activityid` int(10) unsigned NOT NULL,
+  `time` longtext NOT NULL,
+  `distance` longtext NOT NULL,
+  `pace` longtext NOT NULL,
+  `heartrate` longtext NOT NULL,
+  `cadence` longtext NOT NULL,
+  `power` longtext NOT NULL,
+  `temperature` longtext NOT NULL,
+  `groundcontact` longtext NOT NULL,
+  `vertical_oscillation` longtext NOT NULL,
+  `pauses` text NOT NULL,
+  PRIMARY KEY (`activityid`),
+  KEY `accountid` (`accountid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `runalyze_training`
 --
 
@@ -209,9 +265,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `distance` decimal(6,2) NOT NULL DEFAULT '0.00',
   `s` decimal(8,2) NOT NULL DEFAULT '0.00',
   `elapsed_time` int(6) NOT NULL DEFAULT '0',
-  `pace` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '?:??',
   `elevation` int(5) NOT NULL DEFAULT '0',
-  `elevation_calculated` int(5) NOT NULL DEFAULT '0',
   `kcal` int(5) NOT NULL DEFAULT '0',
   `pulse_avg` int(3) NOT NULL DEFAULT '0',
   `pulse_max` int(3) NOT NULL DEFAULT '0',
@@ -223,9 +277,12 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',
   `power` int(4) NOT NULL DEFAULT '0',
+  `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
+  `routeid` int(10) unsigned NOT NULL,
   `clothes` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   `splits` text CHARACTER SET latin1 COLLATE latin1_general_ci,
   `comment` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
@@ -233,23 +290,10 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `abc` smallint(1) NOT NULL DEFAULT '0',
   `shoeid` int(11) NOT NULL DEFAULT '0',
   `notes` text NOT NULL,
-  `arr_time` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_lat` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_lon` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_alt` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_alt_original` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_dist` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_heart` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_pace` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_cadence` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_power` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `arr_temperature` longtext CHARACTER SET latin1 COLLATE latin1_general_ci,
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL,
   `creator_details` tinytext NOT NULL,
   `activity_id` varchar(50) NOT NULL DEFAULT '',
-  `elevation_corrected` tinyint(1) NOT NULL DEFAULT '0',
-  `gps_cache_object` mediumtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`),
   KEY `time` (`time`),

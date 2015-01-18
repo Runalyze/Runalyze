@@ -5,6 +5,10 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Parameter\Application\ElevationMethod;
+use Runalyze\Data\Elevation;
+use Runalyze\View\Activity\Context;
+use Runalyze\Model;
 
 /**
  * Display elevation info for a training
@@ -15,9 +19,9 @@ use Runalyze\Configuration;
 class ElevationInfo {
 	/**
 	 * Training object
-	 * @var \TrainingObject
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
 	 * Lowest point
@@ -44,11 +48,10 @@ class ElevationInfo {
 	protected $calculatedElevation = 0;
 
 	/**
-	 * Constructor
-	 * @param TrainingObject $Training Training object
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 
 		$this->handleRequest();
 	}
@@ -58,7 +61,16 @@ class ElevationInfo {
 	 */
 	protected function handleRequest() {
 		if (Request::param('use-calculated-value') == 'true') {
-			$this->Training->setCalculatedValueAsElevation();
+			$oldObject = clone $this->Context->activity();
+			$this->Context->activity()->set(Model\Activity\Object::ELEVATION, $this->Context->route()->elevation());
+
+			$Updater = new Model\Activity\Updater(
+				DB::getInstance(),
+				$this->Context->activity(),
+				$oldObject
+			);
+			$Updater->setAccountID(SessionAccountHandler::getId());
+			$Updater->update();
 		}
 	}
 
@@ -86,28 +98,30 @@ class ElevationInfo {
 	 * Calculate values
 	 */
 	protected function calculateValues() {
-		$this->lowestPoint = min( $this->Training->getArrayAltitude() );
-		$this->highestPoint = max( $this->Training->getArrayAltitude() );
+		$this->lowestPoint = min( $this->Context->route()->elevations() );
+		$this->highestPoint = max( $this->Context->route()->elevations() );
 
-		$this->manualElevation = $this->Training->getElevation();
-		$this->calculatedElevation = $this->Training->GpsData()->calculateElevation();
+		$this->manualElevation = $this->Context->activity()->elevation();
+		$this->calculatedElevation = $this->Context->route()->elevation();
 	}
 
 	/**
 	 * Display header
 	 */
 	protected function displayHeader() {
-		echo HTML::h1( sprintf( __('Elevation calculation for: %s'), $this->Training->DataView()->getTitleWithCommentAndDate() ) );
+		echo HTML::h1( sprintf( __('Elevation calculation for: %s'), $this->Context->dataview()->titleWithComment() ) );
 	}
 
 	/**
 	 * Display standard values
 	 */
 	protected function displayStandardValues() {
-		if ($this->manualElevation != $this->calculatedElevation)
-			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$this->Training->Linker()->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'small');
-		else
+		if ($this->manualElevation != $this->calculatedElevation) {
+			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
+			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$Linker->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'small');
+		} else {
 			$useCalculatedValueLink = '';
+		}
 
 		$Fieldset = new FormularFieldset( __('General data') );
 		$Fieldset->setHtmlCode('
@@ -129,11 +143,11 @@ class ElevationInfo {
 			</div>
 			<div class="w50">
 				<label>&oslash; '.__('Gradient').'</label>
-				<span class="as-input">'.$this->Training->DataView()->getGradientInPercent().'</span>
+				<span class="as-input">'.$this->Context->dataview()->gradientInPercent().'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('Up/Down').'</label>
-				<span class="as-input">'.$this->Training->DataView()->getElevationUpAndDown().'</span>
+				<span class="as-input">+'.$this->Context->route()->elevationUp().'m / -'.$this->Context->route()->elevationDown().'m</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -143,10 +157,11 @@ class ElevationInfo {
 	 * Display different algorithms
 	 */
 	protected function displayDifferentAlgorithms() {
-		if (!$this->Training->hasArrayAltitude())
+		if ($this->Context->route()->hasElevations()) {
 			return;
+		}
 
-		$Code  = $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitude());
+		$Code  = $this->getDifferentAlgorithmsFor($this->Context->route()->elevations());
 		$Code .= '<p class="small info">'.__('You can choose the algorithm and threshold in the configuration window.').'</p>';
 
 		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/thresholds') );
@@ -158,13 +173,14 @@ class ElevationInfo {
 	 * Display different algorithms with original data
 	 */
 	protected function displayDifferentAlgorithmsWithOriginalData() {
-		if (!$this->Training->hasArrayAltitudeOriginal() || !$this->Training->elevationWasCorrected())
+		if (!$this->Context->route()->hasOriginalElevations() || !$this->Context->route()->elevationsCorrected()) {
 			return;
+		}
 
 		$Fieldset = new FormularFieldset( __('Elevation data for different algorithms/thresholds (based on original data)') );
 		$Fieldset->setId('table-with-original-data');
 		$Fieldset->setCollapsed();
-		$Fieldset->setHtmlCode( $this->getDifferentAlgorithmsFor($this->Training->getArrayAltitudeOriginal()) );
+		$Fieldset->setHtmlCode( $this->getDifferentAlgorithmsFor($this->Context->route()->elevationsOriginal()) );
 		$Fieldset->display();
 	}
 
@@ -175,13 +191,13 @@ class ElevationInfo {
 	 */
 	protected function getDifferentAlgorithmsFor($array) {
 		$Method        = new ElevationMethod();
-		$Calculator    = new ElevationCalculator($array);
+		$Calculator    = new Elevation\Calculation\Calculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
 			array(ElevationMethod::NONE, false),
-			array(ElevationMethod::TRESHOLD, true),
+			array(ElevationMethod::THRESHOLD, true),
 			array(ElevationMethod::DOUGLAS_PEUCKER, true),
-			//array(ElevationMethod::REUMANN_WITKAMM, false)
+			//array(ElevationMethod::REUMANN_WITKAM, false)
 		);
 
 		$Code  = '<table class="fullwidth zebra-style small">';
@@ -201,13 +217,13 @@ class ElevationInfo {
 			if ($Algorithm[1]) {
 				foreach ($TresholdRange as $t) {
 					$highlight = (Configuration::ActivityView()->elevationMinDiff() == $t) && (Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0]) ? ' highlight' : '';
-					$Calculator->setTreshold($t);
-					$Calculator->calculateElevation();
-					$Code .= '<td class="r'.$highlight.'">'.$Calculator->getElevation().'&nbsp;m</td>';
+					$Calculator->setThreshold($t);
+					$Calculator->calculate();
+					$Code .= '<td class="r'.$highlight.'">'.$Calculator->totalElevation().'&nbsp;m</td>';
 				}
 			} else {
-				$Calculator->calculateElevation();
-				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->getElevation().'&nbsp;m</td>';
+				$Calculator->calculate();
+				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->totalElevation().'&nbsp;m</td>';
 			}
 
 			$Code .= '</tr>';
@@ -225,14 +241,17 @@ class ElevationInfo {
 	protected function displayElevationCorrection() {
 		$Fieldset = new FormularFieldset( __('Elevation correction') );
 
-		if ($this->Training->elevationWasCorrected()) {
+		if ($this->Context->route()->elevationsCorrected()) {
 			$Fieldset->addSmallInfo( __('Elevation data have been corrected.') );
 		} else {
+			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
+
+			// TODO: add link to "reload" if correction has been done via ajax
 			$Fieldset->setHtmlCode(
 				'<p class="warning small block" id="gps-results">
 					'.__('Elevation data has not been corrected.').'<br>
 					<br>
-					<a class="ajax" target="gps-results" href="'.$this->Training->Linker()->urlToElevationCorrection().'"><strong>&raquo; '.__('correct now').'</strong></a>
+					<a class="ajax" target="gps-results" href="'.$Linker->urlToElevationCorrection().'"><strong>&raquo; '.__('correct now').'</strong></a>
 				</p>'
 			);
 		}
@@ -244,12 +263,12 @@ class ElevationInfo {
 	 * Display plot
 	 */
 	protected function displayPlot() {
-		$Plot = new TrainingPlotElevationCompareAlgorithms($this->Training);
+		$Plot = new Runalyze\View\Activity\Plot\ElevationAlgorithms($this->Context);
 
 		echo '<fieldset>';
 		echo '<legend>'.__('Compare algorithms').'</legend>';
 		echo '<div id="plot-'.$Plot->getKey().'" class="plot-container">';
-		$Plot->displayAsSinglePlot();
+		$Plot->display();
 		echo '</div>';
 		echo '</fieldset>';
 	}

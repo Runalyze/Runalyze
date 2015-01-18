@@ -199,7 +199,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		} elseif ($this->Values['event_type'][1] == 'start') {
 			if ($this->isPaused && ($thisTimestamp - $this->TrainingObject->getTimestamp()) < end($this->gps['time_in_s'])) {
 				$this->pausesToApply[] = array(
-					'time' => $thisTimestamp - $this->TrainingObject->getTimestamp(),
+					'time' => $this->lastStopTimestamp - $this->TrainingObject->getTimestamp(),
 					'duration' => ($thisTimestamp - $this->lastStopTimestamp)
 				);
 			}
@@ -244,6 +244,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->gps['time_in_s'][] = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$this->gps['pace'][]      = $this->getCurrentPace();
+
+		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
+		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
 	}
 
 	/**

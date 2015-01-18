@@ -8,6 +8,8 @@ namespace Runalyze;
 
 use Runalyze\Configuration;
 
+use SessionAccountHandler;
+
 /**
  * Context
  * 
@@ -29,17 +31,34 @@ class Context {
 
 	/**
 	 * Athlete
-	 * @return Athlete
+	 * @return \Runalyze\Athlete
 	 */
 	static public function Athlete() {
 		if (!isset(self::$Objects['athlete'])) {
 			self::$Objects['athlete'] = new Athlete(
 				Configuration::General()->gender(),
 				Configuration::Data()->HRmax(),
-				Configuration::Data()->HRrest()
+				Configuration::Data()->HRrest(),
+				null,
+				null,
+				Configuration::Data()->vdot()
 			);
 		}
 
 		return self::$Objects['athlete'];
+	}
+
+	/**
+	 * Athlete
+	 * @return \Runalyze\Model\Factory
+	 */
+	static public function Factory() {
+		if (!isset(self::$Objects['factory'])) {
+			self::$Objects['factory'] = new Model\Factory(
+				SessionAccountHandler::getId()
+			);
+		}
+
+		return self::$Objects['factory'];
 	}
 }

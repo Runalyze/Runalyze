@@ -3,6 +3,9 @@
  * This file contains class::TrainingViewSectionRow
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Row of the training view
  * 
@@ -12,7 +15,7 @@
 abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Plot
-	 * @var TrainingPlot 
+	 * @var \Runalyze\View\Activity\Plot\ActivityPlot
 	 */
 	protected $Plot = null;
 
@@ -43,8 +46,8 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	/**
 	 * Constructor
 	 */
-	public function __construct(TrainingObject &$Training) {
-		parent::__construct($Training);
+	public function __construct(Context &$Context = null) {
+		parent::__construct($Context);
 
 		$this->setPlot();
 	}

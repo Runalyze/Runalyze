@@ -32,10 +32,11 @@ class PluginFactory {
          */
         static private function cachePluginData() {
             $data = Cache::get('plugins');
-            if($data == NULL) {
+			if ($data == NULL) {
                 $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
                 Cache::set('plugins', $data, '3600');
             }
+
             return $data;
         }
 
@@ -46,9 +47,12 @@ class PluginFactory {
 	 * @throws InvalidArgumentException
 	 */
 	public function newInstance($Pluginkey) {
-            $plugins = $this->cachePluginData();
-            foreach($plugins as $plugin)
-                $data[$plugin['key']] = $plugin;
+		$plugins = $this->cachePluginData();
+
+		foreach($plugins as $plugin) {
+			$data[$plugin['key']] = $plugin;
+		}
+
 		if ($data[$Pluginkey] === false) {
 			throw new InvalidArgumentException('Plugin with key "'.$Pluginkey.'" is not installed.');
 		}
@@ -200,8 +204,8 @@ class PluginFactory {
 	 */
 	public function uninstallPlugin($key) {
 		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
-                Cache::delete('plugins');
-        }
+		Cache::delete('plugins');
+	}
 
 	/**
 	 * Get the PLUGINKEY for a given ID from database
@@ -209,11 +213,12 @@ class PluginFactory {
 	 * @return string
 	 */
 	static public function keyFor($id) {
-                $plugins = self::cachePluginData();
-                foreach ($plugins as $plugin) {
-                    if($id == $plugin['id'])
-			$data = $plugin;
-                }
+		$plugins = self::cachePluginData();
+		foreach ($plugins as $plugin) {
+			if ($id == $plugin['id']) {
+				$data = $plugin;
+			}
+		}
 
 		if ($data === false) {
 			throw new RuntimeException('No plugin found for id "'.$id.'".');

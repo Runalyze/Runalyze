@@ -22,10 +22,11 @@
 <div id="headline">
 	<span class="tab singleTab">
 		<?php
-		if (strlen($User['username']) > 1)
+		if (isset($User) && isset($User['username']) && strlen($User['username']) > 1) {
 			printf( __('Public training view of <strong>%s</strong>'), $User['username']);
-		else
+		} else {
 			_e('Public training view');
+		}
 		?>
 	</span>
 </div>

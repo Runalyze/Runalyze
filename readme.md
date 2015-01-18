@@ -4,8 +4,24 @@
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 
 
-Runalyze is a web application for analyzing your training - more detailed than any other sports diary.
+Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
+
+## Git usage
+
+Up to now, we don't have any script for migrating the database automatically.
+You have to apply recent changes by hand from the respective update files in `inc/install/`.
+
+#### For v2.0 (and for respective pre-releases since 2015/01/17):
+There were some big changes in our table structure.
+Activity data is now split over three tables (training, trackdata, route) to improve performance.
+We recommend creating a backup before refactoring your data.
+
+To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0alpha.sql`.
+Afterwards you can copy your data with the script `refactor-db.php`.
+Change the settings within the file and run it via cli or browser.
+
+Release details for v2.0alpha on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0alpha/).
 
 ## License
 * TODO - we're currently seeking for the right license to choose

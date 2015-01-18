@@ -92,9 +92,11 @@ class RunalyzeJsonAnalyzer {
 			'runalyze_dataset',
 			'runalyze_plugin',
 			'runalyze_plugin_conf',
+			'runalyze_route',
 			'runalyze_shoe',
 			'runalyze_sport',
 			'runalyze_training',
+			'runalyze_trackdata',
 			'runalyze_type',
 			'runalyze_user'
 		);

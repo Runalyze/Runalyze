@@ -10,6 +10,10 @@ use Runalyze\Configuration;
 use Runalyze\Parameter\Int;
 use Runalyze\Parameter\Float;
 use Runalyze\Calculation\Performance;
+use Runalyze\Calculation\JD;
+
+use SessionAccountHandler;
+use DB;
 
 /**
  * Configuration category: Data
@@ -62,6 +66,15 @@ class Data extends \Runalyze\Configuration\Category {
 	}
 
 	/**
+	 * Recalculate starttime
+	 */
+	public function recalculateStartTime() {
+		$this->updateStartTime(
+			DB::getInstance()->query('SELECT MIN(`time`) FROM `'.PREFIX.'training`')->fetchColumn()
+		);
+	}
+
+	/**
 	 * Maximal heart rate
 	 * @return int
 	 */
@@ -96,11 +109,23 @@ class Data extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Vdot shape
+	 * VDOT shape
 	 * @return float
 	 */
 	public function vdotShape() {
 		return $this->get('VDOT_FORM');
+	}
+
+	/**
+	 * Currently used VDOT value
+	 * @return float
+	 */
+	public function vdot() {
+		if (Configuration::Vdot()->useManualValue()) {
+			return Configuration::Vdot()->manualValue();
+		}
+
+		return $this->vdotShape();
 	}
 
 	/**
@@ -113,11 +138,27 @@ class Data extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Vdot corrector
+	 * VDOT corrector
 	 * @return float
 	 */
 	public function vdotCorrector() {
 		return $this->get('VDOT_CORRECTOR');
+	}
+
+	/**
+	 * Currently used VDOT corrector
+	 * @return int 1 if correction is not used
+	 */
+	public function vdotFactor() {
+		if (Configuration::Vdot()->useManualFactor()) {
+			return Configuration::Vdot()->manualFactor();
+		}
+
+		if (Configuration::Vdot()->useCorrectionFactor()) {
+			return $this->vdotCorrector();
+		}
+
+		return 1;
 	}
 
 	/**
@@ -211,5 +252,41 @@ class Data extends \Runalyze\Configuration\Category {
 		$this->updateMaxCTL($Calc->maxFitness());
 		$this->updateMaxATL($Calc->maxFatigue());
 		$this->updateMaxTrimp($Calc->maxTrimp());
+	}
+
+	/**
+	 * Recalculate VDOT corrector
+	 * @return float new factor
+	 */
+	public function recalculateVDOTcorrector() {
+		$Corrector = new JD\VDOTCorrector;
+		$Corrector->fromDatabase(
+			DB::getInstance(),
+			SessionAccountHandler::getId(),
+			Configuration::General()->competitionType()
+		);
+
+		$this->updateVdotCorrector( $Corrector->factor() );
+
+		return $Corrector->factor();
+	}
+
+	/**
+	 * Recalculate VDOT shape
+	 * @return float new shape
+	 */
+	public function recalculateVDOTshape() {
+		$Shape = new JD\Shape(
+			DB::getInstance(),
+			SessionAccountHandler::getId(),
+			Configuration::General()->runningSport(),
+			Configuration::Vdot()
+		);
+		$Shape->setCorrector(new JD\VDOTCorrector($this->vdotFactor()));
+		$Shape->calculate();
+
+		$this->updateVdotShape( $Shape->value() );
+
+		return $Shape->value();
 	}
 }

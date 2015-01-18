@@ -117,6 +117,9 @@ abstract class PluginPanel extends Plugin {
 		if (!$this->isInActive()) {
 			DB::getInstance()->update('plugin', $this->id(), 'active', ($this->isActive() ? Plugin::ACTIVE_VARIOUS : Plugin::ACTIVE));
 		}
+
+		// TODO: 'update cache' insteada of deleting it?
+		Cache::delete('plugins');
 	}
 
 	/**
@@ -124,6 +127,7 @@ abstract class PluginPanel extends Plugin {
 	 * @param string $mode   'up' | 'down'
 	 */
 	public function move($mode) {
+		// TODO: Do this with one query
 		if ($mode == 'up') {
 			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.$this->order().' WHERE `type`="panel" AND `order`='.($this->order()-1).' LIMIT 1');
 			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()-1));
@@ -131,6 +135,9 @@ abstract class PluginPanel extends Plugin {
 			DB::getInstance()->exec('UPDATE `'.PREFIX.'plugin` SET `order`='.($this->order()).' WHERE `type`="panel" AND `order`='.($this->order()+1).' LIMIT 1');
 			DB::getInstance()->update('plugin', $this->id(), 'order', ($this->order()+1));
 		}
+
+		// TODO: 'update cache' insteada of deleting it?
+		Cache::delete('plugins');
 	}
 
 	/**

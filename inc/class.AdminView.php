@@ -3,6 +3,9 @@
  * This file contains class::AdminView
  * @package Runalyze\Frontend
  */
+
+use Runalyze\Activity\Distance;
+
 /**
  * Class for admin view
  *
@@ -313,7 +316,7 @@ class AdminView {
 						<!--<td>'.__('Activate user').' - '.__('Set new password').'</td>-->
 					</tr>';
 					//<td class="small r">'.$User['num'].'x</td>
-					//<td class="small r">'.Running::Km($User['km']).'</td>
+					//<td class="small r">'.Distance::format($User['km']).'</td>
 			}
 
 			$Code .= '

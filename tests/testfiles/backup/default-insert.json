@@ -27,5 +27,5 @@
 {"1":{"time":"1234567890","weight":"70","pulse_rest":"45","pulse_max":"205"}}
 
 {"TABLE":"runalyze_training"}
-{"1":{"time":"1234567890","sportid":"1","typeid":"1","s":"900.00","clothes":"1,2","shoeid":"0","comment":"UNITTEST-1"}}
-{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","clothes":"2","shoeid":"1","comment":"UNITTEST-2"}}
+{"1":{"time":"1234567890","sportid":"1","typeid":"1","s":"900.00","clothes":"1,2","shoeid":"0","routeid":"0","comment":"UNITTEST-1"}}
+{"2":{"time":"1234567890","sportid":"2","typeid":"2","s":"1500.00","clothes":"2","shoeid":"1","routeid":"0","comment":"UNITTEST-2"}}

@@ -46,25 +46,34 @@ class Athlete {
 	protected $age = null;
 
 	/**
+	 * Current VDOT shape
+	 * @var float
+	 */
+	protected $vdot = 0;
+
+	/**
 	 * Create athlete
 	 * @param \Gender $Gender [optional]
 	 * @param int $maximalHR [optional]
 	 * @param int $restingHR [optional]
 	 * @param flot $weight [optional]
 	 * @param int $age [optional]
+	 * @param float $vdot [optional]
 	 */
 	public function __construct(
 		Gender $Gender = null,
 		$maximalHR = null,
 		$restingHR = null,
 		$weight = null,
-		$age = null
+		$age = null,
+		$vdot = 0
 	) {
 		$this->Gender = $Gender ?: new Gender();
 		$this->maximalHR = $maximalHR;
 		$this->restingHR = $restingHR;
 		$this->weight = $weight;
 		$this->age = $age;
+		$this->vdot = $vdot;
 	}
 
 	/**
@@ -108,6 +117,14 @@ class Athlete {
 	}
 
 	/**
+	 * VDOT shape
+	 * @return float
+	 */
+	public function vdot() {
+		return $this->vdot;
+	}
+
+	/**
 	 * Knows gender
 	 * @return bool
 	 */
@@ -145,5 +162,13 @@ class Athlete {
 	 */
 	public function knowsAge() {
 		return (NULL !== $this->age);
+	}
+
+	/**
+	 * Knows VDOT shape
+	 * @return bool
+	 */
+	public function knowsVDOT() {
+		return (0 !== $this->vdot);
 	}
 }

@@ -69,7 +69,7 @@ class Temperature {
 	 * @return float
 	 */
 	protected function toCelsiusFrom($value, $unit) {
-		if (is_null($value)) {
+		if (!is_numeric($value)) {
 			return null;
 		}
 
@@ -134,8 +134,8 @@ class Temperature {
 	}
 
 	/**
-	 * Unit
-	 * @return string
+	 * Value
+	 * @return null|int
 	 */
 	public function value() {
 		return $this->fromCelsiusTo($this->inCelsius, $this->unit);

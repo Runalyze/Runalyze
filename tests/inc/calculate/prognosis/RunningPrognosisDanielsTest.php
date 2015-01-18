@@ -27,17 +27,12 @@ class RunningPrognosisDanielsTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers RunningPrognosisDaniels::setupFromDatabase
 	 * @todo   Implement testSetupFromDatabase().
 	 */
 	public function testSetupFromDatabase() {
 		// TODO: uses VDOT_FORM / BasicEndurance::getConst()
 	}
 
-	/**
-	 * @covers RunningPrognosisDaniels::inSeconds
-	 * @todo   Implement testInSeconds().
-	 */
 	public function testInSeconds() {
 		$this->object->adjustVDOT( false );
 
@@ -68,12 +63,6 @@ class RunningPrognosisDanielsTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * @covers RunningPrognosisDaniels::getAdjustedVDOTforDistanceIfWanted
-	 * @covers RunningPrognosisDaniels::setVDOT
-	 * @covers RunningPrognosisDaniels::setBasicEnduranceForAdjustment
-	 * @covers RunningPrognosisDaniels::adjustVDOT
-	 */
 	public function testGetAdjustedVDOTforDistanceIfWanted() {
 		$this->object->setVDOT( 30 );
 		$this->object->adjustVDOT( true );
@@ -86,9 +75,6 @@ class RunningPrognosisDanielsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 30, $this->object->getAdjustedVDOTforDistanceIfWanted(50) );
 	}
 
-	/**
-	 * @covers RunningPrognosisDaniels::getAdjustedVDOTforDistance
-	 */
 	public function testGetAdjustedVDOTforDistance() {
 		$this->object->setVDOT( 30 );
 		$this->object->setBasicEnduranceForAdjustment(0);
@@ -109,9 +95,6 @@ class RunningPrognosisDanielsTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 60*0.91, $this->object->getAdjustedVDOTforDistance(50), '', 0.2 );
 	}
 
-	/**
-	 * @covers RunningPrognosisDaniels::getAdjustmentFactor
-	 */
 	public function testGetAdjustmentFactor() {
 		$this->object->setBasicEnduranceForAdjustment(0);
 		$this->assertEquals( 1.00, $this->object->getAdjustmentFactor(0), '', 0 );

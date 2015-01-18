@@ -5,7 +5,9 @@
  */
 require '../inc/class.Frontend.php';
 
+use Runalyze\View\Activity\Context;
+
 $Frontend = new Frontend();
 
-$VDOTinfo = new VDOTinfo(new TrainingObject(Request::sendId()));
+$VDOTinfo = new VDOTinfo(new Context(Request::sendId(), SessionAccountHandler::getId()));
 $VDOTinfo->display();

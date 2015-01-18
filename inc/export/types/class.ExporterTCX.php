@@ -3,6 +3,10 @@
  * This file contains class::ExporterTCX
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\Model\Trackdata;
+use Runalyze\Model\Route;
+
 /**
  * Exporter for: TCX
  * 
@@ -34,7 +38,7 @@ class ExporterTCX extends ExporterAbstractFile {
 	 * Set file content
 	 */
 	protected function setFileContent() {
-		if (!$this->Training->GpsData()->hasPositionData()) {
+		if (!$this->Context->hasRoute() || !$this->Context->route()->hasPositionData()) {
 			$this->addError( __('The training does not contain gps-data and cannot be saved as tcx-file.') );
 
 			return;
@@ -64,33 +68,32 @@ class ExporterTCX extends ExporterAbstractFile {
 	 * Set general info 
 	 */
 	protected function setGeneralInfo() {
-		if ($this->Training->Sport()->isRunning())
-			$this->Activity->addAttribute('Sport', 'Running');
-
-		$this->Activity->addChild('Id', $this->timeToString($this->Training->get('time')));
+		$this->Activity->addChild('Id', $this->timeToString($this->Context->activity()->timestamp()));
 	}
 
 	/**
 	 * Add all laps to xml 
 	 */
 	protected function setLaps() {
-		$Starttime = $this->Training->get('time');
+		$Starttime = $this->Context->activity()->timestamp();
 
-		$GPS = $this->Training->GpsData();
-		$GPS->startLoop();
+		$Loop = new Trackdata\Loop($this->Context->trackdata());
 
-		while ($GPS->nextKilometer()) {
-			$TimeInSeconds = $GPS->getTimeOfStep();
+		while (!$Loop->isAtEnd()) {
+			$Loop->nextKilometer();
+			$TimeInSeconds = $Loop->difference(Trackdata\Object::TIME);
 
 			$Lap = $this->Activity->addChild('Lap');
-			$Lap->addAttribute('StartTime', $this->timeToString($Starttime + $GPS->getTime() - $TimeInSeconds));
+			$Lap->addAttribute('StartTime', $this->timeToString($Starttime + $Loop->time() - $TimeInSeconds));
 			$Lap->addChild('TotalTimeSeconds', $TimeInSeconds);
-			$Lap->addChild('DistanceMeters', 1000*$GPS->getDistanceOfStep());
+			$Lap->addChild('DistanceMeters', 1000*$Loop->difference(Trackdata\Object::DISTANCE));
 
-			$AvgBpm = $Lap->addChild('AverageHeartRateBpm');
-			$AvgBpm->addChild('Value', $GPS->getAverageHeartrateOfStep());
-			$MaxBpm = $Lap->addChild('MaximumHeartRateBpm');
-			$MaxBpm->addChild('Value', $GPS->getMaximumHeartrateOfStep());
+			if ($this->Context->trackdata()->has(Trackdata\Object::HEARTRATE)) {
+				$AvgBpm = $Lap->addChild('AverageHeartRateBpm');
+				$AvgBpm->addChild('Value', $Loop->average(Trackdata\Object::HEARTRATE));
+				$MaxBpm = $Lap->addChild('MaximumHeartRateBpm');
+				$MaxBpm->addChild('Value', $Loop->max(Trackdata\Object::HEARTRATE));
+			}
 
 			$Lap->addChild('Intensity', 'Active');
 			$Lap->addChild('TriggerMethod', 'Distance');
@@ -106,28 +109,33 @@ class ExporterTCX extends ExporterAbstractFile {
 	 * Add track to all laps to xml 
 	 */
 	protected function setTrack() {
-		$Starttime = $this->Training->get('time');
-		$GPS = $this->Training->GpsData();
-		$GPS->startLoop();
+		$Starttime = $this->Context->activity()->timestamp();
 
-		$hasElevation = $this->Training->hasArrayAltitude();
-		$hasHeartrate = $this->Training->hasArrayHeartrate();
+		$Trackdata = new Trackdata\Loop($this->Context->trackdata());
+		$Route = new Route\Loop($this->Context->route());
 
-		while ($GPS->nextStep()) {
-			$Trackpoint = $this->Activity->Lap[(int)$GPS->currentKilometer()]->Track->addChild('Trackpoint');
-			$Trackpoint->addChild('Time', $this->timeToString($Starttime + $GPS->getTime()));
+		$hasElevation = $this->Context->route()->hasOriginalElevations();
+		$hasHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
+
+		while ($Trackdata->nextStep()) {
+			$Route->nextStep();
+
+			$Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
+			$Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
 
 			$Position = $Trackpoint->addChild('Position');
-			$Position->addChild('LatitudeDegrees', $GPS->getLatitude());
-			$Position->addChild('LongitudeDegrees', $GPS->getLongitude());
+			$Position->addChild('LatitudeDegrees', $Route->latitude());
+			$Position->addChild('LongitudeDegrees', $Route->longitude());
 
-			if ($hasElevation)
-				$Trackpoint->addChild('AltitudeMeters', $GPS->getElevation());
-			$Trackpoint->addChild('DistanceMeters', 1000*$GPS->getDistance());
+			if ($hasElevation) {
+				$Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+			}
+
+			$Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
 			if ($hasHeartrate) {
 				$Heartrate = $Trackpoint->addChild('HeartRateBpm');
-				$Heartrate->addChild('Value', $GPS->getHeartrate());
+				$Heartrate->addChild('Value', $Trackdata->current(Trackdata\Object::HEARTRATE));
 			}
 		}
 	}

@@ -3,6 +3,9 @@
  * This file contains class::ExporterAbstract
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Create exporter for given type
  *
@@ -27,10 +30,10 @@ abstract class ExporterAbstract {
 	}
 
 	/**
-	 * Training
-	 * @var TrainingObject
+	 * Activity context
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context = null;
 
 	/**
 	 * Internal array with errors to display
@@ -40,10 +43,10 @@ abstract class ExporterAbstract {
 
 	/**
 	 * Constructor
-	 * @param TrainingObject $Training
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject $Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 	}
 
 	/**

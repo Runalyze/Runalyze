@@ -13,6 +13,7 @@ use Runalyze\Configuration;
  */
 class FormularFieldset extends HtmlTag {
 	static public $LAYOUT_FIELD_W100          = 'w100 block';
+	static public $LAYOUT_FIELD_W100_CHECKBOX = 'w100 checkbox-first';
 	static public $LAYOUT_FIELD_W100_IN_W50   = 'w100 with50erLabel';
 	static public $LAYOUT_FIELD_W100_IN_W33   = 'w100 with33erLabel';
 	static public $LAYOUT_FIELD_W50_IN_W33    = 'w50 with33erLabel';

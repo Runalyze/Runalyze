@@ -183,7 +183,7 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 
 			Filesystem::deleteFile('../plugin/'.$this->key().'/import/'.$_GET['file']);
 		} else {
-			require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonAnalyzer.php';
+			require_once __DIR__.'/class.RunalyzeJsonAnalyzer.php';
 
 			$Analyzer = new RunalyzeJsonAnalyzer('../plugin/'.$this->key().'/import/'.$_GET['file']);
 
@@ -218,9 +218,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Display form: import finished 
 	 */
 	protected function displayImportFinish() {
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBulkInsert.php';
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporterResults.php';
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonImporter.php';
+		require_once __DIR__.'/class.RunalyzeBulkInsert.php';
+		require_once __DIR__.'/class.RunalyzeJsonImporterResults.php';
+		require_once __DIR__.'/class.RunalyzeJsonImporter.php';
 
 		$fileName = '../plugin/'.$this->key().'/import/'.$_POST['file'];
 		$Importer = new RunalyzeJsonImporter($fileName);
@@ -346,8 +346,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Create backup: JSON
 	 */
 	protected function createBackupJSON() {
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBackup.php';
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeJsonBackup.php';
+		require_once __DIR__.'/class.RunalyzeBackup.php';
+		require_once __DIR__.'/class.RunalyzeJsonBackup.php';
 
 		$Backup = new RunalyzeJsonBackup($this->getFileName(self::TYPE_JSON));
 		$Backup->run();
@@ -357,8 +357,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 	 * Create backup: SQL
 	 */
 	protected function createBackupSQL() {
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeBackup.php';
-		require_once FRONTEND_PATH.'../plugin/'.$this->key().'/class.RunalyzeSqlBackup.php';
+		require_once __DIR__.'/class.RunalyzeBackup.php';
+		require_once __DIR__.'/class.RunalyzeSqlBackup.php';
 
 		$Backup = new RunalyzeSqlBackup($this->getFileName(self::TYPE_SQL));
 		$Backup->run();

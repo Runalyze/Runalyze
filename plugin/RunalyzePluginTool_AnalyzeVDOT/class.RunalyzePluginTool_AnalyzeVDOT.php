@@ -15,9 +15,9 @@ $PLUGINKEY = 'RunalyzePluginTool_AnalyzeVDOT';
 class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	/**
 	 * All trainings to be edited
-	 * @var array
+	 * @var \PDOStatement
 	 */
-	private $Trainings = array();
+	private $Query = array();
 
 	/**
 	 * Name
@@ -51,27 +51,30 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 	protected function displayContent() {
 		$this->initTrainings();
 
-		include FRONTEND_PATH.'../plugin/'.$this->key().'/tpl.Table.php';
+		require_once __DIR__.'/TableRow.php';
+		include __DIR__.'/tpl.Table.php';
 	}
 
 	/**
 	 * Init internal array with all trainings
 	 */
 	private function initTrainings() {
-		$this->Trainings = DB::getInstance()->query('
+		$this->Query = DB::getInstance()->query('
 			SELECT
-				id,
-				time,
-				sportid,
-				distance,
-				s,
-				is_track,
-				comment,
-				pulse_avg,
-				pulse_max,
-				vdot
+				`id`,
+				`time`,
+				`sportid`,
+				`distance`,
+				`s`,
+				`is_track`,
+				`comment`,
+				`pulse_avg`,
+				`pulse_max`,
+				`vdot`,
+				`vdot_by_time`
 			FROM `'.PREFIX.'training`
-			WHERE `pulse_avg`!=0 && `typeid`='.Configuration::General()->competitionType().'
-			ORDER BY `time` DESC')->fetchAll();
+			WHERE `pulse_avg`!=0 AND `typeid`='.Configuration::General()->competitionType().'
+			ORDER BY `time` DESC'
+		);
 	}
 }

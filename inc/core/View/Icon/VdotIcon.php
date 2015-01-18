@@ -6,6 +6,8 @@
 
 namespace Runalyze\View\Icon;
 
+use Runalyze\Configuration;
+
 /**
  * VDOT icon
  * @author Hannes Christiansen
@@ -85,7 +87,7 @@ class VdotIcon extends \Runalyze\View\Icon {
 	protected function setDirectionBasedOn($vdotValue, $currentShape) {
 		// TODO
 		if (is_null($currentShape)) {
-			$currentShape = VDOT_FORM;
+			$currentShape = Configuration::Data()->vdot();
 		}
 
 		$diff = $vdotValue - $currentShape;

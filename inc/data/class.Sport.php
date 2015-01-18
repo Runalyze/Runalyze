@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Pace;
 
 /**
  * Class: Sport
@@ -131,7 +132,7 @@ class Sport {
 	 * @return bool
 	 */
 	public function usesKmh() {
-		return ($this->data['speed'] == SportSpeed::$KM_PER_H);
+		return ($this->data['speed'] == Pace::KM_PER_H);
 	}
 
 	/**

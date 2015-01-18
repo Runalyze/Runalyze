@@ -3,6 +3,11 @@
  * This file contains class::MultiEditor
  * @package Runalyze\Import
  */
+
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Preview;
+use Runalyze\View\Activity\Linker;
+
 /**
  * Multi editor
  *
@@ -15,6 +20,12 @@ class MultiEditor {
 	 * @var array
 	 */
 	static protected $IDs = array();
+
+	/**
+	 * Statement to fetch activities
+	 * @var \PDOStatement
+	 */
+	protected $FetchStatement = null;
 
 	/**
 	 * Constructor
@@ -50,26 +61,16 @@ class MultiEditor {
 		$Code .= '<table class="multi-edit-table fullwidth zebra-style"><tbody>';
 
 		foreach (self::$IDs as $i => $ID) {
-			$Training = new TrainingObject($ID);
-			$Daytime = substr($Training->DataView()->getDaytimeString(), 0, -4);
-
-			if (!empty($Daytime))
-				$Daytime = ' - <small>'.$Daytime.'</small>';
+			$Preview = new Preview(
+				new Activity\Object($this->fetchActivity($ID))
+			);
 
 			$Code .= '<tr id="multi-edit-'.$ID.'" class="link '.($i == 0 ? ' highlight' : '').' show-on-hover-parent">';
-			$Code .= '<td class="multi-edit-sport-icon c">';
-			$Code .= '<span class="link show-on-hover multi-edit-remove-link">'.Icon::$CROSS_SMALL.'</span>';
-			$Code .= $Training->Sport()->IconWithTooltip();
-			$Code .= '</td><td>';
-			$Code .= $Training->DataView()->getDate(false).$Daytime.'<br>';
-			$Code .= '<small>'.Time::toString($Training->getTimeInSeconds(), true, true);
-			if ($Training->hasDistance())
-				$Code .= ' - '.$Training->DataView()->getDistanceStringWithFullDecimals();
-			$Code .= '</small>';
-			$Code .= '</td>';
-			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getPulseIcon().'</td>';
-			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getSplitsIcon().'</td>';
-			$Code .= '<td class="multi-edit-icon">'.$Training->DataView()->getMapIcon().'</td>';
+			$Code .= '<td class="multi-edit-sport-icon c"><span class="link show-on-hover multi-edit-remove-link">'.Icon::$CROSS_SMALL.'</span>'.$Preview->sportIcon().'</td>';
+			$Code .= '<td>'.$Preview->dateAndSmallTime().'<br><small>'.$Preview->durationAndDistance().'</small></td>';
+			$Code .= '<td class="multi-edit-icon">'.$Preview->hrIcon().'</td>';
+			$Code .= '<td class="multi-edit-icon">'.$Preview->splitsIcon().'</td>';
+			$Code .= '<td class="multi-edit-icon">'.$Preview->mapIcon().'</td>';
 			$Code .= '</tr>';
 		}
 
@@ -77,11 +78,11 @@ class MultiEditor {
 		$Code .= '</div>';
 		$Code .= '</div>';
 
-		echo Ajax::wrapJS('$(\'#ajax-navigation\').remove();$(\'body\').append(\''.$Code.'\')');
+		echo Ajax::wrapJS('$(\'#ajax-navigation\').remove();$(\'#ajax-outer\').append(\''.$Code.'\')');
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation tr.link").click(function(e){
 	$("#ajax-navigation tr.link.highlight").removeClass("highlight").addClass("edited");
 	$(this).removeClass("edited").addClass("highlight");
-	Runalyze.Overlay.load( "'.TrainingLinker::$EDITOR_URL.'?mode=multi&id=" + $(this).attr("id").substr(11) );
+	Runalyze.Overlay.load( "'.Linker::EDITOR_URL.'?mode=multi&id=" + $(this).attr("id").substr(11) );
 });');
 		echo Ajax::wrapJSasFunction('$("#ajax-navigation .multi-edit-remove-link").click(function(e){
 	$(this).parent().parent().remove();
@@ -90,12 +91,32 @@ class MultiEditor {
 	}
 
 	/**
+	 * Fetch activity for preview
+	 * @param int $id
+	 * @return array
+	 */
+	protected function fetchActivity($id) {
+		if (is_null($this->FetchStatement)) {
+			$this->FetchStatement = DB::getInstance()->prepare(
+				'SELECT
+					'.implode(',', Preview::keys()).'
+				FROM `'.PREFIX.'training`
+				WHERE `id`=:id
+				LIMIT 1'
+			);
+		}
+
+		$this->FetchStatement->execute(array(':id' => $id));
+		return $this->FetchStatement->fetch();
+	}
+
+	/**
 	 * Display editor
 	 * 
 	 * This function will just load the standard editor in the overlay
 	 */
 	protected function displayEditor() {
-		echo Ajax::wrapJS('Runalyze.Overlay.load(\''.TrainingLinker::$EDITOR_URL.'?mode=multi&id='.self::$IDs[0].'\');');
+		echo Ajax::wrapJS('Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?mode=multi&id='.self::$IDs[0].'\');');
 	}
 
 	/**

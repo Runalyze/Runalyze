@@ -3,6 +3,9 @@
  * This file contains class::FormularValueParser
  * @package Runalyze\HTML\Formular\Validation
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
  * @author Hannes Christiansen
@@ -286,12 +289,9 @@ class FormularValueParser {
 	 * @return boolean 
 	 */
 	static protected function validateTime($key, $options) {
-		$ms = explode(".", Helper::CommaToPoint($_POST[$key]));
+		$Time = new Duration($_POST[$key]);
 
-		$_POST[$key] = Time::toSeconds($ms[0]);
-
-		if (isset($ms[1]))
-			$_POST[$key] += $ms[1]/100;
+		$_POST[$key] = $Time->seconds();
 
 		if ($_POST[$key] == 0 && (isset($options['required']) || isset($options['notempty'])))
 			return __('You have to enter a time.');
@@ -304,7 +304,11 @@ class FormularValueParser {
 	 * @param mixed $value 
 	 */
 	static protected function parseTime(&$value) {
-		$value = Time::toString($value, false, true);
+		if ($value == 0) {
+			$value = '0:00:00';
+		} else {
+			$value = Duration::format($value);
+		}
 	}
 
 	/**

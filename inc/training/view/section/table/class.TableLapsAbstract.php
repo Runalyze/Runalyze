@@ -3,6 +3,9 @@
  * This file contains class::TableLapsAbstract
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Table for laps
  * 
@@ -11,10 +14,9 @@
  */
 abstract class TableLapsAbstract {
 	/**
-	 * Training object
-	 * @var TrainingObject
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
 	 * Code
@@ -23,11 +25,10 @@ abstract class TableLapsAbstract {
 	protected $Code = '';
 
 	/**
-	 * Constructor
-	 * @param TrainingObject $Training
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 
 		$this->setCode();
 	}

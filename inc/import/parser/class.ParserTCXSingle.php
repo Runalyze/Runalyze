@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Distance;
 
 /**
  * Parser for TCX files from Garmin
@@ -159,7 +161,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		);
 
 		if (self::$DEBUG_SPLITS)
-			Error::getInstance()->addDebug('LAPS-TIME: '.Time::toString(round((float)$Lap->TotalTimeSeconds), false, 2));
+			Error::getInstance()->addDebug('LAPS-TIME: '.Duration::format(round((float)$Lap->TotalTimeSeconds)));
 
 		if ((int)$Lap->DistanceMeters == 0 && (int)$Lap->TotalTimeSeconds > 10)
 			$this->isWithoutDistance = true;
@@ -192,8 +194,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			}
 		}
 
-		if (self::$DEBUG_SPLITS)
-			Error::getInstance()->addDebug( 'computed: '. Time::toString( end($this->gps['time_in_s']) ).', '.Running::Km(end($this->gps['km'])) );
+		if (self::$DEBUG_SPLITS) {
+			Error::getInstance()->addDebug( 'computed: '.Duration::format( end($this->gps['time_in_s']) ).', '.Distance::format(end($this->gps['km'])) );
+		}
 	}
 
 	/**
