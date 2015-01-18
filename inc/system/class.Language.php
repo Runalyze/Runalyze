@@ -24,7 +24,7 @@ class Language {
 		if (empty($language))
 			$language = !empty($_GET['lang']) ? $_GET['lang'] : 'en_US.UTF8';
 
-		putenv("LANG=$language"); 
+		putenv("LANG=$language");
 		setlocale(LC_ALL, $language);
 		setlocale(LC_NUMERIC, 'en_US');
 

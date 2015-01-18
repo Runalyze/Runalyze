@@ -121,6 +121,7 @@ $Frontend = new Frontend();
 		<li>
 			<strong>Miscellaneaous</strong>
 			<ul>
+				<li>phpFastCache by Khoa Bui - <a class="external" href="https://github.com/khoaofgod/phpfastcache">https://github.com/khoaofgod/phpfastcache</a></li>
 				<li>Garmin Communicator by Garmin Ltd. - <a class="external" href="http://developer.garmin.com/web-device/garmin-communicator-plugin/">http://developer.garmin.com/web-device/garmin-communicator-plugin/</a></li>
 				<li>Weather data from OpenWeatherMap - <a class="external" href="http://openweathermap.org/">http://openweathermap.org</a></li>
 			</ul>

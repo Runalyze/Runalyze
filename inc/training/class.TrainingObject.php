@@ -202,8 +202,8 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
 			Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
 			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
-			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->arrGroundContact,
-			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->arrVerticalOscillation,
+			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
+			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
 			Runalyze\Model\Trackdata\Object::PAUSES => ''
 		));
 	}

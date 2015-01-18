@@ -64,4 +64,13 @@ class VerticalOscillation extends ActivitySeries {
 	protected function correctUnit($value) {
 		return 0.1*$value;
 	}
+
+	/**
+	 * Average
+	 * @param int $decimals [optional]
+	 * @return int
+	 */
+	protected function avg($decimals = 1) {
+		return parent::avg($decimals);
+	}
 }

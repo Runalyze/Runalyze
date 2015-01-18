@@ -53,7 +53,7 @@ class GeoTIFF extends Strategy {
 
 			return true;
 		} catch (\Exception $Exception) {
-			\Error::getInstance()->addDebug($Exception->getMessage());
+			//\Error::getInstance()->addDebug($Exception->getMessage());
 			return false;
 		}
 	}

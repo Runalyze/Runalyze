@@ -54,8 +54,6 @@ More details: <http://runalyze.de/installation/> (only in german)
 * Icons
 	* [Font Awesome](http://fontawesome.io/) by Dave Gandy
 	* [Forecast Font](http://forecastfont.iconvau.lt/) by Ali Sisk
-* Garmin Communicator
-    * [API](http://developer.garmin.com/web-device/garmin-communicator-plugin/) by Garmin Ltd.
 * Elevation data from Shuttle Radar Topography Mission
 	* [SRTM tiles](http://dwtkns.com/srtm/) grabbed via Derek Watkins
 	* [SRTM files](http://srtm.csi.cgiar.org/) by International  Centre for Tropical  Agriculture (CIAT)
@@ -68,3 +66,7 @@ More details: <http://runalyze.de/installation/> (only in german)
     * [Tablesorter](http://tablesorter.com/docs/) by Christian Bach
     * [Datepicker](http://www.eyecon.ro/) by Stefan Petre
     * [Chosen](http://getharvest.com/) by Patrick Filler for Harvest
+* Miscellaneaous
+    * [phpFastCache](https://github.com/khoaofgod/phpfastcache) by Khoa Bui
+    * [Garmin Communicator](http://developer.garmin.com/web-device/garmin-communicator-plugin/) by Garmin Ltd.
+    * [Weather data](http://openweathermap.org) from OpenWeatherMap Inc.

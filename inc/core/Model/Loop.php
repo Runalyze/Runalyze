@@ -239,7 +239,7 @@ class Loop {
 	 * @return int
 	 */
 	public function average($key) {
-		if ($this->LastIndex == $this->Index) {
+		if ($this->LastIndex >= $this->Index) {
 			return 0;
 		}
 
