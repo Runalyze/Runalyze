@@ -30,6 +30,12 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected $PrognosisStrategy = null;
 
 	/**
+	 * Number of successfully fetched PBs
+	 * @var int
+	 */
+	protected $NumberOfPBs = 0;
+
+	/**
 	 * Name
 	 * @return string
 	 */
@@ -108,6 +114,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
+		$this->lookupPersonalBests();
 		$this->prepareForPrognosis();
 
 		foreach ($this->getDistances() as $km) {
@@ -117,6 +124,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		if ($this->thereAreNotEnoughCompetitions()) {
 			echo HTML::info( __('There are not enough results for good predictions.') );
 		}
+	}
+
+	/**
+	 * Lookup all personal bests at once
+	 */
+	protected function lookupPersonalBests() {
+		PersonalBest::activateStaticCache();
+		$this->NumberOfPBs = PersonalBest::lookupDistances($this->getDistances());
 	}
 
 	/**
@@ -173,7 +188,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return bool
 	 */
 	protected function thereAreNotEnoughCompetitions() {
-		return !DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' LIMIT 1')->fetchColumn();
+		return (0 == $this->NumberOfPBs);
 	}
 
 	/**
