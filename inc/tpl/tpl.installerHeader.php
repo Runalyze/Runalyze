@@ -29,9 +29,9 @@
 		<div class="panel-menu">
 			<ul>
 			<?php
-				foreach (Language::availableLanguages() as $key => $lang) {
-					$liClass = isset($_GET['lang']) && $_GET['lang'] == $key ? ' class="triggered"' : '';
-					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang.'</a></li>';
+				foreach (Language::availableLanguages() as $key => $lang_arr) {
+					$liClass = (Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
+					echo '<li'.$liClass.'><a href="?lang='.$key.'">'.$lang_arr[0].'</a></li>';
 				}
 			?>
 			</ul>
