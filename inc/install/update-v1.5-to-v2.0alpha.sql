@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   `pauses` TEXT NOT NULL,
   PRIMARY KEY (`activityid`),
   KEY `accountid` (`accountid`)
-) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -158,6 +158,18 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `in_routenet` TINYINT( 1 ) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 /* 17.01.2015 - old columns of `runalyze_training` are removed by 'refactor-db.php' */
+
+/* 19.01.2015 - Change to InnoDB */
+ALTER TABLE `runalyze_user` ENGINE=InnoDB;
+ALTER TABLE `runalyze_account` ENGINE=InnoDB;
+ALTER TABLE `runalyze_sport` ENGINE=InnoDB;
+ALTER TABLE `runalyze_conf` ENGINE=InnoDB;
+ALTER TABLE `runalyze_plugin` ENGINE=InnoDB;
+ALTER TABLE `runalyze_clothes` ENGINE=InnoDB;
+ALTER TABLE `runalyze_type` ENGINE=InnoDB;
+ALTER TABLE `runalyze_dataset` ENGINE=InnoDB;
+ALTER TABLE `runalyze_shoe` ENGINE=InnoDB;
+ALTER TABLE `runalyze_training` ENGINE=InnoDB;
