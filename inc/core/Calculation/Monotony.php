@@ -84,7 +84,6 @@ class Monotony {
 
 		foreach ($this->TRIMP as $Trimp) {
 			$var += ($Trimp - $this->Avg) * ($Trimp - $this->Avg);
-			var_dump($var);
 		}
 
 		$var += (static::DAYS - count($this->TRIMP)) * $this->Avg * $this->Avg;
