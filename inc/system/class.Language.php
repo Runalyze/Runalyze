@@ -15,6 +15,8 @@ class Language {
 	 */
 	static private $LOCALE_DIR = './inc/locale';
 
+    static private $CURRENT_LANG = 'en';
+
 	/**
 	 * Constructor
 	 * @param string $language [optional]
@@ -30,6 +32,8 @@ class Language {
         $languagesSupported=Language::availableLanguages();
         $locale = $languagesSupported[$language][1];
 
+        self::$CURRENT_LANG=$language;
+
 		putenv("LANG=$locale");
 		setlocale(LC_ALL, $locale);
 		setlocale(LC_NUMERIC, 'C');
@@ -40,7 +44,18 @@ class Language {
 		textdomain($domain);
 	}
 
-	/**
+    /**
+     * Return currently selected language
+     * @return string
+     */
+
+    public static function getCurrentLanguage()
+    {
+        return self::$CURRENT_LANG;
+    }
+
+
+    /**
 	 * Guess language
 	 * Based on get parameter or language accepted by the browser
 	 * @return string
