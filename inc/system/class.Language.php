@@ -27,8 +27,11 @@ class Language {
 			$language = $this->guessLanguage();
 		}
 
-		putenv("LANG=$language");
-		setlocale(LC_ALL, $language);
+        $languagesSupported=Language::availableLanguages();
+        $locale = $languagesSupported[$language][1];
+
+		putenv("LANG=$locale");
+		setlocale(LC_ALL, $locale);
 		setlocale(LC_NUMERIC, 'C');
 
 		bind_textdomain_codeset($domain, 'UTF-8');
@@ -43,30 +46,124 @@ class Language {
 	 * @return string
 	 */
 	protected function guessLanguage() {
-		if (isset($_GET['lang'])) {
-			return $_GET['lang'];
+        $languagesSupported = Language::availableLanguages();
+
+		if (isset($_GET['lang'])) {     //try to set language from GET if supported
+            $preferredLanguage=$_GET['lang'];
+            if (isset($languagesSupported[$preferredLanguage])){
+                setcookie('lang', $preferredLanguage);
+                return $preferredLanguage;
+            }
 		}
 
-		$preferredLanguage = $this->getBrowserLanguage();
+        if (isset($_COOKIE['lang'])){   //try to set language from COOKIE
+            $preferredLanguage=$_COOKIE['lang'];
+            return $preferredLanguage;
+        }
 
-		if (in_array($preferredLanguage, array_keys(self::availableLanguages()))) {
-			return $preferredLanguage;
-		}
 
-		return 'en';
+		$preferredLanguage = $this->getBrowserLanguage($languagesSupported);   //set language from browser
+        setcookie('lang', $preferredLanguage);
+		return $preferredLanguage;
+
 	}
 
+    function getBrowserLanguage($supported, $default = 'en')
+    {
+        $supp = array();
+        foreach ($supported as $lang => $isSupported) {
+            if ($isSupported) {
+                $supp[strtolower($lang)] = $lang;
+            }
+        }
+        if (!count($supp)) {
+            return $default;
+        }
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $match = $this->matchAccept(
+                $_SERVER['HTTP_ACCEPT_LANGUAGE'],
+                $supp
+            );
+            if (!is_null($match)) {
+                return $match;
+            }
+        }
+        return $default;
+    }
+    /**
+     * Parses a weighed "Accept" HTTP header and matches it against a list
+     * of supported options
+     *
+     * @param string $header The HTTP "Accept" header to parse
+     * @param array $supported A list of supported values
+     *
+     * @return string|NULL a matched option, or NULL if no match
+     */
+
+    function matchAccept($header, $supported)
+    {
+        $matches = $this->sortAccept($header);
+        foreach ($matches as $key => $q) {
+            if (isset($supported[$key])) {
+                return $supported[$key];
+            }
+        }
+// If any (i.e. "*") is acceptable, return the first supported format
+        if (isset($matches['*'])) {
+            return array_shift($supported);
+        }
+        return null;
+    }
 	/**
+     * Parses and sorts a weighed "Accept" HTTP header
+     *
+     * @param string $header The HTTP "Accept" header to parse
+     *
+     * @return array Sorted list of "accept" options
+     */
+
+    function sortAccept($header)
+    {
+        $matches = array();
+        foreach (explode(',', $header) as $option) {
+            $option = array_map('trim', explode(';', $option));
+            $l = strtolower($option[0]);
+            if (isset($option[1])) {
+                $q = (float) str_replace('q=', '', $option[1]);
+            } else {
+                $q = null;
+// Assign default low weight for generic values
+                if ($l == '*/*') {
+                    $q = 0.01;
+                } elseif (substr($l, -1) == '*') {
+                    $q = 0.02;
+                }
+            }
+// Unweighted values, get high weight by their position in the
+// list
+            $matches[$l] = isset($q) ? $q : 1000 - count($matches);
+        }
+        foreach ($matches as $k => $v){
+            if (strlen($k)>2){
+                $gen_lang=substr($k, 0, 2);
+                if (!isset ($matches[$gen_lang])){
+                    $matches[$gen_lang]=$v-0.001;
+                }
+            }
+        }
+        arsort($matches, SORT_NUMERIC);
+
+        return $matches;
+    }
+
+    /**
 	 * Available languages
 	 * @return string
 	 */
 	static public function availableLanguages() {
-		$languages = array(
-			'de'	=> 'German',
-			'en'	=> 'English'
-		);
-
-		return $languages;
+        $supportedLanguages=array();
+        require __DIR__.'/../../config_lang.php';
+		return $supportedLanguages;
 	}
 
 	/**
@@ -132,18 +229,6 @@ class Language {
 	 */
 	static public function _ne($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
-	}
-
-	/**
-	 * Get browser language
-	 * @return string 
-	 */
-	private function getBrowserLanguage() {
-		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-			return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-		}
-
-		return '';
 	}
 }
 
