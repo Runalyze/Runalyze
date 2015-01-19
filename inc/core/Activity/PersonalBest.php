@@ -46,12 +46,12 @@ class PersonalBest {
 	/**
 	 * @var array distance => pb
 	 */
-	static $PBs = array();
+	static public $PBs = array();
 
 	/**
 	 * @var boolean
 	 */
-	static $USE_STATIC_CACHE = true;
+	static public $USE_STATIC_CACHE = true;
 
 	/**
 	 * Activate use of static cache
@@ -66,6 +66,41 @@ class PersonalBest {
 	static public function deactivateStaticCache() {
 		self::$USE_STATIC_CACHE = false;
 		self::$PBs = array();
+	}
+
+	/**
+	 * Prefetch multiple PBs
+	 * 
+	 * This method should be used to avoid multiple requests.
+	 * It requires the usage of the static cache.
+	 * 
+	 * Usage:
+	 * <pre>PersonalBest::activateStaticCache();
+	 * PersonalBest::lookupDistances(array(3, 5, 10), $PDO);
+	 * new PersonalBest(3);
+	 * ...</pre>
+	 * 
+	 * @param array $distances distances in [km]
+	 * @param \PDO $pdo [optional]
+	 * @return int number of fetches PBs
+	 */
+	static public function lookupDistances(array $distances, PDO $pdo = null) {
+		$PDO = is_null($pdo) ? DB::getInstance() : $pdo;
+		$distanceQuery = implode(' OR ', array_map(function($km){
+			return '`distance`="'.$km.'"';
+		}, $distances));
+
+		$Data = $PDO->query(
+				'SELECT `distance`, MIN(`s`) as `pb` FROM `'.PREFIX.'training` '.
+				'WHERE `typeid`="'.Configuration::General()->competitionType().'" '.
+				'AND ('.$distanceQuery.') GROUP BY `distance`'
+		)->fetchAll();
+
+		foreach ($Data as $result) {
+			self::$PBs[(float)$result['distance']] = $result['pb'];
+		}
+
+		return count($Data);
 	}
 
 	/**
@@ -89,8 +124,8 @@ class PersonalBest {
 		$this->ActivityID = NULL;
 		$this->Timestamp = NULL;
 
-		if (self::$USE_STATIC_CACHE && isset(self::$PBs[$this->Distance])) {
-			$this->Time = self::$PBs[$this->Distance];
+		if (self::$USE_STATIC_CACHE && isset(self::$PBs[(float)$this->Distance])) {
+			$this->Time = self::$PBs[(float)$this->Distance];
 		} else {
 			$this->Time = $this->PDO->query(
 				'SELECT MIN(`s`) FROM `'.PREFIX.'training` '.
@@ -101,7 +136,7 @@ class PersonalBest {
 			if ($this->Time == NULL) {
 				$this->Time = false;
 			} elseif (self::$USE_STATIC_CACHE) {
-				self::$PBs[$this->Distance] = $this->Time;
+				self::$PBs[(float)$this->Distance] = $this->Time;
 			}
 		}
 
