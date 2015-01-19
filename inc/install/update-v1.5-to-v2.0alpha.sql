@@ -103,12 +103,6 @@ ALTER TABLE  `runalyze_account` ADD  `salt` CHAR( 64 ) NOT NULL AFTER  `password
 
 
 /* 02.11.2014 - refactor database for activity data */
-ALTER TABLE `runalyze_training` ADD INDEX `time` (`time`);
-ALTER TABLE `runalyze_training` ADD INDEX `sportid` (`sportid`);
-ALTER TABLE `runalyze_training` ADD INDEX `typeid` (`typeid`);
-
-ALTER TABLE `runalyze_user` ADD INDEX `time` (`time`);
-
 ALTER TABLE  `runalyze_training` ADD  `routeid` INT UNSIGNED NOT NULL AFTER  `route`;
 ALTER TABLE  `runalyze_training` ADD  `groundcontact` SMALLINT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `power`;
 ALTER TABLE  `runalyze_training` ADD  `vertical_oscillation` TINYINT UNSIGNED NOT NULL DEFAULT  '0' AFTER  `groundcontact`;
