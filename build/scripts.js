@@ -2817,13 +2817,15 @@ RunalyzePlot.Events = (function($, parent){
 	}
 
 	function moveMapMarker(pos) {
-		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes)
+		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes) {
 			RunalyzeLeaflet.Routes.movePosMarker(pos);
+		}
 	}
 
 	function unsetMapMarker() {
-		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes)
+		if (RunalyzeLeaflet && RunalyzeLeaflet.Routes) {
 			RunalyzeLeaflet.Routes.unsetPosMarker();
+		}
 	}
 
 	function onSelectionTooltip(key) {
@@ -6169,6 +6171,7 @@ var RunalyzeLeaflet = (function($){
 	self.init = function(newID, mapOptions) {
 		if (object !== null) {
 			self.Routes.removeAllRoutes();
+			self.Routes.deletePosMarker();
 			object.remove();
 		}
 
@@ -6324,7 +6327,6 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 	// Public
 
 	var self = {
-		posmarker: 0,
 		routeid: 0
 	};
 
@@ -6633,6 +6635,10 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 
 	self.unsetPosMarker = function() {
 		setPositionMarker([0,0]);
+	};
+
+	self.deletePosMarker = function() {
+		positionMarker = false;
 	};
 
 	return self;
