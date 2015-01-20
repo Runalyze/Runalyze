@@ -316,12 +316,12 @@ class Plot {
 	 * Set specific lines to be filled
 	 * @param array $keys
 	 */
-	public function setLinesFilled($keys = array()) {
+	public function setLinesFilled($keys = array(), $opacity=0.7) {
 		if (empty($keys))
 			$keys = array_keys($this->Data);
 
 		foreach ($keys as $key)
-			$this->Data[$key]['lines']['fill'] = 0.7;
+			$this->Data[$key]['lines']['fill'] = $opacity;
 	}
 
 	/**

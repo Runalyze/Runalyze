@@ -16,6 +16,7 @@ $VDOTs          = array();
 $Trimps_raw     = array();
 $VDOTs_raw      = array();
 $Durations_raw  = array();
+$maxTrimp=0;
 
 $All   = ($_GET['y'] == 'all');
 $Year  = $All ? date('Y') : (int)$_GET['y'];
@@ -86,8 +87,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
 		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
+        $TRIMPs[$index]    = $Trimps_raw[$d];
+        if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
 
-		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
+        $VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
 		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
 		$VDOT_sum        = array_sum($VDOT_slice);
 		$Durations_sum   = array_sum($Durations_slice);
@@ -104,11 +107,14 @@ $Plot = new Plot("form".$_GET['y'], 800, 450);
 
 $Plot->Data[] = array('label' => __('Fitness (CTL)'), 'color' => '#008800', 'data' => $CTLs);
 if (count($ATLs) < $MaxATLPoints)
-	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#880000', 'data' => $ATLs);
+	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'data' => $ATLs);
 $Plot->Data[] = array('label' => __('VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
+$Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
+
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
+$Plot->setLinesFilled(array(1),0.3);
 $Plot->setXAxisAsTime();
 
 if (!$All)
@@ -120,6 +126,18 @@ $Plot->setYTicks(1, 1);
 $Plot->setYLimits(1, 0, 100);
 $Plot->addYAxis(2, 'right');
 $Plot->setYTicks(2, 1, 1);
+
+$Plot->addYAxis(3, 'right');
+$Plot->setYLimits(3, 0, $maxTrimp*2);
+
+$Plot->showAsBars(3,1,2);
+
+$Plot->smoothing(false);
+
+//$Plot->setBarWidth(3,1);
+//$Plot->setBarLineWidth(3,2);
+
+
 
 if ($All)
 	$Plot->setTitle( __('Shape for all years') );
