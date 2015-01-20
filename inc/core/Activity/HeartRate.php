@@ -88,7 +88,7 @@ class HeartRate {
 	 * @return int
 	 */
 	public function inBPM() {
-		return $this->value;
+		return round($this->value);
 	}
 
 	/**
