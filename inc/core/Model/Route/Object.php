@@ -152,6 +152,28 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	}
 
 	/**
+	 * Check array sizes
+	 * @throws \RuntimeException
+	 */
+	protected function checkArraySizes() {
+		foreach ($this->properties() as $key) {
+			if ($this->isArray($key)) {
+				try {
+					$count = count($this->Data[$key]);
+
+					if ($key == self::ELEVATIONS_CORRECTED && $this->numberOfPoints > 0 && $count > $this->numberOfPoints) {
+						$this->Data[$key] = array_slice($this->Data[$key], 0, $this->numberOfPoints);
+					} else {
+						$this->checkArraySize( $count );
+					}
+				} catch(\RuntimeException $E) {
+					throw new \RuntimeException($E->getMessage().' (for '.$key.')');
+				}
+			}
+		}
+	}
+
+	/**
 	 * All properties
 	 * @return array
 	 */
