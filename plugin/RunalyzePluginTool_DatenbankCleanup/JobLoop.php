@@ -153,8 +153,8 @@ class JobLoop extends Job {
 	 * @return array ('total', 'up', 'down', 'calculated')
 	 */
 	protected function elevationsFor(array $data) {
-		if (isset($this->ElevationResults[$data['id']])) {
-			return $this->ElevationResults[$data['id']];
+		if (isset($this->ElevationResults[$data['routeid']])) {
+			return $this->ElevationResults[$data['routeid']];
 		}
 
 		return array($data['elevation'], $data['elevation'], $data['elevation']);
@@ -215,6 +215,7 @@ class JobLoop extends Job {
 		return DB::getInstance()->query(
 			'SELECT
 				`'.PREFIX.'training`.`id`,
+				`'.PREFIX.'training`.`routeid`,
 				`'.PREFIX.'training`.`sportid`,
 				`'.PREFIX.'training`.`typeid`,
 				`'.PREFIX.'training`.`distance`,
