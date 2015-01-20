@@ -107,7 +107,7 @@ class Map extends View\Object {
 	 */
 	public function js() {
 		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
-		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\');';
+		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\', { scrollWheelZoom: false} );';
 
 		foreach ($this->Routes as $Route) {
 			$Code .= $Route->js();
