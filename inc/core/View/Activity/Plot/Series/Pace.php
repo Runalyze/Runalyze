@@ -19,6 +19,12 @@ use Runalyze\Configuration;
  */
 class Pace extends ActivitySeries {
 	/**
+	* How many outliers should be cutted away?
+	* @var type
+	*/
+	static private $CUT_OUTLIER_PERCENTAGE = 10;
+
+	/**
 	 * @var string
 	 */
 	const COLOR = 'rgb(0,0,136)';
