@@ -195,7 +195,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addNotes() {
 		if ($this->Context->activity()->notes() != '') {
-			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Context->activity()->notes();
+			$Notes = '<strong>'.__('Notes').':</strong><br>'.$this->Context->dataview()->notes();
 			$this->NotesContent .= HTML::fileBlock($Notes);
 		}
 	}
