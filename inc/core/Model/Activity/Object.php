@@ -339,6 +339,19 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
+	 * Can be null?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function canBeNull($key) {
+		if ($key == self::TEMPERATURE) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get value for this key
 	 * @param string $key
 	 * @return mixed

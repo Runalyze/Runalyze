@@ -63,6 +63,7 @@ class TrainingFormular extends StandardFormular {
 		parent::prepareForDisplayInSublcass();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
+			$this->addOldObjectData();
 			$this->initElevationCorrectionFieldset();
 			$this->initDeleteFieldset();
 
@@ -93,6 +94,13 @@ class TrainingFormular extends StandardFormular {
 				parent::displayAfterSubmit();
 			}
 		}
+	}
+
+	/**
+	 * Add old object
+	 */
+	protected function addOldObjectData() {
+		$this->addHiddenValue('old-data', base64_encode(serialize($this->dataObject->getArray())));
 	}
 
 	/**

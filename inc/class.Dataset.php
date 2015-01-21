@@ -464,7 +464,7 @@ class Dataset {
 				return $this->Dataview->power();
 
 			case 'temperature':
-				if (!$this->Activity->weather()->isEmpty() && (is_null($this->Sport) || $this->Sport->isOutside())) {
+				if (!$this->Activity->weather()->temperature()->isUnknown() && (is_null($this->Sport) || $this->Sport->isOutside())) {
 					return $this->Activity->weather()->temperature()->asString();
 				}
 

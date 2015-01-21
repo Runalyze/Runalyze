@@ -291,4 +291,16 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan($ObjectWithout->trimp(), $ObjectWith->trimp());
 	}
 
+	public function testTemperature() {
+		$Zero = $this->fetch(
+			$this->insert(array(
+				Object::TEMPERATURE => 0
+			))
+		);
+
+		$this->assertEquals(0, $Zero->weather()->temperature()->value());
+		$this->assertFalse($Zero->weather()->temperature()->isUnknown());
+		$this->assertFalse($Zero->weather()->isEmpty());
+	}
+
 }

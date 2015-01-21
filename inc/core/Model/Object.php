@@ -48,10 +48,10 @@ abstract class Object {
 	 */
 	final protected function readData(array $data) {
 		foreach ($this->properties() as $key) {
-			if (isset($data[$key]) && $data[$key] != '') {
+			if (isset($data[$key]) && $data[$key] !== '') {
 				$this->Data[$key] = $this->isArray($key) && !is_array($data[$key]) ? self::explode($data[$key]) : $data[$key];
 			} else {
-				$this->Data[$key] = $this->isArray($key) ? array() : '';
+				$this->Data[$key] = $this->isArray($key) ? array() : ($this->canBeNull($key) ? NULL : '');
 			}
 		}
 	}
@@ -115,6 +115,15 @@ abstract class Object {
 	 * @return boolean
 	 */
 	public function isArray($key) {
+		return false;
+	}
+
+	/**
+	 * Can be null?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function canBeNull($key) {
 		return false;
 	}
 

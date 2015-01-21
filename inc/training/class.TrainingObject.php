@@ -56,18 +56,6 @@ class TrainingObject extends DataObject {
 	private $Cadence = null;
 
 	/**
-	 * Ground contact
-	 * @var array
-	 */
-	private $arrGroundContact = array();
-
-	/**
-	 * Vertical oscillation
-	 * @var array
-	 */
-	private $arrVerticalOscillation = array();
-
-	/**
 	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
@@ -212,34 +200,37 @@ class TrainingObject extends DataObject {
 	 * Update object in database
 	 */
 	public function update() {
+		$OldData = isset($_POST['old-data'])
+				? unserialize(base64_decode($_POST['old-data']))
+				: array();
+
+		if (!is_array($OldData)) {
+			$OldData = array();
+		}
+
 		$UpdaterActivity = new \Runalyze\Model\Activity\Updater(DB::getInstance(),
 			$this->newActivityObject(),
-			new \Runalyze\Model\Activity\Object(array(
-				// TODO: old activity is currently unknown
-				Runalyze\Model\Activity\Object::SHOEID => isset($_POST['shoeid_old']) ? $_POST['shoeid_old'] : 0,
-				Runalyze\Model\Activity\Object::TIME_IN_SECONDS => isset($_POST['s_old']) ? $_POST['s_old'] : 0,
-				Runalyze\Model\Activity\Object::DISTANCE => isset($_POST['dist_old']) ? $_POST['dist_old'] : 0
-			))
+			new \Runalyze\Model\Activity\Object($OldData)
 		);
 		$UpdaterActivity->setAccountID( SessionAccountHandler::getId() );
 		$UpdaterActivity->update();
 
-		/*
-		// TODO: ROUTEID?
-		$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance());
-		$UpdaterRoute->setAccountID( SessionAccountHandler::getId() );
-		$UpdaterRoute->update(
-			new Runalyze\Model\Route\Object(array(
-				Runalyze\Model\Route\Object::NAME => $this->get('route'),
-				Runalyze\Model\Route\Object::CITIES => $this->get('route')
-			)),
-			array(
-				// TODO: old route is currently unknown
-				Runalyze\Model\Route\Object::NAME,
-				Runalyze\Model\Route\Object::CITIES
-			)
-		);
-		 */
+		if (isset($OldData['routeid']) && isset($OldData['route'])) {
+			$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance(),
+				new Runalyze\Model\Route\Object(array(
+					'id' => $OldData['routeid'],
+					Runalyze\Model\Route\Object::NAME => $this->get('route'),
+					Runalyze\Model\Route\Object::CITIES => $this->get('route')
+				)),
+				new Runalyze\Model\Route\Object(array(
+					'id' => $OldData['routeid'],
+					Runalyze\Model\Route\Object::NAME => $OldData['route'],
+					Runalyze\Model\Route\Object::CITIES => $OldData['route']
+				))
+			);
+			$UpdaterRoute->setAccountID( SessionAccountHandler::getId() );
+			$UpdaterRoute->update();
+		}
 	}
 
 	/**

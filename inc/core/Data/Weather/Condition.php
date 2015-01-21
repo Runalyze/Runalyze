@@ -85,7 +85,11 @@ class Condition {
 	 * @param int $identifier a class constant
 	 */
 	public function set($identifier) {
-		$this->identifier = $identifier;
+		if (!in_array($identifier, self::completeList())) {
+			$this->identifier = self::UNKNOWN;
+		} else { 
+			$this->identifier = $identifier;
+		}
 	}
 
 	/**
