@@ -77,7 +77,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Display info
 	 */
 	protected function displayInfo() {
-		echo '<div class="training-row-info">';
+		echo '<div class="training-row-info'.($this->withShadow ? ' with-shadow' : '').'">';
 
 		if (!empty($this->BoxedValues)) {
 			$this->displayBoxedValues();

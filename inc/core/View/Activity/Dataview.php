@@ -404,6 +404,10 @@ class Dataview {
 	 * @return string
 	 */
 	public function partnerAsLinks() {
+		if (\Request::isOnSharedPage()) {
+			return $this->partner();
+		}
+
 		$links = array();
 
 		foreach ($this->Activity->partner()->asArray() as $partner) {

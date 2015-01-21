@@ -1,6 +1,6 @@
-@headline-background:					#2c2c2c;
-@headline-gradient:						linear-gradient(to bottom, #333333, #222222);
-@headline-shadow:						0 2px 3px rgba(0, 0, 0, 0.25);
+@headline-background:					#222;
+@headline-border-width:					2px;
+@headline-border-color:					rgba(0, 0, 0, 0.25);
 @headline-logo-font-size:				20px;
 @headline-logo-font-weight:				200;
 @headline-logo-color:					#999;
@@ -27,8 +27,9 @@ body {
 	line-height: 24px;
 	overflow: hidden;
 	background-color: @headline-background;
-	background-image: @headline-gradient;
-	box-shadow: @headline-shadow;
+	border-bottom: @headline-border-width solid @headline-border-color;
+	-webkit-background-clip: padding-box;
+    background-clip: padding-box;
 
 	.logo {
 		color: @headline-logo-color !important;

@@ -102,15 +102,23 @@ class ElevationAlgorithms extends ActivityPlot {
 		$Calculator->calculate();
 
 		$i = 0;
-		$Points    = $Calculator->strategy()->smoothedData();
-		$Indices   = $Calculator->strategy()->smoothingIndices();
+		$Points = $Calculator->strategy()->smoothedData();
+		$Indices = $Calculator->strategy()->smoothingIndices();
+		$hasDistances = $this->Context->trackdata()->get(Trackdata\Object::DISTANCE);
 		$Distances = $this->Context->trackdata()->get(Trackdata\Object::DISTANCE);
+		$Times = $this->Context->trackdata()->get(Trackdata\Object::TIME);
+		$num = $this->Context->trackdata()->num();
 
 		foreach ($Indices as $i => $index) {
-			if ($index >= count($Distances))
-				$index = count($Distances)-1;
+			if ($index >= $num) {
+				$index = $num - 1;
+			}
 
-			$Data[(string)$Distances[$index]] = $Points[$i];
+			if ($hasDistances) {
+				$Data[(string)$Distances[$index]] = $Points[$i];
+			} else {
+				$Data[(string)$Times[$index].'000'] = $Points[$i];
+			}
 		}
 
 		return $Data;

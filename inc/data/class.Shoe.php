@@ -49,6 +49,10 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getSearchLink() {
+		if (Request::isOnSharedPage()) {
+			return $this->getName();
+		}
+
 		return ShoeFactory::getSearchLink($this->id());
 	}
 	
