@@ -81,11 +81,13 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 * Add info link
 	 */
 	protected function addInfoLink() {
-		$Linker = new Linker($this->Context->activity());
-
-		$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
-
-		$this->Content = HTML::info( $InfoLink );
+		if (!Request::isOnSharedPage()) {
+			$Linker = new Linker($this->Context->activity());
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$this->Content = HTML::info( $InfoLink );
+		} else {
+			$this->Content = '';
+		}
 
 		if ($this->Context->route()->hasCorrectedElevations()) {
 			$this->Content .= HTML::info( __('Elevation data were corrected.') );

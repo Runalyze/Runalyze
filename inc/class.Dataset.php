@@ -377,7 +377,7 @@ class Dataset {
 		if (!is_object($this->Activity) || !$this->Activity->isPublic()) {
 			echo HTML::emptyTD();
 		} else {
-			echo HTML::td(Icon::$ADD_SMALL_GREEN, 'link');
+			echo HTML::td(\Icon::$ADD_SMALL_GREEN, 'link');
 		}
 	}
 

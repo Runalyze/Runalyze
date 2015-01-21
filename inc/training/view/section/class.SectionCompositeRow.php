@@ -105,9 +105,8 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add info link
 	 */
 	protected function addVdotInfoLink() {
-		if ($this->Context->dataview()->vdot()->value() > 0) {
+		if (!Request::isOnSharedPage() && $this->Context->dataview()->vdot()->value() > 0) {
 			$Linker = new Activity\Linker($this->Context->activity());
-
 			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
 			$this->Content .= HTML::info( $InfoLink );
@@ -186,11 +185,11 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add info link
 	 */
 	protected function addElevationInfoLink() {
-		$Linker = new Activity\Linker($this->Context->activity());
-
-		$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
-
-		$this->Content .= HTML::info( $InfoLink );
+		if (!Request::isOnSharedPage()) {
+			$Linker = new Activity\Linker($this->Context->activity());
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$this->Content .= HTML::info( $InfoLink );
+		}
 
 		if ($this->Context->route()->hasCorrectedElevations()) {
 			$this->Content .= HTML::info( __('Elevation data were corrected.') );

@@ -69,11 +69,12 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addInfoLink() {
 		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
-			$Linker = new Activity\Linker($this->Context->activity());
+			if (!Request::isOnSharedPage()) {
+				$Linker = new Activity\Linker($this->Context->activity());
+				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
-
-			$this->Content = HTML::info( $InfoLink );
+				$this->Content = HTML::info( $InfoLink );
+			}
 		}
 	}
 }

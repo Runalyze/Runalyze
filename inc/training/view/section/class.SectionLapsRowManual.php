@@ -45,10 +45,12 @@ class SectionLapsRowManual extends TrainingViewSectionRow {
 	 */
 	protected function addInfoLink() {
 		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE) && $this->Context->trackdata()->has(Trackdata\Object::TIME)) {
-			$Linker = new Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToRoundsInfo().'">'.__('More details about your laps').'</a>', 'normal');
+			if (!Request::isOnSharedPage()) {
+				$Linker = new Linker($this->Context->activity());
+				$InfoLink = Ajax::window('<a href="'.$Linker->urlToRoundsInfo().'">'.__('More details about your laps').'</a>', 'normal');
 
-			$this->Content = HTML::info( $InfoLink );
+				$this->Content = HTML::info( $InfoLink );
+			}
 		}
 	}
 }
