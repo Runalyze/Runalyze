@@ -51,10 +51,19 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 			Model\Route\Object::ELEVATION_UP => 500,
 			Model\Route\Object::ELEVATION_DOWN => 100
 		)));
+		$CalculatorOnlyDown = new Calculator($Activity, null, new Model\Route\Object(array(
+			Model\Route\Object::ELEVATION => 500,
+			Model\Route\Object::ELEVATION_UP => 0,
+			Model\Route\Object::ELEVATION_DOWN => 500
+		)));
 
 		$this->assertGreaterThan(
 			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation(),
 			$CalculatorUpAndDown->calculateVDOTbyHeartRateWithElevation()
+		);
+		$this->assertGreaterThan(
+			$CalculatorOnlyDown->calculateVDOTbyHeartRateWithElevation(),
+			$CalculatorOnlyElevation->calculateVDOTbyHeartRateWithElevation()
 		);
 		$this->assertGreaterThan(
 			$CalculatorOnlyActivity->calculateVDOTbyHeartRateWithElevation(),

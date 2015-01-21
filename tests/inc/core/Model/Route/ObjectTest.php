@@ -65,4 +65,19 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(7.8, $T->get(Object::MAX_LONGITUDE));
 	}
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1172
+	 */
+	public function testPossibilityOfTooLargeCorrectedElevations() {
+		$Object = new Object(array(
+			Object::LATITUDES => array(49.440, 49.441, 49.442, 49.443, 49.444, 49.445, 49.446, 49.447, 49.448, 49.449, 49.450),
+			Object::LONGITUDES => array(7.760, 7.761, 7.762, 7.763, 7.764, 7.765, 7.766, 7.767, 7.768, 7.769, 7.770),
+			Object::ELEVATIONS_ORIGINAL => array(240, 238, 240, 238, 238, 237, 236, 237, 240, 248, 259),
+			Object::ELEVATIONS_CORRECTED => array(240, 240, 240, 240, 240, 237, 237, 237, 237, 237, 259, 259, 259, 259, 259)
+		));
+
+		$this->assertEquals(11, $Object->num());
+		$this->assertEquals(11, count($Object->elevationsCorrected()));
+	}
+
 }

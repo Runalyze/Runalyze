@@ -53,10 +53,12 @@ class TableZonesPace extends TableZonesAbstract {
 		$Zones = array();
 
 		$Distribution = new TimeSeries(
-			$this->Context->trackdata()->get(Trackdata\Object::PACE),
-			$this->Context->trackdata()->get(Trackdata\Object::TIME)
+			$this->Context->trackdata()->pace(),
+			$this->Context->trackdata()->time()
 		);
-
+		$Distribution->calculateStatistic();
+var_dump(array_sum($this->Context->trackdata()->get(Trackdata\Object::PACE))/$this->Context->trackdata()->num());
+var_dump($Distribution);
 		foreach ($Distribution->histogram() as $paceInSeconds => $seconds) {
 			$pace = $this->zoneFor($paceInSeconds);
 

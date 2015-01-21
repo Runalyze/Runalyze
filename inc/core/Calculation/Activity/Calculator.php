@@ -105,7 +105,7 @@ class Calculator {
 	 */
 	public function calculateVDOTbyHeartRateWithElevation() {
 		if ($this->knowsRoute()) {
-			if ($this->Route->elevationUp() > 0 && $this->Route->elevationDown() > 0) {
+			if ($this->Route->elevationUp() > 0 || $this->Route->elevationDown() > 0) {
 				return $this->calculateVDOTbyHeartRateWithElevationFor($this->Route->elevationUp(), $this->Route->elevationDown());
 			}
 

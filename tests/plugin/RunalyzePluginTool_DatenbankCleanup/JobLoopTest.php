@@ -70,4 +70,45 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNotEquals(0, $data['trimp']);
 	}
 
+	public function testDontOverwriteElevation() {
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `distance`, `s`, `elevation`, `routeid`) VALUES (1, 10, 3600, 42, 1)');
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevation`, `elevation_up`, `elevation_down`) VALUES (1, 123, 123, 123)');
+
+		$_POST = array(
+			JobLoop::ELEVATION => 'on',
+			JobLoop::ELEVATION_OVERWRITE => 'on'
+		);
+
+		$Loop = new JobLoop;
+		$Loop->run();
+
+		$this->assertEquals(42, $this->PDO->query(
+			'SELECT `elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1'
+		)->fetchColumn());
+	}
+
+	public function testUsageOfCorrectElevation() {
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`) VALUES (1, 2, 10, 3600, 150)');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`id`, `routeid`, `distance`, `s`, `pulse_avg`) VALUES (2, 1, 10, 3600, 150)');
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevations_corrected`) VALUES (1, "0|100")');
+		$this->PDO->exec('INSERT INTO `runalyze_route` (`id`, `elevations_corrected`) VALUES (2, "200|0")');
+
+		$_POST = array(
+			JobLoop::ELEVATION => 'on',
+			JobLoop::ELEVATION_OVERWRITE => 'on',
+			JobLoop::VDOT => 'on'
+		);
+
+		$Loop = new JobLoop;
+		$Loop->run();
+
+		$DataDown = $this->PDO->query('SELECT `elevation`, `vdot`, `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=1 LIMIT 1')->fetch();
+		$DataUp = $this->PDO->query('SELECT `elevation`, `vdot`, `vdot_with_elevation` FROM `runalyze_training` WHERE `id`=2 LIMIT 1')->fetch();
+
+		$this->assertEquals($DataUp['vdot'], $DataDown['vdot']);
+		$this->assertEquals(100, $DataUp['elevation']);
+		$this->assertEquals(200, $DataDown['elevation']);
+		$this->assertGreaterThan($DataDown['vdot_with_elevation'], $DataUp['vdot_with_elevation']);
+	}
+
 }

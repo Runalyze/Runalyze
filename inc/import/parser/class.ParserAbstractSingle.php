@@ -306,7 +306,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$this->paceDist = $currDist;
 			$this->paceTime = $currTime;
 
-			return $pace;
+			return round($pace);
 		}
 
 		return 0;
