@@ -117,7 +117,7 @@ class Loop {
 	 * @param float $value to move
 	 * @throws \InvalidArgumentException
 	 */
-	protected function move($key, $value) {
+	public function move($key, $value) {
 		$this->moveTo($key, $this->Index == 0 ? $value : $this->current($key) + $value);
 	}
 
@@ -126,6 +126,13 @@ class Loop {
 	 */
 	public function index() {
 		return $this->Index;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function currentStepSize() {
+		return $this->Index - $this->LastIndex;
 	}
 
 	/**

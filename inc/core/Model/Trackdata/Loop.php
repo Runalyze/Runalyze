@@ -58,7 +58,7 @@ class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Move for time
 	 * @param int $seconds
-	 * @throws \RuntimeException
+	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveTime($seconds) {
 		$this->move(Object::TIME, $seconds);
@@ -67,7 +67,7 @@ class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Move to time
 	 * @param int $seconds
-	 * @throws \RuntimeException
+	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveToTime($seconds) {
 		$this->moveTo(Object::TIME, $seconds);
@@ -76,7 +76,7 @@ class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Move for distance
 	 * @param float $kilometer
-	 * @throws \RuntimeException
+	 * @throws \RuntimeException for negative values or if distance is empty
 	 */
 	public function moveDistance($kilometer) {
 		$this->move(Object::DISTANCE, $kilometer);
@@ -85,7 +85,7 @@ class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Move to distance
 	 * @param float $kilometer
-	 * @throws \RuntimeException
+	 * @throws \RuntimeException for negative values or if distance is empty
 	 */
 	public function moveToDistance($kilometer) {
 		$this->moveTo(Object::DISTANCE, $kilometer);

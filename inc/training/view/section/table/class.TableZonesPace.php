@@ -4,9 +4,9 @@
  * @package Runalyze\DataObjects\Training\View
  */
 
-use Runalyze\Model\Trackdata;
 use Runalyze\Activity\Pace;
 use Runalyze\Calculation\Distribution\TimeSeries;
+use Runalyze\Calculation\Activity\PaceSmoother;
 
 /**
  * Display pace zones
@@ -15,6 +15,12 @@ use Runalyze\Calculation\Distribution\TimeSeries;
  * @package Runalyze\DataObjects\Training\View
  */
 class TableZonesPace extends TableZonesAbstract {
+	/**
+	 * Step size to smooth pace date
+	 * @var int
+	 */
+	const STEP_SIZE = 10;
+
 	/**
 	 * Get title for average
 	 * @return string
@@ -51,14 +57,13 @@ class TableZonesPace extends TableZonesAbstract {
 		// - make zones configurable
 		// - calculate distance / average hr of zone
 		$Zones = array();
+		$Smoother = new PaceSmoother($this->Context->trackdata(), true);
 
 		$Distribution = new TimeSeries(
-			$this->Context->trackdata()->pace(),
+			$Smoother->smooth(self::STEP_SIZE, PaceSmoother::MODE_STEP),
 			$this->Context->trackdata()->time()
 		);
-		$Distribution->calculateStatistic();
-var_dump(array_sum($this->Context->trackdata()->get(Trackdata\Object::PACE))/$this->Context->trackdata()->num());
-var_dump($Distribution);
+
 		foreach ($Distribution->histogram() as $paceInSeconds => $seconds) {
 			$pace = $this->zoneFor($paceInSeconds);
 
@@ -84,7 +89,6 @@ var_dump($Distribution);
 	 * @return int
 	 */
 	protected function zoneFor($paceInSeconds) {
-		// TODO
-		return Helper::ceilFor($paceInSeconds, 60);
+		return 60 * floor($paceInSeconds / 60);
 	}
 }
