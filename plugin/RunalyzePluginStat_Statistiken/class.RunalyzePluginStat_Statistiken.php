@@ -453,7 +453,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			FROM
 				`'.PREFIX.'training`
 			WHERE
-				`sportid`=:sportid AND `accountid`='.SessionAccountHandler::getId();
+				`sportid`=:sportid AND `accountid`=:sessid';
 
 		if ($this->year != -1)
 			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))=:year';
@@ -462,6 +462,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$Request = DB::getInstance()->prepare($Query);
 		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
+		$Request->bindParam('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
 
 		if ($this->year != -1)
 			$Request->bindParam('year', $this->year, PDO::PARAM_INT);
