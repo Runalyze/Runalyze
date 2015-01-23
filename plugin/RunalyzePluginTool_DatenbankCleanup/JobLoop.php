@@ -111,7 +111,7 @@ class JobLoop extends Job {
 				}
 
 				if ($this->isRequested(self::JD_POINTS)) {
-					$Update->bindValue(':jd_intensity', $Calculator->calculateJDintensity());
+					$Update->bindValue(':jd_intensity', $calculate_vdot ? $Calculator->calculateJDintensity() : 0);
 				}
 
 				if ($this->isRequested(self::TRIMP)) {
