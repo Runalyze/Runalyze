@@ -101,4 +101,11 @@ class DurationTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('1:03', $Time->fromSeconds(63.00)->string(Duration::FORMAT_COMPETITION, 2));
 	}
 
+	public function testHourFormat() {
+		$Time = new Duration();
+
+		$this->assertEquals('24:00:00', $Time->fromSeconds(24*3600)->string(Duration::FORMAT_WITH_HOURS));
+		$this->assertEquals('27:13:08', $Time->fromSeconds(27*3600+13*60+8)->string(Duration::FORMAT_WITH_HOURS));
+	}
+
 }
