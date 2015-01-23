@@ -41,7 +41,7 @@ if (START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`
 			FROM `'.PREFIX.'training`
 			WHERE
-				`vdot`>0
+				`vdot`>0 AND use_vdot<>0
 			GROUP BY `y`, `m`
 			ORDER BY `y` ASC, `m` ASC')->fetchAll();
 
