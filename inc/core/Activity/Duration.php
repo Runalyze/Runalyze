@@ -187,7 +187,15 @@ class Duration {
 			throw new \InvalidArgumentException('Can\'t format time (t = '.((int)round($this->Time)).').');
 		}
 
-		return $time->format($format);
+		if ($format == self::FORMAT_WITH_HOURS) {
+			/* we need to compute the hours ourselves, since DateTime outputs %G as [0..24) */
+			$sec = $time->format("U");
+			$s=$sec % 60;
+			$m=(($sec-$s) / 60) % 60;
+			$h=floor($sec / 3600);
+			return $h.":".substr("0".$m,-2).":".substr("0".$s,-2);
+		} else
+			return $time->format($format);
 	}
 
 	/**
