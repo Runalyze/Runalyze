@@ -48,7 +48,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 				SUM(`trimp`) as `trimp`,
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `vdot`,
-				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `s`
+				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
 			FROM `'.PREFIX.'training`
 			WHERE
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'

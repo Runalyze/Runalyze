@@ -7,6 +7,7 @@
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
 use Runalyze\Calculation\Activity\Calculator;
+use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Route;
@@ -96,19 +97,21 @@ class JobLoop extends Job {
 			try {
 				$Calculator = $this->calculatorFor($Data);
 
+                $calculate_vdot=$Data['sportid']==Configuration::General()->runningSport();
+
 				if ($this->isRequested(self::ELEVATION) && $this->isRequested(self::ELEVATION_OVERWRITE)) {
 					$elevations = $this->elevationsFor($Data);
 					$Update->bindValue(':elevation', $elevations[0]);
 				}
 
 				if ($this->isRequested(self::VDOT)) {
-					$Update->bindValue(':vdot', $Calculator->calculateVDOTbyHeartRate());
-					$Update->bindValue(':vdot_by_time', $Calculator->calculateVDOTbyTime());
-					$Update->bindValue(':vdot_with_elevation', $Calculator->calculateVDOTbyHeartRateWithElevation());
+					$Update->bindValue(':vdot', $calculate_vdot?$Calculator->calculateVDOTbyHeartRate():0);
+					$Update->bindValue(':vdot_by_time', $calculate_vdot?$Calculator->calculateVDOTbyTime():0);
+					$Update->bindValue(':vdot_with_elevation', $calculate_vdot?$Calculator->calculateVDOTbyHeartRateWithElevation():0);
 				}
 
 				if ($this->isRequested(self::JD_POINTS)) {
-					$Update->bindValue(':jd_intensity', $Calculator->calculateJDintensity());
+					$Update->bindValue(':jd_intensity', $calculate_vdot ? $Calculator->calculateJDintensity() : 0);
 				}
 
 				if ($this->isRequested(self::TRIMP)) {
