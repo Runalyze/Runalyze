@@ -462,7 +462,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$Request = DB::getInstance()->prepare($Query);
 		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
-		$Request->bindParam('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
+		$Request->bindValue('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
 
 		if ($this->year != -1)
 			$Request->bindParam('year', $this->year, PDO::PARAM_INT);
