@@ -61,7 +61,9 @@ class ConfigTabPlugins extends ConfigTab {
 	 * @return string 
 	 */
 	private function getCodeFor($PluginType) {
-		$Plugins = DB::getInstance()->query('SELECT `id`, `key`, `order` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string($PluginType).'" ORDER BY FIELD(`active`, 1, 2, 0), `order` ASC')->fetchAll();
+		$Factory = new PluginFactory();
+		$Plugins = $Factory->completeData($PluginType);
+		usort($Plugins, $this->pluginOrderFunction());
 
 		if (empty($Plugins)) {
 			return HTML::info(__('No plugins available.'));
@@ -78,8 +80,6 @@ class ConfigTabPlugins extends ConfigTab {
 					</tr>
 				</thead>
 				<tbody>';
-
-		$Factory = new PluginFactory();
 
 		foreach ($Plugins as $Data) {
 			$Plugin = $Factory->newInstance($Data['key']);
@@ -128,6 +128,31 @@ class ConfigTabPlugins extends ConfigTab {
 	}
 
 	/**
+	 * @return \Closure
+	 */
+	protected function pluginOrderFunction() {
+		return function($a, $b){
+			if ($a['active'] == $b['active']) {
+				if ($a['order'] == $b['order']) {
+					return ($a['id'] > $b['id']) ? 1 : -1;
+				}
+
+				return ($a['order'] > $b['order']) ? 1 : -1;
+			}
+
+			if ($a['active'] == 0) {
+				return 1;
+			}
+
+			if ($b['active'] == 0) {
+				return -1;
+			}
+
+			return ($a['active'] > $b['active']) ? 1 : -1;
+		};
+	}
+
+	/**
 	 * Get code for install
 	 * @return string 
 	 */
@@ -172,13 +197,11 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Plugins = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin`')->fetchAll();
-		foreach ($Plugins as $Plugin) {
+		$Factory = new PluginFactory();
+		foreach ($Factory->completeData() as $Plugin) {
 			$id = $Plugin['id'];
 
 			if (isset($_POST['plugin_modus_'.$id]) && isset($_POST['plugin_order_'.$id])) {
-				
-
 				DB::getInstance()->update('plugin', $id,
 					array(
 						'active',
@@ -191,6 +214,8 @@ class ConfigTabPlugins extends ConfigTab {
 				);
 			}
 		}
+
+		$Factory->clearCache();
 
 		Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
 	}

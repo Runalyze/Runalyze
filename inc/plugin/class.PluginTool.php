@@ -61,9 +61,8 @@ abstract class PluginTool extends Plugin {
 
 		$Factory = new PluginFactory();
 
-		$tools = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `type`="'.PluginType::string(PluginType::Tool).'" AND `active`='.Plugin::ACTIVE.' ORDER BY `order` ASC')->fetchAll();
-		foreach ($tools as $tool) {
-			$Sublinks[] = $Factory->newInstanceFor($tool['id'])->getLink();
+		foreach ($Factory->activePlugins(PluginType::Tool) as $key) {
+			$Sublinks[] = $Factory->newInstance($key)->getLink();
 		}
 
 		$Links = array();
