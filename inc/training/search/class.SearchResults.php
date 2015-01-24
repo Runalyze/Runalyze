@@ -81,27 +81,39 @@ class SearchResults {
 	 */
 	private function setAllowedKeys() {
 		$this->allowedKeys = array(
-			'distance',
-			'route',
-			'elevation',
-			's',
-			'comment',
-			'temperature',
-			'pulse_avg',
-			'partner',
-			'kcal',
 			'typeid',
 			'weatherid',
-			'shoeid'
+			'shoeid',
+
+			'distance',
+			's',
+			'pulse_avg',
+
+			'elevation',
+			'temperature',
+			'kcal',
+
+			'partner',
+			'route',
+			'comment',
+
+			'pulse_max',
+			'jd_intensity',
+			'trimp',
+
+			'cadence',
+			'groundcontact',
+			'vertical_oscillation',
+
+			'use_vdot',
+			'is_public',
+			'abc'
 		);
 
 		// Some additional keys
-		$this->allowedKeys[] = 'is_public';
+		$this->allowedKeys[] = 'power';
 		$this->allowedKeys[] = 'is_track';
-		$this->allowedKeys[] = 'trimp';
 		$this->allowedKeys[] = 'vdot';
-		$this->allowedKeys[] = 'pulse_max';
-		$this->allowedKeys[] = 'jd_points';
 		$this->allowedKeys[] = 'notes';
 	}
 
@@ -142,22 +154,24 @@ class SearchResults {
 	private function getWhere() {
 		$conditions = array();
 
-		if (isset($_POST['date-from']) && isset($_POST['date-to']))
-			$this->addTimeRangeCondition($conditions);
-
 		if (isset($_POST['sportid']))
 			$this->addSportCondition($conditions);
 
-		if (isset($_POST['clothes']))
-			$this->addClothesCondition($conditions);
+		if (isset($_POST['date-from']) && isset($_POST['date-to']))
+			$this->addTimeRangeCondition($conditions);
 
 		foreach ($this->allowedKeys as $key) {
-			if (isset($_POST[$key]))
-				if (is_array($_POST[$key]))
+			if (isset($_POST[$key])) {
+				if (is_array($_POST[$key])) {
 					$this->addConditionForArray($key, $conditions);
-				elseif (strlen($_POST[$key]) > 0)
+				} elseif (strlen($_POST[$key]) > 0) {
 					$this->addConditionFor($key, $conditions);
+				}
+			}
 		}
+
+		if (isset($_POST['clothes']))
+			$this->addClothesCondition($conditions);
 
 		if (empty($conditions))
 			return 'WHERE 1';
@@ -187,10 +201,26 @@ class SearchResults {
 	private function addConditionFor($key, array &$conditions) {
 		$sign = (isset($_POST['opt'][$key])) ? $this->signFor($_POST['opt'][$key]) : '=';
 
-		if ($sign == ' LIKE ')
+		if ($sign == ' LIKE ') {
 			$conditions[] = '`'.$key.'` '.$sign.' "%'.DB::getInstance()->escape($_POST[$key], false).'%"';
-		else
-			$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($_POST[$key]);
+		} else {
+			if (in_array($key, array('distance', 'vertical_oscillation'))) {
+				$_POST[$key] = (float)str_replace(',', '.', $_POST[$key]);
+			}
+
+			if ($key == 'vertical_oscillation') {
+				$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape(10*$_POST[$key]);
+			} else {
+				$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($_POST[$key]);
+			}
+
+			if (
+				($sign == '<' || $sign == '<=') &&
+				in_array($key, array('distance', 'pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation'))
+			) {
+				$conditions[] = '`'.$key.'` != 0';
+			}
+		}
 	}
 
 	/**
@@ -372,7 +402,7 @@ class SearchResults {
 	/**
 	 * Display all training rows
 	 */
-	private function displayTrainingRows() {	
+	private function displayTrainingRows() {
 		foreach ($this->Trainings as $training) {
 			$date = date("d.m.Y", $training['time']);
 			$link = Ajax::trainingLink($training['id'], $date, true);
