@@ -34,9 +34,12 @@ class FormularSelectSearchSort extends FormularField {
 			'pulse_avg'	=> __('avg. Heartrate'),
 			'pulse_max'	=> __('max. Heartrate'),
 			'temperature'	=> __('Temperature'),
+			'cadence'	=> __('Cadence'),
+			'groundcontact'	=> __('Ground contact'),
+			'vertical_oscillation'	=> __('Vertical oscillation'),
 			'vdot'		=> __('VDOT'),
 			'trimp'		=> __('TRIMP'),
-			'jd_points'	=> __('JDpoints')
+			'jd_intensity'	=> __('JDpoints')
 		);
 
 		$code .= HTML::selectBox('search-sort-by', $sortByOptions);

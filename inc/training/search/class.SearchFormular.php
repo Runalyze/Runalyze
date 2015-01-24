@@ -126,14 +126,23 @@ class SearchFormular extends Formular {
 		$this->addConditionFieldWithChosen('clothes', 'clothes', 'name', __('Clothing'), __('Choose clothing'));
 
 		$this->addConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
-		$this->addConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
 		$this->addConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
+		$this->addConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
 		$this->addConditionField('s', __('Duration'), FormularInput::$SIZE_SMALL);
-		$this->addConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
 		$this->addConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
+		$this->addConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
 		$this->addConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
-		$this->addConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
 		$this->addConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
+		$this->addConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
+		$this->addConditionField('pulse_max', __('max. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+		$this->addConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
+		$this->addBooleanField('is_public', __('Is public'));
+		$this->addConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
+		$this->addConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
+		$this->addBooleanField('use_vdot', __('Uses VDOT'));
+		$this->addConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
+		$this->addConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
+		$this->addBooleanField('abc', __('Running drills'));
 	}
 
 	/**
@@ -174,6 +183,23 @@ class SearchFormular extends Formular {
 			$Field->setSize($size);
 		if (!empty($unit))
 			$Field->setUnit($unit);
+
+		$this->Fieldset->addField($Field);
+	}
+
+	/**
+	 * Add boolean field
+	 * @param string $key
+	 * @param string $label
+	 */
+	private function addBooleanField($key, $label) {
+		$Field = new FormularSelectBox($key, $label);
+		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33 );
+		$Field->setOptions(array(
+			'' => '',
+			'1' => __('Yes'),
+			'0' => __('No')
+		));
 
 		$this->Fieldset->addField($Field);
 	}
