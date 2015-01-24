@@ -218,7 +218,16 @@ class Plot {
 			$this->Options['series']['points']['lineWidth'] = $size;
 	}
 
-	/**
+    /**
+     * Show series as points
+     * @param int $series
+     */
+    public function showAsPoints($series) {
+        $this->Data[$series]['points']['show'] = true;
+    }
+
+
+    /**
 	* Set line width for series
 	* @param int $series
 	* @param int $width
@@ -304,6 +313,14 @@ class Plot {
 	}
 
 	/**
+     * Put grid above data
+     */
+    public function setGridAboveData() {
+        $this->Options['grid']['aboveData'] = true;
+    }
+
+
+	/**
 	 * Set legend as table (not in one line as default)
 	 * @param string $position
 	 */
@@ -356,6 +373,21 @@ class Plot {
 	 */
 	public function setXAxisAsTime() {
 		$this->Options['xaxis']['mode'] = "time";
+        $this->Options['xaxis']['monthNames']=	array(
+            __('Jan'),
+            __('Feb'),
+            __('Mar'),
+            __('Apr'),
+            __('May'),
+            __('Jun'),
+            __('Jul'),
+            __('Aug'),
+            __('Sep'),
+            __('Oct'),
+            __('Nov'),
+            __('Dec'),
+        );
+
 	}
 
 	/**

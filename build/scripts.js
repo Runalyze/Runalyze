@@ -3892,7 +3892,8 @@ Runalyze.Feature = (function($, Parent){
 			flat: true,
 			format: 'd B Y',
 			date: [new Date(parseInt($("#calendar-start").val())), new Date(parseInt($("#calendar-end").val()))],
-			calendars: 3,
+            locale:  JSON.parse($("#calendar-locale").val()),
+            calendars: 3,
 			mode: 'range',
 			starts: 1
 		});
@@ -3926,7 +3927,8 @@ Runalyze.Feature = (function($, Parent){
 				starts: 1,
 				position: 'bottom',
 				mode: 'single',
-				onBeforeShow: function(){ $t.DatePickerSetDate($t.val(), true); },
+                locale:  JSON.parse($("#calendar-locale").val()),
+                onBeforeShow: function(){ $t.DatePickerSetDate($t.val(), true); },
 				onChange: function(formated, dates){ $t.val(formated); $t.DatePickerHide(); }
 			});
 		});

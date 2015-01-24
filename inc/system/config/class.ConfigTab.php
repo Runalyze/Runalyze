@@ -89,7 +89,7 @@ abstract class ConfigTab {
 		$this->Formular->addCSSclass('ajax');
 		$this->Formular->addCSSclass('no-automatic-reload');
 		$this->Formular->addHiddenValue('configTabKey', $this->key);
-		$this->Formular->addSubmitButton('Speichern');
+		$this->Formular->addSubmitButton(__('Save'));
 		$this->Formular->display();
 	}
 
