@@ -281,6 +281,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 			'label'		=> __('Plots: smooth curves')
 		));
 
+        $Fieldset->addHandle( $this->handle('TRAINING_PLOT_PRECISION'), array(
+            'label'		=> __('Plots: precision'),
+            'tooltip'	=> __('How many data points should be plotted?')
+        ));
+
 		$Fieldset->addHandle( $this->handle('PACE_Y_LIMIT_MIN'), array(
 			'label'		=> __('Pace plot: y-axis minimum'),
 			'tooltip'	=> __('Data points below this limit will be ignored. (only for running)')
