@@ -373,6 +373,21 @@ class Plot {
 	 */
 	public function setXAxisAsTime() {
 		$this->Options['xaxis']['mode'] = "time";
+        $this->Options['xaxis']['monthNames']=	array(
+            __('Jan'),
+            __('Feb'),
+            __('Mar'),
+            __('Apr'),
+            __('May'),
+            __('Jun'),
+            __('Jul'),
+            __('Aug'),
+            __('Sep'),
+            __('Oct'),
+            __('Nov'),
+            __('Dec'),
+        );
+
 	}
 
 	/**
