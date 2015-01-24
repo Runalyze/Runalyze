@@ -19,8 +19,8 @@ $Durations_raw  = array();
 $VDOTsday       = array();
 $maxTrimp=0;
 
-$All   = ($_GET['y'] == 'all');
-$lastHalf   = ($_GET['y'] == 'lasthalf');
+$All   = 1*($_GET['y'] == 'all'); //0 or 1
+$lastHalf   = 1*($_GET['y'] == 'lasthalf');
 $Year  = $All || $lastHalf ? date('Y') : (int)$_GET['y'];
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
@@ -52,7 +52,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
-	$Data = Cache::get('calculationsPlotData'.$Year.$All);
+	$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf);
 	if (is_null($Data)) {
 		$withElevation = Configuration::Vdot()->useElevationCorrection();
 
@@ -67,7 +67,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
 			GROUP BY `index`')->fetchAll();
 
-		Cache::set('calculationsPlotData'.$Year.$All, $Data, '300');
+		Cache::set('calculationsPlotData'.$Year.$All.$lastHalf, $Data, '300');
 	}
 
 	foreach ($Data as $dat) {
