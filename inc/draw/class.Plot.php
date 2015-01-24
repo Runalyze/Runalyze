@@ -313,6 +313,14 @@ class Plot {
 	}
 
 	/**
+     * Put grid above data
+     */
+    public function setGridAboveData() {
+        $this->Options['grid']['aboveData'] = true;
+    }
+
+
+	/**
 	 * Set legend as table (not in one line as default)
 	 * @param string $position
 	 */
