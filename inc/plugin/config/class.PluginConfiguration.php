@@ -10,6 +10,11 @@
  */
 class PluginConfiguration {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY = 'PluginConf';
+
+	/**
 	 * Values
 	 * @var PluginConfigurationValue[]
 	 */
@@ -50,15 +55,17 @@ class PluginConfiguration {
 	 * Catch values
 	 */
 	final public function catchValuesFromDatabase() {
-            $ResultFromDB = Cache::get('PluginConfig');
-            if(is_null($ResultFromDB)) {
-                $ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
-                Cache::set('PluginConfig', $ResultFromDB, '60');
-            } 		
-            $ValuesFromDB = array();
+		$ResultFromDB = Cache::get(self::CACHE_KEY);
+		if (is_null($ResultFromDB)) {
+			$ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+			Cache::set(self::CACHE_KEY, $ResultFromDB, '60');
+		}
+		$ValuesFromDB = array();
 
-		foreach ($ResultFromDB[$this->PluginID] as $Result) {
-			$ValuesFromDB[$Result['config']] = $Result['value'];
+		if (isset($ResultFromDB[$this->PluginID])) {
+			foreach ($ResultFromDB[$this->PluginID] as $Result) {
+				$ValuesFromDB[$Result['config']] = $Result['value'];
+			}
 		}
 
 		foreach ($this->Values as $Value) {
@@ -100,6 +107,8 @@ class PluginConfiguration {
 
 			$this->update($Value->key());
 		}
+
+		Cache::delete(self::CACHE_KEY);
 	}
 
 	/**

@@ -10,54 +10,112 @@
  */
 class PluginFactory {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY = 'plugins';
+
+	/**
 	 * Array with all keys
 	 * @var array
 	 */
-	static private $Plugins = array();
+	static private $Plugins = NULL;
 
 	/**
-	 * Plugins as array
+	 * Array with complete plugin data
 	 * @return array
 	 */
-	protected function pluginList() {
-		if (empty(self::$Plugins)) {
-			$this->readInstalledPlugins();
+	static private function Plugins() {
+		if (NULL === self::$Plugins) {
+			self::$Plugins = self::fetchAllPlugins();
 		}
 
 		return self::$Plugins;
 	}
-        
-        /**
-         * Cache all from Table plugin for a user
-         */
-        static private function cachePluginData() {
-            $data = Cache::get('plugins');
-			if ($data == NULL) {
-                $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
-                Cache::set('plugins', $data, '3600');
-            }
 
-            return $data;
-        }
+	/**
+	 * Cache all from Table plugin for a user
+	 */
+	static private function fetchAllPlugins() {
+		$data = Cache::get(self::CACHE_KEY);
+
+		if ($data == NULL) {
+			$data = self::fetchAllPluginsFrom(DB::getInstance(), SessionAccountHandler::getId());
+			Cache::set(self::CACHE_KEY, $data, '3600');
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Clear cache
+	 */
+	static public function clearCache() {
+		self::$Plugins = NULL;
+		Cache::delete(self::CACHE_KEY);
+	}
+
+	/**
+	 * Fetch complete list from database
+	 * @param \PDO $PDO
+	 * @param int $accountID
+	 * @return array
+	 */
+	static private function fetchAllPluginsFrom(PDO $PDO, $accountID) {
+		return $PDO->query(
+			'SELECT * FROM `'.PREFIX.'plugin` '.
+			'WHERE `accountid`='.$accountID.' '.
+			'ORDER BY `order` ASC'
+		)->fetchAll();
+	}
+
+	/**
+	 * @param int $id
+	 * @return array
+	 */
+	static public function dataFor($id) {
+		foreach (self::Plugins() as $data) {
+			if ($data['id'] == $id) {
+				return $data;
+			}
+		}
+
+		return array();
+	}
+
+	/**
+	 * Complete plugin data
+	 * @param enum $type [optional]
+	 * @return array
+	 */
+	public function completeData($type = false) {
+		if ($type === false) {
+			return self::Plugins();
+		}
+
+		$plugins = self::Plugins();
+		foreach ($plugins as $k => $plugin) {
+			if ($plugin['type'] != PluginType::string($type)) {
+				unset($plugins[$k]);
+			}
+		}
+
+		return $plugins;
+	}
 
 	/**
 	 * New instance for key
-	 * @param string $Pluginkey
+	 * @param string $pluginkey
 	 * @return Plugin
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
-	public function newInstance($Pluginkey) {
-		$plugins = $this->cachePluginData();
-
-		foreach($plugins as $plugin) {
-			$data[$plugin['key']] = $plugin;
+	public function newInstance($pluginkey) {
+		foreach (self::Plugins() as $plugin) {
+			if ($plugin['key'] == $pluginkey) {
+				return (new $pluginkey($plugin['id']));
+			}
 		}
 
-		if ($data[$Pluginkey] === false) {
-			throw new InvalidArgumentException('Plugin with key "'.$Pluginkey.'" is not installed.');
-		}
-
-		return (new $Pluginkey($data[$Pluginkey]['id']));
+		throw new InvalidArgumentException('Plugin with key "'.$pluginkey.'" is not installed.');
 	}
 
 	/**
@@ -78,13 +136,6 @@ class PluginFactory {
 		$Plugin = new $Pluginkey( PluginInstaller::ID );
 
 		return $Plugin;
-	}
-
-	/**
-	 * Read all installed plugins
-	 */
-	protected function readInstalledPlugins() {
-		self::$Plugins = DB::getInstance()->query('SELECT `key`, `type`, `active` FROM `'.PREFIX.'plugin` ORDER BY `order` ASC')->fetchAll();
 	}
 
 	/**
@@ -132,15 +183,13 @@ class PluginFactory {
 	}
 
 	/**
-	 * Get all inactive plugins
-	 * @param mixed $type [optional] false or enum
+	 * Get all enabled panels
 	 * @return array array with plugin keys
 	 */
 	public function enabledPanels() {
 		$keys = array();
-		$plugins = $this->pluginList();
 
-		foreach ($plugins as $plugin) {
+		foreach (self::Plugins() as $plugin) {
 			if ($plugin['type'] == PluginType::string(PluginType::Panel) && $plugin['active'] != Plugin::ACTIVE_NOT) {
 				$keys[] = $plugin['key'];
 			}
@@ -157,9 +206,8 @@ class PluginFactory {
 	 */
 	protected function getPlugins($type = false, $active = false) {
 		$keys = array();
-		$plugins = $this->pluginList();
 
-		foreach ($plugins as $plugin) {
+		foreach (self::Plugins() as $plugin) {
 			if (($type === false || $plugin['type'] == PluginType::string($type)) && ($active === false || $plugin['active'] == $active)) {
 				$keys[] = $plugin['key'];
 			}
@@ -204,26 +252,22 @@ class PluginFactory {
 	 */
 	public function uninstallPlugin($key) {
 		DB::getInstance()->exec('DELETE FROM `'.PREFIX.'plugin` WHERE `key`='.DB::getInstance()->escape($key).' LIMIT 1');
-		Cache::delete('plugins');
+		self::clearCache();
 	}
 
 	/**
 	 * Get the PLUGINKEY for a given ID from database
 	 * @param int $id
 	 * @return string
+	 * @throws \InvalidArgumentException
 	 */
 	static public function keyFor($id) {
-		$plugins = self::cachePluginData();
-		foreach ($plugins as $plugin) {
+		foreach (self::Plugins() as $plugin) {
 			if ($id == $plugin['id']) {
-				$data = $plugin;
+				return $plugin['key'];
 			}
 		}
 
-		if ($data === false) {
-			throw new RuntimeException('No plugin found for id "'.$id.'".');
-		}
-
-		return $data['key'];
+		throw new InvalidArgumentException('No plugin found for id "'.$id.'".');
 	}
 }

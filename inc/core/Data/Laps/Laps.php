@@ -62,6 +62,13 @@ class Laps {
 	}
 
 	/**
+	 * @return \Runalyze\Data\Laps\Lap[]
+	 */
+	public function objects() {
+		return $this->Objects;
+	}
+
+	/**
 	 * @return int
 	 */
 	public function num() {

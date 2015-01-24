@@ -8,6 +8,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Model\Trackdata;
+use Runalyze\Data\Laps\Laps;
 
 /**
  * Table: computed laps
@@ -26,12 +27,26 @@ class TableLapsComputed extends TableLapsAbstract {
 	 * Set code
 	 */
 	protected function setCode() {
-		$this->initData();
+		$this->constructLaps();
 		$this->setDataToCode();
 
 		// TODO: elevation data is disabled
 		// - it is not in the trackdata
 		// - calculator has to be used for partial array
+	}
+
+	/**
+	 * Construct laps
+	 */
+	protected function constructLaps() {
+		if ($this->Context->trackdata()->totalDistance() < 1) {
+			$Distances = array(1);
+		} else {
+			$Distances = range(1, floor($this->Context->trackdata()->totalDistance()), 1);
+		}
+
+		$this->Laps = new Laps();
+		$this->Laps->calculateFrom($Distances, $this->Context->trackdata(), $this->Context->route());
 	}
 
 	/**
@@ -62,7 +77,7 @@ class TableLapsComputed extends TableLapsAbstract {
 	 */
 	protected function setDataToCode() {
 		$showCellForHeartrate = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
-		$showCellForElevation = false;
+		$showCellForElevation = $this->Context->hasRoute() && $this->Context->route()->hasElevations();
 
 		$this->Code .= '<table class="fullwidth zebra-style">';
 		$this->Code .= '<thead><tr>';
@@ -75,13 +90,14 @@ class TableLapsComputed extends TableLapsAbstract {
 
 		$this->Code .= '<tbody>';
 
-		foreach ($this->Data as $Info) {
+		//foreach ($this->Data as $Info) {
+		foreach ($this->Laps->objects() as $Lap) {
 			$this->Code .= '<tr class="r">';
-			$this->Code .= '<td>'.$Info['distance'].'</td>';
-			$this->Code .= '<td>'.$Info['time'].'</td>';
-			$this->Code .= '<td>'.$Info['pace'].'</td>';
-			if ($showCellForHeartrate) $this->Code .= '<td>'.$Info['heartrate'].'</td>';
-			if ($showCellForElevation) $this->Code .= '<td>'.$Info['elevation'].'</td>';
+			$this->Code .= '<td>'.$Lap->trackDistance()->string().'</td>';
+			$this->Code .= '<td>'.$Lap->trackDuration()->string().'</td>';
+			$this->Code .= '<td>'.$Lap->pace()->asMinPerKm().'<small>/km</small></td>';
+			if ($showCellForHeartrate) $this->Code .= '<td>'.$Lap->HRavg()->inBPM().'<small>bpm</small></td>';
+			if ($showCellForElevation) $this->Code .= '<td class="c">+'.$Lap->elevationUp().'/-'.$Lap->elevationDown().'</td>';
 			$this->Code .= '</tr>';
 		}
 

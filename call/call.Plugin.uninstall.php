@@ -14,6 +14,10 @@ echo '<h1>'.__('Uninstall').' '.$Pluginkey.'</h1>';
 
 if ($Installer->uninstall()) {
 	echo HTML::okay( __('The plugin has been uninstalled.') );
+
+	PluginFactory::clearCache();
+	Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+	echo Ajax::getReloadCommand();
 } else {
 	echo HTML::error( __('There was a problem, the plugin could not be uninstalled.') );
 }

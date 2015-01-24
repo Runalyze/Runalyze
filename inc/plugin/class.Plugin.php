@@ -304,18 +304,6 @@ abstract class Plugin {
 
 		return true;
 	}
-
-         /**
-         * Cache all from Table plugin for a user
-         */
-        static private function cachePluginData() {
-            $data = Cache::get('plugins');
-            if(is_null($data)) {
-                $data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'plugin`')->fetchAll();
-                Cache::set('plugins', $data, '3600');
-            }
-            return $data;
-        }       
         
 	/**
 	 * Initialize all variables
@@ -325,18 +313,13 @@ abstract class Plugin {
 			return;
 		}
 
-                $plugindata = self::cachePluginData();
-                foreach($plugindata as $plugin) {
-                    if($plugin['id'] == $this->id())
-                        $dat = $plugin;
-                }
-
-		$this->key         = $dat['key'];
-		$this->active      = $dat['active'];
-		$this->order       = $dat['order'];
-		$this->sportid     = $this->defaultSport();
-		$this->year        = $this->defaultYear();
-		$this->dat         = '';
+        $data = PluginFactory::dataFor($this->id());
+		$this->key     = $data['key'];
+		$this->active  = $data['active'];
+		$this->order   = $data['order'];
+		$this->sportid = $this->defaultSport();
+		$this->year    = $this->defaultYear();
+		$this->dat     = '';
 
 		if (isset($_GET['sport']))
 			if (is_numeric($_GET['sport']))
@@ -417,7 +400,7 @@ abstract class Plugin {
 		if (isset($_GET['active'])) {
 			$this->setActive((int) $_GET['active']);
 
-			Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
+			Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
 			echo Ajax::getReloadCommand();
 		}
 	}
@@ -439,5 +422,7 @@ abstract class Plugin {
 	final public function setActive($active = 1) {
 		DB::getInstance()->update('plugin', $this->id(), 'active', $active);
 		$this->active = $active;
+
+		PluginFactory::clearCache();
 	}
 }

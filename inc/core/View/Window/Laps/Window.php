@@ -145,6 +145,7 @@ class Window {
 	protected function constructLapsFromSplits() {
 		if ($this->handmadeLapsDiffer() && !Request::param('calculate-for-splits')) {
 			$this->Laps->readFrom($this->Context->activity()->splits());
+			return;
 		}
 
 		$Distances = array();

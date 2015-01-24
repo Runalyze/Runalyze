@@ -19,6 +19,11 @@ abstract class TableLapsAbstract {
 	protected $Context;
 
 	/**
+	 * @var \Runalyze\Data\Laps\Laps
+	 */
+	protected $Laps;
+
+	/**
 	 * Code
 	 * @var string
 	 */
