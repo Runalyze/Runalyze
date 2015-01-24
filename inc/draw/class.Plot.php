@@ -218,7 +218,16 @@ class Plot {
 			$this->Options['series']['points']['lineWidth'] = $size;
 	}
 
-	/**
+    /**
+     * Show series as points
+     * @param int $series
+     */
+    public function showAsPoints($series) {
+        $this->Data[$series]['points']['show'] = true;
+    }
+
+
+    /**
 	* Set line width for series
 	* @param int $series
 	* @param int $width

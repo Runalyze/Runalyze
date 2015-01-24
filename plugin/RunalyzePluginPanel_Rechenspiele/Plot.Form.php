@@ -16,6 +16,7 @@ $VDOTs          = array();
 $Trimps_raw     = array();
 $VDOTs_raw      = array();
 $Durations_raw  = array();
+$VDOTsday       = array();
 $maxTrimp=0;
 
 $All   = ($_GET['y'] == 'all');
@@ -98,7 +99,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		if (count($VDOT_slice) != 0 && $Durations_sum != 0) {
 			$VDOTs[$index] = Configuration::Data()->vdotFactor() * ($VDOT_sum / $Durations_sum);
 		}
-	}
+
+        if ( $VDOTs_raw[$d]) $VDOTsday[$index]= Configuration::Data()->vdotFactor() * ($VDOTs_raw[$d]/$Durations_raw[$d]);
+
+    }
 } else {
 	$DataFailed = true;
 }
@@ -108,8 +112,9 @@ $Plot = new Plot("form".$_GET['y'], 800, 450);
 $Plot->Data[] = array('label' => __('Fitness (CTL)'), 'color' => '#008800', 'data' => $CTLs);
 if (count($ATLs) < $MaxATLPoints)
 	$Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'data' => $ATLs);
-$Plot->Data[] = array('label' => __('VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
+$Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
+$Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
 
 
 $Plot->setMarginForGrid(5);
@@ -131,6 +136,8 @@ $Plot->addYAxis(3, 'right');
 $Plot->setYLimits(3, 0, $maxTrimp*2);
 
 $Plot->showAsBars(3,1,2);
+
+$Plot->showAsPoints(4);
 
 $Plot->smoothing(false);
 
