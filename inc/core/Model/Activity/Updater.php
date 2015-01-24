@@ -133,7 +133,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		);
 
 		if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-			if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::HR_AVG)) {
+			if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::HR_AVG) || $this->hasChanged(Object::ELEVATION)) {
 				$this->NewObject->set(Object::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
 				$this->NewObject->set(Object::JD_INTENSITY, $Calculator->calculateJDintensity());
 				$this->NewObject->set(Object::VDOT, $Calculator->calculateVDOTbyHeartRate());
