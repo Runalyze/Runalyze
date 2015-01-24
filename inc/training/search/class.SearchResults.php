@@ -145,14 +145,6 @@ class SearchResults {
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
 		)->fetchAll();
-
-		Error::getInstance()->addDebug(
-			'SELECT
-				id,
-				time
-				'.$this->Dataset->getQuerySelectForAllDatasets().'
-			FROM `'.PREFIX.'training`
-			'.$this->getWhere().$this->getOrder().$this->getLimit());
 	}
 
 	/**
