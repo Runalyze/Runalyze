@@ -18,6 +18,7 @@ new Autoloader();
 require_once FRONTEND_PATH.'../lib/phpfastcache/phpfastcache.php';
 require_once FRONTEND_PATH.'system/class.Cache.php';
 new Cache();
+Cache::clean();
 
 date_default_timezone_set('Europe/Berlin');
 
