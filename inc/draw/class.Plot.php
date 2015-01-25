@@ -567,7 +567,7 @@ class Plot {
 	 * @param int $day
 	 */
 	static public function dayOfYearToJStime($year, $day) {
-		return mktime(1,0,0,1,$day,$year).'000';
+		return mktime(12,0,0,1,$day,$year).'000';
 	}
 
 	/**
