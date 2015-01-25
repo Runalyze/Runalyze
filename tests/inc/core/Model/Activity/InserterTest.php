@@ -18,10 +18,16 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $PDO;
 
+	protected $OutdoorID;
+	protected $IndoorID;
+
 	protected function setUp() {
+		\Cache::clean();
 		$this->PDO = \DB::getInstance();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(1,600,1,0)');
+		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(2,400,0,0)');
+		$this->IndoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(1,10,3000,0)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(2,0,0,0)');
 	}
@@ -30,6 +36,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
+		\Cache::clean();
 	}
 
 	/**
@@ -81,7 +88,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Object::WEATHERID => Weather\Condition::SUNNY,
 				Object::TEMPERATURE => 7,
 				Object::CLOTHES => array(1,2,3),
-				Object::SPORTID => 1
+				Object::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -97,7 +104,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Object::WEATHERID => Weather\Condition::SUNNY,
 				Object::TEMPERATURE => 7,
 				Object::CLOTHES => array(1,2,3),
-				Object::SPORTID => 2
+				Object::SPORTID => $this->IndoorID
 			))
 		);
 
