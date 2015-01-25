@@ -75,7 +75,7 @@ class Sport {
 	* @return string
 	*/
 	public function Icon($tooltip = '') {
-		return Icon::getSportIcon($this->id, '', $tooltip);
+		return Icon::getSportIconForGif($this->data['img'], $tooltip);
 	}
 	
 	/**

@@ -83,6 +83,19 @@ class PluginFactory {
 	}
 
 	/**
+	 * @return array
+	 */
+	static public function allIDs() {
+		$IDs = array();
+
+		foreach (self::Plugins() as $data) {
+			$IDs[] = $data['id'];
+		}
+
+		return $IDs;
+	}
+
+	/**
 	 * Complete plugin data
 	 * @param enum $type [optional]
 	 * @return array

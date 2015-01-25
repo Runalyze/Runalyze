@@ -169,14 +169,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function showPrognosis($distance) {
 		$PB = new PersonalBest($distance);
-		$PBTime = new Duration( $PB->seconds() );
+		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
 		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
 		$Distance = new Distance($distance);
 		$Pace = new Pace($Prognosis->seconds(), $distance, Pace::MIN_PER_KM);
 
 		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime->string(), $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
+					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
 					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
 				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>

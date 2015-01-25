@@ -69,7 +69,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 * @return string
 	 */
 	protected function titleForAllYears() {
-		return 'Gesamt';
+		return __('All years');
 	}
 
 	/**

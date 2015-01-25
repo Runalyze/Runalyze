@@ -85,7 +85,9 @@ class Factory {
 	 */
 	public function type($typeid) {
 		return new Type\Object(
-			$this->arrayByPK('type', $typeid)
+			\TypeFactory::DataFor($typeid)
+			// TODO: The factory must be able to fetch all rows at once
+			//$this->arrayByPK('type', $typeid)
 		);
 	}
 
@@ -96,7 +98,9 @@ class Factory {
 	 */
 	public function sport($sportid) {
 		return new Sport\Object(
-			$this->arrayByPK('sport', $sportid)
+			\SportFactory::DataFor($sportid)
+			// TODO: The factory must be able to fetch all rows at once
+			//$this->arrayByPK('sport', $sportid)
 		);
 	}
 

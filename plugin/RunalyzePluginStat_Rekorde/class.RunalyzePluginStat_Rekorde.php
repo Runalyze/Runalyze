@@ -94,8 +94,8 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				if (!empty($data)) {
 					$output = true;
 					echo '<tr class="r">';
-					echo '<td class="b l">'.Icon::getSportIcon($sport['id']).' '.$sport['name'].'</td>';
-	
+					echo '<td class="b l">'.Icon::getSportIconForGif($sport['img'], $sport['name']).' '.$sport['name'].'</td>';
+
 					$j = 0;
 					foreach ($data as $j => $dat) {
 						if ($rekord['speed']) {

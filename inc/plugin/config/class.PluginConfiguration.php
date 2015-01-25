@@ -56,10 +56,25 @@ class PluginConfiguration {
 	 */
 	final public function catchValuesFromDatabase() {
 		$ResultFromDB = Cache::get(self::CACHE_KEY);
+
 		if (is_null($ResultFromDB)) {
-			$ResultFromDB = DB::getInstance()->query('SELECT `pluginid`,`config`,`value` FROM `'.PREFIX.'plugin_conf`')->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+			$ResultFromDB = DB::getInstance()->query(
+				'SELECT `pluginid`,`config`,`value` '.
+				'FROM `'.PREFIX.'plugin_conf` '.
+				'WHERE `pluginid` IN ('.implode(',', PluginFactory::allIDs()).')'
+			)->fetchAll(PDO::FETCH_GROUP|PDO::FETCH_ASSOC);
+
 			Cache::set(self::CACHE_KEY, $ResultFromDB, '60');
 		}
+
+		$this->checkValuesFromDatabase($ResultFromDB);
+	}
+
+	/**
+	 * Check values
+	 * @param array $ResultFromDB
+	 */
+	private function checkValuesFromDatabase(array $ResultFromDB) {
 		$ValuesFromDB = array();
 
 		if (isset($ResultFromDB[$this->PluginID])) {
