@@ -25,28 +25,22 @@ $Year  = $All || $lastHalf ? date('Y') : (int)$_GET['y'];
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
     $StartYear    = !$All ? $Year : START_YEAR;
-    $StartYear    = $lastHalf ? date('Y', time()-60*60*24*180) : $StartYear;
+    $StartYear    = $lastHalf ? date('Y', strtotime("today -180days")) : $StartYear;
     $EndYear      = !$All && !$lastHalf ? $Year : date('Y');
 	$MaxDays      = ($EndYear - $StartYear + 1)*366;
     $MaxDays      = $lastHalf ? 366 : $MaxDays;
-	$AddDays      = max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
-	$StartTime    = !$All ? mktime(1,0,0,1,1,$StartYear) : START_TIME;
-    $StartTime    = $lastHalf ? time()-60*60*24*180 : $StartTime;
+	$AddDays      = 3*max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
+	$StartTime    = !$All ? mktime(0,0,0,1,1,$StartYear) : strtotime("today 00:00", START_TIME);
+    $StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
 	$StartDay     = date('Y-m-d', $StartTime);
-	$EndTime      = !$All && $Year < date('Y') ? mktime(1,0,0,12,31,$Year) : time();
-    $EndTime      = $lastHalf ? time()+24*60*60*30 : $EndTime;
+	$EndTime      = !$All && $Year < date('Y') ? mktime(0,0,0,12,31,$Year) : strtotime("today 00:00");
+    $EndTime      = $lastHalf ? strtotime("today 00:00 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 
 	$EmptyArray    = array_fill(0, $MaxDays + $AddDays + 1, 0);
 	$Trimps_raw    = $EmptyArray;
 	$VDOTs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
-
-
-//    trigger_error('ST:'.date('Y-m-d',$StartTime), E_USER_NOTICE);
-//    trigger_error('ET:'.date('Y-m-d',$EndTime), E_USER_NOTICE);
-//    trigger_error('SY:'.$StartYear, E_USER_NOTICE);
-//    trigger_error('EY:'.$EndYear, E_USER_NOTICE);
 
 
 	// Here VDOT will be implemented again
@@ -81,7 +75,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		}
 	}
 
-	$StartDayInYear = $All || $lastHalf ? Time::diffInDays($StartTime, mktime(1,0,0,1,1,$StartYear)) + 1 : 0;
+	$StartDayInYear = $All || $lastHalf ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1 : 0;
 	$LowestIndex = $AddDays + 1;
 	$HighestIndex = $AddDays + 1 + $NumberOfDays;
 
@@ -96,7 +90,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$TSBModel->calculate();
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear + 1);
 
 		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
 		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
@@ -127,7 +121,6 @@ $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'dat
 $Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
 $Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' => $VDOTsday, 'yaxis' => 2);
-
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
