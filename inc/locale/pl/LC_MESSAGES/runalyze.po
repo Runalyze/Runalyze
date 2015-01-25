@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2014-11-19 14:35+0200\n"
+"PO-Revision-Date: 2015-01-25 23:59+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
@@ -991,7 +991,7 @@ msgstr "Liczba miejsc po przecinku"
 
 #: inc/core/Configuration/Category/ActivityView.php:280
 msgid "Plots: combination"
-msgstr "Wykresy: połączone"
+msgstr "Wykresy: łączenie"
 
 #: inc/core/Configuration/Category/ActivityView.php:284
 msgid "Plots: smooth curves"
@@ -4507,17 +4507,17 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:332
 msgid "Easy"
-msgstr "Easy"
+msgstr "Bieg spokojny"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:333
 msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
-"Tempo Easy (spokojne) odnosi się do rozgrzewki, schłodzenia i biegu "
+"Tempo biegu spokojnego (Easy) to tempo rozgrzewki, schłodzenia i biegu "
 "regeneracyjnego."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:338
 msgid "Marathon"
-msgstr "Maraton"
+msgstr "Maratońskie"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:339
 msgid "Steady run or long repeats (e.g. 2 x 4 miles at marathon pace)"
@@ -4531,7 +4531,7 @@ msgstr "Próg mleczanowy"
 msgid ""
 "Steady, prolonged or tempo runs or intermittent runs, also called cruise "
 "intervals."
-msgstr "Biegi równe, wydłużone lub tempowe, bądź biegi przerywane."
+msgstr "Biegi równe, wydłużone lub tempowe, bądź powtarzane odcinki."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:350
 msgid "Interval"
@@ -4547,14 +4547,14 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:356
 msgid "Repetition"
-msgstr "Powtórzenia"
+msgstr "Rytmy"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:357
 msgid ""
 "Repetitions are fast, but not necessarily \"hard,\" because work bouts are "
 "relatively short and are followed by relatively long recovery bouts."
 msgstr ""
-"Powtórzenia są szybkie, ale niekoniecznie ciężkie, ponieważ fazy pracy są "
+"Rytmy są szybkie, ale niekoniecznie ciężkie, ponieważ fazy pracy są "
 "względnie krótkie i przeplatane względnie długimi fazami regeneracji."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:397
@@ -4683,8 +4683,8 @@ msgid ""
 "* %s &quot;long&quot; jogs do not show up, because they have less than 0.2 "
 "points."
 msgstr ""
-"* %s &quot;long&quot; długich biegów nie zostało wyświetlonych, ponieważ "
-"mają poniżej 0.2 punkta."
+"* %s &quot;długich&quot; biegów nie zostało wyświetlonych, ponieważ mają "
+"poniżej 0.2 punkta."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:571
 #, php-format
@@ -5165,7 +5165,7 @@ msgstr "Z przodu"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:173
 msgid "Head 2 Head"
-msgstr "Równo"
+msgstr "Postęp"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
 msgid "Me"
@@ -5408,7 +5408,7 @@ msgstr "km/miesiąc"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:286
 msgid "Last"
-msgstr "Ostatni"
+msgstr "Ostatnich"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:286
 msgid "training weeks"
