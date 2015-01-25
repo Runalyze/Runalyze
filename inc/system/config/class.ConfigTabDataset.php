@@ -17,7 +17,7 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_dataset';
-		$this->title = __('dataset');
+		$this->title = __('Dataset');
 	}
 
 	/**
