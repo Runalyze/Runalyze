@@ -12,6 +12,7 @@ use Runalyze\View\Icon;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Data\Weather;
+use Runalyze\Activity\PersonalBest;
 
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
@@ -305,13 +306,29 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '</thead>';
 		echo '<tbody>';
 
+		PersonalBest::activateStaticCache();
+		PersonalBest::lookupDistances($kms);
+
 		foreach ($kms as $i => $km) {
 			echo '<tr class="r"><td class="b">'.Distance::format($km, $km <= 3, 1).'</td>';
 		
-			foreach ($year as $key => $y)
-				if ($key != 'sum')
-					echo '<td>'.($y[$km]['sum'] != 0 ? '<small>'.Duration::format($y[$km]['pb']).'</small> '.$y[$km]['sum'].'x' : '<em><small>---</small></em>').'</td>';
-		
+			foreach ($year as $key => $y) {
+				if ($key != 'sum') {
+					if ($y[$km]['sum'] != 0) {
+						$PB = new PersonalBest($km);
+						$distance = Duration::format($y[$km]['pb']);
+
+						if ($PB->seconds() == $y[$km]['pb']) {
+							$distance = '<strong>'.$distance.'</strong>';
+						}
+
+						echo '<td>'.$distance.' <small>'.$y[$km]['sum'].'x</small></td>';
+					} else {
+						echo '<td><em><small>---</small></em></td>';
+					}
+				}
+			}
+
 			echo '</tr>';
 		}
 

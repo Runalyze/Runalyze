@@ -10,7 +10,7 @@ use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Bool;
 use Runalyze\Parameter\Int;
 use Runalyze\Parameter\String;
-use Runalyze\Parameter\Set;
+use Runalyze\Parameter\Select;
 use Runalyze\Parameter\Application\ActivityRoutePrecision;
 use Runalyze\Parameter\Application\ActivityRouteBreak;
 use Runalyze\Parameter\Application\ActivityPlotMode;
@@ -195,7 +195,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 * - ELEVATION_TRESHOLD
 	 */
 	protected function createOtherOptions() {
-		$this->createHandle('TRAINING_DECIMALS', new Set('1', array(
+		$this->createHandle('TRAINING_DECIMALS', new Select('1', array(
 			'options'		=> array('0', '1', '2')
 		)));
 

@@ -85,6 +85,10 @@ class PersonalBest {
 	 * @return int number of fetches PBs
 	 */
 	static public function lookupDistances(array $distances, PDO $pdo = null) {
+		foreach ($distances as $km) {
+			self::$PBs[(float)$km] = false;
+		}
+
 		$PDO = is_null($pdo) ? DB::getInstance() : $pdo;
 		$distanceQuery = implode(' OR ', array_map(function($km){
 			return '`distance`="'.$km.'"';
