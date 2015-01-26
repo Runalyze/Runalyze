@@ -8,6 +8,8 @@ namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
 use Runalyze\Data\Elevation;
 
+use SessionAccountHandler;
+
 /**
  * Recalculate elevations
  * 
@@ -99,7 +101,9 @@ class ElevationsRecalculator {
 					ELSE  `elevations_original` 
 				END) AS  `elevations` 
 			FROM `'.PREFIX.'route`
-			WHERE `elevations_original`!="" OR `elevations_corrected`!=""'
+			WHERE
+				`accountid`='.(int)SessionAccountHandler::getId().' AND
+				(`elevations_original`!="" OR `elevations_corrected`!="") LIMIT 1'
 		);
 	}
 
