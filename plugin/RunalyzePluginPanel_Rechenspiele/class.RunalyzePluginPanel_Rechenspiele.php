@@ -146,6 +146,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
+		// TODO: This cache value will not automatically be updated, right? That's horrible!
                 $JDQuery = Cache::get('JDQuery');
                 if(is_null($JDQuery)) {
                     $JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));

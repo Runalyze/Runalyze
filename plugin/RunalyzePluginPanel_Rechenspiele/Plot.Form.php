@@ -13,6 +13,7 @@ $DataFailed     = false;
 $ATLs           = array();
 $CTLs           = array();
 $VDOTs          = array();
+$TRIMPs         = array();
 $Trimps_raw     = array();
 $VDOTs_raw      = array();
 $Durations_raw  = array();
@@ -146,7 +147,9 @@ $Plot->showAsPoints(4);
 
 $Plot->smoothing(false);
 
-if ($lastHalf) $Plot->addMarkingArea('x',Plot::dayOfYearToJStime($StartYear, $HighestIndex-30 - $AddDays + $StartDayInYear), $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
+if ($lastHalf && !$DataFailed) {
+	$Plot->addMarkingArea('x',Plot::dayOfYearToJStime($StartYear, $HighestIndex-30 - $AddDays + $StartDayInYear), $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
+}
 
 $Plot->setGridAboveData();
 

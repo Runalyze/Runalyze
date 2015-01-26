@@ -113,7 +113,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 
 		echo '<p class="text">';
 		echo sprintf( __('You have trained <strong>%sx</strong> in total and out of that <strong>%sx</strong> with a training partner, '), $this->TrainingsTotal, $this->TrainingsWithPartner );
-		echo sprintf( __('that are <strong>%s</strong> &#37;.'), round(100*$this->TrainingsWithPartner/$this->TrainingsTotal) );
+		echo sprintf( __('that are <strong>%s</strong> &#37;.'), $this->TrainingsTotal == 0 ? 0 : round(100*$this->TrainingsWithPartner/$this->TrainingsTotal) );
 		echo '</p>';
 	}
 

@@ -192,7 +192,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 * @return int
 	 */
 	public function maxATL() {
-		return $this->get('MAX_ATL');
+		return max(1, $this->get('MAX_ATL'));
 	}
 
 	/**
@@ -209,7 +209,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 * @return int
 	 */
 	public function maxCTL() {
-		return $this->get('MAX_CTL');
+		return max(1, $this->get('MAX_CTL'));
 	}
 
 	/**
@@ -226,7 +226,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 * @return int
 	 */
 	public function maxTrimp() {
-		return $this->get('MAX_TRIMP');
+		return max(1, $this->get('MAX_TRIMP'));
 	}
 
 	/**

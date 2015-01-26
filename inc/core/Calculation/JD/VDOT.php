@@ -227,10 +227,14 @@ class VDOT {
 
 	/**
 	 * Pace at %vVDOT
-	 * @param float $percentage in [0.0, 1.0]
+	 * @param float $percentage in (0.0, 1.0]
 	 * @return int
 	 */
 	public function paceAt($percentage) {
+		if ($this->Value == 0) {
+			return 0;
+		}
+
 		return round(60*1000/($percentage*$this->speed()));
 	}
 

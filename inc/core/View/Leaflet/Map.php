@@ -117,7 +117,9 @@ class Map extends View\Object {
 			$Code .= 'RunalyzeLeaflet.map().fitBounds([['.$this->Bounds['lat.min'].','.$this->Bounds['lng.min'].'],['.$this->Bounds['lat.max'].','.$this->Bounds['lng.max'].']]);';
 		}
 
-        $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
+		if (!empty($this->Routes)) {
+	        $Code.= 'RunalyzeLeaflet.Routes.routeid="'.$this->Routes[0]->id().'";';
+		}
 
 		return '<script>'.$Code.'</script>';
 	}
