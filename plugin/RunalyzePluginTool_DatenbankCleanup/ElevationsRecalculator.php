@@ -103,7 +103,7 @@ class ElevationsRecalculator {
 			FROM `'.PREFIX.'route`
 			WHERE
 				`accountid`='.(int)SessionAccountHandler::getId().' AND
-				(`elevations_original`!="" OR `elevations_corrected`!="") LIMIT 1'
+				(`elevations_original`!="" OR `elevations_corrected`!="")'
 		);
 	}
 

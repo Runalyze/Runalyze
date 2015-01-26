@@ -20,6 +20,7 @@ class ElevationsRecalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO = new PDO('sqlite::memory:');
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$this->PDO->exec('CREATE TABLE IF NOT EXISTS `'.PREFIX.'route` (
+			`accountid` int,
 			`id` int,
 			`elevation` smallint,
 			`elevation_up` smallint,
@@ -34,10 +35,11 @@ class ElevationsRecalculatorTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testSimpleRecalculations() {
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES(1,   0,   0,  0, "100|200|150", "")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES(2, 100, 100, 50, "100|200|150", "")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES(3,   0,   0,  0, "", "150|200|100")');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES(4, 100,   0,  0, "", "")');
+		$id = (int)\SessionAccountHandler::getId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES('.$id.', 1,   0,   0,  0, "100|200|150", "")');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES('.$id.', 2, 100, 100, 50, "100|200|150", "")');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES('.$id.', 3,   0,   0,  0, "", "150|200|100")');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` VALUES('.$id.', 4, 100,   0,  0, "", "")');
 
 		$Job = new ElevationsRecalculator($this->PDO);
 		$Job->run();
