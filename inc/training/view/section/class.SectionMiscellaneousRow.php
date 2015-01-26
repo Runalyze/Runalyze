@@ -133,7 +133,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Weather = new BoxedValue($this->Context->activity()->weather()->condition()->string(), '', __('Weather condition'), $this->Context->activity()->weather()->condition()->icon()->code());
 			$Weather->defineAsFloatingBlock('w50');
 
-			$Temp = new BoxedValue(Helper::Unknown($this->Context->activity()->weather()->temperature()->value(), '?', true), $this->Context->activity()->weather()->temperature()->unit(), __('Temperature'));
+			$Temp = new BoxedValue(Helper::Unknown($this->Context->activity()->weather()->temperature()->value()), $this->Context->activity()->weather()->temperature()->unit(), __('Temperature'));
 			$Temp->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Weather;

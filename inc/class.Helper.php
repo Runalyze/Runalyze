@@ -90,11 +90,11 @@ class Helper {
 	 * @param mixed $var
 	 * @param string $string string to be displayed instead, default: ?
 	 */
-	public static function Unknown($var, $string = '?', $zeroisvalid = false) {
+	public static function Unknown($var, $string = '?') {
 		if ($var == NULL || !isset($var))
 			return $string;
 
-		if ((is_numeric($var) && ($zeroisvalid || $var != 0)) || (!is_numeric($var) && $var != '') )
+		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )
 			return $var;
 
 		return $string;
