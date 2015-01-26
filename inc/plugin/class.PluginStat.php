@@ -49,13 +49,8 @@ abstract class PluginStat extends Plugin {
 	 * @param int $id
 	 */
 	public function __construct($id) {
-		if ($id == parent::$INSTALLER_ID) {
-			$this->id = $id;
-			return;
-		}
-
-		if (!is_numeric($id) || $id <= 0) {
-			Error::getInstance()->addError('An object of class::Plugin must have an ID: <$id='.$id.'>');
+		if (!is_numeric($id) || ($id <= 0 && $id != parent::$INSTALLER_ID)) {
+			Error::getInstance()->addError('PluginStat::__construct(): An object of class::Plugin must have an ID: <$id='.$id.'>');
 			return false;
 		}
 
