@@ -23,8 +23,13 @@ class TimeSeries extends Empirical {
 	 * Construct empirical distribution
 	 * @param array $data array of data points
 	 * @param array $time continuous time points
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(array $data, array $time) {
+		if (empty($time)) {
+			throw new \InvalidArgumentException('Time array must not be empty.');
+		}
+
 		$lastTime = 0;
 		foreach ($data as $i => $val) {
 			$delta = $time[$i] - $lastTime;

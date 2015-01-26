@@ -142,7 +142,7 @@ class Calculator {
 
 		$Intensity = new JD\Intensity();
 
-		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) {
+		if ($this->knowsTrackdata() && $this->Trackdata->has(Model\Trackdata\Object::HEARTRATE) && $this->Trackdata->has(Model\Trackdata\Object::TIME)) {
 			return $Intensity->calculateByHeartrate(
 				new TimeSeries(
 					$this->Trackdata->heartRate(),
