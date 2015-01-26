@@ -146,4 +146,14 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$T->at(0, Object::DISTANCE);
 	}
 
+	public function testDefectActivitiesFromHRMandGPXimport() {
+		$T = new Object(array(
+			Object::DISTANCE => array(0.05, 1.0, 1.5, 2.0),
+			Object::TIME => array(10, 20, 30, 40),
+			Object::HEARTRATE => array(120, 125, 130, 135, 140)
+		));
+
+		$this->assertEquals(4, $T->num());
+	}
+
 }

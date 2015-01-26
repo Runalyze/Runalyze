@@ -75,9 +75,6 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 <gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxdata="http://www.cluetrust.com/XML/GPXDATA/1/0">
 	<trk>
 		<trkseg>
-			<trkpt lat="50.7748849411" lon="6.1124603078">
-				<time>2013-02-04T20:38:00Z</time>
-			</trkpt>
 			<trkpt lat="50.7749991026" lon="6.1125158798">
 				<ele>275</ele>
 				<time>2013-02-04T20:38:10Z</time>
@@ -103,11 +100,11 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
-		$this->assertEquals( 20, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 10, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 90, $this->object->object()->getCadence() );
 		$this->assertEquals( 27, $this->object->object()->Weather()->temperature()->value() );
 
-		$this->assertEquals( array(10, 20), $this->object->object()->getArrayTime() );
+		$this->assertEquals( array(0, 10), $this->object->object()->getArrayTime() );
 		$this->assertEquals( array(275,280), $this->object->object()->getArrayAltitude() );
 		$this->assertEquals( array(125,120), $this->object->object()->getArrayHeartrate() );
 		$this->assertEquals( array(90, 90), $this->object->object()->getArrayCadence() );

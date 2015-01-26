@@ -99,6 +99,28 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
+	 * Check array sizes
+	 * @throws \RuntimeException
+	 */
+	protected function checkArraySizes() {
+		foreach ($this->properties() as $key) {
+			if ($this->isArray($key)) {
+				try {
+					$count = count($this->Data[$key]);
+
+					if ($key == self::HEARTRATE && $this->numberOfPoints > 0 && $count == 1 + $this->numberOfPoints) {
+						$this->Data[$key] = array_slice($this->Data[$key], 1);
+					} else {
+						$this->checkArraySize( $count );
+					}
+				} catch(\RuntimeException $E) {
+					throw new \RuntimeException($E->getMessage().' (for '.$key.')');
+				}
+			}
+		}
+	}
+
+	/**
 	 * Read pauses
 	 */
 	protected function readPauses() {

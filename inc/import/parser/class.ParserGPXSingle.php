@@ -97,8 +97,6 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	protected function parseTrackpoint($Point) {
 		if ($this->lastTimestamp == 0) {
 			$this->lastTimestamp = strtotime((string)$Point->time);
-
-			return;
 		}
 
 		if (!empty($Point['lat'])) {
