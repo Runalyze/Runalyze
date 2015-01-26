@@ -64,7 +64,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function initConfiguration() {
 		$Configuration = new PluginConfiguration($this->id());
-		$Configuration->addValue( new PluginConfigurationValueInt('main_distance', __('Main distance'), '', 10) );
+		$Configuration->addValue( new PluginConfigurationValueFloat('main_distance', __('Main distance'), '', 10) );
 		$Configuration->addValue( new PluginConfigurationValueArray('pb_distances', __('Distances for yearly comparison'), '', array(1, 3, 5, 10, 21.1, 42.2)) );
 		$Configuration->addValue( new PluginConfigurationValueHiddenArray('fun_ids', '', '', array()) );
 

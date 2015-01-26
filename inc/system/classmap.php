@@ -150,6 +150,7 @@ $CLASSMAP = array(
 'PluginConfigurationValue' => 'plugin/config/class.PluginConfigurationValue.php',
 'PluginConfigurationValueArray' => 'plugin/config/class.PluginConfigurationValueArray.php',
 'PluginConfigurationValueBool' => 'plugin/config/class.PluginConfigurationValueBool.php',
+'PluginConfigurationValueFloat' => 'plugin/config/class.PluginConfigurationValueFloat.php',
 'PluginConfigurationValueHiddenArray' => 'plugin/config/class.PluginConfigurationValueHiddenArray.php',
 'PluginConfigurationValueInt' => 'plugin/config/class.PluginConfigurationValueInt.php',
 'PluginConfigurationValueSelect' => 'plugin/config/class.PluginConfigurationValueSelect.php',
