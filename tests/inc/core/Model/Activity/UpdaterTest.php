@@ -301,6 +301,20 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());
 	}
 
+	public function testUpdateTemperatureFromNullToZero() {
+		$OldObject = $this->fetch( $this->insert(array(
+			Object::TEMPERATURE => NULL
+		)) );
+
+		$this->assertTrue($OldObject->weather()->temperature()->isUnknown());
+
+		$NewObject = clone $OldObject;
+		$NewObject->weather()->temperature()->setTemperature(0);
+		$Result = $this->update($NewObject, $OldObject);
+
+		$this->assertFalse($Result->weather()->temperature()->isUnknown());
+	}
+
 	public function testUpdateTemperatureWithoutOldObject() {
 		$OldObject = $this->fetch( $this->insert(array(
 			Object::TEMPERATURE => 5

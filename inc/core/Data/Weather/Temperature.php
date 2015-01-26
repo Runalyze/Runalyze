@@ -146,11 +146,20 @@ class Temperature {
 	 * @return string
 	 */
 	public function asString() {
+		return $this->asStringWithoutUnit().'&nbsp;'.$this->unit();
+	}
+
+	/**
+	 * As string without unit
+	 * @param string $stringForUnknown [optional]
+	 * @return string
+	 */
+	public function asStringWithoutUnit($stringForUnknown = '?') {
 		if ($this->isUnknown()) {
-			return '?&nbsp;'.$this->unit();
+			return $stringForUnknown;
 		}
 
-		return round($this->value()).'&nbsp;'.$this->unit();
+		return round($this->value());
 	}
 
 	/**
