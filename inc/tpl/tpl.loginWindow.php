@@ -178,7 +178,7 @@ if ($NumUser == NULL) {
 $NumKm = Cache::get('NumKm', 1);
 if ($NumKm == NULL) {
     $NumKm = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
-    Cache::set('NumKm', $NumUser, '500', 1);
+    Cache::set('NumKm', $NumKm, '500', 1);
 }
 DB::getInstance()->startAddingAccountID();
 

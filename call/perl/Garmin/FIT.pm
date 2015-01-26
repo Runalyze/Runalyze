@@ -3,7 +3,6 @@ package Garmin::FIT;
 use FileHandle;
 use POSIX qw(BUFSIZ);
 use Time::Local;
-use UNIVERSAL qw(isa);
 
 require Exporter;
 @ISA = qw(Exporter);
@@ -26,17 +25,18 @@ require Exporter;
 	     FIT_HEADER_LENGTH
 	     );
 
-$version = 0.11;
+$version = 0.12;
 $version_major_scale = 100;
 
 sub version_major {
   my ($self, $ver) = @_;
+  my $iver = int($ver);
 
   if (wantarray) {
-    (int($ver), int(($ver - int($ver)) * $version_major_scale));
+    ($iver, int(($ver - $iver) * $version_major_scale));
   }
   else {
-    int($ver);
+    $iver;
   }
 }
 
@@ -241,6 +241,27 @@ sub dump {
   }
 }
 
+sub safe_isa {
+  eval {$_[0]->isa($_[1])};
+}
+
+sub error_callback {
+  my $self = shift;
+
+  if (@_) {
+    if (&safe_isa($_[0], CODE)) {
+      $self->{error_callback_argv} = [@_[1 .. $#_]];
+      $self->{error_callback} = $_[0];
+    }
+    else {
+      undef;
+    }
+  }
+  else {
+    $self->{error_callback};
+  }
+}
+
 sub error {
   my $self = shift;
 
@@ -253,7 +274,15 @@ sub error {
     $fit .= ': ' if $fit ne '';
 
     $self->{error} = "$p::$subr\#$l\@$fn: $fit$_[0]";
-    undef;
+
+    if (&safe_isa($self->{error_callback}, CODE)) {
+      my $argv = &safe_isa($self->{error_callback_argv}, ARRAY) ? $self->{error_callback_argv} : [];
+
+      $self->{error_callback}->($self, @$argv);
+    }
+    else {
+      undef;
+    }
   }
   else {
     $self->{error};
@@ -411,7 +440,7 @@ sub clear_buffer {
     if ($self->cp_fit) {
       my $FH = $self->cp_fit_FH;
 
-      if (isa($FH, 'FileHandle') && $FH->opened) {
+      if (&safe_isa($FH, 'FileHandle') && $FH->opened) {
 	my $buffer = $self->buffer;
 
 	$FH->print(substr($$buffer, 0, $self->offset));
@@ -1827,6 +1856,7 @@ sub named_type_value {
      42 => +{'name' => 'avg_stroke_distance', 'scale' => 100, 'unit' => 'm'},
      43 => +{'name' => 'swim_stroke', 'type_name' => 'swim_stroke'},
      44 => +{'name' => 'pool_length', 'scale' => 100, 'unit' => 'm'},
+     45 => +{'name' => 'xxx45_ftp', 'unit' => 'watts'}, # just a guess
      46 => +{'name' => 'pool_length_unit', 'type_name' => 'display_measure'},
      47 => +{'name' => 'num_active_lengths', 'unit' => 'lengths'},
      48 => +{'name' => 'total_work', 'unit' => 'J'},
@@ -3071,7 +3101,7 @@ sub close {
   my $cp_fit_FH = $self->cp_fit_FH;
   my $FH = $self->FH;
 
-  $cp_fit_FH->close if isa($cp_fit_FH, 'FileHandle') && $cp_fit_FH->opened;
+  $cp_fit_FH->close if &safe_isa($cp_fit_FH, 'FileHandle') && $cp_fit_FH->opened;
   $FH->close if $FH->opened;
 }
 
@@ -3476,6 +3506,21 @@ The author is very grateful to Garmin for supplying us free software programers 
 which includes detailed documetation about its proprietary file format.
 
 =head1 CHANGES
+
+=head2 0.11 --E<gt> 0.12
+
+=over 4
+
+=item C<safe_isa()>
+
+New subroutine to avoid importing C<isa> method from C<UNIVERSAL> class.
+Thanks to Blaine Schmidt who kindly informed that such importation is deprecated.
+
+=item C<xxx45_ftp>
+
+The field numbered 45 in a session message seems FTP.
+
+=back
 
 =head2 0.10 --E<gt> 0.11
 

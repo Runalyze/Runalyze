@@ -142,7 +142,7 @@ abstract class Updater {
 	 */
 	protected function hasChanged($key) {
 		if ($this->knowsOldObject()) {
-			return ($this->OldObject->get($key) != $this->NewObject->get($key));
+			return ($this->OldObject->get($key) !== $this->NewObject->get($key));
 		}
 
 		return true;
