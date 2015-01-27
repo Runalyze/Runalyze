@@ -69,7 +69,7 @@ class Temperature {
 	 * @return float
 	 */
 	protected function toCelsiusFrom($value, $unit) {
-		if (is_null($value)) {
+		if (!is_numeric($value)) {
 			return null;
 		}
 
@@ -134,8 +134,8 @@ class Temperature {
 	}
 
 	/**
-	 * Unit
-	 * @return string
+	 * Value
+	 * @return null|int
 	 */
 	public function value() {
 		return $this->fromCelsiusTo($this->inCelsius, $this->unit);
@@ -146,11 +146,20 @@ class Temperature {
 	 * @return string
 	 */
 	public function asString() {
+		return $this->asStringWithoutUnit().'&nbsp;'.$this->unit();
+	}
+
+	/**
+	 * As string without unit
+	 * @param string $stringForUnknown [optional]
+	 * @return string
+	 */
+	public function asStringWithoutUnit($stringForUnknown = '?') {
 		if ($this->isUnknown()) {
-			return '?&nbsp;'.$this->unit();
+			return $stringForUnknown;
 		}
 
-		return round($this->value()).'&nbsp;'.$this->unit();
+		return round($this->value());
 	}
 
 	/**

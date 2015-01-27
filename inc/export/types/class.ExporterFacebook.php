@@ -28,13 +28,13 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 * Display
 	 */
 	public function display() {
-		if (!$this->Training->isPublic()) {
+		if (!$this->Context->activity()->isPublic()) {
 			echo HTML::error( __('This training is private and cannot be shared.') );
 			return;
 		}
 
 		$Linklist = new BlocklinkList();
-		$Linklist->addCompleteLink( $this->getLink() );
+		$Linklist->addCompleteLink( $this->externalLink($this->getUrl(), __('Share!')) );
 		$Linklist->display();
 
 		echo HTML::info( __('You will be forwared to Facebook, where you can define which text shall be displayed.') );
@@ -46,7 +46,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 * Get link
 	 * @return string 
 	 */
-	protected function getLink() {
+	protected function getUrl() {
 		// TODO
 		// Wenn v1.3 online ist:
 		// check: on user.runalyze.de/user.runalyze.com
@@ -56,15 +56,13 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		// @see https://developers.facebook.com/docs/reference/opengraph/action-type/fitness.runs
 		// @see https://developers.facebook.com/docs/reference/opengraph/object-type/fitness.course
 
-		$url   = urlencode($this->Training->Linker()->publicUrl());
-		$title = urlencode($this->Training->DataView()->getTitle().' am '.$this->Training->DataView()->getDate(false).' - Trainingsansicht');
+		$url   = urlencode($this->getPublicURL());
+		$title = urlencode($this->Context->dataview()->titleWithComment());
 		$text  = urlencode($this->getText());
 		$image = 'http://runalyze.de/wp-content/uploads/Account.png';
 
-		$FbUrl = 'https://www.facebook.com/dialog/feed?app_id='.self::$APP_ID.'&link='.$url.'&picture='.$image.'&name='.$title.'&caption='.$url.'&description='.$text.'&redirect_uri=http://www.facebook.com';
+		return 'https://www.facebook.com/dialog/feed?app_id='.self::$APP_ID.'&link='.$url.'&picture='.$image.'&name='.$title.'&caption='.$url.'&description='.$text.'&redirect_uri=http://www.facebook.com';
 		//$FbUrl = 'https://facebook.com/sharer.php?s=100&amp;p[url]='.$url.'&amp;p[title]='.$title.'&amp;p[summary]='.$text.'&amp;p[images][0]='.$image;
-
-		return '<a href="'.$FbUrl.'" target="_blank" style="background-image:url(inc/export/icons/facebook.png);"><strong>'.__('Share!').'</strong></a>';
 	}
 
 	/**

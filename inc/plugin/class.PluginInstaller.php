@@ -62,6 +62,8 @@ class PluginInstaller {
 			'99',
 		));
 
+		PluginFactory::clearCache();
+
 		return true;
 	}
 
@@ -74,8 +76,9 @@ class PluginInstaller {
 		$Plugin = $Factory->newInstance($this->Key);
 
 		DB::getInstance()->deleteByID('plugin', $Plugin->id());
+		DB::getInstance()->query('DELETE FROM `'.PREFIX.'plugin_conf` WHERE `pluginid`='.$Plugin->id());
 
-		// TODO: As soon as a table for plugin_conf exists, remove related rows.
+		PluginFactory::clearCache();
 
 		return true;
 	}

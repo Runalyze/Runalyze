@@ -5,36 +5,6 @@
  */
 class TimeTest extends PHPUnit_Framework_TestCase {
 
-	/**
-	 * @var Time
-	 */
-	protected $object;
-
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
-	protected function setUp() {}
-
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
-	protected function tearDown() {}
-
-	/**
-	 * @covers Time::toString
-	 */
-	public function testToString() {
-		$this->assertEquals( '&nbsp;', Time::toString(-1) );
-		$this->assertEquals( '11,00s', Time::toString(11) );
-		$this->assertEquals( '11,23s', Time::toString(11.23) );
-		$this->assertEquals( '0:11', Time::toString(11, false, false, false) );
-	}
-
-	/**
-	 * @covers Time::diffInDays
-	 */
 	public function testDiffInDays() {
 		$this->assertEquals(0, Time::diffInDays(mktime(0,0,0,12,5,2000), mktime(0,0,0,12,5,2000)));
 		$this->assertEquals(0, Time::diffInDays(mktime(0,0,0,12,5,2000), mktime(23,59,0,12,5,2000)));
@@ -45,9 +15,6 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(365, Time::diffInDays(mktime(0,0,0,12,5,2000), mktime(0,0,0,12,5,2001)));
 	}
 
-	/**
-	 * @covers Time::isToday
-	 */
 	public function testDiffOfDays() {
 		$this->assertEquals( 0, Time::diffOfDates('2006-09-07', '2006-09-07') );
 		$this->assertEquals( 1, Time::diffOfDates('2006-09-06', '2006-09-07') );
@@ -58,9 +25,6 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 2, Time::diffOfDates('2014-03-30', '2014-04-01') );
 	}
 
-	/**
-	 * @covers Time::isToday
-	 */
 	public function testIsToday() {
 		$this->assertTrue( Time::isToday(time()) );
 		$this->assertTrue( Time::isToday(mktime(0,0,0)) );
@@ -70,15 +34,6 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers Time::daytimeString
-	 */
-	public function testDaytimeString() {
-		$this->assertEquals( '', Time::daytimeString(mktime(0,0,0,1,1,2000)) );
-		$this->assertEquals( '16:30 Uhr', Time::daytimeString(mktime(16,30,0,1,1,2000)) );
-	}
-
-	/**
-	 * @covers Time::Weekstart
 	 * @todo Implement testWeekstart().
 	 */
 	public function testWeekstart() {
@@ -86,43 +41,10 @@ class TimeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @covers Time::Weekend
 	 * @todo Implement testWeekend().
 	 */
 	public function testWeekend() {
 		// ...
 	}
 
-	/**
-	 * @covers Time::Weekday
-	 * @todo Implement testWeekday().
-	 */
-	public function testWeekday() {
-		// ...
-	}
-
-	/**
-	 * @covers Time::Month
-	 * @todo Implement testMonth().
-	 */
-	public function testMonth() {
-		// ...
-	}
-
-	/**
-	 * @covers Time::getTimestampFor
-	 */
-	public function testGetTimestampFor() {
-		$this->assertEquals(
-				"31.12.2011 12:05:00", date("d.m.Y H:i:s", Time::getTimestampFor('31.12.2011', '12:05')));
-
-		$this->assertEquals(
-				"31.12.2011 00:00:00", date("d.m.Y H:i:s", Time::getTimestampFor('31.12.2011', '')));
-
-		$this->assertEquals(
-				"31.12." . date("Y") . " 00:00:00", date("d.m.Y H:i:s", Time::getTimestampFor('31.12', '')));
-	}
-
 }
-
-?>

@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Pace;
 
 /**
  * Class: Sport
@@ -74,7 +75,7 @@ class Sport {
 	* @return string
 	*/
 	public function Icon($tooltip = '') {
-		return Icon::getSportIcon($this->id, '', $tooltip);
+		return Icon::getSportIconForGif($this->data['img'], $tooltip);
 	}
 	
 	/**
@@ -131,7 +132,7 @@ class Sport {
 	 * @return bool
 	 */
 	public function usesKmh() {
-		return ($this->data['speed'] == SportSpeed::$KM_PER_H);
+		return ($this->data['speed'] == Pace::KM_PER_H);
 	}
 
 	/**

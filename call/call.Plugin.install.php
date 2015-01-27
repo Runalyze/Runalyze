@@ -23,6 +23,9 @@ if ($Installer->install()) {
 	echo $Plugin->getConfigLink(Icon::$CONF.' '.__('Configuration'));
 	echo '</li>';
 	echo '</ul>';
+
+	Ajax::setReloadFlag(Ajax::$RELOAD_ALL);
+	echo Ajax::getReloadCommand();
 } else {
 	echo HTML::error( __('There was a problem, the plugin could not be installed.') );
 }

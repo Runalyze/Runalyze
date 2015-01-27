@@ -10,7 +10,7 @@ use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Bool;
 use Runalyze\Parameter\Int;
 use Runalyze\Parameter\String;
-use Runalyze\Parameter\Set;
+use Runalyze\Parameter\Select;
 use Runalyze\Parameter\Application\ActivityRoutePrecision;
 use Runalyze\Parameter\Application\ActivityRouteBreak;
 use Runalyze\Parameter\Application\ActivityPlotMode;
@@ -195,7 +195,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 * - ELEVATION_TRESHOLD
 	 */
 	protected function createOtherOptions() {
-		$this->createHandle('TRAINING_DECIMALS', new Set('1', array(
+		$this->createHandle('TRAINING_DECIMALS', new Select('1', array(
 			'options'		=> array('0', '1', '2')
 		)));
 
@@ -241,12 +241,9 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('PACE_Y_AXIS_REVERSE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('PACE_HIDE_OUTLIERS')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
-		$this->handle('TRAINING_PLOT_PRECISION')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('TRAINING_PLOT_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
-		$this->handle('GMAP_PATH_BREAK')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('GMAP_PATH_BREAK')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
-		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeEvent('System::clearTrainingCache');
 		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup()');
@@ -283,6 +280,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('TRAINING_PLOT_SMOOTH'), array(
 			'label'		=> __('Plots: smooth curves')
 		));
+
+        $Fieldset->addHandle( $this->handle('TRAINING_PLOT_PRECISION'), array(
+            'label'		=> __('Plots: precision'),
+            'tooltip'	=> __('How many data points should be plotted?')
+        ));
 
 		$Fieldset->addHandle( $this->handle('PACE_Y_LIMIT_MIN'), array(
 			'label'		=> __('Pace plot: y-axis minimum'),

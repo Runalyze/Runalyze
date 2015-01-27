@@ -33,7 +33,9 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'pace'          => array(),
 			'rpm'			=> array(),
 			'temp'			=> array(),
-			'power'			=> array()
+			'power'			=> array(),
+			'groundcontact'	=> array(),
+			'oscillation'	=> array()
 		);
 
 	/**
@@ -150,6 +152,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayCadence( $this->gps['rpm'] );
 		$this->TrainingObject->setArrayPower( $this->gps['power'] );
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
+		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
+		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
 
 		$this->setValuesFromArraysIfEmpty();
 	}
@@ -191,6 +195,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->setAvgCadenceFromArray();
 		$this->setAvgPowerFromArray();
 		$this->setTemperatureFromArray();
+		$this->setRunningDynamicsFromArray();
 	}
 
 	/**
@@ -216,6 +221,26 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
 
 			$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
+		}
+	}
+
+	/**
+	 * Set running dynamics from array
+	 */
+	private function setRunningDynamicsFromArray() {
+		$groundContact = $this->TrainingObject->getArrayGroundContact();
+		$oscillation = $this->TrainingObject->getArrayVerticalOscillation();
+
+		if (!empty($groundContact) && max($groundContact) > 30) {
+			$groundContact = array_filter($groundContact, 'ParserAbstract__ArrayFilterForLowEntries');
+
+			$this->TrainingObject->setGroundContactTime( round(array_sum($groundContact)/count($groundContact)) );
+		}
+
+		if (!empty($oscillation) && max($oscillation) > 30) {
+			$oscillation = array_filter($oscillation);
+
+			$this->TrainingObject->setVerticalOscillation( round(array_sum($oscillation)/count($oscillation)) );
 		}
 	}
 
@@ -281,7 +306,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			$this->paceDist = $currDist;
 			$this->paceTime = $currTime;
 
-			return $pace;
+			return round($pace);
 		}
 
 		return 0;

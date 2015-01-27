@@ -8,14 +8,18 @@ require '../inc/class.Frontend.php';
 $Frontend = new Frontend();
 $Factory = new PluginFactory();
 
-$Plugin = $Factory->newInstanceFor( filter_input(INPUT_GET, 'id') );
+try {
+	$Plugin = $Factory->newInstanceFor( filter_input(INPUT_GET, 'id') );
+} catch (Exception $E) {
+	$Plugin = null;
 
-if ($Plugin === false) {
 	echo HTML::error( __('The plugin could not be found.') );
 }
 
-if ($Plugin instanceof PluginPanel) {
-	$Plugin->setSurroundingDivVisible(false);
-}
+if ($Plugin !== null) {
+	if ($Plugin instanceof PluginPanel) {
+		$Plugin->setSurroundingDivVisible(false);
+	}
 
-$Plugin->display();
+	$Plugin->display();
+}

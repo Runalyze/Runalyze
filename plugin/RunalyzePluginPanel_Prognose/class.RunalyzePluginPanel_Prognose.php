@@ -5,6 +5,10 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace;
+use Runalyze\Activity\PersonalBest;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -24,6 +28,12 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @var RunningPrognosisStrategy
 	 */
 	protected $PrognosisStrategy = null;
+
+	/**
+	 * Number of successfully fetched PBs
+	 * @var int
+	 */
+	protected $NumberOfPBs = 0;
 
 	/**
 	 * Name
@@ -104,6 +114,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @see PluginPanel::displayContent()
 	 */
 	protected function displayContent() {
+		$this->lookupPersonalBests();
 		$this->prepareForPrognosis();
 
 		foreach ($this->getDistances() as $km) {
@@ -113,6 +124,14 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		if ($this->thereAreNotEnoughCompetitions()) {
 			echo HTML::info( __('There are not enough results for good predictions.') );
 		}
+	}
+
+	/**
+	 * Lookup all personal bests at once
+	 */
+	protected function lookupPersonalBests() {
+		PersonalBest::activateStaticCache();
+		$this->NumberOfPBs = PersonalBest::lookupDistances($this->getDistances());
 	}
 
 	/**
@@ -149,25 +168,18 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @param double $distance
 	 */
 	protected function showPrognosis($distance) {
-		$PrognosisInSeconds    = $this->Prognosis->inSeconds($distance);
-		$PersonalBestInSeconds = Running::PersonalBest($distance, true);
-		$VDOTold               = round(JD::Competition2VDOT($distance, $PersonalBestInSeconds), 2);
-		$VDOTnew               = round(JD::Competition2VDOT($distance, $PrognosisInSeconds), 2);
+		$PB = new PersonalBest($distance);
+		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
+		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
+		$Distance = new Distance($distance);
+		$Pace = new Pace($Prognosis->seconds(), $distance, Pace::MIN_PER_KM);
 
-		$oldTimeString  = Time::toString($PersonalBestInSeconds);
-		$newTimeString  = '<strong>'.Time::toString($PrognosisInSeconds).'</strong>';
-		$paceString     = SportSpeed::minPerKm($distance, $PrognosisInSeconds);
-		$distanceString = Running::Km($distance, 0, ($distance <= 3));
-
-		echo '
-			<p>
+		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> %s'),
-							Ajax::tooltip($oldTimeString, 'VDOT: '.$VDOTold),
-							Ajax::tooltip($newTimeString, 'VDOT: '.$VDOTnew)).'
-					<small>('.$paceString.'/km)</small>
+					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
+					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
-				<strong>'.$distanceString.'</strong>
+				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>
 			</p>';
 	}
 
@@ -176,7 +188,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return bool
 	 */
 	protected function thereAreNotEnoughCompetitions() {
-		return !DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' LIMIT 1')->fetchColumn();
+		return (0 == $this->NumberOfPBs);
 	}
 
 	/**

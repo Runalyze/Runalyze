@@ -58,6 +58,18 @@ class FormularUnit {
 	static public $M = 'm';
 
 	/**
+	 * Unit: cm
+	 * @var string
+	 */
+	static public $CM = 'cm';
+
+	/**
+	 * Unit: ms
+	 * @var string
+	 */
+	static public $MS = 'ms';
+
+	/**
 	 * Unit: user
 	 * @var string
 	 */

@@ -5,6 +5,9 @@
  * @author Hannes Christiansen
  * @copyright http://www.runalyze.de/
  */
+
+use Runalyze\View\Activity\Context;
+
 if (!file_exists('config.php')) {
 	include 'install.php';
 	exit();
@@ -61,7 +64,8 @@ $Frontend = new Frontend();
 			<div id="statistics-inner">
 				<?php
 				if (isset($_GET['id'])) {
-					$View = new TrainingView(new TrainingObject(Request::sendId()));
+					$Context = new Context(Request::sendId(), SessionAccountHandler::getId());
+					$View = new TrainingView($Context);
 					$View->display();
 				} elseif (isset($_GET['pluginid'])) {
 					$Factory->newInstanceFor((int)$_GET['pluginid'])->display();

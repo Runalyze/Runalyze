@@ -22,20 +22,12 @@ class ExporterTwitter extends ExporterAbstractSocialShare {
 	 * Display
 	 */
 	public function display() {
+		$url = 'https://twitter.com/share?url='.$this->getPublicURL().'&text='.$this->getText().'&via=RunalyzeDE';
+
 		$Linklist = new BlocklinkList();
-		$Linklist->addCompleteLink( $this->getLink() );
+		$Linklist->addCompleteLink($this->externalLink($url, __('Tweet!')) );
 		$Linklist->display();
 
 		echo HTML::info( __('You will be forwared to Twitter, where you can define which text shall be displayed.') );
-	}
-
-	/**
-	 * Get link
-	 * @return string 
-	 */
-	protected function getLink() {
-		$URL = 'https://twitter.com/share?url='.$this->Training->Linker()->publicUrl().'&text='.$this->getText().'&via=RunalyzeDE';
-
-		return '<a href="'.$URL.'" target="_blank" style="background-image:url(inc/export/icons/twitter.png);"><strong>'.__('Tweet!').'</strong></a>';
 	}
 }

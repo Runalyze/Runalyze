@@ -5,6 +5,9 @@
  */
 require '../../inc/class.Frontend.php';
 
+use Runalyze\View\Leaflet;
+use Runalyze\Model;
+
 $Frontend = new Frontend();
 
 require 'class.RunalyzePluginStat_Strecken.php';
@@ -16,43 +19,40 @@ require 'class.RunalyzePluginStat_Strecken.php';
 
 <div class="panel-content">
 <?php
-$AllTrainings = DB::getInstance()->query('
+$Routes = DB::getInstance()->query('
 	SELECT
 		id,
-		time,
-		arr_time,
-		arr_lat,
-		arr_lon,
-		arr_alt,
-		arr_dist,
-		arr_heart,
-		arr_pace
-	FROM `'.PREFIX.'training`
-	WHERE `arr_lat`!=""
-	ORDER BY `time` DESC
-	LIMIT '.RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET)->fetchAll();
+		lats,
+		lngs,
+		min_lat,
+		min_lng,
+		max_lat,
+		max_lng
+	FROM `'.PREFIX.'route`
+	WHERE `lats`!=""
+	ORDER BY `id` DESC
+	LIMIT '.RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET);
 
-$Map = new LeafletMap('map', 600);
+$Map = new Leaflet\Map('map-routenet', 600);
 
 $minLat = 999;
 $maxLat = -999;
 $minLng = 999;
 $maxLng = -999;
 
-foreach ($AllTrainings as $Training) {
-	$GPS = new GpsData($Training);
-	$Bounds = $GPS->getBoundS();
+while ($RouteData = $Routes->fetch()) {
+	$Route = new Model\Route\Object($RouteData);
 
-	$minLat = min($minLat, $Bounds['lat.min']);
-	$maxLat = max($maxLat, $Bounds['lat.max']);
-	$minLng = min($minLng, $Bounds['lng.min']);
-	$maxLng = max($maxLng, $Bounds['lng.max']);
+	$minLat = min($minLat, $RouteData['min_lat']);
+	$maxLat = max($maxLat, $RouteData['max_lat']);
+	$minLng = min($minLng, $RouteData['min_lng']);
+	$maxLng = max($maxLng, $RouteData['max_lng']);
 
-	$Route = new LeafletTrainingRoute('route-'.$Training['id'], $GPS, false);
-	$Route->addOption('hoverable', false);
-	$Route->addOption('autofit', false);
+	$Path = new Leaflet\Activity('route-'.$RouteData['id'], $Route, null, false);
+	$Path->addOption('hoverable', false);
+	$Path->addOption('autofit', false);
 
-	$Map->addRoute($Route);
+	$Map->addRoute($Path);
 }
 
 $Map->setBounds(array(
@@ -65,7 +65,7 @@ $Map->display();
 ?>
 
 <p class="info">
-	<?php echo sprintf( __('The network contains your last %s routes.'), RunalyzePluginStat_Strecken::$MAX_ROUTES_ON_NET ); ?>
+	<?php echo sprintf( __('The network contains your last %s routes.'), RunalyzePluginStat_Strecken::MAX_ROUTES_ON_NET ); ?>
 	<?php _e('More routes are not possible at the moment due to performance issues.'); ?>
 </p>
 </div>

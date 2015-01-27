@@ -16,7 +16,7 @@ class SectionPace extends TrainingViewSectionTabbedPlot {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Pace data');
 
-		$this->appendRowTabbedPlot( new SectionPaceRow($this->Training) );
+		$this->appendRowTabbedPlot( new SectionPaceRow($this->Context) );
 	}
 
 	/**
@@ -24,7 +24,7 @@ class SectionPace extends TrainingViewSectionTabbedPlot {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return $this->Training->hasArrayPace() || ($this->Training->getDistance() > 0 && $this->Training->getTimeInSeconds() > 0);
+		return ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) || $this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE);
 	}
 
 	/**

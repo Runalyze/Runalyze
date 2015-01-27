@@ -3,6 +3,9 @@
  * This file contains class::ExporterFactory
  * @package Runalyze\Export
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Create exporter for given type
  *
@@ -23,17 +26,19 @@ class ExporterFactory {
 	public function __construct($Type) {
 		$ExporterClass = 'Exporter'.$Type;
 
-		if (class_exists($ExporterClass))
-			$this->Exporter = new $ExporterClass( new TrainingObject(Request::sendId()) );
+		if (class_exists($ExporterClass)) {
+			$this->Exporter = new $ExporterClass( new Context(Request::sendId(), SessionAccountHandler::getId()) );
+		}
 	}
 
 	/**
 	 * Display
 	 */
 	public function display() {
-		if (is_null($this->Exporter))
+		if (is_null($this->Exporter)) {
 			echo HTML::error( __('The chosen exporter could not be located.') );
-		else
+		} else {
 			$this->Exporter->display();
+		}
 	}
 }

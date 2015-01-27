@@ -15,7 +15,22 @@
 		<input id="calendar-start" type="hidden" value="<?php echo $this->timestamp_start; ?>000">
 		<input id="calendar-end" type="hidden" value="<?php echo $this->timestamp_end; ?>000">
 
-		<div class="c">
+        <input id="calendar-locale" type="hidden" value="<?php
+
+        $days = array(__("Sunday"), __("Monday"), __("Tuesday"), __("Wednesday"), __("Thursday"), __("Friday"), __("Saturday"));
+        $daysMin = array(__("Su"), __("Mo"), __("Tu"), __("We"), __("Th"), __("Fr"), __("Sa"));
+        $daysShort = array(__("Sun"), __("Mon"), __("Tue"), __("Wed"), __("Thu"), __("Fri"), __("Sat"));
+        $months = array(__("January"), __("February"), __("March"), __("April"), __("May"), __("June"),
+            __("July"), __("August"), __("September"), __("October"), __("November"), __("December"));
+        $monthsShort = array(__("Jan"), __("Feb"), __("Mar"), __("Apr"), __("May"), __("Jun"), __("Jul"), __("Aug"), __("Sep"), __("Oct"), __("Nov"), __("Dec"),);
+        $weekMin=_("wk");
+
+        $locale = array ("days" => $days, "daysMin"=>$daysMin, "daysShort"=>$daysShort, "months" => $months, "monthsShort" => $monthsShort, "weekMin" => $weekMin );
+
+        echo htmlspecialchars(json_encode($locale)) ?>">
+
+
+        <div class="c">
 			<?php _e('You can select any time range by selecting two dates.'); ?>
 		</div>
 
@@ -45,14 +60,14 @@ foreach ($this->days as $i => $day) {
 				echo '<td class="l" style="width:24px;">';
 
 				foreach ($day['shorts'] as $short) {
-					$this->Dataset->setTrainingId($short['id'], $short);
+					$this->Dataset->setActivityData($short);
 					$this->Dataset->displayShortLink();
 				}
 
 				echo '</td><td class="l">'.Dataset::getDateString($day['date']).'</td>';
 			}
 
-			$this->Dataset->setTrainingId($id, $Training);
+			$this->Dataset->setActivityData($Training);
 
 			if ($this->showPublicLink)
 				$this->Dataset->displayPublicIcon();
@@ -67,7 +82,7 @@ foreach ($this->days as $i => $day) {
 				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
-			$this->Dataset->setTrainingId($short['id'], $short);
+			$this->Dataset->setActivityData($short);
 			$this->Dataset->displayShortLink();
 		}
 

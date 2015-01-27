@@ -5,11 +5,18 @@
          bootstrap="../tests/bootstrap.php"
          colors="true"
          verbose="true">
-  <testsuite name="PHPLOC">
-    <directory suffix="Test.php">../tests</directory>
-  </testsuite>
+	<testsuite name="PHPLOC">
+		<directory suffix="Test.php">../tests</directory>
+	</testsuite>
 
-  <logging>
-    <log type="coverage-text" target="php://stdout"/>
-  </logging>
-</phpunit> 
+	<filter>
+		<whitelist>
+			<directory suffix=".php">../inc</directory>
+		</whitelist>
+	</filter>
+<!--
+	<logging>
+		<log type="coverage-text" target="php://stdout"/>
+	</logging>
+-->
+</phpunit>

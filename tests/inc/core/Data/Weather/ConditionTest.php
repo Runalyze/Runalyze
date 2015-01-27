@@ -51,4 +51,9 @@ class ConditionTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->object->isUnknown());
 	}
 
+	public function testWrongId() {
+		$this->object->set('foobar');
+		$this->assertTrue($this->object->isUnknown());
+	}
+
 }

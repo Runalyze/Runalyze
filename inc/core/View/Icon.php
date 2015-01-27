@@ -28,6 +28,26 @@ class Icon {
 	const INFO = 'fa-info-circle';
 
 	/**
+	 * @var string
+	 */
+	const CLOCK = 'fa-clock-o';
+
+	/**
+	 * @var string
+	 */
+	const CLOCK_GRAY = 'fa-clock-o unimportant';
+
+	/**
+	 * @var string
+	 */
+	const HEART = 'fa-heart';
+
+	/**
+	 * @var string
+	 */
+	const MAP_ARROW = 'fa-location-arrow';
+
+	/**
 	 * Key to identfiy FontAwesome icon
 	 * @see http://fontawesome.io/icons/
 	 * @var string

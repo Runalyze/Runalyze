@@ -3,6 +3,9 @@
  * This file contains class::ConfigTabSports
  * @package Runalyze\System\Config
  */
+
+use Runalyze\Activity\Pace;
+
 /**
  * ConfigTabSports
  * @author Hannes Christiansen
@@ -82,12 +85,13 @@ class ConfigTabSports extends ConfigTab {
 				<tbody>';
 
 		$Sports   = SportFactory::AllSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => SportSpeed::$DEFAULT, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
 		$SportCount = SportFactory::CountArray();
 		foreach($SportCount as $is => $SC)
 			$Sports[$is]['counts'] = $SC;
 
 		$IconOptions = SportFactory::getIconOptions();
+		$PaceOptions = Pace::options();
 
 		foreach ($Sports as $i => $Data) {
 			$id         = $Data['id'];
@@ -117,7 +121,7 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'"></td>
 						<td><input type="text" size="1" name="sport[RPE]['.$id.']" value="'.$Data['RPE'].'"></td>
 						<td><input type="checkbox" name="sport[distances]['.$id.']"'.($Data['distances'] == 1 ? ' checked' : '').'></td>
-						<td>'.SportSpeed::getSelectBox($Data['speed'], 'sport[speed]['.$id.']').'</td>
+						<td>'.HTML::selectBox('sport[speed]['.$id.']', $PaceOptions, $Data['speed']).'</td>
 						<td><input type="checkbox" name="sport[types]['.$id.']"'.($Data['types'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[pulse]['.$id.']"'.($Data['pulse'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>

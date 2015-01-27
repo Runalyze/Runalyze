@@ -97,8 +97,6 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	protected function parseTrackpoint($Point) {
 		if ($this->lastTimestamp == 0) {
 			$this->lastTimestamp = strtotime((string)$Point->time);
-
-			return;
 		}
 
 		if (!empty($Point['lat'])) {
@@ -106,7 +104,7 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 			$lon  = round((double)$Point['lon'], 7);
 			$dist = empty($this->gps['latitude'])
 					? 0
-					: round(GpsData::distance($lat, $lon, end($this->gps['latitude']), end($this->gps['longitude'])), 3);
+					: round(GpsData::distance($lat, $lon, end($this->gps['latitude']), end($this->gps['longitude'])), 5);
 		} elseif (count($this->gps['latitude'])) {
 			$lat  = end($this->gps['latitude']);
 			$lon  = end($this->gps['longitude']);
@@ -156,6 +154,12 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 					$TPE = $Point->extensions->children('gpxtpx',true)->TrackPointExtension;
 					if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->hr))
 						$bpm = (int)$TPE->children('gpxtpx',true)->hr;
+
+                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->cad))
+						$rpm = (int)$TPE->children('gpxtpx',true)->cad;
+
+                    if (count($TPE->children('gpxtpx',true)) > 0 && isset($TPE->children('gpxtpx',true)->atemp))
+						$temp = (float)$TPE->children('gpxtpx',true)->atemp;
 				}
 			}
 

@@ -4,6 +4,10 @@
  * @package Runalyze\Plugins\Panels
  */
 $PLUGINKEY = 'RunalyzePluginPanel_Sports';
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+
 /**
  * Class: RunalyzePluginPanel_Sports
  * @author Hannes Christiansen
@@ -124,10 +128,12 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			$Value->defineAsFloatingBlock('w50');
 
 			if ($dat['count_distance'] >= $dat['count']/2) {
-				$Value->setValue( Running::KmFormat($dat['distance']) );
+				$Distance = new Distance($dat['distance']);
+				$Value->setValue( $Distance->stringKilometer(false, false) );
 				$Value->setUnit('km');
 			} else {
-				$Value->setValue(Time::toString($dat['time_in_s'], false, true));
+				$Duration = new Duration($dat['time_in_s']);
+				$Value->setValue($Duration->string(Duration::FORMAT_WITH_HOURS));
 			}
 
 			$Value->display();
@@ -147,8 +153,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 				$Sport = new Sport($dat['sportid']);
 
 				$result = $dat['count_distance'] >= $dat['count']/2
-					? Helper::Unknown(Running::Km($dat['distance']), '0,0 km')
-					: Time::toString($dat['time_in_s']);
+					? Distance::format($dat['distance'])
+					: Duration::format($dat['time_in_s']);
 
 				echo '<p><span class="right"><small><small>('.sprintf( __('%u-times'), Helper::Unknown($dat['count'], '0')).')</small></small> '.$result.'</span> ';
 				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';

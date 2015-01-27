@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Ziele';
 /**
@@ -271,8 +272,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		$span_format        = isset($Line['lvl']) ? $this->getLevelStyle($Line['lvl']) : 0;
 		$p_format           = isset($Line['sep']) && $Line['sep'] ? ' style="border-top:1px solid #ccc;"' : '';
 
-		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>('.Helper::Unknown(round($Line['anz'],1), '0').'x)</small></small>' : '';
-		$Distance           = isset($Line['km']) && $Line['km'] > 0 ? '<span '.($Line['lvl'] == 1 ? $span_format : '').'>'.Helper::Unknown(Running::Km(round($Line['km'],1)), '0,0 km').'</span>' : '';
+		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>('.round($Line['anz'], 1).'x)</small></small>' : '';
+		$Distance           = isset($Line['km']) && $Line['km'] > 0 ? '<span '.($Line['lvl'] == 1 ? $span_format : '').'>'.Distance::format($Line['km'], false, 1).'</span>' : '';
 
 		echo '<p'.$p_format.'>'.
 			'<span class="right">'.
@@ -304,18 +305,19 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 	 */
 	private function fetchDataSince($timestamp) {
 		$Data = DB::getInstance()->query('
-				SELECT
-					`sportid`,
-					COUNT(`id`) as `anzahl`,
-					SUM(`distance`) as `distanz_sum`,
-					SUM(`s`) as `dauer_sum`
-				FROM `'.PREFIX.'training`
-				WHERE
-					`time` >= '.$timestamp.' AND
-					`sportid`='.Configuration::General()->runningSport().'
-				GROUP BY `sportid`
-				ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
-			')->fetch();
+			SELECT
+				`sportid`,
+				COUNT(`id`) as `anzahl`,
+				SUM(`distance`) as `distanz_sum`,
+				SUM(`s`) as `dauer_sum`
+			FROM `'.PREFIX.'training`
+			WHERE
+				`sportid`='.Configuration::General()->runningSport().' AND
+				`time` >= '.$timestamp.' AND
+				`accountid`='.SessionAccountHandler::getId().'
+			GROUP BY `sportid`
+			ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
+		')->fetch();
 
 		if (!is_array($Data))
 			return array('anzahl' => 0, 'distanz_sum' => 0, 'dauer_sum' => 0);
@@ -334,7 +336,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 			FROM `'.PREFIX.'training`
 			WHERE
 				DATE(FROM_UNIXTIME(`time`))=DATE(NOW()) AND
-				`sportid`='.Configuration::General()->runningSport().'
+				`sportid`='.Configuration::General()->runningSport().' AND
+				`accountid`='.SessionAccountHandler::getId().'
 			LIMIT 1
 		')->rowCount();
 	}

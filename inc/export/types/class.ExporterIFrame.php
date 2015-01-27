@@ -3,6 +3,10 @@
  * This file contains class::ExporterIFrame
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\View\Activity\Linker;
+use Runalyze\Model\Activity;
+
 /**
  * Exporter for: IFrame
  * 
@@ -60,7 +64,7 @@ class ExporterIFrame extends ExporterAbstract {
 		$FieldsetPreview = new FormularFieldset( __('Preview') );
 		$FieldsetPreview->addBlock($Code);
 
-		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?type=IFrame&id='.$this->Training->id() );
+		$Formular = new Formular( $_SERVER['SCRIPT_NAME'].'?type=IFrame&id='.$this->Context->activity()->id() );
 		$Formular->addCSSclass('ajax');
 		$Formular->addCSSclass('no-automatic-reload');
 		$Formular->addFieldset($FieldsetCode);
@@ -74,10 +78,10 @@ class ExporterIFrame extends ExporterAbstract {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
-		$this->Training->set('is_public', 1);
-		$Url = $this->Training->Linker()->publicUrl();
+		$this->Context->activity()->set(Activity\Object::IS_PUBLIC, 1);
+		$Linker = new Linker($this->Context->activity());
 
-		return '<iframe style="padding:0;margin:0 auto;display:block;max-width:100%;" src="'.$Url.'&amp;mode=iframe" width="'.$this->width().'" height="'.$this->height().'"></iframe>';
+		return '<iframe style="padding:0;margin:0 auto;display:block;max-width:100%;" src="'.$Linker->publicUrl().'&amp;mode=iframe" width="'.$this->width().'" height="'.$this->height().'"></iframe>';
 	}
 
 	/**

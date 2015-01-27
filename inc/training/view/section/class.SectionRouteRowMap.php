@@ -3,6 +3,9 @@
  * This file contains class::SectionRouteRowMap
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Leaflet;
+
 /**
  * Row: Map
  * 
@@ -16,11 +19,17 @@ class SectionRouteRowMap extends TrainingViewSectionRowFullwidth {
 	protected function setContent() {
 		$this->id = 'training-map';
 
-		if ($this->Training->hasPositionData()) {
-			$Map = new LeafletMap('map');
-			$Map->addRoute( new LeafletTrainingRoute('route-'.$this->Training->id(), $this->Training->GpsData()) );
+		if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
+			$Map = new Leaflet\Map('map-'.$this->Context->activity()->id());
+			$Map->addRoute(
+				new Leaflet\Activity(
+					'route-'.$this->Context->activity()->id(),
+					$this->Context->route(),
+					$this->Context->trackdata()
+				)
+			);
 
-			$this->Content = $Map->getCode();
+			$this->Content = $Map->code();
 		}
 	}
 }

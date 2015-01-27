@@ -4,6 +4,9 @@
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Strecken';
+
+use Runalyze\Activity\Distance;
+
 /**
  * Class: RunalyzePluginStat_Strecken
  * @author Hannes Christiansen
@@ -11,16 +14,21 @@ $PLUGINKEY = 'RunalyzePluginStat_Strecken';
  */
 class RunalyzePluginStat_Strecken extends PluginStat {
 	/**
+	 * City sperator
+	 */
+	const CITY_SEPERATOR = ' - ';
+
+	/**
 	 * Maximum number of routes on routenet
 	 * @var int 
 	 */
-	static public $MAX_ROUTES_ON_NET = 100;
+	const MAX_ROUTES_ON_NET = 50;
 
 	/**
 	 * Array with all cities
 	 * @var array
 	 */
-	private $orte = array();
+	protected $Cities = array();
 
 	/**
 	 * Name
@@ -93,29 +101,28 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '<thead><tr><th colspan="3">'.__('Most frequent routes').'</th></tr></thead>';
 		echo '<tbody class="r">';
 
-		$strecken = DB::getInstance()->query('
+		$i = 0;
+		$statement = DB::getInstance()->query('
 			SELECT
-				`route`,
-				SUM(`distance`) as `km`,
+				`'.PREFIX.'route`.`name`,
+				SUM(`'.PREFIX.'training`.`distance`) as `km`,
 				SUM(1) as `num`
 			FROM `'.PREFIX.'training`
-			WHERE `route`!="" '.$this->getSportAndYearDependenceForQuery().'
-			GROUP BY `route`
+			LEFT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid`=`'.PREFIX.'route`.`id`
+			WHERE 1 '.$this->getSportAndYearDependenceForQuery().' AND `'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND `routeid`!=0 AND `name`!=""
+			GROUP BY `name`
 			ORDER BY `num` DESC
-			LIMIT 10')->fetchAll();
+			LIMIT 10'
+		);
 
-		if (empty($strecken))
-			echo HTML::emptyTD(3, HTML::em( __('There are no routes.') ));
+		while ($data = $statement->fetch()) {
+			echo '<tr>
+					<td>'.$data['num'].'x</td>
+					<td class="l">'.SearchLink::to('route', $data['name'], Helper::Cut($data['name'],100)).'</td>
+					<td>'.Distance::format($data['km']).'</td>
+				</tr>';
 
-		foreach ($strecken as $i => $strecke) {
-			echo('
-				<tr class="a'.($i%2+1).'">
-					<td>'.$strecke['num'].'x</td>
-					<td class="l">	
-						'.SearchLink::to('route', $strecke['route'], Helper::Cut($strecke['route'],100)).'
-					</td>
-					<td>'.Running::Km($strecke['km']).'</td>
-				</tr>');
+			$i++;
 		}
 
 		echo '</tbody>';
@@ -131,21 +138,21 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '<tbody>';
 		
 		$i = 1;
-		array_multisort($this->orte, SORT_DESC);
 
-		if (empty($this->orte))
+		if (empty($this->Cities)) {
 			echo HTML::emptyTD(2, HTML::em( __('There are no routes.') ));
+		}
 
-		foreach ($this->orte as $ort => $num) {
+		foreach ($this->Cities as $city => $num) {
 			$i++;
-			echo('
-				<tr class="a'.($i%2+1).'">
+			echo '<tr class="a'.($i%2+1).'">
 					<td>'.$num.'x</td>
-					<td>'.SearchLink::to('route', $ort, $ort, 'like').'</td>
-				</tr>');
+					<td>'.SearchLink::to('route', $city, $city, 'like').'</td>
+				</tr>';
 
-			if ($i == 11)
+			if ($i == 11) {
 				break;
+			}
 		}
 
 		echo '</tbody>';
@@ -161,9 +168,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '<tbody>';
 
 		$num_x = 0;
-		array_multisort($this->orte);
+		$LonelyCities = array_reverse($this->Cities);
 		
-		foreach ($this->orte as $ort => $num) {
+		foreach ($LonelyCities as $city => $num) {
 			if ($num_x <= 4) {
 				if ($num_x != $num) {
 					if ($num != 1)
@@ -173,7 +180,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 				} else
 					echo ', ';
 
-				echo SearchLink::to('route', $ort, $ort, 'like');
+				echo SearchLink::to('route', $city, $city, 'like');
 			}
 			else {
 				echo '</td></tr>';
@@ -184,7 +191,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		echo '
 			<tr class="no-zebra">
 				<td colspan="2" class="c">
-					'.sprintf( __('You have visited %s different places.'), count($this->orte) ).'
+					'.sprintf( __('You have visited %s different places.'), count($this->Cities) ).'
 				</td>
 			</tr>
 		</tbody>
@@ -197,18 +204,49 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Initialize internal array for all cities
 	 */
 	private function initCities() {
-		$this->orte = array();
-		$strecken = DB::getInstance()->query('SELECT `route`, `distance` FROM `'.PREFIX.'training` WHERE `route`!="" '.$this->getSportAndYearDependenceForQuery())->fetchAll();
-		foreach ($strecken as $strecke) {
-			$streckenorte = explode(" - ", $strecke['route']);
-			foreach ($streckenorte as $streckenort) {
-				$streckenort = trim($streckenort);
+		$this->Cities = array();
+		$statement = DB::getInstance()->query($this->fetchCitiesQuery());
 
-				if (!isset($this->orte[$streckenort]))
-					$this->orte[$streckenort] = 1;
+		while ($string = $statement->fetch(PDO::FETCH_COLUMN)) {
+			$cities = explode(" - ", $string);
+			foreach ($cities as $city) {
+				$city = trim($city);
+
+				if (!isset($this->Cities[$city]))
+					$this->Cities[$city] = 1;
 				else
-					$this->orte[$streckenort]++;
+					$this->Cities[$city]++;
 			}
 		}
+
+		array_multisort($this->Cities, SORT_DESC);
+	}
+
+	/**
+	 * Query to fetch cities
+	 * @return string
+	 */
+	private function fetchCitiesQuery() {
+		if ($this->sportid <= 0 && $this->year <= 0) {
+			return 'SELECT `cities` FROM `'.PREFIX.'route` WHERE `cities`!=""';
+		}
+
+		$Query = 'SELECT `'.PREFIX.'route`.`cities` FROM `'.PREFIX.'training`';
+		$Query .= ' RIGHT JOIN `runalyze_route` ON `runalyze_training`.`routeid` = `runalyze_route`.`id`';
+		$Query .= ' WHERE ';
+
+		if ($this->sportid > 0) {
+			$Query .= '`sportid`='.(int) $this->sportid.' AND ';
+		}
+
+		$Query .= '`runalyze_training`.`accountid`='.SessionAccountHandler::getId().' AND ';
+
+		if ($this->year > 0) {
+			$Query .= 'YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year.' AND ';
+		}
+
+		$Query .= '`routeid`!=0 AND `cities`!=""';
+
+		return $Query;
 	}
 }

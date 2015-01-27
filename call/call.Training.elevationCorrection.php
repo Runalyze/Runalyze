@@ -5,17 +5,39 @@
  */
 require '../inc/class.Frontend.php';
 
+use Runalyze\Context;
+use Runalyze\Model\Activity;
+use Runalyze\Model\Route;
+use Runalyze\Calculation\Route\Calculator;
+use Runalyze\View\Activity\Linker;
+
 $Frontend = new Frontend();
 
-$Training = new TrainingObject( Request::sendId() );
-$Training->tryToCorrectElevation();
+$Factory = Context::Factory();
+$Activity = $Factory->activity(Request::sendId());
+$ActivityOld = clone $Activity;
+$Route = $Factory->route($Activity->get(Activity\Object::ROUTEID));
+$RouteOld = clone $Route;
 
-if ($Training->elevationWasCorrected()) {
+$Calculator = new Calculator($Route);
+
+if ($Calculator->tryToCorrectElevation()) {
+	$Calculator->calculateElevation();
+	$Activity->set(Activity\Object::ELEVATION, $Route->elevation());
+
+	$UpdaterRoute = new Route\Updater(DB::getInstance(), $Route, $RouteOld);
+	$UpdaterRoute->setAccountID(SessionAccountHandler::getId());
+	$UpdaterRoute->update();
+
+	$UpdaterActivity = new Activity\Updater(DB::getInstance(), $Activity, $ActivityOld);
+	$UpdaterActivity->setAccountID(SessionAccountHandler::getId());
+	$UpdaterActivity->update();
+
 	echo __('Elevation data has been corrected.');
 
 	Ajax::setReloadFlag( Ajax::$RELOAD_DATABROWSER_AND_TRAINING );
 	echo Ajax::getReloadCommand();
-	echo Ajax::wrapJS('if($("#ajax").is(":visible"))Runalyze.Overlay.load(\''.$Training->Linker()->editUrl().'\')');
+	echo Ajax::wrapJS('if($("#ajax").is(":visible") && $("#training").length)Runalyze.Overlay.load(\''.Linker::EDITOR_URL.'?id='.Request::sendId().'\')');
 } else {
 	echo __('Elevation data could not be retrieved.');
 }

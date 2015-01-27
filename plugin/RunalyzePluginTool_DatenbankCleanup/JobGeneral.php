@@ -63,12 +63,12 @@ class JobGeneral extends Job {
 			$this->recalculateShoeStatistics();
 		}
 
-		if ($this->isRequested(self::VDOT)) {
-			$this->recalculateVDOTshape();
-		}
-
 		if ($this->isRequested(self::VDOT_CORRECTOR)) {
 			$this->recalculateVDOTcorrector();
+		}
+
+		if ($this->isRequested(self::VDOT)) {
+			$this->recalculateVDOTshape();
 		}
 
 		if ($this->isRequested(self::ENDURANCE)) {
@@ -105,8 +105,7 @@ class JobGeneral extends Job {
 	 */
 	protected function recalculateVDOTshape() {
 		$oldValue = Configuration::Data()->vdotShape();
-		\JD::recalculateVDOTform();
-		$newValue = Configuration::Data()->vdotShape();
+		$newValue = Configuration::Data()->recalculateVDOTshape();
 
 		$this->addSuccessMessage(__('Vdot shape'), number_format($oldValue, 1), number_format($newValue, 1));
 	}
@@ -116,8 +115,7 @@ class JobGeneral extends Job {
 	 */
 	protected function recalculateVDOTcorrector() {
 		$oldValue = Configuration::Data()->vdotCorrector();
-		\JD::recalculateVDOTform();
-		$newValue = Configuration::Data()->vdotCorrector();
+		$newValue = Configuration::Data()->recalculateVDOTcorrector();
 
 		$this->addSuccessMessage(__('Vdot corrector'), number_format($oldValue, 4), number_format($newValue, 4));
 	}

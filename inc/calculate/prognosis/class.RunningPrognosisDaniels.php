@@ -3,6 +3,11 @@
  * This file contains class::RunningPrognosisDaniels
  * @package Runalyze\Calculations\Prognosis
  */
+
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\Math\Bisection;
+use Runalyze\Configuration;
+
 /**
  * Class: RunningPrognosisDaniels
  * 
@@ -44,7 +49,7 @@ class RunningPrognosisDaniels extends RunningPrognosisStrategy {
 	 * Running setup from database
 	 */
 	public function setupFromDatabase() {
-		$this->setVDOT( VDOT_FORM );
+		$this->setVDOT( Configuration::Data()->vdot() );
 		$this->adjustVDOT( true );
 		$this->setBasicEnduranceForAdjustment( BasicEndurance::getConst() );
 	}
@@ -75,12 +80,34 @@ class RunningPrognosisDaniels extends RunningPrognosisStrategy {
 
 	/**
 	 * Prognosis in seconds
-	 * @see JD::CompetitionPrognosis()
 	 * @param float $distance in kilometer
 	 * @return float prognosis in seconds
 	 */
 	public function inSeconds($distance) {
-		return JD::CompetitionPrognosis($this->getAdjustedVDOTforDistanceIfWanted($distance), $distance);
+		return self::prognosisFor($this->getAdjustedVDOTforDistanceIfWanted($distance), $distance);
+	}
+
+	/**
+	 * Calculate prognosis for given VDOT
+	 * @see \Runalyze\Calculation\JD\VDOT::formula
+	 * @param $VDOTtoReach  VDOT
+	 * @param $km           Distance [km]
+	 * @return int          Time [s]
+	 */
+	public static function prognosisFor($VDOTtoReach, $km = 5) {
+		if ($VDOTtoReach == 0)
+			return 0;
+
+		$Bisection = new Bisection(
+			$VDOTtoReach,
+			round(2*60*$km),
+			round(10*60*$km),
+			function($seconds) use ($km) {
+				return VDOT::formula($km, $seconds);
+			}
+		);
+
+		return $Bisection->findValue();
 	}
 
 	/**

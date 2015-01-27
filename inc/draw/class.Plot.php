@@ -218,7 +218,16 @@ class Plot {
 			$this->Options['series']['points']['lineWidth'] = $size;
 	}
 
-	/**
+    /**
+     * Show series as points
+     * @param int $series
+     */
+    public function showAsPoints($series) {
+        $this->Data[$series]['points']['show'] = true;
+    }
+
+
+    /**
 	* Set line width for series
 	* @param int $series
 	* @param int $width
@@ -304,6 +313,14 @@ class Plot {
 	}
 
 	/**
+     * Put grid above data
+     */
+    public function setGridAboveData() {
+        $this->Options['grid']['aboveData'] = true;
+    }
+
+
+	/**
 	 * Set legend as table (not in one line as default)
 	 * @param string $position
 	 */
@@ -316,12 +333,12 @@ class Plot {
 	 * Set specific lines to be filled
 	 * @param array $keys
 	 */
-	public function setLinesFilled($keys = array()) {
+	public function setLinesFilled($keys = array(), $opacity=0.7) {
 		if (empty($keys))
 			$keys = array_keys($this->Data);
 
 		foreach ($keys as $key)
-			$this->Data[$key]['lines']['fill'] = 0.7;
+			$this->Data[$key]['lines']['fill'] = $opacity;
 	}
 
 	/**
@@ -356,6 +373,21 @@ class Plot {
 	 */
 	public function setXAxisAsTime() {
 		$this->Options['xaxis']['mode'] = "time";
+        $this->Options['xaxis']['monthNames']=	array(
+            __('Jan'),
+            __('Feb'),
+            __('Mar'),
+            __('Apr'),
+            __('May'),
+            __('Jun'),
+            __('Jul'),
+            __('Aug'),
+            __('Sep'),
+            __('Oct'),
+            __('Nov'),
+            __('Dec'),
+        );
+
 	}
 
 	/**
@@ -483,15 +515,14 @@ class Plot {
 			$diff = $max - $min;
 			if ($factor == 'auto') {
 				$factor = pow(10, round(log10($diff))-1);
+
 				if ($factor > 10)
 					$factor = 10;
 			}
 
-			$min = floor($min/$factor-0.02*$diff)*$factor;
+			$minScaled = $min > 0 ? max(0, $min/$factor - 0.02*$diff) : $min/$factor - 0.02*$diff;
+			$min = floor($minScaled)*$factor;
 			$max = ceil($max/$factor+0.02*$diff)*$factor;
-
-			if ($min < 0)
-				$min = 0;
 
 			$this->setYTicks($axis, $factor);
 		}
@@ -536,7 +567,7 @@ class Plot {
 	 * @param int $day
 	 */
 	static public function dayOfYearToJStime($year, $day) {
-		return mktime(1,0,0,1,$day,$year).'000';
+		return mktime(12,0,0,1,$day,$year).'000';
 	}
 
 	/**
@@ -566,7 +597,7 @@ class Plot {
  * @return mixed
  */
 function PLOT__correctValuesMapperForTime($v) {
-	return $v*1000;
+	return round($v*1000);
 }
 
 /**
@@ -578,7 +609,7 @@ function PLOT__correctValuesMapperFromPaceToKmh($v) {
 	if ($v == 0)
 		return 0;
 
-	return 3600/$v;
+	return round(3600/$v, 2);
 }
 
 /**

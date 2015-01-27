@@ -47,6 +47,10 @@ class Percental implements Scale {
 	 * @inheritDoc
 	 */
 	public function transform($input) {
+		if ($this->Max == $this->Min) {
+			return 0;
+		}
+
 		return min(100, 100 * max(0, $input - $this->Min) / ($this->Max - $this->Min) );
 	}
 }

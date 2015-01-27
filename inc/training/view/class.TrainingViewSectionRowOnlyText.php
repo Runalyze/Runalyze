@@ -29,15 +29,6 @@ abstract class TrainingViewSectionRowOnlyText extends TrainingViewSectionRowAbst
 	protected $ContentLeft = '';
 
 	/**
-	 * Constructor
-	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
-
-		$this->setContent();
-	}
-
-	/**
 	 * Display
 	 */
 	final public function display() {

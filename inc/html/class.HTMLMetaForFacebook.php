@@ -3,6 +3,11 @@
  * This file contains class::HTMLMetaForFacebook
  * @package Runalyze\HTML
  */
+
+use Runalyze\View\Activity\Context;
+use Runalyze\View\Activity\Linker;
+use Runalyze\Model;
+
 /**
  * Meta-tag creator for Facebook
  * 
@@ -18,13 +23,28 @@ class HTMLMetaForFacebook {
 	 * Step size for meta course
 	 * @var int
 	 */
-	static private $STEP_SIZE = 10;
+	const STEP_SIZE = 10;
 
 	/**
-	 * Training
-	 * @var TrainingObject
+	 * @var string
+	 * @todo
 	 */
-	protected $Training = null;
+	const IMAGE = 'http://runalyze.de/wp-content/uploads/Account.png';
+
+	/**
+	 * @var \Runalyze\View\Activity\Context
+	 */
+	protected $Context = null;
+
+	/**
+	 * @var \Runalyze\Model\Route\Loop
+	 */
+	protected $RouteLoop;
+
+	/**
+	 * @var \Runalyze\Model\Trackdata\Loop
+	 */
+	protected $TrackdataLoop;
 
 	/**
 	 * Properties
@@ -36,47 +56,36 @@ class HTMLMetaForFacebook {
 	 * Constructor
 	 */
 	public function __construct() {
-		// TODO
-		//if (System::isAtLocalhost())
-		//	return;
+		if ($this->canFindActivityID()) {
+			$this->setContext();
 
-		if ($this->canFindTrainingID()) {
-			$this->setTraining();
-			$this->checkTraining();
-			$this->setProperties();
+			if ($this->activityIsValid()) {
+				$this->setProperties();
+			}
 		}
 	}
 
 	/**
-	 * Set training
+	 * Set context
 	 */
-	private function setTraining() {
-                $data = Cache::get('training'.SharedLinker::getTrainingId(),1);
-                if(is_null($data)) {
-                    $data = DB::getInstance()->fetchByID('training', SharedLinker::getTrainingId());
-                    Cache::set('training'.SharedLinker::getTrainingId(), $data, '3600', 1);
-                }
-		if ($data)
-			$this->Training = new TrainingObject( $data );
+	private function setContext() {
+		$this->Context = new Context(SharedLinker::getTrainingId(), SessionAccountHandler::getId());
 	}
 
 	/**
-	 * Can find training ID?
+	 * Can find activity ID?
 	 * @return boolean
 	 */
-	private function canFindTrainingID() {
+	protected function canFindActivityID() {
 		return Request::isOnSharedPage() && SharedLinker::getTrainingId() > 0;
 	}
 
 	/**
-	 * Check training
+	 * Is valid?
+	 * @return boolean
 	 */
-	private function checkTraining() {
-		if (!is_null($this->Training) && $this->Training->isDefaultId())
-			$this->Training = null;
-
-		if (!is_null($this->Training) && !$this->Training->isPublic())
-			$this->Training = null;
+	protected function activityIsValid() {
+		return (!is_null($this->Context) && $this->Context->activity()->duration() > 0 && $this->Context->activity()->isPublic());
 	}
 
 	/**
@@ -84,35 +93,34 @@ class HTMLMetaForFacebook {
 	 * @param string $name
 	 * @param string $content
 	 */
-	private function add($name, $content) {
+	protected function add($name, $content) {
 		$this->Properties[$name] = $content;
 	}
 
 	/**
 	 * Set properties
 	 */
-	private function setProperties() {
-		if (is_null($this->Training))
-			return;
+	protected function setProperties() {
+		$Exporter = new ExporterFacebook($this->Context);
 
-		$Exporter = new ExporterFacebook($this->Training);
+		$Linker = new Linker($this->Context->activity());
 
 		$this->add('fb:app_id', ExporterFacebook::$APP_ID);
 		$this->add('og:type', 'fitness.course');
-		$this->add('og:url', $this->Training->Linker()->publicUrl());
+		$this->add('og:url', $Linker->publicUrl());
 		$this->add('og:title', addslashes($Exporter->metaTitle()));
-		$this->add('og:image', 'http://runalyze.de/wp-content/uploads/Account.png');
+		$this->add('og:image', self::IMAGE);
 
-		$this->add('fitness:calories', $this->Training->getCalories());
-		$this->add('fitness:distance:value', $this->Training->getDistance());
+		$this->add('fitness:calories', $this->Context->activity()->calories());
+		$this->add('fitness:distance:value', $this->Context->activity()->distance());
 		$this->add('fitness:distance:units', 'km');
-		$this->add('fitness:duration:value', $this->Training->getTimeInSeconds());
+		$this->add('fitness:duration:value', $this->Context->activity()->duration());
 		$this->add('fitness:duration:units', 's');
 
-		if ($this->Training->getDistance() > 0 && $this->Training->getTimeInSeconds() > 0) {
-			$this->add('fitness:pace:value', $this->Training->getTimeInSeconds()/$this->Training->getDistance()/1000);
+		if ($this->Context->activity()->distance() > 0) {
+			$this->add('fitness:pace:value', $this->Context->activity()->duration()/$this->Context->activity()->distance()/1000);
 			$this->add('fitness:pace:units', 's/m');
-			$this->add('fitness:speed:value', 1000/($this->Training->getTimeInSeconds()/$this->Training->getDistance()));
+			$this->add('fitness:speed:value', 1000/($this->Context->activity()->duration()/$this->Context->activity()->distance()));
 			$this->add('fitness:speed:units', 'm/s');
 		}
 	}
@@ -121,50 +129,60 @@ class HTMLMetaForFacebook {
 	 * Display
 	 */
 	public function display() {
-		foreach ($this->Properties as $name => $content)
+		foreach ($this->Properties as $name => $content) {
 			echo '<meta property="'.$name.'" content="'.$content.'">'.NL;
+		}
 
-		if (!empty($this->Properties) && $this->Training->hasPositionData())
-			echo '<link rel="opengraph" href="'.System::getFullDomain().'call/call.MetaCourse.php?id='.$this->Training->id().'">';
+		if (!empty($this->Properties) && $this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
+			echo '<link rel="opengraph" href="'.System::getFullDomain().'call/call.MetaCourse.php?id='.$this->Context->activity()->id().'&account='.SessionAccountHandler::getId().'">';
+		}
 	}
 
 	/**
 	 * Display course
 	 */
 	public function displayCourse() {
-		DB::getInstance()->stopAddingAccountID();
-		$TrainingData   = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'training` WHERE `id`='.(int)Request::sendId().' LIMIT 1')->fetch();
-		DB::getInstance()->startAddingAccountID();
+		$this->Context = new Context(Request::sendId(), Request::param('account'));
 
-		$this->Training = new TrainingObject( $TrainingData );
-
-		if ($this->Training->isDefaultId() || !$this->Training->isPublic())
+		if (!$this->activityIsValid() || !$this->Context->hasRoute() || !$this->Context->route()->hasPositionData()) {
 			die('Don\'t do that!');
+		}
 
-		echo '<meta property="og:type" content="metadata">';
-		echo '<link rel="origin" href="'.$this->Training->Linker()->publicUrl().'">';
+		$Linker = new Linker($this->Context->activity());
 
-		$this->Training->GpsData()->startLoop();
-		$this->Training->GpsData()->setStepSize(self::$STEP_SIZE);
+		echo '<meta property="og:type" content="metadata">'.NL;
+		echo '<link rel="origin" href="'.$Linker->publicUrl().'">'.NL;
 
-		while ($this->Training->GpsData()->nextStep())
+		$this->RouteLoop = new Model\Route\Loop($this->Context->route());
+		$this->RouteLoop->setStepSize(self::STEP_SIZE);
+
+		$this->TrackdataLoop = new Model\Trackdata\Loop($this->Context->trackdata());
+		$this->TrackdataLoop->setStepSize(self::STEP_SIZE);
+
+		while ($this->RouteLoop->nextStep()) {
+			$this->TrackdataLoop->nextStep();
+
 			$this->displayActivityDataPoint();
+		}
 	}
 
 	/**
 	 * Display activity data point
 	 */
 	protected function displayActivityDataPoint() {
+		// TODO: Elevation?
+		//$elevation = ...
+		$pace = $this->TrackdataLoop->average(Model\Trackdata\Object::PACE);
+
 		echo '
-<meta property="fitness:metrics:location:latitude"  content="'.$this->Training->GpsData()->getLatitude().'">
-<meta property="fitness:metrics:location:longitude" content="'.$this->Training->GpsData()->getLongitude().'">
-<meta property="fitness:metrics:location:altitude"  content="'.$this->Training->GpsData()->getElevation().'">
-<meta property="fitness:metrics:timestamp" content="'.date('Y-m-d\TH:i', ($this->Training->getTimestamp() + $this->Training->GpsData()->getTime())).'">
-<meta property="fitness:metrics:distance:value" content="'.$this->Training->GpsData()->getDistance().'">
+<meta property="fitness:metrics:location:latitude"  content="'.$this->RouteLoop->latitude().'">
+<meta property="fitness:metrics:location:longitude" content="'.$this->RouteLoop->longitude().'">
+<meta property="fitness:metrics:timestamp" content="'.date('Y-m-d\TH:i', ($this->Context->activity()->timestamp() + $this->TrackdataLoop->time())).'">
+<meta property="fitness:metrics:distance:value" content="'.$this->TrackdataLoop->distance().'">
 <meta property="fitness:metrics:distance:units" content="km">
-<meta property="fitness:metrics:pace:value" content="'.($this->Training->GpsData()->getPace()/1000).'">
+<meta property="fitness:metrics:pace:value" content="'.($pace/1000).'">
 <meta property="fitness:metrics:pace:units" content="s/m">
-<meta property="fitness:metrics:speed:value" content="'.($this->Training->GpsData()->getPace() > 0 ? 1000/$this->Training->GpsData()->getPace() : 0).'">
+<meta property="fitness:metrics:speed:value" content="'.($pace > 0 ? 1000/$pace : 0).'">
 <meta property="fitness:metrics:speed:units" content="m/s">';
 	}
 }

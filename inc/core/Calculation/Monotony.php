@@ -39,16 +39,15 @@ class Monotony {
 	const CRITICAL = 2;
 
 	/**
+	 * Number of days
+	 */
+	const DAYS = 7;
+
+	/**
 	 * Trimp data
 	 * @var array
 	 */
 	protected $TRIMP = array();
-
-	/**
-	 * Number of days
-	 * @var int
-	 */
-	protected $Count;
 
 	/**
 	 * Trimp average
@@ -65,12 +64,10 @@ class Monotony {
 	/**
 	 * Construct
 	 * @param array $trimpData
-	 * @param int $count [optional]
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(array $trimpData, $count = 0) {
+	public function __construct(array $trimpData) {
 		$this->TRIMP = $trimpData;
-		$this->Count = ($count > 0) ? $count : count($trimpData);
 	}
 
 	/**
@@ -82,14 +79,16 @@ class Monotony {
 			return;
 		}
 
-		$this->Avg = array_sum($this->TRIMP) / $this->Count;
+		$this->Avg = array_sum($this->TRIMP) / static::DAYS;
 		$var = 0;
 
 		foreach ($this->TRIMP as $Trimp) {
 			$var += ($Trimp - $this->Avg) * ($Trimp - $this->Avg);
 		}
 
-		$var /= $this->Count;
+		$var += (static::DAYS - count($this->TRIMP)) * $this->Avg * $this->Avg;
+
+		$var /= static::DAYS;
 
 		$this->Value = ($var == 0) ? self::MAX : $this->Avg / sqrt($var);
 	}
@@ -113,7 +112,7 @@ class Monotony {
 	 * @return float
 	 */
 	public function trainingStrain() {
-		return $this->Avg * $this->value();
+		return $this->Avg * static::DAYS * $this->value();
 	}
 
 	/**
@@ -135,7 +134,7 @@ class Monotony {
 	 */
 	public function trainingStrainAsPercentage() {
 		// TODO: Use another maximum?
-		$max = 2 * Configuration::Data()->maxATL();
+		$max = 2 * Configuration::Data()->maxATL() * static::DAYS;
 		$Scale = new Scale\Percental();
 		$Scale->setMaximum($max);
 

@@ -5,7 +5,10 @@
  */
 require '../inc/class.Frontend.php';
 
+use Runalyze\View\Activity\Context;
+use Runalyze\View\Window\Laps\Window;
+
 $Frontend = new Frontend();
 
-$RoundsInfo = new RoundsInfo(new TrainingObject(Request::sendId()));
-$RoundsInfo->display();
+$Window = new Window(new Context(Request::sendId(), SessionAccountHandler::getId()));
+$Window->display();

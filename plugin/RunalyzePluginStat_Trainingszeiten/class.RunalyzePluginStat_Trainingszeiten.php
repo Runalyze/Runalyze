@@ -4,6 +4,11 @@
  * @package Runalyze\Plugins\Stats
  */
 $PLUGINKEY = 'RunalyzePluginStat_Trainingszeiten';
+
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Linker;
+use Runalyze\View\Activity\Dataview;
+
 /**
  * Plugin "Trainingszeiten"
  * 
@@ -125,17 +130,20 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 		echo '<tbody>';
 
 		foreach ($nights as $i => $data) {
-			$Training = new TrainingObject($data);
+			$Activity = new Activity\Object($data);
+			$Linker = new Linker($Activity);
+			$View = new Dataview($Activity);
 
 			if ($i%2 == 0)
-				echo('<tr class="a'.(round($i/2)%2+1).'">');
-			echo('
-				<td class="b">'.$Training->DataView()->getDaytimeString().'</td>
-				<td>'.$Training->Linker()->linkWithSportIcon().'</td>
-				<td>'.$Training->DataView()->getKmOrTime().' '.$Training->Sport()->name().'</td>
-				<td>'.$Training->DataView()->getDateAsWeeklink().'</td>');
+				echo '<tr">';
+
+			echo '<td class="b">'.$View->daytime().'</td>
+				<td>'.$Linker->linkWithSportIcon().'</td>
+				<td>'.$View->distanceOrDuration().' '.SportFactory::name($Activity->sportid()).'</td>
+				<td>'.$Linker->weekLink().'</td>';
+
 			if ($i%2 == 1)
-				echo('</tr>');
+				echo '</tr>';
 		}
 
 		echo '</tbody></table>';

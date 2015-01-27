@@ -193,9 +193,9 @@ abstract class PluginStat extends Plugin {
 			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink(__('All'), -1, $this->year).'</li>';
 		}
 
-		$Sports = DB::getInstance()->query('SELECT `name`, `id` FROM `'.PREFIX.'sport` ORDER BY `id` ASC')->fetchAll();
-		foreach ($Sports as $Sport) {
-			$Links .= '<li'.($Sport['id']==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($Sport['name'], $Sport['id'], $this->year).'</li>';
+		$Sports = SportFactory::NamesAsArray();
+		foreach ($Sports as $id => $name) {
+			$Links .= '<li'.($id == $this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($name, $id, $this->year).'</li>';
 		}
 
 		return $Links;

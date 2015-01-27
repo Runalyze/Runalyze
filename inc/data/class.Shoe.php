@@ -3,6 +3,10 @@
  * This file contains class::Shoe
  * @package Runalyze\DataObjects\Shoe
  */
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+
 /**
  * Data object for a shoe
  * @author Hannes Christiansen
@@ -45,6 +49,10 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getSearchLink() {
+		if (Request::isOnSharedPage()) {
+			return $this->getName();
+		}
+
 		return ShoeFactory::getSearchLink($this->id());
 	}
 	
@@ -69,7 +77,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getTimeString() {
-		return Time::toString($this->getTime());
+		return Duration::format($this->getTime());
 	}
 
 	/**
@@ -85,7 +93,7 @@ class Shoe extends DataObject {
 	 * @return string
 	 */
 	public function getKmString() {
-		return Running::Km($this->getKm());
+		return Distance::format($this->getKm());
 	}
 
 	/**

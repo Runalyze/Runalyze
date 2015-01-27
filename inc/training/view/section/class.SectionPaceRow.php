@@ -3,6 +3,9 @@
  * This file contains class::SectionPaceRow
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity;
+
 /**
  * Row: Heartrate
  * 
@@ -14,10 +17,10 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Set plot
 	 */
 	protected function setRightContent() {
-		$this->addRightContent('plot', __('Pace plot'), new TrainingPlotPace($this->Training));
+		$this->addRightContent('plot', __('Pace plot'), new Activity\Plot\Pace($this->Context));
 
-		if ($this->Training->hasArrayPace()) {
-			$Table = new TableZonesPace($this->Training);
+		if ($this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE)) {
+			$Table = new TableZonesPace($this->Context);
 			$Code = $Table->getCode();
 			$Code .= HTML::info( __('You\'ll be soon able to configure your own zones.') );
 
@@ -36,7 +39,7 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 			$Value->defineAsFloatingBlock('w50');
 		}
 
-		if ($this->Training->getCurrentlyUsedVdot() > 0) {
+		if ($this->Context->dataview()->vdot()->value() > 0) {
 			$this->addInfoLink();
 		}
 	}
@@ -45,9 +48,9 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: average pace
 	 */
 	protected function addAveragePace() {
-		if ($this->Training->getDistance() > 0 && $this->Training->getTimeInSeconds() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Training->getPace(), '/km', __('&oslash; Pace'));
-			$this->BoxedValues[] = new BoxedValue($this->Training->DataView()->getKmh(), 'km/h', __('&oslash; Speed'));
+		if ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
+			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->pace()->asMinPerKm(), '/km', __('&oslash; Pace'));
+			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->pace()->asKmPerHour(), 'km/h', __('&oslash; Speed'));
 		}
 	}
 
@@ -55,9 +58,9 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: vdot/intensity
 	 */
 	protected function addCalculations() {
-		if ($this->Training->getVdotCorrected() > 0 || $this->Training->getJDintensity() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Training->getCurrentlyUsedVdot(), '-'), '', __('VDOT'), $this->Training->DataView()->getVDOTicon());
-			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Training->getJDintensity(), '-'), '', __('Training points'));
+		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon());
+			$this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->jdIntensity(), '-'), '', __('Training points'));
 		}
 	}
 
@@ -65,10 +68,13 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add info link
 	 */
 	protected function addInfoLink() {
-		if ($this->Training->getVdotCorrected() > 0 || $this->Training->getJDintensity() > 0) {
-			$InfoLink = Ajax::window('<a href="'.$this->Training->Linker()->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
+		if ($this->Context->dataview()->vdot()->value() > 0 || $this->Context->activity()->jdIntensity() > 0) {
+			if (!Request::isOnSharedPage()) {
+				$Linker = new Activity\Linker($this->Context->activity());
+				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
-			$this->Content = HTML::info( $InfoLink );
+				$this->Content = HTML::info( $InfoLink );
+			}
 		}
 	}
 }

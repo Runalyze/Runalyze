@@ -16,7 +16,7 @@ class SectionComposite extends TrainingViewSectionTabbedPlot {
 	protected function setHeaderAndRows() {
 		$this->Header = __('Composite data');
 
-		$this->appendRowTabbedPlot( new SectionCompositeRow($this->Training) );
+		$this->appendRowTabbedPlot( new SectionCompositeRow($this->Context) );
 	}
 
 	/**

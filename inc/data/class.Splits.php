@@ -3,6 +3,9 @@
  * This file contains class::Splits
  * @package Runalyze\Data\Splits
  */
+
+use Runalyze\Activity\Duration;
+
 /**
  * Class for handling splits
  * @author Hannes Christiansen
@@ -110,7 +113,7 @@ class Splits {
 
 		$this->asArray[] = array(
 			'km' => $this->formatKM($km),
-			'time' => Time::toString($timeInSeconds, false, false, false),
+			'time' => $this->formatTime($timeInSeconds),
 			'active' => $active
 		);
 		$this->arrayToString();
@@ -187,8 +190,9 @@ class Splits {
 			//else
 			$this->asArray[$key]['km'] = $this->formatKM($split['km']);
 
-			if (substr($split['time'], -1) == 's')
-				$this->asArray[$key]['time'] = Time::toString(Time::toSeconds($split['time']), false, 2);
+			if (substr($split['time'], -1) == 's') {
+				$this->asArray[$key]['time'] = $this->formatTime(substr($split['time'], 0, -1));
+			}
 		}
 	}
 
@@ -199,6 +203,14 @@ class Splits {
 	 */
 	private function formatKM($km) {
 		return number_format(Helper::CommaToPoint($km), 2, '.', '');
+	}
+
+	/**
+	 * @param float $seconds
+	 * @return string
+	 */
+	private function formatTime($seconds) {
+		return Duration::format(round($seconds));
 	}
 
 	/**
@@ -221,9 +233,12 @@ class Splits {
 	public function timesAsArray($restingLaps = false) {
 		$times = array();
 
-		foreach ($this->asArray as $split)
-			if ($restingLaps || $split['active'])
-				$times[] = Time::toSeconds($split['time']);
+		foreach ($this->asArray as $split) {
+			if ($restingLaps || $split['active']) {
+				$Duration = new Duration($split['time']);
+				$times[] = $Duration->seconds();
+			}
+		}
 
 		return $times;
 	}
@@ -235,8 +250,10 @@ class Splits {
 	public function totalTime() {
 		$time = 0;
 
-		foreach ($this->asArray as $split)
-			$time += Time::toSeconds($split['time']);
+		foreach ($this->asArray as $split) {
+			$Duration = new Duration($split['time']);
+			$time += $Duration->seconds();
+		}
 
 		return $time;
 	}
@@ -314,9 +331,12 @@ class Splits {
 	public function pacesAsArray($restingLaps = false) {
 		$paces = array();
 
-		foreach ($this->asArray as $split)
-			if ($restingLaps || $split['active'])
-				$paces[] = $split['km'] > 0 ? (int)round(Time::toSeconds($split['time'])/$split['km']) : 0;
+		foreach ($this->asArray as $split) {
+			if ($restingLaps || $split['active']) {
+				$Duration = new Duration($split['time']);
+				$paces[] = $split['km'] > 0 ? (int)round($Duration->seconds()/$split['km']) : 0;
+			}
+		}
 
 		return $paces;
 	}
@@ -353,8 +373,9 @@ class Splits {
 
 		foreach ($this->asArray as &$split) {
 			if ($mode == 'km') {
-				$s = Time::toSeconds($split['time']);
-				while ($i < $size-1 && $s > $Time[$i] - $totalTime)
+				$Duration = new Duration($split['time']);
+
+				while ($i < $size-1 && $Duration->seconds() > $Time[$i] - $totalTime)
 					$i++;
 
 				$split['km'] = $this->formatKM($Distance[$i] - $totalDistance);
@@ -362,7 +383,7 @@ class Splits {
 				while ($i < $size-1 && $split['km'] > $Distance[$i] - $totalDistance)
 					$i++;
 
-				$split['time'] = Time::toString($Time[$i] - $totalTime, false, 2);
+				$split['time'] = $this->formatTime($Time[$i] - $totalTime);
 			}
 
 			$totalTime     = $Time[$i];

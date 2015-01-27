@@ -3,6 +3,11 @@
  * This file contains class::TableZonesAbstract
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+use Runalyze\View\Activity\Context;
+
 /**
  * Display zones
  * 
@@ -11,16 +16,15 @@
  */
 abstract class TableZonesAbstract {
 	/**
-	 * Minimum distance to be shown as a zone
-	 * @var double
+	 * @var int [s]
 	 */
-	protected static $MINIMUM_DISTANCE_FOR_ZONE = 0.1;
+	const MINIMUM_TIME_IN_ZONE = 10;
 
 	/**
-	 * Training object
-	 * @var TrainingObject
+	 * Context
+	 * @var \Runalyze\View\Activity\Context
 	 */
-	protected $Training = null;
+	protected $Context;
 
 	/**
 	 * Data
@@ -30,13 +34,15 @@ abstract class TableZonesAbstract {
 
 	/**
 	 * Constructor
-	 * @param TrainingObject $Training
+	 * @param \Runalyze\View\Activity\Context $context
 	 */
-	public function __construct(TrainingObject &$Training) {
-		$this->Training = $Training;
+	public function __construct(Context $context) {
+		$this->Context = $context;
 
-		$this->initData();
-		$this->convertData();
+		if ($this->Context->trackdata()->has(Runalyze\Model\Trackdata\Object::TIME)) {
+			$this->initData();
+			$this->convertData();
+		}
 	}
 
 	/**
@@ -78,8 +84,8 @@ abstract class TableZonesAbstract {
 			}
 
 			$this->Data[$i]['percentage'] = $percentage;
-			$this->Data[$i]['time']       = $totalTime > 0 ? Time::toString($Info['time'], false, $Info['time'] < 60 ? 2 : false) : '-';
-			$this->Data[$i]['distance']   = Running::Km($Info['distance'], 2);
+			$this->Data[$i]['time']       = $totalTime > 0 ? Duration::format($Info['time']) : '-';
+			$this->Data[$i]['distance']   = $totalDist > 0 ? Distance::format($Info['distance']) : '-';
 		}
 	}
 

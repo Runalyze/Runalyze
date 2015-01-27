@@ -3,6 +3,10 @@
  * This file contains class::MultiImporterFormular
  * @package Runalyze\Import
  */
+
+use Runalyze\Model\Activity;
+use Runalyze\View\Activity\Preview;
+
 /**
  * Formular to import multiple trainings
  *
@@ -100,14 +104,27 @@ class MultiImporterFormular extends Formular {
 		$Inputs  = HTML::checkBox('training-import['.$i.']', true);
 		$Inputs .= HTML::hiddenInput('training-data['.$i.']', $Data);
 
+		$Preview = new Preview(
+			new Activity\Object(array(
+				Activity\Object::TIMESTAMP => $TrainingObject->getTimestamp(),
+				Activity\Object::SPORTID => $TrainingObject->get('sportid'),
+				Activity\Object::TIME_IN_SECONDS => $TrainingObject->getTimeInSeconds(),
+				Activity\Object::DISTANCE => $TrainingObject->getDistance(),
+				Activity\Object::IS_TRACK => $TrainingObject->isTrack(),
+				Activity\Object::HR_AVG => $TrainingObject->getPulseAvg(),
+				Activity\Object::SPLITS => $TrainingObject->get('splits'),
+				Activity\Object::ROUTEID => $TrainingObject->hasPositionData()
+			)
+		));
+
 		$Row  = '<td>'.$Inputs.'</td>';
-		$Row .= '<td>'.$TrainingObject->DataView()->getDate().'</td>';
-		$Row .= '<td>'.Time::toString(round($TrainingObject->getTimeInSeconds()), true, true).'</td>';
-		$Row .= '<td>'.$TrainingObject->DataView()->getDistanceStringWithFullDecimals().'</td>';
-		$Row .= '<td>'.$TrainingObject->Sport()->IconWithTooltip().'</td>';
-		$Row .= '<td>'.$TrainingObject->DataView()->getPulseIcon().'</td>';
-		$Row .= '<td>'.$TrainingObject->DataView()->getSplitsIcon().'</td>';
-		$Row .= '<td>'.$TrainingObject->DataView()->getMapIcon().'</td>';
+		$Row .= '<td>'.$Preview->dateAndTime().'</td>';
+		$Row .= '<td>'.$Preview->duration().'</td>';
+		$Row .= '<td>'.$Preview->distance().'</td>';
+		$Row .= '<td>'.$Preview->sportIcon().'</td>';
+		$Row .= '<td>'.$Preview->hrIcon().'</td>';
+		$Row .= '<td>'.$Preview->splitsIcon().'</td>';
+		$Row .= '<td>'.$Preview->mapIcon().'</td>';
 
 		return $Row;
 	}

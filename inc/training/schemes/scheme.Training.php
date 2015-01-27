@@ -9,10 +9,9 @@ $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
-	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation'
-	'elapsed_time', 'elevation_calculated', // 'power', 'cadence',
-	// TODO: already prepared attributes
-	'jd_intensity'
+	'arr_groundcontact', 'arr_vertical_oscillation',
+	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation'
 );
 
 $FIELDSETS = array(
@@ -338,6 +337,26 @@ $FIELDS = array(
 						'css'		=> TrainingFormular::$ONLY_POWER_CLASS
 					)
 	),
+	'groundcontact'		=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '5',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'vertical_oscillation'	=> array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '3',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
 	'temperature'		=> array(
 					'database'	=> array(
 						'type'		=> 'float',
@@ -541,6 +560,24 @@ $FIELDS = array(
 					)
 	),
 	'arr_temperature'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_groundcontact'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_vertical_oscillation'	=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',

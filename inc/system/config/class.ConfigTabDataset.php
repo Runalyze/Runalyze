@@ -17,7 +17,7 @@ class ConfigTabDataset extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_dataset';
-		$this->title = __('dataset');
+		$this->title = __('Dataset');
 	}
 
 	/**
@@ -54,7 +54,7 @@ class ConfigTabDataset extends ConfigTab {
 
 		$Labels = new DatasetLabels();
 		$DatasetObject = new Dataset();
-		$DatasetObject->setTrainingId(DataObject::$DEFAULT_ID, $this->getExampleTraining());
+		$DatasetObject->setActivityData($this->getExampleTraining());
 
 		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC')->fetchAll();
 		foreach ($Dataset as $Data) {
@@ -161,6 +161,7 @@ class ConfigTabDataset extends ConfigTab {
 			DB::getInstance()->update('dataset', $id, $columns, $values);
 		}
 
+		Cache::delete('Dataset');
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}
 
@@ -183,21 +184,21 @@ class ConfigTabDataset extends ConfigTab {
 			'is_track'	=> 1,
 			'distance'	=> 10,
 			's'			=> 51*60+27,
-			'pace'		=> '-:--',
 			'elevation'	=> 57,
 			'kcal'		=> 691,
 			'pulse_avg'	=> 186,
 			'pulse_max'	=> 193,
-			'vdot_with_elevation'	=> VDOT_FORM + 1,
-			'vdot'		=> VDOT_FORM + 1,
+			'vdot_with_elevation'	=> Configuration::Data()->vdot() + 1,
+			'vdot'		=> Configuration::Data()->vdot() + 2,
 			'use_vdot'	=> 0,
 			'jd_intensity'	=> 27,
 			'trimp'		=> 121,
 			'cadence'	=> 90,
+			'groundcontact'	=> 220,
+			'vertical_oscillation'	=> 76,
 			'power'		=> 520,
 			'temperature'	=> 17,
 			'weatherid'	=> 5,
-			'route'		=> str_replace(' ', '&nbsp;', __('Olympic stadium')),
 			'clothes'	=> $ClothesID,
 			'splits'	=> '5|26:51-5|24:36',
 			'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),
@@ -205,16 +206,6 @@ class ConfigTabDataset extends ConfigTab {
 			'abc'		=> 1,
 			'shoeid'	=> $ShoeID,
 			'notes'		=> str_replace(' ', '&nbsp;', __('Great run!')),
-			'arr_time'	=> '',
-			'arr_lat'	=> '',
-			'arr_lon'	=> '',
-			'arr_alt'	=> '',
-			'arr_dist'	=> '',
-			'arr_heart'	=> '',
-			'arr_pace'	=> '',
-			'arr_cadence'	=> '',
-			'arr_power'	=> '',
-			'arr_temperature'	=> '',
 			'accountid'	=> SessionAccountHandler::getId(),
 			'creator'	=> '',
 			'creator_details'	=> '',

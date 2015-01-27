@@ -3,6 +3,9 @@
  * This file contains class::ExporterHTML
  * @package Runalyze\Export\Types
  */
+
+use Runalyze\View\Activity\Linker;
+
 /**
  * Exporter for: HTML
  * 
@@ -27,7 +30,7 @@ class ExporterHTML extends ExporterAbstract {
 		$FieldsetPreview = new FormularFieldset( __('Preview') );
 		$FieldsetPreview->addBlock($Code);
 
-		if (!$this->Training->isPublic())
+		if (!$this->Context->activity()->isPublic())
 			$FieldsetPreview->addWarning( __('Your training is private: There is no link included.') );
 
 		$Formular = new Formular();
@@ -42,14 +45,15 @@ class ExporterHTML extends ExporterAbstract {
 	 * @return string 
 	 */
 	protected function getHTMLCode() {
-		$Url      = $this->Training->Linker()->publicUrl();
-		$Date     = $this->Training->DataView()->getDate(false);
-		$Time     = $this->Training->DataView()->getTimeString();
-		$Title    = $this->Training->hasDistance() ? $this->Training->DataView()->getDistanceString().' ' : '';
-		$Title   .= $this->Training->DataView()->getTitle();
-		$Pace     = $this->Training->hasDistance() ? $this->Training->DataView()->getPace().'/km' : '';
-		$Elev     = $this->Training->DataView()->getElevation();
-		$Heart    = $this->Training->getPulseAvg() > 0 ? $this->Training->getPulseAvg().'bpm' : '';
+		$Linker = new Linker($this->Context->activity());
+		$Url      = $Linker->publicUrl();
+		$Date     = $this->Context->dataview()->date();
+		$Time     = $this->Context->dataview()->duration()->string();
+		$Title    = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->distance().' ' : '';
+		$Title   .= $this->Context->dataview()->titleByTypeOrSport();
+		$Pace     = $this->Context->activity()->distance() > 0 ? $this->Context->dataview()->pace()->valueWithAppendix() : '';
+		$Elev     = $this->Context->dataview()->elevation();
+		$Heart    = $this->Context->activity()->hrAvg() > 0 ? $this->Context->dataview()->hrAvg()->string() : '';
 		$Spans    = '';
 
 		if ($Time != '')

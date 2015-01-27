@@ -9,6 +9,11 @@ use Runalyze\Calculation\Performance;
 use Runalyze\Calculation\Trimp;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
+use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\JD\VDOTCorrector;
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+use Runalyze\View\Tooltip;
 
 /**
  * Class: RunalyzePluginPanel_Rechenspiele
@@ -123,12 +128,13 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$TSBmodel->calculate();
 
 		$MonotonyQuery = new Performance\ModelQuery();
-		$MonotonyQuery->setRange(time() - 7*DAY_IN_S, time());
+		$MonotonyQuery->setRange(time() - Monotony::DAYS*DAY_IN_S, time());
 		$MonotonyQuery->execute(DB::getInstance());
 
-		$Monotony = new Monotony($MonotonyQuery->data(), 7);
+		$Monotony = new Monotony($MonotonyQuery->data());
 		$Monotony->calculate();
 
+		$VDOT        = Configuration::Data()->vdot();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
@@ -140,6 +146,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
+		// TODO: This cache value will not automatically be updated, right? That's horrible!
                 $JDQuery = Cache::get('JDQuery');
                 if(is_null($JDQuery)) {
                     $JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
@@ -156,10 +163,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->Configuration()->value('show_vdot'),
 				'bars'	=> array(
-					new ProgressBarSingle(2*round(VDOT_FORM - 30), ProgressBarSingle::$COLOR_BLUE)
+					new ProgressBarSingle(2*round($VDOT - 30), ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> '',
-				'value'	=> number_format(VDOT_FORM,2),
+				'value'	=> number_format($VDOT, 2),
 				'title'	=> __('VDOT'),
 				'small'	=> '',
 				'tooltip'	=> __('Current average VDOT')
@@ -202,8 +209,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'bars'	=> array(
 					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
-				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.Math::WithSign($TrimpValues['TSB']),
-				'value'	=> Math::WithSign($TrimpValues['TSB']),
+				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TrimpValues['TSB']),
+				'value'	=> sprintf("%+d", $TrimpValues['TSB']),
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
 				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
@@ -241,7 +248,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 							)
 					)
 				),
-				'bar-tooltip'	=> 'Training strain = avg(Trimp)*Monotony',
+				'bar-tooltip'	=> 'Training strain = sum(Trimp)*Monotony',
 				'value'	=> round($Monotony->trainingStrain()),
 				'title'	=> __('Training&nbsp;strain'),
 				'small'	=> '',
@@ -308,14 +315,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		echo '<table class="fullwidth nomargin">';
 
 		$Paces = $this->getArrayForPaces();
-		$vVDOT = JD::VDOT2v(VDOT_FORM);
+		$VDOT = new VDOT(Configuration::Data()->vdot());
 
 		foreach ($Paces as $Pace) {
 			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
 
 			echo '<tr>';
 			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
-			echo '<td class="r"><em>'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'</em> - <em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'</em>/km</td>';
+			echo '<td class="r"><em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
 			echo '</tr>';
 		}
 
@@ -447,40 +454,39 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetVDOT() {
-		$Table = '
-			<table class="fullwidth zebra-style">
+		$Table = '<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th colspan="10">'.sprintf( __('VDOT values of the last %s days'), Configuration::Vdot()->days() ).'</th>
 					</tr>
 				</thead>
-				<tbody class="top-and-bottom-border">
-				';
+				<tbody class="top-and-bottom-border">';
 
+		$Tooltip = new Tooltip('');
+		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
 		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
+
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)
-				$Table .= '<tr>'.NL;
+				$Table .= '<tr>';
 
-			$Link   = Ajax::trainingLink($Data['id'], round(JD::correctVDOT($Data['vdot']), 2));
-			$Title  = Running::Km($Data['distance']).' am '.date('d.m.Y', $Data['time']);
-			$Table .= '<td>'.Ajax::tooltip($Link, $Title).'</td>'.NL;
+			$Tooltip->setText(date('d.m.Y', $Data['time']).': '.Distance::format($Data['distance']));
+			$VDOT->setValue($Data['vdot']);
+
+			$Table .= '<td '.$Tooltip->attributes().'>'.Ajax::trainingLink($Data['id'], $VDOT->value()).'</td>';
 
 			if ($i%10 == 9)
-				$Table .= '</tr>'.NL;
+				$Table .= '</tr>';
 		}
 
 		if (count($VDOTs)%10 != 0)
 			$Table .= HTML::emptyTD(10 - count($VDOTs)%10);
 
-		$Table .= '
-				</tbody>
-			</table>
-			';
+		$Table .= '</tbody></table>';
 
 		$Fieldset = new FormularFieldset( __('VDOT') );
 		$Fieldset->addBlock( sprintf( __('The VDOT value is the average, weighted by the time, of the VDOT of your activities in the last %s days.'), Configuration::Vdot()->days() ) );
-		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), VDOT_FORM ) );
+		$Fieldset->addBlock( sprintf( __('Your current VDOT shape: <strong>%s</strong><br>&nbsp;'), Configuration::Data()->vdot() ) );
 		$Fieldset->addBlock($Table);
 		$Fieldset->addInfo( __('Jack Daniels uses VDOT as a fixed value and not based on the training progress.<br>'.
 								'We do instead predict the VDOT from all activities based on the heart rate. '.
@@ -509,21 +515,21 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody class="top-and-bottom-border">
 					<tr>
 						<td>'.__('<strong>Current VDOT</strong> <small>(based on heart rate)</small>').'</td>
-						<td class="r">'.round(VDOT_FORM, 2).'</td>
+						<td class="r">'.round(Configuration::Data()->vdot(), 2).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target kilometer per week</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysForWeekKm() / 7)).'</td>
-						<td class="r">'.Running::Km($BasicEndurance->getTargetWeekKm()).'</td>
+						<td class="r">'.Distance::format($BasicEndurance->getTargetWeekKm(), false, 0).'</td>
 						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['weekkm-percentage']) ).'</td>
-						<td class="small">(&oslash; '.Running::Km(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), 0).')</td>
+						<td class="small">(&oslash; '.Distance::format(($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7), false, 0).')</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForWeekKilometer().'</td>
 						<td rowspan="2" class="bottom-spacer b" style="vertical-align:middle;">= '.round($BEresults['percentage']).'&#37;</td>
 					</tr>
 					<tr>
 						<td>'.__('<strong>Marathon time</strong> <small>(optimal)</small>').'</td>
-						<td class="r">'.Time::toString($Prognosis->inSeconds(42.195)).'</td>
+						<td class="r">'.Duration::format($Prognosis->inSeconds(42.195)).'</td>
 						<td>&nbsp;</td>
 						<td>'.sprintf( __('<strong>Target long run</strong> <small>(%s weeks)</small>'), round($BasicEndurance->getDaysToRecognizeForLongjogs() / 7)).'</td>
-						<td class="r">'.Running::Km($BasicEndurance->getRealTargetLongjogKmPerWeek()).'</td>
+						<td class="r">'.Distance::format($BasicEndurance->getRealTargetLongjogKmPerWeek(), false, 0).'</td>
 						<td class="small">'.sprintf( __('done by %s&#37;'), round(100*$BEresults['longjog-percentage']) ).'</td>
 						<td class="small">('.round($BEresults['longjog-result'], 1).' points)</td>
 						<td class="small">x'.$BasicEndurance->getPercentageForLongjogs().'</td>
@@ -531,8 +537,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				</tbody>
 			</table>';
 
-		$LongjogTable = '
-			<table class="fullwidth zebra-style c">
+		$LongjogTable = '<table class="fullwidth zebra-style c">
 				<thead>
 					<tr>
 						<th>'.__('Date').'*</th>
@@ -540,26 +545,23 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<th>'.__('Points').'</th>
 					</tr>
 				</thead>
-				<tbody>
-			';
+				<tbody>';
 
 		$IgnoredLongjogs = 0;
 		$Longjogs        = DB::getInstance()->query($BasicEndurance->getQuery(0, true))->fetchAll();
 
 		foreach ($Longjogs as $Longjog) {
 			if ($Longjog['points'] >= 0.2)
-				$LongjogTable .= '
-						<tr>
+				$LongjogTable .= '<tr>
 							<td>'.Ajax::trainingLink($Longjog['id'], date('d.m.Y', $Longjog['time'])).'</td>
-							<td>'.Running::Km($Longjog['distance']).'</td>
+							<td>'.Distance::format($Longjog['distance']).'</td>
 							<td>'.round($Longjog['points'], 1).' points</td>
 						</tr>';
 			else
 				$IgnoredLongjogs++;
 		}
 
-		$LongjogTable .= '
-					<tr class="top-spacer no-zebra">
+		$LongjogTable .= '<tr class="top-spacer no-zebra">
 						<td></td>
 						<td></td>
 						<td class="b">= '.round($BEresults['longjog-result'], 1).' points</td>
@@ -569,7 +571,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$LongjogTable .= '<p class="small">'.sprintf( __('* %s &quot;long&quot; jogs do not show up, '.
 														'because they have less than 0.2 points.'), $IgnoredLongjogs).'</p>';
 		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are being considered.'),
-														Running::Km($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
+														Distance::format($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 
 		$Fieldset = new FormularFieldset( __('Basic endurance') );
 		$Fieldset->addBlock( __('Your basic endurance is based on your weekly kilometers and your long jogs.<br>'.
@@ -590,8 +592,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	 * @return \FormularFieldset 
 	 */
 	public function getFieldsetPaces() {
-		$Table = '
-			<table class="fullwidth zebra-style">
+		$Table = '<table class="fullwidth zebra-style">
 				<thead>
 					<tr>
 						<th>'.__('Name').'</th>
@@ -599,16 +600,15 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 						<th class="small">'.__('Description').'</th>
 					</tr>
 				</thead>
-				<tbody>
-			';
+				<tbody>';
 
-		$vVDOT = JD::VDOT2v(VDOT_FORM);
+		$VDOT = new VDOT(Configuration::Data()->vdot());
+
 		foreach ($this->getArrayForPaces() as $Pace) {
-			$Table .= '
-					<tr>
+			$Table .= '<tr>
 						<td class="b">'.$Pace['short'].'</td>
-						<td class="small"><em>'.JD::v2Pace($vVDOT*$Pace['limit-low']/100).'&nbsp;-&nbsp;'.JD::v2Pace($vVDOT*$Pace['limit-high']/100).'/km</em></td>
-						<td class="small">'.$Pace['description'].'</td>
+						<td class=""><em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>&nbsp;-&nbsp;<em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em>/km</td>
+						<td class="">'.$Pace['description'].'</td>
 					</tr>';
 		}
 

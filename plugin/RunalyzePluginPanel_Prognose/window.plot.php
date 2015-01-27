@@ -3,6 +3,9 @@
  * Window: prognosis plot
  * @package Runalyze\Plugins\Panels
  */
+
+use Runalyze\Activity\Distance;
+
 require '../../inc/class.Frontend.php';
 
 $Frontend = new Frontend();
@@ -21,7 +24,7 @@ $Submenu = '';
 foreach ($distances as $km) {
 	$km = trim($km);
 	$link = 'plugin/RunalyzePluginPanel_Prognose/window.plot.php?distance='.$km;
-	$Submenu .= '<li'.($km == $distance ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.Running::Km($km).'</a>').'</li>';
+	$Submenu .= '<li'.($km == $distance ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.Distance::format($km, Distance::FORMAT_AUTO).'</a>').'</li>';
 }
 ?>
 <div class="panel-heading">

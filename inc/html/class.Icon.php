@@ -82,7 +82,7 @@ class Icon {
 	 * @param string $title
 	 */
 	public static function getSportIcon($id, $title = '', $tooltip = '') {
-		$data = DB::getInstance()->fetchByID('sport', $id);
+		$data = SportFactory::DataFor($id);
 		if ($data === false)
 			return '';
 
@@ -98,10 +98,15 @@ class Icon {
 	/**
 	 * Get sport icon
 	 * @param string $gif filename.gif
+	 * @param string tooltip
 	 * @return string
 	 */
-	public static function getSportIconForGif($gif) {
-		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $gif).'"></i>', $gif);
+	public static function getSportIconForGif($gif, $tooltip = '') {
+		if ($tooltip == '') {
+			$tooltip = $gif;
+		}
+
+		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $gif).'"></i>', $tooltip);
 	}
 
 	/**
