@@ -93,7 +93,7 @@ class HTML {
 		$html = '<tr class="b">';
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
-			$html .= '<'.$tag.' />';
+			$html .= '<'.$tag.'></'.$tag.'>';
 
 		for ($m = 1; $m <= 12; $m++)
 			$html .= '<'.$tag.$width.'>'.Time::Month($m, true).'</'.$tag.'>';
