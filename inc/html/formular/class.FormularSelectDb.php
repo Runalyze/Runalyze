@@ -10,14 +10,26 @@
  */
 class FormularSelectDb extends FormularSelectBox {
 	/**
+	 * @var array
+	 */
+	static $OptionsCache = array();
+
+	/**
 	 * Load options from database
 	 * @param string $Table
 	 * @param string $Label
 	 */
 	public function loadOptionsFrom($Table, $Label) {
-		$Options = DB::getInstance()->query('SELECT `id`, `'.$Label.'` as `value` FROM `'.PREFIX.$Table.'` ORDER BY `id` ASC')->fetchAll();
+		if (!isset(self::$OptionsCache[$Table.'.'.$Label])) {
+			self::$OptionsCache[$Table.'.'.$Label] = DB::getInstance()->query(
+				'SELECT `id`, `'.$Label.'` as `value` '.
+				'FROM `'.PREFIX.$Table.'` '.
+				'ORDER BY `id` ASC'
+			)->fetchAll();
+		}
 
-		foreach ($Options as $Option)
+		foreach (self::$OptionsCache[$Table.'.'.$Label] as $Option) {
 			$this->addOption($Option['id'], $Option['value']);
+		}
 	}
 }
