@@ -1349,12 +1349,12 @@ tr.space-line.zebra-corrector td {
   border: 1px solid #e1e1e1;
   background-color: #efefef;
 }
-.sortable thead th.header {
+.sortable thead th.tablesorter-header {
   padding-right: 14px;
   cursor: pointer;
   position: relative;
 }
-.sortable thead th.header:after {
+.sortable thead th.tablesorter-header > div:after {
   position: absolute;
   right: 0;
   display: inline-block;
@@ -1365,17 +1365,24 @@ tr.space-line.zebra-corrector td {
   -webkit-font-smoothing: antialiased;
   content: "\f0dc";
 }
-.sortable thead th.header:hover:after,
-.sortable thead th.headerSortDown:hover:after,
-.sortable thead th.headerSortDown:after {
+.sortable thead th.tablesorter-header.sorter-false {
+  cursor: default;
+  padding-right: 0;
+}
+.sortable thead th.tablesorter-header.sorter-false  > div:after {
+  display: none;
+}
+.sortable thead th.tablesorter-header:hover > div:after,
+.sortable thead th.tablesorter-headerDesc:hover > div:after,
+.sortable thead th.tablesorter-headerDesc > div:after {
   content: "\f0de";
 }
-.sortable thead th.headerSortUp:hover:after,
-.sortable thead th.headerSortUp:after {
+.sortable thead th.tablesorter-headerAsc:hover > div:after,
+.sortable thead th.tablesorter-headerAsc > div:after {
   content: "\f0dd";
 }
-.sortable thead th.headerSortDown,
-.sortable thead th.headerSortUp {
+.sortable thead th.tablesorter-headerDesc,
+.sortable thead th.tablesorter-headerAsc {
   font-style: italic;
 }
 #training-overview:after {

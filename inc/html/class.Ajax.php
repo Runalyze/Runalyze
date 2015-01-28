@@ -431,11 +431,11 @@ class Ajax {
 		return '
 <div id="pager" class="pager c">
 	<form>
-		<a href="#main" class="first">|&laquo; '.__('Start').'</a>
-		<a href="#main" class="prev">&laquo; '.__('previous').'</a>
+		<span class="link first">|&laquo; '.__('Start').'</span>
+		<span class="link prev">&laquo; '.__('previous').'</span>
 		<input type="text" class="pagedisplay">
-		<a href="#main" class="next">'.__('next').' &raquo;</a>
-		<a href="#main" class="last">'.__('End').' &raquo;|</a>
+		<span class="link next">'.__('next').' &raquo;</span>
+		<span class="link last">'.__('End').' &raquo;|</span>
 
 		<select class="pagesize">
 			<option value="10">10 '.__('per page').'&nbsp;</option>

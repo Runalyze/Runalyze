@@ -134,12 +134,12 @@ tr.space-line.zebra-corrector, tr.space-line.zebra-corrector td {
 		border: 1px solid @table-sortable-border;
 		background-color: @table-sortable-background;
 
-		&.header {
+		&.tablesorter-header {
 			padding-right: @table-sortable-padding-right;
 			cursor: pointer;
 			position: relative;
 
-			&:after {
+			> div:after {
 				position: absolute;
 				right: 0;
 				display: inline-block;
@@ -150,25 +150,34 @@ tr.space-line.zebra-corrector, tr.space-line.zebra-corrector td {
 				-webkit-font-smoothing: antialiased;
 				content: "\f0dc";
 			}
+
+			&.sorter-false {
+				cursor: default;
+				padding-right: 0;
+
+				& > div:after {
+					display: none;
+				}
+			}
 		}
 
-		&.header:hover,
-		&.headerSortDown:hover,
-		&.headerSortDown {
-			&:after {
+		&.tablesorter-header:hover,
+		&.tablesorter-headerDesc:hover,
+		&.tablesorter-headerDesc {
+			> div:after {
 				content: "\f0de";
 			}
 		}
 
-		&.headerSortUp:hover,
-		&.headerSortUp {
-			&:after {
+		&.tablesorter-headerAsc:hover,
+		&.tablesorter-headerAsc {
+			> div:after {
 				content: "\f0dd";
 			}
 		}
 
-		&.headerSortDown,
-		&.headerSortUp {
+		&.tablesorter-headerDesc,
+		&.tablesorter-headerAsc {
 			font-style: italic;
 		}
 	}

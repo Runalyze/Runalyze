@@ -7,8 +7,8 @@ $JS_FILES = array(
 	'lib/jquery-2.1.0.min.js',
 	'lib/jquery.form.js',
 	'lib/jquery.metadata.js',
-	'lib/jquery.tablesorter.js',
-	'lib/jquery.tablesorter.pager.js',
+	'lib/jquery.tablesorter-2.18.4.js',
+	'lib/jquery.tablesorter-2.18.4.pager.js',
 	'lib/bootstrap-tooltip.js',
 
 	'lib/fineuploader-3.5.0.min.js',
