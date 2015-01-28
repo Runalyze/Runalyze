@@ -9,6 +9,8 @@ $Frontend = new Frontend();
 
 if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('user', (int)Request::sendId());
+	Cache::delete(UserData::CACHE_KEY);
+
 	header('Location: window.sportler.table.php?reload=true');
 }
 

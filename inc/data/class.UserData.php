@@ -8,7 +8,12 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects
  */
-class UserData extends DataObject {	
+class UserData extends DataObject {
+	/**
+	 * @var string
+	 */
+	const CACHE_KEY = 'userdata';
+
 	/**
 	* Array containing all rows from database
 	* @var array
@@ -38,6 +43,8 @@ class UserData extends DataObject {
 	 * Tasks to perform after insert
 	 */
 	protected function tasksAfterInsert() {
+		Cache::delete(self::CACHE_KEY);
+
 		Helper::recalculateHFmaxAndHFrest();
 	}
 
@@ -45,6 +52,8 @@ class UserData extends DataObject {
 	 * Tasks to perform after update
 	 */
 	protected function tasksAfterUpdate() {
+		Cache::delete(self::CACHE_KEY);
+
 		Helper::recalculateHFmaxAndHFrest();
 	}
 
@@ -124,14 +133,19 @@ class UserData extends DataObject {
 	 * @return array
 	 */
 	static public function getFullArray() {
-               $userdata = Cache::get('userdata');
-                
-		if (is_null(self::$fullArray) && is_null($userdata)) {
+		if (!is_null(self::$fullArray)) {
+			return self::$fullArray;
+		}
+
+		$userdata = Cache::get(self::CACHE_KEY);
+
+		if (is_null($userdata)) {
 			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
-                        self::$fullArray = $userdata;
-                        Cache::set('userdata', $userdata, '600');
-                }
-                self::$fullArray = $userdata;
+			Cache::set(self::CACHE_KEY, $userdata, '600');
+		}
+
+		self::$fullArray = $userdata;
+
 		return $userdata;
 	}
 }
