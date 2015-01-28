@@ -140,8 +140,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
 		$CTLabsolute = $TSBmodel->fitnessAt(0);
 		$TrimpValues = array(
-			'ATL'	=> round(100*$ATLabsolute/$ATLmax),
-			'CTL'	=> round(100*$CTLabsolute/$CTLmax),
+			'ATL'		=> round(100*$ATLabsolute/$ATLmax),
+			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
+			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
+			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
 			'TSB'	=> $TSBmodel->performanceAt(0)
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
@@ -188,7 +190,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle($TrimpValues['ATL'], ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $ATLabsolute, $ATLmax, $TrimpValues['ATL']),
-				'value'	=> $TrimpValues['ATL'].'&nbsp;&#37;',
+				'value'	=> $TrimpValues['ATLstring'],
 				'title'	=> __('Fatigue'),
 				'small'	=> '(ATL)',
 				'tooltip'	=> __('Actual Training Load<br><small>Average training impulse of the last weeks in relation to your maximal value.</small>')
@@ -199,7 +201,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 					new ProgressBarSingle($TrimpValues['CTL'], ProgressBarSingle::$COLOR_BLUE)
 				),
 				'bar-tooltip'	=> sprintf( __('Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;'), $CTLabsolute, $CTLmax, $TrimpValues['CTL']),
-				'value'	=> $TrimpValues['CTL'].'&nbsp;&#37;',
+				'value'	=> $TrimpValues['CTLstring'],
 				'title'	=> __('Fitness&nbsp;level'),
 				'small'	=> '(CTL)',
 				'tooltip'	=> __('Chronical Training Load<br><small>Average training impulse of the last months in relation to your maximal value.</small>')

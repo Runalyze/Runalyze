@@ -84,8 +84,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$ATLdays = Configuration::Trimp()->daysForATL();
 	$CTLdays = Configuration::Trimp()->daysForCTL();
 
-	$maxATL = Configuration::Data()->maxATL();
-	$maxCTL = Configuration::Data()->maxCTL();
+	$maxATL = Configuration::Trimp()->showInPercent() ? Configuration::Data()->maxATL() : 100;
+	$maxCTL = Configuration::Trimp()->showInPercent() ? Configuration::Data()->maxCTL() : 100;
 
 	$TSBModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
 	$TSBModel->calculate();
@@ -132,9 +132,12 @@ if (!$All && !$lastHalf)
 	$Plot->setXAxisLimitedTo($Year);
 
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, '%');
 $Plot->setYTicks(1, 1);
-$Plot->setYLimits(1, 0, 100);
+if (Configuration::Trimp()->showInPercent()) {
+	$Plot->addYUnit(1, '%');
+	$Plot->setYLimits(1, 0, 100);
+}
+
 $Plot->addYAxis(2, 'right');
 $Plot->setYTicks(2, 1, 1);
 
