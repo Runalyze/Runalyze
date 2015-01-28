@@ -5608,6 +5608,8 @@ RunalyzePlot.Events = (function($, parent){
 			var	plot = parent.getPlot(key),
 				rangeCalculation = true;
 
+            rangeCalculation = (plot.getOptions().xaxis.mode != 'time');
+
 			plot.selection = true;
 
 			var axes = plot.getAxes(),
@@ -5632,11 +5634,13 @@ RunalyzePlot.Events = (function($, parent){
 					if (series.data[j][0] >= from && series.data[j][0] <= to){
 						sum = sum + series.data[j][1];
 						num = num + 1;
+                        if (i==3)
+                            console.log(series.data[j][1]);
 					}
 
 				content = content + line(
 					series.label,
-					"&oslash; "+series.yaxis.tickFormatter(Math.round((sum/num)*100)/100, series.yaxis)
+					"&oslash; "+series.yaxis.tickFormatter(Math.round(sum*100.0/num)/100, series.yaxis)
 				);
 			}
 

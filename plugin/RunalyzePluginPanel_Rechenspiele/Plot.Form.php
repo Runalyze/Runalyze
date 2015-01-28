@@ -68,7 +68,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
 
-		$Trimps_raw[$index] = $dat['trimp'];
+		$Trimps_raw[$index] = 1*$dat['trimp'];
 
 		if ($dat['vdot'] != 0) {
 			$VDOTs_raw[$index]     = $dat['vdot']; // Remember: These values are already multiplied with `s`
