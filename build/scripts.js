@@ -5634,8 +5634,6 @@ RunalyzePlot.Events = (function($, parent){
 					if (series.data[j][0] >= from && series.data[j][0] <= to){
 						sum = sum + series.data[j][1];
 						num = num + 1;
-                        if (i==3)
-                            console.log(series.data[j][1]);
 					}
 
 				content = content + line(

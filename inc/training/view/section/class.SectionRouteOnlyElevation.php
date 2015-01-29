@@ -9,14 +9,14 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionRouteOnlyMap extends SectionRoute {
+class SectionRouteOnlyElevation extends SectionRoute {
 	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
-		$this->Header = __('Course');
+		$this->Header = __('Elevation data');
 
-		$this->appendRow( new SectionRouteRowMap($this->Context) );
+        $this->appendRow( new SectionRouteRowElevation($this->Context) );
 	}
 
 	/**
@@ -24,6 +24,6 @@ class SectionRouteOnlyMap extends SectionRoute {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return $this->Context->hasRoute() && $this->Context->route()->hasPositionData();
+        return $this->Context->activity()->elevation() > 0;
 	}
 }

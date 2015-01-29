@@ -64,21 +64,50 @@ class TrainingView {
 	 * Init sections
 	 */
 	protected function initSections() {
-		$this->Sections[] = new SectionOverview($this->Context);
-		$this->Sections[] = new SectionLaps($this->Context);
 
-		if (Configuration::ActivityView()->plotMode()->showSeperated()) {
-			$this->Sections[] = new SectionHeartrate($this->Context);
-			$this->Sections[] = new SectionPace($this->Context);
-			$this->Sections[] = new SectionRoute($this->Context);
-		} else {
+		if (Configuration::ActivityView()->mapFirst() && Configuration::ActivityView()->plotMode()->showCollection()) {
+
 			$this->Sections[] = new SectionComposite($this->Context);
+			$this->Sections[] = new SectionLaps($this->Context);
 
-			if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
-				$this->Sections[] = new SectionRoute($this->Context);
-			} else {
+		} else {
+
+			$this->Sections[] = new SectionOverview($this->Context);
+
+			if (Configuration::ActivityView()->mapFirst()) {
 				$this->Sections[] = new SectionRouteOnlyMap($this->Context);
+			} else
+				$this->Sections[] = new SectionLaps($this->Context);
+
+			if (Configuration::ActivityView()->plotMode()->showSeperated()) {
+				$this->Sections[] = new SectionHeartrate($this->Context);
+				$this->Sections[] = new SectionPace($this->Context);
+
+				if (Configuration::ActivityView()->mapFirst()) {
+					$this->Sections[] = new SectionRouteOnlyElevation($this->Context);
+				} else
+					$this->Sections[] = new SectionRoute($this->Context);
+
+			} else {
+				$this->Sections[] = new SectionComposite($this->Context);
+
+				if (Configuration::ActivityView()->plotMode()->showPaceAndHR()) {
+
+					if (Configuration::ActivityView()->mapFirst()) {
+						$this->Sections[] = new SectionRouteOnlyElevation($this->Context);
+					} else
+						$this->Sections[] = new SectionRoute($this->Context);
+
+				} else {
+					if (!Configuration::ActivityView()->mapFirst())
+						$this->Sections[] = new SectionRouteOnlyMap($this->Context);
+				}
 			}
+
+			if (Configuration::ActivityView()->mapFirst()) {
+				$this->Sections[] = new SectionLaps($this->Context);
+			}
+
 		}
 
 		$this->Sections[] = new SectionMiscellaneous($this->Context);
