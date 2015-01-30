@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-01-15 18:19+0200\n"
-"Last-Translator: Jörg <jgutowski@gmx.de>\n"
+"PO-Revision-Date: 2015-01-30 09:04+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.9\n"
+"X-Generator: Weblate 2.1\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -5223,7 +5223,7 @@ msgstr "Hinweis: Saison bezieht sich auf die aktuelle Saison im kmspiel."
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:62
 #, php-format
 msgid "Show a prognosis for the current %s"
-msgstr ""
+msgstr "Zeige die Prognose für den derzeitigen %s"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:63
 #, php-format
