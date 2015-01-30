@@ -26,6 +26,9 @@ abstract class TrainingViewSectionRowTabbedPlot extends TrainingViewSectionRow {
 	 */
 	protected $RightContentTitle = array();
 
+
+    protected $TopContent="";
+
 	/**
 	 * CSS id
 	 * @var string
@@ -86,6 +89,9 @@ abstract class TrainingViewSectionRowTabbedPlot extends TrainingViewSectionRow {
 		echo '<div id="training-view-tabbed-'.$this->cssID.'" class="training-row-plot">';
 
 		$first = true;
+
+        echo $this->TopContent;
+
 		foreach ($this->RightContent as $key => $Content) {
 			echo '<div class="change" id="training-view-tabbed-'.$this->cssID.'-'.$key.'"'.(!$first ? ' style="display:none;"' : '').'>';
 

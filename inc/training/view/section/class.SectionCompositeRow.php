@@ -6,18 +6,42 @@
 
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
+use Runalyze\View\Leaflet;
 
 /**
  * Row: Heartrate
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
 class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
+
+    protected function addMap() {
+
+        if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
+            $Map = new Leaflet\Map('map-'.$this->Context->activity()->id());
+            $Map->addRoute(
+                new Leaflet\Activity(
+                    'route-'.$this->Context->activity()->id(),
+                    $this->Context->route(),
+                    $this->Context->trackdata()
+                )
+            );
+
+            $this->TopContent = '<div id="training-map"">'.$Map->code().'</div>';
+            $this->big=true;
+
+        }
+    }
+
+
 	/**
 	 * Set plot
 	 */
 	protected function setRightContent() {
+        if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst())
+            $this->addMap();
+
 		$this->addRightContent('plot', __('Composite plot'), $this->getPlot());
 
 		if ($this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE)) {
@@ -55,6 +79,11 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setContent() {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
+        if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
+            $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->distance(), '-.--'), 'km', __('Distance'));
+            $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
+        }
+
 		$this->addAveragePace();
 		$this->addCalculations();
 
@@ -64,6 +93,10 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 
 		if ($showElevation) {
 			$this->addElevation();
+		}
+
+		if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
+			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->elapsedTime(), '', __('Elapsed time'));
 		}
 
 		foreach ($this->BoxedValues as &$Value) {
@@ -161,7 +194,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 
 			if ($this->Context->activity()->elevation() > 0) {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-	
+
 				if ($this->Context->hasRoute()) {
 					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), 'm', __('Elevation up/down'));
 				}

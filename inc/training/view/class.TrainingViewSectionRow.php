@@ -43,6 +43,9 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 */
 	protected $withShadow = false;
 
+
+   protected $big = false;
+
 	/**
 	 * Constructor
 	 */
@@ -77,7 +80,7 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Display info
 	 */
 	protected function displayInfo() {
-		echo '<div class="training-row-info'.($this->withShadow ? ' with-shadow' : '').'">';
+		echo '<div class="training-row-info'.($this->withShadow ? ' with-shadow' : '').'"'.($this->big?' style="max-height:none"':'').'>';
 
 		if (!empty($this->BoxedValues)) {
 			$this->displayBoxedValues();

@@ -60,6 +60,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->createHandle('TRAINING_MAP_COLOR', new String('#FF5500'));
 
 		$this->createHandle('TRAINING_LEAFLET_LAYER', new String('OpenStreetMap'));
+		$this->createHandle('TRAINING_MAP_SHOW_FIRST', new Bool(false));
 	}
 
 	/**
@@ -84,6 +85,14 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	public function routeColor() {
 		return $this->get('TRAINING_MAP_COLOR');
+	}
+
+	/**
+	 * Show map first
+	 * @return string
+	 */
+	public function mapFirst() {
+		return $this->get('TRAINING_MAP_SHOW_FIRST');
 	}
 
 	/**
@@ -233,6 +242,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER_AND_TRAINING);
+		$this->handle('TRAINING_MAP_SHOW_FIRST')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('TRAINING_PLOT_SMOOTH')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
@@ -327,6 +337,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('TRAINING_MAP_COLOR'), array(
 			'label'		=> __('Map: line color'),
 			'tooltip'	=> __('as hexadecimal rgb (e.g. #ff5500)')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_MAP_SHOW_FIRST'), array(
+			'label'		=> __('Map: show map first'),
+			'tooltip'	=> __('show map before plots')
 		));
 	}
 

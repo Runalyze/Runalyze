@@ -150,6 +150,7 @@ $CLASSMAP = array(
 'SectionPaceRow' => 'training/view/section/class.SectionPaceRow.php',
 'SectionMiscellaneous' => 'training/view/section/class.SectionMiscellaneous.php',
 'SectionMiscellaneousRow' => 'training/view/section/class.SectionMiscellaneousRow.php',
+'SectionRouteOnlyElevation' => 'training/view/section/class.SectionRouteOnlyElevation.php',
 'SectionRoute' => 'training/view/section/class.SectionRoute.php',
 'SectionHeartrateRow' => 'training/view/section/class.SectionHeartrateRow.php',
 'SectionLapsRowComputed' => 'training/view/section/class.SectionLapsRowComputed.php',
