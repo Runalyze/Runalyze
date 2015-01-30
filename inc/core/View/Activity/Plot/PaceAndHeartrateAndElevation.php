@@ -30,5 +30,6 @@ class PaceAndHeartrateAndElevation extends ActivityPlot {
 		$this->addSeries(new Series\Elevation($context), 1, false);
 		$this->addSeries(new Series\Pace($context), 2, false);
 		$this->addSeries(new Series\Heartrate($context), 3, false);
+		$this->addSeries(new Series\TimeSeries($context), 4, false);
 	}
 }

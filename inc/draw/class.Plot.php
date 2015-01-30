@@ -237,6 +237,15 @@ class Plot {
 	}
 
 	/**
+	 * Set shadow width for series
+	 * @param int $series
+	 * @param int $size
+	 */
+	public function setShadowSize($series, $size) {
+		$this->Data[$series]['shadowSize'] = $size;
+	}
+
+	/**
 	* Show specific series as bars
 	* @param int $series
 	*/
@@ -453,6 +462,14 @@ class Plot {
 
 		if ($position == 'right' && $align)
 			$this->Options['yaxes'][$i-1]['alignTicksWithAxis'] = $alignTo;
+	}
+
+	/**
+	 * Hide y axis
+	 * @param int $i
+	 */
+	public function hideYAxis($i) {
+		$this->Options['yaxes'][$i-1]['show'] = false;
 	}
 
 	/**
