@@ -5,6 +5,8 @@
 if (!defined('RUNALYZE_BUILD'))
 	die('You\'re not allowed to do that.');
 
+echo 'Building pluginmap...'.PHP_EOL;
+
 /**
  * Output php file containing pluginmap as <?php $PLUGINMAP = array(...); ?>
  * @var string

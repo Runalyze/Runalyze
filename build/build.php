@@ -1,16 +1,16 @@
 <?php
-/**
+/*
  * This file can be used to build Runalyze.
- */
+ * Usage: php build.php [COMPONENT]...
+*/
+
+
+
 /**
  * Scripts to call
  * @var array
  */
-$SCRIPTS = array(
-	'build.js.php',
-	'build.classmap.php',
-	'build.pluginmap.php'
-);
+$SCRIPTS = array();
 
 /**
  * Build flag
@@ -27,7 +27,18 @@ $ROOT = dirname(__FILE__).'/';
 /**
  * Find build scripts and include them
  */
+findBuildScripts( $ROOT);
 findBuildScripts( $ROOT.'../plugin/');
+
+if ($argc > 1) {
+	$request_run = $argv;
+	array_shift($request_run);
+	$request_run = array_map(function ($v) {
+		return 'build.' . $v . '.php';
+	}, $request_run);
+
+	$SCRIPTS = array_intersect($SCRIPTS, $request_run);
+}
 
 foreach ($SCRIPTS as $path) {
 	include dirname(__FILE__).'/'.$path;
@@ -48,7 +59,7 @@ function findBuildScripts($dir) {
 			if (is_dir($dir.$file)) {
 				findBuildScripts($dir.$file.'/');
 			} else {
-				if ($file == 'build.php') {
+				if (preg_match('/build\..*\.php/',$file)) {
 					$SCRIPTS[] = substr( $dir.$file, strlen($ROOT) );
 				}
 			}
