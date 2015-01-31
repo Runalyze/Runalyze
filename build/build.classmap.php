@@ -5,6 +5,8 @@
 if (!defined('RUNALYZE_BUILD'))
 	die('You\'re not allowed to do that.');
 
+echo 'Building classmap...'.PHP_EOL;
+
 /**
  * Output php file containing classmap as <?php $CLASSMAP = array(...); ?>
  * @var string

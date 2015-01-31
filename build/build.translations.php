@@ -1,4 +1,11 @@
 <?php
+/**
+ * CLI-Script to generate translations
+ */
+if (!defined('RUNALYZE_BUILD'))
+	die('You\'re not allowed to do that.');
+
+echo 'Building translations...'.PHP_EOL;
 
 $supportedLanguages=array();
 
