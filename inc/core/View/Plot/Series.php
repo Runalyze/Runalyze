@@ -100,10 +100,23 @@ class Series {
 			return;
 		}
 
+		if ($this->UnitString == 'time') {
+			foreach ($this->Data as $k => $v)
+				$this->Data[$k] = $v * "1000";
+		}
+
 		$Plot->Data[] = array('label' => $this->Label, 'color' => $this->Color, 'data' => $this->Data, 'yaxis' => $yAxis);
 
 		if ($this->UnitString != '') {
-			$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
+			if ($this->UnitString == 'time') {
+				$series = count($Plot->Data) - 1;
+				$Plot->setYAxisAsTime($yAxis);
+				$Plot->setYAxisTimeFormat('%H:%M:%S', $yAxis);
+				$Plot->setLineWidth($series, 0);
+				$Plot->setShadowSize($series, 0);
+				$Plot->hideYAxis($yAxis);
+			} else
+				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 		}
 
 		if ($this->TickSize !== false) {
