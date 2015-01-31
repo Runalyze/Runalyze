@@ -9,6 +9,8 @@
 if (!defined('RUNALYZE_BUILD'))
 	die('You\'re not allowed to do that.');
 
+echo 'Building javascript files...'.PHP_EOL;
+
 // Windows or Unix?
 $WINDOWS		= false;
 // *.jar-file of YUI-compressor
