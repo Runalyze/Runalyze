@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class: Cache - Wrapper for PHPFastCache
  * @author Michael Pohl
@@ -7,12 +8,18 @@
 class Cache {
 
 	/**
+	 * Last cache clean date
+	 * @var int
+	*/
+	private static $LASTCLEAN = null;
+
+	/**
 	 * Boolean flag: Cache enabled?
 	 * @var bool
 	 */
 	public $footer_sent = true;
         
-        public static $cache;
+    public static $cache;
 
 	/**
 	 * Prohibit creating an object from outside
@@ -37,15 +44,27 @@ class Cache {
         /**
          * Set Cache
          */
-        static public function get($keyword, $nousercache = 0) {
-           if($nousercache == 0) { 
-               return self::$cache->get($keyword.SessionAccountHandler::getId());
-               } else {
-               return self::$cache->get($keyword);
-            }            
-        }
-        
-        /**
+	static public function get($keyword, $nousercache = 0) {
+		if ($nousercache == 0) {
+			$key = $keyword . SessionAccountHandler::getId();
+			$cachedobj = self::$cache->getinfo($key);
+			$lastcacheclean = self::$LASTCLEAN;
+			if ($lastcacheclean === null) {
+				$lastcacheclean = self::$cache->get('LASTCLEAN' . SessionAccountHandler::getId());
+				$lastcacheclean = $lastcacheclean ? : 0;
+				self::$LASTCLEAN = $lastcacheclean;
+			}
+			if (isset($cachedobj['write_time']) && $cachedobj['write_time'] > $lastcacheclean) {
+				return $cachedobj['value'];
+			} else {
+				return null;
+			}
+		} else {
+			return self::$cache->get($keyword);
+		}
+	}
+
+	/**
          * Delete from cache
          */
         static public function delete($keyword, $nousercache = 0) {
@@ -59,11 +78,16 @@ class Cache {
         /**
          * Clean up all cache
          */
-        static public function clean() {
-            self::$cache->clean();
-        }
-        
-        /**
+	static public function clean() {
+		self::$LASTCLEAN = time();
+		if (SessionAccountHandler::getId() === null){
+			self::$cache->clean();
+		}
+		else
+			self::$cache->set('LASTCLEAN' . SessionAccountHandler::getId(), self::$LASTCLEAN);;
+	}
+
+	/**
          * is existing?
          */
         static public function is($keyword, $nousercache = 0) {
