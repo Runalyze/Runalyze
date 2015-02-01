@@ -12,15 +12,15 @@ $EmptyTables = array();
 $EmptyTables['clothes'] = array(
 	'columns' => array('name', 'short', 'order'),
 	'values'  => array(
-		array('Langarmshirt', 'S-Lang', 1),
-		array('T-Shirt', 'Shirt', 1),
-		array('Singlet', 'Singlet', 1),
-		array('Jacke', 'Jacke', 1),
-		array('kurze Hose', 'H-kurz', 2),
-		array('lange Hose', 'H-lang', 2),
-		array('Laufshorts', 'Shorts', 2),
-		array('Handschuhe', 'Handschuhe', 3),
-		array('Muetze', 'Muetze', 4)
+		array(__('Langarmshirt'), __('S-Lang'), 1),
+		array(__('T-Shirt'), __('T-Shirt'), 1),
+		array(__('Singlet'), __('Singlet'), 1),
+		array(__('Jacke'), __('Jacke'), 1),
+		array(__('kurze Hose'), __('H-kurz'), 2),
+		array(__('lange Hose'), __('H-lang'), 2),
+		array(__('Laufshorts'), __('Shorts'), 2),
+		array(__('Handschuhe'), __('Handschuhe'), 3),
+		array(__('Muetze'), __('Muetze'), 4)
 	)
 );
 $EmptyTables['dataset'] = array(
@@ -81,24 +81,24 @@ $EmptyTables['plugin'] = array(
 $EmptyTables['sport'] = array(
 	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'speed', 'types', 'pulse', 'power', 'outside'),
 	'values'  => array(
-		array('Laufen', 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1),
-		array('Radfahren', 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
-		array('Schwimmen', 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
-		array('Gymnastik', 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
-		array('Sonstiges', 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
+		array(__('Running'), 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
+		array(__('Swimming'), 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
+		array(__('Biking'), 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
+		array(__('Gymnastics'), 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
+		array(__('Other'), 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(
 	// Sportid will be updated by AccountHandler::setSpecialConfigValuesFor
 	'columns' => array('name', 'abbr', 'RPE', 'sportid'),
 	'values'  => array(
-		array('Dauerlauf', 'DL', 4, 0),
-		array('Fahrtspiel', 'FS', 5, 0),
-		array('Intervalltraining', 'IT', 7, 0),
-		array('Tempodauerlauf', 'TDL', 7, 0),
-		array('Wettkampf', 'WK', 10, 0),
-		array('Regenerationslauf', 'RL', 2, 0),
-		array('Langer Lauf', 'LL', 5, 0),
-		array('Warm-/Auslaufen', 'WA', 1, 0)
+		array(__('Jogging'), __('JOG'), 4, 0),
+		array(__('Fartlek'), __('FL'), 5, 0),
+		array(__('Interval training'), __('IT'), 7, 0),
+		array(__('Tempo Run'), __('TR'), 7, 0),
+		array(__('Race'), __('RC'), 10, 0, 'TYPE_ID_RACE'),
+		array(__('Regeneration Run'), __('RG'), 2, 0),
+		array(__('Long Slow Distance'), __('LSD'), 5, 0, 'TYPE_ID_LONGRUN'),
+		array(__('Warm-up'), __('WU'), 1, 0)
 	)
 );

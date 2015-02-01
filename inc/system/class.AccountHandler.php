@@ -50,6 +50,13 @@ class AccountHandler {
 	static public $SALT_LENGTH = 32;
 
 	/**
+	 * Array for special key values
+	 * used when initializing account
+	 * @var int
+	 */
+	static private $SPECIAL_KEYS=array();
+
+	/**
 	 * Update account-values
 	 * @param string $username
 	 * @param mixed $column
@@ -59,7 +66,7 @@ class AccountHandler {
 		DB::getInstance()->stopAddingAccountID();
 		DB::getInstance()->updateWhere('account', '`username`='.DB::getInstance()->escape($username).' LIMIT 1', $column, $value);
 		DB::getInstance()->startAddingAccountID();
-                Cache::delete('account'.$id,1);
+        //FIXME        Cache::delete('account'.$id,1);
 	}
         
         /**
@@ -407,15 +414,24 @@ class AccountHandler {
 		$DB          = DB::getInstance();
 		$EmptyTables = array();
 
-		include FRONTEND_PATH.'system/schemes/set.emptyValues.php';
+		include FRONTEND_PATH . 'system/schemes/set.emptyValues.php';
 
 		foreach ($EmptyTables as $table => $data) {
-			$columns   = $data['columns'];
+			$columns = $data['columns'];
 			$columns[] = 'accountid';
-
 			foreach ($data['values'] as $values) {
+				$special_keys = array();
+
+				for ($i = count($values); $i > count($columns)-1; $i--) {
+					$special_keys[] = array_pop($values);
+				}
+
 				$values[] = $accountID;
-				$DB->insert($table, $columns, $values);
+				$dbId = $DB->insert($table, $columns, $values);
+
+				foreach ($special_keys as $sk) {
+					self::$SPECIAL_KEYS[$sk] = $dbId;
+				}
 			}
 		}
 	}
@@ -485,22 +501,16 @@ class AccountHandler {
 			return;
 		}
 
-		Configuration::loadAll();
-
 		$DB = DB::getInstance();
+
 		$whereAdd = 'AND `accountid`='.(int)$accountId;
+		$columns=array('category', 'key', 'value', 'accountid');
 
-		$RunningID = $DB->query('SELECT id FROM '.PREFIX.'sport WHERE accountid="'.$accountId.'" AND name="Laufen" LIMIT 1')->fetchColumn();
+		$DB->exec('UPDATE `'.PREFIX.'type` SET `sportid`="'.self::$SPECIAL_KEYS['RUNNING_SPORT_ID'].'" WHERE `accountid`="'.$accountId.'"');
 
-		$DB->updateWhere('conf', '`key`="MAINSPORT" '.$whereAdd, 'value', $RunningID);
-		$DB->updateWhere('conf', '`key`="RUNNINGSPORT" '.$whereAdd, 'value', $RunningID);
-
-		$DB->exec('UPDATE `'.PREFIX.'type` SET `sportid`="'.$RunningID.'" WHERE `accountid`="'.$accountId.'"');
-
-		$RaceTypeID = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Wettkampf" LIMIT 1')->fetchColumn();
-		$DB->updateWhere('conf', '`key`="WK_TYPID" '.$whereAdd, 'value', $RaceTypeID);
-
-		$LongRunID = $DB->query('SELECT id FROM '.PREFIX.'type WHERE accountid="'.$accountId.'" AND name="Langer Lauf" LIMIT 1')->fetchColumn();
-		$DB->updateWhere('conf', '`key`="LL_TYPID" '.$whereAdd, 'value', $LongRunID);
+		$DB->insert('conf', $columns, array('general','MAINSPORT', self::$SPECIAL_KEYS['MAIN_SPORT_ID'], $accountId));
+		$DB->insert('conf', $columns, array('general','RUNNINGSPORT', self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], $accountId));
+		$DB->insert('conf', $columns, array('general','TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
+		$DB->insert('conf', $columns, array('general','TYPE_ID_LONGRUN', self::$SPECIAL_KEYS['TYPE_ID_LONGRUN'], $accountId));
 	}
 }
