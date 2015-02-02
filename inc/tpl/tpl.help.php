@@ -63,8 +63,7 @@ $Frontend = new Frontend();
 	<h1><?php printf( __('Browser Support')); ?></h1>
 </div>
 <div class="panel-content">
-	<?php printf( __('Runalyze is a modern application and therefore we want to use the most modern web techniques.
-	We will not try to support any outdated browser versions.')); ?>
+	<?php printf( __('Runalyze is a modern application and therefore we want to use the most modern web techniques. We will not try to support any outdated browser versions.')); ?>
 	<ul>
 		<li><?php printf( __('e.g. jQuery 2.x does not support IE8 (or less)')); ?></li>
 	</ul>
