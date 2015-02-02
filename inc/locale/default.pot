@@ -3429,6 +3429,25 @@ msgstr ""
 msgid "You can contact us via email:"
 msgstr ""
 
+#: inc/tpl/tpl.help.php:63
+msgid "Browser Support"
+msgstr ""
+
+#: inc/tpl/tpl.help.php:66
+msgid ""
+"Runalyze is a modern application and therefore we want to use the most "
+"modern web techniques. We will not try to support any outdated browser "
+"versions."
+msgstr ""
+
+#: inc/tpl/tpl.help.php:68
+msgid "e.g. jQuery 2.x does not support IE8 (or less)"
+msgstr ""
+
+#: inc/tpl/tpl.help.php:73
+msgid "Credits"
+msgstr ""
+
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
 msgstr ""
