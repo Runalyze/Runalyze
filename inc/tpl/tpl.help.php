@@ -59,35 +59,19 @@ $Frontend = new Frontend();
 	</ul>
 </div>
 
-
 <div class="panel-heading panel-sub-heading">
-	<h1>Changelog</h1>
+	<h1><?php printf( __('Browser Support')); ?></h1>
 </div>
 <div class="panel-content">
+	<?php printf( __('Runalyze is a modern application and therefore we want to use the most modern web techniques.
+	We will not try to support any outdated browser versions.')); ?>
 	<ul>
-		<li>
-			<strong>Version 2.x</strong>, 2014
-			<ul>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v2-0/" title="Runalyze v2.0">v2.0</a></strong>, XX.XX.2014: ...</li>
-			</ul>
-		</li>
-		<li>
-			<strong>Version 1.x</strong>, 2012 - 2013, <em>(only in german)</em>
-			<ul>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-5/" title="Runalyze v1.5">v1.5</a></strong>, 01.01.2014: Bugfixes, genauere VDOT-Formel</li>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/" title="Runalyze v1.4">v1.4</a></strong>, 23.08.2013: Bugfix für Sicherheitsrisiko</li>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-3/" title="Runalyze v1.3">v1.3</a></strong>, 29.07.2013: Neue Importer, mehr Trainingsdaten, VDOT-Korrektur für H&ouml;henmeter, ...</li>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-2/" title="Runalyze v1.2">v1.2</a></strong>, 13.11.2012: Diagramme speichern, &Ouml;ffentliche Trainingsliste</li>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-1/" title="Runalyze v1.1">v1.1</a></strong>, 19.07.2012: Erste Online-Version</li>
-				<li><strong><a href="http://runalyze.de/allgemein/runalyze-v1-0/" title="Runalyze v1.0">v1.0</a></strong>, 20.01.2012: Erste &ouml;ffentliche Version</li>
-			</ul>
-		</li>
+		<li><?php printf( __('e.g. jQuery 2.x does not support IE8 (or less)')); ?></li>
 	</ul>
 </div>
 
-
 <div class="panel-heading panel-sub-heading">
-	<h1>Credits</h1>
+	<h1><?php printf( __('Credits')); ?></h1>
 </div>
 <div class="panel-content">
 	<ul>
@@ -126,19 +110,5 @@ $Frontend = new Frontend();
 				<li>Weather data from OpenWeatherMap - <a class="external" href="http://openweathermap.org/">http://openweathermap.org</a></li>
 			</ul>
 		</li>
-	</ul>
-</div>
-
-
-<div class="panel-heading panel-sub-heading">
-	<h1>Browser Support</h1>
-</div>
-<div class="panel-content">
-	Runalyze is a modern application and therefore we want to use the most modern web techniques.
-	We will not try to support any outdated browser versions.
-
-	<ul>
-		<li>jQuery 2.x does not support IE8 (or less)</li>
-		<li>Flot charts work with IE 6+, Chrome, Firefox 2+, Safari 3+ and Opera 9.5+</li>
 	</ul>
 </div>
