@@ -143,7 +143,7 @@ msgstr ""
 #: inc/training/schemes/scheme.UserData.php:33
 #: inc/training/search/class.FormularSelectSearchSort.php:29
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:247
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:246
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:545
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:357
@@ -645,7 +645,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:49
 #: inc/training/view/section/table/class.TableLapsComputed.php:84
 #: inc/training/view/section/table/class.TableZonesAbstract.php:105
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:239
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:238
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:546
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:127
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:224
@@ -662,8 +662,8 @@ msgstr ""
 #: inc/training/view/section/class.SectionOverviewRow.php:51
 #: inc/training/view/section/table/class.TableLapsComputed.php:86
 #: inc/training/view/section/table/class.TableZonesHeartrate.php:21
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:241
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:245
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:240
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:244
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:601
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:123
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:125
@@ -772,8 +772,8 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:132
 #: inc/training/view/section/class.SectionOverviewRow.php:55
 #: inc/training/view/section/class.SectionPaceRow.php:62
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:242
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:246
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:241
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:245
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:172
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:489
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:11
@@ -904,7 +904,7 @@ msgid "General statistics"
 msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:129
-#: inc/system/schemes/set.emptyValues.php:84
+#: inc/system/schemes/set.emptyValues.php:83
 msgid "Running"
 msgstr ""
 
@@ -1831,8 +1831,8 @@ msgstr ""
 
 #: inc/data/class.Splits.php:142
 #: inc/training/formular/class.TrainingInputSplits.php:61
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:357
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:370
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
 msgstr ""
 
@@ -2909,135 +2909,127 @@ msgid "The settings have been saved."
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:15
-msgid "Langarmshirt"
+msgid "l-sleeve"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:15
-msgid "S-Lang"
+msgid "long sleeve"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:16
 msgid "T-Shirt"
 msgstr ""
 
+#: inc/system/schemes/set.emptyValues.php:16
+msgid "T-shirt"
+msgstr ""
+
 #: inc/system/schemes/set.emptyValues.php:17
-msgid "Singlet"
+msgid "singlet"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:18
-msgid "Jacke"
+msgid "jacket"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:19
-msgid "H-kurz"
+msgid "l-pants"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:19
-msgid "kurze Hose"
+msgid "long pants"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:20
-msgid "H-lang"
-msgstr ""
-
-#: inc/system/schemes/set.emptyValues.php:20
-msgid "lange Hose"
+msgid "shorts"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:21
-msgid "Laufshorts"
-msgstr ""
-
-#: inc/system/schemes/set.emptyValues.php:21
-msgid "Shorts"
+msgid "gloves"
 msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:22
-msgid "Handschuhe"
+msgid "hat"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:23
-msgid "Muetze"
-msgstr ""
-
-#: inc/system/schemes/set.emptyValues.php:85
+#: inc/system/schemes/set.emptyValues.php:84
 msgid "Swimming"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:86
+#: inc/system/schemes/set.emptyValues.php:85
 msgid "Biking"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:87
+#: inc/system/schemes/set.emptyValues.php:86
 msgid "Gymnastics"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:88
+#: inc/system/schemes/set.emptyValues.php:87
 msgid "Other"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:95
+#: inc/system/schemes/set.emptyValues.php:94
 msgid "JOG"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:95
+#: inc/system/schemes/set.emptyValues.php:94
 msgid "Jogging"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:96
+#: inc/system/schemes/set.emptyValues.php:95
 msgid "FL"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:96
+#: inc/system/schemes/set.emptyValues.php:95
 msgid "Fartlek"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:97
+#: inc/system/schemes/set.emptyValues.php:96
 msgid "IT"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:97
+#: inc/system/schemes/set.emptyValues.php:96
 msgid "Interval training"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:98
+#: inc/system/schemes/set.emptyValues.php:97
 msgid "TR"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:98
+#: inc/system/schemes/set.emptyValues.php:97
 msgid "Tempo Run"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:99
+#: inc/system/schemes/set.emptyValues.php:98
 msgid "RC"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:99
+#: inc/system/schemes/set.emptyValues.php:98
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "Race"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:100
+#: inc/system/schemes/set.emptyValues.php:99
 msgid "RG"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:100
+#: inc/system/schemes/set.emptyValues.php:99
 msgid "Regeneration Run"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:101
+#: inc/system/schemes/set.emptyValues.php:100
 msgid "LSD"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:101
+#: inc/system/schemes/set.emptyValues.php:100
 msgid "Long Slow Distance"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:102
+#: inc/system/schemes/set.emptyValues.php:101
 msgid "WU"
 msgstr ""
 
-#: inc/system/schemes/set.emptyValues.php:102
+#: inc/system/schemes/set.emptyValues.php:101
 msgid "Warm-up"
 msgstr ""
 
@@ -4233,8 +4225,8 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:86
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:240
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:385
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:239
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:384
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:43
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:147
 msgid "Prognosis"
@@ -4283,57 +4275,57 @@ msgstr ""
 msgid "Your two best results:"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:243
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:242
 msgid "Difference"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:244
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:243
 msgid "Personal best"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:280
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:279
 #, php-format
 msgid "The results give the constants K = %f and e = %f."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:296
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:295
 msgid "Input"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:301
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:300
 msgid "Model"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:309
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:308
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:60
 msgid "Distances"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:324
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:323
 msgid "New VDOT"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:329
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:328
 msgid "Use Basic Endurance"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:334
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:333
 msgid "Basic Endurance"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:349
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:348
 msgid "Best result"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:364
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:363
 msgid "Second best result"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:399
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:398
 msgid "Show prognosis"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:418
+#: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:417
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:107
 msgid "Prognosis calculator"
 msgstr ""
