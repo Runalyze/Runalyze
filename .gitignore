@@ -16,3 +16,4 @@ img/backgrounds/My-*
 lib/phpfastcache/cache.storage.*
 *.xcf
 config.php
+*.mo

@@ -191,7 +191,6 @@ class Prognose_PrognosisWindow {
 	 * Init calculations
 	 */
 	protected function runCalculations() {
-		$DateQuery = DB::getInstance()->prepare('SELECT `time` FROM `'.PREFIX.'training` WHERE `typeid`="'.Configuration::General()->competitionType().'" AND `distance`=:distance ORDER BY `s` ASC LIMIT 1');
 		foreach ($this->Distances as $km) {
 			$Prognosis = $this->PrognosisObject->inSeconds( $km );
 

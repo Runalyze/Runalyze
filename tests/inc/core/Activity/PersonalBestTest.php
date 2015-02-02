@@ -97,4 +97,32 @@ class PersonalBestTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1100, $PB5k->seconds());
 	}
 
+	public function testMultiLookupWithDetails() {
+		PersonalBest::activateStaticCache();
+		$date = mktime(12,0,0,6,1,2010);
+
+		$this->insert(1.0,  180, $date);
+		$this->insert(1.0,  200, $date);
+		$this->insert(3.10,  600, $date);
+		$this->insert(3.10,  650, $date);
+		$this->insert(5.0, 1100, $date);
+		$this->insert(5.0, 1200, $date);
+
+		$this->assertEquals(3, PersonalBest::lookupDistances(array(1, 3.1, 5), $this->PDO, true));
+
+		$PDO = new \PDO('sqlite::memory:');
+
+		$PB1k = new PersonalBest(1, $PDO, true, true);
+		$PB3k = new PersonalBest("3.1", $PDO, true, true);
+		$PB5k = new PersonalBest(5, $PDO, true);
+		$PB5k->lookupWithDetails();
+
+		$this->assertEquals(  180, $PB1k->seconds());
+		$this->assertEquals($date, $PB1k->timestamp());
+		$this->assertEquals(  600, $PB3k->seconds());
+		$this->assertEquals($date, $PB3k->timestamp());
+		$this->assertEquals( 1100, $PB5k->seconds());
+		$this->assertEquals($date, $PB5k->timestamp());
+	}
+
 }
