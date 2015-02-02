@@ -12,15 +12,14 @@ $EmptyTables = array();
 $EmptyTables['clothes'] = array(
 	'columns' => array('name', 'short', 'order'),
 	'values'  => array(
-		array(__('Langarmshirt'), __('S-Lang'), 1),
-		array(__('T-Shirt'), __('T-Shirt'), 1),
-		array(__('Singlet'), __('Singlet'), 1),
-		array(__('Jacke'), __('Jacke'), 1),
-		array(__('kurze Hose'), __('H-kurz'), 2),
-		array(__('lange Hose'), __('H-lang'), 2),
-		array(__('Laufshorts'), __('Shorts'), 2),
-		array(__('Handschuhe'), __('Handschuhe'), 3),
-		array(__('Muetze'), __('Muetze'), 4)
+		array(__('long sleeve'), __('l-sleeve'), 1),
+		array(__('T-shirt'), __('T-Shirt'), 1),
+		array(__('singlet'), __('singlet'), 1),
+		array(__('jacket'), __('jacket'), 1),
+		array(__('long pants'), __('l-pants'), 2),
+		array(__('shorts'), __('shorts'), 2),
+		array(__('gloves'), __('gloves'), 3),
+		array(__('hat'), __('hat'), 4)
 	)
 );
 $EmptyTables['dataset'] = array(
