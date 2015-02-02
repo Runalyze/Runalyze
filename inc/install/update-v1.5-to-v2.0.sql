@@ -110,6 +110,9 @@ ALTER TABLE  `runalyze_training` ADD  `vertical_oscillation` TINYINT UNSIGNED NO
 INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'groundcontact', 1, 1, 'small', '', 25, 1, 'AVG', `id` FROM `runalyze_account`;
 INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'vertical_oscillation', 1, 1, 'small', '', 26, 1, 'AVG', `id` FROM `runalyze_account`;
 
+/* Allow InnoDB row_format = DYNAMIC */
+SET GLOBAL innodb_file_format=barracuda; SET GLOBAL innodb_file_per_table=ON;
+
 CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   `accountid` INT UNSIGNED NOT NULL,
   `activityid` INT UNSIGNED NOT NULL,
