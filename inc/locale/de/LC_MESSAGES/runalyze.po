@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-03 14:56+0200\n"
+"PO-Revision-Date: 2015-02-03 15:31+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -3517,8 +3517,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:297
 msgid "Please activate JavaScript, Runalyze will not work without."
-msgstr ""
-"Bitte aktivieren Sie Javascript. Runalyze wird sonst nicht funktionieren."
+msgstr "Bitte aktiviere Javascript. Runalyze wird sonst nicht funktionieren."
 
 #: inc/tpl/tpl.InstallerUpdate.php:3
 msgid "Update Runalyze"
@@ -3542,7 +3541,8 @@ msgstr ""
 #: inc/tpl/tpl.InstallerUpdate.php:12
 msgid "To be safe we recommend you to make a complete backup of your database."
 msgstr ""
-"Um sicherzugehen empfehlen wir ein Komplettbackup der Datenbank zu erstellen."
+"Um sicherzugehen empfehlen wir ein vollständiges Backup der Datenbank zu "
+"erstellen."
 
 #: inc/tpl/tpl.InstallerUpdate.php:17
 msgid "----- please choose"
@@ -3587,7 +3587,7 @@ msgid ""
 "If you want to stay up to date on changes and receive tips from time to "
 "time, visit our blog at %s."
 msgstr ""
-"Wenn du über Updates und Tipps auf dem aktuellen Stand bleiben möchtest "
+"Wenn du über Updates und Tipps auf dem aktuellen Stand bleiben möchtest, "
 "besuche unseren Blog unter %s."
 
 #: inc/tpl/tpl.help.php:20
@@ -3614,7 +3614,8 @@ msgstr ""
 msgid ""
 "Have a look at the configuration window to see what we're talking about."
 msgstr ""
-"Wirf einen Blick in das Konfigurationsfenster um zu sehen was wir meinen."
+"Wirf einen Blick in das Konfigurationsfenster um zu sehen, wovon die Rede "
+"ist."
 
 #: inc/tpl/tpl.help.php:35
 msgid ""
@@ -3622,7 +3623,7 @@ msgid ""
 "presentation and configure some parameters of our experimental calculations."
 msgstr ""
 "Du kannst deine eigenen Sportarten und Trainingstypen anlegen, auswählen "
-"welche Informationen dir wie und wo angezeigt werden und einige Parameter "
+"welche Informationen dir wie und wo angezeigt werden, und einige Parameter "
 "unserer experimentellen Berechnungen konfigurieren."
 
 #: inc/tpl/tpl.help.php:41
@@ -3744,8 +3745,8 @@ msgstr "Das Passwort war falsch."
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
 msgstr ""
-"Der Account wurde noch nicht aktiviert.<br>Bitte wird einen Blick in deinen "
-"Posteingang."
+"Der Account wurde noch nicht aktiviert.<br>Bitte kontrolliere dein E-Mail-"
+"Postfach."
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
@@ -3753,7 +3754,9 @@ msgstr "Eingeloggt bleiben"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
-msgstr "Runalyze ist derzeitig im Wartungsmodus. Kein Einloggen möglich."
+msgstr ""
+"Runalyze befindet sich derzeit im Wartungsmodus. Einloggen ist daher nicht "
+"möglich."
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 msgid "Create a new account"
@@ -3761,7 +3764,7 @@ msgstr "Neuen Account erstellen"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
-msgstr "Registrierungen sind derzeitig deaktiviert."
+msgstr "Registrierungen sind derzeit deaktiviert."
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
@@ -3776,7 +3779,7 @@ msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
-"Vielen Dank für deine Registrierung. Um deinen Account zu aktivieren haben "
+"Vielen Dank für deine Registrierung. Um deinen Account zu aktivieren, haben "
 "wir dir eine Email geschickt, die in Kürze bei dir eintreffen sollte."
 
 #: inc/tpl/tpl.loginWindow.php:121
@@ -3810,11 +3813,11 @@ msgstr "hat <strong>%s</strong> erfasst."
 #: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
-msgstr "<strong>%d</strong> Athlet ist angemeldet."
+msgstr "<strong>%d</strong> Athlet ist online."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
-msgstr "INutzername"
+msgstr "Nutzername"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 msgid "New password"
@@ -3842,7 +3845,7 @@ msgstr "Distanzen auf 100m runden"
 
 #: inc/training/formular/class.TrainingInputSplits.php:47
 msgid "apply as total distance"
-msgstr "als Gesamtdistanz nehmen"
+msgstr "als Gesamtdistanz übernehmen"
 
 #: inc/training/formular/class.TrainingInputSplits.php:48
 msgid "all active"
@@ -4069,7 +4072,7 @@ msgstr "Wähle das Wetter"
 
 #: inc/training/search/class.SearchFormular.php:126
 msgid "Choose clothing"
-msgstr "Wähle die Klamotten"
+msgstr "Wähle die Kleidung"
 
 #: inc/training/search/class.SearchFormular.php:139
 msgid "Is public"
@@ -4298,13 +4301,12 @@ msgstr "Kombinierte Daten"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
-msgstr "Diagramm kombinieren"
+msgstr "Kombiniertes Diagramm"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
-msgstr ""
-"Bald wirst du hier deine eigenen Herzfrequenzzonen konfigurieren können."
+msgstr "Bald wirst du deine eigenen Herzfrequenzzonen konfigurieren können."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:52
 #: inc/training/view/section/class.SectionPaceRow.php:27
@@ -4367,12 +4369,12 @@ msgstr "Mehr über die Höhenmeter"
 #: inc/training/view/section/class.SectionCompositeRow.php:228
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 msgid "Elevation data were corrected."
-msgstr "Höhenmeterdaten wurden korrigiert."
+msgstr "Höhendaten wurden korrigiert."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:230
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 msgid "Elevation data are not corrected."
-msgstr "Höhenmeterdaten wurden nicht korrigiert."
+msgstr "Höhendaten wurden nicht korrigiert."
 
 #: inc/training/view/section/class.SectionHeartrate.php:17
 msgid "Heartrate data"
@@ -4414,7 +4416,7 @@ msgstr "Bodenkontaktzeit"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:56
 msgid "Power plot"
-msgstr "Power"
+msgstr "Leistung"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:61
 msgid "Temperature plot"
@@ -4455,7 +4457,7 @@ msgstr "Pacedigramm"
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
-msgstr "Strecke- und Höhenmeterdaten"
+msgstr "Strecke- und Höhenmeter"
 
 #: inc/training/view/section/class.SectionRouteOnlyElevation.php:17
 msgid "Elevation data"
@@ -4499,7 +4501,7 @@ msgstr "Ergebnis"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:100
 msgid "Prognosis trend"
-msgstr "Prognosenentwicklung"
+msgstr "Prognoseverlauf"
 
 #: plugin/RunalyzePluginPanel_Prognose/Plot.Form.php:103
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:165
@@ -4534,7 +4536,7 @@ msgstr "keine"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:120
 msgid "Your two best results:"
-msgstr "Deine besten zwei Ergebnisse:"
+msgstr "Deine zwei besten Ergebnisse:"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:243
 msgid "Difference"
@@ -4555,7 +4557,7 @@ msgstr "Eingabe"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:301
 msgid "Model"
-msgstr "Model"
+msgstr "Modell"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:309
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:60
@@ -4589,7 +4591,7 @@ msgstr "Zeige Prognose"
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:418
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:107
 msgid "Prognosis calculator"
-msgstr "Prognosenrechner"
+msgstr "Prognoserechner"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:51
 msgid "Predict your race performance on various distances."
@@ -4623,7 +4625,7 @@ msgid ""
 "Herbert Steffny uses fixed factors to transform performances from one "
 "distance to another. This model uses your best result."
 msgstr ""
-"Herbert Steffny nutzt feste Faktoren um Zielzeiten von einer Distanz auf "
+"Herbert Steffny nutzt feste Faktoren, um Zielzeiten von einer Distanz auf "
 "eine andere zu übertragen. Dieses Modell nutzt dein bestes Resultat."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:70
@@ -4641,7 +4643,7 @@ msgid ""
 "The VDOT model is the only one which considers your current shape. The other "
 "models are based on your previous race results."
 msgstr ""
-"Das VDOT Model ist das Einzige, welches deine aktuelle Form betrachtet. Die "
+"Das VDOT-Modell ist das Einzige, welches deine aktuelle Form betrachtet. Die "
 "anderen Modelle beziehen sich auf deine bisherigen Wettkampfergebnisse."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:81
@@ -4650,7 +4652,7 @@ msgstr "Distanzen zum Vorhersagen"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:84
 msgid "Prediction model"
-msgstr "Prognosemodel"
+msgstr "Prognosemodell"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:106
 msgid "Show prognosis trend"
@@ -4659,8 +4661,7 @@ msgstr "Prognoseverlauf anzeigen"
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:125
 msgid "There are not enough results for good predictions."
 msgstr ""
-"Derzeitig sind zu wenige Ergebnisse für eine aussagekräftige Prognose "
-"vorhanden."
+"Derzeit sind zu wenig Ergebnisse für eine aussagekräftige Prognose vorhanden."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:179
 #, php-format
@@ -4765,7 +4766,7 @@ msgstr "Zeige: Montonie/TS"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:61
 msgid "Show monotony and training strain (based on TRIMP)"
-msgstr "Zeige Monotonie und Trainingsbelastung (Basiernd auf TRIMP)"
+msgstr "Zeige Monotonie und Trainingsbelastung (Basierend auf TRIMP)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:64
 msgid "Show: VDOT"
@@ -4789,7 +4790,7 @@ msgstr "Zeige: Trainingspunkte"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:73
 msgid "Training intensity by Jack Daniels"
-msgstr "Trainingsintenivität von Jack Daniels"
+msgstr "Trainingsintensität von Jack Daniels"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:93
 msgid "Show form"
@@ -5343,7 +5344,7 @@ msgstr "Schuh löschen"
 #: plugin/RunalyzePluginPanel_Schuhe/window.schuhe.php:38
 msgid "The shoe cannot be deleted as long it is used for some activity."
 msgstr ""
-"Der Schuh kann nicht gelöscht werden solange er bei Einheiten eingetragen "
+"Der Schuh kann nicht gelöscht werden, solange er bei Einheiten eingetragen "
 "ist."
 
 #: plugin/RunalyzePluginPanel_Schuhe/window.schuhe.table.php:15
@@ -5498,7 +5499,7 @@ msgid ""
 "You can set a goal (value &gt; 0) for every time range. If it is set, you "
 "will see how much you have to run to reach it."
 msgstr ""
-"Wenn ein Ziel definiert ist (Wert > 0) wird ausserdem angezeigt, wieviel "
+"Wenn ein Ziel definiert ist (Wert > 0) wird ausserdem angezeigt, wie viel "
 "noch für die Erreichung des Ziels notwendig ist."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:52
@@ -5637,7 +5638,7 @@ msgstr "[%HFmax]"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:74
 msgid "Heart rate zone: Increment"
-msgstr "Herzfrequenzzone: Zunahme"
+msgstr "Herzfrequenzzone: Schrittweite"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:75
 msgid "Lowest pace zone"
@@ -5740,7 +5741,7 @@ msgstr "steilste Strecke"
 
 #: plugin/RunalyzePluginStat_Laufabc/class.RunalyzePluginStat_Laufabc.php:23
 msgid "Running Drills"
-msgstr "Lauf ABC"
+msgstr "Lauf-ABC"
 
 #: plugin/RunalyzePluginStat_Laufabc/class.RunalyzePluginStat_Laufabc.php:31
 msgid "How often did you do your running drills?"
@@ -5827,7 +5828,7 @@ msgstr "km/Monat"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:291
 msgid "Last"
-msgstr "Letzten"
+msgstr "Zuletzt"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:291
 msgid "training weeks"
@@ -5853,7 +5854,7 @@ msgstr "Dein letzter Lauf war am %s"
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:394
 #, php-format
 msgid "%d day of running since %s"
-msgstr "%d Lauftag seit %s"
+msgstr "%d Tage laufen seit %s"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
@@ -5973,11 +5974,11 @@ msgstr "Nächtliches Training"
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:153
 msgid "2 a.m. is considered as <em>most extreme</em> time for a training. "
 msgstr ""
-"2Uhr morgens wird als eine <em>extreme</em> Zeit für ein Training angesehen. "
+"2 Uhr morgens wird als <em>extremste</em> Zeit für ein Training angesehen. "
 
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:154
 msgid "The 20 trainings being nearest to that time are listed."
-msgstr "Die 20 Trainings, die am Nächsten daran liegen werde hier gelistet."
+msgstr "Die 20 Trainings, die am nächsten daran liegen werden hier gelistet."
 
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:33
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:284
@@ -6337,7 +6338,7 @@ msgstr "Interne Konstanten aktualisieren"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:36
 msgid "Recalculate your equipment statistics"
-msgstr "Neuberechnung deiner Klamottenstatistiken"
+msgstr "Neuberechnung deiner Kleidungsstatistiken"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:42
 msgid "Recalculate your VDOT correction factor"
