@@ -36,10 +36,9 @@ class DB {
 	 * @param $database string
 	 */
 	public static function connect($host, $user, $password, $database) {
-		self::$PDO = new PDOforRunalyze('mysql:dbname='.$database.';host='.$host, $user, $password);
+		self::$PDO = new PDOforRunalyze('mysql:dbname='.$database.';host='.$host.';charset=utf8', $user, $password);
 		self::$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		self::$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-		self::$PDO->query("SET NAMES 'utf8'");
 	}
 
 	/**

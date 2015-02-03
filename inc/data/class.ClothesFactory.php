@@ -11,6 +11,11 @@
  */
 class ClothesFactory {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY = 'clothes';
+
+	/**
 	 * All clothes as array
 	 * @var array
 	 */
@@ -36,26 +41,35 @@ class ClothesFactory {
 			self::$AllClothes[$data['id']] = $data;
 	}
         
-        /**
-         * Cache Clothes
-         */
-        static private function cacheAllClothes() {
-            $clothes = Cache::get('clothes');
-                if(is_null($clothes)) {
-                    $clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
-                    Cache::set('clothes', $clothes, '3600');
-                }
-            return $clothes;
-        }
+	/**
+	 * Cache Clothes
+	 */
+	static private function cacheAllClothes() {
+		$clothes = Cache::get(self::CACHE_KEY);
+		if (is_null($clothes)) {
+			$clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
+			Cache::set(self::CACHE_KEY, $clothes, '3600');
+		}
+		return $clothes;
+	}
 
 	/**
 	 * Get ordered clothes
 	 * @return array
 	 */
 	static public function OrderedClothes() {
-                //$clothes = self::cacheAllClothes();
-                //Todo Sort Clothes
-		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes` ORDER BY `order` ASC')->fetchAll();
+		$clothes = self::AllClothes();
+		usort($clothes, function($a, $b){
+			if ($a['order'] == $b['order']) {
+				return 0;
+			} else if ($a['order'] < $b['order']) {
+				return -1;
+			}
+
+			return 1;
+		});
+
+		return $clothes;
 	}
 
 	/**

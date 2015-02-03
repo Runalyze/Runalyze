@@ -69,8 +69,8 @@ DELIMITER ;
 
 CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `short` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `short` varchar(20) NOT NULL,
   `order` tinyint(1) NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -86,8 +86,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
 CREATE TABLE IF NOT EXISTS `runalyze_conf` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(32) NOT NULL,
-  `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `value` varchar(255) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `key` varchar(100) NOT NULL,
+  `value` varchar(255) NOT NULL,
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
@@ -101,14 +101,14 @@ CREATE TABLE IF NOT EXISTS `runalyze_conf` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(20) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `modus` tinyint(1) NOT NULL DEFAULT '0',
-  `class` varchar(25) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `style` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `class` varchar(25) NOT NULL,
+  `style` varchar(100) NOT NULL,
   `position` smallint(6) NOT NULL DEFAULT '0',
   `summary` tinyint(1) NOT NULL DEFAULT '0',
-  `summary_mode` varchar(3) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'SUM',
+  `summary_mode` varchar(3) NOT NULL DEFAULT 'SUM',
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `key` varchar(100) NOT NULL,
   `type` enum('panel','stat','tool') NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `order` smallint(6) NOT NULL,
@@ -187,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `since` varchar(10) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT '01.01.2000',
+  `name` varchar(100) NOT NULL,
+  `since` varchar(10) NOT NULL DEFAULT '01.01.2000',
   `weight` smallint(5) unsigned NOT NULL,
   `km` decimal(6,2) NOT NULL DEFAULT '0.00',
   `time` int(11) NOT NULL DEFAULT '0',
@@ -207,8 +207,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `img` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL DEFAULT 'unknown.gif',
+  `name` varchar(50) NOT NULL,
+  `img` varchar(100) NOT NULL DEFAULT 'unknown.gif',
   `short` tinyint(1) NOT NULL DEFAULT '0',
   `kcal` smallint(4) NOT NULL DEFAULT '0',
   `HFavg` smallint(3) NOT NULL DEFAULT '120',
@@ -281,12 +281,12 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `temperature` tinyint(4) DEFAULT NULL,
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
-  `route` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
+  `route` tinytext,
   `routeid` int(10) unsigned NOT NULL,
-  `clothes` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `splits` text CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `comment` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
-  `partner` tinytext CHARACTER SET latin1 COLLATE latin1_general_ci,
+  `clothes` varchar(100) NOT NULL,
+  `splits` text,
+  `comment` tinytext,
+  `partner` tinytext,
   `abc` smallint(1) NOT NULL DEFAULT '0',
   `shoeid` int(11) NOT NULL DEFAULT '0',
   `notes` text NOT NULL,
@@ -309,8 +309,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
-  `abbr` varchar(5) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `abbr` varchar(5) NOT NULL,
   `RPE` smallint(2) NOT NULL DEFAULT '2',
   `sportid` int(11) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL,
