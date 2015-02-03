@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-03 10:29+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-02-03 11:18+0200\n"
+"Last-Translator: Jörg <jgutowski@gmx.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -825,7 +825,7 @@ msgstr "Trittfrequenz"
 
 #: inc/class.DatasetLabels.php:45
 msgid "Ground contact time"
-msgstr ""
+msgstr "Bodenkontaktzeit"
 
 #: inc/class.DatasetLabels.php:46
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:38
@@ -833,7 +833,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:144
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:120
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "Vertikale Bewegung"
 
 #: inc/class.DatasetLabels.php:47
 #: inc/core/View/Activity/Plot/Series/Power.php:37
@@ -1048,9 +1048,8 @@ msgid "Plots: smooth curves"
 msgstr "Grafiken: geglättete Kurven"
 
 #: inc/core/Configuration/Category/ActivityView.php:295
-#, fuzzy
 msgid "Plots: precision"
-msgstr "Streckengenauigkeit"
+msgstr "Grafiken: Streckengenauigkeit"
 
 #: inc/core/Configuration/Category/ActivityView.php:296
 msgid "How many data points should be plotted?"
@@ -1129,7 +1128,7 @@ msgstr "als hexadezimal rgb (z.B. #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:343
 msgid "Map: show map first"
-msgstr ""
+msgstr "Karte: Karte zuerst anzeigen"
 
 #: inc/core/Configuration/Category/ActivityView.php:344
 msgid "show map before plots"
@@ -1298,7 +1297,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:92
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr ""
+msgstr "ATL/CTL in Prozent deines bisherigen Maximums anzeigen"
 
 #: inc/core/Configuration/Category/Trimp.php:93
 msgid ""
