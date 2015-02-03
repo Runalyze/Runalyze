@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-03 14:51+0200\n"
+"PO-Revision-Date: 2015-02-03 14:56+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -3401,7 +3401,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
-msgstr "Dieser Präfix ist bereits in Benutzung."
+msgstr "Dieser Präfix wird bereits verwendet."
 
 #: inc/tpl/tpl.Installer.php:146
 msgid "This prefix is free."
@@ -3409,14 +3409,14 @@ msgstr "Dieser Präfix ist verfügbar."
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "Prefix"
-msgstr "Prefix"
+msgstr "Präfix"
 
 #: inc/tpl/tpl.Installer.php:158
 msgid ""
 "You can activate a debug toolbar to see specific information if problems "
 "occur."
 msgstr ""
-"Du kannst eine Debug-Toolbar aktivieren um spezifische Informationen bei "
+"Du kannst eine Debug-Toolbar aktivieren, um spezifische Informationen bei "
 "Problemen zu erhalten."
 
 #: inc/tpl/tpl.Installer.php:170
@@ -3499,8 +3499,8 @@ msgid ""
 "There are some problems with filling the database. Please insert the above "
 "SQL-statements by hand (e.g. via PhpMyAdmin)."
 msgstr ""
-"Es gab Probleme beim Schreiben der Daten in die Datenbank. Bitte führe die o."
-"a. SQL-Anweisungen von Hand aus (z.B. per PhpMyAdmin)."
+"Es gab Probleme beim Schreiben der Daten in die Datenbank. Bitte führe die "
+"obigen SQL-Anweisungen von Hand aus (z.B. per PhpMyAdmin)."
 
 #: inc/tpl/tpl.Installer.php:258
 msgid "Setup database"
