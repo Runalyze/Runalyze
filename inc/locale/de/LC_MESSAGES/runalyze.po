@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-01-30 09:04+0200\n"
+"PO-Revision-Date: 2015-02-03 10:29+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -939,9 +939,9 @@ msgid "Miscellaneous"
 msgstr "Zusätzliches"
 
 #: inc/core/Activity/Pace.php:214
-#, fuzzy, php-format
+#, php-format
 msgid "%s in %s"
-msgstr " in "
+msgstr "%s in %s"
 
 #: inc/core/Configuration/Category/ActivityForm.php:205
 msgid "Activity form"
@@ -1053,7 +1053,6 @@ msgid "Plots: precision"
 msgstr "Streckengenauigkeit"
 
 #: inc/core/Configuration/Category/ActivityView.php:296
-#, fuzzy
 msgid "How many data points should be plotted?"
 msgstr "Jeder wievielte Datenpunkt soll auf der Strecke angezeigt werden?"
 
@@ -1133,9 +1132,8 @@ msgid "Map: show map first"
 msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:344
-#, fuzzy
 msgid "show map before plots"
-msgstr "Wetter-Statistiken anzeigen"
+msgstr "Zeige Strecke vor den Diagrammen"
 
 #: inc/core/Configuration/Category/ActivityView.php:354
 msgid "Elevation: smoothing"
@@ -1705,12 +1703,10 @@ msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:36
 #: inc/training/view/section/class.SectionLaps.php:27
-#, fuzzy
 msgid "Computed Laps"
 msgstr "Berechnete Runden"
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:45
-#, fuzzy
 msgid "No GPS-data available. Can\\'t compute laps."
 msgstr ""
 "Keine GPS-Daten verfügbar. Die Zwischenzeiten können nicht berechnet werden."
@@ -1742,7 +1738,6 @@ msgid "Heartrate data available"
 msgstr "Pulsdaten verfügbar"
 
 #: inc/core/View/Activity/Preview.php:145
-#, fuzzy
 msgid "Lap data available"
 msgstr "Keine Daten verfügbar"
 
