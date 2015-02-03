@@ -7,11 +7,6 @@
 -- Server Version: 5.1.44
 -- PHP-Version: 5.3.1
 
-
-/* Allow InnoDB row_format = DYNAMIC */
-SET GLOBAL innodb_file_format=barracuda; SET GLOBAL innodb_file_per_table=ON;
-
-
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
