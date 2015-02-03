@@ -7,8 +7,9 @@
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 
-$Factory = new PluginFactory();
-$Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
+if (!($this instanceof RunalyzePluginStat_Wettkampf)) {
+	die('Not allowed.');
+}
 
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
@@ -18,10 +19,11 @@ $trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Distance
 $titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Distance::format($distance, $distance <= 3, 1) ) );
 $timeFormat  = '%M:%S';
 
-$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
+$competitions = $this->RaceContainer->races($distance);
+//$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
-		if (!$Plugin->isFunCompetition($competition['id'])) {
+		if (!$this->isFunCompetition($competition['id'])) {
 			$Dates[]   = $competition['time'];
 			$Results[$competition['time'].'000'] = ($competition['s']*1000); // Attention: timestamp(0) => 1:00:00
 		}

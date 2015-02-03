@@ -14,6 +14,8 @@ use Runalyze\Activity\Duration;
 use Runalyze\Data\Weather;
 use Runalyze\Activity\PersonalBest;
 
+use Runalyze\Plugin\Statistic\Races\RaceContainer;
+
 $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
 /**
  * Plugin "Wettkampf"
@@ -22,7 +24,15 @@ $PLUGINKEY = 'RunalyzePluginStat_Wettkampf';
  * @package Runalyze\Plugins\Stats
  */
 class RunalyzePluginStat_Wettkampf extends PluginStat {
-	private $distances = array();
+	/**
+	 * @var array
+	 */
+	private $PBdistances = array();
+
+	/**
+	 * @var \Runalyze\Plugin\Statistic\Races\RaceContainer 
+	 */
+	protected $RaceContainer;
 
 	/**
 	 * Name
@@ -87,6 +97,17 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setOwnNavigation();
+		$this->loadRaces();
+	}
+
+	/**
+	 * Load races
+	 */
+	protected function loadRaces() {
+		require_once __DIR__.'/RaceContainer.php';
+
+		$this->RaceContainer = new RaceContainer();
+		$this->RaceContainer->fetchData();
 	}
 
 	/**
@@ -104,6 +125,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	public function getYearComparisonTable() {
 		ob_start();
+		$this->loadRaces();
 		$this->displayPersonalBestYears();
 		return ob_get_clean();
 	}
@@ -114,27 +136,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayDivs() {
 		echo HTML::clearBreak();
 
-		$this->displayDivForPersonalBest();
-		$this->displayDivForWkTable();
-	}
+		echo '<div id="bestzeiten" class="change">';
+		$this->displayPersonalBests();
+		echo '</div>';
 
-	/**
-	 * Display div for personal bests 
-	 */
-	private function displayDivForPersonalBest() {
-		echo '<div id="bestzeiten" class="change">'.NL;
-			$this->displayPersonalBests();
-		echo '</div>'.NL;
-	}
-
-	/**
-	 * Display div for competitions 
-	 */
-	private function displayDivForWkTable() {
-		echo '<div id="wk-tablelist" class="change" style="display:none;">'.NL;
-			$this->displayAllCompetitions();
-			$this->displayWeatherStatistics();
-		echo '</div>'.NL;
+		echo '<div id="wk-tablelist" class="change" style="display:none;">';
+		$this->displayAllCompetitions();
+		$this->displayWeatherStatistics();
+		echo '</div>';
 	}
 
 	/**
@@ -143,32 +152,14 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayAllCompetitions() {
 		$this->displayTableStart('wk-table');
 
-		$query = DB::getInstance()->query('
-			SELECT
-				id,
-				time,
-				sportid,
-				typeid,
-				comment,
-				distance,
-				s,
-				is_track,
-				pulse_avg,
-				pulse_max,
-				weatherid,
-				temperature
-			FROM `'.PREFIX.'training`
-			WHERE `typeid`='.Configuration::General()->competitionType().'
-			ORDER BY `time` DESC');
-
-		while ($data = $query->fetch()) {
+		foreach ($this->RaceContainer->allRaces() as $data) {
 			$this->displayWkTr($data);
 		}
 
-		if ($query->rowCount() == 0) {
+		if (!isset($data)) {
 			$this->displayEmptyTr( __('There are no races.') );
 		}
-		
+
 		$this->displayTableEnd('wk-table');
 	}
 
@@ -180,8 +171,9 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$this->displayPersonalBestsTRs();
 		$this->displayTableEnd('pb-table');
 
-		if (!empty($this->distances))
+		if (!empty($this->PBdistances)) {
 			$this->displayPersonalBestsImages();
+		}
 
 		$this->displayPersonalBestYears();
 	}
@@ -190,41 +182,32 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 * Display all table-rows for personal bests
 	 */
 	private function displayPersonalBestsTRs() {
-		$this->distances = array();
-		$dists = DB::getInstance()->query('SELECT `distance`, SUM(1) as `wks` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' GROUP BY `distance`')->fetchAll();
+		$this->PBdistances = array();
+		$AllDistances = $this->RaceContainer->distances();
+		sort($AllDistances);
 
-		$SingleRequest = DB::getInstance()->prepare('
-					SELECT
-						id,
-						time,
-						sportid,
-						typeid,
-						comment,
-						distance,
-						s,
-						is_track,
-						pulse_avg,
-						pulse_max,
-						weatherid,
-						temperature
-					FROM `'.PREFIX.'training`
-					WHERE `typeid`='.Configuration::General()->competitionType().'
-						AND `distance`=:distance
-					ORDER BY `s` ASC');
+		foreach ($AllDistances as $distance) {
+			$Races = $this->RaceContainer->races((float)$distance);
 
-		foreach ($dists as $i => $dist) {
-			if ($dist['wks'] > 1 || in_array($dist['distance'], $this->Configuration()->value('pb_distances'))) {
-				$this->distances[] = $dist['distance'];
+			if (count($Races) > 1 || in_array($distance, $this->Configuration()->value('pb_distances'))) {
+				$this->PBdistances[] = $distance;
 
-				$SingleRequest->bindValue('distance', $dist['distance']);
-				$SingleRequest->execute();
-				$wk = $SingleRequest->fetch();
-				$this->displayWKTr($wk, $i, true);
+				$PB = PHP_INT_MAX;
+				$PBdata = array();
+
+				foreach ($Races as $data) {
+					if ($data['s'] < $PB) {
+						$PBdata = $data;
+					}
+				}
+
+				$this->displayWKTr($data);
 			}
 		}
 
-		if (empty($this->distances))
+		if (empty($this->PBdistances)) {
 			$this->displayEmptyTr('<em>'.__('There are no races for the given distances.').'</em>');
+		}
 	}
 
 	/**
@@ -232,7 +215,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	private function displayPersonalBestsImages() {
 		$SubLinks = array();
-		foreach ($this->distances as $km) {
+		foreach ($this->PBdistances as $km) {
 			$name       = Distance::format($km, $km <= 3, 1);
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
@@ -247,12 +230,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '</div>';
 		echo '<div class="panel-content">';
 
-		$display_km = $this->distances[0];
-		if (in_array($this->Configuration()->value('main_distance'), $this->distances))
+		$display_km = $this->PBdistances[0];
+		if (in_array($this->Configuration()->value('main_distance'), $this->PBdistances))
 			$display_km = $this->Configuration()->value('main_distance');
 
 		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:482px;height:192px;">';
-		foreach ($this->distances as $km) {
+		foreach ($this->PBdistances as $km) {
 			echo Plot::getInnerDivFor('bestzeit'.($km*1000), 480, 190, $km != $display_km);
 			$_GET['km'] = $km;
 			include 'Plot.Bestzeit.php';
@@ -272,13 +255,13 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$kms = (is_array($this->Configuration()->value('pb_distances'))) ? $this->Configuration()->value('pb_distances') : array(3, 5, 10, 21.1, 42.2);
 		foreach ($kms as $km)
 			$dists[$km] = array('sum' => 0, 'pb' => INFINITY);
-		
-		$wks = DB::getInstance()->query('SELECT YEAR(FROM_UNIXTIME(`time`)) as `y`, `distance`, `s` FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' ORDER BY `y` ASC')->fetchAll();
 
-		if (empty($wks))
+		if ($this->RaceContainer->num() == 0)
 			return;
 
-		foreach ($wks as $wk) {
+		foreach ($this->RaceContainer->allRaces() as $wk) {
+			$wk['y'] = date('Y', $wk['time']);
+
 			if (!isset($year[$wk['y']])) {
 				$year[$wk['y']] = $dists;
 				$year[$wk['y']]['sum'] = 0;
@@ -298,7 +281,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<tr>';
 		echo '<th></th>';
 
-		foreach (array_keys($year) as $y)
+		$Years = array_keys($year);
+		sort($Years);
+
+		foreach ($Years as $y)
 			if ($y != 'sum')
 				echo '<th>'.$y.'</th>';
 
@@ -311,8 +297,10 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		foreach ($kms as $i => $km) {
 			echo '<tr class="r"><td class="b">'.Distance::format($km, $km <= 3, 1).'</td>';
-		
-			foreach ($year as $key => $y) {
+
+			foreach ($Years as $key) {
+				$y = $year[$key];
+
 				if ($key != 'sum') {
 					if ($y[$km]['sum'] != 0) {
 						$PB = new PersonalBest($km);
