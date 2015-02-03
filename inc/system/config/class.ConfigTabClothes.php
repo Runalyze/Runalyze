@@ -75,7 +75,7 @@ class ConfigTabClothes extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Clothes   = ClothesFactory::OrderedClothes();
+		$Clothes   = ClothesFactory::AllClothes();
 		$Clothes[] = array('id' => -1);
 		
 
@@ -99,5 +99,7 @@ class ConfigTabClothes extends ConfigTab {
 			elseif (strlen($_POST['clothes']['name'][$id]) > 2)
 				DB::getInstance()->insert('clothes', $columns, $values);
 		}
+
+		Cache::delete(ClothesFactory::CACHE_KEY);
 	}
 }
