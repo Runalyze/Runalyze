@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `mail` (`mail`),
   UNIQUE KEY `session_id` (`session_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Trigger `runalyze_account`
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_conf` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `pluginid` (`pluginid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `in_routenet` tinyint(1) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `pauses` text NOT NULL,
   PRIMARY KEY (`activityid`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   KEY `time` (`time`),
   KEY `sportid` (`sportid`),
   KEY `typeid` (`typeid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 PACK_KEYS=0;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------
 
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -337,4 +337,4 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_plugin_conf` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY (`pluginid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 INSERT INTO `runalyze_plugin_conf` (`pluginid`, `config`, `value`) SELECT PluginList.id, SUBSTRING_INDEX(PluginList.config, "|", 1) as config_key, SUBSTRING_INDEX(SUBSTRING_INDEX(PluginList.config, "|", 2), "=", -1) as config_value FROM (SELECT `id`, SUBSTRING_INDEX(SUBSTRING_INDEX(`config`, "\n", 1), "\n", -1) as `config` FROM runalyze_plugin) AS PluginList WHERE PluginList.config != "";
 INSERT INTO `runalyze_plugin_conf` (`pluginid`, `config`, `value`) SELECT PluginList.id, SUBSTRING_INDEX(PluginList.config, "|", 1) as config_key, SUBSTRING_INDEX(SUBSTRING_INDEX(PluginList.config, "|", 2), "=", -1) as config_value FROM (SELECT `id`, SUBSTRING_INDEX(SUBSTRING_INDEX(`config`, "\n", 2), "\n", -1) as `config` FROM runalyze_plugin) AS PluginList WHERE PluginList.config != "";
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata`(
   `pauses` TEXT NOT NULL,
   PRIMARY KEY (`activityid`),
   KEY `accountid` (`accountid`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -152,21 +152,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
   `in_routenet` TINYINT( 1 ) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   KEY `accountid` (`accountid`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = MyISAM DEFAULT CHARSET=utf8;
 
 /* 17.01.2015 - old columns of `runalyze_training` are removed by 'refactor-db.php' */
-
-/* 19.01.2015 - Change to InnoDB */
-ALTER TABLE `runalyze_user` ENGINE=InnoDB;
-ALTER TABLE `runalyze_account` ENGINE=InnoDB;
-ALTER TABLE `runalyze_sport` ENGINE=InnoDB;
-ALTER TABLE `runalyze_conf` ENGINE=InnoDB;
-ALTER TABLE `runalyze_plugin` ENGINE=InnoDB;
-ALTER TABLE `runalyze_clothes` ENGINE=InnoDB;
-ALTER TABLE `runalyze_type` ENGINE=InnoDB;
-ALTER TABLE `runalyze_dataset` ENGINE=InnoDB;
-ALTER TABLE `runalyze_shoe` ENGINE=InnoDB;
-ALTER TABLE `runalyze_training` ENGINE=InnoDB;
 
 /* 03.02.2015 - Change charset to utf-8 */
 ALTER TABLE `runalyze_clothes` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
