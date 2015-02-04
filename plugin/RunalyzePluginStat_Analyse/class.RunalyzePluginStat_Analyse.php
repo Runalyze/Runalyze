@@ -124,7 +124,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function initTimer() {
 		if ($this->year != -1) {
-			$this->where_time = '&& YEAR(FROM_UNIXTIME(`time`))='.$this->year;
+			$this->where_time = 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
 			$this->group_time = 'MONTH(FROM_UNIXTIME(`time`))';
 			$this->timer = 'MONTH';
 			$this->timer_start = 1;

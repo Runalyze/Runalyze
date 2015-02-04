@@ -134,7 +134,7 @@ abstract class PluginStat extends Plugin {
 		}
 
 		if ($this->year > 0) {
-			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year;
+			$Query .= ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
 		}
 
 		return $Query;

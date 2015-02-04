@@ -335,7 +335,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 				`sportid`
 			FROM `'.PREFIX.'training`
 			WHERE
-				DATE(FROM_UNIXTIME(`time`))=DATE(NOW()) AND
+				`time` BETWEEN UNIX_TIMESTAMP(\''.date('Y-m-d').'\') AND UNIX_TIMESTAMP(\''.date('Y-m-d', time() + DAY_IN_S).'\')-1 AND
 				`sportid`='.Configuration::General()->runningSport().' AND
 				`accountid`='.SessionAccountHandler::getId().'
 			LIMIT 1

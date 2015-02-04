@@ -279,7 +279,7 @@ abstract class PlotSumData extends Plot {
 				WHERE
 					'.$whereSport.'
 					`distance` = 0 AND `s` > 0 AND
-					YEAR(FROM_UNIXTIME(`time`))='.(int)$this->Year.'
+					`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1
 			')->fetchColumn();
 
 			if ($num > 0)
@@ -296,7 +296,7 @@ abstract class PlotSumData extends Plot {
 			FROM `'.PREFIX.'training`
 			WHERE
 				'.$whereSport.'
-				YEAR(FROM_UNIXTIME(`time`))='.(int)$this->Year.'
+				`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1
 			GROUP BY '.$this->groupBy().', '.$this->timer()
 		)->fetchAll();
 	}

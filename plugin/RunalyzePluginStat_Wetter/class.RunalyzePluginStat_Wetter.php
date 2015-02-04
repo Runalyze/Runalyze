@@ -132,7 +132,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL
-				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
 			LIMIT 12')->fetchAll();
@@ -168,7 +168,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`=?
-				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').' AND
+				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').' AND
 				`weatherid`=?
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
@@ -214,7 +214,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`clothes`!=""
-				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			ORDER BY `m` ASC
 			LIMIT 12')->fetchAll();
@@ -230,7 +230,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `m`
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`="'.Configuration::General()->mainSport().'"
-				'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '').'
+				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
 			GROUP BY MONTH(FROM_UNIXTIME(`time`))
 			HAVING `num`!=0
 			ORDER BY `m` ASC
@@ -302,7 +302,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL AND
 				FIND_IN_SET(:id,`clothes`) != 0
-			'.($this->year != -1 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.$this->year : '')
+			'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '')
 		);
 
 		if (!empty($this->Clothes)) {
@@ -337,8 +337,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? 'YEAR(FROM_UNIXTIME(`time`))='.$this->year.' AND ' : '').' `temperature` IS NOT NULL ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
-		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? 'YEAR(FROM_UNIXTIME(`time`))='.$this->year.' AND ' : '').' `temperature` IS NOT NULL ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
+		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND' : '').' `temperature` IS NOT NULL ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
+		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND' : '').' `temperature` IS NOT NULL ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
 			$hot[$i] = $h['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));

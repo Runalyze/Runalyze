@@ -455,17 +455,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			WHERE
 				`sportid`=:sportid AND `accountid`=:sessid';
 
-		if ($this->year != -1)
-			$Query .= ' AND YEAR(FROM_UNIXTIME(`time`))=:year';
+		if ($this->year != -1) {
+			$Query .= ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
+		}
 
 		$Query .= ' GROUP BY '.$Timer.'(FROM_UNIXTIME(`time`)) ORDER BY `i`';
 
 		$Request = DB::getInstance()->prepare($Query);
 		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
 		$Request->bindValue('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
-
-		if ($this->year != -1)
-			$Request->bindParam('year', $this->year, PDO::PARAM_INT);
 
 		$Request->execute();
 

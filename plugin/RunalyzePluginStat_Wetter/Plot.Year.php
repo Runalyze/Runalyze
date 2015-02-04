@@ -16,15 +16,11 @@ $Query = '
 	FROM `'.PREFIX.'training`
 	WHERE
 		!ISNULL(`temperature`) AND
-		YEAR(FROM_UNIXTIME(`time`))=:year
+		`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$Year+1).'-01-01\')-1
 	GROUP BY `d`
 	ORDER BY `d` ASC';
 
-$Request = DB::getInstance()->prepare($Query);
-$Request->bindParam('year', $Year);
-$Request->execute();
-
-$Data = $Request->fetchAll();
+$Data = DB::getInstance()->query($Query)->fetchAll();
 
 foreach ($Data as $dat)
 	$Temperatures[$dat['time']] = (int)$dat['temp'];

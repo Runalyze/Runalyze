@@ -242,7 +242,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$Query .= '`runalyze_training`.`accountid`='.SessionAccountHandler::getId().' AND ';
 
 		if ($this->year > 0) {
-			$Query .= 'YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year.' AND ';
+			$Query .= '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND';
 		}
 
 		$Query .= '`routeid`!=0 AND `cities`!=""';
