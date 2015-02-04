@@ -183,6 +183,13 @@ class Object extends Model\ObjectWithID {
 	const ROUTEID = 'routeid';
 
 	/**
+	 * Key: route
+	 * @var string
+	 * @deprecated
+	 */
+	const ROUTE = 'route';
+
+	/**
 	 * Key: clothes
 	 * @var string
 	 */
@@ -299,6 +306,7 @@ class Object extends Model\ObjectWithID {
 			self::TEMPERATURE,
 			self::WEATHERID,
 			self::ROUTEID,
+			self::ROUTE,
 			self::CLOTHES,
 			self::SPLITS,
 			self::COMMENT,
