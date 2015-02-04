@@ -213,7 +213,7 @@ abstract class PluginStat extends Plugin {
 		}
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--) {
-			$Links .= '<li'.($x==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($x, $this->sportid, $x).'</li>';
+			$Links .= '<li'.($x==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($x, $this->sportid, $x, $this->dat).'</li>';
 		}
 
 		return $Links;
