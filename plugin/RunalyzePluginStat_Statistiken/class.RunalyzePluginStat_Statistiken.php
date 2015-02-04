@@ -122,10 +122,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	protected function setOwnNavigation() {
-		$LinkList  = '<li class="with-submenu"><span class="link">'.__('All training weeks').'</span><ul class="submenu">';
-
-		for ($x = date("Y"); $x >= START_YEAR; $x--)
-			$LinkList .= '<li>'.$this->getInnerLink($x, $this->sportid, $x, 'allWeeks').'</li>';
+		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose statistic').'</span><ul class="submenu">';
+		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('General overview'), $this->sportid, $this->year, '').'</li>';
+		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, ($this->year == -1) ? date('Y') : $this->year, 'allWeeks').'</li>';
 
 		$LinkList .= '</ul></li>';
 
@@ -136,6 +135,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+		if ($this->year == -1 && $this->dat = 'allWeeks') {
+			$this->dat = '';
+		}
+
 		$this->initData();
 		$this->initLineData();
 
