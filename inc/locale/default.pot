@@ -1631,6 +1631,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: inc/training/view/class.ElevationInfo.php:205
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:353
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
 msgid "Threshold"
 msgstr ""
 
@@ -4629,6 +4630,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:341
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:138
 msgid "Easy"
 msgstr ""
 
@@ -4637,6 +4639,7 @@ msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:347
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Marathon"
 msgstr ""
 
@@ -4651,6 +4654,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:359
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Interval"
 msgstr ""
 
@@ -4661,6 +4665,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:365
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
 msgid "Repetition"
 msgstr ""
 
