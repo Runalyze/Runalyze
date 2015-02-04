@@ -31,6 +31,8 @@ class PersonalBestTest extends \PHPUnit_Framework_TestCase {
 			'INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `time`, `typeid`) '.
 			'VALUES ('.$dist.', '.$s.', '.$time.', '.Configuration::General()->competitionType().')'
 		);
+
+		return $this->PDO->lastInsertId();
 	}
 
 	public function testAutoLookup() {
@@ -123,6 +125,25 @@ class PersonalBestTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($date, $PB3k->timestamp());
 		$this->assertEquals( 1100, $PB5k->seconds());
 		$this->assertEquals($date, $PB5k->timestamp());
+	}
+
+	public function testMultiLookupWithDetailsForIdenticalResults() {
+		PersonalBest::activateStaticCache();
+		$date1 = mktime(12,0,0,6,1,2010);
+		$date2 = mktime(12,0,0,6,2,2010);
+
+		$first = $this->insert(1.0,  180, $date1);
+		$second = $this->insert(1.0,  180, $date2);
+
+		$this->assertEquals(1, PersonalBest::lookupDistances(array(1.0), $this->PDO, true));
+
+		$PDO = new \PDO('sqlite::memory:');
+
+		$PB = new PersonalBest(1, $PDO, true, true);
+
+		$this->assertEquals(180, $PB->seconds());
+		$this->assertEquals($date1, $PB->timestamp());
+		$this->assertEquals($first, $PB->activityId());
 	}
 
 }
