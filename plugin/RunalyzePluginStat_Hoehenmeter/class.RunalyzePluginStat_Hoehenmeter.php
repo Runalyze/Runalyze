@@ -126,13 +126,10 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			$Activity = new Activity\Object($Data);
 			$Linker = new Linker($Activity);
 
-			if ($Data['comment'] == '')
-				$Data['comment'] = '<em>'.__('unlabeled').'</em>';
-
 			echo '<tr>
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
-				<td>'.$Data['comment'].'</td>
+				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">'.$Data['elevation'].'&nbsp;m<br>
 					<small>'.round($Data['elevation']/$Data['distance']/10, 2).'&nbsp;&#37;,&nbsp;'.$Data['distance'].'&nbsp;km</small></td>
 			</tr>';
@@ -156,13 +153,10 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 			$Activity = new Activity\Object($Data);
 			$Linker = new Linker($Activity);
 
-			if ($Data['comment'] == '')
-				$Data['comment'] = '<em>'.__('unlabeled').'</em>';
-
 			echo '<tr>
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
-				<td>'.$Data['comment'].'</td>
+				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">
 					'.round($Data['gradient']/10, 2).'&nbsp;&#37;<br>
 					<small>'.$Data['elevation'].'&nbsp;m,&nbsp;'.$Data['distance'].'&nbsp;km</small>
@@ -171,6 +165,26 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		}
 
 		echo '</tbody></table>';
+	}
+
+	/**
+	 * Get label
+	 * @param string $route
+	 * @param string $comment
+	 * @return string
+	 */
+	private function labelFor($route, $comment) {
+		if ($route != '') {
+			if ($comment != '') {
+				return $route.' (<em>'.$comment.'</em>)';
+			}
+
+			return $route;
+		} elseif ($comment != '') {
+			return '<em>'.$comment.'</em>';
+		}
+
+		return '<em>'.__('unlabeled').'</em>';
 	}
 
 	/**
@@ -203,9 +217,18 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		// TODO: fetch route name with join
 		$this->SumData = DB::getInstance()->query('
 			SELECT
-				`time`, `sportid`, `id`, `elevation`, `comment`, `s`, `distance`
+				`'.PREFIX.'training`.`id`,
+				`'.PREFIX.'training`.`time`,
+				`'.PREFIX.'training`.`sportid`,
+				`'.PREFIX.'training`.`comment`,
+				`'.PREFIX.'route`.`name` as `route`,
+				`'.PREFIX.'route`.`distance`,
+				`'.PREFIX.'route`.`elevation`,
+				(`'.PREFIX.'route`.`elevation`/`'.PREFIX.'route`.`distance`) as `gradient`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
+			LEFT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid`=`'.PREFIX.'route`.`id`
+			WHERE `'.PREFIX.'training`.`accountid`="'.SessionAccountHandler::getId().'" AND
+				`'.PREFIX.'training`.`elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			ORDER BY `elevation` DESC
 			LIMIT 10'
 		)->fetchAll();
@@ -218,10 +241,18 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		// TODO: fetch route name with join
 		$this->UpwardData = DB::getInstance()->query('
 			SELECT
-				`time`, `sportid`, `id`, `elevation`, `comment`,
-				(`elevation`/`distance`) as `gradient`, `distance`, `s`
+				`'.PREFIX.'training`.`id`,
+				`'.PREFIX.'training`.`time`,
+				`'.PREFIX.'training`.`sportid`,
+				`'.PREFIX.'training`.`comment`,
+				`'.PREFIX.'route`.`name` as `route`,
+				`'.PREFIX.'route`.`distance`,
+				`'.PREFIX.'route`.`elevation`,
+				(`'.PREFIX.'route`.`elevation`/`'.PREFIX.'route`.`distance`) as `gradient`
 			FROM `'.PREFIX.'training`
-			WHERE `elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
+			LEFT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid`=`'.PREFIX.'route`.`id`
+			WHERE `'.PREFIX.'training`.`accountid`="'.SessionAccountHandler::getId().'" AND
+				`'.PREFIX.'training`.`elevation` > 0 '.$this->getSportAndYearDependenceForQuery().'
 			ORDER BY `gradient` DESC
 			LIMIT 10'
 		)->fetchAll();
