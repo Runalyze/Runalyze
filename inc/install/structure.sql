@@ -295,10 +295,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `creator_details` tinytext NOT NULL,
   `activity_id` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `accountid` (`accountid`),
-  KEY `time` (`time`),
-  KEY `sportid` (`sportid`),
-  KEY `typeid` (`typeid`)
+  KEY `time` (`accountid`,`time`),
+  KEY `sportid` (`accountid`,`sportid`),
+  KEY `typeid` (`accountid`,`typeid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 PACK_KEYS=0;
 
 -- --------------------------------------------------------
@@ -335,6 +334,5 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
   `accountid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `accountid` (`accountid`),
-  KEY `time` (`time`)
+  KEY `time` (`accountid`,`time`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

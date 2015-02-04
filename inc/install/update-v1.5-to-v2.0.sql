@@ -165,3 +165,16 @@ ALTER TABLE `runalyze_shoe` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_c
 ALTER TABLE `runalyze_sport` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE `runalyze_training` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
 ALTER TABLE `runalyze_type` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+/* 04.02.2015 - Use composed indices */
+ALTER TABLE  `runalyze_user` DROP INDEX  `time`;
+ALTER TABLE  `runalyze_user` DROP INDEX  `accountid`;
+ALTER TABLE  `runalyze_user` ADD INDEX  `time` (  `accountid` ,  `time` );
+
+ALTER TABLE  `runalyze_training` DROP INDEX  `time`;
+ALTER TABLE  `runalyze_training` DROP INDEX  `sportid`;
+ALTER TABLE  `runalyze_training` DROP INDEX  `typeid`;
+ALTER TABLE  `runalyze_training` DROP INDEX  `accountid`;
+ALTER TABLE  `runalyze_training` ADD INDEX  `time` (  `accountid` ,  `time` );
+ALTER TABLE  `runalyze_training` ADD INDEX  `sportid` (  `accountid` ,  `sportid` );
+ALTER TABLE  `runalyze_training` ADD INDEX  `typeid` (  `accountid` ,  `typeid` );
