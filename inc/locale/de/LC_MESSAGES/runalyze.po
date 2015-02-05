@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-03 15:31+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-02-05 11:46+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3815,25 +3815,25 @@ msgid "Send link"
 msgstr "Link senden"
 
 #: inc/tpl/tpl.loginWindow.php:190
-#, fuzzy, php-format
+#, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] "Bisher ist <strong>%d</strong> Athlet bei uns registriert und"
-msgstr[1] "Bisher ist <strong>%d</strong> Athlet bei uns registriert und"
+msgstr[1] "Bisher sind <strong>%d</strong> Athleten bei uns registriert und"
 
 #: inc/tpl/tpl.loginWindow.php:191
-#, fuzzy, php-format
+#, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "hat <strong>%s</strong> erfasst."
-msgstr[1] "hat <strong>%s</strong> erfasst."
+msgstr[1] "haben <strong>%s</strong> erfasst."
 
 #: inc/tpl/tpl.loginWindow.php:193
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>%d</strong> athlete is online."
 msgid_plural "<strong>%d</strong> athletes are online."
 msgstr[0] "<strong>%d</strong> Athlet ist online."
-msgstr[1] "<strong>%d</strong> Athlet ist online."
+msgstr[1] "<strong>%d</strong> Athleten sind online."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
