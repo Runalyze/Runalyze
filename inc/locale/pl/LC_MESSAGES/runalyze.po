@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-05 19:51+0200\n"
+"PO-Revision-Date: 2015-02-05 20:23+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
@@ -3015,7 +3015,7 @@ msgstr "Ustawienia zapisane."
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "l-sleeve"
-msgstr ""
+msgstr "dł. rękaw"
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "long sleeve"
@@ -3039,7 +3039,7 @@ msgstr "kurtka"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "l-pants"
-msgstr ""
+msgstr "dł. spodnie"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "long pants"
