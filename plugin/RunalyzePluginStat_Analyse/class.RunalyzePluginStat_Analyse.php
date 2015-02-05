@@ -97,12 +97,15 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 	private function setAnalysisNavigation() {
 		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose evaluation').'</span><ul class="submenu">';
-		$LinkList .= '<li>'.$this->getInnerLink( __('in percent'), $this->sportid, $this->year, '').'</li>';
+		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('in percent'), $this->sportid, $this->year, '').'</li>';
 
-		if ($this->Sport->usesDistance())
-			$LinkList .= '<li>'.$this->getInnerLink( __('by distance'), $this->sportid, $this->year, 'km').'</li>';
+		if ($this->Sport->usesDistance()) {
+			$LinkList .= '<li'.('km' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('by distance'), $this->sportid, $this->year, 'km').'</li>';
+		} elseif ($this->dat == 'km') {
+			$this->dat = '';
+		}
 
-		$LinkList .= '<li>'.$this->getInnerLink( __('by time'), $this->sportid, $this->year, 's').'</li>';
+		$LinkList .= '<li'.('s' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('by time'), $this->sportid, $this->year, 's').'</li>';
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));

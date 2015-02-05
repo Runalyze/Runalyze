@@ -190,12 +190,12 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		if ($this->ShowAllSportsLink) {
-			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink(__('All'), -1, $this->year).'</li>';
+			$Links .= '<li'.(-1==$this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink(__('All'), -1, $this->year, $this->dat).'</li>';
 		}
 
 		$Sports = SportFactory::NamesAsArray();
 		foreach ($Sports as $id => $name) {
-			$Links .= '<li'.($id == $this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($name, $id, $this->year).'</li>';
+			$Links .= '<li'.($id == $this->sportid ? ' class="active"' : '').'>'.$this->getInnerLink($name, $id, $this->year, $this->dat).'</li>';
 		}
 
 		return $Links;
@@ -209,7 +209,7 @@ abstract class PluginStat extends Plugin {
 		$Links = '';
 
 		if ($CompareYears) { 
-			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1).'</li>';
+			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1, $this->dat).'</li>';
 		}
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--) {
