@@ -18,7 +18,7 @@ foreach ($Steps as $i => $Name) {
 ?>
 	</p>
 
-	
+
 <?php if ($this->currentStep == self::$ALREADY_INSTALLED): ?>
 
 	<p class="text-headline">
@@ -96,7 +96,7 @@ foreach ($Steps as $i => $Name) {
 		<p class="okay">
 			<?php _e('A connection could be established.'); ?>
 		</p>
-	
+
 		<?php if ($this->mysqlVersionIsOkay()): ?>
 		<p class="okay">
 			<?php printf( __('Currently MySQL %s is running.'), $this->getMysqlVersion()); ?>
@@ -216,7 +216,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<?php else: ?>
 	<p class="error">
-		<?php printf( __('Please save the following code as <strong>%s<&strong>:'), '/runalyze/config.php'); ?>
+		<?php printf( __('Please save the following code as <strong>%s<strong>:'), '/runalyze/config.php'); ?>
 	</p>
 	<textarea class="code"><?php echo htmlspecialchars($this->writeConfigFileString); ?></textarea>
 	<?php endif; ?>
