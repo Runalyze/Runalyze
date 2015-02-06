@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-05 20:23+0200\n"
+"PO-Revision-Date: 2015-02-06 17:48+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
@@ -3295,7 +3295,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr "Nie można zestawić połączenia."
+msgstr "Udało się zestawić połączenie."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
@@ -3420,7 +3420,7 @@ msgstr "Plik konfiguracyjny zapisany."
 
 #: inc/tpl/tpl.Installer.php:243
 msgid "Next step: setup database"
-msgstr "Następny krok: ustaw bazę danych"
+msgstr "Następny krok: przygotuj bazę danych"
 
 #: inc/tpl/tpl.Installer.php:252
 msgid ""
@@ -3432,7 +3432,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:258
 msgid "Setup database"
-msgstr "Ustaw bazę danych"
+msgstr "Przygotuj bazę danych"
 
 #: inc/tpl/tpl.Installer.php:265
 msgid "Ready! Congratulations!"
