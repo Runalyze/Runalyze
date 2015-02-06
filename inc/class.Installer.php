@@ -14,7 +14,7 @@ class Installer {
 	 * @var string
 	 */
 	static $REQUIRED_PHP_VERSION = '5.3.0';
-	
+
 	/**
 	* Required MYSQL-version
 	* @var string
@@ -123,7 +123,7 @@ class Installer {
 		$this->executeCurrentStep();
 		$this->displayCurrentStep();
 	}
-	
+
 	/**
 	* Define const PATH
 	*/
@@ -312,7 +312,19 @@ class Installer {
 		@mysql_select_db($this->mysqlConfig[3]);
 
 		self::importSqlFile(PATH.'install/structure.sql');
-		self::importSqlFile(PATH.'install/runalyze_empty.sql');
+		//self::importSqlFile(PATH.'install/runalyze_empty.sql');
+
+		define('FRONTEND_PATH', __DIR__.'/');
+		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
+		new Autoloader();
+
+		require FRONTEND_PATH.'../config.php';
+		$this->adminPassAsMD5 = md5($password);
+
+		DB::connect($host, $username, $password, $database);
+		unset($host, $username, $password, $database);
+
+		AccountHandler::createNewNoLoginUser();
 	}
 
 	/**
@@ -361,7 +373,7 @@ class Installer {
 
 			if (defined('PREFIX'))
 				$line = str_replace('runalyze_', PREFIX, $line);
-			
+
 			if (isset($mysqlConfig[3]) && !isset($_POST['database'])) {
 				$line = str_replace('DATABASE runalyze', $mysqlConfig[3], $line);
 				$line = str_replace('DATABASE `runalyze`', $mysqlConfig[3], $line);
