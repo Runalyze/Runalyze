@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2014-11-05 20:52+0100\n"
-"PO-Revision-Date: 2015-02-05 11:46+0200\n"
+"PO-Revision-Date: 2015-02-06 11:42+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -3081,17 +3081,14 @@ msgid "T-Shirt"
 msgstr "T-Shirt"
 
 #: inc/system/schemes/set.emptyValues.php:16
-#, fuzzy
 msgid "T-shirt"
 msgstr "T-Shirt"
 
 #: inc/system/schemes/set.emptyValues.php:17
-#, fuzzy
 msgid "singlet"
 msgstr "Singlet"
 
 #: inc/system/schemes/set.emptyValues.php:18
-#, fuzzy
 msgid "jacket"
 msgstr "Jacke"
 
@@ -3101,21 +3098,19 @@ msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "long pants"
-msgstr ""
+msgstr "lange Hose"
 
 #: inc/system/schemes/set.emptyValues.php:20
-#, fuzzy
 msgid "shorts"
-msgstr "kurz"
+msgstr "kurz Hose"
 
 #: inc/system/schemes/set.emptyValues.php:21
 msgid "gloves"
-msgstr ""
+msgstr "Handschuhe"
 
 #: inc/system/schemes/set.emptyValues.php:22
-#, fuzzy
 msgid "hat"
-msgstr "bei"
+msgstr "Mütze"
 
 #: inc/system/schemes/set.emptyValues.php:84
 msgid "Swimming"
@@ -3641,9 +3636,8 @@ msgid "You can contact us via email:"
 msgstr "Du kannst uns unter folgender E-Mail-Addresse kontaktieren:"
 
 #: inc/tpl/tpl.help.php:63
-#, fuzzy
 msgid "Browser Support"
-msgstr "Support"
+msgstr "Browser Support"
 
 #: inc/tpl/tpl.help.php:66
 msgid ""
@@ -3651,14 +3645,17 @@ msgid ""
 "modern web techniques. We will not try to support any outdated browser "
 "versions."
 msgstr ""
+"Runalyze ist eine moderne Webapplikation und deshalb nutzen wir moderne "
+"Webtechnologien. Wir werden nicht versuchen veraltete Browserversionen zu "
+"unterstützen."
 
 #: inc/tpl/tpl.help.php:68
 msgid "e.g. jQuery 2.x does not support IE8 (or less)"
-msgstr ""
+msgstr "z.B. jQuery 2.x unterstützt kein Internet Explorer 8 (oder älter)"
 
 #: inc/tpl/tpl.help.php:73
 msgid "Credits"
-msgstr ""
+msgstr "Danksagungen"
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
@@ -5876,10 +5873,10 @@ msgid "Your last run was on %s"
 msgstr "Dein letzter Lauf war am %s"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:394
-#, fuzzy, php-format
+#, php-format
 msgid "%d day of running since %s"
 msgid_plural "%d days of running since %s"
-msgstr[0] "%d Tage laufen seit %s"
+msgstr[0] "%d Tag laufen seit %s"
 msgstr[1] "%d Tage laufen seit %s"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
