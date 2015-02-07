@@ -8,7 +8,7 @@ use Runalyze\Configuration;
 
 /**
  * AccountHandler
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
@@ -33,7 +33,7 @@ class AccountHandler {
 
 	/**
 	 * Boolean flag: registration process
-	 * @var type 
+	 * @var type
 	 */
 	static public $IS_ON_REGISTER_PROCESS = false;
 
@@ -60,7 +60,7 @@ class AccountHandler {
 	 * Update account-values
 	 * @param string $username
 	 * @param mixed $column
-	 * @param mixed $value 
+	 * @param mixed $value
 	 */
 	static private function updateAccount($username, $column, $value) {
 		DB::getInstance()->stopAddingAccountID();
@@ -68,7 +68,7 @@ class AccountHandler {
 		DB::getInstance()->startAddingAccountID();
         //FIXME        Cache::delete('account'.$id,1);
 	}
-        
+
         /**
          * Cache Account Data from user
          */
@@ -81,7 +81,7 @@ class AccountHandler {
                 Cache::set('account'.$id, $accountdata, '1800',1);
             }
             return $accountdata;
-        }        
+        }
 
 	/**
 	 * Get account-data from database
@@ -93,7 +93,7 @@ class AccountHandler {
                 if(is_null($Data)) {
                     DB::getInstance()->stopAddingAccountID();
                     $Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
-                    DB::getInstance()->startAddingAccountID();   
+                    DB::getInstance()->startAddingAccountID();
                     Cache::set('account'.$username, $Data, '3600',1);
                 }
 		return $Data;
@@ -112,7 +112,7 @@ class AccountHandler {
 	/**
 	 * Get mail-address for a given username
 	 * @param string $username
-	 * @return boolean|string 
+	 * @return boolean|string
 	 */
 	static public function getMailFor($username) {
 		DB::getInstance()->stopAddingAccountID();
@@ -147,7 +147,7 @@ class AccountHandler {
 	 * Compares a password (given as string) with hash from database
 	 * @param string $realString
 	 * @param string $hashFromDb
-	 * @return boolean 
+	 * @return boolean
 	 */
 	static public function comparePasswords($realString, $hashFromDb, $saltFromDb) {
 		return (self::passwordToHash($realString, $saltFromDb) == $hashFromDb);
@@ -156,10 +156,10 @@ class AccountHandler {
 	/**
 	 * Transforms a password (given as string) to internal hash
 	 * @param string $realString
-	 * @return string 
+	 * @return string
 	 */
 	static private function passwordToHash($realString, $salt) {
-		if (is_null($salt) || strlen($salt) == 0) { 
+		if (is_null($salt) || strlen($salt) == 0) {
 			return md5(trim($realString).self::$SALT);
 		} else {
 			return hash("sha256", trim($realString).$salt);
@@ -206,7 +206,16 @@ class AccountHandler {
 	}
 
 	/**
-	 * Create a new user from post-data 
+	 * Create user for no-login installation
+	 */
+
+	public static function createNewNoLoginUser() {
+		self::importEmptyValuesFor(0);
+		self::setSpecialConfigValuesFor(0);
+	}
+
+	/**
+	 * Create a new user from post-data
 	 */
 	static private function createNewUserFromPost() {
 		$errors = array();
@@ -262,7 +271,7 @@ class AccountHandler {
 					$string .= '<br>'.__('Your local server has no smtp-server. Please contact the administrator.');
 					Error::getInstance()->addDebug('Link for changing password: '.self::getChangePasswordLink($pwHash));
 				}
-		
+
 				return $string;
 			}
 		}
@@ -272,16 +281,16 @@ class AccountHandler {
 
 
 	/**
-	 * 
+	 *
 	 *
 	 */
 	static private function getNewSalt() {
 		return self::getRandomHash(32);
 	}
 
-	/** 
+	/**
 	 * Get hash for changing password
-	 * @return string 
+	 * @return string
 	 */
 	static private function getChangePasswordHash() {
 		return self::getRandomHash();
@@ -289,7 +298,7 @@ class AccountHandler {
 
 	/**
 	 * Get hash.
-	 * @return string 
+	 * @return string
 	 */
 	static private function getRandomHash($bytes = 16) {
 		return bin2hex(openssl_random_pseudo_bytes($bytes));
@@ -313,7 +322,7 @@ class AccountHandler {
 	static private function getActivationLink($hash) {
 		return System::getFullDomain().'login.php?activate='.$hash;
 	}
-        
+
         /**
 	 * Get link for activate account
 	 * @param string $hash
@@ -357,7 +366,7 @@ class AccountHandler {
 			elseif (strlen($_POST['new_pw']) < self::$PASS_MIN_LENGTH)
 				return array( sprintf( __('The password has to contain at least %s signs.'), self::$PASS_MIN_LENGTH) );
 			else {
-				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);				
+				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);
 				header('Location: login.php');
 			}
 		} else
@@ -373,7 +382,7 @@ class AccountHandler {
 
 	/**
 	 * Try to activate the account
-	 * @return boolean 
+	 * @return boolean
 	 */
 	static public function tryToActivateAccount() {
 		DB::getInstance()->stopAddingAccountID();
@@ -391,7 +400,7 @@ class AccountHandler {
 
 	/**
 	 * Try to delete the account
-	 * @return boolean 
+	 * @return boolean
 	 */
 	static public function tryToDeleteAccount() {
 		DB::getInstance()->stopAddingAccountID();
@@ -408,7 +417,7 @@ class AccountHandler {
 	/**
 	 * Import empty values for new account
 	 * Attention: $accountID has to be set here - new registered users are not in session yet!
-	 * @param int $accountID 
+	 * @param int $accountID
 	 */
 	static private function importEmptyValuesFor($accountID) {
 		$DB          = DB::getInstance();
@@ -438,7 +447,7 @@ class AccountHandler {
 
 	/**
 	 * Set activation key for new user and set via email
-	 * @param int $accountId 
+	 * @param int $accountId
 	 * @param array $errors
 	 */
 	static private function setAndSendActivationKeyFor($accountId, &$errors) {
@@ -475,7 +484,7 @@ class AccountHandler {
 		$deletionLink = self::getDeletionLink($deletionHash);
 
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
-                
+
 		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
 		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
@@ -493,10 +502,10 @@ class AccountHandler {
 
 	/**
 	 * Set some special configuration values
-	 * @param int $accountId 
+	 * @param int $accountId
 	 */
 	static private function setSpecialConfigValuesFor($accountId) {
-		if ($accountId <= 0) {
+		if (is_null($accountId) || $accountId < 0) {
 			Error::getInstance()->addError('AccountID for special config-values not set.');
 			return;
 		}
