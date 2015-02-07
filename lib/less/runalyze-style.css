@@ -1,4 +1,3 @@
-/* see SportFactory::getIconOptions() */
 .colored-light {
   background: #eee;
 }
@@ -1369,7 +1368,7 @@ tr.space-line.zebra-corrector td {
   cursor: default;
   padding-right: 0;
 }
-.sortable thead th.tablesorter-header.sorter-false  > div:after {
+.sortable thead th.tablesorter-header.sorter-false > div:after {
   display: none;
 }
 .sortable thead th.tablesorter-header:hover > div:after,
@@ -1637,7 +1636,6 @@ tr.space-line.zebra-corrector td {
 }
 .progress-bar-infos {
   /* Clearfix */
-
   padding-bottom: 5px;
   font-weight: 100;
   letter-spacing: 1px;
@@ -1738,8 +1736,8 @@ tr.space-line.zebra-corrector td {
   padding: 5px 10px 5px 26px;
   min-width: 40px;
 }
-.boxed-value-container.with-icon  > i,
-.boxed-value-container.with-icon  > span > i {
+.boxed-value-container.with-icon > i,
+.boxed-value-container.with-icon > span > i {
   position: absolute;
   left: 5px;
   top: 50%;
@@ -1773,6 +1771,17 @@ tr.space-line.zebra-corrector td {
 .flexible-height .boxed-value {
   white-space: normal;
   height: auto;
+}
+#sports .boxed-value-container.with-icon i {
+  left: 15px;
+  font-size: 22px;
+  line-height: 22px;
+  margin-top: -11px;
+}
+.dataset-sport {
+  padding: 1px;
+  font-size: 14px;
+  line-height: 18px;
 }
 .bar-chart-table {
   font-size: 11px;
@@ -2280,7 +2289,6 @@ div.datepicker {
   overflow: hidden;
   width: 196px;
   height: 147px;
-  position: absolute;
   cursor: default;
   top: 0;
   left: 0;
@@ -2366,6 +2374,440 @@ td.datepickerDisabled a:hover {
 .datepicker a:hover {
   background-color: #ffff66 !important;
   color: #000 !important;
+}
+/**
+ * CSS file for fontIconPicker
+ * This file holds the basic CSS
+ * {@link https://github.com/micc83/fontIconPicker}
+ */
+/* Reset (thx to Eric A. and Kathryn S. Meyer) */
+.icons-selector * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /*	font: inherit;*/
+  vertical-align: baseline;
+  /*	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+}
+.icons-selector,
+.icons-selector:before,
+.icons-selector:after,
+.icons-selector *,
+.icons-selector *:before,
+.icons-selector *:after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+/* Display */
+.icons-selector {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+/* Icon selector */
+.icons-selector .selector {
+  width: 70px;
+  height: 30px;
+}
+/* Selector open button */
+.icons-selector .selector-button {
+  width: 29px;
+  height: 100%;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+/* Selector open button icon */
+.icons-selector .selector-button i {
+  line-height: 28px;
+  text-align: center;
+}
+/* Selected icon container */
+.icons-selector .selected-icon {
+  display: block;
+  width: 40px;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+/* Selected icon */
+.icons-selector .selected-icon i {
+  line-height: 30px;
+  font-size: 12px;
+  cursor: default;
+}
+/* IconPicker Popup */
+.icons-selector .selector-popup {
+  position: absolute;
+  z-index: 10000;
+  background-color: #fefefe;
+  padding: 5px;
+  height: auto;
+  width: 342px;
+  margin-top: -1px;
+}
+/* Search input & category selector */
+.icons-selector .selector-search input[type="text"],
+.icons-selector .selector-category select {
+  border: 0;
+  line-height: 20px;
+  padding: 10px 2.5%;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-size: 12px;
+  display: block;
+  /* Fixes the positioning inside hidden/floated/text-aligned elements, where it would leave a margin */
+}
+.icons-selector .selector-category select {
+  height: 30px;
+}
+.icons-selector .selector-category select option {
+  padding: 5px;
+}
+/* Search input placeholder */
+.icons-selector input::-webkit-input-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input:-moz-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input::-moz-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input:-ms-input-placeholder {
+  text-transform: uppercase;
+}
+/* Search and cancel icon */
+.icons-selector .selector-search {
+  position: relative;
+}
+.icons-selector .selector-search i {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
+/* Icon Container inside Popup */
+.icons-selector .fip-icons-container {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px;
+}
+/* Icon container loading */
+.icons-selector .fip-icons-container .loading {
+  font-size: 24px;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+}
+/* Single icon box */
+.icons-selector .fip-box {
+  display: inline-block;
+  margin: 2px;
+  width: 60px;
+  line-height: 42px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+  height: 40px;
+}
+/* Popup footer */
+.icons-selector .selector-footer {
+  line-height: 12px;
+  padding: 5px 5px 0 5px;
+  text-align: center;
+}
+/* Pagination and footer icons */
+.icons-selector .selector-footer,
+.icons-selector .selector-footer i {
+  font-size: 14px;
+}
+/* Pagination arrows container */
+.icons-selector .selector-arrows {
+  float: right;
+}
+/* Pagination text */
+.icons-selector .selector-pages {
+  font-size: 11px;
+  float: left;
+}
+/* Pagination arrows icons */
+.icons-selector .selector-arrows i {
+  cursor: pointer;
+}
+/* Total icons */
+.icons-selector .selector-footer em {
+  font-style: italic;
+}
+/* No icons found */
+.icons-selector .icons-picker-error i:before {
+  color: #eee;
+}
+/* Icons */
+@font-face {
+  font-family: 'iconpicker';
+  src: url('../fontIconPicker-2.0.0/css/iconpicker.eot');
+  src: url('../fontIconPicker-2.0.0/css/iconpicker.eot') format('embedded-opentype'), url('../fontIconPicker-2.0.0/css/iconpicker.woff') format('woff'), url('../fontIconPicker-2.0.0/css/iconpicker.ttf') format('truetype'), url('../fontIconPicker-2.0.0/css/iconpicker.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.icons-selector [class^="fip-icon-"]:before,
+.icons-selector [class*=" fip-icon-"]:before {
+  font-family: "iconpicker";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+}
+/* Search icon */
+.icons-selector .fip-icon-search:before {
+  content: '\e812';
+  cursor: default;
+}
+/* Cancel search icon */
+.icons-selector .fip-icon-cancel:before {
+  content: '\e814';
+  cursor: pointer;
+}
+/* No icon set */
+.icons-selector .fip-icon-block:before {
+  content: '\e84e';
+  color: #fed0d0;
+}
+/* Open picker icon */
+.icons-selector .fip-icon-down-dir:before {
+  content: '\e800';
+}
+/* Close picker icon */
+.icons-selector .fip-icon-up-dir:before {
+  content: '\e813';
+}
+/* Prev page icon */
+.icons-selector .fip-icon-left-dir:before {
+  content: '\e801';
+}
+/* Next page icon */
+.icons-selector .fip-icon-right-dir:before {
+  content: '\e802';
+}
+/* Loading icon */
+.icons-selector .fip-icon-spin3:before {
+  content: '\e815';
+}
+.icons-selector .fip-icon-spin3 {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+/**
+ * Grey Theme file for fontIconPicker
+ * {@link https://github.com/micc83/fontIconPicker}
+ */
+/* Main Container */
+.icons-selector * {
+  /*   font-family: inherit;*/
+}
+.fip-grey.icons-selector {
+  font-size: 11px;
+}
+/* Icon selector */
+.fip-grey.icons-selector .selector {
+  border: 1px solid #B8B8B8;
+  border-radius: 3px;
+  background-color: #fff;
+  height: 16px;
+  width: 56px;
+}
+/* Selector open button */
+.fip-grey.icons-selector .selector-button {
+  background-color: #F4F4F4;
+  border-left: 1px solid #E1E1E1;
+  width: 15px;
+}
+/* Selector open button hover */
+.fip-grey.icons-selector .selector-button:hover {
+  background-color: #f1f1f1;
+}
+.fip-grey.icons-selector .selector-button:hover i {
+  color: #999;
+}
+/* Selector open button icon */
+.fip-grey.icons-selector .selector-button i {
+  color: #000;
+  /*text-shadow: 0px 1px 0px #FFF;*/
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: -1px;
+}
+/* Selected icon */
+.fip-grey.icons-selector .selected-icon i {
+  color: #404040;
+  line-height: 16px;
+  font-size: 12px;
+}
+/* IconPicker Popup */
+.fip-grey.icons-selector .selector-popup {
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E5E5E5;
+}
+/* Search input & category selector */
+.fip-grey.icons-selector .selector-search input[type="text"],
+.fip-grey.icons-selector .selector-category select {
+  border: 1px solid #EDEDED;
+  color: #404040;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+}
+/* Search input placeholder */
+.fip-grey.icons-selector input::-webkit-input-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input:-moz-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input::-moz-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input:-ms-input-placeholder {
+  color: #ddd !important;
+}
+/* Search and cancel icon */
+.fip-grey.icons-selector .selector-search i {
+  color: #eee;
+}
+/* Icon Container inside Popup */
+.fip-grey.icons-selector .fip-icons-container {
+  background-color: #fff;
+  /*border: 1px solid #EDEDED;*/
+  padding: 0px;
+  font-size: 16px;
+}
+/* Icon container loading */
+.fip-grey.icons-selector .fip-icons-container .loading {
+  color: #eee;
+}
+/* Single icon box */
+.fip-grey.icons-selector .fip-box {
+  border: 1px solid #EFEFEF;
+  width: 40px;
+  line-height: 32px;
+  height: 30px;
+}
+/* Single icon box hover */
+.fip-grey.icons-selector .fip-box:hover {
+  background-color: #f6f6f6;
+}
+/* Pagination and footer icons */
+.fip-grey.icons-selector .selector-footer,
+.fip-grey.icons-selector .selector-footer i {
+  color: #ddd;
+}
+/* Pagination arrows icons hover */
+.fip-grey.icons-selector .selector-arrows i:hover {
+  color: #777;
+}
+/* Currently selected icon color */
+.fip-grey.icons-selector span.current-icon,
+.fip-grey.icons-selector span.current-icon:hover {
+  background-color: #2EA2CC;
+  color: #fff;
+  border: 1px solid #298CBA;
+}
+/* No icons found */
+.fip-grey.icons-selector .icons-picker-error i:before {
+  color: #eee;
 }
 .chzn-container {
   font-size: 0.9em;
@@ -2777,7 +3219,6 @@ td.datepickerDisabled a:hover {
   /*background-image: url(images/layers.png);
 	width: 36px;
 	height: 36px;*/
-
 }
 .leaflet-control-layers-toggle:before {
   display: inline-block;
@@ -2952,7 +3393,7 @@ td.datepickerDisabled a:hover {
   width: 24px;
   margin: 0 auto;
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-  filter: progid:dximagetransform.microsoft.matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
 }
 .leaflet-oldie .leaflet-popup-tip-container {
   margin-top: -1px;
@@ -3010,10 +3451,148 @@ td.datepickerDisabled a:hover {
   height: 12px;
   text-align: center;
 }
+/*
+  Icon Font: Runalyze
+*/
+@font-face {
+  font-family: "Runalyze";
+  src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.eot");
+  src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.eot?#iefix") format("embedded-opentype"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.woff") format("woff"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.ttf") format("truetype"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @font-face {
+    font-family: "Runalyze";
+    src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+  }
+}
+[data-icon]:before {
+  content: attr(data-icon);
+}
+[data-icon]:before,
+.icons8-calendar:before,
+.icons8-clock:before,
+.icons8-coins:before,
+.icons8-degrees:before,
+.icons8-earth_element:before,
+.icons8-expensive:before,
+.icons8-length:before,
+.icons8-like:before,
+.icons8-like_outline:before,
+.icons8-medal2:before,
+.icons8-regular_biking:before,
+.icons8-rotate:before,
+.icons8-running:before,
+.icons8-running_rabbit:before,
+.icons8-speed:before,
+.icons8-speedometer:before,
+.icons8-sports_mode:before,
+.icons8-stairs_up:before,
+.icons8-stopwatch:before,
+.icons8-swimming:before,
+.icons8-temperature:before,
+.icons8-timer:before,
+.icons8-trophy:before,
+.icons8-turtle:before,
+.icons8-waypoint_map:before,
+.icons8-yoga:before {
+  display: inline-block;
+  font-family: "Runalyze";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+.icons8-calendar:before {
+  content: "\f100";
+}
+.icons8-clock:before {
+  content: "\f101";
+}
+.icons8-coins:before {
+  content: "\f102";
+}
+.icons8-degrees:before {
+  content: "\f103";
+}
+.icons8-earth_element:before {
+  content: "\f104";
+}
+.icons8-expensive:before {
+  content: "\f105";
+}
+.icons8-length:before {
+  content: "\f106";
+}
+.icons8-like:before {
+  content: "\f107";
+}
+.icons8-like_outline:before {
+  content: "\f108";
+}
+.icons8-medal2:before {
+  content: "\f109";
+}
+.icons8-regular_biking:before {
+  content: "\f10a";
+}
+.icons8-rotate:before {
+  content: "\f10b";
+}
+.icons8-running:before {
+  content: "\f10c";
+}
+.icons8-running_rabbit:before {
+  content: "\f10d";
+}
+.icons8-speed:before {
+  content: "\f10e";
+}
+.icons8-speedometer:before {
+  content: "\f10f";
+}
+.icons8-sports_mode:before {
+  content: "\f110";
+}
+.icons8-stairs_up:before {
+  content: "\f111";
+}
+.icons8-stopwatch:before {
+  content: "\f112";
+}
+.icons8-swimming:before {
+  content: "\f113";
+}
+.icons8-temperature:before {
+  content: "\f114";
+}
+.icons8-timer:before {
+  content: "\f115";
+}
+.icons8-trophy:before {
+  content: "\f116";
+}
+.icons8-turtle:before {
+  content: "\f117";
+}
+.icons8-waypoint_map:before {
+  content: "\f118";
+}
+.icons8-yoga:before {
+  content: "\f119";
+}
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */@font-face {
+ */
+@font-face {
   font-family: 'FontAwesome';
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?v=4.2.0');
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fontawesome/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fontawesome/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fontawesome/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
@@ -3109,31 +3688,31 @@ td.datepickerDisabled a:hover {
   }
 }
 .fa-rotate-90 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=2);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=3);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=0, mirror=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:dximagetransform.microsoft.basicimage(rotation=2, mirror=1);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -4685,8 +5264,8 @@ td.datepickerDisabled a:hover {
 }
 @font-face {
   font-family: "iconvault";
-  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot");
-  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
+  src: url("../iconvault-forecast/iconvault_forecastfont.eot");
+  src: url("../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
   font-weight: normal;
   font-style: normal;
 }

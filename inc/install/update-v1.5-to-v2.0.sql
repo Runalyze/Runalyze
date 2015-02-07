@@ -178,3 +178,11 @@ ALTER TABLE  `runalyze_training` DROP INDEX  `accountid`;
 ALTER TABLE  `runalyze_training` ADD INDEX  `time` (  `accountid` ,  `time` );
 ALTER TABLE  `runalyze_training` ADD INDEX  `sportid` (  `accountid` ,  `sportid` );
 ALTER TABLE  `runalyze_training` ADD INDEX  `typeid` (  `accountid` ,  `typeid` );
+
+/* 07.02.2015 - New icons */
+UPDATE runalyze_sport SET img='icons8-running'	where img IN	('laufen.gif');
+UPDATE runalyze_sport SET img='icons8-regular_biking'	where img IN	('radfahren.gif');
+UPDATE runalyze_sport SET img='icons8-swimming'	where img IN	('schwimmen.gif');
+UPDATE runalyze_sport SET img='icons8-yoga'	where img IN	('gymnastik.gif');
+UPDATE runalyze_sport SET img='icons8-sports_mode'	where img IN	('unknown.gif','krafttraining.gif','wandern.gif','teamsport.gif','bogenschiessen.gif','inlineskating.gif','taekwondo.gif');
+UPDATE runalyze_dataset SET class='dataset-sport' WHERE name='sportid';
