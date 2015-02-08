@@ -53,4 +53,7 @@ $JS_FILES = array(
 	'lib/leaflet/runalyze.leaflet.js',
 	'lib/leaflet/runalyze.leaflet.layers.js',
 	'lib/leaflet/runalyze.leaflet.routes.js',
+
+	'lib/fontIconPicker-2.0.0/jquery.fonticonpicker.js',
+
 );

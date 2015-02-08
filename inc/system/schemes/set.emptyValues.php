@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains all empty values needed to create a new account.
- * 
+ *
  * Structure:
- * $EmptyTables['TABLENAME_WITHOUT_PREFIX'] = array('columns' => array(...), 'values' => array( array(...), ... )); 
- * 
+ * $EmptyTables['TABLENAME_WITHOUT_PREFIX'] = array('columns' => array(...), 'values' => array( array(...), ... ));
+ *
  * @author Hannes Christiansen
  * @package Runalyze\System
  */
@@ -80,11 +80,11 @@ $EmptyTables['plugin'] = array(
 $EmptyTables['sport'] = array(
 	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'distances', 'speed', 'types', 'pulse', 'power', 'outside'),
 	'values'  => array(
-		array(__('Running'), 'laufen.gif', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
-		array(__('Swimming'), 'schwimmen.gif', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
-		array(__('Biking'), 'radfahren.gif', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
-		array(__('Gymnastics'), 'gymnastik.gif', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
-		array(__('Other'), 'unknown.gif', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
+		array(__('Running'), 'icons8-running', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
+		array(__('Swimming'), 'icons8-swimming', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
+		array(__('Biking'), 'icons8-regular_biking', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
+		array(__('Gymnastics'), 'icons8-yoga', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
+		array(__('Other'), 'icons8-sports_mode', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(

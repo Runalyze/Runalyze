@@ -13,7 +13,7 @@ use Runalyze\Activity\Pace;
  */
 class ConfigTabSports extends ConfigTab {
 	/**
-	 * Set key and title for form 
+	 * Set key and title for form
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_sports';
@@ -39,7 +39,6 @@ class ConfigTabSports extends ConfigTab {
 		$Code  = HTML::info( __('The mode <strong>short</strong> means: the activity log contains only a symbol and no other values for activities of this sport.<br>'.
 								'This is useful if you are mainly interested in the fact of doing the sport, not in the details, e.g. for stretching.') );
 		$Code .= HTML::info( __('The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the calculation of TRIMP.') );
-		$Code .= HTML::info( __('The following icons are available: ').$this->getSportIconList() );
 
 		return $Code;
 	}
@@ -60,7 +59,7 @@ class ConfigTabSports extends ConfigTab {
 
 	/**
 	 * Get code
-	 * @return string 
+	 * @return string
 	 */
 	private function getCode() {
 		$Code = '
@@ -96,14 +95,14 @@ class ConfigTabSports extends ConfigTab {
 		foreach ($Sports as $i => $Data) {
 			$id         = $Data['id'];
 			$icon       = Icon::getSportIcon($id, $Data['img']);
-			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img']);
+			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img'], '', 'fip-select');
 			if (isset($Data['new'])) {
 				$name = '<input type="text" name="sport[name]['.$id.']" value="">';
 			} else {
 				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'];
 			}
-			
-			
+
+
 			if ($id == -1)
 				$delete = '';
 			elseif (!isset($SportCount[$id]) || $SportCount[$id] == 0)
@@ -114,7 +113,7 @@ class ConfigTabSports extends ConfigTab {
 			$Code .= '
 					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
 						<td><input type="checkbox" name="sport[short]['.$id.']"'.($Data['short'] == 1 ? ' checked' : '').'></td>
-						<td>'.$icon.'</td>
+						<td> </td>
 						<td>'.$iconSelect.'</td>
 						<td>'.$name.'</td>
 						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'"></td>
@@ -138,7 +137,7 @@ class ConfigTabSports extends ConfigTab {
 	}
 
 	/**
-	 * Parse all post values 
+	 * Parse all post values
 	 */
 	public function parsePostData() {
 		$Sports   = SportFactory::AllSports();
@@ -178,7 +177,7 @@ class ConfigTabSports extends ConfigTab {
 			);
 
 			if (isset($_POST['sport']['delete'][$id]))
-				DB::getInstance()->deleteByID('sport', (int)$id);	
+				DB::getInstance()->deleteByID('sport', (int)$id);
 			elseif ($Data['id'] != -1)
 				DB::getInstance()->update('sport', $id, $columns, $values);
 			elseif (strlen($_POST['sport']['name'][$id]) > 2)

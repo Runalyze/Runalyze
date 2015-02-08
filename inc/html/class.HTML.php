@@ -5,7 +5,7 @@
  */
 /**
  * Class: HTML
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\HTML
  */
@@ -148,7 +148,7 @@ class HTML {
 	/**
 	 * Return a header
 	 * @param string $text
-	 * @return string 
+	 * @return string
 	 */
 	public static function h1($text) {
 		return '<h1>'.$text.'</h1>';
@@ -308,7 +308,7 @@ class HTML {
 		$name = self::transformNameForMultiIndex($name);
 
 		return '<textarea name="'.$name.'" cols="'.$cols.'" rows="'.$rows.'">'.$value.'</textarea>';
-		
+
 	}
 
 	/**
@@ -400,13 +400,13 @@ class HTML {
 	 * @param string $id [optional]
 	 * @return string
 	 */
-	public static function selectBox($name, $options, $selected = false, $id = '') {
+	public static function selectBox($name, $options, $selected = false, $id = '', $class=null) {
 		if ($selected === false && isset($_POST[$name]))
 			$selected = $_POST[$name];
 
 		$name = self::transformNameForMultiIndex($name);
 
-		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').'>';
+		$html = '<select name="'.$name.'"'.(!empty($id) ? ' id="'.$id.'"' : '').(!empty($class) ? ' class="'.$class.'"' : '').'>';
 
 		foreach ($options as $value => $text) {
 			$additionalAttributes = array();

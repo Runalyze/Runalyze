@@ -9,7 +9,7 @@ use Runalyze\Activity\Pace;
 
 /**
  * Factory serving static methods for Sport
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Sport
  */
@@ -26,17 +26,11 @@ class SportFactory {
 	 */
 	static public function getIconOptions() {
 		$Files = array(
-			'unknown.gif',
-			'radfahren.gif',
-			'schwimmen.gif',
-			'gymnastik.gif',
-			'laufen.gif',
-			'krafttraining.gif',
-			'wandern.gif',
-			'teamsport.gif',
-			'bogenschiessen.gif',
-			'inlineskating.gif',
-			'taekwondo.gif'
+			'icons8-sports_mode',
+			'icons8-running',
+			'icons8-regular_biking',
+			'icons8-swimming',
+			'icons8-yoga',
 		);
 
 		$Options = array();
@@ -62,7 +56,7 @@ class SportFactory {
 
 	/**
 	 * Array with default values
-	 * 
+	 *
 	 * @todo This method should be useless as soon as a DatabaseScheme is used
 	 * @return array
 	 */
@@ -119,7 +113,7 @@ class SportFactory {
 			self::$AllSports[(string)$sport['id']] = $sport;
 		}
 	}
-        
+
         /**
          * Cache all sports for user
          */
@@ -143,7 +137,7 @@ class SportFactory {
 
 	/**
 	 * Reinit all sports
-	 * 
+	 *
 	 * Use this method after updating sports table
 	 */
 	static public function reInitAllSports() {
@@ -183,7 +177,7 @@ class SportFactory {
 
 		return -1;
 	}
-	
+
 	/**
 	* Get normal kcal per hour
 	* @param int $SportID id
