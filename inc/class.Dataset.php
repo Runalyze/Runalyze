@@ -477,8 +477,13 @@ class Dataset {
 
 				return '';
 
-			case 'route':
-				// Does not exist anymore
+			case 'routeid':
+				if ($this->Activity->get(Activity\Object::ROUTEID) > 0) {
+					return $this->cut(
+						$this->Factory->route($this->Activity->get(Activity\Object::ROUTEID))->name()
+					);
+				}
+
 				return '';
 
 			case 'clothes':

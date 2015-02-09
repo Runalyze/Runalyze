@@ -33,7 +33,7 @@ class DatasetLabels {
 			'trimp'			=> __('TRIMP'),
 			'temperature'	=> __('Temperature'),
 			'weatherid'		=> __('Weather'),
-			'route'			=> __('Route'),
+			'routeid'		=> __('Route'),
 			'clothes'		=> __('Clothes'),
 			'splits'		=> __('Splits'),
 			'comment'		=> __('Comment'),
