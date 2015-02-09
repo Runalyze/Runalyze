@@ -14,7 +14,6 @@ UPDATE runalyze_sport SET img='icons8-regular_biking'	where img IN	('radfahren.g
 UPDATE runalyze_sport SET img='icons8-swimming'	where img IN	('schwimmen.gif');
 UPDATE runalyze_sport SET img='icons8-yoga'	where img IN	('gymnastik.gif');
 UPDATE runalyze_sport SET img='icons8-sports_mode'	where img IN	('unknown.gif','krafttraining.gif','wandern.gif','teamsport.gif','bogenschiessen.gif','inlineskating.gif','taekwondo.gif');
-UPDATE runalyze_dataset SET class='dataset-sport' WHERE name='sportid';
 
 /* 09.02.2015 - Fix route for dataset */
 UPDATE `runalyze_dataset` SET `name`="routeid" WHERE `name`="route";

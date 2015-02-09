@@ -180,7 +180,7 @@ foreach ($Steps as $i => $Name) {
 			<strong><?php _e('Garmin API key'); ?>*</strong>
 			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>">
 			<?php if ($_SERVER['SERVER_NAME'] == 'localhost'): ?>
-				<small>(<?php _e('not necessary for localhost'); ?></small>
+				<small>(<?php _e('not necessary for localhost'); ?>)</small>
 			<?php else: ?>
 				<small>
 					(<?php _e('necessary for'); ?> <em><?php echo ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST']; ?></em>,
@@ -244,8 +244,6 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 	<textarea class="code"><?php echo $this->getSqlContentForFrontend('inc/install/structure.sql'); ?></textarea>
-
-	<textarea class="code"><?php echo $this->getSqlContentForFrontend('inc/install/runalyze_empty.sql'); ?></textarea>
 
 	<?php if ($this->cantSetupDatabase): ?>
 	<p class="error">

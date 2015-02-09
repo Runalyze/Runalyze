@@ -31,24 +31,26 @@ $EmptyTables['dataset'] = array(
 		array('distance', 2, '', '', 5, 1, 'SUM'),
 		array('s', 3, '', '', 6, 1, 'SUM'),
 		array('pace', 2, 'small', '', 7, 1, 'AVG'),
-		array('elevation', 2, 'small', '', 9, 1, 'SUM'),
-		array('kcal', 2, 'small', '', 10, 1, 'SUM'),
+		array('elevation', 2, 'small', '', 10, 1, 'SUM'),
+		array('kcal', 2, 'small', '', 11, 1, 'SUM'),
 		array('pulse_avg', 2, 'small', 'font-style:italic;', 8, 1, 'AVG'),
-		array('pulse_max', 1, 'small', '', 0, 0, 'MAX'),
-		array('trimp', 2, '', '', 13, 1, 'SUM'),
+		array('pulse_max', 1, 'small', '', 9, 0, 'MAX'),
+		array('trimp', 2, '', '', 14, 1, 'SUM'),
 		array('temperature', 2, 'small', 'width:35px;', 2, 0, 'AVG'),
 		array('weatherid', 2, '', '', 1, 0, 'NO'),
-		array('route', 1, 'small l', '', 18, 0, 'NO'),
-		array('clothes', 1, 'small l', '', 16, 0, 'NO'),
-		array('splits', 2, '', '', 11, 0, 'NO'),
-		array('comment', 2, 'small l', '', 12, 0, 'NO'),
-		array('shoeid', 1, 'small l', '', 0, 0, 'NO'),
-		array('vdot', 2, '', '', 14, 1, 'AVG'),
-		array('partner', 1, 'small', '', 17, 0, 'NO'),
-		array('abc', 1, '', '', 15, 0, 'NO'),
-		array('cadence', 1, 'small', '', 19, 1, 'AVG'),
-		array('power', 1, 'small', '', 20, 1, 'SUM'),
-		array('jd_intensity', 2, '', '', 22, 1, 'SUM')
+		array('routeid', 1, 'small l', '', 20, 0, 'NO'),
+		array('clothes', 1, 'small l', '', 17, 0, 'NO'),
+		array('splits', 2, '', '', 12, 0, 'NO'),
+		array('comment', 2, 'small l', '', 13, 0, 'NO'),
+		array('shoeid', 1, 'small l', '', 18, 0, 'NO'),
+		array('vdot', 2, '', '', 15, 1, 'AVG'),
+		array('partner', 1, 'small', '', 19, 0, 'NO'),
+		array('abc', 1, '', '', 16, 0, 'NO'),
+		array('cadence', 1, 'small', '', 21, 1, 'AVG'),
+		array('power', 1, 'small', '', 22, 1, 'SUM'),
+		array('jd_intensity', 2, '', '', 23, 1, 'SUM'),
+		array('groundcontact', 2, 'small', '', 24, 1, 'AVG'),
+		array('vertical_oscillation', 2, 'small', '', 25, 1, 'AVG')
 	)
 );
 $EmptyTables['plugin'] = array(
@@ -74,7 +76,8 @@ $EmptyTables['plugin'] = array(
 		array('RunalyzePluginTool_MultiEditor', 'tool', 1, 99),
 		array('RunalyzePluginTool_AnalyzeVDOT', 'tool', 1, 99),
 		array('RunalyzePluginTool_DbBackup', 'tool', 1, 99),
-		array('RunalyzePluginTool_JDTables', 'tool', 1, 99)
+		array('RunalyzePluginTool_JDTables', 'tool', 1, 99),
+		array('RunalyzePluginPanel_Ziele', 'panel', 0, 6)
 	)
 );
 $EmptyTables['sport'] = array(
