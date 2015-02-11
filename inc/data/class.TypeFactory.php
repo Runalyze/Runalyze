@@ -64,21 +64,18 @@ class TypeFactory {
 	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
-                $types = Cache::get('types');
-                if(is_null($types)) {
-		$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` '.self::getOrder())->fetchAll();
-                    Cache::set('types', $types, '3600');
-                }
-		foreach ($types as $data)
-			self::$AllTypes[(string)$data['id']] = $data;
-	}
+		$types = Cache::get('types');
 
-	/**
-	 * Get order
-	 * @return string
-	 */
-	static private function getOrder() {
-		return Configuration::ActivityForm()->orderTypes()->asQuery();
+		if (is_null($types)) {
+			$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type`')->fetchAll();
+			Cache::set('types', $types, '3600');
+		}
+
+		foreach ($types as $data) {
+			self::$AllTypes[(string)$data['id']] = $data;
+		}
+
+		Configuration::ActivityForm()->orderTypes()->sort(self::$AllTypes);
 	}
 
 	/**

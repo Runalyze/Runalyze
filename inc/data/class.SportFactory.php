@@ -112,27 +112,22 @@ class SportFactory {
 		foreach ($sports as $sport) {
 			self::$AllSports[(string)$sport['id']] = $sport;
 		}
+
+		Configuration::ActivityForm()->orderSports()->sort(self::$AllSports);
 	}
 
-        /**
-         * Cache all sports for user
-         */
-        static private function cacheAllSports() {
-            $sports = Cache::get('sport');
-			if (is_null($sports)) {
-				$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
-				Cache::set('sport', $sports, '3600');
-			}
-
-            return $sports;
-        }
-
 	/**
-	 * Get order
-	 * @return string
+	 * Cache all sports for user
 	 */
-	static private function getOrder() {
-		return Configuration::ActivityForm()->orderSports()->asQuery();
+	static private function cacheAllSports() {
+		$sports = Cache::get('sport');
+
+		if (is_null($sports)) {
+			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport`')->fetchAll();
+			Cache::set('sport', $sports, '3600');
+		}
+
+		return $sports;
 	}
 
 	/**

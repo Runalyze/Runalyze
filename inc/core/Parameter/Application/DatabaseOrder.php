@@ -58,4 +58,23 @@ class DatabaseOrder extends \Runalyze\Parameter\Select {
 				return 'ORDER BY `id` ASC';
 		}
 	}
+
+	/**
+	 * Sort data
+	 * @param array $data
+	 */
+	public function sort(array &$data) {
+		$key = ($this->value() == self::ALPHA) ? 'name' : 'id';
+		$desc = ($this->value() == self::DESC) ? -1 : 1;
+
+		uasort($data, function($a, $b) use ($key, $desc) {
+			if ($a[$key] == $b[$key]) {
+				return 0;
+			} else if ($a[$key] < $b[$key]) {
+				return -1 * $desc;
+			}
+
+			return 1 * $desc;
+		});
+	}
 }

@@ -48,13 +48,18 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-                $shoes = Cache::get('shoes');
-                if(is_null($shoes)) {
-		$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` '.self::getOrder())->fetchAll();
-                    Cache::set('shoes', $shoes, '3600');
-                }
-		foreach ($shoes as $shoe)
+		$shoes = Cache::get('shoes');
+
+		if (is_null($shoes)) {
+			$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe`')->fetchAll();
+			Cache::set('shoes', $shoes, '3600');
+		}
+
+		foreach ($shoes as $shoe) {
 			self::$AllShoes[(string)$shoe['id']] = $shoe;
+		}
+
+		Configuration::ActivityForm()->orderShoes()->sort(self::$AllShoes);
 	}
 
 	/**
@@ -65,20 +70,13 @@ class ShoeFactory {
 	}
 
 	/**
-	 * Get order
-	 * @return string
-	 */
-	static private function getOrder() {
-		return Configuration::ActivityForm()->orderShoes()->asQuery();
-	}
-
-	/**
 	 * Get internal array with all shoes
 	 * @return array
 	 */
 	static private function AllShoes() {
-		if (is_null(self::$AllShoes))
+		if (is_null(self::$AllShoes)) {
 			self::initAllShoes();
+		}	
 
 		return self::$AllShoes;
 	}
@@ -91,10 +89,13 @@ class ShoeFactory {
 	static public function FullArray($onlyInUse = true) {
 		$shoes = self::AllShoes();
 
-		if ($onlyInUse)
-			foreach ($shoes as $id => $shoe)
-				if ($shoe['inuse'] != 1)
+		if ($onlyInUse) {
+			foreach ($shoes as $id => $shoe) {
+				if ($shoe['inuse'] != 1) {
 					unset($shoes[$id]);
+				}
+			}
+		}
 
 		return $shoes;
 	}
@@ -106,11 +107,14 @@ class ShoeFactory {
 	 */
 	static public function NamesAsArray($inUse = true) {
 		$shoes = self::AllShoes();
-		foreach ($shoes as $id => $shoe)
-			if (!$inUse || $shoe['inuse'] == 1)
+
+		foreach ($shoes as $id => $shoe) {
+			if (!$inUse || $shoe['inuse'] == 1) {
 				$shoes[$id] = $shoe['name'];
-			else
+			} else {
 				unset($shoes[$id]);
+			}
+		}
 
 		return $shoes;
 	}
