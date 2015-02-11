@@ -1,3 +1,5 @@
+/* Reset (thx to Eric A. and Kathryn S. Meyer) */
+@import "../icons8/styles.css";
 .colored-light {
   background: #eee;
 }
@@ -1368,7 +1370,7 @@ tr.space-line.zebra-corrector td {
   cursor: default;
   padding-right: 0;
 }
-.sortable thead th.tablesorter-header.sorter-false > div:after {
+.sortable thead th.tablesorter-header.sorter-false  > div:after {
   display: none;
 }
 .sortable thead th.tablesorter-header:hover > div:after,
@@ -1636,6 +1638,7 @@ tr.space-line.zebra-corrector td {
 }
 .progress-bar-infos {
   /* Clearfix */
+
   padding-bottom: 5px;
   font-weight: 100;
   letter-spacing: 1px;
@@ -1736,8 +1739,8 @@ tr.space-line.zebra-corrector td {
   padding: 5px 10px 5px 26px;
   min-width: 40px;
 }
-.boxed-value-container.with-icon > i,
-.boxed-value-container.with-icon > span > i {
+.boxed-value-container.with-icon  > i,
+.boxed-value-container.with-icon  > span > i {
   position: absolute;
   left: 5px;
   top: 50%;
@@ -1866,48 +1869,6 @@ tr.space-line.zebra-corrector td {
 label:active .checkbox-icon {
   position: relative;
   top: 1px;
-}
-/* see SportFactory::getIconOptions() */
-[class^="sport-icon-"],
-[class*=" sport-icon-"] {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  vertical-align: middle;
-  background-image: url(../../img/sports.gif);
-}
-.sport-icon-unknown {
-  background-position: 0 0;
-}
-.sport-icon-radfahren {
-  background-position: -10px 0;
-}
-.sport-icon-schwimmen {
-  background-position: -20px 0;
-}
-.sport-icon-gymnastik {
-  background-position: -30px 0;
-}
-.sport-icon-laufen {
-  background-position: 0 -10px;
-}
-.sport-icon-krafttraining {
-  background-position: -10px -10px;
-}
-.sport-icon-wandern {
-  background-position: -20px -10px;
-}
-.sport-icon-teamsport {
-  background-position: -30px -10px;
-}
-.sport-icon-bogenschiessen {
-  background-position: 0 -20px;
-}
-.sport-icon-inlineskating {
-  background-position: -10px -20px;
-}
-.sport-icon-taekwondo {
-  background-position: -20px -20px;
 }
 .fade {
   opacity: 0;
@@ -2387,8 +2348,10 @@ td.datepickerDisabled a:hover {
   border: 0;
   font-size: 100%;
   /*	font: inherit;*/
+
   vertical-align: baseline;
   /*	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+
 }
 .icons-selector,
 .icons-selector:before,
@@ -2463,6 +2426,7 @@ td.datepickerDisabled a:hover {
   font-size: 12px;
   display: block;
   /* Fixes the positioning inside hidden/floated/text-aligned elements, where it would leave a margin */
+
 }
 .icons-selector .selector-category select {
   height: 30px;
@@ -2694,6 +2658,7 @@ td.datepickerDisabled a:hover {
 /* Main Container */
 .icons-selector * {
   /*   font-family: inherit;*/
+
 }
 .fip-grey.icons-selector {
   font-size: 11px;
@@ -2723,6 +2688,7 @@ td.datepickerDisabled a:hover {
 .fip-grey.icons-selector .selector-button i {
   color: #000;
   /*text-shadow: 0px 1px 0px #FFF;*/
+
   font-size: 12px;
   line-height: 16px;
   margin-left: -1px;
@@ -2771,6 +2737,7 @@ td.datepickerDisabled a:hover {
 .fip-grey.icons-selector .fip-icons-container {
   background-color: #fff;
   /*border: 1px solid #EDEDED;*/
+
   padding: 0px;
   font-size: 16px;
 }
@@ -3219,6 +3186,7 @@ td.datepickerDisabled a:hover {
   /*background-image: url(images/layers.png);
 	width: 36px;
 	height: 36px;*/
+
 }
 .leaflet-control-layers-toggle:before {
   display: inline-block;
@@ -3393,7 +3361,7 @@ td.datepickerDisabled a:hover {
   width: 24px;
   margin: 0 auto;
   -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-  filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+  filter: progid:dximagetransform.microsoft.matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
 }
 .leaflet-oldie .leaflet-popup-tip-container {
   margin-top: -1px;
@@ -3451,148 +3419,10 @@ td.datepickerDisabled a:hover {
   height: 12px;
   text-align: center;
 }
-/*
-  Icon Font: Runalyze
-*/
-@font-face {
-  font-family: "Runalyze";
-  src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.eot");
-  src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.eot?#iefix") format("embedded-opentype"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.woff") format("woff"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.ttf") format("truetype"), url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  @font-face {
-    font-family: "Runalyze";
-    src: url("../icons8/Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
-  }
-}
-[data-icon]:before {
-  content: attr(data-icon);
-}
-[data-icon]:before,
-.icons8-calendar:before,
-.icons8-clock:before,
-.icons8-coins:before,
-.icons8-degrees:before,
-.icons8-earth_element:before,
-.icons8-expensive:before,
-.icons8-length:before,
-.icons8-like:before,
-.icons8-like_outline:before,
-.icons8-medal2:before,
-.icons8-regular_biking:before,
-.icons8-rotate:before,
-.icons8-running:before,
-.icons8-running_rabbit:before,
-.icons8-speed:before,
-.icons8-speedometer:before,
-.icons8-sports_mode:before,
-.icons8-stairs_up:before,
-.icons8-stopwatch:before,
-.icons8-swimming:before,
-.icons8-temperature:before,
-.icons8-timer:before,
-.icons8-trophy:before,
-.icons8-turtle:before,
-.icons8-waypoint_map:before,
-.icons8-yoga:before {
-  display: inline-block;
-  font-family: "Runalyze";
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  line-height: 1;
-  text-decoration: inherit;
-  text-rendering: optimizeLegibility;
-  text-transform: none;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-}
-.icons8-calendar:before {
-  content: "\f100";
-}
-.icons8-clock:before {
-  content: "\f101";
-}
-.icons8-coins:before {
-  content: "\f102";
-}
-.icons8-degrees:before {
-  content: "\f103";
-}
-.icons8-earth_element:before {
-  content: "\f104";
-}
-.icons8-expensive:before {
-  content: "\f105";
-}
-.icons8-length:before {
-  content: "\f106";
-}
-.icons8-like:before {
-  content: "\f107";
-}
-.icons8-like_outline:before {
-  content: "\f108";
-}
-.icons8-medal2:before {
-  content: "\f109";
-}
-.icons8-regular_biking:before {
-  content: "\f10a";
-}
-.icons8-rotate:before {
-  content: "\f10b";
-}
-.icons8-running:before {
-  content: "\f10c";
-}
-.icons8-running_rabbit:before {
-  content: "\f10d";
-}
-.icons8-speed:before {
-  content: "\f10e";
-}
-.icons8-speedometer:before {
-  content: "\f10f";
-}
-.icons8-sports_mode:before {
-  content: "\f110";
-}
-.icons8-stairs_up:before {
-  content: "\f111";
-}
-.icons8-stopwatch:before {
-  content: "\f112";
-}
-.icons8-swimming:before {
-  content: "\f113";
-}
-.icons8-temperature:before {
-  content: "\f114";
-}
-.icons8-timer:before {
-  content: "\f115";
-}
-.icons8-trophy:before {
-  content: "\f116";
-}
-.icons8-turtle:before {
-  content: "\f117";
-}
-.icons8-waypoint_map:before {
-  content: "\f118";
-}
-.icons8-yoga:before {
-  content: "\f119";
-}
 /*!
  *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */
-@font-face {
+ */@font-face {
   font-family: 'FontAwesome';
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?v=4.2.0');
   src: url('../fontawesome/fonts/fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'), url('../fontawesome/fonts/fontawesome-webfont.woff?v=4.2.0') format('woff'), url('../fontawesome/fonts/fontawesome-webfont.ttf?v=4.2.0') format('truetype'), url('../fontawesome/fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
@@ -3688,31 +3518,31 @@ td.datepickerDisabled a:hover {
   }
 }
 .fa-rotate-90 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=1);
   -webkit-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 .fa-rotate-180 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=2);
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transform: rotate(180deg);
 }
 .fa-rotate-270 {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=3);
   -webkit-transform: rotate(270deg);
   -ms-transform: rotate(270deg);
   transform: rotate(270deg);
 }
 .fa-flip-horizontal {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=0, mirror=1);
   -webkit-transform: scale(-1, 1);
   -ms-transform: scale(-1, 1);
   transform: scale(-1, 1);
 }
 .fa-flip-vertical {
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  filter: progid:dximagetransform.microsoft.basicimage(rotation=2, mirror=1);
   -webkit-transform: scale(1, -1);
   -ms-transform: scale(1, -1);
   transform: scale(1, -1);
@@ -5264,8 +5094,8 @@ td.datepickerDisabled a:hover {
 }
 @font-face {
   font-family: "iconvault";
-  src: url("../iconvault-forecast/iconvault_forecastfont.eot");
-  src: url("../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
+  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot");
+  src: url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.eot?#iefix") format("embedded-opentype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.woff") format("woff"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.ttf") format("truetype"), url("../iconvault-forecast/../iconvault-forecast/iconvault_forecastfont.svg#iconvault") format("svg");
   font-weight: normal;
   font-style: normal;
 }

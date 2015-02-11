@@ -44,20 +44,6 @@ class ConfigTabSports extends ConfigTab {
 	}
 
 	/**
-	 * Get list with sport icons
-	 * @return array
-	 */
-	private function getSportIconList() {
-		$Icons       = array();
-		$IconOptions = SportFactory::getIconOptions();
-
-		foreach ($IconOptions as $gif)
-			$Icons[] = Icon::getSportIconForGif($gif);
-
-		return implode('&nbsp;', $Icons);
-	}
-
-	/**
 	 * Get code
 	 * @return string
 	 */
