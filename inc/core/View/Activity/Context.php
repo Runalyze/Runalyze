@@ -6,12 +6,14 @@
 
 namespace Runalyze\View\Activity;
 
+use Request;
+use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Activity;
 
 /**
  * Activity context
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity
  */
@@ -104,4 +106,25 @@ class Context {
 	public function hasRoute() {
 		return !is_null($this->Route);
 	}
+
+
+	/**
+	 * @return boolean
+	 */
+	public function hideMap() {
+		if (!Request::isOnSharedPage()) return false;
+
+		$RoutePrivacy = Configuration::Privacy()->RoutePrivacy();
+		if ($RoutePrivacy->showAlways()) return false;
+		$type = $this->activity()->type();
+
+		if ($RoutePrivacy->showRace()) {
+			return (!$type->isCompetition());
+		} elseif ($RoutePrivacy->showRaceAndLongrun()) {
+			return (!$type->isCompetition() && !$type->isLongJog());
+
+		}
+		return true;
+	}
+
 }

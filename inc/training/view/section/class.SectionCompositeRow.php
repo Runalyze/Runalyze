@@ -18,7 +18,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 
     protected function addMap() {
 
-        if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData()) {
+        if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData() && !$this->Context->hideMap()) {
             $Map = new Leaflet\Map('map-'.$this->Context->activity()->id());
             $Map->addRoute(
                 new Leaflet\Activity(
