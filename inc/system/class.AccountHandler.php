@@ -190,6 +190,9 @@ class AccountHandler {
 		if (self::mailExists($_POST['email']))
 			$errors[] = array('email' => __('This email address is already being used.'));
 
+		if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+			$errors[] = array('email' => __('Please enter a valid email address.'));
+
 		if ($_POST['password'] != $_POST['password_again'])
 				$errors[] = array('password_again' => __('The passwords have to be the same.'));
 
