@@ -163,7 +163,7 @@ class ParserKMLtomtomSingle extends ParserAbstractSingleXML {
 		$values = $array->xpath('gx:value');
 
 		foreach ($values as $value)
-			$this->gps['km'][] = (int)$value/1000;
+			$this->gps['km'][] = round((float)$value/1000, ParserAbstract::DISTANCE_PRECISION);
 	}
 
 	/**
