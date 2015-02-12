@@ -14,6 +14,11 @@ use Runalyze\Configuration;
  */
 class ShoeFactory {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY = 'shoes';
+
+	/**
 	 * Array with all shoes
 	 * @var array
 	 */
@@ -48,11 +53,11 @@ class ShoeFactory {
 	 */
 	static private function initAllShoes() {
 		self::$AllShoes = array();
-		$shoes = Cache::get('shoes');
+		$shoes = Cache::get(self::CACHE_KEY);
 
 		if (is_null($shoes)) {
 			$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe`')->fetchAll();
-			Cache::set('shoes', $shoes, '3600');
+			Cache::set(self::CACHE_KEY, $shoes, '3600');
 		}
 
 		foreach ($shoes as $shoe) {
@@ -195,5 +200,6 @@ class ShoeFactory {
 		}
 
 		self::clearAllShoes();
+		Cache::delete(self::CACHE_KEY);
 	}
 }

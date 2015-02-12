@@ -68,6 +68,9 @@ class JobLoop extends Job {
 
 		if (count($this->updateSet())) {
 			$this->runActivityLoop();
+
+			// This may be removed if single activities are not cached anymore.
+			\Cache::clean();
 		}
 	}
 
