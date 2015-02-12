@@ -188,3 +188,6 @@ UPDATE runalyze_sport SET img='icons8-sports_mode'	where img IN	('unknown.gif','
 
 /* 09.02.2015 - Fix route for dataset */
 UPDATE `runalyze_dataset` SET `name`="routeid" WHERE `name`="route";
+
+/* 12.02.2015 - Remove old configuration */
+DELETE FROM `runalyze_conf` WHERE `key`="TRAINING_ELEVATION_SERVER";
