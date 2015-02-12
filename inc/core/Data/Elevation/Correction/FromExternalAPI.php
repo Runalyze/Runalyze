@@ -8,7 +8,7 @@ namespace Runalyze\Data\Elevation\Correction;
 
 /**
  * Abstract corrector strategy for external API
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Elevation\Correction
  */
@@ -21,7 +21,7 @@ abstract class FromExternalAPI extends Strategy {
 
 	/**
 	 * Correct elevation
-	 * 
+	 *
 	 * Note: canHandleData() has to be called before!
 	 */
 	final public function correctElevation() {
@@ -51,6 +51,8 @@ abstract class FromExternalAPI extends Strategy {
 
 		if (count($this->ElevationPoints) > $numberOfPoints)
 			$this->ElevationPoints = array_slice($this->ElevationPoints, 0, $numberOfPoints);
+
+		$this->guessUnknown();
 	}
 
 	/**
