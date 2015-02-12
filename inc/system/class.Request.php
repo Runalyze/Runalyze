@@ -14,7 +14,7 @@ class Request {
 	 * @return string
 	 */
 	static public function Uri() {
-		return $_SERVER['REQUEST_URI'];
+		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 	}
 
 	/**
@@ -22,7 +22,7 @@ class Request {
 	 * @return string
 	 */
 	static public function ScriptName() {
-		return $_SERVER['SCRIPT_NAME'];
+		return isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
 	}
 
 	/**

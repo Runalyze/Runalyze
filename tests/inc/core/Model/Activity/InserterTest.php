@@ -20,16 +20,23 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	protected $OutdoorID;
 	protected $IndoorID;
+	protected $ShoeID1;
+	protected $ShoeID2;
 
 	protected function setUp() {
 		\Cache::clean();
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(1,600,1,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`) VALUES(600,1,0)');
 		$this->OutdoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(2,400,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`) VALUES(400,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(1,10,3000,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(2,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(10,3000,0)');
+		$this->ShoeID1 = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(0,0,0)');
+		$this->ShoeID2 = $this->PDO->lastInsertId();
+
+		\SportFactory::reInitAllSports();
+		\ShoeFactory::reInitAllShoe();
 	}
 
 	protected function tearDown() {
@@ -137,22 +144,22 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->insert(array(
 			Object::TIME_IN_SECONDS => 3600,
 			Object::DISTANCE => 12,
-			Object::SHOEID => 1
+			Object::SHOEID => $this->ShoeID1
 		));
 		$this->insert(array(
 			Object::TIME_IN_SECONDS => 3600,
 			Object::DISTANCE => 12,
-			Object::SHOEID => 2
+			Object::SHOEID => $this->ShoeID2
 		));
 
 		$this->assertEquals(array(
 			'km' => 22,
 			'time' => 6600
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=1 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
+		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID1.' AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(array(
 			'km' => 12,
 			'time' => 3600
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=2 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
+		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2.' AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
 	}
 
 	public function testStartTimeUpdate() {

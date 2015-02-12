@@ -107,6 +107,7 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
+		self::$AllSports = array();
 		$sports = self::cacheAllSports();
 
 		foreach ($sports as $sport) {
@@ -138,7 +139,6 @@ class SportFactory {
 	static public function reInitAllSports() {
 		Cache::delete('sport');
 
-		self::$AllSports = array();
 		self::initAllSports();
 	}
 

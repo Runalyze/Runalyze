@@ -70,6 +70,14 @@ class ShoeFactory {
 	}
 
 	/**
+	 * Reinit shoes
+	 */
+	static public function reInitAllShoe() {
+		self::clearAllShoes();
+		self::initAllShoes();
+	}
+
+	/**
 	 * Get internal array with all shoes
 	 * @return array
 	 */

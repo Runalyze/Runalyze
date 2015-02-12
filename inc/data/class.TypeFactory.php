@@ -64,6 +64,7 @@ class TypeFactory {
 	 * IDs will be set as string as indices for correct order
 	 */
 	static private function initAllTypes() {
+		self::$AllTypes = array();
 		$types = Cache::get('types');
 
 		if (is_null($types)) {
