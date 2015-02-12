@@ -130,7 +130,7 @@ class Pace extends ActivitySeries {
 						$min = 60*1000*floor($min/60/1000);
 					}
 
-					if (!$LimitMax->automatic() && $max < 1000*$LimitMax->value()) {
+					if (!$LimitMax->automatic() && $max > 1000*$LimitMax->value()) {
 						$max = 1000*$LimitMax->value();
 					} else {
 						$max = 60*1000*floor($max/60/1000);
