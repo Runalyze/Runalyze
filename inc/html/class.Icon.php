@@ -10,12 +10,6 @@
  */
 class Icon {
 	/**
-	 * Path to sport icons
-	 * @var string
-	 */
-	static public $PATH_TO_SPORT_ICONS = 'img/sports/';
-
-	/**
 	 * All avaiable icons are set as class members
 	 */
 	// Small, 12x12px
@@ -92,7 +86,7 @@ class Icon {
 		if ($tooltip == '')
 			$tooltip = $title;
 
-		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $data['img']).'"></i>', $tooltip);
+		return Ajax::tooltip('<i class="'.$data['img'].'"></i>', $tooltip);
 	}
 
 	/**
@@ -102,21 +96,6 @@ class Icon {
 	 * @return string
 	 */
 	public static function getSportIconForGif($gif, $tooltip = '') {
-		if ($tooltip == '') {
-			$tooltip = $gif;
-		}
-
-		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $gif).'"></i>', $tooltip);
-	}
-
-	/**
-	 * Get url to icon for given sportid
-	 * @param int $id
-	 * @return string 
-	 */
-	public static function getSportIconUrl($id) {
-		$data = DB::getInstance()->fetchByID('sport', $id);
-
-		return self::$PATH_TO_SPORT_ICONS.$data['img'];
+		return Ajax::tooltip('<i class="'.$gif.'""></i>', $tooltip);
 	}
 }

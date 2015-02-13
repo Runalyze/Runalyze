@@ -18,7 +18,7 @@ require_once 'inc/class.Installer.php';
 
 $Installer = new Installer();
 
-$title = 'Installation: Runalyze '.RUNALYZE_VERSION;
+$title = __(sprintf('Installation: Runalyze %s',RUNALYZE_VERSION));
 include 'inc/tpl/tpl.installerHeader.php';
 
 $Installer->display();

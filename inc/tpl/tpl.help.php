@@ -79,6 +79,7 @@ $Frontend = new Frontend();
 			<ul>
 				<li>Font Awesome by Dave Gandy - <a class="external" href="http://fontawesome.io/">http://fontawesome.io/</a></li>
 				<li>Forecast Font by Ali Sisk - <a class="external" href="http://forecastfont.iconvau.lt/">http://forecastfont.iconvau.lt/</a></li>
+				<li>Icons8 Font by VisualPharm - <a class="external" href="http://icons8.com">http://icons8.com/</a></li>
 			</ul>
 		</li>
 		<li>
@@ -99,6 +100,7 @@ $Frontend = new Frontend();
 				<li>Tablesorter by Christian Bach - <a class="external" href="http://tablesorter.com/docs/">http://tablesorter.com/docs/</a></li>
 				<li>Datepicker by Stefan Petre - <a class="external" href="http://www.eyecon.ro/">http://www.eyecon.ro/</a></li>
 				<li>Chosen by Patrick Filler for Harvest - <a class="external" href="http://getharvest.com">http://getharvest.com</a></li>
+				<li>FontIconPicker by Alessandro Benoit &amp; Swashata Ghosh <a class="external" href="http://codeb.it">http://codeb.it</a></li>
 			</ul>
 		</li>
 		<li>

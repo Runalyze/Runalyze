@@ -9,7 +9,7 @@ use Runalyze\Activity\Pace;
 
 /**
  * Factory serving static methods for Sport
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Sport
  */
@@ -26,17 +26,11 @@ class SportFactory {
 	 */
 	static public function getIconOptions() {
 		$Files = array(
-			'unknown.gif',
-			'radfahren.gif',
-			'schwimmen.gif',
-			'gymnastik.gif',
-			'laufen.gif',
-			'krafttraining.gif',
-			'wandern.gif',
-			'teamsport.gif',
-			'bogenschiessen.gif',
-			'inlineskating.gif',
-			'taekwondo.gif'
+			'icons8-sports_mode',
+			'icons8-running',
+			'icons8-regular_biking',
+			'icons8-swimming',
+			'icons8-yoga',
 		);
 
 		$Options = array();
@@ -62,7 +56,7 @@ class SportFactory {
 
 	/**
 	 * Array with default values
-	 * 
+	 *
 	 * @todo This method should be useless as soon as a DatabaseScheme is used
 	 * @return array
 	 */
@@ -113,43 +107,38 @@ class SportFactory {
 	 * Initialize internal sports-array from database
 	 */
 	static private function initAllSports() {
+		self::$AllSports = array();
 		$sports = self::cacheAllSports();
 
 		foreach ($sports as $sport) {
 			self::$AllSports[(string)$sport['id']] = $sport;
 		}
-	}
-        
-        /**
-         * Cache all sports for user
-         */
-        static private function cacheAllSports() {
-            $sports = Cache::get('sport');
-			if (is_null($sports)) {
-				$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` '.self::getOrder())->fetchAll();
-				Cache::set('sport', $sports, '3600');
-			}
 
-            return $sports;
-        }
+		Configuration::ActivityForm()->orderSports()->sort(self::$AllSports);
+	}
 
 	/**
-	 * Get order
-	 * @return string
+	 * Cache all sports for user
 	 */
-	static private function getOrder() {
-		return Configuration::ActivityForm()->orderSports()->asQuery();
+	static private function cacheAllSports() {
+		$sports = Cache::get('sport');
+
+		if (is_null($sports)) {
+			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport`')->fetchAll();
+			Cache::set('sport', $sports, '3600');
+		}
+
+		return $sports;
 	}
 
 	/**
 	 * Reinit all sports
-	 * 
+	 *
 	 * Use this method after updating sports table
 	 */
 	static public function reInitAllSports() {
 		Cache::delete('sport');
 
-		self::$AllSports = array();
 		self::initAllSports();
 	}
 
@@ -183,7 +172,7 @@ class SportFactory {
 
 		return -1;
 	}
-	
+
 	/**
 	* Get normal kcal per hour
 	* @param int $SportID id

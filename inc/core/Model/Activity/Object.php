@@ -15,7 +15,7 @@ use Runalyze\Data\Weather;
 
 /**
  * Activity object
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity
  */
@@ -407,6 +407,14 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function typeid() {
 		return $this->Data[self::TYPEID];
+	}
+
+	/**
+	 * Type
+	 * @return \Type
+	 */
+	public function type() {
+		return new \Type($this->Data[self::TYPEID]);
 	}
 
 	/**

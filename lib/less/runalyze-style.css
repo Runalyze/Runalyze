@@ -1,4 +1,5 @@
-/* see SportFactory::getIconOptions() */
+/* Reset (thx to Eric A. and Kathryn S. Meyer) */
+@import "../icons8/styles.css";
 .colored-light {
   background: #eee;
 }
@@ -1774,6 +1775,17 @@ tr.space-line.zebra-corrector td {
   white-space: normal;
   height: auto;
 }
+#sports .boxed-value-container.with-icon i {
+  left: 15px;
+  font-size: 22px;
+  line-height: 22px;
+  margin-top: -11px;
+}
+.dataset-sport {
+  padding: 1px;
+  font-size: 14px;
+  line-height: 18px;
+}
 .bar-chart-table {
   font-size: 11px;
   width: 100%;
@@ -1857,48 +1869,6 @@ tr.space-line.zebra-corrector td {
 label:active .checkbox-icon {
   position: relative;
   top: 1px;
-}
-/* see SportFactory::getIconOptions() */
-[class^="sport-icon-"],
-[class*=" sport-icon-"] {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  vertical-align: middle;
-  background-image: url(../../img/sports.gif);
-}
-.sport-icon-unknown {
-  background-position: 0 0;
-}
-.sport-icon-radfahren {
-  background-position: -10px 0;
-}
-.sport-icon-schwimmen {
-  background-position: -20px 0;
-}
-.sport-icon-gymnastik {
-  background-position: -30px 0;
-}
-.sport-icon-laufen {
-  background-position: 0 -10px;
-}
-.sport-icon-krafttraining {
-  background-position: -10px -10px;
-}
-.sport-icon-wandern {
-  background-position: -20px -10px;
-}
-.sport-icon-teamsport {
-  background-position: -30px -10px;
-}
-.sport-icon-bogenschiessen {
-  background-position: 0 -20px;
-}
-.sport-icon-inlineskating {
-  background-position: -10px -20px;
-}
-.sport-icon-taekwondo {
-  background-position: -20px -20px;
 }
 .fade {
   opacity: 0;
@@ -2280,7 +2250,6 @@ div.datepicker {
   overflow: hidden;
   width: 196px;
   height: 147px;
-  position: absolute;
   cursor: default;
   top: 0;
   left: 0;
@@ -2366,6 +2335,446 @@ td.datepickerDisabled a:hover {
 .datepicker a:hover {
   background-color: #ffff66 !important;
   color: #000 !important;
+}
+/**
+ * CSS file for fontIconPicker
+ * This file holds the basic CSS
+ * {@link https://github.com/micc83/fontIconPicker}
+ */
+/* Reset (thx to Eric A. and Kathryn S. Meyer) */
+.icons-selector * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  /*	font: inherit;*/
+
+  vertical-align: baseline;
+  /*	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+
+}
+.icons-selector,
+.icons-selector:before,
+.icons-selector:after,
+.icons-selector *,
+.icons-selector *:before,
+.icons-selector *:after {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+/* Display */
+.icons-selector {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+}
+/* Icon selector */
+.icons-selector .selector {
+  width: 70px;
+  height: 30px;
+}
+/* Selector open button */
+.icons-selector .selector-button {
+  width: 29px;
+  height: 100%;
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  float: left;
+}
+/* Selector open button icon */
+.icons-selector .selector-button i {
+  line-height: 28px;
+  text-align: center;
+}
+/* Selected icon container */
+.icons-selector .selected-icon {
+  display: block;
+  width: 40px;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+/* Selected icon */
+.icons-selector .selected-icon i {
+  line-height: 30px;
+  font-size: 12px;
+  cursor: default;
+}
+/* IconPicker Popup */
+.icons-selector .selector-popup {
+  position: absolute;
+  z-index: 10000;
+  background-color: #fefefe;
+  padding: 5px;
+  height: auto;
+  width: 342px;
+  margin-top: -1px;
+}
+/* Search input & category selector */
+.icons-selector .selector-search input[type="text"],
+.icons-selector .selector-category select {
+  border: 0;
+  line-height: 20px;
+  padding: 10px 2.5%;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+  font-size: 12px;
+  display: block;
+  /* Fixes the positioning inside hidden/floated/text-aligned elements, where it would leave a margin */
+
+}
+.icons-selector .selector-category select {
+  height: 30px;
+}
+.icons-selector .selector-category select option {
+  padding: 5px;
+}
+/* Search input placeholder */
+.icons-selector input::-webkit-input-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input:-moz-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input::-moz-placeholder {
+  text-transform: uppercase;
+}
+.icons-selector input:-ms-input-placeholder {
+  text-transform: uppercase;
+}
+/* Search and cancel icon */
+.icons-selector .selector-search {
+  position: relative;
+}
+.icons-selector .selector-search i {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+}
+/* Icon Container inside Popup */
+.icons-selector .fip-icons-container {
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 5px;
+}
+/* Icon container loading */
+.icons-selector .fip-icons-container .loading {
+  font-size: 24px;
+  margin: 0 auto;
+  padding: 20px 0;
+  text-align: center;
+  width: 100%;
+}
+/* Single icon box */
+.icons-selector .fip-box {
+  display: inline-block;
+  margin: 2px;
+  width: 60px;
+  line-height: 42px;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: top;
+  height: 40px;
+}
+/* Popup footer */
+.icons-selector .selector-footer {
+  line-height: 12px;
+  padding: 5px 5px 0 5px;
+  text-align: center;
+}
+/* Pagination and footer icons */
+.icons-selector .selector-footer,
+.icons-selector .selector-footer i {
+  font-size: 14px;
+}
+/* Pagination arrows container */
+.icons-selector .selector-arrows {
+  float: right;
+}
+/* Pagination text */
+.icons-selector .selector-pages {
+  font-size: 11px;
+  float: left;
+}
+/* Pagination arrows icons */
+.icons-selector .selector-arrows i {
+  cursor: pointer;
+}
+/* Total icons */
+.icons-selector .selector-footer em {
+  font-style: italic;
+}
+/* No icons found */
+.icons-selector .icons-picker-error i:before {
+  color: #eee;
+}
+/* Icons */
+@font-face {
+  font-family: 'iconpicker';
+  src: url('../fontIconPicker-2.0.0/css/iconpicker.eot');
+  src: url('../fontIconPicker-2.0.0/css/iconpicker.eot') format('embedded-opentype'), url('../fontIconPicker-2.0.0/css/iconpicker.woff') format('woff'), url('../fontIconPicker-2.0.0/css/iconpicker.ttf') format('truetype'), url('../fontIconPicker-2.0.0/css/iconpicker.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+.icons-selector [class^="fip-icon-"]:before,
+.icons-selector [class*=" fip-icon-"]:before {
+  font-family: "iconpicker";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  margin-left: .2em;
+}
+/* Search icon */
+.icons-selector .fip-icon-search:before {
+  content: '\e812';
+  cursor: default;
+}
+/* Cancel search icon */
+.icons-selector .fip-icon-cancel:before {
+  content: '\e814';
+  cursor: pointer;
+}
+/* No icon set */
+.icons-selector .fip-icon-block:before {
+  content: '\e84e';
+  color: #fed0d0;
+}
+/* Open picker icon */
+.icons-selector .fip-icon-down-dir:before {
+  content: '\e800';
+}
+/* Close picker icon */
+.icons-selector .fip-icon-up-dir:before {
+  content: '\e813';
+}
+/* Prev page icon */
+.icons-selector .fip-icon-left-dir:before {
+  content: '\e801';
+}
+/* Next page icon */
+.icons-selector .fip-icon-right-dir:before {
+  content: '\e802';
+}
+/* Loading icon */
+.icons-selector .fip-icon-spin3:before {
+  content: '\e815';
+}
+.icons-selector .fip-icon-spin3 {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+/**
+ * Grey Theme file for fontIconPicker
+ * {@link https://github.com/micc83/fontIconPicker}
+ */
+/* Main Container */
+.icons-selector * {
+  /*   font-family: inherit;*/
+
+}
+.fip-grey.icons-selector {
+  font-size: 11px;
+}
+/* Icon selector */
+.fip-grey.icons-selector .selector {
+  border: 1px solid #B8B8B8;
+  border-radius: 3px;
+  background-color: #fff;
+  height: 16px;
+  width: 56px;
+}
+/* Selector open button */
+.fip-grey.icons-selector .selector-button {
+  background-color: #F4F4F4;
+  border-left: 1px solid #E1E1E1;
+  width: 15px;
+}
+/* Selector open button hover */
+.fip-grey.icons-selector .selector-button:hover {
+  background-color: #f1f1f1;
+}
+.fip-grey.icons-selector .selector-button:hover i {
+  color: #999;
+}
+/* Selector open button icon */
+.fip-grey.icons-selector .selector-button i {
+  color: #000;
+  /*text-shadow: 0px 1px 0px #FFF;*/
+
+  font-size: 12px;
+  line-height: 16px;
+  margin-left: -1px;
+}
+/* Selected icon */
+.fip-grey.icons-selector .selected-icon i {
+  color: #404040;
+  line-height: 16px;
+  font-size: 12px;
+}
+/* IconPicker Popup */
+.fip-grey.icons-selector .selector-popup {
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E5E5E5;
+}
+/* Search input & category selector */
+.fip-grey.icons-selector .selector-search input[type="text"],
+.fip-grey.icons-selector .selector-category select {
+  border: 1px solid #EDEDED;
+  color: #404040;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+}
+/* Search input placeholder */
+.fip-grey.icons-selector input::-webkit-input-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input:-moz-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input::-moz-placeholder {
+  color: #ddd;
+}
+.fip-grey.icons-selector input:-ms-input-placeholder {
+  color: #ddd !important;
+}
+/* Search and cancel icon */
+.fip-grey.icons-selector .selector-search i {
+  color: #eee;
+}
+/* Icon Container inside Popup */
+.fip-grey.icons-selector .fip-icons-container {
+  background-color: #fff;
+  /*border: 1px solid #EDEDED;*/
+
+  padding: 0px;
+  font-size: 16px;
+}
+/* Icon container loading */
+.fip-grey.icons-selector .fip-icons-container .loading {
+  color: #eee;
+}
+/* Single icon box */
+.fip-grey.icons-selector .fip-box {
+  border: 1px solid #EFEFEF;
+  width: 40px;
+  line-height: 32px;
+  height: 30px;
+}
+/* Single icon box hover */
+.fip-grey.icons-selector .fip-box:hover {
+  background-color: #f6f6f6;
+}
+/* Pagination and footer icons */
+.fip-grey.icons-selector .selector-footer,
+.fip-grey.icons-selector .selector-footer i {
+  color: #ddd;
+}
+/* Pagination arrows icons hover */
+.fip-grey.icons-selector .selector-arrows i:hover {
+  color: #777;
+}
+/* Currently selected icon color */
+.fip-grey.icons-selector span.current-icon,
+.fip-grey.icons-selector span.current-icon:hover {
+  background-color: #2EA2CC;
+  color: #fff;
+  border: 1px solid #298CBA;
+}
+/* No icons found */
+.fip-grey.icons-selector .icons-picker-error i:before {
+  color: #eee;
 }
 .chzn-container {
   font-size: 0.9em;

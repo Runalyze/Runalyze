@@ -11,7 +11,6 @@ use Runalyze\Parameter\Bool;
 use Runalyze\Parameter\String;
 use Runalyze\Parameter\Set;
 use Runalyze\Parameter\Application\ActivityCreationMode;
-use Runalyze\Parameter\Application\ElevationServer;
 use Runalyze\Parameter\Application\DatabaseOrder;
 use FormularInput;
 
@@ -81,7 +80,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$this->createHandle('TRAINING_CREATE_MODE', new ActivityCreationMode());
 		$this->createHandle('TRAINING_SHOW_AFTER_CREATE', new Bool(false));
 		$this->createHandle('TRAINING_DO_ELEVATION', new Bool(true));
-		$this->createHandle('TRAINING_ELEVATION_SERVER', new ElevationServer());
 		$this->createHandle('TRAINING_LOAD_WEATHER', new Bool(true));
 		$this->createHandle('PLZ', new String(''));
 		$this->createHandle('COMPUTE_KCAL', new Bool(true));
@@ -114,14 +112,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 */
 	public function correctElevation() {
 		return $this->get('TRAINING_DO_ELEVATION');
-	}
-
-	/**
-	 * Server for elevation correction
-	 * @return ElevationServer
-	 */
-	public function elevationServer() {
-		return $this->object('TRAINING_ELEVATION_SERVER');
 	}
 
 	/**
@@ -254,11 +244,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('TRAINING_DO_ELEVATION'), array(
 			'label'		=> __('Automatically correct elevation data'),
 			'tooltip'	=> __('Instead of using gps-elevation a correction via external services is possible.')
-		));
-
-		$Fieldset->addHandle( $this->handle('TRAINING_ELEVATION_SERVER'), array(
-			'label'		=> __('for elevation correction: server'),
-			'tooltip'	=> __('By default, local srtm-files are used. If they are not available, an external server is used.')
 		));
 	}
 

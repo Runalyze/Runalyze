@@ -14,7 +14,7 @@ class Installer {
 	 * @var string
 	 */
 	static $REQUIRED_PHP_VERSION = '5.3.0';
-	
+
 	/**
 	* Required MYSQL-version
 	* @var string
@@ -123,7 +123,7 @@ class Installer {
 		$this->executeCurrentStep();
 		$this->displayCurrentStep();
 	}
-	
+
 	/**
 	* Define const PATH
 	*/
@@ -150,6 +150,10 @@ class Installer {
 	 * Load configuration file
 	 */
 	protected function loadConfig() {
+		if (defined('PREFIX')) {
+			return true;
+		}
+
 		if (file_exists(PATH.'../config.php')) {
 			include PATH.'../config.php';
 
@@ -312,7 +316,16 @@ class Installer {
 		@mysql_select_db($this->mysqlConfig[3]);
 
 		self::importSqlFile(PATH.'install/structure.sql');
-		self::importSqlFile(PATH.'install/runalyze_empty.sql');
+
+		define('FRONTEND_PATH', __DIR__.'/');
+		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
+		new Autoloader();
+
+		$this->adminPassAsMD5 = md5($this->mysqlConfig[2]);
+
+		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
+
+		AccountHandler::createNewNoLoginUser();
 	}
 
 	/**
@@ -351,33 +364,47 @@ class Installer {
 	 * @return array
 	 */
 	static public function getSqlFileAsArray($filename) {
-		$MRK = array('delimiter', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
+		$MRK = array('DELIMITER', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
 		$SQL = @file($filename);
 		$query  = '';
 		$array = array();
+		$inDelimiter = false;
 
 		foreach ($SQL as $line) {
 			$line = trim($line);
 
 			if (defined('PREFIX'))
 				$line = str_replace('runalyze_', PREFIX, $line);
-			
+
 			if (isset($mysqlConfig[3]) && !isset($_POST['database'])) {
 				$line = str_replace('DATABASE runalyze', $mysqlConfig[3], $line);
 				$line = str_replace('DATABASE `runalyze`', $mysqlConfig[3], $line);
 			}
 
-			$AA = explode(' ', $line);
-			if (in_array(strtoupper($AA[0]), $MRK)) {
-				$query = $line;
-			} elseif (strlen($query) > 1) {
-				$query .= " ".$line;
-			}
+			if ($inDelimiter) {
+				$query .= ' '.$line;
 
-			$x = strlen($query) - 1;
-			if (mb_substr($query,$x) == ';') {
-				$array[] = $query;
-				$query = '';
+				if (mb_substr($line, 0, 9) == 'DELIMITER') {
+					$inDelimiter = false;
+					$array[] = $query;
+				}
+			} else {
+				$AA = explode(' ', $line);
+				if (in_array(strtoupper($AA[0]), $MRK)) {
+					if ($AA[0] == 'DELIMITER') {
+						$inDelimiter = true;
+					}
+
+					$query = $line;
+				} elseif (strlen($query) > 1) {
+					$query .= " ".$line;
+				}
+
+				$x = strlen($query) - 1;
+				if (mb_substr($query,$x) == ';') {
+					$array[] = $query;
+					$query = '';
+				}
 			}
 		}
 

@@ -168,7 +168,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 */
 	protected function setGPSfromSample(SimpleXMLElement &$Sample) {
 		$this->gps['time_in_s'][] = $this->Time;
-		$this->gps['km'][]        = round((int)$Sample->Distance)/1000;
+		$this->gps['km'][]        = round((float)$Sample->Distance/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['latitude'][]  = $this->Latitude;
 		$this->gps['longitude'][] = $this->Longitude;
 		$this->gps['altitude'][]  = !empty($Sample->Altitude)

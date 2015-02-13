@@ -33,7 +33,7 @@ abstract class Strategy {
 
 	/**
 	 * Points to group together
-	 * 
+	 *
 	 * This is only a bad guess.
 	 * It would be better to decide this by distance between the points.
 	 * @var int
@@ -69,6 +69,31 @@ abstract class Strategy {
 	 * Correct elevation
 	 */
 	abstract public function correctElevation();
+
+	/**
+	 * Guess unknown elevations
+	 * @param int $unknownValue
+	 */
+	public function guessUnknown($unknownValue = -32768) {
+		$numberOfPoints = count($this->ElevationPoints);
+
+		$i = 0;
+		while ($i < $numberOfPoints && $this->ElevationPoints[$i] == $unknownValue) { // unknown from the start
+			$i++;
+		};
+		if ($i == $numberOfPoints) { // in case nothing is known assume elevation of 0
+			$lastKnown = 0;
+		} else {
+			$lastKnown = $this->ElevationPoints[$i];  // first good one will be used for beginning
+		}
+		for ($i = 0; $i < $numberOfPoints; $i++) {	//substitute each unknown with last known
+			if ($this->ElevationPoints[$i] == $unknownValue) {
+				$this->ElevationPoints[$i] = $lastKnown;
+			} else {
+				$lastKnown = $this->ElevationPoints[$i];
+			}
+		}
+	}
 
 	/**
 	 * Get corrected elevation

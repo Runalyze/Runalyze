@@ -136,6 +136,6 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 	 * @return double
 	 */
 	public static function arrayMapDistance($distance) {
-		return round($distance/1000, 3);
+		return round($distance/1000, ParserAbstract::DISTANCE_PRECISION);
  	}
  }

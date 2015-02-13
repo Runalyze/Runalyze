@@ -1,0 +1,91 @@
+/*
+  Icon Font: Runalyze
+*/
+
+@font-face {
+  font-family: "Runalyze";
+  src: url("./Runalyze_e04737d6af6b96899a220a054187540e.eot");
+  src: url("./Runalyze_e04737d6af6b96899a220a054187540e.eot?#iefix") format("embedded-opentype"),
+       url("./Runalyze_e04737d6af6b96899a220a054187540e.woff") format("woff"),
+       url("./Runalyze_e04737d6af6b96899a220a054187540e.ttf") format("truetype"),
+       url("./Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Runalyze";
+    src: url("./Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+  }
+}
+
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+.icons8-calendar:before,
+.icons8-clock:before,
+.icons8-coins:before,
+.icons8-degrees:before,
+.icons8-earth_element:before,
+.icons8-expensive:before,
+.icons8-length:before,
+.icons8-like:before,
+.icons8-like_outline:before,
+.icons8-medal2:before,
+.icons8-regular_biking:before,
+.icons8-rotate:before,
+.icons8-running:before,
+.icons8-running_rabbit:before,
+.icons8-speed:before,
+.icons8-speedometer:before,
+.icons8-sports_mode:before,
+.icons8-stairs_up:before,
+.icons8-stopwatch:before,
+.icons8-swimming:before,
+.icons8-temperature:before,
+.icons8-timer:before,
+.icons8-trophy:before,
+.icons8-turtle:before,
+.icons8-waypoint_map:before,
+.icons8-yoga:before {
+  display: inline-block;
+  font-family: "Runalyze";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icons8-calendar:before { content: "\f100"; }
+.icons8-clock:before { content: "\f101"; }
+.icons8-coins:before { content: "\f102"; }
+.icons8-degrees:before { content: "\f103"; }
+.icons8-earth_element:before { content: "\f104"; }
+.icons8-expensive:before { content: "\f105"; }
+.icons8-length:before { content: "\f106"; }
+.icons8-like:before { content: "\f107"; }
+.icons8-like_outline:before { content: "\f108"; }
+.icons8-medal2:before { content: "\f109"; }
+.icons8-regular_biking:before { content: "\f10a"; }
+.icons8-rotate:before { content: "\f10b"; }
+.icons8-running:before { content: "\f10c"; }
+.icons8-running_rabbit:before { content: "\f10d"; }
+.icons8-speed:before { content: "\f10e"; }
+.icons8-speedometer:before { content: "\f10f"; }
+.icons8-sports_mode:before { content: "\f110"; }
+.icons8-stairs_up:before { content: "\f111"; }
+.icons8-stopwatch:before { content: "\f112"; }
+.icons8-swimming:before { content: "\f113"; }
+.icons8-temperature:before { content: "\f114"; }
+.icons8-timer:before { content: "\f115"; }
+.icons8-trophy:before { content: "\f116"; }
+.icons8-turtle:before { content: "\f117"; }
+.icons8-waypoint_map:before { content: "\f118"; }
+.icons8-yoga:before { content: "\f119"; }

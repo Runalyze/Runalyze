@@ -87,10 +87,14 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 		$Times = array();
 		$Dists = array();
 		$totalDist = 0;
+		$hrWithTime = 0;
 
 		if (isset($this->XML->Laps) && !empty($this->XML->Laps)) {
 			foreach ($this->XML->Laps->Lap as $Lap) {
 				$Times[] = (int)$Lap['totalTime'];
+
+				if (isset($Lap['avgHeartRate']) && (int)$Lap['avgHeartRate'] > 0)
+				$hrWithTime += (int)$Lap['totalTime'] * (int)$Lap['avgHeartRate'];
 			}
 		}
 
@@ -106,6 +110,10 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 		if (count($Times) > 0 && count($Times) == count($Dists)) {
 			for ($i = 0; $i < count($Times); $i++)
 				$this->TrainingObject->Splits()->addSplit($Dists[$i], $Times[$i]);
+		}
+
+		if ($hrWithTime > 0 && $this->TrainingObject->getPulseAvg() == 0 && $this->TrainingObject->getTimeInSeconds() > 0) {
+			$this->TrainingObject->setPulseAvg( round($hrWithTime / $this->TrainingObject->getTimeInSeconds()) );
 		}
 	}
 }

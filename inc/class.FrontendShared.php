@@ -8,13 +8,13 @@ use Runalyze\View\Activity;
 
 /**
  * Class for customizing frontend for displaying shared activities
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Frontend
  */
 class FrontendShared extends Frontend {
 	/**
-	 * @var Runalyze\View\Activity\Context 
+	 * @var Runalyze\View\Activity\Context
 	 */
 	protected $ActivityContext = null;
 
@@ -66,11 +66,15 @@ class FrontendShared extends Frontend {
 			include 'tpl/tpl.Frontend.footer.php';
 		}
 
+		if (RUNALYZE_DEBUG && Error::getInstance()->hasErrors()) {
+			Error::getInstance()->display();
+		}
+
 		Error::getInstance()->footer_sent = true;
 	}
 
 	/**
-	 * Init training 
+	 * Init training
 	 */
 	private function initTraining() {
 		// TODO: Cache?
@@ -82,7 +86,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Display shared view 
+	 * Display shared view
 	 */
 	public function displaySharedView() {
 		if (is_null($this->ActivityContext)) {
@@ -95,7 +99,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Display requested training 
+	 * Display requested training
 	 */
 	protected function displayRequestedTraining() {
 		$_GET['id'] = $this->ActivityContext->activity()->id();
@@ -110,7 +114,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Get page title according to current training 
+	 * Get page title according to current training
 	 * @return string
 	 */
 	protected function getPageTitle() {
@@ -122,7 +126,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Throw error: invalid request 
+	 * Throw error: invalid request
 	 */
 	protected function throwErrorForInvalidRequest() {
 		echo HTML::h1( __('Error') );
@@ -135,7 +139,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Throw error: This training is private 
+	 * Throw error: This training is private
 	 */
 	protected function throwErrorForPrivateTraining() {
 		echo HTML::h1( __('Error') );
@@ -148,7 +152,7 @@ class FrontendShared extends Frontend {
 	}
 
 	/**
-	 * Display link to www.runalyze.de 
+	 * Display link to www.runalyze.de
 	 */
 	protected function displayLinkToRunalyze() {
 		$List = new BlocklinkList();
@@ -160,7 +164,7 @@ class FrontendShared extends Frontend {
 	 * Overwrite init of error-handling to use logfiles
 	 */
 	protected function initErrorHandling() {
-		Error::init(Request::Uri(), true);
+		Error::init(Request::Uri());
 	}
 
 	/**

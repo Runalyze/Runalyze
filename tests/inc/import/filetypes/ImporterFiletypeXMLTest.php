@@ -89,7 +89,7 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 
 		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
-		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint() );
+		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint(), '', 0.0005 );
 	}
 
 	/**

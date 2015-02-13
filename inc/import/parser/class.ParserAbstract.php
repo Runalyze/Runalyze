@@ -11,6 +11,12 @@
  */
 abstract class ParserAbstract {
 	/**
+	 * Number of decimals to be parsed/saved
+	 * @int decimals for [km]
+	 */
+	const DISTANCE_PRECISION = 5;
+
+	/**
 	 * File content
 	 * @var string
 	 */

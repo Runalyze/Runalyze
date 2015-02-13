@@ -198,10 +198,11 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 				foreach ($Races as $data) {
 					if ($data['s'] < $PB) {
 						$PBdata = $data;
+						$PB = $data['s'];
 					}
 				}
 
-				$this->displayWKTr($data);
+				$this->displayWKTr($PBdata);
 			}
 		}
 
