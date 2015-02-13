@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-13 07:51+0100\n"
-"PO-Revision-Date: 2015-02-12 18:32+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-02-13 09:37+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -744,7 +744,7 @@ msgid "You have to change the following variables:"
 msgstr "Die folgenden Variablen müssen angepasst werden:"
 
 #: inc/tpl/tpl.Installer.php:219
-#, fuzzy, php-format
+#, php-format
 msgid "Please save the following code as <strong>%s<strong>:"
 msgstr "Bitte speichere den folgenden Code unter <strong>%s<&strong>:"
 
@@ -2632,9 +2632,8 @@ msgid "This email address is already being used."
 msgstr "Diese E-Mail-Adresse wird bereits verwendet."
 
 #: inc/system/class.AccountHandler.php:194
-#, fuzzy
 msgid "Please enter a valid email address."
-msgstr "Bitte eine Zahl eingeben."
+msgstr "Bitte gib eine gültige E-Mail Adresse ein."
 
 #: inc/system/class.AccountHandler.php:197
 #: inc/system/class.AccountHandler.php:368
@@ -2733,11 +2732,11 @@ msgstr "Schließe den Vorgang durch Anklicken des nachfolgenden Links ab: "
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "long sleeve"
-msgstr ""
+msgstr "Langarmshirt"
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "l-sleeve"
-msgstr ""
+msgstr "S-Lang"
 
 #: inc/system/schemes/set.emptyValues.php:16
 msgid "T-shirt"
@@ -2761,7 +2760,7 @@ msgstr "lange Hose"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "l-pants"
-msgstr ""
+msgstr "T-lang"
 
 #: inc/system/schemes/set.emptyValues.php:20
 msgid "shorts"
@@ -5615,14 +5614,12 @@ msgid "Monthly and weekly summaries for all sports"
 msgstr "Monatliche und wöchentliche Übersicht für alle Sportarten"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:125
-#, fuzzy
 msgid "Choose statistic"
-msgstr "Trainings auswählen"
+msgstr "Statistik auswählen"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:126
-#, fuzzy
 msgid "General overview"
-msgstr "Allgemeine Informationen"
+msgstr "Allgemeine Übersicht"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:127
 msgid "All training weeks"
