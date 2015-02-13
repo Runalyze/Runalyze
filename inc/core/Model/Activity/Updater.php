@@ -120,6 +120,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->NewObject->set(Object::TIMESTAMP_EDITED, time());
 
 		$this->updateVDOTAndIntensityAndTrimp();
+		$this->updatePower();
 	}
 
 	/**
@@ -145,6 +146,46 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 		if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)) {
 			$this->NewObject->set(Object::TRIMP, $Calculator->calculateTrimp());
+		}
+	}
+
+	/**
+	 * Update power
+	 */
+	protected function updatePower() {
+		if ($this->hasChanged(Object::SPORTID)) {
+			if (\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower()) {
+				$Calculator = new \Runalyze\Calculation\Power\Calculator(
+					$this->Trackdata,
+					$this->Route
+				);
+				$Calculator->calculate();
+
+				$this->updatePowerForTrackdata($Calculator->powerData());
+				$this->NewObject->set(Object::POWER, $Calculator->average());
+			} else {
+				$this->updatePowerForTrackdata(array());
+				$this->NewObject->set(Object::POWER, 0);
+			}
+		}
+	}
+
+	/**
+	 * Update power for trackdata
+	 * @param array $powerData
+	 */
+	protected function updatePowerForTrackdata(array $powerData) {
+		if (
+			(NULL !== $this->Trackdata) && (
+				(empty($powerData) && $this->Trackdata->has(Model\Trackdata\Object::POWER)) ||
+				(!empty($powerData) && !$this->Trackdata->has(Model\Trackdata\Object::POWER))
+			)
+		) {
+			$this->Trackdata->set(Model\Trackdata\Object::POWER, $powerData);
+
+			$TrackdataUpdater = new Model\Trackdata\Updater($this->PDO);
+			$TrackdataUpdater->setAccountID($this->AccountID);
+			$TrackdataUpdater->update($this->Trackdata, array(Model\Trackdata\Object::POWER));
 		}
 	}
 

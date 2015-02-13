@@ -26,9 +26,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		\Cache::clean();
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`) VALUES(600,1,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(600,1,0,1)');
 		$this->OutdoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`) VALUES(400,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(10,3000,0)');
 		$this->ShoeID1 = $this->PDO->lastInsertId();
@@ -315,6 +315,36 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0, $Zero->weather()->temperature()->value());
 		$this->assertFalse($Zero->weather()->temperature()->isUnknown());
 		$this->assertFalse($Zero->weather()->isEmpty());
+	}
+
+	public function testPowerCalculation() {
+		// TODO: Needs configuration setting
+		if (Configuration::ActivityForm()->computePower()) {
+			$ActivityIndoor = new Object(array(
+				Object::DISTANCE => 10,
+				Object::TIME_IN_SECONDS => 3000,
+				Object::SPORTID => $this->IndoorID
+			));
+
+			$Trackdata = new Model\Trackdata\Object(array(
+				Model\Trackdata\Object::TIME => array(1500, 3000),
+				Model\Trackdata\Object::DISTANCE => array(5, 10)
+			));
+
+			$Inserter = new Inserter($this->PDO);
+			$Inserter->setAccountID(0);
+			$Inserter->setTrackdata($Trackdata);
+			$Inserter->insert($ActivityIndoor);
+
+			$this->assertEquals(0, $this->fetch($Inserter->insertedID())->power());
+
+			$ActivityOutdoor = clone $ActivityIndoor;
+			$ActivityOutdoor->set(Object::SPORTID, $this->OutdoorID);
+			$Inserter->insert($ActivityOutdoor);
+
+			$this->assertNotEquals(0, $this->fetch($Inserter->insertedID())->power());
+			$this->assertNotEmpty($Trackdata->power());
+		}
 	}
 
 }

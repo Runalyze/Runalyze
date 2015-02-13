@@ -52,7 +52,7 @@ class Updater extends Model\UpdaterWithAccountID {
 	 * @return string
 	 */
 	protected function whereSubclass() {
-		return '`activityid`='.$this->NewObject->activityID();
+		return '`activityid`="'.$this->NewObject->activityID().'"';
 	}
 
 	/**

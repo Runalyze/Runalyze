@@ -250,20 +250,6 @@ class TrainingObject extends DataObject {
 		}
 	}
 
-	/**
-	 * Calculate power
-	 */
-	private function calculatePower() {
-		throw new RuntimeException('This method has to be refactored.');
-
-		/*$GPS = new GpsData($this->getArray());
-		$data = $GPS->calculatePower();
-
-		$this->updateValue('arr_power', implode(self::$ARR_SEP, $data));
-		$this->updateValue('power', $GPS->averagePower());
-		$this->updateValue('gps_cache_object', '');*/
-	}
-
 
 	/**************************************************************************
 	 *

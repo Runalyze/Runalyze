@@ -18,18 +18,33 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $PDO;
 
+	protected $OutdoorID;
+	protected $IndoorID;
+	protected $ShoeID1;
+	protected $ShoeID2;
+
 	protected function setUp() {
+		\Cache::clean();
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(1,600,1,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(2,400,0,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(1,10,3000,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(2,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(600,1,0,1)');
+		$this->OutdoorID = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(400,0,0,0)');
+		$this->IndoorID = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(10,3000,0)');
+		$this->ShoeID1 = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(0,0,0)');
+		$this->ShoeID2 = $this->PDO->lastInsertId();
+
+		\SportFactory::reInitAllSports();
+		\ShoeFactory::reInitAllShoe();
 	}
 
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
+
+		\Cache::clean();
 	}
 
 	/**
@@ -220,19 +235,19 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$OldObject = $this->fetch( $this->insert(array(
 			Object::DISTANCE => 10,
 			Object::TIME_IN_SECONDS => 3000,
-			Object::SHOEID => 2
+			Object::SHOEID => $this->ShoeID2
 		)) );
 
 		$NewObject = clone $OldObject;
-		$NewObject->set(Object::SHOEID, 1);
+		$NewObject->set(Object::SHOEID, $this->ShoeID1);
 
 		$this->update($NewObject, $OldObject);
 
-		$Shoe1 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`=1')->fetch(PDO::FETCH_ASSOC));
+		$Shoe1 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID1)->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(20, $Shoe1->getKmInDatabase());
 		$this->assertEquals(6000, $Shoe1->getTime());
 
-		$Shoe2 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`=2')->fetch(PDO::FETCH_ASSOC));
+		$Shoe2 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2)->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(0, $Shoe2->getKmInDatabase());
 		$this->assertEquals(0, $Shoe2->getTime());
 	}
@@ -241,7 +256,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$OldObject = $this->fetch( $this->insert(array(
 			Object::DISTANCE => 10,
 			Object::TIME_IN_SECONDS => 3000,
-			Object::SHOEID => 2
+			Object::SHOEID => $this->ShoeID2
 		)) );
 
 		$NewObject = clone $OldObject;
@@ -249,7 +264,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->update($NewObject, $OldObject);
 
-		$Shoe = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`=2')->fetch(PDO::FETCH_ASSOC));
+		$Shoe = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2)->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(10, $Shoe->getKmInDatabase());
 		$this->assertEquals(3600, $Shoe->getTime());
 	}
@@ -327,6 +342,29 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Result = $this->update($NewObject);
 
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());
+	}
+
+	public function testUpdatePowerCalculation() {
+		// TODO: Needs configuration setting
+		if (Configuration::ActivityForm()->computePower()) {
+			$OldObject = $this->fetch( $this->insert(array(
+				Object::DISTANCE => 10,
+				Object::TIME_IN_SECONDS => 3000,
+				Object::SPORTID => $this->IndoorID
+			)));
+
+			$NewObject = clone $OldObject;
+			$NewObject->set(Object::SPORTID, $this->OutdoorID);
+
+			$Result = $this->update($NewObject, $OldObject, new Model\Trackdata\Object(array(
+				Model\Trackdata\Object::TIME => array(1500, 3000),
+				Model\Trackdata\Object::DISTANCE => array(5, 10)
+			)));
+
+			$this->assertEquals(0, $OldObject->power());
+			$this->assertNotEquals(0, $NewObject->power());
+			$this->assertNotEquals(0, $Result->power());
+		}
 	}
 
 }

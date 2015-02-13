@@ -87,6 +87,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->removeDataIfInside();
 		$this->calculateCaloriesIfZero();
 		$this->calculateVDOTAndIntensityAndTrimp();
+		$this->calculatePower();
 	}
 
 	/**
@@ -138,6 +139,26 @@ class Inserter extends Model\InserterWithAccountID {
 		}
 
 		$this->Object->set(Object::TRIMP, $Calculator->calculateTrimp());
+	}
+
+	/**
+	 * Calculate power
+	 */
+	protected function calculatePower() {
+		if (
+			\Runalyze\Context::Factory()->sport($this->Object->sportid())->hasPower() &&
+			Configuration::ActivityForm()->computePower() &&
+			(NULL !== $this->Trackdata)
+		) {
+			$Calculator = new \Runalyze\Calculation\Power\Calculator(
+				$this->Trackdata,
+				$this->Route
+			);
+			$Calculator->calculate();
+
+			$this->Trackdata->set(Model\Trackdata\Object::POWER, $Calculator->powerData());
+			$this->Object->set(Object::POWER, $Calculator->average());
+		}
 	}
 
 	/**
