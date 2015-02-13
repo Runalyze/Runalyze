@@ -223,6 +223,12 @@ class TrainingObject extends DataObject {
 			$this->newActivityObject(),
 			new \Runalyze\Model\Activity\Object($OldData)
 		);
+
+		if (isset($OldData['routeid'])) {
+			$UpdaterActivity->setRoute(\Runalyze\Context::Factory()->route($OldData['routeid']));
+		}
+
+		$UpdaterActivity->setTrackdata(\Runalyze\Context::Factory()->trackdata($this->id()));
 		$UpdaterActivity->setAccountID( SessionAccountHandler::getId() );
 		$UpdaterActivity->update();
 

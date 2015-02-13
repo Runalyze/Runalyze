@@ -66,9 +66,6 @@ class Calculator {
 		$result = $Corrector->getCorrectedElevation();
 
 		if (!empty($result)) {
-			// TODO:
-			// remove invalid values?
-
 			$this->Route->set(Route\Object::ELEVATIONS_CORRECTED, $result);
 			$this->Route->set(Route\Object::ELEVATIONS_SOURCE, $Corrector->getNameOfUsedStrategy());
 
