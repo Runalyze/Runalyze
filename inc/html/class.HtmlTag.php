@@ -49,7 +49,7 @@ abstract class HtmlTag {
 	 * @param string $value 
 	 */
 	public function addAttribute($name, $value) {
-		$this->attributes[] = $name.'="'.$value.'"';
+		$this->attributes[] = $name.'="'.htmlspecialchars($value).'"';
 	}
 
 	/**

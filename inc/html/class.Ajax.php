@@ -165,9 +165,9 @@ class Ajax {
 		$class = $atLeft ? is_string($atLeft) ? 'class="'.$atLeft.'"' : 'class="atLeft" ' : '';
 
 		if ($onlyAttributes)
-			return $class.'rel="tooltip" title="'.$tooltip.'"';
+			return $class.'rel="tooltip" title="'.htmlspecialchars($tooltip).'"';
 
-		return '<span '.$class.'rel="tooltip" title="'.$tooltip.'">'.$html.'</span>';
+		return '<span '.$class.'rel="tooltip" title="'.htmlspecialchars($tooltip).'">'.$html.'</span>';
 	}
 
 	/**
