@@ -8966,6 +8966,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 	var positionMarker;
 	var epsilon = 0.0003;
 	var epsilonKM = 0.01;
+	var maxBisectionIterations = 20;
 	var mouseover = false;
 	var mousemovebounded = false;
 	var minZoomForMarker = 13;
@@ -9059,7 +9060,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 	}
 
 	function getSegmentsInfoAt(latlng) {
-		var id = mouseover, i = 0;
+		var id = mouseover;
 
 		for (var s = 0, numSegments = objects[id].segments.length; s < numSegments; s++) {
 			for (var p = 0, numPoints = objects[id].segments[s].length; p < numPoints; p++) {
@@ -9240,9 +9241,9 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 				counter = 0;
 				lower = 0;
 				index = 0;
-				upper = segmentLength;
+				upper = segmentLength - 1;
 
-				while (counter < 20 && Math.abs(objects[id].segmentsInfo[s][index]['km'] - km) > epsilonKM) {
+				while ((upper - lower) > 1 && counter < maxBisectionIterations && Math.abs(objects[id].segmentsInfo[s][index]['km'] - km) > epsilonKM) {
 					counter++;
 
 					index = Math.floor( (upper+lower)/2 );
@@ -9254,7 +9255,13 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 					}
 				}
 
-				if (upper == lower || Math.abs(objects[id].segmentsInfo[s][index]['km'] - km) <= epsilonKM) {
+				if (lower != upper) {
+					var ratio = (km - objects[id].segmentsInfo[s][lower]['km']) / (objects[id].segmentsInfo[s][upper]['km'] - objects[id].segmentsInfo[s][lower]['km']);
+					pos = [
+						objects[id].segments[s][lower][0] + ratio * (objects[id].segments[s][upper][0] - objects[id].segments[s][lower][0]),
+						objects[id].segments[s][lower][1] + ratio * (objects[id].segments[s][upper][1] - objects[id].segments[s][lower][1])
+					];
+				} else {
 					pos = objects[id].segments[s][index];
 				}
 			}
