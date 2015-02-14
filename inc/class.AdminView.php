@@ -177,6 +177,9 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', __('Users have to login')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
+		$Fieldset->addField( new FormularInput('OPENWEATHERMAP_API_KEY', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
+		$Fieldset->addField( new FormularInput('NOKIA_HERE_APPID', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
+		$Fieldset->addField( new FormularInput('NOKIA_HERE_TOKEN', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularSubmit(__('Save'), '') );
 		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
 
@@ -495,7 +498,9 @@ class AdminView {
 			'USER_MUST_LOGIN',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
-			'OPENWEATHERMAP_API_KEY'
+			'OPENWEATHERMAP_API_KEY',
+			'NOKIA_HERE_APPID',
+			'NOKIA_HERE_TOKEN'
 		);
 	}
 
@@ -573,6 +578,24 @@ define(\'MAIL_SENDER\', \'Runalyze <mail@runalyze.de>\');';
  * @see http://openweathermap.org/appid
  */
 define(\'OPENWEATHERMAP_API_KEY\', \'\');';
+
+			case 'NOKIA_HERE_APPID':
+				define('NOKIA_HERE_APPID', '');
+				return '/**
+ * App-ID for Nokia/Here maps in Leaflet
+ * @var string
+ * @see https://developer.here.com
+ */
+define(\'NOKIA_HERE_APPID\', \'\');';
+
+			case 'NOKIA_HERE_TOKEN':
+				define('NOKIA_HERE_TOKEN', '');
+				return '/**
+ * Token/App-Code for Nokia/Here maps in Leaflet
+ * @var string
+ * @see https://developer.here.com
+ */
+define(\'NOKIA_HERE_TOKEN\', \'\');';
 
 			default:
 				return '// Whoo! Runalyze tried to add an nonexisting configuration variable to this file. ($Variable = '.$Variable.')';

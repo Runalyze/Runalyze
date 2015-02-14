@@ -5997,7 +5997,8 @@ Runalyze.Options = (function($, parent){
 	var options = {
 		sharedView:		false,
 		fadeSpeed:		200,
-		loadingClass:	'loading'
+		loadingClass:	'loading',
+		nokiaAuth:		{ app: 'YOUR-APP-ID', token: 'YOUR-APP-TOKEN' }
 	};
 
 
@@ -6006,8 +6007,21 @@ Runalyze.Options = (function($, parent){
 
 	// Public Methods
 
+	self.setNokiaLayerAuth = function(appId, token) {
+		options.nokiaAuth.app = appId;
+		options.nokiaAuth.token = token;
+
+		return self;
+	};
+
+	self.nokiaAuth = function() {
+		return options.nokiaAuth;
+	};
+
 	self.setSharedView = function(flag) {
 		options.sharedView = flag || true;
+
+		return self;
 	};
 
 	self.isSharedView = function() {
@@ -8888,8 +8902,8 @@ RunalyzeLeaflet.getNewLayers = function(){
 		'Nokia': L.tileLayer(
 			'http://{s}.maptile.lbs.ovi.com/maptiler/v2/maptile/newest/hybrid.day/{z}/{x}/{y}/256/png8?token={token}&app_id={appId}', {
 				subdomains: '1234',
-				appId: 'tGaXC0G7JoT5tEvUJW8b',
-				token: 'rXyIHiKvci-xdLuLEPJepQ',
+				appId: Runalyze.Options.nokiaAuth().app,
+				token: Runalyze.Options.nokiaAuth().token,
 				attribution: 'Map &copy; <a href="http://developer.here.com">Nokia</a>, Data &copy; NAVTEQ 2012'
 			}
 		),

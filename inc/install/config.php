@@ -59,8 +59,28 @@ define('USER_CAN_REGISTER', true);
 define('GARMIN_API_KEY', '{config::garminkey}');
 
 /**
- * Adress for sending mails to users
- * @var string MAIL_SENDER Adress for sending mails to users
+ * Address for sending mails to users
+ * @var string
  */
 define('MAIL_SENDER', 'Runalyze <mail@runalyze.de>');
-?>
+
+/**
+ * OpenWeatherMap: API key
+ * @var string OPENWEATHERMAP_API_KEY api key
+ * @see http://openweathermap.org/appid
+ */
+define('OPENWEATHERMAP_API_KEY', '');
+
+/**
+ * App-ID for Nokia/Here maps in Leaflet
+ * @var string
+ * @see https://developer.here.com
+ */
+define('NOKIA_HERE_APPID', '');
+
+/**
+ * Token/App-Code for Nokia/Here maps in Leaflet
+ * @var string
+ * @see https://developer.here.com
+ */
+define('NOKIA_HERE_TOKEN', '');

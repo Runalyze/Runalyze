@@ -78,6 +78,10 @@ class Ajax {
 		$Options['sharedView'] = Request::isOnSharedPage();
 
 		echo self::wrapJS('Runalyze.init('.json_encode($Options).');');
+
+		if (defined('NOKIA_HERE_APPID') && NOKIA_HERE_APPID != '' && defined('NOKIA_HERE_TOKEN') && NOKIA_HERE_TOKEN != '') {
+			echo self::wrapJS('Runalyze.Options.setNokiaLayerAuth("'.NOKIA_HERE_APPID.'", "'.NOKIA_HERE_TOKEN.'")');
+		}
 	}
 
 	/**
