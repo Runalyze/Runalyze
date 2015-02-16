@@ -39,7 +39,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	}
 
 	/**
-	 * Display long description 
+	 * Display long description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p( __('Show body values: weight, resting heart rate and values like fat-, water- and muscles-percentage.') );
@@ -95,6 +95,13 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	protected function displayContentInNewDesign() {
 		$Code = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
+
+		if ($UserData->getPulseMax()==0){
+			$topBox = new BoxedValue(__('Enter maximal HR'), '', __('Otherwise calculations will be wrong'));
+			$topBox->addClass('colored-orange');
+			$topBox->defineAsFloatingBlockWithFixedWidth(1);
+			$Code .= $topBox->getCode();
+		}
 
 		$FirstValues = array();
 		$SecondValues = array();
