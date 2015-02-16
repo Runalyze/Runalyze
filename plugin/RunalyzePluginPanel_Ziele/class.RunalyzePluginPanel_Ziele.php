@@ -144,7 +144,8 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 		if ($days > 7)
 			$this->addLine( __('&oslash; Week'), $days > 0 ? 7*$dat['distanz_sum']/$days : 0, $dat['anzahl']/$days*7 );
 
-		$this->addHeadline( __('Prognosis'), $dat['distanz_sum']/$days*$dauer, $dat['anzahl']/$days*$dauer);
+		if ($days*$dauer > 0)
+			$this->addHeadline( __('Prognosis'), $dat['distanz_sum']/$days*$dauer, $dat['anzahl']/$days*$dauer);
 
 		if ($goal > 0) {
 			$this->addHeadline( __('Goal'), $goal);
