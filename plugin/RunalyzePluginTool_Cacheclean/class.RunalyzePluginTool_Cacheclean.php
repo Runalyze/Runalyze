@@ -24,7 +24,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Empty your internal cache.');
+		return __('Runalyze uses data caching for faster access. Whenever you feel the views are not updated you can force emptying the cache');
 	}
 
 	/**
