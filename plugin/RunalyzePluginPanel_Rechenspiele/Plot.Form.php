@@ -25,17 +25,17 @@ $lastHalf   = 1*($_GET['y'] == 'lasthalf');
 $Year  = $All || $lastHalf ? date('Y') : (int)$_GET['y'];
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
-    $StartYear    = !$All ? $Year : START_YEAR;
-    $StartYear    = $lastHalf ? date('Y', strtotime("today -180days")) : $StartYear;
-    $EndYear      = !$All && !$lastHalf ? $Year : date('Y');
+	$StartYear    = !$All ? $Year : START_YEAR;
+	$StartYear    = $lastHalf ? date('Y', strtotime("today -180days")) : $StartYear;
+	$EndYear      = !$All && !$lastHalf ? $Year : date('Y');
 	$MaxDays      = ($EndYear - $StartYear + 1)*366;
-    $MaxDays      = $lastHalf ? 366 : $MaxDays;
+	$MaxDays      = $lastHalf ? 366 : $MaxDays;
 	$AddDays      = 3*max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
 	$StartTime    = !$All ? mktime(0,0,0,1,1,$StartYear) : strtotime("today 00:00", START_TIME);
-    $StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
+	$StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
 	$StartDay     = date('Y-m-d', $StartTime);
 	$EndTime      = !$All && $Year < date('Y') ? mktime(0,0,0,12,31,$Year) : strtotime("today 00:00");
-    $EndTime      = $lastHalf ? strtotime("today 00:00 +30days") : $EndTime;
+	$EndTime      = $lastHalf ? strtotime("today 00:00 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 
 	$EmptyArray    = array_fill(0, $MaxDays + $AddDays + 1, 0);
@@ -47,11 +47,13 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
-	$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf);
-	if (is_null($Data)) {
-		$withElevation = Configuration::Vdot()->useElevationCorrection();
 
-		$Data = DB::getInstance()->query('
+	//Can't cache until we can invalidate it
+	//$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf);
+	//if (is_null($Data)) {
+	$withElevation = Configuration::Vdot()->useElevationCorrection();
+
+	$Data = DB::getInstance()->query('
 			SELECT
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 				SUM(`trimp`) as `trimp`,
@@ -59,11 +61,11 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
 			FROM `'.PREFIX.'training`
 			WHERE
-				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
+				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
 			GROUP BY `index`')->fetchAll();
 
-		Cache::set('calculationsPlotData'.$Year.$All.$lastHalf, $Data, '300');
-	}
+	//	Cache::set('calculationsPlotData'.$Year.$All.$lastHalf, $Data, '300');
+	//}
 
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
@@ -95,10 +97,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 
 		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
 		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
-        $TRIMPs[$index]    = $Trimps_raw[$d];
-        if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
+		$TRIMPs[$index]    = $Trimps_raw[$d];
+		if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
 
-        $VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
+		$VDOT_slice      = array_slice($VDOTs_raw, $d - $VDOTdays, $VDOTdays);
 		$Durations_slice = array_slice($Durations_raw, $d - $VDOTdays, $VDOTdays);
 		$VDOT_sum        = array_sum($VDOT_slice);
 		$Durations_sum   = array_sum($Durations_slice);
@@ -107,9 +109,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 			$VDOTs[$index] = Configuration::Data()->vdotFactor() * ($VDOT_sum / $Durations_sum);
 		}
 
-        if ( $VDOTs_raw[$d]) $VDOTsday[$index]= Configuration::Data()->vdotFactor() * ($VDOTs_raw[$d]/$Durations_raw[$d]);
+		if ( $VDOTs_raw[$d]) $VDOTsday[$index]= Configuration::Data()->vdotFactor() * ($VDOTs_raw[$d]/$Durations_raw[$d]);
 
-    }
+	}
 } else {
 	$DataFailed = true;
 }
