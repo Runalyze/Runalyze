@@ -90,6 +90,13 @@ class Series {
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public function isEmpty() {
+		return empty($this->Data);
+	}
+
+	/**
 	 * Set properties
 	 * @param \Plot $Plot
 	 * @param int $yAxis

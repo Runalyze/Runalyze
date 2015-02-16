@@ -27,7 +27,9 @@ class PaceAndHeartrate extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
-		$this->addSeries(new Series\Pace($context), 1, false);
-		$this->addSeries(new Series\Heartrate($context), 2, false);
+		$this->addMultipleSeries(array(
+			new Series\Pace($context),
+			new Series\Heartrate($context)
+		));
 	}
 }

@@ -53,6 +53,10 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	 * @param boolean $addAnnotations [optional]
 	 */
 	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+		if (empty($this->Data)) {
+			return;
+		}
+
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
 		switch ($this->XAxis) {

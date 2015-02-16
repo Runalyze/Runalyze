@@ -94,6 +94,20 @@ abstract class ActivityPlot {
 	}
 
 	/**
+	 * @param \Runalyze\View\Plot\Series[] $series
+	 */
+	protected function addMultipleSeries(array $series) {
+		$yaxis = 1;
+
+		foreach ($series as $object) {
+			if ($object instanceof \Runalyze\View\Plot\Series && !$object->isEmpty()) {
+				$this->addSeries($object, $yaxis, false);
+				$yaxis++;
+			}
+		}
+	}
+
+	/**
 	 * Data is available
 	 * @return bool
 	 */
