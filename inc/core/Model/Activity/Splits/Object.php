@@ -40,7 +40,9 @@ class Object extends StringArrayObject {
 				throw new \InvalidArgumentException('Array must consist of Split-objects only.');
 			}
 
-			$this->add($split);
+			if (!$split->isEmpty()) {
+				$this->add($split);
+			}
 		}
 	}
 
@@ -64,7 +66,9 @@ class Object extends StringArrayObject {
 			$Split = new Split();
 			$Split->fromString($splitString);
 
-			$this->add($Split);
+			if (!$Split->isEmpty()) {
+				$this->add($Split);
+			}
 		}
 	}
 

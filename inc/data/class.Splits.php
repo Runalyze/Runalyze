@@ -108,8 +108,9 @@ class Splits {
 	 * @param bool $active optional
 	 */
 	public function addSplit($km, $timeInSeconds, $active = true) {
-		//if ($km <= 0)
-		//	return;
+		if ($km <= 0 && $timeInSeconds <= 0) {
+			return;
+		}
 
 		$this->asArray[] = array(
 			'km' => $this->formatKM($km),
