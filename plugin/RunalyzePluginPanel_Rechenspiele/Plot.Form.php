@@ -47,11 +47,13 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	// Here VDOT will be implemented again
 	// Normal functions are too slow, calling them for each day would trigger each time a query
 	// - VDOT: AVG(`vdot`) for Configuration::Vdot()->days()
-	$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf);
-	if (is_null($Data)) {
-		$withElevation = Configuration::Vdot()->useElevationCorrection();
 
-		$Data = DB::getInstance()->query('
+	//Can't cache until we can invalidate it
+	//$Data = Cache::get('calculationsPlotData'.$Year.$All.$lastHalf);
+	//if (is_null($Data)) {
+	$withElevation = Configuration::Vdot()->useElevationCorrection();
+
+	$Data = DB::getInstance()->query('
 			SELECT
 				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") as `index`,
 				SUM(`trimp`) as `trimp`,
@@ -59,11 +61,11 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 				SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).'*(`sportid`='.Configuration::General()->runningSport().')) as `s`
 			FROM `'.PREFIX.'training`
 			WHERE
-				DATEDIFF(FROM_UNIXTIME(`time`), "'.$StartDay.'") BETWEEN -'.$AddDays.' AND '.$NumberOfDays.'
+				`time` BETWEEN UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL -'.$AddDays.' DAY) AND UNIX_TIMESTAMP("'.$StartDay.'" + INTERVAL '.$NumberOfDays.' DAY)-1
 			GROUP BY `index`')->fetchAll();
 
-		Cache::set('calculationsPlotData'.$Year.$All.$lastHalf, $Data, '300');
-	}
+	//	Cache::set('calculationsPlotData'.$Year.$All.$lastHalf, $Data, '300');
+	//}
 
 	foreach ($Data as $dat) {
 		$index = $dat['index'] + $AddDays;
