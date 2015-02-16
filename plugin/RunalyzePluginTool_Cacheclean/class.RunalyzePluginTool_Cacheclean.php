@@ -24,7 +24,7 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Empty the cache for activities.');
+		return __('Empty your internal cache.');
 	}
 
 	/**
@@ -36,8 +36,8 @@ class RunalyzePluginTool_Cacheclean extends PluginTool {
 			System::clearCache();
 		}
 
-		$Fieldset = new FormularFieldset( __('Empty the cache') );
-		$Fieldset->addInfo( self::getActionLink('<strong>'.__('Empty the cache').'</strong>', 'delete=true') );
+		$Fieldset = new FormularFieldset( __('Empty your cache') );
+		$Fieldset->addInfo( self::getActionLink('<strong>'.__('Empty your cache').'</strong>', 'delete=true') );
 
 		$Formular = new Formular();
 		$Formular->setId('cacheclean-form');
