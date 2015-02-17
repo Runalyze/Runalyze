@@ -68,7 +68,7 @@ class LapsManual extends Laps {
 	 */
 	protected function readDataFromSplits(Splits\Object $splits, $showInactive) {
 		foreach ($splits->asArray() as $split) {
-			if ($showInactive || $split->isActive()) {
+			if (($showInactive || $split->isActive()) && $split->distance() > 0) {
 				$this->Labels[] = $split->distance();
 				$this->Data[] = $split->time() / $split->distance();
 			}
