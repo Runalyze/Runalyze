@@ -39,7 +39,7 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 		$this->Filename = FRONTEND_PATH.$Filename.'.temp';
 
 		$Command = new PerlCommand();
-		$Command->setScript('fittorunalyze.pl', $File.' 1>'.$this->Filename);
+		$Command->setScript('fittorunalyze.pl', '"'.$File.'" 1>"'.$this->Filename.'"');
 
 		$Shell = new Shell();
 		$Shell->runCommand($Command);
