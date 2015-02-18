@@ -153,7 +153,7 @@ class Pace {
 	 * @return float
 	 */
 	public function secondsPerKm() {
-		return $this->Time / $this->Distance;
+		return ($this->Distance > 0) ? ($this->Time / $this->Distance) : 0;
 	}
 
 	/**
