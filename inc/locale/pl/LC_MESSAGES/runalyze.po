@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-18 09:53+0100\n"
-"PO-Revision-Date: 2015-02-13 08:03+0200\n"
+"PO-Revision-Date: 2015-02-18 21:02+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3230,23 +3230,25 @@ msgstr "E-mail nadawcy"
 
 #: inc/class.AdminView.php:180
 msgid "OpenWeatherMap API-Key"
-msgstr ""
+msgstr "Klucz API OpenWeatherMap"
 
 #: inc/class.AdminView.php:180
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
+"Pobieranie danych pogodowych wymaga klucza API, zobacz "
+"openweathermap.org/appid"
 
 #: inc/class.AdminView.php:181
 msgid "Nokia/Here App-ID"
-msgstr ""
+msgstr "Nokia/Here App-ID"
 
 #: inc/class.AdminView.php:181 inc/class.AdminView.php:182
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
-msgstr ""
+msgstr "Mapy Nokia wymagają app-id/token, zobacz developer.here.com"
 
 #: inc/class.AdminView.php:182
 msgid "Nokia/Here Token"
-msgstr ""
+msgstr "Nokia/Here Token"
 
 #: inc/class.AdminView.php:187
 msgid "<strong>config.php</strong> is not writable"
@@ -5475,10 +5477,11 @@ msgid ""
 "Runalyze uses data caching for faster access. Whenever you feel the views "
 "are not updated you can force emptying the cache"
 msgstr ""
+"Runalyze używa cache w celu szybszego dostępu do danych. Jeśli uważasz, że "
+"widok danych nie jest aktualny, możesz wymusić oczyszczenie cache"
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:39
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:40
-#, fuzzy
 msgid "Empty your cache"
 msgstr "Wyczyść cache"
 
@@ -6078,13 +6081,12 @@ msgid "You have to specify which values to record. (see configuration)"
 msgstr "Musisz określić jakie wartości rejestrować. (zobacz konfigurację)"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
-#, fuzzy
 msgid "Enter maximal HR"
-msgstr "Tętno maksymalne"
+msgstr "Wprowadź tętno maksymalne"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
 msgid "Otherwise calculations will be wrong"
-msgstr ""
+msgstr "Jeśli tego nie zrobisz wyliczenia będą nieprawidłowe"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:129
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:194
