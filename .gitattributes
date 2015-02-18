@@ -1,0 +1,50 @@
+# Handle line endings automatically for files detected as text
+* text=auto
+
+# These files are text and should be normalized (Convert crlf => lf)
+*.php text
+*.css text
+*.less text
+*.scss text
+*.js text
+*.txt text
+*.html text
+*.sql text
+*.pl text
+*.pm text
+*.yml text
+*.md text
+
+.htaccess text
+.gitattributes text
+.gitignore text
+.editorconfig text
+
+*.json text	
+*.csv text
+*.gpx text
+*.hrm text
+*.kml text
+*.pwx text
+*.slf text
+*.sml text
+*.fitlog text
+*.logbook text
+*.logbook3 text
+*.tcx text
+*.xml text
+
+# (binary is a macro for -text -diff)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+
+*.eot binary
+*.ttf binary
+*.woff binary
+*.otf binary
+
+*.fit binary
+*.gz binary
