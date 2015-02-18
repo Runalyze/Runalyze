@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-18 09:53+0100\n"
-"PO-Revision-Date: 2015-02-18 21:02+0200\n"
+"PO-Revision-Date: 2015-02-18 21:05+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
@@ -2123,7 +2123,7 @@ msgstr "Próg dla algorytmu wygładzającego"
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr "Wyczyść bazę danych"
+msgstr "Oczyść bazę danych"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
@@ -6317,7 +6317,7 @@ msgstr "Dane zostały zaimportowane."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:235
 msgid "It is recommended to use the <em>Database cleanup</em> tool."
-msgstr "Zalecane jest użycie narzędzia <em>Czyszczenie bazy danych</em>."
+msgstr "Zalecane jest użycie narzędzia <em>Oczyść bazę danych</em>."
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:275
 msgid "Allowed file extension: *.json.gz"
