@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-18 09:53+0100\n"
-"PO-Revision-Date: 2015-02-13 09:37+0200\n"
+"PO-Revision-Date: 2015-02-19 08:31+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3298,23 +3298,25 @@ msgstr "Absender Mailadresse"
 
 #: inc/class.AdminView.php:180
 msgid "OpenWeatherMap API-Key"
-msgstr ""
+msgstr "OpenWeatherMap API-Key"
 
 #: inc/class.AdminView.php:180
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
+"Um Wetterdaten zu laden wird ein API Key benötigt, siehe "
+"openweathermap.org/appid"
 
 #: inc/class.AdminView.php:181
 msgid "Nokia/Here App-ID"
-msgstr ""
+msgstr "Nokia/Here App-ID"
 
 #: inc/class.AdminView.php:181 inc/class.AdminView.php:182
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
-msgstr ""
+msgstr "Nokia Maps benötigt eine APP-ID & Token, siehe developer.here.com"
 
 #: inc/class.AdminView.php:182
 msgid "Nokia/Here Token"
-msgstr ""
+msgstr "Nokia/Here Token"
 
 #: inc/class.AdminView.php:187
 msgid "<strong>config.php</strong> is not writable"
@@ -5587,12 +5589,14 @@ msgid ""
 "Runalyze uses data caching for faster access. Whenever you feel the views "
 "are not updated you can force emptying the cache"
 msgstr ""
+"Runalyze nutzt Caching für einen schnelleren Zugriff. Wenn du das Gefühl "
+"hast, dass bestimmte Ansichten nicht aktualisiert werden kannst du hier den "
+"gesamten Cache leeren"
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:39
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:40
-#, fuzzy
 msgid "Empty your cache"
-msgstr "Löscht den Trainings-Cache"
+msgstr "Löscht deinen Cache"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:29
 msgid "Records"
@@ -6206,13 +6210,12 @@ msgstr ""
 "Konfiguration)"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
-#, fuzzy
 msgid "Enter maximal HR"
-msgstr "Maximalpuls"
+msgstr "Gib deinen Maximalpuls ein"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
 msgid "Otherwise calculations will be wrong"
-msgstr ""
+msgstr "Andernfalls werden die Berechnungen falsch sein"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:129
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:194
