@@ -134,6 +134,8 @@ class ConfigTabTypes extends ConfigTab {
 				DB::getInstance()->insert('type', $columns, $values);
 		}
 
+		TypeFactory::reInitAllTypes();
+
 		Ajax::setReloadFlag(Ajax::$RELOAD_DATABROWSER);
 	}
 }

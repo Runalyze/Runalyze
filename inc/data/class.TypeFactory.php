@@ -80,6 +80,17 @@ class TypeFactory {
 	}
 
 	/**
+	 * Reinit all types
+	 *
+	 * Use this method after updating types table
+	 */
+	static public function reInitAllTypes() {
+		Cache::delete('types');
+
+		self::initAllTypes();
+	}
+
+	/**
 	 * Get array with all names
 	 * @param bool $abbr
 	 * @return array keys are ids, values are names
