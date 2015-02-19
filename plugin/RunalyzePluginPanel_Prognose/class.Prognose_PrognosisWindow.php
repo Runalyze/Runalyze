@@ -113,9 +113,9 @@ class Prognose_PrognosisWindow {
 		$this->InfoLines['jack-daniels']  = __('Your current VDOT:').' '.$CurrentShape.'. ';
 		$this->InfoLines['jack-daniels'] .= __('Your current basic endurance:').' '.BasicEndurance::getConst().'.';
 
-		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s and %s in %s'),
-				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']),
-				Distance::format($TopResults[1]['distance']), Duration::format($TopResults[1]['s'])
+		$ResultLine = empty($TopResults) ? __('none') : sprintf( __('%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>'),
+				Distance::format($TopResults[0]['distance']), Duration::format($TopResults[0]['s']), date('d.m.Y', $TopResults[0]['time']),
+				Distance::format($TopResults[1]['distance']), Duration::format($TopResults[1]['s']), date('d.m.Y', $TopResults[1]['time'])
 		);
 		$this->InfoLines['robert-bock'] = __('Your two best results:').' '.$ResultLine;
 
