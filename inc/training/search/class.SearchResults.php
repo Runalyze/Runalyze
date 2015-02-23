@@ -14,6 +14,11 @@ use Runalyze\Configuration;
  */
 class SearchResults {
 	/**
+	 * @var int
+	 */
+	const MAX_LIMIT_FOR_MULTI_EDITOR = 100;
+
+	/**
 	 * Allowed keys
 	 * @var array
 	 */
@@ -141,7 +146,7 @@ class SearchResults {
 			'SELECT
 				id,
 				time
-				'.$this->Dataset->getQuerySelectForAllDatasets().'
+				'.($this->multiEditorRequested() ? '' : $this->Dataset->getQuerySelectForAllDatasets()).'
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
 		)->fetchAll();
@@ -301,6 +306,10 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getLimit() {
+		if ($this->multiEditorRequested()) {
+			return ' LIMIT '.self::MAX_LIMIT_FOR_MULTI_EDITOR;
+		}
+
 		if ($this->page <= 0)
 			$this->page = 1;
 
@@ -313,13 +322,20 @@ class SearchResults {
 	 * Display
 	 */
 	public function display() {
-		if (isset($_POST['send-to-multi-editor'])) {
+		if ($this->multiEditorRequested()) {
 			$this->sendResultsToMultiEditor();
 		} else {
 			echo '<div id="'.DATA_BROWSER_SEARCHRESULT_ID.'">';
 			$this->displayResults();
 			echo '</div>';
 		}
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function multiEditorRequested() {
+		return isset($_POST['send-to-multi-editor']);
 	}
 
 	/**
