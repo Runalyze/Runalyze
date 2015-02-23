@@ -31,10 +31,10 @@ abstract class RunningPrognosisStrategy {
 	public function getTopResults($numberOfResults = 1, $minimalDistanceRequired = 3) {
 		$Query = '
 			SELECT
-				`distance`, `s`, `vdot_by_time`
+				`time`, `distance`, `s`, `vdot_by_time`
 			FROM (
 				SELECT
-					`distance`, `s`, `vdot_by_time`
+					`time`, `distance`, `s`, `vdot_by_time`
 				FROM `'.PREFIX.'training`
 				WHERE
 					`sportid`='.Configuration::General()->runningSport().'
