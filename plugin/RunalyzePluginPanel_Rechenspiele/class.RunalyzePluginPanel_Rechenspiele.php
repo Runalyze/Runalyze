@@ -38,7 +38,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	}
 
 	/**
-	 * Display long description 
+	 * Display long description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p( __('Runalyze uses a lot of tables and derived formulas from Jack Daniels\' Running formula. '.
@@ -106,7 +106,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		if ($this->Configuration()->value('show_trainingpaces')) {
 			$this->showPaces();
-		}	
+		}
 
 		if (Time::diffInDays(START_TIME) < 70) {
 			echo HTML::info( __('There are not enough activities for good calculations.') );
@@ -128,7 +128,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$TSBmodel->calculate();
 
 		$MonotonyQuery = new Performance\ModelQuery();
-		$MonotonyQuery->setRange(time() - Monotony::DAYS*DAY_IN_S, time());
+		$MonotonyQuery->setRange(time()-(Monotony::DAYS-1)*DAY_IN_S, time());
 		$MonotonyQuery->execute(DB::getInstance());
 
 		$Monotony = new Monotony($MonotonyQuery->data());
@@ -156,7 +156,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
                     $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
                     $JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
                     Cache::set('JDQuery', $JDQuery, '600');
-                } 
+                }
                     $JDPointsLastWeek = $JDQuery['LastWeek'];
                     $JDPointsThisWeek = $JDQuery['ThisWeek'];
 		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
@@ -333,7 +333,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 	/**
 	 * Get array for paces
-	 * @return array 
+	 * @return array
 	 */
 	protected function getArrayForPaces() {
 		$Paces = array(
@@ -374,7 +374,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 	/**
 	 * Get fieldset for TRIMP
-	 * @return \FormularFieldset 
+	 * @return \FormularFieldset
 	 */
 	public function getFieldsetTRIMP() {
 		$ModelQuery = new Performance\ModelQuery();
@@ -453,7 +453,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 	/**
 	 * Get fieldset for VDOT
-	 * @return \FormularFieldset 
+	 * @return \FormularFieldset
 	 */
 	public function getFieldsetVDOT() {
 		$Table = '<table class="fullwidth zebra-style">
@@ -499,7 +499,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 	/**
 	 * Get fieldset for basic endurance
-	 * @return \FormularFieldset 
+	 * @return \FormularFieldset
 	 */
 	public function getFieldsetBasicEndurance() {
 		$BasicEndurance = new BasicEndurance();
@@ -591,7 +591,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 	/**
 	 * Get fieldset for paces
-	 * @return \FormularFieldset 
+	 * @return \FormularFieldset
 	 */
 	public function getFieldsetPaces() {
 		$Table = '<table class="fullwidth zebra-style">

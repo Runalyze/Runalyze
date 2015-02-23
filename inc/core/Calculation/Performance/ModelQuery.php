@@ -8,7 +8,7 @@ namespace Runalyze\Calculation\Performance;
 
 /**
  * Query for performance model
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\TrainingLoad
  */
@@ -52,8 +52,16 @@ class ModelQuery {
 	 * @param int $to
 	 */
 	public function setRange($from, $to) {
-		$this->From = $from;
-		$this->To = $to;
+		$this->From = $this->setHour($from,"0:00");
+		$this->To = $this->setHour($to,"23:59");
+	}
+
+	/**
+	 * set hour of timestamp
+	 */
+	public function setHour($timestamp, $hour="0:00") {
+		if ($timestamp==null) return null;
+		return strtotime($hour, $timestamp);
 	}
 
 	/**
@@ -78,7 +86,7 @@ class ModelQuery {
 	 */
 	public function execute(\PDOforRunalyze $DB) {
 		$this->Data = array();
-		$Today = new \DateTime('today');
+		$Today = new \DateTime('today 23:59');
 
 		$Statement = $DB->query($this->query());
 		while ($row = $Statement->fetch()) {
@@ -90,7 +98,7 @@ class ModelQuery {
 
 	/**
 	 * Get query
-	 * 
+	 *
 	 * @return string
 	 */
 	private function query() {
