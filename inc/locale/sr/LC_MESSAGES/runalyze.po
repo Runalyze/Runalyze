@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-13 07:51+0100\n"
+"POT-Creation-Date: 2015-02-18 09:53+0100\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -316,7 +316,7 @@ msgstr ""
 msgid "run diary"
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:316
+#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:319
 msgid "Set new password"
 msgstr ""
 
@@ -400,7 +400,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabClothes.php:43
 #: inc/system/config/class.ConfigTabSports.php:57
 #: inc/system/config/class.ConfigTabTypes.php:43
-#: inc/system/config/class.ConfigTabAccount.php:34 inc/class.AdminView.php:296
+#: inc/system/config/class.ConfigTabAccount.php:34 inc/class.AdminView.php:299
 #: inc/training/schemes/scheme.Shoe.php:28
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:347
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:405
@@ -409,7 +409,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:297
+#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:300
 msgid "Email"
 msgstr ""
 
@@ -518,7 +518,7 @@ msgstr ""
 msgid "Public training view"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:4 inc/html/class.Ajax.php:434
+#: inc/tpl/tpl.Installer.php:4 inc/html/class.Ajax.php:438
 #: inc/core/View/Leaflet/Activity.php:223
 msgid "Start"
 msgstr ""
@@ -627,7 +627,7 @@ msgstr ""
 msgid "Host server"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:295
+#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:298
 msgid "User"
 msgstr ""
 
@@ -747,7 +747,7 @@ msgstr ""
 msgid "Runalyze has been successfully installed. Have fun while using it!"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:377
+#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:380
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
 msgstr ""
@@ -845,7 +845,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:29
 #: inc/system/config/class.ConfigTabPlugins.php:41
-#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:204
+#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
 msgstr ""
 
@@ -912,21 +912,21 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: inc/html/class.Ajax.php:435
+#: inc/html/class.Ajax.php:439
 msgid "previous"
 msgstr ""
 
-#: inc/html/class.Ajax.php:437 inc/class.DataBrowser.php:241
+#: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:241
 msgid "next"
 msgstr ""
 
-#: inc/html/class.Ajax.php:438
+#: inc/html/class.Ajax.php:442
 msgid "End"
 msgstr ""
 
-#: inc/html/class.Ajax.php:441 inc/html/class.Ajax.php:442
-#: inc/html/class.Ajax.php:443 inc/html/class.Ajax.php:444
-#: inc/html/class.Ajax.php:445
+#: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
+#: inc/html/class.Ajax.php:447 inc/html/class.Ajax.php:448
+#: inc/html/class.Ajax.php:449
 msgid "per page"
 msgstr ""
 
@@ -1459,7 +1459,7 @@ msgid "diff"
 msgstr ""
 
 #: inc/core/View/Splits/Table.php:218
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:150
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:151
 msgid "Goal"
 msgstr ""
 
@@ -1475,7 +1475,7 @@ msgstr ""
 msgid "1st/2nd Half"
 msgstr ""
 
-#: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:402
+#: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:403
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:24
 #: inc/training/schemes/scheme.Training.php:39
@@ -2447,7 +2447,7 @@ msgid ""
 "is permanent and cannot be reversed. Therefore, you should backup your data."
 msgstr ""
 
-#: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:180
+#: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
 msgid "Save"
 msgstr ""
 
@@ -2726,14 +2726,14 @@ msgstr ""
 msgid "Search for an activity"
 msgstr ""
 
-#: inc/data/class.Splits.php:142
+#: inc/data/class.Splits.php:143
 #: inc/training/formular/class.TrainingInputSplits.php:61
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
 msgstr ""
 
-#: inc/data/class.Splits.php:142
+#: inc/data/class.Splits.php:143
 #: inc/training/formular/class.TrainingInputSplits.php:113
 msgid "Resting"
 msgstr ""
@@ -3100,120 +3100,140 @@ msgstr ""
 msgid "Sender e-mail"
 msgstr ""
 
-#: inc/class.AdminView.php:184
+#: inc/class.AdminView.php:180
+msgid "OpenWeatherMap API-Key"
+msgstr ""
+
+#: inc/class.AdminView.php:180
+msgid "Loading weather data requires an api key, see openweathermap.org/appid"
+msgstr ""
+
+#: inc/class.AdminView.php:181
+msgid "Nokia/Here App-ID"
+msgstr ""
+
+#: inc/class.AdminView.php:181 inc/class.AdminView.php:182
+msgid "Nokia maps require an app-id/-token, see developer.here.com"
+msgstr ""
+
+#: inc/class.AdminView.php:182
+msgid "Nokia/Here Token"
+msgstr ""
+
+#: inc/class.AdminView.php:187
 msgid "<strong>config.php</strong> is not writable"
 msgstr ""
 
-#: inc/class.AdminView.php:184
+#: inc/class.AdminView.php:187
 msgid "Changes can't be saved."
 msgstr ""
 
-#: inc/class.AdminView.php:205
+#: inc/class.AdminView.php:208
 msgid "Look for new plugins"
 msgstr ""
 
-#: inc/class.AdminView.php:206
+#: inc/class.AdminView.php:209
 msgid "Go"
 msgstr ""
 
-#: inc/class.AdminView.php:214
+#: inc/class.AdminView.php:217
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
 msgstr ""
 
-#: inc/class.AdminView.php:214
+#: inc/class.AdminView.php:217
 msgid "These tools will not work."
 msgstr ""
 
-#: inc/class.AdminView.php:284
+#: inc/class.AdminView.php:287
 msgid "User list"
 msgstr ""
 
-#: inc/class.AdminView.php:288
+#: inc/class.AdminView.php:291
 msgid "There are no registered users."
 msgstr ""
 
-#: inc/class.AdminView.php:298
+#: inc/class.AdminView.php:301
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:164
 msgid "since"
 msgstr ""
 
-#: inc/class.AdminView.php:299
+#: inc/class.AdminView.php:302
 msgid "last"
 msgstr ""
 
-#: inc/class.AdminView.php:300
+#: inc/class.AdminView.php:303
 msgid "Functions"
 msgstr ""
 
-#: inc/class.AdminView.php:316
+#: inc/class.AdminView.php:319
 msgid "Activate user"
 msgstr ""
 
-#: inc/class.AdminView.php:341
+#: inc/class.AdminView.php:344
 msgid "Server information"
 msgstr ""
 
-#: inc/class.AdminView.php:342
+#: inc/class.AdminView.php:345
 msgid "PHP version:"
 msgstr ""
 
-#: inc/class.AdminView.php:343
+#: inc/class.AdminView.php:346
 msgid "MySQL version:"
 msgstr ""
 
-#: inc/class.AdminView.php:344
+#: inc/class.AdminView.php:347
 msgid "Time limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:345
+#: inc/class.AdminView.php:348
 msgid "Memory limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:346
+#: inc/class.AdminView.php:349
 msgid "Upload limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:347
+#: inc/class.AdminView.php:350
 msgid "Post limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:350
+#: inc/class.AdminView.php:353
 msgid "Perl scripts can be used."
 msgstr ""
 
-#: inc/class.AdminView.php:352
+#: inc/class.AdminView.php:355
 msgid "Perl scripts cannot be used."
 msgstr ""
 
-#: inc/class.AdminView.php:369
+#: inc/class.AdminView.php:372
 msgid "Permissions"
 msgstr ""
 
-#: inc/class.AdminView.php:370
+#: inc/class.AdminView.php:373
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
 msgstr ""
 
-#: inc/class.AdminView.php:380
+#: inc/class.AdminView.php:383
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
 msgstr ""
 
-#: inc/class.AdminView.php:395
+#: inc/class.AdminView.php:398
 msgid "Unused files"
 msgstr ""
 
-#: inc/class.AdminView.php:401
+#: inc/class.AdminView.php:404
 msgid "Clear directories"
 msgstr ""
 
-#: inc/class.AdminView.php:413
+#: inc/class.AdminView.php:416
 msgid "clean up"
 msgstr ""
 
-#: inc/class.AdminView.php:419
+#: inc/class.AdminView.php:422
 msgid "No files found"
 msgstr ""
 
@@ -4031,23 +4051,23 @@ msgid "Analysis"
 msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:45
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:103
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:153
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:179
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:110
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:160
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:186
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:38
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
 msgid "Weight"
 msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:55
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:107
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:114
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:40
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:37
 msgid "Resting HR"
 msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:65
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:108
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:115
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:38
 msgid "Maximal HR"
 msgstr ""
@@ -4110,7 +4130,7 @@ msgstr ""
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:19
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:20
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:30
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:162
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:164
 msgid "Shape"
 msgstr ""
 
@@ -4344,17 +4364,17 @@ msgid "Current"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:142
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:165
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:157
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "&oslash; Day"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:145
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:159
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:160
 msgid "&oslash; Week"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:147
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:148
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:43
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:239
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:384
@@ -4362,68 +4382,68 @@ msgstr ""
 msgid "Prognosis"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:155
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:161
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:162
 msgid "Goal reached."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:164
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:165
 msgid "Pace Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:170
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
 msgid "Behind"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:172
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:173
 msgid "Ahead"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
 msgid "Head 2 Head"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:176
 msgid "Me"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:176
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
 msgid "Pace&nbsp;Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:182
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:183
 #, php-format
 msgid "%s to %s (%d days)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:368
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:369
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:170
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:317
 msgid "Week"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:369
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:370
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:174
 msgid "Month"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:370
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:371
 msgid "Half-Year"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:371
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:372
 msgid "Saison"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:371
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:372
 msgid "Note: Saison means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:372
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:373
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:178
 msgid "Year"
 msgstr ""
@@ -5139,27 +5159,27 @@ msgid ""
 "(negative)."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:119
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:121
 msgid "Fitness (CTL)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:121
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:123
 msgid "Fatigue (ATL)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:122
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:124
 msgid "avg VDOT"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:124
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:126
 msgid "day VDOT"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:160
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:162
 msgid "Shape for all years"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:165
+#: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:167
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Daytime.php:68
 #: plugin/RunalyzePluginStat_Trainingszeiten/Plot.Weekday.php:71
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:81
@@ -5178,12 +5198,14 @@ msgid "Cacheclean"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:27
-msgid "Empty the cache for activities."
+msgid ""
+"Runalyze uses data caching for faster access. Whenever you feel the views "
+"are not updated you can force emptying the cache"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:39
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:40
-msgid "Empty the cache"
+msgid "Empty your cache"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:29
@@ -5750,7 +5772,7 @@ msgid "Add data"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:71
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:215
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:222
 msgid "Show table"
 msgstr ""
 
@@ -5758,32 +5780,40 @@ msgstr ""
 msgid "You have to specify which values to record. (see configuration)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:122
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:187
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
+msgid "Enter maximal HR"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:100
+msgid "Otherwise calculations will be wrong"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:129
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:194
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:42
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:43
 msgid "Fat"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:123
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:187
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:130
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:194
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:43
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:44
 msgid "Water"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:124
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:187
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:131
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:194
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:44
 #: plugin/RunalyzePluginPanel_Sportler/Plot.analyse.php:45
 msgid "Muscles"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:154
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:161
 msgid "Other values"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:223
+#: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:230
 msgid "Add a new entry"
 msgstr ""
 
