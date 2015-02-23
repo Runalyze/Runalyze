@@ -86,10 +86,11 @@ class Calculator {
 		$max = $this->Athlete->knowsMaximalHeartRate() ? $this->Athlete->maximalHR() : self::DEFAULT_HR_MAX;
 		$rest = $this->Athlete->knowsRestingHeartRate() ? $this->Athlete->restingHR() : self::DEFAULT_HR_REST;
 		$sum = 0;
+		$B = $Factor->B();
 
 		foreach ($this->Data as $bpm => $t) {
 			$hr = max(0, ($bpm - $rest) / ($max - $rest));
-			$sum += $t / 60 * $hr * exp($Factor->B() * $hr);
+			$sum += $t / 60 * $hr * exp($B * $hr);
 		}
 
 		$this->value = $Factor->A() * $sum;

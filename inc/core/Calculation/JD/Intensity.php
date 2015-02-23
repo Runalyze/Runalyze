@@ -160,7 +160,7 @@ class Intensity {
 	 * @return float
 	 */
 	protected function pointsFor($hrInPercent, $seconds) {
-		$hrInPercent = max($hrInPercent, 0.5);
+		$hrInPercent = $hrInPercent < 0.5 ? 0.5 : $hrInPercent;
 
 		return (4.742894532 * pow($hrInPercent, 2) - 5.298465448 * $hrInPercent + 1.550709462) * $seconds / 60;
 	}

@@ -37,21 +37,26 @@ class Threshold extends Strategy {
 	public function setEpsilon($epsilon) {
 		$this->Epsilon = $epsilon;
 	}
-
 	/**
 	 * Smooth data
 	 */
 	public function runSmoothing() {
 		$i = 0;
+		$max = count($this->ElevationData);
 		$this->SmoothedData = array($this->ElevationData[0]);
 		$this->SmoothingIndices = array(0);
 
-		while (isset($this->ElevationData[$i+1])) {
-			$isLastStepUp    = $this->ElevationData[$i] > end($this->SmoothedData) && $this->ElevationData[$i+1] <= $this->ElevationData[$i];
-			$isLastStepDown  = $this->ElevationData[$i] < end($this->SmoothedData) && $this->ElevationData[$i+1] >= $this->ElevationData[$i];
-			$isAboveTreshold = abs(end($this->SmoothedData) - $this->ElevationData[$i]) > $this->Epsilon;
+		while ($i+1 < $max) {
+			$lastPoint = end($this->SmoothedData);
 
-			if (($isLastStepUp || $isLastStepDown) && $isAboveTreshold) {
+			// Due to performance reasons this is not clean code
+			if (
+				(abs($lastPoint - $this->ElevationData[$i]) > $this->Epsilon) &&
+				(
+					($this->ElevationData[$i] > $lastPoint && $this->ElevationData[$i+1] <= $this->ElevationData[$i]) ||
+					($this->ElevationData[$i] < $lastPoint && $this->ElevationData[$i+1] >= $this->ElevationData[$i])
+				)
+			) {
 				$this->SmoothingIndices[] = $i;
 				$this->SmoothedData[] = $this->ElevationData[$i];
 			}
