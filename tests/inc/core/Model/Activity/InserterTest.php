@@ -36,7 +36,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->ShoeID2 = $this->PDO->lastInsertId();
 
 		\SportFactory::reInitAllSports();
-		\ShoeFactory::reInitAllShoe();
+		\ShoeFactory::reInitAllShoes();
 	}
 
 	protected function tearDown() {
