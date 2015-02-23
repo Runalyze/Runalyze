@@ -17,11 +17,13 @@ There were some big changes in our table structure.
 Activity data is now split over three tables (training, trackdata, route) to improve performance.
 We recommend creating a backup before refactoring your data.
 
-To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0alpha.sql`.
+To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0.sql`.
 Afterwards you can copy your data with the script `refactor-db.php`.
 Change the settings within the file and run it via cli or browser.
+In addition you can use `build/global.cleanup.php` in a similar way to run a cleanup for all accounts at once.
 
-Release details for v2.0alpha on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0alpha/).
+Release details for v2.0alpha on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0alpha/). 
+Release details for v2.0beta on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0beta/).
 
 ## License
 * TODO - we're currently seeking for the right license to choose

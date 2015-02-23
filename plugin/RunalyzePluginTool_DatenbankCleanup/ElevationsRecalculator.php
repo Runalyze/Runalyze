@@ -36,11 +36,24 @@ class ElevationsRecalculator {
 	protected $PDO;
 
 	/**
+	 * Account ID
+	 * @var int
+	 */
+	protected $AccountID;
+
+	/**
 	 * Construct
 	 * @param \PDO $database
+	 * @param int $accountID [optional]
 	 */
-	public function __construct(\PDO $database) {
+	public function __construct(\PDO $database, $accountID = 'auto') {
 		$this->PDO = $database;
+
+		if ($accountID === 'auto') {
+			$this->AccountID = SessionAccountHandler::getId();
+		} else {
+			$this->AccountID = $accountID;
+		}
 	}
 
 	/**
@@ -80,7 +93,7 @@ class ElevationsRecalculator {
 			'`elevation_down` = :elevation_down'
 		);
 
-		$Query = 'UPDATE `'.PREFIX.'route` SET '.implode(',', $Set).' WHERE `id`=:id';
+		$Query = 'UPDATE `'.PREFIX.'route` SET '.implode(',', $Set).' WHERE `id`=:id AND `accountid`="'.(int)$this->AccountID.'"';
 
 		return $this->PDO->prepare($Query);
 	}
@@ -102,7 +115,7 @@ class ElevationsRecalculator {
 				END) AS  `elevations` 
 			FROM `'.PREFIX.'route`
 			WHERE
-				`accountid`='.(int)SessionAccountHandler::getId().' AND
+				`accountid`="'.(int)$this->AccountID.'" AND
 				(`elevations_original`!="" OR `elevations_corrected`!="")'
 		);
 	}

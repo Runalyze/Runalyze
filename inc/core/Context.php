@@ -61,4 +61,11 @@ class Context {
 
 		return self::$Objects['factory'];
 	}
+
+	/**
+	 * Clear internal cache
+	 */
+	static public function reset() {
+		self::$Objects = array();
+	}
 }
