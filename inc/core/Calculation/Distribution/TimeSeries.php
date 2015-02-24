@@ -32,14 +32,13 @@ class TimeSeries extends Empirical {
 
 		$lastTime = 0;
 		foreach ($data as $i => $val) {
-			$delta = $time[$i] - $lastTime;
-			$lastTime += $delta;
-
 			if (!isset($this->Histogram[$val])) {
-				$this->Histogram[$val] = $delta;
+				$this->Histogram[$val] = $time[$i] - $lastTime;
 			} else {
-				$this->Histogram[$val] += $delta;
+				$this->Histogram[$val] += $time[$i] - $lastTime;
 			}
+
+			$lastTime = $time[$i];
 		}
 	}
 

@@ -25,7 +25,7 @@ class Shoe extends DataObject {
 	 */
 	protected function tasksAfterInsert() {
 		// TODO: 'update' cache
-		Cache::delete('shoes');
+		ShoeFactory::reInitAllShoes();
 	}
 
 	/**
@@ -33,7 +33,7 @@ class Shoe extends DataObject {
 	 */
 	protected function tasksAfterUpdate() {
 		// TODO: 'update' cache
-		Cache::delete('shoes');
+		ShoeFactory::reInitAllShoes();
 	}
 
 	/**

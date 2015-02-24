@@ -25,9 +25,22 @@ class Configuration {
 	static private $ValuesFromDB = null;
 
 	/**
-	 * Load all categories
+	 * Account ID
+	 * @var int
 	 */
-	static public function loadAll() {
+	static private $AccountID = null;
+
+	/**
+	 * Load all categories
+	 * @param mixed $accountid
+	 */
+	static public function loadAll($accountid = 'auto') {
+		if ($accountid === 'auto') {
+			self::$AccountID = self::loadAccountID();
+		} else {
+			self::$AccountID = $accountid;
+		}
+
 		self::fetchAllValues();
 
 		self::ActivityForm();
@@ -47,28 +60,28 @@ class Configuration {
 	 * @return array
 	 */
 	static private function fetchAllValues() {
-		if (self::userID() !== null) {
-			self::$ValuesFromDB = \DB::getInstance()->query('SELECT `key`,`value`,`category` FROM '.PREFIX.'conf WHERE `accountid`="'.self::userID().'"')->fetchAll();
+		self::$Categories = array();
+
+		if (self::$AccountID !== null) {
+			self::$ValuesFromDB = \DB::getInstance()->query('SELECT `key`,`value`,`category` FROM '.PREFIX.'conf WHERE `accountid`="'.self::$AccountID.'"')->fetchAll();
 		} else {
 			self::$ValuesFromDB = array();
 		}
 	}
 
 	/**
-	 * User ID
+	 * Load account ID
 	 * @return int
 	 */
-	static private function userID() {
+	static private function loadAccountID() {
 		if (defined('RUNALYZE_TEST'))
 			return null;
 
 		if (\AccountHandler::$IS_ON_REGISTER_PROCESS) {
-			$ID = \AccountHandler::$NEW_REGISTERED_ID;
-		} else {
-			$ID = \SessionAccountHandler::getId();
+			return \AccountHandler::$NEW_REGISTERED_ID;
 		}
 
-		return $ID;
+		return \SessionAccountHandler::getId();
 	}
 
 	/**
@@ -80,7 +93,7 @@ class Configuration {
 		if (!isset(self::$Categories[$categoryName])) {
 			$className = 'Runalyze\\Configuration\\Category\\'.$categoryName;
 			$Category = new $className();
-			$Category->setUserID(self::userID(), self::$ValuesFromDB);
+			$Category->setUserID(self::$AccountID, self::$ValuesFromDB);
 
 			self::$Categories[$categoryName] = $Category;
 		}

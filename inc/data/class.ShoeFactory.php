@@ -77,7 +77,7 @@ class ShoeFactory {
 	/**
 	 * Reinit shoes
 	 */
-	static public function reInitAllShoe() {
+	static public function reInitAllShoes() {
 		self::clearAllShoes();
 		self::initAllShoes();
 	}

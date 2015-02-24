@@ -310,6 +310,10 @@ class SessionAccountHandler {
 	 * @return type 
 	 */
 	static public function getId() {
+		// Dirty hack for 'global.cleanup.php'
+		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount'))
+			return GlobalCleanupAccount::$ID;
+
 		if (SharedLinker::isOnSharedPage())
 			return SharedLinker::getUserId();
 
