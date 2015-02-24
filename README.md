@@ -9,7 +9,7 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 
 ## Git usage
 
-Up to now, we don't have any script for migrating the database automatically.
+Up to now we don't have any automated migration script.
 You have to apply recent changes by hand from the respective update files in `inc/install/`.
 
 #### For v2.0 (and for respective pre-releases since 2015/01/17):
@@ -18,9 +18,9 @@ Activity data is now split over three tables (training, trackdata, route) to imp
 We recommend creating a backup before refactoring your data.
 
 To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0.sql`.
-Afterwards you can copy your data with the script `refactor-db.php`.
-Change the settings within the file and run it via cli or browser.
-In addition you can use `build/global.cleanup.php` in a similar way to run a cleanup for all accounts at once.
+Afterwards you can copy your data to new tables with `refactor-db.php`.
+Change settings within the file and run it via cli or browser.
+In addition you can use `build/global.cleanup.php` similarly to run a cleanup for all accounts at once.
 
 Release details for v2.0alpha on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0alpha/). 
 Release details for v2.0beta on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0beta/).
@@ -56,6 +56,7 @@ More details: <http://runalyze.de/installation/> (only in german)
 * Icons
 	* [Font Awesome](http://fontawesome.io/) by Dave Gandy
 	* [Forecast Font](http://forecastfont.iconvau.lt/) by Ali Sisk
+	* [Icons8 Font](http://icons8.com/) by VisualPharm
 * Elevation data from Shuttle Radar Topography Mission
 	* [SRTM tiles](http://dwtkns.com/srtm/) grabbed via Derek Watkins
 	* [SRTM files](http://srtm.csi.cgiar.org/) by International  Centre for Tropical  Agriculture (CIAT)
@@ -68,6 +69,7 @@ More details: <http://runalyze.de/installation/> (only in german)
     * [Tablesorter](http://tablesorter.com/docs/) by Christian Bach
     * [Datepicker](http://www.eyecon.ro/) by Stefan Petre
     * [Chosen](http://getharvest.com/) by Patrick Filler for Harvest
+    * [FontIconPicker](http://codeb.it/) by Alessandro Benoit &amp; Swashata Ghosh
 * Miscellaneaous
     * [phpFastCache](https://github.com/khoaofgod/phpfastcache) by Khoa Bui
     * [Garmin Communicator](http://developer.garmin.com/web-device/garmin-communicator-plugin/) by Garmin Ltd.
