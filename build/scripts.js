@@ -6126,13 +6126,15 @@ Runalyze.Overlay = (function($, Parent){
 	}
 
 	function wrapEverything() {
-		$("body > :not(#flot-loader, #copy, #error-toolbar, script)").wrapAll('<div id="ajax-outer"><div id="ajax" class="panel"></div></div>');
-		Parent.body().prepend('<div id="overlay"></div>');
+		if (!$("#ajax-outer").length) {
+			$("body > :not(#flot-loader, #copy, #error-toolbar, script)").wrapAll('<div id="ajax-outer"><div id="ajax" class="panel"></div></div>');
+			Parent.body().prepend('<div id="overlay"></div>');
+
+			$("#ajax").css('margin-top', '50px');
+			$("#ajax, #overlay").show().fadeTo( Parent.Options.fadeSpeed(), 1);
+		}
 
 		addBodyClass();
-
-		$("#ajax").css('margin-top', '50px');
-		$("#ajax, #overlay").show().fadeTo( Parent.Options.fadeSpeed(), 1);
 	}
 
 	function addObjects() {

@@ -24,6 +24,8 @@
 <?php echo Ajax::wrapJSforDocumentReady('Runalyze.init();'); ?>
 
 <div id="overlay" style="display:block;"></div>
+
+<div id="ajax-outer">
 <div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' big-window'; ?>" style="display:block;">
 	<div class="panel-heading">
 		<div class="panel-menu">
