@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 09:53+0100\n"
+"POT-Creation-Date: 2015-02-24 08:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2757,7 +2757,7 @@ msgstr ""
 msgid "spm = steps per minute"
 msgstr ""
 
-#: inc/data/class.TypeFactory.php:111
+#: inc/data/class.TypeFactory.php:122
 msgid "No types available"
 msgstr ""
 
@@ -5617,7 +5617,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:116
 #, php-format
-msgid "%s in %s and %s in %s"
+msgid "%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:120

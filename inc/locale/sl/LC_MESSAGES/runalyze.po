@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-18 09:53+0100\n"
+"POT-Creation-Date: 2015-02-24 08:37+0100\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2762,7 +2762,7 @@ msgstr ""
 msgid "spm = steps per minute"
 msgstr ""
 
-#: inc/data/class.TypeFactory.php:111
+#: inc/data/class.TypeFactory.php:122
 msgid "No types available"
 msgstr ""
 
@@ -5624,7 +5624,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:116
 #, php-format
-msgid "%s in %s and %s in %s"
+msgid "%s in %s <small>(%s)</small> and %s in %s <small>(%s)</small>"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:120
