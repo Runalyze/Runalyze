@@ -38,25 +38,18 @@ class InstallerUpdate extends Installer {
 	 * Init all possible updates
 	 */
 	protected function initPossibleUpdates() {
-		// v2.0beta (von 2015/02)
+		// v2.0 (von 2015/02)
+		$this->PossibleUpdates[] = array(
+			'file'	=> 'update-v1.5-to-v2.0.sql',
+			'from'	=> 'v1.5',
+			'to'	=> 'v2.0',
+			'date'	=> '2014/01'
+		);
 		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v2.0alpha-to-v2.0beta.sql',
 			'from'	=> 'v2.0alpha',
-			'to'	=> 'v2.0beta',
+			'to'	=> 'v2.0',
 			'date'	=> '2015/01'
-		);
-		$this->PossibleUpdates[] = array(
-			'file'	=> 'update-v1.5-to-v2.0beta.sql',
-			'from'	=> 'v1.5',
-			'to'	=> 'v2.0beta',
-			'date'	=> '2014/01'
-		);
-		// v2.0alpha (von 2015/01)
-		$this->PossibleUpdates[] = array(
-			'file'	=> 'update-v1.5-to-v2.0alpha.sql',
-			'from'	=> 'v1.5',
-			'to'	=> 'v2.0alpha',
-			'date'	=> '2014/01'
 		);
 		// v1.5 (von 2014/01)
 		$this->PossibleUpdates[] = array(

@@ -12,7 +12,7 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 Up to now we don't have any automated migration script.
 You have to apply recent changes by hand from the respective update files in `inc/install/`.
 
-#### For v2.0 (and for respective pre-releases since 2015/01/17):
+#### For v2.0:
 There were some big changes in our table structure.
 Activity data is now split over three tables (training, trackdata, route) to improve performance.
 We recommend creating a backup before refactoring your data.
@@ -22,15 +22,14 @@ Afterwards you can copy your data to new tables with `refactor-db.php`.
 Change settings within the file and run it via cli or browser.
 In addition you can use `build/global.cleanup.php` similarly to run a cleanup for all accounts at once.
 
-Release details for v2.0alpha on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0alpha/). 
-Release details for v2.0beta on [runalyze.de](http://runalyze.de/allgemein/runalyze-v2-0beta/).
+Release details on runalyze.de: [v2.0alpha](http://runalyze.de/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://runalyze.de/allgemein/runalyze-v2-0beta/).
 
 ## License
 * TODO - we're currently seeking for the right license to choose
 
 ## Changelog
 * new versions, multi-lingual
- * v2.0, hopefully coming soon
+ * [v2.0](http://runalyze.de/allgemein/runalyze-v2-0/), 28.02.2015: First mutlilingual major release
 * old versions, only in german
  * [v1.5](http://runalyze.de/allgemein/runalyze-v1-5/), 01.01.2014: Bugfixes, genauere VDOT-Formel
  * [v1.4](http://runalyze.de/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/), 23.08.2013: Bugfix für Sicherheitsrisiko
@@ -51,6 +50,7 @@ More details: <http://runalyze.de/installation/> (only in german)
 * download new zip-file and extract it
 * open `../runalyze/update.php` in your browser
 * follow the instructions
+* for v2.0 only: run `../runalyze/refactor-db.php`
 
 ## Credits
 * Icons
