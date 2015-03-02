@@ -79,8 +79,10 @@ class Window {
 		$this->DemandedPace = new Pace(0, 1);
 		$this->DemandedPace->setUnit(Pace::MIN_PER_KM);
 
-		if ($this->Context->activity()->splits()->isEmpty()) {
-			$_POST['distance'] = $this->LapDistance;
+		if (isset($_POST['distance'])) {
+			$_POST['distance'] = str_replace(',', '.', $_POST['distance']);
+		} elseif ($this->Context->activity()->splits()->isEmpty()) {
+			$_POST['distance'] = 1;
 		}
 	}
 
