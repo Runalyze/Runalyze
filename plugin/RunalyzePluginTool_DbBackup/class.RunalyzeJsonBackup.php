@@ -52,10 +52,7 @@ class RunalyzeJsonBackup extends RunalyzeBackup {
 			$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
 
 		while ($Row = $Statement->fetch()) {
-			if ($TableName == 'runalyze_training')
-				$Row['gps_cache_object'] = '';
-
-			$id = $Row['id'];
+			$id = isset($Row['id']) ? $Row['id'] : '';
 			unset($Row['id']);
 
 			if (isset($Row['accountid']))
