@@ -196,6 +196,6 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * @return string
 	 */
 	public function getDistances() {
-		return $this->Configuration()->value('distances');
+		return array_filter($this->Configuration()->value('distances'), 'is_numeric');
 	}
 }
