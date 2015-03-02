@@ -108,7 +108,7 @@ class Object extends Model\Object implements Model\Loopable {
 				try {
 					$count = count($this->Data[$key]);
 
-					if ($key == self::HEARTRATE && $this->numberOfPoints > 0 && $count == 1 + $this->numberOfPoints) {
+					if (($key == self::HEARTRATE || $key == self::CADENCE) && $this->numberOfPoints > 0 && $count == 1 + $this->numberOfPoints) {
 						$this->Data[$key] = array_slice($this->Data[$key], 1);
 					} else {
 						$this->checkArraySize( $count );
