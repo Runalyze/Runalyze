@@ -216,7 +216,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 	<?php else: ?>
 	<p class="error">
-		<?php printf( __('Please save the following code as <strong>%s<strong>:'), '/runalyze/config.php'); ?>
+		<?php printf( __('Please save the following code as <strong>%s</strong>:'), '/runalyze/config.php'); ?>
 	</p>
 	<textarea class="code"><?php echo htmlspecialchars($this->writeConfigFileString); ?></textarea>
 	<?php endif; ?>
