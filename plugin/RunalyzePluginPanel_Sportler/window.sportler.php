@@ -12,6 +12,7 @@ if (Request::param('delete') == 'true') {
 	Cache::delete(UserData::CACHE_KEY);
 
 	header('Location: window.sportler.table.php?reload=true');
+	exit;
 }
 
 if (Request::sendId() === false) {
@@ -27,8 +28,10 @@ if (Request::sendId() === false) {
 
 $Formular = new StandardFormular($UserData, $Mode);
 
-if ($Formular->submitSucceeded())
+if ($Formular->submitSucceeded()) {
 	header('Location: window.sportler.table.php?reload=true');
+	exit;
+}
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');

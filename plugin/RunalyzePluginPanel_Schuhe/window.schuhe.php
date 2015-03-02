@@ -11,6 +11,7 @@ if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('shoe', (int)Request::sendId());
 	DB::getInstance()->query('UPDATE `'.PREFIX.'training` SET `shoeid`=0 WHERE `shoeid`='.(int)Request::sendId());
 	header('Location: window.schuhe.table.php?reload=true');
+	exit;
 }
 
 if (Request::sendId() === false) {
@@ -25,8 +26,10 @@ if (Request::sendId() === false) {
 
 $Formular = new StandardFormular($Shoe, $Mode);
 
-if ($Formular->submitSucceeded())
+if ($Formular->submitSucceeded()) {
 	header('Location: window.schuhe.table.php');
+	exit;
+}
 
 
 if (Request::sendId() > 0) {

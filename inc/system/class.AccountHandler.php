@@ -371,6 +371,7 @@ class AccountHandler {
 			else {
 				self::setNewPassword($_POST['chpw_username'], $_POST['new_pw']);
 				header('Location: login.php');
+				exit;
 			}
 		} else
 			return array( __('Something went wrong.') );
