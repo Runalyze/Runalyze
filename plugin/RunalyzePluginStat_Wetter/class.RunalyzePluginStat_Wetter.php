@@ -305,8 +305,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '')
 		);
 
+		$i = 0;
+
 		if (!empty($this->Clothes)) {
-			$i = 0;
 			foreach ($this->Clothes as $kleidung) {
 				echo ($i%3 == 0) ? '</tr><tr class="r">' : '<td>&nbsp;&nbsp;</td>';
 

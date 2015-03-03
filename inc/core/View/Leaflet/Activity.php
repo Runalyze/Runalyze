@@ -254,7 +254,7 @@ class Activity extends LeafletRoute {
 	protected function findLimitForPauses() {
 		if (!is_null($this->Trackdata) && $this->Trackdata->has(Trackdata\Object::DISTANCE)) {
 			$SecondsForDist = (int)Configuration::ActivityView()->routeBreak()->value();
-			$AveragePace = $this->Trackdata->totalTime() / $this->Trackdata->totalDistance();
+			$AveragePace = $this->Trackdata->totalDistance() > 0 ? $this->Trackdata->totalTime() / $this->Trackdata->totalDistance() : 0;
 
 			if ($AveragePace > 0) {
 				$this->PauseLimit = max($this->PauseLimit, $SecondsForDist/$AveragePace);
