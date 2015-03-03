@@ -8,11 +8,12 @@ namespace Runalyze\Model;
 
 /**
  * Loop through object
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
-class Loop {
+class Loop
+{
 	/**
 	 * Current index
 	 * @var int
@@ -47,7 +48,8 @@ class Loop {
 	 * Construct
 	 * @param \Runalyze\Model\Loopable $object
 	 */
-	public function __construct(Loopable $object) {
+	public function __construct(Loopable $object)
+	{
 		$this->Object = $object;
 
 		$this->countTotalSize();
@@ -57,24 +59,27 @@ class Loop {
 	/**
 	 * Count total size
 	 */
-	protected function countTotalSize() {
+	protected function countTotalSize()
+	{
 		$this->TotalSize = $this->Object->num();
 	}
 
 	/**
 	 * @return int
 	 */
-	public function num() {
+	public function num()
+	{
 		return $this->TotalSize;
 	}
 
 	/**
 	 * Reset
-	 * 
+	 *
 	 * Sets the internal pointer to the beginning.
 	 * This method does not change the step size.
 	 */
-	public function reset() {
+	public function reset()
+	{
 		$this->Index = 0;
 		$this->LastIndex = 0;
 	}
@@ -83,7 +88,8 @@ class Loop {
 	 * Set step size
 	 * @param int $size
 	 */
-	public function setStepSize($size) {
+	public function setStepSize($size)
+	{
 		$this->StepSize = $size;
 	}
 
@@ -91,7 +97,8 @@ class Loop {
 	 * Move index forward
 	 * @return boolean
 	 */
-	public function nextStep() {
+	public function nextStep()
+	{
 		$this->LastIndex = $this->Index;
 		$this->Index += $this->StepSize;
 
@@ -107,7 +114,8 @@ class Loop {
 	 * Is at the end?
 	 * @return boolean
 	 */
-	public function isAtEnd() {
+	public function isAtEnd()
+	{
 		return ($this->Index >= $this->TotalSize - 1);
 	}
 
@@ -117,21 +125,24 @@ class Loop {
 	 * @param float $value to move
 	 * @throws \InvalidArgumentException
 	 */
-	public function move($key, $value) {
+	public function move($key, $value)
+	{
 		$this->moveTo($key, $this->Index == 0 ? $value : $this->current($key) + $value);
 	}
 
 	/**
 	 * @return int
 	 */
-	public function index() {
+	public function index()
+	{
 		return $this->Index;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function currentStepSize() {
+	public function currentStepSize()
+	{
 		return $this->Index - $this->LastIndex;
 	}
 
@@ -139,7 +150,8 @@ class Loop {
 	 * Go to index
 	 * @param int $index
 	 */
-	public function goToIndex($index) {
+	public function goToIndex($index)
+	{
 		$this->LastIndex = $this->Index;
 		$this->Index = $index;
 	}
@@ -147,7 +159,8 @@ class Loop {
 	/**
 	 * Go to end
 	 */
-	public function goToEnd() {
+	public function goToEnd()
+	{
 		$this->goToIndex($this->TotalSize - 1);
 	}
 
@@ -157,23 +170,20 @@ class Loop {
 	 * @param float $target to move
 	 * @throws \InvalidArgumentException
 	 */
-	protected function moveTo($key, $target) {
+	protected function moveTo($key, $target)
+	{
 		if (!$this->Object->has($key)) {
 			throw new \InvalidArgumentException('No array available.');
 		}
 
-		if ($target < $this->current($key)) {
-			throw new \InvalidArgumentException('Target must be larger than current value.');
-		}
-
 		$this->LastIndex = $this->Index;
 
-		do {
-			$this->Index++;
-		} while(
+		while (
 			!$this->isAtEnd() &&
 			$this->Object->at($this->Index, $key) < $target
-		);
+		) {
+			$this->Index++;
+		};
 	}
 
 	/**
@@ -181,7 +191,8 @@ class Loop {
 	 * @param enum $key
 	 * @return int
 	 */
-	public function current($key) {
+	public function current($key)
+	{
 		if ($this->Object->has($key)) {
 			return $this->Object->at($this->Index, $key);
 		}
@@ -194,7 +205,8 @@ class Loop {
 	 * @param enum $key
 	 * @return float
 	 */
-	public function difference($key) {
+	public function difference($key)
+	{
 		if ($this->Object->has($key)) {
 			return $this->Object->at($this->Index, $key) - $this->Object->at($this->LastIndex, $key);
 		}
@@ -207,7 +219,8 @@ class Loop {
 	 * @param enum $key
 	 * @return float
 	 */
-	public function sum($key) {
+	public function sum($key)
+	{
 		$sum = 0;
 
 		if ($this->Object->has($key)) {
@@ -225,7 +238,8 @@ class Loop {
 	 * @param enum $key
 	 * @return float
 	 */
-	public function max($key) {
+	public function max($key)
+	{
 		$max = -PHP_INT_MAX;
 
 		if ($this->Object->has($key)) {
@@ -245,7 +259,8 @@ class Loop {
 	 * @param enum $key
 	 * @return int
 	 */
-	public function average($key) {
+	public function average($key)
+	{
 		if ($this->LastIndex >= $this->Index) {
 			return 0;
 		}
@@ -257,7 +272,8 @@ class Loop {
 	 * @param enum $key
 	 * @return array
 	 */
-	public function slice($key) {
+	public function slice($key)
+	{
 		if ($this->Object->has($key)) {
 			$start = $this->LastIndex == 0 ? $this->LastIndex : $this->LastIndex + 1;
 			return array_slice($this->Object->get($key), $start, $this->Index - $start + 1);

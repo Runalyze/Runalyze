@@ -6,17 +6,18 @@
 
 namespace Runalyze\Data\Laps;
 
-use Runalyze\Model\Trackdata;
-use Runalyze\Model\Route;
 use Runalyze\Data\Elevation;
+use Runalyze\Model\Route;
+use Runalyze\Model\Trackdata;
 
 /**
  * Calculate laps from trackdata/route
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Data\Laps
  */
-class Calculator {
+class Calculator
+{
 	/**
 	 * @var \Runalyze\Data\Laps\Laps
 	 */
@@ -40,16 +41,18 @@ class Calculator {
 	/**
 	 * @param \Runalyze\Data\Laps\Laps $object
 	 */
-	public function __construct(Laps $object) {
+	public function __construct(Laps $object)
+	{
 		$this->Laps = $object;
 	}
 
 	/**
 	 * @param array $lapDistances
 	 */
-	public function setDistances(array $lapDistances) {
-		if (!$this->isConsecutive($lapDistances)) {
-			$this->makeDistancesConsecutive($lapDistances);
+	public function setDistances(array $lapDistances)
+	{
+		if (!self::isSorted($lapDistances)) {
+			throw new \InvalidArgumentException('Calculator needs sorted array of distances');
 		}
 
 		$this->Distances = $lapDistances;
@@ -59,7 +62,8 @@ class Calculator {
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
 	 * @param \Runalyze\Model\Route\Object $route
 	 */
-	public function calculateFrom(Trackdata\Object $trackdata, Route\Object $route = null) {
+	public function calculateFrom(Trackdata\Object $trackdata, Route\Object $route = null)
+	{
 		$this->TrackdataLoop = new Trackdata\Loop($trackdata);
 		$this->RouteLoop = !is_null($route) ? new Route\Loop($route) : null;
 
@@ -67,16 +71,40 @@ class Calculator {
 			$this->move($kilometer);
 			$this->readLap();
 		}
-	
+
 		if (!$this->TrackdataLoop->isAtEnd()) {
 			$this->finish();
 		}
 	}
 
 	/**
+	 * Convert distance comma-separated string to array
+	 * + at the beginning means treat as intervals
+	 * @param $distanceStr
+	 * @return array
+	 */
+	public static function getDistancesFromString($distanceStr)
+	{
+		if (substr($distanceStr, 0, 1) == "+") {
+			$distanceStr = substr($distanceStr, 1);
+			$distanceArr = explode(',', $distanceStr);
+			$distSum = 0;
+			foreach ($distanceArr as $k => $v) {
+				$distSum += $v;
+				$distanceArr[$k] = $distSum;
+			}
+		} else {
+			$distanceArr = explode(',', $distanceStr);
+		}
+		if (!self::isSorted($distanceArr)) $distanceArr = [];
+		return $distanceArr;
+	}
+
+	/**
 	 * Read lap
 	 */
-	protected function readLap() {
+	protected function readLap()
+	{
 		$Lap = new Lap(
 			$this->TrackdataLoop->difference(Trackdata\Object::TIME),
 			$this->TrackdataLoop->difference(Trackdata\Object::DISTANCE)
@@ -93,7 +121,8 @@ class Calculator {
 	/**
 	 * @param \Runalyze\Data\Laps\Lap $Lap
 	 */
-	protected function addElevationFor(Lap $Lap) {
+	protected function addElevationFor(Lap $Lap)
+	{
 		if ($this->RouteLoop == null) {
 			return;
 		}
@@ -107,7 +136,8 @@ class Calculator {
 	/**
 	 * @param float $kilometer
 	 */
-	protected function move($kilometer) {
+	protected function move($kilometer)
+	{
 		$this->TrackdataLoop->moveToDistance($kilometer);
 
 		if (!is_null($this->RouteLoop)) {
@@ -118,7 +148,8 @@ class Calculator {
 	/**
 	 * Go to end and read last lap
 	 */
-	protected function finish() {
+	protected function finish()
+	{
 		$this->TrackdataLoop->goToEnd();
 
 		if (!is_null($this->RouteLoop)) {
@@ -129,28 +160,16 @@ class Calculator {
 	}
 
 	/**
-	 * @param array $distances
-	 */
-	protected function makeDistancesConsecutive(array &$distances) {
-		$sum = 0;
-		$num = count($distances);
-
-		for ($i = 0; $i < $num; ++$i) {
-			$sum += $distances[$i];
-			$distances[$i] = $sum;
-		}
-	}
-
-	/**
-	 * Is the given array consecutive?
+	 * Is the given array sorted?
 	 * @param array $data
-	 * @return boolean true for e.g. [1, 2, 3, 4, 5], false for e.g. [1, 2, 3, 2, 1]
+	 * @return boolean true for e.g. [1, 2.5, 3], false for e.g. [1, 2, 1.5]
 	 */
-	protected function isConsecutive(array $data) {
+	protected static function isSorted(array $data)
+	{
 		$num = count($data);
 
 		for ($i = 1; $i < $num; ++$i) {
-			if ($data[$i] <= $data[$i-1]) {
+			if ($data[$i] < $data[$i - 1]) {
 				return false;
 			}
 		}

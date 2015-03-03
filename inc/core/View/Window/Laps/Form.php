@@ -16,7 +16,7 @@ use Ajax;
 
 /**
  * Display form for laps window
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Window\Laps
  */
@@ -61,10 +61,11 @@ class Form {
 	 * @return \FormularInput
 	 */
 	protected function distancesField() {
-		$Field = new FormularInput('manual-distances', Ajax::tooltip('<small>'.__('or').':</small> '.__('Manual laps'), __('List with all distances, comma seperated') ));
+		$Field = new FormularInput('manual-distances', Ajax::tooltip('<small>'.__('or').':</small> '.__('Manual laps'),
+			__('List with all distances, comma seperated. Put "+" at the beginning to treat distances as intervals.') ));
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W50 );
 		$Field->setSize( FormularInput::$SIZE_FULL_INLINE );
-		$Field->setPlaceholder( __('e.g.').' 5, 10, 20, 21.1, 25, 30, 35, 40');
+		$Field->setPlaceholder( __('e.g.').' 5, 10, 21.1 '.__('or').' +0.4, 0.8, 0.4');
 
 		return $Field;
 	}
