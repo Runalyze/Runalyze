@@ -121,7 +121,7 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 		$this->assertFalse( $this->object->failed() );
 
-		$this->assertEquals( 114, $this->object->object()->getPulseAvg() );
+		$this->assertEquals( 113, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 132, $this->object->object()->getPulseMax() );
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
