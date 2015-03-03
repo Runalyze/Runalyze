@@ -16,7 +16,7 @@ use FormularFieldset;
 
 /**
  * Display table for laps
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Window\Laps
  */
@@ -137,7 +137,7 @@ class Table {
 	 * @return string
 	 */
 	protected function tableRowFor($i) {
-		$this->Laps->at($i)->pace()->setUnit( Pace::MIN_PER_KM );
+		$this->Laps->at($i)->pace()->setUnit($this->DemandedPace->unit());
 
 		return '<tr class="c '.($this->Laps->at($i)->isActive() ? '' : 'unimportant').'">'.
 				'<td class="small">'.($this->Laps->at($i)->isActive() ? ($this->IndexActive++).'.' : '('.($this->IndexResting++).'.)').'</td>'.
