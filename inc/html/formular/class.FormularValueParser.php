@@ -338,7 +338,7 @@ class FormularValueParser {
 		$IDs   = explode(',', $value);
 
 		foreach ($IDs as $ID)
-			$Array[$ID] = 'on';
+			$Array[trim($ID)] = 'on';
 
 		$value = $Array;
 	}
