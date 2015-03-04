@@ -96,7 +96,7 @@ class Calculator
 		} else {
 			$distanceArr = explode(',', $distanceStr);
 		}
-		if (!self::isSorted($distanceArr)) $distanceArr = [];
+		if (!self::isSorted($distanceArr)) $distanceArr = array();
 		return $distanceArr;
 	}
 
