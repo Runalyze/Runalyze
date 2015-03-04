@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-24 08:37+0100\n"
-"PO-Revision-Date: 2015-03-04 09:23+0200\n"
+"PO-Revision-Date: 2015-03-04 21:25+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ca/>\n"
@@ -1858,7 +1858,7 @@ msgstr "Publiqui entrenaments"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr "Marqui cada entrenament com a públic tot just hagi sigut creat"
+msgstr "Marqui cada entrenament com a públic tot just hagi sigut creat."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
@@ -2048,7 +2048,7 @@ msgstr "Gràfics: precisió"
 
 #: inc/core/Configuration/Category/ActivityView.php:296
 msgid "How many data points should be plotted?"
-msgstr "Quants punts de  dades s'han de dibuixar"
+msgstr "Quants punts de  dades s'han de dibuixar?"
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Pace plot: y-axis minimum"
@@ -2080,11 +2080,13 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:315
 msgid "Pace: Ignore outliers"
-msgstr ""
+msgstr "Diagrama del ritme: descarta valors extrems"
 
 #: inc/core/Configuration/Category/ActivityView.php:316
 msgid "Try to ignore outliers in the pace plot."
 msgstr ""
+"Si es troba activat, el valors extrems no es consideraran a l'hora de "
+"dibuixar el diagrama del ritme."
 
 #: inc/core/Configuration/Category/ActivityView.php:326
 msgid "Map: interrupt route"
@@ -2183,6 +2185,8 @@ msgid ""
 "Complex tools for analyzing or processing the complete database will open in "
 "an overlay."
 msgstr ""
+"Amb les eines pot executar modificacions complexes al banc de dades o "
+"analitzar grans quantitats de dades."
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
@@ -2227,11 +2231,11 @@ msgstr "* Els plugins amagats només mostren les capçaleres."
 
 #: inc/system/config/class.ConfigTabPlugins.php:120
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr "* Els plugins amagats són agrupats com 'diversos'"
+msgstr "* Els plugins amagats són agrupats com 'diversos'."
 
 #: inc/system/config/class.ConfigTabPlugins.php:164
 msgid "There are no new plugins to install."
-msgstr "No hi ha nous plugins per instal·lar"
+msgstr "No hi ha nous plugins per instal·lar."
 
 #: inc/system/config/class.ConfigTabPlugins.php:171
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:133
@@ -2326,7 +2330,8 @@ msgstr "Tipus-CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:48
 msgid "'c': centered<br>'l': left-aligned<br>'small': small<br>'b': bold"
-msgstr "'c': centered<br>'l': left-aligned<br>'small': small<br>'b': bold"
+msgstr ""
+"'c': centrat<br>'l': alineat a l'esquerra<br>'small': petit<br>'b': negreta"
 
 #: inc/system/config/class.ConfigTabDataset.php:49
 msgid "CSS-Style"
@@ -2360,6 +2365,8 @@ msgstr "Els seus esports"
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
 msgstr ""
+"Posi el ratolí sobre la capçalera en cas que alguna abreviatura no sigui "
+"prou clara."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid ""
@@ -2466,7 +2473,7 @@ msgstr "Fora"
 msgid "Sport is performed outdoor: activate route, weather, ..."
 msgstr ""
 "L'activitat esportiva s'ha desenvolupat fora: activi ruta, condicions "
-"meteorològiques, etc"
+"meteorològiques, etc."
 
 #: inc/system/config/class.ConfigTabSports.php:67
 msgid "A sport can only be deleted if no references exist."
@@ -2486,10 +2493,14 @@ msgid ""
 "Activity types are useful to seperate your training into different "
 "categories. An activity type can only belong to one sport."
 msgstr ""
+"Amb els tipus d'entrenament es poden classificar els entrenaments còmodament "
+"en categories. Un tipus d'entrenament només pertànyer a  un tipus d'esport."
 
 #: inc/system/config/class.ConfigTabTypes.php:28
 msgid "Types with a RPE-value &ge; 5 will be emphasized in the activity log."
 msgstr ""
+"Tipus d'entrenament amb un valor de RPE &ge; 5 són ressaltats a la visió "
+"global d'entrenaments."
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
@@ -2682,7 +2693,7 @@ msgstr "Realment vol esborrar el seu compte"
 
 #: inc/system/class.AccountHandler.php:493
 msgid "Complete the process by accessing the following link: "
-msgstr "Finalitzi el procés mitjançant el següent link:"
+msgstr "Finalitzi el procés mitjançant el següent link: "
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "long sleeve"
@@ -2702,7 +2713,7 @@ msgstr "Màniga curta"
 
 #: inc/system/schemes/set.emptyValues.php:17
 msgid "singlet"
-msgstr ""
+msgstr "samarreta"
 
 #: inc/system/schemes/set.emptyValues.php:18
 msgid "jacket"
@@ -2714,7 +2725,7 @@ msgstr "Malles"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "l-pants"
-msgstr ""
+msgstr "malles"
 
 #: inc/system/schemes/set.emptyValues.php:20
 msgid "shorts"
@@ -2970,82 +2981,84 @@ msgid ""
 "Complex tools can analyze or process the complete database and will open in "
 "an overlay."
 msgstr ""
+"Amb les eines pot executar modificacions complicades del banc de dades o "
+"analitzar grans quantitats de dades."
 
 #: inc/plugin/class.PluginTool.php:88
 msgid "Installed tools"
-msgstr ""
+msgstr "Les següents eines es troben instal·lades"
 
 #: inc/plugin/class.PluginTool.php:95
 msgid "No tools installed."
-msgstr ""
+msgstr "No hi han eines instal·lades."
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Mogui aquí el seu punter del ratolí per arrencar el Communicator."
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:273
 msgid "Upload file"
-msgstr ""
+msgstr "Pugi l'arxiu"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "Ha esdevingut un problema mentre es pujaven les dades."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "El seu navegador aparentment no dóna suport a aquest Uploader, miri"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Supported file extensions:"
-msgstr ""
+msgstr "Extensions d'arxiu a les quals es dóna suport:"
 
 #: inc/import/tpl/tpl.Importer.upload.php:67
 msgid "Supported file size:"
-msgstr ""
+msgstr "Tamany d'arxiu màxim:"
 
 #: inc/import/class.ImporterWindowTabCommunicator.php:26
 msgid "Garmin Communicator"
-msgstr ""
+msgstr "Garmin Communicator"
 
 #: inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
-msgstr ""
+msgstr "Pugi"
 
 #: inc/import/class.ImporterWindow.php:216
 msgid "Add workout"
-msgstr ""
+msgstr "Entri entrenament"
 
 #: inc/import/class.MultiImporter.php:76
 msgid "The activities have been successfully imported."
-msgstr ""
+msgstr "Els entrenaments han sigut importats amb èxit."
 
 #: inc/import/class.MultiImporterFormular.php:57
 msgid "Choose activities"
-msgstr ""
+msgstr "Seleccioni els entrenaments"
 
 #: inc/import/class.MultiImporterFormular.php:62
 msgid "Import selected activities"
-msgstr ""
+msgstr "Importi tots els entrenaments seleccionats"
 
 #: inc/import/class.MultiImporterFormular.php:73
 #, php-format
 msgid "Found %s activities."
-msgstr ""
+msgstr "%s entrenaments trobats."
 
 #: inc/import/class.MultiImporterFormular.php:75
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 #: call/call.garminCommunicator.php:104 call/call.garminCommunicator.php:121
 msgid "Import"
-msgstr ""
+msgstr "Importi"
 
 #: inc/import/class.MultiImporterFormular.php:137
 msgid "Show multi editor afterwards"
-msgstr ""
+msgstr "Mostri després l'editor múltiple"
 
 #: inc/import/class.MultiEditor.php:45
 msgid "No activities for editing were set."
-msgstr ""
+msgstr "No s'han seleccionat entrenaments per modificar."
 
 #: inc/import/class.MultiEditor.php:58
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:31
@@ -3055,94 +3068,105 @@ msgstr "Editor múltiple"
 #: inc/import/parser/class.ParserTCXSingle.php:103
 msgid ""
 "Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located."
-msgstr ""
+msgstr "L'objecte XML no és de Garmin. &lt;ld&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserTCXSingle.php:124
 msgid "This file does not contain any laps."
-msgstr ""
+msgstr "Aquest entrenament no té cap volta."
 
 #: inc/import/parser/class.ParserGPXSingle.php:63
 msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
-msgstr ""
+msgstr "L'objecte XML no té cap ruta. &lt;trkseg&gt;-tag no s'ha pogut trobar."
 
 #: inc/import/parser/class.ParserFITSingle.php:159
 msgid "FIT file is not specified as activity."
-msgstr ""
+msgstr "L'arxiu FIT no és especificat com a entrenament."
 
 #: inc/import/parser/class.ParserXMLsuuntoSingle.php:67
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
 msgstr ""
+"L'objecte XML no conté cap dada. &lt;Samples&gt;-tag oder &lt;header&gt;-tag "
+"no s'ha trobat."
 
 #: inc/import/parser/class.ParserFITLOGSingle.php:42
 msgid ""
 "Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be "
 "located."
 msgstr ""
+"L'objecte XML no és de SportTracks. &lt;Duration&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserPWXSingle.php:54
 msgid ""
 "Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag "
 "could not be located."
 msgstr ""
+"L'objecte XML no és de Peaksware/Trainingpakes. &lt;device&gt;-tag no s'ha "
+"trobat."
 
 #: inc/import/parser/class.ParserSLFSingle.php:48
 msgid ""
 "Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be "
 "located."
-msgstr ""
+msgstr "L'objecte XML no és de  Sigma.  &lt;LogEntries&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
 msgid "This file does not contain any data."
-msgstr ""
+msgstr "L'arxiu no conté cap dada."
 
 #: inc/import/parser/class.ParserLOGBOOKSingle.php:39
 msgid ""
 "Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no "
 "attribute 'startTime'."
 msgstr ""
+"L'objecte XML no és de SportTracks. &lt;Activity&gt;-tag no té cap atribut "
+"'startTime'."
 
 #: inc/import/parser/class.ParserKMLtomtomSingle.php:69
 msgid ""
 "Given XML object does not contain any track. &lt;gx:Track&gt;-tag could not "
 "be located."
-msgstr ""
+msgstr "L'objecte XML no conté cap ruta. &lt;gx:Track&gt;-tag no es pot trobat."
 
 #: inc/import/parser/class.ParserXMLpolarSingle.php:43
 msgid ""
 "Given XML object does not contain any results. &lt;result&gt;-tag could not "
 "be located."
-msgstr ""
+msgstr "L'objecte XML no té cap dada. &lt;result&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "Header&gt;-tag could not be located."
 msgstr ""
+"L'objecte XML no té cap resultat. &lt;Samples&gt;-tag o &lt;Header&gt;-tag "
+"no s'han trobat."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
-msgstr ""
+msgstr "Formulari"
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
-msgstr ""
+msgstr "Arxius hrm i gpx amb el mateix nom són automàticament anomenats de nou."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:6
 msgid "kml-files from TomTom are supported."
-msgstr ""
+msgstr "Es dóna suport als arxius KML de TomTom."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:44
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:66
 msgid "This file is not supported. Supported producers of kml-files: "
 msgstr ""
+"No es dóna suport per aquest arxiu. Fabricant dels arxius kml que han de "
+"donar suport són: "
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:79
 msgid "No activities could be found."
-msgstr ""
+msgstr "No s'han trobat entrenaments."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:102
 msgid ""
@@ -3151,68 +3175,68 @@ msgstr ""
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
-msgstr ""
+msgstr "Es dóna suport als arxius xml de Polar, Suunto i RunningAHEAD."
 
 #: inc/draw/class.PlotWeekSumData.php:35
 msgid "Weekly kilometers"
-msgstr ""
+msgstr "Kilòmetres setmanals"
 
 #: inc/draw/class.PlotWeekSumData.php:37
 #: inc/draw/class.PlotMonthSumData.php:37
 msgid "Hours of training"
-msgstr ""
+msgstr "Hores d'entrenament"
 
 #: inc/draw/class.PlotMonthSumData.php:35
 msgid "Monthly kilometers"
-msgstr ""
+msgstr "Kilòmetres mensuals"
 
 #: inc/draw/class.PlotSumData.php:112
 msgid "Choose analysis"
-msgstr ""
+msgstr "Seleccioni l'anàlisi"
 
 #: inc/draw/class.PlotSumData.php:149
 msgid "Activity &amp; Competition"
-msgstr ""
+msgstr "Entrenament &amp; Cursa"
 
 #: inc/draw/class.PlotSumData.php:153
 msgid "By type"
-msgstr ""
+msgstr "Segons tipus d'entrenament"
 
 #: inc/draw/class.PlotSumData.php:164
 msgid "All sports"
-msgstr ""
+msgstr "Tots els tipus d'esport"
 
 #: inc/draw/class.PlotSumData.php:265
 msgid "There are no data for this timerange."
-msgstr ""
+msgstr "No hi han dades per aquest interval de temps."
 
 #: inc/draw/class.PlotSumData.php:438
 msgid "Competition"
-msgstr ""
+msgstr "Cursa"
 
 #: inc/draw/class.PlotSumData.php:440
 msgid "Activity"
-msgstr ""
+msgstr "Entrenament"
 
 #: inc/class.AdminView.php:173
 msgid "Settings"
-msgstr ""
+msgstr "Configuració"
 
 #: inc/class.AdminView.php:175
 msgid "Maintenance mode"
-msgstr ""
+msgstr "Mode de manteniment"
 
 #: inc/class.AdminView.php:176
 msgid "Users can register"
-msgstr ""
+msgstr "L'usuari es pot registrar"
 
 #: inc/class.AdminView.php:177
 msgid "Users have to login"
-msgstr ""
+msgstr "L'usuari ha d'accedir-hi"
 
 #: inc/class.AdminView.php:178
 msgid "Garmin API-key"
-msgstr ""
+msgstr "Clau API de Garmin"
 
 #: inc/class.AdminView.php:178
 msgid ""
@@ -3222,157 +3246,162 @@ msgstr ""
 
 #: inc/class.AdminView.php:179
 msgid "Sender e-mail"
-msgstr ""
+msgstr "Adreça de correu electrònic del remitent"
 
 #: inc/class.AdminView.php:180
 msgid "OpenWeatherMap API-Key"
-msgstr ""
+msgstr "Clau API de OpenWeatherMap"
 
 #: inc/class.AdminView.php:180
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
+"Per carregar les dades de les condicions atmosfèriques cal una clau API, "
+"vegi openweathermap.org/appid"
 
 #: inc/class.AdminView.php:181
 msgid "Nokia/Here App-ID"
-msgstr ""
+msgstr "Nokia/Here App-ID"
 
 #: inc/class.AdminView.php:181 inc/class.AdminView.php:182
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
 msgstr ""
+"Els mapes de Nokia necessiten un APP-ID i un Token, miri developer.here.com"
 
 #: inc/class.AdminView.php:182
 msgid "Nokia/Here Token"
-msgstr ""
+msgstr "Token de Nokia/Here"
 
 #: inc/class.AdminView.php:187
 msgid "<strong>config.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>config.php</strong> no és modificable"
 
 #: inc/class.AdminView.php:187
 msgid "Changes can't be saved."
-msgstr ""
+msgstr "No es poden desar les modificacions."
 
 #: inc/class.AdminView.php:208
 msgid "Look for new plugins"
-msgstr ""
+msgstr "Busqui nous plugins"
 
 #: inc/class.AdminView.php:209
 msgid "Go"
-msgstr ""
+msgstr "Busqui"
 
 #: inc/class.AdminView.php:217
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>/inc/plugin/pluginmap.php</strong> no es pot modificar"
 
 #: inc/class.AdminView.php:217
 msgid "These tools will not work."
-msgstr ""
+msgstr "Aquestes eines no funcionaran."
 
 #: inc/class.AdminView.php:287
 msgid "User list"
-msgstr ""
+msgstr "Llista d'usuari"
 
 #: inc/class.AdminView.php:291
 msgid "There are no registered users."
-msgstr ""
+msgstr "Fins ara no hi ha cap usuari registrat."
 
 #: inc/class.AdminView.php:301
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:164
 msgid "since"
-msgstr ""
+msgstr "des de"
 
 #: inc/class.AdminView.php:302
 msgid "last"
-msgstr ""
+msgstr "últim"
 
 #: inc/class.AdminView.php:303
 msgid "Functions"
-msgstr ""
+msgstr "Funcions"
 
 #: inc/class.AdminView.php:319
 msgid "Activate user"
-msgstr ""
+msgstr "Activi l'usuari"
 
 #: inc/class.AdminView.php:344
 msgid "Server information"
-msgstr ""
+msgstr "Informacions del servidor"
 
 #: inc/class.AdminView.php:345
 msgid "PHP version:"
-msgstr ""
+msgstr "Versió del PHP:"
 
 #: inc/class.AdminView.php:346
 msgid "MySQL version:"
-msgstr ""
+msgstr "Versió del MySQL:"
 
 #: inc/class.AdminView.php:347
 msgid "Time limit:"
-msgstr ""
+msgstr "Límit de temps:"
 
 #: inc/class.AdminView.php:348
 msgid "Memory limit:"
-msgstr ""
+msgstr "Límit de memòria:"
 
 #: inc/class.AdminView.php:349
 msgid "Upload limit:"
-msgstr ""
+msgstr "Límit de pujades:"
 
 #: inc/class.AdminView.php:350
 msgid "Post limit:"
-msgstr ""
+msgstr "Límit de publicacions:"
 
 #: inc/class.AdminView.php:353
 msgid "Perl scripts can be used."
-msgstr ""
+msgstr "Es poden fer servir scripts de Perl."
 
 #: inc/class.AdminView.php:355
 msgid "Perl scripts cannot be used."
-msgstr ""
+msgstr "No es poden fer servir scripts de Perl."
 
 #: inc/class.AdminView.php:372
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: inc/class.AdminView.php:373
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
 msgstr ""
+"Cal permís d'escriptura als següents directoris. (I ha d'establir-se el "
+"propietari correcte!)"
 
 #: inc/class.AdminView.php:383
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
-msgstr ""
+msgstr "El directori <strong>%s</strong> es pot modificar."
 
 #: inc/class.AdminView.php:398
 msgid "Unused files"
-msgstr ""
+msgstr "Arxius que no s'han fet servir"
 
 #: inc/class.AdminView.php:404
 msgid "Clear directories"
-msgstr ""
+msgstr "Esborri els directoris"
 
 #: inc/class.AdminView.php:416
 msgid "clean up"
-msgstr ""
+msgstr "Netegi"
 
 #: inc/class.AdminView.php:422
 msgid "No files found"
-msgstr ""
+msgstr "No s'ha trobat cap arxiu"
 
 #: inc/class.DatasetLabels.php:23
 msgid "Sport type"
-msgstr ""
+msgstr "Tipus d'esport"
 
 #: inc/class.DatasetLabels.php:24 inc/training/schemes/scheme.Training.php:94
 #: inc/training/schemes/scheme.Training.new.php:90
 msgid "Activity type"
-msgstr ""
+msgstr "Tipus d'entrenament"
 
 #: inc/class.DatasetLabels.php:25
 msgid "Daytime"
-msgstr ""
+msgstr "Hora"
 
 #: inc/class.DatasetLabels.php:30
 #: inc/training/view/section/class.SectionCompositeRow.php:180
@@ -3382,7 +3411,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:227
 #: inc/training/schemes/scheme.Training.new.php:223
 msgid "Calories"
-msgstr ""
+msgstr "Calories"
 
 #: inc/class.DatasetLabels.php:31
 msgid "avg. heart rate"
