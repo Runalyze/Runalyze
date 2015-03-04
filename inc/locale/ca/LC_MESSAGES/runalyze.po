@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-24 08:37+0100\n"
-"PO-Revision-Date: 2015-03-02 11:13+0200\n"
+"PO-Revision-Date: 2015-03-04 09:23+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ca/>\n"
@@ -1953,7 +1953,7 @@ msgstr "Calculi la potència"
 
 #: inc/core/Configuration/Category/ActivityForm.php:212
 msgid "Calculate power by speed and grade for cycling"
-msgstr ""
+msgstr "Calculi la potència com velocitat i pendent per ciclisme"
 
 #: inc/core/Configuration/Category/ActivityForm.php:228
 msgid "Automatically load weather conditions"
@@ -2016,63 +2016,67 @@ msgstr "Calendari: creï un botó"
 
 #: inc/core/Configuration/Category/DataBrowser.php:84
 msgid "Add a link for every day to create a new activity."
-msgstr ""
+msgstr "Afegeixi un link per cada entrenament diari."
 
 #: inc/core/Configuration/Category/DataBrowser.php:88
 msgid "Calendar: edit button"
-msgstr ""
+msgstr "Calendari: modifiqui el botó"
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Add an edit-link for every activity."
-msgstr ""
+msgstr "Afegeixi un link modificable per cada entrenament."
 
 #: inc/core/Configuration/Category/ActivityView.php:268
 msgid "Activity view"
-msgstr ""
+msgstr "Vista d'entrenament"
 
 #: inc/core/Configuration/Category/ActivityView.php:271
 msgid "Number of decimals"
-msgstr ""
+msgstr "Nombre de decimals"
 
 #: inc/core/Configuration/Category/ActivityView.php:287
 msgid "Plots: combination"
-msgstr ""
+msgstr "Gràfic: combinat"
 
 #: inc/core/Configuration/Category/ActivityView.php:291
 msgid "Plots: smooth curves"
-msgstr ""
+msgstr "Gràfic: corbes ajustades"
 
 #: inc/core/Configuration/Category/ActivityView.php:295
 msgid "Plots: precision"
-msgstr ""
+msgstr "Gràfics: precisió"
 
 #: inc/core/Configuration/Category/ActivityView.php:296
 msgid "How many data points should be plotted?"
-msgstr ""
+msgstr "Quants punts de  dades s'han de dibuixar"
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Pace plot: y-axis minimum"
-msgstr ""
+msgstr "Gràfic del ritme: eix y mínim"
 
 #: inc/core/Configuration/Category/ActivityView.php:301
 msgid "Data points below this limit will be ignored. (only for running)"
 msgstr ""
+"Punts de dada per sota d'aquest valor han d'ignorar-se. (només per córrer)"
 
 #: inc/core/Configuration/Category/ActivityView.php:305
 msgid "Pace plot: y-axis maximum"
-msgstr ""
+msgstr "Gràfic del ritme: eix y màxim"
 
 #: inc/core/Configuration/Category/ActivityView.php:306
 msgid "Data points above this limit will be ignored. (only for running)"
 msgstr ""
+"Punts de dada per sobre d'aquest valor han d'ignorar-se. (només per córrer)"
 
 #: inc/core/Configuration/Category/ActivityView.php:310
 msgid "Pace: Reverse y-axis"
-msgstr ""
+msgstr "Ritme: Eix y invers"
 
 #: inc/core/Configuration/Category/ActivityView.php:311
 msgid "Reverse the y-axis such that a faster pace is at the top."
 msgstr ""
+"Inverteixi l'eix y de tal manera que un ritme més alt es mostri a dalt de "
+"tot."
 
 #: inc/core/Configuration/Category/ActivityView.php:315
 msgid "Pace: Ignore outliers"
@@ -2084,7 +2088,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:326
 msgid "Map: interrupt route"
-msgstr ""
+msgstr "Mapa: interrompeu la ruta"
 
 #: inc/core/Configuration/Category/ActivityView.php:327
 msgid ""
@@ -2096,82 +2100,83 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:333
 msgid "Map: precision"
-msgstr ""
+msgstr "Mapa; precisió"
 
 #: inc/core/Configuration/Category/ActivityView.php:334
 msgid "How many data points shoud be displayed?"
-msgstr ""
+msgstr "Quants punts de dada s'han de visualitzar?"
 
 #: inc/core/Configuration/Category/ActivityView.php:338
 msgid "Map: line color"
-msgstr ""
+msgstr "Mapa: color de la línia"
 
 #: inc/core/Configuration/Category/ActivityView.php:339
 msgid "as hexadecimal rgb (e.g. #ff5500)"
-msgstr ""
+msgstr "com a hexadecimal rgb (p.e. #ff5500)"
 
 #: inc/core/Configuration/Category/ActivityView.php:343
 msgid "Map: show map first"
-msgstr ""
+msgstr "Mapa: mostri el mapa al començament"
 
 #: inc/core/Configuration/Category/ActivityView.php:344
 msgid "show map before plots"
-msgstr ""
+msgstr "mostri el mapa abans de dibuixar la ruta"
 
 #: inc/core/Configuration/Category/ActivityView.php:354
 msgid "Elevation: smoothing"
-msgstr ""
+msgstr "Elevació: suavitzada"
 
 #: inc/core/Configuration/Category/ActivityView.php:355
 msgid "Choose the algorithm to smooth the elevation data"
-msgstr ""
+msgstr "Escolleixi l'algoritme per suavitzar les dades d'elevació"
 
 #: inc/core/Configuration/Category/ActivityView.php:359
 msgid "Elevation: threshold"
-msgstr ""
+msgstr "Elevació: llindar"
 
 #: inc/core/Configuration/Category/ActivityView.php:360
 msgid "Threshold for the smoothing algorithm"
-msgstr ""
+msgstr "Llindar per l'algoritme que suavitza les dades"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Netegi la base de dades"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
 msgid "You can now use the %s to recalculate the concerning values."
-msgstr ""
+msgstr "Pot fer servir %s per tornar a calcular els valors afectats."
 
 #: inc/system/class.Error.php:332
 msgid "Fatal error"
-msgstr ""
+msgstr "Error fatal"
 
 #: inc/system/class.SharedLinker.php:46
 #: inc/training/view/class.TrainingView.php:52
 msgid "Public link"
-msgstr ""
+msgstr "Link públic"
 
 #: inc/system/class.SharedLinker.php:77
 msgid "Public list"
-msgstr ""
+msgstr "Llista pública"
 
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
-msgstr ""
+msgstr "Panells"
 
 #: inc/system/config/class.ConfigTabPlugins.php:33
 msgid "Panels are small statistics always shown on the right side."
 msgstr ""
+"Els panells són petites estadístiques que es mostren sempre a la part dreta."
 
 #: inc/system/config/class.ConfigTabPlugins.php:38
 msgid "Normal statistics are shown below the activitiy log."
-msgstr ""
+msgstr "Les estadístiques normals es mostres per sota de l'entrenament."
 
 #: inc/system/config/class.ConfigTabPlugins.php:42
 msgid ""
@@ -2181,70 +2186,70 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Instal·li un nou plugin"
 
 #: inc/system/config/class.ConfigTabPlugins.php:47
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Els nous plugins es poden instal·lar aquí."
 
 #: inc/system/config/class.ConfigTabPlugins.php:69
 msgid "No plugins available."
-msgstr ""
+msgstr "No hi ha plugins disponibles."
 
 #: inc/system/config/class.ConfigTabPlugins.php:77
 msgid "Mode"
-msgstr ""
+msgstr "Mode"
 
 #: inc/system/config/class.ConfigTabPlugins.php:78
 #: inc/system/config/class.ConfigTabDataset.php:47
 msgid "Order"
-msgstr ""
+msgstr "Ordre"
 
 #: inc/system/config/class.ConfigTabPlugins.php:92
 msgid "The plugin cannot be found."
-msgstr ""
+msgstr "El plugin no s'ha pogut trobar."
 
 #: inc/system/config/class.ConfigTabPlugins.php:101
 msgid "enabled"
-msgstr ""
+msgstr "activat"
 
 #: inc/system/config/class.ConfigTabPlugins.php:102
 msgid "hidden*"
-msgstr ""
+msgstr "amagat*"
 
 #: inc/system/config/class.ConfigTabPlugins.php:103
 msgid "not enabled"
-msgstr ""
+msgstr "no activat"
 
 #: inc/system/config/class.ConfigTabPlugins.php:117
 msgid "* Hidden plugins only show their headings."
-msgstr ""
+msgstr "* Els plugins amagats només mostren les capçaleres."
 
 #: inc/system/config/class.ConfigTabPlugins.php:120
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr ""
+msgstr "* Els plugins amagats són agrupats com 'diversos'"
 
 #: inc/system/config/class.ConfigTabPlugins.php:164
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "No hi ha nous plugins per instal·lar"
 
 #: inc/system/config/class.ConfigTabPlugins.php:171
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:133
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #: inc/system/config/class.ConfigTabPlugins.php:172
 #: inc/training/search/class.SearchFormular.php:123
 msgid "Type"
-msgstr ""
+msgstr "Tipus"
 
 #: inc/system/config/class.ConfigTabClothes.php:17
 msgid "Equipment"
-msgstr ""
+msgstr "Equipament"
 
 #: inc/system/config/class.ConfigTabClothes.php:24
 msgid "Your equipment"
-msgstr ""
+msgstr "El seu equipament"
 
 #: inc/system/config/class.ConfigTabClothes.php:26
 msgid ""
@@ -2255,99 +2260,102 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabClothes.php:28
 msgid "The category should be a number."
-msgstr ""
+msgstr "La categoria cal que sigui un nombre."
 
 #: inc/system/config/class.ConfigTabClothes.php:29
 msgid "Just fill out the last row to add a new equipment."
-msgstr ""
+msgstr "Senzillament ompli la darrera línia per afegir nou equipament."
 
 #: inc/system/config/class.ConfigTabClothes.php:44
 #: inc/system/config/class.ConfigTabTypes.php:44
 msgid "Abbreviation"
-msgstr ""
+msgstr "Abreviatura"
 
 #: inc/system/config/class.ConfigTabClothes.php:45
 msgid "Category"
-msgstr ""
+msgstr "Categoria"
 
 #: inc/system/config/class.ConfigTabClothes.php:46
 msgid "Delete?"
-msgstr ""
+msgstr "Esborri?"
 
 #: inc/system/config/class.ConfigTabDataset.php:20
 msgid "Dataset"
-msgstr ""
+msgstr "Conjunt de dades"
 
 #: inc/system/config/class.ConfigTabDataset.php:27
 msgid "Your Dataset"
-msgstr ""
+msgstr "El seu conjunt de dades"
 
 #: inc/system/config/class.ConfigTabDataset.php:29
 msgid ""
 "You can specify which values show up in the overview of your activities."
 msgstr ""
+"Pot definir quins valor es mostren en la visió de conjunt dels seus "
+"entrenaments."
 
 #: inc/system/config/class.ConfigTabDataset.php:30
 msgid ""
 "This does not influence the detailed activity view, the form or any plugin."
 msgstr ""
+"Això no canvia la vista d'entrenament detallada, el formulari o cap plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:45
 msgid "Display"
-msgstr ""
+msgstr "Mostri"
 
 #: inc/system/config/class.ConfigTabDataset.php:45
 msgid "The information will be shown directly in the row."
-msgstr ""
+msgstr "La informació es mostrarà directament a la columna."
 
 #: inc/system/config/class.ConfigTabDataset.php:46
 msgid "Summary"
-msgstr ""
+msgstr "Resum"
 
 #: inc/system/config/class.ConfigTabDataset.php:46
 msgid "The value will be summarized for the sport."
-msgstr ""
+msgstr "Les dades s'agruparan per esport."
 
 #: inc/system/config/class.ConfigTabDataset.php:47
 msgid "Indicates the order of appearance."
-msgstr ""
+msgstr "Indica l'ordre d'aparició."
 
 #: inc/system/config/class.ConfigTabDataset.php:48
 msgid "CSS-Class"
-msgstr ""
+msgstr "Tipus-CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:48
 msgid "'c': centered<br>'l': left-aligned<br>'small': small<br>'b': bold"
-msgstr ""
+msgstr "'c': centered<br>'l': left-aligned<br>'small': small<br>'b': bold"
 
 #: inc/system/config/class.ConfigTabDataset.php:49
 msgid "CSS-Style"
-msgstr ""
+msgstr "Estil-CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:49
 msgid "any CSS-Code"
-msgstr ""
+msgstr "qualsevol codi-CSS"
 
 #: inc/system/config/class.ConfigTabDataset.php:50
 msgid "Example"
-msgstr ""
+msgstr "Exemple"
 
 #: inc/system/config/class.ConfigTabDataset.php:204
 msgid "Test activity"
-msgstr ""
+msgstr "Entrenament de prova"
 
 #: inc/system/config/class.ConfigTabDataset.php:208
 msgid "Great run!"
-msgstr ""
+msgstr "Excel·lent cursa!"
 
 #: inc/system/config/class.ConfigTabSports.php:20
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:22
 msgid "Sports"
-msgstr ""
+msgstr "Esports"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"
-msgstr ""
+msgstr "Els seus esports"
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
@@ -2366,45 +2374,47 @@ msgid ""
 "The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the "
 "calculation of TRIMP."
 msgstr ""
+"Els valors de <em>&Oslash; FC</em> i <em>RPE</em> són necessaris pel càlcul "
+"del TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "short"
-msgstr ""
+msgstr "curt"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Show only a symbol."
-msgstr ""
+msgstr "mostri únicament un símbol."
 
 #: inc/system/config/class.ConfigTabSports.php:56
 msgid "Icon"
-msgstr ""
+msgstr "Icona"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Name of the sport"
-msgstr ""
+msgstr "Nom de l'esport"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/h"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Mitjana d'entrega d'energia en kilocalories per hora"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 #: inc/system/config/class.ConfigTabSports.php:64
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:13
 msgid "HR"
-msgstr ""
+msgstr "FC"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Freqüència cardíaca mitjana (emprat per calcular el TRIMP)"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 #: inc/system/config/class.ConfigTabTypes.php:45
 msgid "RPE"
-msgstr ""
+msgstr "RPE"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -2412,60 +2422,64 @@ msgid ""
 "Rating of perceived exertion (based on Borg): average exertion on a scale of "
 "1 (easy) to 10 (extremely hard)"
 msgstr ""
+"Valoració d'esforç percebut (basat en el model de Borg): esforç mitjà en una "
+"escala de 1 (fàcil) fins a 10 (extremadament dur)"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:10
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Has a distance"
-msgstr ""
+msgstr "Té una distància"
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Unit"
-msgstr ""
+msgstr "Unitat"
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Unit for speed"
-msgstr ""
+msgstr "Unitat per velocitat"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "Types"
-msgstr ""
+msgstr "Tipus"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "The sport uses different training types"
-msgstr ""
+msgstr "L'esport empra diferents tipus d'entrenament"
 
 #: inc/system/config/class.ConfigTabSports.php:64
 msgid "Heart rate is recorded."
-msgstr ""
+msgstr "La freqüència cardíaca s'ha desat."
 
 #: inc/system/config/class.ConfigTabSports.php:65
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "La potència s'ha desat o calculat."
 
 #: inc/system/config/class.ConfigTabSports.php:66
 msgid "Outside"
-msgstr ""
+msgstr "Fora"
 
 #: inc/system/config/class.ConfigTabSports.php:66
 msgid "Sport is performed outdoor: activate route, weather, ..."
 msgstr ""
+"L'activitat esportiva s'ha desenvolupat fora: activi ruta, condicions "
+"meteorològiques, etc"
 
 #: inc/system/config/class.ConfigTabSports.php:67
 msgid "A sport can only be deleted if no references exist."
-msgstr ""
+msgstr "Un esport pot  ser esborrat únicament si no existeix cap referència."
 
 #: inc/system/config/class.ConfigTabTypes.php:17
 msgid "Activity Types"
-msgstr ""
+msgstr "Tipus d'activitat"
 
 #: inc/system/config/class.ConfigTabTypes.php:24
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:137
 msgid "Activity types"
-msgstr ""
+msgstr "Tipus d'activitat"
 
 #: inc/system/config/class.ConfigTabTypes.php:26
 msgid ""
@@ -2490,39 +2504,39 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:16
 #: inc/training/schemes/scheme.Training.new.php:78
 msgid "Sport"
-msgstr ""
+msgstr "Esport"
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "A type can only belong to one sport."
-msgstr ""
+msgstr "Un tipus pot pertànyer únicament a un esport."
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "A type can only be deleted if no references exist."
-msgstr ""
+msgstr "Un tipus pot  ser esborrat únicament si no existeix cap referència."
 
 #: inc/system/config/class.ConfigTabAccount.php:31
 msgid "Email address"
-msgstr ""
+msgstr "Adreça de correu electrònic"
 
 #: inc/system/config/class.ConfigTabAccount.php:36
 msgid "Registered since"
-msgstr ""
+msgstr "Registrat des de"
 
 #: inc/system/config/class.ConfigTabAccount.php:39
 msgid "Last Login"
-msgstr ""
+msgstr "Darrera entrada"
 
 #: inc/system/config/class.ConfigTabAccount.php:42
 msgid "Your account"
-msgstr ""
+msgstr "El seu compte"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
 msgid "Backup your data"
-msgstr ""
+msgstr "Còpia de seguretat de les seves dates"
 
 #: inc/system/config/class.ConfigTabAccount.php:56
 msgid "Please use the plugin"
-msgstr ""
+msgstr "Si us plau fagi servir el plugin"
 
 #: inc/system/config/class.ConfigTabAccount.php:58
 msgid ""
@@ -2534,7 +2548,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabAccount.php:62
 #: inc/system/config/class.ConfigTabAccount.php:68
 msgid "Delete your account"
-msgstr ""
+msgstr "Esborri el seu compte"
 
 #: inc/system/config/class.ConfigTabAccount.php:64
 msgid ""
@@ -2544,120 +2558,135 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
 msgid "Save"
-msgstr ""
+msgstr "Desi"
 
 #: inc/system/config/class.ConfigTabs.php:86
 msgid "The settings have been saved."
-msgstr ""
+msgstr "S'ha desat la seva configuració."
 
 #: inc/system/class.Filesystem.php:258
 #, php-format
 msgid ""
 "The directory <strong>%s</strong> is not writable. <em>(chmod = %s)</em>"
 msgstr ""
+"El directori <strong>%s</strong> no es pot modificar. <em>(chmod = %s)</em>"
 
 #: inc/system/class.AccountHandler.php:185
 #, php-format
 msgid "The username has to contain at least %s signs."
-msgstr ""
+msgstr "El nom d'usuari ha d'incloure com a mínim aquests caràcters %s."
 
 #: inc/system/class.AccountHandler.php:188
 msgid "This username is already being used."
-msgstr ""
+msgstr "Aquest nom d'usuari no es troba disponible."
 
 #: inc/system/class.AccountHandler.php:191
 msgid "This email address is already being used."
-msgstr ""
+msgstr "Aquesta adreça de correu electrònic no es troba disponible."
 
 #: inc/system/class.AccountHandler.php:194
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Si us plau entri una adreça de correu electrònic vàlida."
 
 #: inc/system/class.AccountHandler.php:197
 #: inc/system/class.AccountHandler.php:368
 msgid "The passwords have to be the same."
-msgstr ""
+msgstr "les contrasenyes han de coincidir."
 
 #: inc/system/class.AccountHandler.php:200
 #, php-format
 msgid "The password has to contain at least %s characters."
-msgstr ""
+msgstr "La contrasenya ha de tenir com a mínim %s caràcters."
 
 #: inc/system/class.AccountHandler.php:236
 msgid "Something went wrong. Please contact the administrator."
 msgstr ""
+"Alguna cosa no ha funcionat com calia. Si us plau posi's en contacte amb "
+"l'administrador."
 
 #: inc/system/class.AccountHandler.php:264
 msgid "Did you forgot your password"
-msgstr ""
+msgstr "Ha oblidat la seva contrasenya"
 
 #: inc/system/class.AccountHandler.php:265
 msgid ""
 "You can change your password within the next 24 hours with the following link"
 msgstr ""
+"Pot canviar la seva contrasenya mitjançant el següent link dins de les "
+"properes 24 hores"
 
 #: inc/system/class.AccountHandler.php:269
 msgid "The link has been sent and will be valid for 24 hours."
-msgstr ""
+msgstr "El link s'ha enviat i serà vàlid per les properes 24 hores."
 
 #: inc/system/class.AccountHandler.php:271
 msgid "Unable to send link. Please contact the administrator."
 msgstr ""
+"No ens ha sigut possible enviar-li el link. Si us plau contacti "
+"l'administrador."
 
 #: inc/system/class.AccountHandler.php:274
 msgid "Your local server has no smtp-server. Please contact the administrator."
 msgstr ""
+"El seu servidor local no té servidor de smtp. Si us plau contacti "
+"l'administrador."
 
 #: inc/system/class.AccountHandler.php:282
 msgid "The username is unknown."
-msgstr ""
+msgstr "El nom d'usuari ens és desconegut."
 
 #: inc/system/class.AccountHandler.php:370
 #, php-format
 msgid "The password has to contain at least %s signs."
-msgstr ""
+msgstr "La contrasenya ha d'incloure com a mínim aquests caràcters %s."
 
 #: inc/system/class.AccountHandler.php:376
 msgid "Something went wrong."
-msgstr ""
+msgstr "Alguna cosa no ha anat com calia."
 
 #: inc/system/class.AccountHandler.php:462
 msgid "Thanks for your registration"
-msgstr ""
+msgstr "Gràcies per donar-se d'alta"
 
 #: inc/system/class.AccountHandler.php:463
 #, php-format
 msgid "You can activate your account (username = %s) with the following link"
 msgstr ""
+"Pot activar el seu compte (nom d'usuari =  %s) mitjançant el següent link"
 
 #: inc/system/class.AccountHandler.php:467
 #: inc/system/class.AccountHandler.php:497
 msgid "Sending the link did not work. Please contact the administrator."
 msgstr ""
+"L'enviament s'ha pogut enviar el link. Si us plau contacti l'administrador."
 
 #: inc/system/class.AccountHandler.php:471
 msgid ""
 "Your local server has no smtp-server. Your account has been directly "
 "activated."
 msgstr ""
+"El seu servidor local no té servidor de smtp. El seu compte ha sigut activat "
+"directament."
 
 #: inc/system/class.AccountHandler.php:473
 #: inc/system/class.AccountHandler.php:500
 msgid ""
 "Your local server has no smtp-server. You have to contact the administrator."
 msgstr ""
+"El seu servidor local no té servidor de smtp. Cal que contacti "
+"l'administrador."
 
 #: inc/system/class.AccountHandler.php:492
 msgid "Do you really want to delete your account"
-msgstr ""
+msgstr "Realment vol esborrar el seu compte"
 
 #: inc/system/class.AccountHandler.php:493
 msgid "Complete the process by accessing the following link: "
-msgstr ""
+msgstr "Finalitzi el procés mitjançant el següent link:"
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "long sleeve"
-msgstr ""
+msgstr "Màniga llarga"
 
 #: inc/system/schemes/set.emptyValues.php:15
 msgid "l-sleeve"
@@ -2665,11 +2694,11 @@ msgstr "Màniga llarga"
 
 #: inc/system/schemes/set.emptyValues.php:16
 msgid "T-shirt"
-msgstr ""
+msgstr "Màniga curta"
 
 #: inc/system/schemes/set.emptyValues.php:16
 msgid "T-Shirt"
-msgstr ""
+msgstr "Màniga curta"
 
 #: inc/system/schemes/set.emptyValues.php:17
 msgid "singlet"
@@ -2677,11 +2706,11 @@ msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:18
 msgid "jacket"
-msgstr ""
+msgstr "Jaqueta"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "long pants"
-msgstr ""
+msgstr "Malles"
 
 #: inc/system/schemes/set.emptyValues.php:19
 msgid "l-pants"
@@ -2689,149 +2718,149 @@ msgstr ""
 
 #: inc/system/schemes/set.emptyValues.php:20
 msgid "shorts"
-msgstr ""
+msgstr "Pantalons curts"
 
 #: inc/system/schemes/set.emptyValues.php:21
 msgid "gloves"
-msgstr ""
+msgstr "Guants"
 
 #: inc/system/schemes/set.emptyValues.php:22
 msgid "hat"
-msgstr ""
+msgstr "gorra"
 
 #: inc/system/schemes/set.emptyValues.php:87
 msgid "Swimming"
-msgstr ""
+msgstr "Natació"
 
 #: inc/system/schemes/set.emptyValues.php:88
 msgid "Biking"
-msgstr ""
+msgstr "Ciclisme"
 
 #: inc/system/schemes/set.emptyValues.php:89
 msgid "Gymnastics"
-msgstr ""
+msgstr "Gimnàstica"
 
 #: inc/system/schemes/set.emptyValues.php:90
 msgid "Other"
-msgstr ""
+msgstr "D'altres"
 
 #: inc/system/schemes/set.emptyValues.php:97
 msgid "Jogging"
-msgstr ""
+msgstr "Córrer suau"
 
 #: inc/system/schemes/set.emptyValues.php:97
 msgid "JOG"
-msgstr ""
+msgstr "JOG"
 
 #: inc/system/schemes/set.emptyValues.php:98
 msgid "Fartlek"
-msgstr ""
+msgstr "Fartlek"
 
 #: inc/system/schemes/set.emptyValues.php:98
 msgid "FL"
-msgstr ""
+msgstr "FL"
 
 #: inc/system/schemes/set.emptyValues.php:99
 msgid "Interval training"
-msgstr ""
+msgstr "Entrenament d'intervals"
 
 #: inc/system/schemes/set.emptyValues.php:99
 msgid "IT"
-msgstr ""
+msgstr "IT"
 
 #: inc/system/schemes/set.emptyValues.php:100
 msgid "Tempo Run"
-msgstr ""
+msgstr "Cursa a tempo"
 
 #: inc/system/schemes/set.emptyValues.php:100
 msgid "TR"
-msgstr ""
+msgstr "TR"
 
 #: inc/system/schemes/set.emptyValues.php:101
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "Race"
-msgstr ""
+msgstr "Cursa"
 
 #: inc/system/schemes/set.emptyValues.php:101
 msgid "RC"
-msgstr ""
+msgstr "RC"
 
 #: inc/system/schemes/set.emptyValues.php:102
 msgid "Regeneration Run"
-msgstr ""
+msgstr "Cursa de regeneració"
 
 #: inc/system/schemes/set.emptyValues.php:102
 msgid "RG"
-msgstr ""
+msgstr "RG"
 
 #: inc/system/schemes/set.emptyValues.php:103
 msgid "Long Slow Distance"
-msgstr ""
+msgstr "Tirada llarga"
 
 #: inc/system/schemes/set.emptyValues.php:103
 msgid "LSD"
-msgstr ""
+msgstr "LSD"
 
 #: inc/system/schemes/set.emptyValues.php:104
 msgid "Warm-up"
-msgstr ""
+msgstr "Escalfament"
 
 #: inc/system/schemes/set.emptyValues.php:104
 msgid "WU"
-msgstr ""
+msgstr "WU"
 
 #: inc/class.FrontendSharedList.php:159
 #, php-format
 msgid "Activity view of %s"
-msgstr ""
+msgstr "Vista de l'activitat de %s"
 
 #: inc/class.FrontendSharedList.php:168
 msgid "This list is private"
-msgstr ""
+msgstr "Aquesta llista és privada"
 
 #: inc/class.FrontendSharedList.php:169
 msgid "The user does not share his activity list."
-msgstr ""
+msgstr "L'usuari no comparteix la seva llista d'entrenaments."
 
 #: inc/class.DataBrowser.php:207
 msgid "week"
-msgstr ""
+msgstr "setmana"
 
 #: inc/class.DataBrowser.php:231
 msgid "back"
-msgstr ""
+msgstr "enrrere"
 
 #: inc/class.DataBrowser.php:251
 msgid "Reload current datasheet"
-msgstr ""
+msgstr "Torni a carregar la fulla de dades actual"
 
 #: inc/class.DataBrowser.php:259
 msgid "Calendar"
-msgstr ""
+msgstr "Calendari"
 
 #: inc/class.DataBrowser.php:267 inc/class.DataBrowserShared.php:93
 msgid "Activity per month"
-msgstr ""
+msgstr "Activitat per mes"
 
 #: inc/class.DataBrowser.php:275 inc/class.DataBrowserShared.php:101
 msgid "Activity per week"
-msgstr ""
+msgstr "Entrenaments per setmana"
 
 #: inc/class.DataBrowser.php:291
 msgid "Search for an activity"
-msgstr ""
+msgstr "Cerca per entrenaments"
 
 #: inc/data/class.Splits.php:143
 #: inc/training/formular/class.TrainingInputSplits.php:61
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
-msgstr ""
+msgstr "en"
 
 #: inc/data/class.Splits.php:143
 #: inc/training/formular/class.TrainingInputSplits.php:113
 msgid "Resting"
-msgstr ""
+msgstr "Descans"
 
 #: inc/data/class.Cadence.php:92 inc/data/class.CadenceRunning.php:27
 #: inc/class.DatasetLabels.php:44
@@ -2840,101 +2869,101 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:322
 #: inc/training/schemes/scheme.Training.new.php:318
 msgid "Cadence"
-msgstr ""
+msgstr "Cadència"
 
 #: inc/data/class.Cadence.php:108
 msgid "rpm = rotations per minute"
-msgstr ""
+msgstr "rpm = rotacions per minut"
 
 #: inc/data/class.ShoeFactory.php:174
 msgid "No shoes available"
-msgstr ""
+msgstr "No hi ha dades de les sabatilles"
 
 #: inc/data/class.CadenceRunning.php:43
 msgid "spm = steps per minute"
-msgstr ""
+msgstr "spm = passes per minut"
 
 #: inc/data/class.TypeFactory.php:122
 msgid "No types available"
-msgstr ""
+msgstr "No hi ha dades de tipus"
 
 #: inc/plugin/class.PluginStat.php:171 inc/draw/class.PlotSumData.php:116
 msgid "Choose sport"
-msgstr ""
+msgstr "Esculleixi l'esport"
 
 #: inc/plugin/class.PluginStat.php:175 inc/draw/class.PlotSumData.php:120
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:27
 #: plugin/RunalyzePluginStat_Wetter/window.php:24
 msgid "Choose year"
-msgstr ""
+msgstr "Esculleixi l'any"
 
 #: inc/plugin/class.PluginStat.php:193
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:294
 msgid "All"
-msgstr ""
+msgstr "Tot"
 
 #: inc/plugin/class.PluginInstaller.php:96
 msgid "Install plugin"
-msgstr ""
+msgstr "Instal·li el plugin"
 
 #: inc/plugin/class.PluginInstaller.php:109
 msgid "Uninstall plugin"
-msgstr ""
+msgstr "Desinstal·li el plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:77
 msgid "back to overview"
-msgstr ""
+msgstr "enrere cap a vista general"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:83
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:134
 msgid "Plugin configuration"
-msgstr ""
+msgstr "Configuració del plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:107
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:410
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:602
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:111
 msgid "The plugin is deactivated."
-msgstr ""
+msgstr "El plugin es troba desactivat."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:125
 msgid "There are no settings."
-msgstr ""
+msgstr "No hi ha configuració."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:143
 msgid "Activate plugin"
-msgstr ""
+msgstr "Activi el plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:144
 msgid "Deactivate plugin"
-msgstr ""
+msgstr "Desactivi el plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:146
 msgid "Activation"
-msgstr ""
+msgstr "Activació"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:157
 msgid "Open tool"
-msgstr ""
+msgstr "Obri l'eina"
 
 #: inc/plugin/class.PluginType.php:57
 msgid "Panel"
-msgstr ""
+msgstr "Panell"
 
 #: inc/plugin/class.PluginType.php:61
 msgid "Tool"
-msgstr ""
+msgstr "Eines"
 
 #: inc/plugin/class.PluginTool.php:60
 msgid "All tools"
-msgstr ""
+msgstr "Totes les eines"
 
 #: inc/plugin/class.PluginTool.php:69
 msgid "Choose tool"
-msgstr ""
+msgstr "Sel·leccioni l'eina"
 
 #: inc/plugin/class.PluginTool.php:85
 msgid ""
@@ -6132,36 +6161,37 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:139
 msgid "Activities"
-msgstr ""
+msgstr "Entrenaments"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
 msgid "Trackdata"
-msgstr ""
+msgstr "Dades de ruta"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:30
 msgid "Summary of your activities for each sport."
-msgstr ""
+msgstr "Resum dels seus entrenaments per a cada esport."
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:37
 msgid "Old table view"
-msgstr ""
+msgstr "Vista de la taula antiga"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:102
 msgid "No data available since"
-msgstr ""
+msgstr "Cap dada disponible des de"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:159
 #, php-format
 msgid "%u-times"
-msgstr ""
+msgstr "%u-vegades"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:40
 msgid "Statistics about weather conditions, temperatures and clothing."
 msgstr ""
+"Estadístiques de les condicions atmosfèriques, temperatures i peces de roba."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:47
 msgid "There is no bad weather, there is only bad clothing."
-msgstr ""
+msgstr "No existeix el mal temps, només les persones mal vestides."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:48
 msgid ""
@@ -6171,19 +6201,21 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:57
 msgid "Show statistics about weather conditions"
-msgstr ""
+msgstr "Mostri les estadístiques de les condicions atmosfèriques"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:58
 msgid "Show statistics about your clothing"
-msgstr ""
+msgstr "Mostri les estadístiques de la seva roba"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:71
 msgid "Show temperature plots"
-msgstr ""
+msgstr "Mostri les estadístiques de la temperatura"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:98
 msgid "You have to activate some statistics in the plugin configuration."
 msgstr ""
+"Per veure-hi alguna cosa, ha d'activar algunes estadístiques a la "
+"configuració del plugin."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:284
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:287
@@ -6191,124 +6223,124 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/window.php:27
 #: plugin/RunalyzePluginStat_Wetter/Plot.Year.php:29
 msgid "Temperatures"
-msgstr ""
+msgstr "Temperatures"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:344
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:346
 msgid "on"
-msgstr ""
+msgstr "a"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:349
 msgid "Hottest activities"
-msgstr ""
+msgstr "Entrenaments més calents"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:351
 msgid "Coldest activities"
-msgstr ""
+msgstr "Entrenaments més freds"
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:382
 msgid "Weather and Clothing"
-msgstr ""
+msgstr "Condicions atmosfèriques i roba"
 
 #: call/call.Plugin.display.php:16
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "No s'ha pogut trobar el plugin."
 
 #: call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Alguna cosa no ha anat com calia ..."
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Fagi click sobre un entrenament per veure'n més detalls."
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "S'han marcat entrenaments públics: "
 
 #: call/call.garminCommunicator.php:43
 msgid "Connect"
-msgstr ""
+msgstr "Connectar"
 
 #: call/call.garminCommunicator.php:45
 msgid "Searching for devices"
-msgstr ""
+msgstr "Buscant aparells"
 
 #: call/call.garminCommunicator.php:46
 msgid "Transfer complete"
-msgstr ""
+msgstr "Transferència completa"
 
 #: call/call.garminCommunicator.php:50
 msgid "Browse computer"
-msgstr ""
+msgstr "Explori a l'ordinador"
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·li"
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
-msgstr ""
+msgstr "Aparells connectats"
 
 #: call/call.garminCommunicator.php:54
 msgid "Browse devices"
-msgstr ""
+msgstr "Explori aparells"
 
 #: call/call.garminCommunicator.php:55
 msgid "Devices"
-msgstr ""
+msgstr "Aparells"
 
 #: call/call.garminCommunicator.php:56
 msgid "Search for decives"
-msgstr ""
+msgstr "Busqui aparells"
 
 #: call/call.garminCommunicator.php:57
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr ""
+msgstr "Es llegiran dades de #{deviceName}, si us plau esperi..."
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
-msgstr ""
+msgstr "Si us plau esperi ..."
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
-msgstr ""
+msgstr "#{tracks} Entrenaments trobats"
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
-msgstr ""
+msgstr "No s'ha trobat cap aparell"
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr ""
+msgstr "Trobat"
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
-msgstr ""
+msgstr "#{deviceCount} Aparells trobats"
 
 #: call/call.garminCommunicator.php:67
 msgid "Status"
-msgstr ""
+msgstr "Estatus"
 
 #: call/call.garminCommunicator.php:85
 msgid "present"
-msgstr ""
+msgstr "Disponible"
 
 #: call/call.garminCommunicator.php:90
 msgid "ignore"
-msgstr ""
+msgstr "ignori"
 
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr ""
+msgstr "tots"
 
 #: call/window.search.php:21
 msgid "Search for activities"
-msgstr ""
+msgstr "Busqui entrenaments"
 
 #: call/login.php:2
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "Ja no es troba connectat."
 
 #: call/call.Training.edit.php:19
 msgid "The activity has been removed"
