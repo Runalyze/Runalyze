@@ -151,7 +151,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$distanceArr = Calculator::getDistancesFromString($distanceStr);
 
 		//then
-		$this->assertEquals($distanceArr, [1, 2.5, 3]);
+		$this->assertEquals($distanceArr, array(1, 2.5, 3));
 	}
 
 	/**
@@ -166,7 +166,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$distanceArr = Calculator::getDistancesFromString($distanceStr);
 
 		//then
-		$this->assertEquals($distanceArr, [1, 3.5, 6.5]);
+		$this->assertEquals($distanceArr, array(1, 3.5, 6.5));
 	}
 
 	/**
@@ -181,7 +181,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$distanceArr = Calculator::getDistancesFromString($distanceStr);
 
 		//then
-		$this->assertEquals($distanceArr, []);
+		$this->assertEquals($distanceArr, array());
 	}
 
 }
