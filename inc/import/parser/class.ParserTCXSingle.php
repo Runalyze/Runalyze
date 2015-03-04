@@ -65,9 +65,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * This parser reimplements constructor to force $XML-parameter to be given.
-	 * 
+	 *
 	 * @param string $FileContent file content
 	 * @param SimpleXMLElement $XML XML element with <Activity> as root tag
 	 */
@@ -211,9 +211,12 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 		$ThisBreakInMeter   = (float)$TP->DistanceMeters - $this->lastDistance;
 		$ThisBreakInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s'])) - $this->PauseInSeconds;
-		$NoMove  = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
-		$TooSlow = !$this->lastPointWasEmpty && $ThisBreakInMeter > 0 && ($ThisBreakInSeconds/$ThisBreakInMeter > 6);
-
+		if (Configuration::ActivityForm()->detectPauses()) {
+			$NoMove = ($this->lastDistance == (float)$TP->DistanceMeters) && !$this->isWithoutDistance;
+			$TooSlow = !$this->lastPointWasEmpty && $ThisBreakInMeter > 0 && ($ThisBreakInSeconds / $ThisBreakInMeter > 6);
+		} else {
+			$NoMove=$TooSlow=false;
+		}
 		if ((empty($TP->DistanceMeters) && !$this->isWithoutDistance ) || $NoMove || $TooSlow) {
 			$Ignored = false;
 
@@ -324,7 +327,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 
 	/**
 	 * Try to get current sport id
-	 * @return int 
+	 * @return int
 	 */
 	protected function findSportId() {
 		if (!is_null($this->XML) && isset($this->XML->attributes()->Sport))
