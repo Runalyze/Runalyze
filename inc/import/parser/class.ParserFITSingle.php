@@ -66,9 +66,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Finish parsing
 	 */
 	public function finishParsing() {
-		if (Configuration::ActivityForm()->detectPauses()) {
-			$this->applyPauses();
-		}
+		$this->applyPauses();
 		$this->setGPSarrays();
 	}
 
