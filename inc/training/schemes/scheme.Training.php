@@ -39,7 +39,6 @@ $FIELDSETS = array(
 		'legend'	=> __('Laps'),
 		'fields'	=> array('splits'),
 		'conf'		=> 'SPLITS',
-		'css'		=> TrainingFormular::$ONLY_TYPES_CLASS
 	),
 	array(
 		'id'		=> 'other',
