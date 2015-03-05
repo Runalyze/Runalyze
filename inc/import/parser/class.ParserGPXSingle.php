@@ -191,19 +191,15 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 				$Track = $Activity->children('st',true)->heartRateTrack;
 
 				if (isset($Track)) {
-					$this->gps['heartrate'] = array();
-					$Start = $this->TrainingObject->getTimestamp();
-					reset($this->gps['time_in_s']);
+					$num = count($this->gps['time_in_s']);
+					$i = 0;
 
 					foreach ($Track->children('st',true)->heartRate as $HR) {
 						$attr = $HR->attributes();
 
-						$time_in_s = strtotime((string)$attr->time) - $Start;
-						if ($time_in_s > 0) {
-							while (current($this->gps['time_in_s']) != $time_in_s && current($this->gps['time_in_s']) !== false)
-								next($this->gps['time_in_s']);
-
-							$this->gps['heartrate'][] = (int)$attr->bpm;
+						if ($i < $num) {
+							$this->gps['heartrate'][$i] = (int)$attr->bpm;
+							$i++;
 						}
 					}
 				}

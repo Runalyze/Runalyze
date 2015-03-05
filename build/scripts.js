@@ -139,11 +139,11 @@ function sumSplitsToTotal() {
 }
 
 function allSplitsRest() {
-	$("select[name='splits[active][]'] option[value='0']").attr('selected',true);
+	$("select[name='splits[active][]']").val("0");
 }
 
 function allSplitsActive() {
-	$("select[name='splits[active][]'] option[value='1']").attr('selected',true);
+	$("select[name='splits[active][]']").val("1");
 }/*
  * Metadata - jQuery plugin for parsing metadata from elements
  *

@@ -108,6 +108,8 @@ class PersonalBest {
 	 * @return string
 	 */
 	static private function groupedQuery(array $distances, $withDetails = false) {
+		$distances = array_filter($distances, 'is_numeric');
+
 		if ($withDetails) {
 			// This query is damn slow. Don't use it so far.
 			return 'SELECT * FROM ('.

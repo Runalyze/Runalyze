@@ -357,6 +357,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$NumDays  = 0;
 		$LastTime = time();
 		$LastDay  = date('Y-m-d');
+		$Text = '';
 
 		while ($IsStreak) {
 			$Day = $Request->fetch();

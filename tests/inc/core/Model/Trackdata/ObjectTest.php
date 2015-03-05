@@ -156,4 +156,14 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(4, $T->num());
 	}
 
+	public function testDefectActivitiesFromSpoQgpx() {
+		$T = new Object(array(
+			Object::DISTANCE => array(0.05, 1.0, 1.5, 2.0),
+			Object::TIME => array(10, 20, 30, 40),
+			Object::HEARTRATE => array(130, 135, 140)
+		));
+
+		$this->assertEquals(4, $T->num());
+	}
+
 }

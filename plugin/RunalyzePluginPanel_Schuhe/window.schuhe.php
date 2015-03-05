@@ -10,7 +10,10 @@ $Frontend = new Frontend();
 if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('shoe', (int)Request::sendId());
 	DB::getInstance()->query('UPDATE `' . PREFIX . 'training` SET `shoeid`=0 WHERE `shoeid`=' . (int)Request::sendId());
+	Cache::delete(ShoeFactory::CACHE_KEY);
+
 	header('Location: window.schuhe.table.php?reload=true');
+	exit;
 }
 
 if (Request::sendId() === false) {
@@ -28,6 +31,7 @@ $Formular = new StandardFormular($Shoe, $Mode);
 if ($Formular->submitSucceeded()) {
 	header('Location: window.schuhe.table.php');
 	ShoeFactory::clearCache();
+	exit;
 }
 
 if (Request::sendId() > 0) {

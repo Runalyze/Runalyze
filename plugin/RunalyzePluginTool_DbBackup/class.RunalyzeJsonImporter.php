@@ -82,6 +82,8 @@ class RunalyzeJsonImporter {
 		$this->readExistingData();
 		$this->readFile();
 		$this->correctConfigReferences();
+
+		System::clearCache();
 	}
 
 	/**
@@ -314,7 +316,12 @@ class RunalyzeJsonImporter {
 			} else {
 				$this->correctValues($TableName, $Row);
 
-				$BulkInsert->insert(array_values($Row));
+				if ($TableName == 'runalyze_training') {
+					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert(array_values($Row));
+				} else {
+					$BulkInsert->insert(array_values($Row));
+				}
+
 				$this->Results->addInserts($TableName, 1);
 			}
 

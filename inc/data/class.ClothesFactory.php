@@ -36,6 +36,8 @@ class ClothesFactory {
 	 * Init all clothes
 	 */
 	static private function initAllClothes() {
+		self::$AllClothes = array();
+
 		$clothes = self::cacheAllClothes();
 		foreach ($clothes as $data)
 			self::$AllClothes[$data['id']] = $data;

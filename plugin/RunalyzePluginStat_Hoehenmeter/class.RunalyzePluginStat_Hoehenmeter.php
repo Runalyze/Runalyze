@@ -125,13 +125,14 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 		foreach ($this->SumData as $Data) {
 			$Activity = new Activity\Object($Data);
 			$Linker = new Linker($Activity);
+			$grade = $Data['distance'] > 0 ? $Data['elevation'] / $Data['distance'] : 0;
 
 			echo '<tr>
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
 				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">'.$Data['elevation'].'&nbsp;m<br>
-					<small>'.round($Data['elevation']/$Data['distance']/10, 2).'&nbsp;&#37;,&nbsp;'.$Data['distance'].'&nbsp;km</small></td>
+					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.$Data['distance'].'&nbsp;km</small></td>
 			</tr>';
 		}
 

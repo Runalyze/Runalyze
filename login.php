@@ -19,8 +19,10 @@ if (isset($_GET['delete']))
 if (isset($_GET['out']))
 	SessionAccountHandler::logout();
 
-if (SessionAccountHandler::isLoggedIn())
+if (SessionAccountHandler::isLoggedIn()) {
 	header('Location: index.php');
+	exit;
+}
 
 $title = 'Runalyze v'.RUNALYZE_VERSION.' - '.__('Please login');
 $tpl   = 'tpl.loginWindow.php';

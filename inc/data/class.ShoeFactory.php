@@ -166,6 +166,13 @@ class ShoeFactory
 	}
 
 	/**
+	 * Clear cache
+	 */
+	static public function clearCache() {
+		Cache::delete(self::CACHE_KEY);
+	}
+
+	/**
 	 * Get search link for given shoe id
 	 * @param int $id
 	 * @return string
@@ -173,6 +180,9 @@ class ShoeFactory
 	static public function getSearchLink($id)
 	{
 		$shoes = self::AllShoes();
+
+		if (!isset($shoes[$id]))
+			return '?';
 
 		return SearchLink::to('shoeid', $id, $shoes[$id]['name']);
 	}

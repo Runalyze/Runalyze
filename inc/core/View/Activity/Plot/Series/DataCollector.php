@@ -143,7 +143,7 @@ class DataCollector {
 		if ($precision->byPoints() && $trackdata->num() > $precision->numberOfPoints()) {
 			$this->Loop->setStepSize( round($trackdata->num() / $precision->numberOfPoints ()) );
 		} elseif ($precision->byDistance()) {
-			$this->StepDistance = $precision->distanceStep() * 1000;
+			$this->StepDistance = $precision->distanceStep() / 1000;
 		}
 	}
 

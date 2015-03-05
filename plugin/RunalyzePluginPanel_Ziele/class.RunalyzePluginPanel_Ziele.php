@@ -154,7 +154,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel {
 				$togo = $goal - $dat['distanz_sum'];
 
 				$this->addLine( sprintf( __('%d days left'), $rest), $togo);
-				$this->addLine( __('&oslash; Day'), $togo/$rest);
+				$this->addLine( __('&oslash; Day'), $rest > 0 ? $togo/$rest : 0);
 
 				if ($rest > 7)
 					$this->addLine( __('&oslash; Week'), 7*$togo/$rest);
