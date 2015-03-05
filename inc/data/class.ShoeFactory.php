@@ -12,7 +12,8 @@ use Runalyze\Configuration;
  * @author Hannes Christiansen
  * @package Runalyze\Data\Shoe
  */
-class ShoeFactory {
+class ShoeFactory
+{
 	/**
 	 * @var string
 	 */
@@ -28,7 +29,8 @@ class ShoeFactory {
 	 * Number of shoes
 	 * @return int
 	 */
-	static public function numberOfShoes() {
+	static public function numberOfShoes()
+	{
 		return count(self::AllShoes());
 	}
 
@@ -36,7 +38,8 @@ class ShoeFactory {
 	 * Are any shoes in database?
 	 * @return bool
 	 */
-	static public function hasShoes() {
+	static public function hasShoes()
+	{
 		return self::numberOfShoes() > 0;
 	}
 
@@ -44,19 +47,21 @@ class ShoeFactory {
 	 * Are shoes in use?
 	 * @return bool
 	 */
-	static public function hasShoesInUse() {
+	static public function hasShoesInUse()
+	{
 		return count(self::FullArray()) > 0;
 	}
 
 	/**
 	 * Initialize internal shoes-array from database
 	 */
-	static private function initAllShoes() {
+	static private function initAllShoes()
+	{
 		self::$AllShoes = array();
 		$shoes = Cache::get(self::CACHE_KEY);
 
 		if (is_null($shoes)) {
-			$shoes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe`')->fetchAll();
+			$shoes = DB::getInstance()->query('SELECT * FROM `' . PREFIX . 'shoe`')->fetchAll();
 			Cache::set(self::CACHE_KEY, $shoes, '3600');
 		}
 
@@ -70,14 +75,16 @@ class ShoeFactory {
 	/**
 	 * Clear internal array
 	 */
-	static private function clearAllShoes() {
+	static private function clearAllShoes()
+	{
 		self::$AllShoes = null;
 	}
 
 	/**
 	 * Reinit shoes
 	 */
-	static public function reInitAllShoes() {
+	static public function reInitAllShoes()
+	{
 		self::clearAllShoes();
 		self::initAllShoes();
 	}
@@ -86,10 +93,11 @@ class ShoeFactory {
 	 * Get internal array with all shoes
 	 * @return array
 	 */
-	static private function AllShoes() {
+	static private function AllShoes()
+	{
 		if (is_null(self::$AllShoes)) {
 			self::initAllShoes();
-		}	
+		}
 
 		return self::$AllShoes;
 	}
@@ -99,7 +107,8 @@ class ShoeFactory {
 	 * @param bool $onlyInUse [optional] default: true
 	 * @return array
 	 */
-	static public function FullArray($onlyInUse = true) {
+	static public function FullArray($onlyInUse = true)
+	{
 		$shoes = self::AllShoes();
 
 		if ($onlyInUse) {
@@ -118,7 +127,8 @@ class ShoeFactory {
 	 * @param bool $inUse [optional] default: true
 	 * @return array
 	 */
-	static public function NamesAsArray($inUse = true) {
+	static public function NamesAsArray($inUse = true)
+	{
 		$shoes = self::AllShoes();
 
 		foreach ($shoes as $id => $shoe) {
@@ -137,16 +147,22 @@ class ShoeFactory {
 	 * @param int $id ID for the shoe
 	 * @return string
 	 */
-	static public function NameOf($id) {
+	static public function NameOf($id)
+	{
 		$shoes = self::AllShoes();
 
 		if (isset($shoes[$id]))
 			return $shoes[$id]['name'];
 
 		if ($id > 0)
-			Error::getInstance()->addWarning('Asked for unknown shoe-ID: "'.$id.'"');
+			Error::getInstance()->addWarning('Asked for unknown shoe-ID: "' . $id . '"');
 
 		return '?';
+	}
+
+	public static function clearCache()
+	{
+		Cache::delete(self::CACHE_KEY);
 	}
 
 	/**
@@ -154,7 +170,8 @@ class ShoeFactory {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getSearchLink($id) {
+	static public function getSearchLink($id)
+	{
 		$shoes = self::AllShoes();
 
 		return SearchLink::to('shoeid', $id, $shoes[$id]['name']);
@@ -167,7 +184,8 @@ class ShoeFactory {
 	 * @param mixed $selected Value to be selected
 	 * @return string
 	 */
-	static public function SelectBox($inUse = true, $showUnknown = true, $selected = -1) {
+	static public function SelectBox($inUse = true, $showUnknown = true, $selected = -1)
+	{
 		$shoes = self::NamesAsArray($inUse);
 
 		if (empty($shoes))
@@ -180,16 +198,17 @@ class ShoeFactory {
 
 	/**
 	 * Recalculate all shoes
-	 * 
+	 *
 	 * Be sure that a complete recalculation is really needed.
 	 * This task may take very long.
 	 */
-	static public function recalculateAllShoes() {
-		DB::getInstance()->exec('UPDATE `'.PREFIX.'shoe` SET `km`=0, `time`=0');
+	static public function recalculateAllShoes()
+	{
+		DB::getInstance()->exec('UPDATE `' . PREFIX . 'shoe` SET `km`=0, `time`=0');
 
 		$Statement = DB::getInstance()->query(
-			'SELECT `shoeid`, SUM(`distance`) as `km`, SUM(`s`) as `s` '.
-			'FROM `'.PREFIX.'training` '.
+			'SELECT `shoeid`, SUM(`distance`) as `km`, SUM(`s`) as `s` ' .
+			'FROM `' . PREFIX . 'training` ' .
 			'GROUP BY `shoeid`'
 		);
 

@@ -6,6 +6,7 @@
 
 namespace Runalyze\View\Window\Laps;
 
+use Runalyze\Data\Laps\Calculator;
 use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
@@ -16,7 +17,7 @@ use Request;
 
 /**
  * Window for detailed laps info
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Window\Laps
  */
@@ -111,7 +112,7 @@ class Window {
 		}
 
 		if (strlen(Request::param('manual-distances')) > 0) {
-			$this->ManualDistances = explode(',', Request::param('manual-distances'));
+			$this->ManualDistances = Calculator::getDistancesFromString(Request::param('manual-distances'));
 		}
 	}
 
@@ -213,7 +214,7 @@ class Window {
 			if ($this->handmadeLapsDiffer()) {
 				$Form->activateHandmadeDifference();
 			}
-		
+
 			$Form->activateHandmadeInfo();
 		}
 
