@@ -160,15 +160,11 @@ class ShoeFactory
 		return '?';
 	}
 
-	public static function clearCache()
-	{
-		Cache::delete(self::CACHE_KEY);
-	}
-
 	/**
 	 * Clear cache
 	 */
-	static public function clearCache() {
+	public static function clearCache()
+	{
 		Cache::delete(self::CACHE_KEY);
 	}
 
