@@ -174,6 +174,8 @@ class SearchResults {
 				}
 			}
 		}
+	
+		$this->addConditionsForOrder($conditions);
 
 		if (isset($_POST['clothes']))
 			$this->addClothesCondition($conditions);
@@ -298,7 +300,25 @@ class SearchResults {
 		if ($sort == 'vdot' && Configuration::Vdot()->useElevationCorrection())
 			return ' ORDER BY IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) '.$order;
 
+		if ($sort == 'pace')
+			$sort = 'IF(`distance`>0,`s`/`distance`,0)';
+
 		return ' ORDER BY '.$sort.' '.$order;
+	}
+
+	/**
+	 * Add additional conditions for order
+	 * @param array $conditions
+	 */
+	private function addConditionsForOrder(array &$conditions) {
+		if (!isset($_POST['search-sort-by']))
+			return;
+
+		if ($_POST['search-sort-by'] == 'pace') {
+			$conditions[] = '`distance` > 0';
+		} elseif (in_array($_POST['search-sort-by'], array('pulse_avg', 'pulse_max', 'cadence', 'groundcontact', 'vertical_oscillation'))) {
+			$conditions[] = '`'.$_POST['search-sort-by'].'` > 0';
+		}
 	}
 
 	/**
