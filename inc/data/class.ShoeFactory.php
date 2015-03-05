@@ -150,6 +150,13 @@ class ShoeFactory {
 	}
 
 	/**
+	 * Clear cache
+	 */
+	static public function clearCache() {
+		Cache::delete(self::CACHE_KEY);
+	}
+
+	/**
 	 * Get search link for given shoe id
 	 * @param int $id
 	 * @return string

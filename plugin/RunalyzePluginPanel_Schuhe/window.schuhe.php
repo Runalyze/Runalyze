@@ -30,6 +30,7 @@ $Formular = new StandardFormular($Shoe, $Mode);
 
 if ($Formular->submitSucceeded()) {
 	header('Location: window.schuhe.table.php');
+	ShoeFactory::clearCache();
 	exit;
 }
 
