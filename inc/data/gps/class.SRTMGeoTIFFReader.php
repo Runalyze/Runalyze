@@ -253,11 +253,19 @@ class SRTMGeoTIFFReader {
 	*/
 	private function getRoundedElevation($latitude, $longitude) {
 		// Returns results exactly as per http://www.geonames.org elevation API
-		$row = round(($this->topleftLat - $latitude) / self::DEGREES_PER_TILE * ($this->numDataRows - 1));
+		// @RUNALYZE: Need `abs($latitude)` instead of `$latitude`
+		$row = round(abs($this->topleftLat - abs($latitude)) / self::DEGREES_PER_TILE * ($this->numDataRows - 1));
 		$col = round(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * ($this->numDataCols - 1));
 
 		// get the elevation for the calculated row & column
-		return $this->getRowColumnData($row, $col);
+		// @RUNALYZE: We experienced even larger values (e.g. 65535, 65534)
+		//return $this->getRowColumnData($row, $col);
+		$elev = $this->getRowColumnData($row, $col);
+		if ($elev >= self::NO_DATA) {
+			return -self::NO_DATA;
+		}
+
+		return $elev;
 	}
 
 	/**
@@ -269,7 +277,8 @@ class SRTMGeoTIFFReader {
 	*/
 	private function getInterpolatedElevation($latitude, $longitude) {
 		// calculate row & col for the data point p0 (above & left of the parameter point)
-		$row[0] = floor(($this->topleftLat - $latitude) / self::DEGREES_PER_TILE * ($this->numDataRows -1));
+		// @RUNALYZE: Need `abs($latitude)` instead of `$latitude`
+		$row[0] = floor(abs($this->topleftLat - abs($latitude)) / self::DEGREES_PER_TILE * ($this->numDataRows -1));
 		$col[0] = floor(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * ($this->numDataCols -1));
 
 		// set row & col for the data point p1 (above & right of the parameter point)
@@ -285,18 +294,26 @@ class SRTMGeoTIFFReader {
 		$col[3] = $col[0] + 1; 
 
 		// get the difference in lat & lon between the p0 data point and the parameter point
-		$dlat = $this->topleftLat - ($row[0] * self::PIXEL_DIST) - abs($latitude);
-		$dlon = $this->topleftLon + ($col[0] * self::PIXEL_DIST) - $longitude;
+		// @RUNALYZE: This seems to be buggy for negative latitudes (e.g. Sydney)
+		//$dlat = $this->topleftLat - ($row[0] * self::PIXEL_DIST) - abs($latitude);
+		//$dlon = $this->topleftLon + ($col[0] * self::PIXEL_DIST) - $longitude;
+		$dlat = abs($this->topleftLat - abs($latitude)) - ($row[0] * self::DEGREES_PER_TILE / ($this->numDataRows -1));
+		$dlon = abs($this->topleftLon - $longitude) - ($col[0] * self::DEGREES_PER_TILE / ($this->numDataCols -1));
 
 		// express dlat & dlon as a proportion of the side of the square created by p0, p1, p2, p3
-		$dlatProportion = abs($dlat / self::PIXEL_DIST);
-		$dlonProportion = abs($dlon / self::PIXEL_DIST);
+		// @RUNALYZE: It seems that PIXEL_DIST should not be used anymore
+		//$dlatProportion = abs($dlat / self::PIXEL_DIST);
+		//$dlonProportion = abs($dlon / self::PIXEL_DIST);
+		$dlatProportion = abs($dlat / self::DEGREES_PER_TILE * ($this->numDataRows -1));
+		$dlonProportion = abs($dlon / self::DEGREES_PER_TILE * ($this->numDataCols -1));
 
 		// get the elevation values for points p0, p1, p2 & p3
 		$noData = false;
 		for ($i = 0; $i < 4; $i++) {
 			$elev = $this->getRowColumnData($row[$i], $col[$i]);
-			if ($elev == self::NO_DATA) {
+
+			// @RUNALYZE: We experienced even larger values (e.g. 65535, 65534)
+			if ($elev >= self::NO_DATA) {
 				$noData = true;
 			}
 			$points[] = $elev;
@@ -306,7 +323,8 @@ class SRTMGeoTIFFReader {
 		if (!$noData) {
 			$elevation = self::interpolate ($dlonProportion, $dlatProportion, $points);
 		} else {
-			$elevation = self::NO_DATA;
+			// @RUNALYZE: we expect -32768 as invalid value
+			$elevation = -self::NO_DATA;
 		}
 
 		return $elevation;
