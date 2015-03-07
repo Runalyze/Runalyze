@@ -343,7 +343,7 @@ class AdminView {
 	private function getServerDataFieldset() {
 		$Fieldset = new FormularFieldset( __('Server information') );
 		$Fieldset->addSmallInfo( __('PHP version:').' '.PHP_VERSION);
-		$Fieldset->addSmallInfo( __('MySQL version:').' '.@mysql_get_server_info());
+		$Fieldset->addSmallInfo( __('MySQL version:').' '.DB::getInstance()->getAttribute(PDO::ATTR_SERVER_VERSION));
 		$Fieldset->addSmallInfo( __('Time limit:').' '.ini_get('max_execution_time'));
 		$Fieldset->addSmallInfo( __('Memory limit:').' '.ini_get('memory_limit'));
 		$Fieldset->addSmallInfo( __('Upload limit:').' '.ini_get('upload_max_filesize'));
