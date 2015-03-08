@@ -147,10 +147,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		return $this->get('COMPUTE_POWER');
 	}
 
-	public function detectPauses(){
-		return $this->get('DETECT_PAUSES');
-	}
-
 	/**
 	 * Order: sports
 	 * @return DatabaseOrder
@@ -192,7 +188,10 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$this->updateValue( $this->handle('GARMIN_IGNORE_IDS') );
 	}
 
-
+	/**
+	 * Automatically detect pauses
+	 * @return bool
+	 */
 	public function detectPauses(){
 		return $this->get('DETECT_PAUSES');
 	}
@@ -222,11 +221,6 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 			'tooltip'	=> __('Calculate power by speed and grade for cycling')
 		));
  
-		$Fieldset->addHandle( $this->handle('DETECT_PAUSES'), array(
-			'label'		=> __('Detect pauses'),
-			'tooltip'	=> __('Detect pauses (distance not increasing) when importing training')
-		));
-
 		$Fieldset->addHandle( $this->handle('DETECT_PAUSES'), array(
 			'label'		=> __('Detect pauses'),
 			'tooltip'	=> __('Detect pauses (distance not increasing) when importing training')
