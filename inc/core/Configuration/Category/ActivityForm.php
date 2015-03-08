@@ -88,6 +88,7 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$this->createHandle('TRAINING_SORT_TYPES', new DatabaseOrder());
 		$this->createHandle('TRAINING_SORT_SHOES', new DatabaseOrder());
 		$this->createHandle('GARMIN_IGNORE_IDS', new Set(array()));
+		$this->createHandle('DETECT_PAUSES', new Bool(true));
 	}
 
 	/**
@@ -144,6 +145,10 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	 */
 	public function computePower() {
 		return $this->get('COMPUTE_POWER');
+	}
+
+	public function detectPauses(){
+		return $this->get('DETECT_PAUSES');
 	}
 
 	/**
@@ -210,6 +215,11 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('COMPUTE_POWER'), array(
 			'label'		=> __('Calculate power'),
 			'tooltip'	=> __('Calculate power by speed and grade for cycling')
+		));
+ 
+		$Fieldset->addHandle( $this->handle('DETECT_PAUSES'), array(
+			'label'		=> __('Detect pauses'),
+			'tooltip'	=> __('Detect pauses (distance not increasing) when importing training')
 		));
 
 		$this->addHandlesForWeatherTo($Fieldset);
