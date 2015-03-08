@@ -32,6 +32,40 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	protected $totalSplitsTime = 0;
 
 	/**
+	 *
+	 * @var type 
+	 */
+	protected $recordsAltitude = true;
+
+	/**
+	 * Flag: uses US units (miles, mp/h, ft)
+	 * @var boolean
+	 */
+	protected $unitsInUS = false;
+
+	/**
+	 * Factor to transform km/h or mph to s/km
+	 * @var float
+	 */
+	protected $paceFactor = 3600;
+
+	/**
+	 * Factor to transform m or ft to m
+	 * @var float
+	 */
+	protected $distanceFactor = 1;
+
+	/**
+	 * @var int [s]
+	 */
+	protected $recordingInterval = 1;
+
+	/**
+	 * @var int
+	 */
+	protected $totalTime = 0;
+
+	/**
 	 * Parse
 	 */
 	public function parse() {
@@ -80,7 +114,28 @@ class ParserHRMSingle extends ParserAbstractSingle {
 		} elseif (substr($this->Line, 0, 6) == 'Length') {
 			$Time = new Duration(substr($this->Line, 7));
 			$this->TrainingObject->setTimeInSeconds( $Time->seconds() );
+		} elseif (substr($this->Line, 0, 8) == 'Interval') {
+			$this->recordingInterval = (int)trim(substr($this->Line, 9));
+		} elseif (substr($this->Line, 0, 4) == 'Mode') {
+			$this->recordsAltitude = (substr($this->Line, 5, 1) == '1');
+			$this->unitsInUS = (substr($this->Line, 7, 1) == '1');
+
+			if ($this->unitsInUS) {
+				$this->setUSfactors();
+			}
+		} elseif (substr($this->Line, 0, 5) == 'SMode') {
+			$this->recordsAltitude = (substr($this->Line, 8, 1) == '1');
+			$this->unitsInUS = (substr($this->Line, 13, 1) == '1');
+
+			if ($this->unitsInUS) {
+				$this->setUSfactors();
+			}
 		}
+	}
+
+	private function setUSfactors() {
+		$this->paceFactor = 3600 / 1.609344;
+		$this->distanceFactor = 0.305;
 	}
 
 	/**
@@ -99,8 +154,20 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	 */
 	private function readHRdata() {
 		$values = preg_split('/[\s]+/', $this->Line);
-	
+
+		$this->totalTime += $this->recordingInterval;
+		$this->gps['time_in_s'][] = $this->totalTime;
 		$this->gps['heartrate'][] = (int)trim($values[0]);
-		$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+		$this->gps['pace'][]      = (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
+
+		if (count($values) > 3) {
+			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+			$this->gps['altitude'][]  = isset($values[3]) ? round((int)trim($values[3]) * $this->distanceFactor) : 0;
+			$this->gps['power'][]     = isset($values[4]) ? (int)trim($values[4]) : 0;
+		} elseif ($this->recordsAltitude) {
+			$this->gps['altitude'][]  = isset($values[2]) ? round((int)trim($values[2]) * $this->distanceFactor) : 0;
+		} else {
+			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+		}
 	}
 }
