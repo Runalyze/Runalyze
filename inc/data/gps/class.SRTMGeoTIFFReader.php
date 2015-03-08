@@ -16,7 +16,7 @@
  */
 class SRTMGeoTIFFReader {
 	/**
-	*  Returns elevation in metres from CGIAR-CSI SRTM v4 GeoTIFF files given WGS84 latitude and Longitude
+	*  Returns elevation in metres from CGIAR-CSI SRTM v4 & 4.1 GeoTIFF files given WGS84 latitude and Longitude
 	* 
 	*  Data points are available for each 3" of arc (approx every 90m)
 	*  Each data file covers a 5 degree x 5 degree area of the world's surface between 60N & 60S
@@ -28,13 +28,9 @@ class SRTMGeoTIFFReader {
 	const LEN_OFFSET = 4;
 
 	// CGIAR-CSI SRTM GeoTIFF constants
-	const NUM_DATA_ROWS = 6000;     // the number of data rows in the file ( = ImageLength tag value)
-	const NUM_DATA_COLS = 6000;     // the number of data columns in the file ( = ImageWidth tag value)
 	const DEGREES_PER_TILE = 5;     // each tile is 5 x 5 degrees of lat/lon
 	const PIXEL_DIST = 0.000833333; // the distance represented by one pixel (0 degrees 0 mins 3 secs of arc = 1/1200)
-	const STRIPOFFSETS = 0x44bbd5c; // the offset address of the 'StripOffsets' tag
-
-	const NO_DATA = 0;          // Not from original code, don't know what to set here
+	const NO_DATA = 0x8000;         // data void ( = signed int -32768)   
 
 	// read/write public properties
 	public $showErrors = true;     // show messages on error condition, otherwise dies silently
@@ -142,11 +138,11 @@ class SRTMGeoTIFFReader {
 		}
 
 		if ($interpolate) {
-			// use more accurate but slower bilinear iterpolation method
+			// use smoother but slower bilinear iterpolation method
 			$elevation = $this->getInterpolatedElevation($latitude, $longitude);
 		}
 		else {
-			// use less accurate but faster rounding method
+			// use faster rounding method
 			$elevation = $this->getRoundedElevation($latitude, $longitude);
 		} 
 
@@ -163,6 +159,7 @@ class SRTMGeoTIFFReader {
 	* @param bool $interpolate
 	*/
 	public function getMultipleElevations($latLons, $addIntermediatelatLons = false, $interpolate = false) {
+		$totNumSteps = 0;
 		$numlatLons = count($latLons);
 
 		//if ($numlatLons < 4) {
@@ -235,13 +232,6 @@ class SRTMGeoTIFFReader {
 	* @param int col
 	*/
 	public function getElevationByRowCol($tileRefHoriz, $tileRefVert, $row, $col) {
-		if (($row < 0) || ($row > (self::NUM_DATA_ROWS -1))) {
-			$this->handleError(__METHOD__ , "data row number $row out of range");
-		}
-		if (($col < 0) || ($col > (self::NUM_DATA_COLS -1))) {
-			$this->handleError(__METHOD__ , "data column number $col out of range");
-		}
-
 		// get the data file name and the lat & long values in the top left-hand corner
 		// then read the file and jump to the first data address
 		$fileName = $this->getTileFileName ($tileRefHoriz, $tileRefVert);
@@ -256,110 +246,26 @@ class SRTMGeoTIFFReader {
 	}
 
 	/**
-	* Checks the SRTM file is a valid TIFF and find the data location by lookup.
-	* 
-	* Only used for getting the StripOffsets address if for some reason it's different from
-	* the address used by all the six UK SRTM files 
-	* 
-	* @param mixed $fileName
-	*/
-	public function checkSRTMfile ($fileName) {
-		// standard TIFF constants
-		$TIFF_ID = 42;             // magic number located at bytes 2-3 which identifies a TIFF file
-		$TAG_STRIPOFFSETS = 273;   // identifying code for 'StripOffsets' tag in the Image File Directory (IFD)
-		$LEN_IFD_FIELD = 12;       // the number of bytes in each IFD entry
-		$LEN_OFFSET = 4;           // the number of bytes required to hold a TIFF offset address
-		$BIG_ENDIAN = "MM";        // byte order identifiers located at bytes 0-1
-		$LITTLE_ENDIAN = "II";
-
-		$filepath = $this->dataDir . "/". $fileName;
-		if (!file_exists($filepath)){
-			$this->handleError(__METHOD__ , "the file '$filepath' does not exist");
-		}
-		$fp = fopen($filepath, 'rb');
-		if ($fp === false) {
-			$this->handleError(__METHOD__ , "could not open the file '$filepath'");
-		} 
-
-		// go to the file header and work out the byte order (bytes 0-1)
-		// and TIFF identifier (bytes 2-3)
-		fseek($fp, 0);
-		$dataBytes = fread($fp, 4);
-		$data = unpack('c2chars/vTIFF_ID', $dataBytes);
-
-		// check it's a valid TIFF file by looking for the magic number
-		$TIFF = $data['TIFF_ID'];
-		if ($TIFF != $TIFF_ID) {
-			$this->handleError(__METHOD__ , "the file '$fileName' is not a valid TIFF file");
-		} 
-
-		// convert the byte order code to ASCII to get Motorola or Intel ordering identifiers
-		$byteOrder = sprintf('%c%c', $data['chars1'], $data['chars2']);
-
-		// the remaining 4 bytes in the header are the offset to the IFD
-		fseek($fp, 4);
-		$dataBytes = fread($fp, 4);
-		// unpack in whichever byte order was identified previously
-		// - this seems to be always 'II' but whether this is always the case is not specified
-		// so we do the check each time to make sure
-		if ($byteOrder == $LITTLE_ENDIAN) { 
-			$data = unpack('VIFDoffset', $dataBytes); 
-		}
-		elseif ($byteOrder == $BIG_ENDIAN){
-			$data = unpack('NIFDoffset', $dataBytes);
-		}
-		else {
-			self::handleError(__METHOD__ , "could not determine the byte order of the file '$fileName'");
-		}
-
-		// now jump to the IFD offset and get the number of entries in the IFD
-		// which is always stored in the first two bytes of the IFD
-		fseek($fp, $data['IFDoffset']);
-		$dataBytes = fread($fp, 2) ;
-		$data = ($byteOrder == $LITTLE_ENDIAN) ? 
-			unpack('vcount', $dataBytes) :
-			unpack('ncount', $dataBytes);
-		$numFields = $data['count'];
-
-		// iterate the IFD entries until we find the 'StripOffsets' entry
-		for ($i = 0; $i < $numFields; $i++) {
-			$dataBytes = fread($fp, $LEN_IFD_FIELD);
-			$data = ($byteOrder == $LITTLE_ENDIAN) ?
-				unpack('vtag/vtype/Vcount/Voffset', $dataBytes):
-				unpack('ntag/ntype/Ncount/Noffset', $dataBytes);
-			if ($data['tag'] == $TAG_STRIPOFFSETS) {
-				$offset = $data['offset'];
-				break;
-			}
-		}
-
-		if (!$offset) {
-			self::handleError(__METHOD__ , "could not find the 'StripOffsets' entry in the TIFF IFD for $fileName");
-		}
-
-		// check 'StripOffsets' contains the correct amount of data rows for CGIAR-CSI SRTM GeoTIFF files
-		if ($data['count'] != self::NUM_DATA_ROWS) {
-			self::handleError(__METHOD__ , "incorrect number of data rows in '$fileName'");
-		}
-
-		echo "<p>StripOffsets location is: $offset (0x" . sprintf('%x', $offset) . ")</p>";
-	}
-
-	/**
 	* Returns the elevation value of the single data point which is closest to the parameter point
 	* 
 	* @param float $latitude
 	* @param float $longitude
 	*/
 	private function getRoundedElevation($latitude, $longitude) {
-		// Returns results exactly as per http://www.geonames.org/export/web-services.html#srtm3
-		// NB: we ignore row and col 6001 as these as these are overlaps onto the adjacent tiles
-		// on the S and E sides of the tile
-		$row = round(($this->topleftLat - $latitude) / self::DEGREES_PER_TILE * (self::NUM_DATA_ROWS - 1));
-		$col = round(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * (self::NUM_DATA_COLS - 1));
+		// Returns results exactly as per http://www.geonames.org elevation API
+		// @RUNALYZE: Need `abs($latitude)` instead of `$latitude`
+		$row = round(abs($this->topleftLat - abs($latitude)) / self::DEGREES_PER_TILE * ($this->numDataRows - 1));
+		$col = round(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * ($this->numDataCols - 1));
 
 		// get the elevation for the calculated row & column
-		return $this->getRowColumnData($row, $col);
+		// @RUNALYZE: We experienced even larger values (e.g. 65535, 65534)
+		//return $this->getRowColumnData($row, $col);
+		$elev = $this->getRowColumnData($row, $col);
+		if ($elev >= self::NO_DATA) {
+			return -self::NO_DATA;
+		}
+
+		return $elev;
 	}
 
 	/**
@@ -371,11 +277,9 @@ class SRTMGeoTIFFReader {
 	*/
 	private function getInterpolatedElevation($latitude, $longitude) {
 		// calculate row & col for the data point p0 (above & left of the parameter point)
-		// HINT BY HC: Can now use all rows, not!?
-		//$row[0] = floor(($this->topleftLat - $latitude) / self::DEGREES_PER_TILE * (self::NUM_DATA_ROWS -1));
-		//$col[0] = floor(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * (self::NUM_DATA_COLS -1));
-		$row[0] = floor( abs($this->topleftLat - $latitude) / self::PIXEL_DIST );
-		$col[0] = floor( abs($this->topleftLon - $longitude) / self::PIXEL_DIST );
+		// @RUNALYZE: Need `abs($latitude)` instead of `$latitude`
+		$row[0] = floor(abs($this->topleftLat - abs($latitude)) / self::DEGREES_PER_TILE * ($this->numDataRows -1));
+		$col[0] = floor(abs($this->topleftLon - $longitude) / self::DEGREES_PER_TILE * ($this->numDataCols -1));
 
 		// set row & col for the data point p1 (above & right of the parameter point)
 		$row[1] =  $row[0];
@@ -390,21 +294,26 @@ class SRTMGeoTIFFReader {
 		$col[3] = $col[0] + 1; 
 
 		// get the difference in lat & lon between the p0 data point and the parameter point
-		// HINT BY HC: This original calculation seems to be buggy
+		// @RUNALYZE: This seems to be buggy for negative latitudes (e.g. Sydney)
 		//$dlat = $this->topleftLat - ($row[0] * self::PIXEL_DIST) - abs($latitude);
-		//$dlon = $this->topleftLon - ($col[0] * self::PIXEL_DIST) - abs($longitude);
-		$dlat = abs($this->topleftLat - $latitude) - ($row[0] * self::PIXEL_DIST);
-		$dlon = abs($this->topleftLon - $longitude) - ($col[0] * self::PIXEL_DIST);
+		//$dlon = $this->topleftLon + ($col[0] * self::PIXEL_DIST) - $longitude;
+		$dlat = abs($this->topleftLat - abs($latitude)) - ($row[0] * self::DEGREES_PER_TILE / ($this->numDataRows -1));
+		$dlon = abs($this->topleftLon - $longitude) - ($col[0] * self::DEGREES_PER_TILE / ($this->numDataCols -1));
 
 		// express dlat & dlon as a proportion of the side of the square created by p0, p1, p2, p3
-		$dlatProportion = abs($dlat / self::PIXEL_DIST);
-		$dlonProportion = abs($dlon / self::PIXEL_DIST);
+		// @RUNALYZE: It seems that PIXEL_DIST should not be used anymore
+		//$dlatProportion = abs($dlat / self::PIXEL_DIST);
+		//$dlonProportion = abs($dlon / self::PIXEL_DIST);
+		$dlatProportion = abs($dlat / self::DEGREES_PER_TILE * ($this->numDataRows -1));
+		$dlonProportion = abs($dlon / self::DEGREES_PER_TILE * ($this->numDataCols -1));
 
 		// get the elevation values for points p0, p1, p2 & p3
 		$noData = false;
 		for ($i = 0; $i < 4; $i++) {
 			$elev = $this->getRowColumnData($row[$i], $col[$i]);
-			if ($elev == self::NO_DATA) {
+
+			// @RUNALYZE: We experienced even larger values (e.g. 65535, 65534)
+			if ($elev >= self::NO_DATA) {
 				$noData = true;
 			}
 			$points[] = $elev;
@@ -414,7 +323,8 @@ class SRTMGeoTIFFReader {
 		if (!$noData) {
 			$elevation = self::interpolate ($dlonProportion, $dlatProportion, $points);
 		} else {
-			$elevation = self::NO_DATA;
+			// @RUNALYZE: we expect -32768 as invalid value
+			$elevation = -self::NO_DATA;
 		}
 
 		return $elevation;
@@ -443,6 +353,7 @@ class SRTMGeoTIFFReader {
 			$pointData[2] * $y * (1 - $x) +
 			$pointData[3] * $x * $y;
 
+		// return sprintf("%0.1f", $val);
 		return round($val);
 	}
 
@@ -520,6 +431,17 @@ class SRTMGeoTIFFReader {
 	* @param string $fileName
 	*/
 	private function getSRTMFilePointer($fileName) {
+		// standard TIFF constants
+		$TIFF_ID = 42;             // magic number located at bytes 2-3 which identifies a TIFF file
+		$TAG_STRIPOFFSETS = 273;   // identifying code for 'StripOffsets' tag in the Image File Directory (IFD)
+		$TAG_IMAGE_WIDTH = 256;
+		$TAG_IMAGE_LENGTH = 257;
+		$TAG_STRIPBYTECOUNTS = 279;         
+		$LEN_IFD_FIELD = 12;       // the number of bytes in each IFD entry
+		$LEN_OFFSET = 4;           // the number of bytes required to hold a TIFF offset address
+		$BIG_ENDIAN = "MM";        // byte order identifiers located at bytes 0-1
+		$LITTLE_ENDIAN = "II";
+
 		// close any previous file pointer
 		if ($this->fp) {
 			fclose($this->fp);
@@ -534,10 +456,68 @@ class SRTMGeoTIFFReader {
 		if ($fp === false) {
 			$this->handleError(__METHOD__ , "could not open the file '$filepath'");
 		}
+                          
+		// go to the file header and work out the byte order (bytes 0-1) 
+		// and TIFF identifier (bytes 2-3) 
+		fseek($fp, 0);
+		$dataBytes = fread($fp, 4);
+		$data = unpack('c2chars/vTIFF_ID', $dataBytes);
 
-		// first data offset
-		fseek($fp, self::STRIPOFFSETS);
-		$this->fileName = $fileName;
+		// check it's a valid TIFF file by looking for the magic number  
+		$TIFF = $data['TIFF_ID'];        
+		if ($TIFF != $TIFF_ID) {
+			$this->handleError(__METHOD__ , "the file '$fileName' is not a valid TIFF file");
+		}            
+
+		// convert the byte order code to ASCII to get Motorola or Intel ordering identifiers
+		$byteOrder = sprintf('%c%c', $data['chars1'], $data['chars2']);        
+
+		// the remaining 4 bytes in the header are the offset to the IFD
+		fseek($fp, 4);
+		$dataBytes = fread($fp, 4);
+		// unpack in whichever byte order was identified previously 
+		// - this seems to be always 'II' but whether this is always the case is not specified
+		// so we do the check each time to make sure
+		if ($byteOrder == $LITTLE_ENDIAN) { 
+			$data = unpack('VIFDoffset', $dataBytes); 
+		}
+		elseif ($byteOrder == $BIG_ENDIAN){
+			$data = unpack('NIFDoffset', $dataBytes);
+		}
+		else {
+			self::handleError(__METHOD__ , "could not determine the byte order of the file '$fileName'");
+		}
+
+		// now jump to the IFD offset and get the number of entries in the IFD
+		// which is always stored in the first two bytes of the IFD
+		fseek($fp, $data['IFDoffset']);
+		$dataBytes = fread($fp, 2) ;
+		$data = ($byteOrder == $LITTLE_ENDIAN) ? 
+			unpack('vcount', $dataBytes) : 
+			unpack('ncount', $dataBytes);   
+		$numFields = $data['count'];
+
+		// iterate the IFD entries until we find the ones we need 
+		for ($i = 0; $i < $numFields; $i++) {
+			$dataBytes = fread($fp, $LEN_IFD_FIELD);
+			$data = ($byteOrder == $LITTLE_ENDIAN) ? 
+				unpack('vtag/vtype/Vcount/Voffset', $dataBytes) : 
+				unpack('ntag/ntype/Ncount/Noffset', $dataBytes);
+
+			switch($data['tag']) {
+				case $TAG_IMAGE_WIDTH :
+					$this->numDataCols = $data['offset'];
+					break;
+				case $TAG_IMAGE_LENGTH :
+					$this->numDataRows = $data['offset'];
+					break;                    
+				case $TAG_STRIPOFFSETS : 
+					$this->stripOffsets = $data['offset'];
+					break;
+			} 
+		}
+
+		$this->fileName = $fileName;   
 		$this->fp = $fp;
 	}
 
@@ -549,12 +529,11 @@ class SRTMGeoTIFFReader {
 	* @param int $col
 	*/
 	private function getRowColumnData($row, $col) {
-		$DATA_VOID = 0x8000;       // data void ( = signed int -32768)
 		$LEN_DATA = 2;             // the number of bytes containing each item of elevation data 
 								   // ( = BitsPerSample tag value / 8) 
 
 		// find the location of the required data row in the StripOffsets data
-		$dataOffset = self::STRIPOFFSETS + ($row * self::LEN_OFFSET);
+		$dataOffset = $this->stripOffsets + ($row * self::LEN_OFFSET);
 		fseek($this->fp, $dataOffset);
 		$dataBytes = fread($this->fp, self::LEN_OFFSET);
 		$data = unpack('VdataOffset', $dataBytes);
@@ -571,9 +550,6 @@ class SRTMGeoTIFFReader {
 		$data = unpack('velevation', $dataBytes);
 
 		$elevation = $data['elevation'];
-		if ($elevation == $DATA_VOID) {
-			$elevation = 0;
-		}
 
 		return $elevation;
 	}

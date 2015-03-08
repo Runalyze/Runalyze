@@ -56,4 +56,105 @@ Length=00:59:36.4
 		$this->assertEquals( '0.00|6:58-0.00|7:06', $Parser->object()->Splits()->asString() );
 	}
 
+	public function testDefaultRecordingInterval() {
+		$String = '[Params]
+Version=105
+Mode=110
+
+[HRData]
+100	100	220
+120	120	225
+125	120	230
+120	100	220';
+
+		$Parser = new ParserHRMSingle($String);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( array(1, 2, 3, 4), $Parser->object()->getArrayTime() );
+	}
+
+	public function test5sRecordingInterval() {
+		$String = '[Params]
+Version=105
+Interval=5
+Mode=110
+
+[HRData]
+100	100	220
+120	120	225
+125	120	230
+120	100	220';
+
+		$Parser = new ParserHRMSingle($String);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( array(5, 10, 15, 20), $Parser->object()->getArrayTime() );
+	}
+
+	public function testAltitudeAndEUmetricsInVersion105() {
+		$String = '[Params]
+Version=105
+Mode=110
+
+[HRData]
+100	100	220
+120	120	225
+125	120	230
+120	100	220';
+
+		$Parser = new ParserHRMSingle($String);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
+		$this->assertEquals( array(360, 300, 300, 360), $Parser->object()->getArrayPace() );
+		$this->assertEquals( array(220, 225, 230, 220), $Parser->object()->getArrayAltitude() );
+		$this->assertFalse( $Parser->object()->hasArrayCadence() );
+	}
+
+	public function testCadenceAndUSmetricsInVersion105() {
+		$String = '[Params]
+Version=105
+Mode=001
+
+[HRData]
+100	100	82
+120	120	85
+125	120	83
+120	100	82';
+
+		$Parser = new ParserHRMSingle($String);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
+		$this->assertEquals( array(224, 186, 186, 224), $Parser->object()->getArrayPace() );
+		$this->assertEquals( array( 82,  85,  83,  82), $Parser->object()->getArrayCadence() );
+		$this->assertFalse( $Parser->object()->hasArrayAltitude() );
+	}
+
+	public function testUSmetricsInVersion106() {
+		$String = '[Params]
+Version=106
+SMode=11110001
+
+[HRData]
+100	100	82 760 320
+120	120	85 780 350
+125	120	83 770 330
+120	100	82 760 300';
+
+		$Parser = new ParserHRMSingle($String);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
+		$this->assertEquals( array(224, 186, 186, 224), $Parser->object()->getArrayPace() );
+		$this->assertEquals( array( 82,  85,  83,  82), $Parser->object()->getArrayCadence() );
+		$this->assertEquals( array(232, 238, 235, 232), $Parser->object()->getArrayAltitude() );
+		$this->assertEquals( array(320, 350, 330, 300), $Parser->object()->getArrayPower() );
+	}
+
 }

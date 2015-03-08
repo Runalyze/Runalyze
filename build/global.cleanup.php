@@ -118,6 +118,7 @@ $Accounts = $PDO->query('
 	FROM `'.PREFIX.'account`
 	WHERE `cleanup`=0'
 );
+$AccountUpdate = $PDO->prepare('UPDATE `'.PREFIX.'account` SET `cleanup`=1 WHERE `id`=?');
 
 while ($Account = $Accounts->fetch()) {
 	GlobalCleanupAccount::$ID = $Account['id'];
@@ -140,6 +141,8 @@ while ($Account = $Accounts->fetch()) {
 		echo implode(EOL, $JobGeneral->messages());
 		echo EOL.EOL;
 	}
+
+	$AccountUpdate->execute(array($Account['id']));
 
 	echo '.'.(CLI ? '' : ' ');
 }

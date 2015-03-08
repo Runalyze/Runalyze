@@ -254,7 +254,10 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				},
 				callbacks: {
 					onError: function(id, name, errorReason, xhr) {
-						$("#pluginTool").append(\'<p class="error appended-by-uploader">\'+errorReason+\'</p>\');
+						$("#upload-container").append(\'<p class="error appended-by-uploader">\'+errorReason+\'</p>\').removeClass("loading");
+					},
+					onSubmit: function(id, fileName) {
+						$("#upload-container").addClass("loading");
 					},
 					onComplete: function(id, fileName, responseJSON) {
 						$(".appended-by-uploader").remove();

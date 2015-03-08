@@ -14,6 +14,11 @@ namespace Runalyze\Data\Elevation\Correction;
  */
 class GeoTIFF extends Strategy {
 	/**
+	 * @var int
+	 */
+	const UNKNOWN = -32768;
+
+	/**
 	 * Reader
 	 * @var \SRTMGeoTIFFReader
 	 */
@@ -26,10 +31,32 @@ class GeoTIFF extends Strategy {
 	protected $USE_SMOOTHING = true;
 
 	/**
+	 * Boolean flag: guess unknown
+	 * @var boolean
+	 */
+	protected $GUESS_UNKNOWN = true;
+
+	/**
 	 * Boolean flag: interpolate
 	 * @var boolean
 	 */
 	protected $INTERPOLATE = true;
+
+	/**
+	 * Set use smoothing flag
+	 * @param boolean $flag
+	 */
+	public function setUseSmoothing($flag) {
+		$this->USE_SMOOTHING = $flag;
+	}
+
+	/**
+	 * Set guess unknown flag
+	 * @param boolean $flag
+	 */
+	public function setGuessUnknown($flag) {
+		$this->GUESS_UNKNOWN = $flag;
+	}
 
 	/**
 	 * Can the strategy handle the data?
@@ -78,6 +105,10 @@ class GeoTIFF extends Strategy {
 
 			if ($this->USE_SMOOTHING) {
 				$this->smoothElevation();
+			}
+
+			if ($this->GUESS_UNKNOWN) {
+				$this->guessUnknown(self::UNKNOWN);
 			}
 		}
 	}
