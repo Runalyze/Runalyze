@@ -100,6 +100,6 @@ class ConfigTabClothes extends ConfigTab {
 				DB::getInstance()->insert('clothes', $columns, $values);
 		}
 
-		Cache::delete(ClothesFactory::CACHE_KEY);
+		ClothesFactory::reInitAllClothes();
 	}
 }

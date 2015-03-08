@@ -42,6 +42,14 @@ class ClothesFactory {
 		foreach ($clothes as $data)
 			self::$AllClothes[$data['id']] = $data;
 	}
+
+	/**
+	 * Reinit all clothes
+	 */
+	static public function reInitAllClothes() {
+		Cache::delete(self::CACHE_KEY);
+		self::initAllClothes();
+	}
         
 	/**
 	 * Cache Clothes
