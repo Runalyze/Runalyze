@@ -137,6 +137,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$VDOT        = Configuration::Data()->vdot();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
+		$ModelATLmax = $TSBmodel->maxFatigue();
+		$ModelCTLmax = $TSBmodel->maxFitness();
+
+		if ($ModelATLmax > $ATLmax) {
+			Configuration::Data()->updateMaxATL($ModelATLmax);
+			$ATLmax = $ModelATLmax;
+		}
+
+		if ($ModelCTLmax > $CTLmax) {
+			Configuration::Data()->updateMaxCTL($ModelCTLmax);
+			$CTLmax = $ModelCTLmax;
+		}
+
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
 		$CTLabsolute = $TSBmodel->fitnessAt(0);
 		$TrimpValues = array(

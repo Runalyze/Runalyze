@@ -136,6 +136,34 @@ abstract class Model {
 	}
 
 	/**
+	 * @return int
+	 */
+	final public function maxFitness() {
+		return round(max($this->Fitness));
+	}
+
+	/**
+	 * @return int
+	 */
+	final public function maxFatigue() {
+		return round(max($this->Fatigue));
+	}
+
+	/**
+	 * @return int
+	 */
+	final public function maxPerformance() {
+		return round(max($this->Performance));
+	}
+
+	/**
+	 * @return int
+	 */
+	final public function minPerformance() {
+		return round(min($this->Performance));
+	}
+
+	/**
 	 * Fitness
 	 * @param int $index 0 for today
 	 * @return int
