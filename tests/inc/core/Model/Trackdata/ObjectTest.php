@@ -166,4 +166,20 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(4, $T->num());
 	}
 
+	public function testEmptyArrays() {
+		$T = new Object(array(
+			Object::DISTANCE => array(0, 0, 0, 0),
+			Object::TIME => array(10, 20, 30, 40),
+			Object::HEARTRATE => array(0, 0, 0, 0),
+			Object::CADENCE => array(90, 85, 87, 89),
+			Object::TEMPERATURE => array(-2, -1, -1, 0)
+		));
+
+		$this->assertTrue($T->has(Object::TIME));
+		$this->assertTrue($T->has(Object::CADENCE));
+		$this->assertTrue($T->has(Object::TEMPERATURE));
+		$this->assertFalse($T->has(Object::DISTANCE));
+		$this->assertFalse($T->has(Object::HEARTRATE));
+	}
+
 }
