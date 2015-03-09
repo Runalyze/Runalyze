@@ -232,14 +232,14 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		}
 
 		$Query = 'SELECT `'.PREFIX.'route`.`cities` FROM `'.PREFIX.'training`';
-		$Query .= ' RIGHT JOIN `runalyze_route` ON `runalyze_training`.`routeid` = `runalyze_route`.`id`';
+		$Query .= ' RIGHT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid` = `'.PREFIX.'route`.`id`';
 		$Query .= ' WHERE ';
 
 		if ($this->sportid > 0) {
 			$Query .= '`sportid`='.(int) $this->sportid.' AND ';
 		}
 
-		$Query .= '`runalyze_training`.`accountid`='.SessionAccountHandler::getId().' AND ';
+		$Query .= '`'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND ';
 
 		if ($this->year > 0) {
 			$Query .= '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND';
