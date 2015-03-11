@@ -119,8 +119,15 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addAveragePace() {
 		if ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->pace()->asMinPerKm(), '/km', __('&oslash; Pace'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->dataview()->pace()->asKmPerHour(), 'km/h', __('&oslash; Speed'));
+			$Pace = $this->Context->dataview()->pace();
+
+			if ($Pace->unit() == \Runalyze\Activity\Pace::KM_PER_H) {
+				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
+				$this->BoxedValues[] = new BoxedValue($Pace->asMinPerKm(), '/km', __('&oslash; Pace'));
+			} else {
+				$this->BoxedValues[] = new BoxedValue($Pace->value(), $Pace->appendix(), __('&oslash; Pace'));
+				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
+			}
 		}
 	}
 

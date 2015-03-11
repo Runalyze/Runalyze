@@ -22,6 +22,11 @@ use Runalyze\View\Tooltip;
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY_JD_POINTS = 'JDQuery';
+
+	/**
 	 * Name
 	 * @return string
 	 */
@@ -137,6 +142,19 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$VDOT        = Configuration::Data()->vdot();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
+		$ModelATLmax = $TSBmodel->maxFatigue();
+		$ModelCTLmax = $TSBmodel->maxFitness();
+
+		if ($ModelATLmax > $ATLmax) {
+			Configuration::Data()->updateMaxATL($ModelATLmax);
+			$ATLmax = $ModelATLmax;
+		}
+
+		if ($ModelCTLmax > $CTLmax) {
+			Configuration::Data()->updateMaxCTL($ModelCTLmax);
+			$CTLmax = $ModelCTLmax;
+		}
+
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
 		$CTLabsolute = $TSBmodel->fitnessAt(0);
 		$TrimpValues = array(
@@ -148,17 +166,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
-		// TODO: This cache value will not automatically be updated, right? That's horrible!
-                $JDQuery = Cache::get('JDQuery');
-                if(is_null($JDQuery)) {
-                    $JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
-                    $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
-                    $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
-                    $JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
-                    Cache::set('JDQuery', $JDQuery, '600');
-                }
-                    $JDPointsLastWeek = $JDQuery['LastWeek'];
-                    $JDPointsThisWeek = $JDQuery['ThisWeek'];
+		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
+		if (is_null($JDQuery)) {
+			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
+			$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
+			$JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
+			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
+			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
+		}
+		$JDPointsLastWeek = $JDQuery['LastWeek'];
+		$JDPointsThisWeek = $JDQuery['ThisWeek'];
 		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(

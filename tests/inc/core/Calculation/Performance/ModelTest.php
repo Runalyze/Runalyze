@@ -91,4 +91,11 @@ class ModelTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(   0, $this->object->performanceAt(+1) );
 	}
 
+	public function testMaximalValues() {
+		$this->assertEquals( 20, $this->object->maxFitness() );
+		$this->assertEquals( 20, $this->object->maxFatigue() );
+		$this->assertEquals(  0, $this->object->maxPerformance() );
+		$this->assertEquals(-10, $this->object->minPerformance() );
+	}
+
 }

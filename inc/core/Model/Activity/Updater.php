@@ -120,6 +120,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->NewObject->set(Object::TIMESTAMP_EDITED, time());
 
 		$this->updateVDOTAndIntensityAndTrimp();
+		$this->deleteIntensityCache();
 		$this->updatePower();
 	}
 
@@ -134,7 +135,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		);
 
 		if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-			if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::HR_AVG) || $this->hasChanged(Object::ELEVATION)) {
+			$wasNotRunning = $this->knowsOldObject() && $this->hasChanged(Object::SPORTID);
+			if ($this->ForceRecalculations || $wasNotRunning || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::HR_AVG) || $this->hasChanged(Object::ELEVATION)) {
 				$this->NewObject->set(Object::VDOT_BY_TIME, $Calculator->calculateVDOTbyTime());
 				$this->NewObject->set(Object::JD_INTENSITY, $Calculator->calculateJDintensity());
 				$this->NewObject->set(Object::VDOT, $Calculator->calculateVDOTbyHeartRate());
@@ -146,6 +148,28 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 
 		if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)) {
 			$this->NewObject->set(Object::TRIMP, $Calculator->calculateTrimp());
+		}
+	}
+
+	protected function deleteIntensityCache() {
+		if (!class_exists('RunalyzePluginPanel_Rechenspiele')) {
+			return;
+		}
+
+		$timestampLimit = time() - 14 * DAY_IN_S;
+
+		if (
+			($this->hasChanged(Object::JD_INTENSITY) && (
+				$this->NewObject->timestamp() >= $timestampLimit ||
+				($this->knowsOldObject() && $this->OldObject->timestamp() >= $timestampLimit)
+			)) || (
+				$this->knowsOldObject() && $this->hasChanged(Object::TIMESTAMP) && (
+					$this->NewObject->timestamp() >= $timestampLimit ||
+					$this->OldObject->timestamp() >= $timestampLimit
+				)
+			)
+		) {
+			\Cache::delete(\RunalyzePluginPanel_Rechenspiele::CACHE_KEY_JD_POINTS);
 		}
 	}
 

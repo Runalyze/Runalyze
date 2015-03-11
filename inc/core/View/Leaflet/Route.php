@@ -33,9 +33,22 @@ class Route {
 
 	/**
 	 * Infos
+	 * 
+	 * Information to be displayed on mouseover.
+	 * First entry has to be distance.
+	 * 
 	 * @var array
 	 */
 	protected $Infos = array();
+
+	/**
+	 * Labels for infos
+	 * 
+	 * Labels for `$Infos`. Can be false to hide on mouseover.
+	 * 
+	 * @var array
+	 */
+	protected $InfoLabels = array();
 
 	/**
 	 * Options
@@ -67,6 +80,7 @@ class Route {
 		$Options = 'segments: '.json_encode($this->Paths);
 
 		if (count($this->Paths) == count($this->Infos)) {
+			$Options .= ', segmentsInfoLabels: '.json_encode($this->InfoLabels);
 			$Options .= ', segmentsInfo: '.json_encode($this->Infos);
 		}
 

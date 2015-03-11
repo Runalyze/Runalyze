@@ -160,7 +160,7 @@ class Table extends \Runalyze\View\Object {
 		$showOnlyActive = $this->Splits->hasActiveAndInactiveLaps() && $this->Splits->hasActiveLaps(2);
 
 		foreach ($this->Splits->asArray() as $Split) {
-			$PaceObj = $Split->pace(Pace::MIN_PER_KM);
+			$PaceObj = $Split->pace($this->PaceUnit);
 
 			if ($showOnlyActive && !$Split->isActive()) {
 				if (!$seperated && ($i > 0)) { // && ($i < $num_active)) {
@@ -194,7 +194,11 @@ class Table extends \Runalyze\View\Object {
 	 * @return string
 	 */
 	private function tdForPaceDifference(Pace $Pace, $compareOnlyToDemanded = false) {
-		if (($compareOnlyToDemanded && ($this->demandedPace->isEmpty())) || ($this->achievedPaceActive->isEmpty()) && ($this->achievedPace->isEmpty()))
+		if (
+			($compareOnlyToDemanded && ($this->demandedPace->isEmpty())) ||
+			($this->achievedPaceActive->isEmpty()) && ($this->achievedPace->isEmpty()) ||
+			$Pace->unit() == Pace::NONE
+		)
 			return '';
 
 		if (!$this->demandedPace->isEmpty()) {

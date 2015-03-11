@@ -31,7 +31,6 @@ class ExporterGoogle extends ExporterAbstractSocialShare {
 
 		$Linklist = new BlocklinkList();
 		$Linklist->addCompleteLink($this->externalLink($url, __('Share +1')) );
-		$Linklist->addCompleteLink( $this->getLink() );
 		$Linklist->display();
 
 		echo HTML::info( __('You will be forwared to Google+, where you can define which text shall be displayed.') );
