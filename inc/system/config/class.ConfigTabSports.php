@@ -72,8 +72,11 @@ class ConfigTabSports extends ConfigTab {
 		$Sports   = SportFactory::AllSports();
 		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
 		$SportCount = SportFactory::CountArray();
-		foreach($SportCount as $is => $SC)
-			$Sports[$is]['counts'] = $SC;
+		foreach($SportCount as $is => $SC) {
+			if (isset($Sports[$is])) {
+				$Sports[$is]['counts'] = $SC;
+			}
+		}
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
