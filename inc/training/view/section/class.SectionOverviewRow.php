@@ -48,7 +48,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 			new BoxedValue(Helper::Unknown($this->Context->activity()->distance(), '-.--'), 'km', __('Distance')),
 			new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time')),
 			new BoxedValue($this->Context->dataview()->elapsedTime(), '', __('Elapsed time')),
-			new BoxedValue($this->Context->dataview()->pace()->asMinPerKm(), '/km', __('Pace')),
+			new BoxedValue($this->Context->dataview()->pace()->value(), $this->Context->dataview()->pace()->appendix(), __('Pace')),
 			new BoxedValue(Helper::Unknown($this->Context->activity()->hrAvg(), '-'), 'bpm', __('&oslash; Heartrate')),
 			new BoxedValue(Helper::Unknown($this->Context->activity()->hrMax(), '-'), 'bpm', __('max. Heartrate')),
 			new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories')),

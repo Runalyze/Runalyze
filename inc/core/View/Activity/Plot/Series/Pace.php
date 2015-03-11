@@ -32,19 +32,30 @@ class Pace extends ActivitySeries {
 	/**
 	 * @var boolean
 	 */
-	protected $asKMH;
+	protected $isRunning;
 
 	/**
-	 * @var boolean
+	 * @var enum
 	 */
-	protected $isRunning;
+	protected $paceUnit;
+
+	/**
+	 * @var bool
+	 */
+	protected $paceInTime;
 
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
 	 */
 	public function __construct(Activity\Context $context) {
-		$this->asKMH = ($context->sport()->paceUnit() == \Runalyze\Activity\Pace::KM_PER_H);
+		$this->paceUnit = $context->sport()->paceUnit();
+
+		if ($this->paceUnit == \Runalyze\Activity\Pace::NONE) {
+			$this->paceUnit = \Runalyze\Activity\Pace::STANDARD;
+		}
+
+		$this->paceInTime = ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M);
 		$this->isRunning = ($context->sport()->id() == Configuration::General()->runningSport());
 
 		$this->initOptions();
@@ -59,8 +70,9 @@ class Pace extends ActivitySeries {
 		$this->Label = __('Pace');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = $this->asKMH ? 'km/h' : '';
-		$this->UnitDecimals = 0;
+		$pace = new \Runalyze\Activity\Pace(0, 1, $this->paceUnit);
+		$this->UnitString = !$this->paceInTime ? str_replace('&nbsp;', '', $pace->appendix()) : '';
+		$this->UnitDecimals = 1;
 
 		$this->TickSize = false;
 
@@ -73,10 +85,31 @@ class Pace extends ActivitySeries {
 	 * Manipulate data
 	 */
 	protected function manipulateData() {
-		if ($this->asKMH) {
-			$this->Data = \Plot::correctValuesFromPaceToKmh($this->Data);
-		} else {
-			$this->Data = \Plot::correctValuesForTime($this->Data);
+		switch ($this->paceUnit) {
+			case \Runalyze\Activity\Pace::KM_PER_H:
+				$this->Data = array_map(function($v){
+					return ($v == 0) ? 0 : round(3600/$v, 1);
+				}, $this->Data);
+				break;
+
+			case \Runalyze\Activity\Pace::M_PER_S:
+				$this->Data = array_map(function($v){
+					return ($v == 0) ? 0 : round(1000/$v, 1);
+				}, $this->Data);
+				break;
+
+			case \Runalyze\Activity\Pace::MIN_PER_100M:
+				$this->Data = array_map(function($v){
+					return round($v*100);
+				}, $this->Data);
+				break;
+
+			case \Runalyze\Activity\Pace::MIN_PER_KM:
+			default:
+				$this->Data = array_map(function($v){
+					return round($v*1000);
+				}, $this->Data);
+				break;
 		}
 	}
 
@@ -93,7 +126,11 @@ class Pace extends ActivitySeries {
 
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
-		if (!$this->asKMH) {
+		if ($this->paceInTime) {
+			$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
+		}
+
+		if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM) {
 			$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
 
 			$setLimits = false;

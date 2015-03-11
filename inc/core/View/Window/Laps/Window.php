@@ -226,6 +226,8 @@ class Window {
 	 * Display rounds
 	 */
 	protected function displayTable() {
+		$this->DemandedPace->setUnit($this->Context->sport()->paceUnit());
+
 		$Table = new Table(
 			$this->Laps,
 			$this->DemandedTime,

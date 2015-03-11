@@ -8,6 +8,7 @@ namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
+use Runalyze\Activity\Pace;
 
 /**
  * Plot for: computed laps
@@ -48,6 +49,9 @@ class LapsComputed extends Laps {
 
 		$RawData = $this->computeRounds($context);
 		$num = count($RawData);
+		$paceUnit = $context->sport()->paceUnit() == Pace::NONE ? Pace::STANDARD : $context->sport()->paceUnit();
+		$paceInTime = ($paceUnit == Pace::MIN_PER_KM || $paceUnit == Pace::MIN_PER_100M);
+		$pace = new \Runalyze\Activity\Pace(0, 1, $paceUnit);
 
 		foreach ($RawData as $key => $val) {
 			$km = $key + 1;
@@ -62,7 +66,16 @@ class LapsComputed extends Laps {
 			}
 
 			$this->Labels[$key] = array($key, $label);
-			$this->Data[$key]   = $val['km'] > 0 ? $val['s']*1000/$val['km'] : 0;
+			$pace->setDistance($val['km'])->setTime($val['s']);
+
+			if ($paceInTime) {
+				$this->Data[$key] = 1000*$pace->secondsPerKm();
+				if ($paceUnit == Pace::MIN_PER_100M) {
+					$this->Data[$key] /= 10;
+				}
+			} else {
+				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());
+			}
 		}
 
 		$this->Plot->Data[] = array('label' => $this->title, 'data' => $this->Data);
