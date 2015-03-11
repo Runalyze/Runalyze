@@ -291,7 +291,7 @@ class Pace {
 			case self::M_PER_S:
 				$value = abs((float)str_replace(',', '.', $this->value()) - (float)str_replace(',', '.', $other->value()));
 				$string = number_format($value, 1, ',', '.');
-				return $this->formatComparison($string, $other->secondsPerKm() <= $this->secondsPerKm(), $raw);
+				return $this->formatComparison($string, $other->secondsPerKm() >= $this->secondsPerKm(), $raw);
 		}
 
 		throw new \InvalidArgumentException('Pace unit '.$this->Unit.' cannot be compared.');
