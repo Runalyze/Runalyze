@@ -261,7 +261,7 @@ class AccountHandler {
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
-			$message  = sprintf( __('Did you forgot your password %s?'), $account['name'])."<br><br>\r\n\r\n";
+			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= self::getChangePasswordLink($pwHash);
 
