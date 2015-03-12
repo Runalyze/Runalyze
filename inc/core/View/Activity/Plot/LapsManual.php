@@ -10,7 +10,7 @@ use Runalyze\Model\Activity\Splits;
 use Runalyze\View\Activity;
 use Runalyze\Activity\Duration;
 use Runalyze\Util\StringReader;
-use Runalyze\Activity\Pace;
+use Runalyze\Activity\Pace as APace;
 
 /**
  * Plot for: manual laps
@@ -60,7 +60,7 @@ class LapsManual extends Laps {
 		$this->demandedPace = $Reader->findDemandedPace();
 		$this->achievedPace = array_sum($this->Data) / $num;
 
-		$paceUnit = $context->sport()->paceUnit() == Pace::NONE ? Pace::STANDARD : $context->sport()->paceUnit();
+		$paceUnit = $context->sport()->paceUnit() == APace::NONE ? APace::STANDARD : $context->sport()->paceUnit();
 		$this->manipulateData($num, $paceUnit);
 	}
 
@@ -82,8 +82,8 @@ class LapsManual extends Laps {
 	 * @param enum $paceUnit
 	 */
 	protected function manipulateData($num, $paceUnit) {
-		$paceInTime = ($paceUnit == Pace::MIN_PER_KM || $paceUnit == Pace::MIN_PER_100M);
-		$pace = new \Runalyze\Activity\Pace(0, 1, $paceUnit);
+		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M);
+		$pace = new APace(0, 1, $paceUnit);
 
 		foreach ($this->Data as $key => $val) {
 			if ($num > 35) {
@@ -100,7 +100,7 @@ class LapsManual extends Laps {
 
 			if ($paceInTime) {
 				$this->Data[$key] = 1000*$pace->secondsPerKm();
-				if ($paceUnit == Pace::MIN_PER_100M) {
+				if ($paceUnit == APace::MIN_PER_100M) {
 					$this->Data[$key] /= 10;
 				}
 			} else {
