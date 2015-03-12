@@ -7,7 +7,7 @@
 namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\View\Activity;
-use Runalyze\Activity\Pace;
+use Runalyze\Activity\Pace as APace;
 use Helper;
 
 /**
@@ -51,14 +51,14 @@ abstract class Laps extends ActivityPlot {
 	protected function initData(Activity\Context $context) {
 		$this->PaceUnit = $context->sport()->paceUnit();
 
-		if ($this->PaceUnit == \Runalyze\Activity\Pace::NONE) {
-			$this->PaceUnit = \Runalyze\Activity\Pace::STANDARD;
+		if ($this->PaceUnit == APace::NONE) {
+			$this->PaceUnit = APace::STANDARD;
 		}
 
 		$this->SplitsAreNotComplete = $this->splitsAreNotComplete($context);
 		$this->loadData($context);
 
-		if (!empty($this->Data) && ($this->PaceUnit == Pace::MIN_PER_KM || $this->PaceUnit == Pace::MIN_PER_100M)) {
+		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M)) {
 			$min = Helper::floorFor(min($this->Data), 30000);
 			$max = Helper::ceilFor(max($this->Data), 30000);
 
@@ -67,7 +67,7 @@ abstract class Laps extends ActivityPlot {
 			$min = floor(min($this->Data));
 			$max = ceil(max($this->Data));
 
-			$pace = new Pace(0, 1, $this->PaceUnit);
+			$pace = new APace(0, 1, $this->PaceUnit);
 			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $pace->appendix()), 1);
 		}
 
