@@ -33,17 +33,42 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 	 * Init data
 	 * @param \Runalyze\Model\Trackdata $trackdata
 	 * @param string $key
+	 * @param boolean $fillGaps try to fill gaps (zero values)
 	 */
-	protected function initData(Trackdata $trackdata, $key) {
+	protected function initData(Trackdata $trackdata, $key, $fillGaps = false) {
 		if (!$trackdata->has($key)) {
 			$this->Data = array();
 			return;
+		}
+
+		if ($fillGaps) {
+			$this->fillGaps($trackdata, $key);
 		}
 
 		$Collector = new DataCollector($trackdata, $key);
 
 		$this->Data = $Collector->data();
 		$this->XAxis = $Collector->xAxis();
+	}
+
+	/**
+	 * Init data
+	 * @param \Runalyze\Model\Trackdata $trackdata
+	 * @param string $key
+	 */
+	protected function fillGaps(Trackdata $trackdata, $key) {
+		$data = $trackdata->get($key);
+		$last = $data[0];
+
+		foreach ($data as &$val) {
+			if ($val == 0) {
+				$val = $last;
+			}
+
+			$last = $val;
+		}
+
+		$trackdata->set($key, $data);
 	}
 
 	/**
