@@ -9,6 +9,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\Model\Route\Object as Route;
 use Runalyze\Model\Route\Loop;
+use Runalyze\Configuration;
 
 /**
  * Collect data from trackdata
@@ -35,6 +36,8 @@ class DataCollectorWithRoute extends DataCollector {
 		}
 
 		$this->Key = $key;
+		$this->Precision = Configuration::ActivityView()->plotPrecision();
+		$this->KnowsDistance = $trackdata->has(Trackdata::DISTANCE);
 
 		$this->init($trackdata);
 		$this->LoopRoute = new Loop($route);
