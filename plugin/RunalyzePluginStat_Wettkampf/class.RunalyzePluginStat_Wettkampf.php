@@ -324,9 +324,12 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		echo '<tr class="top-spacer no-zebra r">';
 		echo '<td class="b">'.__('In total').'</td>';
 
-		foreach ($year as $i => $y)
-			if ($i != 'sum')
-				echo '<td>'.$y['sum'].'x</td>';
+		foreach ($Years as $key) {
+			if ($key != 'sum') {
+				$y = $year[$key];
+				echo '<td>'.$year[$key]['sum'].'x</td>';
+			}
+		}
 
 		echo '</tr>';
 		echo '</tbody>';
