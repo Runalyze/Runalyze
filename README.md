@@ -29,6 +29,7 @@ Release details on runalyze.de: [v2.0alpha](http://runalyze.de/allgemein/runalyz
 
 ## Changelog
 * new versions, multi-lingual
+ * [v2.0.1](http://runalyze.de/allgemein/runalyze-v2-0-1/), 13.03.2015: Minor bugfixes
  * [v2.0](http://runalyze.de/allgemein/runalyze-v2-0/), 28.02.2015: First mutlilingual major release
 * old versions, only in german
  * [v1.5](http://runalyze.de/allgemein/runalyze-v1-5/), 01.01.2014: Bugfixes, genauere VDOT-Formel
@@ -48,7 +49,7 @@ More details: <http://runalyze.de/installation/> (only in german)
 ## Update
 * delete all contents of `/runalyze/` except for `/config.php/`
 * download new zip-file and extract it
-* open `../runalyze/update.php` in your browser
+* open `../runalyze/update.php` in your browser and look if a database update is needed
 * follow the instructions
 * for v2.0 only: run `../runalyze/refactor-db.php`
 
