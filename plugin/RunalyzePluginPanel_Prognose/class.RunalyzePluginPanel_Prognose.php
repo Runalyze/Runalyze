@@ -90,9 +90,13 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		) );
 		$Model->setDefaultValue('jd');
 
+		$BasicEndurance = new PluginConfigurationValueBool('use_be', __('Use basic endurance'), __('Use basic endurance factor to adapt prognosis for long distances (Jack Daniels only).'));
+		$BasicEndurance->setDefaultValue(true);
+
 		$Configuration = new PluginConfiguration($this->id());
 		$Configuration->addValue($Distances);
 		$Configuration->addValue($Model);
+		$Configuration->addValue($BasicEndurance);
 
 		$this->setConfiguration($Configuration);
 	}
@@ -158,6 +162,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		}
 
 		$this->PrognosisStrategy->setupFromDatabase();
+
+		if ($this->Configuration()->value('model') == 'jd' && !$this->Configuration()->value('use_be')) {
+			$this->PrognosisStrategy->setBasicEnduranceForAdjustment(INFINITY);
+		}
 
 		$this->Prognosis = new RunningPrognosis;
 		$this->Prognosis->setStrategy($this->PrognosisStrategy);
