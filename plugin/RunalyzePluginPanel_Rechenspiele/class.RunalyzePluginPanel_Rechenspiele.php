@@ -232,10 +232,8 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'value'	=> sprintf("%+d", $TrimpValues['TSB']),
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
-				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
-					'&lt; 0: You are training hard.<br>'.
-					'<small>A value of &ge; 10 is desirable for a race.<br>'.
-					'A value of &le; -10 can be a hint to start regeneration.</small>')
+				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>'.
+					'&lt; 0: You are training hard.')
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
