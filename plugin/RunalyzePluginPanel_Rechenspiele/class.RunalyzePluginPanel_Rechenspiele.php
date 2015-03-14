@@ -157,12 +157,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
 		$CTLabsolute = $TSBmodel->fitnessAt(0);
+		$TSBabsolute = $TSBmodel->performanceAt(0);
 		$TrimpValues = array(
 			'ATL'		=> round(100*$ATLabsolute/$ATLmax),
 			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
 			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
 			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
-			'TSB'	=> $TSBmodel->performanceAt(0)
+			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
+			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute)
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
@@ -226,10 +228,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
 				'bars'	=> array(
-					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
+					new ProgressBarSingle(abs($TrimpValues['TSB'])/2, ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
-				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TrimpValues['TSB']),
-				'value'	=> sprintf("%+d", $TrimpValues['TSB']),
+				'bar-tooltip'	=> 'TSB = CTL - ATL<br>'.sprintf( __('absolute: %s<br>as percentage: %s &#37;'), $CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TSBabsolute), $TrimpValues['TSB']),
+				'value'	=> $TrimpValues['TSBstring'],
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
 				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>'.
