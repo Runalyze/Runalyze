@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-16 10:02+0100\n"
-"PO-Revision-Date: 2015-02-24 08:59+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"PO-Revision-Date: 2015-03-16 19:19+0200\n"
+"Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -734,9 +734,9 @@ msgid "You have to change the following variables:"
 msgstr "Musisz zmienić następujące zmienne:"
 
 #: inc/tpl/tpl.Installer.php:219
-#, fuzzy, php-format
+#, php-format
 msgid "Please save the following code as <strong>%s</strong>:"
-msgstr "Zapisz następujący kod jako <strong>%s<strong>:"
+msgstr "Zapisz następujący kod jako <strong>%s</strong>:"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
@@ -1600,6 +1600,8 @@ msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Lista wszystkich dystansów oddzielonych przecinkami. Umieść \"+\" na "
+"początku listy by potraktować dystanse jako interwały."
 
 #: inc/core/View/Window/Laps/Form.php:68
 msgid "e.g."
@@ -1834,15 +1836,16 @@ msgstr ""
 "przypadku deaktywuj tę opcję."
 
 #: inc/core/Configuration/Category/Trimp.php:109
-#, fuzzy
 msgid "Show TSB in percent of ATL/CTL"
-msgstr "Pokaż ATL/CTL jako procent maksimum"
+msgstr "Pokaż TSB jako procent maksimum"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
+"Skala TSB zależy od Twojego ATL/CTL. Dla spójności możesz wyświetlić TSB "
+"jako procent bieżącego ATL/CTL."
 
 #: inc/core/Configuration/Category/Privacy.php:91
 #: inc/training/schemes/scheme.Training.php:65
@@ -1954,11 +1957,11 @@ msgstr "Wylicz moc dla jazdy na rowerze na podstawie prędkości i nachylenia"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Wykryj pauzy"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
-msgstr ""
+msgstr "Wykryj pauzy (dystans nie zwiększa się) podczas importu treningów"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
@@ -2054,7 +2057,7 @@ msgstr "Wykresy: wygładzanie krzywych"
 
 #: inc/core/Configuration/Category/ActivityView.php:310
 msgid "Plots: use time as x-axis"
-msgstr ""
+msgstr "Wykresy: użyj czasu na osi x"
 
 #: inc/core/Configuration/Category/ActivityView.php:314
 msgid "Pace plot: y-axis minimum"
@@ -2621,9 +2624,9 @@ msgid "Something went wrong. Please contact the administrator."
 msgstr "Coś poszło źle. Skontaktuj się z administratorem."
 
 #: inc/system/class.AccountHandler.php:264
-#, fuzzy, php-format
+#, php-format
 msgid "Did you forget your password %s?"
-msgstr "Zapomniałeś hasła"
+msgstr "Nie pamiętasz hasła %s?"
 
 #: inc/system/class.AccountHandler.php:265
 msgid ""
@@ -4105,7 +4108,7 @@ msgstr "Wyślij do multi-edytora"
 #: inc/training/search/class.SearchFormular.php:101
 #, php-format
 msgid "Our multi editor is limited to a maximum of %d activities."
-msgstr ""
+msgstr "Multi-edytor ograniczony jest do %d treningów."
 
 #: inc/training/search/class.SearchFormular.php:119
 msgid "Choose sport(s)"
@@ -4911,14 +4914,13 @@ msgid "Route network"
 msgstr "Sieć tras"
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:90
-#, fuzzy
 msgid "There are no routes matching the criterias."
-msgstr "Brak zawodów na tym dystansie."
+msgstr "Brak tras spełniających kryteria."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:103
 #, php-format
 msgid "The map contains your %s most recent routes matching the criterias."
-msgstr ""
+msgstr "Mapa zawiera %s ostatnich tras spełniających kryteria."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:104
 msgid "More routes are not possible at the moment due to performance issues."
@@ -5083,24 +5085,21 @@ msgstr ""
 "miesięcy w relacji do wartości maksymalnej.</small>"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:233
-#, fuzzy, php-format
+#, php-format
 msgid "absolute: %s<br>as percentage: %s &#37;"
-msgstr ""
-"Wartość aktualna: %s<br>Wartość maksymalna: %s<br>jako procent: %s &#37;"
+msgstr "bezwzględna: %s<br>procentowa: %s &#37;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:235
 msgid "Stress&nbsp;Balance"
 msgstr "Bilans&nbsp;obciążenia"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:237
-#, fuzzy
 msgid ""
 "Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>&lt; "
 "0: You are training hard."
 msgstr ""
 "Training Stress Balance (= CTL - ATL)<br>&gt; 0: Odpoczywasz<br>&lt; 0: "
-"Ciężko trenujesz<br><small>Wartość &ge; 10 jest odpowiedla do zawodów."
-"<br>Wartość &le; -10 jest wskazówką do regeneracji.</small>"
+"Ciężko trenujesz."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:254
 msgid "Monotony"
@@ -5934,7 +5933,6 @@ msgid "Prediction model"
 msgstr "Model prognozy"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
-#, fuzzy
 msgid "Use basic endurance"
 msgstr "Użyj Wytrzymałości bazowej"
 
@@ -5943,6 +5941,8 @@ msgid ""
 "Use basic endurance factor to adapt prognosis for long distances (Jack "
 "Daniels only)."
 msgstr ""
+"Użyj Wytrzymałości bazowej do dostosowania prognozy dla długich dystansów ("
+"tylko Jack Daniels)."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:110
 msgid "Show prognosis trend"
