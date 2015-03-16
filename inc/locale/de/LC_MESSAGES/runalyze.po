@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-16 10:02+0100\n"
-"PO-Revision-Date: 2015-03-12 09:09+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-03-16 14:29+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -744,9 +744,9 @@ msgid "You have to change the following variables:"
 msgstr "Die folgenden Variablen müssen angepasst werden:"
 
 #: inc/tpl/tpl.Installer.php:219
-#, fuzzy, php-format
+#, php-format
 msgid "Please save the following code as <strong>%s</strong>:"
-msgstr "Bitte speichere den folgenden Code unter <strong>%s<&strong>:"
+msgstr "Bitte speichere den folgenden Code unter <strong>%s</strong>:"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
