@@ -65,6 +65,42 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(7.8, $T->get(Object::MAX_LONGITUDE));
 	}
 
+	public function testSynchronizationWithEmptyPoints() {
+		$T = new Object(array(
+			Object::LATITUDES => array(0.0, 47.7, 47.8, 0.0),
+			Object::LONGITUDES => array(0.0, -7.8, -7.7, 0.0)
+		));
+		$T->synchronize();
+
+		$this->assertEquals(47.7, $T->get(Object::STARTPOINT_LATITUDE));
+		$this->assertEquals(-7.8, $T->get(Object::STARTPOINT_LONGITUDE));
+		$this->assertEquals(47.8, $T->get(Object::ENDPOINT_LATITUDE));
+		$this->assertEquals(-7.7, $T->get(Object::ENDPOINT_LONGITUDE));
+
+		$this->assertEquals(47.7, $T->get(Object::MIN_LATITUDE));
+		$this->assertEquals(-7.8, $T->get(Object::MIN_LONGITUDE));
+		$this->assertEquals(47.8, $T->get(Object::MAX_LATITUDE));
+		$this->assertEquals(-7.7, $T->get(Object::MAX_LONGITUDE));
+	}
+
+	public function testSynchronizationWithFullEmptyPoints() {
+		$T = new Object(array(
+			Object::LATITUDES => array(0.0, 0.0, 0.0, 0.0),
+			Object::LONGITUDES => array(0.0, 0.0, 0.0, 0.0)
+		));
+		$T->synchronize();
+
+		$this->assertEquals('', $T->get(Object::STARTPOINT_LATITUDE));
+		$this->assertEquals('', $T->get(Object::STARTPOINT_LONGITUDE));
+		$this->assertEquals('', $T->get(Object::ENDPOINT_LATITUDE));
+		$this->assertEquals('', $T->get(Object::ENDPOINT_LONGITUDE));
+
+		$this->assertEquals('', $T->get(Object::MIN_LATITUDE));
+		$this->assertEquals('', $T->get(Object::MIN_LONGITUDE));
+		$this->assertEquals('', $T->get(Object::MAX_LATITUDE));
+		$this->assertEquals('', $T->get(Object::MAX_LONGITUDE));
+	}
+
 	/**
 	 * @see https://github.com/Runalyze/Runalyze/issues/1172
 	 */

@@ -247,10 +247,17 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			$this->Data[self::ENDPOINT_LATITUDE] = '';
 			$this->Data[self::ENDPOINT_LONGITUDE] = '';
 		} else {
-			$this->Data[self::STARTPOINT_LATITUDE] = reset($this->Data[self::LATITUDES]);
-			$this->Data[self::STARTPOINT_LONGITUDE] = reset($this->Data[self::LONGITUDES]);
-			$this->Data[self::ENDPOINT_LATITUDE] = end($this->Data[self::LATITUDES]);
-			$this->Data[self::ENDPOINT_LONGITUDE] = end($this->Data[self::LONGITUDES]);
+			$Latitudes = array_filter($this->Data[self::LATITUDES]);
+			$Longitudes = array_filter($this->Data[self::LONGITUDES]);
+
+			if (!empty($Latitudes)) {
+				$this->Data[self::STARTPOINT_LATITUDE] = reset($Latitudes);
+				$this->Data[self::ENDPOINT_LATITUDE] = end($Latitudes);
+			}
+			if (!empty($Longitudes)) {
+				$this->Data[self::STARTPOINT_LONGITUDE] = reset($Longitudes);
+				$this->Data[self::ENDPOINT_LONGITUDE] = end($Longitudes);
+			}
 		}
 	}
 
@@ -264,10 +271,17 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			$this->Data[self::MAX_LATITUDE] = '';
 			$this->Data[self::MAX_LONGITUDE] = '';
 		} else {
-			$this->Data[self::MIN_LATITUDE] = min($this->Data[self::LATITUDES]);
-			$this->Data[self::MIN_LONGITUDE] = min($this->Data[self::LONGITUDES]);
-			$this->Data[self::MAX_LATITUDE] = max($this->Data[self::LATITUDES]);
-			$this->Data[self::MAX_LONGITUDE] = max($this->Data[self::LONGITUDES]);
+			$Latitudes = array_filter($this->Data[self::LATITUDES]);
+			$Longitudes = array_filter($this->Data[self::LONGITUDES]);
+
+			if (!empty($Latitudes)) {
+				$this->Data[self::MIN_LATITUDE] = min($Latitudes);
+				$this->Data[self::MAX_LATITUDE] = max($Latitudes);
+			}
+			if (!empty($Longitudes)) {
+				$this->Data[self::MIN_LONGITUDE] = min($Longitudes);
+				$this->Data[self::MAX_LONGITUDE] = max($Longitudes);
+			}
 		}
 	}
 
