@@ -74,7 +74,7 @@ class Geonames extends FromExternalAPI {
 		$latitudeString = implode(',', $latitudes);
 		$longitudeString = implode(',', $longitudes);
 
-		$url = 'http://ws.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.$this->USERNAME;
+		$url = 'http://api.geonames.org/srtm3JSON?lats='.$latitudeString.'&lngs='.$longitudeString.'&username='.$this->USERNAME;
 		$response = json_decode(\Filesystem::getExternUrlContent($url), true);
 
 		if (is_null($response) || !isset($response['geonames']) || !is_array($response['geonames'])) {

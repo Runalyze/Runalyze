@@ -25,7 +25,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 
 			$this->assertTrue( $Corrector->canHandleData() );
 			$Corrector->correctElevation();
-			$this->assertEquals( array(238), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(239), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_38_03.tif is not available.');
 		}
@@ -41,7 +41,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$this->assertTrue( $Corrector->canHandleData() );
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(240.0, 240.0, 240.0, 240.0, 240.0, 241.0, 241.0, 241.0, 241.0, 241.0, 254.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(240.0, 240.0, 240.0, 240.0, 240.0, 239.0, 239.0, 239.0, 239.0, 239.0, 258.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_38_03.tif is not available.');
 		}
@@ -58,7 +58,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->setUseSmoothing(false);
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(240.0, 238.0, 239.0, 238.0, 238.0, 241.0, 236.0, 237.0, 240.0, 246.0, 254.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(240.0, 239.0, 240.0, 238.0, 238.0, 239.0, 236.0, 236.0, 240.0, 247.0, 258.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_38_03.tif is not available.');
 		}
@@ -93,7 +93,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->setUseSmoothing(false);
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(7.0, 7.0, 7.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(5.0, 5.0, 5.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_67_19.tif is not available.');
 		}
@@ -110,7 +110,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->setUseSmoothing(false);
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(18.0, 17.0, 17.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(18.0, 19.0, 19.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_36_02.tif is not available.');
 		}
@@ -127,7 +127,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->setUseSmoothing(false);
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(1669.0, 1671.0, 1672.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(1666.0, 1669.0, 1671.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_40_17.tif is not available.');
 		}
@@ -144,7 +144,7 @@ class GeoTIFFTest extends \PHPUnit_Framework_TestCase {
 			$Corrector->setUseSmoothing(false);
 			$Corrector->correctElevation();
 
-			$this->assertEquals( array(19.0, 9.0, 38.0), $Corrector->getCorrectedElevation() );
+			$this->assertEquals( array(22.0, 25.0, 42.0), $Corrector->getCorrectedElevation() );
 		} else {
 			$this->markTestSkipped('srtm_22_04.tif is not available.');
 		}

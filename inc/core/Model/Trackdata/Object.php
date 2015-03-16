@@ -106,6 +106,10 @@ class Object extends Model\Object implements Model\Loopable {
 		foreach ($this->properties() as $key) {
 			if ($this->isArray($key)) {
 				try {
+					if ($key != self::TEMPERATURE && !empty($this->Data[$key]) && max($this->Data[$key]) == 0) {
+						$this->Data[$key] = array();
+					}
+
 					$count = count($this->Data[$key]);
 
 					if (($key == self::HEARTRATE || $key == self::CADENCE) && $this->numberOfPoints > 0 && $count > 0) {

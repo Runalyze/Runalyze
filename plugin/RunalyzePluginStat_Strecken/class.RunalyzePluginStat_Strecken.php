@@ -61,14 +61,23 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$text = __('Open route network');
-		$Link = Ajax::window('<a class="" href="plugin/'.$this->key().'/window.routenet.php"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
+		$Link = Ajax::window('<a class="" href="plugin/'.$this->key().'/window.routenet.php?sport='.$this->sportid.'&y='.$this->year.'"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
 
 		$this->setToolbarNavigationLinks(array('<li>'.$Link.'</li>'));
 		$this->setYearsNavigation(true, true);
+		$this->setSportsNavigation(true, true);
 
 		$this->setHeaderWithSportAndYear();
 
 		$this->initCities();
+	}
+
+	/**
+	 * Default sport
+	 * @return int
+	 */
+	protected function defaultSport() {
+		return -1;
 	}
 
 	/**
@@ -232,14 +241,14 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		}
 
 		$Query = 'SELECT `'.PREFIX.'route`.`cities` FROM `'.PREFIX.'training`';
-		$Query .= ' RIGHT JOIN `runalyze_route` ON `runalyze_training`.`routeid` = `runalyze_route`.`id`';
+		$Query .= ' RIGHT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid` = `'.PREFIX.'route`.`id`';
 		$Query .= ' WHERE ';
 
 		if ($this->sportid > 0) {
 			$Query .= '`sportid`='.(int) $this->sportid.' AND ';
 		}
 
-		$Query .= '`runalyze_training`.`accountid`='.SessionAccountHandler::getId().' AND ';
+		$Query .= '`'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND ';
 
 		if ($this->year > 0) {
 			$Query .= '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND';
@@ -248,5 +257,64 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$Query .= '`routeid`!=0 AND `cities`!=""';
 
 		return $Query;
+	}
+
+	/**
+	 * Panel menu for routenet
+	 * @param int $sportid
+	 * @param int $year
+	 * @return string
+	 */
+	static public function panelMenuForRoutenet($sportid, $year) {
+		$Code = '<div class="panel-menu"><ul>';
+		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose sport').'</span><ul class="submenu">'.self::submenuForSport($sportid, $year).'</ul></li>';
+		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.self::submenuForYear($sportid, $year).'</ul></li>';
+		$Code .= '</ul></div>';
+
+		return $Code;
+	}
+
+	/**
+	 * Submenu for sport
+	 * @param int $sportid
+	 * @param int $year
+	 * @return string
+	 */
+	static private function submenuForSport($sportid, $year) {
+		$Code = '<li'.(-1 == $sportid ? ' class="active"' : '').'>'.self::linkToRoutenet(__('All'), -1, $year).'</li>';
+
+		$Sports = SportFactory::NamesAsArray();
+		foreach ($Sports as $id => $name) {
+			$Code .= '<li'.($id == $sportid ? ' class="active"' : '').'>'.self::linkToRoutenet($name, $id, $year).'</li>';
+		}
+
+		return $Code;
+	}
+
+	/**
+	 * Submenu for sport
+	 * @param int $sportid
+	 * @param int $year
+	 * @return string
+	 */
+	static private function submenuForYear($sportid, $year) {
+		$Code = '<li'.(-1 == $year ? ' class="active"' : '').'>'.self::linkToRoutenet(__('All years'), $sportid, -1).'</li>';
+
+		for ($y = date("Y"); $y >= START_YEAR; $y--) {
+			$Code .= '<li'.($y == $year ? ' class="active"' : '').'>'.self::linkToRoutenet($y, $sportid, $y).'</li>';
+		}
+
+		return $Code;
+	}
+
+	/**
+	 * Internal link to routenet
+	 * @param string $text
+	 * @param int $sportid
+	 * @param int $year
+	 * @return string
+	 */
+	static private function linkToRoutenet($text, $sportid, $year) {
+		return Ajax::window('<a class="" href="plugin/RunalyzePluginStat_Strecken/window.routenet.php?sport='.$sportid.'&y='.$year.'">'.$text.'</a>', 'big');
 	}
 }

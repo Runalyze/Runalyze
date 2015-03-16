@@ -44,7 +44,7 @@ class Heartrate extends ActivitySeries {
 	public function __construct(Activity\Context $context) {
 		$this->setManipulationFactor();
 		$this->initOptions();
-		$this->initData($context->trackdata(), Trackdata::HEARTRATE);
+		$this->initData($context->trackdata(), Trackdata::HEARTRATE, true);
 		$this->manipulateData();
 	}
 

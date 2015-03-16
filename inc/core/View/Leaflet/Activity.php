@@ -121,6 +121,7 @@ class Activity extends LeafletRoute {
 
 		$this->addCurrentSegment();
 		$this->addStartAndEndIcon();
+		$this->defineInfoLabels();
 	}
 
 	/**
@@ -173,12 +174,24 @@ class Activity extends LeafletRoute {
 		$this->Path[] = array((float)$this->RouteLoop->latitude(), (float)$this->RouteLoop->longitude());
 
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
-			$Infos = array();
-			$Infos['km'] = (float)$this->TrackdataLoop->distance();
-			$Infos[__('Distance')] = Distance::format($Infos['km']);
-			$Infos[__('Time')] = Duration::format($this->TrackdataLoop->time());
+			$this->Info[] = array(
+				(float)$this->TrackdataLoop->distance(),
+				Distance::format($this->TrackdataLoop->distance()),
+				Duration::format($this->TrackdataLoop->time())
+			);
+		}
+	}
 
-			$this->Info[] = $Infos;
+	/**
+	 * Define labels
+	 */
+	protected function defineInfoLabels() {
+		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
+			$this->InfoLabels = array(
+				false,
+				__('Distance'),
+				__('Time')
+			);
 		}
 	}
 

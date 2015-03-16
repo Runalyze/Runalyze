@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\View\Activity;
+use Runalyze\Activity\Pace as APace;
 use Helper;
 
 /**
@@ -32,6 +33,12 @@ abstract class Laps extends ActivityPlot {
 	protected $title;
 
 	/**
+	 * Unit
+	 * @var enum
+	 */
+	protected $PaceUnit;
+
+	/**
 	 * Load data
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
@@ -42,16 +49,29 @@ abstract class Laps extends ActivityPlot {
 	 * @param \Runalyze\View\Activity\Context $context
 	 */
 	protected function initData(Activity\Context $context) {
+		$this->PaceUnit = $context->sport()->paceUnit();
+
+		if ($this->PaceUnit == APace::NONE) {
+			$this->PaceUnit = APace::STANDARD;
+		}
+
 		$this->SplitsAreNotComplete = $this->splitsAreNotComplete($context);
 		$this->loadData($context);
 
-		if (!empty($this->Data)) {
+		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M)) {
 			$min = Helper::floorFor(min($this->Data), 30000);
 			$max = Helper::ceilFor(max($this->Data), 30000);
-			$this->Plot->setYLimits(1, $min, $max, false);
+
+			$this->Plot->setYAxisTimeFormat('%M:%S');
+		} else {
+			$min = floor(min($this->Data));
+			$max = ceil(max($this->Data));
+
+			$pace = new APace(0, 1, $this->PaceUnit);
+			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $pace->appendix()), 1);
 		}
 
-		$this->Plot->setYAxisTimeFormat('%M:%S');
+		$this->Plot->setYLimits(1, $min, $max, false);
 		$this->Plot->setXLabels($this->Labels);
 		$this->Plot->showBars(true);
 

@@ -86,11 +86,29 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$ATLdays = Configuration::Trimp()->daysForATL();
 	$CTLdays = Configuration::Trimp()->daysForCTL();
 
-	$maxATL = Configuration::Trimp()->showInPercent() ? Configuration::Data()->maxATL() : 100;
-	$maxCTL = Configuration::Trimp()->showInPercent() ? Configuration::Data()->maxCTL() : 100;
-
 	$TSBModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
 	$TSBModel->calculate();
+
+	if ($All) {
+		$maxATL = $TSBModel->maxFatigue();
+		$maxCTL = $TSBModel->maxFitness();
+
+		if ($maxATL != Configuration::Data()->maxATL()) {
+			Configuration::Data()->updateMaxATL($maxATL);
+		}
+
+		if ($maxCTL != Configuration::Data()->maxCTL()) {
+			Configuration::Data()->updateMaxCTL($maxCTL);
+		}
+	} else {
+		$maxATL = Configuration::Data()->maxATL();
+		$maxCTL = Configuration::Data()->maxCTL();
+	}
+
+	if (!Configuration::Trimp()->showInPercent()) {
+		$maxATL = 100;
+		$maxCTL = 100;
+	}
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
 		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear + 1);

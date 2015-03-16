@@ -120,6 +120,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	protected function createPlotOptions() {
 		$this->createHandle('TRAINING_PLOT_SMOOTH', new Bool(false));
+		$this->createHandle('TRAINING_PLOT_XAXIS_TIME', new Bool(false));
 
 		$this->createHandle('TRAINING_PLOT_MODE', new ActivityPlotMode());
 		$this->createHandle('TRAINING_PLOT_PRECISION', new ActivityPlotPrecision());
@@ -131,6 +132,14 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	public function smoothCurves() {
 		return $this->get('TRAINING_PLOT_SMOOTH');
+	}
+
+	/**
+	 * Plot: use time as x-axis
+	 * @return bool
+	 */
+	public function usesTimeAsXAxis() {
+		return $this->get('TRAINING_PLOT_XAXIS_TIME');
 	}
 
 	/**
@@ -244,6 +253,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER_AND_TRAINING);
 		$this->handle('TRAINING_MAP_SHOW_FIRST')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
+		$this->handle('TRAINING_PLOT_XAXIS_TIME')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('TRAINING_PLOT_SMOOTH')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('PACE_Y_LIMIT_MIN')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
@@ -287,14 +297,18 @@ class ActivityView extends \Runalyze\Configuration\Category {
 			'label'		=> __('Plots: combination')
 		));
 
-		$Fieldset->addHandle( $this->handle('TRAINING_PLOT_SMOOTH'), array(
-			'label'		=> __('Plots: smooth curves')
-		));
-
         $Fieldset->addHandle( $this->handle('TRAINING_PLOT_PRECISION'), array(
             'label'		=> __('Plots: precision'),
             'tooltip'	=> __('How many data points should be plotted?')
         ));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_PLOT_SMOOTH'), array(
+			'label'		=> __('Plots: smooth curves')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_PLOT_XAXIS_TIME'), array(
+			'label'		=> __('Plots: use time as x-axis')
+		));
 
 		$Fieldset->addHandle( $this->handle('PACE_Y_LIMIT_MIN'), array(
 			'label'		=> __('Pace plot: y-axis minimum'),

@@ -32,6 +32,7 @@ class Trimp extends \Runalyze\Configuration\Category {
 		$this->createHandle('ATL_DAYS', new Int(7));
 		$this->createHandle('CTL_DAYS', new Int(42));
 		$this->createHandle('TRIMP_MODEL_IN_PERCENT', new Bool(true));
+		$this->createHandle('TSB_IN_PERCENT', new Bool(false));
 	}
 
 	/**
@@ -59,6 +60,14 @@ class Trimp extends \Runalyze\Configuration\Category {
 	}
 
 	/**
+	 * Show TSB in percent?
+	 * @return boolean
+	 */
+	public function showTSBinPercent() {
+		return $this->get('TSB_IN_PERCENT');
+	}
+
+	/**
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
@@ -69,6 +78,7 @@ class Trimp extends \Runalyze\Configuration\Category {
 		$this->handle('CTL_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 
 		$this->handle('TRIMP_MODEL_IN_PERCENT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('TSB_IN_PERCENT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
 
 	/**
@@ -93,6 +103,12 @@ class Trimp extends \Runalyze\Configuration\Category {
 			'tooltip'	=> __('By default ATL/CTL are scaled based on your historical maximum. '.
 							'This can lead to wrong assumptions if you were overtrained. '.
 							'Deactivate this option in that case.')
+		));
+
+		$Fieldset->addHandle( $this->handle('TSB_IN_PERCENT'), array(
+			'label'		=> __('Show TSB in percent of ATL/CTL'),
+			'tooltip'	=> __('The scale of TSB values depends on your ATL/CTL. '.
+							'You can display TSB as percentage of your current ATL/CTL to keep consistency.')
 		));
 
 		return $Fieldset;

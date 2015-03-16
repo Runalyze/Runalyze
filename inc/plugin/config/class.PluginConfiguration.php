@@ -111,6 +111,8 @@ class PluginConfiguration {
 				$Value->valueAsString()
 			)
 		);
+
+		Cache::delete(self::CACHE_KEY);
 	}
 
 	/**

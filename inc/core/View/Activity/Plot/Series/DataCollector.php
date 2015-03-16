@@ -9,7 +9,6 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\Model\Trackdata\Loop;
 use Runalyze\Configuration;
-use Runalyze\Parameter\Application\ActivityPlotPrecision;
 
 /**
  * Collect data from trackdata
@@ -60,6 +59,16 @@ class DataCollector {
 	protected $Data = array();
 
 	/**
+	 * @var \Runalyze\Parameter\Application\ActivityPlotPrecision
+	 */
+	protected $Precision;
+
+	/**
+	 * @var boolean
+	 */
+	protected $KnowsDistance;
+
+	/**
 	 * Construct collector
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
 	 * @param enum $key
@@ -71,6 +80,8 @@ class DataCollector {
 		}
 
 		$this->Key = $key;
+		$this->Precision = Configuration::ActivityView()->plotPrecision();
+		$this->KnowsDistance = $trackdata->has(Trackdata::DISTANCE);
 
 		$this->init($trackdata);
 		$this->collect();
@@ -99,7 +110,7 @@ class DataCollector {
 	protected function init(Trackdata $trackdata) {
 		$this->Loop = new Loop($trackdata);
 
-		$this->defineStepSize($trackdata, Configuration::ActivityView()->plotPrecision());
+		$this->defineStepSize($trackdata);
 		$this->defineXAxis($trackdata);
 	}
 
@@ -127,7 +138,7 @@ class DataCollector {
 	 * @return bool 
 	 */
 	protected function move() {
-		if (Configuration::ActivityView()->plotPrecision()->byDistance()) {
+		if ($this->KnowsDistance && $this->Precision->byDistance()) {
 			$this->Loop->moveDistance( $this->StepDistance );
 		} else {
 			$this->Loop->nextStep();
@@ -137,13 +148,12 @@ class DataCollector {
 	/**
 	 * Set step size
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
-	 * @param \Runalyze\Parameter\Application\ActivityPlotPrecision $precision
 	 */
-	protected function defineStepSize(Trackdata $trackdata, ActivityPlotPrecision $precision) {
-		if ($precision->byPoints() && $trackdata->num() > $precision->numberOfPoints()) {
-			$this->Loop->setStepSize( round($trackdata->num() / $precision->numberOfPoints ()) );
-		} elseif ($precision->byDistance()) {
-			$this->StepDistance = $precision->distanceStep() / 1000;
+	protected function defineStepSize(Trackdata $trackdata) {
+		if ($this->Precision->byPoints() && $trackdata->num() > $this->Precision->numberOfPoints()) {
+			$this->Loop->setStepSize( round($trackdata->num() / $this->Precision->numberOfPoints ()) );
+		} elseif ($this->Precision->byDistance()) {
+			$this->StepDistance = $this->Precision->distanceStep() / 1000;
 		}
 	}
 
@@ -152,7 +162,9 @@ class DataCollector {
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
 	 */
 	protected function defineXAxis(Trackdata $trackdata) {
-		if ($trackdata->has(Trackdata::DISTANCE) && $trackdata->totalDistance() > 0) {
+		if (Configuration::ActivityView()->usesTimeAsXAxis() && $trackdata->has(Trackdata::TIME) && $trackdata->totalTime() > 0) {
+			$this->XAxis = self::X_AXIS_TIME;
+		} elseif ($trackdata->has(Trackdata::DISTANCE) && $trackdata->totalDistance() > 0) {
 			$this->XAxis = self::X_AXIS_DISTANCE;
 		} elseif ($trackdata->has(Trackdata::TIME) && $trackdata->totalTime() > 0) {
 			$this->XAxis = self::X_AXIS_TIME;

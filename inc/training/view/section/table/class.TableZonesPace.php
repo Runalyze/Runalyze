@@ -22,6 +22,11 @@ class TableZonesPace extends TableZonesAbstract {
 	const STEP_SIZE = 10;
 
 	/**
+	 * @var enum
+	 */
+	protected $paceUnit;
+
+	/**
 	 * Get title for average
 	 * @return string
 	 */
@@ -31,12 +36,18 @@ class TableZonesPace extends TableZonesAbstract {
 	 * Init data
 	 */
 	protected function initData() {
+		$this->paceUnit = $this->Context->sport()->paceUnit();
+
+		if ($this->paceUnit == Pace::NONE) {
+			$this->paceUnit = Pace::STANDARD;
+		}
+
 		$Zones = $this->computeZones();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
 
 		foreach ($Zones as $paceInSeconds => $Info) {
 			if ($Info['time'] > parent::MINIMUM_TIME_IN_ZONE) {
-				$Pace = new Pace($paceInSeconds, 1, Pace::MIN_PER_KM);
+				$Pace = new Pace($paceInSeconds, 1, $this->paceUnit);
 
 				$this->Data[] = array(
 					'zone'     => $paceInSeconds == 0 ? __('faster') : '&gt; '.$Pace->valueWithAppendix(),
@@ -89,6 +100,23 @@ class TableZonesPace extends TableZonesAbstract {
 	 * @return int
 	 */
 	protected function zoneFor($paceInSeconds) {
-		return 60 * floor($paceInSeconds / 60);
+		if ($paceInSeconds == 0) {
+			return 0;
+		}
+
+		switch ($this->paceUnit) {
+			case Pace::KM_PER_H:
+				return 3600 / floor(3600 / $paceInSeconds / 5) / 5;
+
+			case Pace::M_PER_S:
+				return 1000 / floor(1000 / $paceInSeconds);
+
+			case Pace::MIN_PER_100M:
+				return 50 * floor($paceInSeconds / 50);
+
+			case Pace::MIN_PER_KM:
+			default:
+				return 60 * floor($paceInSeconds / 60);
+		}
 	}
 }

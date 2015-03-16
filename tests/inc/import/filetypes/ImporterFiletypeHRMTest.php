@@ -21,7 +21,7 @@ class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse( $this->object->hasMultipleTrainings() );
 
 		$this->assertEquals( mktime(11, 31, 40, 1, 18, 2012), $this->object->object()->getTimestamp() );
-		$this->assertEquals( 0, $this->object->object()->getDistance() );
+		$this->assertEquals( 9.76, $this->object->object()->getDistance(), '', 0.02 );
 		$this->assertEquals( 59*60 + 39.1, $this->object->object()->getTimeInSeconds() );
 		$this->assertEquals( 133, $this->object->object()->getPulseAvg() );
 		$this->assertEquals( 144, $this->object->object()->getPulseMax() );

@@ -22,6 +22,11 @@ use Runalyze\View\Tooltip;
  */
 class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 	/**
+	 * @var string
+	 */
+	const CACHE_KEY_JD_POINTS = 'JDQuery';
+
+	/**
 	 * Name
 	 * @return string
 	 */
@@ -137,28 +142,42 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$VDOT        = Configuration::Data()->vdot();
 		$ATLmax      = Configuration::Data()->maxATL();
 		$CTLmax      = Configuration::Data()->maxCTL();
+		$ModelATLmax = $TSBmodel->maxFatigue();
+		$ModelCTLmax = $TSBmodel->maxFitness();
+
+		if ($ModelATLmax > $ATLmax) {
+			Configuration::Data()->updateMaxATL($ModelATLmax);
+			$ATLmax = $ModelATLmax;
+		}
+
+		if ($ModelCTLmax > $CTLmax) {
+			Configuration::Data()->updateMaxCTL($ModelCTLmax);
+			$CTLmax = $ModelCTLmax;
+		}
+
 		$ATLabsolute = $TSBmodel->fatigueAt(0);
 		$CTLabsolute = $TSBmodel->fitnessAt(0);
+		$TSBabsolute = $TSBmodel->performanceAt(0);
 		$TrimpValues = array(
 			'ATL'		=> round(100*$ATLabsolute/$ATLmax),
 			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
 			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
 			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
-			'TSB'	=> $TSBmodel->performanceAt(0)
+			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
+			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute)
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
 
-		// TODO: This cache value will not automatically be updated, right? That's horrible!
-                $JDQuery = Cache::get('JDQuery');
-                if(is_null($JDQuery)) {
-                    $JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
-                    $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
-                    $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
-                    $JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
-                    Cache::set('JDQuery', $JDQuery, '600');
-                }
-                    $JDPointsLastWeek = $JDQuery['LastWeek'];
-                    $JDPointsThisWeek = $JDQuery['ThisWeek'];
+		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
+		if (is_null($JDQuery)) {
+			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
+			$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
+			$JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
+			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
+			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
+		}
+		$JDPointsLastWeek = $JDQuery['LastWeek'];
+		$JDPointsThisWeek = $JDQuery['ThisWeek'];
 		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(
@@ -209,16 +228,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues'),
 				'bars'	=> array(
-					new ProgressBarSingle(abs($TrimpValues['TSB']), ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
+					new ProgressBarSingle(abs($TrimpValues['TSB'])/2, ($TSBisPositive ? ProgressBarSingle::$COLOR_GREEN : ProgressBarSingle::$COLOR_RED), ($TSBisPositive ? 'right' : 'left'))
 				),
-				'bar-tooltip'	=> 'TSB = CTL - ATL = '.$CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TrimpValues['TSB']),
-				'value'	=> sprintf("%+d", $TrimpValues['TSB']),
+				'bar-tooltip'	=> 'TSB = CTL - ATL<br>'.sprintf( __('absolute: %s<br>as percentage: %s &#37;'), $CTLabsolute.' - '.$ATLabsolute.' = '.sprintf("%+d", $TSBabsolute), $TrimpValues['TSB']),
+				'value'	=> $TrimpValues['TSBstring'],
 				'title'	=> __('Stress&nbsp;Balance'),
 				'small'	=> '(TSB)',
-				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You\'re relaxing.<br>'.
-					'&lt; 0: You are training hard.<br>'.
-					'<small>A value of &ge; 10 is desirable for a race.<br>'.
-					'A value of &le; -10 can be a hint to start regeneration.</small>')
+				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>'.
+					'&lt; 0: You are training hard.')
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),

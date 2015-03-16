@@ -105,4 +105,20 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan($CalculatorOnlyActivity->calculateJDintensity(), $CalculatorWithTrackdata->calculateJDintensity());
 	}
 
+	public function testCalculationWithEmptyHeartrateArray() {
+		$Activity = new Model\Activity\Object(array(
+			Model\Activity\Object::DISTANCE => 10,
+			Model\Activity\Object::TIME_IN_SECONDS => 3000,
+			Model\Activity\Object::HR_AVG => 150
+		));
+
+		$CalculatorOnlyActivity = new Calculator($Activity, null, null);
+		$CalculatorWithTrackdata = new Calculator($Activity, new Model\Trackdata\Object(array(
+			Model\Trackdata\Object::TIME => array(1500, 3000),
+			Model\Trackdata\Object::HEARTRATE => array(0, 0)
+		)), null);
+
+		$this->assertEquals($CalculatorOnlyActivity->calculateTrimp(), $CalculatorWithTrackdata->calculateTrimp());
+	}
+
 }

@@ -67,9 +67,12 @@ class Calculator
 		$this->TrackdataLoop = new Trackdata\Loop($trackdata);
 		$this->RouteLoop = !is_null($route) ? new Route\Loop($route) : null;
 
-		foreach ($this->Distances as $kilometer) {
-			$this->move($kilometer);
-			$this->readLap();
+		foreach ($this->Distances as $i => $kilometer) {
+			// Ignore empty splits as long as we do not support time-based splits
+			if ($i == 0 && $kilometer > 0 || $this->Distances[$i-1] < $kilometer) {
+				$this->move($kilometer);
+				$this->readLap();
+			}
 		}
 
 		if (!$this->TrackdataLoop->isAtEnd()) {
