@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-02-24 08:37+0100\n"
-"PO-Revision-Date: 2015-02-24 08:42+0200\n"
+"PO-Revision-Date: 2015-03-12 09:09+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -3821,7 +3821,7 @@ msgstr "Bald wirst du deine eigenen Herzfrequenzzonen konfigurieren können."
 #: inc/training/view/section/class.SectionCompositeRow.php:52
 #: inc/training/view/section/class.SectionPaceRow.php:27
 msgid "Pace zones"
-msgstr "Geschwindigkeit Zonen"
+msgstr "Pacezonen"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
@@ -4349,7 +4349,7 @@ msgstr "VDOT für Form"
 #: inc/training/schemes/scheme.Training.php:322
 #: inc/training/schemes/scheme.Training.new.php:318
 msgid "Cadence (Running)"
-msgstr "Schrittfrequenz (Laufen)"
+msgstr "Schrittfrequenz"
 
 #: inc/training/schemes/scheme.Training.php:324
 #: inc/training/schemes/scheme.Training.new.php:320
