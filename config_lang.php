@@ -9,6 +9,7 @@ $supportedLanguages=array (
 //  'en-gb'=>array('GB English','en_GB.utf-8'),
     'de'=>array('Deutsch','de_DE.utf-8'),
     'pl'=>array('Polski', 'pl_PL.utf-8'),
+    'ca'=>array('Català', 'ca_ES.UTF-8'),
 
 );
 
