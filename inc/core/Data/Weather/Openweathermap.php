@@ -6,6 +6,8 @@
 
 namespace Runalyze\Data\Weather;
 
+use Cache;
+
 /**
  * Forecast-strategy for using openweathermap.org
  * 
@@ -31,6 +33,11 @@ class Openweathermap implements ForecastStrategy {
 	const URL_HISTORY = 'http://api.openweathermap.org/data/2.5/history';
 
 	/**
+	 * @var string
+	 */
+	const CACHE_PREFIX = 'weather.';
+
+	/**
 	 * Result from json
 	 * @var array
 	 */
@@ -51,20 +58,44 @@ class Openweathermap implements ForecastStrategy {
 			if ($Location->hasPosition()) {
 				$this->setFromURL( self::URL.'?lat='.$Location->lat().'&lon='.$Location->lon() );
 			} elseif ($Location->hasLocationName()) {
-				$this->setFromURL( self::URL.'?q='.$Location->name() );
+				$this->setFromURL( self::URL.'?q='.$Location->name(), $this->cacheKey($Location->name()) );
 			}
 		}
 	}
 
 	/**
+	 * Generate cache key
+	 * @param string $locationName
+	 * @return string
+	 */
+	protected function cacheKey($locationName) {
+		return self::CACHE_PREFIX.urlencode($locationName);
+	}
+
+	/**
 	 * Set from url
 	 * @param string $url
+	 * @param string $cacheKey [optional] if true result will be cached
 	 */
-	public function setFromURL($url) {
+	public function setFromURL($url, $cacheKey = false) {
+		if ($cacheKey !== false) {
+			$this->Result = Cache::get($cacheKey, 1);
+
+			if ($this->Result != NULL) {
+				return;
+			} else {
+				$this->Result = array();
+			}
+		}
+
 		if (defined('OPENWEATHERMAP_API_KEY') && strlen(OPENWEATHERMAP_API_KEY))
 			$url .= '&APPID='.OPENWEATHERMAP_API_KEY;
 
 		$this->setFromJSON( \Filesystem::getExternUrlContent($url) );
+
+		if ($cacheKey !== false) {
+			Cache::set($cacheKey, $this->Result, 7200, 1);
+		}
 	}
 
 	/**
