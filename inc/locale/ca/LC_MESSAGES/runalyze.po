@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-16 10:02+0100\n"
-"PO-Revision-Date: 2015-03-16 11:04+0200\n"
+"PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ca/>\n"
@@ -1613,6 +1613,8 @@ msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Llista amb totes les distàncies, valors separats per comes. Posi \"+\" al "
+"comencament per considerar les distàncies com a intervals."
 
 #: inc/core/View/Window/Laps/Form.php:68
 msgid "e.g."
@@ -1848,15 +1850,16 @@ msgstr ""
 "opció si és el seu cas."
 
 #: inc/core/Configuration/Category/Trimp.php:109
-#, fuzzy
 msgid "Show TSB in percent of ATL/CTL"
-msgstr "Mostri ATL/CTL com a percentatge del màxim"
+msgstr "Mostri TSS com a percentatge de ATL/CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
+"L'escala dels valors del TSB depèn del seu ATL/CTL. Per mantindre la "
+"consistència pot mostrar el TSB com a percentatge del seu actual ATL/CTL."
 
 #: inc/core/Configuration/Category/Privacy.php:91
 #: inc/training/schemes/scheme.Training.php:65
@@ -1969,11 +1972,13 @@ msgstr "Calculi la potència com velocitat i pendent per ciclisme"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Detecti les pauses"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
 msgstr ""
+"Detecti les pauses quan s'importen entrenaments si la distància no "
+"s'incrementa"
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
@@ -2072,7 +2077,7 @@ msgstr "Gràfic: corbes ajustades"
 
 #: inc/core/Configuration/Category/ActivityView.php:310
 msgid "Plots: use time as x-axis"
-msgstr ""
+msgstr "Diagrama: agafi temps com a eix de les x"
 
 #: inc/core/Configuration/Category/ActivityView.php:314
 msgid "Pace plot: y-axis minimum"
@@ -2658,9 +2663,9 @@ msgstr ""
 "l'administrador."
 
 #: inc/system/class.AccountHandler.php:264
-#, fuzzy, php-format
+#, php-format
 msgid "Did you forget your password %s?"
-msgstr "Ha oblidat la seva contrasenya"
+msgstr "Ha oblidat la seva contrasenya %s?"
 
 #: inc/system/class.AccountHandler.php:265
 msgid ""
@@ -4153,7 +4158,7 @@ msgstr "Enviï a un multi editor"
 #: inc/training/search/class.SearchFormular.php:101
 #, php-format
 msgid "Our multi editor is limited to a maximum of %d activities."
-msgstr ""
+msgstr "El nostre editor múltiple té una capacitat màxima de %d entrenaments."
 
 #: inc/training/search/class.SearchFormular.php:119
 msgid "Choose sport(s)"
@@ -4970,14 +4975,15 @@ msgid "Route network"
 msgstr "Xarxa de rutes"
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:90
-#, fuzzy
 msgid "There are no routes matching the criterias."
-msgstr "No hi ha cap cursa per aquesta distància."
+msgstr "No hi ha cap ruta que s'ajusti als seus criteris de cerca."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:103
 #, php-format
 msgid "The map contains your %s most recent routes matching the criterias."
 msgstr ""
+"El mapa inclou les seves %s més recents rutes que s'ajusten als seus "
+"criteris de cerca."
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:104
 msgid "More routes are not possible at the moment due to performance issues."
@@ -5139,24 +5145,23 @@ msgstr ""
 "mes passat comparada amb el valor màxim.</small>"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:233
-#, fuzzy, php-format
+#, php-format
 msgid "absolute: %s<br>as percentage: %s &#37;"
-msgstr "Valor actual: %s<br>Valor màxim %s<br> en percentatge: %s &#37;"
+msgstr "Valor absolut: %s<br>com a percentatge: %s &#37;"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:235
 msgid "Stress&nbsp;Balance"
 msgstr "Nivell d'estrès"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:237
-#, fuzzy
 msgid ""
 "Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>&lt; "
 "0: You are training hard."
 msgstr ""
-"Training Stress Balance (= CTL - ATL)<br />Valor positiu: està descansat."
-"<br />Valor negatiu: Entrenament dur.<br /><small>Un valor igual o mes gran "
-"que 10 és recomanat per curses.<br/>Un valor per sota de -10 l'hauria de fer "
-"considerar començar una regeneració.</small>"
+"Training Stress Balance (= CTL - ATL)<br />Valor positiu: està descansat.<br "
+"/>Valor negatiu: Entrenament dur.<br /><small>Un valor igual o mes gran que "
+"10 és recomanat per curses.<br/>Un valor per sota de -10 l'hauria de fer "
+"considerar començar una regeneració.</small>."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:254
 msgid "Monotony"
@@ -6004,7 +6009,6 @@ msgid "Prediction model"
 msgstr "Model de predicció"
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:93
-#, fuzzy
 msgid "Use basic endurance"
 msgstr "Empri la seva condició física bàsica"
 
@@ -6013,6 +6017,8 @@ msgid ""
 "Use basic endurance factor to adapt prognosis for long distances (Jack "
 "Daniels only)."
 msgstr ""
+"Empri el factor de la condició física bàsica per adaptar la previsió a "
+"llargues distàncies (només Jack Daniels)."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:110
 msgid "Show prognosis trend"
