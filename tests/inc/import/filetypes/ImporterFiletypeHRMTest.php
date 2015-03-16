@@ -31,5 +31,9 @@ class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 
 		$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+		$this->assertEquals(
+			'1.01|6:03-1.01|5:59-1.01|5:58-1.02|6:05-1.02|6:44-1.01|6:11-1.01|6:00-1.02|5:56-1.02|6:10',
+			$this->object->object()->Splits()->asString()
+		);
 	}
 }

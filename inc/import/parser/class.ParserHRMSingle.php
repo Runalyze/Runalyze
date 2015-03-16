@@ -81,6 +81,7 @@ class ParserHRMSingle extends ParserAbstractSingle {
 			$this->Line = strtok( $separator );
 		}
 
+		$this->addDistancesToLaps();
 		$this->setGPSarrays();
 	}
 
@@ -171,6 +172,12 @@ class ParserHRMSingle extends ParserAbstractSingle {
 			$this->gps['altitude'][]  = isset($values[2]) ? round((int)trim($values[2]) * $this->distanceFactor) : 0;
 		} else {
 			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+		}
+	}
+
+	private function addDistancesToLaps() {
+		if (!empty($this->gps['time_in_s']) && !empty($this->gps['km']) && !$this->TrainingObject->Splits()->areEmpty()) {
+			$this->TrainingObject->Splits()->fillDistancesFromArray($this->gps['time_in_s'], $this->gps['km']);
 		}
 	}
 }
