@@ -3,6 +3,9 @@
  * This file contains class::ExporterWindow
  * @package Runalyze\Export
  */
+
+use Runalyze\Model\Activity;
+
 /**
  * Window for exporting a training.
  *
@@ -36,8 +39,14 @@ class ExporterWindow {
 	 */
 	private function handleRequest() {
 		if (strlen(Request::param('public')) > 0) {
-			DB::getInstance()->update('training', $this->TrainingID, 'is_public', Request::param('public') == 'true' ? 1 : 0);
-			// TODO: clear cache
+			$Updater = new Activity\Updater(DB::getInstance());
+			$Updater->setAccountID(SessionAccountHandler::getId());
+			$Updater->update(new Activity\Object(array(
+				'id' => $this->TrainingID,
+				Activity\Object::IS_PUBLIC => Request::param('public') == 'true' ? 1 : 0
+			)), array(
+				Activity\Object::IS_PUBLIC
+			));
 		}
 	}
 
