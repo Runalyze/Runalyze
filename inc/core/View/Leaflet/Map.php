@@ -106,8 +106,9 @@ class Map extends View\Object {
 	 * @return string
 	 */
 	public function js() {
+		$scrollOnZoom = Configuration::ActivityView()->mapZoomOnScroll();
 		$Code  = 'RunalyzeLeaflet.setDefaultLayer("'.Configuration::ActivityView()->mapLayer().'");';
-		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\', { scrollWheelZoom: false} );';
+		$Code .= 'RunalyzeLeaflet.init(\''.$this->id.'\', { scrollWheelZoom: '.($scrollOnZoom ? 'true' : 'false').'} );';
 
 		foreach ($this->Routes as $Route) {
 			$Code .= $Route->js();

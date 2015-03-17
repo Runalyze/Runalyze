@@ -55,12 +55,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->createHandle('GMAP_PATH_PRECISION', new ActivityRoutePrecision());
 		$this->createHandle('GMAP_PATH_BREAK', new ActivityRouteBreak());
 
-		// TODO
-		// - use in Leaflet (is currently only used for ExporterKML)
 		$this->createHandle('TRAINING_MAP_COLOR', new String('#FF5500'));
 
 		$this->createHandle('TRAINING_LEAFLET_LAYER', new String('OpenStreetMap'));
 		$this->createHandle('TRAINING_MAP_SHOW_FIRST', new Bool(false));
+		$this->createHandle('TRAINING_MAP_ZOOM_ON_SCROLL', new Bool(false));
 	}
 
 	/**
@@ -110,6 +109,14 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	public function updateLayer($layer) {
 		$this->object('TRAINING_LEAFLET_LAYER')->set($layer);
 		$this->updateValue( $this->handle('TRAINING_LEAFLET_LAYER') );
+	}
+
+	/**
+	 * Map: zoom on scroll
+	 * @return bool
+	 */
+	public function mapZoomOnScroll() {
+		return $this->get('TRAINING_MAP_ZOOM_ON_SCROLL');
 	}
 
 	/**
@@ -252,6 +259,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER_AND_TRAINING);
 		$this->handle('TRAINING_MAP_SHOW_FIRST')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
+		$this->handle('TRAINING_MAP_ZOOM_ON_SCROLL')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
 		$this->handle('TRAINING_PLOT_XAXIS_TIME')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('TRAINING_PLOT_MODE')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
@@ -356,6 +364,10 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('TRAINING_MAP_SHOW_FIRST'), array(
 			'label'		=> __('Map: show map first'),
 			'tooltip'	=> __('show map before plots')
+		));
+
+		$Fieldset->addHandle( $this->handle('TRAINING_MAP_ZOOM_ON_SCROLL'), array(
+			'label'		=> __('Map: zoom on scroll')
 		));
 	}
 
