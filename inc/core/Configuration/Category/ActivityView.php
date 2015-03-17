@@ -256,8 +256,8 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('GMAP_PATH_BREAK')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
-		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup()');
-		$this->handle('ELEVATION_TRESHOLD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup()');
+		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
+		$this->handle('ELEVATION_TRESHOLD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
 	}
 
 	/**
