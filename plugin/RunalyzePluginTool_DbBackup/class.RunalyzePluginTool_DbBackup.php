@@ -343,6 +343,8 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 			closedir($handle);
 		}
 
+		sort($Files);
+
 		return $Files;
 	}
 	/**
