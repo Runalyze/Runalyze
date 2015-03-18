@@ -21,7 +21,7 @@
 <div id="flot-loader"></div>
 
 <div id="headline">
-	<a class="tab logo" href="<?php echo System::getFullDomain(); ?>" title="Runalyze" target="_blank">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<a class="tab logo" href="<?php echo System::getFullDomain(); ?>" title="Runalyze">Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
 	<?php if (SessionAccountHandler::isLoggedIn()): ?><a class="tab right" href="login.php?out" title="<?php _e('Logout'); ?>"><i class="fa fa-fw fa-lg fa-sign-out"></i>&nbsp;<?php _e('Logout'); ?></a><?php endif; ?>
 
 	<span class="left b">
