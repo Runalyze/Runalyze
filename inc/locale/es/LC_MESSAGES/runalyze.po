@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-16 10:02+0100\n"
-"PO-Revision-Date: 2014-11-25 22:06+0200\n"
+"PO-Revision-Date: 2015-03-19 00:25+0200\n"
 "Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
-"Language-Team: Spanish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/es/>\n"
+"Language-Team: Spanish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.9\n"
+"X-Generator: Weblate 2.1\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -24,377 +24,381 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:45
 #: inc/training/schemes/scheme.Training.new.php:41
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Varios"
 
 #: index.php:74
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
+"<em>No hay estadísticas disponibles. Active un complemento en su "
+"configuración.</em>"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:21
 msgid "Please login"
-msgstr ""
+msgstr "Iniciar sesión"
 
 #: inc/class.FrontendSharedStatistics.php:50
 #, php-format
 msgid "Activity data of %s"
-msgstr ""
+msgstr "Datos de la actividad %s"
 
 #: inc/class.FrontendSharedStatistics.php:85
 msgid "Total distance:"
-msgstr ""
+msgstr "Distancia total:"
 
 #: inc/class.FrontendSharedStatistics.php:87
 msgid "Number of activities:"
-msgstr ""
+msgstr "Número de actividades:"
 
 #: inc/class.FrontendSharedStatistics.php:89
 msgid "Registered since:"
-msgstr ""
+msgstr "Registrado desde:"
 
 #: inc/class.FrontendSharedStatistics.php:93
 msgid "Total duration:"
-msgstr ""
+msgstr "Duración total:"
 
 #: inc/class.FrontendSharedStatistics.php:95
 msgid "First activity:"
-msgstr ""
+msgstr "Primera actividad:"
 
 #: inc/class.FrontendSharedStatistics.php:97
 msgid "Last login:"
-msgstr ""
+msgstr "Último inicio de sesión:"
 
 #: inc/class.FrontendSharedStatistics.php:103
 msgid "General statistics"
-msgstr ""
+msgstr "Estadísticas generales"
 
 #: inc/class.FrontendSharedStatistics.php:129 inc/plugin/class.Plugin.php:363
 msgid "Year on year"
-msgstr ""
+msgstr "Año en año"
 
 #: inc/class.FrontendSharedStatistics.php:129
 #: inc/system/schemes/set.emptyValues.php:86
 msgid "Running"
-msgstr ""
+msgstr "Carrera a pie"
 
 #: inc/tpl/tpl.DataBrowser.php:14
 msgid "Choose a date ..."
-msgstr ""
+msgstr "Elija una fecha..."
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:77
 msgid "Sunday"
-msgstr ""
+msgstr "Domingo"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:78
 msgid "Monday"
-msgstr ""
+msgstr "Lunes"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:79
 msgid "Tuesday"
-msgstr ""
+msgstr "Martes"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:80
 msgid "Wednesday"
-msgstr ""
+msgstr "Miércoles"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:81
 msgid "Thursday"
-msgstr ""
+msgstr "Jueves"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:82
 msgid "Friday"
-msgstr ""
+msgstr "Viernes"
 
 #: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:84
 msgid "Saturday"
-msgstr ""
+msgstr "Sábado"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Su"
-msgstr ""
+msgstr "D"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Mo"
-msgstr ""
+msgstr "L"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Tu"
-msgstr ""
+msgstr "M"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "We"
-msgstr ""
+msgstr "X"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Th"
-msgstr ""
+msgstr "J"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Fr"
-msgstr ""
+msgstr "V"
 
 #: inc/tpl/tpl.DataBrowser.php:21
 msgid "Sa"
-msgstr ""
+msgstr "S"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:77
 msgid "Sun"
-msgstr ""
+msgstr "Dom"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:78
 msgid "Mon"
-msgstr ""
+msgstr "Lun"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:79
 msgid "Tue"
-msgstr ""
+msgstr "Mar"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:80
 msgid "Wed"
-msgstr ""
+msgstr "Miérc"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:81
 msgid "Thu"
-msgstr ""
+msgstr "Jue"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:82
 msgid "Fri"
-msgstr ""
+msgstr "Vier"
 
 #: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:84
 msgid "Sat"
-msgstr ""
+msgstr "Sáb"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:96
 msgid "January"
-msgstr ""
+msgstr "Enero"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:97
 msgid "February"
-msgstr ""
+msgstr "Febrero"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:98
 msgid "March"
-msgstr ""
+msgstr "Marzo"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:99
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/tpl/tpl.DataBrowser.php:25
 #: inc/calculate/class.Time.php:100 inc/draw/class.Plot.php:390
 msgid "May"
-msgstr ""
+msgstr "Mayo"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:101
 msgid "June"
-msgstr ""
+msgstr "Junio"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:102
 msgid "July"
-msgstr ""
+msgstr "Julio"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:103
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:104
 msgid "September"
-msgstr ""
+msgstr "Septiembre"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:105
 msgid "October"
-msgstr ""
+msgstr "Octubre"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:106
 msgid "November"
-msgstr ""
+msgstr "Noviembre"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:108
 msgid "December"
-msgstr ""
+msgstr "Diciembre"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:96
 #: inc/draw/class.Plot.php:386
 msgid "Jan"
-msgstr ""
+msgstr "Ene"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:97
 #: inc/draw/class.Plot.php:387
 msgid "Feb"
-msgstr ""
+msgstr "Feb"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:98
 #: inc/draw/class.Plot.php:388
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:99
 #: inc/draw/class.Plot.php:389
 msgid "Apr"
-msgstr ""
+msgstr "Abr"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:101
 #: inc/draw/class.Plot.php:391
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:102
 #: inc/draw/class.Plot.php:392
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:103
 #: inc/draw/class.Plot.php:393
 msgid "Aug"
-msgstr ""
+msgstr "Ago"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:104
 #: inc/draw/class.Plot.php:394
 msgid "Sep"
-msgstr ""
+msgstr "Sep"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:105
 #: inc/draw/class.Plot.php:395
 msgid "Oct"
-msgstr ""
+msgstr "Oct"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:106
 #: inc/draw/class.Plot.php:396
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:108
 #: inc/draw/class.Plot.php:397
 msgid "Dec"
-msgstr ""
+msgstr "Dic"
 
 #: inc/tpl/tpl.DataBrowser.php:34
 msgid "You can select any time range by selecting two dates."
-msgstr ""
+msgstr "Puede seleccionar cualquier rango temporal entre dos fechas."
 
 #: inc/tpl/tpl.DataBrowser.php:38
 msgid "Show selection"
-msgstr ""
+msgstr "Mostrar selección"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
-msgstr ""
+msgstr "Consola de depuración"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:3
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:8
 msgid "Delete account"
-msgstr ""
+msgstr "Borrar cuenta"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:6
 msgid "Do you really want to delete your account?"
-msgstr ""
+msgstr "¿Seguro que quiere borrar su cuenta?"
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:12
 msgid "Your account has been deleted."
-msgstr ""
+msgstr "Su cuenta ha sido borrada."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:13
 msgid "You cannot use Runalyze anymore."
-msgstr ""
+msgstr "Ya no puede usar Runalyze."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:17
 msgid "The deletion did not work."
-msgstr ""
+msgstr "El borrado no funcionó."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:18
 #: inc/tpl/tpl.loginWindow.activateAccount.php:12
 msgid "Probably the link was wrong."
-msgstr ""
+msgstr "Probablemente el enlace fuere incorrecto."
 
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:25
 msgid "Main page"
-msgstr ""
+msgstr "Página principal"
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
-msgstr ""
+msgstr "Diario de carrera"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:319
 msgid "Set new password"
-msgstr ""
+msgstr "Cambiar clave"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
-msgstr ""
+msgstr "Usuario"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 msgid "New password"
-msgstr ""
+msgstr "Nueva clave"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:21
 msgid "New password again"
-msgstr ""
+msgstr "Nueva clave de nuevo"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:25
 msgid "The link is not valid anymore."
-msgstr ""
+msgstr "El enlace ya no es válido."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
 msgid "Change password"
-msgstr ""
+msgstr "cambiar clave"
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
-msgstr ""
+msgstr "Administración"
 
 #: inc/tpl/tpl.adminWindow.login.php:6
 #: inc/system/config/class.ConfigTabAccount.php:17
 msgid "Account"
-msgstr ""
+msgstr "Cuenta"
 
 #: inc/tpl/tpl.adminWindow.login.php:7 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.Installer.php:131
 msgid "Password"
-msgstr ""
+msgstr "Clave"
 
 #: inc/tpl/tpl.adminWindow.login.php:13 inc/tpl/tpl.loginWindow.php:26
 #: inc/tpl/tpl.loginWindow.php:44 inc/tpl/tpl.loginWindow.php:48
 #: inc/tpl/tpl.loginWindow.php:155
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18 call/login.php:4
 msgid "Login"
-msgstr ""
+msgstr "Inicio de sesión"
 
 #: inc/tpl/tpl.loginWindow.php:14
 msgid "The username is not known."
-msgstr ""
+msgstr "El usuario no existe."
 
 #: inc/tpl/tpl.loginWindow.php:17
 msgid "The password was incorrect."
-msgstr ""
+msgstr "La clave es incorrecta."
 
 #: inc/tpl/tpl.loginWindow.php:20
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
 msgstr ""
+"La cuenta no ha sido activada.<br>Compruebe el buzón de entrada de su correo."
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
-msgstr ""
+msgstr "Recordarme"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
 msgstr ""
+"Runalyze se encuentra en labores de mantenimiento. No es posible acceder."
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 msgid "Create a new account"
-msgstr ""
+msgstr "Crear nueva cuenta"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
-msgstr ""
+msgstr "Los registros están actualmente deshabilitados."
 
 #: inc/tpl/tpl.loginWindow.php:79
 #: inc/system/config/class.ConfigTabClothes.php:43
@@ -407,69 +411,71 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:617
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:120
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:300
 msgid "Email"
-msgstr ""
+msgstr "Correo electrónico"
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
-msgstr ""
+msgstr "Clave de nuevo"
 
 #: inc/tpl/tpl.loginWindow.php:112
 msgid "You can login now. Enjoy Runalyze!"
-msgstr ""
+msgstr "Ahora puede iniciar la sesión. ¡Disfrute de Runalyze!"
 
 #: inc/tpl/tpl.loginWindow.php:114
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
+"Gracias por registrarse. Debería recibir un correo electrónico en los "
+"próximos minutos con instrucciones para la activación de su cuenta."
 
 #: inc/tpl/tpl.loginWindow.php:121
 msgid "Register"
-msgstr ""
+msgstr "Registrarse"
 
 #: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
 msgid "Forgot your password?"
-msgstr ""
+msgstr "¿Olvidó la clave?"
 
 #: inc/tpl/tpl.loginWindow.php:142
 msgid "A link for changing your password will be sent via email."
-msgstr ""
+msgstr "Un enlace para cambiar su clave se enviará por correo electrónico."
 
 #: inc/tpl/tpl.loginWindow.php:148
 msgid "Send link"
-msgstr ""
+msgstr "Enlace enviado"
 
 #: inc/tpl/tpl.loginWindow.php:190
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Hasta ahora <strong>%d</strong> atletas se han registrado y"
+msgstr[1] "Hasta ahora <strong>%d</strong> atletas se han registrado y"
 
 #: inc/tpl/tpl.loginWindow.php:191
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "han accedido <strong>%s</strong>."
+msgstr[1] "han accedido <strong>%s</strong>."
 
 #: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
 msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<strong>%d</strong> atletas están en línea."
+msgstr[1] "<strong>%d</strong> atletas están en línea."
 
 #: inc/tpl/tpl.installerFooterText.php:5
 #: inc/system/config/class.ConfigTabPlugins.php:37
 #: inc/plugin/class.PluginType.php:54
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:113
 msgid "Statistics"
-msgstr ""
+msgstr "Estadísticas"
 
 #: inc/tpl/tpl.installerFooterText.php:6
 msgid ""
@@ -477,6 +483,9 @@ msgid ""
 "prognoses and visualizes your training in plots - more detailed than any "
 "other sports diary."
 msgstr ""
+"Runalyze analiza su entrenamiento al completo, calcula su estado de forma, "
+"realiza pronósticos y muestra sus entrenamientos en gráficos - más "
+"detallados que cualquier otro diario de entrenamiento."
 
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.Installer.php:5
 #: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:28
@@ -484,7 +493,7 @@ msgstr ""
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: call/call.Plugin.install.php:23
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #: inc/tpl/tpl.installerFooterText.php:13
 msgid ""
@@ -492,10 +501,13 @@ msgid ""
 "information of your training you want to record and which statistics are "
 "being displayed on which place."
 msgstr ""
+"Runalyze es completamente configurable. Puede decidir usted mismo qué "
+"información de sus entrenamientos quiere grabar y qué estadísticas se "
+"mostrarán y en qué lugar."
 
 #: inc/tpl/tpl.installerFooterText.php:19
 msgid "By runners for runners"
-msgstr ""
+msgstr "Por corredores para corredores"
 
 #: inc/tpl/tpl.installerFooterText.php:20
 msgid ""
@@ -503,55 +515,62 @@ msgid ""
 "problems or wishes: Please contact our Runalyze team. It's near and dear to "
 "us"
 msgstr ""
+"Runalyze ha sido creado por corredores para corredores. Siempre que tenga "
+"comentarios, problemas o sugerencias: Póngase en contacto con el equipo de "
+"Runalyze. Es sencillo y así lo queremos"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26
 #: inc/tpl/tpl.FrontendShared.header.php:29
 #, php-format
 msgid "Public training view of <strong>%s</strong>"
-msgstr ""
+msgstr "Vista del entrenamiento público de <strong>%s</strong>"
 
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:28
 #: inc/tpl/tpl.FrontendShared.header.php:31
 msgid "Public training view"
-msgstr ""
+msgstr "Vista del entrenamiento público"
 
 #: inc/tpl/tpl.Installer.php:4 inc/html/class.Ajax.php:438
 #: inc/core/View/Leaflet/Activity.php:236
 msgid "Start"
-msgstr ""
+msgstr "Inicio"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Base de datos"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Preparado"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze ya está instalado."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
 "You cannot reinstall Runalyze. If something does not work, please do not "
 "hesitate to contact us."
 msgstr ""
+"No puede reinstalar Runalyze. Si algo no funciona, por favor no dude "
+"contactar con nosotros."
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:271
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Iniciar Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
 "If you want to reinstall Runalyze please delete you have to delete the "
 "<em>config.php</em>-file in your main directory of this installation."
 msgstr ""
+"Si quiere reinstalar Runalyze tiene que borrar el fichero <em>config.php</em>"
+" en el directorio principal de esta instalación."
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "¡Bienvenido!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
