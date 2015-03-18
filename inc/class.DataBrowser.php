@@ -213,12 +213,26 @@ class DataBrowser {
 	protected function displayIconLinks() {
 		echo '<ul>';
 		echo '<li>'.$this->getSharedListLink().'</li>';
-		echo '<li>'.$this->getRefreshLink().'</li>';
 		echo '<li>'.$this->getMonthKmLink().'</li>';
 		echo '<li>'.$this->getWeekKmLink().'</li>';
 		echo '<li>'.$this->getNaviSearchLink().'</li>';
 		echo '<li>'.$this->getAddLink().'</li>';
 		echo '</ul>';
+	}
+
+	/**
+	 * Display hover links
+	 */
+	protected function displayHoverLinks() {
+		echo $this->getConfigLink();
+		echo $this->getRefreshLink();
+	}
+
+	/**
+	 * Display config link
+	 */
+	protected function getConfigLink() {
+		echo Ajax::window('<a class="tab" href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_dataset">'.Icon::$CONF.'</a>');
 	}
 
 	/**

@@ -4,6 +4,7 @@
 	</div>
 	<div class="icons-left"><?php $this->displayNavigationLinks(); ?></div>
 	<h1><?php $this->displayTitle(); ?></h1>
+	<div class="hover-icons"><?php $this->displayHoverLinks(); ?></div>
 </div>
 <div class="panel-content">
 	<div id="<?php echo DataBrowser::$CALENDAR_ID; ?>">
