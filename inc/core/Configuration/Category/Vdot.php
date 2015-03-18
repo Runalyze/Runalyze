@@ -6,6 +6,7 @@
 
 namespace Runalyze\Configuration\Category;
 
+use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Bool;
 use Runalyze\Parameter\String;
@@ -21,6 +22,12 @@ use FormularUnit;
  * @package Runalyze\Configuration\Category
  */
 class Vdot extends \Runalyze\Configuration\Category {
+	/**
+	 * Flag: recalculation triggered?
+	 * @var boolean
+	 */
+	static private $TRIGGERED = false;
+
 	/**
 	 * Internal key
 	 * @return string
@@ -130,14 +137,14 @@ class Vdot extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('VDOT_HF_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
 
-		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
+		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Vdot::triggerRecalculation');
 		$this->handle('VDOT_USE_CORRECTION')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 
-		$this->handle('VDOT_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
-		$this->handle('VDOT_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('VDOT_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Vdot::triggerRecalculation');
+		$this->handle('VDOT_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 
-		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
-		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Vdot::triggerRecalculation');
+		$this->handle('VDOT_MANUAL_CORRECTOR')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 
 		$this->handle('VDOT_MANUAL_VALUE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 
@@ -196,5 +203,21 @@ class Vdot extends \Runalyze\Configuration\Category {
 		));
 
 		return $Fieldset;
+	}
+
+	/**
+	 * Trigger recalculation
+	 */
+	static public function triggerRecalculation() {
+		if (!self::$TRIGGERED) {
+			self::$TRIGGERED = true;
+
+			$Data = \Runalyze\Configuration::Data();
+
+			$oldValue = $Data->vdotShape();
+			$newValue = $Data->recalculateVDOTshape();
+
+			Messages::addValueRecalculated(__('Vdot shape'), number_format($newValue, 1), number_format($oldValue, 1));
+		}
 	}
 }

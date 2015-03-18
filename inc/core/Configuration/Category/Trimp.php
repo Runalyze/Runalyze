@@ -6,6 +6,7 @@
 
 namespace Runalyze\Configuration\Category;
 
+use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Int;
 use Runalyze\Parameter\Bool;
@@ -17,6 +18,12 @@ use Ajax;
  * @package Runalyze\Configuration\Category
  */
 class Trimp extends \Runalyze\Configuration\Category {
+	/**
+	 * Flag: recalculation triggered?
+	 * @var boolean
+	 */
+	static private $TRIGGERED = false;
+
 	/**
 	 * Internal key
 	 * @return string
@@ -71,10 +78,10 @@ class Trimp extends \Runalyze\Configuration\Category {
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
-		$this->handle('ATL_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
+		$this->handle('ATL_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Trimp::triggerRecalculation');
 		$this->handle('ATL_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 
-		$this->handle('CTL_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
+		$this->handle('CTL_DAYS')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\Trimp::triggerRecalculation');
 		$this->handle('CTL_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 
 		$this->handle('TRIMP_MODEL_IN_PERCENT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
@@ -112,5 +119,27 @@ class Trimp extends \Runalyze\Configuration\Category {
 		));
 
 		return $Fieldset;
+	}
+
+	/**
+	 * Trigger recalculation
+	 */
+	static public function triggerRecalculation() {
+		if (!self::$TRIGGERED) {
+			self::$TRIGGERED = true;
+
+			$Data = \Runalyze\Configuration::Data();
+
+			$oldCTL = $Data->maxCTL();
+			$oldATL = $Data->maxATL();
+
+			$Data->recalculateMaxValues();
+
+			$newCTL = $Data->maxCTL();
+			$newATL = $Data->maxATL();
+
+			Messages::addValueRecalculated(__('Maximal CTL'), $newCTL, $oldCTL);
+			Messages::addValueRecalculated(__('Maximal ATL'), $newATL, $oldATL);
+		}
 	}
 }
