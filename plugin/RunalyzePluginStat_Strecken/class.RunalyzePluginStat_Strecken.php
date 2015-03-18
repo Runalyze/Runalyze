@@ -57,6 +57,16 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	}
 
 	/**
+	 * Init configuration
+	 */
+	protected function initConfiguration() {
+		$Configuration = new PluginConfiguration($this->id());
+		$Configuration->addValue( new PluginConfigurationValueBool('analyze_cities', __('Show visited cities'), '', true) );
+
+		$this->setConfiguration($Configuration);
+	}
+
+	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
@@ -69,7 +79,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 
 		$this->setHeaderWithSportAndYear();
 
-		$this->initCities();
+		if ($this->Configuration()->value('analyze_cities')) {
+			$this->initCities();
+		}
 	}
 
 	/**
@@ -94,19 +106,27 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 */
 	protected function displayContent() {
 		$this->displayRoutes();
-		$this->displayCities();
 
-		echo HTML::clearBreak();
-		echo HTML::clearBreak();
+		if ($this->Configuration()->value('analyze_cities')) {
+			$this->displayCities();
 
-		$this->displayLonelyCities();
+			echo HTML::clearBreak();
+			echo HTML::clearBreak();
+
+			$this->displayLonelyCities();
+		}
 	}
 
 	/**
 	 * Display routes
 	 */
 	private function displayRoutes() {
-		echo '<table style="width:70%;" class="left zebra-style">';
+		if ($this->Configuration()->value('analyze_cities')) {
+			echo '<table style="width:70%;" class="left zebra-style">';
+		} else {
+			echo '<table style="width:100%;" class="zebra-style">';		
+		}
+
 		echo '<thead><tr><th colspan="3">'.__('Most frequent routes').'</th></tr></thead>';
 		echo '<tbody class="r">';
 
