@@ -75,13 +75,13 @@ class BasicEndurance {
 	public function readSettingsFromConfiguration() {
 		$this->VDOT = Configuration::Data()->vdot();
 
-		// TODO: Implement these values as configuration settings
-		$this->MIN_KM_FOR_LONGJOG   = 13;
-		$this->DAYS_FOR_WEEK_KM     = 182;
-		$this->DAYS_FOR_WEEK_KM_MIN = 70;
-		$this->DAYS_FOR_LONGJOGS    = 70;
-		$this->PERCENTAGE_WEEK_KM   = 0.67;
-		$this->PERCENTAGE_LONGJOGS  = 0.33;
+		$BasicEndurance = Configuration::BasicEndurance();
+		$this->MIN_KM_FOR_LONGJOG   = $BasicEndurance->minKmForLongjog();
+		$this->DAYS_FOR_WEEK_KM     = $BasicEndurance->daysForWeekKm();
+		$this->DAYS_FOR_WEEK_KM_MIN = $BasicEndurance->daysForWeekKmMin();
+		$this->DAYS_FOR_LONGJOGS    = $BasicEndurance->daysForLongjogs();
+		$this->PERCENTAGE_WEEK_KM   = $BasicEndurance->percentageWeekKm();
+		$this->PERCENTAGE_LONGJOGS  = $BasicEndurance->percentageLongjogs();
 	}
 
 	/**

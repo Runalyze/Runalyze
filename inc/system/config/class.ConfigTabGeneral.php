@@ -34,6 +34,7 @@ class ConfigTabGeneral extends ConfigTab {
 			Configuration::DataBrowser(),
 			Configuration::Vdot(),
 			Configuration::Trimp(),
+			Configuration::BasicEndurance(),
 			Configuration::Misc()
 		);
 	}

@@ -53,6 +53,7 @@ class Configuration {
 		self::Privacy();
 		self::Trimp();
 		self::Vdot();
+		self::BasicEndurance();
 	}
 
 	/**
@@ -171,6 +172,14 @@ class Configuration {
 	 */
 	static public function Trimp() {
 		return self::get('Trimp');
+	}
+
+	/**
+	 * Basic endurance
+	 * @return \Runalyze\Configuration\Category\BasicEndurance
+	 */
+	static public function BasicEndurance() {
+		return self::get('BasicEndurance');
 	}
 
 	/**
