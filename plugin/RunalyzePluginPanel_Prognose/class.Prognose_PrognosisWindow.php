@@ -423,6 +423,6 @@ class Prognose_PrognosisWindow {
 	protected function displayFormular() {
 		$this->Formular->display();
 
-		echo Ajax::wrapJSasFunction('$(\'#prognosis-calculator .hide-on-model-change:not(.only-'.$_POST['model'].'\').closest(\'div\').hide();');
+		echo Ajax::wrapJSasFunction('$(\'#prognosis-calculator .hide-on-model-change:not(.only-'.$_POST['model'].')\').closest(\'div\').hide();');
 	}
 }
