@@ -166,7 +166,7 @@ class ImporterWindow {
 
 		if ($Uploader->thereWasAFile()) {
 			echo $Uploader->getResponse();
-			Error::getInstance()->footer_sent = true;
+			Error::getInstance()->debug_displayed = true;
 			return true;
 		}
 
