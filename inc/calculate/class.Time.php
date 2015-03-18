@@ -92,7 +92,7 @@ class Time {
 	 * @codeCoverageIgnore
 	 */
 	static public function Month($m, $short = false) {
-		switch ($m) {
+		switch ($m % 12) {
 			case 1: return $short ? __('Jan') : __('January');
 			case 2: return $short ? __('Feb') : __('February');
 			case 3: return $short ? __('Mar') : __('March');
@@ -104,7 +104,7 @@ class Time {
 			case 9: return $short ? __('Sep') : __('September');
 			case 10: return $short ? __('Oct') : __('October');
 			case 11: return $short ? __('Nov') : __('November');
-			case 12:
+			case 0:
 			default: return $short ? __('Dec') : __('December');
 		}
 	}

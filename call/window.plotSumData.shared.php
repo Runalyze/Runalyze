@@ -10,7 +10,7 @@ require '../inc/class.FrontendSharedList.php';
 $Frontend = new FrontendSharedList();
 
 if (!isset($_GET['y']))
-	$_GET['y'] = date("Y");
+	$_GET['y'] = PlotSumData::LAST_12_MONTHS;
 
 if (!isset($_GET['type']))
 	$_GET['type'] = 'month';

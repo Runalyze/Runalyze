@@ -12,6 +12,12 @@ use Runalyze\Configuration;
  */
 abstract class PlotSumData extends Plot {
 	/**
+	 * Key as year for last 12 months
+	 * @var string
+	 */
+	const LAST_12_MONTHS = 'last12months';
+
+	/**
 	 * URL to window
 	 * @var string
 	 */
@@ -65,7 +71,7 @@ abstract class PlotSumData extends Plot {
 	public function __construct() {
 		$sportid = strlen(Request::param('sportid')) > 0 ? Request::param('sportid') : Configuration::General()->runningSport();
 
-		$this->Year  = (int)Request::param('y');
+		$this->Year  = Request::param('y') == self::LAST_12_MONTHS ? self::LAST_12_MONTHS : (int)Request::param('y');
 		$this->Sport = new Sport($sportid);
 
 		parent::__construct($this->getCSSid(), 800, 500);
@@ -177,7 +183,9 @@ abstract class PlotSumData extends Plot {
 	 * @return array
 	 */
 	private function getMenuLinksForYears() {
-		$Links = array();
+		$Links = array(
+			$this->link(__('Last 12 months'), self::LAST_12_MONTHS, Request::param('sportid'), Request::param('group'), self::LAST_12_MONTHS == $this->Year)
+		);
 
 		for ($Y = date('Y'); $Y >= START_YEAR; $Y--)
 			$Links[] = $this->link($Y, $Y, Request::param('sportid'), Request::param('group'), $Y == $this->Year);
@@ -258,7 +266,10 @@ abstract class PlotSumData extends Plot {
 	 * Init data
 	 */
 	private function initData() {
-		if ($this->Year >= START_YEAR && $this->Year <= date('Y') && START_TIME != time()) {
+		if (START_TIME != time() && (
+			($this->Year >= START_YEAR && $this->Year <= date('Y') && START_TIME != time()) ||
+			$this->Year == self::LAST_12_MONTHS
+		)) {
 			$this->loadData();
 			$this->setData();
 		} else {
@@ -279,7 +290,7 @@ abstract class PlotSumData extends Plot {
 				WHERE
 					'.$whereSport.'
 					`distance` = 0 AND `s` > 0 AND
-					`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1
+				'.$this->whereDate().'
 			')->fetchColumn();
 
 			if ($num > 0)
@@ -296,10 +307,26 @@ abstract class PlotSumData extends Plot {
 			FROM `'.PREFIX.'training`
 			WHERE
 				'.$whereSport.'
-				`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1
+				'.$this->whereDate().'
 			GROUP BY '.$this->groupBy().', '.$this->timer()
 		)->fetchAll();
 	}
+
+	/**
+	 * @return string
+	 */
+	private function whereDate() {
+		if (is_numeric($this->Year)) {
+			return '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1';
+		} else {
+			return '`time` >= '.$this->beginningOfLast12Months();
+		}
+	}
+
+	/**
+	 * @return int
+	 */
+	abstract protected function beginningOfLast12Months();
 
 	/**
 	 * Sum data for query

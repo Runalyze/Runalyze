@@ -12,8 +12,9 @@ class PlotWeekSumData extends PlotSumData {
 	 * Constructor
 	 */
 	public function __construct() {
+		$yearEnd = Request::param('y') == self::LAST_12_MONTHS ? date('Y')-1 : (int)Request::param('y');
 		$this->timerStart = 1;
-		$this->timerEnd   = date("W", mktime(0,0,0,12,28,(int)$this->Year)); // http://de.php.net/manual/en/function.date.php#49457
+		$this->timerEnd   = date("W", mktime(0,0,0,12,28,$yearEnd)); // http://de.php.net/manual/en/function.date.php#49457
 
 		parent::__construct();
 	}
@@ -31,10 +32,12 @@ class PlotWeekSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function getTitle() {
-		if ($this->Sport->usesDistance())
-			return __('Weekly kilometers').' '.$this->Year;
+		$Year = $this->Year == parent::LAST_12_MONTHS ? __('last 12 months') : $this->Year;
 
-		return __('Hours of training').' '.$this->Year;
+		if ($this->Sport->usesDistance())
+			return __('Weekly kilometers').' '.$Year;
+
+		return __('Hours of training').' '.$Year;
 	}
 
 	/**
@@ -43,9 +46,10 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function getXLabels() {
 		$weeks = array();
+		$add = $this->Year == self::LAST_12_MONTHS ? date('W') : 0;
 
 		for ($w = $this->timerStart; $w <= $this->timerEnd; $w++)
-			$weeks[] = array($w-$this->timerStart, ($w%5 == 0) ? $w : '');
+			$weeks[] = array($w-$this->timerStart, (($w+$add)%5 == 0) ? ($w + $add)%$this->timerEnd : '');
 
 		return $weeks;
 	}
@@ -55,6 +59,17 @@ class PlotWeekSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function timer() {
+		if ($this->Year == parent::LAST_12_MONTHS) {
+			return '((WEEK(FROM_UNIXTIME(`time`),1) + '.$this->timerEnd.' - '.date('W').' - 1)%'.$this->timerEnd.' + 1)';
+		}
+
 		return 'WEEK(FROM_UNIXTIME(`time`),1)';
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function beginningOfLast12Months() {
+		return strtotime("monday -".$this->timerEnd." weeks");
 	}
 }

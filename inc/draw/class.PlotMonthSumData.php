@@ -31,10 +31,12 @@ class PlotMonthSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function getTitle() {
-		if ($this->Sport->usesDistance())
-			return __('Monthly kilometers').' '.$this->Year;
+		$Year = $this->Year == parent::LAST_12_MONTHS ? __('last 12 months') : $this->Year;
 
-		return __('Hours of training').' '.$this->Year;
+		if ($this->Sport->usesDistance())
+			return __('Monthly kilometers').' '.$Year;
+
+		return __('Hours of training').' '.$Year;
 	}
 
 	/**
@@ -43,9 +45,10 @@ class PlotMonthSumData extends PlotSumData {
 	 */
 	protected function getXLabels() {
 		$months = array();
+		$add = $this->Year == self::LAST_12_MONTHS ? date('m') : 0;
 
 		for ($m = $this->timerStart; $m <= $this->timerEnd; $m++)
-			$months[] = array($m-1, Time::Month($m, true));
+			$months[] = array($m-1, Time::Month($m + $add, true));
 
 		return $months;
 	}
@@ -55,6 +58,17 @@ class PlotMonthSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function timer() {
+		if ($this->Year == parent::LAST_12_MONTHS) {
+			return '((MONTH(FROM_UNIXTIME(`time`)) + 12 - '.date('m').' - 1)%12 + 1)';
+		}
+
 		return 'MONTH(FROM_UNIXTIME(`time`))';
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function beginningOfLast12Months() {
+		return strtotime("first day of -11 months");
 	}
 }
