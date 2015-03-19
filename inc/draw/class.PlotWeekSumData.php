@@ -46,10 +46,18 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function getXLabels() {
 		$weeks = array();
-		$add = $this->Year == self::LAST_12_MONTHS ? date('W') : 0;
+		$add = $this->Year == self::LAST_12_MONTHS ? 0 : date("W") - $this->timerEnd;
 
-		for ($w = $this->timerStart; $w <= $this->timerEnd; $w++)
-			$weeks[] = array($w-$this->timerStart, (($w+$add)%5 == 0) ? ($w + $add)%$this->timerEnd : '');
+		for ($w = $this->timerStart; $w <= $this->timerEnd; $w++) {
+			$time = strtotime("sunday -".($this->timerEnd - $w + $add)." weeks");
+			$string = (date("d", $time) <= 7) ? Time::Month(date("m", $time), true) : '';
+
+			if ($string != '' && date("m", $time) == 1) {
+				$string .= ' \''.date("y", $time);
+			}
+
+			$weeks[] = array($w-$this->timerStart, $string);
+		}
 
 		return $weeks;
 	}
