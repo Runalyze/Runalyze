@@ -23,12 +23,12 @@ class RunalyzeJsonAnalyzer {
 		$Reader = new BigFileReaderGZip($fileName);
 
 		while (!$Reader->eof()) {
-			$Line = $Reader->readLine();
+			$Line = trim($Reader->readLine());
 
 			if (substr($Line, 0, 8) == '{"TABLE"') {
-				$TableName = substr($Line, 10, -3);
+				$TableName = substr($Line, 10, -2);
 				$this->NumberOf[$TableName] = 0;
-			} elseif ($Line{0} == '{') {
+			} elseif ($Line != '' && $Line{0} == '{') {
 				$this->NumberOf[$TableName]++;
 			}
 		}
