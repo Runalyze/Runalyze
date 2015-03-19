@@ -18,6 +18,21 @@ abstract class PlotSumData extends Plot {
 	const LAST_12_MONTHS = 'last12months';
 
 	/**
+	 * @var enum 
+	 */
+	const ANALYSIS_DEFAULT = 'kmorh';
+
+	/**
+	 * @var enum 
+	 */
+	const ANALYSIS_TRIMP = 'trimp';
+
+	/**
+	 * @var enum 
+	 */
+	const ANALYSIS_JD = 'jd';
+
+	/**
 	 * URL to window
 	 * @var string
 	 */
@@ -64,6 +79,12 @@ abstract class PlotSumData extends Plot {
 	 * @var bool
 	 */
 	protected $usesDistance = false;
+
+	/**
+	 * Which analysis to show
+	 * @var enum
+	 */
+	protected $Analysis;
 
 	/**
 	 * Constructor
@@ -119,6 +140,10 @@ abstract class PlotSumData extends Plot {
 				'links'	=> $this->getMenuLinksForGrouping()
 			),
 			array(
+				'title' => __('Choose evaluation'),
+				'links'	=> $this->getMenuLinksForAnalysis()
+			),
+			array(
 				'title' => __('Choose sport'),
 				'links'	=> $this->getMenuLinksForSports()
 			),
@@ -157,6 +182,23 @@ abstract class PlotSumData extends Plot {
 			$Links[] = $this->link( __('Total'), $this->Year, Request::param('sportid'), '', Request::param('group') == '');
 
 		$Links[] = $this->link( __('By type'), $this->Year, Request::param('sportid'), 'types', Request::param('group') == 'types');
+
+		return $Links;
+	}
+
+	/**
+	 * Get menu links for analysis
+	 * @return array
+	 */
+	private function getMenuLinksForAnalysis() {
+		$Links = array(
+			$this->link( __('Distance/Duration'), $this->Year, Request::param('sportid'), Request::param('group'), $this->Analysis == self::ANALYSIS_DEFAULT, self::ANALYSIS_DEFAULT),
+			$this->link( __('TRIMP'), $this->Year, Request::param('sportid'), Request::param('group'), $this->Analysis == self::ANALYSIS_TRIMP, self::ANALYSIS_TRIMP)
+		);
+
+		if ($this->Sport->isRunning()) {
+			$Links[] = $this->link( __('JD points'), $this->Year, $this->Sport->id(), Request::param('group'), $this->Analysis == self::ANALYSIS_JD, self::ANALYSIS_JD);
+		}
 
 		return $Links;
 	}
@@ -202,11 +244,15 @@ abstract class PlotSumData extends Plot {
 	 * @param boolean $current
 	 * @return string
 	 */
-	private function link($text, $year, $sportid, $group, $current = false) {
+	private function link($text, $year, $sportid, $group, $current = false, $analysis = false) {
+		if (!$analysis) {
+			$analysis = $this->Analysis;
+		}
+
 		if (FrontendShared::$IS_SHOWN)
-			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.DataBrowserShared::getBaseUrl().'?view='.(Request::param('type')=='week'?'weekkm':'monthkm').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'">'.$text.'</a></li>');
+			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.DataBrowserShared::getBaseUrl().'?view='.(Request::param('type')=='week'?'weekkm':'monthkm').'&type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'&analysis='.$analysis.'">'.$text.'</a></li>');
 		else
-			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.self::$URL.'?type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'">'.$text.'</a></li>');
+			return Ajax::window('<li'.($current ? ' class="active"' : '').'><a href="'.self::$URL.'?type='.Request::param('type').'&y='.$year.'&sportid='.$sportid.'&group='.$group.'&analysis='.$analysis.'">'.$text.'</a></li>');
 	}
 
 	/**
@@ -243,12 +289,14 @@ abstract class PlotSumData extends Plot {
 		$this->setXLabels($this->getXLabels());
 		$this->addYAxis(1, 'left');
 
-		if ($this->usesDistance) {
-			$this->addYUnit(1, 'km');
-			$this->setYTicks(1, 10, 0);
-		} else {
-			$this->addYUnit(1, 'h');
-			$this->setYTicks(1, 1, 0);
+		if ($this->Analysis == self::ANALYSIS_DEFAULT) {
+			if ($this->usesDistance) {
+				$this->addYUnit(1, 'km');
+				$this->setYTicks(1, 10, 0);
+			} else {
+				$this->addYUnit(1, 'h');
+				$this->setYTicks(1, 1, 0);
+			}
 		}
 	}
 
@@ -270,10 +318,26 @@ abstract class PlotSumData extends Plot {
 			($this->Year >= START_YEAR && $this->Year <= date('Y') && START_TIME != time()) ||
 			$this->Year == self::LAST_12_MONTHS
 		)) {
+			$this->defineAnalysis();
 			$this->loadData();
 			$this->setData();
 		} else {
 			$this->raiseError( __('There are no data for this timerange.') );
+		}
+	}
+
+	/**
+	 * Define analysis
+	 */
+	private function defineAnalysis() {
+		$request = Request::param('analysis');
+
+		if ($request == self::ANALYSIS_JD && $this->Sport->isRunning()) {
+			$this->Analysis = self::ANALYSIS_JD;
+		} elseif ($request == self::ANALYSIS_TRIMP) {
+			$this->Analysis = self::ANALYSIS_TRIMP;
+		} else {
+			$this->Analysis = self::ANALYSIS_DEFAULT;
 		}
 	}
 
@@ -284,7 +348,7 @@ abstract class PlotSumData extends Plot {
 		$whereSport = (Request::param('group') == 'sport') ? '' : '`sportid`='.$this->Sport->id().' AND';
 
 		$this->usesDistance = $this->Sport->usesDistance();
-		if (Request::param('group') != 'sport' && $this->usesDistance) {
+		if (Request::param('group') != 'sport' && $this->Analysis == self::ANALYSIS_DEFAULT && $this->usesDistance) {
 			$num = DB::getInstance()->query('
 				SELECT COUNT(*) FROM `'.PREFIX.'training`
 				WHERE
@@ -333,8 +397,13 @@ abstract class PlotSumData extends Plot {
 	 * @return string
 	 */
 	private function dataSum() {
-		if ($this->usesDistance)
+		if ($this->Analysis == self::ANALYSIS_JD) {
+			return 'SUM(`jd_intensity`)';
+		} elseif ($this->Analysis == self::ANALYSIS_TRIMP) {
+			return 'SUM(`trimp`)';
+		} elseif ($this->usesDistance) {
 			return 'SUM(`distance`)';
+		}
 
 		return 'SUM(`s`)/3600';
 	}
