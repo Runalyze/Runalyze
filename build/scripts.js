@@ -7461,13 +7461,437 @@ Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
 */
-(function(a){function e(h){var k,j=this,l=h.data||{};if(l.elem)j=h.dragTarget=l.elem,h.dragProxy=d.proxy||j,h.cursorOffsetX=l.pageX-l.left,h.cursorOffsetY=l.pageY-l.top,h.offsetX=h.pageX-h.cursorOffsetX,h.offsetY=h.pageY-h.cursorOffsetY;else if(d.dragging||l.which>0&&h.which!=l.which||a(h.target).is(l.not))return;switch(h.type){case"mousedown":return a.extend(l,a(j).offset(),{elem:j,target:h.target,pageX:h.pageX,pageY:h.pageY}),b.add(document,"mousemove mouseup",e,l),i(j,!1),d.dragging=null,!1;case!d.dragging&&"mousemove":if(g(h.pageX-l.pageX)+g(h.pageY-l.pageY)<l.distance)break;h.target=l.target,k=f(h,"dragstart",j),k!==!1&&(d.dragging=j,d.proxy=h.dragProxy=a(k||j)[0]);case"mousemove":if(d.dragging){if(k=f(h,"drag",j),c.drop&&(c.drop.allowed=k!==!1,c.drop.handler(h)),k!==!1)break;h.type="mouseup"}case"mouseup":b.remove(document,"mousemove mouseup",e),d.dragging&&(c.drop&&c.drop.handler(h),f(h,"dragend",j)),i(j,!0),d.dragging=d.proxy=l.elem=!1}return!0}function f(b,c,d){b.type=c;var e=a.event.dispatch.call(d,b);return e===!1?!1:e||b.result}function g(a){return Math.pow(a,2)}function h(){return d.dragging===!1}function i(a,b){a&&(a.unselectable=b?"off":"on",a.onselectstart=function(){return b},a.style&&(a.style.MozUserSelect=b?"":"none"))}a.fn.drag=function(a,b,c){return b&&this.bind("dragstart",a),c&&this.bind("dragend",c),a?this.bind("drag",b?b:a):this.trigger("drag")};var b=a.event,c=b.special,d=c.drag={not:":input",distance:0,which:1,dragging:!1,setup:function(c){c=a.extend({distance:d.distance,which:d.which,not:d.not},c||{}),c.distance=g(c.distance),b.add(this,"mousedown",e,c),this.attachEvent&&this.attachEvent("ondragstart",h)},teardown:function(){b.remove(this,"mousedown",e),this===d.dragging&&(d.dragging=d.proxy=!1),i(this,!0),this.detachEvent&&this.detachEvent("ondragstart",h)}};c.dragstart=c.dragend={setup:function(){},teardown:function(){}}})(jQuery);(function(d){function e(a){var b=a||window.event,c=[].slice.call(arguments,1),f=0,e=0,g=0,a=d.event.fix(b);a.type="mousewheel";b.wheelDelta&&(f=b.wheelDelta/120);b.detail&&(f=-b.detail/3);g=f;void 0!==b.axis&&b.axis===b.HORIZONTAL_AXIS&&(g=0,e=-1*f);void 0!==b.wheelDeltaY&&(g=b.wheelDeltaY/120);void 0!==b.wheelDeltaX&&(e=-1*b.wheelDeltaX/120);c.unshift(a,f,e,g);return(d.event.dispatch||d.event.handle).apply(this,c)}var c=["DOMMouseScroll","mousewheel"];if(d.event.fixHooks)for(var h=c.length;h;)d.event.fixHooks[c[--h]]=d.event.mouseHooks;d.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a=c.length;a;)this.addEventListener(c[--a],e,!1);else this.onmousewheel=e},teardown:function(){if(this.removeEventListener)for(var a=c.length;a;)this.removeEventListener(c[--a],e,!1);else this.onmousewheel=null}};d.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})})(jQuery);(function($){var options={xaxis:{zoomRange:null,panRange:null},zoom:{interactive:false,trigger:"dblclick",amount:1.5},pan:{interactive:false,cursor:"move",frameRate:20}};function init(plot){function onZoomClick(e,zoomOut){var c=plot.offset();c.left=e.pageX-c.left;c.top=e.pageY-c.top;if(zoomOut)plot.zoomOut({center:c});else plot.zoom({center:c})}function onMouseWheel(e,delta){e.preventDefault();onZoomClick(e,delta<0);return false}var prevCursor="default",prevPageX=0,prevPageY=0,panTimeout=null;function onDragStart(e){if(e.which!=1)return false;var c=plot.getPlaceholder().css("cursor");if(c)prevCursor=c;plot.getPlaceholder().css("cursor",plot.getOptions().pan.cursor);prevPageX=e.pageX;prevPageY=e.pageY}function onDrag(e){var frameRate=plot.getOptions().pan.frameRate;if(panTimeout||!frameRate)return;panTimeout=setTimeout(function(){plot.pan({left:prevPageX-e.pageX,top:prevPageY-e.pageY});prevPageX=e.pageX;prevPageY=e.pageY;panTimeout=null},1/frameRate*1e3)}function onDragEnd(e){if(panTimeout){clearTimeout(panTimeout);panTimeout=null}plot.getPlaceholder().css("cursor",prevCursor);plot.pan({left:prevPageX-e.pageX,top:prevPageY-e.pageY})}function bindEvents(plot,eventHolder){var o=plot.getOptions();if(o.zoom.interactive){eventHolder[o.zoom.trigger](onZoomClick);eventHolder.mousewheel(onMouseWheel)}if(o.pan.interactive){eventHolder.bind("dragstart",{distance:10},onDragStart);eventHolder.bind("drag",onDrag);eventHolder.bind("dragend",onDragEnd)}}plot.zoomOut=function(args){if(!args)args={};if(!args.amount)args.amount=plot.getOptions().zoom.amount;args.amount=1/args.amount;plot.zoom(args)};plot.zoom=function(args){if(!args)args={};var c=args.center,amount=args.amount||plot.getOptions().zoom.amount,w=plot.width(),h=plot.height();if(!c)c={left:w/2,top:h/2};var xf=c.left/w,yf=c.top/h,minmax={x:{min:c.left-xf*w/amount,max:c.left+(1-xf)*w/amount},y:{min:c.top-yf*h/amount,max:c.top+(1-yf)*h/amount}};$.each(plot.getAxes(),function(_,axis){var opts=axis.options,min=minmax[axis.direction].min,max=minmax[axis.direction].max,zr=opts.zoomRange,pr=opts.panRange;if(zr===false)return;min=axis.c2p(min);max=axis.c2p(max);if(min>max){var tmp=min;min=max;max=tmp}if(pr){if(pr[0]!=null&&min<pr[0]){min=pr[0]}if(pr[1]!=null&&max>pr[1]){max=pr[1]}}var range=max-min;if(zr&&(zr[0]!=null&&range<zr[0]&&amount>1||zr[1]!=null&&range>zr[1]&&amount<1))return;opts.min=min;opts.max=max});plot.setupGrid();plot.draw();if(!args.preventEvent)plot.getPlaceholder().trigger("plotzoom",[plot,args])};plot.pan=function(args){var delta={x:+args.left,y:+args.top};if(isNaN(delta.x))delta.x=0;if(isNaN(delta.y))delta.y=0;$.each(plot.getAxes(),function(_,axis){var opts=axis.options,min,max,d=delta[axis.direction];min=axis.c2p(axis.p2c(axis.min)+d),max=axis.c2p(axis.p2c(axis.max)+d);var pr=opts.panRange;if(pr===false)return;if(pr){if(pr[0]!=null&&pr[0]>min){d=pr[0]-min;min+=d;max+=d}if(pr[1]!=null&&pr[1]<max){d=pr[1]-max;min+=d;max+=d}}opts.min=min;opts.max=max});plot.setupGrid();plot.draw();if(!args.preventEvent)plot.getPlaceholder().trigger("plotpan",[plot,args])};function shutdown(plot,eventHolder){eventHolder.unbind(plot.getOptions().zoom.trigger,onZoomClick);eventHolder.unbind("mousewheel",onMouseWheel);eventHolder.unbind("dragstart",onDragStart);eventHolder.unbind("drag",onDrag);eventHolder.unbind("dragend",onDragEnd);if(panTimeout)clearTimeout(panTimeout)}plot.hooks.bindEvents.push(bindEvents);plot.hooks.shutdown.push(shutdown)}$.plot.plugins.push({init:init,options:options,name:"navigate",version:"1.3"})})(jQuery);/* Javascript plotting library for jQuery, version 0.8.3.
+(function(a){function e(h){var k,j=this,l=h.data||{};if(l.elem)j=h.dragTarget=l.elem,h.dragProxy=d.proxy||j,h.cursorOffsetX=l.pageX-l.left,h.cursorOffsetY=l.pageY-l.top,h.offsetX=h.pageX-h.cursorOffsetX,h.offsetY=h.pageY-h.cursorOffsetY;else if(d.dragging||l.which>0&&h.which!=l.which||a(h.target).is(l.not))return;switch(h.type){case"mousedown":return a.extend(l,a(j).offset(),{elem:j,target:h.target,pageX:h.pageX,pageY:h.pageY}),b.add(document,"mousemove mouseup",e,l),i(j,!1),d.dragging=null,!1;case!d.dragging&&"mousemove":if(g(h.pageX-l.pageX)+g(h.pageY-l.pageY)<l.distance)break;h.target=l.target,k=f(h,"dragstart",j),k!==!1&&(d.dragging=j,d.proxy=h.dragProxy=a(k||j)[0]);case"mousemove":if(d.dragging){if(k=f(h,"drag",j),c.drop&&(c.drop.allowed=k!==!1,c.drop.handler(h)),k!==!1)break;h.type="mouseup"}case"mouseup":b.remove(document,"mousemove mouseup",e),d.dragging&&(c.drop&&c.drop.handler(h),f(h,"dragend",j)),i(j,!0),d.dragging=d.proxy=l.elem=!1}return!0}function f(b,c,d){b.type=c;var e=a.event.dispatch.call(d,b);return e===!1?!1:e||b.result}function g(a){return Math.pow(a,2)}function h(){return d.dragging===!1}function i(a,b){a&&(a.unselectable=b?"off":"on",a.onselectstart=function(){return b},a.style&&(a.style.MozUserSelect=b?"":"none"))}a.fn.drag=function(a,b,c){return b&&this.bind("dragstart",a),c&&this.bind("dragend",c),a?this.bind("drag",b?b:a):this.trigger("drag")};var b=a.event,c=b.special,d=c.drag={not:":input",distance:0,which:1,dragging:!1,setup:function(c){c=a.extend({distance:d.distance,which:d.which,not:d.not},c||{}),c.distance=g(c.distance),b.add(this,"mousedown",e,c),this.attachEvent&&this.attachEvent("ondragstart",h)},teardown:function(){b.remove(this,"mousedown",e),this===d.dragging&&(d.dragging=d.proxy=!1),i(this,!0),this.detachEvent&&this.detachEvent("ondragstart",h)}};c.dragstart=c.dragend={setup:function(){},teardown:function(){}}})(jQuery);(function(d){function e(a){var b=a||window.event,c=[].slice.call(arguments,1),f=0,e=0,g=0,a=d.event.fix(b);a.type="mousewheel";b.wheelDelta&&(f=b.wheelDelta/120);b.detail&&(f=-b.detail/3);g=f;void 0!==b.axis&&b.axis===b.HORIZONTAL_AXIS&&(g=0,e=-1*f);void 0!==b.wheelDeltaY&&(g=b.wheelDeltaY/120);void 0!==b.wheelDeltaX&&(e=-1*b.wheelDeltaX/120);c.unshift(a,f,e,g);return(d.event.dispatch||d.event.handle).apply(this,c)}var c=["DOMMouseScroll","mousewheel"];if(d.event.fixHooks)for(var h=c.length;h;)d.event.fixHooks[c[--h]]=d.event.mouseHooks;d.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a=c.length;a;)this.addEventListener(c[--a],e,!1);else this.onmousewheel=e},teardown:function(){if(this.removeEventListener)for(var a=c.length;a;)this.removeEventListener(c[--a],e,!1);else this.onmousewheel=null}};d.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})})(jQuery);(function($){var options={xaxis:{zoomRange:null,panRange:null},zoom:{interactive:false,trigger:"dblclick",amount:1.5},pan:{interactive:false,cursor:"move",frameRate:20}};function init(plot){function onZoomClick(e,zoomOut){var c=plot.offset();c.left=e.pageX-c.left;c.top=e.pageY-c.top;if(zoomOut)plot.zoomOut({center:c});else plot.zoom({center:c})}function onMouseWheel(e,delta){e.preventDefault();onZoomClick(e,delta<0);return false}var prevCursor="default",prevPageX=0,prevPageY=0,panTimeout=null;function onDragStart(e){if(e.which!=1)return false;var c=plot.getPlaceholder().css("cursor");if(c)prevCursor=c;plot.getPlaceholder().css("cursor",plot.getOptions().pan.cursor);prevPageX=e.pageX;prevPageY=e.pageY}function onDrag(e){var frameRate=plot.getOptions().pan.frameRate;if(panTimeout||!frameRate)return;panTimeout=setTimeout(function(){plot.pan({left:prevPageX-e.pageX,top:prevPageY-e.pageY});prevPageX=e.pageX;prevPageY=e.pageY;panTimeout=null},1/frameRate*1e3)}function onDragEnd(e){if(panTimeout){clearTimeout(panTimeout);panTimeout=null}plot.getPlaceholder().css("cursor",prevCursor);plot.pan({left:prevPageX-e.pageX,top:prevPageY-e.pageY})}function bindEvents(plot,eventHolder){var o=plot.getOptions();if(o.zoom.interactive){eventHolder[o.zoom.trigger](onZoomClick);eventHolder.mousewheel(onMouseWheel)}if(o.pan.interactive){eventHolder.bind("dragstart",{distance:10},onDragStart);eventHolder.bind("drag",onDrag);eventHolder.bind("dragend",onDragEnd)}}plot.zoomOut=function(args){if(!args)args={};if(!args.amount)args.amount=plot.getOptions().zoom.amount;args.amount=1/args.amount;plot.zoom(args)};plot.zoom=function(args){if(!args)args={};var c=args.center,amount=args.amount||plot.getOptions().zoom.amount,w=plot.width(),h=plot.height();if(!c)c={left:w/2,top:h/2};var xf=c.left/w,yf=c.top/h,minmax={x:{min:c.left-xf*w/amount,max:c.left+(1-xf)*w/amount},y:{min:c.top-yf*h/amount,max:c.top+(1-yf)*h/amount}};$.each(plot.getAxes(),function(_,axis){var opts=axis.options,min=minmax[axis.direction].min,max=minmax[axis.direction].max,zr=opts.zoomRange,pr=opts.panRange;if(zr===false)return;min=axis.c2p(min);max=axis.c2p(max);if(min>max){var tmp=min;min=max;max=tmp}if(pr){if(pr[0]!=null&&min<pr[0]){min=pr[0]}if(pr[1]!=null&&max>pr[1]){max=pr[1]}}var range=max-min;if(zr&&(zr[0]!=null&&range<zr[0]&&amount>1||zr[1]!=null&&range>zr[1]&&amount<1))return;opts.min=min;opts.max=max});plot.setupGrid();plot.draw();if(!args.preventEvent)plot.getPlaceholder().trigger("plotzoom",[plot,args])};plot.pan=function(args){var delta={x:+args.left,y:+args.top};if(isNaN(delta.x))delta.x=0;if(isNaN(delta.y))delta.y=0;$.each(plot.getAxes(),function(_,axis){var opts=axis.options,min,max,d=delta[axis.direction];min=axis.c2p(axis.p2c(axis.min)+d),max=axis.c2p(axis.p2c(axis.max)+d);var pr=opts.panRange;if(pr===false)return;if(pr){if(pr[0]!=null&&pr[0]>min){d=pr[0]-min;min+=d;max+=d}if(pr[1]!=null&&pr[1]<max){d=pr[1]-max;min+=d;max+=d}}opts.min=min;opts.max=max});plot.setupGrid();plot.draw();if(!args.preventEvent)plot.getPlaceholder().trigger("plotpan",[plot,args])};function shutdown(plot,eventHolder){eventHolder.unbind(plot.getOptions().zoom.trigger,onZoomClick);eventHolder.unbind("mousewheel",onMouseWheel);eventHolder.unbind("dragstart",onDragStart);eventHolder.unbind("drag",onDrag);eventHolder.unbind("dragend",onDragEnd);if(panTimeout)clearTimeout(panTimeout)}plot.hooks.bindEvents.push(bindEvents);plot.hooks.shutdown.push(shutdown)}$.plot.plugins.push({init:init,options:options,name:"navigate",version:"1.3"})})(jQuery);/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*
+ * Plugin to hide series in flot graphs.
+ *
+ * To activate, set legend.hideable to true in the flot options object.
+ * To hide one or more series by default, set legend.hidden to an array of
+ * label strings.
+ *
+ * At the moment, this only works with line and point graphs.
+ *
+ * Example:
+ *
+ *     var plotdata = [
+ *         {
+ *             data: [[1, 1], [2, 1], [3, 3], [4, 2], [5, 5]],
+ *             label: "graph 1"
+ *         },
+ *         {
+ *             data: [[1, 0], [2, 1], [3, 0], [4, 4], [5, 3]],
+ *             label: "graph 2"
+ *         }
+ *     ];
+ *
+ *     plot = $.plot($("#placeholder"), plotdata, {
+ *        series: {
+ *             points: { show: true },
+ *             lines: { show: true }
+ *         },
+ *         legend: {
+ *             hideable: true,
+ *             hidden: ["graph 1", "graph 2"]
+ *         }
+ *     });
+ *
+ */
+(function ($) {
+    var options = { };
+
+    function init(plot) {
+        var drawnOnce = false;
+
+        function findPlotSeries(label) {
+            var plotdata = plot.getData();
+            for (var i = 0; i < plotdata.length; i++) {
+                if (plotdata[i].label == label) {
+                    return plotdata[i];
+                }
+            }
+            return null;
+        }
+
+        function plotLabelClicked(label, mouseOut) {
+            var series = findPlotSeries(label);
+            if (!series) {
+                return;
+            }
+
+            var options = plot.getOptions();
+            var switchedOff = false;
+
+            if (typeof series.points.oldShow === "undefined") {
+                series.points.oldShow = false;
+            }
+            if (typeof series.lines.oldShow === "undefined") {
+                series.lines.oldShow = false;
+            }
+            if (typeof series.bars.oldShow === "undefined") {
+                series.bars.oldShow = false;
+            }
+
+            if (series.points.show && !series.points.oldShow) {
+                series.points.show = false;
+                series.points.oldShow = true;
+                switchedOff = true;
+            }
+            if (series.lines.show && !series.lines.oldShow) {
+                series.lines.show = false;
+                series.lines.oldShow = true;
+                switchedOff = true;
+            }
+            if (series.bars.show && !series.bars.oldShow) {
+                series.bars.show = false;
+                series.bars.oldShow = true;
+                switchedOff = true;
+            }
+
+            if (switchedOff) {
+                series.oldColor = series.color;
+                series.color = "#fff";
+                setHidden(options, label, true);
+            } else {
+                var switchedOn = false;
+
+                if (!series.points.show && series.points.oldShow) {
+                    series.points.show = true;
+                    series.points.oldShow = false;
+                    switchedOn = true;
+                }
+                if (!series.lines.show && series.lines.oldShow) {
+            	    series.lines.show = true;
+                    series.lines.oldShow = false;
+                    switchedOn = true;
+                }
+                if (!series.bars.show && series.bars.oldShow) {
+            	    series.bars.show = true;
+                    series.bars.oldShow = false;
+                    switchedOn = true;
+                }
+
+                if (switchedOn) {
+            	    series.color = series.oldColor;
+                    setHidden(options, label, false);
+            	}
+            }
+
+            // HACK: Reset the data, triggering recalculation of graph bounds
+            plot.setData(plot.getData());
+
+            plot.setupGrid();
+            plot.draw();
+        }
+
+        function setHidden(options, label, hide) {
+            // Record state to a new variable in the legend option object.
+            if (!options.legend.hidden) {
+                options.legend.hidden = [];
+            }
+
+            var pos = options.legend.hidden.indexOf(label);
+
+            if (hide) {
+                if (pos < 0) {
+                    options.legend.hidden.push(label);
+                }
+            } else {
+                if (pos > -1) {
+                    options.legend.hidden.splice(pos, 1);
+                }
+            }
+        }
+
+        function setHideAction(elem) {
+            elem.mouseenter(function() { $(this).css("cursor", "pointer"); })
+                .mouseleave(function() { $(this).css("cursor", "default"); })
+                .unbind("click").click(function() {
+                    plotLabelClicked($(this).parent().text());
+                });
+        }
+
+        function plotLabelHandlers(plot) {
+            var options = plot.getOptions();
+
+            if (!options.legend.hideable) {
+                return;
+            }
+
+            var p = plot.getPlaceholder();
+
+            setHideAction(p.find(".graphlabel"));
+            setHideAction(p.find(".legendColorBox"));
+
+            if (!drawnOnce) {
+                drawnOnce = true;
+                if (options.legend.hidden) {
+                    for (var i = 0; i < options.legend.hidden.length; i++) {
+                        plotLabelClicked(options.legend.hidden[i], true);
+                    }
+                }
+            }
+        }
+
+        function checkOptions(plot, options) {
+            if (!options.legend.hideable) {
+                return;
+            }
+
+            options.legend.labelFormatter = function(label, series) {
+                return '<span class="graphlabel">' + label + '</span>';
+            };
+        }
+
+        function hideDatapointsIfNecessary(plot, s, datapoints) {
+            var options = plot.getOptions();
+
+            if (!options.legend.hideable) {
+                return;
+            }
+
+            if (options.legend.hidden &&
+                options.legend.hidden.indexOf(s.label) > -1) {
+                var off = false;
+
+                if (s.points.show) {
+                    s.points.show = false;
+                    s.points.oldShow = true;
+                    off = true;
+                }
+                if (s.lines.show) {
+                    s.lines.show = false;
+                    s.lines.oldShow = true;
+                    off = true;
+                }
+                if (s.bars.show) {
+                    s.bars.show = false;
+                    s.bars.oldShow = true;
+                    off = true;
+                }
+
+                if (off) {
+                    s.oldColor = s.color;
+                    s.color = "#fff";
+                }
+            }
+
+            if (!s.points.show && !s.lines.show && !s.bars.show) {
+                s.datapoints.format = [ null, null ];
+            }
+        }
+
+        plot.hooks.processOptions.push(checkOptions);
+
+        plot.hooks.draw.push(function (plot, ctx) {
+            plotLabelHandlers(plot);
+        });
+
+        plot.hooks.processDatapoints.push(hideDatapointsIfNecessary);
+    }
+
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'hiddenGraphs',
+        version: '1.1'
+    });
+
+})(jQuery);/* Flot plugin for stacking data sets rather than overlyaing them.
 
 Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
 
+The plugin assumes the data is sorted on x (or y if stacking horizontally).
+For line charts, it is assumed that if a line has an undefined gap (from a
+null point), then the line above it should have the same gap - insert zeros
+instead of "null" if you want another behaviour. This also holds for the start
+and end of the chart. Note that stacking a mix of positive and negative values
+in most instances doesn't make sense (so it looks weird).
+
+Two or more series are stacked when their "stack" attribute is set to the same
+key (which can be any number or string or just "true"). To specify the default
+stack, you can set the stack option like this:
+
+	series: {
+		stack: null/false, true, or a key (number/string)
+	}
+
+You can also specify it for a single series, like this:
+
+	$.plot( $("#placeholder"), [{
+		data: [ ... ],
+		stack: true
+	}])
+
+The stacking order is determined by the order of the data series in the array
+(later series end up on top of the previous).
+
+Internally, the plugin modifies the datapoints in each series, adding an
+offset to the y value. For line series, extra data points are inserted through
+interpolation. If there's a second y value, it's also adjusted (e.g for bar
+charts or filled areas).
+
 */
-(function($){var options={series:{stack:null}};function init(plot){function findMatchingSeries(s,allseries){var res=null;for(var i=0;i<allseries.length;++i){if(s==allseries[i])break;if(allseries[i].stack==s.stack)res=allseries[i]}return res}function stackData(plot,s,datapoints){if(s.stack==null||s.stack===false)return;var other=findMatchingSeries(s,plot.getData());if(!other)return;var ps=datapoints.pointsize,points=datapoints.points,otherps=other.datapoints.pointsize,otherpoints=other.datapoints.points,newpoints=[],px,py,intery,qx,qy,bottom,withlines=s.lines.show,horizontal=s.bars.horizontal,withbottom=ps>2&&(horizontal?datapoints.format[2].x:datapoints.format[2].y),withsteps=withlines&&s.lines.steps,fromgap=true,keyOffset=horizontal?1:0,accumulateOffset=horizontal?0:1,i=0,j=0,l,m;while(true){if(i>=points.length)break;l=newpoints.length;if(points[i]==null){for(m=0;m<ps;++m)newpoints.push(points[i+m]);i+=ps}else if(j>=otherpoints.length){if(!withlines){for(m=0;m<ps;++m)newpoints.push(points[i+m])}i+=ps}else if(otherpoints[j]==null){for(m=0;m<ps;++m)newpoints.push(null);fromgap=true;j+=otherps}else{px=points[i+keyOffset];py=points[i+accumulateOffset];qx=otherpoints[j+keyOffset];qy=otherpoints[j+accumulateOffset];bottom=0;if(px==qx){for(m=0;m<ps;++m)newpoints.push(points[i+m]);newpoints[l+accumulateOffset]+=qy;bottom=qy;i+=ps;j+=otherps}else if(px>qx){if(withlines&&i>0&&points[i-ps]!=null){intery=py+(points[i-ps+accumulateOffset]-py)*(qx-px)/(points[i-ps+keyOffset]-px);newpoints.push(qx);newpoints.push(intery+qy);for(m=2;m<ps;++m)newpoints.push(points[i+m]);bottom=qy}j+=otherps}else{if(fromgap&&withlines){i+=ps;continue}for(m=0;m<ps;++m)newpoints.push(points[i+m]);if(withlines&&j>0&&otherpoints[j-otherps]!=null)bottom=qy+(otherpoints[j-otherps+accumulateOffset]-qy)*(px-qx)/(otherpoints[j-otherps+keyOffset]-qx);newpoints[l+accumulateOffset]+=bottom;i+=ps}fromgap=false;if(l!=newpoints.length&&withbottom)newpoints[l+2]+=bottom}if(withsteps&&l!=newpoints.length&&l>0&&newpoints[l]!=null&&newpoints[l]!=newpoints[l-ps]&&newpoints[l+1]!=newpoints[l-ps+1]){for(m=0;m<ps;++m)newpoints[l+ps+m]=newpoints[l+m];newpoints[l+1]=newpoints[l-ps+1]}}datapoints.points=newpoints}plot.hooks.processDatapoints.push(stackData)}$.plot.plugins.push({init:init,options:options,name:"stack",version:"1.2"})})(jQuery);/**
+
+(function ($) {
+    var options = {
+        series: { stack: null } // or number/string
+    };
+    
+    function init(plot) {
+        function findMatchingSeries(s, allseries) {
+            var res = null;
+            for (var i = 0; i < allseries.length; ++i) {
+                if (s == allseries[i])
+                    break;
+                
+                if (allseries[i].stack == s.stack && (allseries[i].points.show || allseries[i].lines.show || allseries[i].bars.show))
+                    res = allseries[i];
+            }
+            
+            return res;
+        }
+        
+        function stackData(plot, s, datapoints) {
+            if (s.stack == null || s.stack === false)
+                return;
+
+            var other = findMatchingSeries(s, plot.getData());
+            if (!other)
+                return;
+
+            if (!s.points.show && !s.lines.show && !s.bars.show) {
+                return;
+            }
+
+            var ps = datapoints.pointsize,
+                points = datapoints.points,
+                otherps = other.datapoints.pointsize,
+                otherpoints = other.datapoints.points,
+                newpoints = [],
+                px, py, intery, qx, qy, bottom,
+                withlines = s.lines.show,
+                horizontal = s.bars.horizontal,
+                withbottom = ps > 2 && (horizontal ? datapoints.format[2].x : datapoints.format[2].y),
+                withsteps = withlines && s.lines.steps,
+                fromgap = true,
+                keyOffset = horizontal ? 1 : 0,
+                accumulateOffset = horizontal ? 0 : 1,
+                i = 0, j = 0, l, m;
+
+            while (true) {
+                if (i >= points.length)
+                    break;
+
+                l = newpoints.length;
+
+                if (points[i] == null) {
+                    // copy gaps
+                    for (m = 0; m < ps; ++m)
+                        newpoints.push(points[i + m]);
+                    i += ps;
+                }
+                else if (j >= otherpoints.length) {
+                    // for lines, we can't use the rest of the points
+                    if (!withlines) {
+                        for (m = 0; m < ps; ++m)
+                            newpoints.push(points[i + m]);
+                    }
+                    i += ps;
+                }
+                else if (otherpoints[j] == null) {
+                    // oops, got a gap
+                    for (m = 0; m < ps; ++m)
+                        newpoints.push(null);
+                    fromgap = true;
+                    j += otherps;
+                }
+                else {
+                    // cases where we actually got two points
+                    px = points[i + keyOffset];
+                    py = points[i + accumulateOffset];
+                    qx = otherpoints[j + keyOffset];
+                    qy = otherpoints[j + accumulateOffset];
+                    bottom = 0;
+
+                    if (px == qx) {
+                        for (m = 0; m < ps; ++m)
+                            newpoints.push(points[i + m]);
+
+                        newpoints[l + accumulateOffset] += qy;
+                        bottom = qy;
+                        
+                        i += ps;
+                        j += otherps;
+                    }
+                    else if (px > qx) {
+                        // we got past point below, might need to
+                        // insert interpolated extra point
+                        if (withlines && i > 0 && points[i - ps] != null) {
+                            intery = py + (points[i - ps + accumulateOffset] - py) * (qx - px) / (points[i - ps + keyOffset] - px);
+                            newpoints.push(qx);
+                            newpoints.push(intery + qy);
+                            for (m = 2; m < ps; ++m)
+                                newpoints.push(points[i + m]);
+                            bottom = qy; 
+                        }
+
+                        j += otherps;
+                    }
+                    else { // px < qx
+                        if (fromgap && withlines) {
+                            // if we come from a gap, we just skip this point
+                            i += ps;
+                            continue;
+                        }
+                            
+                        for (m = 0; m < ps; ++m)
+                            newpoints.push(points[i + m]);
+                        
+                        // we might be able to interpolate a point below,
+                        // this can give us a better y
+                        if (withlines && j > 0 && otherpoints[j - otherps] != null)
+                            bottom = qy + (otherpoints[j - otherps + accumulateOffset] - qy) * (px - qx) / (otherpoints[j - otherps + keyOffset] - qx);
+
+                        newpoints[l + accumulateOffset] += bottom;
+                        
+                        i += ps;
+                    }
+
+                    fromgap = false;
+                    
+                    if (l != newpoints.length && withbottom)
+                        newpoints[l + 2] += bottom;
+                }
+
+                // maintain the line steps invariant
+                if (withsteps && l != newpoints.length && l > 0
+                    && newpoints[l] != null
+                    && newpoints[l] != newpoints[l - ps]
+                    && newpoints[l + 1] != newpoints[l - ps + 1]) {
+                    for (m = 0; m < ps; ++m)
+                        newpoints[l + ps + m] = newpoints[l + m];
+                    newpoints[l + 1] = newpoints[l - ps + 1];
+                }
+            }
+
+            datapoints.points = newpoints;
+        }
+        
+        plot.hooks.processDatapoints.push(stackData);
+    }
+    
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: 'stack',
+        version: '1.2'
+    });
+})(jQuery);
+/**
  * Flot plugin for drawing text (ticks, values, legends, etc...) directly on FLOT's canvas context
  * Released by Andre Lessa, September 2010, v.0.1
  * http://www.lessaworld.com/projects/flotCanvasText
@@ -7841,227 +8265,7 @@ return totalWidth;}
 function shiftPoints(datapoints,serie,dx){var ps=datapoints.pointsize;var points=datapoints.points;var j=0;for(var i=isHorizontal?1:0;i<points.length;i+=ps){points[i]+=dx;serie.data[j][3]=points[i];j++;}
 return points;}
 plot.hooks.processDatapoints.push(reOrderBars);}
-var options={series:{bars:{order:null}}};$.plot.plugins.push({init:init,options:options,name:"orderBars",version:"0.2"});})(jQuery);/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this file,
- * You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-/*
- * Plugin to hide series in flot graphs.
- *
- * To activate, set legend.hideable to true in the flot options object.
- * To hide one or more series by default, set legend.hidden to an array of
- * label strings.
- *
- * At the moment, this only works with line and point graphs.
- *
- * Example:
- *
- *     var plotdata = [
- *         {
- *             data: [[1, 1], [2, 1], [3, 3], [4, 2], [5, 5]],
- *             label: "graph 1"
- *         },
- *         {
- *             data: [[1, 0], [2, 1], [3, 0], [4, 4], [5, 3]],
- *             label: "graph 2"
- *         }
- *     ];
- *
- *     plot = $.plot($("#placeholder"), plotdata, {
- *        series: {
- *             points: { show: true },
- *             lines: { show: true }
- *         },
- *         legend: {
- *             hideable: true,
- *             hidden: ["graph 1", "graph 2"]
- *         }
- *     });
- *
- */
-(function ($) {
-    var options = { };
-
-    function init(plot) {
-        var drawnOnce = false;
-
-        function findPlotSeries(label) {
-            var plotdata = plot.getData();
-            for (var i = 0; i < plotdata.length; i++) {
-                if (plotdata[i].label == label) {
-                    return plotdata[i];
-                }
-            }
-            return null;
-        }
-
-        function plotLabelClicked(label, mouseOut) {
-            var series = findPlotSeries(label);
-            if (!series) {
-                return;
-            }
-
-            var options = plot.getOptions();
-            var switchedOff = false;
-
-            if (typeof series.points.oldShow === "undefined") {
-                series.points.oldShow = false;
-            }
-            if (typeof series.lines.oldShow === "undefined") {
-                series.lines.oldShow = false;
-            }
-
-            if (series.points.show && !series.points.oldShow) {
-                series.points.show = false;
-                series.points.oldShow = true;
-                switchedOff = true;
-            }
-            if (series.lines.show && !series.lines.oldShow) {
-                series.lines.show = false;
-                series.lines.oldShow = true;
-                switchedOff = true;
-            }
-
-            if (switchedOff) {
-                series.oldColor = series.color;
-                series.color = "#fff";
-                setHidden(options, label, true);
-            } else {
-                var switchedOn = false;
-
-                if (!series.points.show && series.points.oldShow) {
-                    series.points.show = true;
-                    series.points.oldShow = false;
-                    switchedOn = true;
-                }
-                if (!series.lines.show && series.lines.oldShow) {
-            	    series.lines.show = true;
-                    series.lines.oldShow = false;
-                    switchedOn = true;
-                }
-
-                if (switchedOn) {
-            	    series.color = series.oldColor;
-                    setHidden(options, label, false);
-            	}
-            }
-
-            // HACK: Reset the data, triggering recalculation of graph bounds
-            plot.setData(plot.getData());
-
-            plot.setupGrid();
-            plot.draw();
-        }
-
-        function setHidden(options, label, hide) {
-            // Record state to a new variable in the legend option object.
-            if (!options.legend.hidden) {
-                options.legend.hidden = [];
-            }
-
-            var pos = options.legend.hidden.indexOf(label);
-
-            if (hide) {
-                if (pos < 0) {
-                    options.legend.hidden.push(label);
-                }
-            } else {
-                if (pos > -1) {
-                    options.legend.hidden.splice(pos, 1);
-                }
-            }
-        }
-
-        function setHideAction(elem) {
-            elem.mouseenter(function() { $(this).css("cursor", "pointer"); })
-                .mouseleave(function() { $(this).css("cursor", "default"); })
-                .unbind("click").click(function() {
-                    plotLabelClicked($(this).parent().text());
-                });
-        }
-
-        function plotLabelHandlers(plot) {
-            var options = plot.getOptions();
-
-            if (!options.legend.hideable) {
-                return;
-            }
-
-            var p = plot.getPlaceholder();
-
-            setHideAction(p.find(".graphlabel"));
-            setHideAction(p.find(".legendColorBox"));
-
-            if (!drawnOnce) {
-                drawnOnce = true;
-                if (options.legend.hidden) {
-                    for (var i = 0; i < options.legend.hidden.length; i++) {
-                        plotLabelClicked(options.legend.hidden[i], true);
-                    }
-                }
-            }
-        }
-
-        function checkOptions(plot, options) {
-            if (!options.legend.hideable) {
-                return;
-            }
-
-            options.legend.labelFormatter = function(label, series) {
-                return '<span class="graphlabel">' + label + '</span>';
-            };
-        }
-
-        function hideDatapointsIfNecessary(plot, s, datapoints) {
-            var options = plot.getOptions();
-
-            if (!options.legend.hideable) {
-                return;
-            }
-
-            if (options.legend.hidden &&
-                options.legend.hidden.indexOf(s.label) > -1) {
-                var off = false;
-
-                if (s.points.show) {
-                    s.points.show = false;
-                    s.points.oldShow = true;
-                    off = true;
-                }
-                if (s.lines.show) {
-                    s.lines.show = false;
-                    s.lines.oldShow = true;
-                    off = true;
-                }
-
-                if (off) {
-                    s.oldColor = s.color;
-                    s.color = "#fff";
-                }
-            }
-
-            if (!s.points.show && !s.lines.show) {
-                s.datapoints.format = [ null, null ];
-            }
-        }
-
-        plot.hooks.processOptions.push(checkOptions);
-
-        plot.hooks.draw.push(function (plot, ctx) {
-            plotLabelHandlers(plot);
-        });
-
-        plot.hooks.processDatapoints.push(hideDatapointsIfNecessary);
-    }
-
-    $.plot.plugins.push({
-        init: init,
-        options: options,
-        name: 'hiddenGraphs',
-        version: '1.1'
-    });
-
-})(jQuery);/* Flot plugin for drawing all elements of a plot on the canvas.
+var options={series:{bars:{order:null}}};$.plot.plugins.push({init:init,options:options,name:"orderBars",version:"0.2"});})(jQuery);/* Flot plugin for drawing all elements of a plot on the canvas.
 
 Copyright (c) 2007-2014 IOLA and Ole Laursen.
 Licensed under the MIT license.
