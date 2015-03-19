@@ -142,10 +142,10 @@ class RunalyzeJsonImporter {
 	 */
 	private function readFile() {
 		while (!$this->Reader->eof()) {
-			$Line = $this->Reader->readLine();
+			$Line = trim($this->Reader->readLine());
 
 			if (substr($Line, 0, 8) == '{"TABLE"') {
-				$TableName = substr($Line, 10, -3);
+				$TableName = substr($Line, 10, -2);
 				$this->readTable($TableName);
 			}
 		}
