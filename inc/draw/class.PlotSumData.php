@@ -127,8 +127,14 @@ abstract class PlotSumData extends Plot {
 		echo '<div class="panel-content">';
 		$this->outputDiv();
 		$this->outputJavaScript();
+		$this->displayInfos();
 		echo '</div>';
 	}
+
+	/**
+	 * Display additional info
+	 */
+	protected function displayInfos() {}
 
 	/**
 	 * Get navigation

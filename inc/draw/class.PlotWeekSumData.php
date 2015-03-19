@@ -17,6 +17,8 @@ class PlotWeekSumData extends PlotSumData {
 		$this->timerEnd   = date("W", mktime(0,0,0,12,28,$yearEnd)); // http://de.php.net/manual/en/function.date.php#49457
 
 		parent::__construct();
+
+		$this->addAverage();
 	}
 
 	/**
@@ -34,10 +36,7 @@ class PlotWeekSumData extends PlotSumData {
 	protected function getTitle() {
 		$Year = $this->Year == parent::LAST_12_MONTHS ? __('last 12 months') : $this->Year;
 
-		if ($this->Sport->usesDistance())
-			return __('Weekly kilometers').' '.$Year;
-
-		return __('Hours of training').' '.$Year;
+		return __('Weekly chart:').' '.$Year;
 	}
 
 	/**
@@ -79,5 +78,50 @@ class PlotWeekSumData extends PlotSumData {
 	 */
 	protected function beginningOfLast12Months() {
 		return strtotime("monday -".$this->timerEnd." weeks");
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function showsAverage() {
+		return ($this->Sport->isRunning() && $this->Analysis == parent::ANALYSIS_DEFAULT && $this->Year == parent::LAST_12_MONTHS);
+	}
+
+	/**
+	 * Add line for average and goal
+	 */
+	protected function addAverage() {
+		if ($this->showsAverage()) {
+			$BasicEndurance = new BasicEndurance();
+			$BasicEndurance->readSettingsFromConfiguration();
+			$Result = $BasicEndurance->asArray();
+
+			$Avg = $Result['weekkm-percentage']*$BasicEndurance->getTargetWeekKm();
+			$Goal = $BasicEndurance->getTargetWeekKm();
+
+			$this->addThreshold('y', $Avg, '#333');
+			$this->addThreshold('y', $Goal, '#ccc');
+
+			$this->addAnnotation(0, $Avg, __('Avg*'), 0, 0);
+			$this->addAnnotation(0, $Goal, __('Goal*'), 0, 0);
+		}
+	}
+
+	/**
+	 * Display additional info
+	 */
+	protected function displayInfos() {
+		if ($this->showsAverage()) {
+			$BasicEndurance = new BasicEndurance();
+			$BasicEndurance->readSettingsFromConfiguration();
+
+			echo HTML::info(
+				'* ' . sprintf(
+					__('These lines belong to our calculations of your basic endurance. '.
+						'The average is taken over %s weeks and the goal belongs to preparing an optimal marathon.'),
+					round($BasicEndurance->getDaysForWeekKm() / 7)
+				)
+			);
+		}
 	}
 }

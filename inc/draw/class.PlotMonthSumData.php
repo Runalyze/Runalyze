@@ -33,10 +33,7 @@ class PlotMonthSumData extends PlotSumData {
 	protected function getTitle() {
 		$Year = $this->Year == parent::LAST_12_MONTHS ? __('last 12 months') : $this->Year;
 
-		if ($this->Sport->usesDistance())
-			return __('Monthly kilometers').' '.$Year;
-
-		return __('Hours of training').' '.$Year;
+		return __('Monthly chart:').' '.$Year;
 	}
 
 	/**
