@@ -12,7 +12,7 @@ use Helper;
 
 /**
  * Plot for: Laps
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -59,19 +59,17 @@ abstract class Laps extends ActivityPlot {
 		$this->loadData($context);
 
 		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M)) {
-			$min = Helper::floorFor(min($this->Data), 30000);
 			$max = Helper::ceilFor(max($this->Data), 30000);
 
 			$this->Plot->setYAxisTimeFormat('%M:%S');
 		} else {
-			$min = floor(min($this->Data));
 			$max = ceil(max($this->Data));
 
 			$pace = new APace(0, 1, $this->PaceUnit);
 			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $pace->appendix()), 1);
 		}
 
-		$this->Plot->setYLimits(1, $min, $max, false);
+		$this->Plot->setYLimits(1, 0, $max, false);
 		$this->Plot->setXLabels($this->Labels);
 		$this->Plot->showBars(true);
 
@@ -91,7 +89,7 @@ abstract class Laps extends ActivityPlot {
 	/**
 	 * Splits are not complete
 	 * "Complete" means: all laps are active and fill total distance
-	 * 
+	 *
 	 * @param \Runalyze\View\Activity\Context $context
 	 * @return boolean
 	 */
