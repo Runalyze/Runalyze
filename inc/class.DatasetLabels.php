@@ -39,6 +39,7 @@ class DatasetLabels {
 			'comment'		=> __('Comment'),
 			'shoeid'		=> __('Shoe'),
 			'vdot'			=> __('VDOT'),
+			'vdoticon'			=> __('VDOT icon'),
 			'partner'		=> __('Training partner'),
 			'abc'			=> __('Running drills'),
 			'cadence'		=> __('Cadence'),

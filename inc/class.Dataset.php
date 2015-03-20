@@ -5,8 +5,8 @@
  */
 
 use Runalyze\Configuration;
-use Runalyze\Model\Factory;
 use Runalyze\Model\Activity;
+use Runalyze\Model\Factory;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Icon;
@@ -115,7 +115,7 @@ class Dataset {
 
 		if (is_null($dataset)) {
 			$dataset = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>='.$modus.' AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
-			Cache::set($key, $dataset, '600'); 
+			Cache::set($key, $dataset, '600');
 		}
 
 		if (empty($dataset)) {
@@ -134,7 +134,7 @@ class Dataset {
 	}
 
 	/**
-	 * Activate kilometer comparison 
+	 * Activate kilometer comparison
 	 */
 	public function activateKilometerComparison() {
 		$this->compareKM = true;
@@ -142,7 +142,7 @@ class Dataset {
 
 	/**
 	 * Set manually distance of last set (e.g. for different order)
-	 * @param double $km 
+	 * @param double $km
 	 */
 	public function setKilometerToCompareTo($km) {
 		$this->kmOfLastSet = $km;
@@ -219,7 +219,7 @@ class Dataset {
 	 * @param int $timerange default 7*24*60*60
 	 * @param int $timestart default 0
 	 * @param int $timeend   default time()
-	 * @return array 
+	 * @return array
 	 */
 	public function getGroupOfTrainingsForTimerange($sportid, $timerange = 604800, $timestart = 0, $timeend = 0) {
 		if ($timeend == 0) {
@@ -257,26 +257,31 @@ class Dataset {
 
 	/**
 	 * Get string for selecting dataset in query
-	 * @return string 
+	 * @return string
 	 */
 	private function getQuerySelectForSet() {
 		$String = '';
 		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
+		$showVdot=0;
+
 		foreach ($this->data as $set) {
 			if ($set['summary'] == 1) {
-				if ($set['name'] == 'vdot') {
-					$String .= ', SUM(IF(`use_vdot`=1 AND `vdot`>0,'.$Sum.',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `vdot`';
+				if ($set['name'] == 'vdot' || $set['name'] == 'vdoticon') {
+					$showVdot = 1;
 				} elseif ($set['name'] == 'pulse_avg') {
 					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
 				} elseif ($set['name'] != 'pace') {
 					if ($set['summary_mode'] != 'AVG') {
-						$String .= ', '.$set['summary_mode'].'(`'.$set['name'].'`) as `'.$set['name'].'`';
+						$String .= ', ' . $set['summary_mode'] . '(`' . $set['name'] . '`) as `' . $set['name'] . '`';
 					} else {
-						$String .= ', '.$set['summary_mode'].'(NULLIF(`'.$set['name'].'`,0)) as `'.$set['name'].'`';
+						$String .= ', ' . $set['summary_mode'] . '(NULLIF(`' . $set['name'] . '`,0)) as `' . $set['name'] . '`';
 					}
 				}
 			}
+		}
+		if ($showVdot) {
+			$String .= ', SUM(IF(`use_vdot`=1 AND `vdot`>0,' . $Sum . ',0))/SUM(IF(`use_vdot`=1 AND `vdot`>0,`s`,0)) as `vdot`';
 		}
 
 		return $String;
@@ -284,13 +289,13 @@ class Dataset {
 
 	/**
 	 * Get all datasets as comma separated string for query
-	 * @return string 
+	 * @return string
 	 */
 	public function getQuerySelectForAllDatasets() {
 		$String = ',`is_track`,`use_vdot`,`vdot_with_elevation`,`is_public`';
 
 		foreach ($this->data as $set) {
-			if ($set['name'] != 'pace') {
+			if ($set['name'] != 'pace'  && $set['name'] != 'vdoticon') {
 				$String .= ', `'.$set['name'].'`';
 			}
 		}
@@ -358,7 +363,7 @@ class Dataset {
 	}
 
 	/**
-	 * Display edit link if used in DataBrowser 
+	 * Display edit link if used in DataBrowser
 	 */
 	public function displayEditLink() {
 		if (Configuration::DataBrowser()->showEditLink()) {
@@ -520,9 +525,16 @@ class Dataset {
 
 				return '';
 
-			case 'vdot':
+			case 'vdoticon':
 				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
 					return $this->Dataview->vdotIcon();
+				}
+
+				return '';
+
+			case 'vdot':
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
+					return $this->Dataview->vdot()->value();//usedVdot() * Configuration::Data()->vdotFactor();
 				}
 
 				return '';
