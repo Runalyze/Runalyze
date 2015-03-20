@@ -6,14 +6,14 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
+use Runalyze\Configuration;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
-use Runalyze\Configuration;
 
 
 /**
  * Plot for: Pace
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
@@ -100,14 +100,14 @@ class Pace extends ActivitySeries {
 
 			case \Runalyze\Activity\Pace::MIN_PER_100M:
 				$this->Data = array_map(function($v){
-					return round($v*100);
+					return ($v == 0) ? 36000*100 :round($v*100);
 				}, $this->Data);
 				break;
 
 			case \Runalyze\Activity\Pace::MIN_PER_KM:
 			default:
 				$this->Data = array_map(function($v){
-					return round($v*1000);
+					return ($v == 0) ? 3600*1000 :round($v*1000);
 				}, $this->Data);
 				break;
 		}
@@ -171,7 +171,7 @@ class Pace extends ActivitySeries {
 						$max = 1000*$LimitMax->value();
 					} else {
 						$max = 60*1000*floor($max/60/1000);
-					}	
+					}
 				}
 			}
 
@@ -181,7 +181,10 @@ class Pace extends ActivitySeries {
 			}
 		}
 
-		if (Configuration::ActivityView()->reversePaceAxis()) {
+		if (Configuration::ActivityView()->reversePaceAxis() &&
+			($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM ||
+				$this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M)
+		) {
 			$Plot->setYAxisReverse($yAxis);
 		}
 	}

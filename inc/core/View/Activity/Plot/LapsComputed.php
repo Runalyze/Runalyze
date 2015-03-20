@@ -6,13 +6,14 @@
 
 namespace Runalyze\View\Activity\Plot;
 
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace as APace;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
-use Runalyze\Activity\Pace as APace;
 
 /**
  * Plot for: computed laps
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -55,14 +56,14 @@ class LapsComputed extends Laps {
 
 		foreach ($RawData as $key => $val) {
 			$km = $key + 1;
-			if ($num < 20) {
-				$label = ($km%2 == 0 && $km > 0) ? $km.' km' : '';
+			if ($num < 30) {
+				$label = $km;
 			} elseif ($num < 50) {
-				$label = ($km%5 == 0 && $km > 0) ? $km.' km' : '';
+				$label = ($km%2 == 1 && $km > 0) ? $km : '';
 			} elseif ($num < 100) {
-				$label = ($km%10 == 0 && $km > 0) ? $km.' km' : '';
+				$label = ($km%5 == 0 && $km > 0) ? $km : '';
 			} else {
-				$label = ($km%50 == 0 && $km > 0) ? $km.' km' : '';
+				$label = ($km%10 == 0 && $km > 0) ? $km : '';
 			}
 
 			$this->Labels[$key] = array($key, $label);
@@ -78,6 +79,8 @@ class LapsComputed extends Laps {
 			}
 		}
 
+		$avgPace = new APace($context->activity()->duration(), $context->activity()->distance(), $paceUnit);
+		$this->achievedPace = $avgPace->secondsPerKm();
 		$this->Plot->Data[] = array('label' => $this->title, 'data' => $this->Data);
 	}
 
@@ -99,5 +102,20 @@ class LapsComputed extends Laps {
 		} while (!$Loop->isAtEnd());
 
 		return $Rounds;
+	}
+
+	/**
+	 * Add annotations
+	 */
+	protected function addAnnotations() {
+		if ($this->demandedPace > 0) {
+			$this->Plot->addThreshold("y", $this->demandedPace*1000, 'rgb(180,0,0)');
+			//$this->Plot->addAnnotation(count($Data)-1, $this->demandedPace*1000, 'Soll: '.Duration::format(round($this->demandedPace)), -10, -7);
+		}
+
+		if ($this->achievedPace > 0) {
+			$this->Plot->addThreshold("y", $this->achievedPace*1000, 'rgb(0,180,0)');
+			$this->Plot->addAnnotation(0, $this->achievedPace*1000, '&oslash; '.Duration::format(round($this->achievedPace)), -40, -7);
+		}
 	}
 }
