@@ -121,6 +121,23 @@ class Splits {
 	}
 
 	/**
+	 * Calculate and add last split
+	 * Add last split to fill up remaining time and distance,
+	 * calculated as difference between given distance/duration and current sum.
+	 * @param float $totalDistance [km] should be larger then current sum of splits
+	 * @param int $totalDuration [s] should be larger then current sum of splits
+	 * @param bool $active
+	 */
+	public function addLastSplitToComplete($totalDistance, $totalDuration, $active = true) {
+		$distance = $totalDistance - $this->totalDistance();
+		$time = $totalDuration - $this->totalTime();
+
+		if ($distance >= 0 && $time > 0) {
+			$this->addSplit($distance, $time, $active);
+		}
+	}
+
+	/**
 	 * Remove single splits
 	 */
 	public function removeSingleSplits() {

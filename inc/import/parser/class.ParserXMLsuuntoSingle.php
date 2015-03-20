@@ -46,6 +46,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 			$this->parseGeneralValues();
 			$this->parseOptionalValues();
 			$this->parseSamples();
+			$this->finishLaps();
 			$this->setGPSarrays();
 		} else {
 			$this->throwNoXMLError();
@@ -113,6 +114,13 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 
 		if (min($this->gps['altitude']) > 0)
 			$this->TrainingObject->set('elevation_corrected', 1);
+	}
+
+	/**
+	 * Finish laps
+	 */
+	protected function finishLaps() {
+		$this->TrainingObject->Splits()->addLastSplitToComplete(end($this->gps['km']), end($this->gps['time_in_s']));
 	}
 
 	/**
