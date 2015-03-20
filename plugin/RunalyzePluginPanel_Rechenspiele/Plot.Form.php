@@ -171,7 +171,7 @@ $Plot->showAsPoints(4);
 $Plot->smoothing(false);
 
 if ($lastHalf && !$DataFailed) {
-	$Plot->addMarkingArea('x',Plot::dayOfYearToJStime($StartYear, $HighestIndex-30 - $AddDays + $StartDayInYear), $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
+	$Plot->addMarkingArea('x',Plot::dayOfYearToJStime($StartYear, $HighestIndex-30 - $AddDays + $StartDayInYear + 1), $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
 }
 
 $Plot->setGridAboveData();
