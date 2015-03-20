@@ -244,5 +244,30 @@ class SplitsTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEquals( '', $Splits->asIconWithTooltip() );
 	}
 
+	public function testCompletingSplits() {
+		$Splits = new Splits();
+		$Splits->addSplit(1, 300);
+		$Splits->addSplit(1, 300);
+		$Splits->addSplit(1, 300);
+		$Splits->addLastSplitToComplete(4.5, 1350);
+
+		$asArray1 = $Splits->asArray();
+		$this->assertEquals(4, count($asArray1));
+		$this->assertEquals(1.5, $asArray1[3]['km']);
+		$this->assertEquals('7:30', $asArray1[3]['time']);
+
+		$Splits->addLastSplitToComplete(5, 1500);
+
+		$asArray2 = $Splits->asArray();
+		$this->assertEquals(5, count($asArray2));
+		$this->assertEquals(0.5, $asArray2[4]['km']);
+		$this->assertEquals('2:30', $asArray2[4]['time']);
+
+		$Splits->addLastSplitToComplete(4, 1200);
+
+		$asArray3 = $Splits->asArray();
+		$this->assertEquals(5, count($asArray3));
+	}
+
 }
 ?>
