@@ -162,18 +162,14 @@ class Loop {
 			throw new \InvalidArgumentException('No array available.');
 		}
 
-		if ($target < $this->current($key)) {
-			throw new \InvalidArgumentException('Target must be larger than current value.');
-		}
-
 		$this->LastIndex = $this->Index;
 
-		do {
-			$this->Index++;
-		} while(
+		while (
 			!$this->isAtEnd() &&
 			$this->Object->at($this->Index, $key) < $target
-		);
+		) {
+			$this->Index++;
+		}
 	}
 
 	/**

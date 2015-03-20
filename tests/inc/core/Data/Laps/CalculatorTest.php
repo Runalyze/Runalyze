@@ -131,4 +131,54 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(3.0, $this->Laps->at(2)->trackDistance()->kilometer());
 	}
 
+	/**
+	 * @see https://github.com/Runalyze/Runalyze/issues/1308
+	 */
+	public function testSpareData()
+	{
+		$this->object->setDistances(array(
+			1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+		));
+		$this->object->calculateFrom(
+			new Trackdata\Object(array(
+				Trackdata\Object::TIME => array(
+					0, 150, 300,
+					450, 600,
+					800,
+					1200,
+					2200,
+					2750
+				), Trackdata\Object::DISTANCE => array(
+					0.0, 0.5, 1.0,
+					1.6, 2.1,
+					2.8,
+					4.1,
+					7.3,
+					8.9
+				), Trackdata\Object::HEARTRATE => array(
+					150, 150, 150,
+					150, 150,
+					150,
+					150,
+					150,
+					150
+				)
+			))
+		);
+
+		$this->assertEquals(10, $this->Laps->num());
+		$this->checkAgainst(array(
+			array( 300, 1.0,  300, 1.0, 150, 150, 0, 0),
+			array( 300, 1.1,  600, 2.1, 150, 150, 0, 0),
+			array( 600, 2.0, 1200, 4.1, 150, 150, 0, 0),
+			array(   0, 0.0, 1200, 4.1,   0,   0, 0, 0),
+			array(1000, 3.2, 2200, 7.3, 150, 150, 0, 0),
+			array(   0, 0.0, 2200, 7.3,   0,   0, 0, 0),
+			array(   0, 0.0, 2200, 7.3,   0,   0, 0, 0),
+			array( 550, 1.6, 2750, 8.9, 150, 150, 0, 0),
+			array(   0, 0.0, 2750, 8.9,   0,   0, 0, 0),
+			array(   0, 0.0, 2750, 8.9,   0,   0, 0, 0)
+		));
+	}
+
 }
