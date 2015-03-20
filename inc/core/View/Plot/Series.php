@@ -10,7 +10,7 @@ use \Plot;
 
 /**
  * Plot series
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Plot
  */
@@ -122,6 +122,12 @@ class Series {
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
 				$Plot->hideYAxis($yAxis);
+			} elseif ($this->UnitString == 'km') {
+				$series = count($Plot->Data) - 1;
+				$Plot->setLineWidth($series, 0);
+				$Plot->setShadowSize($series, 0);
+				//$Plot->hideYAxis($yAxis);
+				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 			} else
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 		}

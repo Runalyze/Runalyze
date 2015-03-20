@@ -10,7 +10,7 @@ use Runalyze\View\Activity;
 
 /**
  * Plot for: Pace and heartrate and elevation
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot
  */
@@ -31,7 +31,8 @@ class PaceAndHeartrateAndElevation extends ActivityPlot {
 			new Series\Elevation($context),
 			new Series\Pace($context),
 			new Series\Heartrate($context),
-			new Series\TimeSeries($context)
+			new Series\TimeSeries($context),
+			new Series\DistanceSeries($context)
 		));
 	}
 }

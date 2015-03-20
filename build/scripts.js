@@ -5432,7 +5432,7 @@ RunalyzePlot.Saver = (function($, parent){
 	return self;
 })(jQuery, RunalyzePlot);/*
  * Lib for using Plots in Runalyze
- * 
+ *
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
  */
 RunalyzePlot.Events = (function($, parent){
@@ -5629,7 +5629,16 @@ RunalyzePlot.Events = (function($, parent){
 			}
 
 			if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
-				moveMapMarker(coords.x);
+				if (plot.getOptions().xaxis.mode != 'time') {
+					moveMapMarker(coords.x);
+				} else {
+					var dataset = plot.getData();
+					var distanceSeries = dataset[dataset.length - 1];
+					for (j = 0; j < distanceSeries.data.length; ++j)
+						if (distanceSeries.data[j][0] > coords.x)
+							break;
+					moveMapMarker(distanceSeries.data[j][1]);
+				}
 			}
 
 			show(key, pos, content, posClass);
@@ -5733,7 +5742,8 @@ RunalyzePlot.Events = (function($, parent){
 	parent.addInitHook('init-events', self.init);
 
 	return self;
-})(jQuery, RunalyzePlot);/*
+})(jQuery, RunalyzePlot);
+/*
  * Additional features for tablesorter
  * 
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
