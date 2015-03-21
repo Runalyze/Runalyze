@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-16 10:02+0100\n"
-"PO-Revision-Date: 2015-03-19 00:25+0200\n"
+"PO-Revision-Date: 2015-03-21 19:10+0200\n"
 "Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
 "Language-Team: Spanish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
@@ -837,9 +837,8 @@ msgid "You can contact us via email:"
 msgstr ""
 
 #: inc/tpl/tpl.help.php:63
-#, fuzzy
 msgid "Browser Support"
-msgstr "Explorar en ordenador"
+msgstr "Soporte del explorador"
 
 #: inc/tpl/tpl.help.php:66
 msgid ""
@@ -4566,7 +4565,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:36
 msgid "Recalculate your equipment statistics"
-msgstr ""
+msgstr "Recalcular las estadísticas del equipamiento"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:42
 msgid "Recalculate your VDOT correction factor"
