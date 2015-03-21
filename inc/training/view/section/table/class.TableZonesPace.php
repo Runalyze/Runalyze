@@ -106,10 +106,10 @@ class TableZonesPace extends TableZonesAbstract {
 
 		switch ($this->paceUnit) {
 			case Pace::KM_PER_H:
-				return 3600 / floor(3600 / $paceInSeconds / 5) / 5;
+				return $paceInSeconds > 720 ? 0 : 3600 / floor(3600 / $paceInSeconds / 5) / 5;
 
 			case Pace::M_PER_S:
-				return 1000 / floor(1000 / $paceInSeconds);
+				return $paceInSeconds > 1000 ? 0 : 1000 / floor(1000 / $paceInSeconds);
 
 			case Pace::MIN_PER_100M:
 				return 50 * floor($paceInSeconds / 50);

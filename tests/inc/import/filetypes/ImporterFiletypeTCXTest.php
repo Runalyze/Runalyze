@@ -182,4 +182,22 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	/**
+	 * Test: DistanceMeters are missing
+	 * Filename: "missing-distances.tcx" 
+	 */
+	public function testMissingDistancePoints() {
+		$this->object->parseFile('../tests/testfiles/tcx/missing-distances.tcx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$DistanceArray = $this->object->object()->getArrayDistance();
+		foreach ($DistanceArray as $i => $km) {
+			if ($i > 0) {
+				$this->assertTrue( $km >= $DistanceArray[$i-1], 'Distance is decreasing');
+			}
+		}
+	}
+
 }
