@@ -11,6 +11,22 @@
  */
 class ImporterHRMandGPX {
 	/**
+	 * @var array
+	 */
+	static private $KEYS_TO_CHECK = array(
+		'arr_time',
+		'arr_lat',
+		'arr_lon',
+		'arr_alt',
+		'arr_dist',
+		'arr_heart',
+		'arr_pace',
+		'arr_cadence',
+		'arr_power',
+		'arr_temperature'
+	);
+
+	/**
 	 * Training
 	 * @var TrainingObject
 	 */
@@ -23,6 +39,11 @@ class ImporterHRMandGPX {
 	protected $GPXImporter = null;
 
 	/**
+	 * @var int
+	 */
+	protected $ArraySize = 0;
+
+	/**
 	 * Constructor
 	 * @param ImporterFiletypeHRM $HRMImporter
 	 * @param ImporterFiletypeGPX $GPXImporter
@@ -31,6 +52,7 @@ class ImporterHRMandGPX {
 		$this->TrainingObject = $HRMImporter->object();
 		$this->GPXImporter    = $GPXImporter;
 
+		$this->readArraySize();
 		$this->addGPXtoObject();
 	}
 
@@ -43,16 +65,55 @@ class ImporterHRMandGPX {
 	}
 
 	/**
+	 * Read array size from hrm
+	 */
+	protected function readArraySize() {
+		$this->ArraySize = count($this->TrainingObject->getArrayHeartrate());
+	}
+
+	/**
 	 * Add GPX to object
 	 */
 	protected function addGPXtoObject() {
-		if (!$this->GPXImporter->failed())
-			foreach ($this->GPXImporter->object()->getArray() as $key => $value)
-				if ($this->TrainingObject->get($key) == '' || $this->TrainingObject->get($key) == 0)
-					$this->TrainingObject->set($key, $value);
+		if ($this->GPXImporter->failed()) {
+			return;
+		}
+
+		foreach ($this->GPXImporter->object()->getArray() as $key => $value) {
+			if ($this->TrainingObject->get($key) == '' || $this->TrainingObject->get($key) == 0) {
+				$this->setFromGPX($key, $value);
+			}
+		}
 
 		if (!$this->TrainingObject->Splits()->areEmpty())
 			$this->fillSplitsFromGPX();
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $value
+	 */
+	protected function setFromGPX($key, $value) {
+		if ($value == '' || $value == 0) {
+			return;
+		}
+
+		if (in_array($key, self::$KEYS_TO_CHECK)) {
+			$array = explode(DataObject::$ARR_SEP, $value);
+			$length = count($array);
+
+			if ($length > $this->ArraySize) {
+				$value = implode(DataObject::$ARR_SEP, array_slice($array, 0, $this->ArraySize));
+			} elseif ($length < $this->ArraySize) {
+				for ($i = 0; $i < $this->ArraySize - $length; $i++) {
+					$array[] = end($array);
+				}
+
+				$value = implode(DataObject::$ARR_SEP, $array);
+			}
+		}
+
+		$this->TrainingObject->set($key, $value);
 	}
 
 	/**
