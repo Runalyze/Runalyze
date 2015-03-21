@@ -164,9 +164,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
 			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
 			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
-			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute)
+			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
+
+		$maxTrimpToBalanced = ceil($TSBmodel->maxTrimpToBalanced($CTLabsolute, $ATLabsolute));
+		$restDays = ceil($TSBmodel->restDays($CTLabsolute, $ATLabsolute));
 
 		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
 		if (is_null($JDQuery)) {
@@ -236,6 +239,28 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				'small'	=> '(TSB)',
 				'tooltip'	=> __('Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>'.
 					'&lt; 0: You are training hard.')
+			),
+			array(
+				'show'	=> $this->Configuration()->value('show_trimpvalues') && !$TSBisPositive,
+				'bars'	=> array(
+					new ProgressBarSingle(100*$restDays/7, ProgressBarSingle::$COLOR_BLUE)
+				),
+				'bar-tooltip'	=> '',
+				'value'	=> $restDays,
+				'title'	=> __('Rest&nbsp;days'),
+				'small'	=> '',
+				'tooltip'	=> __('Rest days needed to reach TSB = 0')
+			),
+			array(
+				'show'	=> $this->Configuration()->value('show_trimpvalues') && $TSBisPositive,
+				'bars'	=> array(
+					new ProgressBarSingle(100*$maxTrimpToBalanced/1000, ProgressBarSingle::$COLOR_BLUE)
+				),
+				'bar-tooltip'	=> '',
+				'value'	=> $maxTrimpToBalanced,
+				'title'	=> __('Easy&nbsp;TRIMP'),
+				'small'	=> '',
+				'tooltip'	=> __('Max TRIMP that will still keep you at TSB = 0')
 			),
 			array(
 				'show'	=> $this->Configuration()->value('show_trimpvalues_extra'),
