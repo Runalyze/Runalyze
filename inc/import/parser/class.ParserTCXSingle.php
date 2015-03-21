@@ -238,6 +238,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 				return;
 		}
 
+		if (empty($TP->DistanceMeters) && !empty($this->gps['km']))
+			$TP->DistanceMeters = end($this->gps['km'])*1000;
+
 		if ($this->TrainingObject->getTimestamp() == 0)
 			$this->TrainingObject->setTimestamp( strtotime((string)$TP->Time) );
 
