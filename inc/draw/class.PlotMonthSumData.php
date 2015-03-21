@@ -68,4 +68,11 @@ class PlotMonthSumData extends PlotSumData {
 	protected function beginningOfLast12Months() {
 		return strtotime("first day of -11 months");
 	}
+
+	/**
+	 * @return float
+	 */
+	protected function factorForWeekKm() {
+		return 365/12/7;
+	}
 }

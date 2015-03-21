@@ -533,8 +533,12 @@ class Dataset {
 				return '';
 
 			case 'vdot':
-				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
-					return $this->Dataview->vdot()->value();//usedVdot() * Configuration::Data()->vdotFactor();
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport() && $this->Activity->vdotByHeartRate() > 0) {
+					if (!$this->Activity->usesVDOT()) {
+						return '<span class="unimportant">'.$this->Dataview->vdot()->value().'</span>';
+					}
+
+					return $this->Dataview->vdot()->value();
 				}
 
 				return '';

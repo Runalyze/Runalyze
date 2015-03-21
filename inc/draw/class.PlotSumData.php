@@ -98,6 +98,7 @@ abstract class PlotSumData extends Plot {
 		parent::__construct($this->getCSSid(), 800, 500);
 
 		$this->init();
+		$this->addAverage();
 	}
 
 	/**
@@ -130,11 +131,6 @@ abstract class PlotSumData extends Plot {
 		$this->displayInfos();
 		echo '</div>';
 	}
-
-	/**
-	 * Display additional info
-	 */
-	protected function displayInfos() {}
 
 	/**
 	 * Get navigation
@@ -540,5 +536,50 @@ abstract class PlotSumData extends Plot {
 			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
 
 		$this->Data[] = array('label' => __('Activity'), 'data' => $Kilometers, 'color' => '#E68617');
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function showsAverage() {
+		return ($this->Sport->isRunning() && $this->Analysis == self::ANALYSIS_DEFAULT);
+	}
+
+	/**
+	 * Add line for average and goal
+	 */
+	protected function addAverage() {
+		if ($this->showsAverage()) {
+			$BasicEndurance = new BasicEndurance();
+			$BasicEndurance->readSettingsFromConfiguration();
+			$Result = $BasicEndurance->asArray();
+
+			$Avg = $this->factorForWeekKm() * $Result['weekkm-percentage']*$BasicEndurance->getTargetWeekKm();
+			$Goal = $this->factorForWeekKm() * $BasicEndurance->getTargetWeekKm();
+			$LabelKeys = array_keys($this->getXLabels());
+
+			$this->addThreshold('y', $Avg, '#999');
+			$this->addThreshold('y', $Goal, '#999');
+
+			$this->addAnnotation(-1, $Avg, sprintf( __('avg:').'&nbsp;%d&nbsp;km', $Avg), 0, -10);
+			$this->addAnnotation(end($LabelKeys), $Goal, sprintf( __('goal:').'&nbsp;%d&nbsp;km', $Goal), 0, -10);
+		}
+	}
+
+	/**
+	 * @return float
+	 */
+	abstract protected function factorForWeekKm();
+
+	/**
+	 * Display additional info
+	 */
+	protected function displayInfos() {
+		if ($this->showsAverage()) {
+			$BasicEndurance = new BasicEndurance();
+			$BasicEndurance->readSettingsFromConfiguration();
+
+			echo HTML::info( __('Goal and average are based on current basic endurance calculations.') );
+		}
 	}
 }
