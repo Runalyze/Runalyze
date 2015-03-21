@@ -158,7 +158,7 @@ class ParserHRMSingle extends ParserAbstractSingle {
 		$this->totalTime += $this->recordingInterval;
 		$this->gps['time_in_s'][] = $this->totalTime;
 		$this->gps['heartrate'][] = (int)trim($values[0]);
-		$this->gps['pace'][]      = (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
+		$this->gps['pace'][]      = isset($values[1]) && (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
 
 		if (count($values) > 3) {
 			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
