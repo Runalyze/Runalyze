@@ -188,7 +188,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read event
 	 */
 	protected function readEvent() {
-		if (!isset($this->Values['event_type']))
+		if (!isset($this->Values['event']) || $this->Values['event'][1] != 'timer' || !isset($this->Values['event_type']))
 			return;
 
 		$thisTimestamp = strtotime((string)$this->Values['timestamp'][1]);
