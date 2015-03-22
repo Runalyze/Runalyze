@@ -88,6 +88,11 @@ class Object extends Model\Object implements Model\Loopable {
 	protected $Pauses = null;
 
 	/**
+	 * @var boolean
+	 */
+	protected $TimeHasBeenRemoved = false;
+
+	/**
 	 * Construct
 	 * @param array $data
 	 */
@@ -107,6 +112,11 @@ class Object extends Model\Object implements Model\Loopable {
 			if ($this->isArray($key)) {
 				try {
 					if ($key != self::TEMPERATURE && !empty($this->Data[$key]) && max($this->Data[$key]) == 0) {
+						$this->Data[$key] = array();
+					}
+
+					if ($key == self::TIME && !empty($this->Data[$key]) && min($this->Data[$key]) < 0) {
+						$this->TimeHasBeenRemoved = true;
 						$this->Data[$key] = array();
 					}
 
@@ -242,6 +252,10 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @return int
 	 */
 	public function totalTime() {
+		if (empty($this->Data[self::TIME])) {
+			return 0;
+		}
+
 		return $this->Data[self::TIME][$this->numberOfPoints-1];
 	}
 

@@ -162,4 +162,20 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( min($this->object->object()->getArrayTime()) >= 0 );
 		}
 	}
+
+	/**
+	 * Test: ignore 'start' for events other than timer
+	 */
+	public function testOtherStartEvents() {
+		if (!Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/FR920-additional-start-events.fit');
+
+			$this->assertFalse( $this->object->failed() );
+			$this->assertEquals( 2*3600 + 47*60 + 22, $this->object->object()->getTimeInSeconds() );
+
+			$time = $this->object->object()->getArrayTime();
+			$this->assertTrue( min($time) >= 0 );
+			$this->assertEquals( 2*3600 + 47*60 + 22, end($time) );
+		}
+	}
 }
