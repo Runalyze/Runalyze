@@ -231,6 +231,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 			}
 		}
 
+		$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+		$last = end($this->gps['time_in_s']);
+
 		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
 		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -3) : 0;
 
@@ -242,11 +245,34 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		$this->gps['temp'][]      = isset($this->Values['temperature']) ? $this->Values['temperature'][0] : 0;
 
-		$this->gps['time_in_s'][] = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
+		$this->gps['time_in_s'][] = $time;
 		$this->gps['pace'][]      = $this->getCurrentPace();
 
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;
+
+		if ($time === $last) {
+			$this->mergeRecord();
+		}
+	}
+
+	/**
+	 * Merge current record
+	 */
+	protected function mergeRecord() {
+		end($this->gps['time_in_s']);
+		$i = key($this->gps['time_in_s']);
+
+		foreach (array_keys($this->gps) as $key) {
+			if (isset($this->gps[$key][$i])) {
+				$last = $this->gps[$key][$i - 1];
+				$current = array_pop($this->gps[$key]);
+
+				if ($current != 0 && $last == 0) {
+					$this->gps[$key][$i - 1] = $current;
+				}
+			}
+		}
 	}
 
 	/**
