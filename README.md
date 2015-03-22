@@ -40,7 +40,7 @@ Release details on runalyze.de: [v2.0alpha](http://runalyze.de/allgemein/runalyz
  * [v1.0](http://runalyze.de/allgemein/runalyze-v1-0/), 20.01.2012: Erste öffentliche Version
 
 ## Installation
-* download [zip-file](https://github.com/Runalyze/Runalyze/archive/master.zip) and extract
+* download [zip-file](https://github.com/Runalyze/Runalyze/releases) and extract
 * open `../runalyze/install.php` in your browser
 * follow the instructions
 
