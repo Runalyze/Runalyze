@@ -93,7 +93,7 @@ body#home {
 #login-window p {
   margin: 1em 0;
 }
-#login-window input.with-unit {
+#login-window .input-with-unit input {
   padding-left: 2px;
   text-align: left;
 }
@@ -435,10 +435,10 @@ fieldset .checkbox-first input {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30px;
+  width: 30px!important;
   display: block;
   text-align: center;
-  float: none;
+  float: none!important;
   font-weight: normal;
   font-size: 0.9em;
   color: #ccc;
