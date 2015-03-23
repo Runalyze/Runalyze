@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-16 10:02+0100\n"
+"POT-Creation-Date: 2015-03-23 21:27+0100\n"
 "PO-Revision-Date: 2015-02-24 08:37+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -78,203 +78,203 @@ msgstr ""
 msgid "Running"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:14
+#: inc/tpl/tpl.DataBrowser.php:15
 msgid "Choose a date ..."
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:77
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:77
 msgid "Sunday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:78
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:78
 msgid "Monday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:79
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:79
 msgid "Tuesday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:80
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:80
 msgid "Wednesday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:81
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:81
 msgid "Thursday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:82
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:82
 msgid "Friday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:20 inc/calculate/class.Time.php:84
+#: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:84
 msgid "Saturday"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Su"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Mo"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Tu"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "We"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Th"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Fr"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:21
+#: inc/tpl/tpl.DataBrowser.php:22
 msgid "Sa"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:77
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:77
 msgid "Sun"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:78
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:78
 msgid "Mon"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:79
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:79
 msgid "Tue"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:80
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:80
 msgid "Wed"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:81
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:81
 msgid "Thu"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:82
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:82
 msgid "Fri"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:22 inc/calculate/class.Time.php:84
+#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:84
 msgid "Sat"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:96
+#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:96
 msgid "January"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:97
+#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:97
 msgid "February"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:98
+#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:98
 msgid "March"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:99
+#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:99
 msgid "April"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/tpl/tpl.DataBrowser.php:25
+#: inc/tpl/tpl.DataBrowser.php:24 inc/tpl/tpl.DataBrowser.php:26
 #: inc/calculate/class.Time.php:100 inc/draw/class.Plot.php:390
 msgid "May"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:101
+#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:101
 msgid "June"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:102
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:102
 msgid "July"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:103
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:103
 msgid "August"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:104
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:104
 msgid "September"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:105
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:105
 msgid "October"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:106
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:106
 msgid "November"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:108
+#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:108
 msgid "December"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:96
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:96
 #: inc/draw/class.Plot.php:386
 msgid "Jan"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:97
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:97
 #: inc/draw/class.Plot.php:387
 msgid "Feb"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:98
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:98
 #: inc/draw/class.Plot.php:388
 msgid "Mar"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:99
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:99
 #: inc/draw/class.Plot.php:389
 msgid "Apr"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:101
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:101
 #: inc/draw/class.Plot.php:391
 msgid "Jun"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:102
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:102
 #: inc/draw/class.Plot.php:392
 msgid "Jul"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:103
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:103
 #: inc/draw/class.Plot.php:393
 msgid "Aug"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:104
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:104
 #: inc/draw/class.Plot.php:394
 msgid "Sep"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:105
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:105
 #: inc/draw/class.Plot.php:395
 msgid "Oct"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:106
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:106
 #: inc/draw/class.Plot.php:396
 msgid "Nov"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:108
+#: inc/tpl/tpl.DataBrowser.php:26 inc/calculate/class.Time.php:108
 #: inc/draw/class.Plot.php:397
 msgid "Dec"
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:34
+#: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
 msgstr ""
 
-#: inc/tpl/tpl.DataBrowser.php:38
+#: inc/tpl/tpl.DataBrowser.php:39
 msgid "Show selection"
 msgstr ""
 
@@ -403,8 +403,8 @@ msgstr ""
 #: inc/system/config/class.ConfigTabAccount.php:34 inc/class.AdminView.php:299
 #: inc/training/schemes/scheme.Shoe.php:28
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:350
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:422
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:617
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:447
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:642
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:120
 msgid "Name"
 msgstr ""
@@ -479,7 +479,7 @@ msgid ""
 msgstr ""
 
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.Installer.php:5
-#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:28
+#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:30
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: call/call.Plugin.install.php:23
@@ -836,17 +836,17 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:25
+#: inc/tpl/tpl.Frontend.header.php:25 inc/tpl/tpl.Frontend.header.php:26
 msgid "Logout"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:29
+#: inc/tpl/tpl.Frontend.header.php:31
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:30
+#: inc/tpl/tpl.Frontend.header.php:32
 msgid "Help"
 msgstr ""
 
@@ -902,7 +902,7 @@ msgstr ""
 msgid "Update"
 msgstr ""
 
-#: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:151
+#: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:184
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:231
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:182
@@ -913,7 +913,7 @@ msgstr ""
 msgid "previous"
 msgstr ""
 
-#: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:241
+#: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:255
 msgid "next"
 msgstr ""
 
@@ -973,7 +973,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:102
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:8
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:349
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:562
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:587
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:246
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: call/call.garminCommunicator.php:65
@@ -1240,8 +1240,9 @@ msgstr ""
 msgid "always"
 msgstr ""
 
-#: inc/core/View/Leaflet/Activity.php:192 inc/core/View/Splits/Table.php:145
-#: inc/core/View/Window/Laps/Table.php:106
+#: inc/core/View/Leaflet/Activity.php:192
+#: inc/core/View/Activity/Plot/Series/DistanceSeries.php:37
+#: inc/core/View/Splits/Table.php:145 inc/core/View/Window/Laps/Table.php:106
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/class.DatasetLabels.php:26
 #: inc/training/view/section/class.SectionRouteRowElevation.php:49
@@ -1258,7 +1259,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:28
 #: inc/training/schemes/scheme.Training.new.php:154
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:351
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:563
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:588
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:227
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:127
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:238
@@ -1342,7 +1343,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/Series/Power.php:37
 #: inc/system/config/class.ConfigTabSports.php:65
-#: inc/class.DatasetLabels.php:47
+#: inc/class.DatasetLabels.php:48
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:104
 #: inc/training/schemes/scheme.Training.php:334
 #: inc/training/schemes/scheme.Training.new.php:330
@@ -1366,7 +1367,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:193
 #: inc/training/schemes/scheme.Training.new.php:189
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:353
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:618
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:643
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:232
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:123
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:125
@@ -1382,7 +1383,7 @@ msgid "Heartrate"
 msgstr ""
 
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:38
-#: inc/class.DatasetLabels.php:46
+#: inc/class.DatasetLabels.php:47
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:120
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:150
@@ -1421,7 +1422,7 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: inc/training/view/class.ElevationInfo.php:205
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:370
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:395
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
 msgid "Threshold"
 msgstr ""
@@ -1430,12 +1431,12 @@ msgstr ""
 msgid "Douglas-Peucker"
 msgstr ""
 
-#: inc/core/View/Activity/Plot/LapsComputed.php:37
+#: inc/core/View/Activity/Plot/LapsComputed.php:38
 #: inc/training/view/section/class.SectionLaps.php:27
 msgid "Computed Laps"
 msgstr ""
 
-#: inc/core/View/Activity/Plot/LapsComputed.php:46
+#: inc/core/View/Activity/Plot/LapsComputed.php:47
 msgid "No GPS-data available. Can\\'t compute laps."
 msgstr ""
 
@@ -1444,7 +1445,7 @@ msgstr ""
 msgid "unknown"
 msgstr ""
 
-#: inc/core/View/Activity/Dataview.php:434 inc/class.DatasetLabels.php:43
+#: inc/core/View/Activity/Dataview.php:434 inc/class.DatasetLabels.php:44
 #: inc/training/search/class.SearchFormular.php:151
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/training/schemes/scheme.Training.new.php:440
@@ -1456,7 +1457,7 @@ msgid "diff"
 msgstr ""
 
 #: inc/core/View/Splits/Table.php:222
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:151
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
 msgid "Goal"
 msgstr ""
 
@@ -1472,7 +1473,7 @@ msgstr ""
 msgid "1st/2nd Half"
 msgstr ""
 
-#: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:403
+#: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:420
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:24
 #: inc/training/schemes/scheme.Training.php:39
@@ -1608,7 +1609,7 @@ msgstr ""
 msgid "%s in %s"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:154 inc/class.DatasetLabels.php:41
+#: inc/core/Configuration/Category/Vdot.php:161 inc/class.DatasetLabels.php:41
 #: inc/training/view/section/class.SectionCompositeRow.php:139
 #: inc/training/view/section/class.SectionOverviewRow.php:55
 #: inc/training/view/section/class.SectionPaceRow.php:69
@@ -1621,8 +1622,8 @@ msgstr ""
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:16
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:18
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:191
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:506
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:194
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:531
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:11
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:239
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:241
@@ -1630,80 +1631,85 @@ msgstr ""
 msgid "VDOT"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:157
+#: inc/core/Configuration/Category/Vdot.php:164
 msgid "Estimation formula"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:158
+#: inc/core/Configuration/Category/Vdot.php:165
 msgid ""
 "Formula to estimate the vdot value. The old method is only listed for "
 "compatibility reasons."
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:162
+#: inc/core/Configuration/Category/Vdot.php:169
 msgid "Time constant length for VDOT"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:163
+#: inc/core/Configuration/Category/Vdot.php:170
 msgid "Time constant length for VDOT rolling average"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:167
+#: inc/core/Configuration/Category/Vdot.php:174
 msgid "Use correction factor"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:168
+#: inc/core/Configuration/Category/Vdot.php:175
 msgid "Use a correction factor based on your best competition. (recommended)"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:172
+#: inc/core/Configuration/Category/Vdot.php:179
 msgid "Manual correction factor"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:173
+#: inc/core/Configuration/Category/Vdot.php:180
 msgid ""
 "Manual correction factor (e.g. 0.9), if the automatic factor does not fit. "
 "Can be left empty."
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:177
+#: inc/core/Configuration/Category/Vdot.php:184
 msgid "Use fixed VDOT value"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:178
+#: inc/core/Configuration/Category/Vdot.php:185
 msgid ""
 "Fixed VDOT value (e.g. 55), if the estimation does not fit. Can be left "
 "empty."
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:182
+#: inc/core/Configuration/Category/Vdot.php:189
 msgid "Adapt for elevation"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:183
+#: inc/core/Configuration/Category/Vdot.php:190
 msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:187
+#: inc/core/Configuration/Category/Vdot.php:194
 msgid "Correction per positive elevation"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:188
+#: inc/core/Configuration/Category/Vdot.php:195
 msgid ""
 "Add for each meter upwards X meter to the distance. (Only for the VDOT "
 "calculation)"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:193
+#: inc/core/Configuration/Category/Vdot.php:200
 msgid "Correction per negative elevation"
 msgstr ""
 
-#: inc/core/Configuration/Category/Vdot.php:194
+#: inc/core/Configuration/Category/Vdot.php:201
 msgid ""
 "Add for each meter downwards X meter to the distance. (Only for the VDOT "
 "calculation)"
+msgstr ""
+
+#: inc/core/Configuration/Category/Vdot.php:220
+#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:110
+msgid "Vdot shape"
 msgstr ""
 
 #: inc/core/Configuration/Category/Design.php:57
@@ -1722,7 +1728,55 @@ msgstr ""
 msgid "Number of results displayed on each page."
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:89 inc/class.DatasetLabels.php:33
+#: inc/core/Configuration/Category/BasicEndurance.php:100
+#: inc/core/Configuration/Category/BasicEndurance.php:148
+#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:131
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:620
+msgid "Basic endurance"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:102
+msgid "Minimal distance for longjogs"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:103
+msgid "Every run above this distance will be rated."
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:107
+msgid "Days for longjogs"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:108
+msgid "Number of days to look at for longjog goal."
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:111
+msgid "Days for week kilometer"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:112
+msgid "Number of days to look at for weekly kilometer goal."
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:115
+msgid "Days for week kilometer (minimum)"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:116
+msgid "This value will be used if not enough data is available."
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:119
+msgid "Factor for week kilometers"
+msgstr ""
+
+#: inc/core/Configuration/Category/BasicEndurance.php:120
+msgid "Percentage as value between 0.00 and 1.00."
+msgstr ""
+
+#: inc/core/Configuration/Category/Trimp.php:96
+#: inc/draw/class.PlotSumData.php:198 inc/class.DatasetLabels.php:33
 #: inc/training/view/section/class.SectionCompositeRow.php:188
 #: inc/training/view/section/class.SectionHeartrateRow.php:75
 #: inc/training/view/section/class.SectionOverviewRow.php:56
@@ -1732,41 +1786,51 @@ msgstr ""
 msgid "TRIMP"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:92
+#: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:93
+#: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:97
+#: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:98
+#: inc/core/Configuration/Category/Trimp.php:105
 msgid "Number of days for CTL time constant"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:102
+#: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:103
+#: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
 "By default ATL/CTL are scaled based on your historical maximum. This can "
 "lead to wrong assumptions if you were overtrained. Deactivate this option in "
 "that case."
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:109
+#: inc/core/Configuration/Category/Trimp.php:116
 msgid "Show TSB in percent of ATL/CTL"
 msgstr ""
 
-#: inc/core/Configuration/Category/Trimp.php:110
+#: inc/core/Configuration/Category/Trimp.php:117
 msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
+msgstr ""
+
+#: inc/core/Configuration/Category/Trimp.php:141
+#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
+msgid "Maximal CTL"
+msgstr ""
+
+#: inc/core/Configuration/Category/Trimp.php:142
+#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
+msgid "Maximal ATL"
 msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:91
@@ -1949,71 +2013,71 @@ msgstr ""
 msgid "Add an edit-link for every activity."
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:278
+#: inc/core/Configuration/Category/ActivityView.php:286
 msgid "Activity view"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:281
+#: inc/core/Configuration/Category/ActivityView.php:289
 msgid "Number of decimals"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:297
+#: inc/core/Configuration/Category/ActivityView.php:305
 msgid "Plots: combination"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:301
+#: inc/core/Configuration/Category/ActivityView.php:309
 msgid "Plots: precision"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:302
+#: inc/core/Configuration/Category/ActivityView.php:310
 msgid "How many data points should be plotted?"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:306
+#: inc/core/Configuration/Category/ActivityView.php:314
 msgid "Plots: smooth curves"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:310
+#: inc/core/Configuration/Category/ActivityView.php:318
 msgid "Plots: use time as x-axis"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:314
+#: inc/core/Configuration/Category/ActivityView.php:322
 msgid "Pace plot: y-axis minimum"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:315
+#: inc/core/Configuration/Category/ActivityView.php:323
 msgid "Data points below this limit will be ignored. (only for running)"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:319
+#: inc/core/Configuration/Category/ActivityView.php:327
 msgid "Pace plot: y-axis maximum"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:320
+#: inc/core/Configuration/Category/ActivityView.php:328
 msgid "Data points above this limit will be ignored. (only for running)"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:324
+#: inc/core/Configuration/Category/ActivityView.php:332
 msgid "Pace: Reverse y-axis"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:325
+#: inc/core/Configuration/Category/ActivityView.php:333
 msgid "Reverse the y-axis such that a faster pace is at the top."
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:329
+#: inc/core/Configuration/Category/ActivityView.php:337
 msgid "Pace: Ignore outliers"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:330
+#: inc/core/Configuration/Category/ActivityView.php:338
 msgid "Try to ignore outliers in the pace plot."
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:340
+#: inc/core/Configuration/Category/ActivityView.php:348
 msgid "Map: interrupt route"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:341
+#: inc/core/Configuration/Category/ActivityView.php:349
 msgid ""
 "The gps path can be interrupted in case of <em>interruptions</em> (e.g. by "
 "car/train/...).Finding these interruptions is not easy. You can define up to "
@@ -2021,43 +2085,47 @@ msgid ""
 "interpolated."
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:347
+#: inc/core/Configuration/Category/ActivityView.php:355
 msgid "Map: precision"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:348
+#: inc/core/Configuration/Category/ActivityView.php:356
 msgid "How many data points shoud be displayed?"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:352
+#: inc/core/Configuration/Category/ActivityView.php:360
 msgid "Map: line color"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:353
+#: inc/core/Configuration/Category/ActivityView.php:361
 msgid "as hexadecimal rgb (e.g. #ff5500)"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:357
+#: inc/core/Configuration/Category/ActivityView.php:365
 msgid "Map: show map first"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:358
+#: inc/core/Configuration/Category/ActivityView.php:366
 msgid "show map before plots"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:368
+#: inc/core/Configuration/Category/ActivityView.php:370
+msgid "Map: zoom on scroll"
+msgstr ""
+
+#: inc/core/Configuration/Category/ActivityView.php:380
 msgid "Elevation: smoothing"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:369
+#: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Choose the algorithm to smooth the elevation data"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:373
+#: inc/core/Configuration/Category/ActivityView.php:385
 msgid "Elevation: threshold"
 msgstr ""
 
-#: inc/core/Configuration/Category/ActivityView.php:374
+#: inc/core/Configuration/Category/ActivityView.php:386
 msgid "Threshold for the smoothing algorithm"
 msgstr ""
 
@@ -2069,6 +2137,13 @@ msgstr ""
 #: inc/core/Configuration/Messages.php:26
 #, php-format
 msgid "You can now use the %s to recalculate the concerning values."
+msgstr ""
+
+#: inc/core/Configuration/Messages.php:37
+#: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
+#, php-format
+msgid ""
+"%s has been recalculated. New value: <strong>%s</strong> (old value: %s)"
 msgstr ""
 
 #: inc/system/class.Error.php:332
@@ -2725,44 +2800,44 @@ msgstr ""
 msgid "week"
 msgstr ""
 
-#: inc/class.DataBrowser.php:231
+#: inc/class.DataBrowser.php:245
 msgid "back"
 msgstr ""
 
-#: inc/class.DataBrowser.php:251
+#: inc/class.DataBrowser.php:265
 msgid "Reload current datasheet"
 msgstr ""
 
-#: inc/class.DataBrowser.php:259
+#: inc/class.DataBrowser.php:273
 msgid "Calendar"
 msgstr ""
 
-#: inc/class.DataBrowser.php:267 inc/class.DataBrowserShared.php:93
+#: inc/class.DataBrowser.php:281 inc/class.DataBrowserShared.php:93
 msgid "Activity per month"
 msgstr ""
 
-#: inc/class.DataBrowser.php:275 inc/class.DataBrowserShared.php:101
+#: inc/class.DataBrowser.php:289 inc/class.DataBrowserShared.php:101
 msgid "Activity per week"
 msgstr ""
 
-#: inc/class.DataBrowser.php:291
+#: inc/class.DataBrowser.php:305
 msgid "Search for an activity"
 msgstr ""
 
-#: inc/data/class.Splits.php:143
+#: inc/data/class.Splits.php:160
 #: inc/training/formular/class.TrainingInputSplits.php:61
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
 msgstr ""
 
-#: inc/data/class.Splits.php:143
+#: inc/data/class.Splits.php:160
 #: inc/training/formular/class.TrainingInputSplits.php:113
 msgid "Resting"
 msgstr ""
 
 #: inc/data/class.Cadence.php:92 inc/data/class.CadenceRunning.php:27
-#: inc/class.DatasetLabels.php:44
+#: inc/class.DatasetLabels.php:45
 #: inc/training/search/class.FormularSelectSearchSort.php:37
 #: inc/training/search/class.SearchFormular.php:144
 #: inc/training/schemes/scheme.Training.php:321
@@ -2786,20 +2861,20 @@ msgstr ""
 msgid "No types available"
 msgstr ""
 
-#: inc/plugin/class.PluginStat.php:171 inc/draw/class.PlotSumData.php:116
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:270
+#: inc/plugin/class.PluginStat.php:171 inc/draw/class.PlotSumData.php:149
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:290
 msgid "Choose sport"
 msgstr ""
 
-#: inc/plugin/class.PluginStat.php:175 inc/draw/class.PlotSumData.php:120
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:271
+#: inc/plugin/class.PluginStat.php:175 inc/draw/class.PlotSumData.php:153
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:291
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:27
 #: plugin/RunalyzePluginStat_Wetter/window.php:24
 msgid "Choose year"
 msgstr ""
 
 #: inc/plugin/class.PluginStat.php:193
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:284
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:304
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:294
 msgid "All"
 msgstr ""
@@ -2822,8 +2897,8 @@ msgid "Plugin configuration"
 msgstr ""
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:107
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:427
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:619
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:452
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:644
 msgid "Description"
 msgstr ""
 
@@ -2973,7 +3048,7 @@ msgstr ""
 msgid "FIT file is not specified as activity."
 msgstr ""
 
-#: inc/import/parser/class.ParserXMLsuuntoSingle.php:67
+#: inc/import/parser/class.ParserXMLsuuntoSingle.php:68
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
@@ -3056,44 +3131,74 @@ msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
 msgstr ""
 
 #: inc/draw/class.PlotWeekSumData.php:35
-msgid "Weekly kilometers"
+#: inc/draw/class.PlotMonthSumData.php:34
+msgid "last 12 months"
 msgstr ""
 
 #: inc/draw/class.PlotWeekSumData.php:37
-#: inc/draw/class.PlotMonthSumData.php:37
-msgid "Hours of training"
+msgid "Weekly chart:"
 msgstr ""
 
-#: inc/draw/class.PlotMonthSumData.php:35
-msgid "Monthly kilometers"
+#: inc/draw/class.PlotMonthSumData.php:36
+msgid "Monthly chart:"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:112
+#: inc/draw/class.PlotSumData.php:141
 msgid "Choose analysis"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:149
+#: inc/draw/class.PlotSumData.php:145
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:99
+msgid "Choose evaluation"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:182
 msgid "Activity &amp; Competition"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:153
+#: inc/draw/class.PlotSumData.php:186
 msgid "By type"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:164
+#: inc/draw/class.PlotSumData.php:197
+msgid "Distance/Duration"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:202
+#: inc/training/search/class.SearchFormular.php:146
+msgid "JD points"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:214
 msgid "All sports"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:265
+#: inc/draw/class.PlotSumData.php:231
+msgid "Last 12 months"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:327
 msgid "There are no data for this timerange."
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:438
+#: inc/draw/class.PlotSumData.php:536
 msgid "Competition"
 msgstr ""
 
-#: inc/draw/class.PlotSumData.php:440
+#: inc/draw/class.PlotSumData.php:538
 msgid "Activity"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:564
+msgid "avg:"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:565
+msgid "goal:"
+msgstr ""
+
+#: inc/draw/class.PlotSumData.php:582
+msgid "Goal and average are based on current basic endurance calculations."
 msgstr ""
 
 #: inc/class.AdminView.php:173
@@ -3336,16 +3441,20 @@ msgid "Shoe"
 msgstr ""
 
 #: inc/class.DatasetLabels.php:42
+msgid "VDOT icon"
+msgstr ""
+
+#: inc/class.DatasetLabels.php:43
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:174
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
 msgstr ""
 
-#: inc/class.DatasetLabels.php:45
+#: inc/class.DatasetLabels.php:46
 msgid "Ground contact time"
 msgstr ""
 
-#: inc/class.DatasetLabels.php:48
+#: inc/class.DatasetLabels.php:49
 msgid "JD intensity"
 msgstr ""
 
@@ -3387,45 +3496,45 @@ msgid ""
 "be able to see your activity."
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:49
+#: inc/export/class.ExporterWindow.php:58
 msgid "Export your training"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:68 call/call.Plugin.install.php:35
+#: inc/export/class.ExporterWindow.php:77 call/call.Plugin.install.php:35
 #: call/call.Plugin.uninstall.php:27
 msgid "back to list"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:93
+#: inc/export/class.ExporterWindow.php:102
 msgid "The training is currently <strong>private</strong>"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:94
+#: inc/export/class.ExporterWindow.php:103
 msgid "make it public"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:96
+#: inc/export/class.ExporterWindow.php:105
 msgid "The training is currently <strong>public</strong>"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:97
+#: inc/export/class.ExporterWindow.php:106
 msgid "make it private"
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:106
+#: inc/export/class.ExporterWindow.php:115
 #, php-format
 msgid "Up to now you have exported <strong>%d</strong> trainings."
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:113
+#: inc/export/class.ExporterWindow.php:122
 msgid "The file has been removed."
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:122
+#: inc/export/class.ExporterWindow.php:131
 msgid "You did not export any training."
 msgstr ""
 
-#: inc/export/class.ExporterWindow.php:127
+#: inc/export/class.ExporterWindow.php:136
 msgid "delete"
 msgstr ""
 
@@ -3930,7 +4039,7 @@ msgid "Search"
 msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:83
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:424
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:449
 msgid "Time range"
 msgstr ""
 
@@ -3994,10 +4103,6 @@ msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:145
 msgid "Is public"
-msgstr ""
-
-#: inc/training/search/class.SearchFormular.php:146
-msgid "JD points"
 msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:148
@@ -4342,74 +4447,78 @@ msgstr ""
 msgid "Result overs %s"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:35
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:38
 msgid "Goals"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:43
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:47
 msgid ""
 "Set your own goals for different time ranges and compare your current "
 "performance with them."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:50
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:55
 msgid "This plugin tracks your distances for chosen time ranges."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:51
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:56
 msgid ""
 "You can set a goal (value &gt; 0) for every time range. If it is set, you "
 "will see how much you have to run to reach it."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:52
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:57
 msgid ""
 "A virtual Pace Bunny <em>reaches</em> the goal with a steady performance - "
 "you can see how far you are ahead or behind."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:53
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:58
 msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:63
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:69
 #, php-format
 msgid "Show a prognosis for the current %s"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:64
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:70
 #, php-format
 msgid "Current time range: %s to %s"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:71
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:77
 #, php-format
 msgid "%s: show"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:72
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:78
 #, php-format
 msgid "%s: goal"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:141
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:84
+msgid "Show details"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:154
 msgid "Current"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:142
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:157
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
 msgid "&oslash; Day"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:145
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:160
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:159
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
 msgid "&oslash; Week"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:148
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:162
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:43
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:239
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:384
@@ -4417,68 +4526,68 @@ msgstr ""
 msgid "Prognosis"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:168
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:162
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
 msgid "Goal reached."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:165
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:184
 msgid "Pace Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:189
 msgid "Behind"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:173
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:191
 msgid "Ahead"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
 msgid "Head 2 Head"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:176
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
 msgid "Me"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
 msgid "Pace&nbsp;Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:183
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:201
 #, php-format
 msgid "%s to %s (%d days)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:369
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:416
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:170
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:317
 msgid "Week"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:370
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:417
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:174
 msgid "Month"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:371
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:418
 msgid "Half-Year"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:372
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:419
 msgid "Saison"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:372
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:419
 msgid "Note: Saison means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:373
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:420
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:178
 msgid "Year"
 msgstr ""
@@ -4488,8 +4597,8 @@ msgid "How often did you train with whom?"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:72
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:88
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:301
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:100
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:321
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:16
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:56
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:64
@@ -4528,12 +4637,6 @@ msgid ""
 "Due to performance reasons, some statistics are saved in the database. Under "
 "some circumstances you have to recalculate these values after deleting an "
 "activity by hand."
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
-#, php-format
-msgid ""
-"%s has been recalculated. New value: <strong>%s</strong> (old value: %s)"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:22
@@ -4617,25 +4720,8 @@ msgstr ""
 msgid "Statistics have been recalculated for all <strong>%s</strong> shoes."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:110
-msgid "Vdot shape"
-msgstr ""
-
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:120
 msgid "Vdot corrector"
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:131
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:595
-msgid "Basic endurance"
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
-msgid "Maximal CTL"
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
-msgid "Maximal ATL"
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:152
@@ -4677,32 +4763,36 @@ msgid ""
 "visit each city or place."
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:63
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:64
+msgid "Show visited cities"
+msgstr ""
+
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:73
 msgid "Open route network"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:110
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:130
 msgid "Most frequent routes"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:146
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:166
 msgid "Most frequent places"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:152
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:172
 msgid "There are no routes."
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:176
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:196
 msgid "Rare places"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:203
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:223
 #, php-format
 msgid "You have visited %s different places."
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:209
+#: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:229
 msgid "Everything seperated by a ' - ' is considered as an individual place."
 msgstr ""
 
@@ -4824,186 +4914,202 @@ msgstr ""
 msgid "There are not enough activities for good calculations."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:193
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:196
 msgid "Current average VDOT"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:202
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:205
 msgid "Basic&nbsp;endurance"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:204
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:207
 msgid ""
 "<em>Experimental value!</em><br>100 &#37; means: you had enough long runs "
 "and kilometers per week to run a good marathon, based on your current VDOT."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:211
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:222
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:214
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:225
 #, php-format
 msgid "Current value: %s<br>Maximal value: %s<br>as percentage: %s &#37;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:213
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:216
 msgid "Fatigue"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:215
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:218
 msgid ""
 "Actual Training Load<br><small>Average training impulse of the last weeks in "
 "relation to your maximal value.</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:224
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:227
 msgid "Fitness&nbsp;level"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:226
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:229
 msgid ""
 "Chronical Training Load<br><small>Average training impulse of the last "
 "months in relation to your maximal value.</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:233
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:236
 #, php-format
 msgid "absolute: %s<br>as percentage: %s &#37;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:235
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:238
 msgid "Stress&nbsp;Balance"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:237
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:240
 msgid ""
 "Training Stress Balance (= CTL - ATL)<br>&gt; 0: You are relaxing.<br>&lt; "
 "0: You are training hard."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:254
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:250
+msgid "Rest&nbsp;days"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:252
+msgid "Rest days needed to reach TSB = 0"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:261
+msgid "Easy&nbsp;TRIMP"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:263
+msgid "Max TRIMP that will still keep you at TSB = 0"
+msgstr ""
+
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:279
 msgid "Monotony"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:256
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:281
 msgid ""
 "Monotony<br><small>Monotony of your last seven days.<br>Values below 1.5 are "
 "preferable.</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:272
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:297
 msgid "Training&nbsp;strain"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:274
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:299
 msgid "Training strain<br><small>of your last seven days</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:283
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:308
 #, php-format
 msgid ""
 "This week: %s training points<br>Prognosis: ca. %s training points<br>Last "
 "week: %s training points"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:285
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:310
 msgid "Training&nbsp;points"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:287
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:312
 msgid ""
 "Training intensity by Jack Daniels.<br>Jack Daniels considers the following "
 "levels:<br>50 points: Beginner<br>100 points: Advanced Runner<br>200 points: "
 "Pro Runner"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:358
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:383
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:138
 msgid "Easy"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:359
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:384
 msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:364
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:389
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Marathon"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:365
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:390
 msgid "Steady run or long repeats (e.g. 2 x 4 miles at marathon pace)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:371
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:396
 msgid ""
 "Steady, prolonged or tempo runs or intermittent runs, also called cruise "
 "intervals."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:376
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:401
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Interval"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:377
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:402
 msgid ""
 "Intervals: It takes about two minutes for you to gear up to functioning at "
 "VO2max so the ideal duration of an interval is 3-5 minutes each."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:382
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:407
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
 msgid "Repetition"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:383
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:408
 msgid ""
 "Repetitions are fast, but not necessarily \"hard,\" because work bouts are "
 "relatively short and are followed by relatively long recovery bouts."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:423
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:448
 msgid "in &#37;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:425
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:450
 msgid "&oslash; value/day"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:426
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 msgid "max. value"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:433
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:458
 msgid "Actual Training Load"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:435
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:444
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:460
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:469
 #, php-format
 msgid "%s days"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:438
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:463
 msgid "Training impulse over a short period"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:442
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:467
 msgid "Chronical Training Load"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:447
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:472
 msgid "Training impulse over a long period"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:476
 msgid "Training Stress Balance"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:454
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:479
 msgid "Current impulse<br>positive: recovery<br>negative: hard training"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:461
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:486
 msgid ""
 "ATL/CTL are based on the TRIMP-concept, which adresses an impulse value to "
 "every activity. ATL and CTL are averaged values over a given time range. "
@@ -5011,103 +5117,103 @@ msgid ""
 "themselves do not tell much."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:466
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:491
 msgid ""
 "see <a href=\"http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/Das-"
 "TRIMP-Konzept/1730751739988967389/head/page1\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:479
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:504
 #, php-format
 msgid "VDOT values of the last %s days"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:507
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:532
 #, php-format
 msgid ""
 "The VDOT value is the average, weighted by the time, of the VDOT of your "
 "activities in the last %s days."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:508
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:533
 #, php-format
 msgid "Your current VDOT shape: <strong>%s</strong><br>&nbsp;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:510
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:535
 msgid ""
 "Jack Daniels uses VDOT as a fixed value and not based on the training "
 "progress.<br>We do instead predict the VDOT from all activities based on the "
 "heart rate. These formulas are derived from Jack Daniels' tables as well."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:536
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:561
 msgid "<strong>Current VDOT</strong> <small>(based on heart rate)</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:539
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:564
 #, php-format
 msgid "<strong>Target kilometer per week</strong> <small>(%s weeks)</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:541
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:552
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:566
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:577
 #, php-format
 msgid "done by %s&#37;"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:547
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:572
 msgid "<strong>Marathon time</strong> <small>(optimal)</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:550
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:575
 #, php-format
 msgid "<strong>Target long run</strong> <small>(%s weeks)</small>"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:564
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:589
 msgid "Points"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:590
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:615
 #, php-format
 msgid ""
 "* %s &quot;long&quot; jogs do not show up, because they have less than 0.2 "
 "points."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:592
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:617
 #, php-format
 msgid "* In general, all runs with more than %s are being considered."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:596
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:621
 msgid ""
 "Your basic endurance is based on your weekly kilometers and your long jogs."
 "<br>The target is derived from the possible marathon time based on your "
 "current shape."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:599
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:624
 msgid ""
 "The points for your long runs are weighted by time and quadratic in "
 "distance. That means, a long jog yesterday gives more points than a long jog "
 "two weeks ago and a 30k-jog gives more points than two 20k-jogs."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:603
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:628
 msgid ""
 "The basic endurance is <strong>not</strong> from Jack Daniels.<br>It's our "
 "own attempt to adjust the prognosis for long distances based on your current "
 "endurance."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:638
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:663
 msgid "Training paces"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:640
+#: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:665
 msgid "These paces are based on Jack Daniels' recommendation."
 msgstr ""
 
@@ -5531,10 +5637,6 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:77
 msgid "Pace zone: Increment"
-msgstr ""
-
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:99
-msgid "Choose evaluation"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:100
