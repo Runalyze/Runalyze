@@ -115,12 +115,17 @@ class Object extends Model\Object implements Model\Loopable {
 						$this->Data[$key] = array();
 					}
 
+					// TODO: Move all these fixes to a new script to correct defect activities
 					if ($key == self::TIME && !empty($this->Data[$key]) && min($this->Data[$key]) < 0) {
 						$this->TimeHasBeenRemoved = true;
 						$this->Data[$key] = array();
 					}
 
 					$count = count($this->Data[$key]);
+
+					if ($key == self::DISTANCE && $count > 0) {
+						$this->fixDistanceArray();
+					}
 
 					if (($key == self::HEARTRATE || $key == self::CADENCE) && $this->numberOfPoints > 0 && $count > 0) {
 						if ($count == 1 + $this->numberOfPoints) {
@@ -134,6 +139,17 @@ class Object extends Model\Object implements Model\Loopable {
 				} catch(\RuntimeException $E) {
 					throw new \RuntimeException($E->getMessage().' (for '.$key.')');
 				}
+			}
+		}
+	}
+
+	/**
+	 * Fix distance array
+	 */
+	protected function fixDistanceArray() {
+		foreach ($this->Data[self::DISTANCE] as $i => $dist) {
+			if ($i > 0 && $dist == 0) {
+				$this->Data[self::DISTANCE][$i] = $this->Data[self::DISTANCE][$i - 1];
 			}
 		}
 	}
