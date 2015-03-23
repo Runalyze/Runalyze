@@ -120,22 +120,24 @@ class ExporterTCX extends ExporterAbstractFile {
 		while ($Trackdata->nextStep()) {
 			$Route->nextStep();
 
-			$Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
-			$Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
+			if ($this->Activity->Lap[(int)floor($Trackdata->distance())]) {
+				$Trackpoint = $this->Activity->Lap[(int)floor($Trackdata->distance())]->Track->addChild('Trackpoint');
+				$Trackpoint->addChild('Time', $this->timeToString($Starttime + $Trackdata->time()));
 
-			$Position = $Trackpoint->addChild('Position');
-			$Position->addChild('LatitudeDegrees', $Route->latitude());
-			$Position->addChild('LongitudeDegrees', $Route->longitude());
+				$Position = $Trackpoint->addChild('Position');
+				$Position->addChild('LatitudeDegrees', $Route->latitude());
+				$Position->addChild('LongitudeDegrees', $Route->longitude());
 
-			if ($hasElevation) {
-				$Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
-			}
+				if ($hasElevation) {
+					$Trackpoint->addChild('AltitudeMeters', $Route->current(Route\Object::ELEVATIONS_ORIGINAL));
+				}
 
-			$Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
+				$Trackpoint->addChild('DistanceMeters', 1000*$Trackdata->distance());
 
-			if ($hasHeartrate) {
-				$Heartrate = $Trackpoint->addChild('HeartRateBpm');
-				$Heartrate->addChild('Value', $Trackdata->current(Trackdata\Object::HEARTRATE));
+				if ($hasHeartrate) {
+					$Heartrate = $Trackpoint->addChild('HeartRateBpm');
+					$Heartrate->addChild('Value', $Trackdata->current(Trackdata\Object::HEARTRATE));
+				}
 			}
 		}
 	}
