@@ -125,8 +125,19 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		} else {
 			foreach ($this->XML->Lap as $i => $Lap) {
 				if ($i == 0) {
-					if (isset($Lap['StartTime']) && strtotime((string)$Lap['StartTime']) < $this->TrainingObject->getTimestamp())
-						$this->TrainingObject->setTimestamp( strtotime((string)$Lap['StartTime']) );
+					if (isset($Lap['StartTime'])) {
+						$start = strtotime((string)$Lap['StartTime']);
+						if ($start < $this->TrainingObject->getTimestamp()) {
+							$this->TrainingObject->setTimestamp($start);
+						}
+					}
+
+					if (!empty($Lap->Track) && !empty($Lap->Track[0]->Trackpoint[0])) {
+						$start = strtotime((string)$Lap->Track[0]->Trackpoint[0]->Time);
+						if ($start < $this->TrainingObject->getTimestamp()) {
+							$this->TrainingObject->setTimestamp($start);
+						}
+					}
 				}
 
 				$this->parseLap($Lap);

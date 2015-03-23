@@ -123,4 +123,44 @@ class ParserTCXSingleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( $Parser->object()->hasArrayLongitude(), false );
 	}
 
+	public function testWrongStartTimeInTrack() {
+		$XML = simplexml_load_string_utf8('
+    <Activity Sport="Running">
+      <Id>2011-03-06T11:21:50.000Z</Id>
+      <Lap StartTime="2011-03-06T11:21:50.000Z">
+        <TotalTimeSeconds>365.06</TotalTimeSeconds>
+        <DistanceMeters>1000.0</DistanceMeters>
+        <MaximumSpeed>3.2309999465942383</MaximumSpeed>
+        <Calories>72</Calories>
+        <Intensity>Active</Intensity>
+        <TriggerMethod>Manual</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2011-03-06T11:21:49.000Z</Time>
+            <Position>
+              <LatitudeDegrees>51.48495283909142</LatitudeDegrees>
+              <LongitudeDegrees>9.156514825299382</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>0.0</DistanceMeters>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2011-03-06T11:21:59.000Z</Time>
+            <Position>
+              <LatitudeDegrees>51.485025342553854</LatitudeDegrees>
+              <LongitudeDegrees>9.156750775873661</LongitudeDegrees>
+            </Position>
+            <DistanceMeters>18.06999969482422</DistanceMeters>
+          </Trackpoint>
+        </Track>
+      </Lap>
+    </Activity>');
+		$Parser = new ParserTCXSingle('', $XML);
+		$Parser->parse();
+
+		$this->assertFalse( $Parser->failed() );
+		$this->assertEquals( "2011-03-06 12:21:49", date("Y-m-d H:i:s", $Parser->object()->getTimestamp()) );
+		$this->assertEquals( array(0, 10), $Parser->object()->getArrayTime() );
+		$this->assertEquals( array(0.000, 0.01807), $Parser->object()->getArrayDistance() );
+	}
+
 }
