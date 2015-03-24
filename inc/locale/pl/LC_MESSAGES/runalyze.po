@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-23 21:27+0100\n"
-"PO-Revision-Date: 2015-03-16 19:19+0200\n"
+"PO-Revision-Date: 2015-03-24 19:04+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1810,46 +1810,43 @@ msgstr "Wytrzymałość bazowa"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:102
 msgid "Minimal distance for longjogs"
-msgstr ""
+msgstr "Minimalny dystans dla długich wybiegań"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Every run above this distance will be rated."
-msgstr ""
+msgstr "Każdy bieg powyżej tego dystansu będzie punktowany."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:107
-#, fuzzy
 msgid "Days for longjogs"
-msgstr "Dni dla ATL"
+msgstr "Dni dla długich wybiegań"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Number of days to look at for longjog goal."
-msgstr ""
+msgstr "Liczba dni które brać pod uwagę do celu długich wybiegań."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:111
-#, fuzzy
 msgid "Days for week kilometer"
-msgstr "Kilometrów tygodniowo"
+msgstr "Dni do kilometrów tygodniowo"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr ""
+msgstr "Liczba dni, które brać pod uwagę do celu kilometrów tygodniowo."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:115
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Dni do kilometrów tygodniowo (minimum)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "This value will be used if not enough data is available."
-msgstr ""
+msgstr "Wartość, która zostanie użyta, jeśli brak wystarczającej ilości danych."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:119
-#, fuzzy
 msgid "Factor for week kilometers"
-msgstr "Kilometrów tygodniowo"
+msgstr "Współczynnik dla kilometrów tygodniowo"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Procentowo, zapisany jako wartość pomiędzy 0.00 a 1.00."
 
 #: inc/core/Configuration/Category/Trimp.php:96
 #: inc/draw/class.PlotSumData.php:198 inc/class.DatasetLabels.php:33
@@ -2202,7 +2199,7 @@ msgstr "pokaż mapę przed wykresami"
 
 #: inc/core/Configuration/Category/ActivityView.php:370
 msgid "Map: zoom on scroll"
-msgstr ""
+msgstr "Mapa: przybliż przy przewijaniu"
 
 #: inc/core/Configuration/Category/ActivityView.php:380
 msgid "Elevation: smoothing"
@@ -3270,15 +3267,15 @@ msgstr "pliki xml Polar, Suunto i RunningAHEAD są obsługiwane."
 #: inc/draw/class.PlotWeekSumData.php:35
 #: inc/draw/class.PlotMonthSumData.php:34
 msgid "last 12 months"
-msgstr ""
+msgstr "ostatnich 12 miesięcy"
 
 #: inc/draw/class.PlotWeekSumData.php:37
 msgid "Weekly chart:"
-msgstr ""
+msgstr "Wykres tygodniowy:"
 
 #: inc/draw/class.PlotMonthSumData.php:36
 msgid "Monthly chart:"
-msgstr ""
+msgstr "Wykres miesięczny:"
 
 #: inc/draw/class.PlotSumData.php:141
 msgid "Choose analysis"
@@ -3298,9 +3295,8 @@ msgid "By type"
 msgstr "Wg typu"
 
 #: inc/draw/class.PlotSumData.php:197
-#, fuzzy
 msgid "Distance/Duration"
-msgstr "Dystans"
+msgstr "Dystans/Czas"
 
 #: inc/draw/class.PlotSumData.php:202
 #: inc/training/search/class.SearchFormular.php:146
@@ -3313,7 +3309,7 @@ msgstr "Wszystkie"
 
 #: inc/draw/class.PlotSumData.php:231
 msgid "Last 12 months"
-msgstr ""
+msgstr "Ostatnich 12 miesięcy"
 
 #: inc/draw/class.PlotSumData.php:327
 msgid "There are no data for this timerange."
@@ -3329,16 +3325,15 @@ msgstr "Trening"
 
 #: inc/draw/class.PlotSumData.php:564
 msgid "avg:"
-msgstr ""
+msgstr "śr:"
 
 #: inc/draw/class.PlotSumData.php:565
-#, fuzzy
 msgid "goal:"
-msgstr "%s: cel"
+msgstr "cel:"
 
 #: inc/draw/class.PlotSumData.php:582
 msgid "Goal and average are based on current basic endurance calculations."
-msgstr ""
+msgstr "Cel i średnia w oparciu o bieżące wyliczenia wytrzymałości bazowej."
 
 #: inc/class.AdminView.php:173
 msgid "Settings"
@@ -3586,9 +3581,8 @@ msgid "Shoe"
 msgstr "Buty"
 
 #: inc/class.DatasetLabels.php:42
-#, fuzzy
 msgid "VDOT icon"
-msgstr "VDOT"
+msgstr "Ikona VDOT"
 
 #: inc/class.DatasetLabels.php:43
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:174
@@ -4694,9 +4688,8 @@ msgid "%s: goal"
 msgstr "%s: cel"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:84
-#, fuzzy
 msgid "Show details"
-msgstr "Pokaż tabelę"
+msgstr "Pokaż szczegóły"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:154
 msgid "Current"
@@ -4974,9 +4967,8 @@ msgstr ""
 "razy odwiedzałeś dane miejsce."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:64
-#, fuzzy
 msgid "Show visited cities"
-msgstr "Pokaż nocne treningi"
+msgstr "Pokaż odwiedzone miasta"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:73
 msgid "Open route network"
@@ -5201,20 +5193,19 @@ msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:250
 msgid "Rest&nbsp;days"
-msgstr ""
+msgstr "Dni&nbsp;odpoczynku"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:252
 msgid "Rest days needed to reach TSB = 0"
-msgstr ""
+msgstr "Dni odpoczynku potrzebne by osiągnąć TSB = 0"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:261
-#, fuzzy
 msgid "Easy&nbsp;TRIMP"
-msgstr "wg&nbsp;tętna"
+msgstr "Łatwy&nbsp;TRIMP"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:263
 msgid "Max TRIMP that will still keep you at TSB = 0"
-msgstr ""
+msgstr "Maksymalny TRIMP, który nadal pozwoli utrzymać TSB = 0"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:279
 msgid "Monotony"
