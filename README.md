@@ -29,6 +29,7 @@ Release details on runalyze.de: [v2.0alpha](http://runalyze.de/allgemein/runalyz
 
 ## Changelog
 * new versions, multi-lingual
+ * [v2.0.2](http://runalyze.de/allgemein/runalyze-v2-0-2/), 24.03.2015: Minor bugfixes
  * [v2.0.1](http://runalyze.de/allgemein/runalyze-v2-0-1/), 13.03.2015: Minor bugfixes
  * [v2.0](http://runalyze.de/allgemein/runalyze-v2-0/), 28.02.2015: First mutlilingual major release
 * old versions, only in german
