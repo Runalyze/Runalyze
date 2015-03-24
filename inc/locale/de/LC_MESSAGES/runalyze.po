@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-23 21:27+0100\n"
-"PO-Revision-Date: 2015-03-24 18:57+0200\n"
+"PO-Revision-Date: 2015-03-24 20:36+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -1833,7 +1833,7 @@ msgstr "Minimale Distanz für lange Läufe"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Every run above this distance will be rated."
-msgstr ""
+msgstr "Jeder Lauf über dieser Distanz wird gewertet."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:107
 msgid "Days for longjogs"
@@ -1858,12 +1858,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "This value will be used if not enough data is available."
-msgstr ""
+msgstr "Dieser Wert wird genutzt, wenn nicht genügend Daten verfügbar sind."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:119
-#, fuzzy
 msgid "Factor for week kilometers"
-msgstr "Wochenkilometer"
+msgstr "Faktor für Wochenkilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
@@ -3334,15 +3333,15 @@ msgstr "XML-Dateien werden von Polar, Suunto und RunningAHEAD unterstützt."
 #: inc/draw/class.PlotWeekSumData.php:35
 #: inc/draw/class.PlotMonthSumData.php:34
 msgid "last 12 months"
-msgstr ""
+msgstr "letzte 12 Monate"
 
 #: inc/draw/class.PlotWeekSumData.php:37
 msgid "Weekly chart:"
-msgstr ""
+msgstr "Wöchentliche Grafik:"
 
 #: inc/draw/class.PlotMonthSumData.php:36
 msgid "Monthly chart:"
-msgstr ""
+msgstr "Monatliche Grafik:"
 
 #: inc/draw/class.PlotSumData.php:141
 msgid "Choose analysis"
@@ -3376,7 +3375,7 @@ msgstr "Alle Sportarten"
 
 #: inc/draw/class.PlotSumData.php:231
 msgid "Last 12 months"
-msgstr ""
+msgstr "Letzten 12 Monate"
 
 #: inc/draw/class.PlotSumData.php:327
 msgid "There are no data for this timerange."
