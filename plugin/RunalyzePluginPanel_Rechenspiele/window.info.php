@@ -68,6 +68,6 @@ new Frontend();
 	</p>
 
 	<p class="file">
-		see <em><a href="http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/Das-TRIMP-Konzept/1730751739988967389/head/page1" title="Das TRIMP-Konzept">Das TRIMP-Konzept</a> (german, netzathleten.de)</em>
+		see <em><a href="http://www.netzathleten.de/fitness/richtig-trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht" title="Das TRIMP-Konzept">Das TRIMP-Konzept</a> (german, netzathleten.de)</em>
 	</p>
 </div>

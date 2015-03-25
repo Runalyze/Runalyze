@@ -486,7 +486,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$Fieldset->addBlock( __('ATL/CTL are based on the TRIMP-concept, which adresses an impulse value to every activity. '.
 								'ATL and CTL are averaged values over a given time range.') );
 		$Fieldset->addBlock($Table);
-		$Fieldset->addInfo( __('see <a href="http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/Das-TRIMP-Konzept/1730751739988967389/head/page1" title="Das TRIMP-Konzept">The TRIMP-concept</a> (german, netzathleten.de)') );
+		$Fieldset->addInfo( __('see <a href="http://www.netzathleten.de/fitness/richtig-trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht" title="Das TRIMP-Konzept">The TRIMP-concept</a> (german, netzathleten.de)') );
 		$Fieldset->addInfo( __('see <a href="http://fellrnr.com/wiki/TRIMP">TRIMP</a> and <a href="http://fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas">Modeling Human Performance</a> on fellrnr.com') );
 
 		return $Fieldset;
