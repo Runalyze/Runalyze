@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-23 21:27+0100\n"
-"PO-Revision-Date: 2015-03-21 19:10+0200\n"
+"PO-Revision-Date: 2015-03-28 16:24+0200\n"
 "Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
-"Language-Team: Spanish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/es/>\n"
+"Language-Team: Spanish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -574,63 +574,69 @@ msgstr "¡Bienvenido!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Déjenos comprobar primero si su servidor cumple los requisitos."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
 msgid ""
 "PHP %s is required, but PHP %s is running. Please update your PHP version."
 msgstr ""
+"Se requiere PHP %s, pero se está ejecutando PHP %s. Por favor, actualice su "
+"versión de PHP."
 
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
 msgid "Currently PHP %s is running."
-msgstr ""
+msgstr "Actualmente se está ejecutando PHP %s."
 
 #: inc/tpl/tpl.Installer.php:64
 msgid ""
 "Importing large files (e.g. a SportTracks logbook) may take some time. "
 "Please have a look at your server limitations:"
 msgstr ""
+"Importar grandes ficheros (ej.: un registro de SportTracks) puede llevar "
+"algún tiempo. Por favor compruebe las limitaciones de su servidor:"
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Límite de tiempo"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Límite de memoria"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Límite de subidas"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Comenzar instalación"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Configuraciones para Runalyze"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze necesita una base de datos MySQL."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
 "The connection settings are incorrect. We are not able to connect to the "
 "database."
 msgstr ""
+"Los ajustes de la conexión son incorrectos. No se puede conectar a la base "
+"de datos."
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr ""
+msgstr "Se estableció una conexión."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "Actualmente se está ejecutando MySQL %s."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
@@ -638,76 +644,85 @@ msgid ""
 "MySQL %s is required, but MySQL %s is running. Please update your MySQL "
 "version."
 msgstr ""
+"Se necesita MySQL %s, pero se está ejecutando MySQL %s. Por favor actualice "
+"su versión MySQL."
 
 #: inc/tpl/tpl.Installer.php:113
+#, fuzzy
 msgid "Host server"
-msgstr ""
+msgstr "Servidor \"Host\""
 
 #: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:298
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #: inc/tpl/tpl.Installer.php:137
 msgid ""
 "You can use a specific database prefix if you want to run multiple "
 "installations of Runalyze."
 msgstr ""
+"Puede usar un prefijo para la base de datos si quiere ejecutar varias "
+"instalaciones de Runalyze."
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
-msgstr ""
+msgstr "El prefijo ya se está usando."
 
 #: inc/tpl/tpl.Installer.php:146
 msgid "This prefix is free."
-msgstr ""
+msgstr "El prefijo está libre."
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "Prefix"
-msgstr ""
+msgstr "Prefijo"
 
 #: inc/tpl/tpl.Installer.php:158
 msgid ""
 "You can activate a debug toolbar to see specific information if problems "
 "occur."
 msgstr ""
+"Pude activar una barra de depuración para ver información específica, si hay "
+"algún problema."
 
 #: inc/tpl/tpl.Installer.php:163 inc/class.AdminView.php:174
 msgid "Debug mode"
-msgstr ""
+msgstr "Modo de depuración"
 
 #: inc/tpl/tpl.Installer.php:170
 msgid "Registrations"
-msgstr ""
+msgstr "Registros"
 
 #: inc/tpl/tpl.Installer.php:173
 msgid "Users have to register and login"
-msgstr ""
+msgstr "Los usuarios tienen que registrarse y entrar"
 
 #: inc/tpl/tpl.Installer.php:180
 msgid "Garmin API key"
-msgstr ""
+msgstr "Clave del API de Garmin"
 
 #: inc/tpl/tpl.Installer.php:183
 msgid "not necessary for localhost"
-msgstr ""
+msgstr "no es necesario para el servidor local"
 
 #: inc/tpl/tpl.Installer.php:186
 msgid "necessary for"
-msgstr ""
+msgstr "necesario para"
 
 #: inc/tpl/tpl.Installer.php:187
 msgid "see"
-msgstr ""
+msgstr "ver"
 
 #: inc/tpl/tpl.Installer.php:195
 msgid ""
 "A Garmin API key is necessary for using Garmin Communicator (enables direct "
 "imports from any Garmin Forerunner)."
 msgstr ""
+"Se necesita una clave del API de Garmin para usar el Garmin Communicator ("
+"permite la importación directa desde cualquier Garmin Forerunner)."
 
 #: inc/tpl/tpl.Installer.php:201
 msgid "The configuration file cannot be written."
-msgstr ""
+msgstr "El fichero de configuraciones no se puede escribir."
 
 #: inc/tpl/tpl.Installer.php:206
 #, php-format
@@ -715,62 +730,66 @@ msgid ""
 "Please copy <strong>%s</strong> to the directory <strong>%s</strong> and "
 "insert your data."
 msgstr ""
+"Por favor copie <strong>%s</strong> al directorio <strong>%s</strong> y "
+"coloque sus datos."
 
 #: inc/tpl/tpl.Installer.php:207
 msgid "You have to change the following variables:"
-msgstr ""
+msgstr "Tiene que cambiar las siguientes variables:"
 
 #: inc/tpl/tpl.Installer.php:219
 #, php-format
 msgid "Please save the following code as <strong>%s</strong>:"
-msgstr ""
+msgstr "Por favor guarde el siguiente código como <strong>%s</strong>:"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
-msgstr ""
+msgstr "¡Grabado! Continuar..."
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Write configuration file"
-msgstr ""
+msgstr "Escribir fichero de configuración"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Check settings"
-msgstr ""
+msgstr "Comprobar ajustes"
 
 #: inc/tpl/tpl.Installer.php:239
 msgid "The configuration file has been written."
-msgstr ""
+msgstr "El fichero de configuraciones se ha grabado."
 
 #: inc/tpl/tpl.Installer.php:243
 msgid "Next step: setup database"
-msgstr ""
+msgstr "Próximo paso: configurar la base de datos"
 
 #: inc/tpl/tpl.Installer.php:250
 msgid ""
 "There are some problems with filling the database. Please insert the above "
 "SQL-statements by hand (e.g. via PhpMyAdmin)."
 msgstr ""
+"Hay algunos problemas rellenando la base de datos. Por favor inserte la "
+"siguiente cadena de SQL manualmente (ej.: a través de PhpMyAdmin)."
 
 #: inc/tpl/tpl.Installer.php:256
 msgid "Setup database"
-msgstr ""
+msgstr "Configurar base de datos"
 
 #: inc/tpl/tpl.Installer.php:263
 msgid "Ready! Congratulations!"
-msgstr ""
+msgstr "¡Listo! ¡Felicidades!"
 
 #: inc/tpl/tpl.Installer.php:267
 msgid "Runalyze has been successfully installed. Have fun while using it!"
-msgstr ""
+msgstr "Runalyze se ha instalado correctamente. ¡Diviértase mientras lo usa!"
 
 #: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:380
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
-msgstr ""
+msgstr "El directorio <strong>%s</strong> no se puede escribir."
 
 #: inc/tpl/tpl.Installer.php:295
 msgid "Please activate JavaScript, Runalyze will not work without."
-msgstr ""
+msgstr "Por favor active JavaScript; Runalyze no funcionará sin él."
 
 #: inc/tpl/tpl.help.php:11
 msgid ""
@@ -3180,9 +3199,8 @@ msgid "By type"
 msgstr ""
 
 #: inc/draw/class.PlotSumData.php:197
-#, fuzzy
 msgid "Distance/Duration"
-msgstr "Duración"
+msgstr "Distancia/Duración"
 
 #: inc/draw/class.PlotSumData.php:202
 #: inc/training/search/class.SearchFormular.php:146
@@ -4520,9 +4538,8 @@ msgid "%s: goal"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:84
-#, fuzzy
 msgid "Show details"
-msgstr "Mostrar selección"
+msgstr "Mostrar detalles"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:154
 msgid "Current"
@@ -4785,9 +4802,8 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:64
-#, fuzzy
 msgid "Show visited cities"
-msgstr "Mostrar selección"
+msgstr "Mostrar ciudades visitadas"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:73
 msgid "Open route network"
