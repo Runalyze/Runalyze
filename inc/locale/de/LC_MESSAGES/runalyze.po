@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-29 19:30+0200\n"
-"PO-Revision-Date: 2015-03-29 19:29+0200\n"
+"PO-Revision-Date: 2015-03-29 19:49+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3391,7 +3391,7 @@ msgstr "Training"
 
 #: inc/draw/class.PlotSumData.php:564
 msgid "avg:"
-msgstr ""
+msgstr "durchschn:"
 
 #: inc/draw/class.PlotSumData.php:565
 msgid "goal:"
@@ -5299,7 +5299,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:261
 #, fuzzy
 msgid "Easy&nbsp;TRIMP"
-msgstr "aus&nbsp;Puls"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:263
 msgid "Max TRIMP that will still keep you at TSB = 0"
@@ -5452,15 +5452,14 @@ msgstr ""
 "bisherigen Maximum angegeben."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:489
-#, fuzzy
 msgid ""
 "see <a href=\"http://www.netzathleten.de/fitness/richtig-trainieren/"
 "item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
-"siehe <a href=\"http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/"
-"Das-TRIMP-Konzept/1730751739988967389/head/page1\" title=\"Das TRIMP-Konzept"
-"\">Das TRIMP-Konzept</a> auf netzathleten.de"
+"siehe <a href=\"http://www.netzathleten.de/fitness/richtig-"
+"trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das "
+"TRIMP-Konzept\">Das TRIMP-Konzept</a> auf netzathleten.de"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:490
 msgid ""
