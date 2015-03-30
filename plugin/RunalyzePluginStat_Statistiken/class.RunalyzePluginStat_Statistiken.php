@@ -476,7 +476,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 	private function computeInTotalForCompleteData() {
 		if ($this->year == -1) {
-			$Total = array('i' => 'total', 's' => 0, 's_sum_with_distance' => 0, 'distance' => 0, 'vdot' => 0, 'trimp' => 0, 'jd_intensity' => 0);
+			$Total = array('i' => date('Y') + 1, 's' => 0, 's_sum_with_distance' => 0, 'distance' => 0, 'vdot' => 0, 'trimp' => 0, 'jd_intensity' => 0);
 
 			foreach ($this->CompleteData as $data) {
 				$Total['s'] += $data['s'];
