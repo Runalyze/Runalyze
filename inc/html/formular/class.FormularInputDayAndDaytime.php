@@ -65,10 +65,13 @@ class FormularInputDayAndDaytime extends FormularField {
 		if (!isset($_POST[$this->getFieldDayName()]) || !isset($_POST[$this->getFieldDaytimeName()]))
 			return;
 
+		$date = $_POST[$this->getFieldDayName()];
+		$time = $_POST[$this->getFieldDaytimeName()];
+
 		$this->FieldDay->validate();
 		$this->FieldDaytime->validate();
 
-		$_POST[$this->name] = $_POST[$this->getFieldDayName()] + $_POST[$this->getFieldDaytimeName()];
+		$_POST[$this->name] = strtotime($date.' '.$time);
 	}
 
 	/**
