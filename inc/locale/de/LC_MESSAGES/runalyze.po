@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-03-29 19:30+0200\n"
-"PO-Revision-Date: 2015-03-29 19:49+0200\n"
+"PO-Revision-Date: 2015-03-30 21:09+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -1866,7 +1866,7 @@ msgstr "Faktor für Wochenkilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Prozentual als Wert zwischen 0.00 und 1.00."
 
 #: inc/core/Configuration/Category/Trimp.php:96
 #: inc/draw/class.PlotSumData.php:198 inc/class.DatasetLabels.php:33
