@@ -119,7 +119,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->displayStyle();
 		$this->displayAnalysis();
 
-		echo HTML::info('* '.__('The values consider only the average heart rate of your activities.'));
+		echo HTML::info('* '.__('The values consider only the average data fields of your activities.'));
 	}
 
 	/**
