@@ -44,6 +44,12 @@ class Pace {
 	const MIN_PER_100M = "min/100m";
 
 	/**
+	 * Speed unit min/500m
+	 * @var string
+         */
+        const MIN_PER_500M = "min/500m";
+
+	/**
 	 * Speed unit m/s
 	 * @var string
 	 */
@@ -78,6 +84,7 @@ class Pace {
 			self::KM_PER_H		=> self::KM_PER_H,
 			self::MIN_PER_KM	=> self::MIN_PER_KM,
 			self::MIN_PER_100M	=> self::MIN_PER_100M,
+			self::MIN_PER_500M	=> self::MIN_PER_500M,
 			self::M_PER_S		=> self::M_PER_S
 		);
 	}
@@ -171,6 +178,9 @@ class Pace {
 
 			case self::MIN_PER_100M:
 				return $this->asMinPer100m();
+		
+			case self::MIN_PER_500M:
+                                return $this->asMinPer500m();
 
 			case self::M_PER_S:
 				return $this->asMeterPerSecond();
@@ -199,6 +209,8 @@ class Pace {
 				return '/km';
 			case self::MIN_PER_100M:
 				return '/100m';
+			 case self::MIN_PER_500M:
+				return '/500m';
 			case self::M_PER_S:
 				return '&nbsp;m/s';
 		}
@@ -249,6 +261,18 @@ class Pace {
 
 		return $result;
 	}
+	
+        /**
+         * As: min/500m
+         * @return string
+         */
+        public function asMinPer500m() {
+                $this->Time /= 2;
+                $result = $this->asMinPerKm();
+                $this->Time *= 2;
+
+                return $result;
+        }
 
 	/**
 	 * As: m/s
