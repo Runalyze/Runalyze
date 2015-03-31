@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-29 19:30+0200\n"
+"POT-Creation-Date: 2015-03-31 20:35+0200\n"
 "PO-Revision-Date: 2015-03-24 19:04+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
@@ -998,7 +998,7 @@ msgstr "Dodaj"
 msgid "Edit"
 msgstr "Edytuj"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:93
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/core/View/Leaflet/Activity.php:193
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Splits/Table.php:146 inc/core/View/Window/Laps/Table.php:107
@@ -1016,7 +1016,7 @@ msgstr "Edytuj"
 msgid "Time"
 msgstr "Czas"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:95
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -1032,7 +1032,7 @@ msgstr "Czas"
 msgid "Date"
 msgstr "Data"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:99
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
 msgstr "Godzina"
@@ -1665,7 +1665,7 @@ msgstr "śnieg"
 msgid "at"
 msgstr "w"
 
-#: inc/core/Activity/Pace.php:214
+#: inc/core/Activity/Pace.php:226
 #, php-format
 msgid "%s in %s"
 msgstr "%s w %s"
