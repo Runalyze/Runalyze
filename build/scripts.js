@@ -5510,7 +5510,9 @@ RunalyzePlot.Events = (function($, parent){
 					} else if (axes.xaxis.options.mode == "time" && axisRange/1000 > 86400*2) {
 						x = (new Date(x)).toLocaleDateString();
 					} else {
-						x = axes.xaxis.tickFormatter(Math.round(x*100)/100, axes.xaxis);
+						if (axes.xaxis.tickFormatter) {
+							x = axes.xaxis.tickFormatter(Math.round(x*100)/100, axes.xaxis);
+						}
 					}
 
 					content = content + line(
@@ -5545,13 +5547,17 @@ RunalyzePlot.Events = (function($, parent){
 					if (axes.xaxis.options.mode == "time" && axisRange/1000 > 86400*2) {
 						x = (new Date(coords.x)).toLocaleDateString();
 					} else {
-						x = axes.xaxis.tickFormatter(Math.round(coords.x*100)/100, axes.xaxis);
+						if (axes.xaxis.tickFormatter) {
+							x = axes.xaxis.tickFormatter(Math.round(coords.x*100)/100, axes.xaxis);
+						}
 					}
 
-					content = content + line(
-						options.atString,
-						x
-					);
+					if (x) {
+						content = content + line(
+							options.atString,
+							x
+						);
+					}
 
 					var dataset = plot.getData();
 
@@ -5617,13 +5623,15 @@ RunalyzePlot.Events = (function($, parent){
 				from = parseFloat(ranges.xaxis.from.toFixed(1)),
 				to = parseFloat(ranges.xaxis.to.toFixed(1));
 
-			if (rangeCalculation)
-				content = content + line(
-					axes.xaxis.tickFormatter(from, axes.xaxis)+" - "+axes.xaxis.tickFormatter(to, axes.xaxis),
-					axes.xaxis.tickFormatter(Math.round((to-from)*10)/10, axes.xaxis)
-				);
-			else
-				content = content + '<span>' + axes.xaxis.tickFormatter(from, axes.xaxis)+" - "+axes.xaxis.tickFormatter(to, axes.xaxis) + '</span><br>';
+			if (axes.xaxis.tickFormatter) {
+				if (rangeCalculation)
+					content = content + line(
+						axes.xaxis.tickFormatter(from, axes.xaxis)+" - "+axes.xaxis.tickFormatter(to, axes.xaxis),
+						axes.xaxis.tickFormatter(Math.round((to-from)*10)/10, axes.xaxis)
+					);
+				else
+					content = content + '<span>' + axes.xaxis.tickFormatter(from, axes.xaxis)+" - "+axes.xaxis.tickFormatter(to, axes.xaxis) + '</span><br>';
+			}
 
 			// TODO: Think if min/max value is of interest too
 			var i, j, dataset = plot.getData();
@@ -5688,7 +5696,8 @@ RunalyzePlot.Events = (function($, parent){
 	parent.addInitHook('init-events', self.init);
 
 	return self;
-})(jQuery, RunalyzePlot);/*
+})(jQuery, RunalyzePlot);
+/*
  * Additional features for tablesorter
  * 
  * (c) 2014 Hannes Christiansen, http://www.runalyze.de/
