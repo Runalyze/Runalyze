@@ -75,7 +75,7 @@ class PlotWeekSumData extends PlotSumData {
 	 * @return int
 	 */
 	protected function beginningOfLast12Months() {
-		return strtotime("monday -".$this->timerEnd." weeks");
+		return strtotime("monday -".($this->timerEnd - 1)." weeks");
 	}
 
 	/**
