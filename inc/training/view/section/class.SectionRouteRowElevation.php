@@ -10,7 +10,7 @@ use Runalyze\View\Activity\Linker;
 
 /**
  * Row: Route
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -53,7 +53,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 
 			if ($this->Context->activity()->elevation() > 0) {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-	
+
 				if ($this->Context->hasRoute()) {
 					$upDown = '+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown();
 				} else {
@@ -84,15 +84,15 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Linker($this->Context->activity());
 			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
-			$this->Content = HTML::info( $InfoLink );
+			$this->Footer = HTML::info( $InfoLink );
 		} else {
-			$this->Content = '';
+			$this->Footer = '';
 		}
 
 		if ($this->Context->route()->hasCorrectedElevations()) {
-			$this->Content .= HTML::info( __('Elevation data were corrected.') );
+			$this->Footer .= HTML::info( __('Elevation data were corrected.') );
 		} elseif ($this->Context->route()->hasOriginalElevations() && Configuration::ActivityForm()->correctElevation()) {
-			$this->Content .= HTML::warning( __('Elevation data are not corrected.') );
+			$this->Footer .= HTML::warning( __('Elevation data are not corrected.') );
 		}
 
 		// TODO: Add link to correct them now!
