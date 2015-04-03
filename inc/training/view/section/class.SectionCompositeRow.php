@@ -149,7 +149,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 			$Linker = new Activity\Linker($this->Context->activity());
 			$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
-			$this->Content .= HTML::info( $InfoLink );
+			$this->Footer .= HTML::info( $InfoLink );
 		}
 	}
 
@@ -228,13 +228,13 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Activity\Linker($this->Context->activity());
 			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
-			$this->Content .= HTML::info( $InfoLink );
+			$this->Footer .= HTML::info( $InfoLink );
 		}
 
 		if ($this->Context->route()->hasCorrectedElevations()) {
-			$this->Content .= HTML::info( __('Elevation data were corrected.') );
+			$this->Footer .= HTML::info( __('Elevation data were corrected.') );
 		} elseif ($this->Context->route()->hasOriginalElevations() && Configuration::ActivityForm()->correctElevation()) {
-			$this->Content .= HTML::warning( __('Elevation data are not corrected.') );
+			$this->Footer .= HTML::warning( __('Elevation data are not corrected.') );
 		}
 
 		// TODO: Add link to correct them now!
