@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-31 20:35+0200\n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -3921,8 +3921,8 @@ msgstr ""
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr "Darrer canvi el <strong>%s</strong> a les <strong>%s</strong> ."
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr "Més detalls sobre les voltes"
 

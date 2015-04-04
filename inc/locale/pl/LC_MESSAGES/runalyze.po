@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-03-31 20:35+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
 "PO-Revision-Date: 2015-04-02 21:31+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
+"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3868,8 +3868,8 @@ msgstr "Trening utworzony <strong>%s</strong> o <strong>%s</strong>."
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr "Ostatnia modyfikacja <strong>%s</strong> o <strong>%s</strong>."
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr "Więcej danych o okrążeniach"
 
@@ -5360,9 +5360,9 @@ msgid ""
 "item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
-"zobacz <a href=\"http://www.netzathleten.de/fitness/richtig-"
-"trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das "
-"TRIMP-Konzept\">The TRIMP-concept</a> (german, netzathleten.de)"
+"zobacz <a href=\"http://www.netzathleten.de/fitness/richtig-trainieren/"
+"item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
+"\">The TRIMP-concept</a> (german, netzathleten.de)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:490
 msgid ""
@@ -5370,9 +5370,9 @@ msgid ""
 "fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas\">Modeling "
 "Human Performance</a> on fellrnr.com"
 msgstr ""
-"zobacz <a href=\"http://fellrnr.com/wiki/TRIMP\">TRIMP</a> and <a href=\""
-"http://fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas\">"
-"Modeling Human Performance</a> on fellrnr.com"
+"zobacz <a href=\"http://fellrnr.com/wiki/TRIMP\">TRIMP</a> and <a href="
+"\"http://fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas"
+"\">Modeling Human Performance</a> on fellrnr.com"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:503
 #, php-format

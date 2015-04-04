@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-31 20:35+0200\n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
 "PO-Revision-Date: 2014-12-28 09:39+0200\n"
 "Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
 "Language-Team: French <http://translate.runalyze.de/projects/runalyze/"
@@ -3722,8 +3722,8 @@ msgstr ""
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr ""
 
