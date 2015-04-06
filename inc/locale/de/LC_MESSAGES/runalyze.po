@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-03-29 19:30+0200\n"
-"PO-Revision-Date: 2015-03-30 21:09+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
+"PO-Revision-Date: 2015-03-31 19:35+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
+"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.1\n"
+"X-Generator: Weblate 2.3-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -1017,7 +1017,7 @@ msgstr "Erstellen"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:93
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/core/View/Leaflet/Activity.php:193
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Splits/Table.php:146 inc/core/View/Window/Laps/Table.php:107
@@ -1035,7 +1035,7 @@ msgstr "Bearbeiten"
 msgid "Time"
 msgstr "Zeit"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:95
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -1051,7 +1051,7 @@ msgstr "Zeit"
 msgid "Date"
 msgstr "Datum"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:99
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
 msgstr "Uhrzeit"
@@ -1685,7 +1685,7 @@ msgstr "Schnee"
 msgid "at"
 msgstr "bei"
 
-#: inc/core/Activity/Pace.php:214
+#: inc/core/Activity/Pace.php:226
 #, php-format
 msgid "%s in %s"
 msgstr "%s in %s"
@@ -1854,7 +1854,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:115
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Anzahl Tage für Wochenkilometer (minimum)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "This value will be used if not enough data is available."
@@ -3942,8 +3942,8 @@ msgstr ""
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr "Letzte Änderung am <strong>%s</strong> um <strong>%s</strong>."
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr "Mehr Informationen über deine Runden"
 
@@ -5297,7 +5297,6 @@ msgid "Rest days needed to reach TSB = 0"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:261
-#, fuzzy
 msgid "Easy&nbsp;TRIMP"
 msgstr ""
 
@@ -5457,9 +5456,9 @@ msgid ""
 "item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
-"siehe <a href=\"http://www.netzathleten.de/fitness/richtig-"
-"trainieren/item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das "
-"TRIMP-Konzept\">Das TRIMP-Konzept</a> auf netzathleten.de"
+"siehe <a href=\"http://www.netzathleten.de/fitness/richtig-trainieren/"
+"item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
+"\">Das TRIMP-Konzept</a> auf netzathleten.de"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:490
 msgid ""

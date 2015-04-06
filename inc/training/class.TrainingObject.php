@@ -160,7 +160,7 @@ class TrainingObject extends DataObject {
 
 		$this->id = $InserterActivity->insertedID();
 
-		if ($this->hasArrayTime() || $this->hasArrayDistance()) {
+		if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayPace() || $this->hasArrayHeartrate()) {
 			$Trackdata->set(Runalyze\Model\Trackdata\Object::ACTIVITYID, $this->id());
 			$InserterTrack = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
 			$InserterTrack->setAccountID( SessionAccountHandler::getId() );

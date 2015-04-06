@@ -8,7 +8,7 @@ use Runalyze\View\Activity\Context;
 
 /**
  * Row of the training view
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -35,7 +35,13 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Additional content
 	 * @var string
 	 */
-	protected $Content = '';
+	protected $Header = '';
+
+	/**
+	 * Additional content
+	 * @var string
+	 */
+	protected $Footer = '';
 
 	/**
 	 * With shadow?
@@ -86,12 +92,16 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 			$this->displayBoxedValues();
 		}
 
+		if (!empty($this->Header)) {
+			echo '<div class="panel-content">'.$this->Header.'</div>';
+		}
+
 		if (!empty($this->Code)) {
 			echo '<div>' . $this->Code . '</div>';
 		}
 
-		if (!empty($this->Content)) {
-			echo '<div class="panel-content">'.$this->Content.'</div>';
+		if (!empty($this->Footer)) {
+			echo '<div class="panel-content">'.$this->Footer.'</div>';
 		}
 
 		echo '</div>';

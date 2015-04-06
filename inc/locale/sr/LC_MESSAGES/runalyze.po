@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-29 19:30+0200\n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -949,7 +949,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:93
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/core/View/Leaflet/Activity.php:193
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Splits/Table.php:146 inc/core/View/Window/Laps/Table.php:107
@@ -967,7 +967,7 @@ msgstr ""
 msgid "Time"
 msgstr ""
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:95
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -983,7 +983,7 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:99
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
 msgstr ""
@@ -1607,7 +1607,7 @@ msgstr ""
 msgid "at"
 msgstr ""
 
-#: inc/core/Activity/Pace.php:214
+#: inc/core/Activity/Pace.php:226
 #, php-format
 msgid "%s in %s"
 msgstr ""
@@ -3720,8 +3720,8 @@ msgstr ""
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr ""
 

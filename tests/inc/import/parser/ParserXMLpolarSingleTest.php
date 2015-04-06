@@ -69,4 +69,42 @@ class ParserXMLpolarSingleTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 166, $Parser->object()->getPulseMax() );
 	}
 
+	public function testTimeArray() {
+		$XML = simplexml_load_string_utf8('
+<exercise> 
+      <created>2011-05-13 17:36:19.0</created>  
+      <time>2011-05-11 07:09:34.0</time>  
+      <sport>Cycling</sport>  
+      <name>Cycling</name>  
+      <result> 
+        <distance>17100.0</distance>  
+        <calories>500</calories>  
+        <duration>00:01:00</duration> 
+        <heart-rate> 
+          <average>146</average>  
+          <maximum>166</maximum> 
+        </heart-rate>
+        <recording-rate>5</recording-rate>
+        <samples> 
+          <sample> 
+            <type>HEARTRATE</type>  
+            <values>100,105,110,115,120,120,120,125,125,130,125,120,115</values> 
+          </sample> 
+        </samples>
+      </result>
+      <note/>
+    </exercise>');
+		$Parser = new ParserXMLpolarSingle('', $XML);
+		$Parser->parse();
+
+		$this->assertEquals(
+			array(100,105,110,115,120,120,120,125,125,130,125,120,115),
+			$Parser->object()->getArrayHeartrate()
+		);
+		$this->assertEquals(
+			array(  0,  5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60),
+			$Parser->object()->getArrayTime()
+		);
+	}
+
 }

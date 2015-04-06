@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-03-29 19:30+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
 "PO-Revision-Date: 2015-03-29 22:12+0200\n"
 "Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
-"Language-Team: Spanish "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
+"Language-Team: Spanish <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1008,7 +1008,7 @@ msgstr "Crear"
 msgid "Edit"
 msgstr "Editar"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:93
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/core/View/Leaflet/Activity.php:193
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Splits/Table.php:146 inc/core/View/Window/Laps/Table.php:107
@@ -1026,7 +1026,7 @@ msgstr "Editar"
 msgid "Time"
 msgstr "Tiempo"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:95
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -1042,7 +1042,7 @@ msgstr "Tiempo"
 msgid "Date"
 msgstr "Fecha"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:99
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
 msgstr "Hora del día"
@@ -1639,7 +1639,8 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:114
 msgid "Leave lap distances empty to use your handmade laps."
-msgstr "Dejar la distancia de las vueltas vacía para usar sus vueltas manuales."
+msgstr ""
+"Dejar la distancia de las vueltas vacía para usar sus vueltas manuales."
 
 #: inc/core/View/Window/Laps/Form.php:127
 msgid "Show calculated laps"
@@ -1673,7 +1674,7 @@ msgstr "nevando"
 msgid "at"
 msgstr "en"
 
-#: inc/core/Activity/Pace.php:214
+#: inc/core/Activity/Pace.php:226
 #, php-format
 msgid "%s in %s"
 msgstr "%s en %s"
@@ -3788,8 +3789,8 @@ msgstr ""
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr ""
 

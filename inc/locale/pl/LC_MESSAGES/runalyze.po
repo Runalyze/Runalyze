@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-29 19:30+0200\n"
-"PO-Revision-Date: 2015-03-24 19:04+0200\n"
+"POT-Creation-Date: 2015-04-04 08:17+0200\n"
+"PO-Revision-Date: 2015-04-02 21:31+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
 "runalyze/pl/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.1\n"
+"X-Generator: Weblate 2.3-dev\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -998,7 +998,7 @@ msgstr "Dodaj"
 msgid "Edit"
 msgstr "Edytuj"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:93
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/core/View/Leaflet/Activity.php:193
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Splits/Table.php:146 inc/core/View/Window/Laps/Table.php:107
@@ -1016,7 +1016,7 @@ msgstr "Edytuj"
 msgid "Time"
 msgstr "Czas"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:95
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/import/class.MultiImporterFormular.php:75
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:81
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -1032,7 +1032,7 @@ msgstr "Czas"
 msgid "Date"
 msgstr "Data"
 
-#: inc/html/formular/class.FormularInputDayAndDaytime.php:99
+#: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
 msgstr "Godzina"
@@ -1665,7 +1665,7 @@ msgstr "śnieg"
 msgid "at"
 msgstr "w"
 
-#: inc/core/Activity/Pace.php:214
+#: inc/core/Activity/Pace.php:226
 #, php-format
 msgid "%s in %s"
 msgstr "%s w %s"
@@ -3868,8 +3868,8 @@ msgstr "Trening utworzony <strong>%s</strong> o <strong>%s</strong>."
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr "Ostatnia modyfikacja <strong>%s</strong> o <strong>%s</strong>."
 
-#: inc/training/view/section/class.SectionLapsRowManual.php:50
-#: inc/training/view/section/class.SectionLapsRowComputed.php:48
+#: inc/training/view/section/class.SectionLapsRowManual.php:49
+#: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
 msgstr "Więcej danych o okrążeniach"
 
@@ -5346,24 +5346,22 @@ msgid "Current impulse<br>positive: recovery<br>negative: hard training"
 msgstr "Bieżący impuls<br>dodatni: odpoczynek<br>ujemny: ciężki trening"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:486
-#, fuzzy
 msgid ""
 "ATL/CTL are based on the TRIMP-concept, which adresses an impulse value to "
 "every activity. ATL and CTL are averaged values over a given time range."
 msgstr ""
 "ATL/CTL bazują na koncepcji TRIMP, która każdemu treningowi przyporządkowuje "
-"wartość impulsu treningowego. Wartości ATL i CTL są uśrednieniem w zadanym "
-"zakresie czasu. Runalyze wyświetla wartości w relacji do aktualnego maksimum."
+"wartość impulsu treningowego. ATL i CTL są uśrednionymi wartościami w "
+"zadanym zakresie czasu."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:489
-#, fuzzy
 msgid ""
 "see <a href=\"http://www.netzathleten.de/fitness/richtig-trainieren/"
 "item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 msgstr ""
-"zobacz <a href=\"http://www.netzathleten.de/Sportmagazin/Richtig-trainieren/"
-"Das-TRIMP-Konzept/1730751739988967389/head/page1\" title=\"Das TRIMP-Konzept"
+"zobacz <a href=\"http://www.netzathleten.de/fitness/richtig-trainieren/"
+"item/1481-trainingstagebuch-sinnvoll-oder-nicht\" title=\"Das TRIMP-Konzept"
 "\">The TRIMP-concept</a> (german, netzathleten.de)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:490
@@ -5372,6 +5370,9 @@ msgid ""
 "fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas\">Modeling "
 "Human Performance</a> on fellrnr.com"
 msgstr ""
+"zobacz <a href=\"http://fellrnr.com/wiki/TRIMP\">TRIMP</a> and <a href="
+"\"http://fellrnr.com/wiki/Modeling_Human_Performance#The_TSB_Formulas"
+"\">Modeling Human Performance</a> on fellrnr.com"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:503
 #, php-format

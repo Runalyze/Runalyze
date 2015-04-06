@@ -8,7 +8,7 @@ use Runalyze\View\Activity;
 
 /**
  * Row: Heartrate
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
@@ -80,7 +80,7 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 				$Linker = new Activity\Linker($this->Context->activity());
 				$InfoLink = Ajax::window('<a href="'.$Linker->urlToVDOTInfo().'">'.__('More about VDOT calculation').'</a>', 'small');
 
-				$this->Content = HTML::info( $InfoLink );
+				$this->Footer = HTML::info( $InfoLink );
 			}
 		}
 	}

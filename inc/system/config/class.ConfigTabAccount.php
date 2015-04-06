@@ -45,6 +45,17 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($NameField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
+                
+                $Password =  new FormularFieldset(__('Change your password'));
+                $OldPasswordField = new FormularInputPassword('old_pw', __('Old password'));
+                $NewPasswordField = new FormularInputPassword('new_pw', __('New password'));
+                $RepeatNewPasswordField = new FormularInputPassword('new_pw_repeat', __('Repeat new password'));
+                $ChangePasswordButton = new FormularSubmit(__('Change password'), __('Change password'));
+                $Password->addField($OldPasswordField);
+                $Password->addField($NewPasswordField);
+                $Password->addField($RepeatNewPasswordField);
+                $Password->addField($ChangePasswordButton);
+                
 
 		$Backup = new FormularFieldset( __('Backup your data') );
 		$Backup->setCollapsed();
@@ -70,6 +81,7 @@ class ConfigTabAccount extends ConfigTab {
 		$Delete->addWarning($DeleteLink);
 
 		$this->Formular->addFieldset($Account);
+                $this->Formular->addFieldset($Password);
 		$this->Formular->addFieldset($Backup);
 		$this->Formular->addFieldset($Delete);
 		$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
@@ -81,5 +93,19 @@ class ConfigTabAccount extends ConfigTab {
 	public function parsePostData() {
 		if ($_POST['name'] != SessionAccountHandler::getName())
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
+                if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
+                    //TODO Error and info are not shown?
+                    $Account = DB::getInstance()->query('SELECT password, salt FROM `'.PREFIX.'account`')->fetch();             
+                    if(AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
+                        AccountHandler::setNewPassword(SessionAccountHandler::getUsername(), $_POST['new_pw']);
+                        HTML::info(__('Password changed successfully'));
+                    } else {
+                        HTML::error (__('You current password is wrong.'));
+                    }
+                } else {
+                    HTML::error(__('The passwords have to be the same.'));
+                }
+                
+                    
 	}
 }
