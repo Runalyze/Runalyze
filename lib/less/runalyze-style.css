@@ -435,10 +435,10 @@ fieldset .checkbox-first input {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30px!important;
+  width: 30px !important;
   display: block;
   text-align: center;
-  float: none!important;
+  float: none !important;
   font-weight: normal;
   font-size: 0.9em;
   color: #ccc;
