@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-04 08:17+0200\n"
+"POT-Creation-Date: 2015-04-09 22:16+0200\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,7 +31,7 @@ msgid ""
 "configuration.</em>"
 msgstr ""
 
-#: login.php:27 inc/tpl/tpl.installerHeader.php:21
+#: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
 msgstr ""
 
@@ -324,6 +324,7 @@ msgid "IUsername"
 msgstr ""
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
+#: inc/system/config/class.ConfigTabAccount.php:51
 msgid "New password"
 msgstr ""
 
@@ -336,6 +337,7 @@ msgid "The link is not valid anymore."
 msgstr ""
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
+#: inc/system/config/class.ConfigTabAccount.php:53
 msgid "Change password"
 msgstr ""
 
@@ -478,7 +480,7 @@ msgid ""
 msgstr ""
 
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.Installer.php:5
-#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:30
+#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:32
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: call/call.Plugin.install.php:23
@@ -835,17 +837,17 @@ msgstr ""
 msgid "Credits"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:25 inc/tpl/tpl.Frontend.header.php:26
+#: inc/tpl/tpl.Frontend.header.php:27 inc/tpl/tpl.Frontend.header.php:28
 msgid "Logout"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:31
+#: inc/tpl/tpl.Frontend.header.php:33
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
 msgstr ""
 
-#: inc/tpl/tpl.Frontend.header.php:32
+#: inc/tpl/tpl.Frontend.header.php:34
 msgid "Help"
 msgstr ""
 
@@ -2518,29 +2520,55 @@ msgid "Your account"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:49
+msgid "Change your password"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:50
+msgid "Old password"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:52
+msgid "Repeat new password"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:60
 msgid "Backup your data"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabAccount.php:56
+#: inc/system/config/class.ConfigTabAccount.php:67
 msgid "Please use the plugin"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabAccount.php:58
+#: inc/system/config/class.ConfigTabAccount.php:69
 msgid ""
 "The backup of all your data is not manually possible yet.<br>In important "
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
 "care of it right away!"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabAccount.php:62
-#: inc/system/config/class.ConfigTabAccount.php:68
+#: inc/system/config/class.ConfigTabAccount.php:73
+#: inc/system/config/class.ConfigTabAccount.php:79
 msgid "Delete your account"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabAccount.php:64
+#: inc/system/config/class.ConfigTabAccount.php:75
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:101
+msgid "Password changed successfully"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:103
+msgid "You current password is wrong."
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:106
+#: inc/system/class.AccountHandler.php:197
+#: inc/system/class.AccountHandler.php:368
+msgid "The passwords have to be the same."
 msgstr ""
 
 #: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
@@ -2572,11 +2600,6 @@ msgstr ""
 
 #: inc/system/class.AccountHandler.php:194
 msgid "Please enter a valid email address."
-msgstr ""
-
-#: inc/system/class.AccountHandler.php:197
-#: inc/system/class.AccountHandler.php:368
-msgid "The passwords have to be the same."
 msgstr ""
 
 #: inc/system/class.AccountHandler.php:200

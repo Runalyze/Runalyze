@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-04 08:17+0200\n"
+"POT-Creation-Date: 2015-04-09 22:16+0200\n"
 "PO-Revision-Date: 2015-03-31 19:35+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
@@ -34,7 +34,7 @@ msgstr ""
 "<em>Es sind keine Statistiken vorhanden. Aktiviere ein Plugin in deiner "
 "Konfiguration.</em>"
 
-#: login.php:27 inc/tpl/tpl.installerHeader.php:21
+#: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
 msgstr "Bitte einloggen"
 
@@ -329,6 +329,7 @@ msgid "IUsername"
 msgstr "Nutzername"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
+#: inc/system/config/class.ConfigTabAccount.php:51
 msgid "New password"
 msgstr "Neues Passwort"
 
@@ -341,6 +342,7 @@ msgid "The link is not valid anymore."
 msgstr "Der Link ist nicht mehr gültig."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
+#: inc/system/config/class.ConfigTabAccount.php:53
 msgid "Change password"
 msgstr "Passwort ändern"
 
@@ -494,7 +496,7 @@ msgstr ""
 "wie kein anderes Lauftagebuch."
 
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.Installer.php:5
-#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:30
+#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:32
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: call/call.Plugin.install.php:23
@@ -901,17 +903,17 @@ msgstr "z.B. jQuery 2.x unterstützt kein Internet Explorer 8 (oder älter)"
 msgid "Credits"
 msgstr "Danksagungen"
 
-#: inc/tpl/tpl.Frontend.header.php:25 inc/tpl/tpl.Frontend.header.php:26
+#: inc/tpl/tpl.Frontend.header.php:27 inc/tpl/tpl.Frontend.header.php:28
 msgid "Logout"
 msgstr "Ausloggen"
 
-#: inc/tpl/tpl.Frontend.header.php:31
+#: inc/tpl/tpl.Frontend.header.php:33
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
 msgstr "Tools"
 
-#: inc/tpl/tpl.Frontend.header.php:32
+#: inc/tpl/tpl.Frontend.header.php:34
 msgid "Help"
 msgstr "Hilfe"
 
@@ -2675,14 +2677,29 @@ msgid "Your account"
 msgstr "Dein Account"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
+#, fuzzy
+msgid "Change your password"
+msgstr "Passwort ändern"
+
+#: inc/system/config/class.ConfigTabAccount.php:50
+#, fuzzy
+msgid "Old password"
+msgstr "Neues Passwort"
+
+#: inc/system/config/class.ConfigTabAccount.php:52
+#, fuzzy
+msgid "Repeat new password"
+msgstr "Neues Passwort setzen"
+
+#: inc/system/config/class.ConfigTabAccount.php:60
 msgid "Backup your data"
 msgstr "Deine Daten sichern"
 
-#: inc/system/config/class.ConfigTabAccount.php:56
+#: inc/system/config/class.ConfigTabAccount.php:67
 msgid "Please use the plugin"
 msgstr "Bitte nutze das Plugin"
 
-#: inc/system/config/class.ConfigTabAccount.php:58
+#: inc/system/config/class.ConfigTabAccount.php:69
 msgid ""
 "The backup of all your data is not manually possible yet.<br>In important "
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
@@ -2692,12 +2709,12 @@ msgstr ""
 "Fällen schreib uns eine E-Mail an mail@runalyze.de und wir werden uns so "
 "schnell wie möglich darum kümmern!"
 
-#: inc/system/config/class.ConfigTabAccount.php:62
-#: inc/system/config/class.ConfigTabAccount.php:68
+#: inc/system/config/class.ConfigTabAccount.php:73
+#: inc/system/config/class.ConfigTabAccount.php:79
 msgid "Delete your account"
 msgstr "Deinen Account löschen"
 
-#: inc/system/config/class.ConfigTabAccount.php:64
+#: inc/system/config/class.ConfigTabAccount.php:75
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
@@ -2705,6 +2722,21 @@ msgstr ""
 "Du erhältst eine E-Mail mit einem Link zum Löschen deines Accounts.<br>Das "
 "Löschen kann danach nicht rückgängig gemacht werden. Du solltest daher deine "
 "Daten sichern, falls du doch noch einmal zurückkehren möchtest."
+
+#: inc/system/config/class.ConfigTabAccount.php:101
+msgid "Password changed successfully"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:103
+#, fuzzy
+msgid "You current password is wrong."
+msgstr "Deine derzeitige Grundlagenausdauer:"
+
+#: inc/system/config/class.ConfigTabAccount.php:106
+#: inc/system/class.AccountHandler.php:197
+#: inc/system/class.AccountHandler.php:368
+msgid "The passwords have to be the same."
+msgstr "Die Passwörter müssen identisch sein."
 
 #: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
 msgid "Save"
@@ -2738,11 +2770,6 @@ msgstr "Diese E-Mail-Adresse wird bereits verwendet."
 #: inc/system/class.AccountHandler.php:194
 msgid "Please enter a valid email address."
 msgstr "Bitte gib eine gültige E-Mail Adresse ein."
-
-#: inc/system/class.AccountHandler.php:197
-#: inc/system/class.AccountHandler.php:368
-msgid "The passwords have to be the same."
-msgstr "Die Passwörter müssen identisch sein."
 
 #: inc/system/class.AccountHandler.php:200
 #, php-format

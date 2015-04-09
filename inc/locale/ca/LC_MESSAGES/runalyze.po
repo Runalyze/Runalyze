@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-04 08:17+0200\n"
+"POT-Creation-Date: 2015-04-09 22:16+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -36,7 +36,7 @@ msgstr ""
 "<em>No hi ha estadístiques disponibles. Activeu el plugin a la vostra "
 "configuració.</em>"
 
-#: login.php:27 inc/tpl/tpl.installerHeader.php:21
+#: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
 msgstr "Iniciï sessió si us plau"
 
@@ -329,6 +329,7 @@ msgid "IUsername"
 msgstr "Usuari"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
+#: inc/system/config/class.ConfigTabAccount.php:51
 msgid "New password"
 msgstr "Nou password"
 
@@ -341,6 +342,7 @@ msgid "The link is not valid anymore."
 msgstr "El link ja no és vàlid."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
+#: inc/system/config/class.ConfigTabAccount.php:53
 msgid "Change password"
 msgstr "Canviï el password"
 
@@ -490,7 +492,7 @@ msgstr ""
 "cap altre diari d'entrenaments."
 
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.Installer.php:5
-#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:30
+#: inc/tpl/tpl.help.php:29 inc/tpl/tpl.Frontend.header.php:32
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: call/call.Plugin.install.php:23
@@ -895,17 +897,17 @@ msgstr "p.e. jQuery 2.x no suporta Internet Explorer 8 (o anterior)"
 msgid "Credits"
 msgstr "Agraïments"
 
-#: inc/tpl/tpl.Frontend.header.php:25 inc/tpl/tpl.Frontend.header.php:26
+#: inc/tpl/tpl.Frontend.header.php:27 inc/tpl/tpl.Frontend.header.php:28
 msgid "Logout"
 msgstr "Desconnexió"
 
-#: inc/tpl/tpl.Frontend.header.php:31
+#: inc/tpl/tpl.Frontend.header.php:33
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
 msgstr "Eines"
 
-#: inc/tpl/tpl.Frontend.header.php:32
+#: inc/tpl/tpl.Frontend.header.php:34
 msgid "Help"
 msgstr "Ajuda"
 
@@ -2661,14 +2663,29 @@ msgid "Your account"
 msgstr "El seu compte"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
+#, fuzzy
+msgid "Change your password"
+msgstr "Canviï el password"
+
+#: inc/system/config/class.ConfigTabAccount.php:50
+#, fuzzy
+msgid "Old password"
+msgstr "Nou password"
+
+#: inc/system/config/class.ConfigTabAccount.php:52
+#, fuzzy
+msgid "Repeat new password"
+msgstr "Entri un nou password"
+
+#: inc/system/config/class.ConfigTabAccount.php:60
 msgid "Backup your data"
 msgstr "Còpia de seguretat de les seves dates"
 
-#: inc/system/config/class.ConfigTabAccount.php:56
+#: inc/system/config/class.ConfigTabAccount.php:67
 msgid "Please use the plugin"
 msgstr "Si us plau fagi servir el plugin"
 
-#: inc/system/config/class.ConfigTabAccount.php:58
+#: inc/system/config/class.ConfigTabAccount.php:69
 msgid ""
 "The backup of all your data is not manually possible yet.<br>In important "
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
@@ -2678,12 +2695,12 @@ msgstr ""
 "d'extrema necessitat enviïn's un correu electrònic a mail@runalyze.de i ens "
 "n'ocuparem tan aviat com sigui possible!"
 
-#: inc/system/config/class.ConfigTabAccount.php:62
-#: inc/system/config/class.ConfigTabAccount.php:68
+#: inc/system/config/class.ConfigTabAccount.php:73
+#: inc/system/config/class.ConfigTabAccount.php:79
 msgid "Delete your account"
 msgstr "Esborri el seu compte"
 
-#: inc/system/config/class.ConfigTabAccount.php:64
+#: inc/system/config/class.ConfigTabAccount.php:75
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
@@ -2692,6 +2709,21 @@ msgstr ""
 "seu compte.<br> En cas que s'esborri el compte ni hi ha possibilitat de "
 "desfer aquest canvi. Vostè mateix haurà de desar les seves dades, en cas que "
 "vulgui recuperar-les."
+
+#: inc/system/config/class.ConfigTabAccount.php:101
+msgid "Password changed successfully"
+msgstr ""
+
+#: inc/system/config/class.ConfigTabAccount.php:103
+#, fuzzy
+msgid "You current password is wrong."
+msgstr "La seva condició física bàsica:"
+
+#: inc/system/config/class.ConfigTabAccount.php:106
+#: inc/system/class.AccountHandler.php:197
+#: inc/system/class.AccountHandler.php:368
+msgid "The passwords have to be the same."
+msgstr "les contrasenyes han de coincidir."
 
 #: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
 msgid "Save"
@@ -2724,11 +2756,6 @@ msgstr "Aquesta adreça de correu electrònic no es troba disponible."
 #: inc/system/class.AccountHandler.php:194
 msgid "Please enter a valid email address."
 msgstr "Si us plau entri una adreça de correu electrònic vàlida."
-
-#: inc/system/class.AccountHandler.php:197
-#: inc/system/class.AccountHandler.php:368
-msgid "The passwords have to be the same."
-msgstr "les contrasenyes han de coincidir."
 
 #: inc/system/class.AccountHandler.php:200
 #, php-format
