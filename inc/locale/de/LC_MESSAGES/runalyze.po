@@ -1,18 +1,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-04-09 22:16+0200\n"
-"PO-Revision-Date: 2015-03-31 19:35+0200\n"
+"PO-Revision-Date: 2015-04-10 12:16+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.3\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -2682,14 +2682,12 @@ msgid "Change your password"
 msgstr "Passwort ändern"
 
 #: inc/system/config/class.ConfigTabAccount.php:50
-#, fuzzy
 msgid "Old password"
-msgstr "Neues Passwort"
+msgstr "Altes Passwort"
 
 #: inc/system/config/class.ConfigTabAccount.php:52
-#, fuzzy
 msgid "Repeat new password"
-msgstr "Neues Passwort setzen"
+msgstr "Neues Passwort wiederholen"
 
 #: inc/system/config/class.ConfigTabAccount.php:60
 msgid "Backup your data"
@@ -2725,12 +2723,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:101
 msgid "Password changed successfully"
-msgstr ""
+msgstr "Passwort wurde erfolgreich geändert"
 
 #: inc/system/config/class.ConfigTabAccount.php:103
-#, fuzzy
 msgid "You current password is wrong."
-msgstr "Deine derzeitige Grundlagenausdauer:"
+msgstr "Dein derzeitiges Passwort ist falsch."
 
 #: inc/system/config/class.ConfigTabAccount.php:106
 #: inc/system/class.AccountHandler.php:197
