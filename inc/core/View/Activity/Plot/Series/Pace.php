@@ -6,8 +6,10 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
+use Plot;
 use Runalyze\Configuration;
 use Runalyze\Model\Trackdata\Object as Trackdata;
+use Runalyze\Parameter\Application\PaceAxisType;
 use Runalyze\View\Activity;
 
 
@@ -119,73 +121,108 @@ class Pace extends ActivitySeries {
 	 * @param int $yAxis
 	 * @param boolean $addAnnotations [optional]
 	 */
-	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true) {
+	public function addTo(\Plot &$Plot, $yAxis, $addAnnotations = true)
+	{
 		if (empty($this->Data)) {
 			return;
 		}
 
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
-		if ($this->paceInTime) {
-			$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
+		if (!$this->paceInTime) return;
+
+		$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
+
+		$min = min($this->Data);
+		$max = max($this->Data);
+
+
+		$setLimits = false;
+		$autoscale = true;
+
+		if (Configuration::ActivityView()->ignorePaceOutliers() && ($max - $min) > 2 * 60 * 1000) {
+			$setLimits = true;
+			$num = count($this->Data);
+			$sorted = $this->Data;
+			sort($sorted);
+			$min = 10 * 1000 * floor($sorted[round((self::$CUT_OUTLIER_PERCENTAGE / 2 / 100) * $num)] / 10 / 1000);
+			$max = 10 * 1000 * ceil($sorted[round((1 - self::$CUT_OUTLIER_PERCENTAGE / 2 / 100) * $num) - 1] / 10 / 1000);
 		}
 
-		if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM) {
-			$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
+		if ($max > 50 * 60 * 1000) {
+			$setLimits = true;
+			$max = 50 * 60 * 1000;
+		}
 
-			$setLimits = false;
-			$autoscale = true;
-			$min       = min($this->Data);
-			$max       = max($this->Data);
+		if (Configuration::ActivityView()->paceAxisType()->valueAsString() == PaceAxisType::AS_SPEED) {
+			$LimitMin = Configuration::ActivityView()->paceYaxisMinimum();
+			if (!$LimitMin->automatic()) $min = $LimitMin->value() * 1000;
+			$this->setYAxisForReversePace($Plot, $yAxis, $min);
+		} else {
+			$LimitMin = Configuration::ActivityView()->paceYaxisMinimum();
+			$LimitMax = Configuration::ActivityView()->paceYaxisMaximum();
 
-			if ($max > 50*60*1000) {
+			if (!$LimitMin->automatic() || !$LimitMax->automatic()) {
 				$setLimits = true;
-				$max = 50*60*1000;
-			}
+				$autoscale = false;
 
-			if (Configuration::ActivityView()->ignorePaceOutliers() && ($max - $min) > 2*60*1000) {
-				$setLimits = true;
-				$num       = count($this->Data);
-				$sorted    = $this->Data;
-				sort($sorted);
+				if (!$LimitMin->automatic() && $min < 1000 * $LimitMin->value()) {
+					$min = 1000 * $LimitMin->value();
+				} else {
+					$min = 60 * 1000 * floor($min / 60 / 1000);
+				}
 
-				$min = 10*1000*floor( $sorted[round((self::$CUT_OUTLIER_PERCENTAGE/2/100)*$num)] /10/1000 );
-				$max = 10*1000*ceil( $sorted[round((1-self::$CUT_OUTLIER_PERCENTAGE/2/100)*$num)-1] /10/1000 );
-			}
-
-			if ($this->isRunning) {
-				$LimitMin = Configuration::ActivityView()->paceYaxisMinimum();
-				$LimitMax = Configuration::ActivityView()->paceYaxisMaximum();
-
-				if (!$LimitMin->automatic() || !$LimitMax->automatic()) {
-					$setLimits = true;
-					$autoscale = false;
-
-					if (!$LimitMin->automatic() && $min < 1000*$LimitMin->value()) {
-						$min = 1000*$LimitMin->value();
-					} else {
-						$min = 60*1000*floor($min/60/1000);
-					}
-
-					if (!$LimitMax->automatic() && $max > 1000*$LimitMax->value()) {
-						$max = 1000*$LimitMax->value();
-					} else {
-						$max = 60*1000*floor($max/60/1000);
-					}
+				if (!$LimitMax->automatic() && $max > 1000 * $LimitMax->value()) {
+					$max = 1000 * $LimitMax->value();
+				} else {
+					$max = 60 * 1000 * floor($max / 60 / 1000);
 				}
 			}
-
 			if ($setLimits) {
 				$Plot->setYLimits($yAxis, $min, $max, $autoscale);
-				$Plot->setYTicks($yAxis, null);
+				$Plot->setYAxisLabels($yAxis, null);
 			}
 		}
 
-		if (Configuration::ActivityView()->reversePaceAxis() &&
-			($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM ||
-				$this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M)
-		) {
-			$Plot->setYAxisReverse($yAxis);
+		switch (Configuration::ActivityView()->paceAxisType()->valueAsString()) {
+			case PaceAxisType::AS_SPEED:
+				$Plot->setYAxisPaceReverse($yAxis);
+				break;
+			case PaceAxisType::REVERSE:
+				$Plot->setYAxisReverse($yAxis);
+				break;
 		}
+	}
+
+	/**
+	 * @param Plot $plot
+	 * @param $yAxis
+	 * @param $dataMin
+	 */
+	private function setYAxisForReversePace(Plot $plot, $yAxis, $dataMin)
+	{
+		if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM) {
+			if ($dataMin < 180000) {
+				$min = 120000;
+				$max = 3600000;
+				$ticks = [120000, 180000, 240000, 300000, 360000, 480000, 600000];
+			} else if ($dataMin < 240000) {
+				$min = 180000;
+				$max = 3600000;
+				$ticks = [180000, 240000, 300000, 360000, 480000, 600000];
+			} else {
+				$min = 240000;
+				$max = 3600000;
+				$ticks = [240000, 300000, 360000, 480000, 600000];
+			}
+		} else if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M) {
+			$min = 60000;
+			$max = 7200000;
+			$ticks = [60000, 120000, 180000, 240000];
+		}
+
+		$plot->setYLimits($yAxis, $min, $max, false);
+		$plot->setYAxisLabels($yAxis, $ticks);
+
 	}
 }
