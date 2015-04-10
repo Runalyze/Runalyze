@@ -200,7 +200,7 @@ if ($count < $tables[PREFIX.'training']) {
 			$NewRouteId = 0;
 		}
 
-		if (!empty($Row['arr_time']) || !empty($Row['arr_dist'])) {
+		if (!empty($Row['arr_time']) || !empty($Row['arr_dist']) || !empty($Row['arr_heart'])) {
 			$InsertTrackdata->execute(array(
 				':accountid'		=> $Row['accountid'],
 				':activityid'		=> $Row['id'],
