@@ -1,19 +1,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-04-09 22:16+0200\n"
-"PO-Revision-Date: 2015-04-02 21:31+0200\n"
+"PO-Revision-Date: 2015-04-10 20:00+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.3-dev\n"
+"X-Generator: Weblate 2.3\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -2627,19 +2627,16 @@ msgid "Your account"
 msgstr "Twoje konto"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
-#, fuzzy
 msgid "Change your password"
 msgstr "Zmień hasło"
 
 #: inc/system/config/class.ConfigTabAccount.php:50
-#, fuzzy
 msgid "Old password"
-msgstr "Nowe hasło"
+msgstr "Stare hasło"
 
 #: inc/system/config/class.ConfigTabAccount.php:52
-#, fuzzy
 msgid "Repeat new password"
-msgstr "Ustaw nowe hasło"
+msgstr "Powtórz nowe hasło"
 
 #: inc/system/config/class.ConfigTabAccount.php:60
 msgid "Backup your data"
@@ -2673,12 +2670,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:101
 msgid "Password changed successfully"
-msgstr ""
+msgstr "Hasło zostało zmienione"
 
 #: inc/system/config/class.ConfigTabAccount.php:103
-#, fuzzy
 msgid "You current password is wrong."
-msgstr "Twoja aktualna wytrzymałość bazowa:"
+msgstr "Twoje aktualne hasło jest niepoprawne."
 
 #: inc/system/config/class.ConfigTabAccount.php:106
 #: inc/system/class.AccountHandler.php:197
