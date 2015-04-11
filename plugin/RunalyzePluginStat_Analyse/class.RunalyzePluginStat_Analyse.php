@@ -119,7 +119,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$this->displayStyle();
 		$this->displayAnalysis();
 
-		echo HTML::info('* '.__('The values consider only the average heart rate of your activities.'));
+		echo HTML::info('* '.__('The values consider only the average data fields of your activities.'));
 	}
 
 	/**
@@ -405,9 +405,12 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$Pace = new Pace(0, 1, SportFactory::getSpeedUnitFor($this->sportid));
 
 			for ($speed = $speed_min; $speed > ($speed_max - $speed_step); $speed -= $speed_step) {
-				$name = ($speed <= $speed_max)
-					? '<small>'.__('faster than').'</small>&nbsp;'.$Pace->setTime($speed + $speed_step)->valueWithAppendix()
-					: '<small>'.__('up to').'</small>&nbsp;'.$Pace->setTime($speed)->valueWithAppendix();
+				if ($speed <= $speed_max)
+					$name = '<small>'.__('faster than').'</small>&nbsp;'.$Pace->setTime($speed + $speed_step)->valueWithAppendix();
+				else if ($speed == $speed_min)
+					$name = '<small>'.__('up to').'</small>&nbsp;'.$Pace->setTime($speed)->valueWithAppendix();
+				else
+					$name = $Pace->setTime($speed+$speed_step)->value().' <small>'.__('to').'</small>&nbsp;'.$Pace->setTime($speed)->valueWithAppendix();
 				$speed_foreach[] = array( 'name' => $name, 'id' => max($speed, $speed_max));
 			}
 		}
@@ -428,7 +431,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
-				CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`
+				'.(Configuration::General()->heartRateUnit()->isHRreserve() ?
+					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.' - '.HF_REST.') / ('.HF_MAX.' - '.HF_REST.')) /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`'
+				:
+					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`').'
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->group_time.'
@@ -448,9 +454,21 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$pulse_foreach = array();
 
 		if (!empty($result)) {
+			$absoluteValues = Configuration::General()->heartRateUnit()->isBPM();
+
 			for ($pulse = $pulse_min; $pulse < (100 + $pulse_step); $pulse += $pulse_step) {
+				$from = max(($pulse == $pulse_min) ? 0 : $pulse-$pulse_step, 0);
+				$to = min($pulse, 100);
+
+				if ($absoluteValues) {
+					$from = ceil(HF_MAX * $from / 100);
+					$to = floor(HF_MAX * $to / 100).' bpm';
+				} else {
+					$to .= ' &#37;';
+				}
+
 				$pulse_foreach[] = array(
-					'name' => '<small>'.__('up to').'</small> '.min($pulse, 100).' &#37;',
+					'name' => $from.' <small>'.__('to').'</small> '.$to,
 					'id' => $pulse
 				);
 			}
