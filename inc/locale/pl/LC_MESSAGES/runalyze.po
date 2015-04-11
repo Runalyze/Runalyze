@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-04-11 20:31+0200\n"
-"PO-Revision-Date: 2015-04-10 20:00+0200\n"
+"PO-Revision-Date: 2015-04-11 20:38+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1285,34 +1285,28 @@ msgid "Pace plot: y-axis minimum"
 msgstr "Wykres tempa: minimum osi Y"
 
 #: inc/core/Configuration/Category/ActivityView.php:324
-#, fuzzy
 msgid "Data points below this limit will be ignored. (only for min/km)"
-msgstr ""
-"Punkty danych poniżej tej wartości zostaną zignorowane. (tylko bieganie)"
+msgstr "Punkty danych poniżej tej wartości zostaną zignorowane. (tylko min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:328
 msgid "Pace plot: y-axis maximum"
 msgstr "Wykres tempa: maksimum osi Y"
 
 #: inc/core/Configuration/Category/ActivityView.php:329
-#, fuzzy
 msgid "Data points above this limit will be ignored. (only for min/km)"
-msgstr ""
-"Punkty danych powyżej tej wartości zostaną zignorowane. (tylko bieganie)"
+msgstr "Punkty danych powyżej tej wartości zostaną zignorowane. (tylko min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:333
-#, fuzzy
 msgid "Pace plot: y-axis scale type"
-msgstr "Wykres tempa: maksimum osi Y"
+msgstr "Wykres tempa: typ osi Y"
 
 #: inc/core/Configuration/Category/ActivityView.php:334
 msgid "Scale type that will be used to show pace on y-axis."
-msgstr ""
+msgstr "Typ skali, który będzie używany do pokazywania tempa na osi Y."
 
 #: inc/core/Configuration/Category/ActivityView.php:338
-#, fuzzy
 msgid "Pace plot: Ignore outliers"
-msgstr "Tempo: Ignoruj punkty odstające"
+msgstr "Wykres tempa: Ignoruj punkty odstające"
 
 #: inc/core/Configuration/Category/ActivityView.php:339
 msgid "Try to ignore outliers in the pace plot."
@@ -1837,16 +1831,15 @@ msgstr "co dwudziesty punkt"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "liniowa"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "liniowa odwrócona"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
-#, fuzzy
 msgid "as speed"
-msgstr "&oslash; Prędkość"
+msgstr "jak prędkość"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
@@ -6639,9 +6632,9 @@ msgid "by time"
 msgstr "wg czasu"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
-#, fuzzy
 msgid "The values consider only the average data fields of your activities."
-msgstr "Pod uwagę brane są średnie wartości tętna dla treningów."
+msgstr ""
+"Przedstawione dane wyliczane są na podstawie średnich wartości dla treningów."
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:178
 msgid "There is no data for this sport."
