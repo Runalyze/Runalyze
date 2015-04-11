@@ -60,7 +60,7 @@ class LapsManual extends Laps {
 		$this->demandedPace = $Reader->findDemandedPace();
 		$this->achievedPace = array_sum($this->Data) / $num;
 
-		$paceUnit = $context->sport()->paceUnit() == APace::NONE ? APace::STANDARD : $context->sport()->paceUnit();
+		$paceUnit = $context->sport()->paceUnit();
 		$this->manipulateData($num, $paceUnit);
 	}
 
@@ -82,7 +82,7 @@ class LapsManual extends Laps {
 	 * @param enum $paceUnit
 	 */
 	protected function manipulateData($num, $paceUnit) {
-		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M);
+		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M || $paceUnit == APace::MIN_PER_500M);
 		$pace = new APace(0, 1, $paceUnit);
 
 		foreach ($this->Data as $key => $val) {
@@ -102,6 +102,8 @@ class LapsManual extends Laps {
 				$this->Data[$key] = 1000*$pace->secondsPerKm();
 				if ($paceUnit == APace::MIN_PER_100M) {
 					$this->Data[$key] /= 10;
+				} elseif ($paceUnit == APace::MIN_PER_500M) {
+					$this->Data[$key] /= 2;
 				}
 			} else {
 				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());

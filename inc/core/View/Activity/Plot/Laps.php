@@ -51,14 +51,10 @@ abstract class Laps extends ActivityPlot {
 	protected function initData(Activity\Context $context) {
 		$this->PaceUnit = $context->sport()->paceUnit();
 
-		if ($this->PaceUnit == APace::NONE) {
-			$this->PaceUnit = APace::STANDARD;
-		}
-
 		$this->SplitsAreNotComplete = $this->splitsAreNotComplete($context);
 		$this->loadData($context);
 
-		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M)) {
+		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M || $this->PaceUnit == APace::MIN_PER_500M)) {
 			$max = Helper::ceilFor(max($this->Data), 30000);
 
 			$this->Plot->setYAxisTimeFormat('%M:%S');

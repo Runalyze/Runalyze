@@ -38,10 +38,6 @@ class TableZonesPace extends TableZonesAbstract {
 	protected function initData() {
 		$this->paceUnit = $this->Context->sport()->paceUnit();
 
-		if ($this->paceUnit == Pace::NONE) {
-			$this->paceUnit = Pace::STANDARD;
-		}
-
 		$Zones = $this->computeZones();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
 

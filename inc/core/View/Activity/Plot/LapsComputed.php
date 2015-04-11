@@ -50,8 +50,8 @@ class LapsComputed extends Laps {
 
 		$RawData = $this->computeRounds($context);
 		$num = count($RawData);
-		$paceUnit = $context->sport()->paceUnit() == APace::NONE ? APace::STANDARD : $context->sport()->paceUnit();
-		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M);
+		$paceUnit = $context->sport()->paceUnit();
+		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M || $paceUnit == APace::MIN_PER_500M);
 		$pace = new APace(0, 1, $paceUnit);
 
 		foreach ($RawData as $key => $val) {
@@ -73,6 +73,8 @@ class LapsComputed extends Laps {
 				$this->Data[$key] = 1000*$pace->secondsPerKm();
 				if ($paceUnit == APace::MIN_PER_100M) {
 					$this->Data[$key] /= 10;
+				} elseif ($paceUnit == APace::MIN_PER_500M) {
+					$this->Data[$key] /= 2;
 				}
 			} else {
 				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());

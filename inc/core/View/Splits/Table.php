@@ -196,8 +196,7 @@ class Table extends \Runalyze\View\Object {
 	private function tdForPaceDifference(Pace $Pace, $compareOnlyToDemanded = false) {
 		if (
 			($compareOnlyToDemanded && ($this->demandedPace->isEmpty())) ||
-			($this->achievedPaceActive->isEmpty()) && ($this->achievedPace->isEmpty()) ||
-			$Pace->unit() == Pace::NONE
+			($this->achievedPaceActive->isEmpty()) && ($this->achievedPace->isEmpty())
 		)
 			return '';
 

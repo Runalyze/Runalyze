@@ -53,11 +53,7 @@ class Pace extends ActivitySeries {
 	public function __construct(Activity\Context $context) {
 		$this->paceUnit = $context->sport()->paceUnit();
 
-		if ($this->paceUnit == \Runalyze\Activity\Pace::NONE) {
-			$this->paceUnit = \Runalyze\Activity\Pace::STANDARD;
-		}
-
-		$this->paceInTime = ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M);
+		$this->paceInTime = ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_500M);
 		$this->isRunning = ($context->sport()->id() == Configuration::General()->runningSport());
 
 		$this->initOptions();
@@ -103,6 +99,12 @@ class Pace extends ActivitySeries {
 			case \Runalyze\Activity\Pace::MIN_PER_100M:
 				$this->Data = array_map(function($v){
 					return ($v == 0) ? 36000*100 :round($v*100);
+				}, $this->Data);
+				break;
+
+			case \Runalyze\Activity\Pace::MIN_PER_500M:
+				$this->Data = array_map(function($v){
+					return ($v == 0) ? 36000*500 :round($v*500);
 				}, $this->Data);
 				break;
 
