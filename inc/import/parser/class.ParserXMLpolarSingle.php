@@ -98,6 +98,11 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 		if (isset($this->XML->result->samples)) {
 			foreach ($this->XML->result->samples->sample as $Sample) {
 				$Data = explode(',', (string)$Sample->values);
+
+				if (end($Data) == '') {
+					array_pop($Data);
+				}
+
 				$Num = count($Data);
 
 				switch ((string)$Sample->type) {
@@ -117,6 +122,10 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 					case 'DISTANCE':
 						$values = array_map( array('ParserXMLpolarSingle', 'arrayMapDistance'), $Data );
 						$this->TrainingObject->setArrayDistance( $values );
+						break;
+
+					case 'RUN_CADENCE':
+						$this->TrainingObject->setArrayCadence( $Data );
 						break;
 				}
 			}
