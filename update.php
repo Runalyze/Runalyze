@@ -12,6 +12,7 @@
 
 require_once 'inc/class.Installer.php';
 require_once 'inc/class.InstallerUpdate.php';
+require_once 'inc/system/class.Request.php';
 require_once 'inc/system/class.System.php';
 require_once 'inc/html/class.Ajax.php';
 
