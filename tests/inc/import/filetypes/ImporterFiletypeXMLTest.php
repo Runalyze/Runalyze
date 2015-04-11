@@ -91,6 +91,20 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
 		$this->assertEquals( 20.049, $this->object->object()->getArrayDistanceLastPoint(), '', 0.0005 );
 	}
+ 
+ 	/**
+	 * Test: Polar file
+	 * Filename: "Polar-with-arrays.xml" 
+	 */
+	public function test_PolarArraySizesWithAdditionalComma() {
+		$this->object->parseFile('../tests/testfiles/xml/Polar-additional-comma.xml');
+
+		$size = count($this->object->object()->getArrayHeartrate());
+
+		$this->assertEquals($size, count($this->object->object()->getArrayPace()));
+		$this->assertEquals($size, count($this->object->object()->getArrayAltitude()));
+		$this->assertEquals($size, count($this->object->object()->getArrayCadence()));
+	}
 
 	/**
 	 * Test: Polar file with multiple trainings
