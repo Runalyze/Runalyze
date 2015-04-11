@@ -68,7 +68,7 @@ class ExporterHTML extends ExporterAbstract {
 		$UrlLink = (System::isAtLocalhost()) ? '' : '<a href="'.$Url.'" class="runalyze-emb-share">'.$Url.'</a>';
 
 		return '<div class="runalyze-emb">
-	<a href="http://www.runalyze.de/" class="runalyze-emb-runalyze">runalyze.de</a>
+	<a href="https://runalyze.com/" class="runalyze-emb-runalyze">runalyze.com</a>
 	<strong>'.$Title.'</strong> <small>'.$Date.'</small><br>
 	<div class="runalyze-emb-infos">
 		'.$Spans.'
@@ -76,6 +76,6 @@ class ExporterHTML extends ExporterAbstract {
 	'.$UrlLink.'
 	<div class="runalyze-clear"></div>
 </div>
-<script src="'.(!System::isAtLocalhost() ? System::getFullDomain().'/lib/embedded.local.js' : 'http://user.runalyze.de/lib/embedded.js').'"></script>';
+<script src="https://runalyze.com/lib/embedded.js"></script>';
 	}
 }
