@@ -6204,6 +6204,13 @@ Runalyze.Overlay = (function($, Parent){
 		Parent.body().prepend('<div id="overlay"></div><div id="ajax-outer"><div id="ajax" class="panel"></div></div>');
 	}
 
+	function bindEsc() {
+		$(document).keyup(function(e) {
+			if (e.keyCode == 27)
+				self.close();
+		});
+	}
+
 
 	// Public Methods
 
@@ -6215,6 +6222,7 @@ Runalyze.Overlay = (function($, Parent){
 		}
 
 		initObjects();
+		bindEsc();
 
 		$outer.click(function(e){
 			if (e.target == e.currentTarget)
