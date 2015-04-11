@@ -12,8 +12,8 @@ $Frontend = new Frontend();
 	</p>
 
 	<p class="text">
-		<?php printf( __('Please look at our official website %s to get an overview of our features.'), '<a href="http://runalyze.de/">runalyze.de</a>'); ?><br>
-		<?php printf( __('If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.'), '<a href="http://runalyze.de/blog/">runalyze.de/blog/</a>'); ?>
+		<?php printf( __('Please look at our official website %s to get an overview of our features.'), '<a href="http://blog.runalyze.com/">blog.runalyze.com</a>'); ?><br>
+		<?php printf( __('If you want to stay up to date on changes and receive tips from time to time, visit our blog at %s.'), '<a href="http://blog.runalyze.com/blog/">blog.runalyze.com/blog/</a>'); ?>
 	</p>
 
 	<p class="text">
@@ -55,7 +55,7 @@ $Frontend = new Frontend();
 		<li><a href="http://twitter.com/RunalyzeDE" title="Runalyze"><i class="fa fa-twitter color-twitter"></i> <strong>Twitter</strong></a></li>
 		<li><a href="http://facebook.com/Runalyze" title="Runalyze"><i class="fa fa-facebook color-facebook"></i> <strong>Facebook</strong></a></li>
 		<li><a href="https://plus.google.com/communities/116260192529858591171" title="Runalyze"><i class="fa fa-google-plus color-google-plus"></i> <strong>Google+</strong></a></li>
-		<li><a href="http://runalyze.de/faq/" title="Runalyze"><i class="fa fa-question"></i> <strong>FAQ</strong></a></li>
+		<li><a href="http://blog.runalyze.com/faq/" title="Runalyze"><i class="fa fa-question"></i> <strong>FAQ</strong></a></li>
 	</ul>
 </div>
 
