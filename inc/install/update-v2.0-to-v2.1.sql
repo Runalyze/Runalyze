@@ -15,3 +15,6 @@ UPDATE runalyze_sport SET img="icons8-Running" where `img`="icons8-running";
 UPDATE runalyze_sport SET img="icons8-Regular-Biking" where `img`="icons8-regular_biking";
 UPDATE runalyze_sport SET img="icons8-Swimming" where `img`="icons8-swimming";
 UPDATE runalyze_sport SET img="icons8-Yoga" where `img`="icons8-yoga";
+
+/* 12.04.2015 - remove distances/pulse from sport configuration */
+ALTER TABLE `runalyze_sport` DROP `distances`, DROP `pulse`;

@@ -349,8 +349,8 @@ abstract class PlotSumData extends Plot {
 	private function loadData() {
 		$whereSport = (Request::param('group') == 'sport') ? '' : '`sportid`='.$this->Sport->id().' AND';
 
-		$this->usesDistance = $this->Sport->usesDistance();
-		if (Request::param('group') != 'sport' && $this->Analysis == self::ANALYSIS_DEFAULT && $this->usesDistance) {
+		$this->usesDistance = true;
+		if (Request::param('group') != 'sport' && $this->Analysis == self::ANALYSIS_DEFAULT) {
 			$num = DB::getInstance()->query('
 				SELECT COUNT(*) FROM `'.PREFIX.'training`
 				WHERE

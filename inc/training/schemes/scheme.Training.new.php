@@ -27,8 +27,7 @@ $FIELDSETS = array(
 		'id'		=> 'distance',
 		'legend'	=> __('Distance'),
 		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
-		'conf'		=> 'DISTANCE',
-		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
+		'conf'		=> 'DISTANCE'
 	),
 	array(
 		'id'		=> 'splits',

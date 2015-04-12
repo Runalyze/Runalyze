@@ -111,22 +111,6 @@ class Sport {
 	}
 
 	/**
-	 * Has a training of this sport a distance?
-	 * @return bool
-	 */
-	public function usesDistance() {
-		return ($this->data['distances'] == 1);
-	}
-
-	/**
-	 * Does this sport use pulse?
-	 * @return bool
-	 */
-	public function usesPulse() {
-		return ($this->data['pulse'] == 1);
-	}
-
-	/**
 	 * Does this sport use km/h as unit for speed?
 	 * @todo REMOVE this function
 	 * @return bool
