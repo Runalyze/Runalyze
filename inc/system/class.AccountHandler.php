@@ -23,7 +23,7 @@ class AccountHandler {
 	 * Minimum length for passwords
 	 * @var int
 	 */
-	static private $PASS_MIN_LENGTH = 6;
+	static public $PASS_MIN_LENGTH = 6;
 
 	/**
 	 * Minimum length for usernames
@@ -147,6 +147,7 @@ class AccountHandler {
 	 * Compares a password (given as string) with hash from database
 	 * @param string $realString
 	 * @param string $hashFromDb
+	 * @param string $saltFromDb
 	 * @return boolean
 	 */
 	static public function comparePasswords($realString, $hashFromDb, $saltFromDb) {
