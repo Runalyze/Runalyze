@@ -36,9 +36,7 @@ class ConfigTabSports extends ConfigTab {
 	 * @return string
 	 */
 	private function getInfoFieldsAfterCode() {
-		$Code  = HTML::info( __('The mode <strong>short</strong> means: the activity log contains only a symbol and no other values for activities of this sport.<br>'.
-								'This is useful if you are mainly interested in the fact of doing the sport, not in the details, e.g. for stretching.') );
-		$Code .= HTML::info( __('The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the calculation of TRIMP.') );
+		$Code = HTML::info( __('The values for <em>&Oslash; HF</em> and <em>RPE</em> are necessary for the calculation of TRIMP.') );
 
 		return $Code;
 	}
@@ -52,8 +50,7 @@ class ConfigTabSports extends ConfigTab {
 			<table class="fullwidth zebra-style c">
 				<thead>
 					<tr class="b">
-						<th class="small">'.Ajax::tooltip(__('short'), __('Show only a symbol.')).'</th>
-						<th class="small" colspan="2">'.__('Icon').'</th>
+						<th>'.__('Icon').'</th>
 						<th>'.Ajax::tooltip(__('Name'), __('Name of the sport')).'</th>
 						<th>'.Ajax::tooltip(__('kcal/h'), __('Average energy turnover in kilocalories per hour')).'</th>
 						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
@@ -64,13 +61,14 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip(__('HR'), __('Heart rate is recorded.')).'</th>
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>
 						<th>'.Ajax::tooltip(__('Outside'), __('Sport is performed outdoor: activate route, weather, ...')).'</th>
+						<th>'.Ajax::tooltip(__('Calendar view'), __('Mode for displaying activities in calendar')).'</th>
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A sport can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
 
 		$Sports   = SportFactory::AllSports();
-		$Sports[] = array('id' => -1, 'new' => true, 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'RPE' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'types' => 0, 'pulse' => 0, 'power' => 0, 'outside' => '');
 		$SportCount = SportFactory::CountArray();
 		foreach($SportCount as $is => $SC) {
 			if (isset($Sports[$is])) {
@@ -80,17 +78,15 @@ class ConfigTabSports extends ConfigTab {
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
+		$ShortOptions = array(
+			0 => __('complete row'),
+			1 => __('only icon')
+		);
 
-		foreach ($Sports as $i => $Data) {
+		foreach ($Sports as $Data) {
 			$id         = $Data['id'];
-			$icon       = Icon::getSportIcon($id, $Data['img']);
+			$isRunning  = ($id == Runalyze\Configuration::General()->runningSport());
 			$iconSelect = HTML::selectBox('sport[img]['.$id.']', $IconOptions, $Data['img'], '', 'fip-select');
-			if (isset($Data['new'])) {
-				$name = '<input type="text" name="sport[name]['.$id.']" value="">';
-			} else {
-				$name = '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'];
-			}
-
 
 			if ($id == -1)
 				$delete = '';
@@ -101,10 +97,8 @@ class ConfigTabSports extends ConfigTab {
 
 			$Code .= '
 					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
-						<td><input type="checkbox" name="sport[short]['.$id.']"'.($Data['short'] == 1 ? ' checked' : '').'></td>
-						<td> </td>
 						<td>'.$iconSelect.'</td>
-						<td>'.$name.'</td>
+						<td>'.($isRunning ? '<input type="hidden" name="sport[name]['.$id.']" value="'.$Data['name'].'">'.$Data['name'] : '<input type="text" name="sport[name]['.$id.']" value="'.$Data['name'].'">').'</td>
 						<td><input type="text" size="3" name="sport[kcal]['.$id.']" value="'.$Data['kcal'].'"></td>
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'"></td>
 						<td><input type="text" size="1" name="sport[RPE]['.$id.']" value="'.$Data['RPE'].'"></td>
@@ -114,7 +108,8 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="checkbox" name="sport[pulse]['.$id.']"'.($Data['pulse'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
-						<td>'.$delete.'</td>
+						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0">-' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
+						<td>'.($isRunning ? '-' : $delete).'</td>
 					</tr>';
 		}
 
@@ -153,7 +148,7 @@ class ConfigTabSports extends ConfigTab {
 			$values  = array(
 				$_POST['sport']['name'][$id],
 				$_POST['sport']['img'][$id],
-				isset($_POST['sport']['short'][$id]),
+				$_POST['sport']['short'][$id],
 				$_POST['sport']['kcal'][$id],
 				$_POST['sport']['HFavg'][$id],
 				$_POST['sport']['RPE'][$id],
@@ -165,7 +160,7 @@ class ConfigTabSports extends ConfigTab {
 				isset($_POST['sport']['outside'][$id]),
 			);
 
-			if (isset($_POST['sport']['delete'][$id]))
+			if (isset($_POST['sport']['delete'][$id]) && $id != Runalyze\Configuration::General()->runningSport())
 				DB::getInstance()->deleteByID('sport', (int)$id);
 			elseif ($Data['id'] != -1)
 				DB::getInstance()->update('sport', $id, $columns, $values);

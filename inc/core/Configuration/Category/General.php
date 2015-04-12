@@ -128,7 +128,6 @@ class General extends \Runalyze\Configuration\Category {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
-		$this->handle('RUNNINGSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
 
@@ -149,10 +148,6 @@ class General extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('MAINSPORT'), array(
 			'label'		=> __('Main sport')
-		));
-
-		$Fieldset->addHandle( $this->handle('RUNNINGSPORT'), array(
-			'label'		=> __('Running sport')
 		));
 
 		$Fieldset->addHandle( $this->handle('TYPE_ID_RACE'), array(
