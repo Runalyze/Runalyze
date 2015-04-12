@@ -1,56 +1,53 @@
 /*
-  Icon Font: Runalyze
+  Icon Font: Runalyze-sports
 */
 
 @font-face {
-  font-family: "Runalyze";
-  src: url("./Runalyze_e04737d6af6b96899a220a054187540e.eot");
-  src: url("./Runalyze_e04737d6af6b96899a220a054187540e.eot?#iefix") format("embedded-opentype"),
-       url("./Runalyze_e04737d6af6b96899a220a054187540e.woff") format("woff"),
-       url("./Runalyze_e04737d6af6b96899a220a054187540e.ttf") format("truetype"),
-       url("./Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+  font-family: "Runalyze-sports";
+  src: url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.eot");
+  src: url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.eot?#iefix") format("embedded-opentype"),
+       url(data:application/x-font-woff;charset=utf-8;base64,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),
+       url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.woff") format("woff"),
+       url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.ttf") format("truetype"),
+       url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.svg#Runalyze-sports") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: "Runalyze";
-    src: url("./Runalyze_e04737d6af6b96899a220a054187540e.svg#Runalyze") format("svg");
+    font-family: "Runalyze-sports";
+    src: url("./Runalyze-sports_af360bca4f539e045596eeaa6580f7c2.svg#Runalyze-sports") format("svg");
   }
 }
 
 [data-icon]:before { content: attr(data-icon); }
 
 [data-icon]:before,
-.icons8-calendar:before,
-.icons8-clock:before,
-.icons8-coins:before,
-.icons8-degrees:before,
-.icons8-earth_element:before,
-.icons8-expensive:before,
-.icons8-length:before,
-.icons8-like:before,
-.icons8-like_outline:before,
-.icons8-medal2:before,
-.icons8-regular_biking:before,
-.icons8-rotate:before,
-.icons8-running:before,
-.icons8-running_rabbit:before,
-.icons8-speed:before,
-.icons8-speedometer:before,
-.icons8-sports_mode:before,
-.icons8-stairs_up:before,
-.icons8-stopwatch:before,
-.icons8-swimming:before,
-.icons8-temperature:before,
-.icons8-timer:before,
-.icons8-trophy:before,
-.icons8-turtle:before,
-.icons8-waypoint_map:before,
-.icons8-yoga:before {
+.icons8-Climbing:before,
+.icons8-Dancing:before,
+.icons8-Exercise:before,
+.icons8-Football:before,
+.icons8-Guru:before,
+.icons8-Handball:before,
+.icons8-Mountain-Biking:before,
+.icons8-Paddling:before,
+.icons8-Pilates:before,
+.icons8-Pushups:before,
+.icons8-Regular-Biking:before,
+.icons8-Roller-Skating:before,
+.icons8-Rowing:before,
+.icons8-Running:before,
+.icons8-Sports-Mode:before,
+.icons8-Swimming:before,
+.icons8-Time-Trial-Biking:before,
+.icons8-Trekking:before,
+.icons8-Walking:before,
+.icons8-Weightlift:before,
+.icons8-Yoga:before,
+.icons8-skiing:before {
   display: inline-block;
-  font-family: "Runalyze";
+  font-family: "Runalyze-sports";
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -63,29 +60,25 @@
   font-smoothing: antialiased;
 }
 
-.icons8-calendar:before { content: "\f100"; }
-.icons8-clock:before { content: "\f101"; }
-.icons8-coins:before { content: "\f102"; }
-.icons8-degrees:before { content: "\f103"; }
-.icons8-earth_element:before { content: "\f104"; }
-.icons8-expensive:before { content: "\f105"; }
-.icons8-length:before { content: "\f106"; }
-.icons8-like:before { content: "\f107"; }
-.icons8-like_outline:before { content: "\f108"; }
-.icons8-medal2:before { content: "\f109"; }
-.icons8-regular_biking:before { content: "\f10a"; }
-.icons8-rotate:before { content: "\f10b"; }
-.icons8-running:before { content: "\f10c"; }
-.icons8-running_rabbit:before { content: "\f10d"; }
-.icons8-speed:before { content: "\f10e"; }
-.icons8-speedometer:before { content: "\f10f"; }
-.icons8-sports_mode:before { content: "\f110"; }
-.icons8-stairs_up:before { content: "\f111"; }
-.icons8-stopwatch:before { content: "\f112"; }
-.icons8-swimming:before { content: "\f113"; }
-.icons8-temperature:before { content: "\f114"; }
-.icons8-timer:before { content: "\f115"; }
-.icons8-trophy:before { content: "\f116"; }
-.icons8-turtle:before { content: "\f117"; }
-.icons8-waypoint_map:before { content: "\f118"; }
-.icons8-yoga:before { content: "\f119"; }
+.icons8-Climbing:before { content: "\f100"; }
+.icons8-Dancing:before { content: "\f101"; }
+.icons8-Exercise:before { content: "\f102"; }
+.icons8-Football:before { content: "\f103"; }
+.icons8-Guru:before { content: "\f104"; }
+.icons8-Handball:before { content: "\f105"; }
+.icons8-Mountain-Biking:before { content: "\f106"; }
+.icons8-Paddling:before { content: "\f107"; }
+.icons8-Pilates:before { content: "\f108"; }
+.icons8-Pushups:before { content: "\f109"; }
+.icons8-Regular-Biking:before { content: "\f10a"; }
+.icons8-Roller-Skating:before { content: "\f10b"; }
+.icons8-Rowing:before { content: "\f10c"; }
+.icons8-Running:before { content: "\f10d"; }
+.icons8-Sports-Mode:before { content: "\f10e"; }
+.icons8-Swimming:before { content: "\f10f"; }
+.icons8-Time-Trial-Biking:before { content: "\f110"; }
+.icons8-Trekking:before { content: "\f111"; }
+.icons8-Walking:before { content: "\f112"; }
+.icons8-Weightlift:before { content: "\f113"; }
+.icons8-Yoga:before { content: "\f114"; }
+.icons8-skiing:before { content: "\f115"; }
