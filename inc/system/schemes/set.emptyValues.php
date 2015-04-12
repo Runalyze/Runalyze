@@ -86,8 +86,8 @@ $EmptyTables['sport'] = array(
 		array(__('Running'), 'icons8-running', 0, 880, 140, 4, 1, "min/km", 1, 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
 		array(__('Swimming'), 'icons8-swimming', 0, 743, 130, 5, 1, "min/100m", 0, 0, 0, 0),
 		array(__('Biking'), 'icons8-regular_biking', 0, 770, 120, 2, 1, "km/h", 0, 1, 1, 1),
-		array(__('Gymnastics'), 'icons8-yoga', 1, 280, 100, 1, 0, "", 0, 0, 0, 0),
-		array(__('Other'), 'icons8-sports_mode', 0, 500, 120, 3, 0, "", 0, 0, 0, 0)
+		array(__('Gymnastics'), 'icons8-yoga', 1, 280, 100, 1, 0, "km/h", 0, 0, 0, 0),
+		array(__('Other'), 'icons8-sports_mode', 0, 500, 120, 3, 0, "km/h", 0, 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(
@@ -100,7 +100,7 @@ $EmptyTables['type'] = array(
 		array(__('Tempo Run'), __('TR'), 7, 0),
 		array(__('Race'), __('RC'), 10, 0, 'TYPE_ID_RACE'),
 		array(__('Regeneration Run'), __('RG'), 2, 0),
-		array(__('Long Slow Distance'), __('LSD'), 5, 0, 'TYPE_ID_LONGRUN'),
+		array(__('Long Slow Distance'), __('LSD'), 5, 0),
 		array(__('Warm-up'), __('WU'), 1, 0)
 	)
 );

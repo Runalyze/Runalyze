@@ -4,3 +4,7 @@ INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `po
 
 /* 11.04.2015 - remove pace unit 'none' */
 UPDATE `runalyze_sport` SET `speed`="km/h" WHERE `speed`="";
+
+/* 12.04.2015 - remove long run type id */
+UPDATE `runalyze_conf` SET `value`="race" WHERE `key`="TRAINING_MAP_PUBLIC_MODE" AND `value`="race-longjog";
+DELETE FROM `runalyze_conf` WHERE `key`="TYPE_ID_LONGRUN";

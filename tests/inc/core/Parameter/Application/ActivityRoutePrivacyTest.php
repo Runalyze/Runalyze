@@ -24,25 +24,16 @@ class ActivityRoutePrivacyTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( true, $this->object->showAlways() );
 		$this->assertEquals( false, $this->object->showNever() );
 		$this->assertEquals( false, $this->object->showRace() );
-		$this->assertEquals( false, $this->object->showRaceAndLongrun() );
 
 		$this->object->set( ActivityRoutePrivacy::NEVER );
 		$this->assertEquals( false, $this->object->showAlways() );
 		$this->assertEquals( true, $this->object->showNever() );
 		$this->assertEquals( false, $this->object->showRace() );
-		$this->assertEquals( false, $this->object->showRaceAndLongrun() );
 
 		$this->object->set( ActivityRoutePrivacy::RACE );
 		$this->assertEquals( false, $this->object->showAlways() );
 		$this->assertEquals( false, $this->object->showNever() );
 		$this->assertEquals( true, $this->object->showRace() );
-		$this->assertEquals( false, $this->object->showRaceAndLongrun() );
-
-		$this->object->set( ActivityRoutePrivacy::RACE_LONGRUN );
-		$this->assertEquals( false, $this->object->showAlways() );
-		$this->assertEquals( false, $this->object->showNever() );
-		$this->assertEquals( false, $this->object->showRace() );
-		$this->assertEquals( true, $this->object->showRaceAndLongrun() );
 	}
 
 }

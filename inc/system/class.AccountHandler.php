@@ -525,6 +525,5 @@ class AccountHandler {
 		$DB->insert('conf', $columns, array('general','MAINSPORT', self::$SPECIAL_KEYS['MAIN_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general','RUNNINGSPORT', self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general','TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
-		$DB->insert('conf', $columns, array('general','TYPE_ID_LONGRUN', self::$SPECIAL_KEYS['TYPE_ID_LONGRUN'], $accountId));
 	}
 }

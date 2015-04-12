@@ -845,8 +845,6 @@ class TrainingObject extends DataObject {
 
 		if ($RoutePrivacy->showRace()) {
 			return (!$this->Type()->isCompetition());
-		} elseif ($RoutePrivacy->showRaceAndLongrun()) {
-			return (!$this->Type()->isCompetition() && !$this->Type()->isLongJog());
 		} elseif ($RoutePrivacy->showAlways()) {
 			return false;
 		}

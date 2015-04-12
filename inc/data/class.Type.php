@@ -92,12 +92,4 @@ class Type {
 	public function isCompetition() {
 		return ($this->id == Configuration::General()->competitionType());
 	}
-
-	/**
-	 * Is this type long jog?
-	 * @return bool
-	 */
-	public function isLongJog() {
-		return ($this->id == Configuration::General()->longRunType());
-	}
 }
