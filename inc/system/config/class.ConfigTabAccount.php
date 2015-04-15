@@ -32,6 +32,13 @@ class ConfigTabAccount extends ConfigTab {
 		$MailField->setDisabled();
 
 		$NameField = new FormularInput('name', __('Name'), $Data['name']);
+                
+                $LanguageField = new FormularSelectBox('language', __('Language'), $Data['language']);
+                
+                foreach(Language::availableLanguages() as $klang => $lang) {
+                        $LanguageField->addOption($klang, $lang[0]);
+                }
+
 
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
@@ -43,6 +50,7 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($UsernameField);
 		$Account->addField($MailField);
 		$Account->addField($NameField);
+                $Account->addField($LanguageField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
                 
@@ -98,7 +106,12 @@ class ConfigTabAccount extends ConfigTab {
 		if ($_POST['name'] != SessionAccountHandler::getName()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
 		}
-
+                
+		if ($_POST['language'] != SessionAccountHandler::getLanguage()) {
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language'], false);
+                        Language::setLanguage($_POST['language']);
+                        
+		}
 		if ($_POST['new_pw'] != '') {
 			$this->tryToChangePassword();
 		}

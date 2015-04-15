@@ -73,13 +73,15 @@ class AccountHandler {
          * Cache Account Data from user
          */
         static private function cacheAccountData($id) {
-            $accountdata = Cache::get('account'.$id,1);
+            //Disabled Accountcache
+            /*$accountdata = Cache::get('account'.$id,1);
             if(is_null($accountdata)) {
                 DB::getInstance()->stopAddingAccountID();
                 $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
                 DB::getInstance()->startAddingAccountID();
                 Cache::set('account'.$id, $accountdata, '1800',1);
-            }
+            }*/
+            $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
             return $accountdata;
         }
 
@@ -227,8 +229,8 @@ class AccountHandler {
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newSalt = self::getNewSalt();
 		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'name', 'mail', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], $_POST['language'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;

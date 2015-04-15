@@ -18,3 +18,6 @@ UPDATE runalyze_sport SET img="icons8-Yoga" where `img`="icons8-yoga";
 
 /* 12.04.2015 - remove distances/pulse from sport configuration */
 ALTER TABLE `runalyze_sport` DROP `distances`, DROP `pulse`;
+
+/* 15.04.2015 - add language to account configuration */
+ALTER TABLE `runalyze_account` ADD `language` VARCHAR(5) NOT NULL AFTER `mail`;

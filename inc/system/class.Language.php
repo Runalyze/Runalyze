@@ -185,9 +185,8 @@ class Language {
 	 * Set Language for user
 	 * @return boolean
 	 */
-	public function setLanguage() {
-		// TODO
-
+	static public function setLanguage($language) {
+		setcookie('lang', $language);
 		return true;        
 	}
 
