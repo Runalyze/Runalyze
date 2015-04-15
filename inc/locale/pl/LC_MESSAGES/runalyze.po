@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-04-14 12:31+0200\n"
-"PO-Revision-Date: 2015-04-11 20:38+0200\n"
+"PO-Revision-Date: 2015-04-15 06:58+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3610,9 +3610,8 @@ msgstr ""
 "i nie można go cofnąć. Dlatego najpierw zrób kopię zapasową swoich danych."
 
 #: inc/system/config/class.ConfigTabAccount.php:119
-#, fuzzy
 msgid "Your password has been changed."
-msgstr "Twoje konto zostało aktywowane."
+msgstr "Twoje hasło zostało zmienione."
 
 #: inc/system/config/class.ConfigTabAccount.php:122
 msgid "You current password is wrong."
@@ -3730,7 +3729,7 @@ msgstr "Sport uprawia się na zewnątrz: włącz trasy, pogodę, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Tryb wyświetlania treningów w kalendarzu"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
@@ -3738,11 +3737,11 @@ msgstr "Sport można usunąć tylko gdy nie jest z niczym powiązany."
 
 #: inc/system/config/class.ConfigTabSports.php:80
 msgid "complete row"
-msgstr ""
+msgstr "pełny wiersz"
 
 #: inc/system/config/class.ConfigTabSports.php:81
 msgid "only icon"
-msgstr ""
+msgstr "tylko ikona"
 
 #: inc/data/class.TypeFactory.php:122
 msgid "No types available"
