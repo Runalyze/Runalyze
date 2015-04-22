@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-15 07:01+0200\n"
+"POT-Creation-Date: 2015-04-22 19:06+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -2202,7 +2202,7 @@ msgid "User"
 msgstr "Usuari"
 
 #: inc/tpl/tpl.Installer.php:131 inc/tpl/tpl.loginWindow.php:32
-#: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
+#: inc/tpl/tpl.loginWindow.php:96 inc/tpl/tpl.adminWindow.login.php:7
 msgid "Password"
 msgstr "Password"
 
@@ -2367,14 +2367,14 @@ msgid ""
 msgstr "El compte encara no ha sigut activat.<br>Revisi els seus emails."
 
 #: inc/tpl/tpl.loginWindow.php:26 inc/tpl/tpl.loginWindow.php:44
-#: inc/tpl/tpl.loginWindow.php:48 inc/tpl/tpl.loginWindow.php:155
+#: inc/tpl/tpl.loginWindow.php:48 inc/tpl/tpl.loginWindow.php:162
 #: inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18 call/login.php:4
 msgid "Login"
 msgstr "Accés"
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
-#: inc/tpl/tpl.loginWindow.php:132
+#: inc/tpl/tpl.loginWindow.php:139
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
 msgstr "Usuari"
@@ -2387,7 +2387,7 @@ msgstr "Vull continuar dins del compte"
 msgid "Runalyze is under maintenance at the moment. No login possible."
 msgstr "Runalyze es troba fent tasques de manteniment. L'accés no és possible."
 
-#: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
+#: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:163
 msgid "Create a new account"
 msgstr "Crear nou compte"
 
@@ -2399,15 +2399,20 @@ msgstr "Noves altes no són ara mateix possibles."
 msgid "Email"
 msgstr "Email"
 
-#: inc/tpl/tpl.loginWindow.php:94
+#: inc/tpl/tpl.loginWindow.php:89
+#: inc/system/config/class.ConfigTabAccount.php:36
+msgid "Language"
+msgstr ""
+
+#: inc/tpl/tpl.loginWindow.php:101
 msgid "Password again"
 msgstr "Entri el password un altre cop"
 
-#: inc/tpl/tpl.loginWindow.php:112
+#: inc/tpl/tpl.loginWindow.php:119
 msgid "You can login now. Enjoy Runalyze!"
 msgstr "Ara ja pot accedir-hi. Gaudeixi amb Runalyze!"
 
-#: inc/tpl/tpl.loginWindow.php:114
+#: inc/tpl/tpl.loginWindow.php:121
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
@@ -2415,39 +2420,39 @@ msgstr ""
 "Gràcies pel seu registre. Per tal d'activar el seu compte, li hem enviat un "
 "email que rebrà de seguida."
 
-#: inc/tpl/tpl.loginWindow.php:121
+#: inc/tpl/tpl.loginWindow.php:128
 msgid "Register"
 msgstr "Registri's"
 
-#: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
+#: inc/tpl/tpl.loginWindow.php:137 inc/tpl/tpl.loginWindow.php:164
 msgid "Forgot your password?"
 msgstr "Ha oblidat el seu password?"
 
-#: inc/tpl/tpl.loginWindow.php:142
+#: inc/tpl/tpl.loginWindow.php:149
 msgid "A link for changing your password will be sent via email."
 msgstr ""
 "El link per canviar el seu password ha sigut enviat a la seva adreça de "
 "email."
 
-#: inc/tpl/tpl.loginWindow.php:148
+#: inc/tpl/tpl.loginWindow.php:155
 msgid "Send link"
 msgstr "Enviï link"
 
-#: inc/tpl/tpl.loginWindow.php:190
+#: inc/tpl/tpl.loginWindow.php:197
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
 msgstr[0] "Fins ara <strong>%d</strong> l'atleta és registrat i"
 msgstr[1] "Fins ara <strong>%d</strong> els atletes són registrats i"
 
-#: inc/tpl/tpl.loginWindow.php:191
+#: inc/tpl/tpl.loginWindow.php:198
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
 msgstr[0] "s'ha registat <strong>%s</strong>."
 msgstr[1] "s'han registrat <strong>%s</strong>."
 
-#: inc/tpl/tpl.loginWindow.php:193
+#: inc/tpl/tpl.loginWindow.php:200
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
 msgid_plural "<strong>%d</strong> athletes are online."
@@ -2749,7 +2754,7 @@ msgid "IUsername"
 msgstr "Usuari"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
-#: inc/system/config/class.ConfigTabAccount.php:61
+#: inc/system/config/class.ConfigTabAccount.php:69
 msgid "New password"
 msgstr "Nou password"
 
@@ -3280,99 +3285,99 @@ msgstr ""
 msgid "Fatal error"
 msgstr "Error fatal"
 
-#: inc/system/class.AccountHandler.php:186
+#: inc/system/class.AccountHandler.php:188
 #, php-format
 msgid "The username has to contain at least %s signs."
 msgstr "El nom d'usuari ha d'incloure com a mínim aquests caràcters %s."
 
-#: inc/system/class.AccountHandler.php:189
+#: inc/system/class.AccountHandler.php:191
 msgid "This username is already being used."
 msgstr "Aquest nom d'usuari no es troba disponible."
 
-#: inc/system/class.AccountHandler.php:192
+#: inc/system/class.AccountHandler.php:194
 msgid "This email address is already being used."
 msgstr "Aquesta adreça de correu electrònic no es troba disponible."
 
-#: inc/system/class.AccountHandler.php:195
+#: inc/system/class.AccountHandler.php:197
 msgid "Please enter a valid email address."
 msgstr "Si us plau entri una adreça de correu electrònic vàlida."
 
-#: inc/system/class.AccountHandler.php:198
-#: inc/system/class.AccountHandler.php:369
-#: inc/system/config/class.ConfigTabAccount.php:125
+#: inc/system/class.AccountHandler.php:200
+#: inc/system/class.AccountHandler.php:371
+#: inc/system/config/class.ConfigTabAccount.php:138
 msgid "The passwords have to be the same."
 msgstr "les contrasenyes han de coincidir."
 
-#: inc/system/class.AccountHandler.php:201
-#: inc/system/config/class.ConfigTabAccount.php:116
+#: inc/system/class.AccountHandler.php:203
+#: inc/system/config/class.ConfigTabAccount.php:129
 #, php-format
 msgid "The password has to contain at least %s characters."
 msgstr "La contrasenya ha de tenir com a mínim %s caràcters."
 
-#: inc/system/class.AccountHandler.php:237
+#: inc/system/class.AccountHandler.php:239
 msgid "Something went wrong. Please contact the administrator."
 msgstr ""
 "Alguna cosa no ha funcionat com calia. Si us plau posi's en contacte amb "
 "l'administrador."
 
-#: inc/system/class.AccountHandler.php:265
+#: inc/system/class.AccountHandler.php:267
 #, php-format
 msgid "Did you forget your password %s?"
 msgstr "Ha oblidat la seva contrasenya %s?"
 
-#: inc/system/class.AccountHandler.php:266
+#: inc/system/class.AccountHandler.php:268
 msgid ""
 "You can change your password within the next 24 hours with the following link"
 msgstr ""
 "Pot canviar la seva contrasenya mitjançant el següent link dins de les "
 "properes 24 hores"
 
-#: inc/system/class.AccountHandler.php:270
+#: inc/system/class.AccountHandler.php:272
 msgid "The link has been sent and will be valid for 24 hours."
 msgstr "El link s'ha enviat i serà vàlid per les properes 24 hores."
 
-#: inc/system/class.AccountHandler.php:272
+#: inc/system/class.AccountHandler.php:274
 msgid "Unable to send link. Please contact the administrator."
 msgstr ""
 "No ens ha sigut possible enviar-li el link. Si us plau contacti "
 "l'administrador."
 
-#: inc/system/class.AccountHandler.php:275
+#: inc/system/class.AccountHandler.php:277
 msgid "Your local server has no smtp-server. Please contact the administrator."
 msgstr ""
 "El seu servidor local no té servidor de smtp. Si us plau contacti "
 "l'administrador."
 
-#: inc/system/class.AccountHandler.php:283
+#: inc/system/class.AccountHandler.php:285
 msgid "The username is unknown."
 msgstr "El nom d'usuari ens és desconegut."
 
-#: inc/system/class.AccountHandler.php:371
+#: inc/system/class.AccountHandler.php:373
 #, php-format
 msgid "The password has to contain at least %s signs."
 msgstr "La contrasenya ha d'incloure com a mínim aquests caràcters %s."
 
-#: inc/system/class.AccountHandler.php:378
+#: inc/system/class.AccountHandler.php:380
 msgid "Something went wrong."
 msgstr "Alguna cosa no ha anat com calia."
 
-#: inc/system/class.AccountHandler.php:464
+#: inc/system/class.AccountHandler.php:466
 msgid "Thanks for your registration"
 msgstr "Gràcies per donar-se d'alta"
 
-#: inc/system/class.AccountHandler.php:465
+#: inc/system/class.AccountHandler.php:467
 #, php-format
 msgid "You can activate your account (username = %s) with the following link"
 msgstr ""
 "Pot activar el seu compte (nom d'usuari =  %s) mitjançant el següent link"
 
-#: inc/system/class.AccountHandler.php:469
-#: inc/system/class.AccountHandler.php:499
+#: inc/system/class.AccountHandler.php:471
+#: inc/system/class.AccountHandler.php:501
 msgid "Sending the link did not work. Please contact the administrator."
 msgstr ""
 "L'enviament s'ha pogut enviar el link. Si us plau contacti l'administrador."
 
-#: inc/system/class.AccountHandler.php:473
+#: inc/system/class.AccountHandler.php:475
 msgid ""
 "Your local server has no smtp-server. Your account has been directly "
 "activated."
@@ -3380,19 +3385,19 @@ msgstr ""
 "El seu servidor local no té servidor de smtp. El seu compte ha sigut activat "
 "directament."
 
-#: inc/system/class.AccountHandler.php:475
-#: inc/system/class.AccountHandler.php:502
+#: inc/system/class.AccountHandler.php:477
+#: inc/system/class.AccountHandler.php:504
 msgid ""
 "Your local server has no smtp-server. You have to contact the administrator."
 msgstr ""
 "El seu servidor local no té servidor de smtp. Cal que contacti "
 "l'administrador."
 
-#: inc/system/class.AccountHandler.php:494
+#: inc/system/class.AccountHandler.php:496
 msgid "Do you really want to delete your account"
 msgstr "Realment vol esborrar el seu compte"
 
-#: inc/system/class.AccountHandler.php:495
+#: inc/system/class.AccountHandler.php:497
 msgid "Complete the process by accessing the following link: "
 msgstr "Finalitzi el procés mitjançant el següent link: "
 
@@ -3611,42 +3616,42 @@ msgstr "Un tipus pot  ser esborrat únicament si no existeix cap referència."
 msgid "Email address"
 msgstr "Adreça de correu electrònic"
 
-#: inc/system/config/class.ConfigTabAccount.php:36
+#: inc/system/config/class.ConfigTabAccount.php:43
 msgid "Registered since"
 msgstr "Registrat des de"
 
-#: inc/system/config/class.ConfigTabAccount.php:39
+#: inc/system/config/class.ConfigTabAccount.php:46
 msgid "Last Login"
 msgstr "Darrera entrada"
 
-#: inc/system/config/class.ConfigTabAccount.php:42
+#: inc/system/config/class.ConfigTabAccount.php:49
 msgid "Your account"
 msgstr "El seu compte"
 
-#: inc/system/config/class.ConfigTabAccount.php:49
+#: inc/system/config/class.ConfigTabAccount.php:57
 #, fuzzy
 msgid "Change your password"
 msgstr "Canviï el password"
 
-#: inc/system/config/class.ConfigTabAccount.php:60
+#: inc/system/config/class.ConfigTabAccount.php:68
 #, fuzzy
 msgid "Old password"
 msgstr "Nou password"
 
-#: inc/system/config/class.ConfigTabAccount.php:62
+#: inc/system/config/class.ConfigTabAccount.php:70
 #, fuzzy
 msgid "Repeat new password"
 msgstr "Entri un nou password"
 
-#: inc/system/config/class.ConfigTabAccount.php:64
+#: inc/system/config/class.ConfigTabAccount.php:72
 msgid "Backup your data"
 msgstr "Còpia de seguretat de les seves dates"
 
-#: inc/system/config/class.ConfigTabAccount.php:71
+#: inc/system/config/class.ConfigTabAccount.php:79
 msgid "Please use the plugin"
 msgstr "Si us plau fagi servir el plugin"
 
-#: inc/system/config/class.ConfigTabAccount.php:73
+#: inc/system/config/class.ConfigTabAccount.php:81
 msgid ""
 "The backup of all your data is not manually possible yet.<br>In important "
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
@@ -3656,12 +3661,12 @@ msgstr ""
 "d'extrema necessitat enviïn's un correu electrònic a mail@runalyze.de i ens "
 "n'ocuparem tan aviat com sigui possible!"
 
-#: inc/system/config/class.ConfigTabAccount.php:77
-#: inc/system/config/class.ConfigTabAccount.php:83
+#: inc/system/config/class.ConfigTabAccount.php:85
+#: inc/system/config/class.ConfigTabAccount.php:91
 msgid "Delete your account"
 msgstr "Esborri el seu compte"
 
-#: inc/system/config/class.ConfigTabAccount.php:79
+#: inc/system/config/class.ConfigTabAccount.php:87
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
@@ -3671,12 +3676,12 @@ msgstr ""
 "desfer aquest canvi. Vostè mateix haurà de desar les seves dades, en cas que "
 "vulgui recuperar-les."
 
-#: inc/system/config/class.ConfigTabAccount.php:119
+#: inc/system/config/class.ConfigTabAccount.php:132
 #, fuzzy
 msgid "Your password has been changed."
 msgstr "El seu compte fou activat."
 
-#: inc/system/config/class.ConfigTabAccount.php:122
+#: inc/system/config/class.ConfigTabAccount.php:135
 #, fuzzy
 msgid "You current password is wrong."
 msgstr "La seva condició física bàsica:"
