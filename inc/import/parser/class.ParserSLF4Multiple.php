@@ -14,13 +14,17 @@ class ParserSLF4Multiple extends ParserAbstractMultipleXML {
 	 * Parse XML
 	 */
 	protected function parseXML() {
-		if (!empty($this->XML->Entries)) {
+		if (!empty($this->XML->GeneralInformation)) {
 			$Parser = new ParserSLF4Single('', $this->XML);
 			$Parser->parse();
-			if ($Parser->failed())
+			if ($Parser->failed()) {
 				$this->addErrors( $Parser->getErrors() );
-			else
+                        } else {
 				$this->addObject( $Parser->object() );
-		}
+		
+                        }        
+                }
+                
+
 	}
 }
