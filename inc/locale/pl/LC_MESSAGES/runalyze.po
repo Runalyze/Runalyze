@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-22 19:06+0200\n"
+"POT-Creation-Date: 2015-05-15 10:16+0200\n"
 "PO-Revision-Date: 2015-04-15 06:58+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
@@ -3824,6 +3824,8 @@ msgstr ""
 "znaleziono tag-a &lt;device&gt;."
 
 #: inc/import/parser/class.ParserSLFSingle.php:48
+#: inc/import/parser/class.ParserSLF4Single.php:48
+#: inc/import/parser/class.ParserSLF3Single.php:48
 msgid ""
 "Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be "
 "located."
@@ -3832,6 +3834,8 @@ msgstr ""
 "LogEntries&gt;."
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
+#: inc/import/parser/class.ParserSLF4Single.php:67
+#: inc/import/parser/class.ParserSLF3Single.php:66
 msgid "This file does not contain any data."
 msgstr "Plik nie zawiera żadnych danych."
 
