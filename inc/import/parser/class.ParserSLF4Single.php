@@ -67,7 +67,7 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
                    if($this->XML->GeneralInformation->trainingTime) {
                        $this->TrainingObject->setTimeInSeconds($this->XML->GeneralInformation->trainingTime/100);
                        $this->TrainingObject->setDistance($this->XML->GeneralInformation->distance/1000);
-                       $this->TrainingObject->setPulseMax($this->XML->GeneralInformation->hrMax);
+                       $this->TrainingObject->setPulseMax($this->XML->GeneralInformation->maximumHeartrate);
                        $this->TrainingObject->setPulseAvg($this->XML->GeneralInformation->averageHeartrate);
                    } else {
                        
