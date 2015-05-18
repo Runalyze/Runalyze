@@ -136,7 +136,7 @@ class Plot {
 				'{}, '.
 				json_encode($this->Annotations).');';
 	}
-	
+
 	/**
 	 * Get code for an error
 	 * @return string
@@ -186,7 +186,7 @@ class Plot {
 	}
 
 	/**
-	 * Clear all annotations 
+	 * Clear all annotations
 	 */
 	public function clearAnnotations() {
 		$this->Annotations = array();
@@ -410,7 +410,7 @@ class Plot {
 
 	/**
 	 * Set x-axis limits to a specific year
-	 * @param int $Year 
+	 * @param int $Year
 	 */
 	public function setXAxisLimitedTo($Year) {
 		$this->Options['xaxis']['min'] = mktime(1,0,0,1,1,$Year).'000';
@@ -418,7 +418,7 @@ class Plot {
 	}
 
 	/**
-	 * Set maximum of x-axis as today 
+	 * Set maximum of x-axis as today
 	 */
 	public function setXAxisMaxToToday() {
 		$this->Options['xaxis']['max'] = time().'000';
@@ -549,8 +549,17 @@ class Plot {
 	}
 
 	/**
+	 * Set y axis labels
+	 * @param int $axis
+	 * @param array $ticks
+	 */
+	public function setYAxisLabels($axis, $ticks) {
+		$this->Options['yaxes'][$axis-1]['ticks'] = $ticks;
+	}
+
+	/**
 	 * Set y axis to reverse
-	 * @param int $axis 
+	 * @param int $axis
 	 */
 	public function setYAxisReverse($axis) {
 		$this->Options['yaxes'][$axis-1]['transform'] = 'function(v){return -v;}';
@@ -558,7 +567,16 @@ class Plot {
 	}
 
 	/**
-	 * Set all zero points to null 
+	 * Set y axis to reverse pace scale
+	 * @param int $axis
+	 */
+	public function setYAxisPaceReverse($axis) {
+		$this->Options['yaxes'][$axis-1]['transform'] = 'function(v){return 1/(v);}';
+		$this->Options['yaxes'][$axis-1]['inverseTransform'] = 'function(v){return 1/v;}';
+	}
+
+	/**
+	 * Set all zero points to null
 	 */
 	public function setZeroPointsToNull() {
 		foreach ($this->Data as $series => $data) {
@@ -608,7 +626,7 @@ class Plot {
 
 /**
  * Mapper for Plot::correctValuesForTime
- * 
+ *
  * Correct php-timestamps to JS-timestamps
  * @param mixed $v
  * @return mixed

@@ -25,12 +25,6 @@ class ActivityRoutePrivacy extends \Runalyze\Parameter\Select {
 	const RACE = 'race';
 
 	/**
-	 * Show route: for races and longjogs
-	 * @var string
-	 */
-	const RACE_LONGRUN = 'race-longjog';
-
-	/**
 	 * Show route: always
 	 * @var string
 	 */
@@ -44,7 +38,6 @@ class ActivityRoutePrivacy extends \Runalyze\Parameter\Select {
 			'options'		=> array(
 				self::NEVER			=> __('never'),
 				self::RACE			=> __('only for competitions'),
-				self::RACE_LONGRUN	=> __('only for competitions and long runs'),
 				self::ALWAYS		=> __('always')
 			)
 		));
@@ -64,14 +57,6 @@ class ActivityRoutePrivacy extends \Runalyze\Parameter\Select {
 	 */
 	public function showRace() {
 		return ($this->value() == self::RACE);
-	}
-
-	/**
-	 * Show only for races and longruns
-	 * @return bool
-	 */
-	public function showRaceAndLongrun() {
-		return ($this->value() == self::RACE_LONGRUN);
 	}
 
 	/**

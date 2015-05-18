@@ -14,10 +14,8 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::CALORIES_PER_HOUR => 700,
 			Object::HR_AVG => 140,
 			Object::RPE => 6,
-			Object::HAS_DISTANCES => 1,
 			Object::PACE_UNIT => 'foo',
 			Object::HAS_TYPES => 1,
-			Object::HAS_HR => 1,
 			Object::HAS_POWER => 0,
 			Object::IS_OUTSIDE => 1
 		));
@@ -28,9 +26,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(6, $Sport->rpe());
 		$this->assertEquals('foo', $Sport->paceUnit());
 
-		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->hasTypes());
-		$this->assertTrue($Sport->hasHeartRate());
 		$this->assertTrue($Sport->isOutside());
 
 		$this->assertFalse($Sport->usesShortDisplay());

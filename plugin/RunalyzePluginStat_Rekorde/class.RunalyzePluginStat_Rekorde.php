@@ -185,7 +185,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$this->rekorde = array();
 		$this->rekorde[] = array(
 			'name'			=> __('Fastest activities'),
-			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` WHERE `distances`=1 ORDER BY `id` ASC',
+			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
 			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
 			'speed'			=> true);
 		$this->rekorde[] = array(

@@ -129,6 +129,7 @@ class SessionAccountHandler {
 
 			if ($Account['session_id'] == session_id()) {
 				$this->setAccount($Account);
+                                Language::setLanguage($Account['language']);
 				$this->updateLastAction();
 
 				return true;
@@ -251,7 +252,8 @@ class SessionAccountHandler {
 	private function setSessionValues() {
 		$_SESSION['username']  = self::$Account['username'];
 		$_SESSION['accountid'] = self::$Account['id'];
-	}
+        }
+        
 
 	/**
 	 * Set session to database 
@@ -352,6 +354,16 @@ class SessionAccountHandler {
 		return self::$Account['name'];
 	}
 
+        /**
+	 * Get language of current user
+	 * @return type 
+	 */
+	static public function getLanguage() {
+		if (!isset(self::$Account['languag']))
+			return '';
+
+		return self::$Account['language'];
+	}
 	/**
 	 * Get username of current user
 	 * @return type 

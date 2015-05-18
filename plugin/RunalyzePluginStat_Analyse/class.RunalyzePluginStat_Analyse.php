@@ -98,13 +98,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	private function setAnalysisNavigation() {
 		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose evaluation').'</span><ul class="submenu">';
 		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('in percent'), $this->sportid, $this->year, '').'</li>';
-
-		if ($this->Sport->usesDistance()) {
-			$LinkList .= '<li'.('km' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('by distance'), $this->sportid, $this->year, 'km').'</li>';
-		} elseif ($this->dat == 'km') {
-			$this->dat = '';
-		}
-
+		$LinkList .= '<li'.('km' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('by distance'), $this->sportid, $this->year, 'km').'</li>';
 		$LinkList .= '<li'.('s' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('by time'), $this->sportid, $this->year, 's').'</li>';
 		$LinkList .= '</ul></li>';
 
@@ -151,11 +145,11 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->AnalysisData[] = $this->getTypeArray();
 		}
 
-		if ($this->Configuration()->value('use_pace') && $this->Sport->usesDistance()) {
+		if ($this->Configuration()->value('use_pace')) {
 			$this->AnalysisData[] = $this->getPaceArray();
 		}
 
-		if ($this->Configuration()->value('use_pulse') && $this->Sport->usesPulse()) {
+		if ($this->Configuration()->value('use_pulse')) {
 			$this->AnalysisData[] = $this->getPulseArray();
 		}
 	}
@@ -232,7 +226,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
-							if ($this->Sport->usesDistance() && $this->dat != 's')
+							if ($this->dat != 's')
 								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], false, 0).'</td>';
 							else
 								echo '<td>'.Duration::format($Data['array']['timer_sum_s'][$t]).'</td>';
@@ -241,7 +235,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 						}
 					}
 
-					if ($this->Sport->usesDistance() && $this->dat != 's')
+					if ($this->dat != 's')
 						echo '<td>'.Distance::format($Data['array']['all_sum_km'], false, 0).'</td></tr>';
 					else
 						echo '<td>'.Duration::format($Data['array']['all_sum_s']).'</td></tr>';

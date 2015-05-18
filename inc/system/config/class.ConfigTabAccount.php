@@ -32,6 +32,13 @@ class ConfigTabAccount extends ConfigTab {
 		$MailField->setDisabled();
 
 		$NameField = new FormularInput('name', __('Name'), $Data['name']);
+                
+                $LanguageField = new FormularSelectBox('language', __('Language'), $Data['language']);
+                
+                foreach(Language::availableLanguages() as $klang => $lang) {
+                        $LanguageField->addOption($klang, $lang[0]);
+                }
+
 
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
 		$SinceField->setDisabled();
@@ -43,19 +50,24 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($UsernameField);
 		$Account->addField($MailField);
 		$Account->addField($NameField);
+                $Account->addField($LanguageField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
                 
-                $Password =  new FormularFieldset(__('Change your password'));
-                $OldPasswordField = new FormularInputPassword('old_pw', __('Old password'));
-                $NewPasswordField = new FormularInputPassword('new_pw', __('New password'));
-                $RepeatNewPasswordField = new FormularInputPassword('new_pw_repeat', __('Repeat new password'));
-                $ChangePasswordButton = new FormularSubmit(__('Change password'), __('Change password'));
-                $Password->addField($OldPasswordField);
-                $Password->addField($NewPasswordField);
-                $Password->addField($RepeatNewPasswordField);
-                $Password->addField($ChangePasswordButton);
-                
+		$Password =  new FormularFieldset(__('Change your password'));
+
+		if (empty($_POST['old_pw']) && empty($_POST['new_pw']) && empty($_POST['new_pw_repeat'])) {
+			$Password->setCollapsed();
+		} else {
+			// Don't show passwords as 'value="..."'
+			$_POST['old_pw'] = '';
+			$_POST['new_pw'] = '';
+			$_POST['new_pw_repeat'] = '';
+		}
+
+		$Password->addField( new FormularInputPassword('old_pw', __('Old password')) );
+		$Password->addField( new FormularInputPassword('new_pw', __('New password')) );
+		$Password->addField( new FormularInputPassword('new_pw_repeat', __('Repeat new password')) );
 
 		$Backup = new FormularFieldset( __('Backup your data') );
 		$Backup->setCollapsed();
@@ -81,7 +93,7 @@ class ConfigTabAccount extends ConfigTab {
 		$Delete->addWarning($DeleteLink);
 
 		$this->Formular->addFieldset($Account);
-                $this->Formular->addFieldset($Password);
+		$this->Formular->addFieldset($Password);
 		$this->Formular->addFieldset($Backup);
 		$this->Formular->addFieldset($Delete);
 		$this->Formular->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
@@ -91,21 +103,39 @@ class ConfigTabAccount extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		if ($_POST['name'] != SessionAccountHandler::getName())
+		if ($_POST['name'] != SessionAccountHandler::getName()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
-                if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
-                    //TODO Error and info are not shown?
-                    $Account = DB::getInstance()->query('SELECT password, salt FROM `'.PREFIX.'account`')->fetch();             
-                    if(AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
-                        AccountHandler::setNewPassword(SessionAccountHandler::getUsername(), $_POST['new_pw']);
-                        HTML::info(__('Password changed successfully'));
-                    } else {
-                        HTML::error (__('You current password is wrong.'));
-                    }
-                } else {
-                    HTML::error(__('The passwords have to be the same.'));
-                }
+		}
                 
-                    
+		if ($_POST['language'] != SessionAccountHandler::getLanguage()) {
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language'], false);
+                        Language::setLanguage($_POST['language']);
+                        
+		}
+		if ($_POST['new_pw'] != '') {
+			$this->tryToChangePassword();
+		}
+	}
+
+	/**
+	 * Try to change password
+	 */
+	private function tryToChangePassword() {
+		if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
+			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`')->fetch();   
+
+			if (AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
+				if (strlen($_POST['new_pw']) < AccountHandler::$PASS_MIN_LENGTH) {
+					ConfigTabs::addMessage( HTML::error(sprintf( __('The password has to contain at least %s characters.'), AccountHandler::$PASS_MIN_LENGTH)) );
+				} else {
+					AccountHandler::setNewPassword(SessionAccountHandler::getUsername(), $_POST['new_pw']);
+					ConfigTabs::addMessage( HTML::okay (__('Your password has been changed.')) );
+				}
+			} else {
+				ConfigTabs::addMessage( HTML::error (__('You current password is wrong.')) );
+			}
+		} else {
+			ConfigTabs::addMessage( HTML::error(__('The passwords have to be the same.')) );
+		}
 	}
 }

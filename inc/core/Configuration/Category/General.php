@@ -35,7 +35,6 @@ class General extends \Runalyze\Configuration\Category {
 		$this->createMainSport();
 		$this->createRunningSport();
 		$this->createCompetitionType();
-		$this->createLongRunType();
 	}
 
 	/**
@@ -123,33 +122,13 @@ class General extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Create: TYPE_ID_LONGRUN
-	 */
-	protected function createLongRunType() {
-		$this->createHandle('TYPE_ID_LONGRUN', new SelectRow(7, array(
-			'table'			=> 'type',
-			'column'		=> 'name'
-		)));
-	}
-
-	/**
-	 * Long run type
-	 * @return int
-	 */
-	public function longRunType() {
-		return $this->get('TYPE_ID_LONGRUN');
-	}
-
-	/**
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
-		$this->handle('RUNNINGSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
-		$this->handle('TYPE_ID_LONGRUN')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 	}
 
 	/**
@@ -171,16 +150,8 @@ class General extends \Runalyze\Configuration\Category {
 			'label'		=> __('Main sport')
 		));
 
-		$Fieldset->addHandle( $this->handle('RUNNINGSPORT'), array(
-			'label'		=> __('Running sport')
-		));
-
 		$Fieldset->addHandle( $this->handle('TYPE_ID_RACE'), array(
 			'label'		=> __('Activity type: competition')
-		));
-
-		$Fieldset->addHandle( $this->handle('TYPE_ID_LONGRUN'), array(
-			'label'		=> __('Activity type: long run')
 		));
 
 		return $Fieldset;

@@ -53,12 +53,6 @@ class Object extends Model\ObjectWithID {
 	const RPE = 'RPE';
 
 	/**
-	 * Key: has distances
-	 * @var string
-	 */
-	const HAS_DISTANCES = 'distances';
-
-	/**
 	 * Key: pace unit
 	 * @var string
 	 */
@@ -69,12 +63,6 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const HAS_TYPES = 'types';
-
-	/**
-	 * Key: has heart rate
-	 * @var string
-	 */
-	const HAS_HR = 'pulse';
 
 	/**
 	 * Key: has power
@@ -100,10 +88,8 @@ class Object extends Model\ObjectWithID {
 			self::CALORIES_PER_HOUR,
 			self::HR_AVG,
 			self::RPE,
-			self::HAS_DISTANCES,
 			self::PACE_UNIT,
 			self::HAS_TYPES,
-			self::HAS_HR,
 			self::HAS_POWER,
 			self::IS_OUTSIDE
 		);
@@ -175,27 +161,11 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
-	 * Has distances?
-	 * @return boolean
-	 */
-	public function hasDistances() {
-		return ($this->Data[self::HAS_DISTANCES] == 1);
-	}
-
-	/**
 	 * Has types?
 	 * @return boolean
 	 */
 	public function hasTypes() {
 		return ($this->Data[self::HAS_TYPES] == 1);
-	}
-
-	/**
-	 * Has heart rate?
-	 * @return boolean
-	 */
-	public function hasHeartRate() {
-		return ($this->Data[self::HAS_HR] == 1);
 	}
 
 	/**

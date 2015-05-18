@@ -221,28 +221,24 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		echo '</thead>';
 		echo '<tbody>';
 
-		$this->displayLine(__('Time'), $this->StundenData);
+		$isRunning = ($this->sportid == Configuration::General()->runningSport());
 
-		if ($this->sport['distances'] != 0) {
-			$this->displayLine(__('Distance'), $this->KMData);
-			if ($this->year == -1) {
-				$this->displayLine('&oslash;'.NBSP.__('km/Week'), $this->KMDataWeek, 'small');
-				$this->displayLine('&oslash;'.NBSP.__('km/Month'), $this->KMDataMonth, 'small');
-			}
-			$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
+		$this->displayLine(__('Time'), $this->StundenData);
+		$this->displayLine(__('Distance'), $this->KMData);
+
+		if ($this->year == -1 && $isRunning) {
+			$this->displayLine('&oslash;'.NBSP.__('km/Week'), $this->KMDataWeek, 'small');
+			$this->displayLine('&oslash;'.NBSP.__('km/Month'), $this->KMDataMonth, 'small');
 		}
 
-		// TODO
-		//  - CONF_RECHENSPIELE is not used anymore.
-		//  - if we want to keep this configurable: create plugin-configuration
-		if ($this->sportid == Configuration::General()->runningSport())
+		$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
+
+		if ($isRunning) {
 			$this->displayLine(__('VDOT'), $this->VDOTData, 'small');
-
-		if ($this->sportid == Configuration::General()->runningSport())
 			$this->displayLine(__('JDpoints'), $this->JDIntensityData, 'small');
+		}
 
-		if (true)
-			$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
+		$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
 
 		echo '</tbody>';
 		echo '</table>';

@@ -23,7 +23,7 @@ class AccountHandler {
 	 * Minimum length for passwords
 	 * @var int
 	 */
-	static private $PASS_MIN_LENGTH = 6;
+	static public $PASS_MIN_LENGTH = 6;
 
 	/**
 	 * Minimum length for usernames
@@ -73,13 +73,15 @@ class AccountHandler {
          * Cache Account Data from user
          */
         static private function cacheAccountData($id) {
-            $accountdata = Cache::get('account'.$id,1);
+            //Disabled Accountcache
+            /*$accountdata = Cache::get('account'.$id,1);
             if(is_null($accountdata)) {
                 DB::getInstance()->stopAddingAccountID();
                 $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
                 DB::getInstance()->startAddingAccountID();
                 Cache::set('account'.$id, $accountdata, '1800',1);
-            }
+            }*/
+            $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
             return $accountdata;
         }
 
@@ -147,6 +149,7 @@ class AccountHandler {
 	 * Compares a password (given as string) with hash from database
 	 * @param string $realString
 	 * @param string $hashFromDb
+	 * @param string $saltFromDb
 	 * @return boolean
 	 */
 	static public function comparePasswords($realString, $hashFromDb, $saltFromDb) {
@@ -226,8 +229,8 @@ class AccountHandler {
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
 		$newSalt = self::getNewSalt();
 		$newAccountId   = DB::getInstance()->insert('account',
-				array('username', 'name', 'mail', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], $_POST['language'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;
@@ -524,6 +527,5 @@ class AccountHandler {
 		$DB->insert('conf', $columns, array('general','MAINSPORT', self::$SPECIAL_KEYS['MAIN_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general','RUNNINGSPORT', self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general','TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
-		$DB->insert('conf', $columns, array('general','TYPE_ID_LONGRUN', self::$SPECIAL_KEYS['TYPE_ID_LONGRUN'], $accountId));
 	}
 }

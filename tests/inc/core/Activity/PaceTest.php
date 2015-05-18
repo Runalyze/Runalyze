@@ -13,14 +13,6 @@ class PaceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(Pace::STANDARD, $Pace->unit());
 	}
 
-	public function testWithoutUnit() {
-		$Pace = new Pace(300, 1, Pace::NONE);
-
-		$this->assertEquals('', $Pace->appendix());
-		$this->assertEquals($Pace->asNone(), $Pace->value());
-		$this->assertEquals($Pace->asNone(), $Pace->valueWithAppendix());
-	}
-
 	public function testKmh() {
 		$Pace = new Pace(300, 1, Pace::KM_PER_H);
 
@@ -43,16 +35,6 @@ class PaceTest extends \PHPUnit_Framework_TestCase {
 		$Pace = new Pace(123, 0.1, Pace::MIN_PER_100M);
 
 		$this->assertEquals('2:03/100m', $Pace->valueWithAppendix());
-	}
-
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testInvalidUnitForComparison() {
-		$Pace1 = new Pace(300, 1, Pace::NONE);
-		$Pace2 = new Pace(360, 1, Pace::NONE);
-
-		$Pace1->compareTo($Pace2);
 	}
 
 	/**

@@ -120,10 +120,8 @@ class Context {
 
 		if ($RoutePrivacy->showRace()) {
 			return (!$type->isCompetition());
-		} elseif ($RoutePrivacy->showRaceAndLongrun()) {
-			return (!$type->isCompetition() && !$type->isLongJog());
-
 		}
+
 		return true;
 	}
 
