@@ -431,7 +431,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
-				'.(Configuration::General()->HeartRateUnit()->Value() == 'hfres' ?
+				'.(Configuration::General()->heartRateUnit()->isHRreserve() ?
 					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.' - '.HF_REST.') / ('.HF_MAX.' - '.HF_REST.')) /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`'
 				:
 					'CEIL( (100 * (`pulse_avg` - '.$ceil_corr.') / '.HF_MAX.') /'.$pulse_step.')*'.$pulse_step.' + '.$ceil_corr.' AS `group`').'
@@ -454,9 +454,21 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$pulse_foreach = array();
 
 		if (!empty($result)) {
+			$absoluteValues = Configuration::General()->heartRateUnit()->isBPM();
+
 			for ($pulse = $pulse_min; $pulse < (100 + $pulse_step); $pulse += $pulse_step) {
+				$from = max(($pulse == $pulse_min) ? 0 : $pulse-$pulse_step, 0);
+				$to = min($pulse, 100);
+
+				if ($absoluteValues) {
+					$from = ceil(HF_MAX * $from / 100);
+					$to = floor(HF_MAX * $to / 100).' bpm';
+				} else {
+					$to .= ' &#37;';
+				}
+
 				$pulse_foreach[] = array(
-					'name' => max(($pulse == $pulse_min)?0:$pulse-$pulse_step, 0).' <small>'.__('to').'</small> '.min($pulse, 100).' &#37;',
+					'name' => $from.' <small>'.__('to').'</small> '.$to,
 					'id' => $pulse
 				);
 			}
