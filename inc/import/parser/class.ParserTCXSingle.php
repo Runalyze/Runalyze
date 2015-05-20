@@ -309,11 +309,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 				$power = (int)$Point->Extensions->TPX->Watts;
 
 			if (count($Point->Extensions->children('ns3',true)) > 0) {
+                            
 				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
 					$TPX = $Point->Extensions->children('ns3',true)->TPX;
 
 					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
 						$power = (int)$TPX->children('ns3',true)->Watts;
+                                        if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->RunCadence)) 
+						$rpm = (int)$TPX->children('ns3',true)->RunCadence;
 				}
 			}
 		}
