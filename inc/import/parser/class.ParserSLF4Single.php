@@ -9,7 +9,7 @@ use Runalyze\Configuration;
 /**
  * Parser for SLF files from Sigma
  *
- * @author Hannes Christiansen
+ * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Import\Parser
  */
 class ParserSLF4Single extends ParserAbstractSingleXML {
@@ -38,7 +38,7 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 * @return bool
 	 */
 	protected function isCorrectSLF() {
-		return !empty($this->XML->Entries);
+		return !empty($this->XML->GeneralInformation);
 	}
 
 	/**
@@ -64,7 +64,15 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 */
 	protected function parseEntries() {
 		if (!isset($this->XML->Entries->Entry)) {
-			$this->addError( __('This file does not contain any data.') );
+                   if($this->XML->GeneralInformation->trainingTime) {
+                       $this->TrainingObject->setTimeInSeconds($this->XML->GeneralInformation->trainingTime/100);
+                       $this->TrainingObject->setDistance($this->XML->GeneralInformation->distance/1000);
+                       $this->TrainingObject->setPulseMax($this->XML->GeneralInformation->maximumHeartrate);
+                       $this->TrainingObject->setPulseAvg($this->XML->GeneralInformation->averageHeartrate);
+                   } else {
+                       
+                      $this->addError( __('This file does not contain any data.') );
+                   }
 		} else {
 			foreach ($this->XML->Entries->Entry as $Log)
 				$this->parseEntry($Log);

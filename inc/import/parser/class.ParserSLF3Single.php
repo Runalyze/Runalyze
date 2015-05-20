@@ -52,7 +52,6 @@ class ParserSLF3Single extends ParserAbstractSingleXML {
 	 * Parse general values
 	 */
 	protected function parseGeneralValues() {
-           // echo $this->XML->GeneralInformation->StartDat
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->GeneralInformation->startDate) );
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
