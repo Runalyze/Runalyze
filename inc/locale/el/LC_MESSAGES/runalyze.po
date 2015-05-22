@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-15 10:16+0200\n"
+"POT-Creation-Date: 2015-05-22 19:24+0200\n"
 "PO-Revision-Date: 2015-02-24 08:37+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3708,8 +3708,8 @@ msgid ""
 msgstr ""
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
-#: inc/import/parser/class.ParserSLF4Single.php:67
-#: inc/import/parser/class.ParserSLF3Single.php:66
+#: inc/import/parser/class.ParserSLF4Single.php:74
+#: inc/import/parser/class.ParserSLF3Single.php:65
 msgid "This file does not contain any data."
 msgstr ""
 
@@ -3815,6 +3815,10 @@ msgstr ""
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:102
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
+msgstr ""
+
+#: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
+msgid "This file is not supported. Supported producers of slf-files: "
 msgstr ""
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6

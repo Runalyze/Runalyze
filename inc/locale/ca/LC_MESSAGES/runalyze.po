@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-15 10:16+0200\n"
+"POT-Creation-Date: 2015-05-22 19:24+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -3901,8 +3901,8 @@ msgid ""
 msgstr "L'objecte XML no és de  Sigma.  &lt;LogEntries&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
-#: inc/import/parser/class.ParserSLF4Single.php:67
-#: inc/import/parser/class.ParserSLF3Single.php:66
+#: inc/import/parser/class.ParserSLF4Single.php:74
+#: inc/import/parser/class.ParserSLF3Single.php:65
 msgid "This file does not contain any data."
 msgstr "L'arxiu no conté cap dada."
 
@@ -4022,6 +4022,13 @@ msgid ""
 msgstr ""
 "No hi ha manera d'analitzar aquest tipus d'arxiu importat. No hi ha suport "
 "per a aquest tipus d'arxiu."
+
+#: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
+#, fuzzy
+msgid "This file is not supported. Supported producers of slf-files: "
+msgstr ""
+"No es dóna suport per aquest arxiu. Fabricant dels arxius kml que han de "
+"donar suport són: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
