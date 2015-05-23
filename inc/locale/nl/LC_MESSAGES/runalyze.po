@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-05-22 19:25+0200\n"
-"PO-Revision-Date: 2015-05-21 19:06+0200\n"
+"PO-Revision-Date: 2015-05-23 11:25+0200\n"
 "Last-Translator: Floriaan Went <info@floriaanwent.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -99,7 +99,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:126
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:226
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -115,42 +115,42 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:586
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 msgid "Time of day"
-msgstr ""
+msgstr "Tijdstip van de dag"
 
 #: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:184
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:182
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:225
 msgid "Total"
-msgstr ""
+msgstr "Totaal"
 
 #: inc/html/class.Ajax.php:438 inc/core/View/Leaflet/Activity.php:236
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: inc/html/class.Ajax.php:439
 msgid "previous"
-msgstr ""
+msgstr "Voorgaand"
 
 #: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:255
 msgid "next"
-msgstr ""
+msgstr "Volgend"
 
 #: inc/html/class.Ajax.php:442
 msgid "End"
-msgstr ""
+msgstr "Einde"
 
 #: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
 #: inc/html/class.Ajax.php:447 inc/html/class.Ajax.php:448
 #: inc/html/class.Ajax.php:449
 msgid "per page"
-msgstr ""
+msgstr "per pagina"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:134
