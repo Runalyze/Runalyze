@@ -2,23 +2,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-15 10:16+0200\n"
-"PO-Revision-Date: 2014-11-05 20:52+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2015-05-22 19:25+0200\n"
+"PO-Revision-Date: 2015-05-21 19:06+0200\n"
+"Last-Translator: Floriaan Went <info@floriaanwent.com>\n"
+"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
+#, fuzzy
 msgid "Please login"
-msgstr ""
+msgstr "s.v.p. aanmelden"
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:17
 #: inc/training/schemes/scheme.Training.new.php:40
@@ -26,8 +28,9 @@ msgstr ""
 #: inc/training/schemes/scheme.Shoe.php:14
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
+#, fuzzy
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Diversen"
 
 #: index.php:74
 msgid ""
@@ -37,28 +40,29 @@ msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:148
 msgid "The field can not be left empty."
-msgstr ""
+msgstr "Dit veld kan niet leeg gelaten worden."
 
 #: inc/html/formular/class.FormularValueParser.php:172
 msgid "Please enter a number."
-msgstr ""
+msgstr "Voeg een cijfer in."
 
 #: inc/html/formular/class.FormularValueParser.php:177
 #: inc/html/formular/class.FormularValueParser.php:197
 msgid "The value is too large."
-msgstr ""
+msgstr "De waarde is te hoog."
 
 #: inc/html/formular/class.FormularValueParser.php:235
 msgid "The date could not be parsed."
-msgstr ""
+msgstr "Het datum kan niet worden verwerkt."
 
 #: inc/html/formular/class.FormularValueParser.php:268
+#, fuzzy
 msgid "The time could not be read."
-msgstr ""
+msgstr "De tijd kan niet worden gelezen."
 
 #: inc/html/formular/class.FormularValueParser.php:297
 msgid "You have to enter a time."
-msgstr ""
+msgstr "Je dient een tijd in te vullen."
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
@@ -3707,8 +3711,8 @@ msgid ""
 msgstr ""
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
-#: inc/import/parser/class.ParserSLF4Single.php:67
-#: inc/import/parser/class.ParserSLF3Single.php:66
+#: inc/import/parser/class.ParserSLF4Single.php:74
+#: inc/import/parser/class.ParserSLF3Single.php:65
 msgid "This file does not contain any data."
 msgstr ""
 
@@ -3814,6 +3818,10 @@ msgstr ""
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:102
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
+msgstr ""
+
+#: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
+msgid "This file is not supported. Supported producers of slf-files: "
 msgstr ""
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6

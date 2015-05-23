@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-15 10:16+0200\n"
+"POT-Creation-Date: 2015-05-22 19:25+0200\n"
 "PO-Revision-Date: 2015-04-14 14:45+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
@@ -3917,8 +3917,8 @@ msgstr ""
 "gefunden."
 
 #: inc/import/parser/class.ParserSLFSingle.php:65
-#: inc/import/parser/class.ParserSLF4Single.php:67
-#: inc/import/parser/class.ParserSLF3Single.php:66
+#: inc/import/parser/class.ParserSLF4Single.php:74
+#: inc/import/parser/class.ParserSLF3Single.php:65
 msgid "This file does not contain any data."
 msgstr "Die Datei beinhaltet keine Trainingsdaten."
 
@@ -4042,6 +4042,12 @@ msgid ""
 msgstr ""
 "Es gibt keinen Parser in ImporterFiletype. Dieser Dateityp wird vielleicht "
 "nicht unterstützt."
+
+#: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
+#, fuzzy
+msgid "This file is not supported. Supported producers of slf-files: "
+msgstr ""
+"Diese Datei wird nicht unterstützt. Unterstützte Hersteller von kml-Dateien: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
