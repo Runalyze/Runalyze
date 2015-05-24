@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-22 19:25+0200\n"
+"POT-Creation-Date: 2015-05-24 05:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3750,7 +3750,13 @@ msgid ""
 msgstr ""
 
 #: inc/import/parser/class.ParserTCXSingle.php:124
+#: inc/import/parser/class.ParserTCXruntasticSingle.php:96
 msgid "This file does not contain any laps."
+msgstr ""
+
+#: inc/import/parser/class.ParserTCXruntasticSingle.php:74
+msgid ""
+"Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located."
 msgstr ""
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29

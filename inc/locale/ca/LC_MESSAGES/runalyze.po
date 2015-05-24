@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-22 19:25+0200\n"
+"POT-Creation-Date: 2015-05-24 05:14+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -3947,8 +3947,15 @@ msgid ""
 msgstr "L'objecte XML no és de Garmin. &lt;ld&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserTCXSingle.php:124
+#: inc/import/parser/class.ParserTCXruntasticSingle.php:96
 msgid "This file does not contain any laps."
 msgstr "Aquest entrenament no té cap volta."
+
+#: inc/import/parser/class.ParserTCXruntasticSingle.php:74
+#, fuzzy
+msgid ""
+"Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located."
+msgstr "L'objecte XML no és de Garmin. &lt;ld&gt;-tag no s'ha trobat."
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29
 msgid ""
