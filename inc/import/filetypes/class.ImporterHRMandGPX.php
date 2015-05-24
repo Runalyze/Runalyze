@@ -68,7 +68,7 @@ class ImporterHRMandGPX {
 	 * Read array size from hrm
 	 */
 	protected function readArraySize() {
-		$this->ArraySize = count($this->TrainingObject->getArrayHeartrate());
+		$this->ArraySize = $this->TrainingObject->hasArrayTime() ? count($this->TrainingObject->getArrayTime()) : 0;
 	}
 
 	/**
@@ -98,7 +98,7 @@ class ImporterHRMandGPX {
 			return;
 		}
 
-		if (in_array($key, self::$KEYS_TO_CHECK)) {
+		if (in_array($key, self::$KEYS_TO_CHECK) && $this->ArraySize > 0) {
 			$array = explode(DataObject::$ARR_SEP, $value);
 			$length = count($array);
 
