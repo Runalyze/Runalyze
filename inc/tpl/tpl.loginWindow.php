@@ -178,7 +178,7 @@ DB::getInstance()->stopAddingAccountID();
 
 $NumUser = Cache::get('NumUser', 1);
 if ($NumUser == NULL) {
-    $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account WHERE activation_hash != ""')->fetchColumn();
+    $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account WHERE activation_hash = ""')->fetchColumn();
     Cache::set('NumUser', $NumUser, '500', 1);
 }
 
