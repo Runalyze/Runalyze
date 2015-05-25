@@ -172,16 +172,16 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 */
 	protected function readSession() {
 		if (isset($this->Values['total_timer_time']))
-			$this->TrainingObject->setTimeInSeconds( round($this->Values['total_timer_time'][0] / 1e3) );
+			$this->TrainingObject->setTimeInSeconds( round($this->Values['total_timer_time'][0] / 1e3) + $this->TrainingObject->getTimeInSeconds() );
 
 		if (isset($this->Values['total_elapsed_time']))
-			$this->TrainingObject->setElapsedTime( round($this->Values['total_elapsed_time'][0] / 1e3) );
+			$this->TrainingObject->setElapsedTime( round($this->Values['total_elapsed_time'][0] / 1e3) + $this->TrainingObject->getElapsedTime() );
 
 		if (isset($this->Values['total_distance']))
-			$this->TrainingObject->setDistance( round($this->Values['total_distance'][0] / 1e5, 3) );
+			$this->TrainingObject->setDistance( round($this->Values['total_distance'][0] / 1e5, 3) + $this->TrainingObject->getDistance() );
 
 		if (isset($this->Values['total_calories']))
-			$this->TrainingObject->setCalories( $this->Values['total_calories'][0] );
+			$this->TrainingObject->setCalories( $this->Values['total_calories'][0] + $this->TrainingObject->getCalories() );
 	}
 
 	/**
@@ -284,9 +284,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
 			);
-
-		if (isset($this->Values['total_calories']))
-			$this->TrainingObject->addCalories($this->Values['total_calories'][0]);
 	}
 
 	/**
