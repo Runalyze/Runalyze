@@ -352,8 +352,11 @@ class Object extends Model\ObjectWithID {
 	 * @return boolean
 	 */
 	protected function canBeNull($key) {
-		if ($key == self::TEMPERATURE) {
-			return true;
+		switch ($key) {
+			case self::TEMPERATURE:
+			case self::NOTES:
+			case self::CREATOR_DETAILS:
+				return true;
 		}
 
 		return false;
@@ -378,6 +381,46 @@ class Object extends Model\ObjectWithID {
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureAllNumericValues();
+		$this->synchronizeObjects();
+	}
+
+	/**
+	 * Ensure that numeric fields get numeric values
+	 */
+	protected function ensureAllNumericValues() {
+		$this->ensureNumericValue(array(
+			self::SPORTID,
+			self::TYPEID,
+			self::TIMESTAMP,
+			self::TIMESTAMP_CREATED,
+			self::TIMESTAMP_EDITED,
+			self::IS_PUBLIC,
+			self::IS_TRACK,
+			self::DISTANCE,
+			self::TIME_IN_SECONDS,
+			self::ELAPSED_TIME,
+			self::ELEVATION,
+			self::CALORIES,
+			self::HR_AVG,
+			self::HR_MAX,
+			self::VDOT,
+			self::VDOT_BY_TIME,
+			self::VDOT_WITH_ELEVATION,
+			self::USE_VDOT,
+			self::JD_INTENSITY,
+			self::TRIMP,
+			self::CADENCE,
+			self::POWER,
+			self::GROUNDCONTACT,
+			self::VERTICAL_OSCILLATION,
+			self::ROUTEID,
+			self::RUNNING_DRILLS,
+			self::SHOEID
+		));
+	}
+
+	protected function synchronizeObjects() {
 		$this->Data[self::TEMPERATURE] = $this->weather()->temperature()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
 		$this->Data[self::CLOTHES] = $this->clothes()->asString();

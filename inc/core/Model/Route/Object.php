@@ -228,13 +228,51 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	}
 
 	/**
+	 * Can be null?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function canBeNull($key) {
+		switch ($key) {
+			case self::ELEVATIONS_ORIGINAL:
+			case self::ELEVATIONS_CORRECTED:
+			case self::LATITUDES:
+			case self::LONGITUDES:
+			case self::STARTPOINT_LATITUDE:
+			case self::STARTPOINT_LONGITUDE:
+			case self::ENDPOINT_LATITUDE:
+			case self::ENDPOINT_LONGITUDE:
+			case self::MIN_LATITUDE:
+			case self::MIN_LONGITUDE:
+			case self::MAX_LATITUDE:
+			case self::MAX_LONGITUDE:
+				return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Synchronize internal models
 	 */
 	public function synchronize() {
 		parent::synchronize();
 
+		$this->ensureAllNumericValues();
 		$this->synchronizeStartAndEndpoint();
 		$this->synchronizeBoundaries();
+	}
+
+	/**
+	 * Ensure that numeric fields get numeric values
+	 */
+	protected function ensureAllNumericValues() {
+		$this->ensureNumericValue(array(
+			self::DISTANCE,
+			self::ELEVATION,
+			self::ELEVATION_UP,
+			self::ELEVATION_DOWN,
+			self::IN_ROUTENET
+		));
 	}
 
 	/**
@@ -242,10 +280,10 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 */
 	protected function synchronizeStartAndEndpoint() {
 		if (!$this->hasPositionData()) {
-			$this->Data[self::STARTPOINT_LATITUDE] = '';
-			$this->Data[self::STARTPOINT_LONGITUDE] = '';
-			$this->Data[self::ENDPOINT_LATITUDE] = '';
-			$this->Data[self::ENDPOINT_LONGITUDE] = '';
+			$this->Data[self::STARTPOINT_LATITUDE] = null;
+			$this->Data[self::STARTPOINT_LONGITUDE] = null;
+			$this->Data[self::ENDPOINT_LATITUDE] = null;
+			$this->Data[self::ENDPOINT_LONGITUDE] = null;
 		} else {
 			$Latitudes = array_filter($this->Data[self::LATITUDES]);
 			$Longitudes = array_filter($this->Data[self::LONGITUDES]);
@@ -266,10 +304,10 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 */
 	protected function synchronizeBoundaries() {
 		if (!$this->hasPositionData()) {
-			$this->Data[self::MIN_LATITUDE] = '';
-			$this->Data[self::MIN_LONGITUDE] = '';
-			$this->Data[self::MAX_LATITUDE] = '';
-			$this->Data[self::MAX_LONGITUDE] = '';
+			$this->Data[self::MIN_LATITUDE] = null;
+			$this->Data[self::MIN_LONGITUDE] = null;
+			$this->Data[self::MAX_LATITUDE] = null;
+			$this->Data[self::MAX_LONGITUDE] = null;
 		} else {
 			$Latitudes = array_filter($this->Data[self::LATITUDES]);
 			$Longitudes = array_filter($this->Data[self::LONGITUDES]);

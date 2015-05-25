@@ -101,6 +101,27 @@ abstract class Object {
 	public function synchronize() {}
 
 	/**
+	 * Ensure numeric values
+	 * @param array|string $keyOrKeys key or array of keys to be checked
+	 * @param int|float $defaultValue optional, default: 0
+	 */
+	protected function ensureNumericValue($keyOrKeys, $defaultValue = 0) {
+		if (!is_array($keyOrKeys)) {
+			$keyOrKeys = array($keyOrKeys);
+		}
+
+		foreach ($keyOrKeys as $key) {
+			if (array_key_exists($key, $this->Data) && !is_numeric($this->Data[$key])) {
+				if (is_bool($this->Data[$key])) {
+					$this->Data[$key] = (int)$this->Data[$key];
+				} else {
+					$this->Data[$key] = $defaultValue;
+				}
+			}
+		}
+	}
+
+	/**
 	 * Can set key?
 	 * @param string $key
 	 * @return boolean
@@ -135,7 +156,7 @@ abstract class Object {
 	 * @throws \RuntimeException
 	 */
 	public function set($key, $value) {
-		if (!isset($this->Data[$key])) {
+		if (!array_key_exists($key, $this->Data)) {
 			throw new \InvalidArgumentException('Unkown data index "'.$key.'".');
 		}
 
@@ -161,7 +182,7 @@ abstract class Object {
 	 * @throws \InvalidArgumentException
 	 */
 	public function get($key) {
-		if (!isset($this->Data[$key])) {
+		if (!array_key_exists($key, $this->Data)) {
 			throw new \InvalidArgumentException('Unknown data index "'.$key.'".');
 		}
 
@@ -175,7 +196,7 @@ abstract class Object {
 	 * @throws \InvalidArgumentException
 	 */
 	public function has($key) {
-		if (!isset($this->Data[$key])) {
+		if (!array_key_exists($key, $this->Data)) {
 			throw new \InvalidArgumentException('Unknown data index "'.$key.'".');
 		}
 

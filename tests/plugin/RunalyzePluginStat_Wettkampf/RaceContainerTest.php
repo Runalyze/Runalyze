@@ -37,7 +37,7 @@ class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function insert($distance, $s = 0, $time = 0) {
-		$this->PDO->exec('INSERT INTO `runalyze_training` (`distance`, `s`, `time`, `typeid`) VALUES ("'.$distance.'", "'.$s.'", "'.$time.'", "'.self::RACEID.'")');
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`distance`, `s`, `time`, `typeid`, `accountid`) VALUES ("'.$distance.'", "'.$s.'", "'.$time.'", "'.self::RACEID.'", 0)');
 	}
 
 	public function testGeneralFunctionality() {

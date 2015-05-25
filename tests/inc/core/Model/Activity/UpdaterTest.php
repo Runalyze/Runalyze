@@ -26,13 +26,13 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		\Cache::clean();
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(600,1,0,1)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",600,1,0,1)');
 		$this->OutdoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`kcal`,`outside`,`accountid`,`power`) VALUES(400,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(10,3000,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",10,3000,0)');
 		$this->ShoeID1 = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`km`,`time`,`accountid`) VALUES(0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",0,0,0)');
 		$this->ShoeID2 = $this->PDO->lastInsertId();
 
 		\SportFactory::reInitAllSports();

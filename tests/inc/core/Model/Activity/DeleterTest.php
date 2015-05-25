@@ -20,10 +20,10 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(1,600,1,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`id`,`kcal`,`outside`,`accountid`) VALUES(2,400,0,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(1,10,3000,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`id`,`km`,`time`,`accountid`) VALUES(2,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",1,600,1,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",2,400,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",1,10,3000,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",2,0,0,0)');
 	}
 
 	protected function tearDown() {

@@ -90,15 +90,15 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		));
 		$T->synchronize();
 
-		$this->assertEquals('', $T->get(Object::STARTPOINT_LATITUDE));
-		$this->assertEquals('', $T->get(Object::STARTPOINT_LONGITUDE));
-		$this->assertEquals('', $T->get(Object::ENDPOINT_LATITUDE));
-		$this->assertEquals('', $T->get(Object::ENDPOINT_LONGITUDE));
+		$this->assertEquals(null, $T->get(Object::STARTPOINT_LATITUDE));
+		$this->assertEquals(null, $T->get(Object::STARTPOINT_LONGITUDE));
+		$this->assertEquals(null, $T->get(Object::ENDPOINT_LATITUDE));
+		$this->assertEquals(null, $T->get(Object::ENDPOINT_LONGITUDE));
 
-		$this->assertEquals('', $T->get(Object::MIN_LATITUDE));
-		$this->assertEquals('', $T->get(Object::MIN_LONGITUDE));
-		$this->assertEquals('', $T->get(Object::MAX_LATITUDE));
-		$this->assertEquals('', $T->get(Object::MAX_LONGITUDE));
+		$this->assertEquals(null, $T->get(Object::MIN_LATITUDE));
+		$this->assertEquals(null, $T->get(Object::MIN_LONGITUDE));
+		$this->assertEquals(null, $T->get(Object::MAX_LATITUDE));
+		$this->assertEquals(null, $T->get(Object::MAX_LONGITUDE));
 	}
 
 	/**
