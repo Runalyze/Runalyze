@@ -139,7 +139,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( "10.55|46:49", $this->object->object(2)->Splits()->asString() );
+			$this->assertEquals( "10.55|46:49", $this->object->object()->Splits()->asString() );
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 		}
@@ -176,6 +176,34 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$time = $this->object->object()->getArrayTime();
 			$this->assertTrue( min($time) >= 0 );
 			$this->assertEquals( 2*3600 + 47*60 + 22, end($time) );
+		}
+	}
+
+	/**
+	 * Test: multisession file
+	 * Filename: "Multisession.fit" 
+	 */
+	public function testMultisession() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/Multisession.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals( 35*60 + 32, $this->object->object()->getTimeInSeconds(), '', 5 );
+			$this->assertEquals( 38*60 + 11, $this->object->object()->getElapsedTime(), '', 5 );
+			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+
+			$this->assertEquals( 7.86, $this->object->object()->getDistance(), '', 0.1);
+			$this->assertEquals( 499, $this->object->object()->getCalories(), '', 10);
+			$this->assertEquals( 149, $this->object->object()->getPulseAvg(), '', 2);
+			$this->assertEquals( 170, $this->object->object()->getPulseMax(), '', 2);
+
+			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+			$this->assertEquals( 7.86, $this->object->object()->Splits()->totalDistance(), '', 0.1);
+			$this->assertEquals( 35*60 + 32, $this->object->object()->Splits()->totalTime(), '', 5);
+
+			$this->assertEquals( 35*60 + 32, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 		}
 	}
 }
