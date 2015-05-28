@@ -37,31 +37,31 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Last point
 	 * @var int
 	 */
-	private $lastPoint = 0;
+	protected $lastPoint = 0;
 
 	/**
 	 * Last distance (exact)
 	 * @var float
 	 */
-	private $lastDistance = -1;
+	protected $lastDistance = -1;
 
 	/**
 	 * Boolean flag: Last point was empty
 	 * @var boolean
 	 */
-	private $lastPointWasEmpty = false;
+	protected $lastPointWasEmpty = false;
 
 	/**
 	 * Boolean flag: without distance (indoor training)
 	 * @var boolean
 	 */
-	private $isWithoutDistance = false;
+	protected $isWithoutDistance = false;
 
 	/**
 	 * Boolean flag: distances are empty
 	 * @var boolean
 	 */
-	private $distancesAreEmpty = false;
+	protected $distancesAreEmpty = false;
 
 	/**
 	 * Constructor
@@ -294,7 +294,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Point
 	 * @return int
 	 */
-	private function parseExtensionValues(SimpleXMLElement &$Point) {
+	protected function parseExtensionValues(SimpleXMLElement &$Point) {
 		$power = 0;
 		$rpm   = 0;
 
@@ -330,7 +330,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $TP
 	 * @return int
 	 */
-	private function distanceToTrackpoint(SimpleXMLElement &$TP) {
+	protected function distanceToTrackpoint(SimpleXMLElement &$TP) {
 		if (empty($this->gps['km']))
 			return empty($TP->Position) ? 0 : 0.001;
 
