@@ -23,7 +23,7 @@ class ImporterFiletypeTCX extends ImporterFiletypeAbstract {
 		else 
 			$this->Parser = new ParserTCXMultiple($String);
 	}
-        
+
 	/**
 	 * Is this string from Runtastic?
 	 * @param string $String
@@ -31,5 +31,5 @@ class ImporterFiletypeTCX extends ImporterFiletypeAbstract {
 	 */
 	private function isFromRuntastic($String) {
 		return strpos($String, 'runtastic') !== false;
-	} 
+	}
 }
