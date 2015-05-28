@@ -20,40 +20,39 @@ class ImporterFiletypeSLF extends ImporterFiletypeAbstract {
     
 	/**
 	 * Set parser
-	 * @param string $String string to parse
+	 * @param string $string string to parse
 	 */
-	protected function setParserFor($String) {
-            if($this->isFromSigmaDataCenter3($String))
-		$this->Parser = new ParserSLF3Multiple($String);
-            elseif ($this->isFromSigmaDataCenter4($String))
-                $this->Parser = new ParserSLF4Multiple($String);
-            else 
-                $this->throwErrorForUnknownFormat();
-                        
+	protected function setParserFor($string) {
+		if ($this->isFromSigmaDataCenter3($string))
+			$this->Parser = new ParserSLF3Multiple($string);
+		elseif ($this->isFromSigmaDataCenter4($string))
+			$this->Parser = new ParserSLF4Multiple($string);
+		else 
+			$this->throwErrorForUnknownFormat();
 	}
-        
+
 	/**
 	 * Is this string from Sigma DataCenter => V4?
-	 * @param string $String
+	 * @param string $string
 	 * @return bool
 	 */
-	private function isFromSigmaDataCenter4(&$String) {
-		return strpos($String, '<Entries') !== false;
+	private function isFromSigmaDataCenter4($string) {
+		return strpos($string, '<Entries') !== false;
 	}   
         
 	/**
 	 * Is this string from Sigma DataCenter <= V3?
-	 * @param string $String
+	 * @param string $string
 	 * @return bool
 	 */
-	private function isFromSigmaDataCenter3(&$String) {
-		return strpos($String, '<LogEntries') !== false;
-	}     
+	private function isFromSigmaDataCenter3($string) {
+		return strpos($string, '<LogEntries') !== false;
+	}
+
 	/**
 	 * Throw error for unknown format
 	 */
 	private function throwErrorForUnknownFormat() {
 		$this->Errors[] = __('This file is not supported. Supported producers of slf-files: '.self::$ALLOWED_PRODUCER.'.');
 	}
-        
 }
