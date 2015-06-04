@@ -146,6 +146,13 @@ class SessionAccountHandler {
 	private function updateLastAction() {
 		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
 	}
+        
+        /**
+         * Update language of current account
+         */
+	private function updateLanguage() {
+		DB::getInstance()->update('account', self::getId(), 'language', Language::getCurrentLanguage());
+	}  
 
 	/**
 	 * Try to login from post data
@@ -184,7 +191,10 @@ class SessionAccountHandler {
 
 				$this->setAccount($Account);
 				$this->setSession();
-
+                                
+                                //Set language for user if not exists
+                                if(empty($Account['language']))
+                                    $this->updateLanguage();
 				// replace old md5 with new sha256 hash
 				if (strlen($Account['salt']) < 1) {
 					AccountHandler::setNewPassword($username, $password);
@@ -194,6 +204,8 @@ class SessionAccountHandler {
 			}
 
 			$this->throwErrorForWrongPassword();
+
+                            
 		} else {
 			$this->throwErrorForWrongUsername();
 		}

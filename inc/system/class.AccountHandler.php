@@ -230,7 +230,7 @@ class AccountHandler {
 		$newSalt = self::getNewSalt();
 		$newAccountId   = DB::getInstance()->insert('account',
 				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], $_POST['language'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;
