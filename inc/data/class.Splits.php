@@ -419,6 +419,7 @@ class Splits {
 	public function getFieldset() {
 		$Fieldset = new FormularFieldset( __('Laps') );
 		$Fieldset->addField( new TrainingInputSplits() );
+                $Fieldset->addCSSclass( TrainingFormular::$ONLY_DISTANCES_CLASS );
 
 		if ($this->areEmpty())
 			$Fieldset->setCollapsed();

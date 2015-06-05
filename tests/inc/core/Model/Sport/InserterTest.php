@@ -31,6 +31,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`kcal` SMALLINT NOT NULL,
 			`HFavg` SMALLINT NOT NULL,
 			`RPE` TINYINT NOT NULL,
+                        `distances` SMALLINT NOT NULL,
 			`speed` VARCHAR(10) NOT NULL,
 			`types` TINYINT NOT NULL,
 			`power` TINYINT NOT NULL,
@@ -58,6 +59,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Object::CALORIES_PER_HOUR => 700,
 			Object::HR_AVG => 140,
 			Object::RPE => 6,
+                        Object::HAS_DISTANCES => 1,
 			Object::PACE_UNIT => 'foo',
 			Object::HAS_TYPES => 1,
 			Object::HAS_POWER => 0,
@@ -77,6 +79,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(6, $Sport->rpe());
 		$this->assertEquals('foo', $Sport->paceUnit());
 
+                $this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->hasTypes());
 		$this->assertTrue($Sport->isOutside());
 

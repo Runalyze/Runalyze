@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_account` (
   `username` varchar(60) NOT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `mail` varchar(100) NOT NULL,
-  `language` varchar(5) NOT NULL DEFAULT '',
+  `language` varchar(3) NOT NULL DEFAULT '',
   `password` varchar(64) NOT NULL DEFAULT '',
   `salt` char(64) NOT NULL DEFAULT '',
   `session_id` varchar(32) DEFAULT NULL,
@@ -196,6 +196,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `kcal` smallint(4) NOT NULL DEFAULT '0',
   `HFavg` smallint(3) NOT NULL DEFAULT '120',
   `RPE` tinyint(2) NOT NULL DEFAULT '2',
+  `distances` tinyint(1) NOT NULL DEFAULT '1',
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `types` tinyint(1) NOT NULL DEFAULT '0',
   `power` tinyint(1) NOT NULL DEFAULT '0',
@@ -452,3 +453,14 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `runalyze_user`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+/*  MySQL Event to delete registered user which have not been activated (7 days) */
+SET GLOBAL event_scheduler = ON;
+DELIMITER |
+CREATE EVENT deleteNotActivatedUsers
+	ON SCHEDULE EVERY 1 DAY
+	DO
+		BEGIN 
+			DELETE FROM runalyze_account WHERE registerdate < UNIX_TIMESTAMP(DATE_ADD(CURDATE(),INTERVAL -7 DAY)) AND activation_hash != '';
+END |
+DELIMITER ;

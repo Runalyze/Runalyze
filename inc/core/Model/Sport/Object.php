@@ -57,6 +57,12 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const PACE_UNIT = 'speed';
+        
+ 	/**
+-	 * Key: has distances
+-	 * @var string
+-	 */
+	const HAS_DISTANCES = 'distances';
 
 	/**
 	 * Key: has types
@@ -88,6 +94,7 @@ class Object extends Model\ObjectWithID {
 			self::CALORIES_PER_HOUR,
 			self::HR_AVG,
 			self::RPE,
+                        self::HAS_DISTANCES,
 			self::PACE_UNIT,
 			self::HAS_TYPES,
 			self::HAS_POWER,
@@ -158,6 +165,14 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function paceUnit() {
 		return $this->Data[self::PACE_UNIT];
+	}
+        
+ 	/**
+-	 * Has distances?
+-	 * @return boolean
+-	 */
+	public function hasDistances() {
+		return ($this->Data[self::HAS_DISTANCES] == 1);
 	}
 
 	/**

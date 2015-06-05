@@ -87,6 +87,7 @@ class SportFactory {
 			'kcal' => 600,
 			'HFavg' => 140,
 			'RPE' => 4,
+                        'distances' => 0,
 			'speed' => Pace::STANDARD,
 			'types' => 0,
 			'power'	=> 0,

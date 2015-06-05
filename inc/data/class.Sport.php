@@ -109,6 +109,14 @@ class Sport {
 	public function avgHF() {
 		return $this->data['HFavg'];
 	}
+        
+        /* 
+	 * Has a training of this sport a distance?
+	 * @return bool
+	 */
+	public function usesDistance() {
+		return ($this->data['distances'] == 1);
+	}
 
 	/**
 	 * Does this sport use km/h as unit for speed?

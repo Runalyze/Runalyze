@@ -24,6 +24,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			`short` TINYINT NOT NULL,
 			`kcal` SMALLINT NOT NULL,
 			`HFavg` SMALLINT NOT NULL,
+                        `distances` SMALLINT NOT NULL,
 			`RPE` TINYINT NOT NULL,
 			`speed` VARCHAR(10) NOT NULL,
 			`types` TINYINT NOT NULL,

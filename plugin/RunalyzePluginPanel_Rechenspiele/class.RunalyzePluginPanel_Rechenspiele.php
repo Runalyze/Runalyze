@@ -163,7 +163,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
 			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
 			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
-			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
+			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute,1)),
 			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;

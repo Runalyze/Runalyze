@@ -10,6 +10,7 @@ function jUpdateSportValues() {
 		run = $s.attr('data-running'),
 		out = $s.attr('data-outside'),
 		typ = $s.attr('data-types'),
+                dis = $s.attr('data-distances'),
 		pow = $s.attr('data-power');
 
 	if (kcal > 0)
@@ -19,7 +20,8 @@ function jUpdateSportValues() {
 	$("form .only-not-running").toggle( typeof run === "undefined" || run === false );
 	$("form .only-outside").toggle( typeof out !== "undefined" && out !== false );
 	$("form .only-types").toggle( typeof typ !== "undefined" && typ !== false );
-	$("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
+        $("form .only-distances").toggle( typeof dis !== "undefined" && dis !== false );
+        $("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
 
 	$("#typeid option:not([data-sport='all'])").attr('disabled', true).hide();
 	$("#typeid option[data-sport='"+$s.val()+"']").attr('disabled', false).show();
