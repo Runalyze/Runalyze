@@ -10,8 +10,8 @@
  */
 
 require_once 'inc/html/class.Ajax.php';
-require_once 'inc/system/class.PDOforRunalyze.php'; // TODO: Check if database class is really needed
-require_once 'inc/system/class.DB.php'; // TODO: Check if database class is really needed
+require_once 'inc/system/class.PDOforRunalyze.php';
+require_once 'inc/system/class.DB.php';
 require_once 'inc/system/class.Request.php';
 require_once 'inc/system/class.System.php';
 require_once 'inc/class.Installer.php';

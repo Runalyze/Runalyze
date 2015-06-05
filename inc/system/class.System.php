@@ -37,15 +37,6 @@ class System {
 	}
 
 	/**
-	 * Is a connection to database possible?
-	 * @return boolean
-	 */
-	static public function hasDatabaseConnection() {
-		// TODO
-		return mysql_ping();
-	}
-
-	/**
 	 * Send an email via smtp
 	 * @param string $to
 	 * @param string $subject
