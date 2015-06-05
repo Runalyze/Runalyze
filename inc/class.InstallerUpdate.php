@@ -102,11 +102,10 @@ class InstallerUpdate extends Installer {
 	 * Import selected file
 	 */
 	protected function importUpdateFile() {
-		mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		mysql_select_db($this->mysqlConfig[3]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
 		if (isset($_POST['importFile']) && strlen($_POST['importFile']) > 4)
-			$this->Errors = self::importSqlFile('inc/install/'.$_POST['importFile']);
+			$this->Errors = $this->importSqlFile('inc/install/'.$_POST['importFile']);
 	}
 
 	/**

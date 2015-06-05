@@ -106,6 +106,12 @@ class Installer {
 	protected $writeConfigFileString = '';
 
 	/**
+	 * PDO object
+	 * @var \PDO
+	 */
+	protected $PDO = null;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -235,12 +241,33 @@ class Installer {
 	 * Is the connection to the MySql-server setup and correct?
 	 */
 	protected function connectionIsSetAndCorrect() {
-		if (!@mysql_connect($_POST['host'], $_POST['username'], $_POST['password']))
-			return false;
-		if (!@mysql_select_db($_POST['database']))
+		if (!isset($_POST['database']))
 			return false;
 
-		return true;
+		try {
+			$this->connectToDatabase($_POST['database'], $_POST['host'], $_POST['username'], $_POST['password']);
+
+			return true;
+		} catch (Exception $e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Connect to database
+	 * @param string $db
+	 * @param string $host
+	 * @param string $user
+	 * @param string $pw
+	 */
+	protected function connectToDatabase($db, $host, $user, $pw) {
+		$this->PDO = new PDO('mysql:dbname='.$db.';host='.$host.';charset=utf8', $user, $pw);
+		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+		if (version_compare(PHP_VERSION, '5.3.6', '<')) {
+			$this->PDO->exec("SET NAMES 'utf8'");
+		}
 	}
 
 	/**
@@ -250,7 +277,7 @@ class Installer {
 		if (!isset($_POST['prefix']) || strlen($_POST['prefix']) < 2)
 			return false;
 
-		return (mysql_num_rows(mysql_query('SHOW TABLES LIKE "'.$_POST['prefix'].'training"')) == 0);
+		return !$this->PDO->query('SHOW TABLES LIKE "'.$_POST['prefix'].'training"')->fetch();
 	}
 
 	/**
@@ -271,7 +298,15 @@ class Installer {
 	 * Get current MySQL-version
 	 */
 	protected function getMysqlVersion() {
-		return @mysql_get_server_info();
+		if ($this->PDO == NULL) {
+			if ($this->mysqlConfig[1] == '') {
+				return '';
+			}
+
+			$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
+		}
+
+		return $this->PDO->getAttribute(PDO::ATTR_SERVER_VERSION);
 	}
 
 	/**
@@ -292,7 +327,9 @@ class Installer {
 		if ($file_string === false)
 			return;
 
-		$file_string = preg_replace('/{config::([^}]*)}/ie', 'isset($config["$1"])?$config["$1"]:"$0"', $file_string);
+		$file_string = preg_replace_callback('/{config::([^}]*)}/i', function($result) use ($config) {
+			return (isset($config[$result[1]])) ? $config[$result[1]] : $result[0];
+		}, $file_string);
 
 		@file_put_contents(PATH.'../config.php', $file_string);
 
@@ -312,10 +349,9 @@ class Installer {
 	 * Import all needed sql-dumps to database
 	 */
 	protected function importSqlFiles() {
-		@mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		@mysql_select_db($this->mysqlConfig[3]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
-		self::importSqlFile(PATH.'install/structure.sql');
+		$this->importSqlFile('inc/install/structure.sql');
 
 		define('FRONTEND_PATH', __DIR__.'/');
 		require_once FRONTEND_PATH.'/system/class.Autoloader.php';
@@ -333,10 +369,12 @@ class Installer {
 	 * @return bool
 	 */
 	protected function databaseIsCorrect() {
-		@mysql_connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
-		@mysql_select_db($this->mysqlConfig[3]);
+		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
-		return (@mysql_num_rows(@mysql_query('SHOW TABLES LIKE "'.PREFIX.'training"')) > 0);
+		$statement = $this->PDO->prepare('SHOW TABLES LIKE "'.PREFIX.'training"');
+		$statement->execute();
+
+		return count($statement->fetch()) > 0;
 	}
 
 	/**
@@ -344,15 +382,16 @@ class Installer {
 	 * @param string $filename
 	 * @return array
 	 */
-	static public function importSqlFile($filename) {
+	protected function importSqlFile($filename) {
 		$Errors  = array();
 		$Queries = self::getSqlFileAsArray($filename);
 
-		foreach ($Queries as $Query) {
-			mysql_query($Query);
-
-			if (mysql_errno())
-				$Errors[] = mysql_error();
+		foreach ($Queries as $query) {
+			try {
+				$this->PDO->query($query);
+			} catch (PDOException $e) {
+				$Errors[] = $e->getMessage();
+			}
 		}
 
 		return $Errors;
@@ -369,6 +408,10 @@ class Installer {
 		$query  = '';
 		$array = array();
 		$inDelimiter = false;
+
+		if (!is_array($SQL)) {
+			$SQL = array();
+		}
 
 		foreach ($SQL as $line) {
 			$line = trim($line);
