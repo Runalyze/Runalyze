@@ -21,7 +21,7 @@ function jUpdateSportValues() {
 	$("form .only-outside").toggle( typeof out !== "undefined" && out !== false );
 	$("form .only-types").toggle( typeof typ !== "undefined" && typ !== false );
         $("form .only-distances").toggle( typeof dis !== "undefined" && dis !== false );
-        $("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
+	$("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
 
 	$("#typeid option:not([data-sport='all'])").attr('disabled', true).hide();
 	$("#typeid option[data-sport='"+$s.val()+"']").attr('disabled', false).show();
@@ -4931,9 +4931,13 @@ var RunalyzePlot = (function($, parent){
 			options.series.curvedLines.apply = false;
 		}
 
-		options.hooks = {
-			draw: [drawHook]
-		};
+		if (options.hooks && options.hooks.draw) {
+			options.hooks.draw.push(drawHook);
+		} else {
+			options.hooks = {
+				draw: [drawHook]
+			};
+		}
 
 		//options.zoom = { interactive: true };
 		//options.pan = { interactive: true };
@@ -5183,6 +5187,41 @@ var RunalyzePlot = (function($, parent){
 
 			resize( $e.attr('id') );
 		}
+	};
+
+	self.flotHookColorPoints = function(limits, colors, defaultColor) {
+		return function(plot, ctx) {
+			var data = plot.getData();
+			var axes = plot.getAxes();
+			var offset = plot.getPlotOffset();
+			var lineWidth = plot.getOptions().series.points.lineWidth;
+			var radius = lineWidth;
+
+			for (var i = 0; i < data.length; i++) {
+				var series = data[i];
+
+				for (var j = 0; j < series.data.length; j++) {
+					var d = (series.data[j]);
+					var x = offset.left + axes.xaxis.p2c(d[0]);
+					var y = offset.top + axes.yaxis.p2c(d[1]);
+
+					var color = defaultColor;
+					for (var l = 0; l < limits.length; l++) {
+						if (d[1] > limits[l]) {
+							color = colors[l];
+							break;
+						}
+					}
+
+					ctx.lineWidth = lineWidth;
+					ctx.beginPath();
+					ctx.arc(x, y, radius, 0, Math.PI*2, true);
+					ctx.closePath();            
+					ctx.fillStyle = color;
+					ctx.fill();
+				}    
+			}
+		};
 	};
 
 	return self;
