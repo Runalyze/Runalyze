@@ -56,8 +56,8 @@ class ConfigTabDataset extends ConfigTab {
 		$DatasetObject = new Dataset();
 		$DatasetObject->setActivityData($this->getExampleTraining());
 
-		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY `position` ASC')->fetchAll();
-		foreach ($Dataset as $Data) {
+		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY (`position` > 0) DESC, `position` ASC')->fetchAll();
+		foreach ($Dataset as $pos => $Data) {
 			$disabled    = ($Data['modus'] == 3) ? ' disabled' : '';
 			$checked_2   = ($Data['modus'] >= 2) ? ' checked' : '';
 			$checked     = ($Data['summary'] == 1) ? ' checked' : '';
@@ -91,11 +91,9 @@ class ConfigTabDataset extends ConfigTab {
 					<td class="c"><input type="checkbox" name="'.$Data['id'].'_summary"'.$checked.'></td>
 					<td class="c small">'.$SummarySign.'</td>
 					<td class="c">
-						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.$Data['position'].'" size="2">
-						'.($Data['position'] > 0 ? '
+						<input class="dataset-position" type="text" name="'.$Data['id'].'_position" value="'.($pos + 1).'" size="2">
 						<span class="link" onclick="datasetMove('.$Data['id'].', \'up\')">'.Icon::$UP.'</span>
 						<span class="link" onclick="datasetMove('.$Data['id'].', \'down\')">'.Icon::$DOWN.'</span>
-							' : '').'
 					</td>
 					<td class="c"><input type="text" name="'.$Data['id'].'_class" value="'.$Data['class'].'" size="7"></td>
 					<td class="c"><input type="text" name="'.$Data['id'].'_style" value="'.$Data['style'].'" size="15"></td>
