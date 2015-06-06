@@ -40,13 +40,3 @@ ALTER TABLE `runalyze_training` CHANGE `notes` `notes` TEXT CHARACTER SET utf8 C
 ALTER TABLE `runalyze_trackdata` CHANGE `time` `time` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `distance` `distance` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `pace` `pace` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `heartrate` `heartrate` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cadence` `cadence` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `power` `power` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `temperature` `temperature` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `groundcontact` `groundcontact` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `vertical_oscillation` `vertical_oscillation` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `pauses` `pauses` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 ALTER TABLE `runalyze_route` CHANGE `lats` `lats` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `lngs` `lngs` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `elevations_original` `elevations_original` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `elevations_corrected` `elevations_corrected` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-/* 04.06.2015 MySQL Event to delete registered user which have not been activated (7 days) */
-SET GLOBAL event_scheduler = ON;
-DELIMITER |
-CREATE EVENT deleteNotActivatedUsers
-	ON SCHEDULE EVERY 1 DAY
-	DO
-		BEGIN 
-			DELETE FROM runalyze_account WHERE registerdate < UNIX_TIMESTAMP(DATE_ADD(CURDATE(),INTERVAL -7 DAY)) AND activation_hash != '';
-END |
-DELIMITER ;
