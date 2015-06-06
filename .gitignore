@@ -17,3 +17,8 @@ lib/phpfastcache/cache.storage.*
 *.xcf
 config.php
 *.mo
+
+#composer
+composer.phar
+vendor/
+composer.lock

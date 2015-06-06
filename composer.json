@@ -2,6 +2,9 @@
     "require": {
         "twig/twig": "1.*",
         "monolog/monolog": "1.*",
+        "symfony/routing": "2.*",
+        "symfony/class-loader": "@stable",
+        "symfony/yaml": "@stable",
         "swiftmailer/swiftmailer": "@stable"
     }
 }

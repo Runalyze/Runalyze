@@ -366,6 +366,17 @@ class SessionAccountHandler {
 		return self::$Account['name'];
 	}
 
+	/**
+	 * Get name of current user
+	 * @return type 
+	 */
+	static public function getAllowMails() {
+		if (!isset(self::$Account['allow_mails']))
+			return '';
+
+		return self::$Account['allow_mails'];
+	}
+        
         /**
 	 * Get language of current user
 	 * @return type 
