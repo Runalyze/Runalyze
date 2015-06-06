@@ -62,9 +62,10 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
-		$this->handle('DB_DISPLAY_MODE')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_DIRECT_EDIT_LINK')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_CREATELINK_FOR_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
+
+		$this->handle('DB_DISPLAY_MODE')->registerOnchangeEvent('Runalyze\\Configuration\\Category\\DataBrowser::showNewTimerangeInDB');
 	}
 
 	/**
@@ -90,5 +91,16 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		));
 
 		return $Fieldset;
+	}
+
+	/**
+	 * Reload data browser for new timerange
+	 */
+	static public function showNewTimerangeInDB() {
+		$mode = \Runalyze\Configuration::DataBrowser()->mode();
+
+		$rel = $mode->showMonth() ? 'month-link' : 'week-link';
+
+		echo Ajax::wrapJSasFunction('$("#data-browser .panel-heading a[rel=\''.$rel.'\']").click();');
 	}
 }

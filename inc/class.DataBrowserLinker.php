@@ -16,49 +16,52 @@ class DataBrowserLinker {
 	 * @param int $start Timestamp for first date in browser
 	 * @param int $end Timestamp for last date in browser
 	 * @param string $title title for the link
+	 * @param string $rel
 	 * @return string HTML-link
 	 */
-	static function link($name, $start, $end, $title = '') {
+	static function link($name, $start, $end, $title = '', $rel = '') {
 		if (FrontendShared::$IS_SHOWN)
 			return DataBrowserShared::getLink($name, $start, $end, $title = '');
 
 		$href = 'call/call.DataBrowser.display.php?start='.$start.'&end='.$end;
 
-		return Ajax::link($name, DATA_BROWSER_ID, $href, '', $title);
+		return Ajax::link($name, DATA_BROWSER_ID, $href, $rel, $title);
 	}
 
 	/**
 	 * Get a ajax-link to a specified DataBrowser
 	 * @param string $name Name to be displayed as link
-	 * @param int $int Timestamp of the week
+	 * @param int $time Timestamp of the week
 	 * @return string HTML-link
 	 */
 	static function weekLink($name, $time) {
-		return self::link($name, Time::Weekstart($time), Time::Weekend($time));
+		return self::link($name, Time::Weekstart($time), Time::Weekend($time), '', 'week-link');
 	}
 
 	/**
 	 * Get a ajax-link to a specified DataBrowser
 	 * @param string $name Name to be displayed as link
-	 * @param int $int Timestamp of the month
+	 * @param int $time Timestamp of the month
 	 * @return string HTML-link
 	 */
 	static function monthLink($name, $time) {
 		return self::link($name,
 			mktime(0, 0, 0, date("m", $time), 1, date("Y", $time)),
-			mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time)));
+			mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time)),
+			'', 'month-link');
 	}
 
 	/**
 	 * Get a ajax-link to a specified DataBrowser
 	 * @param string $name Name to be displayed as link
-	 * @param int $int Timestamp of the year
+	 * @param int $time Timestamp of the year
 	 * @return string HTML-link
 	 */
 	static function yearLink($name, $time) {
 		return self::link($name,
 			mktime(0, 0, 0, 1, 1, date("Y", $time)),
-			mktime(23, 59, 50, 12, 31, date("Y", $time)));
+			mktime(23, 59, 50, 12, 31, date("Y", $time)),
+			'', 'year-link');
 	}
 
 	/**
