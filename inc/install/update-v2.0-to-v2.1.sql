@@ -1,6 +1,6 @@
 /* 20.03.2015 - add vdot value to dataset */
 UPDATE `runalyze_dataset` set name = 'vdoticon' WHERE name = 'vdot';
-INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'vdot', 1, 2, '', '', 0, 1, 'AVG', `id` FROM `runalyze_account`;
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'vdot', 1, 2, '', '', 27, 1, 'AVG', `id` FROM `runalyze_account`;
 
 /* 11.04.2015 - remove pace unit 'none' */
 UPDATE `runalyze_sport` SET `speed`="km/h" WHERE `speed`="";
@@ -40,5 +40,9 @@ ALTER TABLE `runalyze_training` CHANGE `notes` `notes` TEXT CHARACTER SET utf8 C
 ALTER TABLE `runalyze_trackdata` CHANGE `time` `time` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `distance` `distance` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `pace` `pace` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `heartrate` `heartrate` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `cadence` `cadence` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `power` `power` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `temperature` `temperature` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `groundcontact` `groundcontact` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `vertical_oscillation` `vertical_oscillation` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `pauses` `pauses` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 ALTER TABLE `runalyze_route` CHANGE `lats` `lats` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `lngs` `lngs` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `elevations_original` `elevations_original` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL, CHANGE `elevations_corrected` `elevations_corrected` LONGTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
-/* 05.06.2015 */
+/* 05.06.2015 - add opt out for mails */
 ALTER TABLE `runalyze_account` ADD `allow_mails` TINYINT(1) NOT NULL DEFAULT '1' AFTER `deletion_hash` ;
+
+/* 05.06.2015 - add stride length */
+ALTER TABLE `runalyze_training` ADD `stride_length` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `power`;
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'stride_length', 1, 2, 'small', '', 28, 1, 'AVG', `id` FROM `runalyze_account`;

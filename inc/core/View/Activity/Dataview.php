@@ -13,6 +13,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\StrideLength;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
@@ -80,6 +81,12 @@ class Dataview {
 	 * @var \Cadence
 	 */
 	protected $Cadence = null;
+
+	/**
+	 * Stride length
+	 * @var \Runalyze\Activity\StrideLength
+	 */
+	protected $StrideLength = null;
 
 	/**
 	 * Construct data view
@@ -252,6 +259,16 @@ class Dataview {
 			}
 
 			return new Cadence($Activity->cadence());
+		});
+	}
+
+	/**
+	 * Get stride length
+	 * @return \Runalyze\Activity\StrideLength
+	 */
+	public function strideLength() {
+		return $this->object($this->StrideLength, function($Activity){
+			return new StrideLength($Activity->strideLength());
 		});
 	}
 

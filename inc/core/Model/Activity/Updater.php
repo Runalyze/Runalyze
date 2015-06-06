@@ -122,6 +122,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		$this->updateVDOTAndIntensityAndTrimp();
 		$this->deleteIntensityCache();
 		$this->updatePower();
+		$this->updateStrideLength();
 	}
 
 	/**
@@ -210,6 +211,22 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$TrackdataUpdater = new Model\Trackdata\Updater($this->PDO);
 			$TrackdataUpdater->setAccountID($this->AccountID);
 			$TrackdataUpdater->update($this->Trackdata, array(Model\Trackdata\Object::POWER));
+		}
+	}
+
+	/**
+	 * Update stride length
+	 */
+	protected function updateStrideLength() {
+		if ($this->hasChanged(Object::SPORTID)) {
+			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
+				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
+				$Calculator->calculate();
+
+				$this->NewObject->set(Object::STRIDE_LENGTH, $Calculator->average());
+			} else {
+				$this->NewObject->set(Object::STRIDE_LENGTH, 0);
+			}
 		}
 	}
 

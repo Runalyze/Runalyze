@@ -43,6 +43,7 @@ class DatasetLabels {
 			'partner'		=> __('Training partner'),
 			'abc'			=> __('Running drills'),
 			'cadence'		=> __('Cadence'),
+			'stride_length'	=> __('Stride length'),
 			'groundcontact'	=> __('Ground contact time'),
 			'vertical_oscillation'	=> __('Vertical oscillation'),
 			'power'			=> __('Power'),

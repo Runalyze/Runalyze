@@ -153,6 +153,12 @@ class Object extends Model\ObjectWithID {
 	const POWER = 'power';
 
 	/**
+	 * Key: stride length
+	 * @var string
+	 */
+	const STRIDE_LENGTH = 'stride_length';
+
+	/**
 	 * Key: ground contact time
 	 * @var string
 	 */
@@ -301,6 +307,7 @@ class Object extends Model\ObjectWithID {
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
+			self::STRIDE_LENGTH,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::TEMPERATURE,
@@ -412,6 +419,7 @@ class Object extends Model\ObjectWithID {
 			self::TRIMP,
 			self::CADENCE,
 			self::POWER,
+			self::STRIDE_LENGTH,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::ROUTEID,
@@ -594,6 +602,14 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function power() {
 		return $this->Data[self::POWER];
+	}
+
+	/**
+	 * Stride length
+	 * @return int [cm]
+	 */
+	public function strideLength() {
+		return $this->Data[self::STRIDE_LENGTH];
 	}
 
 	/**

@@ -88,6 +88,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->calculateCaloriesIfZero();
 		$this->calculateVDOTAndIntensityAndTrimp();
 		$this->calculatePower();
+		$this->calculateStrideLength();
 	}
 
 	/**
@@ -162,6 +163,21 @@ class Inserter extends Model\InserterWithAccountID {
 
 			$this->Trackdata->set(Model\Trackdata\Object::POWER, $Calculator->powerData());
 			$this->Object->set(Object::POWER, $Calculator->average());
+		}
+	}
+
+	/**
+	 * Calculate stride length
+	 */
+	protected function calculateStrideLength() {
+		if (
+			$this->Object->sportid() == Configuration::General()->runningSport() &&
+			(NULL !== $this->Trackdata)
+		) {
+			$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
+			$Calculator->calculate();
+
+			$this->Object->set(Object::STRIDE_LENGTH, $Calculator->average());
 		}
 	}
 

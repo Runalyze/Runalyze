@@ -459,6 +459,13 @@ class Dataset {
 
 				return '';
 
+			case 'stride_length':
+				if ($this->Dataview->strideLength()->inCM() > 0) {
+					return $this->Dataview->strideLength()->string();
+				}
+
+				return '';
+
 			case 'groundcontact':
 				return $this->Dataview->groundcontact();
 

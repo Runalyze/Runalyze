@@ -194,6 +194,7 @@ class ConfigTabDataset extends ConfigTab {
 			'jd_intensity'	=> 27,
 			'trimp'		=> 121,
 			'cadence'	=> 90,
+			'stride_length'	=> 108,
 			'groundcontact'	=> 220,
 			'vertical_oscillation'	=> 76,
 			'power'		=> 520,
