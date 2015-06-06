@@ -453,14 +453,3 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `runalyze_user`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-/*  MySQL Event to delete registered user which have not been activated (7 days) */
-SET GLOBAL event_scheduler = ON;
-DELIMITER |
-CREATE EVENT deleteNotActivatedUsers
-	ON SCHEDULE EVERY 1 DAY
-	DO
-		BEGIN 
-			DELETE FROM runalyze_account WHERE registerdate < UNIX_TIMESTAMP(DATE_ADD(CURDATE(),INTERVAL -7 DAY)) AND activation_hash != '';
-END |
-DELIMITER ;
