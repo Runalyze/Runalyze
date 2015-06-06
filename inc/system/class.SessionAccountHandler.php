@@ -129,8 +129,9 @@ class SessionAccountHandler {
 
 			if ($Account['session_id'] == session_id()) {
 				$this->setAccount($Account);
-                                Language::setLanguage($Account['language']);
 				$this->updateLastAction();
+
+				Language::setLanguage($Account['language'], false);
 
 				return true;
 			} else
