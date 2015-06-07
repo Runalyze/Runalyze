@@ -46,3 +46,6 @@ ALTER TABLE `runalyze_account` ADD `allow_mails` TINYINT(1) NOT NULL DEFAULT '1'
 /* 05.06.2015 - add stride length */
 ALTER TABLE `runalyze_training` ADD `stride_length` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `power`;
 INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'stride_length', 1, 2, 'small', '', 28, 1, 'AVG', `id` FROM `runalyze_account`;
+
+/* 07.06.2015 - fix clothes for FIND_IN_SET */
+UPDATE `runalyze_training` SET `clothes` = REPLACE(`clothes`, ' ', '');

@@ -36,6 +36,6 @@ class Object extends StringArrayObject {
 	 * @return string
 	 */
 	public function asString() {
-		return implode(self::SEPARATOR.' ', $this->Elements);
+		return implode(self::SEPARATOR, $this->Elements);
 	}
 }
