@@ -12,7 +12,7 @@ class PlotMonthSumData extends PlotSumData {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->timerStart = 1;
+		$this->timerStart = Request::param('y') == parent::LAST_6_MONTHS ? 7 : 1;
 		$this->timerEnd   = 12;
 
 		parent::__construct();
@@ -31,9 +31,7 @@ class PlotMonthSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function getTitle() {
-		$Year = $this->Year == parent::LAST_12_MONTHS ? __('last 12 months') : $this->Year;
-
-		return __('Monthly chart:').' '.$Year;
+		return __('Monthly chart:');
 	}
 
 	/**
@@ -42,10 +40,13 @@ class PlotMonthSumData extends PlotSumData {
 	 */
 	protected function getXLabels() {
 		$months = array();
-		$add = $this->Year == self::LAST_12_MONTHS ? date('m') : 0;
+		$add = ($this->Year == parent::LAST_6_MONTHS || $this->Year == parent::LAST_12_MONTHS) ? date('m') : 0;
+		$i = 0;
 
-		for ($m = $this->timerStart; $m <= $this->timerEnd; $m++)
-			$months[] = array($m-1, Time::Month($m + $add, true));
+		for ($m = $this->timerStart; $m <= $this->timerEnd; $m++) {
+			$months[] = array($i, Time::Month($m + $add, true));
+			$i++;
+		}
 
 		return $months;
 	}
@@ -55,11 +56,20 @@ class PlotMonthSumData extends PlotSumData {
 	 * @return string
 	 */
 	protected function timer() {
-		if ($this->Year == parent::LAST_12_MONTHS) {
+		if ($this->Year == parent::LAST_6_MONTHS) {
+			return '((MONTH(FROM_UNIXTIME(`time`)) + 12 - '.date('m').' - 1)%12 + 1)';
+		} elseif ($this->Year == parent::LAST_12_MONTHS) {
 			return '((MONTH(FROM_UNIXTIME(`time`)) + 12 - '.date('m').' - 1)%12 + 1)';
 		}
 
 		return 'MONTH(FROM_UNIXTIME(`time`))';
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function beginningOfLast6Months() {
+		return strtotime("first day of -5 months");
 	}
 
 	/**
