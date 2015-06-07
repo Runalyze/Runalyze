@@ -517,7 +517,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($dat['i'] == date("Y")) {
 			$WeekFactor  = (date('z')+1) / 7;
 			$MonthFactor = (date('z')+1) / 30.4;
-		} elseif ($dat['i'] == 'total') {
+		} elseif ($dat['i'] == date('Y') + 1) {
 			$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
 			$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
 		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
