@@ -52,3 +52,7 @@ UPDATE `runalyze_training` SET `clothes` = REPLACE(`clothes`, ' ', '');
 
 /* 07.06.2015 - don't use rpe anymore */
 ALTER TABLE `runalyze_sport` DROP `RPE`;
+ALTER TABLE `runalyze_type` ADD `hr_avg` TINYINT(3) UNSIGNED NOT NULL DEFAULT '100' AFTER `sportid`, ADD `quality_session` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `hr_avg`;
+UPDATE `runalyze_type` SET `quality_session` = (`RPE` > 4);
+UPDATE `runalyze_type` SET `hr_avg` = IF(`RPE`>8,90+10*`RPE`,(120 + 7.5 * `RPE`));
+ALTER TABLE `runalyze_type` DROP `RPE`;

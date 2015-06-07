@@ -55,26 +55,24 @@ class Type {
 	 * @return string
 	 */
 	public function formattedAbbr() {
-		if ($this->hasHighRPE())
+		if ($this->isQualitySession())
 			return '<strong>'.$this->data['abbr'].'</strong>';
 
 		return $this->data['abbr'];
 	}
 
 	/**
-	 * Get boolean flag: Is the RPE of this type higher than 4?
-	 * @return bool
+	 * @return int
 	 */
-	public function hasHighRPE() {
-		return ($this->data['RPE'] > 4);
+	public function hrAvg() {
+		return $this->data['hr_avg'];
 	}
 
 	/**
-	 * Get RPE for this type
-	 * @return int
+	 * @return boolean
 	 */
-	public function RPE() {
-		return $this->data['RPE'];
+	public function isQualitySession() {
+		return ($this->data['quality_session'] == 1);
 	}
 
 	/**

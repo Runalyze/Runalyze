@@ -28,16 +28,22 @@ class Object extends Model\ObjectWithID {
 	const ABBREVIATION = 'abbr';
 
 	/**
-	 * Key: RPE
-	 * @var string
-	 */
-	const RPE = 'RPE';
-
-	/**
 	 * Key: short display
 	 * @var string
 	 */
 	const SPORTID = 'sportid';
+
+	/**
+	 * Key: avg. heart rate
+	 * @var string
+	 */
+	const HR_AVG = 'hr_avg';
+
+	/**
+	 * Key: quality session
+	 * @var string
+	 */
+	const QUALITY_SESSION = 'quality_session';
 
 	/**
 	 * All properties
@@ -47,8 +53,9 @@ class Object extends Model\ObjectWithID {
 		return array(
 			self::NAME,
 			self::ABBREVIATION,
-			self::RPE,
-			self::SPORTID
+			self::SPORTID,
+			self::HR_AVG,
+			self::QUALITY_SESSION
 		);
 	}
 
@@ -77,18 +84,26 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
-	 * RPE value
-	 * @return int
-	 */
-	public function rpe() {
-		return $this->Data[self::RPE];
-	}
-
-	/**
 	 * Sportid
 	 * @return int
 	 */
 	public function sportid() {
 		return $this->Data[self::SPORTID];
+	}
+
+	/**
+	 * Avg. heart rate
+	 * @return int
+	 */
+	public function hrAvg() {
+		return $this->Data[self::HR_AVG];
+	}
+
+	/**
+	 * Is quality session?
+	 * @return bool
+	 */
+	public function isQualitySession() {
+		return ($this->Data[self::QUALITY_SESSION] == 1);
 	}
 }

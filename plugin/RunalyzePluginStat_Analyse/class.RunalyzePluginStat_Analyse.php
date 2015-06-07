@@ -304,7 +304,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				SUM(`s`) AS `s`,
 				`typeid`,
 				`typeid` as `group`,
-				`RPE`
+				`hr_avg`
 			FROM `'.PREFIX.'training`
 			LEFT OUTER JOIN `'.PREFIX.'type` ON (
 				'.PREFIX.'training.typeid='.PREFIX.'type.id AND
@@ -313,7 +313,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			WHERE '.PREFIX.'training.`sportid`="'.$this->sportid.'"
 				AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
-			ORDER BY `RPE`, '.$this->getTimerForOrderingInQuery().' ASC
+			ORDER BY `hr_avg`, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
 		$type_data = $this->emptyData;
@@ -341,7 +341,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 				);
 			}
 
-			$types = DB::getInstance()->query('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `RPE` ASC')->fetchAll();
+			$types = DB::getInstance()->query('SELECT `id`, `name`, `abbr` FROM `'.PREFIX.'type` WHERE `sportid`="'.$this->sportid.'" ORDER BY `hr_avg` ASC')->fetchAll();
 			foreach ($types as $type) {
 				$type_foreach[] = array(
 					'name' => '<span title="'.$type['name'].'">'.($type['abbr'] != '' ? $type['abbr'] : $type['name']).'</span>',

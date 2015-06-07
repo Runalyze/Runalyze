@@ -25,7 +25,6 @@ class ConfigTabTypes extends ConfigTab {
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
 							'An activity type can only belong to one sport.') );
-		$Types->addInfo( __('Types with a RPE-value &ge; 5 will be emphasized in the activity log.') );
 		$Types->addInfo( __('Finding your personal bests requieres one type (for running) to be set as the \'Race\'-type in your configuration.') );
 
 		$this->Formular->addFieldset($Types);
@@ -42,15 +41,16 @@ class ConfigTabTypes extends ConfigTab {
 					<tr class="b">
 						<th>'.__('Name').'</th>
 						<th>'.__('Abbreviation').'</th>
-						<th>'.Ajax::tooltip(__('RPE'), __('Rating of perceived exertion (based on Borg): average exertion on a scale of 1 (easy) to 10 (extremely hard)')).'</th>
 						<th>'.Ajax::tooltip( __('Sport'), __('A type can only belong to one sport.')).'</th>
+						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
+						<th>'.Ajax::tooltip( __('Quality?'), __('Quality sessions will be emphasized in your calendar.')).'</th>
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A type can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
 
 		$Types   = DB::getInstance()->query('
-			SELECT ty.id, ty.name, ty.abbr, ty.RPE, ty.sportid, ty.accountid, (
+			SELECT ty.id, ty.name, ty.abbr, ty.sportid, ty.hr_avg, ty.quality_session, ty.accountid, (
 				SELECT COUNT(*) 
 				FROM `'.PREFIX.'training` tr
 				WHERE tr.typeid = ty.id AND
@@ -62,7 +62,7 @@ class ConfigTabTypes extends ConfigTab {
 		')->fetchAll();
 
 		//TODO Change all locations where Typeid is used 
-		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'RPE' => 5);
+		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'hr_avg' => 120, 'quality_session' => 0);
 
 		foreach ($Types as $Data) {
 			$id     = $Data['id'];
@@ -80,12 +80,18 @@ class ConfigTabTypes extends ConfigTab {
 				<tr class="'.($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'"></td>
-					<td><input type="text" size="1" name="type[RPE]['.$id.']" value="'.$Data['RPE'].'"></td>
 					<td><select name="type[sportid]['.$id.']">';
 			foreach ($Sports as $SData)
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
 
 			$Code .= '</select></td>
+					<td>
+						<span class="input-with-unit">
+							<input type="text" name="type[hr_avg]['.$id.']" value="'.$Data['hr_avg'].'" id="type_hr_avg_'.$id.'" class="small-size">
+							<label for="type_hr_avg_'.$id.'" class="input-unit">bpm</label>
+						</span>
+					</td>
+					<td><input type="checkbox" name="type[quality_session]['.$id.']"'.($Data['quality_session'] ? ' checked' : '').'></td>
 					<td>'.$delete.'</td>
 				</tr>';
 		}
@@ -106,24 +112,20 @@ class ConfigTabTypes extends ConfigTab {
 
 		foreach ($Types as $Type) {
 			$id  = $Type['id'];
-			$rpe = (int)$_POST['type']['RPE'][$id];
-
-			if ($rpe < 1)
-				$rpe = 1;
-			elseif ($rpe > 10)
-				$rpe = 10;
 
 			$columns = array(
 				'name',
 				'abbr',
-				'RPE',
 				'sportid',
+				'hr_avg',
+				'quality_session'
 			);
 			$values  = array(
 				$_POST['type']['name'][$id],
 				$_POST['type']['abbr'][$id],
-				$rpe,
 				$_POST['type']['sportid'][$id],
+				$_POST['type']['hr_avg'][$id],
+				isset($_POST['type']['quality_session'][$id])
 			);
 
 			if (isset($_POST['type']['delete'][$id]))

@@ -402,7 +402,7 @@ class Dataset {
 
 			case 'typeid':
 				if (!is_null($this->Type)) {
-					if ($this->Type->rpe() > 4) {
+					if ($this->Type->isQualitySession()) {
 						return '<strong>'.$this->Type->abbreviation().'</strong>';
 					}
 

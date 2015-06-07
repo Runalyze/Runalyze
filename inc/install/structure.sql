@@ -285,8 +285,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
 `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `abbr` varchar(5) NOT NULL DEFAULT '',
-  `RPE` smallint(2) NOT NULL DEFAULT '2',
   `sportid` int(11) NOT NULL DEFAULT '0',
+  `hr_avg` tinyint(3) unsigned NOT NULL DEFAULT '100',
+  `quality_session` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

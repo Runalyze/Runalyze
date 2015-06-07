@@ -43,7 +43,8 @@ class TypeFactory {
 		return array(
 			'name' => '?',
 			'abbr' => '?',
-			'RPE' => 0
+			'hr_avg' => 0,
+			'quality_session' => 0
 		);
 	}
 
