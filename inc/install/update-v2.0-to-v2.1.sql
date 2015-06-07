@@ -21,3 +21,6 @@ ALTER TABLE `runalyze_sport` DROP `distances`, DROP `pulse`;
 
 /* 15.04.2015 - add language to account configuration */
 ALTER TABLE `runalyze_account` ADD `language` VARCHAR(5) NOT NULL AFTER `mail`;
+
+/* 07.06.2015 - fix clothes for FIND_IN_SET */
+UPDATE `runalyze_training` SET `clothes` = REPLACE(`clothes`, ' ', '');
