@@ -24,7 +24,7 @@ $Query = DB::getInstance()->prepare(
 	WHERE
 		`sportid`=:id AND
 		(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
-		'.($this->year > 0 ? 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
+		'.$this->getYearDependenceForQuery().'
 	GROUP BY `h`
 	ORDER BY `h` ASC'
 );

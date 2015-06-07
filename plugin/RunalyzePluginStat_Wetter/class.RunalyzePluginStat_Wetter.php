@@ -74,12 +74,25 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	}
 
 	/**
+	 * Timer for year or ordered months
+	 * @return string
+	 */
+	protected function getTimerForOrderingInQuery() {
+		if ($this->showsAllYears()) {
+			// Ensure month-wise data
+			return 'MONTH(FROM_UNIXTIME(`time`))';
+		}
+
+		return parent::getTimerForOrderingInQuery();
+	}
+
+	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
 		$this->initData();
 
-		$this->setYearsNavigation();
+		$this->setYearsNavigation(true, true, true);
 		$this->setToolbarNavigationLinks($this->getToolbarNavigationLinks());
 
 		$this->setHeader($this->getHeader());
@@ -103,7 +116,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	private function displayMonthTable() {
 		echo '<table class="fullwidth zebra-style r">';
-		echo '<thead>'.HTML::monthTR(8, 1).'</thead>';
+		echo '<thead>';
+		$this->displayTableHeadForTimeRange();
+		echo '</thead>';
 		echo '<tbody>';
 
 		if ($this->Configuration()->value('for_weather')) {
@@ -128,13 +143,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$temps = DB::getInstance()->query('
 			SELECT
 				AVG(`temperature`) as `temp`,
-				MONTH(FROM_UNIXTIME(`time`)) as `m`
+				'.$this->getTimerIndexForQuery().' as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL
-				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
-			GROUP BY MONTH(FROM_UNIXTIME(`time`))
-			ORDER BY `m` ASC
+				'.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
 			LIMIT 12')->fetchAll();
 
 		$i = 1;
@@ -165,13 +179,13 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$Statement = DB::getInstance()->prepare(
 			'SELECT
 				SUM(1) as `num`,
-				MONTH(FROM_UNIXTIME(`time`)) as `m`
+				'.$this->getTimerIndexForQuery().' as `m`
 			FROM `'.PREFIX.'training` WHERE
 				`sportid`=?
-				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').' AND
-				`weatherid`=?
-			GROUP BY MONTH(FROM_UNIXTIME(`time`))
-			ORDER BY `m` ASC
+				AND `weatherid`=?
+				'.$this->getYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
 			LIMIT 12'
 		);
 
@@ -210,13 +224,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	private function displayMonthTableClothes() {
 		$nums = DB::getInstance()->query('SELECT
 				SUM(1) as `num`,
-				MONTH(FROM_UNIXTIME(`time`)) as `m`
+				'.$this->getTimerIndexForQuery().' as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`clothes`!=""
-				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
-			GROUP BY MONTH(FROM_UNIXTIME(`time`))
-			ORDER BY `m` ASC
+				'.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
 			LIMIT 12')->fetchAll();
 		
 		if (!empty($nums)) {
@@ -227,13 +240,12 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$ClothesQuery = DB::getInstance()->prepare(
 			'SELECT
 				SUM(IF(FIND_IN_SET(:id, `clothes`)!=0,1,0)) as `num`,
-				MONTH(FROM_UNIXTIME(`time`)) as `m`
+				'.$this->getTimerIndexForQuery().' as `m`
 			FROM `'.PREFIX.'training` WHERE
-				`sportid`="'.Configuration::General()->mainSport().'"
-				'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
-			GROUP BY MONTH(FROM_UNIXTIME(`time`))
+				1 '.$this->getSportAndYearDependenceForQuery().'
+			GROUP BY '.$this->getTimerIndexForQuery().'
 			HAVING `num`!=0
-			ORDER BY `m` ASC
+			ORDER BY '.$this->getTimerForOrderingInQuery().' ASC
 			LIMIT 12'
 		);
 
@@ -299,10 +311,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 				MIN(`temperature`) as `min`
 			FROM `'.PREFIX.'training`
 			WHERE
-				`sportid`="'.Configuration::General()->mainSport().'" AND
 				`temperature` IS NOT NULL AND
 				FIND_IN_SET(:id,`clothes`) != 0
-			'.($this->year != -1 ? ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '')
+				'.$this->getSportAndYearDependenceForQuery()
 		);
 
 		$i = 0;
@@ -338,8 +349,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Display extreme trainings
 	 */
 	private function displayExtremeTrainings() {
-		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND' : '').' `temperature` IS NOT NULL ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
-		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE '.($this->year != -1 ? '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND' : '').' `temperature` IS NOT NULL ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
+		$hot  = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getYearDependenceForQuery().' ORDER BY `temperature` DESC LIMIT 5')->fetchAll();
+		$cold = DB::getInstance()->query('SELECT `temperature`, `id`, `time` FROM `'.PREFIX.'training` WHERE `temperature` IS NOT NULL '.$this->getYearDependenceForQuery().' ORDER BY `temperature` ASC LIMIT 5')->fetchAll();
 
 		foreach ($hot as $i => $h)
 			$hot[$i] = $h['temperature'].'&nbsp;&#176;C '.__('on').' '.Ajax::trainingLink($h['id'], date('d.m.Y', $h['time']));
@@ -358,7 +369,9 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Initialize internal data
 	 */
 	private function initData() {
-		if ($this->year == -1) {
+		$this->sportid = Configuration::General()->mainSport();
+
+		if ($this->showsAllYears()) {
 			$this->i      = 0;
 			$this->jahr   = "Gesamt";
 			$this->jstart = mktime(0,0,0,1,1,START_YEAR);
@@ -383,6 +396,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 			$header = ($this->Configuration()->value('for_weather')) ? __('Weather and Clothing') : __('Clothing');
 		}
 
-		return $header.': '.$this->jahr;
+		return $header.': '.$this->getYearString();
 	}
 }

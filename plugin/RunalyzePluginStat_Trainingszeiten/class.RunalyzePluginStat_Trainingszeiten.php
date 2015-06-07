@@ -48,7 +48,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * Prepare
 	 */
 	protected function prepareForDisplay() {
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 		$this->setSportsNavigation(true, true);
 
 		$this->setHeaderWithSportAndYear();
@@ -111,7 +111,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			WHERE
 				`sportid` IN('.substr($sports_not_short,0,-1).') AND
 				(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
-				'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
+				'.$this->getYearDependenceForQuery().'
 			ORDER BY
 				ABS(12-(`H`+10)%24-`MIN`/60) ASC,
 				`MIN` DESC LIMIT 20

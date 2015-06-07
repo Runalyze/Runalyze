@@ -90,7 +90,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
 		$this->setAnalysisNavigation();
 		$this->setSportsNavigation();
-		$this->setYearsNavigation();
+		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeader($this->Sport->name().' '.$this->getYearString());
 	}
@@ -125,18 +125,25 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Initialize the internal timer
 	 */
 	private function initTimer() {
-		if ($this->year != -1) {
+		if ($this->showsSpecificYear()) {
 			$this->where_time = 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
 			$this->group_time = 'MONTH(FROM_UNIXTIME(`time`))';
 			$this->timer = 'MONTH';
 			$this->timer_start = 1;
 			$this->timer_end = 12;
-		} else {
+		} elseif ($this->showsAllYears()) {
 			$this->where_time = '';
 			$this->group_time = 'YEAR(FROM_UNIXTIME(`time`))';
 			$this->timer = 'YEAR';
 			$this->timer_start = START_YEAR;
 			$this->timer_end = YEAR;
+		} else {
+			$num = $this->showsLast6Months() ? 6 : 12;
+			$this->where_time = ' AND `time` > '.strtotime("first day of -".($num - 1)." months");
+			$this->group_time = 'MONTH(FROM_UNIXTIME(`time`))';
+			$this->timer = 'MONTH';
+			$this->timer_start = 1;
+			$this->timer_end = 12;
 		}
 
 		$this->colspan = $this->timer_end - $this->timer_start + 3;
@@ -291,7 +298,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function getTypeArray() {
 		$result = DB::getInstance()->query('
-			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
+			SELECT '.$this->getTimerIndexForQuery().' AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
@@ -306,7 +313,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			WHERE '.PREFIX.'training.`sportid`="'.$this->sportid.'"
 				AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.'
 			GROUP BY `typeid`, '.$this->group_time.'
-			ORDER BY `RPE`, `timer` ASC
+			ORDER BY `RPE`, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
 		$type_data = $this->emptyData;
@@ -373,7 +380,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		}
 
 		$result = DB::getInstance()->query('
-			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
+			SELECT '.$this->getTimerIndexForQuery().' AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
@@ -381,7 +388,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' AND `distance`>0
 			GROUP BY `group`, '.$this->group_time.'
-			ORDER BY `group` DESC, `timer` ASC
+			ORDER BY `group` DESC, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
 		$speed_data = $this->emptyData;
@@ -426,7 +433,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$ceil_corr  = $pulse_min % $pulse_step;
 
 		$result = DB::getInstance()->query('
-			SELECT '.$this->timer.'(FROM_UNIXTIME(`time`)) AS `timer`,
+			SELECT '.$this->getTimerIndexForQuery().' AS `timer`,
 				COUNT(*) AS `num`,
 				SUM(`distance`) AS `distance`,
 				SUM(`s`) AS `s`,
@@ -437,7 +444,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			FROM `'.PREFIX.'training`
 			WHERE `sportid`='.$this->sportid.' AND '.PREFIX.'training.accountid="'.SessionAccountHandler::getId().'" '.$this->where_time.' && `pulse_avg`!=0
 			GROUP BY `group`, '.$this->group_time.'
-			ORDER BY `group`, `timer` ASC
+			ORDER BY `group`, '.$this->getTimerForOrderingInQuery().' ASC
 		')->fetchAll();
 
 		$pulse_data = $this->emptyData;
@@ -533,11 +540,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Print header columns for a table
 	 */
 	private function printTableHeader() {
-		for ($i = $this->timer_start; $i <= $this->timer_end; $i++)
-			echo ($this->year != -1)
-				? '<th width="7%">'.Time::Month($i, true).'</th>'
-				: '<th>'.$i.'</th>';
-
+		$this->displayTableHeadForTimeRange(false, '7%');
 		echo '<th>'.__('In total').'</th>';
 	}
 

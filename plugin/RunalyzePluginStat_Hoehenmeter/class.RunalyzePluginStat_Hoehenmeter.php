@@ -39,7 +39,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setSportsNavigation(true, true);
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeaderWithSportAndYear();
 

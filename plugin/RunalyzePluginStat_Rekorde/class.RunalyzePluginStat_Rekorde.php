@@ -41,7 +41,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeaderWithSportAndYear();
 
@@ -186,15 +186,15 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 		$this->rekorde[] = array(
 			'name'			=> __('Fastest activities'),
 			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getYearDependenceForQuery().' AND `distance`>0 ORDER BY (`distance`/`s`) DESC, `s` DESC LIMIT 10',
 			'speed'			=> true);
 		$this->rekorde[] = array(
 			'name'			=> __('Longest activities'),
 			'sportquery'	=> 'SELECT * FROM `'.PREFIX.'sport` ORDER BY `id` ASC',
-			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getSportAndYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
+			'datquery'		=> 'SELECT `id`, `time`, `s`, `distance`, `sportid` FROM `'.PREFIX.'training` WHERE `sportid`=:sportid '.$this->getYearDependenceForQuery().' ORDER BY `distance` DESC, `s` DESC LIMIT 10',
 			'speed'			=> false);
 
-		if ($this->year == -1) {
+		if ($this->showsAllYears()) {
 			$this->years = DB::getInstance()->query('
 				SELECT
 					`sportid`,
@@ -215,7 +215,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				MONTH(FROM_UNIXTIME(`time`)) as `month`,
 				(MONTH(FROM_UNIXTIME(`time`))+100*YEAR(FROM_UNIXTIME(`time`))) as `monthyear`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
 			GROUP BY `monthyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();
@@ -229,7 +229,7 @@ class RunalyzePluginStat_Rekorde extends PluginStat {
 				YEARWEEK(FROM_UNIXTIME(`time`),1) as `weekyear`,
 				`time`
 			FROM `'.PREFIX.'training`
-			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getSportAndYearDependenceForQuery().'
+			WHERE `sportid`='.Configuration::General()->runningSport().' '.$this->getYearDependenceForQuery().'
 			GROUP BY `weekyear`
 			ORDER BY `km` DESC
 			LIMIT 10')->fetchAll();

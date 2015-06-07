@@ -49,7 +49,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setSportsNavigation(true, true);
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeaderWithSportAndYear();
 

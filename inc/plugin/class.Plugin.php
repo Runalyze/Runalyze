@@ -91,7 +91,7 @@ abstract class Plugin {
 	protected $sportid;
 
 	/**
-	 * Displayed year
+	 * Displayed year (-1: 'all', 6/12: 'last 6/12 months')
 	 * @var int
 	 */
 	protected $year;
@@ -329,6 +329,41 @@ abstract class Plugin {
 				$this->year = $_GET['jahr'];
 		if (isset($_GET['dat']))
 			$this->dat = $_GET['dat'];
+	}
+
+	/**
+	 * @return boolean
+	 */
+	final protected function showsAllYears() {
+		return ($this->year == -1);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	final protected function showsSpecificYear() {
+		return ($this->year != -1 && $this->year != 6 && $this->year != 12);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	final protected function showsTimeRange() {
+		return ($this->year == 6) || ($this->year == 12);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	final protected function showsLast6Months() {
+		return ($this->year == 6);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	final protected function showsLast12Months() {
+		return ($this->year == 12);
 	}
 
 	/**
