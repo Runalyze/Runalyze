@@ -196,7 +196,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_sport` (
   `short` tinyint(1) NOT NULL DEFAULT '0',
   `kcal` smallint(4) NOT NULL DEFAULT '0',
   `HFavg` smallint(3) NOT NULL DEFAULT '120',
-  `RPE` tinyint(2) NOT NULL DEFAULT '2',
   `distances` tinyint(1) NOT NULL DEFAULT '1',
   `speed` varchar(10) NOT NULL DEFAULT 'min/km',
   `types` tinyint(1) NOT NULL DEFAULT '0',

@@ -49,3 +49,6 @@ INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `po
 
 /* 07.06.2015 - fix clothes for FIND_IN_SET */
 UPDATE `runalyze_training` SET `clothes` = REPLACE(`clothes`, ' ', '');
+
+/* 07.06.2015 - don't use rpe anymore */
+ALTER TABLE `runalyze_sport` DROP `RPE`;
