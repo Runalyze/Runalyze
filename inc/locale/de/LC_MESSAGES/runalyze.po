@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-08 08:40+0200\n"
-"PO-Revision-Date: 2015-06-08 08:40+0200\n"
+"PO-Revision-Date: 2015-06-08 09:15+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -671,7 +671,7 @@ msgstr "Frequenzdiagramm"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:51
 msgid "Stride length plot"
-msgstr ""
+msgstr "Schrittlängendiagramm"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:56
 msgid "Oscillation plot"
@@ -691,7 +691,7 @@ msgstr "Temperaturdiagramm"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:115
 msgid "Stride Length"
-msgstr ""
+msgstr "Schrittlänge"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:118
 #: inc/training/schemes/scheme.Training.new.php:330
@@ -1814,7 +1814,7 @@ msgstr "Douglas-Peucker"
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:52
 #: inc/class.DatasetLabels.php:46
 msgid "Stride length"
-msgstr ""
+msgstr "Schrittlänge"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -3101,9 +3101,8 @@ msgstr "Alle Sportarten"
 
 #: inc/draw/class.PlotSumData.php:251 inc/plugin/class.PluginStat.php:269
 #: inc/plugin/class.PluginStat.php:288
-#, fuzzy
 msgid "Last 6 months"
-msgstr "Letzten 12 Monate"
+msgstr "Letzten 6 Monate"
 
 #: inc/draw/class.PlotSumData.php:252 inc/plugin/class.PluginStat.php:270
 #: inc/plugin/class.PluginStat.php:290
@@ -3111,9 +3110,8 @@ msgid "Last 12 months"
 msgstr "Letzten 12 Monate"
 
 #: inc/draw/class.PlotSumData.php:298
-#, fuzzy
 msgid "last 6 months"
-msgstr "letzte 12 Monate"
+msgstr "letzten 6 Monate"
 
 #: inc/draw/class.PlotSumData.php:300
 msgid "last 12 months"
@@ -3641,11 +3639,11 @@ msgstr "Durchschnittliche Herzfrequenz (wird z.B. für TRIMP verwendet)"
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Quality?"
-msgstr ""
+msgstr "Qualitätseinheit?"
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Quality sessions will be emphasized in your calendar."
-msgstr ""
+msgstr "Qualitätseinheiten werden im Kalender hervorgehoben."
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "A type can only be deleted if no references exist."
@@ -3673,20 +3671,20 @@ msgid "Your account"
 msgstr "Dein Account"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
-#, fuzzy
 msgid "Email me"
-msgstr "E-Mail-Adresse"
+msgstr "Sende mir E-Mails"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
-#, fuzzy
 msgid "Notifications"
-msgstr "Konfiguration"
+msgstr "Benachrichtigungen"
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
+"In unregelmäßigen Abständen werden wir dir E-Mails schicken. Wer werden dir "
+"niemals Spam oder Werbung zusenden."
 
 #: inc/system/config/class.ConfigTabAccount.php:65
 msgid "Change your password"
@@ -3794,11 +3792,8 @@ msgstr ""
 "sind."
 
 #: inc/system/config/class.ConfigTabSports.php:39
-#, fuzzy
 msgid "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
-"Die Werte für <em>&Oslash; HF</em> und <em>RPE</em> sind für die TRIMP-"
-"Berechnung notwendig."
+msgstr "<em>&Oslash; HF</em>ist für die TRIMP-Berechnung notwendig."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
@@ -4341,9 +4336,8 @@ msgid "Uninstall plugin"
 msgstr "Plugin deinstallieren"
 
 #: inc/plugin/class.PluginStat.php:227
-#, fuzzy
 msgid "Choose time range"
-msgstr "Wähle die Kleidung"
+msgstr "Wähle Zeitraum"
 
 #: inc/plugin/class.PluginStat.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
@@ -5947,9 +5941,8 @@ msgid "km/Month"
 msgstr "km/Monat"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:290
-#, fuzzy
 msgid "Last 10 training weeks"
-msgstr "Trainingswochen"
+msgstr "Letzten 10 Trainingswochen"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:330
 msgid "No activities"
@@ -6708,9 +6701,8 @@ msgid "Last half year"
 msgstr "Letztes Halbjahr"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:20
-#, fuzzy
 msgid "Last year"
-msgstr "Letztes Halbjahr"
+msgstr "Letztes Jahr"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:30
 msgid "Summary of your activities for each sport."
