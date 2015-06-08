@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-05-27 15:51+0200\n"
-"PO-Revision-Date: 2015-04-14 14:45+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-06-08 08:40+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1178,16 +1178,15 @@ msgstr "Anzahl Tage für lange Läufe"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Number of days to look at for longjog goal."
-msgstr ""
+msgstr "Anzahl Tage für empfohlene Distanz der langen Läufe."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:111
-#, fuzzy
 msgid "Days for week kilometer"
-msgstr "Wochenkilometer"
+msgstr "Anzahl Tage für Wochenkilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr ""
+msgstr "Anzahl Tage für wöchentliches Kilometer-Ziel."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:115
 msgid "Days for week kilometer (minimum)"
@@ -1290,34 +1289,28 @@ msgid "Pace plot: y-axis minimum"
 msgstr "Pacediagramm: Y-Achsen-Minimum"
 
 #: inc/core/Configuration/Category/ActivityView.php:324
-#, fuzzy
 msgid "Data points below this limit will be ignored. (only for min/km)"
 msgstr ""
-"Alternativ zum allgemeinen Ignorieren von Ausreißern kann hier eine maximale "
-"Grenze festgelegt werden. (nur beim Laufen)"
+"Datenpunkte unterhalb dieser Grenze werden nicht angezeigt. (nur beim Laufen)"
 
 #: inc/core/Configuration/Category/ActivityView.php:328
 msgid "Pace plot: y-axis maximum"
 msgstr "Pacediagramm: Y-Achsen-Maximum"
 
 #: inc/core/Configuration/Category/ActivityView.php:329
-#, fuzzy
 msgid "Data points above this limit will be ignored. (only for min/km)"
 msgstr ""
-"Alternativ zum allgemeinen Ignorieren von Ausreißern kann hier eine maximale "
-"Grenze festgelegt werden. (nur beim Laufen)"
+"Datenpunkte oberhalb dieser Grenze werden nicht angezeigt. (nur beim Laufen)"
 
 #: inc/core/Configuration/Category/ActivityView.php:333
-#, fuzzy
 msgid "Pace plot: y-axis scale type"
-msgstr "Pacediagramm: Y-Achsen-Maximum"
+msgstr "Pacediagramm: Y-Achsen-Skalierung"
 
 #: inc/core/Configuration/Category/ActivityView.php:334
 msgid "Scale type that will be used to show pace on y-axis."
-msgstr ""
+msgstr "Skalierung, die zur Anzeige der Pace auf der Y-Achse genutzt wird."
 
 #: inc/core/Configuration/Category/ActivityView.php:338
-#, fuzzy
 msgid "Pace plot: Ignore outliers"
 msgstr "Pacediagramm: Ausreißer ignorieren"
 
@@ -1368,7 +1361,7 @@ msgstr "Karte vor Diagrammen anzeigen"
 
 #: inc/core/Configuration/Category/ActivityView.php:371
 msgid "Map: zoom on scroll"
-msgstr ""
+msgstr "Karte: durch Scrollen zoomen"
 
 #: inc/core/Configuration/Category/ActivityView.php:381
 msgid "Elevation: smoothing"
@@ -1857,16 +1850,15 @@ msgstr "jeden 20. Datenpunkt"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "linear"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "umgekehrt linear"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
-#, fuzzy
 msgid "as speed"
-msgstr "&oslash; Geschwindigkeit"
+msgstr "als Geschwindigkeit"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
@@ -2420,7 +2412,7 @@ msgstr "E-Mail-Adresse"
 #: inc/tpl/tpl.loginWindow.php:89
 #: inc/system/config/class.ConfigTabAccount.php:36
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: inc/tpl/tpl.loginWindow.php:101
 msgid "Password again"
@@ -3118,6 +3110,8 @@ msgstr "Ziel:"
 #: inc/draw/class.PlotSumData.php:582
 msgid "Goal and average are based on current basic endurance calculations."
 msgstr ""
+"Ziel und Durchschnitt basieren auf deiner aktuell berechneten "
+"Grundlagenausdauer."
 
 #: inc/draw/class.PlotMonthSumData.php:34
 #: inc/draw/class.PlotWeekSumData.php:35
@@ -3816,7 +3810,7 @@ msgstr "Der Sport wird an der freien Luft betrieben: Strecke, Wetter, ..."
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Modus zur Anzeige der Aktivitäten im Kalender"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
@@ -3825,11 +3819,11 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:80
 msgid "complete row"
-msgstr ""
+msgstr "komplette Zeile"
 
 #: inc/system/config/class.ConfigTabSports.php:81
 msgid "only icon"
-msgstr ""
+msgstr "nur Icon"
 
 #: inc/data/class.TypeFactory.php:122
 msgid "No types available"
@@ -3973,11 +3967,10 @@ msgid "This file does not contain any laps."
 msgstr "Diese Datei enthält keine Runden."
 
 #: inc/import/parser/class.ParserTCXruntasticSingle.php:74
-#, fuzzy
 msgid ""
 "Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located."
 msgstr ""
-"Das XML-Objekt ist nicht von Garmin. &lt;Id&gt;-tag wurde nicht gefunden."
+"Das XML-Objekt ist nicht von Runtastic. &lt;Id&gt;-tag wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29
 msgid ""
@@ -4052,10 +4045,9 @@ msgstr ""
 "nicht unterstützt."
 
 #: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
-#, fuzzy
 msgid "This file is not supported. Supported producers of slf-files: "
 msgstr ""
-"Diese Datei wird nicht unterstützt. Unterstützte Hersteller von kml-Dateien: "
+"Diese Datei wird nicht unterstützt. Unterstützte Hersteller von slf-Dateien: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
@@ -6381,15 +6373,15 @@ msgstr "Ruhetage"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:252
 msgid "Rest days needed to reach TSB = 0"
-msgstr ""
+msgstr "Benötigte Ruhetage um TSB = 0 zu erreichen"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:261
 msgid "Easy&nbsp;TRIMP"
-msgstr ""
+msgstr "Entspannter&nbsp;TRIMP"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:263
 msgid "Max TRIMP that will still keep you at TSB = 0"
-msgstr ""
+msgstr "Maximaler TRIMP-Wert, bei dem TSB = 0 erhalten bleibt"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:279
 msgid "Monotony"
@@ -6527,15 +6519,12 @@ msgid "Current impulse<br>positive: recovery<br>negative: hard training"
 msgstr "Derzeitiger Impuls:<br>Positiv: Erholung<br>Negativ: Hartes Training"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:486
-#, fuzzy
 msgid ""
 "ATL/CTL are based on the TRIMP-concept, which adresses an impulse value to "
 "every activity. ATL and CTL are averaged values over a given time range."
 msgstr ""
 "ATL/CTL basieren auf dem TRIMP-Konzept, das jedem Training einen "
-"Belastungswert zuteilt. ATL und CTL sind Mittelwerte von TRIMP. Da die Werte "
-"selbst wenig Aussagekraft haben, werden sie bei Runalyze in Prozent vom "
-"bisherigen Maximum angegeben."
+"Belastungswert zuteilt. ATL und CTL sind Mittelwerte von TRIMP."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:489
 msgid ""
@@ -6763,11 +6752,9 @@ msgid "by time"
 msgstr "nach Zeit"
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:116
-#, fuzzy
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
-"Diese Werte betrachten nur die durchschnittliche Herzfrequenz deiner "
-"Trainings."
+"Diese Werte betrachten nur die durchschnittlichen Werte deiner Trainings."
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:172
 msgid "There is no data for this sport."
