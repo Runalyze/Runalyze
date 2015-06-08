@@ -156,10 +156,14 @@ class Helper {
 	 * @return int   Timestamp
 	 */
 	private static function calculateStartTime() {
-		$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training`')->fetch();
+                DB::getInstance()->stopAddingAccountID();
+		$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE accountid = '.SessionAccountHandler::getId())->fetch();
+                DB::getInstance()->startAddingAccountID();
 
 		if (isset($data['time']) && $data['time'] == 0) {
-			$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0')->fetch();
+                        DB::getInstance()->stopAddingAccountID();
+			$data = DB::getInstance()->query('SELECT MIN(`time`) as `time` FROM `'.PREFIX.'training` WHERE `time` != 0 AND accountid = '.SessionAccountHandler::getId())->fetch();
+                        DB::getInstance()->startAddingAccountID();
 			Error::getInstance()->addWarning('Du hast ein Training ohne Zeitstempel, also mit dem Datum 01.01.1970.');
 		}
 
@@ -206,9 +210,13 @@ class Helper {
 	private static function calculateHFmax() {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (SharedLinker::isOnSharedPage()) {
-			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" AND `pulse_max` > 0 ORDER BY `time` DESC LIMIT 1')->fetch();
+                        DB::getInstance()->stopAddingAccountID();
+			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" AND `pulse_max` > 0 AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
+                        DB::getInstance()->startAddingAccountID();
 		} else {
-			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `pulse_max` > 0 ORDER BY `time` DESC LIMIT 1')->fetch();
+                        DB::getInstance()->stopAddingAccountID();
+			$userdata = DB::getInstance()->query('SELECT `pulse_max` FROM `'.PREFIX.'user` WHERE `pulse_max` > 0 AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
+                        DB::getInstance()->startAddingAccountID();
 		}
 
 		if ($userdata === false || $userdata['pulse_max'] == 0)
@@ -246,9 +254,9 @@ class Helper {
 	private static function calculateHFrest() {
 		// TODO: Move to class::UserData - possible problem in loading order?
 		if (SharedLinker::isOnSharedPage()) {
-			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" AND `pulse_rest` > 0 ORDER BY `time` DESC LIMIT 1')->fetch();
+			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `accountid`="'.SharedLinker::getUserId().'" AND `pulse_rest` > 0 AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
 		} else {
-			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `pulse_rest` > 0 ORDER BY `time` DESC LIMIT 1')->fetch();
+			$userdata = DB::getInstance()->query('SELECT `pulse_rest` FROM `'.PREFIX.'user` WHERE `pulse_rest` > 0 AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
 		}
 
 		if ($userdata === false)

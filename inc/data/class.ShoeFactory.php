@@ -61,7 +61,7 @@ class ShoeFactory
 		$shoes = Cache::get(self::CACHE_KEY);
 
 		if (is_null($shoes)) {
-			$shoes = DB::getInstance()->query('SELECT * FROM `' . PREFIX . 'shoe`')->fetchAll();
+			$shoes = DB::getInstance()->query('SELECT * FROM `' . PREFIX . 'shoe` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
 			Cache::set(self::CACHE_KEY, $shoes, '3600');
 		}
 

@@ -14,7 +14,7 @@ if ($Plugin->Configuration()->value('plot_timerange') > 0) {
 	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
 }
 
-$Data     = array_reverse( DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
+$Data     = array_reverse( DB::getInstance()->query('SELECT fat,water,muscles,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll().' AND accountid = '.SessionAccountHandler::getId());
 $Adiposes = array();
 $Water    = array();
 $Muscles  = array();

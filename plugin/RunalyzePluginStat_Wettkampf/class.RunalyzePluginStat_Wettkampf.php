@@ -405,7 +405,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		$Condition = new Weather\Condition(0);
 		$Strings = array();
 
-		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!='.Weather\Condition::UNKNOWN.' GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
+		$Weather = DB::getInstance()->query('SELECT SUM(1) as num, weatherid FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `weatherid`!='.Weather\Condition::UNKNOWN.' AND `accountid` = '.SessionAccountHandler::getId().' GROUP BY `weatherid` ORDER BY `weatherid` ASC')->fetchAll();
 		foreach ($Weather as $W) {
 			$Condition->set($W['weatherid']);
 			$Strings[] = $W['num'].'x '.$Condition->icon()->code();

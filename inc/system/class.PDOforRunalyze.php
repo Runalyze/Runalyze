@@ -51,7 +51,7 @@ class PDOforRunalyze extends PDO {
 	 * @param string $statement
 	 */
 	protected function addAccountIDtoStatement(&$statement) {
-		if (!is_numeric($this->accountID) || strpos($statement, 'SET NAMES') !== false || strpos($statement, 'TRUNCATE') !== false) {
+		if (!is_numeric($this->accountID) || strpos($statement, 'SET NAMES') !== false || strpos($statement, 'TRUNCATE') !== false || strpos($statement, 'SessionAccountHandler')) {
 			return;
 		}
 
