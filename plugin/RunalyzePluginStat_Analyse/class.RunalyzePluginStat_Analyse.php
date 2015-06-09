@@ -161,7 +161,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->AnalysisData[] = $this->getPaceArray();
 		}
 
-		if ($this->Configuration()->value('use_pulse') && $this->Sport->usesDistance()) {
+		if ($this->Configuration()->value('use_pulse')) {
 			$this->AnalysisData[] = $this->getPulseArray();
 		}
 	}
