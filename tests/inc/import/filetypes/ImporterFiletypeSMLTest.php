@@ -140,14 +140,16 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * Test: Suunto Ambit3 with only RR data
-	 * Filename: "Suunto-Ambit3-only-RR.sml" 
+	 * Filename: "Suunto-Ambit3-only-RR-reduced.sml" 
 	 */
 	public function testSuuntoAmbit3withOnlyRRdata() {
-		$this->object->parseFile('../tests/testfiles/sml/Suunto-Ambit3-only-RR.sml');
+		$this->object->parseFile('../tests/testfiles/sml/Suunto-Ambit3-only-RR-reduced.sml');
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 
-		$this->assertEquals( 60*2.55, $this->object->object()->getPulseAvg(), '', 0 );
-		$this->assertEquals( 60*2.8, $this->object->object()->getPulseMax(), '', 0 );
+		// Only the first samples up to 0.106 km are available
+		// Header data does not match anymore
+		$this->assertEquals( 117, $this->object->object()->getPulseAvg(), '', 0 );
+		$this->assertEquals( 131, $this->object->object()->getPulseMax(), '', 0 );
 	}
 }
