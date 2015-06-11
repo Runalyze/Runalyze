@@ -62,7 +62,14 @@ define('GARMIN_API_KEY', '{config::garminkey}');
  * Address for sending mails to users
  * @var string
  */
-define('MAIL_SENDER', 'Runalyze <mail@runalyze.de>');
+define('MAIL_SENDER', 'mail@runalyze.de');
+
+/**
+ * Sender name for sending mails to users
+ * @var string
+ */
+define('MAIL_NAME', 'Runalyze');
+
 
 /**
  * OpenWeatherMap: API key
@@ -84,3 +91,34 @@ define('NOKIA_HERE_APPID', '');
  * @see https://developer.here.com
  */
 define('NOKIA_HERE_TOKEN', '');
+
+/**
+ * Define the mail sending server
+ * @var string
+ */
+define('SMTP_HOST', 'localhost');
+
+/**
+ * Define the smtp port
+ * @var string
+ */
+define('SMTP_PORT', '25');
+
+/**
+ * Define the smtp encryption
+ * @var string
+ */
+define('SMTP_SECURITY', '');
+
+/**
+ * Define the auth username for the smtp server
+ * @var string
+ */
+define('SMTP_USERNAME', '');
+
+/**
+ * Define the auth password for the smtp server
+ * @var string
+ */
+define('SMTP_PASSWORD', '');
+

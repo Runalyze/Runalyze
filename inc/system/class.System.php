@@ -44,10 +44,16 @@ class System {
 	 * @return boolean 
 	 */
 	static public function sendMail($to, $subject, $message) {
-		$sender = defined('MAIL_SENDER') ? MAIL_SENDER : 'Runalyze <mail@runalyze.de>';
-		$header = "From: ".$sender."\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\n";
-
-		return mail($to, $subject, $message, $header);
+		$message = Swift_Message::newInstance()
+				->setSubject($subject)
+				->setBody($message, 'text/html')
+				->setFrom(array(MAIL_SENDER => MAIL_NAME))
+				->setTo($to);
+		$transport = Swift_SmtpTransport::newInstance(SMTP_HOST, SMTP_PORT, SMTP_SECURITY)
+  			->setUsername(SMTP_USERNAME)
+  			->setPassword(SMTP_PASSWORD);
+		$mailer = Swift_Mailer::newInstance($transport);
+		return $mailer->send($message);
 	}
 
 	/**

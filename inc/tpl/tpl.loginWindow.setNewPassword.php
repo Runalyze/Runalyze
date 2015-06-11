@@ -10,7 +10,7 @@
 			<input type="hidden" name="chpw_hash" value="<?php echo $_GET['chpw']; ?>">
 			<input type="hidden" name="chpw_username" value="<?php echo $user; ?>">
 			<div class="w100">
-				<label for="chpw_name"><?php _e('IUsername'); ?></label>
+				<label for="chpw_name"><?php _e('Username'); ?></label>
 				<input id="chpw_name" name="chpw_name" class="middle-size" type="text" value="<?php echo $user; ?>" disabled=>
 			</div>
 			<div class="w100">
