@@ -263,9 +263,11 @@ class SessionAccountHandler {
 	 * Set account-values to session 
 	 */
 	private function setSessionValues() {
+		session_regenerate_id();
+
 		$_SESSION['username']  = self::$Account['username'];
 		$_SESSION['accountid'] = self::$Account['id'];
-        }
+	}
         
 
 	/**
