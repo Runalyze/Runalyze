@@ -82,6 +82,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`time` >=:start
+                        AND `accountid` =:accountid
 			GROUP BY `sportid`
 			ORDER BY `distance` DESC, `time_in_s` DESC';
 		$Request = DB::getInstance()->prepare($Query);
@@ -92,6 +93,7 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 			echo '<div id="sports_'.$i.'" class="change"'.($i==0 ? '' : ' style="display:none;"').'>';
 
 			$Request->bindValue('start', $timeset['start'], PDO::PARAM_INT);
+                        $Request->bindValue('accountid', SessionAccountHandler::getId(), PDO::PARAM_INT);
 			$Request->execute();
 			$data = $Request->fetchAll();
 

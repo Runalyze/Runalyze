@@ -138,7 +138,7 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	private function tryToChangePassword() {
 		if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
-			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`')->fetch();   
+			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`'.' AND accountid = '.SessionAccountHandler::getId())->fetch();   
 
 			if (AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
 				if (strlen($_POST['new_pw']) < AccountHandler::$PASS_MIN_LENGTH) {

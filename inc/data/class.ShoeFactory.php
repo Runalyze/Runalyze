@@ -220,7 +220,7 @@ class ShoeFactory
 
 		while ($ShoeData = $Statement->fetch()) {
 			if ($ShoeData['shoeid'] > 0 && $ShoeData['s'] > 0) {
-				DB::getInstance()->update('shoe', $ShoeData['shoeid'], array('km', 'time'), array($ShoeData['km'], $ShoeData['s']));
+                                DB::getInstance()->query('UPDATE `'.PREFIX.'shoe` SET `km` = '.$ShoeData['km'].', `time`='.$ShoeData['s'].' WHERE `id` = '.$ShoeData['shoeid'].' AND `accountid` = '.SessionAccountHandler::getId());
 			}
 		}
 

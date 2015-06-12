@@ -59,7 +59,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 
 		// TODO: Use data from shoe factory
 		$inuse = true;
-		$schuhe = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` ORDER BY `inuse` DESC, `km` DESC')->fetchAll();
+		$schuhe = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'shoe` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `inuse` DESC, `km` DESC')->fetchAll();
 		foreach ($schuhe as $schuh) {
 			$Shoe = new Shoe($schuh);
 

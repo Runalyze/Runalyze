@@ -43,7 +43,7 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 		if ((string)$Equipment->Name == '')
 			return;
 
-		$ExistingShoe = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'shoe` WHERE name='.DB::getInstance()->escape($Equipment->Name).' LIMIT 1')->fetch();
+		$ExistingShoe = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'shoe` WHERE name='.DB::getInstance()->escape($Equipment->Name).' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
 
 		if (isset($ExistingShoe['id'])) {
 			self::$NewEquipment[(string)$Equipment->attributes()->id] = $ExistingShoe['id'];

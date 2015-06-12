@@ -140,7 +140,7 @@ class UserData extends DataObject {
 		$userdata = Cache::get(self::CACHE_KEY);
 
 		if (is_null($userdata)) {
-			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
+			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `time` ASC')->fetchAll();
 			Cache::set(self::CACHE_KEY, $userdata, '600');
 		}
 
