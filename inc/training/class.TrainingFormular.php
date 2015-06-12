@@ -69,7 +69,7 @@ class TrainingFormular extends StandardFormular {
 
 			if (Request::param('mode') == 'multi') {
 				$this->addHiddenValue('mode', 'multi');
-				$this->submitButtons['submit'] = __('Edit and continue');
+				$this->submitButtons['submit'] = __('Save and continue');
 			}
 		}
 

@@ -21,7 +21,7 @@ if (Request::sendId() === false) {
 	$UserData = new UserData( DataObject::$LAST_OBJECT );
 	$UserData->setCurrentTimestamp();
 } else {
-	$Header   =  __('Edit body values');
+	$Header   =  __('Save body values');
 	$Mode     = StandardFormular::$SUBMIT_MODE_EDIT;
 	$UserData = new UserData( Request::sendId() );
 }

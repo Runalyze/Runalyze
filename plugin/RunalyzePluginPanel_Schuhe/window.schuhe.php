@@ -21,7 +21,7 @@ if (Request::sendId() === false) {
 	$Mode = StandardFormular::$SUBMIT_MODE_CREATE;
 	$Shoe = new Shoe(DataObject::$DEFAULT_ID);
 } else {
-	$Header = __('Edit shoe');
+	$Header = __('Save shoe');
 	$Mode = StandardFormular::$SUBMIT_MODE_EDIT;
 	$Shoe = new Shoe(Request::sendId());
 }
