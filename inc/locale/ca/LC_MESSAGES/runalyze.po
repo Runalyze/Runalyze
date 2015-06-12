@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-08 08:40+0200\n"
+"POT-Creation-Date: 2015-06-12 15:46+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -74,11 +74,11 @@ msgid "Create"
 msgstr "Creï"
 
 #: inc/html/formular/class.StandardFormular.php:151
-#: inc/training/view/class.TrainingView.php:57
+#: inc/system/config/class.ConfigTab.php:92
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
-#: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:219
-msgid "Edit"
-msgstr "Modifiqui"
+#: inc/class.AdminView.php:189
+msgid "Save"
+msgstr "Desi"
 
 #: inc/html/formular/class.FormularField.php:210
 msgid "Your input is not allowed."
@@ -940,6 +940,11 @@ msgstr "Link públic"
 msgid "Export"
 msgstr "Exporti"
 
+#: inc/training/view/class.TrainingView.php:57
+#: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:219
+msgid "Edit"
+msgstr "Modifiqui"
+
 #: inc/training/view/class.TrainingView.php:60
 msgid "Show week"
 msgstr "Mostri setmana"
@@ -1043,7 +1048,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:42
 #: inc/system/config/class.ConfigTabAccount.php:34
 #: inc/system/config/class.ConfigTabClothes.php:43
-#: inc/system/config/class.ConfigTabSports.php:54 inc/class.AdminView.php:299
+#: inc/system/config/class.ConfigTabSports.php:54 inc/class.AdminView.php:305
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:350
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:120
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:447
@@ -1108,7 +1113,8 @@ msgstr "Músculs"
 
 #: inc/training/class.TrainingFormular.php:72
 #: inc/core/View/Activity/Form/Form.php:87
-msgid "Edit and continue"
+#, fuzzy
+msgid "Save and continue"
 msgstr "canviï i continuï"
 
 #: inc/training/class.TrainingFormular.php:85
@@ -2218,7 +2224,7 @@ msgstr ""
 msgid "Host server"
 msgstr "Nom del servidor de la base de dades"
 
-#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:298
+#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:304
 msgid "User"
 msgstr "Usuari"
 
@@ -2354,7 +2360,7 @@ msgstr "Enllestit! Enhorabona!"
 msgid "Runalyze has been successfully installed. Have fun while using it!"
 msgstr "Runalyze ha sigut instal·lat amb èxit. Gaudeixi fent-lo servir!"
 
-#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:380
+#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:386
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
 msgstr "Al directori <strong>%s</strong> no es pot escriure."
@@ -2396,6 +2402,7 @@ msgstr "Accés"
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
+#: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
 msgstr "Usuari"
@@ -2416,7 +2423,7 @@ msgstr "Crear nou compte"
 msgid "Registrations are currently disabled."
 msgstr "Noves altes no són ara mateix possibles."
 
-#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:300
+#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:306
 msgid "Email"
 msgstr "Email"
 
@@ -2532,7 +2539,7 @@ msgstr "Desconnexió"
 
 #: inc/tpl/tpl.Frontend.header.php:34
 #: inc/system/config/class.ConfigTabPlugins.php:41
-#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
+#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:213
 msgid "Tools"
 msgstr "Eines"
 
@@ -2761,13 +2768,9 @@ msgstr "L'activació no ha funcionat."
 msgid "Probably the link was wrong."
 msgstr "Possiblement el link és erroni."
 
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:319
+#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:325
 msgid "Set new password"
 msgstr "Entri un nou password"
-
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:13
-msgid "IUsername"
-msgstr "Usuari"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
@@ -3502,10 +3505,6 @@ msgstr "Entrenament de prova"
 msgid "Great run!"
 msgstr "Excel·lent cursa!"
 
-#: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
-msgid "Save"
-msgstr "Desi"
-
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
 msgstr "Plugins"
@@ -3950,7 +3949,7 @@ msgstr ""
 "L'objecte XML no és de SportTracks. &lt;Activity&gt;-tag no té cap atribut "
 "'startTime'."
 
-#: inc/import/parser/class.ParserXMLsuuntoSingle.php:68
+#: inc/import/parser/class.ParserXMLsuuntoSingle.php:104
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
@@ -4406,119 +4405,147 @@ msgid "Sender e-mail"
 msgstr "Adreça de correu electrònic del remitent"
 
 #: inc/class.AdminView.php:180
+#, fuzzy
+msgid "Sender e-mail name"
+msgstr "Adreça de correu electrònic del remitent"
+
+#: inc/class.AdminView.php:181
+msgid "SMTP: host"
+msgstr ""
+
+#: inc/class.AdminView.php:182
+#, fuzzy
+msgid "SMTP: port"
+msgstr "Esport"
+
+#: inc/class.AdminView.php:183
+msgid "SMTP: encryption"
+msgstr ""
+
+#: inc/class.AdminView.php:184
+#, fuzzy
+msgid "SMTP: username"
+msgstr "Usuari"
+
+#: inc/class.AdminView.php:185
+#, fuzzy
+msgid "SMTP: password"
+msgstr "Password"
+
+#: inc/class.AdminView.php:186
 msgid "OpenWeatherMap API-Key"
 msgstr "Clau API de OpenWeatherMap"
 
-#: inc/class.AdminView.php:180
+#: inc/class.AdminView.php:186
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
 "Per carregar les dades de les condicions atmosfèriques cal una clau API, "
 "vegi openweathermap.org/appid"
 
-#: inc/class.AdminView.php:181
+#: inc/class.AdminView.php:187
 msgid "Nokia/Here App-ID"
 msgstr "Nokia/Here App-ID"
 
-#: inc/class.AdminView.php:181 inc/class.AdminView.php:182
+#: inc/class.AdminView.php:187 inc/class.AdminView.php:188
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
 msgstr ""
 "Els mapes de Nokia necessiten un APP-ID i un Token, miri developer.here.com"
 
-#: inc/class.AdminView.php:182
+#: inc/class.AdminView.php:188
 msgid "Nokia/Here Token"
 msgstr "Token de Nokia/Here"
 
-#: inc/class.AdminView.php:187
+#: inc/class.AdminView.php:193
 msgid "<strong>config.php</strong> is not writable"
 msgstr "<strong>config.php</strong> no és modificable"
 
-#: inc/class.AdminView.php:187
+#: inc/class.AdminView.php:193
 msgid "Changes can't be saved."
 msgstr "No es poden desar les modificacions."
 
-#: inc/class.AdminView.php:208
+#: inc/class.AdminView.php:214
 msgid "Look for new plugins"
 msgstr "Busqui nous plugins"
 
-#: inc/class.AdminView.php:209
+#: inc/class.AdminView.php:215
 msgid "Go"
 msgstr "Busqui"
 
-#: inc/class.AdminView.php:217
+#: inc/class.AdminView.php:223
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
 msgstr "<strong>/inc/plugin/pluginmap.php</strong> no es pot modificar"
 
-#: inc/class.AdminView.php:217
+#: inc/class.AdminView.php:223
 msgid "These tools will not work."
 msgstr "Aquestes eines no funcionaran."
 
-#: inc/class.AdminView.php:287
+#: inc/class.AdminView.php:293
 msgid "User list"
 msgstr "Llista d'usuari"
 
-#: inc/class.AdminView.php:291
+#: inc/class.AdminView.php:297
 msgid "There are no registered users."
 msgstr "Fins ara no hi ha cap usuari registrat."
 
-#: inc/class.AdminView.php:301
+#: inc/class.AdminView.php:307
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:164
 msgid "since"
 msgstr "des de"
 
-#: inc/class.AdminView.php:302
+#: inc/class.AdminView.php:308
 msgid "last"
 msgstr "últim"
 
-#: inc/class.AdminView.php:303
+#: inc/class.AdminView.php:309
 msgid "Functions"
 msgstr "Funcions"
 
-#: inc/class.AdminView.php:319
+#: inc/class.AdminView.php:325
 msgid "Activate user"
 msgstr "Activi l'usuari"
 
-#: inc/class.AdminView.php:344
+#: inc/class.AdminView.php:350
 msgid "Server information"
 msgstr "Informacions del servidor"
 
-#: inc/class.AdminView.php:345
+#: inc/class.AdminView.php:351
 msgid "PHP version:"
 msgstr "Versió del PHP:"
 
-#: inc/class.AdminView.php:346
+#: inc/class.AdminView.php:352
 msgid "MySQL version:"
 msgstr "Versió del MySQL:"
 
-#: inc/class.AdminView.php:347
+#: inc/class.AdminView.php:353
 msgid "Time limit:"
 msgstr "Límit de temps:"
 
-#: inc/class.AdminView.php:348
+#: inc/class.AdminView.php:354
 msgid "Memory limit:"
 msgstr "Límit de memòria:"
 
-#: inc/class.AdminView.php:349
+#: inc/class.AdminView.php:355
 msgid "Upload limit:"
 msgstr "Límit de pujades:"
 
-#: inc/class.AdminView.php:350
+#: inc/class.AdminView.php:356
 msgid "Post limit:"
 msgstr "Límit de publicacions:"
 
-#: inc/class.AdminView.php:353
+#: inc/class.AdminView.php:359
 msgid "Perl scripts can be used."
 msgstr "Es poden fer servir scripts de Perl."
 
-#: inc/class.AdminView.php:355
+#: inc/class.AdminView.php:361
 msgid "Perl scripts cannot be used."
 msgstr "No es poden fer servir scripts de Perl."
 
-#: inc/class.AdminView.php:372
+#: inc/class.AdminView.php:378
 msgid "Permissions"
 msgstr "Permisos"
 
-#: inc/class.AdminView.php:373
+#: inc/class.AdminView.php:379
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
@@ -4526,24 +4553,24 @@ msgstr ""
 "Cal permís d'escriptura als següents directoris. (I ha d'establir-se el "
 "propietari correcte!)"
 
-#: inc/class.AdminView.php:383
+#: inc/class.AdminView.php:389
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
 msgstr "El directori <strong>%s</strong> es pot modificar."
 
-#: inc/class.AdminView.php:398
+#: inc/class.AdminView.php:404
 msgid "Unused files"
 msgstr "Arxius que no s'han fet servir"
 
-#: inc/class.AdminView.php:404
+#: inc/class.AdminView.php:410
 msgid "Clear directories"
 msgstr "Esborri els directoris"
 
-#: inc/class.AdminView.php:416
+#: inc/class.AdminView.php:422
 msgid "clean up"
 msgstr "Netegi"
 
-#: inc/class.AdminView.php:422
+#: inc/class.AdminView.php:428
 msgid "No files found"
 msgstr "No s'ha trobat cap arxiu"
 
@@ -6928,6 +6955,9 @@ msgstr "Amb quina freqüència ha fet exercicis de córrer?"
 #: plugin/RunalyzePluginStat_Laufabc/class.RunalyzePluginStat_Laufabc.php:58
 msgid "No activities with running drills found."
 msgstr "No s'han trobat entrenaments amb exercicis de córrer."
+
+#~ msgid "IUsername"
+#~ msgstr "Usuari"
 
 #~ msgid ""
 #~ "Types with a RPE-value &ge; 5 will be emphasized in the activity log."
