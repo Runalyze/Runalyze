@@ -216,6 +216,6 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 	 * @return string
 	 */
 	private function editLinkFor($id) {
-		return Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, __('Save')).'</a>');
+		return Ajax::window('<a href="plugin/'.$this->key().'/window.schuhe.php?id='.$id.'">'.Ajax::tooltip(Icon::$EDIT, __('Edit')).'</a>');
 	}
 }
