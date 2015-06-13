@@ -127,7 +127,23 @@ class UserData extends DataObject {
 	public function getMuscles() {
 		return $this->get('muscles');
 	}
+        
+	/**
+	* Get sleep duration
+	* @return float
+	*/
+	public function getSleepDuration() {
+		return $this->get('sleepduration');
+	}
 
+	/**
+	* Get note
+	* @return float
+	*/
+	public function getNote() {
+		return $this->get('notes');
+	}
+        
 	/**
 	 * Get all rows from user-data
 	 * @return array

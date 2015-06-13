@@ -18,6 +18,16 @@ $FIELDSETS = array(
 		'id'		=> 'pulse',
 		'legend'	=> __('Heartrate'),
 		'fields'	=> array('pulse_rest', 'pulse_max')
+	),
+    	array(
+		'id'		=> 'sleep',
+		'legend'	=> __('Sleep'),
+		'fields'	=> array('sleep_duration')
+	),
+        array(
+		'id'		=> 'notes',
+		'legend'	=> __('Notes'),
+		'fields'	=> array('notes')
 	)
 );
 
@@ -94,5 +104,28 @@ $FIELDS['muscles'] = array(
 	'formular'	=> array(
 		'label'		=> __('Body muscle'),
 		'unit'		=> FormularUnit::$PERCENT
+        )
+);
+$FIELDS['sleep_duration'] = array(
+	'database'	=> array(
+		'type'		=> 'smallint',
+		'precision'	=> '4',
+                'default'	=> '0:00'
+		),
+	'formular'	=> array(
+		'label'		=> __('Sleep Duration'),
+		'unit'		=> FormularUnit::$HOUR,
+                'parser'	=> FormularValueParser::$PARSER_TIME
+	)
+);
+$FIELDS['notes'] = array(
+	'database'	=> array(
+		'type'		=> 'text',
+                'default'	=> ''
+		),
+	'formular'	=> array(
+		'label'		=> __('Notes'),
+                'class'		=> 'FormularTextarea',
+                'size'		=> FormularInput::$SIZE_FULL
 	)
 );

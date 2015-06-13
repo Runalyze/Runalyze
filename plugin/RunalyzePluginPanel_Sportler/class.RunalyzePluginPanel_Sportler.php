@@ -107,12 +107,12 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$SecondValues = array();
 
 		if ($this->Configuration()->value('use_weight')) {
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight()), 'kg', __('Weight'));
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight(), '-'), 'kg', __('Weight'));
 		}
 
 		if ($this->Configuration()->value('use_pulse')) {
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest()), 'bpm', __('Resting HR'));
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax()), 'bpm', __('Maximal HR'));
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseRest(), '-'), 'bpm', __('Resting HR'));
+			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getPulseMax(), '-'), 'bpm', __('Maximal HR'));
 		}
 
 		$NumberOfFirstValues = count($FirstValues);
@@ -126,9 +126,9 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		}
 
 		if ($this->Configuration()->value('use_body_fat')) {
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat()), '&#37;', __('Fat'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater()), '&#37;', __('Water'));
-			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles()), '&#37;', __('Muscles'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getBodyFat(), '-'), '&#37;', __('Fat'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getWater(), '-'), '&#37;', __('Water'));
+			$SecondValues[] = new BoxedValue(Helper::Unknown($UserData->getMuscles(), '-'), '&#37;', __('Muscles'));
 		}
 
 		foreach ($SecondValues as &$Value) {
@@ -182,21 +182,23 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$Analyse  = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
-		if ($this->Configuration()->value('use_weight'))
-			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserData->getWeight()).' kg</strong><br>';
+		if ($this->Configuration()->value('use_weight')) {
+			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserData->getWeight(), '-').' kg</strong><br>';
+                }
 
-		if ($this->Configuration()->value('use_pulse'))
-			$Pulse = Helper::Unknown($UserData->getPulseRest()).' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
-		else
-			$Pulse = Helper::Unknown($UserData->getPulseMax()).' bpm';
-
-		if ($this->Configuration()->value('use_body_fat'))
-			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat()).' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater()).' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles()).' &#37;';
+		if ($this->Configuration()->value('use_pulse')) {
+			$Pulse = Helper::Unknown($UserData->getPulseRest(), '-').' bpm / '.Helper::Unknown($UserData->getPulseMax()).' bpm';
+                } else {
+			$Pulse = Helper::Unknown($UserData->getPulseMax(), '-').' bpm';
+                }
+                
+		if ($this->Configuration()->value('use_body_fat')) {
+			$Analyse = __('Fat').': '.Helper::Unknown($UserData->getBodyFat(), '-').' &#37;, '.__('Water').': '.Helper::Unknown($UserData->getWater(), '-').' &#37;, '.__('Muscles').': '.Helper::Unknown($UserData->getMuscles(), '-').' &#37;';
+                }
 
 		$AnalyseIsHidden = $this->Configuration()->value('use_weight') || $this->Configuration()->value('use_pulse');
 
-		if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat'))
-			return;
+                if (!$AnalyseIsHidden && !$this->Configuration()->value('use_body_fat')) { return; }
 
 		echo('
 			<div id="sportler-content">
