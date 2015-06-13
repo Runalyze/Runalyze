@@ -64,6 +64,16 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	protected $distancesAreEmpty = false;
 
 	/**
+	 * @var bool
+	 */
+	protected $wasPause = false;
+
+	/**
+	 * @var int
+	 */
+	protected $pauseDuration = 0;
+
+	/**
 	 * Constructor
 	 *
 	 * This parser reimplements constructor to force $XML-parameter to be given.
@@ -234,10 +244,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$Ignored = false;
 
 			if (count($TP->children()) == 1 || $NoMove || $TooSlow) {
-				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL)
+				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL) {
 					$Ignored = true;
-				else
+				} else {
 					$this->PauseInSeconds += $ThisBreakInSeconds;
+					$this->wasPause = true;
+					$this->pauseDuration += $ThisBreakInSeconds;
+				}
+
 				if (self::$DEBUG_SPLITS)
 					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.$ThisBreakInSeconds.', empty point: '.
 							($NoMove ?
@@ -258,10 +272,26 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if ($this->lastPointWasEmpty) {
 			$OldPauseInSeconds = $this->PauseInSeconds;
 			$this->PauseInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s']));
+			$this->pauseDuration += $this->PauseInSeconds - $OldPauseInSeconds;
+			$this->wasPause = true;
 
 			if (self::$DEBUG_SPLITS)
 				Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.($this->PauseInSeconds - $OldPauseInSeconds).
 						', last point was empty');
+		}
+
+		if ($this->wasPause) {
+			$this->TrainingObject->Pauses()->add(
+				new \Runalyze\Model\Trackdata\Pause(
+					end($this->gps['time_in_s']),
+					$this->pauseDuration,
+					end($this->gps['heartrate']),
+					(!empty($TP->HeartRateBpm)) ? round($TP->HeartRateBpm->Value) : 0
+				)
+			);
+
+			$this->wasPause = false;
+			$this->pauseDuration = 0;
 		}
 
 		$this->lastPointWasEmpty   = false;
