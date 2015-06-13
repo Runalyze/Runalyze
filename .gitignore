@@ -22,3 +22,9 @@ config.php
 composer.phar
 vendor/
 composer.lock
+
+#assets
+node_modules/
+web/assets/
+view/cache/
+npm-debug.log

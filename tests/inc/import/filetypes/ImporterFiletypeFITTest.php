@@ -206,4 +206,31 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 35*60 + 32, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
 		}
 	}
+
+	/**
+	 * Test: simple pauses
+	 * Filename: "HRV-example.fit" 
+	 */
+	public function testSimplePauseExample() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/HRV-example.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals( 60, $this->object->object()->getTimeInSeconds() );
+			$this->assertEquals( 60 + 69, $this->object->object()->getElapsedTime() );
+			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+
+			$this->assertEquals( 72, $this->object->object()->getPulseAvg() );
+			$this->assertEquals( 100, $this->object->object()->getPulseMax() );
+
+			$Pauses = $this->object->object()->Pauses();
+			$this->assertEquals( 1, $Pauses->num() );
+			$this->assertEquals( 41, $Pauses->at(0)->time() );
+			$this->assertEquals( 69, $Pauses->at(0)->duration() );
+			$this->assertEquals( 100, $Pauses->at(0)->hrStart() );
+			$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
+		}
+	}
 }

@@ -44,6 +44,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 	protected $isPaused = false;
 
 	/**
+	 * Was paused?
+	 * @var bool
+	 */
+	protected $wasPaused = false;
+
+	/**
 	 * Timestamp of last stop
 	 * @var int
 	 */
@@ -202,6 +208,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 					'time' => $this->lastStopTimestamp - $this->TrainingObject->getTimestamp(),
 					'duration' => ($thisTimestamp - $this->lastStopTimestamp)
 				);
+			} elseif ($this->isPaused) {
+				$this->wasPaused = true;
 			}
 
 			$this->isPaused = false;
@@ -234,16 +242,29 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$last = end($this->gps['time_in_s']);
 
+		if ($this->wasPaused) {
+			$this->TrainingObject->Pauses()->add(
+				new \Runalyze\Model\Trackdata\Pause(
+					$last,
+					strtotime((string)$this->Values['timestamp'][1]) - $this->lastStopTimestamp,
+					end($this->gps['heartrate']),
+					isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0
+				)
+			);
+			
+			$this->wasPaused = false;
+		}
+
 		$this->gps['latitude'][]  = isset($this->Values['position_lat']) ? substr($this->Values['position_lat'][1], 0, -3) : 0;
 		$this->gps['longitude'][] = isset($this->Values['position_long']) ? substr($this->Values['position_long'][1], 0, -3) : 0;
 
 		$this->gps['altitude'][]  = isset($this->Values['altitude']) ? substr($this->Values['altitude'][1], 0, -3) : 0;
 
 		$this->gps['km'][]        = isset($this->Values['distance']) ? round($this->Values['distance'][0] / 1e5, ParserAbstract::DISTANCE_PRECISION) : end($this->gps['km']);
-		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? $this->Values['heart_rate'][0] : 0;
-		$this->gps['rpm'][]       = isset($this->Values['cadence']) ? $this->Values['cadence'][0] : 0;
+		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0;
+		$this->gps['rpm'][]       = isset($this->Values['cadence']) ? (int)$this->Values['cadence'][0] : 0;
 
-		$this->gps['temp'][]      = isset($this->Values['temperature']) ? $this->Values['temperature'][0] : 0;
+		$this->gps['temp'][]      = isset($this->Values['temperature']) ? (int)$this->Values['temperature'][0] : 0;
 
 		$this->gps['time_in_s'][] = $time;
 		$this->gps['pace'][]      = $this->getCurrentPace();
@@ -298,19 +319,31 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
 			$pauseUntil = 0;
 			$isPause = false;
+			$hrStart = 0;
 
 			for ($i = 0; $i < $num; $i++) {
 				if (!$isPause && $this->gps['time_in_s'][$i] > $pauseTime) {
 					if ($pauseIndex < count($this->pausesToApply)) {
 						$isPause = true;
+						$hrStart = $this->gps['heartrate'][$i];
 						$pauseInSeconds += $this->pausesToApply[$pauseIndex]['duration'];
 						$pauseTime = $this->pausesToApply[$pauseIndex]['time'];
 						$pauseUntil = $this->pausesToApply[$pauseIndex]['duration'] + $pauseTime;
 						$pauseIndex++;
 						$pauseTime = ($pauseIndex < count($this->pausesToApply)) ? $this->pausesToApply[$pauseIndex]['time'] : PHP_INT_MAX;
 					}
-				} elseif ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
+				}
+
+				if ($isPause && $this->gps['time_in_s'][$i] >= $pauseUntil) {
 					$isPause = false;
+					$this->TrainingObject->Pauses()->add(
+						new \Runalyze\Model\Trackdata\Pause(
+							$this->pausesToApply[$pauseIndex-1]['time'],
+							$this->pausesToApply[$pauseIndex-1]['duration'],
+							$hrStart,
+							end($this->gps['heartrate'])
+						)
+					);
 				}
 
 				if ($isPause) {

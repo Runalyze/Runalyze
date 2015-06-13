@@ -76,6 +76,21 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 		// TODO: missing values
+
+		$this->assertEquals( 5, $this->object->object()->Pauses()->num() );
+
+		foreach (array(
+			array(19, 57, 112, 73),
+			array(19, 1, 73, 71),
+			array(3676, 92, 143, 110),
+			array(3720, 11, 125, 126),
+			array(6176, 20, 140, 133),
+		) as $i => $pause) {
+			$this->assertEquals($pause[0], $this->object->object()->Pauses()->at($i)->time());
+			$this->assertEquals($pause[1], $this->object->object()->Pauses()->at($i)->duration());
+			$this->assertEquals($pause[2], $this->object->object()->Pauses()->at($i)->hrStart());
+			$this->assertEquals($pause[3], $this->object->object()->Pauses()->at($i)->hrEnd());
+		}
 	}
 
 	/**

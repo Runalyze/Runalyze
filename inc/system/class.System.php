@@ -44,10 +44,23 @@ class System {
 	 * @return boolean 
 	 */
 	static public function sendMail($to, $subject, $message) {
-		$sender = defined('MAIL_SENDER') ? MAIL_SENDER : 'Runalyze <mail@runalyze.de>';
-		$header = "From: ".$sender."\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=UTF-8\r\n";
+		$sender = MAIL_SENDER == '' ? 'mail@runalyze.de' : MAIL_SENDER;
 
-		return mail($to, $subject, $message, $header);
+		try {
+			$message = Swift_Message::newInstance()
+					->setSubject($subject)
+					->setBody($message, 'text/html')
+					->setFrom(array($sender => MAIL_NAME))
+					->setTo($to);
+			$transport = Swift_SmtpTransport::newInstance(SMTP_HOST, SMTP_PORT, SMTP_SECURITY)
+				->setUsername(SMTP_USERNAME)
+				->setPassword(SMTP_PASSWORD);
+			$mailer = Swift_Mailer::newInstance($transport);
+			return $mailer->send($message);
+		} catch (Exception $e) {
+			Error::getInstance()->addError('Mail could not be sent: '.$e->getMessage());
+			return false;
+		}
 	}
 
 	/**

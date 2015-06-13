@@ -77,4 +77,15 @@ class ParserSMLsuuntoSingle extends ParserXMLsuuntoSingle {
 			$this->TrainingObject->set('elevation_corrected', 1);
 		}	
 	}
+
+	/**
+	 * @return array
+	 */
+	protected function getRRdata() {
+		if (!empty($this->XML->DeviceLog->{'R-R'}) && !empty($this->XML->DeviceLog->{'R-R'}->Data)) {
+			return explode(' ', (string)$this->XML->DeviceLog->{'R-R'}->Data);
+		}
+
+		return array();
+	}
 }

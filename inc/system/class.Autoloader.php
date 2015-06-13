@@ -19,6 +19,8 @@ class Autoloader {
 	 * Constructing a new Autloader registers all autload-functions 
 	 */
 	public function __construct() {
+		require_once FRONTEND_PATH.'../vendor/autoload.php';
+
 		include FRONTEND_PATH.'system/classmap.php';
 		include FRONTEND_PATH.'plugin/pluginmap.php';
 

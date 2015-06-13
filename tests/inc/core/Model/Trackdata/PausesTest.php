@@ -60,6 +60,17 @@ class PausesTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( $P1->asString(), $P3->asString() );
 	}
 
+	public function testEmptyPauses() {
+		$P = new Pauses('');
+		$this->assertEquals( 0, $P->num() );
+
+		$P->add(new Pause( 60, 10, 120, 100));
+		$P->fromString('');
+
+		$this->assertEquals( 0, $P->num() );
+		$this->assertEquals( '', $P->asString() );
+	}
+
 	/**
 	 * @expectedException \InvalidArgumentException
 	 */

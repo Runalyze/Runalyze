@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-08 08:40+0200\n"
+"POT-Creation-Date: 2015-06-12 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,10 +71,10 @@ msgid "Create"
 msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:151
-#: inc/training/view/class.TrainingView.php:57
+#: inc/system/config/class.ConfigTab.php:92
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
-#: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:219
-msgid "Edit"
+#: inc/class.AdminView.php:189
+msgid "Save"
 msgstr ""
 
 #: inc/html/formular/class.FormularField.php:210
@@ -920,6 +920,11 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
+#: inc/training/view/class.TrainingView.php:57
+#: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:219
+msgid "Edit"
+msgstr ""
+
 #: inc/training/view/class.TrainingView.php:60
 msgid "Show week"
 msgstr ""
@@ -1021,7 +1026,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:42
 #: inc/system/config/class.ConfigTabAccount.php:34
 #: inc/system/config/class.ConfigTabClothes.php:43
-#: inc/system/config/class.ConfigTabSports.php:54 inc/class.AdminView.php:299
+#: inc/system/config/class.ConfigTabSports.php:54 inc/class.AdminView.php:305
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:350
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:120
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:447
@@ -1086,7 +1091,7 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:72
 #: inc/core/View/Activity/Form/Form.php:87
-msgid "Edit and continue"
+msgid "Save and continue"
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:85
@@ -2129,7 +2134,7 @@ msgstr ""
 msgid "Host server"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:298
+#: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:304
 msgid "User"
 msgstr ""
 
@@ -2254,7 +2259,7 @@ msgstr ""
 msgid "Runalyze has been successfully installed. Have fun while using it!"
 msgstr ""
 
-#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:380
+#: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:386
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
 msgstr ""
@@ -2296,6 +2301,7 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
+#: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 #: inc/system/config/class.ConfigTabAccount.php:28
 msgid "Username"
 msgstr ""
@@ -2316,7 +2322,7 @@ msgstr ""
 msgid "Registrations are currently disabled."
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:300
+#: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:306
 msgid "Email"
 msgstr ""
 
@@ -2422,7 +2428,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Frontend.header.php:34
 #: inc/system/config/class.ConfigTabPlugins.php:41
-#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
+#: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:213
 msgid "Tools"
 msgstr ""
 
@@ -2651,12 +2657,8 @@ msgstr ""
 msgid "Probably the link was wrong."
 msgstr ""
 
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:319
+#: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:325
 msgid "Set new password"
-msgstr ""
-
-#: inc/tpl/tpl.loginWindow.setNewPassword.php:13
-msgid "IUsername"
 msgstr ""
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
@@ -3342,10 +3344,6 @@ msgstr ""
 msgid "Great run!"
 msgstr ""
 
-#: inc/system/config/class.ConfigTab.php:92 inc/class.AdminView.php:183
-msgid "Save"
-msgstr ""
-
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
 msgstr ""
@@ -3756,7 +3754,7 @@ msgid ""
 "attribute 'startTime'."
 msgstr ""
 
-#: inc/import/parser/class.ParserXMLsuuntoSingle.php:68
+#: inc/import/parser/class.ParserXMLsuuntoSingle.php:104
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
@@ -4180,139 +4178,163 @@ msgid "Sender e-mail"
 msgstr ""
 
 #: inc/class.AdminView.php:180
-msgid "OpenWeatherMap API-Key"
-msgstr ""
-
-#: inc/class.AdminView.php:180
-msgid "Loading weather data requires an api key, see openweathermap.org/appid"
+msgid "Sender e-mail name"
 msgstr ""
 
 #: inc/class.AdminView.php:181
-msgid "Nokia/Here App-ID"
-msgstr ""
-
-#: inc/class.AdminView.php:181 inc/class.AdminView.php:182
-msgid "Nokia maps require an app-id/-token, see developer.here.com"
+msgid "SMTP: host"
 msgstr ""
 
 #: inc/class.AdminView.php:182
+msgid "SMTP: port"
+msgstr ""
+
+#: inc/class.AdminView.php:183
+msgid "SMTP: encryption"
+msgstr ""
+
+#: inc/class.AdminView.php:184
+msgid "SMTP: username"
+msgstr ""
+
+#: inc/class.AdminView.php:185
+msgid "SMTP: password"
+msgstr ""
+
+#: inc/class.AdminView.php:186
+msgid "OpenWeatherMap API-Key"
+msgstr ""
+
+#: inc/class.AdminView.php:186
+msgid "Loading weather data requires an api key, see openweathermap.org/appid"
+msgstr ""
+
+#: inc/class.AdminView.php:187
+msgid "Nokia/Here App-ID"
+msgstr ""
+
+#: inc/class.AdminView.php:187 inc/class.AdminView.php:188
+msgid "Nokia maps require an app-id/-token, see developer.here.com"
+msgstr ""
+
+#: inc/class.AdminView.php:188
 msgid "Nokia/Here Token"
 msgstr ""
 
-#: inc/class.AdminView.php:187
+#: inc/class.AdminView.php:193
 msgid "<strong>config.php</strong> is not writable"
 msgstr ""
 
-#: inc/class.AdminView.php:187
+#: inc/class.AdminView.php:193
 msgid "Changes can't be saved."
 msgstr ""
 
-#: inc/class.AdminView.php:208
+#: inc/class.AdminView.php:214
 msgid "Look for new plugins"
 msgstr ""
 
-#: inc/class.AdminView.php:209
+#: inc/class.AdminView.php:215
 msgid "Go"
 msgstr ""
 
-#: inc/class.AdminView.php:217
+#: inc/class.AdminView.php:223
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
 msgstr ""
 
-#: inc/class.AdminView.php:217
+#: inc/class.AdminView.php:223
 msgid "These tools will not work."
 msgstr ""
 
-#: inc/class.AdminView.php:287
+#: inc/class.AdminView.php:293
 msgid "User list"
 msgstr ""
 
-#: inc/class.AdminView.php:291
+#: inc/class.AdminView.php:297
 msgid "There are no registered users."
 msgstr ""
 
-#: inc/class.AdminView.php:301
+#: inc/class.AdminView.php:307
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:164
 msgid "since"
 msgstr ""
 
-#: inc/class.AdminView.php:302
+#: inc/class.AdminView.php:308
 msgid "last"
 msgstr ""
 
-#: inc/class.AdminView.php:303
+#: inc/class.AdminView.php:309
 msgid "Functions"
 msgstr ""
 
-#: inc/class.AdminView.php:319
+#: inc/class.AdminView.php:325
 msgid "Activate user"
 msgstr ""
 
-#: inc/class.AdminView.php:344
+#: inc/class.AdminView.php:350
 msgid "Server information"
 msgstr ""
 
-#: inc/class.AdminView.php:345
+#: inc/class.AdminView.php:351
 msgid "PHP version:"
 msgstr ""
 
-#: inc/class.AdminView.php:346
+#: inc/class.AdminView.php:352
 msgid "MySQL version:"
 msgstr ""
 
-#: inc/class.AdminView.php:347
+#: inc/class.AdminView.php:353
 msgid "Time limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:348
+#: inc/class.AdminView.php:354
 msgid "Memory limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:349
+#: inc/class.AdminView.php:355
 msgid "Upload limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:350
+#: inc/class.AdminView.php:356
 msgid "Post limit:"
 msgstr ""
 
-#: inc/class.AdminView.php:353
+#: inc/class.AdminView.php:359
 msgid "Perl scripts can be used."
 msgstr ""
 
-#: inc/class.AdminView.php:355
+#: inc/class.AdminView.php:361
 msgid "Perl scripts cannot be used."
 msgstr ""
 
-#: inc/class.AdminView.php:372
+#: inc/class.AdminView.php:378
 msgid "Permissions"
 msgstr ""
 
-#: inc/class.AdminView.php:373
+#: inc/class.AdminView.php:379
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
 msgstr ""
 
-#: inc/class.AdminView.php:383
+#: inc/class.AdminView.php:389
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
 msgstr ""
 
-#: inc/class.AdminView.php:398
+#: inc/class.AdminView.php:404
 msgid "Unused files"
 msgstr ""
 
-#: inc/class.AdminView.php:404
+#: inc/class.AdminView.php:410
 msgid "Clear directories"
 msgstr ""
 
-#: inc/class.AdminView.php:416
+#: inc/class.AdminView.php:422
 msgid "clean up"
 msgstr ""
 
-#: inc/class.AdminView.php:422
+#: inc/class.AdminView.php:428
 msgid "No files found"
 msgstr ""
 

@@ -1,0 +1,10 @@
+tools:
+    external_code_coverage:
+        timeout: 600
+
+filter:
+    paths: [inc/*, plugin/*, call/*]
+    excluded_paths:
+        - build/
+        - tests/
+        - vendor/

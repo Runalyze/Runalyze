@@ -55,7 +55,13 @@ abstract class StringArrayObject extends StringObject {
 	 * @param string $string
 	 */
 	public function fromString($string) {
-		$this->fromArray(json_decode($string, true));
+		$json = json_decode($string, true);
+
+		if (is_array($json)) {
+			$this->fromArray($json);
+		} else {
+			$this->clear();
+		}
 	}
 
 	/**
@@ -63,7 +69,11 @@ abstract class StringArrayObject extends StringObject {
 	 * @return string
 	 */
 	public function asString() {
-		return json_encode($this->asArray());
+		if ($this->isEmpty()) {
+			return '';
+		}
+
+		return json_encode($this->asArray(), JSON_HEX_QUOT);
 	}
 
 	/**

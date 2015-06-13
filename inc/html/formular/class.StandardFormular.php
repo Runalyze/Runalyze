@@ -148,7 +148,7 @@ class StandardFormular extends Formular {
 			$String = __('Create');
 
 		if ($this->submitMode == self::$SUBMIT_MODE_EDIT)
-			$String = __('Edit');
+			$String = __('Save');
 
 		$this->addSubmitButton( $String );
 	}

@@ -3,6 +3,9 @@
  * This file contains class::ConfigTabTypes
  * @package Runalyze\System\Config
  */
+
+use Runalyze\Configuration;
+
 /**
  * ConfigTabTypes
  * @author Hannes Christiansen
@@ -25,7 +28,7 @@ class ConfigTabTypes extends ConfigTab {
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
 							'An activity type can only belong to one sport.') );
-		$Types->addInfo( __('Finding your personal bests requieres one type (for running) to be set as the \'Race\'-type in your configuration.') );
+		$Types->addInfo( __('Finding your personal bests requieres one type (for running) to be set as the \'Race\'-type.') );
 
 		$this->Formular->addFieldset($Types);
 	}
@@ -44,6 +47,7 @@ class ConfigTabTypes extends ConfigTab {
 						<th>'.Ajax::tooltip( __('Sport'), __('A type can only belong to one sport.')).'</th>
 						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
 						<th>'.Ajax::tooltip( __('Quality?'), __('Quality sessions will be emphasized in your calendar.')).'</th>
+						<th>'.Ajax::tooltip( __('Race'), __('You need to set one type for running as race type.')).'</th>
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A type can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
@@ -63,6 +67,7 @@ class ConfigTabTypes extends ConfigTab {
 
 		//TODO Change all locations where Typeid is used 
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'hr_avg' => 120, 'quality_session' => 0);
+		$raceID = Configuration::General()->competitionType();
 
 		foreach ($Types as $Data) {
 			$id     = $Data['id'];
@@ -92,6 +97,7 @@ class ConfigTabTypes extends ConfigTab {
 						</span>
 					</td>
 					<td><input type="checkbox" name="type[quality_session]['.$id.']"'.($Data['quality_session'] ? ' checked' : '').'></td>
+					<td><input type="radio" name="racetype" value="'.$id.'"'.($id == $raceID ? ' checked' : '').'></td>
 					<td>'.$delete.'</td>
 				</tr>';
 		}
@@ -134,6 +140,15 @@ class ConfigTabTypes extends ConfigTab {
 				DB::getInstance()->update('type', $id, $columns, $values);
 			elseif (strlen($_POST['type']['name'][$id]) > 2)
 				DB::getInstance()->insert('type', $columns, $values);
+		}
+
+		if (
+			isset($Types[$_POST['racetype']]) &&
+			$_POST['type']['sportid'][$_POST['racetype']] == Configuration::General()->runningSport() &&
+			$_POST['racetype'] != Configuration::General()->competitionType()
+		) {
+			Configuration::General()->updateCompetitionType($_POST['racetype']);
+			Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
 		}
 
 		TypeFactory::reInitAllTypes();

@@ -177,6 +177,12 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', __('Users have to login')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
+		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
+		$Fieldset->addField( new FormularInput('SMTP_HOST', __('SMTP: host')) );
+		$Fieldset->addField( new FormularInput('SMTP_PORT', __('SMTP: port')) );
+		$Fieldset->addField( new FormularInput('SMTP_SECURITY', __('SMTP: encryption')) );
+		$Fieldset->addField( new FormularInput('SMTP_USERNAME', __('SMTP: username')) );
+		$Fieldset->addField( new FormularInput('SMTP_PASSWORD', __('SMTP: password')) );
 		$Fieldset->addField( new FormularInput('OPENWEATHERMAP_API_KEY', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
 		$Fieldset->addField( new FormularInput('NOKIA_HERE_APPID', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularInput('NOKIA_HERE_TOKEN', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
@@ -498,9 +504,15 @@ class AdminView {
 			'USER_MUST_LOGIN',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
+			'MAIL_NAME',
 			'OPENWEATHERMAP_API_KEY',
 			'NOKIA_HERE_APPID',
-			'NOKIA_HERE_TOKEN'
+			'NOKIA_HERE_TOKEN',
+			'SMTP_HOST',
+			'SMTP_PORT',
+			'SMTP_SECURITY',
+			'SMTP_USERNAME',
+			'SMTP_PASSWORD'
 		);
 	}
 
@@ -563,12 +575,20 @@ define(\'USER_CAN_REGISTER\', true);';
 define(\'GARMIN_API_KEY\', \''.$APIKey.'\');';
 
 			case 'MAIL_SENDER':
-				define('MAIL_SENDER', 'Runalyze <mail@runalyze.de>');
+				define('MAIL_SENDER', 'mail@runalyze.de');
 				return '/**
  * Adress for sending mails to users
  * @var string MAIL_SENDER Adress for sending mails to users
  */
-define(\'MAIL_SENDER\', \'Runalyze <mail@runalyze.de>\');';
+define(\'MAIL_SENDER\', \'mail@runalyze.de\');';
+
+			case 'MAIL_NAME':
+				define('MAIL_NAME', 'Runalyze');
+				return '/**
+ * Sender name for sending mails to users
+ * @var string
+ */
+define(\'MAIL_NAME\', \'Runalyze\');';
 
 			case 'OPENWEATHERMAP_API_KEY':
 				define('OPENWEATHERMAP_API_KEY', '');
@@ -596,6 +616,46 @@ define(\'NOKIA_HERE_APPID\', \'\');';
  * @see https://developer.here.com
  */
 define(\'NOKIA_HERE_TOKEN\', \'\');';
+
+			case 'SMTP_HOST':
+				define('SMTP_HOST', 'localhost');
+				return '/**
+ * Define the mail sending server
+ * @var string
+ */
+define(\'SMTP_HOST\', \'localhost\');';
+
+			case 'SMTP_PORT':
+				define('SMTP_PORT', '25');
+				return '/**
+ * Define the smtp port
+ * @var string
+ */
+define(\'SMTP_PORT\', \'25\');';
+
+			case 'SMTP_SECURITY':
+				define('SMTP_SECURITY', '');
+				return '/**
+ * Define the smtp encryption
+ * @var string
+ */
+define(\'SMTP_SECURITY\', \'\');';
+
+			case 'SMTP_USERNAME':
+				define('SMTP_USERNAME', '');
+				return '/**
+ * Define the auth username for the smtp server
+ * @var string
+ */
+define(\'SMTP_USERNAME\', \'\');';
+
+			case 'SMTP_PASSWORD':
+				define('SMTP_PASSWORD', '');
+				return '/**
+ * Define the auth password for the smtp server
+ * @var string
+ */
+define(\'SMTP_PASSWORD\', \'\');';
 
 			default:
 				return '// Whoo! Runalyze tried to add an nonexisting configuration variable to this file. ($Variable = '.$Variable.')';
