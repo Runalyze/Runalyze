@@ -57,7 +57,7 @@ class ClothesFactory {
 	static private function cacheAllClothes() {
 		$clothes = Cache::get(self::CACHE_KEY);
 		if (is_null($clothes)) {
-			$clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes`')->fetchAll();
+			$clothes = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'clothes` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
 			Cache::set(self::CACHE_KEY, $clothes, '3600');
 		}
 		return $clothes;

@@ -51,11 +51,11 @@ class PDOforRunalyze extends PDO {
 	 * @param string $statement
 	 */
 	protected function addAccountIDtoStatement(&$statement) {
-		if (!is_numeric($this->accountID) || strpos($statement, 'SET NAMES') !== false || strpos($statement, 'TRUNCATE') !== false) {
+		if (!is_numeric($this->accountID) || strpos($statement, 'SET NAMES') !== false || strpos($statement, 'TRUNCATE') !== false || strpos($statement, 'accountid')) {
 			return;
 		}
 
-		if (
+		if (                        
 				strpos($statement, PREFIX.'account') === false
 				&& strpos($statement, PREFIX.'plugin_conf') === false
 				&& strpos($statement, '`accountid`') === false
@@ -82,7 +82,7 @@ class PDOforRunalyze extends PDO {
 	public function fetchByID($table, $ID) {
 		$table = str_replace(PREFIX, '', $table);
 
-		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
+		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
 	}
 
 	/**
@@ -256,7 +256,6 @@ class PDOforRunalyze extends PDO {
 		if ($this->addsAccountID) {
 			$this->addAccountIDtoStatement($statement);
 		}
-
 		return parent::query($statement);
 	}
 }

@@ -126,7 +126,7 @@ class TrainingObject extends DataObject {
 	 */
 	private function loadRouteName() {
 		if ($this->hasProperty('routeid') && $this->get('routeid') > 0) {
-			$name = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'route` WHERE `id`="'.$this->get('routeid').'" LIMIT 1')->fetchColumn();
+			$name = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'route` WHERE `id`="'.$this->get('routeid').'" AND `accountid` = '.SessionAccountHandler::getId().' LIMIT 1')->fetchColumn();
 			$this->set('route', $name);
 		}
 	}

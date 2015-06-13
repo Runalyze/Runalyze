@@ -142,6 +142,7 @@ class DataBrowser {
 				'.$this->Dataset->getQuerySelectForAllDatasets().'
 			FROM `'.PREFIX.'training`
 			WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).'
+                        AND accountid = '.SessionAccountHandler::getId().'
 				'.$WhereNotPrivate.'
 			ORDER BY `time` ASC
 		')->fetchAll();
@@ -174,7 +175,7 @@ class DataBrowser {
 	 */
 	protected function initShortSports() {
 		$this->sports_short = array();
-		$sports = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1')->fetchAll();
+		$sports = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1 AND accountid = '.SessionAccountHandler::getId())->fetchAll();
 
 		foreach ($sports as $sport)
 			$this->sports_short[] = $sport['id'];

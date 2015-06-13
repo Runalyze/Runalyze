@@ -70,7 +70,7 @@ class Data extends \Runalyze\Configuration\Category {
 	 */
 	public function recalculateStartTime() {
 		$this->updateStartTime(
-			DB::getInstance()->query('SELECT MIN(`time`) FROM `'.PREFIX.'training`')->fetchColumn()
+			DB::getInstance()->query('SELECT MIN(`time`) FROM `'.PREFIX.'training` WHERE accountid = '.SessionAccountHandler::getId())->fetchColumn()
 		);
 	}
 

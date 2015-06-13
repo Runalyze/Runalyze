@@ -10,11 +10,11 @@ $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 $Wunschgewicht = $Plugin->Configuration()->value('wunschgewicht');
 
 if ($Plugin->Configuration()->value('plot_timerange') > 0)
-	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' ORDER BY `time` DESC';
+	$QueryEnd = 'WHERE `time` > '.(time() - DAY_IN_S * (int)$Plugin->Configuration()->value('plot_timerange')).' AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` DESC';
 else
-	$QueryEnd = 'ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
+	$QueryEnd = 'WHERE `accountid` = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT '.((int)$Plugin->Configuration()->value('plot_points'));
 
-$Data     = array_reverse( DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user` '.$QueryEnd)->fetchAll() );
+$Data     = array_reverse( DB::getInstance()->query('SELECT weight,pulse_rest,time FROM `'.PREFIX.'user`'.' '.$QueryEnd)->fetchAll() );
 $Weights  = array();
 $HRrests  = array();
 

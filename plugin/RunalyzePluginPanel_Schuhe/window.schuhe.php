@@ -9,7 +9,7 @@ $Frontend = new Frontend();
 
 if (Request::param('delete') == 'true') {
 	DB::getInstance()->deleteByID('shoe', (int)Request::sendId());
-	DB::getInstance()->query('UPDATE `' . PREFIX . 'training` SET `shoeid`=0 WHERE `shoeid`=' . (int)Request::sendId());
+	DB::getInstance()->query('UPDATE `' . PREFIX . 'training` SET `shoeid`=0 WHERE `shoeid`=' . (int)Request::sendId().' AND accountid = '.SessionAccountHandler::getId());
 	Cache::delete(ShoeFactory::CACHE_KEY);
 
 	header('Location: window.schuhe.table.php?reload=true');

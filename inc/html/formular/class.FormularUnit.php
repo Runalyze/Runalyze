@@ -122,4 +122,10 @@ class FormularUnit {
 	 * @var string
 	 */
 	static public $POWER = 'W';
+        
+        /**
+         * Unit: hour
+         * @var string
+         */
+        static public $HOUR = 'h';
 }

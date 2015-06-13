@@ -102,10 +102,11 @@ abstract class DataObject {
 	 * Load last object
 	 */
 	private function loadLastObject() {
-		if ($this->DatabaseScheme->hasTimestamp())
-			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` ORDER BY `time` DESC LIMIT 1')->fetch();
-		else
-			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` ORDER BY `id` DESC LIMIT 1')->fetch();
+		if ($this->DatabaseScheme->hasTimestamp()) {
+			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
+                } else {
+			$this->data = DB::getInstance()->query('SELECT * FROM `'.$this->tableName().'` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `id` DESC LIMIT 1')->fetch();
+                }
 
 		if (empty($this->data))
 			$this->constructAsDefaultObject();

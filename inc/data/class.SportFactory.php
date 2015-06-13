@@ -141,7 +141,7 @@ class SportFactory {
 		$sports = Cache::get('sport');
 
 		if (is_null($sports)) {
-			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport`')->fetchAll();
+			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 			Cache::set('sport', $sports, '3600');
 		}
 
@@ -225,7 +225,7 @@ class SportFactory {
 	 * @return array ids as keys, counts as values
 	 */
 	static public function CountArray() {
-		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` GROUP BY sportid')->fetchAll();
+		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid` = '.SessionAccountHandler::getId().' GROUP BY sportid')->fetchAll();
 		$Counts = array();
 
 		foreach ($Sports as $Sport) {

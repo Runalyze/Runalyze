@@ -55,8 +55,9 @@ class ConfigTabDataset extends ConfigTab {
 		$Labels = new DatasetLabels();
 		$DatasetObject = new Dataset();
 		$DatasetObject->setActivityData($this->getExampleTraining());
-
-		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` ORDER BY (`position` > 0) DESC, `position` ASC')->fetchAll();
+                
+                
+		$Dataset = DB::getInstance()->query('SELECT *, (`position` = 0) as `hidden` FROM `'.PREFIX.'dataset` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY (`position` > 0) DESC, `position` ASC')->fetchAll();
 		foreach ($Dataset as $pos => $Data) {
 			$disabled    = ($Data['modus'] == 3) ? ' disabled' : '';
 			$checked_2   = ($Data['modus'] >= 2) ? ' checked' : '';
@@ -133,7 +134,7 @@ class ConfigTabDataset extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$dataset = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'dataset`')->fetchAll();
+		$dataset = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'dataset` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
 
 		foreach ($dataset as $set) {
 			$id = $set['id'];

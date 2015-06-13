@@ -69,7 +69,7 @@ class TypeFactory {
 		$types = Cache::get('types');
 
 		if (is_null($types)) {
-			$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type`')->fetchAll();
+			$types = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'type` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 			Cache::set('types', $types, '3600');
 		}
 
