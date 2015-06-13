@@ -581,6 +581,15 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
+	'pauses'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
 	'creator'			=> array(
 					'database'	=> array(
 						'type'		=> 'varchar',

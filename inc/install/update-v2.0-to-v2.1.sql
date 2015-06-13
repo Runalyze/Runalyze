@@ -56,3 +56,6 @@ ALTER TABLE `runalyze_type` ADD `hr_avg` TINYINT(3) UNSIGNED NOT NULL DEFAULT '1
 UPDATE `runalyze_type` SET `quality_session` = (`RPE` > 4);
 UPDATE `runalyze_type` SET `hr_avg` = IF(`RPE`>8,90+10*`RPE`,(120 + 7.5 * `RPE`));
 ALTER TABLE `runalyze_type` DROP `RPE`;
+
+/* 13.06.2015 - change empty string for array objects */
+UPDATE `runalyze_trackdata` SET `pauses`="" WHERE `pauses`="[]";
