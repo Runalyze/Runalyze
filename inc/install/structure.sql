@@ -306,6 +306,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `fat` decimal(3,1) NOT NULL DEFAULT '0.0',
   `water` decimal(3,1) NOT NULL DEFAULT '0.0',
   `muscles` decimal(3,1) NOT NULL DEFAULT '0.0',
+  `sleep_duration` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `notes` text NOT NULL,
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
