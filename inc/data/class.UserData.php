@@ -133,7 +133,7 @@ class UserData extends DataObject {
 	* @return float
 	*/
 	public function getSleepDuration() {
-		return $this->get('sleepduration');
+		return $this->get('sleep_duration');
 	}
 
 	/**

@@ -59,7 +59,7 @@ ALTER TABLE `runalyze_type` DROP `RPE`;
 
 
 /* 12.06.2015 - add sleep duration and notice field to User Data */
-ALTER TABLE `runalyze_user` ADD `sleep_duration` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `muscles`, ADD `notes` TEXT NOT NULL AFTER `sleep_duration`;
+ALTER TABLE `runalyze_user` ADD `sleep_duration` SMALLINT(3) UNSIGNED NOT NULL DEFAULT '0' AFTER `muscles`, ADD `notes` TEXT NULL DEFAULT NULL AFTER `sleep_duration`;
 
 /* 13.06.2015 - change empty string for array objects */
 UPDATE `runalyze_trackdata` SET `pauses`="" WHERE `pauses`="[]";

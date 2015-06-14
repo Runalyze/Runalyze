@@ -32,7 +32,7 @@ if (Request::param('reload') == 'true') {
 				<th class="{sorter: false}">&nbsp;</th>
 				<th class="{sorter:'germandate'}"><?php _e('Date'); ?></th>
 				<th><?php _e('Weight'); ?></th>
-                                <th><?php _e('Sleep duration'); ?></th>
+				<th><?php _e('Sleep duration'); ?></th>
 			<?php if ($Plugin->Configuration()->value('use_pulse')): ?>
 			<?php $Fields = array_merge($Fields, $FieldsPulse); ?>
 				<th><?php _e('Resting HR'); ?></th>
@@ -61,12 +61,8 @@ if (Request::param('reload') == 'true') {
                                
 				<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
 				<?php if ($Unit == 'date') $Unit = ''; ?>
-                                <?php if($Key == 'sleep_duration') {
-                                    $Duration = new Duration($Value*60);
-                                    echo "<td>".$Duration->string('G:i').$Unit."</td>";
-                                } else { ?>
+				<?php if ($Key == 'sleep_duration' && $Value > 0) $Value = (new Duration($Value*60))->string('G:i'); ?>
 				<td><?php echo (!is_numeric($Value) || $Value > 0) ? $Value.$Unit : '-'; ?></td>
-                                <?php } ?>
 			<?php endforeach; ?>
 			</tr>
 		<?php endforeach; ?>

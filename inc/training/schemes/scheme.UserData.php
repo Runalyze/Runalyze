@@ -27,7 +27,8 @@ $FIELDSETS = array(
         array(
 		'id'		=> 'notes',
 		'legend'	=> __('Notes'),
-		'fields'	=> array('notes')
+		'fields'	=> array('notes'),
+		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W33
 	)
 );
 
@@ -110,22 +111,22 @@ $FIELDS['sleep_duration'] = array(
 	'database'	=> array(
 		'type'		=> 'smallint',
 		'precision'	=> '4',
-                'default'	=> '0:00'
+		'default'	=> '0'
 		),
 	'formular'	=> array(
 		'label'		=> __('Sleep Duration'),
 		'unit'		=> FormularUnit::$HOUR,
-                'parser'	=> FormularValueParser::$PARSER_TIME
+		'parser'	=> FormularValueParser::$PARSER_TIME_MINUTES
 	)
 );
 $FIELDS['notes'] = array(
 	'database'	=> array(
 		'type'		=> 'text',
-                'default'	=> ''
+		'default'	=> ''
 		),
 	'formular'	=> array(
 		'label'		=> __('Notes'),
-                'class'		=> 'FormularTextarea',
-                'size'		=> FormularInput::$SIZE_FULL
+		'class'		=> 'FormularTextarea',
+		'size'		=> FormularInput::$SIZE_FULL
 	)
 );
