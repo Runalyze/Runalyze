@@ -162,6 +162,17 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 1*60*60 + 13*60 - 29*60, $this->object->object()->getTimeInSeconds(), '', 10 );
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+
+		$this->assertEquals( 3, $this->object->object()->Pauses()->num() );
+
+		foreach (array(
+			array(339, 233),
+			array(2296, 428),
+			array(2576, 1075),
+		) as $i => $pause) {
+			$this->assertEquals($pause[0], $this->object->object()->Pauses()->at($i)->time());
+			$this->assertEquals($pause[1], $this->object->object()->Pauses()->at($i)->duration());
+		}
 	}
 
 }

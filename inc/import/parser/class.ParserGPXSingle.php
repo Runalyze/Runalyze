@@ -47,6 +47,17 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	protected $limitForPauses = 0;
 
 	/**
+	 * Was there a pause currently?
+	 * @var bool
+	 */
+	protected $wasPaused = false;
+
+	/**
+	 * @var int
+	 */
+	protected $pauseDuration = 0;
+
+	/**
 	 * Set extension XML
 	 * @param SimpleXMLElement $XML
 	 */
@@ -160,6 +171,9 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$newTime = $this->getTimeOfPoint($Point);
 
 		if ($this->lookForPauses && $this->limitForPauses > 0 && ($newTime - end($this->gps['time_in_s'])) > $this->limitForPauses) {
+			$this->wasPaused = true;
+			$this->pauseDuration += $newTime - end($this->gps['time_in_s']);
+
 			return;
 		}
 
@@ -171,6 +185,22 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		$this->gps['altitude'][]  = (isset($Point->ele)) ? (int)$Point->ele : 0;
 
 		$this->parseExtensionValues($Point);
+
+		if ($this->wasPaused) {
+			$num = count($this->gps['heartrate']);
+
+			$this->TrainingObject->Pauses()->add(
+				new \Runalyze\Model\Trackdata\Pause(
+					$this->gps['time_in_s'][$num-2],
+					$this->pauseDuration,
+					$this->gps['heartrate'][$num-2],
+					$this->gps['heartrate'][$num-1]
+				)
+			);
+			
+			$this->wasPaused = false;
+			$this->pauseDuration = 0;
+		}
 	}
 
 	/**
