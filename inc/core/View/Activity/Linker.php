@@ -9,6 +9,7 @@ namespace Runalyze\View\Activity;
 use Runalyze\Model\Activity;
 use Runalyze\Activity\Duration;
 
+use SessionAccountHandler;
 use DataBrowserLinker;
 use SharedLinker;
 use System;
