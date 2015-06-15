@@ -32,12 +32,12 @@ class ConfigTabAccount extends ConfigTab {
 		$MailField->setDisabled();
 
 		$NameField = new FormularInput('name', __('Name'), $Data['name']);
-                
-                $LanguageField = new FormularSelectBox('language', __('Language'), $Data['language']);
-                
-                foreach(Language::availableLanguages() as $klang => $lang) {
-                        $LanguageField->addOption($klang, $lang[0]);
-                }
+
+		$LanguageField = new FormularSelectBox('language', __('Language'), $Data['language']);
+
+		foreach (Language::availableLanguages() as $klang => $lang) {
+			$LanguageField->addOption($klang, $lang[0]);
+		}
 
 
 		$SinceField = new FormularInput('name', __('Registered since'), date('d.m.Y H:i', $Data['registerdate']));
@@ -50,10 +50,18 @@ class ConfigTabAccount extends ConfigTab {
 		$Account->addField($UsernameField);
 		$Account->addField($MailField);
 		$Account->addField($NameField);
-                $Account->addField($LanguageField);
+		$Account->addField($LanguageField);
 		$Account->addField($SinceField);
 		$Account->addField($LastLoginField);
-                
+
+		$AllowMailsField = new FormularSelectBox('allow_mails', __('Email me'), $Data['allow_mails']);
+		$AllowMailsField->addOption('1', __('Yes'));
+		$AllowMailsField->addOption('0', __('No'));
+
+		$Notifications = new FormularFieldset( __('Notifications') );
+		$Notifications->addInfo(__('At irregular intervals we are sending mails to you. We will never send you spam or advertisement.'));
+		$Notifications->addField($AllowMailsField);
+
 		$Password =  new FormularFieldset(__('Change your password'));
 
 		if (empty($_POST['old_pw']) && empty($_POST['new_pw']) && empty($_POST['new_pw_repeat'])) {
@@ -93,6 +101,7 @@ class ConfigTabAccount extends ConfigTab {
 		$Delete->addWarning($DeleteLink);
 
 		$this->Formular->addFieldset($Account);
+		$this->Formular->addFieldset($Notifications);
 		$this->Formular->addFieldset($Password);
 		$this->Formular->addFieldset($Backup);
 		$this->Formular->addFieldset($Delete);
@@ -107,11 +116,18 @@ class ConfigTabAccount extends ConfigTab {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'name', $_POST['name'], false);
 		}
                 
+		if ($_POST['allow_mails'] != SessionAccountHandler::getAllowMails()) {
+			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'allow_mails', $_POST['allow_mails'], false);
+		}
+                
 		if ($_POST['language'] != SessionAccountHandler::getLanguage()) {
 			DB::getInstance()->update('account', SessionAccountHandler::getId(), 'language', $_POST['language'], false);
-                        Language::setLanguage($_POST['language']);
-                        
+			Language::setLanguage($_POST['language']);
+
+			echo Ajax::wrapJS('document.cookie = "lang=" + encodeURIComponent("'.addslashes($_POST['language']).'");');
+			Ajax::setReloadFlag( Ajax::$RELOAD_PAGE );
 		}
+
 		if ($_POST['new_pw'] != '') {
 			$this->tryToChangePassword();
 		}
@@ -122,7 +138,7 @@ class ConfigTabAccount extends ConfigTab {
 	 */
 	private function tryToChangePassword() {
 		if ($_POST['new_pw'] == $_POST['new_pw_repeat']) {
-			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`')->fetch();   
+			$Account = DB::getInstance()->query('SELECT `password`, `salt` FROM `'.PREFIX.'account`'.' AND accountid = '.SessionAccountHandler::getId())->fetch();   
 
 			if (AccountHandler::comparePasswords($_POST['old_pw'], $Account['password'], $Account['salt'])) {
 				if (strlen($_POST['new_pw']) < AccountHandler::$PASS_MIN_LENGTH) {

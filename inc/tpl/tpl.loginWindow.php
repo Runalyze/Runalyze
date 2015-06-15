@@ -86,13 +86,6 @@ use Runalyze\Activity\Distance;
 				$Field->setUnit( FormularUnit::$MAIL );
 				$Field->display();
                                 
-                                $Field = new FormularSelectBox('language', __('Language'));
-                                $Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
-                                 foreach(Language::availableLanguages() as $klang => $lang) {
-                                        $Field->addOption($klang, $lang[0]);
-                                }
-                                $Field->display();
-
 				$Field = new FormularInputPassword('password', __('Password'));
 				$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W100);
 				$Field->setUnit( FormularUnit::$PASS );
@@ -178,7 +171,7 @@ DB::getInstance()->stopAddingAccountID();
 
 $NumUser = Cache::get('NumUser', 1);
 if ($NumUser == NULL) {
-    $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account')->fetchColumn();
+    $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account WHERE activation_hash = ""')->fetchColumn();
     Cache::set('NumUser', $NumUser, '500', 1);
 }
 

@@ -230,7 +230,7 @@ class AccountHandler {
 		$newSalt = self::getNewSalt();
 		$newAccountId   = DB::getInstance()->insert('account',
 				array('username', 'name', 'mail', 'language', 'password', 'salt' , 'registerdate', 'activation_hash'),
-				array($_POST['new_username'], $_POST['name'], $_POST['email'], $_POST['language'], self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
+				array($_POST['new_username'], $_POST['name'], $_POST['email'], Language::getCurrentLanguage(), self::passwordToHash($_POST['password'], $newSalt), $newSalt, time(), $activationHash));
 
 		self::$IS_ON_REGISTER_PROCESS = true;
 		self::$NEW_REGISTERED_ID = $newAccountId;
@@ -266,7 +266,7 @@ class AccountHandler {
 			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
 			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
-			$message .= self::getChangePasswordLink($pwHash);
+			$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
 
 			if (System::sendMail($account['mail'], $subject, $message))
 				return __('The link has been sent and will be valid for 24 hours.');
@@ -275,7 +275,7 @@ class AccountHandler {
 
 				if (System::isAtLocalhost()) {
 					$string .= '<br>'.__('Your local server has no smtp-server. Please contact the administrator.');
-					Error::getInstance()->addDebug('Link for changing password: '.self::getChangePasswordLink($pwHash));
+					Error::getInstance()->addDebug('Link for changing password:'.self::getChangePasswordLink($pwHash));
 				}
 
 				return $string;

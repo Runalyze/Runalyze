@@ -76,6 +76,21 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 		// TODO: missing values
+
+		$this->assertEquals( 5, $this->object->object()->Pauses()->num() );
+
+		foreach (array(
+			array(19, 57, 112, 73),
+			array(19, 1, 73, 71),
+			array(3676, 92, 143, 110),
+			array(3720, 11, 125, 126),
+			array(6176, 20, 140, 133),
+		) as $i => $pause) {
+			$this->assertEquals($pause[0], $this->object->object()->Pauses()->at($i)->time());
+			$this->assertEquals($pause[1], $this->object->object()->Pauses()->at($i)->duration());
+			$this->assertEquals($pause[2], $this->object->object()->Pauses()->at($i)->hrStart());
+			$this->assertEquals($pause[3], $this->object->object()->Pauses()->at($i)->hrEnd());
+		}
 	}
 
 	/**
@@ -198,6 +213,37 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 				$this->assertTrue( $km >= $DistanceArray[$i-1], 'Distance is decreasing');
 			}
 		}
+	}
+
+	/**
+	 * Test: Runtastic file - don't look for pauses!
+	 * Filename: "Runtastic.tcx" 
+	 */
+	public function testRuntasticFile() {
+		$this->object->parseFile('../tests/testfiles/tcx/Runtastic.tcx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( 61, $this->object->object()->getTimeInSeconds(), '', 5);
+		$this->assertEquals( 0.113, $this->object->object()->getDistance(), '', 0.01);
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+
+		$this->assertEquals(
+			array(23, 25, 27, 31, 32, 35, 37, 39, 45, 50),
+			array_slice($this->object->object()->getArrayTime(), 10, 10)
+		);
+		$this->assertEquals(
+			array(0.0, 0.0, 0.0, 0.052, 0.052, 0.052, 0.052, 0.052, 0.071, 0.085),
+			array_slice($this->object->object()->getArrayDistance(), 10, 10)
+		);
+		$this->assertEquals(
+			array(596, 596, 596, 596, 737, 737, 737, 737, 737, 357),
+			array_slice($this->object->object()->getArrayPace(), 10, 10)
+		);
 	}
 
 }

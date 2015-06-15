@@ -27,7 +27,8 @@ $FIELDSETS = array(
 		'id'		=> 'distance',
 		'legend'	=> __('Distance'),
 		'fields'	=> array('distance', 'is_track', 'elevation', 'abc', 'pace', 'power', 'cadence'),
-		'conf'		=> 'DISTANCE'
+            'conf'		=> 'DISTANCE',
+		'css'		=> TrainingFormular::$ONLY_DISTANCES_CLASS
 	),
 	array(
 		'id'		=> 'splits',
@@ -572,6 +573,15 @@ $FIELDS = array(
 					)
 	),
 	'arr_vertical_oscillation'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'pauses'	=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',

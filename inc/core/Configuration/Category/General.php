@@ -122,6 +122,15 @@ class General extends \Runalyze\Configuration\Category {
 	}
 
 	/**
+	 * Update competition type
+	 * @param int $typeid
+	 */
+	public function updateCompetitionType($typeid) {
+		$this->object('TYPE_ID_RACE')->set($typeid);
+		$this->updateValue($this->handle('TYPE_ID_RACE'));
+	}
+
+	/**
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
@@ -148,10 +157,6 @@ class General extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('MAINSPORT'), array(
 			'label'		=> __('Main sport')
-		));
-
-		$Fieldset->addHandle( $this->handle('TYPE_ID_RACE'), array(
-			'label'		=> __('Activity type: competition')
 		));
 
 		return $Fieldset;

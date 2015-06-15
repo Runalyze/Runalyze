@@ -31,6 +31,12 @@ class FormularValueParser {
 	static public $PARSER_TIME = 'time';
 
 	/**
+	 * Parser: time in minutes <=> time-string
+	 * @var string
+	 */
+	static public $PARSER_TIME_MINUTES = 'time-minutes';
+
+	/**
 	 * Parser: encoded string <=> string
 	 * @var string 
 	 */
@@ -91,6 +97,8 @@ class FormularValueParser {
 				return self::validateDaytime($key);
 			case self::$PARSER_TIME:
 				return self::validateTime($key, $parserOptions);
+			case self::$PARSER_TIME_MINUTES:
+				return self::validateTimeMinutes($key, $parserOptions);
 			case self::$PARSER_STRING:
 				return self::validateString($key, $parserOptions);
 			case self::$PARSER_INT:
@@ -127,6 +135,9 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_TIME:
 				self::parseTime($value);
+				break;
+			case self::$PARSER_TIME_MINUTES:
+				self::parseTimeMinutes($value);
 				break;
 			case self::$PARSER_ARRAY_CHECKBOXES:
 				self::parseArrayCheckboxes($value);
@@ -308,6 +319,36 @@ class FormularValueParser {
 			$value = '0:00:00';
 		} else {
 			$value = Duration::format($value);
+		}
+	}
+
+	/**
+	 * Validator: time-string => time in minutes
+	 * This will transform 6:23 to 6*60 + 23
+	 * @param string $key
+	 * @param array $options
+	 * @return boolean 
+	 */
+	static protected function validateTimeMinutes($key, $options) {
+		$Time = new Duration($_POST[$key]);
+
+		$_POST[$key] = $Time->seconds();
+
+		if ($_POST[$key] == 0 && (isset($options['required']) || isset($options['notempty'])))
+			return __('You have to enter a time.');
+
+		return true;
+	}
+
+	/**
+	 * Parse: time in seconds => time-string
+	 * @param mixed $value 
+	 */
+	static protected function parseTimeMinutes(&$value) {
+		if ($value == 0) {
+			$value = '0:00';
+		} else {
+			$value = (new Duration($value*60))->string('G:i');
 		}
 	}
 

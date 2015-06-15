@@ -141,4 +141,27 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
 
+	/**
+	 * Test: NavRun500
+	 * Filename: "NavRun500.gpx" 
+	 */
+	public function testNavRun500() {
+		$this->object->parseFile('../tests/testfiles/gpx/NavRun500.gpx');
+
+		// Original start: 2015-05-25T11:05:01Z
+		// New start: 2015-05-25T12:40:01Z (i.e. -1:35:00)
+		// New end: 2015-05-25T13:53:01Z
+		// Original Pauses:
+		// 01:40:39 - 01:45:04 or 12:45:40 - 12:49:33
+		// 02:17:09 - 02:24:26 or 13:22:10 - 13:29:18
+		// 02:28:57 - 02:46:56 or 13:33:58 - 13:51:53
+		// - sum of (large) pauses = 29:41 or 29:00
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( 1*60*60 + 13*60 - 29*60, $this->object->object()->getTimeInSeconds(), '', 10 );
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+	}
+
 }

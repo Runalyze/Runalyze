@@ -4,13 +4,13 @@
  * @package Runalyze\Plugins\Panels
  */
 require '../../inc/class.Frontend.php';
-
+use Runalyze\Activity\Duration;
 $Frontend = new Frontend();
 
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 
-$Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>');
+$Fields      = array('time' => 'date', 'weight' => ' <small>kg</small>', 'sleep_duration' => ' <small>h</small>');
 $FieldsPulse = array('pulse_rest' => ' <small>bpm</small>', 'pulse_max' => ' <small>bpm</small>');
 $FieldsFat   = array('fat' => ' &#37;', 'water' => ' &#37;', 'muscles' => ' &#37;');
 $Data        = array_reverse(UserData::getFullArray());
@@ -32,6 +32,7 @@ if (Request::param('reload') == 'true') {
 				<th class="{sorter: false}">&nbsp;</th>
 				<th class="{sorter:'germandate'}"><?php _e('Date'); ?></th>
 				<th><?php _e('Weight'); ?></th>
+				<th><?php _e('Sleep duration'); ?></th>
 			<?php if ($Plugin->Configuration()->value('use_pulse')): ?>
 			<?php $Fields = array_merge($Fields, $FieldsPulse); ?>
 				<th><?php _e('Resting HR'); ?></th>
@@ -57,9 +58,11 @@ if (Request::param('reload') == 'true') {
 				<td><?php echo RunalyzePluginPanel_Sportler::getDeleteLinkFor($Info['id']); ?></td>
 				<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
 			<?php foreach ($Fields as $Key => $Unit): ?>
+                               
 				<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
 				<?php if ($Unit == 'date') $Unit = ''; ?>
-				<td><?php echo (!is_numeric($Value) || $Value > 0) ? $Value.$Unit : '?'; ?></td>
+				<?php if ($Key == 'sleep_duration' && $Value > 0) $Value = (new Duration($Value*60))->string('G:i'); ?>
+				<td><?php echo (!is_numeric($Value) || $Value > 0) ? $Value.$Unit : '-'; ?></td>
 			<?php endforeach; ?>
 			</tr>
 		<?php endforeach; ?>

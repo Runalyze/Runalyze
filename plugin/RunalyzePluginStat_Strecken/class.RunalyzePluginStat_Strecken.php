@@ -74,7 +74,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$Link = Ajax::window('<a class="" href="plugin/'.$this->key().'/window.routenet.php?sport='.$this->sportid.'&y='.$this->year.'"><i class="fa fa-map-marker"></i> '.$text.'</a>', 'big');
 
 		$this->setToolbarNavigationLinks(array('<li>'.$Link.'</li>'));
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 		$this->setSportsNavigation(true, true);
 
 		$this->setHeaderWithSportAndYear();
@@ -263,18 +263,9 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 		$Query = 'SELECT `'.PREFIX.'route`.`cities` FROM `'.PREFIX.'training`';
 		$Query .= ' RIGHT JOIN `'.PREFIX.'route` ON `'.PREFIX.'training`.`routeid` = `'.PREFIX.'route`.`id`';
 		$Query .= ' WHERE ';
-
-		if ($this->sportid > 0) {
-			$Query .= '`sportid`='.(int) $this->sportid.' AND ';
-		}
-
-		$Query .= '`'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId().' AND ';
-
-		if ($this->year > 0) {
-			$Query .= '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1 AND';
-		}
-
-		$Query .= '`routeid`!=0 AND `cities`!=""';
+		$Query .= '`'.PREFIX.'training`.`accountid`='.SessionAccountHandler::getId();
+		$Query .= $this->getSportAndYearDependenceForQuery();
+		$Query .= ' AND `routeid`!=0 AND `cities`!=""';
 
 		return $Query;
 	}

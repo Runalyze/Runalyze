@@ -81,26 +81,26 @@ $EmptyTables['plugin'] = array(
 	)
 );
 $EmptyTables['sport'] = array(
-	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'RPE', 'speed', 'types', 'power', 'outside'),
+	'columns' => array('name', 'img', 'short', 'kcal', 'HFavg', 'distances', 'speed', 'types', 'power', 'outside'),
 	'values'  => array(
-		array(__('Running'), 'icons8-running', 0, 880, 140, 4, "min/km", 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
-		array(__('Swimming'), 'icons8-swimming', 0, 743, 130, 5, "min/100m", 0, 0, 0),
-		array(__('Biking'), 'icons8-regular_biking', 0, 770, 120, 2, "km/h", 0, 1, 1),
-		array(__('Gymnastics'), 'icons8-yoga', 1, 280, 100, 1, "km/h", 0, 0, 0),
-		array(__('Other'), 'icons8-sports_mode', 0, 500, 120, 3, "km/h", 0, 0, 0)
+		array(__('Running'), 'icons8-running', 0, 880, 140, 1, "min/km", 1, 0, 1, 'RUNNING_SPORT_ID', 'MAIN_SPORT_ID'),
+		array(__('Swimming'), 'icons8-swimming', 0, 743, 130, 1, "min/100m", 0, 0, 0),
+		array(__('Biking'), 'icons8-regular_biking', 0, 770, 120, 1, "km/h", 0, 1, 1),
+		array(__('Gymnastics'), 'icons8-yoga', 1, 280, 100, 0, "km/h", 0, 0, 0),
+		array(__('Other'), 'icons8-sports_mode', 0, 500, 120, 0, "km/h", 0, 0, 0)
 	)
 );
 $EmptyTables['type'] = array(
 	// Sportid will be updated by AccountHandler::setSpecialConfigValuesFor
-	'columns' => array('name', 'abbr', 'RPE', 'sportid'),
+	'columns' => array('name', 'abbr', 'hr_avg', 'quality_session'),
 	'values'  => array(
-		array(__('Jogging'), __('JOG'), 4, 0),
-		array(__('Fartlek'), __('FL'), 5, 0),
-		array(__('Interval training'), __('IT'), 7, 0),
-		array(__('Tempo Run'), __('TR'), 7, 0),
-		array(__('Race'), __('RC'), 10, 0, 'TYPE_ID_RACE'),
-		array(__('Regeneration Run'), __('RG'), 2, 0),
-		array(__('Long Slow Distance'), __('LSD'), 5, 0),
-		array(__('Warm-up'), __('WU'), 1, 0)
+		array(__('Jogging'), __('JOG'), 143, 0),
+		array(__('Fartlek'), __('FL'), 150, 1),
+		array(__('Interval training'), __('IT'), 165, 1),
+		array(__('Tempo Run'), __('TR'), 165, 1),
+		array(__('Race'), __('RC'), 'TYPE_ID_RACE', 190, 1),
+		array(__('Regeneration Run'), __('RG'), 128, 0),
+		array(__('Long Slow Distance'), __('LSD'), 150, 1),
+		array(__('Warm-up'), __('WU'), 128, 0)
 	)
 );

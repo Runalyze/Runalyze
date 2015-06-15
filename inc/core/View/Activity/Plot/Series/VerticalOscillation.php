@@ -9,13 +9,15 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
 
+use \Plot;
+
 /**
  * Plot for: Vertical oscillation
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
-class VerticalOscillation extends ActivitySeries {
+class VerticalOscillation extends ActivityPointSeries {
 	/**
 	 * @var string
 	 */
@@ -72,5 +74,17 @@ class VerticalOscillation extends ActivitySeries {
 	 */
 	protected function avg($decimals = 1) {
 		return parent::avg($decimals);
+	}
+
+	/**
+	 * Add to plot
+	 * @param \Plot $Plot
+	 * @param int $yAxis
+	 * @param boolean $addAnnotations [optional]
+	 */
+	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+		parent::addTo($Plot, $yAxis, $addAnnotations);
+
+		$this->setColorThresholdsBelow($Plot, 6.7, 8.3, 10.0, 11.8);
 	}
 }

@@ -65,9 +65,9 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	public function testFetchByID() {
 		$this->assertEquals( 0, $this->object->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn() );
 
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(1, 100)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(2, 200)');
-		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`) VALUES(3, 300)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(1, 100, 0)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(2, 200, 0)');
+		$this->object->exec('INSERT INTO `runalyze_training` (`id`, `s`, `accountid`) VALUES(3, 300, 0)');
 
 		$Training1 = $this->object->fetchByID('training', 1);
 		$this->assertEquals( 100, $Training1['s'] );
@@ -126,7 +126,7 @@ class PDOforRunalyzeTest extends PHPUnit_Framework_TestCase {
 	 * @covers PDOforRunalyze::prepare
 	 */
 	public function testPrepare() {
-		$Insert = $this->object->prepare('INSERT INTO `runalyze_training` (`id`, `s`, `distance`) VALUES (:id, :s, :distance)');
+		$Insert = $this->object->prepare('INSERT INTO `runalyze_training` (`id`, `s`, `distance`, `accountid`) VALUES (:id, :s, :distance, 0)');
 		$Insert->bindValue('id', 1);
 		$Insert->bindValue('s', 300);
 		$Insert->bindValue('distance', 1);

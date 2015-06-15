@@ -200,7 +200,7 @@ class Formular extends HtmlTag {
 	 */
 	protected function displayHiddenValues() {
 		foreach ($this->hiddenValues as $name => $value)
-			echo '<input type="hidden" name="'.$name.'" value="'.$value.'">';
+			echo '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars($value).'">';
 	}
 
 	/**

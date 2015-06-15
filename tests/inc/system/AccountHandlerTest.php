@@ -127,8 +127,8 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
 
 		DB::getInstance()->insert('account',
-			array('id', 'username', 'activation_hash'),
-			array(1, 'test', '8e1e915d08a163ddd4accc6d890dd557')
+			array('id', 'username', 'mail', 'activation_hash'),
+			array(1, 'test', 'test@mail.de', '8e1e915d08a163ddd4accc6d890dd557')
 		);
 
 		$_GET['activate'] = '';

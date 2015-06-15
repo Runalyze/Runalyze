@@ -37,31 +37,41 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Last point
 	 * @var int
 	 */
-	private $lastPoint = 0;
+	protected $lastPoint = 0;
 
 	/**
 	 * Last distance (exact)
 	 * @var float
 	 */
-	private $lastDistance = -1;
+	protected $lastDistance = -1;
 
 	/**
 	 * Boolean flag: Last point was empty
 	 * @var boolean
 	 */
-	private $lastPointWasEmpty = false;
+	protected $lastPointWasEmpty = false;
 
 	/**
 	 * Boolean flag: without distance (indoor training)
 	 * @var boolean
 	 */
-	private $isWithoutDistance = false;
+	protected $isWithoutDistance = false;
 
 	/**
 	 * Boolean flag: distances are empty
 	 * @var boolean
 	 */
-	private $distancesAreEmpty = false;
+	protected $distancesAreEmpty = false;
+
+	/**
+	 * @var bool
+	 */
+	protected $wasPause = false;
+
+	/**
+	 * @var int
+	 */
+	protected $pauseDuration = 0;
 
 	/**
 	 * Constructor
@@ -234,10 +244,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$Ignored = false;
 
 			if (count($TP->children()) == 1 || $NoMove || $TooSlow) {
-				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL)
+				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL) {
 					$Ignored = true;
-				else
+				} else {
 					$this->PauseInSeconds += $ThisBreakInSeconds;
+					$this->wasPause = true;
+					$this->pauseDuration += $ThisBreakInSeconds;
+				}
+
 				if (self::$DEBUG_SPLITS)
 					Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.$ThisBreakInSeconds.', empty point: '.
 							($NoMove ?
@@ -258,10 +272,26 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		if ($this->lastPointWasEmpty) {
 			$OldPauseInSeconds = $this->PauseInSeconds;
 			$this->PauseInSeconds = (strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp() - end($this->gps['time_in_s']));
+			$this->pauseDuration += $this->PauseInSeconds - $OldPauseInSeconds;
+			$this->wasPause = true;
 
 			if (self::$DEBUG_SPLITS)
 				Error::getInstance()->addDebug('PAUSE at '.(string)$TP->Time.' of '.($this->PauseInSeconds - $OldPauseInSeconds).
 						', last point was empty');
+		}
+
+		if ($this->wasPause) {
+			$this->TrainingObject->Pauses()->add(
+				new \Runalyze\Model\Trackdata\Pause(
+					end($this->gps['time_in_s']),
+					$this->pauseDuration,
+					end($this->gps['heartrate']),
+					(!empty($TP->HeartRateBpm)) ? round($TP->HeartRateBpm->Value) : 0
+				)
+			);
+
+			$this->wasPause = false;
+			$this->pauseDuration = 0;
 		}
 
 		$this->lastPointWasEmpty   = false;
@@ -294,7 +324,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Point
 	 * @return int
 	 */
-	private function parseExtensionValues(SimpleXMLElement &$Point) {
+	protected function parseExtensionValues(SimpleXMLElement &$Point) {
 		$power = 0;
 		$rpm   = 0;
 
@@ -309,11 +339,14 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 				$power = (int)$Point->Extensions->TPX->Watts;
 
 			if (count($Point->Extensions->children('ns3',true)) > 0) {
+                            
 				if (isset($Point->Extensions->children('ns3',true)->TPX)) {
 					$TPX = $Point->Extensions->children('ns3',true)->TPX;
 
 					if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->Watts))
 						$power = (int)$TPX->children('ns3',true)->Watts;
+                                        if (count($TPX->children('ns3',true)) > 0 && isset($TPX->children('ns3',true)->RunCadence)) 
+						$rpm = (int)$TPX->children('ns3',true)->RunCadence;
 				}
 			}
 		}
@@ -327,7 +360,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $TP
 	 * @return int
 	 */
-	private function distanceToTrackpoint(SimpleXMLElement &$TP) {
+	protected function distanceToTrackpoint(SimpleXMLElement &$TP) {
 		if (empty($this->gps['km']))
 			return empty($TP->Position) ? 0 : 0.001;
 

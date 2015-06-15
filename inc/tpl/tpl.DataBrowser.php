@@ -99,7 +99,7 @@ echo '<tbody>';
 
 // Z U S A M M E N F A S S U N G
 $WhereNotPrivate = (FrontendShared::$IS_SHOWN && !\Runalyze\Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
-$sports = DB::getInstance()->query('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' '.$WhereNotPrivate.' GROUP BY `sportid`')->fetchAll();
+$sports = DB::getInstance()->query('SELECT `id`, `time`, `sportid`, SUM(1) as `num` FROM `'.PREFIX.'training` WHERE `time` BETWEEN '.($this->timestamp_start-10).' AND '.($this->timestamp_end-10).' AND accountid = '.SessionAccountHandler::getId().' '.$WhereNotPrivate.' GROUP BY `sportid`')->fetchAll();
 foreach ($sports as $i => $sportdata) {
 	$Sport = new Sport($sportdata['sportid']);
 	echo '<tr class="r no-zebra">

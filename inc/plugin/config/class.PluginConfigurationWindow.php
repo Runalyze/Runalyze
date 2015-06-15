@@ -128,7 +128,7 @@ class PluginConfigurationWindow {
 				$Fieldset->addField( $Value->getFormField() );
 			}
 
-			$Fieldset->addField( new FormularSubmit( __('Edit'), '') );
+			$Fieldset->addField( new FormularSubmit( __('Save'), '') );
 		}
 
 		return $Fieldset;

@@ -42,10 +42,10 @@ class TableLaps extends TableLapsAbstract {
 		$Halfs = array();
 
 		$Loop = new Trackdata\Loop($this->Context->trackdata());
-		$Loop->moveToDistance( $this->Context->activity()->distance()/2 );
+		$Loop->moveToDistance( $this->Context->trackdata()->totalDistance()/2 );
 		$Halfs[] = $this->halfFromLoop($Loop);
 
-		$Loop->moveToDistance( $this->Context->activity()->distance() );
+		$Loop->moveToDistance( $this->Context->trackdata()->totalDistance() );
 		$Halfs[] = $this->halfFromLoop($Loop);
 
 		return $Halfs;

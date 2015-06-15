@@ -167,8 +167,13 @@ class Calculator {
 		} elseif ($this->Activity->hrAvg() > 0) {
 			$data = array($this->Activity->hrAvg() => $this->Activity->duration());
 		} else {
-			$Factory =Context::Factory();
-			$data = array($Factory->sport($this->Activity->sportid())->avgHR() => $this->Activity->duration());
+			$Factory = Context::Factory();
+
+			if ($this->Activity->typeid() > 0) {
+				$data = array($Factory->type($this->Activity->typeid())->hrAvg() => $this->Activity->duration());
+			} else {
+				$data = array($Factory->sport($this->Activity->sportid())->avgHR() => $this->Activity->duration());
+			}
 		}
 
 		$Athlete = Context::Athlete();

@@ -16,6 +16,12 @@ use Runalyze\Configuration;
  */
 class ParserGPXSingle extends ParserAbstractSingleXML {
 	/**
+	 * Factor to guess pause limit
+	 * @var int
+	 */
+	public static $PAUSE_FACTOR_FROM_AVERAGE_INTERVAL = 10;
+
+	/**
 	 * Last timestamp
 	 * @var int
 	 */
@@ -28,6 +34,19 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	protected $ExtensionXML = null;
 
 	/**
+	 * Boolean flag: look for pauses
+	 * @var boolean
+	 */
+	protected $lookForPauses = false;
+
+	/**
+	 * Limit in seconds
+	 * Gaps larger than this value will be recognized as pause if activated
+	 * @var int [s]
+	 */
+	protected $limitForPauses = 0;
+
+	/**
 	 * Set extension XML
 	 * @param SimpleXMLElement $XML
 	 */
@@ -36,10 +55,19 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 	}
 
 	/**
+	 * Enable/Disable looking for pauses
+	 * @param boolean $flag
+	 */
+	public function lookForPauses($flag = true) {
+		$this->lookForPauses = $flag;
+	}
+
+	/**
 	 * Parse
 	 */
 	protected function parseXML() {
 		if ($this->isCorrectGPX()) {
+			$this->guessLimitForPauses();
 			$this->parseGeneralValues();
 			$this->parseTrack();
 			$this->setGPSarrays();
@@ -72,6 +100,23 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 		if (!empty($this->XML->desc))
 			$this->TrainingObject->setComment(strip_tags((string)$this->XML->desc));
+	}
+
+	/**
+	 * Guess limit for pauses
+	 */
+	protected function guessLimitForPauses() {
+		$totalPoints = 0;
+		$totalTime = 0;
+		$numSegments = count($this->XML->trkseg);
+
+		for ($seg = 0; $seg < $numSegments; ++$seg) {
+			$numPoints = count($this->XML->trkseg[$seg]->trkpt);
+			$totalPoints += $numPoints;
+			$totalTime += strtotime((string)$this->XML->trkseg[$seg]->trkpt[$numPoints-1]->time) - strtotime((string)$this->XML->trkseg[$seg]->trkpt[0]->time);
+		}
+
+		$this->limitForPauses = round(self::$PAUSE_FACTOR_FROM_AVERAGE_INTERVAL * $totalTime / $totalPoints);
 	}
 
 	/**
@@ -112,7 +157,13 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 		} else
 			return;
 
-		$this->gps['time_in_s'][] = $this->getTimeOfPoint($Point);
+		$newTime = $this->getTimeOfPoint($Point);
+
+		if ($this->lookForPauses && $this->limitForPauses > 0 && ($newTime - end($this->gps['time_in_s'])) > $this->limitForPauses) {
+			return;
+		}
+
+		$this->gps['time_in_s'][] = $newTime;
 		$this->gps['km'][]        = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
 		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['latitude'][]  = $lat;

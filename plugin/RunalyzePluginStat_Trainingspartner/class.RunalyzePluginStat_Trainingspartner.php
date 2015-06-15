@@ -49,7 +49,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 	 */
 	protected function prepareForDisplay() {
 		$this->setSportsNavigation(true, true);
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 
 		$this->setHeaderWithSportAndYear();
 
@@ -127,7 +127,7 @@ class RunalyzePluginStat_Trainingspartner extends PluginStat {
 		$trainings = DB::getInstance()->query($Query)->fetchAll();
 
 		$this->TrainingsWithPartner = count($trainings);
-		$this->TrainingsTotal = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE 1'.$this->getSportAndYearDependenceForQuery())->fetchColumn();
+		$this->TrainingsTotal = DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE 1'.$this->getSportAndYearDependenceForQuery().' AND accountid = '.SessionAccountHandler::getId())->fetchColumn();
 
 		if (empty($trainings))
 			return;

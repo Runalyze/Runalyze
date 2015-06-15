@@ -114,7 +114,7 @@ class Dataset {
 		$dataset = Cache::get($key);
 
 		if (is_null($dataset)) {
-			$dataset = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>='.$modus.' AND `position`!=0 ORDER BY `position` ASC')->fetchAll();
+			$dataset = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'dataset` WHERE `modus`>='.$modus.' AND `position`!=0 AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY `position` ASC')->fetchAll();
 			Cache::set($key, $dataset, '600');
 		}
 
@@ -205,6 +205,7 @@ class Dataset {
 				FROM `'.PREFIX.'training`
 				WHERE
 					`sportid`='.$sportid.'
+                                        AND `accountid` = '.SessionAccountHandler::getId().'
 					AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 					'.$this->getQueryWhereNotPrivate().'
 				GROUP BY `sportid`
@@ -237,6 +238,7 @@ class Dataset {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`='.$sportid.'
+                                AND `accountid` = '.SessionAccountHandler::getId().'
 				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 				'.$this->getQueryWhereNotPrivate().'
 			GROUP BY `timerange`, `sportid`
@@ -402,7 +404,7 @@ class Dataset {
 
 			case 'typeid':
 				if (!is_null($this->Type)) {
-					if ($this->Type->rpe() > 4) {
+					if ($this->Type->isQualitySession()) {
 						return '<strong>'.$this->Type->abbreviation().'</strong>';
 					}
 
@@ -455,6 +457,13 @@ class Dataset {
 			case 'cadence':
 				if ($this->Dataview->cadence()->value() > 0) {
 					return $this->Dataview->cadence()->asString();
+				}
+
+				return '';
+
+			case 'stride_length':
+				if ($this->Dataview->strideLength()->inCM() > 0) {
+					return $this->Dataview->strideLength()->string();
 				}
 
 				return '';

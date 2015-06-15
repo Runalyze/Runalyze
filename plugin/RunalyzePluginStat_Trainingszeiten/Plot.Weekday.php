@@ -25,7 +25,7 @@ $Query = DB::getInstance()->prepare(
 	FROM `'.PREFIX.'training`
 	WHERE
 		`sportid`=:id
-		'.($this->year > 0 ? 'AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1' : '').'
+		'.$this->getYearDependenceForQuery().'
 	GROUP BY `day`
 	ORDER BY ((`day`+6)%7) ASC'
 );

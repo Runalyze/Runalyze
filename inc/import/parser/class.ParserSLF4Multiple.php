@@ -17,6 +17,7 @@ class ParserSLF4Multiple extends ParserAbstractMultipleXML {
 		if (!empty($this->XML->Entries)) {
 			$Parser = new ParserSLF4Single('', $this->XML);
 			$Parser->parse();
+
 			if ($Parser->failed())
 				$this->addErrors( $Parser->getErrors() );
 			else

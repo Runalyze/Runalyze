@@ -47,16 +47,16 @@ class Object extends Model\ObjectWithID {
 	const HR_AVG = 'HFavg';
 
 	/**
-	 * Key: RPE
-	 * @var string
-	 */
-	const RPE = 'RPE';
-
-	/**
 	 * Key: pace unit
 	 * @var string
 	 */
 	const PACE_UNIT = 'speed';
+        
+ 	/**
+-	 * Key: has distances
+-	 * @var string
+-	 */
+	const HAS_DISTANCES = 'distances';
 
 	/**
 	 * Key: has types
@@ -87,7 +87,7 @@ class Object extends Model\ObjectWithID {
 			self::SHORT,
 			self::CALORIES_PER_HOUR,
 			self::HR_AVG,
-			self::RPE,
+			self::HAS_DISTANCES,
 			self::PACE_UNIT,
 			self::HAS_TYPES,
 			self::HAS_POWER,
@@ -145,19 +145,19 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
-	 * RPE value
-	 * @return int
-	 */
-	public function rpe() {
-		return $this->Data[self::RPE];
-	}
-
-	/**
 	 * Pace unit
 	 * @return enum see \Runalyze\Activity\Pace
 	 */
 	public function paceUnit() {
 		return $this->Data[self::PACE_UNIT];
+	}
+        
+ 	/**
+	 * Has distances?
+	 * @return boolean
+	 */
+	public function hasDistances() {
+		return ($this->Data[self::HAS_DISTANCES] == 1);
 	}
 
 	/**

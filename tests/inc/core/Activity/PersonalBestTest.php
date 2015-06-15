@@ -28,8 +28,8 @@ class PersonalBestTest extends \PHPUnit_Framework_TestCase {
 
 	protected function insert($dist, $s, $time = 0) {
 		$this->PDO->exec(
-			'INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `time`, `typeid`) '.
-			'VALUES ('.$dist.', '.$s.', '.$time.', '.Configuration::General()->competitionType().')'
+			'INSERT INTO `'.PREFIX.'training` (`distance`, `s`, `time`, `typeid`, `accountid`) '.
+			'VALUES ('.$dist.', '.$s.', '.$time.', '.Configuration::General()->competitionType().', 0)'
 		);
 
 		return $this->PDO->lastInsertId();

@@ -27,8 +27,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`id` INTEGER PRIMARY KEY AUTOINCREMENT,
 			`name` VARCHAR(50) NOT NULL,
 			`abbr` VARCHAR(5) NOT NULL,
-			`RPE` SMALLINT NOT NULL,
 			`sportid` INTEGER NOT NULL,
+			`hr_avg` SMALLINT NOT NULL,
+			`quality_session` SMALLINT NOT NULL,
 			`accountid` INTEGER NOT NULL
 			);
 		');
@@ -49,8 +50,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$Type = new Object(array(
 			Object::NAME => 'Type name',
 			Object::ABBREVIATION => 'Tn',
-			Object::RPE => 5,
-			Object::SPORTID => 1
+			Object::SPORTID => 1,
+			Object::HR_AVG => 120,
+			Object::QUALITY_SESSION => 1
 		));
 
 		$Inserter = new Inserter($this->PDO, $Type);
@@ -62,8 +64,9 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals('Type name', $New->name());
 		$this->assertEquals('Tn', $New->abbreviation());
-		$this->assertEquals(5, $New->rpe());
 		$this->assertEquals(1, $New->sportid());
+		$this->assertEquals(120, $New->hrAvg());
+		$this->assertEquals(true, $New->isQualitySession());
 	}
 
 }

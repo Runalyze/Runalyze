@@ -21,8 +21,9 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			`id` INTEGER PRIMARY KEY AUTOINCREMENT,
 			`name` VARCHAR(50) NOT NULL,
 			`abbr` VARCHAR(5) NOT NULL,
-			`RPE` SMALLINT NOT NULL,
 			`sportid` INTEGER NOT NULL,
+			`hr_avg` SMALLINT NOT NULL,
+			`quality_session` SMALLINT NOT NULL,
 			`accountid` INTEGER NOT NULL
 			);
 		');
@@ -38,7 +39,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->insert(new Object(array(
 			Object::NAME => 'Type name',
 			Object::ABBREVIATION => 'Tn',
-			Object::RPE => 5
+			Object::HR_AVG => 120,
+			Object::QUALITY_SESSION => 1
 		)));
 
 		$Type = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
@@ -54,7 +56,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'type` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals('New type name', $Result->name());
 		$this->assertEquals('Tn', $Result->abbreviation());
-		$this->assertEquals(5, $Result->rpe());
+		$this->assertEquals(120, $Result->hrAvg());
+		$this->assertEquals(true, $Result->isQualitySession());
 	}
 
 }

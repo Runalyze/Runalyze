@@ -129,8 +129,9 @@ class SessionAccountHandler {
 
 			if ($Account['session_id'] == session_id()) {
 				$this->setAccount($Account);
-                                Language::setLanguage($Account['language']);
 				$this->updateLastAction();
+
+				Language::setLanguage($Account['language'], false);
 
 				return true;
 			} else
@@ -146,6 +147,13 @@ class SessionAccountHandler {
 	private function updateLastAction() {
 		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
 	}
+        
+        /**
+         * Update language of current account
+         */
+	private function updateLanguage() {
+		DB::getInstance()->update('account', self::getId(), 'language', Language::getCurrentLanguage());
+	}  
 
 	/**
 	 * Try to login from post data
@@ -184,7 +192,10 @@ class SessionAccountHandler {
 
 				$this->setAccount($Account);
 				$this->setSession();
-
+                                
+                                //Set language for user if not exists
+                                if(empty($Account['language']))
+                                    $this->updateLanguage();
 				// replace old md5 with new sha256 hash
 				if (strlen($Account['salt']) < 1) {
 					AccountHandler::setNewPassword($username, $password);
@@ -194,6 +205,8 @@ class SessionAccountHandler {
 			}
 
 			$this->throwErrorForWrongPassword();
+
+                            
 		} else {
 			$this->throwErrorForWrongUsername();
 		}
@@ -250,9 +263,11 @@ class SessionAccountHandler {
 	 * Set account-values to session 
 	 */
 	private function setSessionValues() {
+		session_regenerate_id();
+
 		$_SESSION['username']  = self::$Account['username'];
 		$_SESSION['accountid'] = self::$Account['id'];
-        }
+	}
         
 
 	/**
@@ -354,6 +369,17 @@ class SessionAccountHandler {
 		return self::$Account['name'];
 	}
 
+	/**
+	 * Get name of current user
+	 * @return type 
+	 */
+	static public function getAllowMails() {
+		if (!isset(self::$Account['allow_mails']))
+			return '';
+
+		return self::$Account['allow_mails'];
+	}
+        
         /**
 	 * Get language of current user
 	 * @return type 

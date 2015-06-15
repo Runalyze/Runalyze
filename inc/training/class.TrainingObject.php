@@ -56,6 +56,12 @@ class TrainingObject extends DataObject {
 	private $Cadence = null;
 
 	/**
+	 * Pauses
+	 * @var \Runalyze\Model\Trackdata\Pauses
+	 */
+	private $Pauses = null;
+
+	/**
 	 * Fill default object with standard settings
 	 */
 	protected function fillDefaultObject() {
@@ -118,6 +124,7 @@ class TrainingObject extends DataObject {
 	final public function updateAfterParsing() {
 		$this->removeSingleSplits();
 		$this->setSplitsFromObject();
+		$this->setPausesFromObject();
 		$this->loadRouteName();
 	}
 
@@ -126,7 +133,7 @@ class TrainingObject extends DataObject {
 	 */
 	private function loadRouteName() {
 		if ($this->hasProperty('routeid') && $this->get('routeid') > 0) {
-			$name = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'route` WHERE `id`="'.$this->get('routeid').'" LIMIT 1')->fetchColumn();
+			$name = DB::getInstance()->query('SELECT `name` FROM `'.PREFIX.'route` WHERE `id`="'.$this->get('routeid').'" AND `accountid` = '.SessionAccountHandler::getId().' LIMIT 1')->fetchColumn();
 			$this->set('route', $name);
 		}
 	}
@@ -203,7 +210,7 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::TEMPERATURE => $this->get('arr_temperature'),
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
-			Runalyze\Model\Trackdata\Object::PAUSES => ''
+			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
 		));
 	}
 
@@ -365,6 +372,26 @@ class TrainingObject extends DataObject {
 		}
 
 		return $this->Cadence;
+	}
+
+	/**
+	 * Pauses object
+	 * @return \Runalyze\Model\Trackdata\Pauses
+	 */
+	public function Pauses() {
+		if (is_null($this->Pauses)) {
+			$data = $this->hasProperty('pauses') ? $this->get('pauses') : '';
+			$this->Pauses = new Runalyze\Model\Trackdata\Pauses($data);
+		}
+
+		return $this->Pauses;
+	}
+	
+	/**
+	 * Set pauses from pauses object
+	 */
+	public function setPausesFromObject() {
+		$this->forceToSet('pauses', $this->Pauses()->asString());
 	}
 
 

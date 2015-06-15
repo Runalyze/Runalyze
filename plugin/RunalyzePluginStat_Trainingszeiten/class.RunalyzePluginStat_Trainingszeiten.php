@@ -48,7 +48,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 	 * Prepare
 	 */
 	protected function prepareForDisplay() {
-		$this->setYearsNavigation(true, true);
+		$this->setYearsNavigation(true, true, true);
 		$this->setSportsNavigation(true, true);
 
 		$this->setHeaderWithSportAndYear();
@@ -92,7 +92,7 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			$sports_not_short = $this->sportid.',';
 		} else {
 			$sports_not_short = '';
-			$sports = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=0')->fetchAll();
+			$sports = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=0 AND `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 			foreach ($sports as $sport)
 				$sports_not_short .= $sport['id'].',';
 		}
@@ -110,8 +110,9 @@ class RunalyzePluginStat_Trainingszeiten extends PluginStat {
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid` IN('.substr($sports_not_short,0,-1).') AND
-				(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
-				'.($this->year > 0 ? 'AND YEAR(FROM_UNIXTIME(`time`))='.(int)$this->year : '').'
+                                `accountid` = '.SessionAccountHandler::getId().' AND
+				(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0) 
+				'.$this->getYearDependenceForQuery().'
 			ORDER BY
 				ABS(12-(`H`+10)%24-`MIN`/60) ASC,
 				`MIN` DESC LIMIT 20

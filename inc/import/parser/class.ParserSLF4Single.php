@@ -9,36 +9,16 @@ use Runalyze\Configuration;
 /**
  * Parser for SLF files from Sigma
  *
- * @author Hannes Christiansen
+ * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Import\Parser
  */
-class ParserSLF4Single extends ParserAbstractSingleXML {
-	/**
-	 * Total pause in seconds
-	 * @var int
-	 */
-	protected $PauseInSeconds = 0;
-
-	/**
-	 * Parse
-	 */
-	protected function parseXML() {
-		if ($this->isCorrectSLF()) {
-			$this->parseGeneralValues();
-			$this->parseEntries();
-			$this->parseLaps();
-			$this->setGPSarrays();
-		} else {
-			$this->throwNoSLFError();
-		}
-	}
-
+class ParserSLF4Single extends ParserSLF3Single {
 	/**
 	 * Is a correct file given?
 	 * @return bool
 	 */
 	protected function isCorrectSLF() {
-		return !empty($this->XML->Entries);
+		return !empty($this->XML->GeneralInformation);
 	}
 
 	/**
@@ -53,18 +33,25 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML->GeneralInformation->startDate) );
-                $this->TrainingObject->setCalories($this->XML->GeneralInformation->calories);
+		$this->TrainingObject->setCalories((int)$this->XML->GeneralInformation->calories);
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
-                $this->TrainingObject->setComment($this->XML->GeneralInformation->name);
+		$this->TrainingObject->setComment((string)$this->XML->GeneralInformation->name);
 	}
 
 	/**
 	 * Parse all entries
 	 */
-	protected function parseEntries() {
+	protected function parseLogEntries() {
 		if (!isset($this->XML->Entries->Entry)) {
-			$this->addError( __('This file does not contain any data.') );
+			if ($this->XML->GeneralInformation->trainingTime) {
+				$this->TrainingObject->setTimeInSeconds((int)$this->XML->GeneralInformation->trainingTime/100);
+				$this->TrainingObject->setDistance((float)$this->XML->GeneralInformation->distance/1000);
+				$this->TrainingObject->setPulseMax((int)$this->XML->GeneralInformation->maximumHeartrate);
+				$this->TrainingObject->setPulseAvg((int)$this->XML->GeneralInformation->averageHeartrate);
+			} else {
+			   $this->addError( __('This file does not contain any data.') );
+			}
 		} else {
 			foreach ($this->XML->Entries->Entry as $Log)
 				$this->parseEntry($Log);
@@ -79,15 +66,13 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Log 
 	 */
 	protected function parseEntry($Log) {
- 
-                $Log = $Log->attributes();
+		$Log = $Log->attributes();
 		if ((int)$Log['trainingTime'] == 0) {
-
 			return;
 		}
 
-                $this->gps['time_in_s'][] = (int)$Log['trainingTimeAbsolute']/100;
-                $this->gps['km'][]        = round((float)$Log['distanceAbsolute']/1000, ParserAbstract::DISTANCE_PRECISION);
+		$this->gps['time_in_s'][] = (int)$Log['trainingTimeAbsolute']/100;
+		$this->gps['km'][]        = round((float)$Log['distanceAbsolute']/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['heartrate'][] = (!empty($Log['heartrate']))
 									? round($Log['heartrate'])
@@ -98,8 +83,8 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 * Parse all laps
 	 */
 	protected function parseLaps() {
-		if (!empty($this->XML->Laps))
-			foreach ($this->XML->Laps->Lap as $Lap)
+		if (!empty($this->XML->Markers))
+			foreach ($this->XML->Markers->Marker as $Lap)
 				$this->parseLap($Lap);
 	}
 
@@ -108,29 +93,14 @@ class ParserSLF4Single extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Lap
 	 */
 	protected function parseLap($Lap) {
-                $Lap = $Lap->attributes();
+		$Lap = $Lap->attributes();
 		if (!isset($Lap['calories']))
 			$this->TrainingObject->addCalories( (int)$Lap['calories'] );
 
 		$this->TrainingObject->Splits()->addSplit(
 			round((int)$Lap['distance'])/1000,
-			round((float)$Lap['trainingTime']),
+			round((int)$Lap['time']/100),
 			((string)$Lap['FastLap'] != 'false')
 		);
-	}
-
-	/**
-	 * Get name of creator
-	 * @return string
-	 */
-	protected function findCreator() {
-		$String = '';
-
-		if (!empty($this->XML->GeneralInformation)) {
-			foreach ($this->XML->GeneralInformation->attributes() as $key => $value)
-				$String .= (string)$key.': '.((string)$value)."\n";
-		}
-
-		return $String;
 	}
 }

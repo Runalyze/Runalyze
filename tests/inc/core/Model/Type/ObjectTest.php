@@ -12,13 +12,15 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::NAME => 'Type name',
 			Object::ABBREVIATION => 'Tn',
 			Object::SPORTID => 1,
-			Object::RPE => 5
+			Object::HR_AVG => 123,
+			Object::QUALITY_SESSION
 		));
 
 		$this->assertEquals('Type name', $Type->name());
 		$this->assertEquals('Tn', $Type->abbreviation());
 		$this->assertEquals(1, $Type->sportid());
-		$this->assertEquals(5, $Type->rpe());
+		$this->assertEquals(123, $Type->hrAvg());
+		$this->assertEquals(false, $Type->isQualitySession());
 	}
 
 }

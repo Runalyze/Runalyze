@@ -163,7 +163,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 			'ATLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$ATLabsolute/$ATLmax).'&nbsp;&#37;' : $ATLabsolute,
 			'CTL'		=> round(100*$CTLabsolute/$CTLmax),
 			'CTLstring'	=> Configuration::Trimp()->showInPercent() ? round(100*$CTLabsolute/$CTLmax).'&nbsp;&#37;' : $CTLabsolute,
-			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute)),
+			'TSB'		=> round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute,1)),
 			'TSBstring'	=> Configuration::Trimp()->showTSBinPercent() ? sprintf("%+d", round(100*$TSBabsolute/max($ATLabsolute, $CTLabsolute))).'&nbsp;&#37;' : sprintf("%+d", $TSBabsolute),
 		);
 		$TSBisPositive = $TrimpValues['TSB'] > 0;
@@ -173,9 +173,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
 		if (is_null($JDQuery)) {
-			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S));
-			$JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()));
-			$JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
+			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S).' AND accountid = '.SessionAccountHandler::getId());
+			
+                        $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()).' AND accountid = '.SessionAccountHandler::getId());
+                        $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
 			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
 			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
 		}
@@ -507,7 +508,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Tooltip = new Tooltip('');
 		$VDOT = new VDOT(0, new VDOTCorrector(Configuration::Data()->vdotFactor()));
-		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 ORDER BY time ASC')->fetchAll();
+		$VDOTs = DB::getInstance()->query('SELECT `id`,`time`,`distance`,IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`) as `vdot` FROM `'.PREFIX.'training` WHERE time>='.(time() - Configuration::Vdot()->days()*DAY_IN_S).' AND vdot>0 AND use_vdot=1 AND accountid = '.SessionAccountHandler::getId().' ORDER BY time ASC')->fetchAll();
 
 		foreach ($VDOTs as $i => $Data) {
 			if ($i%10 == 0)

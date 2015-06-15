@@ -12,6 +12,12 @@ use Runalyze\Configuration;
  */
 abstract class PlotSumData extends Plot {
 	/**
+	 * Key as year for last 6 months
+	 * @var string
+	 */
+	const LAST_6_MONTHS = 'last6months';
+
+	/**
 	 * Key as year for last 12 months
 	 * @var string
 	 */
@@ -92,13 +98,27 @@ abstract class PlotSumData extends Plot {
 	public function __construct() {
 		$sportid = strlen(Request::param('sportid')) > 0 ? Request::param('sportid') : Configuration::General()->runningSport();
 
-		$this->Year  = Request::param('y') == self::LAST_12_MONTHS ? self::LAST_12_MONTHS : (int)Request::param('y');
+		$this->Year  = $this->getRequestedYear();
 		$this->Sport = new Sport($sportid);
 
 		parent::__construct($this->getCSSid(), 800, 500);
 
 		$this->init();
 		$this->addAverage();
+	}
+
+	/**
+	 * Get requested year/key
+	 * @return int|string
+	 */
+	protected function getRequestedYear() {
+		$request = Request::param('y');
+
+		if ($request == self::LAST_12_MONTHS || $request == self::LAST_6_MONTHS) {
+			return $request;
+		}
+
+		return (int)$request;
 	}
 
 	/**
@@ -117,7 +137,7 @@ abstract class PlotSumData extends Plot {
 		echo '<div class="panel-menu">';
 		echo $this->getNavigationMenu();
 		echo '</div>';
-		echo HTML::h1( $this->getTitle() );
+		echo HTML::h1( $this->getTitle() . ' ' . $this->getTitleAppendix() );
 		echo '</div>';
 	}
 
@@ -228,6 +248,7 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function getMenuLinksForYears() {
 		$Links = array(
+			$this->link(__('Last 6 months'), self::LAST_6_MONTHS, Request::param('sportid'), Request::param('group'), self::LAST_6_MONTHS == $this->Year),
 			$this->link(__('Last 12 months'), self::LAST_12_MONTHS, Request::param('sportid'), Request::param('group'), self::LAST_12_MONTHS == $this->Year)
 		);
 
@@ -268,6 +289,19 @@ abstract class PlotSumData extends Plot {
 	 * @return string
 	 */
 	abstract protected function getTitle();
+
+	/**
+	 * @return string
+	 */
+	protected function getTitleAppendix() {
+		if ($this->Year == self::LAST_6_MONTHS) {
+			return __('last 6 months');
+		} elseif ($this->Year == self::LAST_12_MONTHS) {
+			return __('last 12 months');
+		}
+
+		return $this->Year;
+	}
 
 	/**
 	 * Get X labels
@@ -318,6 +352,7 @@ abstract class PlotSumData extends Plot {
 	private function initData() {
 		if (START_TIME != time() && (
 			($this->Year >= START_YEAR && $this->Year <= date('Y') && START_TIME != time()) ||
+			$this->Year == self::LAST_6_MONTHS ||
 			$this->Year == self::LAST_12_MONTHS
 		)) {
 			$this->defineAnalysis();
@@ -349,8 +384,8 @@ abstract class PlotSumData extends Plot {
 	private function loadData() {
 		$whereSport = (Request::param('group') == 'sport') ? '' : '`sportid`='.$this->Sport->id().' AND';
 
-		$this->usesDistance = true;
-		if (Request::param('group') != 'sport' && $this->Analysis == self::ANALYSIS_DEFAULT) {
+		$this->usesDistance = $this->Sport->usesDistance();
+		if (Request::param('group') != 'sport' && $this->Analysis == self::ANALYSIS_DEFAULT && $this->usesDistance) {
 			$num = DB::getInstance()->query('
 				SELECT COUNT(*) FROM `'.PREFIX.'training`
 				WHERE
@@ -384,10 +419,17 @@ abstract class PlotSumData extends Plot {
 	private function whereDate() {
 		if (is_numeric($this->Year)) {
 			return '`time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->Year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->Year+1).'-01-01\')-1';
+		} elseif ($this->Year == self::LAST_6_MONTHS) {
+			return '`time` >= '.$this->beginningOfLast6Months();
 		} else {
 			return '`time` >= '.$this->beginningOfLast12Months();
 		}
 	}
+
+	/**
+	 * @return int
+	 */
+	abstract protected function beginningOfLast6Months();
 
 	/**
 	 * @return int

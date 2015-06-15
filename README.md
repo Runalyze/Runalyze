@@ -2,36 +2,40 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
+[![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
 
 
 Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
 
-## Git usage
+## Install / Development
+Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
+v2.2+ will probably require [npm](https://nodejs.org/download/),
+[bower](http://bower.io/) (`sudo npm install -g bower`) and
+[grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
 
-Up to now we don't have any automated migration script.
-You have to apply recent changes by hand from the respective update files in `inc/install/`.
+To install all dependencies:
+```
+composer install
+bower install
+npm install
+grunt
+```
 
-#### For v2.0:
-There were some big changes in our table structure.
-Activity data is now split over three tables (training, trackdata, route) to improve performance.
-We recommend creating a backup before refactoring your data.
-
-To refactor your data, you first have to apply all changes from `update-v1.5-to-v2.0.sql`.
-Afterwards you can copy your data to new tables with `refactor-db.php`.
-Change settings within the file and run it via cli or browser.
-In addition you can use `build/global.cleanup.php` similarly to run a cleanup for all accounts at once.
-
-Release details on runalyze.de: [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/).
+Still, we don't have any automated migration script for the database so far.
+You have to apply recent changes from the respective update files in `inc/install/` by hand.
 
 ## License
 * TODO - we're currently seeking for the right license to choose
 
 ## Changelog
 * new versions, multi-lingual
+ * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: Minor bugfixes
  * [v2.0.2](http://blog.runalyze.com/allgemein/runalyze-v2-0-2/), 24.03.2015: Minor bugfixes
  * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: Minor bugfixes
  * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: First mutlilingual major release
+ * warning: migration from v1.5 to v2.0 requires to run `refactor-db.php`, see [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/) and [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/)
 * old versions, only in german
  * [v1.5](http://blog.runalyze.com/allgemein/runalyze-v1-5/), 01.01.2014: Bugfixes, genauere VDOT-Formel
  * [v1.4](http://blog.runalyze.com/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/), 23.08.2013: Bugfix für Sicherheitsrisiko
@@ -45,7 +49,7 @@ Release details on runalyze.de: [v2.0alpha](http://blog.runalyze.com/allgemein/r
 * open `../runalyze/install.php` in your browser
 * follow the instructions
 
-More details: <http://runalyze.de/installation/> (only in german)
+More details: <http://blog.runalyze.com/installation/> (only in german)
 
 ## Update
 * delete all contents of `/runalyze/` except for `/config.php/`

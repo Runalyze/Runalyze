@@ -60,14 +60,6 @@ class Sport {
 	public function name() {
 		return $this->data['name'];
 	}
-
-	/**
-	 * Get RPE for this sport
-	 * @return int
-	 */
-	public function RPE() {
-		return $this->data['RPE'];
-	}
 	
 	/**
 	* Get icon for this sport
@@ -109,6 +101,14 @@ class Sport {
 	public function avgHF() {
 		return $this->data['HFavg'];
 	}
+        
+        /* 
+	 * Has a training of this sport a distance?
+	 * @return bool
+	 */
+	public function usesDistance() {
+		return ($this->data['distances'] == 1);
+	}
 
 	/**
 	 * Does this sport use km/h as unit for speed?
@@ -125,14 +125,6 @@ class Sport {
 	 */
 	public function hasTypes() {
 		return ($this->data['types'] == 1);
-	}
-
-	/**
-	 * Has this sport a high RPE?
-	 * @return bool
-	 */
-	public function hasHighRPE() {
-		return ($this->data['RPE'] > 4);
 	}
 
 	/**

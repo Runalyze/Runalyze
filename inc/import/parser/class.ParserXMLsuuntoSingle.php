@@ -39,10 +39,46 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	protected $Distance = 0;
 
 	/**
+	 * @var boolean
+	 */
+	protected $UseRR = false;
+
+	/**
+	 * @var array
+	 */
+	protected $RRdata = array();
+
+	/**
+	 * @var int
+	 */
+	protected $LastRRindex = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $CurrentRRindex = -1;
+
+	/**
+	 * @var float [s]
+	 */
+	protected $RRsum = 0;
+
+	/**
+	 * @var float [s]
+	 */
+	protected $RRcurrentSum = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $numRRdata = 0;
+
+	/**
 	 * Parse
 	 */
 	protected function parseXML() {
 		if ($this->isCorrectXML()) {
+			$this->readRRdata();
 			$this->parseGeneralValues();
 			$this->parseOptionalValues();
 			$this->parseSamples();
@@ -120,7 +156,9 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * Finish laps
 	 */
 	protected function finishLaps() {
-		$this->TrainingObject->Splits()->addLastSplitToComplete(end($this->gps['km']), end($this->gps['time_in_s']));
+		$totalTime = $this->TrainingObject->getTimeInSeconds() > 0 ? $this->TrainingObject->getTimeInSeconds() : end($this->gps['time_in_s']);
+
+		$this->TrainingObject->Splits()->addLastSplitToComplete(end($this->gps['km']), $totalTime);
 	}
 
 	/**
@@ -166,6 +204,12 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 			$this->Distance = (int)$Sample->Distance;
 			$this->Time     = (int)$Sample->Time;
 
+			while ($this->RRsum < $this->Time && $this->CurrentRRindex < $this->numRRdata - 1) {
+				$this->CurrentRRindex++;
+				$this->RRcurrentSum += $this->RRdata[$this->CurrentRRindex]/1000;
+				$this->RRsum += $this->RRdata[$this->CurrentRRindex]/1000;
+			}
+
 			$this->setGPSfromSample($Sample);
 		}
 	}
@@ -175,6 +219,22 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 	 * @param SimpleXMLElement $Sample
 	 */
 	protected function setGPSfromSample(SimpleXMLElement &$Sample) {
+		if (!empty($Sample->HR)) {
+			$hr = round(60*(float)$Sample->HR);
+			$this->UseRR = false;
+		} elseif ($this->UseRR) {
+			if ($this->CurrentRRindex >= $this->LastRRindex) {
+				$hr = round(60 / $this->RRcurrentSum * ($this->CurrentRRindex - $this->LastRRindex + 1));
+
+				$this->LastRRindex = $this->CurrentRRindex;
+				$this->RRcurrentSum = $this->RRdata[$this->CurrentRRindex]/1000;
+			} else {
+				$hr = 0;
+			}
+		} else {
+			$hr = count($this->gps['heartrate']) > 0 ? end($this->gps['heartrate']) : 0;
+		}
+
 		$this->gps['time_in_s'][] = $this->Time;
 		$this->gps['km'][]        = round((float)$Sample->Distance/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['latitude'][]  = $this->Latitude;
@@ -185,12 +245,33 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		$this->gps['temp'][]      = !empty($Sample->Temperature)
 									? round((float)$Sample->Temperature - 273.15)
 									: (count($this->gps['temp']) > 0 ? end($this->gps['temp']) : 0);
-		$this->gps['heartrate'][] = !empty($Sample->HR)
-									? round(60*(float)$Sample->HR)
-									: (count($this->gps['heartrate']) > 0 ? end($this->gps['heartrate']) : 0);
+		$this->gps['heartrate'][] = $hr;
 		$this->gps['rpm'][]       = !empty($Sample->Cadence)
 									? (float)$Sample->Cadence * 60
 									: (count($this->gps['rpm']) > 0 ? end($this->gps['rpm']) : 0);
 		//$this->gps['power'][] = 0;
+	}
+
+	/**
+	 * Read RR data
+	 */
+	protected function readRRdata() {
+		$this->RRdata = $this->getRRdata();
+
+		if (!empty($this->RRdata)) {
+			$this->UseRR = true;
+			$this->numRRdata = count($this->RRdata);
+		}
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getRRdata() {
+		if (!empty($this->XML->{'R-R'}) && !empty($this->XML->{'R-R'}->Data)) {
+			return explode(' ', (string)$this->XML->{'R-R'}->Data);
+		}
+
+		return array();
 	}
 }

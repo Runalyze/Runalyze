@@ -127,7 +127,23 @@ class UserData extends DataObject {
 	public function getMuscles() {
 		return $this->get('muscles');
 	}
+        
+	/**
+	* Get sleep duration
+	* @return float
+	*/
+	public function getSleepDuration() {
+		return $this->get('sleep_duration');
+	}
 
+	/**
+	* Get note
+	* @return float
+	*/
+	public function getNote() {
+		return $this->get('notes');
+	}
+        
 	/**
 	 * Get all rows from user-data
 	 * @return array
@@ -140,7 +156,7 @@ class UserData extends DataObject {
 		$userdata = Cache::get(self::CACHE_KEY);
 
 		if (is_null($userdata)) {
-			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user ORDER BY `time` ASC')->fetchAll();
+			$userdata = DB::getInstance()->query('SELECT * FROM '.PREFIX.'user WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY `time` ASC')->fetchAll();
 			Cache::set(self::CACHE_KEY, $userdata, '600');
 		}
 

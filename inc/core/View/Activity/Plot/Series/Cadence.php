@@ -12,6 +12,7 @@ use Runalyze\Configuration;
 
 use \Cadence as CadenceUnit;
 use \CadenceRunning as CadenceUnitRunning;
+use \Plot;
 
 /**
  * Plot for: Cadence
@@ -19,20 +20,24 @@ use \CadenceRunning as CadenceUnitRunning;
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
-class Cadence extends ActivitySeries {
+class Cadence extends ActivityPointSeries {
 	/**
 	 * @var string
 	 */
-	const COLOR = 'rgb(200,100,0)';
+	const COLOR = 'rgb(41,128,185)';
+
+	/**
+	 * @var boolean
+	 */
+	protected $isRunning = false;
 
 	/**
 	 * Create series
 	 * @var \Runalyze\View\Activity\Context $context
 	 */
 	public function __construct(Activity\Context $context) {
-		$cadence = ($context->activity()->sportid() == Configuration::General()->runningSport())
-				? new CadenceUnitRunning(0)
-				: new CadenceUnit(0);
+		$this->isRunning = ($context->activity()->sportid() == Configuration::General()->runningSport());
+		$cadence = $this->isRunning ? new CadenceUnitRunning(0) : new CadenceUnit(0);
 
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::CADENCE);
@@ -71,5 +76,19 @@ class Cadence extends ActivitySeries {
 	 */
 	protected function manipulateData(CadenceUnit $cadence) {
 		$cadence->manipulateArray($this->Data);
+	}
+
+	/**
+	 * Add to plot
+	 * @param \Plot $Plot
+	 * @param int $yAxis
+	 * @param boolean $addAnnotations [optional]
+	 */
+	public function addTo(Plot &$Plot, $yAxis, $addAnnotations = true) {
+		parent::addTo($Plot, $yAxis, $addAnnotations);
+
+		if ($this->isRunning) {
+			$this->setColorThresholdsAbove($Plot, 185, 173, 162, 151);
+		}
 	}
 }

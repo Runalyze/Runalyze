@@ -367,7 +367,7 @@ class Ajax {
 				$ret = self::json_encode_jsfunc($value, $funcs, 1);
 				$input[$key] = $ret[0];
 				$funcs = $ret[1];
-			} elseif (substr($value,0,8) == 'function') {
+			} elseif (substr($value,0,8) == 'function' || substr($value,0,13) == 'RunalyzePlot.') {
                   $func_key = "#".uniqid()."#";
                   $funcs[$func_key] = $value;
                   $input[$key] = $func_key;

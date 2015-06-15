@@ -206,6 +206,29 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
+	 * Can be null?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function canBeNull($key) {
+		switch ($key) {
+			case self::TIME:
+			case self::DISTANCE:
+			case self::PACE:
+			case self::HEARTRATE:
+			case self::CADENCE:
+			case self::POWER:
+			case self::TEMPERATURE:
+			case self::GROUNDCONTACT:
+			case self::VERTICAL_OSCILLATION:
+			case self::PAUSES:
+				return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Clear
 	 */
 	public function clear() {

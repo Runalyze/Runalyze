@@ -74,6 +74,7 @@ class RunalyzePluginTool_AnalyzeVDOT extends PluginTool {
 				`vdot_by_time`
 			FROM `'.PREFIX.'training`
 			WHERE `pulse_avg`!=0 AND `typeid`='.Configuration::General()->competitionType().'
+                        AND `accountid` = '.SessionAccountHandler::getId().'
 			ORDER BY `time` DESC'
 		);
 	}

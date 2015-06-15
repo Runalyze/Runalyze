@@ -124,7 +124,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	protected function setOwnNavigation() {
 		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose statistic').'</span><ul class="submenu">';
 		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('General overview'), $this->sportid, $this->year, '').'</li>';
-		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, ($this->year == -1) ? date('Y') : $this->year, 'allWeeks').'</li>';
+		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, (!$this->showsSpecificYear()) ? date('Y') : $this->year, 'allWeeks').'</li>';
 
 		$LinkList .= '</ul></li>';
 
@@ -135,7 +135,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
-		if ($this->year == -1 && $this->dat = 'allWeeks') {
+		if (!$this->showsSpecificYear() && $this->dat = 'allWeeks') {
 			$this->dat = '';
 		}
 
@@ -143,7 +143,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->initLineData();
 
 		$this->setSportsNavigation();
-		$this->setYearsNavigation();
+		$this->setYearsNavigation(true, true, true);
 		$this->setOwnNavigation();
 
 		$this->setHeader($this->sport['name'].': '.$this->getYearString());
@@ -217,8 +217,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		echo '<table class="r fullwidth zebra-style">';
 
 		echo '<thead class="r">';
-		echo ($this->year == -1) ? HTML::yearTR(0, 1, 'th', true) : HTML::monthTR(8, 1, 'th');
+		$this->displayTableHeadForTimeRange();
 		echo '</thead>';
+
 		echo '<tbody>';
 
 		$isRunning = ($this->sportid == Configuration::General()->runningSport());
@@ -278,7 +279,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param bool $showAllWeeks
 	 */
 	private function displayWeekTable($showAllWeeks = false) {
-		if ($this->year != date("Y") && !$showAllWeeks)
+		if (($this->showsAllYears() || ($this->showsSpecificYear() && $this->year != date('Y'))) && !$showAllWeeks)
 			return;
 
 		$Dataset = new Dataset();
@@ -286,8 +287,10 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($this->Configuration()->value('compare_weeks'))
 			$Dataset->activateKilometerComparison();
 
+		$title = $showAllWeeks ? __('All training weeks') : __('Last 10 training weeks');
+
 		echo '<table class="r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.($showAllWeeks?__('All'):__('Last').' 10').' '.__('training weeks').'</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.$title.'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -386,7 +389,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($NumDays >= $this->Configuration()->value('show_streak_days')) {
 			if ($NumDays == 0) {
 				$Text .= __('You don\'t have a streak. Go out and start one!');
-				$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.Configuration::General()->runningSport().' ORDER BY `time` DESC LIMIT 1')->fetch();
+				$LastTraining = DB::getInstance()->query('SELECT time FROM `'.PREFIX.'training` WHERE `sportid`='.Configuration::General()->runningSport().' AND accountid = '.SessionAccountHandler::getId().' ORDER BY `time` DESC LIMIT 1')->fetch();
 
 				if (isset($LastTraining['time']))
 					$Text .= ' '.sprintf( __('Your last run was on %s'), date('d.m.Y', $LastTraining['time']));
@@ -439,7 +442,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initCompleteData() {
 		$withElevation = Configuration::Vdot()->useElevationCorrection();
-		$Timer = $this->year != -1 ? 'MONTH' : 'YEAR';
 
 		$Query = '
 			SELECT
@@ -449,20 +451,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`,
 				SUM(`trimp`) as `trimp`,
 				SUM(`jd_intensity`) as `jd_intensity`,
-				'.$Timer.'(FROM_UNIXTIME(`time`)) as `i`
+				'.$this->getTimerIndexForQuery().' as `i`
 			FROM
 				`'.PREFIX.'training`
 			WHERE
-				`sportid`=:sportid AND `accountid`=:sessid';
+				`accountid`=:sessid '.$this->getSportAndYearDependenceForQuery();
 
-		if ($this->year != -1) {
-			$Query .= ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
-		}
-
-		$Query .= ' GROUP BY '.$Timer.'(FROM_UNIXTIME(`time`)) ORDER BY `i`';
+		$Query .= ' GROUP BY '.$this->getTimerForOrderingInQuery().' ASC';
 
 		$Request = DB::getInstance()->prepare($Query);
-		$Request->bindParam('sportid', $this->sportid, PDO::PARAM_INT);
 		$Request->bindValue('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
 
 		$Request->execute();
@@ -517,7 +514,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if ($dat['i'] == date("Y")) {
 			$WeekFactor  = (date('z')+1) / 7;
 			$MonthFactor = (date('z')+1) / 30.4;
-		} elseif ($dat['i'] == 'total') {
+		} elseif ($dat['i'] == date('Y') + 1) {
 			$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
 			$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
 		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {

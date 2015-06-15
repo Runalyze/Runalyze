@@ -10,6 +10,7 @@ function jUpdateSportValues() {
 		run = $s.attr('data-running'),
 		out = $s.attr('data-outside'),
 		typ = $s.attr('data-types'),
+                dis = $s.attr('data-distances'),
 		pow = $s.attr('data-power');
 
 	if (kcal > 0)
@@ -19,6 +20,7 @@ function jUpdateSportValues() {
 	$("form .only-not-running").toggle( typeof run === "undefined" || run === false );
 	$("form .only-outside").toggle( typeof out !== "undefined" && out !== false );
 	$("form .only-types").toggle( typeof typ !== "undefined" && typ !== false );
+        $("form .only-distances").toggle( typeof dis !== "undefined" && dis !== false );
 	$("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
 
 	$("#typeid option:not([data-sport='all'])").attr('disabled', true).hide();
@@ -4929,9 +4931,13 @@ var RunalyzePlot = (function($, parent){
 			options.series.curvedLines.apply = false;
 		}
 
-		options.hooks = {
-			draw: [drawHook]
-		};
+		if (options.hooks && options.hooks.draw) {
+			options.hooks.draw.push(drawHook);
+		} else {
+			options.hooks = {
+				draw: [drawHook]
+			};
+		}
 
 		//options.zoom = { interactive: true };
 		//options.pan = { interactive: true };
@@ -5181,6 +5187,41 @@ var RunalyzePlot = (function($, parent){
 
 			resize( $e.attr('id') );
 		}
+	};
+
+	self.flotHookColorPoints = function(limits, colors, defaultColor) {
+		return function(plot, ctx) {
+			var data = plot.getData();
+			var axes = plot.getAxes();
+			var offset = plot.getPlotOffset();
+			var lineWidth = plot.getOptions().series.points.lineWidth;
+			var radius = lineWidth;
+
+			for (var i = 0; i < data.length; i++) {
+				var series = data[i];
+
+				for (var j = 0; j < series.data.length; j++) {
+					var d = (series.data[j]);
+					var x = offset.left + axes.xaxis.p2c(d[0]);
+					var y = offset.top + axes.yaxis.p2c(d[1]);
+
+					var color = defaultColor;
+					for (var l = 0; l < limits.length; l++) {
+						if (d[1] > limits[l]) {
+							color = colors[l];
+							break;
+						}
+					}
+
+					ctx.lineWidth = lineWidth;
+					ctx.beginPath();
+					ctx.arc(x, y, radius, 0, Math.PI*2, true);
+					ctx.closePath();            
+					ctx.fillStyle = color;
+					ctx.fill();
+				}    
+			}
+		};
 	};
 
 	return self;
@@ -6715,19 +6756,32 @@ Runalyze.Feature = (function($, Parent){
 			$("a.change[target="+$(this).attr("target")+"]").removeClass('triggered').parent().removeClass('triggered');
 			$(this).addClass('triggered').parent().addClass('triggered');
 
-			var  target = "#"+$(this).attr("target"),
-				$target = $(target),
-				$oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible"),
+			var target = "#"+$(this).attr("target");
+			var $target = $(target);
+
+			if (target == $(this).attr("href")) {
+				$newDiv = $("#"+ $(this).attr("href").split('#').pop() + " .change");
+			} else {
 				$newDiv = $("#"+ $(this).attr("href").split('#').pop());
+			}
+
+			$oldDiv = $(target+" > .change:visible, " + target + " > .panel-content > .change:visible, " + target + " > .statistics-container > .change:visible").not($newDiv);
 
 			$target.addClass('loading');
-			$oldDiv.fadeOut( Parent.Options.fadeSpeed(), function(){
+
+			var fadeInNewDiv = function() {
 				$newDiv.fadeTo( Parent.Options.fadeSpeed(), 1, function(){
 					$target.hide().removeClass( Parent.Options.loadingClass() ).fadeIn();
 					Parent.createFlot();
 					RunalyzePlot.resizeAll();
 				});
-			});
+			};
+
+			if ($oldDiv.length) {
+				$oldDiv.fadeOut( Parent.Options.fadeSpeed(), fadeInNewDiv);
+			} else {
+				fadeInNewDiv();
+			}
 
 			return false;
 		});

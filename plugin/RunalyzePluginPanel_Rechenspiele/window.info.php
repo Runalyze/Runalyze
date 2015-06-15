@@ -18,7 +18,7 @@ new Frontend();
 	</p>
 
 	<p class="file">
-		see <em><a href="http://runningtimes.com/Article.aspx?ArticleID=7482" title="Finding Your VDOT | Running Times">Treshold Training: Finding Your VDOT</a> by Jack Daniels, Ph.D.</em>
+		see <em><a href="http://www.runnersworld.com/workouts/threshold-training-finding-your-vdot" title="Finding Your VDOT | Running Times">Treshold Training: Finding Your VDOT</a> by Jack Daniels, Ph.D.</em>
 	</p>
 </div>
 

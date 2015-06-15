@@ -34,6 +34,12 @@ abstract class PluginStat extends Plugin {
 	protected $ShowCompareYearsLink = true;
 
 	/**
+	 * Boolean flag: show last 6/12 months in years-navigation
+	 * @var bool
+	 */
+	protected $ShowTimeRangeLinks = false;
+
+	/**
 	 * Array of links (each wrapped in a <li>-tag
 	 * @var array
 	 */
@@ -66,10 +72,12 @@ abstract class PluginStat extends Plugin {
 	 * Set flag for years-navigation
 	 * @param bool $flag
 	 * @param bool $compareFlag [optional]
+	 * @param bool $timeRangeFlag [optional]
 	 */
-	protected function setYearsNavigation($flag = true, $compareFlag = true) {
+	protected function setYearsNavigation($flag = true, $compareFlag = true, $timeRangeFlag = false) {
 		$this->ShowYearsNavigation = $flag;
 		$this->ShowCompareYearsLink = $compareFlag;
+		$this->ShowTimeRangeLinks = $timeRangeFlag;
 	}
 
 	/**
@@ -113,8 +121,8 @@ abstract class PluginStat extends Plugin {
 			$HeaderParts[] = $Sport->name();
 		}
 
-		if ($this->year > 0 && $this->ShowYearsNavigation) {
-			$HeaderParts[] = $this->year;
+		if ($this->ShowYearsNavigation) {
+			$HeaderParts[] = $this->getYearString();
 		}
 
 		if (!empty($HeaderParts)) {
@@ -133,11 +141,55 @@ abstract class PluginStat extends Plugin {
 			$Query .= ' AND `sportid`='.(int) $this->sportid;
 		}
 
-		if ($this->year > 0) {
+		$Query .= $this->getYearDependenceForQuery();
+
+		return $Query;
+	}
+
+	/**
+	 * Get query for year
+	 * @return string
+	 */
+	protected function getYearDependenceForQuery() {
+		$Query = '';
+
+		if ($this->showsLast6Months()) {
+			$Query .= ' AND `time` > '.strtotime("first day of -5 months");
+		} elseif ($this->showsLast12Months()) {
+			$Query .= ' AND `time` > '.strtotime("first day of -11 months");
+		} elseif (!$this->showsAllYears()) {
 			$Query .= ' AND `time` BETWEEN UNIX_TIMESTAMP(\''.(int)$this->year.'-01-01\') AND UNIX_TIMESTAMP(\''.((int)$this->year+1).'-01-01\')-1';
 		}
 
 		return $Query;
+	}
+
+	/**
+	 * Timer for year or ordered months
+	 * @return string
+	 */
+	protected function getTimerForOrderingInQuery() {
+		if ($this->showsAllYears()) {
+			return 'YEAR(FROM_UNIXTIME(`time`))';
+		} elseif (!$this->showsSpecificYear()) {
+			return 'DATE_FORMAT(FROM_UNIXTIME(`time`), "%Y-%m")';
+		}
+
+		return 'MONTH(FROM_UNIXTIME(`time`))';
+	}
+
+	/**
+	 * Index for timer
+	 * @return string
+	 */
+	protected function getTimerIndexForQuery() {
+		if ($this->showsLast6Months()) {
+			return '((MONTH(FROM_UNIXTIME(`time`)) + 5 - '.date('m').')%12 + 1)';
+		} elseif ($this->showsLast12Months()) {
+			return '((MONTH(FROM_UNIXTIME(`time`)) + 11 - '.date('m').')%12 + 1)';
+		}
+
+		return $this->getTimerForOrderingInQuery();
 	}
 
 	/**
@@ -172,7 +224,7 @@ abstract class PluginStat extends Plugin {
 		}
 
 		if ($this->ShowYearsNavigation) {
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink).'</ul>';
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink, $this->ShowTimeRangeLinks).'</ul>';
 		}
 
 		if (!empty($this->LinkList)) {
@@ -204,12 +256,18 @@ abstract class PluginStat extends Plugin {
 	/**
 	 * Get links for all years
 	 * @param bool $CompareYears If set, adds a link with year=-1
+	 * @param bool $TimeRanges If set, adds links with year=6/12
 	 */
-	private function getYearLinksAsList($CompareYears = true) {
+	private function getYearLinksAsList($CompareYears = true, $TimeRanges = false) {
 		$Links = '';
 
 		if ($CompareYears) { 
 			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1, $this->dat).'</li>';
+		}
+
+		if ($TimeRanges) { 
+			$Links .= '<li'.(6 == $this->year ? ' class="active"' : '').'>'.$this->getInnerLink(__('Last 6 months'), $this->sportid, 6, $this->dat).'</li>';
+			$Links .= '<li'.(12 == $this->year ? ' class="active"' : '').'>'.$this->getInnerLink(__('Last 12 months'), $this->sportid, 12, $this->dat).'</li>';
 		}
 
 		for ($x = date("Y"); $x >= START_YEAR; $x--) {
@@ -224,7 +282,44 @@ abstract class PluginStat extends Plugin {
 	 * @return string
 	 */
 	protected function getYearString() {
-		return ($this->year != -1 ? $this->year : $this->titleForAllYears());
+		if ($this->showsAllYears()) {
+			return $this->titleForAllYears();
+		} elseif ($this->showsLast6Months()) {
+			return __('Last 6 months');
+		} elseif ($this->showsLast12Months()) {
+			return __('Last 12 months');
+		}
+
+		return $this->year;
+	}
+
+	/**
+	 * Display an empty th and ths for chosen years/months
+	 * @param bool $prependEmptyTag
+	 * @param string $width
+	 */
+	protected function displayTableHeadForTimeRange($prependEmptyTag = true, $width = '8%') {
+		if ($prependEmptyTag) {
+			echo '<th></th>';
+		}
+
+		if (!empty($width)) {
+			$width = ' width="'.$width.'"';
+		}
+
+		if ($this->showsAllYears()) {
+			for ($i = START_YEAR; $i <= date('Y'); $i++) {
+				echo '<th'.$width.'>'.$i.'</th>';
+			}
+			echo '<th>'.__('In total').'</th>';
+		} else {
+			$num = $this->showsLast6Months() ? 6 : 12;
+			$add = $this->showsTimeRange() ? date('m') - $num - 1 + 12 : -1;
+
+			for ($i = 1; $i <= 12; $i++) {
+				echo '<th'.$width.'>'.Time::Month(($i + $add)%12 + 1, true).'</th>';
+			}
+		}
 	}
 
 	/**

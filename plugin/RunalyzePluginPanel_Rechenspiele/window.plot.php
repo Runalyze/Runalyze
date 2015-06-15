@@ -8,14 +8,17 @@ require '../../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 if (!isset($_GET['y']))
-	$_GET['y'] = 'lasthalf';//date("Y");
-//else
-//	$_GET['y'] = (int)$_GET['y'];
+	$_GET['y'] = 'lasthalf';
 
 $link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=all';
 $Submenu = '<li'.('all' == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.__('All years').'</a>').'</li>';
+
 $link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=lasthalf';
 $Submenu .= '<li'.('lasthalf' == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.__('Last half year').'</a>').'</li>';
+
+$link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y=lastyear';
+$Submenu .= '<li'.('lastyear' == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.__('Last year').'</a>').'</li>';
+
 for ($j = date('Y'); $j >= START_YEAR; $j--)  {
 	$link = 'plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php?y='.$j;
 	$Submenu .= '<li'.($j == $_GET['y'] ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.$j.'</a>').'</li>';

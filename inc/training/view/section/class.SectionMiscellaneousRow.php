@@ -41,6 +41,16 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$this->addRightContent('cadence', __('Cadence plot'), $Plot);
 		}
 
+		if (
+			$this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport() &&
+			$this->Context->trackdata()->has(Trackdata\Object::TIME) &&
+			$this->Context->trackdata()->has(Trackdata\Object::DISTANCE) &&
+			$this->Context->trackdata()->has(Trackdata\Object::CADENCE)
+		) {
+			$Plot = new Activity\Plot\StrideLength($this->Context);
+			$this->addRightContent('stridelength', __('Stride length plot'), $Plot);
+		}
+
 		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
 			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
 			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
@@ -101,8 +111,13 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
-			$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
-			$Power->defineAsFloatingBlock('w50');
+			if ($this->Context->activity()->strideLength() > 0) {
+				$Power = new BoxedValue($this->Context->dataview()->strideLength()->value(), 'm', __('Stride Length'));
+				$Power->defineAsFloatingBlock('w50');
+			} else {
+				$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
+				$Power->defineAsFloatingBlock('w50');
+			}
 
 			$this->BoxedValues[] = $Cadence;
 			$this->BoxedValues[] = $Power;
