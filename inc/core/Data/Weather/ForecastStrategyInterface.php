@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains interface::ForecastStrategy
+ * This file contains interface::ForecastStrategyInterface
  * @package Runalyze\Data\Weather
  */
 
@@ -12,7 +12,7 @@ namespace Runalyze\Data\Weather;
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
-interface ForecastStrategy {
+interface ForecastStrategyInterface {
 	/**
 	 * Load conditions
 	 * @param WeatherLocation $Location

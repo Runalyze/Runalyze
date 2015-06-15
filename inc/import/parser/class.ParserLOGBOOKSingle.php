@@ -107,8 +107,10 @@ class ParserLOGBOOKSingle extends ParserAbstractSingleXML {
 			$Dists[] = $this->TrainingObject->getDistance() - $totalDist;
 		}
 
-		if (count($Times) > 0 && count($Times) == count($Dists)) {
-			for ($i = 0; $i < count($Times); $i++)
+		$numTimes = count($Times);
+
+		if ($numTimes > 0 && $numTimes == count($Dists)) {
+			for ($i = 0; $i < $numTimes; $i++)
 				$this->TrainingObject->Splits()->addSplit($Dists[$i], $Times[$i]);
 		}
 

@@ -15,7 +15,7 @@ namespace Runalyze\Data\Weather;
 class Forecast {
 	/**
 	 * Strategy
-	 * @var ForecastStrategy
+	 * @var ForecastStrategyInterface
 	 */
 	protected $Strategy = null;
 
@@ -30,7 +30,7 @@ class Forecast {
 	 * @param ForecastStrategy $Strategy
 	 * @param Location $Location
 	 */
-	public function __construct(ForecastStrategy $Strategy, Location $Location) {
+	public function __construct(ForecastStrategyInterface $Strategy, Location $Location) {
 		$this->Strategy    = $Strategy;
 		$this->Location    = $Location;
 

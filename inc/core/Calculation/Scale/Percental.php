@@ -12,7 +12,7 @@ namespace Runalyze\Calculation\Scale;
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Scale
  */
-class Percental implements Scale {
+class Percental implements ScaleInterface {
 	/**
 	 * Minimum
 	 * @var float

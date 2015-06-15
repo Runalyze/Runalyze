@@ -19,7 +19,7 @@ use Cache;
  * @author Hannes Christiansen
  * @package Runalyze\Data\Weather
  */
-class Openweathermap implements ForecastStrategy {
+class Openweathermap implements ForecastStrategyInterface {
 	/**
 	 * URL for catching forecast
 	 * @var string

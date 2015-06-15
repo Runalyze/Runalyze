@@ -179,7 +179,9 @@ class PaceSmoother {
 			$pace = $dist > 0 ? round($this->Loop->difference(Trackdata\Object::TIME)/$dist) : 0;
 
 			if ($this->KeepArraySize) {
-				for ($i = 0; $i < $this->Loop->currentStepSize(); ++$i) {
+				$steps = $this->Loop->currentStepSize();
+
+				for ($i = 0; $i < $steps; ++$i) {
 					$this->Smoothed[] = $pace;
 				}
 			} else {

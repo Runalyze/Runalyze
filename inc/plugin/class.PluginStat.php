@@ -308,7 +308,9 @@ abstract class PluginStat extends Plugin {
 		}
 
 		if ($this->showsAllYears()) {
-			for ($i = START_YEAR; $i <= date('Y'); $i++) {
+			$year = date('Y');
+
+			for ($i = START_YEAR; $i <= $year; $i++) {
 				echo '<th'.$width.'>'.$i.'</th>';
 			}
 			echo '<th>'.__('In total').'</th>';

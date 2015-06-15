@@ -104,7 +104,8 @@ class SRTMGeoTIFFReader {
 	* 
 	*/
 	public function getTotalDistance() {
-		for ($i = 2; $i < count($this->latLons); $i += 2) {
+		$num = count($this->latLons);
+		for ($i = 2; $i < $num; $i += 2) {
 			$distance += $this->getDistance(
 				$this->latLons[$i-2], 
 				$this->latLons[$i-1], 

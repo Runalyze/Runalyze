@@ -70,7 +70,6 @@ class RunningPrognosisBock extends RunningPrognosisStrategy {
 		if ($distance_short > $distance_long)
 			list($distance_short, $time_short, $distance_long, $time_long) = array($distance_long, $time_long, $distance_short, $time_short);
 
-		//$this->CONST_e = (($time_long - $time_short) / $time_short) * $distance_short / ($distance_long - $distance_short);
 		$this->CONST_e = log($time_long / $time_short) / log($distance_long / $distance_short);
 		$this->CONST_K = $time_long / pow($distance_long, $this->CONST_e);
 	}

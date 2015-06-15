@@ -56,7 +56,7 @@ class DataBrowser {
 
 	/**
 	 * Internal DB object
-	 * @var DB
+	 * @var \PDOforRunalyze
 	 */
 	protected $DB;
 

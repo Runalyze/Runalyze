@@ -348,7 +348,8 @@ class FormularValueParser {
 		if ($value == 0) {
 			$value = '0:00';
 		} else {
-			$value = (new Duration($value*60))->string('G:i');
+			$duration = new Duration($value*60);
+			$value = $duration->string('G:i');
 		}
 	}
 

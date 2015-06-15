@@ -193,7 +193,9 @@ class SearchResults {
 	 */
 	private function addConditionForArray($key, array &$conditions) {
 		$array = array_map(
-			create_function('$value', 'return (int)$value;'),
+			function ($value) {
+				return (int)$value;
+			},
 			$_POST[$key]
 		);
 
@@ -267,7 +269,9 @@ class SearchResults {
 	private function addSportCondition(array &$conditions) {
 		if (is_array($_POST['sportid'])) {
 			$array = array_map(
-				create_function('$value', 'return (int)$value;'),
+				function ($value) {
+					return (int)$value;
+				},
 				$_POST['sportid']
 			);
 

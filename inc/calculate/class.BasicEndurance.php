@@ -253,7 +253,7 @@ class BasicEndurance {
 	 * @return string
 	 */
 	public function valueInPercent($timestamp = 0) {
-		return min(100, max(0, $this->value(false, $timestamp))).' &#37;';
+		return min(100, max(0, $this->value($timestamp))).' &#37;';
 	}
 
 	/**

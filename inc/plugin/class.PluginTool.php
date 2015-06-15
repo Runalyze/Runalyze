@@ -1,4 +1,4 @@
-	<?php
+<?php
 /**
  * This file contains class::PluginTool
  * @package Runalyze\Plugin

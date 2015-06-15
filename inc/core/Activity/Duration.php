@@ -74,12 +74,12 @@ class Duration {
 	/**
 	 * Set duration from seconds
 	 * @param float $seconds
-	 * @return \InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 * @return \Runalyze\Activity\Duration $this-reference
 	 */
 	public function fromSeconds($seconds) {
 		if (!is_numeric($seconds)) {
-			return new \InvalidArgumentException('Parameter $seconds must be of numeric type.');
+			throw new \InvalidArgumentException('Parameter $seconds must be of numeric type.');
 		}
 
 		$this->Time = $seconds;

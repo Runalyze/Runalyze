@@ -72,19 +72,19 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 			'prognosis'	=> array(
 				'title'	=> __('VDOT values with equivalent race results'),
 				'hint'	=> __('Predict results on different distances for a given VDOT.'),
-				'init'	=> '$this->initVDOTRange();',
+				'init'	=> function() { $this->initVDOTRange(); },
 				'tpl'	=> 'tpl.PrognosisTable.php'
 			),
 			'vdot-paces'	=> array(
 				'title'	=> __('VDOT values with equivalent paces'),
 				'hint'	=> __('Find your training paces in min/km for given VDOT values.'),
-				'init'	=> '$this->initVDOTRange();$this->initPaces();',
+				'init'	=> function() { $this->initVDOTRange(); $this->initPaces(); },
 				'tpl'	=> 'tpl.VDOTPaceTable.php'
 			),
 			'pace'	=> array(
 				'title'	=> __('General pace table'),
 				'hint'	=> __('This table shows times for different distances if you run them with the same pace.'),
-				'init'	=> '$this->initPaceRange();',
+				'init'	=> function() { $this->initPaceRange(); },
 				'tpl'	=> 'tpl.PaceTable.php'
 			)
 		);
@@ -107,7 +107,8 @@ class RunalyzePluginTool_JDTables extends PluginTool {
 	 * @param string $tableKey
 	 */
 	private function showTable($tableKey) {
-		eval($this->Tables[$tableKey]['init']);
+		$func = $this->Tables[$tableKey]['init'];
+		$func();
 
 		echo HTML::p('');
 

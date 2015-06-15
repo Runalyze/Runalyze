@@ -111,13 +111,14 @@ class HTML {
 	 * @return string
 	 */
 	public static function yearTR($fixedWidth = 0, $emptyTDs = 1, $tag = 'td', $withTotal = false) {
+		$year = date('Y');
 		$width = ($fixedWidth > 0) ? ' width="'.$fixedWidth.'%"' : '';
 		$html = '<tr class="b">';
 
 		for ($i = 1; $i <= $emptyTDs; $i++)
 			$html .= '<'.$tag.' />';
 
-		for ($y = START_YEAR; $y <= date("Y"); $y++)
+		for ($y = START_YEAR; $y <= $year; $y++)
 			$html .= '<'.$tag.$width.'>'.$y.'</'.$tag.'>';
 
 		if ($withTotal) {

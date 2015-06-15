@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::Scale
+ * This file contains class::ScaleInterface
  * @package Runalyze\Calculation\Scale
  */
 
@@ -12,7 +12,7 @@ namespace Runalyze\Calculation\Scale;
  * @author Hannes Christiansen
  * @package Runalyze\Calculation\Scale
  */
-interface Scale {
+interface ScaleInterface {
 	/**
 	 * Transform value
 	 * @param float $input
