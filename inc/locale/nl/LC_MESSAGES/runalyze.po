@@ -2,25 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 02:45+0200\n"
-"PO-Revision-Date: 2015-05-23 11:25+0200\n"
-"Last-Translator: Floriaan Went <info@floriaanwent.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
-"Language: nl\n"
+"POT-Creation-Date: 2015-06-17 04:03+0200\n"
+"PO-Revision-Date: 2014-11-05 20:52+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
-#, fuzzy
 msgid "Please login"
-msgstr "s.v.p. aanmelden"
+msgstr ""
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:17
 #: inc/training/schemes/scheme.Training.new.php:41
@@ -28,9 +25,8 @@ msgstr "s.v.p. aanmelden"
 #: inc/training/schemes/scheme.Shoe.php:14
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
-#, fuzzy
 msgid "Miscellaneous"
-msgstr "Diversen"
+msgstr ""
 
 #: index.php:74
 msgid ""
@@ -40,30 +36,29 @@ msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:159
 msgid "The field can not be left empty."
-msgstr "Dit veld kan niet leeg gelaten worden."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:183
 msgid "Please enter a number."
-msgstr "Voeg een cijfer in."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:188
 #: inc/html/formular/class.FormularValueParser.php:208
 msgid "The value is too large."
-msgstr "De waarde is te hoog."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:246
 msgid "The date could not be parsed."
-msgstr "Het datum kan niet worden verwerkt."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:279
-#, fuzzy
 msgid "The time could not be read."
-msgstr "De tijd kan niet worden gelezen."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:308
 #: inc/html/formular/class.FormularValueParser.php:338
 msgid "You have to enter a time."
-msgstr "Je dient een tijd in te vullen."
+msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
@@ -100,7 +95,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:126
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:227
 msgid "Time"
-msgstr "Tijd"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -116,42 +111,42 @@ msgstr "Tijd"
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:587
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:94
 msgid "Time of day"
-msgstr "Tijdstip van de dag"
+msgstr ""
 
-#: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:204
+#: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
 msgid "Total"
-msgstr "Totaal"
+msgstr ""
 
 #: inc/html/class.Ajax.php:438 inc/core/View/Leaflet/Activity.php:236
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 #: inc/html/class.Ajax.php:439
 msgid "previous"
-msgstr "Voorgaand"
+msgstr ""
 
 #: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:256
 msgid "next"
-msgstr "Volgend"
+msgstr ""
 
 #: inc/html/class.Ajax.php:442
 msgid "End"
-msgstr "Einde"
+msgstr ""
 
 #: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
 #: inc/html/class.Ajax.php:447 inc/html/class.Ajax.php:448
 #: inc/html/class.Ajax.php:449
 msgid "per page"
-msgstr "per pagina"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:134
@@ -320,11 +315,11 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:378
+#: inc/training/search/class.SearchResults.php:382
 msgid "The multi editor could not be located."
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:411
+#: inc/training/search/class.SearchResults.php:415
 #, php-format
 msgid "Found %s activities"
 msgstr ""
@@ -878,7 +873,7 @@ msgstr ""
 #: inc/training/view/class.ElevationInfo.php:205
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:396
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
 msgstr ""
 
@@ -1761,7 +1756,7 @@ msgstr ""
 msgid "Route data available"
 msgstr ""
 
-#: inc/core/View/Activity/Linker.php:110
+#: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
 msgstr ""
@@ -3756,7 +3751,7 @@ msgid ""
 "could not be located."
 msgstr ""
 
-#: inc/import/parser/class.ParserGPXSingle.php:91
+#: inc/import/parser/class.ParserGPXSingle.php:102
 msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
@@ -4116,7 +4111,7 @@ msgstr ""
 msgid "Choose time range"
 msgstr ""
 
-#: inc/plugin/class.PluginStat.php:314
+#: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
 msgid "In total"
@@ -6081,7 +6076,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:384
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:138
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Easy"
 msgstr ""
 
@@ -6090,7 +6085,7 @@ msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:390
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
 msgid "Marathon"
 msgstr ""
 
@@ -6105,7 +6100,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:402
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
 msgid "Interval"
 msgstr ""
 
@@ -6116,7 +6111,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:408
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:143
 msgid "Repetition"
 msgstr ""
 

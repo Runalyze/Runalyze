@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 02:45+0200\n"
+"POT-Creation-Date: 2015-06-17 04:03+0200\n"
 "PO-Revision-Date: 2014-11-05 20:52+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: pt\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,7 +14,6 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
@@ -119,7 +118,7 @@ msgstr ""
 msgid "Time of day"
 msgstr ""
 
-#: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:204
+#: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
@@ -316,11 +315,11 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:378
+#: inc/training/search/class.SearchResults.php:382
 msgid "The multi editor could not be located."
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:411
+#: inc/training/search/class.SearchResults.php:415
 #, php-format
 msgid "Found %s activities"
 msgstr ""
@@ -874,7 +873,7 @@ msgstr ""
 #: inc/training/view/class.ElevationInfo.php:205
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:396
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
 msgstr ""
 
@@ -1757,7 +1756,7 @@ msgstr ""
 msgid "Route data available"
 msgstr ""
 
-#: inc/core/View/Activity/Linker.php:110
+#: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
 msgstr ""
@@ -3752,7 +3751,7 @@ msgid ""
 "could not be located."
 msgstr ""
 
-#: inc/import/parser/class.ParserGPXSingle.php:91
+#: inc/import/parser/class.ParserGPXSingle.php:102
 msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
@@ -4112,7 +4111,7 @@ msgstr ""
 msgid "Choose time range"
 msgstr ""
 
-#: inc/plugin/class.PluginStat.php:314
+#: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
 msgid "In total"
@@ -6077,7 +6076,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:384
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:138
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Easy"
 msgstr ""
 
@@ -6086,7 +6085,7 @@ msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:390
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
 msgid "Marathon"
 msgstr ""
 
@@ -6101,7 +6100,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:402
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
 msgid "Interval"
 msgstr ""
 
@@ -6112,7 +6111,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:408
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:143
 msgid "Repetition"
 msgstr ""
 

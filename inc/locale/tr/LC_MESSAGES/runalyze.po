@@ -2,24 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 02:45+0200\n"
-"PO-Revision-Date: 2015-03-01 15:57+0200\n"
-"Last-Translator: Burak <radon@thedaemon.de>\n"
-"Language-Team: Turkish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/tr/>\n"
-"Language: tr\n"
+"POT-Creation-Date: 2015-06-17 04:03+0200\n"
+"PO-Revision-Date: 2014-11-05 20:52+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.1\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
-"X-Poedit-Basepath: ../../\n"
-"X-Poedit-SearchPath-0: ../..\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
-msgstr "Lütfen şifreni gir"
+msgstr ""
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:17
 #: inc/training/schemes/scheme.Training.new.php:41
@@ -28,7 +26,7 @@ msgstr "Lütfen şifreni gir"
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
 msgid "Miscellaneous"
-msgstr "çeşitli"
+msgstr ""
 
 #: index.php:74
 msgid ""
@@ -120,7 +118,7 @@ msgstr ""
 msgid "Time of day"
 msgstr ""
 
-#: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:204
+#: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
@@ -317,11 +315,11 @@ msgstr ""
 msgid "to"
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:378
+#: inc/training/search/class.SearchResults.php:382
 msgid "The multi editor could not be located."
 msgstr ""
 
-#: inc/training/search/class.SearchResults.php:411
+#: inc/training/search/class.SearchResults.php:415
 #, php-format
 msgid "Found %s activities"
 msgstr ""
@@ -875,7 +873,7 @@ msgstr ""
 #: inc/training/view/class.ElevationInfo.php:205
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:396
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
 msgstr ""
 
@@ -1096,9 +1094,8 @@ msgid "Body muscle"
 msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:117
-#, fuzzy
 msgid "Sleep Duration"
-msgstr "Toplam zaman:"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:72
 #: inc/core/View/Activity/Form/Form.php:87
@@ -1759,7 +1756,7 @@ msgstr ""
 msgid "Route data available"
 msgstr ""
 
-#: inc/core/View/Activity/Linker.php:110
+#: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
 msgstr ""
@@ -2449,31 +2446,31 @@ msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:77
 msgid "Sunday"
-msgstr "Pazar"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:78
 msgid "Monday"
-msgstr "Pazartesi"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:79
 msgid "Tuesday"
-msgstr "Salı"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:80
 msgid "Wednesday"
-msgstr "Çarşamba"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:81
 msgid "Thursday"
-msgstr "Perşembe"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:82
 msgid "Friday"
-msgstr "Cuma"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:84
 msgid "Saturday"
-msgstr "Cumartesi"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Su"
@@ -2533,52 +2530,52 @@ msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:96
 msgid "January"
-msgstr "Ocak"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:97
 msgid "February"
-msgstr "Şubat"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:98
 msgid "March"
-msgstr "Mart"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:99
 msgid "April"
-msgstr "Nisan"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:390 inc/calculate/class.Time.php:100
 msgid "May"
-msgstr "Mayıs"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:101
 msgid "June"
-msgstr "Haziran"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:102
 msgid "July"
-msgstr "Temmuz"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:103
 msgid "August"
-msgstr "Ağustos"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:104
 msgid "September"
-msgstr "Eylül"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:105
 msgid "October"
-msgstr "Ekim"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:106
 msgid "November"
-msgstr "Kasım"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:108
 msgid "December"
-msgstr "Aralık"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:386
 #: inc/calculate/class.Time.php:96
@@ -2860,7 +2857,7 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:85
 msgid "Total distance:"
-msgstr "Toplam mesafeler:"
+msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:87
 msgid "Number of activities:"
@@ -2868,15 +2865,15 @@ msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:89
 msgid "Registered since:"
-msgstr "Kaydediliş tarihin:"
+msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:93
 msgid "Total duration:"
-msgstr "Toplam zaman:"
+msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:95
 msgid "First activity:"
-msgstr "Ilk aktiviten:"
+msgstr ""
 
 #: inc/class.FrontendSharedStatistics.php:97
 msgid "Last login:"
@@ -3634,9 +3631,8 @@ msgid "km"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:57
-#, fuzzy
 msgid "Has a distance"
-msgstr "Toplam mesafeler:"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
@@ -3755,7 +3751,7 @@ msgid ""
 "could not be located."
 msgstr ""
 
-#: inc/import/parser/class.ParserGPXSingle.php:91
+#: inc/import/parser/class.ParserGPXSingle.php:102
 msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
@@ -4115,7 +4111,7 @@ msgstr ""
 msgid "Choose time range"
 msgstr ""
 
-#: inc/plugin/class.PluginStat.php:314
+#: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
 msgid "In total"
@@ -4381,7 +4377,7 @@ msgstr ""
 
 #: call/window.delete.php:12
 msgid "Delete your account."
-msgstr "Üyeliğini iptal et."
+msgstr ""
 
 #: call/window.delete.php:19
 msgid ""
@@ -4408,7 +4404,7 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr "Iptal et"
+msgstr ""
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
@@ -4432,7 +4428,7 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
-msgstr "Lütfen bekleyiniz..."
+msgstr ""
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
@@ -4444,7 +4440,7 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr "bulundu"
+msgstr ""
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
@@ -4460,11 +4456,11 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:90
 msgid "ignore"
-msgstr "aldırış etme"
+msgstr ""
 
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr "tüm"
+msgstr ""
 
 #: call/login.php:2
 msgid "You are not logged in anymore."
@@ -4484,7 +4480,7 @@ msgstr ""
 
 #: call/call.Plugin.install.php:13
 msgid "Install"
-msgstr "Yükle"
+msgstr ""
 
 #: call/call.Plugin.install.php:19
 msgid "The plugin has been successfully installed."
@@ -4652,11 +4648,11 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:361
 msgid "Hottest activities"
-msgstr "En sıcak aktivitelerin"
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:363
 msgid "Coldest activities"
-msgstr "En soğuk aktivitelerin"
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:396
 msgid "Weather and Clothing"
@@ -5235,7 +5231,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:135
 msgid "SQL-format"
-msgstr "SQL-formatı"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:137
 msgid ""
@@ -5266,7 +5262,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:194
 msgid "Delete all old activities"
-msgstr "Tüm eski aktiviteleri sil"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:195
 msgid "Delete all old body values"
@@ -5274,7 +5270,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:196
 msgid "Delete all old shoes"
-msgstr "Tüm eski ayakkabilari sil"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:198
 #, php-format
@@ -5340,7 +5336,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:136
 msgid "Sport types"
-msgstr "spor dalları"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:138
 msgid "Body data"
@@ -5348,7 +5344,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:139
 msgid "Activities"
-msgstr "Aktiviteler"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
 msgid "Trackdata"
@@ -5515,9 +5511,8 @@ msgid "Body values"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
-#, fuzzy
 msgid "Sleep duration"
-msgstr "Toplam zaman:"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:45
@@ -6081,7 +6076,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:384
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:138
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
 msgid "Easy"
 msgstr ""
 
@@ -6090,7 +6085,7 @@ msgid "Easy pace running refers to warm-ups, cool-downs and recovery runs."
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:390
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:139
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:140
 msgid "Marathon"
 msgstr ""
 
@@ -6105,7 +6100,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:402
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
 msgid "Interval"
 msgstr ""
 
@@ -6116,7 +6111,7 @@ msgid ""
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:408
-#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:142
+#: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:143
 msgid "Repetition"
 msgstr ""
 
