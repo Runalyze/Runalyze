@@ -2,17 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-17 09:23+0200\n"
-"PO-Revision-Date: 2014-12-28 09:39+0200\n"
-"Last-Translator: Michael Spohn <spohnm@gmail.com>\n"
-"Language-Team: French <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/fr/>\n"
-"Language: fr\n"
+"POT-Creation-Date: 2015-06-17 20:31+0200\n"
+"PO-Revision-Date: 2014-11-05 20:52+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 1.9\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -21,22 +19,20 @@ msgstr ""
 msgid "Please login"
 msgstr ""
 
-#: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:17
+#: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:34
 #: inc/training/schemes/scheme.Training.new.php:41
 #: inc/training/schemes/scheme.Training.php:45
 #: inc/training/schemes/scheme.Shoe.php:14
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
 msgid "Miscellaneous"
-msgstr "Divers"
+msgstr ""
 
 #: index.php:74
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
-"<em>Il n'y a pas de statistiques disponibles. Veuillez activer un plugin "
-"dans votre configuration.</em>"
 
 #: inc/html/formular/class.FormularValueParser.php:159
 msgid "The field can not be left empty."
@@ -77,7 +73,7 @@ msgstr ""
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
 #: inc/class.AdminView.php:189
 msgid "Save"
-msgstr "sauevgarder"
+msgstr ""
 
 #: inc/html/formular/class.FormularField.php:210
 msgid "Your input is not allowed."
@@ -103,7 +99,7 @@ msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:91
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:84
 #: inc/training/schemes/scheme.Training.new.php:102
 #: inc/training/schemes/scheme.Training.php:106
 #: inc/training/schemes/scheme.UserData.php:44
@@ -115,10 +111,10 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:587
 msgid "Date"
-msgstr "date"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:94
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:87
 msgid "Time of day"
 msgstr ""
 
@@ -186,7 +182,7 @@ msgstr ""
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:66
 msgid "Duration"
-msgstr "durée"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:32
 #: inc/training/view/section/class.SectionOverviewRow.php:51
@@ -235,7 +231,7 @@ msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:36
 #: inc/training/search/class.SearchFormular.php:138
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:151
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:149
 #: inc/training/schemes/scheme.Training.new.php:361
 #: inc/training/schemes/scheme.Training.php:365
 #: inc/core/View/Activity/Plot/Series/Temperature.php:37
@@ -247,20 +243,22 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:144
 #: inc/training/schemes/scheme.Training.new.php:317
 #: inc/training/schemes/scheme.Training.php:321 inc/class.DatasetLabels.php:45
-#: inc/data/class.CadenceRunning.php:27 inc/data/class.Cadence.php:92
+#: inc/data/class.Cadence.php:92
 msgid "Cadence"
 msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:38
 #: inc/training/search/class.SearchFormular.php:147
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:132
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:130
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:88
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:39
 msgid "Ground contact"
 msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:150
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:135
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:133
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:91
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:40
 #: inc/class.DatasetLabels.php:48
 msgid "Vertical oscillation"
@@ -561,6 +559,10 @@ msgstr ""
 msgid "Influence"
 msgstr ""
 
+#: inc/training/view/section/class.SectionRunningDynamics.php:21
+msgid "Running Dynamics"
+msgstr ""
+
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:24
 #: inc/training/schemes/scheme.Training.new.php:35
@@ -653,38 +655,28 @@ msgstr ""
 msgid "Elapsed time"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:37
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:51
 msgid "Additional notes"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:41
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:55
 msgid "Cadence plot"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:51
-msgid "Stride length plot"
-msgstr ""
-
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:56
-msgid "Oscillation plot"
-msgstr ""
-
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:61
-msgid "Ground contact plot"
-msgstr ""
-
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:66
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:60
 msgid "Power plot"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:71
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:65
 msgid "Temperature plot"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:115
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:108
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:75
 msgid "Stride Length"
 msgstr ""
 
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:111
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:118
 #: inc/training/schemes/scheme.Training.new.php:330
 #: inc/training/schemes/scheme.Training.php:334
@@ -694,27 +686,27 @@ msgstr ""
 msgid "Power"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:148
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:146
 msgid "Weather condition"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:159
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:157
 #: inc/class.DatasetLabels.php:37
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Clothes"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:176
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:174
 msgid "Running shoe"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:189
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:187
 #: inc/class.DatasetLabels.php:43
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:213
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:211
 #: inc/training/schemes/scheme.Training.new.php:48
 #: inc/training/schemes/scheme.Training.new.php:462
 #: inc/training/schemes/scheme.Training.php:52
@@ -724,13 +716,13 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:226
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:224
 #, php-format
 msgid ""
 "You created this training on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
 
-#: inc/training/view/section/class.SectionMiscellaneousRow.php:231
+#: inc/training/view/section/class.SectionMiscellaneousRow.php:229
 #, php-format
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
@@ -787,6 +779,18 @@ msgstr ""
 
 #: inc/training/view/section/table/class.TableZonesAbstract.php:102
 msgid "Zone"
+msgstr ""
+
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:47
+msgid "Stride length plot"
+msgstr ""
+
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:52
+msgid "Oscillation plot"
+msgstr ""
+
+#: inc/training/view/section/class.SectionRunningDynamicsRow.php:57
+msgid "Ground contact plot"
 msgstr ""
 
 #: inc/training/view/section/class.SectionOverview.php:17
@@ -1098,9 +1102,8 @@ msgid "Body muscle"
 msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:117
-#, fuzzy
 msgid "Sleep Duration"
-msgstr "durée"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:72
 #: inc/core/View/Activity/Form/Form.php:87
@@ -2037,7 +2040,7 @@ msgstr ""
 #: call/call.Plugin.install.php:23
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "Configuration"
-msgstr "configuration"
+msgstr ""
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
@@ -2145,7 +2148,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:304
 msgid "User"
-msgstr "utilisateur"
+msgstr ""
 
 #: inc/tpl/tpl.Installer.php:131 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
@@ -2306,7 +2309,7 @@ msgstr ""
 #: inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18 call/login.php:4
 msgid "Login"
-msgstr "Connexion"
+msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
@@ -2333,7 +2336,7 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:306
 msgid "Email"
-msgstr "email"
+msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
@@ -2502,9 +2505,8 @@ msgid "Fr"
 msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:22
-#, fuzzy
 msgid "Sa"
-msgstr "sauevgarder"
+msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:77
 msgid "Sun"
@@ -2669,7 +2671,7 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:325
 msgid "Set new password"
-msgstr "Définir nouveau mot de passe"
+msgstr ""
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
@@ -2785,9 +2787,8 @@ msgid "You can contact us via email:"
 msgstr ""
 
 #: inc/tpl/tpl.help.php:63
-#, fuzzy
 msgid "Browser Support"
-msgstr "Parcourir l'ordinateur"
+msgstr ""
 
 #: inc/tpl/tpl.help.php:66
 msgid ""
@@ -2954,9 +2955,8 @@ msgid "By type"
 msgstr ""
 
 #: inc/draw/class.PlotSumData.php:217
-#, fuzzy
 msgid "Distance/Duration"
-msgstr "durée"
+msgstr ""
 
 #: inc/draw/class.PlotSumData.php:234
 msgid "All sports"
@@ -3506,14 +3506,12 @@ msgid "Your account"
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:57
-#, fuzzy
 msgid "Email me"
-msgstr "email"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:61
-#, fuzzy
 msgid "Notifications"
-msgstr "configuration"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
@@ -3522,19 +3520,16 @@ msgid ""
 msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:65
-#, fuzzy
 msgid "Change your password"
-msgstr "Définir nouveau mot de passe"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:76
-#, fuzzy
 msgid "Old password"
-msgstr "Définir nouveau mot de passe"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:78
-#, fuzzy
 msgid "Repeat new password"
-msgstr "Définir nouveau mot de passe"
+msgstr ""
 
 #: inc/system/config/class.ConfigTabAccount.php:80
 msgid "Backup your data"
@@ -3695,6 +3690,10 @@ msgstr ""
 msgid "No types available"
 msgstr ""
 
+#: inc/data/class.CadenceRunning.php:27
+msgid "Cadence (running)"
+msgstr ""
+
 #: inc/data/class.CadenceRunning.php:43
 msgid "spm = steps per minute"
 msgstr ""
@@ -3853,7 +3852,7 @@ msgstr ""
 #: call/call.garminCommunicator.php:104 call/call.garminCommunicator.php:121
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "Import"
-msgstr "importer"
+msgstr ""
 
 #: inc/import/class.MultiImporterFormular.php:137
 msgid "Show multi editor afterwards"
@@ -3912,7 +3911,7 @@ msgstr ""
 #: inc/export/class.ExporterWindow.php:77 call/call.Plugin.uninstall.php:27
 #: call/call.Plugin.install.php:35
 msgid "back to list"
-msgstr "retour à la liste"
+msgstr ""
 
 #: inc/export/class.ExporterWindow.php:102
 msgid "The training is currently <strong>private</strong>"
@@ -4171,19 +4170,19 @@ msgstr ""
 
 #: inc/class.AdminView.php:173
 msgid "Settings"
-msgstr "paramètres"
+msgstr ""
 
 #: inc/class.AdminView.php:175
 msgid "Maintenance mode"
-msgstr "Travaux d'entretien"
+msgstr ""
 
 #: inc/class.AdminView.php:176
 msgid "Users can register"
-msgstr "Les utilisateurs peuvent s'inscrire"
+msgstr ""
 
 #: inc/class.AdminView.php:177
 msgid "Users have to login"
-msgstr "Les utilisateurs doivent se connecter"
+msgstr ""
 
 #: inc/class.AdminView.php:178
 msgid "Garmin API-key"
@@ -4220,9 +4219,8 @@ msgid "SMTP: username"
 msgstr ""
 
 #: inc/class.AdminView.php:185
-#, fuzzy
 msgid "SMTP: password"
-msgstr "Définir nouveau mot de passe"
+msgstr ""
 
 #: inc/class.AdminView.php:186
 msgid "OpenWeatherMap API-Key"
@@ -4266,37 +4264,37 @@ msgstr ""
 
 #: inc/class.AdminView.php:223
 msgid "These tools will not work."
-msgstr "Ces outils ne fonctionneront pas."
+msgstr ""
 
 #: inc/class.AdminView.php:293
 msgid "User list"
-msgstr "Liste d'utilisateurs"
+msgstr ""
 
 #: inc/class.AdminView.php:297
 msgid "There are no registered users."
-msgstr "Pas d'utilisateurs enregistrés"
+msgstr ""
 
 #: inc/class.AdminView.php:307
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:166
 msgid "since"
-msgstr "depuis"
+msgstr ""
 
 #: inc/class.AdminView.php:308
 msgid "last"
-msgstr "dernier"
+msgstr ""
 
 #: inc/class.AdminView.php:309
 msgid "Functions"
-msgstr "fonctions"
+msgstr ""
 
 #: inc/class.AdminView.php:325
 msgid "Activate user"
-msgstr "Activer utilisateur"
+msgstr ""
 
 #: inc/class.AdminView.php:350
 msgid "Server information"
-msgstr "informations serveur"
+msgstr ""
 
 #: inc/class.AdminView.php:351
 msgid "PHP version:"
@@ -4367,11 +4365,11 @@ msgstr ""
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
-msgstr "Les activités publiques sont marquées : "
+msgstr ""
 
 #: call/window.plotSumData.php:23 call/window.plotSumData.shared.php:25
 msgid "There was a problem."
-msgstr "Un problème est survenue."
+msgstr ""
 
 #: call/call.Plugin.display.php:16
 msgid "The plugin could not be found."
@@ -4379,11 +4377,11 @@ msgstr ""
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
-msgstr "désinstaller"
+msgstr ""
 
 #: call/call.Plugin.uninstall.php:16
 msgid "The plugin has been uninstalled."
-msgstr "Le plugin a été désinstallé "
+msgstr ""
 
 #: call/call.Plugin.uninstall.php:22
 msgid "There was a problem, the plugin could not be uninstalled."
@@ -4391,7 +4389,7 @@ msgstr ""
 
 #: call/window.delete.php:12
 msgid "Delete your account."
-msgstr "Supprimer votre compte"
+msgstr ""
 
 #: call/window.delete.php:19
 msgid ""
@@ -4399,14 +4397,10 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
-"<em> Un mail de confirmation vous a été envoyé. </ em> <br> Nous sommes "
-"triste d'apprendre que vous avez décidé de supprimer votre compte. <br> "
-"Celui-ci sera supprimé dès que vous cliquez sur le lien de confirmation dans "
-"ce mail."
 
 #: call/call.garminCommunicator.php:43
 msgid "Connect"
-msgstr "connecter"
+msgstr ""
 
 #: call/call.garminCommunicator.php:45
 msgid "Searching for devices"
@@ -4414,15 +4408,15 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:46
 msgid "Transfer complete"
-msgstr "transfert terminé"
+msgstr ""
 
 #: call/call.garminCommunicator.php:50
 msgid "Browse computer"
-msgstr "Parcourir l'ordinateur"
+msgstr ""
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr "Annuler"
+msgstr ""
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
@@ -4442,27 +4436,27 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:57
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr "Récupération des données à partir de #{deviceName}, veuillez patienter"
+msgstr ""
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
-msgstr "Veuillez patienter ..."
+msgstr ""
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
-msgstr "#{tracks} activités trouvées"
+msgstr ""
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
-msgstr "Pas d'appareils trouvés"
+msgstr ""
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr "trouvé"
+msgstr ""
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
-msgstr "#{deviceCount}appareils trouvés"
+msgstr ""
 
 #: call/call.garminCommunicator.php:67
 msgid "Status"
@@ -4470,27 +4464,27 @@ msgstr ""
 
 #: call/call.garminCommunicator.php:85
 msgid "present"
-msgstr "présent"
+msgstr ""
 
 #: call/call.garminCommunicator.php:90
 msgid "ignore"
-msgstr "ignorer"
+msgstr ""
 
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr "tous"
+msgstr ""
 
 #: call/login.php:2
 msgid "You are not logged in anymore."
-msgstr "Vous n'êtes plus connecté(e)."
+msgstr ""
 
 #: call/call.Training.elevationCorrection.php:36
 msgid "Elevation data has been corrected."
-msgstr "Les données d'altitude ont été corrigées."
+msgstr ""
 
 #: call/call.Training.elevationCorrection.php:42
 msgid "Elevation data could not be retrieved."
-msgstr "Les données d'altitude n'ont pas pu être récupérés."
+msgstr ""
 
 #: call/window.search.php:21
 msgid "Search for activities"
@@ -4498,11 +4492,11 @@ msgstr ""
 
 #: call/call.Plugin.install.php:13
 msgid "Install"
-msgstr "installer"
+msgstr ""
 
 #: call/call.Plugin.install.php:19
 msgid "The plugin has been successfully installed."
-msgstr "Le plugin a été installé avec succès."
+msgstr ""
 
 #: call/call.Plugin.install.php:30
 msgid "There was a problem, the plugin could not be installed."
@@ -4514,7 +4508,7 @@ msgstr ""
 
 #: call/call.Training.edit.php:19
 msgid "The activity has been removed"
-msgstr "L'activité a été supprimé"
+msgstr ""
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
@@ -5422,9 +5416,8 @@ msgid "Route network"
 msgstr ""
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:90
-#, fuzzy
 msgid "There are no routes matching the criterias."
-msgstr "Pas d'utilisateurs enregistrés"
+msgstr ""
 
 #: plugin/RunalyzePluginStat_Strecken/window.routenet.php:103
 #, php-format
@@ -5530,9 +5523,8 @@ msgid "Body values"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
-#, fuzzy
 msgid "Sleep duration"
-msgstr "durée"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:45
@@ -5709,9 +5701,9 @@ msgid "Cleanup is running ..."
 msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:88
-#, fuzzy, php-format
+#, php-format
 msgid "Elevations have been recalculated for %d routes."
-msgstr "Les données d'altitude ont été corrigées."
+msgstr ""
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:128
 #, php-format
