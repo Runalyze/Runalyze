@@ -3,6 +3,9 @@
  * This file contains class::SectionMiscellaneous
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\View\Activity\Context;
+
 /**
  * Section: Miscellaneous
  * 
@@ -11,12 +14,26 @@
  */
 class SectionMiscellaneous extends TrainingViewSectionTabbedPlot {
 	/**
+	 * @var bool
+	 */
+	protected $showCadence;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct(Context &$Context = null, $showCadence = true) {
+		$this->showCadence = $showCadence;
+
+		parent::__construct($Context);
+	}
+
+	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
 		$this->Header = __('Miscellaneous');
 
-		$this->appendRowTabbedPlot( new SectionMiscellaneousRow($this->Context) );
+		$this->appendRowTabbedPlot( new SectionMiscellaneousRow($this->Context, $this->showCadence) );
 	}
 
 	/**

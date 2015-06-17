@@ -21,6 +21,20 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected $NotesContent = '';
 
 	/**
+	 * @var bool
+	 */
+	protected $showCadence = true;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct(Activity\Context &$Context = null, $showCadence = true) {
+		$this->showCadence = $showCadence;
+
+		parent::__construct($Context);
+	}
+
+	/**
 	 * Set content
 	 */
 	protected function setContent() {
@@ -36,29 +50,9 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 		$this->fillNotesContent();
 		$this->addRightContent('notes', __('Additional notes'), $this->NotesContent);
 
-		if ($this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
+		if ($this->showCadence && $this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
 			$Plot = new Activity\Plot\Cadence($this->Context);
 			$this->addRightContent('cadence', __('Cadence plot'), $Plot);
-		}
-
-		if (
-			$this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport() &&
-			$this->Context->trackdata()->has(Trackdata\Object::TIME) &&
-			$this->Context->trackdata()->has(Trackdata\Object::DISTANCE) &&
-			$this->Context->trackdata()->has(Trackdata\Object::CADENCE)
-		) {
-			$Plot = new Activity\Plot\StrideLength($this->Context);
-			$this->addRightContent('stridelength', __('Stride length plot'), $Plot);
-		}
-
-		if ($this->Context->trackdata()->has(Trackdata\Object::VERTICAL_OSCILLATION)) {
-			$Plot = new Activity\Plot\VerticalOscillation($this->Context);
-			$this->addRightContent('verticaloscillation', __('Oscillation plot'), $Plot);
-		}
-
-		if ($this->Context->trackdata()->has(Trackdata\Object::GROUNDCONTACT)) {
-			$Plot = new Activity\Plot\GroundContact($this->Context);
-			$this->addRightContent('groundcontact', __('Ground contact plot'), $Plot);
 		}
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::POWER)) {
@@ -78,7 +72,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
 		$this->addCadenceAndPower();
-		$this->addRunningDynamics();
 		$this->addWeather();
 		$this->addEquipment();
 		$this->addTrainingPartner();
@@ -107,7 +100,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add cadence and power
 	 */
 	protected function addCadenceAndPower() {
-		if ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->power() > 0) {
+		if ($this->showCadence && ($this->Context->activity()->cadence() > 0 || $this->Context->activity()->power() > 0)) {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
@@ -120,6 +113,11 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			}
 
 			$this->BoxedValues[] = $Cadence;
+			$this->BoxedValues[] = $Power;
+		} elseif (!$this->showCadence && $this->Context->activity()->power() > 0) {
+			$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
+			$Power->defineAsFloatingBlock('w100');
+
 			$this->BoxedValues[] = $Power;
 		}
 	}
