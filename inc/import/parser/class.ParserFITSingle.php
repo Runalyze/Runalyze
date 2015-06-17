@@ -188,6 +188,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['total_calories']))
 			$this->TrainingObject->setCalories( $this->Values['total_calories'][0] + $this->TrainingObject->getCalories() );
+                
+                if (isset($this->Values['total_strokes']))
+                        $this->TrainingObject->setCadence($this->Values['total_strokes'][0]);
+                
 	}
 
 	/**
@@ -238,7 +242,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->TrainingObject->setTimestamp($startTime);
 			}
 		}
-
 		$time = strtotime((string)$this->Values['timestamp'][1]) - $this->TrainingObject->getTimestamp() - $this->PauseInSeconds;
 		$last = end($this->gps['time_in_s']);
 
@@ -305,6 +308,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
 			);
+                $this->gps['stroke'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
 	}
 
 	/**

@@ -197,6 +197,16 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
+	 * @return \Runalyze\Model\Swim\Object
+	 */
+	protected function newSwimObject() {
+		return new Runalyze\Model\Swim\Object(array(
+			Runalyze\Model\Route\Object::STROKE => $this->get('stroke'),
+                        Runalyze\Model\Route\Object::STROKETYPE => $this->get('strokeType')
+		));
+	}
+        
+	/**
 	 * @return \Runalyze\Model\Trackdata\Object
 	 */
 	protected function newTrackdataObject() {
