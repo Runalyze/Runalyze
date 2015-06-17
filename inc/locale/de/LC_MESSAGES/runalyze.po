@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:23+0200\n"
-"PO-Revision-Date: 2015-06-16 10:24+0200\n"
+"PO-Revision-Date: 2015-06-17 20:31+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"redesign/de/>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1089,7 +1089,7 @@ msgstr "Analyse"
 
 #: inc/training/schemes/scheme.UserData.php:24
 msgid "Sleep"
-msgstr ""
+msgstr "Schlaf"
 
 #: inc/training/schemes/scheme.UserData.php:56
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
@@ -1126,15 +1126,13 @@ msgid "Body muscle"
 msgstr "Muskeln"
 
 #: inc/training/schemes/scheme.UserData.php:117
-#, fuzzy
 msgid "Sleep Duration"
-msgstr "Dauer"
+msgstr "Schlafdauer"
 
 #: inc/training/class.TrainingFormular.php:72
 #: inc/core/View/Activity/Form/Form.php:87
-#, fuzzy
 msgid "Save and continue"
-msgstr "Editieren und weiter"
+msgstr "Speichern und weiter"
 
 #: inc/training/class.TrainingFormular.php:85
 #: inc/core/View/Activity/Form/Form.php:100
@@ -4431,32 +4429,28 @@ msgid "Sender e-mail"
 msgstr "Absender Mailadresse"
 
 #: inc/class.AdminView.php:180
-#, fuzzy
 msgid "Sender e-mail name"
 msgstr "Absender Mailadresse"
 
 #: inc/class.AdminView.php:181
 msgid "SMTP: host"
-msgstr ""
+msgstr "SMTP: Server"
 
 #: inc/class.AdminView.php:182
-#, fuzzy
 msgid "SMTP: port"
-msgstr "Sport"
+msgstr "SMTP: Port"
 
 #: inc/class.AdminView.php:183
 msgid "SMTP: encryption"
-msgstr ""
+msgstr "SMTP: Verschlüsselung"
 
 #: inc/class.AdminView.php:184
-#, fuzzy
 msgid "SMTP: username"
-msgstr "Nutzername"
+msgstr "SMTP: Nutzername"
 
 #: inc/class.AdminView.php:185
-#, fuzzy
 msgid "SMTP: password"
-msgstr "Passwort"
+msgstr "SMTP: Passwort"
 
 #: inc/class.AdminView.php:186
 msgid "OpenWeatherMap API-Key"
@@ -5864,9 +5858,8 @@ msgid "Body values"
 msgstr "Körperdaten"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
-#, fuzzy
 msgid "Sleep duration"
-msgstr "Gesamte Trainingsdauer:"
+msgstr "Schlafdauer"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:45
