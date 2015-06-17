@@ -35,12 +35,12 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	 * @param string $Filename relative path (from FRONTEND_PATH) to file
 	 */
 	public function parseFile($Filename) {
-		$File = FRONTEND_PATH.$Filename;
-		$this->Filename = FRONTEND_PATH.$Filename.'.temp.tcx';
-                
-		$Command = new ShellCommand('ttbincnv -t < '.$File.'  > '.$this->Filename.'');
-                $Command->run();
-                   
+		$this->Filename = $Filename.'.temp.tcx';
+
+		$Command = new ShellCommand('ttbincnv -t < '.FRONTEND_PATH.$Filename.'  > '.FRONTEND_PATH.$this->Filename.'');
+		$Command->run();     
+
+		$this->readFile();
 	}
 
 	/**
@@ -48,23 +48,26 @@ class ImporterFiletypeTTBIN extends ImporterFiletypeAbstract {
 	 * @param string $String string to parse
 	 */
 	protected function setParserFor($String) {
-                $read = $this->parseFile($this->Filename);
-		$this->Parser = new ParserTCXMultiple($read);
+		throw new RuntimeException('ImporterFiletypeTTBIN does not use any parser, parseFile() has to be used instead of setParserFor().');
 	}
 
-
 	/**
-	 * Make sure perl script worked
-	 * @throws RuntimeException
+	 * Read file
+	 * 
+	 * WARNING: Don't use this method with a TTBIN-file.
+	 * TTBIN-files have to be parsed first with parseFile($Filename).
+	 * 
+	 * For unittesting, this method accepts a filename of the output of ttbincnv
+	 * 
+	 * @param string $filename [optional] absolute path
 	 */
-	protected function readFirstLine() {
-		$FirstLine = stream_get_line($this->Handle, 4096, PHP_EOL);
+	public function readFile($filename = '') {
+		if (!empty($filename))
+			$this->Filename = $filename;
 
-		if (strpos($FirstLine,'version') !== true) {
-			fclose($this->Handle);
-			unlink($this->Filename);
+		$this->Parser = new ParserTCXMultiple(Filesystem::openFile($this->Filename));
+		$this->Parser->parse();
 
-			throw new RuntimeException('Reading converted ttbin - tcx-file failed. First line was "'.$FirstLine.'".');
-		}
+		Filesystem::deleteFile($this->Filename);
 	}
 }

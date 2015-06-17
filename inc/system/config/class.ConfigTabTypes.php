@@ -28,7 +28,7 @@ class ConfigTabTypes extends ConfigTab {
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
 							'An activity type can only belong to one sport.') );
-		$Types->addInfo( __('Finding your personal bests requieres one type (for running) to be set as the \'Race\'-type.') );
+		$Types->addInfo( __('Finding your personal bests requires one type (for running) to be set as the \'Race\'-type.') );
 
 		$this->Formular->addFieldset($Types);
 	}
