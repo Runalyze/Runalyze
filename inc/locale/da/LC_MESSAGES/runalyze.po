@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-18 21:45+0200\n"
+"PO-Revision-Date: 2015-06-18 21:50+0200\n"
 "Last-Translator: Emil Quist Madsen <emilchanaka@hotmail.com>\n"
 "Language-Team: Danish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/da/>\n"
@@ -35,16 +35,16 @@ msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:148
 msgid "The field can not be left empty."
-msgstr ""
+msgstr "Feltet kan ikke efterlades tomt."
 
 #: inc/html/formular/class.FormularValueParser.php:172
 msgid "Please enter a number."
-msgstr ""
+msgstr "Indtast venligst et tal."
 
 #: inc/html/formular/class.FormularValueParser.php:177
 #: inc/html/formular/class.FormularValueParser.php:197
 msgid "The value is too large."
-msgstr ""
+msgstr "værdien er for stor."
 
 #: inc/html/formular/class.FormularValueParser.php:235
 msgid "The date could not be parsed."
