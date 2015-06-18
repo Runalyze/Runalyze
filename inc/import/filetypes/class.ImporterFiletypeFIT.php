@@ -83,7 +83,7 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 
 		$this->Parser->finishParsing();
 
-		//unlink($this->Filename);
+		unlink($this->Filename);
 	}
 
 	/**
