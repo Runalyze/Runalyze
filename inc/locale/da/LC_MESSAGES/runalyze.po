@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-18 21:50+0200\n"
+"PO-Revision-Date: 2015-06-18 21:53+0200\n"
 "Last-Translator: Emil Quist Madsen <emilchanaka@hotmail.com>\n"
 "Language-Team: Danish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/da/>\n"
@@ -48,7 +48,7 @@ msgstr "værdien er for stor."
 
 #: inc/html/formular/class.FormularValueParser.php:235
 msgid "The date could not be parsed."
-msgstr ""
+msgstr "Datoen er overskredet."
 
 #: inc/html/formular/class.FormularValueParser.php:268
 msgid "The time could not be read."
