@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-04-15 06:58+0200\n"
-"Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"PO-Revision-Date: 2015-06-18 18:37+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3068,9 +3068,8 @@ msgstr "Wszystkie"
 
 #: inc/draw/class.PlotSumData.php:251 inc/plugin/class.PluginStat.php:269
 #: inc/plugin/class.PluginStat.php:288
-#, fuzzy
 msgid "Last 6 months"
-msgstr "Ostatnich 12 miesięcy"
+msgstr "Ostatnich 6 miesięcy"
 
 #: inc/draw/class.PlotSumData.php:252 inc/plugin/class.PluginStat.php:270
 #: inc/plugin/class.PluginStat.php:290
@@ -3078,9 +3077,8 @@ msgid "Last 12 months"
 msgstr "Ostatnich 12 miesięcy"
 
 #: inc/draw/class.PlotSumData.php:298
-#, fuzzy
 msgid "last 6 months"
-msgstr "ostatnich 12 miesięcy"
+msgstr "ostatnich 6 miesięcy"
 
 #: inc/draw/class.PlotSumData.php:300
 msgid "last 12 months"
@@ -3627,9 +3625,8 @@ msgid "Email me"
 msgstr "E-mail"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
-#, fuzzy
 msgid "Notifications"
-msgstr "Konfiguracja"
+msgstr "Powiadomienia"
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
@@ -6598,9 +6595,8 @@ msgid "Last half year"
 msgstr "Ostatnie półrocze"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:20
-#, fuzzy
 msgid "Last year"
-msgstr "Ostatnie półrocze"
+msgstr "Ostatni rok"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:30
 msgid "Summary of your activities for each sport."
@@ -6857,9 +6853,8 @@ msgid "Follow us"
 msgstr ""
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:119
-#, fuzzy
 msgid "Features"
-msgstr "Temperatury"
+msgstr "Funkcje"
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:130
 msgid "Contact"
