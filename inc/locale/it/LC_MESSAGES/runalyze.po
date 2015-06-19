@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:23+0200\n"
-"PO-Revision-Date: 2015-06-17 20:31+0200\n"
+"PO-Revision-Date: 2015-06-19 14:20+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
@@ -4236,9 +4236,8 @@ msgid "SMTP: host"
 msgstr ""
 
 #: inc/class.AdminView.php:182
-#, fuzzy
 msgid "SMTP: port"
-msgstr "Sport"
+msgstr ""
 
 #: inc/class.AdminView.php:183
 msgid "SMTP: encryption"
@@ -5553,9 +5552,8 @@ msgid "Body values"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
-#, fuzzy
 msgid "Sleep duration"
-msgstr "Durata"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:45
