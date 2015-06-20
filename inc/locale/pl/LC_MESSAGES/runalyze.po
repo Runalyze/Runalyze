@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-18 18:37+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-06-20 13:34+0200\n"
+"Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
@@ -662,7 +662,7 @@ msgstr "Wykres kadencji"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:51
 msgid "Stride length plot"
-msgstr ""
+msgstr "Wykres długości kroku"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:56
 msgid "Oscillation plot"
@@ -682,7 +682,7 @@ msgstr "Wykres temperatury"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:115
 msgid "Stride Length"
-msgstr ""
+msgstr "Długość kroku"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:118
 #: inc/training/schemes/scheme.Training.new.php:330
@@ -1780,7 +1780,7 @@ msgstr "Douglas-Peucker"
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:52
 #: inc/class.DatasetLabels.php:46
 msgid "Stride length"
-msgstr ""
+msgstr "Długość kroku"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -3589,11 +3589,11 @@ msgstr "Średnie tętno (do wyliczenia TRIMP)"
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Quality?"
-msgstr ""
+msgstr "Świetny?"
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 msgid "Quality sessions will be emphasized in your calendar."
-msgstr ""
+msgstr "Świetne treningi będą wyróżniane w kalendarzu."
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "A type can only be deleted if no references exist."
@@ -3605,7 +3605,7 @@ msgstr "Adres e-mail"
 
 #: inc/system/config/class.ConfigTabAccount.php:36
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: inc/system/config/class.ConfigTabAccount.php:43
 msgid "Registered since"
@@ -3620,9 +3620,8 @@ msgid "Your account"
 msgstr "Twoje konto"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
-#, fuzzy
 msgid "Email me"
-msgstr "E-mail"
+msgstr "Wysyłaj mi e-maile"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
 msgid "Notifications"
@@ -3633,6 +3632,8 @@ msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
+"Będziemy Ci wysyłać e-maile z informacjami. Nigdy nie będzie to spam ani "
+"reklamy."
 
 #: inc/system/config/class.ConfigTabAccount.php:65
 msgid "Change your password"
@@ -3735,10 +3736,8 @@ msgid "Hover over the headings if the abbreviations are unclear."
 msgstr "Jeśli skróty nie są czytelne przesuń kursor nad nagłówki."
 
 #: inc/system/config/class.ConfigTabSports.php:39
-#, fuzzy
 msgid "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
-"Wartości <em>&Oslash; HF</em> i <em>RPE</em> są wymagane do wyliczenia TRIMP."
+msgstr "Wartość <em>&Oslash; HF</em> jest wymagana do wyliczenia TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
@@ -3948,12 +3947,11 @@ msgid "This file does not contain any laps."
 msgstr "Plik nie zawiera żadnych okrążeń."
 
 #: inc/import/parser/class.ParserTCXruntasticSingle.php:29
-#, fuzzy
 msgid ""
 "Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located."
 msgstr ""
-"Obiekt XML nie został stworzony przez Garmin. Nie znaleziono tag-a &lt;"
-"Id&gt;."
+"Obiekt XML nie został stworzony przez Runtastic. Nie znaleziono tag-a "
+"&lt;Id&gt;."
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29
 msgid ""
@@ -4026,9 +4024,8 @@ msgstr ""
 "Brak parsera w ImporterFiletype. Być może typ pliku nie jest obsługiwany."
 
 #: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
-#, fuzzy
 msgid "This file is not supported. Supported producers of slf-files: "
-msgstr "Plik nieobsługiwany. Obsługiwane są pliki kml tworzone przez: "
+msgstr "Plik nieobsługiwany. Obsługiwane są pliki slf tworzone przez: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
@@ -4274,9 +4271,8 @@ msgid "Uninstall plugin"
 msgstr "Odinstaluj wtyczkę"
 
 #: inc/plugin/class.PluginStat.php:227
-#, fuzzy
 msgid "Choose time range"
-msgstr "Wybierz ubranie"
+msgstr "Wybierz zakres czasu"
 
 #: inc/plugin/class.PluginStat.php:314
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
@@ -5847,9 +5843,8 @@ msgid "km/Month"
 msgstr "km/miesiąc"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:290
-#, fuzzy
 msgid "Last 10 training weeks"
-msgstr "tygodni treningowych"
+msgstr "Ostatnich 10 tygodni treningów"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:330
 msgid "No activities"
@@ -6842,15 +6837,15 @@ msgid ""
 "We are using cookies to give you the best experience on our site. Cookies "
 "are files stored in your browser and are used by most websites to help "
 "personalise your web experience."
-msgstr ""
+msgstr "Używamy ciasteczek w celu personalizacji strony."
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:59
 msgid "By continuing to use our website you agree to our use of cookies."
-msgstr ""
+msgstr "Korzystając z tej strony zgadzasz się na ich wykorzystanie."
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:99
 msgid "Follow us"
-msgstr ""
+msgstr "Śledź nas"
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:119
 msgid "Features"
@@ -6858,107 +6853,106 @@ msgstr "Funkcje"
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:130
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:134
 msgid "Impressum"
-msgstr ""
+msgstr "Nota prawna"
 
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:163
 msgid "Please choose your preferred language"
-msgstr ""
+msgstr "Wybierz preferowany język"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:40
 msgid "RUNALYZE is your running diary"
-msgstr ""
+msgstr "RUNALYZE jest Twoim dziennikiem biegowym"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:50
 msgid "Not yet a member?"
-msgstr ""
+msgstr "Jeszcze nie masz konta?"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:54
 msgid "Test RUNALYZE for <strong>free</strong> and discover all advantages!"
 msgstr ""
+"Przetestuj <strong>darmową</strong> aplikację RUNALYZE i odkryj jej "
+"wszystkie zalety!"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:58
-#, fuzzy
 msgid "Get your account now!"
-msgstr "Usuń konto"
+msgstr "Utwórz konto!"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:67
-#, fuzzy
 msgid ""
 "Until now <strong>%numUser%</strong> athlete is registered and has logged "
 "%numKm%"
 msgid_plural ""
 "Until now <strong>%numUser%</strong> athletes are registered and have logged "
 "%numKm%"
-msgstr[0] "Do tej pory zarejestrował się <strong>%d</strong> sportowiec i"
-msgstr[1] "Do tej pory zarejestrowało się <strong>%d</strong> sportowców i"
-msgstr[2] "Do tej pory zarejestrowało się <strong>%d</strong> sportowców i"
+msgstr[0] ""
+"Do tej pory zarejestrował się <strong>jeden</strong> sportowiec i zapisał "
+"%numKm%"
+msgstr[1] ""
+"Do tej pory zarejestrowało się <strong>%numUser%</strong> sportowców i "
+"zapisało %numKm%"
+msgstr[2] ""
+"Do tej pory zarejestrowało się <strong>%numUser%</strong> sportowców i "
+"zapisało %numKm%"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:79
-#, fuzzy
 msgid "<strong>One</strong> athlete is online"
-msgstr "<strong>%d</strong> sportowiec jest online."
+msgstr "<strong>Jeden</strong> sportowiec jest online"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:85
-#, fuzzy
 msgid "one athlete is online"
 msgid_plural "<strong>%numUserOnline%</strong> athletes are online"
-msgstr[0] "<strong>%d</strong> sportowiec jest online."
-msgstr[1] "<strong>%d</strong> sportowców jest online."
-msgstr[2] "<strong>%d</strong> sportowców jest online."
+msgstr[0] "jeden sportowiec jest online"
+msgstr[1] "<strong>%numUserOnline%</strong> sportowców jest online"
+msgstr[2] "<strong>%numUserOnline%</strong> sportowców jest online"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:215
-#, fuzzy
 msgid "Repeat password"
-msgstr "Powtórz nowe hasło"
+msgstr "Powtórz hasło"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:237
-#, fuzzy
 msgid "Forgot password?"
 msgstr "Nie pamiętasz hasła?"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:262
-#, fuzzy
 msgid "Back to login"
-msgstr "wróć do listy"
+msgstr "Wróć do logowania"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:284
-#, fuzzy
 msgid ""
 "RUNALYZE analyzes your complete training, calculates your shape, computes "
 "prognoses and <strong>visualizes your training in plots</strong> - more "
 "detailed than any other sports diary."
 msgstr ""
-"Runalyze analizuje Twoje treningi, wylicza formę, oblicza prognozy i "
-"wizualizuje trening na wykresach, bardziej szczegółowo niż inne dzienniki "
-"biegowe."
+"RUNALYZE analizuje Twoje treningi, wylicza formę, oblicza prognozy i <strong>"
+"wizualizuje trening na wykresach</strong>, bardziej szczegółowo niż inne "
+"dzienniki biegowe."
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:295
-#, fuzzy
 msgid ""
 "RUNALYZE Runalyze is completely <strong>configurable</strong>. You can "
 "decide by yourself which information of your training you want to record and "
 "which <strong>statistics</strong> are being displayed on which place."
 msgstr ""
-"Runalyze jest w pełni konfigurowalne. Możesz zdecydować, które informacje o "
-"treningach zapisywać oraz jak i gdzie będą wyświetlane."
+"RUNALYZE jest w pełni <strong>konfigurowalne</strong>. Możesz zdecydować, "
+"które informacje o treningach zapisywać oraz <strong>jak i gdzie</strong> "
+"będą wyświetlane."
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:302
 msgid "By athletes for athletes"
-msgstr ""
+msgstr "Sportowcy - sportowcom"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:306
-#, fuzzy
 msgid ""
 "RUNALYZE is created <strong>by athletes for athletes</strong>. Whenever you "
 "have comments, problems or wishes: Please contact our Runalyze team. It's "
 "near and dear to us"
 msgstr ""
-"Runalyze tworzą biegacze dla biegaczy. Jeśli masz uwagi lub sugestie - "
-"skontaktuj się z nami. To dla nas ważne"
+"RUNALYZE tworzą <strong>biegacze dla biegaczy</strong>. Jeśli masz uwagi lub "
+"sugestie - skontaktuj się z nami. To dla nas ważne"
 
 #~ msgid ""
 #~ "Types with a RPE-value &ge; 5 will be emphasized in the activity log."
