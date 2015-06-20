@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-19 08:31+0200\n"
+"PO-Revision-Date: 2015-06-20 11:48+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Danish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/da/>\n"
@@ -66,7 +66,7 @@ msgstr "Indsende"
 
 #: inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
-msgstr ""
+msgstr "Oprette"
 
 #: inc/html/formular/class.StandardFormular.php:151
 #: inc/training/view/class.TrainingView.php:57
