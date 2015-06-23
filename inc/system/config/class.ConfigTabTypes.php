@@ -113,7 +113,7 @@ class ConfigTabTypes extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type`'.' AND accountid = '.SessionAccountHandler::getId())->fetchAll();
+		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 		$Types[] = array('id' => -1);
 
 		foreach ($Types as $Type) {
