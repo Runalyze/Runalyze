@@ -31,13 +31,13 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'km'            => array(),
 			'heartrate'     => array(),
 			'pace'          => array(),
-			'rpm'			=> array(),
-			'temp'			=> array(),
-			'power'			=> array(),
+			'rpm'		=> array(),
+			'temp'		=> array(),
+			'power'		=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
-            		'stroke'     => array(),
-                        'strokeType' => array()
+            		'stroke'        => array(),
+                        'strokeType'    => array()
 		);
 
 	/**
