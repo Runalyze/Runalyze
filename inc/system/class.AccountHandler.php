@@ -263,7 +263,7 @@ class AccountHandler {
 			$pwHash = self::getChangePasswordHash();
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
-			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+			$subject  = 'Runalyze Password Recovery';
 			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
@@ -462,7 +462,7 @@ class AccountHandler {
 		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$subject  = __('Activate your RUNALYZE Account');
 		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
 		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
 		$message .= $activationLink;
@@ -492,7 +492,7 @@ class AccountHandler {
 
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
 		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
 		$message .= $deletionLink;
