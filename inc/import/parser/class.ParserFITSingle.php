@@ -150,6 +150,9 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 'session':
 					$this->readSession();
 					break;
+                                    
+                                case 'length':
+                                        $this->readLength();
 
 				case 'activity':
 					break;
@@ -308,10 +311,21 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
 			);
-                $this->gps['stroke'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
-	}
+                //$this->gps['stroke'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
+        }
+        
+        /**
+         * Read length
+         */
+        protected function readLength() {
+            $this->gps['stroke'][] = isset($this->Values['total_strokes']) ? (int)$this->Values['total_strokes'][0] : 0;
+            $this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
+            $this->gps['swimcadence'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
+            print_r($this->gps['stroke']);
+            
+        }
 
-	/**
+        /**
 	 * Apply pauses
 	 */
 	protected function applyPauses() {

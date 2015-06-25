@@ -311,6 +311,21 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `runalyze_swim`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_swim` (
+  `accountid` int(10) unsigned NOT NULL,
+  `activityid` int(10) unsigned NOT NULL,
+  `stroke` longtext,
+  `stroketype` longtext,
+  `swimcadence` longtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Indizes der exportierten Tabellen
 --
