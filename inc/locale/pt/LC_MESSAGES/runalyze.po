@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-22 15:12+0200\n"
-"Last-Translator: Heiko Andresen <heiko.andresen@gmx.de>\n"
+"PO-Revision-Date: 2015-06-25 14:13+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
@@ -2714,7 +2714,7 @@ msgstr "Definir nova senha"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
-msgstr "IUsername"
+msgstr "Username"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
