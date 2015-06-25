@@ -26,12 +26,6 @@ class HTMLMetaForFacebook {
 	const STEP_SIZE = 10;
 
 	/**
-	 * @var string
-	 * @todo
-	 */
-	const IMAGE = 'http://runalyze.de/wp-content/uploads/Account.png';
-
-	/**
 	 * @var \Runalyze\View\Activity\Context
 	 */
 	protected $Context = null;
@@ -109,7 +103,7 @@ class HTMLMetaForFacebook {
 		$this->add('og:type', 'fitness.course');
 		$this->add('og:url', $Linker->publicUrl());
 		$this->add('og:title', addslashes($Exporter->metaTitle()));
-		$this->add('og:image', self::IMAGE);
+		$this->add('og:image', System::getFullDomain(true).'web/assets/images/runalyze.png');
 
 		$this->add('fitness:calories', $this->Context->activity()->calories());
 		$this->add('fitness:distance:value', $this->Context->activity()->distance());

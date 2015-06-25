@@ -9,7 +9,7 @@
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" >
 
-	<title><?php echo $this->getPageTitle(); ?> - Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
+	<title><?php echo $this->getPageTitle(); ?> - Runalyze</title>
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
