@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-06-19 10:45+0200\n"
+"PO-Revision-Date: 2015-06-22 15:12+0200\n"
 "Last-Translator: Heiko Andresen <heiko.andresen@gmx.de>\n"
 "Language-Team: Portuguese "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pt/>\n"
@@ -45,11 +45,11 @@ msgstr "P.f. digite um número."
 #: inc/html/formular/class.FormularValueParser.php:177
 #: inc/html/formular/class.FormularValueParser.php:197
 msgid "The value is too large."
-msgstr ""
+msgstr "O valor é muito grande."
 
 #: inc/html/formular/class.FormularValueParser.php:235
 msgid "The date could not be parsed."
-msgstr ""
+msgstr "A data não pôde ser analisada."
 
 #: inc/html/formular/class.FormularValueParser.php:268
 msgid "The time could not be read."
@@ -1379,7 +1379,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
-msgstr ""
+msgstr "Design"
 
 #: inc/core/Configuration/Category/Design.php:59
 msgid "Background image"
@@ -1387,7 +1387,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:204
 msgid "Activity form"
-msgstr ""
+msgstr "Formulário de atividade"
 
 #: inc/core/Configuration/Category/ActivityForm.php:207
 msgid "Default window"
@@ -1395,27 +1395,27 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:211
 msgid "Show activity after creation"
-msgstr ""
+msgstr "Mostrar atividade após a criação"
 
 #: inc/core/Configuration/Category/ActivityForm.php:215
 msgid "Calculate calories"
-msgstr ""
+msgstr "Calcular calorias"
 
 #: inc/core/Configuration/Category/ActivityForm.php:216
 msgid "Recalculate calories after changing duration by hand"
-msgstr ""
+msgstr "Recalcular calorias depois de mudar a duração à mão"
 
 #: inc/core/Configuration/Category/ActivityForm.php:220
 msgid "Calculate power"
-msgstr ""
+msgstr "Calcular a potência"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power by speed and grade for cycling"
-msgstr ""
+msgstr "Calcular a potência por velocidade e grau de ciclismo"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
-msgstr ""
+msgstr "Detectar pausas"
 
 #: inc/core/Configuration/Category/ActivityForm.php:226
 msgid "Detect pauses (distance not increasing) when importing training"
@@ -1423,30 +1423,34 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:242
 msgid "Automatically load weather conditions"
-msgstr ""
+msgstr "Carregar automaticamente as condições meteorológicas"
 
 #: inc/core/Configuration/Category/ActivityForm.php:243
 msgid "via openweathermap.org"
-msgstr ""
+msgstr "através de openweathermap.org"
 
 #: inc/core/Configuration/Category/ActivityForm.php:247
 msgid "for weather: Location"
-msgstr ""
+msgstr "para o tempo: localização"
 
 #: inc/core/Configuration/Category/ActivityForm.php:248
 msgid ""
 "For loading weather data from openweathermap.org<br>e.g. <em>Berlin, de</em>"
 msgstr ""
+"Para carregar dados meteorológicos de openweathermap.org <br>, por exemplo, "
+"<em>Berlin, de</em>"
 
 #: inc/core/Configuration/Category/ActivityForm.php:259
 msgid "Automatically correct elevation data"
-msgstr ""
+msgstr "Corrigir automaticamente dados de elevação"
 
 #: inc/core/Configuration/Category/ActivityForm.php:260
 msgid ""
 "Instead of using gps-elevation a correction via external services is "
 "possible."
 msgstr ""
+"Em vez de usar gps-elevação uma correção através de serviços externos é "
+"possível."
 
 #: inc/core/Configuration/Category/ActivityForm.php:270
 msgid "Sort: sport types"
@@ -1454,11 +1458,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityForm.php:274
 msgid "Sort: activity types"
-msgstr ""
+msgstr "Organizar: Tipos de atividades"
 
 #: inc/core/Configuration/Category/ActivityForm.php:278
 msgid "Sort: shoes"
-msgstr ""
+msgstr "Organizar: Sapatos"
 
 #: inc/core/Configuration/Category/DataBrowser.php:76
 #: inc/system/config/class.ConfigTabSports.php:62
@@ -1467,7 +1471,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/DataBrowser.php:79
 msgid "Calendar: mode"
-msgstr ""
+msgstr "Calendário: Modo"
 
 #: inc/core/Configuration/Category/DataBrowser.php:80
 msgid "Default mode for the calendar"
@@ -1475,7 +1479,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/DataBrowser.php:84
 msgid "Calendar: create button"
-msgstr ""
+msgstr "Calendário: Criar botão"
 
 #: inc/core/Configuration/Category/DataBrowser.php:85
 msgid "Add a link for every day to create a new activity."
@@ -1483,15 +1487,15 @@ msgstr ""
 
 #: inc/core/Configuration/Category/DataBrowser.php:89
 msgid "Calendar: edit button"
-msgstr ""
+msgstr "Calendário: Botão de edição"
 
 #: inc/core/Configuration/Category/DataBrowser.php:90
 msgid "Add an edit-link for every activity."
-msgstr ""
+msgstr "Adicione um link editar para cada atividade."
 
 #: inc/core/Configuration/Category/Vdot.php:164
 msgid "Estimation formula"
-msgstr ""
+msgstr "Fórmula de estimativa"
 
 #: inc/core/Configuration/Category/Vdot.php:165
 msgid ""
@@ -1517,7 +1521,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:179
 msgid "Manual correction factor"
-msgstr ""
+msgstr "Fator de correção manual"
 
 #: inc/core/Configuration/Category/Vdot.php:180
 msgid ""
@@ -1527,7 +1531,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:184
 msgid "Use fixed VDOT value"
-msgstr ""
+msgstr "Use o valor fixo VDOT"
 
 #: inc/core/Configuration/Category/Vdot.php:185
 msgid ""
@@ -1544,10 +1548,12 @@ msgid ""
 "The distance can be corrected by a formula from Peter Greif to adapt for "
 "elevation."
 msgstr ""
+"A distância pode ser corrigida por uma fórmula de Peter Greif para adaptar a "
+"elevação."
 
 #: inc/core/Configuration/Category/Vdot.php:194
 msgid "Correction per positive elevation"
-msgstr ""
+msgstr "Correção por elevação positiva"
 
 #: inc/core/Configuration/Category/Vdot.php:195
 msgid ""
@@ -1557,7 +1563,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:200
 msgid "Correction per negative elevation"
-msgstr ""
+msgstr "Correção por elevação negativa"
 
 #: inc/core/Configuration/Category/Vdot.php:201
 msgid ""
@@ -1568,27 +1574,27 @@ msgstr ""
 #: inc/core/Configuration/Category/Vdot.php:220
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:110
 msgid "Vdot shape"
-msgstr ""
+msgstr "Forma VDOT"
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr ""
+msgstr "Dias para ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:100
 msgid "Number of days for ATL time constant"
-msgstr ""
+msgstr "Número de dias para a constante de tempo do ATL"
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
-msgstr ""
+msgstr "Dias para CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:105
 msgid "Number of days for CTL time constant"
-msgstr ""
+msgstr "Número de dias para a constante de tempo do CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr ""
+msgstr "Mostrar ATL/CTL em por cento de seu máximo"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
@@ -1599,7 +1605,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:116
 msgid "Show TSB in percent of ATL/CTL"
-msgstr ""
+msgstr "Mostrar TSB em percentagem do ATL/CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:117
 msgid ""
@@ -1610,22 +1616,22 @@ msgstr ""
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr ""
+msgstr "CTL máxima"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr ""
+msgstr "ATL máxima"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Limpeza de banco de dados"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
 msgid "You can now use the %s to recalculate the concerning values."
-msgstr ""
+msgstr "Agora, você pode usar o %s para recalcular os valores relativos."
 
 #: inc/core/Configuration/Messages.php:37
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -1636,32 +1642,32 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Table.php:108
 msgid "Lap"
-msgstr ""
+msgstr "Volta"
 
 #: inc/core/View/Window/Laps/Table.php:110
 #: inc/core/View/Window/Laps/Table.php:112
 msgid "Diff."
-msgstr ""
+msgstr "Dif."
 
 #: inc/core/View/Window/Laps/Table.php:114
 msgid "max. bpm"
-msgstr ""
+msgstr "BPM máximo"
 
 #: inc/core/View/Window/Laps/Table.php:115
 msgid "elevation"
-msgstr ""
+msgstr "elevação"
 
 #: inc/core/View/Window/Laps/Table.php:162
 msgid "Average"
-msgstr ""
+msgstr "Média"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
-msgstr ""
+msgstr "Calcular voltas"
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Lap every ..."
-msgstr ""
+msgstr "Volta cada..."
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Distance, after which a new lap should start"
@@ -1670,11 +1676,11 @@ msgstr ""
 #: inc/core/View/Window/Laps/Form.php:64 inc/core/View/Window/Laps/Form.php:68
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #: inc/core/View/Window/Laps/Form.php:64
 msgid "Manual laps"
-msgstr ""
+msgstr "Voltas manuais"
 
 #: inc/core/View/Window/Laps/Form.php:65
 msgid ""
@@ -1684,15 +1690,15 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:68
 msgid "e.g."
-msgstr ""
+msgstr "por exemplo"
 
 #: inc/core/View/Window/Laps/Form.php:78
 msgid "Lap time goal"
-msgstr ""
+msgstr "Objetivo do tempo da volta"
 
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "Pace goal"
-msgstr ""
+msgstr "Objetivo de ritmo"
 
 #: inc/core/View/Window/Laps/Form.php:103
 msgid ""
@@ -1709,28 +1715,28 @@ msgstr ""
 
 #: inc/core/View/Window/Laps/Form.php:127
 msgid "Show calculated laps"
-msgstr ""
+msgstr "Mostrar voltas calculadas"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
-msgstr ""
+msgstr "dif"
 
 #: inc/core/View/Splits/Table.php:221
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
 msgid "Goal"
-msgstr ""
+msgstr "Meta"
 
 #: inc/core/View/Splits/Table.php:234
 msgid "Average (active)"
-msgstr ""
+msgstr "Média (ativo)"
 
 #: inc/core/View/Splits/Table.php:242
 msgid "Average (total)"
-msgstr ""
+msgstr "Média (total)"
 
 #: inc/core/View/Splits/Table.php:257
 msgid "1st/2nd Half"
-msgstr ""
+msgstr "1º/2º metade"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
@@ -1738,73 +1744,73 @@ msgstr ""
 
 #: inc/core/View/Activity/Plot/LapsManual.php:50
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Não há nenhumas voltas manuais ."
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:47
 msgid "No GPS-data available. Can\\'t compute laps."
-msgstr ""
+msgstr "Dados GPS não nsão disponíveis. Impossível  calcular voltas."
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:48
 msgid "Original data"
-msgstr ""
+msgstr "Dados originais"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:79
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:52
 #: inc/class.DatasetLabels.php:46
 msgid "Stride length"
-msgstr ""
+msgstr "Comprimento do passo"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
-msgstr ""
+msgstr "Freqüência cardíaca dados disponíveis"
 
 #: inc/core/View/Activity/Preview.php:145
 msgid "Lap data available"
-msgstr ""
+msgstr "Dados da volta disponível"
 
 #: inc/core/View/Activity/Preview.php:159
 msgid "Route data available"
-msgstr ""
+msgstr "Dados de rota disponível"
 
 #: inc/core/View/Activity/Linker.php:110
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
-msgstr ""
+msgstr "desconhecido"
 
 #: inc/core/View/Leaflet/Activity.php:209
 #, php-format
 msgid "<strong>%s. km</strong> in %s"
-msgstr ""
+msgstr "<strong>%s. km</strong> em %s"
 
 #: inc/core/View/Leaflet/Activity.php:210
 #: inc/core/View/Leaflet/Activity.php:241
 #, php-format
 msgid "<strong>Time:</strong> %s"
-msgstr ""
+msgstr "<strong>Tempo:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:240
 #, php-format
 msgid "<strong>Total:</strong> %s"
-msgstr ""
+msgstr "<strong>Total:</strong> %s"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:21
 msgid "every data point"
-msgstr ""
+msgstr "cada ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:22
 msgid "every second data point"
-msgstr ""
+msgstr "cada segundo um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:23
 msgid "every fifth data point (recommended)"
-msgstr ""
+msgstr "cinco em cinco segundos um ponto de dados (recomendado)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:24
 msgid "every tenth data point"
-msgstr ""
+msgstr "dez em dez segundes um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:25
 msgid "every twentieth data point"
@@ -1812,48 +1818,48 @@ msgstr ""
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "linear"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "revertido linear"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
-msgstr ""
+msgstr "como a velocidade"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
-msgstr ""
+msgstr "valor absoluto"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:40
 msgid "&#37; HRmax"
-msgstr ""
+msgstr "&#37; HRmax"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:41
 msgid "&#37; HRreserve"
-msgstr ""
+msgstr "&#37; HRreserve"
 
 #: inc/core/Parameter/Application/PaceAxisLimit.php:28
 msgid "automatic"
-msgstr ""
+msgstr "automático"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
 msgid "never"
-msgstr ""
+msgstr "nunca"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for competitions"
-msgstr ""
+msgstr "só para as competições"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
-msgstr ""
+msgstr "sempre"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
-msgstr ""
+msgstr "distância demais (15s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:29
 msgid "at too big distance (30s)"
@@ -1889,95 +1895,95 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ElevationMethod.php:47
 msgid "Douglas-Peucker-Algorithm"
-msgstr ""
+msgstr "Algoritmo de Douglas-Peucker"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:39
 msgid "id (oldest first)"
-msgstr ""
+msgstr "identificação (antigas primeiro)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:40
 msgid "id (latest first)"
-msgstr ""
+msgstr "identificação (mais recente primeiro)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
-msgstr ""
+msgstr "alfabético"
 
 #: inc/core/Parameter/Application/VdotMethod.php:33
 msgid "logarithmic (new method since v1.5)"
-msgstr ""
+msgstr "logarítmico (novo método desde v 1.5)"
 
 #: inc/core/Parameter/Application/VdotMethod.php:34
 msgid "linear (old method up to v1.4)"
-msgstr ""
+msgstr "linear (método antigo até v 1.4)"
 
 #: inc/core/Parameter/Application/Gender.php:39
 msgid "please choose"
-msgstr ""
+msgstr "escolha, por favor"
 
 #: inc/core/Parameter/Application/Gender.php:40
 msgid "male"
-msgstr ""
+msgstr "macho"
 
 #: inc/core/Parameter/Application/Gender.php:41
 msgid "female"
-msgstr ""
+msgstr "feminino"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
-msgstr ""
+msgstr "cada 50m um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:22
 msgid "every 100m a data point"
-msgstr ""
+msgstr "cada 100m um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:23
 msgid "every 200m a data point"
-msgstr ""
+msgstr "cada 200m um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:24
 msgid "every 500m a data point"
-msgstr ""
+msgstr "cada 500m um ponto de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:25
 msgid "max. 50 data points"
-msgstr ""
+msgstr "no máximo 50 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:26
 msgid "max. 100 data points"
-msgstr ""
+msgstr "no máximo 100 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:27
 msgid "max. 200 data points (recommended)"
-msgstr ""
+msgstr "no máximo 200 pontos de dados (recomendado)"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:28
 msgid "max. 300 data points"
-msgstr ""
+msgstr "no máximo 300 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:29
 msgid "max. 400 data points"
-msgstr ""
+msgstr "no máximo 400 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:30
 msgid "max. 500 data points"
-msgstr ""
+msgstr "no máximo 500 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:31
 msgid "max. 750 data points"
-msgstr ""
+msgstr "no máximo 750 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:32
 msgid "max. 1000 data points"
-msgstr ""
+msgstr "no máximo 1.000 pontos de dados"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
-msgstr ""
+msgstr "Enviar formulário"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
-msgstr ""
+msgstr "Garmin Communicator"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
@@ -1985,7 +1991,7 @@ msgstr ""
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:39
 msgid "all separated"
-msgstr ""
+msgstr "todo separado"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:40
 msgid "Pace / Heart rate"
@@ -1997,15 +2003,15 @@ msgstr ""
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
-msgstr ""
+msgstr "Exibição de semana"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:34
 msgid "Month view"
-msgstr ""
+msgstr "Exibição de mês"
 
 #: inc/core/Data/Weather/Condition.php:142
 msgid "sunny"
-msgstr ""
+msgstr "ensolarado"
 
 #: inc/core/Data/Weather/Condition.php:144
 msgid "fair"
@@ -2013,23 +2019,23 @@ msgstr ""
 
 #: inc/core/Data/Weather/Condition.php:146
 msgid "cloudy"
-msgstr ""
+msgstr "nublado"
 
 #: inc/core/Data/Weather/Condition.php:148
 msgid "changeable"
-msgstr ""
+msgstr "mutável"
 
 #: inc/core/Data/Weather/Condition.php:150
 msgid "rainy"
-msgstr ""
+msgstr "chuvoso"
 
 #: inc/core/Data/Weather/Condition.php:152
 msgid "snowing"
-msgstr ""
+msgstr "a nevar"
 
 #: inc/core/Data/Weather.php:64
 msgid "at"
-msgstr ""
+msgstr "no"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
@@ -2037,7 +2043,7 @@ msgstr ""
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
-msgstr ""
+msgstr "Diário de corridas"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:33
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2046,30 +2052,32 @@ msgstr ""
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:291
 msgid "Configuration"
-msgstr ""
+msgstr "Configuração"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Banco de dados"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Pronto"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze já está instalado."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
 "You cannot reinstall Runalyze. If something does not work, please do not "
 "hesitate to contact us."
 msgstr ""
+"Você não pode reinstalar o Runalyze. Se alguma coisa não funciona, não "
+"hesite em contactar-nos."
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:271
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Iníciar Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
@@ -2079,11 +2087,11 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "Bem-vindo!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Deixe-nos verificar primeiro se o seu servidor atende os requisitos."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
@@ -2094,7 +2102,7 @@ msgstr ""
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
 msgid "Currently PHP %s is running."
-msgstr ""
+msgstr "Atualmente está executando o PHP %s."
 
 #: inc/tpl/tpl.Installer.php:64
 msgid ""
@@ -2104,42 +2112,44 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Limite de tempo"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Limite de memória"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Limite de upload"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Iniciar a instalação"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Configurações para Runalyze"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze precisa de um banco de dados MySQL."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
 "The connection settings are incorrect. We are not able to connect to the "
 "database."
 msgstr ""
+"As configurações de conexão estão incorretas. Não somos capazes de se "
+"conectar ao banco de dados."
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr ""
+msgstr "Foi possível estabelecer uma conexão."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "Atualmente o MySQL %s está sendo executado."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
@@ -2147,21 +2157,23 @@ msgid ""
 "MySQL %s is required, but MySQL %s is running. Please update your MySQL "
 "version."
 msgstr ""
+"MySQL %s é necessária, mas MySQL %s está sendo executado. Por favor, "
+"atualize sua versão do MySQL."
 
 #: inc/tpl/tpl.Installer.php:113
 msgid "Host server"
-msgstr ""
+msgstr "Servidor host"
 
 #: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:298
 msgid "User"
-msgstr ""
+msgstr "Usuário"
 
 #: inc/tpl/tpl.Installer.php:131 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:131
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:205
 msgid "Password"
-msgstr ""
+msgstr "Senha"
 
 #: inc/tpl/tpl.Installer.php:137
 msgid ""
@@ -2171,15 +2183,15 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
-msgstr ""
+msgstr "Esse prefixo já está sendo usado."
 
 #: inc/tpl/tpl.Installer.php:146
 msgid "This prefix is free."
-msgstr ""
+msgstr "Este prefixo é livre."
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "Prefix"
-msgstr ""
+msgstr "Prefixo"
 
 #: inc/tpl/tpl.Installer.php:158
 msgid ""
@@ -2193,27 +2205,27 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:170
 msgid "Registrations"
-msgstr ""
+msgstr "Inscrições"
 
 #: inc/tpl/tpl.Installer.php:173
 msgid "Users have to register and login"
-msgstr ""
+msgstr "Os usuários têm que registar-se e faça o login"
 
 #: inc/tpl/tpl.Installer.php:180
 msgid "Garmin API key"
-msgstr ""
+msgstr "Chave da API de Garmin"
 
 #: inc/tpl/tpl.Installer.php:183
 msgid "not necessary for localhost"
-msgstr ""
+msgstr "Não é necessário para localhost"
 
 #: inc/tpl/tpl.Installer.php:186
 msgid "necessary for"
-msgstr ""
+msgstr "necessário para"
 
 #: inc/tpl/tpl.Installer.php:187
 msgid "see"
-msgstr ""
+msgstr "ver"
 
 #: inc/tpl/tpl.Installer.php:195
 msgid ""
@@ -2223,7 +2235,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:201
 msgid "The configuration file cannot be written."
-msgstr ""
+msgstr "O arquivo de configuração não pode ser gravado."
 
 #: inc/tpl/tpl.Installer.php:206
 #, php-format
@@ -2231,10 +2243,12 @@ msgid ""
 "Please copy <strong>%s</strong> to the directory <strong>%s</strong> and "
 "insert your data."
 msgstr ""
+"Por favor, copie <strong>%s</strong> ao diretório <strong>%s</strong> e "
+"insere seus dados."
 
 #: inc/tpl/tpl.Installer.php:207
 msgid "You have to change the following variables:"
-msgstr ""
+msgstr "Você tem que alterar as seguintes variáveis:"
 
 #: inc/tpl/tpl.Installer.php:219
 #, php-format
@@ -2243,23 +2257,23 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Written! Continue ..."
-msgstr ""
+msgstr "Escrito! Continue..."
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Write configuration file"
-msgstr ""
+msgstr "Gravar um arquivo de configuração"
 
 #: inc/tpl/tpl.Installer.php:231
 msgid "Check settings"
-msgstr ""
+msgstr "Verifique as configurações"
 
 #: inc/tpl/tpl.Installer.php:239
 msgid "The configuration file has been written."
-msgstr ""
+msgstr "O arquivo de configuração foi escrito."
 
 #: inc/tpl/tpl.Installer.php:243
 msgid "Next step: setup database"
-msgstr ""
+msgstr "Próximo passo: banco de dados de configuração"
 
 #: inc/tpl/tpl.Installer.php:250
 msgid ""
@@ -2273,26 +2287,26 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:263
 msgid "Ready! Congratulations!"
-msgstr ""
+msgstr "Pronto! Parabéns!"
 
 #: inc/tpl/tpl.Installer.php:267
 msgid "Runalyze has been successfully installed. Have fun while using it!"
-msgstr ""
+msgstr "Runalyze tiver sido instalado com êxito. Divirta-se ao usá-lo!"
 
 #: inc/tpl/tpl.Installer.php:287 inc/class.AdminView.php:380
 #, php-format
 msgid "The directory <strong>%s</strong> is not writable."
-msgstr ""
+msgstr "O diretório <strong>%s</strong> não é gravável."
 
 #: inc/tpl/tpl.Installer.php:295
 msgid "Please activate JavaScript, Runalyze will not work without."
-msgstr ""
+msgstr "Por favor ative o JavaScript, Runalyze não vai funcionar sem."
 
 #: inc/tpl/tpl.installerHeader.php:23
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:39
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:116
 msgid "Please login"
-msgstr ""
+msgstr "Faça o login"
 
 #: inc/tpl/tpl.FrontendShared.header.php:29
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26
@@ -2307,16 +2321,16 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:14
 msgid "The username is not known."
-msgstr ""
+msgstr "O nome de usuário não é conhecido."
 
 #: inc/tpl/tpl.loginWindow.php:17
 msgid "The password was incorrect."
-msgstr ""
+msgstr "A senha estava incorreta."
 
 #: inc/tpl/tpl.loginWindow.php:20
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
-msgstr ""
+msgstr "A conta não foi ativada. <br>Dar uma olhada em sua caixa de e-mail."
 
 #: inc/tpl/tpl.loginWindow.php:26 inc/tpl/tpl.loginWindow.php:44
 #: inc/tpl/tpl.loginWindow.php:48 inc/tpl/tpl.loginWindow.php:155
@@ -2325,7 +2339,7 @@ msgstr ""
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:114
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:151
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
@@ -2334,96 +2348,98 @@ msgstr ""
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:175
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:248
 msgid "Username"
-msgstr ""
+msgstr "Nome de usuário"
 
 #: inc/tpl/tpl.loginWindow.php:36
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:143
 msgid "Remember me"
-msgstr ""
+msgstr "Lembra de mim"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
-msgstr ""
+msgstr "Runalyze está em manutenção no momento. Não é possível fazer o logon."
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:170
 msgid "Create a new account"
-msgstr ""
+msgstr "Criar uma nova conta"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
-msgstr ""
+msgstr "As inscrições são atualmente desativadas."
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:300
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:195
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
-msgstr ""
+msgstr "Senha novamente"
 
 #: inc/tpl/tpl.loginWindow.php:112
 msgid "You can login now. Enjoy Runalyze!"
-msgstr ""
+msgstr "Pode entrar agora. Aproveite Runalyze!"
 
 #: inc/tpl/tpl.loginWindow.php:114
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
+"Obrigado pela sua inscrição. Você deve receber um email dentro dos próximos "
+"minutos com mais instruções para ativar sua conta."
 
 #: inc/tpl/tpl.loginWindow.php:121
 msgid "Register"
-msgstr ""
+msgstr "Registre-se"
 
 #: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:157
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Esqueceu sua senha?"
 
 #: inc/tpl/tpl.loginWindow.php:142
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:242
 msgid "A link for changing your password will be sent via email."
-msgstr ""
+msgstr "Um link para alterar sua senha será enviado via e-mail."
 
 #: inc/tpl/tpl.loginWindow.php:148
 msgid "Send link"
-msgstr ""
+msgstr "Enviar link"
 
 #: inc/tpl/tpl.loginWindow.php:190
 #, php-format
 msgid "Until now <strong>%d</strong> athlete is registered and"
 msgid_plural "Until now <strong>%d</strong> athletes are registered and"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Até agora <strong>%d</strong> atleta é registrada e"
+msgstr[1] "Até agora  <strong>%d</strong> atletas são registradas e"
 
 #: inc/tpl/tpl.loginWindow.php:191
 #, php-format
 msgid "has logged <strong>%s</strong>."
 msgid_plural "have logged <strong>%s</strong>."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "tem registrado <strong>%s</strong>."
+msgstr[1] "tem registrado <strong>%s</strong>."
 
 #: inc/tpl/tpl.loginWindow.php:193
 #, php-format
 msgid "<strong>%d</strong> athlete is online."
 msgid_plural "<strong>%d</strong> athletes are online."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "<strong>%d</strong> atleta é on-line."
+msgstr[1] "<strong>%d</strong> atletas são on-line."
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
-msgstr ""
+msgstr "Administração"
 
 #: inc/tpl/tpl.adminWindow.login.php:6
 #: inc/system/config/class.ConfigTabAccount.php:17
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #: inc/tpl/tpl.InstallerUpdate.php:3
 msgid "Update Runalyze"
-msgstr ""
+msgstr "Atualização Runalyze"
 
 #: inc/tpl/tpl.InstallerUpdate.php:7
 msgid ""
@@ -2442,226 +2458,226 @@ msgstr ""
 
 #: inc/tpl/tpl.InstallerUpdate.php:17
 msgid "----- please choose"
-msgstr ""
+msgstr "----- por favor, escolha"
 
 #: inc/tpl/tpl.InstallerUpdate.php:19
 #, php-format
 msgid "Update to %s (from %s, %s)"
-msgstr ""
+msgstr "Atualização para %s (a partir de %s, %s)"
 
 #: inc/tpl/tpl.InstallerUpdate.php:30
 msgid "The update was successful."
-msgstr ""
+msgstr "A atualização foi bem-sucedida."
 
 #: inc/tpl/tpl.InstallerUpdate.php:35
 msgid "Update"
-msgstr ""
+msgstr "Atualização"
 
 #: inc/tpl/tpl.Frontend.header.php:27 inc/tpl/tpl.Frontend.header.php:28
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: inc/tpl/tpl.Frontend.header.php:34
 #: inc/system/config/class.ConfigTabPlugins.php:41
 #: inc/plugin/class.PluginTool.php:82 inc/class.AdminView.php:207
 msgid "Tools"
-msgstr ""
+msgstr "Ferramentas"
 
 #: inc/tpl/tpl.Frontend.header.php:35
 msgid "Help"
-msgstr ""
+msgstr "Ajuda"
 
 #: inc/tpl/tpl.DataBrowser.php:15
 msgid "Choose a date ..."
-msgstr ""
+msgstr "Escolha o dia ..."
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:77
 msgid "Sunday"
-msgstr ""
+msgstr "Domingo"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:78
 msgid "Monday"
-msgstr ""
+msgstr "Segunda-feira"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:79
 msgid "Tuesday"
-msgstr ""
+msgstr "Terça-feira"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:80
 msgid "Wednesday"
-msgstr ""
+msgstr "Quarta-feira"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:81
 msgid "Thursday"
-msgstr ""
+msgstr "Quinta-feira"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:82
 msgid "Friday"
-msgstr ""
+msgstr "Sexta-feira"
 
 #: inc/tpl/tpl.DataBrowser.php:21 inc/calculate/class.Time.php:84
 msgid "Saturday"
-msgstr ""
+msgstr "Sábado"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Su"
-msgstr ""
+msgstr "Do"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Mo"
-msgstr ""
+msgstr "2a"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Tu"
-msgstr ""
+msgstr "3a"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "We"
-msgstr ""
+msgstr "4a"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Th"
-msgstr ""
+msgstr "5a"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Fr"
-msgstr ""
+msgstr "6a"
 
 #: inc/tpl/tpl.DataBrowser.php:22
 msgid "Sa"
-msgstr ""
+msgstr "Sa"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:77
 msgid "Sun"
-msgstr ""
+msgstr "Do"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:78
 msgid "Mon"
-msgstr ""
+msgstr "2a"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:79
 msgid "Tue"
-msgstr ""
+msgstr "3a"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:80
 msgid "Wed"
-msgstr ""
+msgstr "3a"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:81
 msgid "Thu"
-msgstr ""
+msgstr "5a"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:82
 msgid "Fri"
-msgstr ""
+msgstr "6a"
 
 #: inc/tpl/tpl.DataBrowser.php:23 inc/calculate/class.Time.php:84
 msgid "Sat"
-msgstr ""
+msgstr "Sa"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:96
 msgid "January"
-msgstr ""
+msgstr "Janeiro"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:97
 msgid "February"
-msgstr ""
+msgstr "Fevereiro"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:98
 msgid "March"
-msgstr ""
+msgstr "Março"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:99
 msgid "April"
-msgstr ""
+msgstr "Abril"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/tpl/tpl.DataBrowser.php:26
 #: inc/draw/class.Plot.php:390 inc/calculate/class.Time.php:100
 msgid "May"
-msgstr ""
+msgstr "Maio"
 
 #: inc/tpl/tpl.DataBrowser.php:24 inc/calculate/class.Time.php:101
 msgid "June"
-msgstr ""
+msgstr "Junho"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:102
 msgid "July"
-msgstr ""
+msgstr "Julho"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:103
 msgid "August"
-msgstr ""
+msgstr "Agosto"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:104
 msgid "September"
-msgstr ""
+msgstr "Setembro"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:105
 msgid "October"
-msgstr ""
+msgstr "Outubro"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:106
 msgid "November"
-msgstr ""
+msgstr "Novembro"
 
 #: inc/tpl/tpl.DataBrowser.php:25 inc/calculate/class.Time.php:108
 msgid "December"
-msgstr ""
+msgstr "Dezembro"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:386
 #: inc/calculate/class.Time.php:96
 msgid "Jan"
-msgstr ""
+msgstr "Jan"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:387
 #: inc/calculate/class.Time.php:97
 msgid "Feb"
-msgstr ""
+msgstr "Fev"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:388
 #: inc/calculate/class.Time.php:98
 msgid "Mar"
-msgstr ""
+msgstr "Mar"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:389
 #: inc/calculate/class.Time.php:99
 msgid "Apr"
-msgstr ""
+msgstr "Abr"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:391
 #: inc/calculate/class.Time.php:101
 msgid "Jun"
-msgstr ""
+msgstr "Jun"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:392
 #: inc/calculate/class.Time.php:102
 msgid "Jul"
-msgstr ""
+msgstr "Jul"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:393
 #: inc/calculate/class.Time.php:103
 msgid "Aug"
-msgstr ""
+msgstr "Ago"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:394
 #: inc/calculate/class.Time.php:104
 msgid "Sep"
-msgstr ""
+msgstr "Set"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:395
 #: inc/calculate/class.Time.php:105
 msgid "Oct"
-msgstr ""
+msgstr "Out"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:396
 #: inc/calculate/class.Time.php:106
 msgid "Nov"
-msgstr ""
+msgstr "Nov"
 
 #: inc/tpl/tpl.DataBrowser.php:26 inc/draw/class.Plot.php:397
 #: inc/calculate/class.Time.php:108
 msgid "Dec"
-msgstr ""
+msgstr "Dez"
 
 #: inc/tpl/tpl.DataBrowser.php:35
 msgid "You can select any time range by selecting two dates."
@@ -2669,53 +2685,53 @@ msgstr ""
 
 #: inc/tpl/tpl.DataBrowser.php:39
 msgid "Show selection"
-msgstr ""
+msgstr "Visualizar seleção"
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:3
 msgid "Activate account"
-msgstr ""
+msgstr "Ativar conta"
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:6
 msgid "Your account has been activated."
-msgstr ""
+msgstr "Sua conta foi ativada."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:7
 msgid "You can now use Runalyze."
-msgstr ""
+msgstr "Agora, você pode usar Runalyze."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:11
 msgid "The activation did not work."
-msgstr ""
+msgstr "A ativação não funcionou."
 
 #: inc/tpl/tpl.loginWindow.activateAccount.php:12
 #: inc/tpl/tpl.loginWindow.deleteAccount.php:18
 msgid "Probably the link was wrong."
-msgstr ""
+msgstr "Provavelmente o link estava errado."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:8 inc/class.AdminView.php:319
 msgid "Set new password"
-msgstr ""
+msgstr "Definir nova senha"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:13
 msgid "IUsername"
-msgstr ""
+msgstr "IUsername"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:17
 #: inc/system/config/class.ConfigTabAccount.php:77
 msgid "New password"
-msgstr ""
+msgstr "Nova senha"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:21
 msgid "New password again"
-msgstr ""
+msgstr "Nova senha novamente"
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:25
 msgid "The link is not valid anymore."
-msgstr ""
+msgstr "O link não é mais válido."
 
 #: inc/tpl/tpl.loginWindow.setNewPassword.php:31
 msgid "Change password"
-msgstr ""
+msgstr "Alterar senha"
 
 #: inc/tpl/tpl.installerFooterText.php:5
 #: inc/system/config/class.ConfigTabPlugins.php:37
@@ -2723,7 +2739,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:113
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:280
 msgid "Statistics"
-msgstr ""
+msgstr "Estatísticas"
 
 #: inc/tpl/tpl.installerFooterText.php:6
 msgid ""
@@ -2741,7 +2757,7 @@ msgstr ""
 
 #: inc/tpl/tpl.installerFooterText.php:19
 msgid "By runners for runners"
-msgstr ""
+msgstr "Pelos corredores para os corredores"
 
 #: inc/tpl/tpl.installerFooterText.php:20
 msgid ""
@@ -2755,12 +2771,16 @@ msgid ""
 "Runalyze is completely configurable and more detailed than any other tool "
 "for analyzing your activities."
 msgstr ""
+"Runalyze é completamente configurável e mais detalhada do que qualquer outra "
+"ferramenta de análise de suas atividades."
 
 #: inc/tpl/tpl.help.php:15
 #, php-format
 msgid ""
 "Please look at our official website %s to get an overview of our features."
 msgstr ""
+"Por favor veja nosso site oficial %s para obter uma visão geral dos nossos "
+"recursos."
 
 #: inc/tpl/tpl.help.php:16
 #, php-format
@@ -2774,10 +2794,12 @@ msgid ""
 "Runalyze is an open-source project. We are working on it as much as we can "
 "in our free time."
 msgstr ""
+"Runalyze é um projeto open-source. Estamos trabalhando nele tanto quanto "
+"possível em nosso tempo livre."
 
 #: inc/tpl/tpl.help.php:21
 msgid "Official developers:"
-msgstr ""
+msgstr "Desenvolvedores oficiais:"
 
 #: inc/tpl/tpl.help.php:33
 msgid ""
@@ -6620,7 +6642,7 @@ msgstr ""
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:302
 msgid "By athletes for athletes"
-msgstr ""
+msgstr "Por atletas para atletas"
 
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:306
 msgid ""
@@ -6628,3 +6650,6 @@ msgid ""
 "have comments, problems or wishes: Please contact our Runalyze team. It's "
 "near and dear to us"
 msgstr ""
+"RUNALYZE é criado <strong>por atletas para atletas</strong>. Sempre que "
+"tiver comentários, problemas ou desejos: Por favor, entre em contato com a "
+"nossa equipa de Runalyze. É próximo e querido para nós"
