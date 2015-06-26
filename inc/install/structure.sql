@@ -320,6 +320,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_swim` (
   `accountid` int(10) unsigned NOT NULL,
+  `swimtime` longtext,
   `activityid` int(10) unsigned NOT NULL,
   `stroke` longtext,
   `stroketype` longtext,
@@ -388,6 +389,12 @@ ALTER TABLE `runalyze_sport`
 -- Indizes für die Tabelle `runalyze_trackdata`
 --
 ALTER TABLE `runalyze_trackdata`
+ ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_swim`
+--
+ALTER TABLE `runalyze_swim`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
 --

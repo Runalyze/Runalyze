@@ -144,6 +144,7 @@ class TrainingObject extends DataObject {
 	public function insert() {
 		$Route = $this->newRouteObject();
 		$Trackdata = $this->newTrackdataObject();
+                $Swimdata = $this->newSwimObject();
 
 		if ($Route->name() != '' || $Route->hasPositionData() || $Route->hasElevations()) {
 			$InserterRoute = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
@@ -201,8 +202,10 @@ class TrainingObject extends DataObject {
 	 */
 	protected function newSwimObject() {
 		return new Runalyze\Model\Swim\Object(array(
+                        Runalyze\Model\Swim\Object::SWIMTIME => $this->get('swimtime'),
 			Runalyze\Model\Swim\Object::STROKE => $this->get('stroke'),
-                        Runalyze\Model\Swim\Object::STROKETYPE => $this->get('strokeType')
+                        Runalyze\Model\Swim\Object::STROKETYPE => $this->get('stroketype'),
+                        Runalyze\Model\Swim\Object::SWIMCADENCE => $this->get('swimcadence')
 		));
 	}
         
@@ -779,20 +782,17 @@ class TrainingObject extends DataObject {
 	 */
 	public function hasComment() { return strlen($this->get('comment')) > 0; }
 
-
 	/**
 	 * Get partner
 	 * @return string partner
 	 */
 	public function getPartner() { return $this->get('partner'); }
 
-
 	/**
 	 * Was with running abc?
 	 * @return bool True if this training was with 'running abc'
 	 */
 	public function wasWithABC() { return $this->get('abc') == 1; }
-
 
 	/**
 	 * Set notes
@@ -805,39 +805,42 @@ class TrainingObject extends DataObject {
 	 */
 	public function getNotes() { return $this->get('notes'); }
 
-
 	/**
 	 * Set array for time
 	 * @param array $array array with timepoints
 	 */
 	public function setArrayTime($array) { $this->setArrayFor('arr_time', $array); }
+        
 	/**
 	 * Get array for time
 	 * @return array array with timepoints
 	 */
 	public function getArrayTime() { return $this->getArrayFor('arr_time'); }
+        
 	/**
 	 * Get last time point
 	 * @return int
 	 */
 	public function getArrayTimeLastPoint() { return $this->getLastArrayPoint('arr_time'); }
+        
 	/**
 	 * Has array time?
 	 * @return bool
 	 */
 	public function hasArrayTime() { return strlen($this->get('arr_time')) > 0; }
 
-
 	/**
 	 * Set array for latitude
 	 * @param array $array
 	 */
 	public function setArrayLatitude($array) { $this->setArrayFor('arr_lat', $array); }
+        
 	/**
 	 * Get array for latitude
 	 * @return array
 	 */
 	public function getArrayLatitude() { return $this->getArrayFor('arr_lat'); }
+        
 	/**
 	 * Has array for latitude?
 	 * @return bool
@@ -860,7 +863,83 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayLongitude() { return strlen($this->get('arr_lon')) > 0; }
-
+        
+        
+	/**
+	 * Set array for swim stroke
+	 * @param array $data
+	 */
+	public function setArrayStroke(array $data) { $this->setArrayFor('stroke', $data); }
+        
+	/**
+	 * Get array for swim stroke
+	 * @return array
+	 */
+	public function getArrayStroke() { return $this->getArrayFor('stroke'); }
+        
+	/**
+	 * Has array for swim stroke?
+	 * @return bool
+	 */
+	public function hasArrayStroke() { return strlen($this->get('stroke')) > 0; }
+        
+        
+	/**
+	 * Set array for swim stroke type
+	 * @param array $data
+	 */
+	public function setArrayStrokeType(array $data) { $this->setArrayFor('stroketype', $data); }
+        
+        /**
+	 * Get array for swim stroke type
+	 * @return array
+	 */
+	public function getArrayStrokeType() { return $this->getArrayFor('stroketype'); }
+        
+	/**
+	 * Has array for swim stroke type?
+	 * @return bool
+	 */
+	public function hasArrayStrokeType() { return strlen($this->get('stroketype')) > 0; }
+        
+        
+	/**
+	 * Set array for swim cadence
+	 * @param array $data
+	 */
+	public function setArraySwimCadence(array $data) { $this->setArrayFor('swimcadence', $data); }
+        
+        /**
+	 * Get array for swim cadence
+	 * @return array
+	 */
+	public function getArraySwimCadence() { return $this->getArrayFor('swimcadence'); }
+        
+	/**
+	 * Has array for swim cadence?
+	 * @return bool
+	 */
+	public function hasArraySwimCadence() { return strlen($this->get('swimcadence')) > 0; }
+        
+        
+	/**
+	 * Set array for swim time
+	 * @param array $data
+	 */
+	public function setArraySwimTime(array $data) { $this->setArrayFor('swimtime', $data); }
+        
+        /**
+	 * Get array for swim time
+	 * @return array
+	 */
+	public function getArraySwimTime() { return $this->getArrayFor('swimtime'); }
+        
+	/**
+	 * Has array for swim time?
+	 * @return bool
+	 */
+	public function hasArraySwimTime() { return strlen($this->get('swimtime')) > 0; }
+        
 
 	/**
 	 * Has position data?
