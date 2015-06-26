@@ -311,7 +311,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
 			);
-                //$this->gps['stroke'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
+
         }
         
         /**
@@ -322,7 +322,7 @@ class ParserFITSingle extends ParserAbstractSingle {
             $this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
             $this->gps['swimcadence'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
             $this->gps['swimtime'][] = isset($this->Values['start_time']) ? (int)$this->Values['start_time'][0] : 0; 
-            
+                       
         }
 
         /**

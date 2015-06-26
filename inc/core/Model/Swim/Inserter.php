@@ -43,7 +43,8 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @return array
 	 */
 	protected function keys() {
-		return array_merge(array(
+
+            return array_merge(array(
 				self::ACCOUNTID
 			),
 			Object::allProperties()

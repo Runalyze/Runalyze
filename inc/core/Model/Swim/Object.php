@@ -49,7 +49,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Key: swim cadence
 	 * @var string
 	 */
-	const STROKETYPE = 'swimcadence';
+	const SWIMCADENCE = 'swimcadence';
         
 	/**
 	 * Construct
@@ -90,6 +90,14 @@ class Object extends Model\Object implements Model\Loopable {
 		return false;
 	}
         
+	/**
+	 * Is the property an array?
+	 * @param string $key
+	 * @return bool
+	 */
+	public function isArray($key) {
+		return ($key != self::ACTIVITYID);
+	}
         /**
 	 * Properties
 	 * @return array

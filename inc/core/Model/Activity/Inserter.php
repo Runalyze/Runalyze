@@ -29,6 +29,11 @@ class Inserter extends Model\InserterWithAccountID {
 	protected $Trackdata = null;
 
 	/**
+	 * @var \Runalyze\Model\Swim\Object
+	 */
+	protected $Swimdata = null;
+        
+	/**
 	 * @var \Runalyze\Model\Route\Object
 	 */
 	protected $Route = null;
@@ -47,6 +52,13 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	public function setTrackdata(Model\Trackdata\Object $trackdata) {
 		$this->Trackdata = $trackdata;
+	}
+        
+	/**
+	 * @param \Runalyze\Model\Swim\Object $swimdata
+	 */
+	public function setSwimdata(Model\Swim\Object $swimdata) {
+		$this->Swimdata = $swimdata;
 	}
 
 	/**

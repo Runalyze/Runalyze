@@ -164,6 +164,9 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setAccountID( SessionAccountHandler::getId() );
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
+                $InserterActivity->setSwimdata(($Swimdata));
+                print_r($this->getArrayStroke());
+                
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
@@ -174,6 +177,14 @@ class TrainingObject extends DataObject {
 			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
 			$InserterTrack->insert();
 		}
+                if ($this->hasArrayStroke()) {
+                    
+                        $Swimdata->set(Runalyze\Model\Swim\Object::ACTIVITYID, $this->id());
+                        $InserterSwim = new Runalyze\Model\Swim\Inserter(DB::getInstance(), $Swimdata);
+                        $InserterSwim->setAccountID( SessionAccountHandler::getId() );
+                        $InserterSwim->insert();
+                }        
+                
 	}
 
 	/**
@@ -207,6 +218,7 @@ class TrainingObject extends DataObject {
                         Runalyze\Model\Swim\Object::STROKETYPE => $this->get('stroketype'),
                         Runalyze\Model\Swim\Object::SWIMCADENCE => $this->get('swimcadence')
 		));
+                
 	}
         
 	/**
