@@ -31,8 +31,8 @@ class Loop extends \Runalyze\Model\Loop {
 	 * Current time
 	 * @return int
 	 */
-	public function time() {
-		return $this->current(Object::TIME);
+	public function swimtime() {
+		return $this->current(Object::SWIMTIME);
 	}
 
 
@@ -42,7 +42,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveTime($seconds) {
-		$this->move(Object::TIME, $seconds);
+		$this->move(Object::SWIMTIME, $seconds);
 	}
 
 	/**
@@ -51,7 +51,7 @@ class Loop extends \Runalyze\Model\Loop {
 	 * @throws \RuntimeException for negative values or if time is empty
 	 */
 	public function moveToTime($seconds) {
-		$this->moveTo(Object::TIME, $seconds);
+		$this->moveTo(Object::SWIMTIME, $seconds);
 	}
 
 

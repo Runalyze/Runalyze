@@ -52,6 +52,14 @@ class Object extends Model\Object implements Model\Loopable {
 	const STROKETYPE = 'swimcadence';
         
 	/**
+	 * Construct
+	 * @param array $data
+	 */
+	public function __construct(array $data = array()) {
+		parent::__construct($data);
+	}
+        
+	/**
 	 * All properties
 	 * @return array
 	 */
@@ -86,7 +94,7 @@ class Object extends Model\Object implements Model\Loopable {
 	}
    
 	/**
-	 * Stroke
+	 * SWIMTIME
 	 * @return int
 	 */
 	public function swimtime() {
@@ -94,7 +102,7 @@ class Object extends Model\Object implements Model\Loopable {
 	}  
         
 	/**
-	 * Stroke
+	 * STROKE
 	 * @return int
 	 */
 	public function stroke() {
