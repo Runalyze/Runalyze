@@ -73,6 +73,23 @@ class Object extends Model\Object implements Model\Loopable {
 		);
 	}
         
+	/**
+	 * Can be null?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function canBeNull($key) {
+		switch ($key) {
+                        case self::SWIMTIME:
+                        case self::ACTIVITYID:
+                        case self::STROKE:
+                        case self::STROKETYPE:
+                        case self::SWIMCADENCE:
+				return true;
+		}
+		return false;
+	}
+        
         /**
 	 * Properties
 	 * @return array

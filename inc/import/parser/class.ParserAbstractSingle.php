@@ -35,11 +35,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'temp'		=> array(),
 			'power'		=> array(),
 			'groundcontact'	=> array(),
-			'oscillation'	=> array(),
-            		'stroke'        => array(),
-                        'strokeType'    => array(),
-                        'swimcadence'   => array(),
-                        'swimtime'      => array()
+			'oscillation'	=> array()
 		);
 
 	/**
@@ -158,10 +154,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
-                $this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
-                $this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
-                $this->TrainingObject->setArraySwimCadence( $this->gps['swimcadence'] );
-                $this->TrainingObject->setArraySwimTime( $this->gps['swimtime'] );
                 
 		$this->setValuesFromArraysIfEmpty();
 	}
