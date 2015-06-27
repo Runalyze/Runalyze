@@ -320,8 +320,9 @@ class ParserFITSingle extends ParserAbstractSingle {
         protected function readLength() {
             $this->gps['stroke'][] = isset($this->Values['total_strokes']) ? (int)$this->Values['total_strokes'][0] : 0;
             $this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
-            $this->gps['swimcadence'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
-            $this->gps['swimtime'][] = isset($this->Values['start_time']) ? (int)$this->Values['start_time'][0] : 0; 
+            $this->gps['rpm'][]       = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
+            $time = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
+            $this->gps['time_in_s'][] = $time;
                        
         }
 

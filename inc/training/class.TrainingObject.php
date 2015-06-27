@@ -165,7 +165,6 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
                 $InserterActivity->setSwimdata(($Swimdata));
-                print_r($this->getArrayStroke());
                 
 		$InserterActivity->insert();
 
@@ -177,7 +176,7 @@ class TrainingObject extends DataObject {
 			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
 			$InserterTrack->insert();
 		}
-                if ($this->hasArrayStroke()) {
+                if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
                     
                         $Swimdata->set(Runalyze\Model\Swim\Object::ACTIVITYID, $this->id());
                         $InserterSwim = new Runalyze\Model\Swim\Inserter(DB::getInstance(), $Swimdata);
@@ -213,10 +212,8 @@ class TrainingObject extends DataObject {
 	 */
 	protected function newSwimObject() {
 		return new Runalyze\Model\Swim\Object(array(
-                        Runalyze\Model\Swim\Object::SWIMTIME => $this->get('swimtime'),
 			Runalyze\Model\Swim\Object::STROKE => $this->get('stroke'),
-                        Runalyze\Model\Swim\Object::STROKETYPE => $this->get('stroketype'),
-                        Runalyze\Model\Swim\Object::SWIMCADENCE => $this->get('swimcadence')
+                        Runalyze\Model\Swim\Object::STROKETYPE => $this->get('stroketype')
 		));
                 
 	}
@@ -914,45 +911,6 @@ class TrainingObject extends DataObject {
 	 */
 	public function hasArrayStrokeType() { return strlen($this->get('stroketype')) > 0; }
         
-        
-	/**
-	 * Set array for swim cadence
-	 * @param array $data
-	 */
-	public function setArraySwimCadence(array $data) { $this->setArrayFor('swimcadence', $data); }
-        
-        /**
-	 * Get array for swim cadence
-	 * @return array
-	 */
-	public function getArraySwimCadence() { return $this->getArrayFor('swimcadence'); }
-        
-	/**
-	 * Has array for swim cadence?
-	 * @return bool
-	 */
-	public function hasArraySwimCadence() { return strlen($this->get('swimcadence')) > 0; }
-        
-        
-	/**
-	 * Set array for swim time
-	 * @param array $data
-	 */
-	public function setArraySwimTime(array $data) { $this->setArrayFor('swimtime', $data); }
-        
-        /**
-	 * Get array for swim time
-	 * @return array
-	 */
-	public function getArraySwimTime() { return $this->getArrayFor('swimtime'); }
-        
-	/**
-	 * Has array for swim time?
-	 * @return bool
-	 */
-	public function hasArraySwimTime() { return strlen($this->get('swimtime')) > 0; }
-        
-
 	/**
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.

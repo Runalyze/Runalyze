@@ -320,11 +320,9 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 
 CREATE TABLE IF NOT EXISTS `runalyze_swim` (
   `accountid` int(10) unsigned NOT NULL,
-  `swimtime` longtext,
   `activityid` int(10) unsigned NOT NULL,
   `stroke` longtext,
   `stroketype` longtext,
-  `swimcadence` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

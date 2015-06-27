@@ -27,12 +27,6 @@ class Object extends Model\Object implements Model\Loopable {
 	const ACTIVITYID = 'activityid';
         
 	/**
-	 * Key: time
-	 * @var string
-	 */
-	const SWIMTIME = 'swimtime';
-        
-	/**
 	 * Key: stroke
 	 * @var string
 	 */
@@ -45,11 +39,6 @@ class Object extends Model\Object implements Model\Loopable {
 	const STROKETYPE = 'stroketype';
         
         
-	/**
-	 * Key: swim cadence
-	 * @var string
-	 */
-	const SWIMCADENCE = 'swimcadence';
         
 	/**
 	 * Construct
@@ -65,11 +54,9 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	static public function allProperties() {
 		return array(
-                        self::SWIMTIME,
 			self::ACTIVITYID,
 			self::STROKE,
-			self::STROKETYPE,
-                        self::SWIMCADENCE
+			self::STROKETYPE
 		);
 	}
         
@@ -80,11 +67,9 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	protected function canBeNull($key) {
 		switch ($key) {
-                        case self::SWIMTIME:
                         case self::ACTIVITYID:
                         case self::STROKE:
                         case self::STROKETYPE:
-                        case self::SWIMCADENCE:
 				return true;
 		}
 		return false;
@@ -119,14 +104,6 @@ class Object extends Model\Object implements Model\Loopable {
 	}
    
 	/**
-	 * SWIMTIME
-	 * @return int
-	 */
-	public function swimtime() {
-		return $this->Data[self::SWIMTIME];
-	}  
-        
-	/**
 	 * STROKE
 	 * @return int
 	 */
@@ -142,13 +119,6 @@ class Object extends Model\Object implements Model\Loopable {
 		return $this->Data[self::STROKETYPE];
 	}
         
-	/**
-	 * SWIMCADENCE
-	 * @return int
-	 */
-	public function swimcadence() {
-		return $this->Data[self::SWIMCADENCE];
-	}
         
 	/**
 	 * Number of points

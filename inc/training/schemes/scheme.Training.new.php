@@ -634,24 +634,6 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'swimtime'	=> array(
-					'database'	=> array(
-						'type'		=> 'longtext',
-						'null'		=> 'true',
-					),
-					'formular'	=> array(
-						'hidden'	=> true
-					)
-	),
-	'swimcadence'	=> array(
-					'database'	=> array(
-						'type'		=> 'longtext',
-						'null'		=> 'true',
-					),
-					'formular'	=> array(
-						'hidden'	=> true
-					)
-	),
 	'stroke'	=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
