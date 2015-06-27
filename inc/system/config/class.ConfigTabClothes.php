@@ -14,14 +14,14 @@ class ConfigTabClothes extends ConfigTab {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key = 'config_tab_clothes';
-		$this->title = __('Equipment');
+		$this->title = __('Clothes');
 	}
 
 	/**
 	 * Set all fieldsets and fields
 	 */
 	public function setFieldsetsAndFields() {
-		$Clothes = new FormularFieldset(__('Your equipment'));
+		$Clothes = new FormularFieldset(__('Your clothes'));
 		$Clothes->setHtmlCode($this->getCode());
 		$Clothes->addInfo( __('Equipment can be entered for additional statistics.<br>'.
 							'Category and abbreviation are used to order and display them in the form for editing an activity.') );
