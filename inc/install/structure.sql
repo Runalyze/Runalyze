@@ -320,8 +320,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `input`  tinyint(1) NOT NULL DEFAULT '0',
-  `sportid` int(11) NOT NULL DEFAULT '0',
+  `input`  tinyint(1) NOT NULL DEFAULT '0'
   `max_km` decimal(6,2) NOT NULL DEFAULT '0.00',
   `max_time` int(11) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL
@@ -446,6 +445,17 @@ ALTER TABLE `runalyze_user`
  ADD PRIMARY KEY (`id`), ADD KEY `time` (`accountid`,`time`);
 
 --
+-- Indizes für die Tabelle `runalyze_equipment_type`
+--
+ALTER TABLE `runalyze_equipment`
+ ADD PRIMARY KEY (`id`), ADD KEY `time` (`accountid`,`time`);
+--
+-- Indizes für die Tabelle `runalyze_equipment_type`
+--
+ALTER TABLE `runalyze_equipment_type`
+ ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
 -- AUTO_INCREMENT für exportierte Tabellen
 --
 
@@ -508,4 +518,14 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT für Tabelle `runalyze_user`
 --
 ALTER TABLE `runalyze_user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `runalyze_equipment`
+--
+ALTER TABLE `runalyze_equipment`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `runalyze_equipment_type`
+--
+ALTER TABLE `runalyze_equipment_type`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

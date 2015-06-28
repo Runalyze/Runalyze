@@ -42,12 +42,40 @@ class ConfigTabEquipment extends ConfigTab {
 					<tr>
 						<th>'.__('Name').'</th>
 						<th>'.__('Typ').'</th>
-						<th>'.__('Default max. km').'</th>
-						<th>'.__('Default max. Time').'</th>
-                                                <th>'.__('Sports').'</th>    
+						<th>'.__('max. km').'</th>
+						<th>'.__('max. Time').'</th>
+                                                <th>'.__('Sports').'</th> 
+                                                <th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment type can only be deleted if no references (equipment) exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
+                $eqt   = EquipmentFactory::AllEquipmentTypes();
+		foreach ($eqt as $Data) {
+			$id     = $Data['id'];
+			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipmenttype[delete]['.$id.']">';
+
+			$Code .= '
+					<tr class="'.($delete == '' ? ' unimportant' : '').'">
+						<td><input type="text" size="30" name="equipmenttype[name]['.$id.']" value="'.$Data['name'].'"></td>
+                                             <td><select name="equipmenttype[input]['.$id.']" value="'.$Data['input'].'">
+                                             <option value="'.EquipmentFactory::TYPE_INPUT_SINGLE.'" '.HTML::Selected($Data['input'] == EquipmentFactory::TYPE_INPUT_SINGLE).'>Single choice</option>
+                                             <option value="'.EquipmentFactory::TYPE_INPUT_SINGLE.'" '.HTML::Selected($Data['input'] == EquipmentFactory::TYPE_INPUT_CHOICE).'>Multiple Choice</option>
+                                             </select></td>';
+
+                                                    
+			$Code .= '              <td><input type="text" size="3" name="equipmenttype[max_km]['.$id.']" value="'.$Data['max_km'].'"></td>
+                                                <td><input type="text" size="3" name="equipmenttype[max_time]['.$id.']" value="'.$Data['max_time'].'"></td>
+                                                <td><select name="type[sportid]['.$id.']">';
+                        $Sports = SportFactory::AllSports();
+			foreach ($Sports as $SData) {
+				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
+                        }
+
+			$Code .= '</select></td>
+						<td>'.$delete.'</td>
+					</tr>';
+		}
+                
                 $Code .= '
 				</tbody>
 			</table>';
@@ -64,12 +92,31 @@ class ConfigTabEquipment extends ConfigTab {
 						<th>'.__('prev. distance').'</th>
 						<th>'.__('Start of use').'</th>
                                                 <th>'.__('End of use').'</th>
+                                                <th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
+                $eq   = EquipmentFactory::AllEquipment();
+                
+		foreach ($eq as $Data) {
+			$id     = $Data['id'];
+			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipment[delete]['.$id.']">';
+
+			$Code .= '
+					<tr class="'.($delete == '' ? ' unimportant' : '').'">
+						<td><input type="text" size="30" name="equipment[name]['.$id.']" value="'.$Data['name'].'"></td>
+						<td><input type="text" size="15" name="equipment[distance]['.$id.']" value="'.$Data['distance'].'"></td>
+						<td><input type="text" size="4" name="equipment[time]['.$id.']" value="'.$Data['time'].'"></td>
+                                                <td><input type="text" size="4" name="equipment[notes]['.$id.']" value="'.$Data['notes'].'"></td>
+						<td>'.$delete.'</td>
+					</tr>';
+		}
+                
+                
                 $Code .= '
 				</tbody>
 			</table>';
+                
                 return $Code;
         }
 
