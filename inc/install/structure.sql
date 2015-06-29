@@ -320,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `input`  tinyint(1) NOT NULL DEFAULT '0'
+  `input`  tinyint(1) NOT NULL DEFAULT '0',
   `max_km` decimal(6,2) NOT NULL DEFAULT '0.00',
   `max_time` int(11) NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL

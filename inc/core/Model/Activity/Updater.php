@@ -103,7 +103,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function ignore($key) {
 		if ($key == Object::DISTANCE || $key == Object::TIME_IN_SECONDS) {
-			if ($this->OldObject == null && $this->NewObject->shoeID() > 0) {
+			if ($this->OldObject == null) {
 				throw new \RuntimeException('For an update of distance or duration the old object has to be set.');
 			}
 		}
@@ -246,30 +246,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-		if ($this->hasChanged(Object::SHOEID)) {
-			if ($this->knowsOldObject()) {
-				$this->PDO->exec(
-					'UPDATE `'.PREFIX.'shoe` SET
-						`km` = `km` - '.(float)$this->OldObject->distance().',
-						`time` = `time` - '.(int)$this->OldObject->duration().'
-					WHERE `id`="'.$this->OldObject->shoeID().'" LIMIT 1'
-				);
-			}
-
-			$this->PDO->exec(
-				'UPDATE `'.PREFIX.'shoe` SET
-					`km` = `km` + '.(float)$this->NewObject->distance().',
-					`time` = `time` + '.(int)$this->NewObject->duration().'
-				WHERE `id`="'.$this->NewObject->shoeID().'" LIMIT 1'
-			);
-		} elseif ($this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::TIME_IN_SECONDS)) {
-			$this->PDO->exec(
-				'UPDATE `'.PREFIX.'shoe` SET
-					`km` = `km` + ('.((float)$this->NewObject->distance() - (float)$this->OldObject->distance()).'),
-					`time` = `time` + ('.((int)$this->NewObject->duration() - (float)$this->OldObject->duration()).')
-				WHERE `id`="'.$this->NewObject->shoeID().'" LIMIT 1'
-			);
-		}
+            //TODO
 	}
 
 	/**

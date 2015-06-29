@@ -175,12 +175,7 @@ class ShoeFactory
 	 */
 	static public function getSearchLink($id)
 	{
-		$shoes = self::AllShoes();
-
-		if (!isset($shoes[$id]))
-			return '?';
-
-		return SearchLink::to('shoeid', $id, $shoes[$id]['name']);
+            //
 	}
 
 	/**

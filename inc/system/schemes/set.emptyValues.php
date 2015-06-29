@@ -9,7 +9,7 @@
  * @package Runalyze\System
  */
 $EmptyTables = array();
-$EmptyTables['clothes'] = array(
+/*$EmptyTables['clothes'] = array(
 	'columns' => array('name', 'short', 'order'),
 	'values'  => array(
 		array(__('long sleeve'), __('l-sleeve'), 1),
@@ -21,7 +21,7 @@ $EmptyTables['clothes'] = array(
 		array(__('gloves'), __('gloves'), 3),
 		array(__('hat'), __('hat'), 4)
 	)
-);
+);*/
 $EmptyTables['dataset'] = array(
 	'columns' => array('name', 'modus', 'class', 'style', 'position', 'summary', 'summary_mode'),
 	'values'  => array(
@@ -39,10 +39,9 @@ $EmptyTables['dataset'] = array(
 		array('temperature', 2, 'small', 'width:35px;', 2, 0, 'AVG'),
 		array('weatherid', 2, '', '', 1, 0, 'NO'),
 		array('routeid', 1, 'small l', '', 20, 0, 'NO'),
-		array('clothes', 1, 'small l', '', 17, 0, 'NO'),
+		array('equipment', 1, 'small l', '', 17, 0, 'NO'),
 		array('splits', 2, '', '', 12, 0, 'NO'),
 		array('comment', 2, 'small l', '', 13, 0, 'NO'),
-		array('shoeid', 1, 'small l', '', 18, 0, 'NO'),
 		array('vdot', 2, '', '', 15, 1, 'AVG'),
 		array('partner', 1, 'small', '', 19, 0, 'NO'),
 		array('abc', 1, '', '', 16, 0, 'NO'),
@@ -59,7 +58,7 @@ $EmptyTables['plugin'] = array(
 		array('RunalyzePluginPanel_Sports', 'panel', 1, 1),
 		array('RunalyzePluginPanel_Rechenspiele', 'panel', 1, 2),
 		array('RunalyzePluginPanel_Prognose', 'panel', 2, 3),
-		array('RunalyzePluginPanel_Schuhe', 'panel', 2, 4),
+		array('RunalyzePluginPanel_Equipment', 'panel', 2, 4),
 		array('RunalyzePluginPanel_Sportler', 'panel', 1, 5),
 		array('RunalyzePluginStat_Analyse', 'stat', 1, 2),
 		array('RunalyzePluginStat_Statistiken', 'stat',1, 1),

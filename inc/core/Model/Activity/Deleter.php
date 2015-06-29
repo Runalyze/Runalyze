@@ -75,14 +75,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-		if ($this->Object->shoeID() > 0) {
-			$this->PDO->exec(
-				'UPDATE `'.PREFIX.'shoe` SET
-					`km` = `km` - '.(float)$this->Object->distance().',
-					`time` = `time` - '.(int)$this->Object->duration().'
-				WHERE `id`="'.$this->Object->shoeID().'" LIMIT 1'
-			);
-		}
+            //TODO
 	}
 
 	/**

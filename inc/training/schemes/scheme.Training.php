@@ -43,7 +43,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vdot', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -57,7 +57,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'weather',
 		'legend'	=> __('Weather conditions'),
-		'fields'	=> array('weatherid', 'temperature', 'clothes'),
+		'fields'	=> array('weatherid', 'temperature'),
 		'conf'		=> 'WEATHER'
 	),
 	array(
@@ -390,19 +390,6 @@ $FIELDS = array(
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),
-	'clothes'			=> array(
-					'database'	=> array(
-						'type'		=> 'varchar',
-						'precision'	=> '100',
-						'default'	=> ''
-					),
-					'formular'	=> array(
-						'label'		=> __('Clothing'),
-						'class'		=> 'TrainingSelectClothes',
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS,
-						'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
-					)
-	),
 	'splits'			=> array(
 					'database'	=> array(
 						'type'		=> 'text',
@@ -445,18 +432,6 @@ $FIELDS = array(
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
 					)),
-	'shoeid'			=> array(
-					'database'	=> array(
-						'type'		=> 'int',
-						'precision'	=> '11',
-						'default'	=> '0'
-					),
-					'formular'	=> array(
-						'label'		=> __('Shoe'),
-						'class'		=> 'TrainingSelectShoe',
-						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
-					)
-	),
 	'notes'				=> array(
 					'database'	=> array(
 						'type'		=> 'text',

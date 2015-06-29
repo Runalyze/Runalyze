@@ -61,7 +61,7 @@ class EquipmentFactory {
 	 */
 	static public function AllEquipment() {
 		if (is_null(self::$AllEquipment))
-			self::initAllTypes();
+			self::initAllEquipment();
 
 		return self::$AllEquipment;
 	}
@@ -84,7 +84,7 @@ class EquipmentFactory {
 	static private function initAllEquipment() {
 		self::$AllEquipment = array();
 
-		$equipment = self::cacheAllEquipmentTypes();
+		$equipment = self::cacheAllEquipment();
 		foreach ($equipment as $data)
 			self::$AllEquipment[$data['id']] = $data;
 	}   
@@ -95,7 +95,7 @@ class EquipmentFactory {
 	static private function cacheAllEquipment() {
 		$equipment = Cache::get(self::CACHE_KEY_EQ);
 		if (is_null($equipment)) {
-			$equipment = DB::getInstance()->query('SELECT id, name, typeid, notes, distance, time, additional_km, date_start, date_end FROM `'.PREFIX.'equipment` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
+			$equipment = DB::getInstance()->query('SELECT id, name, typeid, notes, distance, time, additional_km, date_start, date_end FROM `'.PREFIX.'equipment` WHERE accountid = '.SessionAccountHandler::getId().' ORDER BY typeid ASC')->fetchAll();
 			Cache::set(self::CACHE_KEY_EQ, $equipment, '3600');
 		}
 		return $equipment;

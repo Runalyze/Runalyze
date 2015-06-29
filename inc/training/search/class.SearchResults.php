@@ -88,9 +88,8 @@ class SearchResults {
 		$this->allowedKeys = array(
 			'typeid',
 			'weatherid',
-			'shoeid',
-
-			'distance',
+			
+                        'distance',
 			's',
 			'pulse_avg',
 
@@ -120,6 +119,7 @@ class SearchResults {
 		$this->allowedKeys[] = 'is_track';
 		$this->allowedKeys[] = 'vdot';
 		$this->allowedKeys[] = 'notes';
+
 	}
 
 	/**
@@ -161,7 +161,7 @@ class SearchResults {
 
 		if (isset($_POST['sportid']))
 			$this->addSportCondition($conditions);
-
+                
 		if (isset($_POST['date-from']) && isset($_POST['date-to']))
 			$this->addTimeRangeCondition($conditions);
 
@@ -177,8 +177,6 @@ class SearchResults {
 	
 		$this->addConditionsForOrder($conditions);
 
-		if (isset($_POST['clothes']))
-			$this->addClothesCondition($conditions);
 
 		if (empty($conditions))
 			return 'WHERE 1';
@@ -280,17 +278,26 @@ class SearchResults {
 			$conditions[] = '`sportid`="'.(int)$_POST['sportid'].'"';
 		}
 	}
-
-	/**
-	 * Add clothes condition
-	 * @param array $conditions
+        
+ 	/**
+	 * Add equipment condition
 	 */
-	private function addClothesCondition(array &$conditions) {
-		if (!is_array($_POST['clothes']))
-			$_POST['clothes'] = array((int)$_POST['clothes']);
-
-		foreach ($_POST['clothes'] as $id)
-			$conditions[] = 'FIND_IN_SET('.(int)$id.',`clothes`)';
+        //TODO - Has to be a JOIN Condition with IN (
+	private function addEquipmentCondition() {
+		if (is_array($_POST['equipmentid'])) {
+			$array = array_map(
+				function ($value) {
+					return (int)$value;
+				},
+				$_POST['equipmentid']
+			);
+                                
+			//$conditions[] = '`id` IN('.implode(',', $array).')';
+                        return 'LEFT JOIN (SELECT ae.activityid FROM `'.PREFIX.'activity_equipment` ae WHERE ae.equipmentid IN('.implode(',', $array).'))  ON ae.activityid = `id`';
+		} else {
+			//$conditions[] = '`id`="'.(int)$_POST['sportid'].'"';
+		}
+               
 	}
 
 	/**

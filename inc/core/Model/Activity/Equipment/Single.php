@@ -1,15 +1,15 @@
 <?php
 /**
  * This file contains class::Single
- * @package Runalyze\Model\Activity\Clothes
+ * @package Runalyze\Model\Activity\Equipment
  */
 
-namespace Runalyze\Model\Activity\Clothes;
+namespace Runalyze\Model\Activity\Equipment;
 
 use Runalyze\Model;
 
 /**
- * Single clothes
+ * Single Equipment
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Activity\Clothes
@@ -21,17 +21,6 @@ class Single extends Model\ObjectWithID {
 	 */
 	const NAME = 'name';
 
-	/**
-	 * Short name
-	 * @var string
-	 */
-	const SHORT_NAME = 'short';
-
-	/**
-	 * Group order
-	 * @var string
-	 */
-	const GROUP_ORDER = 'order';
 
 	/**
 	 * All properties
@@ -39,9 +28,7 @@ class Single extends Model\ObjectWithID {
 	 */
 	static public function allProperties() {
 		return array(
-			self::NAME,
-			self::SHORT_NAME,
-			self::GROUP_ORDER
+			self::NAME
 		);
 	}
 

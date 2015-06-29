@@ -127,10 +127,9 @@ class SearchFormular extends Formular {
 	 */
 	protected function initConditions() {
 		$this->addConditionFieldWithChosen('typeid', 'type', 'name', __('Type'), __('Choose activity type(s)'));
-		$this->addConditionFieldWithChosen('shoeid', 'shoe', 'name', __('Shoe'), __('Choose shoe(s)'));
 		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
-		$this->addConditionFieldWithChosen('clothes', 'clothes', 'name', __('Clothing'), __('Choose clothing'));
-
+                $this->addConditionFieldWithChosen('equipmentid', 'equipment', 'name', __('Equipment'), __('Choose equipment'));
+                        
 		$this->addConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
 		$this->addConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
 		$this->addConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);

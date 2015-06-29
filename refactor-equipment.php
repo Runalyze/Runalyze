@@ -80,9 +80,7 @@ if (!$HasTableEq OR !$HasTableEqT OR !$HasTableEqS OR !$HasTableEqAE) {
 
 echo NL;
 
-/**
- * Refactor Shoe table to equipment
- */
+
     $HasColumnAccount = $PDO->query('SHOW COLUMNS FROM `'.PREFIX.'account` LIKE "refactored"')->fetch();
     if(!$HasColumnAccount) {
         $PDO->exec('ALTER TABLE `'.PREFIX.'account` ADD `refactored` TINYINT NOT NULL AFTER `id`');
@@ -92,63 +90,101 @@ echo NL;
 
 $count = $PDO->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `refactored`=1')->fetchColumn();
 if ($count < $countAccount) {
+    
     $accounts = $PDO->query('SELECT `id` FROM `'.PREFIX.'account` WHERE `refactored`=0 LIMIT '.LIMIT);
     print_r($accounts);
     while ($Row = $accounts->fetch()) {
-        $InsertShoeinType = $PDO->prepare('INSERT INTO runalyze_equipment_type (`name`, `input`, `max_km`, `accountid`) VALUES (:name, 0, 1000, :accountid)');
+        /* Refactor shoe table to equipment */
+        $InsertShoeinType = $PDO->prepare('INSERT INTO '.PREFIX.'equipment_type (`name`, `input`, `max_km`, `accountid`) VALUES (:name, 0, 1000, :accountid)');
         $InsertShoeinType->execute(array(
             ':name' => 'Schuhe',
             ':accountid' => $Row['id']
         ));
         $ShoeTypeId = $PDO->lastInsertId();
         
-    $shoetable = $PDO->query('SELECT `id`, `name`, `since`, `weight`, `km`, `time`, `additionalKm`, `inuse`  FROM `'.PREFIX.'shoe` WHERE `accountid`='.$Row['id']);    
+    $shoetable = $PDO->query('SELECT `id`, `name`, `since`, `weight`, `km`, `time`, `additionalKm`, `inuse`  FROM `'.PREFIX.'shoe` WHERE `accountid`='.$Row['id']); 
+    $shoeMap = array();
     while ($shoe = $shoetable->fetch()) {    
-        $InsertShoeinEqp = $PDO->prepare('INSERT INTO runalyze_equipment_type (`name`, `input`, `max_km`, `accountid`) VALUES (:name, 0, 1000, :accountid)');
+        $InsertShoeinEqp = $PDO->prepare('INSERT INTO '.PREFIX.'equipment (`name`, `typeid`, `accountid`, `notes`, `distance`, `time`, `additional_km`, `date_start`,`date_end`) VALUES (:name, :typeid, :accountid, :notes, :distance, :time, :additional_km, :date_start, :date_end)');
         $InsertShoeinEqp->execute(array(
             ':name' => $shoe['name'],
             ':typeid' => $ShoeTypeId,
             ':accountid' => $Row['id'],
-            ':notes' => $Row['weight'],
-            ':distance' => $Row['km'],
-            ':time' => $Row['time'],
-            ':additional_km' => $Row['additionalKm'],  
-            ':date_start' => $Row['since'],
-            ':date_end' => $Row
-        ));     
+            ':notes' => $shoe['weight'],
+            ':distance' => $shoe['km'],
+            ':time' => $shoe['time'],
+            ':additional_km' => $shoe['additionalKm'],  
+            ':date_start' => $shoe['since'],
+            ':date_end' => ''
+        ));    
+        $shoeMap[$shoe['id']] = $PDO->lastInsertId(); 
+    } 
+    /* Refactor clothes table to equipment */
+        $InsertClothesinType = $PDO->prepare('INSERT INTO '.PREFIX.'equipment_type (`name`, `input`, `accountid`) VALUES (:name, 1, :accountid)');
+        $InsertClothesinType->execute(array(
+            ':name' => 'Clothes',
+            ':accountid' => $Row['id']
+        ));
+        $ClothesTypeId = $PDO->lastInsertId();
+    
+    /* link every sport to every type id */
+    $userSport = $PDO->query('SELECT `id` FROM  `'.PREFIX.'sport` WHERE `accountid`='.$Row['id']);
+        while ($sport = $userSport->fetch()) {  
+        $InsertSport = $PDO->prepare('INSERT INTO '.PREFIX.'equipment_sport (`sportid`, `equipment_typeid`) VALUES (:sportid, :typeid)');
+        $InsertSport->execute(array(
+            ':sportid' => $sport['id'],
+            ':typeid' => $ShoeTypeId
+        ));    
+                $InsertSport->execute(array(
+            ':sportid' => $sport['id'],
+            ':typeid' => $ClothesTypeId
+        ));       
+            
+        } 
+        
+    $clothestable = $PDO->query('SELECT `id`, `name`, `accountid` FROM `'.PREFIX.'clothes` WHERE `accountid`='.$Row['id']);  
+    $clothesMap = array();
+    while ($clothes = $clothestable->fetch()) {    
+        $InsertClotheinEqp = $PDO->prepare('INSERT INTO '.PREFIX.'equipment (`name`, `typeid`, `accountid`) VALUES (:name, :typeid, :accountid)');
+        $InsertClotheinEqp->execute(array(
+            ':name' => $clothes['name'],
+            ':typeid' => $ClothesTypeId,
+            ':accountid' => $Row['id']
+        )); 
+       $clothesMap[$clothes['id']] = $PDO->lastInsertId(); 
         
     }
-    
-    
-    
-    /*
-    $HasTableShoe = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"');
-    if($HasTableShoe) {
-        $HasColumnShoe = $PDO->query('SHOW COLUMNS FROM `'.PREFIX.'shoe` LIKE "refactored"')->fetch();
-        if(!$HasColumnShoe) {
-           $PDO->exec('ALTER TABLE `'.PREFIX.'shoe` ADD `refactored` TINYINT NOT NULL AFTER `id`');
-           echo 'Added column \'refactored\' to table shoe.'.NL;
+    print_r($clothesMap);
+    /* Refactor training table to equipment */
+    $trainings = $PDO->query('SELECT `id`, `clothes`, `shoeid` FROM `'.PREFIX.'training` WHERE `accountid`='.$Row['id']);    
+    while ($training = $trainings->fetch()) { 
+        $InsertEquipActivity = $PDO->prepare('INSERT INTO '.PREFIX.'activity_equipment (`activityid`, `equipmentid`) VALUES (:activityid, :equipmentid)');
+        if($training['shoeid'] != 0) {
+            $InsertEquipActivity->execute(array(
+                ':activityid' => $training['id'],
+                ':equipmentid' => $shoeMap[$training['shoeid']]
+            )); 
         }
-
-        $count = $PDO->query('SELECT COUNT(*) FROM `'.PREFIX.'shoe` WHERE `refactored`=1')->fetchColumn();
-
-
-    }*/
-
-    /**
-     * Refactor Clothes table to equipment
-     */
-    /*$HasTableClothes = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'clothes"');
-
-    if($HasTableClothes) {
-        $HasColumnShoe = $PDO->query('SHOW COLUMNS FROM `'.PREFIX.'clothes` LIKE "refactored"')->fetch();
-        if(!$HasColumnShoe) {
-           $PDO->exec('ALTER TABLE `'.PREFIX.'clothes` ADD `refactored` TINYINT NOT NULL AFTER `id`');
-           echo 'Added column \'refactored\' to table shoe.'.NL;
+        if(!empty($training['clothes'])) {
+            if(strpos($training['clothes'], ',')) {
+                $clothes = explode(',', $training['clothes']);
+            } else {
+                $clothes[] = $training['clothes'];
+            }
+               //  print_r($clothes);
+            foreach($clothes as $clot) {
+                $InsertEquipActivity->execute(array(
+                ':activityid' => $training['id'],
+                ':equipmentid' => $clothesMap[trim($clot)]
+            )); 
+                echo $training['id'].'and'.$clothesMap[trim($clot)];echo NL;
+            }
         }
-    }*/
-
-
+    }
+    
+    $PDO->query('UPDATE `'.PREFIX.'account` SET `refactored` = 1 WHERE `id`='.$Row['id']);
+    }
+    
 }
 
 
@@ -156,8 +192,8 @@ if ($count < $countAccount) {
 echo 'Table '.PREFIX.'training has column \'refactored\'.'.NL;
 echo ' - refactored: '.$count.'/'.$tables[PREFIX.'training'].NL;
 echo NL;
-
-if ($count < $tables[PREFIX.'training']) {
+*/
+if ($count < $countAccount) {
 
 
 	echo 'done;'.NL;
@@ -174,17 +210,20 @@ if ($count < $tables[PREFIX.'training']) {
 }
 
 
-if ($count + LIMIT >= $tables[PREFIX.'training']) {
+if ($count + LIMIT >= $countAccount) {
 	echo 'You are done. All rows are refactored.'.NL;
 
 	$PDO->exec('DROP TABLE IF EXISTS `'.PREFIX.'shoe`, `'.PREFIX.'clothes`');
 	echo 'All unused tables (shoe, clothe) have been dropped.'.NL;
-
+        
+        $PDO->exec('ALTER TABLE `'.PREFIX.'training` DROP `shoeid` DROP `clothes`');
+        echo 'All unused columns from training (shoeid, clothes) have been dropped.'.NL;
+        
 	echo NL;
 	echo 'Remember to unset your credentials within this file.'.NL;
 	echo '(Or simply delete this file if you are not working on our git repository)'.NL;
 }
-*/
+
 function notNull($value) {
 	if (is_null($value))
 		return '';

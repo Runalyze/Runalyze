@@ -500,9 +500,6 @@ class Dataset {
 
 				return '';
 
-			case 'clothes':
-				return $this->cut( $this->Dataview->clothes() );
-
 			case 'splits':
 				if (!$this->Activity->splits()->isEmpty()) {
 					if (
@@ -527,12 +524,6 @@ class Dataset {
 			case 'abc':
 				return $this->Dataview->abcIcon();
 
-			case 'shoeid':
-				if ($this->Activity->shoeID() > 0) {
-					return ShoeFactory::NameOf($this->Activity->shoeID());
-				}
-
-				return '';
 
 			case 'vdoticon':
 				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {

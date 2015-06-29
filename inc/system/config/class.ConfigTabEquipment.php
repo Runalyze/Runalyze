@@ -50,12 +50,13 @@ class ConfigTabEquipment extends ConfigTab {
 				</thead>
 				<tbody>';
                 $eqt   = EquipmentFactory::AllEquipmentTypes();
+                $eqt[] =  array('id' => -1, 'new' => true, 'name' => '', 'input' => '0', 'max_km' => '1000', 'max_time' => '0');  
 		foreach ($eqt as $Data) {
 			$id     = $Data['id'];
 			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipmenttype[delete]['.$id.']">';
 
 			$Code .= '
-					<tr class="'.($delete == '' ? ' unimportant' : '').'">
+					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
 						<td><input type="text" size="30" name="equipmenttype[name]['.$id.']" value="'.$Data['name'].'"></td>
                                              <td><select name="equipmenttype[input]['.$id.']" value="'.$Data['input'].'">
                                              <option value="'.EquipmentFactory::TYPE_INPUT_SINGLE.'" '.HTML::Selected($Data['input'] == EquipmentFactory::TYPE_INPUT_SINGLE).'>Single choice</option>
@@ -88,25 +89,32 @@ class ConfigTabEquipment extends ConfigTab {
 				<thead>
 					<tr>
 						<th>'.__('Name').'</th>
-						<th>'.__('Equipment Type').'</th>
+						<th>'.__('Type').'</th>
 						<th>'.__('prev. distance').'</th>
 						<th>'.__('Start of use').'</th>
                                                 <th>'.__('End of use').'</th>
+                                                <th>'.__('Notes').'</th>   
                                                 <th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment can only be deleted if no references exist.')).'</th>
 					</tr>
 				</thead>
 				<tbody>';
                 $eq   = EquipmentFactory::AllEquipment();
-                
+                $eq[] =  array('id' => -1, 'new' => true, 'name' => '', 'typeid' => '0', 'notes' => '', 'additional_km' => '0', 'date_start' => '', 'date_end' => '');  
+                $eqt   = EquipmentFactory::AllEquipmentTypes();
 		foreach ($eq as $Data) {
 			$id     = $Data['id'];
 			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipment[delete]['.$id.']">';
 
 			$Code .= '
-					<tr class="'.($delete == '' ? ' unimportant' : '').'">
+					<tr class="'.(isset($Data['new']) ? ' unimportant' : '').'">
 						<td><input type="text" size="30" name="equipment[name]['.$id.']" value="'.$Data['name'].'"></td>
-						<td><input type="text" size="15" name="equipment[distance]['.$id.']" value="'.$Data['distance'].'"></td>
-						<td><input type="text" size="4" name="equipment[time]['.$id.']" value="'.$Data['time'].'"></td>
+						<td><select name="equipment[typeid]['.$id.']">';
+                        foreach ($eqt as $type) {
+				$Code .= '<option value="'.$type['id'].'"'.HTML::Selected($type['id'] == $Data['typeid']).'>'.$type['name'].'</option>';
+                        }
+			$Code .=		'</select></td><td><input type="text" size="4" name="equipment[additional_km]['.$id.']" value="'.$Data['additional_km'].'"></td>
+                                                <td><input type="text" class="pick-a-date small-size has-a-datepicker" size="4" name="equipment[date_start]['.$id.']" value="'.$Data['date_start'].'"></td>
+                                                <td><input type="text" size="4" name="equipment[date_end]['.$id.']" value="'.$Data['date_end'].'"></td>
                                                 <td><input type="text" size="4" name="equipment[notes]['.$id.']" value="'.$Data['notes'].'"></td>
 						<td>'.$delete.'</td>
 					</tr>';

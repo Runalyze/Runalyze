@@ -309,28 +309,6 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * Shoe object
-	 * @return \Shoe
-	 */
-	public function Shoe() {
-		if (is_null($this->Shoe))
-			$this->Shoe = new Shoe($this->get('shoeid'));
-
-		return $this->Shoe;
-	}
-
-	/**
-	 * Clothes object
-	 * @return \Clothes
-	 */
-	public function Clothes() {
-		if (is_null($this->Clothes))
-			$this->Clothes = new Clothes($this->get('clothes'));
-
-		return $this->Clothes;
-	}
-
-	/**
 	 * Weather object
 	 * @return \Runalyze\Data\Weather
 	 */

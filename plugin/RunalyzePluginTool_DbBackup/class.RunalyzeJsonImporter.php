@@ -93,7 +93,6 @@ class RunalyzeJsonImporter {
 		$Requests = array(
 			'delete_trainings'	=> array('training', 'route', 'trackdata'),
 			'delete_user_data'	=> array('user'),
-			'delete_shoes'		=> array('shoe')
 		);
 
 		foreach ($Requests as $key => $tables) {
@@ -120,8 +119,6 @@ class RunalyzeJsonImporter {
 		Configuration::loadAll();
 
 		$Tables = array(
-			'clothes'	=> 'name',
-			'shoe'		=> 'name',
 			'sport'		=> 'name',
 			'type'		=> 'name',
 			'plugin'	=> 'key'
@@ -158,8 +155,6 @@ class RunalyzeJsonImporter {
 	private function readTable($TableName) {
 		$TableSettings = array(
 			'import'	=> array(
-				'runalyze_clothes',
-				'runalyze_shoe',
 				'runalyze_sport',
 				'runalyze_type',
 				'runalyze_user',
@@ -349,10 +344,8 @@ class RunalyzeJsonImporter {
 	 * @param array $Training
 	 */
 	private function correctTraining(array &$Training) {
-		$Training['clothes'] = $this->correctClothes($Training['clothes']);
 		$Training['sportid'] = $this->correctID('runalyze_sport', $Training['sportid']);
 		$Training['typeid']  = $this->correctID('runalyze_type', $Training['typeid']);
-		$Training['shoeid']  = $this->correctID('runalyze_shoe', $Training['shoeid']);
 		$Training['routeid'] = $this->correctID('runalyze_route', $Training['routeid']);
 	}
 
@@ -367,27 +360,6 @@ class RunalyzeJsonImporter {
 			return $this->ReplaceIDs[$Table][$ID];
 
 		return 0;
-	}
-
-	/**
-	 * Correct string of clothes
-	 * @param string $String
-	 * @return string
-	 */
-	private function correctClothes($String) {
-		if (!isset($this->ReplaceIDs['runalyze_clothes']) || empty($String))
-			return $String;
-
-		$IDs = explode(',', $String);
-
-		if (!is_array($IDs))
-			return $String;
-
-		foreach ($IDs as $i => $ID)
-			if ((int)$ID > 0 && isset($this->ReplaceIDs['runalyze_clothes'][$ID]))
-				$IDs[$i] = $this->ReplaceIDs['runalyze_clothes'][$ID];
-
-		return implode(',', $IDs);
 	}
 
 	/**
