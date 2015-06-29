@@ -163,7 +163,7 @@ class PaceSmoother {
 		if ($this->KeepArraySize && isset($i) && $i % $this->StepSize != 0) {
 			$pace = $dist - $lastDist > 0 ? round(($time[$i] - $lastTime)/($dist - $lastDist)) : 0;
 
-			for ($j = 0; $j < $i % $this->StepSize; ++$j) {
+			for ($j = 0; $j - 1 < $i % $this->StepSize; ++$j) {
 				$this->Smoothed[] = $pace;
 			}
 		}

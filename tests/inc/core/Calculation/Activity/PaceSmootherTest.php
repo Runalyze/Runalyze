@@ -27,7 +27,7 @@ class PaceSmootherTest extends \PHPUnit_Framework_TestCase {
 		)), true);
 
 		$this->assertEquals(array(
-			8, 8, 4, 4, 3, 3, 15, 15, 6
+			8, 8, 4, 4, 3, 3, 15, 15, 6, 6
 		), $Smoother->smooth(2, PaceSmoother::MODE_STEP));
 	}
 

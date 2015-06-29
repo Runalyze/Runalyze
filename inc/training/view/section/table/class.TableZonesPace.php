@@ -5,8 +5,10 @@
  */
 
 use Runalyze\Activity\Pace;
-use Runalyze\Calculation\Distribution\TimeSeries;
+use Runalyze\Activity\HeartRate;
+use Runalyze\Calculation\Distribution\TimeSeriesForTrackdata;
 use Runalyze\Calculation\Activity\PaceSmoother;
+use Runalyze\Model\Trackdata;
 
 /**
  * Display pace zones
@@ -30,7 +32,7 @@ class TableZonesPace extends TableZonesAbstract {
 	 * Get title for average
 	 * @return string
 	 */
-	public function titleForAverage() { return __('&oslash;&nbsp;Pace'); }
+	public function titleForAverage() { return '&oslash;&nbsp;'.__('HR'); }
 
 	/**
 	 * Init data
@@ -40,16 +42,19 @@ class TableZonesPace extends TableZonesAbstract {
 
 		$Zones = $this->computeZones();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
+		$Pace = new Pace(0, 1, $this->paceUnit);
+		$HR = new HeartRate(0, Runalyze\Context::Athlete());
 
 		foreach ($Zones as $paceInSeconds => $Info) {
 			if ($Info['time'] > parent::MINIMUM_TIME_IN_ZONE) {
-				$Pace = new Pace($paceInSeconds, 1, $this->paceUnit);
+				$Pace->setTime($paceInSeconds);
+				$HR->setBPM($Info['time'] > 0 ? $Info['hr'] / $Info['time'] : 0);
 
 				$this->Data[] = array(
 					'zone'     => $paceInSeconds == 0 ? __('faster') : '&gt; '.$Pace->valueWithAppendix(),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => $Info['hf-sum'] > 0 ? round(100*$Info['hf-sum']/$hrMax/$Info['num']).'&nbsp;&#37;' : '-'
+					'average'  => $HR->string()
 				);
 			}
 		}
@@ -62,14 +67,18 @@ class TableZonesPace extends TableZonesAbstract {
 		// TODO
 		// - move this a calculation class
 		// - make zones configurable
-		// - calculate distance / average hr of zone
 		$Zones = array();
-		$Smoother = new PaceSmoother($this->Context->trackdata(), true);
+		$SmoothTrackdata = clone $this->Context->trackdata();
+		$Smoother = new PaceSmoother($SmoothTrackdata, true);
+		$SmoothTrackdata->set(Trackdata\Object::PACE, $Smoother->smooth(self::STEP_SIZE, PaceSmoother::MODE_STEP));
 
-		$Distribution = new TimeSeries(
-			$Smoother->smooth(self::STEP_SIZE, PaceSmoother::MODE_STEP),
-			$this->Context->trackdata()->time()
+		$Distribution = new TimeSeriesForTrackdata(
+			$SmoothTrackdata,
+			Trackdata\Object::PACE,
+			array(Trackdata\Object::DISTANCE),
+			array(Trackdata\Object::HEARTRATE)
 		);
+		$Data = $Distribution->data();
 
 		foreach ($Distribution->histogram() as $paceInSeconds => $seconds) {
 			$pace = $this->zoneFor($paceInSeconds);
@@ -77,12 +86,13 @@ class TableZonesPace extends TableZonesAbstract {
 			if (!isset($Zones[$pace])) {
 				$Zones[$pace] = array(
 					'time' => $seconds,
-					'distance' => 0,
-					'hf-sum' => 0,
-					'num' => 0
+					'distance' => $Data[$paceInSeconds][Trackdata\Object::DISTANCE],
+					'hr' => $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds,
 				);
 			} else {
 				$Zones[$pace]['time'] += $seconds;
+				$Zones[$pace]['distance'] += $Data[$paceInSeconds][Trackdata\Object::DISTANCE];
+				$Zones[$pace]['hr'] += $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds;
 			}
 		}
 

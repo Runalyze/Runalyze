@@ -55,7 +55,7 @@ abstract class TableZonesAbstract {
 	 * Show average?
 	 * @return bool
 	 */
-	private function showAverage() { return $this->titleForAverage() == ''; }
+	private function showAverage() { return $this->titleForAverage() != ''; }
 
 	/**
 	 * Init data
