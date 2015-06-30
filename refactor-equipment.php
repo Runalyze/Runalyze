@@ -96,6 +96,7 @@ if ($count < $countAccount) {
     while ($Row = $accounts->fetch()) {
         /* Refactor shoe table to equipment */
         $InsertShoeinType = $PDO->prepare('INSERT INTO '.PREFIX.'equipment_type (`name`, `input`, `max_km`, `accountid`) VALUES (:name, 0, 1000, :accountid)');
+        //TODO - Check language of user (or timestamp lastlogin < as publication of multilanguage (2.0)
         $InsertShoeinType->execute(array(
             ':name' => 'Schuhe',
             ':accountid' => $Row['id']
@@ -120,6 +121,7 @@ if ($count < $countAccount) {
         $shoeMap[$shoe['id']] = $PDO->lastInsertId(); 
     } 
     /* Refactor clothes table to equipment */
+    //TODO - Check language of user (or timestamp lastlogin < as publication of multilanguage (2.0)
         $InsertClothesinType = $PDO->prepare('INSERT INTO '.PREFIX.'equipment_type (`name`, `input`, `accountid`) VALUES (:name, 1, :accountid)');
         $InsertClothesinType->execute(array(
             ':name' => 'Clothes',
@@ -145,6 +147,7 @@ if ($count < $countAccount) {
     $clothestable = $PDO->query('SELECT `id`, `name`, `accountid` FROM `'.PREFIX.'clothes` WHERE `accountid`='.$Row['id']);  
     $clothesMap = array();
     while ($clothes = $clothestable->fetch()) {    
+        
         $InsertClotheinEqp = $PDO->prepare('INSERT INTO '.PREFIX.'equipment (`name`, `typeid`, `accountid`) VALUES (:name, :typeid, :accountid)');
         $InsertClotheinEqp->execute(array(
             ':name' => $clothes['name'],
@@ -154,7 +157,6 @@ if ($count < $countAccount) {
        $clothesMap[$clothes['id']] = $PDO->lastInsertId(); 
         
     }
-    print_r($clothesMap);
     /* Refactor training table to equipment */
     $trainings = $PDO->query('SELECT `id`, `clothes`, `shoeid` FROM `'.PREFIX.'training` WHERE `accountid`='.$Row['id']);    
     while ($training = $trainings->fetch()) { 
@@ -171,7 +173,6 @@ if ($count < $countAccount) {
             } else {
                 $clothes[] = $training['clothes'];
             }
-               //  print_r($clothes);
             foreach($clothes as $clot) {
                 $InsertEquipActivity->execute(array(
                 ':activityid' => $training['id'],
@@ -218,6 +219,17 @@ if ($count + LIMIT >= $countAccount) {
         
         $PDO->exec('ALTER TABLE `'.PREFIX.'training` DROP `shoeid` DROP `clothes`');
         echo 'All unused columns from training (shoeid, clothes) have been dropped.'.NL;
+        
+        
+        // Recalculate all distance and time data of all usersq
+        $PDO->exec('UPDATE runalyze_equipment 
+                        CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` 
+                            FROM runalyze_equipment eqp 
+                                LEFT JOIN runalyze_activity_equipment aeqp ON eqp.id = aeqp.equipmentid 
+                                LEFT JOIN runalyze_training tr ON aeqp.activityid = tr.id GROUP BY eqp.id) 
+                    AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
+
+        
         
 	echo NL;
 	echo 'Remember to unset your credentials within this file.'.NL;

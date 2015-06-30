@@ -1,4 +1,4 @@
---
+V--
 -- Tabellenstruktur für Tabelle `runalyze_equipment_type`
 --
 
@@ -66,7 +66,6 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `runalyze_equipment_type`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 
 
 DELETE FROM runalyze_plugin WHERE `key` = 'RunalyzePluginPanel_Schuhe';

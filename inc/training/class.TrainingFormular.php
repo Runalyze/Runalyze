@@ -65,14 +65,17 @@ class TrainingFormular extends StandardFormular {
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
 			$this->addOldObjectData();
 			$this->initElevationCorrectionFieldset();
-			$this->initDeleteFieldset();
-
-			if (Request::param('mode') == 'multi') {
+                        
+        		if (Request::param('mode') == 'multi') {
 				$this->addHiddenValue('mode', 'multi');
 				$this->submitButtons['submit'] = __('Save and continue');
 			}
 		}
-
+                $this->initEquipmentFieldset();
+                if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
+                    $this->initDeleteFieldset();
+                }
+                
 		$this->appendJavaScript();
 	}
 
@@ -117,6 +120,15 @@ class TrainingFormular extends StandardFormular {
 
 		$this->addFieldset($Fieldset);
 	}
+        
+        /**
+	 * Display fieldset: Equipment
+	 */
+	protected function initEquipmentFieldset() {
+            $Fieldset = new FormularFieldset( __('Equipment') );
+            $this->addFieldset($Fieldset);
+
+        }
 
 	/**
 	 * Init fieldset for correct elevation

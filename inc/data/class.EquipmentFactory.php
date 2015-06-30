@@ -45,10 +45,19 @@ class EquipmentFactory {
 	static private $AllEquipment = null;
 
 	/**
+	 * Number of equipment
+	 * @return int
+	 */
+	static public function numberOfEquipment()
+	{
+		return count(self::AllEquipment());
+	}
+        
+	/**
 	 * Get all equipment types/categories
 	 * @return array
 	 */
-	static public function AllEquipmentTypes() {
+	static public function AllTypes() {
 		if (is_null(self::$AllTypes))
 			self::initAllTypes();
 
@@ -73,7 +82,7 @@ class EquipmentFactory {
 	static private function initAllTypes() {
 		self::$AllTypes = array();
                  
-		$eqtypes = self::cacheAllEquipmentTypes();
+		$eqtypes = self::cacheAllTypes();
 		foreach ($eqtypes as $data)
 			self::$AllTypes[$data['id']] = $data;
 	}   
@@ -87,7 +96,23 @@ class EquipmentFactory {
 		$equipment = self::cacheAllEquipment();
 		foreach ($equipment as $data)
 			self::$AllEquipment[$data['id']] = $data;
-	}   
+	}
+        
+        /**
+	 * Reinit all equipment
+	 */
+	static public function reInitAllEquipment() {
+		Cache::delete(self::CACHE_KEY_EQ);
+		self::initAllEquipment();
+	}
+        
+       /**
+	 * Reinit all equipment
+	 */
+	static public function reInitAllTypes() {
+		Cache::delete(self::CACHE_KEY_EQT);
+		self::initAllTypes();
+	}
         
 	/**
 	 * Cache equipment type
@@ -104,7 +129,7 @@ class EquipmentFactory {
 	/**
 	 * Cache Clothes
 	 */
-	static private function cacheAllEquipmentTypes() {
+	static private function cacheAllTypes() {
 		$equipmenttype = Cache::get(self::CACHE_KEY_EQT);
 		if (is_null($equipmenttype)) {
 			$equipmenttype = DB::getInstance()->query('SELECT id, name, input, max_km, max_time FROM `'.PREFIX.'equipment_type` WHERE accountid = '.SessionAccountHandler::getId())->fetchAll();
@@ -112,4 +137,44 @@ class EquipmentFactory {
 		}
 		return $equipmenttype;
 	}
+
+	/**
+	 * Clear internal array
+	 */
+	static private function clearAllEquipment()
+	{
+		self::$AllEquipment = null;
+	}   
+        
+	/**
+	 * Clear internal array
+	 */
+	static private function clearAllEquipmentType()
+	{
+		self::$AllEquipment = null;
+	}  
+        
+	/**
+	 * Recalculate all equipment
+	 *
+	 * Be sure that a complete recalculation is really needed.
+	 * This task may take very long.
+	 */
+	static public function recalculateAllEquipment()
+	{
+		$Statement = DB::getInstance()->query('UPDATE runalyze_equipment CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` FROM runalyze_equipment eqp LEFT JOIN runalyze_activity_equipment aeqp ON eqp.id = aeqp.equipmentid LEFT JOIN runalyze_training tr ON aeqp.activityid = tr.id WHERE eqp.accountid = '.SessionAccountHandler::getId().' GROUP BY eqp.id) AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
+
+		self::clearAllEquipment();
+		Cache::delete(self::CACHE_KEY_EQ);
+	}
+        
+	/**
+	 * Get search-link for one ID
+	 * @param int $id
+	 * @return string
+	 */
+	static public function getSearchLinkForSingleEquipment($id) {
+		return SearchLink::to('equipment', $id, self::NameFor($id));
+	}
+        
 }

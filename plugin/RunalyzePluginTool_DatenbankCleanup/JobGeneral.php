@@ -22,10 +22,10 @@ class JobGeneral extends Job {
 	const INTERNALS = 'internals';
 
 	/**
-	 * Task key: shoe statistics
+	 * Task key: equipment statistics
 	 * @var string
 	 */
-	const SHOES = 'shoes';
+	const EQUIPMENT = 'equipment';
 
 	/**
 	 * Task key: vdot shape
@@ -59,8 +59,8 @@ class JobGeneral extends Job {
 			$this->recalculateInternalConstants();
 		}
 
-		if ($this->isRequested(self::SHOES)) {
-			$this->recalculateShoeStatistics();
+		if ($this->isRequested(self::EQUIPMENT)) {
+			$this->recalculateEquipmentStatistics();
 		}
 
 		if ($this->isRequested(self::VDOT_CORRECTOR)) {
@@ -91,13 +91,13 @@ class JobGeneral extends Job {
 	}
 
 	/**
-	 * Recalculate shoe statistics
+	 * Recalculate equipment statistics
 	 */
-	protected function recalculateShoeStatistics() {
-		$num = \ShoeFactory::numberOfShoes();
-		\ShoeFactory::recalculateAllShoes();
+	protected function recalculateEquipmentStatistics() {
+		$num = \EquipmentFactory::numberOfEquipment();
+		\EquipmentFactory::recalculateAllEquipment();
 
-		$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), $num ) );
+		$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> equipment.'), $num ) );
 	}
 
 	/**

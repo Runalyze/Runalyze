@@ -32,7 +32,7 @@ if (!($this instanceof RunalyzePluginTool_DatenbankCleanup)) {
 				</div>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" name="shoes">
+						<input type="checkbox" name="equipment">
 						<?php _e('Recalculate your equipment statistics'); ?>
 					</label>
 				</div>

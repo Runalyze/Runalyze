@@ -77,9 +77,10 @@ class Form extends StandardFormular {
 	 */
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
-
+$this->initEquipmentFieldset();
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
 			$this->initGPSFieldset();
+                        
 			$this->initDeleteFieldset();
 
 			if (Request::param('mode') == 'multi') {
@@ -110,7 +111,15 @@ class Form extends StandardFormular {
 			}
 		}
 	}
-
+        
+        /**
+	 * Display fieldset: Equipment
+	 */
+	protected function initEquipmentFieldset() {
+            $Fieldset = new FormularFieldset( __('Equipment') );
+            $this->addFieldset($Fieldset);
+        }
+        
 	/**
 	 * Display fieldset: Delete training 
 	 */

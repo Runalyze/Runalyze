@@ -49,7 +49,7 @@ class ConfigTabEquipment extends ConfigTab {
 					</tr>
 				</thead>
 				<tbody>';
-                $eqt   = EquipmentFactory::AllEquipmentTypes();
+                $eqt   = EquipmentFactory::AllTypes();
                 $eqt[] =  array('id' => -1, 'new' => true, 'name' => '', 'input' => '0', 'max_km' => '1000', 'max_time' => '0');  
 		foreach ($eqt as $Data) {
 			$id     = $Data['id'];
@@ -79,7 +79,7 @@ class ConfigTabEquipment extends ConfigTab {
                 
                 $Code .= '
 				</tbody>
-			</table>';
+			</table><input type="submit" name="submit" value="Save">';
                 return $Code;
         }
         
@@ -100,7 +100,7 @@ class ConfigTabEquipment extends ConfigTab {
 				<tbody>';
                 $eq   = EquipmentFactory::AllEquipment();
                 $eq[] =  array('id' => -1, 'new' => true, 'name' => '', 'typeid' => '0', 'notes' => '', 'additional_km' => '0', 'date_start' => '', 'date_end' => '');  
-                $eqt   = EquipmentFactory::AllEquipmentTypes();
+                $eqt   = EquipmentFactory::AllTypes();
 		foreach ($eq as $Data) {
 			$id     = $Data['id'];
 			$delete = (isset($Data['new'])) ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipment[delete]['.$id.']">';
@@ -113,8 +113,8 @@ class ConfigTabEquipment extends ConfigTab {
 				$Code .= '<option value="'.$type['id'].'"'.HTML::Selected($type['id'] == $Data['typeid']).'>'.$type['name'].'</option>';
                         }
 			$Code .=		'</select></td><td><input type="text" size="4" name="equipment[additional_km]['.$id.']" value="'.$Data['additional_km'].'"></td>
-                                                <td><input type="text" class="pick-a-date small-size has-a-datepicker" size="4" name="equipment[date_start]['.$id.']" value="'.$Data['date_start'].'"></td>
-                                                <td><input type="text" size="4" name="equipment[date_end]['.$id.']" value="'.$Data['date_end'].'"></td>
+                                                <td><input type="text" class="pick-a-date" size="7" name="equipment[date_start]['.$id.']" value="'.$Data['date_start'].'"></td>
+                                                <td><input type="text" class="pick-a-date" size="7" name="equipment[date_end]['.$id.']" value="'.$Data['date_end'].'"></td>
                                                 <td><input type="text" size="4" name="equipment[notes]['.$id.']" value="'.$Data['notes'].'"></td>
 						<td>'.$delete.'</td>
 					</tr>';
@@ -133,6 +133,65 @@ class ConfigTabEquipment extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		echo "all I heard was nothing";
+            //Equipment
+		$Equipment   = EquipmentFactory::AllEquipment();
+		$Equipment[] = array('id' => -1);
+		
+
+		foreach ($Equipment as $Data) {
+			$id      = $Data['id'];
+			$columns = array(
+				'name',
+                                'additional_km',
+                                'date_start',
+                                'date_end',
+                                'notes'
+			);
+			$values  = array(
+				$_POST['equipment']['name'][$id],
+                                $_POST['equipment']['additional_km'][$id],
+                                $_POST['equipment']['date_start'][$id],
+                                $_POST['equipment']['date_end'][$id],
+                                $_POST['equipment']['notes'][$id],
+			);
+
+			if (isset($_POST['equipment']['delete'][$id]))
+				DB::getInstance()->deleteByID('equipment', (int)$Data['id']);
+			elseif ($Data['id'] != -1)
+				DB::getInstance()->update('equipment', $Data['id'], $columns, $values);
+			elseif (strlen($_POST['equipment']['name'][$id]) > 2)
+				DB::getInstance()->insert('equipment', $columns, $values);
+		}
+
+		EquipmentFactory::reInitAllEquipment();
+                //EquipmentTypeType
+            	$EquipmentType   = EquipmentFactory::AllTypes();
+		$EquipmentType[] = array('id' => -1);
+		
+
+		foreach ($EquipmentType as $Data) {
+			$id      = $Data['id'];
+			$columns = array(
+				'name',
+                                'input',
+                                'max_km',
+                                'max_time'
+			);
+			$values  = array(
+				$_POST['equipmenttype']['name'][$id],
+                                $_POST['equipmenttype']['input'][$id],
+                                $_POST['equipmenttype']['max_km'][$id],
+                                $_POST['equipmenttype']['max_time'][$id]
+			);
+
+			if (isset($_POST['equipmenttype']['delete'][$id]))
+				DB::getInstance()->deleteByID('equipment_type', (int)$Data['id']);
+			elseif ($Data['id'] != -1)
+				DB::getInstance()->update('equipment_type', $Data['id'], $columns, $values);
+			elseif (strlen($_POST['equipmenttype']['name'][$id]) > 2)
+				DB::getInstance()->insert('equipment_type', $columns, $values);
+		}
+
+		EquipmentFactory::reInitAllTypes();    
 	}
 }
