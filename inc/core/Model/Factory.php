@@ -66,6 +66,17 @@ class Factory {
 			$this->arrayByPK('trackdata', $activityid)
 		);
 	}
+        
+	/**
+	 * Swim
+	 * @param int $activityid
+	 * @return \Runalyze\Model\Swim\Object
+	 */
+	public function swim($activityid) {
+		return new Swim\Object(
+			$this->arrayByPK('swim', $activityid)
+		);
+	}
 
 	/**
 	 * Route
