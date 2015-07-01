@@ -1,27 +1,27 @@
 <?php
 /**
  * This file contains class::Loop
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 
-namespace Runalyze\Model\Swim;
+namespace Runalyze\Model\Swimdata;
 
 /**
  * Loop through swimdata object
  * 
  * @author Hannes Christiansen & Michael Pohl
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
 	protected $Object;
 
 	/**
 	 * Construct
-	 * @param \Runalyze\Model\Swim\Object $object
+	 * @param \Runalyze\Model\Swimdata\Object $object
 	 */
 	public function __construct(Object $object) {
 		parent::__construct($object);

@@ -6,7 +6,7 @@
 
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Model\Swim;
+use Runalyze\Model\Swimdata;
 /**
  * Row: Miscellaneous
  * 
@@ -70,7 +70,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
-                if ($this->Context->trackdata()->has(Swim\Object::STROKE)) {
+                if ($this->Context->swimdata()->has(Swimdata\Object::STROKE) && $this->Context->trackdata()->has(Trackdata\Object::DISTANCE)) {
 			$Plot = new Activity\Plot\Stroke($this->Context);
 			$this->addRightContent('stroke', __('Stroke'), $Plot);        
                 }

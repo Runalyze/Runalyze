@@ -29,9 +29,9 @@ class Context {
 	protected $Trackdata;
         
 	/**
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
-	protected $Swim;
+	protected $Swimdata;
 
 	/**
 	 * @var \Runalyze\Model\Route\Object
@@ -58,7 +58,7 @@ class Context {
 
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
-                $this->Swim = $Factory->swim((int)$activityID);
+                $this->Swimdata = $Factory->swimdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		$this->Dataview = new Dataview($this->Activity);
@@ -79,10 +79,10 @@ class Context {
 	}
         
 	/**
-	 * @return \Runalyze\Model\Swim\Object
+	 * @return \Runalyze\Model\Swimdata\Object
 	 */
-	public function swim() {
-		return $this->Swim;
+	public function swimdata() {
+		return $this->Swimdata;
 	}
 
 	/**

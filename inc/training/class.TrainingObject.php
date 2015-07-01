@@ -54,6 +54,7 @@ class TrainingObject extends DataObject {
 	 * @var \Cadence
 	 */
 	private $Cadence = null;
+        
 
 	/**
 	 * Pauses
@@ -178,8 +179,8 @@ class TrainingObject extends DataObject {
 		}
                 if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
                     
-                        $Swimdata->set(Runalyze\Model\Swim\Object::ACTIVITYID, $this->id());
-                        $InserterSwim = new Runalyze\Model\Swim\Inserter(DB::getInstance(), $Swimdata);
+                        $Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
+                        $InserterSwim = new Runalyze\Model\Swimdata\Inserter(DB::getInstance(), $Swimdata);
                         $InserterSwim->setAccountID( SessionAccountHandler::getId() );
                         $InserterSwim->insert();
                 }        
@@ -208,12 +209,12 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
-	 * @return \Runalyze\Model\Swim\Object
+	 * @return \Runalyze\Model\Swimdata\Object
 	 */
 	protected function newSwimObject() {
-		return new Runalyze\Model\Swim\Object(array(
-			Runalyze\Model\Swim\Object::STROKE => $this->get('stroke'),
-                        Runalyze\Model\Swim\Object::STROKETYPE => $this->get('stroketype')
+		return new Runalyze\Model\Swimdata\Object(array(
+			Runalyze\Model\Swimdata\Object::STROKE => $this->get('stroke'),
+                        Runalyze\Model\Swimdata\Object::STROKETYPE => $this->get('stroketype')
 		));
                 
 	}
@@ -790,6 +791,22 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasComment() { return strlen($this->get('comment')) > 0; }
+        
+	/**
+	 * Set total strokes
+	 * @param string $totalStrokes total strokes
+	 */
+	public function setTotalStrokes($totalStrokes) { $this->set('total_strokes', $totalStrokes); }
+	/**
+	 * Get total strokes
+	 * @return string total strokes
+	 */
+	public function getTotalStrokes() { return $this->get('total_strokes'); }
+	/**
+	 * Has total strokes?
+	 * @return bool
+	 */
+	public function hasTotalStrokes() { return strlen($this->get('total_strokes')) > 0; }
 
 	/**
 	 * Get partner

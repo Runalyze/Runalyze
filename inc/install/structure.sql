@@ -255,6 +255,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',
   `power` int(4) NOT NULL DEFAULT '0',
+  `total_strokes` int(3) NOT NULL DEFAULT '0',
+  `swolf` int(3) NOT NULL DEFAULT '0',
   `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -318,11 +320,11 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 -- Tabellenstruktur für Tabelle `runalyze_swim`
 --
 
-CREATE TABLE IF NOT EXISTS `runalyze_swim` (
+CREATE TABLE IF NOT EXISTS `runalyze_swimdata` (
   `accountid` int(10) unsigned NOT NULL,
   `activityid` int(10) unsigned NOT NULL,
   `stroke` longtext,
-  `stroketype` longtext,
+  `stroketype` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

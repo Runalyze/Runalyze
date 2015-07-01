@@ -68,13 +68,13 @@ class Factory {
 	}
         
 	/**
-	 * Swim
+	 * Swimdata
 	 * @param int $activityid
-	 * @return \Runalyze\Model\Swim\Object
+	 * @return \Runalyze\Model\Swimdata\Object
 	 */
-	public function swim($activityid) {
-		return new Swim\Object(
-			$this->arrayByPK('swim', $activityid)
+	public function swimdata($activityid) {
+		return new Swimdata\Object(
+			$this->arrayByPK('swimdata', $activityid)
 		);
 	}
 
@@ -172,6 +172,8 @@ class Factory {
 	protected function primaryKey($tablename) {
 		switch ($tablename) {
 			case 'trackdata':
+				return 'activityid';
+			case 'swimdata':
 				return 'activityid';
 		}
 

@@ -15,7 +15,7 @@ use Runalyze\View\Activity;
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\View\Activity\Plot\Series
  */
-class Stroke extends ActivitySeries {
+class Swolf extends ActivitySeries {
 	/**
 	 * @var string
 	 */

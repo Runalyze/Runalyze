@@ -199,6 +199,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->setAvgPowerFromArray();
 		$this->setTemperatureFromArray();
 		$this->setRunningDynamicsFromArray();
+                $this->setTotalStrokesFromArray();
 	}
 
 	/**
@@ -268,6 +269,16 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
+	}
+        
+        /**
+	 * Set total swim stroekss from array
+	 */
+	private function setTotalStrokesFromArray() {
+		$array = $this->TrainingObject->getArrayStroke();
+              
+		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
+			$this->TrainingObject->setTotalStrokes( round(array_sum($array)));
 	}
 
 	/**

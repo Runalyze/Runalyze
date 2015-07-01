@@ -1,22 +1,23 @@
 <?php
 /**
  * This file contains class::Object
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 
-namespace Runalyze\Model\Swim;
+namespace Runalyze\Model\Swimdata;
 
 use Runalyze\Model;
 
 /**
- * Swim object
+ * Swimdata object
  *  
  * @author Hannes Christiansen & Michael Pohl
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 /**
  * Stroke Type
  * 0 =  freestyle (kraulen?)
+ * 1 = 
  * 2 = breaststroke 
  */
 class Object extends Model\Object implements Model\Loopable {
@@ -118,9 +119,8 @@ class Object extends Model\Object implements Model\Loopable {
 	public function stroketype() {
 		return $this->Data[self::STROKETYPE];
 	}
-        
-        
-	/**
+
+        /**
 	 * Number of points
 	 * @return int
 	 */

@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains class::Inserter
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 
-namespace Runalyze\Model\Swim;
+namespace Runalyze\Model\Swimdata;
 
 use Runalyze\Model;
 
@@ -12,19 +12,19 @@ use Runalyze\Model;
  * Insert swimdata to database
  * 
  * @author Hannes Christiansen & Michael Pohl
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 class Inserter extends Model\InserterWithAccountID {
 	/**
 	 * Object
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
 	protected $Object;
 
 	/**
 	 * Construct inserter
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Swim\Object $object [optional]
+	 * @param \Runalyze\Model\Swimdata\Object $object [optional]
 	 */
 	public function __construct(\PDO $connection, Object $object = null) {
 		parent::__construct($connection, $object);
@@ -35,7 +35,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * @return string
 	 */
 	protected function table() {
-		return 'swim';
+		return 'swimdata';
 	}
 
 	/**

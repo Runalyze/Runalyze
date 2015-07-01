@@ -1,10 +1,10 @@
 <?php
 /**
  * This file contains class::Updater
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 
-namespace Runalyze\Model\Swim;
+namespace Runalyze\Model\Swimdata;
 
 use Runalyze\Model;
 
@@ -14,26 +14,26 @@ use Cache;
  * Update swimdata in database
  * 
  * @author Hannes Christiansen & Michael Pohl
- * @package Runalyze\Model\Swim
+ * @package Runalyze\Model\Swimdata
  */
 class Updater extends Model\UpdaterWithAccountID {
 	/**
 	 * Old object
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
 	protected $OldObject;
 
 	/**
 	 * New object
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
 	protected $NewObject;
 
 	/**
 	 * Construct updater
 	 * @param \PDO $connection
-	 * @param \Runalyze\Model\Swim\Object $newObject [optional]
-	 * @param \Runalyze\Model\Swim\Object $oldObject [optional]
+	 * @param \Runalyze\Model\Swimdata\Object $newObject [optional]
+	 * @param \Runalyze\Model\Swimdata\Object $oldObject [optional]
 	 */
 	public function __construct(\PDO $connection, Object $newObject = null, Object $oldObject = null) {
 		parent::__construct($connection, $newObject, $oldObject);
@@ -44,7 +44,7 @@ class Updater extends Model\UpdaterWithAccountID {
 	 * @return string
 	 */
 	protected function table() {
-		return 'swim';
+		return 'swimdata';
 	}
 
 	/**

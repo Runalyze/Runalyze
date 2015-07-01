@@ -11,7 +11,7 @@ $HIDDEN_KEYS = array(
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'pauses',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes'
 );
 
 $FIELDSETS = array(
@@ -654,6 +654,18 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'hidden'	=> true
+					)
+	),
+    	'total_strokes'			=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '3',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Total strokes',
+						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,'),
+						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	)
 );
