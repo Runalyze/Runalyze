@@ -35,6 +35,7 @@ class FormularSelectSearchSort extends FormularField {
 			'pulse_max'	=> __('max. Heartrate'),
 			'temperature'	=> __('Temperature'),
 			'cadence'	=> __('Cadence'),
+			'stride_length'	=> __('Stride length'),
 			'groundcontact'	=> __('Ground contact'),
 			'vertical_oscillation'	=> __('Vertical oscillation'),
 			'vdot'		=> __('VDOT'),
