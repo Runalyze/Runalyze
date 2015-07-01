@@ -37,7 +37,7 @@ class TableZonesHeartrate extends TableZonesAbstract {
 					'zone'     => '&lt;&nbsp;'.$hf.'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => $Pace->valueWithAppendix()
+					'average'  => $Pace->value() > 0 ? $Pace->valueWithAppendix() : '-'
 				);
 			}
 		}
@@ -52,11 +52,12 @@ class TableZonesHeartrate extends TableZonesAbstract {
 		// - make zones configurable
 		$Zones = array();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
+		$hasDistance = $this->Context->trackdata()->has(Trackdata\Object::DISTANCE);
 
 		$Distribution = new TimeSeriesForTrackdata(
 			$this->Context->trackdata(),
 			Trackdata\Object::HEARTRATE,
-			array(Trackdata\Object::DISTANCE)
+			$hasDistance ? array(Trackdata\Object::DISTANCE) : array()
 		);
 		$Data = $Distribution->data();
 
@@ -66,11 +67,11 @@ class TableZonesHeartrate extends TableZonesAbstract {
 			if (!isset($Zones[$hf])) {
 				$Zones[$hf] = array(
 					'time' => $seconds,
-					'distance' => $Data[$bpm][Trackdata\Object::DISTANCE]
+					'distance' => $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0
 				);
 			} else {
 				$Zones[$hf]['time'] += $seconds;
-				$Zones[$hf]['distance'] += $Data[$bpm][Trackdata\Object::DISTANCE];
+				$Zones[$hf]['distance'] += $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0;
 			}
 		}
 
