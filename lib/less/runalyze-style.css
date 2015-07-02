@@ -929,6 +929,21 @@ tr.ERROR td {
 .multi-edit-table tr.edited {
   opacity: 0.5;
 }
+.data-browser-labels td {
+  position: relative;
+  height: 1em;
+  overflow: hidden;
+}
+.data-browser-labels td span {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .panel {
   position: relative;
   margin: 5px 5px 10px 5px;

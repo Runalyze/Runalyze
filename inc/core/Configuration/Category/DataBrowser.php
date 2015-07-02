@@ -30,6 +30,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createHandle('DB_DISPLAY_MODE', new DataBrowserMode());
+		$this->createHandle('DB_SHOW_DATASET_LABELS', new Bool(true));
 		$this->createHandle('DB_SHOW_DIRECT_EDIT_LINK', new Bool(false));
 		$this->createHandle('DB_SHOW_CREATELINK_FOR_DAYS', new Bool(false));
 	}
@@ -40,6 +41,14 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 */
 	public function mode() {
 		return $this->object('DB_DISPLAY_MODE');
+	}
+
+	/**
+	 * Show dataset labels
+	 * @return bool
+	 */
+	public function showLabels() {
+		return $this->get('DB_SHOW_DATASET_LABELS');
 	}
 
 	/**
@@ -62,6 +71,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	 * Register onchange events
 	 */
 	protected function registerOnchangeEvents() {
+		$this->handle('DB_SHOW_DATASET_LABELS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_DIRECT_EDIT_LINK')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('DB_SHOW_CREATELINK_FOR_DAYS')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 
@@ -78,6 +88,10 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('DB_DISPLAY_MODE'), array(
 			'label'		=> __('Calendar: mode'),
 			'tooltip'	=> __('Default mode for the calendar')
+		));
+
+		$Fieldset->addHandle( $this->handle('DB_SHOW_DATASET_LABELS'), array(
+			'label'		=> __('Calendar: show labels for dataset')
 		));
 
 		$Fieldset->addHandle( $this->handle('DB_SHOW_CREATELINK_FOR_DAYS'), array(
