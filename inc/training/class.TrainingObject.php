@@ -807,6 +807,22 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasTotalStrokes() { return strlen($this->get('total_strokes')) > 0; }
+        
+	/**
+	 * Set swolf
+	 * @param string $swolf swolf
+	 */
+	public function setSwolf($swolf) { $this->set('swolf', $swolf); }
+	/**
+	 * Get swolf
+	 * @return string swolf
+	 */
+	public function getSwolf() { return $this->get('swolf'); }
+	/**
+	 * Has swolf?
+	 * @return bool
+	 */
+	public function hasSwolf() { return strlen($this->get('swolf')) > 0; }
 
 	/**
 	 * Get partner

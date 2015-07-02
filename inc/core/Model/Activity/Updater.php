@@ -229,7 +229,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			}
 		}
 	}
-
+        
 	/**
 	 * Tasks after insertion
 	 */

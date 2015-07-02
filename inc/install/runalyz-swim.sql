@@ -15,4 +15,4 @@ CREATE TABLE IF NOT EXISTS `runalyze_swimdata` (
 ALTER TABLE `runalyze_swim`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
-ALTER TABLE `runalyze_training` ADD `total_strokes` int(3) NOT NULL DEFAULT '0' AFTER `power`;
+ALTER TABLE `runalyze_training` ADD `total_strokes` int(4) NOT NULL DEFAULT '0',ADD `swolf` int(3) NOT NULL DEFAULT '0' AFTER `power`;

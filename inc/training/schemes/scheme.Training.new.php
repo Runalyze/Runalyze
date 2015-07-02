@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf'
 );
 
 $FIELDSETS = array(
@@ -655,14 +655,22 @@ $FIELDS = array(
     	'total_strokes'			=> array(
 					'database'	=> array(
 						'type'		=> 'int',
-						'precision'	=> '3',
+						'precision'	=> '4',
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Total strokes',
-						'tooltip'	=> __('Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with one foot) per minute,'),
-						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
+						'label'		=> 'Total strokes'
 					)
-	)
+	),
+    	'swolf' 			=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'SWOLF'
+					)
+	) 
 );
 ?>

@@ -34,7 +34,7 @@ class Swolf extends ActivitySeries {
 	 * Init options
 	 */
 	protected function initOptions() {
-		$this->Label = __('Stroke');
+		$this->Label = __('Swolf');
 		$this->Color = self::COLOR;
 
 		$this->UnitString = '°C';
