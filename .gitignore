@@ -17,3 +17,14 @@ lib/phpfastcache/cache.storage.*
 *.xcf
 config.php
 *.mo
+
+#composer
+composer.phar
+vendor/
+composer.lock
+
+#assets
+node_modules/
+web/assets/
+view/cache/
+npm-debug.log
