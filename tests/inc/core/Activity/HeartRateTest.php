@@ -16,6 +16,14 @@ class HeartRateTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals( 150, $HR->inBPM() );
 	}
 
+	public function testDynamicSetting() {
+		$HR = new HeartRate(150);
+		$this->assertEquals(150, $HR->inBPM());
+
+		$HR->setBPM(120);
+		$this->assertEquals(120, $HR->inBPM());
+	}
+
 	public function testWithAthlete() {
 		$HR = new HeartRate(160, new Athlete(null, 200, 40));
 

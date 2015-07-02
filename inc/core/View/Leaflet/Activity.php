@@ -76,6 +76,16 @@ class Activity extends LeafletRoute {
 	protected $PauseLimit = 0.05;
 
 	/**
+	 * @var int
+	 */
+	protected $PauseIndex = 0;
+
+	/**
+	 * @var bool
+	 */
+	protected $PathShouldBreak = false;
+
+	/**
 	 * Boolean flag: add icons and info
 	 * @var bool
 	 */
@@ -117,6 +127,11 @@ class Activity extends LeafletRoute {
 			$this->checkForPause();
 			$this->fillCurrentSegment();
 			$this->checkForDistanceMarker();
+
+			if ($this->PathShouldBreak) {
+				$this->addCurrentSegment();
+				$this->PathShouldBreak = false;
+			}
 		}
 
 		$this->addCurrentSegment();
@@ -281,8 +296,42 @@ class Activity extends LeafletRoute {
 	 * Check for pause
 	 */
 	protected function checkForPause() {
-		if (!Configuration::ActivityView()->routeBreak()->never() && $this->RouteLoop->calculatedStepDistance() > $this->PauseLimit) {
+		if (!is_null($this->Trackdata) && $this->Trackdata->hasPauses()) {
+			if (
+				$this->PauseIndex < $this->Trackdata->pauses()->num() &&
+				$this->Trackdata->pauses()->at($this->PauseIndex)->time() <= $this->Trackdata->at($this->TrackdataLoop->index(), Trackdata\Object::TIME)
+			) {
+				$this->addCurrentPauseIcon();
+
+				$this->PathShouldBreak = true;
+				$this->PauseIndex++;
+			}
+		} elseif (!Configuration::ActivityView()->routeBreak()->never() && $this->RouteLoop->calculatedStepDistance() > $this->PauseLimit) {
 			$this->addCurrentSegment();
 		}
+	}
+
+	/**
+	 * Add icon for current pause
+	 */
+	protected function addCurrentPauseIcon() {
+		$Pause = $this->Trackdata->pauses()->at($this->PauseIndex);
+		$Index = $this->RouteLoop->index();
+
+		$Tooltip = sprintf( __('<strong>Pause</strong> of %s'), Duration::format($Pause->duration()));
+		$Tooltip .= '<br>'.sprintf( __('<strong>Distance:</strong> %s'), Distance::format($this->Trackdata->at($Index, Trackdata\Object::DISTANCE)) );
+		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->Trackdata->at($Index, Trackdata\Object::TIME)) );
+		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($Pause->time()) );
+
+		if ($Pause->hasHeartRateInfo()) {
+			$Tooltip .= '<br>'.sprintf( __('<strong>Heart rate:</strong>').' '.__('%s to %s'), $Pause->hrStart(), $Pause->hrEnd().' bpm' );
+		}
+
+		$this->addMarker(
+			$this->Route->at($Index, Route\Object::LATITUDES),
+			$this->Route->at($Index, Route\Object::LONGITUDES),
+			$this->pauseIcon(),
+			$Tooltip
+		);
 	}
 }

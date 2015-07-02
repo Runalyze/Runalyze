@@ -20,17 +20,6 @@ class PaceSmootherTest extends \PHPUnit_Framework_TestCase {
 		), $Smoother->smooth(2, PaceSmoother::MODE_STEP));
 	}
 
-	public function testKeepingArraySize() {
-		$Smoother = new PaceSmoother(new Object(array(
-			Object::TIME => array(0, 7, 16, 20, 24, 25, 30, 40, 60, 66),
-			Object::DISTANCE => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-		)), true);
-
-		$this->assertEquals(array(
-			8, 8, 4, 4, 3, 3, 15, 15, 6
-		), $Smoother->smooth(2, PaceSmoother::MODE_STEP));
-	}
-
 	public function testSmoothingByDistance() {
 		$Smoother = new PaceSmoother(new Object(array(
 			Object::TIME => array(0, 7, 16, 20, 24, 25, 30, 40, 60, 66),
@@ -51,6 +40,29 @@ class PaceSmootherTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(
 			round(20/3), 20/4, 20/1, 6/1
 		), $Smoother->smooth(18, PaceSmoother::MODE_TIME));
+	}
+
+	public function testKeepingArraySize() {
+		$arraySizes = range(15, 35);
+		$stepSizes = range(2, 11);
+		$modes = array('step' => PaceSmoother::MODE_STEP, 'time' => PaceSmoother::MODE_TIME, 'distance' => PaceSmoother::MODE_DISTANCE);
+
+		foreach ($arraySizes as $arraySize) {
+			$Smoother = new PaceSmoother(new Object(array(
+				Object::TIME => range(0, $arraySize - 1),
+				Object::DISTANCE => range(0, $arraySize - 1)
+			)), true);
+
+			foreach ($stepSizes as $stepSize) {
+				foreach ($modes as $name => $mode) {
+					$this->assertEquals(
+						$arraySize,
+						count($Smoother->smooth($stepSize, $mode)),
+						'Wrong array size for mode = '.$name.', arraySize = '.$arraySize.' and stepSize = '.$stepSize
+					);
+				}
+			}
+		}
 	}
 
 }

@@ -28,7 +28,7 @@ class ConfigTabTypes extends ConfigTab {
 		$Types->setHtmlCode($this->getCode());
 		$Types->addInfo( __('Activity types are useful to seperate your training into different categories. '.
 							'An activity type can only belong to one sport.') );
-		$Types->addInfo( __('Finding your personal bests requieres one type (for running) to be set as the \'Race\'-type.') );
+		$Types->addInfo( __('Finding your personal bests requires one type (for running) to be set as the \'Race\'-type.') );
 
 		$this->Formular->addFieldset($Types);
 	}
@@ -113,7 +113,7 @@ class ConfigTabTypes extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type`'.' AND accountid = '.SessionAccountHandler::getId())->fetchAll();
+		$Types = DB::getInstance()->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();
 		$Types[] = array('id' => -1);
 
 		foreach ($Types as $Type) {

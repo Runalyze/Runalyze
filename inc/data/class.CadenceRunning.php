@@ -24,7 +24,7 @@ class CadenceRunning extends Cadence {
 	 * @return string
 	 */
 	public function label() {
-		return __('Cadence');
+		return __('Cadence (running)');
 	}
 
 	/**

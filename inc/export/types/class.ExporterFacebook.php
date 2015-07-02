@@ -59,7 +59,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		$url   = urlencode($this->getPublicURL());
 		$title = urlencode($this->Context->dataview()->titleWithComment());
 		$text  = urlencode($this->getText());
-		$image = 'http://runalyze.de/wp-content/uploads/Account.png';
+		$image = System::getFullDomain(true).'/web/assets/images/runalyze.png';
 
 		return 'https://www.facebook.com/dialog/feed?app_id='.self::$APP_ID.'&link='.$url.'&picture='.$image.'&name='.$title.'&caption='.$url.'&description='.$text.'&redirect_uri=http://www.facebook.com';
 		//$FbUrl = 'https://facebook.com/sharer.php?s=100&amp;p[url]='.$url.'&amp;p[title]='.$title.'&amp;p[summary]='.$text.'&amp;p[images][0]='.$image;

@@ -4,8 +4,9 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
+use Runalyze\Activity\Pace;
+use Runalyze\Calculation\Distribution\TimeSeriesForTrackdata;
 use Runalyze\Model\Trackdata;
-use Runalyze\Calculation\Distribution\TimeSeries;
 
 /**
  * Display heartrate zones
@@ -18,21 +19,25 @@ class TableZonesHeartrate extends TableZonesAbstract {
 	 * Get title for average
 	 * @return string
 	 */
-	public function titleForAverage() { return __('Pace'); }
+	public function titleForAverage() { return '&oslash;&nbsp;'.__('Pace'); }
 
 	/**
 	 * Init data
 	 */
 	protected function initData() {
 		$Zones = $this->computeZones();
+		$Pace = new Pace(0, 0, $this->Context->sport()->paceUnit());
 
 		foreach ($Zones as $hf => $Info) {
 			if ($Info['time'] > parent::MINIMUM_TIME_IN_ZONE) {
+				$Pace->setTime($Info['time']);
+				$Pace->setDistance($Info['distance']);
+
 				$this->Data[] = array(
 					'zone'     => '&lt;&nbsp;'.$hf.'&nbsp;&#37;',
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => ''
+					'average'  => $Pace->value() > 0 ? $Pace->valueWithAppendix() : '-'
 				);
 			}
 		}
@@ -45,14 +50,16 @@ class TableZonesHeartrate extends TableZonesAbstract {
 		// TODO
 		// - move this a calculation class
 		// - make zones configurable
-		// - calculate distance / average pace of zone
 		$Zones = array();
 		$hrMax = Runalyze\Configuration::Data()->HRmax();
+		$hasDistance = $this->Context->trackdata()->has(Trackdata\Object::DISTANCE);
 
-		$Distribution = new TimeSeries(
-			$this->Context->trackdata()->get(Trackdata\Object::HEARTRATE),
-			$this->Context->trackdata()->get(Trackdata\Object::TIME)
+		$Distribution = new TimeSeriesForTrackdata(
+			$this->Context->trackdata(),
+			Trackdata\Object::HEARTRATE,
+			$hasDistance ? array(Trackdata\Object::DISTANCE) : array()
 		);
+		$Data = $Distribution->data();
 
 		foreach ($Distribution->histogram() as $bpm => $seconds) {
 			$hf = $this->zoneFor($bpm, $hrMax);
@@ -60,10 +67,11 @@ class TableZonesHeartrate extends TableZonesAbstract {
 			if (!isset($Zones[$hf])) {
 				$Zones[$hf] = array(
 					'time' => $seconds,
-					'distance' => 0
+					'distance' => $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0
 				);
 			} else {
 				$Zones[$hf]['time'] += $seconds;
+				$Zones[$hf]['distance'] += $hasDistance ? $Data[$bpm][Trackdata\Object::DISTANCE] : 0;
 			}
 		}
 

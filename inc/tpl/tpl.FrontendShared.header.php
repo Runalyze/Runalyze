@@ -12,13 +12,13 @@
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
-	<title><?php echo $this->getPageTitle(); ?> - Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
+	<title><?php echo $this->getPageTitle(); ?> - Runalyze</title>
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
 </head>
 
-<body id="shared" style="background-image:url(<?php echo \Runalyze\Configuration::Design()->backgroundImage(); ?>);">
+<body id="shared">
 
 <div id="flot-loader"></div>
 

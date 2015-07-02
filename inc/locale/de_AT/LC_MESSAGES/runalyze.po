@@ -1,21 +1,21 @@
+# German translations for PACKAGE package.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2015.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Runalyze\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-17 09:52+0200\n"
-"PO-Revision-Date: 2015-05-23 11:25+0200\n"
-"Last-Translator: Floriaan Went <info@floriaanwent.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
-"Language: nl\n"
+"PO-Revision-Date: 2015-06-17 09:52+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de_AT\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
-"X-Poedit-KeywordsList: __;_ne;_n;_e\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:17
 #: inc/training/schemes/scheme.Training.new.php:41
@@ -23,9 +23,8 @@ msgstr ""
 #: inc/training/schemes/scheme.Shoe.php:14
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
-#, fuzzy
 msgid "Miscellaneous"
-msgstr "Diversen"
+msgstr ""
 
 #: index.php:74
 msgid ""
@@ -35,29 +34,28 @@ msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:148
 msgid "The field can not be left empty."
-msgstr "Dit veld kan niet leeg gelaten worden."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:172
 msgid "Please enter a number."
-msgstr "Voeg een cijfer in."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:177
 #: inc/html/formular/class.FormularValueParser.php:197
 msgid "The value is too large."
-msgstr "De waarde is te hoog."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:235
 msgid "The date could not be parsed."
-msgstr "Het datum kan niet worden verwerkt."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:268
-#, fuzzy
 msgid "The time could not be read."
-msgstr "De tijd kan niet worden gelezen."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:297
 msgid "You have to enter a time."
-msgstr "Je dient een tijd in te vullen."
+msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
@@ -94,7 +92,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:126
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:227
 msgid "Time"
-msgstr "Tijd"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -110,42 +108,42 @@ msgstr "Tijd"
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:586
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:94
 msgid "Time of day"
-msgstr "Tijdstip van de dag"
+msgstr ""
 
 #: inc/html/class.HTML.php:124 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:182
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
 msgid "Total"
-msgstr "Totaal"
+msgstr ""
 
 #: inc/html/class.Ajax.php:438 inc/core/View/Leaflet/Activity.php:236
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 #: inc/html/class.Ajax.php:439
 msgid "previous"
-msgstr "Voorgaand"
+msgstr ""
 
 #: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:255
 msgid "next"
-msgstr "Volgend"
+msgstr ""
 
 #: inc/html/class.Ajax.php:442
 msgid "End"
-msgstr "Einde"
+msgstr ""
 
 #: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
 #: inc/html/class.Ajax.php:447 inc/html/class.Ajax.php:448
 #: inc/html/class.Ajax.php:449
 msgid "per page"
-msgstr "per pagina"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:134
@@ -2267,9 +2265,8 @@ msgstr ""
 #: inc/tpl/tpl.installerHeader.php:23
 #: tmp/3/e/3ecd0834b7fbde5d271bf044aeb0907e248289992c5fb423fb803c8c47e16fc4.php:39
 #: tmp/2/e/2e6dbf6283558717f3fbb9ca1d5d19896fb461b1e135c6bd45f5bd590b733a1a.php:116
-#, fuzzy
 msgid "Please login"
-msgstr "s.v.p. aanmelden"
+msgstr ""
 
 #: inc/tpl/tpl.FrontendShared.header.php:29
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26

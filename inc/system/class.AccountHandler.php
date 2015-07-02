@@ -29,7 +29,17 @@ class AccountHandler {
 	 * Minimum length for usernames
 	 * @var int
 	 */
-	static private $USER_MIN_LENGTH = 3;
+	const USER_MIN_LENGTH = 3;
+
+	/**
+	 * @var int
+	 */
+	const USER_MAX_LENGTH = 32;
+
+	/**
+	 * @var string
+	 */
+	const USER_REGEXP = 'a-zA-Z0-9\.\_\-';
 
 	/**
 	 * Boolean flag: registration process
@@ -184,8 +194,14 @@ class AccountHandler {
 	static public function tryToRegisterNewUser() {
 		$errors = array();
 
-		if (strlen($_POST['new_username']) < self::$USER_MIN_LENGTH)
-			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::$USER_MIN_LENGTH));
+		if (strlen($_POST['new_username']) < self::USER_MIN_LENGTH)
+			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::USER_MIN_LENGTH));
+
+		if (strlen($_POST['new_username']) > self::USER_MAX_LENGTH)
+			$errors[] = array('new_username' => sprintf( __('The username has to contain at most %s signs.'), self::USER_MAX_LENGTH));
+
+		if (preg_replace('#[^'.self::USER_REGEXP.']#i', '', $_POST['new_username']) != $_POST['new_username'])
+			$errors[] = array('new_username' => sprintf( __('The username has to contain only the following characters: %s'), stripslashes(self::USER_REGEXP)));
 
 		if (self::usernameExists($_POST['new_username']))
 			$errors[] = array('new_username' => __('This username is already being used.'));
@@ -263,7 +279,7 @@ class AccountHandler {
 			$pwHash = self::getChangePasswordHash();
 			self::updateAccount($username, array('changepw_hash', 'changepw_timelimit'), array($pwHash, time()+DAY_IN_S));
 
-			$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+			$subject  = 'Runalyze Password Recovery';
 			$message  = sprintf( __('Did you forget your password %s?'), $account['name'])."<br><br>\r\n\r\n";
 			$message .= __('You can change your password within the next 24 hours with the following link').":<br>\r\n";
 			$message .= '<a href='.self::getChangePasswordLink($pwHash).'>'.self::getChangePasswordLink($pwHash).'</a>';
@@ -462,7 +478,7 @@ class AccountHandler {
 		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$subject  = __('Activate your RUNALYZE Account');
 		$message  = __('Thanks for your registration').', '.$account['name']."!<br><br>\r\n\r\n";
 		$message .= sprintf( __('You can activate your account (username = %s) with the following link'), $account['username']).":<br>\r\n";
 		$message .= $activationLink;
@@ -492,7 +508,7 @@ class AccountHandler {
 
 		DB::getInstance()->update('account', SessionAccountHandler::getId(), 'deletion_hash', $deletionHash, false);
 
-		$subject  = 'Runalyze v'.RUNALYZE_VERSION;
+		$subject  = __('Deletion request of your RUNALYZE account');
 		$message  = __('Do you really want to delete your account').' '.$account['username'].", ".$account['name']."?<br><br>\r\n\r\n";
 		$message .= __('Complete the process by accessing the following link: ')."<br>\r\n";
 		$message .= $deletionLink;
