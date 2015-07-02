@@ -155,4 +155,12 @@ class Route {
 	final public function endIcon() {
 		return 'RunalyzeLeaflet.Routes.endIcon()';
 	}
+
+	/**
+	 * Pause icon
+	 * @return string
+	 */
+	final public function pauseIcon() {
+		return 'RunalyzeLeaflet.Routes.pauseIcon()';
+	}
 }

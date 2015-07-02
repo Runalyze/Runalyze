@@ -49,8 +49,11 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 */
 	protected $withShadow = false;
 
-
-   protected $big = false;
+	/**
+	 * Disable scrolling and show full height
+	 * @var bool
+	 */
+	protected $big = false;
 
 	/**
 	 * Constructor
@@ -70,6 +73,11 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Display
 	 */
 	final public function display() {
+		if (\Runalyze\Configuration::ActivityView()->showSectionsFullheight()) {
+			$this->big = true;
+			$this->withShadow = false;
+		}
+
 		echo '<div class="training-row">';
 
 		if ($this->withShadow) {
@@ -86,7 +94,10 @@ abstract class TrainingViewSectionRow extends TrainingViewSectionRowAbstract {
 	 * Display info
 	 */
 	protected function displayInfo() {
-		echo '<div class="training-row-info'.($this->withShadow ? ' with-shadow' : '').'"'.($this->big?' style="max-height:none"':'').'>';
+		$class = $this->big ? 'fullheight'
+				: ($this->withShadow ? 'with-shadow' : '');
+
+		echo '<div class="training-row-info '.$class.'">';
 
 		if (!empty($this->BoxedValues)) {
 			$this->displayBoxedValues();

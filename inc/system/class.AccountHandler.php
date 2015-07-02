@@ -29,7 +29,17 @@ class AccountHandler {
 	 * Minimum length for usernames
 	 * @var int
 	 */
-	static private $USER_MIN_LENGTH = 3;
+	const USER_MIN_LENGTH = 3;
+
+	/**
+	 * @var int
+	 */
+	const USER_MAX_LENGTH = 32;
+
+	/**
+	 * @var string
+	 */
+	const USER_REGEXP = 'a-zA-Z0-9\.\_\-';
 
 	/**
 	 * Boolean flag: registration process
@@ -184,8 +194,14 @@ class AccountHandler {
 	static public function tryToRegisterNewUser() {
 		$errors = array();
 
-		if (strlen($_POST['new_username']) < self::$USER_MIN_LENGTH)
-			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::$USER_MIN_LENGTH));
+		if (strlen($_POST['new_username']) < self::USER_MIN_LENGTH)
+			$errors[] = array('new_username' => sprintf( __('The username has to contain at least %s signs.'), self::USER_MIN_LENGTH));
+
+		if (strlen($_POST['new_username']) > self::USER_MAX_LENGTH)
+			$errors[] = array('new_username' => sprintf( __('The username has to contain at most %s signs.'), self::USER_MAX_LENGTH));
+
+		if (preg_replace('#[^'.self::USER_REGEXP.']#i', '', $_POST['new_username']) != $_POST['new_username'])
+			$errors[] = array('new_username' => sprintf( __('The username has to contain only the following characters: %s'), stripslashes(self::USER_REGEXP)));
 
 		if (self::usernameExists($_POST['new_username']))
 			$errors[] = array('new_username' => __('This username is already being used.'));

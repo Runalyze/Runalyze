@@ -44,6 +44,14 @@ class HeartRate {
 	}
 
 	/**
+	 * Set value
+	 * @param int $valueInBPM
+	 */
+	public function setBPM($valueInBPM) {
+		$this->value = $valueInBPM;
+	}
+
+	/**
 	 * Heart rate as string
 	 * @return string
 	 */
