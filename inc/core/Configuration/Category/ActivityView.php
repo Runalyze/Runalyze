@@ -217,6 +217,7 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	/**
 	 * Create: Plot options
 	 * - TRAINING_DECIMALS
+	 * - SHOW_SECTIONS_FULLHEIGHT
 	 * - ELEVATION_METHOD
 	 * - ELEVATION_TRESHOLD
 	 */
@@ -224,6 +225,8 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->createHandle('TRAINING_DECIMALS', new Select('1', array(
 			'options' => array('0', '1', '2')
 		)));
+
+		$this->createHandle('SHOW_SECTIONS_FULLHEIGHT', new Bool(false));
 
 		$this->createHandle('ELEVATION_METHOD', new ElevationMethod());
 
@@ -236,6 +239,14 @@ class ActivityView extends \Runalyze\Configuration\Category {
 	 */
 	public function decimals() {
 		return (int)$this->get('TRAINING_DECIMALS');
+	}
+
+	/**
+	 * Show sections always in fullheight
+	 * @return bool
+	 */
+	public function showSectionsFullheight() {
+		return $this->get('SHOW_SECTIONS_FULLHEIGHT');
 	}
 
 	/**
@@ -275,6 +286,8 @@ class ActivityView extends \Runalyze\Configuration\Category {
 		$this->handle('GMAP_PATH_BREAK')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 		$this->handle('GMAP_PATH_PRECISION')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
 
+		$this->handle('SHOW_SECTIONS_FULLHEIGHT')->registerOnchangeFlag(Ajax::$RELOAD_TRAINING);
+
 		$this->handle('ELEVATION_METHOD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
 		$this->handle('ELEVATION_TRESHOLD')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::useCleanup');
 	}
@@ -288,6 +301,11 @@ class ActivityView extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle($this->handle('TRAINING_DECIMALS'), array(
 			'label' => __('Number of decimals')
+		));
+
+		$Fieldset->addHandle($this->handle('SHOW_SECTIONS_FULLHEIGHT'), array(
+			'label' => __('Activity view: show rows in full height'),
+			'tooltip' => __('By default e.g. lap data will be scrollable and not shown completely.')
 		));
 
 		$this->addHandlesForMapsTo($Fieldset);

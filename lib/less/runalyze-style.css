@@ -1420,6 +1420,9 @@ tr.space-line.zebra-corrector td {
   max-height: 190px;
   padding-bottom: 10px;
 }
+.training-row-info.fullheight {
+  max-height: none;
+}
 .training-row-info .boxed-values {
   margin-bottom: 0;
 }
