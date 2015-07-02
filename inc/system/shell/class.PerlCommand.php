@@ -63,7 +63,7 @@ class PerlCommand extends ShellCommand {
 	 * @param string $command
 	 */
 	public function setCommand($command) {
-		$this->command = 'LANG=C '.self::$PERL_PATH.' '.$command;
+		$this->command = self::$PERL_PATH.' '.$command;
 	}
 
 	/**
