@@ -119,6 +119,13 @@ class Context {
 	public function hasRoute() {
 		return !is_null($this->Route);
 	}
+        
+	/**
+	 * @return boolean
+	 */
+	public function hasSwimdata() {
+		return !is_null($this->Swimdata);
+	}
 
 
 	/**

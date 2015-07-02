@@ -198,6 +198,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Calculate swim values
 	 */
 	protected function calculateSwimValues() {
+            if(NULL !== $this->Trackdata && NULL !== $this->Swimdata) {
                 if ($this->Swimdata->stroke()) {
                     $this->Object->set(Object::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
                 }
@@ -213,6 +214,7 @@ class Inserter extends Model\InserterWithAccountID {
                         $this->Object->set(Object::SWOLF, round(($totalstrokes + $totaltime) / $num));
                 }
                 }
+            }
 	}
         
 	/**
