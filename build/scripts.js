@@ -5673,16 +5673,18 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
-			if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
-				if (plot.getOptions().xaxis.mode != 'time') {
-					moveMapMarker(coords.x);
-				} else {
-					var dataset = plot.getData();
-					var distanceSeries = dataset[dataset.length - 1];
-					for (j = 0; j < distanceSeries.data.length; ++j)
-						if (distanceSeries.data[j][0] > coords.x)
-							break;
-					moveMapMarker(distanceSeries.data[j][1]);
+			if (RunalyzeLeaflet && RunalyzeLeaflet.Routes && RunalyzeLeaflet.Routes.routeid) {
+				if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
+					if (plot.getOptions().xaxis.mode != 'time') {
+						moveMapMarker(coords.x);
+					} else {
+						var dataset = plot.getData();
+						var distanceSeries = dataset[dataset.length - 1];
+						for (j = 0; j < distanceSeries.data.length - 1; ++j)
+							if (distanceSeries.data[j][0] > coords.x)
+								break;
+						moveMapMarker(distanceSeries.data[j][1]);
+					}
 				}
 			}
 
