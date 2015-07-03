@@ -195,8 +195,7 @@ class ParserFITSingle extends ParserAbstractSingle {
                 if (isset($this->Values['total_strokes']))
                         $this->TrainingObject->setCadence($this->Values['total_strokes'][0]);
                 if (isset($this->Values['pool_length'])) 
-                       echo ''; //$this->Values['pool_length'][0];
-                
+                        $this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);                
                         
 	}
 

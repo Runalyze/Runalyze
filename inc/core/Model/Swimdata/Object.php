@@ -152,4 +152,20 @@ class Object extends Model\Object implements Model\Loopable {
 		return $this->numberOfPoints;
 	}
         
+	/**
+	 * Check array sizes
+	 * @throws \RuntimeException
+	 */
+	protected function checkArraySizes() {
+		foreach ($this->properties() as $key) {
+			if ($key != 'pool_length' && $this->isArray($key)) {
+				try {
+					$this->checkArraySize( count($this->Data[$key]) );
+				} catch(\RuntimeException $E) {
+					throw new \RuntimeException($E->getMessage().' (for '.$key.')');
+				}
+			}
+		}
+	}
+        
 }

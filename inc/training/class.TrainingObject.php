@@ -214,7 +214,8 @@ class TrainingObject extends DataObject {
 	protected function newSwimObject() {
 		return new Runalyze\Model\Swimdata\Object(array(
 			Runalyze\Model\Swimdata\Object::STROKE => $this->get('stroke'),
-                        Runalyze\Model\Swimdata\Object::STROKETYPE => $this->get('stroketype')
+                        Runalyze\Model\Swimdata\Object::STROKETYPE => $this->get('stroketype'),
+                        Runalyze\Model\Swimdata\Object::POOL_LENGTH => $this->get('pool_length')
 		));
                 
 	}
@@ -823,6 +824,22 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasSwolf() { return strlen($this->get('swolf')) > 0; }
+        
+	/**
+	 * Set pool length
+	 * @param string $poollength pool length
+	 */
+	public function setPoolLength($poollength) { $this->set('pool_length', $poollength); }
+	/**
+	 * Get pool length
+	 * @return string pool length
+	 */
+	public function getPoolLength() { return $this->get('pool_length'); }
+	/**
+	 * Has pool length?
+	 * @return bool
+	 */
+	public function hasPoolLength() { return strlen($this->get('pool_length')) > 0; }    
 
 	/**
 	 * Get partner

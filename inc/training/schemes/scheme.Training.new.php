@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
@@ -671,6 +671,17 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'SWOLF'
 					)
-	) 
+	),
+    	'pool_length' 			=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Pool length'
+					)
+	),  
+    
 );
 ?>

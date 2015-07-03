@@ -11,7 +11,7 @@ $HIDDEN_KEYS = array(
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'pauses',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
@@ -675,6 +675,16 @@ $FIELDS = array(
 					'formular'	=> array(
 						'label'		=> 'SWOLF'
 					)
-	)    
+	),
+    	'pool_length' 			=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Pool length'
+					)
+	),   
 );
 ?>
