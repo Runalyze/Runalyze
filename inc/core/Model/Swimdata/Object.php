@@ -34,6 +34,12 @@ class Object extends Model\Object implements Model\Loopable {
 	const STROKE = 'stroke';
         
 	/**
+	 * Key: pool length
+	 * @var string
+	 */
+	const POOL_LENGTH = 'pool_length';
+        
+	/**
 	 * Key: stroketype
 	 * @var string
 	 */
@@ -47,6 +53,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
+                $this->checkArraySizes();
 	}
         
 	/**
@@ -57,7 +64,8 @@ class Object extends Model\Object implements Model\Loopable {
 		return array(
 			self::ACTIVITYID,
 			self::STROKE,
-			self::STROKETYPE
+			self::STROKETYPE,
+                        self::POOL_LENGTH
 		);
 	}
         
@@ -71,6 +79,7 @@ class Object extends Model\Object implements Model\Loopable {
                         case self::ACTIVITYID:
                         case self::STROKE:
                         case self::STROKETYPE:
+                        case self::POOL_LENGTH:
 				return true;
 		}
 		return false;
@@ -119,7 +128,22 @@ class Object extends Model\Object implements Model\Loopable {
 	public function stroketype() {
 		return $this->Data[self::STROKETYPE];
 	}
+        
+	/**
+	 * STROKETYPE
+	 * @return int
+	 */
+	public function poollength() {
+		return $this->Data[self::POOL_LENGTH];
+	}
 
+        /*
+         * Calculate Distance based on pool length
+         */
+        public function fillDistanceArray($trackdata) {
+            //TODO
+        }
+        
         /**
 	 * Number of points
 	 * @return int

@@ -28,31 +28,21 @@ class Loop extends \Runalyze\Model\Loop {
 	}
 
 	/**
-	 * Current time
+	 * Current stroke
 	 * @return int
 	 */
-	public function swimtime() {
-		return $this->current(Object::SWIMTIME);
+	public function stroke() {
+		return $this->current(Object::STROKE);
 	}
-
-
+        
 	/**
-	 * Move for time
-	 * @param int $seconds
-	 * @throws \RuntimeException for negative values or if time is empty
+	 * Current stroke
+	 * @return int
 	 */
-	public function moveTime($seconds) {
-		$this->move(Object::SWIMTIME, $seconds);
+	public function stroketype() {
+		return $this->current(Object::STROKETYPE);
 	}
 
-	/**
-	 * Move to time
-	 * @param int $seconds
-	 * @throws \RuntimeException for negative values or if time is empty
-	 */
-	public function moveToTime($seconds) {
-		$this->moveTo(Object::SWIMTIME, $seconds);
-	}
 
 
 }

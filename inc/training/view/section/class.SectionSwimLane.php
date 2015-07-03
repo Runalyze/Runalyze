@@ -9,16 +9,17 @@
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Model\Swimdata;
 class SectionSwimLane extends TrainingViewSectionTabbed {
+        
 	/**
 	 * Set header and rows
 	 */
 	protected function setHeaderAndRows() {
 		$this->Header = __('Lanes');
+                $this->appendRowTabbed(new SectionSwimLaneRow($this->Context, __('Lanes')));
 
-		if (!$this->Context->activity()->splits()->isEmpty() && $this->Context->activity()->splits()->totalDistance() > 0) {
-			$this->appendRowTabbed( new SectionLapsRowManual($this->Context), __('Manual Laps') );
-		}
 	}
 
 	/**
@@ -26,7 +27,7 @@ class SectionSwimLane extends TrainingViewSectionTabbed {
 	 * @return bool
 	 */
 	protected function hasRequiredData() {
-		return ($this->Context->swimdata()->has(\Runalyze\Model\Swimdata\Object::STROKE));
+		return ($this->Context->swimdata()->has(Swimdata\Object::STROKE));
 	}
 
 	/**

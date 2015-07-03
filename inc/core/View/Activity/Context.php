@@ -62,6 +62,8 @@ class Context {
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		$this->Dataview = new Dataview($this->Activity);
+                $this->Trackdata = $this->Swimdata->fillDistanceArray($this->Trackdata);
+
 	}
 
 	/**

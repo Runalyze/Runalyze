@@ -28,27 +28,17 @@ class SectionSwimLaneRow extends TrainingViewSectionRow {
 	 */
 	protected function setContent() {
 		$this->withShadow = true;
-		$this->addInfoLink();
 		$this->addTable();
+
 	}
 
 	/**
 	 * Add: table
 	 */
 	protected function addTable() {
-		$Table = new TableLapsComputed($this->Context);
+		$Table = new TableSwimLane($this->Context);
 		$this->Code = $Table->getCode();
 	}
 
-	/**
-	 * Add info link
-	 */
-	protected function addInfoLink() {
-		if (!Request::isOnSharedPage()) {
-			$Linker = new Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToRoundsInfo().'">'.__('More details about your laps').'</a>', 'normal');
 
-			$this->Header = HTML::info( $InfoLink );
-		}
-	}
 }
