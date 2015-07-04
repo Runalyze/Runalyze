@@ -91,7 +91,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @return bool
 	 */
 	public function isArray($key) {
-		return ($key != self::ACTIVITYID);
+		return ($key != self::ACTIVITYID && $key != 'pool_length');
 	}
         /**
 	 * Properties
@@ -152,20 +152,5 @@ class Object extends Model\Object implements Model\Loopable {
 		return $this->numberOfPoints;
 	}
         
-	/**
-	 * Check array sizes
-	 * @throws \RuntimeException
-	 */
-	protected function checkArraySizes() {
-		foreach ($this->properties() as $key) {
-			if ($key != 'pool_length' && $this->isArray($key)) {
-				try {
-					$this->checkArraySize( count($this->Data[$key]) );
-				} catch(\RuntimeException $E) {
-					throw new \RuntimeException($E->getMessage().' (for '.$key.')');
-				}
-			}
-		}
-	}
-        
+       
 }
