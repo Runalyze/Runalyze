@@ -122,23 +122,23 @@ class TrainingFormular extends StandardFormular {
 	 * Init fieldset for correct elevation
 	 */
 	protected function initElevationCorrectionFieldset() {
-		// TODO: Elevation correction is currently only available with a route object, not for the activity object
-		return;
+		if ($this->dataObject->get('routeid') > 0) {
+			$Route = Runalyze\Context::Factory()->route($this->dataObject->get('routeid'));
 
-		if ($this->dataObject->get('elevation_corrected') == 1)
-			return;
+			if ($Route->hasPositionData() && !$Route->hasCorrectedElevations()) {
+				$Fieldset = new FormularFieldset( __('Use elevation correction') );
+				$Fieldset->setCollapsed();
 
-		$Fieldset = new FormularFieldset( __('Use elevation correction') );
-		$Fieldset->setConfValueToSaveStatus('ELEVATION');
+				$Fieldset->addInfo('
+					<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'"><strong>'.__('Correct elevation data').'</strong></a><br>
+					<br>
+					<small id="gps-results" class="block">
+						'.__('Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.').'
+					</small>');
 
-		$Fieldset->addInfo('
-			<a class="ajax" target="gps-results" href="call/call.Training.elevationCorrection.php?id='.$this->dataObject->id().'"><strong>'.__('Correct elevation data').'</strong></a><br>
-			<br>
-			<small id="gps-results" class="block">
-				'.__('Elevation data via GPS is very inaccurate. Therefore you can correct it via some satellite data.').'
-			</small>');
-
-		$this->addFieldset($Fieldset);
+				$this->addFieldset($Fieldset);
+			}
+		}
 	}
 
 	/**
