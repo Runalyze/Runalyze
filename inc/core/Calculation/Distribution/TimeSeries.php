@@ -28,6 +28,8 @@ class TimeSeries extends Empirical {
 	public function __construct(array $data, array $time) {
 		if (empty($time)) {
 			throw new \InvalidArgumentException('Time array must not be empty.');
+		} elseif (count($time) < count($data)) {
+			throw new \InvalidArgumentException('Time array must be at least as large as data array.');
 		}
 
 		$lastTime = 0;

@@ -61,7 +61,7 @@ class TimeSeriesForTrackdata extends TimeSeries {
 
 		foreach (array_merge($sumDifferencesKeys, $avgValuesKeys) as $key) {
 			if (!$trackdata->has($key)) {
-				throw new \InvalidArgumentException('Trackdata for key "'.$key.'" must not be empty.');
+				$trackdata->set($key, array_fill(0, $trackdata->num(), 0));
 			}
 		}
 
