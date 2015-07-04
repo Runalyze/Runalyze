@@ -48,18 +48,4 @@ class TimeSeriesForTrackdataTest extends \PHPUnit_Framework_TestCase {
 		), $Dist->data() );
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testException() {
-		new TimeSeriesForTrackdata(
-			new Trackdata\Object(array(
-				Trackdata\Object::TIME => array(30, 60, 90, 120, 150, 180, 210, 240, 270, 300),
-				Trackdata\Object::HEARTRATE => array(120, 120, 150, 150, 150, 180, 150, 180, 150, 120)
-			)),
-			Trackdata\Object::HEARTRATE,
-			array(Trackdata\Object::DISTANCE)
-		);
-	}
-
 }
