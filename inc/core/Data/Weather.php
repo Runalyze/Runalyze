@@ -39,6 +39,14 @@ class Weather {
 	}
 
 	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		$this->Temperature = clone $this->Temperature;
+		$this->Condition = clone $this->Condition;
+	}
+
+	/**
 	 * Temperature
 	 * @return \Runalyze\Data\Weather\Temperature
 	 */

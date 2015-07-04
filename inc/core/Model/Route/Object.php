@@ -142,14 +142,10 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const IN_ROUTENET = 'in_routenet';
 
 	/**
-	 * Construct
-	 * @param array $data
+	 * Flag: ensure arrays to be equally sized
+	 * @var bool
 	 */
-	public function __construct(array $data = array()) {
-		parent::__construct($data);
-
-		$this->checkArraySizes();
-	}
+	protected $checkArraySizes = true;
 
 	/**
 	 * Check array sizes
@@ -260,6 +256,10 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		$this->ensureAllNumericValues();
 		$this->synchronizeStartAndEndpoint();
 		$this->synchronizeBoundaries();
+
+		if (!$this->hasCorrectedElevations()) {
+			$this->set(self::ELEVATIONS_SOURCE, '');
+		}
 	}
 
 	/**
