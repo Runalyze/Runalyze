@@ -141,7 +141,7 @@ class Object extends Model\Object implements Model\Loopable {
          * Calculate Distance based on pool length
          */
         public function fillDistanceArray($trackdata) {
-            //TODO
+            return $trackdata;
         }
         
         /**
