@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-07 18:54+0200\n"
-"PO-Revision-Date: 2015-06-25 14:13+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Portuguese <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pt/>\n"
+"PO-Revision-Date: 2015-07-08 16:02+0200\n"
+"Last-Translator: Heiko Andresen <heiko.andresen@gmx.de>\n"
+"Language-Team: Portuguese "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -6573,15 +6573,15 @@ msgstr ""
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:61
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:62
 msgid "two values, comma seperated"
-msgstr ""
+msgstr "dois valores, separados por vírgula"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:62
 msgid "Pace table: 400m from  ...s to ...s"
-msgstr ""
+msgstr "Tabela de ritmo: 400 metros de ...s até ...s"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:73
 msgid "VDOT values with equivalent race results"
-msgstr ""
+msgstr "Valores VDOT com resultados de corrida equivalente"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:74
 msgid "Predict results on different distances for a given VDOT."
@@ -6647,23 +6647,23 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:146
 msgid "per year"
-msgstr ""
+msgstr "por ano"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:157
 msgid "per month"
-msgstr ""
+msgstr "por mês"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:167
 msgid "per week"
-msgstr ""
+msgstr "por semana"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:187
 msgid "Fastest activities"
-msgstr ""
+msgstr "Actividades mais rápidas"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:192
 msgid "Longest activities"
-msgstr ""
+msgstr "Actividades mais longas"
 
 #: plugin/RunalyzePluginStat_Laufabc/class.RunalyzePluginStat_Laufabc.php:23
 msgid "Running Drills"
