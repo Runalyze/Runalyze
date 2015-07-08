@@ -261,6 +261,7 @@ class ParserXMLsuuntoSingle extends ParserAbstractSingleXML {
 		if (!empty($this->RRdata)) {
 			$this->UseRR = true;
 			$this->numRRdata = count($this->RRdata);
+			$this->gps['hrv'] = $this->RRdata;
 		}
 	}
 

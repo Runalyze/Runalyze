@@ -34,6 +34,11 @@ class Context {
 	protected $Route;
 
 	/**
+	 * @var \Runalyze\Model\HRV\Object
+	 */
+	protected $HRV;
+
+	/**
 	 * @var \Runalyze\Model\Sport\Object
 	 */
 	protected $Sport;
@@ -54,6 +59,7 @@ class Context {
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
+		$this->HRV = $Factory->hrv((int)$activityID);
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		$this->Dataview = new Dataview($this->Activity);
 	}
@@ -70,6 +76,13 @@ class Context {
 	 */
 	public function trackdata() {
 		return $this->Trackdata;
+	}
+
+	/**
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	public function hrv() {
+		return $this->HRV;
 	}
 
 	/**
@@ -97,7 +110,7 @@ class Context {
 	 * @return boolean
 	 */
 	public function hasTrackdata() {
-		return !is_null($this->Trackdata);
+		return !$this->Trackdata->isEmpty();
 	}
 
 	/**
@@ -105,6 +118,13 @@ class Context {
 	 */
 	public function hasRoute() {
 		return !is_null($this->Route);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function hasHRV() {
+		return !$this->HRV->isEmpty();
 	}
 
 

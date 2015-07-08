@@ -8,6 +8,8 @@
 {"TABLE":"runalyze_dataset"}
 {"1":{"name":"test-dataset","active":"1","modus":"1","class":"testclass","style":"","position":"42","summary":"1"}}
 
+{"TABLE":"runalyze_hrv"}
+
 {"TABLE":"runalyze_plugin"}
 {"1":{"key":"RunalyzePluginTool_TEST","type":"tool","active":"1","order":"42"}}
 

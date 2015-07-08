@@ -233,4 +233,19 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
 		}
 	}
+
+	/**
+	 * Test: hrv
+	 * Filename: "HRV-example.fit" 
+	 */
+	public function testHRV() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/HRV-example.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertTrue( $this->object->object()->hasArrayHRV() );
+		}
+	}
 }
