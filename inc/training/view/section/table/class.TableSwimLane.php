@@ -33,12 +33,9 @@ class TableSwimLane extends TableLapsAbstract {
 	 * Display data
 	 */
 	protected function setDataToCode() {
-                $hasDistance = $this->Context->trackdata()->has('distance');
-                echo $hasDistance;
 
 		$this->Code .= '<table class="fullwidth zebra-style">';
 		$this->Code .= '<thead><tr>';
-                if($hasDistance !== false)
                     $this->Code .= '<th>'.__('Distance').'</th>';
 		$this->Code .= '<th>'.__('Time').'</th>';
 		$this->Code .= '<th>'.__('Swolf').'</th>';
@@ -55,8 +52,7 @@ class TableSwimLane extends TableLapsAbstract {
                    
                     $duration = $Time->current('time') - $lasttime;
                     $this->Code .= '<tr class="r">';
-                    if($hasDistance !== false)
-                        $this->Code .= '<td></td>';
+                    $this->Code .= '<td>'.$Time->current('distance').'</td>';
                     $this->Code .= '<td>'.$duration.'</td>';
                     $this->Code .= '<td>'.($duration + $Loop->stroke()).'</td>';
                     $this->Code .= '<td>'.$Loop->stroke().'</td>';

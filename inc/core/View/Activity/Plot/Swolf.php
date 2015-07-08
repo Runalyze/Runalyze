@@ -9,7 +9,7 @@ namespace Runalyze\View\Activity\Plot;
 use Runalyze\View\Activity;
 
 /**
- * Plot for: stroke
+ * Plot for: Swolf
  * 
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\View\Activity\Plot

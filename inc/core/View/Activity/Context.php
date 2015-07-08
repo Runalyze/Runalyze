@@ -10,6 +10,7 @@ use Request;
 use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Activity;
+use Runalyze\Model\Trackdata;
 
 /**
  * Activity context
@@ -61,8 +62,9 @@ class Context {
                 $this->Swimdata = $Factory->swimdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
-		$this->Dataview = new Dataview($this->Activity);
-               // $this->Trackdata = $this->Swimdata->fillDistanceArray($this->Trackdata);
+		
+                $this->Swimdata->fillDistanceArray($this->Trackdata);
+                $this->Dataview = new Dataview($this->Activity);
 
 	}
 

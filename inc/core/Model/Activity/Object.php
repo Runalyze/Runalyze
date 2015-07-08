@@ -659,7 +659,7 @@ class Object extends Model\ObjectWithID {
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
-
+        
 	/**
 	 * Clothes
 	 * @return \Runalyze\Data\Weather

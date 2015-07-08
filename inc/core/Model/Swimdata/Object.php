@@ -6,8 +6,9 @@
 
 namespace Runalyze\Model\Swimdata;
 
-use Runalyze\Model;
 
+use Runalyze\Model;
+use Runalyze\Model\Trackdata;
 /**
  * Swimdata object
  *  
@@ -19,6 +20,8 @@ use Runalyze\Model;
  * 0 =  freestyle (kraulen?)
  * 1 = 
  * 2 = breaststroke 
+ * 
+ * Free, Breast, Fly, Back, Mixed, Drill
  */
 class Object extends Model\Object implements Model\Loopable {
 	/**
@@ -131,7 +134,7 @@ class Object extends Model\Object implements Model\Loopable {
         
 	/**
 	 * STROKETYPE
-	 * @return int
+	 * @return int [m]
 	 */
 	public function poollength() {
 		return $this->Data[self::POOL_LENGTH];
@@ -140,8 +143,18 @@ class Object extends Model\Object implements Model\Loopable {
         /*
          * Calculate Distance based on pool length
          */
-        public function fillDistanceArray($trackdata) {
-            return $trackdata;
+        public function fillDistanceArray(Trackdata\Object &$trackdata) {
+            if($this->poollength() && !$trackdata->has(Trackdata\Object::DISTANCE)) {
+                $distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
+                $trackdata->set(Trackdata\Object::DISTANCE, $distance);
+            }
+        }
+        
+        /*
+         * Calculate swolf array
+         */
+        public function fillSwolfArray() {
+
         }
         
         /**

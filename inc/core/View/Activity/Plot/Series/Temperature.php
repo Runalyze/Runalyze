@@ -30,6 +30,7 @@ class Temperature extends ActivitySeries {
 		$this->initData($context->trackdata(), Trackdata::TEMPERATURE);
 	}
 
+        
 	/**
 	 * Init options
 	 */

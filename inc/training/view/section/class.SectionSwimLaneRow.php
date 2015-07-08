@@ -15,23 +15,38 @@ use Runalyze\View\Activity\Linker;
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\DataObjects\Training\View\Section
  */
-class SectionSwimLaneRow extends TrainingViewSectionRow {
+class SectionSwimLaneRow extends TrainingViewSectionRowTabbedPlot {
+    
+    
 	/**
-	 * Set plot
+	 * Constructor
 	 */
-	protected function setPlot() {
-		$this->Plot = new Activity\Plot\LapsComputed($this->Context);
+	public function __construct(Activity\Context &$Context = null) {
+		parent::__construct($Context);
 	}
+        
 
+        
+	/**
+	 * Set content right
+	 */
+	protected function setRightContent() {
+            $Plot = new Activity\Plot\Stroke($this->Context);
+            $this->addRightContent('stroke', __('Stroke'), $Plot);
+            $Plot = new Activity\Plot\Swolf($this->Context);
+            $this->addRightContent('swolf', __('SWOLF'), $Plot);
+		
+        }
+        
 	/**
 	 * Set content
 	 */
 	protected function setContent() {
 		$this->withShadow = true;
 		$this->addTable();
-
+ 
 	}
-
+ 
 	/**
 	 * Add: table
 	 */
@@ -39,6 +54,5 @@ class SectionSwimLaneRow extends TrainingViewSectionRow {
 		$Table = new TableSwimLane($this->Context);
 		$this->Code = $Table->getCode();
 	}
-
 
 }

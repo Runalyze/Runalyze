@@ -64,10 +64,8 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
-                if ($this->Context->swimdata()->has(Swimdata\Object::STROKE) && $this->Context->trackdata()->has(Trackdata\Object::DISTANCE)) {
-			$Plot = new Activity\Plot\Stroke($this->Context);
-			$this->addRightContent('stroke', __('Stroke'), $Plot);        
-                }
+
+                
 	}
 
 	/**
@@ -139,6 +137,11 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
                     }	
                     if($this->Context->activity()->swolf() > 0) {
                         $Swolf = new BoxedValue($this->Context->activity()->swolf(), '', __('Swolf'));
+                        $Swolf->defineAsFloatingBlock('w50');    
+                        $this->BoxedValues[] = $Swolf;
+                    }	
+                    if($this->Context->swimdata()->poollength() > 0) {
+                        $Swolf = new BoxedValue($this->Context->swimdata()->poollength()/10, 'm', __('Pool length'));
                         $Swolf->defineAsFloatingBlock('w50');    
                         $this->BoxedValues[] = $Swolf;
                     }	
