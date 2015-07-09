@@ -16,7 +16,8 @@ class SectionLaps extends TrainingViewSectionTabbed {
 	/**
 	 * Set header and rows
 	 */
-	protected function setHeaderAndRows() {if (!$this->Context->activity()->splits()->isEmpty() && $this->Context->activity()->splits()->totalDistance() > 0) {
+	protected function setHeaderAndRows() {
+                if (!$this->Context->activity()->splits()->isEmpty() && $this->Context->activity()->splits()->totalDistance() > 0) {
 			$this->appendRowTabbed( new SectionLapsRowManual($this->Context), __('Manual Laps') );
 		}
 		$this->Header = __('Laps');

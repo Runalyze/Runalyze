@@ -6,7 +6,7 @@
 
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Model\Swimdata;
+
 /**
  * Row: Miscellaneous
  * 

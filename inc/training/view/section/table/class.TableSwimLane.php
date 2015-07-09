@@ -6,7 +6,8 @@
 
 use Runalyze\Model\Trackdata;
 use Runalyze\Model\Swimdata;
-
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
 
 /**
  * Display swim lanes
@@ -36,7 +37,8 @@ class TableSwimLane extends TableLapsAbstract {
 
 		$this->Code .= '<table class="fullwidth zebra-style">';
 		$this->Code .= '<thead><tr>';
-                    $this->Code .= '<th>'.__('Distance').'</th>';
+                $this->Code .= '<th></th>';
+                $this->Code .= '<th>'.__('Distance').'</th>';
 		$this->Code .= '<th>'.__('Time').'</th>';
 		$this->Code .= '<th>'.__('Swolf').'</th>';
                 $this->Code .= '<th>'.__('Strokes').'</th>';
@@ -48,18 +50,23 @@ class TableSwimLane extends TableLapsAbstract {
                 $Time = new Trackdata\Loop($this->Context->trackdata());
       
                 $lasttime = 0;
+                $i = 1;
                 while ($Loop->nextStep()) {
-                   
+                        
                     $duration = $Time->current('time') - $lasttime;
+                    $duration = new Duration($duration);
+                    $distance = new Distance($Time->current('distance'));
                     $this->Code .= '<tr class="r">';
-                    $this->Code .= '<td>'.$Time->current('distance').'</td>';
-                    $this->Code .= '<td>'.$duration.'</td>';
+                    $this->Code .= '<td>'.$i.'.</td>';
+                    $this->Code .= '<td>'.$distance->string(false, 3).'</td>';
+                    $this->Code .= '<td>'.$duration->string().'</td>';
                     $this->Code .= '<td>'.($duration + $Loop->stroke()).'</td>';
                     $this->Code .= '<td>'.$Loop->stroke().'</td>';
                     $this->Code .= '<td>'.$Loop->stroketype().'</td>';
                     $this->Code .= '</tr>';      
                     $lasttime = $Time->current('time');
                     $Time->move('time', 1);
+                    $i++;
                 }
 
 
