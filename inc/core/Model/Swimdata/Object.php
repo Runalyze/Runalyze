@@ -48,6 +48,12 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	const STROKETYPE = 'stroketype';
         
+	/**
+	 * Key: swolf
+	 * @var string
+	 */
+	const SWOLF = 'swolf';     
+        
         
         
 	/**
@@ -148,6 +154,17 @@ class Object extends Model\Object implements Model\Loopable {
                 $distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
                 $trackdata->set(Trackdata\Object::DISTANCE, $distance);
             }
+        }
+        
+        /*
+         * Create swolf array
+         */
+        public function swolfArray() {
+            if($this->stroke() && !$trackdata->has(Trackdata\Object::TIME)) {
+                $distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
+                //Swimdata\Object::SW
+
+                }
         }
         
         /*

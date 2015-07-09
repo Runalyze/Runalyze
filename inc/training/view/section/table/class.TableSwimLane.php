@@ -8,7 +8,7 @@ use Runalyze\Model\Trackdata;
 use Runalyze\Model\Swimdata;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
-
+use Runalyze\Data\Stroketype;
 /**
  * Display swim lanes
  * 
@@ -52,7 +52,7 @@ class TableSwimLane extends TableLapsAbstract {
                 $lasttime = 0;
                 $i = 1;
                 while ($Loop->nextStep()) {
-                        
+                    $stroketype = new Stroketype($Loop->stroketype());
                     $duration = $Time->current('time') - $lasttime;
                     $duration = new Duration($duration);
                     $distance = new Distance($Time->current('distance'));
@@ -62,7 +62,7 @@ class TableSwimLane extends TableLapsAbstract {
                     $this->Code .= '<td>'.$duration->string().'</td>';
                     $this->Code .= '<td>'.($duration + $Loop->stroke()).'</td>';
                     $this->Code .= '<td>'.$Loop->stroke().'</td>';
-                    $this->Code .= '<td>'.$Loop->stroketype().'</td>';
+                    $this->Code .= '<td>'.$stroketype->shortstring().'</td>';
                     $this->Code .= '</tr>';      
                     $lasttime = $Time->current('time');
                     $Time->move('time', 1);

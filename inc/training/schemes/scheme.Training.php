@@ -11,7 +11,7 @@ $HIDDEN_KEYS = array(
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_pace', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'pauses',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf'
 );
 
 $FIELDSETS = array(
@@ -43,7 +43,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route', 'pool_length'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -683,7 +683,8 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Pool length'
+						'label'		=> 'Pool length',
+                                                 'unit'		=> FormularUnit::$M
 					)
 	),   
 );
