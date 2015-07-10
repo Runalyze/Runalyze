@@ -32,7 +32,6 @@ class RunalyzeJsonAnalyzer {
 				$this->NumberOf[$TableName]++;
 			}
 		}
-
 		$Reader->close();
 	}
 
@@ -86,19 +85,19 @@ class RunalyzeJsonAnalyzer {
 	 */
 	protected function expectedTables() {
 		return array(
-			'runalyze_account',
-			'runalyze_clothes',
-			'runalyze_conf',
-			'runalyze_dataset',
-			'runalyze_plugin',
-			'runalyze_plugin_conf',
-			'runalyze_route',
-			'runalyze_shoe',
-			'runalyze_sport',
-			'runalyze_training',
-			'runalyze_trackdata',
-			'runalyze_type',
-			'runalyze_user'
+			'account',
+			'clothes',
+			'conf',
+			'dataset',
+			'plugin',
+			'plugin_conf',
+			'route',
+			'shoe',
+			'sport',
+			'training',
+			'trackdata',
+			'type',
+			'user'
 		);
 	}
 }
