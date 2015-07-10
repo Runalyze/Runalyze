@@ -46,6 +46,8 @@ class TrainingInputSplits extends FormularField {
 		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">'.__('round for 100m').'</span></p>';
 		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">'.__('apply as total distance').'</span></p>';
 		$Inputs .= '<p><span class="link" onclick="allSplitsActive();">'.__('all active').'</span> - <span class="link" onclick="allSplitsRest();">'.__('all resting').'</span></p>';
+		$Inputs .= '<p>'.__('alternating:').' <span class="link" onclick="evenSplits(0); oddSplits(1);">'.__('first resting').'</span>';
+		$Inputs .= ' - <span class="link" onclick="evenSplits(1); oddSplits(0);">'.__('first active').'</span></p>';
 		$Inputs .= '<textarea id="defaultInputSplit" class="hide">'.HTML::textareaTransform($this->getInnerDivForSplit()).'</textarea>';
 
 		return $Inputs;
