@@ -66,7 +66,7 @@ class ConfigTabEquipment extends ConfigTab {
                                                     
 			$Code .= '              <td><input type="text" size="3" name="equipmenttype[max_km]['.$id.']" value="'.$Data['max_km'].'"></td>
                                                 <td><input type="text" size="3" name="equipmenttype[max_time]['.$id.']" value="'.$Data['max_time'].'"></td>
-                                                <td><select name="type[sportid]['.$id.']">';
+                                                <td><select name="type[sportid]['.$id.']"><option value="all">'.__('all').'</option>';
                         $Sports = SportFactory::AllSports();
 			foreach ($Sports as $SData) {
 				$Code .= '<option value="'.$SData['id'].'"'.HTML::Selected($SData['id'] == $Data['sportid']).'>'.$SData['name'].'</option>';
@@ -133,7 +133,7 @@ class ConfigTabEquipment extends ConfigTab {
 	 * Parse all post values 
 	 */
 	public function parsePostData() {
-            //Equipment
+
 		$Equipment   = EquipmentFactory::AllEquipment();
 		$Equipment[] = array('id' => -1);
 		
@@ -164,7 +164,7 @@ class ConfigTabEquipment extends ConfigTab {
 		}
 
 		EquipmentFactory::reInitAllEquipment();
-                //EquipmentTypeType
+
             	$EquipmentType   = EquipmentFactory::AllTypes();
 		$EquipmentType[] = array('id' => -1);
 		

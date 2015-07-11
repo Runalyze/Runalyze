@@ -115,6 +115,7 @@ class TrainingFormular extends StandardFormular {
 		$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
 		$Fieldset = new FormularFieldset( __('Delete activity') );
+                
 		$Fieldset->addWarning($DeleteLink);
 		$Fieldset->setCollapsed();
 
@@ -126,6 +127,7 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function initEquipmentFieldset() {
             $Fieldset = new FormularFieldset( __('Equipment') );
+            $eqt = EquipmentFactory::getEquipmentforFormular();
             $this->addFieldset($Fieldset);
 
         }

@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
   `distance` decimal(6,2) NOT NULL DEFAULT '0.00',
   `time` int(11) NOT NULL DEFAULT '0',
   `additional_km` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `date_start` int(11) NOT NULL DEFAULT '0',
-  `date_end` int(11) NOT NULL DEFAULT '0',
+  `date_start` DATE NOT NULL ,
+  `date_end` DATE NOT NULL,
   `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

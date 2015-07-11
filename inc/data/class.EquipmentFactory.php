@@ -162,12 +162,25 @@ class EquipmentFactory {
 	 */
 	static public function recalculateAllEquipment()
 	{
-		$Statement = DB::getInstance()->query('UPDATE runalyze_equipment CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` FROM runalyze_equipment eqp LEFT JOIN runalyze_activity_equipment aeqp ON eqp.id = aeqp.equipmentid LEFT JOIN runalyze_training tr ON aeqp.activityid = tr.id WHERE eqp.accountid = '.SessionAccountHandler::getId().' GROUP BY eqp.id) AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
+		$Statement = DB::getInstance()->query('UPDATE runalyze_equipment CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` FROM `'.PREFIX.'equipment eqp LEFT JOIN `'.PREFIX.'activity_equipment aeqp ON eqp.id = aeqp.equipmentid LEFT JOIN `'.PREFIX.'training tr ON aeqp.activityid = tr.id WHERE eqp.accountid = '.SessionAccountHandler::getId().' GROUP BY eqp.id) AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
 
 		self::clearAllEquipment();
 		Cache::delete(self::CACHE_KEY_EQ);
 	}
-        
+
+        /**
+         * Get equipment array for formular
+         */
+        static public function getEquipmentforFormular() {
+                $Statement = DB::getInstance()->query('SELECT eq.id, eq.name, eqt.id as `typeid`, eqt.name as `typename`, eqt.input as `typeinput`, eqs.sportid from `'.PREFIX.'equipment` eq LEFT JOIN `'.PREFIX.'equipment_type` eqt ON eq.typeid = eqt.id LEFT JOIN `'.PREFIX.'equipment_sport` eqs ON eqt.id = eqs.equipment_typeid WHERE eq.accountid = '.SessionAccountHandler::getId());
+                $equipment = $Statement->fetchAll();
+                $formdata = array();
+                foreach($equipment as $eqt) {
+                    $formdata[$eqt['sportid']][$eqt['typename']] = $eqt['typeinput'];
+                }
+
+                return $formdata;
+        }
 	/**
 	 * Get search-link for one ID
 	 * @param int $id
