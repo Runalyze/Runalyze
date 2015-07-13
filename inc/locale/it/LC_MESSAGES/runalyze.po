@@ -2,24 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 18:54+0200\n"
-"PO-Revision-Date: 2015-06-19 14:20+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Italian <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/it/>\n"
-"Language: it\n"
+"POT-Creation-Date: 2015-07-13 14:17+0200\n"
+"PO-Revision-Date: 2014-11-05 20:52+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Poedit 1.5.7\n"
 "X-Poedit-KeywordsList: __;_ne;_n;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: login.php:27 inc/tpl/tpl.installerHeader.php:23
 msgid "Please login"
-msgstr "Accedi"
+msgstr ""
 
 #: index.php:47 inc/training/view/section/class.SectionMiscellaneous.php:34
 #: inc/training/schemes/scheme.Training.new.php:41
@@ -28,62 +26,58 @@ msgstr "Accedi"
 #: inc/core/Configuration/Category/Misc.php:46
 #: inc/class.FrontendSharedStatistics.php:152
 msgid "Miscellaneous"
-msgstr "Altro"
+msgstr ""
 
 #: index.php:74
 msgid ""
 "<em>There are no statistics available. Activate a plugin in your "
 "configuration.</em>"
 msgstr ""
-"<em>Non ci sono statistiche disponibili. Attiva un plugin nelle tue "
-"configurazioni.</em>"
 
 #: inc/html/formular/class.FormularValueParser.php:159
 msgid "The field can not be left empty."
-msgstr "Questo campo non puo' essere lasciato vuoto."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:183
 msgid "Please enter a number."
-msgstr "Inserire un numero."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:188
 #: inc/html/formular/class.FormularValueParser.php:208
 msgid "The value is too large."
-msgstr "Il valore inserito e' troppo lungo."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:246
 msgid "The date could not be parsed."
-msgstr "La data e' stata inserita in modo errato."
+msgstr ""
 
 #: inc/html/formular/class.FormularValueParser.php:279
 msgid "The time could not be read."
 msgstr ""
-"Non e' stato possibile visualizzare la data, probabilmente il formato "
-"inserito e' errato."
 
 #: inc/html/formular/class.FormularValueParser.php:308
 #: inc/html/formular/class.FormularValueParser.php:338
 msgid "You have to enter a time."
-msgstr "Inserire una data."
+msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
-msgstr "Invia"
+msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:148
 msgid "Create"
-msgstr "Creare"
+msgstr ""
 
 #: inc/html/formular/class.StandardFormular.php:151
 #: inc/system/config/class.ConfigTab.php:92
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
 #: inc/class.AdminView.php:189
 msgid "Save"
-msgstr "Salva"
+msgstr ""
 
 #: inc/html/formular/class.FormularField.php:210
 msgid "Your input is not allowed."
-msgstr "Il valore inserito non e' valido."
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/training/view/section/class.SectionOverviewRow.php:49
@@ -102,7 +96,7 @@ msgstr "Il valore inserito non e' valido."
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:126
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:227
 msgid "Time"
-msgstr "Tempo"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -118,42 +112,42 @@ msgstr "Tempo"
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:33
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:587
 msgid "Date"
-msgstr "Data"
+msgstr ""
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:87
 msgid "Time of day"
-msgstr "Orario"
+msgstr ""
 
 #: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
 msgid "Total"
-msgstr "Totale"
+msgstr ""
 
 #: inc/html/class.Ajax.php:438 inc/core/View/Leaflet/Activity.php:251
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr "Start"
+msgstr ""
 
 #: inc/html/class.Ajax.php:439
 msgid "previous"
-msgstr "precedente"
+msgstr ""
 
 #: inc/html/class.Ajax.php:441 inc/class.DataBrowser.php:256
 msgid "next"
-msgstr "successivo"
+msgstr ""
 
 #: inc/html/class.Ajax.php:442
 msgid "End"
-msgstr "Fine"
+msgstr ""
 
 #: inc/html/class.Ajax.php:445 inc/html/class.Ajax.php:446
 #: inc/html/class.Ajax.php:447 inc/html/class.Ajax.php:448
 #: inc/html/class.Ajax.php:449
 msgid "per page"
-msgstr "per pagina"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:134
@@ -179,7 +173,7 @@ msgstr "per pagina"
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:228
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:588
 msgid "Distance"
-msgstr "Distanza"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:31
 #: inc/training/search/class.SearchFormular.php:137
@@ -190,7 +184,7 @@ msgstr "Distanza"
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:66
 msgid "Duration"
-msgstr "Durata"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:32
 #: inc/training/view/section/class.SectionOverviewRow.php:51
@@ -210,7 +204,7 @@ msgstr "Durata"
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:235
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:643
 msgid "Pace"
-msgstr "Ritmo"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:33
 #: inc/training/search/class.SearchFormular.php:135
@@ -223,11 +217,11 @@ msgstr "Ritmo"
 #: inc/class.DatasetLabels.php:29
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:26
 msgid "Elevation"
-msgstr "Altitudine"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:34
 msgid "avg. Heartrate"
-msgstr "frequenza cardiaca media"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:35
 #: inc/training/view/section/class.SectionHeartrateRow.php:64
@@ -236,7 +230,7 @@ msgstr "frequenza cardiaca media"
 #: inc/training/view/section/class.SectionCompositeRow.php:174
 #: inc/training/view/section/class.SectionCompositeRow.php:177
 msgid "max. Heartrate"
-msgstr "Frequenza cardiaca massima"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:36
 #: inc/training/search/class.SearchFormular.php:138
@@ -247,7 +241,7 @@ msgstr "Frequenza cardiaca massima"
 #: inc/core/View/Activity/Plot/Series/Temperature.php:37
 #: inc/class.DatasetLabels.php:34
 msgid "Temperature"
-msgstr "Temperatura"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:37
 #: inc/training/search/class.SearchFormular.php:144
@@ -256,7 +250,7 @@ msgstr "Temperatura"
 #: inc/training/class.TrainingFormular.php:203 inc/class.DatasetLabels.php:45
 #: inc/data/class.Cadence.php:92
 msgid "Cadence"
-msgstr "Cadenza"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:38
 #: inc/training/search/class.SearchFormular.php:152
@@ -271,7 +265,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:88
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:39
 msgid "Ground contact"
-msgstr "Tempo di contatto con il terreno"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:150
@@ -281,7 +275,7 @@ msgstr "Tempo di contatto con il terreno"
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:40
 #: inc/class.DatasetLabels.php:48
 msgid "Vertical oscillation"
-msgstr "Oscillazione verticale"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/view/class.VDOTinfo.php:74
@@ -303,7 +297,7 @@ msgstr "Oscillazione verticale"
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:195
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:531
 msgid "VDOT"
-msgstr "VDOT"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/search/class.SearchFormular.php:149
@@ -314,62 +308,62 @@ msgstr "VDOT"
 #: inc/draw/class.PlotSumData.php:218 inc/class.DatasetLabels.php:33
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:242
 msgid "TRIMP"
-msgstr "TRIMP (Impulso allenante)"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:239
 msgid "JDpoints"
-msgstr "Punti Jack Daniels (JD)"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:47
 msgid "descending"
-msgstr "discendente"
+msgstr ""
 
 #: inc/training/search/class.FormularSelectSearchSort.php:47
 msgid "ascending"
-msgstr "ascendente"
+msgstr ""
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:331
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:419
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:477
 msgid "to"
-msgstr "fino"
+msgstr ""
 
 #: inc/training/search/class.SearchResults.php:385
 msgid "The multi editor could not be located."
-msgstr "Il multi editor non e' stato trovato."
+msgstr ""
 
 #: inc/training/search/class.SearchResults.php:418
 #, php-format
 msgid "Found %s activities"
-msgstr "Sono state trovate %s attività'"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:53
 msgid "Search activities"
-msgstr "Cerca attività"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:66
 msgid "Search"
-msgstr "Cerca"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:83
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:450
 msgid "Time range"
-msgstr "Arco temporale"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:91
 msgid "Sorting"
-msgstr "Ordina"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:100
 msgid "Send to multi editor"
-msgstr "Invia al multi editor"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:101
 #, php-format
 msgid "Our multi editor is limited to a maximum of %d activities."
-msgstr "Il multi editor e' limitato ad un massimo di %d attivita'."
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:115
 #: inc/training/schemes/scheme.Training.new.php:16
@@ -378,31 +372,31 @@ msgstr "Il multi editor e' limitato ad un massimo di %d attivita'."
 #: inc/training/schemes/scheme.Training.php:81
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Sport"
-msgstr "Sport"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:119
 msgid "Choose sport(s)"
-msgstr "Scegli la/le tipologia/e di sport"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:129
 #: inc/system/config/class.ConfigTabPlugins.php:172
 msgid "Type"
-msgstr "Tipologia"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:129
 msgid "Choose activity type(s)"
-msgstr "Scegli la tipologia di allenamento"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:130
 #: inc/training/schemes/scheme.Training.new.php:451
 #: inc/training/schemes/scheme.Training.php:455
 #: inc/training/schemes/scheme.Shoe.php:9 inc/class.DatasetLabels.php:40
 msgid "Shoe"
-msgstr "Scarpe"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:130
 msgid "Choose shoe(s)"
-msgstr "Scegli le scarpe"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:131
 #: inc/training/schemes/scheme.Training.new.php:373
@@ -410,40 +404,40 @@ msgstr "Scegli le scarpe"
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:32
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:355
 msgid "Weather"
-msgstr "Meteo"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:131
 msgid "Choose weather conditions"
-msgstr "Scegli le condizioni meteorologiche"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:132
 #: inc/training/schemes/scheme.Training.new.php:396
 #: inc/training/schemes/scheme.Training.php:400
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:396
 msgid "Clothing"
-msgstr "Abbigliamento"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:132
 msgid "Choose clothing"
-msgstr "Scegli l'abbigliamento"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:136
 #: inc/training/schemes/scheme.Training.new.php:384
 #: inc/training/schemes/scheme.Training.php:388 inc/class.DatasetLabels.php:36
 msgid "Route"
-msgstr "Percorso"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:139
 #: inc/training/schemes/scheme.Training.new.php:419
 #: inc/training/schemes/scheme.Training.php:423 inc/class.DatasetLabels.php:39
 msgid "Comment"
-msgstr "Commento"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:140
 #: inc/training/schemes/scheme.Training.new.php:233
 #: inc/training/schemes/scheme.Training.php:237
 msgid "avg. HR"
-msgstr "Frequenza cardiaca media"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:141
 #: inc/training/view/section/class.SectionHeartrateRow.php:77
@@ -452,141 +446,135 @@ msgstr "Frequenza cardiaca media"
 #: inc/training/schemes/scheme.Training.new.php:222
 #: inc/training/schemes/scheme.Training.php:226 inc/class.DatasetLabels.php:30
 msgid "Calories"
-msgstr "Calorie"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:142
 #: inc/training/schemes/scheme.Training.new.php:429
 #: inc/training/schemes/scheme.Training.php:433
 msgid "Partner"
-msgstr "Partner"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:143
 #: inc/training/schemes/scheme.Training.new.php:244
 #: inc/training/schemes/scheme.Training.php:248
 msgid "max. HR"
-msgstr "Frequenza cardiaca massima"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:145
 msgid "Is public"
-msgstr "Pubblico"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:146
 #: inc/draw/class.PlotSumData.php:222
 msgid "JD points"
-msgstr "Punti Jack Daniels (JD)"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:148
 msgid "Uses VDOT"
-msgstr "Usa VDOT"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:151
 #: inc/training/schemes/scheme.Training.new.php:440
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/core/View/Activity/Dataview.php:451 inc/class.DatasetLabels.php:44
 msgid "Running drills"
-msgstr "Esercitazioni sulla corsa"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:207
 #: inc/system/config/class.ConfigTabAccount.php:58
 msgid "Yes"
-msgstr "Si"
+msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:208
 #: inc/system/config/class.ConfigTabAccount.php:59
 msgid "No"
-msgstr "No"
+msgstr ""
 
 #: inc/training/view/class.TrainingViewSectionTabbedPlot.php:63
 #: inc/plugin/class.PluginStat.php:245
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:295
 msgid "All"
-msgstr "Tutte"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:54
 #, php-format
 msgid "VDOT calculation for: %s"
-msgstr "Calcolo VDOT per: %s"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:63
 msgid "Standard calculation: As competition"
-msgstr "Calcolo standard: come competizione"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:66
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given competition."
 msgstr ""
-"Tutte le formule tradizionali sono usate per calcolare un valore VDOT per "
-"una certa gara."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
-msgstr "Correzione: con Frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:95
 msgid "Jack Daniels has tables to compare &#37;HRmax and &#37;vVDOT."
-msgstr "Jack Daniels ha tabelle per confrontare la FC Max e VDOT."
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:96
 msgid ""
 "Because of a lot of influencing factors these computations are not always "
 "accurate."
 msgstr ""
-"A causa dei molti fattori che influenzano i valori, questi non sono sempre "
-"accurati."
 
 #: inc/training/view/class.VDOTinfo.php:100
 #: inc/training/schemes/scheme.UserData.php:19
 #: inc/core/View/Activity/Plot/Series/Heartrate.php:55
 msgid "Heartrate"
-msgstr "Frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:108
 msgid "equals"
-msgstr "corrisponde"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:121
 msgid "Correction: based on correction factor"
-msgstr "Correzione: con fattore di correttura"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:124
 msgid "To consider some individual factors, we use a correction factor."
 msgstr ""
-"Per considerare alcuni fattori individuali, usiamo un fattore di correzione."
 
 #: inc/training/view/class.VDOTinfo.php:125
 msgid "This factor is based on your <em>best</em> competition."
-msgstr "Questa fattore e' basato sulla tua <em>migliore</em> competizione."
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:129
 msgid "Correction factor"
-msgstr "Fattore di correzione"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:137
 msgid "uncorrected"
-msgstr "non corretto"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:170
 msgid "Correction: considering elevation"
-msgstr "Correzione: considerare l'altitudine"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:173
 msgid "This correction method is currently unused."
-msgstr "Questo metodo di correzione non viene attualmente usato."
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:177
 #: inc/training/view/class.ElevationInfo.php:149
 msgid "Up/Down"
-msgstr "Salita/Discesa"
+msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:185
 msgid "Influence"
-msgstr "Influenza della distanza"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
-#, fuzzy
 msgid "Running Dynamics"
-msgstr "Esercitazioni sulla corsa"
+msgstr ""
 
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:24
@@ -596,39 +584,38 @@ msgstr "Esercitazioni sulla corsa"
 #: inc/training/schemes/scheme.Training.php:413
 #: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:420
 msgid "Laps"
-msgstr "Giri"
+msgstr ""
 
 #: inc/training/view/section/class.SectionLaps.php:23
 #: inc/core/View/Activity/Plot/LapsManual.php:39
 msgid "Manual Laps"
-msgstr "Giri inseriti manualmente"
+msgstr ""
 
 #: inc/training/view/section/class.SectionLaps.php:27
 #: inc/core/View/Activity/Plot/LapsComputed.php:38
 msgid "Computed Laps"
-msgstr "Giri calcolati dal dispositivo"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
-msgstr "Dati di distanza e altitudine"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPace.php:17
 msgid "Pace data"
-msgstr "Pace"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:20
 msgid "Heartrate plot"
-msgstr "Grafico sulla frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:28
 #: inc/training/view/section/class.SectionPaceRow.php:28
 msgid "You'll be soon able to configure your own zones."
 msgstr ""
-"Presto sara' possibile configurare le vostre zone della frequenza cardiaca."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:30
 msgid "Heartrate zones"
-msgstr "Zone della frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:51
 #: inc/training/view/section/class.SectionHeartrateRow.php:54
@@ -636,71 +623,71 @@ msgstr "Zone della frequenza cardiaca"
 #: inc/training/view/section/class.SectionCompositeRow.php:161
 #: inc/training/view/section/class.SectionCompositeRow.php:164
 msgid "&oslash; Heartrate"
-msgstr "&oslash; Frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:217
 msgid "Course"
-msgstr "Percorso"
+msgstr ""
 
 #: inc/training/view/section/class.SectionLapsRowManual.php:49
 #: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
-msgstr "Piu' informazioni sui tuoi giri"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:55
 #: inc/training/view/section/class.SectionCompositeRow.php:203
 msgid "&oslash; Gradient"
-msgstr "&oslash; Pendenza"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:63
 #: inc/training/view/section/class.SectionCompositeRow.php:206
 msgid "Elevation up/down"
-msgstr "Salita/Discesa"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
 #: inc/training/view/section/class.SectionCompositeRow.php:230
 msgid "More about elevation"
-msgstr "Di più' riguardo l'altitudine"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:235
 msgid "Elevation data were corrected."
-msgstr "I dati sull'altitudine sono stati corretti."
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:237
 msgid "Elevation data are not corrected."
-msgstr "I dati sull'altitudine non sono corretti."
+msgstr ""
 
 #: inc/training/view/section/class.SectionOverviewRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:99
 #: inc/training/schemes/scheme.Training.new.php:177
 #: inc/training/schemes/scheme.Training.php:181
 msgid "Elapsed time"
-msgstr "Tempo trascorso"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:51
 msgid "Additional notes"
-msgstr "Appunti aggiuntivi"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:55
 msgid "Cadence plot"
-msgstr "Grafico della cadenza"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:60
 msgid "Power plot"
-msgstr "Potenza"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:65
 msgid "Temperature plot"
-msgstr "Grafico sulla temperatura"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:108
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:75
 msgid "Stride Length"
-msgstr "Lunghezza del passo"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:111
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:118
@@ -711,27 +698,27 @@ msgstr "Lunghezza del passo"
 #: inc/class.DatasetLabels.php:49
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Power"
-msgstr "Potenza (Watt)"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:146
 msgid "Weather condition"
-msgstr "Condizioni climatiche"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:157
 #: inc/class.DatasetLabels.php:37
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Clothes"
-msgstr "Abbigliamento"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:174
 msgid "Running shoe"
-msgstr "Scarpe da corsa"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:187
 #: inc/class.DatasetLabels.php:43
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
-msgstr "Compagno d'allenamento"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:211
 #: inc/training/schemes/scheme.Training.new.php:48
@@ -741,62 +728,60 @@ msgstr "Compagno d'allenamento"
 #: inc/training/schemes/scheme.UserData.php:29
 #: inc/training/schemes/scheme.UserData.php:128
 msgid "Notes"
-msgstr "Appunti"
+msgstr ""
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:224
 #, php-format
 msgid ""
 "You created this training on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
-"Hai creato questo allenamento il <strong>%s</strong> alle <strong>%s</"
-"strong>."
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:229
 #, php-format
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
-msgstr "Ultima modifica il <strong>%s</strong> alle <strong>%s</strong>."
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:20
 msgid "Pace plot"
-msgstr "Grafico del pace (min./km)"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:30
 #: inc/training/view/section/class.SectionCompositeRow.php:52
 msgid "Pace zones"
-msgstr "Zone del ritmo di corsa"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:58
 #: inc/training/view/section/class.SectionPaceRow.php:62
 #: inc/training/view/section/class.SectionCompositeRow.php:125
 #: inc/training/view/section/class.SectionCompositeRow.php:129
 msgid "&oslash; Speed"
-msgstr "&oslash; Velocita'"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:59
 #: inc/training/view/section/class.SectionPaceRow.php:61
 #: inc/training/view/section/class.SectionCompositeRow.php:126
 #: inc/training/view/section/class.SectionCompositeRow.php:128
 msgid "&oslash; Pace"
-msgstr "&oslash; Pace"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:140
 msgid "Training points"
-msgstr "Punti di allenamento"
+msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:84
 #: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
-msgstr "Di più' riguardo al calcolo VDOT"
+msgstr ""
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
 msgid "&oslash; bpm"
-msgstr "&oslash; bpm"
+msgstr ""
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:58
 msgid "elev."
-msgstr "Altitudine"
+msgstr ""
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/system/config/class.ConfigTabTypes.php:48
@@ -807,148 +792,139 @@ msgstr ""
 
 #: inc/training/view/section/table/class.TableZonesPace.php:54
 msgid "faster"
-msgstr "Piu' veloce"
+msgstr ""
 
 #: inc/training/view/section/table/class.TableZonesAbstract.php:102
 msgid "Zone"
-msgstr "Zona"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:47
 msgid "Stride length plot"
-msgstr "Grafico sulla lunghezza del passo"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:52
 msgid "Oscillation plot"
-msgstr "Grafico sul movimento verticale (oscillazione)"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:57
 msgid "Ground contact plot"
-msgstr "Tempo di contatto con il terreno"
+msgstr ""
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
-msgstr "Panoramica"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHeartrate.php:17
 msgid "Heartrate data"
-msgstr "Dati sulla frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/section/class.SectionRouteOnlyElevation.php:17
 msgid "Elevation data"
-msgstr "Dati sull'altitudine"
+msgstr ""
 
 #: inc/training/view/section/class.SectionComposite.php:17
 msgid "Composite data"
-msgstr "Dati compositi"
+msgstr ""
 
 #: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
-msgstr "Diagramma composito"
+msgstr ""
 
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
 msgstr ""
-"Presto sara' possibile configurare le proprie zone della frequenza cardiaca."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
-msgstr "Zone della frequenza cardiaca"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:112
 #, php-format
 msgid "Elevation calculation for: %s"
-msgstr "Calcolo dell'altitudine per: %s"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:121
 msgid "apply data"
-msgstr "Sostituire i dati con questi"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:126
 msgid "General data"
-msgstr "Dati generali"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:129
 msgid "manual value"
-msgstr "Valore manuale"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:129
 msgid "If you did not insert a value by hand, this value has been calculated."
 msgstr ""
-"Se non sono stati inseriti dati riguardo l'altitudine manualmente, verra' "
-"preso il valore calcolato automaticamente."
 
 #: inc/training/view/class.ElevationInfo.php:133
 msgid "Lowest point"
-msgstr "Punto più' basso"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:137
 msgid "calculated value"
-msgstr "Valore calcolato"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:137
 msgid ""
 "This value is calculated with your current configuration. The saved value "
 "may be outdated."
 msgstr ""
-"Questo valore e' stato calcolato con le impostazioni attuali. Nella "
-"panoramica sugli allenamenti può essere salvato un valore obsoleto."
 
 #: inc/training/view/class.ElevationInfo.php:141
 msgid "Highest point"
-msgstr "Punto più alto"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:145
 msgid "Gradient"
-msgstr "Pendenza"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:165
 msgid "You can choose the algorithm and threshold in the configuration window."
 msgstr ""
-"Puoi scegliere autonomamente gli Algoritmi e i valori predefiniti da "
-"utilizzare, nella sezione impostazioni."
 
 #: inc/training/view/class.ElevationInfo.php:167
 msgid "Elevation data for different algorithms/thresholds"
-msgstr "Dati sull'altitudine per differenti algoritmi e valori predefiniti"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:180
 msgid ""
 "Elevation data for different algorithms/thresholds (based on original data)"
 msgstr ""
-"Dati sull'altitudine per differenti algoritmi/soglie (basato sui dati "
-"originali)"
 
 #: inc/training/view/class.ElevationInfo.php:205
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:67
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:396
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:141
 msgid "Threshold"
-msgstr "Soglia"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:242
 msgid "Elevation correction"
-msgstr "Correzione dell'altitudine"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:245
 msgid "Elevation data have been corrected."
-msgstr "I dati dell'altitudine sono stati corretti."
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:252
 msgid "Elevation data has not been corrected."
-msgstr "I dati sull'altitudine non sono stati corretti."
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:254
 msgid "correct now"
-msgstr "Correggere ora"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:269
 msgid "Compare algorithms"
-msgstr "Compara gli algoritmi"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:280
 msgid "Note for elevation data"
-msgstr "Appunti sui dati dell'elevazione"
+msgstr ""
 
 #: inc/training/view/class.ElevationInfo.php:284
 msgid ""
@@ -959,118 +935,122 @@ msgid ""
 "value (for up-/downwards). We give you therefore the possibility to choose "
 "algorithm and threshold such that the values fit your experience."
 msgstr ""
-"Il calcolo dell'altitudine risulta essere sempre molto complessa, dato che "
-"non esiste una singola soluzione corretta. Dati GPS errati possono essere "
-"corretti tramite dati-SRTM, tuttavia anche questi sono disponibili soltanto "
-"in una griglia di 90x90m e perciò non sempre accurati. Per rendere i dati "
-"più precisi possono essere usati degli specifici algoritmi. Questi algoritmi "
-"pero' differiscono da Software a software, perciò non si giungerà mai con "
-"differenti Software (come Garmin Connect, SportTracks, etc.) ad un valore "
-"univoco e identico relativo all'altitudine (metri in salita/discesa)."
 
 #: inc/training/view/class.TrainingView.php:52
 #: inc/system/class.SharedLinker.php:46
 msgid "Public link"
-msgstr "Link pubblico"
+msgstr ""
 
 #: inc/training/view/class.TrainingView.php:56
 msgid "Export"
-msgstr "Esporta"
+msgstr ""
 
 #: inc/training/view/class.TrainingView.php:57
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:219
 msgid "Edit"
-msgstr "Modifica"
+msgstr ""
 
 #: inc/training/view/class.TrainingView.php:60
 msgid "Show week"
-msgstr "Mostra settimana"
+msgstr ""
 
 #: inc/training/formular/class.TrainingSelectShoe.php:22
 msgid "select shoe"
-msgstr "Scegli le scarpe"
+msgstr ""
 
 #: inc/training/formular/class.TrainingSelectType.php:22
 msgid "select type"
-msgstr "Scegli la tipologia"
+msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:45
 msgid "add new lap"
-msgstr "aggiungi un nuovo giro"
+msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:46
 msgid "round for 100m"
-msgstr "giro da 100m"
+msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:47
 msgid "apply as total distance"
-msgstr "applica come distanza totale"
+msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:48
 msgid "all active"
-msgstr "tutti attivi"
+msgstr ""
 
 #: inc/training/formular/class.TrainingInputSplits.php:48
 msgid "all resting"
-msgstr "tutti a riposo"
+msgstr ""
 
-#: inc/training/formular/class.TrainingInputSplits.php:61
+#: inc/training/formular/class.TrainingInputSplits.php:49
+msgid "alternating:"
+msgstr ""
+
+#: inc/training/formular/class.TrainingInputSplits.php:49
+msgid "first resting"
+msgstr ""
+
+#: inc/training/formular/class.TrainingInputSplits.php:50
+msgid "first active"
+msgstr ""
+
+#: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
-msgstr "in"
+msgstr ""
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 #: inc/data/class.Splits.php:160
 msgid "Resting"
-msgstr "Riposo"
+msgstr ""
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 msgid "Active"
-msgstr "Attivo"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:22
 #: inc/training/schemes/scheme.Training.php:26
 #: inc/training/schemes/scheme.UserData.php:9
 msgid "General information"
-msgstr "Informazioni generali"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:55
 #: inc/training/schemes/scheme.Training.php:59
 msgid "Weather conditions"
-msgstr "Condizioni climatiche"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:61
 #: inc/training/schemes/scheme.Training.php:65
 #: inc/core/Configuration/Category/Privacy.php:91
 msgid "Privacy"
-msgstr "Privacy"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:89
 #: inc/training/schemes/scheme.Training.php:93 inc/class.DatasetLabels.php:24
 msgid "Activity type"
-msgstr "Tipologia di allenamento"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:131
 #: inc/training/schemes/scheme.Training.php:135
 msgid "Public"
-msgstr "Pubblico"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:142
 #: inc/training/schemes/scheme.Training.php:146
 msgid "Track"
-msgstr "Pista"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:285
 #: inc/training/schemes/scheme.Training.php:289
 msgid "VDOT for form"
-msgstr "VDOT per forma fisica"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:317
 #: inc/training/schemes/scheme.Training.php:321
 msgid "Cadence (Running)"
-msgstr "Cadenza (corsa)"
+msgstr ""
 
 #: inc/training/schemes/scheme.Training.new.php:319
 #: inc/training/schemes/scheme.Training.php:323
@@ -1078,8 +1058,6 @@ msgid ""
 "Unit is always - also for running - <em>rpm</em>, i.e. rounds (or steps with "
 "one foot) per minute,"
 msgstr ""
-"L'unita' di misura e' sempre - anche per la corsa - <em>rpm</em>, per "
-"esempio giri (o passi con un piede) per minuto"
 
 #: inc/training/schemes/scheme.Shoe.php:28 inc/tpl/tpl.loginWindow.php:79
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -1091,32 +1069,32 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:448
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:642
 msgid "Name"
-msgstr "Nome"
+msgstr ""
 
 #: inc/training/schemes/scheme.Shoe.php:40
 msgid "Purchase date"
-msgstr "Data d'acquisto"
+msgstr ""
 
 #: inc/training/schemes/scheme.Shoe.php:49
 msgid "prev. distance"
-msgstr "Distanza percorsa finora"
+msgstr ""
 
 #: inc/training/schemes/scheme.Shoe.php:65
 msgid "weigth"
-msgstr "Peso"
+msgstr ""
 
 #: inc/training/schemes/scheme.Shoe.php:83
 msgid "In use"
-msgstr "In uso"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:14
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:54
 msgid "Analysis"
-msgstr "Analisi"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:24
 msgid "Sleep"
-msgstr "Dormire (sonno)"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:56
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
@@ -1125,46 +1103,46 @@ msgstr "Dormire (sonno)"
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:160
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:186
 msgid "Weight"
-msgstr "Peso"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:66
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:38
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:40
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:114
 msgid "Resting HR"
-msgstr "Frequenza cardiaca a riposo"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:76
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:39
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:115
 msgid "Maximal HR"
-msgstr "Frequenza cardiaca massimale"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:86
 msgid "Body fat"
-msgstr "Grasso corporeo"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:96
 msgid "Body water"
-msgstr "Acqua (contenuta nel corpo)"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:106
 msgid "Body muscle"
-msgstr "Massa muscolare"
+msgstr ""
 
 #: inc/training/schemes/scheme.UserData.php:117
 msgid "Sleep Duration"
-msgstr "Durata del sonno"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:91
 #: inc/core/View/Activity/Form/Form.php:87
 msgid "Save and continue"
-msgstr "Salva e continua"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:146
 #: inc/core/View/Activity/Form/Form.php:100
 msgid "The activity has been successfully created."
-msgstr "L'allenamento e' stato inserito correttamente."
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:174
 msgid "Remove data series"
@@ -1190,14 +1168,12 @@ msgid "Ground contact time"
 msgstr ""
 
 #: inc/training/class.TrainingFormular.php:217
-#, fuzzy
 msgid "Original elevation"
-msgstr "Di più' riguardo l'altitudine"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:218
-#, fuzzy
 msgid "Corrected elevation"
-msgstr "Correggi dati dell'altitudine"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:222
 msgid "GPS path"
@@ -1206,22 +1182,22 @@ msgstr ""
 #: inc/training/class.TrainingFormular.php:238
 #: inc/core/View/Activity/Form/Form.php:118
 msgid "Permanently delete this activity"
-msgstr "Elimina definitivamente questo allenamento"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:242
 #: inc/core/View/Activity/Form/Form.php:122
 msgid "Delete activity"
-msgstr "Elimina allenamento"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:257
 #: inc/core/View/Activity/Form/Form.php:145
 msgid "Use elevation correction"
-msgstr "Usa correzione dell'altitudine"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:261
 #: inc/core/View/Activity/Form/Form.php:149
 msgid "Correct elevation data"
-msgstr "Correggi dati dell'altitudine"
+msgstr ""
 
 #: inc/training/class.TrainingFormular.php:264
 #: inc/core/View/Activity/Form/Form.php:152
@@ -1229,136 +1205,128 @@ msgid ""
 "Elevation data via GPS is very inaccurate. Therefore you can correct it via "
 "some satellite data."
 msgstr ""
-"Dati sull'altitudine via GPS sono inaccurati. Perciò puoi correggerli "
-"tramite dati satellitari."
 
 #: inc/core/Configuration/Category/General.php:148
 #: inc/system/config/class.ConfigTabGeneral.php:20
 msgid "General settings"
-msgstr "Impostazioni generali"
+msgstr ""
 
 #: inc/core/Configuration/Category/General.php:151
 msgid "Gender"
-msgstr "Sesso"
+msgstr ""
 
 #: inc/core/Configuration/Category/General.php:155
 msgid "Heart rate unit"
-msgstr "Battiti cardiaci"
+msgstr ""
 
 #: inc/core/Configuration/Category/General.php:159
 msgid "Main sport"
-msgstr "Sport principale"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:100
 #: inc/core/Configuration/Category/BasicEndurance.php:148
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:131
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:620
 msgid "Basic endurance"
-msgstr "Resistenza di fondo"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:102
 msgid "Minimal distance for longjogs"
-msgstr "Distanza minima per corse lunghe"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:103
 msgid "Every run above this distance will be rated."
-msgstr "Ogni corsa al di sopra di questa distanza sarà valutata."
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:107
 msgid "Days for longjogs"
-msgstr "Numero di giorni per le corse lunghe (di fondo)"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:108
 msgid "Number of days to look at for longjog goal."
-msgstr "Numero di giorni consigliato per la distanza delle corse lunghe."
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:111
 msgid "Days for week kilometer"
-msgstr "Numero di giorni per i km settimanali"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Number of days to look at for weekly kilometer goal."
-msgstr "Numero di giorni per l'obbiettivo-chilometrico settimanale."
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:115
 msgid "Days for week kilometer (minimum)"
-msgstr "Numero di giorni per Km-settimanali (minimo)"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "This value will be used if not enough data is available."
 msgstr ""
-"Questo valore verra' usato se non ci saranno abbastanza dati disponibili."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:119
 msgid "Factor for week kilometers"
-msgstr "Fattore per i Km settimanali"
+msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr "Percentuale come valore tra 0.00 e 1.00."
+msgstr ""
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
-msgstr "Cerca: risultati per pagina"
+msgstr ""
 
 #: inc/core/Configuration/Category/Misc.php:49
 msgid "Number of results displayed on each page."
-msgstr "Numero di risultati visualizzati su ogni pagina."
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr "Pubblica gli allenamenti"
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
 msgstr ""
-"Pubblica automaticamente ogni allenamento dopo la sua creazione/importazione."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr "Lista degli allenamenti pubblica"
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
-"Se attivo: Tutti possono vedere una lista di tutte le tue attività "
-"(pubbliche)."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr "Lista: allenamenti privati"
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
 "If activated: Display a summary for each private activity in the public "
 "activity list."
-msgstr "Se attivo: mostra le tue attività private nella lista pubblica."
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr "Lista pubblica: statistiche generali"
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
 msgstr ""
-"Mostra alcune statistiche generali al di sopra della lista delle attività/"
-"allenamenti"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
-msgstr "Visualizzazione pubblica: mostra la mappa"
+msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
-msgstr "La mappa può essere nascosta negli allenamenti/attivita' pubbliche"
+msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Activity view"
-msgstr "Visualizzazione delle attività"
+msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Number of decimals"
-msgstr "Quantita' di cifre decimali (dopo la virgola)"
+msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
@@ -1370,11 +1338,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:324
 msgid "Plots: combination"
-msgstr "Diagramma: combinazione"
+msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:328
 msgid "Plots: precision"
-msgstr "Diagramma: precisione"
+msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:329
 msgid "How many data points should be plotted?"
@@ -1819,7 +1787,7 @@ msgid "diff"
 msgstr ""
 
 #: inc/core/View/Splits/Table.php:221
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "Goal"
 msgstr ""
 
@@ -1880,7 +1848,6 @@ msgstr ""
 #: inc/core/View/Leaflet/Activity.php:225
 #: inc/core/View/Leaflet/Activity.php:256
 #: inc/core/View/Leaflet/Activity.php:323
-#: inc/core/View/Leaflet/Activity.php:324
 #, php-format
 msgid "<strong>Time:</strong> %s"
 msgstr ""
@@ -1900,11 +1867,11 @@ msgstr ""
 msgid "<strong>Distance:</strong> %s"
 msgstr ""
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 msgid "<strong>Heart rate:</strong>"
 msgstr ""
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 #, php-format
 msgid "%s to %s"
 msgstr ""
@@ -3823,9 +3790,8 @@ msgid "No types available"
 msgstr ""
 
 #: inc/data/class.CadenceRunning.php:27
-#, fuzzy
 msgid "Cadence (running)"
-msgstr "Cadenza (corsa)"
+msgstr ""
 
 #: inc/data/class.CadenceRunning.php:43
 msgid "spm = steps per minute"
@@ -4968,13 +4934,13 @@ msgid "Current"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:172
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:186
 msgid "&oslash; Day"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:159
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
 msgid "&oslash; Week"
 msgstr ""
 
@@ -4986,40 +4952,40 @@ msgstr ""
 msgid "Prognosis"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:168
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:169
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:178
 msgid "Goal reached."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:184
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
 msgid "Pace Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:189
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:190
 msgid "Behind"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:191
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
 msgid "Ahead"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:193
 msgid "Head 2 Head"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
 msgid "Me"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:196
 msgid "Pace&nbsp;Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:201
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:202
 #, php-format
 msgid "%s to %s (%d days)"
 msgstr ""
@@ -6658,6 +6624,3 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Laufabc/class.RunalyzePluginStat_Laufabc.php:58
 msgid "No activities with running drills found."
 msgstr ""
-
-#~ msgid "&oslash;&nbsp;Pace"
-#~ msgstr "&oslash;&nbsp;Pace"
