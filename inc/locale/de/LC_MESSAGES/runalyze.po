@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-13 14:34+0200\n"
+"PO-Revision-Date: 2015-07-13 14:39+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -1017,14 +1017,12 @@ msgid "alternating:"
 msgstr "abwechselnd:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "first resting"
-msgstr "alle Ruhe"
+msgstr "Erste Runde \"Ruhe\""
 
 #: inc/training/formular/class.TrainingInputSplits.php:50
-#, fuzzy
 msgid "first active"
-msgstr "Erstes Training:"
+msgstr "Erste Runde \"Aktiv\""
 
 #: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
