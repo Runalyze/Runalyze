@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-07 18:54+0200\n"
-"PO-Revision-Date: 2015-06-22 15:17+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-07-08 22:16+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -586,9 +586,8 @@ msgid "Influence"
 msgstr "Distanzeinfluss"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
-#, fuzzy
 msgid "Running Dynamics"
-msgstr "Lauf-ABC"
+msgstr "Running Dynamics"
 
 #: inc/training/view/section/class.SectionLaps.php:20
 #: inc/training/formular/class.TrainingInputSplits.php:24
@@ -1115,7 +1114,7 @@ msgstr "Analyse"
 
 #: inc/training/schemes/scheme.UserData.php:24
 msgid "Sleep"
-msgstr ""
+msgstr "Schlaf"
 
 #: inc/training/schemes/scheme.UserData.php:56
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
@@ -1152,15 +1151,13 @@ msgid "Body muscle"
 msgstr "Muskeln"
 
 #: inc/training/schemes/scheme.UserData.php:117
-#, fuzzy
 msgid "Sleep Duration"
-msgstr "Dauer"
+msgstr "Schlafdauer"
 
 #: inc/training/class.TrainingFormular.php:91
 #: inc/core/View/Activity/Form/Form.php:87
-#, fuzzy
 msgid "Save and continue"
-msgstr "Editieren und weiter"
+msgstr "Speichern und weiter"
 
 #: inc/training/class.TrainingFormular.php:146
 #: inc/core/View/Activity/Form/Form.php:100
@@ -1169,18 +1166,19 @@ msgstr "Die Trainingseinheit wurde erfolgreich eingetragen."
 
 #: inc/training/class.TrainingFormular.php:174
 msgid "Remove data series"
-msgstr ""
+msgstr "Entferne Datenserie"
 
 #: inc/training/class.TrainingFormular.php:175
 msgid ""
 "You may want to remove a data series if a sensor, e.g. your heart rate "
 "strap, produced unusable data."
 msgstr ""
+"Du kannst hier Datenserien entfernen, wenn ein Sensor wie. z.B. dein "
+"Pulsgurt falsche Daten geliefert hat."
 
 #: inc/training/class.TrainingFormular.php:176
-#, fuzzy
 msgid "Attention: This operation cannot be undone."
-msgstr "Das Plugin konnte nicht gefunden werden."
+msgstr "Achtung: Diese Aktion kann nicht rückgängig gemacht werden."
 
 #: inc/training/class.TrainingFormular.php:201
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:354
@@ -1192,18 +1190,16 @@ msgid "Ground contact time"
 msgstr "Bodenkontaktzeit"
 
 #: inc/training/class.TrainingFormular.php:217
-#, fuzzy
 msgid "Original elevation"
-msgstr "Originaldaten"
+msgstr "Original Höhendaten"
 
 #: inc/training/class.TrainingFormular.php:218
-#, fuzzy
 msgid "Corrected elevation"
-msgstr "Höhendaten korrigieren"
+msgstr "Korrigierte Höhendaten"
 
 #: inc/training/class.TrainingFormular.php:222
 msgid "GPS path"
-msgstr ""
+msgstr "GPS Weg"
 
 #: inc/training/class.TrainingFormular.php:238
 #: inc/core/View/Activity/Form/Form.php:118
@@ -1360,11 +1356,12 @@ msgstr "Anzahl der Nachkommastellen"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
-msgstr ""
+msgstr "Aktivitätsansicht: zeige Reihen in voller Höhe"
 
 #: inc/core/Configuration/Category/ActivityView.php:308
 msgid "By default e.g. lap data will be scrollable and not shown completely."
 msgstr ""
+"Standardmäßig werden z.B. Rundendaten scrollbar und nicht komplett angezeigt."
 
 #: inc/core/Configuration/Category/ActivityView.php:324
 msgid "Plots: combination"
@@ -1591,7 +1588,7 @@ msgstr "Standardansicht für den Kalender"
 
 #: inc/core/Configuration/Category/DataBrowser.php:94
 msgid "Calendar: show labels for dataset"
-msgstr ""
+msgstr "Kalender: Zeige Label für Dataset"
 
 #: inc/core/Configuration/Category/DataBrowser.php:98
 msgid "Calendar: create button"
@@ -1937,24 +1934,23 @@ msgid "<strong>Total:</strong> %s"
 msgstr "<strong>Gesamt:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:321
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>Pause</strong> of %s"
-msgstr "<strong>Zeit:</strong> %s"
+msgstr "<strong>Pause</strong> von %s"
 
 #: inc/core/View/Leaflet/Activity.php:322
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>Distance:</strong> %s"
-msgstr "<strong>Zeit:</strong> %s"
+msgstr "<strong>Distanz:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:327
-#, fuzzy
 msgid "<strong>Heart rate:</strong>"
-msgstr "<strong>Gesamt:</strong> %s"
+msgstr "<strong>Herzfrequenz:</strong>"
 
 #: inc/core/View/Leaflet/Activity.php:327
-#, fuzzy, php-format
+#, php-format
 msgid "%s to %s"
-msgstr "%s bis %s (%d Tage)"
+msgstr "%s bis %s"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:21
 msgid "every data point"
@@ -3431,14 +3427,14 @@ msgid "The username has to contain at least %s signs."
 msgstr "Der Nutzername muss mindestens %s Zeichen enthalten."
 
 #: inc/system/class.AccountHandler.php:201
-#, fuzzy, php-format
+#, php-format
 msgid "The username has to contain at most %s signs."
 msgstr "Der Nutzername muss mindestens %s Zeichen enthalten."
 
 #: inc/system/class.AccountHandler.php:204
-#, fuzzy, php-format
+#, php-format
 msgid "The username has to contain only the following characters: %s"
-msgstr "Der Nutzername muss mindestens %s Zeichen enthalten."
+msgstr "Der Nutzername darf nur die folgenden Zeichen besitzen: %s"
 
 #: inc/system/class.AccountHandler.php:207
 msgid "This username is already being used."
@@ -3509,9 +3505,8 @@ msgid "Something went wrong."
 msgstr "Ein Fehler ist aufgetreten."
 
 #: inc/system/class.AccountHandler.php:481
-#, fuzzy
 msgid "Activate your RUNALYZE Account"
-msgstr "Account aktivieren"
+msgstr "Account deinen RUNALYZE Account"
 
 #: inc/system/class.AccountHandler.php:482
 msgid "Thanks for your registration"
@@ -3548,9 +3543,8 @@ msgstr ""
 "kontaktieren."
 
 #: inc/system/class.AccountHandler.php:511
-#, fuzzy
 msgid "Deletion request of your RUNALYZE account"
-msgstr "Deinen Account löschen"
+msgstr "Löschanfrage deines RUNALYZE Accounts"
 
 #: inc/system/class.AccountHandler.php:512
 msgid "Do you really want to delete your account"
@@ -3727,13 +3721,12 @@ msgstr ""
 "werden. Ein Trainingstyp kann nur zu einer Sportart gehören."
 
 #: inc/system/config/class.ConfigTabTypes.php:31
-#, fuzzy
 msgid ""
 "Finding your personal bests requires one type (for running) to be set as the "
 "'Race'-type."
 msgstr ""
-"Um die persönliche Bestleistung zu ermitteln ist es notwendig, einen "
-"Trainingstyp als \"Wettkampf\" in der allgemeinen Konfiguration festzulegen."
+"Um deine persönliche Bestleistung zu ermitteln ist es notwendig, dass ein "
+"Trainingstyp (fürs Laufen) als \"Wettkampf\" gesetzt ist."
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 #: inc/system/config/class.ConfigTabClothes.php:44
@@ -3759,7 +3752,7 @@ msgstr "Qualitätseinheiten werden im Kalender hervorgehoben."
 
 #: inc/system/config/class.ConfigTabTypes.php:50
 msgid "You need to set one type for running as race type."
-msgstr ""
+msgstr "Du musst einen Trainingstyp fürs Laufen als Wettkampftyp setzen."
 
 #: inc/system/config/class.ConfigTabTypes.php:51
 msgid "A type can only be deleted if no references exist."
@@ -3799,7 +3792,7 @@ msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
 msgstr ""
-"In unregelmäßigen Abständen werden wir dir E-Mails schicken. Wer werden dir "
+"In unregelmäßigen Abständen werden wir dir E-Mails schicken. Wir werden dir "
 "niemals Spam oder Werbung zusenden."
 
 #: inc/system/config/class.ConfigTabAccount.php:65
@@ -3986,9 +3979,8 @@ msgid "No types available"
 msgstr "Keine Typen verfügbar"
 
 #: inc/data/class.CadenceRunning.php:27
-#, fuzzy
 msgid "Cadence (running)"
-msgstr "Schrittfrequenz"
+msgstr "Frequenz (Laufen)"
 
 #: inc/data/class.CadenceRunning.php:43
 msgid "spm = steps per minute"
@@ -4539,32 +4531,28 @@ msgid "Sender e-mail"
 msgstr "Absender Mailadresse"
 
 #: inc/class.AdminView.php:180
-#, fuzzy
 msgid "Sender e-mail name"
-msgstr "Absender Mailadresse"
+msgstr "Mail Absendername"
 
 #: inc/class.AdminView.php:181
 msgid "SMTP: host"
-msgstr ""
+msgstr "SMTP: Host"
 
 #: inc/class.AdminView.php:182
-#, fuzzy
 msgid "SMTP: port"
-msgstr "Sport"
+msgstr "SMTP: Port"
 
 #: inc/class.AdminView.php:183
 msgid "SMTP: encryption"
-msgstr ""
+msgstr "SMTP: Verschlüsselung"
 
 #: inc/class.AdminView.php:184
-#, fuzzy
 msgid "SMTP: username"
-msgstr "Nutzername"
+msgstr "SMTP: Nutzername"
 
 #: inc/class.AdminView.php:185
-#, fuzzy
 msgid "SMTP: password"
-msgstr "Passwort"
+msgstr "SMTP: Passwort"
 
 #: inc/class.AdminView.php:186
 msgid "OpenWeatherMap API-Key"
@@ -5968,9 +5956,8 @@ msgid "Body values"
 msgstr "Körperdaten"
 
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:35
-#, fuzzy
 msgid "Sleep duration"
-msgstr "Gesamte Trainingsdauer:"
+msgstr "Schlafdauer"
 
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:26
 #: plugin/RunalyzePluginPanel_Sportler/class.RunalyzePluginPanel_Sportler.php:45
