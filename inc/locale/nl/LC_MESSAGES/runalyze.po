@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-07-07 18:54+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-13 14:31+0200\n"
 "PO-Revision-Date: 2015-07-12 21:48+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
-"Language-Team: Dutch "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
+"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1011,19 +1011,34 @@ msgstr "Totaal aktief"
 msgid "all resting"
 msgstr "Totaal rust"
 
-#: inc/training/formular/class.TrainingInputSplits.php:61
+#: inc/training/formular/class.TrainingInputSplits.php:49
+#, fuzzy
+msgid "alternating:"
+msgstr "Totaal rust"
+
+#: inc/training/formular/class.TrainingInputSplits.php:49
+#, fuzzy
+msgid "first resting"
+msgstr "Totaal rust"
+
+#: inc/training/formular/class.TrainingInputSplits.php:50
+#, fuzzy
+msgid "first active"
+msgstr "Trainingslijst openbaar"
+
+#: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
 msgstr "In"
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 #: inc/data/class.Splits.php:160
 msgid "Resting"
 msgstr "Rust"
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 msgid "Active"
 msgstr "Aktief"
 
@@ -1404,8 +1419,8 @@ msgstr "Tempo diagram: y-as maximaal"
 #: inc/core/Configuration/Category/ActivityView.php:347
 msgid "Data points above this limit will be ignored. (only for min/km)"
 msgstr ""
-"Gegevenspunten boven deze grens zullen niet worden getoond. (alleen voor "
-"min/km)"
+"Gegevenspunten boven deze grens zullen niet worden getoond. (alleen voor min/"
+"km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:351
 msgid "Pace plot: y-axis scale type"
@@ -1435,9 +1450,9 @@ msgid ""
 "which distance (in seconds by average pace)between two data points can be "
 "interpolated."
 msgstr ""
-"De gps-route kan worden onderbroken in geval van <em>onderbrekingen</em> ("
-"bv. door auto/trein /...). Deze onderbrekingen vinden is niet gemakkelijk. U "
-"kunt definiëren tot welke afstand (in seconden bij een gemiddeld tempo) "
+"De gps-route kan worden onderbroken in geval van <em>onderbrekingen</em> "
+"(bv. door auto/trein /...). Deze onderbrekingen vinden is niet gemakkelijk. "
+"U kunt definiëren tot welke afstand (in seconden bij een gemiddeld tempo) "
 "tussen twee gegevenspunten kan worden geïnterpoleerd."
 
 #: inc/core/Configuration/Category/ActivityView.php:374
@@ -1518,7 +1533,8 @@ msgstr "Bereken kracht"
 
 #: inc/core/Configuration/Category/ActivityForm.php:221
 msgid "Calculate power by speed and grade for cycling"
-msgstr "Bereken bij fietsen het vermogen door snelheid en gradatie te gebruiken"
+msgstr ""
+"Bereken bij fietsen het vermogen door snelheid en gradatie te gebruiken"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
@@ -1855,7 +1871,7 @@ msgid "diff"
 msgstr ""
 
 #: inc/core/View/Splits/Table.php:221
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "Goal"
 msgstr ""
 
@@ -1916,7 +1932,6 @@ msgstr ""
 #: inc/core/View/Leaflet/Activity.php:225
 #: inc/core/View/Leaflet/Activity.php:256
 #: inc/core/View/Leaflet/Activity.php:323
-#: inc/core/View/Leaflet/Activity.php:324
 #, php-format
 msgid "<strong>Time:</strong> %s"
 msgstr ""
@@ -1936,11 +1951,11 @@ msgstr ""
 msgid "<strong>Distance:</strong> %s"
 msgstr ""
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 msgid "<strong>Heart rate:</strong>"
 msgstr ""
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 #, php-format
 msgid "%s to %s"
 msgstr ""
@@ -5003,13 +5018,13 @@ msgid "Current"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:172
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:186
 msgid "&oslash; Day"
 msgstr ""
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:159
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
 msgid "&oslash; Week"
 msgstr ""
 
@@ -5021,40 +5036,40 @@ msgstr ""
 msgid "Prognosis"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:168
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:169
 #, php-format
 msgid "%d days left"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:178
 msgid "Goal reached."
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:184
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
 msgid "Pace Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:189
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:190
 msgid "Behind"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:191
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
 msgid "Ahead"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:193
 msgid "Head 2 Head"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
 msgid "Me"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:196
 msgid "Pace&nbsp;Bunny"
 msgstr ""
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:201
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:202
 #, php-format
 msgid "%s to %s (%d days)"
 msgstr ""
