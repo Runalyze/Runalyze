@@ -321,7 +321,6 @@ class Activity extends LeafletRoute {
 		$Tooltip = sprintf( __('<strong>Pause</strong> of %s'), Duration::format($Pause->duration()));
 		$Tooltip .= '<br>'.sprintf( __('<strong>Distance:</strong> %s'), Distance::format($this->Trackdata->at($Index, Trackdata\Object::DISTANCE)) );
 		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->Trackdata->at($Index, Trackdata\Object::TIME)) );
-		$Tooltip .= '<br>'.sprintf( __('<strong>Time:</strong> %s'), Duration::format($Pause->time()) );
 
 		if ($Pause->hasHeartRateInfo()) {
 			$Tooltip .= '<br>'.sprintf( __('<strong>Heart rate:</strong>').' '.__('%s to %s'), $Pause->hrStart(), $Pause->hrEnd().' bpm' );

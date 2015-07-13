@@ -91,8 +91,8 @@ abstract class RunalyzeBackup {
 		} else {
 			$Query .= ' WHERE `accountid`='.$this->AccountID;
 		}
-
-		$this->startTableRows($TableName);
+                $startTablename = str_replace(PREFIX, '', $TableName);
+		$this->startTableRows($startTablename);
 
 		$Statement = $this->DB->query($Query);
 		$this->saveRowsFromStatement($TableName, $ColumnInfo, $Statement);
