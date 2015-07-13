@@ -150,7 +150,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 		$rest = $dauer - $days;
 
 		$dat = $this->fetchDataSince($start->getTimestamp());
-		if ($goal > 0) {
+		if ($dat['distanz_sum'] > 0) {
 			$this->addHeadline(__('Current'), $dat['distanz_sum'], $dat['anzahl'], true);
 			if ($showDetails) {
 				$this->addLine(__('&oslash; Day'), $days > 0 ? $dat['distanz_sum'] / $days : 0);
@@ -160,9 +160,10 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 
 				if ($days > 0)
 					$this->addHeadline(__('Prognosis'), $dat['distanz_sum'] / $days * $dauer, $dat['anzahl'] / $days * $dauer);
-				$this->addHeadline(__('Goal'), $goal);
 			}
-
+		}
+		if ($goal > 0) {
+			$this->addHeadline(__('Goal'), $goal);
 			if ($dat['distanz_sum'] < $goal) {
 				$togo = $goal - $dat['distanz_sum'];
 				$this->addLine(sprintf(__('%d days left'), $rest), $togo);
@@ -362,7 +363,6 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 			GROUP BY `sportid`
 			ORDER BY `distanz_sum` DESC, `dauer_sum` DESC
 		')->fetch();
-
 		if (!is_array($Data))
 			return array('anzahl' => 0, 'distanz_sum' => 0, 'dauer_sum' => 0);
 
