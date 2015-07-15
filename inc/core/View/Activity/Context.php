@@ -64,6 +64,7 @@ class Context {
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		
                 $this->Swimdata->fillDistanceArray($this->Trackdata);
+                $this->Swimdata->swolfArray($this->Trackdata);
                 $this->Dataview = new Dataview($this->Activity);
 
 	}

@@ -9,6 +9,7 @@ namespace Runalyze\Model\Swimdata;
 
 use Runalyze\Model;
 use Runalyze\Model\Trackdata;
+use Runalyze\Activity\Duration;
 /**
  * Swimdata object
  *  
@@ -74,6 +75,7 @@ class Object extends Model\Object implements Model\Loopable {
 			self::ACTIVITYID,
 			self::STROKE,
 			self::STROKETYPE,
+                        self::SWOLF,
                         self::POOL_LENGTH
 		);
 	}
@@ -139,6 +141,14 @@ class Object extends Model\Object implements Model\Loopable {
 	}
         
 	/**
+	 * SWOLF
+	 * @return int
+	 */
+	public function swolf() {
+		return $this->Data[self::SWOLF];
+	}
+        
+	/**
 	 * STROKETYPE
 	 * @return int [m]
 	 */
@@ -159,12 +169,24 @@ class Object extends Model\Object implements Model\Loopable {
         /*
          * Create swolf array
          */
-        public function swolfArray() {
-            if($this->stroke() && !$trackdata->has(Trackdata\Object::TIME)) {
-                $distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
-                //Swimdata\Object::SW
-
+        public function swolfArray(Trackdata\Object &$trackdata) {
+            if($this->stroke() && $trackdata->has(Trackdata\Object::TIME)) {
+                $Time = new Trackdata\Loop($trackdata);
+                $Loop = new Loop($this);
+                $swolf[] = $Time->current('time');
+                $lasttime = 0;
+                $i = 1;
+                
+                do {
+                    $duration = $Time->current('time') - $lasttime;
+                    $swolf[] = $duration + $Loop->stroke();
+                    $lasttime = $Time->current('time');
+                    $Time->move('time', 1);
+                    $i++;
+                } while ($Loop->nextStep());
+                    $this->set(Object::SWOLF, $swolf);
                 }
+                
         }
         
         /*

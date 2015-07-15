@@ -43,6 +43,11 @@ class Loop extends \Runalyze\Model\Loop {
 		return $this->current(Object::STROKETYPE);
 	}
 
-
-
+	/**
+	 * Current swolf
+	 * @return int
+	 */
+	public function swolf() {
+		return $this->current(Object::SWOLF);
+	}
 }
