@@ -397,7 +397,7 @@ class RunalyzeJsonImporter {
 			$ConfigValues = Configuration\Handle::tableHandles();
 
 			foreach ($ConfigValues as $key => $table) {
-				$table = PREFIX.$table;
+				$table = 'runalyze_'.$table;
 
 				if (isset($this->ReplaceIDs[$table])) {
 					$OldValue = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetchColumn();
