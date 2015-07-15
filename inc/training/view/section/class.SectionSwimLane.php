@@ -36,6 +36,6 @@ class SectionSwimLane extends TrainingViewSectionTabbedPlot {
 	 * @return string
 	 */
 	protected function cssId() {
-		return 'laps';
+		return 'swim-laps';
 	}
 }
