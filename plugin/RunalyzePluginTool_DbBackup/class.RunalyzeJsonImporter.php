@@ -280,7 +280,6 @@ class RunalyzeJsonImporter {
 			default:
 				return;
 		}
-                echo $TableName;
 		$this->Results->addUpdates($TableName, $Statement->rowCount());
 	}
 
