@@ -45,12 +45,11 @@ class RunalyzeJsonBackup extends RunalyzeBackup {
 	 * @param PDOStatement $Statement
 	 */
 	protected function saveRowsFromStatement(&$TableName, array $ColumnInfo, PDOStatement $Statement) {
-		$TableName = str_replace(PREFIX, '', $TableName);
-                if ($TableName == 'account')
+		if ($TableName == 'runalyze_account')
 			return;
 
-		
-			
+		if (PREFIX != 'runalyze_')
+			$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
 
 		while ($Row = $Statement->fetch()) {
 			$id = isset($Row['id']) ? $Row['id'] : '';
