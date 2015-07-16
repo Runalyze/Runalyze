@@ -36,6 +36,8 @@ class SectionSwimLaneRow extends TrainingViewSectionRowTabbedPlot {
             $this->addRightContent('stroke', __('Stroke'), $Plot);
             $Plot = new Activity\Plot\Swolf($this->Context);
             $this->addRightContent('swolf', __('SWOLF'), $Plot);
+            $Plot = new Activity\Plot\Swolfcycles($this->Context);
+            $this->addRightContent('swolfcycles', __('SWOLFcycles'), $Plot);
 		
         }
         

@@ -15,7 +15,7 @@ use Runalyze\View\Activity;
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
  */
-class Swolf extends ActivityPointSeries {
+class Swolfcycles extends ActivityPointSeries {
 	/**
 	 * @var string
 	 */
@@ -42,7 +42,7 @@ class Swolf extends ActivityPointSeries {
 			return;
 		}
 
-		$key = Swimdata::SWOLF;
+		$key = Swimdata::SWOLFCYCLES;
 
 		if (!$context->swimdata()->has($key)) {
 			$this->Data = array();
