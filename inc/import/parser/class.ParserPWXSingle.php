@@ -126,7 +126,6 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 		$this->gps['altitude'][]  = (!empty($Log->alt)) ? round((int)$Log->alt) : 0;
 		$this->gps['heartrate'][] = (!empty($Log->hr)) ? round((int)$Log->hr) : 0;
 		$this->gps['km'][]        = round($dist, ParserAbstract::DISTANCE_PRECISION);
-		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['rpm'][]       = (!empty($Log->cad)) ? (int)$Log->cad : 0;
 		$this->gps['temp'][]      = (!empty($Log->temp)) ? round((int)$Log->temp) : 0;
 		$this->gps['power'][]     = (!empty($Log->pwr)) ? round((int)$Log->pwr) : 0;

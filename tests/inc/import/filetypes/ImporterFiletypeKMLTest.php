@@ -65,7 +65,6 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 	}
 }

@@ -24,7 +24,6 @@ class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 108, $this->object->object()->getPulseMax() );
 		$this->assertEquals( 16, $this->object->object()->get('temperature') );
 
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertEquals(
 			array(108, 108, 107, 107, 107, 107, 107),
@@ -51,7 +50,6 @@ class ImporterFiletypeTRKTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( 20, $this->object->object()->getTimeInSeconds() );
 
 		$this->assertFalse( $this->object->object()->hasArrayHeartrate() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 		$this->assertEquals(

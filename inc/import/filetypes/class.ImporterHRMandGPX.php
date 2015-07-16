@@ -20,7 +20,6 @@ class ImporterHRMandGPX {
 		'arr_alt',
 		'arr_dist',
 		'arr_heart',
-		'arr_pace',
 		'arr_cadence',
 		'arr_power',
 		'arr_temperature'

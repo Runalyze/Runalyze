@@ -527,15 +527,6 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'arr_pace'			=> array(
-					'database'	=> array(
-						'type'		=> 'longtext',
-						'null'		=> 'true',
-					),
-					'formular'	=> array(
-						'hidden'	=> true
-					)
-	),
 	'arr_cadence'		=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',

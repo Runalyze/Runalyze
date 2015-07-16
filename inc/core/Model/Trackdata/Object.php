@@ -111,7 +111,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
-
+                //$this->calculatePaceArray();
 		$this->readPauses();
 	}
 
@@ -189,7 +189,6 @@ class Object extends Model\Object implements Model\Loopable {
 			self::ACTIVITYID,
 			self::TIME,
 			self::DISTANCE,
-			self::PACE,
 			self::HEARTRATE,
 			self::CADENCE,
 			self::POWER,
@@ -398,4 +397,23 @@ class Object extends Model\Object implements Model\Loopable {
 	public function hasPauses() {
 		return !$this->Pauses->isEmpty();
 	}
+        
+        /*
+         * Calculate Pace Array 
+         */
+        public function calculatePaceArray() {
+                $Loop = new Loop($this);
+                $pace = array();
+                $lastTime = 0;
+                $lastDist = 0;
+                
+                do {
+			$pace[] = round(($lastTime - $Loop->time()) / ($lastDist - $Loop->distance()));            
+			$lastDist = $Loop->distance();
+                        $lastTime = $Loop->time();
+                } while ($Loop->nextStep());
+                
+                   $pace[] = round(($lastTime - end($this->time())) / ($lastDist - end($this->distance())));
+                   $this->set(Object::PACE, $pace);                
+        }
 }

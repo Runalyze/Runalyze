@@ -40,7 +40,6 @@ class ParserAbstractSingleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( array(0,  0, 0.1, 0.1, 0.1, 0.3, 0.5, 0.5, 0.5, 1.0), $Parser->object()->getArrayDistance() );
 		$this->assertEquals( array(5, 10,  20,  31,  39,  58,  82, 120, 190, 260), $Parser->object()->getArrayTime() );
-		$this->assertEquals( array(0,  0, 200,   0,   0, 190, 120,   0,   0, 356), $Parser->object()->getArrayPace() );
 	}
 
 	public function testSetPaceFromDistanceAndTime() {
@@ -52,7 +51,6 @@ class ParserAbstractSingleTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( array(0,  0, 0.1, 0.1, 0.1, 0.3, 0.5, 0.5, 0.5, 1.0), $Parser->object()->getArrayDistance() );
 		$this->assertEquals( array(5, 10,  20,  31,  39,  58,  82, 120, 190, 260), $Parser->object()->getArrayTime() );
-		$this->assertEquals( array(0,  0, 200,   0,   0, 190, 120,   0,   0, 356), $Parser->object()->getArrayPace() );
 	}
 
 }

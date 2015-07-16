@@ -58,7 +58,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertFalse( $this->object->object()->hasArrayGroundContact() );
 			$this->assertFalse( $this->object->object()->hasArrayVerticalOscillation() );
@@ -93,7 +92,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 			$this->assertTrue( $this->object->object()->hasArrayGroundContact() );
@@ -132,7 +130,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 

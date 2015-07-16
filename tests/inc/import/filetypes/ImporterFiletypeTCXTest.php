@@ -71,7 +71,6 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 
 		$this->assertEquals( 1, $this->object->object()->Sport()->id() );
@@ -172,7 +171,6 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 		$this->assertFalse( $this->object->object()->hasArrayPower() );
 
@@ -239,10 +237,6 @@ class ImporterFiletypeTCXTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(
 			array(0.0, 0.0, 0.0, 0.052, 0.052, 0.052, 0.052, 0.052, 0.071, 0.085),
 			array_slice($this->object->object()->getArrayDistance(), 10, 10)
-		);
-		$this->assertEquals(
-			array(596, 596, 596, 596, 737, 737, 737, 737, 737, 357),
-			array_slice($this->object->object()->getArrayPace(), 10, 10)
 		);
 	}
 

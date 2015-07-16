@@ -25,7 +25,6 @@ class ImporterFiletypeHRMandGPXTest extends PHPUnit_Framework_TestCase {
 			'heartrate'	=> $object->getArrayHeartrate(),
 			'latitude'	=> $object->getArrayLatitude(),
 			'longitude'	=> $object->getArrayLongitude(),
-			'pace'	=> $object->getArrayPace(),
 			'time'	=> $object->getArrayTime()
 		);
 
