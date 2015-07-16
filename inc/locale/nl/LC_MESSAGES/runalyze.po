@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-12 21:48+0200\n"
+"PO-Revision-Date: 2015-07-16 13:27+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1761,321 +1761,330 @@ msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
+"Het schalen van TSB waarden hangt af van uw ATL/CTL. U kunt TSB in "
+"percentages laten weergeven om vergelijkbare waarden te krijgen."
 
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr ""
+msgstr "Maximale CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr ""
+msgstr "Maximale ATL"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Database opruimen"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
 msgid "You can now use the %s to recalculate the concerning values."
 msgstr ""
+"U kunt nu de tool %s gebruiken voor het berekenen van de betreffende waarden."
 
 #: inc/core/Configuration/Messages.php:37
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
 #, php-format
 msgid ""
 "%s has been recalculated. New value: <strong>%s</strong> (old value: %s)"
-msgstr ""
+msgstr "%s is herberekend. Nieuwe waarde: <strong>%s</strong> (oude waarde: %s)"
 
 #: inc/core/View/Window/Laps/Table.php:108
 msgid "Lap"
-msgstr ""
+msgstr "Ronde"
 
 #: inc/core/View/Window/Laps/Table.php:110
 #: inc/core/View/Window/Laps/Table.php:112
 msgid "Diff."
-msgstr ""
+msgstr "Verschil"
 
 #: inc/core/View/Window/Laps/Table.php:114
 msgid "max. bpm"
-msgstr ""
+msgstr "Max. BPM"
 
 #: inc/core/View/Window/Laps/Table.php:115
 msgid "elevation"
-msgstr ""
+msgstr "hoogte"
 
 #: inc/core/View/Window/Laps/Table.php:162
 msgid "Average"
-msgstr ""
+msgstr "Gemiddelde"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
-msgstr ""
+msgstr "Berekenen ronden"
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Lap every ..."
-msgstr ""
+msgstr "Ronde elke..."
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Distance, after which a new lap should start"
-msgstr ""
+msgstr "Afstand, waarna een nieuwe ronde moet beginnen"
 
 #: inc/core/View/Window/Laps/Form.php:64 inc/core/View/Window/Laps/Form.php:68
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "or"
-msgstr ""
+msgstr "of"
 
 #: inc/core/View/Window/Laps/Form.php:64
 msgid "Manual laps"
-msgstr ""
+msgstr "Handmatige ronden"
 
 #: inc/core/View/Window/Laps/Form.php:65
 msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Lijst met alle afstanden, door komma's gescheiden. Zet een \"+\" aan het "
+"begin om deze afstanden als intervallen te behandelen."
 
 #: inc/core/View/Window/Laps/Form.php:68
 msgid "e.g."
-msgstr ""
+msgstr "bijv."
 
 #: inc/core/View/Window/Laps/Form.php:78
 msgid "Lap time goal"
-msgstr ""
+msgstr "Ronde tijd doel"
 
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "Pace goal"
-msgstr ""
+msgstr "Tempo doel"
 
 #: inc/core/View/Window/Laps/Form.php:103
 msgid ""
 "Calculate values for handmade splits although total distance does not match."
 msgstr ""
+"Bereken tussentijden voor handmatige ronden, ondanks dat de totaal afstand "
+"niet klopt."
 
 #: inc/core/View/Window/Laps/Form.php:107
 msgid "The total distance of your handmade laps differs from the gps distance."
 msgstr ""
+"De totale afstand van uw handmatige ronden verschilt van de gps-afstand."
 
 #: inc/core/View/Window/Laps/Form.php:114
 msgid "Leave lap distances empty to use your handmade laps."
-msgstr ""
+msgstr "Laat de rondeafstand leeg om uw handmatige ronden te gebruiken."
 
 #: inc/core/View/Window/Laps/Form.php:127
 msgid "Show calculated laps"
-msgstr ""
+msgstr "Toon berekende ronden"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
-msgstr ""
+msgstr "diff"
 
 #: inc/core/View/Splits/Table.php:221
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "Goal"
-msgstr ""
+msgstr "Doel"
 
 #: inc/core/View/Splits/Table.php:234
 msgid "Average (active)"
-msgstr ""
+msgstr "Gemiddelde (actief)"
 
 #: inc/core/View/Splits/Table.php:242
 msgid "Average (total)"
-msgstr ""
+msgstr "Gemiddelde (totaal)"
 
 #: inc/core/View/Splits/Table.php:257
 msgid "1st/2nd Half"
-msgstr ""
+msgstr "1e/2e helft"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
-msgstr ""
+msgstr "Geen diagram beschikbaar."
 
 #: inc/core/View/Activity/Plot/LapsManual.php:50
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Er zijn geen handmatige ronden."
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:47
 msgid "No GPS-data available. Can\\'t compute laps."
 msgstr ""
+"Geen GPS-gegevens beschikbaar. Tussentijden kunnen niet berekend worden."
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:48
 msgid "Original data"
-msgstr ""
+msgstr "Oorspronkelijke gegevens"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:79
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
-msgstr ""
+msgstr "Hartslag gegevens beschikbaar"
 
 #: inc/core/View/Activity/Preview.php:145
 msgid "Lap data available"
-msgstr ""
+msgstr "Ronde gegevens beschikbaar"
 
 #: inc/core/View/Activity/Preview.php:159
 msgid "Route data available"
-msgstr ""
+msgstr "Route gegevens beschikbaar"
 
 #: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
-msgstr ""
+msgstr "onbekend"
 
 #: inc/core/View/Leaflet/Activity.php:224
 #, php-format
 msgid "<strong>%s. km</strong> in %s"
-msgstr ""
+msgstr "<strong>% s. km</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:225
 #: inc/core/View/Leaflet/Activity.php:256
 #: inc/core/View/Leaflet/Activity.php:323
 #, php-format
 msgid "<strong>Time:</strong> %s"
-msgstr ""
+msgstr "<strong>Tijd:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:255
 #, php-format
 msgid "<strong>Total:</strong> %s"
-msgstr ""
+msgstr "<strong>Totaal:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:321
 #, php-format
 msgid "<strong>Pause</strong> of %s"
-msgstr ""
+msgstr "<strong>Pauze</strong> van %s"
 
 #: inc/core/View/Leaflet/Activity.php:322
 #, php-format
 msgid "<strong>Distance:</strong> %s"
-msgstr ""
+msgstr "<strong>Afstand:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:326
 msgid "<strong>Heart rate:</strong>"
-msgstr ""
+msgstr "<strong>Hartslag:</strong>"
 
 #: inc/core/View/Leaflet/Activity.php:326
 #, php-format
 msgid "%s to %s"
-msgstr ""
+msgstr "%s tot %s"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:21
 msgid "every data point"
-msgstr ""
+msgstr "elk gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:22
 msgid "every second data point"
-msgstr ""
+msgstr "elke tweede gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:23
 msgid "every fifth data point (recommended)"
-msgstr ""
+msgstr "elk 5e gegevenspunt (aanbevolen)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:24
 msgid "every tenth data point"
-msgstr ""
+msgstr "elk 10e gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:25
 msgid "every twentieth data point"
-msgstr ""
+msgstr "elk 20e gegevenspunt"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "lineair"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "omgekeerd lineair"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
-msgstr ""
+msgstr "Als snelheid"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
-msgstr ""
+msgstr "absolute waarde"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:40
 msgid "&#37; HRmax"
-msgstr ""
+msgstr "&#37; HFmax"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:41
 msgid "&#37; HRreserve"
-msgstr ""
+msgstr "&#37; HFreserve"
 
 #: inc/core/Parameter/Application/PaceAxisLimit.php:28
 msgid "automatic"
-msgstr ""
+msgstr "automatisch"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
 msgid "never"
-msgstr ""
+msgstr "nooit"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for competitions"
-msgstr ""
+msgstr "alleen voor wedstrijden"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
-msgstr ""
+msgstr "altijd"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
-msgstr ""
+msgstr "bij een te grote afstand (15s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:29
 msgid "at too big distance (30s)"
-msgstr ""
+msgstr "bij een te grote afstand (30s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:30
 msgid "at too big distance (60s)"
-msgstr ""
+msgstr "bij een te grote afstand (60s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:31
 msgid "at too big distance (120s)"
-msgstr ""
+msgstr "bij een te grote afstand (120s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:32
 msgid "at too big distance (240s)"
-msgstr ""
+msgstr "bij een te grote afstand (240s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:33
 msgid "at too big distance (300s)"
-msgstr ""
+msgstr "bij een te grote afstand (300s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:34
 msgid "at too big distance (600s)"
-msgstr ""
+msgstr "bij een te grote afstand (600s)"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:45
 msgid "no smoothing"
-msgstr ""
+msgstr "niet effenen"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:46
 msgid "Threshold method"
-msgstr ""
+msgstr "Grenswaarden methode"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:47
 msgid "Douglas-Peucker-Algorithm"
-msgstr ""
+msgstr "Douglas-Peucker-algoritme"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:39
 msgid "id (oldest first)"
-msgstr ""
+msgstr "id (oudste eerst)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:40
 msgid "id (latest first)"
-msgstr ""
+msgstr "id (nieuwste eerst)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
-msgstr ""
+msgstr "alfabetisch"
 
 #: inc/core/Parameter/Application/VdotMethod.php:33
 msgid "logarithmic (new method since v1.5)"
-msgstr ""
+msgstr "logaritmisch (nieuwe methode sinds v1.5)"
 
 #: inc/core/Parameter/Application/VdotMethod.php:34
 msgid "linear (old method up to v1.4)"
