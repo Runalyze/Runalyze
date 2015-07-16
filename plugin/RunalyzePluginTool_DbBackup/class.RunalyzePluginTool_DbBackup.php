@@ -195,9 +195,9 @@ class RunalyzePluginTool_DbBackup extends PluginTool {
 				$Fieldset->addField( new FormularCheckbox('delete_user_data', __('Delete all old body values'), false) );
 				$Fieldset->addField( new FormularCheckbox('delete_shoes', __('Delete all old shoes'), false) );
 
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> activities in this file.'), $Analyzer->count('training')) );
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> shoes in this file.'), $Analyzer->count('shoe')) );
-				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> body values in this file.'), $Analyzer->count('user')) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> activities in this file.'), $Analyzer->count('runalyze_training')) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> shoes in this file.'), $Analyzer->count('runalyze_shoe')) );
+				$Fieldset->addFileBlock( sprintf( __('There are <strong>%s</strong> body values in this file.'), $Analyzer->count('runalyze_user')) );
 
 				$Fieldset->setLayoutForFields(FormularFieldset::$LAYOUT_FIELD_W100);
 
