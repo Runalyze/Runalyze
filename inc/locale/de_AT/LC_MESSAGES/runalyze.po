@@ -6,12 +6,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-12 16:53+0200\n"
+"PO-Revision-Date: 2015-07-13 20:47+0200\n"
 "Last-Translator: Christoph <christoph@grabmer.at>\n"
-"Language-Team: Austrian German <http://translate.runalyze.de/projects/"
-"runalyze/runalyze/de_AT/>\n"
+"Language-Team: Austrian German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de_AT/>\n"
 "Language: de_AT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1299,65 +1299,69 @@ msgstr "Faktor fia Wochenkilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Prozent ois Wert zwischen 0.00 und 1.00."
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
-msgstr ""
+msgstr "Suche: Ergebnisse pro Seitn"
 
 #: inc/core/Configuration/Category/Misc.php:49
 msgid "Number of results displayed on each page."
-msgstr ""
+msgstr "Resultate die auf ana Seitn ozagt werdn."
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr ""
+msgstr "Veröffentlich de Aktivitäten"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr ""
+msgstr "Automatisch olle Aktivitäten nochn erstelln ois Öffentlich markieren."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr ""
+msgstr "Öffentliche Auflistung: aktiv"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
+"Waun aktiviert: Jeder kaun a Listn oller deiner (öffentlichen) Aktivitäten "
+"sehn."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr ""
+msgstr "Veröffentliche: Private Workouts"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
 "If activated: Display a summary for each private activity in the public "
 "activity list."
 msgstr ""
+"Waun aktiviert: Zeigt a Übersicht für olle privaten Aktivitäten in deiner "
+"öffentlichen Liste an."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr ""
+msgstr "Veröffentliche: Oigemeine Statistiken"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
-msgstr ""
+msgstr "Zag a boa generelle Statistiken in der Aktivitätsliste"
 
 #: inc/core/Configuration/Category/Privacy.php:114
 msgid "Public view: show map"
-msgstr ""
+msgstr "Öffentliche Ansicht: Karte zeigen"
 
 #: inc/core/Configuration/Category/Privacy.php:115
 msgid "You can hide the map for the public view"
-msgstr ""
+msgstr "Du kaunst de Karten für de öffentliche Ansicht verstecken"
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Activity view"
-msgstr ""
+msgstr "Aktivitätsansicht"
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Number of decimals"
-msgstr ""
+msgstr "Dezimalstellen"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
