@@ -111,7 +111,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
-                //$this->calculatePaceArray();
+                $this->calculatePaceArray();
 		$this->readPauses();
 	}
 

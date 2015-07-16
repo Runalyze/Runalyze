@@ -215,7 +215,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_trackdata` (
   `activityid` int(10) unsigned NOT NULL,
   `time` longtext,
   `distance` longtext,
-  `pace` longtext,
   `heartrate` longtext,
   `cadence` longtext,
   `power` longtext,
