@@ -13,7 +13,7 @@ class ParserAbstractSingle_MockTester extends ParserAbstractSingle {
 					$this->gps[$key][] = $GPSdata[$key][$i];
 				}
 
-				$this->gps['pace'][] = $this->getCurrentPace();
+				//$this->gps['pace'][] = $this->getCurrentPace();
 			}
 		} else {
 			$this->gps = array_merge($this->gps, $GPSdata);

@@ -111,8 +111,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
-                $this->calculatePaceArray();
-		$this->readPauses();
+ 		$this->readPauses();
 	}
 
 	/**
@@ -225,7 +224,6 @@ class Object extends Model\Object implements Model\Loopable {
 		switch ($key) {
 			case self::TIME:
 			case self::DISTANCE:
-			case self::PACE:
 			case self::HEARTRATE:
 			case self::CADENCE:
 			case self::POWER:
@@ -234,6 +232,20 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::VERTICAL_OSCILLATION:
 			case self::PAUSES:
 				return true;
+		}
+
+		return false;
+	}
+        
+	/**
+	 * Is not in Database?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function notInDatabase($key) {
+		switch ($key) {
+			case self::PACE:
+				return false;
 		}
 
 		return false;
@@ -414,6 +426,6 @@ class Object extends Model\Object implements Model\Loopable {
                 } while ($Loop->nextStep());
                 
                    $pace[] = round(($lastTime - end($this->time())) / ($lastDist - end($this->distance())));
-                   $this->set(Object::PACE, $pace);                
+                  $this->set(Object::PACE, $pace);                
         }
 }

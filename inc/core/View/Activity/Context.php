@@ -53,6 +53,7 @@ class Context {
 
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
+                $this->Trackdata->calculatePaceArray();
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		$this->Dataview = new Dataview($this->Activity);

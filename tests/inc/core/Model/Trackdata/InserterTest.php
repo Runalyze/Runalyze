@@ -28,7 +28,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`activityid` int(10),
 			`time` longtext NOT NULL,
 			`distance` longtext NOT NULL,
-			`pace` longtext NOT NULL,
 			`heartrate` longtext NOT NULL,
 			`cadence` longtext NOT NULL,
 			`power` longtext NOT NULL,
