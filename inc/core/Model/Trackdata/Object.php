@@ -180,10 +180,10 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
-	 * All properties
+	 * All databaseproperties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::TIME,
@@ -202,9 +202,14 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Properties
 	 * @return array
 	 */
-	public function properties() {
-		return static::allProperties();
-	}
+        public function properties() {
+            return array_merge(array(
+                    self::PACE
+                ),
+                static::allDatabaseProperties() 
+            );
+        }
+        
 
 	/**
 	 * Is the property an array?

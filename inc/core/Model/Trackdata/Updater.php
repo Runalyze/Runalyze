@@ -63,7 +63,7 @@ class Updater extends Model\UpdaterWithAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allProperties()
+			Object::allDatabaseProperties()
 		);
 	}
 

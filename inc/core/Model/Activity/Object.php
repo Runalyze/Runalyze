@@ -290,7 +290,7 @@ class Object extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::TIMESTAMP,
 			self::TIMESTAMP_CREATED,
@@ -339,7 +339,7 @@ class Object extends Model\ObjectWithID {
 	 * @return array
 	 */
 	public function properties() {
-		return static::allProperties();
+		return static::allDatabaseProperties();
 	}
 
 	/**

@@ -58,13 +58,7 @@ abstract class Inserter {
 	 * Keys to insert
 	 * @return array
 	 */
-	protected function keys() {
-		if (!is_null($this->Object)) {
-			return $this->Object->properties();
-		}
-
-		return array();
-	}
+	abstract protected function keys();
 
 	/**
 	 * Prepare insert

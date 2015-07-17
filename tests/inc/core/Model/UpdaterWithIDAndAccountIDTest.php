@@ -8,6 +8,9 @@ class UpdaterWithAccountIDForObjectWithID_MockTester extends UpdaterWithIDAndAcc
 	public function table() {
 		return 'table';
 	}
+        protected function keys() {
+            return array('foo', 'accountid');
+        }
 }
 class UpdaterWithAccountIDObjectWithID_MockTester extends ObjectWithID {
 	public function properties() {
