@@ -1,4 +1,4 @@
-# [Runalyze v2.0](http://blog.runalyze.com)
+# [Runalyze v2.1-dev](http://blog.runalyze.com)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
@@ -31,6 +31,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * new versions, multi-lingual
+ * [v2.0.4](http://blog.runalyze.com/allgemein/runalyze-v2-0-4/), 17.07.2015: Minor bugfixes
  * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: Minor bugfixes
  * [v2.0.2](http://blog.runalyze.com/allgemein/runalyze-v2-0-2/), 24.03.2015: Minor bugfixes
  * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: Minor bugfixes
