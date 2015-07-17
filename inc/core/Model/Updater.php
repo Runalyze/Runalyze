@@ -59,7 +59,7 @@ abstract class Updater {
 	 * Keys to update
 	 * @return array
 	 */
-        abstract protected function keys();
+	abstract protected function keys();
 
 	/**
 	 * Ignore specific key

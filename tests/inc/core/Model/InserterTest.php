@@ -8,9 +8,9 @@ class InserterForObjectWithoutID_MockTester extends Inserter {
 	public function table() {
 		return 'withoutid';
 	}
-        protected function keys() {
-            return array('foo','arr');
-        }
+	protected function keys() {
+		return array('foo','arr');
+	}
 }
 class InserterObjectWithoutID_MockTester extends Object {
 	public function properties() {
@@ -76,14 +76,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'withoutid`');
 		$this->PDO->exec('DROP TABLE `'.PREFIX.'withid`');
-	}
-
-	/**
-	 * @expectedException \RuntimeException
-	 */
-	public function testPrepareWithoutKeys() {
-		$I = new InserterForObjectWithoutID_MockTester($this->PDO);
-		$I->prepare();
 	}
 
 	/**

@@ -52,18 +52,6 @@ abstract class InserterWithAccountID extends Inserter {
 
 		return parent::value($key);
 	}
-
-	/**
-	 * Keys to insert
-	 * @return array
-	 */
-	protected function keys() {
-		return array_merge(array(
-				self::ACCOUNTID
-			),
-			Object::allDatabaseProperties()
-		);
-	}
         
 	/**
 	 * Tasks before insertion
