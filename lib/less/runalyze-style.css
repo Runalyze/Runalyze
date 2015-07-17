@@ -1300,6 +1300,10 @@ tbody.asThead th {
 td img {
   vertical-align: middle;
 }
+td.as-small-as-possible {
+  width: 1px;
+  white-space: nowrap;
+}
 tbody.top-spacer tr:first-child,
 tbody.top-spacer tr:first-child td,
 tr.top-spacer,

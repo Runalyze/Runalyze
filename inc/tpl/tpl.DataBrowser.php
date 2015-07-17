@@ -96,7 +96,7 @@ foreach ($this->days as $i => $day) {
 		}
 
 		echo '</td>
-				<td class="l">'.Dataset::getDateString($day['date']).'</td>
+				<td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>
 				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'"></td>
 			</tr>';
 	}
