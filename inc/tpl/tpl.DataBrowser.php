@@ -73,7 +73,7 @@ foreach ($this->days as $i => $day) {
 					$this->Dataset->displayShortLink();
 				}
 
-				echo '</td><td class="l">'.Dataset::getDateString($day['date']).'</td>';
+				echo '</td><td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>';
 			}
 
 			$this->Dataset->setActivityData($Training);
