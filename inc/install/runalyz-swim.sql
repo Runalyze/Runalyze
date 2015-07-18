@@ -7,13 +7,13 @@ CREATE TABLE IF NOT EXISTS `runalyze_swimdata` (
   `activityid` int(10) unsigned NOT NULL,
   `stroke` longtext,
   `stroketype` longtext,
-  `pool_length` tinyint(3) unsigned NOT NULL DEFAULT '0'
+  `pool_length` smallint(5) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Indizes für die Tabelle `runalyze_swim`
+-- Indizes für die Tabelle `runalyze_swimdata`
 --
-ALTER TABLE `runalyze_swim`
+ALTER TABLE `runalyze_swimdata`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
-ALTER TABLE `runalyze_training` ADD `total_strokes` int(4) NOT NULL DEFAULT '0',ADD `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0' AFTER `power`;
+ALTER TABLE `runalyze_training` ADD `total_strokes` smallint(5) unsigned NOT NULL DEFAULT '0', ADD `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0' AFTER `power`;

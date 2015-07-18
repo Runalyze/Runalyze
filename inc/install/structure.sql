@@ -255,8 +255,8 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `trimp` int(4) NOT NULL DEFAULT '0',
   `cadence` int(3) NOT NULL DEFAULT '0',
   `power` int(4) NOT NULL DEFAULT '0',
-  `total_strokes` int(3) NOT NULL DEFAULT '0',
-  `swolf` int(3) NOT NULL DEFAULT '0',
+  `total_strokes` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `stride_length` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `groundcontact` smallint(5) unsigned NOT NULL DEFAULT '0',
   `vertical_oscillation` tinyint(3) unsigned NOT NULL DEFAULT '0',
@@ -317,14 +317,15 @@ CREATE TABLE IF NOT EXISTS `runalyze_user` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_swim`
+-- Tabellenstruktur für Tabelle `runalyze_swimdata`
 --
 
 CREATE TABLE IF NOT EXISTS `runalyze_swimdata` (
   `accountid` int(10) unsigned NOT NULL,
   `activityid` int(10) unsigned NOT NULL,
   `stroke` longtext,
-  `stroketype` longtext
+  `stroketype` longtext,
+  `pool_length` smallint(5) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -392,9 +393,9 @@ ALTER TABLE `runalyze_trackdata`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
 --
--- Indizes für die Tabelle `runalyze_swim`
+-- Indizes für die Tabelle `runalyze_swimdata`
 --
-ALTER TABLE `runalyze_swim`
+ALTER TABLE `runalyze_swimdata`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
 --
