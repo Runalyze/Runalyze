@@ -305,6 +305,28 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertGreaterThan($ObjectWithout->trimp(), $ObjectWith->trimp());
 	}
 
+	public function testWithSwimdata() {
+		$Activity = new Object(array(
+			Object::DISTANCE => 0.2,
+			Object::TIME_IN_SECONDS => 120,
+		));
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->setTrackdata(new Model\Trackdata\Object(array(
+			Model\Trackdata\Object::TIME => array(30, 60, 90, 120),
+			Model\Trackdata\Object::DISTANCE => array(0.05, 0.1, 0.15, 0.2)
+		)));
+		$Inserter->setSwimdata(new Model\Swimdata\Object(array(
+			Model\Swimdata\Object::STROKE => array(25, 20, 15, 20)
+		)));
+		$Inserter->insert($Activity);
+		$Result = $this->fetch( $Inserter->insertedID());
+
+		$this->assertEquals(80, $Result->totalStrokes());
+		$this->assertEquals(50, $Result->swolf());
+	}
+
 	public function testTemperature() {
 		$Zero = $this->fetch(
 			$this->insert(array(

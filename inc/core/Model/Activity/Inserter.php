@@ -101,7 +101,7 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->calculateVDOTAndIntensityAndTrimp();
 		$this->calculatePower();
 		$this->calculateStrideLength();
-                $this->calculateSwimValues();
+		$this->calculateSwimValues();
 	}
 
 	/**
@@ -198,23 +198,21 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Calculate swim values
 	 */
 	protected function calculateSwimValues() {
-            if(NULL !== $this->Trackdata && NULL !== $this->Swimdata) {
-                if ($this->Swimdata->stroke()) {
-                    $this->Object->set(Object::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
-                }
-                    
-                if ( $this->Object->totalStrokes() && $this->Trackdata->totalTime()) {
-                   
-                   $num = $this->Trackdata->num();
-                   $totaltime = $this->Trackdata->totalTime();
-                   $totalstrokes = $this->Object->totalStrokes();
+		if (NULL !== $this->Trackdata && NULL !== $this->Swimdata) {
+			if ($this->Swimdata->stroke()) {
+				$this->Object->set(Object::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
+			}
 
-              
-		if (!empty($totalstrokes) && !empty($totaltime) & !empty($num) && $totalstrokes != 0) {
-                        $this->Object->set(Object::SWOLF, round(($totalstrokes + $totaltime) / $num));
-                }
-                }
-            }
+			if ($this->Object->totalStrokes() && $this->Trackdata->totalTime()) {
+			   $num = $this->Trackdata->num();
+			   $totaltime = $this->Trackdata->totalTime();
+			   $totalstrokes = $this->Object->totalStrokes();
+
+				if (!empty($totalstrokes) && !empty($totaltime) & !empty($num) && $totalstrokes != 0) {
+					$this->Object->set(Object::SWOLF, round(($totalstrokes + $totaltime) / $num));
+				}
+			}
+		}
 	}
         
 	/**

@@ -663,7 +663,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Total strokes'
+						'label'		=> __('Total strokes')
 					)
 	),
     	'swolf' 			=> array(
@@ -673,7 +673,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'SWOLF'
+						'label'		=> __('SWOLF')
 					)
 	),
     	'pool_length' 			=> array(
@@ -683,8 +683,8 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
-						'label'		=> 'Pool length',
-                                                 'unit'		=> FormularUnit::$M
+						'label'		=> __('Pool length'),
+						'unit'		=> FormularUnit::$CM
 					)
 	),   
 );

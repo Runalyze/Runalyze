@@ -133,6 +133,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 'file_creator':
 					break;
 				case 'device_info':
+					$this->readDeviceInfo();
 					break;
 
 				case 'event':
@@ -150,9 +151,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 				case 'session':
 					$this->readSession();
 					break;
-                                    
-                                case 'length':
-                                        $this->readLength();
+
+				case 'length':
+					$this->readLength();
+					break;
 
 				case 'activity':
 					break;
@@ -167,13 +169,18 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if (isset($this->Values['type']) && $this->Values['type'][1] != 'activity')
 			$this->addError( __('FIT file is not specified as activity.') );
 
-		if (isset($this->Values['garmin_product']))
-			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
-
 		if (isset($this->Values['time_created']))
 			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['time_created'][1]) );
 
 		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
+	}
+
+	/**
+	 * Read device info
+	 */
+	protected function readDeviceInfo() {
+		if (isset($this->Values['garmin_product']))
+			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
 	}
 
 	/**
@@ -191,12 +198,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 		if (isset($this->Values['total_calories']))
 			$this->TrainingObject->setCalories( $this->Values['total_calories'][0] + $this->TrainingObject->getCalories() );
-                
-                if (isset($this->Values['total_strokes']))
-                        $this->TrainingObject->setCadence($this->Values['total_strokes'][0]);
-                if (isset($this->Values['pool_length'])) 
-                        $this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);                
-                        
+
+		if (isset($this->Values['total_strokes']))
+			$this->TrainingObject->setTotalStrokes($this->Values['total_strokes'][0]);
+
+		if (isset($this->Values['avg_swimming_cadence']))
+			$this->TrainingObject->setCadence($this->Values['avg_swimming_cadence'][0]);
+
+		if (isset($this->Values['pool_length']))
+			$this->TrainingObject->setPoolLength($this->Values['pool_length'][0]);
 	}
 
 	/**
@@ -313,22 +323,20 @@ class ParserFITSingle extends ParserAbstractSingle {
 				$this->Values['total_distance'][0] / 1e5,
 				$this->Values['total_timer_time'][0] / 1e3
 			);
-
-        }
+	}
         
-        /**
-         * Read length
-         */
-        protected function readLength() {
-            $this->gps['stroke'][] = isset($this->Values['total_strokes']) ? (int)$this->Values['total_strokes'][0] : 0;
-            $this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
-            $this->gps['rpm'][]       = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
-            $time = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
-            $this->gps['time_in_s'][] = $time;
-                                  
-        }
+	/**
+	 * Read length
+	 */
+	protected function readLength() {
+		$this->gps['stroke'][] = isset($this->Values['total_strokes']) ? (int)$this->Values['total_strokes'][0] : 0;
+		$this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
+		// These values are read by readRecord()
+		//$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
+		//$this->gps['time_in_s'][] = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
+	}
 
-        /**
+	/**
 	 * Apply pauses
 	 */
 	protected function applyPauses() {

@@ -6,23 +6,14 @@
 
 namespace Runalyze\Model\Swimdata;
 
-
 use Runalyze\Model;
 use Runalyze\Model\Trackdata;
-use Runalyze\Activity\Duration;
+
 /**
  * Swimdata object
  *  
  * @author Hannes Christiansen & Michael Pohl
  * @package Runalyze\Model\Swimdata
- */
-/**
- * Stroke Type
- * 0 =  freestyle (kraulen?)
- * 1 = 
- * 2 = breaststroke 
- * 
- * Free, Breast, Fly, Back, Mixed, Drill
  */
 class Object extends Model\Object implements Model\Loopable {
 	/**
@@ -30,46 +21,44 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @var string
 	 */
 	const ACTIVITYID = 'activityid';
-        
+
 	/**
 	 * Key: stroke
 	 * @var string
 	 */
 	const STROKE = 'stroke';
-        
+
 	/**
 	 * Key: pool length
 	 * @var string
 	 */
 	const POOL_LENGTH = 'pool_length';
-        
+
 	/**
 	 * Key: stroketype
 	 * @var string
 	 */
 	const STROKETYPE = 'stroketype';
-        
+
 	/**
 	 * Key: swolf
 	 * @var string
 	 */
 	const SWOLF = 'swolf';     
-        
+
 	/**
 	 * Key: SWOLFCYCLES
 	 * @var string
 	 */
 	const SWOLFCYCLES = 'swolfcycles';     
-        
-        
-        
+
 	/**
 	 * Construct
 	 * @param array $data
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
-                $this->checkArraySizes();
+		$this->checkArraySizes();
 	}
         
 	/**
@@ -81,9 +70,9 @@ class Object extends Model\Object implements Model\Loopable {
 			self::ACTIVITYID,
 			self::STROKE,
 			self::STROKETYPE,
-                        self::SWOLF,
-                        self::SWOLFCYCLES,
-                        self::POOL_LENGTH
+			self::SWOLF,
+			self::SWOLFCYCLES,
+			self::POOL_LENGTH
 		);
 	}
         
@@ -94,31 +83,41 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	protected function canBeNull($key) {
 		switch ($key) {
-                        case self::ACTIVITYID:
-                        case self::STROKE:
-                        case self::STROKETYPE:
-                        case self::POOL_LENGTH:
+			case self::STROKE:
+			case self::STROKETYPE:
+			case self::SWOLF:
+			case self::SWOLFCYCLES:
 				return true;
 		}
+
 		return false;
 	}
-        
+ 
 	/**
 	 * Is the property an array?
 	 * @param string $key
 	 * @return bool
 	 */
 	public function isArray($key) {
-		return ($key != self::ACTIVITYID && $key != 'pool_length');
+		return ($key != self::ACTIVITYID && $key != self::POOL_LENGTH);
 	}
-        /**
+
+	/**
 	 * Properties
 	 * @return array
 	 */
 	public function properties() {
 		return static::allProperties();
 	}
-        
+
+	/**
+	 * Number of points
+	 * @return int
+	 */
+	public function num() {
+		return $this->numberOfPoints;
+	}
+
 	/**
 	 * Value at
 	 * 
@@ -130,98 +129,94 @@ class Object extends Model\Object implements Model\Loopable {
 	public function at($index, $key) {
 		return $this->Data[$key][$index];
 	}
-   
+
+	/**
+	 * Activity ID
+	 * @return int
+	 */
+	public function activityID() {
+		return $this->Data[self::ACTIVITYID];
+	}
+
 	/**
 	 * STROKE
-	 * @return int
+	 * @return array
 	 */
 	public function stroke() {
 		return $this->Data[self::STROKE];
 	}
-        
+
 	/**
 	 * STROKETYPE
-	 * @return int
+	 * @return array
 	 */
 	public function stroketype() {
 		return $this->Data[self::STROKETYPE];
 	}
-        
+
 	/**
 	 * SWOLF
-	 * @return int
+	 * @return array
 	 */
 	public function swolf() {
 		return $this->Data[self::SWOLF];
 	}
-        
+
 	/**
 	 * SWOLFcycles
-	 * @return int
+	 * @return array
 	 */
 	public function swolfcycles() {
 		return $this->Data[self::SWOLFCYCLES];
 	}
-        
+
 	/**
 	 * STROKETYPE
-	 * @return int [m]
+	 * @return int [cm]
 	 */
 	public function poollength() {
 		return $this->Data[self::POOL_LENGTH];
 	}
 
-        /*
-         * Calculate Distance based on pool length
-         */
-        public function fillDistanceArray(Trackdata\Object &$trackdata) {
-            if($this->poollength() && !$trackdata->has(Trackdata\Object::DISTANCE)) {
-                $distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
-                $trackdata->set(Trackdata\Object::DISTANCE, $distance);
-            }
-        }
-        
-        /*
-         * Create swolf array
-         * http://marathonswimmers.org/blog/2012/05/stroke-count-games/
-         */
-        public function swolfArray(Trackdata\Object &$trackdata) {
-            if($this->stroke() && $trackdata->has(Trackdata\Object::TIME)) {
-                $Time = new Trackdata\Loop($trackdata);
-                $Loop = new Loop($this);
-                $swolf[] = $Time->current('time');
-                $swolfcycles[] = $Time->current('time');
-                $lasttime = 0;
-                $i = 1;
-                
-                do {
-                    $duration = $Time->current('time') - $lasttime;
-                    $swolf[] = $duration + $Loop->stroke();
-                    $swolfcycles[] = $duration + ($Loop->stroke()/2);
-                    $lasttime = $Time->current('time');
-                    $Time->move('time', 1);
-                    $i++;
-                } while ($Loop->nextStep());
-                    $this->set(Object::SWOLF, $swolf);
-                    $this->set(Object::SWOLFCYCLES, $swolfcycles);
-                }
-                
-        }
-        
-        /*
-         * Calculate swolf array
-         */
-        public function fillSwolfArray() {
-
-        }
-        
-        /**
-	 * Number of points
-	 * @return int
+	/*
+	 * Calculate Distance based on pool length
 	 */
-	public function num() {
-		return $this->numberOfPoints;
+	public function fillDistanceArray(Trackdata\Object &$trackdata) {
+		if ($this->poollength() && !$trackdata->has(Trackdata\Object::DISTANCE)) {
+			$distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
+			$trackdata->set(Trackdata\Object::DISTANCE, $distance);
+		}
 	}
-        
-       
+
+	/*
+	 * Create swolf array
+	 * http://marathonswimmers.org/blog/2012/05/stroke-count-games/
+	 */
+	public function swolfArray(Trackdata\Object &$trackdata) {
+		if ($this->stroke() && $trackdata->has(Trackdata\Object::TIME)) {
+			$Time = new Trackdata\Loop($trackdata);
+			$Loop = new Loop($this);
+			$swolf[] = $Time->current('time');
+			$swolfcycles[] = $Time->current('time');
+			$lasttime = 0;
+
+			do {
+				$duration = $Time->current('time') - $lasttime;
+				$swolf[] = $duration + $Loop->stroke();
+				$swolfcycles[] = $duration + ($Loop->stroke()/2);
+				$lasttime = $Time->current('time');
+				$Time->move('time', 1);
+			} while ($Loop->nextStep());
+
+			$this->set(Object::SWOLF, $swolf);
+			$this->set(Object::SWOLFCYCLES, $swolfcycles);
+		}
+	}
+
+	/*
+	 * Calculate swolf array
+	 */
+	public function fillSwolfArray() {
+
+	}
 }

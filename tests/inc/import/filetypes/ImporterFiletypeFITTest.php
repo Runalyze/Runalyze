@@ -233,4 +233,29 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
 		}
 	}
+
+	/**
+	 * Test: simple pauses
+	 * Filename: "swim-25m-lane.fit" 
+	 */
+	public function testSimpleSwimmingFile() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-25m-lane.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+			$this->assertEquals(890, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(25, $this->object->object()->getCadence());
+
+			$this->assertEquals(2116, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(2354, $this->object->object()->getElapsedTime());
+			$this->assertEquals(1.95, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayStroke());
+			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+		}
+	}
 }

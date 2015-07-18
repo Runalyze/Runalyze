@@ -36,8 +36,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'power'		=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
-                        'stroke'        => array(),
-                        'stroketype'    => array()
+			'stroke'        => array(),
+			'stroketype'    => array()
 		);
 
 	/**
@@ -156,8 +156,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
-                $this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
-                $this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
+		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
+		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->setValuesFromArraysIfEmpty();
 	}
 
@@ -268,17 +268,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
-	}
-        
-        /**
-	 * Set total swim strokes from array
-	 */
-	private function setTotalStrokesFromArray() {
-		$array = $this->TrainingObject->getArrayStroke();
-              
-		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
-                        $this->TrainingObject->setTotalStrokes( round(array_sum($array)));
-                
 	}
         
 	/**

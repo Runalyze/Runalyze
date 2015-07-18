@@ -56,14 +56,20 @@ class Updater extends Model\UpdaterWithAccountID {
 	}
 
 	/**
-	 * Keys to insert
+	 * Keys to update
 	 * @return array
 	 */
 	protected function keys() {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allProperties()
+			array_diff(
+				Object::allProperties(),
+				array(
+					Object::SWOLF,
+					Object::SWOLFCYCLES
+				)
+			)
 		);
 	}
 
