@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-16 17:02+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-07-17 11:16+0200\n"
+"Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
@@ -2090,135 +2090,135 @@ msgstr "logaritmisch (nieuwe methode sinds v1.5)"
 
 #: inc/core/Parameter/Application/VdotMethod.php:34
 msgid "linear (old method up to v1.4)"
-msgstr ""
+msgstr "lineair (oude methode tot v1.4)"
 
 #: inc/core/Parameter/Application/Gender.php:39
 msgid "please choose"
-msgstr ""
+msgstr "kiezen aub"
 
 #: inc/core/Parameter/Application/Gender.php:40
 msgid "male"
-msgstr ""
+msgstr "man"
 
 #: inc/core/Parameter/Application/Gender.php:41
 msgid "female"
-msgstr ""
+msgstr "vrouw"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
-msgstr ""
+msgstr "elke 50m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:22
 msgid "every 100m a data point"
-msgstr ""
+msgstr "elke 100m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:23
 msgid "every 200m a data point"
-msgstr ""
+msgstr "elke 200m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:24
 msgid "every 500m a data point"
-msgstr ""
+msgstr "elke 500m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:25
 msgid "max. 50 data points"
-msgstr ""
+msgstr "Max. 50 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:26
 msgid "max. 100 data points"
-msgstr ""
+msgstr "Max. 100 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:27
 msgid "max. 200 data points (recommended)"
-msgstr ""
+msgstr "Max. 200 gegevenspunten (aanbevolen)"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:28
 msgid "max. 300 data points"
-msgstr ""
+msgstr "Max. 300 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:29
 msgid "max. 400 data points"
-msgstr ""
+msgstr "Max. 400 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:30
 msgid "max. 500 data points"
-msgstr ""
+msgstr "Max. 500 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:31
 msgid "max. 750 data points"
-msgstr ""
+msgstr "Max. 750 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:32
 msgid "max. 1000 data points"
-msgstr ""
+msgstr "Max. 1000 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
-msgstr ""
+msgstr "gegevens uploaden"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
-msgstr ""
+msgstr "Garmin Communicator"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
-msgstr ""
+msgstr "Standaardformulier"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:39
 msgid "all separated"
-msgstr ""
+msgstr "alle gescheiden"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:40
 msgid "Pace / Heart rate"
-msgstr ""
+msgstr "Tempo / hartslag"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:41
 msgid "Pace / Heart rate / Elevation"
-msgstr ""
+msgstr "Tempo / hartslag / hoogte"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
-msgstr ""
+msgstr "Weekweergave"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:34
 msgid "Month view"
-msgstr ""
+msgstr "Maandweergave"
 
 #: inc/core/Data/Weather/Condition.php:142
 msgid "sunny"
-msgstr ""
+msgstr "zonnig"
 
 #: inc/core/Data/Weather/Condition.php:144
 msgid "fair"
-msgstr ""
+msgstr "normaal"
 
 #: inc/core/Data/Weather/Condition.php:146
 msgid "cloudy"
-msgstr ""
+msgstr "bewolkt"
 
 #: inc/core/Data/Weather/Condition.php:148
 msgid "changeable"
-msgstr ""
+msgstr "wisselvallig"
 
 #: inc/core/Data/Weather/Condition.php:150
 msgid "rainy"
-msgstr ""
+msgstr "regenachtig"
 
 #: inc/core/Data/Weather/Condition.php:152
 msgid "snowing"
-msgstr ""
+msgstr "sneeuw"
 
 #: inc/core/Data/Weather.php:72
 msgid "at"
-msgstr ""
+msgstr "bij"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
-msgstr ""
+msgstr "Debug console"
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
-msgstr ""
+msgstr "Loopdagboek"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:33
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2226,50 +2226,57 @@ msgstr ""
 #: call/call.Plugin.install.php:23
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "Configuration"
-msgstr ""
+msgstr "Configuratie"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Klaar"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze is al geïnstalleerd."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
 "You cannot reinstall Runalyze. If something does not work, please do not "
 "hesitate to contact us."
 msgstr ""
+"U kunt Runalyze niet opnieuw installeren. Als er iets niet werkt, aarzel dan "
+"niet om contact met ons op te nemen."
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:271
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Start Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
 "If you want to reinstall Runalyze please delete you have to delete the "
 "<em>config.php</em>-file in your main directory of this installation."
 msgstr ""
+"Als u Runalyze opnieuw wilt installeren, moet u eerst het "
+"<em>config.php</em>-bestand in de hoofdmap van de huidige installatie "
+"verwijderen."
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "Welkom!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Laten we eerst controleren of de server voldoet aan de eisen."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
 msgid ""
 "PHP %s is required, but PHP %s is running. Please update your PHP version."
 msgstr ""
+"PHP %s is vereist, maar PHP %s wordt uitgevoerd. Gelieve uw PHP versie "
+"bijwerken."
 
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
