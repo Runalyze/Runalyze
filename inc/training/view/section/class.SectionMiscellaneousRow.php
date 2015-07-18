@@ -74,7 +74,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setBoxedValues() {
 		$this->addDateAndTime();
 		$this->addCadenceAndPower();
-                $this->addStrokeandSwolf();
+		$this->addStrokeandSwolf();
 		$this->addWeather();
 		$this->addEquipment();
 		$this->addTrainingPartner();
@@ -124,32 +124,31 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = $Power;
 		}
 	}
-        
-        /*
-         * Add swolf and total strokes
-         */
-        protected function addStrokeandSwolf() {
-                if ($this->Context->hasSwimdata() && ($this->Context->activity()->totalStrokes() > 0 || $this->Context->activity()->swolf() > 0)) {
-                    if($this->Context->activity()->totalStrokes() > 0) {
-                        $Strokes = new BoxedValue($this->Context->activity()->totalStrokes(), '', __('Strokes'));
-                        $Strokes->defineAsFloatingBlock('w50');    
-                        $this->BoxedValues[] = $Strokes;
-                    }	
-                    if($this->Context->activity()->swolf() > 0) {
-                        $Swolf = new BoxedValue($this->Context->activity()->swolf(), '', __('Swolf'));
-                        $Swolf->defineAsFloatingBlock('w50');    
-                        $this->BoxedValues[] = $Swolf;
-                    }	
-                    if($this->Context->swimdata()->poollength() > 0) {
-                        $Swolf = new BoxedValue($this->Context->swimdata()->poollength()/10, 'm', __('Pool length'));
-                        $Swolf->defineAsFloatingBlock('w50');    
-                        $this->BoxedValues[] = $Swolf;
-                    }	
-                   
-                   
-                    
-                }
-        }
+
+	/*
+	 * Add swolf and total strokes
+	 */
+	protected function addStrokeandSwolf() {
+		if ($this->Context->hasSwimdata() && ($this->Context->activity()->totalStrokes() > 0 || $this->Context->activity()->swolf() > 0)) {
+			if ($this->Context->activity()->totalStrokes() > 0) {
+				$Strokes = new BoxedValue($this->Context->activity()->totalStrokes(), '', __('Strokes'));
+				$Strokes->defineAsFloatingBlock('w50');    
+				$this->BoxedValues[] = $Strokes;
+			}
+
+			if ($this->Context->activity()->swolf() > 0) {
+				$Swolf = new BoxedValue($this->Context->activity()->swolf(), '', __('Swolf'));
+				$Swolf->defineAsFloatingBlock('w50');    
+				$this->BoxedValues[] = $Swolf;
+			}
+
+			if ($this->Context->swimdata()->poollength() > 0) {
+				$Swolf = new BoxedValue($this->Context->swimdata()->poollength()/100, 'm', __('Pool length'));
+				$Swolf->defineAsFloatingBlock('w50');    
+				$this->BoxedValues[] = $Swolf;
+			}
+		}
+	}
 
         /**
 	 * Add running dynamics

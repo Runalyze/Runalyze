@@ -59,13 +59,13 @@ class Context {
 
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
-                $this->Swimdata = $Factory->swimdata((int)$activityID);
+		$this->Swimdata = $Factory->swimdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
 		$this->Sport = $Factory->sport($this->Activity->sportid());
 		
-                $this->Swimdata->fillDistanceArray($this->Trackdata);
-                $this->Swimdata->swolfArray($this->Trackdata);
-                $this->Dataview = new Dataview($this->Activity);
+		$this->Swimdata->fillDistanceArray($this->Trackdata);
+		$this->Swimdata->fillSwolfArray($this->Trackdata);
+		$this->Dataview = new Dataview($this->Activity);
 
 	}
 

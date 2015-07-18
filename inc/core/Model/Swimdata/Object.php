@@ -210,31 +210,24 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Create swolf array
 	 * http://marathonswimmers.org/blog/2012/05/stroke-count-games/
 	 */
-	public function swolfArray(Trackdata\Object &$trackdata) {
+	public function fillSwolfArray(Trackdata\Object &$trackdata) {
 		if ($this->stroke() && $trackdata->has(Trackdata\Object::TIME)) {
-			$Time = new Trackdata\Loop($trackdata);
+			$TrackLoop = new Trackdata\Loop($trackdata);
 			$Loop = new Loop($this);
-			$swolf[] = $Time->current('time');
-			$swolfcycles[] = $Time->current('time');
-			$lasttime = 0;
 
-			do {
-				$duration = $Time->current('time') - $lasttime;
+			$max = $Loop->num();
+
+			for ($i = 1; $i <= $max; ++$i) {
+				$duration = $TrackLoop->difference(Trackdata\Object::TIME);
 				$swolf[] = $duration + $Loop->stroke();
-				$swolfcycles[] = $duration + ($Loop->stroke()/2);
-				$lasttime = $Time->current('time');
-				$Time->move('time', 1);
-			} while ($Loop->nextStep());
+				$swolfcycles[] = $duration + $Loop->stroke()/2;
+
+				$Loop->nextStep();
+				$TrackLoop->nextStep();
+			}
 
 			$this->set(Object::SWOLF, $swolf);
 			$this->set(Object::SWOLFCYCLES, $swolfcycles);
 		}
-	}
-
-	/*
-	 * Calculate swolf array
-	 */
-	public function fillSwolfArray() {
-
 	}
 }
