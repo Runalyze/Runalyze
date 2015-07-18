@@ -182,4 +182,12 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($T->has(Object::HEARTRATE));
 	}
 
+	public function testEmptyWithActivityID() {
+		$T = new Object(array(
+			Object::ACTIVITYID => 42
+		));
+
+		$this->assertTrue($T->isEmpty());
+	}
+
 }

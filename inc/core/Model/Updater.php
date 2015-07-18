@@ -167,6 +167,10 @@ abstract class Updater {
 	 * Tasks before update
 	 */
 	protected function before() {
+		if ($this->knowsOldObject()) {
+			$this->OldObject->synchronize();
+		}
+
 		$this->NewObject->synchronize();
 	}
 

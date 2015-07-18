@@ -144,7 +144,16 @@ function allSplitsRest() {
 
 function allSplitsActive() {
 	$("select[name='splits[active][]']").val("1");
-}/*
+}
+
+function evenSplits(theValue) {
+	$("select[name='splits[active][]']:even").val(theValue);
+}
+
+function oddSplits(theValue) {
+	$("select[name='splits[active][]']:odd").val(theValue);
+}
+/*
  * Metadata - jQuery plugin for parsing metadata from elements
  *
  * Copyright (c) 2006 John Resig, Yehuda Katz, J�örn Zaefferer, Paul McLanahan
@@ -5061,13 +5070,19 @@ var RunalyzePlot = (function($, parent){
 	// General methods for Plots
 
 	self.preparePlot = function(cssId, width, height, code) {
-		delete created.cssId;
+		if (created.hasOwnProperty(cssId)) {
+			delete created[cssId];
+		}
+
+		if (plots.hasOwnProperty(cssId)) {
+			plots[cssId].annotations = [];
+		}
 
 		$(document).off('createFlot.'+cssId).on('createFlot.'+cssId, function(){
 			var $e = $('#'+cssId);
 
 			if (!created.hasOwnProperty(cssId) && $e.width() > 0 && $e.is(':visible') && !$e.hasClass('flot-hide')) {
-				created.cssId = true;
+				created[cssId] = true;
 
 				$e.width(width).height(height);
 
@@ -5673,16 +5688,18 @@ RunalyzePlot.Events = (function($, parent){
 				}
 			}
 
-			if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
-				if (plot.getOptions().xaxis.mode != 'time') {
-					moveMapMarker(coords.x);
-				} else {
-					var dataset = plot.getData();
-					var distanceSeries = dataset[dataset.length - 1];
-					for (j = 0; j < distanceSeries.data.length; ++j)
-						if (distanceSeries.data[j][0] > coords.x)
-							break;
-					moveMapMarker(distanceSeries.data[j][1]);
+			if (RunalyzeLeaflet && RunalyzeLeaflet.Routes && RunalyzeLeaflet.Routes.routeid) {
+				if ($(".training-row-plot").has($("#"+key)).length && !opt.series.bars.show) {
+					if (plot.getOptions().xaxis.mode != 'time') {
+						moveMapMarker(coords.x);
+					} else {
+						var dataset = plot.getData();
+						var distanceSeries = dataset[dataset.length - 1];
+						for (j = 0; j < distanceSeries.data.length - 1; ++j)
+							if (distanceSeries.data[j][0] > coords.x)
+								break;
+						moveMapMarker(distanceSeries.data[j][1]);
+					}
 				}
 			}
 

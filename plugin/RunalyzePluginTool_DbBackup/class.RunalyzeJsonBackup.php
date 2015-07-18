@@ -28,6 +28,7 @@ class RunalyzeJsonBackup extends RunalyzeBackup {
 	 * @param string $TableName
 	 */
 	protected function startTableRows($TableName) {
+                $TableName = str_replace(PREFIX, 'runalyze_', $TableName);
 		$this->Writer->addToFile('{"TABLE":"'.$TableName.'"}'.NL);
 	}
 
@@ -45,11 +46,10 @@ class RunalyzeJsonBackup extends RunalyzeBackup {
 	 * @param PDOStatement $Statement
 	 */
 	protected function saveRowsFromStatement(&$TableName, array $ColumnInfo, PDOStatement $Statement) {
-		if ($TableName == 'runalyze_account')
+		if ($TableName == PREFIX.'account')
 			return;
 
-		if (PREFIX != 'runalyze_')
-			$TableName = str_replace(PREFIX, 'runalyze_', $TableName);
+                $TableName = str_replace(PREFIX, 'runalyze_', $TableName);
 
 		while ($Row = $Statement->fetch()) {
 			$id = isset($Row['id']) ? $Row['id'] : '';

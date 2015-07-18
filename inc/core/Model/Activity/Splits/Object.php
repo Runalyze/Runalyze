@@ -28,6 +28,15 @@ class Object extends StringArrayObject {
 	protected $Elements = array();
 
 	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		foreach ($this->Elements as $i => $split) {
+			$this->Elements[$i] = clone $split;
+		}
+	}
+
+	/**
 	 * From array
 	 * @param \Runalyze\Model\Activity\Splits\Split[] $splits
 	 * @throws \InvalidArgumentException

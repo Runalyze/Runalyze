@@ -353,6 +353,21 @@ class Dataset {
 	}
 
 	/**
+	 * Display labels
+	 */
+	public function displayTableLabels() {
+		if (Configuration::DataBrowser()->showEditLink()) {
+			echo HTML::emptyTD();
+		}
+
+		$Labels = new DatasetLabels();
+
+		foreach ($this->data as $set) {
+			echo '<td><span '.Ajax::tooltip('', $Labels->get($set['name']), false, true).'>'.$Labels->get($set['name']).'</span></td>';
+		}
+	}
+
+	/**
 	 * Display a single dataset
 	 * @param array $set
 	 */

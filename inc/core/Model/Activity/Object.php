@@ -292,6 +292,13 @@ class Object extends Model\ObjectWithID {
 	protected $Partner = null;
 
 	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		$this->cloneInternalObjects();
+	}
+
+	/**
 	 * All properties
 	 * @return array
 	 */

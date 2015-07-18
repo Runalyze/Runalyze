@@ -93,13 +93,25 @@ class Object extends Model\Object implements Model\Loopable {
 	protected $TimeHasBeenRemoved = false;
 
 	/**
+	 * Flag: ensure arrays to be equally sized
+	 * @var bool
+	 */
+	protected $checkArraySizes = true;
+
+	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		$this->cloneInternalObjects();
+	}
+
+	/**
 	 * Construct
 	 * @param array $data
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
 
-		$this->checkArraySizes();
 		$this->readPauses();
 	}
 
@@ -229,6 +241,15 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
+	 * Ignore a key while checking for emptiness
+	 * @param enum $key
+	 * @return boolean
+	 */
+	protected function ignoreNonEmptyValue($key) {
+		return ($key == self::ACTIVITYID);
+	}
+
+	/**
 	 * Clear
 	 */
 	public function clear() {
@@ -248,14 +269,6 @@ class Object extends Model\Object implements Model\Loopable {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Number of points
-	 * @return int
-	 */
-	public function num() {
-		return $this->numberOfPoints;
 	}
 
 	/**

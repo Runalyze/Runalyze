@@ -12,7 +12,7 @@
 
 	<link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
 
-	<title><?php echo $this->getPageTitle(); ?> - Runalyze</title>
+	<title><?php echo $this->getPageTitle(); ?> - RUNALYZE</title>
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>
@@ -33,5 +33,5 @@
 		?>
 	</span>
 
-	<a class="tab right b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; Runalyze v<?php echo RUNALYZE_VERSION; ?></a>
+	<a class="tab right b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; RUNALYZE v<?php echo RUNALYZE_VERSION; ?></a>
 </div>

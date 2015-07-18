@@ -42,6 +42,14 @@
 
 	<div id="data-browser-container">
 		<table class="zebra-style">
+			<?php if (\Runalyze\Configuration::DataBrowser()->showLabels()): ?>
+			<thead class="data-browser-labels">
+				<tr class="small">
+					<td colspan="<?php echo (2 + $this->showPublicLink); ?>"></td>
+					<?php $this->Dataset->displayTableLabels(); ?>
+				</tr>
+			</thead>
+			<?php endif; ?>
 			<tbody class="top-and-bottom-border">
 <?php
 foreach ($this->days as $i => $day) {
@@ -65,7 +73,7 @@ foreach ($this->days as $i => $day) {
 					$this->Dataset->displayShortLink();
 				}
 
-				echo '</td><td class="l">'.Dataset::getDateString($day['date']).'</td>';
+				echo '</td><td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>';
 			}
 
 			$this->Dataset->setActivityData($Training);
@@ -88,7 +96,7 @@ foreach ($this->days as $i => $day) {
 		}
 
 		echo '</td>
-				<td class="l">'.Dataset::getDateString($day['date']).'</td>
+				<td class="l as-small-as-possible">'.Dataset::getDateString($day['date']).'</td>
 				<td colspan="'.($this->Dataset->cols() + $this->showPublicLink).'"></td>
 			</tr>';
 	}

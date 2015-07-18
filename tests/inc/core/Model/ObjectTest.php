@@ -62,6 +62,8 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			'b' => '',
 			'c' => true
 		), $O->completeData());
+
+		$this->assertEquals(0, $O->num());
 	}
 
 	public function testSimpleObjectWithArray() {
@@ -73,9 +75,11 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(1,2,3), $O->get('b'));
 		$this->assertTrue($O->has('b'));
+		$this->assertEquals(3, $O->num());
 
 		$O->set('b', array());
 		$this->assertFalse($O->has('b'));
+		$this->assertEquals(0, $O->num());
 	}
 
 	public function testClearing() {
@@ -90,6 +94,8 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEmpty($O->get('a'));
 		$this->assertEmpty($O->get('b'));
 		$this->assertEmpty($O->get('c'));
+
+		$this->assertTrue($O->isEmpty());
 	}
 
 	public function testSimpleObjectWithArrayAsString() {
@@ -106,6 +112,8 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('', $O->get('a'));
 		$this->assertEquals(array(), $O->get('b'));
 		$this->assertEquals('', $O->get('c'));
+
+		$this->assertTrue($O->isEmpty());
 	}
 
 	/**
