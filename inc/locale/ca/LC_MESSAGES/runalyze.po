@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-13 14:31+0200\n"
+"POT-Creation-Date: 2015-07-18 11:15+0200\n"
 "PO-Revision-Date: 2015-03-16 11:24+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan <http://translate.runalyze.de/projects/runalyze/"
@@ -128,7 +128,7 @@ msgstr "Hora"
 #: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:238
 msgid "Total"
 msgstr "Total"
 
@@ -331,8 +331,8 @@ msgstr "ascens"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:331
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:419
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:477
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:420
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:478
 msgid "to"
 msgstr "fins a"
 
@@ -3471,6 +3471,11 @@ msgstr ""
 "Alguna cosa no ha funcionat com calia. Si us plau posi's en contacte amb "
 "l'administrador."
 
+#: inc/system/class.AccountHandler.php:282
+#, fuzzy
+msgid "Reset your RUNALYZE password"
+msgstr "Canviï el password"
+
 #: inc/system/class.AccountHandler.php:283
 #, php-format
 msgid "Did you forget your password %s?"
@@ -4465,7 +4470,7 @@ msgstr "Seleccioni roba"
 
 #: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:545
 msgid "In total"
 msgstr "Total"
 
@@ -4987,7 +4992,7 @@ msgstr "Temperatures"
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:64
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:189
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:152
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:194
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:195
 msgid "No data available."
 msgstr "No hi ha dades disponibles."
 
@@ -6922,47 +6927,46 @@ msgstr "Zona de ritme: increment"
 msgid "in percent"
 msgstr "en percentatge"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:102
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:106
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:103
 msgid "by distance"
 msgstr "per distància"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:107
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:108
 msgid "by time"
 msgstr "per temps"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:121
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 #, fuzzy
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
 "Aquests valors consideren només la freqüència cardíaca mitjana dels seus "
 "entrenaments."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:184
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:185
 msgid "There is no data for this sport."
 msgstr "No hi ha dades per l'esport seleccionat."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:339
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:340
 msgid "without"
 msgstr "sense"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:353
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:354
 msgid "Training types"
 msgstr "Tipus d'entrenament"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:415
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:416
 msgid "faster than"
 msgstr "més ràpid que"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:417
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:418
 msgid "up to"
 msgstr "fins a"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:424
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:425
 msgid "Pace Zones"
 msgstr "zones de ritme"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:483
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:484
 msgid "Heart Rate Zones"
 msgstr "Zones de pols"
 
