@@ -111,6 +111,24 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
+	 * Synchronize
+	 */
+	public function synchronize() {
+		parent::synchronize();
+
+		$this->ensureAllNumericValues();
+	}
+
+	/**
+	 * Ensure that numeric fields get numeric values
+	 */
+	protected function ensureAllNumericValues() {
+		$this->ensureNumericValue(array(
+			self::POOL_LENGTH
+		));
+	}
+
+	/**
 	 * Number of points
 	 * @return int
 	 */
