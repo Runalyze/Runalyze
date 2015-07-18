@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-18 11:27+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-07-18 15:30+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -624,7 +624,7 @@ msgstr "Herzfrequenzdiagramm"
 #: inc/training/view/section/class.SectionHeartrateRow.php:28
 #: inc/training/view/section/class.SectionPaceRow.php:28
 msgid "You'll be soon able to configure your own zones."
-msgstr "Bald wird es möglich sein eigene Herzfrequenzzonen zu konfigurieren."
+msgstr "Bald wird es möglich sein, eigene Zonen zu konfigurieren."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:30
 msgid "Heartrate zones"
@@ -787,7 +787,7 @@ msgstr "Trainingspunkte"
 #: inc/training/view/section/class.SectionPaceRow.php:84
 #: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
-msgstr "Mehr über die VDOT Berechnung"
+msgstr "Mehr zur VDOT Berechnung"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
@@ -848,7 +848,7 @@ msgstr "Kombiniertes Diagramm"
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
-msgstr "Bald wirst du deine eigenen Herzfrequenzzonen konfigurieren können."
+msgstr "Bald wirst du deine eigenen Zonen konfigurieren können."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
@@ -1758,12 +1758,12 @@ msgstr ""
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr "Maximal CTL"
+msgstr "Maximaler CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr "Maximal ATL"
+msgstr "Maximaler ATL"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
@@ -6155,7 +6155,7 @@ msgstr "VDOT Korrektur"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:152
 msgid "Maximal TRIMP"
-msgstr "Maximal TRIMP"
+msgstr "Maximaler TRIMP"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.Job.php:19
 msgid "Cleanup is running ..."

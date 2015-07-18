@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-17 11:16+0200\n"
+"PO-Revision-Date: 2015-07-18 18:47+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -795,7 +795,6 @@ msgid "&oslash; bpm"
 msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:58
-#, fuzzy
 msgid "elev."
 msgstr "Hoogteverschil"
 
@@ -1013,19 +1012,16 @@ msgid "all resting"
 msgstr "Totaal rust"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "alternating:"
-msgstr "Totaal rust"
+msgstr "afwisselend:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "first resting"
-msgstr "Totaal rust"
+msgstr "eerste rust moment"
 
 #: inc/training/formular/class.TrainingInputSplits.php:50
-#, fuzzy
 msgid "first active"
-msgstr "Trainingslijst openbaar"
+msgstr "Eerste actief"
 
 #: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
@@ -1325,7 +1321,7 @@ msgstr "Publiceer activiteiten"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr "Automatisch elke activiteit publiek maken."
+msgstr "Automatisch elke activiteit openbaar maken."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
@@ -1347,7 +1343,7 @@ msgid ""
 "activity list."
 msgstr ""
 "Toont een samenvatting voor elke privé activiteit in de openbare "
-"activiteiten lijst, wanneer deze is geativeerd."
+"activiteiten lijst, wanneer deze is geactiveerd."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
@@ -1800,7 +1796,6 @@ msgstr "Ronde"
 
 #: inc/core/View/Window/Laps/Table.php:110
 #: inc/core/View/Window/Laps/Table.php:112
-#, fuzzy
 msgid "Diff."
 msgstr "Verschil"
 
@@ -2281,52 +2276,56 @@ msgstr ""
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
 msgid "Currently PHP %s is running."
-msgstr ""
+msgstr "Op dit moment draait PHP %s."
 
 #: inc/tpl/tpl.Installer.php:64
 msgid ""
 "Importing large files (e.g. a SportTracks logbook) may take some time. "
 "Please have a look at your server limitations:"
 msgstr ""
+"Importeren van grote bestanden (bijv. SportTracks logboek) kan enige tijd "
+"duren. Bekijk even de beperkingen van de server:"
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Tijdslimiet"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Geheugen limiet"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Upload limiet"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Installatie starten"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Runalyze instellingen"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze heeft een MySQL database nodig."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
 "The connection settings are incorrect. We are not able to connect to the "
 "database."
 msgstr ""
+"De database inloggegevens zijn onjuist. We kunnen geen verbinding maken met "
+"de database."
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr ""
+msgstr "Er kon een verbinding gemaakt worden."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "Op dit moment draait MySQL %s."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
