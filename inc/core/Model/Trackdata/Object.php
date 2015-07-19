@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Trackdata;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Activity\PaceCalculator;
 
 /**
  * Trackdata object
@@ -111,6 +112,8 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
+
+		$this->calculatePaceArray();
  		$this->readPauses();
 	}
 
@@ -202,14 +205,13 @@ class Object extends Model\Object implements Model\Loopable {
 	 * Properties
 	 * @return array
 	 */
-        public function properties() {
-            return array_merge(array(
-                    self::PACE
-                ),
-                static::allDatabaseProperties() 
-            );
-        }
-        
+	public function properties() {
+		return array_merge(array(
+				self::PACE
+			),
+			static::allDatabaseProperties() 
+		);
+	}
 
 	/**
 	 * Is the property an array?
@@ -415,22 +417,13 @@ class Object extends Model\Object implements Model\Loopable {
 		return !$this->Pauses->isEmpty();
 	}
         
-        /*
-         * Calculate Pace Array 
-         */
-        public function calculatePaceArray() {
-                $Loop = new Loop($this);
-                $pace = array();
-                $lastTime = 0;
-                $lastDist = 0;
-                
-                do {
-			$pace[] = round(($lastTime - $Loop->time()) / ($lastDist - $Loop->distance()));            
-			$lastDist = $Loop->distance();
-                        $lastTime = $Loop->time();
-                } while ($Loop->nextStep());
-                
-                   $pace[] = round(($lastTime - end($this->time())) / ($lastDist - end($this->distance())));
-                  $this->set(Object::PACE, $pace);                
-        }
+	/*
+	 * Calculate pace array 
+	 */
+	public function calculatePaceArray() {
+		$PaceCalculator = new PaceCalculator($this);
+		$PaceCalculator->calculate();
+
+		$this->set(self::PACE, $PaceCalculator->result());
+	}
 }
