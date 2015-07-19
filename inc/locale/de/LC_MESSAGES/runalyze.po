@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-13 14:34+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"POT-Creation-Date: 2015-07-18 11:15+0200\n"
+"PO-Revision-Date: 2015-07-18 15:30+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -126,7 +126,7 @@ msgstr "Uhrzeit"
 #: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:238
 msgid "Total"
 msgstr "Gesamt"
 
@@ -329,8 +329,8 @@ msgstr "aufsteigend"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:331
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:419
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:477
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:420
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:478
 msgid "to"
 msgstr "bis"
 
@@ -624,7 +624,7 @@ msgstr "Herzfrequenzdiagramm"
 #: inc/training/view/section/class.SectionHeartrateRow.php:28
 #: inc/training/view/section/class.SectionPaceRow.php:28
 msgid "You'll be soon able to configure your own zones."
-msgstr "Bald wird es möglich sein eigene Herzfrequenzzonen zu konfigurieren."
+msgstr "Bald wird es möglich sein, eigene Zonen zu konfigurieren."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:30
 msgid "Heartrate zones"
@@ -787,7 +787,7 @@ msgstr "Trainingspunkte"
 #: inc/training/view/section/class.SectionPaceRow.php:84
 #: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
-msgstr "Mehr über die VDOT Berechnung"
+msgstr "Mehr zur VDOT Berechnung"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
@@ -848,7 +848,7 @@ msgstr "Kombiniertes Diagramm"
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
-msgstr "Bald wirst du deine eigenen Herzfrequenzzonen konfigurieren können."
+msgstr "Bald wirst du deine eigenen Zonen konfigurieren können."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
@@ -1017,14 +1017,12 @@ msgid "alternating:"
 msgstr "abwechselnd:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "first resting"
-msgstr "alle Ruhe"
+msgstr "Erste Runde \"Ruhe\""
 
 #: inc/training/formular/class.TrainingInputSplits.php:50
-#, fuzzy
 msgid "first active"
-msgstr "Erstes Training:"
+msgstr "Erste Runde \"Aktiv\""
 
 #: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
@@ -1534,7 +1532,7 @@ msgstr "Leistung berechnen"
 msgid "Calculate power by speed and grade for cycling"
 msgstr ""
 "Beim Radfahren kann die jeweilige Leistung anhand einiger physikalischer "
-"Größen automatisch berechnet werden."
+"Größen automatisch berechnet werden"
 
 #: inc/core/Configuration/Category/ActivityForm.php:225
 msgid "Detect pauses"
@@ -1760,12 +1758,12 @@ msgstr ""
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr "Maximal CTL"
+msgstr "Maximaler CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr "Maximal ATL"
+msgstr "Maximaler ATL"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
@@ -3477,6 +3475,10 @@ msgstr "Das Passwort muss mindestens %s Zeichen enthalten."
 msgid "Something went wrong. Please contact the administrator."
 msgstr "Es lief etwas schief. Bitte kontaktiere den Administrator."
 
+#: inc/system/class.AccountHandler.php:282
+msgid "Reset your RUNALYZE password"
+msgstr "Setze dein RUNALYZE Passwort zurück"
+
 #: inc/system/class.AccountHandler.php:283
 #, php-format
 msgid "Did you forget your password %s?"
@@ -3561,7 +3563,7 @@ msgstr "Löschanfrage deines RUNALYZE Accounts"
 
 #: inc/system/class.AccountHandler.php:512
 msgid "Do you really want to delete your account"
-msgstr "Willst du deinen Account wirklich löschen?"
+msgstr "Willst du deinen Account wirklich löschen"
 
 #: inc/system/class.AccountHandler.php:513
 msgid "Complete the process by accessing the following link: "
@@ -4467,7 +4469,7 @@ msgstr "Wähle Zeitraum"
 
 #: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:545
 msgid "In total"
 msgstr "Gesamt"
 
@@ -4988,7 +4990,7 @@ msgstr "Temperaturen"
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:64
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:189
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:152
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:194
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:195
 msgid "No data available."
 msgstr "Keine Daten verfügbar."
 
@@ -6153,7 +6155,7 @@ msgstr "VDOT Korrektur"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:152
 msgid "Maximal TRIMP"
-msgstr "Maximal TRIMP"
+msgstr "Maximaler TRIMP"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.Job.php:19
 msgid "Cleanup is running ..."
@@ -6926,45 +6928,44 @@ msgstr "Tempobereich: Schrittweite"
 msgid "in percent"
 msgstr "in Prozent"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:102
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:106
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:103
 msgid "by distance"
 msgstr "nach Distanz"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:107
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:108
 msgid "by time"
 msgstr "nach Zeit"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:121
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
 "Diese Werte betrachten nur die durchschnittlichen Werte deiner Trainings."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:184
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:185
 msgid "There is no data for this sport."
 msgstr "Keine Daten für den Sport vorhanden."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:339
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:340
 msgid "without"
 msgstr "ohne"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:353
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:354
 msgid "Training types"
 msgstr "Trainingstypen"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:415
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:416
 msgid "faster than"
 msgstr "schneller als"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:417
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:418
 msgid "up to"
 msgstr "bis"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:424
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:425
 msgid "Pace Zones"
 msgstr "Tempobereiche"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:483
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:484
 msgid "Heart Rate Zones"
 msgstr "Pulsbereiche"
 

@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-13 14:31+0200\n"
-"PO-Revision-Date: 2015-07-12 21:48+0200\n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
+"POT-Creation-Date: 2015-07-18 11:15+0200\n"
+"PO-Revision-Date: 2015-07-18 18:47+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -126,7 +126,7 @@ msgstr "Tijdstip van de dag"
 #: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:238
 msgid "Total"
 msgstr "Totaal"
 
@@ -329,8 +329,8 @@ msgstr "oplopend"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:331
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:419
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:477
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:420
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:478
 msgid "to"
 msgstr "tot"
 
@@ -1012,19 +1012,16 @@ msgid "all resting"
 msgstr "Totaal rust"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "alternating:"
-msgstr "Totaal rust"
+msgstr "afwisselend:"
 
 #: inc/training/formular/class.TrainingInputSplits.php:49
-#, fuzzy
 msgid "first resting"
-msgstr "Totaal rust"
+msgstr "eerste rust moment"
 
 #: inc/training/formular/class.TrainingInputSplits.php:50
-#, fuzzy
 msgid "first active"
-msgstr "Trainingslijst openbaar"
+msgstr "Eerste actief"
 
 #: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
@@ -1324,7 +1321,7 @@ msgstr "Publiceer activiteiten"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
-msgstr "Automatisch elke activiteit publiek maken."
+msgstr "Automatisch elke activiteit openbaar maken."
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
@@ -1346,7 +1343,7 @@ msgid ""
 "activity list."
 msgstr ""
 "Toont een samenvatting voor elke privé activiteit in de openbare "
-"activiteiten lijst, wanneer deze is geativeerd."
+"activiteiten lijst, wanneer deze is geactiveerd."
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
@@ -1761,26 +1758,29 @@ msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
+"Het schalen van TSB waarden hangt af van uw ATL/CTL. U kunt TSB in "
+"percentages laten weergeven om vergelijkbare waarden te krijgen."
 
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr ""
+msgstr "Maximale CTL"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr ""
+msgstr "Maximale ATL"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
 msgid "Database cleanup"
-msgstr ""
+msgstr "Database opruimen"
 
 #: inc/core/Configuration/Messages.php:26
 #, php-format
 msgid "You can now use the %s to recalculate the concerning values."
 msgstr ""
+"U kunt nu de tool %s gebruiken voor het berekenen van de betreffende waarden."
 
 #: inc/core/Configuration/Messages.php:37
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -1788,426 +1788,433 @@ msgstr ""
 msgid ""
 "%s has been recalculated. New value: <strong>%s</strong> (old value: %s)"
 msgstr ""
+"%s is herberekend. Nieuwe waarde: <strong>%s</strong> (oude waarde: %s)"
 
 #: inc/core/View/Window/Laps/Table.php:108
 msgid "Lap"
-msgstr ""
+msgstr "Ronde"
 
 #: inc/core/View/Window/Laps/Table.php:110
 #: inc/core/View/Window/Laps/Table.php:112
 msgid "Diff."
-msgstr ""
+msgstr "Verschil"
 
 #: inc/core/View/Window/Laps/Table.php:114
 msgid "max. bpm"
-msgstr ""
+msgstr "Max. BPM"
 
 #: inc/core/View/Window/Laps/Table.php:115
 msgid "elevation"
-msgstr ""
+msgstr "hoogte"
 
 #: inc/core/View/Window/Laps/Table.php:162
 msgid "Average"
-msgstr ""
+msgstr "Gemiddelde"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
-msgstr ""
+msgstr "Berekenen ronden"
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Lap every ..."
-msgstr ""
+msgstr "Ronde elke..."
 
 #: inc/core/View/Window/Laps/Form.php:52
 msgid "Distance, after which a new lap should start"
-msgstr ""
+msgstr "Afstand, waarna een nieuwe ronde moet beginnen"
 
 #: inc/core/View/Window/Laps/Form.php:64 inc/core/View/Window/Laps/Form.php:68
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "or"
-msgstr ""
+msgstr "of"
 
 #: inc/core/View/Window/Laps/Form.php:64
 msgid "Manual laps"
-msgstr ""
+msgstr "Handmatige ronden"
 
 #: inc/core/View/Window/Laps/Form.php:65
 msgid ""
 "List with all distances, comma seperated. Put \"+\" at the beginning to "
 "treat distances as intervals."
 msgstr ""
+"Lijst met alle afstanden, door komma's gescheiden. Zet een \"+\" aan het "
+"begin om deze afstanden als intervallen te behandelen."
 
 #: inc/core/View/Window/Laps/Form.php:68
 msgid "e.g."
-msgstr ""
+msgstr "bijv."
 
 #: inc/core/View/Window/Laps/Form.php:78
 msgid "Lap time goal"
-msgstr ""
+msgstr "Ronde tijd doel"
 
 #: inc/core/View/Window/Laps/Form.php:91
 msgid "Pace goal"
-msgstr ""
+msgstr "Tempo doel"
 
 #: inc/core/View/Window/Laps/Form.php:103
 msgid ""
 "Calculate values for handmade splits although total distance does not match."
 msgstr ""
+"Bereken tussentijden voor handmatige ronden, ondanks dat de totaal afstand "
+"niet klopt."
 
 #: inc/core/View/Window/Laps/Form.php:107
 msgid "The total distance of your handmade laps differs from the gps distance."
 msgstr ""
+"De totale afstand van uw handmatige ronden verschilt van de gps-afstand."
 
 #: inc/core/View/Window/Laps/Form.php:114
 msgid "Leave lap distances empty to use your handmade laps."
-msgstr ""
+msgstr "Laat de rondeafstand leeg om uw handmatige ronden te gebruiken."
 
 #: inc/core/View/Window/Laps/Form.php:127
 msgid "Show calculated laps"
-msgstr ""
+msgstr "Toon berekende ronden"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
-msgstr ""
+msgstr "diff"
 
 #: inc/core/View/Splits/Table.php:221
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "Goal"
-msgstr ""
+msgstr "Doel"
 
 #: inc/core/View/Splits/Table.php:234
 msgid "Average (active)"
-msgstr ""
+msgstr "Gemiddelde (actief)"
 
 #: inc/core/View/Splits/Table.php:242
 msgid "Average (total)"
-msgstr ""
+msgstr "Gemiddelde (totaal)"
 
 #: inc/core/View/Splits/Table.php:257
 msgid "1st/2nd Half"
-msgstr ""
+msgstr "1e/2e helft"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
-msgstr ""
+msgstr "Geen diagram beschikbaar."
 
 #: inc/core/View/Activity/Plot/LapsManual.php:50
 msgid "There are no manual laps."
-msgstr ""
+msgstr "Er zijn geen handmatige ronden."
 
 #: inc/core/View/Activity/Plot/LapsComputed.php:47
 msgid "No GPS-data available. Can\\'t compute laps."
 msgstr ""
+"Geen GPS-gegevens beschikbaar. Tussentijden kunnen niet berekend worden."
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:48
 msgid "Original data"
-msgstr ""
+msgstr "Oorspronkelijke gegevens"
 
 #: inc/core/View/Activity/Plot/ElevationAlgorithms.php:79
 msgid "Douglas-Peucker"
-msgstr ""
+msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
-msgstr ""
+msgstr "Hartslag gegevens beschikbaar"
 
 #: inc/core/View/Activity/Preview.php:145
 msgid "Lap data available"
-msgstr ""
+msgstr "Ronde gegevens beschikbaar"
 
 #: inc/core/View/Activity/Preview.php:159
 msgid "Route data available"
-msgstr ""
+msgstr "Route gegevens beschikbaar"
 
 #: inc/core/View/Activity/Linker.php:111
 #: inc/core/Data/Weather/Condition.php:155 inc/data/class.SportFactory.php:220
 msgid "unknown"
-msgstr ""
+msgstr "onbekend"
 
 #: inc/core/View/Leaflet/Activity.php:224
 #, php-format
 msgid "<strong>%s. km</strong> in %s"
-msgstr ""
+msgstr "<strong>%s. km</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:225
 #: inc/core/View/Leaflet/Activity.php:256
 #: inc/core/View/Leaflet/Activity.php:323
 #, php-format
 msgid "<strong>Time:</strong> %s"
-msgstr ""
+msgstr "<strong>Tijd:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:255
 #, php-format
 msgid "<strong>Total:</strong> %s"
-msgstr ""
+msgstr "<strong>Totaal:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:321
 #, php-format
 msgid "<strong>Pause</strong> of %s"
-msgstr ""
+msgstr "<strong>Pauze</strong> van %s"
 
 #: inc/core/View/Leaflet/Activity.php:322
 #, php-format
 msgid "<strong>Distance:</strong> %s"
-msgstr ""
+msgstr "<strong>Afstand:</strong> %s"
 
 #: inc/core/View/Leaflet/Activity.php:326
 msgid "<strong>Heart rate:</strong>"
-msgstr ""
+msgstr "<strong>Hartslag:</strong>"
 
 #: inc/core/View/Leaflet/Activity.php:326
 #, php-format
 msgid "%s to %s"
-msgstr ""
+msgstr "%s tot %s"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:21
 msgid "every data point"
-msgstr ""
+msgstr "elk gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:22
 msgid "every second data point"
-msgstr ""
+msgstr "elke tweede gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:23
 msgid "every fifth data point (recommended)"
-msgstr ""
+msgstr "elk 5e gegevenspunt (aanbevolen)"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:24
 msgid "every tenth data point"
-msgstr ""
+msgstr "elk 10e gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityRoutePrecision.php:25
 msgid "every twentieth data point"
-msgstr ""
+msgstr "elk 20e gegevenspunt"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
-msgstr ""
+msgstr "lineair"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 msgid "reversed linear"
-msgstr ""
+msgstr "omgekeerd lineair"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
-msgstr ""
+msgstr "Als snelheid"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:39
 msgid "absolute value"
-msgstr ""
+msgstr "absolute waarde"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:40
 msgid "&#37; HRmax"
-msgstr ""
+msgstr "&#37; HFmax"
 
 #: inc/core/Parameter/Application/HeartRateUnit.php:41
 msgid "&#37; HRreserve"
-msgstr ""
+msgstr "&#37; HFreserve"
 
 #: inc/core/Parameter/Application/PaceAxisLimit.php:28
 msgid "automatic"
-msgstr ""
+msgstr "automatisch"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
 msgid "never"
-msgstr ""
+msgstr "nooit"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:40
 msgid "only for competitions"
-msgstr ""
+msgstr "alleen voor wedstrijden"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:41
 msgid "always"
-msgstr ""
+msgstr "altijd"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:28
 msgid "at too big distance (15s)"
-msgstr ""
+msgstr "bij een te grote afstand (15s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:29
 msgid "at too big distance (30s)"
-msgstr ""
+msgstr "bij een te grote afstand (30s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:30
 msgid "at too big distance (60s)"
-msgstr ""
+msgstr "bij een te grote afstand (60s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:31
 msgid "at too big distance (120s)"
-msgstr ""
+msgstr "bij een te grote afstand (120s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:32
 msgid "at too big distance (240s)"
-msgstr ""
+msgstr "bij een te grote afstand (240s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:33
 msgid "at too big distance (300s)"
-msgstr ""
+msgstr "bij een te grote afstand (300s)"
 
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:34
 msgid "at too big distance (600s)"
-msgstr ""
+msgstr "bij een te grote afstand (600s)"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:45
 msgid "no smoothing"
-msgstr ""
+msgstr "niet effenen"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:46
 msgid "Threshold method"
-msgstr ""
+msgstr "Grenswaarden methode"
 
 #: inc/core/Parameter/Application/ElevationMethod.php:47
 msgid "Douglas-Peucker-Algorithm"
-msgstr ""
+msgstr "Douglas-Peucker-algoritme"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:39
 msgid "id (oldest first)"
-msgstr ""
+msgstr "id (oudste eerst)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:40
 msgid "id (latest first)"
-msgstr ""
+msgstr "id (nieuwste eerst)"
 
 #: inc/core/Parameter/Application/DatabaseOrder.php:41
 msgid "alphabetical"
-msgstr ""
+msgstr "alfabetisch"
 
 #: inc/core/Parameter/Application/VdotMethod.php:33
 msgid "logarithmic (new method since v1.5)"
-msgstr ""
+msgstr "logaritmisch (nieuwe methode sinds v1.5)"
 
 #: inc/core/Parameter/Application/VdotMethod.php:34
 msgid "linear (old method up to v1.4)"
-msgstr ""
+msgstr "lineair (oude methode tot v1.4)"
 
 #: inc/core/Parameter/Application/Gender.php:39
 msgid "please choose"
-msgstr ""
+msgstr "kiezen aub"
 
 #: inc/core/Parameter/Application/Gender.php:40
 msgid "male"
-msgstr ""
+msgstr "man"
 
 #: inc/core/Parameter/Application/Gender.php:41
 msgid "female"
-msgstr ""
+msgstr "vrouw"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:21
 msgid "every 50m a data point"
-msgstr ""
+msgstr "elke 50m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:22
 msgid "every 100m a data point"
-msgstr ""
+msgstr "elke 100m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:23
 msgid "every 200m a data point"
-msgstr ""
+msgstr "elke 200m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:24
 msgid "every 500m a data point"
-msgstr ""
+msgstr "elke 500m een gegevenspunt"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:25
 msgid "max. 50 data points"
-msgstr ""
+msgstr "Max. 50 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:26
 msgid "max. 100 data points"
-msgstr ""
+msgstr "Max. 100 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:27
 msgid "max. 200 data points (recommended)"
-msgstr ""
+msgstr "Max. 200 gegevenspunten (aanbevolen)"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:28
 msgid "max. 300 data points"
-msgstr ""
+msgstr "Max. 300 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:29
 msgid "max. 400 data points"
-msgstr ""
+msgstr "Max. 400 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:30
 msgid "max. 500 data points"
-msgstr ""
+msgstr "Max. 500 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:31
 msgid "max. 750 data points"
-msgstr ""
+msgstr "Max. 750 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityPlotPrecision.php:32
 msgid "max. 1000 data points"
-msgstr ""
+msgstr "Max. 1000 gegevenspunten"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:39
 msgid "Upload form"
-msgstr ""
+msgstr "gegevens uploaden"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:40
 msgid "Garmin-Communicator"
-msgstr ""
+msgstr "Garmin Communicator"
 
 #: inc/core/Parameter/Application/ActivityCreationMode.php:41
 msgid "Standard form"
-msgstr ""
+msgstr "Standaardformulier"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:39
 msgid "all separated"
-msgstr ""
+msgstr "alle gescheiden"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:40
 msgid "Pace / Heart rate"
-msgstr ""
+msgstr "Tempo / hartslag"
 
 #: inc/core/Parameter/Application/ActivityPlotMode.php:41
 msgid "Pace / Heart rate / Elevation"
-msgstr ""
+msgstr "Tempo / hartslag / hoogte"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:33
 msgid "Week view"
-msgstr ""
+msgstr "Weekweergave"
 
 #: inc/core/Parameter/Application/DataBrowserMode.php:34
 msgid "Month view"
-msgstr ""
+msgstr "Maandweergave"
 
 #: inc/core/Data/Weather/Condition.php:142
 msgid "sunny"
-msgstr ""
+msgstr "zonnig"
 
 #: inc/core/Data/Weather/Condition.php:144
 msgid "fair"
-msgstr ""
+msgstr "normaal"
 
 #: inc/core/Data/Weather/Condition.php:146
 msgid "cloudy"
-msgstr ""
+msgstr "bewolkt"
 
 #: inc/core/Data/Weather/Condition.php:148
 msgid "changeable"
-msgstr ""
+msgstr "wisselvallig"
 
 #: inc/core/Data/Weather/Condition.php:150
 msgid "rainy"
-msgstr ""
+msgstr "regenachtig"
 
 #: inc/core/Data/Weather/Condition.php:152
 msgid "snowing"
-msgstr ""
+msgstr "sneeuw"
 
 #: inc/core/Data/Weather.php:72
 msgid "at"
-msgstr ""
+msgstr "bij"
 
 #: inc/tpl/tpl.Frontend.debug.php:2
 msgid "Debug console"
-msgstr ""
+msgstr "Debug console"
 
 #: inc/tpl/tpl.installerFooter.php:3
 msgid "run diary"
-msgstr ""
+msgstr "Loopdagboek"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:33
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2215,100 +2222,110 @@ msgstr ""
 #: call/call.Plugin.install.php:23
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:131
 msgid "Configuration"
-msgstr ""
+msgstr "Configuratie"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Klaar"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze is al geïnstalleerd."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
 "You cannot reinstall Runalyze. If something does not work, please do not "
 "hesitate to contact us."
 msgstr ""
+"U kunt Runalyze niet opnieuw installeren. Als er iets niet werkt, aarzel dan "
+"niet om contact met ons op te nemen."
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:271
 #: inc/tpl/tpl.InstallerUpdate.php:39
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Start Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
 "If you want to reinstall Runalyze please delete you have to delete the "
 "<em>config.php</em>-file in your main directory of this installation."
 msgstr ""
+"Als u Runalyze opnieuw wilt installeren, moet u eerst het <em>config.php</"
+"em>-bestand in de hoofdmap van de huidige installatie verwijderen."
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "Welkom!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Laten we eerst controleren of de server voldoet aan de eisen."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
 msgid ""
 "PHP %s is required, but PHP %s is running. Please update your PHP version."
 msgstr ""
+"PHP %s is vereist, maar PHP %s wordt uitgevoerd. Gelieve uw PHP versie "
+"bijwerken."
 
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
 msgid "Currently PHP %s is running."
-msgstr ""
+msgstr "Op dit moment draait PHP %s."
 
 #: inc/tpl/tpl.Installer.php:64
 msgid ""
 "Importing large files (e.g. a SportTracks logbook) may take some time. "
 "Please have a look at your server limitations:"
 msgstr ""
+"Importeren van grote bestanden (bijv. SportTracks logboek) kan enige tijd "
+"duren. Bekijk even de beperkingen van de server:"
 
 #: inc/tpl/tpl.Installer.php:67
 msgid "Time limit"
-msgstr ""
+msgstr "Tijdslimiet"
 
 #: inc/tpl/tpl.Installer.php:68
 msgid "Memory limit"
-msgstr ""
+msgstr "Geheugen limiet"
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Upload limiet"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Installatie starten"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Runalyze instellingen"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze heeft een MySQL database nodig."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
 "The connection settings are incorrect. We are not able to connect to the "
 "database."
 msgstr ""
+"De database inloggegevens zijn onjuist. We kunnen geen verbinding maken met "
+"de database."
 
 #: inc/tpl/tpl.Installer.php:97
 msgid "A connection could be established."
-msgstr ""
+msgstr "Er kon een verbinding gemaakt worden."
 
 #: inc/tpl/tpl.Installer.php:102
 #, php-format
 msgid "Currently MySQL %s is running."
-msgstr ""
+msgstr "Op dit moment draait MySQL %s."
 
 #: inc/tpl/tpl.Installer.php:106
 #, php-format
@@ -3398,6 +3415,10 @@ msgstr ""
 msgid "Something went wrong. Please contact the administrator."
 msgstr ""
 
+#: inc/system/class.AccountHandler.php:282
+msgid "Reset your RUNALYZE password"
+msgstr ""
+
 #: inc/system/class.AccountHandler.php:283
 #, php-format
 msgid "Did you forget your password %s?"
@@ -4308,7 +4329,7 @@ msgstr ""
 
 #: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:545
 msgid "In total"
 msgstr ""
 
@@ -4802,7 +4823,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:64
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:189
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:152
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:194
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:195
 msgid "No data available."
 msgstr ""
 
@@ -6549,44 +6570,43 @@ msgstr ""
 msgid "in percent"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:102
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:106
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:103
 msgid "by distance"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:107
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:108
 msgid "by time"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:121
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:184
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:185
 msgid "There is no data for this sport."
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:339
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:340
 msgid "without"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:353
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:354
 msgid "Training types"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:415
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:416
 msgid "faster than"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:417
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:418
 msgid "up to"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:424
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:425
 msgid "Pace Zones"
 msgstr ""
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:483
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:484
 msgid "Heart Rate Zones"
 msgstr ""
 
