@@ -204,13 +204,6 @@ body {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-#headline .logo {
-  color: #999999 !important;
-  font-size: 20px;
-  font-weight: 200;
-  margin: 4px 25px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
 #headline .tab {
   display: block;
   float: left;
@@ -223,6 +216,13 @@ body {
 }
 #headline .tab:hover {
   color: #eeeeee;
+}
+#headline .logo {
+  margin: 5px 25px 5px 5px;
+  text-indent: -9999px;
+  background: url(../../web/assets/images/runalyze-header-swoosh.png) no-repeat center center;
+  width: 184px;
+  height: 20px;
 }
 input,
 select,
@@ -1299,6 +1299,10 @@ tbody.asThead th {
 }
 td img {
   vertical-align: middle;
+}
+td.as-small-as-possible {
+  width: 1px;
+  white-space: nowrap;
 }
 tbody.top-spacer tr:first-child,
 tbody.top-spacer tr:first-child td,

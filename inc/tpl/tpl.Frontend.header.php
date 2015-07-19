@@ -12,7 +12,7 @@
         <?php foreach (Language::availableLanguages() as $key => $lang_arr) { ?>
         <link rel="alternate" href="<?php echo System::getFullDomain(true)."index.php?lang=".$key; ?>" hreflang="<?php echo $key; ?>" />
         <?php } ?>
-	<title>Runalyze v<?php echo RUNALYZE_VERSION; ?></title>
+	<title>RUNALYZE</title>
 
 	<?php echo System::getCodeForExternalJSFiles(); ?>
 	<?php echo System::getCodeForLocalJSFiles(); ?>

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 18:54+0200\n"
+"POT-Creation-Date: 2015-07-18 11:15+0200\n"
 "PO-Revision-Date: 2015-06-20 13:34+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
@@ -126,7 +126,7 @@ msgstr "Godzina"
 #: inc/html/class.HTML.php:125 inc/draw/class.PlotSumData.php:204
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:184
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:237
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:238
 msgid "Total"
 msgstr "Razem"
 
@@ -329,8 +329,8 @@ msgstr "w górę"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:331
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:419
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:477
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:420
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:478
 msgid "to"
 msgstr "do"
 
@@ -1001,19 +1001,34 @@ msgstr "wszysktie aktywne"
 msgid "all resting"
 msgstr "wszystkie odpoczynek"
 
-#: inc/training/formular/class.TrainingInputSplits.php:61
+#: inc/training/formular/class.TrainingInputSplits.php:49
+#, fuzzy
+msgid "alternating:"
+msgstr "wszystkie odpoczynek"
+
+#: inc/training/formular/class.TrainingInputSplits.php:49
+#, fuzzy
+msgid "first resting"
+msgstr "wszystkie odpoczynek"
+
+#: inc/training/formular/class.TrainingInputSplits.php:50
+#, fuzzy
+msgid "first active"
+msgstr "Pierwszy trening:"
+
+#: inc/training/formular/class.TrainingInputSplits.php:63
 #: inc/data/class.Splits.php:160
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:356
 #: plugin/RunalyzePluginPanel_Prognose/class.Prognose_PrognosisWindow.php:369
 msgid "in"
 msgstr "w"
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 #: inc/data/class.Splits.php:160
 msgid "Resting"
 msgstr "Odpoczynek"
 
-#: inc/training/formular/class.TrainingInputSplits.php:113
+#: inc/training/formular/class.TrainingInputSplits.php:115
 msgid "Active"
 msgstr "Aktywne"
 
@@ -1834,7 +1849,7 @@ msgid "diff"
 msgstr "różnica"
 
 #: inc/core/View/Splits/Table.php:221
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:163
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
 msgid "Goal"
 msgstr "Cel"
 
@@ -1895,7 +1910,6 @@ msgstr "<strong>%s. km</strong> w %s"
 #: inc/core/View/Leaflet/Activity.php:225
 #: inc/core/View/Leaflet/Activity.php:256
 #: inc/core/View/Leaflet/Activity.php:323
-#: inc/core/View/Leaflet/Activity.php:324
 #, php-format
 msgid "<strong>Time:</strong> %s"
 msgstr "<strong>Czas:</strong> %s"
@@ -1915,12 +1929,12 @@ msgstr "<strong>Czas:</strong> %s"
 msgid "<strong>Distance:</strong> %s"
 msgstr "<strong>Czas:</strong> %s"
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 #, fuzzy
 msgid "<strong>Heart rate:</strong>"
 msgstr "<strong>Razem:</strong> %s"
 
-#: inc/core/View/Leaflet/Activity.php:327
+#: inc/core/View/Leaflet/Activity.php:326
 #, fuzzy, php-format
 msgid "%s to %s"
 msgstr "%s do %s (%d dni)"
@@ -3415,6 +3429,11 @@ msgstr "Hasło musi zawierać co najmniej %s znaków."
 msgid "Something went wrong. Please contact the administrator."
 msgstr "Coś poszło źle. Skontaktuj się z administratorem."
 
+#: inc/system/class.AccountHandler.php:282
+#, fuzzy
+msgid "Reset your RUNALYZE password"
+msgstr "Zmień hasło"
+
 #: inc/system/class.AccountHandler.php:283
 #, php-format
 msgid "Did you forget your password %s?"
@@ -4380,7 +4399,7 @@ msgstr "Wybierz zakres czasu"
 
 #: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:544
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:545
 msgid "In total"
 msgstr "Razem"
 
@@ -4899,7 +4918,7 @@ msgstr "Temperatury"
 #: plugin/RunalyzePluginPanel_Sportler/Plot.gewicht.php:64
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:189
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:152
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:194
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:195
 msgid "No data available."
 msgstr "Brak danych."
 
@@ -5129,13 +5148,13 @@ msgid "Current"
 msgstr "Bieżący"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:156
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:171
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:172
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:186
 msgid "&oslash; Day"
 msgstr "&oslash; dziennie"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:159
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:174
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:175
 msgid "&oslash; Week"
 msgstr "&oslash; tygodniowo"
 
@@ -5147,40 +5166,40 @@ msgstr "&oslash; tygodniowo"
 msgid "Prognosis"
 msgstr "Prognoza"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:168
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:169
 #, php-format
 msgid "%d days left"
 msgstr "%d dni pozostało"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:177
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:178
 msgid "Goal reached."
 msgstr "Cel osiągnięty."
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:184
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:185
 msgid "Pace Bunny"
 msgstr "Zając"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:189
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:190
 msgid "Behind"
 msgstr "Z tyłu"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:191
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
 msgid "Ahead"
 msgstr "Z przodu"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:192
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:193
 msgid "Head 2 Head"
 msgstr "Postęp"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:194
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
 msgid "Me"
 msgstr "Ja"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:195
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:196
 msgid "Pace&nbsp;Bunny"
 msgstr "Zając"
 
-#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:201
+#: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:202
 #, php-format
 msgid "%s to %s (%d days)"
 msgstr "%s do %s (%d dni)"
@@ -6796,45 +6815,44 @@ msgstr "Strefa tempa: interwał"
 msgid "in percent"
 msgstr "w procentach"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:102
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:106
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:103
 msgid "by distance"
 msgstr "wg dystansu"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:107
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:108
 msgid "by time"
 msgstr "wg czasu"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:121
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:122
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
 "Przedstawione dane wyliczane są na podstawie średnich wartości dla treningów."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:184
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:185
 msgid "There is no data for this sport."
 msgstr "Brak danych dla tego sportu."
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:339
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:340
 msgid "without"
 msgstr "brak"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:353
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:354
 msgid "Training types"
 msgstr "Typy treningu"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:415
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:416
 msgid "faster than"
 msgstr "szybciej niż"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:417
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:418
 msgid "up to"
 msgstr "do"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:424
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:425
 msgid "Pace Zones"
 msgstr "Strefy Tempa"
 
-#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:483
+#: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:484
 msgid "Heart Rate Zones"
 msgstr "Strefy Tętna"
 

@@ -63,3 +63,6 @@ ALTER TABLE `runalyze_user` ADD `sleep_duration` SMALLINT(3) UNSIGNED NOT NULL D
 
 /* 13.06.2015 - change empty string for array objects */
 UPDATE `runalyze_trackdata` SET `pauses`="" WHERE `pauses`="[]";
+
+/* 18.07.2015 - calculate stride length */
+UPDATE `runalyze_training` SET `stride_length` = (`distance`*1000*100/(`cadence`*2/60*`s`)) WHERE `cadence` > 0 AND `s` > 0

@@ -98,7 +98,7 @@ $EmptyTables['type'] = array(
 		array(__('Fartlek'), __('FL'), 150, 1),
 		array(__('Interval training'), __('IT'), 165, 1),
 		array(__('Tempo Run'), __('TR'), 165, 1),
-		array(__('Race'), __('RC'), 'TYPE_ID_RACE', 190, 1),
+		array(__('Race'), __('RC'), 190, 1, 'TYPE_ID_RACE'),
 		array(__('Regeneration Run'), __('RG'), 128, 0),
 		array(__('Long Slow Distance'), __('LSD'), 150, 1),
 		array(__('Warm-up'), __('WU'), 128, 0)
