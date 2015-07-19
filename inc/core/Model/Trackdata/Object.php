@@ -420,7 +420,7 @@ class Object extends Model\Object implements Model\Loopable {
 	/*
 	 * Calculate pace array 
 	 */
-	public function calculatePaceArray() {
+	protected function calculatePaceArray() {
 		$PaceCalculator = new PaceCalculator($this);
 		$PaceCalculator->calculate();
 

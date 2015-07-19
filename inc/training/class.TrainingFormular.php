@@ -199,7 +199,6 @@ class TrainingFormular extends StandardFormular {
 			Trackdata::TIME => __('Time'),
 			Trackdata::DISTANCE => __('Distance'),
 			Trackdata::HEARTRATE => __('Heart rate'),
-			Trackdata::PACE => __('Pace'),
 			Trackdata::CADENCE => __('Cadence'),
 			Trackdata::VERTICAL_OSCILLATION => __('Vertical oscillation'),
 			Trackdata::GROUNDCONTACT => __('Ground contact time'),
