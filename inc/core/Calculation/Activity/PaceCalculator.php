@@ -22,7 +22,7 @@ class PaceCalculator {
 	/**
 	 * @var \Runalyze\Calculation\Activity\PaceSmoother
 	 */
-	protected $Smoother;
+	protected $Smoother = null;
 
 	/**
 	 * @var array
@@ -34,7 +34,9 @@ class PaceCalculator {
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
 	 */
 	public function __construct(Trackdata\Object $trackdata) {
-		$this->Smoother = new PaceSmoother($trackdata, true);
+		if ($trackdata->has(Trackdata\Object::TIME) && $trackdata->has(Trackdata\Object::DISTANCE)) {
+			$this->Smoother = new PaceSmoother($trackdata, true);
+		}
 	}
 
 	/**
@@ -42,15 +44,17 @@ class PaceCalculator {
 	 * @return array
 	 */
 	public function calculate() {
-		$this->Smoother->smooth(0.001, PaceSmoother::MODE_DISTANCE);
+		if (NULL !== $this->Smoother) {
+			$this->Pace = $this->Smoother->smooth(0.001, PaceSmoother::MODE_DISTANCE);
+		}
 
-		return $this->Smoother->result();
+		return $this->Pace;
 	}
 
 	/**
 	 * @return array
 	 */
 	public function result() {
-		return $this->Smoother->result();
+		return $this->Pace;
 	}
 }
