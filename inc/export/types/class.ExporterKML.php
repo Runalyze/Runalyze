@@ -65,7 +65,10 @@ class ExporterKML extends ExporterAbstractFile {
 		$Loop = new Runalyze\Model\Route\Loop($this->Context->route());
 
 		while ($Loop->nextStep()) {
-			$Track .= $Loop->longitude().','.$Loop->latitude().NL;
+			// TODO: start a new line after a pause
+			if ($Loop->latitude() != 0 || $Loop->longitude() != 0) {
+				$Track .= $Loop->longitude().','.$Loop->latitude().NL;
+			}
 		}
 
 		$this->XML->Folder->Placemark->LineString->addChild('coordinates', $Track);
