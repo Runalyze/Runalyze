@@ -141,7 +141,7 @@ class SportFactory {
 		$sports = Cache::get('sport');
 
 		if (is_null($sports)) {
-			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` WHERE `accountid` = '.SessionAccountHandler::getId())->fetchAll();
+			$sports = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'sport` WHERE `accountid` = "'.(int)SessionAccountHandler::getId().'"')->fetchAll();
 			Cache::set('sport', $sports, '3600');
 		}
 
