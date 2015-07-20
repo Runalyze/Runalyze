@@ -1904,12 +1904,16 @@ label:active .checkbox-icon {
 }
 .tooltip {
   position: absolute;
-  z-index: 3010;
+  z-index: 1990;
   display: block;
   padding: 5px;
   font-size: 11px;
   opacity: 0;
   visibility: visible;
+}
+#ajax .tooltip,
+.fullscreen .tooltip {
+  z-index: 3010;
 }
 .tooltip.in {
   opacity: 0.9;
