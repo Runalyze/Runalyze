@@ -48,6 +48,7 @@ abstract class RunalyzeBackup {
 			PREFIX.'clothes',
 			PREFIX.'conf',
 			PREFIX.'dataset',
+			PREFIX.'hrv',
 			PREFIX.'plugin',
 			PREFIX.'plugin_conf',
 			PREFIX.'shoe',
