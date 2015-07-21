@@ -38,6 +38,12 @@ class ParserFITSingle extends ParserAbstractSingle {
 	protected $PauseInSeconds = 0;
 
 	/**
+	 * Is this a swimming activity?
+	 * @var bool
+	 */
+	protected $isSwimming = false;
+
+	/**
 	 * Is paused?
 	 * @var boolean
 	 */
@@ -247,7 +253,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		if ($this->isPaused) // Should not happen?
 			return;
 
-		if (!isset($this->Values['timestamp']))
+		if ($this->isSwimming || !isset($this->Values['timestamp']))
 			return;
 
 		if (empty($this->gps['time_in_s'])) {
@@ -329,11 +335,18 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read length
 	 */
 	protected function readLength() {
+		if (!$this->isSwimming) {
+			foreach (array_keys($this->gps) as $key) {
+				$this->gps[$key] = array();
+			}
+
+			$this->isSwimming = true;
+		}
+
 		$this->gps['stroke'][] = isset($this->Values['total_strokes']) ? (int)$this->Values['total_strokes'][0] : 0;
 		$this->gps['stroketype'][] = isset($this->Values['swim_stroke']) ? (int)$this->Values['swim_stroke'][0] : 0;
-		// These values are read by readRecord()
-		//$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
-		//$this->gps['time_in_s'][] = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
+		$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
+		$this->gps['time_in_s'][] = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
 	}
 
 	/**

@@ -235,7 +235,7 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * Test: simple pauses
+	 * Test: simple swimming file (FR910xt)
 	 * Filename: "swim-25m-lane.fit" 
 	 */
 	public function testSimpleSwimmingFile() {
@@ -256,6 +256,37 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertTrue($this->object->object()->hasArrayStroke());
 			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertFalse($this->object->object()->hasArrayDistance());
+		}
+	}
+
+	/**
+	 * Test: simple swimming file (Fenix 3)
+	 * Filename: "swim-fenix-50m.fit" 
+	 */
+	public function testSwimmingFileFromFenix() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-fenix-50m.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+			$this->assertEquals(5000, $this->object->object()->getPoolLength());
+			$this->assertEquals(1750, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(32, $this->object->object()->getCadence());
+
+			$this->assertEquals(3272, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(3817, $this->object->object()->getElapsedTime());
+			$this->assertEquals(2.05, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayStroke());
+			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertFalse($this->object->object()->hasArrayDistance());
 		}
 	}
 }

@@ -219,12 +219,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	private function setAvgCadenceFromArray() {
 		$array = $this->TrainingObject->getArrayCadence();
-
-		if (!empty($array) && max($array) > 30) {
-			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
-		}
+		$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
 	}
 
 	/**
