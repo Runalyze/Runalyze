@@ -201,7 +201,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function fillDistanceArray(Trackdata\Object &$trackdata) {
 		if ($this->poollength() && !$trackdata->has(Trackdata\Object::DISTANCE)) {
-			$distance = range($this->poollength()/10000, $this->num()*$this->poollength()/10000, $this->poollength()/10000);   
+			$distance = range($this->poollength()/100000, $this->num()*$this->poollength()/100000, $this->poollength()/100000);   
 			$trackdata->set(Trackdata\Object::DISTANCE, $distance);
 		}
 	}
