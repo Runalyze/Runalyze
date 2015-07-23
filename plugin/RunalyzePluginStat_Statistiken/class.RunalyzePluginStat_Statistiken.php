@@ -625,12 +625,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 	private function computeInTotalForCompleteData() {
 		if ($this->year == -1) {
-			print ("foo");
 			$Total = array('i' => date('Y') + 1); //, 's' => 0, 's_sum_with_distance' => 0);
 			$Totalcount = array();
 
 			$Total['number'] = 0;
 			$Total['s_sum_with_distance'] = 0;
+			$Total['stride_distance'] = 0;
 			foreach ($this->DatasetData as $set) {
 				$Total[$set['name']] = 0;
 				$Totalcount[$set['name']] = 0;
@@ -644,7 +644,11 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 					switch ($set['name']) {
 						case 'pulse_avg':
 						case 'cadence':
-							$Total[$set['name']] += $data['s']*$data[$set['name']];
+						case 'vdot':
+							if ($data[$set['name']] > 0) {
+								$Totalcount[$set['name']] += $data['s'];
+								$Total[$set['name']] += $data['s']*$data[$set['name']];
+							}
 							break;
 
 						case 'pulse_max':
@@ -653,8 +657,6 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 							}
 							break;
 
-						case 'vdot':
-						case 'cadence':
 						case 'stride_length':
 						case 'pulse_avg':
 						case 'groundcontact':
@@ -666,9 +668,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 							break;
 
 						case 'temperature':
-							$Total[$set['name']] += $data[$set['name']];
 							if ($data[$set['name']] != NULL) {
-								$Totalcount[$set['name']] += 1;
+								$Total[$set['name']] += $data['s']*$data[$set['name']];
+								$Totalcount[$set['name']] += $data['s'];
 							}
 							break;
 
@@ -677,13 +679,18 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 							break;
 					}
 
+					if ($data['cadence'] > 0) {
+						$Total['stride_distance'] += $data['distance'];
+					}
+
 				}
 
 			}
 
-			$Total['vdot'] = $this->helperComputeAverage($Total['vdot'], $Total['s']);
-			$Total['cadence'] = $this->helperComputeAverage($Total['cadence'], $Total['s']);
-			$Total['stride_length'] = $this->helperComputeAverage($Total['stride_length'], $Totalcount['stride_length']);
+			$Total['vdot'] = $this->helperComputeAverage($Total['vdot'], $Totalcount['vdot']);
+			$Totalsteps = $Total['cadence'];
+			$Total['cadence'] = $this->helperComputeAverage($Total['cadence'], $Totalcount['cadence']);
+			$Total['stride_length'] = $this->helperComputeAverage($Total['stride_distance']*1000, $Totalsteps/60)*2;
 			$Total['pulse_avg'] = $this->helperComputeAverage($Total['pulse_avg'], $Total['s']);
 			$Total['groundcontact'] = $this->helperComputeAverage($Total['groundcontact'], $Totalcount['groundcontact']);
 			$Total['vertical_oscillation'] = $this->helperComputeAverage($Total['vertical_oscillation'], $Totalcount['vertical_oscillation']);
