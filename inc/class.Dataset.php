@@ -261,7 +261,7 @@ class Dataset {
 	 * Get string for selecting dataset in query
 	 * @return string
 	 */
-	private function getQuerySelectForSet() {
+	public function getQuerySelectForSet() {
 		$String = '';
 		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
@@ -271,8 +271,9 @@ class Dataset {
 			if ($set['summary'] == 1) {
 				if ($set['name'] == 'vdot' || $set['name'] == 'vdoticon') {
 					$showVdot = 1;
-				} elseif ($set['name'] == 'pulse_avg') {
-					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
+				} elseif ($set['name'] == 'pulse_avg' or $set['name'] == 'cadence') {
+					$String .= ', SUM(`s`*`'.$set['name'].'`*(`'.$set['name'].'` > 0))'
+							.'/SUM(`s`*(`'.$set['name'].'` > 0)) as `'.$set['name'].'`';
 				} elseif ($set['name'] != 'pace') {
 					if ($set['summary_mode'] != 'AVG') {
 						$String .= ', ' . $set['summary_mode'] . '(`' . $set['name'] . '`) as `' . $set['name'] . '`';
@@ -616,4 +617,13 @@ class Dataset {
 
 		return round(100*($this->Activity->distance() - $this->kmOfLastSet ) / $this->kmOfLastSet, 1);
 	}
+
+	/**
+	 * public getter for Dataset data
+	 * @return array
+	 */
+	public function getData() {
+		return $this->data;
+	}
+
 }
