@@ -6,6 +6,8 @@
 
 {"TABLE":"runalyze_dataset"}
 
+{"TABLE":"runalyze_hrv"}
+
 {"TABLE":"runalyze_plugin"}
 
 {"TABLE":"runalyze_plugin_conf"}

@@ -123,6 +123,10 @@ class TrainingView {
 		} else {
 			$this->Sections[] = new SectionMiscellaneous($this->Context, true);
 		}
+
+		if ($this->Context->hasHRV()) {
+			$this->Sections[] = new SectionHRV($this->Context);
+		}
 	}
 
 	/**

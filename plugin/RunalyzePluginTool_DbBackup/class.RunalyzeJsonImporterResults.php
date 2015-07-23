@@ -130,15 +130,16 @@ class RunalyzeJsonImporterResults {
 			'runalyze_clothes'		=> __('Clothes'),
 			'runalyze_conf'			=> __('Configuration'),
 			'runalyze_dataset'		=> __('dataset'),
-			'runalyze_plugin'			=> __('Plugin'),
+			'runalyze_plugin'		=> __('Plugin'),
 			'runalyze_plugin_conf'	=> __('Plugin configuration'),
 			'runalyze_shoe'			=> __('Shoes'),
-			'runalyze_sport'			=> __('Sport types'),
+			'runalyze_sport'		=> __('Sport types'),
 			'runalyze_type'			=> __('Activity types'),
 			'runalyze_user'			=> __('Body data'),
 			'runalyze_training'		=> __('Activities'),
-			'runalyze_trackdata'		=> __('Trackdata'),
-			'runalyze_route'			=> __('Routes')
+			'runalyze_trackdata'	=> __('Trackdata'),
+			'runalyze_route'		=> __('Routes'),
+			'runalyze_hrv'			=> __('HRV data')
 		);
 	}
 }
