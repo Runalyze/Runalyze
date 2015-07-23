@@ -419,30 +419,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->initCompleteData();
 		$this->computeInTotalForCompleteData();
 
-		foreach ($this->CompleteData as $Data) {
-			// handling 'number' separately, as it's not in the Dataset->getData() array
-			$text = $Data['number'] > 0 ? $Data['number'] : NBSP;
-			$this->LineData['number'][] = array('i' => $Data['i'], 'text' => $text);
 
-			$UnitString = array ('elevation' => __('hm'),
-				'kcal' => __('kcal'),
-				'power' => __('W'),
-				'groundcontact' => __('ms'),
-				'vertical_oscillation' => __('cm')
-			);
-				
-			// looping through everything in the dataset
+		foreach ($this->CompleteData as $Data) {
+			$this->Dataset->setActivityData($Data);
 			foreach ($this->DatasetData as $set) {
+
 				switch ($set['name']) {
-					case 's':
-						if ($Data['s'] > 0) {
-							$duration = new Duration($Data['s']);
-							$text = $duration->string(Duration::FORMAT_WITH_HOURS);
-						} else {
-							$text = NBSP;
-						}
-						
-						$this->LineData['s'][] = array('i' => $Data['i'], 'text' => $text);
+					case 'abc':
+						$text = ($Data[$set['name']] == 0) ? NBSP : $Data[$set['name']];
+						$this->LineData[$set['name']][] = array('i' => $Data['i'], 'text' => $text);
 						break;
 
 					case 'distance':
@@ -468,11 +453,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 						$this->LineData['distance_month'][] = array('i' => $Data['i'], 'text' => $textMonth);
 						break;
 
-					case 'pace':
-						$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
-						$text = ($Data['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
-						$this->LineData['pace'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
+				/* maybe this manual solution is better as long as 
+				 * https://github.com/Runalyze/Runalyze/blob/1c66c261bb0d625fd368cf475122f658a805304c/inc/class.Dataset.php#L442
+				 * is not fixed?!
+				 */
+				//	case 'pace':
+				//		$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
+				//		$text = ($Data['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
+				//		$this->LineData['pace'][] = array('i' => $Data['i'], 'text' => $text);
+				//		break;
 
 					case 'vdot':
 						$VDOT = isset($Data['vdot']) ? Configuration::Data()->vdotFactor()*($Data['vdot']) : 0;
@@ -495,99 +484,19 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 						$this->LineData['jd_intensity'][] = array('i' => $Data['i'], 'text' => $text);
 						break;
 
-					case 'trimp':
-						$avg  = ($this->year != -1) ? 15 : 180;
 
-						if ($Data['trimp'] == 0) {
-							$text = NBSP;
-						} else {
-							$Stress = new Stresscolor($Data['trimp'] / $avg);
-							$text = $Stress->string($Data['trimp']);
-						}
-
-						$this->LineData['trimp'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'cadence':
-						if ($this->isRunning) {
-							$Cadence = new CadenceRunning($Data['cadence']);
-						}
-						else {
-							$Cadence = new Cadence($Data['cadence']);
-						}
-
-						if ($Cadence->value() > 0) {
-							$text = $Cadence->asString();
-						}
-						else {
-							$text = NBSP;
-						}
-						$this->LineData['cadence'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'stride_length':
-						$StrideLength = new StrideLength($Data['stride_length']);
-
-						if ($StrideLength->inCM() > 0) {
-							$text = $StrideLength->string();
-						}
-						else {
-							$text = NBSP;
-						}
-						$this->LineData['stride_length'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-
-					case 'pulse_avg':
-						$PulseAvg = new HeartRate($Data['pulse_avg'], GeneralContext::Athlete());
-						if ($PulseAvg->inBPM() > 0) {
-							$text = $PulseAvg->string();
-						}
-						else {
-							$text = NBSP;
-						}
-						$this->LineData['pulse_avg'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'pulse_max':
-						$PulseMax = new HeartRate($Data['pulse_max'], GeneralContext::Athlete());
-						if ($PulseMax->inBPM() > 0) {
-							$text = $PulseMax->string();
-						}
-						else {
-							$text = NBSP;
-						}
-						$this->LineData['pulse_max'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'temperature':
-						$Temperature = new Temperature($Data['temperature']);
-						if ($Temperature->value() != NULL) {
-							$text = $Temperature->asString();
-						}
-						else {
-							$text = NBSP;
-						}
-						$this->LineData['temperature'][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'elevation':
-					case 'kcal':
-					case 'power':
-					case 'groundcontact':
-					case 'vertical_oscillation':
-						$text = ($Data[$set['name']] == 0) ? NBSP : $Data[$set['name']] . NBSP . $UnitString[$set['name']];
-						$this->LineData[$set['name']][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
-					case 'abc':
-						$text = ($Data[$set['name']] == 0) ? NBSP : $Data[$set['name']];
-						$this->LineData[$set['name']][] = array('i' => $Data['i'], 'text' => $text);
-						break;
-
+					default:
+						$DataString = $this->Dataset->getDataset($set['name']);
+						$text = ($DataString == '' ? NBSP : $DataString);
+						$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
 				}
+
 			}
+			// handling 'number' separately, as it's not in the Dataset->getData() array
+			$text = $Data['number'] > 0 ? $Data['number'] : NBSP;
+			$this->LineData['number'][] = array('i' => $Data['i'], 'text' => $text);
 		}
+			
 	}
 
 	/**
@@ -625,7 +534,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 	private function computeInTotalForCompleteData() {
 		if ($this->year == -1) {
-			$Total = array('i' => date('Y') + 1); //, 's' => 0, 's_sum_with_distance' => 0);
+			$Total = array('i' => date('Y') + 1);
 			$Totalcount = array();
 
 			$Total['number'] = 0;
