@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-24 09:57+0200\n"
-"Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
+"PO-Revision-Date: 2015-07-24 10:18+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
@@ -3534,7 +3534,7 @@ msgstr "Richiesta di cancellazione del tuo account RUNALYZE"
 
 #: inc/system/class.AccountHandler.php:512
 msgid "Do you really want to delete your account"
-msgstr "Vuoi davvero eliminare il tuo account ?"
+msgstr "Vuoi davvero eliminare il tuo account"
 
 #: inc/system/class.AccountHandler.php:513
 msgid "Complete the process by accessing the following link: "
