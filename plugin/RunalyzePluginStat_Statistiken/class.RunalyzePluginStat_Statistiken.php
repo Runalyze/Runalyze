@@ -511,9 +511,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 
 					default:
-						$DataString = $this->Dataset->getDataset($set['name']);
-						$text = ($DataString == '' ? NBSP : $DataString);
-						$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
+						if (array_key_exists($set['name'], $Data)) {
+							$DataString = $this->Dataset->getDataset($set['name']);
+							$text = ($DataString == '' ? NBSP : $DataString);
+							$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
+						}
+						break;
 				}
 
 			}
