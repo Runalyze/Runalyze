@@ -37,7 +37,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 		$Linklist->addCompleteLink( $this->externalLink($this->getUrl(), __('Share!')) );
 		$Linklist->display();
 
-		echo HTML::info( __('You will be forwared to Facebook, where you can define which text shall be displayed.') );
+		echo HTML::info( __('You will be forwarded to Facebook, where you can define which text shall be displayed.') );
 
 		$this->throwLinkErrorForLocalhost();
 	}
