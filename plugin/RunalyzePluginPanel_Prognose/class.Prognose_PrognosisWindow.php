@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD\VDOT;
+use Runalyze\Calculation\Prognosis;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
@@ -39,13 +40,13 @@ class Prognose_PrognosisWindow {
 
 	/**
 	 * Prognosis object
-	 * @var RunningPrognosis
+	 * @var \Runalyze\Calculation\Prognosis\Prognosis
 	 */
 	protected $PrognosisObject = null;
 
 	/**
 	 * Prognosis strategies
-	 * @var array
+	 * @var Runalyze\Calculation\Prognosis\AbstractStrategy[]
 	 */
 	protected $PrognosisStrategies = array();
 
@@ -89,7 +90,7 @@ class Prognose_PrognosisWindow {
 	 * Set default values
 	 */
 	protected function setDefaultValues() {
-		$Strategy = new RunningPrognosisBock;
+		$Strategy = new Prognosis\Bock();
 		$TopResults = $Strategy->getTopResults(2);
 		$CurrentShape = Configuration::Data()->vdotShape();
 
@@ -129,7 +130,7 @@ class Prognose_PrognosisWindow {
 	 * Read post data
 	 */
 	protected function readPostData() {
-		$this->PrognosisObject = new RunningPrognosis;
+		$this->PrognosisObject = new Prognosis\Prognosis();
 		$this->Distances = Helper::arrayTrim(explode(',', $_POST['distances']));
 
 		$this->PrognosisObject->setStrategy( $this->PrognosisStrategies[$_POST['model']] );
@@ -139,7 +140,7 @@ class Prognose_PrognosisWindow {
 	 * Setup prognosis strategy: Jack Daniels
 	 */
 	protected function setupJackDanielsStrategy() {
-		$Strategy = new RunningPrognosisDaniels;
+		$Strategy = new Prognosis\Daniels();
 		$Strategy->adjustVDOT( isset($_POST['endurance']) );
 		$Strategy->setVDOT( (float)Helper::CommaToPoint($_POST['vdot']) );
 		$Strategy->setBasicEnduranceForAdjustment( (int)$_POST['endurance-value'] );
@@ -154,7 +155,7 @@ class Prognose_PrognosisWindow {
 		$BestTime = new Duration($_POST['best-result-time']);
 		$SecondTime = new Duration($_POST['second-best-result-time']);
 
-		$Strategy = new RunningPrognosisBock;
+		$Strategy = new Prognosis\Bock();
 		$Strategy->setFromResults(
 			$_POST['best-result-km'],
 			$BestTime->seconds(),
@@ -170,7 +171,7 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function setupSteffnyStrategy() {
 		$Time = new Duration($_POST['best-result-time']);
-		$Strategy = new RunningPrognosisSteffny;
+		$Strategy = new Prognosis\Steffny();
 		$Strategy->setReferenceResult($_POST['best-result-km'], $Time->seconds());
 
 		$this->PrognosisStrategies['herbert-steffny'] = $Strategy;
@@ -181,7 +182,7 @@ class Prognose_PrognosisWindow {
 	 */
 	protected function setupCameronStrategy() {
 		$Time = new Duration($_POST['best-result-time']);
-		$Strategy = new RunningPrognosisCameron;
+		$Strategy = new Prognosis\Cameron();
 		$Strategy->setReferenceResult($_POST['best-result-km'], $Time->seconds());
 
 		$this->PrognosisStrategies['david-cameron'] = $Strategy;
@@ -273,7 +274,7 @@ class Prognose_PrognosisWindow {
 	protected function finishResultTable() {
 		$this->ResultTable .= '</tbody></table>';
 
-		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof RunningPrognosisBock) {
+		if ($_POST['model'] == 'robert-bock' && $this->PrognosisStrategies['robert-bock'] instanceof Prognosis\Bock) {
 			$K = $this->PrognosisStrategies['robert-bock']->getK();
 			$e = $this->PrognosisStrategies['robert-bock']->getE();
 			$this->ResultTable .= HTML::info( sprintf( __('The results give the constants K = %f and e = %f.'), $K, $e) ).'<br>';

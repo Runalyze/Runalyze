@@ -1,10 +1,13 @@
 <?php
 /**
- * This file contains class::RunningPrognosisSteffny
- * @package Runalyze\Calculations\Prognosis
+ * This file contains class::Steffny
+ * @package Runalyze\Calculation\Prognosis
  */
+
+namespace Runalyze\Calculation\Prognosis;
+
 /**
- * Class: RunningPrognosisSteffny
+ * Prognosis by Herbert Steffny
  * 
  * Competition prediction based on "Das große Laufbuch" by Herbert Steffny.
  * See page 136.
@@ -14,9 +17,9 @@
  * predict 4:03/km and therefore 30:23.
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations\Prognosis
+ * @package Runalyze\Calculation\Prognosis
  */
-class RunningPrognosisSteffny extends RunningPrognosisStrategy {
+class Steffny extends AbstractStrategy {
 	/**
 	 * Reference pace for 10k
 	 * @var float

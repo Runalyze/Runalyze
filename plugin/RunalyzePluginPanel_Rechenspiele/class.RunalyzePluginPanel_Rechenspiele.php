@@ -6,6 +6,7 @@
 $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 
 use Runalyze\Calculation\Performance;
+use Runalyze\Calculation\Prognosis;
 use Runalyze\Calculation\Trimp;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
@@ -548,10 +549,10 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$BasicEndurance->readSettingsFromConfiguration();
 		$BEresults = $BasicEndurance->asArray();
 
-		$Strategy  = new RunningPrognosisDaniels;
+		$Strategy  = new Prognosis\Daniels();
 		$Strategy->setupFromDatabase();
 		$Strategy->adjustVDOT(false);
-		$Prognosis = new RunningPrognosis;
+		$Prognosis = new Prognosis\Prognosis();
 		$Prognosis->setStrategy($Strategy);
 
 		$GeneralTable = '
