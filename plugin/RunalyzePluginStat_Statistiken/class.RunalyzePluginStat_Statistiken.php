@@ -446,6 +446,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 
 		foreach ($this->CompleteData as $Data) {
+			$Data['sportid'] = $this->sportid;
 			$this->Dataset->setActivityData($Data);
 			foreach ($this->DatasetData as $set) {
 
