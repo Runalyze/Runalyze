@@ -14,6 +14,7 @@ use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\StrideLength;
 use Runalyze\View\Stresscolor;
 use Runalyze\Data\Weather\Temperature;
+use Runalyze\Dataset;
 
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
@@ -67,7 +68,24 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @var array
 	 */
 	private $LineData = array();
-	
+
+	/**
+	 * Dataset for converting and showing data
+	 * @var object
+	 */
+	private $Dataset;
+
+	/**
+	 * Data of the Dataset, Dataset->getData()
+	 * @var array
+	 */
+	private $DatasetData = array();
+
+	/**
+	 * Info about selected sport
+	 * @var boolean
+	 */
+	private $isRunning;
 
 	/**
 	 * Name
@@ -96,15 +114,21 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
+
+	/**
+	 * Init some class variables
+	 */
+	private function initVariables() {
+		$this->Dataset = new Dataset(SessionAccountHandler::getId());
+		$this->DatasetData = $this->Dataset->getData();
+
+		$this->isRunning = ($this->sportid == Configuration::General()->runningSport());
+	}
+
 	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
-
-		$this->Dataset = new Dataset();
-		$this->DatasetData = $this->Dataset->getData();
-
-		$this->isRunning = ($this->sportid == Configuration::General()->runningSport());
 
 		if (!$this->showsSpecificYear() && $this->dat = 'allWeeks') {
 			$this->dat = '';
@@ -174,6 +198,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	public function getYearComparisonTable() {
 		$this->year = -1;
+		$this->initVariables();
 		$this->initData();
 		$this->initLineData();
 
