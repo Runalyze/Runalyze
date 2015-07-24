@@ -14,7 +14,6 @@ use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\StrideLength;
 use Runalyze\View\Stresscolor;
 use Runalyze\Data\Weather\Temperature;
-use Runalyze\Dataset;
 
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
@@ -134,6 +133,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			$this->dat = '';
 		}
 
+		$this->initVariables();
 		$this->initData();
 		$this->initLineData();
 
@@ -478,15 +478,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 						$this->LineData['distance_month'][] = array('i' => $Data['i'], 'text' => $textMonth);
 						break;
 
-				/* maybe this manual solution is better as long as 
+				/* use this as long as
 				 * https://github.com/Runalyze/Runalyze/blob/1c66c261bb0d625fd368cf475122f658a805304c/inc/class.Dataset.php#L442
-				 * is not fixed?!
+				 * is not fixed
 				 */
-				//	case 'pace':
-				//		$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
-				//		$text = ($Data['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
-				//		$this->LineData['pace'][] = array('i' => $Data['i'], 'text' => $text);
-				//		break;
+					case 'pace':
+						$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
+						$text = ($Data['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
+						$this->LineData['pace'][] = array('i' => $Data['i'], 'text' => $text);
+						break;
 
 					case 'vdot':
 						$VDOT = isset($Data['vdot']) ? Configuration::Data()->vdotFactor()*($Data['vdot']) : 0;
@@ -609,7 +609,8 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 							break;
 
 						default:
-							$Total[$set['name']] += $data[$set['name']];
+							if (array_key_exists($set['name'], $data))
+								$Total[$set['name']] += $data[$set['name']];
 							break;
 					}
 

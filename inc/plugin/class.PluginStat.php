@@ -92,7 +92,6 @@ abstract class PluginStat extends Plugin {
 	 * Includes the plugin-file for displaying the statistics
 	 */
 	public function display() {
-		print "DEBUGafsf";
 		$this->prepareForDisplay();
 
 		echo '<div class="panel-heading">';
