@@ -445,17 +445,18 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initLineData() {
 		$this->initCompleteData();
-		$this->computeInTotalForCompleteData();
+		$this->initTotalData();
 
 		foreach ($this->CompleteData as $Data) {
 			$Data['sportid'] = $this->sportid;
 			$this->Dataset->setActivityData($Data);
 			foreach ($this->DatasetData as $set) {
 
+				$text = NBSP;
 				switch ($set['name']) {
 					case 'abc':
-						$text = ($Data[$set['name']] == 0) ? NBSP : $Data[$set['name']];
-						$this->LineData[$set['name']][] = array('i' => $Data['i'], 'text' => $text);
+						if ($Data['abc'] > 0)
+							$text = $Data['abc'].'x';
 						break;
 
 					case 'distance':
@@ -468,7 +469,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 						} elseif ($Data['i'] == date('Y') + 1) {
 							$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
 							$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
-						} elseif ($Data['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
+						} elseif ($Data['i'] == START_YEAR && date("Y", START_TIME) == START_YEAR) {
 							$WeekFactor  = 53 - date("W", START_TIME);
 							$MonthFactor = 13 - date("n", START_TIME);
 						}
@@ -476,26 +477,32 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 						$text        = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance'], false, 0);
 						$textWeek    = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance']/$WeekFactor, false, 0);
 						$textMonth   = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance']/$MonthFactor, false, 0);
-						$this->LineData['distance'][]      = array('i' => $Data['i'], 'text' => $text);
 						$this->LineData['distance_week'][]  = array('i' => $Data['i'], 'text' => $textWeek);
 						$this->LineData['distance_month'][] = array('i' => $Data['i'], 'text' => $textMonth);
 						break;
 
-				/* use this as long as
-				 * https://github.com/Runalyze/Runalyze/blob/1c66c261bb0d625fd368cf475122f658a805304c/inc/class.Dataset.php#L442
-				 * is not fixed
-				 */
+					/* use this as long as
+					 * https://github.com/Runalyze/Runalyze/blob/1c66c261bb0d625fd368cf475122f658a805304c/inc/class.Dataset.php#L442
+					 * is not fixed
+					 */
 					case 'pace':
 						$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
-						$text = ($Data['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
-						$this->LineData['pace'][] = array('i' => $Data['i'], 'text' => $text);
+						if ($Data['s_sum_with_distance'] != 0)
+							$text = $Pace->valueWithAppendix();
+						break;
+
+					case 'stride_length':
+						if ($Data['steps'] > 0) {
+							$strideLength = new StrideLength ($Data['distance_sum_with_cadence']*50000/$Data['steps']);
+							if ($strideLength->inCM() > 0)
+								$text = $strideLength->string();
+						}
 						break;
 
 					case 'vdot':
 						$VDOT = isset($Data['vdot']) ? Configuration::Data()->vdotFactor()*($Data['vdot']) : 0;
-						$text = ($VDOT == 0) ? NBSP : number_format($VDOT, 1);
-
-						$this->LineData['vdot'][] = array('i' => $Data['i'], 'text' => $text);
+						if ($VDOT > 0)
+							$text = number_format($VDOT, 1);
 						break;
 
 					case 'jd_intensity':
@@ -508,19 +515,16 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 							$Stress->scale(0, 50);
 							$text = $Stress->string($Data['jd_intensity']);
 						}
-
-						$this->LineData['jd_intensity'][] = array('i' => $Data['i'], 'text' => $text);
 						break;
 
 
 					default:
-						if (array_key_exists($set['name'], $Data)) {
-							$DataString = $this->Dataset->getDataset($set['name']);
-							$text = ($DataString == '' ? NBSP : $DataString);
-							$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
-						}
+						$DataString = $this->Dataset->getDataset($set['name']);
+						$text = (($DataString == '' or $DataString == 0) ? NBSP : $DataString);
 						break;
 				}
+
+				$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
 
 			}
 			// handling 'number' separately, as it's not in the Dataset->getData() array
@@ -534,12 +538,12 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Init complete data
 	 */
 	private function initCompleteData() {
-		$withElevation = Configuration::Vdot()->useElevationCorrection();
-
 		$Query = 
 			'SELECT '
 				.'COUNT(`id`) as `number`, '
 				.'SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`, '
+				.'SUM(IF(`cadence`>0,`distance`,0)) as `distance_sum_with_cadence`, '
+				.'SUM(`s`*`cadence`/60) as `steps`, '
 				.$this->getTimerIndexForQuery().' as `i`, '
 				.'SUM(`abc`) as `abc` '
 				.$this->Dataset->getQuerySelectForSet().' '
@@ -563,88 +567,30 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		return ($totalcount > 0 ? $totalvalue / $totalcount : $totalvalue);
 	}
 
-	private function computeInTotalForCompleteData() {
+	private function initTotalData() {
+
 		if ($this->year == -1) {
-			$Total = array('i' => date('Y') + 1);
-			$Totalcount = array();
-
-			$Total['number'] = 0;
-			$Total['s_sum_with_distance'] = 0;
-			$Total['stride_distance'] = 0;
-
-			foreach ($this->DatasetData as $set) {
-				$Total[$set['name']] = 0;
-				$Totalcount[$set['name']] = 0;
-			}
-
-			$Totalsteps = 0;
-			foreach ($this->CompleteData as $data) {
-				$Total['number'] += $data['number'];
-				$Total['s_sum_with_distance'] += $data['s_sum_with_distance'];
-
-				foreach ($this->DatasetData as $set) {
-
-					if (array_key_exists ($set['name'], $data)) {
-						switch ($set['name']) {
-							case 'cadence':
-							case 'vdot':
-							case 'pulse_avg':
-								if ($data[$set['name']] > 0) {
-									$Totalcount[$set['name']] += $data['s'];
-									$Total[$set['name']] += $data['s']*$data[$set['name']];
-
-									if ($set['name'] == 'cadence' and array_key_exists('distance', $data)) {
-										$Total['stride_distance'] += $data['distance'];
-										$Totalsteps += $data['s']*$data['cadence'];
-									}
-								}
-								break;
-
-							case 'pulse_max':
-								if ($data['pulse_max'] > $Total['pulse_max']) {
-									$Total['pulse_max'] = $data['pulse_max'];
-								}
-								break;
-
-							case 'stride_length':
-							case 'groundcontact':
-							case 'vertical_oscillation':
-								$Total[$set['name']] += $data[$set['name']];
-								if ($data[$set['name']] > 0) {
-									$Totalcount[$set['name']] += 1;
-								}
-								break;
-
-							case 'temperature':
-								if ($data[$set['name']] != NULL) {
-									$Total[$set['name']] += $data['s']*$data[$set['name']];
-									$Totalcount[$set['name']] += $data['s'];
-								}
-								break;
-
-							default:
-								if (array_key_exists($set['name'], $data))
-									$Total[$set['name']] += $data[$set['name']];
-								break;
-						}
-
-					}
-
-				}
-
-			}
-
-			$Totalsteps = $Totalsteps/60;
-			$Total['stride_length'] = $this->helperComputeAverage($Total['stride_distance']*1000, $Totalsteps)*2;
-
-			foreach ($this->DatasetData as $set) {
-				if (array_key_exists($set['name'], $Total) and $set['summary_mode'] == 'AVG'
-					and $set['name'] != 'stride_length') {
-					$Total[$set['name']] = $this->helperComputeAverage($Total[$set['name']], $Totalcount[$set['name']]);
-				}
-			}
-
-
+			$Query = 
+				'SELECT '
+					.'COUNT(`id`) as `number`, '
+					.'SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`, '
+					.'SUM(IF(`cadence`>0,`distance`,0)) as `distance_sum_with_cadence`, '
+					.'SUM(`s`*`cadence`/60) as `steps`, '
+					.'SUM(`abc`) as `abc` '
+					.$this->Dataset->getQuerySelectForSet().' '
+				.'FROM '
+					.'`'.PREFIX.'training` '
+				.'WHERE '
+					.'`accountid`=:sessid '.$this->getSportAndYearDependenceForQuery();
+	
+			$Request = DB::getInstance()->prepare($Query);
+			$Request->bindValue('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
+	
+			$Request->execute();
+	
+			$Total = $Request->fetch();
+			$Total['i'] = date('Y') + 1;
+	
 			$this->CompleteData[] = $Total;
 		}
 	}
