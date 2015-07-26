@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-23 07:31+0200\n"
+"PO-Revision-Date: 2015-07-24 15:37+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -3347,400 +3347,420 @@ msgstr "Fietsen"
 
 #: inc/system/schemes/set.emptyValues.php:89
 msgid "Gymnastics"
-msgstr ""
+msgstr "Gymnastiek"
 
 #: inc/system/schemes/set.emptyValues.php:90
 msgid "Other"
-msgstr ""
+msgstr "Overige"
 
 #: inc/system/schemes/set.emptyValues.php:97
 msgid "Jogging"
-msgstr ""
+msgstr "Duurloop"
 
 #: inc/system/schemes/set.emptyValues.php:97
 msgid "JOG"
-msgstr ""
+msgstr "DL"
 
 #: inc/system/schemes/set.emptyValues.php:98
 msgid "Fartlek"
-msgstr ""
+msgstr "Vaartspel"
 
 #: inc/system/schemes/set.emptyValues.php:98
 msgid "FL"
-msgstr ""
+msgstr "VS"
 
 #: inc/system/schemes/set.emptyValues.php:99
 msgid "Interval training"
-msgstr ""
+msgstr "Interval-training"
 
 #: inc/system/schemes/set.emptyValues.php:99
 msgid "IT"
-msgstr ""
+msgstr "IT"
 
 #: inc/system/schemes/set.emptyValues.php:100
 msgid "Tempo Run"
-msgstr ""
+msgstr "Tempo duurloop"
 
 #: inc/system/schemes/set.emptyValues.php:100
 msgid "TR"
-msgstr ""
+msgstr "TDL"
 
 #: inc/system/schemes/set.emptyValues.php:101
 #: inc/system/config/class.ConfigTabTypes.php:50
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:9
 msgid "Race"
-msgstr ""
+msgstr "Wedstrijd"
 
 #: inc/system/schemes/set.emptyValues.php:101
 msgid "RC"
-msgstr ""
+msgstr "W"
 
 #: inc/system/schemes/set.emptyValues.php:102
 msgid "Regeneration Run"
-msgstr ""
+msgstr "Herstelloop"
 
 #: inc/system/schemes/set.emptyValues.php:102
 msgid "RG"
-msgstr ""
+msgstr "HL"
 
 #: inc/system/schemes/set.emptyValues.php:103
 msgid "Long Slow Distance"
-msgstr ""
+msgstr "Lange duurloop"
 
 #: inc/system/schemes/set.emptyValues.php:103
 msgid "LSD"
-msgstr ""
+msgstr "LDL"
 
 #: inc/system/schemes/set.emptyValues.php:104
 msgid "Warm-up"
-msgstr ""
+msgstr "Warming-up"
 
 #: inc/system/schemes/set.emptyValues.php:104
 msgid "WU"
-msgstr ""
+msgstr "WU"
 
 #: inc/system/class.Filesystem.php:258
 #, php-format
 msgid ""
 "The directory <strong>%s</strong> is not writable. <em>(chmod = %s)</em>"
-msgstr ""
+msgstr "De map <strong>%s</strong> is niet beschrijfbaar. <em>(chmod = %s)</em>"
 
 #: inc/system/class.Error.php:332
 msgid "Fatal error"
-msgstr ""
+msgstr "Fatale fout"
 
 #: inc/system/class.AccountHandler.php:198
 #, php-format
 msgid "The username has to contain at least %s signs."
-msgstr ""
+msgstr "De gebruikersnaam moet ten minste %s tekens bevatten."
 
 #: inc/system/class.AccountHandler.php:201
 #, php-format
 msgid "The username has to contain at most %s signs."
-msgstr ""
+msgstr "De gebruikersnaam moet minstens %s tekens bevatten."
 
 #: inc/system/class.AccountHandler.php:204
 #, php-format
 msgid "The username has to contain only the following characters: %s"
-msgstr ""
+msgstr "De gebruikersnaam mag alleen de volgende tekens bevatten: %s"
 
 #: inc/system/class.AccountHandler.php:207
 msgid "This username is already being used."
-msgstr ""
+msgstr "Deze gebruikersnaam wordt al gebruikt."
 
 #: inc/system/class.AccountHandler.php:210
 msgid "This email address is already being used."
-msgstr ""
+msgstr "Dit e-mailadres wordt al gebruikt."
 
 #: inc/system/class.AccountHandler.php:213
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Voer een geldig e-mailadres in."
 
 #: inc/system/class.AccountHandler.php:216
 #: inc/system/class.AccountHandler.php:387
 #: inc/system/config/class.ConfigTabAccount.php:154
 msgid "The passwords have to be the same."
-msgstr ""
+msgstr "De wachtwoorden moeten overeenkomen."
 
 #: inc/system/class.AccountHandler.php:219
 #: inc/system/config/class.ConfigTabAccount.php:145
 #, php-format
 msgid "The password has to contain at least %s characters."
-msgstr ""
+msgstr "Het wachtwoord moet ten minste %s tekens bevatten."
 
 #: inc/system/class.AccountHandler.php:255
 msgid "Something went wrong. Please contact the administrator."
-msgstr ""
+msgstr "Er ging iets mis. Neem contact op met de beheerder."
 
 #: inc/system/class.AccountHandler.php:282
 msgid "Reset your RUNALYZE password"
-msgstr ""
+msgstr "Uw RUNALYZE-wachtwoord opnieuw instellen"
 
 #: inc/system/class.AccountHandler.php:283
 #, php-format
 msgid "Did you forget your password %s?"
-msgstr ""
+msgstr "Wachtwoord vergeten, %s?"
 
 #: inc/system/class.AccountHandler.php:284
 msgid ""
 "You can change your password within the next 24 hours with the following link"
 msgstr ""
+"U kunt uw wachtwoord wijzigen binnen de komende 24 uur met de volgende link"
 
 #: inc/system/class.AccountHandler.php:288
 msgid "The link has been sent and will be valid for 24 hours."
-msgstr ""
+msgstr "De link is verstuurd en is 24 uur geldig."
 
 #: inc/system/class.AccountHandler.php:290
 msgid "Unable to send link. Please contact the administrator."
-msgstr ""
+msgstr "De Link kan niet verstuurd worden. Neem contact op met de beheerder."
 
 #: inc/system/class.AccountHandler.php:293
 msgid "Your local server has no smtp-server. Please contact the administrator."
 msgstr ""
+"Uw lokale server heeft geen virtuele smtp-server. Neem contact op met de "
+"beheerder."
 
 #: inc/system/class.AccountHandler.php:301
 msgid "The username is unknown."
-msgstr ""
+msgstr "De gebruikersnaam is onbekend."
 
 #: inc/system/class.AccountHandler.php:389
 #, php-format
 msgid "The password has to contain at least %s signs."
-msgstr ""
+msgstr "Het wachtwoord moet ten minste %s tekens bevatten."
 
 #: inc/system/class.AccountHandler.php:396
 msgid "Something went wrong."
-msgstr ""
+msgstr "Er ging iets mis."
 
 #: inc/system/class.AccountHandler.php:481
 msgid "Activate your RUNALYZE Account"
-msgstr ""
+msgstr "Uw RUNALYZE Account activeren"
 
 #: inc/system/class.AccountHandler.php:482
 msgid "Thanks for your registration"
-msgstr ""
+msgstr "Bedankt voor uw registratie"
 
 #: inc/system/class.AccountHandler.php:483
 #, php-format
 msgid "You can activate your account (username = %s) with the following link"
-msgstr ""
+msgstr "U kunt uw account activeren (gebruikersnaam = %s) met de volgende link"
 
 #: inc/system/class.AccountHandler.php:487
 #: inc/system/class.AccountHandler.php:517
 msgid "Sending the link did not work. Please contact the administrator."
-msgstr ""
+msgstr "Het sturen van de link werkte niet. Neem contact op met de beheerder."
 
 #: inc/system/class.AccountHandler.php:491
 msgid ""
 "Your local server has no smtp-server. Your account has been directly "
 "activated."
 msgstr ""
+"Uw lokale server heeft geen virtuele smtp-server. Uw account is direct "
+"geactiveerd."
 
 #: inc/system/class.AccountHandler.php:493
 #: inc/system/class.AccountHandler.php:520
 msgid ""
 "Your local server has no smtp-server. You have to contact the administrator."
 msgstr ""
+"Uw lokale server heeft geen virtuele smtp-server. U moet contact opnemen met "
+"de beheerder."
 
 #: inc/system/class.AccountHandler.php:511
 msgid "Deletion request of your RUNALYZE account"
-msgstr ""
+msgstr "Verwijderingsverzoek van uw RUNALYZE account"
 
 #: inc/system/class.AccountHandler.php:512
 msgid "Do you really want to delete your account"
-msgstr ""
+msgstr "Wilt u echt uw account te verwijderen"
 
 #: inc/system/class.AccountHandler.php:513
 msgid "Complete the process by accessing the following link: "
-msgstr ""
+msgstr "Voltooi het proces door het klikken op de volgende link: "
 
 #: inc/system/config/class.ConfigTabDataset.php:20
 msgid "Dataset"
-msgstr ""
+msgstr "Dataset"
 
 #: inc/system/config/class.ConfigTabDataset.php:27
 msgid "Your Dataset"
-msgstr ""
+msgstr "Uw Dataset"
 
 #: inc/system/config/class.ConfigTabDataset.php:29
 msgid ""
 "You can specify which values show up in the overview of your activities."
 msgstr ""
+"U kunt opgeven welke waarden weergegeven worden in het activiteiten "
+"overzicht."
 
 #: inc/system/config/class.ConfigTabDataset.php:30
 msgid ""
 "This does not influence the detailed activity view, the form or any plugin."
 msgstr ""
+"Dit heeft geen invloed op de detailweergave, het formulier of een plugin."
 
 #: inc/system/config/class.ConfigTabDataset.php:45
 msgid "Display"
-msgstr ""
+msgstr "Weergave"
 
 #: inc/system/config/class.ConfigTabDataset.php:45
 msgid "The information will be shown directly in the row."
-msgstr ""
+msgstr "De informatie wordt rechtstreeks in de rij weergegeven."
 
 #: inc/system/config/class.ConfigTabDataset.php:46
 msgid "Summary"
-msgstr ""
+msgstr "Samenvatting"
 
 #: inc/system/config/class.ConfigTabDataset.php:46
+#, fuzzy
 msgid "The value will be summarized for the sport."
-msgstr ""
+msgstr "De waarde zal worden samengevat voor de sport."
 
 #: inc/system/config/class.ConfigTabDataset.php:47
 #: inc/system/config/class.ConfigTabPlugins.php:78
 msgid "Order"
-msgstr ""
+msgstr "Volgorde"
 
 #: inc/system/config/class.ConfigTabDataset.php:47
 msgid "Indicates the order of appearance."
-msgstr ""
+msgstr "Geeft de volgorde van weergave aan."
 
 #: inc/system/config/class.ConfigTabDataset.php:48
 msgid "CSS-Class"
-msgstr ""
+msgstr "CSS-klasse"
 
 #: inc/system/config/class.ConfigTabDataset.php:48
 msgid "'c': centered<br>'l': left-aligned<br>'small': small<br>'b': bold"
 msgstr ""
+"'c': gecentreerd<br>'l': links uitgelijnd <br>'small': klein <br>'b': vet"
 
 #: inc/system/config/class.ConfigTabDataset.php:49
 msgid "CSS-Style"
-msgstr ""
+msgstr "CSS-stijl"
 
 #: inc/system/config/class.ConfigTabDataset.php:49
 msgid "any CSS-Code"
-msgstr ""
+msgstr "een CSS-Code"
 
 #: inc/system/config/class.ConfigTabDataset.php:50
 msgid "Example"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: inc/system/config/class.ConfigTabDataset.php:204
 msgid "Test activity"
-msgstr ""
+msgstr "Test activiteit"
 
 #: inc/system/config/class.ConfigTabDataset.php:208
 msgid "Great run!"
-msgstr ""
+msgstr "Geweldige run!"
 
 #: inc/system/config/class.ConfigTabPlugins.php:17
 msgid "Plugins"
-msgstr ""
+msgstr "Plugins"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
-msgstr ""
+msgstr "Panels"
 
 #: inc/system/config/class.ConfigTabPlugins.php:33
 msgid "Panels are small statistics always shown on the right side."
 msgstr ""
+"Panels zijn kleine statistieken die weergegeven worden aan de rechterkant."
 
 #: inc/system/config/class.ConfigTabPlugins.php:38
 msgid "Normal statistics are shown below the activitiy log."
-msgstr ""
+msgstr "Normale statistieken staan onder het activiteiten logboek."
 
 #: inc/system/config/class.ConfigTabPlugins.php:42
 msgid ""
 "Complex tools for analyzing or processing the complete database will open in "
 "an overlay."
 msgstr ""
+"Met Tools kunt u gecompliceerde veranderingen in de database doorvoeren of "
+"grote hoeveelheden gegevens analyseren."
 
 #: inc/system/config/class.ConfigTabPlugins.php:46
 msgid "Install a new plugin"
-msgstr ""
+msgstr "Een nieuwe plugin installeren"
 
 #: inc/system/config/class.ConfigTabPlugins.php:47
 msgid "New plugins can be installed here."
-msgstr ""
+msgstr "Nieuwe plugins kunnen hier worden geïnstalleerd."
 
 #: inc/system/config/class.ConfigTabPlugins.php:69
 msgid "No plugins available."
-msgstr ""
+msgstr "Geen plugins beschikbaar."
 
 #: inc/system/config/class.ConfigTabPlugins.php:77
 msgid "Mode"
-msgstr ""
+msgstr "Modus"
 
 #: inc/system/config/class.ConfigTabPlugins.php:92
 msgid "The plugin cannot be found."
-msgstr ""
+msgstr "De plugin kan niet gevonden worden."
 
 #: inc/system/config/class.ConfigTabPlugins.php:101
 msgid "enabled"
-msgstr ""
+msgstr "ingeschakeld"
 
 #: inc/system/config/class.ConfigTabPlugins.php:102
 msgid "hidden*"
-msgstr ""
+msgstr "verborgen *"
 
 #: inc/system/config/class.ConfigTabPlugins.php:103
 msgid "not enabled"
-msgstr ""
+msgstr "niet ingeschakeld"
 
 #: inc/system/config/class.ConfigTabPlugins.php:117
 msgid "* Hidden plugins only show their headings."
-msgstr ""
+msgstr "* Verborgen plugins tonen alleen hun kopregel."
 
 #: inc/system/config/class.ConfigTabPlugins.php:120
 msgid "* Hidden plugins are grouped as 'Miscellaneous'."
-msgstr ""
+msgstr "* Verborgen plugins zijn gegroepeerd als 'Diversen'."
 
 #: inc/system/config/class.ConfigTabPlugins.php:164
 msgid "There are no new plugins to install."
-msgstr ""
+msgstr "Er zijn geen nieuwe plugins om te installeren."
 
 #: inc/system/config/class.ConfigTabPlugins.php:171
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:133
 msgid "Plugin"
-msgstr ""
+msgstr "Plugin"
 
 #: inc/system/config/class.ConfigTabTypes.php:20
 msgid "Activity Types"
-msgstr ""
+msgstr "Activiteitstypes"
 
 #: inc/system/config/class.ConfigTabTypes.php:27
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:137
 msgid "Activity types"
-msgstr ""
+msgstr "Activiteitstypes"
 
 #: inc/system/config/class.ConfigTabTypes.php:29
 msgid ""
 "Activity types are useful to seperate your training into different "
 "categories. An activity type can only belong to one sport."
 msgstr ""
+"Activiteitstypes zijn handig om uw trainingen in verschillende categorieën "
+"in te delen. Ieder activiteitstype kan maar tot één sport behoren."
 
 #: inc/system/config/class.ConfigTabTypes.php:31
 msgid ""
 "Finding your personal bests requires one type (for running) to be set as the "
 "'Race'-type."
 msgstr ""
+"Het vinden van uw persoonlijke records vereist dat er één type (voor "
+"hardlopen) moet worden ingesteld als de \"Race\"-type."
 
 #: inc/system/config/class.ConfigTabTypes.php:46
 #: inc/system/config/class.ConfigTabClothes.php:44
 msgid "Abbreviation"
-msgstr ""
+msgstr "Afkorting"
 
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "A type can only belong to one sport."
-msgstr ""
+msgstr "Een trainingstype kan slechts tot één sport behoren."
 
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/system/config/class.ConfigTabSports.php:56
 msgid "Average heart rate (used for calculation of TRIMP)"
-msgstr ""
+msgstr "Gemiddelde hartslag (gebruikt voor de berekening van TRIMP)"
 
 #: inc/system/config/class.ConfigTabTypes.php:49
 msgid "Quality?"
-msgstr ""
+msgstr "Kwaliteit?"
 
 #: inc/system/config/class.ConfigTabTypes.php:49
+#, fuzzy
 msgid "Quality sessions will be emphasized in your calendar."
-msgstr ""
+msgstr "Kwaliteitssessies zal worden benadrukt in uw agenda."
 
 #: inc/system/config/class.ConfigTabTypes.php:50
 msgid "You need to set one type for running as race type."
-msgstr ""
+msgstr "U dient één trainingstype in te stellen welke als wedstrijd-type dient."
 
 #: inc/system/config/class.ConfigTabTypes.php:51
 msgid "A type can only be deleted if no references exist."
