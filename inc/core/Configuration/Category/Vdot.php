@@ -217,7 +217,7 @@ class Vdot extends \Runalyze\Configuration\Category {
 			$oldValue = $Data->vdotShape();
 			$newValue = $Data->recalculateVDOTshape();
 
-			Messages::addValueRecalculated(__('Vdot shape'), number_format($newValue, 1), number_format($oldValue, 1));
+			Messages::addValueRecalculated(__('VDOT shape'), number_format($newValue, 1), number_format($oldValue, 1));
 		}
 	}
 }
