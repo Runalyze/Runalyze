@@ -289,4 +289,33 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertFalse($this->object->object()->hasArrayDistance());
 		}
 	}
+
+	/**
+	 * Test: outdoor swimming file
+	 * Filename: "swim-outdoor.fit" 
+	 */
+	public function testOutdoorSwimmingFile() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-outdoor.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(0, $this->object->object()->getPoolLength());
+			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(27, $this->object->object()->getCadence());
+
+			$this->assertEquals(1007, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(1007, $this->object->object()->getElapsedTime());
+			$this->assertEquals(0.985, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+		}
+	}
 }
