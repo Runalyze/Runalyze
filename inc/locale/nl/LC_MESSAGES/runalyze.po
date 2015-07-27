@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-24 15:37+0200\n"
+"PO-Revision-Date: 2015-07-27 12:07+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -3765,60 +3765,62 @@ msgstr "U dient één trainingstype in te stellen welke als wedstrijd-type dient
 #: inc/system/config/class.ConfigTabTypes.php:51
 msgid "A type can only be deleted if no references exist."
 msgstr ""
+"Een trainingstype kan alleen worden verwijderd als er geen trainingen van "
+"dit type geregistreerd zijn."
 
 #: inc/system/config/class.ConfigTabAccount.php:31
 msgid "Email address"
-msgstr ""
+msgstr "E-mailadres"
 
 #: inc/system/config/class.ConfigTabAccount.php:36
 msgid "Language"
-msgstr ""
+msgstr "Taal"
 
 #: inc/system/config/class.ConfigTabAccount.php:43
 msgid "Registered since"
-msgstr ""
+msgstr "Geregistreerd sinds"
 
 #: inc/system/config/class.ConfigTabAccount.php:46
 msgid "Last Login"
-msgstr ""
+msgstr "Laatste Login"
 
 #: inc/system/config/class.ConfigTabAccount.php:49
 msgid "Your account"
-msgstr ""
+msgstr "Uw account"
 
 #: inc/system/config/class.ConfigTabAccount.php:57
 msgid "Email me"
-msgstr ""
+msgstr "Stuur mij E-mails"
 
 #: inc/system/config/class.ConfigTabAccount.php:61
 msgid "Notifications"
-msgstr ""
+msgstr "Meldingen"
 
 #: inc/system/config/class.ConfigTabAccount.php:62
 msgid ""
 "At irregular intervals we are sending mails to you. We will never send you "
 "spam or advertisement."
-msgstr ""
+msgstr "Wij sturen u soms e-mails. Wij sturen u nooit spam of advertentie."
 
 #: inc/system/config/class.ConfigTabAccount.php:65
 msgid "Change your password"
-msgstr ""
+msgstr "Uw wachtwoord wijzigen"
 
 #: inc/system/config/class.ConfigTabAccount.php:76
 msgid "Old password"
-msgstr ""
+msgstr "Oude wachtwoord"
 
 #: inc/system/config/class.ConfigTabAccount.php:78
 msgid "Repeat new password"
-msgstr ""
+msgstr "Herhaal nieuw wachtwoord"
 
 #: inc/system/config/class.ConfigTabAccount.php:80
 msgid "Backup your data"
-msgstr ""
+msgstr "Back-up van uw gegevens"
 
 #: inc/system/config/class.ConfigTabAccount.php:87
 msgid "Please use the plugin"
-msgstr ""
+msgstr "Gebruik de plugin"
 
 #: inc/system/config/class.ConfigTabAccount.php:89
 msgid ""
@@ -3826,33 +3828,39 @@ msgid ""
 "individual cases write us an e-mail to mail@runalyze.de and and we will take "
 "care of it right away!"
 msgstr ""
+"De back-up van uw gegevens is op dit moment nog niet mogelijk. <br>In "
+"belangrijke individuele gevallen kunt u een e-mail sturen naar mail@"
+"runalyze.de en dan zullen wij er meteen voor zorgen!"
 
 #: inc/system/config/class.ConfigTabAccount.php:93
 #: inc/system/config/class.ConfigTabAccount.php:99
 msgid "Delete your account"
-msgstr ""
+msgstr "Uw account verwijderen"
 
 #: inc/system/config/class.ConfigTabAccount.php:95
 msgid ""
 "You'll receive an email with a link to confirm the deletion.<br>The deletion "
 "is permanent and cannot be reversed. Therefore, you should backup your data."
 msgstr ""
+"U ontvangt een e-mail met een link om de verwijdering te bevestigen. <br>De "
+"verwijdering is permanent en kan niet worden teruggedraaid. Daarom moet u "
+"zelf een back-up van uw gegevens maken indien u dit wenst."
 
 #: inc/system/config/class.ConfigTabAccount.php:148
 msgid "Your password has been changed."
-msgstr ""
+msgstr "Uw wachtwoord is gewijzigd."
 
 #: inc/system/config/class.ConfigTabAccount.php:151
 msgid "You current password is wrong."
-msgstr ""
+msgstr "Uw huidige wachtwoord is onjuist."
 
 #: inc/system/config/class.ConfigTabClothes.php:17
 msgid "Equipment"
-msgstr ""
+msgstr "Uitrusting"
 
 #: inc/system/config/class.ConfigTabClothes.php:24
 msgid "Your equipment"
-msgstr ""
+msgstr "Uw uitrusting"
 
 #: inc/system/config/class.ConfigTabClothes.php:26
 msgid ""
@@ -3860,31 +3868,36 @@ msgid ""
 "abbreviation are used to order and display them in the form for editing an "
 "activity."
 msgstr ""
+"Uw uitrusting kan worden ingevoerd voor aanvullende statistieken. <br>"
+"Categorie en afkorting worden gebruikt om in het formulier te sorteren voor "
+"het bewerken van een activiteit."
 
 #: inc/system/config/class.ConfigTabClothes.php:28
 msgid "The category should be a number."
-msgstr ""
+msgstr "De categorie moet een getal zijn."
 
 #: inc/system/config/class.ConfigTabClothes.php:29
 msgid "Just fill out the last row to add a new equipment."
 msgstr ""
+"Om een nieuwe uitrusting toe te voegen, hoeft u eenvoudigweg alleen de "
+"laatste regel in te vullen."
 
 #: inc/system/config/class.ConfigTabClothes.php:45
 msgid "Category"
-msgstr ""
+msgstr "Categorie"
 
 #: inc/system/config/class.ConfigTabClothes.php:46
 msgid "Delete?"
-msgstr ""
+msgstr "Verwijderen?"
 
 #: inc/system/config/class.ConfigTabs.php:86
 msgid "The settings have been saved."
-msgstr ""
+msgstr "De instellingen zijn opgeslagen."
 
 #: inc/system/config/class.ConfigTabSports.php:20
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:22
 msgid "Sports"
-msgstr ""
+msgstr "Sportsoorten"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"

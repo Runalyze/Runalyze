@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-26 20:15+0200\n"
+"PO-Revision-Date: 2015-07-27 08:43+0200\n"
 "Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
@@ -1711,11 +1711,12 @@ msgstr "VDOT"
 
 #: inc/core/Configuration/Category/Trimp.php:99
 msgid "Days for ATL"
-msgstr "Giorni per ATL"
+msgstr "Giorni per ATL (Carico di allenamento acuto)"
 
 #: inc/core/Configuration/Category/Trimp.php:100
+#, fuzzy
 msgid "Number of days for ATL time constant"
-msgstr ""
+msgstr "(Carico di allenamento acuto)"
 
 #: inc/core/Configuration/Category/Trimp.php:104
 msgid "Days for CTL"
@@ -1727,7 +1728,9 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Trimp.php:109
 msgid "Show ATL/CTL in percent of your maximum"
-msgstr "Mostra la percentuale ATL/CTL dei tuoi valori massimi"
+msgstr ""
+"Mostra la percentuale ATL/CTL (Carico di allenamento acuto/Carico di "
+"allenamento cronico) dei tuoi valori massimi"
 
 #: inc/core/Configuration/Category/Trimp.php:110
 msgid ""
@@ -1735,31 +1738,36 @@ msgid ""
 "lead to wrong assumptions if you were overtrained. Deactivate this option in "
 "that case."
 msgstr ""
-"Di default ATL/CTL sono ordinati in base ai dati storici dei massimi. Questo "
-"può dare risultati errati nel caso di sovrallenamento. In questo caso, "
-"disattivare la opzione."
+"Di default ATL/CTL (Carico di allenamento acuto/Carico di allenamento "
+"cronico) sono ordinati in base ai dati storici dei massimi. Questo può dare "
+"risultati errati nel caso di sovrallenamento. In questo caso, disattivare la "
+"opzione."
 
 #: inc/core/Configuration/Category/Trimp.php:116
 msgid "Show TSB in percent of ATL/CTL"
-msgstr "Mostra la percentuale di TSB del ATL/CTL"
+msgstr ""
+"Mostra la percentuale di TSB (Bilanciamento dello stress dell’allenamento) "
+"del ATL/CTL (Carico di allenamento acuto/Carico di allenamento cronico)"
 
 #: inc/core/Configuration/Category/Trimp.php:117
 msgid ""
 "The scale of TSB values depends on your ATL/CTL. You can display TSB as "
 "percentage of your current ATL/CTL to keep consistency."
 msgstr ""
-"La scala dei valori TSB dipende dal tuo ATL/CTL. Puoi mostrare il TSB in "
-"percentuale per avere dati coerenti con il tuo ATL/CTL."
+"La scala dei valori TSB (Bilanciamento dello stress dell’allenamento) "
+"dipende dal tuo ATL/CTL (Carico di allenamento acuto/Carico di allenamento "
+"cronico). Puoi mostrare il TSB in percentuale per avere dati coerenti con il "
+"tuo ATL/CTL."
 
 #: inc/core/Configuration/Category/Trimp.php:141
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:150
 msgid "Maximal CTL"
-msgstr "CTL massimale"
+msgstr "CTL (Carico di allenamento cronico) massimo"
 
 #: inc/core/Configuration/Category/Trimp.php:142
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:151
 msgid "Maximal ATL"
-msgstr "ATL massimale"
+msgstr "ATL (Carico di allenamento acuto) massimo"
 
 #: inc/core/Configuration/Messages.php:25
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:24
@@ -5753,7 +5761,6 @@ msgid "Activities"
 msgstr "Attività"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:140
-#, fuzzy
 msgid "Trackdata"
 msgstr "Dati del tracciato"
 
@@ -6168,13 +6175,15 @@ msgstr ""
 msgid ""
 "These recalculations are only needed if you changed the corresponding "
 "settings."
-msgstr ""
+msgstr "Il ricalcolo è necessario solo se cambi i settaggi corrispondenti."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:77
 msgid ""
 "This task may take some time, since we have to loop through all your "
 "activities."
 msgstr ""
+"Questa elaborazione può richedere tempo poichè occorre analizzare tutte le "
+"tue attività."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:85
 msgid "Recalculate elevation"
@@ -6198,7 +6207,7 @@ msgstr "Ricalcola i valori i TRIMP"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:117
 msgid "Allow to force recalculations if settings did not change"
-msgstr ""
+msgstr "Consente di forzare il ricalcolo se i settatggi non cambiano"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.ViewForm.php:123
 msgid "Start cleanup"
@@ -6209,21 +6218,27 @@ msgid ""
 "VDOT is the shortform of <em>V-dot-O2Max</em>, the maximum rate of oxygen "
 "flow."
 msgstr ""
+"VDOT è lìabbreviazione di <em>V-dot-O2Max</em>, ovvero massimo consumo di "
+"ossigeno."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:16
 msgid ""
 "This value is a good measurement for the possible performance of a runner."
 msgstr ""
+"Questo valoro è utile per determinare le possibili performance di un "
+"corridore."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:17
 msgid ""
 "Due to some additional factors, one talks about a <em>pseudo V-dot-O2Max</"
 "em>, which is equal for all runners at the same level."
 msgstr ""
+"In base ad alcuni fattori aggiuntivi, si parla di <em>pseudo V-dot-O2Max</em>"
+", che è uguarle per tutti i corridori dello stesso livello."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:25
 msgid "Your Shape: an estimation of your VDOT value"
-msgstr ""
+msgstr "La tua forma fisica: stima del tuo valore di VDOT"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:29
 msgid ""
@@ -6240,28 +6255,39 @@ msgid ""
 "Your personal VDOT value is estimated based on the ratio of heart rate and "
 "pace in every of your runs."
 msgstr ""
+"Il valore di VDOT persoanle è stimayo in base al rapporti tra frequenza "
+"cardiaca e ritimo in ognuna delle tue corse."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:35
 msgid "The average over a given period is considered as your current shape."
 msgstr ""
+"La media in un determinato periodo è considerato come la vostra forma "
+"attuale."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:39
 msgid ""
 "Each VDOT value of an activity is marked with an arrow, to show if this "
 "value is (much) higher than your current shape, equal to it or (much) lower:"
 msgstr ""
+"Ciacun valore di VDOT di un'attività è indicata con una freccia. La freccia "
+"indica se questo valore è (molto) superiore alla vostra forma attuale, pari "
+"o (molto) più basso:"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:50
 msgid ""
 "Warning: Of course, pauses, walking and other factors can heavily influence "
 "the ratio of heart rate and pace."
 msgstr ""
+"Attenzione: naturalmente, le pause, le parti di cammino e altri fattori "
+"possono influenzare pesantemente il rapporto tra frequenza cardiaca e ritmo."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:51
 msgid ""
 "Activities with known influences or strange results can be ignored for the "
 "calculation of your shape."
 msgstr ""
+"Attività nelle quali ci sono fattori che influenzano le stime o risultati "
+"strani possono essere ingnorati per il calcolo della tua froma fisica."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:56
 msgid "TRIMP/ATL/CTL/TSB"
@@ -6271,19 +6297,24 @@ msgstr "TRIMP/ATL/CTL/TSB"
 msgid ""
 "The TRIMP-concept gives a possibility to describe the load of a single "
 "activity."
-msgstr ""
+msgstr "Il TRIMP consente di descrivere il carico di ciascuna attività."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:61
 msgid ""
 "For a single activity the TRIMP is calculated based on the duration and your "
 "heart rate."
 msgstr ""
+"Per ogni singli attività il TRIMP è calcolato sulla base della durata e "
+"della frequenza cardiaca."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:65
 msgid ""
 "Your <strong>Actual Training Load</strong>, ATL, also fatigue, is based on "
 "the sum of your last TRIMP values in a short period, e.g. for seven days."
 msgstr ""
+"Il tuo <strong>Carico Attuale di Allenamento</strong>, la fatica, in inglese "
+"ATL, si basa sulla somma dei tuoi ultimi valori di TRIMP in un intervallo di "
+"tempo recente, come ad es. 7 giorni."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:66
 msgid ""
@@ -6291,6 +6322,10 @@ msgid ""
 "fitness level, is based on the sum of your last TRIMP values in a long "
 "period, e.g. for fourty days."
 msgstr ""
+"Invece, il tuo <strong>Carico di Allenamento Cronico</strong>, ovvero il "
+"livello di benessere fisico e psichico, in inglese CTL, si basa sulla somma "
+"dei tuoi ultimi valori di TRIMP su un periodo più lungo, come ad es. 40 "
+"giorni."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.info.php:67
 msgid ""
@@ -6298,14 +6333,18 @@ msgid ""
 "strong>, TSB. It describes if you are recovering (positive) or training hard "
 "(negative)."
 msgstr ""
+"La differenza di questi valoro è chiamata <strong>Bilanciamento dello Stress "
+"dell’Allenamento</strong>, in inglese TSB e indica se sei in fase di "
+"recupero (positivo) o di allenamento intenso (negativo)."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:143
 msgid "Fitness (CTL)"
 msgstr ""
+"Benessere fisico/psichico (Carico di Allenamento Cronico, in inglese CTL)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:145
 msgid "Fatigue (ATL)"
-msgstr ""
+msgstr "Fatica (Carico di Allenamento Acuto, in inglese ATL)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:146
 msgid "avg VDOT"
@@ -6317,17 +6356,19 @@ msgstr "VDOT giornaliero"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:184
 msgid "Shape for all years"
-msgstr ""
+msgstr "Forma fisica di tutti gli anni"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:34
 msgid "Calculations"
-msgstr ""
+msgstr "Calcoli"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:42
 msgid ""
 "Calculate experimental values as shape and fatigue based on TRIMP, basic "
 "endurance and your VDOT shape."
 msgstr ""
+"Calcolare i valori sperimentali di forma fisica e fatica sulla base del "
+"TRIMP, della resistenza di base e della vostro VDOT."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:49
 msgid ""
@@ -6344,7 +6385,7 @@ msgstr "Mostra: ritmo"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:58
 msgid "Paces based on your curent VDOT"
-msgstr ""
+msgstr "Ritmi basati sull'attuale valore di VDOT"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:61
 msgid "Show: ATL/CTL/TSB"
@@ -6353,6 +6394,8 @@ msgstr "Mostra: ATL/CTL/TSB"
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:62
 msgid "Show actual/chronical training load and stress balance (based on TRIMP)"
 msgstr ""
+"Mostra il carico di allenamento attuale o protratto nel tempo e il "
+"bilanciamento dello stress (sulla base del TRIMP)"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:65
 msgid "Show: Monotony/TS"
@@ -6464,6 +6507,8 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:253
 msgid "Rest days needed to reach TSB = 0"
 msgstr ""
+"Giorni di riposo per ottinere un TBS (Bilanciamento dello stress "
+"dell’allenamento) = 0"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:262
 msgid "Easy&nbsp;TRIMP"
@@ -6472,6 +6517,8 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:264
 msgid "Max TRIMP that will still keep you at TSB = 0"
 msgstr ""
+"TRIMP massimo che terrà il tuo TBS (Bilanciamento dello stress "
+"dell’allenamento) = 0"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:280
 msgid "Monotony"
