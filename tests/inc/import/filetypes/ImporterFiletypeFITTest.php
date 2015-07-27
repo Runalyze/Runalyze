@@ -291,6 +291,11 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayTime());
 			$this->assertFalse($this->object->object()->hasArrayDistance());
 
+			$this->assertEquals(
+				array(68, 68+80, 68+80+69, 68+80+69+86, 68+80+69+86+82, 68+80+69+86+82+91, 68+80+69+86+82+91+90, 68+80+69+86+82+91+90+98),
+				array_slice($this->object->object()->getArrayTime(), 0, 8)
+			);
+
 			$timeArray = $this->object->object()->getArrayTime();
 			$this->assertNotEquals(0, $timeArray[0]);
 		}

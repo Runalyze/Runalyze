@@ -348,9 +348,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['rpm'][] = isset($this->Values['avg_swimming_cadence']) ? (int)$this->Values['avg_swimming_cadence'][0] : 0;
 
 		if (empty($this->gps['time_in_s'])) {
+			$this->TrainingObject->setTimestamp( strtotime((string)$this->Values['start_time'][1]) );
 			$this->gps['time_in_s'][] = round(((int)$this->Values['total_timer_time'][0])/1000);
 		} else {
-			$this->gps['time_in_s'][] = strtotime((string)$this->Values['start_time'][1]) - $this->TrainingObject->getTimestamp();
+			$this->gps['time_in_s'][] = end($this->gps['time_in_s']) + round(((int)$this->Values['total_timer_time'][0])/1000);
 		}
 	}
 
