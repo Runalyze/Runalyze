@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-27 08:43+0200\n"
-"Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
+"PO-Revision-Date: 2015-07-28 08:16+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
 "Language: it\n"
@@ -5272,7 +5272,6 @@ msgid "Saison"
 msgstr "Stagione"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:419
-#, fuzzy
 msgid "Note: Saison means the current season in the german &quot;kmspiel&quot;"
 msgstr ""
 "Nota: Stagione indica l'attuale stagione in Germania &quot;kmspiel&quot;"
