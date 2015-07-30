@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-30 09:51+0200\n"
+"PO-Revision-Date: 2015-07-30 17:58+0200\n"
 "Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
@@ -1995,9 +1995,8 @@ msgid "linear"
 msgstr "lineare"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
-#, fuzzy
 msgid "reversed linear"
-msgstr "in senso inverso"
+msgstr "logaritmico"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:18
 msgid "as speed"
