@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-29 20:50+0200\n"
+"PO-Revision-Date: 2015-07-30 09:51+0200\n"
 "Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
 "Language-Team: Italian "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/it/>\n"
@@ -713,7 +713,7 @@ msgstr "Potenza (Watt)"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:146
 msgid "Weather condition"
-msgstr "Condizioni climatiche"
+msgstr "Meteo"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:157
 #: inc/class.DatasetLabels.php:37
@@ -1049,7 +1049,7 @@ msgstr "Informazioni generali"
 #: inc/training/schemes/scheme.Training.new.php:55
 #: inc/training/schemes/scheme.Training.php:59
 msgid "Weather conditions"
-msgstr "Condizioni climatiche"
+msgstr "Meteo"
 
 #: inc/training/schemes/scheme.Training.new.php:61
 #: inc/training/schemes/scheme.Training.php:65
@@ -1878,7 +1878,7 @@ msgstr "Mostra i giri calcolati"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
-msgstr "diff"
+msgstr "Diff"
 
 #: inc/core/View/Splits/Table.php:221
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:166
@@ -1991,9 +1991,8 @@ msgid "every twentieth data point"
 msgstr "ogni 20 punti di misura"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
-#, fuzzy
 msgid "linear"
-msgstr "in avanti"
+msgstr "lineare"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:17
 #, fuzzy
@@ -4970,8 +4969,7 @@ msgstr "DAti non disponibili."
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:40
 msgid "Statistics about weather conditions, temperatures and clothing."
 msgstr ""
-"Statistiche sulle condizioni del tempo, le temperature e l'abbigliamento "
-"adatto."
+"Statistiche sulle condizioni del tempo, le temperature e l'abbigliamento."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:47
 msgid "There is no bad weather, there is only bad clothing."
@@ -4982,9 +4980,8 @@ msgid ""
 "Are you a wimp or a tough runner?Have a look at these statistics about the "
 "weather conditions and your clothing while training."
 msgstr ""
-"Sei un buono a nulla o un corridore difficile? Date un'occhiata a queste "
-"statistiche sulle condizioni meteorologiche e sul vostro abbigliamento "
-"durante l'allenamento."
+"Sei un buono a nulla o un corridore difficile? Dai un'occhiata alle "
+"statistiche sul meteo e sull'abbigliamento durante l'allenamento."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:57
 msgid "Show statistics about weather conditions"
