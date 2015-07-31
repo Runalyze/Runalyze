@@ -30,19 +30,13 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",10,3000,0)');
-		$this->ShoeID1 = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",0,0,0)');
-		$this->ShoeID2 = $this->PDO->lastInsertId();
 
 		\SportFactory::reInitAllSports();
-		\ShoeFactory::reInitAllShoes();
 	}
 
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
 
 		\Cache::clean();
 	}
@@ -216,57 +210,6 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(0, Configuration::Data()->vdotShape());
 		$this->assertEquals(1, Configuration::Data()->vdotFactor());
-	}
-
-	/**
-	 * @expectedException \RuntimeException
-	 */
-	public function testProblemWithEquipment() {
-		$NewObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::SHOEID => 1
-		)) );
-
-		$this->update($NewObject);
-	}
-
-	public function testUpdatingEquipmentID() {
-		$OldObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::SHOEID => $this->ShoeID2
-		)) );
-
-		$NewObject = clone $OldObject;
-		$NewObject->set(Object::SHOEID, $this->ShoeID1);
-
-		$this->update($NewObject, $OldObject);
-
-		$Shoe1 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID1)->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(20, $Shoe1->getKmInDatabase());
-		$this->assertEquals(6000, $Shoe1->getTime());
-
-		$Shoe2 = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2)->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(0, $Shoe2->getKmInDatabase());
-		$this->assertEquals(0, $Shoe2->getTime());
-	}
-
-	public function testUpdatingEquipmentTime() {
-		$OldObject = $this->fetch( $this->insert(array(
-			Object::DISTANCE => 10,
-			Object::TIME_IN_SECONDS => 3000,
-			Object::SHOEID => $this->ShoeID2
-		)) );
-
-		$NewObject = clone $OldObject;
-		$NewObject->set(Object::TIME_IN_SECONDS, 3600);
-
-		$this->update($NewObject, $OldObject);
-
-		$Shoe = new Shoe($this->PDO->query('SELECT * FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2)->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(10, $Shoe->getKmInDatabase());
-		$this->assertEquals(3600, $Shoe->getTime());
 	}
 
 	public function testStartTimeUpdate() {

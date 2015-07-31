@@ -30,19 +30,13 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",10,3000,0)');
-		$this->ShoeID1 = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",0,0,0)');
-		$this->ShoeID2 = $this->PDO->lastInsertId();
 
 		\SportFactory::reInitAllSports();
-		\ShoeFactory::reInitAllShoes();
 	}
 
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
 		\Cache::clean();
 	}
 
@@ -94,14 +88,12 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Object::TIME_IN_SECONDS => 3600,
 				Object::WEATHERID => Weather\Condition::SUNNY,
 				Object::TEMPERATURE => 7,
-				Object::CLOTHES => array(1,2,3),
 				Object::SPORTID => $this->OutdoorID
 			))
 		);
 
 		$this->assertEquals(Weather\Condition::SUNNY, $Object->weather()->condition()->id());
 		$this->assertEquals(7, $Object->weather()->temperature()->value());
-		$this->assertFalse($Object->clothes()->isEmpty());
 	}
 
 	public function testIndoorData() {
@@ -110,13 +102,11 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 				Object::TIME_IN_SECONDS => 3600,
 				Object::WEATHERID => Weather\Condition::SUNNY,
 				Object::TEMPERATURE => 7,
-				Object::CLOTHES => array(1,2,3),
 				Object::SPORTID => $this->IndoorID
 			))
 		);
 
 		$this->assertTrue($Object->weather()->isEmpty());
-		$this->assertTrue($Object->clothes()->isEmpty());
 	}
 
 	public function testCalories() {
@@ -138,28 +128,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertEquals(873, $ObjectWith->calories());
-	}
-
-	public function testEquipmentUpdate() {
-		$this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => $this->ShoeID1
-		));
-		$this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => $this->ShoeID2
-		));
-
-		$this->assertEquals(array(
-			'km' => 22,
-			'time' => 6600
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID1.' AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(array(
-			'km' => 12,
-			'time' => 3600
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`='.$this->ShoeID2.' AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
 	}
 
 	public function testStartTimeUpdate() {

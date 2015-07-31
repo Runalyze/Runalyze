@@ -22,14 +22,11 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO = \DB::getInstance();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",1,600,1,0)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",2,400,0,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",1,10,3000,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",2,0,0,0)');
-	}
+        }
 
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
 	}
 
 	/**
@@ -68,28 +65,6 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWrongObject() {
 		new Deleter($this->PDO, new Model\Trackdata\Object);
-	}
-
-	public function testEquipmentUpdate() {
-		$this->delete($this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => 1
-		)));
-		$this->delete($this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => 2
-		)));
-
-		$this->assertEquals(array(
-			'km' => 10,
-			'time' => 3000
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=1 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(array(
-			'km' => 0,
-			'time' => 0
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=2 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
 	}
 
 	public function testStartTimeUpdate() {
