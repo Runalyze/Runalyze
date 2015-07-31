@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-27 12:07+0200\n"
+"PO-Revision-Date: 2015-07-31 13:13+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -3177,7 +3177,6 @@ msgstr "Kies analyse"
 
 #: inc/draw/class.PlotSumData.php:165
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:99
-#, fuzzy
 msgid "Choose evaluation"
 msgstr "Kies rapportage"
 
@@ -3594,9 +3593,8 @@ msgid "Summary"
 msgstr "Samenvatting"
 
 #: inc/system/config/class.ConfigTabDataset.php:46
-#, fuzzy
 msgid "The value will be summarized for the sport."
-msgstr "De waarde zal worden samengevat voor de sport."
+msgstr "De waardes worden getoond in de statistieken van het sporttype."
 
 #: inc/system/config/class.ConfigTabDataset.php:47
 #: inc/system/config/class.ConfigTabPlugins.php:78
@@ -3901,185 +3899,196 @@ msgstr "Sportsoorten"
 
 #: inc/system/config/class.ConfigTabSports.php:27
 msgid "Your sports"
-msgstr ""
+msgstr "Uw sport"
 
 #: inc/system/config/class.ConfigTabSports.php:29
 msgid "Hover over the headings if the abbreviations are unclear."
-msgstr ""
+msgstr "Ga met de muis over de koppen als de afkortingen onduidelijk zijn."
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
-msgstr ""
+msgstr "<em>Ø HR</em> is nodig voor de berekening van TRIMP."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
-msgstr ""
+msgstr "Pictogram"
 
 #: inc/system/config/class.ConfigTabSports.php:54
 msgid "Name of the sport"
-msgstr ""
+msgstr "Naam van de sport"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "kcal/h"
-msgstr ""
+msgstr "kcal/u"
 
 #: inc/system/config/class.ConfigTabSports.php:55
 msgid "Average energy turnover in kilocalories per hour"
-msgstr ""
+msgstr "Gemiddelde energie omzet in kilocalorieën per uur"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:10
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: inc/system/config/class.ConfigTabSports.php:57
 msgid "Has a distance"
-msgstr ""
+msgstr "Heeft een afstand"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit"
-msgstr ""
+msgstr "Eenheid"
 
 #: inc/system/config/class.ConfigTabSports.php:58
 msgid "Unit for speed"
-msgstr ""
+msgstr "Eenheid voor snelheid"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "Types"
-msgstr ""
+msgstr "Typen"
 
 #: inc/system/config/class.ConfigTabSports.php:59
 msgid "The sport uses different training types"
 msgstr ""
+"Er worden verschillende trainingstypen gebruikt (bijv. intervaltraining)"
 
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Power is recorded or calculated."
-msgstr ""
+msgstr "De kracht wordt geregistreerd of berekend."
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Outside"
-msgstr ""
+msgstr "Buiten"
 
 #: inc/system/config/class.ConfigTabSports.php:61
 msgid "Sport is performed outdoor: activate route, weather, ..."
-msgstr ""
+msgstr "De sport wordt buiten beoefend: activeren route, weer,..."
 
 #: inc/system/config/class.ConfigTabSports.php:62
 msgid "Mode for displaying activities in calendar"
-msgstr ""
+msgstr "Modus voor het weergeven van activiteiten in agenda"
 
 #: inc/system/config/class.ConfigTabSports.php:63
 msgid "A sport can only be deleted if no references exist."
 msgstr ""
+"Een sport kan alleen worden verwijderd als er geen verwijzingen bestaan."
 
 #: inc/system/config/class.ConfigTabSports.php:80
 msgid "complete row"
-msgstr ""
+msgstr "volledige rij"
 
 #: inc/system/config/class.ConfigTabSports.php:81
 msgid "only icon"
-msgstr ""
+msgstr "alleen pictogram"
 
 #: inc/data/class.TypeFactory.php:123
 msgid "No types available"
-msgstr ""
+msgstr "Geen types beschikbaar"
 
 #: inc/data/class.CadenceRunning.php:27
 msgid "Cadence (running)"
-msgstr ""
+msgstr "Cadans (lopen)"
 
 #: inc/data/class.CadenceRunning.php:43
 msgid "spm = steps per minute"
-msgstr ""
+msgstr "SPM = stappen per minuut"
 
 #: inc/data/class.ShoeFactory.php:198
 msgid "No shoes available"
-msgstr ""
+msgstr "Geen schoenen ingevoerd"
 
 #: inc/data/class.Cadence.php:108
 msgid "rpm = rotations per minute"
-msgstr ""
+msgstr "rpm = rotaties per minuut"
 
 #: inc/class.FrontendSharedList.php:159
 #, php-format
 msgid "Activity view of %s"
-msgstr ""
+msgstr "Weergave van de activiteit van %s"
 
 #: inc/class.FrontendSharedList.php:168
 msgid "This list is private"
-msgstr ""
+msgstr "Deze lijst is privé"
 
 #: inc/class.FrontendSharedList.php:169
 msgid "The user does not share his activity list."
-msgstr ""
+msgstr "De gebruiker deelt zijn activiteitenlijst niet."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
-msgstr ""
+msgstr "Formulier"
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:276
 msgid "Upload file"
-msgstr ""
+msgstr "Bestand uploaden"
 
 #: inc/import/tpl/tpl.Importer.upload.php:39
 msgid "There were problems while uploading."
-msgstr ""
+msgstr "Er waren problemen bij het uploaden."
 
 #: inc/import/tpl/tpl.Importer.upload.php:54
 msgid "Your browser does not seem to support this uploader, see"
-msgstr ""
+msgstr "Uw browser lijkt deze uploader niet te ondersteunen, zie"
 
 #: inc/import/tpl/tpl.Importer.upload.php:62
 msgid "Supported file extensions:"
-msgstr ""
+msgstr "Ondersteunde bestandsextensies:"
 
 #: inc/import/tpl/tpl.Importer.upload.php:67
 msgid "Supported file size:"
-msgstr ""
+msgstr "Maximale bestandsgrootte:"
 
 #: inc/import/tpl/tpl.Importer.garminCommunicator.php:10
 msgid "Move your mouse here to start loading the communicator."
-msgstr ""
+msgstr "Beweeg uw muis hier om de communicator te starten."
 
 #: inc/import/class.MultiEditor.php:45
 msgid "No activities for editing were set."
-msgstr ""
+msgstr "Er zijn geen activiteiten geselecteerd om te bewerken."
 
 #: inc/import/class.MultiEditor.php:58
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:31
 msgid "Multi editor"
-msgstr ""
+msgstr "Multieditor"
 
 #: inc/import/parser/class.ParserPWXSingle.php:54
 msgid ""
 "Given XML object is not from Peaksware/Trainingpakes. &lt;device&gt;-tag "
 "could not be located."
 msgstr ""
+"Het XML object is niet van Peaksware/Trainingpakes. &lt;apparaat&gt;-tag kan "
+"niet worden gevonden."
 
 #: inc/import/parser/class.ParserGPXSingle.php:102
 msgid ""
 "Given XML object does not contain any track. &lt;trkseg&gt;-tag could not be "
 "located."
 msgstr ""
+"Het XML object bevat geen track. &lt;trkseg&gt;-tag kan niet worden gevonden."
 
 #: inc/import/parser/class.ParserLOGBOOKSingle.php:39
 msgid ""
 "Given XML object is not from SportTracks. &lt;Activity&gt;-tag has no "
 "attribute 'startTime'."
 msgstr ""
+"Het XML object is niet van SportTracks. &lt;activiteit&gt;-tag heeft geen "
+"kenmerk 'startTime'."
 
 #: inc/import/parser/class.ParserXMLsuuntoSingle.php:104
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "header&gt;-tag could not be located."
 msgstr ""
+"Het XML object bevat geen resultaten. &lt; Voorbeelden&gt;-tag of "
+"&lt;header&gt;-tag kan niet worden gevonden."
 
 #: inc/import/parser/class.ParserXMLpolarSingle.php:43
 msgid ""
 "Given XML object does not contain any results. &lt;result&gt;-tag could not "
 "be located."
 msgstr ""
+"Het XML object bevat geen resultaten. &lt;result&gt;-tag kan niet worden "
+"gevonden."
 
 #: inc/import/parser/class.ParserSLF4Single.php:28
 #: inc/import/parser/class.ParserSLF3Single.php:48
@@ -4087,225 +4096,249 @@ msgid ""
 "Given XML object is not from Sigma. &lt;LogEntries&gt;-tag could not be "
 "located."
 msgstr ""
+"Het XML object is niet van Sigma. &lt;LogEntries&gt;-tag kan niet worden "
+"gevonden."
 
 #: inc/import/parser/class.ParserSLF4Single.php:53
 #: inc/import/parser/class.ParserSLF3Single.php:65
 msgid "This file does not contain any data."
-msgstr ""
+msgstr "Dit bestand bevat geen gegevens."
 
 #: inc/import/parser/class.ParserKMLtomtomSingle.php:69
 msgid ""
 "Given XML object does not contain any track. &lt;gx:Track&gt;-tag could not "
 "be located."
 msgstr ""
+"Het XML object bevat geen track. &lt;gx:Track&gt;-tag kan niet worden "
+"gevonden."
 
 #: inc/import/parser/class.ParserTCXSingle.php:113
 msgid ""
 "Given XML object is not from Garmin. &lt;Id&gt;-tag could not be located."
 msgstr ""
+"Het XML object is niet van Garmin. &lt;Id&gt;-tag kan niet worden gevonden."
 
 #: inc/import/parser/class.ParserTCXSingle.php:134
 msgid "This file does not contain any laps."
-msgstr ""
+msgstr "Dit bestand bevat niet alle ronden."
 
 #: inc/import/parser/class.ParserTCXruntasticSingle.php:29
 msgid ""
 "Given XML object is not from Runtastic. &lt;Id&gt;-tag could not be located."
 msgstr ""
+"Het XML object is niet van Runtastic. &lt;Id&gt;-tag kan niet worden "
+"gevonden."
 
 #: inc/import/parser/class.ParserSMLsuuntoSingle.php:29
 msgid ""
 "Given XML object does not contain any results. &lt;Samples&gt;-tag or &lt;"
 "Header&gt;-tag could not be located."
 msgstr ""
+"Het XML object bevat geen resultaten. &lt;Samples&gt;-tag of &lt;Header&gt;-"
+"tag kan niet worden gevonden."
 
 #: inc/import/parser/class.ParserFITLOGSingle.php:42
 msgid ""
 "Given XML object is not from SportTracks. &lt;Duration&gt;-tag could not be "
 "located."
 msgstr ""
+"Het XML object is niet van SportTracks. &lt;Duration&gt;-tag kan niet worden "
+"gevonden."
 
 #: inc/import/parser/class.ParserFITSingle.php:165
 msgid "FIT file is not specified as activity."
-msgstr ""
+msgstr "FIT bestand niet is opgegeven als activiteit."
 
 #: inc/import/class.MultiImporterFormular.php:57
 msgid "Choose activities"
-msgstr ""
+msgstr "Kies activiteiten"
 
 #: inc/import/class.MultiImporterFormular.php:62
 msgid "Import selected activities"
-msgstr ""
+msgstr "Geselecteerde activiteiten importeren"
 
 #: inc/import/class.MultiImporterFormular.php:73
 #, php-format
 msgid "Found %s activities."
-msgstr ""
+msgstr "%s activiteiten gevonden."
 
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:104 call/call.garminCommunicator.php:121
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "Import"
-msgstr ""
+msgstr "Importeren"
 
 #: inc/import/class.MultiImporterFormular.php:137
 msgid "Show multi editor afterwards"
-msgstr ""
+msgstr "Toon hierna de multieditor"
 
 #: inc/import/class.ImporterWindowTabCommunicator.php:26
 msgid "Garmin Communicator"
-msgstr ""
+msgstr "Garmin Communicator"
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:6
 msgid "kml-files from TomTom are supported."
-msgstr ""
+msgstr "KML-bestanden van TomTom worden ondersteund."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:44
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:66
 msgid "This file is not supported. Supported producers of kml-files: "
 msgstr ""
+"Dit bestand wordt niet ondersteund. Deze makers van kml-bestanden worden "
+"ondersteund: "
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
 msgstr ""
+"HRM - en gpx-files met dezelfde naam zullen automatisch worden gecombineerd."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:79
 msgid "No activities could be found."
-msgstr ""
+msgstr "Er kunnen geen activiteiten gevonden worden."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:102
 msgid ""
 "There is no parser in ImporterFiletype. Maybe this filetype is not supported."
 msgstr ""
+"Er is geen parser in ImporterFiletype. Wellicht wordt dit bestandstype niet "
+"ondersteund."
 
 #: inc/import/filetypes/class.ImporterFiletypeSLF.php:56
 msgid "This file is not supported. Supported producers of slf-files: "
 msgstr ""
+"Dit bestand wordt niet ondersteund. Deze varianten van slf-bestanden worden "
+"ondersteund: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
-msgstr ""
+msgstr "XML-bestanden van Polar, Suunto en RunningAHEAD worden ondersteund."
 
 #: inc/import/class.ImporterWindow.php:216
 msgid "Add workout"
-msgstr ""
+msgstr "Training toevoegen"
 
 #: inc/import/class.MultiImporter.php:76
 msgid "The activities have been successfully imported."
-msgstr ""
+msgstr "De activiteiten zijn succesvol geïmporteerd."
 
 #: inc/import/class.ImporterWindowTabUpload.php:38
 msgid "Upload"
-msgstr ""
+msgstr "Upload"
 
 #: inc/export/class.ExporterWindow.php:58
 msgid "Export your training"
-msgstr ""
+msgstr "Training exporteren"
 
 #: inc/export/class.ExporterWindow.php:77 call/call.Plugin.uninstall.php:27
 #: call/call.Plugin.install.php:35
 msgid "back to list"
-msgstr ""
+msgstr "terug naar de lijst"
 
 #: inc/export/class.ExporterWindow.php:102
 msgid "The training is currently <strong>private</strong>"
-msgstr ""
+msgstr "Deze training is momenteel <strong>privé</strong>"
 
 #: inc/export/class.ExporterWindow.php:103
 msgid "make it public"
-msgstr ""
+msgstr "openbaar maken"
 
 #: inc/export/class.ExporterWindow.php:105
 msgid "The training is currently <strong>public</strong>"
-msgstr ""
+msgstr "De training is momenteel <strong>openbaar</strong>"
 
 #: inc/export/class.ExporterWindow.php:106
 msgid "make it private"
-msgstr ""
+msgstr "privé maken"
 
 #: inc/export/class.ExporterWindow.php:115
 #, php-format
 msgid "Up to now you have exported <strong>%d</strong> trainings."
-msgstr ""
+msgstr "Tot nu toe zijn er <strong>%d</strong> trainingen geëxporteerd."
 
 #: inc/export/class.ExporterWindow.php:122
 msgid "The file has been removed."
-msgstr ""
+msgstr "Het bestand is verwijderd."
 
 #: inc/export/class.ExporterWindow.php:131
 msgid "You did not export any training."
-msgstr ""
+msgstr "U heeft geen enkele training geëxporteerd."
 
 #: inc/export/class.ExporterWindow.php:136
 msgid "delete"
-msgstr ""
+msgstr "verwijderen"
 
 #: inc/export/class.ExporterAbstractSocialShare.php:36
 msgid "I did sport: "
-msgstr ""
+msgstr "Ik heb zojuist deze sport voltooid: "
 
 #: inc/export/class.ExporterAbstractSocialShare.php:40
 msgid " in "
-msgstr ""
+msgstr " in "
 
 #: inc/export/class.ExporterAbstractSocialShare.php:79
 msgid "Runalyze is running on a local server."
-msgstr ""
+msgstr "Runalyze wordt uitgevoerd op een lokale server."
 
 #: inc/export/class.ExporterAbstractSocialShare.php:80
 msgid ""
 "Linking your activity in a social network does not make sense - nobody will "
 "be able to see your activity."
 msgstr ""
+"Uw activiteiten delen op een sociaal netwerk heeft geen zin, omdat niemand "
+"deze zal kunnen zien."
 
 #: inc/export/class.ExporterAbstractFile.php:66
 msgid "Your activity has been exported."
-msgstr ""
+msgstr "Uw activiteit is geëxporteerd."
 
 #: inc/export/class.ExporterAbstractFile.php:68
 msgid "Download"
-msgstr ""
+msgstr "Downloaden"
 
 #: inc/export/class.ExporterFactory.php:39
 msgid "The chosen exporter could not be located."
-msgstr ""
+msgstr "De gekozen exportvariant kon niet worden gevonden."
 
 #: inc/export/class.ExporterType.php:36
 msgid "Export as file"
-msgstr ""
+msgstr "Exporteren als bestand"
 
 #: inc/export/class.ExporterType.php:39
 msgid "Export to social media"
-msgstr ""
+msgstr "Exporteren naar sociale media"
 
 #: inc/export/class.ExporterType.php:43
 msgid "Export as code"
-msgstr ""
+msgstr "Exporteren als code"
 
 #: inc/export/types/class.ExporterGPX.php:42
 msgid "The training does not contain gps-data and cannot be saved as gpx-file."
 msgstr ""
+"De training bevat geen gps-gegevens en kan niet worden opgeslagen als gpx-"
+"bestand."
 
 #: inc/export/types/class.ExporterIFrame.php:35
 #: inc/export/types/class.ExporterHTML.php:22
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #: inc/export/types/class.ExporterIFrame.php:39
 #: inc/export/types/class.ExporterHTML.php:26
 msgid "HTML-Code"
-msgstr ""
+msgstr "HTML-Code"
 
 #: inc/export/types/class.ExporterIFrame.php:42
 msgid ""
 "Runalyze runs on a local server. Only people in your local network will be "
 "able to see the training."
 msgstr ""
+"Runalyze wordt uitgevoerd op een lokale server. Alleen mensen in uw eigen "
+"netwerk kunnen deze training zien."
 
 #: inc/export/types/class.ExporterIFrame.php:46
 #: inc/export/types/class.ExporterHTML.php:28
 msgid "Add this code to your blog/website."
-msgstr ""
+msgstr "Voeg deze code toe aan uw blog/website."
 
 #: inc/export/types/class.ExporterIFrame.php:48
 msgid "Width"
