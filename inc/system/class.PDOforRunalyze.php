@@ -82,8 +82,13 @@ class PDOforRunalyze extends PDO {
 	public function fetchByID($table, $ID) {
 		$table = str_replace(PREFIX, '', $table);
 
-		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
-	}
+		if ($table == 'account' || $table == 'plugin_conf') {
+			return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
+		}
+
+		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();	
+                
+        }
 
 	/**
 	 * Fetch row by id
@@ -143,7 +148,7 @@ class PDOforRunalyze extends PDO {
 		$table = str_replace(PREFIX, '', $table);
 
 		// TODO: TEST IT!
-		if ($table != 'account' && $table != 'plugin_conf' && !in_array('accountid', $columns)) {
+		if ($table != 'account' && $table != 'plugin_conf' && $table != 'equipment_sport' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
 			$values[]  = $this->accountID;
 		}

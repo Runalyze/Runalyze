@@ -542,6 +542,22 @@ class AccountHandler {
 
 		$DB->insert('conf', $columns, array('general','MAINSPORT', self::$SPECIAL_KEYS['MAIN_SPORT_ID'], $accountId));
 		$DB->insert('conf', $columns, array('general','RUNNINGSPORT', self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], $accountId));
-		$DB->insert('conf', $columns, array('general','TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
+		//$DB->insert('conf', $columns, array('general','TYPE_ID_RACE', self::$SPECIAL_KEYS['TYPE_ID_RACE'], $accountId));
+                
+                //Connect equipment type and sport
+                $DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_SHOES_ID']));
+                $DB->insert('equipment_sport', array('sportid', 'equipment_typeid'), array(self::$SPECIAL_KEYS['RUNNING_SPORT_ID'], self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID']));
+                
+                // Add standard clothes equipment
+                $eqColumns = array('name', 'typeid', 'accountid');
+                $DB->insert('equipment', $eqColumns, array(__('long sleeve'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('T-shirt'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('singlet'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('jacket'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('long pants'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('shorts'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('gloves'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+                $DB->insert('equipment', $eqColumns, array(__('hat'), self::$SPECIAL_KEYS['EQUIPMENT_CLOTHES_ID'], $accountId));
+
 	}
 }
