@@ -182,7 +182,7 @@ class AdminView {
 		$Fieldset->addField( new FormularInput('SMTP_PORT', __('SMTP: port')) );
 		$Fieldset->addField( new FormularInput('SMTP_SECURITY', __('SMTP: encryption')) );
 		$Fieldset->addField( new FormularInput('SMTP_USERNAME', __('SMTP: username')) );
-		$Fieldset->addField( new FormularInput('SMTP_PASSWORD', __('SMTP: password')) );
+		$Fieldset->addField( new FormularInputPassword('SMTP_PASSWORD', __('SMTP: password')) );
 		$Fieldset->addField( new FormularInput('OPENWEATHERMAP_API_KEY', Ajax::tooltip(__('OpenWeatherMap API-Key'), __('Loading weather data requires an api key, see openweathermap.org/appid'))) );
 		$Fieldset->addField( new FormularInput('NOKIA_HERE_APPID', Ajax::tooltip(__('Nokia/Here App-ID'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
 		$Fieldset->addField( new FormularInput('NOKIA_HERE_TOKEN', Ajax::tooltip(__('Nokia/Here Token'), __('Nokia maps require an app-id/-token, see developer.here.com'))) );
