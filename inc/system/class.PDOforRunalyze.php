@@ -90,6 +90,7 @@ class PDOforRunalyze extends PDO {
                 
         }
 
+
 	/**
 	 * Fetch row by id
 	 * @param string $table without PREFIX

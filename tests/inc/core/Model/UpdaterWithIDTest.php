@@ -8,6 +8,9 @@ class UpdaterForObjectWithID_MockTester extends UpdaterWithID {
 	public function table() {
 		return 'table';
 	}
+        protected function keys() {
+            return array('foo');
+        }
 }
 class UpdaterObjectWithID_MockTester extends ObjectWithID {
 	public function properties() {

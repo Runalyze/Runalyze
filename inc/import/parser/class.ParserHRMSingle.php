@@ -14,6 +14,12 @@ use Runalyze\Activity\Duration;
  */
 class ParserHRMSingle extends ParserAbstractSingle {
 	/**
+	 * Data of 'Interval' for rr-data
+	 * @int
+	 */
+	const RR_DATA_INTERVAL = 238;
+
+	/**
 	 * Current line
 	 * @var string
 	 */
@@ -150,28 +156,32 @@ class ParserHRMSingle extends ParserAbstractSingle {
 		}
 	}
 
-	/**
-	 * Read heartrate
-	 */
 	private function readHRdata() {
 		$values = preg_split('/[\s]+/', $this->Line);
-
-		$this->totalTime += $this->recordingInterval;
-		$this->gps['time_in_s'][] = $this->totalTime;
-		$this->gps['heartrate'][] = (int)trim($values[0]);
-		$this->gps['pace'][]      = $pace = isset($values[1]) && (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
-
-		$dist = $pace > 0 ? round($this->recordingInterval/$pace, ParserAbstract::DISTANCE_PRECISION) : 0;
-		$this->gps['km'][] = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
-
-		if (count($values) > 3) {
-			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
-			$this->gps['altitude'][]  = isset($values[3]) ? round((int)trim($values[3]) * $this->distanceFactor) : 0;
-			$this->gps['power'][]     = isset($values[4]) ? (int)trim($values[4]) : 0;
-		} elseif ($this->recordsAltitude) {
-			$this->gps['altitude'][]  = isset($values[2]) ? round((int)trim($values[2]) * $this->distanceFactor) : 0;
+		if ($this->recordingInterval == self::RR_DATA_INTERVAL) {
+			$rr = (int)trim($values[0]);
+			if ($rr <= 0) {
+				return;
+			}
+			$this->totalTime += $rr/1000;
+			$this->gps['heartrate'][] = round(60000/$rr);
+			$this->gps['hrv'][] = $rr;
 		} else {
-			$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+			$this->totalTime += $this->recordingInterval;
+			$this->gps['time_in_s'][] = $this->totalTime;
+			$this->gps['heartrate'][] = (int)trim($values[0]);
+			$pace = isset($values[1]) && (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
+			$dist = $pace > 0 ? round($this->recordingInterval/$pace, ParserAbstract::DISTANCE_PRECISION) : 0;
+			$this->gps['km'][] = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
+			if (count($values) > 3) {
+				$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+				$this->gps['altitude'][]  = isset($values[3]) ? round((int)trim($values[3]) * $this->distanceFactor) : 0;
+				$this->gps['power'][]     = isset($values[4]) ? (int)trim($values[4]) : 0;
+			} elseif ($this->recordsAltitude) {
+				$this->gps['altitude'][]  = isset($values[2]) ? round((int)trim($values[2]) * $this->distanceFactor) : 0;
+			} else {
+				$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
+			}
 		}
 	}
 

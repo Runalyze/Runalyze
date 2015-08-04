@@ -110,11 +110,6 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 						$this->TrainingObject->setArrayHeartrate( $Data );
 						break;
 
-					case 'SPEED':
-						$values = array_map( array('ParserXMLpolarSingle', 'arrayMapPace'), $Data );
-						$this->TrainingObject->setArrayPace( $values );
-						break;
-
 					case 'ALTITUDE':
 						$this->TrainingObject->setArrayAltitude( $Data );
 						break;

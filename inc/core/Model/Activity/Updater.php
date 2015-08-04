@@ -92,7 +92,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allProperties()
+			Object::allDatabaseProperties()
 		);
 	}
 
@@ -229,7 +229,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			}
 		}
 	}
-
+        
 	/**
 	 * Tasks after insertion
 	 */

@@ -4,7 +4,7 @@ require_once '../class.Frontend.php';
 $Frontend = new Frontend();
 ?>
 <div class="panel-heading">
-	<h1>Runalyze</h1>
+	<h1>Runalyze v<?php echo RUNALYZE_VERSION; ?></h1>
 </div>
 <div class="panel-content">
 	<p class="text">

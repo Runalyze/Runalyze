@@ -271,6 +271,22 @@ class Dataview {
 			return new StrideLength($Activity->strideLength());
 		});
 	}
+        
+        /**
+         * Get total strokes
+         * @return \Runalyze\Activity\TotalStrokes
+         */
+        public function totalStrokes() {
+            return $this->object($this->totalStrokes());
+        }
+        
+        /**
+         * Get swolf
+         * @return \Runalyze\Activity\Swolf
+         */
+        public function swolf() {
+            return $this->object($this->swolf());
+        }
 
 	/**
 	 * Get string for displaying colored trimp

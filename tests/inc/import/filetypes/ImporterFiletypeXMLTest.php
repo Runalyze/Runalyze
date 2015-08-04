@@ -85,7 +85,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 
 		$this->assertEquals( array_fill(0, 20, '1.00'), $this->object->object()->Splits()->distancesAsArray() );
@@ -101,7 +100,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 
 		$size = count($this->object->object()->getArrayHeartrate());
 
-		$this->assertEquals($size, count($this->object->object()->getArrayPace()));
 		$this->assertEquals($size, count($this->object->object()->getArrayAltitude()));
 		$this->assertEquals($size, count($this->object->object()->getArrayCadence()));
 	}
@@ -201,7 +199,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 
@@ -232,7 +229,6 @@ class ImporterFiletypeXMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
 		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 

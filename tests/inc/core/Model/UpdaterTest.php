@@ -11,6 +11,9 @@ class UpdaterForObject_MockTester extends Updater {
 	public function where() {
 		return '`key`="1"';
 	}
+        protected function keys() {
+            return array('foo','bar');
+        }
 }
 class UpdaterObject_MockTester extends Object {
 	public function properties() {

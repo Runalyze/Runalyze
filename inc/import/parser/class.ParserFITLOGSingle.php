@@ -47,7 +47,11 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML['StartTime']) );
-		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
+		
+		if (!empty($this->XML['categoryName']))
+			$this->guessSportID( (string)$this->XML['categoryName'] );
+		else
+			$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->Duration['TotalSeconds']))
 			$this->TrainingObject->setTimeInSeconds(round((double)$this->XML->Duration['TotalSeconds']));
@@ -100,7 +104,6 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 
 		$this->gps['time_in_s'][] = (int)$Point['tm'];
 		$this->gps['km'][]        = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
-		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['latitude'][]  = $lat;
 		$this->gps['longitude'][] = $lon;
 		$this->gps['altitude'][]  = (!empty($Point['ele'])) ? (int)$Point['ele'] : 0;

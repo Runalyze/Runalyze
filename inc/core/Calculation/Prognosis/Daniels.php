@@ -1,15 +1,18 @@
 <?php
 /**
- * This file contains class::RunningPrognosisDaniels
- * @package Runalyze\Calculations\Prognosis
+ * This file contains class::Daniels
+ * @package Runalyze\Calculation\Prognosis
  */
 
+namespace Runalyze\Calculation\Prognosis;
+
+use BasicEndurance;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\Math\Bisection;
 use Runalyze\Configuration;
 
 /**
- * Class: RunningPrognosisDaniels
+ * Prognosis by Jack Daniels
  * 
  * Competition prediction based on "Die Laufformel" by Jack Daniels.
  * See page 52/53 for a table.
@@ -18,9 +21,9 @@ use Runalyze\Configuration;
  * This adjustment is NOT based on Jack Daniels' formulas.
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations\Prognosis
+ * @package Runalyze\Calculation\Prognosis
  */
-class RunningPrognosisDaniels extends RunningPrognosisStrategy {
+class Daniels extends AbstractStrategy {
 	/**
 	 * VDOT
 	 * @var float
@@ -127,7 +130,7 @@ class RunningPrognosisDaniels extends RunningPrognosisStrategy {
 	 * 
 	 * This method doesn't care if the strategy uses an adjusted VDOT or not.
 	 * 
-	 * @see RunningPrognosisDaniels::getAdjustmentFactor()
+	 * @see self::getAdjustmentFactor()
 	 * @param float $distance distance in km
 	 * @return float factor
 	 */

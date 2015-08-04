@@ -4,7 +4,7 @@
 @headline-logo-font-size:				20px;
 @headline-logo-font-weight:				200;
 @headline-logo-color:					#999;
-@headline-logo-margin:					4px 25px;
+@headline-logo-margin:					5px 25px 5px 5px;
 @headline-tab-color:					#999;
 @headline-tab-color-hover:				#eee;
 @headline-tab-margin:					4px 18px;
@@ -31,14 +31,6 @@ body {
 	-webkit-background-clip: padding-box;
     background-clip: padding-box;
 
-	.logo {
-		color: @headline-logo-color !important;
-		font-size: @headline-logo-font-size;
-		font-weight: @headline-logo-font-weight;
-		margin: @headline-logo-margin;
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-	}
-
 	.tab {
 		display: block;
 		float: left;
@@ -54,4 +46,16 @@ body {
 			color: @headline-tab-color-hover;
 		}
 	}
+
+	.logo {
+		margin: @headline-logo-margin;
+		text-indent: -9999px;
+		background: url(../../web/assets/images/runalyze-header-swoosh.png) no-repeat center center;
+		width: 184px;
+		height: 20px;
+	}
+}
+
+#menu-link {
+	display: none;
 }

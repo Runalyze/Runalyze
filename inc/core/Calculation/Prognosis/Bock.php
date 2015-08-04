@@ -1,10 +1,13 @@
 <?php
 /**
- * This file contains class::RunningPrognosisBock
- * @package Runalyze\Calculations\Prognosis
+ * This file contains class::Bock
+ * @package Runalyze\Calculation\Prognosis
  */
+
+namespace Runalyze\Calculation\Prognosis;
+
 /**
- * Class: RunningPrognosisBock
+ * Prognosis by Robert Bock
  * 
  * Competition prediction based on CPP method by Robert Bock.
  * CPP stands for 'Competitive Performance Predictor'.
@@ -12,9 +15,9 @@
  * @see http://www.robert-bock.de/Sport_0/lauf_7/cpp/cpp.html
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations\Prognosis
+ * @package Runalyze\Calculation\Prognosis
  */
-class RunningPrognosisBock extends RunningPrognosisStrategy {
+class Bock extends AbstractStrategy {
 	/**
 	 * Const K
 	 * @var float 

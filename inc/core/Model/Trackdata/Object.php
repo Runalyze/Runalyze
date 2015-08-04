@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Trackdata;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Activity\PaceCalculator;
 
 /**
  * Trackdata object
@@ -93,14 +94,27 @@ class Object extends Model\Object implements Model\Loopable {
 	protected $TimeHasBeenRemoved = false;
 
 	/**
+	 * Flag: ensure arrays to be equally sized
+	 * @var bool
+	 */
+	protected $checkArraySizes = true;
+
+	/**
+	 * Clone object
+	 */
+	public function __clone() {
+		$this->cloneInternalObjects();
+	}
+
+	/**
 	 * Construct
 	 * @param array $data
 	 */
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
 
-		$this->checkArraySizes();
-		$this->readPauses();
+		$this->calculatePaceArray();
+ 		$this->readPauses();
 	}
 
 	/**
@@ -169,15 +183,14 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
-	 * All properties
+	 * All databaseproperties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::TIME,
 			self::DISTANCE,
-			self::PACE,
 			self::HEARTRATE,
 			self::CADENCE,
 			self::POWER,
@@ -193,7 +206,11 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @return array
 	 */
 	public function properties() {
-		return static::allProperties();
+		return array_merge(array(
+				self::PACE
+			),
+			static::allDatabaseProperties() 
+		);
 	}
 
 	/**
@@ -214,7 +231,6 @@ class Object extends Model\Object implements Model\Loopable {
 		switch ($key) {
 			case self::TIME:
 			case self::DISTANCE:
-			case self::PACE:
 			case self::HEARTRATE:
 			case self::CADENCE:
 			case self::POWER:
@@ -226,6 +242,29 @@ class Object extends Model\Object implements Model\Loopable {
 		}
 
 		return false;
+	}
+        
+	/**
+	 * Is not in Database?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function notInDatabase($key) {
+		switch ($key) {
+			case self::PACE:
+				return false;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Ignore a key while checking for emptiness
+	 * @param enum $key
+	 * @return boolean
+	 */
+	protected function ignoreNonEmptyValue($key) {
+		return ($key == self::ACTIVITYID);
 	}
 
 	/**
@@ -248,14 +287,6 @@ class Object extends Model\Object implements Model\Loopable {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Number of points
-	 * @return int
-	 */
-	public function num() {
-		return $this->numberOfPoints;
 	}
 
 	/**
@@ -384,5 +415,15 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function hasPauses() {
 		return !$this->Pauses->isEmpty();
+	}
+        
+	/*
+	 * Calculate pace array 
+	 */
+	protected function calculatePaceArray() {
+		$PaceCalculator = new PaceCalculator($this);
+		$PaceCalculator->calculate();
+
+		$this->set(self::PACE, $PaceCalculator->result());
 	}
 }

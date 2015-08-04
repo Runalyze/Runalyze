@@ -54,6 +54,7 @@ class TrainingObject extends DataObject {
 	 * @var \Cadence
 	 */
 	private $Cadence = null;
+        
 
 	/**
 	 * Pauses
@@ -144,6 +145,7 @@ class TrainingObject extends DataObject {
 	public function insert() {
 		$Route = $this->newRouteObject();
 		$Trackdata = $this->newTrackdataObject();
+                $Swimdata = $this->newSwimObject();
 
 		if ($Route->name() != '' || $Route->hasPositionData() || $Route->hasElevations()) {
 			$InserterRoute = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
@@ -163,16 +165,37 @@ class TrainingObject extends DataObject {
 		$InserterActivity->setAccountID( SessionAccountHandler::getId() );
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
+                $InserterActivity->setSwimdata(($Swimdata));
+                
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
 
-		if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayPace() || $this->hasArrayHeartrate()) {
+		if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayHeartrate()) {
 			$Trackdata->set(Runalyze\Model\Trackdata\Object::ACTIVITYID, $this->id());
 			$InserterTrack = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
 			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
 			$InserterTrack->insert();
 		}
+
+                if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
+                    
+                        $Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
+                        $InserterSwim = new Runalyze\Model\Swimdata\Inserter(DB::getInstance(), $Swimdata);
+                        $InserterSwim->setAccountID( SessionAccountHandler::getId() );
+                        $InserterSwim->insert();
+                }        
+                
+
+
+		if ($this->hasArrayHRV()) {
+			$HRV = $this->newHRVObject();
+			$HRV->set(Runalyze\Model\HRV\Object::ACTIVITYID, $this->id());
+			$InserterHRV = new Runalyze\Model\HRV\Inserter(DB::getInstance(), $HRV);
+			$InserterHRV->setAccountID( SessionAccountHandler::getId() );
+			$InserterHRV->insert();
+		}
+
 	}
 
 	/**
@@ -197,13 +220,24 @@ class TrainingObject extends DataObject {
 	}
 
 	/**
+	 * @return \Runalyze\Model\Swimdata\Object
+	 */
+	protected function newSwimObject() {
+		return new Runalyze\Model\Swimdata\Object(array(
+			Runalyze\Model\Swimdata\Object::STROKE => $this->get('stroke'),
+                        Runalyze\Model\Swimdata\Object::STROKETYPE => $this->get('stroketype'),
+                        Runalyze\Model\Swimdata\Object::POOL_LENGTH => $this->get('pool_length')
+		));
+                
+	}
+        
+	/**
 	 * @return \Runalyze\Model\Trackdata\Object
 	 */
 	protected function newTrackdataObject() {
 		return new Runalyze\Model\Trackdata\Object(array(
 			Runalyze\Model\Trackdata\Object::TIME => $this->get('arr_time'),
 			Runalyze\Model\Trackdata\Object::DISTANCE => $this->get('arr_dist'),
-			Runalyze\Model\Trackdata\Object::PACE => $this->get('arr_pace'),
 			Runalyze\Model\Trackdata\Object::HEARTRATE => $this->get('arr_heart'),
 			Runalyze\Model\Trackdata\Object::CADENCE => $this->get('arr_cadence'),
 			Runalyze\Model\Trackdata\Object::POWER => $this->get('arr_power'),
@@ -211,6 +245,15 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
+		));
+	}
+
+	/**
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	protected function newHRVObject() {
+		return new Runalyze\Model\HRV\Object(array(
+			Runalyze\Model\HRV\Object::DATA => $this->get('hrv')
 		));
 	}
 
@@ -746,7 +789,54 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasComment() { return strlen($this->get('comment')) > 0; }
-
+        
+	/**
+	 * Set total strokes
+	 * @param string $totalStrokes total strokes
+	 */
+	public function setTotalStrokes($totalStrokes) { $this->set('total_strokes', $totalStrokes); }
+	/**
+	 * Get total strokes
+	 * @return string total strokes
+	 */
+	public function getTotalStrokes() { return $this->get('total_strokes'); }
+	/**
+	 * Has total strokes?
+	 * @return bool
+	 */
+	public function hasTotalStrokes() { return strlen($this->get('total_strokes')) > 0; }
+        
+	/**
+	 * Set swolf
+	 * @param string $swolf swolf
+	 */
+	public function setSwolf($swolf) { $this->set('swolf', $swolf); }
+	/**
+	 * Get swolf
+	 * @return string swolf
+	 */
+	public function getSwolf() { return $this->get('swolf'); }
+	/**
+	 * Has swolf?
+	 * @return bool
+	 */
+	public function hasSwolf() { return strlen($this->get('swolf')) > 0; }
+        
+	/**
+	 * Set pool length
+	 * @param string $poollength pool length
+	 */
+	public function setPoolLength($poollength) { $this->set('pool_length', $poollength); }
+	/**
+	 * Get pool length
+	 * @return string pool length
+	 */
+	public function getPoolLength() { return $this->get('pool_length'); }
+	/**
+	 * Has pool length?
+	 * @return bool
+	 */
+	public function hasPoolLength() { return strlen($this->get('pool_length')) > 0; }    
 
 	/**
 	 * Get partner
@@ -754,13 +844,11 @@ class TrainingObject extends DataObject {
 	 */
 	public function getPartner() { return $this->get('partner'); }
 
-
 	/**
 	 * Was with running abc?
 	 * @return bool True if this training was with 'running abc'
 	 */
 	public function wasWithABC() { return $this->get('abc') == 1; }
-
 
 	/**
 	 * Set notes
@@ -773,39 +861,42 @@ class TrainingObject extends DataObject {
 	 */
 	public function getNotes() { return $this->get('notes'); }
 
-
 	/**
 	 * Set array for time
 	 * @param array $array array with timepoints
 	 */
 	public function setArrayTime($array) { $this->setArrayFor('arr_time', $array); }
+        
 	/**
 	 * Get array for time
 	 * @return array array with timepoints
 	 */
 	public function getArrayTime() { return $this->getArrayFor('arr_time'); }
+        
 	/**
 	 * Get last time point
 	 * @return int
 	 */
 	public function getArrayTimeLastPoint() { return $this->getLastArrayPoint('arr_time'); }
+        
 	/**
 	 * Has array time?
 	 * @return bool
 	 */
 	public function hasArrayTime() { return strlen($this->get('arr_time')) > 0; }
 
-
 	/**
 	 * Set array for latitude
 	 * @param array $array
 	 */
 	public function setArrayLatitude($array) { $this->setArrayFor('arr_lat', $array); }
+        
 	/**
 	 * Get array for latitude
 	 * @return array
 	 */
 	public function getArrayLatitude() { return $this->getArrayFor('arr_lat'); }
+        
 	/**
 	 * Has array for latitude?
 	 * @return bool
@@ -828,8 +919,45 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayLongitude() { return strlen($this->get('arr_lon')) > 0; }
-
-
+        
+        
+	/**
+	 * Set array for swim stroke
+	 * @param array $data
+	 */
+	public function setArrayStroke(array $data) { $this->setArrayFor('stroke', $data); }
+        
+	/**
+	 * Get array for swim stroke
+	 * @return array
+	 */
+	public function getArrayStroke() { return $this->getArrayFor('stroke'); }
+        
+	/**
+	 * Has array for swim stroke?
+	 * @return bool
+	 */
+	public function hasArrayStroke() { return strlen($this->get('stroke')) > 0; }
+        
+        
+	/**
+	 * Set array for swim stroke type
+	 * @param array $data
+	 */
+	public function setArrayStrokeType(array $data) { $this->setArrayFor('stroketype', $data); }
+        
+        /**
+	 * Get array for swim stroke type
+	 * @return array
+	 */
+	public function getArrayStrokeType() { return $this->getArrayFor('stroketype'); }
+        
+	/**
+	 * Has array for swim stroke type?
+	 * @return bool
+	 */
+	public function hasArrayStrokeType() { return strlen($this->get('stroketype')) > 0; }
+        
 	/**
 	 * Has position data?
 	 * @return bool True if latitude and longitude arrays are set.
@@ -1031,6 +1159,23 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
+
+	
+	/**
+	 * Set array for heart rate variability
+	 * @param array $data
+	 */
+	public function setArrayHRV(array $data) { $this->setArrayFor('hrv', $data); }
+	/**
+	 * Get array for vertical oscillation
+	 * @return array
+	 */
+	public function getArrayHRV() { return $this->getArrayFor('hrv'); }
+	/**
+	 * Has array for vertical oscillation?
+	 * @return bool
+	 */
+	public function hasArrayHRV() { return ($this->get('hrv') != ''); }
 
 
 	/**

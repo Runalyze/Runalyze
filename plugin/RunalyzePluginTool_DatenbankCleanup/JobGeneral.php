@@ -107,7 +107,7 @@ class JobGeneral extends Job {
 		$oldValue = Configuration::Data()->vdotShape();
 		$newValue = Configuration::Data()->recalculateVDOTshape();
 
-		$this->addSuccessMessage(__('Vdot shape'), number_format($oldValue, 1), number_format($newValue, 1));
+		$this->addSuccessMessage(__('VDOT shape'), number_format($oldValue, 1), number_format($newValue, 1));
 	}
 
 	/**

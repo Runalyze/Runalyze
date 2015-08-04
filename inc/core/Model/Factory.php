@@ -66,6 +66,17 @@ class Factory {
 			$this->arrayByPK('trackdata', $activityid)
 		);
 	}
+        
+	/**
+	 * Swimdata
+	 * @param int $activityid
+	 * @return \Runalyze\Model\Swimdata\Object
+	 */
+	public function swimdata($activityid) {
+		return new Swimdata\Object(
+			$this->arrayByPK('swimdata', $activityid)
+		);
+	}
 
 	/**
 	 * Route
@@ -75,6 +86,17 @@ class Factory {
 	public function route($routeid) {
 		return new Route\Object(
 			$this->arrayByPK('route', $routeid)
+		);
+	}
+
+	/**
+	 * HRV
+	 * @param int $activityid
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	public function hrv($activityid) {
+		return new HRV\Object(
+			$this->arrayByPK('hrv', $activityid)
 		);
 	}
 
@@ -161,6 +183,9 @@ class Factory {
 	protected function primaryKey($tablename) {
 		switch ($tablename) {
 			case 'trackdata':
+			case 'hrv':
+				return 'activityid';
+			case 'swimdata':
 				return 'activityid';
 		}
 

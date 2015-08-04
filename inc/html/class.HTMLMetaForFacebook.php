@@ -49,13 +49,15 @@ class HTMLMetaForFacebook {
 	/**
 	 * Constructor
 	 */
-	public function __construct() {
-		if ($this->canFindActivityID()) {
+	public function __construct(Context $context = null) {
+		if (NULL !== $context) {
+			$this->Context = $context;
+		} elseif ($this->canFindActivityID()) {
 			$this->setContext();
+		}
 
-			if ($this->activityIsValid()) {
-				$this->setProperties();
-			}
+		if ($this->activityIsValid()) {
+			$this->setProperties();
 		}
 	}
 

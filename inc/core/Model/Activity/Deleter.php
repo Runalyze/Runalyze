@@ -45,6 +45,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 */
 	protected function after() {
 		$this->deleteTrackdata();
+		$this->deleteSwimdata();
 		$this->deleteRoute();
 
 		$this->updateEquipment();
@@ -57,7 +58,22 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Delete trackdata
 	 */
 	protected function deleteTrackdata() {
-		$this->PDO->exec('DELETE FROM `'.PREFIX.'trackdata` WHERE `activityid`="'.$this->Object->id().'" LIMIT 1');
+		$Deleter = new Model\Trackdata\Deleter($this->PDO, new Model\Trackdata\Object(array(
+			'activityid' => $this->Object->id()
+		)));
+		$Deleter->setAccountID($this->AccountID);
+		$Deleter->delete();
+	}
+
+	/**
+	 * Delete trackdata
+	 */
+	protected function deleteSwimdata() {
+		$Deleter = new Model\Swimdata\Deleter($this->PDO, new Model\Swimdata\Object(array(
+			'activityid' => $this->Object->id()
+		)));
+		$Deleter->setAccountID($this->AccountID);
+		$Deleter->delete();
 	}
 
 	/**
@@ -67,7 +83,11 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 		if ($this->Object->get(Model\Activity\Object::ROUTEID) > 0) {
 			// TODO: check if route was uniquely used
 			// For the moment, routes are created uniquely, so that's right.
-			$this->PDO->exec('DELETE FROM `'.PREFIX.'route` WHERE `id`="'.$this->Object->get(Model\Activity\Object::ROUTEID).'" LIMIT 1');
+			$Deleter = new Model\Route\Deleter($this->PDO, new Model\Route\Object(array(
+				'id' => $this->Object->get(Model\Activity\Object::ROUTEID)
+			)));
+			$Deleter->setAccountID($this->AccountID);
+			$Deleter->delete();
 		}
 	}
 

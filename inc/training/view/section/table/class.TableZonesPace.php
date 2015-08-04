@@ -54,7 +54,7 @@ class TableZonesPace extends TableZonesAbstract {
 					'zone'     => $paceInSeconds == 0 ? __('faster') : '&gt; '.$Pace->valueWithAppendix(),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
-					'average'  => $HR->string()
+					'average'  => $HR->asBPM() > 0 ? $HR->string() : '-'
 				);
 			}
 		}
@@ -71,12 +71,13 @@ class TableZonesPace extends TableZonesAbstract {
 		$SmoothTrackdata = clone $this->Context->trackdata();
 		$Smoother = new PaceSmoother($SmoothTrackdata, true);
 		$SmoothTrackdata->set(Trackdata\Object::PACE, $Smoother->smooth(self::STEP_SIZE, PaceSmoother::MODE_STEP));
+		$hasHR = $this->Context->trackdata()->has(Trackdata\Object::HEARTRATE);
 
 		$Distribution = new TimeSeriesForTrackdata(
 			$SmoothTrackdata,
 			Trackdata\Object::PACE,
 			array(Trackdata\Object::DISTANCE),
-			array(Trackdata\Object::HEARTRATE)
+			$hasHR ? array(Trackdata\Object::HEARTRATE) : array()
 		);
 		$Data = $Distribution->data();
 
@@ -87,12 +88,12 @@ class TableZonesPace extends TableZonesAbstract {
 				$Zones[$pace] = array(
 					'time' => $seconds,
 					'distance' => $Data[$paceInSeconds][Trackdata\Object::DISTANCE],
-					'hr' => $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds,
+					'hr' => $hasHR ? $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds : 0,
 				);
 			} else {
 				$Zones[$pace]['time'] += $seconds;
 				$Zones[$pace]['distance'] += $Data[$paceInSeconds][Trackdata\Object::DISTANCE];
-				$Zones[$pace]['hr'] += $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds;
+				$Zones[$pace]['hr'] += $hasHR ? $Data[$paceInSeconds][Trackdata\Object::HEARTRATE] * $seconds : 0;
 			}
 		}
 

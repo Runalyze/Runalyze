@@ -63,7 +63,6 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 		$this->assertTrue( $this->object->object()->hasPositionData() );
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 	}
 
@@ -173,6 +172,24 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals($pause[0], $this->object->object()->Pauses()->at($i)->time());
 			$this->assertEquals($pause[1], $this->object->object()->Pauses()->at($i)->duration());
 		}
+	}
+
+	/**
+	 * Test: standard route
+	 * Filename: "Route-only.gpx" 
+	 */
+	public function testStandardGPXroute() {
+		$this->object->parseFile('../tests/testfiles/gpx/Route-only.gpx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals(0.4, $this->object->object()->getDistance(), '', 0.05);
+
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 	}
 
 }

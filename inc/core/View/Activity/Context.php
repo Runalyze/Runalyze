@@ -10,6 +10,7 @@ use Request;
 use Runalyze\Configuration;
 use Runalyze\Model\Factory;
 use Runalyze\Model\Activity;
+use Runalyze\Model\Trackdata;
 
 /**
  * Activity context
@@ -27,11 +28,21 @@ class Context {
 	 * @var \Runalyze\Model\Trackdata\Object
 	 */
 	protected $Trackdata;
+        
+	/**
+	 * @var \Runalyze\Model\Swimdata\Object
+	 */
+	protected $Swimdata;
 
 	/**
 	 * @var \Runalyze\Model\Route\Object
 	 */
 	protected $Route;
+
+	/**
+	 * @var \Runalyze\Model\HRV\Object
+	 */
+	protected $HRV;
 
 	/**
 	 * @var \Runalyze\Model\Sport\Object
@@ -53,9 +64,15 @@ class Context {
 
 		$this->Activity = $Factory->activity((int)$activityID);
 		$this->Trackdata = $Factory->trackdata((int)$activityID);
+		$this->Swimdata = $Factory->swimdata((int)$activityID);
 		$this->Route = $this->Activity->get(Activity\Object::ROUTEID) ? $Factory->route($this->Activity->get(Activity\Object::ROUTEID)) : null;
+		$this->HRV = $Factory->hrv((int)$activityID);
 		$this->Sport = $Factory->sport($this->Activity->sportid());
+		
+		$this->Swimdata->fillDistanceArray($this->Trackdata);
+		$this->Swimdata->fillSwolfArray($this->Trackdata);
 		$this->Dataview = new Dataview($this->Activity);
+
 	}
 
 	/**
@@ -70,6 +87,20 @@ class Context {
 	 */
 	public function trackdata() {
 		return $this->Trackdata;
+	}
+        
+	/**
+	 * @return \Runalyze\Model\Swimdata\Object
+	 */
+	public function swimdata() {
+		return $this->Swimdata;
+	}
+
+	/**
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	public function hrv() {
+		return $this->HRV;
 	}
 
 	/**
@@ -97,7 +128,7 @@ class Context {
 	 * @return boolean
 	 */
 	public function hasTrackdata() {
-		return !is_null($this->Trackdata);
+		return !$this->Trackdata->isEmpty();
 	}
 
 	/**
@@ -105,6 +136,20 @@ class Context {
 	 */
 	public function hasRoute() {
 		return !is_null($this->Route);
+	}
+        
+	/**
+	 * @return boolean
+	 */
+	public function hasSwimdata() {
+		return !is_null($this->Swimdata);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	public function hasHRV() {
+		return !$this->HRV->isEmpty();
 	}
 
 

@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Route;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Route\Calculator;
 
 /**
  * Update route in database
@@ -53,7 +54,19 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		return array_merge(array(
 				self::ACCOUNTID
 			),
-			Object::allProperties()
+			Object::allDatabaseProperties()
 		);
+	}
+
+	/**
+	 * Tasks before insertion
+	 */
+	protected function before() {
+		parent::before();
+
+		if ($this->hasChanged(Object::ELEVATIONS_ORIGINAL) || $this->hasChanged(Object::ELEVATIONS_CORRECTED)) {
+			$Calculator = new Calculator($this->NewObject);
+			$Calculator->calculateElevation();
+		}
 	}
 }

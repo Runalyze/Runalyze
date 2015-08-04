@@ -36,16 +36,19 @@ class TrainingInputSplits extends FormularField {
 	 * @return string
 	 */
 	protected function getInputs() {
-		$Inputs = '';
 		$Splits = new Splits( Splits::$FROM_POST );
+		$Inputs = '<ol class="splits">';
 
 		foreach ($Splits->asArray() as $split)
 			$Inputs .= $this->getInnerDivForSplit($split);
 
-		$Inputs .= '<p id="addSplitsLink"><span class="link" onclick="$e=$(this);$($(\'#defaultInputSplit\').val()).insertBefore($e.parent());">'.__('add new lap').'</span></p>';
-		$Inputs .= '<p><span class="link" onclick="$(\'input[name=\\\'splits[km][]\\\']\').each(function(e){$(this).val((Math.round(10*$(this).val())/10).toFixed(2));});">'.__('round for 100m').'</span></p>';
-		$Inputs .= '<p><span class="link" onclick="sumSplitsToTotal();">'.__('apply as total distance').'</span></p>';
-		$Inputs .= '<p><span class="link" onclick="allSplitsActive();">'.__('all active').'</span> - <span class="link" onclick="allSplitsRest();">'.__('all resting').'</span></p>';
+		$Inputs .= '</ol>';
+		$Inputs .= '<p id="addSplitsLink"><span class="link add-split">'.__('add new lap').'</span></p>';
+		$Inputs .= '<p><span class="link round-splits">'.__('round for 100m').'</span></p>';
+		$Inputs .= '<p><span class="link sum-splits">'.__('apply as total distance').'</span></p>';
+		$Inputs .= '<p><span class="link active-splits">'.__('all active').'</span> - <span class="link rest-splits">'.__('all resting').'</span></p>';
+		$Inputs .= '<p>'.__('alternating:').' <span class="link alternate-splits-rest">'.__('first resting').'</span>';
+		$Inputs .= ' - <span class="link alternate-splits-active">'.__('first active').'</span></p>';
 		$Inputs .= '<textarea id="defaultInputSplit" class="hide">'.HTML::textareaTransform($this->getInnerDivForSplit()).'</textarea>';
 
 		return $Inputs;
@@ -63,7 +66,7 @@ class TrainingInputSplits extends FormularField {
 		$Code .= $this->getActiveInputCode($split['active']);
 		$Code .= $this->getSpanForLinks();
 
-		return '<div>'.$Code.'</div>';
+		return '<li>'.$Code.'</li>';
 	}
 
 	/**
@@ -71,7 +74,7 @@ class TrainingInputSplits extends FormularField {
 	 * @return string 
 	 */
 	protected function getSpanForLinks() {
-		$Span  = '<span class="link" onclick="$(this).parent().remove()">'.Icon::$DELETE.'</span> ';
+		$Span  = '&nbsp; <span class="link" onclick="$(this).parent().remove()">'.Icon::$DELETE.'</span> ';
 		$Span .= '<span class="link" onclick="$e=$(this);$p=$e.parent();$p.clone().insertAfter($p);">'.Icon::$PLUS.'</span>';
 
 		return $Span;
@@ -124,6 +127,23 @@ class TrainingInputSplits extends FormularField {
 		$label  = '<label>'.$this->label.'</label>';
 		$inputs = '<div id="formularSplitsContainer" class="full-size left">'.$this->getInputs().'</div>';
 
-		return $label.$inputs;
+		return $label.$inputs.$this->getJScode();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getJScode() {
+		return Ajax::wrapJSforDocumentReady(
+			'splits = $("#formularSplitsContainer");'.
+			'defaultSplit = $("#defaultInputSplit").val();'.
+			'splits.find(".add-split").click(addSplit);'.
+			'splits.find(".round-splits").click(roundSplits);'.
+			'splits.find(".sum-splits").click(sumSplitsToTotal);'.
+			'splits.find(".active-splits").click(allSplitsActive);'.
+			'splits.find(".rest-splits").click(allSplitsRest);'.
+			'splits.find(".alternate-splits-rest").click(function(){evenSplits(0);oddSplits(1);});'.
+			'splits.find(".alternate-splits-active").click(function(){evenSplits(1);oddSplits(0);});'
+		);
 	}
 }

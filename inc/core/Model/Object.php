@@ -35,11 +35,34 @@ abstract class Object {
 	protected $numberOfPoints = 0;
 
 	/**
+	 * Flag: ensure arrays to be equally sized
+	 * @var bool
+	 */
+	protected $checkArraySizes = false;
+
+	/**
 	 * Construct
 	 * @param array $data
 	 */
 	public function __construct(array $data = array()) {
 		$this->readData($data);
+
+		if ($this->checkArraySizes) {
+			$this->checkArraySizes();
+		} else {
+			$this->count();
+		}
+	}
+
+	/**
+	 * Create deep copies of internal objects
+	 */
+	protected function cloneInternalObjects() {
+		foreach ($this as $property => $value) {
+			if (is_object($value)) {
+				$this->{$property} = clone $value;
+			}
+		}
 	}
 
 	/**
@@ -57,10 +80,37 @@ abstract class Object {
 	}
 
 	/**
+	 * Count number of points
+	 */
+	protected function count() {
+		$this->numberOfPoints = 0;
+
+		foreach ($this->properties() as $key) {
+			if ($this->isArray($key)) {
+				$num = count($this->Data[$key]);
+
+				if ($num > $this->numberOfPoints) {
+					$this->numberOfPoints = $num;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Number of points
+	 * @return int
+	 */
+	public function num() {
+		return $this->numberOfPoints;
+	}
+
+	/**
 	 * Check array sizes
 	 * @throws \RuntimeException
 	 */
 	protected function checkArraySizes() {
+		$this->numberOfPoints = 0;
+
 		foreach ($this->properties() as $key) {
 			if ($this->isArray($key)) {
 				try {
@@ -94,7 +144,7 @@ abstract class Object {
 	 * @return array
 	 */
 	abstract public function properties();
-
+        
 	/**
 	 * Synchronize internal models
 	 */
@@ -111,11 +161,15 @@ abstract class Object {
 		}
 
 		foreach ($keyOrKeys as $key) {
-			if (array_key_exists($key, $this->Data) && !is_numeric($this->Data[$key])) {
-				if (is_bool($this->Data[$key])) {
-					$this->Data[$key] = (int)$this->Data[$key];
+			if (array_key_exists($key, $this->Data)) {
+				if (!is_numeric($this->Data[$key])) {
+					if (is_bool($this->Data[$key])) {
+						$this->Data[$key] = (int)$this->Data[$key];
+					} else {
+						$this->Data[$key] = $defaultValue;
+					}
 				} else {
-					$this->Data[$key] = $defaultValue;
+					$this->Data[$key] = (float)$this->Data[$key];
 				}
 			}
 		}
@@ -171,7 +225,21 @@ abstract class Object {
 		$this->Data[$key] = $value;
 
 		if ($this->isArray($key)) {
-			$this->checkArraySize(count($this->Data[$key]));
+			$this->handleNewArraySize(count($this->Data[$key]));
+		}
+	}
+
+	/**
+	 * Handle a new array size
+	 * @param int $num
+	 */
+	protected function handleNewArraySize($num) {
+		if ($num != $this->numberOfPoints) {
+			if ($this->checkArraySizes) {
+				$this->checkArraySizes();
+			} else {
+				$this->count();
+			}
 		}
 	}
 
@@ -216,6 +284,29 @@ abstract class Object {
 		}
 
 		$this->numberOfPoints = 0;
+	}
+
+	/**
+	 * Is this object empty?
+	 * @return boolean
+	 */
+	public function isEmpty() {
+		foreach ($this->properties() as $key) {
+			if (!empty($this->Data[$key]) && !$this->ignoreNonEmptyValue($key)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Ignore a key while checking for emptiness
+	 * @param enum $key
+	 * @return boolean
+	 */
+	protected function ignoreNonEmptyValue($key) {
+		return false;
 	}
 
 	/**

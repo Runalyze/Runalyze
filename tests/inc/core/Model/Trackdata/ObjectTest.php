@@ -15,7 +15,6 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::ACTIVITYID => 1,
 			Object::TIME => '20'.Object::ARRAY_SEPARATOR.'40',
 			Object::DISTANCE => '0.1'.Object::ARRAY_SEPARATOR.'0.2',
-			Object::PACE => '3:20'.Object::ARRAY_SEPARATOR.'3:20',
 			Object::HEARTRATE => '140'.Object::ARRAY_SEPARATOR.'120',
 			Object::PAUSES => $P->asString()
 		));
@@ -51,7 +50,6 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $T->activityID());
 		$this->assertEquals(array(20, 40), $T->time());
 		$this->assertEquals(array(0.1, 0.2), $T->distance());
-		$this->assertEquals(array('3:20', '3:20'), $T->pace());
 		$this->assertEquals(array(140, 120), $T->heartRate());
 
 		$this->assertEquals(2, $T->num());
@@ -180,6 +178,14 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($T->has(Object::TEMPERATURE));
 		$this->assertFalse($T->has(Object::DISTANCE));
 		$this->assertFalse($T->has(Object::HEARTRATE));
+	}
+
+	public function testEmptyWithActivityID() {
+		$T = new Object(array(
+			Object::ACTIVITYID => 42
+		));
+
+		$this->assertTrue($T->isEmpty());
 	}
 
 }

@@ -1,12 +1,13 @@
 <?php
+use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
 
-$Strategy = new RunningPrognosisDaniels;
+$Strategy = new Prognosis\Daniels();
 $Strategy->adjustVDOT(false);
 
-$Prognosis = new RunningPrognosis;
+$Prognosis = new Prognosis\Prognosis;
 $Prognosis->setStrategy($Strategy);
 ?>
 

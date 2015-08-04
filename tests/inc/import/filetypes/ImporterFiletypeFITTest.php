@@ -58,7 +58,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertFalse( $this->object->object()->hasArrayGroundContact() );
 			$this->assertFalse( $this->object->object()->hasArrayVerticalOscillation() );
@@ -93,7 +92,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 			$this->assertTrue( $this->object->object()->hasArrayGroundContact() );
@@ -132,7 +130,6 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 			$this->assertTrue( $this->object->object()->hasArrayLatitude() );
 			$this->assertTrue( $this->object->object()->hasArrayLongitude() );
-			$this->assertTrue( $this->object->object()->hasArrayPace() );
 			$this->assertTrue( $this->object->object()->hasArrayTime() );
 			$this->assertTrue( $this->object->object()->hasArrayTemperature() );
 
@@ -231,6 +228,117 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 69, $Pauses->at(0)->duration() );
 			$this->assertEquals( 100, $Pauses->at(0)->hrStart() );
 			$this->assertEquals( 69, $Pauses->at(0)->hrEnd() );
+		}
+	}
+
+	/**
+	 * Test: simple swimming file (FR910xt)
+	 * Filename: "swim-25m-lane.fit" 
+	 */
+	public function testSimpleSwimmingFile() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-25m-lane.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(2500, $this->object->object()->getPoolLength());
+			$this->assertEquals(890, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(25, $this->object->object()->getCadence());
+
+			$this->assertEquals(2116, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(2354, $this->object->object()->getElapsedTime());
+			$this->assertEquals(1.95, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayStroke());
+			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertFalse($this->object->object()->hasArrayDistance());
+
+			$timeArray = $this->object->object()->getArrayTime();
+			$this->assertNotEquals(0, $timeArray[0]);
+		}
+	}
+
+	/**
+	 * Test: simple swimming file (Fenix 3)
+	 * Filename: "swim-fenix-50m.fit" 
+	 */
+	public function testSwimmingFileFromFenix() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-fenix-50m.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fenix3', $this->object->object()->getCreator());
+			$this->assertEquals(5000, $this->object->object()->getPoolLength());
+			$this->assertEquals(1750, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(32, $this->object->object()->getCadence());
+
+			$this->assertEquals(3272, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(3817, $this->object->object()->getElapsedTime());
+			$this->assertEquals(2.05, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayStroke());
+			$this->assertTrue($this->object->object()->hasArrayStrokeType());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertFalse($this->object->object()->hasArrayDistance());
+
+			$this->assertEquals(
+				array(68, 68+80, 68+80+69, 68+80+69+86, 68+80+69+86+82, 68+80+69+86+82+91, 68+80+69+86+82+91+90, 68+80+69+86+82+91+90+98),
+				array_slice($this->object->object()->getArrayTime(), 0, 8)
+			);
+
+			$timeArray = $this->object->object()->getArrayTime();
+			$this->assertNotEquals(0, $timeArray[0]);
+		}
+	}
+
+	/**
+	 * Test: outdoor swimming file
+	 * Filename: "swim-outdoor.fit" 
+	 */
+	public function testOutdoorSwimmingFile() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/swim-outdoor.fit');
+
+			$this->assertFalse($this->object->hasMultipleTrainings() );
+			$this->assertFalse($this->object->failed() );
+
+			$this->assertEquals('fr910xt', $this->object->object()->getCreator());
+			$this->assertEquals(0, $this->object->object()->getPoolLength());
+			$this->assertEquals(424, $this->object->object()->getTotalStrokes());
+			$this->assertEquals(27, $this->object->object()->getCadence());
+
+			$this->assertEquals(1007, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(1007, $this->object->object()->getElapsedTime());
+			$this->assertEquals(0.985, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayLatitude());
+			$this->assertTrue($this->object->object()->hasArrayLongitude());
+                }
+        }
+        /*
+	 * Test: hrv
+	 * Filename: "HRV-example.fit" 
+	 */
+	public function testHRV() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/HRV-example.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertTrue( $this->object->object()->hasArrayHRV() );
+
 		}
 	}
 }

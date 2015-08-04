@@ -91,7 +91,7 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		$Requests = array(
-			'delete_trainings'	=> array('training', 'route', 'trackdata'),
+			'delete_trainings'	=> array('training', 'route', 'trackdata', 'swimdata', 'hrv'),
 			'delete_user_data'	=> array('user'),
 		);
 
@@ -109,7 +109,7 @@ class RunalyzeJsonImporter {
 	 * @param string $table without prefix
 	 */
 	private function truncateTable($table) {
-		$this->Results->addDeletes(PREFIX.$table, $this->DB->query('DELETE FROM `'.PREFIX.$table.'`')->rowCount());
+		$this->Results->addDeletes('runalyze_'.$table, $this->DB->query('DELETE FROM `'.PREFIX.$table.'`')->rowCount());
 	}
 
 	/**
@@ -160,7 +160,9 @@ class RunalyzeJsonImporter {
 				'runalyze_user',
 				'runalyze_route',
 				'runalyze_training',
-				'runalyze_trackdata'
+                                'runalyze_swimdata',
+				'runalyze_trackdata',
+				'runalyze_hrv'
 			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
@@ -275,7 +277,6 @@ class RunalyzeJsonImporter {
 			default:
 				return;
 		}
-
 		$this->Results->addUpdates($TableName, $Statement->rowCount());
 	}
 
@@ -336,6 +337,10 @@ class RunalyzeJsonImporter {
 			$Row['pluginid'] = $this->correctID('runalyze_plugin', $Row['pluginid']);
 		} elseif ($TableName == 'runalyze_trackdata') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+                } elseif ($TableName == 'runalyze_swimdata') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+		} elseif ($TableName == 'runalyze_hrv') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 		}
 	}
 
@@ -370,7 +375,7 @@ class RunalyzeJsonImporter {
 			$ConfigValues = Configuration\Handle::tableHandles();
 
 			foreach ($ConfigValues as $key => $table) {
-				$table = PREFIX.$table;
+				$table = 'runalyze_'.$table;
 
 				if (isset($this->ReplaceIDs[$table])) {
 					$OldValue = $this->DB->query('SELECT `value` FROM `'.PREFIX.'conf` WHERE `key`="'.$key.'" LIMIT 1')->fetchColumn();

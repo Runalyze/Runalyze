@@ -19,7 +19,10 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setRightContent() {
 		$this->addRightContent('plot', __('Pace plot'), new Activity\Plot\Pace($this->Context));
 
-		if ($this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE)) {
+		if (
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::PACE) &&
+			$this->Context->trackdata()->has(\Runalyze\Model\Trackdata\Object::TIME)
+		) {
 			$Table = new TableZonesPace($this->Context);
 			$Code = $Table->getCode();
 			$Code .= HTML::info( __('You\'ll be soon able to configure your own zones.') );
