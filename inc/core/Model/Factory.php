@@ -66,6 +66,17 @@ class Factory {
 			$this->arrayByPK('trackdata', $activityid)
 		);
 	}
+        
+	/**
+	 * Swimdata
+	 * @param int $activityid
+	 * @return \Runalyze\Model\Swimdata\Object
+	 */
+	public function swimdata($activityid) {
+		return new Swimdata\Object(
+			$this->arrayByPK('swimdata', $activityid)
+		);
+	}
 
 	/**
 	 * Route
@@ -173,6 +184,8 @@ class Factory {
 		switch ($tablename) {
 			case 'trackdata':
 			case 'hrv':
+				return 'activityid';
+			case 'swimdata':
 				return 'activityid';
 		}
 

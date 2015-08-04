@@ -31,12 +31,14 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'km'            => array(),
 			'heartrate'     => array(),
 			'pace'          => array(),
-			'rpm'			=> array(),
-			'temp'			=> array(),
-			'power'			=> array(),
+			'rpm'		=> array(),
+			'temp'		=> array(),
+			'power'		=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
-			'hrv'			=> array()
+			'stroke'        => array(),
+			'stroketype'    => array(),
+			'hrv'		=> array()
 		);
 
 	/**
@@ -155,6 +157,8 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
 		$this->TrainingObject->setArrayGroundContact( $this->gps['groundcontact'] );
 		$this->TrainingObject->setArrayVerticalOscillation( $this->gps['oscillation'] );
+		$this->TrainingObject->setArrayStroke( $this->gps['stroke'] );
+		$this->TrainingObject->setArrayStrokeType( $this->gps['stroketype'] );
 		$this->TrainingObject->setArrayHRV( $this->gps['hrv'] );
 
 		$this->setValuesFromArraysIfEmpty();
@@ -218,12 +222,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 */
 	private function setAvgCadenceFromArray() {
 		$array = $this->TrainingObject->getArrayCadence();
-
-		if (!empty($array) && max($array) > 30) {
-			$array = array_filter($array, 'ParserAbstract__ArrayFilterForLowEntries');
-
-			$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
-		}
+		$this->TrainingObject->setCadence( round(array_sum($array)/count($array)) );
 	}
 
 	/**
@@ -268,7 +267,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
 	}
-
+        
 	/**
 	 * Set pace from distance and time
 	 */

@@ -157,6 +157,18 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const STRIDE_LENGTH = 'stride_length';
+        
+	/**
+	 * Key: total_strokes
+	 * @var string
+	 */
+	const TOTAL_STROKES = 'total_strokes';
+        
+	/**
+	 * Key: SWOLF
+	 * @var string
+	 */
+	const SWOLF = 'swolf';
 
 	/**
 	 * Key: ground contact time
@@ -315,6 +327,8 @@ class Object extends Model\ObjectWithID {
 			self::CADENCE,
 			self::POWER,
 			self::STRIDE_LENGTH,
+                        self::SWOLF,
+                        self::TOTAL_STROKES,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::TEMPERATURE,
@@ -427,6 +441,8 @@ class Object extends Model\ObjectWithID {
 			self::CADENCE,
 			self::POWER,
 			self::STRIDE_LENGTH,
+			self::TOTAL_STROKES,
+			self::SWOLF,
 			self::GROUNDCONTACT,
 			self::VERTICAL_OSCILLATION,
 			self::ROUTEID,
@@ -618,6 +634,22 @@ class Object extends Model\ObjectWithID {
 	public function strideLength() {
 		return $this->Data[self::STRIDE_LENGTH];
 	}
+        
+	/**
+	 * Total strokes
+	 * @return int 
+	 */
+	public function totalStrokes() {
+		return $this->Data[self::TOTAL_STROKES];
+	}
+        
+	/**
+	 * Swolf
+	 * @return int 
+	 */
+	public function swolf() {
+		return $this->Data[self::SWOLF];
+	}
 
 	/**
 	 * Ground contact
@@ -634,7 +666,7 @@ class Object extends Model\ObjectWithID {
 	public function verticalOscillation() {
 		return $this->Data[self::VERTICAL_OSCILLATION];
 	}
-
+        
 	/**
 	 * Clothes
 	 * @return \Runalyze\Data\Weather

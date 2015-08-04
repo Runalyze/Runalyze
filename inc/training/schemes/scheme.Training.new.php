@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf'
 );
 
 $FIELDSETS = array(
@@ -39,7 +39,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
+		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route', 'pool_length'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -633,6 +633,56 @@ $FIELDS = array(
 					'formular'	=> array(
 						'hidden'	=> true
 					)
-	)
+	),
+	'stroke'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'stroketype'	=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+    	'total_strokes'			=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Total strokes'
+					)
+	),
+    	'swolf' 			=> array(
+					'database'	=> array(
+						'type'		=> 'int',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'SWOLF'
+					)
+	),
+    	'pool_length' 			=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '4',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'label'		=> 'Pool length',
+                                                'unit'		=> FormularUnit::$M
+					)
+	),  
+    
 );
 ?>

@@ -63,7 +63,7 @@ abstract class TrainingViewSectionTabbed extends TrainingViewSection {
 
 		foreach ($this->RowsTabbedTitle as $i => $Title)
 			echo Ajax::change($Title, 'training-view-tabbed-'.$this->cssId(), 'training-view-tabbed-'.$this->cssId().'-'.$i);
-
+ 
 		echo '</div>';
 	}
 

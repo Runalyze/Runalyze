@@ -78,6 +78,7 @@ class TrainingView {
 				$this->Sections[] = new SectionRouteOnlyMap($this->Context);
 			} else
 				$this->Sections[] = new SectionLaps($this->Context);
+                                $this->Sections[] = new SectionSwimLane($this->Context);
 
 			if (Configuration::ActivityView()->plotMode()->showSeperated()) {
 				$this->Sections[] = new SectionHeartrate($this->Context);
