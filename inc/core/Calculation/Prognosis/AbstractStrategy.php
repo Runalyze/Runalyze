@@ -1,17 +1,21 @@
 <?php
 /**
- * This file contains class::RunningPrognosisStrategy
- * @package Runalyze\Calculations\Prognosis
+ * This file contains class::AbstractStrategy
+ * @package Runalyze\Calculation\Prognosis
  */
 
+namespace Runalyze\Calculation\Prognosis;
+
+use DB;
 use Runalyze\Configuration;
 
 /**
- * Class: RunningPrognosisStrategy
+ * Abstract strategy to calculate a race prognosis
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations\Prognosis
+ * @package Runalyze\Calculation\Prognosis
  */
-abstract class RunningPrognosisStrategy {
+abstract class AbstractStrategy {
 	/**
 	 * Running setup from database
 	 */

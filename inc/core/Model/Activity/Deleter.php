@@ -45,6 +45,7 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 */
 	protected function after() {
 		$this->deleteTrackdata();
+		$this->deleteSwimdata();
 		$this->deleteRoute();
 
 		$this->updateEquipment();
@@ -58,6 +59,17 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 */
 	protected function deleteTrackdata() {
 		$Deleter = new Model\Trackdata\Deleter($this->PDO, new Model\Trackdata\Object(array(
+			'activityid' => $this->Object->id()
+		)));
+		$Deleter->setAccountID($this->AccountID);
+		$Deleter->delete();
+	}
+
+	/**
+	 * Delete trackdata
+	 */
+	protected function deleteSwimdata() {
+		$Deleter = new Model\Swimdata\Deleter($this->PDO, new Model\Swimdata\Object(array(
 			'activityid' => $this->Object->id()
 		)));
 		$Deleter->setAccountID($this->AccountID);

@@ -174,4 +174,22 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	/**
+	 * Test: standard route
+	 * Filename: "Route-only.gpx" 
+	 */
+	public function testStandardGPXroute() {
+		$this->object->parseFile('../tests/testfiles/gpx/Route-only.gpx');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals(0.4, $this->object->object()->getDistance(), '', 0.05);
+
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+	}
+
 }

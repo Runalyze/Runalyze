@@ -1,8 +1,11 @@
 <?php
 /**
- * This file contains class::RunningPrognosisCameron
- * @package Runalyze\Calculations\Prognosis
+ * This file contains class::Cameron
+ * @package Runalyze\Calculation\Prognosis
  */
+
+namespace Runalyze\Calculation\Prognosis;
+
 /**
  * Prognosis by David Cameron
  * 
@@ -12,9 +15,9 @@
  * @see http://www.infobarrel.com/Runners_Math_How_to_Predict_Your_Race_Time
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations\Prognosis
+ * @package Runalyze\Calculation\Prognosis
  */
-class RunningPrognosisCameron extends RunningPrognosisStrategy {
+class Cameron extends AbstractStrategy {
 	/**
 	 * Best result: distance
 	 * @var float in kilometers

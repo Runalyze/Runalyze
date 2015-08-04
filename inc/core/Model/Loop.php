@@ -208,6 +208,10 @@ class Loop
 	public function difference($key)
 	{
 		if ($this->Object->has($key)) {
+			if ($this->LastIndex == 0 && $this->Index == 0) {
+				return $this->Object->at($this->Index, $key);
+			}
+
 			return $this->Object->at($this->Index, $key) - $this->Object->at($this->LastIndex, $key);
 		}
 

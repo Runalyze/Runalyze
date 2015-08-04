@@ -78,6 +78,7 @@ class TrainingView {
 				$this->Sections[] = new SectionRouteOnlyMap($this->Context);
 			} else
 				$this->Sections[] = new SectionLaps($this->Context);
+                                $this->Sections[] = new SectionSwimLane($this->Context);
 
 			if (Configuration::ActivityView()->plotMode()->showSeperated()) {
 				$this->Sections[] = new SectionHeartrate($this->Context);
@@ -122,6 +123,10 @@ class TrainingView {
 			$this->Sections[] = new SectionMiscellaneous($this->Context, false);
 		} else {
 			$this->Sections[] = new SectionMiscellaneous($this->Context, true);
+		}
+
+		if ($this->Context->hasHRV()) {
+			$this->Sections[] = new SectionHRV($this->Context);
 		}
 	}
 

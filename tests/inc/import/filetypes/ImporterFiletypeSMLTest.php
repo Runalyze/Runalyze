@@ -149,5 +149,7 @@ class ImporterFiletypeSMLTest extends PHPUnit_Framework_TestCase {
 		// Header data does not match anymore
 		$this->assertEquals( 117, $this->object->object()->getPulseAvg(), '', 0 );
 		$this->assertEquals( 131, $this->object->object()->getPulseMax(), '', 0 );
+
+		$this->assertTrue( $this->object->object()->hasArrayHRV() );
 	}
 }

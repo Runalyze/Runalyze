@@ -55,7 +55,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p(
-			__('This plugin lists all your races. It shows you a summary of all your races and'.
+			__('This plugin lists all your races. It shows you a summary of all your races and '.
 				'your personal bests (over all distances with at least two results).') );
 		echo HTML::p(
 			__('In addition, it plots the trend of your results over a specific distance.'.

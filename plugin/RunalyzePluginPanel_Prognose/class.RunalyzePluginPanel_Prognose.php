@@ -9,6 +9,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\PersonalBest;
+use Runalyze\Calculation\Prognosis;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -19,13 +20,13 @@ $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 class RunalyzePluginPanel_Prognose extends PluginPanel {
 	/**
 	 * Prognosis
-	 * @var RunningPrognosis
+	 * @var Runalyze\Calculation\Prognosis\Prognosis
 	 */
 	protected $Prognosis = null;
 
 	/**
 	 * Prognosis strategy
-	 * @var RunningPrognosisStrategy
+	 * @var Runalyze\Calculation\Prognosis\AbstractStrategy
 	 */
 	protected $PrognosisStrategy = null;
 
@@ -144,20 +145,20 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	protected function prepareForPrognosis() {
 		switch ($this->Configuration()->value('model')) {
 			case 'cpp':
-				$this->PrognosisStrategy = new RunningPrognosisBock;
+				$this->PrognosisStrategy = new Prognosis\Bock();
 				break;
 
 			case 'steffny':
-				$this->PrognosisStrategy = new RunningPrognosisSteffny;
+				$this->PrognosisStrategy = new Prognosis\Steffny();
 				break;
 
 			case 'cameron':
-				$this->PrognosisStrategy = new RunningPrognosisCameron;
+				$this->PrognosisStrategy = new Prognosis\Cameron();
 				break;
 
 			case 'jd':
 			default:
-				$this->PrognosisStrategy = new RunningPrognosisDaniels;
+				$this->PrognosisStrategy = new Prognosis\Daniels();
 				break;
 		}
 
@@ -167,7 +168,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 			$this->PrognosisStrategy->setBasicEnduranceForAdjustment(INFINITY);
 		}
 
-		$this->Prognosis = new RunningPrognosis;
+		$this->Prognosis = new Prognosis\Prognosis();
 		$this->Prognosis->setStrategy($this->PrognosisStrategy);
 	}
 

@@ -6,6 +6,7 @@
  */
 
 use Runalyze\Calculation\JD;
+use Runalyze\Calculation\Prognosis;
 use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 
@@ -22,10 +23,10 @@ $DataFailed = false;
 $Prognosis  = array();
 $Results    = array();
 
-$Strategy = new RunningPrognosisDaniels;
+$Strategy = new Prognosis\Daniels();
 $Strategy->adjustVDOT(false);
 
-$PrognosisObj = new RunningPrognosis;
+$PrognosisObj = new Prognosis\Prognosis();
 $PrognosisObj->setStrategy($Strategy);
 
 if (START_TIME != time()) {

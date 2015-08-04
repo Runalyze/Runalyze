@@ -28,6 +28,9 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
+		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'trackdata`');
+		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'swimdata`');
+		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'route`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
 	}
@@ -216,6 +219,43 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->delete($relevantId);
 		$this->assertEquals(0, Configuration::Data()->basicEndurance());
+	}
+
+	public function testDeletionOfRoute() {
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'route` (`accountid`) VALUES(0)');
+		$routeID = $this->PDO->lastInsertId();
+
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`routeid`,`accountid`) VALUES('.$routeID.',0)');
+		$activityID = $this->PDO->lastInsertId();
+
+		$this->delete($activityID);
+
+		$this->assertEquals(array(), $this->PDO->query('SELECT `id` FROM `'.PREFIX.'route` WHERE `id`='.$routeID)->fetchAll());
+		$this->assertEquals(array(), $this->PDO->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `id`='.$activityID)->fetchAll());
+	}
+
+	public function testDeletionOfTrackdata() {
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`) VALUES(0)');
+		$activityID = $this->PDO->lastInsertId();
+
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'trackdata` (`activityid`, `accountid`) VALUES('.$activityID.', 0)');
+
+		$this->delete($activityID);
+
+		$this->assertEquals(array(), $this->PDO->query('SELECT `activityid` FROM `'.PREFIX.'trackdata` WHERE `activityid`='.$activityID)->fetchAll());
+		$this->assertEquals(array(), $this->PDO->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `id`='.$activityID)->fetchAll());
+	}
+
+	public function testDeletionOfSwimdata() {
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'training` (`accountid`) VALUES(0)');
+		$activityID = $this->PDO->lastInsertId();
+
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'swimdata` (`activityid`, `accountid`) VALUES('.$activityID.', 0)');
+
+		$this->delete($activityID);
+
+		$this->assertEquals(array(), $this->PDO->query('SELECT `activityid` FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$activityID)->fetchAll());
+		$this->assertEquals(array(), $this->PDO->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `id`='.$activityID)->fetchAll());
 	}
 
 }

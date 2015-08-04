@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-18 15:30+0200\n"
+"PO-Revision-Date: 2015-07-20 15:37+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -3521,7 +3521,7 @@ msgstr "Ein Fehler ist aufgetreten."
 
 #: inc/system/class.AccountHandler.php:481
 msgid "Activate your RUNALYZE Account"
-msgstr "Account deinen RUNALYZE Account"
+msgstr "Aktiviere deinen RUNALYZE Account"
 
 #: inc/system/class.AccountHandler.php:482
 msgid "Thanks for your registration"

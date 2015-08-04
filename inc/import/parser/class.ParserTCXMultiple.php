@@ -16,6 +16,7 @@ class ParserTCXMultiple extends ParserAbstractMultipleXML {
 	protected function parseXML() {
 		$this->parseMultiSportSessions();
 		$this->parseStandardActivities();
+		$this->parseCourses();
 	}
 
 	/**
@@ -46,11 +47,34 @@ class ParserTCXMultiple extends ParserAbstractMultipleXML {
 	}
 
 	/**
+	 * Parse courses
+	 */
+	protected function parseCourses() {
+		if (isset($this->XML->Courses->Course))
+			foreach ($this->XML->Courses->Course as $Course)
+				$this->parseSingleCourse($Course);
+	}
+
+	/**
 	 * Parse single training
 	 * @param SimpleXMLElement $Training
 	 */
 	protected function parseSingleTraining(SimpleXMLElement &$Training) {
 		$Parser = new ParserTCXSingle('', $Training);
+		$Parser->parse();
+
+		if ($Parser->failed())
+			$this->addErrors( $Parser->getErrors() );
+		else
+			$this->addObject( $Parser->object() );
+	}
+
+	/**
+	 * Parse single course
+	 * @param SimpleXMLElement $Course
+	 */
+	protected function parseSingleCourse(SimpleXMLElement &$Course) {
+		$Parser = new ParserTCXSingleCourse('', $Course);
 		$Parser->parse();
 
 		if ($Parser->failed())

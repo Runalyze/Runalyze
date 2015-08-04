@@ -47,7 +47,11 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 	 */
 	protected function parseGeneralValues() {
 		$this->TrainingObject->setTimestamp( strtotime((string)$this->XML['StartTime']) );
-		$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
+		
+		if (!empty($this->XML['categoryName']))
+			$this->guessSportID( (string)$this->XML['categoryName'] );
+		else
+			$this->TrainingObject->setSportid( Configuration::General()->mainSport() );
 
 		if (!empty($this->XML->Duration['TotalSeconds']))
 			$this->TrainingObject->setTimeInSeconds(round((double)$this->XML->Duration['TotalSeconds']));

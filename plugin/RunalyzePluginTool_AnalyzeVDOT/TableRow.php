@@ -14,7 +14,7 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 
-use RunningPrognosisDaniels;
+use Runalyze\Calculation\Prognosis\Daniels;
 use HTML;
 use DB;
 use SessionAccountHandler;
@@ -141,7 +141,7 @@ class TableRow {
 	 * @return string
 	 */
 	public function prognosisByHR() {
-		$Prognosis = new RunningPrognosisDaniels();
+		$Prognosis = new Daniels();
 		$Prognosis->adjustVDOT(false);
 		$Prognosis->setVDOT($this->Activity->vdotByHeartRate());
 
@@ -166,7 +166,7 @@ class TableRow {
 	 */
 	public function prognosisByHRafterCorrection() {
 		if (Configuration::Vdot()->useCorrectionFactor()) {
-			$Prognosis = new RunningPrognosisDaniels();
+			$Prognosis = new Daniels();
 			$Prognosis->adjustVDOT(false);
 			$Prognosis->setVDOT(Configuration::Data()->vdotFactor() * $this->Activity->vdotByHeartRate());
 
@@ -189,7 +189,7 @@ class TableRow {
 	 * @return int
 	 */
 	public function prognosisByShapeInSeconds() {
-		$Prognosis = new RunningPrognosisDaniels();
+		$Prognosis = new Daniels();
 		$Prognosis->adjustVDOT(false);
 		$Prognosis->setVDOT($this->Shape);
 

@@ -67,4 +67,24 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 	}
+
+	/**
+	 * Test: standard route
+	 * Filename: "Route-only.kml" 
+	 */
+	public function testStandardKMLroute() {
+		$this->object->parseFile('../tests/testfiles/kml/Route-only.kml');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals(0.4, $this->object->object()->getDistance(), '', 0.05);
+
+		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+
+		$this->assertFalse( $this->object->object()->hasArrayTime() );
+	}
 }

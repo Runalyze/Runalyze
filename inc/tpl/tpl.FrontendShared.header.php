@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<?php $Meta = new HTMLMetaForFacebook(); $Meta->display(); ?>
+	<?php if (NULL !== $this->ActivityContext) { $Meta = new HTMLMetaForFacebook($this->ActivityContext); $Meta->display(); } ?>
 
 	<base href="<?php echo System::getFullDomain(); ?>">
 
@@ -23,7 +23,9 @@
 <div id="flot-loader"></div>
 
 <div id="headline">
-	<span class="tab">
+	<a class="tab logo b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">RUNALYZE</a>
+
+	<span class="tab right">
 		<?php
 		if (isset($User) && isset($User['username']) && strlen($User['username']) > 1) {
 			printf( __('Public training view of <strong>%s</strong>'), $User['username']);
@@ -32,6 +34,4 @@
 		}
 		?>
 	</span>
-
-	<a class="tab right b" href="http://www.runalyze.de/" title="Runalyze" target="_blank">&copy; RUNALYZE v<?php echo RUNALYZE_VERSION; ?></a>
 </div>
