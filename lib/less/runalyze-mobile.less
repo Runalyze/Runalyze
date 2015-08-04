@@ -74,13 +74,26 @@
 }
 
 @media (max-width: 600px) {
-	body {
-		padding-top: 77px;
+	#home #headline {
+		.tab { display: none; width: 90%; margin: 5px 0; padding: 2px 5%; }
+		&.menu-expanded .tab, .logo { display: block; }
+		.left, .right { float: none; }
+	}
+	#shared #headline {
+		max-height: 36px;
 	}
 
-	#headline {
-		.tab { margin: 0 12px; }
-		.logo { margin: 0 25px; }
+	#menu-link {
+		cursor: pointer;
+		display: block;
+		position: absolute;
+		right: 0;
+		top: 0;
+		margin: 7px;
+		height: 20px;
+		line-height: 20px;
+		font-size: 20px;
+		color: #fff;
 	}
 
 	#ajax, #ajax.small-window, #ajax.big-window {

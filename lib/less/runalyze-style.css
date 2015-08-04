@@ -223,6 +223,9 @@ body {
   width: 184px;
   height: 20px;
 }
+#menu-link {
+  display: none;
+}
 input,
 select,
 textarea,
@@ -1558,14 +1561,34 @@ tr.space-line.zebra-corrector td {
   }
 }
 @media (max-width: 600px) {
-  body {
-    padding-top: 77px;
+  #home #headline .tab {
+    display: none;
+    width: 90%;
+    margin: 5px 0;
+    padding: 2px 5%;
   }
-  #headline .tab {
-    margin: 0 12px;
+  #home #headline.menu-expanded .tab,
+  #home #headline .logo {
+    display: block;
   }
-  #headline .logo {
-    margin: 0 25px;
+  #home #headline .left,
+  #home #headline .right {
+    float: none;
+  }
+  #shared #headline {
+    max-height: 36px;
+  }
+  #menu-link {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 7px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 20px;
+    color: #fff;
   }
   #ajax,
   #ajax.small-window,
@@ -1902,12 +1925,16 @@ label:active .checkbox-icon {
 }
 .tooltip {
   position: absolute;
-  z-index: 3010;
+  z-index: 1990;
   display: block;
   padding: 5px;
   font-size: 11px;
   opacity: 0;
   visibility: visible;
+}
+#ajax .tooltip,
+.fullscreen .tooltip {
+  z-index: 3010;
 }
 .tooltip.in {
   opacity: 0.9;

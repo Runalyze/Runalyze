@@ -91,7 +91,7 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		$Requests = array(
-			'delete_trainings'	=> array('training', 'route', 'trackdata'),
+			'delete_trainings'	=> array('training', 'route', 'trackdata', 'hrv'),
 			'delete_user_data'	=> array('user'),
 			'delete_shoes'		=> array('shoe')
 		);
@@ -165,7 +165,8 @@ class RunalyzeJsonImporter {
 				'runalyze_user',
 				'runalyze_route',
 				'runalyze_training',
-				'runalyze_trackdata'
+				'runalyze_trackdata',
+				'runalyze_hrv'
 			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
@@ -339,6 +340,8 @@ class RunalyzeJsonImporter {
 		} elseif ($TableName == 'runalyze_plugin_conf') {
 			$Row['pluginid'] = $this->correctID('runalyze_plugin', $Row['pluginid']);
 		} elseif ($TableName == 'runalyze_trackdata') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+		} elseif ($TableName == 'runalyze_hrv') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 		}
 	}

@@ -48,6 +48,13 @@ class DataBrowserShared extends DataBrowser {
 	}
 
 	/**
+	 * Display hover links
+	 */
+	protected function displayHoverLinks() {
+		echo $this->getRefreshLink();
+	}
+
+	/**
 	 * Get base url
 	 * @return string
 	 */

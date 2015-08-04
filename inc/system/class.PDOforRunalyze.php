@@ -82,7 +82,11 @@ class PDOforRunalyze extends PDO {
 	public function fetchByID($table, $ID) {
 		$table = str_replace(PREFIX, '', $table);
 
-		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND accountid = '.SessionAccountHandler::getId().' LIMIT 1')->fetch();
+		if ($table == 'account' || $table == 'plugin_conf') {
+			return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
+		}
+
+		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();
 	}
 
 	/**

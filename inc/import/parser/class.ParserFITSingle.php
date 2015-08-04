@@ -150,6 +150,10 @@ class ParserFITSingle extends ParserAbstractSingle {
 					$this->readRecord();
 					break;
 
+				case 'hrv':
+					$this->readHRV();
+					break;
+
 				case 'lap':
 					$this->readLap();
 					break;
@@ -352,6 +356,15 @@ class ParserFITSingle extends ParserAbstractSingle {
 			$this->gps['time_in_s'][] = round(((int)$this->Values['total_timer_time'][0])/1000);
 		} else {
 			$this->gps['time_in_s'][] = end($this->gps['time_in_s']) + round(((int)$this->Values['total_timer_time'][0])/1000);
+		}
+	}
+
+	/**
+	 * Read hrv
+	 */
+	protected function readHRV() {
+		if (!$this->isPaused) {
+			$this->gps['hrv'][] = $this->Values['time'][0];
 		}
 	}
 

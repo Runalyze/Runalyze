@@ -90,6 +90,7 @@ class RunalyzeJsonAnalyzer {
 			'runalyze_clothes',
 			'runalyze_conf',
 			'runalyze_dataset',
+			'runalyze_hrv',
 			'runalyze_plugin',
 			'runalyze_plugin_conf',
 			'runalyze_route',

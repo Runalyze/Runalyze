@@ -109,6 +109,18 @@ CREATE TABLE IF NOT EXISTS `runalyze_dataset` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `runalyze_hrv`
+--
+
+CREATE TABLE IF NOT EXISTS `runalyze_hrv` (
+  `accountid` int(10) unsigned NOT NULL,
+  `activityid` int(10) unsigned NOT NULL,
+  `data` longtext
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `runalyze_plugin`
 --
 
@@ -355,6 +367,12 @@ ALTER TABLE `runalyze_conf`
 --
 ALTER TABLE `runalyze_dataset`
  ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+
+--
+-- Indizes für die Tabelle `runalyze_hrv`
+--
+ALTER TABLE `runalyze_hrv`
+ ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
 --
 -- Indizes für die Tabelle `runalyze_plugin`

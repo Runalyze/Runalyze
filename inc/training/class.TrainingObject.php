@@ -177,6 +177,7 @@ class TrainingObject extends DataObject {
 			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
 			$InserterTrack->insert();
 		}
+
                 if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
                     
                         $Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
@@ -185,6 +186,16 @@ class TrainingObject extends DataObject {
                         $InserterSwim->insert();
                 }        
                 
+
+
+		if ($this->hasArrayHRV()) {
+			$HRV = $this->newHRVObject();
+			$HRV->set(Runalyze\Model\HRV\Object::ACTIVITYID, $this->id());
+			$InserterHRV = new Runalyze\Model\HRV\Inserter(DB::getInstance(), $HRV);
+			$InserterHRV->setAccountID( SessionAccountHandler::getId() );
+			$InserterHRV->insert();
+		}
+
 	}
 
 	/**
@@ -235,6 +246,15 @@ class TrainingObject extends DataObject {
 			Runalyze\Model\Trackdata\Object::GROUNDCONTACT => $this->get('arr_groundcontact'),
 			Runalyze\Model\Trackdata\Object::VERTICAL_OSCILLATION => $this->get('arr_vertical_oscillation'),
 			Runalyze\Model\Trackdata\Object::PAUSES => $this->get('pauses')
+		));
+	}
+
+	/**
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	protected function newHRVObject() {
+		return new Runalyze\Model\HRV\Object(array(
+			Runalyze\Model\HRV\Object::DATA => $this->get('hrv')
 		));
 	}
 
@@ -1162,6 +1182,23 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayVerticalOscillation() { return strlen($this->get('arr_vertical_oscillation')) > 0; }
+
+	
+	/**
+	 * Set array for heart rate variability
+	 * @param array $data
+	 */
+	public function setArrayHRV(array $data) { $this->setArrayFor('hrv', $data); }
+	/**
+	 * Get array for vertical oscillation
+	 * @return array
+	 */
+	public function getArrayHRV() { return $this->getArrayFor('hrv'); }
+	/**
+	 * Has array for vertical oscillation?
+	 * @return bool
+	 */
+	public function hasArrayHRV() { return ($this->get('hrv') != ''); }
 
 
 	/**

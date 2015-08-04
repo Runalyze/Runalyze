@@ -90,6 +90,17 @@ class Factory {
 	}
 
 	/**
+	 * HRV
+	 * @param int $activityid
+	 * @return \Runalyze\Model\HRV\Object
+	 */
+	public function hrv($activityid) {
+		return new HRV\Object(
+			$this->arrayByPK('hrv', $activityid)
+		);
+	}
+
+	/**
 	 * Type
 	 * @param int $typeid
 	 * @return \Runalyze\Model\Type\Object
@@ -172,6 +183,7 @@ class Factory {
 	protected function primaryKey($tablename) {
 		switch ($tablename) {
 			case 'trackdata':
+			case 'hrv':
 				return 'activityid';
 			case 'swimdata':
 				return 'activityid';

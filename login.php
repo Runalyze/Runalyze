@@ -24,7 +24,7 @@ if (SessionAccountHandler::isLoggedIn()) {
 	exit;
 }
 
-$title = 'Runalyze v'.RUNALYZE_VERSION.' - '.__('Please login');
+$title = 'RUNALYZE - '.__('Please login');
 $tpl   = 'tpl.loginWindow.php';
 
 if (isset($_GET['chpw']))

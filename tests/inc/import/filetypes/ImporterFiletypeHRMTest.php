@@ -60,4 +60,18 @@ class ImporterFiletypeHRMTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
 	}
+
+	public function testHRVdata() {
+		$this->object->parseFile('../tests/testfiles/hrm/hrv.hrm');
+
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( "08.08.2012 18:09:55", date("d.m.Y H:i:s", $this->object->object()->getTimestamp()) );
+		$this->assertEquals( 2*60 + 13.3, $this->object->object()->getTimeInSeconds() );
+
+		$this->assertTrue( $this->object->object()->hasArrayHeartrate() );
+		$this->assertTrue( $this->object->object()->hasArrayHRV() );
+
+		$this->assertEquals( 93, $this->object->object()->getPulseAvg() );
+	}
 }
