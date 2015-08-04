@@ -138,6 +138,7 @@ class RunalyzeJsonImporterResults {
 			'runalyze_user'			=> __('Body data'),
 			'runalyze_training'		=> __('Activities'),
 			'runalyze_trackdata'	=> __('Trackdata'),
+                        'runalyze_swimdata'     => __('Swimdata'),
 			'runalyze_route'		=> __('Routes'),
 			'runalyze_hrv'			=> __('HRV data')
 		);

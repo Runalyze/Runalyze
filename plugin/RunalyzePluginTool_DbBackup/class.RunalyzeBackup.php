@@ -57,7 +57,8 @@ abstract class RunalyzeBackup {
 			PREFIX.'user',
 			PREFIX.'route',
 			PREFIX.'training',
-			PREFIX.'trackdata'
+			PREFIX.'trackdata',
+                        PREFIX.'swimdata'
 		);
 
 		foreach ($Tables as $TableName) {
