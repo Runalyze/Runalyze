@@ -295,7 +295,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['temp'][]      = isset($this->Values['temperature']) ? (int)$this->Values['temperature'][0] : 0;
 
 		$this->gps['time_in_s'][] = $time;
-		$this->gps['pace'][]      = $this->getCurrentPace();
 
 		$this->gps['groundcontact'][] = isset($this->Values['stance_time']) ? round($this->Values['stance_time'][0]/10) : 0;
 		$this->gps['oscillation'][]   = isset($this->Values['vertical_oscillation']) ? round($this->Values['vertical_oscillation'][0]/10) : 0;

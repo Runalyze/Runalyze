@@ -173,7 +173,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * All properties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::CITIES,
@@ -203,7 +203,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @return array
 	 */
 	public function properties() {
-		return static::allProperties();
+		return static::allDatabaseProperties();
 	}
 
 	/**

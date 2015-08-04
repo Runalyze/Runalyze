@@ -52,7 +52,7 @@ abstract class InserterWithAccountID extends Inserter {
 
 		return parent::value($key);
 	}
-
+        
 	/**
 	 * Tasks before insertion
 	 */

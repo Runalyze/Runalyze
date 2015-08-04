@@ -77,5 +77,5 @@ class InserterWithAccountIDTest extends \PHPUnit_Framework_TestCase {
 			'accountid' => 1
 		), $this->PDO->query('SELECT * FROM `'.PREFIX.'temp`')->fetch(PDO::FETCH_ASSOC));
 	}
-
+        
 }

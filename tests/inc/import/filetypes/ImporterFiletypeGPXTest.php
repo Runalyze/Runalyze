@@ -63,7 +63,6 @@ class ImporterFiletypeGPXTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue( $this->object->object()->hasArrayAltitude() );
 		$this->assertTrue( $this->object->object()->hasPositionData() );
 		$this->assertTrue( $this->object->object()->hasArrayDistance() );
-		$this->assertTrue( $this->object->object()->hasArrayPace() );
 		$this->assertTrue( $this->object->object()->hasArrayTime() );
 	}
 

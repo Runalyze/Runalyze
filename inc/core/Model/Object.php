@@ -144,7 +144,7 @@ abstract class Object {
 	 * @return array
 	 */
 	abstract public function properties();
-
+        
 	/**
 	 * Synchronize internal models
 	 */

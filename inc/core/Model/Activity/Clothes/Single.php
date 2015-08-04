@@ -37,7 +37,7 @@ class Single extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::SHORT_NAME,
@@ -50,7 +50,7 @@ class Single extends Model\ObjectWithID {
 	 * @return array
 	 */
 	public function properties() {
-		return static::allProperties();
+		return static::allDatabaseProperties();
 	}
 
 	/**

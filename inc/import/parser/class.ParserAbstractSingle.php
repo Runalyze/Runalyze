@@ -30,10 +30,9 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 			'altitude'      => array(),
 			'km'            => array(),
 			'heartrate'     => array(),
-			'pace'          => array(),
-			'rpm'		=> array(),
-			'temp'		=> array(),
-			'power'		=> array(),
+			'rpm'			=> array(),
+			'temp'			=> array(),
+			'power'			=> array(),
 			'groundcontact'	=> array(),
 			'oscillation'	=> array(),
 			'stroke'        => array(),
@@ -142,16 +141,12 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	protected function setGPSarrays() {
 		$this->removeInvalidEntriesFromGPSarrays();
 
-		if (empty($this->gps['pace']) && !empty($this->gps['time_in_s']) && !empty($this->gps['km']))
-			$this->setPaceFromDistanceAndTime();
-
 		$this->TrainingObject->setArrayTime( $this->gps['time_in_s'] );
 		$this->TrainingObject->setArrayDistance( $this->gps['km'] );
 		$this->TrainingObject->setArrayLatitude( $this->gps['latitude'] );
 		$this->TrainingObject->setArrayLongitude( $this->gps['longitude'] );
 		$this->TrainingObject->setArrayAltitude( $this->gps['altitude'] );
 		$this->TrainingObject->setArrayHeartrate( $this->gps['heartrate'] );
-		$this->TrainingObject->setArrayPace( $this->gps['pace'] );
 		$this->TrainingObject->setArrayCadence( $this->gps['rpm'] );
 		$this->TrainingObject->setArrayPower( $this->gps['power'] );
 		$this->TrainingObject->setArrayTemperature( $this->gps['temp'] );
@@ -266,31 +261,6 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
-	}
-        
-	/**
-	 * Set pace from distance and time
-	 */
-	private function setPaceFromDistanceAndTime() {
-		$num = count($this->gps['km']);
-		$prevDist = 0;
-		$prevTime = 0;
-
-		for ($i = 0; $i < $num; ++$i) {
-			$currDist = $this->gps['km'][$i];
-			$currTime = $this->gps['time_in_s'][$i];
-
-			if ($currDist > $prevDist) {
-				$pace = ($currTime - $prevTime) / ($currDist - $prevDist);
-	
-				$prevDist = $currDist;
-				$prevTime = $currTime;
-			} else {
-				$pace = 0;
-			}
-
-			$this->gps['pace'][] = round($pace);
-		}
 	}
 
 	/**

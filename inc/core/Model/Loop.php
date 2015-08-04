@@ -127,7 +127,7 @@ class Loop
 	 */
 	public function move($key, $value)
 	{
-		$this->moveTo($key, $this->Index == 0 ? $value : $this->current($key) + $value);
+		$this->moveTo($key, $this->Index == 0 && $value > $this->current($key) ? $value : $this->current($key) + $value);
 	}
 
 	/**
@@ -183,7 +183,7 @@ class Loop
 			$this->Object->at($this->Index, $key) < $target
 		) {
 			$this->Index++;
-		};
+		}
 	}
 
 	/**

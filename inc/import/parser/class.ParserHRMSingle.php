@@ -156,19 +156,13 @@ class ParserHRMSingle extends ParserAbstractSingle {
 		}
 	}
 
-	/**
-	 * Read heartrate
-	 */
 	private function readHRdata() {
 		$values = preg_split('/[\s]+/', $this->Line);
-
 		if ($this->recordingInterval == self::RR_DATA_INTERVAL) {
 			$rr = (int)trim($values[0]);
-
 			if ($rr <= 0) {
 				return;
 			}
-
 			$this->totalTime += $rr/1000;
 			$this->gps['heartrate'][] = round(60000/$rr);
 			$this->gps['hrv'][] = $rr;
@@ -176,11 +170,9 @@ class ParserHRMSingle extends ParserAbstractSingle {
 			$this->totalTime += $this->recordingInterval;
 			$this->gps['time_in_s'][] = $this->totalTime;
 			$this->gps['heartrate'][] = (int)trim($values[0]);
-			$this->gps['pace'][]      = $pace = isset($values[1]) && (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
-
+			$pace = isset($values[1]) && (int)trim($values[1]) > 0 ? round($this->paceFactor / ((int)trim($values[1]) / 10)) : 0;
 			$dist = $pace > 0 ? round($this->recordingInterval/$pace, ParserAbstract::DISTANCE_PRECISION) : 0;
 			$this->gps['km'][] = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
-
 			if (count($values) > 3) {
 				$this->gps['rpm'][]       = isset($values[2]) ? (int)trim($values[2]) : 0;
 				$this->gps['altitude'][]  = isset($values[3]) ? round((int)trim($values[3]) * $this->distanceFactor) : 0;

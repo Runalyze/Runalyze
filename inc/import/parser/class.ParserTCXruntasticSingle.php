@@ -49,7 +49,6 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 		$this->gps['time_in_s'][]  = strtotime((string)$TP->Time) - $this->TrainingObject->getTimestamp();
 		$this->gps['km'][]         = round((float)$TP->DistanceMeters/1000, ParserAbstract::DISTANCE_PRECISION);
 		$this->gps['altitude'][]   = (int)$TP->AltitudeMeters;
-		$this->gps['pace'][]       = 0;
 		$this->gps['heartrate'][]  = (!empty($TP->HeartRateBpm))
 									? round($TP->HeartRateBpm->Value)
 									: 0;
@@ -63,16 +62,6 @@ class ParserTCXruntasticSingle extends ParserTCXSingle {
 		} else {
 			$this->gps['latitude'][]  = 0;
 			$this->gps['longitude'][] = 0;
-		}
-
-		if ($this->CurrentIndex > 0 && $this->gps['km'][$this->CurrentIndex] > $this->gps['km'][$this->CurrentIndex-1]) {
-			$pace = $this->getCurrentPaceForRuntastic();
-
-			for ($i = $this->CurrentIndex; $i > $this->LastActiveIndex; --$i) {
-				$this->gps['pace'][$i] = $pace;
-			}
-
-			$this->LastActiveIndex = $this->CurrentIndex;
 		}
 
 		$this->CurrentIndex++;

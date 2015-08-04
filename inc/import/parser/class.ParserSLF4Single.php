@@ -73,7 +73,6 @@ class ParserSLF4Single extends ParserSLF3Single {
 
 		$this->gps['time_in_s'][] = (int)$Log['trainingTimeAbsolute']/100;
 		$this->gps['km'][]        = round((float)$Log['distanceAbsolute']/1000, ParserAbstract::DISTANCE_PRECISION);
-		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['heartrate'][] = (!empty($Log['heartrate']))
 									? round($Log['heartrate'])
 									: 0;

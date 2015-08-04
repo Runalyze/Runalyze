@@ -7,6 +7,7 @@
 namespace Runalyze\Model\Trackdata;
 
 use Runalyze\Model;
+use Runalyze\Calculation\Activity\PaceCalculator;
 
 /**
  * Trackdata object
@@ -112,7 +113,8 @@ class Object extends Model\Object implements Model\Loopable {
 	public function __construct(array $data = array()) {
 		parent::__construct($data);
 
-		$this->readPauses();
+		$this->calculatePaceArray();
+ 		$this->readPauses();
 	}
 
 	/**
@@ -181,15 +183,14 @@ class Object extends Model\Object implements Model\Loopable {
 	}
 
 	/**
-	 * All properties
+	 * All databaseproperties
 	 * @return array
 	 */
-	static public function allProperties() {
+	static public function allDatabaseProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::TIME,
 			self::DISTANCE,
-			self::PACE,
 			self::HEARTRATE,
 			self::CADENCE,
 			self::POWER,
@@ -205,7 +206,11 @@ class Object extends Model\Object implements Model\Loopable {
 	 * @return array
 	 */
 	public function properties() {
-		return static::allProperties();
+		return array_merge(array(
+				self::PACE
+			),
+			static::allDatabaseProperties() 
+		);
 	}
 
 	/**
@@ -226,7 +231,6 @@ class Object extends Model\Object implements Model\Loopable {
 		switch ($key) {
 			case self::TIME:
 			case self::DISTANCE:
-			case self::PACE:
 			case self::HEARTRATE:
 			case self::CADENCE:
 			case self::POWER:
@@ -235,6 +239,20 @@ class Object extends Model\Object implements Model\Loopable {
 			case self::VERTICAL_OSCILLATION:
 			case self::PAUSES:
 				return true;
+		}
+
+		return false;
+	}
+        
+	/**
+	 * Is not in Database?
+	 * @param string $key
+	 * @return boolean
+	 */
+	protected function notInDatabase($key) {
+		switch ($key) {
+			case self::PACE:
+				return false;
 		}
 
 		return false;
@@ -397,5 +415,15 @@ class Object extends Model\Object implements Model\Loopable {
 	 */
 	public function hasPauses() {
 		return !$this->Pauses->isEmpty();
+	}
+        
+	/*
+	 * Calculate pace array 
+	 */
+	protected function calculatePaceArray() {
+		$PaceCalculator = new PaceCalculator($this);
+		$PaceCalculator->calculate();
+
+		$this->set(self::PACE, $PaceCalculator->result());
 	}
 }

@@ -109,7 +109,6 @@ Mode=110
 
 		$this->assertFalse( $Parser->failed() );
 		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
-		$this->assertEquals( array(360, 300, 300, 360), $Parser->object()->getArrayPace() );
 		$this->assertEquals( array(0.00278, 0.00611, 0.00944, 0.01222), $Parser->object()->getArrayDistance() );
 		$this->assertEquals( array(220, 225, 230, 220), $Parser->object()->getArrayAltitude() );
 		$this->assertFalse( $Parser->object()->hasArrayCadence() );
@@ -131,7 +130,6 @@ Mode=001
 
 		$this->assertFalse( $Parser->failed() );
 		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
-		$this->assertEquals( array(224, 186, 186, 224), $Parser->object()->getArrayPace() );
 		$this->assertEquals( array(0.00446, 0.00984, 0.01522, 0.01968), $Parser->object()->getArrayDistance() );
 		$this->assertEquals( array( 82,  85,  83,  82), $Parser->object()->getArrayCadence() );
 		$this->assertFalse( $Parser->object()->hasArrayAltitude() );
@@ -153,7 +151,6 @@ SMode=11110001
 
 		$this->assertFalse( $Parser->failed() );
 		$this->assertEquals( array(100, 120, 125, 120), $Parser->object()->getArrayHeartrate() );
-		$this->assertEquals( array(224, 186, 186, 224), $Parser->object()->getArrayPace() );
 		$this->assertEquals( array( 82,  85,  83,  82), $Parser->object()->getArrayCadence() );
 		$this->assertEquals( array(232, 238, 235, 232), $Parser->object()->getArrayAltitude() );
 		$this->assertEquals( array(320, 350, 330, 300), $Parser->object()->getArrayPower() );

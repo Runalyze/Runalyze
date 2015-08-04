@@ -28,7 +28,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`activityid` int(10),
 			`time` longtext NOT NULL,
 			`distance` longtext NOT NULL,
-			`pace` longtext NOT NULL,
 			`heartrate` longtext NOT NULL,
 			`cadence` longtext NOT NULL,
 			`power` longtext NOT NULL,
@@ -72,7 +71,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(20, 40, 60), $N->time());
 		$this->assertEquals(array(0.1, 0.2, 0.3), $N->distance());
 		$this->assertEquals(array(100, 120, 130), $N->heartRate());
-		$this->assertEmpty($N->pace());
 
 		$this->assertFalse($N->pauses()->isEmpty());
 	}

@@ -11,6 +11,9 @@ class UpdaterWithAccountIDForObject_MockTester extends UpdaterWithAccountID {
 	public function whereSubclass() {
 		return '`key`="1"';
 	}
+        protected function keys() {
+            return array('foo', 'accountid');
+        }
 }
 class UpdaterWithAccountIDObject_MockTester extends Object {
 	public function properties() {

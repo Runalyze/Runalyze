@@ -59,13 +59,7 @@ abstract class Updater {
 	 * Keys to update
 	 * @return array
 	 */
-	protected function keys() {
-		if (!is_null($this->NewObject)) {
-			return $this->NewObject->properties();
-		}
-
-		return array();
-	}
+	abstract protected function keys();
 
 	/**
 	 * Ignore specific key

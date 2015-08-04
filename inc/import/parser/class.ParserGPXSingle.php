@@ -179,7 +179,6 @@ class ParserGPXSingle extends ParserAbstractSingleXML {
 
 		$this->gps['time_in_s'][] = $newTime;
 		$this->gps['km'][]        = empty($this->gps['km']) ? $dist : $dist + end($this->gps['km']);
-		$this->gps['pace'][]      = $this->getCurrentPace();
 		$this->gps['latitude'][]  = $lat;
 		$this->gps['longitude'][] = $lon;
 		$this->gps['altitude'][]  = (isset($Point->ele)) ? (int)$Point->ele : 0;
