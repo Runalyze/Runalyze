@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-31 13:13+0200\n"
+"PO-Revision-Date: 2015-08-08 22:29+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -4342,282 +4342,298 @@ msgstr "Voeg deze code toe aan uw blog/website."
 
 #: inc/export/types/class.ExporterIFrame.php:48
 msgid "Width"
-msgstr ""
+msgstr "Breedte"
 
 #: inc/export/types/class.ExporterIFrame.php:53
 msgid "Height"
-msgstr ""
+msgstr "Hoogte"
 
 #: inc/export/types/class.ExporterIFrame.php:58
 msgid "Change size"
-msgstr ""
+msgstr "Grootte aanpassen"
 
 #: inc/export/types/class.ExporterIFrame.php:64
 #: inc/export/types/class.ExporterHTML.php:30
 msgid "Preview"
-msgstr ""
+msgstr "Voorbeeld"
 
 #: inc/export/types/class.ExporterHTML.php:34
 msgid "Your training is private: There is no link included."
-msgstr ""
+msgstr "Uw training is privé: er is geen link toegevoegd."
 
 #: inc/export/types/class.ExporterKML.php:35
 msgid "The training does not contain gps-data and cannot be saved as kml-file."
 msgstr ""
+"De training bevat geen gps-data en kan daarom niet als kml-bestand "
+"opgeslagen worden."
 
 #: inc/export/types/class.ExporterFacebook.php:32
 #: inc/export/types/class.ExporterGoogle.php:26
 msgid "This training is private and cannot be shared."
-msgstr ""
+msgstr "Deze training is privé en kan niet worden gedeeld."
 
 #: inc/export/types/class.ExporterFacebook.php:37
 msgid "Share!"
-msgstr ""
+msgstr "Delen!"
 
 #: inc/export/types/class.ExporterFacebook.php:40
 msgid ""
 "You will be forwared to Facebook, where you can define which text shall be "
 "displayed."
 msgstr ""
+"U zal worden omgeleid naar Facebook, waar u zelf kunt definiëren welke tekst "
+"er moet worden weergegeven."
 
 #: inc/export/types/class.ExporterTCX.php:42
 msgid "The training does not contain gps-data and cannot be saved as tcx-file."
 msgstr ""
+"De training bevat geen gps-gegevens en kan niet worden opgeslagen als tcx-"
+"bestand."
 
 #: inc/export/types/class.ExporterGoogle.php:33
 msgid "Share +1"
-msgstr ""
+msgstr "Delen + 1"
 
 #: inc/export/types/class.ExporterGoogle.php:36
 msgid ""
 "You will be forwared to Google+, where you can define which text shall be "
 "displayed."
 msgstr ""
+"U zal worden omgeleid naar Google +, waar u zelf kunt definiëren welke tekst "
+"er moet worden weergegeven."
 
 #: inc/export/types/class.ExporterTwitter.php:28
 msgid "Tweet!"
-msgstr ""
+msgstr "Twitteren!"
 
 #: inc/export/types/class.ExporterTwitter.php:31
 msgid ""
 "You will be forwared to Twitter, where you can define which text shall be "
 "displayed."
 msgstr ""
+"U zult omgeleid worden om te twitteren, waarin u zelf kunt definiëren welke "
+"tekst er moet worden weergegeven."
 
 #: inc/export/class.ExporterListView.php:41
 msgid "No exporter could be located."
-msgstr ""
+msgstr "Export type kon niet gevonden worden."
 
 #: inc/plugin/class.PluginType.php:57
 msgid "Panel"
-msgstr ""
+msgstr "Deelvenster"
 
 #: inc/plugin/class.PluginType.php:61
 msgid "Tool"
-msgstr ""
+msgstr "Tools"
 
 #: inc/plugin/class.PluginTool.php:60
 msgid "All tools"
-msgstr ""
+msgstr "Alle tools"
 
 #: inc/plugin/class.PluginTool.php:69
 msgid "Choose tool"
-msgstr ""
+msgstr "Kies tools"
 
 #: inc/plugin/class.PluginTool.php:85
 msgid ""
 "Complex tools can analyze or process the complete database and will open in "
 "an overlay."
 msgstr ""
+"Met tools kunt u complexe wijzigingen in de database gedaan worden of grote "
+"hoeveelheden gegevens geanalyseerd worden."
 
 #: inc/plugin/class.PluginTool.php:88
 msgid "Installed tools"
-msgstr ""
+msgstr "Geïnstalleerde hulpprogramma 's"
 
 #: inc/plugin/class.PluginTool.php:95
 msgid "No tools installed."
-msgstr ""
+msgstr "Geen hulpprogramma's geïnstalleerd."
 
 #: inc/plugin/class.PluginInstaller.php:96
 msgid "Install plugin"
-msgstr ""
+msgstr "Installeer plugin"
 
 #: inc/plugin/class.PluginInstaller.php:109
 msgid "Uninstall plugin"
-msgstr ""
+msgstr "Verwijderen plugin"
 
 #: inc/plugin/class.PluginStat.php:227
 msgid "Choose time range"
-msgstr ""
+msgstr "Kies tijdsbereik"
 
 #: inc/plugin/class.PluginStat.php:316
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:325
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:545
 msgid "In total"
-msgstr ""
+msgstr "In totaal"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:77
 msgid "back to overview"
-msgstr ""
+msgstr "terug naar overzicht"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:83
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:134
 msgid "Plugin configuration"
-msgstr ""
+msgstr "Plugin configuratie"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:107
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:453
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:644
 msgid "Description"
-msgstr ""
+msgstr "Omschrijving"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:111
 msgid "The plugin is deactivated."
-msgstr ""
+msgstr "De plugin is gedeactiveerd."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:125
 msgid "There are no settings."
-msgstr ""
+msgstr "Er zijn geen instellingen."
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:143
 msgid "Activate plugin"
-msgstr ""
+msgstr "Activeer plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:144
 msgid "Deactivate plugin"
-msgstr ""
+msgstr "Deactiveren plugin"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:146
 msgid "Activation"
-msgstr ""
+msgstr "Activatie"
 
 #: inc/plugin/config/class.PluginConfigurationWindow.php:157
 msgid "Open tool"
-msgstr ""
+msgstr "Open hulpprogramma"
 
 #: inc/class.AdminView.php:173
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: inc/class.AdminView.php:175
 msgid "Maintenance mode"
-msgstr ""
+msgstr "Onderhoudsmodus"
 
 #: inc/class.AdminView.php:176
 msgid "Users can register"
-msgstr ""
+msgstr "Gebruikers kunnen zich registreren"
 
 #: inc/class.AdminView.php:177
 msgid "Users have to login"
-msgstr ""
+msgstr "Gebruikers moeten inloggen"
 
 #: inc/class.AdminView.php:178
 msgid "Garmin API-key"
-msgstr ""
+msgstr "Garmin API-sleutel"
 
 #: inc/class.AdminView.php:178
 msgid ""
 "Needed for any online-version of the Garmin Communicator<br>see http://"
 "developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/"
 msgstr ""
+"Voor elke online-versie van de Garmin Communicator <br>nodig Zie "
+"http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-"
+"site-key/"
 
 #: inc/class.AdminView.php:179
 msgid "Sender e-mail"
-msgstr ""
+msgstr "E-mail afzender"
 
 #: inc/class.AdminView.php:180
 msgid "Sender e-mail name"
-msgstr ""
+msgstr "Naam e-mail afzender"
 
 #: inc/class.AdminView.php:181
 msgid "SMTP: host"
-msgstr ""
+msgstr "SMTP: host"
 
 #: inc/class.AdminView.php:182
 msgid "SMTP: port"
-msgstr ""
+msgstr "SMTP: poort"
 
 #: inc/class.AdminView.php:183
 msgid "SMTP: encryption"
-msgstr ""
+msgstr "SMTP: encryptie"
 
 #: inc/class.AdminView.php:184
 msgid "SMTP: username"
-msgstr ""
+msgstr "SMTP: gebruikersnaam"
 
 #: inc/class.AdminView.php:185
 msgid "SMTP: password"
-msgstr ""
+msgstr "SMTP: wachtwoord"
 
 #: inc/class.AdminView.php:186
 msgid "OpenWeatherMap API-Key"
-msgstr ""
+msgstr "OpenWeatherMap API-sleutel"
 
 #: inc/class.AdminView.php:186
 msgid "Loading weather data requires an api key, see openweathermap.org/appid"
 msgstr ""
+"Laden van weergegevens vereist een api-sleutel, zie openweathermap.org/appid"
 
 #: inc/class.AdminView.php:187
 msgid "Nokia/Here App-ID"
-msgstr ""
+msgstr "Nokia/hier App-ID"
 
 #: inc/class.AdminView.php:187 inc/class.AdminView.php:188
 msgid "Nokia maps require an app-id/-token, see developer.here.com"
-msgstr ""
+msgstr "Nokia maps vereisen een app-id /-token, zie developer.here.com"
 
 #: inc/class.AdminView.php:188
 msgid "Nokia/Here Token"
-msgstr ""
+msgstr "Nokia/here Token"
 
 #: inc/class.AdminView.php:193
 msgid "<strong>config.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>config.php</strong> is niet schrijfbaar"
 
 #: inc/class.AdminView.php:193
 msgid "Changes can't be saved."
-msgstr ""
+msgstr "Wijzigingen kunnen niet worden opgeslagen."
 
 #: inc/class.AdminView.php:214
 msgid "Look for new plugins"
-msgstr ""
+msgstr "Zoeken naar nieuwe plugins"
 
 #: inc/class.AdminView.php:215
 msgid "Go"
-msgstr ""
+msgstr "Zoek"
 
 #: inc/class.AdminView.php:223
 msgid "<strong>/inc/plugin/pluginmap.php</strong> is not writable"
-msgstr ""
+msgstr "<strong>/Inc/plugin/pluginmap.php</strong> is niet beschrijfbaar"
 
 #: inc/class.AdminView.php:223
 msgid "These tools will not work."
-msgstr ""
+msgstr "Deze hulpprogramma's zullen niet werken."
 
 #: inc/class.AdminView.php:293
 msgid "User list"
-msgstr ""
+msgstr "Gebruikerslijst"
 
 #: inc/class.AdminView.php:297
 msgid "There are no registered users."
-msgstr ""
+msgstr "Er zijn geen geregistreerde gebruikers."
 
 #: inc/class.AdminView.php:307
 #: plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php:121
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:166
 msgid "since"
-msgstr ""
+msgstr "sinds"
 
 #: inc/class.AdminView.php:308
 msgid "last"
-msgstr ""
+msgstr "laatst"
 
 #: inc/class.AdminView.php:309
 msgid "Functions"
-msgstr ""
+msgstr "Functies"
 
 #: inc/class.AdminView.php:325
 msgid "Activate user"
-msgstr ""
+msgstr "Gebruiker activeren"
 
 #: inc/class.AdminView.php:350
 msgid "Server information"
