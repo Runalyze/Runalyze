@@ -1932,7 +1932,7 @@ label:active .checkbox-icon {
   opacity: 0;
   visibility: visible;
 }
-#ajax .tooltip,
+.overlay .tooltip,
 .fullscreen .tooltip {
   z-index: 3010;
 }
