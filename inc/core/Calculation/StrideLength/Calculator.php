@@ -6,6 +6,7 @@
 
 namespace Runalyze\Calculation\StrideLength;
 
+use Runalyze\Model\Activity;
 use Runalyze\Model\Trackdata;
 use Runalyze\Calculation\Distribution\TimeSeries;
 
@@ -85,5 +86,19 @@ class Calculator {
 		$Series->calculateStatistic();
 
 		return round($Series->mean());
+	}
+
+	/**
+	 * Calculate stride length for activity
+	 * Use this method if trackdata is not available
+	 * @param \Runalyze\Model\Activity\Object $activity
+	 * @return int [cm]
+	 */
+	static public function forActivity(Activity\Object $activity) {
+		if ($activity->cadence() > 0 && $activity->duration() > 0) {
+			return round($activity->distance() * 1000 * 100 / ($activity->cadence() * 2 / 60 * $activity->duration()));
+		}
+
+		return 0;
 	}
 }
