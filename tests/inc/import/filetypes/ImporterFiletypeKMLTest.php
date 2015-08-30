@@ -69,6 +69,25 @@ class ImporterFiletypeKMLTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * Test: standard file without explicit distance
+	 * Filename: "TomTom-without-distance-extension.kml" 
+	 */
+	public function testFileFromTomTomWithoutDistance() {
+		$this->object->parseFile('../tests/testfiles/kml/TomTom-without-distance-extension.kml');
+
+		$this->assertFalse( $this->object->hasMultipleTrainings() );
+		$this->assertFalse( $this->object->failed() );
+
+		$this->assertEquals( 5*60*60 + 51*60 + 51, $this->object->object()->getTimeInSeconds() );
+		$this->assertEquals( 12.816, $this->object->object()->getDistance(), '', 0.1);
+
+		$this->assertTrue( $this->object->object()->hasArrayLatitude() );
+		$this->assertTrue( $this->object->object()->hasArrayLongitude() );
+		$this->assertTrue( $this->object->object()->hasArrayDistance() );
+		$this->assertTrue( $this->object->object()->hasArrayTime() );
+	}
+
+	/**
 	 * Test: standard route
 	 * Filename: "Route-only.kml" 
 	 */
