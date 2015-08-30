@@ -7,7 +7,7 @@ $TABLENAME = 'training';
 $HIDDEN_KEYS = array(
 	'creator', 'creator_details', 'activity_id',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf'
+	'elapsed_time', 'groundcontact', 'vertical_oscillation', 'total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
@@ -39,7 +39,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route', 'pool_length'),
+		'fields'	=> array('use_vdot', 'shoeid', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
