@@ -115,10 +115,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear + 1);
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
-		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
+		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d) / $maxATL;
+		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d) / $maxCTL;
 		$TRIMPs[$index]    = $Trimps_raw[$d];
 		if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
 
