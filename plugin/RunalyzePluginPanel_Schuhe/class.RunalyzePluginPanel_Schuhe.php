@@ -125,7 +125,7 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
 					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>
-					<th>'.__('Weigth').'</th>
+					<th>'.__('Weight').'</th>
 				</tr>
 			</thead>
 			<tbody>';
