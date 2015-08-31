@@ -7769,11 +7769,11 @@ Licensed under the MIT license.
             }
         }
 
-        function setHideAction(elem) {
+        function setHideAction(elem, useNext) {
             elem.mouseenter(function() { $(this).css("cursor", "pointer"); })
                 .mouseleave(function() { $(this).css("cursor", "default"); })
                 .unbind("click").click(function() {
-                    plotLabelClicked($(this).parent().text());
+                    plotLabelClicked(useNext ? $(this).next().text() : $(this).parent().text());
                 });
         }
 
@@ -7787,7 +7787,7 @@ Licensed under the MIT license.
             var p = plot.getPlaceholder();
 
             setHideAction(p.find(".graphlabel"));
-            setHideAction(p.find(".legendColorBox"));
+            setHideAction(p.find(".legendColorBox"), true);
 
             if (!drawnOnce) {
                 drawnOnce = true;
