@@ -123,6 +123,18 @@ class SearchFormular extends Formular {
 	}
 
 	/**
+	 * Add field: notes
+	 */
+	private function addFieldNotes() {
+		$Field = new FormularInput('notes', __('Notes'));
+		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W33 );
+		$Field->setSize( FormularInput::$SIZE_FULL_INLINE );
+
+		$this->Fieldset->addField( $Field );
+		$this->Fieldset->addField( new FormularInputHidden('opt[notes]', '', 'like') );
+	}
+
+	/**
 	 * Init conditions fieldset
 	 */
 	protected function initConditions() {
@@ -130,6 +142,8 @@ class SearchFormular extends Formular {
 		$this->addConditionFieldWithChosen('shoeid', 'shoe', 'name', __('Shoe'), __('Choose shoe(s)'));
 		$this->addConditionFieldWithChosen('weatherid', 'weather', 'name', __('Weather'), __('Choose weather conditions'));
 		$this->addConditionFieldWithChosen('clothes', 'clothes', 'name', __('Clothing'), __('Choose clothing'));
+
+		$this->addFieldNotes();
 
 		$this->addConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
 		$this->addConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
