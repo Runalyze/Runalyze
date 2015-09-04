@@ -103,6 +103,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 1, $this->object->object()->Sport()->id() );
 
 			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
+
+			$this->assertEquals( 53, $this->object->object()->getFitVdotEstimate() );
+			$this->assertEquals( 816, $this->object->object()->getFitRecoveryTime() );
+			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 		}
 	}
 
@@ -139,6 +143,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( "10.55|46:49", $this->object->object()->Splits()->asString() );
 
 			$this->assertEquals( 46*60 + 50, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
+
+			$this->assertEquals( 65, $this->object->object()->getFitVdotEstimate() );
+			$this->assertEquals( 932, $this->object->object()->getFitRecoveryTime() );
+			$this->assertEquals( 0, $this->object->object()->getFitHRVscore() );
 		}
 	}
 
@@ -201,6 +209,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals( 35*60 + 32, $this->object->object()->Splits()->totalTime(), '', 5);
 
 			$this->assertEquals( 35*60 + 32, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
+
+			$this->assertEquals( 64, $this->object->object()->getFitVdotEstimate() );
+			$this->assertEquals( 1377, $this->object->object()->getFitRecoveryTime() );
+			$this->assertEquals( 458, $this->object->object()->getFitHRVscore() );
 		}
 	}
 
@@ -324,9 +336,10 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 			$this->assertTrue($this->object->object()->hasArrayDistance());
 			$this->assertTrue($this->object->object()->hasArrayLatitude());
 			$this->assertTrue($this->object->object()->hasArrayLongitude());
-                }
-        }
-        /*
+		}
+	}
+
+	/*
 	 * Test: hrv
 	 * Filename: "HRV-example.fit" 
 	 */
