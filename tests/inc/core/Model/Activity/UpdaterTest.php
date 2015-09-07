@@ -26,9 +26,9 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		\Cache::clean();
 		$this->PDO = \DB::getInstance();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",600,1,0,1)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`,`HFavg`) VALUES("",600,1,0,1,160)');
 		$this->OutdoorID = $this->PDO->lastInsertId();
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`,`HFavg`) VALUES("",400,0,0,0,100)');
 		$this->IndoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`km`,`time`,`accountid`) VALUES("",10,3000,0)');
 		$this->ShoeID1 = $this->PDO->lastInsertId();
@@ -138,6 +138,20 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($OldObject->vdotByHeartRate(), $Result->vdotByHeartRate());
 		$this->assertGreaterThan($OldObject->vdotWithElevation(), $Result->vdotWithElevation());
 		$this->assertGreaterThan($OldObject->jdIntensity(), $Result->jdIntensity());
+		$this->assertGreaterThan($OldObject->trimp(), $Result->trimp());
+	}
+
+	public function testTrimpCalculations() {
+		$OldObject = $this->fetch( $this->insert(array(
+			Object::TIME_IN_SECONDS => 3000,
+			Object::SPORTID => $this->IndoorID
+		)) );
+
+		$NewObject = clone $OldObject;
+		$NewObject->set(Object::SPORTID, $this->OutdoorID);
+
+		$Result = $this->update($NewObject, $OldObject);
+
 		$this->assertGreaterThan($OldObject->trimp(), $Result->trimp());
 	}
 

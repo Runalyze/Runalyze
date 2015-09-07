@@ -147,7 +147,12 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 			$this->NewObject->unsetRunningValues();
 		}
 
-		if ($this->ForceRecalculations || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)) {
+		if ($this->ForceRecalculations || (
+				(NULL === $this->Trackdata || !$this->Trackdata->has(Model\Trackdata\Object::TIME) || !$this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) && (
+					$this->hasChanged(Object::SPORTID) || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)
+				)
+			)
+		) {
 			$this->NewObject->set(Object::TRIMP, $Calculator->calculateTrimp());
 		}
 	}
@@ -179,7 +184,12 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function updatePower() {
 		if ($this->hasChanged(Object::SPORTID)) {
-			if (\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower()) {
+			if (
+				\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower() &&
+				NULL !== $this->Trackdata &&
+				$this->Trackdata->has(Model\Trackdata\Object::TIME) && 
+				$this->Trackdata->has(Model\Trackdata\Object::DISTANCE)
+			) {
 				$Calculator = new \Runalyze\Calculation\Power\Calculator(
 					$this->Trackdata,
 					$this->Route
