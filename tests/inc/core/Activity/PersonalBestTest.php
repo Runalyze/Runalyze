@@ -23,7 +23,7 @@ class PersonalBestTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE `'.PREFIX.'training`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 	}
 
 	protected function insert($dist, $s, $time = 0) {

@@ -22,14 +22,14 @@ class JobLoopTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO = DB::getInstance();
 		$this->PDO->exec('TRUNCATE TABLE `runalyze_route`');
 		$this->PDO->exec('TRUNCATE TABLE `runalyze_trackdata`');
-		$this->PDO->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->PDO->exec('DELETE FROM `runalyze_training`');
 
 		$_POST = array();
 	}
 	protected function tearDown() {
 		$this->PDO->exec('TRUNCATE TABLE `runalyze_route`');
 		$this->PDO->exec('TRUNCATE TABLE `runalyze_trackdata`');
-		$this->PDO->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->PDO->exec('DELETE FROM `runalyze_training`');
 
 		$_POST = array();
 	}

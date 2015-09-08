@@ -127,6 +127,30 @@ class Factory {
 	}
 
 	/**
+	 * Equipment type
+	 * @param int $equipmentTypeid
+	 * @return \Runalyze\Model\EquipmentType\Object
+	 */
+	public function equipmentType($equipmentTypeid) {
+		return new EquipmentType\Object(
+			// TODO: The factory must be able to fetch all rows at once
+			$this->arrayByPK('equipment_type', $equipmentTypeid)
+		);
+	}
+
+	/**
+	 * Equipment
+	 * @param int $equipmentid
+	 * @return \Runalyze\Model\Equipment\Object
+	 */
+	public function equipment($equipmentid) {
+		return new Equipment\Object(
+			// TODO: The factory must be able to fetch all rows at once
+			$this->arrayByPK('equipment', $equipmentid)
+		);
+	}
+
+	/**
 	 * Array by primary key
 	 * @param string $tablename
 	 * @param int $id

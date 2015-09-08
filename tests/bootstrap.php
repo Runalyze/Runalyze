@@ -41,6 +41,8 @@ $_SERVER['SCRIPT_NAME'] = '/runalyze/index.php';
 // Load and clean database
 DB::connect('127.0.0.1', 'root', '', 'runalyze_unittest');
 DB::getInstance()->exec('SET GLOBAL sql_mode="TRADITIONAL"');
+DB::getInstance()->exec('DELETE FROM `runalyze_account`');
+DB::getInstance()->exec('INSERT INTO `runalyze_account` (`id`,`username`,`mail`) VALUES(1, "test", "test@test.com")');
 
 // Language functions
 if (!function_exists('__')) {

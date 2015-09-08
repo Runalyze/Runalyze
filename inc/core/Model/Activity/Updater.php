@@ -103,7 +103,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function ignore($key) {
 		if ($key == Object::DISTANCE || $key == Object::TIME_IN_SECONDS) {
-			if ($this->OldObject == null) {
+			// TODO: needed if equipment is set
+			if ($this->OldObject == null && false) {
 				throw new \RuntimeException('For an update of distance or duration the old object has to be set.');
 			}
 		}

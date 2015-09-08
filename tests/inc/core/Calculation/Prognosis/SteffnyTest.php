@@ -33,7 +33,7 @@ class SteffnyTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(  16*60 +  6, $this->object->inSeconds(5), '', 1 );
 		$this->assertEquals(  33*60 + 12, $this->object->inSeconds(10), '', 1 );
 
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
 	public function testSetReferenceFrom10kTime() {

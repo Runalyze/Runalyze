@@ -35,8 +35,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
 
 		\Cache::clean();
 	}

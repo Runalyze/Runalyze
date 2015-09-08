@@ -37,7 +37,7 @@ class BockTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(  76*60 + 14, $this->object->inSeconds(21.1), '', 1 );
 		$this->assertEquals( 159*60 +  7, $this->object->inSeconds(42.2), '', 1 );
 
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
 	public function testSetFromResultsAndInSeconds() {

@@ -13,7 +13,7 @@ class ModelQueryTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->DB = \DB::getInstance();
-		$this->DB->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->DB->exec('DELETE FROM `runalyze_training`');
 
 		$Date = new \DateTime('today 15:30');
 		$this->DB->insert('training', array('time', 'trimp', 'sportid'), array($Date->getTimestamp(), 100, 1));
@@ -31,7 +31,7 @@ class ModelQueryTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		$this->DB->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->DB->exec('DELETE FROM `runalyze_training`');
 	}
 
 	public function testSimpleQuery() {

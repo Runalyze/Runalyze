@@ -25,7 +25,7 @@ class BasicEnduranceTest extends PHPUnit_Framework_TestCase {
 	 * This method is called after a test is executed.
 	 */
 	protected function tearDown() {
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_training`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
 	/**

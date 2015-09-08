@@ -41,7 +41,7 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function truncateTables() {
-		$this->DB->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->DB->exec('DELETE FROM `runalyze_training`');
 		$this->DB->exec('TRUNCATE TABLE `runalyze_user`');
 
 		$this->DB->exec('DELETE FROM `runalyze_conf` WHERE `key`="TEST_CONF"');
