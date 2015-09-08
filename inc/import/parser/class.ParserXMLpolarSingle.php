@@ -91,7 +91,13 @@ class ParserXMLpolarSingle extends ParserAbstractSingleXML {
 				$distance = round(((double)$Lap->distance)/1000, 2);
 				$Time = new Duration((string)$Lap->duration);
 
-				$this->TrainingObject->Splits()->addSplit($distance, $Time->seconds());
+				$seconds = $Time->seconds();
+
+                if (($seconds / (double)$Lap->distance) < 0.06) {
+                    $seconds = $seconds * 60;
+                }
+
+				$this->TrainingObject->Splits()->addSplit($distance, $seconds);
 			}
 		}
 	}
