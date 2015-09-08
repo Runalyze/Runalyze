@@ -228,7 +228,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update stride length
 	 */
 	protected function updateStrideLength() {
-		if ($this->hasChanged(Object::SPORTID) || true) {
+		if ($this->hasChanged(Object::SPORTID)) {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
 				if (NULL !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
 					$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
