@@ -207,6 +207,8 @@ class Prognose_PrognosisWindow {
 			$PacePrognosis = new Pace($Prognosis, $km, Pace::MIN_PER_KM);
 			$PacePB = new Pace($PB->seconds(), $km, Pace::MIN_PER_KM);
 
+			$DateWithLink = Ajax::trainingLink($PB->activityId(), date('d.m.Y', $PB->timestamp()), true);
+
 			$this->Prognoses[] = array(
 				'distance'	=> Distance::format($km, $km <= 3),
 				'prognosis'		=> Duration::format($Prognosis),
@@ -217,7 +219,7 @@ class Prognose_PrognosisWindow {
 				'pb'			=> $PB->seconds() > 0 ? Duration::format($PB->seconds()) : '-',
 				'pb-pace'		=> $PB->seconds() > 0 ? $PacePB->valueWithAppendix() : '-',
 				'pb-vdot'		=> $PB->seconds() > 0 ? $VDOTpb->uncorrectedValue() : '-',
-				'pb-date'		=> $PB->seconds() > 0 ? date('d.m.Y', $PB->timestamp()) : '-'
+				'pb-date'		=> $PB->seconds() > 0 ? $DateWithLink : '-'
 			);
 		}
 	}

@@ -19,3 +19,6 @@ ALTER TABLE `runalyze_swimdata`
  ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
 
 ALTER TABLE `runalyze_training` ADD `total_strokes` smallint(5) unsigned NOT NULL DEFAULT '0', ADD `swolf` tinyint(3) unsigned NOT NULL DEFAULT '0' AFTER `power`;
+
+/* 04.09.2015 - add recovery advisor for fit files */
+ALTER TABLE `runalyze_training` ADD `fit_vdot_estimate` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0' AFTER `use_vdot`, ADD `fit_recovery_time` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `fit_vdot_estimate`, ADD `fit_hrv_analysis` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `fit_recovery_time`;

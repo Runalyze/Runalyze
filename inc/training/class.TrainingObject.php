@@ -672,6 +672,15 @@ class TrainingObject extends DataObject {
 	 */
 	public function usedForVdot() { return $this->get('use_vdot') == 1; }
 
+	public function setFitVdotEstimate($vdot) { $this->set('fit_vdot_estimate', $vdot); }
+	public function getFitVdotEstimate() { return $this->get('fit_vdot_estimate'); }
+
+	public function setFitRecoveryTime($minutes) { $this->set('fit_recovery_time', $minutes); }
+	public function getFitRecoveryTime() { return $this->get('fit_recovery_time'); }
+
+	public function setFitHRVscore($score) { $this->set('fit_hrv_analysis', $score); }
+	public function getFitHRVscore() { return $this->get('fit_hrv_analysis'); }
+
 
 	/**
 	 * Get JD intensity

@@ -535,7 +535,7 @@ abstract class PlotSumData extends Plot {
 	 */
 	private function setDataForTypes() {
 		$emptyData = array_fill(0, $this->timerEnd - $this->timerStart + 1, 0);
-		$Types     = array(array('name' => 'ohne', 'data' => $emptyData));
+		$Types     = array(array('name' => __('without'), 'data' => $emptyData));
 		$TypesData = DB::getInstance()->query('
 			SELECT
 				id, name
@@ -574,10 +574,12 @@ abstract class PlotSumData extends Plot {
 
 		// TODO: currently, only ONE competition type is allowed (and used for running)
 		// if ($this->Sport->hasTypes())
-		if ($this->Sport->isRunning())
+		if ($this->Sport->isRunning()) {
 			$this->Data[] = array('label' => __('Competition'), 'data' => $KilometersCompetition);
-
-		$this->Data[] = array('label' => __('Activity'), 'data' => $Kilometers, 'color' => '#E68617');
+			$this->Data[] = array('label' => __('Training'), 'data' => $Kilometers, 'color' => '#E68617');
+		} else {
+			$this->Data[] = array('label' => $this->Sport->name(), 'data' => $Kilometers, 'color' => '#E68617');
+		}
 	}
 
 	/**

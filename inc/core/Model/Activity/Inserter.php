@@ -182,14 +182,15 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Calculate stride length
 	 */
 	protected function calculateStrideLength() {
-		if (
-			$this->Object->sportid() == Configuration::General()->runningSport() &&
-			(NULL !== $this->Trackdata)
-		) {
-			$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
-			$Calculator->calculate();
+		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
+			if (NULL !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
+				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
+				$Calculator->calculate();
 
-			$this->Object->set(Object::STRIDE_LENGTH, $Calculator->average());
+				$this->Object->set(Object::STRIDE_LENGTH, $Calculator->average());
+			} elseif ($this->Object->cadence() > 0) {
+				$this->Object->set(Object::STRIDE_LENGTH, \Runalyze\Calculation\StrideLength\Calculator::forActivity($this->Object));
+			}
 		}
 	}
 

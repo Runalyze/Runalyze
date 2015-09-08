@@ -28,7 +28,7 @@ $Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$_GET['y'];
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$StartYear    = !$All ? $Year : START_YEAR;
 	$StartYear    = $lastHalf ? date('Y', strtotime("today -180days")) : $StartYear;
-	$StartYear    = $lastYear ? date('Y', strtotime("today -365days")) : $StartYear;
+	$StartYear    = $lastYear ? date('Y', strtotime("today -1 year")) : $StartYear;
 	$EndYear      = !$All && !$lastHalf ? $Year : date('Y');
 	$MaxDays      = ($EndYear - $StartYear + 1)*366;
 	$MaxDays      = $lastHalf ? 366 : $MaxDays;
@@ -36,10 +36,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$AddDays      = 3*max(Configuration::Trimp()->daysForATL(), Configuration::Trimp()->daysForCTL(), Configuration::Vdot()->days());
 	$StartTime    = !$All ? mktime(0,0,0,1,1,$StartYear) : strtotime("today 00:00", START_TIME);
 	$StartTime    = $lastHalf ? strtotime("today 00:00 -180days") : $StartTime;
-	$StartTime    = $lastYear ? strtotime("today 00:00 -365days") : $StartTime;
+	$StartTime    = $lastYear ? strtotime("today 00:00 -1 year") : $StartTime;
 	$StartDay     = date('Y-m-d', $StartTime);
-	$EndTime      = !$All && $Year < date('Y') ? mktime(0,0,0,12,31,$Year) : strtotime("today 00:00");
-	$EndTime      = $lastHalf || $lastYear ? strtotime("today 00:00 +30days") : $EndTime;
+	$EndTime      = !$All && $Year < date('Y') ? mktime(23,59,0,12,31,$Year) : strtotime("today 23:59");
+	$EndTime      = $lastHalf || $lastYear ? strtotime("today 23:59 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 
 	$EmptyArray    = array_fill(0, $MaxDays + $AddDays + 1, 0);
@@ -82,7 +82,8 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		}
 	}
 
-	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1 : 0;
+	$TodayIndex = Time::diffInDays($StartTime) + $AddDays;
+	$StartDayInYear = $All || $lastHalf || $lastYear ? Time::diffInDays($StartTime, mktime(0,0,0,1,1,$StartYear)) + 1 + 1*($StartYear < $Year) : 1;
 	$LowestIndex = $AddDays + 1;
 	$HighestIndex = $AddDays + 1 + $NumberOfDays;
 
@@ -115,10 +116,10 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	}
 
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
-		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear + 1);
+		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d - 1) / $maxATL;
-		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d - 1) / $maxCTL;
+		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d) / $maxATL;
+		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d) / $maxCTL;
 		$TRIMPs[$index]    = $Trimps_raw[$d];
 		if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
 
@@ -132,7 +133,6 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		}
 
 		if ( $VDOTs_raw[$d]) $VDOTsday[$index]= Configuration::Data()->vdotFactor() * ($VDOTs_raw[$d]/$Durations_raw[$d]);
-
 	}
 } else {
 	$DataFailed = true;
@@ -175,7 +175,7 @@ $Plot->showAsPoints(4);
 $Plot->smoothing(false);
 
 if (($lastHalf || $lastYear) && !$DataFailed) {
-	$Plot->addMarkingArea('x',Plot::dayOfYearToJStime($StartYear, $HighestIndex-30 - $AddDays + $StartDayInYear + 1), $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
+	$Plot->addMarkingArea('x', time().'000', $index, 'rgba(255,255,255,0.3)');//'rgba(200,200,200,0.5)');
 }
 
 $Plot->setGridAboveData();

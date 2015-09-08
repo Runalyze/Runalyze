@@ -387,7 +387,7 @@ fieldset .with33erLabel label {
   width: 14.85%;
 }
 fieldset .with33erLabel .full-size {
-  width: 85%;
+  width: 84%;
 }
 fieldset .w50.with33erLabel label {
   width: 29.7%;
@@ -1932,7 +1932,7 @@ label:active .checkbox-icon {
   opacity: 0;
   visibility: visible;
 }
-#ajax .tooltip,
+.overlay .tooltip,
 .fullscreen .tooltip {
   z-index: 3010;
 }

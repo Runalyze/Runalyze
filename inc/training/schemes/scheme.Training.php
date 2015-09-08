@@ -10,8 +10,9 @@ $HIDDEN_KEYS = array(
 	//'elevation_corrected', 'gps_cache_object',
 	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'pauses', 'hrv',
+	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
-	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf'
+	'elapsed_time', 'elevation_calculated', 'groundcontact', 'vertical_oscillation', 'stroke', 'stroketype','total_strokes', 'swolf', 'pool_length'
 );
 
 $FIELDSETS = array(
@@ -289,6 +290,36 @@ $FIELDS = array(
 						'label'		=> __('VDOT for form'),
 						'class'		=> 'FormularCheckbox',
 						'css'		=> TrainingFormular::$ONLY_RUNNING_CLASS
+					)
+	),
+	'fit_vdot_estimate'	=> array(
+					'database'	=> array(
+						'type'		=> 'tinyint',
+						'precision'	=> '2',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'fit_recovery_time'	=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '5',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'fit_hrv_analysis'	=> array(
+					'database'	=> array(
+						'type'		=> 'smallint',
+						'precision'	=> '5',
+						'default'	=> '0'
+					),
+					'formular'	=> array(
+						'hidden'	=> true
 					)
 	),
 	'jd_intensity'		=> array(
@@ -613,7 +644,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'stroke'	=> array(
+	'stroke'			=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',
@@ -622,7 +653,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'stroketype'	=> array(
+	'stroketype'		=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',
@@ -631,7 +662,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-    	'total_strokes'			=> array(
+    'total_strokes'		=> array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
@@ -641,7 +672,7 @@ $FIELDS = array(
 						'label'		=> __('Total strokes')
 					)
 	),
-    	'swolf' 			=> array(
+    'swolf'				=> array(
 					'database'	=> array(
 						'type'		=> 'int',
 						'precision'	=> '4',
@@ -651,7 +682,7 @@ $FIELDS = array(
 						'label'		=> __('SWOLF')
 					)
 	),
-    	'pool_length' 			=> array(
+    'pool_length'		=> array(
 					'database'	=> array(
 						'type'		=> 'smallint',
 						'precision'	=> '4',

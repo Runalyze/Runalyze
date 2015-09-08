@@ -304,8 +304,8 @@ class Plot {
 	 * Add a marking area
 	 * @param string $axis
 	 * @param double $from
+	 * @param double $to
 	 * @param string $color
-	 * @param int $lineWidth
 	 */
 	public function addMarkingArea($axis, $from, $to, $color ='rgba(255,255,255,0.2)') {
 		$this->Options['grid']['markings'][] = array(

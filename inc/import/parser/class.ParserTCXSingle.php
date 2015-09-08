@@ -121,6 +121,9 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 		$this->TrainingObject->setActivityId( (string)$this->XML->Id );
 		$this->TrainingObject->setCreatorDetails( $this->findCreator() );
 		$this->findSportId();
+		
+		if (!empty($this->XML->Notes))
+            $this->TrainingObject->setNotes( (string)$this->XML->Notes );
 
 		if (!empty($this->XML->Training))
 			$this->TrainingObject->setComment( (string)$this->XML->Training->Plan->Name );

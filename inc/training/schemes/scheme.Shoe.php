@@ -62,7 +62,7 @@ $FIELDS['weight'] = array(
 		'precision'	=> '3',
 	),
 	'formular'	=> array(
-		'label'		=> __('weigth'),
+		'label'		=> __('weight'),
 		'unit'		=> FormularUnit::$G
 	)
 );

@@ -197,6 +197,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 		$this->setAvgPowerFromArray();
 		$this->setTemperatureFromArray();
 		$this->setRunningDynamicsFromArray();
+		$this->setDistanceFromGPSdata();
 	}
 
 	/**
@@ -261,6 +262,35 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 		if (!empty($array) && (min($array) != max($array) || min($array) != 0))
 			$this->TrainingObject->setTemperature( round(array_sum($array)/count($array)) );
+	}
+
+	/**
+	 * Calculate distance
+	 */
+	private function setDistanceFromGPSdata() {
+		if (!empty($this->gps['latitude']) && !empty($this->gps['longitude']) && empty($this->gps['km'])) {
+			$num = count($this->gps['latitude']);
+			$this->gps['km'] = array(0);
+			$lastDistance = 0;
+
+			for ($i = 1; $i < $num; ++$i) {
+				$step = round(
+					GpsData::distance(
+						$this->gps['latitude'][$i-1],
+						$this->gps['longitude'][$i-1],
+						$this->gps['latitude'][$i],
+						$this->gps['longitude'][$i]
+					),
+					ParserAbstract::DISTANCE_PRECISION
+				);
+
+				$this->gps['km'][] = $lastDistance + $step;
+				$lastDistance += $step;
+			}
+
+			$this->TrainingObject->setArrayDistance( $this->gps['km'] );
+			$this->TrainingObject->setDistance( end($this->gps['km']) );
+		}
 	}
 
 	/**

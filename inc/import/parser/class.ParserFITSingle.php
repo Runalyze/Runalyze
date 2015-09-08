@@ -223,6 +223,23 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read event
 	 */
 	protected function readEvent() {
+		if (isset($this->Values['event']) && isset($this->Values['data'])) {
+			switch ((int)$this->Values['event'][1]) {
+				case 37:
+					$this->TrainingObject->setFitVdotEstimate((int)$this->Values['data'][1]);
+					return;
+
+				case 38:
+					$this->TrainingObject->setFitRecoveryTime((int)$this->Values['data'][1]);
+					return;
+
+				case 39:
+					$this->TrainingObject->setFitHRVscore((int)$this->Values['data'][1]);
+					return;
+
+			}
+		}
+
 		if (!isset($this->Values['event']) || $this->Values['event'][1] != 'timer' || !isset($this->Values['event_type']))
 			return;
 
