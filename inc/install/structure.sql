@@ -46,11 +46,9 @@ DROP TRIGGER IF EXISTS `del_tr_train`;
 DELIMITER //
 CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
  FOR EACH ROW BEGIN
-		DELETE FROM runalyze_clothes WHERE accountid = OLD.id;
 		DELETE FROM runalyze_conf WHERE accountid = OLD.id;
 		DELETE FROM runalyze_dataset WHERE accountid = OLD.id;
 		DELETE FROM runalyze_plugin WHERE accountid = OLD.id;
-		DELETE FROM runalyze_shoe WHERE accountid = OLD.id;
 		DELETE FROM runalyze_sport WHERE accountid = OLD.id;
 		DELETE FROM runalyze_training WHERE accountid = OLD.id;
 		DELETE FROM runalyze_type WHERE accountid = OLD.id;
@@ -68,20 +66,6 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `runalyze_activity_equipment` (
   `activityid` int(10) unsigned NOT NULL,
   `equipmentid` int(10) unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `runalyze_clothes`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_clothes` (
-`id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `short` varchar(20) NOT NULL DEFAULT '',
-  `order` tinyint(1) NOT NULL DEFAULT '0',
-  `accountid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -128,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
   `name` varchar(50) NOT NULL,
   `typeid` int(10) unsigned NOT NULL DEFAULT '0',
   `notes` tinytext NOT NULL,
-  `distance` int(10) unsigned NOT NULL DEFAULT '0',
+  `distance` decimal(8,2) unsigned NOT NULL DEFAULT '0.00',
   `time` int(10) unsigned NOT NULL DEFAULT '0',
   `additional_km` int(10) unsigned NOT NULL DEFAULT '0',
   `date_start` date DEFAULT NULL,
@@ -236,24 +220,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_route` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `runalyze_shoe`
---
-
-CREATE TABLE IF NOT EXISTS `runalyze_shoe` (
-`id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `since` varchar(10) NOT NULL DEFAULT '01.01.2000',
-  `weight` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `km` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `time` int(11) NOT NULL DEFAULT '0',
-  `inuse` tinyint(1) NOT NULL DEFAULT '1',
-  `additionalKm` decimal(6,2) NOT NULL DEFAULT '0.00',
-  `accountid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `runalyze_sport`
 --
 
@@ -348,12 +314,10 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `weatherid` smallint(6) NOT NULL DEFAULT '1',
   `route` text,
   `routeid` int(10) unsigned NOT NULL DEFAULT '0',
-  `clothes` varchar(100) NOT NULL DEFAULT '',
   `splits` mediumtext,
   `comment` text,
   `partner` text,
   `abc` smallint(1) NOT NULL DEFAULT '0',
-  `shoeid` int(11) NOT NULL DEFAULT '0',
   `notes` text,
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',
@@ -414,12 +378,6 @@ ALTER TABLE `runalyze_activity_equipment`
  ADD PRIMARY KEY (`activityid`,`equipmentid`), ADD KEY `equipmentid` (`equipmentid`);
 
 --
--- Indizes für die Tabelle `runalyze_clothes`
---
-ALTER TABLE `runalyze_clothes`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
-
---
 -- Indizes für die Tabelle `runalyze_conf`
 --
 ALTER TABLE `runalyze_conf`
@@ -474,12 +432,6 @@ ALTER TABLE `runalyze_route`
  ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
 
 --
--- Indizes für die Tabelle `runalyze_shoe`
---
-ALTER TABLE `runalyze_shoe`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
-
---
 -- Indizes für die Tabelle `runalyze_sport`
 --
 ALTER TABLE `runalyze_sport`
@@ -525,11 +477,6 @@ ALTER TABLE `runalyze_user`
 ALTER TABLE `runalyze_account`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT für Tabelle `runalyze_clothes`
---
-ALTER TABLE `runalyze_clothes`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT für Tabelle `runalyze_conf`
 --
 ALTER TABLE `runalyze_conf`
@@ -564,11 +511,6 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `runalyze_route`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `runalyze_shoe`
---
-ALTER TABLE `runalyze_shoe`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `runalyze_sport`
 --

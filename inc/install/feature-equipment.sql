@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
   `name` varchar(50) NOT NULL,
   `typeid` int(10) unsigned NOT NULL DEFAULT '0',
   `notes` tinytext NOT NULL,
-  `distance` int(10) unsigned NOT NULL DEFAULT '0',
+  `distance` decimal(8,2) unsigned NOT NULL DEFAULT '0.00',
   `time` int(10) unsigned NOT NULL DEFAULT '0',
   `additional_km` int(10) unsigned NOT NULL DEFAULT '0',
   `date_start` date DEFAULT NULL,
