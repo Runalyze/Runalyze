@@ -187,7 +187,7 @@ class EquipmentFactory {
 	 * @return string
 	 */
 	static public function getSearchLinkForSingleEquipment($id) {
-		return SearchLink::to('equipment', $id, self::NameFor($id));
+		return SearchLink::to('equipmentid', $id, self::NameFor($id));
 	}
         
 }

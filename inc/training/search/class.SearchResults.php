@@ -88,8 +88,8 @@ class SearchResults {
 		$this->allowedKeys = array(
 			'typeid',
 			'weatherid',
-			
-                        'distance',
+
+			'distance',
 			's',
 			'pulse_avg',
 
@@ -145,8 +145,8 @@ class SearchResults {
 
 		$this->Trainings = DB::getInstance()->query(
 			'SELECT
-				id,
-				time
+				`id`,
+				`time`
 				'.($this->multiEditorRequested() ? '' : $this->Dataset->getQuerySelectForAllDatasets()).'
 			FROM `'.PREFIX.'training`
 			'.$this->getWhere().$this->getOrder().$this->getLimit()
@@ -158,7 +158,7 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getWhere() {
-		$conditions = array();
+		$conditions = array('`accountid`="'.SessionAccountHandler::getId().'"');
 
 		if (isset($_POST['sportid']))
 			$this->addSportCondition($conditions);
@@ -178,11 +178,7 @@ class SearchResults {
 	
 		$this->addConditionsForOrder($conditions);
 
-
-		if (empty($conditions))
-			return 'WHERE 1';
-
-		return 'WHERE '.implode(' AND ', $conditions);
+		return $this->getEquipmentCondition().' WHERE '.implode(' AND ', $conditions);
 	}
 
 	/**
@@ -281,12 +277,12 @@ class SearchResults {
 			$conditions[] = '`sportid`="'.(int)$_POST['sportid'].'"';
 		}
 	}
-        
- 	/**
-	 * Add equipment condition
+
+	/**
+	 * Get equipment condition
+	 * @return string
 	 */
-        //TODO - Has to be a JOIN Condition with IN (
-	private function addEquipmentCondition() {
+	private function getEquipmentCondition() {
 		if (is_array($_POST['equipmentid'])) {
 			$array = array_map(
 				function ($value) {
@@ -294,13 +290,13 @@ class SearchResults {
 				},
 				$_POST['equipmentid']
 			);
-                                
-			//$conditions[] = '`id` IN('.implode(',', $array).')';
-                        return 'LEFT JOIN (SELECT ae.activityid FROM `'.PREFIX.'activity_equipment` ae WHERE ae.equipmentid IN('.implode(',', $array).'))  ON ae.activityid = `id`';
+
+			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `sub` ON `sub`.`activityid` = `'.PREFIX.'training`.`id`';
+		} elseif (isset($_POST['equipmentid'])) {
+			return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
 		} else {
-			//$conditions[] = '`id`="'.(int)$_POST['sportid'].'"';
+			return '';
 		}
-               
 	}
 
 	/**

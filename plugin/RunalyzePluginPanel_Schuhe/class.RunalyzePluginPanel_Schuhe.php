@@ -102,10 +102,9 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				$inuse = false;
 			}
 
-			// TODO: search link
 			echo '<p style="position:relative;">
 				<span class="right">'.$Distance->string().'</span>
-				<strong>'.$Object->name().'</strong>
+				<strong>'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</strong>
 				'.$this->getUsageImage($Object->distance()).'
 			</p>';
 		}
@@ -172,10 +171,9 @@ class RunalyzePluginPanel_Schuhe extends PluginPanel {
 				$Pace = new Pace($Object->duration(), $Object->distance());
 				$MaxPace = new Pace($data['pace_in_s'], 1);
 
-				// TODO: search link
 				echo '<tr class="'.$in_use.' r" style="position: relative">
 					<td class="small">'.$data['num'].'x</td>
-					<td class="b l">'.$Object->name().'</td>
+					<td class="b l">'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</td>
 					<td class="small">'.$this->formatData($Object->startDate()).'</td>
 					<td>'.(($data['num'] != 0) ? Distance::format($Object->distance()/$data['num']) : '-').'</td>
 					<td>'.(($Object->duration() > 0) ? $Pace->asMinPerKm().'/km' : '-').'</td>
