@@ -111,7 +111,13 @@ if ($count < $countAccount) {
             ':accountid' => $Row['id']
         ));
         $ShoeTypeId = $PDO->lastInsertId();
-        
+
+		// TODO: rename to RunalyzePluginPanel_Equipment
+		$equipmentPlugin = $PDO->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `key`="RunalyzePluginPanel_Schuhe" AND `accountid`="'.$Row['id'].'" LIMIT 1')->fetchColumn();
+		if ($equipmentPlugin) {
+			$PDO->exec('INSERT INTO `'.PREFIX.'plugin_conf` (`pluginid`, `config`, `value`) VALUES ("'.$equipmentPlugin.'", "type", "'.$ShoeTypeId.'")');
+		}
+
 		$shoetable = $PDO->query('SELECT `id`, `name`, `since`, `weight`, `km`, `time`, `additionalKm`, `inuse`  FROM `'.PREFIX.'shoe` WHERE `accountid`='.$Row['id']); 
 		$shoeMap = array();
 

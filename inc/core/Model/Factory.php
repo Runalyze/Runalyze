@@ -139,6 +139,28 @@ class Factory {
 	}
 
 	/**
+	 * Sport for equipment type
+	 * @param int $equipmentTypeid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\Sport\Object[]
+	 */
+	public function sportForEquipmentType($equipmentTypeid, $onlyIDs = false) {
+		$Sport = array();
+
+		$IDs = $this->DB->query('SELECT `sportid` FROM `'.PREFIX.'equipment_sport` WHERE `equipment_typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+
+		if ($onlyIDs) {
+			return $IDs;
+		}
+
+		foreach ($IDs as $id) {
+			$Sport[] = $this->sport($id);
+		}
+
+		return $Sport;
+	}
+
+	/**
 	 * Equipment
 	 * @param int $equipmentid
 	 * @return \Runalyze\Model\Equipment\Object
@@ -148,6 +170,28 @@ class Factory {
 			// TODO: The factory must be able to fetch all rows at once
 			$this->arrayByPK('equipment', $equipmentid)
 		);
+	}
+
+	/**
+	 * Equipment for activity
+	 * @param int $activityid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\Equipment\Object[]
+	 */
+	public function equipmentForActivity($activityid, $onlyIDs = false) {
+		$Equipment = array();
+
+		$IDs = $this->DB->query('SELECT `equipmentid` FROM `'.PREFIX.'activity_equipment` WHERE `activityid`="'.$activityid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+
+		if ($onlyIDs) {
+			return $IDs;
+		}
+
+		foreach ($IDs as $id) {
+			$Equipment[] = $this->equipment($id);
+		}
+
+		return $Equipment;
 	}
 
 	/**

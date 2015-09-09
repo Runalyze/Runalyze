@@ -164,6 +164,22 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
+	 * Additional distance
+	 * @return int [km]
+	 */
+	public function additionalDistance() {
+		return $this->Data[self::ADDITIONAL_KM];
+	}
+
+	/**
+	 * Total distance
+	 * @return int [km]
+	 */
+	public function totalDistance() {
+		return $this->Data[self::DISTANCE] + $this->Data[self::ADDITIONAL_KM];
+	}
+
+	/**
 	 * Start date
 	 * @return string Y-m-d
 	 */

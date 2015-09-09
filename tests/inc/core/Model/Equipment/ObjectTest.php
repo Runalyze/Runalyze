@@ -11,6 +11,8 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$Equipment = new Object(array(
 			Object::NAME => 'Equipment name',
 			Object::NOTES => 'Here are some notes',
+			Object::DISTANCE => 123.45,
+			Object::ADDITIONAL_KM => 50,
 			Object::DATE_START => '2015-01-01',
 			Object::DATE_END => null
 		));
@@ -21,6 +23,10 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('2015-01-01', $Equipment->startDate());
 		$this->assertTrue($Equipment->isInUse());
 		$this->assertEquals(null, $Equipment->endDate());
+
+		$this->assertEquals(123.45, $Equipment->distance());
+		$this->assertEquals(50, $Equipment->additionalDistance());
+		$this->assertEquals(173.45, $Equipment->totalDistance());
 	}
 
 }

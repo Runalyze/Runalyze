@@ -17,6 +17,7 @@ $PLUGINMAP = array(
 'RunalyzePluginStat_Hoehenmeter' => '../plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php',
 'RunalyzePluginTool_MultiEditor' => '../plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php',
 'RunalyzePluginTool_DatenbankCleanup' => '../plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php',
+'RunalyzePluginPanel_Schuhe' => '../plugin/RunalyzePluginPanel_Schuhe/class.RunalyzePluginPanel_Schuhe.php',
 'RunalyzePluginPanel_Sports' => '../plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php',
 'RunalyzePluginPanel_Rechenspiele' => '../plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php',
 'RunalyzePluginPanel_Prognose' => '../plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php',
