@@ -64,8 +64,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
-
-                
 	}
 
 	/**
@@ -187,7 +185,28 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add equipment
 	 */
 	protected function addEquipment() {
-            //TODO
+		$Types = array();
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$Equipment = $Factory->equipmentForActivity($this->Context->activity()->id());
+
+		foreach ($Equipment as $Object) {
+			$Link = SearchLink::to('equipmentid', $Object->id(), $Object->name());
+
+			if (isset($Types[$Object->typeid()])) {
+				$Types[$Object->typeid()][] = $Link;
+			} else {
+				$Types[$Object->typeid()] = array($Link);
+			}
+		}
+
+		foreach ($Types as $typeid => $links) {
+			$Type = $Factory->equipmentType($typeid);
+
+			$Value = new BoxedValue(implode(', ', $links), '', $Type->name());
+			$Value->defineAsFloatingBlock('w100 flexible-height');
+
+			$this->BoxedValues[] = $Value;
+		}
 	}
 
 	/**
