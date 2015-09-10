@@ -75,6 +75,25 @@ class ParserFITSingle extends ParserAbstractSingle {
 	}
 
 	/**
+	 * Start a new activity at current point
+	 */
+	public function startNewActivity() {
+		$timestamp = $this->TrainingObject->getTimestamp() + max($this->TrainingObject->getTimeInSeconds(), $this->TrainingObject->getElapsedTime());
+		$creator = $this->TrainingObject->getCreator();
+
+		$this->TrainingObject = new TrainingObject(array());
+		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
+		$this->TrainingObject->setCreator($creator);
+
+		$this->isPaused = false;
+		$this->isSwimming = false;
+
+		foreach (array_keys($this->gps) as $key) {
+			$this->gps[$key] = array();
+		}
+	}
+
+	/**
 	 * Finish parsing
 	 */
 	public function finishParsing() {

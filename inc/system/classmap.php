@@ -145,6 +145,7 @@ $CLASSMAP = array(
 'ParserAbstractMultiple' => 'import/parser/class.ParserAbstractMultiple.php',
 'ParserPWXSingle' => 'import/parser/class.ParserPWXSingle.php',
 'ParserFITSingle' => 'import/parser/class.ParserFITSingle.php',
+'ParserFITMultiple' => 'import/parser/class.ParserFITMultiple.php',
 'ParserGPXSingle' => 'import/parser/class.ParserGPXSingle.php',
 'ParserTCXMultiple' => 'import/parser/class.ParserTCXMultiple.php',
 'ParserLOGBOOKSingle' => 'import/parser/class.ParserLOGBOOKSingle.php',
