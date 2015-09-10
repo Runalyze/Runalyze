@@ -189,7 +189,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Read device info
 	 */
 	protected function readDeviceInfo() {
-		if (isset($this->Values['garmin_product']))
+		if (isset($this->Values['garmin_product']) && isset($this->Values['device_index']) && $this->Values['device_index'][0] == 0)
 			$this->TrainingObject->setCreator($this->Values['garmin_product'][1]);
 	}
 
@@ -308,6 +308,8 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$this->gps['km'][]        = isset($this->Values['distance']) ? round($this->Values['distance'][0] / 1e5, ParserAbstract::DISTANCE_PRECISION) : end($this->gps['km']);
 		$this->gps['heartrate'][] = isset($this->Values['heart_rate']) ? (int)$this->Values['heart_rate'][0] : 0;
 		$this->gps['rpm'][]       = isset($this->Values['cadence']) ? (int)$this->Values['cadence'][0] : 0;
+		$this->gps['power'][]     = isset($this->Values['power']) ? (int)$this->Values['power'][0] : 0;
+		//$this->gps['left_right'][]     = isset($this->Values['left_right_balance']) ? (int)$this->Values['left_right_balance'][0] : 0;
 
 		$this->gps['temp'][]      = isset($this->Values['temperature']) ? (int)$this->Values['temperature'][0] : 0;
 

@@ -354,4 +354,30 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 		}
 	}
+
+	/*
+	 * Test: with power data
+	 * Filename: "with-power.fit" 
+	 */
+	public function testWithPowerData() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/with-power.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('edge810', $this->object->object()->getCreator());
+			$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(39.023, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayTemperature());
+			$this->assertTrue($this->object->object()->hasArrayPower());
+
+		}
+	}
 }
