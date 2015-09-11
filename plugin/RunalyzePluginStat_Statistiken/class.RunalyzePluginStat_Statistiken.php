@@ -5,11 +5,16 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Context as GeneralContext;
 use Runalyze\Calculation\JD;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Activity\HeartRate;
+use Runalyze\Activity\StrideLength;
 use Runalyze\View\Stresscolor;
+use Runalyze\Data\Weather\Temperature;
+
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
@@ -58,57 +63,34 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	private $CompleteData = array();
 
 	/**
-	 * Data for hours
+	 * Data array for displaying the rows
 	 * @var array
 	 */
-	private $StundenData = array();
+	private $LineData = array();
 
 	/**
-	 * Data for kilometer
-	 * @var array
+	 * Dataset for converting and showing data
+	 * @var object
 	 */
-	private $KMData = array();
+	private $Dataset;
 
 	/**
-	 * Kilometer data for week
+	 * Data of the Dataset, Dataset->getData()
 	 * @var array
 	 */
-	private $KMDataWeek = array(); // = KMData / 52
+	private $DatasetData = array();
 
 	/**
-	 * Kilometer data for month
-	 * @var array
+	 * Info about selected sport
+	 * @var boolean
 	 */
-	private $KMDataMonth = array(); // = KMData / 12
-
-	/**
-	 * Data for pace
-	 * @var array
-	 */
-	private $TempoData = array();
-
-	/**
-	 * Data for vdot
-	 * @var array
-	 */
-	private $VDOTData = array();
-
-	/**
-	 * Data for JD intensity
-	 * @var array
-	 */
-	private $JDIntensityData = array();
-
-	/**
-	 * Data for trimp
-	 * @var array
-	 */
-	private $TRIMPData = array();
+	private $isRunning;
 
 	/**
 	 * Name
 	 * @return string
 	 */
+
 	final public function name() {
 		return __('Statistics');
 	}
@@ -131,14 +113,27 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
+
+	/**
+	 * Init some class variables
+	 */
+	private function initVariables() {
+		$this->Dataset = new Dataset(SessionAccountHandler::getId());
+		$this->DatasetData = $this->Dataset->getData();
+
+		$this->isRunning = ($this->sportid == Configuration::General()->runningSport());
+	}
+
 	/**
 	 * Init data 
 	 */
 	protected function prepareForDisplay() {
+
 		if (!$this->showsSpecificYear() && $this->dat = 'allWeeks') {
 			$this->dat = '';
 		}
 
+		$this->initVariables();
 		$this->initData();
 		$this->initLineData();
 
@@ -147,6 +142,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->setOwnNavigation();
 
 		$this->setHeader($this->sport['name'].': '.$this->getYearString());
+
 	}
 
 	/**
@@ -202,6 +198,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	public function getYearComparisonTable() {
 		$this->year = -1;
+		$this->initVariables();
 		$this->initData();
 		$this->initLineData();
 
@@ -222,24 +219,40 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		echo '<tbody>';
 
-		$isRunning = ($this->sportid == Configuration::General()->runningSport());
+		$DatasetLabels = new DatasetLabels();
 
-		$this->displayLine(__('Time'), $this->StundenData);
-		$this->displayLine(__('Distance'), $this->KMData);
+		$this->displayLine(__('Activities'), 'number');
+		$this->displayLine($DatasetLabels->get('s'), 's');
+		$this->displayLine($DatasetLabels->get('distance'), 'distance');
 
-		if ($this->year == -1 && $isRunning) {
-			$this->displayLine('&oslash;'.NBSP.__('km/Week'), $this->KMDataWeek, 'small');
-			$this->displayLine('&oslash;'.NBSP.__('km/Month'), $this->KMDataMonth, 'small');
+		if ($this->year == -1 && $this->isRunning) {
+			$this->displayLine('&oslash;'.NBSP.__('km/Week'), 'distance_week', 'small');
+			$this->displayLine('&oslash;'.NBSP.__('km/Month'), 'distance_month', 'small');
 		}
 
-		$this->displayLine('&oslash;'.NBSP.__('Pace'), $this->TempoData, 'small');
+		$this->displayLine('&oslash;'.NBSP.__('Pace'), 'pace', 'small');
 
-		if ($isRunning) {
-			$this->displayLine(__('VDOT'), $this->VDOTData, 'small');
-			$this->displayLine(__('JDpoints'), $this->JDIntensityData, 'small');
+		if ($this->isRunning) {
+			$this->displayLine($DatasetLabels->get('vdot'), 'vdot', 'small');
+			$this->displayLine($DatasetLabels->get('jd_intensity'), 'jd_intensity', 'small');
 		}
 
-		$this->displayLine(__('TRIMP'), $this->TRIMPData, 'small');
+		$this->displayLine($DatasetLabels->get('trimp'), 'trimp', 'small');
+
+		$this->displayLine('&oslash;'.NBSP.__('Cadence'), 'cadence', 'small');
+		if ($this->isRunning) {
+			$this->displayLine('&oslash;'.NBSP.__('Stride length'), 'stride_length', 'small');
+			$this->displayLine('&oslash;'.NBSP.__('Ground contact time'), 'groundcontact', 'small');
+			$this->displayLine('&oslash;'.NBSP.__('Vertical oscillation'), 'vertical_oscillation', 'small');
+		}
+
+		$this->displayLine($DatasetLabels->get('elevation'), 'elevation', 'small');
+		$this->displayLine($DatasetLabels->get('kcal'), 'kcal', 'small');
+		$this->displayLine($DatasetLabels->get('pulse_avg'), 'pulse_avg', 'small');
+		$this->displayLine($DatasetLabels->get('pulse_max'), 'pulse_max', 'small');
+		$this->displayLine($DatasetLabels->get('power'), 'power', 'small');
+		$this->displayLine($DatasetLabels->get('temperature'), 'temperature', 'small');
+		$this->displayLine($DatasetLabels->get('abc'), 'abc', 'small');
 
 		echo '</tbody>';
 		echo '</table>';
@@ -251,13 +264,23 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * @param array $data Array containing all $data[] = array('i' => i, 'text' => '...')
 	 * @param string $class [optional] additional class for table cells
 	 */
-	private function displayLine($title, $data, $class = '') {
-		echo '<tr>';
-		echo '<td class="b">'.$title.'</td>';
+	private function displayLine($title, $dataname, $class = '') {
+		if (!array_key_exists ($dataname, $this->LineData))
+			return;
 
-		if (empty($data)) {
-			echo HTML::emptyTD($this->colspan);
-		} else {
+		$data = $this->LineData[$dataname];
+		$emptyDataLine = true;
+		foreach ($data as $dat) {
+			if ($dat['text'] != NBSP) {
+				$emptyDataLine = false;
+				break;
+			}
+		}
+
+		if (!$emptyDataLine) {
+			echo '<tr>';
+			echo '<td class="b">'.$title.'</td>';
+
 			$td_i = 0;
 			foreach ($data as $dat) {
 				for (; ($this->num_start + $td_i) < $dat['i']; $td_i++)
@@ -269,9 +292,9 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 			for (; $td_i < $this->num; $td_i++)
 				echo HTML::emptyTD();
-		}
 
-		echo '</tr>';
+			echo '</tr>';
+		}
 	}
 
 	/**
@@ -282,15 +305,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		if (($this->showsAllYears() || ($this->showsSpecificYear() && $this->year != date('Y'))) && !$showAllWeeks)
 			return;
 
-		$Dataset = new Dataset();
-
 		if ($this->Configuration()->value('compare_weeks'))
-			$Dataset->activateKilometerComparison();
+			$this->Dataset->activateKilometerComparison();
 
 		$title = $showAllWeeks ? __('All training weeks') : __('Last 10 training weeks');
 
 		echo '<table class="r fullwidth zebra-style">';
-		echo '<thead><tr><th colspan="'.($Dataset->cols()+1).'">'.$title.'</th></tr></thead>';
+		echo '<thead><tr><th colspan="'.($this->Dataset->cols()+1).'">'.$title.'</th></tr></thead>';
 		echo '<tbody>';
 
 		if (!$showAllWeeks) {
@@ -303,7 +324,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 
 		$CompleteData   = array();
 		$CurrentWeekEnd = Time::Weekend($starttime);
-		$CompleteResult = $Dataset->getGroupOfTrainingsForTimerange($this->sportid, 7*DAY_IN_S, $CurrentWeekEnd - ($maxW+2)*7*DAY_IN_S, $CurrentWeekEnd);
+		$CompleteResult = $this->Dataset->getGroupOfTrainingsForTimerange($this->sportid, 7*DAY_IN_S, $CurrentWeekEnd - ($maxW+2)*7*DAY_IN_S, $CurrentWeekEnd);
 
 		foreach ($CompleteResult as $Data) {
 			$CompleteData[$Data['timerange']] = $Data;
@@ -319,15 +340,15 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 			echo '<tr><td class="l"><span class="b">'.DataBrowserLinker::link($week, $start, $end, '').'</span>&nbsp;&nbsp;&nbsp;<span class="small">'.date('d.m',$start)." - ".date('d.m',$end).'</span></td>';
 
 			if (isset($CompleteData[$w]) && !empty($CompleteData[$w])) {
-				$Dataset->setGroupOfTrainings($CompleteData[$w]);
+				$this->Dataset->setGroupOfTrainings($CompleteData[$w]);
 
 				if (isset($CompleteData[$w+1])) {
-					$Dataset->setKilometerToCompareTo($CompleteData[$w+1]['distance']);
+					$this->Dataset->setKilometerToCompareTo($CompleteData[$w+1]['distance']);
 				}
 
-				$Dataset->displayTableColumns();
+				$this->Dataset->displayTableColumns();
 			} else
-				echo HTML::emptyTD($Dataset->cols(), '<em>'.__('No activities').'</em>', 'c small');
+				echo HTML::emptyTD($this->Dataset->cols(), '<em>'.__('No activities').'</em>', 'c small');
 
 			echo '</tr>';
 		}
@@ -408,14 +429,13 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->sport = SportFactory::DataFor($this->sportid);
 
 		if ($this->year != -1) {
-			$this->num = 12;
 			$this->num_start = 1;
 			$this->num_end   = 12;
 		} else {
-			$this->num = date("Y") - START_YEAR + 1;
 			$this->num_start = START_YEAR;
 			$this->num_end   = date("Y");
 		}
+		$this->num = $this->num_end - $this->num_start + 1;
 
 		$this->colspan = $this->num + 1;
 	}
@@ -425,37 +445,112 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 */
 	private function initLineData() {
 		$this->initCompleteData();
-		$this->computeInTotalForCompleteData();
+		$this->initTotalData();
 
 		foreach ($this->CompleteData as $Data) {
-			$this->initStundenData($Data);
-			$this->initKMData($Data);
-			$this->initTempoData($Data);
-			$this->initVDOTData($Data);
-			$this->initJDIntensityData($Data);
-			$this->initTRIMPData($Data);
+			$Data['sportid'] = $this->sportid;
+			$this->Dataset->setActivityData($Data);
+			foreach ($this->DatasetData as $set) {
+
+				$text = NBSP;
+				switch ($set['name']) {
+					case 'abc':
+						if ($Data['abc'] > 0)
+							$text = $Data['abc'].'x';
+						break;
+
+					case 'distance':
+						$WeekFactor  = 52;
+						$MonthFactor = 12;
+				
+						if ($Data['i'] == date("Y")) {
+							$WeekFactor  = (date('z')+1) / 7;
+							$MonthFactor = (date('z')+1) / 30.4;
+						} elseif ($Data['i'] == date('Y') + 1) {
+							$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
+							$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
+						} elseif ($Data['i'] == START_YEAR && date("Y", START_TIME) == START_YEAR) {
+							$WeekFactor  = 53 - date("W", START_TIME);
+							$MonthFactor = 13 - date("n", START_TIME);
+						}
+				
+						$text        = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance'], false, 0);
+						$textWeek    = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance']/$WeekFactor, false, 0);
+						$textMonth   = ($Data['distance'] == 0) ? NBSP : Distance::format($Data['distance']/$MonthFactor, false, 0);
+						$this->LineData['distance_week'][]  = array('i' => $Data['i'], 'text' => $textWeek);
+						$this->LineData['distance_month'][] = array('i' => $Data['i'], 'text' => $textMonth);
+						break;
+
+					/* use this as long as
+					 * https://github.com/Runalyze/Runalyze/blob/1c66c261bb0d625fd368cf475122f658a805304c/inc/class.Dataset.php#L442
+					 * is not fixed
+					 */
+					case 'pace':
+						$Pace = new Pace($Data['s_sum_with_distance'], $Data['distance'], SportFactory::getSpeedUnitFor($this->sportid));
+						if ($Data['s_sum_with_distance'] != 0)
+							$text = $Pace->valueWithAppendix();
+						break;
+
+					case 'stride_length':
+						if ($Data['steps'] > 0) {
+							$strideLength = new StrideLength ($Data['distance_sum_with_cadence']*50000/$Data['steps']);
+							if ($strideLength->inCM() > 0)
+								$text = $strideLength->string();
+						}
+						break;
+
+					case 'vdot':
+						$VDOT = isset($Data['vdot']) ? Configuration::Data()->vdotFactor()*($Data['vdot']) : 0;
+						if ($VDOT > 0)
+							$text = number_format($VDOT, 1);
+						break;
+
+					case 'jd_intensity':
+						$avg  = ($this->year != -1) ? 8 : 100;
+
+						if ($Data['jd_intensity'] == 0) {
+							$text = NBSP;
+						} else {
+							$Stress = new Stresscolor($Data['jd_intensity'] / $avg);
+							$Stress->scale(0, 50);
+							$text = $Stress->string($Data['jd_intensity']);
+						}
+						break;
+
+
+					default:
+						$DataString = $this->Dataset->getDataset($set['name']);
+						$text = (($DataString == '' or $DataString == 0) ? NBSP : $DataString);
+						break;
+				}
+
+				$this->LineData[$set['name']][] = array ('i' => $Data['i'], 'text' => $text);
+
+			}
+			// handling 'number' separately, as it's not in the Dataset->getData() array
+			$text = $Data['number'] > 0 ? $Data['number'] : NBSP;
+			$this->LineData['number'][] = array('i' => $Data['i'], 'text' => $text);
 		}
+			
 	}
 
 	/**
 	 * Init complete data
 	 */
 	private function initCompleteData() {
-		$withElevation = Configuration::Vdot()->useElevationCorrection();
-
-		$Query = '
-			SELECT
-				SUM(`s`) as `s`,
-				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
-				SUM(`distance`) as `distance`,
-				SUM('.JD\Shape::mysqlVDOTsum($withElevation).')/SUM('.JD\Shape::mysqlVDOTsumTime($withElevation).') as `vdot`,
-				SUM(`trimp`) as `trimp`,
-				SUM(`jd_intensity`) as `jd_intensity`,
-				'.$this->getTimerIndexForQuery().' as `i`
-			FROM
-				`'.PREFIX.'training`
-			WHERE
-				`accountid`=:sessid '.$this->getSportAndYearDependenceForQuery();
+		$Query = 
+			'SELECT '
+				.'COUNT(`id`) as `number`, '
+				.'SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`, '
+				.'SUM(IF(`cadence`>0,`distance`,0)) as `distance_sum_with_cadence`, '
+				.'SUM(`s`*`cadence`/60) as `steps`, '
+				.$this->getTimerIndexForQuery().' as `i`, '
+				.'SUM(`abc`) as `abc` '
+				.$this->Dataset->getQuerySelectForSet().' '
+			.'FROM '
+				.'`'.PREFIX.'training` '
+			.'WHERE '
+				.'`accountid`=:sessid '.$this->getSportAndYearDependenceForQuery();
 
 		$Query .= ' GROUP BY '.$this->getTimerForOrderingInQuery().' ASC';
 
@@ -467,123 +562,37 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->CompleteData = $Request->fetchAll();
 	}
 
-	private function computeInTotalForCompleteData() {
+
+	private function helperComputeAverage($totalvalue, $totalcount) {
+		return ($totalcount > 0 ? $totalvalue / $totalcount : $totalvalue);
+	}
+
+	private function initTotalData() {
+
 		if ($this->year == -1) {
-			$Total = array('i' => date('Y') + 1, 's' => 0, 's_sum_with_distance' => 0, 'distance' => 0, 'vdot' => 0, 'trimp' => 0, 'jd_intensity' => 0);
-
-			foreach ($this->CompleteData as $data) {
-				$Total['s'] += $data['s'];
-				$Total['s_sum_with_distance'] += $data['s_sum_with_distance'];
-				$Total['distance'] += $data['distance'];
-				$Total['vdot'] += $data['s']*$data['vdot'];
-				$Total['trimp'] += $data['trimp'];
-				$Total['jd_intensity'] += $data['jd_intensity'];
-			}
-
-			if ($Total['s'] > 0) {
-				$Total['vdot'] /= $Total['s'];
-			}
-
+			$Query = 
+				'SELECT '
+					.'COUNT(`id`) as `number`, '
+					.'SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`, '
+					.'SUM(IF(`cadence`>0,`distance`,0)) as `distance_sum_with_cadence`, '
+					.'SUM(`s`*`cadence`/60) as `steps`, '
+					.'SUM(`abc`) as `abc` '
+					.$this->Dataset->getQuerySelectForSet().' '
+				.'FROM '
+					.'`'.PREFIX.'training` '
+				.'WHERE '
+					.'`accountid`=:sessid '.$this->getSportAndYearDependenceForQuery();
+	
+			$Request = DB::getInstance()->prepare($Query);
+			$Request->bindValue('sessid', SessionAccountHandler::getId(), PDO::PARAM_INT);
+	
+			$Request->execute();
+	
+			$Total = $Request->fetch();
+			$Total['i'] = date('Y') + 1;
+	
 			$this->CompleteData[] = $Total;
 		}
 	}
 
-	/**
-	 * Initialize line-data-array for 'Stunden'
-	 * @param array $dat
-	 */
-	private function initStundenData($dat) {
-		if ($dat['s'] > 0) {
-			$duration = new Duration($dat['s']);
-			$text = $duration->string(Duration::FORMAT_WITH_HOURS);
-		} else {
-			$text = NBSP;
-		}
-
-		$this->StundenData[] = array('i' => $dat['i'], 'text' => $text);
-	}
-
-	/**
-	 * Initialize line-data-array for 'KM'
-	 * @param array $dat
-	 */
-	private function initKMData($dat) {
-		$WeekFactor  = 52;
-		$MonthFactor = 12;
-
-		if ($dat['i'] == date("Y")) {
-			$WeekFactor  = (date('z')+1) / 7;
-			$MonthFactor = (date('z')+1) / 30.4;
-		} elseif ($dat['i'] == date('Y') + 1) {
-			$WeekFactor = ceil( (time() - START_TIME) / DAY_IN_S / 7 );
-			$MonthFactor = ceil( (time() - START_TIME) / DAY_IN_S / 30.4 );
-		} elseif ($dat['i'] == START_YEAR && date("0", START_TIME) == START_YEAR) {
-			$WeekFactor  = 53 - date("W", START_TIME);
-			$MonthFactor = 13 - date("n", START_TIME);
-		}
-
-		$text        = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance'], false, 0);
-		$textWeek    = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance']/$WeekFactor, false, 0);
-		$textMonth   = ($dat['distance'] == 0) ? NBSP : Distance::format($dat['distance']/$MonthFactor, false, 0);
-		$this->KMData[]      = array('i' => $dat['i'], 'text' => $text);
-		$this->KMDataWeek[]  = array('i' => $dat['i'], 'text' => $textWeek);
-		$this->KMDataMonth[] = array('i' => $dat['i'], 'text' => $textMonth);
-	}
-
-	/**
-	 * Initialize line-data-array for 'Tempo'
-	 * @param array $dat
-	 */
-	private function initTempoData($dat) {
-		$Pace = new Pace($dat['s_sum_with_distance'], $dat['distance'], SportFactory::getSpeedUnitFor($this->sportid));
-		$text = ($dat['s_sum_with_distance'] == 0) ? NBSP : $Pace->valueWithAppendix();
-
-		$this->TempoData[] = array('i' => $dat['i'], 'text' => $text);
-	}
-
-	/**
-	 * Initialize line-data-array for 'VDOT'
-	 * @param array $dat
-	 */
-	private function initVDOTData($dat) {
-		$VDOT = isset($dat['vdot']) ? Configuration::Data()->vdotFactor()*($dat['vdot']) : 0;
-		$text = ($VDOT == 0) ? NBSP : number_format($VDOT, 1);
-
-		$this->VDOTData[] = array('i' => $dat['i'], 'text' => $text);
-	}
-
-	/**
-	 * Initialize line-data-array for 'JD-points'
-	 * @param array $dat
-	 */
-	private function initJDIntensityData($dat) {
-		$avg  = ($this->year != -1) ? 8 : 100;
-
-		if ($dat['jd_intensity'] == 0) {
-			$text = NBSP;
-		} else {
-			$Stress = new Stresscolor($dat['jd_intensity'] / $avg);
-			$Stress->scale(0, 50);
-			$text = $Stress->string($dat['jd_intensity']);
-		}
-
-		$this->JDIntensityData[] = array('i' => $dat['i'], 'text' => $text);
-	}
-
-	/**
-	 * Initialize line-data-array for 'TRIMP'
-	 * @param array $dat
-	 */
-	private function initTRIMPData($dat) {
-		$avg  = ($this->year != -1) ? 15 : 180;
-
-		if ($dat['trimp'] == 0) {
-			$text = NBSP;
-		} else {
-			$Stress = new Stresscolor($dat['trimp'] / $avg);
-			$text = $Stress->string($dat['trimp']);
-		}
-
-		$this->TRIMPData[] = array('i' => $dat['i'], 'text' => $text);
-	}
 }
