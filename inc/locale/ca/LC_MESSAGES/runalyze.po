@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-08-05 15:18+0200\n"
+"PO-Revision-Date: 2015-08-23 12:14+0200\n"
 "Last-Translator: pedro galan <arnoldewald@yahoo.es>\n"
 "Language-Team: Catalan "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/ca/>\n"
@@ -1289,7 +1289,7 @@ msgstr "Dies per kilòmetres setmanals (mínim)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "This value will be used if not enough data is available."
-msgstr ""
+msgstr "Aquest valor es fa servir si no hi han prou dades disponibles."
 
 #: inc/core/Configuration/Category/BasicEndurance.php:119
 msgid "Factor for week kilometers"
@@ -1297,7 +1297,7 @@ msgstr "Factor per kilòmetres setmanals"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Percentage as value between 0.00 and 1.00."
-msgstr ""
+msgstr "Percentual com a valor entre 0,00 i 1,00."
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
@@ -1363,7 +1363,7 @@ msgstr "Nombre de decimals"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
-msgstr ""
+msgstr "Vista d'activitat: mostra files completes"
 
 #: inc/core/Configuration/Category/ActivityView.php:308
 msgid "By default e.g. lap data will be scrollable and not shown completely."
@@ -3157,7 +3157,7 @@ msgstr "Seleccioni l'anàlisi"
 #: inc/draw/class.PlotSumData.php:165
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:99
 msgid "Choose evaluation"
-msgstr "Seleccioni evaluació"
+msgstr "Seleccioni avaluació"
 
 #: inc/draw/class.PlotSumData.php:169 inc/plugin/class.PluginStat.php:223
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:281

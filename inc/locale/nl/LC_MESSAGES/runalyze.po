@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-08-08 22:29+0200\n"
+"PO-Revision-Date: 2015-09-03 08:12+0200\n"
 "Last-Translator: roland <rolandgm@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -4637,102 +4637,104 @@ msgstr "Gebruiker activeren"
 
 #: inc/class.AdminView.php:350
 msgid "Server information"
-msgstr ""
+msgstr "Serverinformatie"
 
 #: inc/class.AdminView.php:351
 msgid "PHP version:"
-msgstr ""
+msgstr "PHP versie:"
 
 #: inc/class.AdminView.php:352
 msgid "MySQL version:"
-msgstr ""
+msgstr "MySQL versie:"
 
 #: inc/class.AdminView.php:353
 msgid "Time limit:"
-msgstr ""
+msgstr "Tijdslimiet:"
 
 #: inc/class.AdminView.php:354
 msgid "Memory limit:"
-msgstr ""
+msgstr "Geheugenlimiet:"
 
 #: inc/class.AdminView.php:355
 msgid "Upload limit:"
-msgstr ""
+msgstr "Upload limiet:"
 
 #: inc/class.AdminView.php:356
 msgid "Post limit:"
-msgstr ""
+msgstr "Post limiet:"
 
 #: inc/class.AdminView.php:359
 msgid "Perl scripts can be used."
-msgstr ""
+msgstr "Er kunnen Perl scripts worden gebruikt."
 
 #: inc/class.AdminView.php:361
 msgid "Perl scripts cannot be used."
-msgstr ""
+msgstr "Perlscripts kunnen niet gebruikt worden."
 
 #: inc/class.AdminView.php:378
 msgid "Permissions"
-msgstr ""
+msgstr "Rechten"
 
 #: inc/class.AdminView.php:379
 msgid ""
 "The following directories do need write permissions. (And the right owner "
 "has to be set!)"
 msgstr ""
+"Deze mappen hebben nog schrijf machtigingen nodig. (En de juiste eigenaar "
+"moet worden ingesteld!)"
 
 #: inc/class.AdminView.php:389
 #, php-format
 msgid "The directory <strong>%s</strong> is writable."
-msgstr ""
+msgstr "De map <strong>%s</strong> is schrijfbaar."
 
 #: inc/class.AdminView.php:404
 msgid "Unused files"
-msgstr ""
+msgstr "Ongebruikte bestanden"
 
 #: inc/class.AdminView.php:410
 msgid "Clear directories"
-msgstr ""
+msgstr "Mappen opschonen"
 
 #: inc/class.AdminView.php:422
 msgid "clean up"
-msgstr ""
+msgstr "opschonen"
 
 #: inc/class.AdminView.php:428
 msgid "No files found"
-msgstr ""
+msgstr "Geen bestanden gevonden"
 
 #: call/call.SharedList.php:44
 msgid "Click on an activity to see more details."
-msgstr ""
+msgstr "Klik op een activiteit om meer details te bekijken."
 
 #: call/call.SharedList.php:45
 msgid "Public activities are marked: "
-msgstr ""
+msgstr "Openbare activiteiten zijn gemarkeerd: "
 
 #: call/window.plotSumData.php:23 call/window.plotSumData.shared.php:25
 msgid "There was a problem."
-msgstr ""
+msgstr "Er was een probleem."
 
 #: call/call.Plugin.display.php:16
 msgid "The plugin could not be found."
-msgstr ""
+msgstr "De plugin kon niet worden gevonden."
 
 #: call/call.Plugin.uninstall.php:13
 msgid "Uninstall"
-msgstr ""
+msgstr "Deinstalleren"
 
 #: call/call.Plugin.uninstall.php:16
 msgid "The plugin has been uninstalled."
-msgstr ""
+msgstr "De plugin is verwijderd."
 
 #: call/call.Plugin.uninstall.php:22
 msgid "There was a problem, the plugin could not be uninstalled."
-msgstr ""
+msgstr "Er was een probleem, de plugin kon niet worden verwijderd."
 
 #: call/window.delete.php:12
 msgid "Delete your account."
-msgstr ""
+msgstr "Uw account verwijderen."
 
 #: call/window.delete.php:19
 msgid ""
@@ -4740,128 +4742,131 @@ msgid ""
 "decided to delete your account.<br>Your account will be deleted as soon as "
 "you click on the confirmation link in your mail."
 msgstr ""
+"<em>Er is een bevestigings e-mail verstuurd.</em> <br>We vinden het jammer, "
+"dat u besloten heeft om uw account te verwijderen. <br>Uw account zal worden "
+"verwijderd zodra u op de bevestigingslink in uw e-mail klikt."
 
 #: call/call.garminCommunicator.php:43
 msgid "Connect"
-msgstr ""
+msgstr "Verbinden"
 
 #: call/call.garminCommunicator.php:45
 msgid "Searching for devices"
-msgstr ""
+msgstr "Zoek naar apparaten"
 
 #: call/call.garminCommunicator.php:46
 msgid "Transfer complete"
-msgstr ""
+msgstr "Overdracht compleet"
 
 #: call/call.garminCommunicator.php:50
 msgid "Browse computer"
-msgstr ""
+msgstr "Bladeren op de computer"
 
 #: call/call.garminCommunicator.php:51 call/call.garminCommunicator.php:52
 msgid "Cancel"
-msgstr ""
+msgstr "Annuleren"
 
 #: call/call.garminCommunicator.php:53
 msgid "Connected devices"
-msgstr ""
+msgstr "Aangesloten apparaten"
 
 #: call/call.garminCommunicator.php:54
 msgid "Browse devices"
-msgstr ""
+msgstr "Blader door apparaten"
 
 #: call/call.garminCommunicator.php:55
 msgid "Devices"
-msgstr ""
+msgstr "Apparaten"
 
 #: call/call.garminCommunicator.php:56
 msgid "Search for decives"
-msgstr ""
+msgstr "Zoek naar apparaten"
 
 #: call/call.garminCommunicator.php:57
 msgid "Retrieving data from #{deviceName}, please wait ..."
-msgstr ""
+msgstr "Gegevens worden van #{deviceName} opgehaald, even geduld..."
 
 #: call/call.garminCommunicator.php:58
 msgid "Please wait ..."
-msgstr ""
+msgstr "Een ogenblik geduld..."
 
 #: call/call.garminCommunicator.php:59
 msgid "Found #{tracks} activities"
-msgstr ""
+msgstr "#{tracks} activiteiten gevonden"
 
 #: call/call.garminCommunicator.php:60
 msgid "No devices found"
-msgstr ""
+msgstr "Geen apparaten gevonden"
 
 #: call/call.garminCommunicator.php:61 call/call.garminCommunicator.php:62
 msgid "Found"
-msgstr ""
+msgstr "Gevonden"
 
 #: call/call.garminCommunicator.php:63
 msgid "#{deviceCount} devices found"
-msgstr ""
+msgstr "#{deviceCount} apparaten gevonden"
 
 #: call/call.garminCommunicator.php:67
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: call/call.garminCommunicator.php:85
 msgid "present"
-msgstr ""
+msgstr "aanwezig"
 
 #: call/call.garminCommunicator.php:90
 msgid "ignore"
-msgstr ""
+msgstr "negeren"
 
 #: call/call.garminCommunicator.php:123
 msgid "all"
-msgstr ""
+msgstr "alle"
 
 #: call/login.php:2
 msgid "You are not logged in anymore."
-msgstr ""
+msgstr "U bent niet meer ingelogd."
 
 #: call/call.Training.elevationCorrection.php:36
 msgid "Elevation data has been corrected."
-msgstr ""
+msgstr "Hoogte gegevens zijn gecorrigeerd."
 
 #: call/call.Training.elevationCorrection.php:42
 msgid "Elevation data could not be retrieved."
-msgstr ""
+msgstr "Hoogte gegevens kunnen niet worden opgehaald."
 
 #: call/window.search.php:21
 msgid "Search for activities"
-msgstr ""
+msgstr "Activiteiten zoeken"
 
 #: call/call.Plugin.install.php:13
 msgid "Install"
-msgstr ""
+msgstr "Installeren"
 
 #: call/call.Plugin.install.php:19
 msgid "The plugin has been successfully installed."
-msgstr ""
+msgstr "De plugin is geïnstalleerd."
 
 #: call/call.Plugin.install.php:30
 msgid "There was a problem, the plugin could not be installed."
-msgstr ""
+msgstr "Er was een probleem, de plugin kan niet worden geïnstalleerd."
 
 #: call/call.Plugin.config.php:19
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Er ging iets mis..."
 
 #: call/call.Training.edit.php:19
 msgid "The activity has been removed"
-msgstr ""
+msgstr "De activiteit is verwijderd"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:14
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:15
 msgid "by&nbsp;HR"
-msgstr ""
+msgstr "bij&nbsp;HS"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:16
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:17
 msgid "corrected"
-msgstr ""
+msgstr "gecorrigeerd"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:18
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:19
@@ -4869,19 +4874,19 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/Plot.Form.php:186
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:33
 msgid "Shape"
-msgstr ""
+msgstr "Vorm"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:20
 msgid "Deviation"
-msgstr ""
+msgstr "Afwijking"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:21
 msgid "Corrector"
-msgstr ""
+msgstr "Correctie"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:46
 msgid "You did not run any races."
-msgstr ""
+msgstr "U heeft geen wedstrijden gelopen."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:55
 msgid ""
