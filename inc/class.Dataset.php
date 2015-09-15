@@ -455,14 +455,16 @@ class Dataset {
 				return $this->Dataview->duration()->string();
 
 			case 'pace':
-				if (isset($this->ActivityData['s_sum_with_distance'])) {
-					if ($this->ActivityData['s_sum_with_distance'] > 0) {
-						$Pace = new Pace($this->ActivityData['s_sum_with_distance'], $this->Activity->distance(), SportFactory::getSpeedUnitFor($this->Activity->sportid()));
-						return $Pace->valueWithAppendix();
+				if ($this->Activity->distance() > 0) {
+					if (isset($this->ActivityData['s_sum_with_distance'])) {
+						if ($this->ActivityData['s_sum_with_distance'] > 0) {
+							$Pace = new Pace($this->ActivityData['s_sum_with_distance'], $this->Activity->distance(), SportFactory::getSpeedUnitFor($this->Activity->sportid()));
+							return $Pace->valueWithAppendix();
+						}
+
+						return '';
 					}
 
-					return '';
-				} elseif ($this->Activity->distance() > 0) {
 					return $this->Dataview->pace()->valueWithAppendix();
 				}
 
