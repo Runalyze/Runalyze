@@ -62,6 +62,13 @@ class Type {
 	}
 
 	/**
+	 * @return boolean
+	 */
+	public function isShort() {
+		return ($this->data['short'] == 1);
+	}
+
+	/**
 	 * @return int
 	 */
 	public function hrAvg() {

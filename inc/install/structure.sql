@@ -302,6 +302,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
   `name` varchar(50) NOT NULL,
   `abbr` varchar(5) NOT NULL DEFAULT '',
   `sportid` int(11) NOT NULL DEFAULT '0',
+  `short` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hr_avg` tinyint(3) unsigned NOT NULL DEFAULT '100',
   `quality_session` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `accountid` int(11) NOT NULL

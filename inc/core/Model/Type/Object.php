@@ -22,16 +22,22 @@ class Object extends Model\ObjectWithID {
 	const NAME = 'name';
 
 	/**
-	 * Key: img
+	 * Key: short display
 	 * @var string
 	 */
 	const ABBREVIATION = 'abbr';
 
 	/**
-	 * Key: short display
+	 * Key: sport id
 	 * @var string
 	 */
 	const SPORTID = 'sportid';
+
+	/**
+	 * Key: short mode
+	 * @var string
+	 */
+	const SHORT = 'short';
 
 	/**
 	 * Key: avg. heart rate
@@ -54,6 +60,7 @@ class Object extends Model\ObjectWithID {
 			self::NAME,
 			self::ABBREVIATION,
 			self::SPORTID,
+			self::SHORT,
 			self::HR_AVG,
 			self::QUALITY_SESSION
 		);
@@ -89,6 +96,14 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function sportid() {
 		return $this->Data[self::SPORTID];
+	}
+
+	/**
+	 * Uses short mode?
+	 * @return boolean
+	 */
+	public function usesShortMode() {
+		return ($this->Data[self::SHORT] == 1);
 	}
 
 	/**

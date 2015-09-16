@@ -22,3 +22,6 @@ ALTER TABLE `runalyze_training` ADD `total_strokes` smallint(5) unsigned NOT NUL
 
 /* 04.09.2015 - add recovery advisor for fit files */
 ALTER TABLE `runalyze_training` ADD `fit_vdot_estimate` TINYINT(2) UNSIGNED NOT NULL DEFAULT '0' AFTER `use_vdot`, ADD `fit_recovery_time` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `fit_vdot_estimate`, ADD `fit_hrv_analysis` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `fit_recovery_time`;
+
+/* 16.09.2015 - add short mode for types */
+ALTER TABLE `runalyze_type` ADD `short` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sportid`;
