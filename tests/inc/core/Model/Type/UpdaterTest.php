@@ -22,6 +22,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 			`name` VARCHAR(50) NOT NULL,
 			`abbr` VARCHAR(5) NOT NULL,
 			`sportid` INTEGER NOT NULL,
+			`short` INTEGER NOT NULL,
 			`hr_avg` SMALLINT NOT NULL,
 			`quality_session` SMALLINT NOT NULL,
 			`accountid` INTEGER NOT NULL
@@ -58,6 +59,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Tn', $Result->abbreviation());
 		$this->assertEquals(120, $Result->hrAvg());
 		$this->assertEquals(true, $Result->isQualitySession());
+		$this->assertFalse($Result->usesShortMode());
 	}
 
 }

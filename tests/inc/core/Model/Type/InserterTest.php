@@ -28,6 +28,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			`name` VARCHAR(50) NOT NULL,
 			`abbr` VARCHAR(5) NOT NULL,
 			`sportid` INTEGER NOT NULL,
+			`short` INTEGER NOT NULL,
 			`hr_avg` SMALLINT NOT NULL,
 			`quality_session` SMALLINT NOT NULL,
 			`accountid` INTEGER NOT NULL
@@ -51,6 +52,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			Object::NAME => 'Type name',
 			Object::ABBREVIATION => 'Tn',
 			Object::SPORTID => 1,
+			Object::SHORT => 0,
 			Object::HR_AVG => 120,
 			Object::QUALITY_SESSION => 1
 		));
@@ -67,6 +69,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $New->sportid());
 		$this->assertEquals(120, $New->hrAvg());
 		$this->assertEquals(true, $New->isQualitySession());
+		$this->assertFalse($New->usesShortMode());
 	}
 
 }
