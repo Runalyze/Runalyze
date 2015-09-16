@@ -115,7 +115,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$maxCTL = Configuration::Data()->maxCTL();
 	}
 
-	if (!Configuration::Trimp()->showInPercent()) {
+	$showInPercent = Configuration::Trimp()->showInPercent() && $perfmodel != 'banister';
+
+	if (!$showInPercent) {
 		$maxATL = 100;
 		$maxCTL = 100;
 	}
@@ -171,7 +173,7 @@ if (!$All && !$lastHalf && !$lastYear)
 
 $Plot->addYAxis(1, 'left');
 $Plot->setYTicks(1, 1);
-if (Configuration::Trimp()->showInPercent()) {
+if ($showInPercent) {
 	$Plot->addYUnit(1, '%');
 	$Plot->setYLimits(1, 0, 100);
 }
