@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-07-18 11:15+0200\n"
-"PO-Revision-Date: 2015-07-20 15:37+0200\n"
+"PO-Revision-Date: 2015-09-16 20:32+0200\n"
 "Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -796,7 +796,7 @@ msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:58
 msgid "elev."
-msgstr "Höhenunterschied"
+msgstr "Anstieg"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/system/config/class.ConfigTabTypes.php:48
@@ -3917,7 +3917,7 @@ msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:39
 msgid "<em>&Oslash; HF</em> is necessary for the calculation of TRIMP."
-msgstr "<em>&Oslash; HF</em>ist für die TRIMP-Berechnung notwendig."
+msgstr "<em>&Oslash; HF</em> ist für die TRIMP-Berechnung notwendig."
 
 #: inc/system/config/class.ConfigTabSports.php:53
 msgid "Icon"
