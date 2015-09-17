@@ -1,10 +1,10 @@
 # [Runalyze v2.1](http://blog.runalyze.com)
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
 [![Translation status](http://translate.runalyze.de/widgets/runalyze/-/svg-badge.svg)](http://translate.runalyze.de/engage/runalyze/?utm_source=widget)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Runalyze/Runalyze?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
@@ -31,20 +31,20 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * new versions, multi-lingual
- * [v2.1](http://blog.runalyze.com/allgemein/runalyze-v2-1/), 19.07.2015: Minor release - Running Dynamics, new importers, TSB Model: Recovery time ... 
- * [v2.0.4](http://blog.runalyze.com/allgemein/runalyze-v2-0-4/), 17.07.2015: Minor bugfixes
- * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: Minor bugfixes
- * [v2.0.2](http://blog.runalyze.com/allgemein/runalyze-v2-0-2/), 24.03.2015: Minor bugfixes
- * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: Minor bugfixes
- * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: First mutlilingual major release
- * warning: migration from v1.5 to v2.0 requires to run `refactor-db.php`, see [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/) and [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/)
-* old versions, only in german
- * [v1.5](http://blog.runalyze.com/allgemein/runalyze-v1-5/), 01.01.2014: Bugfixes, genauere VDOT-Formel
- * [v1.4](http://blog.runalyze.com/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/), 23.08.2013: Bugfix für Sicherheitsrisiko
- * [v1.3](http://blog.runalyze.com/allgemein/runalyze-v1-3/), 29.07.2013: Neue Importer, mehr Trainingsdaten, VDOT-Korrektur für Höhenmeter, ...
- * [v1.2](http://blog.runalyze.com/allgemein/runalyze-v1-2/), 13.11.2012: Diagramme speichern, Öffentliche Trainingsliste
- * [v1.1](http://blog.runalyze.com/allgemein/runalyze-v1-1/), 19.07.2012: Erste Online-Version
- * [v1.0](http://blog.runalyze.com/allgemein/runalyze-v1-0/), 20.01.2012: Erste öffentliche Version
+ * [v2.1](http://blog.runalyze.com/allgemein/runalyze-v2-1/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
+ * [v2.0.4](http://blog.runalyze.com/allgemein/runalyze-v2-0-4/), 17.07.2015: minor bugfixes
+ * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: minor bugfixes
+ * [v2.0.2](http://blog.runalyze.com/allgemein/runalyze-v2-0-2/), 24.03.2015: minor bugfixes
+ * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: minor bugfixes
+ * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: first mutlilingual major release
+ * warning: migration from v1.5 to v2.0 requires `refactor-db.php` (see [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/))
+* old versions (german only)
+ * [v1.5](http://blog.runalyze.com/allgemein/runalyze-v1-5/), 01.01.2014: bugfixes, improved vdot formula
+ * [v1.4](http://blog.runalyze.com/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/), 23.08.2013: bugfix for security issue
+ * [v1.3](http://blog.runalyze.com/allgemein/runalyze-v1-3/), 29.07.2013: new importer, more data, vdot correction by elevation, ...
+ * [v1.2](http://blog.runalyze.com/allgemein/runalyze-v1-2/), 13.11.2012: save plots, share activity list
+ * [v1.1](http://blog.runalyze.com/allgemein/runalyze-v1-1/), 19.07.2012: first online version
+ * [v1.0](http://blog.runalyze.com/allgemein/runalyze-v1-0/), 20.01.2012: first public version
 
 ## Installation
 * download [zip-file](https://github.com/Runalyze/Runalyze/releases) and extract

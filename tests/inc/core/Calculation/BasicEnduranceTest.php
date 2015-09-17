@@ -12,36 +12,21 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 */
 	protected function setUp() {
 		$this->object = new BasicEndurance;
 	}
 
-	/**
-	 * Tears down the fixture, for example, closes a network connection.
-	 * This method is called after a test is executed.
-	 */
 	protected function tearDown() {
 		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
-	/**
-	 * @covers BasicEndurance::getConst
-	 */
 	public function testGetConst() {
 		// TODO: needs VDOT_FORM
 		// $this->assertEquals(0, BasicEndurance::getConst(true));
 	}
 
-	/**
-	 * @covers BasicEndurance::recalculateValue
-	 * @todo   Implement testRecalculateValue().
-	 */
 	public function testRecalculateValue() {
-		// Remove the following lines when you implement this test.
+		// TODO
 	}
 
 	public function testSetterAndGetter() {
