@@ -9120,7 +9120,6 @@ var RunalyzeLeaflet = (function($){
 	// Private
 
 	var id = '';
-	var ready = false;
 	var object = null;
 	var options = {
 		visible: {
@@ -9163,10 +9162,10 @@ var RunalyzeLeaflet = (function($){
 		$('<a class="leaflet-control-zoom-full" href="javascript:RunalyzeLeaflet.toggleFullscreen();" title="Fullscreen"><i class="fa fa-expand"></i></a>').insertAfter('.leaflet-control-zoom-in');
 
 		object.on('baselayerchange', function(e){
-			self.setDefaultLayer(e.name);
-
-			if (ready)
+			if (options.layer != e.name) {
+				self.setDefaultLayer(e.name);
 				Runalyze.Config.setLeafletLayer(e.name);
+			}
 		});
 	}
 
@@ -9189,7 +9188,6 @@ var RunalyzeLeaflet = (function($){
 			object.remove();
 		}
 
-		ready = false;
 		initLayers();
 		setMapOptions(mapOptions);
 		id = newID;
@@ -9197,7 +9195,6 @@ var RunalyzeLeaflet = (function($){
 
 		initControls();
 		initTooltip();
-		ready = true;
 
 		return self;
 	};
