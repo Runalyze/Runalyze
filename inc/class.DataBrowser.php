@@ -14,6 +14,12 @@ use Runalyze\Util\Time;
  */
 class DataBrowser {
 	/**
+	 * Show a line to seperate weeks
+	 * @var boolean
+	 */
+	static public $SEPARATE_WEEKS_BY_LINE = true;
+
+	/**
 	 * CSS-ID for calendar-widget
 	 * @var string
 	 */

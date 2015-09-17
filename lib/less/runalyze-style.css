@@ -1313,6 +1313,14 @@ td.top-spacer,
 .zebra-style tbody .top-spacer {
   border-top: 1px solid #666666;
 }
+.top-separated-light,
+.zebra-style tbody .top-separated-light {
+  border-top: 1px solid #cccccc;
+}
+.top-separated,
+.zebra-style tbody .top-separated {
+  border-top: 1px solid #999999;
+}
 tr.bottom-spacer,
 tr.bottom-spacer td,
 td.bottom-spacer {

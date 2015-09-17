@@ -52,16 +52,35 @@
 			<?php endif; ?>
 			<tbody class="top-and-bottom-border">
 <?php
+if ($this->day_count < 25) {
+	$weekSeparator = ' top-separated';
+	$monthSeparator = ' top-separated-light';
+} else {
+	$weekSeparator = ' top-separated-light';
+	$monthSeparator = ' top-separated';
+}
+
 foreach ($this->days as $i => $day) {
+	$trClass = '';
+
+	if ($i > 0 && date('w', $day['date']) == 1) {
+		$trClass = $weekSeparator;
+	}
+
+	if ($i > 0 && date('j', $day['date']) == 1) {
+		$trClass = ($trClass == '') ? $monthSeparator : ' top-separated';
+	}
+
 	if (!empty($day['trainings'])) {
 		foreach ($day['trainings'] as $t => $Training) {
 			$id       = $Training['id'];
 			$wk_class = isset($Training['typeid']) && $Training['typeid'] == \Runalyze\Configuration::General()->competitionType() ? ' wk' : '';
+			$trClass = ($t == 0) ? $trClass : '';
 
 			if (FrontendShared::$IS_SHOWN && !$Training['is_public'])
-				echo '<tr class="r training'.$wk_class.'">';
+				echo '<tr class="r'.$trClass.' training'.$wk_class.'">';
 			else
-				echo '<tr class="r training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
+				echo '<tr class="r'.$trClass.' training'.$wk_class.'" id="training_'.$id.'" '.Ajax::trainingLinkAsOnclick($id).'>';
 
 			if ($t != 0)
 				echo '<td colspan="2"></td>';
@@ -87,7 +106,7 @@ foreach ($this->days as $i => $day) {
 		}
 	} else {
 		echo '
-			<tr class="r">
+			<tr class="r'.$trClass.'">
 				<td class="l" style="width:24px;">';
 
 		foreach ($day['shorts'] as $short) {
