@@ -63,15 +63,16 @@ class ConfigTabTypes extends ConfigTab {
 			) AS tcount
 			FROM `'.PREFIX.'type` ty
 			WHERE `accountid`="'.SessionAccountHandler::getId().'"
-			ORDER BY `id` ASC
+			ORDER BY `sportid` ASC, `tcount` DESC
 		')->fetchAll();
 
 		//TODO Change all locations where Typeid is used 
 		$Types[] = array('id' => -1, 'sportid' => -1, 'name' => '', 'abbr' => '', 'short' => 0, 'hr_avg' => 120, 'quality_session' => 0);
 		$raceID = Configuration::General()->competitionType();
+		$sportid = false;
 
 		foreach ($Types as $Data) {
-			$id     = $Data['id'];
+			$id = $Data['id'];
 
 			if ($id == -1)
 				$delete = '';
@@ -87,7 +88,7 @@ class ConfigTabTypes extends ConfigTab {
 			);
 	
 			$Code .= '
-				<tr class="'.($id == -1 ? ' unimportant' : '').'">
+				<tr class="'.($sportid !== false && $sportid != $Data['sportid'] ? 'top-separated-light' : '').($id == -1 ? ' unimportant' : '').'">
 					<td><input type="text" size="20" name="type[name]['.$id.']" value="'.$Data['name'].'"></td>
 					<td><input type="text" size="3" name="type[abbr]['.$id.']" value="'.$Data['abbr'].'"></td>
 					<td><select name="type[sportid]['.$id.']">';
@@ -106,6 +107,8 @@ class ConfigTabTypes extends ConfigTab {
 					<td>'.HTML::selectBox('type[short]['.$id.']', $ShortOptions, $Data['short']).'</td>
 					<td>'.$delete.'</td>
 				</tr>';
+
+			$sportid = $Data['sportid'];
 		}
 
 		$Code .= '
