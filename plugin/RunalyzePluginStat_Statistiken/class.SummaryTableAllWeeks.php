@@ -4,6 +4,8 @@
  * @package Runalyze\Plugins\Stats\RunalyzePluginStat_Statistiken
  */
 
+use Runalyze\Util\Time;
+
 /**
  * Summary table for dataset/data browser
  * 

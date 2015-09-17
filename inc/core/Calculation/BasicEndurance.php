@@ -1,13 +1,18 @@
 <?php
 /**
  * This file contains class::BasicEndurance
- * @package Runalyze\Calculations
+ * @package Runalyze\Calculation
  */
 
+namespace Runalyze\Calculation;
+
 use Runalyze\Configuration;
+use Runalyze\Util\Time;
+
+use DB;
 
 /**
- * Class: BasicEndurance
+ * BasicEndurance
  * 
  * This class can calculated a value for the basic endurance.
  * A value of 100 represents a fully sufficient training for an optimal marathon.
@@ -16,7 +21,7 @@ use Runalyze\Configuration;
  * This class can use the settings from configuration or with own settings.
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations
+ * @package Runalyze\Calculation
  */
 class BasicEndurance {
 	/**

@@ -8,6 +8,7 @@ use Runalyze\Activity\Pace;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
+use Runalyze\Util\Time;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Icon;

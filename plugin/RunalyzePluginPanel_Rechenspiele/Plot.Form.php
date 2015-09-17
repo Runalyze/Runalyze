@@ -7,6 +7,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
+use Runalyze\Util\Time;
 
 $MaxATLPoints   = 750;
 $DataFailed     = false;

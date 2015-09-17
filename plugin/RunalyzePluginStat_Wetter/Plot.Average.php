@@ -5,6 +5,8 @@
  * @package Runalyze\Plugins\Stats
  */
 
+use Runalyze\Util\Time;
+
 $Months       = array();
 $Temperatures = array();
 

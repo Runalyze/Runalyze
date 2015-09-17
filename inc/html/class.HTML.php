@@ -3,6 +3,9 @@
  * This file contains class::HTML
  * @package Runalyze\HTML
  */
+
+use Runalyze\Util\Time;
+
 /**
  * Class: HTML
  *

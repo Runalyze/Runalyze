@@ -7,13 +7,14 @@ $PLUGINKEY = 'RunalyzePluginPanel_Rechenspiele';
 
 use Runalyze\Calculation\Performance;
 use Runalyze\Calculation\Prognosis;
-use Runalyze\Calculation\Trimp;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\Monotony;
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Util\Time;
 use Runalyze\View\Tooltip;
 
 /**

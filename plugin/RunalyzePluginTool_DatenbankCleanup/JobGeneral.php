@@ -6,6 +6,7 @@
 
 namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
 
 /**
@@ -125,7 +126,7 @@ class JobGeneral extends Job {
 	 */
 	protected function recalculateBasicEndurance() {
 		$oldValue = Configuration::Data()->basicEndurance();
-		\BasicEndurance::recalculateValue();
+		BasicEndurance::recalculateValue();
 		$newValue = Configuration::Data()->basicEndurance();
 
 		$this->addSuccessMessage(__('Basic endurance'), $oldValue, $newValue);

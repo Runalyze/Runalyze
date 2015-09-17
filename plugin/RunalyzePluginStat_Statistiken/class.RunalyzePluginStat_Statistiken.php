@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Configuration;
-
+use Runalyze\Util\Time;
 
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**

@@ -3,6 +3,9 @@
  * This file contains class::PluginStat
  * @package Runalyze\Plugin
  */
+
+use Runalyze\Util\Time;
+
 /**
  * Abstract plugin class for statistics
  * @author Hannes Christiansen

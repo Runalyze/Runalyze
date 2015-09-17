@@ -8,13 +8,13 @@ namespace Runalyze\View\Activity;
 
 use Runalyze\Model\Activity;
 use Runalyze\Activity\Duration;
+use Runalyze\Util\Time;
 
 use SessionAccountHandler;
 use DataBrowserLinker;
 use SharedLinker;
 use System;
 use Sport;
-use Time;
 use Icon;
 use Ajax;
 use DB;

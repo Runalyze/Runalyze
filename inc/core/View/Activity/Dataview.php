@@ -18,14 +18,13 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context as GeneralContext;
+use Runalyze\Util\Time;
 use Runalyze\View\Stresscolor;
 
 use SessionAccountHandler;
 use ClothesFactory;
 use SportFactory;
 use SearchLink;
-use Running;
-use Time;
 use Icon;
 use Ajax;
 use HTML;

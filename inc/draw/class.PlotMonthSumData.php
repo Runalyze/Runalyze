@@ -3,6 +3,9 @@
  * This file contains class::PlotMonthSumData
  * @package Runalyze\Plot
  */
+
+use Runalyze\Util\Time;
+
 /**
  * Plot month data
  * @package Runalyze\Plot

@@ -1,12 +1,16 @@
 <?php
 /**
  * This file contains class::Time
- * @package Runalyze\Calculations
+ * @package Runalyze\Util
  */
+
+namespace Runalyze\Util;
+
 /**
  * Class for standard operations for timestamps
+ * 
  * @author Hannes Christiansen
- * @package Runalyze\Calculations
+ * @package Runalyze\Util
  */
 class Time {
 	/**
@@ -16,8 +20,9 @@ class Time {
 	 * @return int
 	 */
 	static public function diffInDays($time_1, $time_2 = 0) {
-		if ($time_2 == 0)
+		if ($time_2 == 0) {
 			$time_2 = time();
+		}
 
 		return floor(abs(($time_1 - $time_2)/(3600*24)));
 	}
@@ -29,11 +34,7 @@ class Time {
 	 * @return int
 	 */
 	static public function diffOfDates($date1, $date2) {
-		if (function_exists('date_diff')) // needs PHP >5.3.0
-			return (int)date_diff(date_create($date1), date_create($date2))->format('%a');
-
-		// TODO: Problem because of summer/winter-time
-		return floor(abs(strtotime($date1) - strtotime($date2)) / (3600 * 24));
+		return (int)date_diff(date_create($date1), date_create($date2))->format('%a');
 	}
 
 	/**
@@ -42,7 +43,7 @@ class Time {
 	 * @return boolean
 	 */
 	static public function isToday($timestamp) {
-		return date('d.m.Y') == date('d.m.Y', $timestamp);
+		return (date('d.m.Y') == date('d.m.Y', $timestamp));
 	}
 
 	/**
@@ -51,10 +52,14 @@ class Time {
 	 */
 	static public function Weekstart($time) {
 		$w = date("w", $time);
-		if ($w == 0)
+
+		if ($w == 0) {
 			$w = 7;
+		}
+
 		$w -= 1;
-		return mktime(0, 0, 0, date("m",$time), date("d",$time)-$w, date("Y",$time));
+
+		return mktime(0, 0, 0, date('m', $time), date('d', $time) - $w, date('Y', $time));
 	}
 
 	/**
@@ -63,7 +68,8 @@ class Time {
 	 */
 	static public function Weekend($time) {
 		$start = self::Weekstart($time);
-		return mktime(23, 59, 50, date("m",$start), date("d",$start)+6, date("Y",$start));
+
+		return mktime(23, 59, 50, date('m', $start), date('d', $start) + 6, date('Y', $start));
 	}
 
 	/**

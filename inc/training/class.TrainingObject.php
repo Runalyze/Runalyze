@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Util\Time;
 
 /**
  * DataObject for trainings
