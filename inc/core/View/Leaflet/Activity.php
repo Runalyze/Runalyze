@@ -191,8 +191,7 @@ class Activity extends LeafletRoute {
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
 			$this->Info[] = array(
 				(float)$this->TrackdataLoop->distance(),
-				Distance::format($this->TrackdataLoop->distance()),
-				Duration::format($this->TrackdataLoop->time())
+				(int)$this->TrackdataLoop->time()
 			);
 		}
 	}
@@ -203,9 +202,12 @@ class Activity extends LeafletRoute {
 	protected function defineInfoLabels() {
 		if ($this->addIconsAndInfo && $this->hasTrackdataLoop()) {
 			$this->InfoLabels = array(
-				false,
 				__('Distance'),
 				__('Time')
+			);
+			$this->InfoFunctions = array(
+				'function(v){return v.toFixed(2)+"&nbsp;km";}',
+				'function(v){return (new Date(v * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0];}'
 			);
 		}
 	}
