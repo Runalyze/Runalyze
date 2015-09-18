@@ -12,8 +12,8 @@ $EmptyTables = array();
 $EmptyTables['runalyze_equipment_type'] = array(
 	'columns' => array('name', 'input'),
 	'values'  => array(
-		array(__('clothes'),1, 'EQUIPMENT_CLOTHES_ID'),
-		array(__('shoes'),2, 'EQUIPMENT_SHOES_ID')
+		array(__('Shoes'), 0, 'EQUIPMENT_SHOES_ID'),
+		array(__('Clothes'), 1, 'EQUIPMENT_CLOTHES_ID')
 	)
 );
 

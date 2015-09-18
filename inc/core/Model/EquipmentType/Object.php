@@ -16,6 +16,16 @@ use Runalyze\Model;
  */
 class Object extends Model\ObjectWithID {
 	/**
+	 * @var enum
+	 */
+	const CHOICE_SINGLE = 0;
+
+	/**
+	 * @var enum
+	 */
+	const CHOICE_MULTIPLE = 1;
+
+	/**
 	 * Key: name
 	 * @var string
 	 */
@@ -93,7 +103,7 @@ class Object extends Model\ObjectWithID {
 	 * @return boolean
 	 */
 	public function allowsMultipleValues() {
-		return ($this->Data[self::INPUT] == 1);
+		return ($this->Data[self::INPUT] == self::CHOICE_MULTIPLE);
 	}
 
 	/**
