@@ -25,3 +25,8 @@ ALTER TABLE `runalyze_training` ADD `fit_vdot_estimate` TINYINT(2) UNSIGNED NOT 
 
 /* 16.09.2015 - add short mode for types */
 ALTER TABLE `runalyze_type` ADD `short` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `sportid`;
+
+/* 17.09.2015 - add statistics from fit files to dataset */
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'fit_vdot_estimate', 1, 1, 'small', '', 29, 1, 'AVG', `id` FROM `runalyze_account`;
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'fit_recovery_time', 1, 1, 'small', '', 30, 0, 'NO', `id` FROM `runalyze_account`;
+INSERT INTO `runalyze_dataset` (`name`, `active`, `modus`, `class`, `style`, `position`, `summary`, `summary_mode`, `accountid`) SELECT 'fit_hrv_analysis', 1, 1, 'small', '', 31, 1, 'AVG', `id` FROM `runalyze_account`;

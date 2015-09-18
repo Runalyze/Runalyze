@@ -598,6 +598,19 @@ class Dataset {
 				}
 
 				return '';
+
+			case 'fit_vdot_estimate':
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
+					return $this->Dataview->fitVdotEstimate();
+				}
+
+				return '';
+
+			case 'fit_recovery_time':
+				return $this->Dataview->fitRecoveryTime();
+
+			case 'fit_hrv_analysis':
+				return $this->Dataview->fitHRVscore();
 		}
 
 		return '';
