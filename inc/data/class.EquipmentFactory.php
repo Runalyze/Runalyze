@@ -162,7 +162,23 @@ class EquipmentFactory {
 	 */
 	static public function recalculateAllEquipment()
 	{
-		$Statement = DB::getInstance()->query('UPDATE runalyze_equipment CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` FROM `'.PREFIX.'equipment eqp LEFT JOIN `'.PREFIX.'activity_equipment aeqp ON eqp.id = aeqp.equipmentid LEFT JOIN `'.PREFIX.'training tr ON aeqp.activityid = tr.id WHERE eqp.accountid = '.SessionAccountHandler::getId().' GROUP BY eqp.id) AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
+		DB::getInstance()->exec(
+			'UPDATE `'.PREFIX.'equipment`
+			CROSS JOIN(
+				SELECT
+					`eqp`.`id` AS `eqpid`,
+					SUM(`tr`.`distance`) AS `km`,
+					SUM(`tr`.`s`) AS `s` 
+				FROM `'.PREFIX.'equipment` AS `eqp` 
+				LEFT JOIN `'.PREFIX.'activity_equipment` AS `aeqp` ON `eqp`.`id` = `aeqp`.`equipmentid` 
+				LEFT JOIN `'.PREFIX.'training` AS `tr` ON `aeqp`.`activityid` = `tr`.`id`
+				WHERE `eqp`.`accountid` = '.SessionAccountHandler::getId().'
+				GROUP BY `eqp`.`id`
+			) AS `new`
+			SET
+				`distance` = IFNULL(`new`.`km`, 0),
+				`time` = IFNULL(`new`.`s`, 0)
+			WHERE `id` = `new`.`eqpid`');
 
 		self::clearAllEquipment();
 		Cache::delete(self::CACHE_KEY_EQ);

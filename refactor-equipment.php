@@ -220,18 +220,28 @@ if ($count + LIMIT >= $countAccount) {
 	$PDO->exec('ALTER TABLE `'.PREFIX.'account` DROP `refactored`');
 
 	$PDO->exec('DROP TABLE IF EXISTS `'.PREFIX.'shoe`, `'.PREFIX.'clothes`');
-	echo 'All unused tables (shoe, clothe) have been dropped.'.NL;
+	echo 'All unused tables (shoe, clothes) have been dropped.'.NL;
         
 	$PDO->exec('ALTER TABLE `'.PREFIX.'training` DROP `shoeid`, DROP `clothes`');
 	echo 'All unused columns from training (shoeid, clothes) have been dropped.'.NL;
 
-	// Recalculate all distance and time data of all usersq
-	$PDO->exec('UPDATE runalyze_equipment 
-					CROSS JOIN(SELECT eqp.id AS `eqpid`, SUM(tr.distance) AS `km`, SUM(tr.s)+eqp.additional_km AS `s` 
-						FROM runalyze_equipment eqp 
-							LEFT JOIN runalyze_activity_equipment aeqp ON eqp.id = aeqp.equipmentid 
-							LEFT JOIN runalyze_training tr ON aeqp.activityid = tr.id GROUP BY eqp.id) 
-				AS NEW SET distance = NEW.km, TIME = NEW.s WHERE id = NEW.eqpid;');
+	// Recalculate distance/time for all equipment
+	$PDO->exec(
+		'UPDATE `'.PREFIX.'equipment`
+		CROSS JOIN(
+			SELECT
+				`eqp`.`id` AS `eqpid`,
+				SUM(`tr`.`distance`) AS `km`,
+				SUM(`tr`.`s`) AS `s` 
+			FROM `'.PREFIX.'equipment` AS `eqp` 
+			LEFT JOIN `'.PREFIX.'activity_equipment` AS `aeqp` ON `eqp`.`id` = `aeqp`.`equipmentid` 
+			LEFT JOIN `'.PREFIX.'training` AS `tr` ON `aeqp`.`activityid` = `tr`.`id`
+			GROUP BY `eqp`.`id`
+		) AS `new`
+		SET
+			`distance` = IFNULL(`new`.`km`, 0),
+			`time` = IFNULL(`new`.`s`, 0)
+		WHERE `id` = `new`.`eqpid`');
 
 	echo NL;
 	echo 'Remember to unset your credentials within this file.'.NL;
