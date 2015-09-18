@@ -1,0 +1,220 @@
+1) Create new FreeNAS jail
+   VIMAGE: checked
+   Everything else: Default
+   
+2) Open a shell, connect to your freenas box and open a shell in the created jail.
+   Remember:
+     $> jls                   --> list all jails
+	 $> jexec <name|id> csh   --> opens a shell in the shell with <name|id>
+
+3) Install required packages (nginx, php, mysql, ...).
+    $> pkg install nginx php56 php56-extensions mysql56-server php56-mysql php56-mbstring php56-zlib php56-openssl php56-gettext php56-pdo_mysql node npm
+
+4) Add the following lines to your '/etc/rc.conf' file
+    ---
+	nginx_enable="YES"
+    php_fpm_enable="YES"
+    mysql_enable="YES"
+	---
+	
+5) Configure MySQL:
+   - Create the file '/usr/local/etc/my.conf'
+   $> ee /usr/local/etc/my.conf
+   
+     with the following content:
+   ---
+   # The MySQL server configuration
+   [mysqld]
+   socket = /tmp/mysql.sock
+   # Don't listen on a TCP/IP port at all.
+   skip-networking
+   skip-name-resolve
+   #Expire binary logs after one day:
+   expire_logs_days = 1
+   ---
+
+6) Start mysql-server:
+   $> service mysql-server start
+  
+   - Setup basics for mysql and delete default user and tables
+   $> mysql_secure_installation
+   --> set a root password, remove anonymous user and test db before reloading privileges table (defaults).
+   
+   - Now we will create a new sql user called 'runalyze' and a database (also 'runalyze') where the data is stored:
+   $> mysql -u root -p
+   $mysql> CREATE DATABASE runalyze;
+   $mysql> CREATE USER "runalyze"@"localhost" IDENTIFIED BY "ChangeThisPassword";
+   $mysql> GRANT ALL PRIVILEGES ON runalyze.* TO "runalyze"@"localhost";
+   $mysql> FLUSH PRIVILEGES;
+   $mysql> quit
+   $> service mysql-server restart
+  
+  
+7) Ok, now let's copy the production setup of php-fpm:
+  $> cp /usr/local/etc/php.ini-production /usr/local/etc/php.ini
+  Feel free to apply your changes ...
+  $> ee /usr/local/etc/php.ini
+  
+  Sample config contains tons of comments and descriptions. Below my changes are listed:
+  ---
+  output_buffering = Off
+  session.save_path = "/tmp"
+  upload_max_filesize = 20M
+  post_max_size = 20M
+  date.timezone = Europe/Vienna
+  ---
+  
+8) Create a backup of your php-fpm settings and replace the default config with the following content.
+  $> cp /usr/local/etc/php-fpm.conf /usr/local/etc/php-fpm.conf.bak
+  
+  $> ee /usr/local/etc/php-fpm.conf
+  ---
+  [global]
+  pid = run/php-fpm.pid
+
+  [www]
+  listen = /var/run/phph-fpm.socket
+  listen.owner = www
+  listen.group = www
+  listen.mode = 0666
+
+  listen.backlog = -1
+  listen.allowed_clients = 127.0.0.1
+
+  user = www
+  group = www
+
+  pm = dynamic
+  pm.max_children = 5
+  pm.start_servers = 2
+  pm.min_spare_servers = 1
+  pm.max_spare_servers = 3
+  pm.max_requests = 500
+
+  env[HOSTNAME] = $HOSTNAME
+  env[PATH] = /usr/local/bin:/usr/bin:/bin
+  env[TMP] = /tmp
+  env[TMPDIR] = /tmp
+  env[TEMP] = /tmp
+  ---
+  
+9) Start PHP service:
+   $> service php-fpm start
+  
+10) Adjust the nginx.conf file to your needs. My configuration is listed below:
+    Note that i configured another nginx that handles incoming connections from the internet. So I want to the admin and config file to be accessible from my local network when accessing the server by its internal IP but don't want the files to be accessible from outside. So make sure that you block these files in your configuration!
+
+   ---
+   $> cat /usr/local/etc/nginx/nginx.conf
+   user www;
+
+   worker_processes 2;
+
+   events {
+     worker_connections  128;
+   }
+
+   http {
+       include  mime.types;
+       default_type  application/octet-stream;
+       sendfile  off;
+       ignore_invalid_headers on;
+       #server_name_in_redirect off;
+       server_tokens off;
+       keepalive_timeout  65;
+   
+       gzip              on;
+       gzip_buffers      256 8k;
+       gzip_comp_level   9;
+       gzip_http_version 1.0;
+       gzip_min_length   0;
+       gzip_types        text/css text/javascript text/mathml text/plain text/xml application/x-javascript application/atom+xml application/rss+xml application/xhtml+xml image/svg+xml;
+       gzip_vary         on;
+       gzip_disable      "MSIE [1-6]\.(?!.*SV1)";
+
+       log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+       #access_log  logs/access.log  main;
+
+       server {
+           listen 80;
+           server_name _;
+
+           # Prevent Clickjacking
+           add_header X-Frame-Options "SAMEORIGIN";
+
+           #access_log  logs/host.access.log  main;
+
+           # Stops the annoying error messages in the logs
+           location ~* ^/(favicon.ico|robots.txt) {
+               log_not_found off;
+           }
+
+		   # Path of your runalyze copy
+           root /usr/local/www/runalyze;
+           index index.php;
+           location / {
+                   client_max_body_size 20M;
+
+                   location ~ \.php$ {
+                           try_files $uri =404;
+                           fastcgi_pass unix:/var/run/php-fpm.sock;
+                           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                           include fastcgi_params;
+                   }
+                   location ~* \.(?:jpg|jpeg|png|gif|ico|css|js)$ {
+                           expires 10d; add_header Cache-Control public;
+                   }
+           }
+       }
+   }
+   ---
+  
+11) clone Runalyze archive or donwload a release zip file to your box and extract it to '/usr/local/www/runalyze'
+  $> cd /usr/local/www && fetch https://github.com/Runalyze/Runalyze/releases/download/v2.1.0/runalyze-v2.1.0.zip && unzip runalyze-v2.1.0.zip
+  
+12) Set the access rights so that your www user is allowed to manipulate the created dir.
+    $> chown -R www:www /usr/local/www/runalyze
+  
+13) Because FreeBSD uses other path for placing binaries you have to change the perl exec path in: "runalyze/inc/system/shell/class.PerlCommand.php"
+    FROM: private static $PERL_PATH = '/usr/bin/perl';
+      TO: private static $PERL_PATH = '/usr/local/bin/perl';
+  
+14) Now it is time to install runalyze itself by opening http://<ip-of-you-box>/install.php in your browser and following the installation routine. If it tells you that perl script wont work don't mind! Thats caused by a bug in FreeNAS jails (see: https://bugs.freenas.org/issues/4810).
+
+BUT: If you want to be able to import *.fit Files you will have to apply a little hack.
+
+15) Overcome locale errors/warnings of perl:
+    Open the FIT file importer class:
+	$> ee runalyze/inc/import/filetypes/class.ImporterFiletypeFIT.php
+	
+	Replace the private function readFirstLine() with the following code snippet.
+	---
+	protected function readFirstLine() {
+                // XXX: Workaround for Perl locale Warnings
+                //      Lines like the following are ignored silently:
+				// --- Console log of perl running with undefined locale ---
+                // perl: warning: Setting locale failed.
+                // perl: warning: Please check that your locale settings:
+                //         LC_ALL = "en_US",
+                //         LANG = "en_US"
+                //     are supported and installed on your system.
+                // perl: warning: Falling back to the standard locale ("C").
+				// --- end ---
+
+                do {
+                        $FirstLine = stream_get_line($this->Handle, 4096, PHP_EOL);
+                } while(trim($FirstLine) != 'SUCCESS' && ! feof($this->Handle));
+
+                if (feof($this->Handle)) {
+                        //while(($line = stream_get_line($this->Handle, 4096, PHP_EOL)) != false && !feof($this->Handle
+                        //      $FirstLine .= $line;
+                        fclose($this->Handle);
+                        unlink($this->Filename);
+
+                        throw new RuntimeException('Reading *.fit-file failed. First line was "'.$FirstLine.'".');
+                }
+        }
+	---
