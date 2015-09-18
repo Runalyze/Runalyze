@@ -29,12 +29,30 @@ class Factory {
 	protected $AccountID;
 
 	/**
+	 * Array with tablenames that should be cached statically
+	 * @var array
+	 */
+	protected $UseStaticCacheAndFullFetch = array();
+
+	/**
+	 * Static cache to not read file-cache every time
+	 * @var array
+	 */
+	protected $StaticCache = array();
+
+	/**
 	 * Factory
 	 * @param int $accountID [optional]
 	 */
 	public function __construct($accountID = null) {
 		$this->DB = DB::getInstance();
 		$this->AccountID = $accountID;
+		$this->UseStaticCacheAndFullFetch = array(
+			'sport' => true,
+			'type' => true,
+			'equipment' => true,
+			'equipment_type' => true
+		);
 	}
 
 	/**
@@ -107,10 +125,18 @@ class Factory {
 	 */
 	public function type($typeid) {
 		return new Type\Object(
-			\TypeFactory::DataFor($typeid)
-			// TODO: The factory must be able to fetch all rows at once
-			//$this->arrayByPK('type', $typeid)
+			$this->arrayByPK('type', $typeid)
 		);
+	}
+
+	/**
+	 * All type objects
+	 * @return \Runalyze\Model\Type\Object[]
+	 */
+	public function allTypes() {
+		return $this->allObjects('type', function($data){
+			return new Type\Object($data);
+		});
 	}
 
 	/**
@@ -120,10 +146,18 @@ class Factory {
 	 */
 	public function sport($sportid) {
 		return new Sport\Object(
-			\SportFactory::DataFor($sportid)
-			// TODO: The factory must be able to fetch all rows at once
-			//$this->arrayByPK('sport', $sportid)
+			$this->arrayByPK('sport', $sportid)
 		);
+	}
+
+	/**
+	 * All sport objects
+	 * @return \Runalyze\Model\Sport\Object[]
+	 */
+	public function allSports() {
+		return $this->allObjects('sport', function($data){
+			return new Sport\Object($data);
+		});
 	}
 
 	/**
@@ -133,9 +167,18 @@ class Factory {
 	 */
 	public function equipmentType($equipmentTypeid) {
 		return new EquipmentType\Object(
-			// TODO: The factory must be able to fetch all rows at once
 			$this->arrayByPK('equipment_type', $equipmentTypeid)
 		);
+	}
+
+	/**
+	 * All equipment type objects
+	 * @return \Runalyze\Model\EquipmentType\Object[]
+	 */
+	public function allEquipmentTypes() {
+		return $this->allObjects('equipment_type', function($data){
+			return new EquipmentType\Object($data);
+		});
 	}
 
 	/**
@@ -147,6 +190,7 @@ class Factory {
 	public function sportForEquipmentType($equipmentTypeid, $onlyIDs = false) {
 		$Sport = array();
 
+		// TODO: provide a cache for this
 		$IDs = $this->DB->query('SELECT `sportid` FROM `'.PREFIX.'equipment_sport` WHERE `equipment_typeid`="'.$equipmentTypeid.'"')->fetchAll(\PDO::FETCH_COLUMN);
 
 		if ($onlyIDs) {
@@ -167,9 +211,18 @@ class Factory {
 	 */
 	public function equipment($equipmentid) {
 		return new Equipment\Object(
-			// TODO: The factory must be able to fetch all rows at once
 			$this->arrayByPK('equipment', $equipmentid)
 		);
+	}
+
+	/**
+	 * All equipment objects
+	 * @return \Runalyze\Model\Equipment\Object[]
+	 */
+	public function allEquipments() {
+		return $this->allObjects('equipment', function($data){
+			return new Equipment\Object($data);
+		});
 	}
 
 	/**
@@ -206,35 +259,131 @@ class Factory {
 			return $this->fetch($tablename, $id);
 		}
 
-		// TODO: 
-		// provide somehow an internal cache to not read the file every time
-		// this needs static properties: ::$CACHE['accountID']['table']['PK']
-
-		$Data = Cache::get($tablename.$id);
-		if (is_null($Data)) {
-			$Data = $this->fetch($tablename, $id);
-
-			Cache::set($tablename.$id, $Data, $cachetime);
-		} else {
-			//Cache::touch($tablename.$id);
+		if (isset($this->UseStaticCacheAndFullFetch[$tablename])) {
+			return $this->arrayByPKfromStaticCache($tablename, $id);
 		}
 
-		return $Data;
+		return $this->arrayByPKfromCache($tablename, $id, $cachetime);
+	}
+
+	/**
+	 * Array by primary key from static cache
+	 * @param string $tablename
+	 * @param int $id
+	 * @return array
+	 */
+	protected function arrayByPKfromStaticCache($tablename, $id) {
+		if (!isset($this->StaticCache[$tablename])) {
+			$this->fetchStaticCache($tablename);
+		}
+
+		if (isset($this->StaticCache[$tablename][$id])) {
+			return $this->StaticCache[$tablename][$id];
+		}
+
+		return array();
+	}
+
+	/**
+	 * Fetch static cache
+	 * @param string $tablename
+	 */
+	protected function fetchStaticCache($tablename) {
+		$pk = $this->primaryKey($tablename);
+		$allData = $this->fetch($tablename, 0, true);
+		$this->StaticCache[$tablename] = array();
+
+		foreach ($allData as $data) {
+			$this->StaticCache[$tablename][$data[$pk]] = $data;
+		}
+	}
+
+	/**
+	 * Array by primary key from cache class
+	 * @param string $tablename
+	 * @param int $id
+	 * @param int $cachetime [optional]
+	 * @return array
+	 */
+	protected function arrayByPKfromCache($tablename, $id, $cachetime) {
+		$data = Cache::get($tablename.$id);
+
+		if (is_null($data)) {
+			$data = $this->fetch($tablename, $id);
+
+			Cache::set($tablename.$id, $data, $cachetime);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * All data
+	 * @param string $tablename
+	 * @return array
+	 * @throws \InvalidArgumentException
+	 */
+	protected function allData($tablename) {
+		if (!isset($this->UseStaticCacheAndFullFetch[$tablename])) {
+			throw new \InvalidArgumentException('The table "'.$tablename.'" does not provide a full fetch');
+		}
+
+		if (!isset($this->StaticCache[$tablename])) {
+			$this->fetchStaticCache($tablename);
+		}
+
+		return $this->StaticCache[$tablename];
+	}
+
+	/**
+	 * All objects
+	 * @param string $tablename
+	 * @param \Closure $constructor
+	 * @return \Runalyze\Model\Object[]
+	 */
+	public function allObjects($tablename, \Closure $constructor) {
+		$allObjects = array();
+		$allData = $this->allData($tablename);
+
+		foreach ($allData as $data) {
+			$allObjects[] = $constructor($data);
+		}
+
+		return $allObjects;
+	}
+
+	/**
+	 * Clear cache
+	 * @param string $tablename
+	 * @param int $id can be empty if the table uses a full fetch and static cache
+	 * @throws \InvalidArgumentException
+	 */
+	public function clearCache($tablename, $id = false) {
+		if (isset($this->UseStaticCacheAndFullFetch[$tablename]) && isset($this->StaticCache[$tablename])) {
+			unset($this->StaticCache[$tablename]);
+		} elseif ($id) {
+			Cache::delete($tablename.$id);
+		} else {
+			throw new \InvalidArgumentException('Argument $id must be set, the table "'.$tablename.'" does not use a static cache.');
+		}
 	}
 
 	/**
 	 * Fetch data
 	 * @param string $tablename
 	 * @param int $id
+	 * @param boolean $fullFetch
 	 * @return array
 	 */
-	protected function fetch($tablename, $id) {
+	protected function fetch($tablename, $id, $fullFetch = false) {
 		$field = $this->primaryKey($tablename);
 		$AndAccountID = $this->hasAccountID() && $this->tableHasAccountid($tablename) ? 'AND `accountid`='.(int)$this->AccountID : '';
 
-		// TODO:
-		// provide a full fetch for tables as sport / type
-		$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
+		if ($fullFetch) {
+			$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE 1 '.$AndAccountID)->fetchAll();
+		} else {
+			$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
+		}
 
 		if (!is_array($result)) {
 			return array();
