@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Util\Time;
 
 /**
  * DataBrowser
@@ -12,6 +13,12 @@ use Runalyze\Configuration;
  * @package Runalyze\DataBrowser
  */
 class DataBrowser {
+	/**
+	 * Show a line to seperate weeks
+	 * @var boolean
+	 */
+	static public $SEPARATE_WEEKS_BY_LINE = true;
+
 	/**
 	 * CSS-ID for calendar-widget
 	 * @var string
@@ -53,6 +60,12 @@ class DataBrowser {
 	 * @var array
 	 */
 	protected $sports_short;
+
+	/**
+	 * Array containing IDs for 'short' types
+	 * @var array
+	 */
+	protected $types_short;
 
 	/**
 	 * Internal DB object
@@ -128,7 +141,7 @@ class DataBrowser {
 	 * Init all days for beeing displayed
 	 */
 	protected function initDays() {
-		$this->initShortSports();
+		$this->initShortModes();
 		$this->initEmptyDays();
 
 		$WhereNotPrivate = (FrontendShared::$IS_SHOWN && !Configuration::Privacy()->showPrivateActivitiesInList()) ? 'AND is_public=1' : '';
@@ -150,7 +163,7 @@ class DataBrowser {
 		foreach ($AllTrainings as $Training) {
 			$w = Time::diffInDays($Training['time'], $this->timestamp_start);
 
-			if (in_array($Training['sportid'], $this->sports_short))
+			if (in_array($Training['sportid'], $this->sports_short) || in_array($Training['typeid'], $this->types_short))
 				$this->days[$w]['shorts'][]    = $Training;
 			else
 				$this->days[$w]['trainings'][] = $Training;
@@ -173,12 +186,9 @@ class DataBrowser {
 	/**
 	 * Init $this->sports_short
 	 */
-	protected function initShortSports() {
-		$this->sports_short = array();
-		$sports = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1 AND accountid = '.SessionAccountHandler::getId())->fetchAll();
-
-		foreach ($sports as $sport)
-			$this->sports_short[] = $sport['id'];
+	protected function initShortModes() {
+		$this->sports_short = $this->DB->query('SELECT `id` FROM `'.PREFIX.'sport` WHERE `short`=1 AND accountid = '.SessionAccountHandler::getId())->fetchAll(PDO::FETCH_COLUMN);
+		$this->types_short = $this->DB->query('SELECT `id` FROM `'.PREFIX.'type` WHERE `short`=1 AND accountid = '.SessionAccountHandler::getId())->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 	/**

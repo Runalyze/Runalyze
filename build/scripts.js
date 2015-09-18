@@ -9120,7 +9120,6 @@ var RunalyzeLeaflet = (function($){
 	// Private
 
 	var id = '';
-	var ready = false;
 	var object = null;
 	var options = {
 		visible: {
@@ -9163,10 +9162,10 @@ var RunalyzeLeaflet = (function($){
 		$('<a class="leaflet-control-zoom-full" href="javascript:RunalyzeLeaflet.toggleFullscreen();" title="Fullscreen"><i class="fa fa-expand"></i></a>').insertAfter('.leaflet-control-zoom-in');
 
 		object.on('baselayerchange', function(e){
-			self.setDefaultLayer(e.name);
-
-			if (ready)
+			if (options.layer != e.name) {
+				self.setDefaultLayer(e.name);
 				Runalyze.Config.setLeafletLayer(e.name);
+			}
 		});
 	}
 
@@ -9189,7 +9188,6 @@ var RunalyzeLeaflet = (function($){
 			object.remove();
 		}
 
-		ready = false;
 		initLayers();
 		setMapOptions(mapOptions);
 		id = newID;
@@ -9197,7 +9195,6 @@ var RunalyzeLeaflet = (function($){
 
 		initControls();
 		initTooltip();
-		ready = true;
 
 		return self;
 	};
@@ -9509,10 +9506,19 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 
 		var text = '';
 		var labels = objects[mouseover].segmentsInfoLabels;
+		var functions = objects[mouseover].segmentsInfoFunctions;
 
-		for (var i = 0; i < labels.length; ++i)
-			if (labels[i])
-				text = text + '<strong>' + labels[i] + ':</strong> ' + info[i] + '<br>';
+		for (var i = 0; i < labels.length; ++i) {
+			if (labels[i]) {
+				var value = info[i];
+
+				if (functions[i]) {
+					value = functions[i](value);
+				}
+
+				text = text + '<strong>' + labels[i] + ':</strong> ' + value + '<br>';
+			}
+		}
 
 		if (text != '')
 			$(tooltip).html( text.substr(0, text.length - 4) );
@@ -9536,6 +9542,7 @@ RunalyzeLeaflet.Routes = (function($, parent, Math){
 	self.addRoute = function(id, object) {
 		object.segments = object.segments || [];
 		object.segmentsInfoLabels = object.segmentsInfoLabels || [];
+		object.segmentsInfoFunctions = object.segmentsInfoFunctions || [];
 		object.segmentsInfo = object.segmentsInfo || [];
 		object.marker = object.marker || [];
 		object.markertopush = object.markertopush || [];

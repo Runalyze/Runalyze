@@ -51,6 +51,12 @@ class Route {
 	protected $InfoLabels = array();
 
 	/**
+	 * Functions to style info
+	 * @var array
+	 */
+	protected $InfoFunctions = array();
+
+	/**
 	 * Options
 	 * @var array
 	 */
@@ -82,6 +88,7 @@ class Route {
 		if (count($this->Paths) == count($this->Infos)) {
 			$Options .= ', segmentsInfoLabels: '.json_encode($this->InfoLabels);
 			$Options .= ', segmentsInfo: '.json_encode($this->Infos);
+			$Options .= ', segmentsInfoFunctions: ['.implode(',', $this->InfoFunctions).']';
 		}
 
 		$Options .= ', markertopush: ['.implode(',', $this->Marker).']';

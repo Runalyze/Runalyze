@@ -158,7 +158,7 @@ textarea.code {
   width: 98%;
   margin: 0 auto;
   height: 100px;
-  overflow: scroll;
+  overflow: auto;
   display: block;
   white-space: nowrap;
   font-family: monospace;
@@ -473,7 +473,7 @@ body.overlay #ajax-outer {
   display: none;
   z-index: 2001;
   position: fixed;
-  overflow-y: scroll;
+  overflow-y: auto;
   left: 0;
   top: 0;
   right: 0;
@@ -510,7 +510,7 @@ body.overlay #ajax-outer {
   box-sizing: border-box;
   border-radius: 0;
   border: 0;
-  overflow: scroll;
+  overflow: auto;
 }
 #ajax.fullscreen #close {
   top: 0;
@@ -525,7 +525,7 @@ body.overlay #ajax-outer {
   margin: 0;
   width: 210px;
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
 }
 form#training {
   min-height: 350px;
@@ -1313,6 +1313,14 @@ td.top-spacer,
 .zebra-style tbody .top-spacer {
   border-top: 1px solid #666666;
 }
+.top-separated-light,
+.zebra-style tbody .top-separated-light {
+  border-top: 1px solid #cccccc;
+}
+.top-separated,
+.zebra-style tbody .top-separated {
+  border-top: 1px solid #999999;
+}
 tr.bottom-spacer,
 tr.bottom-spacer td,
 td.bottom-spacer {
@@ -1435,7 +1443,7 @@ tr.space-line.zebra-corrector td {
   width: 300px;
   margin-left: -301px;
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .training-row-info.with-shadow {
   max-height: 190px;
@@ -1521,7 +1529,7 @@ tr.space-line.zebra-corrector td {
     width: auto;
   }
   #widget-calendar {
-    overflow: scroll;
+    overflow: auto;
     width: auto;
   }
   #data-browser,
@@ -1530,7 +1538,7 @@ tr.space-line.zebra-corrector td {
   }
   #data-browser-container,
   #statistics-container {
-    overflow: scroll;
+    overflow: auto;
   }
   table,
   tr,
@@ -1553,7 +1561,7 @@ tr.space-line.zebra-corrector td {
     float: none;
   }
   #ajax {
-    overflow: scroll;
+    overflow: auto;
   }
   #close {
     top: 0;
@@ -1599,7 +1607,7 @@ tr.space-line.zebra-corrector td {
     margin: 0 !important;
     width: 100%;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
   }
   #ajax fieldset .w25,
   #ajax fieldset .w33,
@@ -3424,7 +3432,7 @@ td.datepickerDisabled a:hover {
 /* Own styles */
 .leaflet-control-layers-list {
   max-height: 250px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .leaflet-container.fullscreen {
   position: fixed !important;

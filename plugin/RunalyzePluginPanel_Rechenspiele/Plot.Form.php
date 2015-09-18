@@ -7,6 +7,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
+use Runalyze\Util\Time;
 
 $MaxATLPoints   = 750;
 $DataFailed     = false;
@@ -20,10 +21,10 @@ $Durations_raw  = array();
 $VDOTsday       = array();
 $maxTrimp=0;
 
-$All      = 1*($_GET['y'] == 'all'); //0 or 1
-$lastHalf = 1*($_GET['y'] == 'lasthalf');
-$lastYear = 1*($_GET['y'] == 'lastyear');
-$Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$_GET['y'];
+$All      = 1*($timerange == 'all'); //0 or 1
+$lastHalf = 1*($timerange == 'lasthalf');
+$lastYear = 1*($timerange == 'lastyear');
+$Year     = $All || $lastHalf || $lastYear ? date('Y') : (int)$timerange;
 
 if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$StartYear    = !$All ? $Year : START_YEAR;
@@ -91,18 +92,23 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$ATLdays = Configuration::Trimp()->daysForATL();
 	$CTLdays = Configuration::Trimp()->daysForCTL();
 
-	$TSBModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
-	$TSBModel->calculate();
+	if ($perfmodel == 'banister') {
+		$performanceModel = new Runalyze\Calculation\Performance\Banister($Trimps_raw, $CTLdays, $ATLdays, 1, 3);
+	} else {
+		$performanceModel = new Runalyze\Calculation\Performance\TSB($Trimps_raw, $CTLdays, $ATLdays);
+	}
+
+	$performanceModel->calculate();
 
 	if ($All) {
-		$maxATL = $TSBModel->maxFatigue();
-		$maxCTL = $TSBModel->maxFitness();
+		$maxATL = $performanceModel->maxFatigue();
+		$maxCTL = $performanceModel->maxFitness();
 
-		if ($maxATL != Configuration::Data()->maxATL()) {
+		if ($perfmodel == 'tsb' && $maxATL != Configuration::Data()->maxATL()) {
 			Configuration::Data()->updateMaxATL($maxATL);
 		}
 
-		if ($maxCTL != Configuration::Data()->maxCTL()) {
+		if ($perfmodel == 'tsb' && $maxCTL != Configuration::Data()->maxCTL()) {
 			Configuration::Data()->updateMaxCTL($maxCTL);
 		}
 	} else {
@@ -110,7 +116,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 		$maxCTL = Configuration::Data()->maxCTL();
 	}
 
-	if (!Configuration::Trimp()->showInPercent()) {
+	$showInPercent = Configuration::Trimp()->showInPercent() && $perfmodel != 'banister';
+
+	if (!$showInPercent) {
 		$maxATL = 100;
 		$maxCTL = 100;
 	}
@@ -118,8 +126,9 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	for ($d = $LowestIndex; $d <= $HighestIndex; $d++) {
 		$index = Plot::dayOfYearToJStime($StartYear, $d - $AddDays + $StartDayInYear);
 
-		$ATLs[$index] = 100 * $TSBModel->fatigueAt($d) / $maxATL;
-		$CTLs[$index] = 100 * $TSBModel->fitnessAt($d) / $maxCTL;
+		$ATLs[$index] = 100 * $performanceModel->fatigueAt($d) / $maxATL;
+		$CTLs[$index] = 100 * $performanceModel->fitnessAt($d) / $maxCTL;
+		$TSBs[$index] = 100 * $performanceModel->performanceAt($d) / $maxCTL;
 		$TRIMPs[$index]    = $Trimps_raw[$d];
 		if ($maxTrimp<$Trimps_raw[$d]) $maxTrimp=$Trimps_raw[$d];
 
@@ -138,10 +147,15 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$DataFailed = true;
 }
 
-$Plot = new Plot("form".$_GET['y'], 800, 450);
+$Plot = new Plot("form".$timerange.$perfmodel, 800, 450);
 
 $Plot->Data[] = array('label' => __('Fitness (CTL)'), 'color' => '#008800', 'data' => $CTLs);
 //if (count($ATLs) < $MaxATLPoints)
+
+if ($perfmodel == 'banister') {
+	$Plot->Data[] = array('label' => 'TSB', 'color' => '#BBBB00', 'data' => $TSBs);
+}
+
 $Plot->Data[] = array('label' => __('Fatigue (ATL)'), 'color' => '#CC2222', 'data' => $ATLs);
 $Plot->Data[] = array('label' => __('avg VDOT'), 'color' => '#000000', 'data' => $VDOTs, 'yaxis' => 2);
 $Plot->Data[] = array('label' => 'TRIMP', 'color' => '#5555FF', 'data' => $TRIMPs, 'yaxis' => 3);
@@ -149,7 +163,10 @@ $Plot->Data[] = array('label' => __('day VDOT'), 'color' => '#444444', 'data' =>
 
 $Plot->setMarginForGrid(5);
 $Plot->setLinesFilled(array(0));
-$Plot->setLinesFilled(array(1),0.3);
+if ($perfmodel == 'banister') {
+	$Plot->setLinesFilled(array(2), 0.3);
+}
+$Plot->setLinesFilled(array(1),0.4);
 $Plot->setXAxisAsTime();
 
 if (!$All && !$lastHalf && !$lastYear)
@@ -157,7 +174,7 @@ if (!$All && !$lastHalf && !$lastYear)
 
 $Plot->addYAxis(1, 'left');
 $Plot->setYTicks(1, 1);
-if (Configuration::Trimp()->showInPercent()) {
+if ($showInPercent) {
 	$Plot->addYUnit(1, '%');
 	$Plot->setYLimits(1, 0, 100);
 }
@@ -168,9 +185,13 @@ $Plot->setYTicks(2, 1, 1);
 $Plot->addYAxis(3, 'right');
 $Plot->setYLimits(3, 0, $maxTrimp*2);
 
-$Plot->showAsBars(3,1,2);
-
-$Plot->showAsPoints(4);
+if ($perfmodel == 'banister') {
+	$Plot->showAsBars(4,1,2);
+	$Plot->showAsPoints(5);
+} else {
+	$Plot->showAsBars(3,1,2);
+	$Plot->showAsPoints(4);
+}
 
 $Plot->smoothing(false);
 

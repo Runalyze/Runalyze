@@ -18,14 +18,13 @@ use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\JD\VDOTCorrector;
 use Runalyze\View\Icon\VdotIcon;
 use Runalyze\Context as GeneralContext;
+use Runalyze\Util\Time;
 use Runalyze\View\Stresscolor;
 
 use SessionAccountHandler;
 use ClothesFactory;
 use SportFactory;
 use SearchLink;
-use Running;
-use Time;
 use Icon;
 use Ajax;
 use HTML;
@@ -271,22 +270,22 @@ class Dataview {
 			return new StrideLength($Activity->strideLength());
 		});
 	}
-        
-        /**
-         * Get total strokes
-         * @return \Runalyze\Activity\TotalStrokes
-         */
-        public function totalStrokes() {
-            return $this->object($this->totalStrokes());
-        }
-        
-        /**
-         * Get swolf
-         * @return \Runalyze\Activity\Swolf
-         */
-        public function swolf() {
-            return $this->object($this->swolf());
-        }
+
+	/**
+	 * Get total strokes
+	 * @return \Runalyze\Activity\TotalStrokes
+	 */
+	public function totalStrokes() {
+		return $this->object($this->totalStrokes());
+	}
+
+	/**
+	 * Get swolf
+	 * @return \Runalyze\Activity\Swolf
+	 */
+	public function swolf() {
+		return $this->object($this->swolf());
+	}
 
 	/**
 	 * Get string for displaying colored trimp
@@ -315,6 +314,51 @@ class Dataview {
 		$Stress->scale(0, 50);
 
 		return $Stress->string($this->Activity->jdIntensity());
+	}
+ 
+ 	/**
+	 * Get string for VDOT estimate
+	 * @return string
+	 */
+	public function fitVdotEstimate() {
+		if ($this->Activity->fitVdotEstimate() > 0) {
+			return round($this->Activity->fitVdotEstimate());
+		}
+
+		return '';
+	}
+ 
+ 	/**
+	 * Get string for recovery time
+	 * @return string
+	 */
+	public function fitRecoveryTime() {
+		if ($this->Activity->fitRecoveryTime() > 0) {
+			$hours = $this->Activity->fitRecoveryTime() / 60;
+
+			if ($hours > 72) {
+				return round($hours / 24).'d';
+			}
+
+			return round($hours).'h';
+		}
+
+		return '';
+	}
+ 
+ 	/**
+	 * Get string for hrv score
+	 * @return string
+	 */
+	public function fitHRVscore() {
+		if ($this->Activity->fitHRVscore() > 0) {
+			$hue = 128 - 64*($this->Activity->fitHRVscore()/1000);
+			$tooltip = Ajax::tooltip('', __('HRV score').': '.round($this->Activity->fitHRVscore()), false, true);
+
+			return '<i class="fa fa-fw fa-dot-circle-o" style="color:hsl('.min(128, max(0, round($hue))).',74%,44%);" '.$tooltip.'></i>';
+		}
+
+		return '';
 	}
 
 	/**

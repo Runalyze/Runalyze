@@ -192,27 +192,20 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 		if (Shell::isPerlAvailable()) {
 			$this->object->parseFile('../tests/testfiles/fit/Multisession.fit');
 
-			$this->assertFalse( $this->object->hasMultipleTrainings() );
 			$this->assertFalse( $this->object->failed() );
+			$this->assertTrue( $this->object->hasMultipleTrainings() );
 
-			$this->assertEquals( 35*60 + 32, $this->object->object()->getTimeInSeconds(), '', 5 );
-			$this->assertEquals( 38*60 + 11, $this->object->object()->getElapsedTime(), '', 5 );
-			$this->assertTrue( $this->object->object()->hasElapsedTime() );
+			$FirstSession = $this->object->object(0);
+			$this->assertEquals('23.05.2015 12:52:35', date('d.m.Y H:i:s', $FirstSession->getTimestamp()));
+			$this->assertEquals(1131, $FirstSession->getTimeInSeconds());
+			$this->assertEquals(1173, $FirstSession->getElapsedTime());
+			$this->assertEquals(4.111, $FirstSession->getDistance());
 
-			$this->assertEquals( 7.86, $this->object->object()->getDistance(), '', 0.1);
-			$this->assertEquals( 499, $this->object->object()->getCalories(), '', 10);
-			$this->assertEquals( 149, $this->object->object()->getPulseAvg(), '', 2);
-			$this->assertEquals( 170, $this->object->object()->getPulseMax(), '', 2);
-
-			$this->assertFalse( $this->object->object()->Splits()->areEmpty() );
-			$this->assertEquals( 7.86, $this->object->object()->Splits()->totalDistance(), '', 0.1);
-			$this->assertEquals( 35*60 + 32, $this->object->object()->Splits()->totalTime(), '', 5);
-
-			$this->assertEquals( 35*60 + 32, $this->object->object()->getArrayTimeLastPoint(), '', 5 );
-
-			$this->assertEquals( 64, $this->object->object()->getFitVdotEstimate() );
-			$this->assertEquals( 1377, $this->object->object()->getFitRecoveryTime() );
-			$this->assertEquals( 458, $this->object->object()->getFitHRVscore() );
+			$SecondSession = $this->object->object(1);
+			$this->assertEquals('23.05.2015 14:31:29', date('d.m.Y H:i:s', $SecondSession->getTimestamp()));
+			$this->assertEquals(1001, $SecondSession->getTimeInSeconds());
+			$this->assertEquals(1118, $SecondSession->getElapsedTime());
+			$this->assertEquals(3.746, $SecondSession->getDistance());
 		}
 	}
 
@@ -352,6 +345,89 @@ class ImporterFiletypeFITTest extends PHPUnit_Framework_TestCase {
 
 			$this->assertTrue( $this->object->object()->hasArrayHRV() );
 
+		}
+	}
+
+	/*
+	 * Test: with power data
+	 * Filename: "with-power.fit" 
+	 */
+	public function testWithPowerData() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/with-power.fit');
+
+			$this->assertFalse( $this->object->hasMultipleTrainings() );
+			$this->assertFalse( $this->object->failed() );
+
+			$this->assertEquals('edge810', $this->object->object()->getCreator());
+			$this->assertEquals(3600 + 18*60 + 9, $this->object->object()->getTimeInSeconds());
+			$this->assertEquals(39.023, $this->object->object()->getDistance());
+
+			$this->assertTrue($this->object->object()->hasArrayTime());
+			$this->assertTrue($this->object->object()->hasArrayDistance());
+			$this->assertTrue($this->object->object()->hasArrayAltitude());
+			$this->assertTrue($this->object->object()->hasArrayHeartrate());
+			$this->assertTrue($this->object->object()->hasArrayCadence());
+			$this->assertTrue($this->object->object()->hasArrayTemperature());
+			$this->assertTrue($this->object->object()->hasArrayPower());
+
+		}
+	}
+
+	/*
+	 * Test: multisport session from fenix 3
+	 * Filename: "multisport-triathlon-fenix3.fit" 
+	 */
+	public function testMultisportTriathlonFromFenix3() {
+		if (Shell::isPerlAvailable()) {
+			$this->object->parseFile('../tests/testfiles/fit/multisport-triathlon-fenix3.fit');
+
+			$this->assertFalse($this->object->failed());
+			$this->assertTrue($this->object->hasMultipleTrainings());
+			$this->assertEquals(5, $this->object->numberOfTrainings());
+
+			$Swimming = $this->object->object(0);
+			$this->assertEquals('09.08.2015 09:13:03', date('d.m.Y H:i:s', $Swimming->getTimestamp()));
+			$this->assertEquals(1.526, $Swimming->getDistance());
+			$this->assertEquals(2033, $Swimming->getTimeInSeconds());
+			$this->assertTrue($Swimming->hasArrayDistance());
+			$this->assertTrue($Swimming->hasArrayCadence());
+			$this->assertFalse($Swimming->hasArrayHeartrate());
+			$this->assertTrue($Swimming->hasArrayAltitude());
+			$this->assertFalse($Swimming->hasArrayVerticalOscillation());
+			$this->assertFalse($Swimming->hasArrayGroundContact());
+
+			$Transition1 = $this->object->object(1);
+			$this->assertEquals('09.08.2015 09:48:47', date('d.m.Y H:i:s', $Transition1->getTimestamp()));
+			$this->assertEquals(0.367, $Transition1->getDistance());
+			$this->assertEquals(165, $Transition1->getTimeInSeconds());
+
+			$Cycling = $this->object->object(2);
+			$this->assertEquals('09.08.2015 09:51:35', date('d.m.Y H:i:s', $Cycling->getTimestamp()));
+			$this->assertEquals(40.261, $Cycling->getDistance());
+			$this->assertEquals(4455, $Cycling->getTimeInSeconds());
+			$this->assertTrue($Cycling->hasArrayDistance());
+			$this->assertFalse($Cycling->hasArrayCadence());
+			$this->assertTrue($Cycling->hasArrayHeartrate());
+			$this->assertTrue($Cycling->hasArrayAltitude());
+			$this->assertFalse($Cycling->hasArrayVerticalOscillation());
+			$this->assertFalse($Cycling->hasArrayGroundContact());
+
+			$Transition2 = $this->object->object(3);
+			$this->assertEquals('09.08.2015 11:05:48', date('d.m.Y H:i:s', $Transition2->getTimestamp()));
+			$this->assertEquals(0.419, $Transition2->getDistance());
+			$this->assertEquals(109, $Transition2->getTimeInSeconds());
+
+			$Running = $this->object->object(4);
+			$this->assertEquals('09.08.2015 11:07:41', date('d.m.Y H:i:s', $Running->getTimestamp()));
+			$this->assertEquals(9.317, $Running->getDistance());
+			$this->assertEquals(2381, $Running->getTimeInSeconds());
+			$this->assertTrue($Running->hasArrayDistance());
+			$this->assertTrue($Running->hasArrayCadence());
+			$this->assertTrue($Running->hasArrayHeartrate());
+			$this->assertTrue($Running->hasArrayAltitude());
+			$this->assertTrue($Running->hasArrayVerticalOscillation());
+			$this->assertTrue($Running->hasArrayGroundContact());
 		}
 	}
 }

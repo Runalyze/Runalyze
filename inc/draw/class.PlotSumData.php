@@ -4,6 +4,7 @@
  * @package Runalyze\Plot
  */
 
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
 
 /**

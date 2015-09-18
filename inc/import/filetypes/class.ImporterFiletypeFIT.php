@@ -69,19 +69,9 @@ class ImporterFiletypeFIT extends ImporterFiletypeAbstract {
 		if (!empty($filename))
 			$this->Filename = $filename;
 
-		$this->Parser = new ParserFITSingle('');
-
-		$this->Handle = @fopen($this->Filename, "r");
-		if ($this->Handle) {
-			$this->readFirstLine();
-
-			while (($line = stream_get_line($this->Handle, 4096, PHP_EOL)) !== false && !feof($this->Handle))
-				$this->Parser->parseLine($line);
-
-			fclose($this->Handle);
-		}
-
-		$this->Parser->finishParsing();
+		$this->Parser = new ParserFITMultiple('');
+		$this->Parser->setFilename($this->Filename);
+		$this->Parser->parse();
 
 		unlink($this->Filename);
 	}

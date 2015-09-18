@@ -3,7 +3,8 @@
 @table-padding-more:				5px 3px;
 @table-head-border:					#666;
 @table-border:						#eee;
-@table-border-section:				#ccc;
+@table-border-section:				#999;
+@table-border-section-light:		#ccc;
 @table-color-hover:					#000;
 @table-background:					rgba(240,240,245,.4);
 @table-background-odd:				rgba(250,250,255,.4);
@@ -63,6 +64,14 @@ tbody.top-spacer tr:first-child td,
 tr.top-spacer, td.top-spacer,
 .zebra-style tbody .top-spacer {
 	border-top: 1px solid @table-head-border;
+}
+.top-separated-light,
+.zebra-style tbody .top-separated-light {
+	border-top: 1px solid @table-head-section-light;
+}
+.top-separated,
+.zebra-style tbody .top-separated {
+	border-top: 1px solid @table-head-section;
 }
 
 tr.bottom-spacer, tr.bottom-spacer td, td.bottom-spacer {

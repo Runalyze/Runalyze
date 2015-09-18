@@ -12,6 +12,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 			Object::NAME => 'Type name',
 			Object::ABBREVIATION => 'Tn',
 			Object::SPORTID => 1,
+			Object::SHORT => 1,
 			Object::HR_AVG => 123,
 			Object::QUALITY_SESSION
 		));
@@ -21,6 +22,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $Type->sportid());
 		$this->assertEquals(123, $Type->hrAvg());
 		$this->assertEquals(false, $Type->isQualitySession());
+		$this->assertEquals(true, $Type->usesShortMode());
 	}
 
 }

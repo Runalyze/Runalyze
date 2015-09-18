@@ -6,6 +6,7 @@
 
 namespace Runalyze\Configuration\Category;
 
+use Runalyze\Calculation\BasicEndurance as CalculationBasicEndurance;
 use Runalyze\Configuration\Messages;
 use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\Int;
@@ -141,9 +142,9 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 		if (!self::$TRIGGERED) {
 			self::$TRIGGERED = true;
 
-			$oldValue = \BasicEndurance::getConst();
-			\BasicEndurance::recalculateValue();
-			$newValue = \BasicEndurance::getConst();
+			$oldValue = BasicEndurance::getConst();
+			CalculationBasicEndurance::recalculateValue();
+			$newValue = BasicEndurance::getConst();
 
 			Messages::addValueRecalculated(__('Basic endurance'), $newValue.' &#37;', $oldValue.' &#37;');
 		}

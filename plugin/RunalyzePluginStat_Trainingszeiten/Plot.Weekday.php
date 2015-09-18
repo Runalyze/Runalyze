@@ -5,6 +5,8 @@
  * @package Runalyze\Plugins\Stats
  */
 
+use Runalyze\Util\Time;
+
 $titleCenter = __('Activity [in h] by weekday');
 $yAxis       = array();
 $xAxis       = array();

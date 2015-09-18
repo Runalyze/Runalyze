@@ -7,9 +7,8 @@
 namespace Runalyze\Model\Activity;
 
 use Runalyze\Model;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
-
-use BasicEndurance;
 
 /**
  * Deleter activity in database

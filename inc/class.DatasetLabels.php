@@ -45,7 +45,10 @@ class DatasetLabels {
 			'groundcontact'	=> __('Ground contact time'),
 			'vertical_oscillation'	=> __('Vertical oscillation'),
 			'power'			=> __('Power'),
-			'jd_intensity'	=> __('JD intensity')
+			'jd_intensity'	=> __('JD intensity'),
+			'fit_vdot_estimate'	=> __('VDOT').' '.__('(by file)'),
+			'fit_recovery_time'	=> __('Recovery time').' '.__('(by file)'),
+			'fit_hrv_analysis'	=> __('HRV score').' '.__('(by file)')
 		);
 	}
 

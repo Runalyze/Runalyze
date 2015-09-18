@@ -4,9 +4,11 @@
  * @package Runalyze\DataBrowser\Dataset
  */
 
+use Runalyze\Activity\Pace;
 use Runalyze\Configuration;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
+use Runalyze\Util\Time;
 use Runalyze\View\Activity\Dataview;
 use Runalyze\View\Activity\Linker;
 use Runalyze\View\Icon;
@@ -29,6 +31,11 @@ class Dataset {
 	 * @var \Runalyze\Model\Activity\Object
 	 */
 	protected $Activity = null;
+
+	/**
+	 * @var array
+	 */
+	protected $ActivityData = array();
 
 	/**
 	 * Sport
@@ -166,6 +173,7 @@ class Dataset {
 		$this->Linker = new Linker($object);
 		$this->Sport = $this->Activity->sportid() > 0 ? $this->Factory->sport($this->Activity->sportid()) : null;
 		$this->Type = $this->Activity->typeid() > 0 ? $this->Factory->type($this->Activity->typeid()) : null;
+		$this->ActivityData = $this->Activity->completeData();
 	}
 
 	/**
@@ -177,6 +185,7 @@ class Dataset {
 
 		if (!empty($data)) {
 			$this->setActivity( new Activity\Object($data) );
+			$this->ActivityData = $data;
 		} else {
 			$this->Activity = null;
 			$this->Dataview = null;
@@ -205,7 +214,7 @@ class Dataset {
 				FROM `'.PREFIX.'training`
 				WHERE
 					`sportid`='.$sportid.'
-                                        AND `accountid` = '.SessionAccountHandler::getId().'
+					AND `accountid` = '.SessionAccountHandler::getId().'
 					AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 					'.$this->getQueryWhereNotPrivate().'
 				GROUP BY `sportid`
@@ -227,18 +236,26 @@ class Dataset {
 			$timeend = time();
 		}
 
+		if ($timerange == 366*DAY_IN_S) {
+			$timerangeQuery = date('Y', $timeend).' - YEAR(FROM_UNIXTIME(`time`)) as `timerange`';
+		} elseif ($timerange == 31*DAY_IN_S) {
+			$timerangeQuery = date('m', $timeend).' - MONTH(FROM_UNIXTIME(`time`)) + 12*('.date('Y', $timeend).' - YEAR(FROM_UNIXTIME(`time`))) as `timerange`';
+		} else {
+			$timerangeQuery = 'FLOOR(('.$timeend.'-`time`)/('.$timerange.')) as `timerange`';
+		}
+
 		return DB::getInstance()->query('
 			SELECT
 				`sportid`,
 				`time`,
 				SUM(IF(`distance`>0,`s`,0)) as `s_sum_with_distance`,
 				SUM(1) as `num`,
-				FLOOR(('.$timeend.'-`time`)/('.$timerange.')) as `timerange`
+				'.$timerangeQuery.'
 				'.$this->getQuerySelectForSet().'
 			FROM `'.PREFIX.'training`
 			WHERE
 				`sportid`='.$sportid.'
-                                AND `accountid` = '.SessionAccountHandler::getId().'
+				AND `accountid` = '.SessionAccountHandler::getId().'
 				AND `time` BETWEEN '.($timestart-10).' AND '.($timeend-10).'
 				'.$this->getQueryWhereNotPrivate().'
 			GROUP BY `timerange`, `sportid`
@@ -261,7 +278,7 @@ class Dataset {
 	 * Get string for selecting dataset in query
 	 * @return string
 	 */
-	private function getQuerySelectForSet() {
+	public function getQuerySelectForSet() {
 		$String = '';
 		$Sum = Configuration::Vdot()->useElevationCorrection() ? 'IF(`vdot_with_elevation`>0,`vdot_with_elevation`,`vdot`)*`s`' : '`vdot`*`s`';
 
@@ -271,13 +288,14 @@ class Dataset {
 			if ($set['summary'] == 1) {
 				if ($set['name'] == 'vdot' || $set['name'] == 'vdoticon') {
 					$showVdot = 1;
-				} elseif ($set['name'] == 'pulse_avg') {
-					$String .= ', SUM(`s`*`pulse_avg`*(`pulse_avg` > 0))/SUM(`s`*(`pulse_avg` > 0)) as `pulse_avg`';
+				} elseif ($set['name'] == 'temperature') {
+					$String .= ', ' . $set['summary_mode'] . '(NULLIF(`' . $set['name'] . '`,0)) as `' . $set['name'] . '`';
 				} elseif ($set['name'] != 'pace') {
 					if ($set['summary_mode'] != 'AVG') {
 						$String .= ', ' . $set['summary_mode'] . '(`' . $set['name'] . '`) as `' . $set['name'] . '`';
 					} else {
-						$String .= ', ' . $set['summary_mode'] . '(NULLIF(`' . $set['name'] . '`,0)) as `' . $set['name'] . '`';
+						$String .= ', SUM(`s`*`'.$set['name'].'`*(`'.$set['name'].'` > 0))'
+									.'/SUM(`s`*(`'.$set['name'].'` > 0)) as `'.$set['name'].'`';
 					}
 				}
 			}
@@ -439,8 +457,15 @@ class Dataset {
 
 			case 'pace':
 				if ($this->Activity->distance() > 0) {
-					// TODO: 's_sum_with_distance'
-					//return $this->TrainingObject->DataView()->getSpeedStringForTime( $this->TrainingObject->getTimeInSecondsSumWithDistance() );
+					if (isset($this->ActivityData['s_sum_with_distance'])) {
+						if ($this->ActivityData['s_sum_with_distance'] > 0) {
+							$Pace = new Pace($this->ActivityData['s_sum_with_distance'], $this->Activity->distance(), SportFactory::getSpeedUnitFor($this->Activity->sportid()));
+							return $Pace->valueWithAppendix();
+						}
+
+						return '';
+					}
+
 					return $this->Dataview->pace()->valueWithAppendix();
 				}
 
@@ -564,6 +589,19 @@ class Dataset {
 				}
 
 				return '';
+
+			case 'fit_vdot_estimate':
+				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
+					return $this->Dataview->fitVdotEstimate();
+				}
+
+				return '';
+
+			case 'fit_recovery_time':
+				return $this->Dataview->fitRecoveryTime();
+
+			case 'fit_hrv_analysis':
+				return $this->Dataview->fitHRVscore();
 		}
 
 		return '';
@@ -587,11 +625,11 @@ class Dataset {
 			return '';
 
 		$Percentage = $this->distanceComparisonPercentage();
-		$String     = ($Percentage > 0) ? sprintf("%+d", $Percentage).'&nbsp;&#37;' : '-';
+		$String     = ($Percentage != 0) ? sprintf("%+d", $Percentage).'&nbsp;&#37;' : '-';
 		$this->kmOfLastSet = $this->Activity->distance();
 
-		$Stress = new Stresscolor($Percentage * 100);
-		$Stress->scale(0, 20);
+		$Stress = new Stresscolor($Percentage);
+		$Stress->scale(0, 30);
 
 		return ' <small style="display:inline-block;width:55px;color:#'.$Stress->rgb().'">'.$String.'</small>';
 	}
@@ -607,4 +645,13 @@ class Dataset {
 
 		return round(100*($this->Activity->distance() - $this->kmOfLastSet ) / $this->kmOfLastSet, 1);
 	}
+
+	/**
+	 * public getter for Dataset data
+	 * @return array
+	 */
+	public function getData() {
+		return $this->data;
+	}
+
 }

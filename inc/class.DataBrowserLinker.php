@@ -3,6 +3,9 @@
  * This file contains class::DataBrowserLinker
  * @package Runalyze\DataBrowser
  */
+
+use Runalyze\Util\Time;
+
 /**
  * Linker for DataBrowser
  *

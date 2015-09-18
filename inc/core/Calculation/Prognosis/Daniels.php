@@ -6,7 +6,7 @@
 
 namespace Runalyze\Calculation\Prognosis;
 
-use BasicEndurance;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\Math\Bisection;
 use Runalyze\Configuration;

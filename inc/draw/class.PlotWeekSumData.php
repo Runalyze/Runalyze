@@ -3,6 +3,9 @@
  * This file contains class::PlotWeekSumData
  * @package Runalyze\Plot
  */
+
+use Runalyze\Util\Time;
+
 /**
  * Plot week data
  * @package Runalyze\Plot

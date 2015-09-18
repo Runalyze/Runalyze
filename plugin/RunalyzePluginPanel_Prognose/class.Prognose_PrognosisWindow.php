@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Calculation\JD\VDOT;
 use Runalyze\Calculation\Prognosis;
 use Runalyze\Activity\Distance;
