@@ -20,8 +20,6 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 
 	protected $OutdoorID;
 	protected $IndoorID;
-	protected $ShoeID1;
-	protected $ShoeID2;
 
 	protected function setUp() {
 		\Cache::clean();
@@ -31,12 +29,17 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
 
+		$Factory = new Model\Factory(0);
+		$Factory->clearCache('sport');
 		\SportFactory::reInitAllSports();
 	}
 
 	protected function tearDown() {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
+
+		$Factory = new Model\Factory(0);
+		$Factory->clearCache('sport');
 		\Cache::clean();
 	}
 
@@ -113,7 +116,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$ObjectWithout = $this->fetch(
 			$this->insert(array(
 				Object::TIME_IN_SECONDS => 3600,
-				Object::SPORTID => 1
+				Object::SPORTID => $this->OutdoorID
 			))
 		);
 
@@ -122,7 +125,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$ObjectWith = $this->fetch(
 			$this->insert(array(
 				Object::TIME_IN_SECONDS => 3600,
-				Object::SPORTID => 1,
+				Object::SPORTID => $this->OutdoorID,
 				Object::CALORIES => 873
 			))
 		);

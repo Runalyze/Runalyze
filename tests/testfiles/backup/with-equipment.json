@@ -1,0 +1,51 @@
+{"TABLE":"runalyze_account"}
+
+{"TABLE":"runalyze_conf"}
+
+{"TABLE":"runalyze_dataset"}
+
+{"TABLE":"runalyze_hrv"}
+
+{"TABLE":"runalyze_plugin"}
+
+{"TABLE":"runalyze_plugin_conf"}
+
+{"TABLE":"runalyze_sport"}
+{"11":{"name":"Sport A"}}
+{"12":{"name":"Sport B"}}
+
+{"TABLE":"runalyze_type"}
+
+{"TABLE":"runalyze_user"}
+
+{"TABLE":"runalyze_route"}
+
+{"TABLE":"runalyze_training"}
+{"21":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","comment":"UNITTEST-1"}}
+{"22":{"time":"1234567890","sportid":"11","s":"100.00","routeid":"0","comment":"UNITTEST-2"}}
+{"23":{"time":"1234567890","sportid":"12","s":"100.00","routeid":"0","comment":"UNITTEST-3"}}
+
+{"TABLE":"runalyze_trackdata"}
+
+{"TABLE":"runalyze_swimdata"}
+
+{"TABLE":"runalyze_equipment_type"}
+{"31":{"name":"Typ A"}}
+{"32":{"name":"Typ AB"}}
+
+{"TABLE":"runalyze_equipment_sport"}
+{"":{"sportid":"11","equipment_typeid":"31"}}
+{"":{"sportid":"11","equipment_typeid":"32"}}
+{"":{"sportid":"12","equipment_typeid":"32"}}
+
+{"TABLE":"runalyze_equipment"}
+{"41":{"name":"A1","typeid":"31","notes":""}}
+{"42":{"name":"AB1","typeid":"32","notes":""}}
+{"43":{"name":"AB2","typeid":"32","notes":""}}
+
+{"TABLE":"runalyze_activity_equipment"}
+{"":{"activityid":"21","equipmentid":"41"}}
+{"":{"activityid":"22","equipmentid":"41"}}
+{"":{"activityid":"22","equipmentid":"42"}}
+{"":{"activityid":"22","equipmentid":"43"}}
+{"":{"activityid":"23","equipmentid":"42"}}

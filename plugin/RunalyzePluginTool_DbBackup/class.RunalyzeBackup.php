@@ -45,20 +45,22 @@ abstract class RunalyzeBackup {
 
 		$Tables = array(
 			PREFIX.'account',
-			PREFIX.'clothes',
 			PREFIX.'conf',
 			PREFIX.'dataset',
 			PREFIX.'hrv',
 			PREFIX.'plugin',
 			PREFIX.'plugin_conf',
-			PREFIX.'shoe',
 			PREFIX.'sport',
 			PREFIX.'type',
 			PREFIX.'user',
 			PREFIX.'route',
 			PREFIX.'training',
 			PREFIX.'trackdata',
-                        PREFIX.'swimdata'
+			PREFIX.'swimdata',
+			PREFIX.'equipment_type',
+			PREFIX.'equipment_sport',
+			PREFIX.'equipment',
+			PREFIX.'activity_equipment'
 		);
 
 		foreach ($Tables as $TableName) {
@@ -90,6 +92,10 @@ abstract class RunalyzeBackup {
 			$Query .= ' WHERE `id`='.$this->AccountID.' LIMIT 1';
 		} elseif ($TableName == PREFIX.'plugin_conf') {
 			$Query .= ' WHERE `pluginid` IN('.implode(',', $this->fetchPluginIDs()).')';
+		} elseif ($TableName == PREFIX.'equipment_sport') {
+			$Query .= ' WHERE `equipment_typeid` IN('.implode(',', $this->fetchEquipmentTypeIDs()).')';
+		} elseif ($TableName == PREFIX.'activity_equipment') {
+			$Query .= ' WHERE `equipmentid` IN('.implode(',', $this->fetchEquipmentIDs()).')';
 		} else {
 			$Query .= ' WHERE `accountid`='.$this->AccountID;
 		}
@@ -119,6 +125,22 @@ abstract class RunalyzeBackup {
 	 */
 	private function fetchPluginIDs() {
 		return $this->DB->query('SELECT `id` FROM `'.PREFIX.'plugin` WHERE `accountid`='.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
+	}
+
+	/**
+	 * Equipment type IDs
+	 * @return array
+	 */
+	private function fetchEquipmentIDs() {
+		return $this->DB->query('SELECT `id` FROM `'.PREFIX.'equipment` WHERE `accountid`='.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
+	}
+
+	/**
+	 * Equipment type IDs
+	 * @return array
+	 */
+	private function fetchEquipmentTypeIDs() {
+		return $this->DB->query('SELECT `id` FROM `'.PREFIX.'equipment_type` WHERE `accountid`='.$this->AccountID)->fetchAll(PDO::FETCH_COLUMN);
 	}
 
 	/**

@@ -38,7 +38,7 @@ class Factory {
 	 * Static cache to not read file-cache every time
 	 * @var array
 	 */
-	protected $StaticCache = array();
+	static $StaticCache = array();
 
 	/**
 	 * Factory
@@ -273,12 +273,12 @@ class Factory {
 	 * @return array
 	 */
 	protected function arrayByPKfromStaticCache($tablename, $id) {
-		if (!isset($this->StaticCache[$tablename])) {
+		if (!isset(self::$StaticCache[$tablename])) {
 			$this->fetchStaticCache($tablename);
 		}
 
-		if (isset($this->StaticCache[$tablename][$id])) {
-			return $this->StaticCache[$tablename][$id];
+		if (isset(self::$StaticCache[$tablename][$id])) {
+			return self::$StaticCache[$tablename][$id];
 		}
 
 		return array();
@@ -291,10 +291,10 @@ class Factory {
 	protected function fetchStaticCache($tablename) {
 		$pk = $this->primaryKey($tablename);
 		$allData = $this->fetch($tablename, 0, true);
-		$this->StaticCache[$tablename] = array();
+		self::$StaticCache[$tablename] = array();
 
 		foreach ($allData as $data) {
-			$this->StaticCache[$tablename][$data[$pk]] = $data;
+			self::$StaticCache[$tablename][$data[$pk]] = $data;
 		}
 	}
 
@@ -328,11 +328,11 @@ class Factory {
 			throw new \InvalidArgumentException('The table "'.$tablename.'" does not provide a full fetch');
 		}
 
-		if (!isset($this->StaticCache[$tablename])) {
+		if (!isset(self::$StaticCache[$tablename])) {
 			$this->fetchStaticCache($tablename);
 		}
 
-		return $this->StaticCache[$tablename];
+		return self::$StaticCache[$tablename];
 	}
 
 	/**
@@ -358,10 +358,18 @@ class Factory {
 	 * @param int $id can be empty if the table uses a full fetch and static cache
 	 * @throws \InvalidArgumentException
 	 */
-	public function clearCache($tablename, $id = false) {
+	public function clearCache($tablename = false, $id = false) {
+		if ($tablename === false) {
+			foreach (array_keys($this->UseStaticCacheAndFullFetch) as $tablename) {
+				$this->clearCache($tablename);
+			}
+
+			return;
+		}
+
 		if (isset($this->UseStaticCacheAndFullFetch[$tablename])) {
-			if (isset($this->StaticCache[$tablename])) {
-				unset($this->StaticCache[$tablename]);
+			if (isset(self::$StaticCache[$tablename])) {
+				unset(self::$StaticCache[$tablename]);
 			}	
 		} elseif ($id) {
 			Cache::delete($tablename.$id);

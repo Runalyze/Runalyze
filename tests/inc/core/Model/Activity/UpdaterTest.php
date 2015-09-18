@@ -31,6 +31,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`,`HFavg`) VALUES("",400,0,0,0,100)');
 		$this->IndoorID = $this->PDO->lastInsertId();
 
+		$Factory = new Model\Factory(0);
+		$Factory->clearCache('sport');
 		\SportFactory::reInitAllSports();
 	}
 
@@ -38,6 +40,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
 
+		$Factory = new Model\Factory(0);
+		$Factory->clearCache('sport');
 		\Cache::clean();
 	}
 

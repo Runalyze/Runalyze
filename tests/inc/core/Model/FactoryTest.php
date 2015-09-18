@@ -27,18 +27,20 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->truncateTables();
 		\Cache::clean();
 
-		$this->accountID = rand(1, 100);
-		$this->DB->exec('INSERT INTO `runalyze_account` (`id`, `username`, `mail`) VALUES('.$this->accountID.', "Test", "test@test.com")');
+		$this->accountID = rand(2, 100);
+		$this->DB->exec('INSERT INTO `runalyze_account` (`id`, `username`, `mail`) VALUES('.$this->accountID.', "ModelFactoryTest", "model@factory.test")');
 		$this->object = new Factory($this->accountID);
+		$this->object->clearCache();
 	}
 
 	protected function tearDown() {
+		$this->object->clearCache();
 		$this->truncateTables();
 		\Cache::clean();
 	}
 
 	private function truncateTables() {
-		$this->DB->exec('DELETE FROM `runalyze_account`');
+		$this->DB->exec('DELETE FROM `runalyze_account` WHERE `username`="ModelFactoryTest"');
 		$this->DB->exec('DELETE FROM `runalyze_training`');
 		$this->DB->exec('DELETE FROM `runalyze_trackdata`');
 		$this->DB->exec('DELETE FROM `runalyze_swimdata`');
@@ -46,11 +48,6 @@ class FactoryTest extends \PHPUnit_Framework_TestCase {
 		$this->DB->exec('DELETE FROM `runalyze_hrv`');
 		$this->DB->exec('DELETE FROM `runalyze_type`');
 		$this->DB->exec('DELETE FROM `runalyze_sport`');
-		$this->DB->exec('DELETE FROM `runalyze_equipment`');
-
-		// Shouldn't be needed, right?
-		$this->DB->exec('DELETE FROM `runalyze_equipment_type`');
-		$this->DB->exec('DELETE FROM `runalyze_equipment_sport`');
 	}
 
 	public function testThatNothingIsThere() {

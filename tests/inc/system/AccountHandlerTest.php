@@ -129,9 +129,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 			array(1, 'test', 'test@mail.de', '8e1e915d08a163ddd4accc6d890dd557')
 		);
 
-		$_GET['activate'] = '';
-		$this->assertEquals( false, AccountHandler::tryToActivateAccount() );
-
 		$_GET['activate'] = '908a098ef7e6cb87de7a6';
 		$this->assertEquals( false, AccountHandler::tryToActivateAccount() );
 

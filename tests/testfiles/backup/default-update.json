@@ -21,4 +21,18 @@
 
 {"TABLE":"runalyze_user"}
 
+{"TABLE":"runalyze_route"}
+
 {"TABLE":"runalyze_training"}
+
+{"TABLE":"runalyze_trackdata"}
+
+{"TABLE":"runalyze_swimdata"}
+
+{"TABLE":"runalyze_equipment_type"}
+
+{"TABLE":"runalyze_equipment_sport"}
+
+{"TABLE":"runalyze_equipment"}
+
+{"TABLE":"runalyze_activity_equipment"}

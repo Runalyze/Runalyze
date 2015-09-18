@@ -20,6 +20,11 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	protected $DB;
 
 	/**
+	 * @var int
+	 */
+	protected $AccountID;
+
+	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 */
@@ -28,6 +33,7 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->truncateTables();
 
 		$_POST = array();
+		$this->AccountID = 1;
 	}
 
 	/**
@@ -42,7 +48,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 
 	private function truncateTables() {
 		$this->DB->exec('DELETE FROM `runalyze_training`');
-		$this->DB->exec('TRUNCATE TABLE `runalyze_user`');
+		$this->DB->exec('DELETE FROM `runalyze_equipment_type`');
+		$this->DB->exec('DELETE FROM `runalyze_user`');
 
 		$this->DB->exec('DELETE FROM `runalyze_conf` WHERE `key`="TEST_CONF"');
 		$this->DB->exec('DELETE FROM `runalyze_dataset` WHERE `name`="test-dataset"');
@@ -50,10 +57,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_one"');
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_two"');
 
-		$this->DB->exec('DELETE FROM `runalyze_sport` WHERE `name`="Testsport"');
-		$this->DB->exec('DELETE FROM `runalyze_sport` WHERE `name`="Newsport"');
-		$this->DB->exec('DELETE FROM `runalyze_type` WHERE `name`="Testtype"');
-		$this->DB->exec('DELETE FROM `runalyze_type` WHERE `name`="Newtype"');
+		$this->DB->exec('DELETE FROM `runalyze_sport`');
+		$this->DB->exec('DELETE FROM `runalyze_type`');
 	}
 
 	/**
@@ -186,6 +191,42 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 			'typeid'	=> $NewType,
 			's'			=> '1500.00'
 		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `comment`="UNITTEST-2" LIMIT 1')->fetch());
+	}
+
+	/**
+	 * Test with equipment
+	 */
+	public function testWithEquipment() {
+		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/with-equipment.json.gz', $this->AccountID);
+		$Importer->importData();
+
+		$SportA = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Sport A"')->fetchColumn();
+		$SportB = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Sport B"')->fetchColumn();
+
+		$TypeA = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `name`="Typ A"')->fetchColumn();
+		$TypeAB = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `name`="Typ AB"')->fetchColumn();
+
+		$Activity1 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-1"')->fetchColumn();
+		$Activity2 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-2"')->fetchColumn();
+		$Activity3 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-3"')->fetchColumn();
+
+		$EquipmentA1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="A1"')->fetchColumn();
+		$EquipmentAB1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB1"')->fetchColumn();
+		$EquipmentAB2 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB2"')->fetchColumn();
+
+		$this->assertEquals(array(
+			array($SportA, $TypeA),
+			array($SportA, $TypeAB),
+			array($SportB, $TypeAB)
+		), $this->DB->query('SELECT `sportid`, `equipment_typeid` FROM `runalyze_equipment_sport`')->fetchAll(PDO::FETCH_NUM));
+
+		$this->assertEquals($TypeA, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="A1"')->fetchColumn());
+		$this->assertEquals($TypeAB, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="AB1"')->fetchColumn());
+		$this->assertEquals($TypeAB, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="AB2"')->fetchColumn());
+
+		$this->assertEquals(array($EquipmentA1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity1)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($EquipmentA1, $EquipmentAB1, $EquipmentAB2), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity2)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($EquipmentAB1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity3)->fetchAll(PDO::FETCH_COLUMN));
 	}
 
 }
