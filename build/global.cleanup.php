@@ -99,6 +99,7 @@ echo 'Start to clean accounts ';
 
 $_POST = array(
 	Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral::ENDURANCE => true,
+	Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral::EQUIPMENT => true,
 	Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral::MAX_TRIMP => true,
 	Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral::VDOT => true,
 	Runalyze\Plugin\Tool\DatabaseCleanup\JobGeneral::VDOT_CORRECTOR => true,
@@ -126,8 +127,6 @@ while ($Account = $Accounts->fetch()) {
 
 	Runalyze\Context::reset();
 	Runalyze\Configuration::loadAll($Account['id']);
-
-	ShoeFactory::reInitAllShoes();
 
 	$JobLoop = new Runalyze\Plugin\Tool\DatabaseCleanup\JobLoop();
 	$JobLoop->run();

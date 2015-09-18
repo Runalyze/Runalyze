@@ -8,6 +8,7 @@ namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Model\Equipment;
 
 /**
  * JobGeneral
@@ -95,10 +96,14 @@ class JobGeneral extends Job {
 	 * Recalculate equipment statistics
 	 */
 	protected function recalculateEquipmentStatistics() {
-		$num = \EquipmentFactory::numberOfEquipment();
-		\EquipmentFactory::recalculateAllEquipment();
+		$Updater = new Equipment\StatisticsUpdater(\DB::getInstance(), \SessionAccountHandler::getId());
+		$num = $Updater->run();
 
-		$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> equipment.'), $num ) );
+		if ($num === false) {
+			$this->addMessage( __('There was a problem while recalculating your equipment statistics') );
+		} else {
+			$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> pieces of equipment.'), $num ) );
+		}
 	}
 
 	/**

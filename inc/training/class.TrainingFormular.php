@@ -249,16 +249,17 @@ class TrainingFormular extends StandardFormular {
 
 		$this->addFieldset($Fieldset);
 	}
-        
-        /**
+
+	/**
 	 * Display fieldset: Equipment
 	 */
 	protected function initEquipmentFieldset() {
-            $Fieldset = new FormularFieldset( __('Equipment') );
-            $eqt = EquipmentFactory::getEquipmentforFormular();
-            $this->addFieldset($Fieldset);
+		$Fieldset = new FormularFieldset( __('Equipment') );
 
-        }
+		// TODO
+
+		$this->addFieldset($Fieldset);
+	}
 
 	/**
 	 * Init fieldset for correct elevation

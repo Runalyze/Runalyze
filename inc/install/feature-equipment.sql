@@ -118,7 +118,7 @@ ALTER TABLE `runalyze_equipment_type`
 ADD CONSTRAINT `runalyze_equipment_type_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 
-DELETE FROM runalyze_plugin_conf where `config` = 'for_clothes';
+DELETE FROM runalyze_plugin_conf where `config` = 'for_clothes' OR `config` = 'for_weather';
 DELETE FROM runalyze_dataset WHERE `name` = 'shoeid' OR `name` = 'clothes';
 
  

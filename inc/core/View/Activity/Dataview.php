@@ -22,7 +22,6 @@ use Runalyze\Util\Time;
 use Runalyze\View\Stresscolor;
 
 use SessionAccountHandler;
-use ClothesFactory;
 use SportFactory;
 use SearchLink;
 use Icon;
@@ -443,29 +442,6 @@ class Dataview {
 			return '-';
 
 		return round($this->Activity->elevation() / $this->Activity->distance()/10, 2).'&nbsp;&#37;';
-	}
-
-	/**
-	 * Clothes
-	 * @return string
-	 */
-	public function clothes() {
-		$clothes = array();
-
-		foreach ($this->Activity->clothes()->asArray() as $id) {
-			$clothes[] = ClothesFactory::NameFor($id);
-		}
-
-		return implode(', ', $clothes);
-	}
-
-	/**
-	 * Get clothes as links
-	 * @return string
-	 */
-	public function clothesAsLinks() {
-		// TODO
-		return $this->clothes();
 	}
 
 	/**

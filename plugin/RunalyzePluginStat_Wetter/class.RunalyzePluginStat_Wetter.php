@@ -5,8 +5,9 @@
  */
 $PLUGINKEY = 'RunalyzePluginStat_Wetter';
 
-use \Runalyze\Data\Weather;
+use Runalyze\Data\Weather;
 use Runalyze\Configuration;
+use Runalyze\Util\Time;
 
 /**
  * Class: RunalyzePluginStat_Wetter
@@ -32,7 +33,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * @return string
 	 */
 	final public function description() {
-		return __('Statistics about weather conditions, temperatures and clothing.');
+		return __('Statistics about weather conditions and temperatures.');
 	}
 
 	/**
@@ -40,19 +41,8 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p( __('There is no bad weather, there is only bad clothing.') );
-		echo HTML::p( __('Are you a wimp or a tough runner?'. 
-						'Have a look at these statistics about the weather conditions and your clothing while training.') );
-	}
-
-	/**
-	 * Init configuration
-	 */
-	protected function initConfiguration() {
-		$Configuration = new PluginConfiguration($this->id());
-		$Configuration->addValue( new PluginConfigurationValueBool('for_weather', __('Show statistics about weather conditions'), '', true) );
-		$Configuration->addValue( new PluginConfigurationValueBool('for_clothes', __('Show statistics about your clothing'), '', true) );
-
-		$this->setConfiguration($Configuration);
+		echo HTML::p( __('Are you a wimp or a tough runner? '. 
+						'Have a look at these statistics about the weather conditions.') );
 	}
 
 	/**
@@ -61,9 +51,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 */
 	protected function getToolbarNavigationLinks() {
 		$LinkList = array();
-
-		if ($this->Configuration()->value('for_weather'))
-			$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$LINE_CHART, __('Show temperature plots')).'</a>').'</li>';
+		$LinkList[] = '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.php">'.Ajax::tooltip(Icon::$LINE_CHART, __('Show temperature plots')).'</a>').'</li>';
 
 		return $LinkList;
 	}
@@ -100,10 +88,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	protected function displayContent() {
 		$this->displayExtremeTrainings();
 		$this->displayMonthTable();
-		$this->displayClothesTable();
-
-		if (!$this->Configuration()->value('for_weather') && !$this->Configuration()->value('for_clothes'))
-			echo HTML::warning( __('You have to activate some statistics in the plugin configuration.') );
 	}
 
 	/**
@@ -116,17 +100,28 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		echo '</thead>';
 		echo '<tbody>';
 
-		if ($this->Configuration()->value('for_weather')) {
-			$this->displayMonthTableTemp();
-			$this->displayMonthTableWeather();
-		}
-
-		if ($this->Configuration()->value('for_clothes')) {
-			$this->displayMonthTableClothes();
-		}
+		$this->displayMonthTableTemp();
+		$this->displayMonthTableWeather();
 
 		echo '</tbody>';
 		echo '</table>';
+	}
+
+	/**
+	 * Display an empty th and ths for chosen years/months
+	 * @param bool $prependEmptyTag
+	 * @param string $width
+	 */
+	protected function displayTableHeadForTimeRange($prependEmptyTag = true, $width = '8%') {
+		echo '<th></th>';
+
+		$width = ' width="'.$width.'"';
+		$num = $this->showsLast6Months() ? 6 : 12;
+		$add = $this->showsTimeRange() ? date('m') - $num - 1 + 12 : -1;
+
+		for ($i = 1; $i <= 12; $i++) {
+			echo '<th'.$width.'>'.Time::Month(($i + $add)%12 + 1, true).'</th>';
+		}
 	}
 
 	/**
@@ -242,7 +237,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 
 		if ($this->showsAllYears()) {
 			$this->i      = 0;
-			$this->jahr   = "Gesamt";
+			$this->jahr   = __('In total');
 			$this->jstart = mktime(0,0,0,1,1,START_YEAR);
 			$this->jende  = time();
 		} else {
@@ -258,12 +253,6 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 	 * Get header depending on config
 	 */
 	private function getHeader() {
-		$header = 'Wetter';
-
-		if ($this->Configuration()->value('for_clothes')) {
-			$header = ($this->Configuration()->value('for_weather')) ? __('Weather and Clothing') : __('Clothing');
-		}
-
-		return $header.': '.$this->getYearString();
+		return __('Weather').': '.$this->getYearString();
 	}
 }

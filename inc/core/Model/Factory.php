@@ -359,8 +359,10 @@ class Factory {
 	 * @throws \InvalidArgumentException
 	 */
 	public function clearCache($tablename, $id = false) {
-		if (isset($this->UseStaticCacheAndFullFetch[$tablename]) && isset($this->StaticCache[$tablename])) {
-			unset($this->StaticCache[$tablename]);
+		if (isset($this->UseStaticCacheAndFullFetch[$tablename])) {
+			if (isset($this->StaticCache[$tablename])) {
+				unset($this->StaticCache[$tablename]);
+			}	
 		} elseif ($id) {
 			Cache::delete($tablename.$id);
 		} else {
