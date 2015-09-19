@@ -79,6 +79,10 @@ abstract class RelationUpdater {
 
 	/**
 	 * Update
+	 * 
+	 * If you only want to create relations, keep the old array empty.
+	 * If you only want to delete relations, keep the new array empty.
+	 * 
 	 * @param array $otherIDsNew [optional]
 	 * @param array $otherIDsOld [optional]
 	 */
@@ -91,9 +95,21 @@ abstract class RelationUpdater {
 			$this->OtherIDsOld = $otherIDsOld;
 		}
 
+		$this->beforeUpdate();
 		$this->removeOldRelatives();
 		$this->addNewRelatives();
+		$this->afterUpdate();
 	}
+
+	/**
+	 * Tasks to run before update
+	 */
+	protected function beforeUpdate() {}
+
+	/**
+	 * Tasks to run after update
+	 */
+	protected function afterUpdate() {}
 
 	/**
 	 * Add new relatives

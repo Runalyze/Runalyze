@@ -164,10 +164,10 @@ class ActivityForm extends \Runalyze\Configuration\Category {
 	}
 
 	/**
-	 * Order: shoes
+	 * Order: equipment
 	 * @return DatabaseOrder
 	 */
-	public function orderShoes() {
+	public function orderEquipment() {
 		return $this->object('TRAINING_SORT_SHOES');
 	}
 

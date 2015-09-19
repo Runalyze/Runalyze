@@ -40,6 +40,16 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected $Route = null;
 
 	/**
+	 * @var array
+	 */
+	protected $EquipmentIDsNew = array();
+
+	/**
+	 * @var array
+	 */
+	protected $EquipmentIDsOld = array();
+
+	/**
 	 * @var boolean
 	 */
 	protected $ForceRecalculations = false;
@@ -66,6 +76,15 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	public function setRoute(Model\Route\Object $route) {
 		$this->Route = $route;
+	}
+
+	/**
+	 * @param array $newIDs
+	 * @param array $oldIDs
+	 */
+	public function setEquipmentIDs(array $newIDs, array $oldIDs) {
+		$this->EquipmentIDsNew = $newIDs;
+		$this->EquipmentIDsOld = $oldIDs;
 	}
 
 	/**
@@ -260,7 +279,11 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-            //TODO
+		if (!empty($this->EquipmentIDsNew) || !empty($this->EquipmentIDsOld)) {
+	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->NewObject->id());
+			$EquipmentUpdater->setActivityObjects($this->NewObject, $this->OldObject);
+			$EquipmentUpdater->update($this->EquipmentIDsNew, $this->EquipmentIDsOld);
+		}
 	}
 
 	/**

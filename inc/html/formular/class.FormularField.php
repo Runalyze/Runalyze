@@ -117,7 +117,9 @@ abstract class FormularField extends HtmlTag {
 		$this->name = $name;
 		$this->label = $label;
 
-		if (strlen($value))
+		if (is_array($value))
+			$this->value = $value;
+		elseif (strlen($value))
 			$this->value = $value;
 		elseif (isset($_POST[$name]))
 			$this->value = $_POST[$name];

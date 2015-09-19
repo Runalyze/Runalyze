@@ -21,6 +21,11 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	protected $OutdoorID;
 	protected $IndoorID;
 
+	protected $EquipmentType;
+	protected $EquipmentA;
+	protected $EquipmentB;
+	protected $EquipmentC;
+
 	protected function setUp() {
 		\Cache::clean();
 		$this->PDO = \DB::getInstance();
@@ -28,6 +33,15 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->OutdoorID = $this->PDO->lastInsertId();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`kcal`,`outside`,`accountid`,`power`) VALUES("",400,0,0,0)');
 		$this->IndoorID = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`,`accountid`) VALUES("Type",0)');
+		$this->EquipmentType = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_sport` (`sportid`,`equipment_typeid`) VALUES('.$this->OutdoorID.','.$this->EquipmentType.')');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("A",'.$this->EquipmentType.',"",0)');
+		$this->EquipmentA = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("B",'.$this->EquipmentType.',"",0)');
+		$this->EquipmentB = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("C",'.$this->EquipmentType.',"",0)');
+		$this->EquipmentC = $this->PDO->lastInsertId();
 
 		$Factory = new Model\Factory(0);
 		$Factory->clearCache('sport');
@@ -37,6 +51,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 	protected function tearDown() {
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'equipment_type`');
 
 		$Factory = new Model\Factory(0);
 		$Factory->clearCache('sport');
@@ -338,6 +353,25 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 			$this->assertNotEquals(0, $this->fetch($Inserter->insertedID())->power());
 			$this->assertNotEmpty($Trackdata->power());
 		}
+	}
+
+	public function testEquipment() {
+		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentA);
+		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=1, `time`=600 WHERE `id`='.$this->EquipmentB);
+		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentC);
+
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->setEquipmentIDs(array($this->EquipmentA, $this->EquipmentB));
+		$Inserter->insert(new Object(array(
+			Object::DISTANCE => 10,
+			Object::TIME_IN_SECONDS => 3600,
+			Object::SPORTID => $this->OutdoorID
+		)));
+
+		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array(11, 4200), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array( 0,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentC)->fetch(PDO::FETCH_NUM));
 	}
 
 }

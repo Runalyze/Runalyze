@@ -183,6 +183,9 @@ class ConfigTabEquipment extends ConfigTab {
 					$Inserter = new EquipmentType\Inserter($DB, $NewType);
 					$Inserter->setAccountID($accountId);
 					$Inserter->insert();
+
+					$RelationUpdater = new EquipmentType\RelationUpdater($DB, $Inserter->insertedID());
+					$RelationUpdater->update($_POST['equipmenttype']['sportid'][$id]);
 				}
 			} elseif (isset($_POST['equipmenttype']['delete'][$id])) {
 				$DB->deleteByID('equipment_type', (int)$id);

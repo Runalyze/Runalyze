@@ -12,8 +12,10 @@ use Runalyze\View\Activity\Dataview;
 $Frontend = new Frontend();
 
 if (isset($_GET['delete']) && is_numeric($_GET['delete'])) {
-	$Deleter = new Activity\Deleter(DB::getInstance(), Runalyze\Context::Factory()->activity($_GET['delete']));
+	$Factory = Runalyze\Context::Factory();
+	$Deleter = new Activity\Deleter(DB::getInstance(), $Factory->activity($_GET['delete']));
 	$Deleter->setAccountID(SessionAccountHandler::getId());
+	$Deleter->setEquipmentIDs($Factory->equipmentForActivity($_GET['delete'], true));
 	$Deleter->delete();
 
 	echo '<div class="panel-content"><p id="submit-info" class="error">'.__('The activity has been removed').'</p></div>';

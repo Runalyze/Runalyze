@@ -38,6 +38,11 @@ class Inserter extends Model\InserterWithAccountID {
 	protected $Route = null;
 
 	/**
+	 * @var array
+	 */
+	protected $EquipmentIDs = array();
+
+	/**
 	 * Construct inserter
 	 * @param \PDO $connection
 	 * @param \Runalyze\Model\Activity\Object $object [optional]
@@ -65,6 +70,13 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	public function setRoute(Model\Route\Object $route) {
 		$this->Route = $route;
+	}
+
+	/**
+	 * @param array $ids
+	 */
+	public function setEquipmentIDs(array $ids) {
+		$this->EquipmentIDs = $ids;
 	}
 
 	/**
@@ -228,7 +240,11 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-        //TODO
+		if (!empty($this->EquipmentIDs)) {
+	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->Object->id());
+			$EquipmentUpdater->setActivityObjects($this->Object);
+			$EquipmentUpdater->update($this->EquipmentIDs);
+		}
 	}
 
 	/**

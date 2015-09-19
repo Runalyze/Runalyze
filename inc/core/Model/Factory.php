@@ -205,6 +205,29 @@ class Factory {
 	}
 
 	/**
+	 * Equipment types for sport
+	 * @param int $sportid
+	 * @param boolean $onlyIDs [optional]
+	 * @return int[]|\Runalyze\Model\EquipmentType\Object[]
+	 */
+	public function equipmentTypeForSport($sportid, $onlyIDs = false) {
+		$Types = array();
+
+		// TODO: provide a cache for this
+		$IDs = $this->DB->query('SELECT `equipment_typeid` FROM `'.PREFIX.'equipment_sport` WHERE `sportid`="'.$sportid.'"')->fetchAll(\PDO::FETCH_COLUMN);
+
+		if ($onlyIDs) {
+			return $IDs;
+		}
+
+		foreach ($IDs as $id) {
+			$Types[] = $this->equipmentType($id);
+		}
+
+		return $Types;
+	}
+
+	/**
 	 * Equipment
 	 * @param int $equipmentid
 	 * @return \Runalyze\Model\Equipment\Object
@@ -390,7 +413,7 @@ class Factory {
 		$AndAccountID = $this->hasAccountID() && $this->tableHasAccountid($tablename) ? 'AND `accountid`='.(int)$this->AccountID : '';
 
 		if ($fullFetch) {
-			$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE 1 '.$AndAccountID)->fetchAll();
+			$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE 1 '.$AndAccountID.' '.$this->orderBy($tablename))->fetchAll();
 		} else {
 			$result = $this->DB->query('SELECT * FROM `'.PREFIX.$tablename.'` WHERE `'.$field.'`='.(int)$id.' '.$AndAccountID.' LIMIT 1')->fetch();
 		}
@@ -432,5 +455,23 @@ class Factory {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Order for full fetch
+	 * @param string $tablename
+	 * @return string
+	 */
+	protected function orderBy($tablename) {
+		switch ($tablename) {
+			case 'sport':
+				return \Runalyze\Configuration::ActivityForm()->orderSports()->asQuery();
+			case 'type':
+				return \Runalyze\Configuration::ActivityForm()->orderTypes()->asQuery();
+			case 'equipment':
+				return \Runalyze\Configuration::ActivityForm()->orderEquipment()->asQuery();
+		}
+
+		return '';
 	}
 }

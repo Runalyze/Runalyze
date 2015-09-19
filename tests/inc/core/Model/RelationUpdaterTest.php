@@ -5,6 +5,7 @@ namespace Runalyze\Model;
 use PDO;
 
 class RelationUpdaterForObject_MockTester extends RelationUpdater {
+	public $foobar;
 	public function table() {
 		return 'table';
 	}
@@ -13,6 +14,12 @@ class RelationUpdaterForObject_MockTester extends RelationUpdater {
 	}
 	public function otherColumn() {
 		return 'other';
+	}
+	protected function beforeUpdate() {
+		$this->foobar .= 'before';
+	}
+	protected function afterUpdate() {
+		$this->foobar .= 'after';
 	}
 }
 
@@ -40,6 +47,7 @@ class RelationUpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Updater->update();
 
 		$this->assertEmpty($this->PDO->query('SELECT * FROM `'.PREFIX.'table`')->fetchAll());
+		$this->assertEquals('beforeafter', $Updater->foobar);
 	}
 
 	public function testAddingRelations() {

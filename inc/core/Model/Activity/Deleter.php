@@ -23,12 +23,24 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	protected $Object;
 
 	/**
+	 * @var array
+	 */
+	protected $EquipmentIDs = array();
+
+	/**
 	 * Construct deleter
 	 * @param \PDO $connection
 	 * @param \Runalyze\Model\Activity\Object $object [optional]
 	 */
 	public function __construct(\PDO $connection, Object $object = null) {
 		parent::__construct($connection, $object);
+	}
+
+	/**
+	 * @param array $ids
+	 */
+	public function setEquipmentIDs(array $ids) {
+		$this->EquipmentIDs = $ids;
 	}
 
 	/**
@@ -94,7 +106,11 @@ class Deleter extends Model\DeleterWithIDAndAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-            //TODO
+		if (!empty($this->EquipmentIDs)) {
+	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->Object->id());
+			$EquipmentUpdater->setActivityObjects(new Object(), $this->Object);
+			$EquipmentUpdater->update(array(), $this->EquipmentIDs);
+		}
 	}
 
 	/**

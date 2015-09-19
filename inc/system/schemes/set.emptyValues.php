@@ -38,8 +38,6 @@ $EmptyTables['dataset'] = array(
 		array('vdoticon', 2, '', '', 16, 1, 'AVG'),
 		array('vdot', 1, '', '', 17, 1, 'AVG'),
 		array('abc', 1, '', '', 18, 0, 'NO'),
-		array('clothes', 1, 'small l', '', 19, 0, 'NO'),
-		array('shoeid', 1, 'small l', '', 20, 0, 'NO'),
 		array('partner', 1, 'small', '', 21, 0, 'NO'),
 		array('routeid', 1, 'small l', '', 22, 0, 'NO'),
 		array('cadence', 1, 'small', '', 23, 1, 'AVG'),

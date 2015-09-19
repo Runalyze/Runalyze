@@ -44,7 +44,7 @@ $FIELDSETS = array(
 	array(
 		'id'		=> 'other',
 		'legend'	=> __('Miscellaneous'),
-		'fields'	=> array('use_vdot', 'comment', 'partner', 'route', 'pool_length'),
+		'fields'	=> array('use_vdot', 'comment', 'partner', 'route'),
 		'conf'		=> 'OTHER',
 		'layout'	=> FormularFieldset::$LAYOUT_FIELD_W100_IN_W50
 	),
@@ -689,6 +689,7 @@ $FIELDS = array(
 						'default'	=> '0'
 					),
 					'formular'	=> array(
+						'hidden'	=> true,
 						'label'		=> __('Pool length'),
 						'unit'		=> FormularUnit::$CM
 					)
