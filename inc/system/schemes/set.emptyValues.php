@@ -57,7 +57,7 @@ $EmptyTables['plugin'] = array(
 		array('RunalyzePluginPanel_Sports', 'panel', 1, 1),
 		array('RunalyzePluginPanel_Rechenspiele', 'panel', 1, 2),
 		array('RunalyzePluginPanel_Prognose', 'panel', 2, 3),
-		//array('RunalyzePluginPanel_Equipment', 'panel', 2, 4),
+		array('RunalyzePluginPanel_Equipment', 'panel', 2, 4),
 		array('RunalyzePluginPanel_Sportler', 'panel', 1, 5),
 		array('RunalyzePluginStat_Analyse', 'stat', 1, 2),
 		array('RunalyzePluginStat_Statistiken', 'stat',1, 1),

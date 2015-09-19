@@ -1,9 +1,9 @@
 <?php
 /**
- * This file contains the class of the RunalyzePluginPanel "Schuhe".
+ * This file contains the class of the RunalyzePluginPanel "Equipment".
  * @package Runalyze\Plugins\Panels
  */
-$PLUGINKEY = 'RunalyzePluginPanel_Schuhe';
+$PLUGINKEY = 'RunalyzePluginPanel_Equipment';
 
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
@@ -11,12 +11,12 @@ use Runalyze\Activity\Pace;
 use Runalyze\Model;
 
 /**
- * Class: RunalyzePluginPanel_Schuhe
+ * Class: RunalyzePluginPanel_Equipment
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Panels
  */
-class RunalyzePluginPanel_Schuhe extends PluginPanel {
+class RunalyzePluginPanel_Equipment extends PluginPanel {
 	/**
 	 * Internal array with all equipment from database and statistic values
 	 * @var array 

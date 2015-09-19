@@ -8,7 +8,7 @@ require '../../inc/class.Frontend.php';
 $Frontend = new Frontend();
 
 $Factory = new PluginFactory();
-$Plugin = $Factory->newInstance('RunalyzePluginPanel_Schuhe');
+$Plugin = $Factory->newInstance('RunalyzePluginPanel_Equipment');
 
 echo '<div class="panel-heading">';
 echo '<h1>'.__('Your equipment').'</h1>';
