@@ -31,6 +31,7 @@ You have to apply recent changes from the respective update files in `inc/instal
 
 ## Changelog
 * new versions, multi-lingual
+ * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
  * [v2.1](http://blog.runalyze.com/allgemein/runalyze-v2-1/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
  * [v2.0.4](http://blog.runalyze.com/allgemein/runalyze-v2-0-4/), 17.07.2015: minor bugfixes
  * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: minor bugfixes
