@@ -79,8 +79,14 @@ if (!$HasTableEq OR !$HasTableEqT OR !$HasTableEqS OR !$HasTableEqAE) {
     $countAccount = $PDO->query('SELECT COUNT(*) FROM `'.PREFIX.'account`')->fetchColumn();
 }
 
-echo NL;
+if ($countAccount == 0) {
+	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false". ';
+	echo 'Runalyze v2.2 requires every user to have an account. ';
+	echo 'Please register an account and update the `accountid` in all relevant tables.'.NL;
+	exit;
+}
 
+echo NL;
 
 $HasColumnAccount = $PDO->query('SHOW COLUMNS FROM `'.PREFIX.'account` LIKE "refactored"')->fetch();
 
