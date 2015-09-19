@@ -58,12 +58,17 @@ class RunalyzeJsonImporter {
 	/**
 	 * Construct importer
 	 * @param string $fileName relative to FRONTEND_PATH
+	 * @param int $accountID optional, session account id is used otherwise
 	 */
-	public function __construct($fileName) {
+	public function __construct($fileName, $accountID = false) {
 		$this->Reader = new BigFileReaderGZip($fileName);
 		$this->DB = DB::getInstance();
 		$this->AccountID = USER_MUST_LOGIN ? SessionAccountHandler::getId() : 0;
 		$this->Results = new RunalyzeJsonImporterResults();
+
+		if ($accountID !== false) {
+			$this->AccountID = $accountID;
+		}
 	}
 
 	/**
@@ -91,9 +96,8 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		$Requests = array(
-			'delete_trainings'	=> array('training', 'route', 'trackdata', 'swimdata', 'hrv'),
+			'delete_trainings'	=> array('training', 'route', 'trackdata', 'swimdata', 'hrv', 'activity_equipment'),
 			'delete_user_data'	=> array('user'),
-			'delete_shoes'		=> array('shoe')
 		);
 
 		foreach ($Requests as $key => $tables) {
@@ -120,11 +124,11 @@ class RunalyzeJsonImporter {
 		Configuration::loadAll();
 
 		$Tables = array(
-			'clothes'	=> 'name',
-			'shoe'		=> 'name',
 			'sport'		=> 'name',
 			'type'		=> 'name',
-			'plugin'	=> 'key'
+			'plugin'	=> 'key',
+			'equipment'	=> 'name',
+			'equipment_type' => 'name'
 		);
 
 		foreach ($Tables as $Table => $Column) {
@@ -158,16 +162,18 @@ class RunalyzeJsonImporter {
 	private function readTable($TableName) {
 		$TableSettings = array(
 			'import'	=> array(
-				'runalyze_clothes',
-				'runalyze_shoe',
 				'runalyze_sport',
 				'runalyze_type',
 				'runalyze_user',
+				'runalyze_equipment_type',
+				'runalyze_equipment_sport',
+				'runalyze_equipment',
 				'runalyze_route',
 				'runalyze_training',
-                                'runalyze_swimdata',
+				'runalyze_swimdata',
 				'runalyze_trackdata',
-				'runalyze_hrv'
+				'runalyze_hrv',
+				'runalyze_activity_equipment'
 			),
 			'update'	=> array(
 				'runalyze_conf'			=> 'overwrite_config',
@@ -311,7 +317,9 @@ class RunalyzeJsonImporter {
 				if (isset($this->ExistingData[$TableName][$Values[0]])) {
 					$this->ReplaceIDs[$TableName][$ID] = $this->ExistingData[$TableName][$Values[0]];
 				} else {
-					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert($Values);
+					$this->correctValues($TableName, $Row);
+
+					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert(array_values($Row));
 					$this->Results->addInserts($TableName, 1);
 				}
 			} else {
@@ -342,10 +350,18 @@ class RunalyzeJsonImporter {
 			$Row['pluginid'] = $this->correctID('runalyze_plugin', $Row['pluginid']);
 		} elseif ($TableName == 'runalyze_trackdata') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
-                } elseif ($TableName == 'runalyze_swimdata') {
+		} elseif ($TableName == 'runalyze_swimdata') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
 		} elseif ($TableName == 'runalyze_hrv') {
 			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+		} elseif ($TableName == 'runalyze_equipment') {
+			$Row['typeid'] = $this->correctID('runalyze_equipment_type', $Row['typeid']);
+		} elseif ($TableName == 'runalyze_equipment_sport') {
+			$Row['sportid'] = $this->correctID('runalyze_sport', $Row['sportid']);
+			$Row['equipment_typeid'] = $this->correctID('runalyze_equipment_type', $Row['equipment_typeid']);
+		} elseif ($TableName == 'runalyze_activity_equipment') {
+			$Row['activityid'] = $this->correctID('runalyze_training', $Row['activityid']);
+			$Row['equipmentid'] = $this->correctID('runalyze_equipment', $Row['equipmentid']);
 		}
 	}
 
@@ -354,11 +370,17 @@ class RunalyzeJsonImporter {
 	 * @param array $Training
 	 */
 	private function correctTraining(array &$Training) {
-		$Training['clothes'] = $this->correctClothes($Training['clothes']);
-		$Training['sportid'] = $this->correctID('runalyze_sport', $Training['sportid']);
-		$Training['typeid']  = $this->correctID('runalyze_type', $Training['typeid']);
-		$Training['shoeid']  = $this->correctID('runalyze_shoe', $Training['shoeid']);
-		$Training['routeid'] = $this->correctID('runalyze_route', $Training['routeid']);
+		if (isset($Training['sportid'])) {
+			$Training['sportid'] = $this->correctID('runalyze_sport', $Training['sportid']);
+		}
+
+		if (isset($Training['typeid'])) {
+			$Training['typeid']  = $this->correctID('runalyze_type', $Training['typeid']);
+		}
+
+		if (isset($Training['routeid'])) {
+			$Training['routeid'] = $this->correctID('runalyze_route', $Training['routeid']);
+		}
 	}
 
 	/**
@@ -372,27 +394,6 @@ class RunalyzeJsonImporter {
 			return $this->ReplaceIDs[$Table][$ID];
 
 		return 0;
-	}
-
-	/**
-	 * Correct string of clothes
-	 * @param string $String
-	 * @return string
-	 */
-	private function correctClothes($String) {
-		if (!isset($this->ReplaceIDs['runalyze_clothes']) || empty($String))
-			return $String;
-
-		$IDs = explode(',', $String);
-
-		if (!is_array($IDs))
-			return $String;
-
-		foreach ($IDs as $i => $ID)
-			if ((int)$ID > 0 && isset($this->ReplaceIDs['runalyze_clothes'][$ID]))
-				$IDs[$i] = $this->ReplaceIDs['runalyze_clothes'][$ID];
-
-		return implode(',', $IDs);
 	}
 
 	/**

@@ -1,7 +1,5 @@
 {"TABLE":"runalyze_account"}
 
-{"TABLE":"runalyze_clothes"}
-
 {"TABLE":"runalyze_conf"}
 {"1":{"category":"test-data","key":"TEST_CONF","value":"true"}}
 
@@ -17,12 +15,24 @@
 {"1":{"pluginid":"1","config":"test_one","value":"1"}}
 {"2":{"pluginid":"1","config":"test_two","value":"2"}}
 
-{"TABLE":"runalyze_shoe"}
-
 {"TABLE":"runalyze_sport"}
 
 {"TABLE":"runalyze_type"}
 
 {"TABLE":"runalyze_user"}
 
+{"TABLE":"runalyze_route"}
+
 {"TABLE":"runalyze_training"}
+
+{"TABLE":"runalyze_trackdata"}
+
+{"TABLE":"runalyze_swimdata"}
+
+{"TABLE":"runalyze_equipment_type"}
+
+{"TABLE":"runalyze_equipment_sport"}
+
+{"TABLE":"runalyze_equipment"}
+
+{"TABLE":"runalyze_activity_equipment"}

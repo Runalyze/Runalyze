@@ -16,7 +16,6 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($A->splits()->isEmpty());
 		$this->assertTrue($A->partner()->isEmpty());
-		$this->assertTrue($A->clothes()->isEmpty());
 	}
 
 	public function testEmptyTemperature() {

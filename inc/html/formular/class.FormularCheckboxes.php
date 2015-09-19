@@ -42,6 +42,7 @@ class FormularCheckboxes extends FormularField {
 
 		foreach ($this->checkboxes as $key => $label) {
 			$value    = isset($this->value[$key]) && $this->value[$key] == 'on' ? 1 : 0;
+			$label = Helper::Cut($label, 12);
 
 			$Checkbox = new FormularCheckbox($this->getNameForKey($key), $label, $value);
 			$Checkbox->setLayout( FormularFieldset::$LAYOUT_FIELD_SMALL_INLINE );

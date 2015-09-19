@@ -64,8 +64,6 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Plot = new Activity\Plot\Temperature($this->Context);
 			$this->addRightContent('temperature', __('Temperature plot'), $Plot);
 		}
-
-                
 	}
 
 	/**
@@ -181,29 +179,33 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$this->BoxedValues[] = $Temp;
 		}
 
-		if (!$this->Context->activity()->clothes()->isEmpty()) {
-			$Clothes = new BoxedValue($this->Context->dataview()->clothesAsLinks(), '', __('Clothes'));
-			$Clothes->defineAsFloatingBlock('w100 flexible-height');
-
-			$this->BoxedValues[] = $Clothes;
-		}
 	}
 
 	/**
 	 * Add equipment
 	 */
 	protected function addEquipment() {
-		$id = $this->Context->activity()->shoeID();
+		$Types = array();
+		$Factory = new \Runalyze\Model\Factory(SessionAccountHandler::getId());
+		$Equipment = $Factory->equipmentForActivity($this->Context->activity()->id());
 
-		if ($id) {
-			$Shoe = new Shoe($id);
+		foreach ($Equipment as $Object) {
+			$Link = SearchLink::to('equipmentid', $Object->id(), $Object->name());
 
-			if (!$Shoe->isDefaultId()) {
-				$RunningShoe = new BoxedValue($Shoe->getSearchLink(), '', __('Running shoe'));
-				$RunningShoe->defineAsFloatingBlock('w100 flexible-height');
-
-				$this->BoxedValues[] = $RunningShoe;
+			if (isset($Types[$Object->typeid()])) {
+				$Types[$Object->typeid()][] = $Link;
+			} else {
+				$Types[$Object->typeid()] = array($Link);
 			}
+		}
+
+		foreach ($Types as $typeid => $links) {
+			$Type = $Factory->equipmentType($typeid);
+
+			$Value = new BoxedValue(implode(', ', $links), '', $Type->name());
+			$Value->defineAsFloatingBlock('w100 flexible-height');
+
+			$this->BoxedValues[] = $Value;
 		}
 	}
 

@@ -26,7 +26,7 @@ class DataSeriesRemoverTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'trackdata`');
 		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'route`');
 	}

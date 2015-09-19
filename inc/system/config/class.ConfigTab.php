@@ -28,6 +28,12 @@ abstract class ConfigTab {
 	protected $key = '';
 
 	/**
+	 * Model factory
+	 * @var \Runalyze\Model\Factory
+	 */
+	protected $Model;
+
+	/**
 	 * Set key and title for form 
 	 */
 	abstract protected function setKeyAndTitle();
@@ -46,6 +52,8 @@ abstract class ConfigTab {
 	 * Construct new tab
 	 */
 	public function __construct() {
+		$this->Model = new Runalyze\Model\Factory(SessionAccountHandler::getId());
+
 		$this->setKeyAndTitle();
 	}
 

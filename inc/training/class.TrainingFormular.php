@@ -80,6 +80,8 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
+		$this->initEquipmentFieldset();
+
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
 			$this->addOldObjectData();
 			$this->initElevationCorrectionFieldset();
@@ -90,6 +92,10 @@ class TrainingFormular extends StandardFormular {
 				$this->addHiddenValue('mode', 'multi');
 				$this->submitButtons['submit'] = __('Save and continue');
 			}
+		}
+
+		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
+			$this->initDeleteFieldset();
 		}
 
 		$this->appendJavaScript();
@@ -162,6 +168,100 @@ class TrainingFormular extends StandardFormular {
 	 */
 	protected function addOldObjectData() {
 		$this->addHiddenValue('old-data', base64_encode(serialize($this->dataObject->getArray())));
+	}
+
+	/**
+	 * Read selected equipment from post data
+	 * @param int $checkForSportID optional
+	 * @return array
+	 */
+	static public function readEquipmentFromPost($checkForSportID = false) {
+		$SelectedEquipment = array();
+
+		foreach ($_POST['equipment'] as $value) {
+			if (is_array($value)) {
+				$SelectedEquipment = array_merge($SelectedEquipment, array_keys($value));
+			} else {
+				$SelectedEquipment[] = $value;
+			}
+		}
+
+		if ($checkForSportID) {
+			$Factory = new Factory(SessionAccountHandler::getId());
+			$TypeIDs = $Factory->equipmentTypeForSport($checkForSportID, true);
+			foreach ($SelectedEquipment as $i => $id) {
+				$Equipment = $Factory->equipment($id);
+
+				if (!in_array($Equipment->typeid(), $TypeIDs)) {
+					unset($SelectedEquipment[$i]);
+				}
+			}
+		}
+
+		return $SelectedEquipment;
+	}
+
+	/**
+	 * Display fieldset: Equipment
+	 */
+	protected function initEquipmentFieldset() {
+		$isCreateForm = ($this->submitMode == StandardFormular::$SUBMIT_MODE_CREATE);
+		$Factory = new Factory(SessionAccountHandler::getId());
+		$AllEquipment = $Factory->allEquipments();
+		$RelatedEquipment = $isCreateForm ? array() : $Factory->equipmentForActivity($this->dataObject->id(), true);
+
+		$Fieldset = new FormularFieldset( __('Equipment') );
+		$Fieldset->addField(new FormularInputHidden('equipment_old', '', implode(',', $RelatedEquipment)));
+
+		if (isset($_POST['equipment'])) {
+			$RelatedEquipment = self::readEquipmentFromPost();
+		}
+
+		foreach ($Factory->allEquipmentTypes() as $EquipmentType) {
+			$options = array();
+			$values = array();
+
+			foreach ($AllEquipment as $Equipment) {
+				if (
+					$Equipment->typeid() == $EquipmentType->id() &&
+					(!$isCreateForm || $Equipment->isInUse())
+				) {
+					$options[$Equipment->id()] = $Equipment->name();
+
+					if (in_array($Equipment->id(), $RelatedEquipment)) {
+						$values[$Equipment->id()] = 'on';
+					}
+				}
+			}
+
+			if ($EquipmentType->allowsMultipleValues()) {
+				$Field = new FormularCheckboxes('equipment['.$EquipmentType->id().']', $EquipmentType->name(), $values);
+
+				foreach ($options as $key => $label) {
+					$Field->addCheckbox($key, $label);
+				}
+			} else {
+				$selected = !empty($values) ? array_keys($values) : array(0);
+				$Field = new FormularSelectBox('equipment['.$EquipmentType->id().']', $EquipmentType->name(), $selected[0]);
+				$Field->addOption(0, '');
+
+				foreach ($options as $key => $label) {
+					$Field->addOption($key, $label);
+				}
+			}
+
+			$SportClasses = 'only-specific-sports';
+			foreach ($Factory->sportForEquipmentType($EquipmentType->id(), true) as $id) {
+				$SportClasses .= ' only-sport-'.$id;
+			}
+
+			$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
+			$Field->addLayoutClass($SportClasses);
+			$Field->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
+			$Fieldset->addField($Field);
+		}
+
+		$this->addFieldset($Fieldset);
 	}
 
 	/**
@@ -239,6 +339,7 @@ class TrainingFormular extends StandardFormular {
 		$DeleteLink = Ajax::link($DeleteText, 'ajax', $DeleteUrl);
 
 		$Fieldset = new FormularFieldset( __('Delete activity') );
+                
 		$Fieldset->addWarning($DeleteLink);
 		$Fieldset->setCollapsed();
 

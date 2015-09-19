@@ -4,7 +4,6 @@ namespace Runalyze\Model\Activity;
 
 use Runalyze\Configuration;
 use Runalyze\Model;
-use Runalyze\Data\Weather;
 
 use PDO;
 
@@ -18,21 +17,33 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $PDO;
 
+	protected $EquipmentType;
+	protected $EquipmentA;
+	protected $EquipmentB;
+
 	protected function setUp() {
+		\Cache::clean();
+
 		$this->PDO = \DB::getInstance();
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",1,600,1,0)');
 		$this->PDO->exec('INSERT INTO `'.PREFIX.'sport` (`name`,`id`,`kcal`,`outside`,`accountid`) VALUES("",2,400,0,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",1,10,3000,0)');
-		$this->PDO->exec('INSERT INTO `'.PREFIX.'shoe` (`name`,`id`,`km`,`time`,`accountid`) VALUES("",2,0,0,0)');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_type` (`name`,`accountid`) VALUES("Type",0)');
+		$this->EquipmentType = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment_sport` (`sportid`,`equipment_typeid`) VALUES(1,'.$this->EquipmentType.')');
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("A",'.$this->EquipmentType.',"",0)');
+		$this->EquipmentA = $this->PDO->lastInsertId();
+		$this->PDO->exec('INSERT INTO `'.PREFIX.'equipment` (`name`,`typeid`,`notes`,`accountid`) VALUES("B",'.$this->EquipmentType.',"",0)');
+		$this->EquipmentB = $this->PDO->lastInsertId();
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'training`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'trackdata`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'swimdata`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'route`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'sport`');
-		$this->PDO->exec('TRUNCATE TABLE `'.PREFIX.'shoe`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'training`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'trackdata`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'swimdata`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'route`');
+		$this->PDO->exec('DELETE FROM `'.PREFIX.'sport`');
+
+		\Cache::clean();
 	}
 
 	/**
@@ -71,28 +82,6 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testWrongObject() {
 		new Deleter($this->PDO, new Model\Trackdata\Object);
-	}
-
-	public function testEquipmentUpdate() {
-		$this->delete($this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => 1
-		)));
-		$this->delete($this->insert(array(
-			Object::TIME_IN_SECONDS => 3600,
-			Object::DISTANCE => 12,
-			Object::SHOEID => 2
-		)));
-
-		$this->assertEquals(array(
-			'km' => 10,
-			'time' => 3000
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=1 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
-		$this->assertEquals(array(
-			'km' => 0,
-			'time' => 0
-		), $this->PDO->query('SELECT `km`, `time` FROM `'.PREFIX.'shoe` WHERE `id`=2 AND `accountid`=0')->fetch(PDO::FETCH_ASSOC));
 	}
 
 	public function testStartTimeUpdate() {
@@ -256,6 +245,32 @@ class DeleterTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals(array(), $this->PDO->query('SELECT `activityid` FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$activityID)->fetchAll());
 		$this->assertEquals(array(), $this->PDO->query('SELECT `id` FROM `'.PREFIX.'training` WHERE `id`='.$activityID)->fetchAll());
+	}
+
+	public function testEquipment() {
+		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentA);
+		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentB);
+
+		$Object = new Object(array(
+			Object::DISTANCE => 10,
+			Object::TIME_IN_SECONDS => 3600,
+			Object::SPORTID => 1
+		));
+		$Inserter = new Inserter($this->PDO);
+		$Inserter->setAccountID(0);
+		$Inserter->setEquipmentIDs(array($this->EquipmentA));
+		$Inserter->insert($Object);
+
+		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array( 0,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
+
+		$Deleter = new Deleter($this->PDO, $Object);
+		$Deleter->setAccountID(0);
+		$Deleter->setEquipmentIDs(array($this->EquipmentA));
+		$Deleter->delete();
+
+		$this->assertEquals(array(0, 0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array(0, 0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
 	}
 
 }

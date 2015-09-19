@@ -13,7 +13,7 @@ $ConfigTabs->addTab(new ConfigTabPlugins());
 $ConfigTabs->addTab(new ConfigTabDataset());
 $ConfigTabs->addTab(new ConfigTabSports());
 $ConfigTabs->addTab(new ConfigTabTypes());
-$ConfigTabs->addTab(new ConfigTabClothes());
+$ConfigTabs->addTab(new ConfigTabEquipment());
 $ConfigTabs->addTab(new ConfigTabAccount());
 $ConfigTabs->display();
 

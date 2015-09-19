@@ -58,6 +58,8 @@ class PDOforRunalyze extends PDO {
 		if (                        
 				strpos($statement, PREFIX.'account') === false
 				&& strpos($statement, PREFIX.'plugin_conf') === false
+				&& strpos($statement, PREFIX.'activity_equipment') === false
+				&& strpos($statement, PREFIX.'equipment_sport') === false
 				&& strpos($statement, '`accountid`') === false
 				&& strpos($statement, 'accountid=') === false
 			) {
@@ -86,8 +88,10 @@ class PDOforRunalyze extends PDO {
 			return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' LIMIT 1')->fetch();
 		}
 
-		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();
-	}
+		return $this->query('SELECT * FROM `'.PREFIX.$table.'` WHERE `id`='.(int)$ID.' AND `accountid`="'.SessionAccountHandler::getId().'" LIMIT 1')->fetch();	
+                
+        }
+
 
 	/**
 	 * Fetch row by id
@@ -147,7 +151,7 @@ class PDOforRunalyze extends PDO {
 		$table = str_replace(PREFIX, '', $table);
 
 		// TODO: TEST IT!
-		if ($table != 'account' && $table != 'plugin_conf' && !in_array('accountid', $columns)) {
+		if ($table != 'account' && $table != 'plugin_conf' && $table != 'equipment_sport' && !in_array('accountid', $columns)) {
 			$columns[] = 'accountid';
 			$values[]  = $this->accountID;
 		}

@@ -144,13 +144,15 @@ class TrainingObject extends DataObject {
 	 * Insert object to database
 	 */
 	public function insert() {
+		$DB = DB::getInstance();
+		$AccountID = SessionAccountHandler::getId();
 		$Route = $this->newRouteObject();
 		$Trackdata = $this->newTrackdataObject();
-                $Swimdata = $this->newSwimObject();
+		$Swimdata = $this->newSwimObject();
 
 		if ($Route->name() != '' || $Route->hasPositionData() || $Route->hasElevations()) {
-			$InserterRoute = new Runalyze\Model\Route\Inserter(DB::getInstance(), $Route);
-			$InserterRoute->setAccountID( SessionAccountHandler::getId() );
+			$InserterRoute = new Runalyze\Model\Route\Inserter($DB, $Route);
+			$InserterRoute->setAccountID($AccountID);
 			$InserterRoute->insert();
 
 			$this->forceToSet('routeid', $InserterRoute->insertedID());
@@ -162,41 +164,37 @@ class TrainingObject extends DataObject {
 
 		$Activity = $this->newActivityObject();
 
-		$InserterActivity = new Runalyze\Model\Activity\Inserter(DB::getInstance(), $Activity);
-		$InserterActivity->setAccountID( SessionAccountHandler::getId() );
+		$InserterActivity = new Runalyze\Model\Activity\Inserter($DB, $Activity);
+		$InserterActivity->setAccountID($AccountID);
 		$InserterActivity->setRoute($Route);
 		$InserterActivity->setTrackdata($Trackdata);
-                $InserterActivity->setSwimdata(($Swimdata));
-                
+		$InserterActivity->setSwimdata($Swimdata);
+		$InserterActivity->setEquipmentIDs(TrainingFormular::readEquipmentFromPost($Activity->sportid()));
 		$InserterActivity->insert();
 
 		$this->id = $InserterActivity->insertedID();
 
 		if ($this->hasArrayTime() || $this->hasArrayDistance() || $this->hasArrayHeartrate()) {
 			$Trackdata->set(Runalyze\Model\Trackdata\Object::ACTIVITYID, $this->id());
-			$InserterTrack = new Runalyze\Model\Trackdata\Inserter(DB::getInstance(), $Trackdata);
-			$InserterTrack->setAccountID( SessionAccountHandler::getId() );
+			$InserterTrack = new Runalyze\Model\Trackdata\Inserter($DB, $Trackdata);
+			$InserterTrack->setAccountID($AccountID);
 			$InserterTrack->insert();
 		}
 
-                if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
-                    
-                        $Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
-                        $InserterSwim = new Runalyze\Model\Swimdata\Inserter(DB::getInstance(), $Swimdata);
-                        $InserterSwim->setAccountID( SessionAccountHandler::getId() );
-                        $InserterSwim->insert();
-                }        
-                
-
+		if ($this->hasArrayStroke() || $this->hasArrayStrokeType() ) {
+			$Swimdata->set(Runalyze\Model\Swimdata\Object::ACTIVITYID, $this->id());
+			$InserterSwim = new Runalyze\Model\Swimdata\Inserter($DB, $Swimdata);
+			$InserterSwim->setAccountID($AccountID);
+			$InserterSwim->insert();
+		}
 
 		if ($this->hasArrayHRV()) {
 			$HRV = $this->newHRVObject();
 			$HRV->set(Runalyze\Model\HRV\Object::ACTIVITYID, $this->id());
-			$InserterHRV = new Runalyze\Model\HRV\Inserter(DB::getInstance(), $HRV);
-			$InserterHRV->setAccountID( SessionAccountHandler::getId() );
+			$InserterHRV = new Runalyze\Model\HRV\Inserter($DB, $HRV);
+			$InserterHRV->setAccountID($AccountID);
 			$InserterHRV->insert();
 		}
-
 	}
 
 	/**
@@ -262,6 +260,8 @@ class TrainingObject extends DataObject {
 	 * Update object in database
 	 */
 	public function update() {
+		$DB = DB::getInstance();
+		$AccountID = SessionAccountHandler::getId();
 		$OldData = isset($_POST['old-data'])
 				? unserialize(base64_decode($_POST['old-data']))
 				: array();
@@ -270,8 +270,9 @@ class TrainingObject extends DataObject {
 			$OldData = array();
 		}
 
-		$UpdaterActivity = new \Runalyze\Model\Activity\Updater(DB::getInstance(),
-			$this->newActivityObject(),
+		$NewActivity = $this->newActivityObject();
+		$UpdaterActivity = new \Runalyze\Model\Activity\Updater($DB,
+			$NewActivity,
 			new \Runalyze\Model\Activity\Object($OldData)
 		);
 
@@ -280,11 +281,15 @@ class TrainingObject extends DataObject {
 		}
 
 		$UpdaterActivity->setTrackdata(\Runalyze\Context::Factory()->trackdata($this->id()));
-		$UpdaterActivity->setAccountID( SessionAccountHandler::getId() );
+		$UpdaterActivity->setEquipmentIDs(
+			TrainingFormular::readEquipmentFromPost($NewActivity->sportid()),
+			isset($_POST['equipment_old']) ? explode(',', $_POST['equipment_old']) : array()
+		);
+		$UpdaterActivity->setAccountID($AccountID);
 		$UpdaterActivity->update();
 
 		if (isset($OldData['routeid']) && isset($OldData['route'])) {
-			$UpdaterRoute = new \Runalyze\Model\Route\Updater(DB::getInstance(),
+			$UpdaterRoute = new \Runalyze\Model\Route\Updater($DB,
 				new Runalyze\Model\Route\Object(array(
 					'id' => $OldData['routeid'],
 					Runalyze\Model\Route\Object::NAME => $this->get('route'),
@@ -296,7 +301,7 @@ class TrainingObject extends DataObject {
 					Runalyze\Model\Route\Object::CITIES => $OldData['route']
 				))
 			);
-			$UpdaterRoute->setAccountID( SessionAccountHandler::getId() );
+			$UpdaterRoute->setAccountID($AccountID);
 			$UpdaterRoute->update();
 		}
 	}
@@ -350,28 +355,6 @@ class TrainingObject extends DataObject {
 		}
 
 		return $this->Type;
-	}
-
-	/**
-	 * Shoe object
-	 * @return \Shoe
-	 */
-	public function Shoe() {
-		if (is_null($this->Shoe))
-			$this->Shoe = new Shoe($this->get('shoeid'));
-
-		return $this->Shoe;
-	}
-
-	/**
-	 * Clothes object
-	 * @return \Clothes
-	 */
-	public function Clothes() {
-		if (is_null($this->Clothes))
-			$this->Clothes = new Clothes($this->get('clothes'));
-
-		return $this->Clothes;
 	}
 
 	/**

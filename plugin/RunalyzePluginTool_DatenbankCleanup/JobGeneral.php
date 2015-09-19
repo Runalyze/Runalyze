@@ -8,6 +8,7 @@ namespace Runalyze\Plugin\Tool\DatabaseCleanup;
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Model\Equipment;
 
 /**
  * JobGeneral
@@ -23,10 +24,10 @@ class JobGeneral extends Job {
 	const INTERNALS = 'internals';
 
 	/**
-	 * Task key: shoe statistics
+	 * Task key: equipment statistics
 	 * @var string
 	 */
-	const SHOES = 'shoes';
+	const EQUIPMENT = 'equipment';
 
 	/**
 	 * Task key: vdot shape
@@ -60,8 +61,8 @@ class JobGeneral extends Job {
 			$this->recalculateInternalConstants();
 		}
 
-		if ($this->isRequested(self::SHOES)) {
-			$this->recalculateShoeStatistics();
+		if ($this->isRequested(self::EQUIPMENT)) {
+			$this->recalculateEquipmentStatistics();
 		}
 
 		if ($this->isRequested(self::VDOT_CORRECTOR)) {
@@ -92,13 +93,17 @@ class JobGeneral extends Job {
 	}
 
 	/**
-	 * Recalculate shoe statistics
+	 * Recalculate equipment statistics
 	 */
-	protected function recalculateShoeStatistics() {
-		$num = \ShoeFactory::numberOfShoes();
-		\ShoeFactory::recalculateAllShoes();
+	protected function recalculateEquipmentStatistics() {
+		$Updater = new Equipment\StatisticsUpdater(\DB::getInstance(), \SessionAccountHandler::getId());
+		$num = $Updater->run();
 
-		$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> shoes.'), $num ) );
+		if ($num === false) {
+			$this->addMessage( __('There was a problem while recalculating your equipment statistics') );
+		} else {
+			$this->addMessage( sprintf( __('Statistics have been recalculated for all <strong>%s</strong> pieces of equipment.'), $num ) );
+		}
 	}
 
 	/**

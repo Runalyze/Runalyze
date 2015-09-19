@@ -27,13 +27,13 @@ class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
-		$this->PDO->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->PDO->exec('DELETE FROM `runalyze_training`');
 
 		$this->Container = new RaceContainer($this->PDO, self::RACEID, false);
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE TABLE `runalyze_training`');
+		$this->PDO->exec('DELETE FROM `runalyze_training`');
 	}
 
 	protected function insert($distance, $s = 0, $time = 0) {

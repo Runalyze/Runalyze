@@ -44,7 +44,7 @@ class RunalyzeBulkInsert {
 		$PreparedColumns = '`'.implode('`,`', $Columns).'`';
 		$PreparedValues = implode(',', array_fill(0, count($Columns), '?'));
 
-		if ($accountID !== false) {
+		if ($accountID !== false && $TableName != PREFIX.'equipment_sport' && $TableName != PREFIX.'activity_equipment') {
 			$PreparedColumns .= ',`accountid`';
 			$PreparedValues .= ','.$accountID;
 		}

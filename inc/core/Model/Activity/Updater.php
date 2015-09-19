@@ -40,6 +40,16 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected $Route = null;
 
 	/**
+	 * @var array
+	 */
+	protected $EquipmentIDsNew = array();
+
+	/**
+	 * @var array
+	 */
+	protected $EquipmentIDsOld = array();
+
+	/**
 	 * @var boolean
 	 */
 	protected $ForceRecalculations = false;
@@ -66,6 +76,15 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	public function setRoute(Model\Route\Object $route) {
 		$this->Route = $route;
+	}
+
+	/**
+	 * @param array $newIDs
+	 * @param array $oldIDs
+	 */
+	public function setEquipmentIDs(array $newIDs, array $oldIDs) {
+		$this->EquipmentIDsNew = $newIDs;
+		$this->EquipmentIDsOld = $oldIDs;
 	}
 
 	/**
@@ -102,7 +121,8 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function ignore($key) {
 		if ($key == Object::DISTANCE || $key == Object::TIME_IN_SECONDS) {
-			if ($this->OldObject == null && $this->NewObject->shoeID() > 0) {
+			// TODO: needed if equipment is set
+			if ($this->OldObject == null && false) {
 				throw new \RuntimeException('For an update of distance or duration the old object has to be set.');
 			}
 		}
@@ -259,29 +279,10 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 * Update equipment
 	 */
 	protected function updateEquipment() {
-		if ($this->hasChanged(Object::SHOEID)) {
-			if ($this->knowsOldObject()) {
-				$this->PDO->exec(
-					'UPDATE `'.PREFIX.'shoe` SET
-						`km` = `km` - '.(float)$this->OldObject->distance().',
-						`time` = `time` - '.(int)$this->OldObject->duration().'
-					WHERE `id`="'.$this->OldObject->shoeID().'" LIMIT 1'
-				);
-			}
-
-			$this->PDO->exec(
-				'UPDATE `'.PREFIX.'shoe` SET
-					`km` = `km` + '.(float)$this->NewObject->distance().',
-					`time` = `time` + '.(int)$this->NewObject->duration().'
-				WHERE `id`="'.$this->NewObject->shoeID().'" LIMIT 1'
-			);
-		} elseif ($this->hasChanged(Object::DISTANCE) || $this->hasChanged(Object::TIME_IN_SECONDS)) {
-			$this->PDO->exec(
-				'UPDATE `'.PREFIX.'shoe` SET
-					`km` = `km` + ('.((float)$this->NewObject->distance() - (float)$this->OldObject->distance()).'),
-					`time` = `time` + ('.((int)$this->NewObject->duration() - (float)$this->OldObject->duration()).')
-				WHERE `id`="'.$this->NewObject->shoeID().'" LIMIT 1'
-			);
+		if (!empty($this->EquipmentIDsNew) || !empty($this->EquipmentIDsOld)) {
+	        $EquipmentUpdater = new EquipmentUpdater($this->PDO, $this->NewObject->id());
+			$EquipmentUpdater->setActivityObjects($this->NewObject, $this->OldObject);
+			$EquipmentUpdater->update($this->EquipmentIDsNew, $this->EquipmentIDsOld);
 		}
 	}
 

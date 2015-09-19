@@ -34,7 +34,7 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @covers AccountHandler::getDataFor
 	 */
 	public function testSimpleGetter() {
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id` = 1 OR `id` = 13');
 
 		DB::getInstance()->insert('account',
 			array('id', 'username', 'name', 'mail'),
@@ -55,8 +55,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertTrue( is_array(AccountHandler::getDataFor('Testuser')) );
 		$this->assertEquals( false, AccountHandler::getDataFor('Tester') );
-
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
 	}
 
 	/**
@@ -86,17 +84,17 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @covers AccountHandler::getUsernameForChangePasswordHash
 	 */
 	public function testGetUsernameForChangePasswordHash() {
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
-
 		DB::getInstance()->insert('account',
 			array('username', 'changepw_hash', 'changepw_timelimit', 'mail'),
 			array('OldChanger', '8e1e915d08a163ddd4accc6d890dd557', time()-100, 'test1@mail.de')
 		);
+		$FirstID = DB::getInstance()->lastInsertId();
 
 		DB::getInstance()->insert('account',
 			array('username', 'changepw_hash', 'changepw_timelimit', 'mail'),
 			array('NewChanger', '920676ca497a95fa7abfe6b353692613', time()+7*DAY_IN_S, 'test2@mail.de')
 		);
+		$SecondID = DB::getInstance()->lastInsertId();
 
 		$_GET['chpw'] = '';
 		$this->assertEquals( false, AccountHandler::getUsernameForChangePasswordHash() );
@@ -110,7 +108,7 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 		$_GET['chpw'] = '920676ca497a95fa7abfe6b353692613';
 		$this->assertEquals( 'NewChanger', AccountHandler::getUsernameForChangePasswordHash() );
 
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id`="'.$FirstID.'" OR `id`="'.$SecondID.'"');
 	}
 
 	/**
@@ -124,15 +122,12 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @covers AccountHandler::tryToActivateAccount
 	 */
 	public function testTryToActivateAccount() {
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
+		DB::getInstance()->exec('DELETE FROM `runalyze_account` WHERE `id` = 1');
 
 		DB::getInstance()->insert('account',
 			array('id', 'username', 'mail', 'activation_hash'),
 			array(1, 'test', 'test@mail.de', '8e1e915d08a163ddd4accc6d890dd557')
 		);
-
-		$_GET['activate'] = '';
-		$this->assertEquals( false, AccountHandler::tryToActivateAccount() );
 
 		$_GET['activate'] = '908a098ef7e6cb87de7a6';
 		$this->assertEquals( false, AccountHandler::tryToActivateAccount() );
@@ -143,8 +138,6 @@ class AccountHandlerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals( true, AccountHandler::tryToActivateAccount() );
 
 		$this->assertEquals( '', DB::getInstance()->query('SELECT activation_hash FROM `runalyze_account` WHERE `id`=1 LIMIT 1')->fetchColumn() );
-
-		DB::getInstance()->exec('TRUNCATE TABLE `runalyze_account`');
 	}
 
 	/**

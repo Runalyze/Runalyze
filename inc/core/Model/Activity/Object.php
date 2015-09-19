@@ -9,7 +9,6 @@ namespace Runalyze\Model\Activity;
 use Runalyze\Model;
 use Runalyze\Model\Activity\Partner;
 use Runalyze\Model\Activity\Splits;
-use Runalyze\Model\Activity\Clothes;
 
 use Runalyze\Data\Weather;
 
@@ -226,12 +225,6 @@ class Object extends Model\ObjectWithID {
 	const ROUTE = 'route';
 
 	/**
-	 * Key: clothes
-	 * @var string
-	 */
-	const CLOTHES = 'clothes';
-
-	/**
 	 * Key: splits
 	 * @var string
 	 */
@@ -255,11 +248,6 @@ class Object extends Model\ObjectWithID {
 	 */
 	const RUNNING_DRILLS = 'abc';
 
-	/**
-	 * Key: shoe id
-	 * @var string
-	 */
-	const SHOEID = 'shoeid';
 
 	/**
 	 * Key: notes
@@ -290,12 +278,6 @@ class Object extends Model\ObjectWithID {
 	 * @var \Runalyze\Data\Weather
 	 */
 	protected $Weather = null;
-
-	/**
-	 * Splits
-	 * @var \Runalyze\Model\Activity\Clothes\Object
-	 */
-	protected $Clothes = null;
 
 	/**
 	 * Splits
@@ -356,12 +338,10 @@ class Object extends Model\ObjectWithID {
 			self::WEATHERID,
 			self::ROUTEID,
 			self::ROUTE,
-			self::CLOTHES,
 			self::SPLITS,
 			self::COMMENT,
 			self::PARTNER,
 			self::RUNNING_DRILLS,
-			self::SHOEID,
 			self::NOTES,
 			self::CREATOR,
 			self::CREATOR_DETAILS,
@@ -387,7 +367,6 @@ class Object extends Model\ObjectWithID {
 			case self::TEMPERATURE:
 			case self::WEATHERID:
 			case self::PARTNER:
-			case self::CLOTHES:
 			case self::SPLITS:
 				return false;
 		}
@@ -471,14 +450,12 @@ class Object extends Model\ObjectWithID {
 			self::VERTICAL_OSCILLATION,
 			self::ROUTEID,
 			self::RUNNING_DRILLS,
-			self::SHOEID
 		));
 	}
 
 	protected function synchronizeObjects() {
 		$this->Data[self::TEMPERATURE] = $this->weather()->temperature()->value();
 		$this->Data[self::WEATHERID] = $this->weather()->condition()->id();
-		$this->Data[self::CLOTHES] = $this->clothes()->asString();
 		$this->Data[self::SPLITS] = $this->splits()->asString();
 		$this->Data[self::PARTNER] = $this->partner()->asString();
 	}
@@ -716,7 +693,7 @@ class Object extends Model\ObjectWithID {
 	}
         
 	/**
-	 * Clothes
+	 * Weather
 	 * @return \Runalyze\Data\Weather
 	 */
 	public function weather() {
@@ -728,18 +705,6 @@ class Object extends Model\ObjectWithID {
 		}
 
 		return $this->Weather;
-	}
-
-	/**
-	 * Clothes
-	 * @return \Runalyze\Model\Activity\Clothes\Object
-	 */
-	public function clothes() {
-		if (is_null($this->Clothes)) {
-			$this->Clothes = new Clothes\Object($this->Data[self::CLOTHES]);
-		}
-
-		return $this->Clothes;
 	}
 
 	/**
@@ -782,13 +747,6 @@ class Object extends Model\ObjectWithID {
 		return ($this->Data[self::RUNNING_DRILLS] == 1);
 	}
 
-	/**
-	 * Shoe ID
-	 * @return int
-	 */
-	public function shoeID() {
-		return $this->Data[self::SHOEID];
-	}
 
 	/**
 	 * Notes

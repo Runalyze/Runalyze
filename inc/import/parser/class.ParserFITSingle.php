@@ -81,7 +81,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 		$timestamp = $this->TrainingObject->getTimestamp() + max($this->TrainingObject->getTimeInSeconds(), $this->TrainingObject->getElapsedTime());
 		$creator = $this->TrainingObject->getCreator();
 
-		$this->TrainingObject = new TrainingObject(array());
+		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);
 		$this->TrainingObject->setTimestamp(PHP_INT_MAX);
 		$this->TrainingObject->setCreator($creator);
 

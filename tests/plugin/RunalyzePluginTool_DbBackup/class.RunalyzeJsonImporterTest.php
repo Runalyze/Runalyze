@@ -20,6 +20,11 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	protected $DB;
 
 	/**
+	 * @var int
+	 */
+	protected $AccountID;
+
+	/**
 	 * Sets up the fixture, for example, opens a network connection.
 	 * This method is called before a test is executed.
 	 */
@@ -28,6 +33,7 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->truncateTables();
 
 		$_POST = array();
+		$this->AccountID = 1;
 	}
 
 	/**
@@ -41,9 +47,9 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	private function truncateTables() {
-		$this->DB->exec('TRUNCATE TABLE `runalyze_training`');
-		$this->DB->exec('TRUNCATE TABLE `runalyze_user`');
-		$this->DB->exec('TRUNCATE TABLE `runalyze_shoe`');
+		$this->DB->exec('DELETE FROM `runalyze_training`');
+		$this->DB->exec('DELETE FROM `runalyze_equipment_type`');
+		$this->DB->exec('DELETE FROM `runalyze_user`');
 
 		$this->DB->exec('DELETE FROM `runalyze_conf` WHERE `key`="TEST_CONF"');
 		$this->DB->exec('DELETE FROM `runalyze_dataset` WHERE `name`="test-dataset"');
@@ -51,12 +57,8 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_one"');
 		$this->DB->exec('DELETE FROM `runalyze_plugin_conf` WHERE `config`="test_two"');
 
-		$this->DB->exec('DELETE FROM `runalyze_clothes` WHERE `name`="Test-Clothes"');
-		$this->DB->exec('DELETE FROM `runalyze_clothes` WHERE `name`="New-Clothes"');
-		$this->DB->exec('DELETE FROM `runalyze_sport` WHERE `name`="Testsport"');
-		$this->DB->exec('DELETE FROM `runalyze_sport` WHERE `name`="Newsport"');
-		$this->DB->exec('DELETE FROM `runalyze_type` WHERE `name`="Testtype"');
-		$this->DB->exec('DELETE FROM `runalyze_type` WHERE `name`="Newtype"');
+		$this->DB->exec('DELETE FROM `runalyze_sport`');
+		$this->DB->exec('DELETE FROM `runalyze_type`');
 	}
 
 	/**
@@ -76,13 +78,6 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		return 2;
 	}
 
-	private function fillDummyShoes() {
-		$this->DB->insert('shoe', array('name', 'time'), array("Testschuh", time() - DAY_IN_S) );
-		$this->DB->insert('shoe', array('name', 'time'), array("Zweitschuh", time()) );
-
-		return 2;
-	}
-
 	/**
 	 * Test deletes
 	 */
@@ -91,18 +86,15 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 
 		$numTrainings = $this->fillDummyTrainings();
 		$numUser = $this->fillDummyUser();
-		$numShoes = $this->fillDummyShoes();
 
 		$this->assertEquals($numTrainings, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
 		$this->assertEquals($numUser, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals($numShoes, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
 
 		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-empty.json.gz');
 		$Importer->importData();
 
 		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
 		$this->assertEquals($numUser, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals($numShoes, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
 	}
 
 	public function testDeleteBody() {
@@ -110,37 +102,15 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 
 		$numTrainings = $this->fillDummyTrainings();
 		$numUser = $this->fillDummyUser();
-		$numShoes = $this->fillDummyShoes();
 
 		$this->assertEquals($numTrainings, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
 		$this->assertEquals($numUser, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals($numShoes, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
 
 		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-empty.json.gz');
 		$Importer->importData();
 
 		$this->assertEquals($numTrainings, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
 		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals($numShoes, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
-	}
-
-	public function testDeleteShoes() {
-		$_POST['delete_shoes'] = true;
-
-		$numTrainings = $this->fillDummyTrainings();
-		$numUser = $this->fillDummyUser();
-		$numShoes = $this->fillDummyShoes();
-
-		$this->assertEquals($numTrainings, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
-		$this->assertEquals($numUser, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals($numShoes, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
-
-		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-empty.json.gz');
-		$Importer->importData();
-
-		$this->assertEquals($numTrainings, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training`')->fetchColumn());
-		$this->assertEquals($numUser, $this->DB->query('SELECT COUNT(*) FROM `runalyze_user`')->fetchColumn());
-		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_shoe`')->fetchColumn());
 	}
 
 	/**
@@ -182,7 +152,6 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 	 * Test inserts
 	 */
 	public function testInserts() {
-		$TestClothes = $this->DB->insert('runalyze_clothes', array('name'), array('Test-Clothes') );
 		$TestSport = $this->DB->insert('runalyze_sport', array('name'), array('Testsport') );
 		$TestType = $this->DB->insert('runalyze_type', array('name', 'sportid'), array('Testtype', $TestSport) );
 
@@ -191,20 +160,15 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$Importer->importData();
 
 		// Check nothing changed
-		$this->assertEquals($TestClothes, $this->DB->query('SELECT `id` FROM `runalyze_clothes` WHERE `name`="Test-Clothes"')->fetchColumn());
 		$this->assertEquals($TestSport, $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Testsport"')->fetchColumn());
 		$this->assertEquals($TestType, $this->DB->query('SELECT `id` FROM `runalyze_type` WHERE `name`="Testtype"')->fetchColumn());
 
 		// Check existing/new
-		$NewClothes = $this->DB->query('SELECT `id` FROM `runalyze_clothes` WHERE `name`="New-Clothes"')->fetchColumn();
 		$NewSport = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Newsport"')->fetchColumn();
 		$NewType = $this->DB->query('SELECT `id` FROM `runalyze_type` WHERE `name`="Newtype"')->fetchColumn();
-		$NewShoe = $this->DB->query('SELECT `id` FROM `runalyze_shoe` WHERE `name`="Testshoe"')->fetchColumn();
 
-		$this->assertNotEquals(0, $NewClothes);
 		$this->assertNotEquals(0, $NewSport);
 		$this->assertNotEquals(0, $NewType);
-		$this->assertNotEquals(0, $NewShoe);
 
 		// Check inserts
 		$this->assertEquals(array(
@@ -218,19 +182,51 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 			'time'		=> '1234567890',
 			'sportid'	=> $TestSport,
 			'typeid'	=> $TestType,
-			's'			=> '900.00',
-			'clothes'	=> $TestClothes.','.$NewClothes,
-			'shoeid'	=> '0'
-		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s`, `clothes`, `shoeid` FROM `runalyze_training` WHERE `comment`="UNITTEST-1" LIMIT 1')->fetch());
+			's'			=> '900.00'
+		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `comment`="UNITTEST-1" LIMIT 1')->fetch());
 
 		$this->assertEquals(array(
 			'time'		=> '1234567890',
 			'sportid'	=> $NewSport,
 			'typeid'	=> $NewType,
-			's'			=> '1500.00',
-			'clothes'	=> $NewClothes,
-			'shoeid'	=> $NewShoe
-		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s`, `clothes`, `shoeid` FROM `runalyze_training` WHERE `comment`="UNITTEST-2" LIMIT 1')->fetch());
+			's'			=> '1500.00'
+		), $this->DB->query('SELECT `time`, `sportid`, `typeid`, `s` FROM `runalyze_training` WHERE `comment`="UNITTEST-2" LIMIT 1')->fetch());
+	}
+
+	/**
+	 * Test with equipment
+	 */
+	public function testWithEquipment() {
+		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/with-equipment.json.gz', $this->AccountID);
+		$Importer->importData();
+
+		$SportA = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Sport A"')->fetchColumn();
+		$SportB = $this->DB->query('SELECT `id` FROM `runalyze_sport` WHERE `name`="Sport B"')->fetchColumn();
+
+		$TypeA = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `name`="Typ A"')->fetchColumn();
+		$TypeAB = $this->DB->query('SELECT `id` FROM `runalyze_equipment_type` WHERE `name`="Typ AB"')->fetchColumn();
+
+		$Activity1 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-1"')->fetchColumn();
+		$Activity2 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-2"')->fetchColumn();
+		$Activity3 = $this->DB->query('SELECT `id` FROM `runalyze_training` WHERE `comment`="UNITTEST-3"')->fetchColumn();
+
+		$EquipmentA1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="A1"')->fetchColumn();
+		$EquipmentAB1 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB1"')->fetchColumn();
+		$EquipmentAB2 = $this->DB->query('SELECT `id` FROM `runalyze_equipment` WHERE `name`="AB2"')->fetchColumn();
+
+		$this->assertEquals(array(
+			array($SportA, $TypeA),
+			array($SportA, $TypeAB),
+			array($SportB, $TypeAB)
+		), $this->DB->query('SELECT `sportid`, `equipment_typeid` FROM `runalyze_equipment_sport`')->fetchAll(PDO::FETCH_NUM));
+
+		$this->assertEquals($TypeA, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="A1"')->fetchColumn());
+		$this->assertEquals($TypeAB, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="AB1"')->fetchColumn());
+		$this->assertEquals($TypeAB, $this->DB->query('SELECT `typeid` FROM `runalyze_equipment` WHERE `name`="AB2"')->fetchColumn());
+
+		$this->assertEquals(array($EquipmentA1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity1)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($EquipmentA1, $EquipmentAB1, $EquipmentAB2), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity2)->fetchAll(PDO::FETCH_COLUMN));
+		$this->assertEquals(array($EquipmentAB1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity3)->fetchAll(PDO::FETCH_COLUMN));
 	}
 
 }
