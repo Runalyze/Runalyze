@@ -97,8 +97,7 @@ class ConfigTabTypes extends ConfigTab {
 						</span>
 					</td>
 					<td><input type="checkbox" name="type[quality_session]['.$id.']"'.($Data['quality_session'] ? ' checked' : '').'></td>
-					<td><input type="radio" name="racetype" value="'.$id.'"'.($id == $raceID ? ' checked' : '').'></td>
-					<td>'.$delete.'</td>
+					<td>'.($id == -1 ? '' : '<input type="radio" name="racetype" value="'.$id.'"'.($id == $raceID ? ' checked' : '').'>').'</td>					<td>'.$delete.'</td>
 				</tr>';
 		}
 
@@ -143,10 +142,11 @@ class ConfigTabTypes extends ConfigTab {
 		}
 
 		if (
-			isset($Types[$_POST['racetype']]) &&
+			isset($_POST['type']['name'][$_POST['racetype']]) && !isset($_POST['type']['delete'][$_POST['racetype']]) &&
 			$_POST['type']['sportid'][$_POST['racetype']] == Configuration::General()->runningSport() &&
 			$_POST['racetype'] != Configuration::General()->competitionType()
 		) {
+			// TODO: this needs a recalculation of vdot factor
 			Configuration::General()->updateCompetitionType($_POST['racetype']);
 			Ajax::setReloadFlag(Ajax::$RELOAD_PLUGINS);
 		}
