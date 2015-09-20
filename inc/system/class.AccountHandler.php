@@ -154,6 +154,17 @@ class AccountHandler {
 	static public function mailExists($mail) {
 		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
 	}
+        
+        /**
+         * Is the mail address valid?
+         * @param string $mail
+         * @return boolean 
+         */
+        static public function mailValid($mail) {
+            $validator = new \EmailValidator\Validator();
+            //isValid() could be used too, if server is connected to the internet
+            return(1 == $validator->isDisposable($mail));
+        }
 
 	/**
 	 * Compares a password (given as string) with hash from database
@@ -208,6 +219,9 @@ class AccountHandler {
 
 		if (self::mailExists($_POST['email']))
 			$errors[] = array('email' => __('This email address is already being used.'));
+                
+                if(self::mailValid($_POST['email']))
+                        $errors[] = array('email' => __('This email address is not allowed'));
 
 		if (false === filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 			$errors[] = array('email' => __('Please enter a valid email address.'));
