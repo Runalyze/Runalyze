@@ -94,10 +94,6 @@ class TrainingFormular extends StandardFormular {
 			}
 		}
 
-		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
-			$this->initDeleteFieldset();
-		}
-
 		$this->appendJavaScript();
 	}
 
