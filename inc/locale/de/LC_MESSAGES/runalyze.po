@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-17 14:51+0200\n"
-"PO-Revision-Date: 2015-09-16 20:32+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-09-17 15:44+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -649,12 +649,12 @@ msgstr "&oslash; Herzfrequenz"
 #: inc/training/view/section/class.SectionSwimLaneRow.php:36
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
 msgid "Stroke"
-msgstr ""
+msgstr "Zug"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
 #: inc/training/schemes/scheme.Training.php:707
 msgid "SWOLF"
-msgstr ""
+msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
 msgid "SWOLFcycles"
@@ -672,9 +672,8 @@ msgid "More details about your laps"
 msgstr "Mehr Informationen über deine Runden"
 
 #: inc/training/view/section/class.SectionHRV.php:18
-#, fuzzy
 msgid "Heart rate variability"
-msgstr "Pulsanzeige"
+msgstr "Herzfrequenzvariabilität"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:55
 #: inc/training/view/section/class.SectionCompositeRow.php:203
@@ -743,19 +742,19 @@ msgstr "Leistung"
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:134
 #: inc/training/view/section/table/class.TableSwimLane.php:43
 msgid "Strokes"
-msgstr ""
+msgstr "Züge"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:140
 #: inc/training/view/section/table/class.TableSwimLane.php:42
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
 #: inc/core/View/Activity/Plot/Series/Swolf.php:62
 msgid "Swolf"
-msgstr ""
+msgstr "Swolf"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:146
 #: inc/training/schemes/scheme.Training.php:717
 msgid "Pool length"
-msgstr ""
+msgstr "Poollänge"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:174
 msgid "Weather condition"
@@ -826,7 +825,7 @@ msgstr "Mehr zur VDOT Berechnung"
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
 msgid "Lanes"
-msgstr ""
+msgstr "Bahnen"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
@@ -867,13 +866,12 @@ msgstr "Bodenkontaktzeit"
 #: inc/training/view/section/class.SectionHRVRow.php:30
 #, fuzzy
 msgid "R-R intervals"
-msgstr "Intervall"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 #: inc/core/View/Activity/Plot/HRVPointcare.php:55
-#, fuzzy
 msgid "Pointcare plot"
-msgstr "Pacedigramm"
+msgstr ""
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
@@ -1146,9 +1144,8 @@ msgstr ""
 "Schritte mit einem Fuß) pro Minute"
 
 #: inc/training/schemes/scheme.Training.php:697
-#, fuzzy
 msgid "Total strokes"
-msgstr "Gesamte Trainingsdistanz:"
+msgstr "Gesamt Züge"
 
 #: inc/training/schemes/scheme.Shoe.php:28 inc/tpl/tpl.loginWindow.php:79
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -1171,7 +1168,6 @@ msgid "prev. distance"
 msgstr "bish. Leistung"
 
 #: inc/training/schemes/scheme.Shoe.php:65
-#, fuzzy
 msgid "weight"
 msgstr "Gewicht"
 
@@ -1974,9 +1970,8 @@ msgid "Douglas-Peucker"
 msgstr "Douglas-Peucker"
 
 #: inc/core/View/Activity/Plot/Series/HRV.php:96
-#, fuzzy
 msgid "R-R interval"
-msgstr "Intervall"
+msgstr "R-R Intervall"
 
 #: inc/core/View/Activity/Preview.php:131
 msgid "Heartrate data available"
@@ -2270,19 +2265,19 @@ msgstr "Schnee"
 
 #: inc/core/Data/Stroketype.php:98 inc/core/Data/Stroketype.php:119
 msgid "Freestyle"
-msgstr ""
+msgstr "Freistil"
 
 #: inc/core/Data/Stroketype.php:100
 msgid "Backstroke"
-msgstr ""
+msgstr "Rückenschwimmen"
 
 #: inc/core/Data/Stroketype.php:102
 msgid "Breaststroke"
-msgstr ""
+msgstr "Brustschwimmen"
 
 #: inc/core/Data/Stroketype.php:104 inc/core/Data/Stroketype.php:125
 msgid "Butterfly"
-msgstr ""
+msgstr "Schmetterling"
 
 #: inc/core/Data/Stroketype.php:106 inc/core/Data/Stroketype.php:127
 msgid "Drill"
@@ -2290,15 +2285,15 @@ msgstr ""
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:129
 msgid "Mixed"
-msgstr ""
+msgstr "Gemischt"
 
 #: inc/core/Data/Stroketype.php:121
 msgid "Back"
-msgstr ""
+msgstr "Rücken"
 
 #: inc/core/Data/Stroketype.php:123
 msgid "Breast"
-msgstr ""
+msgstr "Brust"
 
 #: inc/core/Data/Weather.php:72
 msgid "at"
@@ -3344,9 +3339,8 @@ msgid "Competition"
 msgstr "Wettkampf"
 
 #: inc/draw/class.PlotSumData.php:580
-#, fuzzy
 msgid "Training"
-msgstr "Trainingszeiten"
+msgstr "Training"
 
 #: inc/draw/class.PlotSumData.php:609
 msgid "avg:"
@@ -4188,18 +4182,14 @@ msgstr ""
 "gefunden."
 
 #: inc/import/parser/class.ParserKMLSingle.php:42
-#, fuzzy
 msgid "Given XML object does not contain any coordinates."
-msgstr ""
-"Das XML-Objekt enthält keine Strecke. &lt;trkseg&gt;-tag wurde nicht "
-"gefunden."
+msgstr "Das XML-Objekt enthält keine Koordinaten."
 
 #: inc/import/parser/class.ParserTCXSingleCourse.php:49
-#, fuzzy
 msgid ""
 "Given XML object is not from Garmin. &lt;Track&gt;-tag could not be located."
 msgstr ""
-"Das XML-Objekt ist nicht von Garmin. &lt;Id&gt;-tag wurde nicht gefunden."
+"Das XML-Objekt ist nicht von Garmin. &lt;Track&gt;-tag wurde nicht gefunden."
 
 #: inc/import/parser/class.ParserLOGBOOKSingle.php:39
 msgid ""
@@ -4507,7 +4497,6 @@ msgid "Share!"
 msgstr "Teilen!"
 
 #: inc/export/types/class.ExporterFacebook.php:40
-#, fuzzy
 msgid ""
 "You will be forwarded to Facebook, where you can define which text shall be "
 "displayed."
@@ -5933,7 +5922,7 @@ msgstr "Streckendaten"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:141
 msgid "Swimdata"
-msgstr ""
+msgstr "Schwimmdaten"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:38
@@ -5941,9 +5930,8 @@ msgid "Routes"
 msgstr "Strecken"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
-#, fuzzy
 msgid "HRV data"
-msgstr "Daten hinzufügen"
+msgstr "HRV Daten"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
@@ -6180,9 +6168,9 @@ msgid "Add a new entry"
 msgstr "Einen neuen Eintrag hinzufügen"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableAllWeeks.php:22
-#, fuzzy, php-format
+#, php-format
 msgid "All training weeks %s"
-msgstr "Alle Trainingswochen"
+msgstr "Alle Trainingswochen %s"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:46
 msgid "Monthly and weekly summaries for all sports"
@@ -6201,14 +6189,10 @@ msgid "All training weeks"
 msgstr "Alle Trainingswochen"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:108
-#, fuzzy
 msgid ""
 "This plugin shows summaries for all weeks, months or years to compare your "
 "overall training."
 msgstr ""
-"Diese Statistiken bieten eine Auswertung für jeden Monat oder jedes Jahr. "
-"Dabei werden die wichtigen Größen Dauer, Distanz, Tempo, VDOT und Trimp "
-"verglichen."
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:117
 msgid "Compare kilometers per week"
@@ -6243,14 +6227,12 @@ msgstr[0] "%d Tag laufen seit %s"
 msgstr[1] "%d Tage laufen seit %s"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableAllYears.php:59
-#, fuzzy
 msgid "/week"
-msgstr "Woche"
+msgstr "/Woche"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableAllYears.php:60
-#, fuzzy
 msgid "/month"
-msgstr "Monat"
+msgstr "/Monat"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTable10Weeks.php:20
 msgid "Last 10 training weeks"
@@ -6261,9 +6243,8 @@ msgid "No activities"
 msgstr "keine Trainings"
 
 #: plugin/RunalyzePluginStat_Statistiken/class.SummaryTableMonths.php:68
-#, fuzzy
 msgid "All months"
-msgstr "Alle Sportarten"
+msgstr "Alle Monate"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/class.RunalyzePluginTool_DatenbankCleanup.php:32
 msgid ""
@@ -7003,17 +6984,15 @@ msgstr "Letztes Jahr"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:37
 msgid "TSB"
-msgstr ""
+msgstr "TSB"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:40
-#, fuzzy
 msgid "Banister"
-msgstr "schneller"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:47
-#, fuzzy
 msgid "Performance model"
-msgstr "Wartungsmodus"
+msgstr ""
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:30
 msgid "Summary of your activities for each sport."
