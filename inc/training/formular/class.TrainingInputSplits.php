@@ -21,9 +21,9 @@ class TrainingInputSplits extends FormularField {
 	 */
 	public function __construct($name = '', $label = '', $value = '') {
 		if ($label == '')
-			parent::__construct('splits', __('Laps'), $name);
+			parent::__construct('splits', __('Laps').' '.$this->helpIcon(), $name);
 		else
-			parent::__construct($name, $label, $value);
+			parent::__construct($name, $label.' '.$this->helpIcon(), $value);
 
 		$this->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$this->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
@@ -61,7 +61,7 @@ class TrainingInputSplits extends FormularField {
 	 */
 	protected function getInnerDivForSplit($split = array('km' => '1.00', 'time' => '6:00', 'active' => true)) {
 		$Code  = $this->getDistanceInputCode($split['km']);
-		$Code .= '&nbsp;'.__('in').'&nbsp;';
+		$Code .= '&nbsp; '.__('in').'&nbsp;';
 		$Code .= $this->getTimeInputCode($split['time']);
 		$Code .= $this->getActiveInputCode($split['active']);
 		$Code .= $this->getSpanForLinks();
@@ -81,6 +81,13 @@ class TrainingInputSplits extends FormularField {
 	}
 
 	/**
+	 * @return string
+	 */
+	protected function helpIcon() {
+		return Ajax::tooltip('<i class="fa fa-fw fa-question-circle"></i>', __('Defining some laps as \'resting\' will hide them in the respective plot.'));
+	}
+
+	/**
 	 * Get input for time
 	 * @param string $time
 	 * @return FormularInput 
@@ -88,7 +95,7 @@ class TrainingInputSplits extends FormularField {
 	protected function getTimeInputCode($time) {
 		$FieldTime = new FormularInput('splits[time][]', '', $time);
 		$FieldTime->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
-		$FieldTime->setLabelToRight();
+		$FieldTime->hideLabel();
 
 		return $FieldTime->getCode();
 	}
@@ -102,6 +109,7 @@ class TrainingInputSplits extends FormularField {
 		$FieldDistance = new FormularInput('splits[km][]', '', $distance);
 		$FieldDistance->setUnit( FormularUnit::$KM );
 		$FieldDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
+		$FieldDistance->hideLabel();
 
 		return $FieldDistance->getCode();
 	}

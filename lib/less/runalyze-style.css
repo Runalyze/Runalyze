@@ -452,6 +452,9 @@ fieldset .validation-failed {
   background-color: #fdebd7;
   border-color: #cc0000;
 }
+ol.splits li {
+  padding-bottom: 3px;
+}
 body.overlay {
   overflow: hidden;
 }
