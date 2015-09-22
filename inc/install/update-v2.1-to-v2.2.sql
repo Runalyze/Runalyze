@@ -36,6 +36,10 @@ ALTER TABLE `runalyze_training` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_
 ALTER TABLE `runalyze_sport` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE `runalyze_account` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
+UPDATE `runalyze_plugin` SET `key`="RunalyzePluginPanel_Equipment" WHERE `key`="RunalyzePluginPanel_Schuhe";
+DELETE FROM `runalyze_plugin_conf` WHERE `config` = 'for_clothes' OR `config` = 'for_weather';
+DELETE FROM `runalyze_dataset` WHERE `name` = 'shoeid' OR `name` = 'clothes';
+
 --
 -- Tabellenstruktur für Tabelle `runalyze_equipment_type`
 --
@@ -118,6 +122,22 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
 ALTER TABLE `runalyze_equipment_type`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+
+DROP TRIGGER IF EXISTS `del_tr_train`;
+DELIMITER //
+CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
+ FOR EACH ROW BEGIN
+		DELETE FROM runalyze_conf WHERE accountid = OLD.id;
+		DELETE FROM runalyze_dataset WHERE accountid = OLD.id;
+		DELETE FROM runalyze_plugin WHERE accountid = OLD.id;
+		DELETE FROM runalyze_sport WHERE accountid = OLD.id;
+		DELETE FROM runalyze_training WHERE accountid = OLD.id;
+		DELETE FROM runalyze_type WHERE accountid = OLD.id;
+		DELETE FROM runalyze_user WHERE accountid = OLD.id;
+	END
+//
+DELIMITER ;
+
 --
 -- Constraints der exportierten Tabellen
 --
@@ -148,23 +168,3 @@ ADD CONSTRAINT `runalyze_equipment_sport_ibfk_2` FOREIGN KEY (`equipment_typeid`
 --
 ALTER TABLE `runalyze_equipment_type`
 ADD CONSTRAINT `runalyze_equipment_type_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-UPDATE `runalyze_plugin` SET `key`="RunalyzePluginPanel_Equipment" WHERE `key`="RunalyzePluginPanel_Schuhe";
-DELETE FROM `runalyze_plugin_conf` WHERE `config` = 'for_clothes' OR `config` = 'for_weather';
-DELETE FROM `runalyze_dataset` WHERE `name` = 'shoeid' OR `name` = 'clothes';
-
-DROP TRIGGER IF EXISTS `del_tr_train`;
-DELIMITER //
-CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
- FOR EACH ROW BEGIN
-		DELETE FROM runalyze_conf WHERE accountid = OLD.id;
-		DELETE FROM runalyze_dataset WHERE accountid = OLD.id;
-		DELETE FROM runalyze_plugin WHERE accountid = OLD.id;
-		DELETE FROM runalyze_sport WHERE accountid = OLD.id;
-		DELETE FROM runalyze_training WHERE accountid = OLD.id;
-		DELETE FROM runalyze_type WHERE accountid = OLD.id;
-		DELETE FROM runalyze_user WHERE accountid = OLD.id;
-	END
-//
-DELIMITER ;
-
