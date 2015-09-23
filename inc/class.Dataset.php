@@ -335,7 +335,7 @@ class Dataset {
 	 * Display short link for e.g. 'Gymnastik'
 	 */
 	public function displayShortLink() {
-		echo $this->Linker->linkWithSportIcon();
+		echo $this->Linker->linkWithSportIcon('atRight');
 	}
 
 	/**

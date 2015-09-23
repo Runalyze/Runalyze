@@ -92,10 +92,11 @@ class Icon {
 	/**
 	 * Get sport icon
 	 * @param string $gif filename.gif
-	 * @param string tooltip
+	 * @param string $tooltip optional
+	 * @param string $tooltipCssClass optional, e.g. 'atRight'
 	 * @return string
 	 */
-	public static function getSportIconForGif($gif, $tooltip = '') {
-		return Ajax::tooltip('<i class="'.$gif.'""></i>', $tooltip);
+	public static function getSportIconForGif($gif, $tooltip = '', $tooltipCssClass = '') {
+		return Ajax::tooltip('<i class="'.$gif.'""></i>', $tooltip, $tooltipCssClass);
 	}
 }

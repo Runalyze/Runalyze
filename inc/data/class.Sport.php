@@ -62,12 +62,13 @@ class Sport {
 	}
 	
 	/**
-	* Get icon for this sport
+	 * Get icon for this sport
 	 * @param string $tooltip optional parameter for tooltip
-	* @return string
-	*/
-	public function Icon($tooltip = '') {
-		return Icon::getSportIconForGif($this->data['img'], $tooltip);
+	 * @param string $tooltipCssClass optional, e.g. 'atRight'
+	 * @return string
+	 */
+	public function Icon($tooltip = '', $tooltipCssClass = '') {
+		return Icon::getSportIconForGif($this->data['img'], $tooltip, $tooltipCssClass);
 	}
 	
 	/**

@@ -113,15 +113,16 @@ class Linker {
 
 	/**
 	 * Get link with icon as text
+	 * @param string $tooltipCssClass optional, e.g. 'atRight'
 	 * @return string HTML-link to this training
 	 */
-	public function linkWithSportIcon() {
+	public function linkWithSportIcon($tooltipCssClass = '') {
 		$Sport = new Sport($this->Activity->sportid());
 		$Time = new Duration($this->Activity->duration());
 
 		$tooltip = $Sport->name().': '.$Time->string();
 
-		return $this->link( $Sport->Icon($tooltip) );
+		return $this->link( $Sport->Icon($tooltip, $tooltipCssClass) );
 	}
 
 	/**
