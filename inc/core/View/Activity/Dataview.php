@@ -7,6 +7,7 @@
 namespace Runalyze\View\Activity;
 
 use Runalyze\Configuration;
+use Runalyze\Data\Cadence;
 use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
@@ -27,8 +28,6 @@ use SearchLink;
 use Icon;
 use Ajax;
 use HTML;
-use Cadence;
-use CadenceRunning;
 use Helper;
 
 /**
@@ -76,7 +75,7 @@ class Dataview {
 
 	/**
 	 * Cadence
-	 * @var \Cadence
+	 * @var \Runalyze\Data\Cadence\AbstractCadence
 	 */
 	protected $Cadence = null;
 
@@ -248,15 +247,15 @@ class Dataview {
 
 	/**
 	 * Get cadence
-	 * @return \Cadence
+	 * @return \Runalyze\Data\Cadence\AbstractCadence
 	 */
 	public function cadence() {
 		return $this->object($this->Cadence, function($Activity){
 			if ($Activity->sportid() == Configuration::General()->runningSport()) {
-				return new CadenceRunning($Activity->cadence());
+				return new Cadence\Running($Activity->cadence());
 			}
 
-			return new Cadence($Activity->cadence());
+			return new Cadence\General($Activity->cadence());
 		});
 	}
 

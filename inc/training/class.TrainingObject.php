@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\Util\Time;
+use Runalyze\Data\Cadence;
 
 /**
  * DataObject for trainings
@@ -27,18 +28,6 @@ class TrainingObject extends DataObject {
 	private $Type = null;
 
 	/**
-	 * Shoe
-	 * @var \Shoe
-	 */
-	private $Shoe = null;
-
-	/**
-	 * Clothes
-	 * @var \Clothes
-	 */
-	private $Clothes = null;
-
-	/**
 	 * Weather
 	 * @var \Runalyze\Data\Weather
 	 */
@@ -52,7 +41,7 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Cadence
-	 * @var \Cadence
+	 * @var \Runalyze\Data\Cadence\AbstractCadence
 	 */
 	private $Cadence = null;
         
@@ -388,14 +377,14 @@ class TrainingObject extends DataObject {
 
 	/**
 	 * Cadence object
-	 * @return \Cadence
+	 * @return \Runalyze\Data\Cadence\AbstractCadence
 	 */
 	public function Cadence() {
 		if (is_null($this->Cadence)) {
 			if ($this->Sport()->isRunning())
-				$this->Cadence = new CadenceRunning($this->get('cadence'));
+				$this->Cadence = new Cadence\Running($this->get('cadence'));
 			else
-				$this->Cadence = new Cadence($this->get('cadence'));
+				$this->Cadence = new Cadence\General($this->get('cadence'));
 		}
 
 		return $this->Cadence;

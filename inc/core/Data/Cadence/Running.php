@@ -1,27 +1,28 @@
 <?php
 /**
- * This file contains class::CadenceRunning
- * @package Runalyze\Data
+ * This file contains class::Running
+ * @package Runalyze\Data\Cadence
  */
+
+namespace Runalyze\Data\Cadence;
+
 /**
- * Cadence for running
- * 
- * This class displays the cadence of a training.
- * Cadence is used here as "steps per minute" for e.g. running.
+ * Cadence for running in steps per minute
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data
+ * @package Runalyze\Data\Cadence
  */
-class CadenceRunning extends Cadence {
+class Running extends AbstractCadence {
 	/**
 	 * Factor for manipulating value
 	 * @var float
 	 */
-	protected $factor = 2;
+	protected $Factor = 2;
 
 	/**
 	 * Label
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	public function label() {
 		return __('Cadence (running)');
@@ -30,6 +31,7 @@ class CadenceRunning extends Cadence {
 	/**
 	 * Unit as string
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	public function unitAsString() {
 		return 'spm';
@@ -38,6 +40,7 @@ class CadenceRunning extends Cadence {
 	/**
 	 * Explanation for unit
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	protected function unitExplanation() {
 		return __('spm = steps per minute');
@@ -46,6 +49,7 @@ class CadenceRunning extends Cadence {
 	/**
 	 * Formular unit
 	 * @return enum
+	 * @codeCoverageIgnore
 	 */
 	public function formularUnit() {
 		return FormularUnit::$SPM;

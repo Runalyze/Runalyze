@@ -4,6 +4,7 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
+use Runalyze\Data\Cadence;
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
 
@@ -28,9 +29,9 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 	protected function setRightContent() {
 		if ($this->Context->trackdata()->has(Trackdata\Object::CADENCE)) {
 			if ($this->Context->activity()->sportid() == Runalyze\Configuration::General()->runningSport()) {
-				$Cadence = new CadenceRunning(0);
+				$Cadence = new Cadence\Running();
 			} else {
-				$Cadence = new Cadence(0);
+				$Cadence = new Cadence\General();
 			}
 
 			$Plot = new Activity\Plot\Cadence($this->Context);

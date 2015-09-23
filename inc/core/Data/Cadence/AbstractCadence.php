@@ -1,38 +1,36 @@
 <?php
 /**
- * This file contains class::Cadence
- * @package Runalyze\Data
+ * This file contains class::AbstractCadence
+ * @package Runalyze\Data\Cadence
  */
+
+namespace Runalyze\Data\Cadence;
+
 /**
- * Cadence
- * 
- * This class displays the cadence of a training.
- * Cadence is used as "rotations per minute" for e.g. cycling.
- * 
- * This class can be extended for other units.
+ * Abstract class for cadence
  * 
  * @author Hannes Christiansen
- * @package Runalyze\Data
+ * @package Runalyze\Data\Cadence
  */
-class Cadence {
+abstract class AbstractCadence {
 	/**
 	 * Value
 	 * @param int $value
 	 */
-	protected $value = 0;
+	protected $Value = 0;
 
 	/**
 	 * Factor for manipulating value
 	 * @var float
 	 */
-	protected $factor = 1;
+	protected $Factor = 1;
 
 	/**
 	 * Constructor
 	 * @param int $value
 	 */
-	public function __construct($value) {
-		$this->value = round($this->factor*$value);
+	public function __construct($value = 0) {
+		$this->Value = round($this->Factor*$value);
 	}
 
 	/**
@@ -40,28 +38,31 @@ class Cadence {
 	 * @return int
 	 */
 	final public function value() {
-		return $this->value;
+		return $this->Value;
 	}
 
 	/**
 	 * As string
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	final public function asString() {
-		return $this->value.'&nbsp;'.$this->unitAsString();
+		return $this->Value.'&nbsp;'.$this->unitAsString();
 	}
 
 	/**
 	 * As string with tooltip
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	final public function asStringWithTooltip() {
-		return Ajax::tooltip($this->asString(), $this->value.' '.$this->unitExplanation());
+		return Ajax::tooltip($this->asString(), $this->Value.' '.$this->unitExplanation());
 	}
 
 	/**
 	 * As string with tooltip
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
 	final public function unitAsStringWithTooltip() {
 		return Ajax::tooltip($this->unitAsString(), $this->unitExplanation());
@@ -81,38 +82,34 @@ class Cadence {
 	 * @return float
 	 */
 	final public function useFactor($value) {
-		return $this->factor*$value;
+		return $this->Factor*$value;
 	}
 
 	/**
 	 * Label
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
-	public function label() {
-		return __('Cadence');
-	}
+	abstract public function label();
 
 	/**
 	 * Unit as string
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
-	public function unitAsString() {
-		return 'rpm';
-	}
+	abstract public function unitAsString();
 
 	/**
 	 * Explanation for unit
 	 * @return string
+	 * @codeCoverageIgnore
 	 */
-	protected function unitExplanation() {
-		return __('rpm = rotations per minute');
-	}
+	abstract protected function unitExplanation();
 
 	/**
 	 * Formular unit
 	 * @return enum
+	 * @codeCoverageIgnore
 	 */
-	public function formularUnit() {
-		return FormularUnit::$RPM;
-	}
+	abstract public function formularUnit();
 }

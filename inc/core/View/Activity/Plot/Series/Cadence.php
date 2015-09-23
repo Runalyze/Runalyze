@@ -6,12 +6,11 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
+use Runalyze\Data;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
 use Runalyze\Configuration;
 
-use \Cadence as CadenceUnit;
-use \CadenceRunning as CadenceUnitRunning;
 use \Plot;
 
 /**
@@ -37,7 +36,7 @@ class Cadence extends ActivityPointSeries {
 	 */
 	public function __construct(Activity\Context $context) {
 		$this->isRunning = ($context->activity()->sportid() == Configuration::General()->runningSport());
-		$cadence = $this->isRunning ? new CadenceUnitRunning(0) : new CadenceUnit(0);
+		$cadence = $this->isRunning ? new Data\Cadence\Running() : new Data\Cadence\General(0);
 
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::CADENCE);
@@ -63,18 +62,18 @@ class Cadence extends ActivityPointSeries {
 
 	/**
 	 * Init strings
-	 * @param \Cadence $cadence
+	 * @param \Runalyze\Data\Cadence\AbstractCadence $cadence
 	 */
-	protected function initStrings(CadenceUnit $cadence) {
+	protected function initStrings(Data\Cadence\AbstractCadence $cadence) {
 		$this->Label = $cadence->label();
 		$this->UnitString = $cadence->unitAsString();
 	}
 
 	/**
 	 * Manipulate data
-	 * @param \Cadence $cadence
+	 * @param \Runalyze\Data\Cadence\AbstractCadence $cadence
 	 */
-	protected function manipulateData(CadenceUnit $cadence) {
+	protected function manipulateData(Data\Cadence\AbstractCadence $cadence) {
 		$cadence->manipulateArray($this->Data);
 	}
 
