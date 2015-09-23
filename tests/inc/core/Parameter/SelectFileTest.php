@@ -58,4 +58,16 @@ class ParameterSelectFileTest extends \PHPUnit_Framework_TestCase {
 		$this->object->set('/bin/shell');
 	}
 
+	public function testUppercaseVariantsAllowed() {
+		$this->object->set('another/path/to/file.PNG');
+	}
+
+	/**
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testUppercaseVariantsDisallowed() {
+		$this->object->allowUppercaseVariants(false);
+		$this->object->set('another/path/to/file.PNG');
+	}
+
 }
