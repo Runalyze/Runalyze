@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-17 14:51+0200\n"
-"PO-Revision-Date: 2015-09-17 15:44+0200\n"
+"PO-Revision-Date: 2015-09-24 07:58+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
@@ -658,7 +658,7 @@ msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
 msgid "SWOLFcycles"
-msgstr ""
+msgstr "SWOLFcycles"
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
