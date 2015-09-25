@@ -174,7 +174,6 @@ class AdminView {
 		$Fieldset->addField( new FormularCheckbox('RUNALYZE_DEBUG', __('Debug mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CANT_LOGIN', __('Maintenance mode')) );
 		$Fieldset->addField( new FormularCheckbox('USER_CAN_REGISTER', __('Users can register')) );
-		$Fieldset->addField( new FormularCheckbox('USER_MUST_LOGIN', __('Users have to login')) );
 		$Fieldset->addField( new FormularInput('GARMIN_API_KEY', Ajax::tooltip(__('Garmin API-key'), __('Needed for any online-version of the Garmin Communicator<br>see http://developer.garmin.com/web-device/garmin-communicator-plugin/get-your-site-key/') )) );
 		$Fieldset->addField( new FormularInput('MAIL_SENDER', __('Sender e-mail')) );
 		$Fieldset->addField( new FormularInput('MAIL_NAME', __('Sender e-mail name')) );
@@ -501,7 +500,6 @@ class AdminView {
 			'RUNALYZE_DEBUG',
 			'USER_CANT_LOGIN',
 			'USER_CAN_REGISTER',
-			'USER_MUST_LOGIN',
 			'GARMIN_API_KEY',
 			'MAIL_SENDER',
 			'MAIL_NAME',

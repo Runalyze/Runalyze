@@ -63,7 +63,7 @@ class RunalyzeJsonImporter {
 	public function __construct($fileName, $accountID = false) {
 		$this->Reader = new BigFileReaderGZip($fileName);
 		$this->DB = DB::getInstance();
-		$this->AccountID = USER_MUST_LOGIN ? SessionAccountHandler::getId() : 0;
+		$this->AccountID = SessionAccountHandler::getId();
 		$this->Results = new RunalyzeJsonImporterResults();
 
 		if ($accountID !== false) {

@@ -167,16 +167,6 @@ foreach ($Steps as $i => $Name) {
 
 	<p class="text">
 		<label>
-			<strong><?php _e('Registrations'); ?></strong>
-			<input type="checkbox" name="login" <?php if (isset($_POST['login']) && $_POST['login']) echo 'checked' ?>>
-			<small>
-				<?php _e('Users have to register and login'); ?>
-			</small>
-		</label>
-	</p>
-
-	<p class="text">
-		<label>
 			<strong><?php _e('Garmin API key'); ?>*</strong>
 			<input type="text" name="garminkey" value="<?php echo (isset($_POST['garminkey']) ? $_POST['garminkey'] : ''); ?>">
 			<?php if ($_SERVER['SERVER_NAME'] == 'localhost'): ?>
@@ -211,7 +201,6 @@ foreach ($Steps as $i => $Name) {
 		<em>'{config::password}'</em> &raquo; <em>'<?php echo $_POST['password']; ?>'</em><br>
 		<em>'{config::prefix}'</em> &raquo; <em>'<?php echo $_POST['prefix']; ?>'</em><br>
 		<em>{config::debug}</em> &raquo; <em><?php echo isset($_POST['debug']) ? 'true' : 'false'; ?></em><br>
-		<em>{config::login}</em> &raquo; <em><?php echo isset($_POST['login']) ? 'true' : 'false'; ?><br>
 		<em>{config::garminkey}</em> &raquo; <em><?php echo $_POST['garminkey']; ?><br>
 	</p>
 	<?php else: ?>

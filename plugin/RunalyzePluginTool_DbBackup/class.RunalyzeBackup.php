@@ -34,7 +34,7 @@ abstract class RunalyzeBackup {
 	public function __construct($fileName) {
 		$this->Writer = new BigFileWriterGZip($fileName);
 		$this->DB = DB::getInstance();
-		$this->AccountID = USER_MUST_LOGIN ? SessionAccountHandler::getId() : 0;
+		$this->AccountID = SessionAccountHandler::getId();
 	}
 
 	/**
