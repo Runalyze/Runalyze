@@ -22,6 +22,11 @@ class InstallerUpdate extends Installer {
 	protected $Errors = array();
 
 	/**
+	 * @var array
+	 */
+	protected $FurtherInstructions = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -39,17 +44,25 @@ class InstallerUpdate extends Installer {
 	 */
 	protected function initPossibleUpdates() {
 		$this->PossibleUpdates[] = array(
+			'file'	=> 'update-v2.1-to-v2.2.sql',
+			'from'	=> 'v2.1',
+			'to'	=> 'v2.2',
+			'date'	=> '2015/07',
+			'instruction'	=> $this->instructionToRunScript('refactor-equipment.php')
+		);
+		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v2.0-to-v2.1.sql',
 			'from'	=> 'v2.0',
 			'to'	=> 'v2.1',
-			'date'	=> '2015/05'
+			'date'	=> '2015/02'
 		);
 		// v2.0 (von 2015/02)
 		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v1.5-to-v2.0.sql',
 			'from'	=> 'v1.5',
 			'to'	=> 'v2.0',
-			'date'	=> '2014/01'
+			'date'	=> '2014/01',
+			'instruction'	=> $this->instructionToRunScript('refactor-db.php')
 		);
 		$this->PossibleUpdates[] = array(
 			'file'	=> 'update-v2.0alpha-to-v2.0beta.sql',
@@ -105,13 +118,45 @@ class InstallerUpdate extends Installer {
 	}
 
 	/**
+	 * Get message to run specific script
+	 * @param string $script relative to /runalyze/
+	 * @return string
+	 */
+	protected function instructionToRunScript($script) {
+		return sprintf(
+			__('You are required to run the script %s. Please set your database connection within that file first and then run it via cli or in your browser.'),
+			'<a href="'.$script.'">'.$script.'</a>'
+		);
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function hasErrors() {
+		return (!empty($this->Errors) && (count($this->Errors) > 1 || strlen(trim($this->Errors[0])) > 3));
+	}
+
+	/**
+	 * @return boolean
+	 */
+	protected function triesToUpdate() {
+		return isset($_POST['importFile']) && isset($this->PossibleUpdates[$_POST['importFile']]);
+	}
+
+	/**
 	 * Import selected file
 	 */
 	protected function importUpdateFile() {
 		$this->connectToDatabase($this->mysqlConfig[3], $this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2]);
 
-		if (isset($_POST['importFile']) && strlen($_POST['importFile']) > 4)
-			$this->Errors = $this->importSqlFile('inc/install/'.$_POST['importFile']);
+		if ($this->triesToUpdate()) {
+			$update = $this->PossibleUpdates[$_POST['importFile']];
+			$this->Errors = $this->importSqlFile('inc/install/'.$update['file']);
+
+			if (isset($update['instruction'])) {
+				$this->FurtherInstructions[] = $update['instruction'];
+			}
+		}
 	}
 
 	/**
