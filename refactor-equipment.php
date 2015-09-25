@@ -14,6 +14,7 @@ define('PREFIX', 'runalyze_');
 define('LIMIT', 100); // Limit number of accounts to refactor per request
 define('CLI', false); // Set to true if running from command line
 define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet and key_buffer_size for mysql
+define('CHECK_INNODB', true); // Set to false if you don't want or can't use InnoDB as your storage engine
 
 // Uncomment these lines to unset time/memory limits
 #@ini_set('memory_limit', '-1');
@@ -54,6 +55,20 @@ if (empty($database) && empty($hostname)) {
 }
 
 /**
+ * Check database engine
+ */
+if (CHECK_INNODB) {
+	$tableStatus = $PDO->query('SHOW TABLE STATUS WHERE Name = "'.PREFIX.'training"')->fetch();
+
+	if (isset($tableStatus['Engine']) && $tableStatus['Engine'] != 'InnoDB') {
+		echo 'Your tables are still using "'.$tableStatus['Engine'].'" as storage engine.'.NL;
+		echo 'We highly recommend using "InnoDB" as storage engine for RUNALYZE since v2.0.'.NL.NL;
+		echo 'Please update your tables (inc/install/innodb.sql may help) or remove this check.'.NL;
+		exit;
+	}
+}
+
+/**
  * Check version
  */
 $IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"');
@@ -80,8 +95,8 @@ if (!$HasTableEq OR !$HasTableEqT OR !$HasTableEqS OR !$HasTableEqAE) {
 }
 
 if ($countAccount == 0) {
-	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false". ';
-	echo 'Runalyze v2.2 requires every user to have an account. ';
+	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false".'.NL;
+	echo 'Runalyze v2.2 requires every user to have an account.'.NL.NL;
 	echo 'Please register an account and update the `accountid` in all relevant tables.'.NL;
 	exit;
 }
