@@ -317,7 +317,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_training` (
   `splits` mediumtext,
   `comment` text,
   `partner` text,
-  `abc` smallint(1) NOT NULL DEFAULT '0',
   `notes` text,
   `accountid` int(11) NOT NULL,
   `creator` varchar(100) NOT NULL DEFAULT '',

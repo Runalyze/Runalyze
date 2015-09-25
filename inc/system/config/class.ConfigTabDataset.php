@@ -203,7 +203,6 @@ class ConfigTabDataset extends ConfigTab {
 			'splits'	=> '5|26:51-5|24:36',
 			'comment'	=> str_replace(' ', '&nbsp;', __('Test activity')),
 			'partner'	=> 'Peter',
-			'abc'		=> 1,
 			'notes'		=> str_replace(' ', '&nbsp;', __('Great run!')),
 			'accountid'	=> SessionAccountHandler::getId(),
 			'creator'	=> '',

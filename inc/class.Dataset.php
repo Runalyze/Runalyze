@@ -561,10 +561,6 @@ class Dataset {
 			case 'partner':
 				return $this->cut( $this->Activity->partner()->asString() );
 
-			case 'abc':
-				return $this->Dataview->abcIcon();
-
-
 			case 'vdoticon':
 				if (!is_null($this->Sport) && $this->Sport->id() == Configuration::General()->runningSport()) {
 					return $this->Dataview->vdotIcon();

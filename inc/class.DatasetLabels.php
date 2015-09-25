@@ -39,7 +39,6 @@ class DatasetLabels {
 			'vdot'			=> __('VDOT'),
 			'vdoticon'			=> __('VDOT icon'),
 			'partner'		=> __('Training partner'),
-			'abc'			=> __('Running drills'),
 			'cadence'		=> __('Cadence'),
 			'stride_length'	=> __('Stride length'),
 			'groundcontact'	=> __('Ground contact time'),

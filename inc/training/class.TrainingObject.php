@@ -849,12 +849,6 @@ class TrainingObject extends DataObject {
 	public function getPartner() { return $this->get('partner'); }
 
 	/**
-	 * Was with running abc?
-	 * @return bool True if this training was with 'running abc'
-	 */
-	public function wasWithABC() { return $this->get('abc') == 1; }
-
-	/**
 	 * Set notes
 	 * @param string $notes string
 	 */

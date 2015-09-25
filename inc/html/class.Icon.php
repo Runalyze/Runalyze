@@ -16,7 +16,6 @@ class Icon {
 	static public $EDIT             = '<i class="fa fa-fw fa-pencil"></i>';
 	static public $BACK             = '<i class="fa fa-fw fa-chevron-left"></i>';
 	static public $NEXT             = '<i class="fa fa-fw fa-chevron-right"></i>';
-	static public $ABC              = '<small>ABC</small>';
 	static public $ATTACH           = '<i class="fa fa-fw fa-chain"></i>';
 	static public $CLOCK            = '<i class="fa fa-fw fa-clock-o"></i>';
 	static public $CLOCK_ORANGE     = '<i class="fa fa-fw fa-clock-o"></i>';

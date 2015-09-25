@@ -111,8 +111,7 @@ class SearchResults {
 			'vertical_oscillation',
 
 			'use_vdot',
-			'is_public',
-			'abc'
+			'is_public'
 		);
 
 		// Some additional keys

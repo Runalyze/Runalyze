@@ -161,7 +161,6 @@ class SearchFormular extends Formular {
 		$this->addBooleanField('use_vdot', __('Uses VDOT'));
 		$this->addConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
-		$this->addBooleanField('abc', __('Running drills'));
 		$this->addConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
 	}
 

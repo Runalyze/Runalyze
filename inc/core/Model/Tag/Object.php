@@ -42,32 +42,6 @@ class Object extends Model\ObjectWithID {
 	}
 
 	/**
-	 * Can be null?
-	 * @param string $key
-	 * @return boolean
-	 */
-	protected function canBeNull($key) {
-		return false;
-	}
-
-	/**
-	 * Synchronize
-	 */
-	public function synchronize() {
-		parent::synchronize();
-
-		$this->ensureAllNumericValues();
-	}
-
-	/**
-	 * Ensure that numeric fields get numeric values
-	 */
-	protected function ensureAllNumericValues() {
-		$this->ensureNumericValue(array(
-		));
-	}
-
-	/**
 	 * Tag
 	 * @return string
 	 */
