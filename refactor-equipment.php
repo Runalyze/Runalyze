@@ -97,7 +97,7 @@ if (!$HasTableEq OR !$HasTableEqT OR !$HasTableEqS OR !$HasTableEqAE) {
 if ($countAccount == 0) {
 	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false".'.NL;
 	echo 'Runalyze v2.2 requires every user to have an account.'.NL.NL;
-	echo 'Please register an account and update the `accountid` in all relevant tables.'.NL;
+	echo 'Please register an account and update the `accountid` in all relevant tables (inc/install/switch-accountid-to-1.sql may help).'.NL;
 	exit;
 }
 
