@@ -33,6 +33,20 @@ class Distance {
 	 * @var string
 	 */
 	static public $THOUSANDS_POINT = '.';
+        
+        /**
+         * Default mile multiplier
+         * @var int 
+        */
+        static public $MILE_MULTIPLIER = 0.621371192;
+        
+        
+        /**
+         * Default yard multiplier
+         * @var int 
+        */
+        static public $YARD_MULTIPLIER = 1093.6133;
+        
 
 	/**
 	 * Default number of decimals
@@ -85,7 +99,7 @@ class Distance {
 	public function kilometer() {
 		return $this->Distance;
 	}
-
+        
 	/**
 	 * Meter
 	 * @return int [m]
@@ -93,7 +107,23 @@ class Distance {
 	public function meter() {
 		return round($this->Distance*1000);
 	}
-
+        
+        /**
+	 * Miles
+	 * @return float [miles]
+	 */
+	public function miles() {
+		return $this->multiply(self::$MILE_MULTIPLIER);
+	}
+        
+        /*
+         * Yards
+         * @return int [yards]
+         */
+        public function yard() {
+            return $this->multiply(self::$YARD_MULTIPLIER);
+        }
+        
 	/**
 	 * Format distance as string
 	 * @param mixed $format [optional] set as true for display as meter, can be 'auto'
@@ -138,6 +168,29 @@ class Distance {
 
 		return number_format($this->Distance, $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;km' : '');
 	}
+        
+	/**
+	 * String: as yard
+	 * @param boolean $withUnit [optional]
+	 * @return string with unit
+	 */
+	public function stringYard($withUnit = true) {
+		return number_format($this->multiply(self::$YARD_MULTIPLIER), 0, '', '.').($withUnit ? 'y' : '');
+	}
+        
+	/**
+	 * String: as mile
+	 * @param boolean $withUnit [optional]
+	 * @return string with unit
+	 */
+	public function stringMile($withUnit = true) {
+		if ($decimals === false) {
+			$decimals = self::$DEFAULT_DECIMALS;
+		}
+
+		return number_format($this->multiply(self::$MILE_MULTIPLIER ), $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;km' : '');
+	}
+
 
 	/**
 	 * Multiply distance
