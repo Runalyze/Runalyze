@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-26 20:28+0200\n"
-"PO-Revision-Date: 2015-09-19 18:06+0200\n"
+"PO-Revision-Date: 2015-09-26 23:11+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -425,9 +425,8 @@ msgid "Equipment"
 msgstr "Sprzęt"
 
 #: inc/training/search/class.SearchFormular.php:143
-#, fuzzy
 msgid "Choose equipment"
-msgstr "Twój sprzęt"
+msgstr "Wybierz sprzęt"
 
 #: inc/training/search/class.SearchFormular.php:149
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -1055,6 +1054,7 @@ msgstr "w"
 #: inc/training/formular/class.TrainingInputSplits.php:87
 msgid "Defining some laps as 'resting' will hide them in the respective plot."
 msgstr ""
+"Określenie okrążeń jako \"odpoczynek\" usunie je z odpowiedniego wykresu."
 
 #: inc/training/formular/class.TrainingInputSplits.php:124
 #: inc/data/class.Splits.php:160
@@ -1914,7 +1914,7 @@ msgstr "1/2 połowa"
 
 #: inc/core/View/Activity/Dataview.php:354 inc/class.DatasetLabels.php:51
 msgid "HRV score"
-msgstr ""
+msgstr "Wynik HRV"
 
 #: inc/core/View/Activity/Plot/ActivityPlot.php:82
 msgid "No plot available."
@@ -2829,7 +2829,7 @@ msgstr "Konto"
 
 #: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:32
 msgid "Update RUNALYZE"
-msgstr ""
+msgstr "Aktualizuj RUNALYZE"
 
 #: inc/tpl/tpl.InstallerUpdate.php:7
 msgid ""
@@ -2838,12 +2838,18 @@ msgid ""
 "every update. If you have skipped a version, you need to apply the "
 "respective updates in the correct order."
 msgstr ""
+"Po pobraniu najnowszej wersji RUNALYZE musisz zaktualizować bazę danych, "
+"ponieważ wraz z rozwojem aplikacji zmienia się jej struktura. Jeśli "
+"przeskakujesz wersję, musisz zaaplikować aktualizacje w odpowiedniej "
+"kolejności."
 
 #: inc/tpl/tpl.InstallerUpdate.php:15
 msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
 msgstr ""
+"Zalecamy wykonanie backupu istniejącej bazy danych przez każdą aktualizacją "
+"RUNALYZE."
 
 #: inc/tpl/tpl.InstallerUpdate.php:24
 msgid "----- please choose"
@@ -2855,13 +2861,12 @@ msgid "Update to %s (from %s, %s)"
 msgstr "Aktualizuj do %s (z %s, %s)"
 
 #: inc/tpl/tpl.InstallerUpdate.php:47
-#, fuzzy
 msgid "Your database has been updated successfully."
-msgstr "Hasło zostało zmienione"
+msgstr "Baza danych została zaktualizowana."
 
 #: inc/tpl/tpl.InstallerUpdate.php:56
 msgid "Start RUNALYZE"
-msgstr ""
+msgstr "Uruchom RUNALYZE"
 
 #: inc/tpl/tpl.Frontend.header.php:29 inc/tpl/tpl.Frontend.header.php:30
 msgid "Logout"
@@ -3342,12 +3347,11 @@ msgstr "Intensywność JD"
 #: inc/class.DatasetLabels.php:49 inc/class.DatasetLabels.php:50
 #: inc/class.DatasetLabels.php:51
 msgid "(by file)"
-msgstr ""
+msgstr "(wg pliku)"
 
 #: inc/class.DatasetLabels.php:50
-#, fuzzy
 msgid "Recovery time"
-msgstr "wg czasu"
+msgstr "Czas odpoczynku"
 
 #: inc/system/class.SharedLinker.php:84
 msgid "Public list"
@@ -3478,9 +3482,8 @@ msgid "This email address is already being used."
 msgstr "Ten adres jest już zajęty."
 
 #: inc/system/class.AccountHandler.php:224
-#, fuzzy
 msgid "This email address is not allowed"
-msgstr "Ten adres jest już zajęty."
+msgstr "Ten adres jest niedozwolony"
 
 #: inc/system/class.AccountHandler.php:227
 msgid "Please enter a valid email address."
@@ -3998,9 +4001,8 @@ msgid "A sport can only be deleted if no references exist."
 msgstr "Sport można usunąć tylko gdy nie jest z niczym powiązany."
 
 #: inc/system/config/class.ConfigTabEquipment.php:28
-#, fuzzy
 msgid "Your equipment categories"
-msgstr "Twój sprzęt"
+msgstr "Kategorie sprzętu"
 
 #: inc/system/config/class.ConfigTabEquipment.php:31
 msgid ""
@@ -4009,6 +4011,9 @@ msgid ""
 "one activity. In addition, you can specify to which sports a category "
 "belongs."
 msgstr ""
+"Sprzęt pogrupowany jest w kategorie. Dla każdej kategorii można określić czy "
+"trening może mieć przypisany jeden, czy wiele elementów z danej kategorii. "
+"Dodatkowo możesz określić z jakim sportem powiązana jest dana kategoria."
 
 #: inc/system/config/class.ConfigTabEquipment.php:36
 #: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:14
@@ -4016,43 +4021,37 @@ msgid "Your equipment"
 msgstr "Twój sprzęt"
 
 #: inc/system/config/class.ConfigTabEquipment.php:53
-#, fuzzy
 msgid "max. km"
-msgstr "max. bpm"
+msgstr "max. km"
 
 #: inc/system/config/class.ConfigTabEquipment.php:54
-#, fuzzy
 msgid "max. Time"
-msgstr "max. bpm"
+msgstr "max. Czas"
 
 #: inc/system/config/class.ConfigTabEquipment.php:56
-#, fuzzy
 msgid ""
 "A equipment type can only be deleted if no references (equipment) exist."
-msgstr "Typ można usunąć tylko gdy nie jest z niczym powiązany."
+msgstr "Sprzęt można usunąć tylko gdy nie jest z niczym powiązany."
 
 #: inc/system/config/class.ConfigTabEquipment.php:75
 msgid "Single choice"
-msgstr ""
+msgstr "Pojedynczy wybór"
 
 #: inc/system/config/class.ConfigTabEquipment.php:76
 msgid "Multiple choice"
-msgstr ""
+msgstr "Wielokrotny wybór"
 
 #: inc/system/config/class.ConfigTabEquipment.php:110
-#, fuzzy
 msgid "Start of use"
-msgstr "Uruchom Runalyze"
+msgstr "Początek użytkowania"
 
 #: inc/system/config/class.ConfigTabEquipment.php:111
-#, fuzzy
 msgid "End of use"
-msgstr "W użyciu"
+msgstr "Koniec użytkowania"
 
 #: inc/system/config/class.ConfigTabEquipment.php:113
-#, fuzzy
 msgid "An equipment can only be deleted if no references exist."
-msgstr "Typ można usunąć tylko gdy nie jest z niczym powiązany."
+msgstr "Sprzęt można usunąć tylko gdy nie jest z niczym powiązany."
 
 #: inc/data/class.TypeFactory.php:124
 msgid "No types available"
@@ -4077,6 +4076,8 @@ msgid ""
 "You are required to run the script %s. Please set your database connection "
 "within that file first and then run it via cli or in your browser."
 msgstr ""
+"Konieczne jest wykonanie skryptu %s. Ustaw połączenie do bazy danych "
+"wewnątrz tego pliku i uruchom go przez CLI lub z przeglądarki."
 
 #: inc/import/class.ImporterWindowTabFormular.php:40
 msgid "Form"
@@ -5042,16 +5043,14 @@ msgid "No data available."
 msgstr "Brak danych."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:36
-#, fuzzy
 msgid "Statistics about weather conditions and temperatures."
-msgstr "Statystyki pogody, temperatury, ubrania."
+msgstr "Statystyki pogody i temperatury."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:43
 msgid "There is no bad weather, there is only bad clothing."
 msgstr "Nie ma brzydkiej pogody. Jest tylko złe ubranie."
 
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:44
-#, fuzzy
 msgid ""
 "Are you a wimp or a tough runner? Have a look at these statistics about the "
 "weather conditions."
@@ -5824,19 +5823,16 @@ msgid "HRV data"
 msgstr "Dane HRV"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:143
-#, fuzzy
 msgid "Equipment types"
-msgstr "Sprzęt"
+msgstr "Typy sprzętu"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:144
-#, fuzzy
 msgid "Relation: equipment types to sports"
-msgstr "Przelicz statystyki sprzętu"
+msgstr "Powiązanie: typy sprzętu do sportów"
 
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:145
-#, fuzzy
 msgid "Relation: equipment to activities"
-msgstr "Przelicz statystyki sprzętu"
+msgstr "Powiązanie: sprzęt do treningów"
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
@@ -6095,39 +6091,33 @@ msgid "All months"
 msgstr "Wszystkie miesiące"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:44
-#, fuzzy
 msgid "Display statistics for your equipment."
-msgstr "Wyświetl statystyki dla butów."
+msgstr "Wyświetl statystyki sprzętu."
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:58
 msgid "Equipment type to display"
-msgstr ""
+msgstr "Typ sprzętu do wyświetlenia"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:72
-#, fuzzy
 msgid "Add/Edit equipment"
-msgstr "Sprzęt"
+msgstr "Dodaj/edytuj sprzęt"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:73
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:215
-#, fuzzy
 msgid "Show all equipment"
-msgstr "Twój sprzęt"
+msgstr "Pokaż cały sprzęt"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:87
-#, fuzzy
 msgid "Please choose an equipment type in the plugin configuration."
-msgstr "Musisz włączyć statystyki w konfiguracji."
+msgstr "Wybierz typ sprzętu w konfiguracji wtyczki."
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:113
-#, fuzzy
 msgid "You don't have any equipment"
-msgstr "Nie masz żadnych butów"
+msgstr "Nie masz żadnego sprzętu"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:120
-#, fuzzy
 msgid "Show unused equipment"
-msgstr "Twój sprzęt"
+msgstr "Pokaż nieużywany sprzęt"
 
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:152
 msgid "x-times"
@@ -6168,16 +6158,15 @@ msgid "Internal constants have been refreshed."
 msgstr "Odświeżono stałe wewnętrzne."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:103
-#, fuzzy
 msgid "There was a problem while recalculating your equipment statistics"
-msgstr "Przelicz statystyki sprzętu"
+msgstr "Wystąpił problem podczas przeliczania statystyk sprzętu"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:105
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Statistics have been recalculated for all <strong>%s</strong> pieces of "
 "equipment."
-msgstr "Przeliczono statystyki dla <strong>%s</strong> butów."
+msgstr "Przeliczono statystyki dla <strong>%s</strong> sprzętów."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:126
 msgid "Vdot corrector"
