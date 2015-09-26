@@ -26,7 +26,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
-		$Inserter->setAccountID(1);
+		$Inserter->setAccountID(0);
 		$Inserter->insert(new Object(array(
 			Object::NAME => 'Route name',
 			Object::DISTANCE => 3.14
@@ -39,7 +39,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Changed->set(Object::NAME, 'New route name');
 
 		$Updater = new Updater($this->PDO, $Changed, $Route);
-		$Updater->setAccountID(1);
+		$Updater->setAccountID(0);
 		$Updater->update();
 
 		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `id`='.$Inserter->insertedID())->fetch(PDO::FETCH_ASSOC));

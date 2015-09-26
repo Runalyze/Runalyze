@@ -15,34 +15,39 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $PDO;
 
+	protected $ActivityID;
+
 	protected function setUp() {
 		$this->PDO = DB::getInstance();
 		$this->PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->PDO->exec('INSERT INTO `runalyze_training` (`accountid`) VALUES (0)');
+
+		$this->ActivityID = $this->PDO->lastInsertId();
 	}
 
 	protected function tearDown() {
-		$this->PDO->exec('TRUNCATE `'.PREFIX.'swimdata`');
+		$this->PDO->exec('DELETE FROM `runalyze_training`');
 	}
 
 	public function testSimpleUpdate() {
 		$Inserter = new Inserter($this->PDO);
-		$Inserter->setAccountID(1);
+		$Inserter->setAccountID(0);
 		$Inserter->insert(new Object(array(
-			Object::ACTIVITYID => 1,
+			Object::ACTIVITYID => $this->ActivityID,
 			Object::STROKE => array(25, 20, 15, 20)
 		)));
 
-		$Swimdata = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
+		$Swimdata = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
 		$Swimdata->set(Object::STROKE, array());
 
 		$Changed = clone $Swimdata;
 		$Changed->set(Object::STROKETYPE, array(2, 2, 2, 2));
 
 		$Updater = new Updater($this->PDO, $Changed, $Swimdata);
-		$Updater->setAccountID(1);
+		$Updater->setAccountID(0);
 		$Updater->update();
 
-		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`=1')->fetch(PDO::FETCH_ASSOC));
+		$Result = new Object($this->PDO->query('SELECT * FROM `'.PREFIX.'swimdata` WHERE `activityid`='.$this->ActivityID)->fetch(PDO::FETCH_ASSOC));
 		$this->assertEquals(array(25, 20, 15, 20), $Result->stroke());
 		$this->assertEquals(array(2, 2, 2, 2), $Result->stroketype());
 	}
