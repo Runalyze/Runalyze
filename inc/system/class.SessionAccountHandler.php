@@ -120,8 +120,13 @@ class SessionAccountHandler {
 				Language::setLanguage($Account['language'], false);
 
 				return true;
-			} else
+			} elseif (defined('RUNALYZE_TEST')) {
+				$this->setAccount($Account);
+var_dump($Account);
+				return true;
+			} else {
 				unset($_SESSION['accountid']);
+			}
 		}
 
 		return false;

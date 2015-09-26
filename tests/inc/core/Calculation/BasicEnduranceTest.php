@@ -14,6 +14,7 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		$this->object = new BasicEndurance;
+		DB::getInstance()->exec('DELETE FROM `runalyze_training`');
 	}
 
 	protected function tearDown() {
@@ -120,6 +121,8 @@ class BasicEnduranceTest extends \PHPUnit_Framework_TestCase {
 		$this->object->setDaysToRecognizeForLongjogs(14);
 		$this->assertEquals(555, $this->object->value());
 
+		// Attention: depens on START_TIME
+		$this->object->setMinimalDaysToRecognizeForWeekKilometer(70);
 		$this->object->setDaysToRecognizeForWeekKilometer(70);
 		$this->object->setPercentageForLongjogs(0.01);
 		$this->assertEquals(29, $this->object->value());

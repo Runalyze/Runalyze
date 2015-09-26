@@ -46,6 +46,9 @@ DB::getInstance()->exec('INSERT INTO `runalyze_account` (`id`,`username`,`mail`)
 DB::getInstance()->exec('INSERT INTO `runalyze_account` (`username`,`mail`) VALUES("zero", "zero@test.com")');
 DB::getInstance()->exec('UPDATE `runalyze_account` SET `id`=0 WHERE `username`="zero"');
 
+// Login
+$_SESSION['accountid'] = 0;
+
 // Language functions
 if (!function_exists('__')) {
 	function __($text, $domain = 'runalyze') {
