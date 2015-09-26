@@ -1,3 +1,4 @@
+/* ATTENTION: Not everything is ordered by date, as all constraint definitions have to stay at the bottom */
 /* 08.07.2015 - add hrv table */
 CREATE TABLE IF NOT EXISTS `runalyze_hrv` ( `accountid` int(10) unsigned NOT NULL, `activityid` int(10) unsigned NOT NULL, `data` longtext ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ALTER TABLE `runalyze_hrv` ADD PRIMARY KEY (`activityid`), ADD KEY `accountid` (`accountid`);
@@ -40,10 +41,6 @@ UPDATE `runalyze_plugin` SET `key`="RunalyzePluginPanel_Equipment" WHERE `key`="
 DELETE FROM `runalyze_plugin_conf` WHERE `config` = 'for_clothes' OR `config` = 'for_weather';
 DELETE FROM `runalyze_dataset` WHERE `name` = 'shoeid' OR `name` = 'clothes';
 
---
--- Tabellenstruktur für Tabelle `runalyze_equipment_type`
---
-
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
 `id` int(10) unsigned NOT NULL,
   `name` varchar(50) NOT NULL,
@@ -52,10 +49,6 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment_type` (
   `max_time` int(11) NOT NULL DEFAULT '0',
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Tabellenstruktur für Tabelle `runalyze_equipment`
---
 
 CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
 `id` int(10) unsigned NOT NULL,
@@ -70,58 +63,22 @@ CREATE TABLE IF NOT EXISTS `runalyze_equipment` (
   `accountid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Tabellenstruktur für Tabelle `runalyze_equipment_sport`
---
-
 CREATE TABLE IF NOT EXISTS `runalyze_equipment_sport` (
   `sportid` int(10) unsigned NOT NULL,
   `equipment_typeid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Tabellenstruktur für Tabelle `runalyze_activity_equipment`
---
 
 CREATE TABLE IF NOT EXISTS `runalyze_activity_equipment` (
   `activityid` int(10) unsigned NOT NULL,
   `equipmentid` int(10) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Indizes für die Tabelle `runalyze_equipment`
---
-ALTER TABLE `runalyze_equipment`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`), ADD KEY `typeid` (`typeid`);
-
---
--- Indizes für die Tabelle `runalyze_equipment_type`
---
-ALTER TABLE `runalyze_equipment_type`
- ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
-
---
--- Indizes für die Tabelle `runalyze_activity_equipment`
---
-ALTER TABLE `runalyze_activity_equipment`
- ADD PRIMARY KEY (`activityid`,`equipmentid`), ADD KEY `equipmentid` (`equipmentid`);
-
---
--- Indizes für die Tabelle `runalyze_equipment_sport`
---
-ALTER TABLE `runalyze_equipment_sport`
- ADD PRIMARY KEY (`sportid`,`equipment_typeid`), ADD KEY `equipment_typeid` (`equipment_typeid`);
-
---
--- AUTO_INCREMENT für Tabelle `runalyze_equipment`
---
-ALTER TABLE `runalyze_equipment`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT für Tabelle `runalyze_equipment_type`
---
-ALTER TABLE `runalyze_equipment_type`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+ALTER TABLE `runalyze_equipment` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`), ADD KEY `typeid` (`typeid`);
+ALTER TABLE `runalyze_equipment_type` ADD PRIMARY KEY (`id`), ADD KEY `accountid` (`accountid`);
+ALTER TABLE `runalyze_activity_equipment` ADD PRIMARY KEY (`activityid`,`equipmentid`), ADD KEY `equipmentid` (`equipmentid`);
+ALTER TABLE `runalyze_equipment_sport` ADD PRIMARY KEY (`sportid`,`equipment_typeid`), ADD KEY `equipment_typeid` (`equipment_typeid`);
+ALTER TABLE `runalyze_equipment` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+ALTER TABLE `runalyze_equipment_type` MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 
 DROP TRIGGER IF EXISTS `del_tr_train`;
 DELIMITER //
@@ -138,33 +95,31 @@ CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
 //
 DELIMITER ;
 
---
--- Constraints der exportierten Tabellen
---
+/* 26.09.2015 - add further constraints */
+ALTER TABLE `runalyze_plugin` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
---
--- Constraints der Tabelle `runalyze_activity_equipment`
---
+/* CONSTRAINTS - new order! */
+/* 19.09.2015 - add equipment for all sport types */
 ALTER TABLE `runalyze_activity_equipment`
-ADD CONSTRAINT `runalyze_activity_equipment_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `runalyze_equipment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `runalyze_activity_equipment_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	ADD CONSTRAINT `runalyze_activity_equipment_ibfk_1` FOREIGN KEY (`equipmentid`) REFERENCES `runalyze_equipment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `runalyze_activity_equipment_ibfk_2` FOREIGN KEY (`activityid`) REFERENCES `runalyze_training` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints der Tabelle `runalyze_equipment`
---
 ALTER TABLE `runalyze_equipment`
-ADD CONSTRAINT `runalyze_equipment_ibfk_1` FOREIGN KEY (`typeid`) REFERENCES `runalyze_equipment_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `runalyze_equipment_ibfk_2` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	ADD CONSTRAINT `runalyze_equipment_ibfk_1` FOREIGN KEY (`typeid`) REFERENCES `runalyze_equipment_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `runalyze_equipment_ibfk_2` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints der Tabelle `runalyze_equipment_sport`
---
 ALTER TABLE `runalyze_equipment_sport`
-ADD CONSTRAINT `runalyze_equipment_sport_ibfk_1` FOREIGN KEY (`sportid`) REFERENCES `runalyze_sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `runalyze_equipment_sport_ibfk_2` FOREIGN KEY (`equipment_typeid`) REFERENCES `runalyze_equipment_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+	ADD CONSTRAINT `runalyze_equipment_sport_ibfk_1` FOREIGN KEY (`sportid`) REFERENCES `runalyze_sport` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `runalyze_equipment_sport_ibfk_2` FOREIGN KEY (`equipment_typeid`) REFERENCES `runalyze_equipment_type` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints der Tabelle `runalyze_equipment_type`
---
-ALTER TABLE `runalyze_equipment_type`
-ADD CONSTRAINT `runalyze_equipment_type_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_equipment_type` ADD CONSTRAINT `runalyze_equipment_type_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/* 26.09.2015 - add further constraints */
+ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_plugin_conf` ADD FOREIGN KEY (`pluginid`) REFERENCES `runalyze`.`runalyze_plugin`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_route` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
