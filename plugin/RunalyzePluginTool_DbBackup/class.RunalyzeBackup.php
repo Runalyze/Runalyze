@@ -3,6 +3,9 @@
  * This file contains the class::RunalyzeBackup
  * @package Runalyze\Plugins\Tools
  */
+
+use Runalyze\Util\File\GZipWriter;
+
 /**
  * RunalyzeBackup
  * @author Hannes Christiansen
@@ -11,7 +14,7 @@
 abstract class RunalyzeBackup {
 	/**
 	 * Writer
-	 * @var BigFileWriterGZip
+	 * @var \Runalyze\Util\File\GZipWriter
 	 */
 	protected $Writer;
 
@@ -32,7 +35,7 @@ abstract class RunalyzeBackup {
 	 * @param string $fileName
 	 */
 	public function __construct($fileName) {
-		$this->Writer = new BigFileWriterGZip($fileName);
+		$this->Writer = new GZipWriter(FRONTEND_PATH.$fileName);
 		$this->DB = DB::getInstance();
 		$this->AccountID = SessionAccountHandler::getId();
 	}

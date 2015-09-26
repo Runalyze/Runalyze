@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Configuration;
+use Runalyze\Util\File\GZipReader;
 
 /**
  * RunalyzeJsonImporter
@@ -14,7 +15,7 @@ use Runalyze\Configuration;
 class RunalyzeJsonImporter {
 	/**
 	 * Reader
-	 * @var BigFileReaderGZip
+	 * @var \Runalyze\Util\File\GZipReader
 	 */
 	protected $Reader;
 
@@ -61,7 +62,7 @@ class RunalyzeJsonImporter {
 	 * @param int $accountID optional, session account id is used otherwise
 	 */
 	public function __construct($fileName, $accountID = false) {
-		$this->Reader = new BigFileReaderGZip($fileName);
+		$this->Reader = new GZipReader(FRONTEND_PATH.$fileName);
 		$this->DB = DB::getInstance();
 		$this->AccountID = SessionAccountHandler::getId();
 		$this->Results = new RunalyzeJsonImporterResults();

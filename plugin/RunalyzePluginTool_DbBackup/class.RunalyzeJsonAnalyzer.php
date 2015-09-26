@@ -3,6 +3,9 @@
  * This file contains class::RunalyzeJsonAnalyzer
  * @package Runalyze\Plugins\Tools
  */
+
+use Runalyze\Util\File\GZipReader;
+
 /**
  * RunalyzeJsonAnalyzer
  * @author Hannes Christiansen
@@ -20,7 +23,7 @@ class RunalyzeJsonAnalyzer {
 	 * @param string $fileName
 	 */
 	public function __construct($fileName) {
-		$Reader = new BigFileReaderGZip($fileName);
+		$Reader = new GZipReader(FRONTEND_PATH.$fileName);
 
 		while (!$Reader->eof()) {
 			$Line = trim($Reader->readLine());
