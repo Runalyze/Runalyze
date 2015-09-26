@@ -122,7 +122,7 @@ class SessionAccountHandler {
 				return true;
 			} elseif (defined('RUNALYZE_TEST')) {
 				$this->setAccount($Account);
-var_dump($Account);
+
 				return true;
 			} else {
 				unset($_SESSION['accountid']);
@@ -138,10 +138,10 @@ var_dump($Account);
 	private function updateLastAction() {
 		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
 	}
-        
-        /**
-         * Update language of current account
-         */
+
+	/**
+	 * Update language of current account
+	 */
 	private function updateLanguage() {
 		DB::getInstance()->update('account', self::getId(), 'language', Language::getCurrentLanguage());
 	}  
@@ -180,13 +180,12 @@ var_dump($Account);
 			}
 
 			if (AccountHandler::comparePasswords($password, $Account['password'], $Account['salt'])) {
-
 				$this->setAccount($Account);
 				$this->setSession();
-                                
-                                //Set language for user if not exists
-                                if(empty($Account['language']))
-                                    $this->updateLanguage();
+
+				//Set language for user if not exists
+				if(empty($Account['language']))
+					$this->updateLanguage();
 				// replace old md5 with new sha256 hash
 				if (strlen($Account['salt']) < 1) {
 					AccountHandler::setNewPassword($username, $password);
@@ -195,9 +194,7 @@ var_dump($Account);
 				return true;
 			}
 
-			$this->throwErrorForWrongPassword();
-
-                            
+			$this->throwErrorForWrongPassword(); 
 		} else {
 			$this->throwErrorForWrongUsername();
 		}

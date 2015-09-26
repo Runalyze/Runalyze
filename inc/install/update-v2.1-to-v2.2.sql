@@ -115,11 +115,11 @@ ALTER TABLE `runalyze_equipment_sport`
 ALTER TABLE `runalyze_equipment_type` ADD CONSTRAINT `runalyze_equipment_type_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `runalyze_account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /* 26.09.2015 - add further constraints */
-ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_plugin_conf` ADD FOREIGN KEY (`pluginid`) REFERENCES `runalyze`.`runalyze_plugin`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_route` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze`.`runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze`.`runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_hrv` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_plugin_conf` ADD FOREIGN KEY (`pluginid`) REFERENCES `runalyze_plugin`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_route` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
