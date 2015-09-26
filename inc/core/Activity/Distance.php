@@ -34,18 +34,17 @@ class Distance {
 	 */
 	static public $THOUSANDS_POINT = '.';
         
-        /**
-         * Default mile multiplier
-         * @var int 
-        */
-        static public $MILE_MULTIPLIER = 0.621371192;
-        
-        
-        /**
-         * Default yard multiplier
-         * @var int 
-        */
-        static public $YARD_MULTIPLIER = 1093.6133;
+	/**
+	 * Default mile multiplier
+	 * @var int 
+	*/
+	const MILE_MULTIPLIER = 0.621371192;
+	
+	/**
+	 * Default yard multiplier
+	 * @var int 
+	*/
+	const YARD_MULTIPLIER = 1093.6133;
         
 
 	/**
@@ -108,21 +107,21 @@ class Distance {
 		return round($this->Distance*1000);
 	}
         
-        /**
+	 /**
 	 * Miles
 	 * @return float [miles]
 	 */
 	public function miles() {
-		return $this->multiply(self::$MILE_MULTIPLIER);
+		return $this->multiply(self::MILE_MULTIPLIER);
 	}
         
-        /*
-         * Yards
-         * @return int [yards]
-         */
-        public function yard() {
-            return $this->multiply(self::$YARD_MULTIPLIER);
-        }
+	/*
+	 * Yards
+	 * @return int [yards]
+	*/
+	public function yards() {
+		return $this->multiply(self::YARD_MULTIPLIER);
+	}
         
 	/**
 	 * Format distance as string
@@ -174,7 +173,7 @@ class Distance {
 	 * @param boolean $withUnit [optional]
 	 * @return string with unit
 	 */
-	public function stringYard($withUnit = true) {
+	public function stringYards($withUnit = true) {
 		return number_format($this->multiply(self::$YARD_MULTIPLIER), 0, '', '.').($withUnit ? 'y' : '');
 	}
         
@@ -183,7 +182,7 @@ class Distance {
 	 * @param boolean $withUnit [optional]
 	 * @return string with unit
 	 */
-	public function stringMile($withUnit = true) {
+	public function stringMiles($decimals = false, $withUnit = true) {
 		if ($decimals === false) {
 			$decimals = self::$DEFAULT_DECIMALS;
 		}
