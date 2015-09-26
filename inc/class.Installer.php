@@ -359,8 +359,6 @@ class Installer {
 		$this->adminPassAsMD5 = md5($this->mysqlConfig[2]);
 
 		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
-
-		AccountHandler::createNewNoLoginUser();
 	}
 
 	/**

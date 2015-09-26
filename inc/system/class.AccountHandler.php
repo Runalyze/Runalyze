@@ -242,15 +242,6 @@ class AccountHandler {
 	}
 
 	/**
-	 * Create user for no-login installation
-	 */
-
-	public static function createNewNoLoginUser() {
-		self::importEmptyValuesFor(0);
-		self::setSpecialConfigValuesFor(0);
-	}
-
-	/**
 	 * Create a new user from post-data
 	 */
 	static private function createNewUserFromPost() {
