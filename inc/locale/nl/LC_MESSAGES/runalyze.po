@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-17 14:51+0200\n"
-"PO-Revision-Date: 2015-09-22 17:38+0200\n"
+"PO-Revision-Date: 2015-09-22 22:03+0200\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
 "Language-Team: Dutch "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
@@ -2290,7 +2290,7 @@ msgstr "Oefening"
 
 #: inc/core/Data/Stroketype.php:108 inc/core/Data/Stroketype.php:129
 msgid "Mixed"
-msgstr ""
+msgstr "mixed"
 
 #: inc/core/Data/Stroketype.php:121
 msgid "Back"
@@ -3339,9 +3339,8 @@ msgid "Competition"
 msgstr "Wedstrijd"
 
 #: inc/draw/class.PlotSumData.php:580
-#, fuzzy
 msgid "Training"
-msgstr "Trainingspunten"
+msgstr "Training"
 
 #: inc/draw/class.PlotSumData.php:609
 msgid "avg:"
@@ -4176,10 +4175,8 @@ msgstr ""
 "Het XML object bevat geen track. &lt;trkseg&gt;-tag kan niet worden gevonden."
 
 #: inc/import/parser/class.ParserKMLSingle.php:42
-#, fuzzy
 msgid "Given XML object does not contain any coordinates."
-msgstr ""
-"Het XML object bevat geen track. &lt;trkseg&gt;-tag kan niet worden gevonden."
+msgstr "Het XML object bevat geen coördinaten."
 
 #: inc/import/parser/class.ParserTCXSingleCourse.php:49
 #, fuzzy
@@ -5053,7 +5050,7 @@ msgstr "De tijd is een prognose door Runalyze."
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:76
 msgid "<strong>Corrector:</strong> Ratio between VDOT and VDOT (by HR)"
-msgstr ""
+msgstr "<strong>Corrector:</strong> Ratio tussen VDOT en VDOT (op basis van HS)"
 
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:81
 msgid "The distance correction for elevation is not used in this table."
@@ -5199,6 +5196,8 @@ msgid ""
 "Runalyze uses data caching for faster access. Whenever you feel the views "
 "are not updated you can force emptying the cache"
 msgstr ""
+"Runalyze gebruikt data caching voor snellere toegang. Wanneer de schermen "
+"niet worden bijgewerkt kunt u altijd geforceerd de cache leegmaken"
 
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:39
 #: plugin/RunalyzePluginTool_Cacheclean/class.RunalyzePluginTool_Cacheclean.php:40
@@ -5229,11 +5228,11 @@ msgstr "Geen routes gevonden."
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:119
 msgid "Most elevation"
-msgstr ""
+msgstr "Meeste hoogte"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:147
 msgid "Steepest routes"
-msgstr ""
+msgstr "Steilste routes"
 
 #: plugin/RunalyzePluginStat_Hoehenmeter/class.RunalyzePluginStat_Hoehenmeter.php:188
 msgid "unlabeled"
@@ -5263,7 +5262,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:116
 #, php-format
 msgid "that are <strong>%s</strong> &#37;."
-msgstr ""
+msgstr "dat zijn <strong>%s</strong> &#37;."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:38
 msgid "Goals"
@@ -5284,6 +5283,8 @@ msgid ""
 "You can set a goal (value &gt; 0) for every time range. If it is set, you "
 "will see how much you have to run to reach it."
 msgstr ""
+"U kunt een doel (value &gt; 0) maken voor elke tijdsperiode. Zodra gemaakt, "
+"kunt u zien hoe vaak u moet hardlopen om dit doel te bereiken."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:57
 msgid ""
@@ -5296,6 +5297,8 @@ msgid ""
 "Note: &quot;Saison&quot; refers to the current season in the german &quot;"
 "kmspiel&quot;."
 msgstr ""
+"Let op: &quot;seizoen&quot; betekent het huidige seizoen in het Duitse "
+"&quot;kmspiel&quot;."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:69
 #, php-format
@@ -5471,7 +5474,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:77
 msgid "Main distance"
-msgstr ""
+msgstr "hoofdafstand"
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:78
 msgid "Distances for yearly comparison"
@@ -5528,13 +5531,15 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:46
 msgid "This plugin allows you to edit multiple activities one after another."
-msgstr ""
+msgstr "Deze plugin staat u toe meerdere activiteiten na elkaar te bewerken."
 
 #: plugin/RunalyzePluginTool_MultiEditor/class.RunalyzePluginTool_MultiEditor.php:47
 msgid ""
 "At the moment it's not possible to edit multiple activities with only one "
 "form."
 msgstr ""
+"Op dit moment is het niet mogelijk om meerdere activiteiten te bewerken met "
+"slechts een formulier."
 
 #: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:52
 msgid "Predict your race performance on various distances."

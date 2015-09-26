@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-17 14:51+0200\n"
-"PO-Revision-Date: 2015-09-24 07:58+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
+"PO-Revision-Date: 2015-09-24 08:16+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -463,7 +463,7 @@ msgstr "Kalorien"
 #: inc/training/schemes/scheme.Training.new.php:429
 #: inc/training/schemes/scheme.Training.php:464
 msgid "Partner"
-msgstr "Partner"
+msgstr "Trainingspartner"
 
 #: inc/training/search/class.SearchFormular.php:157
 #: inc/training/schemes/scheme.Training.new.php:244
@@ -864,18 +864,17 @@ msgid "Ground contact plot"
 msgstr "Bodenkontaktzeit"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
-#, fuzzy
 msgid "R-R intervals"
-msgstr ""
+msgstr "R-R Intervalle"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 #: inc/core/View/Activity/Plot/HRVPointcare.php:55
 msgid "Pointcare plot"
-msgstr ""
+msgstr "Pointcare-Diagramm"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
-msgstr ""
+msgstr "&Oslash; R-R Intervall"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
@@ -1538,8 +1537,8 @@ msgstr "Höhenmeter: Glättung"
 #: inc/core/Configuration/Category/ActivityView.php:400
 msgid "Choose the algorithm to smooth the elevation data"
 msgstr ""
-"Für Profis und Höhenmeterfanatiker: Mit welchem Algorithmus sollen die "
-"Höhenmeter vor der Berechnung geglättet werden?"
+"Wähle den Algorithmus, mit dem die Höhenmeter bei der Berechnung geglättet "
+"werden"
 
 #: inc/core/Configuration/Category/ActivityView.php:404
 msgid "Elevation: threshold"
@@ -1547,9 +1546,7 @@ msgstr "Höhenmeter: Schwellenwert"
 
 #: inc/core/Configuration/Category/ActivityView.php:405
 msgid "Threshold for the smoothing algorithm"
-msgstr ""
-"Schwellenwert zur Höhenmeterberechnung. Wird bei der Schwellenwert-Methode "
-"und beim Douglas-Peucker-Algorithmus verwendet."
+msgstr "Schwellenwert zur Höhenmeterberechnung"
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
@@ -1765,7 +1762,6 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Vdot.php:220
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobGeneral.php:111
-#, fuzzy
 msgid "VDOT shape"
 msgstr "VDOT Form"
 
@@ -5453,7 +5449,6 @@ msgid "Personal bests and everything else related to your races."
 msgstr "Bestzeiten und alles weitere zu den bisher gelaufenen Wettkämpfen."
 
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:58
-#, fuzzy
 msgid ""
 "This plugin lists all your races. It shows you a summary of all your races "
 "and your personal bests (over all distances with at least two results)."
@@ -6193,6 +6188,8 @@ msgid ""
 "This plugin shows summaries for all weeks, months or years to compare your "
 "overall training."
 msgstr ""
+"Dieses Plugin zeigt dir Zusammenfassung für alle Wochen, Monate und Jahre "
+"an, um dein gesamtes Training zu vergleichen."
 
 #: plugin/RunalyzePluginStat_Statistiken/class.RunalyzePluginStat_Statistiken.php:117
 msgid "Compare kilometers per week"
@@ -6988,11 +6985,11 @@ msgstr "TSB"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:40
 msgid "Banister"
-msgstr ""
+msgstr "Banister"
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/window.plot.php:47
 msgid "Performance model"
-msgstr ""
+msgstr "Performance-Modell"
 
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:30
 msgid "Summary of your activities for each sport."

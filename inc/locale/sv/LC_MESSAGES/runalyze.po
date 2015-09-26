@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-17 14:51+0200\n"
-"PO-Revision-Date: 2015-09-18 13:40+0200\n"
+"PO-Revision-Date: 2015-09-24 10:32+0200\n"
 "Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
 "Language-Team: Swedish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/sv/>\n"
@@ -600,7 +600,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionLaps.php:26
 #: inc/core/View/Activity/Plot/LapsManual.php:39
 msgid "Manual Laps"
-msgstr ""
+msgstr "manuella rundor"
 
 #: inc/training/view/section/class.SectionLaps.php:23
 #: inc/training/formular/class.TrainingInputSplits.php:24
@@ -610,33 +610,34 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:444
 #: inc/core/View/Window/Laps/Table.php:90 inc/data/class.Splits.php:420
 msgid "Laps"
-msgstr ""
+msgstr "rundor"
 
 #: inc/training/view/section/class.SectionLaps.php:30
 #: inc/core/View/Activity/Plot/LapsComputed.php:38
 msgid "Computed Laps"
-msgstr ""
+msgstr "beräknade rundor"
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
-msgstr ""
+msgstr "kurs- och höjddata"
 
 #: inc/training/view/section/class.SectionPace.php:17
 msgid "Pace data"
-msgstr ""
+msgstr "fart"
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:20
 msgid "Heartrate plot"
-msgstr ""
+msgstr "hjärtfrekvensdiagram"
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:28
 #: inc/training/view/section/class.SectionPaceRow.php:28
 msgid "You'll be soon able to configure your own zones."
-msgstr ""
+msgstr "Snart kommer det att vara möjligt att konfigurera egna zoner."
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:30
+#, fuzzy
 msgid "Heartrate zones"
-msgstr ""
+msgstr "pulszonen"
 
 #: inc/training/view/section/class.SectionHeartrateRow.php:51
 #: inc/training/view/section/class.SectionHeartrateRow.php:54
@@ -644,7 +645,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionCompositeRow.php:161
 #: inc/training/view/section/class.SectionCompositeRow.php:164
 msgid "&oslash; Heartrate"
-msgstr ""
+msgstr "&oslash; hjärtfrekvens"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:36
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
@@ -654,7 +655,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
 #: inc/training/schemes/scheme.Training.php:707
 msgid "SWOLF"
-msgstr ""
+msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
 msgid "SWOLFcycles"
@@ -664,69 +665,71 @@ msgstr ""
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:217
 msgid "Course"
-msgstr ""
+msgstr "rutt"
 
 #: inc/training/view/section/class.SectionLapsRowManual.php:49
 #: inc/training/view/section/class.SectionLapsRowComputed.php:47
 msgid "More details about your laps"
-msgstr ""
+msgstr "mer information om din runda"
 
 #: inc/training/view/section/class.SectionHRV.php:18
 msgid "Heart rate variability"
-msgstr ""
+msgstr "Hjärtfrekvensvariabilitet"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:55
 #: inc/training/view/section/class.SectionCompositeRow.php:203
 msgid "&oslash; Gradient"
-msgstr ""
+msgstr "&oslash; stiga"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:63
 #: inc/training/view/section/class.SectionCompositeRow.php:206
 msgid "Elevation up/down"
-msgstr ""
+msgstr "Höjd upp/ner"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
 #: inc/training/view/section/class.SectionCompositeRow.php:230
 msgid "More about elevation"
-msgstr ""
+msgstr "mer om høydemätare"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
 #: inc/training/view/section/class.SectionCompositeRow.php:235
 msgid "Elevation data were corrected."
-msgstr ""
+msgstr "høydmätare är korrigerade"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
 #: inc/training/view/section/class.SectionCompositeRow.php:237
 msgid "Elevation data are not corrected."
-msgstr ""
+msgstr "høydmätare är inte korrigerade"
 
 #: inc/training/view/section/class.SectionOverviewRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:99
 #: inc/training/schemes/scheme.Training.new.php:177
 #: inc/training/schemes/scheme.Training.php:182
+#, fuzzy
 msgid "Elapsed time"
-msgstr ""
+msgstr "forflüten tid"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:51
 msgid "Additional notes"
-msgstr ""
+msgstr "kompletterande anmärkningar"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:55
 msgid "Cadence plot"
-msgstr ""
+msgstr "frekvensdiagram"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:60
+#, fuzzy
 msgid "Power plot"
-msgstr ""
+msgstr "effekt"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:65
 msgid "Temperature plot"
-msgstr ""
+msgstr "temperaturdiagram"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:111
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:75
 msgid "Stride Length"
-msgstr ""
+msgstr "steglängd"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:114
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:121
@@ -737,55 +740,58 @@ msgstr ""
 #: inc/class.DatasetLabels.php:49
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Power"
-msgstr ""
+msgstr "effekt"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:134
 #: inc/training/view/section/table/class.TableSwimLane.php:43
 msgid "Strokes"
-msgstr ""
+msgstr "tak"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:140
 #: inc/training/view/section/table/class.TableSwimLane.php:42
 #: inc/core/View/Activity/Plot/Series/Swolfcycles.php:62
 #: inc/core/View/Activity/Plot/Series/Swolf.php:62
 msgid "Swolf"
-msgstr ""
+msgstr "Swolf"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:146
 #: inc/training/schemes/scheme.Training.php:717
 msgid "Pool length"
-msgstr ""
+msgstr "bassänglängd"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:174
 msgid "Weather condition"
-msgstr ""
+msgstr "Väderförhållandena"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:185
 #: inc/class.DatasetLabels.php:37
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Clothes"
-msgstr ""
+msgstr "kläder"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:202
 msgid "Running shoe"
-msgstr ""
+msgstr "Löparskor"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:215
 #: inc/class.DatasetLabels.php:43
 #: plugin/RunalyzePluginStat_Trainingspartner/class.RunalyzePluginStat_Trainingspartner.php:36
 msgid "Training partner"
-msgstr ""
+msgstr "träningskompis"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:252
 #, php-format
 msgid ""
 "You created this training on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
+"du har upprättad träningen den <strong>%s</strong> klockan "
+"<strong>%s</strong>."
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:257
 #, php-format
 msgid "Last modification on <strong>%s</strong> at <strong>%s</strong>."
 msgstr ""
+"senaste ändringen gjorde <strong>%s</strong> klockan <strong>%s</strong>."
 
 #: inc/training/view/section/class.SectionPaceRow.php:20
 msgid "Pace plot"
