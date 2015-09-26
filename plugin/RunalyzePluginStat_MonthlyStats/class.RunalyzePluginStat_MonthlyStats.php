@@ -79,7 +79,7 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	 * @return string
 	 */
 	private function getCircleFor($percentage) {
-		$opacity = min(1, round($percentage / 100, 2) + 0.2);
+		$opacity = min(1, round($percentage * 0.8 / 100, 2) + 0.2);
 		return ' <i class="fa fa-circle" style="width: 30px; text-align:center;  color: #800; opacity:' . $opacity . '; font-size: ' . floor(sqrt($percentage) * 30 / 10) . 'px"></i>';
 	}
 
