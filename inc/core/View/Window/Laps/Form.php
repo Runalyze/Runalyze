@@ -124,9 +124,32 @@ class Form {
 		$Formular->addCSSclass('no-automatic-reload');
 		$Formular->addFieldset( $this->Fieldset );
 		$Formular->addHiddenValue('id', Request::sendId());
-		$Formular->addSubmitButton( __('Show calculated laps') );
+		$Formular->addSubmitButton( __('Show calculated laps'), 'submit-calculated-laps' );
+		$Formular->addSubmitButton( __('Show manual laps'), 'submit-manual-laps' );
 		$Formular->display();
 
 		echo '<p>&nbsp;</p>';
+		echo $this->getJScode();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getJScode() {
+		return Ajax::wrapJS(
+			'var buttonCalc = $("#rounds-configurator input[name=submit-calculated-laps]");'.
+			'var buttonManual = $("#rounds-configurator input[name=submit-manual-laps]");'.
+			'function updateButtonVisibility() {'.
+				'if ($("#rounds-configurator input:text").filter(function() { return this.value != ""; }).length == 0) {'.
+					'buttonCalc.addClass("hide");'.
+					'buttonManual.removeClass("hide");'.
+				'} else {'.
+					'buttonCalc.removeClass("hide");'.
+					'buttonManual.addClass("hide");'.
+				'}'.
+			'}'.
+			'$("#rounds-configurator input[type=text]").change(updateButtonVisibility);'.
+			'updateButtonVisibility();'
+		);
 	}
 }
