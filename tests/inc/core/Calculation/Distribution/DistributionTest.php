@@ -30,6 +30,7 @@ class DistributionTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals( 10, $Dist->min() );
 		$this->assertEquals( 15, $Dist->mean() );
+		$this->assertEquals( 15, $Dist->median() );
 		$this->assertEquals( 20, $Dist->max() );
 		$this->assertEquals( 12.5, $Dist->variance() );
 	}

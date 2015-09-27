@@ -29,6 +29,11 @@ abstract class Distribution {
 	const MEAN = 'mean';
 
 	/**
+	 * Mean
+	 */
+	const MEDIAN = 'median';
+
+	/**
 	 * Variance
 	 */
 	const VARIANCE = 'var';
@@ -41,6 +46,7 @@ abstract class Distribution {
 		'min' => 0,
 		'max' => 0,
 		'mean' => 0,
+		'median' => 0,
 		'var' => 0
 	);
 
@@ -80,11 +86,20 @@ abstract class Distribution {
 		$mean = $sum / $num;
 		$this->setStatistic(self::MEAN, $mean);
 
+		$desiredMedianIndex = $num / 2;
+		$currentMedianIndex = 0;
+		$median = false;
 		$var = 0;
 		foreach ($data as $value => $count) {
 			$var += $count * ($value - $mean) * ($value - $mean);
+			$currentMedianIndex += $count;
+
+			if ($median === false && $currentMedianIndex >= $desiredMedianIndex) {
+				$median = $value;
+			}
 		}
 
+		$this->setStatistic(self::MEDIAN, $median);
 		$this->setStatistic(self::VARIANCE, $var / $num);
 	}
 
@@ -119,6 +134,14 @@ abstract class Distribution {
 	 */
 	final public function mean() {
 		return $this->Statistic[self::MEAN];
+	}
+
+	/**
+	 * Median
+	 * @return float
+	 */
+	final public function median() {
+		return $this->Statistic[self::MEDIAN];
 	}
 
 	/**
