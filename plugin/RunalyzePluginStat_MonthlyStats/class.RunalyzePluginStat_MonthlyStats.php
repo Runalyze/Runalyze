@@ -55,12 +55,18 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 
 	private function setAnalysisNavigation() {
 		if ($this->dat == '') $this->dat = 'km';
-		$LinkList = '<li class="with-submenu"><span class="link">' . __('Choose evaluation') . '</span><ul class="submenu">';
+		$LinkList = '<li class="with-submenu"><span class="link">' . $this->getAnalysisType() . '</span><ul class="submenu">';
 		$LinkList .= '<li' . ('km' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by distance'), $this->sportid, $this->year, 'km') . '</li>';
 		$LinkList .= '<li' . ('s' == $this->dat ? ' class="active"' : '') . '>' . $this->getInnerLink(__('by time'), $this->sportid, $this->year, 's') . '</li>';
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
+	}
+
+	private function getAnalysisType() {
+		$types = ['km' => __('by distance'),
+			's' => __('by time')];
+		return $types[$this->dat];
 	}
 
 	/**

@@ -223,11 +223,11 @@ abstract class PluginStat extends Plugin {
 	 */
 	private function getNavigation() {
 		if ($this->ShowSportsNavigation) {
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose sport').'</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.$this->getSportString().'</span><ul class="submenu">'.$this->getSportLinksAsList().'</ul>';
 		}
 
 		if ($this->ShowYearsNavigation) {
-			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.__('Choose time range').'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink, $this->ShowTimeRangeLinks).'</ul>';
+			$this->LinkList[] = '<li class="with-submenu"><span class="link">'.$this->getYearString().'</span><ul class="submenu">'.$this->getYearLinksAsList($this->ShowCompareYearsLink, $this->ShowTimeRangeLinks).'</ul>';
 		}
 
 		if (!empty($this->LinkList)) {
@@ -264,11 +264,11 @@ abstract class PluginStat extends Plugin {
 	private function getYearLinksAsList($CompareYears = true, $TimeRanges = false) {
 		$Links = '';
 
-		if ($CompareYears) { 
+		if ($CompareYears) {
 			$Links .= '<li'.(-1==$this->year ? ' class="active"' : '').'>'.$this->getInnerLink($this->titleForAllYears(), $this->sportid, -1, $this->dat).'</li>';
 		}
 
-		if ($TimeRanges) { 
+		if ($TimeRanges) {
 			$Links .= '<li'.(6 == $this->year ? ' class="active"' : '').'>'.$this->getInnerLink(__('Last 6 months'), $this->sportid, 6, $this->dat).'</li>';
 			$Links .= '<li'.(12 == $this->year ? ' class="active"' : '').'>'.$this->getInnerLink(__('Last 12 months'), $this->sportid, 12, $this->dat).'</li>';
 		}
@@ -279,7 +279,7 @@ abstract class PluginStat extends Plugin {
 
 		return $Links;
 	}
-		
+
 	/**
 	 * Get the year as string
 	 * @return string
@@ -294,6 +294,14 @@ abstract class PluginStat extends Plugin {
 		}
 
 		return $this->year;
+	}
+
+	/**
+	 * Get sport as string
+	 * @return string
+	 */
+	protected function getSportString() {
+		return ($this->sportid == -1 ? __('All') : SportFactory::name($this->sportid));
 	}
 
 	/**
