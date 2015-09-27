@@ -91,7 +91,6 @@ class AdminView {
 	 */
 	private function displayView() {
 		$this->displaySettings();
-		$this->displayTools();
 		$this->displayUserList();
 		$this->displayServerData();
 		$this->displayPermissions();
@@ -107,18 +106,6 @@ class AdminView {
 		$Formular->addHiddenValue('hash', $this->getAdminHash());
 		$Formular->addHiddenValue('job', 'settings');
 		$Formular->addFieldset( $this->getSettingsFieldset() );
-		$Formular->display();
-	}
-
-	/**
-	 * Display tools
-	 */
-	private function displayTools() {
-		$Formular = new Formular();
-		$Formular->setId('admin-window-tools');
-		$Formular->addHiddenValue('hash', $this->getAdminHash());
-		$Formular->addHiddenValue('job', 'tools');
-		$Formular->addFieldset( $this->getToolsFieldset() );
 		$Formular->display();
 	}
 
@@ -190,36 +177,6 @@ class AdminView {
 
 		if (!is_writable(FRONTEND_PATH.'../config.php')) {
 			$Fieldset->addError( __('<strong>config.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'../config.php')),1).')</em> '.__('Changes can\'t be saved.') );
-		}
-
-		return $Fieldset;
-	}
-
-	/**
-	 * Get fieldset for tools
-	 * @return \FormularFieldset
-	 */
-	private function getToolsFieldset() {
-		$result = '';
-
-		if (isset($_POST['hash']) && $this->isLoggedIn && $_POST['job'] == 'tools') {
-			ob_start();
-			include FRONTEND_PATH.'plugin/cli.pluginmap.php';
-			$result = ob_get_contents();
-			ob_end_clean();
-		}
-
-		$Fieldset = new FormularFieldset( __('Tools') );
-		$Fieldset->addField( new FormularCheckbox('read_plugins', __('Look for new plugins')) );
-		$Fieldset->addField( new FormularSubmit(__('Go'), '') );
-		$Fieldset->setLayoutForFields( FormularFieldset::$LAYOUT_FIELD_W100 );
-
-		if (!empty($result)) {
-			$Fieldset->addOkay($result);
-		}
-
-		if (!is_writable(FRONTEND_PATH.'plugin/pluginmap.php')) {
-			$Fieldset->addError( __('<strong>/inc/plugin/pluginmap.php</strong> is not writable').', <em>(chmod = '.substr(decoct(fileperms(FRONTEND_PATH.'plugin/pluginmap.php')),1).')</em> '.__('These tools will not work.') );
 		}
 
 		return $Fieldset;
