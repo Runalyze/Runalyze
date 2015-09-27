@@ -10,9 +10,9 @@ use Runalyze\Util\Time;
 $PLUGINKEY = 'RunalyzePluginStat_Statistiken';
 /**
  * Plugin "Statistiken"
- * 
+ *
  * General statistics
- * 
+ *
  * @author Hannes Christiansen
  * @package Runalyze\Plugins\Stats
  */
@@ -50,7 +50,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	 * Set navigation
 	 */
 	protected function setOwnNavigation() {
-		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose statistic').'</span><ul class="submenu">';
+		$LinkList  = '<li class="with-submenu"><span class="link">'.$this->getAnalysisType().'</span><ul class="submenu">';
 		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('General overview'), $this->sportid, $this->year, '').'</li>';
 		$LinkList .= '<li'.('allWeeks' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink(__('All training weeks'), $this->sportid, (!$this->showsSpecificYear()) ? date('Y') : $this->year, 'allWeeks').'</li>';
 
@@ -59,6 +59,11 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 		$this->setToolbarNavigationLinks(array($LinkList));
 	}
 
+	private function getAnalysisType() {
+		$types = ['' => __('General overview'),
+			'allWeeks' => __('All training weeks')];
+		return $types[$this->dat];
+	}
 
 	/**
 	 * Init some class variables
@@ -83,7 +88,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Init data 
+	 * Init data
 	 */
 	protected function prepareForDisplay() {
 		if (!$this->showsSpecificYear() && $this->dat = 'allWeeks') {
@@ -101,7 +106,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Display long description 
+	 * Display long description
 	 */
 	protected function displayLongDescription() {
 		echo HTML::p(
@@ -160,11 +165,11 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Display table with data for each month 
+	 * Display table with data for each month
 	 */
 	private function displayYearTable() {
 		if ($this->year == -1) {
-			$SummaryTable = new SummaryTableAllYears($this->Dataset, $this->sportid, $this->year);			
+			$SummaryTable = new SummaryTableAllYears($this->Dataset, $this->sportid, $this->year);
 		} else {
 			$SummaryTable = new SummaryTableMonths($this->Dataset, $this->sportid, $this->year);
 
@@ -182,7 +187,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Display table with last week-statistics 
+	 * Display table with last week-statistics
 	 * @param bool $showAllWeeks
 	 */
 	private function displayWeekTable($showAllWeeks = false) {
@@ -200,7 +205,7 @@ class RunalyzePluginStat_Statistiken extends PluginStat {
 	}
 
 	/**
-	 * Display days of streakrunning 
+	 * Display days of streakrunning
 	 */
 	private function displayStreak() {
 		$Query = '
