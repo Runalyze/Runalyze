@@ -283,6 +283,10 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getEquipmentCondition() {
+		if (!isset($_POST['equipmentid'])) {
+			return '';
+		}
+
 		if (is_array($_POST['equipmentid'])) {
 			$array = array_map(
 				function ($value) {
@@ -292,11 +296,9 @@ class SearchResults {
 			);
 
 			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `sub` ON `sub`.`activityid` = `'.PREFIX.'training`.`id`';
-		} elseif (isset($_POST['equipmentid'])) {
-			return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
-		} else {
-			return '';
 		}
+
+		return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
 	}
 
 	/**
