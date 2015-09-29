@@ -147,7 +147,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
 		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
 		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
-		$this->addNumericConditionField('s', __('Duration'), FormularInput::$SIZE_SMALL);
+		$this->addDurationField('s', __('Duration'));
 		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
 		$this->addStringConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
 		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
@@ -230,6 +230,21 @@ class SearchFormular extends Formular {
 		} elseif ($type == 'string') {
 			$Field->setStringOptions();
 		}
+
+		$this->Fieldset->addField($Field);
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $label
+	 */
+	protected function addDurationField($key, $label) {
+		$Field = new FormularInputWithEqualityOption($key, $label);
+		$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W33);
+		$Field->setSize(FormularInput::$SIZE_SMALL);
+		$Field->setParser(FormularValueParser::$PARSER_TIME, array('hide-empty' => true));
+		$Field->addAttribute('placeholder', 'h:mm:ss');
+		$Field->setNumericOptions();
 
 		$this->Fieldset->addField($Field);
 	}

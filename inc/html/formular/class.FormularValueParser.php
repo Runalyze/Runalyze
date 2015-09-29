@@ -134,7 +134,7 @@ class FormularValueParser {
 				self::parseDaytime($value);
 				break;
 			case self::$PARSER_TIME:
-				self::parseTime($value);
+				self::parseTime($value, $parserOptions);
 				break;
 			case self::$PARSER_TIME_MINUTES:
 				self::parseTimeMinutes($value);
@@ -313,10 +313,15 @@ class FormularValueParser {
 	/**
 	 * Parse: time in seconds => time-string
 	 * @param mixed $value 
+	 * @param array $options
 	 */
-	static protected function parseTime(&$value) {
+	static protected function parseTime(&$value, $options) {
 		if ($value == 0) {
-			$value = '0:00:00';
+			if (isset($options['hide-empty'])) {
+				$value = '';
+			} else {
+				$value = '0:00:00';
+			}
 		} else {
 			$value = Duration::format($value);
 		}

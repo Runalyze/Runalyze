@@ -4,6 +4,7 @@
  * @package Runalyze\Search
  */
 
+use Runalyze\Activity\Duration;
 use Runalyze\Configuration;
 
 /**
@@ -165,6 +166,11 @@ class SearchResults {
                 
 		if (isset($_POST['date-from']) && isset($_POST['date-to']))
 			$this->addTimeRangeCondition($conditions);
+
+		if (isset($_POST['s']) && strlen($_POST['s']) > 0) {
+			$Time = new Duration($_POST['s']);
+			$_POST['s'] = $Time->seconds();
+		}
 
 		foreach ($this->allowedKeys as $key) {
 			if (isset($_POST[$key])) {
