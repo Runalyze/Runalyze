@@ -80,6 +80,7 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
+                $this->initTagFieldset();
 		$this->initEquipmentFieldset();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
@@ -197,6 +198,20 @@ class TrainingFormular extends StandardFormular {
 		return $SelectedEquipment;
 	}
 
+        
+        /**
+         * Display fieldset: Tag
+         */
+        
+        protected function initTagFieldset() {
+            $Fieldset = new FormularFieldset( __('Tags') );
+            $Field = new FormularInput('tags', __('Tags'));
+            $Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
+            $Field->setSize( FormularInput::$SIZE_FULL_INLINE );
+            $Fieldset->addField( $Field );
+            $this->addFieldset($Fieldset);
+        }
+        
 	/**
 	 * Display fieldset: Equipment
 	 */
