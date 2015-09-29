@@ -43,7 +43,7 @@ if ($Year >= START_YEAR && $Year <= date('Y') && START_TIME != time()) {
 	$EndTime      = $lastHalf || $lastYear ? strtotime("today 23:59 +30days") : $EndTime;
 	$NumberOfDays = Time::diffInDays($StartTime, $EndTime);
 
-	$EmptyArray    = array_fill(0, $MaxDays + $AddDays + 1, 0);
+	$EmptyArray    = array_fill(0, $NumberOfDays + $AddDays + 2, 0);
 	$Trimps_raw    = $EmptyArray;
 	$VDOTs_raw     = $EmptyArray;
 	$Durations_raw = $EmptyArray;
