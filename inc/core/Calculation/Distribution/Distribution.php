@@ -34,6 +34,11 @@ abstract class Distribution {
 	const MEDIAN = 'median';
 
 	/**
+	 * Mode
+	 */
+	const MODE = 'mode';
+
+	/**
 	 * Variance
 	 */
 	const VARIANCE = 'var';
@@ -47,6 +52,7 @@ abstract class Distribution {
 		'max' => 0,
 		'mean' => 0,
 		'median' => 0,
+		'mode' => 0,
 		'var' => 0
 	);
 
@@ -78,13 +84,21 @@ abstract class Distribution {
 
 		$sum = 0;
 		$num = 0;
+		$maxCount = 0;
+		$mode = 0;
 		foreach ($data as $value => $count) {
 			$sum += $value * $count;
 			$num += $count;
+
+			if ($count > $maxCount) {
+				$maxCount = $count;
+				$mode = $value;
+			}
 		}
 
 		$mean = $sum / $num;
 		$this->setStatistic(self::MEAN, $mean);
+		$this->setStatistic(self::MODE, $mode);
 
 		$desiredMedianIndex = $num / 2;
 		$currentMedianIndex = 0;
@@ -145,10 +159,26 @@ abstract class Distribution {
 	}
 
 	/**
+	 * Mode
+	 * @return float
+	 */
+	final public function mode() {
+		return $this->Statistic[self::MODE];
+	}
+
+	/**
 	 * Variance
 	 * @return float
 	 */
 	final public function variance() {
 		return $this->Statistic[self::VARIANCE];
+	}
+
+	/**
+	 * Standard deviation
+	 * @return float
+	 */
+	final public function stdDev() {
+		return sqrt($this->Statistic[self::VARIANCE]);
 	}
 }
