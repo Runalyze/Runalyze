@@ -69,7 +69,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$CONF.'</a>').'</li>';
+		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
