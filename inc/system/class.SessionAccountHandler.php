@@ -262,8 +262,14 @@ class SessionAccountHandler {
 	 * Set session to database 
 	 */
 	private function setSessionToDatabase() {
-		$columns = array('session_id', 'lastlogin', 'autologin_hash');
-		$values  = array(session_id(), time(), $this->getAutologinHash());
+		$columns = array('session_id', 'lastlogin');
+		$values  = array(session_id(), time());
+
+		if (isset($_POST['autologin'])) {
+			$columns[] = 'autologin_hash';
+			$values[] = $this->getAutologinHash();
+		}
+
 		DB::getInstance()->update('account', self::getId(), $columns, $values);
 	}
 
