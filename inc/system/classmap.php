@@ -89,6 +89,7 @@ $CLASSMAP = array(
 'ImporterFiletypeGPX' => 'import/filetypes/class.ImporterFiletypeGPX.php',
 'ImporterFiletypeHRM' => 'import/filetypes/class.ImporterFiletypeHRM.php',
 'ImporterFiletypeKML' => 'import/filetypes/class.ImporterFiletypeKML.php',
+'ImporterFiletypeKMZ' => 'import/filetypes/class.ImporterFiletypeKMZ.php',
 'ImporterFiletypeLOGBOOK' => 'import/filetypes/class.ImporterFiletypeLOGBOOK.php',
 'ImporterFiletypeLOGBOOK3' => 'import/filetypes/class.ImporterFiletypeLOGBOOK3.php',
 'ImporterFiletypePWX' => 'import/filetypes/class.ImporterFiletypePWX.php',
