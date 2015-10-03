@@ -68,4 +68,12 @@ class Loop extends \Runalyze\Model\Loop {
 
 		return array();
 	}
+
+	/**
+	 * @param array $data
+	 * @return \Runalyze\Model\Route\Object
+	 */
+	protected function createNewObject(array $data) {
+		return new Object($data);
+	}
 }

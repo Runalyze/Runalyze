@@ -174,6 +174,7 @@ class Window {
 	 */
 	protected function constructLaps() {
 		$this->Laps = new Laps();
+		$this->Laps->enableCalculationOfAdditionalValues();
 
 		if (
 			empty($this->ManualDistances) && $this->LapDistance == 0 &&

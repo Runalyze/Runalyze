@@ -90,4 +90,12 @@ class Loop extends \Runalyze\Model\Loop {
 	public function moveToDistance($kilometer) {
 		$this->moveTo(Object::DISTANCE, $kilometer);
 	}
+
+	/**
+	 * @param array $data
+	 * @return \Runalyze\Model\Trackdata\Object
+	 */
+	protected function createNewObject(array $data) {
+		return new Object($data);
+	}
 }

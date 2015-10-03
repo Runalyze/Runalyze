@@ -7,9 +7,11 @@
 namespace Runalyze\Data\Laps;
 
 use Runalyze\Activity\Duration;
+use Runalyze\Calculation;
 use Runalyze\Data\Elevation;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
+use Runalyze\Model\Activity;
 
 /**
  * Calculate laps from trackdata/route
@@ -45,11 +47,23 @@ class Calculator
 	protected $RouteLoop = null;
 
 	/**
+	 * @var bool
+	 */
+	protected $CalculateAdditionalValues = false;
+
+	/**
 	 * @param \Runalyze\Data\Laps\Laps $object
 	 */
 	public function __construct(Laps $object)
 	{
 		$this->Laps = $object;
+	}
+
+	/**
+	 * @param bool $flag
+	 */
+	public function calculateAdditionalValues($flag = true) {
+		$this->CalculateAdditionalValues = $flag;
 	}
 
 	/**
@@ -117,7 +131,7 @@ class Calculator
 	 */
 	protected function readLapsFromTimes()
 	{
-		foreach ($this->Times as $i => $seconds) {
+		foreach ($this->Times as $seconds) {
 			$this->moveToTime($seconds);
 			$this->readLap();
 		}
@@ -206,6 +220,7 @@ class Calculator
 		$Lap->setTrackDistance($this->TrackdataLoop->distance());
 		$Lap->setHR($this->TrackdataLoop->average(Trackdata\Object::HEARTRATE), $this->TrackdataLoop->max(Trackdata\Object::HEARTRATE));
 		$this->addElevationFor($Lap);
+		$this->calculateAdditionalValuesFor($Lap);
 
 		$this->Laps->add($Lap);
 	}
@@ -223,6 +238,76 @@ class Calculator
 		$Calculator->calculate();
 
 		$Lap->setElevation($Calculator->elevationUp(), $Calculator->elevationDown());
+	}
+
+	/**
+	 * @param \Runalyze\Data\Laps\Lap $Lap
+	 */
+	protected function calculateAdditionalValuesFor(Lap $Lap)
+	{
+		if (!$this->CalculateAdditionalValues) {
+			return;
+		}
+
+		$AdditionalData = array();
+		$SlicedTrackdata = $this->TrackdataLoop->sliceObject();
+
+		$this->addTrackdataAveragesToDataFrom($SlicedTrackdata, $AdditionalData);
+		$this->addStrideLengthToDataFrom($SlicedTrackdata, $AdditionalData);
+		$this->addVDOTToDataFrom($Lap, $AdditionalData);
+
+		$Lap->setAdditionalValues($AdditionalData);
+	}
+
+	/**
+	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param array $AdditionalData
+	 */
+	protected function addTrackdataAveragesToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+		$KeysToAverage = array(
+			Activity\Object::CADENCE => Trackdata\Object::CADENCE,
+			Activity\Object::GROUNDCONTACT => Trackdata\Object::GROUNDCONTACT,
+			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION
+		);
+
+		$NewLoop = new Trackdata\Loop($Object);
+		$NewLoop->goToEnd();
+
+		foreach ($KeysToAverage as $objectKey => $trackdataKey) {
+			if ($Object->has($trackdataKey)) {
+				$AdditionalData[$objectKey] = $NewLoop->average($trackdataKey);
+			}
+		}
+	}
+
+	/**
+	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param array $AdditionalData
+	 */
+	protected function addStrideLengthToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+		$StrideCalculator = new Calculation\StrideLength\Calculator($Object);
+		$StrideCalculator->calculate();
+
+		if ($StrideCalculator->average() > 0) {
+			$AdditionalData[Activity\Object::STRIDE_LENGTH] = $StrideCalculator->average();
+		}
+	}
+
+	/**
+	 * @param \Runalyze\Data\Laps\Lap $Lap
+	 * @param array $AdditionalData
+	 */
+	protected function addVDOTToDataFrom(Lap $Lap, array &$AdditionalData) {
+		$VDOT = new Calculation\JD\VDOT();
+		$VDOT->fromPaceAndHR(
+			$Lap->distance()->kilometer(),
+			$Lap->duration()->seconds(),
+			$Lap->HRavg()->inPercent() / 100
+		);
+
+		if ($VDOT->value() > 0) {
+			$AdditionalData[Activity\Object::VDOT] = $VDOT->value();
+		}
 	}
 
 	/**
