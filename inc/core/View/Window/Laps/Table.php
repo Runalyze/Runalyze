@@ -177,6 +177,10 @@ class Table {
 	 * @return string
 	 */
 	protected function checkboxToToggleInactiveSplits() {
+		if ($this->IndexActive == 1 || $this->IndexResting == 1) {
+			return;
+		}
+
 		$Code  = '<p class="checkbox-first">';
 		$Code .= '<label>';
 		$Code .= '<input type="checkbox" name="toggle-active-splits" id="toggle-active-splits" checked> ';

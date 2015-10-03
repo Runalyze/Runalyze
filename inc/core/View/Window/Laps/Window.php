@@ -49,6 +49,12 @@ class Window {
 	protected $LapDistance = 0;
 
 	/**
+	 * Lap time
+	 * @var mixed
+	 */
+	protected $LapTime = 0;
+
+	/**
 	 * Demanded time
 	 * @var \Runalyze\Activity\Duration
 	 */
@@ -65,6 +71,12 @@ class Window {
 	 * @var array
 	 */
 	protected $ManualDistances = array();
+
+	/**
+	 * Manual times
+	 * @var array
+	 */
+	protected $ManualTimes = array();
 
 	/**
 	 * @param \Runalyze\View\Activity\Context $context
@@ -100,6 +112,11 @@ class Window {
 			$this->LapDistance = min($this->Context->trackdata()->totalDistance(), (float)Request::param('distance'));
 		}
 
+		if (strlen(Request::param('time')) > 0) {
+			$Time = new Duration(Request::param('time'));
+			$this->LapTime = min($this->Context->trackdata()->totalTime(), $Time->seconds());
+		}
+
 		if (strlen(Request::param('demanded-time')) > 0) {
 			$this->DemandedTime->fromString(Request::param('demanded-time'));
 
@@ -120,6 +137,10 @@ class Window {
 
 		if (strlen(Request::param('manual-distances')) > 0) {
 			$this->ManualDistances = Calculator::getDistancesFromString(Request::param('manual-distances'));
+		}
+
+		if (strlen(Request::param('manual-times')) > 0) {
+			$this->ManualTimes = Calculator::getTimesFromString(Request::param('manual-times'));
 		}
 	}
 
@@ -154,7 +175,11 @@ class Window {
 	protected function constructLaps() {
 		$this->Laps = new Laps();
 
-		if (empty($this->ManualDistances) && $this->LapDistance == 0 && !$this->Context->activity()->splits()->isEmpty()) {
+		if (
+			empty($this->ManualDistances) && $this->LapDistance == 0 &&
+			empty($this->ManualTimes) && $this->LapTime == 0 &&
+			!$this->Context->activity()->splits()->isEmpty()
+		) {
 			$this->constructLapsFromSplits();
 		} else {
 			$this->constructLapsFromTrackdata();
@@ -219,6 +244,40 @@ class Window {
 	 * Construct laps from trackdata
 	 */
 	protected function constructLapsFromTrackdata() {
+		if (!empty($this->ManualTimes) || $this->LapTime != 0) {
+			$this->constructLapsFromTrackdataByTimes();
+		} else {
+			$this->constructLapsFromTrackdataByDistances();
+		}
+	}
+
+	/**
+	 * Construct laps from trackdata by times
+	 */
+	protected function constructLapsFromTrackdataByTimes() {
+		$Times = $this->ManualTimes;
+
+		if (empty($Times)) {
+			if ($this->LapTime == 0) {
+				$this->LapTime = 300;
+			}
+
+			$LastStep = $this->LapTime * floor($this->Context->trackdata()->totalTime() / $this->LapTime);
+
+			if ($LastStep <= $this->LapTime) {
+				$Times = array($this->LapTime);
+			} else {
+				$Times = range($this->LapTime, $LastStep, $this->LapTime);
+			}
+		}
+
+		$this->Laps->calculateFromTimes($Times, $this->Context->trackdata(), $this->Context->route());
+	}
+
+	/**
+	 * Construct laps from trackdata by distances
+	 */
+	protected function constructLapsFromTrackdataByDistances() {
 		$Distances = $this->ManualDistances;
 
 		if (empty($Distances)) {

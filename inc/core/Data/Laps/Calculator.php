@@ -6,6 +6,7 @@
 
 namespace Runalyze\Data\Laps;
 
+use Runalyze\Activity\Duration;
 use Runalyze\Data\Elevation;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
@@ -143,6 +144,52 @@ class Calculator
 		}
 		if (!self::isSorted($distanceArr)) $distanceArr = array();
 		return $distanceArr;
+	}
+
+	/**
+	 * Convert times from comma-separated string to array
+	 * + at the beginning means treat as intervals
+	 * ' means minutes
+	 * 
+	 * @param string $string
+	 * @return array
+	 */
+	public static function getTimesFromString($string)
+	{
+		$string = str_replace('\'', ':00', $string);
+
+		if (substr($string, 0, 1) == "+") {
+			$times = self::explodeTimeStrings(substr($string, 1));
+			$sum = 0;
+
+			foreach ($times as $i => $time) {
+				$sum += $time;
+				$times[$i] = $sum;
+			}
+		} else {
+			$times = self::explodeTimeStrings($string);
+		}
+
+		if (!self::isSorted($times))
+		{
+			$times = array();
+		}
+
+		return $times;
+	}
+
+	/**
+	 * @param string $commaSeparatedString
+	 * @return array
+	 */
+	private static function explodeTimeStrings($commaSeparatedString)
+	{
+		$timeStrings = explode(',', $commaSeparatedString);
+
+		return array_map(function ($string) {
+			$Time = new Duration($string);
+			return $Time->seconds();
+		}, $timeStrings);
 	}
 
 	/**

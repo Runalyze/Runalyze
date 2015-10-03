@@ -250,4 +250,20 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		));
 	}
 
+	public function testTimesFromString()
+	{
+		$this->assertEquals(
+			array(15*60, 45*60 + 30, 1*3600 + 60 + 1),
+			Calculator::getTimesFromString('15:00, 45:30, 1:01:01')
+		);
+	}
+
+	public function testTimesFromStringWithShortNotationForMinutes()
+	{
+		$this->assertEquals(
+			array(5*60, 15*60, 20*60),
+			Calculator::getTimesFromString('+5\', 10\', 5\'')
+		);
+	}
+
 }
