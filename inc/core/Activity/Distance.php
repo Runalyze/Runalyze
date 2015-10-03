@@ -37,16 +37,16 @@ class Distance {
         
 	/**
 	 * Default mile multiplier
-	 * @var int 
+	 * @var double 
 	*/
 	const MILE_MULTIPLIER = 0.621371192;
 	
 	/**
 	 * Default yard multiplier
-	 * @var int 
+	 * @var double 
 	*/
 	const YARD_MULTIPLIER = 1093.6133;
-        
+       
 
 	/**
 	 * Default number of decimals
@@ -59,6 +59,12 @@ class Distance {
 	 * @var float
 	 */
 	protected $Distance;
+	
+	/**
+	 * Preferred distance unit
+	 * @var \Runalyze\Parameter\Application\DistanceUnit
+	 */
+	protected $PreferredUnit;
 
 	/**
 	 * Format
@@ -78,6 +84,7 @@ class Distance {
 	 * @param float $distance [km]
 	 */
 	public function __construct($distance = 0) {
+		$this->PreferredUnit = \Runalyze\Configuration::General()->distanceUnit();
 		$this->set($distance);
 	}
 
@@ -140,14 +147,14 @@ class Distance {
 		}
 
 		if ($format === true) {
-		    if(\Runalyze\Configuration::General()->distanceUnit()->isKM())
+		    if($this->PreferredUnit->isKM())
 			return $this->stringMeter();
-		    elseif(\Runalyze\Configuration::General()->distanceUnit()->isMILES())
+		    elseif($this->PreferredUnit->isMILES())
 			return $this->stringYards();
 		} else {
-		    if(\Runalyze\Configuration::General()->distanceUnit()->isKM())
+		    if($this->PreferredUnit->isKM())
 			return $this->stringKilometer($decimals);
-		    elseif(\Runalyze\Configuration::General()->distanceUnit()->isMILES())
+		    elseif($this->PreferredUnit->isMILES())
 			return $this->stringMiles($decimals);
 		    
 		}
@@ -182,7 +189,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringYards($withUnit = true) {
-		return number_format($this->multiply(self::YARD_MULTIPLIER), 0, '', '.').($withUnit ? 'y' : '');
+		return number_format($this->Distance * self::YARD_MULTIPLIER, 0, '', '.').($withUnit ? 'y' : '');
 	}
         
 	/**
@@ -195,7 +202,7 @@ class Distance {
 			$decimals = self::$DEFAULT_DECIMALS;
 		}
 
-		return number_format($this->multiply(self::MILE_MULTIPLIER ), $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;m' : '');
+		return number_format($this->Distance * self::MILE_MULTIPLIER, $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;mi' : '');
 	}
 
 
