@@ -168,6 +168,27 @@ class Table {
 		$Code .= '</tr>';
 		$Code .= '</tbody>';
 		$Code .= '</table>';
+		$Code .= $this->checkboxToToggleInactiveSplits();
+
+		return $Code;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function checkboxToToggleInactiveSplits() {
+		$Code  = '<p class="checkbox-first">';
+		$Code .= '<label>';
+		$Code .= '<input type="checkbox" name="toggle-active-splits" id="toggle-active-splits" checked> ';
+		$Code .= __('Show inactive splits');
+		$Code .= '</label>';
+		$Code .= '</p>';
+
+		$Code .= Ajax::wrapJS(
+			'$("#toggle-active-splits").click(function(){'.
+				'$("#'.self::CSS_ID.' tr.unimportant").toggle();'.
+			'});'
+		);
 
 		return $Code;
 	}
