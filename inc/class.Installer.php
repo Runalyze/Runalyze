@@ -13,7 +13,7 @@ class Installer {
 	 * Required PHP-version
 	 * @var string
 	 */
-	static $REQUIRED_PHP_VERSION = '5.3.0';
+	static $REQUIRED_PHP_VERSION = '5.4.0';
 
 	/**
 	* Required MYSQL-version
