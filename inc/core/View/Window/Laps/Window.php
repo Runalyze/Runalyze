@@ -25,7 +25,12 @@ class Window {
 	/**
 	 * @var float
 	 */
-	const HANDMADE_LIMIT = 0.2;
+	const HANDMADE_LIMIT_TIME = 10;
+
+	/**
+	 * @var float
+	 */
+	const HANDMADE_LIMIT_DISTANCE = 0.2;
 
 	/**
 	 * @var \Runalyze\View\Activity\Context
@@ -119,14 +124,28 @@ class Window {
 	}
 
 	/**
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function handmadeLapsDiffer() {
 		if ($this->Context->activity()->splits()->isEmpty()) {
 			return false;
 		}
 
-		return (abs($this->Context->trackdata()->totalDistance() - $this->Context->activity()->splits()->totalDistance()) > self::HANDMADE_LIMIT);
+		return ($this->handmadeLapsTimeDiffers() && $this->handmadeLapsDistanceDiffers());
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function handmadeLapsTimeDiffers() {
+		return (abs($this->Context->trackdata()->totalTime() - $this->Context->activity()->splits()->totalTime()) > self::HANDMADE_LIMIT_TIME);
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function handmadeLapsDistanceDiffers() {
+		return (abs($this->Context->trackdata()->totalDistance() - $this->Context->activity()->splits()->totalDistance()) > self::HANDMADE_LIMIT_DISTANCE);
 	}
 
 	/**
@@ -151,6 +170,25 @@ class Window {
 			return;
 		}
 
+		if ($this->handmadeLapsTimeDiffers()) {
+			$this->constructLapsFromSplitsDistances();
+		} else {
+			$this->constructLapsFromSplitsTimes();
+		}
+
+		$num = $this->Laps->num();
+
+		foreach ($this->Context->activity()->splits()->asArray() as $i => $split) {
+			if ($i < $num) {
+				$this->Laps->at($i)->setMode( $split->isActive() ? Lap::MODE_ACTIVE : Lap::MODE_RESTING );
+			}
+		}
+	}
+
+	/**
+	 * Construct laps from splits object by distances
+	 */
+	protected function constructLapsFromSplitsDistances() {
 		$Distances = array();
 		$sum = 0;
 
@@ -160,13 +198,21 @@ class Window {
 		}
 
 		$this->Laps->calculateFrom($Distances, $this->Context->trackdata(), $this->Context->route());
-		$num = $this->Laps->num();
+	}
 
-		foreach ($this->Context->activity()->splits()->asArray() as $i => $split) {
-			if ($i < $num) {
-				$this->Laps->at($i)->setMode( $split->isActive() ? Lap::MODE_ACTIVE : Lap::MODE_RESTING );
-			}
+	/**
+	 * Construct laps from splits object by times
+	 */
+	protected function constructLapsFromSplitsTimes() {
+		$Times = array();
+		$sum = 0;
+
+		foreach ($this->Context->activity()->splits()->asArray() as $split) {
+			$Times[] = $split->time() + $sum;
+			$sum += $split->time();
 		}
+
+		$this->Laps->calculateFromTimes($Times, $this->Context->trackdata(), $this->Context->route());
 	}
 
 	/**

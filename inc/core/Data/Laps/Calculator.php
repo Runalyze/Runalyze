@@ -29,6 +29,11 @@ class Calculator
 	protected $Distances = array();
 
 	/**
+	 * @var array
+	 */
+	protected $Times = array();
+
+	/**
 	 * @var \Runalyze\Model\Trackdata\Loop
 	 */
 	protected $TrackdataLoop = null;
@@ -47,7 +52,7 @@ class Calculator
 	}
 
 	/**
-	 * @param array $lapDistances
+	 * @param array $lapDistances [km]
 	 */
 	public function setDistances(array $lapDistances)
 	{
@@ -56,6 +61,20 @@ class Calculator
 		}
 
 		$this->Distances = $lapDistances;
+		$this->Times = array();
+	}
+
+	/**
+	 * @param array $lapTimes [s]
+	 */
+	public function setTimes(array $lapTimes)
+	{
+		if (!self::isSorted($lapTimes)) {
+			throw new \InvalidArgumentException('Calculator needs sorted array of times');
+		}
+
+		$this->Distances = array();
+		$this->Times = $lapTimes;
 	}
 
 	/**
@@ -67,16 +86,39 @@ class Calculator
 		$this->TrackdataLoop = new Trackdata\Loop($trackdata);
 		$this->RouteLoop = !is_null($route) ? new Route\Loop($route) : null;
 
-		foreach ($this->Distances as $i => $kilometer) {
-			// Ignore empty splits as long as we do not support time-based splits
-			if ($i == 0 && $kilometer > 0 || $this->Distances[$i-1] < $kilometer) {
-				$this->move($kilometer);
-				$this->readLap();
-			}
+		if (!empty($this->Distances)) {
+			$this->readLapsFromDistances();
+		} else {
+			$this->readLapsFromTimes();
 		}
 
 		if (!$this->TrackdataLoop->isAtEnd()) {
 			$this->finish();
+		}
+	}
+
+	/**
+	 * Read laps from given distances
+	 */
+	protected function readLapsFromDistances()
+	{
+		foreach ($this->Distances as $i => $kilometer) {
+			// Ignore empty splits
+			if ($i == 0 && $kilometer > 0 || $this->Distances[$i-1] < $kilometer) {
+				$this->moveToDistance($kilometer);
+				$this->readLap();
+			}
+		}
+	}
+
+	/**
+	 * Read laps from given times
+	 */
+	protected function readLapsFromTimes()
+	{
+		foreach ($this->Times as $i => $seconds) {
+			$this->moveToTime($seconds);
+			$this->readLap();
 		}
 	}
 
@@ -139,9 +181,21 @@ class Calculator
 	/**
 	 * @param float $kilometer
 	 */
-	protected function move($kilometer)
+	protected function moveToDistance($kilometer)
 	{
 		$this->TrackdataLoop->moveToDistance($kilometer);
+
+		if (!is_null($this->RouteLoop)) {
+			$this->RouteLoop->goToIndex($this->TrackdataLoop->index());
+		}
+	}
+
+	/**
+	 * @param int $seconds
+	 */
+	protected function moveToTime($seconds)
+	{
+		$this->TrackdataLoop->moveToTime($seconds);
 
 		if (!is_null($this->RouteLoop)) {
 			$this->RouteLoop->goToIndex($this->TrackdataLoop->index());

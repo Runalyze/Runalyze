@@ -107,7 +107,7 @@ class Table {
 						'<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>'.
 						'<th class="{sorter: \'distance\'}">'.__('Lap').'</th>'.
 						'<th class="{sorter: \'resulttime\'}">'.__('Duration').'</th>'.
-						'<th>'.__('Diff.').'</th>'.
+						($this->DemandedTime->isZero() ? '' : '<th>'.__('Diff.').'</th>').
 						'<th>'.__('Pace').'</th>'.
 						'<th>'.__('Diff.').'</th>'.
 						'<th>'.__('&oslash; bpm').'</th>'.
@@ -145,9 +145,9 @@ class Table {
 				'<td>'.($this->Laps->at($i)->hasTrackValues() ? $this->Laps->at($i)->trackDuration()->string() : '-').'</td>'.
 				'<td>'.$this->Laps->at($i)->distance()->string().'</td>'.
 				'<td>'.$this->Laps->at($i)->duration()->string().'</td>'.
-				'<td>'.$this->Laps->at($i)->duration()->compareTo($this->DemandedTime, true).'</td>'.
+				($this->DemandedTime->isZero() ? '' : '<td>'.$this->Laps->at($i)->duration()->compareTo($this->DemandedTime, true).'</td>').
 				'<td>'.$this->Laps->at($i)->pace()->valueWithAppendix().'</td>'.
-				'<td>'.$this->Laps->at($i)->pace()->compareTo($this->DemandedPace).'</td>'.
+				($this->DemandedPace->isEmpty() ? '' : '<td>'.$this->Laps->at($i)->pace()->compareTo($this->DemandedPace).'</td>').
 				'<td>'.($this->Laps->at($i)->hasHR() ? Helper::Unknown(round($this->Laps->at($i)->HRavg()->inBPM()), '-') : '-').'</td>'.
 				'<td>'.($this->Laps->at($i)->hasHR() ? Helper::Unknown(round($this->Laps->at($i)->HRmax()->inBPM()), '-') : '-').'</td>'.
 				'<td>'.($this->Laps->at($i)->hasElevation() ? '+'.$this->Laps->at($i)->elevationUp().'/-'.$this->Laps->at($i)->elevationDown() : '-').'</td>'.
@@ -161,9 +161,10 @@ class Table {
 		$Code  = '<tbody>';
 		$Code .= '<tr class="no-zebra"><td colspan="4" class="r">'.__('Average').':</td>';
 		$Code .= '<td class="c">'.($this->AverageTime != null ? $this->AverageTime->string() : '').'</td>';
-		$Code .= '<td></td>';
+		$Code .= ($this->DemandedTime->isZero() ? '' : '<td></td>');
 		$Code .= '<td class="c">'.($this->AveragePace != null ? $this->AveragePace->valueWithAppendix() : '').'</td>';
-		$Code .= '<td colspan="4"></td>';
+		$Code .= ($this->DemandedPace->isEmpty() ? '' : '<td></td>');
+		$Code .= '<td colspan="3"></td>';
 		$Code .= '</tr>';
 		$Code .= '</tbody>';
 		$Code .= '</table>';

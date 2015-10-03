@@ -139,6 +139,22 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(3.0, $this->Laps->at(2)->trackDistance()->kilometer());
 	}
 
+	public function testConsecutiveTimes()
+	{
+		$this->object->setTimes(array(
+			300, 370, 430, 498, 560, 840
+		));
+		$this->object->calculateFrom($this->trackdata());
+
+		$this->assertEquals(6, $this->Laps->num());
+		$this->assertEquals(300, $this->Laps->at(0)->duration()->seconds());
+		$this->assertEquals(70, $this->Laps->at(1)->duration()->seconds());
+		$this->assertEquals(60, $this->Laps->at(2)->duration()->seconds());
+		$this->assertEquals(68, $this->Laps->at(3)->duration()->seconds());
+		$this->assertEquals(62, $this->Laps->at(4)->duration()->seconds());
+		$this->assertEquals(280, $this->Laps->at(5)->duration()->seconds());
+	}
+
 	/**
 	 * @test
 	 */

@@ -34,6 +34,17 @@ class Laps {
 	}
 
 	/**
+	 * @param array $times
+	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Route\Object $route
+	 */
+	public function calculateFromTimes(array $times, Trackdata\Object $trackdata, Route\Object $route = null) {
+		$Calculator = new Calculator($this);
+		$Calculator->setTimes($times);
+		$Calculator->calculateFrom($trackdata, $route);
+	}
+
+	/**
 	 * @param \Runalyze\Model\Activity\Splits\Object $splits
 	 */
 	public function readFrom(Splits\Object $splits) {
