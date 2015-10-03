@@ -10,6 +10,7 @@ use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\SelectRow;
 use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
+use Runalyze\Parameter\Application\DistanceUnit;
 use Ajax;
 
 /**
@@ -31,6 +32,7 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createGender();
+		$this->createDistanceUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
@@ -43,6 +45,22 @@ class General extends \Runalyze\Configuration\Category {
 	protected function createGender() {
 		$this->createHandle('GENDER', new Gender());
 	}
+	
+	/**
+	 * Create: DistanceUnit
+	 */
+	protected function createDistanceUnit() {
+		$this->createHandle('DISTANCE_UNIT', new DistanceUnit());
+	}
+	
+	/**
+	 * Distance Unit
+	 * @return HeartRateUnit
+	 */
+	public function distanceUnit() {
+		return $this->object('DISTANCE_UNIT');
+	}
+
 
 	/**
 	 * Gender
@@ -135,6 +153,7 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('DISTANCE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
@@ -149,6 +168,10 @@ class General extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('GENDER'), array(
 			'label'		=> __('Gender')
+		));
+		
+		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT'), array(
+			'label'		=> __('Distance unit')
 		));
 
 		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(

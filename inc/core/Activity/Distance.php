@@ -6,6 +6,7 @@
 
 namespace Runalyze\Activity;
 
+
 // TODO: use
 // Configuration::ActivityView()->decimals()
 
@@ -139,9 +140,16 @@ class Distance {
 		}
 
 		if ($format === true) {
+		    if(\Runalyze\Configuration::General()->distanceUnit()->isKM())
 			return $this->stringMeter();
+		    elseif(\Runalyze\Configuration::General()->distanceUnit()->isMILES())
+			return $this->stringYards();
 		} else {
+		    if(\Runalyze\Configuration::General()->distanceUnit()->isKM())
 			return $this->stringKilometer($decimals);
+		    elseif(\Runalyze\Configuration::General()->distanceUnit()->isMILES())
+			return $this->stringMiles($decimals);
+		    
 		}
 	}
 
@@ -174,7 +182,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringYards($withUnit = true) {
-		return number_format($this->multiply(self::$YARD_MULTIPLIER), 0, '', '.').($withUnit ? 'y' : '');
+		return number_format($this->multiply(self::YARD_MULTIPLIER), 0, '', '.').($withUnit ? 'y' : '');
 	}
         
 	/**
@@ -187,7 +195,7 @@ class Distance {
 			$decimals = self::$DEFAULT_DECIMALS;
 		}
 
-		return number_format($this->multiply(self::$MILE_MULTIPLIER ), $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;km' : '');
+		return number_format($this->multiply(self::MILE_MULTIPLIER ), $decimals, self::$DECIMAL_POINT, self::$THOUSANDS_POINT).($withUnit ? '&nbsp;m' : '');
 	}
 
 
