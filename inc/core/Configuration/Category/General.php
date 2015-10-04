@@ -11,6 +11,7 @@ use Runalyze\Parameter\SelectRow;
 use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
 use Runalyze\Parameter\Application\DistanceUnit;
+use Runalyze\Parameter\Application\WeightUnit;
 use Ajax;
 
 /**
@@ -33,6 +34,7 @@ class General extends \Runalyze\Configuration\Category {
 	protected function createHandles() {
 		$this->createGender();
 		$this->createDistanceUnit();
+		$this->createWeightUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
@@ -59,6 +61,21 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	public function distanceUnit() {
 		return $this->object('DISTANCE_UNIT');
+	}
+	
+	/**
+	 * Create: WeightUnit
+	 */
+	protected function createWeightUnit() {
+		$this->createHandle('WEIGHT_UNIT', new WeightUnit());
+	}
+	
+	/**
+	 * weight Unit
+	 * @return HeartRateUnit
+	 */
+	public function weightUnit() {
+		return $this->object('WEIGHT_UNIT');
 	}
 
 
@@ -173,6 +190,11 @@ class General extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT'), array(
 			'label'		=> __('Distance unit')
 		));
+		
+		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
+			'label'		=> __('Weight unit')
+		));
+
 
 		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(
 			'label'		=> __('Heart rate unit')

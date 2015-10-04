@@ -56,6 +56,18 @@ class FormularUnit {
 	 * @var string
 	 */
 	static public $M = 'm';
+	
+	/**
+	 * Unit: miles
+	 * @var string
+	 */
+	static public $MILES = 'miles';
+
+	/**
+	 * Unit: yards
+	 * @var string
+	 */
+	static public $Y = 'y';	
 
 	/**
 	 * Unit: cm

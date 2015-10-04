@@ -5,6 +5,7 @@
  */
 
 namespace Runalyze\Activity;
+use Runalyze\Activity\Distance;
 
 /**
  * Different pace types/units
@@ -48,6 +49,18 @@ class Pace {
 	 * @var string
 	 */
 	const M_PER_S = "m/s";
+	
+	/**
+	 * Speed unit mi/h
+	 * @var string
+	 */
+	const MI_PER_H = "mi/h";
+	
+	/**
+	 * Speed unit min/mile
+	 * @var string
+	 */
+	const MIN_PER_MILE = "min/mi";
 
 	/**
 	 * Time [s]
@@ -78,7 +91,9 @@ class Pace {
 			self::MIN_PER_KM	=> self::MIN_PER_KM,
 			self::MIN_PER_100M	=> self::MIN_PER_100M,
 			self::MIN_PER_500M	=> self::MIN_PER_500M,
-			self::M_PER_S		=> self::M_PER_S
+			self::M_PER_S		=> self::M_PER_S,
+			self::MI_PER_H		=> self::MI_PER_H,
+			self::MIN_PER_MILE	=> self::MIN_PER_MILE
 		);
 	}
 
@@ -177,6 +192,9 @@ class Pace {
 
 			case self::M_PER_S:
 				return $this->asMeterPerSecond();
+			    
+			case self::MIN_PER_MILE:
+				return $this->asMinPerMile();
 		}
 
 		return '?';
@@ -206,6 +224,10 @@ class Pace {
 				return '/500m';
 			case self::M_PER_S:
 				return '&nbsp;m/s';
+			case self::MIN_PER_MILE:
+				return '&nbsp;min/mi';
+			case self::MI_PER_H:
+				return '&nbsp;mi/h';
 		}
 
 		return '';
@@ -271,6 +293,18 @@ class Pace {
 		return number_format($this->Distance*1000/$this->Time, 1, ',', '.');
 	}
 
+	/**
+	 * As: min/mile
+	 * @return string
+	 */
+	public function asMinPerMile() {
+		if ($this->isEmpty()) {
+			return '-:--';
+		}
+
+		return Duration::format(round($this->Time / $this->Distance));
+	}
+	
 	/**
 	 * Compare
 	 * Both pace objects must have the same unit and the unit must be comparable.
