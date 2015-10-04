@@ -61,9 +61,7 @@ if (Request::param('reload') == 'true') {
 			<?php foreach ($Fields as $Key => $Unit): ?>
                                <?php if($Key == 'weight') {
 					$Weight = new Weight($Info[$Key]);
-					$Info[$Key] = $Weight->string(1, false).'<small>'.$Weight->unit().'</small>';
-					
-					
+					$Info[$Key] = $Weight->string(1, false).'<small>'.$Weight->unit().'</small>';	
 			       }
 
 				   ?>

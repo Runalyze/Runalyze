@@ -54,7 +54,7 @@ class Pace {
 	 * Speed unit mi/h
 	 * @var string
 	 */
-	const MI_PER_H = "mi/h";
+	const MILES_PER_H = "mph";
 	
 	/**
 	 * Speed unit min/mile
@@ -92,7 +92,7 @@ class Pace {
 			self::MIN_PER_100M	=> self::MIN_PER_100M,
 			self::MIN_PER_500M	=> self::MIN_PER_500M,
 			self::M_PER_S		=> self::M_PER_S,
-			self::MI_PER_H		=> self::MI_PER_H,
+			self::MILES_PER_H	=> self::MILES_PER_H,
 			self::MIN_PER_MILE	=> self::MIN_PER_MILE
 		);
 	}
@@ -226,8 +226,8 @@ class Pace {
 				return '&nbsp;m/s';
 			case self::MIN_PER_MILE:
 				return '&nbsp;min/mi';
-			case self::MI_PER_H:
-				return '&nbsp;mi/h';
+			case self::MILES_PER_H:
+				return '&nbsp;mph';
 		}
 
 		return '';
