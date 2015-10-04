@@ -6,6 +6,7 @@
 
 use Runalyze\Model\Activity;
 use Runalyze\View\Activity\Linker;
+use Runalyze\Activity\Distance;
 
 $PLUGINKEY = 'RunalyzePluginStat_Hoehenmeter';
 /**
@@ -132,7 +133,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td>'.$Linker->linkWithSportIcon().'</td>
 				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">'.$Data['elevation'].'&nbsp;m<br>
-					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.$Data['distance'].'&nbsp;km</small></td>
+					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.Distance::format($Data['distance'], false, true).'</small></td>
 			</tr>';
 		}
 
@@ -160,7 +161,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">
 					'.round($Data['gradient']/10, 2).'&nbsp;&#37;<br>
-					<small>'.$Data['elevation'].'&nbsp;m,&nbsp;'.$Data['distance'].'&nbsp;km</small>
+					<small>'.$Data['elevation'].'&nbsp;m,&nbsp;'.Distance::format($Data['distance'], false, true).'</small>
 				</td>
 			</tr>';
 		}

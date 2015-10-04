@@ -131,8 +131,8 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 
 			if ($dat['count_distance'] >= $dat['count']/2) {
 				$Distance = new Distance($dat['distance']);
-				$Value->setValue( $Distance->stringKilometer(false, false) );
-				$Value->setUnit('km');
+				$Value->setValue($Distance->string(false, false, false) );
+				$Value->setUnit($Distance->unit());
 			} else {
 				$Duration = new Duration($dat['time_in_s']);
 				$Value->setValue($Duration->string(Duration::FORMAT_WITH_HOURS));

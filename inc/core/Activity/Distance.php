@@ -71,12 +71,12 @@ class Distance {
 	 * @param float $distance [km]
 	 * @param mixed $format [optional] set as true for display as meter, can be 'auto'
 	 * @param int $decimals [optional] number of decimals
+	 * @param bool $withUnit [optional] with or without unit
 	 * @return string
 	 */
-	static public function format($distance, $format = false, $decimals = false) {
+	static public function format($distance, $format = false, $decimals = false, $withUnit = true) {
 		$Object = new Distance($distance);
-
-		return $Object->string($format, $decimals);
+		return $Object->string($format, $decimals, $withUnit);
 	}
 
 	/**
@@ -130,6 +130,24 @@ class Distance {
 	public function yards() {
 		return $this->multiply(self::YARD_MULTIPLIER);
 	}
+	
+	/*
+	 * Unit
+	 * @return string
+	 */
+	public function unit($format = false) {
+	    if ($format === true) {
+	    if($this->PreferredUnit->isKM())
+		    return 'm';
+		elseif($this->PreferredUnit->isMILES())
+		    return 'y';
+	    } else {
+		if($this->PreferredUnit->isKM())
+		    return 'km';
+		elseif($this->PreferredUnit->isMILES())
+		    return 'mi';
+	    }
+	}
         
 	/**
 	 * Format distance as string
@@ -137,7 +155,7 @@ class Distance {
 	 * @param int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public function string($format = false, $decimals = false) {
+	public function string($format = false, $decimals = false, $withUnit = true) {
 		if ($format == self::FORMAT_AUTO) {
 			if ($this->Distance <= 1.0 || $this->Distance == 1.5 || $this->Distance == 3.0) {
 				$format = true;
@@ -148,14 +166,14 @@ class Distance {
 
 		if ($format === true) {
 		    if($this->PreferredUnit->isKM())
-			return $this->stringMeter();
+			return $this->stringMeter($withUnit);
 		    elseif($this->PreferredUnit->isMILES())
-			return $this->stringYards();
+			return $this->stringYards($withUnit);
 		} else {
 		    if($this->PreferredUnit->isKM())
-			return $this->stringKilometer($decimals);
+			return $this->stringKilometer($decimals, $withUnit);
 		    elseif($this->PreferredUnit->isMILES())
-			return $this->stringMiles($decimals);
+			return $this->stringMiles($decimals, $withUnit);
 		    
 		}
 	}
@@ -189,7 +207,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringYards($withUnit = true) {
-		return number_format($this->Distance * self::YARD_MULTIPLIER, 0, '', '.').($withUnit ? 'y' : '');
+		return number_format($this->Distance * self::YARD_MULTIPLIER, 0, '', '.').($withUnit ? '&nbsp;y' : '');
 	}
         
 	/**
