@@ -2,8 +2,9 @@
 /**
  * Scheme for `runalyze_training`
  */
+use Runalyze\Configuration;
 $TABLENAME = 'training';
-
+$Distance = new \Runalyze\Activity\Distance();
 $HIDDEN_KEYS = array(
 	//'created', 'edited',
 	'creator', 'creator_details', 'activity_id',
@@ -157,7 +158,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
-						'unit'		=> FormularUnit::$KM
+						'unit'		=> Configuration::General()->distanceUnit()->value()
 					)
 	),
 	's'					=> array(

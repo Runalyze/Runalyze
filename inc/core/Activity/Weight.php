@@ -18,10 +18,16 @@ use Runalyze\Configuration;
 class Weight {
     
 	/**
-	 * Default pund multiplier
+	 * Default poun d multiplier
 	 * @var double 
 	*/
 	const POUND_MULTIPLIER = 2.204622;
+        
+	/**
+	 * Default stone multiplier
+	 * @var double 
+	*/
+	const STONE_MULTIPLIER = 0.157473;
 	
 	/**
 	 * Default number of decimals
@@ -71,6 +77,8 @@ class Weight {
 		    return 'kg';
 		elseif($this->PreferredUnit->isLBS())
 		    return 'lbs';
+                elseif($this->PreferredUnit->isST())
+		    return 'st';
 
 	}
 
@@ -96,6 +104,8 @@ class Weight {
 			return $this->stringKG($withUnit);
 		    elseif($this->PreferredUnit->isLBS())
 			return $this->stringLBS($withUnit);
+                    elseif($this->PreferredUnit->isST())
+			return $this->stringST($withUnit);
 	}
 	
 	/**
@@ -107,11 +117,19 @@ class Weight {
 	}
 	
 	/**
-	 * Weight
+	 * Weight in pounds
 	 * @return float [lbs]
 	 */
 	public function LBS() {
 		return $this->Weight * self::POUND_MULTIPLIER;
+	}
+        
+	/**
+	 * Weight in stone
+	 * @return float [st]
+	 */
+	public function ST() {
+		return $this->Weight * self::STONE_MULTIPLIER;
 	}
 	
 	/**
@@ -129,8 +147,16 @@ class Weight {
 	 * @return string with unit
 	 */
 	public function stringLBS($withUnit = true) {
-		return number_format($this->Weight * self::POUND_MULTIPLIER, 0, '', '.').($withUnit ? 'lbs' : '');
+		return number_format($this->LBS(), 0, '', '.').($withUnit ? 'lbs' : '');
 	}
-	
+        
+	/**
+	 * String: as stone
+	 * @param boolean $withUnit [optional]
+	 * @return string with unit
+	 */
+	public function stringST($withUnit = true) {
+		return number_format($this->ST(), 0, '', '.').($withUnit ? 'st' : '');
+	}
 
 }

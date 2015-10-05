@@ -71,12 +71,12 @@ class LapsComputed extends Laps {
 
 			if ($paceInTime) {
 				$this->Data[$key] = 1000*$pace->secondsPerKm();
-				if ($paceUnit == APace::MIN_PER_100M) {
+				if ($paceUnit == APace::MIN_PER_100M OR $paceUnit == APace::MIN_PER_100Y) {
 					$this->Data[$key] /= 10;
-				} elseif ($paceUnit == APace::MIN_PER_500M) {
+				} elseif ($paceUnit == APace::MIN_PER_500M OR $paceUnit == APace::MIN_PER_500Y) {
 					$this->Data[$key] /= 2;
-				}
-			} else {
+				}	
+		} else {
 				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());
 			}
 		}
@@ -95,7 +95,7 @@ class LapsComputed extends Laps {
 		$Rounds = array();
 
 		do {
-			$Loop->nextKilometer();
+			$Loop->nextDistance();
 
 			$Rounds[] = array(
 				'km' => $Loop->difference(Trackdata\Object::DISTANCE),

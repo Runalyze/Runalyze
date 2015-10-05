@@ -9,6 +9,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\View\Activity\Plot\Series\DataCollector;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity\Context;
+use Runalyze\Configuration;
 
 use \Plot;
 
@@ -86,7 +87,7 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 
 		switch ($this->XAxis) {
 			case DataCollector::X_AXIS_DISTANCE:
-				$Plot->setXUnit('km');
+				$Plot->setXUnit(Configuration::General()->distanceUnit()->value());
 				break;
 
 			case DataCollector::X_AXIS_TIME:

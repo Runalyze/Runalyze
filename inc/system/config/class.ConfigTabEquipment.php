@@ -6,6 +6,7 @@
 
 use Runalyze\Model\EquipmentType;
 use Runalyze\Model\Equipment;
+use Runalyze\Activity\Distance;
 
 /**
  * ConfigTabEquipment
@@ -50,7 +51,7 @@ class ConfigTabEquipment extends ConfigTab {
 					<tr>
 						<th>'.__('Name').'</th>
 						<th>'.__('Type').'</th>
-						<th>'.__('max. km').'</th>
+						<th>'.__('max.').Runalyze\Configuration::General()->distanceUnit()->unit().'</th>
 						<th>'.__('max. Time').'</th>
 						<th>'.__('Sports').'</th> 
 						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment type can only be deleted if no references (equipment) exist.')).'</th>
@@ -75,7 +76,7 @@ class ConfigTabEquipment extends ConfigTab {
 								<option value="'.EquipmentType\Object::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
 								<option value="'.EquipmentType\Object::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.$Type->maxDistance().'"><label class="input-unit">km</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.$Type->maxDistance().'"><label class="input-unit">'.Runalyze\Configuration::General()->distanceUnit()->unit().'</label></span></td>
 						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.$Type->maxDuration().'"><label class="input-unit">s</label></span></td>
 						<td><input name="equipmenttype[sportid_old]['.$id.']" type="hidden" value="'.implode(',', $sportIDs).'">
 							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple>';
@@ -134,7 +135,7 @@ class ConfigTabEquipment extends ConfigTab {
 			}
 
 			$Code .= '</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.$Equipment->additionalDistance().'"><label class="input-unit">km</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.$Equipment->additionalDistance().'"><label class="input-unit">'.Runalyze\Configuration::General()->distanceUnit()->unit().'</label></span></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_start]['.$id.']" value="'.$this->datetimeToString($Equipment->startDate()).'"></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_end]['.$id.']" value="'.$this->datetimeToString($Equipment->endDate()).'"></td>
 						<td><input type="text" size="fullwidth" name="equipment[notes]['.$id.']" value="'.$Equipment->notes().'"></td>

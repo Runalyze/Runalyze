@@ -22,7 +22,13 @@ class WeightUnit extends \Runalyze\Parameter\Select {
 	 * Pound
 	 * @var string
 	 */
-	const LBS = 'LBS';
+	const LBS = 'lbs';
+        
+	/**
+	 * Stone
+	 * @var string
+	 */
+	const ST = 'st';
 
 	/**
 	 * Construct
@@ -31,7 +37,8 @@ class WeightUnit extends \Runalyze\Parameter\Select {
 		parent::__construct(self::KG, array(
 			'options'		=> array(
 				self::KG		=> __('kilogram'),
-				self::LBS		=> __('Pounds')
+				self::LBS		=> __('Pounds'),
+                                self::ST		=> __('Stone')
 			)
 		));
 	}
@@ -50,5 +57,21 @@ class WeightUnit extends \Runalyze\Parameter\Select {
 	public function isLBS() {
 		return ($this->value() == self::LBS);
 	}
+        
+	/**
+	 * Is stone?
+	 * @return bool
+	 */
+	public function isST() {
+		return ($this->value() == self::ST);
+	}
+        
+        /*
+         * Get current user weight unit
+         *  @return string
+         */
+        public function unit() {
+            return $this->value();
+        }
 
 }

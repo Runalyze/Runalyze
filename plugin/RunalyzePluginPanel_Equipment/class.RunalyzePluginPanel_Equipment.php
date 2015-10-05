@@ -152,9 +152,9 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
 					<th>'.__('Name').'</th>
 					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
-					<th class="{sorter: \'distance\'}">&Oslash; km</th>
+					<th class="{sorter: \'distance\'}">&Oslash; '.Runalyze\Configuration::General()->distanceUnit()->unit().'</th>
 					<th>&Oslash; '.__('Pace').'</th>
-					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> km</th>
+					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> '.Runalyze\Configuration::General()->distanceUnit()->unit().'</th>
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
 					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>

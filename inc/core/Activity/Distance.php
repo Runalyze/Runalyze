@@ -272,4 +272,5 @@ class Distance {
 	public function isZero() {
 		return ($this->Distance == 0);
 	}
+        
 }

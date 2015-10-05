@@ -22,7 +22,7 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	 * MILES
 	 * @var string
 	 */
-	const MILES = 'miles';
+	const MILES = 'mi';
 
 	/**
 	 * Construct
@@ -50,5 +50,14 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	public function isMILES() {
 		return ($this->value() == self::MILES);
 	}
+        
+        
+        /*
+         * Get current user distance unit
+         *  @return string
+         */
+        public function unit() {
+            return $this->value();
+        }
 
 }

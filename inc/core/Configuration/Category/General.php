@@ -72,7 +72,7 @@ class General extends \Runalyze\Configuration\Category {
 	
 	/**
 	 * weight Unit
-	 * @return HeartRateUnit
+	 * @return WeightUnit
 	 */
 	public function weightUnit() {
 		return $this->object('WEIGHT_UNIT');
@@ -171,6 +171,7 @@ class General extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+                $this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);

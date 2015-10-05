@@ -206,7 +206,7 @@ class Activity extends LeafletRoute {
 				__('Time')
 			);
 			$this->InfoFunctions = array(
-				'function(v){return v.toFixed(2)+"&nbsp;km";}',
+				'function(v){return v.toFixed(2)+"&nbsp;'.Configuration::General()->distanceUnit()->value().'";}',
 				'function(v){return (new Date(v * 1000)).toUTCString().match(/(\d\d:\d\d:\d\d)/)[0];}'
 			);
 		}
@@ -220,10 +220,10 @@ class Activity extends LeafletRoute {
 			return;
 		}
 
-		if (round($this->TrackdataLoop->distance(), 2) >= $this->Dist) {
+		if (round(Distance::format($this->TrackdataLoop->distance(),false,false,false), 2) >= $this->Dist) {
 			$Pace = new Pace($this->TrackdataLoop->time() - $this->Time);
 
-			$Tooltip = sprintf( __('<strong>%s. km</strong> in %s'), $this->Dist, $Pace->asMinPerKm() ).'<br>';
+			$Tooltip = sprintf( __('<strong>%s. '.Configuration::General()->distanceUnit()->value().'</strong> in %s'), $this->Dist, $Pace->asMinPerKm() ).'<br>';
 			$Tooltip .= sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 
 			$this->addMarker(

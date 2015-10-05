@@ -8,6 +8,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
+use Runalyze\Configuration;
 
 /**
  * Plot for: Temperature
@@ -37,7 +38,7 @@ class DistanceSeries extends ActivitySeries {
 		$this->Label = __('Distance');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = 'km';
+		$this->UnitString = Configuration::General()->distanceUnit()->value();
 		$this->UnitDecimals = 2;
 
 		$this->TickSize = 10;

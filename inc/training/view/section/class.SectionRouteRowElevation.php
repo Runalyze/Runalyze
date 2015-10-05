@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Runalyze\View\Activity\Linker;
+use Runalyze\Activity\Distance;
 
 /**
  * Row: Route
@@ -46,7 +47,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 */
 	protected function addElevation() {
 		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->distance(), 'km', __('Distance'));
+			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit()->value(), __('Distance'));
 			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->elevation(), 'm', __('Elevation'));
 
 			// TODO: Calculated elevation?

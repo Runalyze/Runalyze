@@ -51,7 +51,7 @@ class Pace {
 	const M_PER_S = "m/s";
 	
 	/**
-	 * Speed unit mi/h
+	 * Speed unit mph
 	 * @var string
 	 */
 	const MILES_PER_H = "mph";
@@ -61,6 +61,23 @@ class Pace {
 	 * @var string
 	 */
 	const MIN_PER_MILE = "min/mi";
+        
+	/**
+	 * Speed unit min/100y
+	 * @var string
+	 */
+	const MIN_PER_100Y = "min/100y";
+
+	/**
+	 * Speed unit min/500y
+	 * @var string
+	 */
+	const MIN_PER_500Y = "min/500y";
+        
+        /*
+         * MILE Multiplier
+         */
+        const MILE_MULTIPLIER = 0.621371;
 
 	/**
 	 * Time [s]
@@ -93,7 +110,9 @@ class Pace {
 			self::MIN_PER_500M	=> self::MIN_PER_500M,
 			self::M_PER_S		=> self::M_PER_S,
 			self::MILES_PER_H	=> self::MILES_PER_H,
-			self::MIN_PER_MILE	=> self::MIN_PER_MILE
+			self::MIN_PER_MILE	=> self::MIN_PER_MILE,
+                        self::MIN_PER_100Y      => self::MIN_PER_100Y,
+                        self::MIN_PER_500Y      => self::MIN_PER_500Y,
 		);
 	}
 
@@ -193,8 +212,17 @@ class Pace {
 			case self::M_PER_S:
 				return $this->asMeterPerSecond();
 			    
-			case self::MIN_PER_MILE:
-				return $this->asMinPerMile();
+			case self::MILES_PER_H:
+				return $this->asMilesPerHour();
+                        
+                        case self::MIN_PER_MILE:
+                                return $this->asminPerMile();
+                            
+                        case self::MIN_PER_100Y:
+				return $this->asMinPer100y();  
+                            
+                        case self::MIN_PER_500Y:
+				return $this->asMinPer500y();    
 		}
 
 		return '?';
@@ -228,6 +256,10 @@ class Pace {
 				return '&nbsp;min/mi';
 			case self::MILES_PER_H:
 				return '&nbsp;mph';
+			case self::MIN_PER_100Y:
+				return '/100y';
+			case self::MIN_PER_500Y:
+				return '/500y';
 		}
 
 		return '';
@@ -294,15 +326,51 @@ class Pace {
 	}
 
 	/**
-	 * As: min/mile
+	 * As: miles/hour
 	 * @return string
 	 */
-	public function asMinPerMile() {
+	public function asMilesPerHour() {
 		if ($this->isEmpty()) {
 			return '-:--';
 		}
 
-		return Duration::format(round($this->Time / $this->Distance));
+		return number_format(($this->Distance*3600*self::MILE_MULTIPLIER)/$this->Time, 1, ',', '.');
+	}
+        
+	/**
+	 * As: min/mile
+	 * @return string
+	 */
+	public function asminPerMile() {
+		if ($this->isEmpty()) {
+			return '-:--';
+		}
+
+		return Duration::format(round($this->Time/($this->Distance*self::MILE_MULTIPLIER)));
+	}
+        
+	/**
+	 * As: min/100y
+	 * @return string
+	 */
+	public function asMinPer100y() {
+		$this->Time /= 10;
+		$result = $this->asminPerMile();
+		$this->Time *= 10;
+
+		return $result;
+	}
+        
+	/**
+	 * As: min/500y
+	 * @return string
+	 */
+	public function asMinPer500y() {
+		$this->Time /= 2;
+		$result = $this->asminPerMile();
+		$this->Time *= 2;
+
+		return $result;
 	}
 	
 	/**
@@ -326,12 +394,16 @@ class Pace {
 			case self::MIN_PER_KM:
 			case self::MIN_PER_100M:
 			case self::MIN_PER_500M:
+                        case self::MIN_PER_MILE:
+                        case self::MIN_PER_100Y:
+                        case self::MIN_PER_500Y:   
 				$first = new Duration($this->value());
 				$second = new Duration($other->value());
 				$string = Duration::format( abs($first->seconds() - $second->seconds()) );
 				return $this->formatComparison($string, $first->seconds() <= $second->seconds(), $raw);
 
 			case self::KM_PER_H:
+                        case self::MILES_PER_H: 
 			case self::M_PER_S:
 				$value = abs((float)str_replace(',', '.', $this->value()) - (float)str_replace(',', '.', $other->value()));
 				$string = number_format($value, 1, ',', '.');
