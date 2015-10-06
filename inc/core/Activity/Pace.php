@@ -10,7 +10,8 @@ use Runalyze\Activity\Distance;
 /**
  * Different pace types/units
  *
- * @author Hannes Christiansen
+ * @author Hannes Christiansen <hannes@runalyze.de>
+ * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Activity
  */
 class Pace {

@@ -23,15 +23,15 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	 * @var string
 	 */
 	const MILES = 'mi';
-
+        
 	/**
 	 * Construct
 	 */
 	public function __construct() {
 		parent::__construct(self::KM, array(
 			'options'		=> array(
-				self::KM		=> __('Kilometer'),
-				self::MILES		=> __('Miles')
+				self::KM		=> __('Metric units'),
+				self::MILES		=> __('English units')
 			)
 		));
 	}
@@ -59,5 +59,5 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
         public function unit() {
             return $this->value();
         }
-
+        
 }

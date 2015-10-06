@@ -11,8 +11,8 @@ use Runalyze\Configuration;
 /**
  * Weight
  * 
- * @author Hannes Christiansen
- * @author Michael Pohl
+ * @author Hannes Christiansen <hannes@runalyze.de>
+ * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Activity
  */
 class Weight {
@@ -89,6 +89,28 @@ class Weight {
 	 */
 	public function set($weight) {
 		$this->Weight = (float)str_replace(',', '.', $weight);
+
+		return $this;
+	}
+        
+	/**
+	 * Set pound weight
+	 * @param float $weight [pound]
+	 * @return \Runalyze\Activity\Weight $this-reference
+	 */
+	public function setPound($weight) {
+		$this->Weight = (float)str_replace(',', '.', $weight) * 0.453592;
+
+		return $this;
+	}
+        
+	/**
+	 * Set stone weight
+	 * @param float $weight [stone]
+	 * @return \Runalyze\Activity\Weight $this-reference
+	 */
+	public function setStone($weight) {
+		$this->Weight = (float)str_replace(',', '.', $weight) * 6.35029;
 
 		return $this;
 	}

@@ -13,7 +13,8 @@ namespace Runalyze\Activity;
 /**
  * Distance
  *
- * @author Hannes Christiansen
+ * @author Hannes Christiansen <hannes@runalyze.de>
+ * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Activity
  */
 class Distance {
@@ -98,6 +99,17 @@ class Distance {
 
 		return $this;
 	}
+        
+	/**
+	 * Set distance in miles
+	 * @param float $distance [mi]
+	 * @return \Runalyze\Activity\Distance $this-reference
+	 */
+	public function setMiles($distance) {
+		$this->Distance = (float)str_replace(',', '.', $distance) * 1.60934;
+
+		return $this;
+	}
 
 	/**
 	 * Kilometer
@@ -137,10 +149,7 @@ class Distance {
 	 */
 	public function unit($format = false) {
 	    if ($format === true) {
-	    if($this->PreferredUnit->isKM())
-		    return 'm';
-		elseif($this->PreferredUnit->isMILES())
-		    return 'y';
+                return $this->unitForShortDistances();
 	    } else {
 		if($this->PreferredUnit->isKM())
 		    return 'km';
@@ -148,6 +157,32 @@ class Distance {
 		    return 'mi';
 	    }
 	}
+        
+	/*
+	 * Unit for short distances
+	 * @return string
+	 */
+	public function unitForShortDistances() {
+	    if($this->PreferredUnit->isKM()) {
+		    return 'm';
+            } elseif($this->PreferredUnit->isMILES()) {
+		    return 'y';
+	    }
+	}    
+        
+	/*
+	 * Unit for elevation
+	 * @return string
+	 */
+	public function unitForElevation() {
+	    if($this->PreferredUnit->isKM()) {
+		    return 'hm';
+            } elseif($this->PreferredUnit->isMILES()) {
+		    return 'ft';
+	    }
+	} 
+        
+        /* TODO factor(), factorForShortDistance(), factorForElevation() */
         
 	/**
 	 * Format distance as string
