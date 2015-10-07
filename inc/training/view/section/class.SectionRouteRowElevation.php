@@ -49,7 +49,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 		if ($this->Context->activity()->distance() > 0) {
 			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit()->value(), __('Distance'));
 			$Elevation = new Distance($this->Context->activity()->elevation()/1000);
-                        $this->BoxedValues[] = new BoxedValue($Elevation->stringForShortDistanceFeet(false, false), $Elevation->unitForShortDistancesFeet(), __('Elevation'));
+                        $this->BoxedValues[] = new BoxedValue($Elevation->stringForDistanceFeet(false, false), $Elevation->unitForDistancesFeet(), __('Elevation'));
 
 			// TODO: Calculated elevation?
 
@@ -57,9 +57,9 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
 
 				if ($this->Context->hasRoute()) {
-					$upDown = '+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown();
+					$upDown = '+'.  Distance::formatFeet($this->Context->route()->elevationUp(), false).'/-'.Distance::formatFeet($this->Context->route()->elevationDown(), false);
 				} else {
-					$upDown = '+'.$this->Context->activity()->elevation().'/-'.$this->Context->activity()->elevation();
+					$upDown = '+'.Distance::formatFeet($this->Context->activity()->elevation(), false).'/-'.Distance::formatFeet($this->Context->activity()->elevation(), false);
 				}
 
 				$this->BoxedValues[] = new BoxedValue($upDown, 'm', __('Elevation up/down'));

@@ -7,7 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Runalyze\View\Leaflet;
-
+use Runalyze\Activity\Distance;
 /**
  * Row: Heartrate
  *
@@ -80,7 +80,8 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
         if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
-            $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->distance(), '-.--'), 'km', __('Distance'));
+	    $Distance = new Distance($this->Context->activity()->distance());
+            $this->BoxedValues[] = new BoxedValue(Helper::Unknown($Distance->string(false, false, false), '-.--'), $Distance->unit(), __('Distance'));
             $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
         }
 

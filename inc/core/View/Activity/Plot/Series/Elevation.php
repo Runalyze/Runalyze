@@ -8,6 +8,7 @@ namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Model\Route\Object as Route;
 use Runalyze\View\Activity;
+use Runalyze\Configuration;
 
 /**
  * Plot for: Elevation
@@ -48,9 +49,8 @@ class Elevation extends ActivitySeries {
 			$this->Data = array();
 			return;
 		}
-
+		
 		$Collector = new DataCollectorWithRoute($context->trackdata(), $key, $context->route());
-
 		$this->Data = $Collector->data();
 		$this->XAxis = $Collector->xAxis();
 	}
@@ -62,7 +62,7 @@ class Elevation extends ActivitySeries {
 		$this->Label = __('Elevation');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = 'm';
+		$this->UnitString = Configuration::General()->distanceUnitAsFeet();
 		$this->UnitDecimals = 0;
 
 		$this->TickSize = 10;

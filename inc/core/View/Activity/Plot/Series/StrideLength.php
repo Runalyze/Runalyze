@@ -9,6 +9,8 @@ namespace Runalyze\View\Activity\Plot\Series;
 use Runalyze\Calculation\StrideLength\Calculator;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
+use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 /**
  * Plot for: stride length
@@ -52,7 +54,7 @@ class StrideLength extends ActivityPointSeries {
 		$this->Label = __('Stride length');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = 'm';
+		$this->UnitString = Configuration::General()->distanceUnitAsFeet();
 		$this->UnitDecimals = 2;
 
 		$this->TickSize = 1;
@@ -76,7 +78,8 @@ class StrideLength extends ActivityPointSeries {
 	 * @return float
 	 */
 	protected function correctUnit($value) {
-		return 0.01*$value;
+	    $strideLength = new Distance(0.01*$value);
+		return $strideLength->stringForDistanceFeet(false);
 	}
 
 	/**

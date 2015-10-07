@@ -57,7 +57,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 			new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories')),
 			new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon()),
 			new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP')),
-			new BoxedValue(Helper::Unknown($Elevation->stringForShortDistanceFeet(true, false, false), '-'), $Elevation->unitForElevation(true), __('Elevation'))
+			new BoxedValue(Helper::Unknown($Elevation->stringForDistanceFeet(false), '-'), $Elevation->unitForElevation(true), __('Elevation'))
 		);
 	}
 }

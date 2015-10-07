@@ -65,11 +65,18 @@ class General extends \Runalyze\Configuration\Category {
 
         
 	/**
-	 * Distance Unit
-	 * @return HeartRateUnit
+	 * Distance Unit as feet
+	 * @return distance unit with feet
 	 */
-	public function elevationUnit() {
-		return $this->object('DISTANCE_UNIT')->elevationUnit();
+	public function distanceUnitAsFeet() {
+		return $this->object('DISTANCE_UNIT')->distanceUnitAsFeet();
+	}
+	/**
+	 * Distance Unit as yard
+	 * @return distance unit with feet
+	 */
+	public function distanceUnitAsYard() {
+		return $this->object('DISTANCE_UNIT')->distanceUnitAsYard();
 	}
 	
 	/**

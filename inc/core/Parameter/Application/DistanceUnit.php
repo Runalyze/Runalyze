@@ -25,7 +25,7 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	const MILES = 'mi';
         
 	/**
-	 * Yard
+	 * Feet
 	 * @var string
 	 */
 	const FT = 'ft';
@@ -36,7 +36,13 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	 * @var string
 	 */
 	const M = 'm';
-        
+	
+	/**
+	 * Yard
+	 * @var string
+	 */
+	const Y = 'y';
+	
 	/**
 	 * Construct
 	 */
@@ -73,10 +79,17 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
             return $this->value();
         }
         
-        public function elevationUnit() {
+        public function distanceUnitAsFeet() {
             if($this->isKM())
                 return self::M;
             elseif($this->isMILES())
                 return self::FT;
         }        
+	
+        public function distanceUnitAsYard() {
+            if($this->isKM())
+                return self::M;
+            elseif($this->isMILES())
+                return self::Y;
+        }     
 }

@@ -47,6 +47,12 @@ class Distance {
 	 * @var double 
 	*/
 	const YARD_MULTIPLIER = 1093.6133;
+	
+	/**
+	 * Default feet multiplier
+	 * @var double
+	 */
+	const FEET_MULTIPLIER = 3280.84;
        
 
 	/**
@@ -78,6 +84,28 @@ class Distance {
 	static public function format($distance, $format = false, $decimals = false, $withUnit = true) {
 		$Object = new Distance($distance);
 		return $Object->string($format, $decimals, $withUnit);
+	}
+	
+	/**
+	 * Format to m/yard
+	 * @param float $distance [km]
+	 * @param bool $withUnit [optional] with or without unit
+	 * @return string
+	 */
+	static public function formatYard($distance, $withUnit = true) {
+		$Object = new Distance($distance);
+		return $Object->stringYards($withUnit);
+	}
+	
+	/**
+	 * Format to m/feet
+	 * @param float $distance [km]
+	 * @param bool $withUnit [optional] with or without unit
+	 * @return string
+	 */
+	static public function formatFeet($distance, $withUnit = true) {
+		$Object = new Distance($distance);
+		return $Object->stringFeet($withUnit);
 	}
 
 	/**
@@ -142,6 +170,14 @@ class Distance {
 	public function yards() {
 		return $this->multiply(self::YARD_MULTIPLIER);
 	}
+        
+	/*
+	 * Feet
+	 * @return int [feet]
+	*/
+	public function feets() {
+		return $this->multiply(self::FEET_MULTIPLIER);
+	}
 	
 	/*
 	 * Unit
@@ -162,19 +198,27 @@ class Distance {
 	 * Unit for short distances
 	 * @return string
 	 */
-	public function unitForShortDistancesYard() {
+	public function unitForShortDistances() {
 	    if($this->PreferredUnit->isKM()) {
 		    return 'm';
             } elseif($this->PreferredUnit->isMILES()) {
 		    return 'y';
 	    }
 	}   
+	
+	/*
+	 * Unit for short distances
+	 * @return string
+	 */
+	public function unitForDistancesYard() {
+	    $this->unitForShortDistances();
+	}   
         
 	/*
 	 * Unit for short distances
 	 * @return string
 	 */
-	public function unitForShortDistancesFeet() {
+	public function unitForDistancesFeet() {
 	    if($this->PreferredUnit->isKM()) {
 		    return 'm';
             } elseif($this->PreferredUnit->isMILES()) {
@@ -231,9 +275,9 @@ class Distance {
 	 * @param int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public function stringForShortDistanceFeet($decimals = false, $withUnit = true) {
+	public function stringForDistanceFeet($withUnit = true) {
                 if($this->PreferredUnit->isKM())
-                    return $this->stringKilometer($withUnit);
+                    return $this->stringMeter($withUnit);
                 elseif($this->PreferredUnit->isMILES())
                     return $this->stringFeet($withUnit);
 		    
@@ -246,9 +290,9 @@ class Distance {
 	 * @param int $decimals [optional] number of decimals
 	 * @return string
 	 */
-	public function stringForShortDistanceYards($decimals = false, $withUnit = true) {
+	public function stringForDistanceYards($decimals = false, $withUnit = true) {
                 if($this->PreferredUnit->isKM())
-                    return $this->stringKilometer($withUnit);
+                    return $this->stringMeter($withUnit);
                 elseif($this->PreferredUnit->isMILES())
                     return $this->stringYards($withUnit);
 		    
@@ -270,7 +314,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringFeet($withUnit = true) {
-		return number_format($this->Distance*3280.84, 0, '', '.').($withUnit ? 'ft' : '');
+		return number_format($this->Distance * self::FEET_MULTIPLIER, 0, '', '.').($withUnit ? '&nbsp;ft' : '');
 	}
 
 	/**
