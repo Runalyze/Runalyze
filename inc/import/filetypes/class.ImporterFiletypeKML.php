@@ -59,4 +59,4 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 	}
 }
 
-ImporterWindowTabUpload::addInfo( sprintf(__('%-files are supported from: %s'), 'kml', ImporterFiletypeKML::ALLOWED_PRODUCER) );
+ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'kml', ImporterFiletypeKML::ALLOWED_PRODUCER) );

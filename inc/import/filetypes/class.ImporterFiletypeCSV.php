@@ -48,4 +48,4 @@ class ImporterFiletypeCSV extends ImporterFiletypeAbstract {
 	}
 }
 
-ImporterWindowTabUpload::addInfo( sprintf(__('%-files are supported from: %s'), 'csv', ImporterFiletypeCSV::ALLOWED_PRODUCER) );
+ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'csv', ImporterFiletypeCSV::ALLOWED_PRODUCER) );

@@ -549,7 +549,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function printTableHeader() {
 		$this->displayTableHeadForTimeRange(false, '7%');
-		echo '<th>'.__('In total').'</th>';
+
+		if (!$this->showsAllYears()) {
+			echo '<th>'.__('In total').'</th>';
+		}
 	}
 
 	/**
