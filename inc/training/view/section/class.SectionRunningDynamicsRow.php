@@ -7,6 +7,7 @@
 use Runalyze\Data\Cadence;
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
+use Runalyze\Activity\Distance;
 
 /**
  * Row: Running dynamics
@@ -73,7 +74,8 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
-			$StrideLength = new BoxedValue($this->Context->dataview()->strideLength()->value(), 'm', __('Stride Length'));
+                        $StrideLengthDistance = new Distance($this->Context->dataview()->strideLength()->value()/1000);
+			$StrideLength = new BoxedValue($StrideLengthDistance->stringForShortDistanceFeet(false, false), $StrideLengthDistance->unitForShortDistancesFeet(), __('Stride Length'));
 			$StrideLength->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;

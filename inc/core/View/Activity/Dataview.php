@@ -426,7 +426,7 @@ class Dataview {
 	 */
 	public function elevation() {
 		if ($this->Activity->elevation() > 0) {
-			return $this->Activity->elevation().'&nbsp;hm';
+			return $this->Activity->elevation().'&nbsp;'.  Configuration::General()->elevationUnit();
 		}
 
 		return '';

@@ -46,7 +46,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 	 */
 	protected function setBoxedValues() {	
 		$Distance = new Distance($this->Context->activity()->distance());
-		$Elevation = new Distance($this->Context->activity()->elevation());
+		$Elevation = new Distance($this->Context->activity()->elevation() / 1000);
 		$this->BoxedValues = array(
 			new BoxedValue(Helper::Unknown($Distance->string(false, false, false), '-.--'), $Distance->unit(), __('Distance')),
 			new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time')),
@@ -57,7 +57,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 			new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories')),
 			new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon()),
 			new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP')),
-			new BoxedValue(Helper::Unknown($Elevation->string(true, false, false), '-'), $Elevation->unit(true), __('Elevation'))
+			new BoxedValue(Helper::Unknown($Elevation->stringForShortDistanceFeet(true, false, false), '-'), $Elevation->unitForElevation(true), __('Elevation'))
 		);
 	}
 }

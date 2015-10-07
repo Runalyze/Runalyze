@@ -5,7 +5,7 @@
  */
 
 namespace Runalyze\Parameter\Application;
-
+use Runalyze\Configuration;
 /**
  * Distance Unit
  * @author Hannes Christiansen & Michael Pohl
@@ -23,6 +23,19 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
 	 * @var string
 	 */
 	const MILES = 'mi';
+        
+	/**
+	 * Yard
+	 * @var string
+	 */
+	const FT = 'ft';
+        
+        
+	/**
+	 * HM
+	 * @var string
+	 */
+	const M = 'm';
         
 	/**
 	 * Construct
@@ -60,4 +73,10 @@ class DistanceUnit extends \Runalyze\Parameter\Select {
             return $this->value();
         }
         
+        public function elevationUnit() {
+            if($this->isKM())
+                return self::M;
+            elseif($this->isMILES())
+                return self::FT;
+        }        
 }

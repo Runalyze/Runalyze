@@ -162,11 +162,23 @@ class Distance {
 	 * Unit for short distances
 	 * @return string
 	 */
-	public function unitForShortDistances() {
+	public function unitForShortDistancesYard() {
 	    if($this->PreferredUnit->isKM()) {
 		    return 'm';
             } elseif($this->PreferredUnit->isMILES()) {
 		    return 'y';
+	    }
+	}   
+        
+	/*
+	 * Unit for short distances
+	 * @return string
+	 */
+	public function unitForShortDistancesFeet() {
+	    if($this->PreferredUnit->isKM()) {
+		    return 'm';
+            } elseif($this->PreferredUnit->isMILES()) {
+		    return 'ft';
 	    }
 	}    
         
@@ -212,6 +224,36 @@ class Distance {
 		    
 		}
 	}
+        
+	/**
+	 * Format elevation as string
+	 * @param mixed $format [optional] set as true for display as meter, can be 'auto'
+	 * @param int $decimals [optional] number of decimals
+	 * @return string
+	 */
+	public function stringForShortDistanceFeet($decimals = false, $withUnit = true) {
+                if($this->PreferredUnit->isKM())
+                    return $this->stringKilometer($withUnit);
+                elseif($this->PreferredUnit->isMILES())
+                    return $this->stringFeet($withUnit);
+		    
+		
+	}
+        
+	/**
+	 * Format elevation as string
+	 * @param mixed $format [optional] set as true for display as meter, can be 'auto'
+	 * @param int $decimals [optional] number of decimals
+	 * @return string
+	 */
+	public function stringForShortDistanceYards($decimals = false, $withUnit = true) {
+                if($this->PreferredUnit->isKM())
+                    return $this->stringKilometer($withUnit);
+                elseif($this->PreferredUnit->isMILES())
+                    return $this->stringYards($withUnit);
+		    
+		
+	}
 
 	/**
 	 * String: as meter
@@ -220,6 +262,15 @@ class Distance {
 	 */
 	public function stringMeter($withUnit = true) {
 		return number_format($this->Distance*1000, 0, '', '.').($withUnit ? 'm' : '');
+	}
+        
+	/**
+	 * String: as feet
+	 * @param boolean $withUnit [optional]
+	 * @return string with unit
+	 */
+	public function stringFeet($withUnit = true) {
+		return number_format($this->Distance*3280.84, 0, '', '.').($withUnit ? 'ft' : '');
 	}
 
 	/**

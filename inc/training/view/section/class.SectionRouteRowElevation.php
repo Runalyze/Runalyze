@@ -48,7 +48,8 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	protected function addElevation() {
 		if ($this->Context->activity()->distance() > 0) {
 			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit()->value(), __('Distance'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->elevation(), 'm', __('Elevation'));
+			$Elevation = new Distance($this->Context->activity()->elevation()/1000);
+                        $this->BoxedValues[] = new BoxedValue($Elevation->stringForShortDistanceFeet(false, false), $Elevation->unitForShortDistancesFeet(), __('Elevation'));
 
 			// TODO: Calculated elevation?
 

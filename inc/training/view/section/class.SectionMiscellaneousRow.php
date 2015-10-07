@@ -6,7 +6,7 @@
 
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-
+use Runalyze\Activity\Distance;
 /**
  * Row: Miscellaneous
  * 
@@ -141,6 +141,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			}
 
 			if ($this->Context->swimdata()->poollength() > 0) {
+                                $PoolLength = new Distance($this->Context->swimdata()->poollength()/100);
 				$Swolf = new BoxedValue($this->Context->swimdata()->poollength()/100, 'm', __('Pool length'));
 				$Swolf->defineAsFloatingBlock('w50');    
 				$this->BoxedValues[] = $Swolf;
