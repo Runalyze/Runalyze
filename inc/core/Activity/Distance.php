@@ -95,7 +95,10 @@ class Distance {
 	 */
 	static public function formatYard($distance, $decimals = false, $withUnit = true) {
 		$Object = new Distance($distance);
-		return $Object->stringYards($decimals, $withUnit);
+		if($Object->PreferredUnit->isKM())
+                    return $Object->stringMeter($decimals, $withUnit);
+                elseif($Object->PreferredUnit->isMILES())
+                    return $Object->stringYards($decimals, $withUnit);
 	}
 	
 	/**
@@ -107,7 +110,10 @@ class Distance {
 	 */
 	static public function formatFeet($distance, $decimals = false, $withUnit = true) {
 		$Object = new Distance($distance);
-		return $Object->stringFeet($decimals, $withUnit);
+		if($Object->PreferredUnit->isKM())
+                    return $Object->stringMeter($decimals, $withUnit);
+                elseif($Object->PreferredUnit->isMILES())
+                    return $Object->stringFeet($decimals, $withUnit);
 	}
 
 	/**

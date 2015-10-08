@@ -62,7 +62,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 					$upDown = '+'.Distance::formatFeet($this->Context->activity()->elevation(), false).'/-'.Distance::formatFeet($this->Context->activity()->elevation(), false);
 				}
 
-				$this->BoxedValues[] = new BoxedValue($upDown, 'm', __('Elevation up/down'));
+				$this->BoxedValues[] = new BoxedValue($upDown, Configuration::General()->distanceUnitAsFeet(), __('Elevation up/down'));
 			}
 		}
 	}

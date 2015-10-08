@@ -195,8 +195,8 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 */
 	protected function addElevation() {
 		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->distance(), 'km', __('Distance'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->elevation(), 'm', __('Elevation'));
+			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit(), __('Distance'));
+			$this->BoxedValues[] = new BoxedValue(Distance::formatFeet($this->Context->activity()->elevation(), false, false), Configuration::General()->distanceUnitAsFeet(), __('Elevation'));
 
 			// TODO: Calculated elevation?
 
@@ -204,7 +204,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
 
 				if ($this->Context->hasRoute()) {
-					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), 'm', __('Elevation up/down'));
+					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), Configuration::General()->distanceUnitAsFeet(), __('Elevation up/down'));
 				}
 			}
 		}
