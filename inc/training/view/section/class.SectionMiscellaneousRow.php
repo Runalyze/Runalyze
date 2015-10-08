@@ -107,7 +107,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence->defineAsFloatingBlock('w50');
 
 			if ($this->Context->activity()->strideLength() > 0) {
-				$Power = new BoxedValue($this->Context->dataview()->strideLength()->value(), Configuration::General()->distanceUnitAsFeet(), __('Stride Length'));
+				$Power = new BoxedValue(Distance::formatFeet($this->Context->dataview()->strideLength()->value(), false, false), Configuration::General()->distanceUnitAsFeet(), __('Stride Length'));
 				$Power->defineAsFloatingBlock('w50');
 			} else {
 				$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
@@ -143,7 +143,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 
 			if ($this->Context->swimdata()->poollength() > 0) {
                                 $PoolLength = new Distance($this->Context->swimdata()->poollength()/100);
-				$Swolf = new BoxedValue($this->Context->swimdata()->poollength()/100, Configuration::General()->distanceUnitAsYard(), __('Pool length'));
+				$Swolf = new BoxedValue($PoolLength->stringForDistanceYards(true, false), Configuration::General()->distanceUnitAsYard(), __('Pool length'));
 				$Swolf->defineAsFloatingBlock('w50');    
 				$this->BoxedValues[] = $Swolf;
 			}

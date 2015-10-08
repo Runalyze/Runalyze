@@ -79,7 +79,7 @@ class StrideLength extends ActivityPointSeries {
 	 */
 	protected function correctUnit($value) {
 	    $strideLength = new Distance(0.01*$value);
-		return $strideLength->stringForDistanceFeet(false);
+		return $strideLength->stringForDistanceFeet(false, false);
 	}
 
 	/**

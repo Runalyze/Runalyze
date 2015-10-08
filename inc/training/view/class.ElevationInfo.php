@@ -9,6 +9,7 @@ use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Data\Elevation;
 use Runalyze\View\Activity\Context;
 use Runalyze\Model;
+use Runalyze\Activity\Distance;
 
 /**
  * Display elevation info for a training
@@ -127,19 +128,19 @@ class ElevationInfo {
 		$Fieldset->setHtmlCode('
 			<div class="w50">
 				<label>'.Ajax::tooltip(__('manual value'), __('If you did not insert a value by hand, this value has been calculated.')).'</label>
-				<span class="as-input">'.$this->manualElevation.'&nbsp;m</span>
+				<span class="as-input">'. Distance::formatFeet($this->manualElevation, true).'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('Lowest point').'</label>
-				<span class="as-input">'.$this->lowestPoint.'&nbsp;m</span>
+				<span class="as-input">'.Distance::formatFeet($this->lowestPoint, true).'</span>
 			</div>
 			<div class="w50">
 				<label>'.Ajax::tooltip(__('calculated value'), __('This value is calculated with your current configuration. The saved value may be outdated.') ).'</label>
-				<span class="as-input">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
+				<span class="as-input">'.Distance::formatFeet($this->calculatedElevation, true).'</span> '.$useCalculatedValueLink.'
 			</div>
 			<div class="w50">
 				<label>'.__('Highest point').'</label>
-				<span class="as-input">'.$this->highestPoint.'&nbsp;m</span>
+				<span class="as-input">'.Distance::formatFeet($this->highestPoint, true).'</span>
 			</div>
 			<div class="w50">
 				<label>&oslash; '.__('Gradient').'</label>
@@ -147,7 +148,7 @@ class ElevationInfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Up/Down').'</label>
-				<span class="as-input">+'.$this->Context->route()->elevationUp().'m / -'.$this->Context->route()->elevationDown().'m</span>
+				<span class="as-input">+'.Distance::formatFeet($this->Context->route()->elevationUp(), true).' / -'.Distance::formatFeet($this->Context->route()->elevationDown(), true).'</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -219,11 +220,11 @@ class ElevationInfo {
 					$highlight = (Configuration::ActivityView()->elevationMinDiff() == $t) && (Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0]) ? ' highlight' : '';
 					$Calculator->setThreshold($t);
 					$Calculator->calculate();
-					$Code .= '<td class="r'.$highlight.'">'.$Calculator->totalElevation().'&nbsp;m</td>';
+					$Code .= '<td class="r'.$highlight.'">'. Distance::formatFeet($Calculator->totalElevation(), true).'</td>';
 				}
 			} else {
 				$Calculator->calculate();
-				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->totalElevation().'&nbsp;m</td>';
+				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.Distance::formatFeet($Calculator->totalElevation(), true).'</td>';
 			}
 
 			$Code .= '</tr>';

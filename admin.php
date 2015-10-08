@@ -3,7 +3,7 @@
  * RUNALYZE
  * 
  * @author Runalyze
- * @copyright http://www.runalyze.de/
+ * @copyright http://www.runalyze.com/
  */
 if (!file_exists('config.php')) {
 	include 'install.php';

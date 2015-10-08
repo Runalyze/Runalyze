@@ -427,7 +427,7 @@ class Dataview {
 	public function elevation() {
 		if ($this->Activity->elevation() > 0) {
 		    $Elevation = new Distance($this->Activity->elevation()/1000);
-			return $Elevation->stringForDistanceFeet(true);
+			return $Elevation->stringForDistanceFeet(false, true);
 		}
 
 		return '';
