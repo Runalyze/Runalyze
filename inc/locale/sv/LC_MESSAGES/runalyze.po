@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-26 20:28+0200\n"
-"PO-Revision-Date: 2015-09-29 10:51+0200\n"
+"PO-Revision-Date: 2015-10-08 14:48+0200\n"
 "Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
 "Language-Team: Swedish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/sv/>\n"
@@ -278,7 +278,7 @@ msgstr "jordkontakt"
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:40
 #: inc/class.DatasetLabels.php:46
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "vertikal svängning"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/view/class.VDOTinfo.php:74
@@ -313,7 +313,6 @@ msgid "TRIMP"
 msgstr "TRIMP"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
-#, fuzzy
 msgid "JDpoints"
 msgstr "JDpoäng"
 
@@ -486,8 +485,9 @@ msgstr "använder VDOT"
 #: inc/training/schemes/scheme.Training.new.php:440
 #: inc/training/schemes/scheme.Training.php:462
 #: inc/core/View/Activity/Dataview.php:486 inc/class.DatasetLabels.php:42
+#, fuzzy
 msgid "Running drills"
-msgstr ""
+msgstr "lopps øvningär"
 
 #: inc/training/search/class.SearchFormular.php:220
 #: inc/system/config/class.ConfigTabAccount.php:58
@@ -589,7 +589,7 @@ msgstr "Påverkan"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
 msgid "Running Dynamics"
-msgstr ""
+msgstr "Running Dynamics"
 
 #: inc/training/view/section/class.SectionLaps.php:21
 #: inc/training/view/section/class.SectionLaps.php:26
@@ -701,7 +701,6 @@ msgstr "høydmätare är inte korrigerade"
 #: inc/training/view/section/class.SectionCompositeRow.php:99
 #: inc/training/schemes/scheme.Training.new.php:177
 #: inc/training/schemes/scheme.Training.php:182
-#, fuzzy
 msgid "Elapsed time"
 msgstr "forflüten tid"
 
@@ -714,7 +713,6 @@ msgid "Cadence plot"
 msgstr "frekvensdiagram"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:60
-#, fuzzy
 msgid "Power plot"
 msgstr "effekt"
 
@@ -815,7 +813,7 @@ msgstr "Mer om VDOT beräkninger"
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
 msgid "Lanes"
-msgstr ""
+msgstr "banor"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
@@ -824,97 +822,100 @@ msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:58
 msgid "elev."
-msgstr ""
+msgstr "höjdökning"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:35
 #: inc/system/config/class.ConfigTabTypes.php:48
 #: inc/system/config/class.ConfigTabSports.php:56
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:13
 msgid "HR"
-msgstr ""
+msgstr "HF"
 
 #: inc/training/view/section/table/class.TableZonesPace.php:54
 msgid "faster"
-msgstr ""
+msgstr "snabbare"
 
 #: inc/training/view/section/table/class.TableZonesAbstract.php:102
 msgid "Zone"
-msgstr ""
+msgstr "zon"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:48
 msgid "Stride length plot"
-msgstr ""
+msgstr "steglängdgraf"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:53
 msgid "Oscillation plot"
-msgstr ""
+msgstr "vertikal svängningsrörelse graf"
 
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:58
 msgid "Ground contact plot"
-msgstr ""
+msgstr "markkontakttid graf"
 
 #: inc/training/view/section/class.SectionHRVRow.php:30
 msgid "R-R intervals"
-msgstr ""
+msgstr "R-R intervaller"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
 #: inc/core/View/Activity/Plot/HRVPointcare.php:55
 msgid "Pointcare plot"
-msgstr ""
+msgstr "Pointcare graf"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
-msgstr ""
+msgstr "&Oslash; R-R intervaller"
 
 #: inc/training/view/section/class.SectionOverview.php:17
 msgid "Overview"
-msgstr ""
+msgstr "översikt"
 
 #: inc/training/view/section/class.SectionHeartrate.php:17
 msgid "Heartrate data"
-msgstr ""
+msgstr "puls uppgifter"
 
 #: inc/training/view/section/class.SectionRouteOnlyElevation.php:17
 msgid "Elevation data"
-msgstr ""
+msgstr "höjd uppgifter"
 
 #: inc/training/view/section/class.SectionComposite.php:17
 msgid "Composite data"
-msgstr ""
+msgstr "sammensatte uppgifter"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
-msgstr ""
+msgstr "sammensatt graf"
 
 #: inc/training/view/section/class.SectionCompositeRow.php:50
 #: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
-msgstr ""
+msgstr "Snart kommer du att kunna konfigurera egna zoner."
 
 #: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
-msgstr ""
+msgstr "pulszoner"
 
 #: inc/training/view/class.ElevationInfo.php:112
 #, php-format
 msgid "Elevation calculation for: %s"
-msgstr ""
+msgstr "højdmeter beräkningor for: %s"
 
 #: inc/training/view/class.ElevationInfo.php:121
 msgid "apply data"
-msgstr ""
+msgstr "använda uppgifter"
 
 #: inc/training/view/class.ElevationInfo.php:126
 msgid "General data"
-msgstr ""
+msgstr "allmän uppgifter"
 
 #: inc/training/view/class.ElevationInfo.php:129
 msgid "manual value"
-msgstr ""
+msgstr "manuella värden"
 
 #: inc/training/view/class.ElevationInfo.php:129
+#, fuzzy
 msgid "If you did not insert a value by hand, this value has been calculated."
 msgstr ""
+"Antingen genom upprättandet inte ställa in höjddata , använde det beräknade "
+"värdet."
 
 #: inc/training/view/class.ElevationInfo.php:133
 msgid "Lowest point"
