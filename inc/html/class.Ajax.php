@@ -368,7 +368,7 @@ class Ajax {
 				$input[$key] = $ret[0];
 				$funcs = $ret[1];
 			} elseif (substr($value,0,8) == 'function' || substr($value,0,13) == 'RunalyzePlot.') {
-                  $func_key = "#".uniqid()."#";
+                  $func_key = "#".uniqid(rand(), true)."#";
                   $funcs[$func_key] = $value;
                   $input[$key] = $func_key;
 			}
