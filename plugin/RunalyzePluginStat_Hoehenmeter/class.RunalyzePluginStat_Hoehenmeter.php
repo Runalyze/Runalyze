@@ -100,7 +100,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 					$Link->fromTo(mktime(0,0,0,$m,1,$y), mktime(0,0,0,$m+1,0,$y));
 					$Link->sortBy('elevation');
 
-					echo '<td>'.$Link->link($Data[$m]['elevation'].'&nbsp;m').'</td>';
+					echo '<td>'.$Link->link(Distance::formatFeet($Data[$m]['elevation']/1000)).'</td>';
 				} else {
 					echo HTML::emptyTD();
 				}
@@ -132,8 +132,8 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td class="small">'.$Linker->weekLink().'</td>
 				<td>'.$Linker->linkWithSportIcon().'</td>
 				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
-				<td class="r">'.$Data['elevation'].'&nbsp;m<br>
-					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.Distance::format($Data['distance'], false, true).'</small></td>
+				<td class="r">'.  Distance::formatFeet($Data['elevation']/1000).'<br>
+					<small>'.round($grade/10, 2).'&nbsp;&#37;,&nbsp;'.Distance::format($Data['distance']).'</small></td>
 			</tr>';
 		}
 
@@ -161,7 +161,7 @@ class RunalyzePluginStat_Hoehenmeter extends PluginStat {
 				<td>'.$this->labelFor($Data['route'], $Data['comment']).'</td>
 				<td class="r">
 					'.round($Data['gradient']/10, 2).'&nbsp;&#37;<br>
-					<small>'.$Data['elevation'].'&nbsp;m,&nbsp;'.Distance::format($Data['distance'], false, true).'</small>
+					<small>'.Distance::formatFeet($Data['elevation']/1000).',&nbsp;'.Distance::format($Data['distance'], false, true).'</small>
 				</td>
 			</tr>';
 		}

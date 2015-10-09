@@ -175,7 +175,7 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>'.__('Up/Down').'</label>
-				<span class="as-input">+'.$up.'/-'.$down.'&nbsp;m</span>
+				<span class="as-input">+'.Distance::formatFeet($up/1000, false, false).'/-'.Distance::formatFeet($down/1000, false, true).'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
@@ -183,7 +183,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>
-				<span class="as-input">'.sprintf("%+d", 1000*$Modifier->additionalDistance()).'m = '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
+				<span class="as-input">'.Distance::formatFeet($Modifier->additionalDistance(), 2). '= '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

@@ -313,7 +313,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringMeter($decimals = false, $withUnit = true) {
-		return number_format($this->Distance*1000, 0, '', '.').($withUnit ? 'm' : '');
+		return number_format($this->Distance*1000, 0, self::$DECIMAL_POINT, '.').($withUnit ? 'm' : '');
 	}
         
 	/**
@@ -322,7 +322,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringFeet($decimals = false, $withUnit = true) {
-		return number_format($this->Distance * self::FEET_MULTIPLIER, 0, '', '.').($withUnit ? '&nbsp;ft' : '');
+		return number_format($this->Distance * self::FEET_MULTIPLIER, $decimals, self::$DECIMAL_POINT, '.').($withUnit ? '&nbsp;ft' : '');
 	}
 
 	/**
@@ -345,7 +345,7 @@ class Distance {
 	 * @return string with unit
 	 */
 	public function stringYards($decimals = false, $withUnit = true) {
-		return number_format($this->Distance * self::YARD_MULTIPLIER, 0, '', '.').($withUnit ? '&nbsp;y' : '');
+		return number_format($this->Distance * self::YARD_MULTIPLIER, 0, self::$DECIMAL_POINT, '.').($withUnit ? '&nbsp;y' : '');
 	}
         
 	/**

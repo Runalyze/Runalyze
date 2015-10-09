@@ -57,9 +57,9 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
 
 				if ($this->Context->hasRoute()) {
-					$upDown = '+'.  Distance::formatFeet($this->Context->route()->elevationUp(), false).'/-'.Distance::formatFeet($this->Context->route()->elevationDown(), false);
+					$upDown = '+'.  Distance::formatFeet($this->Context->route()->elevationUp()/1000, false, false).'/-'.Distance::formatFeet($this->Context->route()->elevationDown()/1000, false, false);
 				} else {
-					$upDown = '+'.Distance::formatFeet($this->Context->activity()->elevation(), false).'/-'.Distance::formatFeet($this->Context->activity()->elevation(), false);
+					$upDown = '+'.Distance::formatFeet($this->Context->activity()->elevation()/1000, false, false).'/-'.Distance::formatFeet($this->Context->activity()->elevation()/1000, false, false);
 				}
 
 				$this->BoxedValues[] = new BoxedValue($upDown, Configuration::General()->distanceUnitAsFeet(), __('Elevation up/down'));
