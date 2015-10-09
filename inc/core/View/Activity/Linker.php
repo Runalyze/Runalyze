@@ -218,7 +218,7 @@ class Linker {
 	 * @return string
 	 */
 	static public function editPrevLink($id, $timestamp) {
-		$PrevTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE (time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.') AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time DESC LIMIT 1')->fetch();
+		$PrevTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time DESC LIMIT 1')->fetch();
 
 		if (isset($PrevTraining['id']))
 			return self::editLink($PrevTraining['id'], Icon::$BACK, 'ajax-prev', 'black-rounded-icon');
@@ -233,7 +233,7 @@ class Linker {
 	 * @return string
 	 */
 	static public function editNextLink($id, $timestamp) {
-		$NextTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE (time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.') AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time ASC LIMIT 1')->fetch();
+		$NextTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time ASC LIMIT 1')->fetch();
 
 		if (isset($NextTraining['id']))
 			return self::editLink($NextTraining['id'], Icon::$NEXT, 'ajax-next', 'black-rounded-icon');
