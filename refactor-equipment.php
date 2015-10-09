@@ -192,7 +192,7 @@ if ($count < $countAccount) {
 		// Refactor training table to equipment
 		$trainings = $PDO->query('SELECT `id`, `clothes`, `shoeid` FROM `'.PREFIX.'training` WHERE `accountid`='.$Row['id']);    
 		while ($training = $trainings->fetch()) {
-			if ($training['shoeid'] != 0) {
+			if ($training['shoeid'] != 0 && isset($shoeMap[$training['shoeid']])) {
 				$InsertEquipActivity->execute(array(
 					':activityid' => $training['id'],
 					':equipmentid' => $shoeMap[$training['shoeid']]
@@ -207,10 +207,12 @@ if ($count < $countAccount) {
 				}
 
 				foreach ($clothes as $clot) {
-					$InsertEquipActivity->execute(array(
-						':activityid' => $training['id'],
-						':equipmentid' => $clothesMap[trim($clot)]
-					));
+					if (isset($clothesMap[trim($clot)])) {
+						$InsertEquipActivity->execute(array(
+							':activityid' => $training['id'],
+							':equipmentid' => $clothesMap[trim($clot)]
+						));
+					}
 				}
 			}
 		}
