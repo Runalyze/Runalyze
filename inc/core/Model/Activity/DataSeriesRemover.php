@@ -160,7 +160,7 @@ class DataSeriesRemover {
 	 * Save changes for trackdata
 	 */
 	protected function saveChangesForTrackdata() {
-		if (NULL === $this->Trackdata) {
+		if (NULL === $this->Trackdata || $this->OldTrackdata->isEmpty()) {
 			return;
 		}
 
@@ -183,7 +183,7 @@ class DataSeriesRemover {
 	 * Save changes for route
 	 */
 	protected function saveChangesForRoute() {
-		if (NULL === $this->Route) {
+		if (NULL === $this->Route || $this->OldRoute->isEmpty()) {
 			return;
 		}
 
