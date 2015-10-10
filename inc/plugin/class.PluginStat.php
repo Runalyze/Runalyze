@@ -58,7 +58,7 @@ abstract class PluginStat extends Plugin {
 	 * @return int
 	 */
 	final public function type() {
-		return PluginType::Stat;
+		return PluginType::STAT;
 	}
 
 	/**
@@ -330,7 +330,7 @@ abstract class PluginStat extends Plugin {
 			$add = $this->showsTimeRange() ? date('m') - $num - 1 + 12 : -1;
 
 			for ($i = 1; $i <= 12; $i++) {
-				echo '<th'.$width.'>'.Time::Month(($i + $add)%12 + 1, true).'</th>';
+				echo '<th'.$width.'>'.Time::month(($i + $add)%12 + 1, true).'</th>';
 			}
 		}
 	}
@@ -367,7 +367,7 @@ abstract class PluginStat extends Plugin {
 	 * Are various statistics installed?
 	 * @return bool
 	 */
-	static public function hasVariousStats() {
+	public static function hasVariousStats() {
 		$Factory = new PluginFactory();
 		$array = $Factory->variousPlugins();
 
@@ -378,7 +378,7 @@ abstract class PluginStat extends Plugin {
 	 * Get the link for first various statistic
 	 * @return string
 	 */
-	static public function getLinkForVariousStats() {
+	public static function getLinkForVariousStats() {
 		$Factory = new PluginFactory();
 		$array = $Factory->variousPlugins();
 

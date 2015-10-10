@@ -17,7 +17,7 @@ abstract class ExporterAbstract {
 	 * Type
 	 * @return enum
 	 */
-	static public function Type() {
+	public static function Type() {
 		return ExporterType::Code;
 	}
 
@@ -25,7 +25,7 @@ abstract class ExporterAbstract {
 	 * Icon class
 	 * @return string
 	 */
-	static public function IconClass() {
+	public static function IconClass() {
 		return 'fa-file-code-o';
 	}
 

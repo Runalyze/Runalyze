@@ -137,7 +137,7 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsMaximalHeartRate() {
-		return (NULL !== $this->maximalHR);
+		return (null !== $this->maximalHR);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsRestingHeartRate() {
-		return (NULL !== $this->restingHR);
+		return (null !== $this->restingHR);
 	}
 
 	/**
@@ -153,7 +153,7 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsWeight() {
-		return (NULL !== $this->weight);
+		return (null !== $this->weight);
 	}
 
 	/**
@@ -161,7 +161,7 @@ class Athlete {
 	 * @return bool
 	 */
 	public function knowsAge() {
-		return (NULL !== $this->age);
+		return (null !== $this->age);
 	}
 
 	/**

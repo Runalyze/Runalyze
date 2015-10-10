@@ -178,7 +178,6 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayContentInOldDesign() {
 		$Weight   = '';
-		$Pulse    = '';
 		$Analyse  = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
@@ -237,7 +236,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getEditLinkFor($id) {
+	public static function getEditLinkFor($id) {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
 	}
 
@@ -246,7 +245,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getDeleteLinkFor($id) {
+	public static function getDeleteLinkFor($id) {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'&delete=true">'.Icon::$DELETE.'</a>');
 	}
 }

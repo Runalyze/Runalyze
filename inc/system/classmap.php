@@ -19,7 +19,6 @@ $CLASSMAP = array(
 'Type' => 'data/class.Type.php',
 'TypeFactory' => 'data/class.TypeFactory.php',
 'UserData' => 'data/class.UserData.php',
-'GpsData' => 'data/gps/class.GpsData.php',
 'SRTMGeoTIFFReader' => 'data/gps/class.SRTMGeoTIFFReader.php',
 'Plot' => 'draw/class.Plot.php',
 'PlotMonthSumData' => 'draw/class.PlotMonthSumData.php',

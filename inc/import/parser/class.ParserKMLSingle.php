@@ -57,7 +57,7 @@ class ParserKMLSingle extends ParserAbstractSingleXML {
 						$this->gps['km'][] = 0;
 					} else {
 						$this->gps['km'][] = end($this->gps['km']) + round(
-							GpsData::distance(
+							Runalyze\Model\Route\Object::gpsDistance(
 								$parts[1],
 								$parts[0],
 								end($this->gps['latitude']),

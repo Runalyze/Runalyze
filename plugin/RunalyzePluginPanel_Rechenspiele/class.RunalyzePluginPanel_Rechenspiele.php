@@ -175,16 +175,16 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$JDQuery = Cache::get(self::CACHE_KEY_JD_POINTS);
 		if (is_null($JDQuery)) {
-			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::Weekend(time() - 7*DAY_IN_S).' AND accountid = '.SessionAccountHandler::getId());
+			$JDQueryLastWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time() - 7*DAY_IN_S).' AND `time`<'.Time::weekend(time() - 7*DAY_IN_S).' AND accountid = '.SessionAccountHandler::getId());
 			
-                        $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::Weekstart(time()).' AND `time`<'.Time::Weekend(time()).' AND accountid = '.SessionAccountHandler::getId());
+                        $JDQueryThisWeek = DB::getInstance()->query('SELECT SUM(`jd_intensity`) FROM `'.PREFIX.'training` WHERE `time`>='.Time::weekstart(time()).' AND `time`<'.Time::weekend(time()).' AND accountid = '.SessionAccountHandler::getId());
                         $JDQuery['LastWeek'] = Helper::Unknown($JDQueryLastWeek->fetchColumn(), 0);
 			$JDQuery['ThisWeek'] = Helper::Unknown($JDQueryThisWeek->fetchColumn(), 0);
 			Cache::set(self::CACHE_KEY_JD_POINTS, $JDQuery, '600');
 		}
 		$JDPointsLastWeek = $JDQuery['LastWeek'];
 		$JDPointsThisWeek = $JDQuery['ThisWeek'];
-		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::Weekend(time()) - time()) / DAY_IN_S) * 7);
+		$JDPointsPrognosis = round($JDPointsThisWeek / (7 - (Time::weekend(time()) - time()) / DAY_IN_S) * 7);
 
 		$Values = array(
 			array(

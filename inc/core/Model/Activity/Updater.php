@@ -167,7 +167,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		}
 
 		if ($this->ForceRecalculations || (
-				(NULL === $this->Trackdata || !$this->Trackdata->has(Model\Trackdata\Object::TIME) || !$this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) && (
+				(null === $this->Trackdata || !$this->Trackdata->has(Model\Trackdata\Object::TIME) || !$this->Trackdata->has(Model\Trackdata\Object::HEARTRATE)) && (
 					$this->hasChanged(Object::SPORTID) || $this->hasChanged(Object::TIME_IN_SECONDS) || $this->hasChanged(Object::HR_AVG)
 				)
 			)
@@ -205,7 +205,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 		if ($this->hasChanged(Object::SPORTID)) {
 			if (
 				\Runalyze\Context::Factory()->sport($this->NewObject->sportid())->hasPower() &&
-				NULL !== $this->Trackdata &&
+				null !== $this->Trackdata &&
 				$this->Trackdata->has(Model\Trackdata\Object::TIME) && 
 				$this->Trackdata->has(Model\Trackdata\Object::DISTANCE)
 			) {
@@ -230,7 +230,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	 */
 	protected function updatePowerForTrackdata(array $powerData) {
 		if (
-			(NULL !== $this->Trackdata) && (
+			(null !== $this->Trackdata) && (
 				(empty($powerData) && $this->Trackdata->has(Model\Trackdata\Object::POWER)) ||
 				(!empty($powerData) && !$this->Trackdata->has(Model\Trackdata\Object::POWER))
 			)
@@ -249,7 +249,7 @@ class Updater extends Model\UpdaterWithIDAndAccountID {
 	protected function updateStrideLength() {
 		if ($this->hasChanged(Object::SPORTID)) {
 			if ($this->NewObject->sportid() == Configuration::General()->runningSport()) {
-				if (NULL !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
+				if (null !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
 					$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
 					$Calculator->calculate();
 

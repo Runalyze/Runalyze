@@ -452,7 +452,7 @@ class AdminView {
 	 * Get array of config variables for editing
 	 * @return array
 	 */
-	static public function getArrayOfConfigVariables() {
+	public static function getArrayOfConfigVariables() {
 		return array(
 			'RUNALYZE_DEBUG',
 			'USER_CANT_LOGIN',
@@ -474,7 +474,7 @@ class AdminView {
 	/**
 	 * Check for missing variables in config file and update if needed
 	 */
-	static public function checkAndUpdateConfigFile() {
+	public static function checkAndUpdateConfigFile() {
 		$Variables = self::getArrayOfConfigVariables();
 
 		foreach ($Variables as $Variable)
@@ -486,7 +486,7 @@ class AdminView {
 	 * Add variable to config file
 	 * @param string $Variable
 	 */
-	static private function addVariableToConfigFile($Variable) {
+	private static function addVariableToConfigFile($Variable) {
 		$ConfigFile  = str_replace('?>', NL, Filesystem::openFile('../config.php'));
 		$ConfigFile .= self::defineAndGetConfigLinesFor($Variable);
 		$ConfigFile .= NL.'?>';
@@ -499,7 +499,7 @@ class AdminView {
 	 * @param string $Variable
 	 * @return string
 	 */
-	static private function defineAndGetConfigLinesFor($Variable) {
+	private static function defineAndGetConfigLinesFor($Variable) {
 		switch ($Variable) {
 			case 'USER_CANT_LOGIN':
 				define('USER_CANT_LOGIN', false);

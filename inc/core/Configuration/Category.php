@@ -99,7 +99,7 @@ abstract class Category {
 
 	/**
 	 * Fieldset
-	 * @return ConfigurationFieldset
+	 * @return \Runalyze\Configuration\Fieldset
 	 */
 	public function Fieldset() {
 		return null;

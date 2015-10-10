@@ -110,7 +110,7 @@ class DataBrowser extends \Runalyze\Configuration\Category {
 	/**
 	 * Reload data browser for new timerange
 	 */
-	static public function showNewTimerangeInDB() {
+	public static function showNewTimerangeInDB() {
 		$mode = \Runalyze\Configuration::DataBrowser()->mode();
 
 		$rel = $mode->showMonth() ? 'month-link' : 'week-link';

@@ -19,7 +19,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 
 
-<?php if ($this->currentStep == self::$ALREADY_INSTALLED): ?>
+<?php if ($this->currentStep == self::ALREADY_INSTALLED): ?>
 
 	<p class="text-headline">
 		<?php _e('Runalyze is already installed.'); ?>
@@ -37,7 +37,7 @@ foreach ($Steps as $i => $Name) {
 		<?php _e('If you want to reinstall Runalyze please delete you have to delete the <em>config.php</em>-file in your main directory of this installation.'); ?>
 	</p>
 
-<?php elseif ($this->currentStep == self::$START): ?>
+<?php elseif ($this->currentStep == self::START): ?>
 
 <form action="install.php" method="post">
 	<p class="text">
@@ -50,7 +50,7 @@ foreach ($Steps as $i => $Name) {
 
 	<?php if (!$this->phpVersionIsOkay()): ?>
 	<p class="error">
-		<?php printf( __('PHP %s is required, but PHP %s is running. Please update your PHP version.'), self::$REQUIRED_PHP_VERSION, PHP_VERSION); ?>
+		<?php printf( __('PHP %s is required, but PHP %s is running. Please update your PHP version.'), self::REQUIRED_PHP_VERSION, PHP_VERSION); ?>
 	</p>
 	<?php else: ?>
 	<p class="okay">
@@ -77,7 +77,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 </form>
 
-<?php elseif ($this->currentStep == self::$SETUP_CONFIG): ?>
+<?php elseif ($this->currentStep == self::SETUP_CONFIG): ?>
 
 <form action="install.php" method="post">
 	<p class="text">
@@ -103,7 +103,7 @@ foreach ($Steps as $i => $Name) {
 		</p>
 		<?php elseif (!$this->cantWriteConfig): ?>
 		<p class="error">
-			<?php printf( __('MySQL %s is required, but MySQL %s is running. Please update your MySQL version.'), self::$REQUIRED_MYSQL_VERSION, $this->getMysqlVersion()); ?>
+			<?php printf( __('MySQL %s is required, but MySQL %s is running. Please update your MySQL version.'), self::REQUIRED_MYSQL_VERSION, $this->getMysqlVersion()); ?>
 		</p>
 		<?php endif; ?>
 	<?php endif; ?>
@@ -221,7 +221,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 </form>
 
-<?php elseif ($this->currentStep == self::$SETUP_DATABASE): ?>
+<?php elseif ($this->currentStep == self::SETUP_DATABASE): ?>
 
 <form action="install.php" method="post">
 	<p class="text">
@@ -246,7 +246,7 @@ foreach ($Steps as $i => $Name) {
 	</p>
 </form>
 
-<?php elseif ($this->currentStep == self::$READY): ?>
+<?php elseif ($this->currentStep == self::READY): ?>
 
 	<p class="text">
 		<strong><?php _e('Ready! Congratulations!'); ?></strong>

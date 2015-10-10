@@ -16,25 +16,25 @@ class Configuration {
 	 * Categories
 	 * @var \Runalyze\Configuration\Category[]
 	 */
-	static private $Categories = array();
+	private static $Categories = array();
 
 	/**
 	 * Values from database
 	 * @var array
 	 */
-	static private $ValuesFromDB = null;
+	private static $ValuesFromDB = null;
 
 	/**
 	 * Account ID
 	 * @var int
 	 */
-	static private $AccountID = null;
+	private static $AccountID = null;
 
 	/**
 	 * Load all categories
 	 * @param mixed $accountid
 	 */
-	static public function loadAll($accountid = 'auto') {
+	public static function loadAll($accountid = 'auto') {
 		if ($accountid === 'auto') {
 			self::$AccountID = self::loadAccountID();
 		} else {
@@ -60,7 +60,7 @@ class Configuration {
 	 * Fetch values
 	 * @return array
 	 */
-	static private function fetchAllValues() {
+	private static function fetchAllValues() {
 		self::$Categories = array();
 
 		if (self::$AccountID !== null) {
@@ -74,7 +74,7 @@ class Configuration {
 	 * Load account ID
 	 * @return int
 	 */
-	static private function loadAccountID() {
+	private static function loadAccountID() {
 		if (defined('RUNALYZE_TEST'))
 			return null;
 
@@ -90,7 +90,7 @@ class Configuration {
 	 * @param string $categoryName
 	 * @return \Runalyze\Configuration\Category
 	 */
-	static private function get($categoryName) {
+	private static function get($categoryName) {
 		if (!isset(self::$Categories[$categoryName])) {
 			$className = 'Runalyze\\Configuration\\Category\\'.$categoryName;
 			$Category = new $className();
@@ -106,7 +106,7 @@ class Configuration {
 	 * General
 	 * @return \Runalyze\Configuration\Category\General
 	 */
-	static public function General() {
+	public static function General() {
 		return self::get('General');
 	}
 
@@ -114,7 +114,7 @@ class Configuration {
 	 * Activity view
 	 * @return \Runalyze\Configuration\Category\ActivityView
 	 */
-	static public function ActivityView() {
+	public static function ActivityView() {
 		return self::get('ActivityView');
 	}
 
@@ -122,7 +122,7 @@ class Configuration {
 	 * Activity form
 	 * @return \Runalyze\Configuration\Category\ActivityForm
 	 */
-	static public function ActivityForm() {
+	public static function ActivityForm() {
 		return self::get('ActivityForm');
 	}
 
@@ -130,7 +130,7 @@ class Configuration {
 	 * Data browser
 	 * @return \Runalyze\Configuration\Category\DataBrowser
 	 */
-	static public function DataBrowser() {
+	public static function DataBrowser() {
 		return self::get('DataBrowser');
 	}
 
@@ -138,7 +138,7 @@ class Configuration {
 	 * Privacy
 	 * @return \Runalyze\Configuration\Category\Privacy
 	 */
-	static public function Privacy() {
+	public static function Privacy() {
 		return self::get('Privacy');
 	}
 
@@ -146,7 +146,7 @@ class Configuration {
 	 * Design
 	 * @return \Runalyze\Configuration\Category\Design
 	 */
-	static public function Design() {
+	public static function Design() {
 		return self::get('Design');
 	}
 
@@ -154,7 +154,7 @@ class Configuration {
 	 * Data
 	 * @return \Runalyze\Configuration\Category\Data
 	 */
-	static public function Data() {
+	public static function Data() {
 		return self::get('Data');
 	}
 
@@ -162,7 +162,7 @@ class Configuration {
 	 * VDOT
 	 * @return \Runalyze\Configuration\Category\Vdot
 	 */
-	static public function Vdot() {
+	public static function Vdot() {
 		return self::get('Vdot');
 	}
 
@@ -170,7 +170,7 @@ class Configuration {
 	 * Trimp
 	 * @return \Runalyze\Configuration\Category\Trimp
 	 */
-	static public function Trimp() {
+	public static function Trimp() {
 		return self::get('Trimp');
 	}
 
@@ -178,7 +178,7 @@ class Configuration {
 	 * Basic endurance
 	 * @return \Runalyze\Configuration\Category\BasicEndurance
 	 */
-	static public function BasicEndurance() {
+	public static function BasicEndurance() {
 		return self::get('BasicEndurance');
 	}
 
@@ -186,7 +186,7 @@ class Configuration {
 	 * Miscellaneous
 	 * @return \Runalyze\Configuration\Category\Misc
 	 */
-	static public function Misc() {
+	public static function Misc() {
 		return self::get('Misc');
 	}
 }

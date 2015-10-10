@@ -65,7 +65,7 @@ class Design extends \Runalyze\Configuration\Category {
 	/**
 	 * Set background image to body
 	 */
-	static public function setBackgroundImageToBody() {
+	public static function setBackgroundImageToBody() {
 		$url = \Runalyze\Configuration::Design()->backgroundImage();
 
 		echo Ajax::wrapJSasFunction('$("body").css("background-image","url(\''.$url.'\')");');

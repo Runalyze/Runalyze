@@ -15,37 +15,37 @@ class SessionAccountHandler {
 	 * Array containing userrow from database
 	 * @var array
 	 */
-	static private $Account = array();
+	private static $Account = array();
 
 	/**
 	 * Error type
 	 * @var int
 	 */
-	static public $ErrorType = 0;
+	public static $ErrorType = 0;
 
 	/**
 	 * Error: no error
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_NO = 0;
+	public static $ERROR_TYPE_NO = 0;
 
 	/**
 	 * Error: no/wrong username
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_WRONG_USERNAME = 1;
+	public static $ERROR_TYPE_WRONG_USERNAME = 1;
 
 	/**
 	 * Error: no/wrong password
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_WRONG_PASSWORD = 2;
+	public static $ERROR_TYPE_WRONG_PASSWORD = 2;
 
 	/**
 	 * Error: activation needed
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_ACTIVATION_NEEDED = 3;
+	public static $ERROR_TYPE_ACTIVATION_NEEDED = 3;
 
 	/**
 	 * Construct a new SessionAccountHandler
@@ -54,7 +54,7 @@ class SessionAccountHandler {
 	 * - all these consts will be defined after setting Account-ID,
 	 *   because some of them need database-connection
 	 */
-	function __construct() {
+	public function __construct() {
 		session_start();
 
 		if (!$this->tryToUseSession()) {
@@ -70,11 +70,6 @@ class SessionAccountHandler {
 			}
 		}
 	}
-
-	/**
-	 * Destruct SessionAccountHandler 
-	 */
-	function __destruct() {}
 
 	/**
 	 * Is user on login-page?
@@ -96,7 +91,7 @@ class SessionAccountHandler {
 	 * Is anyone logged in?
 	 * @return boolean 
 	 */
-	static public function isLoggedIn() {
+	public static function isLoggedIn() {
 		if (isset($_SESSION['accountid']))
 			return true;
 
@@ -234,9 +229,10 @@ class SessionAccountHandler {
 	/**
 	 * Try to set account from request 
 	 */
-	static public function setAccountFromRequest() {
-		if (empty(self::$Account))
+	public static function setAccountFromRequest() {
+		if (empty(self::$Account)) {
 			self::$Account = AccountHandler::getDataForId( SharedLinker::getUserId() );
+		}
 	}
 
 	/**
@@ -292,13 +288,12 @@ class SessionAccountHandler {
 	 * Get number of online users
 	 * @return int
 	 */
-	static public function getNumberOfUserOnline() {
-		DB::getInstance()->stopAddingAccountID();
+	public static function getNumberOfUserOnline() {
 		$result = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60))->fetch();
-		DB::getInstance()->startAddingAccountID();
 
-		if ($result !== false && isset($result['num']))
+		if ($result !== false && isset($result['num'])) {
 			return $result['num'];
+		}
 
 		return 0;
 	}
@@ -306,7 +301,7 @@ class SessionAccountHandler {
 	/**
 	 * Logout 
 	 */
-	static public function logout() {
+	public static function logout() {
 		DB::getInstance()->update('account', self::getId(), 'session_id', null);
 		DB::getInstance()->update('account', self::getId(), 'autologin_hash', '');
 		session_destroy();
@@ -318,19 +313,22 @@ class SessionAccountHandler {
 
 	/**
 	 * Get ID of current user
-	 * @return type 
+	 * @return int 
 	 */
-	static public function getId() {
+	public static function getId() {
 		// Dirty hack for 'global.cleanup.php'
-		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount'))
+		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount')) {
 			return GlobalCleanupAccount::$ID;
+		}
 
-		if (SharedLinker::isOnSharedPage())
+		if (SharedLinker::isOnSharedPage()) {
 			return SharedLinker::getUserId();
+		}
 
 		if (!isset(self::$Account['id'])) {
-			if (isset($_SESSION['accountid']))
+			if (isset($_SESSION['accountid'])) {
 				return $_SESSION['accountid'];
+			}
 
 			return null;
 		}
@@ -340,54 +338,60 @@ class SessionAccountHandler {
 
 	/**
 	 * Get mail of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getMail() {
-		if (!isset(self::$Account['mail']))
+	public static function getMail() {
+		if (!isset(self::$Account['mail'])) {
 			return '';
+		}
 
 		return self::$Account['mail'];
 	}
 
 	/**
 	 * Get name of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getName() {
-		if (!isset(self::$Account['name']))
+	public static function getName() {
+		if (!isset(self::$Account['name'])) {
 			return '';
+		}
 
 		return self::$Account['name'];
 	}
 
 	/**
-	 * Get name of current user
-	 * @return type 
+	 * Get if mails are allowed
+	 * @return string 
 	 */
-	static public function getAllowMails() {
-		if (!isset(self::$Account['allow_mails']))
+	public static function getAllowMails() {
+		if (!isset(self::$Account['allow_mails'])) {
 			return '';
+		}
 
 		return self::$Account['allow_mails'];
 	}
-        
-        /**
+
+	/**
 	 * Get language of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getLanguage() {
-		if (!isset(self::$Account['language']))
+	public static function getLanguage() {
+		if (!isset(self::$Account['language'])) {
 			return '';
+		}
 
 		return self::$Account['language'];
 	}
+
 	/**
 	 * Get username of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getUsername() {
-		if (!isset(self::$Account['username']))
+	public static function getUsername() {
+		if (!isset(self::$Account['username'])) {
 			return '';
+		}
 
 		return self::$Account['username'];
 	}

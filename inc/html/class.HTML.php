@@ -99,7 +99,7 @@ class HTML {
 			$html .= '<'.$tag.'></'.$tag.'>';
 
 		for ($m = 1; $m <= 12; $m++)
-			$html .= '<'.$tag.$width.'>'.Time::Month($m, true).'</'.$tag.'>';
+			$html .= '<'.$tag.$width.'>'.Time::month($m, true).'</'.$tag.'>';
 
 		$html .= '</tr>';
 
@@ -385,10 +385,10 @@ class HTML {
 	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
 	 */
-	public static function Checked($value, $value_to_be_checked = NULL) {
-		if ($value_to_be_checked != NULL)
+	public static function Checked($value, $value_to_be_checked = null) {
+		if ($value_to_be_checked != null)
 			$value = ($value == $value_to_be_checked);
-		if ($value == NULL || !isset($value))
+		if ($value == null || !isset($value))
 			$value = false;
 
 		return ($value === true)
@@ -437,8 +437,8 @@ class HTML {
 	 * @param mixed $value_to_be_checked [optional]
 	 * @return string
 	 */
-	public static function Selected($value, $value_to_be_checked = NULL) {
-		if ($value_to_be_checked != NULL) {
+	public static function Selected($value, $value_to_be_checked = null) {
+		if ($value_to_be_checked != null) {
 			if (is_array($value_to_be_checked))
 				$value = in_array($value, $value_to_be_checked);
 			else

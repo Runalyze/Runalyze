@@ -12,13 +12,13 @@
 abstract class ParserAbstractMultiple extends ParserAbstract {
 	/**
 	 * Training object
-	 * @var \TrainingObject
+	 * @var \TrainingObject[]
 	 */
 	private $TrainingObjects = array();
 
 	/**
 	 * Get training objects
-	 * @return array
+	 * @return \TrainingObject[]
 	 */
 	final public function objects() {
 		return $this->TrainingObjects;

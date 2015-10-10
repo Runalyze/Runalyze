@@ -38,8 +38,7 @@ class ParserHRMSingle extends ParserAbstractSingle {
 	protected $totalSplitsTime = 0;
 
 	/**
-	 *
-	 * @var type 
+	 * @var boolean 
 	 */
 	protected $recordsAltitude = true;
 

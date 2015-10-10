@@ -24,7 +24,7 @@ class Pace extends ActivitySeries {
 	* How many outliers should be cutted away?
 	* @var type
 	*/
-	static private $CUT_OUTLIER_PERCENTAGE = 10;
+	private static $CUT_OUTLIER_PERCENTAGE = 10;
 
 	/**
 	 * @var string

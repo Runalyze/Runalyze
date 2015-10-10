@@ -13,9 +13,10 @@ class System {
 	 * Get code to include all local JS-files
 	 * @return string 
 	 */
-	static public function getCodeForLocalJSFiles() {
-		if (self::isAtLocalhost())
+	public static function getCodeForLocalJSFiles() {
+		if (self::isAtLocalhost()) {
 			return '<script src="build/scripts.js"></script>';
+		}
 
 		return '<script src="build/scripts.min.js"></script>';
 	}
@@ -24,7 +25,7 @@ class System {
 	 * Get code to include all external JS-files
 	 * @return string 
 	 */
-	static public function getCodeForExternalJSFiles() {
+	public static function getCodeForExternalJSFiles() {
 		return '';
 	}
 
@@ -32,7 +33,7 @@ class System {
 	 * Get code to include all CSS-files
 	 * @return string 
 	 */
-	static public function getCodeForAllCSSFiles() {
+	public static function getCodeForAllCSSFiles() {
 		return '<link rel="stylesheet" href="lib/less/runalyze-style.css">';
 	}
 
@@ -43,7 +44,7 @@ class System {
 	 * @param string $message
 	 * @return boolean 
 	 */
-	static public function sendMail($to, $subject, $message) {
+	public static function sendMail($to, $subject, $message) {
 		$sender = MAIL_SENDER == '' ? 'mail@runalyze.de' : MAIL_SENDER;
 
 		try {
@@ -66,26 +67,22 @@ class System {
 	/**
 	 * Set memory- and time-limit as high as possible 
 	 */
-	static public function setMaximalLimits() {
+	public static function setMaximalLimits() {
 		@ini_set('memory_limit', '-1');
 
-		if (!ini_get('safe_mode'))
+		if (!ini_get('safe_mode')) {
 			set_time_limit(0);
-
-		DB::getInstance()->stopAddingAccountID();
-		// Error: Access denied; you need the SUPER privilege for this operation
-		//DB::getInstance()->exec('SET GLOBAL max_allowed_packet=536870912;');
-		//DB::getInstance()->exec('SET GLOBAL key_buffer_size=536870912;');
-		DB::getInstance()->startAddingAccountID();
+		}
 	}
 
 	/**
 	 * Get domain where Runalyze is running
 	 * @return string
 	 */
-	static public function getDomain() {
-		if (!isset($_SERVER['HTTP_HOST']))
+	public static function getDomain() {
+		if (!isset($_SERVER['HTTP_HOST'])) {
 			return '';
+		}
 
 		return Request::getProtocol().'://'.$_SERVER['HTTP_HOST'];
 	}
@@ -95,7 +92,7 @@ class System {
 	 * @param boolean $onlyToRunalyze
 	 * @return string
 	 */
-	static public function getFullDomain($onlyToRunalyze = true) {
+	public static function getFullDomain($onlyToRunalyze = true) {
 		$path = self::getDomain().substr($_SERVER['SCRIPT_NAME'], 0, strripos($_SERVER['SCRIPT_NAME'], "/"))."/";
 
 		if ($onlyToRunalyze) {
@@ -109,9 +106,10 @@ class System {
 	 * Is this script running on localhost?
 	 * @return boolean
 	 */
-	static public function isAtLocalhost() {
-		if (!isset($_SERVER['SERVER_NAME']))
+	public static function isAtLocalhost() {
+		if (!isset($_SERVER['SERVER_NAME'])) {
 			return false;
+		}
 
 		return $_SERVER['SERVER_NAME'] == 'localhost';
 	}
@@ -119,7 +117,7 @@ class System {
 	/**
 	 * Clear complete cache 
 	 */
-	static public function clearCache() {
+	public static function clearCache() {
 		Cache::clean();
 	}
 }

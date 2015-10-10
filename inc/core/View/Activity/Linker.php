@@ -117,12 +117,16 @@ class Linker {
 	 * @return string HTML-link to this training
 	 */
 	public function linkWithSportIcon($tooltipCssClass = '') {
-		$Sport = new Sport($this->Activity->sportid());
 		$Time = new Duration($this->Activity->duration());
+		$Factory = new \Runalyze\Model\Factory(\SessionAccountHandler::getId());
+		$Sport = $Factory->sport($this->Activity->sportid());
+		$code = $Sport->icon()->code();
 
-		$tooltip = $Sport->name().': '.$Time->string();
+		$Tooltip = new \Runalyze\View\Tooltip($Sport->name().': '.$Time->string());
+		$Tooltip->setPosition($tooltipCssClass);
+		$Tooltip->wrapAround($code);
 
-		return $this->link( $Sport->Icon($tooltip, $tooltipCssClass) );
+		return $this->link($code);
 	}
 
 	/**
@@ -135,7 +139,7 @@ class Linker {
 			$name = date('d.m.Y', $this->Activity->timestamp());
 		}
 
-		return DataBrowserLinker::link($name, Time::Weekstart($this->Activity->timestamp()), Time::Weekend($this->Activity->timestamp()));
+		return DataBrowserLinker::link($name, Time::weekstart($this->Activity->timestamp()), Time::weekend($this->Activity->timestamp()));
 	}
 
 	/**
@@ -190,7 +194,7 @@ class Linker {
 	 * @param string $linkClass [optional]
 	 * @return string link to editor window
 	 */
-	static public function editLink($id, $text = '', $linkId = '', $linkClass = '') {
+	public static function editLink($id, $text = '', $linkId = '', $linkClass = '') {
 		if ($text == '')
 			$text = Icon::$EDIT;
 
@@ -217,7 +221,7 @@ class Linker {
 	 * @param int $timestamp
 	 * @return string
 	 */
-	static public function editPrevLink($id, $timestamp) {
+	public static function editPrevLink($id, $timestamp) {
 		$PrevTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time<"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id<'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time DESC LIMIT 1')->fetch();
 
 		if (isset($PrevTraining['id']))
@@ -232,7 +236,7 @@ class Linker {
 	 * @param int $timestamp
 	 * @return string
 	 */
-	static public function editNextLink($id, $timestamp) {
+	public static function editNextLink($id, $timestamp) {
 		$NextTraining = DB::getInstance()->query('SELECT id FROM '.PREFIX.'training WHERE ((time>"'.$timestamp.'" AND id!='.$id.') OR (time="'.$timestamp.'" AND id>'.$id.')) AND `accountid` = '.SessionAccountHandler::getId().' ORDER BY time ASC LIMIT 1')->fetch();
 
 		if (isset($NextTraining['id']))

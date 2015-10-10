@@ -1229,7 +1229,7 @@ class TrainingObject extends DataObject {
 	 * @param int $id id
 	 * @return boolean 
 	 */
-	static public function idIsCompetition($id) {
+	public static function idIsCompetition($id) {
 		return (DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'training` WHERE `id`='.(int)$id.' AND `typeid`="'.Configuration::General()->competitionType().'" LIMIT 1')->fetchColumn() > 0);
 	}
 }

@@ -15,13 +15,13 @@ namespace Runalyze\Calculation\Prognosis;
 class Prognosis {
 	/**
 	 * Strategy
-	 * @var \Runalyze\Calculation\AbstractStrategy
+	 * @var \Runalyze\Calculation\Prognosis\AbstractStrategy
 	 */
 	private $Strategy = null;
 
 	/**
 	 * Set strategy
-	 * @param \Runalyze\Calculation\AbstractStrategy $strategy
+	 * @param \Runalyze\Calculation\Prognosis\AbstractStrategy $strategy
 	 */
 	public function setStrategy(AbstractStrategy $strategy) {
 		$this->Strategy = $strategy;
@@ -33,7 +33,7 @@ class Prognosis {
 	 * @return int
 	 */
 	public function inSeconds($distance) {
-		if (NULL === $this->Strategy) {
+		if (null === $this->Strategy) {
 			throw new \RuntimeException('Prognosis class requires a strategy to be set.');
 		}
 

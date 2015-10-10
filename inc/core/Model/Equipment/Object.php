@@ -67,7 +67,7 @@ class Object extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::TYPEID,
@@ -192,7 +192,7 @@ class Object extends Model\ObjectWithID {
 	 * @return boolean
 	 */
 	public function hasStartDate() {
-		return (NULL !== $this->Data[self::DATE_START]);
+		return (null !== $this->Data[self::DATE_START]);
 	}
 
 	/**
@@ -208,6 +208,6 @@ class Object extends Model\ObjectWithID {
 	 * @return boolean
 	 */
 	public function isInUse() {
-		return (NULL === $this->Data[self::DATE_END]);
+		return (null === $this->Data[self::DATE_END]);
 	}
 }

@@ -24,7 +24,7 @@ class StrideLength {
 	 * @param int $strideLengthInCM [cm]
 	 * @return string
 	 */
-	static public function format($strideLengthInCM) {
+	public static function format($strideLengthInCM) {
 		$Object = new StrideLength($strideLengthInCM);
 
 		return $Object->string();

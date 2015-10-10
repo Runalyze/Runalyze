@@ -65,7 +65,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 * All properties
 	 * @return array
 	 */
-	static public function allProperties() {
+	public static function allProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::STROKE,
@@ -216,6 +216,8 @@ class Object extends Model\Object implements Model\Loopable {
 			$Loop = new Loop($this);
 
 			$max = $Loop->num();
+			$swolf = array();
+			$swolfcycles = array();
 
 			for ($i = 1; $i <= $max; ++$i) {
 				$duration = $TrackLoop->difference(Trackdata\Object::TIME);

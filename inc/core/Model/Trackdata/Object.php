@@ -186,7 +186,7 @@ class Object extends Model\Object implements Model\Loopable {
 	 * All databaseproperties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::TIME,

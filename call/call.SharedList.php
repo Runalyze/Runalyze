@@ -47,4 +47,3 @@ if (!Request::isAjax()) {
 	</div>
 </div>';
 }
-?>

@@ -20,25 +20,25 @@ abstract class DataObject {
 	 * Enum as argument for constructor: get last object
 	 * @var string 
 	 */
-	static public $LAST_OBJECT = 'LAST';
+	public static $LAST_OBJECT = 'LAST';
 
 	/**
 	 * Default id for empty object
 	 * @var int 
 	 */
-	static public $DEFAULT_ID = -1;
+	public static $DEFAULT_ID = -1;
 
 	/**
 	 * Internal flag: debug insert/update-queries
 	 * @var bool
 	 */
-	static private $DEBUG_QUERIES = false;
+	private static $DEBUG_QUERIES = false;
 
 	/**
 	 * Array seperator for gps-data in database
 	 * @var char
 	 */
-	static public $ARR_SEP = '|';
+	public static $ARR_SEP = '|';
 
 	/**
 	 * Internal ID of this dataset in database

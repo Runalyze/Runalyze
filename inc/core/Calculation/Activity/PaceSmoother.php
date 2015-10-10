@@ -160,7 +160,7 @@ class PaceSmoother {
 			}
 		}
 
-		if ($this->KeepArraySize && isset($i)) {
+		if ($this->KeepArraySize && !empty($distance)) {
 			$pace = $dist - $lastDist > 0 ? round(($time[$i] - $lastTime)/($dist - $lastDist)) : 0;
 
 			for ($j = count($this->Smoothed), $num = $this->Trackdata->num(); $j < $num; ++$j) {

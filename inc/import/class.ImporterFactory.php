@@ -31,13 +31,13 @@ class ImporterFactory {
 	 * Boolean flag: log all filecontents?
 	 * @var bool
 	 */
-	static private $logFileContents = false;
+	private static $logFileContents = false;
 
 	/**
 	 * Import from garmin communicator
 	 * @var enum
 	 */
-	static public $FROM_COMMUNICATOR = 'NO_FILENAME_IMPORT_FROM_GARMIN_COMMUNICATOR';
+	public static $FROM_COMMUNICATOR = 'NO_FILENAME_IMPORT_FROM_GARMIN_COMMUNICATOR';
 
 	/**
 	 * Filename
@@ -305,7 +305,7 @@ class ImporterFactory {
 	 * @param string $extension filetype
 	 * @return string
 	 */
-	static private function classFor($extension) {
+	private static function classFor($extension) {
 		return 'ImporterFiletype'.mb_strtoupper($extension);
 	}
 
@@ -314,7 +314,7 @@ class ImporterFactory {
 	 * @param string $extension file extension
 	 * @return boolean
 	 */
-	static public function canImportExtension($extension) {
+	public static function canImportExtension($extension) {
 		return class_exists(self::classFor($extension));
 	}
 }

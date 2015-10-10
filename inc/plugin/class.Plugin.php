@@ -98,7 +98,7 @@ abstract class Plugin {
 
 	/**
 	 * Internal data from database
-	 * @var array
+	 * @var string
 	 */
 	protected $dat;
 
@@ -396,14 +396,6 @@ abstract class Plugin {
 	 */
 	protected function titleForAllYears() {
 		return __('Year on year');
-	}
-
-	/**
-	 * Get config
-	 * @return array
-	 */
-	final public function getConfig() {
-		return $this->config;
 	}
 
 	/**

@@ -14,37 +14,37 @@ class ProgressBar {
 	 * HTML class: surrounding div
 	 * @var string
 	 */
-	static private $DIV_CONTAINER = 'progress-bar-container';
+	private static $DIV_CONTAINER = 'progress-bar-container';
 
 	/**
 	 * HTML class: container floating outer div
 	 * @var string
 	 */
-	static private $CLASS_INLINE = 'progress-bar-container-inline';
+	private static $CLASS_INLINE = 'progress-bar-container-inline';
 
 	/**
 	 * HTML class: animated
 	 * @var string
 	 */
-	static private $CLASS_ANIMATED = 'animated';
+	private static $CLASS_ANIMATED = 'animated';
 
 	/**
 	 * HTML class: container div
 	 * @var string
 	 */
-	static private $DIV_INNER = 'progress-bar-inner';
+	private static $DIV_INNER = 'progress-bar-inner';
 
 	/**
 	 * HTML class: container div with icon
 	 * @var string
 	 */
-	static private $DIV_BAR = 'progress-bar';
+	private static $DIV_BAR = 'progress-bar';
 
 	/**
 	 * HTML class: div for goal line
 	 * @var string
 	 */
-	static private $DIV_GOAL = 'progress-bar-goal';
+	private static $DIV_GOAL = 'progress-bar-goal';
 
 	/**
 	 * Single progress bars

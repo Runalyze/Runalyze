@@ -145,11 +145,11 @@ class DataSeriesRemover {
 		$Updater->setAccountID($this->AccountID);
 		$Updater->forceRecalculations();
 
-		if (NULL !== $this->Trackdata) {
+		if (null !== $this->Trackdata) {
 			$Updater->setTrackdata($this->Trackdata);
 		}
 
-		if (NULL !== $this->Route) {
+		if (null !== $this->Route) {
 			$Updater->setRoute($this->Route);
 		}
 
@@ -160,7 +160,7 @@ class DataSeriesRemover {
 	 * Save changes for trackdata
 	 */
 	protected function saveChangesForTrackdata() {
-		if (NULL === $this->Trackdata || $this->OldTrackdata->isEmpty()) {
+		if (null === $this->Trackdata || $this->OldTrackdata->isEmpty()) {
 			return;
 		}
 
@@ -183,7 +183,7 @@ class DataSeriesRemover {
 	 * Save changes for route
 	 */
 	protected function saveChangesForRoute() {
-		if (NULL === $this->Route || $this->OldRoute->isEmpty()) {
+		if (null === $this->Route || $this->OldRoute->isEmpty()) {
 			return;
 		}
 

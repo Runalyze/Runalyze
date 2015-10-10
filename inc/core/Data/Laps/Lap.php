@@ -198,7 +198,7 @@ class Lap {
 	 * @return boolean
 	 */
 	public function hasTrackValues() {
-		return (NULL !== $this->TrackDurationAtEnd);
+		return (null !== $this->TrackDurationAtEnd);
 	}
 
 	/**
@@ -212,7 +212,7 @@ class Lap {
 	 * @return boolean
 	 */
 	public function hasHR() {
-		return (NULL !== $this->HRavg);
+		return (null !== $this->HRavg);
 	}
 
 	/**

@@ -27,13 +27,13 @@ class Context {
 	 * Objects
 	 * @var array
 	 */
-	static private $Objects = array();
+	private static $Objects = array();
 
 	/**
 	 * Athlete
 	 * @return \Runalyze\Athlete
 	 */
-	static public function Athlete() {
+	public static function Athlete() {
 		if (!isset(self::$Objects['athlete'])) {
 			self::$Objects['athlete'] = new Athlete(
 				Configuration::General()->gender(),
@@ -52,7 +52,7 @@ class Context {
 	 * Athlete
 	 * @return \Runalyze\Model\Factory
 	 */
-	static public function Factory() {
+	public static function Factory() {
 		if (!isset(self::$Objects['factory'])) {
 			self::$Objects['factory'] = new Model\Factory(
 				SessionAccountHandler::getId()
@@ -65,7 +65,7 @@ class Context {
 	/**
 	 * Clear internal cache
 	 */
-	static public function reset() {
+	public static function reset() {
 		self::$Objects = array();
 	}
 }

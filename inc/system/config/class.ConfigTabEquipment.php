@@ -271,6 +271,6 @@ class ConfigTabEquipment extends ConfigTab {
 			return date('Y-m-d', $time);
 		}
 
-		return NULL;
+		return null;
 	}
 }

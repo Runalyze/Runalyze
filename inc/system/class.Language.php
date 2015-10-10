@@ -23,19 +23,19 @@ class Language {
 	 * Locale dir
 	 * @var string
 	 */
-	static private $LOCALE_DIR = './inc/locale';
+	private static $LOCALE_DIR = './inc/locale';
 
 	/**
 	 * Current language
 	 * @var string
 	 */
-    static private $CURRENT_LANG = 'en';
+    private static $CURRENT_LANG = 'en';
 
 	/**
 	 * Available languages
 	 * @var array
 	 */
-	static private $AVAILABLE_LANGUAGES = NULL;
+	private static $AVAILABLE_LANGUAGES = null;
 
 	/**
 	 * Constructor
@@ -69,7 +69,7 @@ class Language {
 	 * @param boolean $overwriteGetParameter [optional]
 	 * @return boolean
 	 */
-	static public function setLanguage($language, $overwriteGetParameter = true) {
+	public static function setLanguage($language, $overwriteGetParameter = true) {
 		$supportedLanguages = self::availableLanguages();
 
 		if (!isset($supportedLanguages[$language])) {
@@ -109,7 +109,7 @@ class Language {
 	/**
 	 * Read available languages
 	 */
-	static private function readAvailableLanguages() {
+	private static function readAvailableLanguages() {
         $supportedLanguages = array();
         include __DIR__.'/../../config_lang.php';
 
@@ -120,8 +120,8 @@ class Language {
 	 * Available languages
 	 * @return string
 	 */
-	static public function availableLanguages() {
-		if (NULL === self::$AVAILABLE_LANGUAGES) {
+	public static function availableLanguages() {
+		if (null === self::$AVAILABLE_LANGUAGES) {
 			self::readAvailableLanguages();
 		}
 
@@ -190,7 +190,7 @@ class Language {
      * @param string $header The HTTP "Accept" header to parse
      * @param array $supported A list of supported values
      *
-     * @return string|NULL a matched option, or NULL if no match
+     * @return string|null a matched option, or null if no match
      */
 	protected function matchAccept($header, $supported) {
 		$matches = $this->sortAccept($header);
@@ -251,7 +251,7 @@ class Language {
 	 * @param string $domainname
 	 * @param string $dir
 	 */
-	static public function addTextDomain($domainname, $dir) {
+	public static function addTextDomain($domainname, $dir) {
 		bindtextdomain($domainname, $dir);
 	}
 
@@ -260,7 +260,7 @@ class Language {
 	 * @param string $text
 	 * @param string domain
 	 */
-	static public function __($text, $domain) {
+	public static function __($text, $domain) {
 	   return gettext($text);
 	}
 
@@ -269,7 +269,7 @@ class Language {
 	 * @param string $text
 	 * @param string domain
 	 */
-	static public function _e($text, $domain) {
+	public static function _e($text, $domain) {
 	   return gettext($text);
 	}
 
@@ -278,7 +278,7 @@ class Language {
 	 * @param string $text
 	 * @param string domain
 	 */
-	static public function _n($msg1, $msg2, $n, $domain) {
+	public static function _n($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
 	}
 
@@ -287,7 +287,7 @@ class Language {
 	 * @param string $text
 	 * @param string domain
 	 */
-	static public function _ne($msg1, $msg2, $n, $domain) {
+	public static function _ne($msg1, $msg2, $n, $domain) {
 	   return ngettext($msg1, $msg2, $n);
 	}
 }

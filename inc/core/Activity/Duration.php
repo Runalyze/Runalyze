@@ -40,7 +40,7 @@ class Duration {
 	 * Decimal point
 	 * @var string
 	 */
-	static public $DECIMAL_POINT = ',';
+	public static $DECIMAL_POINT = ',';
 
 	/**
 	 * Time [s]
@@ -53,7 +53,7 @@ class Duration {
 	 * @param float|string $input seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
 	 * @return string
 	 */
-	static public function format($input) {
+	public static function format($input) {
 		$Object = new Duration($input);
 
 		return $Object->string();

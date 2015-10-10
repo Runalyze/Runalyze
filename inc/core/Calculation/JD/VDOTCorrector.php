@@ -25,13 +25,13 @@ class VDOTCorrector {
 	 * Global correction factor
 	 * @var float
 	 */
-	static private $GlobalFactor = 1;
+	private static $GlobalFactor = 1;
 
 	/**
 	 * Set global factor
 	 * @param float $factor
 	 */
-	static public function setGlobalFactor($factor) {
+	public static function setGlobalFactor($factor) {
 		self::$GlobalFactor = $factor;
 	}
 

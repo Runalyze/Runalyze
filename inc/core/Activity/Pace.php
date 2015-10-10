@@ -72,7 +72,7 @@ class Pace {
 	 * @return array
 	 * @codeCoverageIgnore
 	 */
-	static public function options() {
+	public static function options() {
 		return array(
 			self::KM_PER_H		=> self::KM_PER_H,
 			self::MIN_PER_KM	=> self::MIN_PER_KM,

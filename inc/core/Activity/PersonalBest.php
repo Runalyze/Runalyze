@@ -46,24 +46,24 @@ class PersonalBest {
 	/**
 	 * @var array distance => pb
 	 */
-	static public $PBs = array();
+	public static $PBs = array();
 
 	/**
 	 * @var boolean
 	 */
-	static public $USE_STATIC_CACHE = true;
+	public static $USE_STATIC_CACHE = true;
 
 	/**
 	 * Activate use of static cache
 	 */
-	static public function activateStaticCache() {
+	public static function activateStaticCache() {
 		self::$USE_STATIC_CACHE = true;
 	}
 
 	/**
 	 * Deactivate use of static cache
 	 */
-	static public function deactivateStaticCache() {
+	public static function deactivateStaticCache() {
 		self::$USE_STATIC_CACHE = false;
 		self::$PBs = array();
 	}
@@ -85,7 +85,7 @@ class PersonalBest {
 	 * @param boolean $withDetails [optional]
 	 * @return int number of fetches PBs
 	 */
-	static public function lookupDistances(array $distances, PDO $pdo = null, $withDetails = false) {
+	public static function lookupDistances(array $distances, PDO $pdo = null, $withDetails = false) {
 		foreach ($distances as $km) {
 			self::$PBs[(float)$km] = false;
 		}
@@ -107,7 +107,7 @@ class PersonalBest {
 	 * @param boolean $withDetails [optional]
 	 * @return string
 	 */
-	static private function groupedQuery(array $distances, $withDetails = false) {
+	private static function groupedQuery(array $distances, $withDetails = false) {
 		$distances = array_filter($distances, 'is_numeric');
 
 		if ($withDetails) {
@@ -152,8 +152,8 @@ class PersonalBest {
 	 * @return \Runalyze\Activity\PersonalBest this-reference
 	 */
 	public function lookup() {
-		$this->ActivityID = NULL;
-		$this->Timestamp = NULL;
+		$this->ActivityID = null;
+		$this->Timestamp = null;
 
 		if (self::$USE_STATIC_CACHE && isset(self::$PBs[(float)$this->Distance])) {
 			if (is_array(self::$PBs[(float)$this->Distance])) {
@@ -168,7 +168,7 @@ class PersonalBest {
 				'AND `distance`="'.$this->Distance.'"'
 			)->fetchColumn();
 
-			if ($this->Time == NULL) {
+			if ($this->Time == null) {
 				$this->Time = false;
 			} elseif (self::$USE_STATIC_CACHE) {
 				self::$PBs[(float)$this->Distance] = $this->Time;
@@ -202,8 +202,8 @@ class PersonalBest {
 				self::$PBs[(float)$this->Distance] = $Data;
 			}
 		} else {
-			$this->ActivityID = NULL;
-			$this->Timestamp = NULL;
+			$this->ActivityID = null;
+			$this->Timestamp = null;
 			$this->Time = false;
 		}
 
@@ -230,7 +230,7 @@ class PersonalBest {
 	 * @return boolean
 	 */
 	public function knowsActivity() {
-		return (NULL !== $this->ActivityID);
+		return (null !== $this->ActivityID);
 	}
 
 	/**

@@ -19,7 +19,7 @@ class MultiEditor {
 	 * IDs
 	 * @var array
 	 */
-	static protected $IDs = array();
+	private static $IDs = array();
 
 	/**
 	 * Statement to fetch activities
@@ -123,7 +123,7 @@ class MultiEditor {
 	 * Set IDs
 	 * @param array $IDs
 	 */
-	static public function setIDs(array $IDs) {
+	public static function setIDs(array $IDs) {
 		self::$IDs = $IDs;
 	}
 
@@ -131,7 +131,7 @@ class MultiEditor {
 	 * Get IDs
 	 * @return array
 	 */
-	static public function IDs() {
+	public static function IDs() {
 		if (empty(self::$IDs))
 			if (strlen(Request::param('multi-editor-ids')) > 0)
 				self::$IDs = explode(',', Request::param('multi-editor-ids'));
@@ -143,7 +143,7 @@ class MultiEditor {
 	 * Is the multi editor currently used?
 	 * @return bool
 	 */
-	static public function isUsed() {
+	public static function isUsed() {
 		return count(self::IDs()) > 0;
 	}
 
@@ -151,7 +151,7 @@ class MultiEditor {
 	 * Get hidden input field
 	 * @return string
 	 */
-	static public function hiddenInput() {
+	public static function hiddenInput() {
 		return HTML::hiddenInput('multi-editor-ids', implode(',', self::IDs()));
 	}
 }

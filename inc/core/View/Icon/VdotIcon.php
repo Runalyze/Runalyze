@@ -49,13 +49,13 @@ class VdotIcon extends \Runalyze\View\Icon {
 	 * Transparent
 	 * @var bool
 	 */
-	protected $isTransparent = false;
+	protected $IsTransparent = false;
 
 	/**
 	 * Direction
 	 * @var string
 	 */
-	protected $direction = '';
+	protected $Direction = '';
 
 	/**
 	 * Vdot Icon
@@ -109,42 +109,42 @@ class VdotIcon extends \Runalyze\View\Icon {
 	 * Set transparent
 	 */
 	public function setTransparent() {
-		$this->isTransparent = true;
+		$this->IsTransparent = true;
 	}
 
 	/**
 	 * Set up
 	 */
 	public function setUp() {
-		$this->direction = self::DIRECTION_UP;
+		$this->Direction = self::DIRECTION_UP;
 	}
 
 	/**
 	 * Set up half
 	 */
 	public function setUpHalf() {
-		$this->direction = self::DIRECTION_UP_HALF;
+		$this->Direction = self::DIRECTION_UP_HALF;
 	}
 
 	/**
 	 * Set right
 	 */
 	public function setRight() {
-		$this->direction = self::DIRECTION_RIGHT;
+		$this->Direction = self::DIRECTION_RIGHT;
 	}
 
 	/**
 	 * Set down half
 	 */
 	public function setDownHalf() {
-		$this->direction = self::DIRECTION_DOWN_HALF;
+		$this->Direction = self::DIRECTION_DOWN_HALF;
 	}
 
 	/**
 	 * Set down
 	 */
 	public function setDown() {
-		$this->direction = self::DIRECTION_DOWN;
+		$this->Direction = self::DIRECTION_DOWN;
 	}
 
 	/**
@@ -152,11 +152,11 @@ class VdotIcon extends \Runalyze\View\Icon {
 	 * @return string
 	 */
 	public function code() {
-		if ($this->isTransparent) {
-			$this->fontAwesomeName .= ' vdot-ignore';
+		if ($this->IsTransparent) {
+			$this->FontAwesomeName .= ' vdot-ignore';
 		}
 
-		$this->fontAwesomeName .= ' '.$this->direction;
+		$this->FontAwesomeName .= ' '.$this->Direction;
 
 		return parent::code();
 	}

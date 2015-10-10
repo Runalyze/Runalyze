@@ -26,7 +26,7 @@ class TableZonesPace extends TableZonesAbstract {
 	/**
 	 * @var enum
 	 */
-	protected $paceUnit;
+	protected $PaceUnit;
 
 	/**
 	 * Get title for average
@@ -38,11 +38,10 @@ class TableZonesPace extends TableZonesAbstract {
 	 * Init data
 	 */
 	protected function initData() {
-		$this->paceUnit = $this->Context->sport()->paceUnit();
+		$this->PaceUnit = $this->Context->sport()->paceUnit();
 
 		$Zones = $this->computeZones();
-		$hrMax = Runalyze\Configuration::Data()->HRmax();
-		$Pace = new Pace(0, 1, $this->paceUnit);
+		$Pace = new Pace(0, 1, $this->PaceUnit);
 		$HR = new HeartRate(0, Runalyze\Context::Athlete());
 
 		foreach ($Zones as $paceInSeconds => $Info) {
@@ -111,7 +110,7 @@ class TableZonesPace extends TableZonesAbstract {
 			return 0;
 		}
 
-		switch ($this->paceUnit) {
+		switch ($this->PaceUnit) {
 			case Pace::KM_PER_H:
 				return $paceInSeconds > 720 ? 0 : 3600 / floor(3600 / $paceInSeconds / 5) / 5;
 

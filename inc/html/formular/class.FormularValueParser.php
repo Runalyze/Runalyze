@@ -16,61 +16,61 @@ class FormularValueParser {
 	 * Parser: timestamp <=> date-string
 	 * @var string 
 	 */
-	static public $PARSER_DATE = 'date';
+	public static $PARSER_DATE = 'date';
 
 	/**
 	 * Parser: timestamp <=> daytime-string
 	 * @var string 
 	 */
-	static public $PARSER_DAYTIME = 'daytime';
+	public static $PARSER_DAYTIME = 'daytime';
 
 	/**
 	 * Parser: time in seconds <=> time-string
 	 * @var string
 	 */
-	static public $PARSER_TIME = 'time';
+	public static $PARSER_TIME = 'time';
 
 	/**
 	 * Parser: time in minutes <=> time-string
 	 * @var string
 	 */
-	static public $PARSER_TIME_MINUTES = 'time-minutes';
+	public static $PARSER_TIME_MINUTES = 'time-minutes';
 
 	/**
 	 * Parser: encoded string <=> string
 	 * @var string 
 	 */
-	static public $PARSER_STRING = 'string';
+	public static $PARSER_STRING = 'string';
 
 	/**
 	 * Parser: check for integer
 	 * @var string 
 	 */
-	static public $PARSER_INT = 'int';
+	public static $PARSER_INT = 'int';
 
 	/**
 	 * Parser: check for decimal
 	 * @var string 
 	 */
-	static public $PARSER_DECIMAL = 'decimal';
+	public static $PARSER_DECIMAL = 'decimal';
 
 	/**
 	 * Parser: check for boolean
 	 * @var string 
 	 */
-	static public $PARSER_BOOL = 'bool';
+	public static $PARSER_BOOL = 'bool';
 
 	/**
 	 * Parser: comma separated string <=> checkboxes
 	 * @var string 
 	 */
-	static public $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
+	public static $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
 
 	/**
 	 * Parser: array with splits <=> string for splits
 	 * @var string
 	 */
-	static public $PARSER_SPLITS = 'splits';
+	public static $PARSER_SPLITS = 'splits';
 
 	/**
 	 * Validate post-value for a given key with a given parser
@@ -79,7 +79,7 @@ class FormularValueParser {
 	 * @param array $parserOptions
 	 * @return boolean 
 	 */
-	static public function validatePost($key, $parser, $parserOptions = array()) {
+	public static function validatePost($key, $parser, $parserOptions = array()) {
 		if (is_null($parser))
 			return true;
 
@@ -122,7 +122,7 @@ class FormularValueParser {
 	 * @param enum $parser
 	 * @param array $parserOptions
 	 */
-	static public function parse(&$value, $parser, $parserOptions = array()) {
+	public static function parse(&$value, $parser, $parserOptions = array()) {
 		if (is_null($parser))
 			return;
 
@@ -154,7 +154,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateString($key, $options = array()) {
+	private static function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
 			return __('The field can not be left empty.');
 
@@ -166,7 +166,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateBool($key) {
+	private static function validateBool($key) {
 		$_POST[$key] = isset($_POST[$key]) ? '1' : '0';
 
 		return true;
@@ -178,7 +178,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateInt($key, $options) {
+	private static function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
 			return __('Please enter a number.');
 
@@ -196,7 +196,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateDecimal($key, $options) {
+	private static function validateDecimal($key, $options) {
 		$_POST[$key] = Helper::CommaToPoint($_POST[$key]);
 
 		if (!is_numeric($_POST[$key]))
@@ -216,7 +216,7 @@ class FormularValueParser {
 	 * @param array $options array with key 'precision': as int or string for decimal
 	 * @return boolean
 	 */
-	static protected function precisionIsOkay($value, $options) {
+	private static function precisionIsOkay($value, $options) {
 		if (!isset($options['precision']))
 			return true;
 
@@ -233,7 +233,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateDate($key) {
+	private static function validateDate($key) {
 		$dateParts = self::removeEmptyValues(explode('.', $_POST[$key]));
 		$numParts  = count($dateParts);
 
@@ -253,7 +253,7 @@ class FormularValueParser {
 	 * Parse: timestamp => date-string
 	 * @param type $value 
 	 */
-	static protected function parseDate(&$value) {
+	private static function parseDate(&$value) {
 		if (is_numeric($value))
 			$value = date('d.m.Y', $value);
 	}
@@ -263,7 +263,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateDaytime($key) {
+	private static function validateDaytime($key) {
 		$timeParts = self::removeEmptyValues(explode(':', $_POST[$key]));
 		$numParts  = count($timeParts);
 
@@ -285,7 +285,7 @@ class FormularValueParser {
 	 * Parse: timestamp => date-string
 	 * @param type $value 
 	 */
-	static protected function parseDaytime(&$value) {
+	private static function parseDaytime(&$value) {
 		if (is_numeric($value))
 			$value = date('H:i', $value);
 
@@ -299,7 +299,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateTime($key, $options) {
+	private static function validateTime($key, $options) {
 		$Time = new Duration($_POST[$key]);
 
 		$_POST[$key] = $Time->seconds();
@@ -315,7 +315,7 @@ class FormularValueParser {
 	 * @param mixed $value 
 	 * @param array $options
 	 */
-	static protected function parseTime(&$value, $options) {
+	private static function parseTime(&$value, $options) {
 		if ($value == 0) {
 			if (isset($options['hide-empty'])) {
 				$value = '';
@@ -334,7 +334,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateTimeMinutes($key, $options) {
+	private static function validateTimeMinutes($key, $options) {
 		$Time = new Duration($_POST[$key]);
 
 		$_POST[$key] = $Time->seconds();
@@ -349,7 +349,7 @@ class FormularValueParser {
 	 * Parse: time in seconds => time-string
 	 * @param mixed $value 
 	 */
-	static protected function parseTimeMinutes(&$value) {
+	private static function parseTimeMinutes(&$value) {
 		if ($value == 0) {
 			$value = '0:00';
 		} else {
@@ -364,7 +364,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean
 	 */
-	static protected function validateArrayCheckboxes($key, $options) {
+	private static function validateArrayCheckboxes($key, $options) {
 		if (!isset($_POST[$key]))
 			return true;
 
@@ -377,7 +377,7 @@ class FormularValueParser {
 	 * Parse: comma separated string => checkbox array
 	 * @param string $value
 	 */
-	static protected function parseArrayCheckboxes(&$value) {
+	private static function parseArrayCheckboxes(&$value) {
 		if (is_array($value))
 			return;
 
@@ -396,7 +396,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean
 	 */
-	static protected function validateSplits($key, $options) {
+	private static function validateSplits($key, $options) {
 		if (!isset($_POST[$key])) {
 			$_POST[$key] = array();
 		}
@@ -411,7 +411,7 @@ class FormularValueParser {
 	 * Parse: splits string => splits array
 	 * @param string $value
 	 */
-	static protected function parseSplits(&$value) {
+	private static function parseSplits(&$value) {
 		$Splits = new Splits($value);
 		$value = $Splits->asArray();
 	}
@@ -421,7 +421,7 @@ class FormularValueParser {
 	 * @param array $array
 	 * @return array
 	 */
-	static private function removeEmptyValues($array) {
+	private static function removeEmptyValues($array) {
 		foreach ($array as $key => $value)
 			if (empty($value))
 				unset($array[$key]);

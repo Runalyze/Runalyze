@@ -81,7 +81,7 @@ class Calculator {
 	 * @return boolean
 	 */
 	protected function knowsRoute() {
-		return (NULL !== $this->Route);
+		return (null !== $this->Route);
 	}
 
 	/**
@@ -112,9 +112,8 @@ class Calculator {
 			return;
 		}
 
-		$everyNthPoint  = ceil($this->Size/1000); //self::$everyNthElevationPoint * ceil($this->Size/1000);
+		$everyNthPoint  = ceil($this->Size/1000);
 		$n              = $everyNthPoint;
-		$distance       = 0;
 		$grade          = 0;
 		$calcGrade      = $this->knowsRoute() && $this->Route->hasElevations();
 

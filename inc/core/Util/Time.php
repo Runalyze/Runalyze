@@ -19,7 +19,7 @@ class Time {
 	 * @param int $time_2 optional
 	 * @return int
 	 */
-	static public function diffInDays($time_1, $time_2 = 0) {
+	public static function diffInDays($time_1, $time_2 = 0) {
 		if ($time_2 == 0) {
 			$time_2 = time();
 		}
@@ -33,7 +33,7 @@ class Time {
 	 * @param string $date2
 	 * @return int
 	 */
-	static public function diffOfDates($date1, $date2) {
+	public static function diffOfDates($date1, $date2) {
 		return (int)date_diff(date_create($date1), date_create($date2))->format('%a');
 	}
 
@@ -42,7 +42,7 @@ class Time {
 	 * @param int $timestamp
 	 * @return boolean
 	 */
-	static public function isToday($timestamp) {
+	public static function isToday($timestamp) {
 		return (date('d.m.Y') == date('d.m.Y', $timestamp));
 	}
 
@@ -50,7 +50,7 @@ class Time {
 	 * Get the timestamp of the start of the week
 	 * @param int $time
 	 */
-	static public function Weekstart($time) {
+	public static function weekstart($time) {
 		$w = date("w", $time);
 
 		if ($w == 0) {
@@ -66,8 +66,8 @@ class Time {
 	 * Get the timestamp of the end of the week
 	 * @param int $time
 	 */
-	static public function Weekend($time) {
-		$start = self::Weekstart($time);
+	public static function weekend($time) {
+		$start = self::weekstart($time);
 
 		return mktime(23, 59, 50, date('m', $start), date('d', $start) + 6, date('Y', $start));
 	}
@@ -78,7 +78,7 @@ class Time {
 	 * @param bool $short   short version, default: false
 	 * @codeCoverageIgnore
 	 */
-	static public function Weekday($w, $short = false) {
+	public static function weekday($w, $short = false) {
 		switch ($w%7) {
 			case 0: return $short ? __('Sun') : __('Sunday');
 			case 1: return $short ? __('Mon') : __('Monday');
@@ -97,7 +97,7 @@ class Time {
 	 * @param bool $short   short version, default: false
 	 * @codeCoverageIgnore
 	 */
-	static public function Month($m, $short = false) {
+	public static function month($m, $short = false) {
 		switch ($m % 12) {
 			case 1: return $short ? __('Jan') : __('January');
 			case 2: return $short ? __('Feb') : __('February');

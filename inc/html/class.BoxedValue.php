@@ -14,43 +14,43 @@ class BoxedValue {
 	 * HTML class: surrounding div
 	 * @var string
 	 */
-	static public $SURROUNDING_DIV = 'boxed-values';
+	public static $SURROUNDING_DIV = 'boxed-values';
 
 	/**
 	 * HTML class: container floating outer div
 	 * @var string
 	 */
-	static public $CONTAINER_FLOATING_OUTER_DIV = 'boxed-value-outer';
+	public static $CONTAINER_FLOATING_OUTER_DIV = 'boxed-value-outer';
 
 	/**
 	 * HTML class: container div
 	 * @var string
 	 */
-	static public $CONTAINER_DIV = 'boxed-value-container';
+	public static $CONTAINER_DIV = 'boxed-value-container';
 
 	/**
 	 * HTML class: container div with icon
 	 * @var string
 	 */
-	static public $CONTAINER_DIV_WITH_ICON = 'boxed-value-container with-icon';
+	public static $CONTAINER_DIV_WITH_ICON = 'boxed-value-container with-icon';
 
 	/**
 	 * HTML class: value div
 	 * @var string
 	 */
-	static public $VALUE_DIV = 'boxed-value';
+	public static $VALUE_DIV = 'boxed-value';
 
 	/**
 	 * HTML class: unit div
 	 * @var string
 	 */
-	static public $VALUE_UNIT_DIV = 'boxed-value-unit';
+	public static $VALUE_UNIT_DIV = 'boxed-value-unit';
 
 	/**
 	 * HTML class: info div
 	 * @var string
 	 */
-	static public $VALUE_INFO_DIV = 'boxed-value-info';
+	public static $VALUE_INFO_DIV = 'boxed-value-info';
 
 	/**
 	 * Value
@@ -278,7 +278,7 @@ class BoxedValue {
 	 * Wrap values
 	 * @param string $ValuesString
 	 */
-	static public function wrapValues($ValuesString) {
+	public static function wrapValues($ValuesString) {
 		echo self::getWrappedValues($ValuesString);
 	}
 
@@ -287,7 +287,7 @@ class BoxedValue {
 	 * @param string $ValuesString
 	 * @return string
 	 */
-	static public function getWrappedValues($ValuesString) {
+	public static function getWrappedValues($ValuesString) {
 		return '<div class="'.self::$SURROUNDING_DIV.'">'.$ValuesString.'</div>';
 	}
 }

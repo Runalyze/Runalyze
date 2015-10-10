@@ -18,7 +18,7 @@ class UserData extends DataObject {
 	* Array containing all rows from database
 	* @var array
 	*/
-	static private $fullArray = null;
+	private static $fullArray = null;
 
 	/**
 	 * Init DatabaseScheme 
@@ -148,7 +148,7 @@ class UserData extends DataObject {
 	 * Get all rows from user-data
 	 * @return array
 	 */
-	static public function getFullArray() {
+	public static function getFullArray() {
 		if (!is_null(self::$fullArray)) {
 			return self::$fullArray;
 		}

@@ -256,7 +256,7 @@ abstract class Loop
 		}
 
 		if ($max == -PHP_INT_MAX) {
-			return NULL;
+			return null;
 		}
 
 		return $max;

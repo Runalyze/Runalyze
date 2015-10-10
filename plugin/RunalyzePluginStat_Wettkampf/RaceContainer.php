@@ -46,7 +46,7 @@ class RaceContainer {
 	 * @param int $competitionType [optional]
 	 */
 	public function __construct(PDO $pdo = null, $competitionType = false) {
-		$this->PDO = (NULL == $pdo) ? DB::getInstance() : $pdo;
+		$this->PDO = (null == $pdo) ? DB::getInstance() : $pdo;
 		$this->ComeptitionType = (false === $competitionType) ? Configuration::General()->competitionType() : $competitionType;
 	}
 
