@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `runalyze_type` (
 CREATE TABLE IF NOT EXISTS `runalyze_user` (
 `id` int(11) NOT NULL,
   `time` int(11) NOT NULL,
-  `weight` decimal(4,1) NOT NULL DEFAULT '0.0',
+  `weight` decimal(5,2) NOT NULL DEFAULT '0.0',
   `pulse_rest` smallint(3) NOT NULL DEFAULT '0',
   `pulse_max` smallint(3) NOT NULL DEFAULT '0',
   `fat` decimal(3,1) NOT NULL DEFAULT '0.0',

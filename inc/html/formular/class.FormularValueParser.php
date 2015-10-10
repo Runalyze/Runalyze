@@ -5,6 +5,8 @@
  */
 
 use Runalyze\Activity\Duration;
+use Runalyze\Configuration;
+use Runalyze\Activity\Weight;
 
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
@@ -73,6 +75,12 @@ class FormularValueParser {
 	public static $PARSER_SPLITS = 'splits';
 
 	/**
+	 * Parser: weight in kg <=> weight in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_WEIGHT = 'weight';
+
+	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param enum $parser
@@ -111,6 +119,8 @@ class FormularValueParser {
 				return self::validateArrayCheckboxes($key, $parserOptions);
 			case self::$PARSER_SPLITS:
 				return self::validateSplits($key, $parserOptions);
+			case self::$PARSER_WEIGHT:
+				return self::validateWeight($key);
 			default:
 				return true;
 		}
@@ -144,6 +154,8 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_SPLITS:
 				self::parseSplits($value);
+			case self::$PARSER_WEIGHT:
+				self::parseWeight($value);
 				break;
 		}
 	}
@@ -414,6 +426,25 @@ class FormularValueParser {
 	private static function parseSplits(&$value) {
 		$Splits = new Splits($value);
 		$value = $Splits->asArray();
+	}
+
+	/**
+	 * Validator: weight in preferred unit => weight in kg
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateWeight($key) {
+		$_POST[$key] = round((new Weight())->setInPreferredUnit($_POST[$key])->kg(), 2);
+
+		return true;
+	}
+
+	/**
+	 * Parse: weight in kg => weight in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseWeight(&$value) {
+		$value = round((new Weight($value))->valueInPreferredUnit(), 2);
 	}
 
 	/**

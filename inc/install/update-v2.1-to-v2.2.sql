@@ -123,3 +123,6 @@ ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runaly
 ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+/* 10.10.2015 - more precision for body weight */
+ALTER TABLE `runalyze_user` CHANGE `weight` `weight` DECIMAL(5,2) NOT NULL DEFAULT '0.0';

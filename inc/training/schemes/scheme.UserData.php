@@ -49,10 +49,11 @@ $FIELDS['time'] = array(
 $FIELDS['weight'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
-		'precision'	=> '4,1',
+		'precision'	=> '5,2',
 		),
 	'formular'	=> array(
 		'label'		=> __('Weight'),
+		'parser'	=> FormularValueParser::$PARSER_WEIGHT,
 		'unit'		=> \Runalyze\Configuration::General()->weightUnit()->unit()
 	)
 );

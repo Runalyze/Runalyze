@@ -63,7 +63,6 @@ class General extends \Runalyze\Configuration\Category {
 		return $this->object('DISTANCE_UNIT');
 	}
 
-        
 	/**
 	 * Distance Unit as feet
 	 * @return distance unit with feet
@@ -71,6 +70,7 @@ class General extends \Runalyze\Configuration\Category {
 	public function distanceUnitAsFeet() {
 		return $this->object('DISTANCE_UNIT')->distanceUnitAsFeet();
 	}
+
 	/**
 	 * Distance Unit as yard
 	 * @return distance unit with feet
@@ -88,12 +88,11 @@ class General extends \Runalyze\Configuration\Category {
 	
 	/**
 	 * weight Unit
-	 * @return WeightUnit
+	 * @return \Runalyze\Parameter\Application\WeightUnit
 	 */
 	public function weightUnit() {
 		return $this->object('WEIGHT_UNIT');
 	}
-
 
 	/**
 	 * Gender
@@ -187,7 +186,7 @@ class General extends \Runalyze\Configuration\Category {
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('DISTANCE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
-                $this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
+		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
@@ -203,15 +202,14 @@ class General extends \Runalyze\Configuration\Category {
 		$Fieldset->addHandle( $this->handle('GENDER'), array(
 			'label'		=> __('Gender')
 		));
-		
+
 		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT'), array(
 			'label'		=> __('Distance unit')
 		));
-		
+
 		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
 			'label'		=> __('Weight unit')
 		));
-
 
 		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(
 			'label'		=> __('Heart rate unit')

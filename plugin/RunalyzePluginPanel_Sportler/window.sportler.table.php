@@ -59,12 +59,11 @@ if (Request::param('reload') == 'true') {
 				<td><?php echo RunalyzePluginPanel_Sportler::getDeleteLinkFor($Info['id']); ?></td>
 				<td><?php echo RunalyzePluginPanel_Sportler::getEditLinkFor($Info['id']); ?></td>
 			<?php foreach ($Fields as $Key => $Unit): ?>
-                               <?php if($Key == 'weight') {
+				<?php if ($Key == 'weight') {
 					$Weight = new Weight($Info[$Key]);
-					$Info[$Key] = $Weight->string(1, false).'<small>'.$Weight->unit().'</small>';	
-			       }
-
-				   ?>
+					$Info[$Key] = $Weight->string(1, false).' <small>'.$Weight->unit().'</small>';	
+				}
+				?>
 				<?php $Value = ($Unit == 'date') ? date('d.m.Y', $Info[$Key]) : $Info[$Key]; ?>
 				<?php if ($Unit == 'date') $Unit = ''; ?>
 				<?php if ($Key == 'sleep_duration' && $Value > 0) $Value = (new Duration($Value*60))->string('G:i'); ?>
