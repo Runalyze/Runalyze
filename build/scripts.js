@@ -6592,7 +6592,7 @@ Runalyze.Statistics = (function($, Parent){
 	};
 
 	self.shows = function(id) {
-		return (currentUrl.lastIndexOf( options.urlStat + id.toString(), 0 ) === 0);
+		return (currentUrl == options.urlStat + id.toString()) || (currentUrl.lastIndexOf( options.urlStat + id.toString() + '&', 0 ) === 0);
 	};
 
 	self.currentId = function() {
