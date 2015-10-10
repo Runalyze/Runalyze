@@ -109,7 +109,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		if ($this->Configuration()->value('use_weight')) {
 			$Weight = new Weight($UserData->getWeight());
-			$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(1, false), '-'), $Weight->unit(), __('Weight'));
+			$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(false), '-'), $Weight->unit(), __('Weight'));
 		}
 
 		if ($this->Configuration()->value('use_pulse')) {
@@ -185,7 +185,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 
 		if ($this->Configuration()->value('use_weight')) {
 		    $UserWeight = new Weight($UserData->getWeight());
-			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserWeight->string(1, false), '-').' '.$UserWeight->unit().'</strong><br>';
+			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserWeight->string(false), '-').' '.$UserWeight->unit().'</strong><br>';
                 }
 
 		if ($this->Configuration()->value('use_pulse')) {

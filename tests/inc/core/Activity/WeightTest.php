@@ -12,9 +12,9 @@ class WeightTest extends \PHPUnit_Framework_TestCase
 {
 	public function testConstructor()
 	{
-		$this->assertEquals('75.0', (new Weight(75, new WeightUnit(WeightUnit::KG)))->string(1, false));
-		$this->assertEquals('165.3', (new Weight(75, new WeightUnit(WeightUnit::POUNDS)))->string(1, false));
-		$this->assertEquals('11.8', (new Weight(75, new WeightUnit(WeightUnit::STONES)))->string(1, false));
+		$this->assertEquals('75.0', (new Weight(75, new WeightUnit(WeightUnit::KG)))->string(false, 1));
+		$this->assertEquals('165.3', (new Weight(75, new WeightUnit(WeightUnit::POUNDS)))->string(false, 1));
+		$this->assertEquals('11.8', (new Weight(75, new WeightUnit(WeightUnit::STONES)))->string(false, 1));
 	}
 
 	public function testSettingInPreferredUnit()
@@ -59,8 +59,8 @@ class WeightTest extends \PHPUnit_Framework_TestCase
 		Configuration::General()->weightUnit()->set(WeightUnit::KG);
 		$unit = '&nbsp;'.Configuration::General()->weightUnit()->unit();
 
-		$this->assertEquals('10.0'.$unit, Weight::format(10, 1, true));
-		$this->assertEquals('12.346'.$unit, Weight::format(12.3456, 3, true));
-		$this->assertEquals('12.3', Weight::format(12.3456, 1, false));
+		$this->assertEquals('10.0'.$unit, Weight::format(10, true, 1));
+		$this->assertEquals('12.346'.$unit, Weight::format(12.3456, true, 3));
+		$this->assertEquals('12.3', Weight::format(12.3456, false, 1));
 	}
 }
