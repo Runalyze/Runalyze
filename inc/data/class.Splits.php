@@ -16,7 +16,7 @@ class Splits {
 	 * Enum for constructor: Take data from post
 	 * @var enum
 	 */
-	static public $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
+	public static $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
 
 	/**
 	 * Splits as string

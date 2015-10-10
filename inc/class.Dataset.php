@@ -343,10 +343,10 @@ class Dataset {
 	 * @param int $timestamp
 	 * @return string
 	 */
-	static public function getDateString($timestamp) {
+	public static function getDateString($timestamp) {
 		$date    = date('d.m.', $timestamp);
 		$addLink = '';
-		$weekDay = Time::Weekday(date('w', $timestamp), true);
+		$weekDay = Time::weekday(date('w', $timestamp), true);
 
 		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN) {
 			$addLink = ImporterWindow::linkForDate($timestamp);

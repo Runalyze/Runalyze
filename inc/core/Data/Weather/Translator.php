@@ -17,7 +17,7 @@ class Translator {
 	 * Try to get weather id for string
 	 * @param string $string
 	 */
-	static public function IDfor($string) {
+	public static function IDfor($string) {
 		switch ($string) {
 			case 'Mostly Sunny':
 			case 'Sunny':

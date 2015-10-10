@@ -44,7 +44,7 @@ class PaceCalculator {
 	 * @return array
 	 */
 	public function calculate() {
-		if (NULL !== $this->Smoother) {
+		if (null !== $this->Smoother) {
 			$this->Pace = $this->Smoother->smooth(0.001, PaceSmoother::MODE_DISTANCE);
 		}
 

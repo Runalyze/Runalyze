@@ -19,13 +19,13 @@ class ConfigTabs {
 	 * HTML-ID for div
 	 * @var string
 	 */
-	static public $TABS_ID = 'config-tabs';
+	public static $TABS_ID = 'config-tabs';
 
 	/**
 	 * Messages to show after submit
 	 * @var array
 	 */
-	static private $Messages = array();
+	private static $Messages = array();
 
 	/**
 	 * Internal array with all tabs
@@ -43,7 +43,7 @@ class ConfigTabs {
 	 * Add message after submit
 	 * @param string $HTMLcode HTML::info() or HTML::text() or HTML::warning() or HTML::error()
 	 */
-	static public function addMessage($HTMLcode) {
+	public static function addMessage($HTMLcode) {
 		self::$Messages[] = $HTMLcode;
 	}
 
@@ -70,8 +70,9 @@ class ConfigTabs {
 	protected function displayNavigation() {
 		$Links   = array();
 
-		foreach ($this->Tabs as $Tab)
+		foreach ($this->Tabs as $Tab) {
 			$Links[] = array('tag' => Ajax::link($Tab->getTitle(), self::$TABS_ID, $Tab->getUrl()));
+		}
 
 		echo Ajax::toolbarNavigation($Links);
 	}
@@ -121,8 +122,9 @@ class ConfigTabs {
 	protected function displayCurrentTab() {
 		$CurrentKey = $this->getCurrentKey();
 
-		if (isset($this->Tabs[$CurrentKey]))
+		if (isset($this->Tabs[$CurrentKey])) {
 			$this->Tabs[$CurrentKey]->display();
+		}
 	}
 
 	/**
@@ -132,8 +134,9 @@ class ConfigTabs {
 	protected function getCurrentKey() {
 		$CurrentKey = Request::param('key');
 
-		if (empty($CurrentKey))
+		if (empty($CurrentKey)) {
 			$CurrentKey = $this->defaultKey;
+		}
 
 		return $CurrentKey;
 	}

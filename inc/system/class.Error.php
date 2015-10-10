@@ -26,7 +26,7 @@ class Error {
 	 * Internatl instance pointer
 	 * @var Error
 	 */
-	private static $instance = NULL;
+	private static $instance = null;
 
 	/**
 	 * Array of strings with all errors
@@ -81,7 +81,7 @@ class Error {
 	 * @return Error
 	 */
 	public static function getInstance() {
-		if (self::$instance == NULL)
+		if (self::$instance == null)
 			self::$instance = new self;
 
 		return self::$instance;
@@ -96,7 +96,7 @@ class Error {
 	 * Destructor for this class
 	 * Prints error messages to logfile if wanted
 	 */
-	function __destruct() {
+	public function __destruct() {
 		$this->display();
 	}
 
@@ -395,4 +395,3 @@ function error_handler($type, $message, $file, $line) {
 
     return true;
 }
-?>

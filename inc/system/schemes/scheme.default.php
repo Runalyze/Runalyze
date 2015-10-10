@@ -14,4 +14,3 @@ $FIELDS['id'] = array(
 		'label'		=> 'ID'
 	)
 );
-?>

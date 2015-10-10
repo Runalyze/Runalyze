@@ -24,7 +24,7 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 	 * Flag: recalculation triggered?
 	 * @var boolean
 	 */
-	static private $TRIGGERED = false;
+	private static $TRIGGERED = false;
 
 	/**
 	 * Internal key
@@ -138,7 +138,7 @@ class BasicEndurance extends \Runalyze\Configuration\Category {
 	/**
 	 * Trigger recalculation
 	 */
-	static public function triggerRecalculation() {
+	public static function triggerRecalculation() {
 		if (!self::$TRIGGERED) {
 			self::$TRIGGERED = true;
 

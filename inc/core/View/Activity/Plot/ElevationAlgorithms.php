@@ -102,6 +102,7 @@ class ElevationAlgorithms extends ActivityPlot {
 		$Calculator->calculate();
 
 		$i = 0;
+		$Data = array();
 		$Points = $Calculator->strategy()->smoothedData();
 		$Indices = $Calculator->strategy()->smoothingIndices();
 		$hasDistances = $this->Context->trackdata()->get(Trackdata\Object::DISTANCE);

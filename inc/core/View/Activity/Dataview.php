@@ -172,7 +172,7 @@ class Dataview {
 	 * @return string
 	 */
 	public function weekday() {
-		return Time::Weekday( date('w', $this->Activity->timestamp()) );
+		return Time::weekday( date('w', $this->Activity->timestamp()) );
 	}
 
 	/**
@@ -267,22 +267,6 @@ class Dataview {
 		return $this->object($this->StrideLength, function($Activity){
 			return new StrideLength($Activity->strideLength());
 		});
-	}
-
-	/**
-	 * Get total strokes
-	 * @return \Runalyze\Activity\TotalStrokes
-	 */
-	public function totalStrokes() {
-		return $this->object($this->totalStrokes());
-	}
-
-	/**
-	 * Get swolf
-	 * @return \Runalyze\Activity\Swolf
-	 */
-	public function swolf() {
-		return $this->object($this->swolf());
 	}
 
 	/**

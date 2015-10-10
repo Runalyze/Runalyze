@@ -32,13 +32,13 @@ class VDOT {
 	 * Precision
 	 * @var int
 	 */
-	static private $Precision = 2;
+	private static $Precision = 2;
 
 	/**
 	 * Method
 	 * @var enum 
 	 */
-	static private $Method = 0;
+	private static $Method = 0;
 
 	/**
 	 * Value
@@ -56,7 +56,7 @@ class VDOT {
 	 * Set precision
 	 * @param int $decimals number of decimals to display
 	 */
-	static public function setPrecision($decimals) {
+	public static function setPrecision($decimals) {
 		self::$Precision = $decimals;
 	}
 
@@ -64,7 +64,7 @@ class VDOT {
 	 * Set method
 	 * @param enum $method
 	 */
-	static public function setMethod($method) {
+	public static function setMethod($method) {
 		self::$Method = $method;
 	}
 
@@ -117,7 +117,7 @@ class VDOT {
 	 * @param float $distance [km]
 	 * @param int $seconds
 	 */
-	static public function formula($distance, $seconds) {
+	public static function formula($distance, $seconds) {
 		$min = $seconds/60;
 		$m = 1000*$distance;
 
@@ -247,7 +247,7 @@ class VDOT {
 	 * @param float $percentage in [0.0, 1.0]
 	 * @return float in [0.0, 1.0]
 	 */
-	static public function HRat($percentage) {
+	public static function HRat($percentage) {
 		if (self::$Method == self::METHOD_LOGARITHMIC)
 			return 0.68725*log($percentage)+1.00466;
 
@@ -263,7 +263,7 @@ class VDOT {
 	 * @param float $hrInPercent in [0.0, 1.0]
 	 * @return float in [0.0, 1.0]
 	 */
-	static public function percentageAt($hrInPercent) {
+	public static function percentageAt($hrInPercent) {
 		if (self::$Method == self::METHOD_LOGARITHMIC)
 			return exp( ($hrInPercent - 1.00466) / 0.68725 );
 

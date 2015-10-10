@@ -30,7 +30,7 @@ abstract class ExporterType {
 	 * @param enum $Type
 	 * @return string
 	 */
-	static public function heading($Type) {
+	public static function heading($Type) {
 		switch ($Type) {
 			case self::File:
 				return __('Export as file');

@@ -44,13 +44,13 @@ abstract class PlotSumData extends Plot {
 	 * URL to window
 	 * @var string
 	 */
-	static public $URL = 'call/window.plotSumData.php';
+	public static $URL = 'call/window.plotSumData.php';
 
 	/**
 	 * URL to shared window
 	 * @var string
 	 */
-	static public $URL_SHARED = 'call/window.plotSumData.shared.php';
+	public static $URL_SHARED = 'call/window.plotSumData.shared.php';
 
 	/**
 	 * Year

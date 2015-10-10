@@ -14,7 +14,7 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * New equipment
 	 * @var array
 	 */
-	static private $NewEquipment = array();
+	private static $NewEquipment = array();
 
 	/**
 	 * Parse XML
@@ -98,7 +98,7 @@ class ParserXMLrunningAHEADMultiple extends ParserAbstractMultipleXML {
 	 * @param string $key
 	 * @return int
 	 */
-	static public function newEquipmentId($key) {
+	public static function newEquipmentId($key) {
 		if (isset(self::$NewEquipment[$key]))
 			return self::$NewEquipment[$key];
 

@@ -9,4 +9,3 @@ $Frontend = new Frontend();
 
 $DataBrowser = new DataBrowser();
 $DataBrowser->display();
-?>

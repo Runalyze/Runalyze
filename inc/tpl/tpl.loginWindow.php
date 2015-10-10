@@ -170,13 +170,13 @@ function show(what) {
 DB::getInstance()->stopAddingAccountID();
 
 $NumUser = Cache::get('NumUser', 1);
-if ($NumUser == NULL) {
+if ($NumUser == null) {
     $NumUser = DB::getInstance()->query('SELECT COUNT(*) FROM '.PREFIX.'account WHERE activation_hash = ""')->fetchColumn();
     Cache::set('NumUser', $NumUser, '500', 1);
 }
 
 $NumKm = Cache::get('NumKm', 1);
-if ($NumKm == NULL) {
+if ($NumKm == null) {
     $NumKm = DB::getInstance()->query('SELECT SUM(distance) FROM '.PREFIX.'training')->fetchColumn();
     Cache::set('NumKm', $NumKm, '500', 1);
 }

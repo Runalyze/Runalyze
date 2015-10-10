@@ -94,7 +94,7 @@ class ParserFITLOGSingle extends ParserAbstractSingleXML {
 			$lon  = round((double)$Point['lon'], 7);
 			$dist = empty($this->gps['latitude'])
 					? 0
-					: round(GpsData::distance($lat, $lon, end($this->gps['latitude']), end($this->gps['longitude'])), ParserAbstract::DISTANCE_PRECISION);
+					: round(Runalyze\Model\Route\Object::gpsDistance($lat, $lon, end($this->gps['latitude']), end($this->gps['longitude'])), ParserAbstract::DISTANCE_PRECISION);
 		} elseif (count($this->gps['latitude'])) {
 			$lat  = end($this->gps['latitude']);
 			$lon  = end($this->gps['longitude']);

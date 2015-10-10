@@ -3,7 +3,6 @@
  * This file contains class::ImporterFiletypeCSV
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo( __('csv-files from Epson are supported.') );
 /**
  * Importer: *.csv
  *
@@ -48,3 +47,5 @@ class ImporterFiletypeCSV extends ImporterFiletypeAbstract {
 		);
 	}
 }
+
+ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'csv', ImporterFiletypeCSV::ALLOWED_PRODUCER) );

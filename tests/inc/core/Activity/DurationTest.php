@@ -52,6 +52,7 @@ class DurationTest extends \PHPUnit_Framework_TestCase {
 	public function testAutoFormat() {
 		$Time = new Duration();
 
+		$this->assertEquals('1d 09:13:41', $Time->fromString('1d 09:13:41,4')->string());
 		$this->assertEquals('1d 09:13:41', $Time->fromString('33:13:41,4')->string());
 		$this->assertEquals(   '23:13:41', $Time->fromString('23:13:41,4')->string());
 		$this->assertEquals(    '3:13:41', $Time->fromString(' 3:13:41,4')->string());

@@ -66,4 +66,3 @@ abstract class HtmlTag {
 		return implode(' ', $this->attributes);
 	}
 }
-?>

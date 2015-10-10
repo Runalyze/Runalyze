@@ -58,7 +58,7 @@ class DataBrowserShared extends DataBrowser {
 	 * Get base url
 	 * @return string
 	 */
-	static function getBaseUrl() {
+	public static function getBaseUrl() {
 		return 'shared/'.Request::param('user').'/';
 	}
 
@@ -70,7 +70,7 @@ class DataBrowserShared extends DataBrowser {
 	 * @param string $title title for the link
 	 * @return string HTML-link
 	 */
-	static function getLink($name, $start, $end, $title = '') {
+	public static function getLink($name, $start, $end, $title = '') {
 		$href = self::getBaseUrl().'?start='.$start.'&end='.$end;
 
 		return Ajax::link($name, DATA_BROWSER_SHARED_ID, $href, '', $title);
@@ -80,7 +80,7 @@ class DataBrowserShared extends DataBrowser {
 	 * Get URL for month km
 	 * @return string
 	 */
-	static public function getUrlForMonthKm() {
+	public static function getUrlForMonthKm() {
 		return self::getBaseUrl().'?view=monthkm';
 	}
 
@@ -88,7 +88,7 @@ class DataBrowserShared extends DataBrowser {
 	 * Get URL for month km
 	 * @return string
 	 */
-	static public function getUrlForWeekKm() {
+	public static function getUrlForWeekKm() {
 		return self::getBaseUrl().'?view=weekkm';
 	}
 

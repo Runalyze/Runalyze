@@ -9,4 +9,3 @@ $Frontend = new Frontend();
 
 $View = new ExporterWindow();
 $View->display();
-?>

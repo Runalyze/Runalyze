@@ -31,7 +31,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * All properties
 	 * @return array
 	 */
-	static public function allProperties() {
+	public static function allProperties() {
 		return array(
 			self::ACTIVITYID,
 			self::DATA

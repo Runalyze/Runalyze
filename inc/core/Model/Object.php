@@ -74,7 +74,7 @@ abstract class Object {
 			if (isset($data[$key]) && $data[$key] !== '') {
 				$this->Data[$key] = $this->isArray($key) && !is_array($data[$key]) ? self::explode($data[$key]) : $data[$key];
 			} else {
-				$this->Data[$key] = $this->isArray($key) ? array() : ($this->canBeNull($key) ? NULL : '');
+				$this->Data[$key] = $this->isArray($key) ? array() : ($this->canBeNull($key) ? null : '');
 			}
 		}
 	}
@@ -322,7 +322,7 @@ abstract class Object {
 	 * @param string $string
 	 * @return array
 	 */
-	static public function explode($string) {
+	public static function explode($string) {
 		return explode(self::ARRAY_SEPARATOR, $string);
 	}
 
@@ -331,7 +331,7 @@ abstract class Object {
 	 * @param array $data
 	 * @return string
 	 */
-	static public function implode(array $data) {
+	public static function implode(array $data) {
 		return implode(self::ARRAY_SEPARATOR, $data);
 	}
 }

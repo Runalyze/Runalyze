@@ -19,12 +19,12 @@ class Benchmark {
 	 * Start time
 	 * @var int
 	 */
-	static private $StartTime = null;
+	private static $StartTime = null;
 
 	/**
 	 * Start benchmark
 	 */
-	static public function start() {
+	public static function start() {
 		self::$StartTime = microtime(true);
 	}
 
@@ -33,7 +33,7 @@ class Benchmark {
 	 * 
 	 * This will produce a debug message with execution time.
 	 */
-	static public function end() {
+	public static function end() {
 		if (!is_null(self::$StartTime)) {
 			Error::getInstance()->addDebug('Benchmark time: '.(microtime(true) - self::$StartTime));
 		}

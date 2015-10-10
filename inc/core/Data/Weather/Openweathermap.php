@@ -81,7 +81,7 @@ class Openweathermap implements ForecastStrategyInterface {
 		if ($cacheKey !== false) {
 			$this->Result = Cache::get($cacheKey, 1);
 
-			if ($this->Result != NULL) {
+			if ($this->Result != null) {
 				return;
 			} else {
 				$this->Result = array();

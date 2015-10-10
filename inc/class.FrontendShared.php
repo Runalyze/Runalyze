@@ -22,13 +22,13 @@ class FrontendShared extends Frontend {
 	 * Flag: shared view is used
 	 * @var boolean
 	 */
-	static public $IS_SHOWN = false;
+	public static $IS_SHOWN = false;
 
 	/**
 	 * Flag: shared view is iframe
 	 * @var boolean
 	 */
-	static public $IS_IFRAME = false;
+	public static $IS_IFRAME = false;
 
 	/**
 	 * Function to display the HTML-Header

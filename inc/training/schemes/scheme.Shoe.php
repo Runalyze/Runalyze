@@ -85,4 +85,3 @@ $FIELDS['inuse'] = array(
 		'parser'	=> FormularValueParser::$PARSER_BOOL
 	)
 );
-?>

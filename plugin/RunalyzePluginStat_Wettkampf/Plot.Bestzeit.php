@@ -20,7 +20,7 @@ $titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Distan
 $timeFormat  = '%M:%S';
 
 $competitions = $this->RaceContainer->races($distance);
-//$competitions = DB::getInstance()->query('SELECT id,time,s FROM `'.PREFIX.'training` WHERE `typeid`='.Configuration::General()->competitionType().' AND `distance`="'.$distance.'" ORDER BY `time` ASC')->fetchAll();
+
 if (!empty($competitions)) {
 	foreach ($competitions as $competition) {
 		if (!$this->isFunCompetition($competition['id'])) {
@@ -35,8 +35,6 @@ if (!empty($competitions)) {
 
 $Plot = new Plot("bestzeit".$distance*1000, 480, 190);
 $Plot->Data[] = array('label' => $label, 'data' => $Results);
-//$Plot->Data[] = array('label' => $trend, 'data' => $Results, 'color' => '#C61D17', 'lines' => array('show' => true), 'curvedLines' => array('apply' => true, 'fit' => true));
-//$Plot->Data[] = array('label' => $label, 'data' => $Results, 'color' => '#C61D17', 'points' => array('show' => true), 'curvedLines' => array('apply' => false));
 
 $Plot->setMarginForGrid(5);
 $Plot->setXAxisAsTime();

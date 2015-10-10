@@ -51,11 +51,11 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const PACE_UNIT = 'speed';
-        
- 	/**
--	 * Key: has distances
--	 * @var string
--	 */
+
+	/**
+	 * Key: has distances
+	 * @var string
+	 */
 	const HAS_DISTANCES = 'distances';
 
 	/**
@@ -80,7 +80,7 @@ class Object extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::IMAGE,
@@ -151,8 +151,8 @@ class Object extends Model\ObjectWithID {
 	public function paceUnit() {
 		return $this->Data[self::PACE_UNIT];
 	}
-        
- 	/**
+
+	/**
 	 * Has distances?
 	 * @return boolean
 	 */

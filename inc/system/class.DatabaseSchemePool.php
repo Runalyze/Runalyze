@@ -21,14 +21,14 @@ class DatabaseSchemePool {
 	 * Array with all objects
 	 * @var array
 	 */
-	static protected $Objects = array();
+	private static $Objects = array();
 
 	/**
 	 * Get instance of a DatabaseScheme
 	 * @param string $schemeFile
 	 * @return DatabaseScheme 
 	 */
-	static public function get($schemeFile) {
+	public static function get($schemeFile) {
 		if (!isset(self::$Objects[$schemeFile]))
 			self::$Objects[$schemeFile] = new DatabaseScheme($schemeFile);
 

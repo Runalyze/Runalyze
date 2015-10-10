@@ -21,7 +21,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Get URL
 	 * @return string 
 	 */
-	static public function getExternalUrl() {
+	public static function getExternalUrl() {
 		return ConfigTabs::$CONFIG_URL.'?key=config_tab_plugins&external=true';
 	}
 
@@ -31,16 +31,16 @@ class ConfigTabPlugins extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Panels = new FormularFieldset( __('Panels') );
 		$Panels->addInfo( __('Panels are small statistics always shown on the right side.') );
-		$Panels->setHtmlCode($this->getCodeFor( PluginType::Panel ));
+		$Panels->setHtmlCode($this->getCodeFor( PluginType::PANEL ));
 		$Panels->setCollapsed();
 
 		$Stats = new FormularFieldset( __('Statistics') );
 		$Stats->addInfo( __('Normal statistics are shown below the activitiy log.') );
-		$Stats->setHtmlCode($this->getCodeFor( PluginType::Stat ));
+		$Stats->setHtmlCode($this->getCodeFor( PluginType::STAT ));
 
 		$Tools = new FormularFieldset(__('Tools') );
 		$Tools->addInfo( __('Complex tools for analyzing or processing the complete database will open in an overlay.') );
-		$Tools->setHtmlCode($this->getCodeFor( PluginType::Tool ));
+		$Tools->setHtmlCode($this->getCodeFor( PluginType::TOOL ));
 		$Tools->setCollapsed();
 
 		$Install = new FormularFieldset( __('Install a new plugin') );

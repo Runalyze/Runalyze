@@ -89,6 +89,6 @@ class SummaryTableMonths extends SummaryTable {
 		$start = mktime(0, 0, 1, $month, 1, $year);
 		$end   = mktime(23, 59, 59, $month-1, 0, $year);
 
-		return DataBrowserLinker::link(Time::Month($month), $start, $end, '');
+		return DataBrowserLinker::link(Time::month($month), $start, $end, '');
 	}
 }

@@ -38,7 +38,7 @@ abstract class PluginPanel extends Plugin {
 	 * @return int
 	 */
 	final public function type() {
-		return PluginType::Panel;
+		return PluginType::PANEL;
 	}
 
 	/**

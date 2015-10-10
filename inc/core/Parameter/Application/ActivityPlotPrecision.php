@@ -17,7 +17,7 @@ class ActivityPlotPrecision extends \Runalyze\Parameter\Select {
 	 */
 	public function __construct() {
 		parent::__construct('200points', array(
-			'options'		=> array( // see GpsData::nextStepForPlotData, GpsData::setStepSizeForPlotData
+			'options'		=> array(
 				'50m'			=> __('every 50m a data point'),
 				'100m'			=> __('every 100m a data point'),
 				'200m'			=> __('every 200m a data point'),

@@ -34,10 +34,10 @@ class FormularInputDayAndDaytime extends FormularField {
 	protected $internalLayout = '';
 
 	/**
-	 * Internal layout classes to forward o internal fields
-	 * @var string
+	 * Internal layout classes to forward to internal fields
+	 * @var array
 	 */
-	protected $internalLayoutClasses = '';
+	protected $internalLayoutClasses = array();
 
 	/**
 	 * Get field name for day

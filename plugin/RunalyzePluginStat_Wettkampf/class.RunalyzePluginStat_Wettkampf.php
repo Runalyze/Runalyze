@@ -326,7 +326,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		foreach ($Years as $key) {
 			if ($key != 'sum') {
-				$y = $year[$key];
 				echo '<td>'.$year[$key]['sum'].'x</td>';
 			}
 		}

@@ -15,13 +15,13 @@ class StandardFormular extends Formular {
 	 * Enum: Submit mode - editing
 	 * @var int 
 	 */
-	static public $SUBMIT_MODE_EDIT = 0;
+	public static $SUBMIT_MODE_EDIT = 0;
 
 	/**
 	 * Enum: Submit mode - creating
 	 * @var int 
 	 */
-	static public $SUBMIT_MODE_CREATE = 1;
+	public static $SUBMIT_MODE_CREATE = 1;
 
 	/**
 	 * Boolean flag: Has the formular been submitted?

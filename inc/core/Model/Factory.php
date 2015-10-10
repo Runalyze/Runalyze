@@ -38,7 +38,7 @@ class Factory {
 	 * Static cache to not read file-cache every time
 	 * @var array
 	 */
-	static $StaticCache = array();
+	public static $StaticCache = array();
 
 	/**
 	 * Factory

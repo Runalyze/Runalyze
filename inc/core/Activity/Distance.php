@@ -28,13 +28,13 @@ class Distance {
 	 * Seperator for decimals
 	 * @var string
 	 */
-	static public $DECIMAL_POINT = ',';
+	public static $DECIMAL_POINT = ',';
 
 	/**
 	 * Seperator for thousands
 	 * @var string
 	 */
-	static public $THOUSANDS_POINT = '.';
+	public static $THOUSANDS_POINT = '.';
         
 	/**
 	 * Default mile multiplier
@@ -59,7 +59,7 @@ class Distance {
 	 * Default number of decimals
 	 * @var int
 	 */
-	static public $DEFAULT_DECIMALS = 2;
+	public static $DEFAULT_DECIMALS = 2;
 
 	/**
 	 * Distance [km]
@@ -81,7 +81,7 @@ class Distance {
 	 * @param bool $withUnit [optional] with or without unit
 	 * @return string
 	 */
-	static public function format($distance, $format = false, $decimals = false, $withUnit = true) {
+	public static function format($distance, $format = false, $decimals = false, $withUnit = true) {
 		$Object = new Distance($distance);
 		return $Object->string($format, $decimals, $withUnit);
 	}

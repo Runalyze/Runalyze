@@ -17,14 +17,14 @@ class TypeFactory {
 	 * All types as array
 	 * @var array
 	 */
-	static private $AllTypes = null;
+	private static $AllTypes = null;
 
 	/**
 	 * Data for ID
 	 * @param int $id typeid
 	 * @return array
 	 */
-	static public function DataFor($id) {
+	public static function DataFor($id) {
 		$Types = self::AllTypes();
 
 		if (isset($Types[$id]))
@@ -39,7 +39,7 @@ class TypeFactory {
 	 * @todo This method should be useless as soon as a DatabaseScheme is used
 	 * @return array
 	 */
-	static private function defaultArray() {
+	private static function defaultArray() {
 		return array(
 			'name' => '?',
 			'abbr' => '?',
@@ -53,7 +53,7 @@ class TypeFactory {
 	 * Get all types
 	 * @return array
 	 */
-	static public function AllTypes() {
+	public static function AllTypes() {
 		if (is_null(self::$AllTypes))
 			self::initAllTypes();
 
@@ -65,7 +65,7 @@ class TypeFactory {
 	 * 
 	 * IDs will be set as string as indices for correct order
 	 */
-	static private function initAllTypes() {
+	private static function initAllTypes() {
 		self::$AllTypes = array();
 		$types = Cache::get('types');
 
@@ -86,7 +86,7 @@ class TypeFactory {
 	 *
 	 * Use this method after updating types table
 	 */
-	static public function reInitAllTypes() {
+	public static function reInitAllTypes() {
 		Cache::delete('types');
 
 		self::initAllTypes();
@@ -97,10 +97,10 @@ class TypeFactory {
 	 * @param bool $abbr
 	 * @return array keys are ids, values are names
 	 */
-	static public function NamesAsArray($abbr = false) {
+	public static function NamesAsArray($abbr = false) {
 		$types = self::AllTypes();
 		foreach ($types as $id => $type) {
-			if ($abbr == false) {
+			if ($abbr === false) {
 				$types[$id] = $type['name'];
 			} else {
 				$types[$id] = $type['abbr'];
@@ -117,7 +117,7 @@ class TypeFactory {
 	 * @param bool $abbr
 	 * @return string
 	 */
-	static public function SelectBox($showUnknown = true, $selected = -1, $abbr = false) {
+	public static function SelectBox($showUnknown = true, $selected = -1, $abbr = false) {
 		$types = self::NamesAsArray($abbr);
 
 		if (empty($types)) 

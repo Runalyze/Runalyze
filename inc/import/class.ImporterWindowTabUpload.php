@@ -20,7 +20,7 @@ class ImporterWindowTabUpload extends ImporterWindowTab {
 	 * Additional information for filetypes
 	 * @var array
 	 */
-	static private $FiletypeInfo = array();
+	private static $FiletypeInfo = array();
 
 	/**
 	 * CSS id
@@ -82,7 +82,7 @@ class ImporterWindowTabUpload extends ImporterWindowTab {
 	 * Add additional information for uploader
 	 * @param string $message message to display
 	 */
-	static public function addInfo($message) {
+	public static function addInfo($message) {
 		self::$FiletypeInfo[] = $message;
 	}
 }

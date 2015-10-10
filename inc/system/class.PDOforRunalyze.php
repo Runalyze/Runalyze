@@ -175,7 +175,7 @@ class PDOforRunalyze extends PDO {
 
 	/**
 	 * Escapes values for safe mysql-queries:
-	 *    - Sets null-objects to 'NULL'
+	 *    - Sets null-objects to 'null'
 	 *    - Sets true/false to 1/0
 	 *    - Sets strings to "$value"
 	 * @param $values mixed might be an array
@@ -197,7 +197,7 @@ class PDOforRunalyze extends PDO {
 		} else if (!is_numeric($values) || $forceAsString) {
 			$values = $this->quote($values);
 
-			if ($quotes == false && substr($values, 0, 1) == "'" && substr($values, -1) == "'" && strlen($values) > 2) {
+			if ($quotes === false && substr($values, 0, 1) == "'" && substr($values, -1) == "'" && strlen($values) > 2) {
 				$values = substr($values, 1, -1);
 			}
 		}

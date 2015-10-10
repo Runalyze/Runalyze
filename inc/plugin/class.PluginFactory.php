@@ -16,16 +16,16 @@ class PluginFactory {
 
 	/**
 	 * Array with all keys
-	 * @var array
+	 * @var array|null
 	 */
-	static private $Plugins = NULL;
+	private static $Plugins = null;
 
 	/**
 	 * Array with complete plugin data
 	 * @return array
 	 */
-	static private function Plugins() {
-		if (NULL === self::$Plugins) {
+	private static function Plugins() {
+		if (null === self::$Plugins) {
 			self::$Plugins = self::fetchAllPlugins();
 		}
 
@@ -35,10 +35,10 @@ class PluginFactory {
 	/**
 	 * Cache all from Table plugin for a user
 	 */
-	static private function fetchAllPlugins() {
+	private static function fetchAllPlugins() {
 		$data = Cache::get(self::CACHE_KEY);
 
-		if ($data == NULL) {
+		if ($data == null) {
 			$data = self::fetchAllPluginsFrom(DB::getInstance(), SessionAccountHandler::getId());
 			Cache::set(self::CACHE_KEY, $data, '3600');
 		}
@@ -49,8 +49,8 @@ class PluginFactory {
 	/**
 	 * Clear cache
 	 */
-	static public function clearCache() {
-		self::$Plugins = NULL;
+	public static function clearCache() {
+		self::$Plugins = null;
 		Cache::delete(self::CACHE_KEY);
 	}
 
@@ -60,7 +60,7 @@ class PluginFactory {
 	 * @param int $accountID
 	 * @return array
 	 */
-	static private function fetchAllPluginsFrom(PDO $PDO, $accountID) {
+	private static function fetchAllPluginsFrom(PDO $PDO, $accountID) {
 		return $PDO->query(
 			'SELECT * FROM `'.PREFIX.'plugin` '.
 			'WHERE `accountid`='.$accountID.' '.
@@ -72,7 +72,7 @@ class PluginFactory {
 	 * @param int $id
 	 * @return array
 	 */
-	static public function dataFor($id) {
+	public static function dataFor($id) {
 		foreach (self::Plugins() as $data) {
 			if ($data['id'] == $id) {
 				return $data;
@@ -85,7 +85,7 @@ class PluginFactory {
 	/**
 	 * @return array
 	 */
-	static public function allIDs() {
+	public static function allIDs() {
 		$IDs = array();
 
 		foreach (self::Plugins() as $data) {
@@ -192,7 +192,7 @@ class PluginFactory {
 	 * @return array array with plugin keys
 	 */
 	public function variousPlugins() {
-		return $this->getPlugins(PluginType::Stat, Plugin::ACTIVE_VARIOUS);
+		return $this->getPlugins(PluginType::STAT, Plugin::ACTIVE_VARIOUS);
 	}
 
 	/**
@@ -203,7 +203,7 @@ class PluginFactory {
 		$keys = array();
 
 		foreach (self::Plugins() as $plugin) {
-			if ($plugin['type'] == PluginType::string(PluginType::Panel) && $plugin['active'] != Plugin::ACTIVE_NOT) {
+			if ($plugin['type'] == PluginType::string(PluginType::PANEL) && $plugin['active'] != Plugin::ACTIVE_NOT) {
 				$keys[] = $plugin['key'];
 			}
 		}
@@ -274,7 +274,7 @@ class PluginFactory {
 	 * @return string
 	 * @throws \InvalidArgumentException
 	 */
-	static public function keyFor($id) {
+	public static function keyFor($id) {
 		foreach (self::Plugins() as $plugin) {
 			if ($id == $plugin['id']) {
 				return $plugin['key'];

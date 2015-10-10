@@ -12,18 +12,18 @@ use Runalyze\Configuration;
  * @package Runalyze\HTML\Formular
  */
 class FormularFieldset extends HtmlTag {
-	static public $LAYOUT_FIELD_W100          = 'w100 block';
-	static public $LAYOUT_FIELD_W100_CHECKBOX = 'w100 checkbox-first';
-	static public $LAYOUT_FIELD_W100_IN_W50   = 'w100 with50erLabel';
-	static public $LAYOUT_FIELD_W100_IN_W33   = 'w100 with33erLabel';
-	static public $LAYOUT_FIELD_W50_IN_W33    = 'w50 with33erLabel';
-	static public $LAYOUT_FIELD_W50           = 'w50';
-	static public $LAYOUT_FIELD_W50_AS_W100   = 'w50 marginr50';
-	static public $LAYOUT_FIELD_W33           = 'w33';
-	static public $LAYOUT_FIELD_W25           = 'w25';
-	static public $LAYOUT_FIELD_INLINE        = 'inline';
-	static public $LAYOUT_FIELD_SMALL         = 'small';
-	static public $LAYOUT_FIELD_SMALL_INLINE  = 'inline small';
+	public static $LAYOUT_FIELD_W100          = 'w100 block';
+	public static $LAYOUT_FIELD_W100_CHECKBOX = 'w100 checkbox-first';
+	public static $LAYOUT_FIELD_W100_IN_W50   = 'w100 with50erLabel';
+	public static $LAYOUT_FIELD_W100_IN_W33   = 'w100 with33erLabel';
+	public static $LAYOUT_FIELD_W50_IN_W33    = 'w50 with33erLabel';
+	public static $LAYOUT_FIELD_W50           = 'w50';
+	public static $LAYOUT_FIELD_W50_AS_W100   = 'w50 marginr50';
+	public static $LAYOUT_FIELD_W33           = 'w33';
+	public static $LAYOUT_FIELD_W25           = 'w25';
+	public static $LAYOUT_FIELD_INLINE        = 'inline';
+	public static $LAYOUT_FIELD_SMALL         = 'small';
+	public static $LAYOUT_FIELD_SMALL_INLINE  = 'inline small';
 
 	/**
 	 * Title for this fieldset, if empty, no header is shown

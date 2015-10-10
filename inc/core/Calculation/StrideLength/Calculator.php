@@ -94,7 +94,7 @@ class Calculator {
 	 * @param \Runalyze\Model\Activity\Object $activity
 	 * @return int [cm]
 	 */
-	static public function forActivity(Activity\Object $activity) {
+	public static function forActivity(Activity\Object $activity) {
 		if ($activity->cadence() > 0 && $activity->duration() > 0) {
 			return round($activity->distance() * 1000 * 100 / ($activity->cadence() * 2 / 60 * $activity->duration()));
 		}

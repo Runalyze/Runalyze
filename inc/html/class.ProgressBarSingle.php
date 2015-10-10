@@ -26,43 +26,43 @@ class ProgressBarSingle {
 	 * HTML class: color blue
 	 * @var string
 	 */
-	static public $COLOR_BLUE = 'colored-blue';
+	public static $COLOR_BLUE = 'colored-blue';
 
 	/**
 	 * HTML class: color red
 	 * @var string
 	 */
-	static public $COLOR_RED = 'colored-red';
+	public static $COLOR_RED = 'colored-red';
 
 	/**
 	 * HTML class: color green
 	 * @var string
 	 */
-	static public $COLOR_GREEN = 'colored-green';
+	public static $COLOR_GREEN = 'colored-green';
 
 	/**
 	 * HTML class: color yellow
 	 * @var string
 	 */
-	static public $COLOR_YELLOW = 'colored-yellow';
+	public static $COLOR_YELLOW = 'colored-yellow';
 
 	/**
 	 * HTML class: color orange
 	 * @var string
 	 */
-	static public $COLOR_ORANGE = 'colored-orange';
+	public static $COLOR_ORANGE = 'colored-orange';
 
 	/**
 	 * HTML class: color grey
 	 * @var string
 	 */
-	static public $COLOR_GREY = 'colored-grey';
+	public static $COLOR_GREY = 'colored-grey';
 
 	/**
 	 * HTML class: color light (grey)
 	 * @var string
 	 */
-	static public $COLOR_LIGHT = 'colored-light';
+	public static $COLOR_LIGHT = 'colored-light';
 
 	/**
 	 * Width

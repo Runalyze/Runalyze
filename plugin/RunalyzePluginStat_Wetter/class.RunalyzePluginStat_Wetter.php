@@ -120,7 +120,7 @@ class RunalyzePluginStat_Wetter extends PluginStat {
 		$add = $this->showsTimeRange() ? date('m') - $num - 1 + 12 : -1;
 
 		for ($i = 1; $i <= 12; $i++) {
-			echo '<th'.$width.'>'.Time::Month(($i + $add)%12 + 1, true).'</th>';
+			echo '<th'.$width.'>'.Time::month(($i + $add)%12 + 1, true).'</th>';
 		}
 	}
 

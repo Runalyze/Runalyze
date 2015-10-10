@@ -32,6 +32,6 @@ class SportIcon extends \Runalyze\View\Icon {
 	 * Display
 	 */
 	public function code() {
-		return '<i class="'.$this->Filename.'"'.$this->tooltipAttributes().'>';
+		return '<i class="'.$this->Filename.'"'.$this->tooltipAttributes().'></i>';
 	}
 }

@@ -19,13 +19,13 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 	 * Debug splits
 	 * @var boolean
 	 */
-	static private $DEBUG_SPLITS = false;
+	private static $DEBUG_SPLITS = false;
 
 	/**
 	 * Ignore "empty" moves until this number of seconds
 	 * @var int number of seconds
 	 */
-	static private $IGNORE_NO_MOVE_UNTIL = 1;
+	private static $IGNORE_NO_MOVE_UNTIL = 1;
 
 	/**
 	 * Total pause time
@@ -370,7 +370,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			return end($this->gps['km']);
 
 		return end($this->gps['km']) +
-			GpsData::distance(
+			Runalyze\Model\Route\Object::gpsDistance(
 				end($this->gps['latitude']), end($this->gps['longitude']),
 				(double)$TP->Position->LatitudeDegrees, (double)$TP->Position->LongitudeDegrees
 			);

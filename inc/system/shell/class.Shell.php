@@ -79,7 +79,7 @@ class Shell {
 	 * Tries to run a testscript and returns true if succeeded.
 	 * @return boolean
 	 */
-	static public function isPerlAvailable() {
+	public static function isPerlAvailable() {
 		try {
 			$Command = new PerlCommand();
 			$Command->setScript('test.pl', '');

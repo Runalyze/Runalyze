@@ -22,7 +22,7 @@ class DataBrowserLinker {
 	 * @param string $rel
 	 * @return string HTML-link
 	 */
-	static function link($name, $start, $end, $title = '', $rel = '') {
+	public static function link($name, $start, $end, $title = '', $rel = '') {
 		if (FrontendShared::$IS_SHOWN)
 			return DataBrowserShared::getLink($name, $start, $end, $title = '');
 
@@ -37,8 +37,8 @@ class DataBrowserLinker {
 	 * @param int $time Timestamp of the week
 	 * @return string HTML-link
 	 */
-	static function weekLink($name, $time) {
-		return self::link($name, Time::Weekstart($time), Time::Weekend($time), '', 'week-link');
+	public static function weekLink($name, $time) {
+		return self::link($name, Time::weekstart($time), Time::weekend($time), '', 'week-link');
 	}
 
 	/**
@@ -47,7 +47,7 @@ class DataBrowserLinker {
 	 * @param int $time Timestamp of the month
 	 * @return string HTML-link
 	 */
-	static function monthLink($name, $time) {
+	public static function monthLink($name, $time) {
 		return self::link($name,
 			mktime(0, 0, 0, date("m", $time), 1, date("Y", $time)),
 			mktime(23, 59, 50, date("m", $time)+1, 0, date("Y", $time)),
@@ -60,7 +60,7 @@ class DataBrowserLinker {
 	 * @param int $time Timestamp of the year
 	 * @return string HTML-link
 	 */
-	static function yearLink($name, $time) {
+	public static function yearLink($name, $time) {
 		return self::link($name,
 			mktime(0, 0, 0, 1, 1, date("Y", $time)),
 			mktime(23, 59, 50, 12, 31, date("Y", $time)),
@@ -73,7 +73,7 @@ class DataBrowserLinker {
 	 * @param int $end Timestamp for last date in browser
 	 * @return array Returns an array {'start', 'end'}
 	 */
-	static function prevTimestamps($start, $end) {
+	public static function prevTimestamps($start, $end) {
 		return self::nextTimestamps($start, $end, true);
 	}
 
@@ -84,7 +84,7 @@ class DataBrowserLinker {
 	 * @param bool $getPrev optional to get previous timestamps
 	 * @return array Returns an array {'start', 'end'}
 	 */
-	static function nextTimestamps($start, $end, $getPrev = false) {
+	public static function nextTimestamps($start, $end, $getPrev = false) {
 		if (!is_numeric($start))
 			$start = time();
 		if (!is_numeric($end))

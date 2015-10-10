@@ -13,7 +13,7 @@ class Request {
 	 * Get requested URI
 	 * @return string
 	 */
-	static public function Uri() {
+	public static function Uri() {
 		return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 	}
 
@@ -21,7 +21,7 @@ class Request {
 	 * Get requested script name
 	 * @return string
 	 */
-	static public function ScriptName() {
+	public static function ScriptName() {
 		return isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
 	}
 
@@ -29,7 +29,7 @@ class Request {
 	 * Get requested filename
 	 * @return string
 	 */
-	static public function Basename() {
+	public static function Basename() {
 		return basename(self::Uri());
 	}
 
@@ -37,7 +37,7 @@ class Request {
 	 * Get current folder of request
 	 * @return string
 	 */
-	static public function CurrentFolder() {
+	public static function CurrentFolder() {
 		return basename(dirname(self::Uri()));
 	}
 
@@ -45,7 +45,7 @@ class Request {
 	 * Is the user on a shared page?
 	 * @return boolean
 	 */
-	static public function isOnSharedPage() {
+	public static function isOnSharedPage() {
 		return SharedLinker::isOnSharedPage();
 	}
 
@@ -54,7 +54,7 @@ class Request {
 	 * Be careful: Does not work if a file is sent via jQuery!
 	 * @return boolean
 	 */
-	static public function isAjax() {
+	public static function isAjax() {
 		return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
 	}
 
@@ -62,7 +62,7 @@ class Request {
 	 * Is request HTTPS?
 	 * @return boolean
 	 */
-	static public function isHttps() {
+	public static function isHttps() {
 		return isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off';
 	}
 
@@ -70,7 +70,7 @@ class Request {
 	 * Get protocol (http/https)
 	 * @return string
 	 */
-	static public function getProtocol() {
+	public static function getProtocol() {
 		if (self::isHttps())
 			return 'https';
 
@@ -81,7 +81,7 @@ class Request {
 	 * Get ID send as post or get
 	 * @return mixed
 	 */
-	static public function sendId() {
+	public static function sendId() {
 		if (isset($_GET['id']))
 			return $_GET['id'];
 		if (isset($_POST['id']))
@@ -95,7 +95,7 @@ class Request {
 	 * @param string $key
 	 * @return string 
 	 */
-	static public function param($key) {
+	public static function param($key) {
 		if (isset($_GET[$key]))
 			return $_GET[$key];
 		if (isset($_POST[$key]))

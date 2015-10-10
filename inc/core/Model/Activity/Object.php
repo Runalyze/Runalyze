@@ -302,7 +302,7 @@ class Object extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::TIMESTAMP,
 			self::TIMESTAMP_CREATED,

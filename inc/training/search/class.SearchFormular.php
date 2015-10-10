@@ -210,10 +210,10 @@ class SearchFormular extends Formular {
 
 	/**
 	 * Add standard condition field
-	 * @param type $key
-	 * @param type $label
-	 * @param type $size
-	 * @param type $unit
+	 * @param string $key
+	 * @param string $label
+	 * @param string $size
+	 * @param string $unit
 	 * @param string $type options: all | numeric | string
 	 */
 	private function addConditionField($key, $label, $size = '', $unit = '', $type = 'all') {
@@ -269,7 +269,7 @@ class SearchFormular extends Formular {
 	/**
 	 * Transform old params to new params
 	 */
-	static public function transformOldParamsToNewParams() {
+	public static function transformOldParamsToNewParams() {
 		if (isset($_POST['val']) && is_array($_POST['val']))
 			foreach ($_POST['val'] as $key => $value)
 				$_POST[$key] = $value;

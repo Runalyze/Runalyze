@@ -88,7 +88,7 @@ class PluginInstaller {
 	 * @param string $name [optional] default: add-icon
 	 * @return string
 	 */
-	static public function link($key, $name = '') {
+	public static function link($key, $name = '') {
 		if ($name == '') {
 			$name = Icon::$ADD;
 		}
@@ -101,7 +101,7 @@ class PluginInstaller {
 	 * @param string $name [optional] default: delete-icon
 	 * @return string
 	 */
-	static public function uninstallLink($key, $name = '') {
+	public static function uninstallLink($key, $name = '') {
 		if ($name == '') {
 			$name = Icon::$DELETE;
 		}

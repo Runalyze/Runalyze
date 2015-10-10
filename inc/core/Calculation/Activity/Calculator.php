@@ -58,14 +58,14 @@ class Calculator {
 	 * @return boolean
 	 */
 	protected function knowsTrackdata() {
-		return (NULL !== $this->Trackdata);
+		return (null !== $this->Trackdata);
 	}
 
 	/**
 	 * @return boolean
 	 */
 	protected function knowsRoute() {
-		return (NULL !== $this->Route);
+		return (null !== $this->Route);
 	}
 
 	/**

@@ -25,7 +25,7 @@ class Set extends \Runalyze\Parameter {
 	 * @param array $array
 	 * @return string
 	 */
-	static public function arrayToString(array $array) {
+	public static function arrayToString(array $array) {
 		$string = implode(self::SEPERATOR, $array);
 
 		if (strlen($string) > Parameter::MAX_LENGTH)

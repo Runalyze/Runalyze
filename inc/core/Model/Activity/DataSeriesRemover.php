@@ -19,6 +19,11 @@ class DataSeriesRemover {
 	/**
 	 * @var \Runalyze\Model\Activity\Object
 	 */
+	protected $OldActivity;
+
+	/**
+	 * @var \Runalyze\Model\Activity\Object
+	 */
 	protected $Activity;
 
 	/**
@@ -52,6 +57,11 @@ class DataSeriesRemover {
 	protected $AccountID;
 
 	/**
+	 * @var array
+	 */
+	protected $ActivityKeysForTrackdataKeys = [];
+
+	/**
 	 * Construct updater
 	 * @param \PDO $connection
 	 * @param int $accountID
@@ -62,10 +72,20 @@ class DataSeriesRemover {
 		$this->PDO = $connection;
 		$this->AccountID = $accountID;
 		$this->Activity = $activity;
+		$this->OldActivity = clone $activity;
 		$this->Trackdata = $factory->trackdata($activity->id());
 		$this->OldTrackdata = clone $this->Trackdata;
 		$this->Route = $factory->route($activity->get(Object::ROUTEID));
 		$this->OldRoute = clone $this->Route;
+
+		$this->ActivityKeysForTrackdataKeys = [
+			Model\Trackdata\Object::HEARTRATE => Model\Activity\Object::HR_AVG,
+			Model\Trackdata\Object::CADENCE => Model\Activity\Object::CADENCE,
+			Model\Trackdata\Object::VERTICAL_OSCILLATION => Model\Activity\Object::VERTICAL_OSCILLATION,
+			Model\Trackdata\Object::GROUNDCONTACT => Model\Activity\Object::GROUNDCONTACT,
+			Model\Trackdata\Object::POWER => Model\Activity\Object::POWER,
+			Model\Trackdata\Object::TEMPERATURE => Model\Activity\Object::TEMPERATURE
+		];
 	}
 
 	/**
@@ -73,9 +93,26 @@ class DataSeriesRemover {
 	 * @param enum $key
 	 */
 	public function removeFromTrackdata($key) {
+		if (isset($this->ActivityKeysForTrackdataKeys[$key])) {
+			$this->removeFromActivityIfValueIsEqualToAverage($key, $this->ActivityKeysForTrackdataKeys[$key]);
+		}
+
 		$this->Trackdata->set($key, array());
 	}
 
+	/**
+	 * @param enum $trackdataKey
+	 * @param enum $activityKey
+	 */
+	protected function removeFromActivityIfValueIsEqualToAverage($trackdataKey, $activityKey) {
+		// TODO: this does not use a filter for low values as ParserAbstractSingle does
+		$dataArray = $this->Trackdata->get($trackdataKey);
+		$dataAverage = round(array_sum($dataArray) / count($dataArray));
+
+		if ($this->Activity->get($activityKey) == $dataAverage) {
+			$this->Activity->set($activityKey, '');
+		}
+	}
 	/**
 	 * Remove single series from route
 	 * @param enum $key
@@ -101,20 +138,18 @@ class DataSeriesRemover {
 	 * Save changes
 	 */
 	public function saveChanges() {
-		$oldObject = clone $this->Activity;
-
 		$this->saveChangesForTrackdata();
 		$this->saveChangesForRoute();
 
-		$Updater = new Updater($this->PDO, $this->Activity, $oldObject);
+		$Updater = new Updater($this->PDO, $this->Activity, $this->OldActivity);
 		$Updater->setAccountID($this->AccountID);
 		$Updater->forceRecalculations();
 
-		if (NULL !== $this->Trackdata) {
+		if (null !== $this->Trackdata) {
 			$Updater->setTrackdata($this->Trackdata);
 		}
 
-		if (NULL !== $this->Route) {
+		if (null !== $this->Route) {
 			$Updater->setRoute($this->Route);
 		}
 
@@ -125,7 +160,7 @@ class DataSeriesRemover {
 	 * Save changes for trackdata
 	 */
 	protected function saveChangesForTrackdata() {
-		if (NULL === $this->Trackdata) {
+		if (null === $this->Trackdata || $this->OldTrackdata->isEmpty()) {
 			return;
 		}
 
@@ -148,7 +183,7 @@ class DataSeriesRemover {
 	 * Save changes for route
 	 */
 	protected function saveChangesForRoute() {
-		if (NULL === $this->Route) {
+		if (null === $this->Route || $this->OldRoute->isEmpty()) {
 			return;
 		}
 

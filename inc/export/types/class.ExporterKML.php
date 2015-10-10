@@ -111,7 +111,7 @@ class ExporterKML extends ExporterAbstractFile {
 	 * @param string $rgb
 	 * @return string 
 	 */
-	static protected function rgbToKmlColor($rgb) {
+	public static function rgbToKmlColor($rgb) {
 		if (strlen($rgb) == 7)
 			$rgb = substr($rgb, 1);
 

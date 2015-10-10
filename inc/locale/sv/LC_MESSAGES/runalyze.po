@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-09-26 20:28+0200\n"
-"PO-Revision-Date: 2015-09-24 10:32+0200\n"
+"PO-Revision-Date: 2015-09-29 10:51+0200\n"
 "Last-Translator: Matthias Kristiansen-Kürner <matthias.kr.ku@gmail.com>\n"
-"Language-Team: Swedish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/sv/>\n"
+"Language-Team: Swedish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -318,7 +318,6 @@ msgid "JDpoints"
 msgstr "JDpoäng"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:47
-#, fuzzy
 msgid "descending"
 msgstr "fallande"
 
@@ -425,11 +424,11 @@ msgstr "Välj väderförhållandena"
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
 msgid "Equipment"
-msgstr ""
+msgstr "utrustning"
 
 #: inc/training/search/class.SearchFormular.php:143
 msgid "Choose equipment"
-msgstr ""
+msgstr "Välj utrustning"
 
 #: inc/training/search/class.SearchFormular.php:149
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -646,7 +645,7 @@ msgstr "&oslash; hjärtfrekvens"
 #: inc/training/view/section/class.SectionSwimLaneRow.php:36
 #: inc/core/View/Activity/Plot/Series/Stroke.php:62
 msgid "Stroke"
-msgstr ""
+msgstr "stroke"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
 #: inc/training/schemes/scheme.Training.php:682
@@ -654,8 +653,9 @@ msgid "SWOLF"
 msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
+#, fuzzy
 msgid "SWOLFcycles"
-msgstr ""
+msgstr "SWOLFcycles"
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
@@ -781,36 +781,36 @@ msgstr ""
 
 #: inc/training/view/section/class.SectionPaceRow.php:20
 msgid "Pace plot"
-msgstr ""
+msgstr "tempodiagram"
 
 #: inc/training/view/section/class.SectionPaceRow.php:30
 #: inc/training/view/section/class.SectionCompositeRow.php:52
 msgid "Pace zones"
-msgstr ""
+msgstr "temposoner"
 
 #: inc/training/view/section/class.SectionPaceRow.php:58
 #: inc/training/view/section/class.SectionPaceRow.php:62
 #: inc/training/view/section/class.SectionCompositeRow.php:125
 #: inc/training/view/section/class.SectionCompositeRow.php:129
 msgid "&oslash; Speed"
-msgstr ""
+msgstr "&oslash; hastighet"
 
 #: inc/training/view/section/class.SectionPaceRow.php:59
 #: inc/training/view/section/class.SectionPaceRow.php:61
 #: inc/training/view/section/class.SectionCompositeRow.php:126
 #: inc/training/view/section/class.SectionCompositeRow.php:128
 msgid "&oslash; Pace"
-msgstr ""
+msgstr "&oslash; tempo"
 
 #: inc/training/view/section/class.SectionPaceRow.php:73
 #: inc/training/view/section/class.SectionCompositeRow.php:140
 msgid "Training points"
-msgstr ""
+msgstr "träningspoäng"
 
 #: inc/training/view/section/class.SectionPaceRow.php:84
 #: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
-msgstr ""
+msgstr "Mer om VDOT beräkninger"
 
 #: inc/training/view/section/class.SectionSwimLane.php:21
 #: inc/training/view/section/class.SectionSwimLane.php:22
@@ -820,7 +820,7 @@ msgstr ""
 #: inc/training/view/section/table/class.TableLapsComputed.php:57
 #: inc/core/View/Window/Laps/Table.php:113
 msgid "&oslash; bpm"
-msgstr ""
+msgstr "&oslash; bpm"
 
 #: inc/training/view/section/table/class.TableLapsComputed.php:58
 msgid "elev."

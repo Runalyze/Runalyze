@@ -26,7 +26,7 @@ abstract class PluginTool extends Plugin {
 	 * @return int
 	 */
 	final public function type() {
-		return PluginType::Tool;
+		return PluginType::TOOL;
 	}
 
 	/**
@@ -61,7 +61,7 @@ abstract class PluginTool extends Plugin {
 
 		$Factory = new PluginFactory();
 
-		foreach ($Factory->activePlugins(PluginType::Tool) as $key) {
+		foreach ($Factory->activePlugins(PluginType::TOOL) as $key) {
 			$Sublinks[] = $Factory->newInstance($key)->getLink();
 		}
 
@@ -89,7 +89,7 @@ abstract class PluginTool extends Plugin {
 		echo '<tbody class="top-and-bottom-border">';
 
 		$Factory = new PluginFactory();
-		$tools = $Factory->activePlugins( PluginType::Tool );
+		$tools = $Factory->activePlugins( PluginType::TOOL );
 		
 		if (empty($tools)) {
 			echo '<tr><td colspan="3"><em>'.__('No tools installed.').'.</em></td></tr>';
@@ -127,7 +127,7 @@ abstract class PluginTool extends Plugin {
 	 * @param string $data [optional] Additional data
 	 * @return string
 	 */
-	static public function getLinkFor($id, $name, $data = '') {
+	public static function getLinkFor($id, $name, $data = '') {
 		return Ajax::link($name, self::$TOOLS_DIV_ID, parent::$DISPLAY_URL.'?id='.$id, $data);
 	}
 

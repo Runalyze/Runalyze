@@ -48,16 +48,15 @@ class SRTMGeoTIFFReader {
 	/**
 	* Constructor: assigns data directory
 	* @param mixed $dataDir
-	* @return SRTMGeoTIFFReader
 	*/
-	function __construct($dataDir) {
+	public function __construct($dataDir) {
 		$this->dataDir = $dataDir;
 	}
 
 	/**
 	* Destructor: clean up resources
 	*/
-	function __destruct() {
+	public function __destruct() {
 		if (is_resource($this->fp)) {
 			fclose($this->fp);
 		}

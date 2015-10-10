@@ -49,7 +49,7 @@ class Preview {
 	 * Needed keys for activity objects
 	 * @return array
 	 */
-	static public function keys() {
+	public static function keys() {
 		return array(
 			'id',
 			Activity\Object::TIMESTAMP,

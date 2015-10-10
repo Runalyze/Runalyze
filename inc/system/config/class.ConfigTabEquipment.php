@@ -4,6 +4,7 @@
  * @package Runalyze\System\Config
  */
 
+use Runalyze\Activity\Duration;
 use Runalyze\Model\EquipmentType;
 use Runalyze\Model\Equipment;
 use Runalyze\Activity\Distance;
@@ -77,7 +78,7 @@ class ConfigTabEquipment extends ConfigTab {
 								<option value="'.EquipmentType\Object::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
 						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.$Type->maxDistance().'"><label class="input-unit">'.Runalyze\Configuration::General()->distanceUnit()->unit().'</label></span></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.$Type->maxDuration().'"><label class="input-unit">s</label></span></td>
+						<td><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.($Type->maxDuration() > 0 ? Duration::format($Type->maxDuration()) : '').'" placeholder="d hh:mm:ss"></td>
 						<td><input name="equipmenttype[sportid_old]['.$id.']" type="hidden" value="'.implode(',', $sportIDs).'">
 							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple>';
 
@@ -173,11 +174,13 @@ class ConfigTabEquipment extends ConfigTab {
 			$isNew = !$Type->hasID();
 			$id = $isNew ? -1 : $Type->id();
 
+			$MaxTime = new Duration($_POST['equipmenttype']['max_time'][$id]);
+
 			$NewType = clone $Type;
 			$NewType->set(EquipmentType\Object::NAME, $_POST['equipmenttype']['name'][$id]);
 			$NewType->set(EquipmentType\Object::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
 			$NewType->set(EquipmentType\Object::MAX_KM, (int)$_POST['equipmenttype']['max_km'][$id]);
-			$NewType->set(EquipmentType\Object::MAX_TIME, (int)$_POST['equipmenttype']['max_time'][$id]);
+			$NewType->set(EquipmentType\Object::MAX_TIME, $MaxTime->seconds());
 
 			if ($isNew) {
 				if ($NewType->name() != '') {
@@ -269,6 +272,6 @@ class ConfigTabEquipment extends ConfigTab {
 			return date('Y-m-d', $time);
 		}
 
-		return NULL;
+		return null;
 	}
 }

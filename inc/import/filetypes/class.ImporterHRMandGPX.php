@@ -13,7 +13,7 @@ class ImporterHRMandGPX {
 	/**
 	 * @var array
 	 */
-	static private $KEYS_TO_CHECK = array(
+	private static $KEYS_TO_CHECK = array(
 		'arr_time',
 		'arr_lat',
 		'arr_lon',
