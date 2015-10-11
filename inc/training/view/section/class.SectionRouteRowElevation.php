@@ -7,7 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Runalyze\View\Activity\Linker;
-use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Route
@@ -46,23 +46,21 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 * Add: elevation
 	 */
 	protected function addElevation() {
-		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit()->value(), __('Distance'));
-			$Elevation = new Distance($this->Context->activity()->elevation()/1000);
-                        $this->BoxedValues[] = new BoxedValue($Elevation->stringForDistanceFeet(false, false), $Elevation->unitForDistancesFeet(), __('Elevation'));
+		if ($this->Context->activity()->distance() > 0 || $this->Context->activity()->elevation() > 0) {
+			if ($this->Context->activity()->distance() > 0) {
+				$this->BoxedValues[] = new Box\Distance($this->Context);
+			}
+
+			$this->BoxedValues[] = new Box\Elevation($this->Context);
 
 			// TODO: Calculated elevation?
 
 			if ($this->Context->activity()->elevation() > 0) {
-				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-
-				if ($this->Context->hasRoute()) {
-					$upDown = '+'.  Distance::formatFeet($this->Context->route()->elevationUp()/1000, false, false).'/-'.Distance::formatFeet($this->Context->route()->elevationDown()/1000, false, false);
-				} else {
-					$upDown = '+'.Distance::formatFeet($this->Context->activity()->elevation()/1000, false, false).'/-'.Distance::formatFeet($this->Context->activity()->elevation()/1000, false, false);
+				if ($this->Context->activity()->distance() > 0) {
+					$this->BoxedValues[] = new Box\Gradient($this->Context);
 				}
 
-				$this->BoxedValues[] = new BoxedValue($upDown, Configuration::General()->distanceUnitAsFeet(), __('Elevation up/down'));
+				$this->BoxedValues[] = new Box\ElevationUpDown($this->Context);
 			}
 		}
 	}

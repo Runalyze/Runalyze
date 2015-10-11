@@ -74,8 +74,7 @@ class SectionRunningDynamicsRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence = new BoxedValue(Helper::Unknown($this->Context->dataview()->cadence()->value(), '-'), $this->Context->dataview()->cadence()->unitAsString(), $this->Context->dataview()->cadence()->label());
 			$Cadence->defineAsFloatingBlock('w50');
 
-                        $StrideLengthDistance = new Distance($this->Context->dataview()->strideLength()->value()/1000);
-			$StrideLength = new BoxedValue($StrideLengthDistance->stringForDistanceFeet(false, false), $StrideLengthDistance->unitForDistancesFeet(), __('Stride Length'));
+			$StrideLength = new Activity\Box\StrideLength($this->Context);
 			$StrideLength->defineAsFloatingBlock('w50');
 
 			$this->BoxedValues[] = $Cadence;

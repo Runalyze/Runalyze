@@ -10,6 +10,7 @@ use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\SelectRow;
 use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\Parameter\Application\DistanceUnit;
 use Runalyze\Parameter\Application\WeightUnit;
 use Ajax;
@@ -33,7 +34,7 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createGender();
-		$this->createDistanceUnit();
+		$this->createDistanceUnitSystem();
 		$this->createWeightUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
@@ -49,36 +50,20 @@ class General extends \Runalyze\Configuration\Category {
 	}
 	
 	/**
-	 * Create: DistanceUnit
+	 * Create: DISTANCE_UNIT_SYSTEM
 	 */
-	protected function createDistanceUnit() {
-		$this->createHandle('DISTANCE_UNIT', new DistanceUnit());
+	protected function createDistanceUnitSystem() {
+		$this->createHandle('DISTANCE_UNIT_SYSTEM', new DistanceUnitSystem());
 	}
 	
 	/**
-	 * Distance Unit
-	 * @return DistanceUnit
+	 * Unit system for distances
+	 * @return \Runalyze\Parameter\Application\DistanceUnitSystem
 	 */
-	public function distanceUnit() {
-		return $this->object('DISTANCE_UNIT');
+	public function distanceUnitSystem() {
+		return $this->object('DISTANCE_UNIT_SYSTEM');
 	}
 
-	/**
-	 * Distance Unit as feet
-	 * @return distance unit with feet
-	 */
-	public function distanceUnitAsFeet() {
-		return $this->object('DISTANCE_UNIT')->distanceUnitAsFeet();
-	}
-
-	/**
-	 * Distance Unit as yard
-	 * @return distance unit with feet
-	 */
-	public function distanceUnitAsYard() {
-		return $this->object('DISTANCE_UNIT')->distanceUnitAsYard();
-	}
-	
 	/**
 	 * Create: WeightUnit
 	 */
@@ -185,7 +170,7 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
-		$this->handle('DISTANCE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
 		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
@@ -203,8 +188,8 @@ class General extends \Runalyze\Configuration\Category {
 			'label'		=> __('Gender')
 		));
 
-		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT'), array(
-			'label'		=> __('Distance unit')
+		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT_SYSTEM'), array(
+			'label'		=> __('Unit system for distances')
 		));
 
 		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(

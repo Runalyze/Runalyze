@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains class::StrideLength
+ * This file contains class::PoolLength
  * @package Runalyze\Activity
  */
 
@@ -10,12 +10,12 @@ use Runalyze\Configuration;
 use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
- * Stride length
+ * Pool length
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Activity
  */
-class StrideLength implements ValueInterface
+class PoolLength implements ValueInterface
 {
 	/**
 	 * Value [cm]
@@ -29,7 +29,7 @@ class StrideLength implements ValueInterface
 	protected $UnitSystem;
 
 	/**
-	 * Format stride length
+	 * Format pool length
 	 * @param int $centimeter
 	 * @param bool $withUnit
 	 * @return string
@@ -50,12 +50,12 @@ class StrideLength implements ValueInterface
 	}
 
 	/**
-	 * Label for stride length
+	 * Label for pool length
 	 * @return string
 	 */
 	public function label()
 	{
-		return __('Stride length');
+		return __('Pool length');
 	}
 
 	/**
@@ -65,16 +65,16 @@ class StrideLength implements ValueInterface
 	public function unit()
 	{
 		if ($this->UnitSystem->isImperial()) {
-			return DistanceUnitSystem::FEET;
+			return DistanceUnitSystem::YARDS;
 		}
 
-		return DistanceUnitSystem::CM;
+		return DistanceUnitSystem::METER;
 	}
 
 	/**
-	 * Set stride length
+	 * Set pool length
 	 * @param int $centimeter
-	 * @return \Runalyze\Activity\StrideLength $this-reference
+	 * @return \Runalyze\Activity\PoolLength $this-reference
 	 */
 	public function set($centimeter)
 	{
@@ -85,7 +85,7 @@ class StrideLength implements ValueInterface
 
 	/**
 	 * @param float $meter
-	 * @return \Runalyze\Activity\StrideLength $this-reference
+	 * @return \Runalyze\Activity\PoolLength $this-reference
 	 */
 	public function setMeter($meter)
 	{
@@ -95,33 +95,33 @@ class StrideLength implements ValueInterface
 	}
 
 	/**
-	 * @param int $feet
-	 * @return \Runalyze\Activity\StrideLength $this-reference
+	 * @param float $yards
+	 * @return \Runalyze\Activity\PoolLength $this-reference
 	 */
-	public function setFeet($feet)
+	public function setYards($yards)
 	{
-		$this->Centimeter = $feet / DistanceUnitSystem::FEET_MULTIPLIER * 1000 * 100;
+		$this->Centimeter = $yards / DistanceUnitSystem::YARD_MULTIPLIER * 1000 * 100;
 
 		return $this;
 	}
 
 	/**
-	 * @param int $strideLength [mixed unit]
-	 * @return \Runalyze\Activity\StrideLength $this-reference
+	 * @param int $poolLength [mixed unit]
+	 * @return \Runalyze\Activity\PoolLength $this-reference
 	 */
-	public function setInPreferredUnit($strideLength)
+	public function setInPreferredUnit($poolLength)
 	{
 		if ($this->UnitSystem->isImperial()) {
-			$this->setFeet($strideLength);
+			$this->setYards($poolLength);
 		} else {
-			$this->setMeter($strideLength);
+			$this->setMeter($poolLength);
 		}
 
 		return $this;
 	}
 
 	/**
-	 * Get stride length
+	 * Get pool length
 	 * @return int [cm]
 	 */
 	public function value()
@@ -148,18 +148,18 @@ class StrideLength implements ValueInterface
 	/**
 	 * @return float
 	 */
-	public function feet()
+	public function yards()
 	{
-		return round($this->Centimeter * DistanceUnitSystem::FEET_MULTIPLIER / 1000 / 100, 2);
+		return round($this->Centimeter * DistanceUnitSystem::YARD_MULTIPLIER / 1000 / 100, 2);
 	}
 
 	/**
-	 * @return int [mixed unit]
+	 * @return mixed [mixed unit]
 	 */
 	public function valueInPreferredUnit()
 	{
 		if ($this->UnitSystem->isImperial()) {
-			return $this->feet();
+			return $this->yards();
 		}
 
 		return $this->meter();
@@ -173,7 +173,7 @@ class StrideLength implements ValueInterface
 	public function string($withUnit = true)
 	{
 		if ($this->UnitSystem->isImperial()) {
-			return $this->stringFeet($withUnit);
+			return $this->stringYards($withUnit);
 		}
 
 		return $this->stringMeter($withUnit);
@@ -185,7 +185,7 @@ class StrideLength implements ValueInterface
 	 */
 	public function stringMeter($withUnit = true)
 	{
-		return number_format($this->Centimeter/100, 2).($withUnit ? '&nbsp;'.DistanceUnitSystem::METER : '');
+		return number_format($this->Centimeter/100, 0).($withUnit ? '&nbsp;'.DistanceUnitSystem::METER : '');
 	}
 
 	/**
@@ -194,15 +194,15 @@ class StrideLength implements ValueInterface
 	 */
 	public function stringCM($withUnit = true)
 	{
-		return number_format($this->Centimeter, 0).($withUnit ? '&nbsp;'.DistanceUnitSystem::CM : '');
+		return number_format($this->Centimeter, 0, '', '').($withUnit ? '&nbsp;'.DistanceUnitSystem::CM : '');
 	}
 
 	/**
 	 * @param bool $withUnit
 	 * @return string
 	 */
-	public function stringFeet($withUnit = true)
+	public function stringYards($withUnit = true)
 	{
-		return number_format($this->feet(), 1, '.', '').($withUnit ? '&nbsp;'.DistanceUnitSystem::FEET : '');
+		return number_format($this->yards(), 2, '.', '').($withUnit ? '&nbsp;'.DistanceUnitSystem::YARDS : '');
 	}
 }

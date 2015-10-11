@@ -56,8 +56,8 @@ class SummaryTableAllYears extends SummaryTable {
 			}
 
 			if ($data['distance'] > 0) {
-				$weekString = Distance::format($data['distance']/$weekFactor, false, 0).__('/week');
-				$monthString = Distance::format($data['distance']/$monthFactor, false, 0).__('/month');
+				$weekString = Distance::format($data['distance']/$weekFactor, true, 0).__('/week');
+				$monthString = Distance::format($data['distance']/$monthFactor, true, 0).__('/month');
 			} else {
 				$weekString = NBSP;
 				$monthString = NBSP;

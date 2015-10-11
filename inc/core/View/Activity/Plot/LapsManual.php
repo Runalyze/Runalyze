@@ -8,6 +8,7 @@ namespace Runalyze\View\Activity\Plot;
 
 use Runalyze\Model\Activity\Splits;
 use Runalyze\View\Activity;
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Util\StringReader;
 use Runalyze\Activity\Pace as APace;
@@ -71,7 +72,7 @@ class LapsManual extends Laps {
 	protected function readDataFromSplits(Splits\Object $splits, $showInactive) {
 		foreach ($splits->asArray() as $split) {
 			if (($showInactive || $split->isActive()) && $split->distance() > 0) {
-				$this->Labels[] = $split->distance();
+				$this->Labels[] = round((new Distance($split->distance()))->valueInPreferredUnit(), 2);
 				$this->Data[] = $split->time() / $split->distance();
 			}
 		}

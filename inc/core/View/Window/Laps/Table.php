@@ -7,6 +7,7 @@
 namespace Runalyze\View\Window\Laps;
 
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Pace;
 use Runalyze\Data\Laps\Laps;
 use Runalyze\Model\Activity;
@@ -174,7 +175,7 @@ class Table {
 				($this->DemandedPace->isEmpty() ? '' : '<td>'.$Lap->pace()->compareTo($this->DemandedPace).'</td>').
 				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRavg()->inBPM()), '-') : '-').'</td>'.
 				'<td>'.($Lap->hasHR() ? Helper::Unknown(round($Lap->HRmax()->inBPM()), '-') : '-').'</td>'.
-				'<td>'.($Lap->hasElevation() ? '+'.$Lap->elevationUp().'/-'.$Lap->elevationDown() : '-').'</td>'.
+				'<td>'.($Lap->hasElevation() ? '+'.Elevation::format($Lap->elevationUp(), false).'/-'.Elevation::format($Lap->elevationDown(), false) : '-').'</td>'.
 				$this->additionalTableCellsFor($Lap).
 			'</tr>';
 	}

@@ -6,8 +6,8 @@
 
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
-use Runalyze\Activity\Distance;
-use Runalyze\Configuration;
+use Runalyze\View\Activity\Box;
+
 /**
  * Row: Miscellaneous
  * 
@@ -107,7 +107,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence->defineAsFloatingBlock('w50');
 
 			if ($this->Context->activity()->strideLength() > 0) {
-				$Power = new BoxedValue(Distance::formatFeet($this->Context->dataview()->strideLength()->value(), false, false), Configuration::General()->distanceUnitAsFeet(), __('Stride Length'));
+				$Power = new Activity\Box\StrideLength($this->Context);
 				$Power->defineAsFloatingBlock('w50');
 			} else {
 				$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
@@ -142,10 +142,9 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			}
 
 			if ($this->Context->swimdata()->poollength() > 0) {
-                                $PoolLength = new Distance($this->Context->swimdata()->poollength()/100);
-				$Swolf = new BoxedValue($PoolLength->stringForDistanceYards(true, false), Configuration::General()->distanceUnitAsYard(), __('Pool length'));
-				$Swolf->defineAsFloatingBlock('w50');    
-				$this->BoxedValues[] = $Swolf;
+				$PoolLength = new Box\PoolLength($this->Context);
+				$PoolLength->defineAsFloatingBlock('w50');    
+				$this->BoxedValues[] = $PoolLength;
 			}
 		}
 	}

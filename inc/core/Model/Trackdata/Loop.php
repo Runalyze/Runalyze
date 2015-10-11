@@ -45,20 +45,18 @@ class Loop extends \Runalyze\Model\Loop {
 		return $this->current(Object::DISTANCE);
 	}
 
-        /*
-         * Move Distance
-         * @return boolean
-         */
-        
-        public function nextDistance() {
-            $Unit = Configuration::General()->distanceUnit();
-            if($Unit->isKM()) {
-                return $this->nextKilometer();
-            } elseif($Unit->isMILES()) {
-                return $this->nextMile();
-            }
-                
-        }
+	/**
+	 * Move Distance
+	 * @return bool
+	 */
+	public function nextDistance() {
+		if (Configuration::General()->distanceUnitSystem()->isImperial()) {
+			return $this->nextMile();
+		}
+
+		return $this->nextKilometer();
+	}
+
 	/**
 	 * Next kilometer
 	 * 
@@ -74,7 +72,7 @@ class Loop extends \Runalyze\Model\Loop {
 	/**
 	 * Next mile
 	 * 
-	 * Alias for <code>moveDistance(0.621371)</code>
+	 * Alias for <code>moveDistance(1.60934)</code>
 	 * @return boolean
 	 */
 	public function nextMile() {

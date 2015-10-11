@@ -5,7 +5,7 @@
  */
 
 use Runalyze\Activity\Duration;
-use Runalyze\Configuration;
+use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Weight;
 
 /**
@@ -81,6 +81,12 @@ class FormularValueParser {
 	public static $PARSER_WEIGHT = 'weight';
 
 	/**
+	 * Parser: elevation in m <=> elevation in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_ELEVATION = 'elevation';
+
+	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param enum $parser
@@ -121,6 +127,8 @@ class FormularValueParser {
 				return self::validateSplits($key, $parserOptions);
 			case self::$PARSER_WEIGHT:
 				return self::validateWeight($key);
+			case self::$PARSER_ELEVATION:
+				return self::validateElevation($key);
 			default:
 				return true;
 		}
@@ -154,8 +162,12 @@ class FormularValueParser {
 				break;
 			case self::$PARSER_SPLITS:
 				self::parseSplits($value);
+				break;
 			case self::$PARSER_WEIGHT:
 				self::parseWeight($value);
+				break;
+			case self::$PARSER_ELEVATION:
+				self::parseElevation($value);
 				break;
 		}
 	}
@@ -445,6 +457,25 @@ class FormularValueParser {
 	 */
 	private static function parseWeight(&$value) {
 		$value = round((new Weight($value))->valueInPreferredUnit(), 2);
+	}
+
+	/**
+	 * Validator: elevation in preferred unit => elevation in m
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateElevation($key) {
+		$_POST[$key] = round((new Elevation())->setInPreferredUnit($_POST[$key])->meter(), 2);
+
+		return true;
+	}
+
+	/**
+	 * Parse: elevation in m => elevation in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseElevation(&$value) {
+		$value = round((new Elevation($value))->valueInPreferredUnit(), 2);
 	}
 
 	/**

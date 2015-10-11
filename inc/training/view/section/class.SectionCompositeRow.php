@@ -7,7 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Runalyze\View\Leaflet;
-use Runalyze\Activity\Distance;
+
 /**
  * Row: Heartrate
  *
@@ -15,9 +15,10 @@ use Runalyze\Activity\Distance;
  * @package Runalyze\DataObjects\Training\View\Section
  */
 class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
-
+	/**
+	 * Add map
+	 */
     protected function addMap() {
-
         if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData() && !$this->Context->hideMap()) {
             $Map = new Leaflet\Map('map-'.$this->Context->activity()->id());
             $Map->addRoute(
@@ -29,11 +30,9 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
             );
 
             $this->TopContent = '<div id="training-map"">'.$Map->code().'</div>';
-            $this->big=true;
-
+            $this->big = true;
         }
     }
-
 
 	/**
 	 * Set plot
@@ -80,8 +79,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
         if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
-	    $Distance = new Distance($this->Context->activity()->distance());
-            $this->BoxedValues[] = new BoxedValue(Helper::Unknown($Distance->string(false, false, false), '-.--'), $Distance->unit(), __('Distance'));
+            $this->BoxedValues[] = new Box\Distance($this->Context);
             $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
         }
 
@@ -194,18 +192,21 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: elevation
 	 */
 	protected function addElevation() {
-		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue(Distance::format($this->Context->activity()->distance(), false, false, false), Configuration::General()->distanceUnit(), __('Distance'));
-			$this->BoxedValues[] = new BoxedValue(Distance::formatFeet($this->Context->activity()->elevation(), false, false), Configuration::General()->distanceUnitAsFeet(), __('Elevation'));
+		if ($this->Context->activity()->distance() > 0 || $this->Context->activity()->elevation() > 0) {
+			if ($this->Context->activity()->distance() > 0) {
+				$this->BoxedValues[] = new Box\Distance($this->Context);
+			}
+
+			$this->BoxedValues[] = new Box\Elevation($this->Context);
 
 			// TODO: Calculated elevation?
 
 			if ($this->Context->activity()->elevation() > 0) {
-				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-
-				if ($this->Context->hasRoute()) {
-					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), Configuration::General()->distanceUnitAsFeet(), __('Elevation up/down'));
+				if ($this->Context->activity()->distance() > 0) {
+					$this->BoxedValues[] = new Box\Gradient($this->Context);
 				}
+
+				$this->BoxedValues[] = new Box\ElevationUpDown($this->Context);
 			}
 		}
 	}

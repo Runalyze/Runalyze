@@ -2,7 +2,9 @@
 /**
  * Scheme for `runalyze_training`
  */
+
 use Runalyze\Configuration;
+
 $TABLENAME = 'training';
 $Distance = new \Runalyze\Activity\Distance();
 $HIDDEN_KEYS = array(
@@ -158,7 +160,7 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
-						'unit'		=> Configuration::General()->distanceUnit()->value()
+						'unit'		=> Configuration::General()->distanceUnitSystem()->distanceUnit()
 					)
 	),
 	's'					=> array(
@@ -204,7 +206,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Elevation'),
-						'unit'		=> FormularUnit::$ELEVATION,
+						'unit'		=> Configuration::General()->distanceUnitSystem()->elevationUnit(),
+						'parser'	=> FormularValueParser::$PARSER_ELEVATION,
 						'css'		=> TrainingFormular::$ONLY_OUTSIDE_CLASS
 					)
 	),

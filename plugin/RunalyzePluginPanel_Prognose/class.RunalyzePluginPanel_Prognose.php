@@ -79,7 +79,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict'));
+		// TODO: allow input in miles
+		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict').' (in km)');
 		$Distances->setDefaultValue( array(1, 3, 5, 10, 21.1, 42.2) );
 
 		$Model = new PluginConfigurationValueSelect('model', __('Prediction model'));
@@ -188,7 +189,7 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
 					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
-				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>
+				<strong>'.$Distance->stringAuto(true, 1).'</strong>
 			</p>';
 	}
 

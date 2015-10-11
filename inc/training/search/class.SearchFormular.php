@@ -3,6 +3,9 @@
  * This file contains class::SearchFormular
  * @package Runalyze\Search
  */
+
+use Runalyze\Configuration;
+
 /**
  * Search formular
  *
@@ -144,8 +147,8 @@ class SearchFormular extends Formular {
 
 		$this->addFieldNotes();
 
-		$this->addNumericConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
-		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
+		$this->addNumericConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->distanceUnit());
+		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->elevationUnit());
 		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
 		$this->addDurationField('s', __('Duration'));
 		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
@@ -162,7 +165,7 @@ class SearchFormular extends Formular {
 		$this->addNumericConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addNumericConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
 		$this->addBooleanField('abc', __('Running drills'));
-		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
+		$this->addNumericConditionField('stride_length', __('Stride length'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->strideLengthUnit());
 	}
 
 	/**

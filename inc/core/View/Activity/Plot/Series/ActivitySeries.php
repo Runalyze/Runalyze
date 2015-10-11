@@ -87,7 +87,10 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 
 		switch ($this->XAxis) {
 			case DataCollector::X_AXIS_DISTANCE:
-				$Plot->setXUnit(Configuration::General()->distanceUnit()->value());
+				$Plot->setXUnitFactor(
+					Configuration::General()->distanceUnitSystem()->distanceToPreferredUnitFactor(),
+					Configuration::General()->distanceUnitSystem()->distanceUnit()
+				);
 				break;
 
 			case DataCollector::X_AXIS_TIME:

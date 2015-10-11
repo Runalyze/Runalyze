@@ -3,13 +3,15 @@
  * This file contains class::SectionOverviewRow
  * @package Runalyze\DataObjects\Training\View\Section
  */
+
+use Runalyze\Activity\Distance;
+use Runalyze\View\Activity\Box;
 /**
  * Row: Overview
  * 
  * @author Hannes Christiansen
  * @package Runalyze\DataObjects\Training\View\Section
  */
-use Runalyze\Activity\Distance;
 class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 	/**
 	 * Boxed values
@@ -46,7 +48,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 	 */
 	protected function setBoxedValues() {	
 		$Distance = new Distance($this->Context->activity()->distance());
-		$Elevation = new Distance($this->Context->activity()->elevation() / 1000);
+
 		$this->BoxedValues = array(
 			new BoxedValue(Helper::Unknown($Distance->string(false, false, false), '-.--'), $Distance->unit(), __('Distance')),
 			new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time')),
@@ -57,7 +59,7 @@ class SectionOverviewRow extends TrainingViewSectionRowFullwidth {
 			new BoxedValue($this->Context->activity()->calories(), 'kcal', __('Calories')),
 			new BoxedValue(Helper::Unknown($this->Context->dataview()->vdot()->value(), '-'), '', __('VDOT'), $this->Context->dataview()->vdotIcon()),
 			new BoxedValue($this->Context->activity()->trimp(), '', __('TRIMP')),
-			new BoxedValue(Helper::Unknown($Elevation->stringForDistanceFeet(false, false), '-'), $Elevation->unitForElevation(true), __('Elevation'))
+			new Box\Elevation($this->Context)
 		);
 	}
 }

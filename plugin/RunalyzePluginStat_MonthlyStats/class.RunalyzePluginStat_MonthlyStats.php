@@ -32,7 +32,7 @@ class RunalyzePluginStat_MonthlyStats extends PluginStat {
 	 * @return string
 	 */
 	final public function description() {
-		return sprintf(__('How many %s/hours did you do per month'), Configuration::General()->distanceUnit()->value());
+		return sprintf(__('How many %s/hours did you do per month'), Configuration::General()->distanceUnitSystem()->distanceUnit());
 	}
 
 	/**
