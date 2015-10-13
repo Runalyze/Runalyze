@@ -80,6 +80,7 @@ class TrainingFormular extends StandardFormular {
 	protected function prepareForDisplayInSublcass() {
 		parent::prepareForDisplayInSublcass();
 
+		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
@@ -157,6 +158,13 @@ class TrainingFormular extends StandardFormular {
 				parent::displayAfterSubmit();
 			}
 		}
+	}
+
+	/**
+	 * Add additional hidden fields
+	 */
+	protected function addAdditionalHiddenFields() {
+		$this->addHiddenValue('distance-to-km-factor', Configuration::General()->distanceUnitSystem()->distanceToKmFactor());
 	}
 
 	/**

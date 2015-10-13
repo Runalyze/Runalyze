@@ -4,6 +4,7 @@
  * @package Runalyze\HTML\Formular\Validation
  */
 
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Elevation;
 use Runalyze\Activity\Weight;
@@ -87,6 +88,12 @@ class FormularValueParser {
 	public static $PARSER_ELEVATION = 'elevation';
 
 	/**
+	 * Parser: distance in km <=> distance in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_DISTANCE = 'distance';
+
+	/**
 	 * Validate post-value for a given key with a given parser
 	 * @param string $key
 	 * @param enum $parser
@@ -129,6 +136,8 @@ class FormularValueParser {
 				return self::validateWeight($key);
 			case self::$PARSER_ELEVATION:
 				return self::validateElevation($key);
+			case self::$PARSER_DISTANCE:
+				return self::validateDistance($key);
 			default:
 				return true;
 		}
@@ -161,13 +170,16 @@ class FormularValueParser {
 				self::parseArrayCheckboxes($value);
 				break;
 			case self::$PARSER_SPLITS:
-				self::parseSplits($value);
+				self::parseSplits($value, $parserOptions);
 				break;
 			case self::$PARSER_WEIGHT:
 				self::parseWeight($value);
 				break;
 			case self::$PARSER_ELEVATION:
 				self::parseElevation($value);
+				break;
+			case self::$PARSER_DISTANCE:
+				self::parseDistance($value);
 				break;
 		}
 	}
@@ -425,7 +437,7 @@ class FormularValueParser {
 			$_POST[$key] = array();
 		}
 
-		$Splits = new Splits($_POST[$key]);
+		$Splits = new Splits($_POST[$key], $options);
 		$_POST[$key] = $Splits->asString();
 
 		return true;
@@ -434,9 +446,10 @@ class FormularValueParser {
 	/**
 	 * Parse: splits string => splits array
 	 * @param string $value
+	 * @param array $options
 	 */
-	private static function parseSplits(&$value) {
-		$Splits = new Splits($value);
+	private static function parseSplits(&$value, $options) {
+		$Splits = new Splits($value, $options);
 		$value = $Splits->asArray();
 	}
 
@@ -476,6 +489,25 @@ class FormularValueParser {
 	 */
 	private static function parseElevation(&$value) {
 		$value = round((new Elevation($value))->valueInPreferredUnit(), 2);
+	}
+
+	/**
+	 * Validator: distance in preferred unit => distance in km
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateDistance($key) {
+		$_POST[$key] = round((new Distance())->setInPreferredUnit($_POST[$key])->kilometer(), 3);
+
+		return true;
+	}
+
+	/**
+	 * Parse: distance in km => distance in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseDistance(&$value) {
+		$value = number_format((new Distance($value))->valueInPreferredUnit(), 3, '.', '');
 	}
 
 	/**

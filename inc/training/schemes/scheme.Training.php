@@ -160,7 +160,8 @@ $FIELDS = array(
 					),
 					'formular'	=> array(
 						'label'		=> __('Distance'),
-						'unit'		=> Configuration::General()->distanceUnitSystem()->distanceUnit()
+						'unit'		=> Configuration::General()->distanceUnitSystem()->distanceUnit(),
+						'parser'	=> FormularValueParser::$PARSER_DISTANCE
 					)
 	),
 	's'					=> array(
