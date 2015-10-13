@@ -6,6 +6,7 @@
 
 namespace Runalyze\View\Window\Laps;
 
+use Runalyze\Configuration;
 use Runalyze\Data\Laps\Calculator;
 use Runalyze\View\Activity\Context;
 use Runalyze\Activity\Duration;
@@ -100,7 +101,7 @@ class Window {
 		if (isset($_POST['distance'])) {
 			$_POST['distance'] = str_replace(',', '.', $_POST['distance']);
 		} elseif ($this->Context->activity()->splits()->isEmpty()) {
-			$_POST['distance'] = 1;
+			$_POST['distance'] = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
 		}
 	}
 

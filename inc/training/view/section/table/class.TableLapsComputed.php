@@ -5,6 +5,7 @@
  */
 
 use Runalyze\Activity\Elevation;
+use Runalyze\Configuration;
 use Runalyze\Model\Trackdata;
 use Runalyze\Data\Laps\Laps;
 
@@ -33,7 +34,7 @@ class TableLapsComputed extends TableLapsAbstract {
 	 * Construct laps
 	 */
 	protected function constructLaps() {
-		$singleDistance = \Runalyze\Configuration::General()->distanceUnitSystem()->distanceToPreferredUnitFactor();
+		$singleDistance = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
 
 		if ($this->Context->trackdata()->totalDistance() < $singleDistance) {
 			$Distances = array($singleDistance);

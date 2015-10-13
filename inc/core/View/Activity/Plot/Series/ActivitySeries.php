@@ -91,6 +91,23 @@ abstract class ActivitySeries extends \Runalyze\View\Plot\Series {
 					Configuration::General()->distanceUnitSystem()->distanceToPreferredUnitFactor(),
 					Configuration::General()->distanceUnitSystem()->distanceUnit()
 				);
+
+				$stepSize = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
+
+				if ($stepSize != round($stepSize)) {
+					end($this->Data);
+					$totalDistanceInKm = key($this->Data);
+
+					while ($totalDistanceInKm / $stepSize > 15) {
+						$stepSize *= 2;
+					}
+
+					while ($totalDistanceInKm / $stepSize < 4) {
+						$stepSize /= 2;
+					}
+
+					$Plot->Options['xaxis']['tickSize'] = $stepSize;
+				}
 				break;
 
 			case DataCollector::X_AXIS_TIME:
