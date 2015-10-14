@@ -223,7 +223,7 @@ class Activity extends LeafletRoute {
 		if (round((new Distance($this->TrackdataLoop->distance()))->valueInPreferredUnit(), 2) >= $this->Dist) {
 			$Pace = new Pace($this->TrackdataLoop->time() - $this->Time);
 
-			$Tooltip = sprintf( __('<strong>%s. '.Configuration::General()->distanceUnitSystem()->distanceUnit().'</strong> in %s'), $this->Dist, $Pace->asMinPerKm() ).'<br>';
+			$Tooltip = sprintf( __('<strong>%s. %s</strong> in %s'), $this->Dist, Configuration::General()->distanceUnitSystem()->distanceUnit(), $Pace->asMinPerKm() ).'<br>';
 			$Tooltip .= sprintf( __('<strong>Time:</strong> %s'), Duration::format($this->TrackdataLoop->time()) );
 
 			$this->addMarker(
