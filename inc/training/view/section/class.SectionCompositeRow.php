@@ -79,7 +79,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
         if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
-            $this->BoxedValues[] = new Box\Distance($this->Context);
+            $this->BoxedValues[] = new Activity\Box\Distance($this->Context);
             $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
         }
 
