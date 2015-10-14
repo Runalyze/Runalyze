@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
+use Runalyze\View\Activity\Box;
 use Runalyze\View\Leaflet;
 
 /**
@@ -79,7 +80,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
         if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
-            $this->BoxedValues[] = new Activity\Box\Distance($this->Context);
+            $this->BoxedValues[] = new Box\Distance($this->Context);
             $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
         }
 
