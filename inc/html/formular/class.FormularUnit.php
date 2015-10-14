@@ -34,18 +34,6 @@ class FormularUnit {
 	public static $RPM = 'rpm';
 
 	/**
-	 * Unit: kg
-	 * @var string
-	 */
-	public static $KG = 'kg';
-	
-	/**
-	 * Unit: weight in gram
-	 * @var string
-	 */
-	public static $G = 'g';
-
-	/**
 	 * Unit: km
 	 * @var string
 	 */
@@ -56,6 +44,18 @@ class FormularUnit {
 	 * @var string
 	 */
 	public static $M = 'm';
+	
+	/**
+	 * Unit: miles
+	 * @var string
+	 */
+	public static $MILES = 'miles';
+
+	/**
+	 * Unit: yards
+	 * @var string
+	 */
+	public static $Y = 'y';
 
 	/**
 	 * Unit: cm

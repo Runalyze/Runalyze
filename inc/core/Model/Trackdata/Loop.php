@@ -5,6 +5,8 @@
  */
 
 namespace Runalyze\Model\Trackdata;
+use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 /**
  * Loop through trackdata object
@@ -44,6 +46,18 @@ class Loop extends \Runalyze\Model\Loop {
 	}
 
 	/**
+	 * Move Distance
+	 * @return bool
+	 */
+	public function nextDistance() {
+		if (Configuration::General()->distanceUnitSystem()->isImperial()) {
+			return $this->nextMile();
+		}
+
+		return $this->nextKilometer();
+	}
+
+	/**
 	 * Next kilometer
 	 * 
 	 * Alias for <code>moveDistance(1.0)</code>
@@ -51,6 +65,18 @@ class Loop extends \Runalyze\Model\Loop {
 	 */
 	public function nextKilometer() {
 		$this->moveDistance(1.0);
+
+		return $this->isAtEnd();
+	}
+        
+	/**
+	 * Next mile
+	 * 
+	 * Alias for <code>moveDistance(1.60934)</code>
+	 * @return boolean
+	 */
+	public function nextMile() {
+		$this->moveDistance(1.60934);
 
 		return $this->isAtEnd();
 	}

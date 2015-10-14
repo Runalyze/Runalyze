@@ -8,7 +8,7 @@ $Duration = new Duration();
 	<thead>
 		<tr>
 			<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
-			<th><?php echo Distance::format($km, $km <= 3, 1); ?></th>
+			<th><?php echo (new Distance($km))->stringAuto(); ?></th>
 			<?php endforeach; ?>
 		</tr>
 	</thead>

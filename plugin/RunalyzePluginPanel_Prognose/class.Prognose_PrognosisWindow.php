@@ -211,7 +211,7 @@ class Prognose_PrognosisWindow {
 			$DateWithLink = Ajax::trainingLink($PB->activityId(), date('d.m.Y', $PB->timestamp()), true);
 
 			$this->Prognoses[] = array(
-				'distance'	=> Distance::format($km, $km <= 3),
+				'distance'	=> (new Distance($km))->stringAuto(),
 				'prognosis'		=> Duration::format($Prognosis),
 				'prognosis-pace'=> $PacePrognosis->valueWithAppendix(),
 				'prognosis-vdot'=> $VDOTprognosis->uncorrectedValue(),
@@ -309,7 +309,8 @@ class Prognose_PrognosisWindow {
 		$FieldModel->addAttribute('onchange', '$(\'#prognosis-calculator .only-\'+$(this).val()).closest(\'div\').show();$(\'#prognosis-calculator .hide-on-model-change:not(.only-\'+$(this).val()+\')\').closest(\'div\').hide();');
 		$FieldModel->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 
-		$FieldDistances = new FormularInput('distances', __('Distances'));
+		// TODO: allow input in miles
+		$FieldDistances = new FormularInput('distances', __('Distances').' (in km)');
 		$FieldDistances->setLayout( FormularFieldset::$LAYOUT_FIELD_W50_AS_W100 );
 		$FieldDistances->setSize( FormularInput::$SIZE_FULL_INLINE );
 

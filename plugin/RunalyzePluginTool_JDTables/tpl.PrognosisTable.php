@@ -17,7 +17,7 @@ $Prognosis->setStrategy($Strategy);
 			<th>VDOT</th>
 		<?php foreach ($this->Configuration()->value('pace_distances') as $km): ?>
 		<?php if ($km >= 1): ?>
-			<th><?php echo Distance::format($km, $km <= 3, 1); ?></th>
+			<th><?php echo (new Distance($km))->stringAuto(); ?></th>
 		<?php endif; ?>
 		<?php endforeach; ?>
 		</tr>

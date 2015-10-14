@@ -112,7 +112,7 @@ class FrontendSharedStatistics {
 
 		if ($Factory->isInstalled('RunalyzePluginStat_Statistiken')) {
 			$Plugin = $Factory->newInstance('RunalyzePluginStat_Statistiken');
-			$Content .= $this->extractTbody($Plugin->getYearComparisonTable());
+			$Content .= ($Plugin->getYearComparisonTable());
 		}
 
 		if ($Factory->isInstalled('RunalyzePluginStat_Wettkampf')) {
@@ -121,11 +121,10 @@ class FrontendSharedStatistics {
 			}
 
 			$Plugin = $Factory->newInstance('RunalyzePluginStat_Wettkampf');
-			$Content .= $this->extractTbody($Plugin->getYearComparisonTable());
+			$Content .= ($Plugin->getYearComparisonTable());
 		}
 
 		if ($Content != '') {
-			$Content = '<table class="not-smaller r fullwidth zebra-style">'.NL.$Content.NL.'</table>'.NL;
 			$this->StatisticTabs->addTab( __('Year on year').' ('.__('Running').')', 'statistics-years', $Content);
 		}
 	}

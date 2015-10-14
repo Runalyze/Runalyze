@@ -130,7 +130,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 
 		foreach ($allEquipment as $data) {
 			$Object = new Model\Equipment\Object($data);
-			$Distance = new Distance($Object->distance());
+			$Distance = new Distance($Object->totalDistance());
 			$Duration = new Duration($Object->duration());
 
 			if ($inuse && !$Object->isInUse()) {
@@ -147,7 +147,7 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 				<strong>'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</strong>
 				'.$this->getUsageImage(
 					$showDistance
-						? $Object->distance() / $EquipmentType->maxDistance()
+						? $Object->totalDistance() / $EquipmentType->maxDistance()
 						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
 				).'
 			</p>';
@@ -190,9 +190,9 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
 					<th>'.__('Name').'</th>
 					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
-					<th class="{sorter: \'distance\'}">&Oslash; km</th>
+					<th class="{sorter: \'distance\'}">&Oslash; '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 					<th>&Oslash; '.__('Pace').'</th>
-					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> km</th>
+					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
 					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>

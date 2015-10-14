@@ -1,6 +1,5 @@
 <?php
 $TABLENAME = 'user';
-
 $HIDDEN_KEYS = array();
 
 $FIELDSETS = array(
@@ -50,11 +49,12 @@ $FIELDS['time'] = array(
 $FIELDS['weight'] = array(
 	'database'	=> array(
 		'type'		=> 'decimal',
-		'precision'	=> '4,1',
+		'precision'	=> '5,2',
 		),
 	'formular'	=> array(
 		'label'		=> __('Weight'),
-		'unit'		=> FormularUnit::$KG
+		'parser'	=> FormularValueParser::$PARSER_WEIGHT,
+		'unit'		=> \Runalyze\Configuration::General()->weightUnit()->unit()
 	)
 );
 $FIELDS['pulse_rest'] = array(

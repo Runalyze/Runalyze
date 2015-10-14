@@ -6,10 +6,10 @@
 
 use Runalyze\Configuration;
 use Runalyze\Calculation\JD;
-use Runalyze\Calculation\Elevation;
+use Runalyze\Calculation;
 use Runalyze\Activity\Distance;
+use Runalyze\Activity\Elevation;
 use Runalyze\View\Activity\Context;
-use Runalyze\Model;
 
 /**
  * Display VDOT info for a training
@@ -153,7 +153,7 @@ class VDOTinfo {
 			$down = $up;
 		}
 
-		$Modifier = new Elevation\DistanceModifier(
+		$Modifier = new Calculation\Elevation\DistanceModifier(
 			$this->Context->activity()->distance(),
 			$up,
 			$down,
@@ -175,7 +175,7 @@ class VDOTinfo {
 
 			<div class="w50">
 				<label>'.__('Up/Down').'</label>
-				<span class="as-input">+'.$up.'/-'.$down.'&nbsp;m</span>
+				<span class="as-input">+'.Elevation::format($up, false).'/-'.Elevation::format($down, true).'</span>
 			</div>
 			<div class="w50 double-height-right">
 				<label>&rArr; '.__('VDOT').'</label>
@@ -183,7 +183,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>
-				<span class="as-input">'.sprintf("%+d", 1000*$Modifier->additionalDistance()).'m = '.Distance::format($Modifier->correctedDistance(), false, 3).'</span>
+				<span class="as-input">'.Distance::format($Modifier->additionalDistance(), true, 3). ' =&gt; '.Distance::format($Modifier->correctedDistance(), true, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

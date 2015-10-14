@@ -8,6 +8,8 @@ namespace Runalyze\View\Activity\Plot\Series;
 
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Plot for: Temperature
@@ -28,6 +30,7 @@ class DistanceSeries extends ActivitySeries {
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::DISTANCE);
+		$this->manipulateData();
 	}
 
 	/**
@@ -37,7 +40,7 @@ class DistanceSeries extends ActivitySeries {
 		$this->Label = __('Distance');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = 'km';
+		$this->UnitString = Configuration::General()->distanceUnitSystem()->distanceUnit();
 		$this->UnitDecimals = 2;
 
 		$this->TickSize = 10;
@@ -48,6 +51,19 @@ class DistanceSeries extends ActivitySeries {
 		$this->ShowMinimum = false;
 	}
 
+	/**
+	 * Manipulate data
+	 */
+	protected function manipulateData() {
+		$UnitSystem = Configuration::General()->distanceUnitSystem();
+
+		if ($UnitSystem->isImperial()) {
+			$this->Data = array_map(function($value) {
+				return $value * DistanceUnitSystem::MILE_MULTIPLIER;
+			}, $this->Data);
+		}
+	}
+	
 	/**
 	 * Average
 	 * @param int $decimals [optional]

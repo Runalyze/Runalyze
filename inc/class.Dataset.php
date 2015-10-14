@@ -472,7 +472,11 @@ class Dataset {
 				return '';
 
 			case 'elevation':
-				return $this->Dataview->elevation();
+				if ($this->Activity->elevation() > 0) {
+					return $this->Dataview->elevation()->string();
+				}
+
+				return '';
 
 			case 'kcal':
 				return $this->Dataview->calories();
@@ -502,7 +506,7 @@ class Dataset {
 				return '';
 
 			case 'stride_length':
-				if ($this->Dataview->strideLength()->inCM() > 0) {
+				if ($this->Dataview->strideLength()->value() > 0) {
 					return $this->Dataview->strideLength()->string();
 				}
 

@@ -6,7 +6,9 @@
 
 namespace Runalyze\View\Activity\Plot\Series;
 
+use Runalyze\Configuration;
 use Runalyze\Model\Route\Object as Route;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 use Runalyze\View\Activity;
 
 /**
@@ -48,11 +50,25 @@ class Elevation extends ActivitySeries {
 			$this->Data = array();
 			return;
 		}
-
+		
 		$Collector = new DataCollectorWithRoute($context->trackdata(), $key, $context->route());
-
 		$this->Data = $Collector->data();
 		$this->XAxis = $Collector->xAxis();
+
+		$this->manipulateData();
+	}
+
+	/**
+	 * Manipulate data for correct unit
+	 */
+	protected function manipulateData() {
+		$UnitSystem = Configuration::General()->distanceUnitSystem();
+
+		if ($UnitSystem->isImperial()) {
+			$this->Data = array_map(function($value) {
+				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000;
+			}, $this->Data);
+		}
 	}
 
 	/**
@@ -62,7 +78,7 @@ class Elevation extends ActivitySeries {
 		$this->Label = __('Elevation');
 		$this->Color = self::COLOR;
 
-		$this->UnitString = 'm';
+		$this->UnitString = Configuration::General()->distanceUnitSystem()->elevationUnit();
 		$this->UnitDecimals = 0;
 
 		$this->TickSize = 10;

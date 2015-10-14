@@ -91,7 +91,7 @@ function getTimeInSeconds() {
 }
 
 function stringToDistance(string) {
-	return Number(string.replace(',', '.'));
+	return Number(string.replace(',', '.')) * $("input[name='distance-to-km-factor']").val();
 }
 
 function stringToSeconds(string) {

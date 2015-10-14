@@ -6,6 +6,7 @@
 
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use Runalyze\Activity\Distance;
 
 /**
  * Plot sum data
@@ -328,7 +329,7 @@ abstract class PlotSumData extends Plot {
 
 		if ($this->Analysis == self::ANALYSIS_DEFAULT) {
 			if ($this->usesDistance) {
-				$this->addYUnit(1, 'km');
+				$this->addYUnit(1, Configuration::General()->distanceUnitSystem()->distanceUnit());
 				$this->setYTicks(1, 10, 0);
 			} else {
 				$this->addYUnit(1, 'h');
@@ -599,15 +600,15 @@ abstract class PlotSumData extends Plot {
 			$BasicEndurance->readSettingsFromConfiguration();
 			$Result = $BasicEndurance->asArray();
 
-			$Avg = $this->factorForWeekKm() * $Result['weekkm-percentage']*$BasicEndurance->getTargetWeekKm();
-			$Goal = $this->factorForWeekKm() * $BasicEndurance->getTargetWeekKm();
+			$Avg = new Distance($this->factorForWeekKm() * $Result['weekkm-percentage'] * $BasicEndurance->getTargetWeekKm());
+			$Goal = new Distance($this->factorForWeekKm() * $BasicEndurance->getTargetWeekKm());
 			$LabelKeys = array_keys($this->getXLabels());
 
-			$this->addThreshold('y', $Avg, '#999');
-			$this->addThreshold('y', $Goal, '#999');
+			$this->addThreshold('y', round($Avg->valueInPreferredUnit()), '#999');
+			$this->addThreshold('y', round($Goal->valueInPreferredUnit()), '#999');
 
-			$this->addAnnotation(-1, $Avg, sprintf( __('avg:').'&nbsp;%d&nbsp;km', $Avg), 0, -10);
-			$this->addAnnotation(end($LabelKeys), $Goal, sprintf( __('goal:').'&nbsp;%d&nbsp;km', $Goal), 0, -10);
+			$this->addAnnotation(-1, round($Avg->valueInPreferredUnit()), __('avg:').'&nbsp;'.$Avg->string(true, 0), 0, -10);
+			$this->addAnnotation(end($LabelKeys), round($Goal->valueInPreferredUnit()), __('goal:').'&nbsp;'.$Goal->string(true, 0), 0, -10);
 		}
 	}
 

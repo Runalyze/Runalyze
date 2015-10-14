@@ -6,6 +6,7 @@
 
 use Runalyze\View\Activity;
 use Runalyze\Model\Trackdata;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Miscellaneous
@@ -106,7 +107,7 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			$Cadence->defineAsFloatingBlock('w50');
 
 			if ($this->Context->activity()->strideLength() > 0) {
-				$Power = new BoxedValue($this->Context->dataview()->strideLength()->value(), 'm', __('Stride Length'));
+				$Power = new Activity\Box\StrideLength($this->Context);
 				$Power->defineAsFloatingBlock('w50');
 			} else {
 				$Power = new BoxedValue(Helper::Unknown($this->Context->activity()->power(), '-'), 'W', __('Power'));
@@ -141,9 +142,9 @@ class SectionMiscellaneousRow extends TrainingViewSectionRowTabbedPlot {
 			}
 
 			if ($this->Context->swimdata()->poollength() > 0) {
-				$Swolf = new BoxedValue($this->Context->swimdata()->poollength()/100, 'm', __('Pool length'));
-				$Swolf->defineAsFloatingBlock('w50');    
-				$this->BoxedValues[] = $Swolf;
+				$PoolLength = new Box\PoolLength($this->Context);
+				$PoolLength->defineAsFloatingBlock('w50');    
+				$this->BoxedValues[] = $PoolLength;
 			}
 		}
 	}

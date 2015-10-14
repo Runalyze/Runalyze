@@ -247,7 +247,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
 							if ($this->Sport->usesDistance() && $this->dat != 's')
-								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], false, 0).'</td>';
+								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], true, 0).'</td>';
 							else
 								echo '<td>'.Duration::format($Data['array']['timer_sum_s'][$t]).'</td>';
 						} else {
@@ -256,7 +256,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					}
 
 					if ($this->Sport->usesDistance() && $this->dat != 's')
-						echo '<td>'.Distance::format($Data['array']['all_sum_km'], false, 0).'</td></tr>';
+						echo '<td>'.Distance::format($Data['array']['all_sum_km'], true, 0).'</td></tr>';
 					else
 						echo '<td>'.Duration::format($Data['array']['all_sum_s']).'</td></tr>';
 				}
@@ -278,7 +278,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$number  = number_format($percent, 1).' &#37;';
 
 		if ($this->dat == 'km') {
-			$number   = Distance::format($dist, false, 0);
+			$number   = Distance::format($dist, true, 0);
 			$tooltip .= ', '.Duration::format($time);
 		} elseif ($this->dat == 's') {
 			$number   = Duration::format($time);

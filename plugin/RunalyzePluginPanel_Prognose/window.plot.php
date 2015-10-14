@@ -24,7 +24,7 @@ $Submenu = '';
 foreach ($distances as $km) {
 	$km = trim($km);
 	$link = 'plugin/RunalyzePluginPanel_Prognose/window.plot.php?distance='.$km;
-	$Submenu .= '<li'.($km == $distance ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.Distance::format($km, Distance::FORMAT_AUTO).'</a>').'</li>';
+	$Submenu .= '<li'.($km == $distance ? ' class="active"' : '').'>'.Ajax::window('<a href="'.$link.'">'.((new Distance($km))->stringAuto()).'</a>').'</li>';
 }
 ?>
 <div class="panel-heading">

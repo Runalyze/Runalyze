@@ -14,9 +14,9 @@ if (!($this instanceof RunalyzePluginStat_Wettkampf)) {
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
-$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Distance::format($distance, $distance <= 3, 1) ) );
-$trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), Distance::format($distance, $distance <= 3, 1) ) );
-$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Distance::format($distance, $distance <= 3, 1) ) );
+$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), (new Distance($distance))->stringAuto(true, 1) ) );
+$trend       = str_replace('&nbsp;', ' ', sprintf( __('Trend over %s'), (new Distance($distance))->stringAuto(true, 1) ) );
+$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), (new Distance($distance))->stringAuto(true, 1) ) );
 $timeFormat  = '%M:%S';
 
 $competitions = $this->RaceContainer->races($distance);

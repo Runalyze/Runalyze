@@ -186,7 +186,6 @@ $CLASSMAP = array(
 'TrainingFormular' => 'training/class.TrainingFormular.php',
 'TrainingObject' => 'training/class.TrainingObject.php',
 'TrainingInputSplits' => 'training/formular/class.TrainingInputSplits.php',
-'TrainingSelectEquipment' => 'training/formular/class.TrainingSelectEquipment.php',
 'TrainingSelectSport' => 'training/formular/class.TrainingSelectSport.php',
 'TrainingSelectType' => 'training/formular/class.TrainingSelectType.php',
 'TrainingSelectWeather' => 'training/formular/class.TrainingSelectWeather.php',

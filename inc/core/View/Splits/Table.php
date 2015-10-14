@@ -177,7 +177,7 @@ class Table extends \Runalyze\View\Object {
 
 			$this->Code .= '<tr class="r">';
 			$this->Code .= '<td class="c">'.(++$i).'.</td>';
-			$this->Code .= '<td>'.Distance::format($Split->distance(), false, 2).'</td>';
+			$this->Code .= '<td>'.Distance::format($Split->distance(), true, 2).'</td>';
 			$this->Code .= '<td>'.Duration::format($Split->time()).'</td>';
 			$this->Code .= '<td>'.$PaceObj->value().'<small>'.$PaceObj->appendix().'</small></td>';
 			$this->Code .= '<td>'.$this->tdForPaceDifference($PaceObj).'</td>';
@@ -271,7 +271,7 @@ class Table extends \Runalyze\View\Object {
 
 			$this->Code .= '<tr class="r">
 								<td></td>
-								<td>'.Distance::format($this->Halfs[$i]['km'], false, 2).'</td>
+								<td>'.Distance::format($this->Halfs[$i]['km'], true, 2).'</td>
 								<td>'.Duration::format($this->Halfs[$i]['s']).'</td>
 								<td>'.$Pace->valueWithAppendix().'</td>
 								<td>'.$Pace->compareTo($TotalPace).'</td>

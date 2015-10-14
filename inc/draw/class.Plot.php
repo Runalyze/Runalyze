@@ -492,6 +492,16 @@ class Plot {
 	}
 
 	/**
+	 * Add unit to x axis
+	 * @param float $factor
+	 * @param string $unit
+	 * @param int $roundTo
+	 */
+	public function setXUnitFactor($factor, $unit, $roundTo = 2) {
+		$this->Options['xaxis']['tickFormatter'] = 'function (v) { v = v * '.$factor.'; return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+	}
+
+	/**
 	 * JS function to round
 	 * @param int $roundTo
 	 * @return string
