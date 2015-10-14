@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-14 09:53+0200\n"
-"PO-Revision-Date: 2015-09-26 23:11+0200\n"
+"PO-Revision-Date: 2015-10-14 20:43+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -822,9 +822,8 @@ msgid "R-R intervals"
 msgstr "Interwały R-R"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
-#, fuzzy
 msgid "Pointcaré plot"
-msgstr "Wykres Poincare"
+msgstr "Wykres Poincaré"
 
 #: inc/training/view/section/class.SectionHRVRow.php:44
 msgid "&Oslash; R-R interval"
@@ -1233,12 +1232,11 @@ msgstr "Płeć"
 
 #: inc/core/Configuration/Category/General.php:192
 msgid "Unit system for distances"
-msgstr ""
+msgstr "System miar dla odległości"
 
 #: inc/core/Configuration/Category/General.php:196
-#, fuzzy
 msgid "Weight unit"
-msgstr "Waga"
+msgstr "Jednostka wagi"
 
 #: inc/core/Configuration/Category/General.php:200
 msgid "Heart rate unit"
@@ -1780,9 +1778,8 @@ msgid "Average"
 msgstr "Średnia"
 
 #: inc/core/View/Window/Laps/Table.php:253
-#, fuzzy
 msgid "Show inactive splits"
-msgstr "Pokaż okrążenia"
+msgstr "Pokaż nieaktywne okrążenia"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
@@ -1804,14 +1801,12 @@ msgid "or"
 msgstr "lub"
 
 #: inc/core/View/Window/Laps/Form.php:66
-#, fuzzy
 msgid "Time, after which a new lap should start"
-msgstr "Dystans, po którym powinno rozpocząć się kolejne okrążęnie"
+msgstr "Czas, po którym powinno rozpocząć się kolejne okrążenie"
 
 #: inc/core/View/Window/Laps/Form.php:78
-#, fuzzy
 msgid "Manual distances"
-msgstr "Główny dystans"
+msgstr "Ręcznie wprowadzone odległości"
 
 #: inc/core/View/Window/Laps/Form.php:79
 msgid ""
@@ -1826,18 +1821,16 @@ msgid "e.g."
 msgstr "np."
 
 #: inc/core/View/Window/Laps/Form.php:91
-#, fuzzy
 msgid "Manual times"
-msgstr "Ręczne okrążenia"
+msgstr "Ręcznie wprowadzone czasy"
 
 #: inc/core/View/Window/Laps/Form.php:92
-#, fuzzy
 msgid ""
 "List with all times, comma seperated. Put \"+\" at the beginning to treat "
 "times as intervals."
 msgstr ""
-"Lista wszystkich dystansów oddzielonych przecinkami. Umieść \"+\" na "
-"początku listy by potraktować dystanse jako interwały."
+"Lista wszystkich czasów oddzielonych przecinkami. Umieść \"+\" na początku "
+"listy by potraktować czasy jako interwały."
 
 #: inc/core/View/Window/Laps/Form.php:104
 msgid "Lap time goal"
@@ -1869,9 +1862,8 @@ msgid "Show calculated laps"
 msgstr "Pokaż wyliczone okrążenia"
 
 #: inc/core/View/Window/Laps/Form.php:152
-#, fuzzy
 msgid "Show manual laps"
-msgstr "Ręczne okrążenia"
+msgstr "Pokaż ręczne okrążenia"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
@@ -1954,7 +1946,7 @@ msgstr "nieznana"
 #: inc/core/View/Leaflet/Activity.php:226
 #, php-format
 msgid "<strong>%s. "
-msgstr ""
+msgstr "<strong>%s. "
 
 #: inc/core/View/Leaflet/Activity.php:227
 #: inc/core/View/Leaflet/Activity.php:258
@@ -2009,11 +2001,11 @@ msgstr "co dwudziesty punkt"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:94
 msgid "Metric units"
-msgstr ""
+msgstr "Jednostki metryczne"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:95
 msgid "Imperial units"
-msgstr ""
+msgstr "Jednostki imperialne"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
@@ -2045,16 +2037,15 @@ msgstr "automatycznie"
 
 #: inc/core/Parameter/Application/WeightUnit.php:40
 msgid "kilograms"
-msgstr ""
+msgstr "kilogramy"
 
 #: inc/core/Parameter/Application/WeightUnit.php:41
-#, fuzzy
 msgid "pounds"
-msgstr "Znaleziono"
+msgstr "funty"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
-msgstr ""
+msgstr "stones"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
@@ -4288,15 +4279,15 @@ msgstr "Garmin Communicator"
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:56
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:45
-#, fuzzy, php-format
+#, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
-msgstr "Plik nieobsługiwany. Obsługiwane są pliki slf tworzone przez: "
+msgstr "Plik nieobsługiwany. Obsługiwane są pliki %s tworzone przez: %s."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:62
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:51
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr ""
+msgstr "Pliki %s są obsługiwane od: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
@@ -5855,14 +5846,13 @@ msgid "Relation: equipment to activities"
 msgstr "Powiązanie: sprzęt do treningów"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:27
-#, fuzzy
 msgid "Monthly Stats"
-msgstr "Wykres miesięczny:"
+msgstr "Statystyki miesięczne"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:35
 #, php-format
 msgid "How many %s/hours did you do per month"
-msgstr ""
+msgstr "Ile %s/godzin trenowałeś/aś w miesiącu"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:59
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:67
@@ -5879,7 +5869,6 @@ msgid "by time"
 msgstr "wg czasu"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:101
-#, fuzzy
 msgid "No activities found."
 msgstr "Nie znaleziono treningów."
 
