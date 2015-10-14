@@ -1,4 +1,4 @@
-# [Runalyze v2.1](http://blog.runalyze.com)
+# [Runalyze v2.2-alpha](http://blog.runalyze.com)
 
 [![Build Status](https://travis-ci.org/Runalyze/Runalyze.svg?branch=master)](https://travis-ci.org/Runalyze/Runalyze)
 [![Code Coverage](https://scrutinizer-ci.com/g/Runalyze/Runalyze/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Runalyze/Runalyze/?branch=master)
@@ -11,7 +11,7 @@ Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and 
 
 ## Install / Development
 Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
-v2.2+ will probably require [npm](https://nodejs.org/download/),
+v2.3+ will probably require [npm](https://nodejs.org/download/),
 [bower](http://bower.io/) (`sudo npm install -g bower`) and
 [grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
 
