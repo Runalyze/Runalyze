@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-15 07:55+0200\n"
-"PO-Revision-Date: 2015-10-12 23:17+0200\n"
+"PO-Revision-Date: 2015-10-15 09:25+0200\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
-"Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/nl/>\n"
+"Language-Team: Dutch "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -829,7 +829,6 @@ msgid "R-R intervals"
 msgstr "R-R intervallen"
 
 #: inc/training/view/section/class.SectionHRVRow.php:31
-#, fuzzy
 msgid "Pointcaré plot"
 msgstr "Poincaré diagram"
 
@@ -1247,12 +1246,11 @@ msgstr "Geslacht"
 
 #: inc/core/Configuration/Category/General.php:192
 msgid "Unit system for distances"
-msgstr ""
+msgstr "Eenheid voor afstanden"
 
 #: inc/core/Configuration/Category/General.php:196
-#, fuzzy
 msgid "Weight unit"
-msgstr "Gewicht"
+msgstr "Eenheid voor gewicht"
 
 #: inc/core/Configuration/Category/General.php:200
 msgid "Heart rate unit"
@@ -1818,9 +1816,8 @@ msgid "Average"
 msgstr "Gemiddelde"
 
 #: inc/core/View/Window/Laps/Table.php:253
-#, fuzzy
 msgid "Show inactive splits"
-msgstr "Nachtelijke activiteiten"
+msgstr "Toon niet-actieve tussentijden"
 
 #: inc/core/View/Window/Laps/Form.php:40
 msgid "Calculate laps"
@@ -1842,14 +1839,12 @@ msgid "or"
 msgstr "of"
 
 #: inc/core/View/Window/Laps/Form.php:66
-#, fuzzy
 msgid "Time, after which a new lap should start"
-msgstr "Afstand, waarna een nieuwe ronde moet beginnen"
+msgstr "Tijd, waarna een nieuwe ronde moet beginnen"
 
 #: inc/core/View/Window/Laps/Form.php:78
-#, fuzzy
 msgid "Manual distances"
-msgstr "hoofdafstand"
+msgstr "Handmatige afstanden"
 
 #: inc/core/View/Window/Laps/Form.php:79
 msgid ""
@@ -1864,18 +1859,16 @@ msgid "e.g."
 msgstr "bijv."
 
 #: inc/core/View/Window/Laps/Form.php:91
-#, fuzzy
 msgid "Manual times"
-msgstr "Handmatige ronden"
+msgstr "Handmatige tijden"
 
 #: inc/core/View/Window/Laps/Form.php:92
-#, fuzzy
 msgid ""
 "List with all times, comma seperated. Put \"+\" at the beginning to treat "
 "times as intervals."
 msgstr ""
-"Lijst met alle afstanden, door komma's gescheiden. Zet een \"+\" aan het "
-"begin om deze afstanden als intervallen te behandelen."
+"Lijst met alle tijden, door komma's gescheiden. Zet een \"+\" aan het begin "
+"om deze tijden als intervallen te behandelen."
 
 #: inc/core/View/Window/Laps/Form.php:104
 msgid "Lap time goal"
@@ -1906,9 +1899,8 @@ msgid "Show calculated laps"
 msgstr "Toon berekende ronden"
 
 #: inc/core/View/Window/Laps/Form.php:152
-#, fuzzy
 msgid "Show manual laps"
-msgstr "Handmatige ronden"
+msgstr "Toon handmatige ronden"
 
 #: inc/core/View/Splits/Table.php:148
 msgid "diff"
@@ -1990,9 +1982,9 @@ msgid "unknown"
 msgstr "onbekend"
 
 #: inc/core/View/Leaflet/Activity.php:226
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>%s. %s</strong> in %s"
-msgstr "<strong>%s. km</strong> in %s"
+msgstr "<strong>%s. %s</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:227
 #: inc/core/View/Leaflet/Activity.php:258
@@ -2047,11 +2039,11 @@ msgstr "elk 20e gegevenspunt"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:94
 msgid "Metric units"
-msgstr ""
+msgstr "Metrisch"
 
 #: inc/core/Parameter/Application/DistanceUnitSystem.php:95
 msgid "Imperial units"
-msgstr ""
+msgstr "Brits-Amerikaans maatsysteem"
 
 #: inc/core/Parameter/Application/PaceAxisType.php:16
 msgid "linear"
@@ -2083,16 +2075,15 @@ msgstr "automatisch"
 
 #: inc/core/Parameter/Application/WeightUnit.php:40
 msgid "kilograms"
-msgstr ""
+msgstr "kilogrammen"
 
 #: inc/core/Parameter/Application/WeightUnit.php:41
-#, fuzzy
 msgid "pounds"
-msgstr "Gevonden"
+msgstr "ponden"
 
 #: inc/core/Parameter/Application/WeightUnit.php:42
 msgid "stones"
-msgstr ""
+msgstr "stones"
 
 #: inc/core/Parameter/Application/ActivityRoutePrivacy.php:39
 #: inc/core/Parameter/Application/ActivityRouteBreak.php:27
@@ -3784,12 +3775,12 @@ msgstr "Plugins"
 
 #: inc/system/config/class.ConfigTabPlugins.php:32
 msgid "Panels"
-msgstr "Panels"
+msgstr "Panelen"
 
 #: inc/system/config/class.ConfigTabPlugins.php:33
 msgid "Panels are small statistics always shown on the right side."
 msgstr ""
-"Panels zijn kleine statistieken die weergegeven worden aan de rechterkant."
+"Panelen zijn kleine statistieken die weergegeven worden aan de rechterkant."
 
 #: inc/system/config/class.ConfigTabPlugins.php:38
 msgid "Normal statistics are shown below the activitiy log."
@@ -4355,17 +4346,17 @@ msgstr "Garmin Communicator"
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:56
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:45
-#, fuzzy, php-format
+#, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
 msgstr ""
-"Dit bestand wordt niet ondersteund. Deze varianten van slf-bestanden worden "
-"ondersteund: "
+"Dit bestand wordt niet ondersteund. Deze varianten van %s-bestanden worden "
+"ondersteund: %s."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:62
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:51
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr ""
+msgstr "%s-bestanden worden ondersteund van: %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
@@ -5299,6 +5290,8 @@ msgid ""
 "Set your own goals for different time ranges and compare your current "
 "performance with them."
 msgstr ""
+"Bepaal uw eigen doelen voor verschillende tijdsintervalllen en vergelijk uw "
+"huidige prestaties hiermee."
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:55
 msgid "This plugin tracks your distances for chosen time ranges."
@@ -5336,7 +5329,7 @@ msgstr "Geef een prognose voor de huidige %s"
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:70
 #, php-format
 msgid "Current time range: %s to %s"
-msgstr ""
+msgstr "Huidig tijdsinterval: %s tot %s"
 
 #: plugin/RunalyzePluginPanel_Ziele/class.RunalyzePluginPanel_Ziele.php:77
 #, php-format
@@ -5954,14 +5947,13 @@ msgid "Relation: equipment to activities"
 msgstr "Relatie: uitrusting met activiteiten"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:27
-#, fuzzy
 msgid "Monthly Stats"
-msgstr "Maandelijkse grafiek:"
+msgstr "Maandelijkse statistieken"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:35
 #, php-format
 msgid "How many %s/hours did you do per month"
-msgstr ""
+msgstr "Hoeveel %s/uren heeft u per maand getraind"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:59
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:67
@@ -5978,9 +5970,8 @@ msgid "by time"
 msgstr "op tijd"
 
 #: plugin/RunalyzePluginStat_MonthlyStats/class.RunalyzePluginStat_MonthlyStats.php:101
-#, fuzzy
 msgid "No activities found."
-msgstr "Er kunnen geen activiteiten gevonden worden."
+msgstr "Er zijn geen activiteiten gevonden."
 
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:46
 msgid "Some statistics for your most frequent routes."
@@ -6998,6 +6989,9 @@ msgid ""
 "own attempt to adjust the prognosis for long distances based on your current "
 "endurance."
 msgstr ""
+"Basisuithoudingsvermogen is <strong>niet</strong> van Jack Daniels.<br> Het "
+"is onze poging om de voorspelling voor uw lange afstanden aan te passen aan "
+"uw huidige uithoudingsvermogen."
 
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:665
 msgid "Training paces"
@@ -7107,6 +7101,8 @@ msgstr "in procenten"
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:129
 msgid "The values consider only the average data fields of your activities."
 msgstr ""
+"De waarden zijn enkel gebaseerd op de gemiddelden van de gegevensvelden van "
+"uw activiteiten."
 
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:192
 msgid "There is no data for this sport."
@@ -7138,32 +7134,34 @@ msgstr "Tabellen door Jack Daniels"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:44
 msgid "Tables for heart rate, paces and VDOT values by Jack Daniels."
-msgstr ""
+msgstr "Tabellen voor hartslag-, tempo- en VDOT-waarden door Jack Daniels."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:61
 msgid "VDOT from ... to ..."
-msgstr ""
+msgstr "VDOT van ... tot ..."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:61
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:62
 msgid "two values, comma seperated"
-msgstr ""
+msgstr "twee waarden, door een komma gescheiden"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:62
 msgid "Pace table: 400m from  ...s to ...s"
-msgstr ""
+msgstr "Tempo tabel: 400m van ...s tot ...s"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:73
 msgid "VDOT values with equivalent race results"
-msgstr ""
+msgstr "VDOT-waarden met vergelijkbare wedstrijdresultaten"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:74
 msgid "Predict results on different distances for a given VDOT."
 msgstr ""
+"Voorspel resultaten voor verschillende afstanden voor een gegeven waarde van "
+"VDOT."
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:79
 msgid "VDOT values with equivalent paces"
-msgstr ""
+msgstr "VDOT-waarden met gelijkwaardige tempo's"
 
 #: plugin/RunalyzePluginTool_JDTables/class.RunalyzePluginTool_JDTables.php:80
 msgid "Find your training paces in min/km for given VDOT values."
@@ -7192,7 +7190,7 @@ msgstr ""
 
 #: plugin/RunalyzePluginTool_JDTables/tpl.PrognosisTable.php:46
 msgid "These values do not fit the original table one hundred percent."
-msgstr ""
+msgstr "Deze waarden komen niet geheel overeen met de originele tabel."
 
 #: plugin/RunalyzePluginTool_JDTables/tpl.PrognosisTable.php:50
 msgid ""
@@ -7207,10 +7205,12 @@ msgid ""
 "These values do not fit the original table one hundred percent, especially "
 "for low VDOT values."
 msgstr ""
+"Deze waarden komen niet geheel overeen met de originele tabel, met name voor "
+"lage VDOT-waarden."
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:31
 msgid "Records"
-msgstr ""
+msgstr "Records"
 
 #: plugin/RunalyzePluginStat_Rekorde/class.RunalyzePluginStat_Rekorde.php:39
 msgid "Faster, longer, better: Your records from your activities."
