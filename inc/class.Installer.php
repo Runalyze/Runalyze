@@ -341,7 +341,7 @@ class Installer {
 	 * @return string
 	 */
 	protected function getSqlContentForFrontend($filename) {
-		return implode("\n", $this->getSqlFileAsArray($filename));
+		return implode("\n", $this->getSqlFileAsArray($filename, false));
 	}
 
 	/**
@@ -399,7 +399,7 @@ class Installer {
 	 * @param string $filename relative to PATH!
 	 * @return array
 	 */
-	public static function getSqlFileAsArray($filename) {
+	public static function getSqlFileAsArray($filename, $removeDelimiter = true) {
 		$MRK = array('DELIMITER', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
 		$SQL = @file($filename);
 		$query  = '';
@@ -422,21 +422,23 @@ class Installer {
 			}
 
 			if ($inDelimiter) {
+			    if (mb_substr($line, 0, 9) == 'DELIMITER') {
+				$inDelimiter = false;
+				$query .= $removeDelimiter ? '' : ' '.$line;
+				$array[] = $query;
+			    } elseif (trim($line) != '//') {
 				$query .= ' '.$line;
-
-				if (mb_substr($line, 0, 9) == 'DELIMITER') {
-					$inDelimiter = false;
-					$array[] = $query;
-				}
+			    }
 			} else {
-				$AA = explode(' ', $line);
-				if (in_array(strtoupper($AA[0]), $MRK)) {
-					if ($AA[0] == 'DELIMITER') {
-						$inDelimiter = true;
-					}
-
-					$query = $line;
-				} elseif (strlen($query) > 1) {
+			    $AA = explode(' ', $line);
+			    if (in_array(strtoupper($AA[0]), $MRK)) {
+				if ($AA[0] == 'DELIMITER') {
+				    $inDelimiter = true;
+				    $query = $removeDelimiter ? '' : $line;
+				} else {
+				    $query = $line;
+				}
+			    } elseif (strlen($query) > 1) {
 					$query .= " ".$line;
 				}
 
