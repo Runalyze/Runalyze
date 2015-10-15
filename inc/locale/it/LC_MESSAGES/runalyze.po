@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-14 09:53+0200\n"
+"POT-Creation-Date: 2015-10-15 07:55+0200\n"
 "PO-Revision-Date: 2015-07-31 19:27+0200\n"
 "Last-Translator: Lorenzo <lorenzo.capitani@gmail.com>\n"
 "Language-Team: Italian <http://translate.runalyze.de/projects/runalyze/"
@@ -89,7 +89,7 @@ msgstr "Il valore inserito non è valido."
 #: inc/training/view/section/table/class.TableLapsComputed.php:59
 #: inc/training/view/section/table/class.TableSwimLane.php:41
 #: inc/training/view/section/table/class.TableZonesAbstract.php:104
-#: inc/training/view/section/class.SectionCompositeRow.php:83
+#: inc/training/view/section/class.SectionCompositeRow.php:84
 #: inc/training/class.TrainingFormular.php:303
 #: inc/core/View/Window/Laps/Table.php:116 inc/core/View/Splits/Table.php:146
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
@@ -226,8 +226,8 @@ msgstr "frequenza cardiaca media"
 #: inc/training/view/section/class.SectionHeartrateRow.php:64
 #: inc/training/view/section/class.SectionHeartrateRow.php:67
 #: inc/training/view/section/class.SectionOverviewRow.php:58
-#: inc/training/view/section/class.SectionCompositeRow.php:173
-#: inc/training/view/section/class.SectionCompositeRow.php:176
+#: inc/training/view/section/class.SectionCompositeRow.php:174
+#: inc/training/view/section/class.SectionCompositeRow.php:177
 msgid "max. Heartrate"
 msgstr "Frequenza cardiaca massima"
 
@@ -284,7 +284,7 @@ msgstr "Oscillazione verticale"
 #: inc/training/view/class.VDOTinfo.php:181
 #: inc/training/view/section/class.SectionOverviewRow.php:60
 #: inc/training/view/section/class.SectionPaceRow.php:72
-#: inc/training/view/section/class.SectionCompositeRow.php:138
+#: inc/training/view/section/class.SectionCompositeRow.php:139
 #: inc/core/Configuration/Category/Vdot.php:161 inc/class.DatasetLabels.php:39
 #: inc/class.DatasetLabels.php:49
 #: plugin/RunalyzePluginTool_AnalyzeVDOT/tpl.Table.php:12
@@ -303,7 +303,7 @@ msgstr "VDOT"
 #: inc/training/search/class.SearchFormular.php:165
 #: inc/training/view/section/class.SectionHeartrateRow.php:78
 #: inc/training/view/section/class.SectionOverviewRow.php:61
-#: inc/training/view/section/class.SectionCompositeRow.php:187
+#: inc/training/view/section/class.SectionCompositeRow.php:188
 #: inc/core/Configuration/Category/Trimp.php:96
 #: inc/draw/class.PlotSumData.php:220 inc/class.DatasetLabels.php:33
 msgid "TRIMP"
@@ -448,7 +448,7 @@ msgstr "Frequenza cardiaca media"
 #: inc/training/search/class.SearchFormular.php:157
 #: inc/training/view/section/class.SectionHeartrateRow.php:77
 #: inc/training/view/section/class.SectionOverviewRow.php:59
-#: inc/training/view/section/class.SectionCompositeRow.php:186
+#: inc/training/view/section/class.SectionCompositeRow.php:187
 #: inc/training/schemes/scheme.Training.new.php:222
 #: inc/training/schemes/scheme.Training.php:232 inc/class.DatasetLabels.php:30
 msgid "Calories"
@@ -632,8 +632,8 @@ msgstr "Zone di frequenza cardiaca"
 #: inc/training/view/section/class.SectionHeartrateRow.php:51
 #: inc/training/view/section/class.SectionHeartrateRow.php:54
 #: inc/training/view/section/class.SectionOverviewRow.php:57
-#: inc/training/view/section/class.SectionCompositeRow.php:160
-#: inc/training/view/section/class.SectionCompositeRow.php:163
+#: inc/training/view/section/class.SectionCompositeRow.php:161
+#: inc/training/view/section/class.SectionCompositeRow.php:164
 msgid "&oslash; Heartrate"
 msgstr "&oslash; Frequenza cardiaca"
 
@@ -653,7 +653,7 @@ msgstr ""
 
 #: inc/training/view/section/class.SectionRouteOnlyMap.php:17
 #: inc/training/view/section/class.SectionRouteRowElevation.php:73
-#: inc/training/view/section/class.SectionCompositeRow.php:219
+#: inc/training/view/section/class.SectionCompositeRow.php:220
 msgid "Course"
 msgstr "Percorso"
 
@@ -668,22 +668,22 @@ msgid "Heart rate variability"
 msgstr "Battito cardiaco"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:86
-#: inc/training/view/section/class.SectionCompositeRow.php:232
+#: inc/training/view/section/class.SectionCompositeRow.php:233
 msgid "More about elevation"
 msgstr "Dati aggiuntivi sull'altitudine"
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:93
-#: inc/training/view/section/class.SectionCompositeRow.php:237
+#: inc/training/view/section/class.SectionCompositeRow.php:238
 msgid "Elevation data were corrected."
 msgstr "I dati sull'altitudine sono stati corretti."
 
 #: inc/training/view/section/class.SectionRouteRowElevation.php:95
-#: inc/training/view/section/class.SectionCompositeRow.php:239
+#: inc/training/view/section/class.SectionCompositeRow.php:240
 msgid "Elevation data are not corrected."
 msgstr "I dati sull'altitudine non sono corretti."
 
 #: inc/training/view/section/class.SectionOverviewRow.php:55
-#: inc/training/view/section/class.SectionCompositeRow.php:98
+#: inc/training/view/section/class.SectionCompositeRow.php:99
 #: inc/training/schemes/scheme.Training.new.php:177
 #: inc/training/schemes/scheme.Training.php:186
 msgid "Elapsed time"
@@ -756,31 +756,31 @@ msgid "Pace plot"
 msgstr "Grafico del ritmo (min./km)"
 
 #: inc/training/view/section/class.SectionPaceRow.php:30
-#: inc/training/view/section/class.SectionCompositeRow.php:51
+#: inc/training/view/section/class.SectionCompositeRow.php:52
 msgid "Pace zones"
 msgstr "Zone del ritmo di corsa"
 
 #: inc/training/view/section/class.SectionPaceRow.php:58
 #: inc/training/view/section/class.SectionPaceRow.php:62
-#: inc/training/view/section/class.SectionCompositeRow.php:124
-#: inc/training/view/section/class.SectionCompositeRow.php:128
+#: inc/training/view/section/class.SectionCompositeRow.php:125
+#: inc/training/view/section/class.SectionCompositeRow.php:129
 msgid "&oslash; Speed"
 msgstr "&oslash; Velocita'"
 
 #: inc/training/view/section/class.SectionPaceRow.php:59
 #: inc/training/view/section/class.SectionPaceRow.php:61
-#: inc/training/view/section/class.SectionCompositeRow.php:125
-#: inc/training/view/section/class.SectionCompositeRow.php:127
+#: inc/training/view/section/class.SectionCompositeRow.php:126
+#: inc/training/view/section/class.SectionCompositeRow.php:128
 msgid "&oslash; Pace"
 msgstr "&oslash; Ritmo"
 
 #: inc/training/view/section/class.SectionPaceRow.php:73
-#: inc/training/view/section/class.SectionCompositeRow.php:139
+#: inc/training/view/section/class.SectionCompositeRow.php:140
 msgid "Training points"
 msgstr "Punti di allenamento"
 
 #: inc/training/view/section/class.SectionPaceRow.php:84
-#: inc/training/view/section/class.SectionCompositeRow.php:149
+#: inc/training/view/section/class.SectionCompositeRow.php:150
 msgid "More about VDOT calculation"
 msgstr "Di più' riguardo al calcolo VDOT"
 
@@ -855,17 +855,17 @@ msgstr "Dati sull'altitudine"
 msgid "Composite data"
 msgstr "Dati compositi"
 
-#: inc/training/view/section/class.SectionCompositeRow.php:44
+#: inc/training/view/section/class.SectionCompositeRow.php:45
 msgid "Composite plot"
 msgstr "Diagramma composito"
 
-#: inc/training/view/section/class.SectionCompositeRow.php:49
-#: inc/training/view/section/class.SectionCompositeRow.php:57
+#: inc/training/view/section/class.SectionCompositeRow.php:50
+#: inc/training/view/section/class.SectionCompositeRow.php:58
 msgid "You will be soon able to configure your own zones."
 msgstr ""
 "Presto sara' possibile configurare le proprie zone della frequenza cardiaca."
 
-#: inc/training/view/section/class.SectionCompositeRow.php:59
+#: inc/training/view/section/class.SectionCompositeRow.php:60
 msgid "Heart rate zones"
 msgstr "Zone della frequenza cardiaca"
 
@@ -1998,9 +1998,9 @@ msgid "unknown"
 msgstr "sconosciuto"
 
 #: inc/core/View/Leaflet/Activity.php:226
-#, php-format
-msgid "<strong>%s. "
-msgstr ""
+#, fuzzy, php-format
+msgid "<strong>%s. %s</strong> in %s"
+msgstr "<strong>%s. km</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:227
 #: inc/core/View/Leaflet/Activity.php:258
@@ -5645,7 +5645,7 @@ msgstr "Elaboratore delle previsioni"
 msgid "There are not enough results for good predictions."
 msgstr "Non ci sono abbastanza risultati per una buona prevsione."
 
-#: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:189
+#: plugin/RunalyzePluginPanel_Prognose/class.RunalyzePluginPanel_Prognose.php:191
 #, php-format
 msgid "<small>from</small> %s <small>to</small> <strong>%s</strong>"
 msgstr "<small>da</small> %s <small>a</small> <strong>%s</strong>"
@@ -7293,9 +7293,6 @@ msgstr "Nessuna attività con tecniche di corsa trovata."
 
 #~ msgid "In use"
 #~ msgstr "In uso"
-
-#~ msgid "<strong>%s. km</strong> in %s"
-#~ msgstr "<strong>%s. km</strong> in %s"
 
 #, fuzzy
 #~ msgid "max. km"
