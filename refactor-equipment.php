@@ -5,7 +5,7 @@
  * You have to set your database connection within this file to enable the script.
  * Remember to delete your credentials afterwards to protect this script.
  */
-$hostname = '';
+$host = '';
 $database = '';
 $username = '';
 $password = '';
@@ -33,14 +33,14 @@ $starttime = microtime(true);
  */
 define('NL', CLI ? PHP_EOL : '<br>'.PHP_EOL);
 
-if (empty($database) && empty($hostname)) {
+if (empty($database) && empty($host)) {
 	echo 'Database connection has to be set within the file.'.NL;
 	exit;
 } else {
 	date_default_timezone_set('Europe/Berlin');
 
 	try {
-		$PDO = new PDO('mysql:dbname='.$database.';host='.$hostname, $username, $password);
+		$PDO = new PDO('mysql:dbname='.$database.';host='.$host, $username, $password);
 		$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
