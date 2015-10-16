@@ -189,7 +189,8 @@ class General extends \Runalyze\Configuration\Category {
 		));
 
 		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT_SYSTEM'), array(
-			'label'		=> __('Unit system for distances')
+			'label'		=> __('Unit system for distances'),
+			'tooltip'	=> __('Changing the unit system for distances does not change pace units. You have to adjust them in sports configuration.')
 		));
 
 		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
