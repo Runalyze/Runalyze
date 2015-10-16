@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-15 07:55+0200\n"
-"PO-Revision-Date: 2015-10-15 09:04+0200\n"
+"PO-Revision-Date: 2015-10-16 07:15+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
 "Language-Team: Polish "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
@@ -4281,17 +4281,17 @@ msgstr "Garmin Communicator"
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:45
 #, php-format
 msgid "This file is not supported. Supported producers of %s-files: %s."
-msgstr "Plik nieobsługiwany. Obsługiwane są pliki %s tworzone przez: %s."
+msgstr "Plik nieobsługiwany. Obsługiwane są pliki %s tworzone przez %s."
 
 #: inc/import/filetypes/class.ImporterFiletypeKML.php:62
 #: inc/import/filetypes/class.ImporterFiletypeCSV.php:51
 #, php-format
 msgid "%s-files are supported from: %s"
-msgstr "Pliki %s są obsługiwane od: %s"
+msgstr "Obsługiwane są pliki %s utworzone przez %s"
 
 #: inc/import/filetypes/class.ImporterFiletypeHRM.php:6
 msgid "hrm- and gpx-files with the same name will be automatically combined."
-msgstr "pliki hrm i gpx z tą samą nazwą zostaną automatycznie połączone."
+msgstr "Pliki hrm i gpx z tą samą nazwą zostaną automatycznie połączone."
 
 #: inc/import/filetypes/class.ImporterFiletypeAbstract.php:72
 msgid "No activities could be found."
@@ -4309,7 +4309,7 @@ msgstr "Plik nieobsługiwany. Obsługiwane są pliki slf tworzone przez: "
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:6
 msgid "xml-files from Polar, Suunto and RunningAHEAD are supported."
-msgstr "pliki xml Polar, Suunto i RunningAHEAD są obsługiwane."
+msgstr "Obsługiwane są pliki xml utworzone przez Polar, Suunto i RunningAHEAD."
 
 #: inc/import/filetypes/class.ImporterFiletypeXML.php:66
 msgid "This file is not supported. Supported producers of kml-files: "
