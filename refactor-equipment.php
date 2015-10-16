@@ -26,7 +26,7 @@ define('CHECK_INNODB', true); // Set to false if you don't want or can't use Inn
  * SCRIPT STARTS - YOU DON'T NEED TO CHANGE ANYTHING BELOW
  ******************************************************************************/
 
-if (!isset($host) && isset($hostname) {
+if (!isset($host) && isset($hostname)) {
     $host = $hostname;
 }
 
