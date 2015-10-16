@@ -478,8 +478,12 @@ class Plot {
 	 * @param string $unit
 	 * @param int $roundTo
 	 */
-	public function addYUnit($i, $unit, $roundTo = 2) {
-		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+	public function addYUnit($i, $unit, $roundTo = 2, $factor = 1) {
+		if ($factor != 1) {
+			$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { v = v * '.$factor.'; return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+		} else {
+			$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+		}
 	}
 
 	/**

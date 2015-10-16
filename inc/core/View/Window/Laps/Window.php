@@ -13,6 +13,7 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Data\Laps\Laps;
 use Runalyze\Data\Laps\Lap;
+use Runalyze\Parameter\Application\PaceUnit;
 
 use Request;
 
@@ -96,7 +97,7 @@ class Window {
 	protected function prepareProperties() {
 		$this->DemandedTime = new Duration();
 		$this->DemandedPace = new Pace(0, 1);
-		$this->DemandedPace->setUnit(Pace::MIN_PER_KM);
+		$this->DemandedPace->setUnitEnum(PaceUnit::MIN_PER_KM);
 
 		if (isset($_POST['distance'])) {
 			$_POST['distance'] = str_replace(',', '.', $_POST['distance']);

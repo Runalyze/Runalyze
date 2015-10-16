@@ -12,6 +12,7 @@ use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\PersonalBest;
+use Runalyze\Parameter\Application\PaceUnit;
 
 /**
  * Prognosis calculator window
@@ -205,8 +206,8 @@ class Prognose_PrognosisWindow {
 			$VDOTpb = new VDOT;
 			$VDOTpb->fromPace($km, $PB->seconds());
 
-			$PacePrognosis = new Pace($Prognosis, $km, Pace::MIN_PER_KM);
-			$PacePB = new Pace($PB->seconds(), $km, Pace::MIN_PER_KM);
+			$PacePrognosis = new Pace($Prognosis, $km, PaceUnit::MIN_PER_KM);
+			$PacePB = new Pace($PB->seconds(), $km, PaceUnit::MIN_PER_KM);
 
 			$DateWithLink = Ajax::trainingLink($PB->activityId(), date('d.m.Y', $PB->timestamp()), true);
 

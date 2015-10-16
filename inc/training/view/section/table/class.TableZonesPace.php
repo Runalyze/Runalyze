@@ -24,7 +24,7 @@ class TableZonesPace extends TableZonesAbstract {
 	const STEP_SIZE = 10;
 
 	/**
-	 * @var enum
+	 * @var \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	protected $PaceUnit;
 
@@ -41,7 +41,8 @@ class TableZonesPace extends TableZonesAbstract {
 		$this->PaceUnit = $this->Context->sport()->paceUnit();
 
 		$Zones = $this->computeZones();
-		$Pace = new Pace(0, 1, $this->PaceUnit);
+		$Pace = new Pace(0, 1);
+		$Pace->setUnit($this->PaceUnit);
 		$HR = new HeartRate(0, Runalyze\Context::Athlete());
 
 		foreach ($Zones as $paceInSeconds => $Info) {
@@ -110,19 +111,14 @@ class TableZonesPace extends TableZonesAbstract {
 			return 0;
 		}
 
-		switch ($this->PaceUnit) {
-			case Pace::KM_PER_H:
-				return $paceInSeconds > 720 ? 0 : 3600 / floor(3600 / $paceInSeconds / 5) / 5;
+		if ($this->PaceUnit->isDecimalFormat()) {
+			$dividend = $this->PaceUnit->dividendForUnit();
 
-			case Pace::M_PER_S:
-				return $paceInSeconds > 1000 ? 0 : 1000 / floor(1000 / $paceInSeconds);
-
-			case Pace::MIN_PER_100M:
-				return 50 * floor($paceInSeconds / 50);
-
-			case Pace::MIN_PER_KM:
-			default:
-				return 60 * floor($paceInSeconds / 60);
+			return $paceInSeconds > $dividend ? 0 : $dividend / floor($dividend / $paceInSeconds);
 		}
+
+		$factor = $this->PaceUnit->factorForUnit();
+
+		return round(30 * floor($factor * $paceInSeconds / 30) / $factor);
 	}
 }

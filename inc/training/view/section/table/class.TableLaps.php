@@ -23,7 +23,7 @@ class TableLaps extends TableLapsAbstract {
 		$Reader = new StringReader($this->Context->activity()->comment());
 
 		$Splits = $this->Context->activity()->splits();
-		$SplitsView = new Splits\Table($Splits, $this->Context->dataview()->pace()->unit());
+		$SplitsView = new Splits\Table($Splits, $this->Context->dataview()->pace()->unitEnum());
 		$SplitsView->setDemandedPace($Reader->findDemandedPace());
 
 		if ($this->Context->trackdata()->has(Trackdata\Object::DISTANCE)

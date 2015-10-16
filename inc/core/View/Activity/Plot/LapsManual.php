@@ -6,12 +6,12 @@
 
 namespace Runalyze\View\Activity\Plot;
 
-use Runalyze\Model\Activity\Splits;
-use Runalyze\View\Activity;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace as PaceObject;
+use Runalyze\Model\Activity\Splits;
 use Runalyze\Util\StringReader;
-use Runalyze\Activity\Pace as APace;
+use Runalyze\View\Activity;
 
 /**
  * Plot for: manual laps
@@ -20,18 +20,6 @@ use Runalyze\Activity\Pace as APace;
  * @package Runalyze\View\Activity\Plot
  */
 class LapsManual extends Laps {
-	/**
-	 * Demanded pace in s/km
-	 * @var int
-	 */
-	protected $demandedPace = 0;
-
-	/**
-	 * Achieved pace in s/km
-	 * @var int
-	 */
-	protected $achievedPace = 0;
-
 	/**
 	 * Set key and title for this plot
 	 */
@@ -61,8 +49,7 @@ class LapsManual extends Laps {
 		$this->demandedPace = $Reader->findDemandedPace();
 		$this->achievedPace = array_sum($this->Data) / $num;
 
-		$paceUnit = $context->sport()->paceUnit();
-		$this->manipulateData($num, $paceUnit);
+		$this->manipulateData($num);
 	}
 
 	/**
@@ -80,11 +67,10 @@ class LapsManual extends Laps {
 
 	/**
 	 * @param int $num
-	 * @param enum $paceUnit
 	 */
-	protected function manipulateData($num, $paceUnit) {
-		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M || $paceUnit == APace::MIN_PER_500M);
-		$pace = new APace(0, 1, $paceUnit);
+	protected function manipulateData($num) {
+		$Pace = new PaceObject(0, 1);
+		$Pace->setUnit($this->PaceUnit);
 
 		foreach ($this->Data as $key => $val) {
 			if ($num > 35) {
@@ -97,35 +83,15 @@ class LapsManual extends Laps {
 				$this->Labels[$key] = array($key, $this->Labels[$key].' km');
 			}
 
-			$pace->setTime($val);
+			$Pace->setTime($val);
 
-			if ($paceInTime) {
-				$this->Data[$key] = 1000*$pace->secondsPerKm();
-				if ($paceUnit == APace::MIN_PER_100M) {
-					$this->Data[$key] /= 10;
-				} elseif ($paceUnit == APace::MIN_PER_500M) {
-					$this->Data[$key] /= 2;
-				}
+			if ($this->PaceUnit->isTimeFormat()) {
+				$this->Data[$key] = 1000 * round($Pace->secondsPerKm() * $this->PaceUnit->factorForUnit());
 			} else {
-				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());
+				$this->Data[$key] = (float)str_replace(',', '.', $Pace->value());
 			}
 		}
 
 		$this->Plot->Data[] = array('label' => $this->title, 'data' => $this->Data);
-	}
-
-	/**
-	 * Add annotations
-	 */
-	protected function addAnnotations() {
-		if ($this->demandedPace > 0) {
-			$this->Plot->addThreshold("y", $this->demandedPace*1000, 'rgb(180,0,0)');
-			//$this->Plot->addAnnotation(count($Data)-1, $this->demandedPace*1000, 'Soll: '.Duration::format(round($this->demandedPace)), -10, -7);
-		}
-
-		if ($this->achievedPace > 0) {
-			$this->Plot->addThreshold("y", $this->achievedPace*1000, 'rgb(0,180,0)');
-			$this->Plot->addAnnotation(0, $this->achievedPace*1000, '&oslash; '.Duration::format(round($this->achievedPace)), -20, -7);
-		}
 	}
 }

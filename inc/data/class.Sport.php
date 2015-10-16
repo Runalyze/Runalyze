@@ -94,15 +94,6 @@ class Sport {
 	}
 
 	/**
-	 * Does this sport use km/h as unit for speed?
-	 * @todo REMOVE this function
-	 * @return bool
-	 */
-	public function usesKmh() {
-		return ($this->data['speed'] == Pace::KM_PER_H);
-	}
-
-	/**
 	 * Has this sport trainingtypes?
 	 * @return bool
 	 */

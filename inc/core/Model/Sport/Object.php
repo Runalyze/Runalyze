@@ -146,9 +146,20 @@ class Object extends Model\ObjectWithID {
 
 	/**
 	 * Pace unit
-	 * @return enum see \Runalyze\Activity\Pace
+	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	public function paceUnit() {
+		$Option = new \Runalyze\Parameter\Application\PaceUnit();
+		$Option->set($this->Data[self::PACE_UNIT]);
+
+		return $Option->object();
+	}
+
+	/**
+	 * Pace unit
+	 * @return string see \Runalyze\Activity\Pace
+	 */
+	public function paceUnitEnum() {
 		return $this->Data[self::PACE_UNIT];
 	}
 

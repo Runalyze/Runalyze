@@ -6,8 +6,9 @@
 
 namespace Runalyze\View\Activity\Plot;
 
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Pace as PaceObject;
 use Runalyze\View\Activity;
-use Runalyze\Activity\Pace as APace;
 use Helper;
 
 /**
@@ -17,6 +18,18 @@ use Helper;
  * @package Runalyze\View\Activity\Plot
  */
 abstract class Laps extends ActivityPlot {
+	/**
+	 * Demanded pace in s/km
+	 * @var int
+	 */
+	protected $demandedPace = 0;
+
+	/**
+	 * Achieved pace in s/km
+	 * @var int
+	 */
+	protected $achievedPace = 0;
+
 	/**
 	 * @var array
 	 */
@@ -34,7 +47,7 @@ abstract class Laps extends ActivityPlot {
 
 	/**
 	 * Unit
-	 * @var enum
+	 * @var \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	protected $PaceUnit;
 
@@ -54,15 +67,16 @@ abstract class Laps extends ActivityPlot {
 		$this->SplitsAreNotComplete = $this->splitsAreNotComplete($context);
 		$this->loadData($context);
 
-		if (!empty($this->Data) && ($this->PaceUnit == APace::MIN_PER_KM || $this->PaceUnit == APace::MIN_PER_100M || $this->PaceUnit == APace::MIN_PER_500M)) {
+		if (!empty($this->Data) && $this->PaceUnit->isTimeFormat()) {
 			$max = Helper::ceilFor(max($this->Data), 30000);
 
 			$this->Plot->setYAxisTimeFormat('%M:%S');
 		} else {
 			$max = ceil(max($this->Data));
 
-			$pace = new APace(0, 1, $this->PaceUnit);
-			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $pace->appendix()), 1);
+			$Pace = new PaceObject(0, 1);
+			$Pace->setUnit($this->PaceUnit);
+			$this->Plot->addYUnit(1, str_replace('&nbsp;', '', $Pace->appendix()), 1);
 		}
 
 		$this->Plot->setYLimits(1, 0, $max, false);
@@ -79,7 +93,27 @@ abstract class Laps extends ActivityPlot {
 	 * Add annotations
 	 */
 	protected function addAnnotations() {
-		// Can be overwritten in subclass
+		if ($this->demandedPace > 0) {
+			$demandedPace = $this->PaceUnit->rawValue($this->demandedPace);
+
+			if ($this->PaceUnit->isTimeFormat()) {
+				$demandedPace *= 1000;
+			}
+
+			$this->Plot->addThreshold("y", round($demandedPace), 'rgb(180,0,0)');
+			//$this->Plot->addAnnotation(count($Data)-1, round($demandedPace), 'Soll: '.$this->PaceUnit->format($this->demandedPace), -10, -7);
+		}
+
+		if ($this->achievedPace > 0) {
+			$achievedPace = $this->PaceUnit->rawValue($this->achievedPace);
+
+			if ($this->PaceUnit->isTimeFormat()) {
+				$achievedPace *= 1000;
+			}
+
+			$this->Plot->addThreshold("y", round($achievedPace), 'rgb(0,180,0)');
+			$this->Plot->addAnnotation(0, round($achievedPace), '&oslash; '.$this->PaceUnit->format($this->achievedPace), -40, -7);
+		}
 	}
 
 	/**

@@ -23,7 +23,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Sport name', $Sport->name());
 		$this->assertEquals(700, $Sport->caloriesPerHour());
 		$this->assertEquals(140, $Sport->avgHR());
-		$this->assertEquals('foo', $Sport->paceUnit());
+		$this->assertEquals('foo', $Sport->paceUnitEnum());
 		$this->assertTrue($Sport->hasDistances());
 		$this->assertTrue($Sport->hasTypes());
 		$this->assertTrue($Sport->isOutside());

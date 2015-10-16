@@ -10,6 +10,7 @@ use Runalyze\Model\Activity\Splits;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Pace;
+use Runalyze\Parameter\Application\PaceUnit;
 
 /**
  * Abstract view object
@@ -61,7 +62,7 @@ class Table extends \Runalyze\View\Object {
 	/**
 	 * @param \Runalyze\Model\Activity\Splits\Object $splits
 	 */
-	public function __construct(Splits\Object $splits, $paceUnit = Pace::MIN_PER_KM) {
+	public function __construct(Splits\Object $splits, $paceUnit = PaceUnit::MIN_PER_KM) {
 		$this->Splits = $splits;
 		$this->PaceUnit = $paceUnit;
 
@@ -264,10 +265,10 @@ class Table extends \Runalyze\View\Object {
 			$totalDist += $Half['km'];
 		}
 
-		$TotalPace = new Pace($totalTime, $totalDist, Pace::MIN_PER_KM);
+		$TotalPace = new Pace($totalTime, $totalDist, PaceUnit::MIN_PER_KM);
 
 		for ($i = 0, $num = count($this->Halfs); $i < $num; $i++) {
-			$Pace = new Pace($this->Halfs[$i]['s'], $this->Halfs[$i]['km'], Pace::MIN_PER_KM);
+			$Pace = new Pace($this->Halfs[$i]['s'], $this->Halfs[$i]['km'], PaceUnit::MIN_PER_KM);
 
 			$this->Code .= '<tr class="r">
 								<td></td>
