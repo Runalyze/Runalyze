@@ -41,6 +41,11 @@ class Series {
 	protected $UnitDecimals = 0;
 
 	/**
+	 * @var float
+	 */
+	protected $UnitFactor = 1;
+
+	/**
 	 * @var int
 	 */
 	protected $TickSize = false;
@@ -122,12 +127,12 @@ class Series {
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
 				$Plot->hideYAxis($yAxis);
-			} elseif ($this->UnitString == 'km') {
+			} elseif ($this->UnitString == 'km' || $this->UnitString == 'mi') {
 				$series = count($Plot->Data) - 1;
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
 				//$Plot->hideYAxis($yAxis);
-				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
+				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals, $this->UnitFactor);
 			} else
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 		}

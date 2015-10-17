@@ -30,7 +30,6 @@ class DistanceSeries extends ActivitySeries {
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::DISTANCE);
-		$this->manipulateData();
 	}
 
 	/**
@@ -43,25 +42,16 @@ class DistanceSeries extends ActivitySeries {
 		$this->UnitString = Configuration::General()->distanceUnitSystem()->distanceUnit();
 		$this->UnitDecimals = 2;
 
+		if (Configuration::General()->distanceUnitSystem()->isImperial()) {
+			$this->UnitFactor = DistanceUnitSystem::MILE_MULTIPLIER;
+		}
+
 		$this->TickSize = 10;
 		$this->TickDecimals = 0;
 
 		$this->ShowAverage = false;
 		$this->ShowMaximum = false;
 		$this->ShowMinimum = false;
-	}
-
-	/**
-	 * Manipulate data
-	 */
-	protected function manipulateData() {
-		$UnitSystem = Configuration::General()->distanceUnitSystem();
-
-		if ($UnitSystem->isImperial()) {
-			$this->Data = array_map(function($value) {
-				return $value * DistanceUnitSystem::MILE_MULTIPLIER;
-			}, $this->Data);
-		}
 	}
 	
 	/**

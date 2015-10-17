@@ -477,6 +477,7 @@ class Plot {
 	 * @param int $i
 	 * @param string $unit
 	 * @param int $roundTo
+	 * @param float $factor
 	 */
 	public function addYUnit($i, $unit, $roundTo = 2, $factor = 1) {
 		if ($factor != 1) {
