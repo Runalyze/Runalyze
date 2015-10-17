@@ -69,18 +69,19 @@ class LapsManual extends Laps {
 	 * @param int $num
 	 */
 	protected function manipulateData($num) {
+		$distanceUnit = \Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit();
 		$Pace = new PaceObject(0, 1);
 		$Pace->setUnit($this->PaceUnit);
 
 		foreach ($this->Data as $key => $val) {
 			if ($num > 35) {
 				$this->Labels[$key] = array($key, round($this->Labels[$key], 1));
-			} elseif ($num >= 20) {
+			} elseif ($num >= 15) {
 				$this->Labels[$key] = array($key, number_format($this->Labels[$key], 1, '.', ''));
 			} elseif ($num > 10) {
-				$this->Labels[$key] = array($key, $this->Labels[$key].'k');
+				$this->Labels[$key] = array($key, $this->Labels[$key].$distanceUnit);
 			} else {
-				$this->Labels[$key] = array($key, $this->Labels[$key].' km');
+				$this->Labels[$key] = array($key, $this->Labels[$key].' '.$distanceUnit);
 			}
 
 			$Pace->setTime($val);

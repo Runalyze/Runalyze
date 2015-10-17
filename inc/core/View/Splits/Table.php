@@ -265,10 +265,10 @@ class Table extends \Runalyze\View\Object {
 			$totalDist += $Half['km'];
 		}
 
-		$TotalPace = new Pace($totalTime, $totalDist, PaceUnit::MIN_PER_KM);
+		$TotalPace = new Pace($totalTime, $totalDist, $this->PaceUnit);
 
 		for ($i = 0, $num = count($this->Halfs); $i < $num; $i++) {
-			$Pace = new Pace($this->Halfs[$i]['s'], $this->Halfs[$i]['km'], PaceUnit::MIN_PER_KM);
+			$Pace = new Pace($this->Halfs[$i]['s'], $this->Halfs[$i]['km'], $this->PaceUnit);
 
 			$this->Code .= '<tr class="r">
 								<td></td>
