@@ -363,13 +363,14 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 
 		$Paces = $this->getArrayForPaces();
 		$VDOT = new VDOT(Configuration::Data()->vdot());
+		$PaceObject = new Runalyze\Activity\Pace(0, 1, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		foreach ($Paces as $Pace) {
 			$DisplayedString = '<strong>'.$Pace['short'].'</strong>';
 
 			echo '<tr>';
 			echo '<td>'.Ajax::tooltip($DisplayedString, $Pace['description']).'</td>';
-			echo '<td class="r"><em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em> - <em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>/km</td>';
+			echo '<td class="r"><em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-high']/100))->value()).'</em> - <em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-low']/100))->value()).'</em>'.$PaceObject->appendix().'</td>';
 			echo '</tr>';
 		}
 
@@ -649,11 +650,12 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				<tbody>';
 
 		$VDOT = new VDOT(Configuration::Data()->vdot());
+		$PaceObject = new Runalyze\Activity\Pace(0, 1, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		foreach ($this->getArrayForPaces() as $Pace) {
 			$Table .= '<tr>
 						<td class="b">'.$Pace['short'].'</td>
-						<td class=""><em>'.Duration::format($VDOT->paceAt($Pace['limit-low']/100)).'</em>&nbsp;-&nbsp;<em>'.Duration::format($VDOT->paceAt($Pace['limit-high']/100)).'</em>/km</td>
+						<td class=""><em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-high']/100))->value()).'</em> - <em>'.($PaceObject->setTime($VDOT->paceAt($Pace['limit-low']/100))->value()).'</em>'.$PaceObject->appendix().'</td>
 						<td class="">'.$Pace['description'].'</td>
 					</tr>';
 		}

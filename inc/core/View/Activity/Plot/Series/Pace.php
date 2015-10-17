@@ -92,7 +92,7 @@ class Pace extends ActivitySeries {
 				return ($v == 0) ? 3600*1000 : 1000*round($v*$factor);
 			}, $this->Data);
 		} else {
-			$dividend = $this->paceUnit->factorForUnit();
+			$dividend = $this->paceUnit->dividendForUnit();
 
 			$this->Data = array_map(function($v) use ($dividend){
 				return ($v == 0) ? 0 : round($dividend/$v, 1);

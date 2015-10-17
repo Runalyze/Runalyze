@@ -10,7 +10,6 @@ use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\PersonalBest;
 use Runalyze\Calculation\Prognosis;
-use Runalyze\Parameter\Application\PaceUnit;
 
 $PLUGINKEY = 'RunalyzePluginPanel_Prognose';
 /**
@@ -182,10 +181,10 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 		$PB = new PersonalBest($distance);
 		$PB->lookupWithDetails();
 		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
-                $PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;
+		$PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;
 		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
 		$Distance = new Distance($distance);
-		$Pace = new Pace($Prognosis->seconds(), $distance, PaceUnit::MIN_PER_KM);
+		$Pace = new Pace($Prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		echo '<p>
 				<span class="right">
