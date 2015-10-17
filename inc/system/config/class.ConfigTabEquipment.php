@@ -78,7 +78,7 @@ class ConfigTabEquipment extends ConfigTab {
 								<option value="'.EquipmentType\Object::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
 								<option value="'.EquipmentType\Object::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.$MaxDistance->string(false).'"><label class="input-unit">'.$MaxDistance->unit().'</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.round($MaxDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$MaxDistance->unit().'</label></span></td>
 						<td><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.($Type->maxDuration() > 0 ? Duration::format($Type->maxDuration()) : '').'" placeholder="d hh:mm:ss"></td>
 						<td><input name="equipmenttype[sportid_old]['.$id.']" type="hidden" value="'.implode(',', $sportIDs).'">
 							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple>';
@@ -139,7 +139,7 @@ class ConfigTabEquipment extends ConfigTab {
 			$AdditionalDistance = new Distance($Equipment->additionalDistance());
 
 			$Code .= '</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.$AdditionalDistance->string(false).'"><label class="input-unit">'.$AdditionalDistance->unit().'</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.round($AdditionalDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$AdditionalDistance->unit().'</label></span></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_start]['.$id.']" value="'.$this->datetimeToString($Equipment->startDate()).'"></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_end]['.$id.']" value="'.$this->datetimeToString($Equipment->endDate()).'"></td>
 						<td><input type="text" size="fullwidth" name="equipment[notes]['.$id.']" value="'.$Equipment->notes().'"></td>

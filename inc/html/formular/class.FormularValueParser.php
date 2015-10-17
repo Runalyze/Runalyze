@@ -137,7 +137,7 @@ class FormularValueParser {
 			case self::$PARSER_ELEVATION:
 				return self::validateElevation($key);
 			case self::$PARSER_DISTANCE:
-				return self::validateDistance($key);
+				return self::validateDistance($key, $parserOptions);
 			default:
 				return true;
 		}
@@ -179,7 +179,7 @@ class FormularValueParser {
 				self::parseElevation($value);
 				break;
 			case self::$PARSER_DISTANCE:
-				self::parseDistance($value);
+				self::parseDistance($value, $parserOptions);
 				break;
 		}
 	}
@@ -494,10 +494,23 @@ class FormularValueParser {
 	/**
 	 * Validator: distance in preferred unit => distance in km
 	 * @param string $key
+	 * @param array $parserOptions
 	 * @return bool
 	 */
-	private static function validateDistance($key) {
-		$_POST[$key] = round((new Distance())->setInPreferredUnit($_POST[$key])->kilometer(), 3);
+	private static function validateDistance($key, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 3;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
+
+		if ($thousandsPoint != '') {
+			$_POST[$key] = str_replace($thousandsPoint, '', $_POST[$key]);
+			$_POST[$key] = str_replace($decimalPoint, '.', $_POST[$key]);
+		} else {
+			$_POST[$key] = str_replace(',', '.', $_POST[$key]);
+			$_POST[$key] = str_replace($decimalPoint, '.', $_POST[$key]);
+		}
+
+		$_POST[$key] = round((new Distance())->setInPreferredUnit($_POST[$key])->kilometer(), $decimals);
 
 		return true;
 	}
@@ -505,9 +518,14 @@ class FormularValueParser {
 	/**
 	 * Parse: distance in km => distance in preferred unit
 	 * @param mixed $value 
+	 * @param array $parserOptions
 	 */
-	private static function parseDistance(&$value) {
-		$value = number_format((new Distance($value))->valueInPreferredUnit(), 3, '.', '');
+	private static function parseDistance(&$value, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 3;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
+
+		$value = number_format((new Distance($value))->valueInPreferredUnit(), $decimals, $decimalPoint, $thousandsPoint);
 	}
 
 	/**
