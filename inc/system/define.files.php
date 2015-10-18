@@ -49,11 +49,11 @@ $JS_FILES = array(
 	'lib/flot-0.8.3/jquery.flot.time.min.js',
 	'lib/flot-0.8.3/jquery.flot.curvedLines.js',
 
+	'lib/geohash.js',
 	'lib/leaflet/leaflet.js',
 	'lib/leaflet/runalyze.leaflet.js',
 	'lib/leaflet/runalyze.leaflet.layers.js',
 	'lib/leaflet/runalyze.leaflet.routes.js',
-
 	'lib/fontIconPicker-2.0.0/jquery.fonticonpicker.js',
 
 );

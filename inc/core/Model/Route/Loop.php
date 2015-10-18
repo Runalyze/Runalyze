@@ -42,6 +42,14 @@ class Loop extends \Runalyze\Model\Loop {
 	public function longitude() {
 		return $this->current(Object::LONGITUDES);
 	}
+	
+	/**
+	 * Current longitude
+	 * @return float
+	 */
+	public function geohash() {
+		return $this->current(Object::GEOHASH);
+	}
 
 	/**
 	 * Calculate distance of current step from latitude/longitude

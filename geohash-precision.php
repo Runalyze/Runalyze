@@ -33,7 +33,7 @@ if (empty($database) && empty($host)) {
 	}
 }
 
-$Routes = $PDO->query('SELECT id, lats, lngs, geohash, startpoint, endpoint, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != "" LIMIT 1');
+$Routes = $PDO->query('SELECT id, lats, lngs, geohash, startpoint, endpoint, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != "" AND id = 3');
 
 $geotools   = new Geotools();	  
 $routePrecision = 7;
@@ -41,7 +41,6 @@ while ($Route = $Routes->fetch()) {
 
     $Startpoint = $geotools->geohash()->decode($Route['startpoint']);
     echo $Route['startpoint_lat'].', '.$Route['startpoint_lng'].' | '. $Route['startpoint'].' | '.round($Startpoint->getCoordinate()->getLongitude(), 5).','.round($Startpoint->getCoordinate()->getLatitude(),5)."\n";
-    //print_r($Startpoint->getCoordinate()->normalizeLatitude($Startpoint->getCoordinate()->getLatitude()));echo "\n";
    
    $lats = explode('|', $Route['lats']);
    $lngs = explode('|', $Route['lngs']);

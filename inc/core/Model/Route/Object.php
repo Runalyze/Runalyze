@@ -68,6 +68,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const LONGITUDES = 'lngs';
+	
+	/**
+	 * Key: geohash
+	 * @var string
+	 */
+	const GEOHASH = 'geohash';
 
 	/**
 	 * Key: elevations original
@@ -100,6 +106,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const STARTPOINT_LONGITUDE = 'startpoint_lng';
 
 	/**
+	 * Key: startpoint
+	 * @var string
+	 */
+	const STARTPOINT = 'startpoint';
+	
+	/**
 	 * Key: endpoint latitude
 	 * @var string
 	 */
@@ -110,6 +122,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const ENDPOINT_LONGITUDE = 'endpoint_lng';
+	
+	/**
+	 * Key: endpoint
+	 * @var string
+	 */
+	const ENDPOINT = 'endpoint';
 
 	/**
 	 * Key: minimal latitude
@@ -122,6 +140,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const MIN_LONGITUDE = 'min_lng';
+	
+	/**
+	 * Key: minimal longitude & latitude
+	 * @var string
+	 */
+	const MIN = 'min';
 
 	/**
 	 * Key: maximal latitude
@@ -134,6 +158,12 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const MAX_LONGITUDE = 'max_lng';
+	
+	/**
+	 * Key: maximal longitude & latitude
+	 * @var string
+	 */
+	const MAX = 'max';	
 
 	/**
 	 * Key: in routenet
@@ -183,17 +213,22 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			self::ELEVATION_DOWN,
 			self::LATITUDES,
 			self::LONGITUDES,
+			self::GEOHASH,
 			self::ELEVATIONS_ORIGINAL,
 			self::ELEVATIONS_CORRECTED,
 			self::ELEVATIONS_SOURCE,
 			self::STARTPOINT_LATITUDE,
 			self::STARTPOINT_LONGITUDE,
+			self::STARTPOINT,
 			self::ENDPOINT_LATITUDE,
 			self::ENDPOINT_LONGITUDE,
+			self::ENDPOINT,
 			self::MIN_LATITUDE,
 			self::MIN_LONGITUDE,
+			self::MIN,
 			self::MAX_LATITUDE,
 			self::MAX_LONGITUDE,
+			self::MAX,
 			self::IN_ROUTENET
 		);
 	}
@@ -217,6 +252,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			case self::ELEVATIONS_CORRECTED:
 			case self::LATITUDES:
 			case self::LONGITUDES:
+			case self::GEOHASH:
 				return true;
 		}
 
@@ -236,12 +272,16 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			case self::LONGITUDES:
 			case self::STARTPOINT_LATITUDE:
 			case self::STARTPOINT_LONGITUDE:
+			case self::STARTPOINT:
 			case self::ENDPOINT_LATITUDE:
 			case self::ENDPOINT_LONGITUDE:
+			case self::ENDPOINT:
 			case self::MIN_LATITUDE:
 			case self::MIN_LONGITUDE:
+			case self::MIN:
 			case self::MAX_LATITUDE:
 			case self::MAX_LONGITUDE:
+			case self::MAX:
 				return true;
 		}
 		return false;
