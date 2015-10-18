@@ -40,12 +40,6 @@ class TrainingFormular extends StandardFormular {
 	 * @var string
 	 */
 	public static $ONLY_OUTSIDE_CLASS = "only-outside";
-
-	/**
-	 * CSS class for inputs only for sports with types
-	 * @var string
-	 */
-	public static $ONLY_TYPES_CLASS = "only-types";
         
  	/**
 	 * CSS class for inputs only for sports with distance

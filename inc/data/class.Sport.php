@@ -94,14 +94,6 @@ class Sport {
 	}
 
 	/**
-	 * Has this sport trainingtypes?
-	 * @return bool
-	 */
-	public function hasTypes() {
-		return ($this->data['types'] == 1);
-	}
-
-	/**
 	 * Is this sport outside?
 	 * @return bool
 	 */

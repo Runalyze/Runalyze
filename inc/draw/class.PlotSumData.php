@@ -468,7 +468,7 @@ abstract class PlotSumData extends Plot {
 		if (Request::param('group') == 'sport')
 			return '`sportid`';
 
-		if (Request::param('group') == 'types' && $this->Sport->hasTypes())
+		if (Request::param('group') == 'types')
 			return '`typeid`';
 
 		return '(`typeid` = '.Configuration::General()->competitionType().')';
@@ -480,7 +480,7 @@ abstract class PlotSumData extends Plot {
 	private function setData() {
 		if (Request::param('group') == 'sport')
 			$this->setDataForSports();
-		elseif (Request::param('group') == 'types' && $this->Sport->hasTypes())
+		elseif (Request::param('group') == 'types')
 			$this->setDataForTypes();
 		else
 			$this->setDataForCompetitionAndTraining();

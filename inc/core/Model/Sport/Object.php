@@ -59,12 +59,6 @@ class Object extends Model\ObjectWithID {
 	const HAS_DISTANCES = 'distances';
 
 	/**
-	 * Key: has types
-	 * @var string
-	 */
-	const HAS_TYPES = 'types';
-
-	/**
 	 * Key: has power
 	 * @var string
 	 */
@@ -89,7 +83,6 @@ class Object extends Model\ObjectWithID {
 			self::HR_AVG,
 			self::HAS_DISTANCES,
 			self::PACE_UNIT,
-			self::HAS_TYPES,
 			self::HAS_POWER,
 			self::IS_OUTSIDE
 		);
@@ -169,14 +162,6 @@ class Object extends Model\ObjectWithID {
 	 */
 	public function hasDistances() {
 		return ($this->Data[self::HAS_DISTANCES] == 1);
-	}
-
-	/**
-	 * Has types?
-	 * @return boolean
-	 */
-	public function hasTypes() {
-		return ($this->Data[self::HAS_TYPES] == 1);
 	}
 
 	/**
