@@ -46,6 +46,7 @@ class Heartrate extends ActivitySeries {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::HEARTRATE, true);
 		$this->manipulateData();
+		$this->setManualAverage(round(100*$context->activity()->hrAvg()/$this->HRmax));
 	}
 
 	/**
@@ -78,7 +79,7 @@ class Heartrate extends ActivitySeries {
 			if (\Runalyze\Context::Athlete()->knowsRestingHeartRate() && Configuration::General()->heartRateUnit()->isHRreserve()) {
 				$this->Factor = false;
 			} else {
-				$this->Factor = 100/Configuration::Data()->HRmax();
+				$this->Factor = 100/$this->HRmax;
 			}
 		}
 	}
