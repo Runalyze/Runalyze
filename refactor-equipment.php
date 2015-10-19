@@ -231,12 +231,6 @@ if ($count < $countAccount) {
 	echo 'Time: '.(microtime(true) - $starttime).'s'.NL;
 	echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
 	echo NL;
-
-	if (CLI) {
-		echo '... call the script again to continue'.NL;
-	} else {
-		echo '... <a href="javascript:location.reload()">reload to continue</a>';
-	}
 }
 
 
@@ -272,6 +266,12 @@ if ($count + LIMIT >= $countAccount) {
 	echo NL;
 	echo 'Remember to unset your credentials within this file.'.NL;
 	echo '(Or simply delete this file if you are not working on our git repository)'.NL;
+} else {
+	if (CLI) {
+		echo '... call the script again to continue'.NL;
+	} else {
+		echo '... <a href="javascript:location.reload()">reload to continue</a>';
+	}
 }
 
 function notNull($value) {
