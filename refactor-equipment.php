@@ -75,9 +75,9 @@ if (CHECK_INNODB) {
 /**
  * Check version
  */
-$IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"');
+$IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"')->fetch();
 
-if (!$IsNotRefactored) {
+if ($IsNotRefactored === false) {
 	echo 'The database is already refactored.'.NL;
 	exit;
 }
