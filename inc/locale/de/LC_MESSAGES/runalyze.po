@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-15 07:55+0200\n"
-"PO-Revision-Date: 2015-10-15 15:11+0200\n"
-"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"PO-Revision-Date: 2015-10-20 19:36+0200\n"
+"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
 "Language-Team: German "
 "<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
@@ -1975,9 +1975,9 @@ msgid "unknown"
 msgstr "unbekannt"
 
 #: inc/core/View/Leaflet/Activity.php:226
-#, fuzzy, php-format
+#, php-format
 msgid "<strong>%s. %s</strong> in %s"
-msgstr "<strong>%s. km</strong> in %s"
+msgstr "<strong>%s. %s</strong> in %s"
 
 #: inc/core/View/Leaflet/Activity.php:227
 #: inc/core/View/Leaflet/Activity.php:258
