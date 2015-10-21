@@ -20,7 +20,13 @@ v2.3+ will probably require [npm](https://nodejs.org/download/),
 [bower](http://bower.io/) (`sudo npm install -g bower`) and
 [grunt](http://gruntjs.com/) (`sudo npm install -g grunt-cli`).
 
-To install all dependencies:
+To install dependencies and build for v2.1/v2.2:
+```
+composer install
+php build/build.php translations
+```
+
+To install dependencies and build for v2.3+ (applies to some branches):
 ```
 composer install
 bower install
@@ -32,7 +38,7 @@ Still, we don't have any automated migration script for the database so far.
 You have to apply recent changes from the respective update files in `inc/install/` by hand.
 
 ## License
-* TODO - we're currently seeking for the right license to choose
+* see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
 * new versions, multi-lingual
