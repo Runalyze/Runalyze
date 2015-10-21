@@ -9,6 +9,11 @@
 Runalyze is a web application for analyzing your training - more detailed than any other sports diary.  
 Runalyze is mainly developed by [laufhannes](https://github.com/laufhannes) and [mipapo](https://github.com/mipapo).
 
+## Documentation
+We provide two different documentations: 
+* [User documentation](http://help.runalyze.com) - FAQ for users of RUNALYZE
+* [Administration documentation](http://docs.runalyze.com) - Installating/Updating/Developing RUNALYZE
+
 ## Install / Development
 Runalyze v2.1+ requires [composer](https://getcomposer.org/doc/00-intro.md#system-requirements) and
 v2.3+ will probably require [npm](https://nodejs.org/download/),
