@@ -95,6 +95,9 @@ CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
 //
 DELIMITER ;
 
+/* 10.10.2015 - more precision for body weight */
+ALTER TABLE `runalyze_user` CHANGE `weight` `weight` DECIMAL(5,2) NOT NULL DEFAULT '0.0';
+
 /* 26.09.2015 - add further constraints */
 ALTER TABLE `runalyze_plugin` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
@@ -123,6 +126,3 @@ ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runaly
 ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/* 10.10.2015 - more precision for body weight */
-ALTER TABLE `runalyze_user` CHANGE `weight` `weight` DECIMAL(5,2) NOT NULL DEFAULT '0.0';
