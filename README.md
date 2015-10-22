@@ -43,10 +43,11 @@ You have to apply recent changes from the respective update files in `inc/instal
 ## Changelog
 * new versions, multi-lingual
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
- * [v2.1](http://blog.runalyze.com/allgemein/runalyze-v2-1/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
- * [v2.0.4](http://blog.runalyze.com/allgemein/runalyze-v2-0-4/), 17.07.2015: minor bugfixes
+ * [v2.1.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 22.10.2015: minor bugfixes
+ * [v2.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-en/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
+ * [v2.0.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-4-2/), 17.07.2015: minor bugfixes
  * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: minor bugfixes
- * [v2.0.2](http://blog.runalyze.com/allgemein/runalyze-v2-0-2/), 24.03.2015: minor bugfixes
+ * [v2.0.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-2-2/), 24.03.2015: minor bugfixes
  * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: minor bugfixes
  * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: first mutlilingual major release
  * warning: migration from v1.5 to v2.0 requires `refactor-db.php` (see [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/))
