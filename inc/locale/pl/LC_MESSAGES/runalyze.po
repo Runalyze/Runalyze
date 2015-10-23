@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-23 12:40+0200\n"
-"PO-Revision-Date: 2015-10-16 07:15+0200\n"
+"PO-Revision-Date: 2015-10-23 14:50+0200\n"
 "Last-Translator: Grzegorz G <grzegorz@thulium.pl>\n"
-"Language-Team: Polish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/pl/>\n"
+"Language-Team: Polish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1227,6 +1227,8 @@ msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"Zmiana systemu miar nie zmienia jednostki tempa. Musisz ją zmienić w "
+"konfiguracji sportu."
 
 #: inc/core/Configuration/Category/General.php:198
 msgid "Weight unit"
@@ -1743,15 +1745,16 @@ msgid "You can now use the %s to recalculate the concerning values."
 msgstr "Możesz teraz użyć %s aby przeliczyć odpowiednie wartości."
 
 #: inc/core/Configuration/Messages.php:34
-#, fuzzy
 msgid "sports configuration"
-msgstr "Zapisz plik konfiguracyjny"
+msgstr "konfiguracja sportów"
 
 #: inc/core/Configuration/Messages.php:37
 #, php-format
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Jeśli chcesz możesz zmienić jednostki tempa w %s. Jednostki nie będą "
+"zmienione automatycznie."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -1897,9 +1900,8 @@ msgstr "Wysokość góra/dół"
 
 #: inc/core/View/Activity/Box/Pace.php:28
 #: inc/core/View/Activity/Box/Speed.php:37
-#, fuzzy
 msgid "Speed"
-msgstr "jak prędkość"
+msgstr "Prędkość"
 
 #: inc/core/View/Activity/Box/Gradient.php:26
 msgid "&oslash; Gradient"
@@ -2464,9 +2466,8 @@ msgid "run diary"
 msgstr "dziennik biegowy"
 
 #: inc/tpl/tpl.installerFooter.php:5
-#, fuzzy
 msgid "Help and Support"
-msgstr "Wsparcie"
+msgstr "Pomoc i Wsparcie"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2882,7 +2883,7 @@ msgstr ""
 #: inc/tpl/tpl.InstallerUpdate.php:13
 #, php-format
 msgid "Detailed upgrade instructions: %s"
-msgstr ""
+msgstr "Szczegółowe instrukcje aktualizacji: %s"
 
 #: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
@@ -6234,9 +6235,8 @@ msgid "Cleanup is running ..."
 msgstr "Czyszczenie w trakcie ..."
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/tpl.Job.php:47
-#, fuzzy
 msgid "back to form"
-msgstr "wróc do listy"
+msgstr "wróc do formularza"
 
 #: plugin/RunalyzePluginTool_DatenbankCleanup/JobLoop.php:88
 #, php-format
