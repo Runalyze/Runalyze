@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-23 12:40+0200\n"
-"PO-Revision-Date: 2015-10-21 10:18+0200\n"
-"Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/de/>\n"
+"PO-Revision-Date: 2015-10-23 13:15+0200\n"
+"Last-Translator: Hannes <mail@laufhannes.de>\n"
+"Language-Team: German "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1242,6 +1242,8 @@ msgid ""
 "Changing the unit system for distances does not change pace units. You have "
 "to adjust them in sports configuration."
 msgstr ""
+"Eine Änderung der Einheiten für Distanzen ändern nicht die Pace-Einheiten. "
+"Du musst diese in der Konfiguration der Sportarten anpassen."
 
 #: inc/core/Configuration/Category/General.php:198
 msgid "Weight unit"
@@ -1781,6 +1783,8 @@ msgstr "Sportkonfiguration"
 msgid ""
 "You may want to adjust pace units in %s. They are not changed automatically."
 msgstr ""
+"Du kannst die Pace-Einheiten in der %s anpassen, das geschieht nicht "
+"automatisch."
 
 #: inc/core/Configuration/Messages.php:49
 #: plugin/RunalyzePluginTool_DatenbankCleanup/Job.php:49
@@ -2493,9 +2497,8 @@ msgid "run diary"
 msgstr "Lauftagebuch"
 
 #: inc/tpl/tpl.installerFooter.php:5
-#, fuzzy
 msgid "Help and Support"
-msgstr "Support"
+msgstr "Hilfe und Support"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2918,7 +2921,7 @@ msgstr ""
 #: inc/tpl/tpl.InstallerUpdate.php:13
 #, php-format
 msgid "Detailed upgrade instructions: %s"
-msgstr ""
+msgstr "Detaillierte Update-Anleitung: %s"
 
 #: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
