@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: mail@runalyze.de\n"
-"POT-Creation-Date: 2015-10-20 19:38+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-23 12:40+0200\n"
 "PO-Revision-Date: 2015-10-21 10:18+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: German "
-"<http://translate.runalyze.de/projects/runalyze/runalyze/de/>\n"
+"Language-Team: German <http://translate.runalyze.de/projects/runalyze/"
+"runalyze/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2492,6 +2492,11 @@ msgstr "Debug Konsole"
 msgid "run diary"
 msgstr "Lauftagebuch"
 
+#: inc/tpl/tpl.installerFooter.php:5
+#, fuzzy
+msgid "Help and Support"
+msgstr "Support"
+
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
@@ -2894,7 +2899,7 @@ msgstr "Administration"
 msgid "Account"
 msgstr "Account"
 
-#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:32
+#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:36
 msgid "Update RUNALYZE"
 msgstr "Update RUNALYZE"
 
@@ -2910,7 +2915,12 @@ msgstr ""
 "hast, musst du die entsprechenden Updates in der richtigen Reihenfolge "
 "ausführen."
 
-#: inc/tpl/tpl.InstallerUpdate.php:15
+#: inc/tpl/tpl.InstallerUpdate.php:13
+#, php-format
+msgid "Detailed upgrade instructions: %s"
+msgstr ""
+
+#: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
@@ -2918,20 +2928,20 @@ msgstr ""
 "Wir empfehlen dir dringend, vor dem Update ein Backup deiner Datenbank zu "
 "erstellen."
 
-#: inc/tpl/tpl.InstallerUpdate.php:24
+#: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "----- please choose"
 msgstr "----- bitte wählen"
 
-#: inc/tpl/tpl.InstallerUpdate.php:26
+#: inc/tpl/tpl.InstallerUpdate.php:30
 #, php-format
 msgid "Update to %s (from %s, %s)"
 msgstr "Update auf %s (von %s, %s)"
 
-#: inc/tpl/tpl.InstallerUpdate.php:47
+#: inc/tpl/tpl.InstallerUpdate.php:51
 msgid "Your database has been updated successfully."
 msgstr "Deine Datenbank wurde erfolgreich aktualisiert."
 
-#: inc/tpl/tpl.InstallerUpdate.php:56
+#: inc/tpl/tpl.InstallerUpdate.php:60
 msgid "Start RUNALYZE"
 msgstr "Starte RUNALYZE"
 

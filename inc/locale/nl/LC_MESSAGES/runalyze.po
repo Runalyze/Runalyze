@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:38+0200\n"
+"POT-Creation-Date: 2015-10-23 12:40+0200\n"
 "PO-Revision-Date: 2015-10-15 09:25+0200\n"
 "Last-Translator: Ivo Nobel <ivo.nobel@gmail.com>\n"
 "Language-Team: Dutch <http://translate.runalyze.de/projects/runalyze/"
@@ -2501,6 +2501,11 @@ msgstr "Debug console"
 msgid "run diary"
 msgstr "Loopdagboek"
 
+#: inc/tpl/tpl.installerFooter.php:5
+#, fuzzy
+msgid "Help and Support"
+msgstr "Ondersteuning"
+
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
@@ -2899,7 +2904,7 @@ msgstr "Beheer"
 msgid "Account"
 msgstr "Account"
 
-#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:32
+#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:36
 msgid "Update RUNALYZE"
 msgstr "RUNALYZE bijwerken"
 
@@ -2915,7 +2920,12 @@ msgstr ""
 "toevoegen bij elke update. Als u een versie heeft overgeslagen dan moet u de "
 "verschillende updates in de juiste volgorde toepassen."
 
-#: inc/tpl/tpl.InstallerUpdate.php:15
+#: inc/tpl/tpl.InstallerUpdate.php:13
+#, php-format
+msgid "Detailed upgrade instructions: %s"
+msgstr ""
+
+#: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
@@ -2923,20 +2933,20 @@ msgstr ""
 "We raden u sterk aan om een back-up te maken van uw database voorafgaand aan "
 "elke update van RUNALYZE."
 
-#: inc/tpl/tpl.InstallerUpdate.php:24
+#: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "----- please choose"
 msgstr "--- Kies"
 
-#: inc/tpl/tpl.InstallerUpdate.php:26
+#: inc/tpl/tpl.InstallerUpdate.php:30
 #, php-format
 msgid "Update to %s (from %s, %s)"
 msgstr "Update naar %s (van %s, %s)"
 
-#: inc/tpl/tpl.InstallerUpdate.php:47
+#: inc/tpl/tpl.InstallerUpdate.php:51
 msgid "Your database has been updated successfully."
 msgstr "De update van uw database is geslaagd."
 
-#: inc/tpl/tpl.InstallerUpdate.php:56
+#: inc/tpl/tpl.InstallerUpdate.php:60
 msgid "Start RUNALYZE"
 msgstr "RUNALYZE starten"
 

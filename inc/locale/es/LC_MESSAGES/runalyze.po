@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:38+0200\n"
+"POT-Creation-Date: 2015-10-23 12:40+0200\n"
 "PO-Revision-Date: 2015-06-18 23:21+0200\n"
 "Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
 "Language-Team: Spanish <http://translate.runalyze.de/projects/runalyze/"
@@ -2440,6 +2440,11 @@ msgstr "Consola de depuración"
 msgid "run diary"
 msgstr "Diario de carrera"
 
+#: inc/tpl/tpl.installerFooter.php:5
+#, fuzzy
+msgid "Help and Support"
+msgstr "Soporte"
+
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
@@ -2836,7 +2841,7 @@ msgstr "Administración"
 msgid "Account"
 msgstr "Cuenta"
 
-#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:32
+#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:36
 msgid "Update RUNALYZE"
 msgstr ""
 
@@ -2848,27 +2853,32 @@ msgid ""
 "respective updates in the correct order."
 msgstr ""
 
-#: inc/tpl/tpl.InstallerUpdate.php:15
+#: inc/tpl/tpl.InstallerUpdate.php:13
+#, php-format
+msgid "Detailed upgrade instructions: %s"
+msgstr ""
+
+#: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
 msgstr ""
 
-#: inc/tpl/tpl.InstallerUpdate.php:24
+#: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "----- please choose"
 msgstr "----- por favor elija"
 
-#: inc/tpl/tpl.InstallerUpdate.php:26
+#: inc/tpl/tpl.InstallerUpdate.php:30
 #, php-format
 msgid "Update to %s (from %s, %s)"
 msgstr "Actualizar a %s (desde %s, %s)"
 
-#: inc/tpl/tpl.InstallerUpdate.php:47
+#: inc/tpl/tpl.InstallerUpdate.php:51
 #, fuzzy
 msgid "Your database has been updated successfully."
 msgstr "La actualización se realizó correctamente."
 
-#: inc/tpl/tpl.InstallerUpdate.php:56
+#: inc/tpl/tpl.InstallerUpdate.php:60
 msgid "Start RUNALYZE"
 msgstr ""
 

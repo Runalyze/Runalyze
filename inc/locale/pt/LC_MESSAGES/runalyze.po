@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-20 19:38+0200\n"
+"POT-Creation-Date: 2015-10-23 12:40+0200\n"
 "PO-Revision-Date: 2015-07-08 16:02+0200\n"
 "Last-Translator: Heiko Andresen <heiko.andresen@gmx.de>\n"
 "Language-Team: Portuguese <http://translate.runalyze.de/projects/runalyze/"
@@ -2459,6 +2459,10 @@ msgstr ""
 msgid "run diary"
 msgstr "Diário de corridas"
 
+#: inc/tpl/tpl.installerFooter.php:5
+msgid "Help and Support"
+msgstr ""
+
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
 #: inc/plugin/config/class.PluginConfigurationWindow.php:122
@@ -2838,7 +2842,7 @@ msgstr "Administração"
 msgid "Account"
 msgstr "Conta"
 
-#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:32
+#: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:36
 msgid "Update RUNALYZE"
 msgstr ""
 
@@ -2850,27 +2854,32 @@ msgid ""
 "respective updates in the correct order."
 msgstr ""
 
-#: inc/tpl/tpl.InstallerUpdate.php:15
+#: inc/tpl/tpl.InstallerUpdate.php:13
+#, php-format
+msgid "Detailed upgrade instructions: %s"
+msgstr ""
+
+#: inc/tpl/tpl.InstallerUpdate.php:19
 msgid ""
 "We urgently recommend a backup of your existing database prior to any update "
 "of RUNALYZE."
 msgstr ""
 
-#: inc/tpl/tpl.InstallerUpdate.php:24
+#: inc/tpl/tpl.InstallerUpdate.php:28
 msgid "----- please choose"
 msgstr "----- por favor, escolha"
 
-#: inc/tpl/tpl.InstallerUpdate.php:26
+#: inc/tpl/tpl.InstallerUpdate.php:30
 #, php-format
 msgid "Update to %s (from %s, %s)"
 msgstr "Atualização para %s (a partir de %s, %s)"
 
-#: inc/tpl/tpl.InstallerUpdate.php:47
+#: inc/tpl/tpl.InstallerUpdate.php:51
 #, fuzzy
 msgid "Your database has been updated successfully."
 msgstr "A atualização foi bem-sucedida."
 
-#: inc/tpl/tpl.InstallerUpdate.php:56
+#: inc/tpl/tpl.InstallerUpdate.php:60
 msgid "Start RUNALYZE"
 msgstr ""
 
