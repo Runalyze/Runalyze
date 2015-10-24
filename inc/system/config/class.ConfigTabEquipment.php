@@ -8,6 +8,7 @@ use Runalyze\Activity\Duration;
 use Runalyze\Model\EquipmentType;
 use Runalyze\Model\Equipment;
 use Runalyze\Activity\Distance;
+use Runalyze\View\Icon;
 
 /**
  * ConfigTabEquipment
@@ -36,10 +37,36 @@ class ConfigTabEquipment extends ConfigTab {
 		);
 
 		$Equipment = new FormularFieldset(__('Your equipment'));
-		$Equipment->setHtmlCode($this->getEquipmentCode());
+		$Equipment->setHtmlCode($this->getEquipmentCode().$this->getJS());
+		$Equipment->addInfo(
+			__('RUNALYZE collects data and calculates statistics for each of your equipment objects. '
+				.'To correctly estimate its lifetime you can specify a \'previous distance\' '
+				.'which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them. '
+				.'In addition, you can specify a start and end date for its usage. '
+				.'Objects will be displayed as \'inactive\' as soon as you have entered an end date.')
+		);
 
 		$this->Formular->addFieldset($EquipmentType);
 		$this->Formular->addFieldset($Equipment);
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDeleteIcon() {
+		$DeleteIcon = new Icon('fa-exclamation-triangle');
+		$DeleteIcon->setTooltip(__('Attention: This operation cannot be undone.'));
+
+		return $DeleteIcon->code();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getJS() {
+		return Ajax::wrapJSasFunction(
+			'$("input.delete-checkbox").change(function(){$(this).parent().parent().toggleClass("ERROR unimportant")});'
+		);
 	}
 
 	/**
@@ -54,8 +81,8 @@ class ConfigTabEquipment extends ConfigTab {
 						<th>'.__('Type').'</th>
 						<th>'.__('max.').Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 						<th>'.__('max. Time').'</th>
-						<th>'.__('Sports').'</th> 
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment type can only be deleted if no references (equipment) exist.')).'</th>
+						<th>'.__('Sports').'</th>
+						<th>'.__('delete').' '.$this->getDeleteIcon().'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -67,7 +94,7 @@ class ConfigTabEquipment extends ConfigTab {
 		foreach ($Types as $Type) {
 			$isNew = !$Type->hasID();
 			$id = $isNew ? -1 : $Type->id();
-			$delete = $isNew ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipmenttype[delete]['.$id.']">';
+			$delete = $isNew ? '' : '<input type="checkbox" class="delete-checkbox" name="equipmenttype[delete]['.$id.']">';
 			$sportIDs = $isNew ? array() : $this->Model->sportForEquipmentType($id, true);
 			$MaxDistance = new Distance($Type->maxDistance());
 
@@ -112,8 +139,8 @@ class ConfigTabEquipment extends ConfigTab {
 						<th>'.__('prev. distance').'</th>
 						<th>'.__('Start of use').'</th>
 						<th>'.__('End of use').'</th>
-						<th>'.__('Notes').'</th>   
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('An equipment can only be deleted if no references exist.')).'</th>
+						<th>'.__('Notes').'</th>
+						<th>'.__('delete').' '.$this->getDeleteIcon().'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -125,7 +152,7 @@ class ConfigTabEquipment extends ConfigTab {
 		foreach ($Equipments as $Equipment) {
 			$isNew = !$Equipment->hasID();
 			$id = $isNew ? -1 : $Equipment->id();
-			$delete = $isNew ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipment[delete]['.$id.']">';
+			$delete = $isNew ? '' : '<input type="checkbox" class="delete-checkbox" name="equipment[delete]['.$id.']">';
 
 			$Code .= '
 					<tr class="'.($isNew ? ' unimportant' : '').'">
