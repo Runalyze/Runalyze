@@ -229,4 +229,56 @@ class RunalyzeJsonImporterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array($EquipmentAB1), $this->DB->query('SELECT `equipmentid` FROM `runalyze_activity_equipment` WHERE `activityid`='.$Activity3)->fetchAll(PDO::FETCH_COLUMN));
 	}
 
+	/**
+	 * Test deletes
+	 */
+	public function testDontDeleteTooMuch() {
+		$_POST['delete_trainings'] = true;
+
+		// Data of account 0
+		$this->DB->exec('INSERT INTO `runalyze_equipment_type` (`accountid`,`name`) VALUES(0, "")');
+		$FirstEquipmentType = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_equipment` (`accountid`,`typeid`,`name`,`notes`) VALUES(0, '.$FirstEquipmentType.', "", "")');
+		$FirstEquipment = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(0)');
+		$FirstRoute = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`) VALUES(0, '.$FirstRoute.')');
+		$FirstTraining = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_hrv` (`accountid`,`activityid`) VALUES(0, '.$FirstTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`,`equipmentid`) VALUES('.$FirstTraining.', '.$FirstEquipment.')');
+
+		// Data of account 1
+		$this->DB->exec('INSERT INTO `runalyze_equipment_type` (`accountid`,`name`) VALUES(1, "")');
+		$SecondEquipmentType = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_equipment` (`accountid`,`typeid`,`name`,`notes`) VALUES(1, '.$SecondEquipmentType.', "", "")');
+		$SecondEquipment = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_route` (`accountid`) VALUES(1)');
+		$SecondRoute = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_training` (`accountid`,`routeid`) VALUES(1, '.$SecondRoute.')');
+		$SecondTraining = $this->DB->lastInsertId();
+		$this->DB->exec('INSERT INTO `runalyze_trackdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_swimdata` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_hrv` (`accountid`,`activityid`) VALUES(1, '.$SecondTraining.')');
+		$this->DB->exec('INSERT INTO `runalyze_activity_equipment` (`activityid`,`equipmentid`) VALUES('.$SecondTraining.', '.$SecondEquipment.')');
+
+		$Importer = new RunalyzeJsonImporter('../tests/testfiles/backup/default-empty.json.gz', 0);
+		$Importer->importData();
+
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_route` WHERE `accountid`=0')->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training` WHERE `accountid`=0')->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_trackdata` WHERE `accountid`=0')->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_swimdata` WHERE `accountid`=0')->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_hrv` WHERE `accountid`=0')->fetchColumn());
+		$this->assertEquals(0, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_equipment` WHERE `equipmentid`='.$FirstEquipment)->fetchColumn());
+
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_route` WHERE `accountid`=1')->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_training` WHERE `accountid`=1')->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_trackdata` WHERE `accountid`=1')->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_swimdata` WHERE `accountid`=1')->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_hrv` WHERE `accountid`=1')->fetchColumn());
+		$this->assertEquals(1, $this->DB->query('SELECT COUNT(*) FROM `runalyze_activity_equipment` WHERE `equipmentid`='.$SecondEquipment)->fetchColumn());
+	}
+
 }
