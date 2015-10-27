@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-23 12:40+0200\n"
+"POT-Creation-Date: 2015-10-27 12:32+0100\n"
 "PO-Revision-Date: 2015-02-24 08:37+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -86,7 +86,7 @@ msgstr ""
 #: inc/training/view/section/table/class.TableSwimLane.php:41
 #: inc/training/view/section/table/class.TableZonesAbstract.php:104
 #: inc/training/view/section/class.SectionCompositeRow.php:84
-#: inc/training/class.TrainingFormular.php:303
+#: inc/training/class.TrainingFormular.php:306
 #: inc/core/View/Window/Laps/Table.php:116 inc/core/View/Splits/Table.php:147
 #: inc/core/View/Activity/Plot/Series/TimeSeries.php:37
 #: inc/core/View/Leaflet/Activity.php:206
@@ -161,7 +161,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:154
 #: inc/training/schemes/scheme.Training.php:36
 #: inc/training/schemes/scheme.Training.php:162
-#: inc/training/class.TrainingFormular.php:304
+#: inc/training/class.TrainingFormular.php:307
 #: inc/core/Activity/Distance.php:80 inc/core/View/Window/Laps/Table.php:115
 #: inc/core/View/Splits/Table.php:146
 #: inc/core/View/Activity/Plot/Series/DistanceSeries.php:39
@@ -234,7 +234,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:176
 #: inc/training/schemes/scheme.Training.new.php:361
 #: inc/training/schemes/scheme.Training.php:401
-#: inc/training/class.TrainingFormular.php:310
+#: inc/training/class.TrainingFormular.php:313
 #: inc/core/View/Activity/Plot/Series/Temperature.php:38
 #: inc/class.DatasetLabels.php:34
 msgid "Temperature"
@@ -244,7 +244,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:160
 #: inc/training/schemes/scheme.Training.new.php:317
 #: inc/training/schemes/scheme.Training.php:357
-#: inc/training/class.TrainingFormular.php:306
+#: inc/training/class.TrainingFormular.php:309
 #: inc/core/Data/Cadence/General.php:22 inc/class.DatasetLabels.php:43
 msgid "Cadence"
 msgstr ""
@@ -269,7 +269,7 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:166
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:160
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:93
-#: inc/training/class.TrainingFormular.php:307
+#: inc/training/class.TrainingFormular.php:310
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:40
 #: inc/class.DatasetLabels.php:46
 msgid "Vertical oscillation"
@@ -381,7 +381,7 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:477
 #: inc/training/schemes/scheme.UserData.php:28
 #: inc/training/schemes/scheme.UserData.php:128
-#: inc/system/config/class.ConfigTabEquipment.php:115
+#: inc/system/config/class.ConfigTabEquipment.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:199
 msgid "Notes"
 msgstr ""
@@ -389,8 +389,8 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:144
 #: inc/training/view/section/table/class.TableSwimLane.php:44
 #: inc/system/config/class.ConfigTabPlugins.php:197
-#: inc/system/config/class.ConfigTabEquipment.php:54
-#: inc/system/config/class.ConfigTabEquipment.php:111
+#: inc/system/config/class.ConfigTabEquipment.php:81
+#: inc/system/config/class.ConfigTabEquipment.php:138
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:78
 msgid "Type"
 msgstr ""
@@ -413,8 +413,8 @@ msgid "Choose weather conditions"
 msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:146
-#: inc/training/class.TrainingFormular.php:217
-#: inc/system/config/class.ConfigTabEquipment.php:23
+#: inc/training/class.TrainingFormular.php:220
+#: inc/system/config/class.ConfigTabEquipment.php:24
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
 msgid "Equipment"
@@ -699,7 +699,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:120
 #: inc/training/schemes/scheme.Training.new.php:330
 #: inc/training/schemes/scheme.Training.php:370
-#: inc/training/class.TrainingFormular.php:309
+#: inc/training/class.TrainingFormular.php:312
 #: inc/core/View/Activity/Plot/Series/Power.php:37
 #: inc/class.DatasetLabels.php:47
 #: inc/system/config/class.ConfigTabSports.php:60
@@ -1131,58 +1131,59 @@ msgstr ""
 msgid "The activity has been successfully created."
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:278
+#: inc/training/class.TrainingFormular.php:281
 msgid "Remove data series"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:279
+#: inc/training/class.TrainingFormular.php:282
 msgid ""
 "You may want to remove a data series if a sensor, e.g. your heart rate "
 "strap, produced unusable data."
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:280
+#: inc/training/class.TrainingFormular.php:283
+#: inc/system/config/class.ConfigTabEquipment.php:58
 msgid "Attention: This operation cannot be undone."
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:305
+#: inc/training/class.TrainingFormular.php:308
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:353
 msgid "Heart rate"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:308 inc/class.DatasetLabels.php:45
+#: inc/training/class.TrainingFormular.php:311 inc/class.DatasetLabels.php:45
 msgid "Ground contact time"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:320
+#: inc/training/class.TrainingFormular.php:323
 msgid "Original elevation"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:321
+#: inc/training/class.TrainingFormular.php:324
 msgid "Corrected elevation"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:325
+#: inc/training/class.TrainingFormular.php:328
 msgid "GPS path"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:341
+#: inc/training/class.TrainingFormular.php:344
 msgid "Permanently delete this activity"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:345
+#: inc/training/class.TrainingFormular.php:348
 msgid "Delete activity"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:361
+#: inc/training/class.TrainingFormular.php:364
 msgid "Use elevation correction"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:365
+#: inc/training/class.TrainingFormular.php:368
 msgid "Correct elevation data"
 msgstr ""
 
-#: inc/training/class.TrainingFormular.php:368
+#: inc/training/class.TrainingFormular.php:371
 msgid ""
 "Elevation data via GPS is very inaccurate. Therefore you can correct it via "
 "some satellite data."
@@ -2704,8 +2705,8 @@ msgstr ""
 #: inc/system/config/class.ConfigTabTypes.php:45
 #: inc/system/config/class.ConfigTabAccount.php:34
 #: inc/system/config/class.ConfigTabSports.php:54
-#: inc/system/config/class.ConfigTabEquipment.php:53
-#: inc/system/config/class.ConfigTabEquipment.php:110
+#: inc/system/config/class.ConfigTabEquipment.php:80
+#: inc/system/config/class.ConfigTabEquipment.php:137
 #: inc/class.AdminView.php:261
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:349
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:191
@@ -3835,7 +3836,7 @@ msgid "The settings have been saved."
 msgstr ""
 
 #: inc/system/config/class.ConfigTabSports.php:20
-#: inc/system/config/class.ConfigTabEquipment.php:57
+#: inc/system/config/class.ConfigTabEquipment.php:84
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:23
 msgid "Sports"
 msgstr ""
@@ -3909,11 +3910,11 @@ msgstr ""
 msgid "A sport can only be deleted if no references exist."
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:30
+#: inc/system/config/class.ConfigTabEquipment.php:31
 msgid "Your equipment categories"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:33
+#: inc/system/config/class.ConfigTabEquipment.php:34
 msgid ""
 "All your equipment is grouped into some categories. For each category, you "
 "can define whether one or multiple objects of that category can belong to "
@@ -3921,47 +3922,54 @@ msgid ""
 "belongs."
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:38
+#: inc/system/config/class.ConfigTabEquipment.php:39
 #: plugin/RunalyzePluginPanel_Equipment/window.equipment.table.php:14
 msgid "Your equipment"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:55
+#: inc/system/config/class.ConfigTabEquipment.php:42
+msgid ""
+"RUNALYZE collects data and calculates statistics for each of your equipment "
+"objects. To correctly estimate its lifetime you can specify a 'previous "
+"distance' which is added to its calculated distance, e.g. if you used your "
+"running shoes for 200 km before tracking them. In addition, you can specify "
+"a start and end date for its usage. Objects will be displayed as 'inactive' "
+"as soon as you have entered an end date."
+msgstr ""
+
+#: inc/system/config/class.ConfigTabEquipment.php:82
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:195
 msgid "max."
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:56
+#: inc/system/config/class.ConfigTabEquipment.php:83
 msgid "max. Time"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:58
-msgid ""
-"A equipment type can only be deleted if no references (equipment) exist."
+#: inc/system/config/class.ConfigTabEquipment.php:85
+#: inc/system/config/class.ConfigTabEquipment.php:143
+#: inc/export/class.ExporterWindow.php:136
+msgid "delete"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:78
+#: inc/system/config/class.ConfigTabEquipment.php:105
 msgid "Single choice"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:79
+#: inc/system/config/class.ConfigTabEquipment.php:106
 msgid "Multiple choice"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:112
+#: inc/system/config/class.ConfigTabEquipment.php:139
 msgid "prev. distance"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:113
+#: inc/system/config/class.ConfigTabEquipment.php:140
 msgid "Start of use"
 msgstr ""
 
-#: inc/system/config/class.ConfigTabEquipment.php:114
+#: inc/system/config/class.ConfigTabEquipment.php:141
 msgid "End of use"
-msgstr ""
-
-#: inc/system/config/class.ConfigTabEquipment.php:116
-msgid "An equipment can only be deleted if no references exist."
 msgstr ""
 
 #: inc/data/class.TypeFactory.php:124
@@ -3993,7 +4001,7 @@ msgid "Form"
 msgstr ""
 
 #: inc/import/tpl/tpl.Importer.upload.php:2
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:276
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:274
 msgid "Upload file"
 msgstr ""
 
@@ -4128,7 +4136,7 @@ msgstr ""
 
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:104 call/call.garminCommunicator.php:121
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:202
 msgid "Import"
 msgstr ""
 
@@ -4225,10 +4233,6 @@ msgstr ""
 
 #: inc/export/class.ExporterWindow.php:131
 msgid "You did not export any training."
-msgstr ""
-
-#: inc/export/class.ExporterWindow.php:136
-msgid "delete"
 msgstr ""
 
 #: inc/export/class.ExporterAbstractSocialShare.php:36
@@ -5520,60 +5524,51 @@ msgstr ""
 msgid "Delete all old body values"
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:196
-msgid "Delete all old shoes"
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:198
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:197
 #, php-format
 msgid "There are <strong>%s</strong> activities in this file."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:199
-#, php-format
-msgid "There are <strong>%s</strong> shoes in this file."
-msgstr ""
-
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:200
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:198
 #, php-format
 msgid "There are <strong>%s</strong> body values in this file."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:206
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:204
 msgid "The file seems to be corrupted."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:233
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:284
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:231
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:282
 msgid "Import data"
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:234
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:232
 msgid "All data have been imported."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:235
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:233
 msgid "It is recommended to use the <em>Database cleanup</em> tool."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:278
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:276
 msgid "Allowed file extension: *.json.gz"
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:279
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:277
 msgid ""
 "The file has to be created with the same version of Runalyze!<br>You won't "
 "be able to import a file from an older version."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:281
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:279
 msgid ""
 "The importer will not change existing data for equipment, sport types or "
 "activity types.<br>You have to make these changes by hand or delete the "
 "existing data in advance."
 msgstr ""
 
-#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:300
+#: plugin/RunalyzePluginTool_DbBackup/class.RunalyzePluginTool_DbBackup.php:298
 msgid "Export data"
 msgstr ""
 
