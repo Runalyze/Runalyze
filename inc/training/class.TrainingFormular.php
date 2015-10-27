@@ -182,6 +182,9 @@ class TrainingFormular extends StandardFormular {
 	public static function readEquipmentFromPost($checkForSportID = false) {
 		$SelectedEquipment = array();
 
+		if (!isset($_POST['equipment']) || !is_array($_POST['equipment']))
+			return $SelectedEquipment;
+
 		foreach ($_POST['equipment'] as $value) {
 			if (is_array($value)) {
 				$SelectedEquipment = array_merge($SelectedEquipment, array_keys($value));
