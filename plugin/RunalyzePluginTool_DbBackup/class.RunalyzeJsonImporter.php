@@ -140,6 +140,12 @@ class RunalyzeJsonImporter {
 				$this->ExistingData['runalyze_'.$Table][$Row[$Column]] = $Row['id'];
 			}
 		}
+
+		$FetchEquipmentSportRelation = $this->DB->query('SELECT CONCAT(`sportid`, "-", `equipment_typeid`) FROM `'.PREFIX.'equipment_sport`');
+
+		while ($Relation = $FetchEquipmentSportRelation->fetchColumn()) {
+			$this->ExistingData['runalyze_equipment_sport'][] = $Relation;
+		}
 	}
 
 	/**
@@ -330,6 +336,11 @@ class RunalyzeJsonImporter {
 					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert(array_values($Row));
 					$this->Results->addInserts($TableName, 1);
 				}
+			} elseif (
+				$TableName == 'runalyze_equipment_sport' &&
+				$this->equipmentSportRelationDoesExist($Row['sportid'], $Row['equipment_typeid'])
+			) {
+				// Hint: Don't insert this relation, it does exist already!
 			} else {
 				$this->correctValues($TableName, $Row);
 
@@ -344,6 +355,26 @@ class RunalyzeJsonImporter {
 
 			$Line = $this->Reader->readLine();
 		}
+	}
+
+	/**
+	 * @param int $sportid
+	 * @param int $equipmentTypeid
+	 * @return boolean
+	 */
+	protected function equipmentSportRelationDoesExist($sportid, $equipmentTypeid) {
+		if (
+			isset($this->ReplaceIDs['runalyze_sport'][$sportid]) &&
+			isset($this->ReplaceIDs['runalyze_equipment_type'][$equipmentTypeid]) &&
+			in_array(
+				$this->ReplaceIDs['runalyze_sport'][$sportid].'-'.$this->ReplaceIDs['runalyze_equipment_type'][$equipmentTypeid],
+				$this->ExistingData['runalyze_equipment_sport']
+			)
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
