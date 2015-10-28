@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-27 12:32+0100\n"
-"PO-Revision-Date: 2015-06-20 11:48+0200\n"
+"PO-Revision-Date: 2015-10-28 11:23+0200\n"
 "Last-Translator: Michael Pohl <michael@mipapo.de>\n"
-"Language-Team: Danish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/da/>\n"
+"Language-Team: Danish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -62,7 +62,7 @@ msgstr ""
 #: inc/html/formular/class.FormularValueParser.php:344
 #: inc/html/formular/class.FormularValueParser.php:379
 msgid "You have to enter a time."
-msgstr ""
+msgstr "Du skal angive et klokkeslæt."
 
 #: inc/html/formular/class.StandardFormular.php:145
 msgid "Submit"
@@ -77,11 +77,11 @@ msgstr "Oprette"
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
 #: inc/class.AdminView.php:175
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: inc/html/formular/class.FormularField.php:212
 msgid "Your input is not allowed."
-msgstr ""
+msgstr "Dit input er ikke tilladt."
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:96
 #: inc/training/view/section/class.SectionOverviewRow.php:54
@@ -100,7 +100,7 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:351
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:197
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:98
 #: inc/training/search/class.FormularSelectSearchSort.php:29
@@ -116,42 +116,42 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Sportler/window.sportler.table.php:34
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:590
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: inc/html/formular/class.FormularInputDayAndDaytime.php:102
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:89
 msgid "Time of day"
-msgstr ""
+msgstr "Tidspunktet på dagen"
 
 #: inc/html/class.HTML.php:128 inc/draw/class.PlotSumData.php:206
 #: plugin/RunalyzePluginStat_Trainingszeiten/class.RunalyzePluginStat_Trainingszeiten.php:70
 #: plugin/RunalyzePluginPanel_Sports/class.RunalyzePluginPanel_Sports.php:189
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:245
 msgid "Total"
-msgstr ""
+msgstr "I alt"
 
 #: inc/html/class.Ajax.php:431 inc/core/View/Leaflet/Activity.php:253
 #: inc/tpl/tpl.Installer.php:4
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: inc/html/class.Ajax.php:432
 msgid "previous"
-msgstr ""
+msgstr "forrige"
 
 #: inc/html/class.Ajax.php:434 inc/class.DataBrowser.php:266
 msgid "next"
-msgstr ""
+msgstr "næste"
 
 #: inc/html/class.Ajax.php:435
 msgid "End"
-msgstr ""
+msgstr "slutning"
 
 #: inc/html/class.Ajax.php:438 inc/html/class.Ajax.php:439
 #: inc/html/class.Ajax.php:440 inc/html/class.Ajax.php:441
 #: inc/html/class.Ajax.php:442
 msgid "per page"
-msgstr ""
+msgstr "pr. side"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:30
 #: inc/training/search/class.SearchFormular.php:150
@@ -175,7 +175,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:198
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:591
 msgid "Distance"
-msgstr ""
+msgstr "Afstand"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:31
 #: inc/training/search/class.SearchFormular.php:153
@@ -186,7 +186,7 @@ msgstr ""
 #: inc/import/class.MultiImporterFormular.php:75
 #: call/call.garminCommunicator.php:66
 msgid "Duration"
-msgstr ""
+msgstr "Varighed"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:32
 #: inc/training/view/section/class.SectionOverviewRow.php:56
@@ -206,7 +206,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:196
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:646
 msgid "Pace"
-msgstr ""
+msgstr "Tempo"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:33
 #: inc/training/search/class.SearchFormular.php:151
@@ -241,7 +241,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/Temperature.php:38
 #: inc/class.DatasetLabels.php:34
 msgid "Temperature"
-msgstr ""
+msgstr "Temperatur"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:37
 #: inc/training/search/class.SearchFormular.php:160
@@ -250,7 +250,7 @@ msgstr ""
 #: inc/training/class.TrainingFormular.php:309
 #: inc/core/Data/Cadence/General.php:22 inc/class.DatasetLabels.php:43
 msgid "Cadence"
-msgstr ""
+msgstr "Kadence"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:38
 #: inc/training/search/class.SearchFormular.php:168
@@ -258,7 +258,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:53
 #: inc/class.DatasetLabels.php:44
 msgid "Stride length"
-msgstr ""
+msgstr "Skridtlængde"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:163
@@ -266,7 +266,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionRunningDynamicsRow.php:90
 #: inc/core/View/Activity/Plot/Series/GroundContact.php:39
 msgid "Ground contact"
-msgstr ""
+msgstr "Jorden kontakt"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:40
 #: inc/training/search/class.SearchFormular.php:166
@@ -276,7 +276,7 @@ msgstr ""
 #: inc/core/View/Activity/Plot/Series/VerticalOscillation.php:40
 #: inc/class.DatasetLabels.php:46
 msgid "Vertical oscillation"
-msgstr ""
+msgstr "Vertikal svingning"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:41
 #: inc/training/view/class.VDOTinfo.php:74
@@ -298,7 +298,7 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:197
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:534
 msgid "VDOT"
-msgstr ""
+msgstr "VDOT"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:42
 #: inc/training/search/class.SearchFormular.php:165
@@ -308,55 +308,55 @@ msgstr ""
 #: inc/core/Configuration/Category/Trimp.php:96
 #: inc/draw/class.PlotSumData.php:220 inc/class.DatasetLabels.php:33
 msgid "TRIMP"
-msgstr ""
+msgstr "TRIMP"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:43
 msgid "JDpoints"
-msgstr ""
+msgstr "JDpoints"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:47
 msgid "descending"
-msgstr ""
+msgstr "faldende"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:47
 msgid "ascending"
-msgstr ""
+msgstr "stigende"
 
 #: inc/training/search/class.FormularInputSearchTimeRange.php:34
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:427
 #: plugin/RunalyzePluginStat_Analyse/class.RunalyzePluginStat_Analyse.php:485
 msgid "to"
-msgstr ""
+msgstr "til"
 
 #: inc/training/search/class.SearchResults.php:405
 msgid "The multi editor could not be located."
-msgstr ""
+msgstr "Multi editor kunne ikke findes."
 
 #: inc/training/search/class.SearchResults.php:438
 #, php-format
 msgid "Found %s activities"
-msgstr ""
+msgstr "Fundne %s aktiviteter"
 
 #: inc/training/search/class.SearchFormular.php:56
 msgid "Search activities"
-msgstr ""
+msgstr "Søg aktiviteter"
 
 #: inc/training/search/class.SearchFormular.php:69
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: inc/training/search/class.SearchFormular.php:86
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:453
 msgid "Time range"
-msgstr ""
+msgstr "Tidsinterval"
 
 #: inc/training/search/class.SearchFormular.php:94
 msgid "Sorting"
-msgstr ""
+msgstr "Sortering"
 
 #: inc/training/search/class.SearchFormular.php:103
 msgid "Send to multi editor"
-msgstr ""
+msgstr "Send til multi editor"
 
 #: inc/training/search/class.SearchFormular.php:104
 #, php-format
@@ -370,11 +370,11 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:85
 #: inc/system/config/class.ConfigTabTypes.php:47
 msgid "Sport"
-msgstr ""
+msgstr "Sport"
 
 #: inc/training/search/class.SearchFormular.php:122
 msgid "Choose sport(s)"
-msgstr ""
+msgstr "Vælg sport(s)"
 
 #: inc/training/search/class.SearchFormular.php:132
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:242
@@ -387,7 +387,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabEquipment.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:199
 msgid "Notes"
-msgstr ""
+msgstr "Noter"
 
 #: inc/training/search/class.SearchFormular.php:144
 #: inc/training/view/section/table/class.TableSwimLane.php:44
@@ -396,7 +396,7 @@ msgstr ""
 #: inc/system/config/class.ConfigTabEquipment.php:138
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:78
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: inc/training/search/class.SearchFormular.php:144
 msgid "Choose activity type(s)"
@@ -409,11 +409,11 @@ msgstr ""
 #: plugin/RunalyzePluginStat_Wetter/class.RunalyzePluginStat_Wetter.php:256
 #: plugin/RunalyzePluginStat_Wettkampf/class.RunalyzePluginStat_Wettkampf.php:354
 msgid "Weather"
-msgstr ""
+msgstr "Vejr"
 
 #: inc/training/search/class.SearchFormular.php:145
 msgid "Choose weather conditions"
-msgstr ""
+msgstr "Vælg vejrforhold"
 
 #: inc/training/search/class.SearchFormular.php:146
 #: inc/training/class.TrainingFormular.php:220
@@ -421,23 +421,23 @@ msgstr ""
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
 msgid "Equipment"
-msgstr ""
+msgstr "Udstyr"
 
 #: inc/training/search/class.SearchFormular.php:146
 msgid "Choose equipment"
-msgstr ""
+msgstr "Vælge udstyr"
 
 #: inc/training/search/class.SearchFormular.php:152
 #: inc/training/schemes/scheme.Training.new.php:384
 #: inc/training/schemes/scheme.Training.php:424 inc/class.DatasetLabels.php:36
 msgid "Route"
-msgstr ""
+msgstr "Rute"
 
 #: inc/training/search/class.SearchFormular.php:155
 #: inc/training/schemes/scheme.Training.new.php:419
 #: inc/training/schemes/scheme.Training.php:446 inc/class.DatasetLabels.php:38
 msgid "Comment"
-msgstr ""
+msgstr "Kommentar"
 
 #: inc/training/search/class.SearchFormular.php:156
 #: inc/training/schemes/scheme.Training.new.php:233
@@ -452,13 +452,13 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:222
 #: inc/training/schemes/scheme.Training.php:232 inc/class.DatasetLabels.php:30
 msgid "Calories"
-msgstr ""
+msgstr "Kalorier"
 
 #: inc/training/search/class.SearchFormular.php:158
 #: inc/training/schemes/scheme.Training.new.php:429
 #: inc/training/schemes/scheme.Training.php:456
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #: inc/training/search/class.SearchFormular.php:159
 #: inc/training/schemes/scheme.Training.new.php:244
@@ -468,16 +468,16 @@ msgstr ""
 
 #: inc/training/search/class.SearchFormular.php:161
 msgid "Is public"
-msgstr ""
+msgstr "Er offentlige"
 
 #: inc/training/search/class.SearchFormular.php:162
 #: inc/draw/class.PlotSumData.php:224
 msgid "JD points"
-msgstr ""
+msgstr "JD point"
 
 #: inc/training/search/class.SearchFormular.php:164
 msgid "Uses VDOT"
-msgstr ""
+msgstr "Bruger VDOT"
 
 #: inc/training/search/class.SearchFormular.php:167
 #: inc/training/schemes/scheme.Training.new.php:440
@@ -489,18 +489,18 @@ msgstr ""
 #: inc/training/search/class.SearchFormular.php:265
 #: inc/system/config/class.ConfigTabAccount.php:58
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: inc/training/search/class.SearchFormular.php:266
 #: inc/system/config/class.ConfigTabAccount.php:59
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #: inc/training/view/class.TrainingViewSectionTabbedPlot.php:63
 #: inc/plugin/class.PluginStat.php:248 inc/plugin/class.PluginStat.php:304
 #: plugin/RunalyzePluginStat_Strecken/class.RunalyzePluginStat_Strecken.php:295
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: inc/training/view/class.VDOTinfo.php:54
 #, php-format
@@ -543,7 +543,7 @@ msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:121
 msgid "Correction: based on correction factor"
-msgstr ""
+msgstr "Korrektion: baseret på korrektionsfaktor"
 
 #: inc/training/view/class.VDOTinfo.php:124
 msgid "To consider some individual factors, we use a correction factor."
@@ -555,15 +555,15 @@ msgstr ""
 
 #: inc/training/view/class.VDOTinfo.php:129
 msgid "Correction factor"
-msgstr ""
+msgstr "Korrektionsfaktor"
 
 #: inc/training/view/class.VDOTinfo.php:137
 msgid "uncorrected"
-msgstr ""
+msgstr "ukorrigeret"
 
 #: inc/training/view/class.VDOTinfo.php:170
 msgid "Correction: considering elevation"
-msgstr ""
+msgstr "Korrektion: overvejer elevation"
 
 #: inc/training/view/class.VDOTinfo.php:173
 msgid "This correction method is currently unused."
@@ -572,11 +572,11 @@ msgstr ""
 #: inc/training/view/class.VDOTinfo.php:177
 #: inc/training/view/class.ElevationInfo.php:150
 msgid "Up/Down"
-msgstr ""
+msgstr "Op/ned"
 
 #: inc/training/view/class.VDOTinfo.php:185
 msgid "Influence"
-msgstr ""
+msgstr "Indflydelse"
 
 #: inc/training/view/section/class.SectionRunningDynamics.php:21
 msgid "Running Dynamics"
@@ -590,17 +590,17 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.php:436
 #: inc/core/View/Window/Laps/Table.php:99 inc/data/class.Splits.php:431
 msgid "Laps"
-msgstr ""
+msgstr "Omgange"
 
 #: inc/training/view/section/class.SectionLaps.php:23
 #: inc/core/View/Activity/Plot/LapsManual.php:28
 msgid "Manual Laps"
-msgstr ""
+msgstr "Manuelle omgange"
 
 #: inc/training/view/section/class.SectionLaps.php:27
 #: inc/core/View/Activity/Plot/LapsComputed.php:25
 msgid "Computed Laps"
-msgstr ""
+msgstr "Beregnede omgange"
 
 #: inc/training/view/section/class.SectionRoute.php:17
 msgid "Course and elevation data"
@@ -639,7 +639,7 @@ msgstr ""
 #: inc/training/view/section/class.SectionSwimLaneRow.php:38
 #: inc/training/schemes/scheme.Training.php:687
 msgid "SWOLF"
-msgstr ""
+msgstr "SWOLF"
 
 #: inc/training/view/section/class.SectionSwimLaneRow.php:40
 msgid "SWOLFcycles"
@@ -680,11 +680,11 @@ msgstr ""
 #: inc/training/schemes/scheme.Training.new.php:177
 #: inc/training/schemes/scheme.Training.php:186
 msgid "Elapsed time"
-msgstr ""
+msgstr "Forløbet tid"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:52
 msgid "Additional notes"
-msgstr ""
+msgstr "Supplerende noter"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:56
 msgid "Cadence plot"
@@ -707,7 +707,7 @@ msgstr ""
 #: inc/class.DatasetLabels.php:47
 #: inc/system/config/class.ConfigTabSports.php:60
 msgid "Power"
-msgstr ""
+msgstr "Magt"
 
 #: inc/training/view/section/class.SectionMiscellaneousRow.php:133
 #: inc/training/view/section/table/class.TableSwimLane.php:43
@@ -1136,7 +1136,7 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:281
 msgid "Remove data series"
-msgstr ""
+msgstr "Fjerne dataserier"
 
 #: inc/training/class.TrainingFormular.php:282
 msgid ""
@@ -1156,7 +1156,7 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:311 inc/class.DatasetLabels.php:45
 msgid "Ground contact time"
-msgstr ""
+msgstr "Jorden kontakttid"
 
 #: inc/training/class.TrainingFormular.php:323
 msgid "Original elevation"
@@ -1172,19 +1172,19 @@ msgstr ""
 
 #: inc/training/class.TrainingFormular.php:344
 msgid "Permanently delete this activity"
-msgstr ""
+msgstr "Permanent slette denne aktivitet"
 
 #: inc/training/class.TrainingFormular.php:348
 msgid "Delete activity"
-msgstr ""
+msgstr "Slette aktivitet"
 
 #: inc/training/class.TrainingFormular.php:364
 msgid "Use elevation correction"
-msgstr ""
+msgstr "Brug højde korrektion"
 
 #: inc/training/class.TrainingFormular.php:368
 msgid "Correct elevation data"
-msgstr ""
+msgstr "Korrekte højdedata"
 
 #: inc/training/class.TrainingFormular.php:371
 msgid ""
@@ -1195,11 +1195,11 @@ msgstr ""
 #: inc/core/Configuration/Category/General.php:186
 #: inc/system/config/class.ConfigTabGeneral.php:20
 msgid "General settings"
-msgstr ""
+msgstr "Generelle indstillinger"
 
 #: inc/core/Configuration/Category/General.php:189
 msgid "Gender"
-msgstr ""
+msgstr "Køn"
 
 #: inc/core/Configuration/Category/General.php:193
 msgid "Unit system for distances"
@@ -1213,15 +1213,15 @@ msgstr ""
 
 #: inc/core/Configuration/Category/General.php:198
 msgid "Weight unit"
-msgstr ""
+msgstr "Vægtenhed"
 
 #: inc/core/Configuration/Category/General.php:202
 msgid "Heart rate unit"
-msgstr ""
+msgstr "Puls enhed"
 
 #: inc/core/Configuration/Category/General.php:206
 msgid "Main sport"
-msgstr ""
+msgstr "Vigtigste sport"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:101
 #: inc/core/Configuration/Category/BasicEndurance.php:149
@@ -1248,7 +1248,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:112
 msgid "Days for week kilometer"
-msgstr ""
+msgstr "Dage for uge kilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:113
 msgid "Number of days to look at for weekly kilometer goal."
@@ -1256,7 +1256,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:116
 msgid "Days for week kilometer (minimum)"
-msgstr ""
+msgstr "Dage for uge kilometer (minimum)"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:117
 msgid "This value will be used if not enough data is available."
@@ -1264,7 +1264,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/BasicEndurance.php:120
 msgid "Factor for week kilometers"
-msgstr ""
+msgstr "Faktor for uge kilometer"
 
 #: inc/core/Configuration/Category/BasicEndurance.php:121
 msgid "Percentage as value between 0.00 and 1.00."
@@ -1272,7 +1272,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Misc.php:48
 msgid "Search: results per page"
-msgstr ""
+msgstr "Søgning: resultater pr. side"
 
 #: inc/core/Configuration/Category/Misc.php:49
 msgid "Number of results displayed on each page."
@@ -1280,7 +1280,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:94
 msgid "Publish activities"
-msgstr ""
+msgstr "Udgive aktiviteter"
 
 #: inc/core/Configuration/Category/Privacy.php:95
 msgid "Automatically mark every activity after its creation as public."
@@ -1288,15 +1288,16 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:99
 msgid "Public list: active"
-msgstr ""
+msgstr "Offentlig liste: aktiv"
 
 #: inc/core/Configuration/Category/Privacy.php:100
 msgid "If activated: Everyone can see a list of all your (public) activities."
 msgstr ""
+"Hvis aktiveret: alle kan se en liste over alle dine (offentlige) aktiviteter."
 
 #: inc/core/Configuration/Category/Privacy.php:104
 msgid "Public list: private workouts"
-msgstr ""
+msgstr "Offentlig liste: privat træning"
 
 #: inc/core/Configuration/Category/Privacy.php:105
 msgid ""
@@ -1306,7 +1307,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Privacy.php:109
 msgid "Public list: general statistics"
-msgstr ""
+msgstr "Offentlig liste: generelle statistikker"
 
 #: inc/core/Configuration/Category/Privacy.php:110
 msgid "Show some general statistics above the activity list"
@@ -1322,11 +1323,11 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:300
 msgid "Activity view"
-msgstr ""
+msgstr "Aktivitet Se"
 
 #: inc/core/Configuration/Category/ActivityView.php:303
 msgid "Number of decimals"
-msgstr ""
+msgstr "Antallet af decimaler"
 
 #: inc/core/Configuration/Category/ActivityView.php:307
 msgid "Activity view: show rows in full height"
@@ -1346,7 +1347,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:329
 msgid "How many data points should be plotted?"
-msgstr ""
+msgstr "Hvor mange datapunkter skal afbildes?"
 
 #: inc/core/Configuration/Category/ActivityView.php:333
 msgid "Plots: smooth curves"
@@ -1362,7 +1363,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:342
 msgid "Data points below this limit will be ignored. (only for min/km)"
-msgstr ""
+msgstr "Datapunkter under denne grænse vil blive ignoreret. (kun for min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:346
 msgid "Pace plot: y-axis maximum"
@@ -1370,7 +1371,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:347
 msgid "Data points above this limit will be ignored. (only for min/km)"
-msgstr ""
+msgstr "Datapunkter over denne grænse vil blive ignoreret. (kun for min/km)"
 
 #: inc/core/Configuration/Category/ActivityView.php:351
 msgid "Pace plot: y-axis scale type"
@@ -1406,7 +1407,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:375
 msgid "How many data points shoud be displayed?"
-msgstr ""
+msgstr "Hvor mange data punkter shoud blive vist?"
 
 #: inc/core/Configuration/Category/ActivityView.php:379
 msgid "Map: line color"
@@ -1430,7 +1431,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:399
 msgid "Elevation: smoothing"
-msgstr ""
+msgstr "Højde: gulvafslibning"
 
 #: inc/core/Configuration/Category/ActivityView.php:400
 msgid "Choose the algorithm to smooth the elevation data"
@@ -1438,7 +1439,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/ActivityView.php:404
 msgid "Elevation: threshold"
-msgstr ""
+msgstr "Højde: tærskel"
 
 #: inc/core/Configuration/Category/ActivityView.php:405
 msgid "Threshold for the smoothing algorithm"
@@ -1446,7 +1447,7 @@ msgstr ""
 
 #: inc/core/Configuration/Category/Design.php:57
 msgid "Design"
-msgstr ""
+msgstr "Design"
 
 #: inc/core/Configuration/Category/Design.php:59
 msgid "Background image"
@@ -2411,7 +2412,7 @@ msgstr ""
 
 #: inc/tpl/tpl.installerFooter.php:5
 msgid "Help and Support"
-msgstr ""
+msgstr "Hjælp og Support"
 
 #: inc/tpl/tpl.Installer.php:5 inc/tpl/tpl.Frontend.header.php:35
 #: inc/tpl/tpl.installerFooterText.php:12 inc/tpl/tpl.help.php:29
@@ -2419,19 +2420,19 @@ msgstr ""
 #: call/call.Plugin.install.php:23
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:130
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #: inc/tpl/tpl.Installer.php:6 inc/tpl/tpl.Installer.php:119
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #: inc/tpl/tpl.Installer.php:7
 msgid "Ready"
-msgstr ""
+msgstr "Klar"
 
 #: inc/tpl/tpl.Installer.php:25
 msgid "Runalyze is already installed."
-msgstr ""
+msgstr "Runalyze er allerede installeret."
 
 #: inc/tpl/tpl.Installer.php:29
 msgid ""
@@ -2441,7 +2442,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:33 inc/tpl/tpl.Installer.php:260
 msgid "Start Runalyze"
-msgstr ""
+msgstr "Start Runalyze"
 
 #: inc/tpl/tpl.Installer.php:37
 msgid ""
@@ -2451,17 +2452,18 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:44
 msgid "Welcome!"
-msgstr ""
+msgstr "Velkommen!"
 
 #: inc/tpl/tpl.Installer.php:48
 msgid "Let us first check if your server fulfills the requirements."
-msgstr ""
+msgstr "Lad os først kontrollere, om din server opfylder kravene."
 
 #: inc/tpl/tpl.Installer.php:53
 #, php-format
 msgid ""
 "PHP %s is required, but PHP %s is running. Please update your PHP version."
 msgstr ""
+"PHP %s er nødvendig, men PHP %s kører. Opdater venligst din PHP version."
 
 #: inc/tpl/tpl.Installer.php:57
 #, php-format
@@ -2484,19 +2486,19 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:69
 msgid "Upload limit"
-msgstr ""
+msgstr "Upload grænse"
 
 #: inc/tpl/tpl.Installer.php:76
 msgid "Start installation"
-msgstr ""
+msgstr "Starte installationen"
 
 #: inc/tpl/tpl.Installer.php:84
 msgid "Settings for Runalyze"
-msgstr ""
+msgstr "Indstillinger for Runalyze"
 
 #: inc/tpl/tpl.Installer.php:88
 msgid "Runalyze does need a MySQL database."
-msgstr ""
+msgstr "Runalyze behøver en MySQL-database."
 
 #: inc/tpl/tpl.Installer.php:93
 msgid ""
@@ -2519,6 +2521,8 @@ msgid ""
 "MySQL %s is required, but MySQL %s is running. Please update your MySQL "
 "version."
 msgstr ""
+"MySQL %s er nødvendig, men MySQL %s kører. Opdater venligst din MySQL "
+"version."
 
 #: inc/tpl/tpl.Installer.php:113
 msgid "Host server"
@@ -2526,12 +2530,12 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:125 inc/class.AdminView.php:260
 msgid "User"
-msgstr ""
+msgstr "Bruger"
 
 #: inc/tpl/tpl.Installer.php:131 inc/tpl/tpl.loginWindow.php:32
 #: inc/tpl/tpl.loginWindow.php:89 inc/tpl/tpl.adminWindow.login.php:7
 msgid "Password"
-msgstr ""
+msgstr "Adgangskode"
 
 #: inc/tpl/tpl.Installer.php:137
 msgid ""
@@ -2541,7 +2545,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:142
 msgid "This prefix is already being used."
-msgstr ""
+msgstr "Dette præfiks bruges allerede."
 
 #: inc/tpl/tpl.Installer.php:146
 msgid "This prefix is free."
@@ -2549,7 +2553,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:152
 msgid "Prefix"
-msgstr ""
+msgstr "Præfiks"
 
 #: inc/tpl/tpl.Installer.php:158
 msgid ""
@@ -2563,15 +2567,15 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:170
 msgid "Garmin API key"
-msgstr ""
+msgstr "Garmin API-nøgle"
 
 #: inc/tpl/tpl.Installer.php:173
 msgid "not necessary for localhost"
-msgstr ""
+msgstr "ikke nødvendigt for localhost"
 
 #: inc/tpl/tpl.Installer.php:176
 msgid "necessary for"
-msgstr ""
+msgstr "nødvendigt for"
 
 #: inc/tpl/tpl.Installer.php:177
 msgid "see"
@@ -2585,7 +2589,7 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:191
 msgid "The configuration file cannot be written."
-msgstr ""
+msgstr "Konfigurationsfilen kan ikke skrives."
 
 #: inc/tpl/tpl.Installer.php:196
 #, php-format
@@ -2605,15 +2609,15 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:220
 msgid "Written! Continue ..."
-msgstr ""
+msgstr "Skrevet! Fortsætte..."
 
 #: inc/tpl/tpl.Installer.php:220
 msgid "Write configuration file"
-msgstr ""
+msgstr "Skrive konfigurationsfil"
 
 #: inc/tpl/tpl.Installer.php:220
 msgid "Check settings"
-msgstr ""
+msgstr "Kontroller indstillinger"
 
 #: inc/tpl/tpl.Installer.php:228
 msgid "The configuration file has been written."
@@ -2635,11 +2639,11 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:252
 msgid "Ready! Congratulations!"
-msgstr ""
+msgstr "Klar! Tillykke!"
 
 #: inc/tpl/tpl.Installer.php:256
 msgid "Runalyze has been successfully installed. Have fun while using it!"
-msgstr ""
+msgstr "Runalyze er blevet installeret. Have det sjovt mens du bruger det!"
 
 #: inc/tpl/tpl.Installer.php:276 inc/class.AdminView.php:342
 #, php-format
@@ -2648,38 +2652,38 @@ msgstr ""
 
 #: inc/tpl/tpl.Installer.php:284
 msgid "Please activate JavaScript, Runalyze will not work without."
-msgstr ""
+msgstr "Aktiver venligst JavaScript, Runalyze vil ikke fungere uden."
 
 #: inc/tpl/tpl.FrontendShared.header.php:31
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:26
 #, php-format
 msgid "Public training view of <strong>%s</strong>"
-msgstr ""
+msgstr "Offentlige træningsvisning af <strong>%s</strong>"
 
 #: inc/tpl/tpl.FrontendShared.header.php:33
 #: inc/tpl/tpl.FrontendSharedIframe.header.php:28
 msgid "Public training view"
-msgstr ""
+msgstr "Offentlige træningsvisning"
 
 #: inc/tpl/tpl.loginWindow.php:14
 msgid "The username is not known."
-msgstr ""
+msgstr "Brugernavnet er ikke kendt."
 
 #: inc/tpl/tpl.loginWindow.php:17
 msgid "The password was incorrect."
-msgstr ""
+msgstr "Password var forkert."
 
 #: inc/tpl/tpl.loginWindow.php:20
 msgid ""
 "The account has not been activated.<br>Have a look into your email inbox."
-msgstr ""
+msgstr "Kontoen er ikke blevet aktiveret. <br>Har et kig ind i din indbakke."
 
 #: inc/tpl/tpl.loginWindow.php:26 inc/tpl/tpl.loginWindow.php:44
 #: inc/tpl/tpl.loginWindow.php:48 inc/tpl/tpl.loginWindow.php:155
 #: inc/tpl/tpl.adminWindow.login.php:13
 #: inc/tpl/tpl.loginWindow.activateAccount.php:18 call/login.php:4
 msgid "Login"
-msgstr ""
+msgstr "Login"
 
 #: inc/tpl/tpl.loginWindow.php:28 inc/tpl/tpl.loginWindow.php:74
 #: inc/tpl/tpl.loginWindow.php:132
@@ -2690,19 +2694,19 @@ msgstr ""
 
 #: inc/tpl/tpl.loginWindow.php:36
 msgid "Remember me"
-msgstr ""
+msgstr "Husk mig"
 
 #: inc/tpl/tpl.loginWindow.php:49
 msgid "Runalyze is under maintenance at the moment. No login possible."
-msgstr ""
+msgstr "Runalyze er under vedligeholdelse i øjeblikket. Ingen login muligt."
 
 #: inc/tpl/tpl.loginWindow.php:57 inc/tpl/tpl.loginWindow.php:156
 msgid "Create a new account"
-msgstr ""
+msgstr "Oprette en ny konto"
 
 #: inc/tpl/tpl.loginWindow.php:60
 msgid "Registrations are currently disabled."
-msgstr ""
+msgstr "Registreringer er deaktiveret i øjeblikket."
 
 #: inc/tpl/tpl.loginWindow.php:79
 #: inc/system/config/class.ConfigTabTypes.php:45
@@ -2716,29 +2720,31 @@ msgstr ""
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:451
 #: plugin/RunalyzePluginPanel_Rechenspiele/class.RunalyzePluginPanel_Rechenspiele.php:645
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: inc/tpl/tpl.loginWindow.php:84 inc/class.AdminView.php:262
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: inc/tpl/tpl.loginWindow.php:94
 msgid "Password again"
-msgstr ""
+msgstr "Adgangskode igen"
 
 #: inc/tpl/tpl.loginWindow.php:112
 msgid "You can login now. Enjoy Runalyze!"
-msgstr ""
+msgstr "Du kan logge ind nu. Nyd Runalyze!"
 
 #: inc/tpl/tpl.loginWindow.php:114
 msgid ""
 "Thanks for your registration. You should receive an email within the next "
 "minutes with further instructions for activating your account."
 msgstr ""
+"Tak for din registrering. Du vil modtage en e-mail inden for de næste "
+"minutter med yderligere instruktioner for at aktivere din konto."
 
 #: inc/tpl/tpl.loginWindow.php:121
 msgid "Register"
-msgstr ""
+msgstr "Registrer"
 
 #: inc/tpl/tpl.loginWindow.php:130 inc/tpl/tpl.loginWindow.php:157
 msgid "Forgot your password?"
@@ -2775,16 +2781,16 @@ msgstr[1] ""
 
 #: inc/tpl/tpl.adminWindow.login.php:5
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: inc/tpl/tpl.adminWindow.login.php:6
 #: inc/system/config/class.ConfigTabAccount.php:17
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #: inc/tpl/tpl.InstallerUpdate.php:3 inc/tpl/tpl.InstallerUpdate.php:36
 msgid "Update RUNALYZE"
-msgstr ""
+msgstr "Opdater RUNALYZE"
 
 #: inc/tpl/tpl.InstallerUpdate.php:7
 msgid ""
@@ -4240,7 +4246,7 @@ msgstr ""
 
 #: inc/export/class.ExporterAbstractSocialShare.php:36
 msgid "I did sport: "
-msgstr ""
+msgstr "Jeg sport: "
 
 #: inc/export/class.ExporterAbstractSocialShare.php:40
 msgid " in "
@@ -4248,7 +4254,7 @@ msgstr ""
 
 #: inc/export/class.ExporterAbstractSocialShare.php:79
 msgid "Runalyze is running on a local server."
-msgstr ""
+msgstr "Runalyze kører på en lokal server."
 
 #: inc/export/class.ExporterAbstractSocialShare.php:80
 msgid ""
@@ -4258,15 +4264,15 @@ msgstr ""
 
 #: inc/export/class.ExporterAbstractFile.php:66
 msgid "Your activity has been exported."
-msgstr ""
+msgstr "Din aktivitet er blevet eksporteret."
 
 #: inc/export/class.ExporterAbstractFile.php:68
 msgid "Download"
-msgstr ""
+msgstr "Download"
 
 #: inc/export/class.ExporterFactory.php:39
 msgid "The chosen exporter could not be located."
-msgstr ""
+msgstr "Den valgte eksportør kunne ikke findes."
 
 #: inc/export/class.ExporterType.php:36
 msgid "Export as file"
@@ -4287,12 +4293,12 @@ msgstr ""
 #: inc/export/types/class.ExporterIFrame.php:35
 #: inc/export/types/class.ExporterHTML.php:22
 msgid "Code"
-msgstr ""
+msgstr "Kode"
 
 #: inc/export/types/class.ExporterIFrame.php:39
 #: inc/export/types/class.ExporterHTML.php:26
 msgid "HTML-Code"
-msgstr ""
+msgstr "HTML-kode"
 
 #: inc/export/types/class.ExporterIFrame.php:42
 msgid ""
@@ -4307,11 +4313,11 @@ msgstr ""
 
 #: inc/export/types/class.ExporterIFrame.php:48
 msgid "Width"
-msgstr ""
+msgstr "Bredde"
 
 #: inc/export/types/class.ExporterIFrame.php:53
 msgid "Height"
-msgstr ""
+msgstr "Højde"
 
 #: inc/export/types/class.ExporterIFrame.php:58
 msgid "Change size"
@@ -4337,7 +4343,7 @@ msgstr ""
 
 #: inc/export/types/class.ExporterFacebook.php:37
 msgid "Share!"
-msgstr ""
+msgstr "Andel!"
 
 #: inc/export/types/class.ExporterFacebook.php:40
 msgid ""
