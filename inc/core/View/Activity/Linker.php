@@ -14,7 +14,7 @@ use SessionAccountHandler;
 use DataBrowserLinker;
 use SharedLinker;
 use System;
-use Sport;
+use Request;
 use Icon;
 use Ajax;
 use DB;
@@ -147,6 +147,10 @@ class Linker {
 	 * @return string
 	 */
 	public function editNavigation() {
+		if (Request::param('mode') == 'multi') {
+			return '';
+		}
+
 		return self::editPrevLink($this->Activity->id(), $this->Activity->timestamp()).
 				self::editNextLink($this->Activity->id(), $this->Activity->timestamp());
 	}

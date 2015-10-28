@@ -213,7 +213,7 @@ class ImporterWindow {
 	 * Get link for create window
 	 */
 	public static function link() {
-		return Ajax::window('<a href="'.self::$URL.'" '.Ajax::tooltip('', __('Add workout'), false, true).'>'.Icon::$ADD.'</a>', 'small');
+		return Ajax::window('<a href="'.self::$URL.'">'.Icon::$ADD.' '.__('Add workout').'</a>', 'small');
 	}
 
 	/**

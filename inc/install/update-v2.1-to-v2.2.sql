@@ -95,8 +95,26 @@ CREATE TRIGGER `del_tr_train` AFTER DELETE ON `runalyze_account`
 //
 DELIMITER ;
 
+/* 10.10.2015 - more precision for body weight */
+ALTER TABLE `runalyze_user` CHANGE `weight` `weight` DECIMAL(5,2) NOT NULL DEFAULT '0.0';
+
 /* 26.09.2015 - add further constraints */
 ALTER TABLE `runalyze_plugin` CHANGE `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+/* 24.10.2015 - clean database for non-existant references */
+DELETE tr FROM runalyze_clothes tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_conf tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_dataset tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_type tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE pl FROM runalyze_plugin pl LEFT JOIN runalyze_account acc on acc.id = pl.accountid  WHERE username IS NULL;
+DELETE plc FROM runalyze_plugin_conf plc LEFT JOIN runalyze_plugin pl on pl.id = plc.pluginid WHERE pl.type IS NULL;
+DELETE tr FROM runalyze_route tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_shoe tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_sport tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_trackdata tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE tr FROM runalyze_training tr LEFT JOIN runalyze_account acc on acc.id = tr.accountid  WHERE username IS NULL;
+DELETE td FROM runalyze_trackdata td LEFT JOIN runalyze_training tr on tr.id=td.activityid  WHERE tr.distance IS NULL;
+DELETE ru FROM runalyze_user ru LEFT JOIN runalyze_account acc on acc.id = ru.accountid  WHERE username IS NULL;
 
 /* CONSTRAINTS - new order! */
 /* 19.09.2015 - add equipment for all sport types */
@@ -123,6 +141,3 @@ ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runaly
 ALTER TABLE `runalyze_swimdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`accountid`) REFERENCES `runalyze_account`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `runalyze_trackdata` ADD FOREIGN KEY (`activityid`) REFERENCES `runalyze_training`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/* 10.10.2015 - more precision for body weight */
-ALTER TABLE `runalyze_user` CHANGE `weight` `weight` DECIMAL(5,2) NOT NULL DEFAULT '0.0';

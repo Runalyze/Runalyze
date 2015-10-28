@@ -97,7 +97,7 @@ class RunalyzeJsonImporter {
 	 */
 	private function deleteOldData() {
 		$Requests = array(
-			'delete_trainings'	=> array('training', 'route', 'trackdata', 'swimdata', 'hrv', 'activity_equipment'),
+			'delete_trainings'	=> array('training', 'route'),
 			'delete_user_data'	=> array('user'),
 		);
 
@@ -115,7 +115,7 @@ class RunalyzeJsonImporter {
 	 * @param string $table without prefix
 	 */
 	private function truncateTable($table) {
-		$this->Results->addDeletes('runalyze_'.$table, $this->DB->query('DELETE FROM `'.PREFIX.$table.'`')->rowCount());
+		$this->Results->addDeletes('runalyze_'.$table, $this->DB->query('DELETE FROM `'.PREFIX.$table.'` WHERE `accountid`="'.$this->AccountID.'"')->rowCount());
 	}
 
 	/**
@@ -139,6 +139,12 @@ class RunalyzeJsonImporter {
 			while ($Row = $Statement->fetch()) {
 				$this->ExistingData['runalyze_'.$Table][$Row[$Column]] = $Row['id'];
 			}
+		}
+
+		$FetchEquipmentSportRelation = $this->DB->query('SELECT CONCAT(`sportid`, "-", `equipment_typeid`) FROM `'.PREFIX.'equipment_sport`');
+
+		while ($Relation = $FetchEquipmentSportRelation->fetchColumn()) {
+			$this->ExistingData['runalyze_equipment_sport'][] = $Relation;
 		}
 	}
 
@@ -314,7 +320,14 @@ class RunalyzeJsonImporter {
 			$Row = current($CompleteRow);
 			$Values = array_values($Row);
 
-			if ($Columns[0] == 'name' || $TableName == 'runalyze_plugin') {
+			if (in_array($TableName, array(
+				'runalyze_equipment',
+				'runalyze_equipment_type',
+				'runalyze_plugin',
+				'runalyze_route',
+				'runalyze_sport',
+				'runalyze_type'
+			))) {
 				if (isset($this->ExistingData[$TableName][$Values[0]])) {
 					$this->ReplaceIDs[$TableName][$ID] = $this->ExistingData[$TableName][$Values[0]];
 				} else {
@@ -323,6 +336,11 @@ class RunalyzeJsonImporter {
 					$this->ReplaceIDs[$TableName][$ID] = $BulkInsert->insert(array_values($Row));
 					$this->Results->addInserts($TableName, 1);
 				}
+			} elseif (
+				$TableName == 'runalyze_equipment_sport' &&
+				$this->equipmentSportRelationDoesExist($Row['sportid'], $Row['equipment_typeid'])
+			) {
+				// Hint: Don't insert this relation, it does exist already!
 			} else {
 				$this->correctValues($TableName, $Row);
 
@@ -337,6 +355,26 @@ class RunalyzeJsonImporter {
 
 			$Line = $this->Reader->readLine();
 		}
+	}
+
+	/**
+	 * @param int $sportid
+	 * @param int $equipmentTypeid
+	 * @return boolean
+	 */
+	protected function equipmentSportRelationDoesExist($sportid, $equipmentTypeid) {
+		if (
+			isset($this->ReplaceIDs['runalyze_sport'][$sportid]) &&
+			isset($this->ReplaceIDs['runalyze_equipment_type'][$equipmentTypeid]) &&
+			in_array(
+				$this->ReplaceIDs['runalyze_sport'][$sportid].'-'.$this->ReplaceIDs['runalyze_equipment_type'][$equipmentTypeid],
+				$this->ExistingData['runalyze_equipment_sport']
+			)
+		) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -81,7 +81,7 @@ class ConfigTabTypes extends ConfigTab {
 			else
 				$delete = SearchLink::to('typeid', $id, '<small>('.$Data['tcount'].')</small>');
 
-			$Sports = SportFactory::AllSportsWithTypes();
+			$Sports = SportFactory::AllSports();
 			$ShortOptions = array(
 				0 => __('complete row'),
 				1 => __('only icon')

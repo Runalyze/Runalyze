@@ -71,6 +71,13 @@ class Series {
 	protected $ShowMinimum = false;
 
 	/**
+	 * Manual average
+	 * A manual average can be used instead of calculating the average of the series
+	 * @var mixed 
+	 */
+	protected $ManualAverage = false;
+
+	/**
 	 * Set label
 	 * @param string $label
 	 */
@@ -166,9 +173,20 @@ class Series {
 	/**
 	 * Average
 	 * @param int $decimals [optional]
-	 * @return int
+	 * @return int|float
 	 */
 	protected function avg($decimals = 0) {
+		if ($this->ManualAverage !== false) {
+			return $this->ManualAverage;
+		}
+
 		return round( array_sum($this->Data)/count($this->Data), $decimals );
+	}
+
+	/**
+	 * @param int|float $value
+	 */
+	protected function setManualAverage($value) {
+		$this->ManualAverage = $value;
 	}
 }

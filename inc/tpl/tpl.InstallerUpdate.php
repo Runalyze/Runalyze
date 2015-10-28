@@ -9,6 +9,10 @@
 				'If you have skipped a version, you need to apply the respective updates in the correct order.'); ?>
 	</p>
 
+	<p class="info">
+		<?php printf(__('Detailed upgrade instructions: %s'), '<a href="http://docs.runalyze.com/en/latest/update.html" target="_blank">docs.runalyze.com/en/latest/update.html</a>'); ?>
+	</p>
+
 	<?php if (!$this->triesToUpdate()): ?>
 
 		<p class="warning">

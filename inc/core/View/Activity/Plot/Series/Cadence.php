@@ -42,6 +42,7 @@ class Cadence extends ActivityPointSeries {
 		$this->initData($context->trackdata(), Trackdata::CADENCE);
 		$this->initStrings($cadence);
 		$this->manipulateData($cadence);
+		$this->setManualAverage($cadence->useFactor($context->activity()->cadence()));
 	}
 
 	/**

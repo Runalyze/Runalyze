@@ -30,6 +30,7 @@ class GroundContact extends ActivityPointSeries {
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::GROUNDCONTACT);
+		$this->setManualAverage($context->activity()->groundcontact());
 	}
 
 	/**

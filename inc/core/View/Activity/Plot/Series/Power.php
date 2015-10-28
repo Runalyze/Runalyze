@@ -28,6 +28,7 @@ class Power extends ActivitySeries {
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
 		$this->initData($context->trackdata(), Trackdata::POWER);
+		$this->setManualAverage($context->activity()->power());
 	}
 
 	/**

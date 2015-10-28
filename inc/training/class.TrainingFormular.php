@@ -40,12 +40,6 @@ class TrainingFormular extends StandardFormular {
 	 * @var string
 	 */
 	public static $ONLY_OUTSIDE_CLASS = "only-outside";
-
-	/**
-	 * CSS class for inputs only for sports with types
-	 * @var string
-	 */
-	public static $ONLY_TYPES_CLASS = "only-types";
         
  	/**
 	 * CSS class for inputs only for sports with distance
@@ -181,6 +175,9 @@ class TrainingFormular extends StandardFormular {
 	 */
 	public static function readEquipmentFromPost($checkForSportID = false) {
 		$SelectedEquipment = array();
+
+		if (!isset($_POST['equipment']) || !is_array($_POST['equipment']))
+			return $SelectedEquipment;
 
 		foreach ($_POST['equipment'] as $value) {
 			if (is_array($value)) {

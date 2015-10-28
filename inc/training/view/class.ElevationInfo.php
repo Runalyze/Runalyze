@@ -119,7 +119,7 @@ class ElevationInfo {
 	protected function displayStandardValues() {
 		if ($this->manualElevation != $this->calculatedElevation) {
 			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
-			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$Linker->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'small');
+			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$Linker->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'normal');
 		} else {
 			$useCalculatedValueLink = '';
 		}
@@ -240,24 +240,42 @@ class ElevationInfo {
 	 * Display elevation correction
 	 */
 	protected function displayElevationCorrection() {
+		$Url = (new Runalyze\View\Activity\Linker($this->Context->activity()))->urlToElevationCorrection();
 		$Fieldset = new FormularFieldset( __('Elevation correction') );
+		$Links = array();
 
 		if ($this->Context->route()->elevationsCorrected()) {
-			$Fieldset->addSmallInfo( __('Elevation data have been corrected.') );
+			$textInfo = __('Elevation data has been corrected.').($this->Context->route()->elevationsSource() != '' ? ' ('.$this->Context->route()->elevationsSource().')': '');
+			$rawLinks = $this->getLinksForCorrectionStrategies();
 		} else {
-			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
-
-			// TODO: add link to "reload" if correction has been done via ajax
-			$Fieldset->setHtmlCode(
-				'<p class="warning small block" id="gps-results">
-					'.__('Elevation data has not been corrected.').'<br>
-					<br>
-					<a class="ajax" target="gps-results" href="'.$Linker->urlToElevationCorrection().'"><strong>&raquo; '.__('correct now').'</strong></a>
-				</p>'
-			);
+			$textInfo = __('Elevation data has not been corrected.');
+			$rawLinks = array('' => __('correct now'));
 		}
 
+		foreach ($rawLinks as $urlAppendix => $text) {
+			$Links[] = '<a class="ajax" target="gps-results" href="'.$Url.$urlAppendix.'"><strong>&raquo; '.$text.'</strong></a>';
+		}
+
+		$Fieldset->setHtmlCode(
+			'<p class="info block" id="gps-results">
+				'.$textInfo.'<br><br>
+				'.implode('<br>', $Links).'
+			</p>'
+		);
+
 		$Fieldset->display();
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getLinksForCorrectionStrategies() {
+		return array(
+			'&strategy=GeoTIFF' => sprintf(__('correct again using %s'), __('srtm files')),
+			'&strategy=Geonames' => sprintf(__('correct again using %s'), 'geonames.org'),
+			'&strategy=DataScienceToolkit' => sprintf(__('correct again using %s'), 'datasciencetoolkit.org'),
+			'&strategy=GoogleMaps' => sprintf(__('correct again using %s'), 'maps.google.com')
+		);
 	}
 
 	/**
@@ -281,7 +299,7 @@ class ElevationInfo {
 		$Fieldset = new FormularFieldset( __('Note for elevation data') );
 		$Fieldset->setId('general-information');
 		$Fieldset->setCollapsed();
-		$Fieldset->addSmallInfo(
+		$Fieldset->addInfo(
 				__('The calculation of elevation data is very difficult - there is not one single solution. '.
 					'Bad gps data can be corrected via srtm-data but these are only available in a 90x90m grid and not always perfectly accurate. '.
 					'In addition, every platform uses another algorithm to determine the elevation value (for up-/downwards). '.

@@ -472,6 +472,14 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	}
 
 	/**
+	 * Strategy name of elevation correction
+	 * @return string
+	 */
+	public function elevationsSource() {
+		return $this->Data[self::ELEVATIONS_SOURCE];
+	}
+
+	/**
 	 * Elevations array (corrected or original)
 	 * @return array
 	 */
