@@ -41,16 +41,16 @@ You have to apply recent changes from the respective update files in `inc/instal
 * see [#952](https://github.com/Runalyze/Runalyze/issues/952)
 
 ## Changelog
-* new versions, multi-lingual
+* [v2.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-2-en/), 28.10.2015: minor release (equipment for al sports, imperial units, ...)
  * warning: migration from v2.1 to v2.2 requires `refactor-equipment.php`
+* [v2.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-en/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
  * [v2.1.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-1-en/), 22.10.2015: minor bugfixes
- * [v2.1](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-1-en/), 19.07.2015: minor release (running dynamics, new importers, recovery time ...)
- * [v2.0.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-4-2/), 17.07.2015: minor bugfixes
- * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: minor bugfixes
- * [v2.0.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-2-2/), 24.03.2015: minor bugfixes
- * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: minor bugfixes
- * [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: first mutlilingual major release
+* [v2.0](http://blog.runalyze.com/allgemein/runalyze-v2-0/), 28.02.2015: first mutlilingual major release
  * warning: migration from v1.5 to v2.0 requires `refactor-db.php` (see [v2.0alpha](http://blog.runalyze.com/allgemein/runalyze-v2-0alpha/), [v2.0beta](http://blog.runalyze.com/allgemein/runalyze-v2-0beta/))
+ * [v2.0.1](http://blog.runalyze.com/allgemein/runalyze-v2-0-1/), 13.03.2015: minor bugfixes
+ * [v2.0.2](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-2-2/), 24.03.2015: minor bugfixes
+ * [v2.0.3](http://blog.runalyze.com/allgemein/runalyze-v2-0-3/), 05.06.2015: minor bugfixes
+ * [v2.0.4](http://blog.runalyze.com/en/allgemein-en/runalyze-v2-0-4-2/), 17.07.2015: minor bugfixes
 * old versions (german only)
  * [v1.5](http://blog.runalyze.com/allgemein/runalyze-v1-5/), 01.01.2014: bugfixes, improved vdot formula
  * [v1.4](http://blog.runalyze.com/allgemein/runalyze-v1-4-fix-fuer-sicherheitsproblem/), 23.08.2013: bugfix for security issue
