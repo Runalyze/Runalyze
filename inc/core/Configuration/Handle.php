@@ -44,13 +44,13 @@ class Handle {
 	 * Array with all values
 	 * @var array
 	 */
-	static private $TableHandles = array();
+	private static $TableHandles = array();
 
 	/**
 	 * All table handles
 	 * @return array array('key' => 'table')
 	 */
-	static public function tableHandles() {
+	public static function tableHandles() {
 		return self::$TableHandles;
 	}
 

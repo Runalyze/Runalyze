@@ -60,7 +60,7 @@ class PluginConfigurationWindow {
 		$this->displayHeader();
 		$this->displayForm();
 
-		if ($this->Plugin->type() == PluginType::Tool && $this->Plugin->isActive()) {
+		if ($this->Plugin->type() == PluginType::TOOL && $this->Plugin->isActive()) {
 			$this->displayLinkToTool();
 		}
 	}

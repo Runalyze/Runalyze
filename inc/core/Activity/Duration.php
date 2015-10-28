@@ -40,7 +40,7 @@ class Duration {
 	 * Decimal point
 	 * @var string
 	 */
-	static public $DECIMAL_POINT = ',';
+	public static $DECIMAL_POINT = ',';
 
 	/**
 	 * Time [s]
@@ -50,10 +50,10 @@ class Duration {
 
 	/**
 	 * Format
-	 * @param float|string $input seconds as float or "[[H:]i:]s[(.|,)u]"
+	 * @param float|string $input seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
 	 * @return string
 	 */
-	static public function format($input) {
+	public static function format($input) {
 		$Object = new Duration($input);
 
 		return $Object->string();
@@ -61,7 +61,7 @@ class Duration {
 
 	/**
 	 * Create duration
-	 * @param float|string $input [optional] seconds as float or "[[H:]i:]s[(.|,)u]"
+	 * @param float|string $input [optional] seconds as float or "[[[z\d ]H:]i:]s[(.|,)u]"
 	 */
 	public function __construct($input = 0) {
 		if (is_numeric($input)) {
@@ -89,7 +89,7 @@ class Duration {
 
 	/**
 	 * From string
-	 * @param string $string format: "[[H:]M:]s[(.|,)u]"
+	 * @param string $string format: "[[[z\d ]H:]i:]s[(.|,)u]"
 	 * @return \Runalyze\Activity\Duration $this-reference
 	 */
 	public function fromString($string) {
@@ -101,7 +101,14 @@ class Duration {
 			$this->Time += (float)('0.'.$split[1]);
 		}
 
-		$parts = explode(':', $split[0]);
+		$splitDays = explode('d ', $split[0]);
+
+		if (isset($splitDays[1])) {
+			$this->Time += 86400 * $splitDays[0];
+			$splitDays[0] = $splitDays[1];
+		}
+
+		$parts = explode(':', $splitDays[0]);
 		$num = count($parts);
 
 		foreach ($parts as $i => $part) {

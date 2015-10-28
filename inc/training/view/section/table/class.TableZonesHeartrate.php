@@ -26,7 +26,8 @@ class TableZonesHeartrate extends TableZonesAbstract {
 	 */
 	protected function initData() {
 		$Zones = $this->computeZones();
-		$Pace = new Pace(0, 0, $this->Context->sport()->paceUnit());
+		$Pace = new Pace(0, 0);
+		$Pace->setUnit($this->Context->sport()->paceUnit());
 
 		foreach ($Zones as $hf => $Info) {
 			if ($Info['time'] > parent::MINIMUM_TIME_IN_ZONE) {

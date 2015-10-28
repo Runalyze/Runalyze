@@ -33,7 +33,7 @@ $Frontend = new Frontend();
 			<ul id="statistics-nav">
 				<?php
 				$Factory = new PluginFactory();
-				$Stats = $Factory->activePlugins( PluginType::Stat );
+				$Stats = $Factory->activePlugins( PluginType::STAT );
 				foreach ($Stats as $i => $key) {
 					$Plugin = $Factory->newInstance($key);
 

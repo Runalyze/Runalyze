@@ -23,13 +23,6 @@ abstract class ImporterFiletypeAbstract {
 	protected $Errors = array();
 
 	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		
-	}
-
-	/**
 	 * Parse string
 	 * @param string $String string to parse
 	 */
@@ -150,7 +143,7 @@ abstract class ImporterFiletypeAbstract {
 	 * @param string $string
 	 * @return string
 	 */
-	static public function decodeCompressedData($string) {
+	public static function decodeCompressedData($string) {
 		$string = mb_substr($string, mb_strpos($string, "\n") + 1);
 		return gzinflate(substr(base64_decode($string),10,-8));
 	}

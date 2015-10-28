@@ -4,7 +4,6 @@
  * Call:   include 'Plot.gewicht.php'
  * @package Runalyze\Plugins\Panels
  */
-
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 

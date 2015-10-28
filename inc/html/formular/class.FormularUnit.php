@@ -13,119 +13,119 @@ class FormularUnit {
 	 * Unit: percent
 	 * @var string
 	 */
-	static public $PERCENT = '&#37;';
+	public static $PERCENT = '&#37;';
 
 	/**
 	 * Unit: bpm
 	 * @var string
 	 */
-	static public $BPM = 'bpm';
+	public static $BPM = 'bpm';
 
 	/**
 	 * Unit: spm
 	 * @var string
 	 */
-	static public $SPM = 'spm';
+	public static $SPM = 'spm';
 
 	/**
 	 * Unit: rpm
 	 * @var string
 	 */
-	static public $RPM = 'rpm';
-
-	/**
-	 * Unit: kg
-	 * @var string
-	 */
-	static public $KG = 'kg';
-	
-	/**
-	 * Unit: weight in gram
-	 * @var string
-	 */
-	static public $G = 'g';
+	public static $RPM = 'rpm';
 
 	/**
 	 * Unit: km
 	 * @var string
 	 */
-	static public $KM = 'km';
+	public static $KM = 'km';
 
 	/**
 	 * Unit: m
 	 * @var string
 	 */
-	static public $M = 'm';
+	public static $M = 'm';
+	
+	/**
+	 * Unit: miles
+	 * @var string
+	 */
+	public static $MILES = 'miles';
+
+	/**
+	 * Unit: yards
+	 * @var string
+	 */
+	public static $Y = 'y';
 
 	/**
 	 * Unit: cm
 	 * @var string
 	 */
-	static public $CM = 'cm';
+	public static $CM = 'cm';
 
 	/**
 	 * Unit: ms
 	 * @var string
 	 */
-	static public $MS = 'ms';
+	public static $MS = 'ms';
 
 	/**
 	 * Unit: user
 	 * @var string
 	 */
-	static public $USER = '&nbsp;<i class="fa fa-fw fa-user"></i>'; // Icon::$USER
+	public static $USER = '&nbsp;<i class="fa fa-fw fa-user"></i>'; // Icon::$USER
 
 	/**
 	 * Unit: password
 	 * @var string
 	 */
-	static public $PASS = '&nbsp;<i class="fa fa-fw fa-lock"></i>'; // Icon::$PASSWORD
+	public static $PASS = '&nbsp;<i class="fa fa-fw fa-lock"></i>'; // Icon::$PASSWORD
 
 	/**
 	 * Unit: mail-adress
 	 * @var string
 	 */
-	static public $MAIL = '&nbsp;<i class="fa fa-fw fa-envelope"></i>'; // Icon::$MAIL
+	public static $MAIL = '&nbsp;<i class="fa fa-fw fa-envelope"></i>'; // Icon::$MAIL
 
 	/**
 	 * Unit: temperature in degree celsius
 	 * @var string
 	 */
-	static public $CELSIUS = '&deg;C';
+	public static $CELSIUS = '&deg;C';
 
 	/**
 	 * Unit: elevation
 	 * @var string
 	 */
-	static public $ELEVATION = 'hm';
+	public static $ELEVATION = 'hm';
 
 	/**
 	 * Unit: kcal
 	 * @var string
 	 */
-	static public $KCAL = 'kcal';
+	public static $KCAL = 'kcal';
 
 	/**
 	 * Unit: pace in km/h
 	 * @var string
 	 */
-	static public $KMH = 'km/h';
+	public static $KMH = 'km/h';
 
 	/**
 	 * Unit: pace in min/km
 	 * @var string
 	 */
-	static public $PACE = '/km';
+	public static $PACE = '/km';
 
 	/**
 	 * Unit: power
 	 * @var string
 	 */
-	static public $POWER = 'W';
+	public static $POWER = 'W';
         
         /**
          * Unit: hour
          * @var string
          */
-        static public $HOUR = 'h';
+        public static $HOUR = 'h';
 }

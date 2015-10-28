@@ -62,24 +62,6 @@ class Sport {
 	}
 	
 	/**
-	 * Get icon for this sport
-	 * @param string $tooltip optional parameter for tooltip
-	 * @param string $tooltipCssClass optional, e.g. 'atRight'
-	 * @return string
-	 */
-	public function Icon($tooltip = '', $tooltipCssClass = '') {
-		return Icon::getSportIconForGif($this->data['img'], $tooltip, $tooltipCssClass);
-	}
-	
-	/**
-	* Get icon for this sport
-	* @return string
-	*/
-	public function IconWithTooltip() {
-		return $this->Icon( $this->name() );
-	}
-	
-	/**
 	* Is this sport set to short-mode?
 	* @return bool
 	*/
@@ -109,23 +91,6 @@ class Sport {
 	 */
 	public function usesDistance() {
 		return ($this->data['distances'] == 1);
-	}
-
-	/**
-	 * Does this sport use km/h as unit for speed?
-	 * @todo REMOVE this function
-	 * @return bool
-	 */
-	public function usesKmh() {
-		return ($this->data['speed'] == Pace::KM_PER_H);
-	}
-
-	/**
-	 * Has this sport trainingtypes?
-	 * @return bool
-	 */
-	public function hasTypes() {
-		return ($this->data['types'] == 1);
 	}
 
 	/**

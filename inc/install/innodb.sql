@@ -1,4 +1,4 @@
--- Statements to use InnoDB as engine
+-- Statements to use InnoDB as engine (you may need to use your own prefix)
 --
 -- InnoDB support e.g. row-level locking instead of table locking
 -- and should be used for large installations.

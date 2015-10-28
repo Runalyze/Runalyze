@@ -17,13 +17,13 @@ class AccountHandler {
 	 * Salt for internal hash-algorithm - use your own for more security
 	 * @var string
 	 */
-	static private $SALT = 'USE_YOUR_OWN';
+	private static $SALT = 'USE_YOUR_OWN';
 
 	/**
 	 * Minimum length for passwords
 	 * @var int
 	 */
-	static public $PASS_MIN_LENGTH = 6;
+	public static $PASS_MIN_LENGTH = 6;
 
 	/**
 	 * Minimum length for usernames
@@ -45,26 +45,26 @@ class AccountHandler {
 	 * Boolean flag: registration process
 	 * @var type
 	 */
-	static public $IS_ON_REGISTER_PROCESS = false;
+	public static $IS_ON_REGISTER_PROCESS = false;
 
 	/**
 	 * ID for new registered user
 	 * @var int
 	 */
-	static public $NEW_REGISTERED_ID = -1;
+	public static $NEW_REGISTERED_ID = -1;
 
 	/**
 	 * Salt length in bytes
 	 * @var int
 	 */
-	static public $SALT_LENGTH = 32;
+	public static $SALT_LENGTH = 32;
 
 	/**
 	 * Array for special key values
 	 * used when initializing account
 	 * @var int
 	 */
-	static private $SPECIAL_KEYS=array();
+	private static $SPECIAL_KEYS = array();
 
 	/**
 	 * Update account-values
@@ -72,53 +72,28 @@ class AccountHandler {
 	 * @param mixed $column
 	 * @param mixed $value
 	 */
-	static private function updateAccount($username, $column, $value) {
+	private static function updateAccount($username, $column, $value) {
 		DB::getInstance()->stopAddingAccountID();
 		DB::getInstance()->updateWhere('account', '`username`='.DB::getInstance()->escape($username).' LIMIT 1', $column, $value);
 		DB::getInstance()->startAddingAccountID();
-        //FIXME        Cache::delete('account'.$id,1);
 	}
-
-        /**
-         * Cache Account Data from user
-         */
-        static private function cacheAccountData($id) {
-            //Disabled Accountcache
-            /*$accountdata = Cache::get('account'.$id,1);
-            if(is_null($accountdata)) {
-                DB::getInstance()->stopAddingAccountID();
-                $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
-                DB::getInstance()->startAddingAccountID();
-                Cache::set('account'.$id, $accountdata, '1800',1);
-            }*/
-            $accountdata = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
-            return $accountdata;
-        }
 
 	/**
 	 * Get account-data from database
 	 * @param string $username
-	 * @return mixed
+	 * @return array
 	 */
-	static public function getDataFor($username) {
-                $Data = Cache::get('account'.$username,1);
-                if(is_null($Data)) {
-                    DB::getInstance()->stopAddingAccountID();
-                    $Data = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
-                    DB::getInstance()->startAddingAccountID();
-                    Cache::set('account'.$username, $Data, '3600',1);
-                }
-		return $Data;
+	public static function getDataFor($username) {
+		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
 	}
 
 	/**
 	 * Get account-data from database
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	static public function getDataForId($id) {
-                $Data = self::cacheAccountData($id);
-		return $Data;
+	public static function getDataForId($id) {
+		return DB::getInstance()->query('SELECT * FROM `'.PREFIX.'account` WHERE `id`="'.(int)$id.'" LIMIT 1')->fetch();
 	}
 
 	/**
@@ -126,10 +101,8 @@ class AccountHandler {
 	 * @param string $username
 	 * @return boolean|string
 	 */
-	static public function getMailFor($username) {
-		DB::getInstance()->stopAddingAccountID();
+	public static function getMailFor($username) {
 		$result = DB::getInstance()->query('SELECT `mail` FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetch();
-		DB::getInstance()->startAddingAccountID();
 
 		if (is_array($result) && isset($result['mail']))
 			return $result['mail'];
@@ -142,7 +115,7 @@ class AccountHandler {
 	 * @param string $username
 	 * @return boolean
 	 */
-	static public function usernameExists($username) {
+	public static function usernameExists($username) {
 		return (1 == DB::getInstance()->query('SELECT COUNT(*) FROM `'.PREFIX.'account` WHERE `username`='.DB::getInstance()->escape($username).' LIMIT 1')->fetchColumn());
 	}
 
@@ -151,7 +124,7 @@ class AccountHandler {
 	 * @param string $mail
 	 * @return boolean
 	 */
-	static public function mailExists($mail) {
+	public static function mailExists($mail) {
 		return (1 == DB::getInstance()->query('SELECT 1 FROM `'.PREFIX.'account` WHERE `mail`='.DB::getInstance()->escape($mail).' LIMIT 1')->fetchColumn());
 	}
         
@@ -160,7 +133,7 @@ class AccountHandler {
          * @param string $mail
          * @return boolean 
          */
-        static public function mailValid($mail) {
+        public static function mailValid($mail) {
             $validator = new \EmailValidator\Validator();
             //isValid() could be used too, if server is connected to the internet
             return(1 == $validator->isDisposable($mail));
@@ -173,7 +146,7 @@ class AccountHandler {
 	 * @param string $saltFromDb
 	 * @return boolean
 	 */
-	static public function comparePasswords($realString, $hashFromDb, $saltFromDb) {
+	public static function comparePasswords($realString, $hashFromDb, $saltFromDb) {
 		return (self::passwordToHash($realString, $saltFromDb) == $hashFromDb);
 	}
 
@@ -182,7 +155,7 @@ class AccountHandler {
 	 * @param string $realString
 	 * @return string
 	 */
-	static private function passwordToHash($realString, $salt) {
+	private static function passwordToHash($realString, $salt) {
 		if (is_null($salt) || strlen($salt) == 0) {
 			return md5(trim($realString).self::$SALT);
 		} else {
@@ -194,7 +167,7 @@ class AccountHandler {
 	 * Get hash for autologin
 	 * @return string
 	 */
-	static public function getAutologinHash() {
+	public static function getAutologinHash() {
 		return md5(trim(SessionAccountHandler::getMail()).self::getRandomHash(32));
 	}
 
@@ -202,7 +175,7 @@ class AccountHandler {
 	 * Try to register new user with data from $_POST
 	 * @return boolean|array true for success, array with errors otherwise
 	 */
-	static public function tryToRegisterNewUser() {
+	public static function tryToRegisterNewUser() {
 		$errors = array();
 
 		if (strlen($_POST['new_username']) < self::USER_MIN_LENGTH)
@@ -242,18 +215,9 @@ class AccountHandler {
 	}
 
 	/**
-	 * Create user for no-login installation
-	 */
-
-	public static function createNewNoLoginUser() {
-		self::importEmptyValuesFor(0);
-		self::setSpecialConfigValuesFor(0);
-	}
-
-	/**
 	 * Create a new user from post-data
 	 */
-	static private function createNewUserFromPost() {
+	private static function createNewUserFromPost() {
 		$errors = array();
 
 		$activationHash = (System::isAtLocalhost()) ? '' : self::getRandomHash();
@@ -286,7 +250,7 @@ class AccountHandler {
 	 * @param string $username
 	 * @return string
 	 */
-	static public function sendPasswordLinkTo($username) {
+	public static function sendPasswordLinkTo($username) {
 		$account = self::getDataFor($username);
 
 		if ($account) {
@@ -317,10 +281,9 @@ class AccountHandler {
 
 
 	/**
-	 *
-	 *
+	 * Get random salt
 	 */
-	static private function getNewSalt() {
+	private static function getNewSalt() {
 		return self::getRandomHash(32);
 	}
 
@@ -328,7 +291,7 @@ class AccountHandler {
 	 * Get hash for changing password
 	 * @return string
 	 */
-	static private function getChangePasswordHash() {
+	private static function getChangePasswordHash() {
 		return self::getRandomHash();
 	}
 
@@ -336,9 +299,8 @@ class AccountHandler {
 	 * Get hash.
 	 * @return string
 	 */
-	static private function getRandomHash($bytes = 16) {
+	private static function getRandomHash($bytes = 16) {
 		return bin2hex(openssl_random_pseudo_bytes($bytes));
-		// return md5(substr(time()-rand(100, 100000),5,10).substr(time()-rand(100, 100000),-5));
 	}
 
 	/**
@@ -346,7 +308,7 @@ class AccountHandler {
 	 * @param string $hash
 	 * @return string
 	 */
-	static private function getChangePasswordLink($hash) {
+	private static function getChangePasswordLink($hash) {
 		return System::getFullDomain().'login.php?chpw='.$hash;
 	}
 
@@ -355,16 +317,16 @@ class AccountHandler {
 	 * @param string $hash
 	 * @return string
 	 */
-	static private function getActivationLink($hash) {
+	private static function getActivationLink($hash) {
 		return System::getFullDomain().'login.php?activate='.$hash;
 	}
 
-        /**
+	/**
 	 * Get link for activate account
 	 * @param string $hash
 	 * @return string
 	 */
-	static private function getDeletionLink($hash) {
+	private static function getDeletionLink($hash) {
 		return System::getFullDomain().'login.php?delete='.$hash;
 	}
 
@@ -372,15 +334,13 @@ class AccountHandler {
 	 * Get username requested for changing password
 	 * @return boolean|string
 	 */
-	static public function getUsernameForChangePasswordHash() {
-		DB::getInstance()->stopAddingAccountID();
+	public static function getUsernameForChangePasswordHash() {
 		$data = DB::getInstance()->query('
 			SELECT username FROM '.PREFIX.'account
 			WHERE changepw_hash='.DB::getInstance()->escape($_GET['chpw']).'
 				AND changepw_timelimit>'.time().'
 			LIMIT 1'
 		)->fetch();
-		DB::getInstance()->startAddingAccountID();
 
 		if ($data)
 			return $data['username'];
@@ -392,7 +352,7 @@ class AccountHandler {
 	 * Try to set new password from post-values
 	 * @return mixed
 	 */
-	static public function tryToSetNewPassword() {
+	public static function tryToSetNewPassword() {
 		if (!isset($_POST['chpw_hash']) || !isset($_POST['new_pw']) || !isset($_POST['new_pw_again']) || !isset($_POST['chpw_username']))
 			return;
 
@@ -410,7 +370,7 @@ class AccountHandler {
 			return array( __('Something went wrong.') );
 	}
 
-	static public function setNewPassword($username, $password) {
+	public static function setNewPassword($username, $password) {
 		$newSalt = self::getNewSalt();
 		self::updateAccount($username,
 			array('password', 'salt', 'changepw_hash', 'changepw_timelimit'),
@@ -421,10 +381,8 @@ class AccountHandler {
 	 * Try to activate the account
 	 * @return boolean
 	 */
-	static public function tryToActivateAccount() {
-		DB::getInstance()->stopAddingAccountID();
+	public static function tryToActivateAccount() {
 		$Account = DB::getInstance()->query('SELECT id FROM `'.PREFIX.'account` WHERE `activation_hash`='.DB::getInstance()->escape($_GET['activate']).' LIMIT 1')->fetch();
-		DB::getInstance()->startAddingAccountID();
 
 		if ($Account) {
 			DB::getInstance()->update('account', $Account['id'], 'activation_hash', '');
@@ -439,10 +397,8 @@ class AccountHandler {
 	 * Try to delete the account
 	 * @return boolean
 	 */
-	static public function tryToDeleteAccount() {
-		DB::getInstance()->stopAddingAccountID();
+	public static function tryToDeleteAccount() {
 		$Account = DB::getInstance()->exec('DELETE FROM `'.PREFIX.'account` WHERE `deletion_hash`='.DB::getInstance()->escape($_GET['delete']).' LIMIT 1');
-		DB::getInstance()->startAddingAccountID();
 
 		if ($Account) {
 			return true;
@@ -456,7 +412,7 @@ class AccountHandler {
 	 * Attention: $accountID has to be set here - new registered users are not in session yet!
 	 * @param int $accountID
 	 */
-	static private function importEmptyValuesFor($accountID) {
+	private static function importEmptyValuesFor($accountID) {
 		$DB          = DB::getInstance();
 		$EmptyTables = array();
 
@@ -487,7 +443,7 @@ class AccountHandler {
 	 * @param int $accountId
 	 * @param array $errors
 	 */
-	static private function setAndSendActivationKeyFor($accountId, &$errors) {
+	private static function setAndSendActivationKeyFor($accountId, &$errors) {
 		$account        = DB::getInstance()->fetchByID('account', $accountId);
 		$activationHash = $account['activation_hash'];
 		$activationLink = self::getActivationLink($activationHash);
@@ -515,7 +471,7 @@ class AccountHandler {
 	 * Set activation key for new user and set via email
 	 * @param array $errors
 	 */
-	static public function setAndSendDeletionKeyFor(&$errors) {
+	public static function setAndSendDeletionKeyFor(&$errors) {
 		$account      = DB::getInstance()->fetchByID('account', SessionAccountHandler::getId());
 		$deletionHash = self::getRandomHash();
 		$deletionLink = self::getDeletionLink($deletionHash);
@@ -541,7 +497,7 @@ class AccountHandler {
 	 * Set some special configuration values
 	 * @param int $accountId
 	 */
-	static private function setSpecialConfigValuesFor($accountId) {
+	private static function setSpecialConfigValuesFor($accountId) {
 		if (is_null($accountId) || $accountId < 0) {
 			Error::getInstance()->addError('AccountID for special config-values not set.');
 			return;

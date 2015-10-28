@@ -343,10 +343,10 @@ class Dataset {
 	 * @param int $timestamp
 	 * @return string
 	 */
-	static public function getDateString($timestamp) {
+	public static function getDateString($timestamp) {
 		$date    = date('d.m.', $timestamp);
 		$addLink = '';
-		$weekDay = Time::Weekday(date('w', $timestamp), true);
+		$weekDay = Time::weekday(date('w', $timestamp), true);
 
 		if (Configuration::DataBrowser()->showCreateLink() && !FrontendShared::$IS_SHOWN) {
 			$addLink = ImporterWindow::linkForDate($timestamp);
@@ -472,7 +472,11 @@ class Dataset {
 				return '';
 
 			case 'elevation':
-				return $this->Dataview->elevation();
+				if ($this->Activity->elevation() > 0) {
+					return $this->Dataview->elevation()->string();
+				}
+
+				return '';
 
 			case 'kcal':
 				return $this->Dataview->calories();
@@ -502,7 +506,7 @@ class Dataset {
 				return '';
 
 			case 'stride_length':
-				if ($this->Dataview->strideLength()->inCM() > 0) {
+				if ($this->Dataview->strideLength()->value() > 0) {
 					return $this->Dataview->strideLength()->string();
 				}
 

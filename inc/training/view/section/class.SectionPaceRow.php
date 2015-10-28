@@ -54,12 +54,12 @@ class SectionPaceRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
 			$Pace = $this->Context->dataview()->pace();
 
-			if ($Pace->unit() == \Runalyze\Activity\Pace::KM_PER_H) {
-				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
-				$this->BoxedValues[] = new BoxedValue($Pace->asMinPerKm(), '/km', __('&oslash; Pace'));
+			if ($Pace->unit()->isDecimalFormat()) {
+				$this->BoxedValues[] = new Activity\Box\Pace($this->Context);
+				$this->BoxedValues[] = new Activity\Box\PaceAlternative($this->Context);
 			} else {
-				$this->BoxedValues[] = new BoxedValue($Pace->value(), $Pace->appendix(), __('&oslash; Pace'));
-				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
+				$this->BoxedValues[] = new Activity\Box\Pace($this->Context);
+				$this->BoxedValues[] = new Activity\Box\Speed($this->Context);
 			}
 		}
 	}

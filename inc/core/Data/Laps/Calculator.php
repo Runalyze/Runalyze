@@ -6,9 +6,12 @@
 
 namespace Runalyze\Data\Laps;
 
+use Runalyze\Activity\Duration;
+use Runalyze\Calculation;
 use Runalyze\Data\Elevation;
 use Runalyze\Model\Route;
 use Runalyze\Model\Trackdata;
+use Runalyze\Model\Activity;
 
 /**
  * Calculate laps from trackdata/route
@@ -29,6 +32,11 @@ class Calculator
 	protected $Distances = array();
 
 	/**
+	 * @var array
+	 */
+	protected $Times = array();
+
+	/**
 	 * @var \Runalyze\Model\Trackdata\Loop
 	 */
 	protected $TrackdataLoop = null;
@@ -39,6 +47,11 @@ class Calculator
 	protected $RouteLoop = null;
 
 	/**
+	 * @var bool
+	 */
+	protected $CalculateAdditionalValues = false;
+
+	/**
 	 * @param \Runalyze\Data\Laps\Laps $object
 	 */
 	public function __construct(Laps $object)
@@ -47,7 +60,14 @@ class Calculator
 	}
 
 	/**
-	 * @param array $lapDistances
+	 * @param bool $flag
+	 */
+	public function calculateAdditionalValues($flag = true) {
+		$this->CalculateAdditionalValues = $flag;
+	}
+
+	/**
+	 * @param array $lapDistances [km]
 	 */
 	public function setDistances(array $lapDistances)
 	{
@@ -56,6 +76,20 @@ class Calculator
 		}
 
 		$this->Distances = $lapDistances;
+		$this->Times = array();
+	}
+
+	/**
+	 * @param array $lapTimes [s]
+	 */
+	public function setTimes(array $lapTimes)
+	{
+		if (!self::isSorted($lapTimes)) {
+			throw new \InvalidArgumentException('Calculator needs sorted array of times');
+		}
+
+		$this->Distances = array();
+		$this->Times = $lapTimes;
 	}
 
 	/**
@@ -67,16 +101,39 @@ class Calculator
 		$this->TrackdataLoop = new Trackdata\Loop($trackdata);
 		$this->RouteLoop = !is_null($route) ? new Route\Loop($route) : null;
 
-		foreach ($this->Distances as $i => $kilometer) {
-			// Ignore empty splits as long as we do not support time-based splits
-			if ($i == 0 && $kilometer > 0 || $this->Distances[$i-1] < $kilometer) {
-				$this->move($kilometer);
-				$this->readLap();
-			}
+		if (!empty($this->Distances)) {
+			$this->readLapsFromDistances();
+		} else {
+			$this->readLapsFromTimes();
 		}
 
 		if (!$this->TrackdataLoop->isAtEnd()) {
 			$this->finish();
+		}
+	}
+
+	/**
+	 * Read laps from given distances
+	 */
+	protected function readLapsFromDistances()
+	{
+		foreach ($this->Distances as $i => $kilometer) {
+			// Ignore empty splits
+			if ($i == 0 && $kilometer > 0 || $this->Distances[$i-1] < $kilometer) {
+				$this->moveToDistance($kilometer);
+				$this->readLap();
+			}
+		}
+	}
+
+	/**
+	 * Read laps from given times
+	 */
+	protected function readLapsFromTimes()
+	{
+		foreach ($this->Times as $seconds) {
+			$this->moveToTime($seconds);
+			$this->readLap();
 		}
 	}
 
@@ -104,6 +161,52 @@ class Calculator
 	}
 
 	/**
+	 * Convert times from comma-separated string to array
+	 * + at the beginning means treat as intervals
+	 * ' means minutes
+	 * 
+	 * @param string $string
+	 * @return array
+	 */
+	public static function getTimesFromString($string)
+	{
+		$string = str_replace('\'', ':00', $string);
+
+		if (substr($string, 0, 1) == "+") {
+			$times = self::explodeTimeStrings(substr($string, 1));
+			$sum = 0;
+
+			foreach ($times as $i => $time) {
+				$sum += $time;
+				$times[$i] = $sum;
+			}
+		} else {
+			$times = self::explodeTimeStrings($string);
+		}
+
+		if (!self::isSorted($times))
+		{
+			$times = array();
+		}
+
+		return $times;
+	}
+
+	/**
+	 * @param string $commaSeparatedString
+	 * @return array
+	 */
+	private static function explodeTimeStrings($commaSeparatedString)
+	{
+		$timeStrings = explode(',', $commaSeparatedString);
+
+		return array_map(function ($string) {
+			$Time = new Duration($string);
+			return $Time->seconds();
+		}, $timeStrings);
+	}
+
+	/**
 	 * Read lap
 	 */
 	protected function readLap()
@@ -117,6 +220,7 @@ class Calculator
 		$Lap->setTrackDistance($this->TrackdataLoop->distance());
 		$Lap->setHR($this->TrackdataLoop->average(Trackdata\Object::HEARTRATE), $this->TrackdataLoop->max(Trackdata\Object::HEARTRATE));
 		$this->addElevationFor($Lap);
+		$this->calculateAdditionalValuesFor($Lap);
 
 		$this->Laps->add($Lap);
 	}
@@ -137,11 +241,93 @@ class Calculator
 	}
 
 	/**
+	 * @param \Runalyze\Data\Laps\Lap $Lap
+	 */
+	protected function calculateAdditionalValuesFor(Lap $Lap)
+	{
+		if (!$this->CalculateAdditionalValues) {
+			return;
+		}
+
+		$AdditionalData = array();
+		$SlicedTrackdata = $this->TrackdataLoop->sliceObject();
+
+		$this->addTrackdataAveragesToDataFrom($SlicedTrackdata, $AdditionalData);
+		$this->addStrideLengthToDataFrom($SlicedTrackdata, $AdditionalData);
+		$this->addVDOTToDataFrom($Lap, $AdditionalData);
+
+		$Lap->setAdditionalValues($AdditionalData);
+	}
+
+	/**
+	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param array $AdditionalData
+	 */
+	protected function addTrackdataAveragesToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+		$KeysToAverage = array(
+			Activity\Object::CADENCE => Trackdata\Object::CADENCE,
+			Activity\Object::GROUNDCONTACT => Trackdata\Object::GROUNDCONTACT,
+			Activity\Object::VERTICAL_OSCILLATION => Trackdata\Object::VERTICAL_OSCILLATION
+		);
+
+		$NewLoop = new Trackdata\Loop($Object);
+		$NewLoop->goToEnd();
+
+		foreach ($KeysToAverage as $objectKey => $trackdataKey) {
+			if ($Object->has($trackdataKey)) {
+				$AdditionalData[$objectKey] = $NewLoop->average($trackdataKey);
+			}
+		}
+	}
+
+	/**
+	 * @param \Runalyze\Model\Trackdata\Object $Object
+	 * @param array $AdditionalData
+	 */
+	protected function addStrideLengthToDataFrom(Trackdata\Object $Object, array &$AdditionalData) {
+		$StrideCalculator = new Calculation\StrideLength\Calculator($Object);
+		$StrideCalculator->calculate();
+
+		if ($StrideCalculator->average() > 0) {
+			$AdditionalData[Activity\Object::STRIDE_LENGTH] = $StrideCalculator->average();
+		}
+	}
+
+	/**
+	 * @param \Runalyze\Data\Laps\Lap $Lap
+	 * @param array $AdditionalData
+	 */
+	protected function addVDOTToDataFrom(Lap $Lap, array &$AdditionalData) {
+		$VDOT = new Calculation\JD\VDOT();
+		$VDOT->fromPaceAndHR(
+			$Lap->distance()->kilometer(),
+			$Lap->duration()->seconds(),
+			$Lap->HRavg()->inPercent() / 100
+		);
+
+		if ($VDOT->value() > 0) {
+			$AdditionalData[Activity\Object::VDOT] = $VDOT->value();
+		}
+	}
+
+	/**
 	 * @param float $kilometer
 	 */
-	protected function move($kilometer)
+	protected function moveToDistance($kilometer)
 	{
 		$this->TrackdataLoop->moveToDistance($kilometer);
+
+		if (!is_null($this->RouteLoop)) {
+			$this->RouteLoop->goToIndex($this->TrackdataLoop->index());
+		}
+	}
+
+	/**
+	 * @param int $seconds
+	 */
+	protected function moveToTime($seconds)
+	{
+		$this->TrackdataLoop->moveToTime($seconds);
 
 		if (!is_null($this->RouteLoop)) {
 			$this->RouteLoop->goToIndex($this->TrackdataLoop->index());

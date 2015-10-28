@@ -4,6 +4,10 @@
  * @package Runalyze\Search
  */
 
+use Runalyze\Activity\Distance;
+use Runalyze\Activity\Duration;
+use Runalyze\Activity\Elevation;
+use Runalyze\Activity\StrideLength;
 use Runalyze\Configuration;
 
 /**
@@ -165,6 +169,11 @@ class SearchResults {
 		if (isset($_POST['date-from']) && isset($_POST['date-to']))
 			$this->addTimeRangeCondition($conditions);
 
+		if (isset($_POST['s']) && strlen($_POST['s']) > 0) {
+			$Time = new Duration($_POST['s']);
+			$_POST['s'] = $Time->seconds();
+		}
+
 		foreach ($this->allowedKeys as $key) {
 			if (isset($_POST[$key])) {
 				if (is_array($_POST[$key])) {
@@ -211,13 +220,19 @@ class SearchResults {
 				$_POST[$key] = (float)str_replace(',', '.', $_POST[$key]);
 			}
 
-			if ($key == 'vertical_oscillation') {
-				$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape(10*$_POST[$key]);
+			if ($key == 'elevation') {
+				$value = (new Elevation())->setInPreferredUnit($_POST[$key])->meter();
+			} elseif ($key == 'distance') {
+				$value = (new Distance())->setInPreferredUnit($_POST[$key])->kilometer();
+			} elseif ($key == 'vertical_oscillation') {
+				$value = 10*$_POST[$key];
 			} elseif ($key == 'stride_length') {
-				$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape(100*$_POST[$key]);
+				$value = (new StrideLength())->setInPreferredUnit($_POST[$key])->cm();
 			} else {
-				$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($_POST[$key]);
+				$value = $_POST[$key];
 			}
+
+			$conditions[] = '`'.$key.'` '.$sign.' '.DB::getInstance()->escape($value);
 
 			if (
 				($sign == '<' || $sign == '<=') &&
@@ -282,6 +297,10 @@ class SearchResults {
 	 * @return string
 	 */
 	private function getEquipmentCondition() {
+		if (!isset($_POST['equipmentid'])) {
+			return '';
+		}
+
 		if (is_array($_POST['equipmentid'])) {
 			$array = array_map(
 				function ($value) {
@@ -291,11 +310,9 @@ class SearchResults {
 			);
 
 			return 'INNER JOIN (SELECT `ae`.`activityid` FROM `'.PREFIX.'activity_equipment` AS `ae` WHERE `ae`.`equipmentid` IN('.implode(',', $array).')) AS `sub` ON `sub`.`activityid` = `'.PREFIX.'training`.`id`';
-		} elseif (isset($_POST['equipmentid'])) {
-			return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
-		} else {
-			return '';
 		}
+
+		return 'INNER JOIN `'.PREFIX.'activity_equipment` AS `ae` ON `ae`.`activityid` = `'.PREFIX.'training`.`id` AND `ae`.`equipmentid`="'.(int)$_POST['equipmentid'].'"';
 	}
 
 	/**

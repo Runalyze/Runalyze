@@ -20,7 +20,7 @@ class SummaryTableAllWeeks extends SummaryTable10Weeks {
 		parent::prepare();
 
 		$this->Title = sprintf(__('All training weeks %s'), $this->Year);
-		$this->TimeEnd = ($this->Year == date("Y")) ? Time::Weekend(time()) : Time::Weekend(mktime(1, 0, 0, 12, 31, $this->Year));
-		$this->TimeStart = Time::Weekstart(mktime(1, 0, 0, 12, 31, $this->Year-1));
+		$this->TimeEnd = ($this->Year == date("Y")) ? Time::weekend(time()) : Time::weekend(mktime(1, 0, 0, 12, 31, $this->Year));
+		$this->TimeStart = Time::weekstart(mktime(1, 0, 0, 12, 31, $this->Year-1));
 	}
 }

@@ -40,8 +40,8 @@ class TimeTest extends \PHPUnit_Framework_TestCase {
 		$start = mktime(0, 0, 0, 9, 14, 2015);
 		$end = mktime(23, 59, 50, 9, 20, 2015);
 
-		$this->assertEquals($start, Time::Weekstart($today));
-		$this->assertEquals($end, Time::Weekend($today));
+		$this->assertEquals($start, Time::weekstart($today));
+		$this->assertEquals($end, Time::weekend($today));
 	}
 
 }

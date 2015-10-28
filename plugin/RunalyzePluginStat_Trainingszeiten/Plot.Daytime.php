@@ -16,28 +16,35 @@ if ($this->sportid > 0) {
 }
 
 $Query = DB::getInstance()->prepare(
-	'SELECT
-		SUM(1) as `num`,
-		SUM(`s`) as `value`,
-		HOUR(FROM_UNIXTIME(`time`)) as `h`
-	FROM `'.PREFIX.'training`
+	'SELECT time, s
+	FROM `' . PREFIX . 'training`
 	WHERE
 		`sportid`=:id AND
 		(HOUR(FROM_UNIXTIME(`time`))!=0 OR MINUTE(FROM_UNIXTIME(`time`))!=0)
-		'.$this->getYearDependenceForQuery().'
-	GROUP BY `h`
-	ORDER BY `h` ASC'
+		' . $this->getYearDependenceForQuery() . '
+	'
 );
 
 foreach ($Sports as $sport) {
 	$id = $sport['name'];
-	$yAxis[$id] = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	$yAxis[$id] = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 	$Query->execute(array(':id' => $sport['id']));
 	$data = $Query->fetchAll();
 
-	foreach ($data as $dat)
-		$yAxis[$id][$dat['h']] = $dat['value']/3600;
+	foreach ($data as $dat) {
+		$starttime = getdate($dat['time']);
+		$endtime = getdate($dat['time'] + $dat['s']);
+
+		$yAxis[$id][$starttime['hours']] += (60 - $starttime['minutes']) / 60;
+		$yAxis[$id][$endtime['hours']] += $endtime['minutes'] / 60;
+
+		if ($starttime['hours'] == $endtime['hours'])
+			$yAxis[$id][$starttime['hours']] -= 1;
+
+		for ($i = $starttime['hours'] + 1; $i < $endtime['hours']; $i++)
+			$yAxis[$id][$i] += 1;
+	}
 }
 
 $Plot = new Plot("daytime", 350, 190);
@@ -59,12 +66,12 @@ $Plot->showBars(true);
 $Plot->stacked();
 
 $error = true;
-foreach ($yAxis as $t) 
-	foreach ($t as $e) 
-		if ($e != "0") 
+foreach ($yAxis as $t)
+	foreach ($t as $e)
+		if ($e != "0")
 			$error = false;
 
-if ($error === true) 
+if ($error === true)
 	$Plot->raiseError( __('No data available.') );
 
 

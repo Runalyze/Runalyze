@@ -11,7 +11,6 @@ function jUpdateSportValues() {
 		kcal = $s.attr('data-kcal'),
 		run = $s.attr('data-running'),
 		out = $s.attr('data-outside'),
-		typ = $s.attr('data-types'),
 		dis = $s.attr('data-distances'),
 		pow = $s.attr('data-power');
 
@@ -21,7 +20,6 @@ function jUpdateSportValues() {
 	$("form .only-running").toggle( typeof run !== "undefined" && run !== false );
 	$("form .only-not-running").toggle( typeof run === "undefined" || run === false );
 	$("form .only-outside").toggle( typeof out !== "undefined" && out !== false );
-	$("form .only-types").toggle( typeof typ !== "undefined" && typ !== false );
 	$("form .only-distances").toggle( typeof dis !== "undefined" && dis !== false );
 	$("form .only-power").toggle( typeof pow !== "undefined" && pow !== false );
 
@@ -33,6 +31,12 @@ function jUpdateSportValues() {
 	if ($("#typeid option:selected").attr('disabled')) {
 		$("#typeid option:selected").attr('selected', false);
 		$("#typeid option[data-sport='all']").attr('selected', true);
+	}
+
+	if ($("#typeid option[value!=0]:not(:disabled)").length) {
+		$("#typeid").parent().show();
+	} else {
+		$("#typeid").parent().hide();
 	}
 }
 
@@ -91,7 +95,7 @@ function getTimeInSeconds() {
 }
 
 function stringToDistance(string) {
-	return Number(string.replace(',', '.'));
+	return Number(string.replace(',', '.')) * $("input[name='distance-to-km-factor']").val();
 }
 
 function stringToSeconds(string) {
@@ -6604,7 +6608,7 @@ Runalyze.Statistics = (function($, Parent){
 	};
 
 	self.shows = function(id) {
-		return (currentUrl.lastIndexOf( options.urlStat + id.toString(), 0 ) === 0);
+		return (currentUrl == options.urlStat + id.toString()) || (currentUrl.lastIndexOf( options.urlStat + id.toString() + '&', 0 ) === 0);
 	};
 
 	self.currentId = function() {

@@ -17,7 +17,7 @@ class ExporterWindow {
 	 * URL for window
 	 * @var string
 	 */
-	static public $URL = 'call/call.Exporter.export.php';
+	public static $URL = 'call/call.Exporter.export.php';
 
 	/**
 	 * Training ID

@@ -15,7 +15,7 @@ class ImporterFiletypeXML extends ImporterFiletypeAbstract {
 	 * Allowed producer of XML files
 	 * @var string
 	 */
-	static private $ALLOWED_PRODUCER = 'Polar, Suunto, RunningAHEAD';
+	private static $ALLOWED_PRODUCER = 'Polar, Suunto, RunningAHEAD';
 
 	/**
 	 * Set parser

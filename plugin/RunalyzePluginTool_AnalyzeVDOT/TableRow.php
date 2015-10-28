@@ -101,7 +101,13 @@ class TableRow {
 	 * @return string
 	 */
 	public function distance() {
-		return Distance::format($this->Activity->distance());
+		$Distance = new Distance($this->Activity->distance());
+
+		if ($this->Activity->isTrack()) {
+			return $Distance->stringMeter();
+		}
+
+		return $Distance->string();
 	}
 
 	/**

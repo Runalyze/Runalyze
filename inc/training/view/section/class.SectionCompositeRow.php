@@ -6,6 +6,7 @@
 
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
+use Runalyze\View\Activity\Box;
 use Runalyze\View\Leaflet;
 
 /**
@@ -15,9 +16,10 @@ use Runalyze\View\Leaflet;
  * @package Runalyze\DataObjects\Training\View\Section
  */
 class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
-
+	/**
+	 * Add map
+	 */
     protected function addMap() {
-
         if ($this->Context->hasRoute() && $this->Context->route()->hasPositionData() && !$this->Context->hideMap()) {
             $Map = new Leaflet\Map('map-'.$this->Context->activity()->id());
             $Map->addRoute(
@@ -29,11 +31,9 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
             );
 
             $this->TopContent = '<div id="training-map"">'.$Map->code().'</div>';
-            $this->big=true;
-
+            $this->big = true;
         }
     }
-
 
 	/**
 	 * Set plot
@@ -80,7 +80,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		$showElevation = Configuration::ActivityView()->plotMode()->showCollection();
 
         if (Configuration::ActivityView()->plotMode()->showCollection() && Configuration::ActivityView()->mapFirst()) {
-            $this->BoxedValues[] = new BoxedValue(Helper::Unknown($this->Context->activity()->distance(), '-.--'), 'km', __('Distance'));
+            $this->BoxedValues[] = new Box\Distance($this->Context);
             $this->BoxedValues[] = new BoxedValue($this->Context->dataview()->duration()->string(), '', __('Time'));
         }
 
@@ -121,12 +121,12 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 		if ($this->Context->activity()->distance() > 0 && $this->Context->activity()->duration() > 0) {
 			$Pace = $this->Context->dataview()->pace();
 
-			if ($Pace->unit() == \Runalyze\Activity\Pace::KM_PER_H) {
-				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
-				$this->BoxedValues[] = new BoxedValue($Pace->asMinPerKm(), '/km', __('&oslash; Pace'));
+			if ($Pace->unit()->isDecimalFormat()) {
+				$this->BoxedValues[] = new Activity\Box\Pace($this->Context);
+				$this->BoxedValues[] = new Activity\Box\PaceAlternative($this->Context);
 			} else {
-				$this->BoxedValues[] = new BoxedValue($Pace->value(), $Pace->appendix(), __('&oslash; Pace'));
-				$this->BoxedValues[] = new BoxedValue($Pace->asKmPerHour(), 'km/h', __('&oslash; Speed'));
+				$this->BoxedValues[] = new Activity\Box\Pace($this->Context);
+				$this->BoxedValues[] = new Activity\Box\Speed($this->Context);
 			}
 		}
 	}
@@ -193,18 +193,21 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	 * Add: elevation
 	 */
 	protected function addElevation() {
-		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->distance(), 'km', __('Distance'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->elevation(), 'm', __('Elevation'));
+		if ($this->Context->activity()->distance() > 0 || $this->Context->activity()->elevation() > 0) {
+			if ($this->Context->activity()->distance() > 0) {
+				$this->BoxedValues[] = new Box\Distance($this->Context);
+			}
+
+			$this->BoxedValues[] = new Box\Elevation($this->Context);
 
 			// TODO: Calculated elevation?
 
 			if ($this->Context->activity()->elevation() > 0) {
-				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-
-				if ($this->Context->hasRoute()) {
-					$this->BoxedValues[] = new BoxedValue('+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown(), 'm', __('Elevation up/down'));
+				if ($this->Context->activity()->distance() > 0) {
+					$this->BoxedValues[] = new Box\Gradient($this->Context);
 				}
+
+				$this->BoxedValues[] = new Box\ElevationUpDown($this->Context);
 			}
 		}
 	}
@@ -227,7 +230,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	protected function addElevationInfoLink() {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Activity\Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal');
 			$this->Footer .= HTML::info( $InfoLink );
 		}
 

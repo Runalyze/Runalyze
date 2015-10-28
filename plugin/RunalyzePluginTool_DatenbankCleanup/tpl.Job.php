@@ -44,7 +44,7 @@ if (!($this instanceof RunalyzePluginTool_DatenbankCleanup)) {
 	<p class="text"></p>
 
 	<p class="text">
-		<?php echo $this->getActionLink('&laquo; back to form'); ?>
+		<?php echo $this->getActionLink('&laquo; '.__('back to form')); ?>
 	</p>
 </div>
 

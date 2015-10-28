@@ -34,12 +34,6 @@ define('PREFIX', '{config::prefix}');
 define('RUNALYZE_DEBUG', {config::debug});
 
 /**
- * To force users to login, define this constant as true
- * @var bool USER_MUST_LOGIN It set to true, users have to login
- */
-define('USER_MUST_LOGIN', {config::login});
-
-/**
  * Working on your site? Disable login with this variable.
  * @var bool USER_CANT_LOGIN Set to disable login
  */

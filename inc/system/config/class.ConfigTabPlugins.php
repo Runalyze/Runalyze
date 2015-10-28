@@ -21,7 +21,7 @@ class ConfigTabPlugins extends ConfigTab {
 	 * Get URL
 	 * @return string 
 	 */
-	static public function getExternalUrl() {
+	public static function getExternalUrl() {
 		return ConfigTabs::$CONFIG_URL.'?key=config_tab_plugins&external=true';
 	}
 
@@ -31,16 +31,16 @@ class ConfigTabPlugins extends ConfigTab {
 	public function setFieldsetsAndFields() {
 		$Panels = new FormularFieldset( __('Panels') );
 		$Panels->addInfo( __('Panels are small statistics always shown on the right side.') );
-		$Panels->setHtmlCode($this->getCodeFor( PluginType::Panel ));
+		$Panels->setHtmlCode($this->getCodeFor( PluginType::PANEL ));
 		$Panels->setCollapsed();
 
 		$Stats = new FormularFieldset( __('Statistics') );
 		$Stats->addInfo( __('Normal statistics are shown below the activitiy log.') );
-		$Stats->setHtmlCode($this->getCodeFor( PluginType::Stat ));
+		$Stats->setHtmlCode($this->getCodeFor( PluginType::STAT ));
 
 		$Tools = new FormularFieldset(__('Tools') );
 		$Tools->addInfo( __('Complex tools for analyzing or processing the complete database will open in an overlay.') );
-		$Tools->setHtmlCode($this->getCodeFor( PluginType::Tool ));
+		$Tools->setHtmlCode($this->getCodeFor( PluginType::TOOL ));
 		$Tools->setCollapsed();
 
 		$Install = new FormularFieldset( __('Install a new plugin') );
@@ -81,7 +81,7 @@ class ConfigTabPlugins extends ConfigTab {
 				</thead>
 				<tbody>';
 
-		foreach ($Plugins as $Data) {
+		foreach ($Plugins as $pos => $Data) {
 			$Plugin = $Factory->newInstance($Data['key']);
 
 			if ($Plugin === false) {
@@ -93,7 +93,7 @@ class ConfigTabPlugins extends ConfigTab {
 					</tr>';
 			} else {
 				$Code .= '
-					<tr class="a'.($Plugin->isInActive() ? ' unimportant' : '').'">
+					<tr id="'.$Plugin->id().'_tr" class="a'.($Plugin->isInActive() ? ' unimportant' : '').'">
 						<td>'.$Plugin->getConfigLink().'</td>
 						<td class="b">'.$Plugin->name().'</td>
 						<td>'.$Plugin->description().'</td>
@@ -102,7 +102,11 @@ class ConfigTabPlugins extends ConfigTab {
 								<option value="'.Plugin::ACTIVE_VARIOUS.'"'.HTML::Selected($Plugin->isHidden()).'>'.__('hidden*').'</option>
 								<option value="'.Plugin::ACTIVE_NOT.'"'.HTML::Selected($Plugin->isInActive()).'>'.__('not enabled').'</option>
 							</select></td>
-						<td><input type="text" name="plugin_order_'.$Plugin->id().'" size="3" value="'.$Plugin->order().'"></td>
+						<td style="white-space:nowrap;">
+							<input class="plugin-position" type="text" name="plugin_order_'.$Plugin->id().'" size="3" value="'.($pos + 1).'">
+							<span class="link" onclick="pluginMove('.$Plugin->id().', \'up\')">'.Icon::$UP.'</span>
+							<span class="link" onclick="pluginMove('.$Plugin->id().', \'down\')">'.Icon::$DOWN.'</span>
+						</td>
 						<td>'.PluginInstaller::uninstallLink($Plugin->key()).'</td>
 					</tr>';
 			}
@@ -111,6 +115,27 @@ class ConfigTabPlugins extends ConfigTab {
 		$Code .= '
 				</tbody>
 			</table>';
+
+		$Code .= Ajax::wrapJS('
+			function pluginMove(id, way) {
+				var pos = parseInt($("input[name=\'plugin_order_"+id+"\']").val()),
+					tr = $("#"+id+"_tr");
+
+				if (way == "up" && pos > 1) {
+					$("#"+id+"_tr .plugin-position").val(pos-1);
+					tr.prev().find(".plugin-position").val(pos);
+					tr.prev().toggleClass("swapped");
+					tr.prev().before(tr);
+				} else if (way == "down" && tr.next().find(".plugin-position").val() > 0) {
+					$("#"+id+"_tr .plugin-position").val(pos+1);
+					tr.next().find(".plugin-position").val(pos);
+					tr.next().toggleClass("swapped");
+					tr.next().after(tr);
+				}
+
+				tr.toggleClass("swapped");
+			}
+		');
 
 		switch($PluginType) {
 			case 'panel':

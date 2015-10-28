@@ -35,12 +35,18 @@ class Corrector {
 	 * Correct elevation
 	 * @param array $latitude
 	 * @param array $longitude
+	 * @param string $strategyName
 	 */
-	public function correctElevation(array $latitude, array $longitude) {
+	public function correctElevation(array $latitude, array $longitude, $strategyName = '') {
 		$this->LatitudePoints = $latitude;
 		$this->LongitudePoints = $longitude;
 
-		$this->chooseStrategy();
+		if ($strategyName != '') {
+			$this->tryToUse($strategyName);
+		} else {
+			$this->chooseStrategy();
+		}
+
 		$this->applyStrategy();
 	}
 
@@ -50,6 +56,22 @@ class Corrector {
 	 */
 	final protected function hasNoValidStrategy() {
 		return !($this->Strategy instanceof Strategy);
+	}
+
+	/**
+	 * 
+	 * @param type $strategyName
+	 */
+	protected function tryToUse($strategyName) {
+		$strategyName = 'Runalyze\\Data\\Elevation\\Correction\\'.$strategyName;
+
+		if (class_exists($strategyName)) {
+			$this->Strategy = new $strategyName($this->LatitudePoints, $this->LongitudePoints);
+
+			if (!$this->Strategy->canHandleData()) {
+				$this->Strategy = null;
+			}
+		}
 	}
 
 	/**
@@ -77,7 +99,7 @@ class Corrector {
 	 */
 	protected function applyStrategy() {
 		if ($this->hasNoValidStrategy()) {
-			throw new \RuntimeException('No elevation correction strategy is able to handle the data. Maybe all query limits are reached.');
+			throw new NoValidStrategyException('No elevation correction strategy is able to handle the data. Maybe all query limits are reached.');
 		} else {
 			$this->Strategy->correctElevation();
 		}

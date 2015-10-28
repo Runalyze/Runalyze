@@ -50,4 +50,12 @@ class Loop extends \Runalyze\Model\Loop {
 	public function swolf() {
 		return $this->current(Object::SWOLF);
 	}
+
+	/**
+	 * @param array $data
+	 * @return \Runalyze\Model\Swimdata\Object
+	 */
+	protected function createNewObject(array $data) {
+		return new Object($data);
+	}
 }

@@ -14,7 +14,7 @@ class ExporterFacebook extends ExporterAbstractSocialShare {
 	 * Icon class
 	 * @return string
 	 */
-	static public function IconClass() {
+	public static function IconClass() {
 		return 'fa-facebook color-facebook';
 	}
 

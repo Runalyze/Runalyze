@@ -6,10 +6,13 @@
 
 namespace Runalyze\Activity;
 
+use Runalyze\Parameter\Application\PaceUnit as PaceUnitOption;
+
 /**
  * Different pace types/units
  *
- * @author Hannes Christiansen
+ * @author Hannes Christiansen <hannes@runalyze.de>
+ * @author Michael Pohl <michael@runalyze.de>
  * @package Runalyze\Activity
  */
 class Pace {
@@ -17,37 +20,7 @@ class Pace {
 	 * Default speed (km/h)
 	 * @var string
 	 */
-	const STANDARD = "km/h";
-
-	/**
-	 * Speed unit km/h
-	 * @var string
-	 */
-	const KM_PER_H = "km/h";
-
-	/**
-	 * Speed unit min/km
-	 * @var string
-	 */
-	const MIN_PER_KM = "min/km";
-
-	/**
-	 * Speed unit min/100m
-	 * @var string
-	 */
-	const MIN_PER_100M = "min/100m";
-
-	/**
-	 * Speed unit min/500m
-	 * @var string
-	 */
-	const MIN_PER_500M = "min/500m";
-
-	/**
-	 * Speed unit m/s
-	 * @var string
-	 */
-	const M_PER_S = "m/s";
+	const STANDARD = PaceUnitOption::KM_PER_H;
 
 	/**
 	 * Time [s]
@@ -62,36 +35,30 @@ class Pace {
 	protected $Distance;
 
 	/**
-	 * Unit
-	 * @var enum
+	 * @var \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
-	protected $Unit;
+	protected $UnitObject = null;
 
 	/**
 	 * Options
 	 * @return array
 	 * @codeCoverageIgnore
 	 */
-	static public function options() {
-		return array(
-			self::KM_PER_H		=> self::KM_PER_H,
-			self::MIN_PER_KM	=> self::MIN_PER_KM,
-			self::MIN_PER_100M	=> self::MIN_PER_100M,
-			self::MIN_PER_500M	=> self::MIN_PER_500M,
-			self::M_PER_S		=> self::M_PER_S
-		);
+	public static function options() {
+		return (new PaceUnitOption())->options();
 	}
 
 	/**
 	 * Create pace
 	 * @param int $time [s]
 	 * @param float $distance [optional] [km]
-	 * @param enum $unit [optional]
+	 * @param string $unitEnum [optional]
 	 */
-	public function __construct($time, $distance = 1, $unit = self::STANDARD) {
+	public function __construct($time, $distance = 1, $unitEnum = self::STANDARD) {
 		$this->Time = $time;
 		$this->Distance = $distance;
-		$this->Unit = $unit;
+
+		$this->setUnitEnum($unitEnum);
 	}
 
 	/**
@@ -127,19 +94,41 @@ class Pace {
 	}
 
 	/**
-	 * Unit
-	 * @return enum
+	 * Unit object
+	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	public function unit() {
-		return $this->Unit;
+		return $this->UnitObject;
+	}
+
+	/**
+	 * Enum for pace unit
+	 * 
+	 * This is for example what is saved in sports configuration.
+	 * 
+	 * @return string
+	 */
+	public function unitEnum() {
+		return $this->UnitObject->unit();
 	}
 
 	/**
 	 * Set unit
-	 * @param enum $unit
+	 * @param \Runalyze\Activity\PaceUnit\AbstractUnit $Unit
 	 */
-	public function setUnit($unit) {
-		$this->Unit = $unit;
+	public function setUnit(PaceUnit\AbstractUnit $Unit) {
+		$this->UnitObject = $Unit;
+	}
+
+	/**
+	 * Set unit
+	 * @param string $unitEnum
+	 */
+	public function setUnitEnum($unitEnum) {
+		$Option = new PaceUnitOption();
+		$Option->set($unitEnum);
+
+		$this->UnitObject = $Option->object();
 	}
 
 	/**
@@ -162,24 +151,7 @@ class Pace {
 	 * @return string e.g. '12,5', '4:51'
 	 */
 	public function value() {
-		switch ($this->Unit) {
-			case self::KM_PER_H:
-				return $this->asKmPerHour();
-
-			case self::MIN_PER_KM:
-				return $this->asMinPerKm();
-
-			case self::MIN_PER_100M:
-				return $this->asMinPer100m();
-		
-			case self::MIN_PER_500M:
-				return $this->asMinPer500m();
-
-			case self::M_PER_S:
-				return $this->asMeterPerSecond();
-		}
-
-		return '?';
+		return $this->UnitObject->format($this->secondsPerKm());
 	}
 
 	/**
@@ -195,20 +167,26 @@ class Pace {
 	 * @return string
 	 */
 	public function appendix() {
-		switch ($this->Unit) {
-			case self::KM_PER_H:
-				return '&nbsp;km/h';
-			case self::MIN_PER_KM:
-				return '/km';
-			case self::MIN_PER_100M:
-				return '/100m';
-			case self::MIN_PER_500M:
-				return '/500m';
-			case self::M_PER_S:
-				return '&nbsp;m/s';
-		}
+		return $this->UnitObject->appendix();
+	}
 
-		return '';
+	/**
+	 * @param string $UnitEnum
+	 * @return string
+	 */
+	public function asUnitEnum($UnitEnum) {
+		$Option = new PaceUnitOption();
+		$Option->set($UnitEnum);
+
+		return $this->asUnit($Option->object());
+	}
+
+	/**
+	 * @param \Runalyze\Activity\PaceUnit\AbstractUnit $Unit
+	 * @return string
+	 */
+	public function asUnit(PaceUnit\AbstractUnit $Unit) {
+		return $Unit->format($this->secondsPerKm());
 	}
 
 	/**
@@ -216,11 +194,7 @@ class Pace {
 	 * @return string
 	 */
 	public function asKmPerHour() {
-		if ($this->isEmpty()) {
-			return '0,0';
-		}
-
-		return number_format($this->Distance*3600/$this->Time, 1, ',', '.');
+		return $this->asUnit(new PaceUnit\KmPerHour());
 	}
 
 	/**
@@ -228,49 +202,9 @@ class Pace {
 	 * @return string
 	 */
 	public function asMinPerKm() {
-		if ($this->isEmpty()) {
-			return '-:--';
-		}
-
-		return Duration::format(round($this->Time/$this->Distance));
-	}
-
-	/**
-	 * As: min/100m
-	 * @return string
-	 */
-	public function asMinPer100m() {
-		$this->Time /= 10;
-		$result = $this->asMinPerKm();
-		$this->Time *= 10;
-
-		return $result;
+		return $this->asUnit(new PaceUnit\MinPerKilometer());
 	}
 	
-	/**
-	 * As: min/500m
-	 * @return string
-	 */
-	public function asMinPer500m() {
-		$this->Time /= 2;
-		$result = $this->asMinPerKm();
-		$this->Time *= 2;
-
-		return $result;
-	}
-
-	/**
-	 * As: m/s
-	 * @return string
-	 */
-	public function asMeterPerSecond() {
-		if ($this->isEmpty()) {
-			return '0,0';
-		}
-
-		return number_format($this->Distance*1000/$this->Time, 1, ',', '.');
-	}
-
 	/**
 	 * Compare
 	 * Both pace objects must have the same unit and the unit must be comparable.
@@ -280,7 +214,7 @@ class Pace {
 	 * @return string
 	 */
 	public function compareTo(Pace $other, $raw = false) {
-		if ($this->Unit != $other->unit()) {
+		if ($this->unitEnum() != $other->unitEnum()) {
 			throw new \InvalidArgumentException('Pace objects must have the same unit.');
 		}
 
@@ -288,23 +222,14 @@ class Pace {
 			return '';
 		}
 
-		switch ($this->Unit) {
-			case self::MIN_PER_KM:
-			case self::MIN_PER_100M:
-			case self::MIN_PER_500M:
-				$first = new Duration($this->value());
-				$second = new Duration($other->value());
-				$string = Duration::format( abs($first->seconds() - $second->seconds()) );
-				return $this->formatComparison($string, $first->seconds() <= $second->seconds(), $raw);
+		$comparisonInSecondsPerKm = $this->UnitObject->compare($this->secondsPerKm(), $other->secondsPerKm());
+		$isPositive = ($comparisonInSecondsPerKm >= 0);
 
-			case self::KM_PER_H:
-			case self::M_PER_S:
-				$value = abs((float)str_replace(',', '.', $this->value()) - (float)str_replace(',', '.', $other->value()));
-				$string = number_format($value, 1, ',', '.');
-				return $this->formatComparison($string, $other->secondsPerKm() >= $this->secondsPerKm(), $raw);
+		if ($comparisonInSecondsPerKm == 0 && $this->UnitObject->isTimeFormat()) {
+			return $this->formatComparison('0:00', $isPositive, $raw);
 		}
 
-		throw new \InvalidArgumentException('Pace unit '.$this->Unit.' cannot be compared.');
+		return $this->formatComparison($this->UnitObject->format(abs($comparisonInSecondsPerKm)), $isPositive, $raw);
 	}
 
 	/**

@@ -31,7 +31,10 @@
 <div id="ajax" class="panel<?php if (defined('ADMIN_WINDOW')) echo ' big-window'; ?>" style="display:block;">
 	<div class="panel-heading">
 		<div class="panel-menu">
-			<ul>
+                    <ul>
+                    <li class="with-submenu">
+                        <span class="link">Language</span>
+			<ul class="submenu">
 			<?php
 				foreach (Language::availableLanguages() as $key => $lang_arr) {
 					$liClass = (Language::getCurrentLanguage() == $key) ? ' class="triggered"' : '';
@@ -39,6 +42,8 @@
 				}
 			?>
 			</ul>
+                    </li>
+                    </ul>
 		</div>
 		<h1><?php echo $title; ?></h1>
 	</div>

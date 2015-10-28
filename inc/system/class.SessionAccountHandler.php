@@ -3,14 +3,6 @@
  * This file contains class::SessionAccountHandler
  * @package Runalyze\System
  */
-
-if (!defined('USER_MUST_LOGIN'))
-/**
- * Is a login needed?
- * @var string
- */
-	define('USER_MUST_LOGIN', false);
-
 /**
  * Class: SessionAccountHandler
  * 
@@ -20,46 +12,40 @@ if (!defined('USER_MUST_LOGIN'))
  */
 class SessionAccountHandler {
 	/**
-	 * Boolean flag: user must be logged in
-	 * @var boolean
-	 */
-	static public $USER_MUST_LOGIN = USER_MUST_LOGIN;
-
-	/**
 	 * Array containing userrow from database
 	 * @var array
 	 */
-	static private $Account = array();
+	private static $Account = array();
 
 	/**
 	 * Error type
 	 * @var int
 	 */
-	static public $ErrorType = 0;
+	public static $ErrorType = 0;
 
 	/**
 	 * Error: no error
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_NO = 0;
+	public static $ERROR_TYPE_NO = 0;
 
 	/**
 	 * Error: no/wrong username
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_WRONG_USERNAME = 1;
+	public static $ERROR_TYPE_WRONG_USERNAME = 1;
 
 	/**
 	 * Error: no/wrong password
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_WRONG_PASSWORD = 2;
+	public static $ERROR_TYPE_WRONG_PASSWORD = 2;
 
 	/**
 	 * Error: activation needed
 	 * @var enum
 	 */
-	static public $ERROR_TYPE_ACTIVATION_NEEDED = 3;
+	public static $ERROR_TYPE_ACTIVATION_NEEDED = 3;
 
 	/**
 	 * Construct a new SessionAccountHandler
@@ -68,7 +54,7 @@ class SessionAccountHandler {
 	 * - all these consts will be defined after setting Account-ID,
 	 *   because some of them need database-connection
 	 */
-	function __construct() {
+	public function __construct() {
 		session_start();
 
 		if (!$this->tryToUseSession()) {
@@ -78,17 +64,12 @@ class SessionAccountHandler {
 			} elseif ($this->tryToLoginFromCookie()) {
 				header('Location: '.System::getFullDomain().'index.php');
 				exit;
-			} elseif (self::$USER_MUST_LOGIN && !$this->isOnLoginPage() && !$this->isOnAdminPage()) {
+			} elseif (!$this->isOnLoginPage() && !$this->isOnAdminPage()) {
 				header('Location: '.System::getFullDomain().'login.php');
 				exit;
 			}
 		}
 	}
-
-	/**
-	 * Destruct SessionAccountHandler 
-	 */
-	function __destruct() {}
 
 	/**
 	 * Is user on login-page?
@@ -110,7 +91,7 @@ class SessionAccountHandler {
 	 * Is anyone logged in?
 	 * @return boolean 
 	 */
-	static public function isLoggedIn() {
+	public static function isLoggedIn() {
 		if (isset($_SESSION['accountid']))
 			return true;
 
@@ -134,8 +115,13 @@ class SessionAccountHandler {
 				Language::setLanguage($Account['language'], false);
 
 				return true;
-			} else
+			} elseif (defined('RUNALYZE_TEST')) {
+				$this->setAccount($Account);
+
+				return true;
+			} else {
 				unset($_SESSION['accountid']);
+			}
 		}
 
 		return false;
@@ -147,10 +133,10 @@ class SessionAccountHandler {
 	private function updateLastAction() {
 		DB::getInstance()->update('account', self::getId(), 'lastaction', time());
 	}
-        
-        /**
-         * Update language of current account
-         */
+
+	/**
+	 * Update language of current account
+	 */
 	private function updateLanguage() {
 		DB::getInstance()->update('account', self::getId(), 'language', Language::getCurrentLanguage());
 	}  
@@ -189,13 +175,12 @@ class SessionAccountHandler {
 			}
 
 			if (AccountHandler::comparePasswords($password, $Account['password'], $Account['salt'])) {
-
 				$this->setAccount($Account);
 				$this->setSession();
-                                
-                                //Set language for user if not exists
-                                if(empty($Account['language']))
-                                    $this->updateLanguage();
+
+				//Set language for user if not exists
+				if(empty($Account['language']))
+					$this->updateLanguage();
 				// replace old md5 with new sha256 hash
 				if (strlen($Account['salt']) < 1) {
 					AccountHandler::setNewPassword($username, $password);
@@ -204,9 +189,7 @@ class SessionAccountHandler {
 				return true;
 			}
 
-			$this->throwErrorForWrongPassword();
-
-                            
+			$this->throwErrorForWrongPassword(); 
 		} else {
 			$this->throwErrorForWrongUsername();
 		}
@@ -246,9 +229,10 @@ class SessionAccountHandler {
 	/**
 	 * Try to set account from request 
 	 */
-	static public function setAccountFromRequest() {
-		if (empty(self::$Account))
+	public static function setAccountFromRequest() {
+		if (empty(self::$Account)) {
 			self::$Account = AccountHandler::getDataForId( SharedLinker::getUserId() );
+		}
 	}
 
 	/**
@@ -274,8 +258,14 @@ class SessionAccountHandler {
 	 * Set session to database 
 	 */
 	private function setSessionToDatabase() {
-		$columns = array('session_id', 'lastlogin', 'autologin_hash');
-		$values  = array(session_id(), time(), $this->getAutologinHash());
+		$columns = array('session_id', 'lastlogin');
+		$values  = array(session_id(), time());
+
+		if (isset($_POST['autologin'])) {
+			$columns[] = 'autologin_hash';
+			$values[] = $this->getAutologinHash();
+		}
+
 		DB::getInstance()->update('account', self::getId(), $columns, $values);
 	}
 
@@ -298,13 +288,12 @@ class SessionAccountHandler {
 	 * Get number of online users
 	 * @return int
 	 */
-	static public function getNumberOfUserOnline() {
-		DB::getInstance()->stopAddingAccountID();
+	public static function getNumberOfUserOnline() {
 		$result = DB::getInstance()->query('SELECT COUNT(*) as num FROM '.PREFIX.'account WHERE session_id!="NULL" AND lastaction>'.(time()-10*60))->fetch();
-		DB::getInstance()->startAddingAccountID();
 
-		if ($result !== false && isset($result['num']))
+		if ($result !== false && isset($result['num'])) {
 			return $result['num'];
+		}
 
 		return 0;
 	}
@@ -312,7 +301,7 @@ class SessionAccountHandler {
 	/**
 	 * Logout 
 	 */
-	static public function logout() {
+	public static function logout() {
 		DB::getInstance()->update('account', self::getId(), 'session_id', null);
 		DB::getInstance()->update('account', self::getId(), 'autologin_hash', '');
 		session_destroy();
@@ -324,24 +313,24 @@ class SessionAccountHandler {
 
 	/**
 	 * Get ID of current user
-	 * @return type 
+	 * @return int 
 	 */
-	static public function getId() {
+	public static function getId() {
 		// Dirty hack for 'global.cleanup.php'
-		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount'))
+		if (defined('GLOBAL_CLEANUP') && class_exists('GlobalCleanupAccount')) {
 			return GlobalCleanupAccount::$ID;
+		}
 
-		if (SharedLinker::isOnSharedPage())
+		if (SharedLinker::isOnSharedPage()) {
 			return SharedLinker::getUserId();
+		}
 
 		if (!isset(self::$Account['id'])) {
-			if (isset($_SESSION['accountid']))
+			if (isset($_SESSION['accountid'])) {
 				return $_SESSION['accountid'];
+			}
 
-			if (USER_MUST_LOGIN)
-				return null;
-
-			return 0;
+			return null;
 		}
 
 		return self::$Account['id'];
@@ -349,54 +338,60 @@ class SessionAccountHandler {
 
 	/**
 	 * Get mail of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getMail() {
-		if (!isset(self::$Account['mail']))
+	public static function getMail() {
+		if (!isset(self::$Account['mail'])) {
 			return '';
+		}
 
 		return self::$Account['mail'];
 	}
 
 	/**
 	 * Get name of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getName() {
-		if (!isset(self::$Account['name']))
+	public static function getName() {
+		if (!isset(self::$Account['name'])) {
 			return '';
+		}
 
 		return self::$Account['name'];
 	}
 
 	/**
-	 * Get name of current user
-	 * @return type 
+	 * Get if mails are allowed
+	 * @return string 
 	 */
-	static public function getAllowMails() {
-		if (!isset(self::$Account['allow_mails']))
+	public static function getAllowMails() {
+		if (!isset(self::$Account['allow_mails'])) {
 			return '';
+		}
 
 		return self::$Account['allow_mails'];
 	}
-        
-        /**
+
+	/**
 	 * Get language of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getLanguage() {
-		if (!isset(self::$Account['language']))
+	public static function getLanguage() {
+		if (!isset(self::$Account['language'])) {
 			return '';
+		}
 
 		return self::$Account['language'];
 	}
+
 	/**
 	 * Get username of current user
-	 * @return type 
+	 * @return string 
 	 */
-	static public function getUsername() {
-		if (!isset(self::$Account['username']))
+	public static function getUsername() {
+		if (!isset(self::$Account['username'])) {
 			return '';
+		}
 
 		return self::$Account['username'];
 	}

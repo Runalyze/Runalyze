@@ -41,6 +41,11 @@ class Series {
 	protected $UnitDecimals = 0;
 
 	/**
+	 * @var float
+	 */
+	protected $UnitFactor = 1;
+
+	/**
 	 * @var int
 	 */
 	protected $TickSize = false;
@@ -64,6 +69,13 @@ class Series {
 	 * @var boolean
 	 */
 	protected $ShowMinimum = false;
+
+	/**
+	 * Manual average
+	 * A manual average can be used instead of calculating the average of the series
+	 * @var mixed 
+	 */
+	protected $ManualAverage = false;
 
 	/**
 	 * Set label
@@ -122,12 +134,12 @@ class Series {
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
 				$Plot->hideYAxis($yAxis);
-			} elseif ($this->UnitString == 'km') {
+			} elseif ($this->UnitString == 'km' || $this->UnitString == 'mi') {
 				$series = count($Plot->Data) - 1;
 				$Plot->setLineWidth($series, 0);
 				$Plot->setShadowSize($series, 0);
 				//$Plot->hideYAxis($yAxis);
-				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
+				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals, $this->UnitFactor);
 			} else
 				$Plot->addYUnit($yAxis, $this->UnitString, $this->UnitDecimals);
 		}
@@ -161,9 +173,20 @@ class Series {
 	/**
 	 * Average
 	 * @param int $decimals [optional]
-	 * @return int
+	 * @return int|float
 	 */
 	protected function avg($decimals = 0) {
+		if ($this->ManualAverage !== false) {
+			return $this->ManualAverage;
+		}
+
 		return round( array_sum($this->Data)/count($this->Data), $decimals );
+	}
+
+	/**
+	 * @param int|float $value
+	 */
+	protected function setManualAverage($value) {
+		$this->ManualAverage = $value;
 	}
 }

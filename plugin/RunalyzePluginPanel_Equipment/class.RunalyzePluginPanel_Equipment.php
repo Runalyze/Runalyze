@@ -61,6 +61,12 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		$Configuration = new PluginConfiguration($this->id());
 		$Configuration->addValue($Types);
 
+		if (isset($_GET['type']) && isset($Options[$_GET['type']])) {
+			$Configuration->object('type')->setValue($_GET['type']);
+			$Configuration->update('type');
+			Cache::delete(PluginConfiguration::CACHE_KEY);
+		}
+
 		$this->setConfiguration($Configuration);
 	}
 
@@ -69,7 +75,17 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 	 */
 	protected function getRightSymbol() {
 		$Links = '';
-		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$CONF.'</a>').'</li>';
+		$Links .= '<li class="with-submenu">'.Ajax::link(__('Type'), 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id()).'</a>';
+		$Links .= '<ul class="submenu">';
+
+		foreach ($this->AllTypes as $Type) {
+			$active = $Type['id'] == (int)$this->Configuration()->value('type');
+			$Links .= '<li'.($active ? ' class="active"' : '').'>'.Ajax::link($Type['name'], 'panel-'.$this->id(), Plugin::$DISPLAY_URL.'?id='.$this->id().'&type='.$Type['id']).'</li>';
+		}
+
+		$Links .= '</ul>';
+		$Links .= '</li>';
+		$Links .= '<li>'.Ajax::window('<a href="'.ConfigTabs::$CONFIG_URL.'?key=config_tab_equipment" '.Ajax::tooltip('', __('Add/Edit equipment'), true, true).'>'.Icon::$ADD.'</a>').'</li>';
 		$Links .= '<li>'.Ajax::window('<a href="plugin/'.$this->key().'/window.equipment.table.php" '.Ajax::tooltip('', __('Show all equipment'), true, true).'>'.Icon::$TABLE.'</a>').'</li>';
 
 		return '<ul>'.$Links.'</ul>';
@@ -92,20 +108,48 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 		echo '<div id="equipment">';
 
 		$inuse = true;
+		$this->showListFor($EquipmentType, $inuse);
+
+		echo '</div>';
+
+		if (!$inuse)
+			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show unused equipment').'</a>', 'hiddenequipment');
+
+		echo HTML::clearBreak();
+	}
+
+	/**
+	 * @param \Runalyze\Model\EquipmentType\Object $EquipmentType
+	 * @param boolean $inuse
+	 */
+	protected function showListFor(Model\EquipmentType\Object $EquipmentType, &$inuse) {
+		$max = 0;
+		$showDistance = $EquipmentType->hasMaxDistance();
+		$hasMaxDuration = $showDistance || $EquipmentType->hasMaxDuration();
 		$allEquipment = DB::getInstance()->query('SELECT * FROM `'.PREFIX.'equipment` WHERE `typeid`="'.$EquipmentType->id().'" AND `accountid`="'.SessionAccountHandler::getId().'" ORDER BY ISNULL(`date_end`) DESC, `distance` DESC')->fetchAll();
+
 		foreach ($allEquipment as $data) {
 			$Object = new Model\Equipment\Object($data);
-			$Distance = new Distance($Object->distance());
+			$Distance = new Distance($Object->totalDistance());
+			$Duration = new Duration($Object->duration());
 
 			if ($inuse && !$Object->isInUse()) {
 				echo '<div id="hiddenequipment" style="display:none;">';
 				$inuse = false;
 			}
 
+			if ($max == 0) {
+				$max = $Object->duration();
+			}
+
 			echo '<p style="position:relative;">
-				<span class="right">'.$Distance->string().'</span>
+				<span class="right">'.($showDistance ? $Distance->string() : $Duration->string()).'</span>
 				<strong>'.SearchLink::to('equipmentid', $Object->id(), $Object->name()).'</strong>
-				'.$this->getUsageImage($Object->distance()).'
+				'.$this->getUsageImage(
+					$showDistance
+						? $Object->totalDistance() / $EquipmentType->maxDistance()
+						: $Object->duration() / ($hasMaxDuration ? $EquipmentType->maxDuration() : $max)
+				).'
 			</p>';
 		}
 
@@ -114,12 +158,6 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 
 		if (!$inuse)
 			echo '</div>';
-		echo '</div>';
-
-		if (!$inuse)
-			echo Ajax::toggle('<a class="right" href="#equipment" name="equipment">'.__('Show unused equipment').'</a>', 'hiddenequipment');
-
-		echo HTML::clearBreak();
 	}
 
 	/**
@@ -132,11 +170,11 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 
 	/**
 	 * Get shoe usage image
-	 * @param float $km
+	 * @param float $percentage [0.0 .. 1.0]
 	 * @return string
 	 */
-	protected function getUsageImage($km) {
-		return '<span class="equipment-usage" style="width:'.round(min(330,$km/4)).'px;"></span>';
+	protected function getUsageImage($percentage) {
+		return '<span class="equipment-usage" style="width:'.round($percentage * 330).'px;"></span>';
 	}
 
 	/**
@@ -152,9 +190,9 @@ class RunalyzePluginPanel_Equipment extends PluginPanel {
 					<th class="{sorter: \'x\'} small">'.__('x-times').'</th>
 					<th>'.__('Name').'</th>
 					<th class="{sorter: \'germandate\'} small">'.__('since').'</th>
-					<th class="{sorter: \'distance\'}">&Oslash; km</th>
+					<th class="{sorter: \'distance\'}">&Oslash; '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 					<th>&Oslash; '.__('Pace').'</th>
-					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> km</th>
+					<th class="{sorter: \'distance\'} small"><small>'.__('max.').'</small> '.Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 					<th class="small"><small>'.__('min.').'</small> '.__('Pace').'</th>
 					<th class="{sorter: \'resulttime\'}">'.__('Time').'</th>
 					<th class="{sorter: \'distance\'}">'.__('Distance').'</th>

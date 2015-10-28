@@ -4,7 +4,10 @@
  * @package Runalyze\HTML\Formular\Validation
  */
 
+use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Elevation;
+use Runalyze\Activity\Weight;
 
 /**
  * Library with parsers for formular values, default behavior: from user input to database value
@@ -16,61 +19,79 @@ class FormularValueParser {
 	 * Parser: timestamp <=> date-string
 	 * @var string 
 	 */
-	static public $PARSER_DATE = 'date';
+	public static $PARSER_DATE = 'date';
 
 	/**
 	 * Parser: timestamp <=> daytime-string
 	 * @var string 
 	 */
-	static public $PARSER_DAYTIME = 'daytime';
+	public static $PARSER_DAYTIME = 'daytime';
 
 	/**
 	 * Parser: time in seconds <=> time-string
 	 * @var string
 	 */
-	static public $PARSER_TIME = 'time';
+	public static $PARSER_TIME = 'time';
 
 	/**
 	 * Parser: time in minutes <=> time-string
 	 * @var string
 	 */
-	static public $PARSER_TIME_MINUTES = 'time-minutes';
+	public static $PARSER_TIME_MINUTES = 'time-minutes';
 
 	/**
 	 * Parser: encoded string <=> string
 	 * @var string 
 	 */
-	static public $PARSER_STRING = 'string';
+	public static $PARSER_STRING = 'string';
 
 	/**
 	 * Parser: check for integer
 	 * @var string 
 	 */
-	static public $PARSER_INT = 'int';
+	public static $PARSER_INT = 'int';
 
 	/**
 	 * Parser: check for decimal
 	 * @var string 
 	 */
-	static public $PARSER_DECIMAL = 'decimal';
+	public static $PARSER_DECIMAL = 'decimal';
 
 	/**
 	 * Parser: check for boolean
 	 * @var string 
 	 */
-	static public $PARSER_BOOL = 'bool';
+	public static $PARSER_BOOL = 'bool';
 
 	/**
 	 * Parser: comma separated string <=> checkboxes
 	 * @var string 
 	 */
-	static public $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
+	public static $PARSER_ARRAY_CHECKBOXES = 'array-checkboxes';
 
 	/**
 	 * Parser: array with splits <=> string for splits
 	 * @var string
 	 */
-	static public $PARSER_SPLITS = 'splits';
+	public static $PARSER_SPLITS = 'splits';
+
+	/**
+	 * Parser: weight in kg <=> weight in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_WEIGHT = 'weight';
+
+	/**
+	 * Parser: elevation in m <=> elevation in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_ELEVATION = 'elevation';
+
+	/**
+	 * Parser: distance in km <=> distance in preferred unit
+	 * @var string 
+	 */
+	public static $PARSER_DISTANCE = 'distance';
 
 	/**
 	 * Validate post-value for a given key with a given parser
@@ -79,7 +100,7 @@ class FormularValueParser {
 	 * @param array $parserOptions
 	 * @return boolean 
 	 */
-	static public function validatePost($key, $parser, $parserOptions = array()) {
+	public static function validatePost($key, $parser, $parserOptions = array()) {
 		if (is_null($parser))
 			return true;
 
@@ -111,6 +132,12 @@ class FormularValueParser {
 				return self::validateArrayCheckboxes($key, $parserOptions);
 			case self::$PARSER_SPLITS:
 				return self::validateSplits($key, $parserOptions);
+			case self::$PARSER_WEIGHT:
+				return self::validateWeight($key);
+			case self::$PARSER_ELEVATION:
+				return self::validateElevation($key);
+			case self::$PARSER_DISTANCE:
+				return self::validateDistance($key, $parserOptions);
 			default:
 				return true;
 		}
@@ -122,7 +149,7 @@ class FormularValueParser {
 	 * @param enum $parser
 	 * @param array $parserOptions
 	 */
-	static public function parse(&$value, $parser, $parserOptions = array()) {
+	public static function parse(&$value, $parser, $parserOptions = array()) {
 		if (is_null($parser))
 			return;
 
@@ -134,7 +161,7 @@ class FormularValueParser {
 				self::parseDaytime($value);
 				break;
 			case self::$PARSER_TIME:
-				self::parseTime($value);
+				self::parseTime($value, $parserOptions);
 				break;
 			case self::$PARSER_TIME_MINUTES:
 				self::parseTimeMinutes($value);
@@ -143,7 +170,16 @@ class FormularValueParser {
 				self::parseArrayCheckboxes($value);
 				break;
 			case self::$PARSER_SPLITS:
-				self::parseSplits($value);
+				self::parseSplits($value, $parserOptions);
+				break;
+			case self::$PARSER_WEIGHT:
+				self::parseWeight($value);
+				break;
+			case self::$PARSER_ELEVATION:
+				self::parseElevation($value);
+				break;
+			case self::$PARSER_DISTANCE:
+				self::parseDistance($value, $parserOptions);
 				break;
 		}
 	}
@@ -154,7 +190,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateString($key, $options = array()) {
+	private static function validateString($key, $options = array()) {
 		if (isset($options['notempty']) && $options['notempty'] && strlen($_POST[$key]) == 0)
 			return __('The field can not be left empty.');
 
@@ -166,7 +202,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateBool($key) {
+	private static function validateBool($key) {
 		$_POST[$key] = isset($_POST[$key]) ? '1' : '0';
 
 		return true;
@@ -178,7 +214,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateInt($key, $options) {
+	private static function validateInt($key, $options) {
 		if (!is_numeric($_POST[$key]) || ($_POST[$key]) != (int)$_POST[$key])
 			return __('Please enter a number.');
 
@@ -196,7 +232,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateDecimal($key, $options) {
+	private static function validateDecimal($key, $options) {
 		$_POST[$key] = Helper::CommaToPoint($_POST[$key]);
 
 		if (!is_numeric($_POST[$key]))
@@ -216,7 +252,7 @@ class FormularValueParser {
 	 * @param array $options array with key 'precision': as int or string for decimal
 	 * @return boolean
 	 */
-	static protected function precisionIsOkay($value, $options) {
+	private static function precisionIsOkay($value, $options) {
 		if (!isset($options['precision']))
 			return true;
 
@@ -233,7 +269,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateDate($key) {
+	private static function validateDate($key) {
 		$dateParts = self::removeEmptyValues(explode('.', $_POST[$key]));
 		$numParts  = count($dateParts);
 
@@ -253,7 +289,7 @@ class FormularValueParser {
 	 * Parse: timestamp => date-string
 	 * @param type $value 
 	 */
-	static protected function parseDate(&$value) {
+	private static function parseDate(&$value) {
 		if (is_numeric($value))
 			$value = date('d.m.Y', $value);
 	}
@@ -263,7 +299,7 @@ class FormularValueParser {
 	 * @param string $key
 	 * @return boolean 
 	 */
-	static protected function validateDaytime($key) {
+	private static function validateDaytime($key) {
 		$timeParts = self::removeEmptyValues(explode(':', $_POST[$key]));
 		$numParts  = count($timeParts);
 
@@ -285,7 +321,7 @@ class FormularValueParser {
 	 * Parse: timestamp => date-string
 	 * @param type $value 
 	 */
-	static protected function parseDaytime(&$value) {
+	private static function parseDaytime(&$value) {
 		if (is_numeric($value))
 			$value = date('H:i', $value);
 
@@ -299,7 +335,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateTime($key, $options) {
+	private static function validateTime($key, $options) {
 		$Time = new Duration($_POST[$key]);
 
 		$_POST[$key] = $Time->seconds();
@@ -313,10 +349,15 @@ class FormularValueParser {
 	/**
 	 * Parse: time in seconds => time-string
 	 * @param mixed $value 
+	 * @param array $options
 	 */
-	static protected function parseTime(&$value) {
+	private static function parseTime(&$value, $options) {
 		if ($value == 0) {
-			$value = '0:00:00';
+			if (isset($options['hide-empty'])) {
+				$value = '';
+			} else {
+				$value = '0:00:00';
+			}
 		} else {
 			$value = Duration::format($value);
 		}
@@ -329,7 +370,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean 
 	 */
-	static protected function validateTimeMinutes($key, $options) {
+	private static function validateTimeMinutes($key, $options) {
 		$Time = new Duration($_POST[$key]);
 
 		$_POST[$key] = $Time->seconds();
@@ -344,7 +385,7 @@ class FormularValueParser {
 	 * Parse: time in seconds => time-string
 	 * @param mixed $value 
 	 */
-	static protected function parseTimeMinutes(&$value) {
+	private static function parseTimeMinutes(&$value) {
 		if ($value == 0) {
 			$value = '0:00';
 		} else {
@@ -359,7 +400,7 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean
 	 */
-	static protected function validateArrayCheckboxes($key, $options) {
+	private static function validateArrayCheckboxes($key, $options) {
 		if (!isset($_POST[$key]))
 			return true;
 
@@ -372,7 +413,7 @@ class FormularValueParser {
 	 * Parse: comma separated string => checkbox array
 	 * @param string $value
 	 */
-	static protected function parseArrayCheckboxes(&$value) {
+	private static function parseArrayCheckboxes(&$value) {
 		if (is_array($value))
 			return;
 
@@ -391,12 +432,12 @@ class FormularValueParser {
 	 * @param array $options
 	 * @return boolean
 	 */
-	static protected function validateSplits($key, $options) {
+	private static function validateSplits($key, $options) {
 		if (!isset($_POST[$key])) {
 			$_POST[$key] = array();
 		}
 
-		$Splits = new Splits($_POST[$key]);
+		$Splits = new Splits($_POST[$key], $options);
 		$_POST[$key] = $Splits->asString();
 
 		return true;
@@ -405,10 +446,86 @@ class FormularValueParser {
 	/**
 	 * Parse: splits string => splits array
 	 * @param string $value
+	 * @param array $options
 	 */
-	static protected function parseSplits(&$value) {
-		$Splits = new Splits($value);
+	private static function parseSplits(&$value, $options) {
+		$Splits = new Splits($value, $options);
 		$value = $Splits->asArray();
+	}
+
+	/**
+	 * Validator: weight in preferred unit => weight in kg
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateWeight($key) {
+		$_POST[$key] = round((new Weight())->setInPreferredUnit($_POST[$key])->kg(), 2);
+
+		return true;
+	}
+
+	/**
+	 * Parse: weight in kg => weight in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseWeight(&$value) {
+		$value = round((new Weight($value))->valueInPreferredUnit(), 2);
+	}
+
+	/**
+	 * Validator: elevation in preferred unit => elevation in m
+	 * @param string $key
+	 * @return bool
+	 */
+	private static function validateElevation($key) {
+		$_POST[$key] = round((new Elevation())->setInPreferredUnit($_POST[$key])->meter(), 2);
+
+		return true;
+	}
+
+	/**
+	 * Parse: elevation in m => elevation in preferred unit
+	 * @param mixed $value 
+	 */
+	private static function parseElevation(&$value) {
+		$value = round((new Elevation($value))->valueInPreferredUnit(), 2);
+	}
+
+	/**
+	 * Validator: distance in preferred unit => distance in km
+	 * @param string $key
+	 * @param array $parserOptions
+	 * @return bool
+	 */
+	private static function validateDistance($key, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 3;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
+
+		if ($thousandsPoint != '') {
+			$_POST[$key] = str_replace($thousandsPoint, '', $_POST[$key]);
+			$_POST[$key] = str_replace($decimalPoint, '.', $_POST[$key]);
+		} else {
+			$_POST[$key] = str_replace(',', '.', $_POST[$key]);
+			$_POST[$key] = str_replace($decimalPoint, '.', $_POST[$key]);
+		}
+
+		$_POST[$key] = round((new Distance())->setInPreferredUnit($_POST[$key])->kilometer(), $decimals);
+
+		return true;
+	}
+
+	/**
+	 * Parse: distance in km => distance in preferred unit
+	 * @param mixed $value 
+	 * @param array $parserOptions
+	 */
+	private static function parseDistance(&$value, array $parserOptions) {
+		$decimals = isset($parserOptions['decimals']) ? $parserOptions['decimals'] : 3;
+		$decimalPoint = isset($parserOptions['decimal-point']) ? $parserOptions['decimal-point'] : '.';
+		$thousandsPoint = isset($parserOptions['thousans-point']) ? $parserOptions['thousans-point'] : '';
+
+		$value = number_format((new Distance($value))->valueInPreferredUnit(), $decimals, $decimalPoint, $thousandsPoint);
 	}
 
 	/**
@@ -416,7 +533,7 @@ class FormularValueParser {
 	 * @param array $array
 	 * @return array
 	 */
-	static private function removeEmptyValues($array) {
+	private static function removeEmptyValues($array) {
 		foreach ($array as $key => $value)
 			if (empty($value))
 				unset($array[$key]);

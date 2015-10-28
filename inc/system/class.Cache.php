@@ -25,14 +25,14 @@ class Cache {
 	 * Prohibit creating an object from outside
 	 */
 	public function __construct() {
-            phpFastCache::setup("storage", "files");
-            self::$cache = new phpFastCache();
-        }
+		phpFastCache::setup("storage", "files");
+		self::$cache = new phpFastCache();
+	}
 
 	/**
 	 * Get Cache
 	 */
-	static public function set($keyword, $data, $time, $nousercache = 0) {
+	public static function set($keyword, $data, $time, $nousercache = 0) {
             if($nousercache == 0) { 
                 $key = $keyword.SessionAccountHandler::getId();
                 self::$cache->set($key, $data, $time);
@@ -40,11 +40,11 @@ class Cache {
                 self::$cache->set($keyword,$data, $time);
             }
         }
-        
-        /**
-         * Set Cache
-         */
-	static public function get($keyword, $nousercache = 0) {
+
+	/**
+	 * Set Cache
+	 */
+	public static function get($keyword, $nousercache = 0) {
 		if ($nousercache == 0) {
 			$key = $keyword . SessionAccountHandler::getId();
 			$cachedobj = self::$cache->getinfo($key);
@@ -65,36 +65,37 @@ class Cache {
 	}
 
 	/**
-         * Delete from cache
-         */
-        static public function delete($keyword, $nousercache = 0) {
-            if($nousercache == 0) { 
-               return self::$cache->delete($keyword.SessionAccountHandler::getId());
-               } else {
-               return self::$cache->delete($keyword);
-            }  
-        }
-        
-        /**
-         * Clean up all cache
-         */
-	static public function clean() {
-		self::$LASTCLEAN = time();
-		if (SessionAccountHandler::getId() === null){
-			self::$cache->clean();
+	 * Delete from cache
+	 */
+	public static function delete($keyword, $nousercache = 0) {
+		if ($nousercache == 0) { 
+			return self::$cache->delete($keyword.SessionAccountHandler::getId());
+		} else {
+			return self::$cache->delete($keyword);
 		}
-		else
-			self::$cache->set('LASTCLEAN' . SessionAccountHandler::getId(), self::$LASTCLEAN);;
 	}
 
 	/**
-         * is existing?
-         */
-        static public function is($keyword, $nousercache = 0) {
-            if($nousercache == 0) { 
-               return self::$cache->isExisting($keyword.SessionAccountHandler::getId());
-               } else {
-               return self::$cache->isExisting($keyword);
-            }  
-        }
+	 * Clean up all cache
+	 */
+	public static function clean() {
+		self::$LASTCLEAN = time();
+
+		if (SessionAccountHandler::getId() === null) {
+			self::$cache->clean();
+		} else {
+			self::$cache->set('LASTCLEAN' . SessionAccountHandler::getId(), self::$LASTCLEAN);
+		}
+	}
+
+	/**
+	 * is existing?
+	 */
+	public static function is($keyword, $nousercache = 0) {
+		if ($nousercache == 0) { 
+			return self::$cache->isExisting($keyword.SessionAccountHandler::getId());
+		} else {
+			return self::$cache->isExisting($keyword);
+		}
+	}
 }

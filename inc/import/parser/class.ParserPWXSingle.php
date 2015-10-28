@@ -117,7 +117,7 @@ class ParserPWXSingle extends ParserAbstractSingleXML {
 		elseif (empty($this->gps['latitude']))
 			$dist = 0;
 		else
-			$dist = end($this->gps['km']) + GpsData::distance(end($this->gps['latitude']), end($this->gps['longitude']),
+			$dist = end($this->gps['km']) + Runalyze\Model\Route\Object::gpsDistance(end($this->gps['latitude']), end($this->gps['longitude']),
 															(double)$Log->lat, (double)$Log->lon);
 
 		$this->gps['time_in_s'][] = (int)$Log->timeoffset;

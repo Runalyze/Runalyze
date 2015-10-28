@@ -11,7 +11,7 @@ $Months       = array();
 $Temperatures = array();
 
 for ($m = 1; $m <= 12; $m++) {
-	$Months[] = array($m-1, Time::Month($m, true));
+	$Months[] = array($m-1, Time::month($m, true));
 
 	for ($y = START_YEAR, $n = date('Y'); $y <= $n; $y++)
 		$Temperatures[$y] = array(null,null,null,null,null,null,null,null,null,null,null,null);

@@ -6,9 +6,10 @@
 
 use Runalyze\Configuration;
 use Runalyze\Parameter\Application\ElevationMethod;
-use Runalyze\Data\Elevation;
+use Runalyze\Data;
 use Runalyze\View\Activity\Context;
 use Runalyze\Model;
+use Runalyze\Activity\Elevation;
 
 /**
  * Display elevation info for a training
@@ -118,7 +119,7 @@ class ElevationInfo {
 	protected function displayStandardValues() {
 		if ($this->manualElevation != $this->calculatedElevation) {
 			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
-			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$Linker->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'small');
+			$useCalculatedValueLink = Ajax::window('<a class="small as-input" href="'.$Linker->urlToElevationInfo('use-calculated-value=true').'">&raquo; '.__('apply data').'</a>', 'normal');
 		} else {
 			$useCalculatedValueLink = '';
 		}
@@ -127,19 +128,19 @@ class ElevationInfo {
 		$Fieldset->setHtmlCode('
 			<div class="w50">
 				<label>'.Ajax::tooltip(__('manual value'), __('If you did not insert a value by hand, this value has been calculated.')).'</label>
-				<span class="as-input">'.$this->manualElevation.'&nbsp;m</span>
+				<span class="as-input">'.Elevation::format($this->manualElevation).'</span>
 			</div>
 			<div class="w50">
 				<label>'.__('Lowest point').'</label>
-				<span class="as-input">'.$this->lowestPoint.'&nbsp;m</span>
+				<span class="as-input">'.Elevation::format($this->lowestPoint).'</span>
 			</div>
 			<div class="w50">
 				<label>'.Ajax::tooltip(__('calculated value'), __('This value is calculated with your current configuration. The saved value may be outdated.') ).'</label>
-				<span class="as-input">'.$this->calculatedElevation.'&nbsp;m</span> '.$useCalculatedValueLink.'
+				<span class="as-input">'.Elevation::format($this->calculatedElevation).'</span> '.$useCalculatedValueLink.'
 			</div>
 			<div class="w50">
 				<label>'.__('Highest point').'</label>
-				<span class="as-input">'.$this->highestPoint.'&nbsp;m</span>
+				<span class="as-input">'.Elevation::format($this->highestPoint).'</span>
 			</div>
 			<div class="w50">
 				<label>&oslash; '.__('Gradient').'</label>
@@ -147,7 +148,7 @@ class ElevationInfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Up/Down').'</label>
-				<span class="as-input">+'.$this->Context->route()->elevationUp().'m / -'.$this->Context->route()->elevationDown().'m</span>
+				<span class="as-input">+'.Elevation::format($this->Context->route()->elevationUp()).' / -'.Elevation::format($this->Context->route()->elevationDown()).'</span>
 			</div>
 		');
 		$Fieldset->display();
@@ -157,7 +158,7 @@ class ElevationInfo {
 	 * Display different algorithms
 	 */
 	protected function displayDifferentAlgorithms() {
-		if ($this->Context->route()->hasElevations()) {
+		if (!$this->Context->route()->hasElevations()) {
 			return;
 		}
 
@@ -191,7 +192,7 @@ class ElevationInfo {
 	 */
 	protected function getDifferentAlgorithmsFor($array) {
 		$Method        = new ElevationMethod();
-		$Calculator    = new Elevation\Calculation\Calculator($array);
+		$Calculator    = new Data\Elevation\Calculation\Calculator($array);
 		$TresholdRange = range(1, 10);
 		$Algorithms    = array(
 			array(ElevationMethod::NONE, false),
@@ -219,11 +220,11 @@ class ElevationInfo {
 					$highlight = (Configuration::ActivityView()->elevationMinDiff() == $t) && (Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0]) ? ' highlight' : '';
 					$Calculator->setThreshold($t);
 					$Calculator->calculate();
-					$Code .= '<td class="r'.$highlight.'">'.$Calculator->totalElevation().'&nbsp;m</td>';
+					$Code .= '<td class="r'.$highlight.'">'. Elevation::format($Calculator->totalElevation()).'</td>';
 				}
 			} else {
 				$Calculator->calculate();
-				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.$Calculator->totalElevation().'&nbsp;m</td>';
+				$Code .= '<td class="c'.(Configuration::ActivityView()->elevationMethod()->value() == $Algorithm[0] ? ' highlight' : '').'" colspan="'.count($TresholdRange).'">'.Elevation::format($Calculator->totalElevation()).'</td>';
 			}
 
 			$Code .= '</tr>';
@@ -239,24 +240,42 @@ class ElevationInfo {
 	 * Display elevation correction
 	 */
 	protected function displayElevationCorrection() {
+		$Url = (new Runalyze\View\Activity\Linker($this->Context->activity()))->urlToElevationCorrection();
 		$Fieldset = new FormularFieldset( __('Elevation correction') );
+		$Links = array();
 
 		if ($this->Context->route()->elevationsCorrected()) {
-			$Fieldset->addSmallInfo( __('Elevation data have been corrected.') );
+			$textInfo = __('Elevation data has been corrected.').($this->Context->route()->elevationsSource() != '' ? ' ('.$this->Context->route()->elevationsSource().')': '');
+			$rawLinks = $this->getLinksForCorrectionStrategies();
 		} else {
-			$Linker = new Runalyze\View\Activity\Linker($this->Context->activity());
-
-			// TODO: add link to "reload" if correction has been done via ajax
-			$Fieldset->setHtmlCode(
-				'<p class="warning small block" id="gps-results">
-					'.__('Elevation data has not been corrected.').'<br>
-					<br>
-					<a class="ajax" target="gps-results" href="'.$Linker->urlToElevationCorrection().'"><strong>&raquo; '.__('correct now').'</strong></a>
-				</p>'
-			);
+			$textInfo = __('Elevation data has not been corrected.');
+			$rawLinks = array('' => __('correct now'));
 		}
 
+		foreach ($rawLinks as $urlAppendix => $text) {
+			$Links[] = '<a class="ajax" target="gps-results" href="'.$Url.$urlAppendix.'"><strong>&raquo; '.$text.'</strong></a>';
+		}
+
+		$Fieldset->setHtmlCode(
+			'<p class="info block" id="gps-results">
+				'.$textInfo.'<br><br>
+				'.implode('<br>', $Links).'
+			</p>'
+		);
+
 		$Fieldset->display();
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getLinksForCorrectionStrategies() {
+		return array(
+			'&strategy=GeoTIFF' => sprintf(__('correct again using %s'), __('srtm files')),
+			'&strategy=Geonames' => sprintf(__('correct again using %s'), 'geonames.org'),
+			'&strategy=DataScienceToolkit' => sprintf(__('correct again using %s'), 'datasciencetoolkit.org'),
+			'&strategy=GoogleMaps' => sprintf(__('correct again using %s'), 'maps.google.com')
+		);
 	}
 
 	/**
@@ -280,7 +299,7 @@ class ElevationInfo {
 		$Fieldset = new FormularFieldset( __('Note for elevation data') );
 		$Fieldset->setId('general-information');
 		$Fieldset->setCollapsed();
-		$Fieldset->addSmallInfo(
+		$Fieldset->addInfo(
 				__('The calculation of elevation data is very difficult - there is not one single solution. '.
 					'Bad gps data can be corrected via srtm-data but these are only available in a 90x90m grid and not always perfectly accurate. '.
 					'In addition, every platform uses another algorithm to determine the elevation value (for up-/downwards). '.

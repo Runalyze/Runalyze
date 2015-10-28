@@ -52,20 +52,20 @@ class Icon {
 	 * @see http://fontawesome.io/icons/
 	 * @var string
 	 */
-	protected $fontAwesomeName;
+	protected $FontAwesomeName;
 
 	/**
 	 * Text for tooltip
 	 * @var string
 	 */
-	protected $tooltip;
+	protected $Tooltip;
 
 	/**
 	 * Construct new icon
 	 * @param string $fontAwesomeName [optional] class const
 	 */
 	public function __construct($fontAwesomeName) {
-		$this->fontAwesomeName = $fontAwesomeName;
+		$this->FontAwesomeName = $fontAwesomeName;
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Icon {
 	 * @param string $tooltip
 	 */
 	public function setTooltip($tooltip) {
-		$this->tooltip = $tooltip;
+		$this->Tooltip = $tooltip;
 	}
 
 	/**
@@ -88,7 +88,7 @@ class Icon {
 	 * @return string
 	 */
 	public function code() {
-		return '<i class="fa fa-fw '.$this->fontAwesomeName.'"'.$this->tooltipAttributes().'></i>';
+		return '<i class="fa fa-fw '.$this->FontAwesomeName.'"'.$this->tooltipAttributes().'></i>';
 	}
 
 	/**
@@ -96,8 +96,8 @@ class Icon {
 	 * @return string
 	 */
 	protected function tooltipAttributes() {
-		if (!empty($this->tooltip)) {
-			$Tooltip = new Tooltip($this->tooltip);
+		if (!empty($this->Tooltip)) {
+			$Tooltip = new Tooltip($this->Tooltip);
 			return ' '.$Tooltip->attributes();
 		}
 
@@ -109,8 +109,8 @@ class Icon {
 	 * @param string $code
 	 */
 	protected function addTooltipToCode(&$code) {
-		if (!empty($this->tooltip)) {
-			$Tooltip = new Tooltip($this->tooltip);
+		if (!empty($this->Tooltip)) {
+			$Tooltip = new Tooltip($this->Tooltip);
 			$Tooltip->wrapAround($code);
 		}
 	}

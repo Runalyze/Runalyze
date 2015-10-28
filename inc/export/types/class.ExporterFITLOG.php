@@ -95,7 +95,7 @@ class ExporterFITLOG extends ExporterAbstractFile {
 			$Point = $Track->addChild('pt');
 			$Point->addAttribute('tm', $Trackdata->time());
 
-			if (NULL !== $Route) {
+			if (null !== $Route) {
 				$Route->nextStep();
 				$Point->addAttribute('lat', $Route->latitude());
 				$Point->addAttribute('lon', $Route->longitude());

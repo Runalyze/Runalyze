@@ -20,7 +20,7 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 
 	public function testEmptyTemperature() {
 		$A = new Object(array(
-			Object::TEMPERATURE => NULL
+			Object::TEMPERATURE => null
 		));
 		$B = new Object(array(
 			Object::TEMPERATURE => ''

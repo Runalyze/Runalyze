@@ -276,7 +276,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @param int $year
 	 * @return string
 	 */
-	static public function panelMenuForRoutenet($sportid, $year) {
+	public static function panelMenuForRoutenet($sportid, $year) {
 		$Code = '<div class="panel-menu"><ul>';
 		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose sport').'</span><ul class="submenu">'.self::submenuForSport($sportid, $year).'</ul></li>';
 		$Code .= '<li class="with-submenu"><span class="link">'.__('Choose year').'</span><ul class="submenu">'.self::submenuForYear($sportid, $year).'</ul></li>';
@@ -291,7 +291,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @param int $year
 	 * @return string
 	 */
-	static private function submenuForSport($sportid, $year) {
+	private static function submenuForSport($sportid, $year) {
 		$Code = '<li'.(-1 == $sportid ? ' class="active"' : '').'>'.self::linkToRoutenet(__('All'), -1, $year).'</li>';
 
 		$Sports = SportFactory::NamesAsArray();
@@ -308,7 +308,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @param int $year
 	 * @return string
 	 */
-	static private function submenuForYear($sportid, $year) {
+	private static function submenuForYear($sportid, $year) {
 		$Code = '<li'.(-1 == $year ? ' class="active"' : '').'>'.self::linkToRoutenet(__('All years'), $sportid, -1).'</li>';
 
 		for ($y = date("Y"); $y >= START_YEAR; $y--) {
@@ -325,7 +325,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * @param int $year
 	 * @return string
 	 */
-	static private function linkToRoutenet($text, $sportid, $year) {
+	private static function linkToRoutenet($text, $sportid, $year) {
 		return Ajax::window('<a class="" href="plugin/RunalyzePluginStat_Strecken/window.routenet.php?sport='.$sportid.'&y='.$year.'">'.$text.'</a>', 'big');
 	}
 }

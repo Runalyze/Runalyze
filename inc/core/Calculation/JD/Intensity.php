@@ -27,13 +27,13 @@ class Intensity {
 	 * Maximal heart rate
 	 * @var int
 	 */
-	static private $HRmax = 200;
+	private static $HRmax = 200;
 
 	/**
 	 * Set HRmax
 	 * @param int $hrMax
 	 */
-	static public function setHRmax($hrMax) {
+	public static function setHRmax($hrMax) {
 		self::$HRmax = $hrMax;
 	}
 
@@ -41,13 +41,13 @@ class Intensity {
 	 * VDOT shape
 	 * @var float
 	 */
-	static private $VDOTshape = 0;
+	private static $VDOTshape = 0;
 
 	/**
 	 * Set VDOT shape
 	 * @param float $vdot
 	 */
-	static public function setVDOTshape($vdot) {
+	public static function setVDOTshape($vdot) {
 		self::$VDOTshape = $vdot;
 	}
 

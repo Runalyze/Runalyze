@@ -21,7 +21,7 @@ class ParserFITSingle extends ParserAbstractSingle {
 
 	/**
 	 * Current header
-	 * @var string
+	 * @var array
 	 */
 	protected $Header = array();
 
@@ -78,7 +78,6 @@ class ParserFITSingle extends ParserAbstractSingle {
 	 * Start a new activity at current point
 	 */
 	public function startNewActivity() {
-		$timestamp = $this->TrainingObject->getTimestamp() + max($this->TrainingObject->getTimeInSeconds(), $this->TrainingObject->getElapsedTime());
 		$creator = $this->TrainingObject->getCreator();
 
 		$this->TrainingObject = new TrainingObject(DataObject::$DEFAULT_ID);

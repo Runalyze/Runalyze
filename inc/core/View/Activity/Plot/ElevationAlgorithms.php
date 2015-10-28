@@ -12,6 +12,7 @@ use Runalyze\Parameter\Application\ElevationMethod;
 use Runalyze\Configuration;
 use Runalyze\Data;
 use Runalyze\Model\Trackdata;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
 
 /**
  * Plot for: Elevation algorithms
@@ -30,7 +31,6 @@ class ElevationAlgorithms extends ActivityPlot {
 	 */
 	protected function setKey() {
 		$this->key   = 'elevation-algorithms';
-		$this->WIDTH = 490;
 	}
 
 	/**
@@ -102,6 +102,7 @@ class ElevationAlgorithms extends ActivityPlot {
 		$Calculator->calculate();
 
 		$i = 0;
+		$Data = array();
 		$Points = $Calculator->strategy()->smoothedData();
 		$Indices = $Calculator->strategy()->smoothingIndices();
 		$hasDistances = $this->Context->trackdata()->get(Trackdata\Object::DISTANCE);
@@ -121,6 +122,22 @@ class ElevationAlgorithms extends ActivityPlot {
 			}
 		}
 
+		$this->manipulateData($Data);
+
 		return $Data;
+	}
+
+	/**
+	 * Manipulate data for correct unit
+	 * @param array $data
+	 */
+	protected function manipulateData(array &$data) {
+		$UnitSystem = Configuration::General()->distanceUnitSystem();
+
+		if ($UnitSystem->isImperial()) {
+			$data = array_map(function($value) {
+				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000;
+			}, $data);
+		}
 	}
 }

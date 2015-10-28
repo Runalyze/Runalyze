@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<?php if (NULL !== $this->ActivityContext) { $Meta = new HTMLMetaForFacebook($this->ActivityContext); $Meta->display(); } ?>
+	<?php if (null !== $this->ActivityContext) { $Meta = new HTMLMetaForFacebook($this->ActivityContext); $Meta->display(); } ?>
 
 	<base href="<?php echo System::getFullDomain(); ?>">
 

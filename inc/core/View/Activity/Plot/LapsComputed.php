@@ -6,8 +6,7 @@
 
 namespace Runalyze\View\Activity\Plot;
 
-use Runalyze\Activity\Duration;
-use Runalyze\Activity\Pace as APace;
+use Runalyze\Activity\Pace as PaceObject;
 use Runalyze\Model\Trackdata;
 use Runalyze\View\Activity;
 
@@ -18,18 +17,6 @@ use Runalyze\View\Activity;
  * @package Runalyze\View\Activity\Plot
  */
 class LapsComputed extends Laps {
-	/**
-	 * Demanded pace in s/km
-	 * @var int
-	 */
-	protected $demandedPace = 0;
-
-	/**
-	 * Achieved pace in s/km
-	 * @var int
-	 */
-	protected $achievedPace = 0;
-
 	/**
 	 * Set key and title for this plot
 	 */
@@ -50,9 +37,8 @@ class LapsComputed extends Laps {
 
 		$RawData = $this->computeRounds($context);
 		$num = count($RawData);
-		$paceUnit = $context->sport()->paceUnit();
-		$paceInTime = ($paceUnit == APace::MIN_PER_KM || $paceUnit == APace::MIN_PER_100M || $paceUnit == APace::MIN_PER_500M);
-		$pace = new APace(0, 1, $paceUnit);
+		$Pace = new PaceObject(0, 1);
+		$Pace->setUnit($this->PaceUnit);
 
 		foreach ($RawData as $key => $val) {
 			$km = $key + 1;
@@ -67,21 +53,16 @@ class LapsComputed extends Laps {
 			}
 
 			$this->Labels[$key] = array($key, $label);
-			$pace->setDistance($val['km'])->setTime($val['s']);
+			$Pace->setDistance($val['km'])->setTime($val['s']);
 
-			if ($paceInTime) {
-				$this->Data[$key] = 1000*$pace->secondsPerKm();
-				if ($paceUnit == APace::MIN_PER_100M) {
-					$this->Data[$key] /= 10;
-				} elseif ($paceUnit == APace::MIN_PER_500M) {
-					$this->Data[$key] /= 2;
-				}
+			if ($this->PaceUnit->isTimeFormat()) {
+				$this->Data[$key] = 1000 * round($Pace->secondsPerKm() * $this->PaceUnit->factorForUnit());
 			} else {
-				$this->Data[$key] = (float)str_replace(',', '.', $pace->value());
+				$this->Data[$key] = (float)str_replace(',', '.', $Pace->value());
 			}
 		}
 
-		$avgPace = new APace($context->activity()->duration(), $context->activity()->distance(), $paceUnit);
+		$avgPace = new PaceObject($context->activity()->duration(), $context->activity()->distance());
 		$this->achievedPace = $avgPace->secondsPerKm();
 		$this->Plot->Data[] = array('label' => $this->title, 'data' => $this->Data);
 	}
@@ -95,7 +76,7 @@ class LapsComputed extends Laps {
 		$Rounds = array();
 
 		do {
-			$Loop->nextKilometer();
+			$Loop->nextDistance();
 
 			$Rounds[] = array(
 				'km' => $Loop->difference(Trackdata\Object::DISTANCE),
@@ -104,20 +85,5 @@ class LapsComputed extends Laps {
 		} while (!$Loop->isAtEnd());
 
 		return $Rounds;
-	}
-
-	/**
-	 * Add annotations
-	 */
-	protected function addAnnotations() {
-		if ($this->demandedPace > 0) {
-			$this->Plot->addThreshold("y", $this->demandedPace*1000, 'rgb(180,0,0)');
-			//$this->Plot->addAnnotation(count($Data)-1, $this->demandedPace*1000, 'Soll: '.Duration::format(round($this->demandedPace)), -10, -7);
-		}
-
-		if ($this->achievedPace > 0) {
-			$this->Plot->addThreshold("y", $this->achievedPace*1000, 'rgb(0,180,0)');
-			$this->Plot->addAnnotation(0, $this->achievedPace*1000, '&oslash; '.Duration::format(round($this->achievedPace)), -40, -7);
-		}
 	}
 }

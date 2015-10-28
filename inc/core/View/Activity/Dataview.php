@@ -12,6 +12,7 @@ use Runalyze\Model\Activity;
 use Runalyze\Model\Factory;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Activity\Elevation;
 use Runalyze\Activity\HeartRate;
 use Runalyze\Activity\Pace;
 use Runalyze\Activity\StrideLength;
@@ -84,6 +85,12 @@ class Dataview {
 	 * @var \Runalyze\Activity\StrideLength
 	 */
 	protected $StrideLength = null;
+
+	/**
+	 * Elevation
+	 * @var \Runalyze\Activity\Elevation
+	 */
+	protected $Elevation = null;
 
 	/**
 	 * Construct data view
@@ -172,7 +179,7 @@ class Dataview {
 	 * @return string
 	 */
 	public function weekday() {
-		return Time::Weekday( date('w', $this->Activity->timestamp()) );
+		return Time::weekday( date('w', $this->Activity->timestamp()) );
 	}
 
 	/**
@@ -206,7 +213,11 @@ class Dataview {
 		}
 
 		if ($this->Activity->distance() > 0) {
-			return Distance::format($this->Activity->distance(), $this->Activity->isTrack(), $decimals);
+			if ($this->Activity->isTrack()) {
+				return (new Distance($this->Activity->distance()))->stringMeter();
+			}
+
+			return Distance::format($this->Activity->distance(), true, $decimals);
 		}
 
 		return '';
@@ -267,22 +278,6 @@ class Dataview {
 		return $this->object($this->StrideLength, function($Activity){
 			return new StrideLength($Activity->strideLength());
 		});
-	}
-
-	/**
-	 * Get total strokes
-	 * @return \Runalyze\Activity\TotalStrokes
-	 */
-	public function totalStrokes() {
-		return $this->object($this->totalStrokes());
-	}
-
-	/**
-	 * Get swolf
-	 * @return \Runalyze\Activity\Swolf
-	 */
-	public function swolf() {
-		return $this->object($this->swolf());
 	}
 
 	/**
@@ -421,15 +416,12 @@ class Dataview {
 	}
 
 	/**
-	 * Get elevation
-	 * @return string elevation with unit
+	 * @return \Runalyze\Activity\Elevation
 	 */
 	public function elevation() {
-		if ($this->Activity->elevation() > 0) {
-			return $this->Activity->elevation().'&nbsp;hm';
-		}
-
-		return '';
+		return $this->object($this->Elevation, function($Activity) {
+			return new Elevation($Activity->elevation());
+		});
 	}
 
 	/**

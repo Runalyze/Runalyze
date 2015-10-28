@@ -5,6 +5,9 @@
  * @package Runalyze\Plugins\Panels
  */
 
+use Runalyze\Activity\Weight;
+
+$Weight = new Weight();
 $Factory = new PluginFactory();
 $Plugin = $Factory->newInstance('RunalyzePluginPanel_Sportler');
 $Wunschgewicht = $Plugin->Configuration()->value('wunschgewicht');
@@ -23,7 +26,7 @@ if (count($Data) == 1)
 
 if (!empty($Data)) {
 	foreach ($Data as $D) {
-		$Weights[$D['time'].'000'] = (double)$D['weight'];
+		$Weights[$D['time'].'000'] = $Weight->set($D['weight'])->valueInPreferredUnit();
 		$HRrests[$D['time'].'000'] = (int)$D['pulse_rest'];
 	}
 }
@@ -49,7 +52,7 @@ $Plot->Options['xaxis']['labelWidth'] = 50;
 $Plot->Options['series']['curvedLines']['fit'] = true;
 
 $Plot->addYAxis(1, 'left');
-$Plot->addYUnit(1, 'kg', 1);
+$Plot->addYUnit(1, $Weight->unit(), 1);
 $Plot->setYTicks(1, 2, 0);
 $Plot->addYAxis(2, 'right', false);
 $Plot->addYUnit(2, 'bpm', 0);

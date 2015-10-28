@@ -7,6 +7,7 @@ $PLUGINKEY = 'RunalyzePluginPanel_Sports';
 
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
+use Runalyze\Model\Factory;
 
 /**
  * Class: RunalyzePluginPanel_Sports
@@ -120,19 +121,21 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 * @param array $data
 	 */
 	private function showDataAsBoxedValues($data) {
+		$Factory = new Factory(SessionAccountHandler::getId());
+
 		foreach ($data as $dat) {
 			// TODO: Define the decision (distance or time) somehow in the configuration
-			$Sport = new Sport($dat['sportid']);
+			$Sport = $Factory->sport($dat['sportid']);
 
 			$Value = new BoxedValue();
-			$Value->setIcon($Sport->Icon());
+			$Value->setIcon($Sport->icon()->code());
 			$Value->setInfo($Sport->name());
 			$Value->defineAsFloatingBlock('w50');
 
 			if ($dat['count_distance'] >= $dat['count']/2) {
 				$Distance = new Distance($dat['distance']);
-				$Value->setValue( $Distance->stringKilometer(false, false) );
-				$Value->setUnit('km');
+				$Value->setValue($Distance->string(false, false, false) );
+				$Value->setUnit($Distance->unit());
 			} else {
 				$Duration = new Duration($dat['time_in_s']);
 				$Value->setValue($Duration->string(Duration::FORMAT_WITH_HOURS));
@@ -148,18 +151,20 @@ class RunalyzePluginPanel_Sports extends PluginPanel {
 	 * @param array $timeset
 	 */
 	private function showDataInTableView($data, $timeset) {
+		$Factory = new Factory(SessionAccountHandler::getId());
+
 		if (empty($data)) {
 			echo '<p><em>'.__('No data available.').'</em></p>';
 		} else {
 			foreach ($data as $dat) {
-				$Sport = new Sport($dat['sportid']);
+				$Sport = $Factory->sport($dat['sportid']);
 
 				$result = $dat['count_distance'] >= $dat['count']/2
 					? Distance::format($dat['distance'])
 					: Duration::format($dat['time_in_s']);
 
 				echo '<p><span class="right"><small><small>('.sprintf( __('%u-times'), Helper::Unknown($dat['count'], '0')).')</small></small> '.$result.'</span> ';
-				echo $Sport->Icon().' <strong>'.$Sport->name().'</strong></p>';
+				echo $Sport->icon()->code().' <strong>'.$Sport->name().'</strong></p>';
 			}
 		}
 

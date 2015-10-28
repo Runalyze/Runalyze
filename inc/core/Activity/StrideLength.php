@@ -6,83 +6,203 @@
 
 namespace Runalyze\Activity;
 
+use Runalyze\Configuration;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
+
 /**
- * StrideLength
+ * Stride length
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Activity
  */
-class StrideLength {
+class StrideLength implements ValueInterface
+{
 	/**
 	 * Value [cm]
-	 * @var int
+	 * @var float
 	 */
-	protected $value;
+	protected $Centimeter;
 
 	/**
-	 * Format value
-	 * @param int $strideLengthInCM [cm]
+	 * @var \Runalyze\Parameter\Application\DistanceUnitSystem 
+	 */
+	protected $UnitSystem;
+
+	/**
+	 * Format stride length
+	 * @param int $centimeter
+	 * @param bool $withUnit
 	 * @return string
 	 */
-	static public function format($strideLengthInCM) {
-		$Object = new StrideLength($strideLengthInCM);
-
-		return $Object->string();
+	public static function format($centimeter, $withUnit = true)
+	{
+		return (new self($centimeter))->string($withUnit);
 	}
 
 	/**
-	 * Constructor
-	 * @param int $valueInCM
+	 * @param int $centimeter
+	 * @param \Runalyze\Parameter\Application\DistanceUnitSystem $unitSystem
 	 */
-	public function __construct($valueInCM) {
-		$this->value = $valueInCM > 0 ? (int)$valueInCM : 0;
+	public function __construct($centimeter = 0, DistanceUnitSystem $unitSystem = null)
+	{
+		$this->Centimeter = $centimeter;
+		$this->UnitSystem = (null !== $unitSystem) ? $unitSystem : Configuration::General()->distanceUnitSystem();
 	}
 
 	/**
-	 * Stride length as string
+	 * Label for stride length
 	 * @return string
 	 */
-	public function string() {
-		return $this->asM();
+	public function label()
+	{
+		return __('Stride length');
 	}
 
 	/**
-	 * Value as string [x.xx m]
+	 * Unit
 	 * @return string
 	 */
-	public function value() {
-		return sprintf('%1.2f', $this->inM());
+	public function unit()
+	{
+		if ($this->UnitSystem->isImperial()) {
+			return DistanceUnitSystem::FEET;
+		}
+
+		return DistanceUnitSystem::CM;
 	}
 
 	/**
-	 * As m
-	 * @return string
+	 * Set stride length
+	 * @param int $centimeter
+	 * @return \Runalyze\Activity\StrideLength $this-reference
 	 */
-	public function asM() {
-		return sprintf('%1.2f', $this->inM()).'&nbsp;m';
+	public function set($centimeter)
+	{
+		$this->Centimeter = $centimeter;
+
+		return $this;
 	}
 
 	/**
-	 * As cm
-	 * @return string
+	 * @param float $meter
+	 * @return \Runalyze\Activity\StrideLength $this-reference
 	 */
-	public function asCM() {
-		return $this->inCM().'&nbsp;cm';
+	public function setMeter($meter)
+	{
+		$this->Centimeter = $meter * 100;
+
+		return $this;
 	}
 
 	/**
-	 * Value in [m]
-	 * @return float
+	 * @param int $feet
+	 * @return \Runalyze\Activity\StrideLength $this-reference
 	 */
-	public function inM() {
-		return round($this->value/100, 2);
+	public function setFeet($feet)
+	{
+		$this->Centimeter = $feet / DistanceUnitSystem::FEET_MULTIPLIER * 1000 * 100;
+
+		return $this;
 	}
 
 	/**
-	 * Value in [%HRmax]
+	 * @param int $strideLength [mixed unit]
+	 * @return \Runalyze\Activity\StrideLength $this-reference
+	 */
+	public function setInPreferredUnit($strideLength)
+	{
+		if ($this->UnitSystem->isImperial()) {
+			$this->setFeet($strideLength);
+		} else {
+			$this->setMeter($strideLength);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Get stride length
+	 * @return int [cm]
+	 */
+	public function value()
+	{
+		return round($this->Centimeter);
+	}
+
+	/**
 	 * @return int
 	 */
-	public function inCM() {
-		return round($this->value);
+	public function cm()
+	{
+		return round($this->Centimeter);
+	}
+
+	/**
+	 * @return float
+	 */
+	public function meter()
+	{
+		return round($this->Centimeter / 100, 2);
+	}	
+
+	/**
+	 * @return float
+	 */
+	public function feet()
+	{
+		return round($this->Centimeter * DistanceUnitSystem::FEET_MULTIPLIER / 1000 / 100, 2);
+	}
+
+	/**
+	 * @return int [mixed unit]
+	 */
+	public function valueInPreferredUnit()
+	{
+		if ($this->UnitSystem->isImperial()) {
+			return $this->feet();
+		}
+
+		return $this->meter();
+	}
+
+	/**
+	 * Format value as string
+	 * @param bool $withUnit
+	 * @return string
+	 */
+	public function string($withUnit = true)
+	{
+		if ($this->UnitSystem->isImperial()) {
+			return $this->stringFeet($withUnit);
+		}
+
+		return $this->stringMeter($withUnit);
+	}
+
+	/**
+	 * @param bool $withUnit
+	 * @return string
+	 */
+	public function stringMeter($withUnit = true)
+	{
+		return number_format($this->Centimeter/100, 2).($withUnit ? '&nbsp;'.DistanceUnitSystem::METER : '');
+	}
+
+	/**
+	 * @param bool $withUnit
+	 * @return string
+	 */
+	public function stringCM($withUnit = true)
+	{
+		return number_format($this->Centimeter, 0).($withUnit ? '&nbsp;'.DistanceUnitSystem::CM : '');
+	}
+
+	/**
+	 * @param bool $withUnit
+	 * @return string
+	 */
+	public function stringFeet($withUnit = true)
+	{
+		return number_format($this->feet(), 1, '.', '').($withUnit ? '&nbsp;'.DistanceUnitSystem::FEET : '');
 	}
 }

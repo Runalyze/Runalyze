@@ -79,7 +79,8 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 * Init configuration
 	 */
 	protected function initConfiguration() {
-		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict'));
+		// TODO: allow input in miles
+		$Distances = new PluginConfigurationValueArray('distances', __('Distances to predict').' (in km)');
 		$Distances->setDefaultValue( array(1, 3, 5, 10, 21.1, 42.2) );
 
 		$Model = new PluginConfigurationValueSelect('model', __('Prediction model'));
@@ -178,17 +179,19 @@ class RunalyzePluginPanel_Prognose extends PluginPanel {
 	 */
 	protected function showPrognosis($distance) {
 		$PB = new PersonalBest($distance);
+		$PB->lookupWithDetails();
 		$PBTime = $PB->exists() ? Duration::format( $PB->seconds() ) : '-';
+		$PBString = $PB->exists() ? Ajax::trainingLink($PB->activityId(),$PBTime,true) : $PBTime;
 		$Prognosis = new Duration( $this->Prognosis->inSeconds($distance) );
 		$Distance = new Distance($distance);
-		$Pace = new Pace($Prognosis->seconds(), $distance, Pace::MIN_PER_KM);
+		$Pace = new Pace($Prognosis->seconds(), $distance, SportFactory::getSpeedUnitFor(Configuration::General()->runningSport()));
 
 		echo '<p>
 				<span class="right">
-					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBTime, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
+					'.sprintf( __('<small>from</small> %s <small>to</small> <strong>%s</strong>'), $PBString, $Prognosis->string(Duration::FORMAT_AUTO, 0) ).'
 					<small>('.$Pace->valueWithAppendix().')</small>
 				</span>
-				<strong>'.$Distance->string(Distance::FORMAT_AUTO, 1).'</strong>
+				<strong>'.$Distance->stringAuto(true, 1).'</strong>
 			</p>';
 	}
 

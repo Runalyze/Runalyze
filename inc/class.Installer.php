@@ -13,49 +13,49 @@ class Installer {
 	 * Required PHP-version
 	 * @var string
 	 */
-	static $REQUIRED_PHP_VERSION = '5.3.0';
+	const REQUIRED_PHP_VERSION = '5.4.0';
 
 	/**
 	* Required MYSQL-version
 	* @var string
 	*/
-	static $REQUIRED_MYSQL_VERSION = '5.0.0';
+	const REQUIRED_MYSQL_VERSION = '5.0.0';
 
 	/**
 	 * Step -1: Runalyze is already installed
 	 * @var int
 	 */
-	static $ALREADY_INSTALLED = -1;
+	const ALREADY_INSTALLED = -1;
 
 	/**
 	 * Step 1: Start of installation
 	 * @var int
 	 */
-	static $START = 1;
+	const START = 1;
 
 	/**
 	 * Step 2: Set up configuration
 	 * @var int
 	 */
-	static $SETUP_CONFIG = 2;
+	const SETUP_CONFIG = 2;
 
 	/**
 	 * Step 3: Set up database
 	 * @var int
 	 */
-	static $SETUP_DATABASE = 3;
+	const SETUP_DATABASE = 3;
 
 	/**
 	 * Step 4: Ready to start
 	 * @var int
 	 */
-	static $READY = 4;
+	const READY = 4;
 
 	/**
 	 * Number of total steps
 	 * @var int
 	 */
-	static $numberOfSteps = 4;
+	const NUMBER_OF_STEPS = 4;
 
 	/**
 	 * Current step of installation
@@ -165,11 +165,11 @@ class Installer {
 
 			$this->mysqlConfig = array($host, $username, $password, $database);
 
-			if ($this->currentStep == self::$START) {
+			if ($this->currentStep == self::START) {
 				if ($this->databaseIsCorrect())
-					$this->currentStep = self::$ALREADY_INSTALLED;
+					$this->currentStep = self::ALREADY_INSTALLED;
 				else
-					$this->currentStep = self::$SETUP_DATABASE;
+					$this->currentStep = self::SETUP_DATABASE;
 			}
 		} else {
 			$this->mysqlConfig = array('localhost', '', '', 'runalyze');
@@ -183,10 +183,10 @@ class Installer {
 	 * Findout which is the current step
 	 */
 	protected function findoutCurrentStep() {
-		if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'] <= self::$numberOfSteps)
+		if (isset($_POST['step']) && is_numeric($_POST['step']) && $_POST['step'] <= self::NUMBER_OF_STEPS)
 			$this->currentStep = $_POST['step'];
 		else
-			$this->currentStep = self::$START;
+			$this->currentStep = self::START;
 	}
 
 	/**
@@ -194,7 +194,7 @@ class Installer {
 	 */
 	protected function executeCurrentStep() {
 		switch ($this->currentStep) {
-			case self::$SETUP_CONFIG:
+			case self::SETUP_CONFIG:
 				if (isset($_POST['write_config'])) {
 					$this->writeConfigFile();
 
@@ -212,7 +212,7 @@ class Installer {
 				}
 				break;
 
-			case self::$SETUP_DATABASE:
+			case self::SETUP_DATABASE:
 				$this->importSqlFiles();
 
 				if ($this->databaseIsCorrect())
@@ -284,21 +284,21 @@ class Installer {
 	 * Is PHP-version high enough?
 	 */
 	protected function phpVersionIsOkay() {
-		return (version_compare(PHP_VERSION, self::$REQUIRED_PHP_VERSION) >= 0);
+		return (version_compare(PHP_VERSION, self::REQUIRED_PHP_VERSION) >= 0);
 	}
 
 	/**
 	 * Is MySQL-version high enough?
 	 */
 	protected function mysqlVersionIsOkay() {
-		return (version_compare($this->getMysqlVersion(), self::$REQUIRED_MYSQL_VERSION) >= 0);
+		return (version_compare($this->getMysqlVersion(), self::REQUIRED_MYSQL_VERSION) >= 0);
 	}
 
 	/**
 	 * Get current MySQL-version
 	 */
 	protected function getMysqlVersion() {
-		if ($this->PDO == NULL) {
+		if ($this->PDO == null) {
 			if ($this->mysqlConfig[1] == '') {
 				return '';
 			}
@@ -319,7 +319,6 @@ class Installer {
 		$config['password']  = $_POST['password'];
 		$config['prefix']    = $_POST['prefix'];
 		$config['debug']     = isset($_POST['debug']) ? 'true' : 'false';
-		$config['login']     = isset($_POST['login']) ? 'true' : 'false';
 		$config['garminkey'] = $_POST['garminkey'];
 
 		$file_string = @file_get_contents(PATH.'install/config.php');
@@ -342,7 +341,7 @@ class Installer {
 	 * @return string
 	 */
 	protected function getSqlContentForFrontend($filename) {
-		return implode("\n", $this->getSqlFileAsArray($filename));
+		return implode("\n", $this->getSqlFileAsArray($filename, false));
 	}
 
 	/**
@@ -360,8 +359,6 @@ class Installer {
 		$this->adminPassAsMD5 = md5($this->mysqlConfig[2]);
 
 		DB::connect($this->mysqlConfig[0], $this->mysqlConfig[1], $this->mysqlConfig[2], $this->mysqlConfig[3]);
-
-		AccountHandler::createNewNoLoginUser();
 	}
 
 	/**
@@ -402,7 +399,7 @@ class Installer {
 	 * @param string $filename relative to PATH!
 	 * @return array
 	 */
-	static public function getSqlFileAsArray($filename) {
+	public static function getSqlFileAsArray($filename, $removeDelimiter = true) {
 		$MRK = array('DELIMITER', 'USE', 'SET', 'LOCK', 'SHOW', 'DROP', 'GRANT', 'ALTER', 'UNLOCK', 'CREATE', 'INSERT', 'UPDATE', 'DELETE', 'REVOKE', 'REPLACE', 'RENAME', 'TRUNCATE');
 		$SQL = @file($filename);
 		$query  = '';
@@ -425,21 +422,23 @@ class Installer {
 			}
 
 			if ($inDelimiter) {
+			    if (mb_substr($line, 0, 9) == 'DELIMITER') {
+				$inDelimiter = false;
+				$query .= $removeDelimiter ? '' : ' '.$line;
+				$array[] = $query;
+			    } elseif (trim($line) != '//') {
 				$query .= ' '.$line;
-
-				if (mb_substr($line, 0, 9) == 'DELIMITER') {
-					$inDelimiter = false;
-					$array[] = $query;
-				}
+			    }
 			} else {
-				$AA = explode(' ', $line);
-				if (in_array(strtoupper($AA[0]), $MRK)) {
-					if ($AA[0] == 'DELIMITER') {
-						$inDelimiter = true;
-					}
-
-					$query = $line;
-				} elseif (strlen($query) > 1) {
+			    $AA = explode(' ', $line);
+			    if (in_array(strtoupper($AA[0]), $MRK)) {
+				if ($AA[0] == 'DELIMITER') {
+				    $inDelimiter = true;
+				    $query = $removeDelimiter ? '' : $line;
+				} else {
+				    $query = $line;
+				}
+			    } elseif (strlen($query) > 1) {
 					$query .= " ".$line;
 				}
 

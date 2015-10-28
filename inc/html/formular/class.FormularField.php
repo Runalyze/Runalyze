@@ -13,19 +13,19 @@ abstract class FormularField extends HtmlTag {
 	 * CSS-class if validation failed
 	 * @var string 
 	 */
-	static public $CSS_VALIDATION_FAILED = 'validation-failed';
+	public static $CSS_VALIDATION_FAILED = 'validation-failed';
 
 	/**
 	 * Array with all failed keys
 	 * @var array
 	 */
-	static private $FAILED_KEYS = array();
+	private static $FAILED_KEYS = array();
 
 	/**
 	 * Array with all validation failures
 	 * @var array
 	 */
-	static private $VALIDATION_FAILURES = array();
+	private static $VALIDATION_FAILURES = array();
 
 	/**
 	 * Name
@@ -79,7 +79,7 @@ abstract class FormularField extends HtmlTag {
 	 * Set key as failed
 	 * @param string $key 
 	 */
-	static public function setKeyAsFailed($key) {
+	public static function setKeyAsFailed($key) {
 		self::$FAILED_KEYS[] = $key;
 	}
 
@@ -87,7 +87,7 @@ abstract class FormularField extends HtmlTag {
 	 * Set key as failed
 	 * @param string $key 
 	 */
-	static public function hasKeyFailed($key) {
+	public static function hasKeyFailed($key) {
 		return in_array($key, self::$FAILED_KEYS);
 	}
 
@@ -95,7 +95,7 @@ abstract class FormularField extends HtmlTag {
 	 * Add validation failure
 	 * @param string $failure
 	 */
-	static public function addValidationFailure($failure) {
+	public static function addValidationFailure($failure) {
 		self::$VALIDATION_FAILURES[] = $failure;
 	}
 
@@ -103,7 +103,7 @@ abstract class FormularField extends HtmlTag {
 	 * Get all validation failures
 	 * @return array
 	 */
-	static public function getValidationFailures() {
+	public static function getValidationFailures() {
 		return self::$VALIDATION_FAILURES;
 	}
 

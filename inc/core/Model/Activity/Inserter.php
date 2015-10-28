@@ -28,7 +28,7 @@ class Inserter extends Model\InserterWithAccountID {
 	protected $Trackdata = null;
 
 	/**
-	 * @var \Runalyze\Model\Swim\Object
+	 * @var \Runalyze\Model\Swimdata\Object
 	 */
 	protected $Swimdata = null;
         
@@ -59,7 +59,7 @@ class Inserter extends Model\InserterWithAccountID {
 	}
         
 	/**
-	 * @param \Runalyze\Model\Swim\Object $swimdata
+	 * @param \Runalyze\Model\Swimdata\Object $swimdata
 	 */
 	public function setSwimdata(Model\Swimdata\Object $swimdata) {
 		$this->Swimdata = $swimdata;
@@ -176,7 +176,7 @@ class Inserter extends Model\InserterWithAccountID {
 		if (
 			\Runalyze\Context::Factory()->sport($this->Object->sportid())->hasPower() &&
 			Configuration::ActivityForm()->computePower() &&
-			(NULL !== $this->Trackdata)
+			(null !== $this->Trackdata)
 		) {
 			$Calculator = new \Runalyze\Calculation\Power\Calculator(
 				$this->Trackdata,
@@ -194,7 +194,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 */
 	protected function calculateStrideLength() {
 		if ($this->Object->sportid() == Configuration::General()->runningSport()) {
-			if (NULL !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
+			if (null !== $this->Trackdata && $this->Trackdata->has(Model\Trackdata\Object::CADENCE)) {
 				$Calculator = new \Runalyze\Calculation\StrideLength\Calculator($this->Trackdata);
 				$Calculator->calculate();
 
@@ -209,7 +209,7 @@ class Inserter extends Model\InserterWithAccountID {
 	 * Calculate swim values
 	 */
 	protected function calculateSwimValues() {
-		if (NULL !== $this->Trackdata && NULL !== $this->Swimdata) {
+		if (null !== $this->Trackdata && null !== $this->Swimdata) {
 			if ($this->Swimdata->stroke()) {
 				$this->Object->set(Object::TOTAL_STROKES, array_sum($this->Swimdata->stroke()));
 			}

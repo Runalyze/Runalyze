@@ -64,7 +64,7 @@ class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 	 * Tasks to run before update
 	 */
 	protected function beforeUpdate() {
-		if (NULL !== $this->OldActivity) {
+		if (null !== $this->OldActivity) {
 			$this->updateEquipment(
 				array_diff($this->OtherIDsOld, $this->OtherIDsNew),
 				-$this->OldActivity->distance(),
@@ -77,7 +77,7 @@ class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 	 * Tasks to run after update
 	 */
 	protected function afterUpdate() {
-		if (NULL !== $this->NewActivity) {
+		if (null !== $this->NewActivity) {
 			$this->updateEquipment(
 				array_diff($this->OtherIDsNew, $this->OtherIDsOld),
 				$this->NewActivity->distance(),
@@ -85,7 +85,7 @@ class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 			);
 		}
 
-		if (NULL !== $this->NewActivity && NULL !== $this->OldActivity) {
+		if (null !== $this->NewActivity && null !== $this->OldActivity) {
 			$this->updateEquipment(
 				array_intersect($this->OtherIDsNew, $this->OtherIDsOld),
 				$this->NewActivity->distance() - $this->OldActivity->distance(),

@@ -314,7 +314,7 @@ class RunalyzePluginPanel_Ziele extends PluginPanel
 		$p_format = isset($Line['sep']) && $Line['sep'] ? ' style="border-top:1px solid #ccc;"' : '';
 
 		$NumberOfActivities = isset($Line['anz']) && $Line['anz'] > 0 ? '<small><small>(' . round($Line['anz'], 1) . 'x)</small></small>' : '';
-		$Distance = isset($Line['km']) && $Line['km'] > 0 ? '<span ' . ($Line['lvl'] == 1 ? $span_format : '') . '>' . Distance::format($Line['km'], false, 1) . '</span>' : '';
+		$Distance = isset($Line['km']) && $Line['km'] > 0 ? '<span ' . ($Line['lvl'] == 1 ? $span_format : '') . '>' . Distance::format($Line['km'], true, 1) . '</span>' : '';
 
 		echo '<p' . $p_format . '>' .
 			'<span class="right">' .

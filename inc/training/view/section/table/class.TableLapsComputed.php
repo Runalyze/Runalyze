@@ -4,6 +4,8 @@
  * @package Runalyze\DataObjects\Training\View\Section
  */
 
+use Runalyze\Activity\Elevation;
+use Runalyze\Configuration;
 use Runalyze\Model\Trackdata;
 use Runalyze\Data\Laps\Laps;
 
@@ -32,10 +34,12 @@ class TableLapsComputed extends TableLapsAbstract {
 	 * Construct laps
 	 */
 	protected function constructLaps() {
-		if ($this->Context->trackdata()->totalDistance() < 1) {
-			$Distances = array(1);
+		$singleDistance = Configuration::General()->distanceUnitSystem()->distanceToKmFactor();
+
+		if ($this->Context->trackdata()->totalDistance() < $singleDistance) {
+			$Distances = array($singleDistance);
 		} else {
-			$Distances = range(1, floor($this->Context->trackdata()->totalDistance()), 1);
+			$Distances = range($singleDistance, floor($this->Context->trackdata()->totalDistance()), $singleDistance);
 		}
 
 		$this->Laps = new Laps();
@@ -69,7 +73,7 @@ class TableLapsComputed extends TableLapsAbstract {
 			$this->Code .= '<td>'.$Lap->trackDuration()->string().'</td>';
 			$this->Code .= '<td>'.$Lap->pace()->value().'<small>'.$Lap->pace()->appendix().'</small></td>';
 			if ($showCellForHeartrate) $this->Code .= '<td>'.$Lap->HRavg()->inBPM().'<small>bpm</small></td>';
-			if ($showCellForElevation) $this->Code .= '<td class="c">+'.$Lap->elevationUp().'/-'.$Lap->elevationDown().'</td>';
+			if ($showCellForElevation) $this->Code .= '<td class="c">+'.Elevation::format($Lap->elevationUp(), false).'/-'.Elevation::format($Lap->elevationDown(), false).'</td>';
 			$this->Code .= '</tr>';
 		}
 

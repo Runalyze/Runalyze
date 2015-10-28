@@ -15,19 +15,19 @@ namespace Runalyze\Data\Weather;
 interface ForecastStrategyInterface {
 	/**
 	 * Load conditions
-	 * @param WeatherLocation $Location
+	 * @param \Runalyze\Data\Weather\Location $Location
 	 */
 	public function loadForecast(Location $Location);
 
 	/**
 	 * Weather condition
-	 * @return Runalze\Data\Weather\Condition
+	 * @return \Runalze\Data\Weather\Condition
 	 */
 	public function condition();
 
 	/**
 	 * Temperature
-	 * @return Runalze\Data\Weather\Temperature
+	 * @return \Runalze\Data\Weather\Temperature
 	 */
 	public function temperature();
 }

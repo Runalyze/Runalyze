@@ -14,7 +14,7 @@ class Filesystem {
 	 * @param string $PathToFile
 	 * @return string
 	 */
-	static public function extensionOfFile($PathToFile) {
+	public static function extensionOfFile($PathToFile) {
 		if (strlen(trim($PathToFile)) == 0)
 			return '';
 
@@ -31,7 +31,7 @@ class Filesystem {
 	 * @param string $Path
 	 * @return array
 	 */
-	static public function getFileNamesFromPath($Path) {
+	public static function getFileNamesFromPath($Path) {
 		$Files = array();
 		$handle = opendir(FRONTEND_PATH.$Path);
 
@@ -115,7 +115,7 @@ class Filesystem {
 	 * Throw an error for a bad XML
 	 * @param string $XML 
 	 */
-	static public function throwErrorForBadXml($XML) {
+	public static function throwErrorForBadXml($XML) {
 		if (empty($XML) || defined('RUNALYZE_TEST'))
 			return;
 
@@ -131,7 +131,7 @@ class Filesystem {
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @param string $fileContent 
 	 */
-	static public function writeFile($fileName, $fileContent) {
+	public static function writeFile($fileName, $fileContent) {
 		$file = fopen(FRONTEND_PATH.$fileName, "w");
 
 		if ($file !== false) {
@@ -146,7 +146,7 @@ class Filesystem {
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @return string
 	 */
-	static public function openFileAndDelete($fileName) {
+	public static function openFileAndDelete($fileName) {
 		$content = self::openFile($fileName);
 		unlink(FRONTEND_PATH.$fileName);
 
@@ -158,7 +158,7 @@ class Filesystem {
 	 * @param string $fileName relative to FRONTEND_PATH
 	 * @return string
 	 */
-	static public function openFile($fileName) {
+	public static function openFile($fileName) {
 		return file_get_contents(FRONTEND_PATH.$fileName);
 	}
 
@@ -166,7 +166,7 @@ class Filesystem {
 	 * Delete file
 	 * @param string $fileName relative to FRONTEND_PATH
 	 */
-	static public function deleteFile($fileName) {
+	public static function deleteFile($fileName) {
 		unlink(FRONTEND_PATH.$fileName);
 	}
 
@@ -175,8 +175,8 @@ class Filesystem {
 	 * @param string $file
 	 * @return string 
 	 */
-	static public function getFilesize($file) {
-		$size = ($file && @is_file($file)) ? filesize($file) : NULL;
+	public static function getFilesize($file) {
+		$size = ($file && @is_file($file)) ? filesize($file) : null;
 
 		return self::bytesToString($size);
 	}
@@ -185,7 +185,7 @@ class Filesystem {
 	 * Get maximum filesize
 	 * @return string
 	 */
-	static public function getMaximumFilesize() {
+	public static function getMaximumFilesize() {
 		$UploadSize = ini_get('upload_max_filesize');
 		$PostSize = ini_get('post_max_size');
 
@@ -196,7 +196,7 @@ class Filesystem {
 	 * Get maximum filesize
 	 * @return string
 	 */
-	static public function getMaximumFilesizeAsString() {
+	public static function getMaximumFilesizeAsString() {
 		$Max = self::getMaximumFilesize();
 
 		if ($Max == PHP_INT_MAX)
@@ -210,7 +210,7 @@ class Filesystem {
 	 * @param int $bytes
 	 * @return string
 	 */
-	static public function bytesToString($bytes) {
+	public static function bytesToString($bytes) {
 		if ($bytes == 0)
 			return '0 B';
 
@@ -224,7 +224,7 @@ class Filesystem {
 	 * @param string $string e.g. "8M"
 	 * @return int
 	 */
-	static public function stringToBytes($string) {
+	public static function stringToBytes($string) {
 		$value = trim($string);
 
 		if ($string == '-1')
@@ -251,7 +251,7 @@ class Filesystem {
 	 * 
 	 * @param string $folder path relative to runalyze/
 	 */
-	static public function checkWritePermissions($folder) {
+	public static function checkWritePermissions($folder) {
 		$realfolder = FRONTEND_PATH.'../'.$folder;
 
 		if (!is_writable($realfolder))

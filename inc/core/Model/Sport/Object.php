@@ -51,18 +51,12 @@ class Object extends Model\ObjectWithID {
 	 * @var string
 	 */
 	const PACE_UNIT = 'speed';
-        
- 	/**
--	 * Key: has distances
--	 * @var string
--	 */
-	const HAS_DISTANCES = 'distances';
 
 	/**
-	 * Key: has types
+	 * Key: has distances
 	 * @var string
 	 */
-	const HAS_TYPES = 'types';
+	const HAS_DISTANCES = 'distances';
 
 	/**
 	 * Key: has power
@@ -80,7 +74,7 @@ class Object extends Model\ObjectWithID {
 	 * All properties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::IMAGE,
@@ -89,7 +83,6 @@ class Object extends Model\ObjectWithID {
 			self::HR_AVG,
 			self::HAS_DISTANCES,
 			self::PACE_UNIT,
-			self::HAS_TYPES,
 			self::HAS_POWER,
 			self::IS_OUTSIDE
 		);
@@ -146,26 +139,29 @@ class Object extends Model\ObjectWithID {
 
 	/**
 	 * Pace unit
-	 * @return enum see \Runalyze\Activity\Pace
+	 * @return \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	public function paceUnit() {
+		$Option = new \Runalyze\Parameter\Application\PaceUnit();
+		$Option->set($this->Data[self::PACE_UNIT]);
+
+		return $Option->object();
+	}
+
+	/**
+	 * Pace unit
+	 * @return string see \Runalyze\Activity\Pace
+	 */
+	public function paceUnitEnum() {
 		return $this->Data[self::PACE_UNIT];
 	}
-        
- 	/**
+
+	/**
 	 * Has distances?
 	 * @return boolean
 	 */
 	public function hasDistances() {
 		return ($this->Data[self::HAS_DISTANCES] == 1);
-	}
-
-	/**
-	 * Has types?
-	 * @return boolean
-	 */
-	public function hasTypes() {
-		return ($this->Data[self::HAS_TYPES] == 1);
 	}
 
 	/**

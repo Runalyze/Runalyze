@@ -27,37 +27,31 @@ class TrainingFormular extends StandardFormular {
 	 * CSS class for inputs only for running
 	 * @var string
 	 */
-	static public $ONLY_RUNNING_CLASS = "only-running";
+	public static $ONLY_RUNNING_CLASS = "only-running";
 
 	/**
 	 * CSS class for inputs only for not running
 	 * @var string
 	 */
-	static public $ONLY_NOT_RUNNING_CLASS = "only-not-running";
+	public static $ONLY_NOT_RUNNING_CLASS = "only-not-running";
 
 	/**
 	 * CSS class for inputs only for sports outside
 	 * @var string
 	 */
-	static public $ONLY_OUTSIDE_CLASS = "only-outside";
-
-	/**
-	 * CSS class for inputs only for sports with types
-	 * @var string
-	 */
-	static public $ONLY_TYPES_CLASS = "only-types";
+	public static $ONLY_OUTSIDE_CLASS = "only-outside";
         
  	/**
 	 * CSS class for inputs only for sports with distance
 	 * @var string
 	 */
-	static public $ONLY_DISTANCES_CLASS = "only-distances";
+	public static $ONLY_DISTANCES_CLASS = "only-distances";
 
 	/**
 	 * CSS class for inputs only for sports with power
 	 * @var string
 	 */
-	static public $ONLY_POWER_CLASS = "only-power";
+	public static $ONLY_POWER_CLASS = "only-power";
 
 	/**
 	 * @var string
@@ -81,6 +75,7 @@ class TrainingFormular extends StandardFormular {
 		parent::prepareForDisplayInSublcass();
 
                 $this->initTagFieldset();
+		$this->addAdditionalHiddenFields();
 		$this->initEquipmentFieldset();
 
 		if ($this->submitMode == StandardFormular::$SUBMIT_MODE_EDIT) {
@@ -161,6 +156,13 @@ class TrainingFormular extends StandardFormular {
 	}
 
 	/**
+	 * Add additional hidden fields
+	 */
+	protected function addAdditionalHiddenFields() {
+		$this->addHiddenValue('distance-to-km-factor', Configuration::General()->distanceUnitSystem()->distanceToKmFactor());
+	}
+
+	/**
 	 * Add old object
 	 */
 	protected function addOldObjectData() {
@@ -172,8 +174,11 @@ class TrainingFormular extends StandardFormular {
 	 * @param int $checkForSportID optional
 	 * @return array
 	 */
-	static public function readEquipmentFromPost($checkForSportID = false) {
+	public static function readEquipmentFromPost($checkForSportID = false) {
 		$SelectedEquipment = array();
+
+		if (!isset($_POST['equipment']) || !is_array($_POST['equipment']))
+			return $SelectedEquipment;
 
 		foreach ($_POST['equipment'] as $value) {
 			if (is_array($value)) {

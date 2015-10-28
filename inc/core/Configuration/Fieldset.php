@@ -14,7 +14,7 @@ namespace Runalyze\Configuration;
 class Fieldset extends \FormularFieldset {
 	/**
 	 * Field factory
-	 * @var ConfigurationFieldFactory
+	 * @var \Runalyze\Configuration\FieldFactory
 	 */
 	protected $Factory;
 

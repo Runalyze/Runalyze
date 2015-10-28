@@ -14,7 +14,7 @@ class SearchLink {
 	 * Window url
 	 * @var string
 	 */
-	static public $WINDOW_URL = 'call/window.search.php';
+	public static $WINDOW_URL = 'call/window.search.php';
 
 	/**
 	 * Parameter
@@ -114,7 +114,7 @@ class SearchLink {
 	 * @param string $sign optional equality sign
 	 * @return string
 	 */
-	static public function to($key, $value, $text, $sign = '') {
+	public static function to($key, $value, $text, $sign = '') {
 		$Link = new SearchLink();
 		$Link->addParam($key, $value, $sign);
 
@@ -127,7 +127,7 @@ class SearchLink {
 	 * @param mixed $value can be an array
 	 * @return string
 	 */
-	static public function urlFor($key, $value) {
+	public static function urlFor($key, $value) {
 		$Link = new SearchLink();
 		$Link->addParam($key, $value);
 

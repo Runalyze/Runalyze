@@ -16,7 +16,7 @@ class Splits {
 	 * Enum for constructor: Take data from post
 	 * @var enum
 	 */
-	static public $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
+	public static $FROM_POST = 'TAKE_PARAMETER_FROM_POST';
 
 	/**
 	 * Splits as string
@@ -31,12 +31,22 @@ class Splits {
 	private $asArray = array();
 
 	/**
+	 * @var bool
+	 */
+	protected $transformDistanceUnit = false;
+
+	/**
 	 * Construct a new object of Splits
 	 * @param string $data [optional]
+	 * @param array $options
 	 */
-	public function __construct($data = '') {
+	public function __construct($data = '', $options = array()) {
 		if ($data == self::$FROM_POST)
 			$data = isset($_POST['splits']) ? $_POST['splits'] : array();
+
+		if (isset($options['transform-unit']) && $options['transform-unit'] === true) {
+			$this->transformDistanceUnit = true;
+		}
 
 		$this->createFromData($data);
 	}
@@ -66,12 +76,13 @@ class Splits {
 	 */
 	private function createFromArray($array) {
 		$this->asArray = array();
+		$factor = $this->transformDistanceUnit ? Runalyze\Configuration::General()->distanceUnitSystem()->distanceToKmFactor() : 1;
 
 		// TODO escaping
 		if (isset($array['km']) && isset($array['time']))
 			foreach ($array['km'] as $i => $km)
 				$this->asArray[] = array(
-					'km' => $km,
+					'km' => $km * $factor,
 					'time' => $array['time'][$i],
 					'active' => !isset($array['active']) || (isset($array['active']) && isset($array['active'][$i]) && $array['active'][$i])
 				);

@@ -80,6 +80,11 @@ class Lap {
 	protected $ElevationDown = false;
 
 	/**
+	 * @var array
+	 */
+	protected $AdditionalValues = array();
+
+	/**
 	 * @var \Runalyze\Athlete
 	 */
 	protected $Athlete;
@@ -193,7 +198,7 @@ class Lap {
 	 * @return boolean
 	 */
 	public function hasTrackValues() {
-		return (NULL !== $this->TrackDurationAtEnd);
+		return (null !== $this->TrackDurationAtEnd);
 	}
 
 	/**
@@ -207,7 +212,7 @@ class Lap {
 	 * @return boolean
 	 */
 	public function hasHR() {
-		return (NULL !== $this->HRavg);
+		return (null !== $this->HRavg);
 	}
 
 	/**
@@ -243,5 +248,43 @@ class Lap {
 	 */
 	public function elevationDown() {
 		return $this->ElevationDown;
+	}
+
+	/**
+	 * @param array $data
+	 */
+	public function setAdditionalValues(array $data) {
+		$this->AdditionalValues = $data;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function additionalValues() {
+		return $this->AdditionalValues;
+	}
+
+	/**
+	 * @param string $key
+	 * @param mixed $value
+	 */
+	public function setAdditionalValue($key, $value) {
+		$this->AdditionalValues[$key] = $value;
+	}
+
+	/**
+	 * @param string $key
+	 * @return bool
+	 */
+	public function hasAdditionalValue($key) {
+		return isset($this->AdditionalValues[$key]);
+	}
+
+	/**
+	 * @param string $key
+	 * @return mixed
+	 */
+	public function additionalValue($key) {
+		return $this->AdditionalValues[$key];
 	}
 }

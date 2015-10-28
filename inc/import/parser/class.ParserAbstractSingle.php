@@ -275,7 +275,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 
 			for ($i = 1; $i < $num; ++$i) {
 				$step = round(
-					GpsData::distance(
+					Runalyze\Model\Route\Object::gpsDistance(
 						$this->gps['latitude'][$i-1],
 						$this->gps['longitude'][$i-1],
 						$this->gps['latitude'][$i],
@@ -319,7 +319,7 @@ abstract class ParserAbstractSingle extends ParserAbstract {
 	 * @param string $string
 	 * @return int
 	 */
-	static private function getIDforDatabaseString($table, $string) {
+	private static function getIDforDatabaseString($table, $string) {
             $Result = Cache::get($table.$string);
             if(is_null($Result)) {
 		if ($table == 'type')

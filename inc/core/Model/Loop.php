@@ -12,7 +12,7 @@ namespace Runalyze\Model;
  * @author Hannes Christiansen
  * @package Runalyze\Model
  */
-class Loop
+abstract class Loop
 {
 	/**
 	 * Current index
@@ -256,7 +256,7 @@ class Loop
 		}
 
 		if ($max == -PHP_INT_MAX) {
-			return NULL;
+			return null;
 		}
 
 		return $max;
@@ -289,4 +289,35 @@ class Loop
 
 		return array();
 	}
+
+	/**
+	 * Slice object based on last/current index
+	 * @return \Runalyze\Model\Object
+	 * @throws \RuntimeException
+	 */
+	public function sliceObject()
+	{
+		if ($this->Object instanceof Runalyze\Model\Object)
+		{
+			throw new \RuntimeException('This object cannot be sliced.');
+		}
+
+		$data = array();
+
+		foreach ($this->Object->properties() as $key)
+		{
+			if ($this->Object->isArray($key))
+			{
+				$data[$key] = $this->slice($key);
+			}
+		}
+
+		return $this->createNewObject($data);
+	}
+
+	/**
+	 * @param array $data
+	 * @return \Runalyze\Model\Object
+	 */
+	abstract protected function createNewObject(array $data);
 }

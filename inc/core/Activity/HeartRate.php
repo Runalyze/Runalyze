@@ -148,6 +148,6 @@ class HeartRate {
 	 * @return bool
 	 */
 	protected function knowsAthlete() {
-		return (NULL !== $this->Athlete);
+		return (null !== $this->Athlete);
 	}
 }

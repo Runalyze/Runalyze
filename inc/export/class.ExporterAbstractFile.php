@@ -14,7 +14,7 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 * Type
 	 * @return enum
 	 */
-	static public function Type() {
+	public static function Type() {
 		return ExporterType::File;
 	}
 
@@ -22,7 +22,7 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 * Icon class
 	 * @return string
 	 */
-	static public function IconClass() {
+	public static function IconClass() {
 		return 'fa-file-text-o';
 	}
 
@@ -36,7 +36,7 @@ abstract class ExporterAbstractFile extends ExporterAbstract {
 	 * Get file name start
 	 * @return string
 	 */
-	static public function fileNameStart() {
+	public static function fileNameStart() {
 		return SessionAccountHandler::getId().'-Training_';
 	}
 

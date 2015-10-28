@@ -22,9 +22,8 @@ class Autoloader {
 		require_once FRONTEND_PATH.'../vendor/autoload.php';
 
 		include FRONTEND_PATH.'system/classmap.php';
-		include FRONTEND_PATH.'plugin/pluginmap.php';
 
-		$this->map = array_merge($CLASSMAP, $PLUGINMAP);
+		$this->map = $CLASSMAP;
 
 		spl_autoload_register( array($this, 'classmapLoader') );
 	}
@@ -36,9 +35,9 @@ class Autoloader {
 	protected function classmapLoader($class) {
 		if (substr($class, 0, 9) == 'Runalyze\\') {
 			require_once FRONTEND_PATH.'core/'.str_replace('\\', '/', substr($class, 9)).'.php';
-		}
-
-		if (isset($this->map[$class])) {
+		} elseif (substr($class, 0, 14) == 'RunalyzePlugin') {
+			require_once FRONTEND_PATH.'../plugin/'.$class.'/class.'.$class.'.php';
+		} elseif (isset($this->map[$class])) {
 			require_once FRONTEND_PATH.$this->map[$class];
 		}
 	}

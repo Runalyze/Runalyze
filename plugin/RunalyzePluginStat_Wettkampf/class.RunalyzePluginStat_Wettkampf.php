@@ -217,7 +217,7 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 	private function displayPersonalBestsImages() {
 		$SubLinks = array();
 		foreach ($this->PBdistances as $km) {
-			$name       = Distance::format($km, $km <= 3, 1);
+			$name       = (new Distance($km))->stringAuto(true, 1);
 			$SubLinks[] = Ajax::flotChange($name, 'bestzeitenFlots', 'bestzeit'.($km*1000));
 		}
 		$Links = array(array('tag' => '<a href="#">'.__('Choose distance').'</a>', 'subs' => $SubLinks));
@@ -296,8 +296,8 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 		PersonalBest::activateStaticCache();
 		PersonalBest::lookupDistances($kms);
 
-		foreach ($kms as $i => $km) {
-			echo '<tr class="r"><td class="b">'.Distance::format($km, $km <= 3, 1).'</td>';
+		foreach ($kms as $km) {
+			echo '<tr class="r"><td class="b">'.(new Distance($km))->stringAuto(true, 1).'</td>';
 
 			foreach ($Years as $key) {
 				$y = $year[$key];
@@ -326,7 +326,6 @@ class RunalyzePluginStat_Wettkampf extends PluginStat {
 
 		foreach ($Years as $key) {
 			if ($key != 'sum') {
-				$y = $year[$key];
 				echo '<td>'.$year[$key]['sum'].'x</td>';
 			}
 		}

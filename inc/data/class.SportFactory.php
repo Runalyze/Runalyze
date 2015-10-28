@@ -18,13 +18,13 @@ class SportFactory {
 	 * All sports as array
 	 * @var array
 	 */
-	static private $AllSports = null;
+	private static $AllSports = null;
 
 	/**
 	 * Get icon options
 	 * @return array
 	 */
-	static public function getIconOptions() {
+	public static function getIconOptions() {
 		$Files = array(
 			'icons8-Sports-Mode',
 			'icons8-Running',
@@ -64,7 +64,7 @@ class SportFactory {
 	 * @param int $id sportid
 	 * @return array
 	 */
-	static public function DataFor($id) {
+	public static function DataFor($id) {
 		$Sports = self::AllSports();
 
 		if (isset($Sports[$id]))
@@ -79,7 +79,7 @@ class SportFactory {
 	 * @todo This method should be useless as soon as a DatabaseScheme is used
 	 * @return array
 	 */
-	static private function defaultArray() {
+	private static function defaultArray() {
 		return array(
 			'name' => '?',
 			'img' => '',
@@ -88,7 +88,6 @@ class SportFactory {
 			'HFavg' => 140,
 			'distances' => 0,
 			'speed' => Pace::STANDARD,
-			'types' => 0,
 			'power'	=> 0,
 			'outside' => 0
 		);
@@ -98,7 +97,7 @@ class SportFactory {
 	 * Get all sports
 	 * @return array
 	 */
-	static public function AllSports() {
+	public static function AllSports() {
 		if (is_null(self::$AllSports)) {
 			self::initAllSports();
 		}
@@ -107,23 +106,9 @@ class SportFactory {
 	}
 
 	/**
-	 * Get all sports with types
-	 * @return array
-	 */
-	static public function AllSportsWithTypes() {
-		$Sports = self::AllSports();
-
-		foreach ($Sports as $i => $Sport)
-			if ($Sport['types'] == 0)
-				unset($Sports[$i]);
-
-		return $Sports;
-	}
-
-	/**
 	 * Initialize internal sports-array from database
 	 */
-	static private function initAllSports() {
+	private static function initAllSports() {
 		self::$AllSports = array();
 		$sports = self::cacheAllSports();
 
@@ -137,7 +122,7 @@ class SportFactory {
 	/**
 	 * Cache all sports for user
 	 */
-	static private function cacheAllSports() {
+	private static function cacheAllSports() {
 		$sports = Cache::get('sport');
 
 		if (is_null($sports)) {
@@ -153,7 +138,7 @@ class SportFactory {
 	 *
 	 * Use this method after updating sports table
 	 */
-	static public function reInitAllSports() {
+	public static function reInitAllSports() {
 		Cache::delete('sport');
 
 		self::initAllSports();
@@ -163,7 +148,7 @@ class SportFactory {
 	 * Get array with all names
 	 * @return array ids as keys, names as values
 	 */
-	static public function NamesAsArray() {
+	public static function NamesAsArray() {
 		$sports = self::AllSports();
 
 		foreach ($sports as $id => $sport) {
@@ -178,7 +163,7 @@ class SportFactory {
 	 * @param string $name
 	 * @return int sportid, -1 if not found
 	 */
-	static public function idByName($name) {
+	public static function idByName($name) {
 		$sports = self::cacheAllSports();
 
 		foreach ($sports as $sport) {
@@ -195,7 +180,7 @@ class SportFactory {
 	* @param int $SportID id
 	* @return int
 	*/
-	static public function kcalPerHourFor($SportID) {
+	public static function kcalPerHourFor($SportID) {
 		$Sports = self::AllSports();
 
 		if (isset($Sports[$SportID])) {
@@ -210,7 +195,7 @@ class SportFactory {
 	 * @param string $sportid
 	 * @return string
 	 */
-	static public function name($sportid) {
+	public static function name($sportid) {
 		$Sports = self::AllSports();
 
 		if (isset($Sports[$sportid])) {
@@ -224,7 +209,7 @@ class SportFactory {
 	 * Get how often the sport is used
 	 * @return array ids as keys, counts as values
 	 */
-	static public function CountArray() {
+	public static function CountArray() {
 		$Sports = DB::getInstance()->query('SELECT sportid, COUNT(sportid) as scount FROM `'.PREFIX.'training` WHERE `accountid` = '.SessionAccountHandler::getId().' GROUP BY sportid')->fetchAll();
 		$Counts = array();
 
@@ -240,7 +225,7 @@ class SportFactory {
 	 * @param int $ID
 	 * @return string
 	 */
-	static public function getSpeedUnitFor($ID) {
+	public static function getSpeedUnitFor($ID) {
 		$Sports = self::AllSports();
 
 		return (isset($Sports[$ID])) ? $Sports[$ID]['speed'] : Pace::STANDARD;

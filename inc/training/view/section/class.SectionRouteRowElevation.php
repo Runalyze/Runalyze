@@ -7,6 +7,7 @@
 use Runalyze\Configuration;
 use Runalyze\View\Activity;
 use Runalyze\View\Activity\Linker;
+use Runalyze\View\Activity\Box;
 
 /**
  * Row: Route
@@ -45,22 +46,21 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	 * Add: elevation
 	 */
 	protected function addElevation() {
-		if ($this->Context->activity()->distance() > 0) {
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->distance(), 'km', __('Distance'));
-			$this->BoxedValues[] = new BoxedValue($this->Context->activity()->elevation(), 'm', __('Elevation'));
+		if ($this->Context->activity()->distance() > 0 || $this->Context->activity()->elevation() > 0) {
+			if ($this->Context->activity()->distance() > 0) {
+				$this->BoxedValues[] = new Box\Distance($this->Context);
+			}
+
+			$this->BoxedValues[] = new Box\Elevation($this->Context);
 
 			// TODO: Calculated elevation?
 
 			if ($this->Context->activity()->elevation() > 0) {
-				$this->BoxedValues[] = new BoxedValue(substr($this->Context->dataview()->gradientInPercent(),0,-11), '&#37;', __('&oslash; Gradient'));
-
-				if ($this->Context->hasRoute()) {
-					$upDown = '+'.$this->Context->route()->elevationUp().'/-'.$this->Context->route()->elevationDown();
-				} else {
-					$upDown = '+'.$this->Context->activity()->elevation().'/-'.$this->Context->activity()->elevation();
+				if ($this->Context->activity()->distance() > 0) {
+					$this->BoxedValues[] = new Box\Gradient($this->Context);
 				}
 
-				$this->BoxedValues[] = new BoxedValue($upDown, 'm', __('Elevation up/down'));
+				$this->BoxedValues[] = new Box\ElevationUpDown($this->Context);
 			}
 		}
 	}
@@ -83,7 +83,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	protected function addInfoLink() {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal');
 			$this->Footer = HTML::info( $InfoLink );
 		} else {
 			$this->Footer = '';

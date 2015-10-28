@@ -3,7 +3,6 @@
  * This file contains class::ImporterFiletypeKML
  * @package Runalyze\Import\Filetype
  */
-ImporterWindowTabUpload::addInfo( __('kml-files from TomTom are supported.') );
 /**
  * Importer: *.xml
  *
@@ -15,7 +14,7 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 	 * Allowed producer of XML files
 	 * @var string
 	 */
-	static private $ALLOWED_PRODUCER = 'Google, TomTom';
+	const ALLOWED_PRODUCER = 'Google, TomTom';
 
 	/**
 	 * Set parser
@@ -53,6 +52,11 @@ class ImporterFiletypeKML extends ImporterFiletypeAbstract {
 	 * Throw error for unknown format
 	 */
 	private function throwErrorForUnknownFormat() {
-		$this->Errors[] = __('This file is not supported. Supported producers of kml-files: '.self::$ALLOWED_PRODUCER.'.');
+		$this->Errors[] = sprintf(
+			__('This file is not supported. Supported producers of %s-files: %s.'),
+			'kml', self::ALLOWED_PRODUCER
+		);
 	}
 }
+
+ImporterWindowTabUpload::addInfo( sprintf(__('%s-files are supported from: %s'), 'kml', ImporterFiletypeKML::ALLOWED_PRODUCER) );

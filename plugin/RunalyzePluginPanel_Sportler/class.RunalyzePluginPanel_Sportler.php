@@ -3,6 +3,7 @@
  * This file contains the class of the RunalyzePluginPanel "Sportler".
  * @package Runalyze\Plugins\Panels
  */
+use Runalyze\Activity\Weight;
 $PLUGINKEY = 'RunalyzePluginPanel_Sportler';
 /**
  * Class: RunalyzePluginPanel_Sportler
@@ -107,7 +108,8 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 		$SecondValues = array();
 
 		if ($this->Configuration()->value('use_weight')) {
-			$FirstValues[] = new BoxedValue(Helper::Unknown($UserData->getWeight(), '-'), 'kg', __('Weight'));
+			$Weight = new Weight($UserData->getWeight());
+			$FirstValues[] = new BoxedValue(Helper::Unknown($Weight->string(false), '-'), $Weight->unit(), __('Weight'));
 		}
 
 		if ($this->Configuration()->value('use_pulse')) {
@@ -178,12 +180,12 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 */
 	protected function displayContentInOldDesign() {
 		$Weight   = '';
-		$Pulse    = '';
 		$Analyse  = '';
 		$UserData = new UserData( DataObject::$LAST_OBJECT );
 
 		if ($this->Configuration()->value('use_weight')) {
-			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserData->getWeight(), '-').' kg</strong><br>';
+		    $UserWeight = new Weight($UserData->getWeight());
+			$Weight = __('Weight').': <strong>'.Helper::Unknown($UserWeight->string(false), '-').' '.$UserWeight->unit().'</strong><br>';
                 }
 
 		if ($this->Configuration()->value('use_pulse')) {
@@ -237,7 +239,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getEditLinkFor($id) {
+	public static function getEditLinkFor($id) {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'">'.Icon::$EDIT.'</a>');
 	}
 
@@ -246,7 +248,7 @@ class RunalyzePluginPanel_Sportler extends PluginPanel {
 	 * @param int $id
 	 * @return string
 	 */
-	static public function getDeleteLinkFor($id) {
+	public static function getDeleteLinkFor($id) {
 		return Ajax::window('<a href="plugin/RunalyzePluginPanel_Sportler/window.sportler.php?id='.$id.'&delete=true">'.Icon::$DELETE.'</a>');
 	}
 }

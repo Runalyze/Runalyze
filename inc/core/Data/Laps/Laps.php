@@ -23,13 +23,38 @@ class Laps {
 	protected $Objects;
 
 	/**
+	 * @var bool
+	 */
+	protected $CalculateAdditionalValues = false;
+
+	/**
+	 * @param bool $flag
+	 */
+	public function enableCalculationOfAdditionalValues($flag = true) {
+		$this->CalculateAdditionalValues = $flag;
+	}
+
+	/**
 	 * @param array $distances
 	 * @param \Runalyze\Model\Trackdata\Object $trackdata
 	 * @param \Runalyze\Model\Route\Object $route
 	 */
 	public function calculateFrom(array $distances, Trackdata\Object $trackdata, Route\Object $route = null) {
 		$Calculator = new Calculator($this);
+		$Calculator->calculateAdditionalValues($this->CalculateAdditionalValues);
 		$Calculator->setDistances($distances);
+		$Calculator->calculateFrom($trackdata, $route);
+	}
+
+	/**
+	 * @param array $times
+	 * @param \Runalyze\Model\Trackdata\Object $trackdata
+	 * @param \Runalyze\Model\Route\Object $route
+	 */
+	public function calculateFromTimes(array $times, Trackdata\Object $trackdata, Route\Object $route = null) {
+		$Calculator = new Calculator($this);
+		$Calculator->calculateAdditionalValues($this->CalculateAdditionalValues);
+		$Calculator->setTimes($times);
 		$Calculator->calculateFrom($trackdata, $route);
 	}
 

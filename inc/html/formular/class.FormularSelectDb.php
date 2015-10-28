@@ -12,7 +12,7 @@ class FormularSelectDb extends FormularSelectBox {
 	/**
 	 * @var array
 	 */
-	static $OptionsCache = array();
+	public static $OptionsCache = array();
 
 	/**
 	 * Load options from database

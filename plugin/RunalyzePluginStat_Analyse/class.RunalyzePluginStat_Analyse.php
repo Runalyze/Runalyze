@@ -4,10 +4,10 @@
  * @package Runalyze\Plugins\Stats
  */
 
-use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Configuration;
 
 $PLUGINKEY = 'RunalyzePluginStat_Analyse';
 /**
@@ -80,7 +80,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	/**
-	 * Init data 
+	 * Init data
 	 */
 	protected function prepareForDisplay() {
 		$this->Sport = new Sport($this->sportid);
@@ -96,7 +96,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	}
 
 	private function setAnalysisNavigation() {
-		$LinkList  = '<li class="with-submenu"><span class="link">'.__('Choose evaluation').'</span><ul class="submenu">';
+		$LinkList  = '<li class="with-submenu"><span class="link">'.$this->getAnalysisType().'</span><ul class="submenu">';
 		$LinkList .= '<li'.('' == $this->dat ? ' class="active"' : '').'>'.$this->getInnerLink( __('in percent'), $this->sportid, $this->year, '').'</li>';
 
 		if ($this->Sport->usesDistance()) {
@@ -109,6 +109,13 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$LinkList .= '</ul></li>';
 
 		$this->setToolbarNavigationLinks(array($LinkList));
+	}
+
+	private function getAnalysisType() {
+		$types = ['' => __('in percent'),
+			'km' => __('by distance'),
+			's' => __('by time')];
+		return $types[$this->dat];
 	}
 
 	/**
@@ -154,7 +161,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Initialize analysis data
 	 */
 	private function initData() {
-		if ($this->Configuration()->value('use_type') && $this->Sport->hasTypes()) {
+		if ($this->Configuration()->value('use_type')) {
 			$this->AnalysisData[] = $this->getTypeArray();
 		}
 
@@ -240,7 +247,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					for ($t = $this->timer_start; $t <= $this->timer_end; $t++) {
 						if (isset($Data['array']['timer_sum_km'][$t])) {
 							if ($this->Sport->usesDistance() && $this->dat != 's')
-								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], false, 0).'</td>';
+								echo '<td>'.Distance::format($Data['array']['timer_sum_km'][$t], true, 0).'</td>';
 							else
 								echo '<td>'.Duration::format($Data['array']['timer_sum_s'][$t]).'</td>';
 						} else {
@@ -249,7 +256,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 					}
 
 					if ($this->Sport->usesDistance() && $this->dat != 's')
-						echo '<td>'.Distance::format($Data['array']['all_sum_km'], false, 0).'</td></tr>';
+						echo '<td>'.Distance::format($Data['array']['all_sum_km'], true, 0).'</td></tr>';
 					else
 						echo '<td>'.Duration::format($Data['array']['all_sum_s']).'</td></tr>';
 				}
@@ -271,7 +278,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		$number  = number_format($percent, 1).' &#37;';
 
 		if ($this->dat == 'km') {
-			$number   = Distance::format($dist, false, 0);
+			$number   = Distance::format($dist, true, 0);
 			$tooltip .= ', '.Duration::format($time);
 		} elseif ($this->dat == 's') {
 			$number   = Duration::format($time);
@@ -322,7 +329,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		foreach ($result as $dat) {
 			if (!isset($type_data[$dat['typeid']]))
 				$type_data[$dat['typeid']] = array();
-			
+
 			$type_data[$dat['typeid']][$dat['timer']] = array(
 				'num'		=> $dat['num'],
 				'distance'	=> $dat['distance'],
@@ -393,7 +400,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		')->fetchAll();
 
 		$speed_data = $this->emptyData;
-		
+
 		foreach ($result as $dat) {
 			if ($this->sportid == Configuration::General()->runningSport()) {
 				if ($dat['group'] > $speed_min)
@@ -405,7 +412,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->setGroupData($speed_data, $dat);
 			$this->setSumData($speed_data, $dat);
 		}
-	
+
 		$speed_foreach = array();
 
 		if (!empty($result)) {
@@ -449,7 +456,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 		')->fetchAll();
 
 		$pulse_data = $this->emptyData;
-		
+
 		foreach ($result as $dat) {
 			if ($dat['group'] < $pulse_min)
 				$dat['group'] = $pulse_min;
@@ -457,7 +464,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 			$this->setGroupData($pulse_data, $dat);
 			$this->setSumData($pulse_data, $dat);
 		}
-	
+
 		$pulse_foreach = array();
 
 		if (!empty($result)) {
@@ -542,7 +549,10 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 */
 	private function printTableHeader() {
 		$this->displayTableHeadForTimeRange(false, '7%');
-		echo '<th>'.__('In total').'</th>';
+
+		if (!$this->showsAllYears()) {
+			echo '<th>'.__('In total').'</th>';
+		}
 	}
 
 	/**

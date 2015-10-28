@@ -58,7 +58,7 @@ class PlotWeekSumData extends PlotSumData {
 
 		for ($w = $this->timerStart; $w <= $this->timerEnd; $w++) {
 			$time = strtotime("sunday -".($this->timerEnd - $w + $add)." weeks");
-			$string = (date("d", $time) <= 7) ? Time::Month(date("m", $time), true) : '';
+			$string = (date("d", $time) <= 7) ? Time::month(date("m", $time), true) : '';
 
 			if ($string != '' && date("m", $time) == 1) {
 				$string .= ' \''.date("y", $time);

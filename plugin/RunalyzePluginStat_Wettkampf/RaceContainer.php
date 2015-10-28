@@ -20,11 +20,6 @@ use Cache;
  */
 class RaceContainer {
 	/**
-	 * @var string
-	 */
-	const CACHE_KEY = 'plugin-races-data';
-
-	/**
 	 * Data
 	 * @var array
 	 */
@@ -46,36 +41,20 @@ class RaceContainer {
 	protected $ComeptitionType;
 
 	/**
-	 * @var boolean
-	 */
-	protected $UseCache;
-
-	/**
 	 * 
 	 * @param PDO $pdo [optional]
 	 * @param int $competitionType [optional]
-	 * @param boolean $useCache [optional]
 	 */
-	public function __construct(PDO $pdo = null, $competitionType = false, $useCache = true) {
-		$this->PDO = (NULL == $pdo) ? DB::getInstance() : $pdo;
+	public function __construct(PDO $pdo = null, $competitionType = false) {
+		$this->PDO = (null == $pdo) ? DB::getInstance() : $pdo;
 		$this->ComeptitionType = (false === $competitionType) ? Configuration::General()->competitionType() : $competitionType;
-		$this->UseCache = $useCache;
 	}
 
 	/**
 	 * Fetch data
 	 */
 	public function fetchData() {
-		if ($this->UseCache) {
-			$this->Data = Cache::get(self::CACHE_KEY);
-
-			if (NULL == $this->Data) {
-				$this->Data = $this->fetchDataFromDB();
-				Cache::set(self::CACHE_KEY, $this->Data, 600);
-			}
-		} else {
-			$this->Data = $this->fetchDataFromDB();
-		}
+		$this->Data = $this->fetchDataFromDB();
 
 		$this->indexDistances();
 	}

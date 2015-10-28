@@ -10,6 +10,9 @@ use Runalyze\Configuration\Fieldset;
 use Runalyze\Parameter\SelectRow;
 use Runalyze\Parameter\Application\Gender;
 use Runalyze\Parameter\Application\HeartRateUnit;
+use Runalyze\Parameter\Application\DistanceUnitSystem;
+use Runalyze\Parameter\Application\DistanceUnit;
+use Runalyze\Parameter\Application\WeightUnit;
 use Ajax;
 
 /**
@@ -31,6 +34,8 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function createHandles() {
 		$this->createGender();
+		$this->createDistanceUnitSystem();
+		$this->createWeightUnit();
 		$this->createHeartRateUnit();
 		$this->createMainSport();
 		$this->createRunningSport();
@@ -42,6 +47,36 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function createGender() {
 		$this->createHandle('GENDER', new Gender());
+	}
+	
+	/**
+	 * Create: DISTANCE_UNIT_SYSTEM
+	 */
+	protected function createDistanceUnitSystem() {
+		$this->createHandle('DISTANCE_UNIT_SYSTEM', new DistanceUnitSystem());
+	}
+	
+	/**
+	 * Unit system for distances
+	 * @return \Runalyze\Parameter\Application\DistanceUnitSystem
+	 */
+	public function distanceUnitSystem() {
+		return $this->object('DISTANCE_UNIT_SYSTEM');
+	}
+
+	/**
+	 * Create: WeightUnit
+	 */
+	protected function createWeightUnit() {
+		$this->createHandle('WEIGHT_UNIT', new WeightUnit());
+	}
+	
+	/**
+	 * weight Unit
+	 * @return \Runalyze\Parameter\Application\WeightUnit
+	 */
+	public function weightUnit() {
+		return $this->object('WEIGHT_UNIT');
 	}
 
 	/**
@@ -135,6 +170,9 @@ class General extends \Runalyze\Configuration\Category {
 	 */
 	protected function registerOnchangeEvents() {
 		$this->handle('GENDER')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeFlag(Ajax::$RELOAD_ALL);
+		$this->handle('DISTANCE_UNIT_SYSTEM')->registerOnchangeEvent('Runalyze\\Configuration\\Messages::adjustPacesInSportsConfiguration');
+		$this->handle('WEIGHT_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
 		$this->handle('HEART_RATE_UNIT')->registerOnchangeFlag(Ajax::$RELOAD_DATABROWSER);
 		$this->handle('MAINSPORT')->registerOnchangeFlag(Ajax::$RELOAD_PAGE);
 		$this->handle('TYPE_ID_RACE')->registerOnchangeFlag(Ajax::$RELOAD_PLUGINS);
@@ -149,6 +187,15 @@ class General extends \Runalyze\Configuration\Category {
 
 		$Fieldset->addHandle( $this->handle('GENDER'), array(
 			'label'		=> __('Gender')
+		));
+
+		$Fieldset->addHandle( $this->handle('DISTANCE_UNIT_SYSTEM'), array(
+			'label'		=> __('Unit system for distances'),
+			'tooltip'	=> __('Changing the unit system for distances does not change pace units. You have to adjust them in sports configuration.')
+		));
+
+		$Fieldset->addHandle( $this->handle('WEIGHT_UNIT'), array(
+			'label'		=> __('Weight unit')
 		));
 
 		$Fieldset->addHandle( $this->handle('HEART_RATE_UNIT'), array(

@@ -20,7 +20,7 @@ class ImporterWindow {
 	 * URL for window
 	 * @var string
 	 */
-	static public $URL = 'call/call.Training.create.php';
+	public static $URL = 'call/call.Training.create.php';
 
 	/**
 	 * Show upload form?
@@ -212,8 +212,8 @@ class ImporterWindow {
 	/**
 	 * Get link for create window
 	 */
-	static public function link() {
-		return Ajax::window('<a href="'.self::$URL.'" '.Ajax::tooltip('', __('Add workout'), false, true).'>'.Icon::$ADD.'</a>', 'small');
+	public static function link() {
+		return Ajax::window('<a href="'.self::$URL.'">'.Icon::$ADD.' '.__('Add workout').'</a>', 'small');
 	}
 
 	/**
@@ -221,7 +221,7 @@ class ImporterWindow {
 	 * @param int $timestamp
 	 * @return string
 	 */
-	static public function linkForDate($timestamp) {
+	public static function linkForDate($timestamp) {
 		if ($timestamp > time()) {
 			return '<span style="opacity:.25;">'.Icon::$ADD_SMALL.'</span>';
 		}

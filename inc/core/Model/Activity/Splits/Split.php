@@ -9,6 +9,7 @@ namespace Runalyze\Model\Activity\Splits;
 use Runalyze\Model\StringObject;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use Runalyze\Parameter\Application\PaceUnit;
 
 /**
  * Single split
@@ -145,7 +146,7 @@ class Split extends StringObject {
 	 * @param enum $unit [optional]
 	 * @return \Runalyze\Activity\Pace
 	 */
-	public function pace($unit = Pace::MIN_PER_KM) {
+	public function pace($unit = PaceUnit::MIN_PER_KM) {
 		return new Pace($this->Time, $this->Distance, $unit);
 	}
 

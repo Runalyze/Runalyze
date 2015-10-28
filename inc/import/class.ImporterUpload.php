@@ -17,7 +17,7 @@ class ImporterUpload {
 	 * Path to files, after construction with absolute path
 	 * @var string 
 	 */
-	static private $pathToFiles = '/files/';
+	private static $pathToFiles = '/files/';
 
 	/**
 	 * JSON-response
@@ -172,7 +172,7 @@ class ImporterUpload {
 	 * @param string $File
 	 * @return string
 	 */
-	static public function absolutePath($File) {
+	public static function absolutePath($File) {
 		return realpath(dirname(__FILE__)).self::$pathToFiles.$File;
 	}
 
@@ -181,7 +181,7 @@ class ImporterUpload {
 	 * @param string $File
 	 * @return string
 	 */
-	static public function relativePath($File) {
+	public static function relativePath($File) {
 		return 'import'.self::$pathToFiles.$File;
 	}
 }

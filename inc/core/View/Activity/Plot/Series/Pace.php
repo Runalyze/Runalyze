@@ -10,6 +10,7 @@ use Plot;
 use Runalyze\Configuration;
 use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\Parameter\Application\PaceAxisType;
+use Runalyze\Parameter\Application\PaceUnit;
 use Runalyze\View\Activity;
 
 
@@ -24,7 +25,7 @@ class Pace extends ActivitySeries {
 	* How many outliers should be cutted away?
 	* @var type
 	*/
-	static private $CUT_OUTLIER_PERCENTAGE = 10;
+	private static $CUT_OUTLIER_PERCENTAGE = 10;
 
 	/**
 	 * @var string
@@ -37,14 +38,14 @@ class Pace extends ActivitySeries {
 	protected $isRunning;
 
 	/**
-	 * @var enum
+	 * @var \Runalyze\Activity\PaceUnit\AbstractUnit
 	 */
 	protected $paceUnit;
 
 	/**
-	 * @var bool
+	 * @var enum
 	 */
-	protected $paceInTime;
+	protected $paceUnitEnum;
 
 	/**
 	 * Create series
@@ -52,8 +53,8 @@ class Pace extends ActivitySeries {
 	 */
 	public function __construct(Activity\Context $context) {
 		$this->paceUnit = $context->sport()->paceUnit();
+		$this->paceUnitEnum = $context->sport()->paceUnitEnum();
 
-		$this->paceInTime = ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M || $this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_500M);
 		$this->isRunning = ($context->sport()->id() == Configuration::General()->runningSport());
 
 		$this->initOptions();
@@ -68,8 +69,9 @@ class Pace extends ActivitySeries {
 		$this->Label = __('Pace');
 		$this->Color = self::COLOR;
 
-		$pace = new \Runalyze\Activity\Pace(0, 1, $this->paceUnit);
-		$this->UnitString = !$this->paceInTime ? str_replace('&nbsp;', '', $pace->appendix()) : '';
+		$pace = new \Runalyze\Activity\Pace(0, 1);
+		$pace->setUnit($this->paceUnit);
+		$this->UnitString = !$this->paceUnit->isTimeFormat() ? str_replace('&nbsp;', '', $pace->appendix()) : '';
 		$this->UnitDecimals = 1;
 
 		$this->TickSize = false;
@@ -83,37 +85,18 @@ class Pace extends ActivitySeries {
 	 * Manipulate data
 	 */
 	protected function manipulateData() {
-		switch ($this->paceUnit) {
-			case \Runalyze\Activity\Pace::KM_PER_H:
-				$this->Data = array_map(function($v){
-					return ($v == 0) ? 0 : round(3600/$v, 1);
-				}, $this->Data);
-				break;
+		if ($this->paceUnit->isTimeFormat()) {
+			$factor = $this->paceUnit->factorForUnit();
 
-			case \Runalyze\Activity\Pace::M_PER_S:
-				$this->Data = array_map(function($v){
-					return ($v == 0) ? 0 : round(1000/$v, 1);
-				}, $this->Data);
-				break;
+			$this->Data = array_map(function($v) use ($factor){
+				return ($v == 0) ? 3600*1000 : 1000*round($v*$factor);
+			}, $this->Data);
+		} else {
+			$dividend = $this->paceUnit->dividendForUnit();
 
-			case \Runalyze\Activity\Pace::MIN_PER_100M:
-				$this->Data = array_map(function($v){
-					return ($v == 0) ? 36000*100 :round($v*100);
-				}, $this->Data);
-				break;
-
-			case \Runalyze\Activity\Pace::MIN_PER_500M:
-				$this->Data = array_map(function($v){
-					return ($v == 0) ? 36000*500 :round($v*500);
-				}, $this->Data);
-				break;
-
-			case \Runalyze\Activity\Pace::MIN_PER_KM:
-			default:
-				$this->Data = array_map(function($v){
-					return ($v == 0) ? 3600*1000 :round($v*1000);
-				}, $this->Data);
-				break;
+			$this->Data = array_map(function($v) use ($dividend){
+				return ($v == 0) ? 0 : round($dividend/$v, 1);
+			}, $this->Data);
 		}
 	}
 
@@ -131,7 +114,7 @@ class Pace extends ActivitySeries {
 
 		parent::addTo($Plot, $yAxis, $addAnnotations);
 
-		if (!$this->paceInTime) return;
+		if (!$this->paceUnit->isTimeFormat()) return;
 
 		$Plot->setYAxisTimeFormat('%M:%S', $yAxis);
 
@@ -203,27 +186,39 @@ class Pace extends ActivitySeries {
 	 */
 	private function setYAxisForReversePace(Plot $plot, $yAxis, $dataMin)
 	{
-		if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_KM) {
-			if ($dataMin < 180000) {
-				$min = 120000;
-				$max = 3600000;
-				$ticks = [120000, 180000, 240000, 300000, 360000, 480000, 600000];
-			} else if ($dataMin < 240000) {
-				$min = 180000;
-				$max = 3600000;
-				$ticks = [180000, 240000, 300000, 360000, 480000, 600000];
+		if ($this->paceUnitEnum == PaceUnit::MIN_PER_MILE) {
+			$min = 240;
+			$max = 3600;
+			$ticks = [300, 360, 450, 600, 900];
+		} else if ($this->paceUnitEnum == PaceUnit::MIN_PER_100M || $this->paceUnitEnum == PaceUnit::MIN_PER_100Y) {
+			$min = $dataMin < 60*1000*10 ? 10 : 60;
+			$max = 720;
+			$ticks = [60, 120, 180, 240];
+		} else if ($this->paceUnitEnum == PaceUnit::MIN_PER_500M || $this->paceUnitEnum == PaceUnit::MIN_PER_500Y) {
+			$min = 60;
+			$max = 720;
+			$ticks = [60, 120, 180, 240];
+		} else { // defaults to min/km
+			if ($dataMin < 180*1000) {
+				$min = 120;
+				$max = 3600;
+				$ticks = [120, 180, 240, 300, 360, 480, 600];
+			} else if ($dataMin < 240*1000) {
+				$min = 180;
+				$max = 3600;
+				$ticks = [180, 240, 300, 360, 480, 600];
 			} else {
-				$min = 240000;
-				$max = 3600000;
-				$ticks = [240000, 300000, 360000, 480000, 600000];
+				$min = 240;
+				$max = 3600;
+				$ticks = [240, 300, 360, 480, 600];
 			}
-		} else if ($this->paceUnit == \Runalyze\Activity\Pace::MIN_PER_100M) {
-			$min = 60000;
-			$max = 7200000;
-			$ticks = [60000, 120000, 180000, 240000];
 		}
 
-		$plot->setYLimits($yAxis, $min, $max, false);
+		$ticks = array_map(function($v){
+			return $v*1000;
+		}, $ticks);
+
+		$plot->setYLimits($yAxis, $min*1000, $max*1000, false);
 		$plot->setYAxisLabels($yAxis, $ticks);
 
 	}

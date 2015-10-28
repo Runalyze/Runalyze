@@ -17,19 +17,19 @@ class DataBrowser {
 	 * Show a line to seperate weeks
 	 * @var boolean
 	 */
-	static public $SEPARATE_WEEKS_BY_LINE = true;
+	public static $SEPARATE_WEEKS_BY_LINE = true;
 
 	/**
 	 * CSS-ID for calendar-widget
 	 * @var string
 	 */
-	static public $CALENDAR_ID = 'data-browser-calendar';
+	public static $CALENDAR_ID = 'data-browser-calendar';
 
 	/**
 	 * CSS-ID for refresh button
 	 * @var string
 	 */
-	static public $REFRESH_BUTTON_ID = 'refreshDataBrowser';
+	public static $REFRESH_BUTTON_ID = 'refreshDataBrowser';
 
 	/**
 	 * Timestamp for first day to be displayed
@@ -126,8 +126,8 @@ class DataBrowser {
 				$this->timestamp_start = mktime(0, 0, 0, date("m"), 1, date("Y"));
 				$this->timestamp_end   = mktime(23, 59, 50, date("m")+1, 0, date("Y"));
 			} else {
-				$this->timestamp_start = Time::Weekstart(time());
-				$this->timestamp_end   = Time::Weekend(time());
+				$this->timestamp_start = Time::weekstart(time());
+				$this->timestamp_end   = Time::weekend(time());
 			}
 		} else {
 			$this->timestamp_start = $_GET['start'];
@@ -213,7 +213,7 @@ class DataBrowser {
 	protected function displayTitle() {
 		$timeForLinks = ($this->timestamp_start < time() && time() < $this->timestamp_end) ? time() : $this->timestamp_start;
 
-		echo DataBrowserLinker::monthLink(Time::Month(date("m", $timeForLinks)), $timeForLinks).', ';
+		echo DataBrowserLinker::monthLink(Time::month(date("m", $timeForLinks)), $timeForLinks).', ';
 		echo DataBrowserLinker::yearLink(date("Y", $timeForLinks), $timeForLinks).', ';
 		echo DataBrowserLinker::weekLink(date("W", $timeForLinks).'. '.__('week') , $timeForLinks);
 	}

@@ -139,6 +139,22 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals(3.0, $this->Laps->at(2)->trackDistance()->kilometer());
 	}
 
+	public function testConsecutiveTimes()
+	{
+		$this->object->setTimes(array(
+			300, 370, 430, 498, 560, 840
+		));
+		$this->object->calculateFrom($this->trackdata());
+
+		$this->assertEquals(6, $this->Laps->num());
+		$this->assertEquals(300, $this->Laps->at(0)->duration()->seconds());
+		$this->assertEquals(70, $this->Laps->at(1)->duration()->seconds());
+		$this->assertEquals(60, $this->Laps->at(2)->duration()->seconds());
+		$this->assertEquals(68, $this->Laps->at(3)->duration()->seconds());
+		$this->assertEquals(62, $this->Laps->at(4)->duration()->seconds());
+		$this->assertEquals(280, $this->Laps->at(5)->duration()->seconds());
+	}
+
 	/**
 	 * @test
 	 */
@@ -232,6 +248,22 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 			array(   0, 0.0, 2750, 8.9,   0,   0, 0, 0),
 			array(   0, 0.0, 2750, 8.9,   0,   0, 0, 0)
 		));
+	}
+
+	public function testTimesFromString()
+	{
+		$this->assertEquals(
+			array(15*60, 45*60 + 30, 1*3600 + 60 + 1),
+			Calculator::getTimesFromString('15:00, 45:30, 1:01:01')
+		);
+	}
+
+	public function testTimesFromStringWithShortNotationForMinutes()
+	{
+		$this->assertEquals(
+			array(5*60, 15*60, 20*60),
+			Calculator::getTimesFromString('+5\', 10\', 5\'')
+		);
 	}
 
 }

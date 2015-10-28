@@ -4,8 +4,11 @@
  * @package Runalyze\System\Config
  */
 
+use Runalyze\Activity\Duration;
 use Runalyze\Model\EquipmentType;
 use Runalyze\Model\Equipment;
+use Runalyze\Activity\Distance;
+use Runalyze\View\Icon;
 
 /**
  * ConfigTabEquipment
@@ -34,10 +37,36 @@ class ConfigTabEquipment extends ConfigTab {
 		);
 
 		$Equipment = new FormularFieldset(__('Your equipment'));
-		$Equipment->setHtmlCode($this->getEquipmentCode());
+		$Equipment->setHtmlCode($this->getEquipmentCode().$this->getJS());
+		$Equipment->addInfo(
+			__('RUNALYZE collects data and calculates statistics for each of your equipment objects. '
+				.'To correctly estimate its lifetime you can specify a \'previous distance\' '
+				.'which is added to its calculated distance, e.g. if you used your running shoes for 200 km before tracking them. '
+				.'In addition, you can specify a start and end date for its usage. '
+				.'Objects will be displayed as \'inactive\' as soon as you have entered an end date.')
+		);
 
 		$this->Formular->addFieldset($EquipmentType);
 		$this->Formular->addFieldset($Equipment);
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getDeleteIcon() {
+		$DeleteIcon = new Icon('fa-exclamation-triangle');
+		$DeleteIcon->setTooltip(__('Attention: This operation cannot be undone.'));
+
+		return $DeleteIcon->code();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getJS() {
+		return Ajax::wrapJSasFunction(
+			'$("input.delete-checkbox").change(function(){$(this).parent().parent().toggleClass("ERROR unimportant")});'
+		);
 	}
 
 	/**
@@ -50,10 +79,10 @@ class ConfigTabEquipment extends ConfigTab {
 					<tr>
 						<th>'.__('Name').'</th>
 						<th>'.__('Type').'</th>
-						<th>'.__('max. km').'</th>
+						<th>'.__('max.').Runalyze\Configuration::General()->distanceUnitSystem()->distanceUnit().'</th>
 						<th>'.__('max. Time').'</th>
-						<th>'.__('Sports').'</th> 
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('A equipment type can only be deleted if no references (equipment) exist.')).'</th>
+						<th>'.__('Sports').'</th>
+						<th>'.__('delete').' '.$this->getDeleteIcon().'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -65,8 +94,9 @@ class ConfigTabEquipment extends ConfigTab {
 		foreach ($Types as $Type) {
 			$isNew = !$Type->hasID();
 			$id = $isNew ? -1 : $Type->id();
-			$delete = $isNew ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipmenttype[delete]['.$id.']">';
+			$delete = $isNew ? '' : '<input type="checkbox" class="delete-checkbox" name="equipmenttype[delete]['.$id.']">';
 			$sportIDs = $isNew ? array() : $this->Model->sportForEquipmentType($id, true);
+			$MaxDistance = new Distance($Type->maxDistance());
 
 			$Code .= '
 					<tr class="'.($isNew ? ' unimportant' : '').'">
@@ -75,8 +105,8 @@ class ConfigTabEquipment extends ConfigTab {
 								<option value="'.EquipmentType\Object::CHOICE_SINGLE.'" '.HTML::Selected(!$Type->allowsMultipleValues()).'>'.__('Single choice').'</option>
 								<option value="'.EquipmentType\Object::CHOICE_MULTIPLE.'" '.HTML::Selected($Type->allowsMultipleValues()).'>'.__('Multiple choice').'</option>
 							</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.$Type->maxDistance().'"><label class="input-unit">km</label></span></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.$Type->maxDuration().'"><label class="input-unit">s</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipmenttype[max_km]['.$id.']" value="'.round($MaxDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$MaxDistance->unit().'</label></span></td>
+						<td><input type="text" class="small-size" name="equipmenttype[max_time]['.$id.']" value="'.($Type->maxDuration() > 0 ? Duration::format($Type->maxDuration()) : '').'" placeholder="d hh:mm:ss"></td>
 						<td><input name="equipmenttype[sportid_old]['.$id.']" type="hidden" value="'.implode(',', $sportIDs).'">
 							<select name="equipmenttype[sportid]['.$id.'][]" class="middle-size" multiple>';
 
@@ -109,8 +139,8 @@ class ConfigTabEquipment extends ConfigTab {
 						<th>'.__('prev. distance').'</th>
 						<th>'.__('Start of use').'</th>
 						<th>'.__('End of use').'</th>
-						<th>'.__('Notes').'</th>   
-						<th>'.Ajax::tooltip(Icon::$CROSS_SMALL, __('An equipment can only be deleted if no references exist.')).'</th>
+						<th>'.__('Notes').'</th>
+						<th>'.__('delete').' '.$this->getDeleteIcon().'</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -122,7 +152,7 @@ class ConfigTabEquipment extends ConfigTab {
 		foreach ($Equipments as $Equipment) {
 			$isNew = !$Equipment->hasID();
 			$id = $isNew ? -1 : $Equipment->id();
-			$delete = $isNew ? Icon::$ADD_SMALL : '<input type="checkbox" name="equipment[delete]['.$id.']">';
+			$delete = $isNew ? '' : '<input type="checkbox" class="delete-checkbox" name="equipment[delete]['.$id.']">';
 
 			$Code .= '
 					<tr class="'.($isNew ? ' unimportant' : '').'">
@@ -133,8 +163,10 @@ class ConfigTabEquipment extends ConfigTab {
 				$Code .= '<option value="'.$Type->id().'"'.HTML::Selected($Type->id() == $Equipment->typeid()).'>'.$Type->name().'</option>';
 			}
 
+			$AdditionalDistance = new Distance($Equipment->additionalDistance());
+
 			$Code .= '</select></td>
-						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.$Equipment->additionalDistance().'"><label class="input-unit">km</label></span></td>
+						<td><span class="input-with-unit"><input type="text" class="small-size" name="equipment[additional_km]['.$id.']" value="'.round($AdditionalDistance->valueInPreferredUnit()).'"><label class="input-unit">'.$AdditionalDistance->unit().'</label></span></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_start]['.$id.']" value="'.$this->datetimeToString($Equipment->startDate()).'"></td>
 						<td><input type="text" class="small-size pick-a-date" placeholder="dd.mm.YYYY" name="equipment[date_end]['.$id.']" value="'.$this->datetimeToString($Equipment->endDate()).'"></td>
 						<td><input type="text" size="fullwidth" name="equipment[notes]['.$id.']" value="'.$Equipment->notes().'"></td>
@@ -172,11 +204,15 @@ class ConfigTabEquipment extends ConfigTab {
 			$isNew = !$Type->hasID();
 			$id = $isNew ? -1 : $Type->id();
 
+			$MaxTime = new Duration($_POST['equipmenttype']['max_time'][$id]);
+			$MaxDistance = new Distance();
+			$MaxDistance->setInPreferredUnit($_POST['equipmenttype']['max_km'][$id]);
+
 			$NewType = clone $Type;
 			$NewType->set(EquipmentType\Object::NAME, $_POST['equipmenttype']['name'][$id]);
 			$NewType->set(EquipmentType\Object::INPUT, (int)$_POST['equipmenttype']['input'][$id]);
-			$NewType->set(EquipmentType\Object::MAX_KM, (int)$_POST['equipmenttype']['max_km'][$id]);
-			$NewType->set(EquipmentType\Object::MAX_TIME, (int)$_POST['equipmenttype']['max_time'][$id]);
+			$NewType->set(EquipmentType\Object::MAX_KM, $MaxDistance->kilometer());
+			$NewType->set(EquipmentType\Object::MAX_TIME, $MaxTime->seconds());
 
 			if ($isNew) {
 				if ($NewType->name() != '') {
@@ -219,10 +255,13 @@ class ConfigTabEquipment extends ConfigTab {
 			$isNew = !$Equipment->hasID();
 			$id = $isNew ? -1 : $Equipment->id();
 
+			$AdditionalDistance = new Distance();
+			$AdditionalDistance->setInPreferredUnit($_POST['equipment']['additional_km'][$id]);
+
 			$NewEquipment = clone $Equipment;
 			$NewEquipment->set(Equipment\Object::NAME, $_POST['equipment']['name'][$id]);
 			$NewEquipment->set(Equipment\Object::TYPEID, (int)$_POST['equipment']['typeid'][$id]);
-			$NewEquipment->set(Equipment\Object::ADDITIONAL_KM, (int)$_POST['equipment']['additional_km'][$id]);
+			$NewEquipment->set(Equipment\Object::ADDITIONAL_KM, $AdditionalDistance->kilometer());
 			$NewEquipment->set(Equipment\Object::DATE_START, $this->stringToDatetime($_POST['equipment']['date_start'][$id]));
 			$NewEquipment->set(Equipment\Object::DATE_END, $this->stringToDatetime($_POST['equipment']['date_end'][$id]));
 			$NewEquipment->set(Equipment\Object::NOTES, $_POST['equipment']['notes'][$id]);
@@ -268,6 +307,6 @@ class ConfigTabEquipment extends ConfigTab {
 			return date('Y-m-d', $time);
 		}
 
-		return NULL;
+		return null;
 	}
 }

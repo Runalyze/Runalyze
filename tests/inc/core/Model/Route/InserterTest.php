@@ -46,13 +46,13 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		));
 
 		$I = new Inserter($this->PDO, $R);
-		$I->setAccountID(1);
+		$I->setAccountID(0);
 		$I->insert();
 
-		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
+		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=0')->fetch(PDO::FETCH_ASSOC);
 		$N = new Object($data);
 
-		$this->assertEquals(1, $data[Inserter::ACCOUNTID]);
+		$this->assertEquals(0, $data[Inserter::ACCOUNTID]);
 		$this->assertEquals('Test route', $N->name());
 		$this->assertTrue($N->hasID());
 		$this->assertTrue($N->hasPositionData());
@@ -65,10 +65,10 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		));
 
 		$I = new Inserter($this->PDO, $R);
-		$I->setAccountID(1);
+		$I->setAccountID(0);
 		$I->insert();
 
-		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=1')->fetch(PDO::FETCH_ASSOC);
+		$data = $this->PDO->query('SELECT * FROM `'.PREFIX.'route` WHERE `accountid`=0')->fetch(PDO::FETCH_ASSOC);
 		$N = new Object($data);
 
 		$this->assertGreaterThan(0, $N->elevation());

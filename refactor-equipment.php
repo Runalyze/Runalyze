@@ -5,7 +5,7 @@
  * You have to set your database connection within this file to enable the script.
  * Remember to delete your credentials afterwards to protect this script.
  */
-$hostname = '';
+$host = '';
 $database = '';
 $username = '';
 $password = '';
@@ -14,6 +14,7 @@ define('PREFIX', 'runalyze_');
 define('LIMIT', 100); // Limit number of accounts to refactor per request
 define('CLI', false); // Set to true if running from command line
 define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet and key_buffer_size for mysql
+define('CHECK_INNODB', true); // Set to false if you don't want or can't use InnoDB as your storage engine
 
 // Uncomment these lines to unset time/memory limits
 #@ini_set('memory_limit', '-1');
@@ -25,6 +26,10 @@ define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet
  * SCRIPT STARTS - YOU DON'T NEED TO CHANGE ANYTHING BELOW
  ******************************************************************************/
 
+if (!isset($host) && isset($hostname)) {
+    $host = $hostname;
+}
+
 $starttime = microtime(true);
 
 /**
@@ -32,14 +37,14 @@ $starttime = microtime(true);
  */
 define('NL', CLI ? PHP_EOL : '<br>'.PHP_EOL);
 
-if (empty($database) && empty($hostname)) {
+if (empty($database) && empty($host)) {
 	echo 'Database connection has to be set within the file.'.NL;
 	exit;
 } else {
 	date_default_timezone_set('Europe/Berlin');
 
 	try {
-		$PDO = new PDO('mysql:dbname='.$database.';host='.$hostname, $username, $password);
+		$PDO = new PDO('mysql:dbname='.$database.';host='.$host, $username, $password);
 		$PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$PDO->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
@@ -54,11 +59,25 @@ if (empty($database) && empty($hostname)) {
 }
 
 /**
+ * Check database engine
+ */
+if (CHECK_INNODB) {
+	$tableStatus = $PDO->query('SHOW TABLE STATUS WHERE Name = "'.PREFIX.'training"')->fetch();
+
+	if (isset($tableStatus['Engine']) && $tableStatus['Engine'] != 'InnoDB') {
+		echo 'Your tables are still using "'.$tableStatus['Engine'].'" as storage engine.'.NL;
+		echo 'We highly recommend using "InnoDB" as storage engine for RUNALYZE since v2.0.'.NL.NL;
+		echo 'Please update your tables (inc/install/innodb.sql may help) or remove this check.'.NL;
+		exit;
+	}
+}
+
+/**
  * Check version
  */
-$IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"');
+$IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"')->fetch();
 
-if (!$IsNotRefactored) {
+if ($IsNotRefactored === false) {
 	echo 'The database is already refactored.'.NL;
 	exit;
 }
@@ -80,9 +99,9 @@ if (!$HasTableEq OR !$HasTableEqT OR !$HasTableEqS OR !$HasTableEqAE) {
 }
 
 if ($countAccount == 0) {
-	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false". ';
-	echo 'Runalyze v2.2 requires every user to have an account. ';
-	echo 'Please register an account and update the `accountid` in all relevant tables.'.NL;
+	echo 'There is no account in `'.PREFIX.'account`. You are probably using Runalyze with "USER_MUST_LOGIN = false".'.NL;
+	echo 'Runalyze v2.2 requires every user to have an account, the option "USER_MUST_LOGIN" has been removed.'.NL.NL;
+	echo 'Please register an account and update the `accountid` in all relevant tables (inc/install/switch-accountid-to-1.sql may help).'.NL;
 	exit;
 }
 
@@ -177,7 +196,7 @@ if ($count < $countAccount) {
 		// Refactor training table to equipment
 		$trainings = $PDO->query('SELECT `id`, `clothes`, `shoeid` FROM `'.PREFIX.'training` WHERE `accountid`='.$Row['id']);    
 		while ($training = $trainings->fetch()) {
-			if ($training['shoeid'] != 0) {
+			if ($training['shoeid'] != 0 && isset($shoeMap[$training['shoeid']])) {
 				$InsertEquipActivity->execute(array(
 					':activityid' => $training['id'],
 					':equipmentid' => $shoeMap[$training['shoeid']]
@@ -192,10 +211,12 @@ if ($count < $countAccount) {
 				}
 
 				foreach ($clothes as $clot) {
-					$InsertEquipActivity->execute(array(
-						':activityid' => $training['id'],
-						':equipmentid' => $clothesMap[trim($clot)]
-					));
+					if (isset($clothesMap[trim($clot)])) {
+						$InsertEquipActivity->execute(array(
+							':activityid' => $training['id'],
+							':equipmentid' => $clothesMap[trim($clot)]
+						));
+					}
 				}
 			}
 		}
@@ -210,12 +231,6 @@ if ($count < $countAccount) {
 	echo 'Time: '.(microtime(true) - $starttime).'s'.NL;
 	echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
 	echo NL;
-
-	if (CLI) {
-		echo '... call the script again to continue'.NL;
-	} else {
-		echo '... <a href="javascript:location.reload()">reload to continue</a>';
-	}
 }
 
 
@@ -251,6 +266,12 @@ if ($count + LIMIT >= $countAccount) {
 	echo NL;
 	echo 'Remember to unset your credentials within this file.'.NL;
 	echo '(Or simply delete this file if you are not working on our git repository)'.NL;
+} else {
+	if (CLI) {
+		echo '... call the script again to continue'.NL;
+	} else {
+		echo '... <a href="javascript:location.reload()">reload to continue</a>';
+	}
 }
 
 function notNull($value) {

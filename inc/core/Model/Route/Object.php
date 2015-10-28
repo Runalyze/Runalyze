@@ -173,7 +173,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * All properties
 	 * @return array
 	 */
-	static public function allDatabaseProperties() {
+	public static function allDatabaseProperties() {
 		return array(
 			self::NAME,
 			self::CITIES,
@@ -432,6 +432,14 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	}
 
 	/**
+	 * Strategy name of elevation correction
+	 * @return string
+	 */
+	public function elevationsSource() {
+		return $this->Data[self::ELEVATIONS_SOURCE];
+	}
+
+	/**
 	 * Elevations array (corrected or original)
 	 * @return array
 	 */
@@ -482,7 +490,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @param double $lon2
 	 * @return double
 	 */
-	static public function gpsDistance($lat1, $lon1, $lat2, $lon2) {
+	public static function gpsDistance($lat1, $lon1, $lat2, $lon2) {
 		$rad1 = deg2rad($lat1);
 		$rad2 = deg2rad($lat2);
 		$dist = sin($rad1) * sin($rad2) +  cos($rad1) * cos($rad2) * cos(deg2rad($lon1 - $lon2)); 

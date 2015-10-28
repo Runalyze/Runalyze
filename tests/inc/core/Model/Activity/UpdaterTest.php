@@ -78,10 +78,10 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Updater = new Updater($this->PDO, $new, $old);
 		$Updater->setAccountID(0);
 
-		if (NULL !== $track) {
+		if (null !== $track) {
 			$Updater->setTrackdata($track);
 		}
-		if (NULL !== $route) {
+		if (null !== $route) {
 			$Updater->setRoute($route);
 		}
 
@@ -281,7 +281,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());
 
 		$NewObject = clone $OldObject;
-		$NewObject->weather()->temperature()->setTemperature(NULL);
+		$NewObject->weather()->temperature()->setTemperature(null);
 		$Result = $this->update($NewObject, $OldObject);
 
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());
@@ -289,7 +289,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 
 	public function testUpdateTemperatureFromNullToZero() {
 		$OldObject = $this->fetch( $this->insert(array(
-			Object::TEMPERATURE => NULL
+			Object::TEMPERATURE => null
 		)) );
 
 		$this->assertTrue($OldObject->weather()->temperature()->isUnknown());
@@ -309,7 +309,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($OldObject->weather()->temperature()->isUnknown());
 
 		$NewObject = clone $OldObject;
-		$NewObject->weather()->temperature()->setTemperature(NULL);
+		$NewObject->weather()->temperature()->setTemperature(null);
 		$Result = $this->update($NewObject);
 
 		$this->assertTrue($Result->weather()->temperature()->isUnknown());

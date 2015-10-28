@@ -3,6 +3,9 @@
  * This file contains class::SearchFormular
  * @package Runalyze\Search
  */
+
+use Runalyze\Configuration;
+
 /**
  * Search formular
  *
@@ -144,20 +147,20 @@ class SearchFormular extends Formular {
 
 		$this->addFieldNotes();
 
-		$this->addConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, FormularUnit::$KM);
-		$this->addConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, FormularUnit::$M);
-		$this->addConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('s', __('Duration'), FormularInput::$SIZE_SMALL);
-		$this->addConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
-		$this->addConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
-		$this->addConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
-		$this->addConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
-		$this->addConditionField('pulse_max', __('max. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
-		$this->addConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
+		$this->addNumericConditionField('distance', __('Distance'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->distanceUnit());
+		$this->addNumericConditionField('elevation', __('Elevation'), FormularInput::$SIZE_SMALL, Configuration::General()->distanceUnitSystem()->elevationUnit());
+		$this->addStringConditionField('route', __('Route'), FormularInput::$SIZE_MIDDLE);
+		$this->addDurationField('s', __('Duration'));
+		$this->addNumericConditionField('temperature', __('Temperature'), FormularInput::$SIZE_SMALL, FormularUnit::$CELSIUS);
+		$this->addStringConditionField('comment', __('Comment'), FormularInput::$SIZE_MIDDLE);
+		$this->addNumericConditionField('pulse_avg', __('avg. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+		$this->addNumericConditionField('kcal', __('Calories'), FormularInput::$SIZE_SMALL, FormularUnit::$KCAL);
+		$this->addStringConditionField('partner', __('Partner'), FormularInput::$SIZE_MIDDLE);
+		$this->addNumericConditionField('pulse_max', __('max. HR'), FormularInput::$SIZE_SMALL, FormularUnit::$BPM);
+		$this->addNumericConditionField('cadence', __('Cadence'), FormularInput::$SIZE_SMALL, FormularUnit::$SPM);
 		$this->addBooleanField('is_public', __('Is public'));
-		$this->addConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
-		$this->addConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
+		$this->addNumericConditionField('jd_intensity', __('JD points'), FormularInput::$SIZE_SMALL);
+		$this->addNumericConditionField('groundcontact', __('Ground contact'), FormularInput::$SIZE_SMALL, FormularUnit::$MS);
 		$this->addBooleanField('use_vdot', __('Uses VDOT'));
 		$this->addConditionField('trimp', __('TRIMP'), FormularInput::$SIZE_SMALL);
 		$this->addConditionField('vertical_oscillation', __('Vertical oscillation'), FormularInput::$SIZE_SMALL, FormularUnit::$CM);
@@ -188,13 +191,34 @@ class SearchFormular extends Formular {
 	}
 
 	/**
-	 * Add standard condition field
-	 * @param type $key
-	 * @param type $label
-	 * @param type $size
-	 * @param type $unit
+	 * @param string $key
+	 * @param string $label
+	 * @param string $size
+	 * @param string $unit
 	 */
-	private function addConditionField($key, $label, $size = '', $unit = '') {
+	protected function addNumericConditionField($key, $label, $size = '', $unit = '') {
+		$this->addConditionField($key, $label, $size, $unit, 'numeric');
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $label
+	 * @param string $size
+	 * @param string $unit
+	 */
+	protected function addStringConditionField($key, $label, $size = '', $unit = '') {
+		$this->addConditionField($key, $label, $size, $unit, 'string');
+	}
+
+	/**
+	 * Add standard condition field
+	 * @param string $key
+	 * @param string $label
+	 * @param string $size
+	 * @param string $unit
+	 * @param string $type options: all | numeric | string
+	 */
+	private function addConditionField($key, $label, $size = '', $unit = '', $type = 'all') {
 		$Field = new FormularInputWithEqualityOption($key, $label);
 		$Field->setLayout( FormularFieldset::$LAYOUT_FIELD_W33 );
 
@@ -202,6 +226,27 @@ class SearchFormular extends Formular {
 			$Field->setSize($size);
 		if (!empty($unit))
 			$Field->setUnit($unit);
+
+		if ($type == 'numeric') {
+			$Field->setNumericOptions();
+		} elseif ($type == 'string') {
+			$Field->setStringOptions();
+		}
+
+		$this->Fieldset->addField($Field);
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $label
+	 */
+	protected function addDurationField($key, $label) {
+		$Field = new FormularInputWithEqualityOption($key, $label);
+		$Field->setLayout(FormularFieldset::$LAYOUT_FIELD_W33);
+		$Field->setSize(FormularInput::$SIZE_SMALL);
+		$Field->setParser(FormularValueParser::$PARSER_TIME, array('hide-empty' => true));
+		$Field->addAttribute('placeholder', 'h:mm:ss');
+		$Field->setNumericOptions();
 
 		$this->Fieldset->addField($Field);
 	}
@@ -226,7 +271,7 @@ class SearchFormular extends Formular {
 	/**
 	 * Transform old params to new params
 	 */
-	static public function transformOldParamsToNewParams() {
+	public static function transformOldParamsToNewParams() {
 		if (isset($_POST['val']) && is_array($_POST['val']))
 			foreach ($_POST['val'] as $key => $value)
 				$_POST[$key] = $value;

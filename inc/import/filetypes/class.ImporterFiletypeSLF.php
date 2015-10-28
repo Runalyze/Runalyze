@@ -16,7 +16,7 @@ class ImporterFiletypeSLF extends ImporterFiletypeAbstract {
 	 * Allowed producer of SLF files
 	 * @var string
 	 */
-	static private $ALLOWED_PRODUCER = 'Sigma Data Center 3 & 4';
+	private static $ALLOWED_PRODUCER = 'Sigma Data Center 3 & 4';
     
 	/**
 	 * Set parser

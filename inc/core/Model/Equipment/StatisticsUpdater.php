@@ -40,7 +40,7 @@ class StatisticsUpdater {
 	 * @return mixed false on failure, number of affected rows otherwise
 	 */
 	public function run() {
-		$whereAccount = NULL !== $this->accountID ? 'WHERE `eqp`.`accountid` = '.$this->accountID : '';
+		$whereAccount = null !== $this->accountID ? 'WHERE `eqp`.`accountid` = '.$this->accountID : '';
 		$result = $this->PDO->exec(
 			'UPDATE `'.PREFIX.'equipment`
 			CROSS JOIN(

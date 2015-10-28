@@ -2,6 +2,9 @@
 /**
  * This file contains class::TrainingInputSplits
  */
+
+use Runalyze\Configuration;
+
 /**
  * Class for input fields: splits 
  * @package Runalyze\DataObjects\Training\Formular
@@ -28,7 +31,7 @@ class TrainingInputSplits extends FormularField {
 		$this->setLayout( FormularFieldset::$LAYOUT_FIELD_W100_IN_W50 );
 		$this->addAttribute( 'class', FormularInput::$SIZE_FULL_INLINE );
 
-		$this->setParser( FormularValueParser::$PARSER_SPLITS );
+		$this->setParser( FormularValueParser::$PARSER_SPLITS, array('transform-unit' => true) );
 	}
 
 	/**
@@ -44,7 +47,11 @@ class TrainingInputSplits extends FormularField {
 
 		$Inputs .= '</ol>';
 		$Inputs .= '<p id="addSplitsLink"><span class="link add-split">'.__('add new lap').'</span></p>';
-		$Inputs .= '<p><span class="link round-splits">'.__('round for 100m').'</span></p>';
+
+		if (Configuration::General()->distanceUnitSystem()->isMetric()) {
+			$Inputs .= '<p><span class="link round-splits">'.__('round for 100m').'</span></p>';
+		}
+
 		$Inputs .= '<p><span class="link sum-splits">'.__('apply as total distance').'</span></p>';
 		$Inputs .= '<p><span class="link active-splits">'.__('all active').'</span> - <span class="link rest-splits">'.__('all resting').'</span></p>';
 		$Inputs .= '<p>'.__('alternating:').' <span class="link alternate-splits-rest">'.__('first resting').'</span>';
@@ -107,8 +114,9 @@ class TrainingInputSplits extends FormularField {
 	 */
 	protected function getDistanceInputCode($distance) {
 		$FieldDistance = new FormularInput('splits[km][]', '', $distance);
-		$FieldDistance->setUnit( FormularUnit::$KM );
+		$FieldDistance->setUnit(Configuration::General()->distanceUnitSystem()->distanceUnit());
 		$FieldDistance->setLayout( FormularFieldset::$LAYOUT_FIELD_INLINE );
+		$FieldDistance->setParser(FormularValueParser::$PARSER_DISTANCE);
 		$FieldDistance->hideLabel();
 
 		return $FieldDistance->getCode();

@@ -91,7 +91,7 @@ class Helper {
 	 * @param string $string string to be displayed instead, default: ?
 	 */
 	public static function Unknown($var, $string = '?') {
-		if ($var == NULL || !isset($var))
+		if ($var == null || !isset($var))
 			return $string;
 
 		if ((is_numeric($var) && $var != 0) || (!is_numeric($var) && $var != '') )

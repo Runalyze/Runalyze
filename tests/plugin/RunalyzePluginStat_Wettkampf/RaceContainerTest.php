@@ -29,7 +29,7 @@ class RaceContainerTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO = DB::getInstance();
 		$this->PDO->exec('DELETE FROM `runalyze_training`');
 
-		$this->Container = new RaceContainer($this->PDO, self::RACEID, false);
+		$this->Container = new RaceContainer($this->PDO, self::RACEID);
 	}
 
 	protected function tearDown() {

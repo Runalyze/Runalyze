@@ -14,7 +14,7 @@ use Runalyze\Configuration;
 class Plot {
 	/**
 	 * CSS-ID for displaying this plot
-	 * @var unknown_type
+	 * @var string
 	 */
 	private $cssID = '';
 
@@ -60,7 +60,7 @@ class Plot {
 	 * @param mixed $width
 	 * @param mixed $height
 	 */
-	function __construct($cssID, $width = 480, $height = 190) {
+	public function __construct($cssID, $width = 480, $height = 190) {
 		$this->width   = $width;
 		$this->height  = $height;
 		$this->cssID   = $cssID;
@@ -80,7 +80,7 @@ class Plot {
 	 * @param int $width
 	 * @param int $height
 	 */
-	static public function getDivFor($id, $width, $height) {
+	public static function getDivFor($id, $width, $height) {
 		return '<div style="position:relative;width:'.$width.'px;height:'.$height.'px;margin:0 auto;">'.self::getInnerDivFor($id, $width, $height).'</div>';
 	}
 
@@ -92,7 +92,7 @@ class Plot {
 	 * @param bool $hidden
 	 * @param string $class
 	 */
-	static public function getInnerDivFor($id, $width, $height, $hidden = false, $class = '') {
+	public static function getInnerDivFor($id, $width, $height, $hidden = false, $class = '') {
 		return '<div class="flot '.Ajax::$IMG_WAIT.' '.$class.($hidden ? ' flot-hide' : '').'" id="'.$id.'" style="width:'.$width.'px;height:'.$height.'px;position:absolute;"></div>';
 	}
 
@@ -477,9 +477,14 @@ class Plot {
 	 * @param int $i
 	 * @param string $unit
 	 * @param int $roundTo
+	 * @param float $factor
 	 */
-	public function addYUnit($i, $unit, $roundTo = 2) {
-		$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+	public function addYUnit($i, $unit, $roundTo = 2, $factor = 1) {
+		if ($factor != 1) {
+			$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { v = v * '.$factor.'; return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+		} else {
+			$this->Options['yaxes'][$i-1]['tickFormatter'] = 'function (v) { return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+		}
 	}
 
 	/**
@@ -489,6 +494,16 @@ class Plot {
 	 */
 	public function setXUnit($unit, $roundTo = 2) {
 		$this->Options['xaxis']['tickFormatter'] = 'function (v) { return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
+	}
+
+	/**
+	 * Add unit to x axis
+	 * @param float $factor
+	 * @param string $unit
+	 * @param int $roundTo
+	 */
+	public function setXUnitFactor($factor, $unit, $roundTo = 2) {
+		$this->Options['xaxis']['tickFormatter'] = 'function (v) { v = v * '.$factor.'; return '.$this->jsRoundUnit($roundTo).' + \' '.$unit.'\'; }';
 	}
 
 	/**
@@ -601,7 +616,7 @@ class Plot {
 	 * @param int $year
 	 * @param int $day
 	 */
-	static public function dayOfYearToJStime($year, $day) {
+	public static function dayOfYearToJStime($year, $day) {
 		return mktime(12,0,0,1,$day,$year).'000';
 	}
 
@@ -610,7 +625,7 @@ class Plot {
 	 * @param array $array
 	 * @return array
 	 */
-	static public function correctValuesForTime($array) {
+	public static function correctValuesForTime($array) {
 		return array_map("PLOT__correctValuesMapperForTime", $array);
 	}
 
@@ -619,7 +634,7 @@ class Plot {
 	 * @param array $array
 	 * @return array
 	 */
-	static public function correctValuesFromPaceToKmh($array) {
+	public static function correctValuesFromPaceToKmh($array) {
 		return array_map("PLOT__correctValuesMapperFromPaceToKmh", $array);
 	}
 }
