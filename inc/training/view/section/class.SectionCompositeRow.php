@@ -230,7 +230,7 @@ class SectionCompositeRow extends TrainingViewSectionRowTabbedPlot {
 	protected function addElevationInfoLink() {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Activity\Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal');
 			$this->Footer .= HTML::info( $InfoLink );
 		}
 

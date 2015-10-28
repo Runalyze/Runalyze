@@ -56,7 +56,6 @@ class ConfigTabSports extends ConfigTab {
 						<th>'.Ajax::tooltip('&Oslash;&nbsp;'.__('HR'), __('Average heart rate (used for calculation of TRIMP)')).'</th>
 						<th>'.Ajax::tooltip(__('km'), __('Has a distance')).'</th>   
 						<th>'.Ajax::tooltip(__('Unit'), __('Unit for speed')).'</th>
-						<th>'.Ajax::tooltip(__('Types'), __('The sport uses different training types')).'</th>
 						<th>'.Ajax::tooltip(__('Power'), __('Power is recorded or calculated.')).'</th>
 						<th>'.Ajax::tooltip(__('Outside'), __('Sport is performed outdoor: activate route, weather, ...')).'</th>
 						<th>'.Ajax::tooltip(__('Calendar view'), __('Mode for displaying activities in calendar')).'</th>
@@ -77,7 +76,7 @@ class ConfigTabSports extends ConfigTab {
 			return (!isset($b['counts']) || (isset($a['counts']) && ((int)$a['counts'] > (int)$b['counts']))) ? -1 : 1;
 		});
 
-		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'types' => 0, 'power' => 0, 'outside' => '');
+		$Sports[] = array('id' => -1, 'new' => true, 'name' => '', 'img' => 'unknown.gif', 'short' => 0, 'kcal' => '', 'HFavg' => '', 'distances' => 0, 'speed' => Pace::STANDARD, 'power' => 0, 'outside' => '');
 
 		$IconOptions = SportFactory::getIconOptions();
 		$PaceOptions = Pace::options();
@@ -106,7 +105,6 @@ class ConfigTabSports extends ConfigTab {
 						<td><input type="text" size="3" name="sport[HFavg]['.$id.']" value="'.$Data['HFavg'].'"></td>
 						<td><input type="checkbox" name="sport[distances]['.$id.']"'.($Data['distances'] == 1 ? ' checked' : '').'></td>
 						<td>'.HTML::selectBox('sport[speed]['.$id.']', $PaceOptions, $Data['speed']).'</td>
-						<td><input type="checkbox" name="sport[types]['.$id.']"'.($Data['types'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[power]['.$id.']"'.($Data['power'] == 1 ? ' checked' : '').'></td>
 						<td><input type="checkbox" name="sport[outside]['.$id.']"'.($Data['outside'] == 1 ? ' checked' : '').'></td>
 						<td>'.($isRunning ? '<input type="hidden" name="sport[short]['.$id.']" value="0">-' : HTML::selectBox('sport[short]['.$id.']', $ShortOptions, $Data['short'])).'</td>
@@ -139,7 +137,6 @@ class ConfigTabSports extends ConfigTab {
 				'HFavg',
 				'distances',
 				'speed',
-				'types',
 				'power',
 				'outside',
 			);
@@ -152,7 +149,6 @@ class ConfigTabSports extends ConfigTab {
 				$_POST['sport']['HFavg'][$id],
 				isset($_POST['sport']['distances'][$id]),
 				$_POST['sport']['speed'][$id],
-				isset($_POST['sport']['types'][$id]),
 				isset($_POST['sport']['power'][$id]),
 				isset($_POST['sport']['outside'][$id]),
 			);

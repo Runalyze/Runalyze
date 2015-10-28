@@ -53,13 +53,4 @@ class DistanceSeries extends ActivitySeries {
 		$this->ShowMaximum = false;
 		$this->ShowMinimum = false;
 	}
-	
-	/**
-	 * Average
-	 * @param int $decimals [optional]
-	 * @return int
-	 */
-	protected function avg($decimals = 1) {
-		return parent::avg($decimals);
-	}
 }

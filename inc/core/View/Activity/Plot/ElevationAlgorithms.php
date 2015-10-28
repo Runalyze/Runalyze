@@ -31,7 +31,6 @@ class ElevationAlgorithms extends ActivityPlot {
 	 */
 	protected function setKey() {
 		$this->key   = 'elevation-algorithms';
-		$this->WIDTH = 490;
 	}
 
 	/**

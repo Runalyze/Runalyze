@@ -29,6 +29,7 @@ class Swolf extends ActivityPointSeries {
 	public function __construct(Activity\Context $context) {
 		$this->initOptions();
 		$this->initDataWithSwimdata($context);
+		$this->setManualAverage($context->activity()->swolf());
 	}
 
 	/**

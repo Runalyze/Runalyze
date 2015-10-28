@@ -83,7 +83,7 @@ class SectionRouteRowElevation extends TrainingViewSectionRow {
 	protected function addInfoLink() {
 		if (!Request::isOnSharedPage()) {
 			$Linker = new Linker($this->Context->activity());
-			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'small');
+			$InfoLink = Ajax::window('<a href="'.$Linker->urlToElevationInfo().'">'.__('More about elevation').'</a>', 'normal');
 			$this->Footer = HTML::info( $InfoLink );
 		} else {
 			$this->Footer = '';

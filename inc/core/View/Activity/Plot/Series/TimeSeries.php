@@ -10,7 +10,7 @@ use Runalyze\Model\Trackdata\Object as Trackdata;
 use Runalyze\View\Activity;
 
 /**
- * Plot for: Temperature
+ * Plot for: Time
  * 
  * @author Hannes Christiansen
  * @package Runalyze\View\Activity\Plot\Series
@@ -46,14 +46,5 @@ class TimeSeries extends ActivitySeries {
 		$this->ShowAverage = false;
 		$this->ShowMaximum = false;
 		$this->ShowMinimum = false;
-	}
-
-	/**
-	 * Average
-	 * @param int $decimals [optional] 
-	 * @return int
-	 */
-	protected function avg($decimals = 1) {
-		return parent::avg($decimals);
 	}
 }

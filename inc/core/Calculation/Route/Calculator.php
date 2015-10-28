@@ -54,15 +54,16 @@ class Calculator {
 	 * 
 	 * This method does directly update the route object.
 	 * 
+	 * @param string $strategyName
 	 * @return boolean false if correction did not work
 	 */
-	public function tryToCorrectElevation() {
+	public function tryToCorrectElevation($strategyName = '') {
 		if (!$this->Route->hasPositionData()) {
 			return false;
 		}
 
 		$Corrector = new Corrector();
-		$Corrector->correctElevation($this->Route->latitudes(), $this->Route->longitudes());
+		$Corrector->correctElevation($this->Route->latitudes(), $this->Route->longitudes(), $strategyName);
 		$result = $Corrector->getCorrectedElevation();
 
 		if (!empty($result)) {

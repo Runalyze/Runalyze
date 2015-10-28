@@ -88,7 +88,6 @@ class SportFactory {
 			'HFavg' => 140,
 			'distances' => 0,
 			'speed' => Pace::STANDARD,
-			'types' => 0,
 			'power'	=> 0,
 			'outside' => 0
 		);
@@ -104,20 +103,6 @@ class SportFactory {
 		}
 
 		return self::$AllSports;
-	}
-
-	/**
-	 * Get all sports with types
-	 * @return array
-	 */
-	public static function AllSportsWithTypes() {
-		$Sports = self::AllSports();
-
-		foreach ($Sports as $i => $Sport)
-			if ($Sport['types'] == 0)
-				unset($Sports[$i]);
-
-		return $Sports;
 	}
 
 	/**

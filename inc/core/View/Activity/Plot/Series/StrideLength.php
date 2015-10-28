@@ -31,6 +31,7 @@ class StrideLength extends ActivityPointSeries {
 		$this->initOptions();
 		$this->initData($context->trackdata());
 		$this->manipulateData();
+		$this->setManualAverage($context->activity()->strideLength());
 	}
 
 	/**
@@ -75,14 +76,5 @@ class StrideLength extends ActivityPointSeries {
 				return $value * DistanceUnitSystem::FEET_MULTIPLIER / 1000 / 100;
 			}, $this->Data);
 		}
-	}
-
-	/**
-	 * Average
-	 * @param int $decimals [optional]
-	 * @return int
-	 */
-	protected function avg($decimals = 2) {
-		return parent::avg($decimals);
 	}
 }

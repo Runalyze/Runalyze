@@ -161,7 +161,7 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 	 * Initialize analysis data
 	 */
 	private function initData() {
-		if ($this->Configuration()->value('use_type') && $this->Sport->hasTypes()) {
+		if ($this->Configuration()->value('use_type')) {
 			$this->AnalysisData[] = $this->getTypeArray();
 		}
 
