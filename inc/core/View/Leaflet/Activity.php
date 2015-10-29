@@ -13,6 +13,7 @@ use Runalyze\Configuration;
 use Runalyze\Activity\Distance;
 use Runalyze\Activity\Duration;
 use Runalyze\Activity\Pace;
+use League\Geotools\Geotools;
 
 /**
  * Leaflet route for an activity
@@ -182,8 +183,7 @@ class Activity extends LeafletRoute {
 	 * Fill current segment
 	 */
 	protected function fillCurrentSegment() {
-	    	$geotools       = new \League\Geotools\Geotools();
-		$geohash = $geotools->geohash()->decode($this->RouteLoop->geohash());
+		$geohash = (new Geotools())->geohash()->decode($this->RouteLoop->geohash());
 		if ($geohash == '7zzzzzzzzzzz') {
 			return;
 		}
@@ -329,7 +329,7 @@ class Activity extends LeafletRoute {
 		}
 
 		$this->addMarkerGeohash(
-			$this->Route->at($Index, Route\Object::GEOHASH),
+			$this->Route->at($Index, Route\Object::GEOHASHES),
 			$this->pauseIcon(),
 			$Tooltip
 		);

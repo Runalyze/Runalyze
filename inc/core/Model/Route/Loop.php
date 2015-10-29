@@ -44,11 +44,11 @@ class Loop extends \Runalyze\Model\Loop {
 	}
 	
 	/**
-	 * Current longitude
+	 * Current geohash
 	 * @return float
 	 */
 	public function geohash() {
-		return $this->current(Object::GEOHASH);
+		return $this->current(Object::GEOHASHES);
 	}
 
 	/**

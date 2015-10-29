@@ -7,6 +7,8 @@
 namespace Runalyze\Model\Route;
 
 use Runalyze\Model;
+use League\Geotools\Geotools;
+use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Route object
@@ -73,7 +75,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * Key: geohash
 	 * @var string
 	 */
-	const GEOHASH = 'geohash';
+	const GEOHASHES = 'geohash';
 
 	/**
 	 * Key: elevations original
@@ -106,7 +108,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const STARTPOINT_LONGITUDE = 'startpoint_lng';
 
 	/**
-	 * Key: startpoint
+	 * Key: startpoint in geohash
 	 * @var string
 	 */
 	const STARTPOINT = 'startpoint';
@@ -124,7 +126,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const ENDPOINT_LONGITUDE = 'endpoint_lng';
 	
 	/**
-	 * Key: endpoint
+	 * Key: endpoint in geohash
 	 * @var string
 	 */
 	const ENDPOINT = 'endpoint';
@@ -142,7 +144,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const MIN_LONGITUDE = 'min_lng';
 	
 	/**
-	 * Key: minimal longitude & latitude
+	 * Key: minimal longitude & latitude in geohash
 	 * @var string
 	 */
 	const MIN = 'min';
@@ -160,7 +162,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	const MAX_LONGITUDE = 'max_lng';
 	
 	/**
-	 * Key: maximal longitude & latitude
+	 * Key: maximal longitude & latitude in geohash
 	 * @var string
 	 */
 	const MAX = 'max';	
@@ -213,21 +215,13 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			self::ELEVATION_DOWN,
 			self::LATITUDES,
 			self::LONGITUDES,
-			self::GEOHASH,
+			self::GEOHASHES,
 			self::ELEVATIONS_ORIGINAL,
 			self::ELEVATIONS_CORRECTED,
 			self::ELEVATIONS_SOURCE,
-			self::STARTPOINT_LATITUDE,
-			self::STARTPOINT_LONGITUDE,
 			self::STARTPOINT,
-			self::ENDPOINT_LATITUDE,
-			self::ENDPOINT_LONGITUDE,
 			self::ENDPOINT,
-			self::MIN_LATITUDE,
-			self::MIN_LONGITUDE,
 			self::MIN,
-			self::MAX_LATITUDE,
-			self::MAX_LONGITUDE,
 			self::MAX,
 			self::IN_ROUTENET
 		);
@@ -252,7 +246,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			case self::ELEVATIONS_CORRECTED:
 			case self::LATITUDES:
 			case self::LONGITUDES:
-			case self::GEOHASH:
+			case self::GEOHASHES:
 				return true;
 		}
 
@@ -270,17 +264,10 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 			case self::ELEVATIONS_CORRECTED:
 			case self::LATITUDES:
 			case self::LONGITUDES:
-			case self::STARTPOINT_LATITUDE:
-			case self::STARTPOINT_LONGITUDE:
+			case self::GEOHASHES:
 			case self::STARTPOINT:
-			case self::ENDPOINT_LATITUDE:
-			case self::ENDPOINT_LONGITUDE:
 			case self::ENDPOINT:
-			case self::MIN_LATITUDE:
-			case self::MIN_LONGITUDE:
 			case self::MIN:
-			case self::MAX_LATITUDE:
-			case self::MAX_LONGITUDE:
 			case self::MAX:
 				return true;
 		}
@@ -320,21 +307,18 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 */
 	protected function synchronizeStartAndEndpoint() {
 		if (!$this->hasPositionData()) {
-			$this->Data[self::STARTPOINT_LATITUDE] = null;
-			$this->Data[self::STARTPOINT_LONGITUDE] = null;
-			$this->Data[self::ENDPOINT_LATITUDE] = null;
-			$this->Data[self::ENDPOINT_LONGITUDE] = null;
+			$this->Data[self::STARTPOINT] = null;
+			$this->Data[self::ENDPOINT] = null;
 		} else {
 			$Latitudes = array_filter($this->Data[self::LATITUDES]);
 			$Longitudes = array_filter($this->Data[self::LONGITUDES]);
 
-			if (!empty($Latitudes)) {
-				$this->Data[self::STARTPOINT_LATITUDE] = reset($Latitudes);
-				$this->Data[self::ENDPOINT_LATITUDE] = end($Latitudes);
-			}
-			if (!empty($Longitudes)) {
-				$this->Data[self::STARTPOINT_LONGITUDE] = reset($Longitudes);
-				$this->Data[self::ENDPOINT_LONGITUDE] = end($Longitudes);
+			if (!empty($Latitudes) && !empty($Longitudes)) {
+			    $StartpointCoordinate = new Coordinate(reset($Latitudes).','.reset($Longitudes));
+			    $this->Data[self::STARTPOINT] = (new Geotools)->geohash()->encode($StartpointCoordinate, 10);
+				    
+			    $EndpointCoordinate = new Coordinate(end($Latitudes).','.end($Longitudes));
+			    $this->Data[self::ENDPOINT] = (new Geotools)->geohash()->encode($EndpointCoordinate, 10);
 			}
 		}
 	}
@@ -344,22 +328,20 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 */
 	protected function synchronizeBoundaries() {
 		if (!$this->hasPositionData()) {
-			$this->Data[self::MIN_LATITUDE] = null;
-			$this->Data[self::MIN_LONGITUDE] = null;
-			$this->Data[self::MAX_LATITUDE] = null;
-			$this->Data[self::MAX_LONGITUDE] = null;
+			$this->Data[self::MIN] = null;
+			$this->Data[self::MAX] = null;
 		} else {
 			$Latitudes = array_filter($this->Data[self::LATITUDES]);
 			$Longitudes = array_filter($this->Data[self::LONGITUDES]);
 
-			if (!empty($Latitudes)) {
-				$this->Data[self::MIN_LATITUDE] = min($Latitudes);
-				$this->Data[self::MAX_LATITUDE] = max($Latitudes);
+			if (!empty($Latitudes) && !empty($Longitudes)) {
+				$MinCoordinate = new Coordinate(min($Latitudes).','.min($Longitudes));
+				$this->Data[self::MIN] = (new Geotools)->geohash()->encode($MinCoordinate, 10);
+				    
+				$MaxCoordinate = new Coordinate(max($Latitudes).','.max($Longitudes));
+				$this->Data[self::MAX] = (new Geotools)->geohash()->encode($MaxCoordinate, 10);
 			}
-			if (!empty($Longitudes)) {
-				$this->Data[self::MIN_LONGITUDE] = min($Longitudes);
-				$this->Data[self::MAX_LONGITUDE] = max($Longitudes);
-			}
+
 		}
 	}
 
@@ -452,7 +434,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @return boolean
 	 */
 	public function hasPositionData() {
-		return $this->has(self::LATITUDES) && $this->has(self::LONGITUDES);
+		return $this->has(self::LATITUDES);
 	}
 
 	/**

@@ -9,6 +9,8 @@ namespace Runalyze\Model\Activity;
 use Runalyze\Model;
 use Runalyze\Calculation\BasicEndurance;
 use Runalyze\Configuration;
+use League\Geotools\Geotools;
+use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Insert activity to database
@@ -169,6 +171,15 @@ class Inserter extends Model\InserterWithAccountID {
 		$this->Object->set(Object::TRIMP, $Calculator->calculateTrimp());
 	}
 
+	/**
+	 * Calculate Geohashes
+	 */
+	protected function calculateRouteGeohashes() {
+	if (null !== $this->Route && $this->Route->has(Model\Route\Object::LATITUDES && $this->Route->has(Model\Route\Object::LONGITUDES))) {
+		
+	    }
+	}
+	
 	/**
 	 * Calculate power
 	 */
