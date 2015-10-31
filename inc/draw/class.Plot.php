@@ -43,6 +43,12 @@ class Plot {
 	public $Options = array();
 
 	/**
+	 * Options only used by Runalyze's plot handler
+	 * @var array
+	 */
+	public $PlotOptions = array();
+
+	/**
 	 * Array containing annotations for this plot
 	 * @var array
 	 */
@@ -133,7 +139,7 @@ class Plot {
 		return 'RunalyzePlot.addPlot("'.$this->cssID.'", '.
 				json_encode($this->Data).', '.
 				Ajax::json_encode_jsfunc($this->Options).', '.
-				'{}, '.
+				json_encode($this->PlotOptions).', '.
 				json_encode($this->Annotations).');';
 	}
 
