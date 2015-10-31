@@ -1,12 +1,12 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Runalyze\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: mail@runalyze.de\n"
 "POT-Creation-Date: 2015-10-27 12:32+0100\n"
-"PO-Revision-Date: 2015-06-18 23:21+0200\n"
-"Last-Translator: Jaime Gallego <jgallegocuesta@gmail.com>\n"
-"Language-Team: Spanish <http://translate.runalyze.de/projects/runalyze/"
-"runalyze/es/>\n"
+"PO-Revision-Date: 2015-10-31 19:22+0200\n"
+"Last-Translator: juliwoodbcn <julianlozano@atletaviajero.info>\n"
+"Language-Team: Spanish "
+"<http://translate.runalyze.de/projects/runalyze/runalyze/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,7 +76,7 @@ msgstr "Crear"
 #: inc/plugin/config/class.PluginConfigurationWindow.php:131
 #: inc/class.AdminView.php:175
 msgid "Save"
-msgstr ""
+msgstr "Guarda"
 
 #: inc/html/formular/class.FormularField.php:212
 msgid "Your input is not allowed."
@@ -257,7 +257,7 @@ msgstr "Cadencia"
 #: inc/core/View/Activity/Plot/Series/StrideLength.php:53
 #: inc/class.DatasetLabels.php:44
 msgid "Stride length"
-msgstr ""
+msgstr "Longitud del paso"
 
 #: inc/training/search/class.FormularSelectSearchSort.php:39
 #: inc/training/search/class.SearchFormular.php:163
@@ -421,11 +421,11 @@ msgstr "Elegir condiciones climáticas"
 #: plugin/RunalyzePluginTool_DbBackup/class.RunalyzeJsonImporterResults.php:142
 #: plugin/RunalyzePluginPanel_Equipment/class.RunalyzePluginPanel_Equipment.php:36
 msgid "Equipment"
-msgstr ""
+msgstr "Equipamiento"
 
 #: inc/training/search/class.SearchFormular.php:146
 msgid "Choose equipment"
-msgstr ""
+msgstr "Elige equipamiento"
 
 #: inc/training/search/class.SearchFormular.php:152
 #: inc/training/schemes/scheme.Training.new.php:384
@@ -513,10 +513,13 @@ msgid "Standard calculation: As competition"
 msgstr "Cálculo estándar: Como competición"
 
 #: inc/training/view/class.VDOTinfo.php:66
+#, fuzzy
 msgid ""
 "All traditional formulas are being used to calculate a VDOT value for a "
 "given competition."
 msgstr ""
+"Todas las formulas tradicionales estan siendo usadas para calcular el valor "
+"VDOT para la competicion dada."
 
 #: inc/training/view/class.VDOTinfo.php:92
 msgid "Correction: based on heartrate"
