@@ -105,7 +105,7 @@ class EquipmentUpdater extends \Runalyze\Model\RelationUpdater {
 			$this->PDO->exec(
 				'UPDATE `'.PREFIX.'equipment`
 				SET
-					`distance` = `distance` + '.(int)$addDistance.',
+					`distance` = `distance` + '.(float)$addDistance.',
 					`time` = `time` + '.(float)$addTime.'
 				WHERE '.$this->where($ids)
 			);
