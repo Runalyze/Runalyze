@@ -7,12 +7,15 @@
 namespace Runalyze\Model\Route;
 
 use Runalyze\Model;
-use League\Geotools\Geotools;
 use League\Geotools\Geohash\Geohash;
 use \League\Geotools\Coordinate\Coordinate;
 
 /**
  * Route object
+ * 
+ * Attention: `set(Object::GEOHASHES, $geohashes)` or `setLatitudesLongitudes($lats, $lngs)`
+ * should be used instead of serving geohashes in constructor to ensure correct
+ * min/max geohashes. They are not calculated within `synchronize()`!
  * 
  * @author Hannes Christiansen
  * @package Runalyze\Model\Route
@@ -23,6 +26,16 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @var string
 	 */
 	const CITIES_SEPARATOR = ' - ';
+
+	/**
+	 * @var int
+	 */
+	const PATH_GEOHASH_PRECISION = 12;
+
+	/**
+	 * @var int
+	 */
+	const BOUNDARIES_GEOHASH_PRECISION = 10;
 
 	/**
 	 * Key: name
@@ -256,11 +269,6 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		parent::synchronize();
 
 		$this->ensureAllNumericValues();
-		//print_r($this->Data[self::LATITUDES]);
-		if(!$this->hasGeohashes()) {
-		    $this->setLatitudesLongitudes($this->Data[self::LATITUDES], $this->Data[self::LONGITUDES]);
-		}
-		
 		$this->synchronizeStartAndEndpoint();
 
 		if (!$this->hasCorrectedElevations()) {
@@ -281,54 +289,123 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		));
 	}
 
-	public function setLatitudesLongitudes(array $latitudes, array $longitudes)
-	{
-	    $size = count($latitudes);
-	    if ($size != count($longitudes)) {
-		throw new \InvalidArgumentException('Latitude & Longitude Array cannot have different lenghts');
-	    }
-	    for ($i = 0; $i < $size; ++$i) {
-		$Coordinate = new Coordinate($latitudes[$i].','.$longitudes[$i]);
-		$geohashes[] = (new Geohash())->encode($Coordinate, 12)->getGeohash();
-	    }
-	    if ($size != count($geohashes)) {
-		throw new \InvalidArgumentException('Geohash array cannot have different length than lat/lng');
-	    } else {
+	/**
+	 * Set array
+	 * @param string $key
+	 * @param mixed $value
+	 * @throws \InvalidArgumentException
+	 * @throws \RuntimeException
+	 */
+	public function set($key, $value) {
+		parent::set($key, $value);
+
+		if ($key == self::GEOHASHES) {
+			$this->setMinMaxFromGeohashes($value);
+		}
+	}
+
+	/**
+	 * @param array $geohashes
+	 */
+	protected function setMinMaxFromGeohashes(array $geohashes) {
+		$latitudes = array();
+		$longitudes = array();
+
+		foreach ($geohashes as $geohash) {
+			$coordinate = (new Geohash())->decode($geohash)->getCoordinate();
+			$latitudes[] = $coordinate->getLatitude();
+			$longitudes[] = $coordinate->getLongitude();
+		}
+
+		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
+	}
+
+	/**
+	 * Set geohashes from latitudes/longitudes
+	 * @param array $latitudes
+	 * @param array $longitudes
+	 * @throws \InvalidArgumentException
+	 */
+	public function setLatitudesLongitudes(array $latitudes, array $longitudes) {
+		$size = count($latitudes);
+
+		if ($size != count($longitudes)) {
+			throw new \InvalidArgumentException('Latitude & Longitude Array cannot have different lenghts');
+		}
+
+		$geohashes = array();
+
+		for ($i = 0; $i < $size; ++$i) {
+			$geohashes[] = (new Geohash())->encode(new Coordinate($latitudes[$i].','.$longitudes[$i]), self::PATH_GEOHASH_PRECISION)->getGeohash();
+		}
+
 		$this->Data[self::GEOHASHES] = $geohashes;
-	    } 
-	    
-	    
-	    /* set min, max, startpoint, endpoint */
-	    $Latitudes = array_filter($latitudes);
-	    $Longitudes = array_filter($longitudes);
+		$this->handleNewArraySize($size);
 
-	    if (!empty($Latitudes) && !empty($Longitudes)) {
-		$StartpointCoordinate = new Coordinate(reset($Latitudes).','.reset($Longitudes));
-		$this->Data[self::STARTPOINT] = (new Geohash())->encode($StartpointCoordinate, 10)->getGeohash();
+		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
+	}
 
-		$EndpointCoordinate = new Coordinate(end($Latitudes).','.end($Longitudes));
-		$this->Data[self::ENDPOINT] = (new Geohash())->encode($EndpointCoordinate, 10)->getGeohash();
+	/**
+	 * @param array $latitudes
+	 * @param array $longitudes
+	 */
+	protected function setMinMaxFromLatitudesLongitudes(array $latitudes, array $longitudes) {
+		$latitudes = array_filter($latitudes);
+		$longitudes = array_filter($longitudes);
 
-		$MinCoordinate = new Coordinate(min($Latitudes).','.min($Longitudes));
-		$this->Data[self::MIN] = (new Geohash())->encode($MinCoordinate, 10)->getGeohash();
+		if (!empty($latitudes) && !empty($longitudes)) {
+			$MinCoordinate = new Coordinate(array(min($latitudes), min($longitudes)));
+			$this->Data[self::MIN] = (new Geohash())->encode($MinCoordinate, self::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
 
-		$MaxCoordinate = new Coordinate(max($Latitudes).','.max($Longitudes));
-		$this->Data[self::MAX] = (new Geohash())->encode($MaxCoordinate, 10)->getGeohash();
-	    }
+			$MaxCoordinate = new Coordinate(array(max($latitudes), max($longitudes)));
+			$this->Data[self::MAX] = (new Geohash())->encode($MaxCoordinate, self::BOUNDARIES_GEOHASH_PRECISION)->getGeohash();
+		} else {
+			$this->setMinMaxToNull();
+		}
+	}
 
+	/**
+	 * Set min/max to null
+	 */
+	protected function setMinMaxToNull() {
+		$this->Data[self::MIN] = null;
+		$this->Data[self::MAX] = null;
 	}
 	
 	/**
 	 * Synchronize start- and endpoint
 	 */
 	protected function synchronizeStartAndEndpoint() {
-	    //Todo Where to put?
-		if (!$this->hasGeohashes()) {
-			$this->Data[self::STARTPOINT] = null;
-			$this->Data[self::ENDPOINT] = null;
-			$this->Data[self::MIN] = null;
-			$this->Data[self::MAX] = null;
+		$this->Data[self::STARTPOINT] = $this->findStartpoint();
+		$this->Data[self::ENDPOINT] = $this->findEndpoint();
+	}
+
+	/**
+	 * @return string|null
+	 */
+	protected function findStartpoint() {
+		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
+		foreach ($this->Data[self::GEOHASHES] as $geohash) {
+			if ($geohash != $nullGeohash) {
+				return $geohash;
+			}
 		}
+
+		return null;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	protected function findEndpoint() {
+		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
+		foreach (array_reverse($this->Data[self::GEOHASHES]) as $geohash) {
+			if ($geohash != $nullGeohash) {
+				return $geohash;
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -404,6 +481,8 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @return array
 	 */
 	public function latitudes() {
+		throw new \RuntimeException('Route\Object::latitudes() is not supported anymore.');
+
 		return $this->Data[self::LATITUDES];
 	}
 
@@ -412,6 +491,8 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 	 * @return array
 	 */
 	public function longitudes() {
+		throw new \RuntimeException('Route\Object::longitudes() is not supported anymore.');
+
 		return $this->Data[self::LONGITUDES];
 	}
 	

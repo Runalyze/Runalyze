@@ -1,1 +1,1 @@
-ALTER TABLE `runalyze_route` ADD `geohashes` longtext AFTER `lngs`, ADD `startpoint` varchar(12) AFTER `startpoint_lng`, ADD `endpoint` varchar(12) AFTER `endpoint_lng`,  ADD `min` varchar(12) AFTER `min_lng`, ADD `max` varchar(12) AFTER `max_lng`;
+ALTER TABLE `runalyze_route` ADD `geohashes` longtext AFTER `lngs`, ADD `startpoint` char(10) AFTER `startpoint_lng`, ADD `endpoint` char(10) AFTER `endpoint_lng`,  ADD `min` char(10) AFTER `min_lng`, ADD `max` char(10) AFTER `max_lng`;

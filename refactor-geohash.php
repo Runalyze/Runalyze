@@ -1,6 +1,6 @@
 <?php
-use League\Geotools\Geotools;
-use \League\Geotools\Coordinate\Coordinate;
+use League\Geotools\Geohash\Geohash;
+use League\Geotools\Coordinate\Coordinate;
 /**
  * Script to refactor equipment
  * 
@@ -8,7 +8,13 @@ use \League\Geotools\Coordinate\Coordinate;
  * Remember to delete your credentials afterwards to protect this script.
  */
 require 'vendor/autoload.php';
-include_once 'config.php';
+
+$host = '';
+$database = '';
+$username = '';
+$password = '';
+
+define('PREFIX', 'runalyze_');
 define('LIMIT', 100); // Limit number of accounts to refactor per request
 define('CLI', false); // Set to true if running from command line
 define('SET_GLOBAL_PROPERTIES', false); // Set to true to set max_allowed_packet and key_buffer_size for mysql
@@ -56,7 +62,8 @@ if (empty($database) && empty($host)) {
 /**
  * Check version
  */
-$IsNotRefactored = $PDO->query('SHOW TABLES LIKE "'.PREFIX.'shoe"');
+// TODO: final version needs to check if `lats` etc. do still exist
+$IsNotRefactored = true;
 
 if (!$IsNotRefactored) {
 	echo 'The database is already refactored.'.NL;
@@ -67,39 +74,29 @@ if (!$IsNotRefactored) {
 /**
  * Overview for data
  */
-$geotools   = new Geotools();
-$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != ""');
+// TODO: final version needs to check for empty `geohashes` columns and use LIMIT
+$Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != "" && id > 2127');
 $InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `geohashes`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
 while ($Route = $Routes->fetch()) {
-    
-	$coordinate = new Coordinate($Route['min_lat'].','.$Route['min_lng']);
-	$min = $geotools->geohash()->encode($coordinate, 10);
-
-	$coordinate = new Coordinate($Route['max_lat'].','.$Route['max_lng']);
-	$max = $geotools->geohash()->encode($coordinate, 10);
-    
-	$coordinate = new Coordinate($Route['startpoint_lat'].','.$Route['startpoint_lng']);
-	$startpoint = $geotools->geohash()->encode($coordinate, 10);
-
-	$coordinate = new Coordinate($Route['endpoint_lat'].','.$Route['endpoint_lng']);
-	$endpoint = $geotools->geohash()->encode($coordinate, 10);
-    
     $lats = explode("|", $Route['lats']);
     $lngs = explode("|", $Route['lngs']);
     $quantity = count($lats);
     $geohashArray = array();
+	$Coordinate = new Coordinate(array(0, 0));
+
     for($i=0; $i< $quantity; $i++) {
-	$coordinate = new Coordinate($lats[$i].','. $lngs[$i]);
-	$geohash = $geotools->geohash()->encode($coordinate, 12);
-	$geohashArray[] = $geohash->getGeohash();
+		// TODO: use a persisent Geohash object as soon as that's possible, see https://github.com/thephpleague/geotools/issues/73
+		$Coordinate->setLatitude($lats[$i]);
+		$Coordinate->setLongitude($lngs[$i]);
+	$geohashArray[] = (new Geohash)->encode($Coordinate, 12)->getGeohash();
     }
-    $InsertGeohash->execute(array(
+	$InsertGeohash->execute(array(
 				':geohash' => implode("|", $geohashArray),
 				 ':id' => $Route['id'],
-				 ':startpoint' => $startpoint->getGeohash(),
-				 ':endpoint' => $endpoint->getGeohash(),
-				 ':min' => $min->getGeohash(),
-				 ':max' => $max->getGeohash()
+				 ':startpoint' => (new Geohash)->encode(new Coordinate(array($Route['startpoint_lat'], $Route['startpoint_lng'])), 10)->getGeohash(),
+				 ':endpoint' => (new Geohash)->encode(new Coordinate(array($Route['endpoint_lat'], $Route['endpoint_lng'])), 10)->getGeohash(),
+				 ':min' => (new Geohash)->encode(new Coordinate(array($Route['min_lat'], $Route['min_lng'])), 10)->getGeohash(),
+				 ':max' => (new Geohash)->encode(new Coordinate(array($Route['max_lat'], $Route['max_lng'])), 10)->getGeohash()
 			    ));
     echo "\033[7D";
     $diff = count($Route['id']);
@@ -112,3 +109,4 @@ while ($Route = $Routes->fetch()) {
         echo 'Memory peak: '.memory_get_peak_usage().'B'.NL;
         echo NL;
 
+// TODO: final version needs to remove old columns (`lats`, ...) afterwards

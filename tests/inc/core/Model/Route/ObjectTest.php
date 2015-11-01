@@ -116,4 +116,27 @@ class ObjectTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(11, count($Object->elevationsCorrected()));
 	}
 
+	public function testSetGeohashes() {
+		// - set geohashes
+		// - check min/max
+	}
+
+	/**
+	 * @todo
+	 */
+	public function testSetLatitudesLongitudes() {
+		// - set latitudes/longitudes
+		// - check min/max
+		// - check some geohashes
+	}
+
+	/**
+	 * @todo
+	 */
+	public function testThatSetLatitudesLongitudesMustHaveExpectedSize() {
+		// - create object with elevations array
+		// - set latitudes/longitudes with larger array
+		// - exception should be thrown
+	}
+
 }

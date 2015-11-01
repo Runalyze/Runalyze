@@ -197,14 +197,15 @@ class TrainingObject extends DataObject {
 	 * @return \Runalyze\Model\Route\Object
 	 */
 	protected function newRouteObject() {
-		return new Runalyze\Model\Route\Object(array(
+		$Route = new Runalyze\Model\Route\Object(array(
 			Runalyze\Model\Route\Object::NAME => $this->get('route'),
 			Runalyze\Model\Route\Object::CITIES => $this->get('route'),
 			Runalyze\Model\Route\Object::DISTANCE => $this->get('distance'),
-			Runalyze\Model\Route\Object::LATITUDES => $this->get('arr_lat'),
-			Runalyze\Model\Route\Object::LONGITUDES => $this->get('arr_lon'),
 			Runalyze\Model\Route\Object::ELEVATIONS_ORIGINAL => $this->get('arr_alt')
 		));
+		$Route->setLatitudesLongitudes($this->get('arr_lat'), $this->get('arr_lon'));
+
+		return $Route;
 	}
 
 	/**
