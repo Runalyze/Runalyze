@@ -69,7 +69,7 @@ if (!$IsNotRefactored) {
  */
 $geotools   = new Geotools();
 $Routes = $PDO->query('SELECT id, lats, lngs, startpoint_lat, startpoint_lng, endpoint_lat, endpoint_lng, min_lat, min_lng, max_lat, max_lng FROM runalyze_route WHERE lats != ""');
-$InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `geohash`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
+$InsertGeohash = $PDO->prepare('UPDATE '.PREFIX.'route SET `geohashes`=:geohash, `startpoint`=:startpoint, `endpoint`=:endpoint, `min`=:min, `max`=:max WHERE `id` = :id');
 while ($Route = $Routes->fetch()) {
     
 	$coordinate = new Coordinate($Route['min_lat'].','.$Route['min_lng']);
