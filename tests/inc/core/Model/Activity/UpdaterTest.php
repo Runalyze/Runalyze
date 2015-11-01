@@ -343,7 +343,7 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$this->PDO->exec('UPDATE `runalyze_equipment` SET `distance`=0, `time`=0 WHERE `id`='.$this->EquipmentB);
 
 		$OldObject = new Object(array(
-			Object::DISTANCE => 10,
+			Object::DISTANCE => 12.34,
 			Object::TIME_IN_SECONDS => 3600,
 			Object::SPORTID => $this->OutdoorID
 		));
@@ -352,8 +352,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Inserter->setEquipmentIDs(array($this->EquipmentA));
 		$Inserter->insert($OldObject);
 
-		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
-		$this->assertEquals(array( 0,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array(12.34, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array( 0.00,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
 
 		$NewObject = clone $OldObject;
 		$Updater = new Updater($this->PDO, $NewObject, $OldObject);
@@ -361,8 +361,8 @@ class UpdaterTest extends \PHPUnit_Framework_TestCase {
 		$Updater->setEquipmentIDs(array($this->EquipmentB), array($this->EquipmentA));
 		$Updater->update();
 
-		$this->assertEquals(array( 0,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
-		$this->assertEquals(array(10, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array( 0.00,    0), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentA)->fetch(PDO::FETCH_NUM));
+		$this->assertEquals(array(12.34, 3600), $this->PDO->query('SELECT `distance`, `time` FROM `runalyze_equipment` WHERE `id`='.$this->EquipmentB)->fetch(PDO::FETCH_NUM));
 	}
 
 }
