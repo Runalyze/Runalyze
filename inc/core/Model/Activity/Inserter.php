@@ -172,15 +172,6 @@ class Inserter extends Model\InserterWithAccountID {
 	}
 
 	/**
-	 * Calculate Geohashes
-	 */
-	protected function calculateRouteGeohashes() {
-	if (null !== $this->Route && $this->Route->has(Model\Route\Object::LATITUDES && $this->Route->has(Model\Route\Object::LONGITUDES))) {
-		
-	    }
-	}
-	
-	/**
 	 * Calculate power
 	 */
 	protected function calculatePower() {

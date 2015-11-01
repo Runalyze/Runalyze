@@ -907,6 +907,23 @@ class TrainingObject extends DataObject {
 	 */
 	public function hasArrayLatitude() { return strlen($this->get('arr_lat')) > 0; }
 
+	/**
+	 * Set array for geohashes
+	 * @param array $array
+	 */
+	public function setArrayGeohashes($array) { $this->setArrayFor('arr_geohashes', $array); }
+        
+	/**
+	 * Get array for geohashes
+	 * @return array
+	 */
+	public function getArrayGeohashes() { return $this->getArrayFor('arr_geohashes'); }
+        
+	/**
+	 * Has array for geohashes?
+	 * @return bool
+	 */
+	public function hasArrayGeohashes() { return strlen($this->get('arr_geohashes')) > 0; }
 
 	/**
 	 * Set array for longitude
@@ -923,8 +940,8 @@ class TrainingObject extends DataObject {
 	 * @return bool
 	 */
 	public function hasArrayLongitude() { return strlen($this->get('arr_lon')) > 0; }
-        
-        
+	
+   
 	/**
 	 * Set array for swim stroke
 	 * @param array $data
