@@ -265,8 +265,18 @@ class TrainingObject extends DataObject {
 			new \Runalyze\Model\Activity\Object($OldData)
 		);
 
-		if (isset($OldData['routeid'])) {
+		if (isset($OldData['routeid']) && $OldData['routeid'] > 0) {
 			$UpdaterActivity->setRoute(\Runalyze\Context::Factory()->route($OldData['routeid']));
+		} elseif ($this->get('route') != '') {
+			$InserterRoute = new Runalyze\Model\Route\Inserter($DB, new Runalyze\Model\Route\Object(array(
+				Runalyze\Model\Route\Object::NAME => $this->get('route'),
+				Runalyze\Model\Route\Object::CITIES => $this->get('route'),
+				Runalyze\Model\Route\Object::DISTANCE => $this->get('distance')
+			)));
+			$InserterRoute->setAccountID($AccountID);
+			$InserterRoute->insert();
+
+			$NewActivity->set(Runalyze\Model\Activity\Object::ROUTEID, $InserterRoute->insertedID());
 		}
 
 		$UpdaterActivity->setTrackdata(\Runalyze\Context::Factory()->trackdata($this->id()));
