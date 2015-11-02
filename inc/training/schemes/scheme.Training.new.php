@@ -472,16 +472,7 @@ $FIELDS = array(
 						'hidden'	=> true
 					)
 	),
-	'arr_lat'			=> array(
-					'database'	=> array(
-						'type'		=> 'longtext',
-						'null'		=> 'true',
-					),
-					'formular'	=> array(
-						'hidden'	=> true
-					)
-	),
-	'arr_lon'			=> array(
+	'arr_geohashes'			=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',

@@ -41,8 +41,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$R = new Object(array(
 			Object::NAME => 'Test route',
 			Object::DISTANCE => 3.14,
-			Object::LATITUDES => array(47.7, 47.8),
-			Object::LONGITUDES => array(7.8, 7.7)
+			Object::GEOHASHES => array('u1xjhpfe7yvs', 'u1xjhzdtjx62')
 		));
 
 		$I = new Inserter($this->PDO, $R);
@@ -56,7 +55,7 @@ class InserterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('Test route', $N->name());
 		$this->assertTrue($N->hasID());
 		$this->assertTrue($N->hasPositionData());
-		$this->assertEquals(47.7, $N->get(Object::MIN_LATITUDE));
+		$this->assertEquals('u1xjhpdt5z', $N->get(Object::MIN));
 	}
 
 	public function testElevationCalculation() {

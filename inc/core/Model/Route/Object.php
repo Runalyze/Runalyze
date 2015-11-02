@@ -421,7 +421,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
 		foreach ($this->Data[self::GEOHASHES] as $geohash) {
 			if ($geohash != $nullGeohash) {
-				return $geohash;
+				return substr($geohash, 0, self::BOUNDARIES_GEOHASH_PRECISION);
 			}
 		}
 
@@ -435,7 +435,7 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 		$nullGeohash = (new Geohash())->encode(new Coordinate(array(0, 0)), self::BOUNDARIES_GEOHASH_PRECISION);
 		foreach (array_reverse($this->Data[self::GEOHASHES]) as $geohash) {
 			if ($geohash != $nullGeohash) {
-				return $geohash;
+				return substr($geohash, 0, self::BOUNDARIES_GEOHASH_PRECISION);
 			}
 		}
 

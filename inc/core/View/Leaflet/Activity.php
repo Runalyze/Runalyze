@@ -184,7 +184,7 @@ class Activity extends LeafletRoute {
 	 */
 	protected function fillCurrentSegment() {
 		$geohash = (new Geotools())->geohash()->decode($this->RouteLoop->geohash());
-		if ($geohash == '7zzzzzzzzzzz') {
+		if ($this->RouteLoop->geohash() == '7zzzzzzzzzzz') {
 			return;
 		}
 

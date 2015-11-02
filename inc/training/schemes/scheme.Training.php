@@ -11,7 +11,7 @@ $HIDDEN_KEYS = array(
 	//'created', 'edited',
 	'creator', 'creator_details', 'activity_id',
 	//'elevation_corrected', 'gps_cache_object',
-	'arr_time', 'arr_lat', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
+	'arr_time', 'arr_lat', 'arr_geohashes', 'arr_lon', 'arr_alt', 'arr_alt_original', 'arr_heart', 'arr_dist', 'arr_cadence', 'arr_power', 'arr_temperature',
 	'arr_groundcontact', 'arr_vertical_oscillation', 'pauses', 'hrv',
 	'fit_vdot_estimate', 'fit_recovery_time', 'fit_hrv_analysis',
 	//'vdot', 'vdot_by_time', 'trimp', 'vdot_with_elevation', 'jd_intensity'
@@ -497,6 +497,15 @@ $FIELDS = array(
 					)
 	),
 	'arr_lon'			=> array(
+					'database'	=> array(
+						'type'		=> 'longtext',
+						'null'		=> 'true',
+					),
+					'formular'	=> array(
+						'hidden'	=> true
+					)
+	),
+	'arr_geohashes'			=> array(
 					'database'	=> array(
 						'type'		=> 'longtext',
 						'null'		=> 'true',

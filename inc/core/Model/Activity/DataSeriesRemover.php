@@ -130,8 +130,7 @@ class DataSeriesRemover {
 	 * Remove gps path from route
 	 */
 	public function removeGPSpathFromRoute() {
-		$this->Route->set(Model\Route\Object::LATITUDES, array());
-		$this->Route->set(Model\Route\Object::LONGITUDES, array());
+		$this->Route->set(Model\Route\Object::GEOHASHES, array());
 	}
 
 	/**

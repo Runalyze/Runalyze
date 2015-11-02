@@ -9,19 +9,16 @@ class LoopTest extends \PHPUnit_Framework_TestCase {
 
 	public function testRouteLoop() {
 		$Loop = new Loop(new Object(array(
-			Object::LATITUDES => array(47.7, 47.8, 47.9, 47.8, 47.7),
-			Object::LONGITUDES => array(7.7, 7.8, 7.9, 7.8, 7.7)
+			Object::GEOHASHES => array('u1xjhxf507s1', 'u1xjhxf6b7s9', 'u1xjhxfd8jyw', 'u1xjhxfdx0cw', 'u1xjhxffrhw4')
 		)));
 
 		$Loop->nextStep();
-		$this->assertEquals(47.8, $Loop->latitude());
-		$this->assertEquals(7.8, $Loop->longitude());
+		$this->assertEquals('u1xjhxf6b7s9', $Loop->geohash());
 		$this->assertEquals(13.41, $Loop->calculatedStepDistance(), '', 0.2);
 
 		$Loop->setStepSize(2);
 		$Loop->nextStep();
-		$this->assertEquals(47.8, $Loop->latitude());
-		$this->assertEquals(7.8, $Loop->longitude());
+		$this->assertEquals('u1xjhxfdx0cw', $Loop->geohash());
 		$this->assertEquals(0.0, $Loop->calculatedStepDistance());
 
 		$Loop->nextStep();
