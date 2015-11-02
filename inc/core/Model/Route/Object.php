@@ -344,6 +344,40 @@ class Object extends Model\ObjectWithID implements Model\Loopable {
 
 		$this->setMinMaxFromLatitudesLongitudes($latitudes, $longitudes);
 	}
+        
+        /**
+         * create latitude and longitude array
+         * @return array Array with coordiantes: ['lat' => array, 'lng' => array]
+         */
+        public function latitudesAndLongitudesFromGeohash() {
+            $Geohash = new Geohash();
+            $Geohashes = $this->Data[self::GEOHASHES];
+            $size = count($this->Data[self::GEOHASHES]);
+            
+            for ($i = 0; $i < $size; $i++) {
+                $geo = $Geohash->decode($Geohashes[$i])->getCoordinate(); 
+                $Coordinates['lat'][] = $geo->getLatitude();
+                $Coordinates['lng'][] = $geo->getLongitude();
+            }  
+            
+            return $Coordinates;
+        }
+        
+	/**
+	 * get latitudes array from geohashes
+	 * @return array latitudes
+	 */
+        public function latitudesFromGeohash() {
+            return $this->latitudesAndLongitudesFromGeohash()['lat'];
+        }
+        
+	/**
+	 * get longitudes array from geohashes
+	 * @return array longitudes 
+	 */
+        public function longitudesFromGeohash() {
+            return $this->latitudesAndLongitudesFromGeohash()['lng'];
+        }
 
 	/**
 	 * @param array $latitudes
